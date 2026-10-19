@@ -37,7 +37,8 @@ class CaptureError(Exception):
 # ---------------------------------------------------------------------------- HTML
 
 def _script_json(obj):
-    return json.dumps(obj, separators=(",", ":"), ensure_ascii=False).replace("</", "<\\/").replace("<!--", "<\\!--")
+    # no "<" at all inside an inline script: scene text can never open or close an element
+    return json.dumps(obj, separators=(",", ":"), ensure_ascii=False).replace("<", "\\u003c")
 
 
 def embed_assets(geometry, asset_root):
