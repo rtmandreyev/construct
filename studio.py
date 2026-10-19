@@ -97,7 +97,7 @@ def load(path):
         raise scene_mod.SceneError(str(exc))
 
 
-def build(scene_path, out_dir, asset_root=None, v1=False, force=True):
+def build(scene_path, out_dir, asset_root=None, v1=False, force=True, frame="y-up"):
     scene = load(scene_path)
     geometry = scene_mod.compile_scene(scene)
     report = audit_mod.audit(scene, geometry)
@@ -112,6 +112,8 @@ def build(scene_path, out_dir, asset_root=None, v1=False, force=True):
     _write(out / "audit.txt", text + "\n", force)
     if v1:
         _write(out / "geometry.v1.json", json.dumps(scene_mod.to_v1(geometry), separators=(",", ":")) + "\n", force)
+    if frame == "z-up":
+        _write(out / "geometry.z-up.json", json.dumps(scene_mod.reframe(geometry, "z-up"), separators=(",", ":")) + "\n", force)
     return geometry, report, text
 
 
@@ -129,6 +131,8 @@ def add_commands(sub):
     p.add_argument("--out", required=True)
     p.add_argument("--asset-root")
     p.add_argument("--v1", action="store_true")
+    p.add_argument("--frame", choices=("y-up", "z-up"), default="y-up",
+                   help="also write geometry.z-up.json for consumers with a Z-up object frame")
     p = sub.add_parser("review", help="build, then capture contact sheets and stills")
     p.add_argument("scene")
     p.add_argument("--out", required=True)
@@ -175,7 +179,7 @@ def run(args):
                 sys.stdout.write(audit_mod.format_report(report) + "\n")
             return 0 if report["ok"] else 1
         if args.command == "build":
-            _, report, text = build(args.scene, args.out, args.asset_root, args.v1)
+            _, report, text = build(args.scene, args.out, args.asset_root, args.v1, frame=args.frame)
             sys.stdout.write(text + "\nwrote %s\n" % Path(args.out, "hologram.html"))
             return 0 if report["ok"] else 1
         if args.command == "review":

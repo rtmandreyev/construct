@@ -1011,6 +1011,8 @@ def compile_scene(scene):
 
     return {
         "format": GEOMETRY_FORMAT, "version": GEOMETRY_VERSION, "generator": GENERATOR,
+        "contract": "tessera.hologram/0.2",
+        "frame": {"up": "+y", "forward": "+z", "note": "metres; the front faces +Z; a viewer's yaw 0 looks at the front"},
         "id": scene["id"], "title": scene["title"], "subject": dict(scene["subject"]),
         "scene_sha256": canonical_sha256(scene),
         "provenance": {"sources": [dict(s) for s in scene["sources"]], "facts": [dict(f) for f in scene["facts"]],
@@ -1100,3 +1102,47 @@ def to_v1(geometry, limit=20000):
                        "strength": geometry["animation"]["idle"]["strength"]},
             "downgraded_from": {"format": GEOMETRY_FORMAT, "version": GEOMETRY_VERSION,
                                 "dropped_segments": len(order) - len(keep)}}
+
+
+# ---------------------------------------------------------------------------- output frame
+
+def reframe(geometry, frame="z-up"):
+    """The same geometry in a Z-up frame for consumers that use one: (x, y, z) Y-up becomes
+    (x, -z, y), a proper rotation (handedness kept). Positions, motion pivots and axes,
+    artwork corners, annotation anchors and bounds are converted; nothing else changes."""
+    if frame in ("y-up", None):
+        return geometry
+    if frame != "z-up":
+        raise SceneError("unknown frame %r (y-up or z-up)" % frame)
+    import copy as _copy
+    g = _copy.deepcopy(geometry)
+
+    def p(v):
+        return [v[0], _r(-v[2]), v[1]]
+
+    def flat(data, stride, offsets):
+        for i in range(0, len(data), stride):
+            for o in offsets:
+                x, y, z = data[i + o:i + o + 3]
+                data[i + o:i + o + 3] = [x, _r(-z), y]
+
+    flat(g["lines"], g["line_stride"], (0, 3))
+    flat(g["fills"], g["fill_stride"], (0,))
+    flat(g["points"], g["point_stride"], (0,))
+    for m in g["motions"]:
+        m["pivot"], m["axis"] = p(m["pivot"]), p(m["axis"])
+    for a in g["artwork"]:
+        a["corners"] = [p(c) for c in a["corners"]]
+    for a in g["annotations"]:
+        a["anchor"] = p(a["anchor"])
+
+    def box(lo, hi):
+        a, b = p(lo), p(hi)
+        return [min(a[k], b[k]) for k in range(3)], [max(a[k], b[k]) for k in range(3)]
+    for part in g["parts"]:
+        for inst in part["instances"]:
+            inst["min"], inst["max"] = box(inst["min"], inst["max"])
+    lo, hi = box(g["bounds"]["min"], g["bounds"]["max"])
+    g["bounds"] = {"min": lo, "max": hi, "center": p(g["bounds"]["center"]), "radius": g["bounds"]["radius"]}
+    g["frame"] = {"up": "+z", "forward": "-y", "note": "converted from the authoring frame (Y up): (x, y, z) -> (x, -z, y)"}
+    return g
