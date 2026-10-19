@@ -48,7 +48,7 @@ class Packages(unittest.TestCase):
         self.assertEqual(plugin["name"], package.NAME)
         self.assertEqual(plugin["version"], package.VERSION)
         fields, body = frontmatter(self.claude_skill / "SKILL.md")
-        self.assertEqual(set(fields), {"name", "description"})
+        self.assertEqual(set(fields), {"name", "description", "license", "compatibility"})
         self.assertIn(package.SKILL_DIR_TOKEN["claude-code"] + "/runtime/cli.py", body)
         self.assertNotIn("{{", body)
 

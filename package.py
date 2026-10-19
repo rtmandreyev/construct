@@ -27,6 +27,8 @@ VERSION = "0.2.0"
 CONTRACT = "tessera.hologram/0.2"
 AUTHOR = "Tessera contributors"
 LICENSE = "Apache-2.0"
+COMPATIBILITY = ("Python 3.10+ (standard library only). Captures need a local Chromium-family "
+                 "browser; video needs ffmpeg. Nothing is installed or downloaded.")
 TAGS = ["Hologram", "3D", "Visualization", "WebGL", "Animation", "Design"]
 
 # The runtime: the v2 toolchain plus the v1 module its CLI still dispatches to.
@@ -88,6 +90,8 @@ def _yaml_str(value):
 
 def frontmatter(host, fields):
     lines = ["---", "name: " + fields["name"], "description: " + _yaml_str(fields["description"])]
+    if host == "claude-code":
+        lines += ["license: " + LICENSE, "compatibility: " + _yaml_str(COMPATIBILITY)]
     if host == "hermes":
         lines += ["version: " + VERSION, "author: " + AUTHOR, "license: " + LICENSE,
                   "metadata:", "  hermes:",
