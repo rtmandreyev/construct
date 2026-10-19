@@ -17,6 +17,7 @@ import tempfile
 from pathlib import Path
 
 from . import audit as audit_mod
+from . import diagnose as diagnose_mod
 from . import hologram, render, scene as scene_mod
 
 STARTER = {
@@ -123,7 +124,8 @@ def add_commands(sub):
     p.add_argument("--title")
     p.add_argument("--output")
     p.add_argument("--force", action="store_true")
-    p = sub.add_parser("check", help="validate, compile and audit a scene")
+    p = sub.add_parser("check", help="validate, compile and audit a scene ('-' reads stdin); --json for "
+                                     "machine-readable diagnostics with JSON paths and fix hints")
     p.add_argument("scene")
     p.add_argument("--json", action="store_true")
     p = sub.add_parser("build", help="geometry, the HTML preview and the audit")
@@ -163,20 +165,17 @@ def run(args):
                 sys.stdout.write(text)
             return 0
         if args.command == "check":
-            scene = load(args.scene)
-            errors = scene_mod.validate(scene)
-            if errors:
-                if args.json:
-                    sys.stdout.write(json.dumps({"valid": False, "errors": errors}, indent=2) + "\n")
-                else:
-                    sys.stdout.write("invalid scene (%d problems):\n  %s\n" % (len(errors), "\n  ".join(errors)))
-                return 1
-            geometry = scene_mod.compile_scene(scene)
-            report = audit_mod.audit(scene, geometry)
+            text = sys.stdin.read() if args.scene == "-" else Path(args.scene).read_text(encoding="utf-8")
+            report = diagnose_mod.diagnose_text(text)
             if args.json:
-                sys.stdout.write(json.dumps({"valid": True, "audit": report}, indent=2) + "\n")
+                sys.stdout.write(json.dumps(report, indent=2, ensure_ascii=False) + "\n")
+            elif report["stats"] is not None:  # it compiled: the audit report, then anything left to fix
+                scene, _ = diagnose_mod.parse_text(text)
+                sys.stdout.write(audit_mod.format_report(audit_mod.audit(scene, scene_mod.compile_scene(scene))) + "\n")
+                if not report["ok"]:
+                    sys.stdout.write("\nhow to fix:\n" + report["repair_text"] + "\n")
             else:
-                sys.stdout.write(audit_mod.format_report(report) + "\n")
+                sys.stdout.write("invalid scene (%d problems)\n%s\n" % (report["errors"], report["repair_text"]))
             return 0 if report["ok"] else 1
         if args.command == "build":
             _, report, text = build(args.scene, args.out, args.asset_root, args.v1, frame=args.frame)

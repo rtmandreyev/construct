@@ -114,21 +114,89 @@ class SceneError(Exception):
 
 # ---------------------------------------------------------------------------- checks
 
-class _Check:
-    def __init__(self):
-        self.errors = []
+def _closest(word, options):
+    import difflib
+    word = str(word)
+    m = difflib.get_close_matches(word, [str(o) for o in options], n=1, cutoff=0.5)
+    return m[0] if m else None
 
-    def err(self, where, message):
-        self.errors.append("%s: %s" % (where, message))
+
+def _slug(v):
+    out = "".join(ch if ch.isalnum() else "-" for ch in str(v).lower()).strip("-")
+    while "--" in out:
+        out = out.replace("--", "-")
+    return (out or "part")[:64]
+
+
+# what to write for a missing key, so a model can repair its draft without reading the docs
+KEY_HELP = {
+    "certainty": 'one of "verified" (cite a source), "user_supplied", "inferred", "decorative"',
+    "stage": "an integer 0..7, foundation first",
+    "role": "one of " + ", ".join(ROLES),
+    "shape": '{"type": "box", "size": [w, h, d]} or another shape (see vocabulary)',
+    "id": "a lowercase id such as \"lid\"",
+    "value": "the known value; delete the whole fact if it is unknown",
+    "units": '"m"', "seed": "an integer, e.g. 7", "format": '"tessera-hologram"', "version": "2",
+    "subject": '{"category": "object", "accuracy": "generic", "synthetic": false}',
+    "sources": '[{"id": "request", "kind": "user_request", "title": "The request", "rights": "user_private"}]',
+    "facts": "[] or facts with key, value and certainty", "parts": "at least one part",
+    "slot": "cover-front, cover-back, inlay, disc, label or booklet-page-N",
+    "pivot": "a world point [x, y, z] on the hinge or turning axis",
+    "axis": "a direction [x, y, z], e.g. [0, 1, 0]",
+}
+SIZE_KEYS = ("size", "radius", "height", "radii", "major", "minor", "radius_top", "radius_bottom", "at", "distance")
+
+
+class _Check:
+    """Collects problems as {where, message, code, hint}; `errors` gives the classic strings."""
+
+    def __init__(self):
+        self.items = []
+        self.known = {}       # kind -> ids defined so far (part, fact, asset, source, view)
+        self.part_names = {}  # parts index -> id, for readable messages
+
+    def err(self, where, message, code="rule", hint=None):
+        if hint is None and code == "rule":
+            import re
+            m = re.match(r"unknown (part|fact|asset|source|view) '(.*?)'", message)
+            if m:
+                code = "reference"
+                known = sorted(self.known.get(m.group(1), ()))
+                near = _closest(m.group(2), known)
+                hint = ("Use one of the scene's %s ids: %s." % (m.group(1), ", ".join(known[:24]) or "(none yet)")
+                        + (" Did you mean %r?" % near if near else ""))
+        self.items.append({"where": where, "message": message, "code": code, "hint": hint})
+
+    @property
+    def errors(self):
+        out = []
+        for e in self.items:
+            where = e["where"]
+            for i, pid in self.part_names.items():
+                pre = "scene.parts[%d]" % i
+                if where == pre or where.startswith(pre + ".") or where.startswith(pre + "["):
+                    where = "part %r" % pid + where[len(pre):]
+                    break
+            out.append("%s: %s" % (where, e["message"]))
+        return out
 
     def keys(self, obj, allowed, required, where):
         if not isinstance(obj, dict):
-            self.err(where, "expected an object")
+            self.err(where, "expected an object", "type", "Write a JSON object {...} here.")
             return False
         for k in sorted(set(obj) - set(allowed)):
-            self.err(where, "unknown key %r" % k)
+            if any(w in k.lower() for w in ("colo", "palette", "hue", "rgb", "shader", "material")):
+                self.err(where, "unknown key %r" % k, "style",
+                         "Remove %r: the renderer owns colour and material; describe the part's role "
+                         "(mass, identity, detail...) instead." % k)
+                continue
+            near = _closest(k, allowed)
+            self.err(where, "unknown key %r" % k, "unknown-key",
+                     "Remove %r%s. Allowed here: %s." % (k, " (did you mean %r?)" % near if near else "",
+                                                       ", ".join(sorted(allowed))))
         for k in sorted(set(required) - set(obj)):
-            self.err(where, "missing key %r" % k)
+            self.err(where, "missing key %r" % k, "missing-key",
+                     "Add %r%s." % (k, ": " + KEY_HELP[k] if k in KEY_HELP else ""))
         return True
 
     def num(self, v, where, lo=None, hi=None, integer=False):
@@ -136,16 +204,27 @@ class _Check:
         if ok and isinstance(v, float) and not math.isfinite(v):
             ok = False
         if not ok:
-            self.err(where, "expected %s" % ("an integer" if integer else "a finite number"))
+            hint = "Write a plain JSON %s (no quotes, no units)." % ("integer" if integer else "number")
+            if isinstance(v, str):
+                try:
+                    hint += " Here: %s." % json.dumps(int(v) if integer else float(v.strip().rstrip("m ")))
+                except ValueError:
+                    pass
+            self.err(where, "expected %s" % ("an integer" if integer else "a finite number"), "type", hint)
             return False
         if lo is not None and v < lo or hi is not None and v > hi:
-            self.err(where, "must be within %s..%s" % (lo, hi))
+            hint = "Use a value between %s and %s." % (lo, hi)
+            key = where.rsplit(".", 1)[-1].split("[")[0]
+            if key in SIZE_KEYS and hi is not None and v > hi and lo is not None and lo <= v / 1000.0 <= hi:
+                hint += " Sizes are metres: %s mm is %g." % (v, v / 1000.0)
+            self.err(where, "must be within %s..%s" % (lo, hi), "range", hint)
             return False
         return True
 
     def vec(self, v, where, n=3, lo=-MAX_EXTENT, hi=MAX_EXTENT):
         if not isinstance(v, list) or len(v) != n:
-            self.err(where, "expected an array of %d numbers" % n)
+            self.err(where, "expected an array of %d numbers" % n, "type",
+                     "Write [x, y, z] in metres." if n == 3 else "Write an array of %d numbers." % n)
             return False
         return all([self.num(x, "%s[%d]" % (where, i), lo, hi) for i, x in enumerate(v)])
 
@@ -153,13 +232,16 @@ class _Check:
         if v is None and not required:
             return True
         if not isinstance(v, str) or (required and not v.strip()) or len(v) > maxlen:
-            self.err(where, "expected a non-blank string of at most %d characters" % maxlen)
+            self.err(where, "expected a non-blank string of at most %d characters" % maxlen, "type",
+                     "Write a short text in double quotes (at most %d characters)." % maxlen)
             return False
         return True
 
     def choice(self, v, options, where):
         if v not in options:
-            self.err(where, "must be one of %s" % ", ".join(options))
+            near = _closest(v, options) if isinstance(v, str) else None
+            self.err(where, "must be one of %s" % ", ".join(options), "choice",
+                     "Use one of: %s.%s" % (", ".join(options), " Did you mean %r?" % near if near else ""))
             return False
         return True
 
@@ -167,7 +249,8 @@ class _Check:
         ok = (isinstance(v, str) and 0 < len(v) <= 64 and v[0].isalnum()
               and all(c.isalnum() or c in "-_." for c in v) and v == v.lower())
         if not ok:
-            self.err(where, "expected a lowercase id (letters, digits, - _ .; at most 64)")
+            self.err(where, "expected a lowercase id (letters, digits, - _ .; at most 64)", "id",
+                     "Use something like %r." % _slug(v))
         return ok
 
 
@@ -324,9 +407,18 @@ PART_REQUIRED = {"id", "role", "shape", "certainty", "stage"}
 
 def validate(scene):
     """Every problem in a scene, as readable strings; empty when it compiles."""
+    return _validate(scene).errors
+
+
+def validate_items(scene):
+    """Every problem as {where, message, code, hint}: `where` is a dotted path from `scene`."""
+    return _validate(scene).items
+
+
+def _validate(scene):
     c = _Check()
-    if not c.keys(scene, SCENE_KEYS, SCENE_REQUIRED, "scene"):
-        return c.errors
+    if not c.keys(scene, SCENE_KEYS | {"style"}, SCENE_REQUIRED, "scene"):
+        return c
     if scene.get("format") != FORMAT:
         c.err("scene.format", "must be %r" % FORMAT)
     if scene.get("version") != VERSION or isinstance(scene.get("version"), bool):
@@ -347,6 +439,7 @@ def validate(scene):
             c.text(subject["summary"], "scene.subject.summary", 600)
 
     source_ids = set()
+    c.known["source"] = source_ids
     sources = scene.get("sources")
     if not isinstance(sources, list) or len(sources) > MAX_SOURCES:
         c.err("scene.sources", "expected an array of at most %d sources" % MAX_SOURCES)
@@ -366,6 +459,7 @@ def validate(scene):
             c.text(s["ref"], w + ".ref", 600)
 
     fact_cert = {}
+    c.known["fact"] = fact_cert
     facts = scene.get("facts")
     if not isinstance(facts, list) or len(facts) > MAX_FACTS:
         c.err("scene.facts", "expected an array of at most %d facts" % MAX_FACTS)
@@ -381,7 +475,8 @@ def validate(scene):
             fact_cert[key] = f.get("certainty")
         v = f.get("value")
         if v is None:
-            c.err(w + ".value", "an unknown fact is absent: delete this fact rather than writing null or a guess")
+            c.err(w + ".value", "an unknown fact is absent: delete this fact rather than writing null or a guess",
+                  "unknown-fact", "Delete this fact (and any label or basis that uses it). Never fill it with a guess.")
         elif isinstance(v, float) and not math.isfinite(v):
             c.err(w + ".value", "non-finite number")
         elif not (isinstance(v, (bool, int, float)) or (isinstance(v, str) and len(v) <= 2000)):
@@ -393,11 +488,14 @@ def validate(scene):
         c.choice(f.get("certainty"), CERTAINTIES, w + ".certainty")
         src = f.get("source")
         if f.get("certainty") == "verified" and src not in source_ids:
-            c.err(w + ".source", "a verified fact must cite one of the scene's sources by id")
+            c.err(w + ".source", "a verified fact must cite one of the scene's sources by id", "certainty",
+                  "Add \"source\": \"<source id>\" naming where it was checked, or lower certainty to "
+                  "\"user_supplied\" (the user said it) or \"inferred\" (your estimate).")
         elif src is not None and src not in source_ids:
             c.err(w + ".source", "unknown source %r" % src)
 
     asset_ids = set()
+    c.known["asset"] = asset_ids
     assets = scene.get("assets", [])
     if not isinstance(assets, list) or len(assets) > MAX_ASSETS:
         c.err("scene.assets", "expected an array of at most %d assets" % MAX_ASSETS)
@@ -411,9 +509,7 @@ def validate(scene):
             if a["id"] in asset_ids:
                 c.err(w + ".id", "duplicate %r" % a["id"])
             asset_ids.add(a["id"])
-        errs = []
-        _asset_path(a.get("path"), w + ".path", errs)
-        c.errors.extend(errs)
+        _asset_path(a.get("path"), w + ".path", c)
         sha = a.get("sha256")
         if not isinstance(sha, str) or len(sha) != 64 or any(ch not in "0123456789abcdef" for ch in sha):
             c.err(w + ".sha256", "expected 64 lowercase hexadecimal characters")
@@ -426,11 +522,12 @@ def validate(scene):
             c.err(w + ".source", "unknown source %r" % a.get("source"))
 
     if "style" in scene:
-        c.errors[:] = [e for e in c.errors if not e.startswith("scene: unknown key 'style'")]
         c.err("scene.style", "colours belong to the renderer: move it to presentation.style_hint "
-              "(a hint a host may ignore) or delete it")
+              "(a hint a host may ignore) or delete it", "style",
+              "Delete \"style\". Describe roles and certainty; the renderer chooses colours.")
 
     part_ids, instances, motions, slots = set(), 0, 0, set()
+    c.known["part"] = part_ids
     parts = scene.get("parts")
     if not isinstance(parts, list) or not 1 <= len(parts) <= MAX_PARTS:
         c.err("scene.parts", "expected 1..%d parts" % MAX_PARTS)
@@ -443,7 +540,7 @@ def validate(scene):
             if p["id"] in part_ids:
                 c.err(w + ".id", "duplicate %r" % p["id"])
             part_ids.add(p["id"])
-            w = "part %r" % p["id"]
+            c.part_names[i] = p["id"]
         if "label" in p:
             c.text(p["label"], w + ".label", 80)
         if "note" in p:
@@ -473,7 +570,8 @@ def validate(scene):
         if p.get("certainty") == "verified":
             backed = p.get("source") in source_ids or any(fact_cert.get(b) == "verified" for b in basis if isinstance(basis, list))
             if not backed:
-                c.err(w, "a verified part needs a cited source or a verified basis fact")
+                c.err(w, "a verified part needs a cited source or a verified basis fact", "certainty",
+                      "Cite a source id in \"source\", list a verified fact in \"basis\", or use \"inferred\".")
         look = p.get("look", {})
         if c.keys(look, {"tone", "line", "fill", "glow", "weight", "alpha"}, set(), w + ".look"):
             if "tone" in look:
@@ -528,9 +626,11 @@ def validate(scene):
         if "artwork" in p:
             _artwork_check(c, p, asset_ids, slots, w + ".artwork")
     if instances > MAX_INSTANCES:
-        c.err("scene.parts", "%d instances after repeats and mirrors exceed %d" % (instances, MAX_INSTANCES))
+        c.err("scene.parts", "%d instances after repeats and mirrors exceed %d" % (instances, MAX_INSTANCES), "budget",
+              "Lower repeat counts or drop mirrors on small parts.")
     if motions > MAX_MOTIONS:
-        c.err("scene.parts", "%d moving instances exceed %d" % (motions, MAX_MOTIONS))
+        c.err("scene.parts", "%d moving instances exceed %d" % (motions, MAX_MOTIONS), "budget",
+              "Animate fewer copies: move the motion to one part, or drop it from repeated parts.")
 
     anns = scene.get("annotations", [])
     if not isinstance(anns, list) or len(anns) > MAX_ANNOTATIONS:
@@ -553,8 +653,10 @@ def validate(scene):
     _label_check(c, scene.get("labels", []), shapes_by_part, scene.get("facts") if isinstance(scene.get("facts"), list) else [])
     _anchor_check(c, scene.get("anchors", {}), shapes_by_part)
     _presentation_check(c, scene.get("presentation", {}), part_ids)
+    c.known["view"] = {"hero", "front", "side", "back", "top", "three-quarter"} | {
+        v.get("id") for v in (scene.get("presentation", {}) or {}).get("views", []) or [] if isinstance(v, dict)}
     _animation_check(c, scene.get("animation", {}), scene.get("presentation", {}))
-    return c.errors
+    return c
 
 
 def _motion_check(c, mo, w):
@@ -780,10 +882,12 @@ def _articulation_check(c, arts, shapes_by_part):
             if c.vec(a["axis"], aw + ".axis", 3, -1, 1) and sum(x * x for x in a["axis"]) < 1e-6:
                 c.err(aw + ".axis", "the axis needs a direction")
         elif t != "lift":
-            c.err(aw + ".axis", "missing key 'axis' (a world direction; lift defaults to up)")
+            c.err(aw + ".axis", "missing key 'axis' (a world direction; lift defaults to up)", "missing-key",
+                  "Add \"axis\": " + KEY_HELP["axis"] + ".")
         if t in ("hinge", "turn"):
             if "pivot" not in a:
-                c.err(aw + ".pivot", "missing key 'pivot' (a world point on the hinge or turning axis)")
+                c.err(aw + ".pivot", "missing key 'pivot' (a world point on the hinge or turning axis)", "missing-key",
+                      "Add \"pivot\": " + KEY_HELP["pivot"] + " in the closed pose (for a hinge, a point on the hinge line).")
             else:
                 c.vec(a["pivot"], aw + ".pivot")
             c.num(a.get("amount"), aw + ".amount", -180 if t == "hinge" else -1080, 180 if t == "hinge" else 1080)
@@ -823,7 +927,9 @@ def _label_check(c, labels, shapes_by_part, facts):
             c.err(lw, "give exactly one of field (a fact key; the host sets its value) or text (decorative words)")
         elif "field" in lb and lb["field"] not in known:
             c.err(lw + ".field", "no fact %r: add the fact with its certainty, or delete the label "
-                  "(an unknown fact has no label; never guess)" % lb["field"])
+                  "(an unknown fact has no label; never guess)" % lb["field"], "unknown-fact",
+                  "Delete this label, or add a fact {\"key\": %s, ...} only if its value is actually known."
+                  % json.dumps(lb["field"]))
         elif "text" in lb:
             c.text(lb["text"], lw + ".text", 120)
         for k, opts in (("role", LABEL_ROLES), ("align", ALIGNS), ("orientation", ORIENTATIONS)):
@@ -862,14 +968,15 @@ def _anchor_check(c, anchors, shapes_by_part):
                 c.vec(g["point"], w + ".grip.point")
 
 
-def _asset_path(path, where, errors):
+def _asset_path(path, where, c):
     if not isinstance(path, str) or not path or len(path) > 512:
-        errors.append("%s: expected a relative path of at most 512 characters" % where)
+        c.err(where, "expected a relative path of at most 512 characters", "type", "Write e.g. \"assets/cover.png\".")
         return
     bad = ("\\" in path or "%" in path or "\x00" in path or path.startswith("/") or "://" in path
            or (len(path) > 1 and path[1] == ":"))
     if bad or any(seg in ("", ".", "..") for seg in path.split("/")):
-        errors.append("%s: must be a plain relative path inside the asset folder" % where)
+        c.err(where, "must be a plain relative path inside the asset folder", "path",
+              "Write a path relative to the scene's folder, e.g. \"assets/cover.png\"; no URLs, no absolute paths, no \"..\".")
 
 
 # ---------------------------------------------------------------------------- transforms

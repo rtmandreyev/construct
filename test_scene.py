@@ -10,7 +10,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from . import audit, png, render, scene, studio
+from . import audit, diagnose, png, render, scene, studio
 
 HERE = Path(__file__).resolve().parent
 EXAMPLES = HERE / "examples" / "v2"
@@ -249,7 +249,7 @@ class Build(unittest.TestCase):
             Path(d, "bad.json").write_text('{"format": "tessera-hologram", "format": 2}')
             r = subprocess.run([sys.executable, cli, "check", "bad.json"], cwd=d, capture_output=True, text=True)
             self.assertEqual(r.returncode, 1)
-            self.assertIn("duplicate", r.stderr)
+            self.assertIn("appears twice", r.stdout)
 
 
 @unittest.skipUnless(render.find_browser() and os.environ.get("HOLOGRAM_SKIP_CAPTURE") != "1", "no Chromium-family browser")
@@ -449,6 +449,70 @@ class GeometrySchema(unittest.TestCase):
         self.assertIn("$.styles[0]: 9 items", errs)
         self.assertIn("$.labels[0].corners: 3 items", errs)
         self.assertIn("$.parts[0].instances[0].joint: 99 out of range", errs)
+
+
+class Diagnostics(unittest.TestCase):
+    """What a weak model gets back: JSON paths, codes and fix hints."""
+
+    def codes(self, report):
+        return {(d["path"], d["code"]) for d in report["diagnostics"]}
+
+    def test_json_level_problems(self):
+        r = diagnose.diagnose_text('{"a": 1,}')
+        self.assertEqual(r["diagnostics"][0]["code"], "json")
+        self.assertIn("trailing comma", r["diagnostics"][0]["hint"])
+        r = diagnose.diagnose_text('{"a": 1 // why\n}')
+        self.assertIn("comment", r["diagnostics"][0]["hint"])
+        fenced = "```json\n" + json.dumps(base()) + "\n```"
+        r = diagnose.diagnose_text(fenced)
+        self.assertEqual([d["code"] for d in r["diagnostics"] if d["severity"] == "error"], ["json"])
+        self.assertIsNotNone(r["stats"])  # still compiled, so the model sees everything else too
+        r = diagnose.diagnose_text('{"id": "a", "id": "b"}')
+        self.assertIn(("$", "duplicate-key"), self.codes(r))
+
+    def test_paths_codes_and_hints(self):
+        s = base(id="Desk Lamp", style={"palette": "amber"})
+        s["facts"].append({"key": "year", "value": None, "certainty": "inferred"})
+        s["parts"][0]["role"] = "structre"
+        s["parts"][0]["colour"] = "red"
+        s["parts"][0]["stage"] = 9
+        s["parts"][0]["shape"]["size"] = [1, 1, 900]
+        s["labels"] = [{"id": "m", "part": "bdy", "field": "maker"}]
+        r = diagnose.diagnose(s)
+        got = self.codes(r)
+        for want in [("$.id", "id"), ("$.style", "style"), ("$.facts[1].value", "unknown-fact"),
+                     ("$.parts[0].role", "choice"), ("$.parts[0]", "style"), ("$.parts[0].stage", "range"),
+                     ("$.parts[0].shape.size[2]", "range"), ("$.labels[0].part", "reference"),
+                     ("$.labels[0].field", "unknown-fact")]:
+            self.assertIn(want, got)
+        hints = {(d["path"], d["code"]): d["hint"] for d in r["diagnostics"]}
+        self.assertIn("'desk-lamp'", hints[("$.id", "id")])
+        self.assertIn("'structure'", hints[("$.parts[0].role", "choice")])
+        self.assertIn("'body'", hints[("$.labels[0].part", "reference")])
+        self.assertIn("is 0.9", hints[("$.parts[0].shape.size[2]", "range")])
+        self.assertTrue(r["repair_text"].startswith("Your scene has"))
+        self.assertFalse(r["ok"])
+
+    def test_audit_findings_point_at_parts(self):
+        s = base()
+        s["parts"].append({"id": "hat", "role": "detail", "certainty": "inferred", "stage": 1,
+                           "shape": {"type": "box", "size": [0.2, 0.2, 0.2]}, "at": [0, 3, 0]})
+        r = diagnose.diagnose(s)
+        floating = [d for d in r["diagnostics"] if d["code"] == "floating"][0]
+        self.assertEqual((floating["path"], floating["severity"]), ("$.parts[1]", "error"))
+        self.assertIn("anchor", floating["hint"])
+        s["parts"][1]["at"] = [0, 1.1, 0]
+        self.assertTrue(diagnose.diagnose(s)["ok"])
+
+    def test_cli_check_json(self):
+        with tempfile.TemporaryDirectory() as d:
+            path = Path(d, "s.json")
+            path.write_text(json.dumps(base(style={"palette": "rose"})))
+            r = subprocess.run([sys.executable, "-I", str(HERE / "cli.py"), "check", str(path), "--json"],
+                               capture_output=True, text=True)
+            self.assertEqual(r.returncode, 1)
+            out = json.loads(r.stdout)
+            self.assertEqual((out["ok"], out["contract"], out["diagnostics"][0]["path"]), (False, "tessera.hologram/0.2", "$.style"))
 
 
 class Capture(unittest.TestCase):
