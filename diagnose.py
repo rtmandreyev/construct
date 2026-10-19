@@ -161,6 +161,18 @@ def diagnose_params(doc, prior=()):
     for item in params_mod.validate_items(doc):
         diags.append(_diag("error", item["code"], _path(item["where"]), item["message"], item["hint"]))
     if any(d["severity"] == "error" and d["code"] != "json" for d in diags):
+        # the document cannot be built yet, but its facts, sources and assets can still be
+        # checked now, so a model learns every problem in one round
+        probe = {"format": scene_mod.FORMAT, "version": scene_mod.VERSION, "id": "probe", "title": "probe",
+                 "subject": {"category": "object", "accuracy": "generic", "synthetic": True}, "units": "m", "seed": 1,
+                 "sources": doc.get("sources", []), "facts": doc.get("facts", []), "assets": doc.get("assets", []),
+                 "parts": [{"id": "p", "role": "mass", "certainty": "inferred", "stage": 0,
+                            "shape": {"type": "box", "size": [1, 1, 1]}}]}
+        if not doc.get("sources") and any(isinstance(f, dict) and f.get("source") == "request" for f in doc.get("facts", [])):
+            probe["sources"] = [{"id": "request", "kind": "user_request", "title": "request", "rights": "user_private"}]
+        for item in scene_mod.validate_items(probe):
+            if item["where"].startswith(("scene.facts", "scene.sources", "scene.assets")):
+                diags.append(_diag("error", item["code"], _path(item["where"]), item["message"], item["hint"]))
         out = {"ok": False, "contract": "tessera.hologram/0.2", "errors": len(diags), "warnings": 0,
                "diagnostics": diags, "stats": None}
         out["repair_text"] = repair_text(out)

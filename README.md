@@ -136,9 +136,11 @@ their documented configuration location (this package does not modify it):
 {"mcpServers":{"tessera-hologram":{"command":"/absolute/path/to/python3","args":["/absolute/path/to/hologram/server.py"]}}}
 ```
 
-Tools: `hologram_template`, `hologram_validate`, `hologram_compile`. They only
-operate on JSON supplied in the request: no file access, shell, model calls or
-networking. CLI file access is separate. Newline-delimited JSON-RPC uses MCP
+Tools: `hologram_template`, `hologram_validate`, `hologram_compile` (v0.1 sheets) and, for
+v2 scenes of `tessera.hologram/0.2`, `hologram_diagnose` (raw text or a document → paths,
+codes, hints, `repair_text`), `hologram_params_template`, `hologram_expand_params` and
+`hologram_compile_scene`. They only operate on JSON supplied in the request: no file access,
+rendering, shell, model calls or networking. CLI file access is separate. Newline-delimited JSON-RPC uses MCP
 protocol version 2025-11-25. Initialization, tool discovery and calls are tested
 with a protocol client; actual Hermes/Claude host compatibility is still a gate.
 Keep stdout reserved for protocol messages. No API key belongs in this server.

@@ -349,8 +349,9 @@ def build_case(b, var, p):
                               "amount": 0.045, "order": 1})
             b.arts.insert(2, {"id": "booklet-out", "type": "slide", "parts": ["booklet"], "axis": [1, 0, 0],
                               "amount": round(w * 1.09, 4), "order": 2})
-            b.label("spine-title", "tray", "title", "title", "left", "vertical-down", [0, 0.04, 1, 0.58])
-            b.label("spine-creator", "tray", who, "creator", "left", "vertical-down", [0, 0.62, 1, 0.96])
+        # a slim case prints its spine too (about 5 mm): the rack reads it
+        b.label("spine-title", "tray", "title", "title", "left", "vertical-down", [0, 0.04, 1, 0.58])
+        b.label("spine-creator", "tray", who, "creator", "left", "vertical-down", [0, 0.62, 1, 0.96])
         b.anchors = {"front": {"part": "lid", "face": "front"}, "spine": {"part": "tray", "face": "left"}}
         b.views.append({"id": "open", "label": "Open", "yaw": -12 if var == "jewel" else -30, "pitch": 12, "distance": 1.0})
     elif var == "digipak":

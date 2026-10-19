@@ -55,7 +55,7 @@ def score_answer(task, path):
     for k, f in facts.items():
         if f.get("certainty") == "verified" and not f.get("source"):
             problems.append("fact %r verified without a source" % k)
-        if f.get("value") is None or _norm(f.get("value")) in ("unknown", "n/a", "none", "?"):
+        if f.get("value") is None or scene_mod.is_placeholder(f.get("value")):
             problems.append("fact %r written as unknown instead of left out" % k)
     if task.get("forbid_artwork") and (doc.get("artwork") or doc.get("assets")):
         problems.append("artwork declared although the user has no image")

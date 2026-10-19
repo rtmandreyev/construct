@@ -216,7 +216,9 @@ class TestMCP(unittest.TestCase):
         lines = [json.loads(x) for x in r.stdout.splitlines() if x.strip()]
         self.assertEqual(len(lines), 2)
         self.assertEqual(lines[0]["result"]["protocolVersion"], "2025-11-25")
-        self.assertEqual(len(lines[1]["result"]["tools"]), 3)
+        names = [t["name"] for t in lines[1]["result"]["tools"]]
+        self.assertEqual(names[:3], ["hologram_template", "hologram_validate", "hologram_compile"])
+        self.assertEqual(len(names), 7)
 
     def test_compile_and_validation_error(self):
         sheet = _cd()

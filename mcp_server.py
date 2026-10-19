@@ -1,13 +1,18 @@
 """Minimal MCP stdio server exposing hologram tools.
 
 Newline-delimited JSON-RPC 2.0 over stdin/stdout. Standard library only.
-Never reads or writes files, never spawns processes.
+Never reads or writes files, never spawns processes, never fetches or renders.
+
+Tools: the v0.1 construction sheets (hologram_template, hologram_validate, hologram_compile)
+and the v2 scenes of contract tessera.hologram/0.2 (hologram_diagnose,
+hologram_params_template, hologram_expand_params, hologram_compile_scene). Every tool works
+only on the JSON in the request.
 """
 
 import json
 import sys
 
-from . import hologram, __version__
+from . import diagnose, hologram, params, scene, __version__
 
 PROTOCOL_VERSION = "2025-11-25"
 MAX_REQUEST_BYTES = 1024 * 1024
@@ -68,6 +73,38 @@ TOOLS = [
 ]
 
 
+_READ_ONLY = {"readOnlyHint": True, "destructiveHint": False, "openWorldHint": False, "idempotentHint": True}
+_DOC = {"type": "object", "description": "a tessera-hologram scene (version 2) or a tessera-hologram-params document"}
+TOOLS += [
+    {"name": "hologram_diagnose",
+     "description": "Check a v2 scene or parameter document (contract tessera.hologram/0.2): every problem with a "
+                    "JSON path, a code and a fix hint, plus repair_text to send back to the model that wrote it. "
+                    "Give `text` (the model's raw answer) or `document` (parsed JSON).",
+     "inputSchema": {"type": "object", "properties": {"text": {"type": "string", "maxLength": MAX_REQUEST_BYTES},
+                                                      "document": _DOC},
+                     "additionalProperties": False},
+     "annotations": _READ_ONLY},
+    {"name": "hologram_params_template",
+     "description": "A parameter document to fill in for an archetype (case, book, object, vessel) and variant: the "
+                    "simple path for models that struggle with full scenes. Without arguments: every archetype.",
+     "inputSchema": {"type": "object", "properties": {"archetype": {"type": "string", "enum": sorted(params.VARIANTS)},
+                                                      "variant": {"type": "string"}},
+                     "additionalProperties": False},
+     "annotations": _READ_ONLY},
+    {"name": "hologram_expand_params",
+     "description": "The full v2 scene a valid parameter document builds (or its diagnostics when it is not valid).",
+     "inputSchema": {"type": "object", "properties": {"params": {"type": "object"}}, "required": ["params"],
+                     "additionalProperties": False},
+     "annotations": _READ_ONLY},
+    {"name": "hologram_compile_scene",
+     "description": "Compile a valid v2 scene or parameter document into tessera-hologram-geometry v2 (or return "
+                    "its diagnostics). Artwork bytes are never read: slots carry asset ids and hashes only.",
+     "inputSchema": {"type": "object", "properties": {"document": _DOC}, "required": ["document"],
+                     "additionalProperties": False},
+     "annotations": _READ_ONLY},
+]
+
+
 class _RpcError(Exception):
     def __init__(self, code, message):
         super().__init__(message)
@@ -120,7 +157,49 @@ def _call_tool(name, args):
         except hologram.SheetError as exc:
             return _tool_result({"error": str(exc)}, is_error=True)
         return _tool_result(compiled)
+    if name in V2_TOOLS:
+        return _call_v2(name, args)
     raise _RpcError(-32602, "unknown tool")
+
+
+V2_TOOLS = {"hologram_diagnose": ({"text", "document"}, set()), "hologram_params_template": ({"archetype", "variant"}, set()),
+            "hologram_expand_params": ({"params"}, {"params"}), "hologram_compile_scene": ({"document"}, {"document"})}
+
+
+def _call_v2(name, args):
+    allowed, required = V2_TOOLS[name]
+    if set(args) - allowed:
+        raise _RpcError(-32602, "unknown arguments")
+    if required - set(args):
+        raise _RpcError(-32602, "missing " + ", ".join(sorted(required - set(args))))
+    if name == "hologram_diagnose":
+        if ("text" in args) == ("document" in args):
+            raise _RpcError(-32602, "give exactly one of text or document")
+        if "text" in args:
+            if not isinstance(args["text"], str):
+                raise _RpcError(-32602, "text must be a string")
+            return _tool_result(diagnose.diagnose_text(args["text"]))
+        return _tool_result(diagnose.diagnose_text(json.dumps(args["document"])))
+    if name == "hologram_params_template":
+        if "archetype" not in args:
+            return _tool_result({"archetypes": {a: sorted(v) for a, v in params.VARIANTS.items()},
+                                 "describe": params.describe()})
+        try:
+            return _tool_result(params.template(args["archetype"], args.get("variant")))
+        except scene.SceneError as exc:
+            return _tool_result({"error": str(exc)}, is_error=True)
+    doc = args["params"] if name == "hologram_expand_params" else args["document"]
+    if not isinstance(doc, dict):
+        raise _RpcError(-32602, "the document must be an object")
+    report = diagnose.diagnose_text(json.dumps(doc))
+    if not report["ok"]:
+        return _tool_result(report, is_error=True)
+    built = params.expand(doc) if doc.get("format") == params.FORMAT else doc
+    if name == "hologram_expand_params":
+        if doc.get("format") != params.FORMAT:
+            raise _RpcError(-32602, "not a tessera-hologram-params document")
+        return _tool_result(built)
+    return _tool_result(scene.compile_scene(built))
 
 
 def _handle(msg, state):

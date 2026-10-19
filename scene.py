@@ -144,6 +144,16 @@ KEY_HELP = {
     "pivot": "a world point [x, y, z] on the hinge or turning axis",
     "axis": "a direction [x, y, z], e.g. [0, 1, 0]",
 }
+# values that stand for "not known"; such a fact is left out instead ("none" is not here: it is
+# a real catalogue number in Discogs exports)
+PLACEHOLDERS = {"", "unknown", "n/a", "na", "n.a.", "?", "??", "???", "tbd", "tba", "-", "--", "—", "not known",
+                "unspecified", "unknown year", "unknown author", "unknown artist"}
+
+
+def is_placeholder(v):
+    return isinstance(v, str) and v.strip().lower() in PLACEHOLDERS
+
+
 # words models reach for, and the option they mean
 SYNONYMS = {"creature": ("organism", "fictional"), "animal": ("organism",), "monster": ("fictional",),
             "plant": ("organism",), "building": ("architecture",), "house": ("architecture",),
@@ -485,8 +495,9 @@ def _validate(scene):
                 c.err(w + ".key", "duplicate %r" % key)
             fact_cert[key] = f.get("certainty")
         v = f.get("value")
-        if v is None:
-            c.err(w + ".value", "an unknown fact is absent: delete this fact rather than writing null or a guess",
+        if v is None or is_placeholder(v):
+            c.err(w + ".value", "an unknown fact is absent: delete this fact rather than writing %s or a guess"
+                  % ("null" if v is None else json.dumps(v)),
                   "unknown-fact", "Delete this fact (and any label or basis that uses it). Never fill it with a guess.")
         elif isinstance(v, float) and not math.isfinite(v):
             c.err(w + ".value", "non-finite number")

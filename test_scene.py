@@ -457,6 +457,24 @@ class GeometrySchema(unittest.TestCase):
 class Diagnostics(unittest.TestCase):
     """What a weak model gets back: JSON paths, codes and fix hints."""
 
+    def test_placeholders_are_unknown_facts_but_none_is_a_value(self):
+        s = base()
+        for v in ("unknown", "N/A", " ? ", "tbd", "-", ""):
+            s["facts"].append({"key": "k%d" % len(s["facts"]), "value": v, "certainty": "inferred"})
+        s["facts"].append({"key": "catno", "value": "none", "certainty": "user_supplied", "source": "req"})
+        bad = [d["path"] for d in diagnose.diagnose(s)["diagnostics"] if d["code"] == "unknown-fact"]
+        self.assertEqual(bad, ["$.facts[%d].value" % i for i in range(1, 7)])
+
+    def test_one_round_reports_document_and_fact_problems(self):
+        doc = json.loads((EXAMPLES / "case-jewel.params.json").read_text())
+        doc["style"] = "x"
+        doc["params"] = {"width": 142}
+        doc["facts"][0]["certainty"] = "sure"
+        doc["facts"].append({"key": "year", "value": "unknown", "certainty": "inferred"})
+        got = {(d["path"], d["code"]) for d in diagnose.diagnose_params(doc)["diagnostics"]}
+        self.assertTrue({("$", "unknown-key"), ("$.params.width", "range"), ("$.facts[0].certainty", "choice"),
+                         ("$.facts[2].value", "unknown-fact")} <= got, got)
+
     def codes(self, report):
         return {(d["path"], d["code"]) for d in report["diagnostics"]}
 
@@ -542,6 +560,8 @@ class Parametric(unittest.TestCase):
             for lb in g["labels"]:
                 self.assertIn(lb["field"], keys)
             self.assertTrue(doc["synthetic"])
+            if doc["archetype"] in ("case", "book"):  # the rack reads spines
+                self.assertTrue(any(lb["id"] == "spine-title" for lb in g["labels"]), path.name)
 
     def test_sizes_are_facts_and_keep_the_stated_certainty(self):
         doc = params.template("book", "paperback")
@@ -625,10 +645,46 @@ class Evaluation(unittest.TestCase):
             g = score.score_run(Path(d, "good"))["rows"][1]
             b = score.score_run(Path(d, "bad"))["rows"][1]
             self.assertEqual(g["score"], 3, g["problems"])
-            self.assertEqual(b["score"], 2)
+            self.assertEqual((b["score"], b["valid"]), (0, False))  # "unknown" as a value is now invalid
             self.assertTrue(any("invented 'author'" in p for p in b["problems"]))
             self.assertTrue(any("written as unknown" in p for p in b["problems"]))
             self.assertEqual(score.score_run(Path(d, "good"))["rows"][0]["score"], 0)  # t1 missing
+
+
+class McpV2(unittest.TestCase):
+    """The v2 tools of the MCP server: read-only, JSON in, JSON out."""
+
+    def session(self, calls):
+        msgs = [{"jsonrpc": "2.0", "id": 0, "method": "initialize", "params": {}}]
+        msgs += [{"jsonrpc": "2.0", "id": i + 1, "method": "tools/call", "params": {"name": n, "arguments": a}}
+                 for i, (n, a) in enumerate(calls)]
+        r = subprocess.run([sys.executable, "-I", str(HERE / "server.py")], input="".join(json.dumps(m) + "\n" for m in msgs),
+                           capture_output=True, text=True, timeout=120)
+        return [json.loads(x) for x in r.stdout.splitlines() if x.strip()][1:]
+
+    def test_diagnose_template_expand_compile(self):
+        golden = json.loads((EXAMPLES / "case-jewel.params.json").read_text())
+        bad = dict(golden, style="x")
+        out = self.session([
+            ("hologram_diagnose", {"text": "```json\n{\"a\": 1,}\n```"}),
+            ("hologram_diagnose", {"document": bad}),
+            ("hologram_params_template", {"archetype": "vessel", "variant": "can"}),
+            ("hologram_params_template", {}),
+            ("hologram_expand_params", {"params": golden}),
+            ("hologram_compile_scene", {"document": golden}),
+            ("hologram_compile_scene", {"document": bad}),
+            ("hologram_diagnose", {"text": "{}", "document": {}}),
+        ])
+        res = [o.get("result", {}).get("structuredContent") for o in out]
+        self.assertFalse(res[0]["ok"])
+        self.assertEqual(res[0]["diagnostics"][0]["code"], "json")
+        self.assertIn(("$", "unknown-key"), {(d["path"], d["code"]) for d in res[1]["diagnostics"]})
+        self.assertEqual(res[2]["variant"], "can")
+        self.assertIn("vessel", res[3]["archetypes"])
+        self.assertEqual(res[4]["format"], "tessera-hologram")
+        self.assertEqual((res[5]["format"], res[5]["contract"]), ("tessera-hologram-geometry", "tessera.hologram/0.2"))
+        self.assertTrue(out[6]["result"]["isError"])
+        self.assertEqual(out[7]["error"]["code"], -32602)
 
 
 class Capture(unittest.TestCase):
