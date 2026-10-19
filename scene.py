@@ -144,6 +144,13 @@ KEY_HELP = {
     "pivot": "a world point [x, y, z] on the hinge or turning axis",
     "axis": "a direction [x, y, z], e.g. [0, 1, 0]",
 }
+# words models reach for, and the option they mean
+SYNONYMS = {"creature": ("organism", "fictional"), "animal": ("organism",), "monster": ("fictional",),
+            "plant": ("organism",), "building": ("architecture",), "house": ("architecture",),
+            "device": ("machine", "object"), "instrument": ("object",), "album": ("cd",), "disc": ("cd",),
+            "car": ("vehicle",), "body": ("mass",), "main": ("mass",), "feature": ("identity",),
+            "decoration": ("ornament",), "estimated": ("inferred",), "guess": ("inferred",), "user": ("user_supplied",),
+            "given": ("user_supplied",), "exact": ("documented",), "typical": ("generic",)}
 SIZE_KEYS = ("size", "radius", "height", "radii", "major", "minor", "radius_top", "radius_bottom", "at", "distance",
              "width", "depth", "thickness", "diameter", "scale_length", "inner_radius", "amount")
 
@@ -241,6 +248,9 @@ class _Check:
     def choice(self, v, options, where):
         if v not in options:
             near = _closest(v, options) if isinstance(v, str) else None
+            syn = SYNONYMS.get(str(v).lower())
+            if syn and all(x in options for x in syn):
+                near = " or ".join(syn)
             self.err(where, "must be one of %s" % ", ".join(options), "choice",
                      "Use one of: %s.%s" % (", ".join(options), " Did you mean %r?" % near if near else ""))
             return False

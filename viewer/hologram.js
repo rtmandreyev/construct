@@ -781,11 +781,17 @@ void main() {
     // the base camera, then the scene's tour (flights between views), then drift and breathing
     const anim = this.geo.animation.camera, reduced = this.opt.reduced;
     let cam = Object.assign({}, base);
+    // without a tour of its own, an object that opens turns to its "open" view while it opens
+    let tour = anim.tour;
+    if (!tour.length && (this.geo.articulations || []).length && (this.geo.presentation.views || []).some((v) => v.id === "open")) {
+      const op = this.openTimes();
+      tour = [{ view: "open", at: op.start, fly: Math.max(1.5, op.end - op.start) }];
+    }
     if (!reduced && !this.opt.freezeCamera) {
-      for (let i = 0; i < anim.tour.length; i++) {
-        const s = anim.tour[i];
+      for (let i = 0; i < tour.length; i++) {
+        const s = tour[i];
         if (t < s.at) break;
-        const prev = i === 0 ? base : this.cameraFor(anim.tour[i - 1].view);
+        const prev = i === 0 ? base : this.cameraFor(tour[i - 1].view);
         const next = this.cameraFor(s.view), fly = s.fly || 2.2;
         const k = Math.min(1, (t - s.at) / fly), e = ease(k);
         let dy = next.yaw - prev.yaw; while (dy > 180) dy -= 360; while (dy < -180) dy += 360;

@@ -313,8 +313,7 @@
       "id": "lid-open",
       "type": "hinge",
       "parts": [
-        "lid",
-        "booklet"
+        "lid"
       ],
       "axis": [
         0,
@@ -330,6 +329,21 @@
       "order": 0
     },
     {
+      "id": "booklet-lift",
+      "type": "lift",
+      "parts": [
+        "booklet"
+      ],
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "amount": 0.045,
+      "order": 1,
+      "note": "taken out of the opened case, towards the viewer"
+    },
+    {
       "id": "booklet-out",
       "type": "slide",
       "parts": [
@@ -340,8 +354,9 @@
         0,
         0
       ],
-      "amount": 0.07,
-      "order": 1
+      "amount": 0.155,
+      "order": 2,
+      "note": "laid beside the case, cover to the front"
     },
     {
       "id": "disc-lift",
@@ -447,6 +462,13 @@
         "label": "Spine",
         "yaw": -88,
         "pitch": 4,
+        "distance": 1.0
+      },
+      {
+        "id": "open",
+        "label": "Open",
+        "yaw": -12,
+        "pitch": 12,
         "distance": 1.0
       }
     ],

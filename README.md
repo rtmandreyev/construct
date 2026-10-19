@@ -21,6 +21,16 @@ python3 tools/hologram/cli.py review scene.json --out out/        # + review/*.p
 python3 tools/hologram/cli.py video scene.json --out out/clip.mp4 --seconds 20
 ```
 
+**Any model.** `check --json` (or `diagnose.diagnose_text`) returns every problem with a
+JSON path, a code and a fix hint, plus `repair_text` to send back to the model that wrote the
+draft. **The simple path:** `params --list`, `params <archetype> --variant <v>`, fill in the
+facts; `check`/`build`/`review` accept the parameter document and a builder draws a case
+(jewel, slim, digipak, box set), a book (hardcover, paperback), a guitar (electric, acoustic,
+bass), a synth or a vessel (bottle, can, glass). `prompts --out dir` writes the any-model
+package (`system.md`, `params.md`, `scene.md`, `repair.md`, `params.schema.json`); the
+committed copy is `prompts/`. `evaluation/` holds synthetic tasks and a scorer that needs no
+model or key: `python3 -m tools.hologram.evaluation.score <run folders>`.
+
 `build --frame z-up` also writes the geometry in a Z-up frame; `build --v1` writes a v1
 downgrade. Open `hologram.html` in any WebGL2 browser (no server). Keys: drag/wheel to
 orbit, 1–6 views, L labels, P provenance, M reduced motion, R replay, space pause. URL parameters
@@ -34,6 +44,10 @@ fixed opening) reproduce any frame exactly.
 | audit (support graph, stage order, overclaims, accuracy backing, clutter) | `audit.py` |
 | WebGL2 viewer and page template | `viewer/` |
 | HTML build, headless capture over DevTools, video | `render.py` |
+| diagnostics with paths and fix hints | `diagnose.py` |
+| parametric archetypes (the simple path) | `params.py`, `examples/v2/*.params.json` |
+| any-model prompts and params schema | `prompts.py`, `prompts/` |
+| synthetic cross-model evaluation | `evaluation/` |
 | CLI commands | `studio.py` |
 | skill body and references | `skill/` |
 | host packages | `package.py` |

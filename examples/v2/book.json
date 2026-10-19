@@ -390,6 +390,13 @@
         "yaw": -82,
         "pitch": 6,
         "distance": 1.0
+      },
+      {
+        "id": "open",
+        "label": "Open",
+        "yaw": 12,
+        "pitch": 10,
+        "distance": 1.0
       }
     ],
     "atmosphere": {
@@ -425,13 +432,18 @@
       "breathe": 0.02,
       "tour": [
         {
+          "view": "open",
+          "at": 7.5,
+          "fly": 2.5
+        },
+        {
           "view": "spine",
-          "at": 12,
+          "at": 16,
           "fly": 3
         },
         {
-          "view": "hero",
-          "at": 19,
+          "view": "open",
+          "at": 23,
           "fly": 3
         }
       ]

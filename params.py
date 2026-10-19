@@ -106,7 +106,7 @@ def template(archetype, variant=None):
         "synthetic": False,
         "facts": [{"key": k, "value": "replace or delete", "certainty": "user_supplied", "source": "request"} for k in keys],
         "artwork": {},
-        "params": dict(defaults),
+        "params": {},
     }
 
 
@@ -340,14 +340,19 @@ def build_case(b, var, p):
         b.part(inner, "artwork", {"type": "plane", "size": [round(bw, 5), round(bw, 5)]},
                (0.005 * w / 0.142, h / 2, d / 2 - lid_d * 0.15), 2, certainty=b.art_certainty("cover-front"),
                artwork=b.slot("cover-front"))
-        b.arts.insert(0, {"id": "lid-open", "type": "hinge", "parts": ["lid", inner], "axis": [0, -1, 0],
-                          "pivot": [round(-w / 2, 6), round(h / 2, 6), round(d / 2, 6)], "amount": 108, "order": 0})
+        b.arts.insert(0, {"id": "lid-open", "type": "hinge", "parts": ["lid"] if var == "jewel" else ["lid", inner],
+                          "axis": [0, -1, 0], "pivot": [round(-w / 2, 6), round(h / 2, 6), round(d / 2, 6)],
+                          "amount": 108, "order": 0})
         if var == "jewel":
-            b.arts.insert(1, {"id": "booklet-out", "type": "slide", "parts": ["booklet"], "axis": [1, 0, 0],
-                              "amount": round(0.5 * w, 4), "order": 1})
+            # the booklet is taken out and laid beside the case, cover to the front (the lid is on the left)
+            b.arts.insert(1, {"id": "booklet-lift", "type": "lift", "parts": ["booklet"], "axis": [0, 0, 1],
+                              "amount": 0.045, "order": 1})
+            b.arts.insert(2, {"id": "booklet-out", "type": "slide", "parts": ["booklet"], "axis": [1, 0, 0],
+                              "amount": round(w * 1.09, 4), "order": 2})
             b.label("spine-title", "tray", "title", "title", "left", "vertical-down", [0, 0.04, 1, 0.58])
             b.label("spine-creator", "tray", who, "creator", "left", "vertical-down", [0, 0.62, 1, 0.96])
         b.anchors = {"front": {"part": "lid", "face": "front"}, "spine": {"part": "tray", "face": "left"}}
+        b.views.append({"id": "open", "label": "Open", "yaw": -12 if var == "jewel" else -30, "pitch": 12, "distance": 1.0})
     elif var == "digipak":
         d, t = p["depth"], 0.0016
         z0 = -d / 2
@@ -368,6 +373,7 @@ def build_case(b, var, p):
         b.label("spine-title", "spine", "title", "title", "left", "vertical-down", [0, 0.04, 1, 0.58])
         b.label("spine-creator", "spine", who, "creator", "left", "vertical-down", [0, 0.62, 1, 0.96])
         b.anchors = {"front": {"part": "front-panel", "face": "front"}, "spine": {"part": "spine", "face": "left"}}
+        b.views.append({"id": "open", "label": "Open", "yaw": 10, "pitch": 14, "distance": 1.0})
     else:  # box: a slipcase open on its right, holding slim cases that slide out
         n, t, cd = p["discs"], 0.0015, 0.0052
         d = n * cd + 2 * t + 0.001
@@ -391,6 +397,7 @@ def build_case(b, var, p):
         b.label("spine-creator", "sleeve-spine", who, "creator", "left", "vertical-down", [0, 0.62, 1, 0.96])
         b.anchors = {"front": {"part": "sleeve-front", "face": "front"}, "spine": {"part": "sleeve-spine", "face": "left"}}
         b.framing = {"yaw": 34, "pitch": 14, "fit": 1.0}
+        b.views.append({"id": "open", "label": "Open", "yaw": 40, "pitch": 18, "distance": 1.0})
     b.annotations = []
 
 
@@ -439,7 +446,8 @@ def build_book(b, var, p):
         b.label("cover-creator", "front-board", who, "creator", "front", region=[0.18, 0.36, 0.82, 0.44])
     b.anchors = {"front": {"part": "front-board", "face": "front"}, "spine": {"part": spine, "face": face}}
     b.framing = {"yaw": -55, "pitch": 12, "fit": 1.0}
-    b.views = [{"id": "spine", "label": "Spine", "yaw": -82, "pitch": 6, "distance": 1.0}]
+    b.views = [{"id": "spine", "label": "Spine", "yaw": -82, "pitch": 6, "distance": 1.0},
+               {"id": "open", "label": "Open", "yaw": 12, "pitch": 10, "distance": 1.0}]
 
 
 # ---------------------------------------------------------------------------- object: guitars

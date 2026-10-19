@@ -37,7 +37,9 @@ Two gates, both required:
   says GENERIC or APPROXIMATE when it is.
 - **Motion**: ambient, never frantic; parts move about their real pivots.
 - **Opening**: lids and boards swing about their real hinge and nothing passes through
-  anything; the open pose shows what opening is for (the disc, the title page).
+  anything; the open pose shows what opening is for (the disc, the title page). Choose the
+  `open` view's yaw and pitch from `view-open.png` (try a few: the board or lid must not
+  hide what it reveals) and keep the hero for the closed object's best side.
 - **Text**: labels sit on their face, read the right way up, and only name facts you have.
 - **Still**: the reduced-motion frame is a complete, good picture.
 

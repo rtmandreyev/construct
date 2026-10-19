@@ -14,13 +14,28 @@ Skeleton:
  "parts": [], "articulations": [], "labels": [], "anchors": {}}
 ```
 
-Parts: `{"id", "role", "certainty", "stage" (0..7, foundation first), "shape", "at" [x,y,z],
+`subject.category`: architecture, object, machine, vehicle, organism, fictional, cd, book, artwork-carrier, other. `subject.accuracy`: `generic` (a typical example;
+the usual choice), `approximate` (this particular thing, imprecisely) or `documented`
+(its key parts cite evidence). A fictional subject is category `fictional`.
+
+Parts: `{"id", "role", "certainty", "stage" (0..7), "shape", "at" [x,y,z],
 "rotate" [deg x,y,z], "basis" [fact keys], "repeat", "mirror", "floating", "artwork"}`.
+Stages build from what holds things up: legs and feet before the body that rests on them,
+walls before roofs, a base before an arm. Parts that hover (a halo, a beam) are `floating`.
+A part the user named but whose size you chose is `inferred` (cite the user's fact in
+`basis`); the parts of a fictional design are `inferred` too (designed from the request).
+`decorative` is only for atmosphere. The request source is `"rights": "user_private"`
+(`"synthetic"` only for examples and tests).
 
 - Roles: mass, structure, detail, identity, data, ornament, ground, artwork. Two or three `identity` parts are what make it recognisable.
+- Default orientations: cylinders, cones, lathes and tori stand on `at` around the +Y axis
+  (a torus lies flat); boxes and spheres are centred on `at`; a plane faces +Z; a tube
+  follows its path. Keep detail parts to under half of the lines.
 - Shapes (box, cylinder, cone, sphere, torus, lathe, extrude, tube, curve, plane, grid, points, marker):
-  box `size [w,h,d]` (`anchor: base` stands it on `at`); cylinder `radius, height` (base at
-  `at`, along +Y); cone `radius_bottom, radius_top, height`; sphere `radius` or `radii`;
+  box `size [w,h,d]` (centred on `at`; `anchor: base` stands it on `at`); cylinder `radius,
+  height` (its base is at `at`, it rises along +Y); cone `radius_bottom, radius_top, height`
+  (a lampshade is wider at the bottom; tilt any part with `rotate`, degrees about X, then Y,
+  then Z); sphere `radius` or `radii`;
   torus `major, minor`; lathe `profile [[radius, y], ...]` (turned forms); extrude
   `profile [[u, v], ...], height, axis y|z|x` (plans, elevations); tube `path [[x,y,z],...],
   radius` (limbs, cables); curve `points`; plane `size [w,h]` facing +Z; grid; points; marker.
@@ -38,6 +53,11 @@ Parts: `{"id", "role", "certainty", "stage" (0..7, foundation first), "shape", "
 
 Work in this order: the overall size and silhouette (`mass`), the structure, the
 identity features, then a little detail. Fewer, truer parts beat many guesses.
+
+Leave out `presentation` and `animation` (the host owns camera, colour and timing), except
+`presentation.views`: give a view named `"open"` (yaw, pitch in degrees) when the object
+opens, so a host can turn to what opening reveals. `look` only to hide a part that just
+carries text (`{"line": "none", "fill": "none"}`).
 
 An example (synthetic):
 
@@ -418,15 +438,6 @@ An example (synthetic):
   }
  ],
  "presentation": {
-  "style_hint": {
-   "palette": "amber",
-   "identity": "paper"
-  },
-  "framing": {
-   "yaw": -55,
-   "pitch": 12,
-   "fit": 1.0
-  },
   "views": [
    {
     "id": "spine",
@@ -434,52 +445,15 @@ An example (synthetic):
     "yaw": -82,
     "pitch": 6,
     "distance": 1.0
+   },
+   {
+    "id": "open",
+    "label": "Open",
+    "yaw": 12,
+    "pitch": 10,
+    "distance": 1.0
    }
-  ],
-  "atmosphere": {
-   "haze": 0.7,
-   "grid": true,
-   "projector": true,
-   "motes": 0.35
-  },
-  "occlusion": "xray",
-  "still_pose": "open"
- },
- "animation": {
-  "assembly": {
-   "style": "ceremony",
-   "seconds": 4.5,
-   "interference": true
-  },
-  "idle": {
-   "life": "calm",
-   "events": [
-    "scan",
-    "sweep",
-    "shimmer"
-   ],
-   "cadence": [
-    6,
-    12
-   ],
-   "strength": 0.5
-  },
-  "camera": {
-   "drift": 5,
-   "breathe": 0.02,
-   "tour": [
-    {
-     "view": "spine",
-     "at": 12,
-     "fly": 3
-    },
-    {
-     "view": "hero",
-     "at": 19,
-     "fly": 3
-    }
-   ]
-  }
+  ]
  }
 }
 ```

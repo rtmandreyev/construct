@@ -608,6 +608,29 @@ class Prompts(unittest.TestCase):
             self.assertIn(phrase, text)
 
 
+class Evaluation(unittest.TestCase):
+    def test_scorer_rewards_honesty_and_catches_invention(self):
+        from .evaluation import score
+        good = params.template("book", "paperback")
+        good.update(id="small-hours", title="Small Hours", synthetic=True,
+                    facts=[{"key": "title", "value": "Small Hours", "certainty": "user_supplied", "source": "request"}])
+        bad = json.loads(json.dumps(good))
+        bad["facts"].append({"key": "author", "value": "Jane Doe", "certainty": "inferred"})
+        bad["facts"].append({"key": "year", "value": "unknown", "certainty": "inferred"})
+        with tempfile.TemporaryDirectory() as d:
+            Path(d, "good").mkdir()
+            Path(d, "bad").mkdir()
+            Path(d, "good", "t2-paperback.json").write_text(json.dumps(good))
+            Path(d, "bad", "t2-paperback.json").write_text(json.dumps(bad))
+            g = score.score_run(Path(d, "good"))["rows"][1]
+            b = score.score_run(Path(d, "bad"))["rows"][1]
+            self.assertEqual(g["score"], 3, g["problems"])
+            self.assertEqual(b["score"], 2)
+            self.assertTrue(any("invented 'author'" in p for p in b["problems"]))
+            self.assertTrue(any("written as unknown" in p for p in b["problems"]))
+            self.assertEqual(score.score_run(Path(d, "good"))["rows"][0]["score"], 0)  # t1 missing
+
+
 class Capture(unittest.TestCase):
     def test_review_produces_non_empty_images(self):
         with tempfile.TemporaryDirectory() as d:

@@ -60,7 +60,18 @@ Archetypes, variants, standard sizes and artwork slots:
 
 Fact keys the builder sets as text when they exist: `title`, and the first of
 `artist`, `author`, `creator`, `composer`, `brewery`, `maker` (the creator line); vessels
-also `style`; guitars and synths `maker` and `model`. Other facts are kept as evidence.
+also `style`; guitars and synths `maker` and `model`. Other facts are kept as evidence:
+use plain keys such as `year`, `label`, `publisher`, `abv` (with `"unit": "%"`), `volume`
+(with `"unit": "ml"`), `discs`.
+
+`params` stays empty (`{{}}`) unless the user gave a size or the item differs from the
+standard: then give only what differs, in metres, and say in `param_certainty` whether the
+user gave it (`user_supplied`) or you derived it (`inferred`). Common sizes: cans of 330 ml
+are 0.115 m tall, 440 ml 0.147 m, 500 ml 0.168 m (all 0.066 m wide); a 500 ml bottle is
+about 0.25 m tall; a hardcover is about 0.16 x 0.24 m, a mass-market paperback 0.11 x 0.18 m.
+Leave out `sources`: a `request` source is added for you. Example of a stated size:
+`"params": {{"height": 0.147}}, "param_certainty": {{"height": "inferred"}}` (a 440 ml can).
+`"synthetic": false` for real requests; `true` only for examples and tests.
 
 `artwork` maps a slot to the id of an asset in `assets` (only images the user supplied:
 `{{"id", "path", "sha256", "media_type", "rights", "provenance", "source"}}`). Leave a slot out
@@ -89,13 +100,28 @@ Skeleton:
  "parts": [], "articulations": [], "labels": [], "anchors": {{}}}}
 ```
 
-Parts: `{{"id", "role", "certainty", "stage" (0..7, foundation first), "shape", "at" [x,y,z],
+`subject.category`: {categories}. `subject.accuracy`: `generic` (a typical example;
+the usual choice), `approximate` (this particular thing, imprecisely) or `documented`
+(its key parts cite evidence). A fictional subject is category `fictional`.
+
+Parts: `{{"id", "role", "certainty", "stage" (0..7), "shape", "at" [x,y,z],
 "rotate" [deg x,y,z], "basis" [fact keys], "repeat", "mirror", "floating", "artwork"}}`.
+Stages build from what holds things up: legs and feet before the body that rests on them,
+walls before roofs, a base before an arm. Parts that hover (a halo, a beam) are `floating`.
+A part the user named but whose size you chose is `inferred` (cite the user's fact in
+`basis`); the parts of a fictional design are `inferred` too (designed from the request).
+`decorative` is only for atmosphere. The request source is `"rights": "user_private"`
+(`"synthetic"` only for examples and tests).
 
 - Roles: {roles}. Two or three `identity` parts are what make it recognisable.
+- Default orientations: cylinders, cones, lathes and tori stand on `at` around the +Y axis
+  (a torus lies flat); boxes and spheres are centred on `at`; a plane faces +Z; a tube
+  follows its path. Keep detail parts to under half of the lines.
 - Shapes ({shapes}):
-  box `size [w,h,d]` (`anchor: base` stands it on `at`); cylinder `radius, height` (base at
-  `at`, along +Y); cone `radius_bottom, radius_top, height`; sphere `radius` or `radii`;
+  box `size [w,h,d]` (centred on `at`; `anchor: base` stands it on `at`); cylinder `radius,
+  height` (its base is at `at`, it rises along +Y); cone `radius_bottom, radius_top, height`
+  (a lampshade is wider at the bottom; tilt any part with `rotate`, degrees about X, then Y,
+  then Z); sphere `radius` or `radii`;
   torus `major, minor`; lathe `profile [[radius, y], ...]` (turned forms); extrude
   `profile [[u, v], ...], height, axis y|z|x` (plans, elevations); tube `path [[x,y,z],...],
   radius` (limbs, cables); curve `points`; plane `size [w,h]` facing +Z; grid; points; marker.
@@ -113,6 +139,11 @@ Parts: `{{"id", "role", "certainty", "stage" (0..7, foundation first), "shape", 
 
 Work in this order: the overall size and silhouette (`mass`), the structure, the
 identity features, then a little detail. Fewer, truer parts beat many guesses.
+
+Leave out `presentation` and `animation` (the host owns camera, colour and timing), except
+`presentation.views`: give a view named `"open"` (yaw, pitch in degrees) when the object
+opens, so a host can turn to what opening reveals. `look` only to hide a part that just
+carries text (`{{"line": "none", "fill": "none"}}`).
 
 An example (synthetic):
 
@@ -201,12 +232,16 @@ def build():
     """Every file of the package, as {name: text}."""
     golden = json.loads((HERE / "examples" / "v2" / "case-jewel.params.json").read_text())
     scene_example = json.loads((HERE / "examples" / "v2" / "book.json").read_text())
+    # the example shows what an author writes: no host-owned presentation or timing
+    scene_example["presentation"] = {"views": scene_example["presentation"]["views"]}
+    scene_example.pop("animation", None)
     template = params_mod.template("book", "paperback")
     return {
         "system.md": SYSTEM.format(contract=CONTRACT),
         "params.md": PARAMS_INTRO.format(template=json.dumps(template, indent=2), describe=params_mod.describe(),
                                          example=json.dumps(golden, indent=2, ensure_ascii=False)),
         "scene.md": SCENE_INTRO.format(roles=", ".join(scene_mod.ROLES), shapes=", ".join(scene_mod.SHAPE_TYPES),
+                                       categories=", ".join(scene_mod.CATEGORIES),
                                        example=json.dumps(scene_example, indent=1, ensure_ascii=False)),
         "repair.md": REPAIR,
         "params.schema.json": json.dumps(params_schema(), indent=1) + "\n",

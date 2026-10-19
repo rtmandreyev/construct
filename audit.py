@@ -99,6 +99,9 @@ def audit(scene, geometry):
     if "identity" not in roles and scene["subject"]["category"] not in ("cd", "book", "artwork-carrier"):
         add(warnings, "no-identity", None,
             "no part has role \"identity\": which two or three features make this recognisably itself?")
+    if geometry.get("articulations") and not any(v.get("id") == "open" for v in geometry["presentation"]["views"]):
+        add(warnings, "no-open-view", None,
+            "it opens but has no view named \"open\": from the hero the opened pose may look closed.")
     styles = geometry["styles"]
     stride = geometry["line_stride"]
     lines = geometry["lines"]

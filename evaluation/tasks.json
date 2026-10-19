@@ -1,0 +1,22 @@
+{
+  "about": "Synthetic cross-model evaluation tasks for the hologram authoring package. Every name is invented. Scored by score.py: validity (the toolkit's own diagnostics), factuality (required facts present with the user's values, nothing the user did not know invented, verified only with a source) and plausibility (size). Visual quality is judged by a person on the review captures.",
+  "tasks": [
+    {"id": "t1-cd", "file": "t1-cd.json", "path": "params", "archetype": "case", "variant": "jewel",
+     "require": {"title": "Glass Harbour", "artist": "The Lantern Choir"},
+     "forbid": ["year", "label", "catalogue", "catalog", "catalog_number", "released", "release_date", "genre", "tracks", "country"],
+     "forbid_artwork": true},
+    {"id": "t2-paperback", "file": "t2-paperback.json", "path": "params", "archetype": "book", "variant": "paperback",
+     "require": {"title": "Small Hours"},
+     "forbid": ["author", "year", "published", "publisher", "isbn", "pages", "released"]},
+    {"id": "t3-can", "file": "t3-can.json", "path": "params", "archetype": "vessel", "variant": "can",
+     "require": {"title": "Example Porter", "abv": 5.6},
+     "forbid": ["brewery", "maker", "ibu", "year"],
+     "size": {"height": [0.14, 0.17]}},
+    {"id": "t4-lamp", "file": "t4-lamp.json", "path": "scene", "category": ["object", "machine"],
+     "require": {}, "forbid": ["maker", "brand", "model", "year"],
+     "size": {"height": [0.34, 0.56]}, "min_identity": 1, "articulated_ok": true},
+    {"id": "t5-snail", "file": "t5-snail.json", "path": "scene", "category": ["fictional", "organism"],
+     "require": {}, "forbid": ["year", "maker"],
+     "min_identity": 1}
+  ]
+}

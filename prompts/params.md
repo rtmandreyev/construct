@@ -28,11 +28,7 @@ user gave sizes (then give them in metres and say how certain they are in `param
     }
   ],
   "artwork": {},
-  "params": {
-    "width": 0.129,
-    "height": 0.198,
-    "thickness": 0.025
-  }
+  "params": {}
 }
 ```
 
@@ -56,7 +52,18 @@ Choices: body_style: double-cut, single-cut, offset; glass_style: pint, tulip, s
 
 Fact keys the builder sets as text when they exist: `title`, and the first of
 `artist`, `author`, `creator`, `composer`, `brewery`, `maker` (the creator line); vessels
-also `style`; guitars and synths `maker` and `model`. Other facts are kept as evidence.
+also `style`; guitars and synths `maker` and `model`. Other facts are kept as evidence:
+use plain keys such as `year`, `label`, `publisher`, `abv` (with `"unit": "%"`), `volume`
+(with `"unit": "ml"`), `discs`.
+
+`params` stays empty (`{}`) unless the user gave a size or the item differs from the
+standard: then give only what differs, in metres, and say in `param_certainty` whether the
+user gave it (`user_supplied`) or you derived it (`inferred`). Common sizes: cans of 330 ml
+are 0.115 m tall, 440 ml 0.147 m, 500 ml 0.168 m (all 0.066 m wide); a 500 ml bottle is
+about 0.25 m tall; a hardcover is about 0.16 x 0.24 m, a mass-market paperback 0.11 x 0.18 m.
+Leave out `sources`: a `request` source is added for you. Example of a stated size:
+`"params": {"height": 0.147}, "param_certainty": {"height": "inferred"}` (a 440 ml can).
+`"synthetic": false` for real requests; `true` only for examples and tests.
 
 `artwork` maps a slot to the id of an asset in `assets` (only images the user supplied:
 `{"id", "path", "sha256", "media_type", "rights", "provenance", "source"}`). Leave a slot out

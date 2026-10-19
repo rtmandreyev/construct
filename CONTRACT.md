@@ -1,6 +1,6 @@
 # Hologram contract `tessera.hologram/0.2`
 
-Status: **draft 2**, 2026-10-19, after Tessera main's review of draft 1 (`fcadb4e`). Owner: the
+Status: **accepted** (draft 2, 2026-10-19) with one minor addition: the `open` view (§9). Owner: the
 hologram toolkit (`tools/hologram/`). Draft 2 adds the five must-fix items (renderer-owned
 style, one-shot articulations, fact labels, anchors, artwork slots and masks) and the smaller
 ones (unknown facts are absent, a published geometry schema, host-optional behaviour). Any
@@ -181,7 +181,14 @@ camera movement.
 `bounds` (and `open_min/open_max`); `presentation.framing {yaw, pitch, fit, target}`;
 `presentation.views[] {id, label, yaw, pitch, distance (× the distance fitted to the view's
 target, or to the whole object), target}`; built-in views `hero, front, side, back, top,
-three-quarter`; yaw 0 looks at the front, pitch is elevation. `animation.camera {drift,
+three-quarter`; yaw 0 looks at the front, pitch is elevation.
+
+**The `open` view** (minor addition to 0.2): `views[id="open"]` is the view that best shows
+the opened pose (the title page, the lifted disc beside its booklet). A host arrives at the
+hero (the closed object's best side) and turns to `open` as the articulations play; the
+portable viewer does the same when the scene has no tour of its own. The audit warns
+(`no-open-view`) when something opens and has no `open` view; the authoring skill picks it
+from `review/view-open.png`. `animation.camera {drift,
 breathe, tour[]}` and `presentation.atmosphere / occlusion / background / float` are the
 portable viewer's preferences; a host that owns its camera and environment ignores them.
 
