@@ -24,7 +24,10 @@ After assembly the object opens, one `order` group after another, and holds: a l
 open, a booklet slides out, a disc lifts and turns once, a book's board opens to the title
 page. Use articulations for anything that opens or is taken out; a host drives them with
 an opening from 0 to 1 and owns the timing. `?open=0` / `?open=1` freezes a pose. Keep the
-sequence short (2–3 groups) and the still pose informative (`still_pose: open`).
+sequence short (2–3 groups) and the still pose informative (`still_pose: open`). Give a
+view named `open`: the camera turns to it while the object opens. Things taken out (a
+booklet, a record) move to where they can be seen, facing the front, and never through
+another part.
 
 ## Part motion
 

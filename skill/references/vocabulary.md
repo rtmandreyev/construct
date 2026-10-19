@@ -156,7 +156,9 @@ the L key. Mark inferred or decorative content in the text ("Beam (decorative)")
 Built-in views: `hero, front, side, back, top, three-quarter`. A view with `target` frames
 that part alone; `distance` multiplies the distance fitted to that target (or to the whole
 object without one), so a small target with `distance: 1` is already a close-up — raise it
-(1.5–3) to keep context. `review` captures each of your views as `view-<id>.png`. `projector` draws an emitter with
+(1.5–3) to keep context. `review` captures each of your views as `view-<id>.png`. A view named
+`open` is the one that best shows the opened pose; give one whenever the object has
+articulations. `projector` draws an emitter with
 light rays and rising motes under small objects; `float` drops the survey ground below a
 hovering subject; `certainty_style: "explicit"` dashes everything inferred.
 
