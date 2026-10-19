@@ -42,17 +42,19 @@ if no browser is available, say so and deliver the HTML without captures.
    `{{SKILL_DIR}}/examples/`. Build masses first, then structure, identity, detail. Use
    the right shape for each part (lathe for turned forms, extrude for plans and gables, tube
    for limbs and arms, repeats for colonnades and railings, mirror for symmetry). Give
-   every part a role, a certainty and a stage. See [vocabulary](references/vocabulary.md).
-4. **Animate with intent.** Choose an assembly style, part motion only where the object
-   really moves (a platter spins, a tentacle sways, a beam turns), idle events that suit
-   the subject, and a camera tour to the identity feature. See
-   [animation](references/animation.md).
+   every part a role, a certainty and a stage. Text (titles, spines, labels) comes from
+   facts through `labels`, images through named artwork slots; never choose colours, the
+   renderer owns them. See [vocabulary](references/vocabulary.md).
+4. **Animate with intent.** Choose an assembly style; `articulations` for what opens once
+   (a lid, a board, a disc lifted out); part motion only where the object keeps moving (a
+   platter spins, a tentacle sways, a beam turns); idle events that suit the subject; and a
+   camera tour to the identity feature. See [animation](references/animation.md).
 5. **Check until the audit is clean.** `check` must report `audit: PASS`. Fix every
    error (floating parts, overclaimed certainty, accuracy that is not backed); read every
    warning and either fix it or be ready to explain it.
 6. **Look at it.** Run `review`, then open and actually inspect
-   `review/hero.png`, `sheet-views.png`, `sheet-assembly.png`, `sheet-life.png` and
-   `sheet-provenance.png`. Judge them against the [review checklist](references/review.md):
+   `review/hero.png`, `sheet-views.png`, `sheet-assembly.png`, `sheet-motion.png`,
+   `sheet-life.png`, `sheet-provenance.png` and each `view-<id>.png`. Judge them against the [review checklist](references/review.md):
    silhouette, hierarchy, identity, clutter, framing, assembly order, honesty. Fix the
    scene and review again. Geometric validity (the audit) and art direction (your eyes)
    are separate gates; pass both.

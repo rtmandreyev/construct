@@ -47,9 +47,14 @@ identity features**, in that order. Neon on a wrong silhouette is still wrong.
 - **Fictional entity**: take the described features as `user_supplied` facts and design
   everything else as `inferred` (designed from the request); use `decorative` only for
   atmosphere. Label it fictional in the title.
-- **CD / book / artwork carrier**: standard generic dimensions (inferred), the artwork face
-  as a `plane` with the supplied, hashed image, or an empty slot; the disc presented in
-  front of its case; a book's spine rounded with `extrude`, pages as a ribbed block.
+- **CD / book / artwork carrier**: standard generic dimensions (inferred). A jewel case is
+  a tray (inlay slot on its back, spine labels on its left face), a hinged lid carrying the
+  booklet (`cover-front`), and a disc in the tray (`disc` slot, circle mask with the hole)
+  that lifts and turns once. A book is boards, a rounded spine (`extrude`) with a flat
+  spine face for its labels, a ribbed page block whose front carries the title-page labels,
+  and a front board hinged on the spine. Name `anchors.front` and `anchors.spine`. Text
+  comes from facts through labels; images through slots. Start from
+  `examples/cd.json` and `examples/book.json`.
 
 ## Framing
 

@@ -15,7 +15,10 @@ The hologram's look tells the truth about what is known; the scene records why.
   A part never claims more than its basis (the audit flags overclaims).
 - `subject.accuracy`: `generic` unless you are modelling *this particular* thing from
   evidence; `documented` only when its key parts are evidence-backed (audit-enforced).
-- `subject.synthetic: true` for examples and anything not about a real item.
+- `subject.synthetic: true` for examples and demonstrations only; a real request is
+  `false` with its request source `user_private`.
+- **Unknown stays unknown.** A fact you do not know is not written at all (never `null`, a
+  placeholder or a plausible guess), and nothing is labelled with it.
 
 ## Sources
 

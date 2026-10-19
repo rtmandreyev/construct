@@ -1,50 +1,50 @@
 # Hologram contract `tessera.hologram/0.2`
 
-Status: draft 1 for review by Tessera main, 2026-10-19. Owner: the hologram toolkit
-(`tools/hologram/`). Changes after review bump the version and are announced.
+Status: **draft 2**, 2026-10-19, after Tessera main's review of draft 1 (`fcadb4e`). Owner: the
+hologram toolkit (`tools/hologram/`). Draft 2 adds the five must-fix items (renderer-owned
+style, one-shot articulations, fact labels, anchors, artwork slots and masks) and the smaller
+ones (unknown facts are absent, a published geometry schema, host-optional behaviour). Any
+change after main accepts 0.2 bumps the version and is announced.
 
-Two documents cross the boundary:
-
-| Document | Format id | Who writes it | Who reads it |
+| Document | Format id | Written by | Read by |
 |---|---|---|---|
 | **Scene** (authoring input) | `"format": "tessera-hologram", "version": 2` | an agent or a person | the toolkit's compiler |
 | **Geometry** (compiled output) | `"format": "tessera-hologram-geometry", "version": 2`, `"contract": "tessera.hologram/0.2"` | the compiler only | renderers (the portable viewer, Tessera native) |
 
-A renderer consumes **geometry**, never scenes: everything is already explicit (line
-segments, triangles, sprites, styles, phases, motion slots). No renderer needs to
-interpret shapes, run code or fetch anything. Keep the source scene next to its geometry;
-`scene_sha256` binds them. The v1 `tessera-geometry` segment list remains available
-(`build --v1`, `scene.to_v1`) for the existing native study.
+A renderer consumes **geometry**, never scenes: everything in it is explicit (line segments,
+triangles, sprites, styles, phases, transform slots, face quads). No renderer needs to
+interpret shapes, run code or fetch anything. Its structure and budgets are published as
+[`geometry.schema.json`](geometry.schema.json) (JSON Schema 2020-12); a consumer re-validates
+structure, budgets and `scene_sha256` itself and never trusts compiler output blindly. Keep
+the source scene next to its geometry; `scene_sha256` binds them. The v1 `tessera-geometry`
+segment list stays available (`build --v1`, `scene.to_v1`).
 
 ## Frame and units
 
-Metres. Authoring and default output frame: **Y up, the front faces +Z** (glTF's
-convention; v1 compatible). `geometry.frame` states it. Consumers with a Z-up object frame
-use `build --frame z-up` (or `scene.reframe(g, "z-up")`): `(x, y, z) → (x, −z, y)`, a proper
-rotation applied to positions, motion pivots/axes, artwork corners, anchors and bounds;
-`frame.up` then reads `+z`. Never mix frames inside one document.
+Metres. **Y up, the front faces +Z** is the only default frame (`geometry.frame`). `build
+--frame z-up` / `scene.reframe(g, "z-up")` remains a utility, `(x, y, z) → (x, −z, y)` applied
+to every position, axis, pivot, quad, anchor and box; Tessera does not use it.
 
 ## 1. Facts and sources
 
-`provenance.sources[]`: `{id, kind, title, rights, ref?}`; kinds `user_request |
-user_supplied | document | measurement | observation | dataset | generated`; rights
-`synthetic | user_private | permitted | public_domain | reference_only`. `ref` is citation
-text, never fetched.
+`provenance.sources[]`: `{id, kind, title, rights, ref?}`; kinds `user_request | user_supplied |
+document | measurement | observation | dataset | generated`; rights `synthetic | user_private |
+permitted | public_domain | reference_only`. `ref` is citation text, never fetched.
 
-`provenance.facts[]`: `{key, value (scalar), unit?, certainty, source?, note?}`.
-Certainty is one of **`verified | user_supplied | inferred | decorative`**. `verified`
-must cite a source id (the compiler refuses otherwise). `subject.accuracy` is
-`generic | approximate | documented`; `subject.synthetic` marks example content.
+`provenance.facts[]`: `{key, value, unit?, certainty, source?, note?}` with certainty
+**`verified | user_supplied | inferred | decorative`**. `verified` must cite a source id.
+**An unknown fact is absent**: `value` is a string, number or boolean, never null; the compiler
+refuses null, and an author deletes the fact instead of guessing. (`tessera.entry`'s
+`unknown` facts simply do not reach the hologram.) `subject.accuracy` is `generic |
+approximate | documented`; `subject.synthetic` marks example content.
 
 ## 2. Parts
 
-`parts[]` (index = the part number used by styles):
-`{id, label, role, certainty, basis[], source, stage, floating, shape, instances[], motion}`.
-`id` is stable and unique; `basis` lists fact keys the geometry rests on; `instances` are
-the copies after repeat/mirror, each `{min, max, motion_slot}` (an axis-aligned box in the
-output frame and its motion slot or −1).
-
-Roles (the hierarchy), with the names main proposed:
+`parts[]` (index = the part number in styles):
+`{id, label, role, certainty, basis[], source, stage, floating, shape, motion, joint, instances[]}`.
+`instances` are the copies after repeat/mirror: `{min, max, motion_slot, joint, open_min?,
+open_max?}` — the rest-pose box, the periodic-motion slot (or −1), the articulation joint (or
+−1), and for articulated copies the box they reach fully open.
 
 | role | meaning | main's term |
 |---|---|---|
@@ -52,107 +52,158 @@ Roles (the hierarchy), with the names main proposed:
 | `structure` | supporting construction | structure |
 | `detail` | small repeated detail; fades first with distance | detail |
 | `identity` | the two or three features that make it recognisable | surface/identity |
-| `data` | emphasised information (a lamp, a measured point, a label) | — |
+| `data` | emphasised information (a lamp, a measured point) | — |
 | `ornament` | decorative atmosphere (motes, sparkle) | — |
 | `ground` | survey/ground reference | — |
 | `artwork` | an artwork carrier face | label/artwork carrier |
 
 ## 3. Geometry
 
-Packed, renderer-ready arrays (numbers rounded to 10 µm):
+Packed, renderer-ready arrays (numbers rounded to 10 µm), all in the rest (closed) pose:
 
-- `lines` stride 9: `ax ay az bx by bz style phase_a phase_b` — draw each as an
-  anti-aliased screen-space line; `phase_*` are build phases (below).
-- `fills` stride 5 per vertex, three vertices per triangle: `x y z style phase` —
-  translucent glass or dark occluders (style field `occluder`).
-- `points` stride 7: `x y z size_px style sprite phase`; sprite `0 disc, 1 ring,
-  2 square, 3 soft`.
-- `counts`, `bounds {min, max, center, radius}`.
+- `lines` stride 9: `ax ay az bx by bz style phase_a phase_b`; per-vertex build phases.
+- `fills` stride 5 per vertex, three per triangle: `x y z style phase`.
+- `points` stride 7: `x y z size_px style sprite phase`; sprite `0 disc, 1 ring, 2 square, 3 soft`.
+- `bounds {min, max, center, radius, open_min, open_max}`; `counts`.
 
-Budgets: ≤ 24,000 lines, ≤ 24,000 triangles, ≤ 6,000 points, ≤ 256 parts, ≤ 1,024
-instances, ≤ 32 moving instances. Authoring shapes (box, cylinder, cone, sphere, torus,
-lathe/revolve, extrude, tube/sweep, curve with Catmull-Rom smoothing, plane, grid, points,
-marker; repeat, radial repeat, mirror) are compiled away.
+Budgets: ≤ 24,000 lines, ≤ 24,000 triangles, ≤ 6,000 points, ≤ 256 parts, ≤ 1,024 instances,
+≤ 32 moving instances, ≤ 16 articulations, ≤ 16 joints, ≤ 48 labels.
 
-## 4. Material roles
+## 4. Material roles (the renderer owns colour)
 
-`styles[]` rows: `tone, alpha, width_px, glow_px, dash, fade, part, motion_slot, occluder`.
+`styles[]` rows: `tone, alpha, width_px, glow_px, dash, fade, part, motion_slot, occluder, joint`.
 
-- `tone` index: `0 accent, 1 bright, 2 hairline, 3 structure, 4 dust, 5 identity, 6 data,
-  7 faint` — palette slots, never colours. `style.palette` (`violet | cyan | amber | green |
-  ice | rose`) and `style.identity` (a low-chroma material tint: `warm-wood, stone, steel,
-  brass, bio, ember, ice, paper, none`) choose the colours.
-- `dash`: `0 solid, 1 dashed, 2 dotted` (world-space pattern).
-- `fade`: `0..3` how strongly depth fog thins it.
-- Certainty is the material: verified/user-supplied crisp, inferred a step back (dashed in
-  `presentation.certainty_style: "explicit"`), decorative dotted and faint. A renderer may
-  restyle within this meaning but must keep the four certainties distinguishable and must
-  offer a provenance view.
-- No shader code, scripts or URLs exist anywhere in either document.
+- `tone` is a slot, never a colour: `0 accent, 1 bright, 2 hairline, 3 structure, 4 dust,
+  5 identity, 6 data, 7 faint`. `dash` `0 solid, 1 dashed, 2 dotted`; `fade` 0..3 (how much
+  depth thins it); `occluder` 1 for a dark fill that hides what is behind it.
+- **Colour belongs to the renderer.** `presentation.style_hint {palette, identity}` is a hint a
+  host may ignore (Tessera ignores it: one palette and its one violet identity light). Authors
+  in the Tessera pipeline omit it; a scene-level `style` is refused.
+- Certainty is the material: verified/user-supplied crisp, inferred a step back, decorative
+  dotted and faint. A renderer may restyle within this meaning but keeps the four
+  certainties distinguishable and offers a provenance view.
+- No shader code, scripts or URLs exist in either document.
 
-## 5. Artwork
+## 5. Artwork slots and masks
 
-Declared in `provenance.assets[]`: `{id, path (relative, inside the asset folder), sha256,
-media_type (png/jpeg/webp), rights, provenance, source?}` with provenance
-**`authentic | synthetic | generated-decorative | user_photo`**. Authentic art needs
-`permitted` or `user_private` rights and a cited source. `artwork[]`:
-`{part, asset_id, corners[4] (top-left, top-right, bottom-right, bottom-left), uv[4], phase}`,
-the face of a `plane` (or the +Z face of a box). A renderer displays bytes only after
-verifying the hash under an explicit asset root (the portable build does this and embeds
-nothing else); a missing or mismatched asset is an empty, labelled slot. Generated
-decoration must be labelled as such wherever it is shown.
+Assets: `provenance.assets[]` `{id, path, sha256, media_type (png/jpeg/webp), rights,
+provenance (authentic | synthetic | generated-decorative | user_photo), source?}`. Authentic
+art needs `permitted` or `user_private` rights and a cited source.
 
-## 6. Animation
+`artwork[]`: `{part, slot, asset_id | null, face, corners[4], uv[4], mask, inner_ratio,
+certainty, motion_slot, joint, phase}`.
 
-**Assembly (staged construction).** `parts[].stage` is an ordered integer 0..7;
-`stages[]` lists the stages used. Every vertex carries a build phase in 0..1: stage order
-first, then bottom-up height within the stage. At build progress `b`, draw what has
-`phase ≤ b`; a line whose phases differ grows from its lower end, with a brightening tip.
-`animation.assembly`: `style` `ceremony` (signal ghost ≈0.9 s, collapse ≈0.35 s, build
-`seconds`, stabilise ≈1.1 s glow) | `build` (build + short settle) | `cut` (complete at once).
+- `slot` names the place, so a pipeline can map images by name: **`cover-front, cover-back,
+  inlay, disc, label, booklet-page-1 … booklet-page-64`**, each at most once per scene. An
+  empty slot (`asset_id: null`) is valid: the host fills it from its own permitted media, or
+  shows its designed no-art face.
+- `mask`: `rect` or `circle`; `inner_ratio` is a circle's hole as a fraction of its radius (a
+  disc print: 7.5 mm / 60 mm = 0.125).
+- A renderer shows bytes only after verifying the hash; generated decoration is labelled.
 
-**Object-relative motion.** `motions[]` slots referenced by `styles[].motion_slot`:
-`{type, axis, pivot, rpm, degrees, distance, period, amount, phase, part}` in the output
-frame.
+## 6. Labels: text from facts, set by the host
 
-| type | meaning | bounds | main's term |
+`labels[]`: `{id, part, face, corners[4], field | null, text, certainty, role, align,
+orientation, motion_slot, joint, phase}`.
+
+- `field` is a fact key (`title`, `artist`, `author`, `year`, …); `text` is that fact's value
+  as the compiler read it, and the label **inherits the fact's certainty**. The host sets the
+  text in its own fonts from the fact (it may re-read the live entry). `field: null` is
+  decorative literal text (certainty `decorative`).
+- `corners` are top-left, top-right, bottom-right, bottom-left **of the text box**: the first
+  edge is the direction the text runs, the last edge points down the letters. `orientation`
+  (`horizontal | vertical-down | vertical-up`) is already applied to the corner order and
+  stated for information. `role`: `title | creator | meta | catalog | body | decorative`
+  (weight/size class; the host decides the type); `align`: `left | center | right`.
+- A label referring to a fact that does not exist is refused: an unknown fact has no label.
+- A spine is a face plus fields; a title page, a beer label or an inlay the same.
+
+## 7. Anchors (rest pose)
+
+`anchors`: `{base {point, up}, front {corners, part, face}, spine {corners, part, face},
+grip {point, part} | null}`, each with `from: scene | bounds`.
+
+- `base`: where the object rests and which way is up (shelf, stand). Default: the bottom
+  centre of the bounds, up +Y.
+- `front`: the face shown face-out; `spine`: the face a rack shows. Defaults: the bounds' +Z
+  and −X faces. Corners as in §6 (seen from outside).
+- `grip`: optional handling point.
+- A rack can draw thousands of items from `bounds` + `anchors.spine` + the spine labels alone;
+  full geometry is for previews and face-out displays (detail roles fade first).
+
+## 8. Animation
+
+**Assembly.** `parts[].stage` 0..7; `stages[]`; every vertex has a build phase 0..1 (stage
+order, then bottom-up height within the stage). Draw what has `phase ≤ b`; a line whose
+phases differ grows from its lower end. `animation.assembly.style`: `ceremony | build | cut`.
+
+**Articulations (one-shot, host-driven).** `articulations[]` (sorted by `order`):
+`{id, type, axis, pivot | null, amount, unit, order, parts[], instances[[part, index]]}`.
+
+| type | moves | amount | unit |
 |---|---|---|---|
-| `spin` | rotate about `axis` through `pivot` at `rpm` | ±120 rpm | spin |
-| `swing` | oscillate `degrees` about `axis`, period `period` | ≤ 90°, 0.2–120 s | hinge |
-| `bob` | translate ± `distance` along `axis` | ≤ 50 m | slide |
-| `pulse` | brightness ×(1 + amount·(1+sin)/2) | amount ≤ 1 | — |
+| `hinge` | rotate about `axis` through `pivot` | −180..180 | deg |
+| `turn` | rotate about `axis` through `pivot` (a disc turning once) | −1080..1080 | deg |
+| `slide` | translate along `axis` | metres | m |
+| `lift` | translate along `axis` (default up) | metres | m |
 
-`phase` (0..1) offsets copies (a ripple through tentacles). "Reveal" is the assembly
-above, not a motion. All motion is a pure function of time `t`.
+The host drives each articulation with an opening `u ∈ [0, 1]` (pose = `amount · u`) and owns
+timing, easing, sequencing and Reduce Motion; `order` is the suggested sequence. Axes and
+pivots are world values **in the rest pose**. `joints[]` lists, per joint slot, the
+articulations that move it (indices into `articulations`, ascending order); a vertex's joint
+transform is `A[j0](u0) · A[j1](u1) · …` — the first is outermost, so **a later articulation
+rides on the earlier ones** (a booklet slides out of a lid that is already hinged open).
+Periodic motion (below) is applied before the joint. `presentation.still_pose` (`open |
+closed`) is the pose the still state shows. The portable viewer opens after assembly, one
+order group at a time (~1.5 s each), and holds; `?open=0..1` freezes a pose.
 
-**Idle life.** `animation.idle`: `life` `off | calm | alive`, `events` from `scan, sweep,
-wave, shimmer, glitch, brownout, propagate, tear, burst`, `cadence [min, max]` seconds,
-`strength 0..1`. Events start after assembly; the schedule is seeded from `scene_sha256`
-so a frame at time `t` is reproducible.
+**Periodic motion.** `motions[]` slots referenced by `styles[].motion_slot`:
 
-**Still state.** `animation.reduced_motion: "still"`: assembly complete, no events, no part
-motion, no camera drift or tour. A renderer must provide it (and honour the platform's
-reduce-motion preference).
+| type | meaning | bounds |
+|---|---|---|
+| `spin` | rotate about `axis` through `pivot` at `rpm` | ±120 rpm |
+| `swing` | oscillate `degrees` about `axis` | ≤ 90°, 0.2–120 s |
+| `bob` | translate ± `distance` along `axis` | ≤ 50 m |
+| `pulse` | brightness × (1 + amount·(1+sin)/2) | amount ≤ 1 |
 
-## 7. Camera hints
+For things that keep moving (a fan, a beam, a tentacle). Hinges, lids and one-time turns are
+articulations, not motions.
 
-`bounds`; `presentation.framing {yaw, pitch, fit, target}` (the hero); `presentation.views[]
-{id, label, yaw, pitch, distance (× the fitted distance), target (part id)}`; built-in views
-`hero, front (yaw 0), side (90), back (180), top, three-quarter`; `animation.camera {drift
-(°/min), breathe, tour[] {view, at, fly}}`. Yaw 0 looks at the front (+Z); pitch is
-elevation. Fitting: frame every part's instance boxes (excluding decorative point clouds)
-inside the field of view with margin. `presentation.float` lifts the survey ground below a
-hovering subject. `presentation.atmosphere {haze, scanlines, vignette, grid, projector,
-motes}`, `occlusion` (`xray` | `none`), `background` (`deep` | `transparent`) are
-presentation preferences a host may override.
+**Idle life (host-optional).** `animation.idle {life, events, cadence, strength}` with events
+`scan, sweep, wave, shimmer, glitch, brownout, propagate, tear, burst`, seeded from
+`scene_sha256`. A host may play none of them (Tessera settles to zero frames when idle).
+
+**Still state (required).** Assembly complete, the `still_pose`, no events, no motion, no
+camera movement.
+
+## 9. Camera hints (host-optional)
+
+`bounds` (and `open_min/open_max`); `presentation.framing {yaw, pitch, fit, target}`;
+`presentation.views[] {id, label, yaw, pitch, distance (× the distance fitted to the view's
+target, or to the whole object), target}`; built-in views `hero, front, side, back, top,
+three-quarter`; yaw 0 looks at the front, pitch is elevation. `animation.camera {drift,
+breathe, tour[]}` and `presentation.atmosphere / occlusion / background / float` are the
+portable viewer's preferences; a host that owns its camera and environment ignores them.
 
 ## Out of scope
 
-Regions, world/atlas navigation and its camera, catalog state, selection and application
-UI stay in Tessera. The contract describes one object.
+Regions, atlas navigation and its camera, catalog state, the entry format, selection and UI
+stay in Tessera. The contract describes one object.
 
 ## Versioning
 
-`contract` changes on any field addition (minor) or semantic change (major). Readers must
-refuse an unknown major, and may ignore unknown fields within the same major. The geometry
-`version` integer tracks the major.
+`contract` changes on any field addition (minor) or semantic change (major). Readers refuse an
+unknown major and may ignore unknown fields within a major. Geometry `version` tracks the major.
+
+## Planned for 0.3 (not in 0.2)
+
+- `terrain` archetype: a heightfield or contour set with `scale.class` (`spot | site | valley |
+  massif | range`) and `extent_m`, mapped to a stage size through a logarithmic scale ladder;
+  provenance per surface, labelled **MEASURED** (supplied DEM/GPX) vs **SKETCHED** (inferred or
+  decorative relief).
+- `route`: a polyline draped on a terrain, traced as an articulation-like progress `u`; summit
+  markers.
+- Golden examples for vessels (bottle, can, glass with `label` slots) and case variants
+  (digipak, slim case, box set), guitars and synths.
+- Hierarchical periodic motion (a head that oscillates while its blades spin), found missing
+  by the fresh-agent test.

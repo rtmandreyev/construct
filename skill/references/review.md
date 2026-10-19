@@ -19,7 +19,8 @@ Two gates, both required:
 | `sheet-life.png` | idle events at their peak: visible but not chaotic, suited to the subject |
 | `sheet-provenance.png` | certainty colours (verified ice-white, user-supplied green, inferred amber, decorative magenta): is the honest story visible? |
 | `still-reduced-motion.png` | the still state alone |
-| `sheet-motion.png` (`--sheets motion`) | part motion across seconds |
+| `sheet-motion.png` | opening and part motion across seconds |
+| `view-<id>.png` | each of your scene's own views, still: is the target framed with context? |
 
 ## Checklist
 
@@ -35,6 +36,9 @@ Two gates, both required:
 - **Honesty**: inferred and decorative parts look it; generated art is labelled; the caption
   says GENERIC or APPROXIMATE when it is.
 - **Motion**: ambient, never frantic; parts move about their real pivots.
+- **Opening**: lids and boards swing about their real hinge and nothing passes through
+  anything; the open pose shows what opening is for (the disc, the title page).
+- **Text**: labels sit on their face, read the right way up, and only name facts you have.
 - **Still**: the reduced-motion frame is a complete, good picture.
 
 ## Common defects and fixes

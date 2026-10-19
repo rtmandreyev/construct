@@ -16,7 +16,7 @@ What made it work, and how the skill keeps it:
 | An audit that must come back empty | `check` (support, assembly order, overclaims, accuracy) |
 | Fixed renders and critics catch what the audit cannot (over-bright guesses, clutter, weak silhouettes) | `review` contact sheets and the checklist |
 | Certainty is the material | verified crisp, inferred softer, decorative dotted; provenance view |
-| The identity tone carries recognition features | `role: identity` + `style.identity` tint |
+| The identity tone carries recognition features | `role: identity` (the renderer gives it its identity light) |
 | Staged assembly, ghost/collapse/build/stabilise | `assembly.style: ceremony` |
 | Alive but calm; events, not constant motion | seeded idle events, `calm` life |
 | Reduced motion is a first-class state | `reduced_motion: still`, checked in review |
