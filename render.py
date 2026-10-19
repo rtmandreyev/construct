@@ -305,14 +305,17 @@ SHEETS = ("assembly", "views", "life", "motion", "provenance")
 
 def review(html_path, out_dir, width=1440, height=900, scale=1.0, sheets=SHEETS, browser=None):
     """Capture the review set: contact sheets (assembly, views, life, motion, provenance),
-    a still of the reduced-motion state and a labelled hero. Returns the written paths."""
+    a still of the reduced-motion state, a still of each of the scene's own views and a
+    labelled hero once assembled and opened. Returns the written paths."""
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)
     written = []
     b = open_browser(_url(html_path, ui=0, capture=1, t="0"), width, height, scale, browser)
     try:
         timeline = b.evaluate("JSON.stringify(HOLO.timeline())")
-        end = json.loads(timeline)["assembly"]["end"]
+        tl = json.loads(timeline)
+        end = max(tl["assembly"]["end"], tl.get("settled", 0.0))
+        views = json.loads(b.evaluate("JSON.stringify((HOLOGRAM_GEOMETRY.presentation.views || []).map((v) => v.id))"))
         for kind in sheets:
             b.open(_url(html_path, sheet=kind, ui=0, capture=1))
             p = out / ("sheet-%s.png" % kind)
@@ -322,6 +325,12 @@ def review(html_path, out_dir, width=1440, height=900, scale=1.0, sheets=SHEETS,
         p = out / "still-reduced-motion.png"
         b.shot(p)
         written.append(str(p))
+        for vid in views:
+            # each of the scene's own views, still, so its framing can be judged
+            b.open(_url(html_path, view=vid, motion="reduced", ui=0, capture=1))
+            p = out / ("view-%s.png" % vid)
+            b.shot(p)
+            written.append(str(p))
         b.open(_url(html_path, t="%.3f" % (end + 2.0), ui=0, capture=1, labels=1))
         p = out / "hero.png"
         b.shot(p)

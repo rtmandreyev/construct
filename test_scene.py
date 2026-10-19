@@ -218,7 +218,8 @@ class Build(unittest.TestCase):
             s = base(assets=[{"id": "art", "path": "art.png", "sha256": good, "media_type": "image/png",
                               "rights": "synthetic", "provenance": "generated-decorative"}])
             s["parts"].append({"id": "face", "role": "artwork", "certainty": "decorative", "stage": 1,
-                               "shape": {"type": "plane", "size": [0.5, 0.75]}, "at": [0, 0.5, 0.51], "artwork_asset_id": "art"})
+                               "shape": {"type": "plane", "size": [0.5, 0.75]}, "at": [0, 0.5, 0.51],
+                               "artwork": {"slot": "cover-front", "asset": "art"}})
             g = scene.compile_scene(s)
             assets, notes = render.embed_assets(g, d)
             self.assertIn("art", assets)
@@ -252,6 +253,204 @@ class Build(unittest.TestCase):
 
 
 @unittest.skipUnless(render.find_browser() and os.environ.get("HOLOGRAM_SKIP_CAPTURE") != "1", "no Chromium-family browser")
+def lid_scene():
+    """A box with a hinged lid, a sliding card in the lid and a label from a fact."""
+    s = base()
+    s["facts"].append({"key": "title", "value": "Synthetic Title", "certainty": "user_supplied", "source": "req"})
+    s["parts"] += [
+        {"id": "lid", "role": "mass", "certainty": "inferred", "stage": 1,
+         "shape": {"type": "box", "size": [1, 0.1, 1]}, "at": [0, 1.05, 0]},
+        {"id": "card", "role": "artwork", "certainty": "decorative", "stage": 2,
+         "shape": {"type": "plane", "size": [0.8, 0.8]}, "at": [0, 1.11, 0], "rotate": [-90, 0, 0],
+         "artwork": {"slot": "booklet-page-1"}}]
+    s["articulations"] = [
+        {"id": "open", "type": "hinge", "parts": ["lid", "card"], "axis": [1, 0, 0], "pivot": [0, 1.0, -0.5], "amount": -90, "order": 0},
+        {"id": "out", "type": "slide", "parts": ["card"], "axis": [0, 0, 1], "amount": 0.3, "order": 1}]
+    s["labels"] = [{"id": "side", "part": "body", "face": "left", "field": "title", "orientation": "vertical-down"}]
+    return s
+
+
+class Contract02(unittest.TestCase):
+    """The tessera.hologram/0.2 review items: host-owned style, articulations, fact labels,
+    anchors, artwork slots and masks, unknown facts."""
+
+    def test_colour_is_a_hint_in_presentation(self):
+        errs = scene.validate(base(style={"palette": "amber"}))
+        self.assertTrue(any("renderer" in e and "style_hint" in e for e in errs), errs)
+        g = scene.compile_scene(base(presentation={"style_hint": {"palette": "amber"}}))
+        self.assertEqual(g["presentation"]["style_hint"]["palette"], "amber")
+        self.assertNotIn("style", g)
+
+    def test_unknown_facts_are_absent(self):
+        s = base()
+        s["facts"].append({"key": "year", "value": None, "certainty": "inferred"})
+        self.assertTrue(any("unknown fact is absent" in e for e in scene.validate(s)))
+
+    def test_articulations_compile_to_ordered_joint_chains(self):
+        g = scene.compile_scene(lid_scene())
+        self.assertEqual([a["id"] for a in g["articulations"]], ["open", "out"])
+        self.assertEqual(g["articulations"][0]["instances"], [["lid", 0], ["card", 0]])
+        parts = {p["id"]: p for p in g["parts"]}
+        self.assertEqual(g["joints"][parts["lid"]["joint"]], [0])
+        self.assertEqual(g["joints"][parts["card"]["joint"]], [0, 1])
+        self.assertEqual(parts["body"]["joint"], -1)
+        for row in g["styles"]:
+            self.assertEqual(row[9], g["parts"][row[6]]["joint"])
+        # the lid swings up about its back edge: fully open it stands above the box
+        self.assertGreater(g["bounds"]["open_max"][1], g["bounds"]["max"][1] + 0.8)
+
+    def test_a_later_articulation_rides_on_the_earlier(self):
+        g = scene.compile_scene(lid_scene())
+        arts = g["articulations"]
+        # the card's centre: slid 0.3 along +Z in the rest frame, then carried up by the hinge
+        p = scene._chain_apply([0, 1], arts, (0.0, 1.11, 0.0))
+        self.assertAlmostEqual(p[2], -0.5 - 0.11, places=4)
+        self.assertAlmostEqual(p[1], 1.0 + 0.5 + 0.3, places=4)
+
+    def test_articulation_checks(self):
+        s = lid_scene()
+        del s["articulations"][0]["pivot"]
+        s["articulations"][1]["parts"] = ["nope"]
+        s["articulations"].append({"id": "big", "type": "hinge", "parts": ["lid"], "axis": [0, 1, 0], "pivot": [0, 0, 0], "amount": 400})
+        errs = "\n".join(scene.validate(s))
+        self.assertIn("pivot", errs)
+        self.assertIn("unknown part 'nope'", errs)
+        self.assertIn("-180..180", errs)
+
+    def test_labels_take_text_and_certainty_from_facts(self):
+        g = scene.compile_scene(lid_scene())
+        lb = g["labels"][0]
+        self.assertEqual((lb["text"], lb["certainty"], lb["field"]), ("Synthetic Title", "user_supplied", "title"))
+        tl, tr, br, bl = lb["corners"]
+        # the left face of the box, text running down: first edge goes down, letters face the front
+        self.assertLess(tr[1], tl[1])
+        self.assertGreater(tl[2], bl[2])
+        s = lid_scene()
+        s["labels"] = [{"id": "x", "part": "body", "field": "year"}, {"id": "y", "part": "body", "text": "SIDE A"},
+                       {"id": "z", "part": "lid", "face": "rim", "text": "oops"}]
+        errs = "\n".join(scene.validate(s))
+        self.assertIn("no fact 'year'", errs)
+        self.assertIn("never guess", errs)
+        self.assertIn("a box has the faces", errs)
+        del s["labels"][0], s["labels"][1]
+        self.assertEqual(scene.compile_scene(s)["labels"][0]["certainty"], "decorative")
+
+    def test_anchors_default_to_the_bounds_and_follow_the_scene(self):
+        g = scene.compile_scene(base())
+        an = g["anchors"]
+        self.assertEqual(an["base"], {"point": [0.0, 0.0, 0.0], "up": [0, 1, 0], "from": "bounds"})
+        tl, tr, br, bl = an["front"]["corners"]
+        self.assertEqual((tl[2], tr[0] > tl[0], tl[1] > bl[1]), (0.5, True, True))
+        self.assertEqual(an["spine"]["corners"][0][0], -0.5)
+        self.assertIsNone(an["grip"])
+        s = lid_scene()
+        s["anchors"] = {"spine": {"part": "body", "face": "left"}, "grip": {"part": "lid"}}
+        an = scene.compile_scene(s)["anchors"]
+        self.assertEqual((an["spine"]["part"], an["spine"]["from"]), ("body", "scene"))
+        self.assertEqual(an["grip"]["point"], [0.0, 1.05, 0.0])
+
+    def test_artwork_slots_and_masks(self):
+        s = lid_scene()
+        s["parts"].append({"id": "disc", "role": "identity", "certainty": "inferred", "stage": 1,
+                           "shape": {"type": "cylinder", "radius": 0.06, "height": 0.0012}, "at": [0, 1.2, 0],
+                           "artwork": {"slot": "disc", "mask": "circle", "inner_radius": 0.0075}})
+        g = scene.compile_scene(s)
+        disc = [a for a in g["artwork"] if a["slot"] == "disc"][0]
+        self.assertEqual((disc["mask"], disc["inner_ratio"], disc["asset_id"]), ("circle", 0.125, None))
+        s["parts"][-1]["artwork"] = {"slot": "booklet-page-1", "inner_radius": 0.01}
+        errs = "\n".join(scene.validate(s))
+        self.assertIn("duplicate slot", errs)
+        self.assertIn("only a circle mask", errs)
+        s["parts"][-1]["artwork"] = {"slot": "poster"}
+        self.assertTrue(any("booklet-page-1..64" in e for e in scene.validate(s)))
+
+    def test_z_up_frame_converts_the_new_fields(self):
+        g = scene.compile_scene(lid_scene())
+        z = scene.reframe(g, "z-up")
+        self.assertEqual(z["articulations"][0]["pivot"], [0.0, 0.5, 1.0])
+        self.assertEqual(z["anchors"]["base"]["up"], [0, 0, 1])
+        self.assertEqual(z["labels"][0]["corners"][0], [g["labels"][0]["corners"][0][0], -g["labels"][0]["corners"][0][2],
+                                                        g["labels"][0]["corners"][0][1]])
+
+
+def schema_errors(inst, sch, root, path="$"):
+    """The JSON Schema keywords geometry.schema.json uses (standard library only)."""
+    import re
+    if "$ref" in sch:
+        return schema_errors(inst, root["$defs"][sch["$ref"].split("/")[-1]], root, path)
+    errs = []
+    kinds = {"object": dict, "array": list, "string": str, "boolean": bool, "null": type(None)}
+
+    def is_type(v, t):
+        if t == "integer":
+            return isinstance(v, int) and not isinstance(v, bool)
+        if t == "number":
+            return isinstance(v, (int, float)) and not isinstance(v, bool)
+        return isinstance(v, kinds[t])
+    if "type" in sch:
+        ts = sch["type"] if isinstance(sch["type"], list) else [sch["type"]]
+        if not any(is_type(inst, t) for t in ts):
+            return ["%s: expected %s" % (path, sch["type"])]
+    if "const" in sch and inst != sch["const"]:
+        errs.append("%s: expected %r" % (path, sch["const"]))
+    if "enum" in sch and inst not in sch["enum"]:
+        errs.append("%s: %r not in %r" % (path, inst, sch["enum"]))
+    if "oneOf" in sch:
+        ok = [o for o in sch["oneOf"] if not schema_errors(inst, o, root, path)]
+        if len(ok) != 1:
+            errs.append("%s: matches %d of oneOf" % (path, len(ok)))
+    if isinstance(inst, (int, float)) and not isinstance(inst, bool):
+        if "minimum" in sch and inst < sch["minimum"] or "maximum" in sch and inst > sch["maximum"]:
+            errs.append("%s: %r out of range" % (path, inst))
+    if isinstance(inst, str):
+        if "maxLength" in sch and len(inst) > sch["maxLength"]:
+            errs.append("%s: too long" % path)
+        if "pattern" in sch and not re.search(sch["pattern"], inst):
+            errs.append("%s: %r does not match" % (path, inst))
+    if isinstance(inst, dict):
+        for k in sch.get("required", []):
+            if k not in inst:
+                errs.append("%s: missing %s" % (path, k))
+        props = sch.get("properties", {})
+        for k, v in inst.items():
+            if k in props:
+                errs += schema_errors(v, props[k], root, "%s.%s" % (path, k))
+            elif sch.get("additionalProperties") is False:
+                errs.append("%s: unexpected %s" % (path, k))
+    if isinstance(inst, list):
+        if "minItems" in sch and len(inst) < sch["minItems"] or "maxItems" in sch and len(inst) > sch["maxItems"]:
+            errs.append("%s: %d items" % (path, len(inst)))
+        pre = sch.get("prefixItems", [])
+        for i, v in enumerate(inst):
+            sub = pre[i] if i < len(pre) else sch.get("items")
+            if sub:
+                errs += schema_errors(v, sub, root, "%s[%d]" % (path, i))
+                if len(errs) > 20:
+                    break
+    return errs
+
+
+class GeometrySchema(unittest.TestCase):
+    def test_every_compiled_example_matches_the_published_schema(self):
+        root = json.loads((HERE / "geometry.schema.json").read_text())
+        for path in sorted(EXAMPLES.glob("*.json")) + [None]:
+            g = scene.compile_scene(json.loads(path.read_text()) if path else lid_scene())
+            for frame in ("y-up", "z-up"):
+                self.assertEqual(schema_errors(json.loads(json.dumps(scene.reframe(g, frame))), root, root), [],
+                                 "%s %s" % (path and path.name, frame))
+
+    def test_the_schema_catches_a_broken_file(self):
+        root = json.loads((HERE / "geometry.schema.json").read_text())
+        g = json.loads(json.dumps(scene.compile_scene(lid_scene())))
+        g["styles"][0] = g["styles"][0][:9]
+        g["labels"][0]["corners"] = g["labels"][0]["corners"][:3]
+        g["parts"][0]["instances"][0]["joint"] = 99
+        errs = "\n".join(schema_errors(g, root, root))
+        self.assertIn("$.styles[0]: 9 items", errs)
+        self.assertIn("$.labels[0].corners: 3 items", errs)
+        self.assertIn("$.parts[0].instances[0].joint: 99 out of range", errs)
+
+
 class Capture(unittest.TestCase):
     def test_review_produces_non_empty_images(self):
         with tempfile.TemporaryDirectory() as d:

@@ -68,6 +68,20 @@ ASSEMBLY = ("ceremony", "build", "cut")
 LIFE = ("off", "calm", "alive")
 SHAPE_TYPES = ("box", "cylinder", "cone", "sphere", "torus", "lathe", "extrude", "tube",
                "curve", "plane", "grid", "points", "marker")
+ARTICULATIONS = ("hinge", "slide", "lift", "turn")
+MAX_ARTICULATIONS = 16
+MAX_JOINTS = 16
+MAX_LABELS = 48
+# the faces a label, an artwork or an anchor can sit on, by shape
+FACES = {"box": ("front", "back", "left", "right", "top", "bottom"), "plane": ("front", "back"),
+         "cylinder": ("top", "bottom"), "lathe": ("top", "bottom")}
+DEFAULT_FACE = {"box": "front", "plane": "front", "cylinder": "top", "lathe": "top"}
+LABEL_ROLES = ("title", "creator", "meta", "catalog", "body", "decorative")
+ALIGNS = ("left", "center", "right")
+ORIENTATIONS = ("horizontal", "vertical-down", "vertical-up")
+ARTWORK_SLOTS = ("cover-front", "cover-back", "inlay", "disc", "label", "booklet-page-N")
+MASKS = ("rect", "circle")
+STILL_POSES = ("open", "closed")
 
 # Role defaults: tone, alpha, width (logical px), glow (px), fill, depth fade (0 none … 2 strong)
 ROLE_STYLE = {
@@ -89,7 +103,8 @@ DASH_CODE = {"solid": 0, "dashed": 1, "dotted": 2}
 SPRITE_CODE = {"disc": 0, "ring": 1, "square": 2, "soft": 3}
 
 SCENE_KEYS = {"format", "version", "id", "title", "subject", "units", "seed", "sources", "facts",
-              "parts", "assets", "style", "annotations", "presentation", "animation"}
+              "parts", "assets", "annotations", "articulations", "labels", "anchors", "presentation",
+              "animation"}
 SCENE_REQUIRED = {"format", "version", "id", "title", "subject", "units", "seed", "sources", "facts", "parts"}
 
 
@@ -303,7 +318,7 @@ _SHAPE_KEYS = {
     "marker": {"type", "sprite", "size_px"},
 }
 PART_KEYS = {"id", "label", "role", "shape", "at", "rotate", "scale", "certainty", "basis", "source",
-             "look", "stage", "repeat", "mirror", "motion", "floating", "artwork_asset_id", "note"}
+             "look", "stage", "repeat", "mirror", "motion", "floating", "artwork", "note"}
 PART_REQUIRED = {"id", "role", "shape", "certainty", "stage"}
 
 
@@ -365,10 +380,12 @@ def validate(scene):
                 c.err(w + ".key", "duplicate %r" % key)
             fact_cert[key] = f.get("certainty")
         v = f.get("value")
-        if isinstance(v, float) and not math.isfinite(v):
+        if v is None:
+            c.err(w + ".value", "an unknown fact is absent: delete this fact rather than writing null or a guess")
+        elif isinstance(v, float) and not math.isfinite(v):
             c.err(w + ".value", "non-finite number")
-        elif not (v is None or isinstance(v, (bool, int, float)) or (isinstance(v, str) and len(v) <= 2000)):
-            c.err(w + ".value", "expected a scalar (string of at most 2000 characters, number, boolean or null)")
+        elif not (isinstance(v, (bool, int, float)) or (isinstance(v, str) and len(v) <= 2000)):
+            c.err(w + ".value", "expected a scalar (string of at most 2000 characters, number or boolean)")
         if "unit" in f:
             c.text(f["unit"], w + ".unit", 24)
         if "note" in f:
@@ -408,14 +425,12 @@ def validate(scene):
         if a.get("source") is not None and a.get("source") not in source_ids:
             c.err(w + ".source", "unknown source %r" % a.get("source"))
 
-    style = scene.get("style", {})
-    if c.keys(style, {"palette", "identity"}, set(), "scene.style"):
-        if "palette" in style:
-            c.choice(style["palette"], PALETTES, "scene.style.palette")
-        if "identity" in style:
-            c.choice(style["identity"], IDENTITIES, "scene.style.identity")
+    if "style" in scene:
+        c.errors[:] = [e for e in c.errors if not e.startswith("scene: unknown key 'style'")]
+        c.err("scene.style", "colours belong to the renderer: move it to presentation.style_hint "
+              "(a hint a host may ignore) or delete it")
 
-    part_ids, instances, motions = set(), 0, 0
+    part_ids, instances, motions, slots = set(), 0, 0, set()
     parts = scene.get("parts")
     if not isinstance(parts, list) or not 1 <= len(parts) <= MAX_PARTS:
         c.err("scene.parts", "expected 1..%d parts" % MAX_PARTS)
@@ -510,12 +525,8 @@ def validate(scene):
             motions += count
         if "floating" in p and not isinstance(p["floating"], bool):
             c.err(w + ".floating", "expected true or false")
-        art = p.get("artwork_asset_id")
-        if art is not None:
-            if art not in asset_ids:
-                c.err(w + ".artwork_asset_id", "unknown asset %r" % art)
-            if not isinstance(p.get("shape"), dict) or p["shape"].get("type") not in ("plane", "box"):
-                c.err(w + ".artwork_asset_id", "artwork binds to a plane (or the +Z face of a box)")
+        if "artwork" in p:
+            _artwork_check(c, p, asset_ids, slots, w + ".artwork")
     if instances > MAX_INSTANCES:
         c.err("scene.parts", "%d instances after repeats and mirrors exceed %d" % (instances, MAX_INSTANCES))
     if motions > MAX_MOTIONS:
@@ -537,6 +548,10 @@ def validate(scene):
             if "certainty" in a:
                 c.choice(a["certainty"], CERTAINTIES, w + ".certainty")
 
+    shapes_by_part = {p["id"]: p.get("shape") for p in parts if isinstance(p, dict) and isinstance(p.get("id"), str)}
+    _articulation_check(c, scene.get("articulations", []), shapes_by_part)
+    _label_check(c, scene.get("labels", []), shapes_by_part, scene.get("facts") if isinstance(scene.get("facts"), list) else [])
+    _anchor_check(c, scene.get("anchors", {}), shapes_by_part)
     _presentation_check(c, scene.get("presentation", {}), part_ids)
     _animation_check(c, scene.get("animation", {}), scene.get("presentation", {}))
     return c.errors
@@ -569,8 +584,17 @@ def _motion_check(c, mo, w):
 
 def _presentation_check(c, pr, part_ids):
     w = "scene.presentation"
-    if not c.keys(pr, {"framing", "views", "atmosphere", "occlusion", "certainty_style", "background", "float"}, set(), w):
+    if not c.keys(pr, {"framing", "views", "atmosphere", "occlusion", "certainty_style", "background", "float",
+                       "style_hint", "still_pose"}, set(), w):
         return
+    hint = pr.get("style_hint", {})
+    if c.keys(hint, {"palette", "identity"}, set(), w + ".style_hint"):
+        if "palette" in hint:
+            c.choice(hint["palette"], PALETTES, w + ".style_hint.palette")
+        if "identity" in hint:
+            c.choice(hint["identity"], IDENTITIES, w + ".style_hint.identity")
+    if "still_pose" in pr:
+        c.choice(pr["still_pose"], STILL_POSES, w + ".still_pose")
     if "float" in pr:
         c.num(pr["float"], w + ".float", 0, MAX_EXTENT)
     fr = pr.get("framing", {})
@@ -673,6 +697,169 @@ def _animation_check(c, an, pr):
                     c.num(s["fly"], sw + ".fly", 0.2, 20)
     if "reduced_motion" in an:
         c.choice(an["reduced_motion"], ("still",), w + ".reduced_motion")
+
+
+def _face_of(c, shape, face, where):
+    """The face a label/artwork/anchor uses; reports an error and returns None when the
+    shape has no such face."""
+    t = shape.get("type") if isinstance(shape, dict) else None
+    if t not in FACES:
+        c.err(where, "only %s parts have faces" % ", ".join(sorted(FACES)))
+        return None
+    face = DEFAULT_FACE[t] if face is None else face
+    if face not in FACES[t]:
+        c.err(where, "a %s has the faces %s" % (t, ", ".join(FACES[t])))
+        return None
+    return face
+
+
+def _region_check(c, region, where):
+    if c.vec(region, where, 4, 0, 1) and (region[0] >= region[2] or region[1] >= region[3]):
+        c.err(where, "expected [u0, v0, u1, v1] with u0 < u1 and v0 < v1 (0..1 across the face, v down)")
+
+
+def _artwork_check(c, p, asset_ids, slots, w):
+    a = p["artwork"]
+    if not c.keys(a, {"slot", "asset", "face", "mask", "inner_radius", "region"}, {"slot"}, w):
+        return
+    slot = a.get("slot")
+    ok = slot in ARTWORK_SLOTS[:-1]
+    if isinstance(slot, str) and slot.startswith("booklet-page-"):
+        n = slot[len("booklet-page-"):]
+        ok = n.isdigit() and 1 <= int(n) <= 64 and str(int(n)) == n
+    if not ok:
+        c.err(w + ".slot", "must be one of cover-front, cover-back, inlay, disc, label, booklet-page-1..64")
+    elif slot in slots:
+        c.err(w + ".slot", "duplicate slot %r: each slot names one place" % slot)
+    else:
+        slots.add(slot)
+    if "asset" in a and a["asset"] not in asset_ids:
+        c.err(w + ".asset", "unknown asset %r (leave asset out for an empty slot)" % a["asset"])
+    face = _face_of(c, p.get("shape"), a.get("face"), w + ".face")
+    mask = a.get("mask", "rect")
+    c.choice(mask, MASKS, w + ".mask")
+    if "inner_radius" in a:
+        if mask != "circle":
+            c.err(w + ".inner_radius", "only a circle mask has an inner radius (the hole of a disc)")
+        elif face is not None and c.num(a["inner_radius"], w + ".inner_radius", MIN_SIZE, MAX_EXTENT):
+            half = _face_half_width(p["shape"], face)
+            if a["inner_radius"] >= half:
+                c.err(w + ".inner_radius", "must be smaller than the face's half width (%g m)" % half)
+    if "region" in a:
+        _region_check(c, a["region"], w + ".region")
+
+
+def _articulation_check(c, arts, shapes_by_part):
+    w = "scene.articulations"
+    if not isinstance(arts, list) or len(arts) > MAX_ARTICULATIONS:
+        c.err(w, "expected at most %d articulations" % MAX_ARTICULATIONS)
+        return
+    seen = set()
+    chains = {}
+    for i, a in enumerate(arts):
+        aw = "%s[%d]" % (w, i)
+        if not c.keys(a, {"id", "parts", "type", "axis", "pivot", "amount", "order", "note"},
+                      {"id", "parts", "type", "amount"}, aw):
+            continue
+        if c.ident(a.get("id"), aw + ".id"):
+            if a["id"] in seen:
+                c.err(aw + ".id", "duplicate %r" % a["id"])
+            seen.add(a["id"])
+        t = a.get("type")
+        c.choice(t, ARTICULATIONS, aw + ".type")
+        ps = a.get("parts")
+        if not isinstance(ps, list) or not 1 <= len(ps) <= 64 or len(set(map(str, ps))) != len(ps):
+            c.err(aw + ".parts", "expected 1..64 distinct part ids")
+        else:
+            for pid in ps:
+                if pid not in shapes_by_part:
+                    c.err(aw + ".parts", "unknown part %r" % pid)
+                else:
+                    chains.setdefault(pid, []).append(i)
+        if "axis" in a:
+            if c.vec(a["axis"], aw + ".axis", 3, -1, 1) and sum(x * x for x in a["axis"]) < 1e-6:
+                c.err(aw + ".axis", "the axis needs a direction")
+        elif t != "lift":
+            c.err(aw + ".axis", "missing key 'axis' (a world direction; lift defaults to up)")
+        if t in ("hinge", "turn"):
+            if "pivot" not in a:
+                c.err(aw + ".pivot", "missing key 'pivot' (a world point on the hinge or turning axis)")
+            else:
+                c.vec(a["pivot"], aw + ".pivot")
+            c.num(a.get("amount"), aw + ".amount", -180 if t == "hinge" else -1080, 180 if t == "hinge" else 1080)
+        elif t in ("slide", "lift"):
+            if "pivot" in a:
+                c.err(aw + ".pivot", "a %s moves along its axis and has no pivot" % t)
+            c.num(a.get("amount"), aw + ".amount", -MAX_EXTENT, MAX_EXTENT)
+        if "order" in a:
+            c.num(a["order"], aw + ".order", 0, 15, True)
+        if "note" in a:
+            c.text(a["note"], aw + ".note", 300)
+    if len({tuple(v) for v in chains.values()}) > MAX_JOINTS:
+        c.err(w, "more than %d different combinations of articulations" % MAX_JOINTS)
+
+
+def _label_check(c, labels, shapes_by_part, facts):
+    w = "scene.labels"
+    if not isinstance(labels, list) or len(labels) > MAX_LABELS:
+        c.err(w, "expected at most %d labels" % MAX_LABELS)
+        return
+    known = {f.get("key") for f in facts if isinstance(f, dict) and f.get("value") is not None}
+    seen = set()
+    for i, lb in enumerate(labels):
+        lw = "%s[%d]" % (w, i)
+        if not c.keys(lb, {"id", "part", "face", "field", "text", "role", "align", "orientation", "region"},
+                      {"id", "part"}, lw):
+            continue
+        if c.ident(lb.get("id"), lw + ".id"):
+            if lb["id"] in seen:
+                c.err(lw + ".id", "duplicate %r" % lb["id"])
+            seen.add(lb["id"])
+        if lb.get("part") not in shapes_by_part:
+            c.err(lw + ".part", "unknown part %r" % lb.get("part"))
+        else:
+            _face_of(c, shapes_by_part[lb["part"]], lb.get("face"), lw + ".face")
+        if ("field" in lb) == ("text" in lb):
+            c.err(lw, "give exactly one of field (a fact key; the host sets its value) or text (decorative words)")
+        elif "field" in lb and lb["field"] not in known:
+            c.err(lw + ".field", "no fact %r: add the fact with its certainty, or delete the label "
+                  "(an unknown fact has no label; never guess)" % lb["field"])
+        elif "text" in lb:
+            c.text(lb["text"], lw + ".text", 120)
+        for k, opts in (("role", LABEL_ROLES), ("align", ALIGNS), ("orientation", ORIENTATIONS)):
+            if k in lb:
+                c.choice(lb[k], opts, "%s.%s" % (lw, k))
+        if "region" in lb:
+            _region_check(c, lb["region"], lw + ".region")
+
+
+def _anchor_check(c, anchors, shapes_by_part):
+    w = "scene.anchors"
+    if not c.keys(anchors, {"base", "front", "spine", "grip"}, set(), w):
+        return
+    if "base" in anchors:
+        b = anchors["base"]
+        if c.keys(b, {"point", "up"}, {"point"}, w + ".base"):
+            c.vec(b.get("point"), w + ".base.point")
+            if "up" in b and c.vec(b["up"], w + ".base.up", 3, -1, 1) and sum(x * x for x in b["up"]) < 1e-6:
+                c.err(w + ".base.up", "the up vector needs a direction")
+    for k in ("front", "spine"):
+        if k in anchors:
+            a = anchors[k]
+            if c.keys(a, {"part", "face"}, {"part"}, "%s.%s" % (w, k)):
+                if a.get("part") not in shapes_by_part:
+                    c.err("%s.%s.part" % (w, k), "unknown part %r" % a.get("part"))
+                else:
+                    _face_of(c, shapes_by_part[a["part"]], a.get("face"), "%s.%s.face" % (w, k))
+    if "grip" in anchors:
+        g = anchors["grip"]
+        if c.keys(g, {"part", "point"}, set(), w + ".grip"):
+            if ("part" in g) == ("point" in g):
+                c.err(w + ".grip", "give exactly one of part or point")
+            elif "part" in g and g["part"] not in shapes_by_part:
+                c.err(w + ".grip.part", "unknown part %r" % g["part"])
+            elif "point" in g:
+                c.vec(g["point"], w + ".grip.point")
 
 
 def _asset_path(path, where, errors):
@@ -831,6 +1018,84 @@ def _shift(m, d):
     return out
 
 
+def _face_local(shape, face):
+    """A face's corners in the part's own frame, as seen from outside it: top-left,
+    top-right, bottom-right, bottom-left (a box's top is seen with the front at the bottom)."""
+    t = shape["type"]
+    if t in ("box", "plane"):
+        w, h = shape["size"][0], shape["size"][1]
+        d = shape["size"][2] if t == "box" else 0.0
+        y0 = h / 2 if t == "box" and shape.get("anchor") == "base" else 0.0
+        x, y, z = w / 2, h / 2, d / 2
+        quad = {"front": [(-x, y, z), (x, y, z), (x, -y, z), (-x, -y, z)],
+                "back": [(x, y, -z), (-x, y, -z), (-x, -y, -z), (x, -y, -z)],
+                "left": [(-x, y, -z), (-x, y, z), (-x, -y, z), (-x, -y, -z)],
+                "right": [(x, y, z), (x, y, -z), (x, -y, -z), (x, -y, z)],
+                "top": [(-x, y, -z), (x, y, -z), (x, y, z), (-x, y, z)],
+                "bottom": [(-x, -y, z), (x, -y, z), (x, -y, -z), (-x, -y, -z)]}[face]
+        return [(a, b + y0, c) for a, b, c in quad]
+    if t == "cylinder":
+        r, top, bot = shape["radius"], shape["height"], 0.0
+    else:  # lathe: the disc spanned by its widest radius at its highest/lowest profile point
+        r = max(q[0] for q in shape["profile"])
+        top, bot = max(q[1] for q in shape["profile"]), min(q[1] for q in shape["profile"])
+    if face == "top":
+        return [(-r, top, -r), (r, top, -r), (r, top, r), (-r, top, r)]
+    return [(-r, bot, r), (r, bot, r), (r, bot, -r), (-r, bot, -r)]
+
+
+def _face_half_width(shape, face):
+    c = _face_local(shape, face)
+    return 0.5 * math.dist(c[0], c[1])
+
+
+def _sub_quad(q, region=None, orientation="horizontal"):
+    """The region [u0, v0, u1, v1] of a quad (u across, v down), turned so that its first
+    edge is the direction text runs."""
+    if region:
+        tl, tr, _, bl = q
+        at = lambda u, v: tuple(tl[k] + u * (tr[k] - tl[k]) + v * (bl[k] - tl[k]) for k in range(3))
+        u0, v0, u1, v1 = region
+        q = [at(u0, v0), at(u1, v0), at(u1, v1), at(u0, v1)]
+    if orientation == "vertical-down":
+        q = [q[1], q[2], q[3], q[0]]
+    elif orientation == "vertical-up":
+        q = [q[3], q[0], q[1], q[2]]
+    return q
+
+
+def _world_face(part, face, region=None, orientation="horizontal", lift=0.0):
+    """A face of a part's first copy in world space (rest pose), lifted along its outward
+    normal so an image or text sits just in front of the surface."""
+    xf = _instances(part)[0][0]
+    q = [xf(c) for c in _face_local(part["shape"], face)]
+    if lift:
+        tl, tr, _, bl = q
+        a = [bl[k] - tl[k] for k in range(3)]
+        b = [tr[k] - tl[k] for k in range(3)]
+        n = (a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0])
+        ln = math.sqrt(sum(x * x for x in n)) or 1.0
+        q = [tuple(c[k] + lift * n[k] / ln for k in range(3)) for c in q]
+    return _sub_quad(q, region, orientation)
+
+
+def _articulate(art, p, u=1.0):
+    """One articulation applied to a world point at opening u (0 closed, 1 open)."""
+    amount = art["amount"] * u
+    if art["type"] in ("hinge", "turn"):
+        piv = art["pivot"]
+        q = _mul(_axis_rot(art["axis"], amount), (p[0] - piv[0], p[1] - piv[1], p[2] - piv[2]))
+        return (q[0] + piv[0], q[1] + piv[1], q[2] + piv[2])
+    return tuple(p[k] + art["axis"][k] * amount for k in range(3))
+
+
+def _chain_apply(chain, arts, p, u=1.0):
+    # a later articulation rides on the earlier ones: the first in order is outermost
+    for ai in reversed(chain):
+        p = _articulate(arts[ai], p, u)
+    return p
+
+
 def _r(x):
     return round(x, 5) + 0.0
 
@@ -858,6 +1123,24 @@ def compile_scene(scene):
     stages = sorted({p["stage"] for p in scene["parts"]})
     stage_index = {s: i for i, s in enumerate(stages)}
 
+    # articulations, in order; each part's chain of them is its joint (a shared transform slot)
+    raw = sorted(enumerate(scene.get("articulations", [])), key=lambda x: (x[1].get("order", 0), x[0]))
+    arts = []
+    for _, a in raw:
+        axis = a.get("axis", [0, 1, 0])
+        n = math.sqrt(sum(x * x for x in axis))
+        arts.append({"id": a["id"], "type": a["type"], "axis": [_r(x / n) for x in axis],
+                     "pivot": [_r(x) for x in a["pivot"]] if "pivot" in a else None,
+                     "amount": a["amount"], "unit": "deg" if a["type"] in ("hinge", "turn") else "m",
+                     "order": a.get("order", 0), "parts": list(a["parts"]), "instances": []})
+    joints, joint_of = [], {}
+    for part in scene["parts"]:
+        chain = tuple(i for i, a in enumerate(arts) if part["id"] in a["parts"])
+        if chain:
+            if chain not in joints:
+                joints.append(chain)
+            joint_of[part["id"]] = joints.index(chain)
+
     styles, style_key = [], {}
     lines, fills, points, motions, artwork = [], [], [], [], []
     part_out = []
@@ -881,7 +1164,8 @@ def compile_scene(scene):
         pinfo = {"id": part["id"], "label": part.get("label", part["id"]), "role": part["role"],
                  "certainty": part["certainty"], "basis": list(part.get("basis", [])),
                  "source": part.get("source"), "stage": part["stage"], "floating": part.get("floating", False),
-                 "shape": part["shape"]["type"], "instances": [], "motion": None}
+                 "shape": part["shape"]["type"], "instances": [], "motion": None,
+                 "joint": joint_of.get(part["id"], -1)}
         sprite_px = part["shape"].get("size_px", 5 if part["shape"]["type"] == "points" else 9)
         for inst_i, (xf, phase, mirrored, carry) in enumerate(_instances(part)):
             slot = -1
@@ -916,7 +1200,17 @@ def compile_scene(scene):
                         lo[k], hi[k] = min(lo[k], p[k]), max(hi[k], p[k])
             if lo[0] == math.inf:
                 lo = hi = list(xf((0.0, 0.0, 0.0)))
-            pinfo["instances"].append({"min": [_r(x) for x in lo], "max": [_r(x) for x in hi], "motion_slot": slot})
+            joint = joint_of.get(part["id"], -1)
+            inst = {"min": [_r(x) for x in lo], "max": [_r(x) for x in hi], "motion_slot": slot, "joint": joint}
+            if joint >= 0:
+                # where the copy reaches when fully open (its rest box carried through the chain)
+                corners = [_chain_apply(joints[joint], arts, (lo[0] if i & 1 else hi[0], lo[1] if i & 2 else hi[1],
+                                                              lo[2] if i & 4 else hi[2])) for i in range(8)]
+                inst["open_min"] = [_r(min(c[k] for c in corners)) for k in range(3)]
+                inst["open_max"] = [_r(max(c[k] for c in corners)) for k in range(3)]
+                for ai in joints[joint]:
+                    arts[ai]["instances"].append([part["id"], inst_i])
+            pinfo["instances"].append(inst)
             built.append((pi, part, inst_lines, inst_tris, inst_pts, slot,
                           (tone, alpha, width, glow, line_kind, fade, fill, sprite_px)))
         if part.get("motion"):
@@ -941,25 +1235,27 @@ def compile_scene(scene):
     def style_of(pi, cls, slot, st, kind, part=None):
         tone, alpha, width, glow, line_kind, fade, fill, _ = st
         wf, af = CLASS_STYLE.get(cls, (1.0, 1.0))
+        jt = joint_of.get(scene["parts"][pi]["id"], -1)
         if kind == "fill":
             key = ("f", pi, slot, fill)
             # glass whispers, a dark fill hides what is behind it (xray)
             glass = {"identity": 0.14, "mass": 0.09, "data": 0.1}.get(part["role"], 0.07)
             entry = [TONES.index(tone), round(glass if fill == "glass" else 0.55, 4), 0, 0, 0, fade, pi, slot,
-                     1 if fill == "dark" else 0]
+                     1 if fill == "dark" else 0, jt]
         elif kind == "point":
             key = ("p", pi, slot)
-            entry = [TONES.index(tone), round(min(1.0, alpha * 1.05), 4), 0, 0, 0, fade, pi, slot, 0]
+            entry = [TONES.index(tone), round(min(1.0, alpha * 1.05), 4), 0, 0, 0, fade, pi, slot, 0, jt]
         else:
             key = ("l", pi, cls, slot)
             entry = [TONES.index(tone), round(alpha * af, 4), round(width * wf, 3),
                      round(glow * (1.0 if cls == shapes.OUTLINE else 0.4), 3),
-                     DASH_CODE.get(line_kind, 0), fade + (1 if cls == shapes.DETAIL else 0), pi, slot, 0]
+                     DASH_CODE.get(line_kind, 0), fade + (1 if cls == shapes.DETAIL else 0), pi, slot, 0, jt]
         if key not in style_key:
             style_key[key] = len(styles)
             styles.append(entry)
         return style_key[key]
 
+    art_done = set()
     for pi, part, ls, ts, ps, slot, st in built:
         if st[4] != "none":
             for a, b, cls in ls:
@@ -973,17 +1269,19 @@ def compile_scene(scene):
         for p, shape in ps:
             si = style_of(pi, 0, slot, st, "point")
             points.extend([_r(p[0]), _r(p[1]), _r(p[2]), st[7], si, shape, phase(part["stage"], p[1])])
-        art = part.get("artwork_asset_id")
-        if art:
-            shp = part["shape"]
-            if shp["type"] == "plane":
-                w2, h2, z = shp["size"][0] / 2, shp["size"][1] / 2, 0.0
-            else:
-                w2, h2, z = shp["size"][0] / 2, shp["size"][1] / 2, shp["size"][2] / 2
-            xf = _instances(part)[0][0]
-            corners = [xf((-w2, h2, z + 0.0005)), xf((w2, h2, z + 0.0005)), xf((w2, -h2, z + 0.0005)), xf((-w2, -h2, z + 0.0005))]
-            artwork.append({"part": part["id"], "asset_id": art, "corners": [[_r(x) for x in c] for c in corners],
-                            "uv": [[0, 0], [1, 0], [1, 1], [0, 1]], "phase": phase(part["stage"], min(c[1] for c in corners))})
+        art = part.get("artwork")
+        if art and part["id"] not in art_done:
+            art_done.add(part["id"])
+            face = art.get("face", DEFAULT_FACE[part["shape"]["type"]])
+            corners = _world_face(part, face, art.get("region"), lift=0.0005)
+            half = _face_half_width(part["shape"], face)
+            artwork.append({"part": part["id"], "slot": art["slot"], "asset_id": art.get("asset"), "face": face,
+                            "corners": [[_r(x) for x in c] for c in corners], "uv": [[0, 0], [1, 0], [1, 1], [0, 1]],
+                            "mask": art.get("mask", "rect"),
+                            "inner_ratio": _r(art.get("inner_radius", 0.0) / half) if half else 0.0,
+                            "certainty": part["certainty"], "motion_slot": slot,
+                            "joint": joint_of.get(part["id"], -1),
+                            "phase": phase(part["stage"], min(c[1] for c in corners))})
 
     n_lines, n_tris, n_points = len(lines) // 9, len(fills) // 15, len(points) // 7
     if n_lines > MAX_LINES or n_tris > MAX_TRIS or n_points > MAX_POINTS:
@@ -1006,8 +1304,40 @@ def compile_scene(scene):
         anchor[1] = inst["max"][1]
         off = a.get("offset", [0, 0, 0])
         anns.append({"id": a["id"], "text": a["text"], "part": a["part"],
-                     "anchor": [_r(anchor[k] + off[k]) for k in range(3)],
+                     "anchor": [_r(anchor[k] + off[k]) for k in range(3)], "joint": inst["joint"],
                      "certainty": a.get("certainty", by_id[a["part"]]["certainty"])})
+
+    facts = {f["key"]: f for f in scene["facts"]}
+    labels = []
+    parts_by_id = {p["id"]: p for p in scene["parts"]}
+    for lb in scene.get("labels", []):
+        part = parts_by_id[lb["part"]]
+        face = lb.get("face", DEFAULT_FACE[part["shape"]["type"]])
+        orient = lb.get("orientation", "horizontal")
+        q = _world_face(part, face, lb.get("region"), orient, lift=0.0006)
+        if "field" in lb:
+            f = facts[lb["field"]]
+            v = f["value"]
+            text = ("yes" if v else "no") if isinstance(v, bool) else (
+                str(int(v)) if isinstance(v, float) and v.is_integer() else str(v))
+            cert, field = f["certainty"], lb["field"]
+        else:
+            text, cert, field = lb["text"], "decorative", None
+        inst = by_id[part["id"]]["instances"][0]
+        labels.append({"id": lb["id"], "part": part["id"], "face": face, "corners": [[_r(x) for x in c] for c in q],
+                       "field": field, "text": text, "certainty": cert,
+                       "role": lb.get("role", "decorative" if field is None else "meta"),
+                       "align": lb.get("align", "center"), "orientation": orient,
+                       "motion_slot": inst["motion_slot"], "joint": inst["joint"],
+                       "phase": phase(part["stage"], min(c[1] for c in q))})
+
+    anchors = _anchors(scene, parts_by_id, by_id, lo, hi)
+    open_lo, open_hi = list(lo), list(hi)
+    for pinfo in part_out:
+        for inst in pinfo["instances"]:
+            if "open_min" in inst:
+                for k in range(3):
+                    open_lo[k], open_hi[k] = min(open_lo[k], inst["open_min"][k]), max(open_hi[k], inst["open_max"][k])
 
     return {
         "format": GEOMETRY_FORMAT, "version": GEOMETRY_VERSION, "generator": GENERATOR,
@@ -1017,20 +1347,56 @@ def compile_scene(scene):
         "scene_sha256": canonical_sha256(scene),
         "provenance": {"sources": [dict(s) for s in scene["sources"]], "facts": [dict(f) for f in scene["facts"]],
                        "assets": [dict(a) for a in scene.get("assets", [])]},
-        "style": {"palette": scene.get("style", {}).get("palette", "violet"),
-                  "identity": scene.get("style", {}).get("identity", "none")},
-        "bounds": {"min": [_r(x) for x in lo], "max": [_r(x) for x in hi], "center": centre, "radius": radius},
+        "bounds": {"min": [_r(x) for x in lo], "max": [_r(x) for x in hi], "center": centre, "radius": radius,
+                   "open_min": [_r(x) for x in open_lo], "open_max": [_r(x) for x in open_hi]},
+        "anchors": anchors,
         "stages": [{"stage": s, "index": i} for i, s in enumerate(stages)],
         "parts": part_out, "styles": styles,
-        "style_fields": ["tone", "alpha", "width_px", "glow_px", "dash", "fade", "part", "motion_slot", "occluder"],
+        "style_fields": ["tone", "alpha", "width_px", "glow_px", "dash", "fade", "part", "motion_slot", "occluder",
+                         "joint"],
         "lines": lines, "line_stride": 9, "line_fields": ["ax", "ay", "az", "bx", "by", "bz", "style", "phase_a", "phase_b"],
         "fills": fills, "fill_stride": 5, "fill_fields": ["x", "y", "z", "style", "phase"],
         "points": points, "point_stride": 7, "point_fields": ["x", "y", "z", "size_px", "style", "sprite", "phase"],
-        "motions": motions, "artwork": artwork, "annotations": anns,
+        "motions": motions, "articulations": arts, "joints": [list(j) for j in joints],
+        "artwork": artwork, "labels": labels, "annotations": anns,
         "presentation": pr, "animation": _normal_animation(scene),
         "counts": {"lines": n_lines, "triangles": n_tris, "points": n_points, "motions": len(motions),
+                   "articulations": len(arts), "labels": len(labels),
                    "instances": sum(len(p["instances"]) for p in part_out)},
     }
+
+
+def _anchors(scene, parts_by_id, info_by_id, lo, hi):
+    """Where a host holds and shelves the object (rest pose): base point and up, the front
+    and spine faces (top-left, top-right, bottom-right, bottom-left as seen from outside),
+    and an optional grip point. Unstated ones come from the bounds."""
+    an = scene.get("anchors", {})
+    rq = lambda q: [[_r(x) for x in c] for c in q]
+    base = an.get("base")
+    out = {"base": {"point": [_r(x) for x in base["point"]], "up": list(base.get("up", [0, 1, 0])), "from": "scene"}
+           if base else {"point": [_r((lo[0] + hi[0]) / 2), _r(lo[1]), _r((lo[2] + hi[2]) / 2)], "up": [0, 1, 0],
+                         "from": "bounds"}}
+    bounds_faces = {
+        "front": [(lo[0], hi[1], hi[2]), (hi[0], hi[1], hi[2]), (hi[0], lo[1], hi[2]), (lo[0], lo[1], hi[2])],
+        "spine": [(lo[0], hi[1], lo[2]), (lo[0], hi[1], hi[2]), (lo[0], lo[1], hi[2]), (lo[0], lo[1], lo[2])],
+    }
+    for k in ("front", "spine"):
+        if k in an:
+            part = parts_by_id[an[k]["part"]]
+            face = an[k].get("face", DEFAULT_FACE[part["shape"]["type"]])
+            out[k] = {"corners": rq(_world_face(part, face)), "part": part["id"], "face": face, "from": "scene"}
+        else:
+            out[k] = {"corners": rq(bounds_faces[k]), "part": None, "face": "+z" if k == "front" else "-x",
+                      "from": "bounds"}
+    grip = an.get("grip")
+    if grip and "part" in grip:
+        b = info_by_id[grip["part"]]["instances"][0]
+        out["grip"] = {"point": [_r((b["min"][k] + b["max"][k]) / 2) for k in range(3)], "part": grip["part"], "from": "scene"}
+    elif grip:
+        out["grip"] = {"point": [_r(x) for x in grip["point"]], "part": None, "from": "scene"}
+    else:
+        out["grip"] = None
+    return out
 
 
 def _normal_presentation(scene):
@@ -1048,6 +1414,10 @@ def _normal_presentation(scene):
         "certainty_style": pr.get("certainty_style", "subtle"),
         "background": pr.get("background", "deep"),
         "float": pr.get("float", 0.0),
+        "style_hint": {"palette": pr.get("style_hint", {}).get("palette", "violet"),
+                       "identity": pr.get("style_hint", {}).get("identity", "none"),
+                       "note": "a hint the host may ignore; the renderer owns colour"},
+        "still_pose": pr.get("still_pose", "open"),
     }
 
 
@@ -1131,8 +1501,18 @@ def reframe(geometry, frame="z-up"):
     flat(g["points"], g["point_stride"], (0,))
     for m in g["motions"]:
         m["pivot"], m["axis"] = p(m["pivot"]), p(m["axis"])
-    for a in g["artwork"]:
+    for a in g["articulations"]:
+        a["axis"] = p(a["axis"])
+        if a["pivot"] is not None:
+            a["pivot"] = p(a["pivot"])
+    for a in g["artwork"] + g["labels"]:
         a["corners"] = [p(c) for c in a["corners"]]
+    an = g["anchors"]
+    an["base"]["point"], an["base"]["up"] = p(an["base"]["point"]), p(an["base"]["up"])
+    for k in ("front", "spine"):
+        an[k]["corners"] = [p(c) for c in an[k]["corners"]]
+    if an["grip"]:
+        an["grip"]["point"] = p(an["grip"]["point"])
     for a in g["annotations"]:
         a["anchor"] = p(a["anchor"])
 
@@ -1142,7 +1522,11 @@ def reframe(geometry, frame="z-up"):
     for part in g["parts"]:
         for inst in part["instances"]:
             inst["min"], inst["max"] = box(inst["min"], inst["max"])
+            if "open_min" in inst:
+                inst["open_min"], inst["open_max"] = box(inst["open_min"], inst["open_max"])
     lo, hi = box(g["bounds"]["min"], g["bounds"]["max"])
-    g["bounds"] = {"min": lo, "max": hi, "center": p(g["bounds"]["center"]), "radius": g["bounds"]["radius"]}
+    olo, ohi = box(g["bounds"]["open_min"], g["bounds"]["open_max"])
+    g["bounds"] = {"min": lo, "max": hi, "center": p(g["bounds"]["center"]), "radius": g["bounds"]["radius"],
+                   "open_min": olo, "open_max": ohi}
     g["frame"] = {"up": "+z", "forward": "-y", "note": "converted from the authoring frame (Y up): (x, y, z) -> (x, -z, y)"}
     return g

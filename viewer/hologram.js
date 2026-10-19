@@ -7,7 +7,8 @@
  *
  * URL parameters: t (freeze time, seconds), view (hero|front|side|back|top|three-quarter|<scene view>),
  * motion (full|reduced), mode (light|provenance), ui (1|0), labels (1|0), caption (1|0),
- * sheet (assembly|views|motion|life|provenance|all), fps (15|20|30|60|0), capture (1).
+ * sheet (assembly|views|motion|life|provenance|all), fps (15|20|30|60|0), capture (1),
+ * open (0..1: hold the articulations at this opening instead of playing them).
  */
 (function () {
   "use strict";
@@ -51,6 +52,7 @@ uniform vec4 uBounds;        // centre xyz, radius
 uniform vec2 uYRange;        // ground y, top y
 uniform mat4 uMotion[32];
 uniform float uMotionGain[32];
+uniform mat4 uJoint[16];     // articulation chains, posed by the opening
 uniform float uGhost;        // pre-build ghost image 0..1
 uniform float uStabilise;    // glow surplus after the build
 uniform float uGlobalAlpha;
@@ -64,9 +66,12 @@ float strike(float t) { return smoothstep(0.0, 0.08, t) * (1.0 - smoothstep(0.7,
 vec4 styleA(float s) { return texelFetch(uStyles, ivec2(0, int(s + 0.5)), 0); }  // tone, alpha, width, glow
 vec4 styleB(float s) { return texelFetch(uStyles, ivec2(1, int(s + 0.5)), 0); }  // dash, fade, part, slot
 vec4 styleC(float s) { return texelFetch(uStyles, ivec2(2, int(s + 0.5)), 0); }  // occluder, certainty, role, drift
+vec4 styleD(float s) { return texelFetch(uStyles, ivec2(3, int(s + 0.5)), 0); }  // joint
 
-vec3 moved(vec3 p, float slot, inout float gain) {
+// periodic motion about the rest pose, then the articulation chain carries it
+vec3 moved(vec3 p, float slot, float joint, inout float gain) {
   if (slot >= -0.5) { int i = int(slot + 0.5); p = (uMotion[i] * vec4(p, 1.0)).xyz; gain *= uMotionGain[i]; }
+  if (joint >= -0.5) p = (uJoint[int(joint + 0.5)] * vec4(p, 1.0)).xyz;
   return p;
 }
 // what an event does to where a point is drawn
@@ -127,10 +132,10 @@ uniform float uInk;     // under-stroke pass
 uniform float uHidden;  // 1 front, <1 behind glass
 out vec4 vColor; out float vAcross; out float vHalf; out float vGlow; out float vDash; out float vPhase; out float vDashKind; out float vTip;
 void main() {
-  vec4 sa = styleA(aStyle), sb = styleB(aStyle), sc = styleC(aStyle);
+  vec4 sa = styleA(aStyle), sb = styleB(aStyle), sc = styleC(aStyle), sd = styleD(aStyle);
   float gain = 1.0;
   float id = float(gl_InstanceID);
-  vec3 a = displaced(moved(aA, sb.w, gain), id), b = displaced(moved(aB, sb.w, gain), id + 0.5);
+  vec3 a = displaced(moved(aA, sb.w, sd.x, gain), id), b = displaced(moved(aB, sb.w, sd.x, gain), id + 0.5);
   vec4 ca = uVP * vec4(a, 1.0), cb = uVP * vec4(b, 1.0);
   float near = 0.02;
   if (ca.w < near && cb.w < near) { gl_Position = vec4(2.0, 2.0, 2.0, 1.0); vColor = vec4(0.0); return; }
@@ -195,9 +200,9 @@ layout(location=1) in float aStyle;
 layout(location=2) in float aPhase;
 out vec3 vWorld; out vec4 vTint; out float vPhase; out float vOcc;
 void main() {
-  vec4 sa = styleA(aStyle), sb = styleB(aStyle), sc = styleC(aStyle);
+  vec4 sa = styleA(aStyle), sb = styleB(aStyle), sc = styleC(aStyle), sd = styleD(aStyle);
   float gain = 1.0;
-  vec3 p = displaced(moved(aPos, sb.w, gain), float(gl_VertexID / 3));
+  vec3 p = displaced(moved(aPos, sb.w, sd.x, gain), float(gl_VertexID / 3));
   vWorld = p; vPhase = aPhase; vOcc = sc.x;
   float ev = eventGain(p, float(gl_VertexID / 3));
   vTint = vec4(toneColor(sa.x, sc.y) * ev, sa.y * gain * fogOf(p, sb.y) * uGlobalAlpha);
@@ -228,9 +233,9 @@ layout(location=4) in float aShape;
 layout(location=5) in float aPhase;
 out vec4 vColor; out vec2 vUv; out float vShape; out float vPhase;
 void main() {
-  vec4 sa = styleA(aStyle), sb = styleB(aStyle), sc = styleC(aStyle);
+  vec4 sa = styleA(aStyle), sb = styleB(aStyle), sc = styleC(aStyle), sd = styleD(aStyle);
   float gain = 1.0; float id = float(gl_InstanceID);
-  vec3 p = moved(aPos, sb.w, gain);
+  vec3 p = moved(aPos, sb.w, sd.x, gain);
   float drift = sc.w;
   float life = 1.0;
   if (drift > 0.5) { // rising motes (the projector's): wrap within a column, fade at both ends
@@ -309,11 +314,11 @@ void main() {
   const ART_VS = COMMON + `
 layout(location=0) in vec3 aPos;
 layout(location=1) in vec2 aUv;
-uniform float uSlot; uniform float uPhaseArt;
+uniform float uSlot; uniform float uJointArt; uniform float uPhaseArt;
 out vec2 vUv; out float vA;
 void main() {
   float gain = 1.0;
-  vec3 p = moved(aPos, uSlot, gain);
+  vec3 p = moved(aPos, uSlot, uJointArt, gain);
   vUv = aUv; vA = uGlobalAlpha * smoothstep(uPhaseArt, uPhaseArt + 0.1, uBuild);
   gl_Position = uVP * vec4(p, 1.0);
 }`;
@@ -321,12 +326,22 @@ void main() {
 precision highp float;
 in vec2 vUv; in float vA; out vec4 o;
 uniform sampler2D uTex; uniform float uTime; uniform vec2 uViewport;
+uniform vec2 uMask;   // x: 0 rectangle, 1 circle; y: the hole as a fraction of the radius
+uniform vec4 uText;   // rgb: the light the renderer sets text in; a: 1 for text
 void main() {
   vec4 c = texture(uTex, vUv);
+  float edge;
+  if (uMask.x > 0.5) {
+    float r = length(vUv - 0.5) * 2.0;
+    if (r > 1.0 || r < uMask.y) discard;
+    edge = smoothstep(1.0, 0.96, r) * smoothstep(uMask.y, uMask.y + 0.03, r);
+  } else {
+    vec2 e = min(vUv, 1.0 - vUv);
+    edge = smoothstep(0.0, 0.025, min(e.x, e.y));
+  }
   // the image as projected light: faint scan texture, a little transparency, edges that fade
   float scan = 0.86 + 0.14 * step(1.0, mod(gl_FragCoord.y, 3.0));
-  vec2 e = min(vUv, 1.0 - vUv);
-  float edge = smoothstep(0.0, 0.025, min(e.x, e.y));
+  if (uText.a > 0.5) { float t = vA * c.a; if (t < 0.003) discard; o = vec4(uText.rgb * scan * t, t); return; }
   float a = vA * 0.82 * (0.7 + 0.3 * edge);
   o = vec4(c.rgb * scan * a, a);
 }`;
@@ -470,19 +485,19 @@ void main() {
 
   Hologram.prototype.upload = function () {
     const gl = this.gl, g = this.geo;
-    // styles texture: 3 texels per style
-    const st = new Float32Array(this.styles.length * 12);
+    // styles texture: 4 texels per style
+    const st = new Float32Array(this.styles.length * 16);
     this.styles.forEach((s, i) => {
       const part = s[6] >= 0 ? g.parts[s[6]] : null;
       st.set([s[0], s[1], s[2], s[3], s[4], s[5], s[6], s[7], s[8],
               part ? CERT_CODE[part.certainty] : 2, part ? ROLE_CODE[part.role] : 6,
-              (this.moteStyle === i) ? 1 : 0], i * 12);
+              (this.moteStyle === i) ? 1 : 0, s.length > 9 ? s[9] : -1, 0, 0, 0], i * 16);
     });
     this.styleTex = gl.createTexture();
     gl.bindTexture(gl.TEXTURE_2D, this.styleTex);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
-    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA32F, 3, this.styles.length, 0, gl.RGBA, gl.FLOAT, st);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA32F, 4, this.styles.length, 0, gl.RGBA, gl.FLOAT, st);
 
     const corner = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, corner);
@@ -529,23 +544,52 @@ void main() {
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 3, -1, -1, 3]), gl.STATIC_DRAW);
     gl.enableVertexAttribArray(0); gl.vertexAttribPointer(0, 2, gl.FLOAT, false, 0, 0);
 
-    // artwork: only supplied, hash-checked bytes the build embedded; otherwise an empty labelled slot
+    // artwork: only supplied, hash-checked bytes the build embedded; otherwise an empty slot.
+    // Labels: text the renderer sets itself from the facts, in its own font, as light.
     this.art = [];
     const assets = (window.HOLOGRAM_ASSETS || {});
-    for (const a of g.artwork || []) {
+    const quad = (c, uv) => {
       const vao = gl.createVertexArray();
       gl.bindVertexArray(vao);
       const b = gl.createBuffer();
       gl.bindBuffer(gl.ARRAY_BUFFER, b);
-      const c = a.corners, d = [];
-      const tri = [0, 1, 2, 0, 2, 3];
-      for (const i of tri) d.push(c[i][0], c[i][1], c[i][2], a.uv[i][0], a.uv[i][1]);
+      const d = [];
+      for (const i of [0, 1, 2, 0, 2, 3]) d.push(c[i][0], c[i][1], c[i][2], uv[i][0], uv[i][1]);
       gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(d), gl.STATIC_DRAW);
       gl.enableVertexAttribArray(0); gl.vertexAttribPointer(0, 3, gl.FLOAT, false, 20, 0);
       gl.enableVertexAttribArray(1); gl.vertexAttribPointer(1, 2, gl.FLOAT, false, 20, 12);
-      const entry = { vao, phase: a.phase, part: a.part, tex: null, ready: false };
-      const slot = (g.parts.find((p) => p.id === a.part) || { instances: [{ motion_slot: -1 }] }).instances[0].motion_slot;
-      entry.slot = slot;
+      return vao;
+    };
+    const UV = [[0, 0], [1, 0], [1, 1], [0, 1]];
+    for (const lb of g.labels || []) {
+      const c = lb.corners, wm = Math.hypot(...V.sub(c[1], c[0])), hm = Math.hypot(...V.sub(c[3], c[0]));
+      if (!(wm > 0 && hm > 0)) continue;
+      const W = 1024, H = Math.max(16, Math.min(1024, Math.round(W * hm / wm)));
+      const cv = document.createElement("canvas"); cv.width = W; cv.height = H;
+      const x = cv.getContext("2d");
+      const weight = lb.role === "title" ? "600 " : lb.role === "creator" ? "500 " : "400 ";
+      let size = H * 0.7;
+      const font = (sz) => weight + sz.toFixed(1) + "px ui-sans-serif, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif";
+      x.font = font(size);
+      const tw = x.measureText(lb.text).width;
+      if (tw > W * 0.94) { size *= W * 0.94 / tw; x.font = font(size); }
+      x.fillStyle = "#ffffff"; x.textBaseline = "middle";
+      x.textAlign = lb.align === "left" ? "left" : lb.align === "right" ? "right" : "center";
+      x.fillText(lb.text, lb.align === "left" ? W * 0.03 : lb.align === "right" ? W * 0.97 : W / 2, H * 0.54);
+      const tex = gl.createTexture();
+      gl.bindTexture(gl.TEXTURE_2D, tex);
+      gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, false);
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, cv);
+      gl.generateMipmap(gl.TEXTURE_2D);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
+      this.art.push({ vao: quad(c, UV), phase: lb.phase, part: lb.part, tex, ready: true, text: true,
+                      certainty: lb.certainty, slot: lb.motion_slot, joint: lb.joint, mask: [0, 0] });
+    }
+    for (const a of g.artwork || []) {
+      const vao = quad(a.corners, a.uv);
+      const entry = { vao, phase: a.phase, part: a.part, tex: null, ready: false,
+                      slot: a.motion_slot !== undefined ? a.motion_slot : -1, joint: a.joint !== undefined ? a.joint : -1,
+                      mask: [a.mask === "circle" ? 1 : 0, a.inner_ratio || 0] };
       if (assets[a.asset_id]) {
         const img = new Image();
         let done;
@@ -563,7 +607,7 @@ void main() {
         };
         img.src = assets[a.asset_id];
       }
-      this.art.push(entry);
+      this.art.unshift(entry);
     }
     gl.bindVertexArray(null);
   };
@@ -583,7 +627,7 @@ void main() {
     if (this.opt.reduced || idle.life === "off" || !idle.events.length) return out;
     const r = rng(this.seed ^ 0x9e3779b9);
     const calm = idle.life === "calm";
-    let t = this.assemblyTimes().end + 1.2;
+    let t = this.openTimes().end + 1.2;
     let last = "";
     for (let i = 0; i < 400 && t < 3600; i++) {
       let kind = idle.events[Math.floor(r() * idle.events.length)];
@@ -623,6 +667,36 @@ void main() {
     }
     s.life = this.opt.reduced || g.animation.idle.life === "off" ? 0 : 1;
     return s;
+  };
+
+  // articulations: after assembly the object opens, one order group after another, and holds
+  Hologram.prototype.openTimes = function () {
+    const arts = this.geo.articulations || [];
+    const orders = [...new Set(arts.map((a) => a.order))].sort((a, b) => a - b);
+    const start = this.assemblyTimes().end + (orders.length ? 0.6 : 0), per = 1.5;
+    return { orders, start, end: start + orders.length * per };
+  };
+  Hologram.prototype.openAt = function (t) {
+    if (this.opt.open !== null && this.opt.open !== undefined) return this.opt.open;
+    if (this.opt.reduced) return this.geo.presentation.still_pose === "closed" ? 0 : 1;
+    const o = this.openTimes();
+    return o.end > o.start ? Math.max(0, Math.min(1, (t - o.start) / (o.end - o.start))) : 0;
+  };
+  Hologram.prototype.jointUniforms = function (u) {
+    const arts = this.geo.articulations || [], joints = this.geo.joints || [];
+    const I = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
+    const mats = new Float32Array(16 * 16);
+    for (let i = 0; i < 16; i++) mats.set(I, i * 16);
+    const orders = [...new Set(arts.map((a) => a.order))].sort((a, b) => a - b), G = orders.length;
+    const A = arts.map((a) => {
+      const v = ease(Math.max(0, Math.min(1, (u * G - orders.indexOf(a.order)) / 0.85)));
+      if (a.type === "hinge" || a.type === "turn") return axisMatrix(a.axis, a.amount * v * Math.PI / 180, a.pivot, [0, 0, 0]);
+      const d = a.amount * v;
+      return [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, a.axis[0] * d, a.axis[1] * d, a.axis[2] * d, 1];
+    });
+    // a later articulation rides on the earlier ones: the first in the chain is outermost
+    joints.forEach((chain, j) => { if (j < 16) mats.set(chain.reduce((M, i) => mat4mul(M, A[i]), I), j * 16); });
+    return mats;
   };
 
   Hologram.prototype.identityCentre = function () {
@@ -673,7 +747,7 @@ void main() {
       this._boxes = {};
       const all = [];
       for (const p of this.geo.parts) {
-        const boxes = p.instances.map((b) => [b.min, b.max]);
+        const boxes = p.instances.map((b) => [b.min, b.max]).concat(p.instances.filter((b) => b.open_min).map((b) => [b.open_min, b.open_max]));
         this._boxes[p.id] = boxes;
         if (!(p.shape === "points" && (p.role === "ornament" || p.certainty === "decorative"))) all.push(...boxes);
       }
@@ -736,9 +810,10 @@ void main() {
 
   // ------------------------------------------------------------------------- drawing
   Hologram.prototype.palette = function () {
-    const pal = PALETTES[this.geo.style.palette] || PALETTES.violet;
+    const hint = this.geo.presentation.style_hint || this.geo.style || {};
+    const pal = PALETTES[hint.palette] || PALETTES.violet;
     const tones = pal.tones.map(hex);
-    const id = IDENTITY[this.geo.style.identity];
+    const id = IDENTITY[hint.identity];
     if (id) tones[5] = [tones[3][0] * 0.58 + id[0] * 0.42 * 1.05, tones[3][1] * 0.58 + id[1] * 0.42 * 1.05, tones[3][2] * 0.58 + id[2] * 0.42 * 1.05];
     else tones[5] = tones[1];
     return { tones, base: hex(pal.base), haze: hex(pal.haze), haze2: hex(pal.haze2) };
@@ -758,6 +833,7 @@ void main() {
     const transparent = pr.background === "transparent";
     gl.clearColor(transparent ? 0 : pal.base[0], transparent ? 0 : pal.base[1], transparent ? 0 : pal.base[2], transparent ? 0 : 1);
     gl.clearDepth(1);
+    gl.depthMask(true);  // a masked depth buffer would not clear, and a sheet's next cell would inherit it
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
     this.aspect = w / h;
@@ -767,6 +843,8 @@ void main() {
     this.lastVP = vp; this.lastRect = rect;
     const s = this.state(t);
     const mot = this.motionUniforms(t);
+    const joints = this.jointUniforms(opts.open !== undefined ? opts.open : this.openAt(t));
+    this.lastJoints = joints;
 
     // atmosphere
     if (!transparent && pr.atmosphere.haze > 0) {
@@ -807,6 +885,7 @@ void main() {
       if (u.uYRange) gl.uniform2f(u.uYRange, this.ground, this.top);
       if (u.uMotion) gl.uniformMatrix4fv(u.uMotion, false, mot.mats);
       if (u.uMotionGain) gl.uniform1fv(u.uMotionGain, mot.gains);
+      if (u.uJoint) gl.uniformMatrix4fv(u.uJoint, false, joints);
       if (u.uGhost) gl.uniform1f(u.uGhost, s.ghost);
       if (u.uStabilise) gl.uniform1f(u.uStabilise, s.stabilise);
       if (u.uGlobalAlpha) gl.uniform1f(u.uGlobalAlpha, s.globalAlpha);
@@ -835,18 +914,28 @@ void main() {
       gl.depthMask(false);
     }
 
-    // artwork faces (supplied bytes only)
+    // artwork faces (supplied bytes only), then the labels' text
     if (this.art.length) {
       const u = common(this.programs.art);
+      const certLight = { verified: 1.0, user_supplied: 0.95, inferred: 0.78, decorative: 0.6 };
+      const certColor = { verified: [0.85, 0.97, 1.0], user_supplied: [0.45, 1.0, 0.62], inferred: [1.0, 0.72, 0.3], decorative: [0.95, 0.42, 0.95] };
+      // images and text sit a hair in front of their surface (and of a clear lid over them)
+      gl.enable(gl.POLYGON_OFFSET_FILL);
+      gl.polygonOffset(-2.0, -4.0);
       for (const a of this.art) {
         if (!a.ready) continue;
         gl.uniform1f(u.uSlot, a.slot);
+        gl.uniform1f(u.uJointArt, a.joint);
         gl.uniform1f(u.uPhaseArt, a.phase);
+        gl.uniform2f(u.uMask, a.mask[0], a.mask[1]);
+        const k = certLight[a.certainty] || 0.8, tint = mode === "provenance" ? certColor[a.certainty] || pal.tones[1] : pal.tones[1];
+        gl.uniform4f(u.uText, tint[0] * k, tint[1] * k, tint[2] * k, a.text ? 1 : 0);
         gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, a.tex); gl.uniform1i(u.uTex, 1);
         gl.depthFunc(gl.LEQUAL);
         gl.bindVertexArray(a.vao);
         gl.drawArrays(gl.TRIANGLES, 0, 6);
       }
+      gl.disable(gl.POLYGON_OFFSET_FILL);
     }
 
     // lines: the under-stroke ink, then light — in front of the glass, then (xray) faintly behind it
@@ -905,6 +994,7 @@ void main() {
       mode: q.get("mode") === "provenance" ? "provenance" : "light",
       ui: q.get("ui") !== "0", labels: q.get("labels") === "1", caption: q.get("caption") !== "0",
       sheet: q.get("sheet"), fps: q.has("fps") ? parseInt(q.get("fps"), 10) : 30, capture: q.get("capture") === "1",
+      open: q.has("open") ? Math.max(0, Math.min(1, parseFloat(q.get("open")) || 0)) : null,
     };
     const stage = document.getElementById("stage");
     const canvas = document.getElementById("holo");
@@ -956,7 +1046,12 @@ void main() {
       const placed = [];
       const free = (x, y, w) => !placed.some((r) => x < r[0] + r[2] + 8 && x + w + 8 > r[0] && Math.abs(y - r[1]) < 22);
       (geo.annotations || []).forEach((a, i) => {
-        const p = project(vp, a.anchor);
+        let anchor = a.anchor;
+        if (a.joint >= 0 && holo.lastJoints) {  // follow the part as it opens
+          const m = holo.lastJoints.subarray(a.joint * 16, a.joint * 16 + 16), q = anchor;
+          anchor = [0, 1, 2].map((r) => m[r] * q[0] + m[4 + r] * q[1] + m[8 + r] * q[2] + m[12 + r]);
+        }
+        const p = project(vp, anchor);
         if (!p || p[2] <= 0) return;
         const sx = (p[0] * 0.5 + 0.5) * cw, sy = (1 - (p[1] * 0.5 + 0.5)) * ch;
         // to the side away from the object's centre, lifted, then nudged until it overlaps no other label
@@ -990,7 +1085,8 @@ void main() {
         return evs.length ? evs.map((e) => ({ label: e.kind.toUpperCase() + " " + (e.t0 + e.dur * 0.45).toFixed(1) + " S", t: e.t0 + e.dur * 0.45, view: "hero", freezeCamera: true }))
                           : [{ label: "LIFE OFF", t: end + 1, view: "hero" }];
       }
-      if (kind === "motion") return [0, 1.5, 3, 4.5, 6, 7.5].map((d) => ({ label: "MOTION " + (end + d).toFixed(1) + " S", t: end + d, view: "hero" }));
+      if (kind === "motion") { const op = holo.openTimes(), span = Math.max(7.5, op.end - end + 1.5);
+        return [0, 0.2, 0.4, 0.6, 0.8, 1].map((k) => ({ label: "MOTION " + (end + k * span).toFixed(1) + " S", t: end + k * span, view: "hero" })); }
       if (kind === "provenance") return ["hero", "front", "side"].map((v) => ({ label: "PROVENANCE " + v.toUpperCase(), t: end + 0.01, view: v, reduced: true, mode: "provenance" }));
       if (kind === "tour") return (geo.animation.camera.tour || []).map((s) => ({ label: "TOUR " + s.view.toUpperCase() + " " + (s.at + (s.fly || 2.2)).toFixed(1) + " S", t: s.at + (s.fly || 2.2) + 0.05, view: "hero" }));
       return [];
@@ -1071,8 +1167,9 @@ void main() {
       renderAt(t, o) { o = o || {}; frozen = t; if (o.view) { opt.view = o.view; holo.userCamera = null; } if (o.mode) { opt.mode = o.mode; holo.opt.mode = o.mode; setUi(); }
         if (o.reduced !== undefined) { opt.reduced = o.reduced; holo.opt.reduced = o.reduced; holo.schedule = holo.buildSchedule(); }
         if (o.sheet !== undefined) opt.sheet = o.sheet;
+        if (o.open !== undefined) { opt.open = o.open; holo.opt.open = o.open; }
         frame(); return true; },
-      timeline() { return { assembly: holo.assemblyTimes(), events: holo.schedule.slice(0, 24) }; },
+      timeline() { const op = holo.openTimes(); return { assembly: holo.assemblyTimes(), open: op, settled: Math.max(holo.assemblyTimes().end, op.end), events: holo.schedule.slice(0, 24) }; },
     };
   }
 

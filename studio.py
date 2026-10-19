@@ -48,6 +48,7 @@ STARTER = {
     "cd": ("A generic CD in a jewel case", "cd", [
         {"id": "case", "role": "mass", "shape": {"type": "box", "size": [0.142, 0.125, 0.0104]}, "at": [0, 0.0625, 0], "certainty": "inferred", "stage": 0, "basis": ["height"]},
         {"id": "front", "role": "artwork", "shape": {"type": "plane", "size": [0.12, 0.12]}, "at": [0.008, 0.0625, 0.0053], "certainty": "decorative", "stage": 1,
+         "artwork": {"slot": "cover-front"},
          "note": "an empty artwork slot until real, permitted cover bytes are supplied"},
     ]),
     "book": ("A generic hardcover book", "book", [
@@ -65,12 +66,11 @@ def starter(category, title=None):
     return {
         "format": scene_mod.FORMAT, "version": scene_mod.VERSION,
         "id": "starter-%s" % category, "title": title or default_title,
-        "subject": {"category": cat, "summary": "Replace with what the user asked for.", "accuracy": "generic", "synthetic": True},
+        "subject": {"category": cat, "summary": "Replace with what the user asked for.", "accuracy": "generic", "synthetic": False},
         "units": "m", "seed": 7,
-        "sources": [{"id": "request", "kind": "user_request", "title": "The user's request", "rights": "synthetic"}],
+        "sources": [{"id": "request", "kind": "user_request", "title": "The user's request", "rights": "user_private"}],
         "facts": [{"key": "height", "value": height, "unit": "m", "certainty": "inferred", "source": "request",
                    "note": "typical size; replace with a measurement or a cited figure when one exists"}],
-        "style": {"palette": "violet", "identity": "none"},
         "parts": json.loads(json.dumps(parts)),
         "presentation": {"framing": {"yaw": 35, "pitch": 18}, "atmosphere": {"haze": 0.7, "grid": True, "projector": category != "architecture"}},
         "animation": {"assembly": {"style": "ceremony", "seconds": 6.0, "interference": True},

@@ -21,7 +21,6 @@
     {"key": "bell.diameter", "value": 0.72, "unit": "m", "certainty": "decorative", "note": "a size chosen for presentation"},
     {"key": "core", "value": "a lantern-like glowing core inside the bell", "certainty": "user_supplied", "source": "request"}
   ],
-  "style": {"palette": "green", "identity": "bio"},
   "parts": [
     {"id": "bell", "label": "Bell", "role": "mass", "certainty": "inferred", "stage": 1, "basis": ["bell.diameter"], "floating": true,
      "shape": {"type": "lathe", "segments": 48, "meridians": 16,
@@ -67,6 +66,7 @@
     {"id": "tentacles", "text": "12 tentacles", "part": "tentacles", "offset": [0, -1.1, 0]}
   ],
   "presentation": {
+    "style_hint": {"palette": "green", "identity": "bio"},
     "framing": {"yaw": 20, "pitch": 8, "fit": 1.0},
     "views": [{"id": "bell", "label": "Bell", "yaw": 0, "pitch": -25, "distance": 1.8, "target": "bell"}],
     "atmosphere": {"haze": 0.85, "grid": true, "projector": false, "motes": 0.8},

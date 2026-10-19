@@ -125,7 +125,8 @@ def audit(scene, geometry):
         if diag < 0.015 * 2 * radius and p["shape"] not in ("marker", "points"):
             add(warnings, "tiny", p["id"],
                 "is %.1f%% of the object's size: it may vanish at the hero framing." % (100.0 * diag / (2 * radius)))
-        if not any(int(styles[s][6]) == parts.index(p) for s in range(len(styles))):
+        carriers = {x["part"] for x in geometry.get("labels", []) + geometry.get("artwork", [])}
+        if p["id"] not in carriers and not any(int(styles[s][6]) == parts.index(p) for s in range(len(styles))):
             add(warnings, "invisible", p["id"], "produces nothing to draw (line \"none\" and no fill).")
 
     lo, hi = geometry["bounds"]["min"], geometry["bounds"]["max"]

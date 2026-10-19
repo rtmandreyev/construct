@@ -20,7 +20,6 @@
     {"key": "record.speed", "value": 33.33, "unit": "rpm", "certainty": "inferred", "note": "the usual LP speed"},
     {"key": "tonearm.shape", "value": "S-shaped with detachable headshell", "certainty": "user_supplied", "source": "request"}
   ],
-  "style": {"palette": "amber", "identity": "steel"},
   "parts": [
     {"id": "feet", "role": "structure", "certainty": "inferred", "stage": 0,
      "shape": {"type": "cylinder", "radius": 0.025, "height": 0.03, "segments": 16, "ribs": 4},
@@ -77,6 +76,7 @@
     {"id": "label", "text": "Label (decorative)", "part": "label"}
   ],
   "presentation": {
+    "style_hint": {"palette": "amber", "identity": "steel"},
     "framing": {"yaw": 32, "pitch": 30, "fit": 1.0},
     "views": [{"id": "stylus", "label": "Stylus", "yaw": 70, "pitch": 18, "distance": 2.6, "target": "headshell"}],
     "atmosphere": {"haze": 0.7, "grid": true, "projector": false, "motes": 0.35},

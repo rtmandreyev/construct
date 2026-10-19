@@ -22,7 +22,6 @@
     {"key": "light.pattern", "value": "two beams, slow rotation", "certainty": "decorative", "note": "chosen for presentation; no real light characteristic is implied"},
     {"key": "rock.height", "value": 2.0, "unit": "m", "certainty": "decorative"}
   ],
-  "style": {"palette": "cyan", "identity": "ember"},
   "parts": [
     {"id": "rock", "label": "Rock outcrop", "role": "structure", "certainty": "decorative", "stage": 0, "basis": ["rock.height"],
      "shape": {"type": "extrude", "axis": "y", "height": 2.0, "ribs": 1,
@@ -78,6 +77,7 @@
     {"id": "beam", "text": "Beam (decorative)", "part": "beam", "offset": [-4, 0, 0]}
   ],
   "presentation": {
+    "style_hint": {"palette": "cyan", "identity": "ember"},
     "framing": {"yaw": 28, "pitch": 16, "fit": 1.0},
     "views": [{"id": "lantern", "label": "Lantern", "yaw": 15, "pitch": 6, "distance": 1.5, "target": "lantern"}],
     "atmosphere": {"haze": 0.8, "grid": true, "projector": false, "motes": 0.5},

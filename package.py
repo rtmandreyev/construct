@@ -137,6 +137,7 @@ def write_skill(host, root):
     for asset in sorted((HERE / "examples" / "v2" / "assets").glob("*.png")):
         _copy(asset, root / "examples" / "assets" / asset.name)
     _copy(HERE / "CONTRACT.md", root / "CONTRACT.md")
+    _copy(HERE / "geometry.schema.json", root / "geometry.schema.json")
 
 
 def write_legal(root):
