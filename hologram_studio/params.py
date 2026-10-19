@@ -652,7 +652,8 @@ def build_vessel(b, var, p):
                (0, h * 0.3, R + 0.0006), 1, certainty=b.art_certainty("label"), artwork=b.slot("label"),
                look=None if b.doc.get("artwork", {}).get("label") else {"line": "none", "fill": "none"})
     elif var == "can":
-        prof = [(R * 0.86, 0), (R * 0.97, h * 0.01), (R, h * 0.04), (R, h * 0.9), (R * 0.84, h * 0.975), (R * 0.82, h)]
+        prof = [(R * 0.86, 0), (R * 0.97, h * 0.01), (R, h * 0.04), (R, h * 0.9), (R * 0.84, h * 0.975), (R * 0.82, h),
+                (0.0, h)]  # the lid closes the top
         b.part("can", "mass", {"type": "lathe", "profile": [[round(r, 5), round(y, 5)] for r, y in prof],
                                "segments": 48, "meridians": 8}, (0, 0, 0), 0, basis=["height", "diameter"])
         b.part("rim", "identity", {"type": "torus", "major": round(R * 0.83, 5), "minor": 0.0012, "segments": 48, "sides": 6,

@@ -9,6 +9,8 @@ reports a part as floating when it really touches something.
 
 import math
 
+from . import scene as scene_mod
+
 
 def _touch(a, b, tol):
     return all(a["min"][k] <= b["max"][k] + tol and b["min"][k] <= a["max"][k] + tol for k in range(3))
@@ -133,6 +135,8 @@ def audit(scene, geometry):
         if p["id"] not in carriers and not any(int(styles[s][6]) == parts.index(p) for s in range(len(styles))):
             add(warnings, "invisible", p["id"], "produces nothing to draw (line \"none\" and no fill).")
 
+    _contact_and_thickness(scene, geometry, add, warnings)
+
     lo, hi = geometry["bounds"]["min"], geometry["bounds"]["max"]
     dims = [round(hi[k] - lo[k], 4) for k in range(3)]
     info.update({"dimensions_m": {"width": dims[0], "height": dims[1], "depth": dims[2]},
@@ -152,3 +156,192 @@ def format_report(report):
     out.append("  %(lines)d lines, %(triangles)d triangles, %(points)d points, %(motions)d moving copies" % i["counts"])
     out.append("  evidence-backed key parts: %s" % i["evidence_backed_key_parts"])
     return "\n".join(out)
+
+
+# ---------------------------------------------------------------------------- real contact and thickness
+#
+# The support check above works on bounding boxes, which is safe but blind to a part that only
+# appears to touch: the box of a diagonal arm covers the whole lamp, so a shade floating off its
+# end still "touches" it. These two checks look at the actual surfaces and segments, rebuilt
+# from the scene in rest pose.
+
+THIN = 0.006      # a structural part thinner than this share of the object's largest size is a hairline
+GAP = 0.01        # parts further apart than this share of the object's largest size do not touch
+
+
+def _sub(a, b):
+    return (a[0] - b[0], a[1] - b[1], a[2] - b[2])
+
+
+def _dot(a, b):
+    return a[0] * b[0] + a[1] * b[1] + a[2] * b[2]
+
+
+def _seg_dist2(p, a, b):
+    ab, ap = _sub(b, a), _sub(p, a)
+    d = _dot(ab, ab)
+    t = 0.0 if d <= 1e-18 else max(0.0, min(1.0, _dot(ap, ab) / d))
+    q = (a[0] + ab[0] * t - p[0], a[1] + ab[1] * t - p[1], a[2] + ab[2] * t - p[2])
+    return _dot(q, q)
+
+
+def _tri_dist2(p, a, b, c):
+    """Squared distance from p to triangle abc (closest point by region)."""
+    ab, ac, ap = _sub(b, a), _sub(c, a), _sub(p, a)
+    d1, d2 = _dot(ab, ap), _dot(ac, ap)
+    if d1 <= 0 and d2 <= 0:
+        return _dot(ap, ap)
+    bp = _sub(p, b)
+    d3, d4 = _dot(ab, bp), _dot(ac, bp)
+    if d3 >= 0 and d4 <= d3:
+        return _dot(bp, bp)
+    cp = _sub(p, c)
+    d5, d6 = _dot(ab, cp), _dot(ac, cp)
+    if d6 >= 0 and d5 <= d6:
+        return _dot(cp, cp)
+    vc, vb, va = d1 * d4 - d3 * d2, d5 * d2 - d1 * d6, d3 * d6 - d5 * d4
+    if vc <= 0 and d1 >= 0 and d3 <= 0:
+        return _seg_dist2(p, a, b)
+    if vb <= 0 and d2 >= 0 and d6 <= 0:
+        return _seg_dist2(p, a, c)
+    if va <= 0 and (d4 - d3) >= 0 and (d5 - d6) >= 0:
+        return _seg_dist2(p, b, c)
+    den = 1.0 / (va + vb + vc)
+    v, w = vb * den, vc * den
+    q = (a[0] + ab[0] * v + ac[0] * w - p[0], a[1] + ab[1] * v + ac[1] * w - p[1], a[2] + ab[2] * v + ac[2] * w - p[2])
+    return _dot(q, q)
+
+
+def _part_geometry(scene):
+    """Per part id: (samples, primitives) in world space, rest pose; primitives are segments
+    (2 points) and triangles (3 points). Sprites (points, markers) are left out."""
+    out = {}
+    for part in scene["parts"]:
+        if part["shape"]["type"] in ("points", "marker"):
+            continue
+        mesh = scene_mod._local_mesh(part["shape"], scene_mod._hash_part(scene["seed"], part["id"]))
+        samples, prims = [], []
+        for xf, _, _, _ in scene_mod._instances(part):
+            for a, b, _ in mesh.lines:
+                a, b = xf(a), xf(b)
+                prims.append((a, b))
+                samples += [a, b, tuple((a[k] + b[k]) / 2 for k in range(3))]
+            for a, b, c in mesh.tris:
+                a, b, c = xf(a), xf(b), xf(c)
+                prims.append((a, b, c))
+                samples += [a, b, c, tuple((a[k] + b[k] + c[k]) / 3 for k in range(3))]
+        out[part["id"]] = (samples, prims)
+    return out
+
+
+def _contact_and_thickness(scene, geometry, add, warnings):
+    lo, hi = geometry["bounds"]["min"], geometry["bounds"]["max"]
+    size = max(hi[k] - lo[k] for k in range(3)) or 1e-6
+    gap = max(0.0015, GAP * size)
+    parts = {p["id"]: p for p in scene["parts"]}
+
+    # ---- thickness: a mass or structure part that is a hairline barely renders
+    for p in scene["parts"]:
+        if p["role"] not in ("mass", "structure") or p.get("floating"):
+            continue
+        thin = _thickness(p)
+        if thin is None or thin >= THIN * size:
+            continue
+        need = THIN * size
+        what = {"tube": "radius %.4g m" % (need / 2), "cylinder": "radius %.4g m" % (need / 2),
+                "cone": "radii of %.4g m" % (need / 2), "torus": "minor radius %.4g m" % (need / 2),
+                "box": "%.4g m on its two thin sides" % need,
+                "curve": "a tube of radius %.4g m (a curve has no thickness)" % (need / 2)}.get(p["shape"]["type"], "%.4g m across" % need)
+        add(warnings, "thin", p["id"],
+            "is %s thick, a hairline next to the object's %.3g m: it will barely render. Use at least %s, "
+            "or give it role \"detail\" if it is meant to be fine." % ("%.4g m" % thin if thin else "zero", size, what))
+
+    # ---- contact: a part whose real geometry comes near no other part's (and not the ground)
+    geo = _part_geometry(scene)
+    cell = max(gap * 4, size / 48)
+    grid = {}
+    for pid, (_, prims) in geo.items():
+        for idx, pr in enumerate(prims):
+            lo_c = [int(math.floor((min(v[k] for v in pr) - gap) / cell)) for k in range(3)]
+            hi_c = [int(math.floor((max(v[k] for v in pr) + gap) / cell)) for k in range(3)]
+            if (hi_c[0] - lo_c[0] + 1) * (hi_c[1] - lo_c[1] + 1) * (hi_c[2] - lo_c[2] + 1) > 4096:
+                continue  # an enormous triangle: its vertices are samples of their own
+            for x in range(lo_c[0], hi_c[0] + 1):
+                for y in range(lo_c[1], hi_c[1] + 1):
+                    for z in range(lo_c[2], hi_c[2] + 1):
+                        grid.setdefault((x, y, z), []).append((pid, idx))
+    gap2 = gap * gap
+    ground = lo[1]
+
+    def touches(pid):
+        samples, _ = geo[pid]
+        for sp in samples:
+            if sp[1] <= ground + gap:
+                return True
+            for qid, idx in grid.get(tuple(int(math.floor(sp[k] / cell)) for k in range(3)), ()):
+                if qid == pid:
+                    continue
+                pr = geo[qid][1][idx]
+                d = _seg_dist2(sp, *pr) if len(pr) == 2 else _tri_dist2(sp, *pr)
+                if d <= gap2:
+                    return True
+        return False
+
+    connected = {pid for pid in geo if touches(pid)}
+    # touching is mutual: a part another part touches is connected too
+    for pid in list(geo):
+        if pid not in connected and any(_near(geo[q][0], pid, geo, grid, cell, gap2) for q in connected if q != pid):
+            connected.add(pid)
+    for pid in geo:
+        p = parts[pid]
+        if pid in connected or p.get("floating") or p["role"] in ("ornament", "ground") or len(geo) < 2:
+            continue
+        near, dist = _nearest(pid, geo)
+        add(warnings, "detached", pid,
+            "touches no other part: its nearest is %r, %.3g m away (the object is %.3g m). Move it onto %r, "
+            "or set \"floating\": true if it truly hovers." % (near, dist, size, near))
+
+
+def _near(samples, target, geo, grid, cell, gap2):
+    for sp in samples:
+        for qid, idx in grid.get(tuple(int(math.floor(sp[k] / cell)) for k in range(3)), ()):
+            if qid != target:
+                continue
+            pr = geo[qid][1][idx]
+            if (_seg_dist2(sp, *pr) if len(pr) == 2 else _tri_dist2(sp, *pr)) <= gap2:
+                return True
+    return False
+
+
+def _nearest(pid, geo):
+    mine = geo[pid][0][::max(1, len(geo[pid][0]) // 400)]
+    best, best_d = None, math.inf
+    for qid, (samples, _) in geo.items():
+        if qid == pid:
+            continue
+        theirs = samples[::max(1, len(samples) // 400)]
+        d = min((_dot(_sub(a, b), _sub(a, b)) for a in mine for b in theirs), default=math.inf)
+        if d < best_d:
+            best, best_d = qid, d
+    return best, math.sqrt(best_d)
+
+
+def _thickness(p):
+    """The smallest cross-section of a linear part in metres, or None when it is not linear."""
+    sh, t = p["shape"], p["shape"]["type"]
+    sc = p.get("scale", 1)
+    k = min(sc) if isinstance(sc, list) else sc
+    if t == "tube":
+        r = sh["radius"]
+        return 2 * (max(r) if isinstance(r, list) else r) * k  # a tapered tube is as thick as its widest point
+    if t == "curve":
+        return 0.0
+    if t in ("cylinder", "cone"):
+        d = 2 * (sh["radius"] if t == "cylinder" else max(sh["radius_bottom"], sh["radius_top"]))
+        return d * k if sh["height"] > 4 * d else None
+    if t == "torus":
+        return 2 * sh["minor"] * k
+    if t == "box":
+        dims = sorted(sh["size"])
+        return dims[1] * k if dims[2] > 4 * dims[1] else None
+    return None

@@ -46,7 +46,7 @@
     {"id": "railing-posts", "label": "Railing", "role": "detail", "certainty": "inferred", "stage": 3,
      "shape": {"type": "box", "size": [0.06, 1.0, 0.06], "anchor": "base"}, "at": [3.3, 22.3, 0],
      "repeat": {"count": 28, "radial": {"axis": "y", "center": [0, 0, 0]}}},
-    {"id": "rail", "role": "structure", "certainty": "inferred", "stage": 3,
+    {"id": "rail", "role": "detail", "certainty": "inferred", "stage": 3,
      "shape": {"type": "torus", "major": 3.3, "minor": 0.04, "segments": 56, "sides": 6, "rings": 0}, "at": [0, 23.3, 0]},
     {"id": "lantern", "label": "Lantern room", "role": "identity", "certainty": "inferred", "stage": 3, "basis": ["focal_plane"],
      "shape": {"type": "cylinder", "radius": 1.9, "height": 3.0, "segments": 40, "ribs": 10, "rings": 1}, "at": [0, 22.3, 0]},

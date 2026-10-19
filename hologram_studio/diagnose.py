@@ -31,6 +31,10 @@ AUDIT_HINTS = {
     "duplicates": "Remove the duplicated part, or move it to where it belongs.",
     "tiny": "Make it larger, merge it into a neighbour or delete it; it will not read at this size.",
     "invisible": "Give it lines (look.line \"auto\") or a fill, or delete it.",
+    "detached": "Move the part so its surface meets the part it hangs from or rests on (named in the message): "
+                "align its end with that part's surface, or extend it to reach. Use \"floating\": true only "
+                "for things that really hover.",
+    "thin": "Thicken it to the radius given in the message, or make it role \"detail\" if it is meant to be a fine line.",
     "no-open-view": "Add presentation.views {\"id\": \"open\", \"yaw\": ..., \"pitch\": ...} facing what opening reveals "
                     "(roughly the yaw the opened part's inside or the taken-out part faces; check review/view-open.png "
                     "if you can see images). A joint that only poses a part (an elbow) needs none: ignore this.",
@@ -134,16 +138,27 @@ def diagnose_text(text):
     return diagnose(scene, diags)
 
 
+# warnings a viewer would see at once: the repair loop goes on until they are gone
+VISIBLE_DEFECTS = ("detached", "thin")
+
+
+def needs_repair(report):
+    return report["errors"] > 0 or any(d["code"] in VISIBLE_DEFECTS for d in report["diagnostics"])
+
+
 def repair_text(report, limit=40):
     """The diagnostics as a short message for the model that wrote the draft."""
+    report["needs_repair"] = needs_repair(report)
     if report["ok"] and not report["warnings"]:
         return "The scene is valid and the audit is clean."
-    errs = [d for d in report["diagnostics"] if d["severity"] == "error"]
-    warns = [d for d in report["diagnostics"] if d["severity"] == "warning"]
+    # visible defects are listed with the errors: the draft is not done while they remain
+    errs = [d for d in report["diagnostics"] if d["severity"] == "error" or d["code"] in VISIBLE_DEFECTS]
+    warns = [d for d in report["diagnostics"] if d["severity"] == "warning" and d["code"] not in VISIBLE_DEFECTS]
     lines = []
     if errs:
-        lines.append("Your scene has %d problem%s. Fix every one and send the whole corrected JSON object "
-                     "(no prose, no code fences):" % (len(errs), "" if len(errs) == 1 else "s"))
+        lines.append("Your scene has %d problem%s%s. Fix every one and send the whole corrected JSON object "
+                     "(no prose, no code fences):" % (len(errs), "" if len(errs) == 1 else "s",
+                                                      "" if report["errors"] else " a viewer will see"))
         for d in errs[:limit]:
             lines.append("- %s [%s] %s%s" % (d["path"], d["code"], d["message"], " -> " + d["hint"] if d["hint"] else ""))
         if len(errs) > limit:

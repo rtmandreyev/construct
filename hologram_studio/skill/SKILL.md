@@ -64,7 +64,8 @@ if no browser is available, say so and deliver the HTML without captures.
    `sheet-life.png`, `sheet-provenance.png` and each `view-<id>.png`. Judge them against the [review checklist](references/review.md):
    silhouette, hierarchy, identity, clutter, framing, assembly order, honesty. Fix the
    scene and review again. Geometric validity (the audit) and art direction (your eyes)
-   are separate gates; pass both.
+   are separate gates; pass both. If you cannot see images, still fix every `detached` and
+   `thin` warning: they are what a viewer notices first.
 7. **Deliver.** Hand over `scene.json`, `out/hologram.html` (and `out/geometry.json`,
    the video if made) with a short note: what is evidence, what is inferred or designed,
    which artwork is authentic and which is generated decoration, and what you reviewed.

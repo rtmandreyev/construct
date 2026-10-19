@@ -687,6 +687,55 @@ class McpV2(unittest.TestCase):
         self.assertEqual(out[7]["error"]["code"], -32602)
 
 
+def lamp(shade_y=0.38, arm_radius=0.008):
+    """A desk lamp: base, an arm, a shade at the arm's end (the defects live-model drafts had)."""
+    s = base(id="lamp")
+    s["parts"] = [
+        {"id": "base", "role": "mass", "certainty": "inferred", "stage": 0,
+         "shape": {"type": "cylinder", "radius": 0.08, "height": 0.02}},
+        {"id": "arm", "role": "structure", "certainty": "inferred", "stage": 1,
+         "shape": {"type": "tube", "path": [[0, 0.02, 0], [0.08, 0.25, 0], [0.16, 0.4, 0]], "radius": arm_radius}},
+        {"id": "shade", "role": "identity", "certainty": "inferred", "stage": 2,
+         "shape": {"type": "cone", "radius_bottom": 0.07, "radius_top": 0.02, "height": 0.1}, "at": [0.16, shade_y, 0]}]
+    return s
+
+
+class Contact(unittest.TestCase):
+    """Real-geometry contact and thickness, beyond bounding boxes."""
+
+    def codes(self, s):
+        return {(d["code"], d["path"]) for d in diagnose.diagnose(s)["diagnostics"]}
+
+    def test_a_connected_lamp_is_clean(self):
+        r = diagnose.diagnose(lamp())
+        self.assertTrue(r["ok"] and not r["warnings"], r["repair_text"])
+
+    def test_a_shade_floating_off_the_arm_is_detached(self):
+        s = lamp(shade_y=0.47)  # 7 cm above the arm's end; its box still overlaps the arm's box
+        got = diagnose.diagnose(s)
+        d = [x for x in got["diagnostics"] if x["code"] == "detached"]
+        self.assertEqual([x["path"] for x in d], ["$.parts[2]"])
+        self.assertIn("'arm'", d[0]["message"])
+        s["parts"][2]["floating"] = True
+        self.assertNotIn(("detached", "$.parts[2]"), self.codes(s))
+
+    def test_a_hairline_arm_is_thin(self):
+        d = [x for x in diagnose.diagnose(lamp(arm_radius=0.0008))["diagnostics"] if x["code"] == "thin"]
+        self.assertEqual([x["path"] for x in d], ["$.parts[1]"])
+        self.assertIn("radius", d[0]["message"])
+        s = lamp(arm_radius=0.0008)
+        s["parts"][1]["role"] = "detail"
+        self.assertNotIn(("thin", "$.parts[1]"), self.codes(s))
+
+    def test_every_example_is_free_of_both(self):
+        for path in sorted(EXAMPLES.glob("*.json")):
+            doc = json.loads(path.read_text())
+            if doc["format"] == params.FORMAT:
+                doc = params.expand(doc)
+            got = {c for c, _ in self.codes(doc)}
+            self.assertFalse({"detached", "thin"} & got, path.name)
+
+
 class Capture(unittest.TestCase):
     def test_review_produces_non_empty_images(self):
         with tempfile.TemporaryDirectory() as d:

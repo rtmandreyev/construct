@@ -31,8 +31,9 @@ Two gates, both required:
   everything is equally bright it is clutter (audit warns above 55 % detail).
 - **Framing**: the object fills the frame with margin in every view; nothing cut off.
 - **Proportions** against the facts; no part obviously too thick, thin, high or low.
-- **Contact**: legs on the ground, roofs on walls, arms on pivots — the audit catches
-  boxes that do not touch; you catch things that touch only by box.
+- **Contact**: legs on the ground, roofs on walls, arms on pivots, a shade on its arm. The
+  audit's `detached` warning compares real surfaces and names the nearest part; fix it, do
+  not explain it away. `thin` flags a structural part too fine to render.
 - **Honesty**: inferred and decorative parts look it; generated art is labelled; the caption
   says GENERIC or APPROXIMATE when it is.
 - **Motion**: ambient, never frantic; parts move about their real pivots.

@@ -8,6 +8,7 @@ Files:
   params.md          the simple path: fill a parameter document (recommended for small models)
   scene.md           the full path: write a scene (capable models)
   repair.md          the loop a host or runner drives: check, send the repair text, retry
+  vision-review.md   an optional self-review of the renders for models that can see images
   params.schema.json JSON Schema of a parameter document, for hosts that can constrain output
 """
 
@@ -163,20 +164,48 @@ REPAIR = """# The check-and-repair loop (for hosts and runners)
 2. Check the answer: `python3 cli.py check draft.json --json` (or `diagnose.diagnose_text`).
    The report: `ok`, `errors`, `warnings`, `diagnostics[]` (`severity, code, path, message,
    hint`) and `repair_text`.
-3. If `ok` is false, send `repair_text` back as the next user message and check again.
+3. While `needs_repair` is true (errors, or a part that is detached or a hairline), send
+   `repair_text` back as the next user message and check again.
    Stop after 4 rounds; if a full scene still fails, ask the same model for the parameter
    document instead (`params.md`), which almost always validates.
 4. When `ok` is true: `build` (geometry, preview, audit) and, if a browser is available,
-   `review` for images a person or a vision model can judge. Warnings are allowed; pass them
-   on with the proposal.
+   `review` for images a person or a vision model can judge. Other warnings are allowed;
+   pass them on with the proposal.
+5. Optional, for models that can see images: send `vision-review.md` with
+   `review/hero.png` (and `review/view-open.png` when it opens) and the original request.
+   Apply the fixes it lists, check again, and stop after 2 rounds.
 
 Codes a model will meet: json, duplicate-key, unknown-key, missing-key, type, range,
 choice, id, reference, certainty, unknown-fact, style, path, budget, floating,
 stage-order, overclaim, accuracy, decorative-identity, no-mass, no-identity, clutter,
-duplicates, tiny, invisible.
+duplicates, tiny, invisible, no-open-view, detached, thin.
 
 A host that supports constrained output can hold a small model to `params.schema.json`.
 No step needs an API key from this toolkit; the model and its key live in the host.
+"""
+
+
+VISION = """# Look at your hologram (optional, for models that can see images)
+
+You wrote a scene; here are its renders: `hero.png` (the finished object) and, when it
+opens, `view-open.png`. Compare them with the request, not with the JSON.
+
+Answer with one JSON object:
+
+```json
+{{"recognisable": true, "reads_as": "what a stranger would call it in three words",
+ "defects": [{{"part": "part id", "problem": "what is wrong in the picture", "fix": "the change to the scene"}}]}}
+```
+
+Look for, in this order:
+1. Does the silhouette read as the requested thing at a glance? If not, which mass is wrong?
+2. Does anything hover, poke through, or end short of what it should touch?
+3. Is any arm, leg, cable or frame so thin it barely shows?
+4. Are the two or three features that make it itself visible and in proportion?
+5. Is any text on the object wrong, upside down, or not from a fact?
+
+List only defects you can see. An empty list is a good answer. Then apply your fixes to the
+scene and send the whole corrected JSON for checking.
 """
 
 
@@ -248,6 +277,7 @@ def build():
                                        categories=", ".join(scene_mod.CATEGORIES),
                                        example=json.dumps(scene_example, indent=1, ensure_ascii=False)),
         "repair.md": REPAIR,
+        "vision-review.md": VISION.format(),
         "params.schema.json": json.dumps(params_schema(), indent=1) + "\n",
     }
 

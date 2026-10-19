@@ -2,6 +2,22 @@
 
 ## 0.2.0 — 2026-10-19 (unreleased; the product name is provisional)
 
+From the first live runs (Hermes with DeepSeek and GPT-6.1 Sol), which passed the audit with
+visible defects:
+
+- `detached`: a part whose real surfaces and segments come within 1% of the object's size of
+  no other part (and not the ground) is flagged with its nearest part, beyond what bounding
+  boxes can see (a shade floating off a diagonal arm). `floating: true` is the exception.
+- `thin`: a mass or structure part thinner than 0.6% of the object's largest size (a tube, a
+  curve, a long cylinder or box, a torus) gets a minimum radius.
+- Both set the report's `needs_repair`, and lead `repair_text`, so the repair loop continues
+  until they are fixed.
+- `prompts/vision-review.md`: an optional self-review of `hero.png` against the request for
+  models that can see images.
+- Fixed in the examples by these checks: the jellyfish's oral arms now hang from the bell,
+  the can has a lid under its tab, the lighthouse rail is detail, the organism starter's eye
+  sits on its body.
+
 First standalone release, extracted from the Tessera project's `hologram-skill` branch with its
 history (`git subtree split` of `tools/hologram`: the toolkit's files only, one author).
 
