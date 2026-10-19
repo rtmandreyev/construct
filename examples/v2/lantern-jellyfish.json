@@ -1,0 +1,81 @@
+{
+  "format": "tessera-hologram",
+  "version": 2,
+  "id": "lantern-jellyfish",
+  "title": "Lantern jellyfish (fictional)",
+  "subject": {
+    "category": "fictional",
+    "summary": "An invented deep-sea jellyfish: a scalloped glass bell around a glowing lantern core, four frilled oral arms and twelve trailing tentacles that sway in a slow ripple, drifting in a cloud of bioluminescent motes.",
+    "accuracy": "generic",
+    "synthetic": true
+  },
+  "units": "m",
+  "seed": 4242,
+  "sources": [
+    {"id": "request", "kind": "user_request", "title": "Synthetic example request: a glowing fictional jellyfish with twelve tentacles and four oral arms", "rights": "synthetic"}
+  ],
+  "facts": [
+    {"key": "species", "value": "fictional; not modelled on a real species", "certainty": "user_supplied", "source": "request"},
+    {"key": "tentacles", "value": 12, "certainty": "user_supplied", "source": "request"},
+    {"key": "oral_arms", "value": 4, "certainty": "user_supplied", "source": "request"},
+    {"key": "bell.diameter", "value": 0.72, "unit": "m", "certainty": "decorative", "note": "a size chosen for presentation"},
+    {"key": "core", "value": "a lantern-like glowing core inside the bell", "certainty": "user_supplied", "source": "request"}
+  ],
+  "style": {"palette": "green", "identity": "bio"},
+  "parts": [
+    {"id": "bell", "label": "Bell", "role": "mass", "certainty": "inferred", "stage": 1, "basis": ["bell.diameter"], "floating": true,
+     "shape": {"type": "lathe", "segments": 48, "meridians": 16,
+               "profile": [[0.0, 0.36], [0.12, 0.35], [0.22, 0.31], [0.29, 0.24], [0.33, 0.16], [0.345, 0.09], [0.335, 0.04], [0.36, 0.0]]},
+     "at": [0, 1.47, 0], "look": {"fill": "glass", "glow": 0.5},
+     "motion": {"type": "pulse", "period": 4.0, "amount": 0.35}},
+    {"id": "bell-inner", "role": "structure", "certainty": "inferred", "stage": 1,
+     "shape": {"type": "lathe", "segments": 40, "meridians": 0, "profile": [[0.05, 0.27], [0.18, 0.22], [0.25, 0.13], [0.28, 0.04]]},
+     "at": [0, 1.47, 0], "look": {"line": "dotted", "alpha": 0.6}},
+    {"id": "scallops", "label": "Rim", "role": "identity", "certainty": "inferred", "stage": 2,
+     "shape": {"type": "torus", "major": 0.045, "minor": 0.008, "segments": 20, "sides": 5, "rings": 0},
+     "at": [0.36, 1.47, 0], "rotate": [90, 0, 0],
+     "repeat": {"count": 24, "radial": {"axis": "y", "center": [0, 1.47, 0]}}},
+    {"id": "core", "label": "Lantern core", "role": "data", "certainty": "inferred", "stage": 3, "basis": ["core"],
+     "shape": {"type": "sphere", "radius": 0.085, "lat": 5, "lon": 8}, "at": [0, 1.64, 0],
+     "motion": {"type": "pulse", "period": 2.6, "amount": 0.9}},
+    {"id": "core-ring", "role": "identity", "certainty": "decorative", "stage": 3,
+     "shape": {"type": "torus", "major": 0.13, "minor": 0.012, "segments": 36, "sides": 6, "rings": 6}, "at": [0, 1.64, 0],
+     "motion": {"type": "spin", "axis": [0.3, 1, 0.2], "rpm": 6}},
+    {"id": "gonads", "role": "identity", "certainty": "decorative", "stage": 2,
+     "shape": {"type": "torus", "major": 0.07, "minor": 0.016, "segments": 24, "sides": 6, "rings": 4},
+     "at": [0.15, 1.6, 0], "rotate": [90, 0, 0], "repeat": {"count": 4, "radial": {"axis": "y", "center": [0, 1.6, 0]}}},
+    {"id": "oral-arms", "label": "Oral arms", "role": "identity", "certainty": "inferred", "stage": 4, "basis": ["oral_arms"],
+     "shape": {"type": "tube", "sides": 6, "samples": 6, "ring_every": 3, "longitudinal": 3,
+               "radius": [0.034, 0.03, 0.024, 0.016, 0.006],
+               "path": [[0.05, 1.47, 0.0], [0.09, 1.2, 0.04], [0.05, 0.92, -0.03], [0.1, 0.62, 0.02], [0.06, 0.36, 0.0]]},
+     "repeat": {"count": 4, "radial": {"axis": "y", "center": [0, 0, 0]}, "phase_step": 0.25},
+     "motion": {"type": "swing", "axis": [1, 0, 0], "pivot": [0.05, 1.47, 0.0], "degrees": 7, "period": 7}},
+    {"id": "tentacles", "label": "Tentacles", "role": "structure", "certainty": "inferred", "stage": 5, "basis": ["tentacles"],
+     "shape": {"type": "tube", "sides": 4, "samples": 6, "ring_every": 0, "longitudinal": 2,
+               "radius": [0.008, 0.006, 0.005, 0.003, 0.0015],
+               "path": [[0.33, 1.47, 0.0], [0.37, 1.08, 0.03], [0.33, 0.68, -0.03], [0.38, 0.28, 0.02], [0.35, -0.08, 0.0]]},
+     "look": {"fill": "none"},
+     "repeat": {"count": 12, "radial": {"axis": "y", "center": [0, 0, 0]}, "phase_step": 0.0833},
+     "motion": {"type": "swing", "axis": [0, 0, 1], "pivot": [0.33, 1.47, 0.0], "degrees": 6, "period": 6}},
+    {"id": "motes", "label": "Bioluminescent motes", "role": "ornament", "certainty": "decorative", "stage": 6, "floating": true,
+     "shape": {"type": "points", "count": 180, "region": {"shell": 1.0}, "sprite": "soft", "size_px": 4}, "at": [0, 1.0, 0]}
+  ],
+  "annotations": [
+    {"id": "core", "text": "Lantern core", "part": "core"},
+    {"id": "bell", "text": "Bell", "part": "bell"},
+    {"id": "arms", "text": "Oral arms", "part": "oral-arms", "offset": [0, -0.6, 0]},
+    {"id": "tentacles", "text": "12 tentacles", "part": "tentacles", "offset": [0, -1.1, 0]}
+  ],
+  "presentation": {
+    "framing": {"yaw": 20, "pitch": 8, "fit": 1.0},
+    "views": [{"id": "bell", "label": "Bell", "yaw": 0, "pitch": -25, "distance": 1.8, "target": "bell"}],
+    "atmosphere": {"haze": 0.85, "grid": true, "projector": false, "motes": 0.8},
+    "occlusion": "xray",
+    "float": 0.5
+  },
+  "animation": {
+    "assembly": {"style": "ceremony", "seconds": 6.5, "interference": true},
+    "idle": {"life": "alive", "events": ["wave", "shimmer", "propagate", "burst"], "cadence": [4, 9], "strength": 0.7},
+    "camera": {"drift": 9, "breathe": 0.04, "tour": [{"view": "bell", "at": 15, "fly": 3.5}, {"view": "hero", "at": 24, "fly": 4}]}
+  }
+}

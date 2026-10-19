@@ -323,8 +323,11 @@ in vec2 vUv; in float vA; out vec4 o;
 uniform sampler2D uTex; uniform float uTime; uniform vec2 uViewport;
 void main() {
   vec4 c = texture(uTex, vUv);
-  float scan = 0.88 + 0.12 * step(1.0, mod(gl_FragCoord.y, 3.0));
-  float a = vA * 0.92;
+  // the image as projected light: faint scan texture, a little transparency, edges that fade
+  float scan = 0.86 + 0.14 * step(1.0, mod(gl_FragCoord.y, 3.0));
+  vec2 e = min(vUv, 1.0 - vUv);
+  float edge = smoothstep(0.0, 0.025, min(e.x, e.y));
+  float a = vA * 0.82 * (0.7 + 0.3 * edge);
   o = vec4(c.rgb * scan * a, a);
 }`;
 
@@ -426,7 +429,8 @@ void main() {
     const extra = [], extraPts = [];
     const lines = g.lines.slice(), points = g.points.slice();
     const add = (style) => { styles.push(style); return styles.length - 1; };
-    const R = this.R, cx = this.C[0], cz = this.C[2], y = this.ground - 0.0005;
+    // a hovering subject keeps its survey ground below it (presentation.float)
+    const R = this.R, cx = this.C[0], cz = this.C[2], y = this.ground - (g.presentation.float || 0) - 0.0005;
     if (at.grid) {
       const span = Math.max(g.bounds.max[0] - g.bounds.min[0], g.bounds.max[2] - g.bounds.min[2], R) * 2.6;
       const raw = span / 14, p10 = Math.pow(10, Math.floor(Math.log10(raw)));
@@ -544,7 +548,9 @@ void main() {
       entry.slot = slot;
       if (assets[a.asset_id]) {
         const img = new Image();
-        entry.loading = new Promise((res) => { img.onload = res; img.onerror = res; });
+        let done;
+        entry.loading = new Promise((res) => { done = res; });
+        img.onerror = () => done();
         img.onload = () => {
           entry.tex = gl.createTexture();
           gl.bindTexture(gl.TEXTURE_2D, entry.tex);
@@ -553,6 +559,7 @@ void main() {
           gl.generateMipmap(gl.TEXTURE_2D);
           gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
           entry.ready = true;
+          done();
         };
         img.src = assets[a.asset_id];
       }
@@ -660,17 +667,40 @@ void main() {
     for (const b of p.instances) for (let k = 0; k < 3; k++) { lo[k] = Math.min(lo[k], b.min[k]); hi[k] = Math.max(hi[k], b.max[k]); }
     return { c: [(lo[0] + hi[0]) / 2, (lo[1] + hi[1]) / 2, (lo[2] + hi[2]) / 2], r: 0.5 * Math.hypot(hi[0] - lo[0], hi[1] - lo[1], hi[2] - lo[2]) };
   };
+  Hologram.prototype.framingBoxes = function (partId) {
+    // what a view must contain: every part's boxes, except decorative clouds of points
+    if (!this._boxes) {
+      this._boxes = {};
+      const all = [];
+      for (const p of this.geo.parts) {
+        const boxes = p.instances.map((b) => [b.min, b.max]);
+        this._boxes[p.id] = boxes;
+        if (!(p.shape === "points" && (p.role === "ornament" || p.certainty === "decorative"))) all.push(...boxes);
+      }
+      this._boxes["*"] = all.length ? all : [[this.geo.bounds.min, this.geo.bounds.max]];
+    }
+    return this._boxes[partId || "*"] || this._boxes["*"];
+  };
   Hologram.prototype.cameraFor = function (id) {
-    const v = this.viewSpec(id), fr = this.geo.presentation.framing;
-    let target = this.C.slice(), radius = this.R;
+    // fit the silhouette as seen from this direction: project every box corner onto the camera's
+    // axes and solve the distance that keeps all of them inside both fields of view, with margin
+    const v = this.viewSpec(id), fr = this.geo.presentation.framing, fov = 34;
     const tid = v.target || (id === "hero" ? fr.target : null);
-    if (tid) { const t = this.targetOf(tid); target = t.c; radius = Math.max(t.r, 0.15 * this.R); }
-    const fov = 34;
-    // a bounding sphere over-estimates what a view shows: frame about four fifths of it, and
-    // respect the narrower of the two fields of view
-    const aspect = this.aspect || 1.6;
-    const half = Math.atan(Math.tan(fov * Math.PI / 360) * Math.min(1, aspect));
-    const dist = radius / Math.sin(half) * 0.8 * (fr.fit || 1) * (v.distance || 1);
+    const boxes = this.framingBoxes(tid);
+    const lo = [Infinity, Infinity, Infinity], hi = [-Infinity, -Infinity, -Infinity];
+    for (const [a, b] of boxes) for (let k = 0; k < 3; k++) { lo[k] = Math.min(lo[k], a[k]); hi[k] = Math.max(hi[k], b[k]); }
+    const target = [(lo[0] + hi[0]) / 2, (lo[1] + hi[1]) / 2, (lo[2] + hi[2]) / 2];
+    const y = v.yaw * Math.PI / 180, p = v.pitch * Math.PI / 180;
+    const back = [Math.sin(y) * Math.cos(p), Math.sin(p), Math.cos(y) * Math.cos(p)];
+    const right = V.norm(V.cross(Math.abs(v.pitch) > 88 ? [0, 0, -1] : [0, 1, 0], back)), up = V.cross(back, right);
+    const aspect = this.aspect || 1.6, tanV = Math.tan(fov * Math.PI / 360), tanH = tanV * aspect, margin = 0.86;
+    let dist = 1e-3;
+    for (const [a, b] of boxes) for (let i = 0; i < 8; i++) {
+      const c = [i & 1 ? b[0] : a[0], i & 2 ? b[1] : a[1], i & 4 ? b[2] : a[2]], d = V.sub(c, target);
+      const x = Math.abs(V.dot(d, right)), yy = Math.abs(V.dot(d, up)), z = V.dot(d, back);
+      dist = Math.max(dist, z + x / (tanH * margin), z + yy / (tanV * margin));
+    }
+    dist *= (fr.fit || 1) * (v.distance || 1);
     return { target, yaw: v.yaw, pitch: v.pitch, dist, fov };
   };
   Hologram.prototype.cameraAt = function (t, base) {

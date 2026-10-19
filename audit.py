@@ -27,10 +27,14 @@ def audit(scene, geometry):
     scene_parts = {p["id"]: p for p in scene["parts"]}
 
     # ---- support: every part rests on the ground or on something that does
+    # the ground and every declared-floating part are anchors: what touches them, transitively,
+    # is held up (a creature's tentacles hang from its floating bell)
     inst = [(p["id"], i, b) for p in parts for i, b in enumerate(p["instances"])]
     solid = [x for x in inst if not by_id[x[0]]["floating"]]
     ground = min((b["min"][1] for _, _, b in solid), default=0.0)
     supported = {(pid, i) for pid, i, b in solid if b["min"][1] <= ground + tol}
+    supported |= {(pid, i) for pid, i, b in inst if by_id[pid]["floating"]}
+    solid = inst
     frontier = list(supported)
     while frontier:
         pid, i = frontier.pop()
@@ -74,7 +78,7 @@ def audit(scene, geometry):
                 add(errors, "overclaim", p["id"],
                     "is %s but its basis facts are at most %s and it cites no source."
                     % (p["certainty"], [k for k, v in rank.items() if v == best][0]))
-        if p["role"] in ("mass", "identity") and p["certainty"] == "decorative":
+        if p["role"] in ("mass", "identity") and p["certainty"] == "decorative" and scene["subject"]["category"] != "fictional":
             add(warnings, "decorative-identity", p["id"],
                 "a %s part is decorative: say so when delivering, it is not evidence." % p["role"])
     accuracy = scene["subject"]["accuracy"]

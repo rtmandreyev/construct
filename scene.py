@@ -569,8 +569,10 @@ def _motion_check(c, mo, w):
 
 def _presentation_check(c, pr, part_ids):
     w = "scene.presentation"
-    if not c.keys(pr, {"framing", "views", "atmosphere", "occlusion", "certainty_style", "background"}, set(), w):
+    if not c.keys(pr, {"framing", "views", "atmosphere", "occlusion", "certainty_style", "background", "float"}, set(), w):
         return
+    if "float" in pr:
+        c.num(pr["float"], w + ".float", 0, MAX_EXTENT)
     fr = pr.get("framing", {})
     if c.keys(fr, {"yaw", "pitch", "fit", "target"}, set(), w + ".framing"):
         if "yaw" in fr:
@@ -752,14 +754,17 @@ def _instances(part):
                     q = _mul(r, (p[0] - centre[0], p[1] - centre[1], p[2] - centre[2]))
                     return (q[0] + centre[0], q[1] + centre[1], q[2] + centre[2])
                 steps.append((f, dphase * i))
-    out = [(lambda p, s=s: s(base(p)), ph, False) for s, ph in steps]
+    # each copy: (shape point -> world point, motion phase, mirrored, carry) where `carry` maps a
+    # world point of the first copy to this copy (the repeat and mirror only, not the part's own
+    # rotate/scale): it moves a motion pivot and axis with the copy
+    out = [(lambda p, s=s: s(base(p)), ph, False, s) for s, ph in steps]
     mirror = part.get("mirror")
     if mirror:
         k = "xyz".index(mirror)
 
         def flip(p, k=k):
             return tuple(-p[j] if j == k else p[j] for j in range(3))
-        out += [(lambda p, g=g: flip(g(p)), ph + 0.5, True) for g, ph, _ in out]
+        out += [(lambda p, g=g: flip(g(p)), ph + 0.5, True, lambda p, c=c: flip(c(p))) for g, ph, _, c in out]
     return out
 
 
@@ -878,21 +883,22 @@ def compile_scene(scene):
                  "source": part.get("source"), "stage": part["stage"], "floating": part.get("floating", False),
                  "shape": part["shape"]["type"], "instances": [], "motion": None}
         sprite_px = part["shape"].get("size_px", 5 if part["shape"]["type"] == "points" else 9)
-        for inst_i, (xf, phase, mirrored) in enumerate(_instances(part)):
+        for inst_i, (xf, phase, mirrored, carry) in enumerate(_instances(part)):
             slot = -1
             if part.get("motion"):
                 mo = part["motion"]
-                pivot_local = mo.get("pivot")
-                pivot = tuple(pivot_local) if pivot_local is not None else xf((0.0, 0.0, 0.0))
-                if pivot_local is not None and inst_i > 0:
-                    # the declared pivot belongs to the first copy: move it with this copy
-                    first = _instances(part)[0][0]
-                    origin0, origin = first((0.0, 0.0, 0.0)), xf((0.0, 0.0, 0.0))
-                    pivot = tuple(pivot_local[k] + origin[k] - origin0[k] for k in range(3))
-                axis = mo.get("axis", [0, 1, 0])
-                if mirrored:
-                    k = "xyz".index(part["mirror"])
-                    axis = [(-a if j != k else a) for j, a in enumerate(axis)]
+                # the pivot is a world point and the axis a world direction for the first copy
+                # (default pivot: the part's `at`); every repeat/mirror copy carries them along
+                at = tuple(part.get("at", (0.0, 0.0, 0.0)))
+                p0 = tuple(mo.get("pivot", at))
+                pivot = carry(p0)
+                d = mo.get("axis", [0, 1, 0])
+                tip = carry((p0[0] + d[0], p0[1] + d[1], p0[2] + d[2]))
+                axis = [tip[k] - pivot[k] for k in range(3)]
+                norm = math.sqrt(sum(x * x for x in axis)) or 1.0
+                axis = [x / norm for x in axis]
+                if mirrored and mo["type"] in ("spin", "swing"):
+                    axis = [-x for x in axis]  # a rotation axis is a pseudovector: a mirror turns it round
                 slot = len(motions)
                 motions.append({"type": mo["type"], "axis": [_r(a) for a in axis], "pivot": [_r(a) for a in pivot],
                                 "rpm": mo.get("rpm", 0.0), "degrees": mo.get("degrees", 0.0),
@@ -1039,6 +1045,7 @@ def _normal_presentation(scene):
         "occlusion": pr.get("occlusion", "xray"),
         "certainty_style": pr.get("certainty_style", "subtle"),
         "background": pr.get("background", "deep"),
+        "float": pr.get("float", 0.0),
     }
 
 

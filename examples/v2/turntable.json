@@ -1,0 +1,90 @@
+{
+  "format": "tessera-hologram",
+  "version": 2,
+  "id": "turntable-generic",
+  "title": "Record player with an open dust cover",
+  "subject": {
+    "category": "machine",
+    "summary": "A generic belt-drive record player: wooden plinth on four feet, platter with a spinning LP, S-shaped tonearm with counterweight and headshell, speed controls, and an open smoked dust cover. Not a particular model.",
+    "accuracy": "generic",
+    "synthetic": true
+  },
+  "units": "m",
+  "seed": 3333,
+  "sources": [
+    {"id": "request", "kind": "user_request", "title": "Synthetic example request: a record player playing an LP", "rights": "synthetic"}
+  ],
+  "facts": [
+    {"key": "plinth.size", "value": "0.46 x 0.11 x 0.36", "unit": "m", "certainty": "inferred", "note": "typical full-size turntable footprint"},
+    {"key": "record.diameter", "value": 0.3, "unit": "m", "certainty": "inferred", "note": "a 12-inch LP is about 0.30 m across"},
+    {"key": "record.speed", "value": 33.33, "unit": "rpm", "certainty": "inferred", "note": "the usual LP speed"},
+    {"key": "tonearm.shape", "value": "S-shaped with detachable headshell", "certainty": "user_supplied", "source": "request"}
+  ],
+  "style": {"palette": "amber", "identity": "steel"},
+  "parts": [
+    {"id": "feet", "role": "structure", "certainty": "inferred", "stage": 0,
+     "shape": {"type": "cylinder", "radius": 0.025, "height": 0.03, "segments": 16, "ribs": 4},
+     "at": [0.19, 0.0, 0.14], "mirror": "x", "repeat": {"count": 2, "step": {"at": [0, 0, -0.28]}}},
+    {"id": "plinth", "label": "Plinth", "role": "mass", "certainty": "inferred", "stage": 0, "basis": ["plinth.size"],
+     "shape": {"type": "box", "size": [0.46, 0.11, 0.36], "anchor": "base", "ribs": 0}, "at": [0, 0.03, 0]},
+    {"id": "deck", "role": "structure", "certainty": "inferred", "stage": 1,
+     "shape": {"type": "box", "size": [0.44, 0.006, 0.34], "anchor": "base"}, "at": [0, 0.14, 0]},
+    {"id": "platter", "label": "Platter", "role": "identity", "certainty": "inferred", "stage": 1, "basis": ["record.diameter"],
+     "shape": {"type": "cylinder", "radius": 0.152, "height": 0.02, "segments": 64, "ribs": 36},
+     "at": [-0.05, 0.146, 0], "motion": {"type": "spin", "axis": [0, 1, 0], "rpm": 33.33}},
+    {"id": "record", "label": "LP", "role": "detail", "certainty": "inferred", "stage": 2, "basis": ["record.diameter", "record.speed"],
+     "shape": {"type": "lathe", "segments": 64, "meridians": 0,
+               "profile": [[0.045, 0], [0.06, 0], [0.072, 0], [0.084, 0], [0.096, 0], [0.108, 0], [0.12, 0], [0.132, 0], [0.142, 0], [0.1495, 0]]},
+     "at": [-0.05, 0.1665, 0], "look": {"tone": "structure", "fill": "glass"},
+     "motion": {"type": "spin", "axis": [0, 1, 0], "rpm": 33.33}},
+    {"id": "label", "label": "Record label", "role": "data", "certainty": "decorative", "stage": 3,
+     "shape": {"type": "cylinder", "radius": 0.045, "height": 0.001, "segments": 40, "ribs": 6},
+     "at": [-0.05, 0.1665, 0], "look": {"glow": 0.4}, "motion": {"type": "spin", "axis": [0, 1, 0], "rpm": 33.33}},
+    {"id": "spindle", "role": "structure", "certainty": "inferred", "stage": 3,
+     "shape": {"type": "cylinder", "radius": 0.0035, "height": 0.02, "segments": 12, "ribs": 2}, "at": [-0.05, 0.166, 0]},
+    {"id": "arm-base", "label": "Tonearm pivot", "role": "structure", "certainty": "inferred", "stage": 2,
+     "shape": {"type": "cylinder", "radius": 0.024, "height": 0.032, "segments": 24, "ribs": 6}, "at": [0.155, 0.146, -0.11]},
+    {"id": "arm-pillar", "role": "structure", "certainty": "inferred", "stage": 3,
+     "shape": {"type": "cylinder", "radius": 0.008, "height": 0.024, "segments": 12, "ribs": 2}, "at": [0.155, 0.178, -0.11]},
+    {"id": "arm", "label": "Tonearm", "role": "identity", "certainty": "inferred", "stage": 4, "basis": ["tonearm.shape"],
+     "shape": {"type": "tube", "radius": 0.0042, "sides": 6, "longitudinal": 2, "ring_every": 0,
+               "path": [[0.155, 0.2, -0.11], [0.15, 0.2, -0.05], [0.115, 0.199, 0.01], [0.07, 0.197, 0.06], [0.04, 0.195, 0.08]]},
+     "motion": {"type": "swing", "axis": [0, 1, 0], "pivot": [0.155, 0.2, -0.11], "degrees": 2.5, "period": 40}},
+    {"id": "counterweight", "role": "identity", "certainty": "inferred", "stage": 4,
+     "shape": {"type": "cylinder", "radius": 0.018, "height": 0.034, "segments": 20, "ribs": 4, "rings": 1},
+     "at": [0.156, 0.2, -0.118], "rotate": [-90, 0, 0],
+     "motion": {"type": "swing", "axis": [0, 1, 0], "pivot": [0.155, 0.2, -0.11], "degrees": 2.5, "period": 40}},
+    {"id": "headshell", "label": "Headshell", "role": "identity", "certainty": "inferred", "stage": 5,
+     "shape": {"type": "box", "size": [0.032, 0.008, 0.018]}, "at": [0.032, 0.192, 0.086], "rotate": [0, -40, 0],
+     "motion": {"type": "swing", "axis": [0, 1, 0], "pivot": [0.155, 0.2, -0.11], "degrees": 2.5, "period": 40}},
+    {"id": "arm-rest", "role": "detail", "certainty": "inferred", "stage": 3,
+     "shape": {"type": "cylinder", "radius": 0.005, "height": 0.042, "segments": 10, "ribs": 2}, "at": [0.195, 0.146, 0.03]},
+    {"id": "knobs", "label": "Speed controls", "role": "detail", "certainty": "inferred", "stage": 3,
+     "shape": {"type": "cylinder", "radius": 0.012, "height": 0.012, "segments": 18, "ribs": 6}, "at": [0.18, 0.146, 0.145],
+     "repeat": {"count": 2, "step": {"at": [-0.045, 0, 0]}}},
+    {"id": "start", "role": "detail", "certainty": "inferred", "stage": 3,
+     "shape": {"type": "box", "size": [0.03, 0.006, 0.016], "anchor": "base"}, "at": [-0.17, 0.146, 0.15]},
+    {"id": "cover", "label": "Dust cover (open)", "role": "structure", "certainty": "inferred", "stage": 5,
+     "shape": {"type": "box", "size": [0.45, 0.09, 0.35]}, "at": [0, 0.32, -0.1574], "rotate": [-70, 0, 0],
+     "look": {"fill": "glass", "tone": "faint", "alpha": 0.7}},
+    {"id": "hinges", "role": "detail", "certainty": "inferred", "stage": 5,
+     "shape": {"type": "box", "size": [0.03, 0.02, 0.012]}, "at": [0.15, 0.15, -0.178], "mirror": "x"}
+  ],
+  "annotations": [
+    {"id": "platter", "text": "Platter, 33⅓ rpm", "part": "platter"},
+    {"id": "arm", "text": "Tonearm", "part": "arm"},
+    {"id": "cover", "text": "Dust cover", "part": "cover"},
+    {"id": "label", "text": "Label (decorative)", "part": "label"}
+  ],
+  "presentation": {
+    "framing": {"yaw": 32, "pitch": 30, "fit": 1.0},
+    "views": [{"id": "stylus", "label": "Stylus", "yaw": 70, "pitch": 18, "distance": 2.6, "target": "headshell"}],
+    "atmosphere": {"haze": 0.7, "grid": true, "projector": false, "motes": 0.35},
+    "occlusion": "xray"
+  },
+  "animation": {
+    "assembly": {"style": "ceremony", "seconds": 6.0, "interference": true},
+    "idle": {"life": "calm", "events": ["sweep", "shimmer", "scan"], "cadence": [6, 12], "strength": 0.55},
+    "camera": {"drift": 7, "breathe": 0.025, "tour": [{"view": "stylus", "at": 14, "fly": 3}, {"view": "hero", "at": 22, "fly": 3.5}]}
+  }
+}
