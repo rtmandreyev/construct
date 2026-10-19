@@ -1,4 +1,4 @@
-"""CLI entrypoint for tessera-hologram."""
+"""Command line for the hologram toolkit (see ../README.md)."""
 
 import argparse
 import json
@@ -6,7 +6,7 @@ import os
 import sys
 import tempfile
 
-from . import hologram, studio
+from . import hologram, product, studio
 
 
 def _emit(obj):
@@ -44,7 +44,7 @@ def _write_output(path, obj, force):
 
 
 def main(argv=None):
-    parser = argparse.ArgumentParser(prog="hologram")
+    parser = argparse.ArgumentParser(prog=product.NAME)
     sub = parser.add_subparsers(dest="command", required=True)
 
     p_tpl = sub.add_parser("template")

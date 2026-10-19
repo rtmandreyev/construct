@@ -1,4 +1,4 @@
-/* Tessera Hologram viewer — a dependency-free WebGL2 renderer for compiled hologram
+/* Hologram viewer — a dependency-free WebGL2 renderer for compiled hologram
  * geometry (format "tessera-hologram-geometry" version 2).
  *
  * Everything is a pure function of the geometry, the seed and a time t, so any frame

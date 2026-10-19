@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hologram-studio"          # the product name: keep in step with hologram_studio/product.py
+version = "0.2.0"
+description = "Audited, animated holograms of objects, buildings and creatures, authored by any AI agent."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE", "NOTICE"]
+requires-python = ">=3.10"
+dependencies = []
+keywords = ["hologram", "3d", "webgl", "agent-skill", "mcp", "visualization"]
+
+[project.scripts]
+hologram-studio = "hologram_studio.__main__:main"
+hologram-studio-mcp = "hologram_studio.mcp_server:main"
+
+[tool.setuptools.packages.find]
+include = ["hologram_studio*"]
+
+[tool.setuptools.package-data]
+"*" = ["*.json", "*.md", "*.html", "*.js", "*.png", "prompts/*", "examples/**/*", "skill/**/*", "viewer/*",
+       "evaluation/*"]

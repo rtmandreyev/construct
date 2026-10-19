@@ -35,9 +35,9 @@ class Packages(unittest.TestCase):
 
     def test_hermes_frontmatter_follows_its_conventions(self):
         fields, body = frontmatter(self.hermes / "SKILL.md")
-        self.assertEqual(fields["name"], "hologram-studio")
+        self.assertEqual(fields["name"], package.NAME)
         self.assertEqual(fields["version"], package.VERSION)
-        self.assertEqual(fields["license"], "Apache-2.0")
+        self.assertEqual(fields["license"], package.LICENSE)
         self.assertTrue(json.loads(fields["description"]))
         self.assertIn("metadata", fields)
         self.assertIn("${HERMES_SKILL_DIR}/runtime/cli.py", body)

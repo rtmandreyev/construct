@@ -16,13 +16,13 @@ import hashlib
 import json
 import math
 
-from . import shapes
+from . import product, shapes
 
 FORMAT = "tessera-hologram"
 VERSION = 2
 GEOMETRY_FORMAT = "tessera-hologram-geometry"
 GEOMETRY_VERSION = 2
-GENERATOR = "tessera-hologram 0.2.0"
+GENERATOR = "%s %s" % (product.NAME, product.VERSION)
 
 # ---------------------------------------------------------------------------- budgets
 MAX_PARTS = 256

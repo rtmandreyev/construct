@@ -1,7 +1,7 @@
 # Hologram contract `tessera.hologram/0.2`
 
 Status: **accepted** (draft 2, 2026-10-19) with one minor addition: the `open` view (§9). Owner: the
-hologram toolkit (`tools/hologram/`). Draft 2 adds the five must-fix items (renderer-owned
+hologram toolkit (this repository, `hologram_studio/`). Draft 2 adds the five must-fix items (renderer-owned
 style, one-shot articulations, fact labels, anchors, artwork slots and masks) and the smaller
 ones (unknown facts are absent, a published geometry schema, host-optional behaviour). Any
 change after main accepts 0.2 bumps the version and is announced.

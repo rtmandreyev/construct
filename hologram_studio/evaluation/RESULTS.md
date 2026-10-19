@@ -67,7 +67,7 @@ an `open`-view warning that says when to ignore it.
 
 - Only Anthropic tiers were available in this session. DeepSeek, OpenRouter models and local
   models (Ollama, llama.cpp, LM Studio) were not run: the scorer needs no model, so main's
-  runner can produce their answers and `python3 -m tools.hologram.evaluation.score <folders>`
+  runner can produce their answers and `python3 -m hologram_studio.evaluation.score <folders>` (from the repository root)
   scores them the same way.
 - Agents ran the loop themselves with a CLI; a host runner adds transport (JSON mode, tool
   calls) that was not exercised here.

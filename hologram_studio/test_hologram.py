@@ -1,4 +1,4 @@
-"""Unit tests for tessera-hologram."""
+"""Unit tests for the v0.1 construction sheets and the MCP server."""
 
 import copy
 import hashlib
@@ -171,7 +171,7 @@ class TestAssets(unittest.TestCase):
 class TestCLI(unittest.TestCase):
     def _run(self, *args):
         return subprocess.run(
-            [sys.executable, "-m", "hologram"] + list(args),
+            [sys.executable, "-m", __package__] + list(args),
             cwd=ROOT, capture_output=True, text=True,
         )
 
@@ -203,7 +203,7 @@ class TestMCP(unittest.TestCase):
     def _session(self, messages):
         payload = "".join(json.dumps(m) + "\n" for m in messages)
         return subprocess.run(
-            [sys.executable, "-m", "hologram.mcp_server"],
+            [sys.executable, "-m", __package__ + ".mcp_server"],
             cwd=ROOT, input=payload, capture_output=True, text=True,
         )
 

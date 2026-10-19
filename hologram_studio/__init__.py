@@ -1,4 +1,6 @@
-"""Tessera hologram: declarative construction sheets compiled to deterministic geometry.
+"""Holograms for objects, buildings and entities: declarative scenes compiled to deterministic,
+audited geometry and an animated WebGL preview (see ../README.md). Also the v0.1 construction
+sheets below.
 
 Public API:
     validate(sheet) -> list[str]
@@ -23,4 +25,4 @@ __all__ = [
     "SheetError",
 ]
 
-__version__ = "0.1.0"
+from .product import VERSION as __version__  # noqa: E402

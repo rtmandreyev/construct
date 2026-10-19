@@ -12,7 +12,7 @@ only on the JSON in the request.
 import json
 import sys
 
-from . import diagnose, hologram, params, scene, __version__
+from . import diagnose, hologram, params, product, scene, __version__
 
 PROTOCOL_VERSION = "2025-11-25"
 MAX_REQUEST_BYTES = 1024 * 1024
@@ -226,7 +226,7 @@ def _handle(msg, state):
         return {
             "protocolVersion": PROTOCOL_VERSION,
             "capabilities": {"tools": {}},
-            "serverInfo": {"name": "tessera-hologram", "version": __version__},
+            "serverInfo": {"name": product.NAME, "version": __version__},
         }
     if method == "notifications/initialized":
         return None

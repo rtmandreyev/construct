@@ -1,9 +1,11 @@
 """Portable CLI entrypoint. Run by absolute path from any working directory."""
 from pathlib import Path
+import importlib
 import sys
 
+# the package is this folder, whatever it is called
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-from hologram.__main__ import main
+main = importlib.import_module(Path(__file__).resolve().parent.name + ".__main__").main
 
 if __name__ == "__main__":
     sys.exit(main())

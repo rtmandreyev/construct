@@ -1,6 +1,7 @@
 """Score model outputs for the synthetic evaluation tasks.
 
-    python3 -m hologram.evaluation.score <run folder> [<run folder> ...] [--json]
+    python3 -m <package>.evaluation.score <run folder> [<run folder> ...] [--json]
+    (from the repository root, <package> being the toolkit's folder, e.g. hologram_studio)
 
 A run folder holds one answer file per task (named in tasks.json) and, optionally, the
 model's own log.json ({"task", "checks", ...}). Nothing is trusted: every answer is

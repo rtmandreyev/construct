@@ -613,7 +613,7 @@ class Prompts(unittest.TestCase):
         from . import prompts
         for name, text in prompts.build().items():
             self.assertEqual((HERE / "prompts" / name).read_text(encoding="utf-8"), text,
-                             "%s is stale: run python3 -m hologram.prompts" % name)
+                             "%s is stale: run python3 cli.py prompts --out prompts" % name)
 
     def test_golden_documents_match_the_params_schema(self):
         from . import prompts

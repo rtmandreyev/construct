@@ -1,20 +1,21 @@
-"""Assemble the hologram-studio skill for its hosts.
+"""Assemble the skill for its hosts (the product name comes from product.py).
 
 One common body (``skill/``), one runtime (this package's v2 modules and the viewer) and
 the v2 examples become self-contained folders:
 
-    <out>/hermes/hologram-studio/        a Hermes skill directory
-    <out>/claude-code/hologram-studio/   a Claude Code plugin; its skills/hologram-studio/
-                                         also works on its own as .claude/skills/hologram-studio
+    <out>/hermes/<name>/                 a Hermes skill directory
+    <out>/claude-code/<name>/            a Claude Code plugin; its skills/<name>/ also works
+                                         on its own as .claude/skills/<name>
 
 Only the frontmatter and the skill-directory token differ between hosts. Every package
 carries MANIFEST.json (version, contract, SHA-256 of each file). Usage:
 
-    python3 tools/hologram/package.py --out /some/empty/folder [--host hermes|claude-code|all]
+    python3 hologram_studio/package.py --out /some/empty/folder [--host hermes|claude-code|all]
 """
 
 import argparse
 import hashlib
+import importlib
 import json
 import os
 import shutil
@@ -22,17 +23,25 @@ import sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
-NAME = "hologram-studio"
-VERSION = "0.2.0"
-CONTRACT = "tessera.hologram/0.2"
-AUTHOR = "Tessera contributors"
-LICENSE = "Apache-2.0"
+REPO = HERE.parent
+try:
+    from . import product
+except ImportError:  # run as a script
+    sys.path.insert(0, str(REPO))
+    product = importlib.import_module(HERE.name + ".product")
+NAME = product.NAME
+TITLE = product.TITLE
+VERSION = product.VERSION
+CONTRACT = product.CONTRACT
+AUTHOR = product.AUTHORS
+LICENSE = product.LICENSE
+PACKAGE = HERE.name  # the Python package's folder, also its folder inside each skill's runtime/
 COMPATIBILITY = ("Python 3.10+ (standard library only). Captures need a local Chromium-family "
                  "browser; video needs ffmpeg. Nothing is installed or downloaded.")
 TAGS = ["Hologram", "3D", "Visualization", "WebGL", "Animation", "Design"]
 
 # The runtime: the v2 toolchain plus the v1 module its CLI still dispatches to.
-RUNTIME_MODULES = ["__init__.py", "__main__.py", "hologram.py", "scene.py", "shapes.py",
+RUNTIME_MODULES = ["__init__.py", "__main__.py", "product.py", "hologram.py", "scene.py", "shapes.py",
                    "audit.py", "diagnose.py", "params.py", "prompts.py", "render.py", "studio.py", "png.py"]
 VIEWER_FILES = ["hologram.js", "template.html"]
 
@@ -42,18 +51,19 @@ SKILL_DIR_TOKEN = {
     "claude-code": "${CLAUDE_SKILL_DIR}",
 }
 
-CLI_SHIM = '''"""hologram-studio command line. Run by absolute path from any folder."""
+CLI_SHIM = '''"""{name} command line. Run by absolute path from any folder."""
+import importlib
 import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from hologram.__main__ import main  # noqa: E402
+main = importlib.import_module("{package}.__main__").main
 
 if __name__ == "__main__":
     sys.exit(main())
 '''
 
-NOTICE = """hologram-studio {version}
+NOTICE = """{name} {version}
 Copyright 2026 {author}. Licensed under {license} (see LICENSE).
 
 Independently authored. It recreates the method and look of NODE's Measured Light
@@ -102,7 +112,8 @@ def frontmatter(host, fields):
 
 
 def render_skill_md(host):
-    fields, body = split_frontmatter((HERE / "skill" / "SKILL.md").read_text(encoding="utf-8"))
+    text = (HERE / "skill" / "SKILL.md").read_text(encoding="utf-8")
+    fields, body = split_frontmatter(text.replace("{{NAME}}", NAME).replace("{{TITLE}}", TITLE))
     for key in ("name", "description"):
         if not fields.get(key):
             raise PackageError("SKILL.md frontmatter lacks " + key)
@@ -128,24 +139,23 @@ def write_skill(host, root):
     for ref in sorted((HERE / "skill" / "references").glob("*.md")):
         _copy(ref, root / "references" / ref.name)
     for module in RUNTIME_MODULES:
-        _copy(HERE / module, root / "runtime" / "hologram" / module)
+        _copy(HERE / module, root / "runtime" / PACKAGE / module)
     for name in VIEWER_FILES:
-        _copy(HERE / "viewer" / name, root / "runtime" / "hologram" / "viewer" / name)
-    (root / "runtime" / "cli.py").write_text(CLI_SHIM, encoding="utf-8")
+        _copy(HERE / "viewer" / name, root / "runtime" / PACKAGE / "viewer" / name)
+    (root / "runtime" / "cli.py").write_text(CLI_SHIM.format(name=NAME, package=PACKAGE), encoding="utf-8")
     for scene in sorted((HERE / "examples" / "v2").glob("*.json")):
         _copy(scene, root / "examples" / scene.name)
     for asset in sorted((HERE / "examples" / "v2" / "assets").glob("*.png")):
         _copy(asset, root / "examples" / "assets" / asset.name)
-    _copy(HERE / "CONTRACT.md", root / "CONTRACT.md")
+    _copy(REPO / "CONTRACT.md", root / "CONTRACT.md")
     _copy(HERE / "geometry.schema.json", root / "geometry.schema.json")
     for f in sorted((HERE / "prompts").iterdir()):
         _copy(f, root / "prompts" / f.name)
 
 
 def write_legal(root):
-    repo_license = HERE.parent.parent / "LICENSE"
-    _copy(repo_license, root / "LICENSE")
-    (root / "NOTICE").write_text(NOTICE.format(version=VERSION, author=AUTHOR, license=LICENSE),
+    _copy(REPO / "LICENSE", root / "LICENSE")
+    (root / "NOTICE").write_text(NOTICE.format(name=NAME, version=VERSION, author=AUTHOR, license=LICENSE),
                                  encoding="utf-8")
 
 

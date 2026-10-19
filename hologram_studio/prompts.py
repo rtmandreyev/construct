@@ -1,7 +1,7 @@
 """The authoring package for any model: prompts and a parameter schema, generated from the
 toolkit's own tables so they never drift from the validator.
 
-    python3 -m hologram.prompts --out prompts/      (or: cli.py prompts --out prompts/)
+    python3 cli.py prompts --out prompts/
 
 Files:
   system.md          rules every author follows (any model, any host)
@@ -15,10 +15,11 @@ import json
 from pathlib import Path
 
 from . import params as params_mod
+from . import product
 from . import scene as scene_mod
 
 HERE = Path(__file__).resolve().parent
-CONTRACT = "tessera.hologram/0.2"
+CONTRACT = product.CONTRACT
 
 SYSTEM = """# Hologram authoring rules ({contract})
 

@@ -1,4 +1,4 @@
-"""Deterministic compiler for tessera-hologram construction sheets.
+"""Deterministic compiler for v0.1 construction sheets (format "tessera-hologram" version 1).
 
 Standard library only. No inference, no network, no file reads except the
 optional asset-root hash verification and read_sheet. Sheets are declarative;

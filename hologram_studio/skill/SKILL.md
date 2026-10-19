@@ -1,9 +1,9 @@
 ---
-name: hologram-studio
+name: {{NAME}}
 description: Build an animated, inspected hologram of a real or fictional object, building, machine, creature or product (CD, book, lamp, lighthouse, jellyfish...) from a request and its evidence. Produces an audited declarative scene, a self-contained animated WebGL preview (staged construction, idle life, camera tour, reduced-motion still) and reviewed captures. Use when someone wants a hologram, holographic model, wireframe light model or animated 3-D presentation of a thing; not for photorealistic rendering, meshes for games, or retrieving cover art.
 ---
 
-# Hologram Studio
+# {{TITLE}}
 
 You author a **scene** (declarative JSON); the bundled tools validate it, audit it, compile
 it and render it. You never write graphics code. Work the loop below until the review
