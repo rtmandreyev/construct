@@ -1,0 +1,191 @@
+{
+  "format": "tessera-hologram",
+  "version": 1,
+  "id": "synthetic-structure-template",
+  "title": "Synthetic structure template",
+  "kind": "structure",
+  "seed": 314,
+  "units": "m",
+  "facts": [
+    {
+      "key": "footprint_m",
+      "value": 0.4,
+      "certainty": "decorative",
+      "source": null
+    }
+  ],
+  "parts": [
+    {
+      "id": "base",
+      "shape": "box",
+      "position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "size": [
+        0.4,
+        0.02,
+        0.4
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "tone": "structure",
+      "certainty": "decorative",
+      "stage": 0
+    },
+    {
+      "id": "column-a",
+      "shape": "box",
+      "position": [
+        -0.15,
+        0.15,
+        -0.15
+      ],
+      "size": [
+        0.03,
+        0.3,
+        0.03
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "tone": "structure",
+      "certainty": "decorative",
+      "stage": 1
+    },
+    {
+      "id": "column-b",
+      "shape": "box",
+      "position": [
+        0.15,
+        0.15,
+        -0.15
+      ],
+      "size": [
+        0.03,
+        0.3,
+        0.03
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "tone": "structure",
+      "certainty": "decorative",
+      "stage": 1
+    },
+    {
+      "id": "column-c",
+      "shape": "box",
+      "position": [
+        -0.15,
+        0.15,
+        0.15
+      ],
+      "size": [
+        0.03,
+        0.3,
+        0.03
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "tone": "structure",
+      "certainty": "decorative",
+      "stage": 1
+    },
+    {
+      "id": "column-d",
+      "shape": "box",
+      "position": [
+        0.15,
+        0.15,
+        0.15
+      ],
+      "size": [
+        0.03,
+        0.3,
+        0.03
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "tone": "structure",
+      "certainty": "decorative",
+      "stage": 1
+    },
+    {
+      "id": "roof",
+      "shape": "box",
+      "position": [
+        0.0,
+        0.31,
+        0.0
+      ],
+      "size": [
+        0.4,
+        0.02,
+        0.4
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "tone": "accent",
+      "certainty": "decorative",
+      "stage": 2
+    },
+    {
+      "id": "axis",
+      "shape": "polyline",
+      "position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "size": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "tone": "faint",
+      "certainty": "decorative",
+      "stage": 3,
+      "points": [
+        [
+          0.0,
+          0.0,
+          0.0
+        ],
+        [
+          0.0,
+          0.35,
+          0.0
+        ]
+      ]
+    }
+  ],
+  "assets": [],
+  "motion": {
+    "assembly_ms": 1200,
+    "ambient": "scan",
+    "strength": 0.4
+  }
+}

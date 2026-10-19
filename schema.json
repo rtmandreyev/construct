@@ -1,0 +1,316 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "tessera-hologram sheet",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "format",
+    "version",
+    "id",
+    "title",
+    "kind",
+    "seed",
+    "units",
+    "facts",
+    "parts",
+    "assets",
+    "motion"
+  ],
+  "properties": {
+    "format": {
+      "const": "tessera-hologram"
+    },
+    "version": {
+      "const": 1
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9](?:[a-z0-9-]{0,78}[a-z0-9])?$"
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 500
+    },
+    "kind": {
+      "enum": [
+        "cd",
+        "book",
+        "structure",
+        "custom"
+      ]
+    },
+    "seed": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 2147483647
+    },
+    "units": {
+      "const": "m"
+    },
+    "facts": {
+      "type": "array",
+      "maxItems": 128,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "key",
+          "value",
+          "certainty",
+          "source"
+        ],
+        "properties": {
+          "key": {
+            "type": "string",
+            "minLength": 1
+          },
+          "value": {
+            "type": [
+              "string",
+              "number",
+              "boolean",
+              "null"
+            ]
+          },
+          "certainty": {
+            "enum": [
+              "verified",
+              "user_supplied",
+              "inferred",
+              "decorative"
+            ]
+          },
+          "source": {
+            "type": [
+              "string",
+              "null"
+            ]
+          }
+        }
+      }
+    },
+    "parts": {
+      "type": "array",
+      "maxItems": 128,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "shape",
+          "position",
+          "size",
+          "rotation",
+          "tone",
+          "certainty",
+          "stage"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "shape": {
+            "enum": [
+              "box",
+              "disc",
+              "ring",
+              "polyline"
+            ]
+          },
+          "position": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "minimum": -100,
+              "maximum": 100
+            },
+            "minItems": 3,
+            "maxItems": 3
+          },
+          "size": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "maximum": 100
+            },
+            "minItems": 3,
+            "maxItems": 3
+          },
+          "rotation": {
+            "type": "array",
+            "items": {
+              "type": "number",
+              "minimum": -360,
+              "maximum": 360
+            },
+            "minItems": 3,
+            "maxItems": 3
+          },
+          "tone": {
+            "enum": [
+              "accent",
+              "bright",
+              "structure",
+              "dust",
+              "identity",
+              "faint"
+            ]
+          },
+          "certainty": {
+            "enum": [
+              "verified",
+              "user_supplied",
+              "inferred",
+              "decorative"
+            ]
+          },
+          "stage": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 5
+          },
+          "points": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 256,
+            "items": {
+              "type": "array",
+              "items": {
+                "type": "number"
+              },
+              "minItems": 3,
+              "maxItems": 3
+            }
+          },
+          "source": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "artwork_asset_id": {
+            "type": "string",
+            "maxLength": 80
+          }
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "shape": {
+                  "const": "polyline"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "points"
+              ]
+            },
+            "else": {
+              "not": {
+                "required": [
+                  "points"
+                ]
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "certainty": {
+                  "const": "verified"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "source"
+              ],
+              "properties": {
+                "source": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "assets": {
+      "type": "array",
+      "maxItems": 32,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "path",
+          "sha256",
+          "media_type",
+          "rights"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "media_type": {
+            "enum": [
+              "image/png",
+              "image/jpeg",
+              "image/webp"
+            ]
+          },
+          "rights": {
+            "enum": [
+              "synthetic",
+              "user_private",
+              "permitted"
+            ]
+          }
+        }
+      }
+    },
+    "motion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "assembly_ms",
+        "ambient",
+        "strength"
+      ],
+      "properties": {
+        "assembly_ms": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 5000
+        },
+        "ambient": {
+          "enum": [
+            "off",
+            "scan",
+            "breathe"
+          ]
+        },
+        "strength": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      }
+    }
+  }
+}

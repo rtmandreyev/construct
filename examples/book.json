@@ -1,0 +1,115 @@
+{
+  "format": "tessera-hologram",
+  "version": 1,
+  "id": "synthetic-book-template",
+  "title": "Synthetic book template",
+  "kind": "book",
+  "seed": 230,
+  "units": "m",
+  "facts": [
+    {
+      "key": "width_m",
+      "value": 0.15,
+      "certainty": "decorative",
+      "source": null
+    },
+    {
+      "key": "height_m",
+      "value": 0.23,
+      "certainty": "decorative",
+      "source": null
+    },
+    {
+      "key": "thickness_m",
+      "value": 0.03,
+      "certainty": "decorative",
+      "source": null
+    }
+  ],
+  "parts": [
+    {
+      "id": "block",
+      "shape": "box",
+      "position": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "size": [
+        0.15,
+        0.23,
+        0.03
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "tone": "structure",
+      "certainty": "decorative",
+      "stage": 0
+    },
+    {
+      "id": "spine",
+      "shape": "box",
+      "position": [
+        -0.075,
+        0.0,
+        0.0
+      ],
+      "size": [
+        0.004,
+        0.23,
+        0.032
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "tone": "accent",
+      "certainty": "decorative",
+      "stage": 1
+    },
+    {
+      "id": "title-line",
+      "shape": "polyline",
+      "position": [
+        0.0,
+        0.06,
+        0.016
+      ],
+      "size": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "rotation": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "tone": "identity",
+      "certainty": "decorative",
+      "stage": 2,
+      "points": [
+        [
+          -0.05,
+          0.0,
+          0.0
+        ],
+        [
+          0.05,
+          0.0,
+          0.0
+        ]
+      ]
+    }
+  ],
+  "assets": [],
+  "motion": {
+    "assembly_ms": 1200,
+    "ambient": "scan",
+    "strength": 0.4
+  }
+}

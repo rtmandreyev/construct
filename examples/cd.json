@@ -1,0 +1,179 @@
+{
+  "format": "tessera-hologram",
+  "version": 1,
+  "id": "synthetic-cd-template",
+  "title": "Synthetic cd template",
+  "kind": "cd",
+  "seed": 142,
+  "units": "m",
+  "facts": [
+    {
+      "key": "representation",
+      "value": "Generic CD jewel case; artwork and exact edition geometry not supplied",
+      "certainty": "decorative",
+      "source": null
+    }
+  ],
+  "parts": [
+    {
+      "id": "case",
+      "shape": "box",
+      "position": [
+        0,
+        0,
+        0
+      ],
+      "size": [
+        0.142,
+        0.125,
+        0.01
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "tone": "structure",
+      "certainty": "inferred",
+      "stage": 0
+    },
+    {
+      "id": "inlay",
+      "shape": "box",
+      "position": [
+        0.005,
+        0,
+        0.0055
+      ],
+      "size": [
+        0.127,
+        0.119,
+        0.0008
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "tone": "bright",
+      "certainty": "inferred",
+      "stage": 1
+    },
+    {
+      "id": "spine",
+      "shape": "box",
+      "position": [
+        -0.065,
+        0,
+        0
+      ],
+      "size": [
+        0.01,
+        0.125,
+        0.012
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "tone": "identity",
+      "certainty": "inferred",
+      "stage": 1
+    },
+    {
+      "id": "disc",
+      "shape": "disc",
+      "position": [
+        0.004,
+        0,
+        0.006
+      ],
+      "size": [
+        0.059,
+        0.0075,
+        0.0012
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "tone": "structure",
+      "certainty": "inferred",
+      "stage": 2
+    },
+    {
+      "id": "hub",
+      "shape": "ring",
+      "position": [
+        0.004,
+        0,
+        0.007
+      ],
+      "size": [
+        0.012,
+        0.002,
+        0.001
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "tone": "accent",
+      "certainty": "inferred",
+      "stage": 3
+    },
+    {
+      "id": "hinge-top",
+      "shape": "box",
+      "position": [
+        -0.069,
+        0.046,
+        0.001
+      ],
+      "size": [
+        0.005,
+        0.014,
+        0.012
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "tone": "faint",
+      "certainty": "inferred",
+      "stage": 4
+    },
+    {
+      "id": "hinge-bottom",
+      "shape": "box",
+      "position": [
+        -0.069,
+        -0.046,
+        0.001
+      ],
+      "size": [
+        0.005,
+        0.014,
+        0.012
+      ],
+      "rotation": [
+        0,
+        0,
+        0
+      ],
+      "tone": "faint",
+      "certainty": "inferred",
+      "stage": 4
+    }
+  ],
+  "assets": [],
+  "motion": {
+    "assembly_ms": 1200,
+    "ambient": "scan",
+    "strength": 0.4
+  }
+}
