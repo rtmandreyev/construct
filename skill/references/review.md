@@ -1,0 +1,52 @@
+# Review
+
+Two gates, both required:
+
+1. **Geometric validity** — `check` reports `audit: PASS`. It proves the object stands up
+   (every part rests on the ground, on another part or on a declared floating part),
+   that nothing claims more certainty than its evidence, and that accuracy claims are
+   backed. It cannot judge beauty or likeness.
+2. **Art direction** — your eyes on the captures. Read the images; do not infer them from
+   the JSON.
+
+## The capture set (`review --out out/`)
+
+| file | what to look for |
+|---|---|
+| `review/hero.png` | the main impression with labels: is it instantly *this* object? |
+| `sheet-views.png` | hero, front, side, back, top, three-quarter: silhouette from every side, proportions, nothing missing or poking through |
+| `sheet-assembly.png` | ghost → collapse → staged build → settle: order makes sense, nothing hovers before its support, the tip of construction reads |
+| `sheet-life.png` | idle events at their peak: visible but not chaotic, suited to the subject |
+| `sheet-provenance.png` | certainty colours (verified ice-white, user-supplied green, inferred amber, decorative magenta): is the honest story visible? |
+| `still-reduced-motion.png` | the still state alone |
+| `sheet-motion.png` (`--sheets motion`) | part motion across seconds |
+
+## Checklist
+
+- **Recognisable at thumbnail size?** Squint at a single view cell. If not, the silhouette
+  or proportions are wrong — fix masses before anything else.
+- **Identity features visible** in hero and in their own view?
+- **Hierarchy**: masses and identity carry the image; detail and ornament recede. If
+  everything is equally bright it is clutter (audit warns above 55 % detail).
+- **Framing**: the object fills the frame with margin in every view; nothing cut off.
+- **Proportions** against the facts; no part obviously too thick, thin, high or low.
+- **Contact**: legs on the ground, roofs on walls, arms on pivots — the audit catches
+  boxes that do not touch; you catch things that touch only by box.
+- **Honesty**: inferred and decorative parts look it; generated art is labelled; the caption
+  says GENERIC or APPROXIMATE when it is.
+- **Motion**: ambient, never frantic; parts move about their real pivots.
+- **Still**: the reduced-motion frame is a complete, good picture.
+
+## Common defects and fixes
+
+| defect | fix |
+|---|---|
+| reads as a generic box/cylinder | stronger identity parts; real profile changes in lathe/extrude; better hero yaw |
+| mush of lines | fewer meridians/rings/ribs; `fill: none` on thin parts; move clutter to `detail` |
+| part floats or sinks | correct `at`/`anchor`; heights from the support's top; or `floating: true` if real |
+| dotted, broken-looking main body | it is `decorative`: designed parts of a requested object are `inferred` |
+| too dark/faint | role `mass`/`identity` instead of `structure`; `look.glow`; fewer competing parts |
+| wrong rotation axis in motion | axis and pivot are world values for the first copy |
+| labels collide | fewer annotations, `offset` them apart |
+
+Fix, `check`, `review` again. Two or three rounds is normal.
