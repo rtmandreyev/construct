@@ -8,7 +8,9 @@
  * URL parameters: t (freeze time, seconds), view (hero|front|side|back|top|three-quarter|<scene view>),
  * motion (full|reduced), mode (light|provenance), ui (1|0), labels (1|0), caption (1|0),
  * sheet (assembly|views|motion|life|provenance|all), fps (15|20|30|60|0), capture (1),
- * open (0..1: hold the articulations at this opening instead of playing them).
+ * open (0..1: hold the articulations at this opening instead of playing them),
+ * shift (x,y: move the framed object across the screen, in fractions of the half-viewport),
+ * zoom (>1 pulls the camera back to leave room around the object).
  */
 (function () {
   "use strict";
@@ -774,7 +776,7 @@ void main() {
       const x = Math.abs(V.dot(d, right)), yy = Math.abs(V.dot(d, up)), z = V.dot(d, back);
       dist = Math.max(dist, z + x / (tanH * margin), z + yy / (tanV * margin));
     }
-    dist *= (fr.fit || 1) * (v.distance || 1);
+    dist *= (fr.fit || 1) * (v.distance || 1) * (this.opt.zoom || 1);
     return { target, yaw: v.yaw, pitch: v.pitch, dist, fov };
   };
   Hologram.prototype.cameraAt = function (t, base) {
@@ -811,7 +813,10 @@ void main() {
     const eye = V.add(cam.target, [cam.dist * Math.sin(y) * Math.cos(p), cam.dist * Math.sin(p), cam.dist * Math.cos(y) * Math.cos(p)]);
     const view = lookAt(eye, cam.target, Math.abs(cam.pitch) > 88 ? [0, 0, -1] : [0, 1, 0]);
     const near = Math.max(cam.dist * 0.01, 0.001), far = cam.dist + this.R * 10;
-    return { vp: mat4mul(perspective(cam.fov, aspect, near, far), view), eye };
+    // an optional screen-space offset: the object framed off-centre (room for type, a layout)
+    const sh = this.opt.shift || [0, 0];
+    const post = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, sh[0], sh[1], 0, 1];
+    return { vp: mat4mul(post, mat4mul(perspective(cam.fov, aspect, near, far), view)), eye };
   };
 
   // ------------------------------------------------------------------------- drawing
@@ -1001,6 +1006,8 @@ void main() {
       ui: q.get("ui") !== "0", labels: q.get("labels") === "1", caption: q.get("caption") !== "0",
       sheet: q.get("sheet"), fps: q.has("fps") ? parseInt(q.get("fps"), 10) : 30, capture: q.get("capture") === "1",
       open: q.has("open") ? Math.max(0, Math.min(1, parseFloat(q.get("open")) || 0)) : null,
+      shift: q.has("shift") ? q.get("shift").split(",").map((x) => Math.max(-0.9, Math.min(0.9, parseFloat(x) || 0))).concat([0]).slice(0, 2) : null,
+      zoom: q.has("zoom") ? Math.max(0.3, Math.min(4, parseFloat(q.get("zoom")) || 1)) : 1,
     };
     const stage = document.getElementById("stage");
     const canvas = document.getElementById("holo");

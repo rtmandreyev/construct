@@ -1,0 +1,385 @@
+{
+ "about": "Release video storyboard. Times are seconds; `start` and `speed` map shot time to the hologram's own clock (t = start + shot_time * speed). Type is set by the page in the storyboard's fonts. Shots with src showcase:<name> come from the showcase folder (--showcase); until it exists the montage uses the repository's golden documents (draft-only shots are marked draft: true). {TITLE} and {NAME} come from product.py.",
+ "fonts": {
+  "headline": "/Library/Fonts/SourceSansPro.otf",
+  "mono": "~/Library/Fonts/JetBrainsMonoNerdFont-Regular.ttf"
+ },
+ "install": "github.com/OWNER/{NAME}",
+ "shots": [
+  {
+   "id": "open",
+   "src": "hologram_studio/examples/v2/lighthouse.json",
+   "start": 0.0,
+   "speed": 1.75,
+   "seconds": 4.0,
+   "music": "intro: one hit as the build starts",
+   "type": {
+    "text": "Describe anything.",
+    "in": 0.5,
+    "out": 3.8,
+    "place": "low"
+   }
+  },
+  {
+   "id": "build",
+   "src": "hologram_studio/examples/v2/turntable.json",
+   "start": 0.5,
+   "speed": 2.0,
+   "seconds": 3.2,
+   "music": "intro",
+   "type": {
+    "text": "Any agent builds it.",
+    "in": 0.3,
+    "out": 3.1,
+    "place": "low"
+   }
+  },
+  {
+   "id": "opens",
+   "src": "hologram_studio/examples/v2/cd.json",
+   "start": 4.0,
+   "speed": 2.0,
+   "seconds": 4.0,
+   "music": "intro: accent on the lid",
+   "type": {
+    "text": "It opens.",
+    "in": 1.4,
+    "out": 3.9,
+    "place": "low"
+   }
+  },
+  {
+   "id": "alive",
+   "src": "hologram_studio/examples/v2/lantern-jellyfish.json",
+   "start": 3.0,
+   "speed": 1.6,
+   "seconds": 4.0,
+   "music": "drop into the montage",
+   "type": {
+    "text": "It comes alive.",
+    "in": 0.6,
+    "out": 3.9,
+    "place": "low"
+   }
+  },
+  {
+   "id": "sc-objects",
+   "src": "showcase:objects-1",
+   "start": 0.4,
+   "speed": 3.4,
+   "seconds": 2.4,
+   "tag": "",
+   "music": "montage",
+   "type": {
+    "text": "Objects.",
+    "in": 0.1,
+    "out": 1.4,
+    "place": "high"
+   }
+  },
+  {
+   "id": "sc-2",
+   "src": "showcase:objects-2",
+   "start": 0.4,
+   "speed": 3.4,
+   "seconds": 2.4,
+   "tag": "",
+   "music": "montage"
+  },
+  {
+   "id": "sc-3",
+   "src": "showcase:objects-3",
+   "start": 0.4,
+   "speed": 3.4,
+   "seconds": 2.4,
+   "tag": "",
+   "music": "montage"
+  },
+  {
+   "id": "sc-4",
+   "src": "showcase:objects-4",
+   "start": 0.4,
+   "speed": 3.4,
+   "seconds": 2.4,
+   "tag": "",
+   "music": "montage"
+  },
+  {
+   "id": "sc-spaces",
+   "src": "showcase:spaces-1",
+   "start": 0.4,
+   "speed": 3.4,
+   "seconds": 2.4,
+   "tag": "",
+   "music": "montage",
+   "type": {
+    "text": "Spaces.",
+    "in": 0.1,
+    "out": 1.4,
+    "place": "high"
+   }
+  },
+  {
+   "id": "sc-6",
+   "src": "showcase:spaces-2",
+   "start": 0.4,
+   "speed": 3.4,
+   "seconds": 2.4,
+   "tag": "",
+   "music": "montage"
+  },
+  {
+   "id": "sc-7",
+   "src": "showcase:spaces-3",
+   "start": 0.4,
+   "speed": 3.4,
+   "seconds": 2.4,
+   "tag": "",
+   "music": "montage"
+  },
+  {
+   "id": "sc-worlds",
+   "src": "showcase:planets-1",
+   "start": 0.4,
+   "speed": 3.4,
+   "seconds": 2.4,
+   "tag": "",
+   "music": "montage",
+   "type": {
+    "text": "Worlds.",
+    "in": 0.1,
+    "out": 1.4,
+    "place": "high"
+   }
+  },
+  {
+   "id": "sc-9",
+   "src": "showcase:planets-2",
+   "start": 0.4,
+   "speed": 3.4,
+   "seconds": 2.4,
+   "tag": "",
+   "music": "montage"
+  },
+  {
+   "id": "sc-10",
+   "src": "showcase:planets-3",
+   "start": 0.4,
+   "speed": 3.4,
+   "seconds": 2.4,
+   "tag": "",
+   "music": "montage"
+  },
+  {
+   "id": "sc-creatures",
+   "src": "showcase:creatures-1",
+   "start": 0.4,
+   "speed": 3.4,
+   "seconds": 2.4,
+   "tag": "",
+   "music": "montage",
+   "type": {
+    "text": "Creatures.",
+    "in": 0.1,
+    "out": 1.4,
+    "place": "high"
+   }
+  },
+  {
+   "id": "sc-12",
+   "src": "showcase:creatures-2",
+   "start": 0.4,
+   "speed": 3.4,
+   "seconds": 2.4,
+   "tag": "",
+   "music": "montage"
+  },
+  {
+   "id": "sc-13",
+   "src": "showcase:creatures-3",
+   "start": 0.4,
+   "speed": 3.4,
+   "seconds": 2.4,
+   "tag": "",
+   "music": "montage"
+  },
+  {
+   "id": "sc-14",
+   "src": "showcase:extra-1",
+   "start": 0.4,
+   "speed": 3.4,
+   "seconds": 2.4,
+   "tag": "",
+   "music": "montage"
+  },
+  {
+   "id": "sc-15",
+   "src": "showcase:extra-2",
+   "start": 0.4,
+   "speed": 3.4,
+   "seconds": 2.4,
+   "tag": "",
+   "music": "montage"
+  },
+  {
+   "id": "d-guitar",
+   "src": "hologram_studio/examples/v2/object-electric-guitar.params.json",
+   "start": 0.4,
+   "speed": 3.4,
+   "seconds": 2.4,
+   "tag": "DRAFT · PARAMETERS",
+   "music": "montage",
+   "type": {
+    "text": "Objects.",
+    "in": 0.1,
+    "out": 1.4,
+    "place": "high"
+   },
+   "draft": true
+  },
+  {
+   "id": "d-synth",
+   "src": "hologram_studio/examples/v2/object-synth.params.json",
+   "start": 0.4,
+   "speed": 3.4,
+   "seconds": 2.4,
+   "tag": "DRAFT · PARAMETERS",
+   "music": "montage",
+   "draft": true
+  },
+  {
+   "id": "d-acoustic",
+   "src": "hologram_studio/examples/v2/object-acoustic-guitar.params.json",
+   "start": 0.4,
+   "speed": 3.4,
+   "seconds": 2.4,
+   "tag": "DRAFT · PARAMETERS",
+   "music": "montage",
+   "draft": true
+  },
+  {
+   "id": "d-box",
+   "src": "hologram_studio/examples/v2/case-box.params.json",
+   "start": 0.4,
+   "speed": 3.4,
+   "seconds": 2.4,
+   "tag": "DRAFT · PARAMETERS",
+   "music": "montage",
+   "draft": true
+  },
+  {
+   "id": "d-digipak",
+   "src": "hologram_studio/examples/v2/case-digipak.params.json",
+   "start": 0.4,
+   "speed": 3.4,
+   "seconds": 2.4,
+   "tag": "DRAFT · PARAMETERS",
+   "music": "montage",
+   "draft": true
+  },
+  {
+   "id": "d-tulip",
+   "src": "hologram_studio/examples/v2/vessel-glass-tulip.params.json",
+   "start": 0.4,
+   "speed": 3.4,
+   "seconds": 2.4,
+   "tag": "DRAFT · PARAMETERS",
+   "music": "montage",
+   "draft": true
+  },
+  {
+   "id": "d-bottle",
+   "src": "hologram_studio/examples/v2/vessel-bottle.params.json",
+   "start": 0.4,
+   "speed": 3.4,
+   "seconds": 2.4,
+   "tag": "DRAFT · PARAMETERS",
+   "music": "montage",
+   "draft": true
+  },
+  {
+   "id": "honest",
+   "src": "hologram_studio/examples/v2/lighthouse.json",
+   "start": 12.0,
+   "speed": 1.0,
+   "seconds": 3.6,
+   "mode": "provenance",
+   "music": "breath",
+   "type": {
+    "text": "Honest about what it knows.",
+    "sub": "verified · user-supplied · inferred · decorative",
+    "in": 0.3,
+    "out": 3.5,
+    "place": "low"
+   }
+  },
+  {
+   "id": "simple",
+   "src": "hologram_studio/examples/v2/book-paperback.params.json",
+   "start": 0.6,
+   "speed": 2.6,
+   "seconds": 3.6,
+   "music": "build back up",
+   "type": {
+    "text": "Small models: ten lines.",
+    "sub": "a parameter document in, a finished hologram out",
+    "in": 0.3,
+    "out": 3.5,
+    "place": "low"
+   }
+  },
+  {
+   "id": "any",
+   "src": "hologram_studio/examples/v2/turntable.json",
+   "start": 14.0,
+   "speed": 1.0,
+   "seconds": 3.4,
+   "music": "final hit",
+   "type": {
+    "text": "Any agent. Any model.",
+    "sub": "MCP · CLI · Python · Hermes · Claude Code",
+    "in": 0.3,
+    "out": 3.3
+   }
+  },
+  {
+   "id": "end",
+   "kind": "card",
+   "seconds": 4.0,
+   "music": "ring out",
+   "grab": 0.6,
+   "type": {
+    "text": "{TITLE}",
+    "sub": "github.com/OWNER/{NAME}\nfree and open source · MIT",
+    "in": 0.2,
+    "out": 3.9
+   }
+  }
+ ],
+ "layout": {
+  "16x9": {
+   "shift": [
+    0.3,
+    0
+   ],
+   "zoom": 0.95,
+   "place": "left"
+  },
+  "1x1": {
+   "shift": [
+    0,
+    0.26
+   ],
+   "zoom": 1.5,
+   "place": "bottom"
+  },
+  "9x16": {
+   "shift": [
+    0,
+    0.34
+   ],
+   "zoom": 1.55,
+   "place": "bottom"
+  }
+ }
+}
