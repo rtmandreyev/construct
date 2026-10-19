@@ -6,7 +6,7 @@ import os
 import sys
 import tempfile
 
-from . import hologram
+from . import hologram, studio
 
 
 def _emit(obj):
@@ -63,7 +63,11 @@ def main(argv=None):
     p_cmp.add_argument("--asset-root")
     p_cmp.add_argument("--force", action="store_true")
 
+    studio.add_commands(sub)
+
     args = parser.parse_args(argv)
+    if args.command in studio.COMMANDS:
+        return studio.run(args)
 
     try:
         if args.command == "template":

@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="generator" content="tessera-hologram">
+<title>__TITLE__</title>
+<style>
+  :root { color-scheme: dark; --ink: #f1e9f7; --dim: #a597b3; --accent: #d16bd0; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: #050205; color: var(--ink);
+    font: 12px/1.35 ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace; overflow: hidden; }
+  #stage { position: fixed; inset: 0; }
+  canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; cursor: grab; }
+  canvas:active { cursor: grabbing; }
+  #overlay { position: absolute; inset: 0; pointer-events: none; }
+  .caption { position: absolute; left: 22px; bottom: 20px; max-width: 70%; text-shadow: 0 0 6px #000, 0 0 2px #000; }
+  .caption .title { font: 600 15px/1.25 ui-sans-serif, -apple-system, "Segoe UI", Inter, Helvetica, Arial, sans-serif; letter-spacing: .02em; }
+  .caption .meta { margin-top: 4px; font-size: 10px; letter-spacing: .14em; color: var(--dim); }
+  .caption .meta.warn { color: #ffb36b; }
+  .legend { position: absolute; right: 20px; bottom: 20px; font-size: 10px; letter-spacing: .12em; }
+  .legend .row { display: flex; align-items: center; gap: 8px; margin-top: 4px; }
+  .legend .swatch { width: 18px; height: 2px; display: inline-block; }
+  .legend .verified .swatch { background: #d9f7ff; } .legend .user_supplied .swatch { background: #73ff9e; }
+  .legend .inferred .swatch { background: #ffb84d; } .legend .decorative .swatch { background: repeating-linear-gradient(90deg, #f26bf2 0 3px, transparent 3px 6px); }
+  .help { position: absolute; left: 22px; top: 18px; font-size: 10px; letter-spacing: .1em; color: var(--dim); opacity: .75; }
+  .labels .label { position: absolute; transform: translate(4px, -50%); padding: 3px 7px; border: 1px solid rgba(255,255,255,.14);
+    background: rgba(10,4,12,.72); border-radius: 4px; font-size: 10.5px; white-space: nowrap; letter-spacing: .04em; }
+  .labels .label.left { transform: translate(calc(-100% - 4px), -50%); }
+  .labels .label.inferred { border-style: dashed; color: #e9d8c2; }
+  .labels .label.decorative { border-style: dotted; color: #e5c6e6; }
+  svg.leaders { position: absolute; inset: 0; width: 100%; height: 100%; }
+  svg.leaders polyline { fill: none; stroke: rgba(240,220,250,.45); stroke-width: 1; }
+  svg.leaders circle { fill: var(--accent); }
+  .sheetcaps .cell { position: absolute; font-size: 10px; letter-spacing: .14em; color: #d9c9e6; text-shadow: 0 0 4px #000; }
+  .sheetcaps .sheethead { position: absolute; left: 0; right: 0; bottom: 0; padding: 4px 10px; font-size: 10px; letter-spacing: .12em;
+    color: #cbbcd8; background: rgba(0,0,0,.55); }
+  pre.error { position: absolute; left: 20px; top: 20px; right: 20px; white-space: pre-wrap; color: #ffb1b1; font-size: 11px; }
+  body.noui .help, body.noui .legend { display: none !important; }
+</style>
+</head>
+<body>
+<div id="stage"><canvas id="holo" aria-label="__TITLE__, an animated hologram"></canvas><div id="overlay"></div></div>
+<script id="hologram-geometry" type="application/json">__GEOMETRY__</script>
+<script>
+  window.HOLOGRAM_GEOMETRY = JSON.parse(document.getElementById("hologram-geometry").textContent);
+  window.HOLOGRAM_ASSETS = __ASSETS__;
+</script>
+<script>
+__VIEWER__
+</script>
+</body>
+</html>
