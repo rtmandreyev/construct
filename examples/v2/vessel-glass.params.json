@@ -1,0 +1,33 @@
+{
+  "format": "tessera-hologram-params",
+  "version": 1,
+  "archetype": "vessel",
+  "variant": "glass",
+  "id": "vessel-glass",
+  "title": "Example Stout (pint glass)",
+  "synthetic": true,
+  "sources": [
+    {
+      "id": "request",
+      "kind": "user_request",
+      "title": "Synthetic example request",
+      "rights": "synthetic"
+    }
+  ],
+  "facts": [
+    {
+      "key": "title",
+      "value": "Example Stout",
+      "certainty": "user_supplied",
+      "source": "request",
+      "note": "invented for this synthetic example"
+    },
+    {
+      "key": "style",
+      "value": "Stout",
+      "certainty": "user_supplied",
+      "source": "request",
+      "note": "invented for this synthetic example"
+    }
+  ]
+}

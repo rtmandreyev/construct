@@ -144,7 +144,8 @@ KEY_HELP = {
     "pivot": "a world point [x, y, z] on the hinge or turning axis",
     "axis": "a direction [x, y, z], e.g. [0, 1, 0]",
 }
-SIZE_KEYS = ("size", "radius", "height", "radii", "major", "minor", "radius_top", "radius_bottom", "at", "distance")
+SIZE_KEYS = ("size", "radius", "height", "radii", "major", "minor", "radius_top", "radius_bottom", "at", "distance",
+             "width", "depth", "thickness", "diameter", "scale_length", "inner_radius", "amount")
 
 
 class _Check:
@@ -1427,6 +1428,8 @@ def compile_scene(scene):
             v = f["value"]
             text = ("yes" if v else "no") if isinstance(v, bool) else (
                 str(int(v)) if isinstance(v, float) and v.is_integer() else str(v))
+            if f.get("unit") and not isinstance(v, (bool, str)):
+                text += f["unit"] if f["unit"] in ("%", "°") else " " + f["unit"]
             cert, field = f["certainty"], lb["field"]
         else:
             text, cert, field = lb["text"], "decorative", None

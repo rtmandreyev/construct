@@ -18,6 +18,7 @@ from pathlib import Path
 
 from . import audit as audit_mod
 from . import diagnose as diagnose_mod
+from . import params as params_mod
 from . import hologram, render, scene as scene_mod
 
 STARTER = {
@@ -92,10 +93,14 @@ def _write(path, text, force):
 
 
 def load(path):
+    """A scene, or the scene a parameter document builds."""
     try:
-        return hologram.read_sheet(path)
+        doc = hologram.read_sheet(path)
     except hologram.SheetError as exc:
         raise scene_mod.SceneError(str(exc))
+    if isinstance(doc, dict) and doc.get("format") == params_mod.FORMAT:
+        return params_mod.expand(doc)
+    return doc
 
 
 def build(scene_path, out_dir, asset_root=None, v1=False, force=True, frame="y-up"):
@@ -122,6 +127,16 @@ def add_commands(sub):
     p = sub.add_parser("new", help="write a valid starter scene for a category")
     p.add_argument("category", choices=sorted(STARTER))
     p.add_argument("--title")
+    p.add_argument("--output")
+    p.add_argument("--force", action="store_true")
+    p = sub.add_parser("params", help="a parameter document for an archetype (the simple path); --list to see them all")
+    p.add_argument("archetype", nargs="?", choices=sorted(params_mod.VARIANTS))
+    p.add_argument("--variant")
+    p.add_argument("--list", action="store_true")
+    p.add_argument("--output")
+    p.add_argument("--force", action="store_true")
+    p = sub.add_parser("expand", help="the full scene a parameter document builds")
+    p.add_argument("params")
     p.add_argument("--output")
     p.add_argument("--force", action="store_true")
     p = sub.add_parser("check", help="validate, compile and audit a scene ('-' reads stdin); --json for "
@@ -152,13 +167,30 @@ def add_commands(sub):
     p.add_argument("--size", default="1280x720")
 
 
-COMMANDS = ("new", "check", "build", "review", "video")
+COMMANDS = ("new", "params", "expand", "check", "build", "review", "video")
 
 
 def run(args):
     try:
         if args.command == "new":
             text = json.dumps(starter(args.category, args.title), indent=2) + "\n"
+            if args.output:
+                _write(args.output, text, args.force)
+            else:
+                sys.stdout.write(text)
+            return 0
+        if args.command == "params":
+            if args.list or not args.archetype:
+                sys.stdout.write(params_mod.describe() + "\n")
+                return 0
+            text = json.dumps(params_mod.template(args.archetype, args.variant), indent=2) + "\n"
+            if args.output:
+                _write(args.output, text, args.force)
+            else:
+                sys.stdout.write(text)
+            return 0
+        if args.command == "expand":
+            text = json.dumps(load(args.params), indent=2, ensure_ascii=False) + "\n"
             if args.output:
                 _write(args.output, text, args.force)
             else:
@@ -171,6 +203,8 @@ def run(args):
                 sys.stdout.write(json.dumps(report, indent=2, ensure_ascii=False) + "\n")
             elif report["stats"] is not None:  # it compiled: the audit report, then anything left to fix
                 scene, _ = diagnose_mod.parse_text(text)
+                if scene.get("format") == params_mod.FORMAT:
+                    scene = params_mod.expand(scene)
                 sys.stdout.write(audit_mod.format_report(audit_mod.audit(scene, scene_mod.compile_scene(scene))) + "\n")
                 if not report["ok"]:
                     sys.stdout.write("\nhow to fix:\n" + report["repair_text"] + "\n")

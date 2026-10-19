@@ -1,0 +1,38 @@
+{
+  "format": "tessera-hologram-params",
+  "version": 1,
+  "archetype": "object",
+  "variant": "electric-guitar",
+  "id": "object-electric-guitar-single-cut",
+  "title": "Exemplar Model S (single-cut)",
+  "synthetic": true,
+  "sources": [
+    {
+      "id": "request",
+      "kind": "user_request",
+      "title": "Synthetic example request",
+      "rights": "synthetic"
+    }
+  ],
+  "facts": [
+    {
+      "key": "maker",
+      "value": "Exemplar",
+      "certainty": "user_supplied",
+      "source": "request",
+      "note": "invented for this synthetic example"
+    },
+    {
+      "key": "model",
+      "value": "Model S",
+      "certainty": "user_supplied",
+      "source": "request",
+      "note": "invented for this synthetic example"
+    }
+  ],
+  "params": {
+    "body_style": "single-cut",
+    "pickups": 2,
+    "knobs": 4
+  }
+}

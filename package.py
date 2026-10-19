@@ -33,7 +33,7 @@ TAGS = ["Hologram", "3D", "Visualization", "WebGL", "Animation", "Design"]
 
 # The runtime: the v2 toolchain plus the v1 module its CLI still dispatches to.
 RUNTIME_MODULES = ["__init__.py", "__main__.py", "hologram.py", "scene.py", "shapes.py",
-                   "audit.py", "diagnose.py", "render.py", "studio.py", "png.py"]
+                   "audit.py", "diagnose.py", "params.py", "render.py", "studio.py", "png.py"]
 VIEWER_FILES = ["hologram.js", "template.html"]
 
 # How each host names the skill's own folder inside SKILL.md.

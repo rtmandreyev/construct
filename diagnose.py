@@ -15,6 +15,7 @@ import json
 import re
 
 from . import audit as audit_mod
+from . import params as params_mod
 from . import scene as scene_mod
 
 AUDIT_HINTS = {
@@ -120,6 +121,8 @@ def diagnose(scene, prior=()):
 
 def diagnose_text(text):
     scene, diags = parse_text(text)
+    if isinstance(scene, dict) and scene.get("format") == params_mod.FORMAT:
+        return diagnose_params(scene, diags)
     if scene is None:
         out = {"ok": False, "contract": "tessera.hologram/0.2", "errors": len(diags), "warnings": 0,
                "diagnostics": diags, "stats": None}
@@ -147,3 +150,17 @@ def repair_text(report, limit=40):
         for d in warns[:12]:
             lines.append("- %s [%s] %s%s" % (d["path"], d["code"], d["message"], " -> " + d["hint"] if d["hint"] else ""))
     return "\n".join(lines)
+
+
+def diagnose_params(doc, prior=()):
+    """The report for a parameter document: its own problems, then the generated scene's."""
+    diags = list(prior)
+    for item in params_mod.validate_items(doc):
+        diags.append(_diag("error", item["code"], _path(item["where"]), item["message"], item["hint"]))
+    if any(d["severity"] == "error" and d["code"] != "json" for d in diags):
+        out = {"ok": False, "contract": "tessera.hologram/0.2", "errors": len(diags), "warnings": 0,
+               "diagnostics": diags, "stats": None}
+        out["repair_text"] = repair_text(out)
+        return out
+    # facts, sources and assets keep their paths: the builder copies them first, in order
+    return diagnose(params_mod.expand(doc), diags)

@@ -126,6 +126,7 @@ def audit(scene, geometry):
             add(warnings, "tiny", p["id"],
                 "is %.1f%% of the object's size: it may vanish at the hero framing." % (100.0 * diag / (2 * radius)))
         carriers = {x["part"] for x in geometry.get("labels", []) + geometry.get("artwork", [])}
+        carriers |= {a["part"] for a in geometry.get("anchors", {}).values() if isinstance(a, dict) and a.get("part")}
         if p["id"] not in carriers and not any(int(styles[s][6]) == parts.index(p) for s in range(len(styles))):
             add(warnings, "invisible", p["id"], "produces nothing to draw (line \"none\" and no fill).")
 

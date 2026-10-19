@@ -10,7 +10,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from . import audit, diagnose, png, render, scene, studio
+from . import audit, diagnose, params, png, render, scene, studio
 
 HERE = Path(__file__).resolve().parent
 EXAMPLES = HERE / "examples" / "v2"
@@ -434,7 +434,10 @@ class GeometrySchema(unittest.TestCase):
     def test_every_compiled_example_matches_the_published_schema(self):
         root = json.loads((HERE / "geometry.schema.json").read_text())
         for path in sorted(EXAMPLES.glob("*.json")) + [None]:
-            g = scene.compile_scene(json.loads(path.read_text()) if path else lid_scene())
+            doc = json.loads(path.read_text()) if path else lid_scene()
+            if doc["format"] == params.FORMAT:
+                doc = params.expand(doc)
+            g = scene.compile_scene(doc)
             for frame in ("y-up", "z-up"):
                 self.assertEqual(schema_errors(json.loads(json.dumps(scene.reframe(g, frame))), root, root), [],
                                  "%s %s" % (path and path.name, frame))
@@ -513,6 +516,76 @@ class Diagnostics(unittest.TestCase):
             self.assertEqual(r.returncode, 1)
             out = json.loads(r.stdout)
             self.assertEqual((out["ok"], out["contract"], out["diagnostics"][0]["path"]), (False, "tessera.hologram/0.2", "$.style"))
+
+
+class Parametric(unittest.TestCase):
+    """The simple path: a short parameter document becomes a clean, house-style scene."""
+
+    def test_every_variant_template_builds_a_clean_scene(self):
+        for arch, variants in params.VARIANTS.items():
+            for var in variants:
+                doc = params.template(arch, var)
+                doc["facts"] = []  # templates carry placeholders; nothing unknown may be labelled
+                r = diagnose.diagnose_params(doc)
+                self.assertTrue(r["ok"], (arch, var, r["repair_text"]))
+                self.assertEqual(r["warnings"], 0, (arch, var, r["repair_text"]))
+
+    def test_golden_documents_are_clean_and_labelled_from_facts(self):
+        docs = sorted(EXAMPLES.glob("*.params.json"))
+        self.assertGreaterEqual(len(docs), 13)
+        for path in docs:
+            doc = json.loads(path.read_text())
+            r = diagnose.diagnose_params(doc)
+            self.assertTrue(r["ok"] and not r["warnings"], (path.name, r["repair_text"]))
+            g = scene.compile_scene(params.expand(doc))
+            keys = {f["key"] for f in doc["facts"]}
+            for lb in g["labels"]:
+                self.assertIn(lb["field"], keys)
+            self.assertTrue(doc["synthetic"])
+
+    def test_sizes_are_facts_and_keep_the_stated_certainty(self):
+        doc = params.template("book", "paperback")
+        doc["facts"] = [{"key": "title", "value": "T", "certainty": "user_supplied", "source": "request"}]
+        doc["params"] = {"height": 0.2}
+        doc["param_certainty"] = {"height": "user_supplied"}
+        s = params.expand(doc)
+        f = {x["key"]: x for x in s["facts"]}
+        self.assertEqual(f["book.size"]["certainty"], "inferred")  # the standard size
+        self.assertEqual(s["facts"][0]["key"], "title")              # the document's facts come first
+        labels = {lb["id"] for lb in s["labels"]}
+        self.assertIn("spine-title", labels)
+        self.assertNotIn("spine-creator", labels)                    # no author fact: no author label
+        self.assertIn("cover-title", labels)                         # no cover art: the designed no-art face
+
+    def test_parameter_problems_point_at_the_document(self):
+        doc = params.template("case", "jewel")
+        doc["facts"] = []
+        doc["params"] = {"width": 142, "discs": 2}
+        doc["artwork"] = {"cover-front": "nope", "poster": "x"}
+        doc["variant"] = "jewel"
+        got = {(d["path"], d["code"]): d["hint"] for d in diagnose.diagnose_params(doc)["diagnostics"]}
+        self.assertIn("0.142", got[("$.params.width", "range")])
+        self.assertIn(("$.params", "unknown-key"), got)
+        self.assertIn(("$.artwork", "unknown-key"), got)
+        self.assertIn(("$.artwork.cover-front", "reference"), got)
+        doc = params.template("case")
+        doc["variant"] = "jewl"
+        hints = [d["hint"] for d in diagnose.diagnose_params(doc)["diagnostics"]]
+        self.assertTrue(any("'jewel'" in h for h in hints))
+
+    def test_cli_params_and_expand(self):
+        with tempfile.TemporaryDirectory() as d:
+            cli = str(HERE / "cli.py")
+            r = subprocess.run([sys.executable, "-I", cli, "params", "vessel", "--variant", "can", "--output", "p.json"],
+                               cwd=d, capture_output=True, text=True)
+            self.assertEqual(r.returncode, 0, r.stderr)
+            doc = json.loads(Path(d, "p.json").read_text())
+            doc["facts"] = [{"key": "title", "value": "Synthetic", "certainty": "user_supplied", "source": "request"}]
+            Path(d, "p.json").write_text(json.dumps(doc))
+            r = subprocess.run([sys.executable, "-I", cli, "build", "p.json", "--out", "out"], cwd=d, capture_output=True, text=True)
+            self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+            r = subprocess.run([sys.executable, "-I", cli, "expand", "p.json"], cwd=d, capture_output=True, text=True)
+            self.assertEqual(json.loads(r.stdout)["format"], "tessera-hologram")
 
 
 class Capture(unittest.TestCase):
