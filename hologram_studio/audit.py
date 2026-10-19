@@ -327,21 +327,4 @@ def _nearest(pid, geo):
 
 
 def _thickness(p):
-    """The smallest cross-section of a linear part in metres, or None when it is not linear."""
-    sh, t = p["shape"], p["shape"]["type"]
-    sc = p.get("scale", 1)
-    k = min(sc) if isinstance(sc, list) else sc
-    if t == "tube":
-        r = sh["radius"]
-        return 2 * (max(r) if isinstance(r, list) else r) * k  # a tapered tube is as thick as its widest point
-    if t == "curve":
-        return 0.0
-    if t in ("cylinder", "cone"):
-        d = 2 * (sh["radius"] if t == "cylinder" else max(sh["radius_bottom"], sh["radius_top"]))
-        return d * k if sh["height"] > 4 * d else None
-    if t == "torus":
-        return 2 * sh["minor"] * k
-    if t == "box":
-        dims = sorted(sh["size"])
-        return dims[1] * k if dims[2] > 4 * dims[1] else None
-    return None
+    return scene_mod.cross_section(p)

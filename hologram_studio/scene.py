@@ -1240,6 +1240,27 @@ def canonical_sha256(scene):
                                      ensure_ascii=False, allow_nan=False).encode("utf-8")).hexdigest()
 
 
+def cross_section(p):
+    """The smallest cross-section of a linear part in metres, or None when it is not linear."""
+    sh, t = p["shape"], p["shape"]["type"]
+    sc = p.get("scale", 1)
+    k = min(sc) if isinstance(sc, list) else sc
+    if t == "tube":
+        r = sh["radius"]
+        return 2 * (max(r) if isinstance(r, list) else r) * k  # a tapered tube is as thick as its widest point
+    if t == "curve":
+        return 0.0
+    if t in ("cylinder", "cone"):
+        d = 2 * (sh["radius"] if t == "cylinder" else max(sh["radius_bottom"], sh["radius_top"]))
+        return d * k if sh["height"] > 4 * d else None
+    if t == "torus":
+        return 2 * sh["minor"] * k
+    if t == "box":
+        dims = sorted(sh["size"])
+        return dims[1] * k if dims[2] > 4 * dims[1] else None
+    return None
+
+
 def compile_scene(scene):
     """Validate and compile; raises SceneError listing every problem."""
     errors = validate(scene)
@@ -1361,9 +1382,30 @@ def compile_scene(scene):
         f = 0.0 if hi - lo < 1e-9 else (y - lo) / (hi - lo)
         return round((stage_index[stage] + 0.82 * f) / nst, 4)
 
+    # legibility: a small mass or structure part (an arm, a handle, a stem) is drawn with a
+    # minimum visual weight, so it does not read as a gap next to dense parts
+    olo, ohi = [math.inf] * 3, [-math.inf] * 3
+    for pinfo in part_out:
+        for ins in pinfo["instances"]:
+            for k in range(3):
+                olo[k], ohi[k] = min(olo[k], ins["min"][k]), max(ohi[k], ins["max"][k])
+    obj_diag = math.sqrt(sum((ohi[k] - olo[k]) ** 2 for k in range(3))) or 1.0
+    obj_size = max(ohi[k] - olo[k] for k in range(3)) or 1.0
+    small = set()
+    for i, pinfo in enumerate(part_out):
+        b = pinfo["instances"][0]
+        if pinfo["role"] not in ("mass", "structure"):
+            continue
+        cs = cross_section(scene["parts"][i])
+        if (cs is not None and cs < 0.04 * obj_size) or \
+                math.sqrt(sum((b["max"][k] - b["min"][k]) ** 2 for k in range(3))) < 0.35 * obj_diag:
+            small.add(i)
+
     def style_of(pi, cls, slot, st, kind, part=None):
         tone, alpha, width, glow, line_kind, fade, fill, _ = st
         wf, af = CLASS_STYLE.get(cls, (1.0, 1.0))
+        if pi in small and kind == "line" and cls != shapes.DETAIL:
+            wf, af = max(wf, 1.0) * 1.2, max(af, 0.9) * 1.3
         jt = joint_of.get(scene["parts"][pi]["id"], -1)
         if kind == "fill":
             key = ("f", pi, slot, fill)
@@ -1376,7 +1418,7 @@ def compile_scene(scene):
             entry = [TONES.index(tone), round(min(1.0, alpha * 1.05), 4), 0, 0, 0, fade, pi, slot, 0, jt]
         else:
             key = ("l", pi, cls, slot)
-            entry = [TONES.index(tone), round(alpha * af, 4), round(width * wf, 3),
+            entry = [TONES.index(tone), round(min(1.0, alpha * af), 4), round(width * wf, 3),
                      round(glow * (1.0 if cls == shapes.OUTLINE else 0.4), 3),
                      DASH_CODE.get(line_kind, 0), fade + (1 if cls == shapes.DETAIL else 0), pi, slot, 0, jt]
         if key not in style_key:
