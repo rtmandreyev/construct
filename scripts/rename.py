@@ -1,8 +1,9 @@
 """Apply the product's final name: python3 scripts/rename.py <new-name> ["New Title"]
 
-Changes NAME and TITLE in the package's product.py, the name in pyproject.toml, the
-copyright line in LICENSE and NOTICE, and renames the package folder with git mv (the import
-name becomes the new name with underscores). The contract and format ids are not touched.
+Changes NAME and TITLE in the package's product.py, then every mention of the old name and
+package folder in the tracked text files (pyproject.toml, docs, licence, notices), and renames
+the package folder with git mv (the import name becomes the new name with underscores). The
+contract and format ids are not touched.
 """
 
 import re
@@ -28,9 +29,16 @@ def main(argv):
     text = re.sub(r'^NAME = "[^"]+"', 'NAME = "%s"' % new, text, flags=re.M)
     text = re.sub(r'^TITLE = "[^"]+"', 'TITLE = "%s"' % title, text, flags=re.M)
     prod.write_text(text)
-    for name in ("pyproject.toml", "LICENSE", "NOTICE", "README.md", "CHANGELOG.md"):
+    files = subprocess.run(["git", "ls-files"], cwd=ROOT, capture_output=True, text=True, check=True).stdout.split()
+    for name in files:
         f = ROOT / name
-        f.write_text(f.read_text().replace(old, new).replace(pkg.name, new.replace("-", "_")))
+        if f.resolve() == Path(__file__).resolve() or not (f.suffix in (".md", ".py", ".toml", ".txt")
+                                                           or f.name in ("LICENSE", "NOTICE")):
+            continue
+        text = f.read_text(encoding="utf-8")
+        changed = text.replace(old, new).replace(pkg.name, new.replace("-", "_"))
+        if changed != text:
+            f.write_text(changed, encoding="utf-8")
     target = ROOT / new.replace("-", "_")
     if target != pkg:
         subprocess.run(["git", "mv", pkg.name, target.name], cwd=ROOT, check=True)
