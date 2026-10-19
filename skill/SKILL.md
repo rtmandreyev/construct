@@ -16,11 +16,18 @@ ffmpeg optional for video). `TOOLS` below is `{{SKILL_DIR}}/runtime/cli.py`, whe
 
 ```sh
 python3 TOOLS new <object|architecture|machine|organism|cd|book> --output scene.json
-python3 TOOLS check scene.json                     # validate + compile + audit
+python3 TOOLS check scene.json                     # validate + compile + audit (--json: paths and fix hints)
 python3 TOOLS build scene.json --out out/          # out/hologram.html (open in any browser)
 python3 TOOLS review scene.json --out out/         # + out/review/*.png contact sheets
 python3 TOOLS video scene.json --out out/hologram.mp4 --seconds 16
 ```
+
+For a CD, a book, a guitar, a synth, a bottle, a can or a glass there is a **simple path**:
+`python3 TOOLS params --list`, then `params <archetype> --variant <v> --output p.json`, fill
+in the facts (leave sizes at their standard unless the user gave them), and `check`/`review`
+it like a scene; a builder draws it in the house style. Use the full loop below for anything
+else, or when the result needs more than the archetype offers. `prompts/` holds the same
+rules for other models and hosts (`system.md`, `params.md`, `scene.md`, `repair.md`).
 
 Work in a folder of your own. Never install software or change settings to make this run;
 if no browser is available, say so and deliver the HTML without captures.

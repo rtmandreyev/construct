@@ -588,6 +588,26 @@ class Parametric(unittest.TestCase):
             self.assertEqual(json.loads(r.stdout)["format"], "tessera-hologram")
 
 
+class Prompts(unittest.TestCase):
+    def test_committed_prompts_match_the_generator(self):
+        from . import prompts
+        for name, text in prompts.build().items():
+            self.assertEqual((HERE / "prompts" / name).read_text(encoding="utf-8"), text,
+                             "%s is stale: run python3 -m hologram.prompts" % name)
+
+    def test_golden_documents_match_the_params_schema(self):
+        from . import prompts
+        root = prompts.params_schema()
+        for path in sorted(EXAMPLES.glob("*.params.json")):
+            self.assertEqual(schema_errors(json.loads(path.read_text()), root, root), [], path.name)
+
+    def test_the_rules_say_what_matters(self):
+        text = (HERE / "prompts" / "system.md").read_text()
+        for phrase in ("exactly one JSON object", "Never describe how it looks", "Unknown stays unknown",
+                       "come only from facts", "fix every one"):
+            self.assertIn(phrase, text)
+
+
 class Capture(unittest.TestCase):
     def test_review_produces_non_empty_images(self):
         with tempfile.TemporaryDirectory() as d:

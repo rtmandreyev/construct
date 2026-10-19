@@ -1,0 +1,378 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "tessera.hologram/0.2/params.schema.json",
+ "title": "Hologram parameter document (tessera-hologram-params v1)",
+ "type": "object",
+ "additionalProperties": false,
+ "required": [
+  "format",
+  "version",
+  "archetype",
+  "variant",
+  "id",
+  "title",
+  "facts"
+ ],
+ "properties": {
+  "format": {
+   "const": "tessera-hologram-params"
+  },
+  "version": {
+   "const": 1
+  },
+  "archetype": {
+   "enum": [
+    "book",
+    "case",
+    "object",
+    "vessel"
+   ]
+  },
+  "variant": {
+   "enum": [
+    "acoustic-guitar",
+    "bass-guitar",
+    "bottle",
+    "box",
+    "can",
+    "digipak",
+    "electric-guitar",
+    "glass",
+    "hardcover",
+    "jewel",
+    "paperback",
+    "slim",
+    "synth"
+   ]
+  },
+  "id": {
+   "type": "string",
+   "pattern": "^[a-z0-9][a-z0-9._-]{0,63}$"
+  },
+  "title": {
+   "type": "string",
+   "minLength": 1,
+   "maxLength": 200
+  },
+  "summary": {
+   "type": "string",
+   "maxLength": 600
+  },
+  "synthetic": {
+   "type": "boolean"
+  },
+  "sources": {
+   "type": "array",
+   "maxItems": 64,
+   "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+     "id",
+     "kind",
+     "title",
+     "rights"
+    ],
+    "properties": {
+     "id": {
+      "type": "string"
+     },
+     "kind": {
+      "enum": [
+       "user_request",
+       "user_supplied",
+       "document",
+       "measurement",
+       "observation",
+       "dataset",
+       "generated"
+      ]
+     },
+     "title": {
+      "type": "string"
+     },
+     "rights": {
+      "enum": [
+       "synthetic",
+       "user_private",
+       "permitted",
+       "public_domain",
+       "reference_only"
+      ]
+     },
+     "ref": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  "facts": {
+   "type": "array",
+   "maxItems": 160,
+   "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+     "key",
+     "value",
+     "certainty"
+    ],
+    "properties": {
+     "key": {
+      "type": "string",
+      "maxLength": 120
+     },
+     "value": {
+      "type": [
+       "string",
+       "number",
+       "boolean"
+      ]
+     },
+     "unit": {
+      "type": "string",
+      "maxLength": 24
+     },
+     "certainty": {
+      "enum": [
+       "verified",
+       "user_supplied",
+       "inferred",
+       "decorative"
+      ]
+     },
+     "source": {
+      "type": "string"
+     },
+     "note": {
+      "type": "string",
+      "maxLength": 600
+     }
+    }
+   }
+  },
+  "assets": {
+   "type": "array",
+   "maxItems": 32,
+   "items": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+     "id",
+     "path",
+     "sha256",
+     "media_type",
+     "rights",
+     "provenance"
+    ],
+    "properties": {
+     "id": {
+      "type": "string"
+     },
+     "path": {
+      "type": "string"
+     },
+     "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+     },
+     "media_type": {
+      "enum": [
+       "image/png",
+       "image/jpeg",
+       "image/webp"
+      ]
+     },
+     "rights": {
+      "enum": [
+       "synthetic",
+       "user_private",
+       "permitted"
+      ]
+     },
+     "provenance": {
+      "enum": [
+       "authentic",
+       "synthetic",
+       "generated-decorative",
+       "user_photo"
+      ]
+     },
+     "source": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  "artwork": {
+   "type": "object",
+   "additionalProperties": false,
+   "properties": {
+    "cover-back": {
+     "type": "string"
+    },
+    "cover-front": {
+     "type": "string"
+    },
+    "disc": {
+     "type": "string"
+    },
+    "inlay": {
+     "type": "string"
+    },
+    "label": {
+     "type": "string"
+    }
+   }
+  },
+  "params": {
+   "type": "object",
+   "additionalProperties": false,
+   "properties": {
+    "width": {
+     "type": "number",
+     "minimum": 0.02,
+     "maximum": 2.0,
+     "description": "outer width, metres"
+    },
+    "height": {
+     "type": "number",
+     "minimum": 0.02,
+     "maximum": 3.0,
+     "description": "outer height, metres"
+    },
+    "depth": {
+     "type": "number",
+     "minimum": 0.002,
+     "maximum": 1.0,
+     "description": "outer depth (thickness) closed, metres"
+    },
+    "thickness": {
+     "type": "number",
+     "minimum": 0.003,
+     "maximum": 0.2,
+     "description": "thickness of the closed book, metres"
+    },
+    "diameter": {
+     "type": "number",
+     "minimum": 0.02,
+     "maximum": 0.5,
+     "description": "widest diameter, metres"
+    },
+    "discs": {
+     "type": "integer",
+     "minimum": 1,
+     "maximum": 12,
+     "description": "number of discs"
+    },
+    "scale_length": {
+     "type": "number",
+     "minimum": 0.4,
+     "maximum": 1.0,
+     "description": "nut-to-bridge string length, metres"
+    },
+    "strings": {
+     "type": "integer",
+     "minimum": 4,
+     "maximum": 12,
+     "description": "number of strings"
+    },
+    "frets": {
+     "type": "integer",
+     "minimum": 12,
+     "maximum": 27,
+     "description": "number of frets"
+    },
+    "pickups": {
+     "type": "integer",
+     "minimum": 0,
+     "maximum": 3,
+     "description": "number of pickups"
+    },
+    "knobs": {
+     "type": "integer",
+     "minimum": 0,
+     "maximum": 6,
+     "description": "number of control knobs"
+    },
+    "keys": {
+     "type": "integer",
+     "minimum": 25,
+     "maximum": 88,
+     "description": "number of keys"
+    },
+    "knob_rows": {
+     "type": "integer",
+     "minimum": 0,
+     "maximum": 4,
+     "description": "rows of knobs on the panel"
+    },
+    "knobs_per_row": {
+     "type": "integer",
+     "minimum": 0,
+     "maximum": 16,
+     "description": "knobs in each row"
+    },
+    "fill": {
+     "type": "number",
+     "minimum": 0.0,
+     "maximum": 1.0,
+     "description": "how full the glass is"
+    },
+    "body_style": {
+     "enum": [
+      "double-cut",
+      "single-cut",
+      "offset"
+     ]
+    },
+    "glass_style": {
+     "enum": [
+      "pint",
+      "tulip",
+      "stange"
+     ]
+    },
+    "screen": {
+     "type": "boolean"
+    },
+    "wheels": {
+     "type": "boolean"
+    }
+   }
+  },
+  "param_certainty": {
+   "type": "object",
+   "additionalProperties": {
+    "enum": [
+     "verified",
+     "user_supplied",
+     "inferred"
+    ]
+   }
+  }
+ },
+ "x-variants": {
+  "case": [
+   "box",
+   "digipak",
+   "jewel",
+   "slim"
+  ],
+  "book": [
+   "hardcover",
+   "paperback"
+  ],
+  "object": [
+   "acoustic-guitar",
+   "bass-guitar",
+   "electric-guitar",
+   "synth"
+  ],
+  "vessel": [
+   "bottle",
+   "can",
+   "glass"
+  ]
+ }
+}

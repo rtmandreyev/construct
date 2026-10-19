@@ -135,6 +135,8 @@ def add_commands(sub):
     p.add_argument("--list", action="store_true")
     p.add_argument("--output")
     p.add_argument("--force", action="store_true")
+    p = sub.add_parser("prompts", help="write the any-model authoring package (prompts and params schema)")
+    p.add_argument("--out", required=True)
     p = sub.add_parser("expand", help="the full scene a parameter document builds")
     p.add_argument("params")
     p.add_argument("--output")
@@ -167,7 +169,7 @@ def add_commands(sub):
     p.add_argument("--size", default="1280x720")
 
 
-COMMANDS = ("new", "params", "expand", "check", "build", "review", "video")
+COMMANDS = ("new", "params", "expand", "prompts", "check", "build", "review", "video")
 
 
 def run(args):
@@ -188,6 +190,11 @@ def run(args):
                 _write(args.output, text, args.force)
             else:
                 sys.stdout.write(text)
+            return 0
+        if args.command == "prompts":
+            from . import prompts as prompts_mod
+            for name in prompts_mod.write(args.out):
+                sys.stdout.write("wrote %s\n" % Path(args.out, name))
             return 0
         if args.command == "expand":
             text = json.dumps(load(args.params), indent=2, ensure_ascii=False) + "\n"
