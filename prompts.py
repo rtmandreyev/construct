@@ -29,6 +29,8 @@ You write data, never code.
 2. Describe what the object is: its parts, real sizes in metres (Y up, the front faces +Z),
    and facts. Never describe how it looks: no colours, materials, glow, effects, fonts or
    camera code. The renderer owns the look, so every entry matches the others on the shelf.
+   Appearance words in a request ("glowing", "mossy", "red") become facts or roles, not
+   colours: a fact `{{"key": "lantern", "value": "glowing", ...}}`, a light as role `data`.
 3. Every fact has a certainty:
    - "verified": a cited source says so (give its "source" id);
    - "user_supplied": the user said or gave it;
@@ -60,7 +62,8 @@ Archetypes, variants, standard sizes and artwork slots:
 
 Fact keys the builder sets as text when they exist: `title`, and the first of
 `artist`, `author`, `creator`, `composer`, `brewery`, `maker` (the creator line); vessels
-also `style`; guitars and synths `maker` and `model`. Other facts are kept as evidence:
+also `style`; guitars and synths `maker` and `model`. A missing fact simply has no line
+(no author known: no author line). Other facts are kept as evidence:
 use plain keys such as `year`, `label`, `publisher`, `abv` (with `"unit": "%"`), `volume`
 (with `"unit": "ml"`), `discs`.
 

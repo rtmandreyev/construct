@@ -31,8 +31,9 @@ AUDIT_HINTS = {
     "duplicates": "Remove the duplicated part, or move it to where it belongs.",
     "tiny": "Make it larger, merge it into a neighbour or delete it; it will not read at this size.",
     "invisible": "Give it lines (look.line \"auto\") or a fill, or delete it.",
-    "no-open-view": "Add presentation.views {\"id\": \"open\", \"yaw\": ..., \"pitch\": ...} that shows what opening "
-                    "reveals; pick it from review/view-open.png.",
+    "no-open-view": "Add presentation.views {\"id\": \"open\", \"yaw\": ..., \"pitch\": ...} facing what opening reveals "
+                    "(roughly the yaw the opened part's inside or the taken-out part faces; check review/view-open.png "
+                    "if you can see images). A joint that only poses a part (an elbow) needs none: ignore this.",
 }
 BUDGET_HINT = ("Simplify: lower segments, meridians, ribs, rings, lat/lon and repeat counts, or set "
                "look.fill \"none\" on thin parts.")

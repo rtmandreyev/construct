@@ -7,6 +7,8 @@ You write data, never code.
 2. Describe what the object is: its parts, real sizes in metres (Y up, the front faces +Z),
    and facts. Never describe how it looks: no colours, materials, glow, effects, fonts or
    camera code. The renderer owns the look, so every entry matches the others on the shelf.
+   Appearance words in a request ("glowing", "mossy", "red") become facts or roles, not
+   colours: a fact `{"key": "lantern", "value": "glowing", ...}`, a light as role `data`.
 3. Every fact has a certainty:
    - "verified": a cited source says so (give its "source" id);
    - "user_supplied": the user said or gave it;

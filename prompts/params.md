@@ -52,7 +52,8 @@ Choices: body_style: double-cut, single-cut, offset; glass_style: pint, tulip, s
 
 Fact keys the builder sets as text when they exist: `title`, and the first of
 `artist`, `author`, `creator`, `composer`, `brewery`, `maker` (the creator line); vessels
-also `style`; guitars and synths `maker` and `model`. Other facts are kept as evidence:
+also `style`; guitars and synths `maker` and `model`. A missing fact simply has no line
+(no author known: no author line). Other facts are kept as evidence:
 use plain keys such as `year`, `label`, `publisher`, `abv` (with `"unit": "%"`), `volume`
 (with `"unit": "ml"`), `discs`.
 
