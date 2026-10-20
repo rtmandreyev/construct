@@ -75,7 +75,45 @@ def project(geometry, yaw, pitch):
     ln, ls = geometry["lines"], geometry["line_stride"]
     segs = [(uv(ln[i], ln[i + 1], ln[i + 2]), uv(ln[i + 3], ln[i + 4], ln[i + 5])) for i in range(0, len(ln), ls)
             if solid(ln[i + 6])]
+    # a tyre (and the well above it) is solid in any photo, however it is drawn: fill each one's outline,
+    # one hull per copy (each copy's own box in the geometry says which points are its own)
+    groups = {}
+    for i in range(0, len(ln), ls):
+        pi = int(styles[int(ln[i + 6])][6])
+        p = parts[pi]
+        tyre = p["shape"] == "torus" and any(w in p["id"].lower() for w in ("wheel", "tyre", "tire"))
+        well = p["shape"] == "curve" and "arch" in p["id"].lower()  # the wheel well under an arch is dark, solid
+        if not (tyre or well):
+            continue
+        for a in ((ln[i], ln[i + 1], ln[i + 2]), (ln[i + 3], ln[i + 4], ln[i + 5])):
+            for k, inst in enumerate(p["instances"]):
+                if all(inst["min"][j] - 1e-6 <= a[j] <= inst["max"][j] + 1e-6 for j in range(3)):
+                    groups.setdefault((pi, k), []).append(uv(*a))
+                    break
+    for pts in groups.values():
+        hull = _hull(pts)
+        for k in range(1, len(hull) - 1):
+            tris.append([hull[0], hull[k], hull[k + 1]])
     return tris, segs
+
+
+def _hull(pts):
+    """Convex hull (monotone chain), counter-clockwise."""
+    pts = sorted(set((round(x, 6), round(y, 6)) for x, y in pts))
+    if len(pts) < 3:
+        return pts
+    def cross(o, a, b):
+        return (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0])
+    lower, upper = [], []
+    for q in pts:
+        while len(lower) >= 2 and cross(lower[-2], lower[-1], q) <= 0:
+            lower.pop()
+        lower.append(q)
+    for q in reversed(pts):
+        while len(upper) >= 2 and cross(upper[-2], upper[-1], q) <= 0:
+            upper.pop()
+        upper.append(q)
+    return lower[:-1] + upper[:-1]
 
 
 def _frame(points, fit, fit_px=None):

@@ -1450,6 +1450,14 @@ class Likeness(unittest.TestCase):
         without, _ = compare_mod.compare(car, trace, "top")
         self.assertEqual((with_ring["iou"], with_ring["edge"]), (without["iou"], without["edge"]))
 
+    def test_a_tyre_is_solid_in_a_silhouette(self):
+        # seen live: tyres drawn as wire rings left holes, and every car's side IoU fell (0.10 on a cut car)
+        tyre = base(parts=[{"id": "tyre-front", "role": "structure", "certainty": "inferred", "stage": 0,
+                            "shape": {"type": "torus", "major": 0.26, "minor": 0.07}, "rotate": [0, 0, 90]}])
+        disc = [(400 + 300 * math.cos(2 * math.pi * k / 48), 400 + 300 * math.sin(2 * math.pi * k / 48)) for k in range(48)]
+        res, _ = compare_mod.compare(tyre, _trace("side", disc), "side")
+        self.assertGreater(res["iou"], 0.9, res)
+
     def test_stations_from_three_views(self):
         side = [(0, 230), (250, 200), (380, 130), (520, 80), (640, 85), (760, 120), (930, 140), (1000, 150),
                 (1000, 250), (980, 285), (500, 285), (0, 285)]
