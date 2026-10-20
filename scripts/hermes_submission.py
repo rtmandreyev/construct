@@ -22,7 +22,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 PKG = ROOT / "construct_hologram"
 HERE = ROOT / "scripts" / "hermes_submission"
-RUNTIME = ["__init__.py", "__main__.py", "product.py", "hologram.py", "scene.py", "shapes.py", "audit.py",
+RUNTIME = ["__init__.py", "__main__.py", "product.py", "hologram.py", "scene.py", "shapes.py", "audit.py", "prompts.py",
            "diagnose.py", "params.py", "render.py", "studio.py", "png.py", "trace.py", "terrain.py", "tiers.py", "globe.py", "critic.py", "compare.py", "archkit.py"]
 EXAMPLES = ["cd.json", "book.json", "lighthouse.json", "lantern-jellyfish.json", "case-jewel.params.json",
             "book-paperback.params.json", "object-electric-guitar.params.json", "vessel-can.params.json"]
@@ -56,6 +56,9 @@ def build(out):
         shutil.copyfile(PKG / m, rt / m)
     for v in ("hologram.js", "template.html"):
         shutil.copyfile(PKG / "viewer" / v, rt / "viewer" / v)
+    (rt / "examples" / "v2").mkdir(parents=True, exist_ok=True)
+    for e in ("case-jewel.params.json", "book.json"):  # the prompts quote these (critique, author, prompts)
+        shutil.copyfile(PKG / "examples" / "v2" / e, rt / "examples" / "v2" / e)
     (skill / "scripts" / "cli.py").write_text(SHIM, encoding="utf-8")
     ex = skill / "assets" / "examples"
     (ex / "assets").mkdir(parents=True)

@@ -42,3 +42,10 @@ def test_unknown_facts_and_colours_are_refused(tmp_path):
     report = json.loads(run("check", "bad.json", "--json", cwd=tmp_path).stdout)
     codes = {d["code"] for d in report["diagnostics"]}
     assert not report["ok"] and {"unknown-fact", "style"} <= codes
+
+
+def test_the_prompts_build_for_the_critic(tmp_path):
+    # critique writes its packet from these prompts; they must build from the installed skill
+    r = run("prompts", "--out", "pr", cwd=tmp_path)
+    assert r.returncode == 0, r.stdout + r.stderr
+    assert (tmp_path / "pr" / "critic.md").exists()
