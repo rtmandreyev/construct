@@ -52,6 +52,8 @@ You write data, never code.
 | standard | one entry (the default) | 10 min | 2 | 6 | ≤5 searches, ≤3 sources read, ≤3 reference images |
 | showcase | only on explicit request: more references, more review rounds | 30 min | 4 | 10 | ≤10 searches, ≤6 sources read, ≤6 reference images |
 
+Research takes at most 40% of the time and ends in a first draft: a complete scene that passes `check`, saved to disk by 40% of the time (draft early; never hold the only copy in context). Then improve it in place, re-checking and saving after every round, so a valid scene is always on disk. At 80% stop adding: make the saved scene valid and deliver it.
+
 Work silhouette, then proportions, then the two or three identity features, then secondary
 detail. Put effort where it shows: nothing smaller than about 0.5% of the object's largest
 size. Stop at whichever comes first: the review judges the construct genuinely good (accurate

@@ -75,3 +75,26 @@ elevation (verified, from the data), the class and the scale.
   a measurement or a drawing behind it.
 
 Your dates, companions and photos belong with your own notes, not in the place.
+
+## The globe: a planet from coastline data
+
+Earth drawn from memory would be a sketch. `construct globe` draws coastlines you supply on a
+sphere instead:
+
+```sh
+python3 construct_hologram/cli.py globe --coastlines ne_110m_coastline.geojson --title "Earth" \
+    --source-title "Natural Earth 1:110m coastline (public domain)" --output earth.json
+```
+
+- **Data:** GeoJSON lines or polygons in longitude/latitude degrees (Natural Earth's
+  `ne_110m_coastline.geojson` or `ne_50m_coastline.geojson`, public domain). A shapefile is
+  converted first (`ogr2ogr -f GeoJSON coast.geojson coast.shp`). Nothing is downloaded.
+- **Budget:** the lines are simplified only as far as the 24,000-line budget needs
+  (Douglas–Peucker in degrees); the note on the `coastline.points` fact states the tolerance.
+- **The construct:** a sphere of the mean radius with a graticule (`--graticule 30`, 0 for
+  none), the coastlines as the identity (verified, cited to the dataset: **MEASURED
+  COASTLINES** with the scale and **DATA:** under the caption), the axis through the poles at
+  the axial tilt (23.44°, cited to the IAU 2006 obliquity; `--no-tilt` stands it upright) and
+  a slow spin about it (`--rpm 1`, 0 for still). The mean radius is cited to the IUGG value.
+- Other bodies work the same way with their own outline data; the tilt and radius facts are
+  Earth's, so edit them (with their sources) or use `--no-tilt`.

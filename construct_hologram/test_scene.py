@@ -11,7 +11,8 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from . import audit, diagnose, params, png, render, runner, scene, studio, terrain, tiers
+from . import shapes as shapes_mod
+from . import audit, diagnose, globe, params, png, render, runner, scene, studio, terrain, tiers
 
 HERE = Path(__file__).resolve().parent
 EXAMPLES = HERE / "examples" / "v2"
@@ -848,6 +849,11 @@ class Tiers(unittest.TestCase):
         self.assertIn(tiers.table(), (HERE / "skill" / "references" / "effort.md").read_text(encoding="utf-8"))
         self.assertIn(tiers.table(), prompts.build()["system.md"])
 
+    def test_the_clock_rule_is_in_the_prompts_and_the_skill(self):
+        from . import prompts
+        self.assertIn(tiers.clock_rule(), prompts.build()["system.md"])
+        self.assertIn("40%", (HERE / "skill" / "SKILL.md").read_text(encoding="utf-8"))
+
     def test_the_request_can_choose_research_and_tier(self):
         self.assertEqual(tiers.from_request("a Leica M3, research: off, tier: Showcase"),
                          {"research": "off", "tier": "showcase"})
@@ -943,6 +949,20 @@ class RunnerLimits(unittest.TestCase):
         self.assertTrue(report["ok"])  # the clean draft, not the broken last answer
         (_, _, _, _, meta), _ = self.run_author([self.BAD], max_cost=0.002, prices=(1.0, 1.0))
         self.assertTrue(meta["stopped_by"].startswith("cost ceiling"))
+
+    def test_every_new_best_valid_draft_is_saved_at_once(self):
+        saved = []
+        (_, _, _, _, meta), _ = self.run_author([self.BAD, self.GOOD, self.verdict("improve"), self.BAD, self.BAD,
+                                                 self.BAD, self.BAD], vision=True, save=saved.append)
+        self.assertEqual(meta["outcome"], "limit")  # the improvement never came back valid
+        self.assertEqual(len(saved), 1)  # only the valid draft, never the broken ones
+        doc = json.loads(saved[0])
+        self.assertEqual((doc["variant"], doc["authoring"]["outcome"]), ("can", "unreviewed"))
+
+    def test_review_stops_at_the_wrap_up_share(self):
+        (_, _, _, _, meta), _ = self.run_author([self.GOOD], clock_step=490, vision=True)
+        self.assertTrue(meta["stopped_by"].startswith("wrap-up"))
+        self.assertEqual(meta["reviews"], 0)
 
     def test_without_vision_or_a_browser_it_is_unreviewed(self):
         (_, text, _, _, meta), _ = self.run_author([self.GOOD])
@@ -1101,6 +1121,31 @@ class Terrain(unittest.TestCase):
         self.assertAlmostEqual(n, 1099999.97, delta=1.0)
         self.assertEqual([round(v, 3) for v in terrain.wgs84_to_utm(0.0, 3.0, 31)], [500000.0, 0.0])
 
+    def test_ridges_of_a_four_sided_pyramid(self):
+        # a pyramid whose crests run NE, SE, SW and NW from the top (rows north to south)
+        n = 61
+        real = [[4000 - 30 * max(abs(r - 30), abs(c - 30)) - 8 * min(abs(r - 30), abs(c - 30)) for c in range(n)]
+                for r in range(n)]
+        found = terrain.ridges(real)
+        bearings = sorted(round(math.degrees(math.atan2(p[-1][1] - p[0][1], -(p[-1][0] - p[0][0]))) % 360) for p in found)
+        self.assertEqual(len(found), 4)
+        for b, want in zip(bearings, (45, 135, 225, 315)):
+            self.assertLess(abs(b - want), 8, bearings)
+
+    def test_the_output_stays_inside_the_budget_at_any_resolution(self):
+        # seen in a live run: a 4.4 x 3.8 km area at resolution 128 compiled to 27,940 triangles
+        n, cell, x0, y0 = 240, 20.0, 2615000.0, 1090000.0
+        with tempfile.TemporaryDirectory() as d:
+            path = Path(d, "dem.xyz")
+            path.write_text("X Y Z\n" + "".join("%.0f %.0f %.1f\n" % (x0 + c * cell, y0 + r * cell,
+                                                                        3000 + 900 * math.sin(r / 17) * math.cos(c / 23))
+                                                for r in range(n) for c in range(n)))
+            sc = terrain.build(str(path), bbox=(x0 + 100, y0 + 300, x0 + 4500, y0 + 4100), resolution=128,
+                               source_title="Synthetic test grid")
+        geo = scene.compile_scene(sc)
+        self.assertLessEqual(geo["counts"]["triangles"], 24000)
+        self.assertTrue(diagnose.diagnose(sc)["ok"])
+
     def test_measured_terrain_with_a_route_and_a_summit(self):
         from . import terrain
         with tempfile.TemporaryDirectory() as d:
@@ -1139,6 +1184,55 @@ class Terrain(unittest.TestCase):
 
 
 
+
+class Globe(unittest.TestCase):
+    """A measured globe from coastline data (synthetic GeoJSON here; Natural Earth in use)."""
+
+    def write(self, d, features):
+        path = Path(d, "coast.geojson")
+        path.write_text(json.dumps({"type": "FeatureCollection", "features": [
+            {"type": "Feature", "properties": {}, "geometry": g} for g in features]}))
+        return str(path)
+
+    def test_reads_lines_rings_and_polygons(self):
+        with tempfile.TemporaryDirectory() as d:
+            lines = globe.read_geojson(self.write(d, [
+                {"type": "LineString", "coordinates": [[0, 0], [10, 5]]},
+                {"type": "MultiLineString", "coordinates": [[[20, 0], [21, 1]], [[30, 0], [31, 1]]]},
+                {"type": "Polygon", "coordinates": [[[0, 0], [5, 0], [5, 5], [0, 0]]]},
+                {"type": "MultiPolygon", "coordinates": [[[[40, 40], [41, 40], [41, 41], [40, 40]]]]},
+                {"type": "Point", "coordinates": [1, 1]}]))
+        self.assertEqual(len(lines), 5)
+        with tempfile.TemporaryDirectory() as d:
+            with self.assertRaises(globe.GlobeError):
+                globe.read_geojson(self.write(d, [{"type": "Point", "coordinates": [1, 1]}]))
+
+    def test_a_dense_coastline_is_simplified_into_the_budget_and_passes(self):
+        ring = [[round(170 * math.cos(2 * math.pi * k / 30000), 5), round(60 * math.sin(2 * math.pi * k / 30000)
+                 + 3 * math.sin(k / 9), 5)] for k in range(30000)]
+        with tempfile.TemporaryDirectory() as d:
+            sc = globe.build(self.write(d, [{"type": "LineString", "coordinates": ring}]), title="Synthetic planet",
+                             source_title="Synthetic coastline (test)")
+        facts = {f["key"]: f for f in sc["facts"]}
+        self.assertIn("simplified", facts["coastline.points"]["note"])
+        self.assertEqual(facts["earth.axial_tilt"]["value"], 23.44)
+        r = diagnose.diagnose(sc)
+        self.assertTrue(r["ok"] and not r["warnings"], r["repair_text"])
+        geo = scene.compile_scene(sc)
+        self.assertLessEqual(geo["counts"]["lines"], 24000)
+        coast = next(p for p in geo["parts"] if p["id"] == "coastlines")
+        self.assertEqual((coast["certainty"], coast["role"]), ("verified", "identity"))
+
+    def test_the_antimeridian_is_not_crossed_and_the_tilt_is_the_spin_axis(self):
+        m = shapes_mod.globe(1.0, [[[179, 0], [-179, 0]]], graticule=0, faces=False)
+        self.assertEqual(len(m.lines), 0)
+        with tempfile.TemporaryDirectory() as d:
+            sc = globe.build(self.write(d, [{"type": "LineString", "coordinates": [[0, 0], [10, 10], [20, 0]]}]),
+                             source_title="Synthetic coastline (test)")
+        spin = next(p for p in sc["parts"] if p["id"] == "coastlines")["motion"]
+        self.assertAlmostEqual(math.degrees(math.atan2(spin["axis"][0], spin["axis"][1])), 23.44, places=2)
+
+
 REAL_DEM = os.environ.get("CONSTRUCT_TEST_MATTERHORN_DEM")
 
 
@@ -1155,9 +1249,17 @@ class RealTerrain(unittest.TestCase):
         self.assertTrue(diagnose.diagnose(sc)["ok"])
         geo = scene.compile_scene(sc)
         self.assertLessEqual(geo["counts"]["triangles"], 24000)
-        hut = next(p for p in sc["parts"] if p["label"] == "Hörnli hut")
+        hut = next(p for p in sc["parts"] if p.get("label") == "Hörnli hut")
         relief = sc["parts"][0]["shape"]["heights"]
         self.assertLess(hut["at"][1], max(max(r) for r in relief))
+        # the Hörnli (NE), Zmutt (NW) and Lion (SW) ridges leave the summit; the Furggen (SE) is short at this grid
+        bearings = []
+        for p in sc["parts"]:
+            if p["id"].startswith("ridge-"):
+                a, b = p["shape"]["points"][0], p["shape"]["points"][-1]
+                bearings.append(math.degrees(math.atan2(b[0] - a[0], -(b[2] - a[2]))) % 360)
+        for want in (55, 300, 240):
+            self.assertTrue(any(abs((x - want + 180) % 360 - 180) < 25 for x in bearings), (want, bearings))
 
 
 class Capture(unittest.TestCase):

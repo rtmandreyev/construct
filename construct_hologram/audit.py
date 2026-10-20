@@ -345,6 +345,8 @@ def _freeform_points(shape):
             return len(shape[k])
     if shape.get("type") == "terrain":
         return sum(len(r) for r in shape.get("heights", []))  # relief is a shape: verified only from data
+    if shape.get("type") == "globe":
+        return sum(len(q) for q in shape.get("paths", []))  # coastlines too
     return 0
 
 

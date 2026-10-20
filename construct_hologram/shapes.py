@@ -391,11 +391,11 @@ def grid(width, depth, divisions):
     return m
 
 
-def terrain(width, depth, heights, contour=0.0, grid_every=4, skirt=True):
+def terrain(width, depth, heights, contour=0.0, grid_every=4, skirt=True, index=5):
     """A heightfield: rows run back (-Z, north) to front (+Z), columns west (-X) to east (+X);
     heights in metres above the base (y = 0). Contour lines every `contour` metres (marching
-    squares; every fifth one an outline), a sparse survey grid, an edge skirt to the base, and
-    glass triangles for the surface."""
+    squares; every `index`-th one a bold index contour), a sparse survey grid (`grid_every` 0:
+    none), an edge skirt to the base, and glass triangles for the surface."""
     m = Mesh()
     rows, cols = len(heights), len(heights[0])
     dx, dz = width / (cols - 1), depth / (rows - 1)
@@ -408,12 +408,12 @@ def terrain(width, depth, heights, contour=0.0, grid_every=4, skirt=True):
             a, b, d, e = at(r, c), at(r, c + 1), at(r + 1, c + 1), at(r + 1, c)
             m.tris.append((a, d, b))
             m.tris.append((a, e, d))
-    step = max(1, grid_every)
+    step = grid_every
     inner = range(1, rows - 1) if skirt else range(rows)  # the skirt draws the edges
-    for r in (r for r in inner if r % step == 0):
+    for r in (r for r in inner if step and r % step == 0):
         for c in range(cols - 1):
             m.line(at(r, c), at(r, c + 1), DETAIL)
-    for c in (c for c in (range(1, cols - 1) if skirt else range(cols)) if c % step == 0):
+    for c in (c for c in (range(1, cols - 1) if skirt else range(cols)) if step and c % step == 0):
         for r in range(rows - 1):
             m.line(at(r, c), at(r + 1, c), DETAIL)
     if skirt:
@@ -432,7 +432,7 @@ def terrain(width, depth, heights, contour=0.0, grid_every=4, skirt=True):
         k = int(lo // contour) + 1
         while k * contour < hi:
             level = k * contour
-            cls = OUTLINE if k % 5 == 0 else CONTOUR
+            cls = OUTLINE if k % max(1, index) == 0 else DETAIL  # index contours carry the relief
             for r in range(rows - 1):
                 for c in range(cols - 1):
                     corners = [at(r, c), at(r, c + 1), at(r + 1, c + 1), at(r + 1, c)]
@@ -445,6 +445,43 @@ def terrain(width, depth, heights, contour=0.0, grid_every=4, skirt=True):
                     for i in range(0, len(cuts) - 1, 2):
                         m.line(cuts[i], cuts[i + 1], cls)
             k += 1
+    return m
+
+
+def globe(radius, paths, graticule=30, faces=True):
+    """A globe: lon/lat paths in degrees (coastlines) drawn on a sphere of `radius`, the
+    north pole up (+Y) and longitude 0 facing the front (+Z); a graticule every `graticule`
+    degrees (0: none), the equator, and glass faces (unless `faces` is false). A segment that crosses the antimeridian
+    is not drawn; long segments are divided so they follow the surface."""
+    m = Mesh()
+
+    def at(lon, lat, lift=1.0):
+        lo, la = math.radians(lon), math.radians(lat)
+        r = radius * lift
+        return (r * math.cos(la) * math.sin(lo), r * math.sin(la), r * math.cos(la) * math.cos(lo))
+    for path in paths:
+        for (lo1, la1), (lo2, la2) in zip(path, path[1:]):
+            if abs(lo2 - lo1) > 180:
+                continue
+            k = max(1, int(max(abs(lo2 - lo1), abs(la2 - la1)) / 2.0))
+            prev = at(lo1, la1, 1.002)
+            for i in range(1, k + 1):
+                q = at(lo1 + (lo2 - lo1) * i / k, la1 + (la2 - la1) * i / k, 1.002)
+                m.line(prev, q, OUTLINE)
+                prev = q
+    if graticule:
+        for lon in range(-180, 180, graticule):
+            m.loop([at(lon, la) for la in range(-90, 91, 3)], DETAIL, closed=False)
+        for lat in range(-90 + graticule, 90, graticule):
+            m.loop([at(lo, lat) for lo in range(-180, 180, 3)], CONTOUR if lat == 0 else DETAIL)
+    if not faces:
+        return m
+    rows, cols = 18, 36
+    grid = [[at(-180 + 360 * j / cols, -90 + 180 * i / rows, 0.995) for j in range(cols)] for i in range(rows + 1)]
+    for i in range(rows):
+        for j in range(cols):
+            k = (j + 1) % cols
+            m.quad(grid[i][j], grid[i][k], grid[i + 1][k], grid[i + 1][j])
     return m
 
 

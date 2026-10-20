@@ -19,6 +19,11 @@ TIERS = {
     "showcase": {"wall_clock_s": 1800, "review_rounds": 4, "check_rounds": 10, "searches": 10, "sources": 6, "images": 6},
 }
 DEFAULT = "standard"
+# shares of the wall clock: research ends by RESEARCH_SHARE, a complete valid draft is on disk by
+# DRAFT_BY, and at WRAP_UP nothing new is added: the saved draft is made valid and delivered
+RESEARCH_SHARE = 0.4
+DRAFT_BY = 0.4
+WRAP_UP = 0.8
 USE = {"quick": "bulk imports and simple archetypes (the parameter path)",
        "standard": "one entry (the default)",
        "showcase": "only on explicit request: more references, more review rounds"}
@@ -72,6 +77,20 @@ def from_request(text):
         if m:
             found[key] = m.group(1).lower()
     return found
+
+
+def clock_rule(lim=None):
+    """The time shares as one sentence (prompts and docs carry it)."""
+    t = "Research takes at most %d%% of the time and ends in a first draft: a complete scene that passes " \
+        "`check`, saved to disk by %d%% of the time (draft early; never hold the only copy in context). Then " \
+        "improve it in place, re-checking and saving after every round, so a valid scene is always on disk. " \
+        "At %d%% stop adding: make the saved scene valid and deliver it." % (
+            RESEARCH_SHARE * 100, DRAFT_BY * 100, WRAP_UP * 100)
+    if lim:
+        w = lim["wall_clock_s"]
+        t += " (This run: research by %d s, a saved draft by %d s, wrap up at %d s.)" % (
+            w * RESEARCH_SHARE, w * DRAFT_BY, w * WRAP_UP)
+    return t
 
 
 def table():

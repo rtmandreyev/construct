@@ -203,6 +203,18 @@ def add_commands(sub):
     p.add_argument("--gpx", help="a route to drape on the terrain")
     p.add_argument("--mark", action="append", default=[], help="Name=lat,lon; repeatable")
     p.add_argument("--from", dest="view_from", default="S", help="the side to view from: S, SE, E, NE, N, NW, W, SW")
+    p.add_argument("--plain", action="store_true", help="no traced ridgelines or summit marker")
+    p.add_argument("--output", required=True)
+    p.add_argument("--force", action="store_true")
+    p = sub.add_parser("globe", help="a measured globe from coastline data you supply (GeoJSON)")
+    p.add_argument("--coastlines", required=True, help="GeoJSON lines or polygons in longitude/latitude; never downloaded")
+    p.add_argument("--title", default="Earth")
+    p.add_argument("--source-title", required=True, help='the dataset and its attribution, e.g. "Natural Earth (public domain)"')
+    p.add_argument("--source-ref")
+    p.add_argument("--rights", default="public_domain", choices=("permitted", "public_domain", "user_private"))
+    p.add_argument("--graticule", type=int, default=30, choices=(0, 10, 15, 20, 30, 45), help="degrees; 0 for none")
+    p.add_argument("--no-tilt", action="store_true", help="draw the axis upright instead of at the axial tilt")
+    p.add_argument("--rpm", type=float, default=1.0, help="spin speed (0: still)")
     p.add_argument("--output", required=True)
     p.add_argument("--force", action="store_true")
     p = sub.add_parser("prompts", help="write the any-model authoring package (prompts and params schema)")
@@ -245,7 +257,7 @@ def add_commands(sub):
     p.add_argument("--identity", choices=scene_mod.IDENTITIES, help="an identity tint the person chose")
 
 
-COMMANDS = ("new", "params", "expand", "prompts", "author", "trace", "trace-image", "terrain", "check", "build", "review",
+COMMANDS = ("new", "params", "expand", "prompts", "author", "trace", "trace-image", "terrain", "globe", "check", "build", "review",
             "video")
 
 
@@ -276,9 +288,21 @@ def run(args):
                     extent=args.extent, bbox=tuple(float(x) for x in args.bbox.split(",")) if args.bbox else None,
                     crs=args.crs, resolution=args.resolution, cls=args.cls, exaggeration=args.exaggeration,
                     title=args.title, source_title=args.source_title, source_ref=args.source_ref, rights=args.rights,
-                    gpx=args.gpx, marks=args.mark, view_from=args.view_from)
+                    gpx=args.gpx, marks=args.mark, view_from=args.view_from, emphasis=not args.plain)
             except (terrain_mod.TerrainError, OSError, ValueError) as exc:
                 sys.stderr.write("terrain: %s\n" % exc)
+                return 1
+            _write(args.output, json.dumps(sc, indent=1, ensure_ascii=False) + "\n", args.force)
+            sys.stdout.write("wrote %s: %s\n" % (args.output, sc["subject"]["summary"]))
+            return 0
+        if args.command == "globe":
+            from . import globe as globe_mod
+            try:
+                sc = globe_mod.build(args.coastlines, title=args.title, source_title=args.source_title,
+                                     source_ref=args.source_ref, rights=args.rights, graticule=args.graticule,
+                                     tilt=not args.no_tilt, rpm=args.rpm)
+            except globe_mod.GlobeError as exc:
+                sys.stderr.write("globe: %s\n" % exc)
                 return 1
             _write(args.output, json.dumps(sc, indent=1, ensure_ascii=False) + "\n", args.force)
             sys.stdout.write("wrote %s: %s\n" % (args.output, sc["subject"]["summary"]))

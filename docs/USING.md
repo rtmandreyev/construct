@@ -116,7 +116,9 @@ renders the construct and asks the model for an art-direction review of its own 
 
 The effort tier bounds the whole run, and `author` enforces it: whichever comes first ends
 the run — a "good" verdict, or any limit — and the best draft so far is written with its
-`authoring` record (tier, outcome, `next` improvements), printed as `next:` lines too.
+`authoring` record (tier, outcome, `next` improvements), printed as `next:` lines too. Every
+new best valid draft is written to `--out` as soon as it passes the check, so a valid construct
+is on disk even if a host stops the run; no review round starts after 80% of the wall clock.
 
 ```sh
 python3 construct_hologram/cli.py author "a Revox A77 tape recorder" --tier showcase --vision \

@@ -225,6 +225,15 @@ labels the construct **MEASURED TERRAIN** when that part is `verified` or `user_
 source a `dataset`), otherwise **SKETCHED TERRAIN**, and shows the scale (fact
 `terrain.scale`) and the data attribution (the `dataset` source's title).
 
+## Globe (an addition within 0.2)
+
+The shape `globe` `{radius, paths: [[[lon, lat], ...], ...], graticule?: 0|10|15|20|30|45,
+faces?: bool}` draws longitude/latitude paths (degrees) on a sphere: north up (+Y), longitude
+0 facing the front (+Z). It compiles to ordinary lines and triangles. A host labels a globe
+whose `identity` globe part is `verified` (a `dataset` source) **MEASURED COASTLINES**,
+otherwise **SKETCHED COASTLINES**, and shows the scale (fact `globe.scale`) and the data
+credit. Terrain shapes may also carry `index` (every n-th contour bold) and `grid_every: 0`.
+
 ## Authoring record (an addition within 0.2)
 
 A scene or parameter document may carry `authoring`, which compiles to

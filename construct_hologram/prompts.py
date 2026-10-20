@@ -74,6 +74,8 @@ You write data, never code.
 
 {tiers}
 
+{clock}
+
 Work silhouette, then proportions, then the two or three identity features, then secondary
 detail. Put effort where it shows: nothing smaller than about 0.5% of the object's largest
 size. Stop at whichever comes first: the review judges the construct genuinely good (accurate
@@ -376,7 +378,7 @@ def build():
     scene_example.pop("animation", None)
     template = params_mod.template("book", "paperback")
     return {
-        "system.md": SYSTEM.format(contract=CONTRACT, tiers=tiers.table(),
+        "system.md": SYSTEM.format(contract=CONTRACT, tiers=tiers.table(), clock=tiers.clock_rule(),
                                    research=", ".join('"%s"' % r for r in tiers.RESEARCH_RECORD)),
         "params.md": PARAMS_INTRO.format(template=json.dumps(template, indent=2), describe=params_mod.describe(),
                                          example=json.dumps(golden, indent=2, ensure_ascii=False)),

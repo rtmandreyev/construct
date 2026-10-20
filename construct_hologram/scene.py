@@ -72,8 +72,9 @@ EVENTS = ("scan", "sweep", "wave", "shimmer", "glitch", "brownout", "propagate",
 ASSEMBLY = ("ceremony", "build", "cut")
 LIFE = ("off", "calm", "alive")
 SHAPE_TYPES = ("box", "cylinder", "cone", "sphere", "torus", "lathe", "extrude", "tube",
-               "curve", "plane", "grid", "points", "marker", "terrain")
+               "curve", "plane", "grid", "points", "marker", "terrain", "globe")
 MAX_TERRAIN = 128
+MAX_GLOBE_POINTS = 20000
 ARTICULATIONS = ("hinge", "slide", "lift", "turn")
 MAX_ARTICULATIONS = 16
 MAX_JOINTS = 16
@@ -392,6 +393,25 @@ def _shape_check(c, shape, where):
     elif t == "grid":
         c.vec(shape.get("size"), where + ".size", 2, **pos)
         c.num(shape.get("divisions"), where + ".divisions", 1, 64, True)
+    elif t == "globe":
+        c.num(shape.get("radius"), where + ".radius", **pos)
+        ps = shape.get("paths")
+        ok = isinstance(ps, list) and all(isinstance(q, list) and len(q) >= 2 for q in ps)
+        if not ok or sum(len(q) for q in ps) > MAX_GLOBE_POINTS:
+            c.err(where + ".paths", "expected lines of 2 or more [longitude, latitude] points (degrees), at most %d "
+                  "points in all" % MAX_GLOBE_POINTS, "type", "construct globe reads them from a GeoJSON file.")
+        else:
+            bad = next(((i, j) for i, q in enumerate(ps) for j, pt in enumerate(q)
+                        if not (isinstance(pt, list) and len(pt) == 2
+                                and all(isinstance(v, (int, float)) and not isinstance(v, bool) for v in pt)
+                                and -180 <= pt[0] <= 180 and -90 <= pt[1] <= 90)), None)
+            if bad:
+                c.err("%s.paths[%d][%d]" % (where, bad[0], bad[1]), "expected [longitude -180..180, latitude -90..90]",
+                      "range")
+        if "graticule" in shape:
+            c.choice(shape["graticule"], (0, 10, 15, 20, 30, 45), where + ".graticule")
+        if "faces" in shape and not isinstance(shape["faces"], bool):
+            c.err(where + ".faces", "expected true or false")
     elif t == "terrain":
         c.vec(shape.get("size"), where + ".size", 2, **pos)
         hs = shape.get("heights")
@@ -409,7 +429,9 @@ def _shape_check(c, shape, where):
         if "contour" in shape:
             c.num(shape["contour"], where + ".contour", 0, MAX_EXTENT)
         if "grid_every" in shape:
-            c.num(shape["grid_every"], where + ".grid_every", 1, 32, True)
+            c.num(shape["grid_every"], where + ".grid_every", 0, 32, True)
+        if "index" in shape:
+            c.num(shape["index"], where + ".index", 1, 20, True)
         if "skirt" in shape and not isinstance(shape["skirt"], bool):
             c.err(where + ".skirt", "expected true or false")
     elif t == "points":
@@ -444,7 +466,8 @@ _SHAPE_KEYS = {
     "curve": {"type", "points", "smooth", "closed"},
     "plane": {"type", "size", "divisions"},
     "grid": {"type", "size", "divisions"},
-    "terrain": {"type", "size", "heights", "contour", "grid_every", "skirt"},
+    "terrain": {"type", "size", "heights", "contour", "index", "grid_every", "skirt"},
+    "globe": {"type", "radius", "paths", "graticule", "faces"},
     "points": {"type", "count", "region", "sprite", "size_px"},
     "marker": {"type", "sprite", "size_px"},
 }
@@ -1153,9 +1176,11 @@ def _local_mesh(shape, seed):
         return shapes.plane(shape["size"][0], shape["size"][1], shape.get("divisions", 0))
     if t == "grid":
         return shapes.grid(shape["size"][0], shape["size"][1], shape["divisions"])
+    if t == "globe":
+        return shapes.globe(shape["radius"], shape["paths"], shape.get("graticule", 30), shape.get("faces", True))
     if t == "terrain":
         return shapes.terrain(shape["size"][0], shape["size"][1], shape["heights"], shape.get("contour", 0.0),
-                              shape.get("grid_every", 4), shape.get("skirt", True))
+                              shape.get("grid_every", 4), shape.get("skirt", True), shape.get("index", 5))
     if t == "points":
         region = shape["region"]
         if "box" in region:

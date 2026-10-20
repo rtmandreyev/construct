@@ -90,6 +90,10 @@ Work in a folder of your own. `out/construct.html` opens in any browser.
    model, a named building or peak, a species) research first whenever you are unsure of its
    shape or specs: the maker's or official pages, specs and reference photos, looked at with
    `vision_analyze` and measured. "research: on/off" in the request overrides this.
+   **Draft early.** Research takes at most 40% of the time; by then a complete scene that
+   passes `check` is saved in your folder. Improve that file in place, checking and saving
+   after every round. At the run budget's wrap-up notice (80%), stop adding: make the saved
+   scene valid, build it and deliver.
 2. **Facts.** Write down what the user said or gave you and what your sources say. Each fact
    gets a certainty: `verified` (cites a source), `user_supplied`, `inferred` (your estimate
    or a traced measurement, with a short note) or `decorative`. Without a cited source
@@ -104,7 +108,8 @@ Work in a folder of your own. `out/construct.html` opens in any browser.
    can see images, trace it from a reference (`references/tracing.md`: the user's photo or a
    web image viewed with `vision_analyze`), then `scripts/cli.py trace` fits it to a verified
    dimension. Traced shapes are `inferred`, cited to the image. A real place or peak comes from
-   elevation data the user supplies: `scripts/cli.py terrain` (`references/terrain.md`).
+   elevation data the user supplies: `scripts/cli.py terrain`, and Earth from coastline data
+   (GeoJSON): `scripts/cli.py globe` (`references/terrain.md`).
 4. **Check until clean.** Run `check --json`. While `needs_repair` is true, fix every
    diagnostic at its JSON path using its hint, and check again. Fix every `detached` and
    `thin` warning: they are what a viewer notices first.
@@ -132,8 +137,10 @@ Work in a folder of your own. `out/construct.html` opens in any browser.
 - **Hairline structure.** A thin arm or leg barely renders: `thin` gives the minimum radius.
 - **Real artwork.** Show a cover only from bytes the user supplied, declared with its SHA-256
   and rights. Never download covers or recreate one from memory.
-- **Running unbounded.** The tier's limits are ceilings; Hermes's own run budget applies on
-  top. When one is reached, deliver the best version so far with its `next` notes.
+- **Running unbounded, or writing at the end.** The tier's limits are ceilings; Hermes's own
+  run budget applies on top. A scene held only in context is lost when the budget ends: save a
+  valid draft by 40% and keep it valid. When a limit is reached, deliver the saved version
+  with its `next` notes.
 - **Captures without a browser.** If no Chromium-family browser exists, deliver the HTML and
   say the review stills were not made; do not install one.
 

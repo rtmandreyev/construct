@@ -23,7 +23,7 @@ ROOT = Path(__file__).resolve().parent.parent
 PKG = ROOT / "construct_hologram"
 HERE = ROOT / "scripts" / "hermes_submission"
 RUNTIME = ["__init__.py", "__main__.py", "product.py", "hologram.py", "scene.py", "shapes.py", "audit.py",
-           "diagnose.py", "params.py", "render.py", "studio.py", "png.py", "trace.py", "terrain.py", "tiers.py"]
+           "diagnose.py", "params.py", "render.py", "studio.py", "png.py", "trace.py", "terrain.py", "tiers.py", "globe.py"]
 EXAMPLES = ["cd.json", "book.json", "lighthouse.json", "lantern-jellyfish.json", "case-jewel.params.json",
             "book-paperback.params.json", "object-electric-guitar.params.json", "vessel-can.params.json"]
 SHIM = '''"""construct command line (Hermes optional skill). Run by absolute path from any folder."""

@@ -14,3 +14,17 @@ Without data, a small hand-made `terrain` heightfield is allowed but stays `infe
 as SKETCHED TERRAIN — say so. Attribution for the data goes in `--source-title`; it is shown
 on the construct. `--dem` takes several tiles or a folder of them; only the area is read. Details:
 docs/TERRAIN.md in the repository.
+
+## The globe
+
+Never draw Earth's continents from memory as if measured. With coastline data (GeoJSON, for
+example Natural Earth's public-domain `ne_110m_coastline.geojson`):
+
+```bash
+python3 TOOLS globe --coastlines coast.geojson --title "Earth" \
+    --source-title "Natural Earth 1:110m coastline (public domain)" --output earth.json
+```
+
+It writes a sphere, the coastlines (verified: MEASURED COASTLINES), the axis at the cited
+23.44° tilt and a slow spin. Without data, a hand-made globe is a sketch: `inferred`
+coastlines and `accuracy` approximate at most; say so.

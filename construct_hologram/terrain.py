@@ -300,7 +300,7 @@ def ladder(extent, cls=None):
 
 def build(dem, center=None, extent=None, bbox=None, crs=None, resolution=72, cls=None, exaggeration=1.0,
           title="Terrain", source_title="Elevation data", source_ref=None, rights="permitted", gpx=None,
-          marks=(), view_from="S", identifier=None):
+          marks=(), view_from="S", identifier=None, emphasis=True):
     if isinstance(dem, Grid):
         grid, fx, fy = dem, dem.x0, dem.y_top
     else:
@@ -351,7 +351,9 @@ def build(dem, center=None, extent=None, bbox=None, crs=None, resolution=72, cls
     v = s * exaggeration
     base = 0.02 * stage  # a plinth under the lowest point
     heights = [[round(base + (h - zmin) * v, 5) for h in row] for row in real]
-    contour_real = _nice((zmax - zmin) / 12)
+    # about three dozen contour levels, a bold index contour on round heights (every 100 m for 50 m)
+    contour_real = _nice((zmax - zmin) / 36)
+    index = 2 if str(contour_real).lstrip("0.").startswith("5") else 5
     size = [round(width_m * s, 5), round(depth_m * s, 5)]
 
     def place(lat, lon, lift=0.0):
@@ -382,14 +384,44 @@ def build(dem, center=None, extent=None, bbox=None, crs=None, resolution=72, cls
         "parts": [{"id": "terrain", "label": "Terrain", "role": "mass", "certainty": "verified", "source": "dem", "stage": 0,
                    "basis": ["terrain.extent", "elevation.min", "elevation.max"],
                    "shape": {"type": "terrain", "size": size, "heights": heights,
-                             "contour": round(contour_real * v, 6), "grid_every": max(2, n // 12)},
-                   "note": "sampled from the elevation data on a %dx%d grid; contours every %g m" % (cols, rows, contour_real)}],
+                             "contour": round(contour_real * v, 6), "index": index,
+                             # a survey grid helps a site read; on a massif it competes with the relief
+                             "grid_every": 0 if cls in ("massif", "range") else max(2, n // 8)},
+                   "note": "sampled from the elevation data on a %dx%d grid; contours every %g m, index contours every %g m"
+                           % (cols, rows, contour_real, contour_real * index)}],
         "annotations": [],
-        "presentation": {"framing": {"yaw": VIEW_YAW.get(view_from.upper(), 0), "pitch": 24, "fit": 1.0}},
+        "presentation": {"framing": {"yaw": VIEW_YAW.get(view_from.upper(), 0), "pitch": 18, "fit": 0.92}},
         "animation": {"assembly": {"style": "ceremony", "seconds": 5.0, "interference": True},
                       "idle": {"life": "calm", "events": ["scan", "sweep", "shimmer"], "cadence": [6, 12], "strength": 0.5},
                       "camera": {"drift": 4, "breathe": 0.02}},
     }
+    if emphasis:
+        # the summit and the ridges that fall from it carry a mountain's identity
+        def cell(r, c, lift):
+            return [round(-size[0] / 2 + size[0] * c / (cols - 1), 5),
+                    round(base + (_bilinear(real, r, c) - zmin) * v + lift, 5),
+                    round(-size[1] / 2 + size[1] * r / (rows - 1), 5)]
+        found = ridges(real) if cls in ("valley", "massif", "range") else []
+        for i, path in enumerate(found):
+            scene["parts"].append({
+                "id": "ridge-%d" % (i + 1), "role": "identity", "certainty": "verified", "source": "dem", "stage": 1,
+                "basis": ["elevation.max"], "shape": {"type": "curve", "points": [cell(r, c, 0.002 * stage) for r, c in path]},
+                "look": {"glow": 0.9},
+                "note": "a ridgeline in the elevation data: the crest followed outward from the summit "
+                        "(every point is the data's own height)"})
+        if found:
+            scene["facts"].append({"key": "terrain.ridges", "value": len(found), "certainty": "inferred",
+                                   "note": "ridgelines traced from the summit in the elevation data"})
+            r, c = found[0][0]
+            near = [m for m in marks if m.split("=", 1)[0].strip().lower() in ("summit", "peak", "top")]
+            if not near:
+                scene["parts"].append({"id": "summit", "label": "Summit", "role": "identity", "certainty": "verified",
+                                       "source": "dem", "basis": ["elevation.max"], "stage": 3,
+                                       "shape": {"type": "marker", "sprite": "ring", "size_px": 16},
+                                       "at": cell(r, c, 0.004 * stage)})
+                scene["annotations"].append({"id": "summit", "text": "Summit %.0f m" % true_hi, "part": "summit"})
+            scene["presentation"]["views"] = [{"id": "summit", "label": "Summit and ridges", "yaw": VIEW_YAW.get(
+                view_from.upper(), 0), "pitch": 12, "distance": 0.6, "target": "ridge-1"}]
     if gpx:
         track = read_gpx(gpx)
         pts = [q for q in (place(lat, lon, lift=0.002 * stage) for lat, lon in track) if q]
@@ -416,6 +448,78 @@ def build(dem, center=None, extent=None, bbox=None, crs=None, resolution=72, cls
     if not scene["annotations"]:
         del scene["annotations"]
     return scene
+
+
+def _bilinear(real, r, c):
+    rows, cols = len(real), len(real[0])
+    if not (0 <= r <= rows - 1 and 0 <= c <= cols - 1):
+        return None
+    r0, c0 = min(int(r), rows - 2), min(int(c), cols - 2)
+    fr, fc = r - r0, c - c0
+    return (real[r0][c0] * (1 - fc) + real[r0][c0 + 1] * fc) * (1 - fr) + \
+        (real[r0 + 1][c0] * (1 - fc) + real[r0 + 1][c0 + 1] * fc) * fr
+
+
+def ridges(real, most=4):
+    """The ridgelines that fall from the highest point of a height grid (rows north to south).
+
+    Rings around the summit are sampled at every radius; on each ring a ridge is an angle where
+    the height peaks (a crest crossing the ring). Peaks are chained outward from the summit; a
+    chain is a ridge while it continues within a few degrees. Deterministic; returns up to
+    `most` paths of (row, col) grid positions (floats), each starting at the summit."""
+    rows, cols = len(real), len(real[0])
+    r0, c0 = max(((r, c) for r in range(rows) for c in range(cols)), key=lambda rc: real[rc[0]][rc[1]])
+    top = real[r0][c0]
+    relief = top - min(min(row) for row in real)
+    if relief <= 0:
+        return []
+    n = 180
+    angles = [2 * math.pi * k / n for k in range(n)]
+    chains, ended = [], []
+    for rad in range(2, max(rows, cols)):
+        ring = [_bilinear(real, r0 - rad * math.cos(a), c0 + rad * math.sin(a)) for a in angles]
+        if any(h is None for h in ring):
+            break
+        peaks = []
+        for k, h in enumerate(ring):
+            window = [ring[(k + d) % n] for d in range(-5, 6) if d]
+            if h >= max(window):
+                low = min(ring[(k + d) % n] for d in range(-15, 16))
+                if h - low > 0.01 * relief:
+                    peaks.append((k, h - low))
+        claimed = set()
+        for ch in chains:
+            near = [(abs((k - ch["k"] + n // 2) % n - n // 2), k, pr) for k, pr in peaks]
+            near = [x for x in near if x[0] <= 9]
+            if near and ring[min(near)[1]] >= top - 0.8 * relief:
+                _, k, pr = min(near)
+                claimed.add(k)
+                ch["k"], ch["miss"] = k, 0
+                ch["prom"] += pr
+                a = angles[k]
+                ch["path"].append((r0 - rad * math.cos(a), c0 + rad * math.sin(a)))
+            else:
+                ch["miss"] += 1
+        if rad <= 6:  # a crest leaving the summit starts within the first rings
+            for k, pr in peaks:
+                if k not in claimed and all(abs((k - ch["k"] + n // 2) % n - n // 2) > 6 for ch in chains):
+                    a = angles[k]
+                    chains.append({"k": k, "path": [(r0, c0), (r0 - rad * math.cos(a), c0 + rad * math.sin(a))],
+                                   "prom": pr, "miss": 0})
+        ended += [ch for ch in chains if ch["miss"] > 3]
+        chains = [ch for ch in chains if ch["miss"] <= 3]
+        if not chains and rad > 6:
+            break
+    found = [ch for ch in chains + ended if len(ch["path"]) >= 6]
+    found.sort(key=lambda ch: -(len(ch["path"]) * ch["prom"]))
+    kept = []
+    for ch in found:
+        end = ch["path"][-1]
+        if all(math.dist(end, k[-1]) > 3 for k in kept):
+            kept.append(ch["path"])
+        if len(kept) == most:
+            break
+    return kept
 
 
 def _nice(x):

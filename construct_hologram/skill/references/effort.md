@@ -39,6 +39,20 @@ Effort goes where it is visible: silhouette, then proportions, then the two or t
 features, then secondary detail. Model nothing smaller than about 0.5% of the object's largest
 size: that is efficiency guidance, not a reason to stop.
 
+## Watch the clock: draft early
+
+A run that researches well and then writes one large scene at the end can lose everything to
+the time limit (seen in a live run: ten minutes of excellent research, no scene saved). So:
+
+| share of the tier's time | what is true |
+|---|---|
+| ≤ 40% | research is over (within its counts) and a **complete scene that passes `check` is saved** in your folder |
+| 40–80% | improve the saved scene in place: one change, `check`, save, `review`; a valid scene is always on disk |
+| 80% | stop adding (in Hermes: the run budget's wrap-up notice); make the saved scene valid, `build`, deliver with `next` |
+
+Start the first draft from what you have (the silhouette, the masses, the identity features
+roughly placed) rather than from a perfect plan; size and detail come in the rounds after.
+
 ## When to stop
 
 At whichever comes first:
@@ -66,7 +80,8 @@ regenerated at a higher tier later. Say the same in the hand-over.
 - **The agent** (any host) follows the table above; the tier is the user's or host's choice,
   standard by default, showcase only when asked.
 - **`construct author`** enforces them itself: `--tier`, a wall-clock timeout, check and
-  review round counters, a cap on web reference images (`--max-images`; the user's own
+  review round counters (no review round starts after 80% of the time), saving every new best
+  valid draft to `--out` at once, a cap on web reference images (`--max-images`; the user's own
   photos are source data, not research), and optional `--max-total-tokens` or `--max-cost`
   (with `--price-in`/`--price-out`, USD per million tokens). `--vision` turns on the
   review rounds for a model that can see. Single limits can be raised, never removed.

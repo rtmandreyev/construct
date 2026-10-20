@@ -44,6 +44,13 @@ if no browser is available, say so and deliver the HTML without captures.
    model, a named building or peak, a species) is researched whenever you are unsure of its
    identity-defining shape or specs; "research: on/off" in the request overrides both. See
    [effort](references/effort.md).
+
+   **Watch the clock, and draft early.** Research takes at most 40% of the tier's time and
+   ends in a first draft: by 40% a complete scene that passes `check` is saved in your
+   folder. Never hold the only copy in context, and never plan one big write at the end:
+   improve the saved scene in place, `check` it and save it after every round, so a valid
+   scene is always on disk. At 80% (in Hermes, the run budget's wrap-up notice) stop adding:
+   make the saved scene valid, `build` it and deliver it with `authoring.next`.
 1. **Research, then facts.** For a researched subject, first look up the exact thing — the
    official or maker's pages, manuals, specs, plans, reference photos — then look at the
    references with vision (any model that can see: Claude, GPT, Gemini, DeepSeek) and
@@ -71,7 +78,8 @@ if no browser is available, say so and deliver the HTML without captures.
    When the thing's identity is a shape you cannot know from text (a guitar body, a car,
    a building's elevation), measure it from a reference image: see
    [tracing](references/tracing.md). Never invent an outline and call it verified. A real
-   place, peak or route comes from elevation data: see [terrain](references/terrain.md).
+   place, peak or route comes from elevation data, and Earth from coastline data
+   (`globe`): see [terrain](references/terrain.md).
 4. **Animate with intent.** Choose an assembly style; `articulations` for what opens once
    (a lid, a board, a disc lifted out); part motion only where the object keeps moving (a
    platter spins, a tentacle sways, a beam turns); idle events that suit the subject; and a

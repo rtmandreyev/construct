@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.2.0 — Construct (unreleased)
+## 0.2.0 — Construct (2026-10-19)
 
 The first release as **Construct**, an independent MIT-licensed project.
 
@@ -30,12 +30,25 @@ The first release as **Construct**, an independent MIT-licensed project.
   at whichever comes first, a "good" verdict or any limit, and delivers the best version so far.
   An optional `authoring` record (tier, research, sources, review rounds, outcome, next
   improvements) is validated, audited and carried into the geometry's provenance.
-  `construct author` enforces the limits (`--tier`, `--vision` review rounds, `--max-seconds`,
+  Draft early: research takes at most 40% of the time and ends in a complete, valid scene saved
+  to disk, improved in place after that; at 80% nothing new is added.
+  `construct author` saves every new best valid draft at once and enforces the limits (`--tier`, `--vision` review rounds, `--max-seconds`,
   `--max-images`, `--max-total-tokens`, `--max-cost`); MCP hosts read them from
   `construct_limits`.
 - **The review hero is the whole object.** `hero.png` is taken in the hero view's fitted
   framing with the camera held still (`?camera=still`), so a camera tour or drift can no longer
   crop it to a detail.
+- **Measured globe.** A `globe` shape (longitude/latitude paths on a sphere, a graticule, glass
+  faces) and `construct globe`, which draws GeoJSON coastlines the user supplies (Natural Earth,
+  public domain) simplified only as far as the line budget needs, with the axis at the cited
+  axial tilt and a slow spin, labelled MEASURED COASTLINES with its scale and data credit.
+- **Terrain that looks its part.** Contours about three dozen levels deep with bold index
+  contours on round heights (every 100 m at 50 m spacing); the ridgelines that fall from the
+  summit traced from the data and lit as identity, with a summit marker; no survey grid on a
+  massif or range; closer hero framing. `--dem` takes several tiles or a folder, reads only the
+  area thinned to the sampling (twenty 2 m swissALTI3D tiles in about 5 s and 35 MB), reports the
+  data's true extremes, and caps the grid at 100 cells per side so the output always fits the
+  triangle budget.
 - **Measured terrain.** A `terrain` shape (a heightfield of up to 128×128: contours, a survey
   grid, a skirt, glass) and `construct terrain`, which samples an ESRI ASCII grid or XYZ export
   the user supplies (LV95, UTM or degrees), scales it by the ladder (spot, site, valley, massif,

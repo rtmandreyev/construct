@@ -1045,6 +1045,14 @@ void main() {
         ex && ex !== 1 ? "HEIGHTS ×" + ex : null].filter(Boolean).join(" · ")));
       (geo.provenance.sources || []).filter((s) => s.kind === "dataset").forEach((s) => caption.appendChild(el("div", "meta", "DATA: " + s.title)));
     }
+    // a globe says the same of its coastlines
+    const coast = !relief && geo.parts.find((p) => p.shape === "globe" && p.role === "identity");
+    if (coast) {
+      const measured = coast.certainty === "verified" || coast.certainty === "user_supplied";
+      const scale = ((geo.provenance.facts || []).find((f) => f.key === "globe.scale") || {}).value;
+      caption.appendChild(el("div", "meta", [measured ? "MEASURED COASTLINES" : "SKETCHED COASTLINES", scale].filter(Boolean).join(" · ")));
+      (geo.provenance.sources || []).filter((s) => s.kind === "dataset").forEach((s) => caption.appendChild(el("div", "meta", "DATA: " + s.title)));
+    }
     if (!opt.caption || opt.sheet) caption.style.display = "none";
     overlay.appendChild(caption);
     const legend = el("div", "legend");

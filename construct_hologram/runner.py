@@ -142,7 +142,8 @@ def _host_note(lim, research, images):
     web = [i for i in images if i.startswith(("http://", "https://"))]
     lines = ["", "Host: the construct author runner. Tier: %s (wall clock %d s, %d check rounds, %d review rounds)."
              % (lim["tier"], lim["wall_clock_s"], lim["check_rounds"], lim["review_rounds"]),
-             "This host has no web search tool."]
+             "This host has no web search tool. Every answer you send is checked, and the best valid one is "
+             "saved at once: send a complete scene first, then improve it."]
     if research == "off":
         lines.append('Research: off (the user said so). Record "authoring": {"tier": "%s", "research": "off"}.' % lim["tier"])
     elif images:
@@ -223,11 +224,13 @@ def _verdict(text):
 
 def author(request, base_url, model, key=None, use_params=False, rounds=None, log=None, images=(), tier=None,
            research=None, vision=False, limit_overrides=None, max_total_tokens=None, max_cost=None,
-           prices=(0.0, 0.0), workdir=None, clock=time.monotonic):
+           prices=(0.0, 0.0), workdir=None, clock=time.monotonic, save=None):
     """Draft, check, repair, then (with vision) review and improve, inside the tier's limits.
 
     Returns (report, text, token totals, history, meta) for the best draft; meta has the tier,
-    outcome ("good", "limit" or "unreviewed"), why it stopped and the next improvements."""
+    outcome ("good", "limit" or "unreviewed"), why it stopped and the next improvements.
+    `save(text)` is called with every new best valid draft (stamped "unreviewed" until the run
+    ends), so a valid construct is on disk even if the host stops the run."""
     asked = tiers.from_request(request)
     tier = tier or asked.get("tier") or tiers.DEFAULT
     research = research or asked.get("research") or "auto"
@@ -268,6 +271,9 @@ def author(request, base_url, model, key=None, use_params=False, rounds=None, lo
             last = (report, text)
             if best is None or _rank(report, doc) >= _rank(best[0], best[2]):
                 best = (report, text, doc)
+                if save and report["ok"] and isinstance(doc, dict):
+                    save(json.dumps(_stamp(json.loads(json.dumps(doc)), lim, budget, "unreviewed", nxt, research),
+                                    indent=2, ensure_ascii=False))
             if not report["needs_repair"]:
                 return
             messages.extend([{"role": "assistant", "content": text}, {"role": "user", "content": report["repair_text"]}])
@@ -276,8 +282,8 @@ def author(request, base_url, model, key=None, use_params=False, rounds=None, lo
     try:
         check_loop()
         while vision and budget.reviews < lim["review_rounds"]:
-            if budget.left() < REVIEW_MARGIN_S:
-                raise LimitReached("wall clock (%gs)" % lim["wall_clock_s"])
+            if budget.left() < max(REVIEW_MARGIN_S, lim["wall_clock_s"] * (1 - tiers.WRAP_UP)):
+                raise LimitReached("wrap-up at %d%% of the wall clock" % (tiers.WRAP_UP * 100))
             shots = _captures(last[1], workdir, log)
             if not shots:
                 break
@@ -329,13 +335,19 @@ def run(args, out):
         raise RunnerError("the environment variable %s is not set" % args.key_env)
     if args.max_cost and not (args.price_in or args.price_out):
         raise RunnerError("--max-cost needs --price-in and --price-out (USD per million tokens)")
+    def save(text):
+        tmp = args.out + ".tmp"
+        with open(tmp, "w", encoding="utf-8") as fh:
+            fh.write(text + "\n")
+        os.replace(tmp, args.out)
+
     try:
         report, text, totals, history, meta = author(
             args.request, args.base_url, args.model, key, args.params, args.rounds,
             log=lambda m: out.write(m + "\n"), images=args.reference or (), tier=args.tier, research=args.research,
             vision=args.vision, limit_overrides=_limits_from(args), max_total_tokens=args.max_total_tokens,
             max_cost=args.max_cost, prices=(args.price_in or 0.0, args.price_out or 0.0),
-            workdir=str(Path(args.out).resolve().parent))
+            workdir=str(Path(args.out).resolve().parent), save=save)
     except tiers.TierError as exc:
         raise RunnerError(str(exc))
     doc, _ = diagnose.parse_text(text)
