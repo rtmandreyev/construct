@@ -105,9 +105,12 @@ def load(path):
     return doc
 
 
-def build(scene_path, out_dir, asset_root=None, v1=False, force=True, frame="y-up"):
+def build(scene_path, out_dir, asset_root=None, v1=False, force=True, frame="y-up", palette=None, identity=None):
     scene = load(scene_path)
     geometry = scene_mod.compile_scene(scene)
+    if palette or identity:  # the person's choice, never the model's
+        geometry["presentation"]["style_hint"].update(
+            {k: v for k, v in (("palette", palette), ("identity", identity)) if v}, note="chosen by the person (host option)")
     report = audit_mod.audit(scene, geometry)
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)
@@ -162,12 +165,16 @@ def add_commands(sub):
     p.add_argument("--v1", action="store_true")
     p.add_argument("--frame", choices=("y-up", "z-up"), default="y-up",
                    help="also write geometry.z-up.json for consumers with a Z-up object frame")
+    p.add_argument("--palette", choices=scene_mod.PALETTES, help="a colour the person chose (the default is the house palette)")
+    p.add_argument("--identity", choices=scene_mod.IDENTITIES, help="an identity tint the person chose")
     p = sub.add_parser("review", help="build, then capture contact sheets and stills")
     p.add_argument("scene")
     p.add_argument("--out", required=True)
     p.add_argument("--asset-root")
     p.add_argument("--size", default="1440x900")
     p.add_argument("--sheets", default=",".join(render.SHEETS))
+    p.add_argument("--palette", choices=scene_mod.PALETTES, help="a colour the person chose (the default is the house palette)")
+    p.add_argument("--identity", choices=scene_mod.IDENTITIES, help="an identity tint the person chose")
     p = sub.add_parser("video", help="render the animation to MP4 or GIF (needs ffmpeg)")
     p.add_argument("scene")
     p.add_argument("--out", required=True)
@@ -177,6 +184,8 @@ def add_commands(sub):
     p.add_argument("--start", type=float, default=0.0)
     p.add_argument("--view")
     p.add_argument("--size", default="1280x720")
+    p.add_argument("--palette", choices=scene_mod.PALETTES, help="a colour the person chose (the default is the house palette)")
+    p.add_argument("--identity", choices=scene_mod.IDENTITIES, help="an identity tint the person chose")
 
 
 COMMANDS = ("new", "params", "expand", "prompts", "author", "check", "build", "review", "video")
@@ -242,11 +251,12 @@ def run(args):
                 sys.stdout.write("invalid scene (%d problems)\n%s\n" % (report["errors"], report["repair_text"]))
             return 0 if report["ok"] else 1
         if args.command == "build":
-            _, report, text = build(args.scene, args.out, args.asset_root, args.v1, frame=args.frame)
+            _, report, text = build(args.scene, args.out, args.asset_root, args.v1, frame=args.frame,
+                                    palette=args.palette, identity=args.identity)
             sys.stdout.write(text + "\nwrote %s\n" % Path(args.out, "hologram.html"))
             return 0 if report["ok"] else 1
         if args.command == "review":
-            _, report, text = build(args.scene, args.out, args.asset_root)
+            _, report, text = build(args.scene, args.out, args.asset_root, palette=args.palette, identity=args.identity)
             sys.stdout.write(text + "\n")
             w, h = (int(x) for x in args.size.lower().split("x"))
             sheets = [s for s in args.sheets.split(",") if s]
@@ -256,7 +266,7 @@ def run(args):
         if args.command == "video":
             out = Path(args.out)
             with tempfile.TemporaryDirectory(prefix="hologram-video-") as tmp:
-                build(args.scene, tmp, args.asset_root)
+                build(args.scene, tmp, args.asset_root, palette=args.palette, identity=args.identity)
                 w, h = (int(x) for x in args.size.lower().split("x"))
                 render.frames(str(Path(tmp, "hologram.html")), str(Path(tmp, "frames")), args.seconds, args.fps,
                               args.start, w, h, view=args.view)

@@ -66,7 +66,6 @@
     {"id": "tentacles", "text": "12 tentacles", "part": "tentacles", "offset": [0, -1.1, 0]}
   ],
   "presentation": {
-    "style_hint": {"palette": "green", "identity": "bio"},
     "framing": {"yaw": 20, "pitch": 8, "fit": 1.0},
     "views": [{"id": "bell", "label": "Bell", "yaw": 0, "pitch": -25, "distance": 1.8, "target": "bell"}],
     "atmosphere": {"haze": 0.85, "grid": true, "projector": false, "motes": 0.8},

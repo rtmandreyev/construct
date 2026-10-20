@@ -149,7 +149,8 @@ volumes: give them a real radius (about 1.5% of the object or more) and the `ide
 role when they carry the silhouette; end them inside the part they join.
 
 Leave out `presentation` and `animation` (the host owns camera, colour and timing), except
-`presentation.views`: give a view named `"open"` (yaw, pitch in degrees) when the object
+`presentation.views` (never `style_hint`: colour is the renderer's, one house palette for
+everyone): give a view named `"open"` (yaw, pitch in degrees) when the object
 opens, so a host can turn to what opening reveals. `look` only to hide a part that just
 carries text (`{{"line": "none", "fill": "none"}}`).
 

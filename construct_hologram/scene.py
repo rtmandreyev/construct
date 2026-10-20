@@ -61,6 +61,8 @@ TONES = ("accent", "bright", "hairline", "structure", "dust", "identity", "data"
 LINES = ("auto", "solid", "dashed", "dotted", "none")
 FILLS = ("auto", "none", "glass", "dark")
 SPRITES = ("disc", "ring", "square", "soft")
+HOUSE_STYLE = {"palette": "violet", "identity": "none",
+               "note": "the house palette; only a host option chosen by a person changes it"}
 PALETTES = ("violet", "cyan", "amber", "green", "ice", "rose")
 IDENTITIES = ("none", "warm-wood", "stone", "steel", "brass", "bio", "ember", "ice", "paper")
 MOTIONS = ("spin", "swing", "bob", "pulse")
@@ -1588,9 +1590,9 @@ def _normal_presentation(scene):
         "certainty_style": pr.get("certainty_style", "subtle"),
         "background": pr.get("background", "deep"),
         "float": pr.get("float", 0.0),
-        "style_hint": {"palette": pr.get("style_hint", {}).get("palette", "violet"),
-                       "identity": pr.get("style_hint", {}).get("identity", "none"),
-                       "note": "a hint the host may ignore; the renderer owns colour"},
+        # one house palette whatever the model wrote: a scene's style_hint is ignored, and only
+        # the person can choose another colour, through a host option (build --palette)
+        "style_hint": dict(HOUSE_STYLE),
         "still_pose": pr.get("still_pose", "open"),
     }
 

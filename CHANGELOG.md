@@ -12,6 +12,10 @@ The first release as **Construct**, an independent MIT-licensed project.
   never written.
 - **Any-model authoring:** `construct author` drafts with any OpenAI-compatible endpoint, checks
   and repairs until clean (the key comes from an environment variable and is never stored).
+- **One house palette.** Every construct renders in the house palette whatever the model wrote:
+  a scene's `presentation.style_hint` is ignored (warning `style-hint-ignored`). Only a person
+  chooses another colour, through a host option (`build --palette`, `--identity`, or the viewer's
+  `?palette=`). The examples no longer carry colour hints.
 - **Legibility:** thin or small mass and structure parts get a minimum visual weight.
 - **Docs:** README with pictures, `docs/ABOUT.md` (what it is, the Anatomy and NODE credits, how
   to talk about it), `docs/USING.md` (every entry point, a worked example, costs and times),

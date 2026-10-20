@@ -89,9 +89,11 @@ Budgets: ≤ 24,000 lines, ≤ 24,000 triangles, ≤ 6,000 points, ≤ 256 parts
 - `tone` is a slot, never a colour: `0 accent, 1 bright, 2 hairline, 3 structure, 4 dust,
   5 identity, 6 data, 7 faint`. `dash` `0 solid, 1 dashed, 2 dotted`; `fade` 0..3 (how much
   depth thins it); `occluder` 1 for a dark fill that hides what is behind it.
-- **Colour belongs to the renderer.** `presentation.style_hint {palette, identity}` is a hint a
-  host may ignore (an app with its own palette ignores it). Authors writing for such a host
-  omit it; a scene-level `style` is refused.
+- **Colour belongs to the renderer.** Every construct compiles with the house palette:
+  `presentation.style_hint` in the geometry is always `{palette: violet, identity: none}` unless
+  a person chose another through a host option (`build --palette`), whatever the scene said.
+  A scene's `style_hint` is ignored with a `style-hint-ignored` warning; a scene-level `style`
+  is refused. An app with its own palette ignores the field altogether.
 - Certainty is the material: verified/user-supplied crisp, inferred a step back, decorative
   dotted and faint. A renderer may restyle within this meaning but keeps the four
   certainties distinguishable and offers a provenance view.

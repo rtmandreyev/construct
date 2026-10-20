@@ -447,10 +447,6 @@
     }
   ],
   "presentation": {
-    "style_hint": {
-      "palette": "violet",
-      "identity": "ice"
-    },
     "framing": {
       "yaw": -58,
       "pitch": 12,

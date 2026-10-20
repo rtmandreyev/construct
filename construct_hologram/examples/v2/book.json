@@ -374,10 +374,6 @@
     }
   ],
   "presentation": {
-    "style_hint": {
-      "palette": "amber",
-      "identity": "paper"
-    },
     "framing": {
       "yaw": -55,
       "pitch": 12,

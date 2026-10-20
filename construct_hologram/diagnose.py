@@ -101,6 +101,12 @@ def diagnose(scene, prior=()):
     for item in items:
         diags.append(_diag("error", item["code"], _path(item["where"]), item["message"], item["hint"]))
     geometry = None
+    hint = (scene.get("presentation") or {}).get("style_hint") if isinstance(scene, dict) else None
+    if hint:
+        diags.append(_diag("warning", "style-hint-ignored", "$.presentation.style_hint",
+                           "style_hint is ignored: every construct renders in the house palette",
+                           "Delete presentation.style_hint. Only the person chooses another colour, with the host's "
+                           "option (build --palette)."))
     if not items:  # text-level problems (a fence) do not stop the rest of the check
         try:
             geometry = scene_mod.compile_scene(scene)

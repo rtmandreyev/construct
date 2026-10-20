@@ -76,7 +76,6 @@
     {"id": "label", "text": "Label (decorative)", "part": "label"}
   ],
   "presentation": {
-    "style_hint": {"palette": "amber", "identity": "steel"},
     "framing": {"yaw": 32, "pitch": 30, "fit": 1.0},
     "views": [{"id": "stylus", "label": "Stylus", "yaw": 70, "pitch": 18, "distance": 2.6, "target": "headshell"}],
     "atmosphere": {"haze": 0.7, "grid": true, "projector": false, "motes": 0.35},

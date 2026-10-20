@@ -274,12 +274,24 @@ class Contract02(unittest.TestCase):
     """The construct/0.2 review items: host-owned style, articulations, fact labels,
     anchors, artwork slots and masks, unknown facts."""
 
-    def test_colour_is_a_hint_in_presentation(self):
+    def test_one_house_palette_whatever_the_model_writes(self):
         errs = scene.validate(base(style={"palette": "amber"}))
         self.assertTrue(any("renderer" in e and "style_hint" in e for e in errs), errs)
-        g = scene.compile_scene(base(presentation={"style_hint": {"palette": "amber"}}))
-        self.assertEqual(g["presentation"]["style_hint"]["palette"], "amber")
-        self.assertNotIn("style", g)
+        plain = scene.compile_scene(base())
+        tinted = scene.compile_scene(base(presentation={"style_hint": {"palette": "amber", "identity": "brass"}}))
+        self.assertEqual(tinted["presentation"]["style_hint"]["palette"], "violet")
+        for g in (plain, tinted):
+            g.pop("scene_sha256")
+        self.assertEqual(plain, tinted)  # the same construct, byte for byte, whatever style_hint said
+        d = diagnose.diagnose(base(presentation={"style_hint": {"palette": "amber"}}))
+        self.assertIn(("style-hint-ignored", "$.presentation.style_hint"), {(x["code"], x["path"]) for x in d["diagnostics"]})
+        self.assertTrue(d["ok"])
+
+    def test_a_person_can_choose_a_palette_through_the_host(self):
+        with tempfile.TemporaryDirectory() as d:
+            Path(d, "s.json").write_text(json.dumps(base()))
+            g, _, _ = studio.build(str(Path(d, "s.json")), str(Path(d, "out")), palette="amber")
+            self.assertEqual(g["presentation"]["style_hint"]["palette"], "amber")
 
     def test_unknown_facts_are_absent(self):
         s = base()

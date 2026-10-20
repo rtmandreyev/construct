@@ -77,7 +77,6 @@
     {"id": "beam", "text": "Beam (decorative)", "part": "beam", "offset": [-4, 0, 0]}
   ],
   "presentation": {
-    "style_hint": {"palette": "cyan", "identity": "ember"},
     "framing": {"yaw": 28, "pitch": 16, "fit": 1.0},
     "views": [{"id": "lantern", "label": "Lantern", "yaw": 15, "pitch": 6, "distance": 1.5, "target": "lantern"}],
     "atmosphere": {"haze": 0.8, "grid": true, "projector": false, "motes": 0.5},

@@ -821,7 +821,9 @@ void main() {
 
   // ------------------------------------------------------------------------- drawing
   Hologram.prototype.palette = function () {
-    const hint = this.geo.presentation.style_hint || this.geo.style || {};
+    // the compiled palette (the house one unless a person chose another), or ?palette= / ?identity=
+    const hint = Object.assign({}, this.geo.presentation.style_hint || {},
+                               this.opt.palette ? { palette: this.opt.palette } : {}, this.opt.identity ? { identity: this.opt.identity } : {});
     const pal = PALETTES[hint.palette] || PALETTES.violet;
     const tones = pal.tones.map(hex);
     const id = IDENTITY[hint.identity];
@@ -1008,6 +1010,7 @@ void main() {
       open: q.has("open") ? Math.max(0, Math.min(1, parseFloat(q.get("open")) || 0)) : null,
       shift: q.has("shift") ? q.get("shift").split(",").map((x) => Math.max(-0.9, Math.min(0.9, parseFloat(x) || 0))).concat([0]).slice(0, 2) : null,
       zoom: q.has("zoom") ? Math.max(0.3, Math.min(4, parseFloat(q.get("zoom")) || 1)) : 1,
+      palette: q.get("palette"), identity: q.get("identity"),
     };
     const stage = document.getElementById("stage");
     const canvas = document.getElementById("holo");

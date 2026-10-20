@@ -27,7 +27,7 @@ errors: the closed vocabulary is the safety boundary.
 - `subject.accuracy`: `generic` (a typical example), `approximate` (based on this particular thing, imprecise), `documented` (its key parts cite evidence; the audit enforces it). `check` prints "evidence-backed key parts: n of m": how many key parts (mass and identity) are themselves verified or user-supplied; 0 is normal for a generic reconstruction.
 - `subject.synthetic`: `true` only for examples and demonstrations; a real request is `false`, its `request` source `user_private`.
 - Facts hold known values only. **An unknown fact is absent**: never `null`, never a guess.
-- Colour is the renderer's. `presentation.style_hint {palette, identity}` is an optional hint a host may ignore: palettes `violet, cyan, amber, green, ice, rose`; identity tints `none, warm-wood, stone, steel, brass, bio, ember, ice, paper`. Leave it out when a host (Tessera) owns the look.
+- Colour is the renderer's: every construct renders in one house palette. Never write `presentation.style_hint` (it is ignored, with a warning). If the person explicitly asks for a colour, the host applies it: `build --palette amber` (palettes `violet, cyan, amber, green, ice, rose`; `--identity` tints `none, warm-wood, stone, steel, brass, bio, ember, ice, paper`).
 
 ## Parts
 
