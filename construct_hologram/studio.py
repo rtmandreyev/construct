@@ -10,6 +10,7 @@
 Exit status: 0 success, 1 the scene or audit has errors, 2 capture unavailable.
 """
 
+import importlib
 import json
 import os
 import sys
@@ -19,6 +20,7 @@ from pathlib import Path
 from . import audit as audit_mod
 from . import diagnose as diagnose_mod
 from . import params as params_mod
+from . import product as product_mod
 from . import hologram, render, scene as scene_mod
 
 STARTER = {
@@ -199,6 +201,12 @@ def run(args):
             else:
                 sys.stdout.write(text)
             return 0
+        if args.command in ("author", "prompts"):
+            try:
+                importlib.import_module("." + ("runner" if args.command == "author" else "prompts"), __package__)
+            except ImportError:
+                sys.stderr.write("%s: not part of this package; use the full checkout (%s)\n" % (args.command, product_mod.REPO))
+                return 2
         if args.command == "author":
             from . import runner
             try:
