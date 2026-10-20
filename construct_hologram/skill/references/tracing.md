@@ -30,6 +30,38 @@ picture instead of inventing it — and never copy the picture.
    `inferred` — measured, not documented (the audit's `shape-overclaim` keeps it honest).
 5. **Look again.** Review the construct against the reference.
 
+## Bodies from three views (cars, hulls, fuselages)
+
+A car is recognisable by its exact silhouette from the side and from above, and by how its
+cabin narrows towards the roof. Trace all three, then loft through them:
+
+1. Trace the **side** (nose left or right: note which), the **top** (plan; nose up or down)
+   and, if you can, the **front**: one `construct-trace` each, the whole outline including
+   the cabin.
+2. `python3 TOOLS loft-from-traces --side side.json --top top.json --front front.json
+   --length 4.14 --height 1.07 --width 1.89 --nose-side left --nose-top up --out body.json`
+   reconciles them into 24 loft stations (crowded at the nose and tail): bottoms and tops
+   from the side, half-widths from the plan, and from the front how wide the body still is
+   at each station's top, so the cabin narrows and the bonnet stays wide. It reports the
+   traced height and width against the documented ones; a mismatch over a few percent means
+   a trace is off.
+3. Put it into a scene: `--into car.json --part body --drop glasshouse` (the traced side
+   already includes the cabin). Start from `params vehicle` for the wheels, arches and
+   lights, then move the wheels to the traced wheelbase.
+4. Add the identity features on top (ducts, the roof channel, door lines) as curves and thin
+   parts on the body.
+
+## Measure the likeness
+
+`python3 TOOLS compare car.json --trace side.json --view side --overlay side.png` projects the
+construct's silhouette from the view (from the geometry, no browser) and measures it against
+the traced outline: IoU (1 = identical) and how far apart the outlines are, as a share of the
+view's width. Vehicles need IoU 0.88 and outlines within 1.2%; landmark buildings 0.82 and 2%.
+The overlay shows the reference amber, the construct violet, both white: fix where the colours
+show. `--record` writes the result into `authoring.compare` (bound to the scene's hash). An
+outstanding vehicle or landmark needs a passing comparison: the critic's "outstanding" is held
+at "good" without one.
+
 ## Enabling vision in hosts
 
 Tracing works with any model that can see images: Claude, GPT, Gemini and DeepSeek among them.

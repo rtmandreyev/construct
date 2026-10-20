@@ -12,6 +12,8 @@ import unittest
 from pathlib import Path
 
 from . import shapes as shapes_mod
+from . import compare as compare_mod
+from . import trace as trace_mod
 from . import audit, critic, diagnose, globe, params, png, render, runner, scene, studio, terrain, tiers
 
 HERE = Path(__file__).resolve().parent
@@ -1371,6 +1373,90 @@ class Vehicles(unittest.TestCase):
             geo = scene.compile_scene(sc)
             tyres = [p for p in geo["parts"] if p["id"].startswith("tyre-")]
             self.assertAlmostEqual(min(i["min"][1] for p in tyres for i in p["instances"]), 0.0, places=3)  # on the ground
+
+
+
+def _trace(view, outline, rid=None):
+    return {"format": "construct-trace", "version": 1,
+            "reference": {"id": rid or "ref-" + view, "title": "Synthetic %s view (test)" % view, "view": view},
+            "image": {"width": 2000, "height": 2000}, "outline": [[round(x, 3), round(y, 3)] for x, y in outline]}
+
+
+def _rect(w, h, n=8):
+    pts = [(w * k / n, 0) for k in range(n)] + [(w, h * k / n) for k in range(n)]
+    pts += [(w - w * k / n, h) for k in range(n)] + [(0, h - h * k / n) for k in range(n)]
+    return [(100 + x, 100 + y) for x, y in pts]
+
+
+class Likeness(unittest.TestCase):
+    """construct compare and loft-from-traces: likeness measured, not only seen."""
+
+    def box(self, w, h, d=1.0):
+        return base(parts=[{"id": "body", "role": "mass", "certainty": "inferred", "stage": 0,
+                            "shape": {"type": "box", "size": [d, h, w], "anchor": "base"}}])
+
+    def test_the_same_silhouette_passes_and_a_wrong_one_does_not(self):
+        same, _ = compare_mod.compare(self.box(4, 1), _trace("side", _rect(800, 200)), "side")
+        self.assertGreater(same["iou"], 0.97)
+        self.assertLess(same["edge"], 0.005)
+        self.assertTrue(same["pass"])
+        tall, _ = compare_mod.compare(self.box(4, 1.5), _trace("side", _rect(800, 200)), "side")
+        self.assertLess(tall["iou"], 0.8)
+        self.assertFalse(tall["pass"])
+
+    def test_a_reference_facing_the_other_way_is_mirrored(self):
+        s = base(parts=[{"id": "wedge", "role": "mass", "certainty": "inferred", "stage": 0, "shape": {
+            "type": "extrude", "axis": "x", "height": 1.0, "profile": [[-2, 0], [2, 0], [2, 1.2], [-2, 0.3]]}, "at": [-0.5, 0, 0]}])
+        # seen from the side (+X) the scene's +Z is on the left: this trace has the tall end on the right
+        pts = [(0, 300), (800, 300), (800, 60), (0, 240)]
+        out = []
+        for i in range(4):
+            a, b = pts[i], pts[(i + 1) % 4]
+            out += [(a[0] + (b[0] - a[0]) * k / 4, a[1] + (b[1] - a[1]) * k / 4) for k in range(4)]
+        res, png_bytes = compare_mod.compare(s, _trace("side", out), "side")
+        self.assertGreater(res["iou"], 0.95)
+        self.assertTrue(png_bytes.startswith(b"\x89PNG"))
+
+    def test_recording_cites_the_reference_and_outstanding_needs_a_pass(self):
+        car = params.expand(params.template("vehicle", "wedge") | {"facts": [], "synthetic": True})
+        res, _ = compare_mod.compare(car, _trace("side", _rect(800, 200)), "side")
+        rec = compare_mod.record(car, res, _trace("side", _rect(800, 200)))
+        self.assertIn("ref-side", {s["id"] for s in rec["sources"]})
+        self.assertEqual(rec["authoring"]["compare"][0]["pass"], False)
+        self.assertNotIn("compare-stale", {d["code"] for d in diagnose.diagnose(rec)["diagnostics"]})
+        new, v = critic.record(rec, _critique(rec))
+        self.assertEqual(v, "good")  # every score 3, but the silhouette does not match yet
+
+    def test_stations_from_three_views(self):
+        side = [(0, 230), (250, 200), (380, 130), (520, 80), (640, 85), (760, 120), (930, 140), (1000, 150),
+                (1000, 250), (980, 285), (500, 285), (0, 285)]
+        side = [(x + 50, y) for x, y in side]
+        side = [p for i in range(len(side)) for p in [side[i], ((side[i][0] + side[(i + 1) % len(side)][0]) / 2,
+                                                               (side[i][1] + side[(i + 1) % len(side)][1]) / 2)]]
+        half = [(300 + 240 * (1 - (1 - k / 30) ** 6) ** 0.5, 50 + 1000 * k / 30) for k in range(31)]
+        top = half + [(600 - x, y) for x, y in reversed(half)]
+        front = [(40, 300), (560, 300), (570, 220), (520, 170), (430, 120), (170, 120), (80, 170), (30, 220)]
+        front = [p for i in range(8) for p in [front[i], ((front[i][0] + front[(i + 1) % 8][0]) / 2,
+                                                         (front[i][1] + front[(i + 1) % 8][1]) / 2)]]
+        res = trace_mod.stations(_trace("side", side), _trace("top", top), 4.14, _trace("front", front),
+                                 nose_side="left", nose_top="up")
+        secs = res["loft"]["sections"]
+        self.assertGreaterEqual(len(secs), 20)
+        self.assertEqual([s_[0] for s_ in secs], sorted(s_[0] for s_ in secs))
+        self.assertLess(secs[-1][1], 0.6 * max(s_[1] for s_ in secs))       # the nose narrows in plan
+        cabin = max(secs, key=lambda s_: s_[3])
+        self.assertLess(cabin[4], 0.9 * cabin[1])                            # the cabin narrows towards its top
+        self.assertAlmostEqual(secs[-1][0] - secs[0][0], 4.14, delta=0.05)
+        car = params.expand(params.template("vehicle", "wedge") | {"facts": [], "synthetic": True})
+        car["parts"] = [p for p in car["parts"] if p["id"] != "glasshouse"]
+        body = next(p for p in car["parts"] if p["id"] == "body")
+        body["shape"] = res["loft"]
+        r = diagnose.diagnose(car)
+        self.assertTrue(r["ok"], r["repair_text"])
+        traced, _ = compare_mod.compare(car, _trace("top", top), "top")
+        plain, _ = compare_mod.compare(params.expand(params.template("vehicle", "wedge") | {"facts": [], "synthetic": True}),
+                                       _trace("top", top), "top")
+        self.assertGreater(traced["iou"], plain["iou"] + 0.05)
 
 
 class Globe(unittest.TestCase):

@@ -114,6 +114,14 @@ def record(scene, doc, model=None):
     if doc["scene_sha256"] != tiers.critic_hash(scene):
         raise CriticError("the critique is for another version of this scene: build a new packet and critique again")
     v = verdict(doc)
+    from . import compare as compare_mod
+    from . import params
+    full = params.expand({k: x for k, x in scene.items() if k != "authoring"}) if params.is_params(scene) else scene
+    current = tiers.critic_hash(scene)
+    passing = [cp for cp in (scene.get("authoring") or {}).get("compare", [])
+               if cp.get("pass") and cp.get("scene_sha256") == current]
+    if v == "outstanding" and compare_mod.needs_likeness(full) and not passing:
+        v = "good"  # "recognisable exactly" is measured, not only seen: compare first
     a = dict(scene.get("authoring") or {"tier": tiers.DEFAULT, "research": "unavailable"})
     prev = (a.get("critic") or {}).get("round", 0)
     a["critic"] = {"scene_sha256": doc["scene_sha256"], "verdict": v, "scores": dict(doc["scores"]),

@@ -275,6 +275,46 @@
         }
        }
       },
+      "compare": {
+       "type": "array",
+       "maxItems": 8,
+       "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+         "view",
+         "reference",
+         "iou",
+         "edge",
+         "pass",
+         "scene_sha256"
+        ],
+        "properties": {
+         "view": {
+          "type": "string"
+         },
+         "reference": {
+          "type": "string"
+         },
+         "iou": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+         },
+         "edge": {
+          "type": "number",
+          "minimum": 0
+         },
+         "pass": {
+          "type": "boolean"
+         },
+         "scene_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+         }
+        }
+       }
+      },
       "critic": {
        "type": "object",
        "additionalProperties": false,

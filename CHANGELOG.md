@@ -33,6 +33,20 @@
   user stops it, and checkpoints every round. `construct author --critic` / `--tier
   masterpiece`; the Claude Code budget hook knows it.
 
+### Milestone 3: likeness, measured
+
+- **`construct compare`**: the construct's silhouette from a named view, projected from the
+  geometry (no browser), against a traced reference outline: IoU and the mean distance between
+  the outlines (as a share of the view's width), the better of the reference as traced or
+  mirrored, and an overlay PNG. Thresholds for vehicles (IoU 0.88, 1.2%) and landmark buildings
+  (0.82, 2%). `--record` binds it to the scene (`authoring.compare`); an outstanding vehicle or
+  landmark needs a passing comparison (`likeness`, `compare-stale`; the critic's verdict is
+  held at "good" without one).
+- **`construct loft-from-traces`**: side, top and front traces reconciled into loft stations
+  (crowded at the nose and tail; the front sets how the cabin narrows), checked against the
+  documented height and width; `--into scene --part body --drop glasshouse` swaps it into an
+  archetype.
+
 ## 0.2.0 — Construct (2026-10-19)
 
 The first release as **Construct**, an independent MIT-licensed project.

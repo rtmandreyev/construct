@@ -183,6 +183,18 @@ works, DeepSeek included; in Hermes enable the vision toolset (`vision_analyze`)
 Code put the photo in the working folder.
 See `construct_hologram/skill/references/tracing.md`.
 
+## Likeness: multi-view lofts and silhouette comparison
+
+```sh
+python3 construct_hologram/cli.py loft-from-traces --side side.json --top top.json --front front.json \
+    --length 4.14 --height 1.07 --width 1.89 --into car.json --part body --drop glasshouse
+python3 construct_hologram/cli.py compare car.json --trace side.json --view side --overlay side.png --record
+```
+
+`loft-from-traces` turns three traced views into loft stations; `compare` measures the
+construct's silhouette from a view against a traced outline (IoU and outline distance; exit
+code 2 until it passes). See `construct_hologram/skill/references/tracing.md`.
+
 ## Python
 
 ```python

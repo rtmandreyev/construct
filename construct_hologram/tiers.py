@@ -128,7 +128,7 @@ def table():
 
 def check(c, a, source_ids, scene_sources, where="scene.authoring"):
     """Validate an `authoring` block with a scene `_Check`."""
-    if not c.keys(a, {"tier", "research", "sources", "review_rounds", "outcome", "next", "identity", "critic"},
+    if not c.keys(a, {"tier", "research", "sources", "review_rounds", "outcome", "next", "identity", "critic", "compare"},
                   {"tier", "research"}, where):
         return
     c.choice(a.get("tier"), tuple(TIERS), where + ".tier")
@@ -162,6 +162,21 @@ def check(c, a, source_ids, scene_sources, where="scene.authoring"):
                 c.err(w + ".parts", "expected the ids of the parts that build this feature", "type", '["roof-channel"]')
             if "source" in item and item["source"] not in source_ids:
                 c.err(w + ".source", "unknown source %r" % (item["source"],), "reference")
+    comps = a.get("compare", [])
+    if not isinstance(comps, list) or len(comps) > 8:
+        c.err(where + ".compare", "expected at most 8 comparison records (construct compare --record writes them)", "type")
+        comps = []
+    for i, cp in enumerate(comps):
+        w = "%s.compare[%d]" % (where, i)
+        if c.keys(cp, {"view", "reference", "iou", "edge", "pass", "scene_sha256"},
+                  {"view", "reference", "iou", "edge", "pass", "scene_sha256"}, w):
+            c.text(cp.get("view"), w + ".view", 64)
+            if cp.get("reference") not in source_ids:
+                c.err(w + ".reference", "unknown source %r" % (cp.get("reference"),), "reference")
+            c.num(cp.get("iou"), w + ".iou", 0, 1)
+            c.num(cp.get("edge"), w + ".edge", 0, 10)
+            if not isinstance(cp.get("pass"), bool):
+                c.err(w + ".pass", "expected true or false")
     if "critic" in a:
         cr, w = a["critic"], where + ".critic"
         if c.keys(cr, {"scene_sha256", "verdict", "scores", "round", "model", "defects"}, {"scene_sha256", "verdict", "scores"}, w):
@@ -214,6 +229,16 @@ def audit(scene, add, warnings):
         if critic["verdict"] == "outstanding" and best < 3 or critic["verdict"] == "good" and best < 2:
             add(warnings, "critic-claim", None, "the critic's verdict %r does not match its scores (lowest %d)" % (
                 critic["verdict"], best))
+    from . import compare as compare_mod
+    current = critic_hash(scene)
+    for cp in a.get("compare", []):
+        if cp["scene_sha256"] != current:
+            add(warnings, "compare-stale", None, "the %s comparison was made on another version: compare again" % cp["view"])
+    passing = [cp for cp in a.get("compare", []) if cp["pass"] and cp["scene_sha256"] == current]
+    if compare_mod.needs_likeness(scene) and a.get("outcome") == "outstanding" and not passing:
+        add(warnings, "likeness", None, "an outstanding %s needs a passing silhouette comparison with a traced "
+            "reference (construct compare --record)" % ("vehicle" if scene["subject"]["category"] == "vehicle"
+                                                        else "landmark"))
     outcome = a.get("outcome")
     if outcome in ("outstanding", "good") and (not critic or critic["verdict"] != outcome):
         add(warnings, "self-graded", None, "outcome %r is an independent critic's verdict, and there is no matching "
@@ -262,6 +287,13 @@ def authoring_schema():
                 "properties": {"feature": {"type": "string", "maxLength": 200},
                                "parts": {"type": "array", "items": {"type": "string"}},
                                "source": {"type": "string"}, "note": {"type": "string"}}}},
+            "compare": {"type": "array", "maxItems": 8, "items": {
+                "type": "object", "additionalProperties": False,
+                "required": ["view", "reference", "iou", "edge", "pass", "scene_sha256"],
+                "properties": {"view": {"type": "string"}, "reference": {"type": "string"},
+                               "iou": {"type": "number", "minimum": 0, "maximum": 1},
+                               "edge": {"type": "number", "minimum": 0}, "pass": {"type": "boolean"},
+                               "scene_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}}},
             "critic": {"type": "object", "additionalProperties": False, "required": ["scene_sha256", "verdict", "scores"],
                        "properties": {"scene_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
                                       "verdict": {"enum": list(VERDICTS)},

@@ -225,6 +225,14 @@ labels the construct **MEASURED TERRAIN** when that part is `verified` or `user_
 source a `dataset`), otherwise **SKETCHED TERRAIN**, and shows the scale (fact
 `terrain.scale`) and the data attribution (the `dataset` source's title).
 
+## Authoring record: identity, critic, compare (additions within 0.2)
+
+`authoring` may also carry `identity` (the checklist: `{feature, parts, source?}`), `critic`
+(`{scene_sha256, verdict, scores, round?, model?, defects?}`: an independent critic's record,
+bound to the hash of the scene without its authoring block) and `compare` (`{view, reference,
+iou, edge, pass, scene_sha256}`: silhouette comparisons). `outcome` adds `outstanding` and
+`self-reviewed`; `tier` adds `masterpiece`. Readers may ignore all of it.
+
 ## Loft (an addition within 0.2)
 
 The shape `loft` `{sections: [[z, half_width, y_bottom, y_top, half_width_top?], ...],

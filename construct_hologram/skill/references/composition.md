@@ -49,7 +49,9 @@ identity features**, in that order. Neon on a wrong silhouette is still wrong.
   cabin. The glasshouse is a second loft, narrower at the roof, from the windscreen base
   raked back. Wheels stand on the ground in arches on the body's side; lights at nose and
   tail as detail. The `vehicle` archetype (`params vehicle --variant wedge|coupe|sedan`)
-  builds exactly this and is the quickest start.
+  builds exactly this and is the quickest start; for a named car, replace its body with one
+  lofted from traced side, top and front views (`loft-from-traces`) and measure it with
+  `compare` ([tracing](tracing.md)).
 - **Machine**: the frame, the moving assembly (with `spin`/`swing` at its real pivot), the
   power or light source as `data`.
 - **Organism**: body volumes as ellipsoids/lathe; limbs as tapered tubes from real joints;

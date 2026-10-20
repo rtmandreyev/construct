@@ -264,6 +264,31 @@ def add_commands(sub):
     p.add_argument("--base-url", help="run the critic as a second model call on this OpenAI-compatible endpoint")
     p.add_argument("--model")
     p.add_argument("--key-env")
+    p = sub.add_parser("compare", help="measure the construct's silhouette from a view against a traced reference")
+    p.add_argument("scene")
+    p.add_argument("--trace", required=True, help="the reference's construct-trace (its outline in pixels)")
+    p.add_argument("--view", default="side", help="front, side, back, top, three-quarter or one of the scene's views")
+    p.add_argument("--fit", default="width", choices=("width", "height"), help="the dimension both are scaled to")
+    p.add_argument("--overlay", help="write the two outlines over each other as a PNG")
+    p.add_argument("--record", action="store_true", help="record the result in the scene's authoring block")
+    p = sub.add_parser("loft-from-traces", help="loft stations for a body from traced side, top and front views")
+    p.add_argument("--side", required=True, help="construct-trace of the side view")
+    p.add_argument("--top", required=True, help="construct-trace of the top (plan) view")
+    p.add_argument("--front", help="construct-trace of the front view (how the body narrows towards its top)")
+    p.add_argument("--length", required=True, type=float, help="the documented overall length, metres")
+    p.add_argument("--height", type=float, help="the documented height, to check the traces against")
+    p.add_argument("--width", type=float, help="the documented width, to check the traces against")
+    p.add_argument("--stations", type=int, default=24)
+    p.add_argument("--nose-side", default="left", choices=("left", "right"), help="where the nose is in the side image")
+    p.add_argument("--nose-top", default="up", choices=("up", "down", "left", "right"),
+                   help="where the nose is in the top image")
+    p.add_argument("--sill", type=float, help="the body's lowest height between the wheels (default 10%% of the height)")
+    p.add_argument("--out", help="write the result (loft shape, sources, part stub, checks) as JSON")
+    p.add_argument("--into", help="a scene whose part gets this loft as its shape (with the references as sources)")
+    p.add_argument("--part", default="body", help="the part to replace with --into")
+    p.add_argument("--drop", action="append", default=[],
+                   help="parts the traced body replaces, removed with --into (a traced side includes the cabin: "
+                        "--drop glasshouse); repeatable")
     p = sub.add_parser("globe", help="a measured globe from coastline data you supply (GeoJSON)")
     p.add_argument("--coastlines", required=True, help="GeoJSON lines or polygons in longitude/latitude; never downloaded")
     p.add_argument("--title", default="Earth")
@@ -315,7 +340,7 @@ def add_commands(sub):
     p.add_argument("--identity", choices=scene_mod.IDENTITIES, help="an identity tint the person chose")
 
 
-COMMANDS = ("new", "params", "expand", "prompts", "author", "trace", "trace-image", "terrain", "globe", "critique", "check", "build", "review",
+COMMANDS = ("new", "params", "expand", "prompts", "author", "trace", "trace-image", "terrain", "globe", "critique", "compare", "loft-from-traces", "check", "build", "review",
             "video")
 
 
@@ -352,6 +377,72 @@ def run(args):
                 return 1
             _write(args.output, json.dumps(sc, indent=1, ensure_ascii=False) + "\n", args.force)
             sys.stdout.write("wrote %s: %s\n" % (args.output, sc["subject"]["summary"]))
+            return 0
+        if args.command == "compare":
+            from . import compare as compare_mod
+            from . import trace as trace_mod
+            doc, diags = diagnose_mod.parse_text(Path(args.scene).read_text(encoding="utf-8"))
+            tdoc, tdiags = diagnose_mod.parse_text(Path(args.trace).read_text(encoding="utf-8"))
+            if doc is None or tdoc is None:
+                sys.stderr.write("compare: cannot read %s\n" % (args.scene if doc is None else args.trace))
+                return 1
+            try:
+                result, picture = compare_mod.compare(doc, tdoc, args.view, args.fit)
+            except (compare_mod.CompareError, trace_mod.TraceError, scene_mod.SceneError) as exc:
+                sys.stderr.write("compare: %s\n" % exc)
+                return 1
+            if args.overlay:
+                Path(args.overlay).write_bytes(picture)
+            sys.stdout.write("%s view against %s: IoU %.3f (needs %.2f), outlines %.2f%% apart (of the view's %s; "
+                             "needs <= %.1f%%)%s: %s\n" % (
+                                 args.view, result["reference"], result["iou"], result["threshold"]["iou"],
+                                 100 * result["edge"], args.fit, 100 * result["threshold"]["edge"],
+                                 ", reference mirrored (%s)" % result["mirrored"] if result["mirrored"] else "",
+                                 "PASS" if result["pass"] else "not yet"))
+            if args.record:
+                new = compare_mod.record(doc, result, tdoc)
+                Path(args.scene).write_text(json.dumps(new, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+                sys.stdout.write("recorded in %s\n" % args.scene)
+            return 0 if result["pass"] else 2
+        if args.command == "loft-from-traces":
+            from . import trace as trace_mod
+            docs = {}
+            for k in ("side", "top", "front"):
+                path = getattr(args, k)
+                if path:
+                    docs[k], _ = diagnose_mod.parse_text(Path(path).read_text(encoding="utf-8"))
+                    if docs[k] is None:
+                        sys.stderr.write("loft-from-traces: cannot read %s\n" % path)
+                        return 1
+            try:
+                res = trace_mod.stations(docs["side"], docs["top"], args.length, docs.get("front"), args.height,
+                                         args.width, args.stations, args.nose_side, args.nose_top, args.sill)
+            except trace_mod.TraceError as exc:
+                sys.stderr.write("loft-from-traces: %s\n" % exc)
+                return 1
+            if args.out:
+                _write(args.out, json.dumps(res, indent=1) + "\n", True)
+            if args.into:
+                sc, _ = diagnose_mod.parse_text(Path(args.into).read_text(encoding="utf-8"))
+                part = next((p for p in (sc or {}).get("parts", []) if p.get("id") == args.part), None)
+                if part is None:
+                    sys.stderr.write("loft-from-traces: %s has no part %r\n" % (args.into, args.part))
+                    return 1
+                sc["parts"] = [p for p in sc["parts"] if p.get("id") not in set(args.drop)]
+                for idf in (sc.get("authoring") or {}).get("identity", []):
+                    idf["parts"] = [x for x in idf.get("parts", []) if x not in set(args.drop)]
+                part["shape"] = res["loft"]
+                part["at"] = [0, 0, 0]
+                part.pop("rotate", None)
+                part.update({k: v for k, v in res["part"].items()})
+                have = {s_.get("id") for s_ in sc.get("sources", [])}
+                sc.setdefault("sources", []).extend(src for src in res["sources"] if src["id"] not in have)
+                Path(args.into).write_text(json.dumps(sc, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+            c = res["checks"]
+            sys.stdout.write("%d stations; traced %.3f x %.3f x %.3f m (w x h x l)%s%s\n" % (
+                len(res["loft"]["sections"]), res["size_m"][0], res["size_m"][1], res["size_m"][2],
+                "; height %.0f%% of the documented" % (100 * c["height_ratio"]) if "height_ratio" in c else "",
+                "; width %.0f%% of the documented" % (100 * c["width_ratio"]) if "width_ratio" in c else ""))
             return 0
         if args.command == "critique":
             from . import critic as critic_mod

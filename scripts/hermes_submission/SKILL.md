@@ -78,6 +78,9 @@ Work in a folder of your own. `out/construct.html` opens in any browser.
 | recognition and composition | `references/composition.md` |
 | assembly, articulations, idle life | `references/animation.md` |
 | certainty, sources, artwork rights | `references/provenance.md` |
+| a car body from traced side, top, front views | `loft-from-traces --side s.json --top t.json --front f.json --length 4.14 --into car.json --part body --drop glasshouse` |
+| measure likeness against a traced reference | `compare car.json --trace side.json --view side --record` |
+| an independent critic (fresh subagent or second call) | `critique scene.json --reference side=photo.jpg`, then `--record critique.json` |
 | the art-direction rubric | `references/review.md` |
 | research policy, effort tiers and their limits | `references/effort.md` |
 
