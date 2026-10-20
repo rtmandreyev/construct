@@ -34,10 +34,14 @@ identity features**, in that order. Neon on a wrong silhouette is still wrong.
 
 ## Recipes by kind (adapt, do not copy)
 
-- **Architecture**: footprint/elevation extrude or lathe for the main volume; roof shape;
-  openings as planes or thin boxes in rhythm (`repeat`); one landmark (tower, dome,
-  portal) as identity; a ground (rock, plinth, plan grid). Stage: ground → mass → roof and
-  landmark → openings → light/annotations.
+- **Architecture**: massing from a traced plan (`trace` the footprint, then an `extrude`
+  with `axis: y`) and elevations (a traced front as an `extrude` with `axis: z`); then the
+  kit: `roof` (gable, hip) on each block, `tower` with its real roof (cone, pyramid, spire,
+  onion) for every tower at its real height, `facade` for window rows and arcades (round,
+  pointed), `dormer`, `battlements` and `buttress` in rhythm with `repeat`. A landmark is a
+  crowd of particular features: count the towers in the references and place each one. A
+  ground: a rock plinth, or measured terrain (`terrain --into`). Stage: ground → mass → roofs
+  and towers → facades → detail. Start from `examples/castle.json`.
 - **Manufactured object**: the housing as mass; working parts (platter, arm, blade, lid)
   as identity, each a separate part so it can move; small controls as detail. Show it in
   use (record on the platter, lid open) when that is recognisable.

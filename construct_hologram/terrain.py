@@ -300,7 +300,7 @@ def ladder(extent, cls=None):
 
 def build(dem, center=None, extent=None, bbox=None, crs=None, resolution=72, cls=None, exaggeration=1.0,
           title="Terrain", source_title="Elevation data", source_ref=None, rights="permitted", gpx=None,
-          marks=(), view_from="S", identifier=None, emphasis=True):
+          marks=(), view_from="S", identifier=None, emphasis=True, real_scale=False):
     if isinstance(dem, Grid):
         grid, fx, fy = dem, dem.x0, dem.y_top
     else:
@@ -347,6 +347,8 @@ def build(dem, center=None, extent=None, bbox=None, crs=None, resolution=72, cls
     true_lo, true_hi = getattr(grid, "zmin_true", zmin), getattr(grid, "zmax_true", zmax)
     extent_m = max(width_m, depth_m)
     cls, stage = ladder(extent_m, cls)
+    if real_scale:  # metres as they are: a plinth for a building modelled at its real size
+        stage = extent_m
     s = stage / extent_m
     v = s * exaggeration
     base = 0.02 * stage  # a plinth under the lowest point
@@ -520,6 +522,24 @@ def ridges(real, most=4):
         if len(kept) == most:
             break
     return kept
+
+
+def plinth(host, terrain_scene):
+    """A building scene standing on measured terrain: the terrain (built at real scale around the
+    building's site) joins the scene as its plinth, shifted so the ground at the site's centre is
+    the scene's y = 0, with its dataset source and facts."""
+    import json
+    host = json.loads(json.dumps(host))
+    t = terrain_scene["parts"][0]
+    hs = t["shape"]["heights"]
+    centre = hs[len(hs) // 2][len(hs[0]) // 2]
+    t = dict(t, id="plinth", label="Terrain", stage=0, at=[0, round(-centre, 4), 0])
+    host["parts"] = [p for p in host["parts"] if p.get("id") != "plinth"] + [t]
+    ids = {s_.get("id") for s_ in host.get("sources", [])}
+    host.setdefault("sources", []).extend(s_ for s_ in terrain_scene["sources"] if s_["id"] not in ids)
+    keys = {f.get("key") for f in host.get("facts", [])}
+    host.setdefault("facts", []).extend(f for f in terrain_scene["facts"] if f["key"] not in keys)
+    return host
 
 
 def _nice(x):

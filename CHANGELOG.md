@@ -47,6 +47,17 @@
   documented height and width; `--into scene --part body --drop glasshouse` swaps it into an
   archetype.
 
+### Milestone 4: the architecture kit
+
+- New shapes: `tower` (round or polygonal; cone, pyramid, spire, onion or flat roof; taper,
+  eave, arched windows in rows), `roof` (gable or hip, either ridge, overhang, tile courses),
+  `dormer`, `facade` (window grids with round, pointed or flat heads and mullions, or an
+  arcade), `battlements` (round or along a wall path) and `buttress` (stepped). Every
+  variant compiles without warnings; `examples/castle.json` uses them all.
+- Massing from a traced plan and elevations (`trace` + `extrude`) in the composition guide.
+- `construct terrain --into scene.json`: measured terrain at real scale as a building's
+  plinth, the ground at the site's centre at `y = 0`.
+
 ## 0.2.0 — Construct (2026-10-19)
 
 The first release as **Construct**, an independent MIT-licensed project.

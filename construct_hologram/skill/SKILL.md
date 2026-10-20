@@ -84,7 +84,10 @@ if no browser is available, say so and deliver the HTML without captures.
    a building's elevation), measure it from a reference image: see
    [tracing](references/tracing.md). Never invent an outline and call it verified. A named
    car or hull: trace side, top and front and loft through them (`loft-from-traces`); a
-   named car or landmark: measure the likeness with `compare` before calling it finished. A real
+   named car or landmark: measure the likeness with `compare` before calling it finished.
+   Buildings: the architecture kit (`tower`, `roof`, `dormer`, `facade`, `battlements`,
+   `buttress`; [composition](references/composition.md)) and a measured site
+   (`terrain --into`). A real
    place, peak or route comes from elevation data, and Earth from coastline data
    (`globe`): see [terrain](references/terrain.md).
 4. **Animate with intent.** Choose an assembly style; `articulations` for what opens once

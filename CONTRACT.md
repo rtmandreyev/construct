@@ -233,6 +233,11 @@ bound to the hash of the scene without its authoring block) and `compare` (`{vie
 iou, edge, pass, scene_sha256}`: silhouette comparisons). `outcome` adds `outstanding` and
 `self-reviewed`; `tier` adds `masterpiece`. Readers may ignore all of it.
 
+## The architecture kit (additions within 0.2)
+
+Shapes `tower`, `roof`, `dormer`, `facade`, `battlements` and `buttress` (fields in the
+skill's vocabulary reference) compile to ordinary lines and triangles; readers need nothing new.
+
 ## Loft (an addition within 0.2)
 
 The shape `loft` `{sections: [[z, half_width, y_bottom, y_top, half_width_top?], ...],

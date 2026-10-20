@@ -251,7 +251,9 @@ def add_commands(sub):
     p.add_argument("--mark", action="append", default=[], help="Name=lat,lon; repeatable")
     p.add_argument("--from", dest="view_from", default="S", help="the side to view from: S, SE, E, NE, N, NW, W, SW")
     p.add_argument("--plain", action="store_true", help="no traced ridgelines or summit marker")
-    p.add_argument("--output", required=True)
+    p.add_argument("--into", help="put the terrain under an existing scene as its plinth, at real scale, the ground "
+                                  "at --center level with the scene's y = 0")
+    p.add_argument("--output", help="the terrain scene to write (or use --into)")
     p.add_argument("--force", action="store_true")
     p = sub.add_parser("critique", help="an independent critic's packet (renders beside references), its answer, "
                                          "or a second model call that runs it")
@@ -371,9 +373,25 @@ def run(args):
                     extent=args.extent, bbox=tuple(float(x) for x in args.bbox.split(",")) if args.bbox else None,
                     crs=args.crs, resolution=args.resolution, cls=args.cls, exaggeration=args.exaggeration,
                     title=args.title, source_title=args.source_title, source_ref=args.source_ref, rights=args.rights,
-                    gpx=args.gpx, marks=args.mark, view_from=args.view_from, emphasis=not args.plain)
+                    gpx=args.gpx, marks=args.mark, view_from=args.view_from,
+                    emphasis=not args.plain and not args.into, real_scale=bool(args.into))
             except (terrain_mod.TerrainError, OSError, ValueError) as exc:
                 sys.stderr.write("terrain: %s\n" % exc)
+                return 1
+            if args.into:
+                if not (args.center and args.extent):
+                    sys.stderr.write("terrain: --into needs --center and --extent (the building stands at the centre)\n")
+                    return 1
+                host, _ = diagnose_mod.parse_text(Path(args.into).read_text(encoding="utf-8"))
+                if not isinstance(host, dict) or "parts" not in host:
+                    sys.stderr.write("terrain: %s is not a scene\n" % args.into)
+                    return 1
+                merged = terrain_mod.plinth(host, sc)
+                Path(args.into).write_text(json.dumps(merged, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
+                sys.stdout.write("put the measured terrain under %s as its plinth (real scale)\n" % args.into)
+                return 0
+            if not args.output:
+                sys.stderr.write("terrain: give --output (or --into)\n")
                 return 1
             _write(args.output, json.dumps(sc, indent=1, ensure_ascii=False) + "\n", args.force)
             sys.stdout.write("wrote %s: %s\n" % (args.output, sc["subject"]["summary"]))

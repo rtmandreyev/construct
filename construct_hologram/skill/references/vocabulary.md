@@ -60,6 +60,12 @@ errors: the closed vocabulary is the safety boundary.
 | `sphere` | `radius` or `radii [x,y,z]`, `lat` 2–24, `lon` 3–48, `anchor` | heads, domes, bodies, ellipsoids |
 | `torus` | `major, minor`, `segments, sides, rings` | rails, rims, tyres, rings |
 | `lathe` | `profile [[radius, y], ...]` revolved about Y, `segments`, `meridians` | towers, bottles, vases, lamps, bells, records (flat profile = grooves) |
+| `tower` | `radius, height`, `sides` (0 round, 3+ polygonal), `roof` cone · pyramid · spire · onion · flat · none, `roof_height`, `taper`, `eave`, `windows [rows, per_row]` | castle towers, turrets, minarets, lighthouses, silos |
+| `roof` | `size [w, d], height`, `style` gable · hip, `ridge` x · z, `overhang`, `courses` | pitched roofs on a block (stands on its eaves) |
+| `dormer` | `width, height, depth, roof_height` (faces +Z, back at z = 0) | windows in a roof (with `repeat`) |
+| `facade` | `size [w, h], rows, cols, opening [w, h]`, `arch` round · pointed · flat · none, `kind` windows · arcade, `outline` | a wall's windows or an arcade, facing +Z; `outline: false` on a box face |
+| `battlements` | `radius` or `path [[x, z], ...]`, `height, merlon, gap, thickness` | crenellated wall tops and tower tops |
+| `buttress` | `width, depth, height, steps` (against z = 0, out along +Z) | cathedral and castle walls (with `repeat`) |
 | `loft` | `sections [[z, half_width, y_bottom, y_top(, half_width_top)], ...]` back to front along +Z, `round` 0–1 | car bodies and glasshouses, hulls, fuselages: the plan (half-widths) and side profile (bottoms, tops) together |
 | `extrude` | `profile [[u,v], ...]` (simple polygon), `height`, `axis` `y` (footprint in XZ, rises) · `z` (front elevation in XY, runs back) · `x`, `ribs` | building plans, gabled houses, book spines, brackets |
 | `tube` | `path [[x,y,z], ...]` (Catmull-Rom smoothed), `radius` or one per point (taper), `sides` 3–24, `samples`, `longitudinal`, `ring_every`, `caps` | limbs, tentacles, tonearms, pipes, cables, branches |

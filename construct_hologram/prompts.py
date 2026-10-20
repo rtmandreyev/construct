@@ -188,6 +188,12 @@ cited drawing, measurement or dataset gives its coordinates; the parts of a fict
   half_width, y_bottom, y_top(, half_width_top)], ...]` back to front along +Z, `round` 0..1
   (car bodies, glasshouses, hulls: plan and side profile together); tube `path [[x,y,z],...],
   radius` (limbs, cables); curve `points`; plane `size [w,h]` facing +Z; grid; points; marker;
+  architecture kit (each stands on y = 0): tower `radius, height, sides (0 round), roof
+  cone|pyramid|spire|onion|flat|none, roof_height, taper, eave, windows [rows, per_row]`; roof
+  `size [w,d], height, style gable|hip, ridge x|z, overhang, courses`; dormer `width, height,
+  depth`; facade `size [w,h], rows, cols, arch round|pointed|flat|none, kind windows|arcade`
+  (a wall facing +Z; `outline: false` on a box face); battlements `radius` or `path [[x,z],...],
+  height, merlon, gap, thickness`; buttress `width, depth, height, steps`;
   terrain `size [w,d], heights [[...rows back to front...]]` — real relief comes from
   `construct terrain` and elevation data (MEASURED TERRAIN, verified); a small hand-made grid
   is `inferred` (SKETCHED TERRAIN).

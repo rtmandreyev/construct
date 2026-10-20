@@ -72,7 +72,8 @@ EVENTS = ("scan", "sweep", "wave", "shimmer", "glitch", "brownout", "propagate",
 ASSEMBLY = ("ceremony", "build", "cut")
 LIFE = ("off", "calm", "alive")
 SHAPE_TYPES = ("box", "cylinder", "cone", "sphere", "torus", "lathe", "extrude", "tube",
-               "curve", "plane", "grid", "points", "marker", "terrain", "globe", "loft")
+               "curve", "plane", "grid", "points", "marker", "terrain", "globe", "loft",
+               "tower", "roof", "dormer", "facade", "battlements", "buttress")
 MAX_TERRAIN = 128
 MAX_GLOBE_POINTS = 20000
 ARTICULATIONS = ("hinge", "slide", "lift", "turn")
@@ -393,6 +394,72 @@ def _shape_check(c, shape, where):
     elif t == "grid":
         c.vec(shape.get("size"), where + ".size", 2, **pos)
         c.num(shape.get("divisions"), where + ".divisions", 1, 64, True)
+    elif t == "tower":
+        from . import archkit
+        c.num(shape.get("radius"), where + ".radius", **pos)
+        c.num(shape.get("height"), where + ".height", **pos)
+        if "sides" in shape and c.num(shape["sides"], where + ".sides", 0, 64, True) and shape["sides"] in (1, 2):
+            c.err(where + ".sides", "0 for a round tower, or 3 or more for a polygonal one", "range")
+        if "roof" in shape:
+            c.choice(shape["roof"], archkit.ROOFS, where + ".roof")
+        if "roof_height" in shape:
+            c.num(shape["roof_height"], where + ".roof_height", **pos)
+        if "taper" in shape:
+            c.num(shape["taper"], where + ".taper", 0.2, 2.0)
+        if "eave" in shape:
+            c.num(shape["eave"], where + ".eave", 0, MAX_EXTENT)
+        if "windows" in shape and c.vec(shape["windows"], where + ".windows", 2, 1, 32):
+            if any(v != int(v) for v in shape["windows"]):
+                c.err(where + ".windows", "expected [rows, windows per row] as whole numbers")
+        if "segments" in shape:
+            c.num(shape["segments"], where + ".segments", 8, 64, True)
+    elif t == "roof":
+        c.vec(shape.get("size"), where + ".size", 2, **pos)
+        c.num(shape.get("height"), where + ".height", **pos)
+        if "style" in shape:
+            c.choice(shape["style"], ("gable", "hip"), where + ".style")
+        if "ridge" in shape:
+            c.choice(shape["ridge"], ("x", "z"), where + ".ridge")
+        if "overhang" in shape:
+            c.num(shape["overhang"], where + ".overhang", 0, MAX_EXTENT)
+        if "courses" in shape:
+            c.num(shape["courses"], where + ".courses", 0, 40, True)
+    elif t == "dormer":
+        for k in ("width", "height", "depth"):
+            c.num(shape.get(k), "%s.%s" % (where, k), **pos)
+        if "roof_height" in shape:
+            c.num(shape["roof_height"], where + ".roof_height", **pos)
+    elif t == "facade":
+        from . import archkit
+        c.vec(shape.get("size"), where + ".size", 2, **pos)
+        for k, hi in (("rows", 20), ("cols", 60)):
+            if k in shape:
+                c.num(shape[k], "%s.%s" % (where, k), 1, hi, True)
+        if "opening" in shape:
+            c.vec(shape["opening"], where + ".opening", 2, **pos)
+        if "arch" in shape:
+            c.choice(shape["arch"], archkit.ARCHES, where + ".arch")
+        if "kind" in shape:
+            c.choice(shape["kind"], ("windows", "arcade"), where + ".kind")
+        if "outline" in shape and not isinstance(shape["outline"], bool):
+            c.err(where + ".outline", "expected true or false")
+    elif t == "battlements":
+        for k in ("height", "merlon", "gap", "thickness"):
+            c.num(shape.get(k), "%s.%s" % (where, k), **pos)
+        if ("radius" in shape) == ("path" in shape):
+            c.err(where, "give exactly one of radius (a round wall top) or path (a closed [[x, z], ...] polygon)")
+        elif "radius" in shape:
+            c.num(shape["radius"], where + ".radius", **pos)
+        elif not isinstance(shape["path"], list) or not 3 <= len(shape["path"]) <= MAX_PATH:
+            c.err(where + ".path", "expected 3..%d [x, z] points around the wall top" % MAX_PATH)
+        else:
+            for i, q in enumerate(shape["path"]):
+                c.vec(q, "%s.path[%d]" % (where, i), 2)
+    elif t == "buttress":
+        for k in ("width", "depth", "height"):
+            c.num(shape.get(k), "%s.%s" % (where, k), **pos)
+        if "steps" in shape:
+            c.num(shape["steps"], where + ".steps", 1, 4, True)
     elif t == "loft":
         secs = shape.get("sections")
         if not isinstance(secs, list) or not 2 <= len(secs) <= MAX_PATH:
@@ -490,6 +557,12 @@ _SHAPE_KEYS = {
     "terrain": {"type", "size", "heights", "contour", "index", "grid_every", "skirt"},
     "globe": {"type", "radius", "paths", "graticule", "faces"},
     "loft": {"type", "sections", "round"},
+    "tower": {"type", "radius", "height", "sides", "roof", "roof_height", "taper", "eave", "windows", "segments"},
+    "roof": {"type", "size", "height", "style", "ridge", "overhang", "courses"},
+    "dormer": {"type", "width", "height", "depth", "roof_height"},
+    "facade": {"type", "size", "rows", "cols", "opening", "arch", "kind", "outline"},
+    "battlements": {"type", "height", "merlon", "gap", "thickness", "radius", "path"},
+    "buttress": {"type", "width", "depth", "height", "steps"},
     "points": {"type", "count", "region", "sprite", "size_px"},
     "marker": {"type", "sprite", "size_px"},
 }
@@ -1198,6 +1271,25 @@ def _local_mesh(shape, seed):
         return shapes.plane(shape["size"][0], shape["size"][1], shape.get("divisions", 0))
     if t == "grid":
         return shapes.grid(shape["size"][0], shape["size"][1], shape["divisions"])
+    if t in ("tower", "roof", "dormer", "facade", "battlements", "buttress"):
+        from . import archkit
+        if t == "tower":
+            return archkit.tower(shape["radius"], shape["height"], shape.get("sides", 0), shape.get("roof", "cone"),
+                                 shape.get("roof_height"), shape.get("taper", 1.0), shape.get("eave", 0.0),
+                                 shape.get("windows"), shape.get("segments", 32))
+        if t == "roof":
+            return archkit.roof(shape["size"][0], shape["size"][1], shape["height"], shape.get("style", "gable"),
+                                shape.get("ridge", "x"), shape.get("overhang", 0.0), shape.get("courses", 0))
+        if t == "dormer":
+            return archkit.dormer(shape["width"], shape["height"], shape["depth"], shape.get("roof_height"))
+        if t == "facade":
+            return archkit.facade(shape["size"][0], shape["size"][1], shape.get("rows", 1), shape.get("cols", 4),
+                                  shape.get("opening"), shape.get("arch", "round"), shape.get("kind", "windows"),
+                                  shape.get("outline", True))
+        if t == "battlements":
+            return archkit.battlements(shape["height"], shape["merlon"], shape["gap"], shape["thickness"],
+                                       shape.get("radius"), shape.get("path"))
+        return archkit.buttress(shape["width"], shape["depth"], shape["height"], shape.get("steps", 2))
     if t == "loft":
         return shapes.loft([list(x) for x in shape["sections"]], shape.get("round", 0.35))
     if t == "globe":

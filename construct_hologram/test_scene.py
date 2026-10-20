@@ -1459,6 +1459,61 @@ class Likeness(unittest.TestCase):
         self.assertGreater(traced["iou"], plain["iou"] + 0.05)
 
 
+
+class ArchitectureKit(unittest.TestCase):
+    """Towers, roofs, dormers, facades, battlements and buttresses: every variant compiles clean."""
+
+    def one(self, shape):
+        return base(subject={"category": "architecture", "accuracy": "generic", "synthetic": True},
+                    parts=[{"id": "p", "role": "identity", "certainty": "inferred", "stage": 0, "shape": shape}])
+
+    def test_every_variant_compiles_without_warnings(self):
+        shapes = [{"type": "tower", "radius": 2, "height": 10, "roof": r, "eave": e, "sides": sd, "windows": [2, 4]}
+                  for r in ("cone", "pyramid", "spire", "onion", "flat", "none") for e in (0, 0.3) for sd in (0, 6)]
+        shapes += [{"type": "roof", "size": [8, 5], "height": 3, "style": st, "ridge": rg, "overhang": o, "courses": 4}
+                   for st in ("gable", "hip") for rg in ("x", "z") for o in (0, 0.3)]
+        shapes += [{"type": "facade", "size": [12, 9], "rows": 3, "cols": 5, "arch": a, "kind": k}
+                   for a in ("round", "pointed", "flat", "none") for k in ("windows", "arcade")]
+        shapes += [{"type": "battlements", "radius": 4, "height": 1, "merlon": 0.8, "gap": 0.6, "thickness": 0.5},
+                   {"type": "battlements", "path": [[0, 0], [10, 0], [10, 6], [0, 6]], "height": 1, "merlon": 0.8,
+                    "gap": 0.6, "thickness": 0.5},
+                   {"type": "buttress", "width": 1, "depth": 2, "height": 8, "steps": 3},
+                   {"type": "dormer", "width": 2, "height": 2, "depth": 1.5}]
+        for sh in shapes:
+            r = diagnose.diagnose(self.one(sh))
+            codes = [d["code"] for d in r["diagnostics"] if d["code"] != "no-mass"]
+            self.assertTrue(r["ok"] and not codes, (sh, codes))
+
+    def test_shapes_are_checked(self):
+        bad = [{"type": "tower", "radius": 2, "height": 10, "sides": 2},
+               {"type": "tower", "radius": 2, "height": 10, "roof": "dome"},
+               {"type": "battlements", "height": 1, "merlon": 1, "gap": 1, "thickness": 1},
+               {"type": "facade", "size": [10, 5], "arch": "ogee"}]
+        for sh in bad:
+            self.assertFalse(diagnose.diagnose(self.one(sh))["ok"], sh)
+
+    def test_a_spire_rises_above_its_shaft(self):
+        geo = scene.compile_scene(self.one({"type": "tower", "radius": 2, "height": 10, "roof": "spire"}))
+        self.assertGreater(geo["bounds"]["max"][1], 10 + 2 * 2.5)
+
+    def test_a_building_on_measured_terrain(self):
+        with tempfile.TemporaryDirectory() as d:
+            dem, _ = synthetic_dem(d)
+            plain = terrain.build(str(dem), center=(45.9763, 7.6586), extent=300, title="Site", source_title="Synthetic grid",
+                                  real_scale=True, emphasis=False)
+        castle = json.loads((EXAMPLES / "castle.json").read_text())
+        castle["parts"] = [p for p in castle["parts"] if p["id"] != "rock"]
+        for p in castle["parts"]:
+            p["at"][1] -= 6 if p["at"][1] >= 6 else 0
+        merged = terrain.plinth(castle, plain)
+        site = next(p for p in merged["parts"] if p["id"] == "plinth")
+        hs = site["shape"]["heights"]
+        self.assertAlmostEqual(site["at"][1] + hs[len(hs) // 2][len(hs[0]) // 2], 0.0, places=3)  # ground at y = 0
+        self.assertAlmostEqual(site["shape"]["size"][0], 300, delta=1)  # real metres
+        self.assertIn("dem", {s_["id"] for s_ in merged["sources"]})
+        self.assertTrue(diagnose.diagnose(merged)["ok"])
+
+
 class Globe(unittest.TestCase):
     """A measured globe from coastline data (synthetic GeoJSON here; Natural Earth in use)."""
 

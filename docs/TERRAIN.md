@@ -76,6 +76,19 @@ elevation (verified, from the data), the class and the scale.
 
 Your dates, companions and photos belong with your own notes, not in the place.
 
+## A building on its site
+
+`--into scene.json` puts measured terrain under an existing building scene as its plinth, at
+real scale (metres as they are), shifted so the ground at `--center` is the scene's `y = 0`:
+
+```sh
+python3 construct_hologram/cli.py terrain --dem tiles/ --center 47.5576,10.7498 --extent 400 \
+    --source-title "elevation data, attribution" --into castle.json
+```
+
+Model the building at its real size with its base at `y = 0`; the terrain joins as the part
+`plinth` with its dataset source and facts (MEASURED TERRAIN · 1:1).
+
 ## The globe: a planet from coastline data
 
 Earth drawn from memory would be a sketch. `construct globe` draws coastlines you supply on a
