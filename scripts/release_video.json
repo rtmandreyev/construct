@@ -4,7 +4,7 @@
   "headline": "/Library/Fonts/SourceSansPro.otf",
   "mono": "~/Library/Fonts/JetBrainsMonoNerdFont-Regular.ttf"
  },
- "install": "github.com/rtmandreyev/construct",
+ "install": "git clone https://github.com/rtmandreyev/construct",
  "shots": [
   {
    "id": "open",
@@ -307,10 +307,10 @@
    "music": "breath",
    "type": {
     "text": "Honest about what it knows.",
-    "sub": "verified · user-supplied · inferred · decorative",
     "in": 0.3,
     "out": 3.5,
-    "place": "low"
+    "place": "low",
+    "mono": "verified · user-supplied · inferred · decorative"
    }
   },
   {
@@ -322,7 +322,7 @@
    "music": "build back up",
    "type": {
     "text": "Small models: ten lines.",
-    "sub": "a parameter document in, a finished hologram out",
+    "sub": "A parameter document in, a finished hologram out.",
     "in": 0.3,
     "out": 3.5,
     "place": "low"
@@ -330,29 +330,30 @@
   },
   {
    "id": "any",
-   "src": "construct_hologram/examples/v2/turntable.json",
-   "start": 14.0,
+   "src": "construct_hologram/examples/v2/lighthouse.json",
+   "start": 26.0,
    "speed": 1.0,
    "seconds": 3.4,
    "music": "final hit",
    "type": {
     "text": "Any agent. Any model.",
-    "sub": "MCP · CLI · Python · Hermes · Claude Code",
     "in": 0.3,
-    "out": 3.3
+    "out": 3.3,
+    "mono": "MCP · CLI · Python · Hermes · Claude Code"
    }
   },
   {
    "id": "end",
    "kind": "card",
-   "seconds": 4.0,
+   "seconds": 4.5,
    "music": "ring out",
    "grab": 0.6,
    "type": {
     "text": "{TITLE}",
-    "sub": "github.com/rtmandreyev/construct\nfree and open source · MIT",
+    "sub": "{TAGLINE}",
     "in": 0.2,
-    "out": 3.9
+    "out": 3.9,
+    "mono": "{INSTALL}\nfree and open source · MIT"
    }
   }
  ],

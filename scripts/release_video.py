@@ -43,11 +43,11 @@ def _font_face(family, path):
         family, mime, base64.b64encode(p.read_bytes()).decode("ascii"))
 
 
-def overlay_script(board, aspect):
+def overlay_script(board, aspect, size=None):
     """JS that adds the type layer to a page and a setType(text, sub, opacity, place) function."""
     fonts = board.get("fonts", {})
     css = _font_face("Headline", fonts.get("headline", "")) + _font_face("Mono", fonts.get("mono", ""))
-    w, h = ASPECTS[aspect]
+    w, h = size or ASPECTS[aspect]
     unit = min(w, h) / 1080.0
     css += """
 #rv { position: fixed; inset: 0; pointer-events: none; z-index: 99; display: flex; flex-direction: column;
@@ -61,22 +61,26 @@ def overlay_script(board, aspect):
 #rv.bottom .t, #rv.bottom .s { width: 84vw; }
 #rv .t { font: 600 %(t)dpx/1.04 'Headline', 'Source Sans Pro', sans-serif; color: #fff; letter-spacing: -0.01em;
          text-shadow: 0 0 %(g)dpx rgba(209,107,208,.55), 0 2px 12px rgba(0,0,0,.6); white-space: pre-line; }
-#rv .s { margin-top: %(sg)dpx; font: 400 %(s)dpx/1.3 'Mono', ui-monospace, monospace; color: rgba(240,228,250,.86);
-         letter-spacing: .04em; white-space: pre-line; }
+#rv .s { margin-top: %(sg)dpx; font: 400 %(s)dpx/1.3 'Headline', 'Source Sans Pro', sans-serif; color: rgba(244,236,252,.9);
+         white-space: pre-line; }
+#rv .m { margin-top: %(sg)dpx; font: 400 %(m)dpx/1.45 'Mono', ui-monospace, monospace; color: rgba(236,226,246,.8);
+         letter-spacing: .03em; white-space: pre-line; }
 #rv .tag { position: fixed; left: %(pad)dpx; bottom: %(tagb)dpx; font: 400 %(tag)dpx/1 'Mono', ui-monospace, monospace;
            color: rgba(236,226,246,.7); letter-spacing: .08em; text-transform: uppercase; }
 .caption, .legend, .help, .labels, svg.leaders { display: none !important; }
-""" % {"pad": int(96 * unit), "top": int(150 * unit), "bot": int(260 * unit), "t": int(84 * unit), "g": int(18 * unit), "s": int(30 * unit),
+""" % {"pad": int(96 * unit), "top": int(150 * unit), "bot": int(260 * unit), "t": int(84 * unit), "g": int(18 * unit), "s": int(38 * unit), "m": int(24 * unit),
        "sg": int(18 * unit), "tag": int(22 * unit), "tagb": int(48 * unit)}
     return """(function(){
   if (!document.getElementById('rvstyle')) {
     const st = document.createElement('style'); st.id = 'rvstyle'; st.textContent = %s; document.head.appendChild(st);
-    const d = document.createElement('div'); d.id = 'rv'; d.innerHTML = '<div class="t"></div><div class="s"></div><div class="tag"></div>';
+    const d = document.createElement('div'); d.id = 'rv'; d.innerHTML = '<div class="t"></div><div class="s"></div><div class="m"></div><div class="tag"></div>';
     document.body.appendChild(d);
   }
-  window.setType = function(t, s, tag, o, place) {
+  window.setType = function(t, s, m, tag, o, place) {
     const d = document.getElementById('rv'); d.className = place || 'center';
     d.querySelector('.t').textContent = t || ''; d.querySelector('.s').textContent = s || '';
+    d.querySelector('.m').textContent = m || ''; d.querySelector('.m').style.display = m ? 'block' : 'none';
+    d.querySelector('.s').style.display = s ? 'block' : 'none';
     d.querySelector('.tag').textContent = tag || ''; d.style.opacity = o;
   };
   return document.fonts.ready.then(() => 1);
@@ -117,21 +121,23 @@ def build_page(src, folder):
 
 
 def text_at(shot, t):
-    """The type to show at time t (seconds into the shot): (text, sub, opacity, place)."""
+    """The type to show at time t (seconds into the shot): (text, sub, mono, opacity, place)."""
     ty = shot.get("type")
     if not ty:
-        return ("", "", 0.0, "center")
+        return ("", "", "", 0.0, "center")
     a, b = ty.get("in", 0.15), ty.get("out", shot["seconds"] - 0.1)
     fade = 0.22
     o = 0.0 if t < a or t > b else min(1.0, (t - a) / fade, (b - t) / fade)
-    return (fill(ty.get("text", "")), fill(ty.get("sub", "")), max(0.0, o), ty.get("place", "center"))
+    return (fill(ty.get("text", "")), fill(ty.get("sub", "")), fill(ty.get("mono", "")), max(0.0, o),
+            ty.get("place", "center"))
 
 
 def fill(text):
-    return text.replace("{TITLE}", product.TITLE).replace("{NAME}", product.NAME)
+    return (text.replace("{TITLE}", product.TITLE).replace("{NAME}", product.NAME)
+            .replace("{TAGLINE}", getattr(product, "TAGLINE", "")).replace("{INSTALL}", BOARD.get("install", "")))
 
 
-def render_shot(b, shot, page, aspect, fps, frames_dir, start_index, is_card):
+def render_shot(b, shot, page, aspect, fps, frames_dir, start_index, is_card, size=None):
     """Capture one shot's frames; returns the next frame index."""
     lay = dict(BOARD.get("layout", {}).get(aspect, {}))
     lay.update(shot.get("layout", {}).get(aspect, {}))
@@ -140,7 +146,7 @@ def render_shot(b, shot, page, aspect, fps, frames_dir, start_index, is_card):
          "shift": ",".join("%g" % v for v in lay["shift"]) if lay.get("shift") and shot.get("type") else None,
          "zoom": lay.get("zoom") if shot.get("type") else lay.get("bare_zoom")}
     b.open(page.resolve().as_uri() if is_card else render._url(page, **{k: v for k, v in q.items() if v is not None}))
-    b.evaluate(overlay_script(BOARD, aspect))
+    b.evaluate(overlay_script(BOARD, aspect, size))
     n = int(round(shot["seconds"] * fps))
     tag = fill(shot.get("tag", ""))
     i = start_index
@@ -148,10 +154,11 @@ def render_shot(b, shot, page, aspect, fps, frames_dir, start_index, is_card):
         t = k / fps
         if not is_card:
             b.evaluate("HOLO.renderAt(%.4f)" % (shot.get("start", 0.0) + t * shot.get("speed", 1.0)))
-        text, sub, o, place = text_at(shot, t)
+        text, sub, mono, o, place = text_at(shot, t)
         if place in ("low", "center") and lay.get("place") and shot.get("kind") != "card":
             place = lay["place"]
-        b.evaluate("setType(%s, %s, %s, %.3f, %s)" % (json.dumps(text), json.dumps(sub), json.dumps(tag), o, json.dumps(place)))
+        b.evaluate("setType(%s, %s, %s, %s, %.3f, %s)" % (json.dumps(text), json.dumps(sub), json.dumps(mono),
+                                                         json.dumps(tag), o, json.dumps(place)))
         b.evaluate("new Promise(r => requestAnimationFrame(() => requestAnimationFrame(() => r(1))))")
         data = b.call("Page.captureScreenshot", format="jpeg", quality=92, captureBeyondViewport=False)["data"]
         (Path(frames_dir) / ("f%06d.jpg" % i)).write_bytes(base64.b64decode(data))
@@ -208,7 +215,7 @@ def main(argv=None):
             try:
                 for sh, page, is_card, title in shots:
                     first = i
-                    i = render_shot(b, sh, page, aspect, fps, frames, i, is_card)
+                    i = render_shot(b, sh, page, aspect, fps, frames, i, is_card, (w, h))
                     timeline.append({"id": sh["id"], "start": round(first / fps, 3), "end": round(i / fps, 3),
                                      "subject": title or sh.get("kind", ""), "music": sh.get("music", "")})
                     grab = sh.get("grab", 0.85)
