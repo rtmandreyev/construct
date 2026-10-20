@@ -16,6 +16,23 @@
   the line budget, islands too small to read are left out first and lines are never simplified
   below about a pixel (no beading). Natural Earth 1:50m now reads as cleanly as 1:110m.
 
+### Milestone 2: the quality bar
+
+- **An independent critic.** `construct critique` writes a packet for a fresh context (the
+  critic's instructions, the request, the identity checklist, the scene's hash, renders from
+  the views of the reference photos beside them); a subagent, a delegated task or a second
+  model call (`--base-url`) answers a `construct-critique` (0–3 scores with strict anchors,
+  the checklist checked item by item, defects ranked by severity). `--record` binds it to the
+  scene's hash and recomputes the verdict from the scores; only the critic can record "good"
+  or "outstanding" (the audit flags `self-graded`, `critic-stale` and `critic-claim`), and the
+  author's own review records "self-reviewed".
+- **Identity checklist.** `authoring.identity`: the features research says make the subject
+  itself, each with the parts that build it (`identity-unbuilt`, `no-checklist`).
+- **The masterpiece tier.** For hard subjects on request: no wall clock and no round cap; it
+  stops only when the critic scores every criterion 3, at an optional cost ceiling, or when the
+  user stops it, and checkpoints every round. `construct author --critic` / `--tier
+  masterpiece`; the Claude Code budget hook knows it.
+
 ## 0.2.0 — Construct (2026-10-19)
 
 The first release as **Construct**, an independent MIT-licensed project.

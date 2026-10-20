@@ -128,9 +128,10 @@ python3 construct_hologram/cli.py author "a Revox A77 tape recorder" --tier show
 
 | option | effect |
 |---|---|
-| `--tier quick\|standard\|showcase` | the limits below (default standard; also `tier: ...` in the request) |
+| `--tier quick\|standard\|showcase\|masterpiece` | the limits below (default standard; also `tier: ...` in the request) |
 | `--research auto\|on\|off` | the research policy, or the user's override (also `research: ...` in the request) |
 | `--rounds`, `--review-rounds`, `--max-seconds`, `--max-images` | raise or lower one limit (never remove it) |
+| `--critic` (or `--critic-model`, `--critic-base-url`, `--critic-key-env`) | an independent critic, a fresh call, judges each review against the references; only its verdict records "good" or "outstanding" |
 | `--max-total-tokens`, `--max-cost` with `--price-in`/`--price-out` | an optional token or cost ceiling (USD per million tokens) |
 
 | tier | wall clock | review/improve rounds | check rounds | web reference images |
@@ -138,6 +139,17 @@ python3 construct_hologram/cli.py author "a Revox A77 tape recorder" --tier show
 | quick | 2 min | 0 (audit only) | 3 | none |
 | standard | 10 min | 2 | 6 | 3 |
 | showcase | 30 min | 4 | 10 | 6 |
+
+**Masterpiece** (`--tier masterpiece`, for hard subjects on request) has no wall clock and no
+round cap: every round the critic compares renders with your references (`--reference
+side=side.jpg --reference top=top.jpg`), its ranked defects go back to the author, and a
+checkpoint is written to `<out>.checkpoints/`. It stops when the critic scores every criterion
+3, at `--max-cost`, or when you press Ctrl-C (the best version so far is written).
+
+**The critic in any host:** `construct critique scene.json --reference side=photo.jpg` writes a
+packet (instructions, checklist, renders beside references) for a fresh subagent or a second
+model (`--base-url --model --key-env`); `--record critique.json` checks the answer, binds it to
+the scene's hash and writes the ranked defects. See `skill/references/review.md`.
 
 The runner has no web search: research is the reference images you attach (web images count
 against the tier; your own photos are source data). Agents with web tools follow the research

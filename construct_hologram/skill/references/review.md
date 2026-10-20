@@ -12,7 +12,15 @@ Two gates, both required:
 
 ## The art-direction rubric
 
-Score each criterion 0–3 (0 missing, 1 weak, 2 good, 3 striking) from the captures:
+Score each criterion 0–3 from the captures, against the references:
+
+- **3 outstanding**: someone who knows the subject names it exactly at a glance; silhouette
+  and proportions match the reference within a few percent; finished, polished, exhibition
+  quality. Rare.
+- **2 good**: clearly right; deviations show only beside the reference.
+- **1 weak**: the right kind of thing, wrong where an owner notices at once (boxy where it is
+  curved, towers missing, a rectangle where the nose tapers).
+- **0** missing or wrong.
 
 | criterion | good means | look at |
 |---|---|---|
@@ -32,9 +40,37 @@ Stop when it is good or when the tier's review rounds or time run out ([effort](
 and record the remaining ideas in `authoring.next`.
 
 A model that can see reviews its own captures (`prompts/vision-review.md` asks for exactly
-these scores and a verdict). A host can add a **fresh-eyes critic**: an independent reviewer,
-given only the request, the references and the contact sheets — the method NODE's places
-were finished with.
+these scores). That self-review records `"outcome": "self-reviewed"`: an author grading its own
+work is lenient (seen in live runs: unfinished castles graded "good"). Only the independent
+critic can record "good" or "outstanding".
+
+## The independent critic
+
+Fresh eyes, the method NODE's places were finished with. The critic is not the author: a
+subagent, a delegated task or a second model call with a fresh context, which sees only the
+packet:
+
+```bash
+python3 TOOLS critique scene.json --reference side=side.jpg --reference top=top.jpg \
+    --reference three-quarter=hero.jpg --request "a Lamborghini Countach LP400"
+```
+
+That writes `critique/packet.md` (the critic's instructions, the request, your identity
+checklist, the scene's hash) and renders from the views of your references beside them. Then:
+
+- **Claude Code**: start a subagent with only this: "Read critique/packet.md and every image
+  it lists; answer with the critique JSON it asks for; save it as critique/critique.json".
+  Do not give it your conversation.
+- **Hermes**: delegate the same task (the delegation toolset), or run the critic as a
+  second model call: add `--base-url`, `--model` and `--key-env` to the command above.
+- **`construct author --critic`** (or `--tier masterpiece`) runs it for you every round.
+
+Record the answer: `python3 TOOLS critique scene.json --record critique/critique.json`. It
+checks the critique, binds it to the scene's hash (a later edit makes it stale), recomputes
+the verdict from the scores (outstanding: every score 3, nothing critical or major, every
+checklist feature present at quality 3; good: every score at least 2, nothing critical), and
+writes `critique/defects.md`: the ranked defects. Fix them most severe first, then critique
+again.
 
 ## The capture set (`review --out out/`)
 

@@ -39,7 +39,9 @@ if no browser is available, say so and deliver the HTML without captures.
 
 0. **Choose the effort and whether to research.** The tier is the user's or host's choice:
    `quick` (bulk, the parameter path), `standard` (the default: ≤10 min, ≤2 review rounds)
-   or `showcase` (only when asked: ≤30 min). Its limits are hard ceilings, not targets. A
+   or `showcase` (only when asked: ≤30 min). Its limits are hard ceilings, not targets.
+   `masterpiece` (only when asked, for hard subjects) has no time or round cap: it ends when
+   the independent critic scores every criterion 3, saving a checkpoint every round. A
    generic subject ("a desk lamp") needs no research; a concrete, named one (a brand and
    model, a named building or peak, a species) is researched whenever you are unsure of its
    identity-defining shape or specs; "research: on/off" in the request overrides both. See
@@ -55,6 +57,9 @@ if no browser is available, say so and deliver the HTML without captures.
    official or maker's pages, manuals, specs, plans, reference photos — then look at the
    references with vision (any model that can see: Claude, GPT, Gemini, DeepSeek) and
    measure silhouette and proportions, within the tier's research counts. Only then author.
+   For a named subject, write the **identity checklist** now: the features that make it
+   itself (a Countach: low wedge, NACA ducts, periscope roof channel, trapezoid arches,
+   scissor doors), in `authoring.identity`, each later listed with the parts that build it.
    Write down what is actually known and where it came from: the user's
    words, supplied measurements, documents they gave you, the sources you read. Every fact gets a certainty:
    `verified` (cites a source), `user_supplied`, `inferred` (your reasoning: typical sizes,
@@ -93,7 +98,11 @@ if no browser is available, say so and deliver the HTML without captures.
    [art-direction rubric](references/review.md): silhouette, proportions against the
    references, identity features, depth and layering, composition and hero framing, the
    assembly's story, motion, detail density, honesty. Improve the weakest point, `check`,
-   `review` again. **Count the rounds in the scene:** before each review, add one to
+   `review` again. Your own review records `"outcome": "self-reviewed"`; only an
+   **independent critic** (a fresh context comparing renders with the references:
+   `critique`, see [review](references/review.md)) can record "good"
+   or "outstanding". Use it at showcase and masterpiece, and whenever the subject is named.
+   **Count the rounds in the scene:** before each review, add one to
    `authoring.review_rounds` and save; `check` warns `tier-rounds` past the tier's cap
    (quick 0, standard 2, showcase 4), and that is the end of reviewing. Stop when every criterion is good and you would show it as it is, or when
    the tier's review rounds or time run out. A host may add a fresh-eyes critic (an

@@ -198,13 +198,14 @@
       "tier",
       "research"
      ],
-     "description": "How the construct was authored: the effort tier, whether research was done and from which sources, and what would improve it next.",
+     "description": "How the construct was authored: the effort tier, whether research was done and from which sources, the identity checklist, the independent critic's record and what would improve it next.",
      "properties": {
       "tier": {
        "enum": [
         "quick",
         "standard",
-        "showcase"
+        "showcase",
+        "masterpiece"
        ]
       },
       "research": {
@@ -225,11 +226,13 @@
       "review_rounds": {
        "type": "integer",
        "minimum": 0,
-       "maximum": 12
+       "maximum": 1000
       },
       "outcome": {
        "enum": [
+        "outstanding",
         "good",
+        "self-reviewed",
         "limit",
         "unreviewed"
        ]
@@ -240,6 +243,132 @@
        "items": {
         "type": "string",
         "maxLength": 300
+       }
+      },
+      "identity": {
+       "type": "array",
+       "maxItems": 16,
+       "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+         "feature",
+         "parts"
+        ],
+        "properties": {
+         "feature": {
+          "type": "string",
+          "maxLength": 200
+         },
+         "parts": {
+          "type": "array",
+          "items": {
+           "type": "string"
+          }
+         },
+         "source": {
+          "type": "string"
+         },
+         "note": {
+          "type": "string"
+         }
+        }
+       }
+      },
+      "critic": {
+       "type": "object",
+       "additionalProperties": false,
+       "required": [
+        "scene_sha256",
+        "verdict",
+        "scores"
+       ],
+       "properties": {
+        "scene_sha256": {
+         "type": "string",
+         "pattern": "^[0-9a-f]{64}$"
+        },
+        "verdict": {
+         "enum": [
+          "outstanding",
+          "good",
+          "improve"
+         ]
+        },
+        "scores": {
+         "type": "object",
+         "additionalProperties": false,
+         "required": [
+          "silhouette",
+          "proportions",
+          "identity",
+          "depth",
+          "composition",
+          "assembly",
+          "motion",
+          "density",
+          "honesty"
+         ],
+         "properties": {
+          "silhouette": {
+           "type": "integer",
+           "minimum": 0,
+           "maximum": 3
+          },
+          "proportions": {
+           "type": "integer",
+           "minimum": 0,
+           "maximum": 3
+          },
+          "identity": {
+           "type": "integer",
+           "minimum": 0,
+           "maximum": 3
+          },
+          "depth": {
+           "type": "integer",
+           "minimum": 0,
+           "maximum": 3
+          },
+          "composition": {
+           "type": "integer",
+           "minimum": 0,
+           "maximum": 3
+          },
+          "assembly": {
+           "type": "integer",
+           "minimum": 0,
+           "maximum": 3
+          },
+          "motion": {
+           "type": "integer",
+           "minimum": 0,
+           "maximum": 3
+          },
+          "density": {
+           "type": "integer",
+           "minimum": 0,
+           "maximum": 3
+          },
+          "honesty": {
+           "type": "integer",
+           "minimum": 0,
+           "maximum": 3
+          }
+         }
+        },
+        "round": {
+         "type": "integer",
+         "minimum": 0
+        },
+        "model": {
+         "type": "string",
+         "maxLength": 120
+        },
+        "defects": {
+         "type": "integer",
+         "minimum": 0
+        }
        }
       }
      }

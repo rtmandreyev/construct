@@ -12,7 +12,7 @@ import unittest
 from pathlib import Path
 
 from . import shapes as shapes_mod
-from . import audit, diagnose, globe, params, png, render, runner, scene, studio, terrain, tiers
+from . import audit, critic, diagnose, globe, params, png, render, runner, scene, studio, terrain, tiers
 
 HERE = Path(__file__).resolve().parent
 EXAMPLES = HERE / "examples" / "v2"
@@ -899,6 +899,107 @@ class Tiers(unittest.TestCase):
 
 
 
+
+def _critique(scene_doc, low=3, severity=None, present=True):
+    scores = {k: 3 for k in tiers.CRITERIA}
+    scores["proportions"] = low
+    return {"format": "construct-critique", "version": 1, "scene_sha256": tiers.critic_hash(scene_doc),
+            "scores": scores, "checklist": [{"feature": "the box", "present": present, "quality": 3}],
+            "defects": [{"rank": 1, "severity": severity, "criterion": "proportions", "parts": ["body"],
+                         "view": "side", "problem": "the nose is a rectangle from above", "fix": "taper the loft"}]
+            if severity else [], "verdict": "outstanding"}
+
+
+class Critic(unittest.TestCase):
+    """The independent critic: its verdict follows its scores, and binds to the scene it judged."""
+
+    def test_the_verdict_follows_the_scores_not_the_claim(self):
+        s = base()
+        self.assertEqual(critic.verdict(_critique(s)), "outstanding")
+        self.assertEqual(critic.verdict(_critique(s, low=2)), "good")
+        self.assertEqual(critic.verdict(_critique(s, severity="major")), "good")
+        self.assertEqual(critic.verdict(_critique(s, low=2, severity="critical")), "improve")
+        self.assertEqual(critic.verdict(_critique(s, present=False)), "improve")
+        self.assertEqual(critic.verdict(_critique(s, low=1)), "improve")
+
+    def test_recording_binds_to_the_scene_and_a_later_edit_is_stale(self):
+        s = base(authoring={"tier": "showcase", "research": "not_needed",
+                            "identity": [{"feature": "the box", "parts": ["body"]}]})
+        orig = copy.deepcopy(s)
+        new, v = critic.record(s, _critique(s, low=2))
+        self.assertEqual((v, new["authoring"]["outcome"], new["authoring"]["critic"]["round"]), ("good", "good", 1))
+        codes = {d["code"] for d in diagnose.diagnose(new)["diagnostics"]}
+        self.assertFalse(codes & {"critic-stale", "self-graded", "critic-claim"}, codes)
+        new["parts"][0]["shape"]["size"] = [2, 1, 1]
+        self.assertIn("critic-stale", {d["code"] for d in diagnose.diagnose(new)["diagnostics"]})
+        with self.assertRaises(critic.CriticError):
+            critic.record(new, _critique(orig))  # judged another version
+
+    def test_the_author_cannot_grade_itself(self):
+        s = base(authoring={"tier": "standard", "research": "not_needed", "outcome": "good"})
+        self.assertIn("self-graded", {d["code"] for d in diagnose.diagnose(s)["diagnostics"]})
+
+    def test_identity_checklist_must_be_built(self):
+        s = base(authoring={"tier": "showcase", "research": "not_needed",
+                            "identity": [{"feature": "scissor doors", "parts": ["door-left"]}]})
+        self.assertIn("identity-unbuilt", {d["code"] for d in diagnose.diagnose(s)["diagnostics"]})
+        self.assertIn("no-checklist", {d["code"] for d in diagnose.diagnose(
+            base(authoring={"tier": "masterpiece", "research": "not_needed"}))["diagnostics"]})
+
+    def test_a_critique_is_checked_like_any_draft(self):
+        r = diagnose.diagnose_text(json.dumps({"format": "construct-critique", "version": 1, "scene_sha256": "x",
+                                               "scores": {}, "defects": [], "verdict": "great"}))
+        self.assertFalse(r["ok"])
+        self.assertTrue(critic.defects_text(_critique(base(), low=1, severity="critical")).count("taper the loft"))
+
+    def test_masterpiece_runs_until_the_critic_says_outstanding(self):
+        good = json.dumps(params.template("vessel", "can") | {"facts": [], "synthetic": True})
+        doc = json.loads(good)
+        rounds = [_critique(doc, low=1, severity="critical"), _critique(doc, low=2, severity="major"), _critique(doc)]
+        calls = []
+        saved = runner.chat, critic.packet, critic.run
+        runner.chat = lambda *a, **k: (good, {"prompt_tokens": 100, "completion_tokens": 10})
+        critic.packet = lambda *a, **k: {"scene_sha256": "x"}
+
+        def fake_run(pk, out, base_url, model, key=None, log=None):
+            calls.append(model)
+            return rounds[len(calls) - 1], {"prompt_tokens": 50, "completion_tokens": 5}
+        critic.run = fake_run
+        try:
+            with tempfile.TemporaryDirectory() as d:
+                rep, text, _, _, meta = runner.author("a can", "http://stub", "author-model", tier="masterpiece",
+                                                     workdir=d, checkpoints=str(Path(d, "cp")),
+                                                     critic={"base_url": "http://stub", "model": "critic-model"})
+                self.assertEqual(len(list(Path(d, "cp").glob("round-*.json"))), 3)
+        finally:
+            runner.chat, critic.packet, critic.run = saved
+        a = json.loads(text)["authoring"]
+        self.assertEqual((meta["outcome"], meta["reviews"], calls), ("outstanding", 3, ["critic-model"] * 3))
+        self.assertEqual((a["tier"], a["outcome"], a["critic"]["verdict"]), ("masterpiece", "outstanding", "outstanding"))
+        self.assertTrue(rep["ok"])
+        self.assertNotIn("critic-stale", {d["code"] for d in rep["diagnostics"]})
+
+    def test_masterpiece_has_no_caps_but_a_user_stop(self):
+        lim = tiers.limits("masterpiece")
+        self.assertIsNone(lim["wall_clock_s"])
+        self.assertIsNone(lim["review_rounds"])
+        self.assertEqual(tiers.limits("masterpiece", wall_clock_s=36000)["wall_clock_s"], 36000)
+        good = json.dumps(params.template("vessel", "can") | {"facts": [], "synthetic": True})
+        saved = runner.chat, critic.packet, critic.run
+        runner.chat = lambda *a, **k: (good, {})
+        critic.packet = lambda *a, **k: {}
+
+        def stop(*a, **k):
+            raise KeyboardInterrupt
+        critic.run = stop
+        try:
+            rep, text, _, _, meta = runner.author("a can", "http://stub", "m", tier="masterpiece")
+        finally:
+            runner.chat, critic.packet, critic.run = saved
+        self.assertEqual((meta["outcome"], meta["stopped_by"]), ("limit", "the user"))
+        self.assertTrue(rep["ok"])
+
+
 def _budget_hook():
     import importlib.util
     spec = importlib.util.spec_from_file_location("construct_budget", HERE.parent / "hosts" / "claude-code" / "construct_budget.py")
@@ -992,11 +1093,12 @@ class RunnerLimits(unittest.TestCase):
         self.assertIn("weakest point (proportions)", sent[2]["content"])
 
     def test_a_good_verdict_ends_the_run_but_not_with_a_low_score(self):
+        # the author's own review never records "good": that is an independent critic's verdict
         (_, _, _, _, meta), _ = self.run_author([self.GOOD, self.verdict("good")], vision=True)
-        self.assertEqual((meta["outcome"], meta["reviews"]), ("good", 1))
+        self.assertEqual((meta["outcome"], meta["reviews"]), ("self-reviewed", 1))
         (_, _, _, _, meta), _ = self.run_author([self.GOOD, self.verdict("good", low=True), self.GOOD,
                                                  self.verdict("good")], vision=True)
-        self.assertEqual((meta["outcome"], meta["reviews"]), ("good", 2))
+        self.assertEqual((meta["outcome"], meta["reviews"]), ("self-reviewed", 2))
 
     def test_the_wall_clock_and_cost_ceilings_deliver_the_best_so_far(self):
         (report, text, _, _, meta), _ = self.run_author([self.GOOD, self.verdict("improve"), self.BAD],
@@ -1374,6 +1476,17 @@ class Capture(unittest.TestCase):
                 data = Path(p).read_bytes()
                 self.assertTrue(data.startswith(b"\x89PNG"), p)
                 self.assertGreater(len(data), 20000, p)  # an empty dark frame compresses far smaller
+
+    def test_a_critique_packet_renders_the_views_of_the_references(self):
+        with tempfile.TemporaryDirectory() as d:
+            ref = Path(d, "side.png")
+            ref.write_bytes((HERE.parent / "docs" / "media" / "provenance.png").read_bytes())  # any image will do
+            pk = critic.packet(str(EXAMPLES / "cd.json"), str(Path(d, "critique")), ["side=" + str(ref)], "a CD")
+            self.assertTrue(Path(d, "critique", "renders", "still-side.png").exists())
+            self.assertEqual(pk["pairs"][0]["render"], "renders/still-side.png")
+            text = Path(d, "critique", "packet.md").read_text()
+            self.assertIn(pk["scene_sha256"], text)
+            self.assertIn("construct-critique", text)
 
     def test_hero_is_the_fitted_whole_object_even_mid_tour(self):
         # a tour that flies close to a small part right when the hero is taken must not decide it

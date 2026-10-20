@@ -118,7 +118,11 @@ Work in a folder of your own. `out/construct.html` opens in any browser.
    `vision_analyze`. Score them with the rubric in `references/review.md` (silhouette,
    proportions, identity, depth, composition, assembly, motion, density, honesty). The aim
    is genuinely good — something you would put in a launch video — not merely
-   recognisable: improve the weakest point, check, review again. Before each review add
+   recognisable: improve the weakest point, check, review again. Your own review records
+   `self-reviewed`; for a named subject run the independent critic: `scripts/cli.py critique
+   scene.json --reference side=photo.jpg`, then delegate `critique/packet.md` to a fresh
+   subagent (or add `--base-url --model --key-env` for a second model call) and record its
+   answer with `--record` (`references/review.md`). Before each review add
    one to `authoring.review_rounds` and save; `check` warns `tier-rounds` past the cap. Stop when every criterion
    is good, or when the tier's review rounds or time run out, whichever comes first.
 6. **Deliver.** Record `authoring` in the scene (tier, research, sources used, outcome,

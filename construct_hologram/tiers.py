@@ -2,7 +2,10 @@
 
 Aim for genuinely good, and always stop within the tier's limits. A tier bounds the whole
 authoring run; whichever comes first ends it: the review judges the construct genuinely good,
-or a limit is reached. Then the best version so far is delivered with a short "next" list, and
+or a limit is reached. The masterpiece tier is the one exception, for hard subjects on request:
+no wall clock and no round cap; it stops only when an independent critic scores every criterion
+outstanding, when the user stops it, or at an optional cost ceiling, and it saves a checkpoint
+every round. Then the best version so far is delivered with a short "next" list, and
 the tier and that list are recorded in the scene's `authoring` block so it can be regenerated
 at a higher tier later. A host or user may pick a tier or override single limits, but every
 limit stays finite: nothing runs unbounded. Hosts add their own hard limits on top (a Hermes
@@ -17,7 +20,13 @@ TIERS = {
     "quick": {"wall_clock_s": 120, "review_rounds": 0, "check_rounds": 3, "searches": 0, "sources": 0, "images": 0},
     "standard": {"wall_clock_s": 600, "review_rounds": 2, "check_rounds": 6, "searches": 5, "sources": 3, "images": 3},
     "showcase": {"wall_clock_s": 1800, "review_rounds": 4, "check_rounds": 10, "searches": 10, "sources": 6, "images": 6},
+    # no wall clock, no round cap: the independent critic's "outstanding" (or the user) ends it;
+    # check rounds count per improvement round
+    "masterpiece": {"wall_clock_s": None, "review_rounds": None, "check_rounds": 8, "searches": 20, "sources": 12,
+                    "images": 12},
 }
+UNCAPPED = "masterpiece"
+CRITERIA = ("silhouette", "proportions", "identity", "depth", "composition", "assembly", "motion", "density", "honesty")
 DEFAULT = "standard"
 # shares of the wall clock: research ends by RESEARCH_SHARE, a complete valid draft is on disk by
 # DRAFT_BY, and at WRAP_UP nothing new is added: the saved draft is made valid and delivered
@@ -26,7 +35,8 @@ DRAFT_BY = 0.4
 WRAP_UP = 0.8
 USE = {"quick": "bulk imports and simple archetypes (the parameter path)",
        "standard": "one entry (the default)",
-       "showcase": "only on explicit request: more references, more review rounds"}
+       "showcase": "only on explicit request: more references, more review rounds",
+       "masterpiece": "hard subjects, only on explicit request: until an independent critic scores every criterion 3"}
 # overrides may raise a limit, never remove it
 CEILING = {"wall_clock_s": 7200, "review_rounds": 12, "check_rounds": 30, "searches": 40, "sources": 20, "images": 20}
 LIMIT_HELP = {"wall_clock_s": "wall clock, seconds", "review_rounds": "review/improve rounds",
@@ -37,7 +47,10 @@ RESEARCH = ("auto", "on", "off")  # the request: decide by the policy, or the us
 # what an author records: researched, not needed (a generic subject), skipped (confident without
 # looking: nothing verified from it), unavailable (no web tool in the host), off (the user said so)
 RESEARCH_RECORD = ("done", "not_needed", "skipped", "unavailable", "off")
-OUTCOMES = ("good", "limit", "unreviewed")
+# outstanding and good are an independent critic's verdicts; self-reviewed is the author's own
+OUTCOMES = ("outstanding", "good", "self-reviewed", "limit", "unreviewed")
+VERDICTS = ("outstanding", "good", "improve")
+MAX_IDENTITY = 16
 MAX_NEXT = 8
 
 # words a host can find in a request: "research: on", "tier: showcase"
@@ -49,7 +62,8 @@ class TierError(ValueError):
 
 
 def limits(tier=DEFAULT, **overrides):
-    """The tier's limits with any overrides applied; every limit finite and within CEILING."""
+    """The tier's limits with any overrides applied; every limit finite and within CEILING, except
+    the masterpiece tier's wall clock and review rounds, which are None (uncapped) unless set."""
     if tier not in TIERS:
         raise TierError("tier is one of %s" % ", ".join(TIERS))
     out = dict(TIERS[tier])
@@ -61,7 +75,8 @@ def limits(tier=DEFAULT, **overrides):
         if isinstance(v, bool) or not isinstance(v, (int, float)) or v != v:
             raise TierError("%s must be a number" % k)
         lo = 1 if k in ("wall_clock_s", "check_rounds") else 0
-        if not lo <= v <= CEILING[k]:
+        top = float("inf") if tier == UNCAPPED else CEILING[k]
+        if not lo <= v <= top or v == float("inf"):
             raise TierError("%s must be within %d..%d: limits can be raised, never removed" % (k, lo, CEILING[k]))
         out[k] = int(v) if k != "wall_clock_s" else float(v)
     out["tier"] = tier
@@ -69,7 +84,7 @@ def limits(tier=DEFAULT, **overrides):
 
 
 def from_request(text):
-    """`research: on|off|auto` and `tier: quick|standard|showcase` written in a request, if present."""
+    """`research: on|off|auto` and `tier: quick|standard|showcase|masterpiece` written in a request."""
     import re
     found = {}
     for key, options in _REQUEST_KEYS.items():
@@ -86,6 +101,9 @@ def clock_rule(lim=None):
         "improve it in place, re-checking and saving after every round, so a valid scene is always on disk. " \
         "At %d%% stop adding: make the saved scene valid and deliver it." % (
             RESEARCH_SHARE * 100, DRAFT_BY * 100, WRAP_UP * 100)
+    if lim and lim["wall_clock_s"] is None:
+        return ("No wall clock: save a complete scene that passes `check` after the first round and a checkpoint "
+                "after every round after that, so the best version is always on disk.")
     if lim:
         w = lim["wall_clock_s"]
         t += " (This run: research by %d s, a saved draft by %d s, wrap up at %d s.)" % (
@@ -100,15 +118,18 @@ def table():
     for name, t in TIERS.items():
         research = ("none beyond the source data" if not t["searches"] else
                     "≤%d searches, ≤%d sources read, ≤%d reference images" % (t["searches"], t["sources"], t["images"]))
-        rows.append("| %s | %s | %s | %s | %d | %s |" % (
-            name, USE[name], "%d min" % (t["wall_clock_s"] // 60),
-            "0 (audit only)" if not t["review_rounds"] else t["review_rounds"], t["check_rounds"], research))
+        rows.append("| %s | %s | %s | %s | %s | %s |" % (
+            name, USE[name], "none" if t["wall_clock_s"] is None else "%d min" % (t["wall_clock_s"] // 60),
+            "until the critic's all-3" if t["review_rounds"] is None else
+            "0 (audit only)" if not t["review_rounds"] else t["review_rounds"],
+            "%d per round" % t["check_rounds"] if name == UNCAPPED else t["check_rounds"], research))
     return "\n".join(rows)
 
 
 def check(c, a, source_ids, scene_sources, where="scene.authoring"):
     """Validate an `authoring` block with a scene `_Check`."""
-    if not c.keys(a, {"tier", "research", "sources", "review_rounds", "outcome", "next"}, {"tier", "research"}, where):
+    if not c.keys(a, {"tier", "research", "sources", "review_rounds", "outcome", "next", "identity", "critic"},
+                  {"tier", "research"}, where):
         return
     c.choice(a.get("tier"), tuple(TIERS), where + ".tier")
     c.choice(a.get("research"), RESEARCH_RECORD, where + ".research")
@@ -127,7 +148,36 @@ def check(c, a, source_ids, scene_sources, where="scene.authoring"):
               'List the sources you read or viewed in "sources" (each also in the scene\'s sources), or record '
               '"skipped" when you worked from what you already knew.')
     if "review_rounds" in a:
-        c.num(a["review_rounds"], where + ".review_rounds", 0, CEILING["review_rounds"], True)
+        c.num(a["review_rounds"], where + ".review_rounds", 0, 1000, True)
+    ident = a.get("identity", [])
+    if not isinstance(ident, list) or len(ident) > MAX_IDENTITY:
+        c.err(where + ".identity", "expected a list of at most %d identity features" % MAX_IDENTITY, "type",
+              '[{"feature": "periscope roof channel", "parts": ["roof-channel"], "source": "ref-top"}]')
+        ident = []
+    for i, item in enumerate(ident):
+        w = "%s.identity[%d]" % (where, i)
+        if c.keys(item, {"feature", "parts", "source", "note"}, {"feature", "parts"}, w):
+            c.text(item.get("feature"), w + ".feature", 200)
+            if not isinstance(item.get("parts"), list) or not all(isinstance(x, str) for x in item["parts"]):
+                c.err(w + ".parts", "expected the ids of the parts that build this feature", "type", '["roof-channel"]')
+            if "source" in item and item["source"] not in source_ids:
+                c.err(w + ".source", "unknown source %r" % (item["source"],), "reference")
+    if "critic" in a:
+        cr, w = a["critic"], where + ".critic"
+        if c.keys(cr, {"scene_sha256", "verdict", "scores", "round", "model", "defects"}, {"scene_sha256", "verdict", "scores"}, w):
+            if not (isinstance(cr.get("scene_sha256"), str) and len(cr["scene_sha256"]) == 64):
+                c.err(w + ".scene_sha256", "expected the 64-hex hash of the scene the critic judged", "type")
+            c.choice(cr.get("verdict"), VERDICTS, w + ".verdict")
+            sc = cr.get("scores")
+            if c.keys(sc, set(CRITERIA), set(CRITERIA), w + ".scores") and all(k in sc for k in CRITERIA):
+                for k in CRITERIA:
+                    c.num(sc[k], "%s.scores.%s" % (w, k), 0, 3, True)
+            if "round" in cr:
+                c.num(cr["round"], w + ".round", 0, 1000, True)
+            if "model" in cr:
+                c.text(cr["model"], w + ".model", 120)
+            if "defects" in cr:
+                c.num(cr["defects"], w + ".defects", 0, 1000, True)
     if "outcome" in a:
         c.choice(a["outcome"], OUTCOMES, where + ".outcome")
     nxt = a.get("next", [])
@@ -147,6 +197,27 @@ def audit(scene, add, warnings):
     kinds = {s["id"]: s["kind"] for s in scene.get("sources", [])}
     looked_up = [s for s in a.get("sources", []) if kinds.get(s) not in ("user_request", "user_supplied")]
     tier = TIERS[a["tier"]]
+    parts = {p["id"] for p in scene.get("parts", [])}
+    for item in a.get("identity", []):
+        missing = [x for x in item["parts"] if x not in parts]
+        if not item["parts"] or missing:
+            add(warnings, "identity-unbuilt", None, "identity feature %r has %s: build it, or say in next why it is "
+                "missing" % (item["feature"], "no part" if not item["parts"] else "unknown parts " + ", ".join(missing)))
+    if a["tier"] in ("showcase", UNCAPPED) and not a.get("identity"):
+        add(warnings, "no-checklist", None, "no identity checklist: write the features that make the subject itself "
+            "(from research) in authoring.identity, each with the parts that build it")
+    critic = a.get("critic")
+    if critic:
+        if critic["scene_sha256"] != critic_hash(scene):
+            add(warnings, "critic-stale", None, "the critic judged another version of this scene: run the critic again")
+        best = min(critic["scores"].values())
+        if critic["verdict"] == "outstanding" and best < 3 or critic["verdict"] == "good" and best < 2:
+            add(warnings, "critic-claim", None, "the critic's verdict %r does not match its scores (lowest %d)" % (
+                critic["verdict"], best))
+    outcome = a.get("outcome")
+    if outcome in ("outstanding", "good") and (not critic or critic["verdict"] != outcome):
+        add(warnings, "self-graded", None, "outcome %r is an independent critic's verdict, and there is no matching "
+            "critic record: run construct critique, or record \"self-reviewed\"" % outcome)
     if a["research"] == "done" and len(looked_up) > tier["sources"] + tier["images"]:
         add(warnings, "tier-budget", None, "%d researched sources is beyond the %s tier (%d sources, %d images): "
             "keep the few that carry the identity, or record a higher tier" % (
@@ -155,9 +226,51 @@ def audit(scene, add, warnings):
         add(warnings, "research", None, "sources %s are listed but research is %r: record \"done\" when you looked "
             "things up" % (", ".join(looked_up), a["research"]))
     rounds = a.get("review_rounds")
-    if isinstance(rounds, int) and rounds > tier["review_rounds"]:
+    if isinstance(rounds, int) and tier["review_rounds"] is not None and rounds > tier["review_rounds"]:
         add(warnings, "tier-rounds", None, "%d review rounds is beyond the %s tier's %d: stop at the cap and deliver "
             "the saved scene with its next notes (or record a higher tier the user asked for)" % (
                 rounds, a["tier"], tier["review_rounds"]))
     if a.get("outcome") == "limit" and not a.get("next"):
         add(warnings, "authoring", None, "stopped at a limit with no \"next\" notes: say what the next improvement would be")
+
+
+def critic_hash(doc):
+    """The hash a critic records: the scene (a parameter document is expanded first) without its
+    authoring block, which the critic's own record changes."""
+    from . import params
+    from . import scene as scene_mod
+    d = {k: v for k, v in doc.items() if k != "authoring"}
+    if params.is_params(d):
+        d = params.expand(d)
+    return scene_mod.canonical_sha256(d)
+
+
+def authoring_schema():
+    """JSON Schema of the authoring block (the parameter schema and geometry schema carry it)."""
+    return {
+        "type": "object", "additionalProperties": False, "required": ["tier", "research"],
+        "description": "How the construct was authored: the effort tier, whether research was done and from which "
+                       "sources, the identity checklist, the independent critic's record and what would improve it next.",
+        "properties": {
+            "tier": {"enum": list(TIERS)}, "research": {"enum": list(RESEARCH_RECORD)},
+            "sources": {"type": "array", "items": {"type": "string"}},
+            "review_rounds": {"type": "integer", "minimum": 0, "maximum": 1000},
+            "outcome": {"enum": list(OUTCOMES)},
+            "next": {"type": "array", "maxItems": MAX_NEXT, "items": {"type": "string", "maxLength": 300}},
+            "identity": {"type": "array", "maxItems": MAX_IDENTITY, "items": {
+                "type": "object", "additionalProperties": False, "required": ["feature", "parts"],
+                "properties": {"feature": {"type": "string", "maxLength": 200},
+                               "parts": {"type": "array", "items": {"type": "string"}},
+                               "source": {"type": "string"}, "note": {"type": "string"}}}},
+            "critic": {"type": "object", "additionalProperties": False, "required": ["scene_sha256", "verdict", "scores"],
+                       "properties": {"scene_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+                                      "verdict": {"enum": list(VERDICTS)},
+                                      "scores": {"type": "object", "additionalProperties": False,
+                                                 "required": list(CRITERIA),
+                                                 "properties": {k: {"type": "integer", "minimum": 0, "maximum": 3}
+                                                                for k in CRITERIA}},
+                                      "round": {"type": "integer", "minimum": 0},
+                                      "model": {"type": "string", "maxLength": 120},
+                                      "defects": {"type": "integer", "minimum": 0}}},
+        },
+    }

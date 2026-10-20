@@ -142,9 +142,14 @@ def diagnose_text(text):
     scene, diags = parse_text(text)
     if params_mod.is_params(scene):
         return diagnose_params(scene, diags)
-    if isinstance(scene, dict) and scene.get("format") == "construct-trace":
-        from . import trace as trace_mod
-        diags += [_diag("error", i["code"], _path(i["where"]), i["message"], i["hint"]) for i in trace_mod.validate_items(scene)]
+    if isinstance(scene, dict) and scene.get("format") in ("construct-trace", "construct-critique"):
+        if scene["format"] == "construct-trace":
+            from . import trace as trace_mod
+            items = trace_mod.validate_items(scene)
+        else:
+            from . import critic as critic_mod
+            items = critic_mod.validate_items(scene)
+        diags += [_diag("error", i["code"], _path(i["where"]), i["message"], i["hint"]) for i in items]
         out = {"ok": not any(d["severity"] == "error" for d in diags), "contract": scene_mod.product.CONTRACT,
                "errors": sum(d["severity"] == "error" for d in diags), "warnings": 0, "diagnostics": diags, "stats": None}
         out["repair_text"] = repair_text(out)

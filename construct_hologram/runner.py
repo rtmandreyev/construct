@@ -97,13 +97,13 @@ class Budget:
 
     def __init__(self, lim, max_total_tokens=None, max_cost=None, prices=(0.0, 0.0), clock=time.monotonic):
         self.lim, self.clock = lim, clock
-        self.deadline = clock() + lim["wall_clock_s"]
+        self.deadline = None if lim["wall_clock_s"] is None else clock() + lim["wall_clock_s"]
         self.max_total_tokens, self.max_cost, self.prices = max_total_tokens, max_cost, prices
         self.checks = self.reviews = 0
         self.tokens = {"prompt_tokens": 0, "completion_tokens": 0}
 
     def left(self):
-        return self.deadline - self.clock()
+        return float("inf") if self.deadline is None else self.deadline - self.clock()
 
     def cost(self):
         return (self.tokens["prompt_tokens"] * self.prices[0] + self.tokens["completion_tokens"] * self.prices[1]) / 1e6
@@ -123,14 +123,17 @@ class Budget:
         if why:
             raise LimitReached(why)
         try:
-            text, usage = chat(base_url, model, messages, key, timeout=max(5, min(300, self.left())))
+            text, usage = chat(base_url, model, messages, key, timeout=max(5, min(600, self.left())))
         except RunnerError:
             if self.left() <= 0:
                 raise LimitReached("wall clock (%gs)" % self.lim["wall_clock_s"])
             raise
-        for k in self.tokens:
-            self.tokens[k] += int(usage.get(k, 0) or 0)
+        self.count(usage)
         return text
+
+    def count(self, usage):
+        for k in self.tokens:
+            self.tokens[k] += int((usage or {}).get(k, 0) or 0)
 
 
 def _rank(report, doc):
@@ -140,8 +143,9 @@ def _rank(report, doc):
 
 def _host_note(lim, research, images):
     web = [i for i in images if i.startswith(("http://", "https://"))]
-    lines = ["", "Host: the construct author runner. Tier: %s (wall clock %d s, %d check rounds, %d review rounds)."
-             % (lim["tier"], lim["wall_clock_s"], lim["check_rounds"], lim["review_rounds"]),
+    lines = ["", "Host: the construct author runner. Tier: %s (wall clock %s, %d check rounds, %s review rounds)."
+             % (lim["tier"], "none" if lim["wall_clock_s"] is None else "%d s" % lim["wall_clock_s"],
+                lim["check_rounds"], "no cap on" if lim["review_rounds"] is None else lim["review_rounds"]),
              "This host has no web search tool. Every answer you send is checked, and the best valid one is "
              "saved at once: send a complete scene first, then improve it."]
     if research == "off":
@@ -156,7 +160,7 @@ def _host_note(lim, research, images):
     return "\n".join(lines)
 
 
-def _stamp(doc, lim, budget, outcome, nxt, research):
+def _stamp(doc, lim, budget, outcome, nxt, research, critic_record=None):
     """Record how the construct was made in its authoring block, kept valid against the scene's sources."""
     a = dict(doc.get("authoring") or {}) if isinstance(doc.get("authoring"), dict) else {}
     a["tier"] = lim["tier"]
@@ -171,6 +175,11 @@ def _stamp(doc, lim, budget, outcome, nxt, research):
     if not a["sources"]:
         a.pop("sources")
     a["review_rounds"] = budget.reviews
+    a.pop("critic", None)
+    if critic_record and critic_record["scene_sha256"] == tiers.critic_hash(doc):
+        a["critic"] = dict(critic_record)  # only for the version the critic judged
+    elif outcome in ("good", "outstanding"):
+        outcome = "self-reviewed"
     a["outcome"] = outcome
     own = a.get("next") if isinstance(a.get("next"), list) else []
     notes = [n for n in own + list(nxt) if isinstance(n, str) and n.strip()]
@@ -224,13 +233,21 @@ def _verdict(text):
 
 def author(request, base_url, model, key=None, use_params=False, rounds=None, log=None, images=(), tier=None,
            research=None, vision=False, limit_overrides=None, max_total_tokens=None, max_cost=None,
-           prices=(0.0, 0.0), workdir=None, clock=time.monotonic, save=None):
+           prices=(0.0, 0.0), workdir=None, clock=time.monotonic, save=None, critic=None, checkpoints=None):
     """Draft, check, repair, then (with vision) review and improve, inside the tier's limits.
 
+    Without a critic the author reviews its own captures (outcome at best "self-reviewed").
+    With `critic` ({"base_url", "model", "key"}) each review is an independent critic's: a fresh
+    context with the references beside renders from the same views; its ranked defects are the
+    next instruction, and only its verdict can make the outcome "good" or "outstanding". The
+    masterpiece tier always uses the critic and stops only at "outstanding", a token or cost
+    ceiling, or the user (Ctrl-C). `checkpoints` is a folder that gets every clean draft.
+
     Returns (report, text, token totals, history, meta) for the best draft; meta has the tier,
-    outcome ("good", "limit" or "unreviewed"), why it stopped and the next improvements.
+    outcome, why it stopped and the next improvements.
     `save(text)` is called with every new best valid draft (stamped "unreviewed" until the run
     ends), so a valid construct is on disk even if the host stops the run."""
+    from . import critic as critic_mod
     asked = tiers.from_request(request)
     tier = tier or asked.get("tier") or tiers.DEFAULT
     research = research or asked.get("research") or "auto"
@@ -238,7 +255,13 @@ def author(request, base_url, model, key=None, use_params=False, rounds=None, lo
     if rounds is not None:
         overrides["check_rounds"] = rounds
     lim = tiers.limits(tier, **overrides)
-    images = list(images or ())
+    uncapped = lim["review_rounds"] is None
+    if tier == tiers.UNCAPPED:
+        if not critic:
+            critic = {"base_url": base_url, "model": model, "key": key}
+        vision = True
+    refs = critic_mod.parse_references(images)
+    images = [r for _, r in refs]
     web = [i for i in images if i.startswith(("http://", "https://"))]
     if research == "off" and web:
         raise RunnerError("research is off: attach only the user's own images, not web references")
@@ -246,21 +269,35 @@ def author(request, base_url, model, key=None, use_params=False, rounds=None, lo
         raise RunnerError("%d web reference images is beyond the %s tier's limit of %d (raise it with --max-images)"
                           % (len(web), tier, lim["images"]))
     budget = Budget(lim, max_total_tokens, max_cost, prices, clock)
+    workdir = workdir or tempfile.mkdtemp(prefix="construct-author-")
     pack = prompts.build()
     text0 = (pack["params.md"] if use_params else pack["scene.md"]) + "\n\nThe request:\n" + request
     text0 += _host_note(lim, research, images)
+    if critic:
+        text0 += ("\nAn independent critic will judge each clean draft against the references; its ranked defects "
+                  "come back to you. Write authoring.identity (the features that make the subject itself, each "
+                  "with its parts) before the parts.")
     messages = [{"role": "system", "content": pack["system.md"]},
                 {"role": "user", "content": [{"type": "text", "text": text0}] + [image_part(i) for i in images]
                  if images else text0}]
     history, best, last, stop, nxt = [], None, None, None, []
+    critic_record, round_checks = None, [0]
+
+    def checkpoint(text, doc):
+        if checkpoints and isinstance(doc, dict):
+            Path(checkpoints).mkdir(parents=True, exist_ok=True)
+            Path(checkpoints, "round-%02d.json" % budget.reviews).write_text(
+                json.dumps(doc, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
     def check_loop():
         nonlocal best, last
         while True:
-            if budget.checks >= lim["check_rounds"]:
-                raise LimitReached("check rounds (%d)" % lim["check_rounds"])
+            used = round_checks[0] if uncapped else budget.checks
+            if used >= lim["check_rounds"]:
+                raise LimitReached("check rounds (%d%s)" % (lim["check_rounds"], " in one round" if uncapped else ""))
             text = budget.ask(base_url, model, messages, key)
             budget.checks += 1
+            round_checks[0] += 1
             report = diagnose.diagnose_text(text)
             doc, _ = diagnose.parse_text(text)
             history.append({"round": len(history), "ok": report["ok"], "needs_repair": report["needs_repair"],
@@ -275,15 +312,61 @@ def author(request, base_url, model, key=None, use_params=False, rounds=None, lo
                     save(json.dumps(_stamp(json.loads(json.dumps(doc)), lim, budget, "unreviewed", nxt, research),
                                     indent=2, ensure_ascii=False))
             if not report["needs_repair"]:
+                checkpoint(text, doc)
                 return
             messages.extend([{"role": "assistant", "content": text}, {"role": "user", "content": report["repair_text"]}])
+
+    def critic_round():
+        """One independent critique of the last clean draft; returns its verdict or None (no browser)."""
+        nonlocal critic_record, nxt
+        doc, _ = diagnose.parse_text(last[1])
+        folder = Path(workdir, "critique-%02d" % (budget.reviews + 1))
+        folder.mkdir(parents=True, exist_ok=True)
+        draft = folder / "draft.json"
+        draft.write_text(json.dumps(doc), encoding="utf-8")
+        why = budget.spent()
+        if why:
+            raise LimitReached(why)
+        try:
+            pk = critic_mod.packet(str(draft), str(folder), ["%s=%s" % (v, r) if v else r for v, r in refs], request)
+        except Exception as exc:  # no browser: the critic cannot see, so it is not faked
+            if log:
+                log("critique skipped: %s" % str(exc).splitlines()[0][:160])
+            return None
+        budget.reviews += 1
+        answer, usage = critic_mod.run(pk, str(folder), critic["base_url"], critic["model"], critic.get("key"), log=log)
+        budget.count(usage)
+        (folder / "critique.json").write_text(json.dumps(answer, indent=2) + "\n", encoding="utf-8")
+        _, verdict = critic_mod.record(doc, answer, critic["model"])
+        critic_record = {"scene_sha256": answer["scene_sha256"], "verdict": verdict, "scores": dict(answer["scores"]),
+                         "round": budget.reviews, "model": str(critic["model"])[:120],
+                         "defects": len(answer.get("defects", []))}
+        nxt = ["%s: %s" % (d["severity"], d["fix"]) for d in critic_mod.ranked(answer, 5)]
+        if log:
+            log("critique %d: %s (lowest score %d, %d defects)" % (budget.reviews, verdict,
+                                                                   min(answer["scores"].values()), len(answer["defects"])))
+        if verdict == "outstanding" or (verdict == "good" and not uncapped):
+            return verdict
+        messages.extend([{"role": "assistant", "content": last[1]},
+                         {"role": "user", "content": critic_mod.defects_text(answer)}])
+        return "improve"
 
     outcome = "unreviewed"
     try:
         check_loop()
-        while vision and budget.reviews < lim["review_rounds"]:
-            if budget.left() < max(REVIEW_MARGIN_S, lim["wall_clock_s"] * (1 - tiers.WRAP_UP)):
+        while vision and (uncapped or budget.reviews < lim["review_rounds"]):
+            if not uncapped and budget.left() < max(REVIEW_MARGIN_S, lim["wall_clock_s"] * (1 - tiers.WRAP_UP)):
                 raise LimitReached("wrap-up at %d%% of the wall clock" % (tiers.WRAP_UP * 100))
+            if critic:
+                v = critic_round()
+                if v is None:
+                    break
+                if v in ("outstanding", "good"):
+                    outcome = v
+                    break
+                round_checks[0] = 0
+                check_loop()
+                continue
             shots = _captures(last[1], workdir, log)
             if not shots:
                 break
@@ -297,7 +380,7 @@ def author(request, base_url, model, key=None, use_params=False, rounds=None, lo
             if log:
                 log("review %d: %s%s" % (budget.reviews, verdict, " (weakest: %s)" % weakest if weakest else ""))
             if verdict == "good":
-                outcome = "good"
+                outcome = "self-reviewed"
                 break
             messages.extend([{"role": "assistant", "content": answer},
                              {"role": "user", "content": "Improve the weakest point%s now. Send the whole corrected "
@@ -310,15 +393,31 @@ def author(request, base_url, model, key=None, use_params=False, rounds=None, lo
         stop, outcome = str(why), "limit"
         if log:
             log("stopped: %s; delivering the best draft so far" % stop)
+    except KeyboardInterrupt:
+        stop, outcome = "the user", "limit"
+        if log:
+            log("stopped by the user; delivering the best draft so far")
+    if outcome in ("good", "outstanding") and last is not None:
+        rep_, text_ = last
+        best = (rep_, text_, diagnose.parse_text(text_)[0])  # the version the critic judged
     report, text, doc = best if best else (None, "", None)
     if isinstance(doc, dict):
-        doc = _stamp(doc, lim, budget, outcome, nxt, research)
+        doc = _stamp(doc, lim, budget, outcome, nxt, research, critic_record)
         text = json.dumps(doc, indent=2, ensure_ascii=False)
         report = diagnose.diagnose_text(text)
-    meta = {"tier": tier, "limits": lim, "outcome": outcome, "stopped_by": stop, "reviews": budget.reviews,
-            "checks": budget.checks, "seconds": round(lim["wall_clock_s"] - budget.left(), 1),
+    meta = {"tier": tier, "limits": lim, "outcome": (doc or {}).get("authoring", {}).get("outcome", outcome),
+            "stopped_by": stop, "reviews": budget.reviews, "checks": budget.checks,
+            "seconds": round(clock() - (budget.deadline - lim["wall_clock_s"]) if budget.deadline is not None else 0, 1),
             "cost": round(budget.cost(), 6), "next": (doc or {}).get("authoring", {}).get("next", [])}
     return report, text, dict(budget.tokens), history, meta
+
+
+def _critic_from(args, key):
+    """The critic's endpoint: --critic (same endpoint and model), or --critic-model / --critic-base-url."""
+    if not (getattr(args, "critic", False) or getattr(args, "critic_model", None) or getattr(args, "critic_base_url", None)):
+        return None
+    ckey = os.environ.get(args.critic_key_env) if getattr(args, "critic_key_env", None) else key
+    return {"base_url": args.critic_base_url or args.base_url, "model": args.critic_model or args.model, "key": ckey}
 
 
 def _limits_from(args):
@@ -347,6 +446,7 @@ def run(args, out):
             log=lambda m: out.write(m + "\n"), images=args.reference or (), tier=args.tier, research=args.research,
             vision=args.vision, limit_overrides=_limits_from(args), max_total_tokens=args.max_total_tokens,
             max_cost=args.max_cost, prices=(args.price_in or 0.0, args.price_out or 0.0),
+            critic=_critic_from(args, key), checkpoints=args.out + ".checkpoints",
             workdir=str(Path(args.out).resolve().parent), save=save)
     except tiers.TierError as exc:
         raise RunnerError(str(exc))

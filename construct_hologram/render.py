@@ -345,6 +345,26 @@ def review(html_path, out_dir, width=1440, height=900, scale=1.0, sheets=SHEETS,
     return written
 
 
+def stills(html_path, out_dir, views, width=1280, height=800, scale=1.0, browser=None):
+    """A still (reduced motion, no labels) from each named view: front, side, back, top,
+    three-quarter, hero or one of the scene's own views. Written as still-<view>.png."""
+    out = Path(out_dir)
+    out.mkdir(parents=True, exist_ok=True)
+    written = []
+    if not views:
+        return written
+    b = open_browser(_url(html_path, ui=0, capture=1, motion="reduced"), width, height, scale, browser)
+    try:
+        for v in views:
+            b.open(_url(html_path, view=v, motion="reduced", camera="still", ui=0, capture=1))
+            p = out / ("still-%s.png" % v)
+            b.shot(p)
+            written.append(str(p))
+    finally:
+        b.close()
+    return written
+
+
 def frames(html_path, out_dir, seconds, fps=24, start=0.0, width=1280, height=720, scale=1.0, view=None, browser=None):
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)

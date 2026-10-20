@@ -128,6 +128,45 @@ def build(scene_path, out_dir, asset_root=None, v1=False, force=True, frame="y-u
     return geometry, report, text
 
 
+def _critique(args, critic_mod):
+    """Build the packet; record an answer; or run the critic as a second model call and record it."""
+    scene_path = Path(args.scene)
+    out = Path(args.out) if args.out else scene_path.resolve().parent / "critique"
+    doc, diags = diagnose_mod.parse_text(scene_path.read_text(encoding="utf-8"))
+    if doc is None:
+        sys.stderr.write("critique: %s\n" % "; ".join(d["message"] for d in diags))
+        return 1
+    try:
+        if args.record:
+            answer, _ = diagnose_mod.parse_text(Path(args.record).read_text(encoding="utf-8"))
+            model = None
+        else:
+            pk = critic_mod.packet(str(scene_path), str(out), args.reference, args.request)
+            if not args.base_url:
+                sys.stdout.write("wrote the packet: %s\nGive packet.md and its images to a fresh critic (a subagent, a "
+                                 "delegated task or another model) and save its answer as critique.json, then:\n"
+                                 "  construct critique %s --record critique.json\n" % (out / "packet.md", args.scene))
+                return 0
+            key = os.environ.get(args.key_env) if args.key_env else None
+            from . import runner
+            answer, _ = critic_mod.run(pk, str(out), args.base_url, args.model, key,
+                                       log=lambda m: sys.stdout.write(m + "\n"))
+            (out / "critique.json").write_text(json.dumps(answer, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+            model = args.model
+        if not isinstance(answer, dict):
+            raise critic_mod.CriticError("the answer is not a JSON object")
+        new, verdict = critic_mod.record(doc, answer, model)
+    except (critic_mod.CriticError, OSError) as exc:
+        sys.stderr.write("critique: %s\n" % exc)
+        return 1
+    scene_path.write_text(json.dumps(new, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    out.mkdir(parents=True, exist_ok=True)
+    (out / "defects.md").write_text(critic_mod.defects_text(answer, top=10) + "\n", encoding="utf-8")
+    sys.stdout.write("verdict: %s (scores %s)\nrecorded in %s; ranked defects in %s\n" % (
+        verdict, ", ".join("%s %d" % kv for kv in answer["scores"].items()), scene_path, out / "defects.md"))
+    return 0
+
+
 def page_in(folder):
     """The built page in a folder: construct.html (or hologram.html from before 0.2)."""
     new = Path(folder, "construct.html")
@@ -153,9 +192,12 @@ def add_commands(sub):
     p.add_argument("--key-env", help="the environment variable that holds the API key (never stored)")
     p.add_argument("--out", required=True)
     p.add_argument("--params", action="store_true", help="ask for a parameter document (best for small models)")
-    p.add_argument("--reference", action="append", help="a reference image (a local photo or an https URL); repeatable")
-    p.add_argument("--tier", choices=("quick", "standard", "showcase"),
-                   help="effort tier and its limits (default standard; also 'tier: ...' in the request)")
+    p.add_argument("--reference", action="append",
+                   help="a reference image (a local photo or an https URL), optionally view=image (side=photo.jpg) so "
+                        "the critic compares it with the render from that view; repeatable")
+    p.add_argument("--tier", choices=("quick", "standard", "showcase", "masterpiece"),
+                   help="effort tier and its limits (default standard; masterpiece: no time or round cap, until the "
+                        "critic scores every criterion 3; also 'tier: ...' in the request)")
     p.add_argument("--research", choices=("auto", "on", "off"),
                    help="auto follows the research policy; on/off overrides it (also 'research: ...' in the request)")
     p.add_argument("--vision", action="store_true",
@@ -164,6 +206,11 @@ def add_commands(sub):
     p.add_argument("--review-rounds", type=int, help="override the tier's review/improve rounds")
     p.add_argument("--max-seconds", type=float, help="override the tier's wall clock")
     p.add_argument("--max-images", type=int, help="override the tier's limit on web reference images")
+    p.add_argument("--critic", action="store_true",
+                   help="an independent critic (a fresh call, same endpoint) judges each review against the references")
+    p.add_argument("--critic-model", help="the critic's model (implies --critic)")
+    p.add_argument("--critic-base-url", help="the critic's endpoint (default: the author's)")
+    p.add_argument("--critic-key-env", help="the critic's API key variable (default: the author's)")
     p.add_argument("--max-total-tokens", type=int, help="stop when prompt + completion tokens reach this")
     p.add_argument("--max-cost", type=float, help="stop when the estimated cost (USD) reaches this")
     p.add_argument("--price-in", type=float, help="USD per million prompt tokens (for --max-cost)")
@@ -206,6 +253,17 @@ def add_commands(sub):
     p.add_argument("--plain", action="store_true", help="no traced ridgelines or summit marker")
     p.add_argument("--output", required=True)
     p.add_argument("--force", action="store_true")
+    p = sub.add_parser("critique", help="an independent critic's packet (renders beside references), its answer, "
+                                         "or a second model call that runs it")
+    p.add_argument("scene")
+    p.add_argument("--out", help="the packet folder (default: <scene folder>/critique)")
+    p.add_argument("--reference", action="append", default=[],
+                   help="view=image: a reference photo and the view it shows (front, side, back, top, three-quarter, hero); repeatable")
+    p.add_argument("--request", help="the request in plain words (default: the scene's summary)")
+    p.add_argument("--record", help="a construct-critique answer to check and record in the scene's authoring block")
+    p.add_argument("--base-url", help="run the critic as a second model call on this OpenAI-compatible endpoint")
+    p.add_argument("--model")
+    p.add_argument("--key-env")
     p = sub.add_parser("globe", help="a measured globe from coastline data you supply (GeoJSON)")
     p.add_argument("--coastlines", required=True, help="GeoJSON lines or polygons in longitude/latitude; never downloaded")
     p.add_argument("--title", default="Earth")
@@ -257,7 +315,7 @@ def add_commands(sub):
     p.add_argument("--identity", choices=scene_mod.IDENTITIES, help="an identity tint the person chose")
 
 
-COMMANDS = ("new", "params", "expand", "prompts", "author", "trace", "trace-image", "terrain", "globe", "check", "build", "review",
+COMMANDS = ("new", "params", "expand", "prompts", "author", "trace", "trace-image", "terrain", "globe", "critique", "check", "build", "review",
             "video")
 
 
@@ -295,6 +353,9 @@ def run(args):
             _write(args.output, json.dumps(sc, indent=1, ensure_ascii=False) + "\n", args.force)
             sys.stdout.write("wrote %s: %s\n" % (args.output, sc["subject"]["summary"]))
             return 0
+        if args.command == "critique":
+            from . import critic as critic_mod
+            return _critique(args, critic_mod)
         if args.command == "globe":
             from . import globe as globe_mod
             try:

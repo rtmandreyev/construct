@@ -83,8 +83,19 @@ and beautiful: something you would put in a launch video), or any limit of the t
 reached. Then deliver the best version so far. The host and user pick the tier (default
 standard) and may override single limits; hosts add hard limits of their own on top.
 
+For a named subject, turn research into an identity checklist before the first part: the
+features that make it itself (a Countach: the low wedge, NACA ducts, the periscope roof
+channel, trapezoid wheel arches, scissor doors), each later mapped to the parts that build it
+(`authoring.identity`). An independent critic checks every item.
+
+Only an independent critic (a fresh context: `critic.md`) can call a construct "good" or
+"outstanding"; your own review records "self-reviewed". The masterpiece tier, on explicit
+request for hard subjects, has no time or round cap: improve the critic's top defects round
+after round, saving a checkpoint each time, until the critic scores every criterion 3.
+
 Record how it was made, in the scene (or parameter document):
 `"authoring": {{"tier": "standard", "research": "done", "sources": ["maker-specs", "ref-front"],
+"identity": [{{"feature": "periscope roof channel", "parts": ["roof-channel"], "source": "ref-top"}}],
 "next": ["what the next improvement would be"]}}` — `research` is one of {research}; `sources`
 are ids from the scene's sources; `next` lists, most valuable first, what you would improve
 with more time.
@@ -286,6 +297,52 @@ yet good. You will then be asked to apply the fix and send the whole corrected s
 """
 
 
+CRITIC = """# Independent critique of a construct
+
+You are an independent critic with fresh eyes. You did not make this construct, and you owe
+its author nothing but an exact account. You get the request, the identity checklist written
+from research, reference photos of the real subject, and renders of the construct taken from
+the same views. Judge the construct against the real thing, view by view: put each reference
+beside its render and measure (length to height, wheelbase to length, where the roofline
+peaks, tower heights against each other, how far the nose narrows).
+
+Score each criterion 0-3:
+
+- 3 outstanding: someone who knows the subject names it exactly at a glance; silhouette and
+  proportions match the reference within a few percent; finished, polished, impressive,
+  exhibition quality. Rare: most first versions are 1 or 2.
+- 2 good: clearly right; deviations show only beside the reference.
+- 1 weak: the right kind of thing, wrong in ways an owner notices at once (boxy where it is
+  curved, missing towers, a rectangle where the nose tapers).
+- 0 missing or wrong.
+
+Criteria: `silhouette`, `proportions`, `identity` (the checklist features, rendered with
+care), `depth` (masses, structure, detail and ornament layered), `composition` (hero framing),
+`assembly` (the build tells the story), `motion` (alive without noise), `density` (rich, never
+cluttered), `honesty` (labels from facts; inferred parts look it).
+
+Answer with one JSON object, no prose:
+
+```json
+{{"format": "construct-critique", "version": 1, "scene_sha256": "copy it from the packet",
+ "scores": {{"silhouette": 1, "proportions": 1, "identity": 2, "depth": 2, "composition": 2, "assembly": 2,
+            "motion": 2, "density": 1, "honesty": 3}},
+ "checklist": [{{"feature": "as listed", "present": true, "quality": 2, "comment": "what is right or wrong"}}],
+ "defects": [{{"rank": 1, "severity": "critical", "criterion": "proportions", "parts": ["body"], "view": "side",
+              "problem": "what is wrong, measured against the reference",
+              "fix": "the concrete change to the scene: which part, which shape, which numbers"}}],
+ "verdict": "improve"}}
+```
+
+- `checklist`: every listed feature, plus any feature of the real subject you find missing.
+- `defects`: ranked by how much they cost the likeness, most severe first; `critical` (the
+  subject is not recognisable because of it), `major` (an owner would notice), `minor`.
+- `verdict`: "outstanding" only when every score is 3 and nothing critical or major remains;
+  "good" when every score is at least 2 and nothing is critical; otherwise "improve". It is
+  recomputed from your scores, so score honestly rather than kindly.
+"""
+
+
 TRACE = """# Trace a reference image (for models that can see)
 
 You are measuring a shape, not copying a picture. Look at the attached image — the user's own
@@ -363,14 +420,7 @@ def params_schema():
                         "properties": {s: {"type": "string"} for s in slots}},
             "params": {"type": "object", "additionalProperties": False, "properties": props},
             "param_certainty": {"type": "object", "additionalProperties": {"enum": ["verified", "user_supplied", "inferred"]}},
-            "authoring": {"type": "object", "additionalProperties": False, "required": ["tier", "research"],
-                          "properties": {"tier": {"enum": list(tiers.TIERS)},
-                                         "research": {"enum": list(tiers.RESEARCH_RECORD)},
-                                         "sources": {"type": "array", "items": {"type": "string"}},
-                                         "review_rounds": {"type": "integer", "minimum": 0},
-                                         "outcome": {"enum": list(tiers.OUTCOMES)},
-                                         "next": {"type": "array", "maxItems": tiers.MAX_NEXT,
-                                                  "items": {"type": "string", "maxLength": 300}}}},
+            "authoring": tiers.authoring_schema(),
         },
         "x-variants": variants,
     }
@@ -395,6 +445,7 @@ def build():
         "repair.md": REPAIR,
         "vision-review.md": VISION.format(),
         "trace.md": TRACE.format(),
+        "critic.md": CRITIC.format(),
         "params.schema.json": json.dumps(params_schema(), indent=1) + "\n",
     }
 

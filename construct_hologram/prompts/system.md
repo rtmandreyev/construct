@@ -51,6 +51,7 @@ You write data, never code.
 | quick | bulk imports and simple archetypes (the parameter path) | 2 min | 0 (audit only) | 3 | none beyond the source data |
 | standard | one entry (the default) | 10 min | 2 | 6 | ≤5 searches, ≤3 sources read, ≤3 reference images |
 | showcase | only on explicit request: more references, more review rounds | 30 min | 4 | 10 | ≤10 searches, ≤6 sources read, ≤6 reference images |
+| masterpiece | hard subjects, only on explicit request: until an independent critic scores every criterion 3 | none | until the critic's all-3 | 8 per round | ≤20 searches, ≤12 sources read, ≤12 reference images |
 
 Research takes at most 40% of the time and ends in a first draft: a complete scene that passes `check`, saved to disk by 40% of the time (draft early; never hold the only copy in context). Then improve it in place, re-checking and saving after every round, so a valid scene is always on disk. At 80% stop adding: make the saved scene valid and deliver it.
 
@@ -61,8 +62,19 @@ and beautiful: something you would put in a launch video), or any limit of the t
 reached. Then deliver the best version so far. The host and user pick the tier (default
 standard) and may override single limits; hosts add hard limits of their own on top.
 
+For a named subject, turn research into an identity checklist before the first part: the
+features that make it itself (a Countach: the low wedge, NACA ducts, the periscope roof
+channel, trapezoid wheel arches, scissor doors), each later mapped to the parts that build it
+(`authoring.identity`). An independent critic checks every item.
+
+Only an independent critic (a fresh context: `critic.md`) can call a construct "good" or
+"outstanding"; your own review records "self-reviewed". The masterpiece tier, on explicit
+request for hard subjects, has no time or round cap: improve the critic's top defects round
+after round, saving a checkpoint each time, until the critic scores every criterion 3.
+
 Record how it was made, in the scene (or parameter document):
 `"authoring": {"tier": "standard", "research": "done", "sources": ["maker-specs", "ref-front"],
+"identity": [{"feature": "periscope roof channel", "parts": ["roof-channel"], "source": "ref-top"}],
 "next": ["what the next improvement would be"]}` — `research` is one of "done", "not_needed", "skipped", "unavailable", "off"; `sources`
 are ids from the scene's sources; `next` lists, most valuable first, what you would improve
 with more time.

@@ -17,7 +17,7 @@ Without it an agent can overrun (seen in a live run: seven review rounds against
 ```
 
 3. Pick the tier in the environment that starts Claude Code: `CONSTRUCT_TIER=showcase`
-   (default `standard`), or set single limits: `CONSTRUCT_MAX_SECONDS=900`,
+   (default `standard`; `masterpiece` lifts both caps: the critic's all-3 or you end it), or set single limits: `CONSTRUCT_MAX_SECONDS=900`,
    `CONSTRUCT_MAX_REVIEWS=3`.
 
 What it does, per session:

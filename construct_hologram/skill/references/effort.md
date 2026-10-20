@@ -34,6 +34,7 @@ Record it in the scene: `"authoring": {"tier": "standard", "research": "done", "
 | quick | bulk imports and simple archetypes (the parameter path) | 2 min | 0 (audit only) | 3 | none beyond the source data |
 | standard | one entry (the default) | 10 min | 2 | 6 | ≤5 searches, ≤3 sources read, ≤3 reference images |
 | showcase | only on explicit request: more references, more review rounds | 30 min | 4 | 10 | ≤10 searches, ≤6 sources read, ≤6 reference images |
+| masterpiece | hard subjects, only on explicit request: until an independent critic scores every criterion 3 | none | until the critic's all-3 | 8 per round | ≤20 searches, ≤12 sources read, ≤12 reference images |
 
 Effort goes where it is visible: silhouette, then proportions, then the two or three identity
 features, then secondary detail. Model nothing smaller than about 0.5% of the object's largest
@@ -53,12 +54,29 @@ the time limit (seen in a live run: ten minutes of excellent research, no scene 
 Start the first draft from what you have (the silhouette, the masses, the identity features
 roughly placed) rather than from a perfect plan; size and detail come in the rounds after.
 
+## The masterpiece tier (hard subjects, on request)
+
+For a subject that must be recognisable exactly (a named car, a landmark building) the user can
+ask for the masterpiece tier. It has no wall clock and no round cap. It ends only when an
+independent critic scores every criterion 3, when the user stops it, or at a cost ceiling the
+user set. Every round:
+
+1. Save the scene (a checkpoint), `check` it until clean.
+2. Have the independent critic judge it ([review](review.md), "The independent critic"), with
+   the reference photos beside renders from the same views.
+3. Fix the critic's top defects, most severe first; re-trace a silhouette when proportions
+   are off; then the next round.
+
+Start it with the same research, identity checklist and draft-early rule as any tier: a
+complete, valid scene first, then the long refinement.
+
 ## When to stop
 
 At whichever comes first:
 
 - **The review judges it genuinely good**: accurate and beautiful, something you would put in
-  a launch video. Judge it with the art-direction rubric in [review](review.md) on the rendered
+  a launch video. Only an independent critic can record "good" or "outstanding"; your own
+  review records "self-reviewed". Judge it with the art-direction rubric in [review](review.md) on the rendered
   captures, not only the audit. Review, improve the weakest point, review again.
 - **Any limit of the tier is reached** (wall clock, check rounds, review rounds, research
   counts, or a host's token or cost ceiling).
@@ -71,7 +89,9 @@ Then deliver the best version so far, and record how it ended:
               "next": ["trace the headstock from a side photo", "finer fret markers"]}
 ```
 
-`outcome` is `good`, `limit` or `unreviewed` (nobody could look at the captures). `next`
+`outcome` is `outstanding` or `good` (an independent critic's verdict, recorded by
+`construct critique`), `self-reviewed` (your own review), `limit` or `unreviewed` (nobody could
+look at the captures). `next`
 lists, most valuable first, what the next improvement would be, so the construct can be
 regenerated at a higher tier later. Say the same in the hand-over.
 
