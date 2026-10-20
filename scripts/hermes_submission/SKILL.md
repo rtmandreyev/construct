@@ -1,6 +1,6 @@
 ---
 name: construct
-description: Turn a description into an honest, animated hologram.
+description: Turn a description into an animated holographic construct.
 version: 0.2.0
 author: OWNER NAME (rtmandreyev)
 license: MIT
@@ -9,7 +9,7 @@ prerequisites:
   commands: [python3]
 metadata:
   hermes:
-    tags: [creative, 3d, hologram, webgl, animation, visualization, html, provenance]
+    tags: [creative, 3d, construct, hologram, webgl, animation, visualization, html, provenance]
     category: creative
     related_skills: [anatomy]
     requires_toolsets: [terminal]
@@ -19,7 +19,7 @@ metadata:
 # Construct
 
 Construct turns a description of a real or fictional thing — an object, a building, a machine,
-a creature — into an animated WebGL hologram. You write a short declarative scene (facts with
+a creature — into an animated holographic construct (WebGL). You write a short declarative scene (facts with
 their certainty, and parts built from a closed set of shapes) or fill an archetype's few
 parameters; the bundled tools validate it, audit it, compile it deterministically and render
 it in one holographic style. You never write graphics code and never choose colours.
@@ -30,9 +30,9 @@ method, not code, and adds 3-D animation, certainty as material and a repair loo
 
 ## When to Use
 
-- The user asks for a hologram, a holographic or wireframe light model, or an animated 3-D
-  presentation of a thing: "make a hologram of my CD", "a lighthouse hologram", "show this
-  guitar as a hologram", "a fictional creature for my game".
+- The user asks for a construct or a hologram — a holographic or wireframe light model, or an
+  animated 3-D presentation of a thing: "make a construct of my CD", "a hologram of this
+  lighthouse", "show this guitar as a construct", "a fictional creature for my game".
 - A collection entry needs a consistent animated figure: CDs and their cases, books,
   guitars, synths, bottles, cans and glasses have ready archetypes.
 
@@ -59,7 +59,7 @@ python3 ${HERMES_SKILL_DIR}/scripts/cli.py review book.json --out out
 python3 ${HERMES_SKILL_DIR}/scripts/cli.py video book.json --out out/book.mp4 --seconds 12
 ```
 
-Work in a folder of your own. `out/hologram.html` opens in any browser.
+Work in a folder of your own. `out/construct.html` opens in any browser.
 
 ## Quick Reference
 
@@ -68,7 +68,7 @@ Work in a folder of your own. `out/hologram.html` opens in any browser.
 | an archetype (case, book, guitar, synth, bottle, can, glass) | `params <archetype> --variant <v> --output p.json` |
 | a full scene starter | `new <object\|architecture\|machine\|organism\|cd\|book> --output scene.json` |
 | check: every problem with a path, code and fix hint | `check file.json --json` (`ok`, `needs_repair`, `diagnostics`, `repair_text`) |
-| build the hologram | `build file.json --out out` |
+| build the construct | `build file.json --out out` |
 | review images | `review file.json --out out` → `out/review/hero.png`, `sheet-views.png`, `view-open.png` |
 | examples to start from | `${HERMES_SKILL_DIR}/assets/examples/` |
 | shapes, fields, roles, motion, labels, anchors | `references/vocabulary.md` |
@@ -96,7 +96,7 @@ Work in a folder of your own. `out/hologram.html` opens in any browser.
    images. Judge them against `references/review.md`: does it read as the thing at a
    glance, does anything hover or barely show, is every label from a fact? Fix the scene and
    review again; two or three rounds is normal.
-5. **Deliver.** Give the user `out/hologram.html` (and the video if asked), and say plainly
+5. **Deliver.** Give the user `out/construct.html` (and the video if asked), and say plainly
    what is evidence, what is inferred or designed, and which artwork is the user's own and
    which is generated decoration. Never call a generic reconstruction exact.
 
@@ -117,7 +117,7 @@ Work in a folder of your own. `out/hologram.html` opens in any browser.
 ## Verification
 
 - `check` reports `audit: PASS` and `needs_repair` is false.
-- `out/hologram.html` exists; `out/review/hero.png` shows the requested thing, recognisably.
+- `out/construct.html` exists; `out/review/hero.png` shows the requested thing, recognisably.
 - Facts in the scene match the user's words; nothing unknown is filled in.
 - For a quick self-test: `python3 ${HERMES_SKILL_DIR}/scripts/cli.py check ${HERMES_SKILL_DIR}/assets/examples/cd.json`
   must report `audit: PASS (0 errors, 0 warnings)`.

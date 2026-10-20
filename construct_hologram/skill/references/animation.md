@@ -1,11 +1,11 @@
 # Animation semantics
 
 Everything is a pure function of time `t` and the scene's hash: any frame can be
-reproduced (`hologram.html?t=12.5`). The page also honours the reduced-motion preference.
+reproduced (`construct.html?t=12.5`). The page also honours the reduced-motion preference.
 
 ## Assembly (staged construction)
 
-The hologram is *constructed*, not faded in. Each part's `stage` (0–7) orders the build;
+A construct is *built*, not faded in. Each part's `stage` (0–7) orders the build;
 within a stage lines grow bottom-up, each with a bright moving tip.
 
 - `ceremony`: the whole object appears as a faint, unstable ghost (signal acquired), collapses,
@@ -46,7 +46,7 @@ blades spin) is not available yet: show the more characteristic one.
 
 ## Idle life (host-optional)
 
-After assembly the hologram stays alive with occasional events (`idle.events`), seeded so
+After assembly the construct stays alive with occasional events (`idle.events`), seeded so
 captures repeat. Hosts may play none of them; never make recognition depend on one:
 
 | event | look | suits |

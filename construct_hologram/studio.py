@@ -1,8 +1,8 @@
-"""Command-line workflow for hologram scenes (format version 2).
+"""Command-line workflow for Construct scenes (format construct-scene, version 2).
 
   new <category> [--title T] [--output scene.json]     a valid starter scene to edit
   check <scene.json>                                    validate, compile and audit
-  build <scene.json> --out DIR [--asset-root DIR]       geometry.json, hologram.html, audit.txt
+  build <scene.json> --out DIR [--asset-root DIR]       geometry.json, construct.html, audit.txt
                      [--v1]                             … plus geometry.v1.json for v1 consumers
   review <scene.json> --out DIR [--asset-root DIR]      build, then capture the review set
   video <scene.json> --out FILE.mp4|.gif [--seconds S] [--fps N] [--start S] [--view V]
@@ -117,7 +117,7 @@ def build(scene_path, out_dir, asset_root=None, v1=False, force=True, frame="y-u
     root = asset_root or str(Path(scene_path).resolve().parent)
     html, notes = render.build_html(geometry, root)
     _write(out / "geometry.json", json.dumps(geometry, separators=(",", ":")) + "\n", force)
-    _write(out / "hologram.html", html, force)
+    _write(out / "construct.html", html, force)
     _write(out / "audit.json", json.dumps(report, indent=2) + "\n", force)
     text = audit_mod.format_report(report) + ("\n" + "\n".join("  note: " + n for n in notes) if notes else "")
     _write(out / "audit.txt", text + "\n", force)
@@ -126,6 +126,12 @@ def build(scene_path, out_dir, asset_root=None, v1=False, force=True, frame="y-u
     if frame == "z-up":
         _write(out / "geometry.z-up.json", json.dumps(scene_mod.reframe(geometry, "z-up"), separators=(",", ":")) + "\n", force)
     return geometry, report, text
+
+
+def page_in(folder):
+    """The built page in a folder: construct.html (or hologram.html from before 0.2)."""
+    new = Path(folder, "construct.html")
+    return str(new if new.exists() or not Path(folder, "hologram.html").exists() else Path(folder, "hologram.html"))
 
 
 def add_commands(sub):
@@ -140,7 +146,7 @@ def add_commands(sub):
     p.add_argument("--list", action="store_true")
     p.add_argument("--output")
     p.add_argument("--force", action="store_true")
-    p = sub.add_parser("author", help="draft a hologram with any OpenAI-compatible model: check and repair until clean")
+    p = sub.add_parser("author", help="draft a construct with any OpenAI-compatible model: check and repair until clean")
     p.add_argument("request", help="what to make, in plain words")
     p.add_argument("--base-url", required=True, help="e.g. https://api.deepseek.com/v1 or http://localhost:11434/v1")
     p.add_argument("--model", required=True)
@@ -253,14 +259,14 @@ def run(args):
         if args.command == "build":
             _, report, text = build(args.scene, args.out, args.asset_root, args.v1, frame=args.frame,
                                     palette=args.palette, identity=args.identity)
-            sys.stdout.write(text + "\nwrote %s\n" % Path(args.out, "hologram.html"))
+            sys.stdout.write(text + "\nwrote %s\n" % Path(args.out, "construct.html"))
             return 0 if report["ok"] else 1
         if args.command == "review":
             _, report, text = build(args.scene, args.out, args.asset_root, palette=args.palette, identity=args.identity)
             sys.stdout.write(text + "\n")
             w, h = (int(x) for x in args.size.lower().split("x"))
             sheets = [s for s in args.sheets.split(",") if s]
-            paths = render.review(str(Path(args.out, "hologram.html")), str(Path(args.out, "review")), w, h, sheets=sheets)
+            paths = render.review(page_in(args.out), str(Path(args.out, "review")), w, h, sheets=sheets)
             sys.stdout.write("captured:\n  %s\n" % "\n  ".join(paths))
             return 0 if report["ok"] else 1
         if args.command == "video":
@@ -268,7 +274,7 @@ def run(args):
             with tempfile.TemporaryDirectory(prefix="hologram-video-") as tmp:
                 build(args.scene, tmp, args.asset_root, palette=args.palette, identity=args.identity)
                 w, h = (int(x) for x in args.size.lower().split("x"))
-                render.frames(str(Path(tmp, "hologram.html")), str(Path(tmp, "frames")), args.seconds, args.fps,
+                render.frames(page_in(tmp), str(Path(tmp, "frames")), args.seconds, args.fps,
                               args.start, w, h, view=args.view)
                 out.parent.mkdir(parents=True, exist_ok=True)
                 render.encode_video(str(Path(tmp, "frames")), str(out), args.fps)

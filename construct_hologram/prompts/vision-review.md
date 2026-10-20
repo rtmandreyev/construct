@@ -1,4 +1,4 @@
-# Look at your hologram (optional, for models that can see images)
+# Look at your construct (optional, for models that can see images)
 
 You wrote a scene; here are its renders: `hero.png` (the finished object) and, when it
 opens, `view-open.png`. Compare them with the request, not with the JSON.

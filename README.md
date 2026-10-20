@@ -1,11 +1,11 @@
 # Construct
 
-**Holograms any agent can build — from a description, honestly.**
+**Holographic constructs any agent can build — from a description, honestly.**
 
-![A lighthouse hologram assembling](docs/media/hero.gif)
+![A lighthouse construct assembling](docs/media/hero.gif)
 
 Construct is an agent skill and toolkit that turns a description of a real or fictional thing
-into an honest, animated hologram. A model — any model — writes a short declarative scene, or
+into an honest, animated holographic construct. A model — any model — writes a short declarative scene, or
 fills an archetype's parameters. Construct validates it, audits it, compiles it
 deterministically and renders it in one holographic style: line light over smoked glass,
 staged assembly, opening and idle life, and a visible certainty for every fact and part.
@@ -21,7 +21,7 @@ staged assembly, opening and idle life, and a visible certainty for every fact a
   repair loop runs until the draft is valid and free of visible defects.
 - Python 3.10+, standard library only. MIT licensed.
 
-![Twelve holograms built with Construct](docs/media/gallery.jpg)
+![Twelve constructs built with Construct](docs/media/gallery.jpg)
 
 ## Install
 
@@ -39,9 +39,9 @@ video needs ffmpeg.
 
 | Where | How |
 |---|---|
-| **Hermes** | Copy `dist/hermes/construct` into `~/.hermes/skills/` (or a project's `.hermes/skills/` and run `hermes skills trust` there). Then ask in plain words: *"make a hologram of a 1970s desk fan"*. |
+| **Hermes** | Copy `dist/hermes/construct` into `~/.hermes/skills/` (or a project's `.hermes/skills/` and run `hermes skills trust` there). Then ask in plain words: *"make a construct of a 1970s desk fan"*. |
 | **Claude Code** | `claude --plugin-dir dist/claude-code/construct` for a session, or copy `dist/claude-code/construct/skills/construct` into `.claude/skills/`. Ask in plain words, or `/construct:construct`. |
-| **Any MCP agent** | Add `{"mcpServers": {"construct": {"command": "python3", "args": ["/path/to/construct/construct_hologram/server.py"]}}}`. Seven read-only tools: `hologram_diagnose`, `hologram_params_template`, `hologram_expand_params`, `hologram_compile_scene`, and the legacy `hologram_template`, `hologram_validate`, `hologram_compile`. |
+| **Any MCP agent** | Add `{"mcpServers": {"construct": {"command": "python3", "args": ["/path/to/construct/construct_hologram/server.py"]}}}`. Seven read-only tools: `construct_diagnose`, `construct_params_template`, `construct_expand_params`, `construct_compile`, and the legacy `hologram_template`, `hologram_validate`, `hologram_compile`. |
 | **Any OpenAI-compatible model** | `python3 construct_hologram/cli.py author "a can of porter" --params --base-url https://api.deepseek.com/v1 --model deepseek-chat --key-env DEEPSEEK_API_KEY --out can.json` (also OpenRouter, OpenAI, Ollama, llama.cpp, LM Studio). |
 | **By hand, no model** | `params` → `check` → `build` → `review` → `video` (below). |
 | **Python** | `from construct_hologram import diagnose, params, scene, render` |
@@ -55,7 +55,7 @@ A complete walk-through of every entry point, with costs and timings from live r
 C=construct_hologram/cli.py
 python3 $C params book --variant paperback --output book.json   # fill in the facts you know
 python3 $C check book.json        # audit: PASS (0 errors, 0 warnings) — or paths and fix hints
-python3 $C build book.json --out out    # out/hologram.html: open it in any browser
+python3 $C build book.json --out out    # out/construct.html: open it in any browser
 python3 $C review book.json --out out   # out/review/*.png: stills to judge it by
 python3 $C video book.json --out out/book.mp4 --seconds 12
 ```
@@ -71,7 +71,7 @@ source, refuses a `null` or placeholder fact, flags parts that float or barely r
 requires the documented-accuracy claim to be backed. Generated artwork is labelled
 **generated decoration**, and a real cover is shown only from bytes the user supplied.
 
-Likeness is a separate question. The audit proves a hologram is valid and honest, not that it
+Likeness is a separate question. The audit proves a construct is valid and honest, not that it
 looks like the thing: for free-form subjects that depends on the model and on a visual review
 (a person, or a model that can see the renders). Parameter archetypes look the same from every
 model.

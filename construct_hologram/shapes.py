@@ -1,4 +1,4 @@
-"""Geometry primitives for hologram scenes (format version 2).
+"""Geometry primitives for Construct scenes (format construct-scene, version 2).
 
 Every primitive is built in its own local frame (metres, Y up) and returns a Mesh:
 line segments with an edge class, translucent triangles and sprite points. Nothing

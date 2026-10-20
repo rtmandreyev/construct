@@ -1,7 +1,7 @@
 {
  "$schema": "https://json-schema.org/draft/2020-12/schema",
  "$id": "construct/0.2/params.schema.json",
- "title": "Hologram parameter document (construct-params v1)",
+ "title": "Construct parameter document (construct-params v1)",
  "type": "object",
  "additionalProperties": false,
  "required": [

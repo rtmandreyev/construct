@@ -1,5 +1,5 @@
 {
-  "about": "Synthetic cross-model evaluation tasks for the hologram authoring package. Every name is invented. Scored by score.py: validity (the toolkit's own diagnostics), factuality (required facts present with the user's values, nothing the user did not know invented, verified only with a source) and plausibility (size). Visual quality is judged by a person on the review captures.",
+  "about": "Synthetic cross-model evaluation tasks for the Construct authoring package. Every name is invented. Scored by score.py: validity (the toolkit's own diagnostics), factuality (required facts present with the user's values, nothing the user did not know invented, verified only with a source) and plausibility (size). Visual quality is judged by a person on the review captures.",
   "tasks": [
     {"id": "t1-cd", "file": "t1-cd.json", "path": "params", "archetype": "case", "variant": "jewel",
      "require": {"title": "Glass Harbour", "artist": "The Lantern Choir"},

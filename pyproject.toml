@@ -5,13 +5,13 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "construct-hologram"   # the distribution: keep in step with construct_hologram/product.py (DIST)
 version = "0.2.0"
-description = "Construct: holograms any agent can build — from a description, honestly."
+description = "Construct: holographic constructs any agent can build — from a description, honestly."
 readme = "README.md"
 license = "MIT"
 license-files = ["LICENSE", "NOTICE"]
 requires-python = ">=3.10"
 dependencies = []
-keywords = ["hologram", "3d", "webgl", "agent-skill", "mcp", "visualization"]
+keywords = ["construct", "hologram", "holographic", "3d", "webgl", "agent-skill", "mcp", "visualization"]
 
 [project.scripts]
 construct = "construct_hologram.__main__:main"

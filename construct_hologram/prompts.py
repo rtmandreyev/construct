@@ -22,9 +22,9 @@ from . import scene as scene_mod
 HERE = Path(__file__).resolve().parent
 CONTRACT = product.CONTRACT
 
-SYSTEM = """# Hologram authoring rules ({contract})
+SYSTEM = """# Construct authoring rules ({contract})
 
-You describe one physical object (or a fictional one) so a renderer can draw it as a hologram.
+You describe one physical object (or a fictional one) so a renderer can draw it as a holographic construct.
 You write data, never code.
 
 1. Answer with exactly one JSON object: no prose, no comments, no code fences.
@@ -189,7 +189,7 @@ No step needs an API key from this toolkit; the model and its key live in the ho
 """
 
 
-VISION = """# Look at your hologram (optional, for models that can see images)
+VISION = """# Look at your construct (optional, for models that can see images)
 
 You wrote a scene; here are its renders: `hero.png` (the finished object) and, when it
 opens, `view-open.png`. Compare them with the request, not with the JSON.
@@ -226,7 +226,7 @@ def params_schema():
     return {
         "$schema": "https://json-schema.org/draft/2020-12/schema",
         "$id": "construct/0.2/params.schema.json",
-        "title": "Hologram parameter document (construct-params v1)",
+        "title": "Construct parameter document (construct-params v1)",
         "type": "object", "additionalProperties": False,
         "required": ["format", "version", "archetype", "variant", "id", "title", "facts"],
         "properties": {

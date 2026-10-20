@@ -6,7 +6,7 @@ can repair its own draft from this list; `repair_text` is the list as a message 
 to it. Covers the JSON text itself (fences, comments, trailing commas, duplicate keys),
 validation, budgets and the audit (support, assembly order, overclaims, accuracy).
 
-    from hologram import diagnose
+    from construct_hologram import diagnose
     report = diagnose.diagnose_text(open("draft.json").read())
     if not report["ok"]: send(report["repair_text"])
 """

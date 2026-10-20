@@ -1,7 +1,7 @@
 # About Construct
 
 **Construct is an agent skill and toolkit that turns a description of a real or fictional
-thing into an honest, animated hologram any agent can build.**
+thing into an honest, animated construct any agent can build.**
 
 ## What it does
 
@@ -19,7 +19,7 @@ thing into an honest, animated hologram any agent can build.**
    staged assembly (a ghost, a collapse, a build that grows bottom-up with a bright tip, a
    settle), one-shot articulations (a lid opens, a disc lifts and turns), calm idle life, and
    a visible certainty for every fact and part. The renderer chooses every colour; agents never do.
-4. **Outputs:** a self-contained HTML hologram that runs in any browser, review stills and
+4. **Outputs:** a self-contained HTML page of the construct that runs in any browser, review stills and
    contact sheets, video, and compiled geometry (`construct-geometry`, see
    [CONTRACT.md](../CONTRACT.md)) that apps such as Tessera render natively.
 
@@ -43,7 +43,7 @@ assets or text from Anatomy are included. From Anatomy's `SKILL.md` and README:
 
 ### What Construct adds
 
-- **3-D animated holograms** rather than flat SVG figures: assembly, articulations, idle life,
+- **3-D animated constructs** rather than flat SVG figures: assembly, articulations, idle life,
   a camera that turns to what opening reveals, a reduced-motion still.
 - **Certainty as material:** verified, user-supplied, inferred and decorative parts look
   different, and a provenance view colours them.
@@ -66,7 +66,7 @@ code, fonts, shaders or assets.
 Say:
 
 - "Inspired by Anatomy's truth-first construction method."
-- "A hologram any agent can build."
+- "A construct any agent can build."
 - "Honest about what is known."
 - "Works with any model, through Hermes, Claude Code, MCP, a CLI, Python or an
   OpenAI-compatible endpoint."
@@ -74,7 +74,7 @@ Say:
 Don't say:
 
 - "Anatomy for 3-D" — Construct shares a method, not a product or code.
-- "Photoreal", "exact replica" or "digital twin" — it is a stylised hologram; generic
+- "Photoreal", "exact replica" or "digital twin" — it is a stylised construct; generic
   reconstructions say so on screen.
 - That it identifies real editions, pressings or printings, or that it reproduces real
   artwork — it shows a real cover only from bytes the user supplied, and never recreates one.

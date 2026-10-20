@@ -40,7 +40,7 @@ audit: PASS (0 errors, 0 warnings)
   evidence-backed key parts: 0 of 2
 
 $ python3 $C build book.json --out out
-wrote out/hologram.html
+wrote out/construct.html
 
 $ python3 $C review book.json --out out
 captured: out/review/sheet-assembly.png, sheet-views.png, sheet-life.png, sheet-motion.png,
@@ -50,7 +50,7 @@ $ python3 $C video book.json --out out/small-hours.mp4 --seconds 12
 wrote out/small-hours.mp4
 ```
 
-`out/` now holds `hologram.html` (84 KB, self-contained: open it in any browser),
+`out/` now holds `construct.html` (84 KB, self-contained: open it in any browser),
 `geometry.json` (for apps), `audit.json`/`audit.txt`, `review/` and the video (2 MB). The book
 assembles, its cover opens to a title page set from the `title` fact, and its spine carries
 the title. With no author fact there is no author line, and with no cover image the cover
@@ -64,7 +64,7 @@ shows its designed no-art face.
 1. Build the skill: `python3 construct_hologram/package.py --out dist`.
 2. Copy `dist/hermes/construct` into `~/.hermes/skills/`, or into a project's
    `.hermes/skills/` and run `hermes skills trust` in that project.
-3. Ask in plain words: *"Make a hologram of my CD: Glass Harbour by The Lantern Choir, a
+3. Ask in plain words: *"Make a construct of my CD: Glass Harbour by The Lantern Choir, a
    normal jewel case."* Hermes finds the skill from its description; the skill runs the CLI
    above with the right archetype or a full scene, repairs, builds and reviews.
 
@@ -88,13 +88,15 @@ Run `python3 construct_hologram/server.py` as a stdio server:
 
 | tool | does |
 |---|---|
-| `hologram_diagnose` | checks a draft (raw model text or parsed JSON): `ok`, `needs_repair`, diagnostics with paths and hints, `repair_text` |
-| `hologram_params_template` | a parameter document for an archetype and variant (no arguments: the list) |
-| `hologram_expand_params` | the full scene a parameter document builds |
-| `hologram_compile_scene` | compiled `construct-geometry` for a scene or parameter document |
+| `construct_diagnose` | checks a draft (raw model text or parsed JSON): `ok`, `needs_repair`, diagnostics with paths and hints, `repair_text` |
+| `construct_params_template` | a parameter document for an archetype and variant (no arguments: the list) |
+| `construct_expand_params` | the full scene a parameter document builds |
+| `construct_compile` | compiled `construct-geometry` for a scene or parameter document |
 | `hologram_template`, `hologram_validate`, `hologram_compile` | the legacy v0.1 construction sheets |
 
 The tools read only the JSON they are given: no file access, rendering or network.
+The 0.2 pre-release names (`hologram_diagnose`, `hologram_params_template`,
+`hologram_expand_params`, `hologram_compile_scene`) still answer for one release.
 
 ## Any OpenAI-compatible model
 

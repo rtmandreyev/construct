@@ -38,7 +38,7 @@ LICENSE = product.LICENSE
 PACKAGE = HERE.name  # the Python package's folder, also its folder inside each skill's runtime/
 COMPATIBILITY = ("Python 3.10+ (standard library only). Captures need a local Chromium-family "
                  "browser; video needs ffmpeg. Nothing is installed or downloaded.")
-TAGS = ["Hologram", "3D", "Visualization", "WebGL", "Animation", "Design"]
+TAGS = ["Construct", "Hologram", "3D", "Visualization", "WebGL", "Animation", "Design"]
 
 # The runtime: the v2 toolchain plus the v1 module its CLI still dispatches to.
 RUNTIME_MODULES = ["__init__.py", "__main__.py", "product.py", "hologram.py", "scene.py", "shapes.py",
@@ -187,7 +187,7 @@ def build_claude_code(out):
     plugin = {
         "name": NAME,
         "version": VERSION,
-        "description": product.TAGLINE + " Audited, animated WebGL holograms of objects, buildings, "
+        "description": product.TAGLINE + " Audited, animated holographic constructs of objects, buildings, "
                        "machines and creatures, with visual review.",
         "author": {"name": AUTHOR},
         "license": LICENSE,

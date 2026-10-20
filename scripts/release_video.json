@@ -1,5 +1,5 @@
 {
- "about": "Release video storyboard. Times are seconds; `start` and `speed` map shot time to the hologram's own clock (t = start + shot_time * speed). Type is set by the page in the storyboard's fonts. Shots with src showcase:<name> come from the showcase folder (--showcase); until it exists the montage uses the repository's golden documents (draft-only shots are marked draft: true). {TITLE} and {NAME} come from product.py.",
+ "about": "Release video storyboard. Times are seconds; `start` and `speed` map shot time to the construct's own clock (t = start + shot_time * speed). Type is set by the page in the storyboard's fonts. Shots with src showcase:<name> come from the showcase folder (--showcase); until it exists the montage uses the repository's golden documents (draft-only shots are marked draft: true). {TITLE} and {NAME} come from product.py.",
  "fonts": {
   "headline": "/Library/Fonts/SourceSansPro.otf",
   "mono": "~/Library/Fonts/JetBrainsMonoNerdFont-Regular.ttf"
@@ -322,7 +322,7 @@
    "music": "build back up",
    "type": {
     "text": "Small models: ten lines.",
-    "sub": "A parameter document in, a finished hologram out.",
+    "sub": "A parameter document in, a finished construct out.",
     "in": 0.3,
     "out": 3.5,
     "place": "low"

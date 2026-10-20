@@ -1,4 +1,4 @@
-/* Hologram viewer — a dependency-free WebGL2 renderer for compiled hologram
+/* Construct viewer — a dependency-free WebGL2 renderer for compiled construct
  * geometry (format "construct-geometry" version 2).
  *
  * Everything is a pure function of the geometry, the seed and a time t, so any frame

@@ -31,7 +31,7 @@ def test_params_check_build_from_a_temp_folder(tmp_path):
     r = run("check", "can.json", "--json", cwd=tmp_path)
     assert json.loads(r.stdout)["ok"] is True
     assert run("build", "can.json", "--out", "out", cwd=tmp_path).returncode == 0
-    assert (tmp_path / "out" / "hologram.html").stat().st_size > 10_000
+    assert (tmp_path / "out" / "construct.html").stat().st_size > 10_000
 
 
 def test_unknown_facts_and_colours_are_refused(tmp_path):

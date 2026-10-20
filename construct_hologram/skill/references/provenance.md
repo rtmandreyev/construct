@@ -1,6 +1,6 @@
 # Provenance, certainty and rights
 
-The hologram's look tells the truth about what is known; the scene records why.
+The construct's look tells the truth about what is known; the scene records why.
 
 ## Certainty
 

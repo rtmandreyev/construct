@@ -1,4 +1,4 @@
-"""Holograms for objects, buildings and entities: declarative scenes compiled to deterministic,
+"""Holographic constructs of objects, buildings and entities: declarative scenes compiled to deterministic,
 audited geometry and an animated WebGL preview (see ../README.md). Also the v0.1 construction
 sheets below.
 

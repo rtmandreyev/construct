@@ -1,7 +1,7 @@
 """Render the release video from a storyboard: python3 scripts/release_video.py [storyboard.json]
     [--showcase DIR] [--out DIR] [--aspects 16x9,1x1,9x16] [--fps 30] [--draft]
 
-Every shot is a real hologram rendered by the toolkit's own viewer in a headless local
+Every shot is a real construct rendered by the toolkit's own viewer in a headless local
 browser, at each aspect natively (the viewer frames the object for the aspect; nothing is
 cropped). On-screen type is set in the same page, in fonts given in the storyboard (OFL fonts
 installed on this machine; the font files are read, never copied into the output).

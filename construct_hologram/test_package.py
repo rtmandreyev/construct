@@ -104,11 +104,11 @@ class Packages(unittest.TestCase):
             self.assertEqual(r.returncode, 0, r.stderr)
             r = run("build", "m.json", "--out", "out")
             self.assertEqual(r.returncode, 0, r.stderr)
-            html = (work / "out" / "hologram.html").read_text(encoding="utf-8")
+            html = (work / "out" / "construct.html").read_text(encoding="utf-8")
             self.assertIn("construct-geometry", html)
             r = run("build", str(skill / "examples" / "cd.json"), "--out", "cd")
             self.assertEqual(r.returncode, 0, r.stderr)
-            self.assertIn("data:image/png;base64,", (work / "cd" / "hologram.html").read_text())
+            self.assertIn("data:image/png;base64,", (work / "cd" / "construct.html").read_text())
 
     def test_starters_open_without_warnings(self):
         with tempfile.TemporaryDirectory() as tmp:

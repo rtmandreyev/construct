@@ -1,7 +1,7 @@
 {
  "$schema": "https://json-schema.org/draft/2020-12/schema",
  "$id": "construct/0.2/geometry.schema.json",
- "title": "Compiled hologram geometry (construct-geometry v2, contract construct/0.2)",
+ "title": "Compiled construct geometry (construct-geometry v2, contract construct/0.2)",
  "description": "Structure and budgets of the compiler's output. Y up, front +Z, metres. A consumer re-validates and never trusts the file blindly; see CONTRACT.md for semantics.",
  "$defs": {
   "vec3": {

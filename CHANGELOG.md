@@ -12,6 +12,13 @@ The first release as **Construct**, an independent MIT-licensed project.
   never written.
 - **Any-model authoring:** `construct author` drafts with any OpenAI-compatible endpoint, checks
   and repairs until clean (the key comes from an environment variable and is never stored).
+- **"Construct" is the noun.** What Construct makes is a *construct* ("build a construct of a
+  lighthouse"; "holographic" still describes the look). MCP tools are `construct_diagnose`,
+  `construct_params_template`, `construct_expand_params` and `construct_compile`; the pre-release
+  names `hologram_diagnose`, `hologram_params_template`, `hologram_expand_params` and
+  `hologram_compile_scene` still answer for one release (unlisted). `build` writes
+  `construct.html` (was `hologram.html`; `review` and `video` still read an old `hologram.html`).
+  The tagline is "Holographic constructs any agent can build — from a description, honestly."
 - **One house palette.** Every construct renders in the house palette whatever the model wrote:
   a scene's `presentation.style_hint` is ignored (warning `style-hint-ignored`). Only a person
   chooses another colour, through a host option (`build --palette`, `--identity`, or the viewer's

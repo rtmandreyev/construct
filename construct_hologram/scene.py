@@ -1,4 +1,4 @@
-"""Hologram scenes, format version 2: validation and deterministic compilation.
+"""Construct scenes (format construct-scene, version 2): validation and deterministic compilation.
 
 A scene is declarative data an agent (or a person) authors: facts with sources and
 certainty, semantic parts built from a closed vocabulary of shapes, and presentation

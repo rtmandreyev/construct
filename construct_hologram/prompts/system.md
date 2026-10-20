@@ -1,6 +1,6 @@
-# Hologram authoring rules (construct/0.2)
+# Construct authoring rules (construct/0.2)
 
-You describe one physical object (or a fictional one) so a renderer can draw it as a hologram.
+You describe one physical object (or a fictional one) so a renderer can draw it as a holographic construct.
 You write data, never code.
 
 1. Answer with exactly one JSON object: no prose, no comments, no code fences.

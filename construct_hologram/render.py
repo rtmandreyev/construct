@@ -1,4 +1,4 @@
-"""Preview build and capture for compiled holograms.
+"""Preview build and capture for compiled constructs.
 
 build_html()  — one self-contained HTML file (the viewer, the geometry and any supplied,
                 hash-checked artwork) that runs in any WebGL2 browser, offline.

@@ -1,6 +1,6 @@
 """The product's identity, in one place.
 
-Construct: holograms any agent can build — from a description, honestly.
+Construct: holographic constructs any agent can build — from a description, honestly.
 
 NAME is the skill, MCP server and command name; DIST the Python distribution; the import
 package is this folder (construct_hologram), found from the folder by the entry points. The
@@ -11,7 +11,7 @@ contract and format ids version the documents agents write and apps read; the LE
 NAME = "construct"                       # skill, MCP server and command name
 TITLE = "Construct"                      # the product, in prose
 DIST = "construct-hologram"              # the Python distribution (PyPI "construct" is another project)
-TAGLINE = "Holograms any agent can build — from a description, honestly."
+TAGLINE = "Holographic constructs any agent can build — from a description, honestly."
 VERSION = "0.2.0"
 LICENSE = "MIT"
 AUTHORS = "The Construct authors"

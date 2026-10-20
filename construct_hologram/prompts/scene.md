@@ -83,7 +83,7 @@ An example (synthetic):
   {
    "id": "request",
    "kind": "user_request",
-   "title": "Synthetic example request: a hardcover book hologram",
+   "title": "Synthetic example request: a hardcover book construct",
    "rights": "synthetic"
   },
   {

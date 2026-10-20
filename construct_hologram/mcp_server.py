@@ -1,11 +1,13 @@
-"""Minimal MCP stdio server exposing hologram tools.
+"""Minimal MCP stdio server exposing Construct's tools.
 
 Newline-delimited JSON-RPC 2.0 over stdin/stdout. Standard library only.
 Never reads or writes files, never spawns processes, never fetches or renders.
 
-Tools: the v0.1 construction sheets (hologram_template, hologram_validate, hologram_compile)
-and the v2 scenes of contract construct/0.2 (hologram_diagnose,
-hologram_params_template, hologram_expand_params, hologram_compile_scene). Every tool works
+Tools: construct_diagnose, construct_params_template, construct_expand_params and
+construct_compile for scenes and parameter documents (contract construct/0.2); the legacy
+v0.1 construction sheets (hologram_template, hologram_validate, hologram_compile). The 0.2
+pre-release names hologram_diagnose, hologram_params_template, hologram_expand_params and
+hologram_compile_scene are still answered for one release. Every tool works
 only on the JSON in the request.
 """
 
@@ -76,7 +78,7 @@ TOOLS = [
 _READ_ONLY = {"readOnlyHint": True, "destructiveHint": False, "openWorldHint": False, "idempotentHint": True}
 _DOC = {"type": "object", "description": "a construct-scene (version 2) or a construct-params document"}
 TOOLS += [
-    {"name": "hologram_diagnose",
+    {"name": "construct_diagnose",
      "description": "Check a v2 scene or parameter document (contract construct/0.2): every problem with a "
                     "JSON path, a code and a fix hint, plus repair_text to send back to the model that wrote it. "
                     "Give `text` (the model's raw answer) or `document` (parsed JSON).",
@@ -84,19 +86,19 @@ TOOLS += [
                                                       "document": _DOC},
                      "additionalProperties": False},
      "annotations": _READ_ONLY},
-    {"name": "hologram_params_template",
+    {"name": "construct_params_template",
      "description": "A parameter document to fill in for an archetype (case, book, object, vessel) and variant: the "
                     "simple path for models that struggle with full scenes. Without arguments: every archetype.",
      "inputSchema": {"type": "object", "properties": {"archetype": {"type": "string", "enum": sorted(params.VARIANTS)},
                                                       "variant": {"type": "string"}},
                      "additionalProperties": False},
      "annotations": _READ_ONLY},
-    {"name": "hologram_expand_params",
+    {"name": "construct_expand_params",
      "description": "The full v2 scene a valid parameter document builds (or its diagnostics when it is not valid).",
      "inputSchema": {"type": "object", "properties": {"params": {"type": "object"}}, "required": ["params"],
                      "additionalProperties": False},
      "annotations": _READ_ONLY},
-    {"name": "hologram_compile_scene",
+    {"name": "construct_compile",
      "description": "Compile a valid v2 scene or parameter document into construct-geometry v2 (or return "
                     "its diagnostics). Artwork bytes are never read: slots carry asset ids and hashes only.",
      "inputSchema": {"type": "object", "properties": {"document": _DOC}, "required": ["document"],
@@ -157,13 +159,19 @@ def _call_tool(name, args):
         except hologram.SheetError as exc:
             return _tool_result({"error": str(exc)}, is_error=True)
         return _tool_result(compiled)
+    name = DEPRECATED.get(name, name)
     if name in V2_TOOLS:
         return _call_v2(name, args)
     raise _RpcError(-32602, "unknown tool")
 
 
-V2_TOOLS = {"hologram_diagnose": ({"text", "document"}, set()), "hologram_params_template": ({"archetype", "variant"}, set()),
-            "hologram_expand_params": ({"params"}, {"params"}), "hologram_compile_scene": ({"document"}, {"document"})}
+V2_TOOLS = {"construct_diagnose": ({"text", "document"}, set()),
+            "construct_params_template": ({"archetype", "variant"}, set()),
+            "construct_expand_params": ({"params"}, {"params"}),
+            "construct_compile": ({"document"}, {"document"})}
+# the 0.2 pre-release names: still answered for one release, no longer listed
+DEPRECATED = {"hologram_diagnose": "construct_diagnose", "hologram_params_template": "construct_params_template",
+              "hologram_expand_params": "construct_expand_params", "hologram_compile_scene": "construct_compile"}
 
 
 def _call_v2(name, args):
@@ -172,7 +180,7 @@ def _call_v2(name, args):
         raise _RpcError(-32602, "unknown arguments")
     if required - set(args):
         raise _RpcError(-32602, "missing " + ", ".join(sorted(required - set(args))))
-    if name == "hologram_diagnose":
+    if name == "construct_diagnose":
         if ("text" in args) == ("document" in args):
             raise _RpcError(-32602, "give exactly one of text or document")
         if "text" in args:
@@ -180,7 +188,7 @@ def _call_v2(name, args):
                 raise _RpcError(-32602, "text must be a string")
             return _tool_result(diagnose.diagnose_text(args["text"]))
         return _tool_result(diagnose.diagnose_text(json.dumps(args["document"])))
-    if name == "hologram_params_template":
+    if name == "construct_params_template":
         if "archetype" not in args:
             return _tool_result({"archetypes": {a: sorted(v) for a, v in params.VARIANTS.items()},
                                  "describe": params.describe()})
@@ -188,14 +196,14 @@ def _call_v2(name, args):
             return _tool_result(params.template(args["archetype"], args.get("variant")))
         except scene.SceneError as exc:
             return _tool_result({"error": str(exc)}, is_error=True)
-    doc = args["params"] if name == "hologram_expand_params" else args["document"]
+    doc = args["params"] if name == "construct_expand_params" else args["document"]
     if not isinstance(doc, dict):
         raise _RpcError(-32602, "the document must be an object")
     report = diagnose.diagnose_text(json.dumps(doc))
     if not report["ok"]:
         return _tool_result(report, is_error=True)
     built = params.expand(doc) if params.is_params(doc) else doc
-    if name == "hologram_expand_params":
+    if name == "construct_expand_params":
         if not params.is_params(doc):
             raise _RpcError(-32602, "not a construct-params document")
         return _tool_result(built)

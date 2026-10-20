@@ -1,4 +1,4 @@
-"""Tests for hologram scenes (format version 2): validation, compilation, audit, build and CLI."""
+"""Tests for Construct scenes (format construct-scene, version 2): validation, compilation, audit, build and CLI."""
 
 import copy
 import hashlib
@@ -244,7 +244,7 @@ class Build(unittest.TestCase):
             self.assertIn("audit: PASS", r.stdout)
             r = subprocess.run([sys.executable, cli, "build", "m.json", "--out", "out", "--v1"], cwd=d, capture_output=True, text=True)
             self.assertEqual(r.returncode, 0, r.stderr)
-            for name in ("geometry.json", "geometry.v1.json", "hologram.html", "audit.txt"):
+            for name in ("geometry.json", "geometry.v1.json", "construct.html", "audit.txt"):
                 self.assertTrue(Path(d, "out", name).exists(), name)
             Path(d, "bad.json").write_text('{"format": "construct-scene", "format": 2}')
             r = subprocess.run([sys.executable, cli, "check", "bad.json"], cwd=d, capture_output=True, text=True)
@@ -678,14 +678,14 @@ class McpV2(unittest.TestCase):
         golden = json.loads((EXAMPLES / "case-jewel.params.json").read_text())
         bad = dict(golden, style="x")
         out = self.session([
-            ("hologram_diagnose", {"text": "```json\n{\"a\": 1,}\n```"}),
-            ("hologram_diagnose", {"document": bad}),
-            ("hologram_params_template", {"archetype": "vessel", "variant": "can"}),
-            ("hologram_params_template", {}),
-            ("hologram_expand_params", {"params": golden}),
-            ("hologram_compile_scene", {"document": golden}),
-            ("hologram_compile_scene", {"document": bad}),
-            ("hologram_diagnose", {"text": "{}", "document": {}}),
+            ("construct_diagnose", {"text": "```json\n{\"a\": 1,}\n```"}),
+            ("construct_diagnose", {"document": bad}),
+            ("construct_params_template", {"archetype": "vessel", "variant": "can"}),
+            ("construct_params_template", {}),
+            ("construct_expand_params", {"params": golden}),
+            ("construct_compile", {"document": golden}),
+            ("hologram_compile_scene", {"document": bad}),   # a deprecated alias still answers
+            ("construct_diagnose", {"text": "{}", "document": {}}),
         ])
         res = [o.get("result", {}).get("structuredContent") for o in out]
         self.assertFalse(res[0]["ok"])
@@ -820,7 +820,7 @@ class Capture(unittest.TestCase):
     def test_review_produces_non_empty_images(self):
         with tempfile.TemporaryDirectory() as d:
             studio.build(str(EXAMPLES / "cd.json"), d)
-            paths = render.review(str(Path(d, "hologram.html")), str(Path(d, "review")), 640, 400, sheets=("views",))
+            paths = render.review(str(Path(d, "construct.html")), str(Path(d, "review")), 640, 400, sheets=("views",))
             for p in paths:
                 data = Path(p).read_bytes()
                 self.assertTrue(data.startswith(b"\x89PNG"), p)

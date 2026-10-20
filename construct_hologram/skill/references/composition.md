@@ -1,6 +1,6 @@
 # Recognition and composition
 
-A hologram is recognised by its **silhouette**, its **proportions** and **two or three
+A construct is recognised by its **silhouette**, its **proportions** and **two or three
 identity features**, in that order. Neon on a wrong silhouette is still wrong.
 
 ## Before you write a part

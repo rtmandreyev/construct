@@ -1,4 +1,4 @@
-"""Command line for the hologram toolkit (see ../README.md)."""
+"""Command line for Construct (see ../README.md)."""
 
 import argparse
 import json

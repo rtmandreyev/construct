@@ -48,7 +48,7 @@ permitted | public_domain | reference_only`. `ref` is citation text, never fetch
 `provenance.facts[]`: `{key, value, unit?, certainty, source?, note?}` with certainty
 **`verified | user_supplied | inferred | decorative`**. `verified` must cite a source id.
 **An unknown fact is absent**: `value` is a string, number or boolean, never null; the compiler
-refuses null, and an author deletes the fact instead of guessing. (An app's "unknown" facts simply do not reach the hologram.) `subject.accuracy` is `generic |
+refuses null, and an author deletes the fact instead of guessing. (An app's "unknown" facts simply do not reach the construct.) `subject.accuracy` is `generic |
 approximate | documented`; `subject.synthetic` marks example content.
 
 ## 2. Parts

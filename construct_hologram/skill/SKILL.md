@@ -1,13 +1,13 @@
 ---
 name: {{NAME}}
-description: Build an animated, inspected hologram of a real or fictional object, building, machine, creature or product (CD, book, lamp, lighthouse, jellyfish...) from a request and its evidence. Produces an audited declarative scene, a self-contained animated WebGL preview (staged construction, idle life, camera tour, reduced-motion still) and reviewed captures. Use when someone wants a hologram, holographic model, wireframe light model or animated 3-D presentation of a thing; not for photorealistic rendering, meshes for games, or retrieving cover art.
+description: Build a construct — an animated, audited holographic model — of a real or fictional object, building, machine, creature or product (CD, book, guitar, lamp, lighthouse, jellyfish...) from a request and its evidence. Produces an audited declarative scene, a self-contained animated WebGL page (staged construction, opening, idle life, reduced-motion still) and reviewed captures. Use when someone wants a construct or a hologram: a holographic model, wireframe light model or animated 3-D presentation of a thing; not for photorealistic rendering, meshes for games, or retrieving cover art.
 ---
 
 # {{TITLE}}
 
 You author a **scene** (declarative JSON); the bundled tools validate it, audit it, compile
 it and render it. You never write graphics code. Work the loop below until the review
-passes: a hologram is finished when it is *recognisable at a glance*, *honest about what
+passes: a construct is finished when it is *recognisable at a glance*, *honest about what
 is known*, and *alive without being noisy*.
 
 Tools (Python 3.10+, standard library only; a Chromium-family browser for captures;
@@ -17,7 +17,7 @@ ffmpeg optional for video). `TOOLS` below is `{{SKILL_DIR}}/runtime/cli.py`, whe
 ```sh
 python3 TOOLS new <object|architecture|machine|organism|cd|book> --output scene.json
 python3 TOOLS check scene.json                     # validate + compile + audit (--json: paths and fix hints)
-python3 TOOLS build scene.json --out out/          # out/hologram.html (open in any browser)
+python3 TOOLS build scene.json --out out/          # out/construct.html (open in any browser)
 python3 TOOLS review scene.json --out out/         # + out/review/*.png contact sheets
 python3 TOOLS video scene.json --out out/hologram.mp4 --seconds 16
 ```
@@ -66,7 +66,7 @@ if no browser is available, say so and deliver the HTML without captures.
    scene and review again. Geometric validity (the audit) and art direction (your eyes)
    are separate gates; pass both. If you cannot see images, still fix every `detached` and
    `thin` warning: they are what a viewer notices first.
-7. **Deliver.** Hand over `scene.json`, `out/hologram.html` (and `out/geometry.json`,
+7. **Deliver.** Hand over `scene.json`, `out/construct.html` (and `out/geometry.json`,
    the video if made) with a short note: what is evidence, what is inferred or designed,
    which artwork is authentic and which is generated decoration, and what you reviewed.
    Never call a generic reconstruction exact, and never present generated art as a real

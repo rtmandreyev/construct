@@ -1,4 +1,4 @@
-"""The geometric and provenance audit of a compiled hologram.
+"""The geometric and provenance audit of a compiled construct.
 
 Validation proves a scene is well-formed; the audit asks whether the object stands up
 and tells the truth. Errors must be zero before visual review. Warnings are judgment
