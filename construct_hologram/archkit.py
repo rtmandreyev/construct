@@ -42,25 +42,38 @@ def _apex_roof(m, ring, apex, sides, meridians):
         m.tris.append((ring[i], ring[(i + 1) % n], apex))
 
 
-def tower(radius, height, sides=0, roof="cone", roof_height=None, taper=1.0, eave=0.0, windows=None, segments=32):
+def tower(radius, height, sides=0, roof="cone", roof_height=None, taper=1.0, eave=0.0, windows=None, segments=32,
+          profile="straight"):
+    """`profile` "parabolic": the shaft narrows ever faster towards the top (a paraboloid, as the
+    bell towers of the Sagrada Familia), ending at `taper` times the base radius."""
     m = Mesh()
     n = sides if sides >= 3 else segments
     start = math.pi / 2 - math.pi / n if sides >= 3 else 0.0  # a polygon shows a face to the front
     rt = radius * taper
-    levels = [0.0, height] if sides >= 3 else [0.0, height * 0.33, height * 0.66, height]
-    rings = [_ring(radius + (rt - radius) * y / height, radius + (rt - radius) * y / height, y, n, start) for y in levels]
+
+    def r_at(y):
+        if profile == "parabolic":
+            k = 1 - min(1.0, taper) ** 2
+            return radius * math.sqrt(max(0.0, 1 - k * y / height))
+        return radius + (rt - radius) * y / height
+    if profile == "parabolic":
+        levels = [height * (1 - (1 - k / 8) ** 1.5) for k in range(9)]
+    else:
+        levels = [0.0, height] if sides >= 3 else [0.0, height * 0.33, height * 0.66, height]
+    rings = [_ring(r_at(y), r_at(y), y, n, start) for y in levels]
     for k, ring in enumerate(rings):
         m.loop(ring, OUTLINE if k in (0, len(rings) - 1) else DETAIL)
     for i in (range(n) if sides >= 3 else range(0, n, max(1, n // 12))):
-        m.line(rings[0][i], rings[-1][i], OUTLINE if sides >= 3 else CONTOUR)
-    for i in range(n):
-        j = (i + 1) % n
-        m.quad(rings[0][i], rings[0][j], rings[-1][j], rings[-1][i])
+        m.loop([rg[i] for rg in rings], OUTLINE if sides >= 3 else CONTOUR, closed=False)
+    for lo, hi in zip(rings, rings[1:]):
+        for i in range(n):
+            j = (i + 1) % n
+            m.quad(lo[i], lo[j], hi[j], hi[i])
     if windows:
         rows, per = max(1, int(windows[0])), max(1, int(windows[1]))
         for r in range(rows):
             y = height * (0.3 + 0.55 * (r + 0.5) / rows)
-            ry = radius + (rt - radius) * y / height
+            ry = r_at(y)
             ww = min(0.5 * ry, 2 * math.pi * ry / per * 0.35)
             wh = min(height / rows * 0.45, ww * 2.2)
             for c in range(per):
@@ -288,4 +301,31 @@ def dormer(width, height, depth, roof_height=None):
     m.quad(eave_fl, apex_f, apex_b, eave_bl)
     m.quad(apex_f, eave_fr, eave_br, apex_b)
     m.tris.append((eave_fl, eave_fr, apex_f))
+    return m
+
+
+def shell(span, height, reach, bulge=0.25, ribs=12, rows=8):
+    """A sail-like shell (the Sydney Opera House's roofs): from a base edge on y = 0 (centred on
+    x, `span` wide) up to an apex `height` high and `reach` behind it (towards -Z), bulging
+    forward and up by `bulge` of its height, drawn as a fan of ribs with cross courses."""
+    m = Mesh()
+    ax, ay, az = 0.0, height, -reach
+    nl = math.hypot(reach, height) or 1.0
+    nrm = (0.0, reach / nl, height / nl)  # perpendicular to the base-to-apex line: forward and up
+
+    def at(t, s):
+        bx = -span / 2 + span * t
+        f = math.sin(math.pi * s) * bulge * height * (1 - 0.6 * (2 * t - 1) ** 2)
+        return (bx + (ax - bx) * s, ay * s + nrm[1] * f, az * s + nrm[2] * f)
+    ribs = max(3, int(ribs))
+    rows = max(2, int(rows))
+    grid = [[at(k / (ribs - 1), r / rows) for r in range(rows + 1)] for k in range(ribs)]
+    for k, rib in enumerate(grid):
+        m.loop(rib, OUTLINE if k in (0, ribs - 1) else CONTOUR, closed=False)
+    m.loop([grid[k][0] for k in range(ribs)], OUTLINE, closed=False)  # the base edge
+    for r in range(1, rows):
+        m.loop([grid[k][r] for k in range(ribs)], DETAIL, closed=False)
+    for k in range(ribs - 1):
+        for r in range(rows):
+            m.quad(grid[k][r], grid[k + 1][r], grid[k + 1][r + 1], grid[k][r + 1])
     return m

@@ -1359,6 +1359,15 @@ class Vehicles(unittest.TestCase):
         r = diagnose.diagnose(good)
         self.assertTrue(r["ok"], r["repair_text"])
 
+    def test_a_body_of_thin_tubes_is_warned(self):
+        car = params.expand(params.template("vehicle", "coupe") | {"facts": [], "synthetic": True})
+        self.assertNotIn("tube-outline", {d["code"] for d in diagnose.diagnose(car)["diagnostics"]})
+        for k in range(6):
+            car["parts"].append({"id": "outline-%d" % k, "role": "structure", "certainty": "inferred", "stage": 2,
+                                 "shape": {"type": "tube", "radius": 0.012,
+                                           "path": [[0.8 - 0.3 * k, 0.4, -2.0], [0.8 - 0.3 * k, 1.0, 0.0], [0.8 - 0.3 * k, 0.6, 2.0]]}})
+        self.assertIn("tube-outline", {d["code"] for d in diagnose.diagnose(car)["diagnostics"]})
+
     def test_every_variant_is_a_car_not_a_box(self):
         for var in params.VARIANTS["vehicle"]:
             doc = params.template("vehicle", var) | {"facts": [], "synthetic": True}
@@ -1478,7 +1487,10 @@ class ArchitectureKit(unittest.TestCase):
                    {"type": "battlements", "path": [[0, 0], [10, 0], [10, 6], [0, 6]], "height": 1, "merlon": 0.8,
                     "gap": 0.6, "thickness": 0.5},
                    {"type": "buttress", "width": 1, "depth": 2, "height": 8, "steps": 3},
-                   {"type": "dormer", "width": 2, "height": 2, "depth": 1.5}]
+                   {"type": "dormer", "width": 2, "height": 2, "depth": 1.5},
+                   {"type": "shell", "span": 30, "height": 50, "reach": 35, "bulge": 0.3, "ribs": 14},
+                   {"type": "tower", "radius": 4, "height": 80, "taper": 0.2, "profile": "parabolic", "roof": "spire",
+                    "windows": [10, 5]}]
         for sh in shapes:
             r = diagnose.diagnose(self.one(sh))
             codes = [d["code"] for d in r["diagnostics"] if d["code"] != "no-mass"]
@@ -1491,6 +1503,18 @@ class ArchitectureKit(unittest.TestCase):
                {"type": "facade", "size": [10, 5], "arch": "ogee"}]
         for sh in bad:
             self.assertFalse(diagnose.diagnose(self.one(sh))["ok"], sh)
+
+    def test_a_parabolic_shaft_narrows_faster_near_the_top(self):
+        geo = scene.compile_scene(self.one({"type": "tower", "radius": 4, "height": 90, "taper": 0.25,
+                                            "profile": "parabolic", "roof": "none"}))
+        lines, st = geo["lines"], geo["line_stride"]
+        def width_at(y):
+            xs = [abs(lines[i + k]) for i in range(0, len(lines), st) for k in (0, 3)
+                  if abs(lines[i + k + 1] - y) < 0.5]
+            return max(xs)
+        mid, top = width_at(45.0 * (1 - (1 - 4 / 8) ** 1.5) * 2), width_at(90.0)
+        self.assertLess(top, 1.1)
+        self.assertGreater(width_at(0.0) - mid, 0)
 
     def test_a_spire_rises_above_its_shaft(self):
         geo = scene.compile_scene(self.one({"type": "tower", "radius": 2, "height": 10, "roof": "spire"}))

@@ -235,7 +235,7 @@ iou, edge, pass, scene_sha256}`: silhouette comparisons). `outcome` adds `outsta
 
 ## The architecture kit (additions within 0.2)
 
-Shapes `tower`, `roof`, `dormer`, `facade`, `battlements` and `buttress` (fields in the
+Shapes `tower`, `roof`, `dormer`, `facade`, `battlements`, `buttress` and `shell` (fields in the
 skill's vocabulary reference) compile to ordinary lines and triangles; readers need nothing new.
 
 ## Loft (an addition within 0.2)

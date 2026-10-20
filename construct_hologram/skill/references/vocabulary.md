@@ -60,11 +60,12 @@ errors: the closed vocabulary is the safety boundary.
 | `sphere` | `radius` or `radii [x,y,z]`, `lat` 2–24, `lon` 3–48, `anchor` | heads, domes, bodies, ellipsoids |
 | `torus` | `major, minor`, `segments, sides, rings` | rails, rims, tyres, rings |
 | `lathe` | `profile [[radius, y], ...]` revolved about Y, `segments`, `meridians` | towers, bottles, vases, lamps, bells, records (flat profile = grooves) |
-| `tower` | `radius, height`, `sides` (0 round, 3+ polygonal), `roof` cone · pyramid · spire · onion · flat · none, `roof_height`, `taper`, `eave`, `windows [rows, per_row]` | castle towers, turrets, minarets, lighthouses, silos |
+| `tower` | `radius, height`, `sides` (0 round, 3+ polygonal), `roof` cone · pyramid · spire · onion · flat · none, `roof_height`, `taper`, `profile` straight · parabolic (narrowing ever faster: the Sagrada Família's bell towers), `eave`, `windows [rows, per_row]` | castle towers, turrets, minarets, lighthouses, silos |
 | `roof` | `size [w, d], height`, `style` gable · hip, `ridge` x · z, `overhang`, `courses` | pitched roofs on a block (stands on its eaves) |
 | `dormer` | `width, height, depth, roof_height` (faces +Z, back at z = 0) | windows in a roof (with `repeat`) |
 | `facade` | `size [w, h], rows, cols, opening [w, h]`, `arch` round · pointed · flat · none, `kind` windows · arcade, `outline` | a wall's windows or an arcade, facing +Z; `outline: false` on a box face |
 | `battlements` | `radius` or `path [[x, z], ...]`, `height, merlon, gap, thickness` | crenellated wall tops and tower tops |
+| `shell` | `span, height, reach, bulge, ribs, rows`: a sail from a base edge (on y = 0, `span` wide) up to an apex `height` high and `reach` behind, bulging forward, ribbed | the Sydney Opera House's roofs; pair them with `rotate [0, 180, 0]` and a podium |
 | `buttress` | `width, depth, height, steps` (against z = 0, out along +Z) | cathedral and castle walls (with `repeat`) |
 | `loft` | `sections [[z, half_width, y_bottom, y_top(, half_width_top)], ...]` back to front along +Z, `round` 0–1 | car bodies and glasshouses, hulls, fuselages: the plan (half-widths) and side profile (bottoms, tops) together |
 | `extrude` | `profile [[u,v], ...]` (simple polygon), `height`, `axis` `y` (footprint in XZ, rises) · `z` (front elevation in XY, runs back) · `x`, `ribs` | building plans, gabled houses, book spines, brackets |

@@ -189,11 +189,13 @@ cited drawing, measurement or dataset gives its coordinates; the parts of a fict
   (car bodies, glasshouses, hulls: plan and side profile together); tube `path [[x,y,z],...],
   radius` (limbs, cables); curve `points`; plane `size [w,h]` facing +Z; grid; points; marker;
   architecture kit (each stands on y = 0): tower `radius, height, sides (0 round), roof
-  cone|pyramid|spire|onion|flat|none, roof_height, taper, eave, windows [rows, per_row]`; roof
+  cone|pyramid|spire|onion|flat|none, roof_height, taper, profile straight|parabolic, eave,
+  windows [rows, per_row]`; roof
   `size [w,d], height, style gable|hip, ridge x|z, overhang, courses`; dormer `width, height,
   depth`; facade `size [w,h], rows, cols, arch round|pointed|flat|none, kind windows|arcade`
   (a wall facing +Z; `outline: false` on a box face); battlements `radius` or `path [[x,z],...],
-  height, merlon, gap, thickness`; buttress `width, depth, height, steps`;
+  height, merlon, gap, thickness`; buttress `width, depth, height, steps`; shell `span,
+  height, reach, bulge, ribs` (a ribbed sail rising back from a base edge: concert-hall roofs);
   terrain `size [w,d], heights [[...rows back to front...]]` — real relief comes from
   `construct terrain` and elevation data (MEASURED TERRAIN, verified); a small hand-made grid
   is `inferred` (SKETCHED TERRAIN).
@@ -209,10 +211,11 @@ cited drawing, measurement or dataset gives its coordinates; the parts of a fict
 - Shelving: `"anchors": {{"front": {{"part", "face"}}, "spine": {{"part", "face"}}}}`.
 - Budgets: 256 parts, 24,000 lines, 24,000 triangles, 32 moving copies.
 
-Vehicles are never a box: trace the side silhouette and the plan outline first (from
-references for a named model), loft the lower body through them with a narrow, rounded
-nose, a second narrower loft for the glasshouse, wheels on the ground in arches. Or start
-from the `vehicle` archetype (wedge, coupe, sedan).
+Vehicles are never a box, and never an outline of thin tubes (they render as wire, not a
+body): trace the side silhouette and the plan outline first (from references for a named
+model), loft the body through them with a narrow, rounded nose, a narrower glasshouse,
+wheels on the ground in arches; then smooth section `curve`s across the body at the main
+stations and along the arch lips. Or start from the `vehicle` archetype (wedge, coupe, sedan).
 
 Work in this order: the overall size and silhouette (`mass`), the structure, the
 identity features, then a little detail. Fewer, truer parts beat many guesses.

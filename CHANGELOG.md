@@ -58,6 +58,17 @@
 - `construct terrain --into scene.json`: measured terrain at real scale as a building's
   plinth, the ground at the site's centre at `y = 0`.
 
+### From the baseline runs
+
+- `tube-outline`: a vehicle (or a scene without surfaces) whose outline is drawn with long thin
+  tubes is warned: they render as glowing wire, not a body (both weak live cars did this).
+- The section method for cars in the composition guide and scene prompt: traced side skins,
+  filled cross-section slices, smooth section curves (how the best-liked cars were built).
+- `tower` `profile: parabolic`: shafts that narrow ever faster towards the top (the Sagrada
+  Família's bell towers).
+- `shell`: a ribbed sail rising back from a base edge, bulging forward (the Sydney Opera
+  House's roofs; pair and turn them with `rotate`).
+
 ## 0.2.0 — Construct (2026-10-19)
 
 The first release as **Construct**, an independent MIT-licensed project.

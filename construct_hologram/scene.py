@@ -73,7 +73,7 @@ ASSEMBLY = ("ceremony", "build", "cut")
 LIFE = ("off", "calm", "alive")
 SHAPE_TYPES = ("box", "cylinder", "cone", "sphere", "torus", "lathe", "extrude", "tube",
                "curve", "plane", "grid", "points", "marker", "terrain", "globe", "loft",
-               "tower", "roof", "dormer", "facade", "battlements", "buttress")
+               "tower", "roof", "dormer", "facade", "battlements", "buttress", "shell")
 MAX_TERRAIN = 128
 MAX_GLOBE_POINTS = 20000
 ARTICULATIONS = ("hinge", "slide", "lift", "turn")
@@ -413,6 +413,8 @@ def _shape_check(c, shape, where):
                 c.err(where + ".windows", "expected [rows, windows per row] as whole numbers")
         if "segments" in shape:
             c.num(shape["segments"], where + ".segments", 8, 64, True)
+        if "profile" in shape:
+            c.choice(shape["profile"], ("straight", "parabolic"), where + ".profile")
     elif t == "roof":
         c.vec(shape.get("size"), where + ".size", 2, **pos)
         c.num(shape.get("height"), where + ".height", **pos)
@@ -455,6 +457,15 @@ def _shape_check(c, shape, where):
         else:
             for i, q in enumerate(shape["path"]):
                 c.vec(q, "%s.path[%d]" % (where, i), 2)
+    elif t == "shell":
+        for k in ("span", "height", "reach"):
+            c.num(shape.get(k), "%s.%s" % (where, k), **pos)
+        if "bulge" in shape:
+            c.num(shape["bulge"], where + ".bulge", 0, 1)
+        if "ribs" in shape:
+            c.num(shape["ribs"], where + ".ribs", 3, 48, True)
+        if "rows" in shape:
+            c.num(shape["rows"], where + ".rows", 2, 24, True)
     elif t == "buttress":
         for k in ("width", "depth", "height"):
             c.num(shape.get(k), "%s.%s" % (where, k), **pos)
@@ -557,12 +568,14 @@ _SHAPE_KEYS = {
     "terrain": {"type", "size", "heights", "contour", "index", "grid_every", "skirt"},
     "globe": {"type", "radius", "paths", "graticule", "faces"},
     "loft": {"type", "sections", "round"},
-    "tower": {"type", "radius", "height", "sides", "roof", "roof_height", "taper", "eave", "windows", "segments"},
+    "tower": {"type", "radius", "height", "sides", "roof", "roof_height", "taper", "eave", "windows", "segments",
+              "profile"},
     "roof": {"type", "size", "height", "style", "ridge", "overhang", "courses"},
     "dormer": {"type", "width", "height", "depth", "roof_height"},
     "facade": {"type", "size", "rows", "cols", "opening", "arch", "kind", "outline"},
     "battlements": {"type", "height", "merlon", "gap", "thickness", "radius", "path"},
     "buttress": {"type", "width", "depth", "height", "steps"},
+    "shell": {"type", "span", "height", "reach", "bulge", "ribs", "rows"},
     "points": {"type", "count", "region", "sprite", "size_px"},
     "marker": {"type", "sprite", "size_px"},
 }
@@ -1271,12 +1284,12 @@ def _local_mesh(shape, seed):
         return shapes.plane(shape["size"][0], shape["size"][1], shape.get("divisions", 0))
     if t == "grid":
         return shapes.grid(shape["size"][0], shape["size"][1], shape["divisions"])
-    if t in ("tower", "roof", "dormer", "facade", "battlements", "buttress"):
+    if t in ("tower", "roof", "dormer", "facade", "battlements", "buttress", "shell"):
         from . import archkit
         if t == "tower":
             return archkit.tower(shape["radius"], shape["height"], shape.get("sides", 0), shape.get("roof", "cone"),
                                  shape.get("roof_height"), shape.get("taper", 1.0), shape.get("eave", 0.0),
-                                 shape.get("windows"), shape.get("segments", 32))
+                                 shape.get("windows"), shape.get("segments", 32), shape.get("profile", "straight"))
         if t == "roof":
             return archkit.roof(shape["size"][0], shape["size"][1], shape["height"], shape.get("style", "gable"),
                                 shape.get("ridge", "x"), shape.get("overhang", 0.0), shape.get("courses", 0))
@@ -1289,6 +1302,9 @@ def _local_mesh(shape, seed):
         if t == "battlements":
             return archkit.battlements(shape["height"], shape["merlon"], shape["gap"], shape["thickness"],
                                        shape.get("radius"), shape.get("path"))
+        if t == "shell":
+            return archkit.shell(shape["span"], shape["height"], shape["reach"], shape.get("bulge", 0.25),
+                                 shape.get("ribs", 12), shape.get("rows", 8))
         return archkit.buttress(shape["width"], shape["depth"], shape["height"], shape.get("steps", 2))
     if t == "loft":
         return shapes.loft([list(x) for x in shape["sections"]], shape.get("round", 0.35))

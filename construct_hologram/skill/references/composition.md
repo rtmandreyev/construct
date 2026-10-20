@@ -45,7 +45,8 @@ identity features**, in that order. Neon on a wrong silhouette is still wrong.
 - **Manufactured object**: the housing as mass; working parts (platter, arm, blade, lid)
   as identity, each a separate part so it can move; small controls as detail. Show it in
   use (record on the platter, lid open) when that is recognisable.
-- **Vehicle**: never a box body. Trace the side silhouette and the plan (top) outline first
+- **Vehicle**: never a box body, and never a body outlined with thin tubes (they render as
+  glowing wire, not a surface: the audit warns `tube-outline`). Trace the side silhouette and the plan (top) outline first
   — from references when the car is a named model ([tracing](tracing.md)) — and loft the
   lower body through them: half-widths from the plan, sill and shoulder heights from the
   side, the sides leaning in (`half_width_top` about 0.9 of the bottom). Round the plan at
@@ -55,7 +56,13 @@ identity features**, in that order. Neon on a wrong silhouette is still wrong.
   tail as detail. The `vehicle` archetype (`params vehicle --variant wedge|coupe|sedan`)
   builds exactly this and is the quickest start; for a named car, replace its body with one
   lofted from traced side, top and front views (`loft-from-traces`) and measure it with
-  `compare` ([tracing](tracing.md)).
+  `compare` ([tracing](tracing.md)). The section method, as the best-liked cars were built:
+  the traced side outline as a thin `extrude` (`axis: x`) on each flank with a glass fill;
+  cross-sections every 10–15 cm as `extrude` slices (`axis: z`) with `look: {"fill": "dark",
+  "line": "none"}`, which give the body its volume and hide what is behind; and smooth
+  `curve`s across the body at the main stations (bonnet, windscreen base, roof, deck) as the
+  identity lines, plus curves along the arch lips and shoulder. A `loft` does the slices and
+  sections in one part; add the curves on top.
 - **Machine**: the frame, the moving assembly (with `spin`/`swing` at its real pivot), the
   power or light source as `data`.
 - **Organism**: body volumes as ellipsoids/lathe; limbs as tapered tubes from real joints;

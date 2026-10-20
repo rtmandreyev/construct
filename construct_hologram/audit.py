@@ -116,6 +116,23 @@ def audit(scene, geometry):
             "it opens but has no view named \"open\": from the hero the opened pose may look closed.")
     from . import tiers
     tiers.audit(scene, add, warnings)
+    # a body drawn with thin tubes reads as glowing wire, not a surface (seen in live car runs)
+    size = max(radius * 2, 1e-6)
+    wires = []
+    for sp in scene["parts"]:
+        sh = sp["shape"]
+        if sh["type"] != "tube" or sp.get("floating"):
+            continue
+        r = max(sh["radius"]) if isinstance(sh["radius"], list) else sh["radius"]
+        length = sum(math.dist(a_, b_) for a_, b_ in zip(sh["path"], sh["path"][1:]))
+        if r <= 0.02 * size and length >= 0.25 * size:
+            wires.append(sp["id"])
+    surfaces = [sp for sp in scene["parts"] if sp["role"] == "mass" and sp["shape"]["type"] in
+                ("box", "loft", "extrude", "lathe", "sphere", "cylinder", "cone")]
+    if (scene["subject"]["category"] == "vehicle" and len(wires) >= 6) or (len(wires) >= 8 and len(surfaces) <= 1):
+        add(warnings, "tube-outline", None, "%d long thin tubes (%s) trace the outline: they render as glowing wires, "
+            "not a body. Build the body as a loft through its sections (or filled slices with section curves), and keep "
+            "tubes for real rods, pipes and frames." % (len(wires), ", ".join(wires[:5]) + (", ..." if len(wires) > 5 else "")))
     styles = geometry["styles"]
     stride = geometry["line_stride"]
     lines = geometry["lines"]
