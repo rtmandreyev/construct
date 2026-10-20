@@ -4,11 +4,11 @@
   "headline": "/Library/Fonts/SourceSansPro.otf",
   "mono": "~/Library/Fonts/JetBrainsMonoNerdFont-Regular.ttf"
  },
- "install": "github.com/OWNER/{NAME}",
+ "install": "github.com/rtmandreyev/construct",
  "shots": [
   {
    "id": "open",
-   "src": "hologram_studio/examples/v2/lighthouse.json",
+   "src": "construct_hologram/examples/v2/lighthouse.json",
    "start": 0.0,
    "speed": 1.75,
    "seconds": 4.0,
@@ -22,7 +22,7 @@
   },
   {
    "id": "build",
-   "src": "hologram_studio/examples/v2/turntable.json",
+   "src": "construct_hologram/examples/v2/turntable.json",
    "start": 0.5,
    "speed": 2.0,
    "seconds": 3.2,
@@ -36,7 +36,7 @@
   },
   {
    "id": "opens",
-   "src": "hologram_studio/examples/v2/cd.json",
+   "src": "construct_hologram/examples/v2/cd.json",
    "start": 4.0,
    "speed": 2.0,
    "seconds": 4.0,
@@ -50,7 +50,7 @@
   },
   {
    "id": "alive",
-   "src": "hologram_studio/examples/v2/lantern-jellyfish.json",
+   "src": "construct_hologram/examples/v2/lantern-jellyfish.json",
    "start": 3.0,
    "speed": 1.6,
    "seconds": 4.0,
@@ -223,7 +223,7 @@
   },
   {
    "id": "d-guitar",
-   "src": "hologram_studio/examples/v2/object-electric-guitar.params.json",
+   "src": "construct_hologram/examples/v2/object-electric-guitar.params.json",
    "start": 0.4,
    "speed": 3.4,
    "seconds": 2.4,
@@ -239,7 +239,7 @@
   },
   {
    "id": "d-synth",
-   "src": "hologram_studio/examples/v2/object-synth.params.json",
+   "src": "construct_hologram/examples/v2/object-synth.params.json",
    "start": 0.4,
    "speed": 3.4,
    "seconds": 2.4,
@@ -249,7 +249,7 @@
   },
   {
    "id": "d-acoustic",
-   "src": "hologram_studio/examples/v2/object-acoustic-guitar.params.json",
+   "src": "construct_hologram/examples/v2/object-acoustic-guitar.params.json",
    "start": 0.4,
    "speed": 3.4,
    "seconds": 2.4,
@@ -259,7 +259,7 @@
   },
   {
    "id": "d-box",
-   "src": "hologram_studio/examples/v2/case-box.params.json",
+   "src": "construct_hologram/examples/v2/case-box.params.json",
    "start": 0.4,
    "speed": 3.4,
    "seconds": 2.4,
@@ -269,7 +269,7 @@
   },
   {
    "id": "d-digipak",
-   "src": "hologram_studio/examples/v2/case-digipak.params.json",
+   "src": "construct_hologram/examples/v2/case-digipak.params.json",
    "start": 0.4,
    "speed": 3.4,
    "seconds": 2.4,
@@ -279,7 +279,7 @@
   },
   {
    "id": "d-tulip",
-   "src": "hologram_studio/examples/v2/vessel-glass-tulip.params.json",
+   "src": "construct_hologram/examples/v2/vessel-glass-tulip.params.json",
    "start": 0.4,
    "speed": 3.4,
    "seconds": 2.4,
@@ -289,7 +289,7 @@
   },
   {
    "id": "d-bottle",
-   "src": "hologram_studio/examples/v2/vessel-bottle.params.json",
+   "src": "construct_hologram/examples/v2/vessel-bottle.params.json",
    "start": 0.4,
    "speed": 3.4,
    "seconds": 2.4,
@@ -299,7 +299,7 @@
   },
   {
    "id": "honest",
-   "src": "hologram_studio/examples/v2/lighthouse.json",
+   "src": "construct_hologram/examples/v2/lighthouse.json",
    "start": 12.0,
    "speed": 1.0,
    "seconds": 3.6,
@@ -315,7 +315,7 @@
   },
   {
    "id": "simple",
-   "src": "hologram_studio/examples/v2/book-paperback.params.json",
+   "src": "construct_hologram/examples/v2/book-paperback.params.json",
    "start": 0.6,
    "speed": 2.6,
    "seconds": 3.6,
@@ -330,7 +330,7 @@
   },
   {
    "id": "any",
-   "src": "hologram_studio/examples/v2/turntable.json",
+   "src": "construct_hologram/examples/v2/turntable.json",
    "start": 14.0,
    "speed": 1.0,
    "seconds": 3.4,
@@ -350,7 +350,7 @@
    "grab": 0.6,
    "type": {
     "text": "{TITLE}",
-    "sub": "github.com/OWNER/{NAME}\nfree and open source · MIT",
+    "sub": "github.com/rtmandreyev/construct\nfree and open source · MIT",
     "in": 0.2,
     "out": 3.9
    }

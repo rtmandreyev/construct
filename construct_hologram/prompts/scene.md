@@ -1,0 +1,462 @@
+# The full path: a scene
+
+Use this when no archetype fits. A scene lists facts and parts built from a closed set
+of shapes; the compiler checks everything.
+
+Skeleton:
+
+```json
+{"format": "construct-scene", "version": 2, "id": "lowercase-id", "title": "Name",
+ "subject": {"category": "object", "accuracy": "generic", "synthetic": false, "summary": "one sentence"},
+ "units": "m", "seed": 7,
+ "sources": [{"id": "request", "kind": "user_request", "title": "The request", "rights": "user_private"}],
+ "facts": [{"key": "height", "value": 0.42, "unit": "m", "certainty": "inferred", "note": "typical"}],
+ "parts": [], "articulations": [], "labels": [], "anchors": {}}
+```
+
+`subject.category`: architecture, object, machine, vehicle, organism, fictional, cd, book, artwork-carrier, other. `subject.accuracy`: `generic` (a typical example;
+the usual choice), `approximate` (this particular thing, imprecisely) or `documented`
+(its key parts cite evidence). A fictional subject is category `fictional`.
+
+Parts: `{"id", "role", "certainty", "stage" (0..7), "shape", "at" [x,y,z],
+"rotate" [deg x,y,z], "basis" [fact keys], "repeat", "mirror", "floating", "artwork"}`.
+Stages build from what holds things up: legs and feet before the body that rests on them,
+walls before roofs, a base before an arm. Parts that hover (a halo, a beam) are `floating`.
+A part the user named but whose size you chose is `inferred` (cite the user's fact in
+`basis`); the parts of a fictional design are `inferred` too (designed from the request).
+`decorative` is only for atmosphere. The request source is `"rights": "user_private"`
+(`"synthetic"` only for examples and tests).
+
+- Roles: mass, structure, detail, identity, data, ornament, ground, artwork. Two or three `identity` parts are what make it recognisable.
+- Default orientations: cylinders, cones, lathes and tori stand on `at` around the +Y axis
+  (a torus lies flat); boxes and spheres are centred on `at`; a plane faces +Z; a tube
+  follows its path. Keep detail parts to under half of the lines.
+- Shapes (box, cylinder, cone, sphere, torus, lathe, extrude, tube, curve, plane, grid, points, marker):
+  box `size [w,h,d]` (centred on `at`; `anchor: base` stands it on `at`); cylinder `radius,
+  height` (its base is at `at`, it rises along +Y); cone `radius_bottom, radius_top, height`
+  (a lampshade is wider at the bottom; tilt any part with `rotate`, degrees about X, then Y,
+  then Z); sphere `radius` or `radii`;
+  torus `major, minor`; lathe `profile [[radius, y], ...]` (turned forms); extrude
+  `profile [[u, v], ...], height, axis y|z|x` (plans, elevations); tube `path [[x,y,z],...],
+  radius` (limbs, cables); curve `points`; plane `size [w,h]` facing +Z; grid; points; marker.
+- Copies: `"repeat": {"count": n, "step": {"at": [dx,dy,dz]}}` or
+  `{"count": n, "radial": {"axis": "y", "center": [x,y,z]}}`; `"mirror": "x"`.
+- Everything rests on something (the ground, another part) unless `"floating": true`.
+- Opening once: `articulations: [{"id", "type": hinge|slide|lift|turn, "parts", "axis",
+  "pivot" (hinge/turn), "amount" (degrees or metres), "order"}]`, values in the closed pose.
+- Text from facts: `labels: [{"id", "part", "face" (box: front back left right top bottom),
+  "field": fact key, "role": title|creator|meta, "orientation": horizontal|vertical-down,
+  "region": [u0, v0, u1, v1]}]`.
+- Images: on a part, `"artwork": {"slot": "cover-front", "asset": "id", "mask": "rect"}`.
+- Shelving: `"anchors": {"front": {"part", "face"}, "spine": {"part", "face"}}`.
+- Budgets: 256 parts, 24,000 lines, 24,000 triangles, 32 moving copies.
+
+Work in this order: the overall size and silhouette (`mass`), the structure, the
+identity features, then a little detail. Fewer, truer parts beat many guesses.
+Connecting parts (an arm, a handle, a stem, a leg) must read clearly next to the big
+volumes: give them a real radius (about 1.5% of the object or more) and the `identity`
+role when they carry the silhouette; end them inside the part they join.
+
+Leave out `presentation` and `animation` (the host owns camera, colour and timing), except
+`presentation.views`: give a view named `"open"` (yaw, pitch in degrees) when the object
+opens, so a host can turn to what opening reveals. `look` only to hide a part that just
+carries text (`{"line": "none", "fill": "none"}`).
+
+An example (synthetic):
+
+```json
+{
+ "format": "construct-scene",
+ "version": 2,
+ "id": "book-generic",
+ "title": "Hardcover book",
+ "subject": {
+  "category": "book",
+  "summary": "A generic hardcover standing upright: boards, a rounded spine and the page block. The front board opens on the spine to the title page. The cover is generated decoration; the title and author are invented for this example.",
+  "accuracy": "generic",
+  "synthetic": true
+ },
+ "units": "m",
+ "seed": 1455,
+ "sources": [
+  {
+   "id": "request",
+   "kind": "user_request",
+   "title": "Synthetic example request: a hardcover book hologram",
+   "rights": "synthetic"
+  },
+  {
+   "id": "generated-art",
+   "kind": "generated",
+   "title": "Abstract banded cover generated by the toolkit (png.book_cover)",
+   "rights": "synthetic"
+  }
+ ],
+ "facts": [
+  {
+   "key": "title",
+   "value": "An Example Novel",
+   "certainty": "user_supplied",
+   "source": "request",
+   "note": "invented for this synthetic example"
+  },
+  {
+   "key": "author",
+   "value": "A. N. Author",
+   "certainty": "user_supplied",
+   "source": "request",
+   "note": "invented for this synthetic example"
+  },
+  {
+   "key": "book.size",
+   "value": "0.156 x 0.234 x 0.036",
+   "unit": "m",
+   "certainty": "inferred",
+   "note": "a common trade hardcover size"
+  },
+  {
+   "key": "artwork",
+   "value": "generated decoration; no edition is identified",
+   "certainty": "decorative",
+   "source": "generated-art"
+  }
+ ],
+ "assets": [
+  {
+   "id": "book-art",
+   "path": "assets/book-cover.png",
+   "sha256": "2eaff397f5ab6161e65841cdadbf7386e85949273172a543a7e7f51e7f875032",
+   "media_type": "image/png",
+   "rights": "synthetic",
+   "provenance": "generated-decorative",
+   "source": "generated-art"
+  }
+ ],
+ "parts": [
+  {
+   "id": "back-board",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 0,
+   "basis": [
+    "book.size"
+   ],
+   "shape": {
+    "type": "box",
+    "size": [
+     0.156,
+     0.234,
+     0.003
+    ]
+   },
+   "at": [
+    0,
+    0.117,
+    -0.0165
+   ]
+  },
+  {
+   "id": "pages",
+   "label": "Page block",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.148,
+     0.226,
+     0.03
+    ],
+    "ribs": 9
+   },
+   "at": [
+    0.003,
+    0.117,
+    0
+   ],
+   "look": {
+    "tone": "hairline",
+    "fill": "glass"
+   }
+  },
+  {
+   "id": "spine",
+   "label": "Spine",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "extrude",
+    "axis": "y",
+    "height": 0.234,
+    "profile": [
+     [
+      -0.078,
+      -0.018
+     ],
+     [
+      -0.083,
+      -0.013
+     ],
+     [
+      -0.0858,
+      -0.006
+     ],
+     [
+      -0.0862,
+      0.0
+     ],
+     [
+      -0.0858,
+      0.006
+     ],
+     [
+      -0.083,
+      0.013
+     ],
+     [
+      -0.078,
+      0.018
+     ],
+     [
+      -0.0755,
+      0.018
+     ],
+     [
+      -0.0755,
+      -0.018
+     ]
+    ]
+   }
+  },
+  {
+   "id": "spine-face",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 1,
+   "basis": [
+    "book.size"
+   ],
+   "note": "the flat of the spine that carries its lettering; drawn only through its labels",
+   "shape": {
+    "type": "plane",
+    "size": [
+     0.034,
+     0.226
+    ]
+   },
+   "at": [
+    -0.0863,
+    0.117,
+    0
+   ],
+   "rotate": [
+    0,
+    -90,
+    0
+   ],
+   "look": {
+    "line": "none",
+    "fill": "none"
+   }
+  },
+  {
+   "id": "front-board",
+   "label": "Front board",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 2,
+   "basis": [
+    "book.size"
+   ],
+   "shape": {
+    "type": "box",
+    "size": [
+     0.156,
+     0.234,
+     0.003
+    ]
+   },
+   "at": [
+    0,
+    0.117,
+    0.0165
+   ]
+  },
+  {
+   "id": "cover-art",
+   "label": "Cover (generated art)",
+   "role": "artwork",
+   "certainty": "decorative",
+   "stage": 3,
+   "basis": [
+    "artwork"
+   ],
+   "shape": {
+    "type": "plane",
+    "size": [
+     0.15,
+     0.228
+    ]
+   },
+   "at": [
+    0.0,
+    0.117,
+    0.0181
+   ],
+   "artwork": {
+    "slot": "cover-front",
+    "asset": "book-art"
+   }
+  },
+  {
+   "id": "headband",
+   "role": "ornament",
+   "certainty": "decorative",
+   "stage": 3,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0016,
+    "height": 0.03,
+    "segments": 8,
+    "ribs": 2
+   },
+   "at": [
+    -0.0745,
+    0.2275,
+    -0.015
+   ],
+   "rotate": [
+    90,
+    0,
+    0
+   ]
+  }
+ ],
+ "articulations": [
+  {
+   "id": "board-open",
+   "type": "hinge",
+   "parts": [
+    "front-board",
+    "cover-art"
+   ],
+   "axis": [
+    0,
+    -1,
+    0
+   ],
+   "pivot": [
+    -0.078,
+    0.117,
+    0.018
+   ],
+   "amount": 115,
+   "order": 0
+  }
+ ],
+ "labels": [
+  {
+   "id": "spine-title",
+   "part": "spine-face",
+   "field": "title",
+   "role": "title",
+   "orientation": "vertical-down",
+   "region": [
+    0.05,
+    0.06,
+    0.95,
+    0.66
+   ]
+  },
+  {
+   "id": "spine-author",
+   "part": "spine-face",
+   "field": "author",
+   "role": "creator",
+   "orientation": "vertical-down",
+   "region": [
+    0.1,
+    0.7,
+    0.9,
+    0.94
+   ]
+  },
+  {
+   "id": "title-page",
+   "part": "pages",
+   "field": "title",
+   "role": "title",
+   "region": [
+    0.12,
+    0.26,
+    0.88,
+    0.36
+   ]
+  },
+  {
+   "id": "title-page-author",
+   "part": "pages",
+   "field": "author",
+   "role": "creator",
+   "region": [
+    0.22,
+    0.42,
+    0.78,
+    0.48
+   ]
+  }
+ ],
+ "anchors": {
+  "front": {
+   "part": "front-board",
+   "face": "front"
+  },
+  "spine": {
+   "part": "spine-face",
+   "face": "front"
+  }
+ },
+ "annotations": [
+  {
+   "id": "cover",
+   "text": "Cover: generated art",
+   "part": "cover-art"
+  },
+  {
+   "id": "spine",
+   "text": "Spine",
+   "part": "spine"
+  },
+  {
+   "id": "pages",
+   "text": "Page block",
+   "part": "pages",
+   "offset": [
+    0.03,
+    -0.08,
+    0
+   ]
+  }
+ ],
+ "presentation": {
+  "views": [
+   {
+    "id": "spine",
+    "label": "Spine",
+    "yaw": -82,
+    "pitch": 6,
+    "distance": 1.0
+   },
+   {
+    "id": "open",
+    "label": "Open",
+    "yaw": 12,
+    "pitch": 10,
+    "distance": 1.0
+   }
+  ]
+ }
+}
+```

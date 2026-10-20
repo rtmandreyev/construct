@@ -1,0 +1,33 @@
+{
+  "format": "construct-params",
+  "version": 1,
+  "archetype": "book",
+  "variant": "paperback",
+  "id": "book-paperback",
+  "title": "Example Stories (paperback)",
+  "synthetic": true,
+  "sources": [
+    {
+      "id": "request",
+      "kind": "user_request",
+      "title": "Synthetic example request",
+      "rights": "synthetic"
+    }
+  ],
+  "facts": [
+    {
+      "key": "title",
+      "value": "Example Stories",
+      "certainty": "user_supplied",
+      "source": "request",
+      "note": "invented for this synthetic example"
+    },
+    {
+      "key": "author",
+      "value": "E. X. Ample",
+      "certainty": "user_supplied",
+      "source": "request",
+      "note": "invented for this synthetic example"
+    }
+  ]
+}

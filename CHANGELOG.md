@@ -22,12 +22,12 @@ First standalone release, extracted from the Tessera project's `hologram-skill` 
 history (`git subtree split` of `tools/hologram`: the toolkit's files only, one author).
 
 - Relicensed under MIT by its author (previously Apache-2.0 inside Tessera).
-- The product's name lives in `hologram_studio/product.py` and `pyproject.toml`;
+- The product's name lives in `construct_hologram/product.py` and `pyproject.toml`;
   `scripts/rename.py` applies a final name.
-- Layout: the package in `hologram_studio/`; the contract, README, licence and notices at the
+- Layout: the package in `construct_hologram/`; the contract, README, licence and notices at the
   root. Removed: the Tessera branch's handoff and working notes and the v0.1
-  `create-hologram` skill (superseded by `hologram_studio/skill`).
-- Contract `tessera.hologram/0.2` (accepted by Tessera, with the `open` view): scenes with
+  `create-hologram` skill (superseded by `construct_hologram/skill`).
+- Contract `construct/0.2` (accepted by Tessera, with the `open` view): scenes with
   facts and certainty, a closed shape vocabulary, roles, stages, periodic motion, one-shot
   articulations, labels from facts, artwork slots and masks, anchors, views; compiled
   geometry with `geometry.schema.json`.

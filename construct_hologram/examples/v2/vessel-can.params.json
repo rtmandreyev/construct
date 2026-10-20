@@ -1,0 +1,48 @@
+{
+  "format": "construct-params",
+  "version": 1,
+  "archetype": "vessel",
+  "variant": "can",
+  "id": "vessel-can",
+  "title": "Example IPA (can)",
+  "synthetic": true,
+  "sources": [
+    {
+      "id": "request",
+      "kind": "user_request",
+      "title": "Synthetic example request",
+      "rights": "synthetic"
+    }
+  ],
+  "facts": [
+    {
+      "key": "title",
+      "value": "Example IPA",
+      "certainty": "user_supplied",
+      "source": "request",
+      "note": "invented for this synthetic example"
+    },
+    {
+      "key": "brewery",
+      "value": "Example Brewing Co.",
+      "certainty": "user_supplied",
+      "source": "request",
+      "note": "invented for this synthetic example"
+    },
+    {
+      "key": "style",
+      "value": "India pale ale",
+      "certainty": "user_supplied",
+      "source": "request",
+      "note": "invented for this synthetic example"
+    },
+    {
+      "key": "abv",
+      "value": 6.5,
+      "certainty": "user_supplied",
+      "source": "request",
+      "note": "invented for this synthetic example",
+      "unit": "%"
+    }
+  ]
+}

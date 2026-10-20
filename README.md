@@ -1,4 +1,4 @@
-# hologram-studio
+# construct
 
 Audited, animated holograms of objects, buildings, machines and creatures — authored by any
 AI agent. An agent (or a person) describes *what* a thing is: its parts, real sizes, facts and
@@ -16,7 +16,7 @@ construction, a calm idle life, an opening sequence, honest certainty, a reduced
   and a frontier model sit side by side on the same shelf.
 - Python 3.10+, standard library only. MIT licensed.
 
-Status: 0.2.0, contract `tessera.hologram/0.2`. The product name is provisional (see
+Status: 0.2.0, contract `construct/0.2`. The product name is provisional (see
 [Renaming](#renaming)).
 
 ## Quick start (from any agent)
@@ -24,20 +24,20 @@ Status: 0.2.0, contract `tessera.hologram/0.2`. The product name is provisional 
 **Command line** (the toolkit runs by path from any folder; nothing to install):
 
 ```sh
-python3 hologram_studio/cli.py params --list                        # the simple path's archetypes
-python3 hologram_studio/cli.py params case --variant jewel --output cd.json
-python3 hologram_studio/cli.py check cd.json --json                 # paths, codes, hints, repair_text
-python3 hologram_studio/cli.py build cd.json --out out/             # out/hologram.html, geometry.json
-python3 hologram_studio/cli.py review cd.json --out out/            # + review/*.png (needs a local Chromium)
-python3 hologram_studio/cli.py video cd.json --out out/cd.mp4       # needs ffmpeg
-python3 hologram_studio/cli.py new organism --output scene.json    # a full scene starter
+python3 construct_hologram/cli.py params --list                        # the simple path's archetypes
+python3 construct_hologram/cli.py params case --variant jewel --output cd.json
+python3 construct_hologram/cli.py check cd.json --json                 # paths, codes, hints, repair_text
+python3 construct_hologram/cli.py build cd.json --out out/             # out/hologram.html, geometry.json
+python3 construct_hologram/cli.py review cd.json --out out/            # + review/*.png (needs a local Chromium)
+python3 construct_hologram/cli.py video cd.json --out out/cd.mp4       # needs ffmpeg
+python3 construct_hologram/cli.py new organism --output scene.json    # a full scene starter
 ```
 
 **MCP** (stdio, read-only tools; no file access, rendering or network). Point any MCP host at
 `server.py`:
 
 ```json
-{"mcpServers": {"hologram-studio": {"command": "python3", "args": ["/absolute/path/to/hologram_studio/server.py"]}}}
+{"mcpServers": {"construct": {"command": "python3", "args": ["/absolute/path/to/construct_hologram/server.py"]}}}
 ```
 
 Tools: `hologram_diagnose` (raw model output or a document → diagnostics and `repair_text`),
@@ -47,7 +47,7 @@ legacy v0.1 `hologram_template` / `hologram_validate` / `hologram_compile`.
 **Python:**
 
 ```python
-from hologram_studio import diagnose, params, scene, render
+from construct_hologram import diagnose, params, scene, render
 
 report = diagnose.diagnose_text(model_output)    # {"ok", "diagnostics", "repair_text", ...}
 if report["ok"]:
@@ -60,14 +60,14 @@ else:
     send_back_to_the_model(report["repair_text"])
 ```
 
-**Agent skills.** `python3 hologram_studio/package.py --out dist/` builds two self-contained
+**Agent skills.** `python3 construct_hologram/package.py --out dist/` builds two self-contained
 skill packages (runtime, prompts, examples, contract, schemas, LICENSE, NOTICE, a hashed
 manifest):
 
-- **Hermes**: copy `dist/hermes/hologram-studio/` into `~/.hermes/skills/`, or into a project's
+- **Hermes**: copy `dist/hermes/construct/` into `~/.hermes/skills/`, or into a project's
   `.hermes/skills/` and run `hermes skills trust` there.
-- **Claude Code**: `claude --plugin-dir dist/claude-code/hologram-studio` for one session, or
-  copy `dist/claude-code/hologram-studio/skills/hologram-studio` into `.claude/skills/`.
+- **Claude Code**: `claude --plugin-dir dist/claude-code/construct` for one session, or
+  copy `dist/claude-code/construct/skills/construct` into `.claude/skills/`.
 
 **Any other model or runner** (an OpenAI-compatible endpoint, a local model): send
 `prompts/system.md`, then `prompts/params.md` (small models) or `prompts/scene.md`, then the
@@ -82,25 +82,25 @@ geometric audit → fixed-view and animation captures → visual review → corr
 | | |
 |---|---|
 | Scene format | facts with certainty and sources; parts from a closed shape vocabulary (box, cylinder, cone, sphere, torus, lathe, extrude, tube, curve, plane, grid, points, marker; repeat, radial repeat, mirror); roles; stages; periodic motion; one-shot articulations (hinge, slide, lift, turn); labels from facts; artwork slots; anchors; views |
-| The simple path | `tessera-hologram-params` documents for `case` (jewel, slim, digipak, box set), `book` (hardcover, paperback), `object` (electric, acoustic and bass guitar, synth), `vessel` (bottle, can, glass) |
+| The simple path | `construct-params` documents for `case` (jewel, slim, digipak, box set), `book` (hardcover, paperback), `object` (electric, acoustic and bass guitar, synth), `vessel` (bottle, can, glass) |
 | Audit | support (nothing floats), assembly order, certainty overclaims, documented-accuracy backing, clutter, duplicates, tiny and invisible parts, a missing `open` view |
 | Output | packed geometry (`geometry.schema.json`) and one self-contained HTML page; review contact sheets; MP4/GIF |
 | Viewer | drag/wheel to orbit, 1–6 views, L labels, P provenance, M reduced motion, R replay, space pause; URL `t`, `view`, `motion`, `mode`, `labels`, `sheet`, `open` reproduce any frame |
 
 The consumer contract is [CONTRACT.md](CONTRACT.md). The authoring skill and its references
-are in `hologram_studio/skill/`; the any-model prompts in `hologram_studio/prompts/`.
+are in `construct_hologram/skill/`; the any-model prompts in `construct_hologram/prompts/`.
 
 ## Repository
 
 | | |
 |---|---|
-| `hologram_studio/` | the package: `scene.py` (validation, compiler), `shapes.py`, `audit.py`, `diagnose.py`, `params.py`, `render.py` and `viewer/`, `studio.py` + `cli.py` (command line), `mcp_server.py` + `server.py`, `prompts.py` + `prompts/`, `package.py`, `product.py` (the name) |
-| `hologram_studio/examples/v2/` | synthetic examples: lighthouse, turntable, a fictional lantern jellyfish, CD, book, and 15 parameter documents |
-| `hologram_studio/evaluation/` | synthetic cross-model tasks, `score.py` (needs no model or key) and the results |
-| `hologram_studio/skill/` | the agent skill: `SKILL.md` and references (vocabulary, composition, animation, review, provenance, method) |
-| `CONTRACT.md`, `hologram_studio/geometry.schema.json`, `hologram_studio/prompts/params.schema.json` | the contract and its schemas |
+| `construct_hologram/` | the package: `scene.py` (validation, compiler), `shapes.py`, `audit.py`, `diagnose.py`, `params.py`, `render.py` and `viewer/`, `studio.py` + `cli.py` (command line), `mcp_server.py` + `server.py`, `prompts.py` + `prompts/`, `package.py`, `product.py` (the name) |
+| `construct_hologram/examples/v2/` | synthetic examples: lighthouse, turntable, a fictional lantern jellyfish, CD, book, and 15 parameter documents |
+| `construct_hologram/evaluation/` | synthetic cross-model tasks, `score.py` (needs no model or key) and the results |
+| `construct_hologram/skill/` | the agent skill: `SKILL.md` and references (vocabulary, composition, animation, review, provenance, method) |
+| `CONTRACT.md`, `construct_hologram/geometry.schema.json`, `construct_hologram/prompts/params.schema.json` | the contract and its schemas |
 
-Tests: `python3 -m unittest discover -s hologram_studio -t . -p 'test_*.py'` (the capture
+Tests: `python3 -m unittest discover -s construct_hologram -t . -p 'test_*.py'` (the capture
 smoke test is skipped without a browser).
 
 ## Evaluation
@@ -109,8 +109,8 @@ Five synthetic tasks (three parameter documents with deliberately unknown facts,
 a fictional creature), prompts only, scored by `score.py` and reviewed visually: Claude Haiku
 13/15 then 15/15 after prompt fixes, Sonnet 15/15, Opus 15/15; no tier invented a fact the
 user did not know. Parameter entries look identical across tiers; free scenes scale with the
-model. Details: [evaluation/RESULTS.md](hologram_studio/evaluation/RESULTS.md). Score any
-provider's answers with `python3 -m hologram_studio.evaluation.score <folders>`.
+model. Details: [evaluation/RESULTS.md](construct_hologram/evaluation/RESULTS.md). Score any
+provider's answers with `python3 -m construct_hologram.evaluation.score <folders>`.
 
 ## Requirements, licence, notices
 
@@ -136,12 +136,12 @@ atlas renders compiled geometry natively (Y-up, front +Z, metres), re-validates 
 slots to its own palette, drives the articulations and turns to the `open` view, and sets
 labels in its own type from the item's live facts. Its agent pipeline (`tessera-agent`, the
 inbox) wraps `diagnose`, `params.expand` and `compile_scene`. The contract and format ids
-(`tessera.hologram/0.2`, `tessera-hologram*`) come from that integration and stay until a new
+(`construct/0.2`, `tessera-hologram*`) come from that integration and stay until a new
 contract version decides otherwise.
 
 ## Renaming
 
-The name lives in `hologram_studio/product.py` (`NAME`, `TITLE`) and `pyproject.toml`; the
+The name lives in `construct_hologram/product.py` (`NAME`, `TITLE`) and `pyproject.toml`; the
 package folder is the import name, and code finds it from the folder. Apply a final name
 with `python3 scripts/rename.py <new-name> ["New Title"]` (rewrites those, the README,
 CHANGELOG, LICENSE and NOTICE, and `git mv`s the folder), then run the tests.

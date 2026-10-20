@@ -107,7 +107,7 @@ def source_path(src, showcase):
 
 def build_page(src, folder):
     doc = json.loads(Path(src).read_text(encoding="utf-8"))
-    if doc.get("format") == params.FORMAT:
+    if params.is_params(doc):
         doc = params.expand(doc)
     geometry = scene.compile_scene(doc)
     html, _ = render.build_html(geometry, str(Path(src).parent))

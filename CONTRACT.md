@@ -1,15 +1,15 @@
-# Hologram contract `tessera.hologram/0.2`
+# Hologram contract `construct/0.2`
 
 Status: **accepted** (draft 2, 2026-10-19) with one minor addition: the `open` view (§9). Owner: the
-hologram toolkit (this repository, `hologram_studio/`). Draft 2 adds the five must-fix items (renderer-owned
+hologram toolkit (this repository, `construct_hologram/`). Draft 2 adds the five must-fix items (renderer-owned
 style, one-shot articulations, fact labels, anchors, artwork slots and masks) and the smaller
 ones (unknown facts are absent, a published geometry schema, host-optional behaviour). Any
 change after main accepts 0.2 bumps the version and is announced.
 
 | Document | Format id | Written by | Read by |
 |---|---|---|---|
-| **Scene** (authoring input) | `"format": "tessera-hologram", "version": 2` | an agent or a person | the toolkit's compiler |
-| **Geometry** (compiled output) | `"format": "tessera-hologram-geometry", "version": 2`, `"contract": "tessera.hologram/0.2"` | the compiler only | renderers (the portable viewer, Tessera native) |
+| **Scene** (authoring input) | `"format": "construct-scene", "version": 2` | an agent or a person | the toolkit's compiler |
+| **Geometry** (compiled output) | `"format": "construct-geometry", "version": 2`, `"contract": "construct/0.2"` | the compiler only | renderers (the portable viewer, Tessera native) |
 
 A renderer consumes **geometry**, never scenes: everything in it is explicit (line segments,
 triangles, sprites, styles, phases, transform slots, face quads). No renderer needs to

@@ -1,0 +1,39 @@
+{
+  "format": "construct-params",
+  "version": 1,
+  "archetype": "vessel",
+  "variant": "glass",
+  "id": "vessel-glass-tulip",
+  "title": "Example Tripel (tulip glass)",
+  "synthetic": true,
+  "sources": [
+    {
+      "id": "request",
+      "kind": "user_request",
+      "title": "Synthetic example request",
+      "rights": "synthetic"
+    }
+  ],
+  "facts": [
+    {
+      "key": "title",
+      "value": "Example Tripel",
+      "certainty": "user_supplied",
+      "source": "request",
+      "note": "invented for this synthetic example"
+    },
+    {
+      "key": "style",
+      "value": "Tripel",
+      "certainty": "user_supplied",
+      "source": "request",
+      "note": "invented for this synthetic example"
+    }
+  ],
+  "params": {
+    "glass_style": "tulip",
+    "height": 0.17,
+    "diameter": 0.085,
+    "fill": 0.75
+  }
+}

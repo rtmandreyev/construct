@@ -1,0 +1,33 @@
+{
+  "format": "construct-params",
+  "version": 1,
+  "archetype": "object",
+  "variant": "electric-guitar",
+  "id": "object-electric-guitar",
+  "title": "Exemplar Model E (electric guitar)",
+  "synthetic": true,
+  "sources": [
+    {
+      "id": "request",
+      "kind": "user_request",
+      "title": "Synthetic example request",
+      "rights": "synthetic"
+    }
+  ],
+  "facts": [
+    {
+      "key": "maker",
+      "value": "Exemplar",
+      "certainty": "user_supplied",
+      "source": "request",
+      "note": "invented for this synthetic example"
+    },
+    {
+      "key": "model",
+      "value": "Model E",
+      "certainty": "user_supplied",
+      "source": "request",
+      "note": "invented for this synthetic example"
+    }
+  ]
+}

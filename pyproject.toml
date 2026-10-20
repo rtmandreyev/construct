@@ -3,9 +3,9 @@ requires = ["setuptools>=68"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "hologram-studio"          # the product name: keep in step with hologram_studio/product.py
+name = "construct-hologram"   # the distribution: keep in step with construct_hologram/product.py (DIST)
 version = "0.2.0"
-description = "Audited, animated holograms of objects, buildings and creatures, authored by any AI agent."
+description = "Construct: holograms any agent can build — from a description, honestly."
 readme = "README.md"
 license = "MIT"
 license-files = ["LICENSE", "NOTICE"]
@@ -14,11 +14,11 @@ dependencies = []
 keywords = ["hologram", "3d", "webgl", "agent-skill", "mcp", "visualization"]
 
 [project.scripts]
-hologram-studio = "hologram_studio.__main__:main"
-hologram-studio-mcp = "hologram_studio.mcp_server:main"
+construct = "construct_hologram.__main__:main"
+construct-mcp = "construct_hologram.mcp_server:main"
 
 [tool.setuptools.packages.find]
-include = ["hologram_studio*"]
+include = ["construct_hologram*"]
 
 [tool.setuptools.package-data]
 "*" = ["*.json", "*.md", "*.html", "*.js", "*.png", "prompts/*", "examples/**/*", "skill/**/*", "viewer/*",

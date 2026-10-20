@@ -1,0 +1,91 @@
+{
+  "format": "construct-scene",
+  "version": 2,
+  "id": "lighthouse-generic",
+  "title": "Coastal lighthouse with keeper's cottage",
+  "subject": {
+    "category": "architecture",
+    "summary": "A generic coastal lighthouse on a rock outcrop: tapering banded tower, gallery, glazed lantern room with a rotating light, and the keeper's cottage. Not any specific station.",
+    "accuracy": "generic",
+    "synthetic": true
+  },
+  "units": "m",
+  "seed": 1847,
+  "sources": [
+    {"id": "request", "kind": "user_request", "title": "Synthetic example request: a coastal lighthouse with its keeper's cottage", "rights": "synthetic"}
+  ],
+  "facts": [
+    {"key": "setting", "value": "a generic lighthouse, not a particular station", "certainty": "user_supplied", "source": "request"},
+    {"key": "tower.height", "value": 27.3, "unit": "m", "certainty": "inferred", "source": "request", "note": "typical for a mid-size coastal tower (roughly 20-35 m)"},
+    {"key": "tower.base_radius", "value": 3.5, "unit": "m", "certainty": "inferred", "note": "proportion: height about four times the base diameter"},
+    {"key": "focal_plane", "value": 23.8, "unit": "m", "certainty": "inferred", "note": "the lamp sits mid-height of the lantern room"},
+    {"key": "light.pattern", "value": "two beams, slow rotation", "certainty": "decorative", "note": "chosen for presentation; no real light characteristic is implied"},
+    {"key": "rock.height", "value": 2.0, "unit": "m", "certainty": "decorative"}
+  ],
+  "parts": [
+    {"id": "rock", "label": "Rock outcrop", "role": "structure", "certainty": "decorative", "stage": 0, "basis": ["rock.height"],
+     "shape": {"type": "extrude", "axis": "y", "height": 2.0, "ribs": 1,
+               "profile": [[-8.5, -3], [-6, -7.5], [1, -9], [8, -8.2], [13.5, -5], [14, 2.5], [9, 6.5], [2, 8], [-5, 7], [-9, 3]]},
+     "look": {"fill": "glass", "alpha": 0.7}},
+    {"id": "path", "label": "Path", "role": "ground", "certainty": "decorative", "stage": 0,
+     "shape": {"type": "curve", "smooth": true, "points": [[0, 2.02, 3.7], [2.5, 2.02, 3.4], [5.5, 2.02, 1.6], [6.6, 2.02, -0.6]]}},
+    {"id": "tower", "label": "Tower", "role": "mass", "certainty": "inferred", "stage": 1, "basis": ["tower.height", "tower.base_radius"],
+     "shape": {"type": "lathe", "segments": 40, "meridians": 10,
+               "profile": [[3.6, 2.0], [3.5, 4.0], [3.31, 8.5], [3.13, 12.8], [2.94, 17.2], [2.75, 22.0]]}},
+    {"id": "band-low", "label": "Lower band", "role": "identity", "certainty": "inferred", "stage": 1,
+     "shape": {"type": "lathe", "segments": 40, "meridians": 20, "profile": [[3.44, 6.0], [3.31, 9.0]]}},
+    {"id": "band-high", "label": "Upper band", "role": "identity", "certainty": "inferred", "stage": 1,
+     "shape": {"type": "lathe", "segments": 40, "meridians": 20, "profile": [[3.15, 13.0], [3.02, 16.0]]}},
+    {"id": "door", "label": "Door", "role": "detail", "certainty": "inferred", "stage": 2,
+     "shape": {"type": "plane", "size": [1.2, 2.1]}, "at": [0, 3.05, 3.56]},
+    {"id": "window-1", "role": "detail", "certainty": "inferred", "stage": 2, "shape": {"type": "box", "size": [0.5, 0.9, 0.3]}, "at": [1.66, 8.0, 2.88], "rotate": [0, 30, 0]},
+    {"id": "window-2", "role": "detail", "certainty": "inferred", "stage": 2, "shape": {"type": "box", "size": [0.5, 0.9, 0.3]}, "at": [-1.99, 13.5, 2.37], "rotate": [0, -40, 0]},
+    {"id": "window-3", "role": "detail", "certainty": "inferred", "stage": 2, "shape": {"type": "box", "size": [0.5, 0.9, 0.3]}, "at": [2.5, 18.5, 1.44], "rotate": [0, 60, 0]},
+    {"id": "gallery", "label": "Gallery", "role": "structure", "certainty": "inferred", "stage": 2,
+     "shape": {"type": "cylinder", "radius": 3.45, "height": 0.3, "segments": 48, "ribs": 0}, "at": [0, 22.0, 0], "look": {"fill": "glass"}},
+    {"id": "railing-posts", "label": "Railing", "role": "detail", "certainty": "inferred", "stage": 3,
+     "shape": {"type": "box", "size": [0.06, 1.0, 0.06], "anchor": "base"}, "at": [3.3, 22.3, 0],
+     "repeat": {"count": 28, "radial": {"axis": "y", "center": [0, 0, 0]}}},
+    {"id": "rail", "role": "detail", "certainty": "inferred", "stage": 3,
+     "shape": {"type": "torus", "major": 3.3, "minor": 0.04, "segments": 56, "sides": 6, "rings": 0}, "at": [0, 23.3, 0]},
+    {"id": "lantern", "label": "Lantern room", "role": "identity", "certainty": "inferred", "stage": 3, "basis": ["focal_plane"],
+     "shape": {"type": "cylinder", "radius": 1.9, "height": 3.0, "segments": 40, "ribs": 10, "rings": 1}, "at": [0, 22.3, 0]},
+    {"id": "dome", "label": "Dome", "role": "mass", "certainty": "inferred", "stage": 4,
+     "shape": {"type": "lathe", "segments": 40, "meridians": 8, "profile": [[2.1, 25.3], [2.0, 25.9], [1.6, 26.6], [0.9, 27.1], [0.0, 27.3]]}},
+    {"id": "ventilator", "role": "structure", "certainty": "inferred", "stage": 4, "shape": {"type": "sphere", "radius": 0.3, "lat": 5, "lon": 8}, "at": [0, 27.55, 0]},
+    {"id": "rod", "role": "detail", "certainty": "inferred", "stage": 4, "shape": {"type": "curve", "points": [[0, 27.85, 0], [0, 29.4, 0]]}},
+    {"id": "lamp", "label": "Lamp", "role": "data", "certainty": "inferred", "stage": 5, "basis": ["focal_plane"],
+     "shape": {"type": "sphere", "radius": 0.45, "lat": 4, "lon": 6}, "at": [0, 23.8, 0],
+     "motion": {"type": "pulse", "period": 2.5, "amount": 0.8}},
+    {"id": "beam", "label": "Beam", "role": "data", "certainty": "decorative", "stage": 6, "floating": true, "basis": ["light.pattern"],
+     "shape": {"type": "cone", "radius_bottom": 0.3, "radius_top": 2.6, "height": 11.0, "segments": 24, "ribs": 4, "caps": false},
+     "at": [0, 23.8, 0], "rotate": [0, 0, -90],
+     "look": {"fill": "glass", "line": "dashed", "alpha": 0.55, "glow": 0.6},
+     "repeat": {"count": 2, "radial": {"axis": "y", "center": [0, 23.8, 0]}},
+     "motion": {"type": "spin", "axis": [0, 1, 0], "rpm": 3}},
+    {"id": "cottage", "label": "Keeper's cottage", "role": "structure", "certainty": "inferred", "stage": 1,
+     "shape": {"type": "extrude", "axis": "z", "height": 7.0, "ribs": 2, "profile": [[-3, 0], [3, 0], [3, 3], [0, 5], [-3, 3]]},
+     "at": [9.0, 2.0, -5.0], "look": {"fill": "glass"}},
+    {"id": "chimney", "role": "detail", "certainty": "inferred", "stage": 2, "shape": {"type": "box", "size": [0.7, 1.8, 0.7], "anchor": "base"}, "at": [10.6, 5.6, -3.0]},
+    {"id": "cottage-door", "role": "detail", "certainty": "inferred", "stage": 2, "shape": {"type": "plane", "size": [1.0, 2.0]}, "at": [8.0, 3.0, 2.01]},
+    {"id": "cottage-window", "role": "detail", "certainty": "inferred", "stage": 2, "shape": {"type": "plane", "size": [1.1, 0.9], "divisions": 1}, "at": [10.4, 3.6, 2.01]}
+  ],
+  "annotations": [
+    {"id": "lantern", "text": "Lantern room", "part": "lantern"},
+    {"id": "gallery", "text": "Gallery", "part": "gallery", "offset": [3.2, 0, 0]},
+    {"id": "cottage", "text": "Keeper's cottage", "part": "cottage"},
+    {"id": "beam", "text": "Beam (decorative)", "part": "beam", "offset": [-4, 0, 0]}
+  ],
+  "presentation": {
+    "style_hint": {"palette": "cyan", "identity": "ember"},
+    "framing": {"yaw": 28, "pitch": 16, "fit": 1.0},
+    "views": [{"id": "lantern", "label": "Lantern", "yaw": 15, "pitch": 6, "distance": 1.5, "target": "lantern"}],
+    "atmosphere": {"haze": 0.8, "grid": true, "projector": false, "motes": 0.5},
+    "occlusion": "xray"
+  },
+  "animation": {
+    "assembly": {"style": "ceremony", "seconds": 7.0, "interference": true},
+    "idle": {"life": "alive", "events": ["scan", "sweep", "propagate", "shimmer"], "cadence": [5, 10], "strength": 0.65},
+    "camera": {"drift": 5, "breathe": 0.03, "tour": [{"view": "lantern", "at": 16, "fly": 3.5}, {"view": "hero", "at": 26, "fly": 4}]}
+  }
+}

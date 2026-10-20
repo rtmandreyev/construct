@@ -1,0 +1,202 @@
+"""Machine-readable diagnostics for a scene draft.
+
+Every problem comes back as {severity, code, path, message, hint}: `path` is a JSON path into
+the draft ($.parts[3].shape.size), `hint` says what to write instead. A model of any size
+can repair its own draft from this list; `repair_text` is the list as a message to send back
+to it. Covers the JSON text itself (fences, comments, trailing commas, duplicate keys),
+validation, budgets and the audit (support, assembly order, overclaims, accuracy).
+
+    from hologram import diagnose
+    report = diagnose.diagnose_text(open("draft.json").read())
+    if not report["ok"]: send(report["repair_text"])
+"""
+
+import json
+import re
+
+from . import audit as audit_mod
+from . import params as params_mod
+from . import scene as scene_mod
+
+AUDIT_HINTS = {
+    "floating": "Move the part so its box touches what holds it (a centred box sits half its height above "
+                "its \"at\"; use \"anchor\": \"base\" to stand it on \"at\"), or set \"floating\": true only if it truly hovers.",
+    "stage-order": "Give the part a stage equal to or later than the part it rests on.",
+    "overclaim": "Lower the part's certainty to the weakest certainty among its basis facts, or cite a source.",
+    "accuracy": "Use subject.accuracy \"generic\" (a typical example) unless key parts rest on evidence.",
+    "decorative-identity": "Designed parts of a requested object are \"inferred\", not \"decorative\".",
+    "no-mass": "Give the primary volume role \"mass\".",
+    "no-identity": "Give the two or three recognisable features role \"identity\".",
+    "clutter": "Fewer detail parts, or lower segments/ribs/repeat counts.",
+    "duplicates": "Remove the duplicated part, or move it to where it belongs.",
+    "tiny": "Make it larger, merge it into a neighbour or delete it; it will not read at this size.",
+    "invisible": "Give it lines (look.line \"auto\") or a fill, or delete it.",
+    "detached": "Move the part so its surface meets the part it hangs from or rests on (named in the message): "
+                "align its end with that part's surface, or extend it to reach. Use \"floating\": true only "
+                "for things that really hover.",
+    "thin": "Thicken it to the radius given in the message, or make it role \"detail\" if it is meant to be a fine line.",
+    "no-open-view": "Add presentation.views {\"id\": \"open\", \"yaw\": ..., \"pitch\": ...} facing what opening reveals "
+                    "(roughly the yaw the opened part's inside or the taken-out part faces; check review/view-open.png "
+                    "if you can see images). A joint that only poses a part (an elbow) needs none: ignore this.",
+}
+BUDGET_HINT = ("Simplify: lower segments, meridians, ribs, rings, lat/lon and repeat counts, or set "
+               "look.fill \"none\" on thin parts.")
+
+
+def _path(where):
+    """`scene.parts[3].shape` -> `$.parts[3].shape`."""
+    if where == "scene":
+        return "$"
+    return "$" + where[len("scene"):] if where.startswith("scene") else "$." + where
+
+
+def _diag(severity, code, path, message, hint=None):
+    return {"severity": severity, "code": code, "path": path, "message": message, "hint": hint}
+
+
+def parse_text(text):
+    """(scene or None, diagnostics) for a draft's raw text."""
+    diags = []
+    stripped = text.strip()
+    if stripped.startswith("```"):
+        diags.append(_diag("error", "json", "$", "the draft is wrapped in a ``` code fence",
+                           "Send only the JSON object: no ``` fences and no prose before or after it."))
+        stripped = re.sub(r"^```[a-zA-Z]*\s*|\s*```$", "", stripped)
+    dupes = []
+
+    def pairs(items):
+        seen = {}
+        for k, v in items:
+            if k in seen:
+                dupes.append(k)
+            seen[k] = v
+        return seen
+    try:
+        obj = json.loads(stripped, object_pairs_hook=pairs)
+    except json.JSONDecodeError as exc:
+        line = stripped.splitlines()[exc.lineno - 1] if 0 < exc.lineno <= len(stripped.splitlines()) else ""
+        hint = "Write strict JSON: double-quoted keys and strings, no comments, no trailing commas, no NaN."
+        if "//" in line or "/*" in line:
+            hint = "Remove the comment: JSON has no comments. Put explanations in a \"note\" field."
+        elif re.search(r",\s*[}\]]", stripped[max(0, exc.pos - 3):exc.pos + 2]):
+            hint = "Remove the trailing comma before the closing bracket."
+        diags.append(_diag("error", "json", "$", "not valid JSON at line %d column %d: %s" % (exc.lineno, exc.colno, exc.msg), hint))
+        return None, diags
+    for k in sorted(set(dupes)):
+        diags.append(_diag("error", "duplicate-key", "$", "the key %r appears twice in one object" % k,
+                           "Keep one %r per object; merge the two." % k))
+    if not isinstance(obj, dict):
+        diags.append(_diag("error", "type", "$", "the draft must be one JSON object", "Send a single {...} scene."))
+        return None, diags
+    return obj, diags
+
+
+def diagnose(scene, prior=()):
+    """The report for a parsed draft."""
+    diags = list(prior)
+    if isinstance(scene, dict) and scene.get("format") == scene_mod.FORMATS[1]:
+        diags.append(_diag("warning", "legacy-format", "$.format", "%r is the format's old id" % scene_mod.FORMATS[1],
+                           "Write \"format\": \"%s\"; the old id is read until the next release." % scene_mod.FORMAT))
+    items = scene_mod.validate_items(scene)
+    for item in items:
+        diags.append(_diag("error", item["code"], _path(item["where"]), item["message"], item["hint"]))
+    geometry = None
+    if not items:  # text-level problems (a fence) do not stop the rest of the check
+        try:
+            geometry = scene_mod.compile_scene(scene)
+        except scene_mod.SceneError as exc:
+            diags.append(_diag("error", "budget", "$.parts", str(exc), BUDGET_HINT))
+    report = None
+    if geometry is not None:
+        report = audit_mod.audit(scene, geometry)
+        index = {p.get("id"): i for i, p in enumerate(scene.get("parts", []))}
+        for sev, rows in (("error", report["errors"]), ("warning", report["warnings"])):
+            for r in rows:
+                path = "$.parts[%d]" % index[r["part"]] if r.get("part") in index else "$"
+                diags.append(_diag(sev, r["code"], path, (("%s: " % r["part"]) if r.get("part") else "") + r["message"],
+                                   AUDIT_HINTS.get(r["code"])))
+    errors = [d for d in diags if d["severity"] == "error"]
+    out = {
+        "ok": not errors,
+        "contract": scene_mod.product.CONTRACT,
+        "errors": len(errors),
+        "warnings": len(diags) - len(errors),
+        "diagnostics": diags,
+        "stats": dict(geometry["counts"], size_m=[round(geometry["bounds"]["max"][k] - geometry["bounds"]["min"][k], 4)
+                                                for k in range(3)]) if geometry else None,
+    }
+    out["repair_text"] = repair_text(out)
+    return out
+
+
+def diagnose_text(text):
+    scene, diags = parse_text(text)
+    if params_mod.is_params(scene):
+        return diagnose_params(scene, diags)
+    if scene is None:
+        out = {"ok": False, "contract": scene_mod.product.CONTRACT, "errors": len(diags), "warnings": 0,
+               "diagnostics": diags, "stats": None}
+        out["repair_text"] = repair_text(out)
+        return out
+    return diagnose(scene, diags)
+
+
+# warnings a viewer would see at once: the repair loop goes on until they are gone
+VISIBLE_DEFECTS = ("detached", "thin")
+
+
+def needs_repair(report):
+    return report["errors"] > 0 or any(d["code"] in VISIBLE_DEFECTS for d in report["diagnostics"])
+
+
+def repair_text(report, limit=40):
+    """The diagnostics as a short message for the model that wrote the draft."""
+    report["needs_repair"] = needs_repair(report)
+    if report["ok"] and not report["warnings"]:
+        return "The scene is valid and the audit is clean."
+    # visible defects are listed with the errors: the draft is not done while they remain
+    errs = [d for d in report["diagnostics"] if d["severity"] == "error" or d["code"] in VISIBLE_DEFECTS]
+    warns = [d for d in report["diagnostics"] if d["severity"] == "warning" and d["code"] not in VISIBLE_DEFECTS]
+    lines = []
+    if errs:
+        lines.append("Your scene has %d problem%s%s. Fix every one and send the whole corrected JSON object "
+                     "(no prose, no code fences):" % (len(errs), "" if len(errs) == 1 else "s",
+                                                      "" if report["errors"] else " a viewer will see"))
+        for d in errs[:limit]:
+            lines.append("- %s [%s] %s%s" % (d["path"], d["code"], d["message"], " -> " + d["hint"] if d["hint"] else ""))
+        if len(errs) > limit:
+            lines.append("- ... and %d more of the same kinds" % (len(errs) - limit))
+    if warns:
+        lines.append("Warnings (fix them if you can; otherwise explain them when you deliver):")
+        for d in warns[:12]:
+            lines.append("- %s [%s] %s%s" % (d["path"], d["code"], d["message"], " -> " + d["hint"] if d["hint"] else ""))
+    return "\n".join(lines)
+
+
+def diagnose_params(doc, prior=()):
+    """The report for a parameter document: its own problems, then the generated scene's."""
+    diags = list(prior)
+    if doc.get("format") == params_mod.FORMATS[1]:
+        diags.append(_diag("warning", "legacy-format", "$.format", "%r is the format's old id" % params_mod.FORMATS[1],
+                           "Write \"format\": \"%s\"; the old id is read until the next release." % params_mod.FORMAT))
+    for item in params_mod.validate_items(doc):
+        diags.append(_diag("error", item["code"], _path(item["where"]), item["message"], item["hint"]))
+    if any(d["severity"] == "error" and d["code"] != "json" for d in diags):
+        # the document cannot be built yet, but its facts, sources and assets can still be
+        # checked now, so a model learns every problem in one round
+        probe = {"format": scene_mod.FORMAT, "version": scene_mod.VERSION, "id": "probe", "title": "probe",
+                 "subject": {"category": "object", "accuracy": "generic", "synthetic": True}, "units": "m", "seed": 1,
+                 "sources": doc.get("sources", []), "facts": doc.get("facts", []), "assets": doc.get("assets", []),
+                 "parts": [{"id": "p", "role": "mass", "certainty": "inferred", "stage": 0,
+                            "shape": {"type": "box", "size": [1, 1, 1]}}]}
+        if not doc.get("sources") and any(isinstance(f, dict) and f.get("source") == "request" for f in doc.get("facts", [])):
+            probe["sources"] = [{"id": "request", "kind": "user_request", "title": "request", "rights": "user_private"}]
+        for item in scene_mod.validate_items(probe):
+            if item["where"].startswith(("scene.facts", "scene.sources", "scene.assets")):
+                diags.append(_diag("error", item["code"], _path(item["where"]), item["message"], item["hint"]))
+        out = {"ok": False, "contract": scene_mod.product.CONTRACT, "errors": len(diags), "warnings": 0,
+               "diagnostics": diags, "stats": None}
+        out["repair_text"] = repair_text(out)
+        return out
+    # facts, sources and assets keep their paths: the builder copies them first, in order
+    return diagnose(params_mod.expand(doc), diags)
