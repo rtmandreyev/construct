@@ -23,7 +23,7 @@ ROOT = Path(__file__).resolve().parent.parent
 PKG = ROOT / "construct_hologram"
 HERE = ROOT / "scripts" / "hermes_submission"
 RUNTIME = ["__init__.py", "__main__.py", "product.py", "hologram.py", "scene.py", "shapes.py", "audit.py",
-           "diagnose.py", "params.py", "render.py", "studio.py", "png.py"]
+           "diagnose.py", "params.py", "render.py", "studio.py", "png.py", "trace.py"]
 EXAMPLES = ["cd.json", "book.json", "lighthouse.json", "lantern-jellyfish.json", "case-jewel.params.json",
             "book-paperback.params.json", "object-electric-guitar.params.json", "vessel-can.params.json"]
 SHIM = '''"""construct command line (Hermes optional skill). Run by absolute path from any folder."""
@@ -47,7 +47,9 @@ def build(out):
     shutil.copyfile(HERE / "SKILL.md", skill / "SKILL.md")
     for ref in sorted((PKG / "skill" / "references").glob("*.md")):
         text = ref.read_text(encoding="utf-8").replace("`examples/", "`assets/examples/")
+        text = text.replace("`prompts/trace.md`", "`references/trace-prompt.md`").replace("python3 TOOLS", "python3 ${HERMES_SKILL_DIR}/scripts/cli.py")
         (skill / "references" / ref.name).write_text(text, encoding="utf-8")
+    shutil.copyfile(PKG / "prompts" / "trace.md", skill / "references" / "trace-prompt.md")
     rt = skill / "scripts" / "construct_hologram"
     (rt / "viewer").mkdir(parents=True)
     for m in RUNTIME:
