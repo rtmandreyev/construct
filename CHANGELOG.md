@@ -1,6 +1,24 @@
 # Changelog
 
-## 0.2.0 — 2026-10-19 (unreleased; the product name is provisional)
+## 0.2.0 — Construct (unreleased)
+
+The first release as **Construct**, an independent MIT-licensed project.
+
+- **Name and ids.** Skill, MCP server and command `construct`; Python distribution
+  `construct-hologram`, import package `construct_hologram`. Contract `construct/0.2` with
+  formats `construct-scene` v2, `construct-geometry` v2 and `construct-params` v1. The previous
+  ids (`tessera.hologram/0.2`, `tessera-hologram`, `tessera-hologram-params`,
+  `tessera-hologram-geometry`) are read for one release with a `legacy-format` warning and are
+  never written.
+- **Any-model authoring:** `construct author` drafts with any OpenAI-compatible endpoint, checks
+  and repairs until clean (the key comes from an environment variable and is never stored).
+- **Legibility:** thin or small mass and structure parts get a minimum visual weight.
+- **Docs:** README with pictures, `docs/ABOUT.md` (what it is, the Anatomy and NODE credits, how
+  to talk about it), `docs/USING.md` (every entry point, a worked example, costs and times),
+  `docs/ARCHETYPES.md`, `docs/EVALUATION.md`, `CONTRIBUTING.md`; `scripts/docs_media.py` and
+  `scripts/release_video.py` render the pictures and the release video.
+
+## 0.2.0-pre — as hologram-studio (2026-10-19)
 
 From the first live runs (Hermes with DeepSeek and GPT-6.1 Sol), which passed the audit with
 visible defects:
@@ -22,8 +40,7 @@ First standalone release, extracted from the Tessera project's `hologram-skill` 
 history (`git subtree split` of `tools/hologram`: the toolkit's files only, one author).
 
 - Relicensed under MIT by its author (previously Apache-2.0 inside Tessera).
-- The product's name lives in `construct_hologram/product.py` and `pyproject.toml`;
-  `scripts/rename.py` applies a final name.
+- The product's name lives in `construct_hologram/product.py` and `pyproject.toml`.
 - Layout: the package in `construct_hologram/`; the contract, README, licence and notices at the
   root. Removed: the Tessera branch's handoff and working notes and the v0.1
   `create-hologram` skill (superseded by `construct_hologram/skill`).

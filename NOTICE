@@ -1,8 +1,10 @@
-construct
+Construct
 Copyright (c) 2026 The Construct authors. Licensed under the MIT License (see LICENSE).
 
-Independently authored. It recreates the method and look of NODE's Measured Light
-holograms without including any NODE code, fonts, shaders or assets.
+Independently authored. Its look and construction grew out of NODE's Measured Light holograms
+(same author); no NODE code, fonts, shaders or assets are included. Its working method is
+inspired by Anatomy (github.com/wheresryan22/anatomy, MIT): no Anatomy code, assets or text
+are included.
 
 Third-party software: none is bundled. The toolkit uses the Python standard library only;
 the viewer is plain WebGL2 and uses system fonts. Optional programs it can call when they

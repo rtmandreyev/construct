@@ -1,152 +1,113 @@
-# construct
+# Construct
 
-Audited, animated holograms of objects, buildings, machines and creatures — authored by any
-AI agent. An agent (or a person) describes *what* a thing is: its parts, real sizes, facts and
-how certain each one is. The toolkit validates and audits that description, compiles it
-deterministically, and renders it as an animated WebGL2 hologram in one house style: staged
-construction, a calm idle life, an opening sequence, honest certainty, a reduced-motion still.
+**Holograms any agent can build — from a description, honestly.**
 
-- **Any model, any host.** No API key, no model and no network service inside. Small models
-  fill a ten-line parameter document; capable models write full scenes; every draft comes
-  back with JSON paths, codes and fix hints until it is valid.
-- **Honest by construction.** Every fact is `verified` (with a source), `user_supplied`,
-  `inferred` or `decorative`; unknown facts are left out, never guessed; text on an object
-  comes only from facts; artwork only from hashed bytes the user supplied.
-- **The renderer owns the look.** Agents never pick colours, so entries from a cheap model
-  and a frontier model sit side by side on the same shelf.
+![A lighthouse hologram assembling](docs/media/hero.gif)
+
+Construct is an agent skill and toolkit that turns a description of a real or fictional thing
+into an honest, animated hologram. A model — any model — writes a short declarative scene, or
+fills an archetype's parameters. Construct validates it, audits it, compiles it
+deterministically and renders it in one holographic style: line light over smoked glass,
+staged assembly, opening and idle life, and a visible certainty for every fact and part.
+
+- **Any agent, any model.** Hermes, Claude Code, any MCP client, a CLI, Python, or any
+  OpenAI-compatible endpoint. No API key, model or network service inside Construct.
+- **Honest about what is known.** Every fact is `verified` (with a source), `user_supplied`,
+  `inferred` or `decorative`. Unknown facts are left out, never guessed. Text on an object
+  comes only from facts; artwork only from images the user supplied, checked by hash.
+- **One style for everyone.** Agents never choose colours, so an entry written by a small
+  model sits on the shelf next to one written by a frontier model.
+- **Repairs itself.** Every problem comes back with a JSON path, a code and a fix hint, and the
+  repair loop runs until the draft is valid and free of visible defects.
 - Python 3.10+, standard library only. MIT licensed.
 
-Status: 0.2.0, contract `construct/0.2`. The product name is provisional (see
-[Renaming](#renaming)).
+![Twelve holograms built with Construct](docs/media/gallery.jpg)
 
-## Quick start (from any agent)
-
-**Command line** (the toolkit runs by path from any folder; nothing to install):
+## Install
 
 ```sh
-python3 construct_hologram/cli.py params --list                        # the simple path's archetypes
-python3 construct_hologram/cli.py params case --variant jewel --output cd.json
-python3 construct_hologram/cli.py check cd.json --json                 # paths, codes, hints, repair_text
-python3 construct_hologram/cli.py build cd.json --out out/             # out/hologram.html, geometry.json
-python3 construct_hologram/cli.py review cd.json --out out/            # + review/*.png (needs a local Chromium)
-python3 construct_hologram/cli.py video cd.json --out out/cd.mp4       # needs ffmpeg
-python3 construct_hologram/cli.py new organism --output scene.json    # a full scene starter
+git clone https://github.com/rtmandreyev/construct
+cd construct
+python3 construct_hologram/package.py --out dist     # builds the Hermes and Claude Code skills
 ```
 
-**MCP** (stdio, read-only tools; no file access, rendering or network). Point any MCP host at
-`server.py`:
+Nothing to install for the CLI, MCP server or Python use: they run from the checkout. Review
+stills need a Chromium-family browser you already have (Chrome, Chromium, Edge, Brave);
+video needs ffmpeg.
 
-```json
-{"mcpServers": {"construct": {"command": "python3", "args": ["/absolute/path/to/construct_hologram/server.py"]}}}
-```
+## Use it from any agent
 
-Tools: `hologram_diagnose` (raw model output or a document → diagnostics and `repair_text`),
-`hologram_params_template`, `hologram_expand_params`, `hologram_compile_scene`, plus the
-legacy v0.1 `hologram_template` / `hologram_validate` / `hologram_compile`.
-
-**Python:**
-
-```python
-from construct_hologram import diagnose, params, scene, render
-
-report = diagnose.diagnose_text(model_output)    # {"ok", "diagnostics", "repair_text", ...}
-if report["ok"]:
-    doc, _ = diagnose.parse_text(model_output)
-    if doc["format"] == params.FORMAT:            # the simple path
-        doc = params.expand(doc)
-    geometry = scene.compile_scene(doc)
-    html, notes = render.build_html(geometry, asset_root="path/to/assets")
-else:
-    send_back_to_the_model(report["repair_text"])
-```
-
-**Agent skills.** `python3 construct_hologram/package.py --out dist/` builds two self-contained
-skill packages (runtime, prompts, examples, contract, schemas, LICENSE, NOTICE, a hashed
-manifest):
-
-- **Hermes**: copy `dist/hermes/construct/` into `~/.hermes/skills/`, or into a project's
-  `.hermes/skills/` and run `hermes skills trust` there.
-- **Claude Code**: `claude --plugin-dir dist/claude-code/construct` for one session, or
-  copy `dist/claude-code/construct/skills/construct` into `.claude/skills/`.
-
-**Any other model or runner** (an OpenAI-compatible endpoint, a local model): send
-`prompts/system.md`, then `prompts/params.md` (small models) or `prompts/scene.md`, then the
-user's request; check the answer and send back `repair_text` until `ok` (`prompts/repair.md`).
-`prompts/params.schema.json` constrains output where the host supports it.
-
-## How it works
-
-**request and evidence → facts → construction (scene or parameters) → deterministic compile →
-geometric audit → fixed-view and animation captures → visual review → correction.**
-
-| | |
+| Where | How |
 |---|---|
-| Scene format | facts with certainty and sources; parts from a closed shape vocabulary (box, cylinder, cone, sphere, torus, lathe, extrude, tube, curve, plane, grid, points, marker; repeat, radial repeat, mirror); roles; stages; periodic motion; one-shot articulations (hinge, slide, lift, turn); labels from facts; artwork slots; anchors; views |
-| The simple path | `construct-params` documents for `case` (jewel, slim, digipak, box set), `book` (hardcover, paperback), `object` (electric, acoustic and bass guitar, synth), `vessel` (bottle, can, glass) |
-| Audit | support (nothing floats), assembly order, certainty overclaims, documented-accuracy backing, clutter, duplicates, tiny and invisible parts, a missing `open` view |
-| Output | packed geometry (`geometry.schema.json`) and one self-contained HTML page; review contact sheets; MP4/GIF |
-| Viewer | drag/wheel to orbit, 1–6 views, L labels, P provenance, M reduced motion, R replay, space pause; URL `t`, `view`, `motion`, `mode`, `labels`, `sheet`, `open` reproduce any frame |
+| **Hermes** | Copy `dist/hermes/construct` into `~/.hermes/skills/` (or a project's `.hermes/skills/` and run `hermes skills trust` there). Then ask in plain words: *"make a hologram of a 1970s desk fan"*. |
+| **Claude Code** | `claude --plugin-dir dist/claude-code/construct` for a session, or copy `dist/claude-code/construct/skills/construct` into `.claude/skills/`. Ask in plain words, or `/construct:construct`. |
+| **Any MCP agent** | Add `{"mcpServers": {"construct": {"command": "python3", "args": ["/path/to/construct/construct_hologram/server.py"]}}}`. Seven read-only tools: `hologram_diagnose`, `hologram_params_template`, `hologram_expand_params`, `hologram_compile_scene`, and the legacy `hologram_template`, `hologram_validate`, `hologram_compile`. |
+| **Any OpenAI-compatible model** | `python3 construct_hologram/cli.py author "a can of porter" --params --base-url https://api.deepseek.com/v1 --model deepseek-chat --key-env DEEPSEEK_API_KEY --out can.json` (also OpenRouter, OpenAI, Ollama, llama.cpp, LM Studio). |
+| **By hand, no model** | `params` → `check` → `build` → `review` → `video` (below). |
+| **Python** | `from construct_hologram import diagnose, params, scene, render` |
 
-The consumer contract is [CONTRACT.md](CONTRACT.md). The authoring skill and its references
-are in `construct_hologram/skill/`; the any-model prompts in `construct_hologram/prompts/`.
+A complete walk-through of every entry point, with costs and timings from live runs, is in
+[docs/USING.md](docs/USING.md).
 
-## Repository
+## Thirty seconds, by hand
 
-| | |
-|---|---|
-| `construct_hologram/` | the package: `scene.py` (validation, compiler), `shapes.py`, `audit.py`, `diagnose.py`, `params.py`, `render.py` and `viewer/`, `studio.py` + `cli.py` (command line), `mcp_server.py` + `server.py`, `prompts.py` + `prompts/`, `package.py`, `product.py` (the name) |
-| `construct_hologram/examples/v2/` | synthetic examples: lighthouse, turntable, a fictional lantern jellyfish, CD, book, and 15 parameter documents |
-| `construct_hologram/evaluation/` | synthetic cross-model tasks, `score.py` (needs no model or key) and the results |
-| `construct_hologram/skill/` | the agent skill: `SKILL.md` and references (vocabulary, composition, animation, review, provenance, method) |
-| `CONTRACT.md`, `construct_hologram/geometry.schema.json`, `construct_hologram/prompts/params.schema.json` | the contract and its schemas |
+```sh
+C=construct_hologram/cli.py
+python3 $C params book --variant paperback --output book.json   # fill in the facts you know
+python3 $C check book.json        # audit: PASS (0 errors, 0 warnings) — or paths and fix hints
+python3 $C build book.json --out out    # out/hologram.html: open it in any browser
+python3 $C review book.json --out out   # out/review/*.png: stills to judge it by
+python3 $C video book.json --out out/book.mp4 --seconds 12
+```
 
-Tests: `python3 -m unittest discover -s construct_hologram -t . -p 'test_*.py'` (the capture
-smoke test is skipped without a browser).
+![A CD case opening: lid, disc and booklet](docs/media/opening.gif)
 
-## Evaluation
+## What makes it honest
 
-Five synthetic tasks (three parameter documents with deliberately unknown facts, a desk lamp,
-a fictional creature), prompts only, scored by `score.py` and reviewed visually: Claude Haiku
-13/15 then 15/15 after prompt fixes, Sonnet 15/15, Opus 15/15; no tier invented a fact the
-user did not know. Parameter entries look identical across tiers; free scenes scale with the
-model. Details: [evaluation/RESULTS.md](construct_hologram/evaluation/RESULTS.md). Score any
-provider's answers with `python3 -m construct_hologram.evaluation.score <folders>`.
+![Provenance view: certainty as colour](docs/media/provenance.png)
 
-## Requirements, licence, notices
+The provenance view shows how every part is known. The audit refuses `verified` without a
+source, refuses a `null` or placeholder fact, flags parts that float or barely render, and
+requires the documented-accuracy claim to be backed. Generated artwork is labelled
+**generated decoration**, and a real cover is shown only from bytes the user supplied.
 
-Python 3.10+. Captures need a Chromium-family browser already installed (Chrome, Chromium,
-Edge, Brave, or `HOLOGRAM_CHROME=/path`); video needs ffmpeg. Nothing is downloaded or
-installed. MIT licence ([LICENSE](LICENSE)); see [NOTICE](NOTICE). Tested on macOS (Apple
-Silicon); Linux and Windows capture paths are untested.
+Likeness is a separate question. The audit proves a hologram is valid and honest, not that it
+looks like the thing: for free-form subjects that depends on the model and on a visual review
+(a person, or a model that can see the renders). Parameter archetypes look the same from every
+model.
 
-## Limitations
+## Documentation
 
-- One periodic motion per part (a fan's head cannot oscillate while its blades spin);
-  articulations do nest.
-- A closed procedural vocabulary: no imported meshes, CAD, photogrammetry or booleans.
-- Artwork is a flat image on a face; liquids in glasses read faintly.
-- The audit proves validity and honesty, not likeness: free-form subjects need a visual
-  review by a person or a model that can see the captures.
-- Terrain and routes (scale ladder, measured vs sketched relief) are planned for contract 0.3.
+- [docs/ABOUT.md](docs/ABOUT.md) — what Construct is, where its method comes from, how to talk about it
+- [docs/USING.md](docs/USING.md) — every entry point, step by step, with a worked example
+- [docs/ARCHETYPES.md](docs/ARCHETYPES.md) — the parameter archetypes (cases, books, guitars, synth, vessels)
+- [CONTRACT.md](CONTRACT.md) — the `construct/0.2` scene and geometry contract for apps
+- [docs/EVALUATION.md](docs/EVALUATION.md) — cross-model results and how to score your own model
+- [CONTRIBUTING.md](CONTRIBUTING.md) · [CHANGELOG.md](CHANGELOG.md)
+
+## Credits
+
+Construct is inspired by **Anatomy's truth-first construction method**
+([wheresryan22/anatomy](https://github.com/wheresryan22/anatomy), MIT): true numbers first, a
+parts list before geometry, an audit run to zero, rendered images read before delivery, and
+never copying a reference image. Construct shares the method, not code: nothing from Anatomy
+is included. Its holographic look and construction grew out of NODE's Measured Light holograms
+by the same author. See [docs/ABOUT.md](docs/ABOUT.md).
 
 ## Integrations: Tessera
 
-Tessera (a collection app) consumes this toolkit as a pinned dependency: its
-atlas renders compiled geometry natively (Y-up, front +Z, metres), re-validates it, maps tone
-slots to its own palette, drives the articulations and turns to the `open` view, and sets
-labels in its own type from the item's live facts. Its agent pipeline (`tessera-agent`, the
-inbox) wraps `diagnose`, `params.expand` and `compile_scene`. The contract and format ids
-(`construct/0.2`, `tessera-hologram*`) come from that integration and stay until a new
-contract version decides otherwise.
+Tessera (a collection app) consumes Construct as a pinned dependency. Its atlas renders
+compiled geometry natively, re-validates it, drives the articulations and turns to the `open`
+view, and sets labels in its own type from each item's live facts. Its agent pipeline wraps
+`diagnose`, `params.expand` and `compile_scene`. The previous ids `tessera.hologram/0.2` and
+`tessera-hologram*` are still read for one release.
 
-## Renaming
+## Limitations
 
-The name lives in `construct_hologram/product.py` (`NAME`, `TITLE`) and `pyproject.toml`; the
-package folder is the import name, and code finds it from the folder. Apply a final name
-with `python3 scripts/rename.py <new-name> ["New Title"]` (rewrites those, the README,
-CHANGELOG, LICENSE and NOTICE, and `git mv`s the folder), then run the tests.
+- One periodic motion per part; articulations nest, periodic motions do not.
+- A closed procedural vocabulary: no imported meshes, CAD, photogrammetry or booleans.
+- Artwork is a flat image on a face; liquids in glasses read faintly.
+- Terrain and routes (with measured or sketched relief) are planned for contract 0.3.
+- Tested on macOS; Linux and Windows review capture is untested.
 
-## Legacy: v0.1 construction sheets
-
-`hologram.py` and `schema.json` keep the earlier construction-sheet compiler (`template`,
-`validate`, `compile` commands and MCP tools) for existing consumers. New work uses scenes.
+MIT licence — see [LICENSE](LICENSE) and [NOTICE](NOTICE).

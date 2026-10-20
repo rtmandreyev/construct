@@ -1,0 +1,153 @@
+# Using Construct
+
+Every entry point does the same thing: a model (or you) writes a scene or a parameter
+document; Construct checks it, and the draft is repaired until it is clean; then it is built
+and, optionally, reviewed and filmed. Paths below are relative to a checkout of
+`https://github.com/rtmandreyev/construct`.
+
+## Requirements
+
+Python 3.10 or newer; nothing else to install. For review stills and video: a
+Chromium-family browser already on the machine (Chrome, Chromium, Edge or Brave; or set
+`HOLOGRAM_CHROME=/path/to/browser`) and ffmpeg. Construct never downloads or installs anything.
+
+## A worked example, end to end (no model)
+
+A paperback whose title you know and whose author you do not:
+
+```sh
+C=construct_hologram/cli.py
+python3 $C params book --variant paperback --output book.json
+```
+
+Fill in what you know — and only that. An unknown author is left out, not guessed:
+
+```json
+{
+  "format": "construct-params", "version": 1,
+  "archetype": "book", "variant": "paperback",
+  "id": "small-hours", "title": "Small Hours", "synthetic": false,
+  "facts": [{"key": "title", "value": "Small Hours", "certainty": "user_supplied", "source": "request"}],
+  "artwork": {}, "params": {}
+}
+```
+
+```text
+$ python3 $C check book.json
+audit: PASS (0 errors, 0 warnings)
+  size 0.1299 x 0.198 x 0.0251 m
+  68 lines, 36 triangles, 0 points, 0 moving copies
+  evidence-backed key parts: 0 of 2
+
+$ python3 $C build book.json --out out
+wrote out/hologram.html
+
+$ python3 $C review book.json --out out
+captured: out/review/sheet-assembly.png, sheet-views.png, sheet-life.png, sheet-motion.png,
+          sheet-provenance.png, still-reduced-motion.png, view-spine.png, view-open.png, hero.png
+
+$ python3 $C video book.json --out out/small-hours.mp4 --seconds 12
+wrote out/small-hours.mp4
+```
+
+`out/` now holds `hologram.html` (84 KB, self-contained: open it in any browser),
+`geometry.json` (for apps), `audit.json`/`audit.txt`, `review/` and the video (2 MB). The book
+assembles, its cover opens to a title page set from the `title` fact, and its spine carries
+the title. With no author fact there is no author line, and with no cover image the cover
+shows its designed no-art face.
+
+`check --json` gives the machine-readable report: `ok`, `needs_repair`, `diagnostics[]`
+(`severity, code, path, message, hint`) and `repair_text`.
+
+## Hermes
+
+1. Build the skill: `python3 construct_hologram/package.py --out dist`.
+2. Copy `dist/hermes/construct` into `~/.hermes/skills/`, or into a project's
+   `.hermes/skills/` and run `hermes skills trust` in that project.
+3. Ask in plain words: *"Make a hologram of my CD: Glass Harbour by The Lantern Choir, a
+   normal jewel case."* Hermes finds the skill from its description; the skill runs the CLI
+   above with the right archetype or a full scene, repairs, builds and reviews.
+
+The skill's body refers to its own runtime through `${HERMES_SKILL_DIR}`; nothing else is
+configured.
+
+## Claude Code
+
+`claude --plugin-dir dist/claude-code/construct` loads it for one session (nothing is
+installed or changed). To keep it in a project, copy `dist/claude-code/construct/skills/construct`
+into `.claude/skills/` (or `~/.claude/skills/` for all projects). Ask in plain words, or invoke
+`/construct:construct` from the plugin.
+
+## Any MCP agent
+
+Run `python3 construct_hologram/server.py` as a stdio server:
+
+```json
+{"mcpServers": {"construct": {"command": "python3", "args": ["/abs/path/construct/construct_hologram/server.py"]}}}
+```
+
+| tool | does |
+|---|---|
+| `hologram_diagnose` | checks a draft (raw model text or parsed JSON): `ok`, `needs_repair`, diagnostics with paths and hints, `repair_text` |
+| `hologram_params_template` | a parameter document for an archetype and variant (no arguments: the list) |
+| `hologram_expand_params` | the full scene a parameter document builds |
+| `hologram_compile_scene` | compiled `construct-geometry` for a scene or parameter document |
+| `hologram_template`, `hologram_validate`, `hologram_compile` | the legacy v0.1 construction sheets |
+
+The tools read only the JSON they are given: no file access, rendering or network.
+
+## Any OpenAI-compatible model
+
+```sh
+export DEEPSEEK_API_KEY=...            # your key, in your shell; Construct never stores it
+python3 construct_hologram/cli.py author "a 440 ml can of Example Porter, 5.6% ABV" --params \
+    --base-url https://api.deepseek.com/v1 --model deepseek-chat --key-env DEEPSEEK_API_KEY --out can.json
+```
+
+`author` sends `prompts/system.md`, then `params.md` (with `--params`, best for small models)
+or `scene.md`, then your request; checks each answer and sends back the repair text until
+`needs_repair` is false (at most `--rounds`, default 4); and writes the final JSON. Then
+`build`/`review` it. The same works for OpenRouter, OpenAI, and local servers (Ollama
+`http://localhost:11434/v1`, llama.cpp, LM Studio).
+
+To build your own runner, use the files in `construct_hologram/prompts/` directly:
+`system.md`, `params.md` or `scene.md`, `repair.md` (the loop), `vision-review.md` (an optional
+self-review for models that can see images) and `params.schema.json` (for endpoints that
+constrain output to a JSON Schema).
+
+## Python
+
+```python
+from construct_hologram import diagnose, params, scene, render
+
+report = diagnose.diagnose_text(model_output)           # ok, needs_repair, diagnostics, repair_text
+if not report["needs_repair"]:
+    doc, _ = diagnose.parse_text(model_output)
+    if params.is_params(doc):                            # the simple path
+        doc = params.expand(doc)
+    geometry = scene.compile_scene(doc)                  # construct-geometry, see CONTRACT.md
+    html, notes = render.build_html(geometry, asset_root="assets")
+```
+
+## Costs and time (live runs)
+
+Measured through Hermes on five synthetic tasks (three parameter entries, a lamp, a fictional
+creature); both models scored 15/15 with no invented facts:
+
+| model | cost | time |
+|---|---|---|
+| DeepSeek (`deepseek-flash`) | about $0.003 per parameter entry, $0.01–0.02 per full scene ($0.038 for all five) | 258 s for all five |
+| GPT-6.1 Sol (`gpt-6.1-sol`, through a ChatGPT plan) | covered by the plan | 357 s for all five |
+
+Construct itself runs locally in seconds: `check` and `build` well under a second for typical
+objects, `review` 10–30 s, a 12 s video about a minute.
+
+## Making it look good
+
+- Start from an archetype when one fits; otherwise from an example in
+  `construct_hologram/examples/v2/`.
+- Fix every `detached` and `thin` warning: they are what a viewer notices first.
+- Look at `review/hero.png` and `review/view-open.png` (or have a vision model do it with
+  `prompts/vision-review.md`). The audit proves validity, not likeness.
+- The skill's references (`construct_hologram/skill/references/`) cover vocabulary,
+  composition, animation, review and provenance.

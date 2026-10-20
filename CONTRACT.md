@@ -1,15 +1,29 @@
-# Hologram contract `construct/0.2`
+# The Construct contract `construct/0.2`
 
-Status: **accepted** (draft 2, 2026-10-19) with one minor addition: the `open` view (§9). Owner: the
-hologram toolkit (this repository, `construct_hologram/`). Draft 2 adds the five must-fix items (renderer-owned
-style, one-shot articulations, fact labels, anchors, artwork slots and masks) and the smaller
-ones (unknown facts are absent, a published geometry schema, host-optional behaviour). Any
-change after main accepts 0.2 bumps the version and is announced.
+Status: **stable** (0.2, 2026-10-19). The documents agents write (scenes, parameter documents)
+and apps read (compiled geometry). Any change bumps the version and is recorded in the
+changelog.
+
+## Identifiers
+
+| | id | version |
+|---|---|---|
+| contract | `construct/0.2` | — |
+| scene (authoring input) | `construct-scene` | 2 |
+| parameter document | `construct-params` | 1 |
+| compiled geometry | `construct-geometry` | 2 |
+
+**Legacy ids, read for one release.** The toolkit began inside Tessera, where the same
+documents were `tessera.hologram/0.2`, `tessera-hologram` (scene, version 2),
+`tessera-hologram-params` and `tessera-hologram-geometry`. Construct 0.2.x reads the legacy
+scene and parameter ids (with a `legacy-format` warning) and never writes them; readers of
+geometry should accept both geometry ids until 0.3. The v0.1 construction sheets
+(`tessera-hologram` version 1, `tessera-geometry`) are a separate legacy format.
 
 | Document | Format id | Written by | Read by |
 |---|---|---|---|
 | **Scene** (authoring input) | `"format": "construct-scene", "version": 2` | an agent or a person | the toolkit's compiler |
-| **Geometry** (compiled output) | `"format": "construct-geometry", "version": 2`, `"contract": "construct/0.2"` | the compiler only | renderers (the portable viewer, Tessera native) |
+| **Geometry** (compiled output) | `"format": "construct-geometry", "version": 2`, `"contract": "construct/0.2"` | the compiler only | renderers (the portable viewer; apps' native renderers) |
 
 A renderer consumes **geometry**, never scenes: everything in it is explicit (line segments,
 triangles, sprites, styles, phases, transform slots, face quads). No renderer needs to
@@ -23,7 +37,7 @@ segment list stays available (`build --v1`, `scene.to_v1`).
 
 Metres. **Y up, the front faces +Z** is the only default frame (`geometry.frame`). `build
 --frame z-up` / `scene.reframe(g, "z-up")` remains a utility, `(x, y, z) → (x, −z, y)` applied
-to every position, axis, pivot, quad, anchor and box; Tessera does not use it.
+to every position, axis, pivot, quad, anchor and box, for apps with a Z-up world.
 
 ## 1. Facts and sources
 
@@ -34,8 +48,7 @@ permitted | public_domain | reference_only`. `ref` is citation text, never fetch
 `provenance.facts[]`: `{key, value, unit?, certainty, source?, note?}` with certainty
 **`verified | user_supplied | inferred | decorative`**. `verified` must cite a source id.
 **An unknown fact is absent**: `value` is a string, number or boolean, never null; the compiler
-refuses null, and an author deletes the fact instead of guessing. (`tessera.entry`'s
-`unknown` facts simply do not reach the hologram.) `subject.accuracy` is `generic |
+refuses null, and an author deletes the fact instead of guessing. (An app's "unknown" facts simply do not reach the hologram.) `subject.accuracy` is `generic |
 approximate | documented`; `subject.synthetic` marks example content.
 
 ## 2. Parts
@@ -46,7 +59,7 @@ approximate | documented`; `subject.synthetic` marks example content.
 open_max?}` — the rest-pose box, the periodic-motion slot (or −1), the articulation joint (or
 −1), and for articulated copies the box they reach fully open.
 
-| role | meaning | main's term |
+| role | meaning | also called |
 |---|---|---|
 | `mass` | primary volume and silhouette | structure (primary) |
 | `structure` | supporting construction | structure |
@@ -77,8 +90,8 @@ Budgets: ≤ 24,000 lines, ≤ 24,000 triangles, ≤ 6,000 points, ≤ 256 parts
   5 identity, 6 data, 7 faint`. `dash` `0 solid, 1 dashed, 2 dotted`; `fade` 0..3 (how much
   depth thins it); `occluder` 1 for a dark fill that hides what is behind it.
 - **Colour belongs to the renderer.** `presentation.style_hint {palette, identity}` is a hint a
-  host may ignore (Tessera ignores it: one palette and its one violet identity light). Authors
-  in the Tessera pipeline omit it; a scene-level `style` is refused.
+  host may ignore (an app with its own palette ignores it). Authors writing for such a host
+  omit it; a scene-level `style` is refused.
 - Certainty is the material: verified/user-supplied crisp, inferred a step back, decorative
   dotted and faint. A renderer may restyle within this meaning but keeps the four
   certainties distinguishable and offers a provenance view.
@@ -171,7 +184,7 @@ articulations, not motions.
 
 **Idle life (host-optional).** `animation.idle {life, events, cadence, strength}` with events
 `scan, sweep, wave, shimmer, glitch, brownout, propagate, tear, burst`, seeded from
-`scene_sha256`. A host may play none of them (Tessera settles to zero frames when idle).
+`scene_sha256`. A host may play none of them (an app may settle to zero frames when idle).
 
 **Still state (required).** Assembly complete, the `still_pose`, no events, no motion, no
 camera movement.
@@ -194,8 +207,8 @@ portable viewer's preferences; a host that owns its camera and environment ignor
 
 ## Out of scope
 
-Regions, atlas navigation and its camera, catalog state, the entry format, selection and UI
-stay in Tessera. The contract describes one object.
+A world or collection around the object (regions, navigation and its camera, catalogue
+state, selection, UI) belongs to the app. The contract describes one object.
 
 ## Versioning
 
@@ -210,7 +223,5 @@ unknown major and may ignore unknown fields within a major. Geometry `version` t
   decorative relief).
 - `route`: a polyline draped on a terrain, traced as an articulation-like progress `u`; summit
   markers.
-- Golden examples for vessels (bottle, can, glass with `label` slots) and case variants
-  (digipak, slim case, box set), guitars and synths.
 - Hierarchical periodic motion (a head that oscillates while its blades spin), found missing
   by the fresh-agent test.
