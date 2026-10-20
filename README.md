@@ -81,6 +81,7 @@ model.
 - [docs/ABOUT.md](docs/ABOUT.md) — what Construct is, where its method comes from, how to talk about it
 - [docs/USING.md](docs/USING.md) — every entry point, step by step, with a worked example
 - [docs/ARCHETYPES.md](docs/ARCHETYPES.md) — the parameter archetypes (cases, books, guitars, synth, vessels)
+- [docs/TERRAIN.md](docs/TERRAIN.md) — places, peaks and routes from elevation data you supply
 - [CONTRACT.md](CONTRACT.md) — the `construct/0.2` scene and geometry contract for apps
 - [docs/EVALUATION.md](docs/EVALUATION.md) — cross-model results and how to score your own model
 - [CONTRIBUTING.md](CONTRIBUTING.md) · [CHANGELOG.md](CHANGELOG.md)
@@ -107,7 +108,7 @@ view, and sets labels in its own type from each item's live facts. Its agent pip
 - One periodic motion per part; articulations nest, periodic motions do not.
 - A closed procedural vocabulary: no imported meshes, CAD, photogrammetry or booleans.
 - Artwork is a flat image on a face; liquids in glasses read faintly.
-- Terrain and routes (with measured or sketched relief) are planned for contract 0.3.
+- Terrain reads ESRI ASCII grids and XYZ exports (convert GeoTIFF first); see [docs/TERRAIN.md](docs/TERRAIN.md).
 - Tested on macOS; Linux and Windows review capture is untested.
 
 MIT licence — see [LICENSE](LICENSE) and [NOTICE](NOTICE).

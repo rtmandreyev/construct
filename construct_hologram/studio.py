@@ -173,6 +173,24 @@ def add_commands(sub):
     p.add_argument("--model", required=True)
     p.add_argument("--key-env")
     p.add_argument("--out", required=True)
+    p = sub.add_parser("terrain", help="a measured-terrain construct from elevation data you supply (.asc or .xyz)")
+    p.add_argument("--dem", required=True, help="an ESRI ASCII grid (.asc) or XYZ export; never downloaded")
+    p.add_argument("--center", help="lat,lon (WGS84) of the area's centre")
+    p.add_argument("--extent", type=float, help="the area's side in metres, with --center")
+    p.add_argument("--bbox", help="xmin,ymin,xmax,ymax in the grid's coordinates")
+    p.add_argument("--crs", help="EPSG:2056 (Swiss LV95), EPSG:326xx/327xx (UTM) or EPSG:4326; guessed when omitted")
+    p.add_argument("--resolution", type=int, default=72, help="grid cells along the longer side (8..128)")
+    p.add_argument("--class", dest="cls", choices=("spot", "site", "valley", "massif", "range"), help="scale class (from the extent when omitted)")
+    p.add_argument("--exaggeration", type=float, default=1.0, help="vertical exaggeration, stated on the construct (1 = true)")
+    p.add_argument("--title", default="Terrain")
+    p.add_argument("--source-title", required=True, help='the dataset and its attribution, e.g. "swissALTI3D, ©swisstopo"')
+    p.add_argument("--source-ref")
+    p.add_argument("--rights", default="permitted", choices=("permitted", "public_domain", "user_private"))
+    p.add_argument("--gpx", help="a route to drape on the terrain")
+    p.add_argument("--mark", action="append", default=[], help="Name=lat,lon; repeatable")
+    p.add_argument("--from", dest="view_from", default="S", help="the side to view from: S, SE, E, NE, N, NW, W, SW")
+    p.add_argument("--output", required=True)
+    p.add_argument("--force", action="store_true")
     p = sub.add_parser("prompts", help="write the any-model authoring package (prompts and params schema)")
     p.add_argument("--out", required=True)
     p = sub.add_parser("expand", help="the full scene a parameter document builds")
@@ -213,7 +231,8 @@ def add_commands(sub):
     p.add_argument("--identity", choices=scene_mod.IDENTITIES, help="an identity tint the person chose")
 
 
-COMMANDS = ("new", "params", "expand", "prompts", "author", "trace", "trace-image", "check", "build", "review", "video")
+COMMANDS = ("new", "params", "expand", "prompts", "author", "trace", "trace-image", "terrain", "check", "build", "review",
+            "video")
 
 
 def run(args):
@@ -234,6 +253,21 @@ def run(args):
                 _write(args.output, text, args.force)
             else:
                 sys.stdout.write(text)
+            return 0
+        if args.command == "terrain":
+            from . import terrain as terrain_mod
+            try:
+                sc = terrain_mod.build(
+                    args.dem, center=tuple(float(x) for x in args.center.split(",")) if args.center else None,
+                    extent=args.extent, bbox=tuple(float(x) for x in args.bbox.split(",")) if args.bbox else None,
+                    crs=args.crs, resolution=args.resolution, cls=args.cls, exaggeration=args.exaggeration,
+                    title=args.title, source_title=args.source_title, source_ref=args.source_ref, rights=args.rights,
+                    gpx=args.gpx, marks=args.mark, view_from=args.view_from)
+            except (terrain_mod.TerrainError, OSError, ValueError) as exc:
+                sys.stderr.write("terrain: %s\n" % exc)
+                return 1
+            _write(args.output, json.dumps(sc, indent=1, ensure_ascii=False) + "\n", args.force)
+            sys.stdout.write("wrote %s: %s\n" % (args.output, sc["subject"]["summary"]))
             return 0
         if args.command == "trace":
             from . import trace as trace_mod

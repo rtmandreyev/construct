@@ -391,6 +391,63 @@ def grid(width, depth, divisions):
     return m
 
 
+def terrain(width, depth, heights, contour=0.0, grid_every=4, skirt=True):
+    """A heightfield: rows run back (-Z, north) to front (+Z), columns west (-X) to east (+X);
+    heights in metres above the base (y = 0). Contour lines every `contour` metres (marching
+    squares; every fifth one an outline), a sparse survey grid, an edge skirt to the base, and
+    glass triangles for the surface."""
+    m = Mesh()
+    rows, cols = len(heights), len(heights[0])
+    dx, dz = width / (cols - 1), depth / (rows - 1)
+    x0, z0 = -width / 2, -depth / 2
+
+    def at(r, c):
+        return (x0 + c * dx, heights[r][c], z0 + r * dz)
+    for r in range(rows - 1):
+        for c in range(cols - 1):
+            a, b, d, e = at(r, c), at(r, c + 1), at(r + 1, c + 1), at(r + 1, c)
+            m.tris.append((a, d, b))
+            m.tris.append((a, e, d))
+    step = max(1, grid_every)
+    inner = range(1, rows - 1) if skirt else range(rows)  # the skirt draws the edges
+    for r in (r for r in inner if r % step == 0):
+        for c in range(cols - 1):
+            m.line(at(r, c), at(r, c + 1), DETAIL)
+    for c in (c for c in (range(1, cols - 1) if skirt else range(cols)) if c % step == 0):
+        for r in range(rows - 1):
+            m.line(at(r, c), at(r + 1, c), DETAIL)
+    if skirt:
+        edge = [at(0, c) for c in range(cols)] + [at(r, cols - 1) for r in range(1, rows)] + \
+               [at(rows - 1, c) for c in range(cols - 2, -1, -1)] + [at(r, 0) for r in range(rows - 2, 0, -1)]
+        m.loop(edge, OUTLINE)
+        base = [(x0, 0.0, z0), (x0 + width, 0.0, z0), (x0 + width, 0.0, z0 + depth), (x0, 0.0, z0 + depth)]
+        m.loop(base, OUTLINE)
+        for p in base:
+            q = (p[0], 0.0, p[2])
+            r_, c_ = (0 if p[2] == z0 else rows - 1), (0 if p[0] == x0 else cols - 1)
+            m.line(q, at(r_, c_), CONTOUR)
+    if contour and contour > 0:
+        lo = min(min(row) for row in heights)
+        hi = max(max(row) for row in heights)
+        k = int(lo // contour) + 1
+        while k * contour < hi:
+            level = k * contour
+            cls = OUTLINE if k % 5 == 0 else CONTOUR
+            for r in range(rows - 1):
+                for c in range(cols - 1):
+                    corners = [at(r, c), at(r, c + 1), at(r + 1, c + 1), at(r + 1, c)]
+                    cuts = []
+                    for i in range(4):
+                        p1, p2 = corners[i], corners[(i + 1) % 4]
+                        if (p1[1] < level) != (p2[1] < level):
+                            t = (level - p1[1]) / (p2[1] - p1[1])
+                            cuts.append((p1[0] + (p2[0] - p1[0]) * t, level, p1[2] + (p2[2] - p1[2]) * t))
+                    for i in range(0, len(cuts) - 1, 2):
+                        m.line(cuts[i], cuts[i + 1], cls)
+            k += 1
+    return m
+
+
 def _hash01(seed, i, k):
     x = math.sin(seed * 12.9898 + i * 78.233 + k * 37.719) * 43758.5453
     return x - math.floor(x)

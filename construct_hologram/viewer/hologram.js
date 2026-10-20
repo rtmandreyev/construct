@@ -1032,6 +1032,16 @@ void main() {
     caption.appendChild(el("div", "title", geo.title));
     caption.appendChild(el("div", "meta", [accuracy, subj.synthetic ? "SYNTHETIC EXAMPLE" : null, geo.counts.lines + " LINES"].filter(Boolean).join(" · ")));
     if ((geo.provenance.assets || []).some((a) => a.provenance === "generated-decorative")) caption.appendChild(el("div", "meta warn", "ARTWORK: GENERATED DECORATION, NOT AUTHENTIC"));
+    // terrain says how its relief is known, at what scale, and whose data it is
+    const relief = geo.parts.find((p) => p.shape === "terrain");
+    if (relief) {
+      const measured = relief.certainty === "verified" || relief.certainty === "user_supplied";
+      const fact = (k) => ((geo.provenance.facts || []).find((f) => f.key === k) || {}).value;
+      const ex = fact("terrain.vertical_exaggeration");
+      caption.appendChild(el("div", "meta", [measured ? "MEASURED TERRAIN" : "SKETCHED TERRAIN", fact("terrain.scale"),
+        ex && ex !== 1 ? "HEIGHTS ×" + ex : null].filter(Boolean).join(" · ")));
+      (geo.provenance.sources || []).filter((s) => s.kind === "dataset").forEach((s) => caption.appendChild(el("div", "meta", "DATA: " + s.title)));
+    }
     if (!opt.caption || opt.sheet) caption.style.display = "none";
     overlay.appendChild(caption);
     const legend = el("div", "legend");

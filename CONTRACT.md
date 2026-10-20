@@ -217,6 +217,14 @@ state, selection, UI) belongs to the app. The contract describes one object.
 `contract` changes on any field addition (minor) or semantic change (major). Readers refuse an
 unknown major and may ignore unknown fields within a major. Geometry `version` tracks the major.
 
+## Terrain (an addition within 0.2)
+
+A scene may use the shape `terrain` (a heightfield); it compiles to ordinary lines and
+triangles, so geometry readers need nothing new. `parts[].shape` is then `"terrain"`: a host
+labels the construct **MEASURED TERRAIN** when that part is `verified` or `user_supplied` (its
+source a `dataset`), otherwise **SKETCHED TERRAIN**, and shows the scale (fact
+`terrain.scale`) and the data attribution (the `dataset` source's title).
+
 ## Planned for 0.3 (not in 0.2)
 
 - `terrain` archetype: a heightfield or contour set with `scale.class` (`spot | site | valley |

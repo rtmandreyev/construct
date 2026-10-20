@@ -34,14 +34,17 @@ cited drawing, measurement or dataset gives its coordinates; the parts of a fict
 - Default orientations: cylinders, cones, lathes and tori stand on `at` around the +Y axis
   (a torus lies flat); boxes and spheres are centred on `at`; a plane faces +Z; a tube
   follows its path. Keep detail parts to under half of the lines.
-- Shapes (box, cylinder, cone, sphere, torus, lathe, extrude, tube, curve, plane, grid, points, marker):
+- Shapes (box, cylinder, cone, sphere, torus, lathe, extrude, tube, curve, plane, grid, points, marker, terrain):
   box `size [w,h,d]` (centred on `at`; `anchor: base` stands it on `at`); cylinder `radius,
   height` (its base is at `at`, it rises along +Y); cone `radius_bottom, radius_top, height`
   (a lampshade is wider at the bottom; tilt any part with `rotate`, degrees about X, then Y,
   then Z); sphere `radius` or `radii`;
   torus `major, minor`; lathe `profile [[radius, y], ...]` (turned forms); extrude
   `profile [[u, v], ...], height, axis y|z|x` (plans, elevations); tube `path [[x,y,z],...],
-  radius` (limbs, cables); curve `points`; plane `size [w,h]` facing +Z; grid; points; marker.
+  radius` (limbs, cables); curve `points`; plane `size [w,h]` facing +Z; grid; points; marker;
+  terrain `size [w,d], heights [[...rows back to front...]]` — real relief comes from
+  `construct terrain` and elevation data (MEASURED TERRAIN, verified); a small hand-made grid
+  is `inferred` (SKETCHED TERRAIN).
 - Copies: `"repeat": {"count": n, "step": {"at": [dx,dy,dz]}}` or
   `{"count": n, "radial": {"axis": "y", "center": [x,y,z]}}`; `"mirror": "x"`.
 - Everything rests on something (the ground, another part) unless `"floating": true`.

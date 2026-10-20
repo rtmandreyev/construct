@@ -133,7 +133,10 @@ cited drawing, measurement or dataset gives its coordinates; the parts of a fict
   then Z); sphere `radius` or `radii`;
   torus `major, minor`; lathe `profile [[radius, y], ...]` (turned forms); extrude
   `profile [[u, v], ...], height, axis y|z|x` (plans, elevations); tube `path [[x,y,z],...],
-  radius` (limbs, cables); curve `points`; plane `size [w,h]` facing +Z; grid; points; marker.
+  radius` (limbs, cables); curve `points`; plane `size [w,h]` facing +Z; grid; points; marker;
+  terrain `size [w,d], heights [[...rows back to front...]]` — real relief comes from
+  `construct terrain` and elevation data (MEASURED TERRAIN, verified); a small hand-made grid
+  is `inferred` (SKETCHED TERRAIN).
 - Copies: `"repeat": {{"count": n, "step": {{"at": [dx,dy,dz]}}}}` or
   `{{"count": n, "radial": {{"axis": "y", "center": [x,y,z]}}}}`; `"mirror": "x"`.
 - Everything rests on something (the ground, another part) unless `"floating": true`.

@@ -19,6 +19,11 @@ The first release as **Construct**, an independent MIT-licensed project.
   `hologram_compile_scene` still answer for one release (unlisted). `build` writes
   `construct.html` (was `hologram.html`; `review` and `video` still read an old `hologram.html`).
   The tagline is "Holographic constructs any agent can build — from a description, honestly."
+- **Measured terrain.** A `terrain` shape (a heightfield of up to 128×128: contours, a survey
+  grid, a skirt, glass) and `construct terrain`, which samples an ESRI ASCII grid or XYZ export
+  the user supplies (LV95, UTM or degrees), scales it by the ladder (spot, site, valley, massif,
+  range), drapes a GPX route, places markers and labels the construct MEASURED TERRAIN with its
+  scale and data attribution; a hand-made relief is SKETCHED TERRAIN. Pulled forward from 0.3.
 - **Likeness from references.** `construct trace` fits a traced outline (`construct-trace`,
   measured by a model that can see, from the user's photo or a web image viewed and never
   kept) to a documented dimension: an `extrude` profile, features in metres, a `reference_image`

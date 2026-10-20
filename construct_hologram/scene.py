@@ -72,7 +72,8 @@ EVENTS = ("scan", "sweep", "wave", "shimmer", "glitch", "brownout", "propagate",
 ASSEMBLY = ("ceremony", "build", "cut")
 LIFE = ("off", "calm", "alive")
 SHAPE_TYPES = ("box", "cylinder", "cone", "sphere", "torus", "lathe", "extrude", "tube",
-               "curve", "plane", "grid", "points", "marker")
+               "curve", "plane", "grid", "points", "marker", "terrain")
+MAX_TERRAIN = 128
 ARTICULATIONS = ("hinge", "slide", "lift", "turn")
 MAX_ARTICULATIONS = 16
 MAX_JOINTS = 16
@@ -391,6 +392,26 @@ def _shape_check(c, shape, where):
     elif t == "grid":
         c.vec(shape.get("size"), where + ".size", 2, **pos)
         c.num(shape.get("divisions"), where + ".divisions", 1, 64, True)
+    elif t == "terrain":
+        c.vec(shape.get("size"), where + ".size", 2, **pos)
+        hs = shape.get("heights")
+        if not isinstance(hs, list) or not 2 <= len(hs) <= MAX_TERRAIN or not all(
+                isinstance(r, list) and len(r) == len(hs[0]) for r in hs) or not 2 <= len(hs[0]) <= MAX_TERRAIN:
+            c.err(where + ".heights", "expected 2..%d rows of 2..%d heights, all rows the same length" % (MAX_TERRAIN, MAX_TERRAIN),
+                  "type", "Sample the elevation onto a regular grid (construct terrain does it from a DEM).")
+        else:
+            bad = next(((i, j) for i, r in enumerate(hs) for j, v in enumerate(r)
+                        if not (isinstance(v, (int, float)) and not isinstance(v, bool) and math.isfinite(v)
+                                and 0 <= v <= MAX_EXTENT)), None)
+            if bad:
+                c.err("%s.heights[%d][%d]" % (where, bad[0], bad[1]), "expected a height in metres, 0..%g" % MAX_EXTENT, "range",
+                      "Heights are stage metres above the base: subtract the lowest point and scale.")
+        if "contour" in shape:
+            c.num(shape["contour"], where + ".contour", 0, MAX_EXTENT)
+        if "grid_every" in shape:
+            c.num(shape["grid_every"], where + ".grid_every", 1, 32, True)
+        if "skirt" in shape and not isinstance(shape["skirt"], bool):
+            c.err(where + ".skirt", "expected true or false")
     elif t == "points":
         c.num(shape.get("count"), where + ".count", 1, 2000, True)
         region = shape.get("region")
@@ -423,6 +444,7 @@ _SHAPE_KEYS = {
     "curve": {"type", "points", "smooth", "closed"},
     "plane": {"type", "size", "divisions"},
     "grid": {"type", "size", "divisions"},
+    "terrain": {"type", "size", "heights", "contour", "grid_every", "skirt"},
     "points": {"type", "count", "region", "sprite", "size_px"},
     "marker": {"type", "sprite", "size_px"},
 }
@@ -1127,6 +1149,9 @@ def _local_mesh(shape, seed):
         return shapes.plane(shape["size"][0], shape["size"][1], shape.get("divisions", 0))
     if t == "grid":
         return shapes.grid(shape["size"][0], shape["size"][1], shape["divisions"])
+    if t == "terrain":
+        return shapes.terrain(shape["size"][0], shape["size"][1], shape["heights"], shape.get("contour", 0.0),
+                              shape.get("grid_every", 4), shape.get("skirt", True))
     if t == "points":
         region = shape["region"]
         if "box" in region:

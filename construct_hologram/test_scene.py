@@ -934,6 +934,67 @@ class Tracing(unittest.TestCase):
         self.assertIn("construct-trace", parts[0]["text"])
 
 
+def synthetic_dem(folder, n=81, cell=40.0):
+    """A synthetic LV95 elevation grid: one peak at 45.9763 N, 7.6586 E (no real data)."""
+    from . import terrain
+    cx, cy = terrain.wgs84_to_lv95(45.9763, 7.6586)
+    x0, y0 = cx - cell * (n // 2), cy - cell * (n // 2)
+    rows = [" ".join("%.1f" % (2500 + 1900 * math.exp(-(((x0 + c * cell - cx) ** 2 + (y0 + (n - 1 - r) * cell - cy) ** 2)
+                                                         / (2 * 900.0 ** 2)))) for c in range(n)) for r in range(n)]
+    path = Path(folder, "dem.asc")
+    path.write_text("ncols %d\nnrows %d\nxllcenter %f\nyllcenter %f\ncellsize %f\nNODATA_value -9999\n" % (n, n, x0, y0, cell)
+                    + "\n".join(rows) + "\n")
+    gpx = Path(folder, "route.gpx")
+    gpx.write_text("<gpx><trk><trkseg>" + "".join('<trkpt lat="%f" lon="%f"></trkpt>' % (45.9763 + 0.008 * (1 - k / 20), 7.6586 + 0.008 * (1 - k / 20))
+                                                for k in range(21)) + "</trkseg></trk></gpx>")
+    return path, gpx
+
+
+class Terrain(unittest.TestCase):
+    def test_reference_systems(self):
+        from . import terrain
+        e, n = terrain.wgs84_to_lv95(46 + 2 / 60 + 38.87 / 3600, 8 + 43 / 60 + 49.79 / 3600)  # swisstopo's worked example
+        self.assertAlmostEqual(e, 2699999.76, delta=1.0)
+        self.assertAlmostEqual(n, 1099999.97, delta=1.0)
+        self.assertEqual([round(v, 3) for v in terrain.wgs84_to_utm(0.0, 3.0, 31)], [500000.0, 0.0])
+
+    def test_measured_terrain_with_a_route_and_a_summit(self):
+        from . import terrain
+        with tempfile.TemporaryDirectory() as d:
+            dem, gpx = synthetic_dem(d)
+            sc = terrain.build(str(dem), center=(45.9763, 7.6586), extent=2400, title="Synthetic peak",
+                               source_title="Synthetic test grid", gpx=str(gpx), marks=["Summit=45.9763,7.6586"], view_from="NE")
+        r = diagnose.diagnose(sc)
+        self.assertTrue(r["ok"] and not r["warnings"], r["repair_text"])
+        facts = {f["key"]: f["value"] for f in sc["facts"]}
+        self.assertEqual(facts["terrain.class"], "valley")
+        self.assertAlmostEqual(facts["elevation.max"], 4400, delta=5)
+        top = max(max(row) for row in sc["parts"][0]["shape"]["heights"])
+        summit = [p for p in sc["parts"] if p["id"] == "mark-1"][0]["at"]
+        self.assertAlmostEqual(summit[1], top, delta=0.05)              # the marker sits on the measured top
+        self.assertEqual(sc["presentation"]["framing"]["yaw"], 135)
+        self.assertEqual(sc["parts"][0]["certainty"], "verified")
+
+    def test_sketched_relief_is_not_verified_by_a_document(self):
+        s = base()
+        s["sources"].append({"id": "doc", "kind": "document", "title": "a guidebook", "rights": "reference_only"})
+        s["parts"] = [{"id": "relief", "role": "mass", "certainty": "verified", "source": "doc", "stage": 0,
+                       "shape": {"type": "terrain", "size": [2, 2], "heights": [[0.1, 0.3, 0.2], [0.2, 0.6, 0.3], [0.1, 0.2, 0.1]]}}]
+        self.assertIn("shape-overclaim", {d["code"] for d in diagnose.diagnose(s)["diagnostics"]})
+
+    def test_cli_terrain_and_the_area_must_be_inside_the_data(self):
+        with tempfile.TemporaryDirectory() as d:
+            synthetic_dem(d)
+            cli = [sys.executable, "-I", str(HERE / "cli.py"), "terrain", "--dem", "dem.asc", "--center", "45.9763,7.6586",
+                   "--source-title", "Synthetic test grid", "--output", "t.json"]
+            r = subprocess.run(cli + ["--extent", "2000"], cwd=d, capture_output=True, text=True)
+            self.assertEqual(r.returncode, 0, r.stderr)
+            self.assertIn("measured terrain", r.stdout)
+            r = subprocess.run(cli + ["--extent", "90000", "--force"], cwd=d, capture_output=True, text=True)
+            self.assertEqual(r.returncode, 1)
+            self.assertIn("beyond the elevation data", r.stderr)
+
+
 class Capture(unittest.TestCase):
     def test_review_produces_non_empty_images(self):
         with tempfile.TemporaryDirectory() as d:
