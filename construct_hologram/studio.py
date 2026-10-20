@@ -135,6 +135,14 @@ def add_commands(sub):
     p.add_argument("--list", action="store_true")
     p.add_argument("--output")
     p.add_argument("--force", action="store_true")
+    p = sub.add_parser("author", help="draft a hologram with any OpenAI-compatible model: check and repair until clean")
+    p.add_argument("request", help="what to make, in plain words")
+    p.add_argument("--base-url", required=True, help="e.g. https://api.deepseek.com/v1 or http://localhost:11434/v1")
+    p.add_argument("--model", required=True)
+    p.add_argument("--key-env", help="the environment variable that holds the API key (never stored)")
+    p.add_argument("--out", required=True)
+    p.add_argument("--params", action="store_true", help="ask for a parameter document (best for small models)")
+    p.add_argument("--rounds", type=int, default=4)
     p = sub.add_parser("prompts", help="write the any-model authoring package (prompts and params schema)")
     p.add_argument("--out", required=True)
     p = sub.add_parser("expand", help="the full scene a parameter document builds")
@@ -169,7 +177,7 @@ def add_commands(sub):
     p.add_argument("--size", default="1280x720")
 
 
-COMMANDS = ("new", "params", "expand", "prompts", "check", "build", "review", "video")
+COMMANDS = ("new", "params", "expand", "prompts", "author", "check", "build", "review", "video")
 
 
 def run(args):
@@ -191,6 +199,13 @@ def run(args):
             else:
                 sys.stdout.write(text)
             return 0
+        if args.command == "author":
+            from . import runner
+            try:
+                return runner.run(args, sys.stdout)
+            except runner.RunnerError as exc:
+                sys.stderr.write("author: %s\n" % exc)
+                return 2
         if args.command == "prompts":
             from . import prompts as prompts_mod
             for name in prompts_mod.write(args.out):

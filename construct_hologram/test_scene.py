@@ -762,6 +762,48 @@ class LegacyIds(unittest.TestCase):
         self.assertNotEqual(product.DIST, "construct")  # PyPI "construct" is another project
 
 
+class Runner(unittest.TestCase):
+    """The OpenAI-compatible author loop, against a local stub endpoint (no real provider)."""
+
+    def test_author_repairs_until_clean(self):
+        import http.server
+        import threading
+        good = json.dumps(params.template("vessel", "can") | {"facts": [], "synthetic": True})
+        answers = ["```json\n{\"format\": \"construct-params\", \"version\": 1}\n```", good]
+        seen = []
+
+        class Stub(http.server.BaseHTTPRequestHandler):
+            def do_POST(self):
+                body = json.loads(self.rfile.read(int(self.headers["Content-Length"])))
+                seen.append((self.headers.get("Authorization"), body))
+                out = json.dumps({"choices": [{"message": {"content": answers[min(len(seen) - 1, 1)]}}],
+                                  "usage": {"prompt_tokens": 10, "completion_tokens": 5}}).encode()
+                self.send_response(200)
+                self.send_header("Content-Type", "application/json")
+                self.end_headers()
+                self.wfile.write(out)
+
+            def log_message(self, *a):
+                pass
+        srv = http.server.HTTPServer(("127.0.0.1", 0), Stub)
+        threading.Thread(target=srv.serve_forever, daemon=True).start()
+        try:
+            with tempfile.TemporaryDirectory() as d:
+                env = dict(os.environ, STUB_KEY="test-key-not-real")
+                r = subprocess.run([sys.executable, "-I", str(HERE / "cli.py"), "author", "a can of synthetic porter",
+                                    "--base-url", "http://127.0.0.1:%d/v1" % srv.server_port, "--model", "stub",
+                                    "--key-env", "STUB_KEY", "--params", "--out", str(Path(d, "can.json"))],
+                                   capture_output=True, text=True, env=env, timeout=60)
+                self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+                self.assertIn("2 rounds", r.stdout)
+                self.assertEqual(json.loads(Path(d, "can.json").read_text())["variant"], "can")
+        finally:
+            srv.shutdown()
+        self.assertEqual(seen[0][0], "Bearer test-key-not-real")
+        self.assertEqual(seen[0][1]["messages"][0]["role"], "system")
+        self.assertIn("problem", seen[1][1]["messages"][-1]["content"])  # the repair text went back
+
+
 class Capture(unittest.TestCase):
     def test_review_produces_non_empty_images(self):
         with tempfile.TemporaryDirectory() as d:
