@@ -6,9 +6,10 @@ description: Build a construct — an animated, audited holographic model — of
 # {{TITLE}}
 
 You author a **scene** (declarative JSON); the bundled tools validate it, audit it, compile
-it and render it. You never write graphics code. Work the loop below until the review
-passes: a construct is finished when it is *recognisable at a glance*, *honest about what
-is known*, and *alive without being noisy*.
+it and render it. You never write graphics code. Work the loop below until the construct is
+*genuinely good* — accurate and beautiful, honest about what is known, alive without being
+noisy: something you would put in a launch video — or until the effort tier's limits are
+reached, whichever comes first. Then deliver the best version so far.
 
 Tools (Python 3.10+, standard library only; a Chromium-family browser for captures;
 ffmpeg optional for video). `TOOLS` below is `{{SKILL_DIR}}/runtime/cli.py`, where
@@ -27,19 +28,34 @@ For a CD, a book, a guitar, a synth, a bottle, a can or a glass there is a **sim
 in the facts (leave sizes at their standard unless the user gave them), and `check`/`review`
 it like a scene; a builder draws it in the house style. Use the full loop below for anything
 else, or when the result needs more than the archetype offers. `prompts/` holds the same
-rules for other models and hosts (`system.md`, `params.md`, `scene.md`, `repair.md`).
+rules for other models and hosts (`system.md`, `params.md`, `scene.md`, `repair.md`,
+`vision-review.md`); `construct author --tier standard --vision` runs the whole bounded loop
+with any OpenAI-compatible model.
 
 Work in a folder of your own. Never install software or change settings to make this run;
 if no browser is available, say so and deliver the HTML without captures.
 
 ## The loop
 
-1. **Facts first.** Write down what is actually known and where it came from: the user's
-   words, supplied measurements, documents they gave you. Every fact gets a certainty:
+0. **Choose the effort and whether to research.** The tier is the user's or host's choice:
+   `quick` (bulk, the parameter path), `standard` (the default: ≤10 min, ≤2 review rounds)
+   or `showcase` (only when asked: ≤30 min). Its limits are hard ceilings, not targets. A
+   generic subject ("a desk lamp") needs no research; a concrete, named one (a brand and
+   model, a named building or peak, a species) is researched whenever you are unsure of its
+   identity-defining shape or specs; "research: on/off" in the request overrides both. See
+   [effort](references/effort.md).
+1. **Research, then facts.** For a researched subject, first look up the exact thing — the
+   official or maker's pages, manuals, specs, plans, reference photos — then look at the
+   references with vision (any model that can see: Claude, GPT, Gemini, DeepSeek) and
+   measure silhouette and proportions, within the tier's research counts. Only then author.
+   Write down what is actually known and where it came from: the user's
+   words, supplied measurements, documents they gave you, the sources you read. Every fact gets a certainty:
    `verified` (cites a source), `user_supplied`, `inferred` (your reasoning: typical sizes,
    proportions) or `decorative` (chosen for presentation). Do not invent precision; a
-   generic reconstruction says so (`subject.accuracy: "generic"`). See
-   [provenance](references/provenance.md).
+   generic reconstruction says so (`subject.accuracy: "generic"`). Each value is
+   documented (`verified`, citing its source), traced (`inferred`, citing the reference
+   image) or invented (`inferred` with a note, or `decorative`). Without a cited source
+   nothing is `verified`. See [provenance](references/provenance.md).
 2. **Recognition before geometry.** Name the silhouette, the primary masses and the **two
    or three identity features** that make the thing itself (a lighthouse: tapering banded
    tower, gallery, glazed lantern; a record player: platter with record, S-shaped tonearm).
@@ -63,18 +79,25 @@ if no browser is available, say so and deliver the HTML without captures.
 5. **Check until the audit is clean.** `check` must report `audit: PASS`. Fix every
    error (floating parts, overclaimed certainty, accuracy that is not backed); read every
    warning and either fix it or be ready to explain it.
-6. **Look at it.** Run `review`, then open and actually inspect
+6. **Review as an art director, and iterate.** Run `review`, then open and actually inspect
    `review/hero.png`, `sheet-views.png`, `sheet-assembly.png`, `sheet-motion.png`,
-   `sheet-life.png`, `sheet-provenance.png` and each `view-<id>.png`. Judge them against the [review checklist](references/review.md):
-   silhouette, hierarchy, identity, clutter, framing, assembly order, honesty. Fix the
-   scene and review again. Geometric validity (the audit) and art direction (your eyes)
-   are separate gates; pass both. If you cannot see images, still fix every `detached` and
-   `thin` warning: they are what a viewer notices first.
-7. **Deliver.** Hand over `scene.json`, `out/construct.html` (and `out/geometry.json`,
-   the video if made) with a short note: what is evidence, what is inferred or designed,
-   which artwork is authentic and which is generated decoration, and what you reviewed.
-   Never call a generic reconstruction exact, and never present generated art as a real
-   cover.
+   `sheet-life.png`, `sheet-provenance.png` and each `view-<id>.png`. Score them against the
+   [art-direction rubric](references/review.md): silhouette, proportions against the
+   references, identity features, depth and layering, composition and hero framing, the
+   assembly's story, motion, detail density, honesty. Improve the weakest point, `check`,
+   `review` again. Stop when every criterion is good and you would show it as it is, or when
+   the tier's review rounds or time run out. A host may add a fresh-eyes critic (an
+   independent reviewer over the contact sheets). Geometric validity (the audit) and art
+   direction (your eyes) are separate gates. If you cannot see images, still fix every
+   `detached` and `thin` warning, and record `"outcome": "unreviewed"`.
+7. **Deliver.** Record how it was made in the scene's `authoring` block (`tier`,
+   `research`, the `sources` used, `review_rounds`, `outcome`: good, limit or unreviewed,
+   and `next`: the most valuable improvements still open). Hand over `scene.json`,
+   `out/construct.html` (and `out/geometry.json`, the video if made) with a short note: what
+   is evidence, what is inferred or designed, which artwork is authentic and which is
+   generated decoration, what you reviewed, and — if a limit stopped you — what the next
+   improvement would be. Never call a generic reconstruction exact, and never present
+   generated art as a real cover.
 
 ## Rules that keep it honest and safe
 

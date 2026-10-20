@@ -6,7 +6,7 @@ the points you name, and labels the result **MEASURED TERRAIN** with its scale a
 source. A relief made by hand (no data) stays `inferred` and is labelled **SKETCHED TERRAIN**.
 
 ```sh
-python3 construct_hologram/cli.py terrain --dem matterhorn.asc --center 45.9763,7.6586 --extent 3000 \
+python3 construct_hologram/cli.py terrain --dem swissalti3d-tiles/ --center 45.97636,7.65861 --extent 3200 \
     --title "Matterhorn" --source-title "swissALTI3D, ©swisstopo" \
     --gpx hornli.gpx --mark "Summit=45.9763,7.6586" --from NE --output matterhorn.json
 python3 construct_hologram/cli.py review matterhorn.json --out out
@@ -22,6 +22,18 @@ Construct reads two plain formats and never downloads anything:
   skipped).
 
 A GeoTIFF is converted first, for example `gdal_translate -of AAIGrid tile.tif tile.asc`.
+
+`--dem` takes one file, several, or a folder of tiles of one dataset (`--dem tiles/`). Only the
+requested area is kept, thinned to the sampling resolution while reading, so a massif from
+twenty 2 m swissALTI3D tiles (5 million points, 119 MB of text) builds in about 5 seconds and
+35 MB of memory. The elevation facts report the data's own lowest and highest points inside
+the area — the summit, not the highest sample. The relief is resampled onto at most 100 cells
+per side, which keeps it inside the 24,000-triangle budget.
+
+Tested against swissALTI3D 2024 (© swisstopo) around the Matterhorn: summit 4477.2 m as in the
+data; the Hörnli hut marker sits on the NE ridge. The tiles are never committed; to run that
+test, point `CONSTRUCT_TEST_MATTERHORN_DEM` at a folder of the XYZ tiles (LV95, E 2615–2619 km,
+N 1090–1093 km).
 
 Reference systems: Swiss LV95 (`EPSG:2056`, swisstopo's approximate formulas, about 1 m), UTM
 (`EPSG:326xx` north / `EPSG:327xx` south), or longitude/latitude degrees (`EPSG:4326`).

@@ -7,7 +7,7 @@
 Reads an ESRI ASCII grid (.asc) or an XYZ text export (x y z per line, a regular grid); it never
 downloads anything. Coordinates in the grid's reference system: Swiss LV95 (EPSG:2056), UTM
 (EPSG:326xx / 327xx) or longitude/latitude degrees (EPSG:4326); WGS84 points (a GPX track,
---center, --mark) are converted to it. The relief is resampled onto a grid of at most 128 per
+--center, --mark) are converted to it. The relief is resampled onto a grid of at most 100 per
 side and scaled by the ladder (spot, site, valley, massif, range: each class twice the stage size
 of the one before) with an optional vertical exaggeration, which is stated. The result is a
 construct scene: the terrain part (verified, cited to the dataset: MEASURED TERRAIN), the route
@@ -23,6 +23,10 @@ from pathlib import Path
 LADDER = [("spot", 100.0, 1.0), ("site", 1000.0, 2.0), ("valley", 8000.0, 4.0), ("massif", 30000.0, 8.0),
           ("range", math.inf, 16.0)]   # class, largest extent in metres, stage width in metres
 VIEW_YAW = {"S": 0, "SE": 45, "E": 90, "NE": 135, "N": 180, "NW": 225, "W": 270, "SW": 315}
+
+
+# the densest grid that stays inside the 24,000-triangle budget with its skirt (2(n-1)^2 + 8(n-1))
+MAX_RESOLUTION = 100
 
 
 class TerrainError(Exception):
@@ -160,6 +164,119 @@ def read_dem(path):
     raise TerrainError("unknown elevation format %r (.asc or .xyz)" % p.suffix)
 
 
+DEM_SUFFIXES = (".asc", ".grd", ".xyz", ".txt", ".csv")
+
+
+def dem_files(paths):
+    """The elevation files named: files, or every .asc/.xyz in a folder (tiles of one dataset)."""
+    out = []
+    for path in ([paths] if isinstance(paths, (str, Path)) else list(paths)):
+        p = Path(path)
+        if p.is_dir():
+            found = sorted(q for q in p.iterdir() if q.suffix.lower() in DEM_SUFFIXES)
+            if not found:
+                raise TerrainError("no .asc or .xyz files in %s" % p)
+            out += found
+        else:
+            if p.suffix.lower() in (".tif", ".tiff"):
+                read_dem(p)  # raises the conversion hint
+            if p.suffix.lower() not in DEM_SUFFIXES:
+                raise TerrainError("unknown elevation format %r (.asc or .xyz)" % p.suffix)
+            out.append(p)
+    if not out:
+        raise TerrainError("no elevation files given")
+    return out
+
+
+def _points(path):
+    """Stream (x, y, z) from one file: XYZ rows, or an ASCII grid's cell centres (missing values skipped)."""
+    if Path(path).suffix.lower() in (".asc", ".grd"):
+        g = read_asc(path)
+        for r, row in enumerate(g.z):
+            for c, h in enumerate(row):
+                if h is not None:
+                    yield g.x0 + c * g.cell, g.y_top - r * g.cell, h
+        return
+    with open(path, encoding="ascii", errors="replace") as fh:
+        for line in fh:
+            parts = line.replace(",", " ").replace(";", " ").split()
+            if len(parts) < 3:
+                continue
+            try:
+                yield float(parts[0]), float(parts[1]), float(parts[2])
+            except ValueError:
+                continue  # a header
+
+
+def _cell_of(path):
+    """The grid spacing of a file, from its header or its first rows."""
+    if Path(path).suffix.lower() in (".asc", ".grd"):
+        return read_asc(path).cell
+    xs = set()
+    for i, (x, _, _) in enumerate(_points(path)):
+        xs.add(x)
+        if i > 2000:
+            break
+    xs = sorted(xs)
+    if len(xs) < 2:
+        raise TerrainError("cannot tell the grid spacing of %s" % path)
+    return min(b - a for a, b in zip(xs, xs[1:]))
+
+
+def first_point(paths):
+    for p in dem_files(paths):
+        for pt in _points(p):
+            return pt
+    raise TerrainError("no x y z values found")
+
+
+def bounds(paths):
+    """(xmin, ymin, xmax, ymax) of every point (one streaming pass)."""
+    xmin = ymin = math.inf
+    xmax = ymax = -math.inf
+    for p in dem_files(paths):
+        for x, y, _ in _points(p):
+            xmin, xmax, ymin, ymax = min(xmin, x), max(xmax, x), min(ymin, y), max(ymax, y)
+    if xmin == math.inf:
+        raise TerrainError("no x y z values found")
+    return xmin, ymin, xmax, ymax
+
+
+def read_area(paths, area, spacing=None):
+    """One grid from several tiles, cropped to area = (xmin, ymin, xmax, ymax) with a small margin
+    and thinned to about half the sampling spacing (the full 2 m data of a massif would not fit in
+    memory, and the sampler never needs it). The true lowest and highest points inside the area
+    are kept as `zmin_true` / `zmax_true`, so a summit is never under-reported by the thinning."""
+    files = dem_files(paths)
+    cell = _cell_of(files[0])
+    k = max(1, int((spacing or cell) / (2 * cell)))
+    step = cell * k
+    margin = 2 * step
+    ax0, ay0, ax1, ay1 = area[0] - margin, area[1] - margin, area[2] + margin, area[3] + margin
+    x0 = y0 = None
+    kept = {}
+    zlo, zhi = math.inf, -math.inf
+    for f in files:
+        for x, y, h in _points(f):
+            if not (ax0 <= x <= ax1 and ay0 <= y <= ay1):
+                continue
+            if area[0] <= x <= area[2] and area[1] <= y <= area[3]:
+                zlo, zhi = min(zlo, h), max(zhi, h)
+            if x0 is None:
+                x0, y0 = x, y
+            i, j = round((x - x0) / cell), round((y - y0) / cell)
+            if i % k == 0 and j % k == 0:
+                kept[(i // k, j // k)] = h
+    if len(kept) < 4:
+        raise TerrainError("the elevation data does not cover the area")
+    ii, jj = [a for a, _ in kept], [b for _, b in kept]
+    imin, imax, jmin, jmax = min(ii), max(ii), min(jj), max(jj)
+    z = [[kept.get((i, j)) for i in range(imin, imax + 1)] for j in range(jmax, jmin - 1, -1)]
+    g = Grid(x0 + imin * step, y0 + jmax * step, step, z)
+    g.zmin_true, g.zmax_true = zlo, zhi
+    return g
+
+
 def read_gpx(path):
     text = Path(path).read_text(encoding="utf-8", errors="replace")
     pts = []
@@ -184,24 +301,33 @@ def ladder(extent, cls=None):
 def build(dem, center=None, extent=None, bbox=None, crs=None, resolution=72, cls=None, exaggeration=1.0,
           title="Terrain", source_title="Elevation data", source_ref=None, rights="permitted", gpx=None,
           marks=(), view_from="S", identifier=None):
-    grid = read_dem(dem) if not isinstance(dem, Grid) else dem
-    crs = crs or guess_crs(grid.x0, grid.y_top)
+    if isinstance(dem, Grid):
+        grid, fx, fy = dem, dem.x0, dem.y_top
+    else:
+        grid = None
+        fx, fy, _ = first_point(dem)
+    crs = crs or guess_crs(fx, fy)
     if bbox:
         xmin, ymin, xmax, ymax = bbox
     elif center and extent:
         cx, cy = to_crs(crs, *center)
         half = extent / 2 if crs != "EPSG:4326" else extent / 2 / 111320.0
         xmin, xmax, ymin, ymax = cx - half, cx + half, cy - half, cy + half
-    else:
+    elif grid is not None:
         xmin, xmax = grid.x0, grid.x0 + (grid.cols - 1) * grid.cell
         ymin, ymax = grid.y_top - (grid.rows - 1) * grid.cell, grid.y_top
+    else:
+        xmin, ymin, xmax, ymax = bounds(dem)
+    if grid is None:
+        # read only the area, thinned to the sampling: tiles of a whole massif stay small
+        grid = read_area(dem, (xmin, ymin, xmax, ymax), max(xmax - xmin, ymax - ymin) / max(8, min(int(resolution), MAX_RESOLUTION)))
     # metres per unit of the grid's coordinates (degrees in EPSG:4326)
     mx = 111320.0 * math.cos(math.radians((ymin + ymax) / 2)) if crs == "EPSG:4326" else 1.0
     my = 110540.0 if crs == "EPSG:4326" else 1.0
     width_m, depth_m = (xmax - xmin) * mx, (ymax - ymin) * my
     if width_m <= 0 or depth_m <= 0:
         raise TerrainError("the area is empty")
-    n = max(8, min(int(resolution), 128))
+    n = max(8, min(int(resolution), MAX_RESOLUTION))
     cols = n if width_m >= depth_m else max(8, int(round(n * width_m / depth_m)))
     rows = n if depth_m >= width_m else max(8, int(round(n * depth_m / width_m)))
     real = []
@@ -217,6 +343,8 @@ def build(dem, center=None, extent=None, bbox=None, crs=None, resolution=72, cls
         real.append(row)
     zmin = min(min(r) for r in real)
     zmax = max(max(r) for r in real)
+    # the facts report the data's own extremes inside the area, not the sampled grid's
+    true_lo, true_hi = getattr(grid, "zmin_true", zmin), getattr(grid, "zmax_true", zmax)
     extent_m = max(width_m, depth_m)
     cls, stage = ladder(extent_m, cls)
     s = stage / extent_m
@@ -238,15 +366,15 @@ def build(dem, center=None, extent=None, bbox=None, crs=None, resolution=72, cls
         "format": "construct-scene", "version": 2, "id": ident, "title": title,
         "subject": {"category": "architecture" if cls in ("spot", "site") else "other", "accuracy": "documented",
                     "synthetic": False, "summary": "%s: measured terrain, %.0f x %.0f m, elevation %.0f-%.0f m, at 1:%s%s."
-                    % (title, width_m, depth_m, zmin, zmax, _ratio(s), "" if exaggeration == 1 else
+                    % (title, width_m, depth_m, true_lo, true_hi, _ratio(s), "" if exaggeration == 1 else
                        ", heights exaggerated %gx" % exaggeration)},
         "units": "m", "seed": 7,
         "sources": [{"id": "dem", "kind": "dataset", "title": source_title, "rights": rights,
                      **({"ref": source_ref} if source_ref else {})}],
         "facts": [
             {"key": "terrain.extent", "value": "%.0f x %.0f" % (width_m, depth_m), "unit": "m", "certainty": "verified", "source": "dem"},
-            {"key": "elevation.min", "value": round(zmin, 1), "unit": "m", "certainty": "verified", "source": "dem"},
-            {"key": "elevation.max", "value": round(zmax, 1), "unit": "m", "certainty": "verified", "source": "dem"},
+            {"key": "elevation.min", "value": round(true_lo, 1), "unit": "m", "certainty": "verified", "source": "dem"},
+            {"key": "elevation.max", "value": round(true_hi, 1), "unit": "m", "certainty": "verified", "source": "dem"},
             {"key": "terrain.class", "value": cls, "certainty": "inferred", "note": "from the extent, on the scale ladder"},
             {"key": "terrain.scale", "value": "1:%s" % _ratio(s), "certainty": "inferred", "note": "the stage scale for this class"},
             {"key": "terrain.vertical_exaggeration", "value": exaggeration, "certainty": "decorative",

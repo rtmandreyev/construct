@@ -331,11 +331,15 @@ def review(html_path, out_dir, width=1440, height=900, scale=1.0, sheets=SHEETS,
             p = out / ("view-%s.png" % vid)
             b.shot(p)
             written.append(str(p))
-        b.open(_url(html_path, t="%.3f" % (end + 2.0), ui=0, capture=1, labels=1))
+        # the hero is the whole object in its fitted hero framing, assembled and opened: the
+        # camera held still, so a tour or drift never decides what the hero shows
+        b.open(_url(html_path, t="%.3f" % (end + 2.0), view="hero", camera="still", ui=0, capture=1, labels=1))
         p = out / "hero.png"
         b.shot(p)
         written.append(str(p))
-        (out / "timeline.json").write_text(timeline + "\n", encoding="utf-8")
+        tl["hero_camera"] = json.loads(b.evaluate("JSON.stringify(HOLO.camera())"))
+        tl["hero_fitted"] = json.loads(b.evaluate("JSON.stringify(HOLO.fitted('hero'))"))
+        (out / "timeline.json").write_text(json.dumps(tl) + "\n", encoding="utf-8")
     finally:
         b.close()
     return written

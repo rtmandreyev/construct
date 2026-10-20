@@ -92,6 +92,7 @@ Run `python3 construct_hologram/server.py` as a stdio server:
 | `construct_params_template` | a parameter document for an archetype and variant (no arguments: the list) |
 | `construct_expand_params` | the full scene a parameter document builds |
 | `construct_compile` | compiled `construct-geometry` for a scene or parameter document |
+| `construct_limits` | an effort tier's limits (with overrides, or `tier:`/`research:` read from a request), for the host to enforce |
 | `hologram_template`, `hologram_validate`, `hologram_compile` | the legacy v0.1 construction sheets |
 
 The tools read only the JSON they are given: no file access, rendering or network.
@@ -108,8 +109,39 @@ python3 construct_hologram/cli.py author "a 440 ml can of Example Porter, 5.6% A
 
 `author` sends `prompts/system.md`, then `params.md` (with `--params`, best for small models)
 or `scene.md`, then your request; checks each answer and sends back the repair text until
-`needs_repair` is false (at most `--rounds`, default 4); and writes the final JSON. Then
-`build`/`review` it. The same works for OpenRouter, OpenAI, and local servers (Ollama
+`needs_repair` is false. With `--vision` (the model can see images) and a browser, it then
+renders the construct and asks the model for an art-direction review of its own captures
+(`prompts/vision-review.md`), improving the weakest point each round until the verdict is
+"good". Then `build`/`review` it.
+
+The effort tier bounds the whole run, and `author` enforces it: whichever comes first ends
+the run — a "good" verdict, or any limit — and the best draft so far is written with its
+`authoring` record (tier, outcome, `next` improvements), printed as `next:` lines too.
+
+```sh
+python3 construct_hologram/cli.py author "a Revox A77 tape recorder" --tier showcase --vision \
+    --reference https://example.org/a77-front.jpg --max-cost 0.50 --price-in 0.27 --price-out 1.10 \
+    --base-url ... --model ... --key-env ... --out a77.json
+```
+
+| option | effect |
+|---|---|
+| `--tier quick\|standard\|showcase` | the limits below (default standard; also `tier: ...` in the request) |
+| `--research auto\|on\|off` | the research policy, or the user's override (also `research: ...` in the request) |
+| `--rounds`, `--review-rounds`, `--max-seconds`, `--max-images` | raise or lower one limit (never remove it) |
+| `--max-total-tokens`, `--max-cost` with `--price-in`/`--price-out` | an optional token or cost ceiling (USD per million tokens) |
+
+| tier | wall clock | review/improve rounds | check rounds | web reference images |
+|---|---|---|---|---|
+| quick | 2 min | 0 (audit only) | 3 | none |
+| standard | 10 min | 2 | 6 | 3 |
+| showcase | 30 min | 4 | 10 | 6 |
+
+The runner has no web search: research is the reference images you attach (web images count
+against the tier; your own photos are source data). Agents with web tools follow the research
+policy and counts in `prompts/system.md` and `skill/references/effort.md`. Hosts add hard
+limits on top (a Hermes run budget, an agent harness's timeout and cost ceiling); MCP hosts get
+a tier's limits from `construct_limits`. The same works for OpenRouter, OpenAI, and local servers (Ollama
 `http://localhost:11434/v1`, llama.cpp, LM Studio).
 
 To build your own runner, use the files in `construct_hologram/prompts/` directly:
@@ -132,8 +164,9 @@ python3 construct_hologram/cli.py trace-image photo.jpg --what "the guitar body 
 ```
 
 The result is an `extrude` profile in metres, the features in metres, a `reference_image`
-source and an `inferred` part stub. The image is never embedded. In Hermes use a
-vision-capable model (or `vision_analyze`); in Claude Code put the photo in the working folder.
+source and an `inferred` part stub. The image is never embedded. Any model that can see images
+works, DeepSeek included; in Hermes enable the vision toolset (`vision_analyze`); in Claude
+Code put the photo in the working folder.
 See `construct_hologram/skill/references/tracing.md`.
 
 ## Python
@@ -168,7 +201,10 @@ objects, `review` 10–30 s, a 12 s video about a minute.
 - Start from an archetype when one fits; otherwise from an example in
   `construct_hologram/examples/v2/`.
 - Fix every `detached` and `thin` warning: they are what a viewer notices first.
-- Look at `review/hero.png` and `review/view-open.png` (or have a vision model do it with
-  `prompts/vision-review.md`). The audit proves validity, not likeness.
+- For a named subject, research first: the maker's pages and specs, reference photos viewed
+  with vision, the identity shape traced. Then author.
+- Look at `review/hero.png`, `sheet-views.png` and `sheet-assembly.png` (or have a vision
+  model do it with `prompts/vision-review.md`) and score them against the art-direction
+  rubric in `skill/references/review.md`. The audit proves validity, not beauty or likeness.
 - The skill's references (`construct_hologram/skill/references/`) cover vocabulary,
   composition, animation, review and provenance.

@@ -7,7 +7,34 @@ Two gates, both required:
    that nothing claims more certainty than its evidence, and that accuracy claims are
    backed. It cannot judge beauty or likeness.
 2. **Art direction** — your eyes on the captures. Read the images; do not infer them from
-   the JSON.
+   the JSON. The bar is not "recognisable": it is **genuinely good**, accurate and
+   beautiful, something you would put in a launch video.
+
+## The art-direction rubric
+
+Score each criterion 0–3 (0 missing, 1 weak, 2 good, 3 striking) from the captures:
+
+| criterion | good means | look at |
+|---|---|---|
+| silhouette | reads instantly as this thing, from the hero and every side | `hero.png`, `sheet-views.png` |
+| proportions | right against the facts and the references: heights, widths, spacing | `sheet-views.png` front and side, beside the reference |
+| identity | the two or three identity features are rendered with care, in proportion, bright | `hero.png`, their own `view-<id>.png` |
+| depth | masses, structure, detail and ornament layer clearly; nothing equally loud | `hero.png` |
+| composition | strong hero framing with margin; nothing cut off; the best side | `hero.png`, each view |
+| assembly | the build order tells the object's story: foundations first, the reveal last | `sheet-assembly.png` |
+| motion | articulations and idle life bring it alive without noise, about real pivots | `sheet-motion.png`, `sheet-life.png` |
+| density | rich detail that never clutters: no hairlines, nothing hovering or poking through | every sheet |
+| honesty | labels only from facts; inferred and decorative parts look it; the caption says GENERIC or APPROXIMATE when it is | `sheet-provenance.png`, `hero.png` |
+
+It is **good** when every criterion scores 2 or more and you would show it as it is.
+Otherwise **iterate**: improve the weakest criterion first, `check`, `review`, score again.
+Stop when it is good or when the tier's review rounds or time run out ([effort](effort.md)),
+and record the remaining ideas in `authoring.next`.
+
+A model that can see reviews its own captures (`prompts/vision-review.md` asks for exactly
+these scores and a verdict). A host can add a **fresh-eyes critic**: an independent reviewer,
+given only the request, the references and the contact sheets — the method NODE's places
+were finished with.
 
 ## The capture set (`review --out out/`)
 
@@ -22,7 +49,7 @@ Two gates, both required:
 | `sheet-motion.png` | opening and part motion across seconds |
 | `view-<id>.png` | each of your scene's own views, still: is the target framed with context? |
 
-## Checklist
+## Checklist (what each criterion hides)
 
 - **Recognisable at thumbnail size?** Squint at a single view cell. If not, the silhouette
   or proportions are wrong — fix masses before anything else.
@@ -56,4 +83,4 @@ Two gates, both required:
 | wrong rotation axis in motion | axis and pivot are world values for the first copy |
 | labels collide | fewer annotations, `offset` them apart |
 
-Fix, `check`, `review` again. Two or three rounds is normal.
+Fix, `check`, `review` again, within the tier's review rounds.

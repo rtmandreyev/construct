@@ -7,9 +7,10 @@ picture instead of inventing it — and never copy the picture.
 ## The steps
 
 1. **Find a reference.** Best: the user's own photo (rights-clean for their collection).
-   Otherwise an image you can view on the web (the maker's product photo, a straight-on view).
+   Otherwise an image you can view on the web (the maker's product photo, a straight-on view),
+   found during research ([effort](effort.md)) and counted against the tier's reference images.
    You look at it; you never download it into the scene, embed it or reproduce it.
-2. **Trace it** (you need to see images). Follow `prompts/trace.md`: answer a
+2. **Trace it** (any model that can see images). Follow `prompts/trace.md`: answer a
    `construct-trace` JSON with the image's pixel size, the silhouette as 40–120 points (pixels,
    y down) and the named features you need (`nut`, `bridge`, `neck-joint`; `roof-ridge`;
    `wheel-front`...). Check it: `check trace.json` reports a self-crossing or too-short outline.
@@ -31,10 +32,11 @@ picture instead of inventing it — and never copy the picture.
 
 ## Enabling vision in hosts
 
-- **Hermes:** use a vision-capable main model (GPT-6.1 Sol, Claude, Gemini; DeepSeek-flash is
-  text-only) and attach the photo (`/paste`, or an image path), or let the agent call
-  `vision_analyze` on the image file with the `trace.md` instructions as its question (set
-  `auxiliary.vision` to a capable model).
+Tracing works with any model that can see images: Claude, GPT, Gemini and DeepSeek among them.
+
+- **Hermes:** with the vision toolset enabled, attach the photo (`/paste`, or an image path)
+  or let the agent call `vision_analyze` on the image, with the `trace.md` instructions as its
+  question. Both DeepSeek and GPT models describe and trace images this way.
 - **Claude Code:** the agent reads image files directly; put the user's photo in the working
   folder.
 - **Any OpenAI-compatible vision model:** `construct trace-image photo.jpg --what "the guitar

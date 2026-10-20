@@ -42,7 +42,7 @@ to every position, axis, pivot, quad, anchor and box, for apps with a Z-up world
 ## 1. Facts and sources
 
 `provenance.sources[]`: `{id, kind, title, rights, ref?}`; kinds `user_request | user_supplied |
-document | measurement | observation | dataset | generated`; rights `synthetic | user_private |
+document | drawing | measurement | observation | dataset | reference_image | generated`; rights `synthetic | user_private |
 permitted | public_domain | reference_only`. `ref` is citation text, never fetched.
 
 `provenance.facts[]`: `{key, value, unit?, certainty, source?, note?}` with certainty
@@ -224,6 +224,15 @@ triangles, so geometry readers need nothing new. `parts[].shape` is then `"terra
 labels the construct **MEASURED TERRAIN** when that part is `verified` or `user_supplied` (its
 source a `dataset`), otherwise **SKETCHED TERRAIN**, and shows the scale (fact
 `terrain.scale`) and the data attribution (the `dataset` source's title).
+
+## Authoring record (an addition within 0.2)
+
+A scene or parameter document may carry `authoring`, which compiles to
+`provenance.authoring`: `{tier, research, sources?, review_rounds?, outcome?, next?}` — `tier`
+`quick | standard | showcase`; `research` `done | not_needed | skipped | unavailable | off`;
+`sources` the ids of the scene's sources research used (required when `research` is `done`);
+`outcome` `good | limit | unreviewed`; `next` up to 8 improvement notes. It says how the
+construct was made so a host can regenerate it at a higher tier; readers may ignore it.
 
 ## Planned for 0.3 (not in 0.2)
 

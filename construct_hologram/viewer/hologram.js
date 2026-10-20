@@ -852,6 +852,7 @@ void main() {
     this.aspect = w / h;
     const base = opts.camera || (this.userCamera && !opts.view ? this.userCamera : this.cameraFor(viewId || this.opt.view || "hero"));
     const cam = (this.userCamera && !opts.view && !opts.camera) ? base : this.cameraAt(t, base);
+    this.lastCamera = cam;
     const { vp, eye } = this.matrices(cam, w / h);
     this.lastVP = vp; this.lastRect = rect;
     const s = this.state(t);
@@ -1011,6 +1012,8 @@ void main() {
       shift: q.has("shift") ? q.get("shift").split(",").map((x) => Math.max(-0.9, Math.min(0.9, parseFloat(x) || 0))).concat([0]).slice(0, 2) : null,
       zoom: q.has("zoom") ? Math.max(0.3, Math.min(4, parseFloat(q.get("zoom")) || 1)) : 1,
       palette: q.get("palette"), identity: q.get("identity"),
+      // camera=still: the view's own fitted framing, no tour, drift or breathing (the review's hero)
+      freezeCamera: q.get("camera") === "still",
     };
     const stage = document.getElementById("stage");
     const canvas = document.getElementById("holo");
@@ -1123,6 +1126,7 @@ void main() {
       const n = cells.length, cols = n <= 4 ? 2 : 3, rows = Math.ceil(n / cols);
       const W = canvas.width, H = canvas.height, cw = Math.floor(W / cols), chh = Math.floor(H / rows);
       sheetCaps.textContent = "";
+      const held = holo.opt.freezeCamera;
       cells.forEach((c, i) => {
         const col = i % cols, row = Math.floor(i / cols);
         holo.opt.freezeCamera = !!c.freezeCamera;
@@ -1131,7 +1135,7 @@ void main() {
         cap.style.left = (col * cw / holo.dpr + 10) + "px"; cap.style.top = (row * chh / holo.dpr + 8) + "px";
         sheetCaps.appendChild(cap);
       });
-      holo.opt.freezeCamera = false;
+      holo.opt.freezeCamera = held;
       const head = el("div", "sheethead", geo.title + " — " + kind.toUpperCase() + " · " + accuracy + (subj.synthetic ? " · SYNTHETIC" : ""));
       sheetCaps.appendChild(head);
     }
@@ -1195,6 +1199,8 @@ void main() {
         if (o.sheet !== undefined) opt.sheet = o.sheet;
         if (o.open !== undefined) { opt.open = o.open; holo.opt.open = o.open; }
         frame(); return true; },
+      camera() { const c = holo.lastCamera; return c ? { target: c.target, yaw: c.yaw, pitch: c.pitch, dist: c.dist } : null; },
+      fitted(view) { const c = holo.cameraFor(view || "hero"); return { target: c.target, yaw: c.yaw, pitch: c.pitch, dist: c.dist }; },
       timeline() { const op = holo.openTimes(); return { assembly: holo.assemblyTimes(), open: op, settled: Math.max(holo.assemblyTimes().end, op.end), events: holo.schedule.slice(0, 24) }; },
     };
   }

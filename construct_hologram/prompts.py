@@ -19,6 +19,7 @@ from pathlib import Path
 from . import params as params_mod
 from . import product
 from . import scene as scene_mod
+from . import tiers
 
 HERE = Path(__file__).resolve().parent
 CONTRACT = product.CONTRACT
@@ -47,6 +48,44 @@ You write data, never code.
    Never invent or describe artwork as if it were the real one.
 7. If you get back a list of problems, fix every one and send the whole corrected object
    again. Each problem names a JSON path and says what to write instead.
+
+## Research (optional; the request decides)
+
+- A generic subject ("a watch", "a desk lamp", "a fictional moss snail"): no research. Build
+  a typical, well-proportioned example from general knowledge: `subject.accuracy` "generic",
+  facts `inferred` or `decorative`; record `"research": "not_needed"`.
+- A concrete, named subject (a brand and model, a named place or building, a species, a
+  specific artwork or vehicle): when you are unsure of its identity-defining shape or specs
+  and the host gives you web search, research it first: the official or maker's pages,
+  manuals, specs and plans, and reference photos. Look at the references (any model that
+  can see images: Claude, GPT, Gemini, DeepSeek...) and measure silhouette and proportions;
+  trace the identity shape (`trace.md`). Each value is then documented (`verified`, citing
+  the source), traced (`inferred`, citing the reference image) or invented (`inferred` with
+  a note, or `decorative`). Only then write parts. Record `"research": "done"` and the ids of
+  the sources you used.
+- Confident without looking: record `"skipped"`. Nothing can be `verified` without a cited
+  source, so facts are `inferred` and accuracy is `approximate` at most.
+- No web tool in the host: record `"unavailable"`, mark accuracy honestly, and list in
+  `next` what research would improve.
+- The user overrides either way ("research: on" / "research: off"); "off" is recorded as
+  `"off"`.
+
+## Effort: aim for genuinely good, always within the tier's limits
+
+{tiers}
+
+Work silhouette, then proportions, then the two or three identity features, then secondary
+detail. Put effort where it shows: nothing smaller than about 0.5% of the object's largest
+size. Stop at whichever comes first: the review judges the construct genuinely good (accurate
+and beautiful: something you would put in a launch video), or any limit of the tier is
+reached. Then deliver the best version so far. The host and user pick the tier (default
+standard) and may override single limits; hosts add hard limits of their own on top.
+
+Record how it was made, in the scene (or parameter document):
+`"authoring": {{"tier": "standard", "research": "done", "sources": ["maker-specs", "ref-front"],
+"next": ["what the next improvement would be"]}}` — `research` is one of {research}; `sources`
+are ids from the scene's sources; `next` lists, most valuable first, what you would improve
+with more time.
 """
 
 PARAMS_INTRO = """# The simple path: a parameter document
@@ -177,46 +216,64 @@ REPAIR = """# The check-and-repair loop (for hosts and runners)
    hint`) and `repair_text`.
 3. While `needs_repair` is true (errors, or a part that is detached or a hairline), send
    `repair_text` back as the next user message and check again.
-   Stop after 4 rounds; if a full scene still fails, ask the same model for the parameter
+   Stop at the tier's check rounds; if a full scene still fails, ask the same model for the parameter
    document instead (`params.md`), which almost always validates.
 4. When `ok` is true: `build` (geometry, preview, audit) and, if a browser is available,
    `review` for images a person or a vision model can judge. Other warnings are allowed;
    pass them on with the proposal.
-5. Optional, for models that can see images: send `vision-review.md` with
-   `review/hero.png` (and `review/view-open.png` when it opens) and the original request.
-   Apply the fixes it lists, check again, and stop after 2 rounds.
+5. For models that can see images: send `vision-review.md` with `review/hero.png`,
+   `sheet-views.png`, `sheet-assembly.png` (and `view-open.png` when it opens) and the
+   original request. While the verdict is "improve", ask for the fix to the weakest point,
+   check it again, and review again.
+6. Every loop is bounded by the effort tier (`system.md`): check rounds, review rounds and
+   wall clock, plus any token or cost ceiling the host sets. Stop at whichever comes first,
+   the verdict "good" or a limit, and deliver the best draft so far with its `authoring`
+   record (`tier`, `outcome`, `next`). `construct author --tier ... --vision` runs exactly this.
 
 Codes a model will meet: json, duplicate-key, unknown-key, missing-key, type, range,
 choice, id, reference, certainty, unknown-fact, style, path, budget, floating,
 stage-order, overclaim, accuracy, decorative-identity, no-mass, no-identity, clutter,
-duplicates, tiny, invisible, no-open-view, detached, thin.
+duplicates, tiny, invisible, no-open-view, detached, thin, shape-overclaim, research,\ntier-budget, authoring.
 
 A host that supports constrained output can hold a small model to `params.schema.json`.
 No step needs an API key from this toolkit; the model and its key live in the host.
 """
 
 
-VISION = """# Look at your construct (optional, for models that can see images)
+VISION = """# Art-direction review of your construct (for models that can see images)
 
-You wrote a scene; here are its renders: `hero.png` (the finished object) and, when it
-opens, `view-open.png`. Compare them with the request, not with the JSON.
+Here are the renders of your construct: `hero.png` (the finished object), `sheet-views.png`
+(hero, front, side, back, top, three-quarter), `sheet-assembly.png` (how it builds) and, when
+it opens, `view-open.png`. Judge the pictures against the request and your references, not
+the JSON. The question is not "is it recognisable?" but "is it genuinely good: accurate and
+beautiful, something you would put in a launch video?"
+
+Score each criterion 0-3 (0 missing, 1 weak, 2 good, 3 striking):
+
+- `silhouette`: it reads instantly as this thing, from the hero and in every view;
+- `proportions`: right against the facts and references (heights, widths, spacing);
+- `identity`: the two or three identity features are rendered with care, in proportion;
+- `depth`: masses, structure, detail and ornament layer clearly; nothing equally loud;
+- `composition`: strong hero framing, nothing cut off, good use of the frame;
+- `assembly`: the build order tells the object's story (foundations first, the reveal last);
+- `motion`: articulations and idle life bring it alive without noise (judge from the
+  assembly sheet and what moves);
+- `density`: rich detail that never clutters; no hairlines, nothing hovering or poking through;
+- `honesty`: labels come only from facts; inferred and decorative parts look it.
 
 Answer with one JSON object:
 
 ```json
-{{"recognisable": true, "reads_as": "what a stranger would call it in three words",
- "defects": [{{"part": "part id", "problem": "what is wrong in the picture", "fix": "the change to the scene"}}]}}
+{{"verdict": "good", "scores": {{"silhouette": 3, "proportions": 2, "identity": 2, "depth": 2,
+ "composition": 3, "assembly": 2, "motion": 2, "density": 2, "honesty": 3}},
+ "weakest": "the criterion to improve first",
+ "fix": "the concrete change to the scene that improves it most",
+ "next": ["further improvements, most valuable first"]}}
 ```
 
-Look for, in this order:
-1. Does the silhouette read as the requested thing at a glance? If not, which mass is wrong?
-2. Does anything hover, poke through, or end short of what it should touch?
-3. Is any arm, leg, cable or frame so thin it barely shows?
-4. Are the two or three features that make it itself visible and in proportion?
-5. Is any text on the object wrong, upside down, or not from a fact?
-
-List only defects you can see. An empty list is a good answer. Then apply your fixes to the
-scene and send the whole corrected JSON for checking.
+`verdict` is "good" only when every score is 2 or more and you would show it as it is;
+otherwise "improve". Be a demanding art director: a construct that is merely correct is not
+yet good. You will then be asked to apply the fix and send the whole corrected scene.
 """
 
 
@@ -297,6 +354,14 @@ def params_schema():
                         "properties": {s: {"type": "string"} for s in slots}},
             "params": {"type": "object", "additionalProperties": False, "properties": props},
             "param_certainty": {"type": "object", "additionalProperties": {"enum": ["verified", "user_supplied", "inferred"]}},
+            "authoring": {"type": "object", "additionalProperties": False, "required": ["tier", "research"],
+                          "properties": {"tier": {"enum": list(tiers.TIERS)},
+                                         "research": {"enum": list(tiers.RESEARCH_RECORD)},
+                                         "sources": {"type": "array", "items": {"type": "string"}},
+                                         "review_rounds": {"type": "integer", "minimum": 0},
+                                         "outcome": {"enum": list(tiers.OUTCOMES)},
+                                         "next": {"type": "array", "maxItems": tiers.MAX_NEXT,
+                                                  "items": {"type": "string", "maxLength": 300}}}},
         },
         "x-variants": variants,
     }
@@ -311,7 +376,8 @@ def build():
     scene_example.pop("animation", None)
     template = params_mod.template("book", "paperback")
     return {
-        "system.md": SYSTEM.format(contract=CONTRACT),
+        "system.md": SYSTEM.format(contract=CONTRACT, tiers=tiers.table(),
+                                   research=", ".join('"%s"' % r for r in tiers.RESEARCH_RECORD)),
         "params.md": PARAMS_INTRO.format(template=json.dumps(template, indent=2), describe=params_mod.describe(),
                                          example=json.dumps(golden, indent=2, ensure_ascii=False)),
         "scene.md": SCENE_INTRO.format(roles=", ".join(scene_mod.ROLES), shapes=", ".join(scene_mod.SHAPE_TYPES),

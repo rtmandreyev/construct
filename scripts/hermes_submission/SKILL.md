@@ -42,6 +42,9 @@ recreating real cover art (artwork is shown only from images the user supplies).
 ## Prerequisites
 
 - Python 3.10+ (standard library only). Nothing is installed or downloaded.
+- Optional: the `web` and `vision` toolsets, for researching a named subject and looking at
+  references and captures. Any model that can see images works (DeepSeek and GPT models
+  included). Without them, the construct is built from general knowledge and labelled so.
 - For review stills and video: a Chromium-family browser already on the machine (Chrome,
   Chromium, Edge, Brave, or `HOLOGRAM_CHROME=/path`) and `ffmpeg`. Without them you can still
   check and build; say that captures were not made.
@@ -75,15 +78,24 @@ Work in a folder of your own. `out/construct.html` opens in any browser.
 | recognition and composition | `references/composition.md` |
 | assembly, articulations, idle life | `references/animation.md` |
 | certainty, sources, artwork rights | `references/provenance.md` |
-| the review checklist | `references/review.md` |
+| the art-direction rubric | `references/review.md` |
+| research policy, effort tiers and their limits | `references/effort.md` |
 
 ## Procedure
 
-1. **Facts first.** Write down what the user actually said or gave you. Each fact gets a
-   certainty: `verified` (cites a source), `user_supplied`, `inferred` (your estimate, with a
-   short note) or `decorative`. Leave unknown facts out entirely — never `null`, "unknown" or
-   a guess. Read `references/provenance.md` if artwork or sources are involved.
-2. **Pick the path.** If an archetype fits (`params --list`), fill its parameter document:
+1. **Effort and research.** Use the tier the user asks for — `quick` (bulk), `standard`
+   (default: at most 10 minutes, 2 review rounds, 5 searches, 3 sources, 3 reference images)
+   or `showcase` (only when asked: at most 30 minutes) — see `references/effort.md`. A
+   generic subject ("a desk lamp") needs no research. For a concrete, named one (a brand and
+   model, a named building or peak, a species) research first whenever you are unsure of its
+   shape or specs: the maker's or official pages, specs and reference photos, looked at with
+   `vision_analyze` and measured. "research: on/off" in the request overrides this.
+2. **Facts.** Write down what the user said or gave you and what your sources say. Each fact
+   gets a certainty: `verified` (cites a source), `user_supplied`, `inferred` (your estimate
+   or a traced measurement, with a short note) or `decorative`. Without a cited source
+   nothing is `verified`. Leave unknown facts out entirely — never `null`, "unknown" or a
+   guess. Read `references/provenance.md` if artwork or sources are involved.
+3. **Pick the path.** If an archetype fits (`params --list`), fill its parameter document:
    copy the facts, leave `params` empty unless the user gave sizes. Otherwise start from
    `new <category>` or an example and read `references/composition.md` and
    `references/vocabulary.md`: name the silhouette and the two or three identity features,
@@ -93,17 +105,21 @@ Work in a folder of your own. `out/construct.html` opens in any browser.
    web image viewed with `vision_analyze`), then `scripts/cli.py trace` fits it to a verified
    dimension. Traced shapes are `inferred`, cited to the image. A real place or peak comes from
    elevation data the user supplies: `scripts/cli.py terrain` (`references/terrain.md`).
-3. **Check until clean.** Run `check --json`. While `needs_repair` is true, fix every
+4. **Check until clean.** Run `check --json`. While `needs_repair` is true, fix every
    diagnostic at its JSON path using its hint, and check again. Fix every `detached` and
    `thin` warning: they are what a viewer notices first.
-4. **Build and look.** Run `review`, then open `out/review/hero.png`, `sheet-views.png` and
-   (if it opens) `view-open.png` with `vision_analyze`, or `read_file` if your model reads
-   images. Judge them against `references/review.md`: does it read as the thing at a
-   glance, does anything hover or barely show, is every label from a fact? Fix the scene and
-   review again; two or three rounds is normal.
-5. **Deliver.** Give the user `out/construct.html` (and the video if asked), and say plainly
-   what is evidence, what is inferred or designed, and which artwork is the user's own and
-   which is generated decoration. Never call a generic reconstruction exact.
+5. **Review as an art director.** Run `review`, then open `out/review/hero.png`,
+   `sheet-views.png`, `sheet-assembly.png` and (if it opens) `view-open.png` with
+   `vision_analyze`. Score them with the rubric in `references/review.md` (silhouette,
+   proportions, identity, depth, composition, assembly, motion, density, honesty). The aim
+   is genuinely good — something you would put in a launch video — not merely
+   recognisable: improve the weakest point, check, review again. Stop when every criterion
+   is good, or when the tier's review rounds or time run out, whichever comes first.
+6. **Deliver.** Record `authoring` in the scene (tier, research, sources used, outcome,
+   `next` improvements). Give the user `out/construct.html` (and the video if asked), and say
+   plainly what is evidence, what is inferred or designed, which artwork is the user's own
+   and which is generated decoration, and — if a limit stopped you — what the next
+   improvement would be. Never call a generic reconstruction exact.
 
 ## Pitfalls
 
@@ -116,6 +132,8 @@ Work in a folder of your own. `out/construct.html` opens in any browser.
 - **Hairline structure.** A thin arm or leg barely renders: `thin` gives the minimum radius.
 - **Real artwork.** Show a cover only from bytes the user supplied, declared with its SHA-256
   and rights. Never download covers or recreate one from memory.
+- **Running unbounded.** The tier's limits are ceilings; Hermes's own run budget applies on
+  top. When one is reached, deliver the best version so far with its `next` notes.
 - **Captures without a browser.** If no Chromium-family browser exists, deliver the HTML and
   say the review stills were not made; do not install one.
 
@@ -123,6 +141,7 @@ Work in a folder of your own. `out/construct.html` opens in any browser.
 
 - `check` reports `audit: PASS` and `needs_repair` is false.
 - `out/construct.html` exists; `out/review/hero.png` shows the requested thing, recognisably.
-- Facts in the scene match the user's words; nothing unknown is filled in.
+- Facts in the scene match the user's words and the cited sources; nothing unknown is filled in.
+- `authoring` records the tier, whether research was done, the outcome and what comes next.
 - For a quick self-test: `python3 ${HERMES_SKILL_DIR}/scripts/cli.py check ${HERMES_SKILL_DIR}/assets/examples/cd.json`
   must report `audit: PASS (0 errors, 0 warnings)`.

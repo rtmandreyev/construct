@@ -3,8 +3,8 @@
 Newline-delimited JSON-RPC 2.0 over stdin/stdout. Standard library only.
 Never reads or writes files, never spawns processes, never fetches or renders.
 
-Tools: construct_diagnose, construct_params_template, construct_expand_params and
-construct_compile for scenes and parameter documents (contract construct/0.2); the legacy
+Tools: construct_diagnose, construct_params_template, construct_expand_params,
+construct_compile and construct_limits (the effort tier a host enforces) for scenes and parameter documents (contract construct/0.2); the legacy
 v0.1 construction sheets (hologram_template, hologram_validate, hologram_compile). The 0.2
 pre-release names hologram_diagnose, hologram_params_template, hologram_expand_params and
 hologram_compile_scene are still answered for one release. Every tool works
@@ -14,7 +14,7 @@ only on the JSON in the request.
 import json
 import sys
 
-from . import diagnose, hologram, params, product, scene, __version__
+from . import diagnose, hologram, params, product, scene, tiers, __version__
 
 PROTOCOL_VERSION = "2025-11-25"
 MAX_REQUEST_BYTES = 1024 * 1024
@@ -104,6 +104,17 @@ TOOLS += [
      "inputSchema": {"type": "object", "properties": {"document": _DOC}, "required": ["document"],
                      "additionalProperties": False},
      "annotations": _READ_ONLY},
+    {"name": "construct_limits",
+     "description": "The effort tier's limits (wall clock, check and review rounds, research counts) with any "
+                    "overrides applied, for the host to enforce: aim for genuinely good, stop at the first limit. "
+                    "Overrides can raise a limit, never remove it. Also reads 'tier:'/'research:' from a request.",
+     "inputSchema": {"type": "object", "properties": {
+         "tier": {"type": "string", "enum": list(tiers.TIERS)},
+         "request": {"type": "string", "maxLength": 20000},
+         "overrides": {"type": "object", "additionalProperties": False,
+                       "properties": {k: {"type": "number", "minimum": 0, "maximum": v} for k, v in tiers.CEILING.items()}}},
+                     "additionalProperties": False},
+     "annotations": _READ_ONLY},
 ]
 
 
@@ -168,7 +179,8 @@ def _call_tool(name, args):
 V2_TOOLS = {"construct_diagnose": ({"text", "document"}, set()),
             "construct_params_template": ({"archetype", "variant"}, set()),
             "construct_expand_params": ({"params"}, {"params"}),
-            "construct_compile": ({"document"}, {"document"})}
+            "construct_compile": ({"document"}, {"document"}),
+            "construct_limits": ({"tier", "request", "overrides"}, set())}
 # the 0.2 pre-release names: still answered for one release, no longer listed
 DEPRECATED = {"hologram_diagnose": "construct_diagnose", "hologram_params_template": "construct_params_template",
               "hologram_expand_params": "construct_expand_params", "hologram_compile_scene": "construct_compile"}
@@ -188,6 +200,16 @@ def _call_v2(name, args):
                 raise _RpcError(-32602, "text must be a string")
             return _tool_result(diagnose.diagnose_text(args["text"]))
         return _tool_result(diagnose.diagnose_text(json.dumps(args["document"])))
+    if name == "construct_limits":
+        asked = tiers.from_request(args["request"]) if isinstance(args.get("request"), str) else {}
+        tier = args.get("tier") or asked.get("tier") or tiers.DEFAULT
+        try:
+            lim = tiers.limits(tier, **(args.get("overrides") or {}))
+        except (tiers.TierError, TypeError) as exc:
+            return _tool_result({"error": str(exc)}, is_error=True)
+        return _tool_result({"limits": lim, "research": asked.get("research", "auto"),
+                             "stop": "the review judges it genuinely good, or any limit is reached; then deliver the "
+                                     "best version so far with authoring.next"})
     if name == "construct_params_template":
         if "archetype" not in args:
             return _tool_result({"archetypes": {a: sorted(v) for a, v in params.VARIANTS.items()},

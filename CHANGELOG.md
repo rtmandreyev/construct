@@ -19,6 +19,23 @@ The first release as **Construct**, an independent MIT-licensed project.
   `hologram_compile_scene` still answer for one release (unlisted). `build` writes
   `construct.html` (was `hologram.html`; `review` and `video` still read an old `hologram.html`).
   The tagline is "Holographic constructs any agent can build — from a description, honestly."
+- **Research and effort, bounded.** Research is optional and decided by the request: none for
+  a generic subject; for a concrete, named one, preferred whenever the model is unsure of its
+  identity-defining shape — the maker's pages, specs and reference photos first, viewed and
+  measured with vision (any model that can see, DeepSeek included), then authoring; the user can
+  say "research: on/off". Three effort tiers — quick, standard (default), showcase — with
+  wall-clock, check-round, review-round and research limits. The aim is genuinely good
+  (an art-direction rubric in `references/review.md` and `prompts/vision-review.md`: silhouette,
+  proportions, identity, depth, composition, assembly, motion, density, honesty); the run stops
+  at whichever comes first, a "good" verdict or any limit, and delivers the best version so far.
+  An optional `authoring` record (tier, research, sources, review rounds, outcome, next
+  improvements) is validated, audited and carried into the geometry's provenance.
+  `construct author` enforces the limits (`--tier`, `--vision` review rounds, `--max-seconds`,
+  `--max-images`, `--max-total-tokens`, `--max-cost`); MCP hosts read them from
+  `construct_limits`.
+- **The review hero is the whole object.** `hero.png` is taken in the hero view's fitted
+  framing with the camera held still (`?camera=still`), so a camera tour or drift can no longer
+  crop it to a detail.
 - **Measured terrain.** A `terrain` shape (a heightfield of up to 128×128: contours, a survey
   grid, a skirt, glass) and `construct terrain`, which samples an ESRI ASCII grid or XYZ export
   the user supplies (LV95, UTM or degrees), scales it by the ladder (spot, site, valley, massif,

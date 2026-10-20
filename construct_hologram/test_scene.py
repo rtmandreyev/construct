@@ -11,7 +11,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from . import audit, diagnose, params, png, render, scene, studio
+from . import audit, diagnose, params, png, render, runner, scene, studio, terrain, tiers
 
 HERE = Path(__file__).resolve().parent
 EXAMPLES = HERE / "examples" / "v2"
@@ -675,6 +675,18 @@ class McpV2(unittest.TestCase):
                            capture_output=True, text=True, timeout=120)
         return [json.loads(x) for x in r.stdout.splitlines() if x.strip()][1:]
 
+    def test_limits_for_hosts(self):
+        out = self.session([("construct_limits", {}),
+                            ("construct_limits", {"request": "a Revox A77, tier: showcase, research: on"}),
+                            ("construct_limits", {"tier": "quick", "overrides": {"check_rounds": 5}}),
+                            ("construct_limits", {"overrides": {"wall_clock_s": 0}})])
+        res = [o["result"] for o in out]
+        self.assertEqual(res[0]["structuredContent"]["limits"]["wall_clock_s"], 600)
+        self.assertEqual((res[1]["structuredContent"]["limits"]["tier"], res[1]["structuredContent"]["research"]),
+                         ("showcase", "on"))
+        self.assertEqual(res[2]["structuredContent"]["limits"]["check_rounds"], 5)
+        self.assertTrue(res[3]["isError"])  # never unbounded
+
     def test_diagnose_template_expand_compile(self):
         golden = json.loads((EXAMPLES / "case-jewel.params.json").read_text())
         bad = dict(golden, style="x")
@@ -815,6 +827,137 @@ class Runner(unittest.TestCase):
         self.assertEqual(seen[0][0], "Bearer test-key-not-real")
         self.assertEqual(seen[0][1]["messages"][0]["role"], "system")
         self.assertIn("problem", seen[1][1]["messages"][-1]["content"])  # the repair text went back
+
+
+
+class Tiers(unittest.TestCase):
+    """Effort tiers: aim for genuinely good, always within finite limits; the record says how it was made."""
+
+    def test_limits_can_be_raised_never_removed(self):
+        self.assertEqual(tiers.limits("standard")["review_rounds"], 2)
+        self.assertEqual(tiers.limits("showcase", review_rounds=6)["review_rounds"], 6)
+        for bad in ({"wall_clock_s": 0}, {"wall_clock_s": float("inf")}, {"check_rounds": 0},
+                    {"review_rounds": 999}, {"searches": -1}, {"unbounded": 1}):
+            with self.assertRaises(tiers.TierError, msg=bad):
+                tiers.limits("standard", **bad)
+        with self.assertRaises(tiers.TierError):
+            tiers.limits("endless")
+
+    def test_docs_and_prompts_carry_the_same_table(self):
+        from . import prompts
+        self.assertIn(tiers.table(), (HERE / "skill" / "references" / "effort.md").read_text(encoding="utf-8"))
+        self.assertIn(tiers.table(), prompts.build()["system.md"])
+
+    def test_the_request_can_choose_research_and_tier(self):
+        self.assertEqual(tiers.from_request("a Leica M3, research: off, tier: Showcase"),
+                         {"research": "off", "tier": "showcase"})
+        self.assertEqual(tiers.from_request("a watch"), {})
+
+    def scene_with(self, authoring, extra_sources=()):
+        s = base(authoring=authoring)
+        s["sources"] += list(extra_sources)
+        return s
+
+    def codes(self, s):
+        return {d["code"] for d in diagnose.diagnose(s)["diagnostics"]}
+
+    def test_the_record_compiles_into_the_provenance(self):
+        a = {"tier": "standard", "research": "done", "sources": ["specs"], "review_rounds": 2, "outcome": "good"}
+        s = self.scene_with(a, [{"id": "specs", "kind": "document", "title": "maker specs", "rights": "reference_only"}])
+        self.assertTrue(diagnose.diagnose(s)["ok"])
+        self.assertEqual(scene.compile_scene(s)["provenance"]["authoring"], a)
+
+    def test_research_done_needs_a_researched_source(self):
+        self.assertIn("research", self.codes(self.scene_with({"tier": "standard", "research": "done"})))
+        self.assertIn("reference", self.codes(self.scene_with({"tier": "standard", "research": "done", "sources": ["nope"]})))
+        self.assertIn("research", self.codes(self.scene_with({"tier": "standard", "research": "done", "sources": ["req"]})))
+
+    def test_audit_notes_budget_and_missing_next(self):
+        refs = [{"id": "r%d" % i, "kind": "reference_image", "title": "ref", "rights": "reference_only"} for i in range(4)]
+        quick = self.scene_with({"tier": "quick", "research": "done", "sources": ["r0", "r1", "r2", "r3"]}, refs)
+        self.assertIn("tier-budget", self.codes(quick))
+        self.assertIn("authoring", self.codes(self.scene_with({"tier": "standard", "research": "not_needed", "outcome": "limit"})))
+
+    def test_a_parameter_document_carries_the_record(self):
+        doc = params.template("vessel", "can") | {"facts": [], "synthetic": True,
+                                                  "authoring": {"tier": "quick", "research": "not_needed"}}
+        self.assertTrue(diagnose.diagnose_params(doc, [])["ok"])
+        self.assertEqual(params.expand(doc)["authoring"]["tier"], "quick")
+
+
+class RunnerLimits(unittest.TestCase):
+    """The author loop stops at whichever comes first: a "good" review or any limit (no endpoint, no browser)."""
+
+    GOOD = json.dumps(params.template("vessel", "can") | {"facts": [], "synthetic": True})
+    BAD = '{"format": "construct-params", "version": 1}'
+
+    def run_author(self, answers, clock_step=0.0, captures=True, **kw):
+        sent, now = [], [0.0]
+
+        def fake_chat(base_url, model, messages, key=None, timeout=300, temperature=0.2):
+            sent.append(messages[-1])
+            now[0] += clock_step
+            return answers[min(len(sent) - 1, len(answers) - 1)], {"prompt_tokens": 1000, "completion_tokens": 100}
+        saved = runner.chat, runner._captures, runner.image_part
+        runner.chat = fake_chat
+        runner._captures = (lambda text, workdir, log: ["hero.png"]) if captures else (lambda *a: [])
+        runner.image_part = lambda ref: {"type": "image_url", "image_url": {"url": ref}}
+        try:
+            out = runner.author("a can", "http://stub", "stub", clock=lambda: now[0], **kw)
+        finally:
+            runner.chat, runner._captures, runner.image_part = saved
+        return out, sent
+
+    def verdict(self, v, low=False, nxt=("trace the rim",)):
+        scores = {k: 1 if low else 2 for k in ("silhouette", "proportions", "identity")}
+        return json.dumps({"verdict": v, "scores": scores, "weakest": "proportions", "next": list(nxt)})
+
+    def test_check_rounds_bound_a_model_that_never_gets_it_right(self):
+        (report, text, _, history, meta), _ = self.run_author([self.BAD], tier="quick")
+        self.assertEqual(len(history), 3)
+        self.assertEqual((meta["outcome"], meta["stopped_by"]), ("limit", "check rounds (3)"))
+        self.assertEqual(json.loads(text)["authoring"]["outcome"], "limit")
+
+    def test_review_rounds_stop_and_record_the_next_improvements(self):
+        (report, text, _, _, meta), sent = self.run_author(
+            [self.GOOD, self.verdict("improve"), self.GOOD, self.verdict("improve"), self.GOOD], vision=True)
+        self.assertEqual((meta["outcome"], meta["reviews"]), ("limit", 2))
+        a = json.loads(text)["authoring"]
+        self.assertEqual((a["tier"], a["outcome"], a["review_rounds"]), ("standard", "limit", 2))
+        self.assertIn("trace the rim", a["next"])
+        self.assertTrue(report["ok"])
+        self.assertIn("weakest point (proportions)", sent[2]["content"])
+
+    def test_a_good_verdict_ends_the_run_but_not_with_a_low_score(self):
+        (_, _, _, _, meta), _ = self.run_author([self.GOOD, self.verdict("good")], vision=True)
+        self.assertEqual((meta["outcome"], meta["reviews"]), ("good", 1))
+        (_, _, _, _, meta), _ = self.run_author([self.GOOD, self.verdict("good", low=True), self.GOOD,
+                                                 self.verdict("good")], vision=True)
+        self.assertEqual((meta["outcome"], meta["reviews"]), ("good", 2))
+
+    def test_the_wall_clock_and_cost_ceilings_deliver_the_best_so_far(self):
+        (report, text, _, _, meta), _ = self.run_author([self.GOOD, self.verdict("improve"), self.BAD],
+                                                       clock_step=250, vision=True)
+        self.assertEqual(meta["outcome"], "limit")
+        self.assertTrue(meta["stopped_by"].startswith("wall clock"))
+        self.assertTrue(report["ok"])  # the clean draft, not the broken last answer
+        (_, _, _, _, meta), _ = self.run_author([self.BAD], max_cost=0.002, prices=(1.0, 1.0))
+        self.assertTrue(meta["stopped_by"].startswith("cost ceiling"))
+
+    def test_without_vision_or_a_browser_it_is_unreviewed(self):
+        (_, text, _, _, meta), _ = self.run_author([self.GOOD])
+        self.assertEqual(meta["outcome"], "unreviewed")
+        self.assertEqual(json.loads(text)["authoring"]["research"], "unavailable")
+        (_, _, _, _, meta), _ = self.run_author([self.GOOD], vision=True, captures=False)
+        self.assertEqual(meta["outcome"], "unreviewed")
+
+    def test_research_counters_and_overrides(self):
+        with self.assertRaises(runner.RunnerError):
+            self.run_author([self.GOOD], tier="quick", images=["https://example.org/ref.jpg"])
+        with self.assertRaises(runner.RunnerError):
+            self.run_author([self.GOOD], research="off", images=["https://example.org/ref.jpg"])
+        (_, text, _, _, _), sent = self.run_author([self.GOOD], research="off")
+        self.assertEqual(json.loads(text)["authoring"]["research"], "off")
 
 
 class ShapeEvidence(unittest.TestCase):
@@ -995,6 +1138,28 @@ class Terrain(unittest.TestCase):
             self.assertIn("beyond the elevation data", r.stderr)
 
 
+
+REAL_DEM = os.environ.get("CONSTRUCT_TEST_MATTERHORN_DEM")
+
+
+@unittest.skipUnless(REAL_DEM, "set CONSTRUCT_TEST_MATTERHORN_DEM to a folder of swissALTI3D XYZ tiles around the Matterhorn")
+class RealTerrain(unittest.TestCase):
+    """swissALTI3D 2024 (© swisstopo), 20 tiles of 2 m XYZ: never committed, read from where the user keeps them."""
+
+    def test_the_matterhorn_from_twenty_tiles(self):
+        sc = terrain.build(REAL_DEM, center=(45.97636, 7.65861), extent=3200, resolution=100, title="Matterhorn",
+                           source_title="swissALTI3D 2024, © swisstopo", marks=["Hörnli hut=45.98194,7.67278"],
+                           view_from="NE")
+        facts = {f["key"]: f["value"] for f in sc["facts"]}
+        self.assertEqual(facts["elevation.max"], 4477.2)  # the summit, not the thinned grid's highest sample
+        self.assertTrue(diagnose.diagnose(sc)["ok"])
+        geo = scene.compile_scene(sc)
+        self.assertLessEqual(geo["counts"]["triangles"], 24000)
+        hut = next(p for p in sc["parts"] if p["label"] == "Hörnli hut")
+        relief = sc["parts"][0]["shape"]["heights"]
+        self.assertLess(hut["at"][1], max(max(r) for r in relief))
+
+
 class Capture(unittest.TestCase):
     def test_review_produces_non_empty_images(self):
         with tempfile.TemporaryDirectory() as d:
@@ -1004,6 +1169,24 @@ class Capture(unittest.TestCase):
                 data = Path(p).read_bytes()
                 self.assertTrue(data.startswith(b"\x89PNG"), p)
                 self.assertGreater(len(data), 20000, p)  # an empty dark frame compresses far smaller
+
+    def test_hero_is_the_fitted_whole_object_even_mid_tour(self):
+        # a tour that flies close to a small part right when the hero is taken must not decide it
+        scene = json.loads((EXAMPLES / "cd.json").read_text())
+        scene["presentation"]["views"].append({"id": "close", "label": "Hinge", "yaw": 40, "pitch": 20,
+                                               "distance": 0.4, "target": "hinge"})
+        scene["animation"]["camera"]["tour"] = [{"view": "close", "at": 2, "fly": 20}]
+        with tempfile.TemporaryDirectory() as d:
+            path = Path(d, "scene.json")
+            path.write_text(json.dumps(scene))
+            studio.build(str(path), d)
+            render.review(str(Path(d, "construct.html")), str(Path(d, "review")), 640, 400, sheets=())
+            tl = json.loads(Path(d, "review", "timeline.json").read_text())
+            cam, fitted = tl["hero_camera"], tl["hero_fitted"]
+            self.assertAlmostEqual(cam["dist"], fitted["dist"], places=4)
+            self.assertAlmostEqual(cam["yaw"], fitted["yaw"], places=4)
+            for a, b in zip(cam["target"], fitted["target"]):
+                self.assertAlmostEqual(a, b, places=4)
 
 
 if __name__ == "__main__":

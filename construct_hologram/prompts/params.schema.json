@@ -352,6 +352,57 @@
      "inferred"
     ]
    }
+  },
+  "authoring": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "tier",
+    "research"
+   ],
+   "properties": {
+    "tier": {
+     "enum": [
+      "quick",
+      "standard",
+      "showcase"
+     ]
+    },
+    "research": {
+     "enum": [
+      "done",
+      "not_needed",
+      "skipped",
+      "unavailable",
+      "off"
+     ]
+    },
+    "sources": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     }
+    },
+    "review_rounds": {
+     "type": "integer",
+     "minimum": 0
+    },
+    "outcome": {
+     "enum": [
+      "good",
+      "limit",
+      "unreviewed"
+     ]
+    },
+    "next": {
+     "type": "array",
+     "maxItems": 8,
+     "items": {
+      "type": "string",
+      "maxLength": 300
+     }
+    }
+   }
   }
  },
  "x-variants": {

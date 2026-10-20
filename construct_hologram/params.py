@@ -26,7 +26,7 @@ FORMAT = product.PARAMS_FORMAT
 FORMATS = (FORMAT, product.LEGACY_PARAMS_FORMAT)  # the legacy id is read for one release
 VERSION = 1
 DOC_KEYS = {"format", "version", "archetype", "variant", "id", "title", "summary", "synthetic", "sources",
-            "facts", "assets", "artwork", "params", "param_certainty"}
+            "facts", "assets", "artwork", "params", "param_certainty", "authoring"}
 DOC_REQUIRED = {"format", "version", "archetype", "variant", "id", "title"}
 CREATOR_FIELDS = ("artist", "author", "creator", "composer", "brewery", "maker")
 
@@ -164,6 +164,10 @@ def validate_items(doc):
             if asset not in ids:
                 c.err("scene.artwork." + slot, "unknown asset %r" % asset, "reference",
                       "Name one of the document's assets by id, or remove this slot (it stays empty).")
+    if "authoring" in doc:
+        from . import tiers
+        srcs = [x for x in doc.get("sources", []) if isinstance(x, dict)] or [{"id": "request", "kind": "user_request"}]
+        tiers.check(c, doc["authoring"], {x.get("id") for x in srcs} | {"request"}, srcs)
     return c.items
 
 
@@ -268,6 +272,8 @@ class _Builder:
             "sources": sources, "facts": self.facts, "assets": [dict(a) for a in doc.get("assets", [])],
             "parts": self.parts,
         }
+        if doc.get("authoring"):
+            s["authoring"] = dict(doc["authoring"])
         if self.arts:
             s["articulations"] = self.arts
         if self.labels:

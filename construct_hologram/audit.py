@@ -114,6 +114,8 @@ def audit(scene, geometry):
     if geometry.get("articulations") and not any(v.get("id") == "open" for v in geometry["presentation"]["views"]):
         add(warnings, "no-open-view", None,
             "it opens but has no view named \"open\": from the hero the opened pose may look closed.")
+    from . import tiers
+    tiers.audit(scene, add, warnings)
     styles = geometry["styles"]
     stride = geometry["line_stride"]
     lines = geometry["lines"]

@@ -110,7 +110,7 @@ SPRITE_CODE = {"disc": 0, "ring": 1, "square": 2, "soft": 3}
 
 SCENE_KEYS = {"format", "version", "id", "title", "subject", "units", "seed", "sources", "facts",
               "parts", "assets", "annotations", "articulations", "labels", "anchors", "presentation",
-              "animation"}
+              "animation", "authoring"}
 SCENE_REQUIRED = {"format", "version", "id", "title", "subject", "units", "seed", "sources", "facts", "parts"}
 
 
@@ -505,6 +505,10 @@ def _validate(scene):
         c.choice(s.get("rights"), SOURCE_RIGHTS, w + ".rights")
         if "ref" in s:
             c.text(s["ref"], w + ".ref", 600)
+
+    if "authoring" in scene:
+        from . import tiers
+        tiers.check(c, scene["authoring"], source_ids, sources)
 
     fact_cert = {}
     c.known["fact"] = fact_cert
@@ -1549,7 +1553,8 @@ def compile_scene(scene):
         "id": scene["id"], "title": scene["title"], "subject": dict(scene["subject"]),
         "scene_sha256": canonical_sha256(scene),
         "provenance": {"sources": [dict(s) for s in scene["sources"]], "facts": [dict(f) for f in scene["facts"]],
-                       "assets": [dict(a) for a in scene.get("assets", [])]},
+                       "assets": [dict(a) for a in scene.get("assets", [])],
+                       **({"authoring": json.loads(json.dumps(scene["authoring"]))} if scene.get("authoring") else {})},
         "bounds": {"min": [_r(x) for x in lo], "max": [_r(x) for x in hi], "center": centre, "radius": radius,
                    "open_min": [_r(x) for x in open_lo], "open_max": [_r(x) for x in open_hi]},
         "anchors": anchors,
