@@ -51,7 +51,9 @@ CATEGORIES = ("architecture", "object", "machine", "vehicle", "organism", "ficti
 ACCURACY = ("generic", "approximate", "documented")
 CERTAINTIES = ("verified", "user_supplied", "inferred", "decorative")
 SOURCE_KINDS = ("user_request", "user_supplied", "document", "measurement", "observation",
-                "dataset", "generated")
+                "dataset", "generated", "drawing", "reference_image")
+# sources that can verify a shape itself (coordinates, a measured outline, elevation data), not just its dimensions
+SHAPE_EVIDENCE = ("drawing", "measurement", "dataset")
 SOURCE_RIGHTS = ("synthetic", "user_private", "permitted", "public_domain", "reference_only")
 ASSET_PROVENANCE = ("authentic", "synthetic", "generated-decorative", "user_photo")
 ASSET_RIGHTS = ("synthetic", "user_private", "permitted")

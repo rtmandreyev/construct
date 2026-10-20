@@ -27,6 +27,8 @@ def audit(scene, geometry):
     tol = max(0.001, 0.004 * radius)
     by_id = {p["id"]: p for p in parts}
     scene_parts = {p["id"]: p for p in scene["parts"]}
+    source_kind = {s["id"]: s["kind"] for s in scene.get("sources", [])}
+    facts_by_key = {f["key"]: f for f in scene.get("facts", [])}
 
     # ---- support: every part rests on the ground or on something that does
     # the ground and every declared-floating part are anchors: what touches them, transitively,
@@ -80,6 +82,14 @@ def audit(scene, geometry):
                 add(errors, "overclaim", p["id"],
                     "is %s but its basis facts are at most %s and it cites no source."
                     % (p["certainty"], [k for k, v in rank.items() if v == best][0]))
+        sp = scene_parts[p["id"]]
+        if sp["certainty"] == "verified" and _freeform_points(sp["shape"]) >= 6:
+            kinds = {source_kind.get(sp.get("source"))} | {source_kind.get(facts_by_key.get(b, {}).get("source"))
+                                                           for b in sp.get("basis", [])}
+            if not kinds & set(scene_mod.SHAPE_EVIDENCE):
+                add(warnings, "shape-overclaim", p["id"],
+                    "is verified, but no cited source gives its shape (a spec page verifies dimensions, not an "
+                    "outline or profile).")
         if p["role"] in ("mass", "identity") and p["certainty"] == "decorative" and scene["subject"]["category"] != "fictional":
             add(warnings, "decorative-identity", p["id"],
                 "a %s part is decorative: say so when delivering, it is not evidence." % p["role"])
@@ -324,6 +334,14 @@ def _nearest(pid, geo):
         if d < best_d:
             best, best_d = qid, d
     return best, math.sqrt(best_d)
+
+
+def _freeform_points(shape):
+    """How many authored points shape a free-form part (0 for primitives)."""
+    for k in ("profile", "path", "points"):
+        if isinstance(shape.get(k), list):
+            return len(shape[k])
+    return 0
 
 
 def _thickness(p):

@@ -23,7 +23,9 @@ Parts: `{"id", "role", "certainty", "stage" (0..7), "shape", "at" [x,y,z],
 Stages build from what holds things up: legs and feet before the body that rests on them,
 walls before roofs, a base before an arm. Parts that hover (a halo, a beam) are `floating`.
 A part the user named but whose size you chose is `inferred` (cite the user's fact in
-`basis`); the parts of a fictional design are `inferred` too (designed from the request).
+`basis`). A spec page verifies dimensions (a scale length, a height), never a shape: an outline,
+profile or path is `inferred` — or traced from a reference image (`construct trace`) — unless a
+cited drawing, measurement or dataset gives its coordinates; the parts of a fictional design are `inferred` too (designed from the request).
 `decorative` is only for atmosphere. The request source is `"rights": "user_private"`
 (`"synthetic"` only for examples and tests).
 

@@ -816,6 +816,36 @@ class Runner(unittest.TestCase):
         self.assertIn("problem", seen[1][1]["messages"][-1]["content"])  # the repair text went back
 
 
+class ShapeEvidence(unittest.TestCase):
+    """A spec page verifies dimensions, not an outline (seen in live runs: an invented guitar body marked verified)."""
+
+    def scene_with(self, kind, certainty="verified"):
+        s = base()
+        s["sources"].append({"id": "src", "kind": kind, "title": "a synthetic source", "rights": "reference_only"})
+        s["facts"].append({"key": "body.length", "value": 0.45, "unit": "m", "certainty": "verified", "source": "src"})
+        s["parts"].append({"id": "outline", "role": "identity", "certainty": certainty, "stage": 1, "basis": ["body.length"],
+                           "shape": {"type": "extrude", "axis": "z", "height": 0.04,
+                                     "profile": [[0, 1], [0.2, 1.1], [0.3, 1.3], [0.2, 1.5], [0, 1.4], [-0.2, 1.3], [-0.1, 1.1]]},
+                           "at": [0, -0.5, 0.5]})
+        return s
+
+    def codes(self, s):
+        return {d["code"] for d in diagnose.diagnose(s)["diagnostics"]}
+
+    def test_a_verified_outline_from_a_spec_page_is_flagged(self):
+        r = diagnose.diagnose(self.scene_with("document"))
+        self.assertIn("shape-overclaim", {d["code"] for d in r["diagnostics"]})
+        self.assertTrue(r["needs_repair"])
+
+    def test_drawings_measurements_and_datasets_can_verify_shapes(self):
+        for kind in ("drawing", "measurement", "dataset"):
+            self.assertNotIn("shape-overclaim", self.codes(self.scene_with(kind)), kind)
+
+    def test_an_inferred_or_traced_outline_is_fine(self):
+        self.assertNotIn("shape-overclaim", self.codes(self.scene_with("document", "inferred")))
+        self.assertNotIn("shape-overclaim", self.codes(self.scene_with("reference_image", "inferred")))
+
+
 class Capture(unittest.TestCase):
     def test_review_produces_non_empty_images(self):
         with tempfile.TemporaryDirectory() as d:

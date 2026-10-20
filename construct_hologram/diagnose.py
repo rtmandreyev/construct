@@ -34,6 +34,9 @@ AUDIT_HINTS = {
     "detached": "Move the part so its surface meets the part it hangs from or rests on (named in the message): "
                 "align its end with that part's surface, or extend it to reach. Use \"floating\": true only "
                 "for things that really hover.",
+    "shape-overclaim": "Make the part \"inferred\" (designed) — or trace it from a reference image (see construct "
+                       "trace) and say so — and keep the dimension facts verified. Verify a shape only from a drawing, a "
+                       "measurement or a dataset that gives its coordinates.",
     "thin": "Thicken it to the radius given in the message, or make it role \"detail\" if it is meant to be a fine line.",
     "no-open-view": "Add presentation.views {\"id\": \"open\", \"yaw\": ..., \"pitch\": ...} facing what opening reveals "
                     "(roughly the yaw the opened part's inside or the taken-out part faces; check review/view-open.png "
@@ -148,7 +151,7 @@ def diagnose_text(text):
 
 
 # warnings a viewer would see at once: the repair loop goes on until they are gone
-VISIBLE_DEFECTS = ("detached", "thin")
+VISIBLE_DEFECTS = ("detached", "thin", "shape-overclaim")
 
 
 def needs_repair(report):

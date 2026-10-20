@@ -17,6 +17,11 @@ The construct's look tells the truth about what is known; the scene records why.
   evidence; `documented` only when its key parts are evidence-backed (audit-enforced).
 - `subject.synthetic: true` for examples and demonstrations only; a real request is
   `false` with its request source `user_private`.
+- **Dimensions are not shapes.** A spec page can verify a length or a height; it does not verify
+  an outline. A free-form part (extrude, lathe, tube, curve) is `verified` only when a source of
+  kind `drawing`, `measurement` or `dataset` gives its coordinates; traced from a photo it is
+  `inferred` with the image cited as a `reference_image` source (the audit warns:
+  `shape-overclaim`).
 - **Unknown stays unknown.** A fact you do not know is not written at all (never `null`, a
   placeholder or a plausible guess), and nothing is labelled with it.
 

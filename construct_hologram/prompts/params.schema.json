@@ -85,7 +85,9 @@
        "measurement",
        "observation",
        "dataset",
-       "generated"
+       "generated",
+       "drawing",
+       "reference_image"
       ]
      },
      "title": {
