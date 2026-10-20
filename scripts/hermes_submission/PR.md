@@ -17,7 +17,7 @@ It is inspired by the truth-first method of the existing `anatomy` optional skil
 numbers first, a parts list before geometry, an audit run to zero, read every rendered image)
 and shares no code with it; `related_skills: [anatomy]`.
 
-Upstream: https://github.com/rtmandreyev/construct (MIT, v0.2.0).
+Upstream: https://github.com/rtmandreyev/construct (MIT, v0.2.1).
 
 ## Why optional-skills
 

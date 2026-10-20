@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "construct-hologram"   # the distribution: keep in step with construct_hologram/product.py (DIST)
-version = "0.2.0"
+version = "0.2.1"
 description = "Construct: holographic constructs any agent can build — from a description, honestly."
 readme = "README.md"
 license = "MIT"

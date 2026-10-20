@@ -2,6 +2,15 @@
 
 ## 0.2.1 (unreleased)
 
+- **The packaged skill runs critique**: the Claude Code package and the Hermes draft ship the
+  two examples the prompts read, and the Hermes draft ships `prompts.py`; `critique`, `author`
+  and `prompts` crashed from an install before.
+- **`compare` measures the object**: ornament and decorative parts (a shadow ring, motes) are
+  left out of the silhouette; a tyre drawn as a wire torus (and the well under its arch) is
+  filled as a solid disc, so a car's side is no longer measured with holes in it; a plan trace
+  drawn any way round (nose up, down, left or right, mirrored) is found, the result names the
+  orientation, and a trace drawn across the view is warned about.
+
 - **Round caps inside any host.** `check` warns `tier-rounds` when `authoring.review_rounds`
   passes the tier's cap; the skill counts rounds in the scene before each review. A Claude Code
   budget hook (`hosts/claude-code/`, opt-in, shipped in the plugin switched off) refuses review

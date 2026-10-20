@@ -57,6 +57,9 @@ cabin narrows towards the roof. Trace all three, then loft through them:
 construct's silhouette from the view (from the geometry, no browser) and measures it against
 the traced outline: IoU (1 = identical) and how far apart the outlines are, as a share of the
 view's width. Vehicles need IoU 0.88 and outlines within 1.2%; landmark buildings 0.82 and 2%.
+A trace may face any way: a plan tries every quarter turn and mirror, and the result says which
+was used and warns when a trace was drawn across the view (draw plans nose-up, sides nose-left).
+Tyres count as solid discs, and ornament (a shadow ring, motes) is left out of the silhouette.
 The overlay shows the reference amber, the construct violet, both white: fix where the colours
 show. `--record` writes the result into `authoring.compare` (bound to the scene's hash). An
 outstanding vehicle or landmark needs a passing comparison: the critic's "outstanding" is held
