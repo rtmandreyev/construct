@@ -1,6 +1,7 @@
 """Tests for Construct scenes (format construct-scene, version 2): validation, compilation, audit, build and CLI."""
 
 import copy
+import math
 import hashlib
 import json
 import os
@@ -844,6 +845,93 @@ class ShapeEvidence(unittest.TestCase):
     def test_an_inferred_or_traced_outline_is_fine(self):
         self.assertNotIn("shape-overclaim", self.codes(self.scene_with("document", "inferred")))
         self.assertNotIn("shape-overclaim", self.codes(self.scene_with("reference_image", "inferred")))
+
+
+def body_trace():
+    """A synthetic traced guitar-like outline in pixels (y down): 600 px tall, nut and bridge marked."""
+    import math as m
+    pts = []
+    for i in range(60):
+        a = 2 * m.pi * i / 60
+        r = 200 + 40 * m.cos(2 * a)  # a waisted body
+        pts.append([round(500 + r * m.sin(a), 1), round(1300 - (300 + 300 * m.cos(a)), 1)])
+    return {"format": "construct-trace", "version": 1,
+            "reference": {"id": "ref-front", "title": "Synthetic test image", "ref": "user photo",
+                          "rights": "user_private", "view": "front"},
+            "image": {"width": 1000, "height": 1400},
+            "outline": pts, "features": {"bridge": [500, 1150], "nut": [500, 150]}}
+
+
+class Tracing(unittest.TestCase):
+    """Shapes measured from a reference image, fitted to a documented dimension."""
+
+    def test_fit_scales_flips_and_cites(self):
+        from . import trace
+        r = trace.fit(body_trace(), "nut:bridge=0.648", points=64)
+        nut, bridge = r["features"]["nut"], r["features"]["bridge"]
+        self.assertAlmostEqual(math.dist(nut, bridge), 0.648, places=4)
+        self.assertGreater(nut[1], bridge[1])                      # y is up now: the nut is above the bridge
+        self.assertEqual(len(r["profile"]), 60)                   # the measured points are kept
+        self.assertAlmostEqual(min(p[1] for p in r["profile"]), 0.0, places=3)   # bottom-centre origin
+        self.assertEqual(r["source"]["kind"], "reference_image")
+        self.assertEqual(r["part"]["certainty"], "inferred")
+        s = base()
+        s["sources"].append(r["source"])
+        s["parts"].append(dict(r["part"], id="body", role="mass", stage=0,
+                               shape={"type": "extrude", "axis": "z", "height": 0.04, "profile": r["profile"]},
+                               at=[0, 0, -0.02]))
+        s["parts"] = s["parts"][1:]
+        self.assertTrue(diagnose.diagnose(s)["ok"], diagnose.diagnose(s)["repair_text"])
+
+    def test_bad_traces_come_back_with_paths(self):
+        bad = body_trace()
+        bad["outline"] = bad["outline"][:5]
+        r = diagnose.diagnose_text(json.dumps(bad))
+        self.assertIn("$.outline", {d["path"] for d in r["diagnostics"]})
+        loop = body_trace()
+        loop["outline"][10], loop["outline"][40] = loop["outline"][40], loop["outline"][10]
+        r = diagnose.diagnose_text(json.dumps(loop))
+        self.assertTrue(any("crosses itself" in d["message"] for d in r["diagnostics"]))
+
+    def test_cli_trace(self):
+        with tempfile.TemporaryDirectory() as d:
+            Path(d, "t.json").write_text(json.dumps(body_trace()))
+            r = subprocess.run([sys.executable, "-I", str(HERE / "cli.py"), "trace", "t.json", "--fit", "height=0.45",
+                                "--out", "body.json"], cwd=d, capture_output=True, text=True)
+            self.assertEqual(r.returncode, 0, r.stderr)
+            self.assertAlmostEqual(json.loads(Path(d, "body.json").read_text())["size_m"][1], 0.45, places=3)
+
+    def test_trace_image_sends_the_image_and_fits(self):
+        import http.server
+        import threading
+        seen = []
+
+        class Stub(http.server.BaseHTTPRequestHandler):
+            def do_POST(self):
+                seen.append(json.loads(self.rfile.read(int(self.headers["Content-Length"]))))
+                out = json.dumps({"choices": [{"message": {"content": json.dumps(body_trace())}}]}).encode()
+                self.send_response(200)
+                self.end_headers()
+                self.wfile.write(out)
+
+            def log_message(self, *a):
+                pass
+        srv = http.server.HTTPServer(("127.0.0.1", 0), Stub)
+        threading.Thread(target=srv.serve_forever, daemon=True).start()
+        try:
+            with tempfile.TemporaryDirectory() as d:
+                Path(d, "photo.png").write_bytes(png.book_cover(16, 24))
+                r = subprocess.run([sys.executable, "-I", str(HERE / "cli.py"), "trace-image", "photo.png",
+                                    "--what", "the guitar body outline, front view", "--features", "nut,bridge",
+                                    "--fit", "nut:bridge=0.648", "--base-url", "http://127.0.0.1:%d/v1" % srv.server_port,
+                                    "--model", "stub", "--out", "body.json"], cwd=d, capture_output=True, text=True, timeout=60)
+                self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+                self.assertEqual(json.loads(Path(d, "body.json").read_text())["part"]["certainty"], "inferred")
+        finally:
+            srv.shutdown()
+        parts = seen[0]["messages"][1]["content"]
+        self.assertTrue(parts[1]["image_url"]["url"].startswith("data:image/png;base64,"))
+        self.assertIn("construct-trace", parts[0]["text"])
 
 
 class Capture(unittest.TestCase):

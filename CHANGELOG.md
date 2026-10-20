@@ -19,6 +19,12 @@ The first release as **Construct**, an independent MIT-licensed project.
   `hologram_compile_scene` still answer for one release (unlisted). `build` writes
   `construct.html` (was `hologram.html`; `review` and `video` still read an old `hologram.html`).
   The tagline is "Holographic constructs any agent can build — from a description, honestly."
+- **Likeness from references.** `construct trace` fits a traced outline (`construct-trace`,
+  measured by a model that can see, from the user's photo or a web image viewed and never
+  kept) to a documented dimension: an `extrude` profile, features in metres, a `reference_image`
+  source, an `inferred` part. `construct trace-image` runs the vision step on any
+  OpenAI-compatible vision model; `author --reference` attaches images. `shape-overclaim`
+  warns when a free-form shape is verified without a drawing, measurement or dataset.
 - **One house palette.** Every construct renders in the house palette whatever the model wrote:
   a scene's `presentation.style_hint` is ignored (warning `style-hint-ignored`). Only a person
   chooses another colour, through a host option (`build --palette`, `--identity`, or the viewer's

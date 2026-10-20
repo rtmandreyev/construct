@@ -117,6 +117,25 @@ To build your own runner, use the files in `construct_hologram/prompts/` directl
 self-review for models that can see images) and `params.schema.json` (for endpoints that
 constrain output to a JSON Schema).
 
+## Likeness from reference images
+
+Text gives dimensions, not shapes. For things whose identity is an outline, a model that can
+see traces a reference — the user's own photo, or a web image it views without keeping — into
+a `construct-trace` document (`prompts/trace.md`), and `construct trace` fits it to a
+documented dimension:
+
+```sh
+python3 construct_hologram/cli.py trace body-trace.json --fit nut:bridge=0.648 --out body.json
+python3 construct_hologram/cli.py trace-image photo.jpg --what "the guitar body outline, front view" \
+    --features nut,bridge --fit nut:bridge=0.648 --base-url https://api.openai.com/v1 \
+    --model <a vision model> --key-env OPENAI_API_KEY --out body.json
+```
+
+The result is an `extrude` profile in metres, the features in metres, a `reference_image`
+source and an `inferred` part stub. The image is never embedded. In Hermes use a
+vision-capable model (or `vision_analyze`); in Claude Code put the photo in the working folder.
+See `construct_hologram/skill/references/tracing.md`.
+
 ## Python
 
 ```python

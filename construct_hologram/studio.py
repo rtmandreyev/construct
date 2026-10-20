@@ -154,6 +154,25 @@ def add_commands(sub):
     p.add_argument("--out", required=True)
     p.add_argument("--params", action="store_true", help="ask for a parameter document (best for small models)")
     p.add_argument("--rounds", type=int, default=4)
+    p.add_argument("--reference", action="append", help="a reference image (a local photo or an https URL); repeatable")
+    p = sub.add_parser("trace", help="fit a traced outline (construct-trace) to a documented dimension: an extrude profile")
+    p.add_argument("trace")
+    p.add_argument("--fit", required=True, help="a:b=metres between two traced features, or height=metres / width=metres")
+    p.add_argument("--origin", default="bottom-center", help="bottom-center, center or feature:<name>")
+    p.add_argument("--points", type=int, default=96)
+    p.add_argument("--out")
+    p = sub.add_parser("trace-image", help="have a vision model trace a reference image, then fit it (OpenAI-compatible)")
+    p.add_argument("image", nargs="+", help="local image files (the user's photos) or https URLs viewed, never kept")
+    p.add_argument("--what", required=True, help='what to trace, e.g. "the guitar body outline, front view"')
+    p.add_argument("--features", help="comma-separated feature names to mark, e.g. nut,bridge,neck-joint")
+    p.add_argument("--fit", required=True)
+    p.add_argument("--origin", default="bottom-center")
+    p.add_argument("--points", type=int, default=96)
+    p.add_argument("--title", help="how to cite the reference")
+    p.add_argument("--base-url", required=True)
+    p.add_argument("--model", required=True)
+    p.add_argument("--key-env")
+    p.add_argument("--out", required=True)
     p = sub.add_parser("prompts", help="write the any-model authoring package (prompts and params schema)")
     p.add_argument("--out", required=True)
     p = sub.add_parser("expand", help="the full scene a parameter document builds")
@@ -194,7 +213,7 @@ def add_commands(sub):
     p.add_argument("--identity", choices=scene_mod.IDENTITIES, help="an identity tint the person chose")
 
 
-COMMANDS = ("new", "params", "expand", "prompts", "author", "check", "build", "review", "video")
+COMMANDS = ("new", "params", "expand", "prompts", "author", "trace", "trace-image", "check", "build", "review", "video")
 
 
 def run(args):
@@ -216,6 +235,35 @@ def run(args):
             else:
                 sys.stdout.write(text)
             return 0
+        if args.command == "trace":
+            from . import trace as trace_mod
+            doc, diags = diagnose_mod.parse_text(Path(args.trace).read_text(encoding="utf-8"))
+            if doc is None:
+                sys.stderr.write("trace: %s\n" % "; ".join(d["message"] for d in diags))
+                return 1
+            try:
+                result = trace_mod.fit(doc, args.fit, args.origin, args.points)
+            except trace_mod.TraceError as exc:
+                sys.stderr.write("trace: %s\n" % exc)
+                return 1
+            text = json.dumps(result, indent=2, ensure_ascii=False) + "\n"
+            if args.out:
+                _write(args.out, text, True)
+                sys.stdout.write("wrote %s: %d points, %.3f x %.3f m\n" % (args.out, len(result["profile"]), *result["size_m"]))
+            else:
+                sys.stdout.write(text)
+            return 0
+        if args.command == "trace-image":
+            try:
+                from . import runner
+            except ImportError:
+                sys.stderr.write("trace-image: not part of this package; use the full checkout (%s)\n" % product_mod.REPO)
+                return 2
+            try:
+                return runner.run_trace_image(args, sys.stdout)
+            except (runner.RunnerError, OSError) as exc:
+                sys.stderr.write("trace-image: %s\n" % exc)
+                return 2
         if args.command in ("author", "prompts"):
             try:
                 importlib.import_module("." + ("runner" if args.command == "author" else "prompts"), __package__)

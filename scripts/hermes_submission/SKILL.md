@@ -88,6 +88,10 @@ Work in a folder of your own. `out/construct.html` opens in any browser.
    `new <category>` or an example and read `references/composition.md` and
    `references/vocabulary.md`: name the silhouette and the two or three identity features,
    build masses first, then structure, identity and a little detail.
+   When the identity is a shape text cannot give (a guitar body, a car, an elevation) and you
+   can see images, trace it from a reference (`references/tracing.md`: the user's photo or a
+   web image viewed with `vision_analyze`), then `scripts/cli.py trace` fits it to a verified
+   dimension. Traced shapes are `inferred`, cited to the image.
 3. **Check until clean.** Run `check --json`. While `needs_repair` is true, fix every
    diagnostic at its JSON path using its hint, and check again. Fix every `detached` and
    `thin` warning: they are what a viewer notices first.

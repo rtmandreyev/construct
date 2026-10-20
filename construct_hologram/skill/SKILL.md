@@ -52,6 +52,9 @@ if no browser is available, say so and deliver the HTML without captures.
    every part a role, a certainty and a stage. Text (titles, spines, labels) comes from
    facts through `labels`, images through named artwork slots; never choose colours, the
    renderer owns them. See [vocabulary](references/vocabulary.md).
+   When the thing's identity is a shape you cannot know from text (a guitar body, a car,
+   a building's elevation), measure it from a reference image: see
+   [tracing](references/tracing.md). Never invent an outline and call it verified.
 4. **Animate with intent.** Choose an assembly style; `articulations` for what opens once
    (a lid, a board, a disc lifted out); part motion only where the object keeps moving (a
    platter spins, a tentacle sways, a beam turns); idle events that suit the subject; and a

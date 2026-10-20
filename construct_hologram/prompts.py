@@ -9,6 +9,7 @@ Files:
   scene.md           the full path: write a scene (capable models)
   repair.md          the loop a host or runner drives: check, send the repair text, retry
   vision-review.md   an optional self-review of the renders for models that can see images
+  trace.md           the vision step that traces a shape from a reference image (construct trace)
   params.schema.json JSON Schema of a parameter document, for hosts that can constrain output
 """
 
@@ -114,7 +115,8 @@ Parts: `{{"id", "role", "certainty", "stage" (0..7), "shape", "at" [x,y,z],
 Stages build from what holds things up: legs and feet before the body that rests on them,
 walls before roofs, a base before an arm. Parts that hover (a halo, a beam) are `floating`.
 A part the user named but whose size you chose is `inferred` (cite the user's fact in
-`basis`). A spec page verifies dimensions (a scale length, a height), never a shape: an outline,
+`basis`). To take a shape from a picture, trace it: `trace.md` gives the measuring step and
+`construct trace` fits the outline to a documented dimension. A spec page verifies dimensions (a scale length, a height), never a shape: an outline,
 profile or path is `inferred` — or traced from a reference image (`construct trace`) — unless a
 cited drawing, measurement or dataset gives its coordinates; the parts of a fictional design are `inferred` too (designed from the request).
 `decorative` is only for atmosphere. The request source is `"rights": "user_private"`
@@ -215,6 +217,36 @@ scene and send the whole corrected JSON for checking.
 """
 
 
+TRACE = """# Trace a reference image (for models that can see)
+
+You are measuring a shape, not copying a picture. Look at the attached image — the user's own
+photo, or an image you are viewing on the web — and answer with one JSON object:
+
+```json
+{{"format": "construct-trace", "version": 1,
+ "reference": {{"id": "ref-front", "title": "who made the image, what it shows", "ref": "the URL, or user photo",
+               "rights": "reference_only", "view": "front"}},
+ "image": {{"width": 1200, "height": 1600}},
+ "outline": [[x, y], [x, y], ...],
+ "features": {{"name": [x, y]}}}}
+```
+
+- `image`: the image's size in pixels as you see it; every point is in those pixels, x to the
+  right, y down.
+- `outline`: the silhouette edge of the one thing you were asked to trace, once around, 40 to
+  120 points, denser where the edge curves (horns, cutaways, waists). Only the outer edge: no
+  holes, no inner details, no shadow or background.
+- `features`: the named points you were asked for (for example a guitar's `nut`, `bridge`,
+  `neck-joint`), each where its centre is.
+- `reference.rights`: `user_private` when the user gave you their own photo, otherwise
+  `reference_only` — the image is looked at, never kept or reproduced.
+- Never transcribe logos, text, colours or artwork from the image.
+
+The outline is then scaled to a documented dimension (`construct trace --fit nut:bridge=0.648`)
+and becomes `inferred` geometry cited to this image.
+"""
+
+
 def params_schema():
     """JSON Schema of a parameter document (structure; the validator checks the rest)."""
     slots = sorted({s for v in params_mod.VARIANTS.values() for (_, _, ss, _) in v.values() for s in ss})
@@ -284,6 +316,7 @@ def build():
                                        example=json.dumps(scene_example, indent=1, ensure_ascii=False)),
         "repair.md": REPAIR,
         "vision-review.md": VISION.format(),
+        "trace.md": TRACE.format(),
         "params.schema.json": json.dumps(params_schema(), indent=1) + "\n",
     }
 
