@@ -27,6 +27,8 @@ identity features**, in that order. Neon on a wrong silhouette is still wrong.
   `radius` list.
 - Many identical things → `repeat` (radial for rings of things), symmetric creatures and
   vehicles → `mirror`.
+- Bodies whose width and height both change along their length (car bodies, glasshouses,
+  hulls, fuselages) → `loft`: one section per real change, back to front.
 - Curved surfaces read through their rings and meridians: 8–16 meridians, rings at real
   profile changes; more lines are not more legible.
 
@@ -39,6 +41,15 @@ identity features**, in that order. Neon on a wrong silhouette is still wrong.
 - **Manufactured object**: the housing as mass; working parts (platter, arm, blade, lid)
   as identity, each a separate part so it can move; small controls as detail. Show it in
   use (record on the platter, lid open) when that is recognisable.
+- **Vehicle**: never a box body. Trace the side silhouette and the plan (top) outline first
+  — from references when the car is a named model ([tracing](tracing.md)) — and loft the
+  lower body through them: half-widths from the plan, sill and shoulder heights from the
+  side, the sides leaning in (`half_width_top` about 0.9 of the bottom). Round the plan at
+  the nose and tail with extra sections; the nose of most cars is far narrower than the
+  cabin. The glasshouse is a second loft, narrower at the roof, from the windscreen base
+  raked back. Wheels stand on the ground in arches on the body's side; lights at nose and
+  tail as detail. The `vehicle` archetype (`params vehicle --variant wedge|coupe|sedan`)
+  builds exactly this and is the quickest start.
 - **Machine**: the frame, the moving assembly (with `spin`/`swing` at its real pivot), the
   power or light source as `data`.
 - **Organism**: body volumes as ellipsoids/lathe; limbs as tapered tubes from real joints;

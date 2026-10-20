@@ -44,10 +44,13 @@ Archetypes, variants, standard sizes and artwork slots:
 - object / acoustic-guitar (a dreadnought acoustic guitar): scale_length=0.645, strings=6, frets=20
 - object / bass-guitar (a solid-body electric bass): scale_length=0.864, strings=4, frets=20, pickups=2, knobs=3
 - object / synth (a keyboard synthesizer): keys=49, knob_rows=2, knobs_per_row=8, screen=true, wheels=true
+- vehicle / wedge (a mid-engined wedge supercar): length=4.14, width=1.89, height=1.07, wheelbase=2.45, wheel_diameter=0.64
+- vehicle / coupe (a front-engined grand-touring coupe): length=4.57, width=1.68, height=1.34, wheelbase=2.49, wheel_diameter=0.7
+- vehicle / sedan (a four-door sedan): length=4.8, width=1.83, height=1.45, wheelbase=2.85, wheel_diameter=0.68
 - vessel / bottle (a 330 ml long-neck bottle): height=0.235, diameter=0.061; slots: label
 - vessel / can (a 330 ml can): height=0.115, diameter=0.066; slots: label
 - vessel / glass (a pint glass): glass_style=pint, height=0.15, diameter=0.086, fill=0.85
-Parameters: width (outer width, metres, 0.02..2); height (outer height, metres, 0.02..3); depth (outer depth (thickness) closed, metres, 0.002..1); thickness (thickness of the closed book, metres, 0.003..0.2); diameter (widest diameter, metres, 0.02..0.5); discs (number of discs, 1..12); scale_length (nut-to-bridge string length, metres, 0.4..1); strings (number of strings, 4..12); frets (number of frets, 12..27); pickups (number of pickups, 0..3); knobs (number of control knobs, 0..6); keys (number of keys, 25..88); knob_rows (rows of knobs on the panel, 0..4); knobs_per_row (knobs in each row, 0..16); fill (how full the glass is, 0..1)
+Parameters: width (outer width, metres, 0.02..3); height (outer height, metres, 0.02..3); depth (outer depth (thickness) closed, metres, 0.002..1); thickness (thickness of the closed book, metres, 0.003..0.2); diameter (widest diameter, metres, 0.02..0.5); discs (number of discs, 1..12); scale_length (nut-to-bridge string length, metres, 0.4..1); strings (number of strings, 4..12); frets (number of frets, 12..27); pickups (number of pickups, 0..3); knobs (number of control knobs, 0..6); keys (number of keys, 25..88); knob_rows (rows of knobs on the panel, 0..4); knobs_per_row (knobs in each row, 0..16); fill (how full the glass is, 0..1); length (overall length, metres, 1..12); wheelbase (front to rear axle, metres, 0.8..7); wheel_diameter (outer tyre diameter, metres, 0.3..1.5)
 Choices: body_style: double-cut, single-cut, offset; glass_style: pint, tulip, stange; screen: true, false; wheels: true, false
 
 Fact keys the builder sets as text when they exist: `title`, and the first of

@@ -197,6 +197,11 @@ def build_claude_code(out):
     (root / ".claude-plugin").mkdir(parents=True)
     (root / ".claude-plugin" / "plugin.json").write_text(json.dumps(plugin, indent=2) + "\n",
                                                          encoding="utf-8")
+    # the opt-in budget hook and its recipe: shipped, never switched on by installing the plugin
+    hooks = HERE.parent / "hosts" / "claude-code"
+    for name in ("construct_budget.py", "README.md"):
+        if (hooks / name).exists():
+            _copy(hooks / name, root / "hosts" / name)
     write_manifest(root, "claude-code")
     return root
 

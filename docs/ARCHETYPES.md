@@ -26,6 +26,15 @@ python3 construct_hologram/cli.py params case --variant jewel --output cd.json
 | `vessel/bottle` | 330 ml long-neck, 235 mm | label | — |
 | `vessel/can` | 330 ml, 115 × 66 mm (440 ml: 147 mm; 500 ml: 168 mm) | label | — |
 | `vessel/glass` | pint, tulip or stange; `fill` | — | — |
+| `vehicle/wedge` | mid-engined wedge supercar, 4.14 × 1.89 × 1.07 m, wheelbase 2.45 m | — | — |
+| `vehicle/coupe` | front-engined grand-touring coupe, 4.57 × 1.68 × 1.34 m, wheelbase 2.49 m | — | — |
+| `vehicle/sedan` | four-door sedan, 4.80 × 1.83 × 1.45 m, wheelbase 2.85 m | — | — |
+
+Vehicles are lofted: the lower body through plan half-widths and side heights (narrow,
+rounded nose and tail; sides leaning in), a narrower glasshouse, wheels on the ground in
+arches. Give `length`, `width`, `height`, `wheelbase` and `wheel_diameter` from a spec sheet
+(with `param_certainty`); for a named model whose silhouette matters, trace it and write a
+scene with `loft` sections instead.
 
 Text on the object comes from facts: `title`, then the first of `artist`, `author`,
 `creator`, `composer`, `brewery`, `maker` (the creator line); vessels add `style`; guitars and

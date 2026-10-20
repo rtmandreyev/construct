@@ -1,5 +1,21 @@
 # Changelog
 
+## 0.2.1 (unreleased)
+
+- **Round caps inside any host.** `check` warns `tier-rounds` when `authoring.review_rounds`
+  passes the tier's cap; the skill counts rounds in the scene before each review. A Claude Code
+  budget hook (`hosts/claude-code/`, opt-in, shipped in the plugin switched off) refuses review
+  commands past the rounds and, past the wall clock, every tool but reading, `check` and
+  `build`; Hermes runs take `--run-budget` and `--max-turns`.
+- **Cars that are cars.** A `loft` shape (rounded sections back to front: plan and side profile
+  together) and a `vehicle` archetype (wedge, coupe, sedan): a lofted lower body with a narrow,
+  rounded nose and leaning sides, a glasshouse loft, tyres on the ground in arches, lights.
+  Car guidance in the prompts and composition reference: trace side and plan first, never a
+  box.
+- **A clean globe from dense data.** Shared coastline edges are drawn once; when a file is over
+  the line budget, islands too small to read are left out first and lines are never simplified
+  below about a pixel (no beading). Natural Earth 1:50m now reads as cleanly as 1:110m.
+
 ## 0.2.0 — Construct (2026-10-19)
 
 The first release as **Construct**, an independent MIT-licensed project.

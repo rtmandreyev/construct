@@ -884,11 +884,68 @@ class Tiers(unittest.TestCase):
         self.assertIn("tier-budget", self.codes(quick))
         self.assertIn("authoring", self.codes(self.scene_with({"tier": "standard", "research": "not_needed", "outcome": "limit"})))
 
+    def test_rounds_past_the_cap_are_flagged(self):
+        within = self.scene_with({"tier": "showcase", "research": "not_needed", "review_rounds": 4})
+        past = self.scene_with({"tier": "showcase", "research": "not_needed", "review_rounds": 7, "outcome": "limit",
+                                "next": ["a sharper nose"]})
+        self.assertNotIn("tier-rounds", self.codes(within))
+        self.assertIn("tier-rounds", self.codes(past))  # seen live: seven rounds against a cap of four
+
     def test_a_parameter_document_carries_the_record(self):
         doc = params.template("vessel", "can") | {"facts": [], "synthetic": True,
                                                   "authoring": {"tier": "quick", "research": "not_needed"}}
         self.assertTrue(diagnose.diagnose_params(doc, [])["ok"])
         self.assertEqual(params.expand(doc)["authoring"]["tier"], "quick")
+
+
+
+def _budget_hook():
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("construct_budget", HERE.parent / "hosts" / "claude-code" / "construct_budget.py")
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+class BudgetHook(unittest.TestCase):
+    """The Claude Code hook that enforces a tier from outside the model."""
+
+    def test_its_table_is_the_tiers(self):
+        hook = _budget_hook()
+        self.assertEqual(hook.TIERS, {k: (v["wall_clock_s"], v["review_rounds"]) for k, v in tiers.TIERS.items()})
+        self.assertEqual(hook.WRAP_UP, tiers.WRAP_UP)
+
+    def test_review_rounds_wrap_up_and_wall_clock(self):
+        hook = _budget_hook()
+        with tempfile.TemporaryDirectory() as d:
+            env = {"CONSTRUCT_TIER": "standard"}
+            ev = {"session_id": "s1", "cwd": d}
+            review = dict(ev, tool_name="Bash", tool_input={"command": "python3 runtime/cli.py review car.json --out out"})
+            check = dict(ev, tool_name="Bash", tool_input={"command": "python3 runtime/cli.py check car.json"})
+            edit = dict(ev, tool_name="Edit", tool_input={"file_path": "car.json"})
+            os.environ.pop("CLAUDE_PROJECT_DIR", None)
+            code, out, _ = hook.handle("session-start", dict(ev, source="startup"), now=1000, env=env)
+            self.assertIn("2 review rounds", out)
+            for k in range(2):
+                self.assertEqual(hook.handle("pre", review, now=1010 + k, env=env)[0], 0)
+                hook.handle("post", review, now=1011 + k, env=env)
+            code, _, err = hook.handle("pre", review, now=1100, env=env)
+            self.assertEqual(code, 2)
+            self.assertIn("review rounds", err)
+            _, out, _ = hook.handle("post", edit, now=1000 + 490, env=env)
+            self.assertIn("wrap-up", json.loads(out)["hookSpecificOutput"]["additionalContext"])
+            self.assertEqual(hook.handle("post", edit, now=1000 + 500, env=env)[1], "")  # told once
+            self.assertEqual(hook.handle("pre", edit, now=1000 + 601, env=env)[0], 2)
+            self.assertEqual(hook.handle("pre", check, now=1000 + 601, env=env)[0], 0)  # deliver: still allowed
+            self.assertEqual(hook.handle("pre", dict(ev, tool_name="Read"), now=1000 + 601, env=env)[0], 0)
+            self.assertEqual(hook.limits({"CONSTRUCT_TIER": "showcase", "CONSTRUCT_MAX_REVIEWS": "3"})[1:], (1800, 3))
+
+    def test_the_claude_code_package_ships_it_switched_off(self):
+        from . import package
+        with tempfile.TemporaryDirectory() as d:
+            root = package.build(Path(d, "pkg"), hosts=("claude-code",))["claude-code"]
+            self.assertTrue((root / "hosts" / "construct_budget.py").exists())
+            self.assertFalse((root / "hooks").exists())  # installing the plugin never switches it on
 
 
 class RunnerLimits(unittest.TestCase):
@@ -1185,6 +1242,35 @@ class Terrain(unittest.TestCase):
 
 
 
+
+class Vehicles(unittest.TestCase):
+    """The loft shape and the vehicle archetype (cars came out boxy from every model before)."""
+
+    def test_loft_sections_are_checked(self):
+        bad = base(parts=[{"id": "hull", "role": "mass", "certainty": "inferred", "stage": 0,
+                           "shape": {"type": "loft", "sections": [[1, 0.5, 0, 1], [0, 0.5, 0, 1]]}}])
+        self.assertIn("rule", {d["code"] for d in diagnose.diagnose(bad)["diagnostics"]})
+        good = base(parts=[{"id": "hull", "role": "mass", "certainty": "inferred", "stage": 0,
+                            "shape": {"type": "loft", "sections": [[-1, 0.3, 0, 0.4], [0, 0.5, 0, 0.6, 0.4], [1, 0.2, 0.1, 0.3]]}}])
+        r = diagnose.diagnose(good)
+        self.assertTrue(r["ok"], r["repair_text"])
+
+    def test_every_variant_is_a_car_not_a_box(self):
+        for var in params.VARIANTS["vehicle"]:
+            doc = params.template("vehicle", var) | {"facts": [], "synthetic": True}
+            r = diagnose.diagnose_params(doc, [])
+            self.assertTrue(r["ok"] and not r["warnings"], (var, r["repair_text"]))
+            sc = params.expand(doc)
+            body = next(p for p in sc["parts"] if p["id"] == "body")["shape"]["sections"]
+            widest = max(sec[1] for sec in body)
+            self.assertLess(body[-1][1], 0.8 * widest, var)   # the nose is narrower than the cabin
+            self.assertLess(body[-1][3], 0.85 * max(sec[3] for sec in body), var)  # and lower
+            self.assertTrue(all(sec[4] < sec[1] for sec in body), var)  # the sides lean in
+            geo = scene.compile_scene(sc)
+            tyres = [p for p in geo["parts"] if p["id"].startswith("tyre-")]
+            self.assertAlmostEqual(min(i["min"][1] for p in tyres for i in p["instances"]), 0.0, places=3)  # on the ground
+
+
 class Globe(unittest.TestCase):
     """A measured globe from coastline data (synthetic GeoJSON here; Natural Earth in use)."""
 
@@ -1222,6 +1308,23 @@ class Globe(unittest.TestCase):
         self.assertLessEqual(geo["counts"]["lines"], 24000)
         coast = next(p for p in geo["parts"] if p["id"] == "coastlines")
         self.assertEqual((coast["certainty"], coast["role"]), ("verified", "identity"))
+
+    def test_shared_edges_are_drawn_once(self):
+        lines = globe.dedupe([[[0, 0], [1, 0], [2, 0]], [[2, 0], [1, 0]], [[5, 5], [6, 6]]])
+        self.assertEqual(sum(len(q) - 1 for q in lines), 3)
+
+    def test_small_islands_go_only_when_the_budget_needs_it(self):
+        def island(lon, lat, size, n):
+            ring = [[lon + size * math.cos(2 * math.pi * k / n), lat + size * math.sin(2 * math.pi * k / n)] for k in range(n)]
+            return ring + [ring[0]]
+        few = [island(10 * k - 170, 0, 0.2, 12) for k in range(30)]
+        lines, tol, floor, dropped = globe.fit_budget(few)
+        self.assertEqual((tol, dropped, len(lines)), (0.0, 0, 30))
+        many = few + [island(0, 40, 30, 15000), island(90, -30, 25, 15000)]
+        lines, tol, floor, dropped = globe.fit_budget(many)
+        self.assertEqual(dropped, 30)
+        self.assertGreaterEqual(tol, globe.MIN_TOLERANCE)  # never sub-pixel segments that bead
+        self.assertEqual(len(lines), 2)
 
     def test_the_antimeridian_is_not_crossed_and_the_tilt_is_the_spin_axis(self):
         m = shapes_mod.globe(1.0, [[[179, 0], [-179, 0]]], graticule=0, faces=False)

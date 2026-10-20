@@ -34,7 +34,7 @@ method, not code, and adds 3-D animation, certainty as material and a repair loo
   animated 3-D presentation of a thing: "make a construct of my CD", "a hologram of this
   lighthouse", "show this guitar as a construct", "a fictional creature for my game".
 - A collection entry needs a consistent animated figure: CDs and their cases, books,
-  guitars, synths, bottles, cans and glasses have ready archetypes.
+  guitars, synths, bottles, cans, glasses and cars have ready archetypes.
 
 Do **not** use it for photoreal renders, meshes for games or CAD, charts, or for finding or
 recreating real cover art (artwork is shown only from images the user supplies).
@@ -68,7 +68,7 @@ Work in a folder of your own. `out/construct.html` opens in any browser.
 
 | need | command or file |
 |---|---|
-| an archetype (case, book, guitar, synth, bottle, can, glass) | `params <archetype> --variant <v> --output p.json` |
+| an archetype (case, book, guitar, synth, bottle, can, glass, car) | `params <archetype> --variant <v> --output p.json` |
 | a full scene starter | `new <object\|architecture\|machine\|organism\|cd\|book> --output scene.json` |
 | check: every problem with a path, code and fix hint | `check file.json --json` (`ok`, `needs_repair`, `diagnostics`, `repair_text`) |
 | build the construct | `build file.json --out out` |
@@ -118,7 +118,8 @@ Work in a folder of your own. `out/construct.html` opens in any browser.
    `vision_analyze`. Score them with the rubric in `references/review.md` (silhouette,
    proportions, identity, depth, composition, assembly, motion, density, honesty). The aim
    is genuinely good — something you would put in a launch video — not merely
-   recognisable: improve the weakest point, check, review again. Stop when every criterion
+   recognisable: improve the weakest point, check, review again. Before each review add
+   one to `authoring.review_rounds` and save; `check` warns `tier-rounds` past the cap. Stop when every criterion
    is good, or when the tier's review rounds or time run out, whichever comes first.
 6. **Deliver.** Record `authoring` in the scene (tier, research, sources used, outcome,
    `next` improvements). Give the user `out/construct.html` (and the video if asked), and say

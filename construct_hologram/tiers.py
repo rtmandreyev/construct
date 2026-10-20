@@ -154,5 +154,10 @@ def audit(scene, add, warnings):
     if a["research"] != "done" and looked_up:
         add(warnings, "research", None, "sources %s are listed but research is %r: record \"done\" when you looked "
             "things up" % (", ".join(looked_up), a["research"]))
+    rounds = a.get("review_rounds")
+    if isinstance(rounds, int) and rounds > tier["review_rounds"]:
+        add(warnings, "tier-rounds", None, "%d review rounds is beyond the %s tier's %d: stop at the cap and deliver "
+            "the saved scene with its next notes (or record a higher tier the user asked for)" % (
+                rounds, a["tier"], tier["review_rounds"]))
     if a.get("outcome") == "limit" and not a.get("next"):
         add(warnings, "authoring", None, "stopped at a limit with no \"next\" notes: say what the next improvement would be")

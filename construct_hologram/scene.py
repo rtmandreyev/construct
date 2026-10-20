@@ -72,7 +72,7 @@ EVENTS = ("scan", "sweep", "wave", "shimmer", "glitch", "brownout", "propagate",
 ASSEMBLY = ("ceremony", "build", "cut")
 LIFE = ("off", "calm", "alive")
 SHAPE_TYPES = ("box", "cylinder", "cone", "sphere", "torus", "lathe", "extrude", "tube",
-               "curve", "plane", "grid", "points", "marker", "terrain", "globe")
+               "curve", "plane", "grid", "points", "marker", "terrain", "globe", "loft")
 MAX_TERRAIN = 128
 MAX_GLOBE_POINTS = 20000
 ARTICULATIONS = ("hinge", "slide", "lift", "turn")
@@ -393,6 +393,27 @@ def _shape_check(c, shape, where):
     elif t == "grid":
         c.vec(shape.get("size"), where + ".size", 2, **pos)
         c.num(shape.get("divisions"), where + ".divisions", 1, 64, True)
+    elif t == "loft":
+        secs = shape.get("sections")
+        if not isinstance(secs, list) or not 2 <= len(secs) <= MAX_PATH:
+            c.err(where + ".sections", "expected 2..%d sections [z, half_width, y_bottom, y_top] or with a top "
+                  "half-width" % MAX_PATH, "type", "Front to back along Z: [[-2.0, 0.85, 0.15, 0.6], [2.0, 0.7, 0.2, 0.45]]")
+        else:
+            last = None
+            for i, sec in enumerate(secs):
+                w = "%s.sections[%d]" % (where, i)
+                if not (isinstance(sec, list) and len(sec) in (4, 5) and all(
+                        isinstance(v, (int, float)) and not isinstance(v, bool) and math.isfinite(v) for v in sec)):
+                    c.err(w, "expected [z, half_width, y_bottom, y_top] or [z, half_width, y_bottom, y_top, half_width_top]")
+                    continue
+                if sec[1] <= 0 or (len(sec) == 5 and sec[4] <= 0) or sec[3] <= sec[2]:
+                    c.err(w, "half-widths must be positive and y_top above y_bottom", "range")
+                if last is not None and sec[0] <= last:
+                    c.err(w, "sections must run along +Z: each z larger than the one before", "rule",
+                          "Order the sections from the back (smallest z) to the front.")
+                last = sec[0]
+        if "round" in shape:
+            c.num(shape["round"], where + ".round", 0, 1)
     elif t == "globe":
         c.num(shape.get("radius"), where + ".radius", **pos)
         ps = shape.get("paths")
@@ -468,6 +489,7 @@ _SHAPE_KEYS = {
     "grid": {"type", "size", "divisions"},
     "terrain": {"type", "size", "heights", "contour", "index", "grid_every", "skirt"},
     "globe": {"type", "radius", "paths", "graticule", "faces"},
+    "loft": {"type", "sections", "round"},
     "points": {"type", "count", "region", "sprite", "size_px"},
     "marker": {"type", "sprite", "size_px"},
 }
@@ -1176,6 +1198,8 @@ def _local_mesh(shape, seed):
         return shapes.plane(shape["size"][0], shape["size"][1], shape.get("divisions", 0))
     if t == "grid":
         return shapes.grid(shape["size"][0], shape["size"][1], shape["divisions"])
+    if t == "loft":
+        return shapes.loft([list(x) for x in shape["sections"]], shape.get("round", 0.35))
     if t == "globe":
         return shapes.globe(shape["radius"], shape["paths"], shape.get("graticule", 30), shape.get("faces", True))
     if t == "terrain":

@@ -92,26 +92,76 @@ def _dp(pts, tol):
     return [p for p, f in zip(pts, keep) if f]
 
 
+def dedupe(lines):
+    """Lines with every segment drawn once: a segment already drawn (in either direction) splits
+    its line there. Coastline files repeat shared edges; drawn twice they bead and brighten."""
+    seen, out = set(), []
+    for line in lines:
+        run = [line[0]]
+        for a, b in zip(line, line[1:]):
+            key = tuple(sorted(((round(a[0], 4), round(a[1], 4)), (round(b[0], 4), round(b[1], 4)))))
+            if key in seen or key[0] == key[1]:
+                if len(run) >= 2:
+                    out.append(run)
+                run = [b]
+                continue
+            seen.add(key)
+            run.append(b)
+        if len(run) >= 2:
+            out.append(run)
+    return out
+
+
+def extent(line):
+    """A line's size in degrees of arc (longitude scaled by the cosine of its latitude)."""
+    lons, lats = [p[0] for p in line], [p[1] for p in line]
+    k = math.cos(math.radians(sum(lats) / len(lats)))
+    return max((max(lons) - min(lons)) * k, max(lats) - min(lats))
+
+
+MIN_TOLERANCE = 0.12  # degrees: about a pixel on a full-frame globe
+SMALL_ISLANDS = (0.5, 1.0, 2.0)  # degrees: islands below these are left out, smallest first, only when needed
+
+
 def fit_budget(lines, max_segments=MAX_SEGMENTS):
-    """(lines, tolerance in degrees): simplified only as much as the budget needs."""
+    """(lines, tolerance in degrees, smallest island kept in degrees, islands left out): the
+    data drawn as it is when it fits; otherwise islands too small to read at globe scale are
+    left out first, then the lines are simplified only as far as the budget needs."""
+    lines = dedupe(lines)
+
+    def fits(ls):
+        return sum(len(q) - 1 for q in ls) <= max_segments and sum(len(q) for q in ls) <= 20000
+    if fits(lines):
+        return [[[round(x, 4), round(y, 4)] for x, y in q] for q in lines], 0.0, 0.0, 0
+    kept, floor, dropped = lines, 0.0, 0
+    for floor in SMALL_ISLANDS:
+        closed = [q for q in lines if q[0] == q[-1] and len(q) > 3]
+        small = [q for q in closed if extent(q) < floor]
+        kept = [q for q in lines if not (q[0] == q[-1] and len(q) > 3 and extent(q) < floor)]
+        dropped = len(small)
+        if sum(len(q) for q in kept) <= 3 * 20000:
+            break
     tol = 0.0
     while True:
-        out = [q for q in (_dp(line, tol) for line in lines) if len(q) >= 2]
-        if sum(len(q) - 1 for q in out) <= max_segments and sum(len(q) for q in out) <= 20000:
-            return [[[round(x, 4), round(y, 4)] for x, y in q] for q in out], tol
-        tol = 0.01 if tol == 0 else tol * 1.6
+        out = [q for q in (_dp(line, tol) for line in kept) if len(q) >= 2]
+        if fits(out):
+            return [[[round(x, 4), round(y, 4)] for x, y in q] for q in out], tol, floor, dropped
+        # a segment shorter than about a pixel of the hero only beads: start there
+        tol = MIN_TOLERANCE if tol == 0 else tol * 1.3
 
 
 def build(coastlines, title="Earth", source_title="Coastline data", source_ref=None, rights="public_domain",
           graticule=30, tilt=True, rpm=1.0, identifier=None):
-    lines, tol = fit_budget(read_geojson(coastlines))
+    lines, tol, floor, dropped = fit_budget(read_geojson(coastlines))
     points = sum(len(q) for q in lines)
     r = STAGE_RADIUS
     a = math.radians(OBLIQUITY_DEG if tilt else 0.0)
     axis = [round(math.sin(a), 6), round(math.cos(a), 6), 0.0]  # the north pole leans to the right
     ident = identifier or re.sub(r"[^a-z0-9]+", "-", title.lower()).strip("-")[:60] or "globe"
     scale = MEAN_RADIUS_M / r
-    simplified = ("simplified to %g° to fit the line budget" % round(tol, 4)) if tol else "every point kept"
+    simplified = "; ".join(x for x in (
+        ("%d islands smaller than %g° left out" % (dropped, floor)) if dropped else "",
+        ("simplified to %g° to fit the line budget" % round(tol, 4)) if tol else "") if x) or "every point kept"
     facts = [
         {"key": "earth.mean_radius", "value": round(MEAN_RADIUS_M / 1000, 4), "unit": "km", "certainty": "verified",
          "source": "radius"},

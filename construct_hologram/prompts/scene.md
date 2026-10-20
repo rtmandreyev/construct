@@ -34,13 +34,15 @@ cited drawing, measurement or dataset gives its coordinates; the parts of a fict
 - Default orientations: cylinders, cones, lathes and tori stand on `at` around the +Y axis
   (a torus lies flat); boxes and spheres are centred on `at`; a plane faces +Z; a tube
   follows its path. Keep detail parts to under half of the lines.
-- Shapes (box, cylinder, cone, sphere, torus, lathe, extrude, tube, curve, plane, grid, points, marker, terrain, globe):
+- Shapes (box, cylinder, cone, sphere, torus, lathe, extrude, tube, curve, plane, grid, points, marker, terrain, globe, loft):
   box `size [w,h,d]` (centred on `at`; `anchor: base` stands it on `at`); cylinder `radius,
   height` (its base is at `at`, it rises along +Y); cone `radius_bottom, radius_top, height`
   (a lampshade is wider at the bottom; tilt any part with `rotate`, degrees about X, then Y,
   then Z); sphere `radius` or `radii`;
   torus `major, minor`; lathe `profile [[radius, y], ...]` (turned forms); extrude
-  `profile [[u, v], ...], height, axis y|z|x` (plans, elevations); tube `path [[x,y,z],...],
+  `profile [[u, v], ...], height, axis y|z|x` (plans, elevations); loft `sections [[z,
+  half_width, y_bottom, y_top(, half_width_top)], ...]` back to front along +Z, `round` 0..1
+  (car bodies, glasshouses, hulls: plan and side profile together); tube `path [[x,y,z],...],
   radius` (limbs, cables); curve `points`; plane `size [w,h]` facing +Z; grid; points; marker;
   terrain `size [w,d], heights [[...rows back to front...]]` — real relief comes from
   `construct terrain` and elevation data (MEASURED TERRAIN, verified); a small hand-made grid
@@ -56,6 +58,11 @@ cited drawing, measurement or dataset gives its coordinates; the parts of a fict
 - Images: on a part, `"artwork": {"slot": "cover-front", "asset": "id", "mask": "rect"}`.
 - Shelving: `"anchors": {"front": {"part", "face"}, "spine": {"part", "face"}}`.
 - Budgets: 256 parts, 24,000 lines, 24,000 triangles, 32 moving copies.
+
+Vehicles are never a box: trace the side silhouette and the plan outline first (from
+references for a named model), loft the lower body through them with a narrow, rounded
+nose, a second narrower loft for the glasshouse, wheels on the ground in arches. Or start
+from the `vehicle` archetype (wedge, coupe, sedan).
 
 Work in this order: the overall size and silhouette (`mass`), the structure, the
 identity features, then a little detail. Fewer, truer parts beat many guesses.

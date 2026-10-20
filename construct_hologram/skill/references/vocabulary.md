@@ -60,6 +60,7 @@ errors: the closed vocabulary is the safety boundary.
 | `sphere` | `radius` or `radii [x,y,z]`, `lat` 2–24, `lon` 3–48, `anchor` | heads, domes, bodies, ellipsoids |
 | `torus` | `major, minor`, `segments, sides, rings` | rails, rims, tyres, rings |
 | `lathe` | `profile [[radius, y], ...]` revolved about Y, `segments`, `meridians` | towers, bottles, vases, lamps, bells, records (flat profile = grooves) |
+| `loft` | `sections [[z, half_width, y_bottom, y_top(, half_width_top)], ...]` back to front along +Z, `round` 0–1 | car bodies and glasshouses, hulls, fuselages: the plan (half-widths) and side profile (bottoms, tops) together |
 | `extrude` | `profile [[u,v], ...]` (simple polygon), `height`, `axis` `y` (footprint in XZ, rises) · `z` (front elevation in XY, runs back) · `x`, `ribs` | building plans, gabled houses, book spines, brackets |
 | `tube` | `path [[x,y,z], ...]` (Catmull-Rom smoothed), `radius` or one per point (taper), `sides` 3–24, `samples`, `longitudinal`, `ring_every`, `caps` | limbs, tentacles, tonearms, pipes, cables, branches |
 | `curve` | `points`, `smooth`, `closed` | edges, paths, outlines, shine strokes |

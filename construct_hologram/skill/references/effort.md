@@ -75,6 +75,12 @@ Then deliver the best version so far, and record how it ended:
 lists, most valuable first, what the next improvement would be, so the construct can be
 regenerated at a higher tier later. Say the same in the hand-over.
 
+## Count the rounds
+
+Before each review round, add one to `authoring.review_rounds` in the saved scene and save
+it. `check` warns `tier-rounds` once the count is past the tier's cap: stop reviewing then,
+deliver, and put what you would still improve in `next`.
+
 ## Who enforces the limits
 
 - **The agent** (any host) follows the table above; the tier is the user's or host's choice,
@@ -87,6 +93,11 @@ regenerated at a higher tier later. Say the same in the hand-over.
   review rounds for a model that can see. Single limits can be raised, never removed.
 - **MCP hosts** ask `construct_limits` for a tier's limits (with overrides, or the `tier:` and
   `research:` words found in a request) and enforce them in their own loop.
+- **Claude Code**: a command hook (`hosts/claude-code/construct_budget.py` in the
+  repository, with its settings recipe) refuses review commands past the tier's rounds and,
+  past the wall clock, every tool but reading, `check` and `build`.
+- **Hermes**: `hermes chat --run-budget 600 --max-turns 120` (per run; the owner's
+  `config.yaml` stays as it is) gives the 80% wrap-up notice and a hard ceiling.
 - **Hosts add hard limits on top**: a Hermes run budget (its turn and time limits), an agent
   harness's timeout and cost ceiling (for example tessera-agent's), a provider's spend cap.
   Whichever limit is tightest wins; Construct never runs unbounded.

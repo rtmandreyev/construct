@@ -57,6 +57,14 @@ VARIANTS = {
         "synth": ("object", {"keys": 49, "knob_rows": 2, "knobs_per_row": 8, "screen": True, "wheels": True}, (),
                   "a keyboard synthesizer"),
     },
+    "vehicle": {
+        "wedge": ("vehicle", {"length": 4.14, "width": 1.89, "height": 1.07, "wheelbase": 2.45, "wheel_diameter": 0.64},
+                  (), "a mid-engined wedge supercar"),
+        "coupe": ("vehicle", {"length": 4.57, "width": 1.68, "height": 1.34, "wheelbase": 2.49, "wheel_diameter": 0.70},
+                  (), "a front-engined grand-touring coupe"),
+        "sedan": ("vehicle", {"length": 4.80, "width": 1.83, "height": 1.45, "wheelbase": 2.85, "wheel_diameter": 0.68},
+                  (), "a four-door sedan"),
+    },
     "vessel": {
         "bottle": ("object", {"height": 0.235, "diameter": 0.061}, ("label",), "a 330 ml long-neck bottle"),
         "can": ("object", {"height": 0.115, "diameter": 0.066}, ("label",), "a 330 ml can"),
@@ -67,7 +75,7 @@ VARIANTS = {
 
 # parameter -> (minimum, maximum, integer, help); choices for text parameters
 PARAMS = {
-    "width": (0.02, 2.0, False, "outer width, metres"),
+    "width": (0.02, 3.0, False, "outer width, metres"),
     "height": (0.02, 3.0, False, "outer height, metres"),
     "depth": (0.002, 1.0, False, "outer depth (thickness) closed, metres"),
     "thickness": (0.003, 0.2, False, "thickness of the closed book, metres"),
@@ -82,6 +90,9 @@ PARAMS = {
     "knob_rows": (0, 4, True, "rows of knobs on the panel"),
     "knobs_per_row": (0, 16, True, "knobs in each row"),
     "fill": (0.0, 1.0, False, "how full the glass is"),
+    "length": (1.0, 12.0, False, "overall length, metres"),
+    "wheelbase": (0.8, 7.0, False, "front to rear axle, metres"),
+    "wheel_diameter": (0.3, 1.5, False, "outer tyre diameter, metres"),
 }
 CHOICES = {
     "body_style": ("double-cut", "single-cut", "offset"),
@@ -106,7 +117,7 @@ def template(archetype, variant=None):
         raise scene_mod.SceneError("archetype %s has the variants %s" % (archetype, ", ".join(VARIANTS[archetype])))
     category, defaults, slots, note = VARIANTS[archetype][variant]
     keys = {"case": ("title", "artist"), "book": ("title", "author"), "object": ("maker", "model"),
-            "vessel": ("title", "brewery")}[archetype]
+            "vessel": ("title", "brewery"), "vehicle": ("maker", "model")}[archetype]
     return {
         "format": FORMAT, "version": VERSION, "archetype": archetype, "variant": variant,
         "id": "my-%s" % variant, "title": "Replace with the item's name",
@@ -709,7 +720,91 @@ def build_vessel(b, var, p):
     b.anchors = {"front": {"part": "label", "face": "front"}} if var in ("bottle", "can") else {}
 
 
-BUILDERS = {"case": build_case, "book": build_book, "object": build_object, "vessel": build_vessel}
+# ---------------------------------------------------------------------------- vehicle
+
+# Shapes as fractions, from the back (t 0) to the nose (t 1): the lower body's sections
+# (t, half-width / width, bottom / height, top / height) give its plan and side profile together;
+# the glasshouse's (t, bottom half-width / width, top half-width / width, base / height, roof / height)
+# sit on it, narrower at the top; `axle` is where the middle of the wheelbase falls.
+CARS = {
+    "wedge": {"axle": 0.47,
+              "body": [(0.0, 0.40, 0.25, 0.58), (0.03, 0.47, 0.17, 0.62), (0.10, 0.50, 0.13, 0.64), (0.40, 0.50, 0.12, 0.62),
+                       (0.60, 0.49, 0.12, 0.53), (0.75, 0.47, 0.12, 0.45), (0.86, 0.43, 0.13, 0.38), (0.94, 0.37, 0.14, 0.32),
+                       (0.985, 0.30, 0.16, 0.28), (1.0, 0.24, 0.19, 0.25)],
+              "glass": [(0.25, 0.42, 0.28, 0.58, 0.64), (0.32, 0.44, 0.32, 0.58, 0.96), (0.46, 0.45, 0.34, 0.57, 1.0),
+                        (0.57, 0.46, 0.38, 0.53, 0.79), (0.65, 0.47, 0.44, 0.49, 0.52)]},
+    "coupe": {"axle": 0.45,
+              "body": [(0.0, 0.38, 0.22, 0.48), (0.02, 0.45, 0.16, 0.53), (0.08, 0.48, 0.14, 0.55), (0.30, 0.50, 0.13, 0.56),
+                       (0.55, 0.50, 0.13, 0.55), (0.78, 0.48, 0.13, 0.53), (0.90, 0.45, 0.14, 0.51), (0.97, 0.39, 0.17, 0.47),
+                       (1.0, 0.32, 0.22, 0.42)],
+              "glass": [(0.08, 0.44, 0.28, 0.53, 0.56), (0.18, 0.45, 0.33, 0.54, 0.80), (0.30, 0.45, 0.36, 0.55, 0.96),
+                        (0.42, 0.45, 0.37, 0.55, 1.0), (0.52, 0.46, 0.40, 0.55, 0.96), (0.60, 0.47, 0.45, 0.54, 0.58)]},
+    "sedan": {"axle": 0.48,
+              "body": [(0.0, 0.42, 0.21, 0.54), (0.02, 0.47, 0.17, 0.57), (0.08, 0.49, 0.15, 0.58), (0.30, 0.50, 0.14, 0.58),
+                       (0.75, 0.50, 0.14, 0.55), (0.92, 0.47, 0.15, 0.52), (0.98, 0.42, 0.18, 0.48), (1.0, 0.36, 0.22, 0.45)],
+              "glass": [(0.14, 0.46, 0.33, 0.57, 0.61), (0.24, 0.46, 0.38, 0.58, 0.97), (0.55, 0.46, 0.39, 0.57, 1.0),
+                        (0.67, 0.47, 0.44, 0.56, 0.59)]},
+}
+
+
+def build_vehicle(b, var, p):
+    car = CARS[var]
+    L, W, H, wb, wd = p["length"], p["width"], p["height"], p["wheelbase"], p["wheel_diameter"]
+    for k in ("length", "width", "height", "wheelbase", "wheel_diameter"):
+        b.dim(k, p[k])
+    b.framing = {"yaw": 38, "pitch": 9, "fit": 1.0}
+    b.atmosphere = {"haze": 0.6, "grid": True, "projector": False, "motes": 0.2}
+
+    def z(t):
+        return -L / 2 + t * L
+    # the sides lean in towards the shoulder (tumblehome)
+    body = [[round(z(t), 4), round(hw * W, 4), round(y0 * H, 4), round(y1 * H, 4), round(hw * W * 0.9, 4)]
+            for t, hw, y0, y1 in car["body"]]
+    b.part("body", "mass", {"type": "loft", "sections": body, "round": 0.7}, (0, 0, 0), 1,
+           basis=["length", "width", "height"], note="plan and side profile of %s, as fractions of its size" % b.note)
+    glass = [[round(z(t), 4), round(hb * W, 4), round(y0 * H, 4), round(y1 * H, 4), round(ht * W, 4)]
+             for t, hb, ht, y0, y1 in car["glass"]]
+    b.part("glasshouse", "identity", {"type": "loft", "sections": glass, "round": 0.3}, (0, 0, 0), 2,
+           basis=["height"], look={"fill": "glass"})
+    # wheels on the ground, in arches cut into the body's sides
+    R, tw = wd / 2, min(0.32, 0.13 * W)
+    zc = z(car["axle"])
+    zr, zf = zc - wb / 2, zc + wb / 2
+
+    def half_width(zz):
+        prof = [(sec[0], sec[1]) for sec in body]
+        for (z0, w0), (z1, w1) in zip(prof, prof[1:]):
+            if z0 <= zz <= z1:
+                return w0 + (w1 - w0) * (zz - z0) / (z1 - z0)
+        return prof[-1][1]
+    for name, zz in (("rear", zr), ("front", zf)):
+        x = half_width(zz) - tw / 2 - 0.01
+        b.part("tyre-" + name, "structure", {"type": "torus", "major": round(R - tw / 2, 4), "minor": round(tw / 2, 4),
+                                             "segments": 32, "sides": 8, "rings": 4},
+               (round(x, 4), round(R, 4), round(zz, 4)), 0, rotate=[0, 0, 90], mirror="x", basis=["wheel_diameter", "wheelbase"])
+        b.part("rim-" + name, "detail", {"type": "cylinder", "radius": round(R * 0.6, 4), "height": round(tw * 0.5, 4),
+                                         "segments": 16, "ribs": 5},
+               (round(x + tw * 0.25, 4), round(R, 4), round(zz, 4)), 1, rotate=[0, 0, 90], mirror="x")
+        # the arch lies on the body's side at axle height (the side leans in above the sill)
+        sec = min(body, key=lambda q: abs(q[0] - zz))
+        ar = R * 1.12
+        xs = half_width(zz) * (1 - 0.1 * min(1.0, max(0.0, (R - sec[2]) / (sec[3] - sec[2])))) - 0.002
+        b.part("arch-" + name, "identity", {"type": "curve", "points": [
+            [round(xs, 4), round(R + ar * math.sin(math.pi * k / 12), 4), round(zz + ar * math.cos(math.pi * k / 12), 4)]
+            for k in range(13)]}, (0, 0, 0), 2, mirror="x", basis=["wheel_diameter"])
+    # lights at the nose and the tail
+    nose, tail = body[-1], body[0]
+    b.part("headlights", "detail", _box([round(W * 0.16, 4), round(H * 0.05, 4), 0.03]),
+           (round(nose[1] * 0.6, 4), round((nose[2] + nose[3]) / 2, 4), round(nose[0] - 0.02, 4)), 3, mirror="x")
+    b.part("taillights", "detail", _box([round(W * 0.2, 4), round(H * 0.05, 4), 0.03]),
+           (round(tail[1] * 0.6, 4), round(tail[3] - H * 0.08, 4), round(tail[0] + 0.02, 4)), 3, mirror="x")
+    b.views = [{"id": "side", "label": "Side profile", "yaw": 90, "pitch": 2, "distance": 1.0},
+               {"id": "plan", "label": "Plan", "yaw": 0, "pitch": 89, "distance": 1.0},
+               {"id": "front", "label": "Nose", "yaw": 20, "pitch": 6, "distance": 1.0}]
+
+
+BUILDERS = {"case": build_case, "book": build_book, "object": build_object, "vessel": build_vessel,
+            "vehicle": build_vehicle}
 
 
 def _radius_at(prof, y):

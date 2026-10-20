@@ -23,7 +23,7 @@ python3 TOOLS review scene.json --out out/         # + out/review/*.png contact 
 python3 TOOLS video scene.json --out out/hologram.mp4 --seconds 16
 ```
 
-For a CD, a book, a guitar, a synth, a bottle, a can or a glass there is a **simple path**:
+For a CD, a book, a guitar, a synth, a bottle, a can, a glass or a car there is a **simple path**:
 `python3 TOOLS params --list`, then `params <archetype> --variant <v> --output p.json`, fill
 in the facts (leave sizes at their standard unless the user gave them), and `check`/`review`
 it like a scene; a builder draws it in the house style. Use the full loop below for anything
@@ -93,7 +93,9 @@ if no browser is available, say so and deliver the HTML without captures.
    [art-direction rubric](references/review.md): silhouette, proportions against the
    references, identity features, depth and layering, composition and hero framing, the
    assembly's story, motion, detail density, honesty. Improve the weakest point, `check`,
-   `review` again. Stop when every criterion is good and you would show it as it is, or when
+   `review` again. **Count the rounds in the scene:** before each review, add one to
+   `authoring.review_rounds` and save; `check` warns `tier-rounds` past the tier's cap
+   (quick 0, standard 2, showcase 4), and that is the end of reviewing. Stop when every criterion is good and you would show it as it is, or when
    the tier's review rounds or time run out. A host may add a fresh-eyes critic (an
    independent reviewer over the contact sheets). Geometric validity (the audit) and art
    direction (your eyes) are separate gates. If you cannot see images, still fix every

@@ -293,6 +293,57 @@ def extrude(profile, height, axis="y", ribs=0, caps=True):
     return m
 
 
+def loft_ring(w, y0, y1, wt=None, rnd=0.35, arc=3):
+    """One loft section in the XY plane: a trapezoid (half-width `w` at the bottom `y0`, `wt` at
+    the top `y1`) with rounded corners, counter-clockwise from the bottom centre."""
+    wt = w if wt is None else wt
+    corners = [(w, y0), (wt, y1), (-wt, y1), (-w, y0)]
+    r = max(0.02, min(1.0, rnd)) * min(w, wt, (y1 - y0) / 2)
+    pts = [(0.0, y0)]
+    for i, c in enumerate(corners):
+        prev, nxt = corners[i - 1] if i else (0.0, y0), corners[(i + 1) % 4] if i < 3 else (0.0, y0)
+
+        def toward(q, d=r):
+            dx, dy = q[0] - c[0], q[1] - c[1]
+            n = math.hypot(dx, dy) or 1.0
+            return (c[0] + dx / n * d, c[1] + dy / n * d)
+        a, b = toward(prev), toward(nxt)
+        for k in range(arc):
+            t = k / (arc - 1)
+            pts.append(((1 - t) ** 2 * a[0] + 2 * (1 - t) * t * c[0] + t * t * b[0],
+                        (1 - t) ** 2 * a[1] + 2 * (1 - t) * t * c[1] + t * t * b[1]))
+    pts.append((0.0, y1))
+    # order: bottom centre, bottom-right, top-right, top centre, top-left, bottom-left
+    return pts[:1 + arc * 2] + [pts[-1]] + pts[1 + arc * 2:-1]
+
+
+def loft(sections, rnd=0.35):
+    """A body lofted along +Z through sections [z, half_width, y_bottom, y_top(, half_width_top)]:
+    each section a rounded trapezoid, so the plan (half-widths along the length) and the side
+    profile (bottoms and tops) shape it together. Hulls, car bodies, fuselages, glasshouses."""
+    m = Mesh()
+    rings = [[(x, y, sec[0]) for x, y in loft_ring(sec[1], sec[2], sec[3], sec[4] if len(sec) > 4 else None, rnd)]
+             for sec in sections]
+    n = len(rings[0])
+    for i, ring in enumerate(rings):
+        m.loop(ring, OUTLINE if i in (0, len(rings) - 1) else CONTOUR)
+    key = {0, 2, 5, n // 2, n - 5, n - 2}  # the keel, the four corners and the crown carry the silhouette
+    for k in range(n):
+        m.loop([ring[k] for ring in rings], OUTLINE if k in key else DETAIL, closed=False)
+    for ra, rb in zip(rings, rings[1:]):
+        for k in range(n):
+            j = (k + 1) % n
+            m.quad(ra[k], ra[j], rb[j], rb[k])
+    for ring, flip in ((rings[0], True), (rings[-1], False)):
+        cx = sum(p[0] for p in ring) / n
+        cy = sum(p[1] for p in ring) / n
+        c = (cx, cy, ring[0][2])
+        for k in range(n):
+            a, b = ring[k], ring[(k + 1) % n]
+            m.tris.append((c, b, a) if flip else (c, a, b))
+    return m
+
+
 def _frames(path):
     """Parallel-transport frames along a polyline: (tangent, normal, binormal)."""
     tangents = []
