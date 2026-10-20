@@ -1436,6 +1436,20 @@ class Likeness(unittest.TestCase):
         new, v = critic.record(rec, _critique(rec))
         self.assertEqual(v, "good")  # every score 3, but the silhouette does not match yet
 
+    def test_ornament_is_not_silhouette(self):
+        # seen live: a shadow ring made a car's plan 2.4 m wide
+        car = params.expand(params.template("vehicle", "wedge") | {"facts": [], "synthetic": True})
+        ringed = json.loads(json.dumps(car))
+        n = 40
+        ringed["parts"].append({"id": "ground-shadow", "role": "ornament", "certainty": "decorative", "stage": 0,
+                                "shape": {"type": "curve", "closed": True, "points": [
+                                    [round(1.2 * math.cos(2 * math.pi * k / n), 4), 0.003,
+                                     round(2.0 * math.sin(2 * math.pi * k / n), 4)] for k in range(n)]}})
+        trace = _trace("top", _rect(300, 800))
+        with_ring, _ = compare_mod.compare(ringed, trace, "top")
+        without, _ = compare_mod.compare(car, trace, "top")
+        self.assertEqual((with_ring["iou"], with_ring["edge"]), (without["iou"], without["edge"]))
+
     def test_stations_from_three_views(self):
         side = [(0, 230), (250, 200), (380, 130), (520, 80), (640, 85), (760, 120), (930, 140), (1000, 150),
                 (1000, 250), (980, 285), (500, 285), (0, 285)]

@@ -61,11 +61,20 @@ def project(geometry, yaw, pitch):
 
     def uv(x, y, z):
         return (x * right[0] + y * right[1] + z * right[2], x * up[0] + y * up[1] + z * up[2])
+    styles, parts = geometry["styles"], geometry["parts"]
+
+    def solid(style):
+        """Ornament and decorative parts (a shadow ring, motes) are not the object's silhouette."""
+        p = parts[int(styles[int(style)][6])]
+        return p["role"] != "ornament" and p["certainty"] != "decorative"
     f, fs = geometry["fills"], geometry["fill_stride"]
-    verts = [uv(f[i], f[i + 1], f[i + 2]) for i in range(0, len(f), fs)]
-    tris = [verts[i:i + 3] for i in range(0, len(verts) - 2, 3)]
+    tris = []
+    for i in range(0, len(f) - 3 * fs + 1, 3 * fs):
+        if solid(f[i + 3]):
+            tris.append([uv(f[i + k * fs], f[i + k * fs + 1], f[i + k * fs + 2]) for k in range(3)])
     ln, ls = geometry["lines"], geometry["line_stride"]
-    segs = [(uv(ln[i], ln[i + 1], ln[i + 2]), uv(ln[i + 3], ln[i + 4], ln[i + 5])) for i in range(0, len(ln), ls)]
+    segs = [(uv(ln[i], ln[i + 1], ln[i + 2]), uv(ln[i + 3], ln[i + 4], ln[i + 5])) for i in range(0, len(ln), ls)
+            if solid(ln[i + 6])]
     return tris, segs
 
 
