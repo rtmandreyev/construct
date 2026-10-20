@@ -1458,6 +1458,16 @@ class Likeness(unittest.TestCase):
         res, _ = compare_mod.compare(tyre, _trace("side", disc), "side")
         self.assertGreater(res["iou"], 0.9, res)
 
+    def test_a_plan_drawn_any_way_round_is_found_and_said(self):
+        # seen live: a nose-right plan compared against a nose-up projection scored IoU 0.31, silently
+        car = params.expand(params.template("vehicle", "wedge") | {"facts": [], "synthetic": True})
+        up, _ = compare_mod.compare(car, _trace("top", _rect(300, 800)), "top")
+        across, _ = compare_mod.compare(car, _trace("top", _rect(800, 300)), "top")
+        self.assertAlmostEqual(across["iou"], up["iou"], delta=0.01)
+        self.assertTrue(across["mirrored"].startswith("t"), across["orientation"])  # turned a quarter (a rectangle ties)
+        self.assertTrue(any("drawn across" in w for w in across["warnings"]))
+        self.assertFalse(up["warnings"])
+
     def test_stations_from_three_views(self):
         side = [(0, 230), (250, 200), (380, 130), (520, 80), (640, 85), (760, 120), (930, 140), (1000, 150),
                 (1000, 250), (980, 285), (500, 285), (0, 285)]

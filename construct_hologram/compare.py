@@ -172,9 +172,16 @@ def silhouette(geometry, yaw, pitch, fit="width", fit_px=None):
     return mask
 
 
+ORIENTATIONS = {"": "as drawn", "x": "mirrored left-right", "y": "mirrored top-bottom", "xy": "turned 180 degrees",
+                "t": "mirrored across the anti-diagonal", "tx": "turned 90 degrees clockwise",
+                "ty": "turned 90 degrees counter-clockwise", "txy": "mirrored across the diagonal"}
+
+
 def reference_mask(outline, fit="width", mirror=""):
-    """A traced outline (pixels, y down) filled into the grid, mirrored across "x", "y" or both
-    when asked; returns (mask, fitted pixels)."""
+    """A traced outline (pixels, y down) filled into the grid: transposed ("t", a quarter turn
+    with a mirror) and mirrored across "x", "y" or both when asked; returns (mask, fitted pixels)."""
+    if "t" in mirror:
+        outline = [(y, x) for x, y in outline]
     pts = [(-x if "x" in mirror else x, y if "y" in mirror else -y) for x, y in outline]
     to, fit_px = _frame(pts, fit)
     poly = [to(*p) for p in pts]
@@ -270,9 +277,21 @@ def compare(scene, trace_doc, view="side", fit="width", yaw=None, pitch=None):
                 raise CompareError("unknown view %r: front, side, back, top, three-quarter or one of the scene's views" % view)
             yaw, pitch = v["yaw"], v["pitch"]
     best = None
-    # a photo may face either way, and a plan may have its nose up or down
-    for mirror in (("", "x", "y", "xy") if view == "top" or pitch > 60 else ("", "x")):
-        ref, fit_px = reference_mask([tuple(p) for p in trace_doc["outline"]], fit, mirror)
+    # a photo may face either way, and a plan may have its nose up, down, left or right: a plan
+    # tries every quarter turn and mirror; another view also tries them when the trace's aspect
+    # is across the projection's (a long shape drawn upright), and says so
+    outline = [tuple(p) for p in trace_doc["outline"]]
+    tx, ty = [p[0] for p in outline], [p[1] for p in outline]
+    trace_aspect = (max(tx) - min(tx)) / max(1e-9, max(ty) - min(ty))
+    tris, segs = project(geometry, yaw, pitch)
+    pu = [q[0] for t in tris for q in t] + [q[0] for sg in segs for q in sg]
+    pv = [q[1] for t in tris for q in t] + [q[1] for sg in segs for q in sg]
+    proj_aspect = (max(pu) - min(pu)) / max(1e-9, max(pv) - min(pv)) if pu else 1.0
+    across = (trace_aspect - 1) * (proj_aspect - 1) < 0 and min(abs(math.log(trace_aspect)),
+                                                                abs(math.log(proj_aspect))) > math.log(1.15)
+    plan = view == "top" or pitch > 60
+    for mirror in (tuple(ORIENTATIONS) if plan or across else ("", "x")):
+        ref, fit_px = reference_mask(outline, fit, mirror)
         mine = silhouette(geometry, yaw, pitch, fit, fit_px)
         iou, edge, p95 = measure(mine, ref, fit_px)
         if best is None or iou > best[0]:
@@ -282,6 +301,10 @@ def compare(scene, trace_doc, view="side", fit="width", yaw=None, pitch=None):
     lo_iou, hi_edge = THRESHOLDS[kind]
     result = {"view": view, "yaw": yaw, "pitch": pitch, "fit": fit, "reference": trace_doc["reference"]["id"],
               "iou": round(iou, 4), "edge": round(edge, 4), "edge_p95": round(p95, 4), "mirrored": mirror or None,
+              "orientation": ORIENTATIONS[mirror],
+              "warnings": (["the trace is drawn across this view (aspect %.2f against the construct's %.2f): it was "
+                            "compared %s; draw plans nose-up and sides nose-left to skip the guess" % (
+                                trace_aspect, proj_aspect, ORIENTATIONS[mirror])] if across else []),
               "kind": kind, "threshold": {"iou": lo_iou, "edge": hi_edge},
               "pass": iou >= lo_iou and edge <= hi_edge, "scene_sha256": tiers.critic_hash(scene)}
     return result, overlay(mine, ref)

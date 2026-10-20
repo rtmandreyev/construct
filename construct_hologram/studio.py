@@ -415,8 +415,10 @@ def run(args):
                              "needs <= %.1f%%)%s: %s\n" % (
                                  args.view, result["reference"], result["iou"], result["threshold"]["iou"],
                                  100 * result["edge"], args.fit, 100 * result["threshold"]["edge"],
-                                 ", reference mirrored (%s)" % result["mirrored"] if result["mirrored"] else "",
+                                 ", reference %s" % result["orientation"] if result["mirrored"] else "",
                                  "PASS" if result["pass"] else "not yet"))
+            for w in result["warnings"]:
+                sys.stdout.write("warning: %s\n" % w)
             if args.record:
                 new = compare_mod.record(doc, result, tdoc)
                 Path(args.scene).write_text(json.dumps(new, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
