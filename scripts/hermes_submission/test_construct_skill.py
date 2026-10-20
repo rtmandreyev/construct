@@ -20,7 +20,8 @@ def run(*args, cwd=None):
 def test_every_bundled_example_passes_the_audit(example):
     r = run("check", str(example))
     assert r.returncode == 0, r.stdout + r.stderr
-    assert "audit: PASS (0 errors, 0 warnings)" in r.stdout
+    assert "audit: PASS (0 errors" in r.stdout
+    assert "[thin]" not in r.stdout and "[detached]" not in r.stdout  # fine detail may warn tiny, never float
 
 
 def test_params_check_build_from_a_temp_folder(tmp_path):

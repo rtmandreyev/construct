@@ -2,6 +2,17 @@
 
 ## 0.2.1 (unreleased)
 
+- **Drawing craft** (`references/craft.md`, linked from the authoring recipe and the scene
+  prompt): five rules from the strongest constructs: a line-weight hierarchy, dark depth-writing
+  fills that hide the construction mesh, a sub-volume per feature, density where the identity
+  lives, and a critic round answered by a refine pass, with excerpts of the scripts that drew
+  them.
+- **Six new examples**: a Leica M3, an open-reel tape recorder, a sea cliff at dusk, a Jackson
+  Juggernaut ET7, a Porsche 911 (964) and the Sagrada Família, drawn with that craft. The two
+  older scenes are converted to `construct-scene`; hairlines are role `detail`, closing points
+  repeated in lathe profiles are dropped, a label carrier is seated on its lens, and a
+  comparison record those edits made stale is removed. No reference photos ship.
+
 - **The packaged skill runs critique**: the Claude Code package and the Hermes draft ship the
   two examples the prompts read, and the Hermes draft ships `prompts.py`; `critique`, `author`
   and `prompts` crashed from an install before.

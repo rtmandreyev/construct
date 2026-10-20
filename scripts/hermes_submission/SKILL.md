@@ -76,6 +76,7 @@ Work in a folder of your own. `out/construct.html` opens in any browser.
 | examples to start from | `${HERMES_SKILL_DIR}/assets/examples/` |
 | shapes, fields, roles, motion, labels, anchors | `references/vocabulary.md` |
 | recognition and composition | `references/composition.md` |
+| drawing craft: weights, fills, sub-volumes, refine rounds | `references/craft.md` |
 | assembly, articulations, idle life | `references/animation.md` |
 | certainty, sources, artwork rights | `references/provenance.md` |
 | a car body from traced side, top, front views | `loft-from-traces --side s.json --top t.json --front f.json --length 4.14 --into car.json --part body --drop glasshouse` |
@@ -106,7 +107,10 @@ Work in a folder of your own. `out/construct.html` opens in any browser.
    copy the facts, leave `params` empty unless the user gave sizes. Otherwise start from
    `new <category>` or an example and read `references/composition.md` and
    `references/vocabulary.md`: name the silhouette and the two or three identity features,
-   build masses first, then structure, identity and a little detail.
+   build masses first, then structure, identity and a little detail. Draw with craft
+   (`references/craft.md`): a line-weight hierarchy, dark depth-writing fills that hide the
+   construction mesh, a sub-volume per feature, density where the identity lives, and a critic
+   round answered by a refine pass; the examples in `assets/examples/` show all five.
    When the identity is a shape text cannot give (a guitar body, a car, an elevation) and you
    can see images, trace it from a reference (`references/tracing.md`: the user's photo or a
    web image viewed with `vision_analyze`), then `scripts/cli.py trace` fits it to a verified

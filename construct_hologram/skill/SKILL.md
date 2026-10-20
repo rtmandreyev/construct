@@ -79,7 +79,10 @@ if no browser is available, say so and deliver the HTML without captures.
    for limbs and arms, repeats for colonnades and railings, mirror for symmetry). Give
    every part a role, a certainty and a stage. Text (titles, spines, labels) comes from
    facts through `labels`, images through named artwork slots; never choose colours, the
-   renderer owns them. See [vocabulary](references/vocabulary.md).
+   renderer owns them. See [vocabulary](references/vocabulary.md). **Draw with craft**
+   ([craft](references/craft.md)): a line-weight hierarchy, dark depth-writing fills that
+   hide the construction mesh, a sub-volume per feature, density where the identity lives,
+   and a critic round answered by a refine pass; the shipped examples show all five.
    When the thing's identity is a shape you cannot know from text (a guitar body, a car,
    a building's elevation), measure it from a reference image: see
    [tracing](references/tracing.md). Never invent an outline and call it verified. A named

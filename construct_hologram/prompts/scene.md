@@ -30,6 +30,12 @@ cited drawing, measurement or dataset gives its coordinates; the parts of a fict
 `decorative` is only for atmosphere. The request source is `"rights": "user_private"`
 (`"synthetic"` only for examples and tests).
 
+Draw with craft (the skill's `references/craft.md`): identity lines heavy (`look.weight`
+1.1-1.5), structure 0.8-0.9, detail 0.55-0.65 and faded (`alpha`); give lofts and shells a
+dark fill (`look.fill: "dark"`) and draw only the meaningful lines; a sub-volume per feature,
+each fitted to its neighbours; spend parts where the identity lives; and answer the critic's
+ranked defects, most severe first, in a refine pass.
+
 - Roles: mass, structure, detail, identity, data, ornament, ground, artwork. Two or three `identity` parts are what make it recognisable.
 - Default orientations: cylinders, cones, lathes and tori stand on `at` around the +Y axis
   (a torus lies flat); boxes and spheres are centred on `at`; a plane faces +Z; a tube

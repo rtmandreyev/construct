@@ -1,0 +1,3189 @@
+{
+  "format": "construct-scene",
+  "version": 2,
+  "id": "o3-reel",
+  "title": "Open Reel — a vintage tape transport",
+  "subject": {
+    "category": "machine",
+    "accuracy": "generic",
+    "synthetic": false,
+    "summary": "A generic upright vintage reel-to-reel recorder: two enormous open three-spoke reels, unequal tape packs, a continuous flat tape ribbon threaded past three heads, an engaging pinch roller, twin moving VU needles and deeply stepped chunky knobs. The requested features are user-supplied; dimensions, construction, typography and illustrative motion are inferred design choices, not a particular manufacturer's documented machine. Tape occupies a fixed geometric path while its transport rotates; winding radii stay constant and meter needles are not driven by audio."
+  },
+  "units": "m",
+  "seed": 73,
+  "sources": [
+    {
+      "id": "request",
+      "kind": "user_request",
+      "title": "Public showcase request: vintage reel-to-reel tape recorder",
+      "rights": "user_private",
+      "ref": "A vintage reel-to-reel tape recorder with two large reels that turn, tape running between them past the heads, VU meters and chunky knobs."
+    }
+  ],
+  "facts": [
+    {
+      "key": "subject",
+      "value": "Vintage reel-to-reel tape recorder",
+      "certainty": "user_supplied",
+      "source": "request"
+    },
+    {
+      "key": "reels",
+      "value": "Two large turning reels",
+      "certainty": "user_supplied",
+      "source": "request"
+    },
+    {
+      "key": "tape",
+      "value": "Tape running between the reels past the heads",
+      "certainty": "user_supplied",
+      "source": "request"
+    },
+    {
+      "key": "meters",
+      "value": "VU meters",
+      "certainty": "user_supplied",
+      "source": "request"
+    },
+    {
+      "key": "controls",
+      "value": "Chunky knobs",
+      "certainty": "user_supplied",
+      "source": "request"
+    },
+    {
+      "key": "cabinet.size",
+      "value": "0.640 wide x 0.612 high x 0.224 deep",
+      "unit": "m",
+      "certainty": "inferred",
+      "note": "Chosen showcase proportions for an upright large-reel deck, including feet; not measured dimensions."
+    },
+    {
+      "key": "cabinet.design",
+      "value": "Four feet, thick side cheeks, a recessed front plate, a separate lower console and sparse side ventilation",
+      "certainty": "inferred",
+      "note": "Generic vintage cabinet construction selected for a legible silhouette; no brand or model is implied."
+    },
+    {
+      "key": "reel.geometry",
+      "value": "0.278 m flanges, three broad swept spokes per flange, stepped locking hubs; reel centres 0.310 m apart",
+      "certainty": "inferred",
+      "note": "Designed from the request; front and rear flanges have genuine open windows, not decorative solid discs."
+    },
+    {
+      "key": "tape.geometry",
+      "value": "0.00635 m wide ribbon; supply winding radius 0.102 m, take-up radius 0.075 m",
+      "certainty": "inferred",
+      "note": "A plausible quarter-inch-style tape path and visibly unequal winding packs, chosen rather than measured."
+    },
+    {
+      "key": "head.design",
+      "value": "Erase, record and playback heads with two outside guide rollers and a capstan/pinch pair",
+      "certainty": "inferred",
+      "note": "Generic three-head interpretation. The request specifies heads, not their count or technical arrangement."
+    },
+    {
+      "key": "motion.design",
+      "value": "Illustrative common tape speed 0.08 m/s: supply 7.48964 rpm; take-up 10.18592 rpm; guides 58.76490 rpm; capstan 95.49297 rpm; pinch -47.74648 rpm",
+      "certainty": "inferred",
+      "note": "Computed as 60v/(2*pi*r), not a claimed recording speed. Fixed pack radii for a short loop; the ribbon is a stationary geometric locus, not a simulated moving tape surface. Both reels turn counterclockwise from the front."
+    },
+    {
+      "key": "pinch.design",
+      "value": "The pinch arm turns 18 degrees into operating contact below the capstan",
+      "certainty": "inferred",
+      "note": "Designed mechanism; the one-shot articulation engages the transport. All parts on the arm travel with it."
+    },
+    {
+      "key": "meter.design",
+      "value": "Twin analog arc scales and independently swinging needles",
+      "certainty": "inferred",
+      "note": "The user supplies VU meters, not readings. Needle motion is illustrative and not sound-reactive or measurement data."
+    },
+    {
+      "key": "vu.text",
+      "value": "VU",
+      "certainty": "user_supplied",
+      "source": "request"
+    },
+    {
+      "key": "scale.text",
+      "value": "−20    −10     0    +3",
+      "certainty": "inferred",
+      "note": "Generic face markings, not an authentic or calibrated scale."
+    },
+    {
+      "key": "left.control",
+      "value": "INPUT",
+      "certainty": "inferred",
+      "note": "Designed functional control legend, not a supplied manufacturer's label."
+    },
+    {
+      "key": "right.control",
+      "value": "OUTPUT",
+      "certainty": "inferred",
+      "note": "Designed functional control legend."
+    },
+    {
+      "key": "transport.text",
+      "value": "REW      STOP      PLAY      FWD      REC",
+      "certainty": "inferred",
+      "note": "Designed generic transport legends; no manufacturer typography or artwork."
+    },
+    {
+      "key": "plate.text",
+      "value": "OPEN REEL",
+      "certainty": "decorative",
+      "note": "Invented showcase inscription, not a manufacturer or model name."
+    },
+    {
+      "key": "generic.text",
+      "value": "GENERIC RECONSTRUCTION",
+      "certainty": "decorative",
+      "note": "Disclosure on the lower cabinet lip."
+    }
+  ],
+  "assets": [],
+  "parts": [
+    {
+      "id": "feet",
+      "label": "Four grounded feet",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 0,
+      "basis": [
+        "cabinet.size",
+        "cabinet.design"
+      ],
+      "shape": {
+        "type": "box",
+        "size": [
+          0.065,
+          0.032,
+          0.053
+        ]
+      },
+      "at": [
+        -0.225,
+        0.016,
+        -0.074
+      ],
+      "repeat": {
+        "count": 2,
+        "step": {
+          "at": [
+            0,
+            0,
+            0.148
+          ]
+        }
+      },
+      "mirror": "x"
+    },
+    {
+      "id": "carcass",
+      "label": "Deep rectangular cabinet",
+      "role": "mass",
+      "certainty": "inferred",
+      "stage": 1,
+      "basis": [
+        "cabinet.size",
+        "cabinet.design"
+      ],
+      "shape": {
+        "type": "box",
+        "size": [
+          0.59,
+          0.56,
+          0.2
+        ]
+      },
+      "at": [
+        0,
+        0.312,
+        -0.01
+      ]
+    },
+    {
+      "id": "side-cheeks",
+      "label": "Thick raised side cheeks",
+      "role": "mass",
+      "certainty": "inferred",
+      "stage": 1,
+      "basis": [
+        "cabinet.size",
+        "cabinet.design"
+      ],
+      "shape": {
+        "type": "box",
+        "size": [
+          0.025,
+          0.58,
+          0.224
+        ]
+      },
+      "at": [
+        -0.3075,
+        0.322,
+        -0.006
+      ],
+      "mirror": "x"
+    },
+    {
+      "id": "top-bridge",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 1,
+      "basis": [
+        "cabinet.design"
+      ],
+      "shape": {
+        "type": "box",
+        "size": [
+          0.59,
+          0.02,
+          0.22
+        ]
+      },
+      "at": [
+        0,
+        0.602,
+        -0.006
+      ]
+    },
+    {
+      "id": "bottom-bridge",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 1,
+      "basis": [
+        "cabinet.design"
+      ],
+      "shape": {
+        "type": "box",
+        "size": [
+          0.59,
+          0.023,
+          0.22
+        ]
+      },
+      "at": [
+        0,
+        0.0435,
+        -0.006
+      ]
+    },
+    {
+      "id": "front-plate",
+      "label": "Recessed transport deck",
+      "role": "mass",
+      "certainty": "inferred",
+      "stage": 2,
+      "basis": [
+        "cabinet.size",
+        "cabinet.design"
+      ],
+      "shape": {
+        "type": "box",
+        "size": [
+          0.584,
+          0.542,
+          0.012
+        ]
+      },
+      "at": [
+        0,
+        0.321,
+        0.096
+      ]
+    },
+    {
+      "id": "lower-console",
+      "label": "Separate meter and control console",
+      "role": "mass",
+      "certainty": "inferred",
+      "stage": 2,
+      "basis": [
+        "cabinet.design",
+        "meters",
+        "controls"
+      ],
+      "shape": {
+        "type": "box",
+        "size": [
+          0.574,
+          0.185,
+          0.02
+        ]
+      },
+      "at": [
+        0,
+        0.1445,
+        0.108
+      ]
+    },
+    {
+      "id": "console-top-seam",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 2,
+      "basis": [
+        "cabinet.design"
+      ],
+      "shape": {
+        "type": "box",
+        "size": [
+          0.574,
+          0.006,
+          0.025
+        ]
+      },
+      "at": [
+        0,
+        0.237,
+        0.109
+      ]
+    },
+    {
+      "id": "reel-motor-seats",
+      "label": "Twin reel motor mounting bosses",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 3,
+      "basis": [
+        "reels",
+        "reel.geometry"
+      ],
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.052,
+            0
+          ],
+          [
+            0.052,
+            0.005
+          ],
+          [
+            0.04,
+            0.011
+          ],
+          [
+            0.033,
+            0.014
+          ]
+        ],
+        "segments": 40,
+        "meridians": 6
+      },
+      "at": [
+        -0.155,
+        0.452,
+        0.102
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "mirror": "x"
+    },
+    {
+      "id": "reel-spindles",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 3,
+      "basis": [
+        "reel.geometry"
+      ],
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.012,
+        "height": 0.066,
+        "segments": 24,
+        "ribs": 4
+      },
+      "at": [
+        -0.155,
+        0.452,
+        0.113
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "mirror": "x"
+    },
+    {
+      "id": "supply-rear-rim",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 4,
+      "basis": [
+        "reel.geometry",
+        "motion.design"
+      ],
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.131,
+            0
+          ],
+          [
+            0.139,
+            0
+          ],
+          [
+            0.139,
+            0.004
+          ],
+          [
+            0.131,
+            0.004
+          ]
+        ],
+        "segments": 64,
+        "meridians": 3
+      },
+      "at": [
+        -0.155,
+        0.452,
+        0.123
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "motion": {
+        "type": "spin",
+        "axis": [
+          0,
+          0,
+          1
+        ],
+        "pivot": [
+          -0.155,
+          0.452,
+          0.145
+        ],
+        "rpm": 7.48964
+      }
+    },
+    {
+      "id": "takeup-rear-rim",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 4,
+      "basis": [
+        "reel.geometry",
+        "motion.design"
+      ],
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.131,
+            0
+          ],
+          [
+            0.139,
+            0
+          ],
+          [
+            0.139,
+            0.004
+          ],
+          [
+            0.131,
+            0.004
+          ]
+        ],
+        "segments": 64,
+        "meridians": 3
+      },
+      "at": [
+        0.155,
+        0.452,
+        0.123
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "motion": {
+        "type": "spin",
+        "axis": [
+          0,
+          0,
+          1
+        ],
+        "pivot": [
+          0.155,
+          0.452,
+          0.145
+        ],
+        "rpm": 10.18592
+      }
+    },
+    {
+      "id": "supply-rear-spokes",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 4,
+      "basis": [
+        "reel.geometry",
+        "motion.design"
+      ],
+      "shape": {
+        "type": "extrude",
+        "axis": "z",
+        "height": 0.004,
+        "profile": [
+          [
+            0.025,
+            -0.011
+          ],
+          [
+            0.124,
+            -0.024
+          ],
+          [
+            0.136,
+            -0.014
+          ],
+          [
+            0.136,
+            0.014
+          ],
+          [
+            0.115,
+            0.023
+          ],
+          [
+            0.025,
+            0.011
+          ]
+        ]
+      },
+      "at": [
+        -0.155,
+        0.452,
+        0.123
+      ],
+      "repeat": {
+        "count": 3,
+        "radial": {
+          "axis": "z",
+          "center": [
+            -0.155,
+            0.452,
+            0.123
+          ]
+        }
+      },
+      "motion": {
+        "type": "spin",
+        "axis": [
+          0,
+          0,
+          1
+        ],
+        "pivot": [
+          -0.155,
+          0.452,
+          0.145
+        ],
+        "rpm": 7.48964
+      }
+    },
+    {
+      "id": "takeup-rear-spokes",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 4,
+      "basis": [
+        "reel.geometry",
+        "motion.design"
+      ],
+      "shape": {
+        "type": "extrude",
+        "axis": "z",
+        "height": 0.004,
+        "profile": [
+          [
+            0.025,
+            -0.011
+          ],
+          [
+            0.124,
+            -0.024
+          ],
+          [
+            0.136,
+            -0.014
+          ],
+          [
+            0.136,
+            0.014
+          ],
+          [
+            0.115,
+            0.023
+          ],
+          [
+            0.025,
+            0.011
+          ]
+        ]
+      },
+      "at": [
+        0.155,
+        0.452,
+        0.123
+      ],
+      "rotate": [
+        0,
+        0,
+        24
+      ],
+      "repeat": {
+        "count": 3,
+        "radial": {
+          "axis": "z",
+          "center": [
+            0.155,
+            0.452,
+            0.123
+          ]
+        }
+      },
+      "motion": {
+        "type": "spin",
+        "axis": [
+          0,
+          0,
+          1
+        ],
+        "pivot": [
+          0.155,
+          0.452,
+          0.145
+        ],
+        "rpm": 10.18592
+      }
+    },
+    {
+      "id": "supply-pack",
+      "label": "Larger supply tape winding",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 4,
+      "basis": [
+        "tape.geometry",
+        "motion.design"
+      ],
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.034,
+            0
+          ],
+          [
+            0.102,
+            0
+          ],
+          [
+            0.102,
+            0.014
+          ],
+          [
+            0.034,
+            0.014
+          ]
+        ],
+        "segments": 64,
+        "meridians": 4
+      },
+      "at": [
+        -0.155,
+        0.452,
+        0.132
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "motion": {
+        "type": "spin",
+        "axis": [
+          0,
+          0,
+          1
+        ],
+        "pivot": [
+          -0.155,
+          0.452,
+          0.145
+        ],
+        "rpm": 7.48964
+      }
+    },
+    {
+      "id": "takeup-pack",
+      "label": "Smaller take-up tape winding",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 4,
+      "basis": [
+        "tape.geometry",
+        "motion.design"
+      ],
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.034,
+            0
+          ],
+          [
+            0.075,
+            0
+          ],
+          [
+            0.075,
+            0.014
+          ],
+          [
+            0.034,
+            0.014
+          ]
+        ],
+        "segments": 64,
+        "meridians": 4
+      },
+      "at": [
+        0.155,
+        0.452,
+        0.132
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "motion": {
+        "type": "spin",
+        "axis": [
+          0,
+          0,
+          1
+        ],
+        "pivot": [
+          0.155,
+          0.452,
+          0.145
+        ],
+        "rpm": 10.18592
+      }
+    },
+    {
+      "id": "supply-rim",
+      "label": "Large open supply reel",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 4,
+      "basis": [
+        "reels",
+        "reel.geometry",
+        "motion.design"
+      ],
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.131,
+            0
+          ],
+          [
+            0.139,
+            0
+          ],
+          [
+            0.139,
+            0.004
+          ],
+          [
+            0.131,
+            0.004
+          ]
+        ],
+        "segments": 64,
+        "meridians": 3
+      },
+      "at": [
+        -0.155,
+        0.452,
+        0.161
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "motion": {
+        "type": "spin",
+        "axis": [
+          0,
+          0,
+          1
+        ],
+        "pivot": [
+          -0.155,
+          0.452,
+          0.145
+        ],
+        "rpm": 7.48964
+      }
+    },
+    {
+      "id": "takeup-rim",
+      "label": "Large open take-up reel",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 4,
+      "basis": [
+        "reels",
+        "reel.geometry",
+        "motion.design"
+      ],
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.131,
+            0
+          ],
+          [
+            0.139,
+            0
+          ],
+          [
+            0.139,
+            0.004
+          ],
+          [
+            0.131,
+            0.004
+          ]
+        ],
+        "segments": 64,
+        "meridians": 3
+      },
+      "at": [
+        0.155,
+        0.452,
+        0.161
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "motion": {
+        "type": "spin",
+        "axis": [
+          0,
+          0,
+          1
+        ],
+        "pivot": [
+          0.155,
+          0.452,
+          0.145
+        ],
+        "rpm": 10.18592
+      }
+    },
+    {
+      "id": "supply-spokes",
+      "label": "Three swept supply spokes",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 4,
+      "basis": [
+        "reel.geometry",
+        "motion.design"
+      ],
+      "shape": {
+        "type": "extrude",
+        "axis": "z",
+        "height": 0.004,
+        "profile": [
+          [
+            0.025,
+            -0.011
+          ],
+          [
+            0.124,
+            -0.024
+          ],
+          [
+            0.136,
+            -0.014
+          ],
+          [
+            0.136,
+            0.014
+          ],
+          [
+            0.115,
+            0.023
+          ],
+          [
+            0.025,
+            0.011
+          ]
+        ]
+      },
+      "at": [
+        -0.155,
+        0.452,
+        0.161
+      ],
+      "repeat": {
+        "count": 3,
+        "radial": {
+          "axis": "z",
+          "center": [
+            -0.155,
+            0.452,
+            0.161
+          ]
+        }
+      },
+      "motion": {
+        "type": "spin",
+        "axis": [
+          0,
+          0,
+          1
+        ],
+        "pivot": [
+          -0.155,
+          0.452,
+          0.145
+        ],
+        "rpm": 7.48964
+      }
+    },
+    {
+      "id": "takeup-spokes",
+      "label": "Three swept take-up spokes",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 4,
+      "basis": [
+        "reel.geometry",
+        "motion.design"
+      ],
+      "shape": {
+        "type": "extrude",
+        "axis": "z",
+        "height": 0.004,
+        "profile": [
+          [
+            0.025,
+            -0.011
+          ],
+          [
+            0.124,
+            -0.024
+          ],
+          [
+            0.136,
+            -0.014
+          ],
+          [
+            0.136,
+            0.014
+          ],
+          [
+            0.115,
+            0.023
+          ],
+          [
+            0.025,
+            0.011
+          ]
+        ]
+      },
+      "at": [
+        0.155,
+        0.452,
+        0.161
+      ],
+      "rotate": [
+        0,
+        0,
+        24
+      ],
+      "repeat": {
+        "count": 3,
+        "radial": {
+          "axis": "z",
+          "center": [
+            0.155,
+            0.452,
+            0.161
+          ]
+        }
+      },
+      "motion": {
+        "type": "spin",
+        "axis": [
+          0,
+          0,
+          1
+        ],
+        "pivot": [
+          0.155,
+          0.452,
+          0.145
+        ],
+        "rpm": 10.18592
+      }
+    },
+    {
+      "id": "supply-hub",
+      "label": "Stepped supply reel locking hub",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 4,
+      "basis": [
+        "reel.geometry",
+        "motion.design"
+      ],
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.031,
+            0
+          ],
+          [
+            0.034,
+            0.003
+          ],
+          [
+            0.034,
+            0.039
+          ],
+          [
+            0.027,
+            0.042
+          ],
+          [
+            0.027,
+            0.051
+          ],
+          [
+            0.017,
+            0.054
+          ],
+          [
+            0.017,
+            0.058
+          ]
+        ],
+        "segments": 32,
+        "meridians": 6
+      },
+      "at": [
+        -0.155,
+        0.452,
+        0.125
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "motion": {
+        "type": "spin",
+        "axis": [
+          0,
+          0,
+          1
+        ],
+        "pivot": [
+          -0.155,
+          0.452,
+          0.145
+        ],
+        "rpm": 7.48964
+      }
+    },
+    {
+      "id": "takeup-hub",
+      "label": "Stepped take-up reel locking hub",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 4,
+      "basis": [
+        "reel.geometry",
+        "motion.design"
+      ],
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.031,
+            0
+          ],
+          [
+            0.034,
+            0.003
+          ],
+          [
+            0.034,
+            0.039
+          ],
+          [
+            0.027,
+            0.042
+          ],
+          [
+            0.027,
+            0.051
+          ],
+          [
+            0.017,
+            0.054
+          ],
+          [
+            0.017,
+            0.058
+          ]
+        ],
+        "segments": 32,
+        "meridians": 6
+      },
+      "at": [
+        0.155,
+        0.452,
+        0.125
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "motion": {
+        "type": "spin",
+        "axis": [
+          0,
+          0,
+          1
+        ],
+        "pivot": [
+          0.155,
+          0.452,
+          0.145
+        ],
+        "rpm": 10.18592
+      }
+    },
+    {
+      "id": "head-bridge",
+      "label": "Head and transport mounting bridge",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 3,
+      "basis": [
+        "head.design"
+      ],
+      "shape": {
+        "type": "extrude",
+        "axis": "z",
+        "height": 0.013,
+        "profile": [
+          [
+            -0.143,
+            0.242
+          ],
+          [
+            0.18,
+            0.242
+          ],
+          [
+            0.18,
+            0.281
+          ],
+          [
+            0.153,
+            0.295
+          ],
+          [
+            -0.124,
+            0.295
+          ],
+          [
+            -0.143,
+            0.281
+          ]
+        ]
+      },
+      "at": [
+        0,
+        0,
+        0.103
+      ]
+    },
+    {
+      "id": "erase-head",
+      "label": "Inferred erase head",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 4,
+      "basis": [
+        "tape",
+        "head.design"
+      ],
+      "shape": {
+        "type": "box",
+        "size": [
+          0.028,
+          0.029,
+          0.031
+        ]
+      },
+      "at": [
+        -0.086,
+        0.268,
+        0.1305
+      ]
+    },
+    {
+      "id": "record-play-heads",
+      "label": "Inferred record and playback shoes",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 4,
+      "basis": [
+        "tape",
+        "head.design"
+      ],
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.016,
+            0
+          ],
+          [
+            0.016,
+            0.02
+          ],
+          [
+            0.015,
+            0.027
+          ],
+          [
+            0.01,
+            0.031
+          ]
+        ],
+        "segments": 24,
+        "meridians": 4
+      },
+      "at": [
+        -0.026,
+        0.268,
+        0.116
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "repeat": {
+        "count": 2,
+        "step": {
+          "at": [
+            0.067,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": "head-gap-marks",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "basis": [
+        "head.design"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0,
+            -0.013,
+            0
+          ],
+          [
+            0,
+            0.013,
+            0
+          ]
+        ]
+      },
+      "at": [
+        -0.026,
+        0.268,
+        0.148
+      ],
+      "repeat": {
+        "count": 2,
+        "step": {
+          "at": [
+            0.067,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": "guide-shafts",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 3,
+      "basis": [
+        "head.design"
+      ],
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.007,
+        "height": 0.046,
+        "segments": 16,
+        "ribs": 3
+      },
+      "at": [
+        -0.237,
+        0.294,
+        0.102
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "mirror": "x"
+    },
+    {
+      "id": "guide-rollers",
+      "label": "Tape guides turning with the ribbon",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 4,
+      "basis": [
+        "head.design",
+        "motion.design"
+      ],
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.016,
+            0
+          ],
+          [
+            0.016,
+            0.003
+          ],
+          [
+            0.013,
+            0.005
+          ],
+          [
+            0.013,
+            0.015
+          ],
+          [
+            0.016,
+            0.017
+          ],
+          [
+            0.016,
+            0.02
+          ]
+        ],
+        "segments": 24,
+        "meridians": 4
+      },
+      "at": [
+        -0.237,
+        0.294,
+        0.128
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "repeat": {
+        "count": 2,
+        "step": {
+          "at": [
+            0.474,
+            0,
+            0
+          ]
+        }
+      },
+      "motion": {
+        "type": "spin",
+        "axis": [
+          0,
+          0,
+          1
+        ],
+        "pivot": [
+          -0.237,
+          0.294,
+          0.138
+        ],
+        "rpm": 58.7649
+      }
+    },
+    {
+      "id": "guide-face-witnesses",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "basis": [
+        "head.design",
+        "motion.design"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.011,
+            0,
+            0
+          ],
+          [
+            0.011,
+            0,
+            0
+          ]
+        ]
+      },
+      "at": [
+        -0.237,
+        0.294,
+        0.149
+      ],
+      "repeat": {
+        "count": 2,
+        "step": {
+          "at": [
+            0.474,
+            0,
+            0
+          ]
+        }
+      },
+      "motion": {
+        "type": "spin",
+        "axis": [
+          0,
+          0,
+          1
+        ],
+        "pivot": [
+          -0.237,
+          0.294,
+          0.138
+        ],
+        "rpm": 58.7649
+      }
+    },
+    {
+      "id": "capstan-seat",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 3,
+      "basis": [
+        "head.design"
+      ],
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.017,
+        "height": 0.015,
+        "segments": 24,
+        "ribs": 4
+      },
+      "at": [
+        0.112,
+        0.263,
+        0.111
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "capstan",
+      "label": "Driven capstan",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 4,
+      "basis": [
+        "head.design",
+        "motion.design"
+      ],
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.008,
+        "height": 0.027,
+        "segments": 24,
+        "ribs": 3
+      },
+      "at": [
+        0.112,
+        0.263,
+        0.123
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "motion": {
+        "type": "spin",
+        "axis": [
+          0,
+          0,
+          1
+        ],
+        "pivot": [
+          0.112,
+          0.263,
+          0.138
+        ],
+        "rpm": 95.49297
+      }
+    },
+    {
+      "id": "capstan-witness",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "basis": [
+        "head.design",
+        "motion.design"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.007,
+            0,
+            0
+          ],
+          [
+            0.007,
+            0,
+            0
+          ],
+          [
+            0,
+            0.007,
+            0
+          ]
+        ]
+      },
+      "at": [
+        0.112,
+        0.263,
+        0.151
+      ],
+      "motion": {
+        "type": "spin",
+        "axis": [
+          0,
+          0,
+          1
+        ],
+        "pivot": [
+          0.112,
+          0.263,
+          0.138
+        ],
+        "rpm": 95.49297
+      }
+    },
+    {
+      "id": "pinch-pivot-seat",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 3,
+      "basis": [
+        "pinch.design"
+      ],
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.009,
+        "height": 0.02,
+        "segments": 20,
+        "ribs": 4
+      },
+      "at": [
+        0.16,
+        0.275,
+        0.11
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "pinch-arm",
+      "label": "Swinging pinch roller carrier",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 4,
+      "basis": [
+        "pinch.design"
+      ],
+      "shape": {
+        "type": "extrude",
+        "axis": "z",
+        "height": 0.006,
+        "profile": [
+          [
+            -0.003,
+            0.006
+          ],
+          [
+            0.006,
+            -0.003
+          ],
+          [
+            -0.042,
+            -0.043
+          ],
+          [
+            -0.055,
+            -0.034
+          ]
+        ]
+      },
+      "at": [
+        0.16,
+        0.275,
+        0.126
+      ],
+      "rotate": [
+        0,
+        0,
+        18
+      ]
+    },
+    {
+      "id": "pinch-roller",
+      "label": "Pinch roller, operating contact below capstan",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 4,
+      "basis": [
+        "head.design",
+        "pinch.design",
+        "motion.design"
+      ],
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.01,
+            0
+          ],
+          [
+            0.016,
+            0.002
+          ],
+          [
+            0.016,
+            0.014
+          ],
+          [
+            0.011,
+            0.017
+          ]
+        ],
+        "segments": 28,
+        "meridians": 5
+      },
+      "at": [
+        0.1254739,
+        0.22592915,
+        0.132
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "motion": {
+        "type": "spin",
+        "axis": [
+          0,
+          0,
+          1
+        ],
+        "pivot": [
+          0.1254739,
+          0.22592915,
+          0.14
+        ],
+        "rpm": -47.74648
+      }
+    },
+    {
+      "id": "pinch-face-witness",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "basis": [
+        "pinch.design",
+        "motion.design"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.011,
+            0,
+            0
+          ],
+          [
+            0.011,
+            0,
+            0
+          ]
+        ]
+      },
+      "at": [
+        0.1254739,
+        0.22592915,
+        0.15
+      ],
+      "motion": {
+        "type": "spin",
+        "axis": [
+          0,
+          0,
+          1
+        ],
+        "pivot": [
+          0.1254739,
+          0.22592915,
+          0.14
+        ],
+        "rpm": -47.74648
+      }
+    },
+    {
+      "id": "tape-ribbon",
+      "label": "Continuous flat tape: supply, guides, heads, nip, take-up",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 5,
+      "basis": [
+        "tape",
+        "tape.geometry",
+        "head.design",
+        "motion.design"
+      ],
+      "note": "A continuous thin extruded ribbon, 6.35 mm wide along Z. Its path is stationary geometry; the rotating transport implies longitudinal feed. Front reel spokes remain ahead of the tape plane.",
+      "shape": {
+        "type": "extrude",
+        "axis": "z",
+        "height": 0.00635,
+        "profile": [
+          [
+            -0.25672,
+            0.43863
+          ],
+          [
+            -0.2506,
+            0.311
+          ],
+          [
+            -0.2506,
+            0.294
+          ],
+          [
+            -0.24878,
+            0.2872
+          ],
+          [
+            -0.2438,
+            0.28222
+          ],
+          [
+            -0.2372,
+            0.2804
+          ],
+          [
+            -0.21025,
+            0.26745
+          ],
+          [
+            -0.1852,
+            0.25643
+          ],
+          [
+            -0.16505,
+            0.2524
+          ],
+          [
+            -0.1,
+            0.2524
+          ],
+          [
+            -0.03,
+            0.2524
+          ],
+          [
+            0.045,
+            0.2524
+          ],
+          [
+            0.09,
+            0.2534
+          ],
+          [
+            0.112,
+            0.2544
+          ],
+          [
+            0.1701,
+            0.2544
+          ],
+          [
+            0.20825,
+            0.27145
+          ],
+          [
+            0.2372,
+            0.2804
+          ],
+          [
+            0.2438,
+            0.28222
+          ],
+          [
+            0.24878,
+            0.2872
+          ],
+          [
+            0.2506,
+            0.294
+          ],
+          [
+            0.23053,
+            0.45528
+          ],
+          [
+            0.22933,
+            0.45528
+          ],
+          [
+            0.2494,
+            0.294
+          ],
+          [
+            0.24774,
+            0.2878
+          ],
+          [
+            0.2432,
+            0.28326
+          ],
+          [
+            0.2368,
+            0.2816
+          ],
+          [
+            0.20775,
+            0.27255
+          ],
+          [
+            0.1699,
+            0.2556
+          ],
+          [
+            0.112,
+            0.2556
+          ],
+          [
+            0.09,
+            0.2546
+          ],
+          [
+            0.045,
+            0.2536
+          ],
+          [
+            -0.03,
+            0.2536
+          ],
+          [
+            -0.1,
+            0.2536
+          ],
+          [
+            -0.16495,
+            0.2536
+          ],
+          [
+            -0.1848,
+            0.25757
+          ],
+          [
+            -0.20975,
+            0.26855
+          ],
+          [
+            -0.2368,
+            0.2816
+          ],
+          [
+            -0.2432,
+            0.28326
+          ],
+          [
+            -0.24774,
+            0.2878
+          ],
+          [
+            -0.2494,
+            0.294
+          ],
+          [
+            -0.2494,
+            0.311
+          ],
+          [
+            -0.25552,
+            0.43863
+          ]
+        ]
+      },
+      "at": [
+        0,
+        0,
+        0.137
+      ]
+    },
+    {
+      "id": "meter-housings",
+      "label": "Twin rectangular analog VU meter bezels",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 3,
+      "basis": [
+        "meters",
+        "meter.design"
+      ],
+      "shape": {
+        "type": "box",
+        "size": [
+          0.126,
+          0.076,
+          0.015
+        ]
+      },
+      "at": [
+        -0.075,
+        0.178,
+        0.1195
+      ],
+      "repeat": {
+        "count": 2,
+        "step": {
+          "at": [
+            0.15,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": "meter-faces",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 4,
+      "basis": [
+        "meter.design"
+      ],
+      "shape": {
+        "type": "plane",
+        "size": [
+          0.112,
+          0.063
+        ]
+      },
+      "at": [
+        -0.075,
+        0.178,
+        0.128
+      ],
+      "repeat": {
+        "count": 2,
+        "step": {
+          "at": [
+            0.15,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": "meter-arcs",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "basis": [
+        "meter.design"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.03721,
+            0.02704,
+            0
+          ],
+          [
+            0.03078,
+            0.03418,
+            0
+          ],
+          [
+            0.023,
+            0.03984,
+            0
+          ],
+          [
+            0.01421,
+            0.04375,
+            0
+          ],
+          [
+            0.00481,
+            0.04575,
+            0
+          ],
+          [
+            -0.00481,
+            0.04575,
+            0
+          ],
+          [
+            -0.01421,
+            0.04375,
+            0
+          ],
+          [
+            -0.023,
+            0.03984,
+            0
+          ],
+          [
+            -0.03078,
+            0.03418,
+            0
+          ],
+          [
+            -0.03721,
+            0.02704,
+            0
+          ]
+        ],
+        "smooth": true
+      },
+      "at": [
+        -0.075,
+        0.151,
+        0.13
+      ],
+      "repeat": {
+        "count": 2,
+        "step": {
+          "at": [
+            0.15,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": "left-meter-ticks",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "basis": [
+        "meter.design"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.026,
+            0.019,
+            0
+          ],
+          [
+            0.041,
+            0.03,
+            0
+          ]
+        ]
+      },
+      "at": [
+        -0.075,
+        0.151,
+        0.131
+      ],
+      "repeat": {
+        "count": 9,
+        "radial": {
+          "axis": "z",
+          "center": [
+            -0.075,
+            0.151,
+            0.131
+          ],
+          "span": 108
+        }
+      }
+    },
+    {
+      "id": "right-meter-ticks",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "basis": [
+        "meter.design"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.026,
+            0.019,
+            0
+          ],
+          [
+            0.041,
+            0.03,
+            0
+          ]
+        ]
+      },
+      "at": [
+        0.075,
+        0.151,
+        0.131
+      ],
+      "repeat": {
+        "count": 9,
+        "radial": {
+          "axis": "z",
+          "center": [
+            0.075,
+            0.151,
+            0.131
+          ],
+          "span": 108
+        }
+      }
+    },
+    {
+      "id": "left-vu-needle",
+      "label": "Illustrative left-channel needle",
+      "role": "data",
+      "certainty": "inferred",
+      "stage": 6,
+      "basis": [
+        "meter.design"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0,
+            -0.007,
+            0
+          ],
+          [
+            -0.004,
+            0.012,
+            0
+          ],
+          [
+            -0.013,
+            0.041,
+            0
+          ]
+        ]
+      },
+      "at": [
+        -0.075,
+        0.151,
+        0.134
+      ],
+      "motion": {
+        "type": "swing",
+        "axis": [
+          0,
+          0,
+          1
+        ],
+        "pivot": [
+          -0.075,
+          0.151,
+          0.134
+        ],
+        "degrees": 18,
+        "period": 2.8,
+        "phase": 0.13
+      }
+    },
+    {
+      "id": "right-vu-needle",
+      "label": "Illustrative right-channel needle",
+      "role": "data",
+      "certainty": "inferred",
+      "stage": 6,
+      "basis": [
+        "meter.design"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0,
+            -0.007,
+            0
+          ],
+          [
+            0.002,
+            0.013,
+            0
+          ],
+          [
+            0.007,
+            0.043,
+            0
+          ]
+        ]
+      },
+      "at": [
+        0.075,
+        0.151,
+        0.134
+      ],
+      "motion": {
+        "type": "swing",
+        "axis": [
+          0,
+          0,
+          1
+        ],
+        "pivot": [
+          0.075,
+          0.151,
+          0.134
+        ],
+        "degrees": 15,
+        "period": 3.7,
+        "phase": 0.38
+      }
+    },
+    {
+      "id": "needle-pivot-caps",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 6,
+      "basis": [
+        "meter.design"
+      ],
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.008,
+        "height": 0.005,
+        "segments": 16,
+        "ribs": 2
+      },
+      "at": [
+        -0.075,
+        0.151,
+        0.129
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "repeat": {
+        "count": 2,
+        "step": {
+          "at": [
+            0.15,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": "left-vu-type",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "basis": [
+        "meter.design"
+      ],
+      "shape": {
+        "type": "plane",
+        "size": [
+          0.108,
+          0.062
+        ]
+      },
+      "at": [
+        -0.075,
+        0.178,
+        0.132
+      ],
+      "look": {
+        "line": "none",
+        "fill": "none"
+      }
+    },
+    {
+      "id": "right-vu-type",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "basis": [
+        "meter.design"
+      ],
+      "shape": {
+        "type": "plane",
+        "size": [
+          0.108,
+          0.062
+        ]
+      },
+      "at": [
+        0.075,
+        0.178,
+        0.132
+      ],
+      "look": {
+        "line": "none",
+        "fill": "none"
+      }
+    },
+    {
+      "id": "large-knob-collars",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 3,
+      "basis": [
+        "controls"
+      ],
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.039,
+            0
+          ],
+          [
+            0.039,
+            0.005
+          ],
+          [
+            0.035,
+            0.008
+          ]
+        ],
+        "segments": 40,
+        "meridians": 4
+      },
+      "at": [
+        -0.226,
+        0.175,
+        0.118
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "mirror": "x"
+    },
+    {
+      "id": "large-knobs",
+      "label": "Chunky stepped control knobs",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 4,
+      "basis": [
+        "controls"
+      ],
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.03,
+            0
+          ],
+          [
+            0.036,
+            0.003
+          ],
+          [
+            0.036,
+            0.009
+          ],
+          [
+            0.031,
+            0.012
+          ],
+          [
+            0.031,
+            0.036
+          ],
+          [
+            0.026,
+            0.041
+          ]
+        ],
+        "segments": 40,
+        "meridians": 12
+      },
+      "at": [
+        -0.226,
+        0.175,
+        0.124
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "mirror": "x"
+    },
+    {
+      "id": "knob-indexes",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "basis": [
+        "controls"
+      ],
+      "shape": {
+        "type": "box",
+        "size": [
+          0.004,
+          0.021,
+          0.002
+        ]
+      },
+      "at": [
+        -0.226,
+        0.189,
+        0.166
+      ],
+      "mirror": "x"
+    },
+    {
+      "id": "selector-knob",
+      "label": "Smaller central selector",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 4,
+      "basis": [
+        "controls"
+      ],
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.021,
+            0
+          ],
+          [
+            0.021,
+            0.006
+          ],
+          [
+            0.018,
+            0.009
+          ],
+          [
+            0.018,
+            0.023
+          ],
+          [
+            0.014,
+            0.026
+          ]
+        ],
+        "segments": 28,
+        "meridians": 6
+      },
+      "at": [
+        0,
+        0.11,
+        0.118
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "left-control-legend",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "basis": [
+        "left.control"
+      ],
+      "shape": {
+        "type": "plane",
+        "size": [
+          0.087,
+          0.018
+        ]
+      },
+      "at": [
+        -0.226,
+        0.125,
+        0.119
+      ],
+      "look": {
+        "line": "none",
+        "fill": "none"
+      }
+    },
+    {
+      "id": "right-control-legend",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "basis": [
+        "right.control"
+      ],
+      "shape": {
+        "type": "plane",
+        "size": [
+          0.087,
+          0.018
+        ]
+      },
+      "at": [
+        0.226,
+        0.125,
+        0.119
+      ],
+      "look": {
+        "line": "none",
+        "fill": "none"
+      }
+    },
+    {
+      "id": "transport-tray",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 3,
+      "basis": [
+        "cabinet.design",
+        "transport.text"
+      ],
+      "shape": {
+        "type": "box",
+        "size": [
+          0.276,
+          0.047,
+          0.009
+        ]
+      },
+      "at": [
+        0,
+        0.0755,
+        0.121
+      ]
+    },
+    {
+      "id": "transport-keys",
+      "label": "Five deep mechanical transport keys",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 6,
+      "basis": [
+        "transport.text"
+      ],
+      "shape": {
+        "type": "extrude",
+        "axis": "x",
+        "height": 0.038,
+        "profile": [
+          [
+            0,
+            -0.011
+          ],
+          [
+            0.018,
+            -0.011
+          ],
+          [
+            0.023,
+            0.005
+          ],
+          [
+            0.018,
+            0.011
+          ],
+          [
+            0,
+            0.011
+          ]
+        ]
+      },
+      "at": [
+        -0.125,
+        0.073,
+        0.123
+      ],
+      "repeat": {
+        "count": 5,
+        "step": {
+          "at": [
+            0.053,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": "transport-legend",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 6,
+      "basis": [
+        "transport.text"
+      ],
+      "shape": {
+        "type": "plane",
+        "size": [
+          0.267,
+          0.015
+        ]
+      },
+      "at": [
+        0,
+        0.098,
+        0.128
+      ],
+      "look": {
+        "line": "none",
+        "fill": "none"
+      }
+    },
+    {
+      "id": "power-switch",
+      "label": "Low-mounted power control",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 6,
+      "basis": [
+        "cabinet.design"
+      ],
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.019,
+            0
+          ],
+          [
+            0.019,
+            0.006
+          ],
+          [
+            0.014,
+            0.009
+          ],
+          [
+            0.014,
+            0.023
+          ]
+        ],
+        "segments": 24,
+        "meridians": 5
+      },
+      "at": [
+        0.226,
+        0.075,
+        0.118
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "status-lamp",
+      "label": "Operating indicator, illustrative",
+      "role": "data",
+      "certainty": "inferred",
+      "stage": 7,
+      "basis": [
+        "cabinet.design"
+      ],
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.008,
+        "height": 0.009,
+        "segments": 16,
+        "ribs": 3
+      },
+      "at": [
+        0.187,
+        0.075,
+        0.118
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "left-side-vents",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "basis": [
+        "cabinet.design"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0,
+            0,
+            -0.07
+          ],
+          [
+            0,
+            0,
+            0.055
+          ]
+        ]
+      },
+      "at": [
+        -0.3202,
+        0.345,
+        0
+      ],
+      "repeat": {
+        "count": 8,
+        "step": {
+          "at": [
+            0,
+            0.018,
+            0
+          ]
+        }
+      },
+      "mirror": "x"
+    },
+    {
+      "id": "rear-service-panel",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 2,
+      "basis": [
+        "cabinet.design"
+      ],
+      "shape": {
+        "type": "box",
+        "size": [
+          0.523,
+          0.464,
+          0.006
+        ]
+      },
+      "at": [
+        0,
+        0.312,
+        -0.112
+      ]
+    },
+    {
+      "id": "rear-vents",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "basis": [
+        "cabinet.design"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.192,
+            0,
+            0
+          ],
+          [
+            0.192,
+            0,
+            0
+          ]
+        ]
+      },
+      "at": [
+        0,
+        0.392,
+        -0.116
+      ],
+      "repeat": {
+        "count": 7,
+        "step": {
+          "at": [
+            0,
+            0.018,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": "name-strip",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "basis": [
+        "cabinet.design"
+      ],
+      "shape": {
+        "type": "plane",
+        "size": [
+          0.174,
+          0.022
+        ]
+      },
+      "at": [
+        0,
+        0.319,
+        0.1025
+      ],
+      "look": {
+        "line": "none",
+        "fill": "none"
+      }
+    },
+    {
+      "id": "disclosure-strip",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 7,
+      "basis": [
+        "cabinet.design"
+      ],
+      "shape": {
+        "type": "plane",
+        "size": [
+          0.33,
+          0.013
+        ]
+      },
+      "at": [
+        0,
+        0.041,
+        0.1045
+      ],
+      "look": {
+        "line": "none",
+        "fill": "none"
+      }
+    }
+  ],
+  "articulations": [
+    {
+      "id": "engage-pinch",
+      "type": "hinge",
+      "parts": [
+        "pinch-arm",
+        "pinch-roller",
+        "pinch-face-witness"
+      ],
+      "axis": [
+        0,
+        0,
+        -1
+      ],
+      "pivot": [
+        0.16,
+        0.275,
+        0.126
+      ],
+      "amount": 18,
+      "order": 0
+    }
+  ],
+  "labels": [
+    {
+      "id": "left-vu-label",
+      "part": "left-vu-type",
+      "field": "vu.text",
+      "role": "meta",
+      "region": [
+        0.28,
+        0.64,
+        0.72,
+        0.84
+      ]
+    },
+    {
+      "id": "right-vu-label",
+      "part": "right-vu-type",
+      "field": "vu.text",
+      "role": "meta",
+      "region": [
+        0.28,
+        0.64,
+        0.72,
+        0.84
+      ]
+    },
+    {
+      "id": "left-scale",
+      "part": "left-vu-type",
+      "field": "scale.text",
+      "role": "meta",
+      "region": [
+        0.07,
+        0.03,
+        0.93,
+        0.18
+      ]
+    },
+    {
+      "id": "right-scale",
+      "part": "right-vu-type",
+      "field": "scale.text",
+      "role": "meta",
+      "region": [
+        0.07,
+        0.03,
+        0.93,
+        0.18
+      ]
+    },
+    {
+      "id": "input-label",
+      "part": "left-control-legend",
+      "field": "left.control",
+      "role": "meta",
+      "region": [
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "output-label",
+      "part": "right-control-legend",
+      "field": "right.control",
+      "role": "meta",
+      "region": [
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "transport-labels",
+      "part": "transport-legend",
+      "field": "transport.text",
+      "role": "meta",
+      "region": [
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "showcase-inscription",
+      "part": "name-strip",
+      "field": "plate.text",
+      "role": "decorative",
+      "region": [
+        0.05,
+        0.05,
+        0.95,
+        0.95
+      ]
+    },
+    {
+      "id": "honesty-label",
+      "part": "disclosure-strip",
+      "field": "generic.text",
+      "role": "decorative",
+      "region": [
+        0,
+        0,
+        1,
+        1
+      ]
+    }
+  ],
+  "anchors": {
+    "front": {
+      "part": "front-plate",
+      "face": "front"
+    },
+    "base": {
+      "point": [
+        0,
+        0,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ]
+    }
+  },
+  "annotations": [
+    {
+      "id": "reel-note",
+      "text": "Open three-spoke reels (inferred geometry)",
+      "part": "supply-rim",
+      "offset": [
+        -0.05,
+        0.025,
+        0
+      ]
+    },
+    {
+      "id": "tape-note",
+      "text": "Flat tape past heads (inferred routing)",
+      "part": "head-bridge",
+      "offset": [
+        -0.035,
+        0.015,
+        0.02
+      ]
+    },
+    {
+      "id": "vu-note",
+      "text": "VU needles: illustrative, not audio data",
+      "part": "meter-housings",
+      "offset": [
+        -0.04,
+        -0.065,
+        0.02
+      ]
+    },
+    {
+      "id": "pinch-note",
+      "text": "Pinch arm engages capstan (inferred)",
+      "part": "pinch-arm",
+      "offset": [
+        0.075,
+        0.015,
+        0
+      ]
+    }
+  ],
+  "presentation": {
+    "views": [
+      {
+        "id": "showcase",
+        "label": "Showcase front three-quarter",
+        "yaw": 15,
+        "pitch": 9,
+        "distance": 1.08
+      },
+      {
+        "id": "open",
+        "label": "Operating pose: pinch engaged",
+        "yaw": 10,
+        "pitch": 7,
+        "distance": 1.08
+      },
+      {
+        "id": "reels",
+        "label": "Open reels and unequal windings",
+        "yaw": 8,
+        "pitch": 5,
+        "target": "supply-rim",
+        "distance": 2.6
+      },
+      {
+        "id": "threading",
+        "label": "Tape, heads and driven nip",
+        "yaw": 12,
+        "pitch": 12,
+        "target": "head-bridge",
+        "distance": 1.8
+      },
+      {
+        "id": "vu",
+        "label": "Analog meters and chunky controls",
+        "yaw": 4,
+        "pitch": 5,
+        "target": "lower-console",
+        "distance": 1.25
+      }
+    ]
+  }
+}
