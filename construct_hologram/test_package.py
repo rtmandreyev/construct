@@ -109,6 +109,16 @@ class Packages(unittest.TestCase):
             r = run("build", str(skill / "examples" / "cd.json"), "--out", "cd")
             self.assertEqual(r.returncode, 0, r.stderr)
             self.assertIn("data:image/png;base64,", (work / "cd" / "construct.html").read_text())
+            # the prompts quote packaged examples: critique, author and prompts must work from an install
+            r = run("prompts", "--out", "pr")
+            self.assertEqual(r.returncode, 0, r.stderr)
+            self.assertTrue((work / "pr" / "critic.md").exists())
+            from . import render
+            if render.find_browser():  # seen live: critique crashed in the packaged skill
+                shutil.copyfile(skill / "examples" / "cd.json", work / "cd.json")
+                r = run("critique", "cd.json", "--out", "crit")
+                self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+                self.assertTrue((work / "crit" / "packet.md").exists())
 
     def test_starters_open_without_warnings(self):
         with tempfile.TemporaryDirectory() as tmp:

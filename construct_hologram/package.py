@@ -45,6 +45,7 @@ RUNTIME_MODULES = ["__init__.py", "__main__.py", "product.py", "hologram.py", "s
                    "audit.py", "diagnose.py", "params.py", "prompts.py", "render.py", "runner.py", "studio.py", "png.py",
                    "trace.py", "terrain.py", "tiers.py", "globe.py", "critic.py", "compare.py", "archkit.py"]
 VIEWER_FILES = ["hologram.js", "template.html"]
+PROMPT_EXAMPLES = ["case-jewel.params.json", "book.json"]
 
 # How each host names the skill's own folder inside SKILL.md.
 SKILL_DIR_TOKEN = {
@@ -144,6 +145,8 @@ def write_skill(host, root):
         _copy(HERE / module, root / "runtime" / PACKAGE / module)
     for name in VIEWER_FILES:
         _copy(HERE / "viewer" / name, root / "runtime" / PACKAGE / "viewer" / name)
+    for name in PROMPT_EXAMPLES:  # the prompts quote these: critique, author and prompts need them
+        _copy(HERE / "examples" / "v2" / name, root / "runtime" / PACKAGE / "examples" / "v2" / name)
     (root / "runtime" / "cli.py").write_text(CLI_SHIM.format(name=NAME, package=PACKAGE), encoding="utf-8")
     for scene in sorted((HERE / "examples" / "v2").glob("*.json")):
         _copy(scene, root / "examples" / scene.name)
