@@ -76,6 +76,16 @@ looks like the thing: for free-form subjects that depends on the model and on a 
 (a person, or a model that can see the renders). Parameter archetypes look the same from every
 model.
 
+## Recommended models
+
+From the evaluation runs:
+
+- **Hard subjects at Masterpiece** (a named car, a landmark): GPT-6.1 Sol or Claude Opus.
+- **Simpler objects at Standard or Showcase:** DeepSeek works as well as those, with no
+  regression on objects such as a tape deck, a watch or a camera.
+- **Small or free models** (MiniMax, Inkling, Nemotron) are not recommended. In about half of
+  their runs they failed to save a scene at all, and they made scale errors.
+
 ## Documentation
 
 - [docs/ABOUT.md](docs/ABOUT.md) — what Construct is, where its method comes from, how to talk about it

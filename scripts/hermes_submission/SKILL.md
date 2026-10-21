@@ -76,6 +76,7 @@ Work in a folder of your own. `out/construct.html` opens in any browser.
 | examples to start from | `${HERMES_SKILL_DIR}/assets/examples/` |
 | shapes, fields, roles, motion, labels, anchors | `references/vocabulary.md` |
 | recognition and composition | `references/composition.md` |
+| masterpiece rounds: ledger, pairwise gate, stop rules, resume | `references/rounds.md` |
 | drawing craft: weights, fills, sub-volumes, refine rounds | `references/craft.md` |
 | assembly, articulations, idle life | `references/animation.md` |
 | certainty, sources, artwork rights | `references/provenance.md` |
@@ -132,6 +133,14 @@ Work in a folder of your own. `out/construct.html` opens in any browser.
    answer with `--record` (`references/review.md`). Before each review add
    one to `authoring.review_rounds` and save; `check` warns `tier-rounds` past the cap. Stop when every criterion
    is good, or when the tier's review rounds or time run out, whichever comes first.
+   **Masterpiece runs judged rounds** (`references/rounds.md`): `scripts/cli.py rounds start
+   scene.json`. Each round, work on at most 4 ledger items and tag each edit (`rounds change
+   D3 "..."`). Then `rounds packet --reference ...`, with ONE delegated critic a round (or
+   `rounds run --base-url ...`), and `rounds record answer.json`. A version is kept only when
+   it beats the best so far, and its regressions lead the next round. After every round,
+   report its summary in chat. Stop when `record` says STOP: every criterion at 3, two rounds
+   without a win, or the 2-hour safety stop on active time. After an interruption run
+   `rounds status` and redo only the step it names.
 6. **Deliver.** Record `authoring` in the scene (tier, research, sources used, outcome,
    `next` improvements). Give the user `out/construct.html` (and the video if asked), and say
    plainly what is evidence, what is inferred or designed, which artwork is the user's own

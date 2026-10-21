@@ -2,6 +2,28 @@
 
 ## 0.2.1 (unreleased)
 
+- **Masterpiece rounds that keep what is good** (`construct rounds`,
+  `references/rounds.md`):
+  - **one critic a round, three parts:** this version blind, then against the best so far
+    (the same views, unlabelled, in a random A/B order, beside the references), then the
+    defect ledger;
+  - **the pairwise pick decides:** a version is kept when it wins overall, and its
+    regressions lead the next round (repair, don't revert); it is reverted only when it
+    loses;
+  - **small rounds:** at most 4 ledger items, every edit tagged with its id;
+  - **a defect ledger** (`ledger.json`): known limits only from kept rounds without progress,
+    or what the tools cannot express, reported as skill gaps;
+  - **stop rules:** every criterion at 3, two rounds without a win, or a 2-hour safety stop
+    on active time (Masterpiece's new default; interruptions do not count);
+  - **a log a person can read and resume:** a chat report after every Masterpiece round
+    (Showcase: once, at the end), `rounds.md`, `checkpoints/round-NN/`, `state.json`
+    (`rounds status`), and the round timeline in `construct.html` and `review`
+    (`rounds.png`).
+
+  A critique's score below 3 must cite a defect of its criterion. The README and USING
+  recommend models: Sol or Opus for hard subjects at Masterpiece, DeepSeek for simpler
+  objects, and not small free models.
+
 - **Drawing craft** (`references/craft.md`, linked from the authoring recipe and the scene
   prompt): five rules from the strongest constructs: a line-weight hierarchy, dark depth-writing
   fills that hide the construction mesh, a sub-volume per feature, density where the identity

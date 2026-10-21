@@ -167,6 +167,63 @@ def _critique(args, critic_mod):
     return 0
 
 
+def _rounds(args):
+    from . import rounds
+    folder, a = Path(args.dir), list(args.args)
+    try:
+        if args.action == "start":
+            if len(a) != 1:
+                raise rounds.RoundsError("usage: construct rounds start scene.json [--tier masterpiece] [--dir run]")
+            st = rounds.start(a[0], args.tier, folder if args.dir != "." else Path(a[0]).resolve().parent)
+            sys.stdout.write("started: round 1, tier %s, %s-minute safety stop on active time\n" % (
+                st["tier"], st["limit_seconds"] // 60))
+        elif args.action == "change":
+            if len(a) != 2:
+                raise rounds.RoundsError("usage: construct rounds change D3 \"what changed\"")
+            st = rounds.change(folder, a[0], a[1])
+            sys.stdout.write("round %d: %d change(s) on %s\n" % (st["round"], len(st["changes"]), ", ".join(
+                sorted({c["ledger"] for c in st["changes"]}))))
+        elif args.action == "packet":
+            scene = rounds.scene_of(folder)
+            pk, key = rounds.packet(folder, scene, args.reference, args.request, args.out)
+            sys.stdout.write("round packet: %s (part 1 this version%s, part 3 the ledger)\nGive it to ONE fresh critic "
+                             "started in that folder, or `construct rounds run --base-url ...`; then:\n"
+                             "  construct rounds record answer.json\n" % (pk, "" if key is None else ", part 2 the pair"))
+        elif args.action in ("record", "run"):
+            if args.action == "record":
+                if len(a) != 1:
+                    raise rounds.RoundsError("usage: construct rounds record answer.json")
+                answer, _ = diagnose_mod.parse_text(Path(a[0]).read_text(encoding="utf-8"))
+                if not isinstance(answer, dict):
+                    raise rounds.RoundsError("the answer is not a JSON object")
+                model = None
+            else:
+                base = args.base_url or os.environ.get("CONSTRUCT_CRITIC_BASE_URL")
+                if not base:
+                    raise rounds.RoundsError("run needs --base-url (or CONSTRUCT_CRITIC_BASE_URL)")
+                model = args.model or os.environ.get("CONSTRUCT_CRITIC_MODEL")
+                key_env = args.key_env or os.environ.get("CONSTRUCT_CRITIC_KEY_ENV")
+                st = rounds.state(folder)
+                if not st.get("packet") or st.get("step") != "packet":
+                    raise rounds.RoundsError("no round packet waiting: `construct rounds packet` first")
+                answer = rounds.run(st["packet"], base, model, os.environ.get(key_env) if key_env else None,
+                                    log=lambda m: sys.stdout.write(m + "\n"))
+            e = rounds.record(folder, answer, rounds.scene_of(folder), model)
+            st = rounds.state(folder)
+            if st["tier"] == "masterpiece" or e["stop"]:
+                sys.stdout.write(rounds.summary(e) + "\n")
+            else:
+                sys.stdout.write("round %d recorded (%s); details in rounds.md\n" % (e["round"], "kept" if e["kept"] else "reverted"))
+        elif args.action == "status":
+            sys.stdout.write(rounds.status(folder) + "\n")
+        else:
+            sys.stdout.write(rounds.report(folder))
+    except (rounds.RoundsError, OSError) as exc:
+        sys.stderr.write("rounds: %s\n" % exc)
+        return 1
+    return 0
+
+
 def page_in(folder):
     """The built page in a folder: construct.html (or hologram.html from before 0.2)."""
     new = Path(folder, "construct.html")
@@ -266,6 +323,17 @@ def add_commands(sub):
     p.add_argument("--base-url", help="run the critic as a second model call on this OpenAI-compatible endpoint")
     p.add_argument("--model")
     p.add_argument("--key-env")
+    p = sub.add_parser("rounds", help="improvement rounds: a defect ledger, a pairwise gate, stop rules and a log")
+    p.add_argument("action", choices=("start", "change", "packet", "record", "run", "status", "report"))
+    p.add_argument("args", nargs="*", help="start: scene.json; change: ID \"what changed\"; record: answer.json")
+    p.add_argument("--dir", default=".", help="the run's folder (state.json, ledger.json, rounds.md, checkpoints/)")
+    p.add_argument("--tier", default="masterpiece", choices=("showcase", "masterpiece"))
+    p.add_argument("--reference", action="append", default=[], help="view=image, as for critique; repeatable")
+    p.add_argument("--request", help="the request in plain words")
+    p.add_argument("--out", help="the packet folder (default: a neutral folder in the temp directory)")
+    p.add_argument("--base-url", help="run the round's critic as direct model calls (default: $CONSTRUCT_CRITIC_BASE_URL)")
+    p.add_argument("--model")
+    p.add_argument("--key-env")
     p = sub.add_parser("compare", help="measure the construct's silhouette from a view against a traced reference")
     p.add_argument("scene")
     p.add_argument("--trace", required=True, help="the reference's construct-trace (its outline in pixels)")
@@ -342,7 +410,7 @@ def add_commands(sub):
     p.add_argument("--identity", choices=scene_mod.IDENTITIES, help="an identity tint the person chose")
 
 
-COMMANDS = ("new", "params", "expand", "prompts", "author", "trace", "trace-image", "terrain", "globe", "critique", "compare", "loft-from-traces", "check", "build", "review",
+COMMANDS = ("new", "params", "expand", "prompts", "author", "trace", "trace-image", "terrain", "globe", "critique", "rounds", "compare", "loft-from-traces", "check", "build", "review",
             "video")
 
 
@@ -396,6 +464,8 @@ def run(args):
             _write(args.output, json.dumps(sc, indent=1, ensure_ascii=False) + "\n", args.force)
             sys.stdout.write("wrote %s: %s\n" % (args.output, sc["subject"]["summary"]))
             return 0
+        if args.command == "rounds":
+            return _rounds(args)
         if args.command == "compare":
             from . import compare as compare_mod
             from . import trace as trace_mod

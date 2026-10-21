@@ -38,6 +38,8 @@ Answer with one JSON object, no prose:
 - `checklist`: every listed feature, plus any feature of the real subject you find missing.
 - `defects`: ranked by how much they cost the likeness, most severe first; `critical` (the
   subject is not recognisable because of it), `major` (an owner would notice), `minor`.
+- **Every score below 3 cites a defect** with that `criterion`: name what keeps it from 3. A
+  score you cannot back with a named defect is noise; give the 3.
 - `verdict`: "outstanding" only when every score is 3 and nothing critical or major remains;
   "good" when every score is at least 2 and nothing is critical; otherwise "improve". It is
   recomputed from your scores, so score honestly rather than kindly.

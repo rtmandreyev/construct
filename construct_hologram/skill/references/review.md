@@ -64,6 +64,10 @@ checklist, the scene's hash) and renders from the views of your references besid
 - **Hermes**: delegate the same task (the delegation toolset), or run the critic as a
   second model call: add `--base-url`, `--model` and `--key-env` to the command above.
 - **`construct author --critic`** (or `--tier masterpiece`) runs it for you every round.
+- **Masterpiece rounds** (`rounds packet` / `rounds record`, [rounds](rounds.md)) use one critic
+  per round in three parts: this version blind, then against the best so far (A/B), then the
+  defect ledger. The pairwise pick decides; scores are recorded, and every score below 3 must
+  cite a defect of its criterion.
 
 Record the answer: `python3 TOOLS critique scene.json --record critique/critique.json`. It
 checks the critique, binds it to the scene's hash (a later edit makes it stale), recomputes

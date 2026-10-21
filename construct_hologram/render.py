@@ -331,6 +331,12 @@ def review(html_path, out_dir, width=1440, height=900, scale=1.0, sheets=SHEETS,
             p = out / ("view-%s.png" % vid)
             b.shot(p)
             written.append(str(p))
+        if b.evaluate("JSON.stringify(((HOLOGRAM_GEOMETRY.provenance || {}).authoring || {}).rounds || [])") != "[]":
+            # the improvement rounds' timeline, over the still (`construct rounds` recorded them)
+            b.open(_url(html_path, motion="reduced", ui=0, capture=1, rounds=1))
+            p = out / "rounds.png"
+            b.shot(p)
+            written.append(str(p))
         # the hero is the whole object in its fitted hero framing, assembled and opened: the
         # camera held still, so a tour or drift never decides what the hero shows
         b.open(_url(html_path, t="%.3f" % (end + 2.0), view="hero", camera="still", ui=0, capture=1, labels=1))

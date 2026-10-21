@@ -27,7 +27,7 @@ import time
 from pathlib import Path
 
 # the tiers' wall clock (seconds) and review rounds; kept equal to construct_hologram/tiers.py
-TIERS = {"quick": (120, 0), "standard": (600, 2), "showcase": (1800, 4), "masterpiece": (None, None)}
+TIERS = {"quick": (120, 0), "standard": (600, 2), "showcase": (1800, 4), "masterpiece": (7200, None)}
 WRAP_UP = 0.8
 REVIEW = re.compile(r"(\bconstruct|cli\.py)\s+review\b")
 DELIVER = re.compile(r"(\bconstruct|cli\.py)\s+(check|build)\b")

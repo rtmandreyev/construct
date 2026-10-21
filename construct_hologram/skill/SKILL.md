@@ -40,8 +40,10 @@ if no browser is available, say so and deliver the HTML without captures.
 0. **Choose the effort and whether to research.** The tier is the user's or host's choice:
    `quick` (bulk, the parameter path), `standard` (the default: ≤10 min, ≤2 review rounds)
    or `showcase` (only when asked: ≤30 min). Its limits are hard ceilings, not targets.
-   `masterpiece` (only when asked, for hard subjects) has no time or round cap: it ends when
-   the independent critic scores every criterion 3, saving a checkpoint every round. A
+   `masterpiece` (only when asked, for hard subjects) runs judged rounds
+   ([rounds](references/rounds.md)): a defect ledger, at most 4 items a round, one critic
+   who compares each version with the best so far, and it stops at every criterion 3, two
+   rounds without a win, or a 2-hour safety stop on active time. A
    generic subject ("a desk lamp") needs no research; a concrete, named one (a brand and
    model, a named building or peak, a species) is researched whenever you are unsure of its
    identity-defining shape or specs; "research: on/off" in the request overrides both. See
@@ -110,6 +112,10 @@ if no browser is available, say so and deliver the HTML without captures.
    **independent critic** (a fresh context comparing renders with the references:
    `critique`, see [review](references/review.md)) can record "good"
    or "outstanding". Use it at showcase and masterpiece, and whenever the subject is named.
+   At masterpiece run the rounds with `python3 TOOLS rounds` ([rounds](references/rounds.md)):
+   tag each edit with its ledger id, one critic per round, keep a version only when it beats
+   the best, and after every round report in chat the critic's top requests, what changed
+   (ledger ids), won or lost, and the minutes. Showcase reports once, at the end.
    **Count the rounds in the scene:** before each review, add one to
    `authoring.review_rounds` and save; `check` warns `tier-rounds` past the tier's cap
    (quick 0, standard 2, showcase 4), and that is the end of reviewing. Stop when every criterion is good and you would show it as it is, or when

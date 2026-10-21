@@ -70,6 +70,12 @@ def validate_items(doc):
             c.text(d.get("problem"), w + ".problem", 600)
             c.text(d.get("fix"), w + ".fix", 600)
     c.choice(doc.get("verdict"), tiers.VERDICTS, "scene.verdict")
+    if isinstance(sc, dict) and isinstance(defects, list):  # a score below 3 names what is wrong
+        cited = {d.get("criterion") for d in defects if isinstance(d, dict)}
+        for k in tiers.CRITERIA:
+            if isinstance(sc.get(k), int) and sc[k] < 3 and k not in cited:
+                c.err("scene.scores." + k, "a score below 3 must cite a defect for %s (a defect with \"criterion\": "
+                      "\"%s\"); a score with no named defect is noise" % (k, k), "rule")
     return c.items
 
 

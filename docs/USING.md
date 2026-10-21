@@ -140,11 +140,28 @@ python3 construct_hologram/cli.py author "a Revox A77 tape recorder" --tier show
 | standard | 10 min | 2 | 6 | 3 |
 | showcase | 30 min | 4 | 10 | 6 |
 
-**Masterpiece** (`--tier masterpiece`, for hard subjects on request) has no wall clock and no
-round cap: every round the critic compares renders with your references (`--reference
+**Masterpiece** (`--tier masterpiece`, for hard subjects on request) has no round cap and a
+2-hour safety stop: every round the critic compares renders with your references (`--reference
 side=side.jpg --reference top=top.jpg`), its ranked defects go back to the author, and a
 checkpoint is written to `<out>.checkpoints/`. It stops when the critic scores every criterion
-3, at `--max-cost`, or when you press Ctrl-C (the best version so far is written).
+3, at `--max-cost`, at the safety stop, or when you press Ctrl-C (the best version so far is
+written).
+
+**Masterpiece rounds in an agent** (Claude Code, Hermes): `construct rounds` runs the judged
+loop on disk: `rounds start scene.json`; each round `rounds change <ledger id> "what"` for at
+most 4 ledger items, `rounds packet --reference ...` for ONE critic (blind first, then this
+version against the best so far as an unlabelled A/B pair, then the defect ledger), and `rounds
+record answer.json`. A version is kept when it wins the pair; otherwise the best comes back.
+Its round report, `rounds.md`, `checkpoints/round-NN/`, `ledger.json` and `state.json` make
+the run readable and resumable (`rounds status`). See `skill/references/rounds.md`.
+
+**Recommended models.** From the evaluation runs:
+
+- **Hard subjects at Masterpiece** (a named car, a landmark): GPT-6.1 Sol or Claude Opus.
+- **Simpler objects at Standard or Showcase:** DeepSeek works as well as those, with no
+  regression on objects such as a tape deck, a watch or a camera.
+- **Small or free models** (MiniMax, Inkling, Nemotron) are not recommended. In about half of
+  their runs they failed to save a scene at all, and they made scale errors.
 
 **The critic in any host:** `construct critique scene.json --reference side=photo.jpg` writes a
 packet (instructions, checklist, renders beside references) for a fresh subagent or a second

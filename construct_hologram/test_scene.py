@@ -237,7 +237,7 @@ class Build(unittest.TestCase):
     def test_html_cannot_be_closed_by_scene_text(self):
         s = base(title="</script><script>alert(1)</script>")
         html, _ = render.build_html(scene.compile_scene(s))
-        self.assertEqual(html.count("<script"), 3)  # geometry, assets, viewer
+        self.assertEqual(html.count("<script"), 4)  # geometry, assets, viewer, the rounds' timeline
 
     def test_cli_new_check_build_from_any_directory(self):
         cli = str(HERE / "cli.py")
@@ -905,11 +905,192 @@ class Tiers(unittest.TestCase):
 def _critique(scene_doc, low=3, severity=None, present=True):
     scores = {k: 3 for k in tiers.CRITERIA}
     scores["proportions"] = low
+    sev = severity or ("minor" if low < 3 else None)  # a score below 3 cites its defect
     return {"format": "construct-critique", "version": 1, "scene_sha256": tiers.critic_hash(scene_doc),
             "scores": scores, "checklist": [{"feature": "the box", "present": present, "quality": 3}],
-            "defects": [{"rank": 1, "severity": severity, "criterion": "proportions", "parts": ["body"],
+            "defects": [{"rank": 1, "severity": sev, "criterion": "proportions", "parts": ["body"],
                          "view": "side", "problem": "the nose is a rectangle from above", "fix": "taper the loft"}]
-            if severity else [], "verdict": "outstanding"}
+            if sev else [], "verdict": "outstanding"}
+
+
+def _round_answer(folder, n, win=True, fixed=(), inexpressible=(), scores=None, regress=False):
+    """A synthetic round answer for checkpoints/round-NN (test)."""
+    from . import rounds
+    rd = Path(folder, "checkpoints", "round-%02d" % n)
+    doc = json.loads((rd / "scene.json").read_text())
+    sc = scores or dict({k: 3 for k in tiers.CRITERIA}, proportions=2)
+    defects = [{"rank": 1, "severity": "major", "criterion": "proportions", "parts": ["body"], "problem": "too tall",
+                "fix": "lower it"}, {"rank": 2, "severity": "minor", "criterion": "identity", "parts": ["body"],
+                                     "problem": "plain", "fix": "add a seam"}]
+    ans = {"format": "construct-round", "version": 1, "scene_sha256": tiers.critic_hash(doc),
+           "critique": {"format": "construct-critique", "version": 1, "scene_sha256": tiers.critic_hash(doc),
+                        "scores": sc, "defects": defects, "verdict": "good"}}
+    key = json.loads((rd / "key.json").read_text()) if (rd / "key.json").exists() else None
+    if key:
+        new = "A" if key["A"] == "new" else "B"
+        old = "B" if new == "A" else "A"
+        diffs = [{"better": new, "criterion": "proportions", "parts": ["body"], "evidence": "lower"}]
+        if regress:
+            diffs.append({"better": old, "criterion": "identity", "parts": ["body"], "evidence": "lost the seam"})
+        ans["pairwise"] = {"winner": new if win else old, "criteria": {k: "same" for k in tiers.CRITERIA}, "differences": diffs}
+    led = rounds.ledger(folder)
+    items = [i for i in led["items"] if i["status"] != "known-limit"]
+    ans["reconcile"] = {"items": [{"id": i["id"], "status": "fixed" if i["id"] in fixed else "inexpressible"
+                                   if i["id"] in inexpressible else "open", "evidence": "seen"} for i in items],
+                        "new": [] if led["items"] else [1, 2]}
+    return ans
+
+
+def _check_in(folder, scene_doc, best=None, seed=0):
+    """What `rounds packet` writes for the round, without rendering (test)."""
+    from . import rounds
+    st = rounds.state(folder)
+    rd = Path(folder, "checkpoints", "round-%02d" % st["round"])
+    rd.mkdir(parents=True, exist_ok=True)
+    (rd / "scene.json").write_text(json.dumps(scene_doc))
+    if st["best_round"] is not None:
+        (rd / "key.json").write_text(json.dumps({"A": "new" if seed % 2 else "best", "B": "best" if seed % 2 else "new",
+                                                  "best_round": st["best_round"], "round": st["round"]}))
+    rounds.step(folder, st, "packet")
+
+
+class Rounds(unittest.TestCase):
+    """Masterpiece rounds: the pairwise gate decides, repair don't revert, small batches, the ledger,
+    stop rules, a log, resumable state."""
+
+    def setUp(self):
+        from . import rounds
+        self.r = rounds
+        self.tmp = tempfile.TemporaryDirectory()
+        self.d = Path(self.tmp.name)
+        self.scene = self.d / "s.json"
+        self.doc = base(subject={"category": "object", "accuracy": "approximate", "synthetic": True})
+        self.scene.write_text(json.dumps(self.doc))
+        rounds.start(str(self.scene), "masterpiece", self.d)
+
+    def tearDown(self):
+        self.tmp.cleanup()
+
+    def edit(self, size):
+        doc = json.loads(json.dumps(self.doc))
+        doc["parts"][0]["shape"]["size"] = size
+        self.scene.write_text(json.dumps(doc))
+        return doc
+
+    def test_a_round_is_kept_when_it_wins_and_its_regression_leads_the_ledger(self):
+        r = self.r
+        _check_in(self.d, self.doc)
+        e = r.record(self.d, _round_answer(self.d, 1), self.scene)
+        self.assertTrue(e["kept"] and e["baseline"])
+        self.assertEqual([i["id"] for i in r.ledger(self.d)["items"]], ["D1", "D2"])
+        r.change(self.d, "D1", "lowered the body")
+        for seed in (0, 1):  # whichever letter the new version got
+            doc = self.edit([1, 0.9 - 0.1 * seed, 1])
+            _check_in(self.d, doc, seed=seed)
+            e = r.record(self.d, _round_answer(self.d, 2 + seed, win=True, fixed=("D1",), regress=True), self.scene)
+            self.assertTrue(e["kept"], seed)
+            first = r.ledger(self.d)["items"][0]
+            self.assertEqual(first["status"], "regressed")  # repair, don't revert: the regression leads
+            self.assertIn("lost the seam", first["title"])
+        st = r.state(self.d)
+        self.assertEqual(st["best_round"], 3)
+        self.assertEqual(json.loads(self.scene.read_text())["authoring"]["critic"]["scene_sha256"],
+                         tiers.critic_hash(json.loads(self.scene.read_text())))
+        log = (self.d / "rounds.md").read_text()
+        self.assertIn("## Round 02 · kept (won against round 1)", log)
+        self.assertIn("[D1] lowered the body", log)
+        self.assertIn("Worse than the best: lost the seam", log)
+
+    def test_a_round_that_loses_is_reverted_and_two_in_a_row_stop_the_run(self):
+        r = self.r
+        _check_in(self.d, self.doc)
+        r.record(self.d, _round_answer(self.d, 1), self.scene)
+        for n in (2, 3):
+            doc = self.edit([2, n, 1])
+            _check_in(self.d, doc)
+            e = r.record(self.d, _round_answer(self.d, n, win=False), self.scene)
+            self.assertFalse(e["kept"])
+            back = json.loads(self.scene.read_text())
+            self.assertEqual(back["parts"], self.doc["parts"])  # the best version is the working scene again
+            self.assertEqual([h["result"] for h in back["authoring"]["rounds"]], ["baseline"] + ["reverted"] * (n - 1))
+        self.assertIn("2 rounds in a row did not beat round 1", e["stop"])
+        self.assertEqual(r.state(self.d)["status"], "stopped")
+        with self.assertRaises(r.RoundsError):
+            r.change(self.d, "D1", "too late")
+        self.assertIn("Known limits (skill gaps): none", r.report(self.d))
+        r_ = diagnose.diagnose(json.loads(self.scene.read_text()))
+        self.assertTrue(r_["ok"], r_["repair_text"])  # the round history is a valid authoring block
+
+    def test_small_batches_and_known_limits(self):
+        r = self.r
+        doc = json.loads(json.dumps(self.doc))
+        _check_in(self.d, doc)
+        ans = _round_answer(self.d, 1)
+        ans["critique"]["defects"] += [{"rank": k, "severity": "minor", "criterion": "density", "problem": "p%d" % k,
+                                        "fix": "f"} for k in (3, 4, 5)]
+        ans["critique"]["scores"]["density"] = 2
+        ans["reconcile"]["new"] = [1, 2, 3, 4, 5]
+        r.record(self.d, ans, self.scene)
+        for i in ("D1", "D2", "D3", "D4"):
+            r.change(self.d, i, "work on " + i)
+        with self.assertRaises(r.RoundsError):  # a fifth item waits for the critic
+            r.change(self.d, "D5", "and this")
+        for n in (2, 3, 4):  # D1 attempted in three kept rounds without progress: a known limit
+            if n > 2:
+                r.change(self.d, "D1", "again")
+            doc = self.edit([1, 1, 1 + n / 10])
+            _check_in(self.d, doc)
+            r.record(self.d, _round_answer(self.d, n, inexpressible=("D5",) if n == 2 else ()), self.scene)
+        items = {i["id"]: i for i in r.ledger(self.d)["items"]}
+        self.assertEqual(items["D1"]["status"], "known-limit")
+        self.assertEqual(items["D5"]["status"], "known-limit")  # the critic: the tools cannot draw it
+        self.assertIn("cannot express", items["D5"]["reason"])
+        with self.assertRaises(r.RoundsError):
+            r.change(self.d, "D1", "once more")
+        self.assertIn("D1", r.report(self.d).split("Known limits")[1])
+
+    def test_reverted_rounds_do_not_count_toward_a_known_limit(self):
+        r = self.r
+        _check_in(self.d, self.doc)
+        r.record(self.d, _round_answer(self.d, 1), self.scene)
+        for n in (2, 3, 4):
+            r.change(self.d, "D1", "try %d" % n)
+            _check_in(self.d, self.edit([1, 1, 1 + n / 10]))
+            r.record(self.d, _round_answer(self.d, n, win=(n == 3)), self.scene)
+            if r.state(self.d)["status"] != "running":
+                break
+        self.assertEqual({i["id"]: i for i in r.ledger(self.d)["items"]}["D1"]["status"], "open")
+
+    def test_every_criterion_at_3_stops_and_active_time_skips_interruptions(self):
+        r = self.r
+        st = r.state(self.d)
+        r.tick(st, st["last_step_at"] + 600)       # ten minutes of work
+        r.tick(st, st["last_step_at"] + 5 * 3600)  # a usage limit: five hours that do not count
+        self.assertAlmostEqual(st["active_seconds"], 600, delta=1)
+        _check_in(self.d, self.doc)
+        ans = _round_answer(self.d, 1, scores={k: 3 for k in tiers.CRITERIA})
+        e = r.record(self.d, ans, self.scene)
+        self.assertEqual(e["stop"], "every criterion at 3")
+        self.assertEqual(st["limit_seconds"], 7200)  # the 2-hour safety stop on active time
+
+    def test_answers_are_checked(self):
+        r = self.r
+        _check_in(self.d, self.doc)
+        r.record(self.d, _round_answer(self.d, 1), self.scene)
+        _check_in(self.d, self.edit([1, 1, 2]))
+        ans = _round_answer(self.d, 2)
+        del ans["pairwise"]
+        with self.assertRaises(r.RoundsError):
+            r.record(self.d, ans, self.scene)  # a later round must judge the pair
+        ans = _round_answer(self.d, 2)
+        ans["reconcile"]["items"] = ans["reconcile"]["items"][:1]
+        with self.assertRaises(r.RoundsError):
+            r.record(self.d, ans, self.scene)  # every ledger item is judged
+        ans = _round_answer(self.d, 2)
+        ans["critique"]["scores"]["depth"] = 2  # no depth defect cited
+        with self.assertRaises(r.RoundsError):
+            r.record(self.d, ans, self.scene)
+        self.assertIn("Next: give the packet", r.status(self.d))
 
 
 class Critic(unittest.TestCase):
@@ -981,9 +1162,9 @@ class Critic(unittest.TestCase):
         self.assertTrue(rep["ok"])
         self.assertNotIn("critic-stale", {d["code"] for d in rep["diagnostics"]})
 
-    def test_masterpiece_has_no_caps_but_a_user_stop(self):
+    def test_masterpiece_has_no_round_cap_a_safety_stop_and_a_user_stop(self):
         lim = tiers.limits("masterpiece")
-        self.assertIsNone(lim["wall_clock_s"])
+        self.assertEqual(lim["wall_clock_s"], 7200)  # a 2-hour safety stop (active time in `construct rounds`)
         self.assertIsNone(lim["review_rounds"])
         self.assertEqual(tiers.limits("masterpiece", wall_clock_s=36000)["wall_clock_s"], 36000)
         good = json.dumps(params.template("vessel", "can") | {"facts": [], "synthetic": True})
@@ -1665,6 +1846,34 @@ class RealTerrain(unittest.TestCase):
 
 
 class Capture(unittest.TestCase):
+    def test_a_round_packet_is_blind_and_paired_and_the_timeline_renders(self):
+        from . import rounds
+        with tempfile.TemporaryDirectory() as d:
+            scene_path = Path(d, "cd.json")
+            doc = json.loads((EXAMPLES / "cd.json").read_text())
+            scene_path.write_text(json.dumps(doc))
+            rounds.start(str(scene_path), "masterpiece", d)
+            pk, key = rounds.packet(d, scene_path, out=str(Path(d, "pk1")))
+            self.assertIsNone(key)
+            self.assertFalse(Path(pk, "step-2").exists())
+            rounds.record(d, _round_answer(d, 1), scene_path)
+            doc["parts"][0]["shape"]["size"][1] *= 1.1
+            scene_path.write_text(json.dumps(dict(json.loads(scene_path.read_text()), parts=doc["parts"])))
+            pk, key = rounds.packet(d, scene_path, out=str(Path(d, "pk2")), seed=3)
+            pics = sorted(p_.name for p_ in Path(pk, "step-2").glob("*.png"))
+            a_views = {n[2:] for n in pics if n.startswith("A-")}
+            self.assertTrue(a_views and a_views == {n[2:] for n in pics if n.startswith("B-")})  # the same views
+            told = " ".join(p_.read_text() for p_ in Path(pk).rglob("*.md")) + " ".join(
+                p_.read_text() for p_ in Path(pk).rglob("*.json"))
+            self.assertNotIn("best_round", told)  # the key stays with the checkpoint
+            self.assertTrue(Path(d, "checkpoints", "round-02", "key.json").exists())
+            self.assertTrue(Path(d, "checkpoints", "round-02", "hero.png").exists())
+            rounds.record(d, _round_answer(d, 2), scene_path)
+            studio.build(str(scene_path), str(Path(d, "out")))
+            paths = render.review(str(Path(d, "out", "construct.html")), str(Path(d, "out", "review")), 640, 400, sheets=())
+            self.assertIn("rounds.png", {Path(p_).name for p_ in paths})
+
+
     def test_review_produces_non_empty_images(self):
         with tempfile.TemporaryDirectory() as d:
             studio.build(str(EXAMPLES / "cd.json"), d)

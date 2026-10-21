@@ -34,7 +34,7 @@ Record it in the scene: `"authoring": {"tier": "standard", "research": "done", "
 | quick | bulk imports and simple archetypes (the parameter path) | 2 min | 0 (audit only) | 3 | none beyond the source data |
 | standard | one entry (the default) | 10 min | 2 | 6 | ≤5 searches, ≤3 sources read, ≤3 reference images |
 | showcase | only on explicit request: more references, more review rounds | 30 min | 4 | 10 | ≤10 searches, ≤6 sources read, ≤6 reference images |
-| masterpiece | hard subjects, only on explicit request: until an independent critic scores every criterion 3 | none | until the critic's all-3 | 8 per round | ≤20 searches, ≤12 sources read, ≤12 reference images |
+| masterpiece | hard subjects, only on explicit request: rounds judged pairwise against the best, until every criterion is 3, two rounds without a win, or the 2-hour safety stop | 120 min active (a safety stop) | until the stop rules | 8 per round | ≤20 searches, ≤12 sources read, ≤12 reference images |
 
 Effort goes where it is visible: silhouette, then proportions, then the two or three identity
 features, then secondary detail. Model nothing smaller than about 0.5% of the object's largest
@@ -57,18 +57,22 @@ roughly placed) rather than from a perfect plan; size and detail come in the rou
 ## The masterpiece tier (hard subjects, on request)
 
 For a subject that must be recognisable exactly (a named car, a landmark building) the user can
-ask for the masterpiece tier. It has no wall clock and no round cap. It ends only when an
-independent critic scores every criterion 3, when the user stops it, or at a cost ceiling the
-user set. Every round:
+ask for the masterpiece tier. It has no round cap; it runs judged rounds
+([rounds](rounds.md)) and stops at the first of: every criterion at 3, two rounds in a row
+that do not beat the best, a 2-hour safety stop on active time (an interruption does not
+count), or the user. Every round:
 
-1. Save the scene (a checkpoint), `check` it until clean.
-2. Have the independent critic judge it ([review](review.md), "The independent critic"), with
-   the reference photos beside renders from the same views.
-3. Fix the critic's top defects, most severe first; re-trace a silhouette when proportions
-   are off; then the next round.
+1. Work on at most 4 ledger items, regressions first, and tag each edit with its ledger id.
+2. `check` until clean; `rounds packet` checks the round in and writes the critic's packet.
+3. One fresh critic judges it blind, then against the best so far (A/B, unlabelled), then
+   reconciles the ledger; `rounds record` keeps the version if it wins overall (its
+   regressions lead the next round) and reverts it only if it loses.
+4. Report the round in chat: the critic's top requests, what changed (ledger ids), won or
+   lost, the minutes. Everything else is in `rounds.md` and `checkpoints/round-NN/`.
 
 Start it with the same research, identity checklist and draft-early rule as any tier: a
-complete, valid scene first, then the long refinement.
+complete, valid scene first, then the rounds. A run can be resumed at any time
+(`rounds status`): usage limits are expected.
 
 ## When to stop
 

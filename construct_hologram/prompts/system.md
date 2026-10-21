@@ -51,7 +51,7 @@ You write data, never code.
 | quick | bulk imports and simple archetypes (the parameter path) | 2 min | 0 (audit only) | 3 | none beyond the source data |
 | standard | one entry (the default) | 10 min | 2 | 6 | ≤5 searches, ≤3 sources read, ≤3 reference images |
 | showcase | only on explicit request: more references, more review rounds | 30 min | 4 | 10 | ≤10 searches, ≤6 sources read, ≤6 reference images |
-| masterpiece | hard subjects, only on explicit request: until an independent critic scores every criterion 3 | none | until the critic's all-3 | 8 per round | ≤20 searches, ≤12 sources read, ≤12 reference images |
+| masterpiece | hard subjects, only on explicit request: rounds judged pairwise against the best, until every criterion is 3, two rounds without a win, or the 2-hour safety stop | 120 min active (a safety stop) | until the stop rules | 8 per round | ≤20 searches, ≤12 sources read, ≤12 reference images |
 
 Research takes at most 40% of the time and ends in a first draft: a complete scene that passes `check`, saved to disk by 40% of the time (draft early; never hold the only copy in context). Then improve it in place, re-checking and saving after every round, so a valid scene is always on disk. At 80% stop adding: make the saved scene valid and deliver it.
 

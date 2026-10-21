@@ -20,9 +20,9 @@ TIERS = {
     "quick": {"wall_clock_s": 120, "review_rounds": 0, "check_rounds": 3, "searches": 0, "sources": 0, "images": 0},
     "standard": {"wall_clock_s": 600, "review_rounds": 2, "check_rounds": 6, "searches": 5, "sources": 3, "images": 3},
     "showcase": {"wall_clock_s": 1800, "review_rounds": 4, "check_rounds": 10, "searches": 10, "sources": 6, "images": 6},
-    # no wall clock, no round cap: the independent critic's "outstanding" (or the user) ends it;
-    # check rounds count per improvement round
-    "masterpiece": {"wall_clock_s": None, "review_rounds": None, "check_rounds": 8, "searches": 20, "sources": 12,
+    # no round cap: the critic's all-3, two rounds in a row that do not beat the best, the user, or a
+    # 2-hour safety stop on ACTIVE time (an interruption does not count) ends it; check rounds per round
+    "masterpiece": {"wall_clock_s": 7200, "review_rounds": None, "check_rounds": 8, "searches": 20, "sources": 12,
                     "images": 12},
 }
 UNCAPPED = "masterpiece"
@@ -36,7 +36,8 @@ WRAP_UP = 0.8
 USE = {"quick": "bulk imports and simple archetypes (the parameter path)",
        "standard": "one entry (the default)",
        "showcase": "only on explicit request: more references, more review rounds",
-       "masterpiece": "hard subjects, only on explicit request: until an independent critic scores every criterion 3"}
+       "masterpiece": "hard subjects, only on explicit request: rounds judged pairwise against the best, until every "
+                      "criterion is 3, two rounds without a win, or the 2-hour safety stop"}
 # overrides may raise a limit, never remove it
 CEILING = {"wall_clock_s": 7200, "review_rounds": 12, "check_rounds": 30, "searches": 40, "sources": 20, "images": 20}
 LIMIT_HELP = {"wall_clock_s": "wall clock, seconds", "review_rounds": "review/improve rounds",
@@ -101,9 +102,11 @@ def clock_rule(lim=None):
         "improve it in place, re-checking and saving after every round, so a valid scene is always on disk. " \
         "At %d%% stop adding: make the saved scene valid and deliver it." % (
             RESEARCH_SHARE * 100, DRAFT_BY * 100, WRAP_UP * 100)
-    if lim and lim["wall_clock_s"] is None:
-        return ("No wall clock: save a complete scene that passes `check` after the first round and a checkpoint "
-                "after every round after that, so the best version is always on disk.")
+    if lim and (lim["wall_clock_s"] is None or lim.get("tier") == UNCAPPED):
+        return ("Rounds, not a schedule: save a complete scene that passes `check` after the first round and a "
+                "checkpoint every round after that (`construct rounds`), so the best version is always on disk; the "
+                "%s is a safety stop on active time." % ("no wall clock" if lim["wall_clock_s"] is None else
+                                                          "%d-minute limit" % (lim["wall_clock_s"] // 60)))
     if lim:
         w = lim["wall_clock_s"]
         t += " (This run: research by %d s, a saved draft by %d s, wrap up at %d s.)" % (
@@ -119,8 +122,9 @@ def table():
         research = ("none beyond the source data" if not t["searches"] else
                     "≤%d searches, ≤%d sources read, ≤%d reference images" % (t["searches"], t["sources"], t["images"]))
         rows.append("| %s | %s | %s | %s | %s | %s |" % (
-            name, USE[name], "none" if t["wall_clock_s"] is None else "%d min" % (t["wall_clock_s"] // 60),
-            "until the critic's all-3" if t["review_rounds"] is None else
+            name, USE[name], "none" if t["wall_clock_s"] is None else "%d min%s" % (
+                t["wall_clock_s"] // 60, " active (a safety stop)" if name == UNCAPPED else ""),
+            "until the stop rules" if t["review_rounds"] is None else
             "0 (audit only)" if not t["review_rounds"] else t["review_rounds"],
             "%d per round" % t["check_rounds"] if name == UNCAPPED else t["check_rounds"], research))
     return "\n".join(rows)
@@ -128,9 +132,25 @@ def table():
 
 def check(c, a, source_ids, scene_sources, where="scene.authoring"):
     """Validate an `authoring` block with a scene `_Check`."""
-    if not c.keys(a, {"tier", "research", "sources", "review_rounds", "outcome", "next", "identity", "critic", "compare"},
-                  {"tier", "research"}, where):
+    if not c.keys(a, {"tier", "research", "sources", "review_rounds", "outcome", "next", "identity", "critic", "compare",
+                      "rounds"}, {"tier", "research"}, where):
         return
+    if "rounds" in a:  # the round timeline (`construct rounds` writes it)
+        r = a["rounds"]
+        if not isinstance(r, list) or len(r) > 40:
+            c.err(where + ".rounds", "expected a list of at most 40 rounds")
+        else:
+            for i, e in enumerate(r):
+                w = "%s.rounds[%d]" % (where, i)
+                if c.keys(e, {"round", "result", "minutes", "changes", "summary"}, {"round", "result"}, w):
+                    c.num(e.get("round"), w + ".round", 0, 1000, True)
+                    c.choice(e.get("result"), ("baseline", "kept", "reverted"), w + ".result")
+                    if "minutes" in e:
+                        c.num(e["minutes"], w + ".minutes", 0, 100000)
+                    if "summary" in e:
+                        c.text(e["summary"], w + ".summary", 200)
+                    if "changes" in e and not (isinstance(e["changes"], list) and all(isinstance(x, str) for x in e["changes"])):
+                        c.err(w + ".changes", "expected ledger ids")
     c.choice(a.get("tier"), tuple(TIERS), where + ".tier")
     c.choice(a.get("research"), RESEARCH_RECORD, where + ".research")
     used = a.get("sources", [])
@@ -287,6 +307,12 @@ def authoring_schema():
                 "properties": {"feature": {"type": "string", "maxLength": 200},
                                "parts": {"type": "array", "items": {"type": "string"}},
                                "source": {"type": "string"}, "note": {"type": "string"}}}},
+            "rounds": {"type": "array", "maxItems": 40, "items": {
+                "type": "object", "additionalProperties": False, "required": ["round", "result"],
+                "properties": {"round": {"type": "integer", "minimum": 0}, "result": {"enum": ["baseline", "kept", "reverted"]},
+                               "minutes": {"type": "number", "minimum": 0},
+                               "changes": {"type": "array", "items": {"type": "string"}},
+                               "summary": {"type": "string", "maxLength": 200}}}},
             "compare": {"type": "array", "maxItems": 8, "items": {
                 "type": "object", "additionalProperties": False,
                 "required": ["view", "reference", "iou", "edge", "pass", "scene_sha256"],
