@@ -84,13 +84,27 @@ Work in a folder of your own. `out/construct.html` opens in any browser.
 | measure likeness against a traced reference | `compare car.json --trace side.json --view side --record` |
 | an independent critic (fresh subagent or second call) | `critique scene.json --reference side=photo.jpg`, then `--record critique.json` |
 | the art-direction rubric | `references/review.md` |
-| research policy, effort tiers and their limits | `references/effort.md` |
+| the modes (fast, masterpiece, unbounded), research policy and limits | `references/effort.md` |
 
 ## Procedure
 
-1. **Effort and research.** Use the tier the user asks for — `quick` (bulk), `standard`
-   (default: at most 10 minutes, 2 review rounds, 5 searches, 3 sources, 3 reference images)
-   or `showcase` (only when asked: at most 30 minutes) — see `references/effort.md`. A
+1. **Mode and research.** Three modes (`references/effort.md`); the user can just say one:
+   - **fast:** one pass with self-review, no rounds loop: at most 10 minutes, 2 review rounds,
+     5 searches, 3 sources, 3 reference images (30 minutes and 4 reviews for a richer
+     subject). Generic subjects, simple objects, quick asks; DeepSeek is fine here.
+   - **masterpiece:** judged rounds (below), stopping after 2 rounds without a win, at every
+     criterion 3, at 12 rounds or at 2 hours of active work. A named subject whose likeness
+     matters. Frontier-model token cost.
+   - **unbounded:** the same rounds with only the stop rules, no round cap and no time
+     ceiling: many rounds and hours at a high token cost, stoppable after any round. Only
+     when the user asks for it by name.
+
+   Quick, standard and showcase still work and mean fast. **If the user names no mode, choose
+   one and announce it before any work:** the mode, why, the rough time and cost, and how to
+   switch. Fast for generic subjects, simple mechanical objects and quick asks; masterpiece
+   for a specific named subject whose likeness matters (a car model, a landmark, a named
+   building); never unbounded. On a smaller or cheaper model with a hard named subject, say so
+   and recommend GPT-6.1 Sol or Claude Opus for masterpiece, with fast as the option here. A
    generic subject ("a desk lamp") needs no research. For a concrete, named one (a brand and
    model, a named building or peak, a species) research first whenever you are unsure of its
    shape or specs: the maker's or official pages, specs and reference photos, looked at with
@@ -135,13 +149,13 @@ Work in a folder of your own. `out/construct.html` opens in any browser.
    answer with `--record` (`references/review.md`). Before each review add
    one to `authoring.review_rounds` and save; `check` warns `tier-rounds` past the cap. Stop when every criterion
    is good, or when the tier's review rounds or time run out, whichever comes first.
-   **Masterpiece runs judged rounds** (`references/rounds.md`): `scripts/cli.py rounds start
-   scene.json`. Each round, work on at most 4 ledger items and tag each edit (`rounds change
+   **Masterpiece and unbounded run judged rounds** (`references/rounds.md`): `scripts/cli.py
+   rounds start scene.json --mode masterpiece` (or `unbounded`). Each round, work on at most 4 ledger items and tag each edit (`rounds change
    D3 "..."`). Then `rounds packet --reference ...`, with ONE delegated critic a round (or
    `rounds run --base-url ...`), and `rounds record answer.json`. A version is kept only when
    it beats the best so far, and its regressions lead the next round. After every round,
-   report its summary in chat. Stop when `record` says STOP: every criterion at 3, two rounds
-   without a win, or the 2-hour safety stop on active time. After an interruption run
+   report its summary in chat. Stop when `record` says STOP: two rounds without a win, every
+   criterion at 3, or, in masterpiece, 12 rounds or 2 hours of active work. After an interruption run
    `rounds status` and redo only the step it names.
 6. **Deliver.** Record `authoring` in the scene (tier, research, sources used, outcome,
    `next` improvements). Give the user `out/construct.html` (and the video if asked), and say

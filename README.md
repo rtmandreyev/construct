@@ -76,12 +76,28 @@ looks like the thing: for free-form subjects that depends on the model and on a 
 (a person, or a model that can see the renders). Parameter archetypes look the same from every
 model.
 
+## Three modes
+
+Say one in the request, or say nothing and the skill picks one and tells you first: the mode,
+why, the rough time and cost, and how to switch.
+
+| mode | what it does | stops | costs | for |
+|---|---|---|---|---|
+| **fast** | one pass with self-review | 10 min (30 for a richer subject) | cents with a DeepSeek-class model | generic subjects, simple objects, quick asks |
+| **masterpiece** | rounds judged by an independent critic, each version against the best so far | 2 rounds without a win, 12 rounds or 2 hours of active work | frontier-model tokens for up to 2 hours | a named car, landmark or building whose likeness matters |
+| **unbounded** | the same rounds, no cap | only after 2 rounds without a win | many rounds and hours, a high token cost | only when you ask for it by name |
+
+The skill never picks unbounded: the critic finds a win almost every round, so it can run for
+hours. Every round is reported, so you can stop it at any time. The old tier names still work
+(quick, standard and showcase are fast).
+
 ## Recommended models
 
 From the evaluation runs:
 
-- **Hard subjects at Masterpiece** (a named car, a landmark): GPT-6.1 Sol or Claude Opus.
-- **Simpler objects at Standard or Showcase:** DeepSeek works as well as those, with no
+- **Hard subjects in masterpiece mode** (a named car, a landmark): GPT-6.1 Sol or Claude Opus.
+  A smaller model on such a subject says so and recommends them.
+- **Simpler objects in fast mode:** DeepSeek works as well as those, with no
   regression on objects such as a tape deck, a watch or a camera.
 - **Small or free models** (MiniMax, Inkling, Nemotron) are not recommended. In about half of
   their runs they failed to save a scene at all, and they made scale errors.

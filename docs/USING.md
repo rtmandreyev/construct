@@ -114,6 +114,21 @@ renders the construct and asks the model for an art-direction review of its own 
 (`prompts/vision-review.md`), improving the weakest point each round until the verdict is
 "good". Then `build`/`review` it.
 
+**Modes.** A run is one of three modes; the user names one, or the skill picks and announces
+it before any work (never unbounded):
+
+| mode | what it does | stops | costs | for |
+|---|---|---|---|---|
+| **fast** (`--mode fast`, the default here) | one pass with self-review, no rounds loop: the standard tier, or showcase for a richer subject | 10 min and 2 reviews (30 min and 4) | cents with DeepSeek (below) | generic subjects, simple objects, quick asks |
+| **masterpiece** (`--mode masterpiece`) | the critic every round, each version judged against the best so far | 2 rounds without a win, every criterion 3, 12 rounds, or 2 hours of active work | frontier-model tokens for up to 2 hours | a named subject whose likeness matters: a car model, a landmark, a named building |
+| **unbounded** (`--mode unbounded`) | the same rounds with only the stop rules | 2 rounds without a win (or every criterion 3), or you | many rounds and hours at a high token cost | only on explicit request |
+
+Unbounded has no round cap and no time ceiling. The critic finds a win almost every round, so
+it can run for many rounds and hours; the per-round report lets you stop it at any time. In the
+owner's blind comparisons no visible gain showed after about 12 rounds, which is where
+masterpiece stops. The old tier names still work: `--tier quick|standard|showcase` are fast,
+`--tier masterpiece` is masterpiece; `mode: ...` or `tier: ...` in a request is read too.
+
 The effort tier bounds the whole run, and `author` enforces it: whichever comes first ends
 the run — a "good" verdict, or any limit — and the best draft so far is written with its
 `authoring` record (tier, outcome, `next` improvements), printed as `next:` lines too. Every
@@ -128,27 +143,29 @@ python3 construct_hologram/cli.py author "a Revox A77 tape recorder" --tier show
 
 | option | effect |
 |---|---|
-| `--tier quick\|standard\|showcase\|masterpiece` | the limits below (default standard; also `tier: ...` in the request) |
+| `--mode fast\|masterpiece\|unbounded` (or `--tier quick\|standard\|showcase\|masterpiece`) | the limits below (default fast, the standard tier; also `mode: ...` or `tier: ...` in the request) |
 | `--research auto\|on\|off` | the research policy, or the user's override (also `research: ...` in the request) |
 | `--rounds`, `--review-rounds`, `--max-seconds`, `--max-images` | raise or lower one limit (never remove it) |
 | `--critic` (or `--critic-model`, `--critic-base-url`, `--critic-key-env`) | an independent critic, a fresh call, judges each review against the references; only its verdict records "good" or "outstanding" |
 | `--max-total-tokens`, `--max-cost` with `--price-in`/`--price-out` | an optional token or cost ceiling (USD per million tokens) |
 
-| tier | wall clock | review/improve rounds | check rounds | web reference images |
-|---|---|---|---|---|
-| quick | 2 min | 0 (audit only) | 3 | none |
-| standard | 10 min | 2 | 6 | 3 |
-| showcase | 30 min | 4 | 10 | 6 |
+| mode | tier | wall clock | review/improve rounds | check rounds | web reference images |
+|---|---|---|---|---|---|
+| fast | quick | 2 min | 0 (audit only) | 3 | none |
+| fast | standard | 10 min | 2 | 6 | 3 |
+| fast | showcase | 30 min | 4 | 10 | 6 |
+| masterpiece | masterpiece | 2 hours | 12 | 8 per round | 12 |
+| unbounded | unbounded | none | no cap | 8 per round | 12 |
 
-**Masterpiece** (`--tier masterpiece`, for hard subjects on request) has no round cap and a
-2-hour safety stop: every round the critic compares renders with your references (`--reference
-side=side.jpg --reference top=top.jpg`), its ranked defects go back to the author, and a
-checkpoint is written to `<out>.checkpoints/`. It stops when the critic scores every criterion
-3, at `--max-cost`, at the safety stop, or when you press Ctrl-C (the best version so far is
-written).
+**Masterpiece and unbounded in `author`:** every round the critic compares renders with your
+references (`--reference side=side.jpg --reference top=top.jpg`), its ranked defects go back to
+the author, and a checkpoint is written to `<out>.checkpoints/`. Masterpiece stops when the
+critic scores every criterion 3, at 12 rounds, at 2 hours, at `--max-cost`, or when you press
+Ctrl-C (the best version so far is written); unbounded only at the first, `--max-cost` or
+Ctrl-C. A model other than Sol or Opus gets a note recommending them.
 
 **Masterpiece rounds in an agent** (Claude Code, Hermes): `construct rounds` runs the judged
-loop on disk: `rounds start scene.json`; each round `rounds change <ledger id> "what"` for at
+loop on disk: `rounds start scene.json --mode masterpiece` (or `unbounded`); each round `rounds change <ledger id> "what"` for at
 most 4 ledger items, `rounds packet --reference ...` for ONE critic (blind first, then this
 version against the best so far as an unlabelled A/B pair, then the defect ledger), and `rounds
 record answer.json`. A version is kept when it wins the pair; otherwise the best comes back.
@@ -157,8 +174,8 @@ the run readable and resumable (`rounds status`). See `skill/references/rounds.m
 
 **Recommended models.** From the evaluation runs:
 
-- **Hard subjects at Masterpiece** (a named car, a landmark): GPT-6.1 Sol or Claude Opus.
-- **Simpler objects at Standard or Showcase:** DeepSeek works as well as those, with no
+- **Hard subjects in masterpiece mode** (a named car, a landmark): GPT-6.1 Sol or Claude Opus.
+- **Simpler objects in fast mode:** DeepSeek works as well as those, with no
   regression on objects such as a tape deck, a watch or a camera.
 - **Small or free models** (MiniMax, Inkling, Nemotron) are not recommended. In about half of
   their runs they failed to save a scene at all, and they made scale errors.

@@ -1,4 +1,4 @@
-# Rounds: how a Masterpiece (or Showcase) gets better, and when it stops
+# Rounds: how a masterpiece (or unbounded) run gets better, and when it stops
 
 A long run improves only if each round is judged fairly and nothing good is thrown away. In live
 runs a construct gained about one rubric point per round, up to about 20 of 27 by 45–50 active
@@ -8,8 +8,8 @@ minutes. What wasted rounds there:
 - bundling 5–10 edits, so nobody could tell which one hurt;
 - retiring defects as "known limits" while they were still being fixed.
 
-`construct rounds` keeps the run on disk, so it can be read, steered and resumed. Use it for
-Masterpiece, and for Showcase when you run review rounds.
+`construct rounds` keeps the run on disk, so it can be read, steered and resumed. It is the
+masterpiece and unbounded modes; fast mode is one pass without it.
 
 ## Start
 
@@ -17,7 +17,7 @@ In the run's own folder, named after nothing (`run-3f9a/`, not the subject's nam
 first draft saved and passing `check`:
 
 ```bash
-python3 TOOLS rounds start scene.json --tier masterpiece
+python3 TOOLS rounds start scene.json --mode masterpiece      # or --mode unbounded, only when asked
 ```
 
 The run's memory is these files. Every command saves them, so an interruption loses at most one
@@ -59,7 +59,7 @@ step:
      a different fix.
 
    Absolute scores are recorded but decide nothing.
-5. **Report the round in chat** (Masterpiece: every round; Showcase: one summary at the end).
+5. **Report the round in chat,** every round.
    `record` prints it: the critic's top requests, what changed (with ledger ids), won or lost
    against the best, and the minutes. Copy it as it is. Then go to step 1, unless it says STOP.
 
@@ -96,15 +96,21 @@ skill could not express.
 ## Stop
 
 At the first of:
+- 2 rounds in a row that don't beat the best (any pairwise win resets the count);
 - every criterion at 3;
-- 2 rounds in a row that don't beat the best;
-- the 2-hour safety stop on **active time**: the author's time from `start` or `record` to the
+- **masterpiece only:** 12 rounds (a default cap: in blind comparisons no visible gain showed
+  after about 12 rounds);
+- **masterpiece only:** 2 hours of **active time**: the author's time from `start` or `record` to the
   next `packet`, measured from the run folder's own activity (edits, a generator writing the
   scene, builds). Time after the last write counts only if the next command comes within 10
   minutes; a silence of over 45 minutes between writes (a usage limit) is an interruption; and
   `rounds pause` marks one explicitly. The critic's time, from `packet` to `record`, is measured
   the same way, the packet's folder included, and logged separately;
 - the user says so.
+
+**Unbounded** keeps only the first two: no round cap and no time ceiling. The critic finds a
+win almost every round, so it can run for many rounds and hours at a high token cost. Report
+every round, so the user can stop it at any time.
 
 Then `python3 TOOLS rounds report` appends the final report to `rounds.md`: the best round, the
 curve, the minutes, the open defects and the known limits. Deliver the best round: it is the

@@ -1,6 +1,6 @@
 # Research and effort
 
-Aim for genuinely good, and always stop within the tier's limits. Both rules hold together.
+Aim for genuinely good, and always stop within the mode's limits. Both rules hold together.
 
 ## Research: optional, decided by the request
 
@@ -27,14 +27,52 @@ Research, when it applies, comes **before** any part is written:
 Record it in the scene: `"authoring": {"tier": "standard", "research": "done", "sources":
 ["maker-specs", "ref-front"]}`, every id also in the scene's `sources`.
 
-## Effort tiers
+## Modes: fast, masterpiece, unbounded
 
-| tier | use | wall clock | review/improve rounds | check rounds | research, when it applies |
-|---|---|---|---|---|---|
-| quick | bulk imports and simple archetypes (the parameter path) | 2 min | 0 (audit only) | 3 | none beyond the source data |
-| standard | one entry (the default) | 10 min | 2 | 6 | ≤5 searches, ≤3 sources read, ≤3 reference images |
-| showcase | only on explicit request: more references, more review rounds | 30 min | 4 | 10 | ≤10 searches, ≤6 sources read, ≤6 reference images |
-| masterpiece | hard subjects, only on explicit request: rounds judged pairwise against the best, until every criterion is 3, two rounds without a win, or the 2-hour safety stop | 120 min active (a safety stop) | until the stop rules | 8 per round | ≤20 searches, ≤12 sources read, ≤12 reference images |
+The user picks a mode by saying its name, or says nothing and you pick one (below).
+
+| mode | what it does | stops at | costs | for |
+|---|---|---|---|---|
+| **fast** | one pass with self-review, no rounds loop (the standard tier; showcase for a richer subject) | the tier's limits: 10 min and 2 reviews, or 30 min and 4 | 10 minutes (30 for a richer subject); cents with a DeepSeek-class model | generic subjects ("a watch", "a car"), simple mechanical objects, quick asks; DeepSeek-class models do these well |
+| **masterpiece** | the rounds loop: a defect ledger and one independent critic a round, each version judged pairwise against the best so far ([rounds](rounds.md)) | 2 rounds in a row without a pairwise win, every criterion 3, **12 rounds**, or **2 hours of active work** | up to 12 rounds and 2 hours of active work, plus the critic's time; the most tokens of a normal run, so use a frontier model (GPT-6.1 Sol or Claude Opus) | a specific named subject whose likeness matters: a car model, a landmark, a named building |
+| **unbounded** | the same loop with **only** its stop rules: no round cap, no time ceiling | 2 rounds in a row without a pairwise win (or every criterion 3), or the user | no cap: many rounds and hours, at a high token cost; stop it at any round | only when the user asks for it by name |
+
+**Unbounded, plainly:** the critic finds a win almost every round, so an unbounded run can go
+on for many rounds and hours, at a high token cost. The per-round report lets the user stop it
+at any time. In blind comparisons the owner saw no visible gain after about 12 rounds, which is
+why masterpiece stops there. Offer unbounded only when asked; never choose it yourself.
+
+The old tier names still work: quick, standard and showcase are fast; masterpiece is
+masterpiece. `tier: showcase` or `mode: masterpiece` in a request is honoured.
+
+### Choosing when the user says nothing
+
+Pick the mode yourself and **announce it before any work**, in two or three lines: the mode,
+why, the rough time and cost, and how to switch. For example:
+
+> Mode: **masterpiece**, because a Porsche 911 is a specific named car whose likeness matters.
+> About 12 rounds and up to 2 hours of active work, at frontier-model token cost. Say "fast"
+> for a single 10-minute pass instead (or "unbounded" to keep going past 12 rounds).
+
+- **fast:** a generic subject, a simple mechanical object, a quick request.
+- **masterpiece:** a specific named subject whose likeness matters (a car model, a landmark, a
+  named building).
+- **unbounded:** never chosen automatically.
+
+**Say which model fits.** If you are a smaller or cheaper model and the subject is a hard named
+one, say so in the announcement and recommend GPT-6.1 Sol or Claude Opus for masterpiece (the
+evaluation runs: small and free models made scale errors and often failed to save a scene);
+offer fast mode as the alternative on the current model.
+
+## The tiers behind the modes
+
+| mode | tier | use | wall clock | review/improve rounds | check rounds | research, when it applies |
+|---|---|---|---|---|---|---|
+| fast | quick | fast mode: bulk imports and simple archetypes (the parameter path) | 2 min | 0 (audit only) | 3 | none beyond the source data |
+| fast | standard | fast mode: one entry, a generic subject or a simple object | 10 min | 2 | 6 | ≤5 searches, ≤3 sources read, ≤3 reference images |
+| fast | showcase | fast mode for a richer subject: more references, more review rounds | 30 min | 4 | 10 | ≤10 searches, ≤6 sources read, ≤6 reference images |
+| masterpiece | masterpiece | a named subject whose likeness matters: rounds judged pairwise against the best, until two rounds without a win, every criterion 3, 12 rounds or the 2-hour ceiling | 120 min active | 12 (default cap) | 8 per round | ≤20 searches, ≤12 sources read, ≤12 reference images |
+| unbounded | unbounded | only on explicit request: the same rounds with only the stop rules (two rounds without a win, or every criterion 3); no round cap, no time ceiling; many rounds and hours at a high token cost | none | until the stop rules | 8 per round | ≤20 searches, ≤12 sources read, ≤12 reference images |
 
 Effort goes where it is visible: silhouette, then proportions, then the two or three identity
 features, then secondary detail. Model nothing smaller than about 0.5% of the object's largest
@@ -54,13 +92,13 @@ the time limit (seen in a live run: ten minutes of excellent research, no scene 
 Start the first draft from what you have (the silhouette, the masses, the identity features
 roughly placed) rather than from a perfect plan; size and detail come in the rounds after.
 
-## The masterpiece tier (hard subjects, on request)
+## Masterpiece and unbounded: the rounds
 
-For a subject that must be recognisable exactly (a named car, a landmark building) the user can
-ask for the masterpiece tier. It has no round cap; it runs judged rounds
-([rounds](rounds.md)) and stops at the first of: every criterion at 3, two rounds in a row
-that do not beat the best, a 2-hour safety stop on active time (an interruption does not
-count), or the user. Every round:
+For a subject that must be recognisable exactly (a named car, a landmark building).
+Masterpiece runs judged rounds ([rounds](rounds.md)) and stops at the first of: two rounds in a
+row that do not beat the best, every criterion at 3, 12 rounds, 2 hours of active time (an
+interruption does not count), or the user. Unbounded drops the round cap and the time ceiling.
+Every round:
 
 1. Work on at most 4 ledger items, regressions first, and tag each edit with its ledger id.
 2. `check` until clean; `rounds packet` checks the round in and writes the critic's packet.
@@ -107,9 +145,9 @@ deliver, and put what you would still improve in `next`.
 
 ## Who enforces the limits
 
-- **The agent** (any host) follows the table above; the tier is the user's or host's choice,
-  standard by default, showcase only when asked.
-- **`construct author`** enforces them itself: `--tier`, a wall-clock timeout, check and
+- **The agent** (any host) follows the tables above; the mode is the user's choice, or yours
+  when they name none (announced first, never unbounded).
+- **`construct author`** enforces them itself: `--mode` (or `--tier`), a wall-clock timeout, check and
   review round counters (no review round starts after 80% of the time), saving every new best
   valid draft to `--out` at once, a cap on web reference images (`--max-images`; the user's own
   photos are source data, not research), and optional `--max-total-tokens` or `--max-cost`
@@ -124,4 +162,5 @@ deliver, and put what you would still improve in `next`.
   `config.yaml` stays as it is) gives the 80% wrap-up notice and a hard ceiling.
 - **Hosts add hard limits on top**: a Hermes run budget (its turn and time limits), an agent
   harness's timeout and cost ceiling (for example tessera-agent's), a provider's spend cap.
-  Whichever limit is tightest wins; Construct never runs unbounded.
+  Whichever limit is tightest wins. Only the unbounded mode, on the user's explicit request,
+  runs without Construct's own round cap and time ceiling.

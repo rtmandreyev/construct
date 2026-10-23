@@ -1,6 +1,28 @@
 # Changelog
 
-## 0.2.1 (unreleased)
+## 0.2.1 (release candidate)
+
+- **Three modes, and the skill chooses** (from the fifth rounds experiment: C2's rounds won
+  the owner's blind pick, and the owner saw no visible gain after about round 12):
+  - **fast:** one pass with self-review, no rounds loop (the standard tier, or showcase for a
+    richer subject). For generic subjects, simple objects and quick asks; DeepSeek-class models
+    do these well.
+  - **masterpiece:** the rounds loop, stopping after 2 rounds without a pairwise win, at every
+    criterion 3, at a default cap of **12 rounds**, or at 2 hours of active work. For a named
+    subject whose likeness matters.
+  - **unbounded:** the same loop with only its stop rules: no round cap, no time ceiling. Only
+    on explicit request: the critic finds a win almost every round, so it can run many rounds
+    and hours at a high token cost; the per-round report lets the user stop it.
+  - **the old tier names are aliases:** quick, standard and showcase mean fast; masterpiece
+    means masterpiece. `--mode` (or `--tier`), `mode:` or `tier:` in a request,
+    `CONSTRUCT_TIER` for the Claude Code hook and the MCP `construct_limits` tool all take
+    either.
+  - **the skill picks when the user says nothing,** and announces it before any work: the
+    mode, why, the rough time and cost, and how to switch. Fast for generic and simple
+    subjects; masterpiece for a named car, landmark or building; never unbounded
+    (`tiers.choose` gives the same answer from the author's judgement of the subject).
+  - **model-aware:** a smaller or cheaper model on a hard named subject says so and recommends
+    GPT-6.1 Sol or Claude Opus (`construct author` logs the same note).
 
 - **Contours, detail and fair rounds** (build C2, from the fifth rounds experiment: build C's
   rounds won every blind comparison; a later build's renders lost their surface contours):

@@ -856,6 +856,37 @@ class Tiers(unittest.TestCase):
         self.assertIn(tiers.clock_rule(), prompts.build()["system.md"])
         self.assertIn("40%", (HERE / "skill" / "SKILL.md").read_text(encoding="utf-8"))
 
+    def test_three_modes_and_the_old_tier_names_as_aliases(self):
+        self.assertEqual(tiers.MODES, ("fast", "masterpiece", "unbounded"))
+        self.assertEqual({t: tiers.mode(t) for t in ("quick", "standard", "showcase", "masterpiece", "unbounded")},
+                         {"quick": "fast", "standard": "fast", "showcase": "fast", "masterpiece": "masterpiece",
+                          "unbounded": "unbounded"})
+        lim = tiers.limits("fast")
+        self.assertEqual((lim["tier"], lim["mode"], lim["wall_clock_s"], lim["review_rounds"]), ("standard", "fast", 600, 2))
+        self.assertEqual(tiers.from_request("a Countach, mode: masterpiece"), {"mode": "masterpiece", "tier": "masterpiece"})
+        self.assertEqual(tiers.from_request("a lamp, mode: fast")["tier"], "standard")
+        with self.assertRaises(tiers.TierError):
+            tiers.mode("epic")
+        self.assertIn("| unbounded | unbounded |", tiers.table())
+
+    def test_the_skill_chooses_a_mode_but_never_unbounded(self):
+        self.assertEqual(tiers.choose("a watch")["mode"], "fast")
+        self.assertEqual(tiers.choose("a Revox A77", named=True, category="machine")["mode"], "fast")
+        pick = tiers.choose("a Lamborghini Countach", named=True, category="vehicle")
+        self.assertEqual((pick["mode"], pick["chosen"]), ("masterpiece", True))
+        self.assertIn("12 rounds", pick["cost"])
+        self.assertEqual(tiers.choose("the Eiffel Tower", named=True, category="architecture")["mode"], "masterpiece")
+        for request in ("a car", "a cathedral"):  # generic: fast, whatever the category
+            self.assertEqual(tiers.choose(request, named=False, category="vehicle")["mode"], "fast")
+        said = tiers.choose("a watch, mode: unbounded")
+        self.assertEqual((said["mode"], said["chosen"]), ("unbounded", False))  # only ever the user's word
+        self.assertIsNone(tiers.model_note("gpt-6.1-sol", "masterpiece"))
+        self.assertIsNone(tiers.model_note("deepseek-chat", "fast"))
+        self.assertIn("Claude Opus", tiers.model_note("deepseek-chat", "masterpiece"))
+        text = (HERE / "skill" / "SKILL.md").read_text(encoding="utf-8")
+        for words in ("announce it before any work", "never\n   unbounded", "recommend GPT-6.1 Sol or Claude Opus"):
+            self.assertIn(words.replace("\\n", "\n"), text)
+
     def test_the_request_can_choose_research_and_tier(self):
         self.assertEqual(tiers.from_request("a Leica M3, research: off, tier: Showcase"),
                          {"research": "off", "tier": "showcase"})
@@ -1136,6 +1167,38 @@ class Rounds(unittest.TestCase):
         self.assertIn("finish round 5 (finish from round 2): a 4-round finish cap would have stopped at round 5", log)
         self.assertEqual(r.state(self.d)["status"], "running")  # logged only
 
+    def test_masterpiece_stops_at_12_rounds_and_unbounded_only_at_the_stop_rule(self):
+        r = self.r
+        self.assertEqual(r.state(self.d)["max_rounds"], 12)
+        _check_in(self.d, self.doc)
+        r.record(self.d, _round_answer(self.d, 1), self.scene)
+        for n in range(2, 13):  # every round a win: only the cap ends it
+            _check_in(self.d, self.edit([1, 1, 1 + n / 100]))
+            e = r.record(self.d, _round_answer(self.d, n), self.scene)
+        self.assertIn("the 12-round cap", e["stop"])
+        with tempfile.TemporaryDirectory() as d:
+            sc = Path(d, "s.json")
+            sc.write_text(json.dumps(self.doc))
+            st = r.start(str(sc), "unbounded", d)
+            self.assertEqual((st["max_rounds"], st["limit_seconds"]), (None, None))
+            st["active_seconds"] = 10 * 3600  # ten hours: no ceiling
+            r._save(d, "state.json", st)
+            _check_in(d, self.doc)
+            r.record(d, _round_answer(d, 1), sc)
+            for n in range(2, 15):
+                _check_in(d, dict(self.doc, parts=[dict(self.doc["parts"][0], at=[0, 0, n / 100])]))
+                e = r.record(d, _round_answer(d, n), sc)
+            self.assertIsNone(e["stop"])  # 14 winning rounds, ten hours: still running
+            self.assertIn("no time ceiling", r.status(d))
+            for n in (15, 16):
+                _check_in(d, dict(self.doc, parts=[dict(self.doc["parts"][0], at=[0, 0, n / 100])]))
+                e = r.record(d, _round_answer(d, n, win=False), sc)
+            self.assertIn("2 rounds in a row did not beat", e["stop"])
+        for fast in ("fast", "standard", "showcase"):
+            with tempfile.TemporaryDirectory() as d:
+                with self.assertRaises(r.RoundsError):
+                    r.start(str(self.scene), fast, d)
+
     def test_answers_are_checked(self):
         r = self.r
         _check_in(self.d, self.doc)
@@ -1225,11 +1288,12 @@ class Critic(unittest.TestCase):
         self.assertTrue(rep["ok"])
         self.assertNotIn("critic-stale", {d["code"] for d in rep["diagnostics"]})
 
-    def test_masterpiece_has_no_round_cap_a_safety_stop_and_a_user_stop(self):
+    def test_masterpiece_has_a_round_cap_a_ceiling_and_a_user_stop_and_unbounded_has_neither(self):
         lim = tiers.limits("masterpiece")
-        self.assertEqual(lim["wall_clock_s"], 7200)  # a 2-hour safety stop (active time in `construct rounds`)
-        self.assertIsNone(lim["review_rounds"])
+        self.assertEqual((lim["wall_clock_s"], lim["review_rounds"]), (7200, 12))  # 2 hours active, 12 rounds
         self.assertEqual(tiers.limits("masterpiece", wall_clock_s=36000)["wall_clock_s"], 36000)
+        lim = tiers.limits("unbounded")
+        self.assertEqual((lim["wall_clock_s"], lim["review_rounds"], lim["mode"]), (None, None, "unbounded"))
         good = json.dumps(params.template("vessel", "can") | {"facts": [], "synthetic": True})
         saved = runner.chat, critic.packet, critic.run
         runner.chat = lambda *a, **k: (good, {})
@@ -1259,8 +1323,12 @@ class BudgetHook(unittest.TestCase):
 
     def test_its_table_is_the_tiers(self):
         hook = _budget_hook()
-        self.assertEqual(hook.TIERS, {k: (v["wall_clock_s"], v["review_rounds"]) for k, v in tiers.TIERS.items()})
+        # the rounds modes count their rounds in `construct rounds`, not review commands
+        self.assertEqual(hook.TIERS, {k: (v["wall_clock_s"], None if k in tiers.ROUNDS else v["review_rounds"])
+                                      for k, v in tiers.TIERS.items()})
         self.assertEqual(hook.WRAP_UP, tiers.WRAP_UP)
+        self.assertEqual(hook.limits({"CONSTRUCT_TIER": "fast"}), ("standard", 600, 2))
+        self.assertEqual(hook.limits({"CONSTRUCT_TIER": "unbounded"}), ("unbounded", None, None))
 
     def test_review_rounds_wrap_up_and_wall_clock(self):
         hook = _budget_hook()

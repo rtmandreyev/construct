@@ -157,11 +157,15 @@ def start(scene_path, tier="masterpiece", folder=None, now=None):
     folder = Path(folder or scene_path.parent).resolve()
     if Path(folder, STATE).exists():
         raise RoundsError("%s already holds a run: `construct rounds status` resumes it" % (folder / STATE))
+    tier = tiers.tier_of(tier)
+    if tier not in tiers.ROUNDS:
+        raise RoundsError("the rounds loop is the masterpiece and unbounded modes; %s is fast mode: one pass with "
+                          "self-review" % tier)
     lim = tiers.limits(tier)
     now = time.time() if now is None else now
     st = {"format": "construct-rounds", "version": 2, "scene": os.path.relpath(scene_path, folder), "tier": tier, "round": 1,
           "step": "authoring", "active_seconds": 0.0, "critic_seconds": 0.0, "last_step_at": now,
-          "limit_seconds": lim["wall_clock_s"], "best_round": None, "no_gain": 0, "status": "running", "changes": [],
+          "limit_seconds": lim["wall_clock_s"], "max_rounds": lim["review_rounds"], "best_round": None, "no_gain": 0, "status": "running", "changes": [],
           "history": []}
     folder.mkdir(parents=True, exist_ok=True)
     (folder / "checkpoints").mkdir(exist_ok=True)
@@ -511,8 +515,10 @@ def record(folder, answer, scene_path=None, model=None, now=None):
         stop = "every criterion at 3"
     elif st["no_gain"] >= NO_GAIN:
         stop = "%d rounds in a row did not beat round %d" % (NO_GAIN, st["best_round"])
+    elif st.get("max_rounds") and n >= st["max_rounds"]:
+        stop = "the %d-round cap (best: round %d)" % (st["max_rounds"], st["best_round"])
     elif st.get("limit_seconds") and st["active_seconds"] >= st["limit_seconds"]:
-        stop = "the %d-minute safety stop (active time)" % (st["limit_seconds"] // 60)
+        stop = "the %d-minute ceiling on active time" % (st["limit_seconds"] // 60)
     st.update({"round": n + 1, "changes": [], "round_started_active": st["active_seconds"]})
     st.pop("packet_at", None)
     if stop:
@@ -595,7 +601,7 @@ def status(folder, now=None):
     lines = ["Run: %s, tier %s, %s%s." % (st["scene"], st["tier"], st["status"], " (%s)" % st["stop"] if st.get("stop") else ""),
              "Round %d, step %s; best round %s; %.1f active minutes%s; critic %.1f minutes." % (
                  st["round"], st["step"], st["best_round"], st["active_seconds"] / 60,
-                 " of %d" % (st["limit_seconds"] // 60) if st.get("limit_seconds") else "",
+                 " of %d" % (st["limit_seconds"] // 60) if st.get("limit_seconds") else " (no time ceiling)",
                  st.get("critic_seconds", 0.0) / 60),
              "Ledger: %s." % ", ".join("%d %s" % (sum(1 for i in led["items"] if i["status"] == s), s) for s in STATUSES)]
     if st["status"] == "running":

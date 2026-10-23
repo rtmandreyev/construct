@@ -28,6 +28,6 @@ positions) are deliberately absent: an arbitrary object has its own facts.
 
 Most time goes to research, facts and visual judgment, not JSON. With the vocabulary in hand
 a first scene takes minutes. NODE's places were finished when they were genuinely striking,
-not merely accurate; here that aim is bounded by an effort tier (quick, standard, showcase)
-whose limits are ceilings, never targets: see [effort](effort.md). Write down your facts and
+not merely accurate; here that aim is bounded by a mode (fast, masterpiece, or unbounded
+when the user asks for it) whose limits are ceilings, never targets: see [effort](effort.md). Write down your facts and
 identity features before the first part.

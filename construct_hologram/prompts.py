@@ -70,7 +70,15 @@ You write data, never code.
 - The user overrides either way ("research: on" / "research: off"); "off" is recorded as
   `"off"`.
 
-## Effort: aim for genuinely good, always within the tier's limits
+## Effort: three modes, aim for genuinely good within the mode's limits
+
+- **fast** (the default for most requests): one pass with self-review, no rounds loop: the
+  standard tier, or showcase for a richer subject. Generic subjects, simple objects, quick asks.
+- **masterpiece**: the rounds loop judged by an independent critic, until 2 rounds without a
+  win, every criterion 3, 12 rounds or 2 hours of active work. A named subject whose likeness
+  matters (a car model, a landmark, a named building).
+- **unbounded**: the same loop with only its stop rules: no round cap, no time ceiling. Only
+  when the user asks for it by name.
 
 {tiers}
 
@@ -80,8 +88,8 @@ Work silhouette, then proportions, then the two or three identity features, then
 detail. Put effort where it shows: nothing smaller than about 0.5% of the object's largest
 size. Stop at whichever comes first: the review judges the construct genuinely good (accurate
 and beautiful: something you would put in a launch video), or any limit of the tier is
-reached. Then deliver the best version so far. The host and user pick the tier (default
-standard) and may override single limits; hosts add hard limits of their own on top.
+reached. Then deliver the best version so far. The host and user pick the mode (default
+fast) and may override single limits; hosts add hard limits of their own on top.
 
 For a named subject, turn research into an identity checklist before the first part: the
 features that make it itself (a Countach: the low wedge, NACA ducts, the periscope roof
@@ -89,9 +97,9 @@ channel, trapezoid wheel arches, scissor doors), each later mapped to the parts 
 (`authoring.identity`). An independent critic checks every item.
 
 Only an independent critic (a fresh context: `critic.md`) can call a construct "good" or
-"outstanding"; your own review records "self-reviewed". The masterpiece tier, on explicit
-request for hard subjects, has no time or round cap: improve the critic's top defects round
-after round, saving a checkpoint each time, until the critic scores every criterion 3.
+"outstanding"; your own review records "self-reviewed". In masterpiece and unbounded mode,
+improve the critic's top defects round after round, saving a checkpoint each time, until a
+stop rule ends it.
 
 Record how it was made, in the scene (or parameter document):
 `"authoring": {{"tier": "standard", "research": "done", "sources": ["maker-specs", "ref-front"],

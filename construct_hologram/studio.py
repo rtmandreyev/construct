@@ -175,8 +175,11 @@ def _rounds(args):
             if len(a) != 1:
                 raise rounds.RoundsError("usage: construct rounds start scene.json [--tier masterpiece] [--dir run]")
             st = rounds.start(a[0], args.tier, folder if args.dir != "." else Path(a[0]).resolve().parent)
-            sys.stdout.write("started: round 1, tier %s, %s-minute safety stop on active time; the medium's limits are "
-                             "seeded as known limits (L1-L3)\n" % (st["tier"], st["limit_seconds"] // 60))
+            sys.stdout.write("started: round 1, %s mode, %s; the medium's limits are seeded as known limits (L1-L3)\n" % (
+                st["tier"], "stops after 2 rounds without a win, at %d rounds or %d minutes of active time" % (
+                    st["max_rounds"], st["limit_seconds"] // 60) if st.get("limit_seconds") else
+                "stops only after 2 rounds without a win (or every criterion 3): no round cap, no time ceiling, so "
+                "report every round and let the user stop it"))
         elif args.action == "change":
             if len(a) != 2:
                 raise rounds.RoundsError("usage: construct rounds change D3 \"what changed\"")
@@ -210,7 +213,7 @@ def _rounds(args):
                                     log=lambda m: sys.stdout.write(m + "\n"))
             e = rounds.record(folder, answer, rounds.scene_of(folder), model)
             st = rounds.state(folder)
-            if st["tier"] == "masterpiece" or e["stop"]:
+            if st["tier"] in ("masterpiece", "unbounded") or e["stop"]:
                 sys.stdout.write(rounds.summary(e) + "\n")
             else:
                 sys.stdout.write("round %d recorded (%s); details in rounds.md\n" % (e["round"], "kept" if e["kept"] else "reverted"))
@@ -256,9 +259,11 @@ def add_commands(sub):
     p.add_argument("--reference", action="append",
                    help="a reference image (a local photo or an https URL), optionally view=image (side=photo.jpg) so "
                         "the critic compares it with the render from that view; repeatable")
-    p.add_argument("--tier", choices=("quick", "standard", "showcase", "masterpiece"),
-                   help="effort tier and its limits (default standard; masterpiece: no time or round cap, until the "
-                        "critic scores every criterion 3; also 'tier: ...' in the request)")
+    p.add_argument("--tier", "--mode", dest="tier", choices=("fast", "masterpiece", "unbounded", "quick", "standard",
+                                                            "showcase"),
+                   help="the mode and its limits: fast (the default: one pass, 10 min; quick, standard and showcase "
+                        "are its tiers), masterpiece (the critic every round: 12 rounds, 2 hours), unbounded (only on "
+                        "explicit request: no round cap, no time ceiling); also 'mode: ...' in the request")
     p.add_argument("--research", choices=("auto", "on", "off"),
                    help="auto follows the research policy; on/off overrides it (also 'research: ...' in the request)")
     p.add_argument("--vision", action="store_true",
@@ -331,7 +336,8 @@ def add_commands(sub):
     p.add_argument("action", choices=("start", "change", "packet", "record", "run", "pause", "status", "report"))
     p.add_argument("args", nargs="*", help="start: scene.json; change: ID \"what changed\"; record: answer.json")
     p.add_argument("--dir", default=".", help="the run's folder (state.json, ledger.json, rounds.md, checkpoints/)")
-    p.add_argument("--tier", default="masterpiece", choices=("showcase", "masterpiece"))
+    p.add_argument("--tier", "--mode", dest="tier", default="masterpiece", choices=("masterpiece", "unbounded"),
+                   help="masterpiece (12 rounds, 2 hours active) or unbounded (only the stop rules; explicit request)")
     p.add_argument("--reference", action="append", default=[], help="view=image, as for critique; repeatable")
     p.add_argument("--request", help="the request in plain words")
     p.add_argument("--out", help="the packet folder (default: a neutral folder in the temp directory)")

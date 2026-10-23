@@ -14,7 +14,8 @@ Configure it in the project's .claude/settings.json (see hosts/claude-code/READM
 
     python3 construct_budget.py session-start | pre | post
 
-Limits come from CONSTRUCT_TIER (quick, standard, showcase; default standard), overridden by
+Limits come from CONSTRUCT_TIER: a mode (fast, masterpiece, unbounded) or a tier (quick, standard,
+showcase; fast is standard, the default), overridden by
 CONSTRUCT_MAX_SECONDS and CONSTRUCT_MAX_REVIEWS. State lives in <project>/.construct-budget/
 (one small JSON file per session; delete the folder to reset).
 """
@@ -27,7 +28,10 @@ import time
 from pathlib import Path
 
 # the tiers' wall clock (seconds) and review rounds; kept equal to construct_hologram/tiers.py
-TIERS = {"quick": (120, 0), "standard": (600, 2), "showcase": (1800, 4), "masterpiece": (7200, None)}
+# (the rounds modes count rounds in `construct rounds`, not review commands: no review cap here)
+TIERS = {"quick": (120, 0), "standard": (600, 2), "showcase": (1800, 4), "masterpiece": (7200, None),
+         "unbounded": (None, None)}
+ALIASES = {"fast": "standard"}
 WRAP_UP = 0.8
 REVIEW = re.compile(r"(\bconstruct|cli\.py)\s+review\b")
 DELIVER = re.compile(r"(\bconstruct|cli\.py)\s+(check|build)\b")
@@ -36,6 +40,7 @@ READ_ONLY = {"Read", "Glob", "Grep", "LS"}
 
 def limits(env=os.environ):
     tier = env.get("CONSTRUCT_TIER", "standard").lower()
+    tier = ALIASES.get(tier, tier)
     if tier not in TIERS:
         tier = "standard"
     seconds, reviews = TIERS[tier]
@@ -46,7 +51,7 @@ def limits(env=os.environ):
             reviews = max(0, int(env["CONSTRUCT_MAX_REVIEWS"]))
     except ValueError:
         pass
-    return tier, seconds, reviews  # None: no cap (the masterpiece tier)
+    return tier, seconds, reviews  # None: no cap (the unbounded mode)
 
 
 def _state_path(event):
@@ -82,9 +87,9 @@ def handle(mode, event, now=None, env=os.environ):
             state = {"start": now, "reviews": 0, "wrapped": False}
         _save(path, state)
         if seconds is None and reviews is None:
-            return 0, ("Construct budget (%s tier): no wall clock and no round cap; the work ends when an "
-                       "independent critic scores every criterion 3, or when the user stops it. Save a checkpoint "
-                       "every round." % tier), ""
+            return 0, ("Construct budget (%s mode): no wall clock and no round cap; the rounds end after 2 rounds "
+                       "without a pairwise win (or every criterion 3), or when the user stops them. Report every "
+                       "round and save a checkpoint every round." % tier), ""
         return 0, ("Construct budget (%s tier): %s of wall clock and %s review rounds for this session. A hook "
                    "enforces them: review commands past the rounds are refused, and past the wall clock only "
                    "reading, check and build run." % (tier, "no cap" if seconds is None else "%d s" % seconds,

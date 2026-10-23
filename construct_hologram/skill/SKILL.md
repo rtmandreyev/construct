@@ -8,7 +8,7 @@ description: Build a construct — an animated, audited holographic model — of
 You author a **scene** (declarative JSON); the bundled tools validate it, audit it, compile
 it and render it. You never write graphics code. Work the loop below until the construct is
 *genuinely good* — accurate and beautiful, honest about what is known, alive without being
-noisy: something you would put in a launch video — or until the effort tier's limits are
+noisy: something you would put in a launch video — or until the mode's limits are
 reached, whichever comes first. Then deliver the best version so far.
 
 Tools (Python 3.10+, standard library only; a Chromium-family browser for captures;
@@ -29,7 +29,7 @@ in the facts (leave sizes at their standard unless the user gave them), and `che
 it like a scene; a builder draws it in the house style. Use the full loop below for anything
 else, or when the result needs more than the archetype offers. `prompts/` holds the same
 rules for other models and hosts (`system.md`, `params.md`, `scene.md`, `repair.md`,
-`vision-review.md`); `construct author --tier standard --vision` runs the whole bounded loop
+`vision-review.md`); `construct author --mode fast --vision` runs the whole bounded loop
 with any OpenAI-compatible model.
 
 Work in a folder of your own. Never install software or change settings to make this run;
@@ -37,13 +37,28 @@ if no browser is available, say so and deliver the HTML without captures.
 
 ## The loop
 
-0. **Choose the effort and whether to research.** The tier is the user's or host's choice:
-   `quick` (bulk, the parameter path), `standard` (the default: ≤10 min, ≤2 review rounds)
-   or `showcase` (only when asked: ≤30 min). Its limits are hard ceilings, not targets.
-   `masterpiece` (only when asked, for hard subjects) runs judged rounds
-   ([rounds](references/rounds.md)): a defect ledger, at most 4 items a round, one critic
-   who compares each version with the best so far, and it stops at every criterion 3, two
-   rounds without a win, or a 2-hour safety stop on active time. A
+0. **Choose the mode, announce it, and decide on research.** Three modes
+   ([effort](references/effort.md)); the user can just say one:
+   - **fast:** one pass with self-review, no rounds loop: ≤10 minutes and 2 reviews (≤30 and
+     4 for a richer subject). Generic subjects, simple objects, quick asks. Cents with a
+     DeepSeek-class model.
+   - **masterpiece:** judged rounds ([rounds](references/rounds.md)): a defect ledger, at most
+     4 items a round, one critic who compares each version with the best so far; it stops
+     after 2 rounds without a win, at every criterion 3, at 12 rounds or at 2 hours of active
+     work. A named subject whose likeness matters. Frontier-model token cost.
+   - **unbounded:** the same rounds with only the stop rules: no round cap, no time ceiling.
+     The critic finds a win almost every round, so it can run many rounds and hours at a high
+     token cost; the per-round report lets the user stop it at any time. **Only when the user
+     asks for it by name.**
+
+   The old names still work (quick, standard and showcase are fast). **If the user names no
+   mode, choose one and announce it before any work:** the mode, why, the rough time and
+   cost, and how to switch ("say fast for a single 10-minute pass"). Fast for a generic
+   subject, a simple mechanical object or a quick ask; masterpiece for a specific named
+   subject whose likeness matters (a car model, a landmark, a named building); never
+   unbounded. If you are a smaller or cheaper model and the subject is a hard named one, say
+   so and recommend GPT-6.1 Sol or Claude Opus for masterpiece, with fast as the option on
+   this model. The limits are ceilings, not targets. A
    generic subject ("a desk lamp") needs no research; a concrete, named one (a brand and
    model, a named building or peak, a species) is researched whenever you are unsure of its
    identity-defining shape or specs; "research: on/off" in the request overrides both. See
@@ -113,11 +128,12 @@ if no browser is available, say so and deliver the HTML without captures.
    `review` again. Your own review records `"outcome": "self-reviewed"`; only an
    **independent critic** (a fresh context comparing renders with the references:
    `critique`, see [review](references/review.md)) can record "good"
-   or "outstanding". Use it at showcase and masterpiece, and whenever the subject is named.
-   At masterpiece run the rounds with `python3 TOOLS rounds` ([rounds](references/rounds.md)):
+   or "outstanding". Use it for a richer fast run, in the rounds modes, and whenever the
+   subject is named. In masterpiece or unbounded mode run the rounds with `python3 TOOLS
+   rounds start scene.json --mode masterpiece` (or `unbounded`) ([rounds](references/rounds.md)):
    tag each edit with its ledger id, one critic per round, keep a version only when it beats
    the best, and after every round report in chat the critic's top requests, what changed
-   (ledger ids), won or lost, and the minutes. Showcase reports once, at the end.
+   (ledger ids), won or lost, and the minutes.
    **Count the rounds in the scene:** before each review, add one to
    `authoring.review_rounds` and save; `check` warns `tier-rounds` past the tier's cap
    (quick 0, standard 2, showcase 4), and that is the end of reviewing. Stop when every criterion is good and you would show it as it is, or when

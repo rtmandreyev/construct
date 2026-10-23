@@ -249,14 +249,17 @@ def author(request, base_url, model, key=None, use_params=False, rounds=None, lo
     ends), so a valid construct is on disk even if the host stops the run."""
     from . import critic as critic_mod
     asked = tiers.from_request(request)
-    tier = tier or asked.get("tier") or tiers.DEFAULT
+    tier = tiers.tier_of(tier or asked.get("tier") or tiers.DEFAULT)
     research = research or asked.get("research") or "auto"
     overrides = dict(limit_overrides or {})
     if rounds is not None:
         overrides["check_rounds"] = rounds
     lim = tiers.limits(tier, **overrides)
-    uncapped = lim["review_rounds"] is None
-    if tier == tiers.UNCAPPED:
+    uncapped = tier in tiers.ROUNDS  # the rounds modes: the critic every round, check rounds per round
+    note = tiers.model_note(model, tier)
+    if note and log:
+        log(note)
+    if tier in tiers.ROUNDS:
         if not critic:
             critic = {"base_url": base_url, "model": model, "key": key}
         vision = True
@@ -354,7 +357,7 @@ def author(request, base_url, model, key=None, use_params=False, rounds=None, lo
     outcome = "unreviewed"
     try:
         check_loop()
-        while vision and (uncapped or budget.reviews < lim["review_rounds"]):
+        while vision and (lim["review_rounds"] is None or budget.reviews < lim["review_rounds"]):
             if not uncapped and budget.left() < max(REVIEW_MARGIN_S, lim["wall_clock_s"] * (1 - tiers.WRAP_UP)):
                 raise LimitReached("wrap-up at %d%% of the wall clock" % (tiers.WRAP_UP * 100))
             if critic:

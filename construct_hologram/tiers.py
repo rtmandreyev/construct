@@ -1,15 +1,24 @@
-"""Effort tiers and the research policy: how long an author may work, and when it looks things up.
+"""Modes, effort tiers and the research policy: how long an author may work, and when it looks
+things up.
 
-Aim for genuinely good, and always stop within the tier's limits. A tier bounds the whole
-authoring run; whichever comes first ends it: the review judges the construct genuinely good,
-or a limit is reached. The masterpiece tier is the one exception, for hard subjects on request:
-no wall clock and no round cap; it stops only when an independent critic scores every criterion
-outstanding, when the user stops it, or at an optional cost ceiling, and it saves a checkpoint
-every round. Then the best version so far is delivered with a short "next" list, and
-the tier and that list are recorded in the scene's `authoring` block so it can be regenerated
-at a higher tier later. A host or user may pick a tier or override single limits, but every
-limit stays finite: nothing runs unbounded. Hosts add their own hard limits on top (a Hermes
-run budget, an agent timeout, a cost ceiling).
+A user chooses one of three modes, or says nothing and the skill chooses (never unbounded):
+
+- fast: one pass with self-review, no rounds loop: the standard tier (10 min) for most things,
+  the showcase tier (30 min) for a richer subject. Quick, standard and showcase are its tiers.
+- masterpiece: the rounds loop (`construct rounds`), judged pairwise against the best, stopping
+  after 2 rounds in a row without a win, at every criterion 3, at a default cap of 12 rounds or
+  at a 2-hour ceiling on active time.
+- unbounded: the same loop with only the stop rules (2 rounds without a win, or every criterion
+  3): no round cap and no time ceiling. Only on explicit request: the critic finds a win almost
+  every round, so it can run for many rounds and hours at a high token cost; the per-round
+  report lets the user stop it at any time.
+
+Aim for genuinely good, and always stop within the mode's limits; whichever comes first ends
+the run. Then the best version so far is delivered with a short "next" list, and the tier and
+that list are recorded in the scene's `authoring` block so it can be regenerated at a higher
+mode later. A host or user may override single limits; outside unbounded every limit stays
+finite. Hosts add their own hard limits on top (a Hermes run budget, an agent timeout, a cost
+ceiling).
 
     {"authoring": {"tier": "standard", "research": "done", "sources": ["maker-specs", "ref-front"],
                    "review_rounds": 2, "outcome": "good", "next": ["trace the headstock from a side photo"]}}
@@ -20,12 +29,22 @@ TIERS = {
     "quick": {"wall_clock_s": 120, "review_rounds": 0, "check_rounds": 3, "searches": 0, "sources": 0, "images": 0},
     "standard": {"wall_clock_s": 600, "review_rounds": 2, "check_rounds": 6, "searches": 5, "sources": 3, "images": 3},
     "showcase": {"wall_clock_s": 1800, "review_rounds": 4, "check_rounds": 10, "searches": 10, "sources": 6, "images": 6},
-    # no round cap: the critic's all-3, two rounds in a row that do not beat the best, the user, or a
-    # 2-hour safety stop on ACTIVE time (an interruption does not count) ends it; check rounds per round
-    "masterpiece": {"wall_clock_s": 7200, "review_rounds": None, "check_rounds": 8, "searches": 20, "sources": 12,
+    # the rounds loop: the critic's all-3, two rounds in a row that do not beat the best, the user, a
+    # default cap of 12 rounds or a 2-hour ceiling on ACTIVE time (an interruption does not count)
+    # ends it; check rounds per round
+    "masterpiece": {"wall_clock_s": 7200, "review_rounds": 12, "check_rounds": 8, "searches": 20, "sources": 12,
                     "images": 12},
+    # the same loop with only its stop rules: no round cap, no time ceiling (explicit request only)
+    "unbounded": {"wall_clock_s": None, "review_rounds": None, "check_rounds": 8, "searches": 20, "sources": 12,
+                  "images": 12},
 }
-UNCAPPED = "masterpiece"
+ROUNDS = ("masterpiece", "unbounded")  # the tiers that run the rounds loop
+UNCAPPED = "unbounded"
+# the three modes a user chooses from; the old tier names stay as aliases
+MODES = ("fast", "masterpiece", "unbounded")
+MODE_OF = {"quick": "fast", "standard": "fast", "showcase": "fast", "fast": "fast", "masterpiece": "masterpiece",
+           "unbounded": "unbounded"}
+FAST_TIER = "standard"  # "fast" on its own: the standard tier (showcase for a richer subject)
 CRITERIA = ("silhouette", "proportions", "identity", "depth", "composition", "assembly", "motion", "density", "honesty")
 DEFAULT = "standard"
 # shares of the wall clock: research ends by RESEARCH_SHARE, a complete valid draft is on disk by
@@ -33,11 +52,18 @@ DEFAULT = "standard"
 RESEARCH_SHARE = 0.4
 DRAFT_BY = 0.4
 WRAP_UP = 0.8
-USE = {"quick": "bulk imports and simple archetypes (the parameter path)",
-       "standard": "one entry (the default)",
-       "showcase": "only on explicit request: more references, more review rounds",
-       "masterpiece": "hard subjects, only on explicit request: rounds judged pairwise against the best, until every "
-                      "criterion is 3, two rounds without a win, or the 2-hour safety stop"}
+USE = {"quick": "fast mode: bulk imports and simple archetypes (the parameter path)",
+       "standard": "fast mode: one entry, a generic subject or a simple object",
+       "showcase": "fast mode for a richer subject: more references, more review rounds",
+       "masterpiece": "a named subject whose likeness matters: rounds judged pairwise against the best, until two "
+                      "rounds without a win, every criterion 3, 12 rounds or the 2-hour ceiling",
+       "unbounded": "only on explicit request: the same rounds with only the stop rules (two rounds without a win, "
+                    "or every criterion 3); no round cap, no time ceiling; many rounds and hours at a high token cost"}
+# what each mode costs, for the announcement and the docs (from the evaluation runs)
+COST = {"fast": "10 minutes (30 for a richer subject); cents with a DeepSeek-class model",
+        "masterpiece": "up to 12 rounds and 2 hours of active work, plus the critic's time; the most tokens of a "
+                       "normal run, so use a frontier model (GPT-6.1 Sol or Claude Opus)",
+        "unbounded": "no cap: many rounds and hours, at a high token cost; stop it at any round"}
 # overrides may raise a limit, never remove it
 CEILING = {"wall_clock_s": 7200, "review_rounds": 12, "check_rounds": 30, "searches": 40, "sources": 20, "images": 20}
 LIMIT_HELP = {"wall_clock_s": "wall clock, seconds", "review_rounds": "review/improve rounds",
@@ -55,18 +81,37 @@ MAX_IDENTITY = 16
 MAX_NEXT = 8
 
 # words a host can find in a request: "research: on", "tier: showcase"
-_REQUEST_KEYS = {"research": RESEARCH, "tier": tuple(TIERS)}
+_REQUEST_KEYS = {"research": RESEARCH, "tier": tuple(TIERS) + ("fast",), "mode": tuple(MODE_OF)}
 
 
 class TierError(ValueError):
     pass
 
 
+def mode(name):
+    """The mode a mode or tier name means: quick, standard and showcase are fast."""
+    m = MODE_OF.get(str(name or "").lower())
+    if m is None:
+        raise TierError("the mode is one of %s (or a tier: %s)" % (", ".join(MODES), ", ".join(TIERS)))
+    return m
+
+
+def tier_of(name):
+    """The tier whose limits a mode or tier name means: "fast" is the standard tier."""
+    name = str(name or "").lower()
+    if name == "fast":
+        return FAST_TIER
+    mode(name)
+    return name
+
+
 def limits(tier=DEFAULT, **overrides):
-    """The tier's limits with any overrides applied; every limit finite and within CEILING, except
-    the masterpiece tier's wall clock and review rounds, which are None (uncapped) unless set."""
+    """The tier's limits with any overrides applied (a mode name works too: fast is the standard
+    tier); every limit finite and within CEILING, except in the rounds tiers: masterpiece's can be
+    raised beyond it, and unbounded has no wall clock and no review round cap unless set."""
+    tier = tier_of(tier) if tier in MODE_OF else tier
     if tier not in TIERS:
-        raise TierError("tier is one of %s" % ", ".join(TIERS))
+        raise TierError("tier is one of %s, or a mode: %s" % (", ".join(TIERS), ", ".join(MODES)))
     out = dict(TIERS[tier])
     for k, v in overrides.items():
         if v is None:
@@ -76,23 +121,59 @@ def limits(tier=DEFAULT, **overrides):
         if isinstance(v, bool) or not isinstance(v, (int, float)) or v != v:
             raise TierError("%s must be a number" % k)
         lo = 1 if k in ("wall_clock_s", "check_rounds") else 0
-        top = float("inf") if tier == UNCAPPED else CEILING[k]
+        top = float("inf") if tier in ROUNDS else CEILING[k]
         if not lo <= v <= top or v == float("inf"):
             raise TierError("%s must be within %d..%d: limits can be raised, never removed" % (k, lo, CEILING[k]))
         out[k] = int(v) if k != "wall_clock_s" else float(v)
     out["tier"] = tier
+    out["mode"] = MODE_OF[tier]
     return out
 
 
 def from_request(text):
-    """`research: on|off|auto` and `tier: quick|standard|showcase|masterpiece` written in a request."""
+    """`research: on|off|auto`, `mode: fast|masterpiece|unbounded` and `tier: quick|standard|showcase|
+    masterpiece|unbounded` written in a request; a mode is also given as its tier."""
     import re
     found = {}
     for key, options in _REQUEST_KEYS.items():
         m = re.search(r"\b%s\s*[:=]\s*(%s)\b" % (key, "|".join(options)), text or "", re.I)
         if m:
             found[key] = m.group(1).lower()
+    if "mode" in found and "tier" not in found:
+        found["tier"] = tier_of(found["mode"])
+    elif found.get("tier") == "fast":
+        found["tier"] = FAST_TIER
     return found
+
+
+def choose(request="", named=False, category=None):
+    """The mode the skill picks when the user names none, with why and what it costs. The author
+    judges the subject (the request alone cannot say whether "Countach" is a car): `named` is a
+    specific real subject named by brand and model or proper name, `category` its scene category.
+    Masterpiece for a named vehicle or building, whose likeness matters; fast for the rest (generic
+    subjects, simple objects, named objects a single pass draws well). Never unbounded: that is only
+    ever the user's word. A mode or tier written in the request wins."""
+    asked = from_request(request)
+    if "tier" in asked:
+        m = MODE_OF[asked["tier"]]
+        return {"mode": m, "tier": asked["tier"], "why": "the request says so", "cost": COST[m], "chosen": False}
+    if named and category in ("vehicle", "architecture"):
+        return {"mode": "masterpiece", "tier": "masterpiece", "chosen": True, "cost": COST["masterpiece"],
+                "why": "a specific named %s: its likeness matters" % ("vehicle" if category == "vehicle" else "building")}
+    return {"mode": "fast", "tier": FAST_TIER, "chosen": True, "cost": COST["fast"],
+            "why": "a named object a single pass draws well" if named else "a generic subject"}
+
+
+# the models the evaluation runs recommend for hard subjects in the rounds modes
+FRONTIER = ("sol", "opus")
+
+
+def model_note(model, mode_name):
+    """A recommendation when a smaller or cheaper model runs a rounds mode, or None."""
+    if mode_name not in ROUNDS or not model or any(f in str(model).lower() for f in FRONTIER):
+        return None
+    return ("%s on a hard named subject: the evaluation runs recommend GPT-6.1 Sol or Claude Opus for %s; smaller or "
+            "cheaper models made scale errors or failed to save a scene. Fast mode suits them." % (model, mode_name))
 
 
 def clock_rule(lim=None):
@@ -102,11 +183,12 @@ def clock_rule(lim=None):
         "improve it in place, re-checking and saving after every round, so a valid scene is always on disk. " \
         "At %d%% stop adding: make the saved scene valid and deliver it." % (
             RESEARCH_SHARE * 100, DRAFT_BY * 100, WRAP_UP * 100)
-    if lim and (lim["wall_clock_s"] is None or lim.get("tier") == UNCAPPED):
+    if lim and (lim["wall_clock_s"] is None or lim.get("tier") in ROUNDS):
         return ("Rounds, not a schedule: save a complete scene that passes `check` after the first round and a "
-                "checkpoint every round after that (`construct rounds`), so the best version is always on disk; the "
-                "%s is a safety stop on active time." % ("no wall clock" if lim["wall_clock_s"] is None else
-                                                          "%d-minute limit" % (lim["wall_clock_s"] // 60)))
+                "checkpoint every round after that (`construct rounds`), so the best version is always on disk; %s." % (
+                    "there is no time ceiling and no round cap: report every round, so the user can stop it"
+                    if lim["wall_clock_s"] is None else "the %d-minute limit is a ceiling on active time" % (
+                        lim["wall_clock_s"] // 60)))
     if lim:
         w = lim["wall_clock_s"]
         t += " (This run: research by %d s, a saved draft by %d s, wrap up at %d s.)" % (
@@ -116,17 +198,18 @@ def clock_rule(lim=None):
 
 def table():
     """The tiers as a Markdown table (prompts and docs are generated from it)."""
-    rows = ["| tier | use | wall clock | review/improve rounds | check rounds | research, when it applies |",
-            "|---|---|---|---|---|---|"]
+    rows = ["| mode | tier | use | wall clock | review/improve rounds | check rounds | research, when it applies |",
+            "|---|---|---|---|---|---|---|"]
     for name, t in TIERS.items():
         research = ("none beyond the source data" if not t["searches"] else
                     "≤%d searches, ≤%d sources read, ≤%d reference images" % (t["searches"], t["sources"], t["images"]))
-        rows.append("| %s | %s | %s | %s | %s | %s |" % (
-            name, USE[name], "none" if t["wall_clock_s"] is None else "%d min%s" % (
-                t["wall_clock_s"] // 60, " active (a safety stop)" if name == UNCAPPED else ""),
+        rows.append("| %s | %s | %s | %s | %s | %s | %s |" % (
+            MODE_OF[name], name, USE[name], "none" if t["wall_clock_s"] is None else "%d min%s" % (
+                t["wall_clock_s"] // 60, " active" if name in ROUNDS else ""),
             "until the stop rules" if t["review_rounds"] is None else
-            "0 (audit only)" if not t["review_rounds"] else t["review_rounds"],
-            "%d per round" % t["check_rounds"] if name == UNCAPPED else t["check_rounds"], research))
+            "0 (audit only)" if not t["review_rounds"] else "%d%s" % (t["review_rounds"], " (default cap)"
+                                                                      if name in ROUNDS else ""),
+            "%d per round" % t["check_rounds"] if name in ROUNDS else t["check_rounds"], research))
     return "\n".join(rows)
 
 
@@ -238,7 +321,7 @@ def audit(scene, add, warnings):
         if not item["parts"] or missing:
             add(warnings, "identity-unbuilt", None, "identity feature %r has %s: build it, or say in next why it is "
                 "missing" % (item["feature"], "no part" if not item["parts"] else "unknown parts " + ", ".join(missing)))
-    if a["tier"] in ("showcase", UNCAPPED) and not a.get("identity"):
+    if a["tier"] in ("showcase",) + ROUNDS and not a.get("identity"):
         add(warnings, "no-checklist", None, "no identity checklist: write the features that make the subject itself "
             "(from research) in authoring.identity, each with the parts that build it")
     critic = a.get("critic")

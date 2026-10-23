@@ -105,11 +105,12 @@ TOOLS += [
                      "additionalProperties": False},
      "annotations": _READ_ONLY},
     {"name": "construct_limits",
-     "description": "The effort tier's limits (wall clock, check and review rounds, research counts) with any "
-                    "overrides applied, for the host to enforce: aim for genuinely good, stop at the first limit. "
-                    "Overrides can raise a limit, never remove it. Also reads 'tier:'/'research:' from a request.",
+     "description": "The limits of a mode (fast, masterpiece, unbounded) or tier (wall clock, check and review "
+                    "rounds, research counts) with any overrides applied, for the host to enforce: aim for genuinely "
+                    "good, stop at the first limit. Overrides can raise a limit, never remove it. Also reads "
+                    "'mode:'/'tier:'/'research:' from a request.",
      "inputSchema": {"type": "object", "properties": {
-         "tier": {"type": "string", "enum": list(tiers.TIERS)},
+         "tier": {"type": "string", "enum": list(tiers.MODE_OF)},
          "request": {"type": "string", "maxLength": 20000},
          "overrides": {"type": "object", "additionalProperties": False,
                        "properties": {k: {"type": "number", "minimum": 0, "maximum": v} for k, v in tiers.CEILING.items()}}},
@@ -207,7 +208,7 @@ def _call_v2(name, args):
             lim = tiers.limits(tier, **(args.get("overrides") or {}))
         except (tiers.TierError, TypeError) as exc:
             return _tool_result({"error": str(exc)}, is_error=True)
-        return _tool_result({"limits": lim, "research": asked.get("research", "auto"),
+        return _tool_result({"limits": lim, "mode": lim["mode"], "research": asked.get("research", "auto"),
                              "stop": "the review judges it genuinely good, or any limit is reached; then deliver the "
                                      "best version so far with authoring.next"})
     if name == "construct_params_template":
