@@ -25,7 +25,7 @@ step:
 
 | file | holds |
 |---|---|
-| `state.json` | `round`, `step`, `active_seconds`, `best_round`, `status` (running / stopped) |
+| `state.json` | `round`, `step`, `active_seconds`, `critic_seconds`, `best_round`, `status` (running / stopped) |
 | `ledger.json` | every defect ever raised: `id`, `title`, `criterion`, `severity`, `first_round`, `status` (open / fixed / regressed / known-limit), `rounds_attempted`, `history` |
 | `rounds.md` | one section per round, appended: what changed, the critic's requests, won or lost |
 | `checkpoints/round-NN/` | that round's scene, its renders, the critic's answer, the A/B key (never shown to the critic) |
@@ -39,10 +39,12 @@ step:
    Small batches tell you which edit did what.
 2. **`check` until clean,** then `python3 TOOLS rounds packet --reference side=side.jpg
    --reference top=top.jpg ...`. That checks the scene in to `checkpoints/round-NN/` and
-   writes one packet, in a neutral folder, for **one** fresh critic:
+   writes one packet, in a neutral folder, with the references copied in, for **one** fresh
+   critic:
    - **part 1:** this version alone, the standard critique;
    - **part 2:** this version and the best so far, from the same views, unlabelled and in a
-     random A/B order, beside the references;
+     random A/B order, beside the references. The pictures are re-encoded and named at random,
+     so no file comparison tells them apart;
    - **part 3:** the ledger.
 
    The critic writes part 1 before it opens part 2. Its blind judgement never sees the history.
@@ -60,6 +62,20 @@ step:
 5. **Report the round in chat** (Masterpiece: every round; Showcase: one summary at the end).
    `record` prints it: the critic's top requests, what changed (with ledger ids), won or lost
    against the best, and the minutes. Copy it as it is. Then go to step 1, unless it says STOP.
+
+Each round's section in `rounds.md` also answers "would a 4-round finish cap stop here?". Finish
+starts at the first round with no critical or major silhouette, proportions or identity item
+open. This is logged only, to compare stop rules; it never stops the run.
+
+## The medium
+
+The renderer cannot do three things, and `start` seeds them as known limits (L1–L3):
+- hidden lines show faintly through solid parts (the x-ray style);
+- glass cannot be tinted;
+- stills show the closed still pose.
+
+An ask the critic itself files under one of them (its `limits` answer in part 3) never enters the
+ledger. Don't try to change the renderer from a scene.
 
 ## Scores need evidence
 
@@ -82,7 +98,12 @@ skill could not express.
 At the first of:
 - every criterion at 3;
 - 2 rounds in a row that don't beat the best;
-- the 2-hour safety stop on active time (time lost to a usage limit or a pause doesn't count);
+- the 2-hour safety stop on **active time**: the author's time from `start` or `record` to the
+  next `packet`, measured from the run folder's own activity (edits, a generator writing the
+  scene, builds). Time after the last write counts only if the next command comes within 10
+  minutes; a silence of over 45 minutes between writes (a usage limit) is an interruption; and
+  `rounds pause` marks one explicitly. The critic's time, from `packet` to `record`, is measured
+  the same way, the packet's folder included, and logged separately;
 - the user says so.
 
 Then `python3 TOOLS rounds report` appends the final report to `rounds.md`: the best round, the
@@ -92,5 +113,5 @@ timeline, and `review` writes it as `rounds.png`.
 
 ## Resume (usage limits are expected)
 
-After any interruption, `python3 TOOLS rounds status` says where the run is and what the next
-step is. Redo only the step it names, never a finished round.
+Before stepping away, `python3 TOOLS rounds pause`. After any interruption, `python3 TOOLS rounds
+status` says where the run is and what the next step is. Redo only the step it names, never a finished round.

@@ -109,9 +109,11 @@ Work in a folder of your own. `out/construct.html` opens in any browser.
    `new <category>` or an example and read `references/composition.md` and
    `references/vocabulary.md`: name the silhouette and the two or three identity features,
    build masses first, then structure, identity and a little detail. Draw with craft
-   (`references/craft.md`): a line-weight hierarchy, dark depth-writing fills that hide the
-   construction mesh, a sub-volume per feature, density where the identity lives, and a critic
-   round answered by a refine pass; the examples in `assets/examples/` show all five.
+   (`references/craft.md`): a line-weight hierarchy, dark depth-writing fills under a faint
+   contour wire (never a main surface with `line: "none"`), a sub-volume per feature, density
+   where the identity lives and true detail everywhere (one clear object at hero scale,
+   something true in every region up close), and a critic round answered by a refine pass; the
+   examples in `assets/examples/` show all five.
    When the identity is a shape text cannot give (a guitar body, a car, an elevation) and you
    can see images, trace it from a reference (`references/tracing.md`: the user's photo or a
    web image viewed with `vision_analyze`), then `scripts/cli.py trace` fits it to a verified

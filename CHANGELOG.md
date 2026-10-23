@@ -2,6 +2,26 @@
 
 ## 0.2.1 (unreleased)
 
+- **Contours, detail and fair rounds** (build C2, from the fifth rounds experiment: build C's
+  rounds won every blind comparison; a later build's renders lost their surface contours):
+  - **the contour rule:** main surfaces keep a faint contour wire (weight about 0.4–0.5, alpha
+    about 0.5–0.6) over their dark fill; `line: "none"` is for occluders and backings. `check`
+    warns `bare-surface` when a visible main surface (role mass, or a large loft or extrude) has
+    no lines. The critic is told that faint surface contours give form and are not clutter. The
+    911 example's glasshouse and bumpers get their contour back.
+  - **the density bar:** at hero scale one clear object; up close every region still has
+    something true to find; a bare face or an empty corner is unfinished (`craft.md`, the
+    critic). The audit's clutter warning stays for real clutter.
+  - **fair timing:** author time comes from the run folder's own activity and stops at the
+    packet; the critic's time is logged separately; `rounds pause`.
+  - **a blind packet:** the references are copied into it, and the pair's pictures are
+    re-encoded and named at random; the header counts the ledger items actually shown.
+  - **the medium:** hidden lines showing through, untinted glass and the closed still pose are
+    seeded as known limits; an ask the critic files under one never enters the ledger.
+  - **a finish-cap log line:** each round says whether a 4-round finish cap would stop there
+    (finish starts at the first round with no critical or major silhouette, proportions or
+    identity item open). Log only.
+
 - **Masterpiece rounds that keep what is good** (`construct rounds`,
   `references/rounds.md`):
   - **one critic a round, three parts:** this version blind, then against the best so far

@@ -31,7 +31,7 @@ Score each criterion 0–3 from the captures, against the references:
 | composition | strong hero framing with margin; nothing cut off; the best side | `hero.png`, each view |
 | assembly | the build order tells the object's story: foundations first, the reveal last | `sheet-assembly.png` |
 | motion | articulations and idle life bring it alive without noise, about real pivots | `sheet-motion.png`, `sheet-life.png` |
-| density | rich detail that never clutters: no hairlines, nothing hovering or poking through | every sheet |
+| density | one clear object at hero scale; up close every region has something true (a bare face or empty corner is unfinished); never clutter: no hairlines, nothing hovering or poking through | every sheet |
 | honesty | labels only from facts; inferred and decorative parts look it; the caption says GENERIC or APPROXIMATE when it is | `sheet-provenance.png`, `hero.png` |
 
 It is **good** when every criterion scores 2 or more and you would show it as it is.
@@ -95,7 +95,8 @@ again.
   or proportions are wrong — fix masses before anything else.
 - **Identity features visible** in hero and in their own view?
 - **Hierarchy**: masses and identity carry the image; detail and ornament recede. If
-  everything is equally bright it is clutter (audit warns above 55 % detail).
+  everything is equally bright it is clutter (audit warns above 55 % detail). Main surfaces
+  keep their faint contour wire: that is form, not clutter.
 - **Framing**: the object fills the frame with margin in every view; nothing cut off.
 - **Proportions** against the facts; no part obviously too thick, thin, high or low.
 - **Contact**: legs on the ground, roofs on walls, arms on pivots, a shade on its arm. The

@@ -40,6 +40,17 @@ Answer with one JSON object, no prose:
   subject is not recognisable because of it), `major` (an owner would notice), `minor`.
 - **Every score below 3 cites a defect** with that `criterion`: name what keeps it from 3. A
   score you cannot back with a named defect is noise; give the 3.
+- **Detail is the standard.** At hero scale the construct reads as one clear object; up close,
+  every region still has something true to find. A bare face or an empty corner is unfinished
+  work: name it as a defect (`density` or `depth`). Clutter is detail that is not true to the
+  subject or that drowns the silhouette, not detail as such.
+- **Faint surface contours give form.** The fine wire that follows a body's, roof's or hood's
+  surface over its dark fill is how this medium shows a sculpted surface; it is not
+  "construction lines" or clutter. Never ask to remove it. A main surface drawn as a flat dark
+  shape with no contour reads as cardboard: that is a defect.
+- **The medium.** The renderer cannot do three things; do not ask for them: hidden lines show
+  faintly through solid parts (the x-ray style), glass cannot be tinted or coloured, and stills
+  show the closed still pose (an opening never shows in a still).
 - `verdict`: "outstanding" only when every score is 3 and nothing critical or major remains;
   "good" when every score is at least 2 and nothing is critical; otherwise "improve". It is
   recomputed from your scores, so score honestly rather than kindly.

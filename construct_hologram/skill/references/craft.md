@@ -35,20 +35,29 @@ curve('rear-lightbar', bar, 'identity', look={'weight': 2.6})
 
 Without weights every line is the same line, and nothing is first.
 
-## 2. Hide the construction mesh; draw only meaningful lines
+## 2. A dark fill under a faint contour; feature lines on top
 
-A loft's or a shell's wire is how it was built, not what it is. Give the volume a dark,
-depth-writing fill and quiet or no lines, then draw the feature lines yourself: roof rails,
-lower edges, bumper faces, window frames.
+Every visible main surface (a body, a roof, a hood, a bumper, a glasshouse, a tower's mass)
+keeps a **faint contour wire** over its dark, depth-writing fill: `look` weight about 0.4–0.5,
+alpha about 0.5–0.6. That fine wire following the surface is what makes it read as sculpted;
+without it the surface is a flat dark shape and the construct looks like a cardboard mockup.
+Then draw the feature lines yourself, heavier: roof rails, lower edges, bumper faces, window
+frames.
 
 ```python
-# Cabin grid is not a feature: keep a depth-writing shell and author its contours.
-by['glasshouse']['look'] = {'fill': 'dark', 'line': 'none', 'alpha': .85}
+# The cabin keeps its faint surface wire over a depth-writing shell; its contours are authored on top.
+by['glasshouse']['look'] = {'fill': 'dark', 'weight': .45, 'alpha': .55}
 for sg in [-1, 1]:
     cv('roof-rail-' + str(sg), rail(sg), 'identity', look={'weight': 1.2})
-by['front-bumper']['look'] = {'fill': 'dark', 'line': 'none', 'alpha': 1}
+by['front-bumper']['look'] = {'fill': 'dark', 'weight': .45, 'alpha': .55}
 cv('front-lower-edge', lower_edge, 'identity', look={'weight': 1.1})
 ```
+
+Hide only true construction scaffolding: helper volumes, guides, a section stack that is not a
+surface. `line: "none"` is for occluders and backings (a dark panel behind a grille, a plate
+that hides the far side), never for a visible main surface; `check` warns `bare-surface` when
+one is. A critic that calls a surface's faint contour "construction lines" is wrong: it is the
+surface.
 
 The dark fill also hides what is behind it, so the far side stops showing through.
 
@@ -81,10 +90,17 @@ for s in body_sections:
 A building works the same way: a foot under each tower, a deck under each lantern, the gables
 standing on the walls.
 
-## 4. Density where identity lives
+## 4. Density where identity lives, and detail everywhere
+
+Two looks, and a construct needs both:
+- **at hero scale, one clear object:** the silhouette and the identity features read first;
+- **up close (4×), every region still has something true to find:** seams, panel lines,
+  louvres, fixings, tracery, coursing. A bare face or an empty corner is unfinished work.
 
 Spend parts on what names the subject, three to five times more than on the rest: lamp rims
-and lenses, louvres and slats, window rows, spires, tracery. Keep the masses simple.
+and lenses, louvres and slats, window rows, spires, tracery. Keep the masses simple in shape,
+not empty: they carry their faint contour and their true seams. Clutter is detail that is not
+true to the subject or that drowns the silhouette; it is not detail as such.
 
 ```python
 for r in [.132, .146]:          # two concentric rims on each round lamp
@@ -122,4 +138,6 @@ was answered. A changed scene makes the critic's record stale; critique the vers
 - More code. The strongest generators were 160–420 lines; the rest were longer.
 - One body with everything on it. Sub-volumes read; one skin reads as a blob.
 - Every line at the default weight, every wire showing.
+- Main surfaces with no contour at all (`line: "none"`): a dark cardboard mockup.
+- Bare faces and empty corners left for "later": up close they are the unfinished work.
 - Calling a construct finished because the audit passes. A clean audit is not a good picture.

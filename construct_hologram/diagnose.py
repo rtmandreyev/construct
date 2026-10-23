@@ -31,6 +31,8 @@ AUDIT_HINTS = {
     "duplicates": "Remove the duplicated part, or move it to where it belongs.",
     "tiny": "Make it larger, merge it into a neighbour or delete it; it will not read at this size.",
     "invisible": "Give it lines (look.line \"auto\") or a fill, or delete it.",
+    "bare-surface": "Drop look.line \"none\" and give the surface a faint contour over its dark fill: look "
+                    "{\"fill\": \"dark\", \"weight\": 0.45, \"alpha\": 0.55}. Keep line \"none\" only for an occluder or backing.",
     "detached": "Move the part so its surface meets the part it hangs from or rests on (named in the message): "
                 "align its end with that part's surface, or extend it to reach. Use \"floating\": true only "
                 "for things that really hover.",

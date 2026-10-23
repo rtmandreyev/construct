@@ -133,6 +133,19 @@ def audit(scene, geometry):
         add(warnings, "tube-outline", None, "%d long thin tubes (%s) trace the outline: they render as glowing wires, "
             "not a body. Build the body as a loft through its sections (or filled slices with section curves), and keep "
             "tubes for real rods, pipes and frames." % (len(wires), ", ".join(wires[:5]) + (", ..." if len(wires) > 5 else "")))
+    # a main surface drawn as a flat dark shape with no contour reads as cardboard (seen in live car
+    # runs): line "none" is for occluders and backings, never for a visible main surface
+    for sp in scene["parts"]:
+        look = sp.get("look") or {}
+        if look.get("line") != "none" or look.get("fill") == "none":
+            continue
+        b = by_id[sp["id"]]["instances"][0]
+        diag = math.sqrt(sum((b["max"][k] - b["min"][k]) ** 2 for k in range(3)))
+        if sp["role"] == "mass" or (sp["shape"]["type"] in ("loft", "extrude") and diag >= 0.25 * size):
+            add(warnings, "bare-surface", sp["id"],
+                "a main surface drawn with line \"none\": with no contour it reads as a flat cardboard shape. Keep a "
+                "faint contour wire over its dark fill (look weight about 0.4-0.5, alpha about 0.5-0.6); line \"none\" "
+                "is for occluders and backings only.")
     styles = geometry["styles"]
     stride = geometry["line_stride"]
     lines = geometry["lines"]

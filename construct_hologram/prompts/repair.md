@@ -24,7 +24,7 @@
 Codes a model will meet: json, duplicate-key, unknown-key, missing-key, type, range,
 choice, id, reference, certainty, unknown-fact, style, path, budget, floating,
 stage-order, overclaim, accuracy, decorative-identity, no-mass, no-identity, clutter,
-duplicates, tiny, invisible, no-open-view, detached, thin, shape-overclaim, research,
+duplicates, tiny, invisible, bare-surface, no-open-view, detached, thin, shape-overclaim, research,
 tier-budget, authoring.
 
 A host that supports constrained output can hold a small model to `params.schema.json`.

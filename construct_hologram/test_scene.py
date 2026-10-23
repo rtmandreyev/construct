@@ -913,15 +913,17 @@ def _critique(scene_doc, low=3, severity=None, present=True):
             if sev else [], "verdict": "outstanding"}
 
 
-def _round_answer(folder, n, win=True, fixed=(), inexpressible=(), scores=None, regress=False):
+def _round_answer(folder, n, win=True, fixed=(), inexpressible=(), scores=None, regress=False, defects=None,
+                  limits=None):
     """A synthetic round answer for checkpoints/round-NN (test)."""
     from . import rounds
     rd = Path(folder, "checkpoints", "round-%02d" % n)
     doc = json.loads((rd / "scene.json").read_text())
     sc = scores or dict({k: 3 for k in tiers.CRITERIA}, proportions=2)
-    defects = [{"rank": 1, "severity": "major", "criterion": "proportions", "parts": ["body"], "problem": "too tall",
-                "fix": "lower it"}, {"rank": 2, "severity": "minor", "criterion": "identity", "parts": ["body"],
-                                     "problem": "plain", "fix": "add a seam"}]
+    defects = defects or [{"rank": 1, "severity": "major", "criterion": "proportions", "parts": ["body"],
+                           "problem": "too tall", "fix": "lower it"},
+                          {"rank": 2, "severity": "minor", "criterion": "identity", "parts": ["body"],
+                           "problem": "plain", "fix": "add a seam"}]
     ans = {"format": "construct-round", "version": 1, "scene_sha256": tiers.critic_hash(doc),
            "critique": {"format": "construct-critique", "version": 1, "scene_sha256": tiers.critic_hash(doc),
                         "scores": sc, "defects": defects, "verdict": "good"}}
@@ -937,7 +939,9 @@ def _round_answer(folder, n, win=True, fixed=(), inexpressible=(), scores=None, 
     items = [i for i in led["items"] if i["status"] != "known-limit"]
     ans["reconcile"] = {"items": [{"id": i["id"], "status": "fixed" if i["id"] in fixed else "inexpressible"
                                    if i["id"] in inexpressible else "open", "evidence": "seen"} for i in items],
-                        "new": [] if led["items"] else [1, 2]}
+                        "new": [] if items else list(range(1, len(defects) + 1))}
+    if limits:
+        ans["reconcile"]["limits"] = limits
     return ans
 
 
@@ -952,6 +956,9 @@ def _check_in(folder, scene_doc, best=None, seed=0):
         (rd / "key.json").write_text(json.dumps({"A": "new" if seed % 2 else "best", "B": "best" if seed % 2 else "new",
                                                   "best_round": st["best_round"], "round": st["round"]}))
     rounds.step(folder, st, "packet")
+    st = rounds.state(folder)
+    st["packet_at"] = st["last_step_at"]
+    rounds._save(folder, "state.json", st)
 
 
 class Rounds(unittest.TestCase):
@@ -982,7 +989,7 @@ class Rounds(unittest.TestCase):
         _check_in(self.d, self.doc)
         e = r.record(self.d, _round_answer(self.d, 1), self.scene)
         self.assertTrue(e["kept"] and e["baseline"])
-        self.assertEqual([i["id"] for i in r.ledger(self.d)["items"]], ["D1", "D2"])
+        self.assertEqual([i["id"] for i in r.ledger(self.d)["items"] if not i.get("medium")], ["D1", "D2"])
         r.change(self.d, "D1", "lowered the body")
         for seed in (0, 1):  # whichever letter the new version got
             doc = self.edit([1, 0.9 - 0.1 * seed, 1])
@@ -1072,6 +1079,62 @@ class Rounds(unittest.TestCase):
         e = r.record(self.d, ans, self.scene)
         self.assertEqual(e["stop"], "every criterion at 3")
         self.assertEqual(st["limit_seconds"], 7200)  # the 2-hour safety stop on active time
+
+    def test_the_medium_is_seeded_and_only_the_critics_word_files_an_ask_there(self):
+        r = self.r
+        led = r.ledger(self.d)
+        self.assertEqual([(i["id"], i["status"]) for i in led["items"]],
+                         [("L1", "known-limit"), ("L2", "known-limit"), ("L3", "known-limit")])
+        _check_in(self.d, self.doc)
+        e = r.record(self.d, _round_answer(self.d, 1, defects=[
+            {"rank": 1, "severity": "major", "criterion": "depth", "parts": ["body"], "problem": "the far wheels show "
+             "through the body", "fix": "hide them"},
+            {"rank": 2, "severity": "minor", "criterion": "honesty", "parts": ["label"], "problem": "a label seen "
+             "through the body anchors on the far side", "fix": "move the anchor"}],
+            scores=dict({k: 3 for k in tiers.CRITERIA}, depth=2, honesty=2), limits={"1": "L1"}), self.scene)
+        self.assertEqual(len(e["medium"]), 1)
+        titles = [i["title"] for i in r.ledger(self.d)["items"] if not i.get("medium")]
+        self.assertEqual(titles, ["a label seen through the body anchors on the far side"])  # words alone file nothing
+        report = r.report(self.d)
+        self.assertIn("Known limits (skill gaps): none", report)
+        self.assertIn("The medium (what the renderer cannot do)", report)
+        self.assertIn("Asks about the medium (not worked on): L1", (self.d / "rounds.md").read_text())
+
+    def test_the_critics_wait_is_not_the_authors_time(self):
+        r = self.r
+        st = r.state(self.d)
+        t0 = st["last_step_at"]
+        (self.d / "work.txt").write_text("x")
+        import os
+        os.utime(self.d / "work.txt", (t0 + 300, t0 + 300))
+        _check_in(self.d, self.doc)  # the author worked until the packet
+        st = r.state(self.d)
+        st["last_step_at"] = st["packet_at"] = t0 + 360
+        r._save(self.d, "state.json", st)
+        r.status(self.d, now=t0 + 3000)  # a status call while the critic works adds nothing
+        self.assertEqual(r.state(self.d)["active_seconds"], st["active_seconds"])
+        e = r.record(self.d, _round_answer(self.d, 1), self.scene, now=t0 + 3600)
+        st = r.state(self.d)
+        self.assertLess(st["active_seconds"], 1000)  # the hour waiting for the critic is not authoring
+        self.assertIn("critic", r.summary(e))
+        r.pause(self.d, now=t0 + 3700)
+        r.status(self.d, now=t0 + 3700 + 9 * 60)  # time after a pause is an interruption
+        self.assertLess(r.state(self.d)["active_seconds"], st["active_seconds"] + 120)
+
+    def test_each_round_logs_whether_a_finish_cap_would_stop_it(self):
+        r = self.r
+        _check_in(self.d, self.doc)
+        r.record(self.d, _round_answer(self.d, 1), self.scene)  # D1: a major proportions item
+        log = (self.d / "rounds.md").read_text()
+        self.assertIn("Would a 4-round finish cap stop here? finish not started (D1 major proportions open)", log)
+        for n in range(2, 7):
+            _check_in(self.d, self.edit([1, 1, 1 + n / 10]))
+            r.record(self.d, _round_answer(self.d, n, fixed=("D1",)), self.scene)
+        log = (self.d / "rounds.md").read_text()
+        self.assertIn("finish round 1 (finish from round 2): a 4-round finish cap would not stop yet", log)
+        self.assertIn("finish round 4 (finish from round 2): a 4-round finish cap would stop here", log)
+        self.assertIn("finish round 5 (finish from round 2): a 4-round finish cap would have stopped at round 5", log)
+        self.assertEqual(r.state(self.d)["status"], "running")  # logged only
 
     def test_answers_are_checked(self):
         r = self.r
@@ -1549,6 +1612,20 @@ class Vehicles(unittest.TestCase):
                                            "path": [[0.8 - 0.3 * k, 0.4, -2.0], [0.8 - 0.3 * k, 1.0, 0.0], [0.8 - 0.3 * k, 0.6, 2.0]]}})
         self.assertIn("tube-outline", {d["code"] for d in diagnose.diagnose(car)["diagnostics"]})
 
+    def test_a_main_surface_without_lines_is_warned(self):
+        def codes(look, role="mass", size=(2, 1, 1)):
+            sc = base(parts=[{"id": "body", "role": role, "certainty": "inferred", "stage": 0, "look": look,
+                              "shape": {"type": "box", "size": list(size), "anchor": "base"}},
+                             {"id": "badge", "role": "identity", "certainty": "inferred", "stage": 1,
+                              "shape": {"type": "box", "size": [0.3, 0.3, 0.05], "anchor": "base"}, "at": [0, 1, 0.5]}])
+            return {d["code"] for d in diagnose.diagnose(sc)["diagnostics"]}
+        self.assertIn("bare-surface", codes({"fill": "dark", "line": "none"}))  # cardboard
+        self.assertNotIn("bare-surface", codes({"fill": "dark", "weight": 0.45, "alpha": 0.55}))  # a faint contour
+        self.assertNotIn("bare-surface", codes({"fill": "dark", "line": "none"}, role="structure"))  # a backing
+        for name in ("porsche-911-964", "leica-m3", "open-reel", "sea-cliff", "juggernaut-et7", "sagrada-familia"):
+            sc = json.loads((EXAMPLES / (name + ".json")).read_text())
+            self.assertNotIn("bare-surface", {d["code"] for d in diagnose.diagnose(sc)["diagnostics"]}, name)
+
     def test_every_variant_is_a_car_not_a_box(self):
         for var in params.VARIANTS["vehicle"]:
             doc = params.template("vehicle", var) | {"facts": [], "synthetic": True}
@@ -1852,17 +1929,31 @@ class Capture(unittest.TestCase):
             scene_path = Path(d, "cd.json")
             doc = json.loads((EXAMPLES / "cd.json").read_text())
             scene_path.write_text(json.dumps(doc))
+            ref = Path(d, "refs", "front-photo.png")
+            ref.parent.mkdir()
+            from . import png as png_mod
+            ref.write_bytes(png_mod.encode(8, 8, lambda x, y: (x * 30, y * 30, 90)))
             rounds.start(str(scene_path), "masterpiece", d)
-            pk, key = rounds.packet(d, scene_path, out=str(Path(d, "pk1")))
+            pk, key = rounds.packet(d, scene_path, ["front=%s" % ref], out=str(Path(d, "pk1")))
             self.assertIsNone(key)
             self.assertFalse(Path(pk, "step-2").exists())
+            self.assertTrue(Path(pk, "step-1", "references", "front-photo.png").exists())  # the references travel along
+            md = Path(pk, "step-1", "packet.md").read_text()
+            self.assertIn("references/front-photo.png", md)
+            self.assertNotIn(str(Path(d).resolve()), md)
             rounds.record(d, _round_answer(d, 1), scene_path)
             doc["parts"][0]["shape"]["size"][1] *= 1.1
             scene_path.write_text(json.dumps(dict(json.loads(scene_path.read_text()), parts=doc["parts"])))
-            pk, key = rounds.packet(d, scene_path, out=str(Path(d, "pk2")), seed=3)
+            pk, key = rounds.packet(d, scene_path, ["front=%s" % ref], out=str(Path(d, "pk2")), seed=3)
             pics = sorted(p_.name for p_ in Path(pk, "step-2").glob("*.png"))
-            a_views = {n[2:] for n in pics if n.startswith("A-")}
-            self.assertTrue(a_views and a_views == {n[2:] for n in pics if n.startswith("B-")})  # the same views
+            a_views = {n.split("-", 2)[2] for n in pics if n.startswith("A-")}
+            self.assertTrue(a_views and a_views == {n.split("-", 2)[2] for n in pics if n.startswith("B-")})  # the same views
+            import hashlib
+            ones = {hashlib.sha256(p_.read_bytes()).hexdigest() for p_ in Path(pk, "step-1", "renders").glob("*.png")}
+            twos = {hashlib.sha256(p_.read_bytes()).hexdigest() for p_ in Path(pk, "step-2").glob("*.png")}
+            self.assertFalse(ones & twos)  # no byte match tells which pair image is the new version
+            shown = len(json.loads(Path(pk, "step-3", "ledger.json").read_text())["items"])
+            self.assertIn("ledger.json (%d items)" % shown, Path(pk, "packet.md").read_text())
             told = " ".join(p_.read_text() for p_ in Path(pk).rglob("*.md")) + " ".join(
                 p_.read_text() for p_ in Path(pk).rglob("*.json"))
             self.assertNotIn("best_round", told)  # the key stays with the checkpoint

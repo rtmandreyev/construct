@@ -647,8 +647,8 @@
       "source": "ref-side",
       "look": {
         "fill": "dark",
-        "line": "none",
-        "alpha": 0.85
+        "weight": 0.45,
+        "alpha": 0.55
       }
     },
     {
@@ -2291,8 +2291,8 @@
       "source": "ref-side",
       "look": {
         "fill": "dark",
-        "line": "none",
-        "alpha": 1
+        "weight": 0.45,
+        "alpha": 0.55
       }
     },
     {
@@ -4063,8 +4063,8 @@
       "source": "ref-side",
       "look": {
         "fill": "dark",
-        "line": "none",
-        "alpha": 1
+        "weight": 0.45,
+        "alpha": 0.55
       }
     },
     {

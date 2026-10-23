@@ -175,8 +175,8 @@ def _rounds(args):
             if len(a) != 1:
                 raise rounds.RoundsError("usage: construct rounds start scene.json [--tier masterpiece] [--dir run]")
             st = rounds.start(a[0], args.tier, folder if args.dir != "." else Path(a[0]).resolve().parent)
-            sys.stdout.write("started: round 1, tier %s, %s-minute safety stop on active time\n" % (
-                st["tier"], st["limit_seconds"] // 60))
+            sys.stdout.write("started: round 1, tier %s, %s-minute safety stop on active time; the medium's limits are "
+                             "seeded as known limits (L1-L3)\n" % (st["tier"], st["limit_seconds"] // 60))
         elif args.action == "change":
             if len(a) != 2:
                 raise rounds.RoundsError("usage: construct rounds change D3 \"what changed\"")
@@ -214,6 +214,10 @@ def _rounds(args):
                 sys.stdout.write(rounds.summary(e) + "\n")
             else:
                 sys.stdout.write("round %d recorded (%s); details in rounds.md\n" % (e["round"], "kept" if e["kept"] else "reverted"))
+        elif args.action == "pause":
+            rounds.pause(folder)
+            sys.stdout.write("paused: the time until the next command is not counted; resume with `construct rounds "
+                             "status`\n")
         elif args.action == "status":
             sys.stdout.write(rounds.status(folder) + "\n")
         else:
@@ -324,7 +328,7 @@ def add_commands(sub):
     p.add_argument("--model")
     p.add_argument("--key-env")
     p = sub.add_parser("rounds", help="improvement rounds: a defect ledger, a pairwise gate, stop rules and a log")
-    p.add_argument("action", choices=("start", "change", "packet", "record", "run", "status", "report"))
+    p.add_argument("action", choices=("start", "change", "packet", "record", "run", "pause", "status", "report"))
     p.add_argument("args", nargs="*", help="start: scene.json; change: ID \"what changed\"; record: answer.json")
     p.add_argument("--dir", default=".", help="the run's folder (state.json, ledger.json, rounds.md, checkpoints/)")
     p.add_argument("--tier", default="masterpiece", choices=("showcase", "masterpiece"))

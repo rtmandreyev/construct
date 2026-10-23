@@ -18,7 +18,9 @@ newer.
 **Part 3, the ledger.** Open `step-3/ledger.json`: the defects found in earlier rounds. For each
 item say `fixed`, `open` or `regressed` in this version (part 1's renders), with one line of
 evidence, or `inexpressible` when the construct's tools cannot draw what it asks. Then list the
-ranks of your part-1 defects that are genuinely new (not a ledger item again).
+ranks of your part-1 defects that are genuinely new (not a ledger item again), and which of them
+ask for the medium's limits (`limits`: {rank: "L1" | "L2" | "L3"}: hidden lines showing through,
+tinted glass, an opening in a still).
 
 Answer with one JSON object, no prose:
 
@@ -29,7 +31,8 @@ Answer with one JSON object, no prose:
                "composition": "same", "assembly": "same", "motion": "same", "density": "A", "honesty": "same"},
               "differences": [{"better": "A", "criterion": "identity", "parts": ["headlamp-left"],
                                 "evidence": "what you see in which view"}]},
- "reconcile": {"items": [{"id": "D3", "status": "fixed", "evidence": "one line from the renders"}], "new": [1, 4]}}
+ "reconcile": {"items": [{"id": "D3", "status": "fixed", "evidence": "one line from the renders"}], "new": [1, 4],
+               "limits": {}}}
 ```
 
 Leave `pairwise` out when the packet has no part 2 (the first version).

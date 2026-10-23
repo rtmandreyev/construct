@@ -268,7 +268,7 @@ REPAIR = """# The check-and-repair loop (for hosts and runners)
 Codes a model will meet: json, duplicate-key, unknown-key, missing-key, type, range,
 choice, id, reference, certainty, unknown-fact, style, path, budget, floating,
 stage-order, overclaim, accuracy, decorative-identity, no-mass, no-identity, clutter,
-duplicates, tiny, invisible, no-open-view, detached, thin, shape-overclaim, research,\ntier-budget, authoring.
+duplicates, tiny, invisible, bare-surface, no-open-view, detached, thin, shape-overclaim, research,\ntier-budget, authoring.
 
 A host that supports constrained output can hold a small model to `params.schema.json`.
 No step needs an API key from this toolkit; the model and its key live in the host.
@@ -354,6 +354,17 @@ Answer with one JSON object, no prose:
   subject is not recognisable because of it), `major` (an owner would notice), `minor`.
 - **Every score below 3 cites a defect** with that `criterion`: name what keeps it from 3. A
   score you cannot back with a named defect is noise; give the 3.
+- **Detail is the standard.** At hero scale the construct reads as one clear object; up close,
+  every region still has something true to find. A bare face or an empty corner is unfinished
+  work: name it as a defect (`density` or `depth`). Clutter is detail that is not true to the
+  subject or that drowns the silhouette, not detail as such.
+- **Faint surface contours give form.** The fine wire that follows a body's, roof's or hood's
+  surface over its dark fill is how this medium shows a sculpted surface; it is not
+  "construction lines" or clutter. Never ask to remove it. A main surface drawn as a flat dark
+  shape with no contour reads as cardboard: that is a defect.
+- **The medium.** The renderer cannot do three things; do not ask for them: hidden lines show
+  faintly through solid parts (the x-ray style), glass cannot be tinted or coloured, and stills
+  show the closed still pose (an opening never shows in a still).
 - `verdict`: "outstanding" only when every score is 3 and nothing critical or major remains;
   "good" when every score is at least 2 and nothing is critical; otherwise "improve". It is
   recomputed from your scores, so score honestly rather than kindly.
@@ -380,7 +391,9 @@ newer.
 **Part 3, the ledger.** Open `step-3/ledger.json`: the defects found in earlier rounds. For each
 item say `fixed`, `open` or `regressed` in this version (part 1's renders), with one line of
 evidence, or `inexpressible` when the construct's tools cannot draw what it asks. Then list the
-ranks of your part-1 defects that are genuinely new (not a ledger item again).
+ranks of your part-1 defects that are genuinely new (not a ledger item again), and which of them
+ask for the medium's limits (`limits`: {{rank: "L1" | "L2" | "L3"}}: hidden lines showing through,
+tinted glass, an opening in a still).
 
 Answer with one JSON object, no prose:
 
@@ -391,7 +404,8 @@ Answer with one JSON object, no prose:
                "composition": "same", "assembly": "same", "motion": "same", "density": "A", "honesty": "same"}},
               "differences": [{{"better": "A", "criterion": "identity", "parts": ["headlamp-left"],
                                 "evidence": "what you see in which view"}}]}},
- "reconcile": {{"items": [{{"id": "D3", "status": "fixed", "evidence": "one line from the renders"}}], "new": [1, 4]}}}}
+ "reconcile": {{"items": [{{"id": "D3", "status": "fixed", "evidence": "one line from the renders"}}], "new": [1, 4],
+               "limits": {{}}}}}}
 ```
 
 Leave `pairwise` out when the packet has no part 2 (the first version).
