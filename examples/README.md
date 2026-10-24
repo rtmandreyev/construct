@@ -1,7 +1,7 @@
 # Examples
 
-Twenty-three constructs made by AI agents with Construct, in fast or masterpiece mode, each with
-its scene and a hero image. See them live, assembling, in the [examples gallery](https://rtmandreyev.github.io/construct/). Some were
+Constructs made by AI agents with Construct, in fast or masterpiece mode, each with its scene
+and a hero image. See them live, assembling, in the [examples gallery](https://rtmandreyev.github.io/construct/). Some were
 made with earlier versions of Construct; all of them build with this release.
 
 | | example | mode | model |

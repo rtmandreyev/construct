@@ -1,0 +1,38 @@
+name: tests
+
+# The whole suite, standard library only: nothing to install. Review captures need a local
+# Chromium-family browser with WebGL, so CI skips those few tests (HOLOGRAM_SKIP_CAPTURE=1);
+# run them locally with a browser. Nothing here reaches the network or a model.
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: python ${{ matrix.python-version }}
+    runs-on: macos-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.x"]
+    env:
+      HOLOGRAM_SKIP_CAPTURE: "1"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Byte-compile
+        run: python3 -m compileall -q construct_hologram scripts
+
+      - name: Test suite
+        run: python3 -m unittest discover -s construct_hologram -t . -p 'test_*.py'
+
+      - name: Build the examples gallery
+        run: python3 scripts/build_site.py --out "$RUNNER_TEMP/site"

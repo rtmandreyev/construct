@@ -2,6 +2,7 @@
 
 import hashlib
 import json
+import os
 import re
 import shutil
 import subprocess
@@ -114,7 +115,7 @@ class Packages(unittest.TestCase):
             self.assertEqual(r.returncode, 0, r.stderr)
             self.assertTrue((work / "pr" / "critic.md").exists())
             from . import render
-            if render.find_browser():  # seen live: critique crashed in the packaged skill
+            if render.find_browser() and os.environ.get("HOLOGRAM_SKIP_CAPTURE") != "1":  # seen live: critique crashed in the packaged skill
                 shutil.copyfile(skill / "examples" / "cd.json", work / "cd.json")
                 r = run("critique", "cd.json", "--out", "crit")
                 self.assertEqual(r.returncode, 0, r.stdout + r.stderr)

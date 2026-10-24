@@ -1,5 +1,17 @@
 # Changelog
 
+## Unreleased
+
+- **A README in the house style**: a plain opening, the three most complex examples assembling,
+  how it works as a flowchart, then install, quick start, modes, models and requirements.
+- **Repository furniture:** a test workflow on every push and pull request, issue and pull
+  request templates, and SECURITY.md.
+- **The gallery's construct pages** are built without the round history, so no published page
+  shows the round timeline, whatever its URL.
+- **Tests that need a browser** now skip cleanly as a class when none is available (or with
+  `HOLOGRAM_SKIP_CAPTURE=1`); before, the skip marker sat on a helper that compile-only tests
+  also use.
+
 ## 0.2.1 — 2026-10-23
 
 Construct 0.2.1 makes long runs pay off and makes the result easy to choose and to trust: three

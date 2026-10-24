@@ -256,7 +256,6 @@ class Build(unittest.TestCase):
             self.assertIn("appears twice", r.stdout)
 
 
-@unittest.skipUnless(render.find_browser() and os.environ.get("HOLOGRAM_SKIP_CAPTURE") != "1", "no Chromium-family browser")
 def lid_scene():
     """A box with a hinged lid, a sliding card in the lid and a label from a fact."""
     s = base()
@@ -1990,6 +1989,8 @@ class RealTerrain(unittest.TestCase):
             self.assertTrue(any(abs((x - want + 180) % 360 - 180) < 25 for x in bearings), (want, bearings))
 
 
+@unittest.skipUnless(render.find_browser() and os.environ.get("HOLOGRAM_SKIP_CAPTURE") != "1",
+                     "no Chromium-family browser (or HOLOGRAM_SKIP_CAPTURE=1)")
 class Capture(unittest.TestCase):
     def test_a_round_packet_is_blind_and_paired_and_the_timeline_renders(self):
         from . import rounds
