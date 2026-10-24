@@ -4,9 +4,10 @@ Twenty-three constructs made by AI agents with Construct, each with its scene, a
 how it was made. See them live, assembling, in the [examples gallery](https://rtmandreyev.github.io/construct/).
 
 Some were made with earlier builds (Construct 0.2.0, or 0.2.1 development and release-candidate
-builds). Every one was checked again with Construct 0.2.1, without changing a scene: all pass
+builds). Every one was checked again with Construct 0.2.1, without changing a scene's content: all pass
 `check`, and the 0.2.1 compiler builds the same construct each time, so the gallery is built
-from these scenes with the release.
+from these scenes with the release. One record was completed: the Sainte-Chapelle's round history
+now includes round 15, the round its scene comes from.
 
 | | example | model | how | made with |
 |---|---|---|---|---|
