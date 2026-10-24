@@ -17,8 +17,10 @@ address you find in this repository.
 ## What Construct does that is security-relevant
 
 - **A construct is a static page.** `construct.html` is one self-contained file: plain WebGL2,
-  no external scripts, fonts or styles, and no network calls. It runs no code from the scene:
-  a scene is data that the compiler validates, and text in it is escaped before it is embedded.
+  no external scripts, fonts or styles, and no network calls. It runs no code from the scene: a
+  scene is data that the compiler validates, and text in it is escaped before it is embedded.
+  The one exception to "no calls" is film mode: a construct opened with `?audio=features.json`
+  reads that one file of numbers beside the page, and nothing else.
 - **The toolkit is local.** It reads and writes files you point it at. It never downloads or
   installs anything, and it uses only Python's standard library.
 - **Review captures** start a local Chromium-family browser you already have, headless, on the

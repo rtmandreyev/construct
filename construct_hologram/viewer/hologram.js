@@ -3,7 +3,8 @@
  *
  * Everything is a pure function of the geometry, the seed and a time t, so any frame
  * can be reproduced exactly (?t=3.2) for review captures. The renderer only draws what
- * the compiler produced: it runs no scene-supplied code and fetches nothing.
+ * the compiler produced: it runs no scene-supplied code and fetches nothing (except, in film mode, the
+ * audio features file named by ?audio).
  *
  * URL parameters: t (freeze time, seconds), view (hero|front|side|back|top|three-quarter|<scene view>),
  * motion (full|reduced), mode (light|provenance), ui (1|0), labels (1|0), caption (1|0),
@@ -12,6 +13,9 @@
  * open (0..1: hold the articulations at this opening instead of playing them),
  * shift (x,y: move the framed object across the screen, in fractions of the half-viewport),
  * zoom (>1 pulls the camera back to leave room around the object).
+ * Film mode: assembly (seconds: the assembly lasts this long, e.g. a whole track), audio (a features file
+ * written by `construct audio`, fetched beside the page: the build, the light and a voice shimmer follow
+ * it). Without these the viewer behaves exactly as without film mode.
  */
 (function () {
   "use strict";
@@ -620,7 +624,7 @@ void main() {
     const asm = this.geo.animation.assembly;
     if (this.opt.reduced || asm.style === "cut") return { ghost: 0, collapse: 0, build: 0, settle: 0, end: 0 };
     const ghost = asm.interference && asm.style === "ceremony" ? 0.9 : 0, collapse = ghost ? 0.35 : 0;
-    const build = Math.max(0.2, asm.seconds), settle = asm.style === "ceremony" ? 1.1 : 0.4;
+    const build = Math.max(0.2, this.opt.assembly || asm.seconds), settle = asm.style === "ceremony" ? 1.1 : 0.4;
     return { ghost, collapse, build, settle, end: ghost + collapse + build + settle };
   };
 
@@ -648,12 +652,26 @@ void main() {
     return out;
   };
 
+  // film mode: audio features {fps, energy[], high[], voice[]} (0..1 per frame) shape the assembly and the idle light
+  Hologram.prototype.audioAt = function (t) {
+    const a = this.audio, i = Math.max(0, Math.min(a.energy.length - 1, Math.round(t * a.fps)));
+    return { energy: a.energy[i] || 0, high: (a.high && a.high[i]) || 0, voice: (a.voice && a.voice[i]) || 0 };
+  };
+  Hologram.prototype.audioBuild = function (tb, dur) {
+    // progress advances by (base + k·energy²) per frame, normalised so the build ends exactly at the assembly's duration
+    const a = this.audio, t0 = this.assemblyTimes().ghost + this.assemblyTimes().collapse;
+    if (!a._acc || a._dur !== dur) { const n = Math.ceil(dur * a.fps) + 1, acc = new Float32Array(n); let s = 0;
+      for (let i = 0; i < n; i++) { const e = a.energy[Math.min(a.energy.length - 1, Math.round(t0 * a.fps) + i)] || 0; s += 0.35 + 2.5 * e * e; acc[i] = s; }
+      a._acc = acc; a._dur = dur; }
+    const acc = a._acc, i = Math.max(0, Math.min(acc.length - 1, Math.round(tb * a.fps))); return acc[i] / acc[acc.length - 1];
+  };
+
   Hologram.prototype.state = function (t) {
     const g = this.geo, at = this.assemblyTimes(), s = { build: 2, ghost: 0, stabilise: 0, globalAlpha: 1, event: [0, 0, 0, 0], eventP: [0, 0, 0, 0], scan: [0, 0] };
     if (t < at.end) {
       if (t < at.ghost) { s.ghost = 1; s.build = 2; s.globalAlpha = 0.18 + 0.1 * Math.sin(t * 40) * Math.sin(t * 7); }
       else if (t < at.ghost + at.collapse) { const k = (t - at.ghost) / at.collapse; s.ghost = 1 - k; s.build = 2; s.globalAlpha = 0.2 * (1 - k); }
-      else if (t < at.ghost + at.collapse + at.build) { const k = (t - at.ghost - at.collapse) / at.build; s.build = k; s.scan = [k * 1.05, 0.6]; }
+      else if (t < at.ghost + at.collapse + at.build) { const tb = t - at.ghost - at.collapse; const k = this.audio ? this.audioBuild(tb, at.build) : tb / at.build; s.build = k; s.scan = [k * 1.05, 0.6]; }
       else { const k = (t - at.ghost - at.collapse - at.build) / at.settle; s.build = 2; s.stabilise = Math.exp(-3.5 * k) * (1 - k); }
     }
     for (const e of this.schedule) {
@@ -667,6 +685,10 @@ void main() {
         break;
       }
       if (e.t0 > t) break;
+    }
+    if (this.audio) {   // film mode: the light breathes with the music, and the hologram shimmers while the voice is present
+      const f = this.audioAt(t); s.globalAlpha *= 0.82 + 0.36 * f.energy;
+      if (s.event[0] === 0 && f.voice > 0.25) s.event = [EVENT_CODE.shimmer, (t * 0.35) % 1, 0.35 + 0.6 * f.voice, 7];
     }
     s.life = this.opt.reduced || g.animation.idle.life === "off" ? 0 : 1;
     return s;
@@ -1004,6 +1026,7 @@ void main() {
     const prefersReduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const opt = {
       t: q.has("t") ? parseFloat(q.get("t")) : null,
+      audio: q.get("audio"), assembly: q.has("assembly") ? Math.max(0.2, Math.min(3600, parseFloat(q.get("assembly")) || 0)) : null,
       view: q.get("view") || "hero",
       reduced: q.get("motion") === "reduced" || (prefersReduced && q.get("motion") !== "full"),
       mode: q.get("mode") === "provenance" ? "provenance" : "light",
@@ -1073,6 +1096,7 @@ void main() {
     };
     setUi();
 
+    if (opt.audio) { window.HOLO_AUDIO_READY = fetch(opt.audio).then((r) => r.json()).then((a) => { holo.audio = a; holo.schedule = holo.buildSchedule(); }).catch((e) => console.error("audio features:", e)); }
     let clock0 = performance.now(), paused = false, pausedAt = 0, frozen = opt.t;
     const now = () => frozen !== null ? frozen : paused ? pausedAt : (performance.now() - clock0) / 1000;
 

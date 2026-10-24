@@ -27,7 +27,8 @@ geometry should accept both geometry ids until 0.3. The v0.1 construction sheets
 
 A renderer consumes **geometry**, never scenes: everything in it is explicit (line segments,
 triangles, sprites, styles, phases, transform slots, face quads). No renderer needs to
-interpret shapes, run code or fetch anything. Its structure and budgets are published as
+interpret shapes, run code or fetch anything (the one exception is film mode's optional audio
+features file, below). Its structure and budgets are published as
 [`geometry.schema.json`](construct_hologram/geometry.schema.json) (JSON Schema 2020-12); a consumer re-validates
 structure, budgets and `scene_sha256` itself and never trusts compiler output blindly. Keep
 the source scene next to its geometry; `scene_sha256` binds them. The v1 `tessera-geometry`
@@ -261,6 +262,29 @@ A scene or parameter document may carry `authoring`, which compiles to
 `sources` the ids of the scene's sources research used (required when `research` is `done`);
 `outcome` `good | limit | unreviewed`; `next` up to 8 improvement notes. It says how the
 construct was made so a host can regenerate it at a higher tier; readers may ignore it.
+
+## Film mode (an addition within 0.2)
+
+Film mode lets an assembly span a piece of music, for video.
+
+- **Long assemblies.** `animation.assembly.seconds` accepts up to 1200 (20 minutes). Above 20
+  seconds the audit warns `long-assembly`: a construct assembles in at most 20 s, and a film
+  usually keeps the scene short and sets the length when rendering.
+- **Viewer parameters.** `assembly=<seconds>` sets the assembly's length for this view,
+  overriding the scene. `audio=<features.json>` loads audio features: the build advances by
+  `0.35 + 2.5·energy²` per frame, normalised so that it still ends exactly on time; the light
+  scales by `0.82 + 0.36·energy`; and while `voice` is above 0.25 the construct shimmers.
+- **The features file** (`construct audio`): `{"format": "construct-audio", "version": 1, "fps",
+  "frames", "scale", "energy": [...], "high": [...], "voice": [...], "range_db"}`, one value per
+  frame, each 0..1, indexed by track time from the start of the page's clock. `energy` is the
+  music's loudness (each track mapped to its own range, or a fixed -40..-10 dBFS window),
+  `high` its brightness and attacks, `voice` a voice stem's level.
+- **The one fetch.** With `audio=`, the portable viewer fetches that one file, a JSON document of
+  numbers beside the page. It fetches nothing else, and nothing at all without the parameter.
+  Without `audio=` and `assembly=` the viewer behaves exactly as it does without film mode.
+- **Hosts with their own renderer** can read the same features. `film/construct-three.js` is an
+  optional three.js loader that draws compiled geometry in a three.js scene and takes
+  `build`, `time`, `energy`, `high` and `voice` every frame.
 
 ## Planned for 0.3 (not in 0.2)
 

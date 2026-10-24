@@ -276,7 +276,7 @@ REPAIR = """# The check-and-repair loop (for hosts and runners)
 Codes a model will meet: json, duplicate-key, unknown-key, missing-key, type, range,
 choice, id, reference, certainty, unknown-fact, style, path, budget, floating,
 stage-order, overclaim, accuracy, decorative-identity, no-mass, no-identity, clutter,
-duplicates, tiny, invisible, bare-surface, no-open-view, detached, thin, shape-overclaim, research,\ntier-budget, authoring.
+duplicates, tiny, invisible, bare-surface, long-assembly, no-open-view, detached, thin, shape-overclaim, research,\ntier-budget, authoring.
 
 A host that supports constrained output can hold a small model to `params.schema.json`.
 No step needs an API key from this toolkit; the model and its key live in the host.

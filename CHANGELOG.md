@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+- **Film mode** ([FILM.md](docs/FILM.md)): a construct can assemble across a whole track of
+  music. `construct audio` measures a track per video frame (loudness, brightness, and a voice
+  stem if you have one), each track against its own range by default (`--scale fixed` keeps one
+  fixed window). `video --assembly S --audio features.json --sound track.wav` renders an assembly
+  of S seconds whose pace and light follow the music, with the track in the MP4. Scenes may now
+  set an assembly of up to 1200 seconds, with a `long-assembly` warning above 20. The viewer
+  takes `?assembly=` and `?audio=`; without them it draws exactly as before, which a test checks
+  against the 0.2.1 viewer. An optional three.js loader for filmmakers ships in
+  `construct_hologram/film/`.
 - **Docs for people new to Construct:** [How a construct is made](docs/HOW-IT-IS-MADE.md) (with a
   construct improving round by round), [The Measured Light style](docs/STYLE.md) (with annotated
   pictures), [Troubleshooting](docs/TROUBLESHOOTING.md), a docs index with a short glossary, and

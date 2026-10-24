@@ -43,7 +43,9 @@ TAGS = ["Construct", "Hologram", "3D", "Visualization", "WebGL", "Animation", "D
 # The runtime: the v2 toolchain plus the v1 module its CLI still dispatches to.
 RUNTIME_MODULES = ["__init__.py", "__main__.py", "product.py", "hologram.py", "scene.py", "shapes.py",
                    "audit.py", "diagnose.py", "params.py", "prompts.py", "render.py", "runner.py", "studio.py", "png.py",
-                   "trace.py", "terrain.py", "tiers.py", "globe.py", "critic.py", "compare.py", "archkit.py", "rounds.py"]
+                   "trace.py", "terrain.py", "tiers.py", "globe.py", "critic.py", "compare.py", "archkit.py", "rounds.py",
+                   "film_audio.py"]
+FILM = ["construct-three.js"]  # film mode's optional three.js loader, shipped as runtime/film/
 VIEWER_FILES = ["hologram.js", "template.html"]
 PROMPT_EXAMPLES = ["case-jewel.params.json", "book.json"]
 
@@ -147,6 +149,8 @@ def write_skill(host, root):
         _copy(HERE / "viewer" / name, root / "runtime" / PACKAGE / "viewer" / name)
     for name in PROMPT_EXAMPLES:  # the prompts quote these: critique, author and prompts need them
         _copy(HERE / "examples" / "v2" / name, root / "runtime" / PACKAGE / "examples" / "v2" / name)
+    for name in FILM:
+        _copy(HERE / "film" / name, root / "runtime" / "film" / name)
     (root / "runtime" / "cli.py").write_text(CLI_SHIM.format(name=NAME, package=PACKAGE), encoding="utf-8")
     for scene in sorted((HERE / "examples" / "v2").glob("*.json")):
         _copy(scene, root / "examples" / scene.name)

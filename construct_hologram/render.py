@@ -371,12 +371,20 @@ def stills(html_path, out_dir, views, width=1280, height=800, scale=1.0, browser
     return written
 
 
-def frames(html_path, out_dir, seconds, fps=24, start=0.0, width=1280, height=720, scale=1.0, view=None, browser=None):
+def frames(html_path, out_dir, seconds, fps=24, start=0.0, width=1280, height=720, scale=1.0, view=None, browser=None,
+           extra=None):
+    """Frames of the animation from `start`, `seconds` long. `extra` adds URL parameters, for film mode:
+    {"assembly": seconds, "audio": "features.json"} (the features file beside the page)."""
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)
-    b = open_browser(_url(html_path, t="%.3f" % start, ui=0, capture=1, view=view), width, height, scale, browser)
+    b = open_browser(_url(html_path, t="%.3f" % start, ui=0, capture=1, view=view, **(extra or {})), width, height, scale,
+                     browser)
     paths = []
     try:
+        if extra and extra.get("audio"):  # film mode: wait until the features are loaded, and refuse to go without them
+            b.evaluate("window.HOLO_AUDIO_READY && window.HOLO_AUDIO_READY.then(() => true)")
+            if not b.evaluate("!!(window.HOLO && HOLO.hologram && HOLO.hologram.audio)"):
+                raise CaptureError("the audio features did not load (%s): see the page's console" % extra["audio"])
         n = int(round(seconds * fps))
         for i in range(n):
             t = start + i / fps
@@ -389,8 +397,9 @@ def frames(html_path, out_dir, seconds, fps=24, start=0.0, width=1280, height=72
     return paths
 
 
-def encode_video(frame_dir, out_path, fps=24):
-    """MP4 (H.264) or GIF from captured frames with ffmpeg, when it is installed."""
+def encode_video(frame_dir, out_path, fps=24, sound=None, sound_start=0.0):
+    """MP4 (H.264) or GIF from captured frames with ffmpeg, when it is installed. With `sound` (any audio file
+    ffmpeg reads), an MP4 carries that audio from `sound_start` seconds, cut or padded to the video's length."""
     ffmpeg = shutil.which("ffmpeg")
     if not ffmpeg:
         raise CaptureError("ffmpeg is not installed: the frames are in %s" % frame_dir)
@@ -401,7 +410,11 @@ def encode_video(frame_dir, out_path, fps=24):
                "fps=%d,scale=720:-1:flags=lanczos,split[a][b];[a]palettegen=stats_mode=diff[p];[b][p]paletteuse=dither=bayer:bayer_scale=4" % min(fps, 15),
                out_path]
     else:
-        cmd = [ffmpeg, "-y", "-loglevel", "error", "-framerate", str(fps), "-i", pattern, "-c:v", "libx264",
-               "-pix_fmt", "yuv420p", "-crf", "18", "-movflags", "+faststart", out_path]
+        cmd = [ffmpeg, "-y", "-loglevel", "error", "-framerate", str(fps), "-i", pattern]
+        if sound:
+            # the audio is padded with silence if it is shorter, then cut at the last frame: the video keeps every frame
+            cmd += ["-ss", "%.3f" % sound_start, "-i", str(sound), "-map", "0:v", "-map", "1:a", "-af", "apad", "-c:a", "aac",
+                    "-b:a", "192k", "-shortest"]
+        cmd += ["-c:v", "libx264", "-pix_fmt", "yuv420p", "-crf", "18", "-movflags", "+faststart", out_path]
     subprocess.run(cmd, check=True)
     return out_path

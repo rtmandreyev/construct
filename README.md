@@ -172,6 +172,7 @@ Start with the first two if you are new; the full index is in [docs/README.md](d
 - [Troubleshooting](docs/TROUBLESHOOTING.md): common problems in plain language
 - [Archetypes](docs/ARCHETYPES.md): ready-made templates for books, CDs, guitars, bottles, cars and more
 - [Terrain](docs/TERRAIN.md): mountains, routes and planets from real elevation data
+- [Film mode](docs/FILM.md): a construct that assembles across a track of music, for videos and films
 - [About](docs/ABOUT.md): where Construct's method comes from
 - [Evaluation](docs/EVALUATION.md): how models compare, and how to score your own
 - [Development](docs/DEVELOPMENT.md): for contributors and for building Construct into your own tools

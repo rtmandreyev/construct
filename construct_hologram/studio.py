@@ -13,6 +13,7 @@ Exit status: 0 success, 1 the scene or audit has errors, 2 capture unavailable.
 import importlib
 import json
 import os
+import shutil
 import sys
 import tempfile
 from pathlib import Path
@@ -411,17 +412,29 @@ def add_commands(sub):
     p.add_argument("scene")
     p.add_argument("--out", required=True)
     p.add_argument("--asset-root")
-    p.add_argument("--seconds", type=float, default=12.0)
+    p.add_argument("--seconds", type=float, help="length of the video (default 12, or the assembly plus 3 s with --assembly)")
     p.add_argument("--fps", type=int, default=24)
     p.add_argument("--start", type=float, default=0.0)
     p.add_argument("--view")
     p.add_argument("--size", default="1280x720")
     p.add_argument("--palette", choices=scene_mod.PALETTES, help="a colour the person chose (the default is the house palette)")
     p.add_argument("--identity", choices=scene_mod.IDENTITIES, help="an identity tint the person chose")
+    p.add_argument("--assembly", type=float, help="film mode: the assembly lasts this many seconds (e.g. a whole track), "
+                                                   "overriding the scene's")
+    p.add_argument("--audio", help="film mode: audio features from `audio` (energy, high, voice); the build and the "
+                                   "light follow them")
+    p.add_argument("--sound", help="film mode: an audio file to put in the MP4, from --start, cut to the video's length")
+    p = sub.add_parser("audio", help="film mode: per-frame audio features (energy, high, voice) for `video --audio`")
+    p.add_argument("music", help="the track (any format ffmpeg reads)")
+    p.add_argument("--out", required=True, help="the features JSON")
+    p.add_argument("--voice", help="an optional voice stem; its level drives the voice shimmer")
+    p.add_argument("--fps", type=int, default=24, help="frames per second of the features (match the video's)")
+    p.add_argument("--scale", choices=("track", "fixed"), default="track",
+                   help="track (default): each track mapped to its own loudness range; fixed: the older -40..-10 dB window")
 
 
 COMMANDS = ("new", "params", "expand", "prompts", "author", "trace", "trace-image", "terrain", "globe", "critique", "rounds", "compare", "loft-from-traces", "check", "build", "review",
-            "video")
+            "video", "audio")
 
 
 def run(args):
@@ -641,15 +654,28 @@ def run(args):
             paths = render.review(page_in(args.out), str(Path(args.out, "review")), w, h, sheets=sheets)
             sys.stdout.write("captured:\n  %s\n" % "\n  ".join(paths))
             return 0 if report["ok"] else 1
+        if args.command == "audio":
+            from . import film_audio
+            n = film_audio.features(args.music, args.voice, args.fps, args.out, args.scale)
+            sys.stdout.write("wrote %s (%d frames at %d fps)\n" % (args.out, n, args.fps))
+            return 0
         if args.command == "video":
             out = Path(args.out)
+            seconds = args.seconds if args.seconds is not None else (args.assembly + 3.0 if args.assembly else 12.0)
             with tempfile.TemporaryDirectory(prefix="hologram-video-") as tmp:
                 build(args.scene, tmp, args.asset_root, palette=args.palette, identity=args.identity)
                 w, h = (int(x) for x in args.size.lower().split("x"))
-                render.frames(page_in(tmp), str(Path(tmp, "frames")), args.seconds, args.fps,
-                              args.start, w, h, view=args.view)
+                extra = {}
+                if args.audio:  # the features travel beside the page, which fetches them
+                    shutil.copyfile(args.audio, Path(tmp, "audio.json"))
+                    extra["audio"] = "audio.json"
+                if args.assembly:
+                    extra["assembly"] = "%.3f" % args.assembly
+                render.frames(page_in(tmp), str(Path(tmp, "frames")), seconds, args.fps,
+                              args.start, w, h, view=args.view, extra=extra)
                 out.parent.mkdir(parents=True, exist_ok=True)
-                render.encode_video(str(Path(tmp, "frames")), str(out), args.fps)
+                render.encode_video(str(Path(tmp, "frames")), str(out), args.fps, sound=args.sound,
+                                    sound_start=args.start)
             sys.stdout.write("wrote %s\n" % out)
             return 0
     except scene_mod.SceneError as exc:

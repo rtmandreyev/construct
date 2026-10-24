@@ -10,6 +10,7 @@ Start with the first two pages if you are new to Construct; the rest are there w
 | fix something that went wrong | [TROUBLESHOOTING.md](TROUBLESHOOTING.md) |
 | fill in a ready-made template (a book, a CD, a guitar, a bottle, a car) | [ARCHETYPES.md](ARCHETYPES.md) |
 | build a mountain, a route or a planet from real elevation data | [TERRAIN.md](TERRAIN.md) |
+| make a construct assemble across a track of music, for a video or a film | [FILM.md](FILM.md) |
 | know where Construct's method comes from | [ABOUT.md](ABOUT.md) |
 | compare models, or score your own | [EVALUATION.md](EVALUATION.md) |
 | contribute, or build Construct into your own tools | [DEVELOPMENT.md](DEVELOPMENT.md) |
