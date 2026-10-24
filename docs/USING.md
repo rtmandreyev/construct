@@ -1,27 +1,39 @@
 # Using Construct
 
-Every entry point does the same thing: a model (or you) writes a scene or a parameter
-document; Construct checks it, and the draft is repaired until it is clean; then it is built
-and, optionally, reviewed and filmed. Paths below are relative to a checkout of
-`https://github.com/rtmandreyev/construct`. To see what the results look like, open the
+Construct works the same way wherever you run it. A model, or you, writes a scene; Construct
+checks it and the scene is repaired until it is clean; then it is built into a page you can open
+in any browser, and reviewed. This page walks through each way to run it, starting with the
+simplest. To see what the results look like first, open the
 [examples gallery](https://rtmandreyev.github.io/construct/).
 
-## Requirements
+## Before you start
 
-Python 3.10 or newer; nothing else to install. For review stills and video: a
-Chromium-family browser already on the machine (Chrome, Chromium, Edge or Brave; or set
-`HOLOGRAM_CHROME=/path/to/browser`) and ffmpeg. Construct never downloads or installs anything.
+You need Python 3.10 or newer, and nothing else to install. For review stills, Construct uses a
+Chromium-family browser you already have (Chrome, Chromium, Edge or Brave); if yours is
+somewhere unusual, point to it with `HOLOGRAM_CHROME=/path/to/browser`. Videos also need ffmpeg.
+Construct never downloads or installs anything.
 
-## A worked example, end to end (no model)
+Get a copy and build the skills:
 
-A paperback whose title you know and whose author you do not:
+```sh
+git clone https://github.com/rtmandreyev/construct.git
+cd construct
+python3 construct_hologram/package.py --out dist
+```
+
+## Your first construct, by hand
+
+You don't need a model to try Construct. Common things, like a book, a CD case, a guitar or a
+bottle, have a ready-made template (an *archetype*) that you fill in with what you know. Here
+is a paperback whose title you know and whose author you don't:
 
 ```sh
 C=construct_hologram/cli.py
 python3 $C params book --variant paperback --output book.json
 ```
 
-Fill in what you know — and only that. An unknown author is left out, not guessed:
+Open `book.json` and fill in what you know, and only that. The author is left out rather than
+guessed:
 
 ```json
 {
@@ -33,257 +45,141 @@ Fill in what you know — and only that. An unknown author is left out, not gues
 }
 ```
 
+Then check it, build it and look at it:
+
 ```text
 $ python3 $C check book.json
 audit: PASS (0 errors, 0 warnings)
-  size 0.1299 x 0.198 x 0.0251 m
-  68 lines, 36 triangles, 0 points, 0 moving copies
-  evidence-backed key parts: 0 of 2
 
 $ python3 $C build book.json --out out
 wrote out/construct.html
 
 $ python3 $C review book.json --out out
-captured: out/review/sheet-assembly.png, sheet-views.png, sheet-life.png, sheet-motion.png,
-          sheet-provenance.png, still-reduced-motion.png, view-spine.png, view-open.png, hero.png
-
-$ python3 $C video book.json --out out/small-hours.mp4 --seconds 12
-wrote out/small-hours.mp4
+captured: out/review/sheet-assembly.png, sheet-views.png, ... hero.png
 ```
 
-`out/` now holds `construct.html` (84 KB, self-contained: open it in any browser),
-`geometry.json` (for apps), `audit.json`/`audit.txt`, `review/` and the video (2 MB). The book
-assembles, its cover opens to a title page set from the `title` fact, and its spine carries
-the title. With no author fact there is no author line, and with no cover image the cover
-shows its designed no-art face.
+Open `out/construct.html` in your browser. The book assembles itself, its cover opens to a
+title page set from your title, and its spine carries the title too. With no author, there is
+no author line; with no cover image, the cover shows its plain designed face. `out/review/`
+holds the stills, and `python3 $C video book.json --out out/small-hours.mp4 --seconds 12`
+makes a video.
 
-`check --json` gives the machine-readable report: `ok`, `needs_repair`, `diagnostics[]`
-(`severity, code, path, message, hint`) and `repair_text`.
+All the archetypes are listed in [ARCHETYPES.md](ARCHETYPES.md).
 
-## Hermes
+## In Claude Code
 
-1. Build the skill: `python3 construct_hologram/package.py --out dist`.
-2. Copy `dist/hermes/construct` into `~/.hermes/skills/`, or into a project's
-   `.hermes/skills/` and run `hermes skills trust` in that project.
-3. Ask in plain words: *"Make a construct of my CD: Glass Harbour by The Lantern Choir, a
-   normal jewel case."* Hermes finds the skill from its description; the skill runs the CLI
-   above with the right archetype or a full scene, repairs, builds and reviews.
+Load the skill for one session with `claude --plugin-dir dist/claude-code/construct`; nothing is
+installed or changed. To keep it in a project, copy `dist/claude-code/construct/skills/construct`
+into the project's `.claude/skills/` (or into `~/.claude/skills/` for all your projects).
 
-The skill's body refers to its own runtime through `${HERMES_SKILL_DIR}`; nothing else is
-configured.
+Then ask in plain words: *"make a construct of a 1970s desk fan"*. The skill picks a mode, tells
+you which and why, and does the rest: it looks the subject up if it needs to, writes the scene,
+checks it, builds it and reviews it. You can also start it with `/construct:construct`.
 
-**Masterpiece mode in Hermes: two things to set up.**
+## In Hermes
 
-- **Allow enough critics.** The masterpiece loop uses one fresh critic, a subagent, every
-  round. A one-shot run (`hermes chat -q` or `--oneshot`) may spawn only
-  `delegation.oneshot_max_children` subagents in all, and the default is 2. With the default,
-  the critic rounds end after two, and later rounds are only self-reviewed: in one live run the
-  third round went unjudged. For masterpiece, raise it in Hermes's `config.yaml` (for example
-  `oneshot_max_children: 14` under `delegation:`, twelve rounds and a margin; `0` means
-  unlimited, for unbounded mode), or run Hermes interactively, which is not capped. Or let the
-  critic be a second model call instead of a subagent: `rounds run --base-url ... --model ...
-  --key-env ...`.
-- **Keep images small.** Hermes's websocket carries at most 8 MB in one frame. A turn that
-  attaches several full-size review stills (up to about 1 MB each as PNG, more once encoded)
-  can pass that, and one live run crashed this way just after saving its result. Review at a
-  smaller size (`review --size 1280x800`), render only the sheets you will look at (`--sheets
-  assembly,views`), and look at the stills a few at a time. Because the skill saves a valid
-  scene after every round, a crash costs at most the round in progress.
+Copy `dist/hermes/construct` into `~/.hermes/skills/`, or into a project's `.hermes/skills/` and
+run `hermes skills trust` there. Then ask in plain words: *"Make a construct of my CD: Glass
+Harbour by The Lantern Choir, a normal jewel case."* Hermes finds the skill from its description.
 
-## Claude Code
+**Masterpiece mode in Hermes needs two settings.** Without them a masterpiece run can end early
+or stop with an error, so it is worth setting them up before your first one.
 
-`claude --plugin-dir dist/claude-code/construct` loads it for one session (nothing is
-installed or changed). To keep it in a project, copy `dist/claude-code/construct/skills/construct`
-into `.claude/skills/` (or `~/.claude/skills/` for all projects). Ask in plain words, or invoke
-`/construct:construct` from the plugin.
+- **Allow enough critics.** Masterpiece mode starts a fresh helper agent, the critic, every
+  round. A one-shot Hermes run (`hermes chat -q` or `--oneshot`) may start only two helper
+  agents in all by default, so the critic stops after two rounds and later rounds go unjudged.
+  Raise the limit in Hermes's `config.yaml`, under `delegation:`, with `oneshot_max_children:
+  14` (twelve rounds and a margin; `0` means no limit, for unbounded mode). Or run Hermes
+  interactively, which has no such limit, or let the critic be a second model you name with
+  `rounds run --base-url ... --model ... --key-env ...`.
+- **Keep the pictures small.** Hermes sends at most 8 MB in one message. A turn that attaches
+  several full-size review stills can pass that and stop the run. Ask for smaller stills
+  (`review --size 1280x800`) and only the sheets you need (`--sheets assembly,views`). Because the
+  skill saves a valid scene after every round, a stop like this costs at most the round in
+  progress.
 
-## Any MCP agent
+## In another agent, through MCP
 
-Run `python3 construct_hologram/server.py` as a stdio server:
+Any agent that speaks MCP can use Construct's tools to check, compile and look up limits. Add the
+server to your agent's configuration:
 
 ```json
-{"mcpServers": {"construct": {"command": "python3", "args": ["/abs/path/construct/construct_hologram/server.py"]}}}
+{"mcpServers": {"construct": {"command": "python3", "args": ["/path/to/construct/construct_hologram/server.py"]}}}
 ```
 
-| tool | does |
-|---|---|
-| `construct_diagnose` | checks a draft (raw model text or parsed JSON): `ok`, `needs_repair`, diagnostics with paths and hints, `repair_text` |
-| `construct_params_template` | a parameter document for an archetype and variant (no arguments: the list) |
-| `construct_expand_params` | the full scene a parameter document builds |
-| `construct_compile` | compiled `construct-geometry` for a scene or parameter document |
-| `construct_limits` | an effort tier's limits (with overrides, or `tier:`/`research:` read from a request), for the host to enforce |
-| `hologram_template`, `hologram_validate`, `hologram_compile` | the legacy v0.1 construction sheets |
+The tools only read the JSON they are given; they never touch your files or the network. The list
+of tools is in [DEVELOPMENT.md](DEVELOPMENT.md#mcp-tools).
 
-The tools read only the JSON they are given: no file access, rendering or network.
-The 0.2 pre-release names (`hologram_diagnose`, `hologram_params_template`,
-`hologram_expand_params`, `hologram_compile_scene`) still answer for one release.
+## With any OpenAI-compatible model
 
-## Any OpenAI-compatible model
+`construct author` runs the whole loop with any model behind an OpenAI-compatible endpoint:
+DeepSeek, OpenRouter, OpenAI, or a local server such as Ollama, llama.cpp or LM Studio. Your key
+stays in your shell; Construct reads it from the environment variable you name and never stores it.
 
 ```sh
-export DEEPSEEK_API_KEY=...            # your key, in your shell; Construct never stores it
+export DEEPSEEK_API_KEY=...
 python3 construct_hologram/cli.py author "a 440 ml can of Example Porter, 5.6% ABV" --params \
     --base-url https://api.deepseek.com/v1 --model deepseek-chat --key-env DEEPSEEK_API_KEY --out can.json
 ```
 
-`author` sends `prompts/system.md`, then `params.md` (with `--params`, best for small models)
-or `scene.md`, then your request; checks each answer and sends back the repair text until
-`needs_repair` is false. With `--vision` (the model can see images) and a browser, it then
-renders the construct and asks the model for an art-direction review of its own captures
-(`prompts/vision-review.md`), improving the weakest point each round until the verdict is
-"good". Then `build`/`review` it.
+`--params` asks for a filled-in archetype, which suits small models best. Add `--vision` if the
+model can see images, so it reviews its own stills, and `--mode masterpiece` with reference
+photos (`--reference side=side.jpg`) for a named subject. Every option is in
+[DEVELOPMENT.md](DEVELOPMENT.md#author-the-any-model-runner).
 
-**Modes.** A run is one of three modes; the user names one, or the skill picks and announces
-it before any work (never unbounded):
+## Choosing a mode
 
-| mode | what it does | stops | costs | for |
-|---|---|---|---|---|
-| **fast** (`--mode fast`, the default here) | one pass with self-review, no rounds loop: the standard tier, or showcase for a richer subject | 10 min and 2 reviews (30 min and 4) | cents with DeepSeek (below) | generic subjects, simple objects, quick requests |
-| **masterpiece** (`--mode masterpiece`) | the critic every round, each version judged against the best so far | 2 rounds without a win, every criterion 3, 12 rounds, or 2 hours of active work | frontier-model tokens for up to 2 hours | a named subject whose likeness matters: a car model, a landmark, a named building |
-| **unbounded** (`--mode unbounded`) | the same rounds with only the stop rules | 2 rounds without a win (or every criterion 3), or you | many rounds and hours at a high token cost | only on explicit request |
+You can name a mode in your request, or say nothing and let the skill choose and explain.
+**fast** is one careful pass, about ten minutes, and suits most things. **masterpiece** runs
+rounds judged by an independent critic, for a named car, landmark or building whose likeness
+matters. **unbounded** is masterpiece without the 12-round cap and the two-hour limit, and the
+skill only uses it when you ask. The README's [Modes](../README.md#modes) table has the details,
+and [How a construct is made](HOW-IT-IS-MADE.md) explains the rounds.
 
-Unbounded has no round cap and no time ceiling. The critic finds a win almost every round, so
-it can run for many rounds and hours; the per-round report lets you stop it at any time. In
-blind comparisons no visible gain showed after about 12 rounds, which is where masterpiece
-stops. The old tier names still work: `--tier quick|standard|showcase` are fast,
-`--tier masterpiece` is masterpiece; `mode: ...` or `tier: ...` in a request is read too.
+## Following a masterpiece run
 
-The effort tier bounds the whole run, and `author` enforces it: whichever comes first ends
-the run — a "good" verdict, or any limit — and the best draft so far is written with its
-`authoring` record (tier, outcome, `next` improvements), printed as `next:` lines too. Every
-new best valid draft is written to `--out` as soon as it passes the check, so a valid construct
-is on disk even if a host stops the run; no review round starts after 80% of the wall clock.
+A masterpiece run reports to you after every round: what the critic asked for, what changed,
+whether the new version beat the best one so far, and how long the round took. You can stop it
+at any point and keep the best version, which is always saved. If a run is interrupted, for
+example by a usage limit, `rounds status` in the run's folder says where it stopped, and the
+agent picks up from there. `rounds pause` marks a deliberate break, so the time away isn't
+counted against the two-hour limit.
 
-```sh
-python3 construct_hologram/cli.py author "a Revox A77 tape recorder" --tier showcase --vision \
-    --reference https://example.org/a77-front.jpg --max-cost 0.50 --price-in 0.27 --price-out 1.10 \
-    --base-url ... --model ... --key-env ... --out a77.json
-```
+## Getting the likeness right
 
-| option | effect |
-|---|---|
-| `--mode fast\|masterpiece\|unbounded` (or `--tier quick\|standard\|showcase\|masterpiece`) | the limits below (default fast, the standard tier; also `mode: ...` or `tier: ...` in the request) |
-| `--research auto\|on\|off` | the research policy, or the user's override (also `research: ...` in the request) |
-| `--rounds`, `--review-rounds`, `--max-seconds`, `--max-images` | raise or lower one limit (never remove it) |
-| `--critic` (or `--critic-model`, `--critic-base-url`, `--critic-key-env`) | an independent critic, a fresh call, judges each review against the references; only its verdict records "good" or "outstanding" |
-| `--max-total-tokens`, `--max-cost` with `--price-in`/`--price-out` | an optional token or cost ceiling (USD per million tokens) |
+Text gives dimensions, not shapes. For things whose identity is an outline, like a guitar body or
+a car's side, a model that can see traces a reference photo into an outline, and Construct fits
+that outline to a known dimension. The photo is only looked at; it is never embedded in the
+construct. Masterpiece mode also compares each version with the reference photos through the
+critic. The commands are in [DEVELOPMENT.md](DEVELOPMENT.md#likeness-from-reference-outlines).
 
-| mode | tier | wall clock | review/improve rounds | check rounds | web reference images |
-|---|---|---|---|---|---|
-| fast | quick | 2 min | 0 (audit only) | 3 | none |
-| fast | standard | 10 min | 2 | 6 | 3 |
-| fast | showcase | 30 min | 4 | 10 | 6 |
-| masterpiece | masterpiece | 2 hours | 12 | 8 per round | 12 |
-| unbounded | unbounded | none | no cap | 8 per round | 12 |
+## How long it takes and what it costs
 
-**Masterpiece and unbounded in `author`:** every round the critic compares renders with your
-references (`--reference side=side.jpg --reference top=top.jpg`), its ranked defects go back to
-the author, and a checkpoint is written to `<out>.checkpoints/`. Masterpiece stops when the
-critic scores every criterion 3, at 12 rounds, at 2 hours, at `--max-cost`, or when you press
-Ctrl-C (the best version so far is written); unbounded only at the first, `--max-cost` or
-Ctrl-C. A model other than Sol or Opus gets a note recommending them.
+Construct itself runs in seconds on your machine: checking and building take well under a
+second for typical objects, review stills 10 to 30 seconds, and a 12-second video about a minute.
+The model is where the time and cost go. Measured through Hermes on five small tasks (three
+archetypes, a lamp and a fictional creature), both models scored full marks with nothing invented:
 
-**Masterpiece rounds in an agent** (Claude Code, Hermes): `construct rounds` runs the judged
-loop on disk: `rounds start scene.json --mode masterpiece` (or `unbounded`); each round `rounds change <ledger id> "what"` for at
-most 4 ledger items, `rounds packet --reference ...` for ONE critic (blind first, then this
-version against the best so far as an unlabelled A/B pair, then the defect ledger), and `rounds
-record answer.json`. A version is kept when it wins the pair; otherwise the best comes back.
-Its round report, `rounds.md`, `checkpoints/round-NN/`, `ledger.json` and `state.json` make
-the run readable and resumable (`rounds status`). See `skill/references/rounds.md`.
+| Model | Cost | Time |
+| --- | --- | --- |
+| DeepSeek (`deepseek-flash`) | about $0.003 per archetype, $0.01–0.02 per full scene | 258 s for all five |
+| GPT-6.1 Sol (through a ChatGPT plan) | covered by the plan | 357 s for all five |
 
-**Recommended models.** From the evaluation runs:
-
-- **Hard subjects in masterpiece mode** (a named car, a landmark): GPT-6.1 Sol or Claude Opus.
-- **Simpler objects in fast mode:** DeepSeek works as well as those, with no
-  regression on objects such as a tape deck, a watch or a camera.
-- **Small or free models** (MiniMax, Inkling, Nemotron) are not recommended. In about half of
-  their runs they failed to save a scene at all, and they made scale errors.
-
-**The critic in any host:** `construct critique scene.json --reference side=photo.jpg` writes a
-packet (instructions, checklist, renders beside references) for a fresh subagent or a second
-model (`--base-url --model --key-env`); `--record critique.json` checks the answer, binds it to
-the scene's hash and writes the ranked defects. See `skill/references/review.md`.
-
-The runner has no web search: research is the reference images you attach (web images count
-against the tier; your own photos are source data). Agents with web tools follow the research
-policy and counts in `prompts/system.md` and `skill/references/effort.md`. Hosts add hard
-limits on top (a Hermes run budget, an agent harness's timeout and cost ceiling); MCP hosts get
-a tier's limits from `construct_limits`. The same works for OpenRouter, OpenAI, and local servers (Ollama
-`http://localhost:11434/v1`, llama.cpp, LM Studio).
-
-To build your own runner, use the files in `construct_hologram/prompts/` directly:
-`system.md`, `params.md` or `scene.md`, `repair.md` (the loop), `vision-review.md` (an optional
-self-review for models that can see images) and `params.schema.json` (for endpoints that
-constrain output to a JSON Schema).
-
-## Likeness from reference images
-
-Text gives dimensions, not shapes. For things whose identity is an outline, a model that can
-see traces a reference — the user's own photo, or a web image it views without keeping — into
-a `construct-trace` document (`prompts/trace.md`), and `construct trace` fits it to a
-documented dimension:
-
-```sh
-python3 construct_hologram/cli.py trace body-trace.json --fit nut:bridge=0.648 --out body.json
-python3 construct_hologram/cli.py trace-image photo.jpg --what "the guitar body outline, front view" \
-    --features nut,bridge --fit nut:bridge=0.648 --base-url https://api.openai.com/v1 \
-    --model <a vision model> --key-env OPENAI_API_KEY --out body.json
-```
-
-The result is an `extrude` profile in metres, the features in metres, a `reference_image`
-source and an `inferred` part stub. The image is never embedded. Any model that can see images
-works, DeepSeek included; in Hermes enable the vision toolset (`vision_analyze`); in Claude
-Code put the photo in the working folder.
-See `construct_hologram/skill/references/tracing.md`.
-
-## Likeness: multi-view lofts and silhouette comparison
-
-```sh
-python3 construct_hologram/cli.py loft-from-traces --side side.json --top top.json --front front.json \
-    --length 4.14 --height 1.07 --width 1.89 --into car.json --part body --drop glasshouse
-python3 construct_hologram/cli.py compare car.json --trace side.json --view side --overlay side.png --record
-```
-
-`loft-from-traces` turns three traced views into loft stations; `compare` measures the
-construct's silhouette from a view against a traced outline (IoU and outline distance; exit
-code 2 until it passes). See `construct_hologram/skill/references/tracing.md`.
-
-## Python
-
-```python
-from construct_hologram import diagnose, params, scene, render
-
-report = diagnose.diagnose_text(model_output)           # ok, needs_repair, diagnostics, repair_text
-if not report["needs_repair"]:
-    doc, _ = diagnose.parse_text(model_output)
-    if params.is_params(doc):                            # the simple path
-        doc = params.expand(doc)
-    geometry = scene.compile_scene(doc)                  # construct-geometry, see CONTRACT.md
-    html, notes = render.build_html(geometry, asset_root="assets")
-```
-
-## Costs and time (live runs)
-
-Measured through Hermes on five synthetic tasks (three parameter entries, a lamp, a fictional
-creature); both models scored 15/15 with no invented facts:
-
-| model | cost | time |
-|---|---|---|
-| DeepSeek (`deepseek-flash`) | about $0.003 per parameter entry, $0.01–0.02 per full scene ($0.038 for all five) | 258 s for all five |
-| GPT-6.1 Sol (`gpt-6.1-sol`, through a ChatGPT plan) | covered by the plan | 357 s for all five |
-
-Construct itself runs locally in seconds: `check` and `build` well under a second for typical
-objects, `review` 10–30 s, a 12 s video about a minute.
+A masterpiece run uses a frontier model for up to two hours of working time plus the critic's
+time, so it costs far more than a fast one.
 
 ## Making it look good
 
-- Start from an archetype when one fits; otherwise from an example in
+- **Start from an archetype** when one fits, or from a similar example in
   `construct_hologram/examples/v2/`.
-- Fix every `detached` and `thin` warning: they are what a viewer notices first.
-- For a named subject, research first: the maker's pages and specs, reference photos viewed
-  with vision, the identity shape traced. Then author.
-- Look at `review/hero.png`, `sheet-views.png` and `sheet-assembly.png` (or have a vision
-  model do it with `prompts/vision-review.md`) and score them against the art-direction
-  rubric in `skill/references/review.md`. The audit proves validity, not beauty or likeness.
-- The skill's references (`construct_hologram/skill/references/`) cover vocabulary,
-  composition, animation, review and provenance.
+- **Fix the warnings a viewer notices first:** parts that don't quite touch (`detached`), lines
+  too thin to read (`thin`), and main surfaces drawn without their faint outline (`bare-surface`).
+- **Research a named subject first:** the maker's pages and specifications, and reference photos
+  looked at closely. Then write the scene.
+- **Look at the pictures.** Open `review/hero.png`, `sheet-views.png` and `sheet-assembly.png`, or
+  have a model that can see do it. The check proves a construct is valid and honest, not that it
+  is beautiful or a good likeness.
+- **The skill's references** in `construct_hologram/skill/references/` go deeper: the
+  vocabulary of shapes, composition, the drawing craft, animation and review.
+
+If something goes wrong, see [TROUBLESHOOTING.md](TROUBLESHOOTING.md).

@@ -27,7 +27,7 @@ REPO_URL = "https://github.com/%s/%s" % (OWNER, REPO)
 
 ROOT = Path(__file__).resolve().parent.parent
 EXAMPLES = ROOT / "examples"
-LINKED = ["README.md", "PUBLISHING.md", "docs/USING.md", "examples/README.md"]  # documents that link to the site
+LINKED = ["README.md", "PUBLISHING.md", "examples/README.md"]  # documents that link to the site, and docs/**/*.md
 
 CSS = """
 :root { color-scheme: dark; --bg: #050205; --panel: #0e0810; --line: #2a1d30; --ink: #f1e9f7; --dim: #a597b3;
@@ -95,11 +95,11 @@ def index_page(examples):
         for e in examples)
     body = ("<header class=\"site\"><div class=\"eyebrow\">Construct · examples</div>"
             "<h1>Holographic constructs, built by AI agents</h1>"
-            "<p>Each construct was written as a short declarative scene by an AI agent, then checked, compiled and "
-            "rendered by Construct, in fast or masterpiece mode. Open one to watch it assemble: drag to orbit, R "
-            "replays the assembly, L shows labels. Some were made with earlier versions of Construct.</p>"
+            "<p>Each of these was made by an AI agent with Construct, in fast or masterpiece mode, and drawn in the "
+            "Measured Light style. Open one to watch it build itself: drag to turn it around, press R to replay the "
+            "assembly and L to read its labels. Some were made with earlier versions of Construct.</p>"
             "<div class=\"links\"><a class=\"button\" href=\"%s\">Construct on GitHub</a>"
-            "<a class=\"button\" href=\"%s#how-it-works\">How it works</a></div></header>"
+            "<a class=\"button\" href=\"%s/blob/main/docs/HOW-IT-IS-MADE.md\">How they were made</a></div></header>"
             "<main><div class=\"grid\">\n%s\n</div></main>"
             "<footer class=\"site\">Construct is MIT licensed. Product and place names belong to their owners; each "
             "construct is an independent reconstruction from public references, not an official model. "
@@ -169,13 +169,15 @@ def set_url(owner_repo):
     """Point every public link at OWNER/REPO: the constants above and the documents that link to the site."""
     owner, repo = owner_repo.split("/", 1)
     new_site, new_repo = "https://%s.github.io/%s/" % (owner, repo), "https://github.com/%s/%s" % (owner, repo)
-    for rel in LINKED + ["scripts/build_site.py"] + [str(p.relative_to(ROOT)) for p in EXAMPLES.glob("*/README.md")]:
+    docs = [str(p.relative_to(ROOT)) for p in list(EXAMPLES.glob("*/README.md")) + list((ROOT / "docs").rglob("*.md"))]
+    for rel in LINKED + ["scripts/build_site.py"] + docs:
         p = ROOT / rel
         if not p.exists():
             continue
         s = p.read_text(encoding="utf-8")
         t = s.replace(SITE_URL, new_site).replace(REPO_URL, new_repo).replace(
-            "github.com/%s/%s.git" % (OWNER, REPO), "github.com/%s/%s.git" % (owner, repo))
+            "github.com/%s/%s.git" % (OWNER, REPO), "github.com/%s/%s.git" % (owner, repo)).replace(
+            "raw.githubusercontent.com/%s/%s/" % (OWNER, REPO), "raw.githubusercontent.com/%s/%s/" % (owner, repo))
         if rel == "scripts/build_site.py":
             t = re.sub(r'^OWNER = ".*"$', 'OWNER = "%s"' % owner, t, flags=re.M)
             t = re.sub(r'^REPO = ".*"$', 'REPO = "%s"' % repo, t, flags=re.M)

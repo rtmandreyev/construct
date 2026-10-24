@@ -34,9 +34,4 @@ python3 -m construct_hologram.evaluation.score path/to/answers [more/folders] [-
 
 The scorer calls no model and needs no key.
 
-## The test suite
-
-`python3 -m unittest discover -s construct_hologram -t . -p 'test_*.py'` — validation,
-compilation, audit (support, real contact, thickness), diagnostics, archetypes and goldens,
-the geometry schema, prompts, packages, MCP tools, the author loop (against a local stub) and,
-when a browser is present, a capture smoke test.
+The test suite is described in [DEVELOPMENT.md](DEVELOPMENT.md#tests).

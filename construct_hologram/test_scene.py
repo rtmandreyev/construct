@@ -2046,7 +2046,8 @@ class Capture(unittest.TestCase):
     def test_a_critique_packet_renders_the_views_of_the_references(self):
         with tempfile.TemporaryDirectory() as d:
             ref = Path(d, "side.png")
-            ref.write_bytes((HERE.parent / "docs" / "media" / "provenance.png").read_bytes())  # any image will do
+            from . import png as png_mod
+            ref.write_bytes(png_mod.encode(8, 8, lambda x, y: (x * 30, y * 30, 90)))  # any image will do
             pk = critic.packet(str(EXAMPLES / "cd.json"), str(Path(d, "critique")), ["side=" + str(ref)], "a CD")
             self.assertTrue(Path(d, "critique", "renders", "still-side.png").exists())
             self.assertEqual(pk["pairs"][0]["render"], "renders/still-side.png")

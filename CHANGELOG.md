@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+- **Docs for people new to Construct:** [How a construct is made](docs/HOW-IT-IS-MADE.md) (with a
+  construct improving round by round), [The Measured Light style](docs/STYLE.md) (with annotated
+  pictures), [Troubleshooting](docs/TROUBLESHOOTING.md), a docs index with a short glossary, and
+  release notes. USING is rewritten for users, and the contributor material moved to
+  [DEVELOPMENT.md](docs/DEVELOPMENT.md).
 - **A README in the house style**: a plain opening, the three most complex examples assembling,
   how it works as a flowchart, then install, quick start, modes, models and requirements.
 - **Repository furniture:** a test workflow on every push and pull request, issue and pull

@@ -58,7 +58,8 @@ assets or text from Anatomy are included. From Anatomy's `SKILL.md` and README:
 ### NODE
 
 Construct's holographic look and construction method grew out of NODE's Measured Light
-holograms, by the same author. Construct is an independent re-creation: it contains no NODE
+holograms, by the same author, and the style keeps that name: see
+[The Measured Light style](STYLE.md). Construct is an independent re-creation: it contains no NODE
 code, fonts, shaders or assets.
 
 ## How to talk about it

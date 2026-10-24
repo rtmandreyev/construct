@@ -1,8 +1,8 @@
 # Construct
 
-**Holographic constructs any AI agent can build, from a description, honestly.** An agent
-writes a short declarative scene; Construct checks it, compiles it and renders it as an
-animated holographic model in one self-contained web page.
+**Holographic constructs any AI agent can build, from a description, honestly.** You ask your
+agent for a thing in plain words, and it builds an animated holographic model of it in the
+**Measured Light** style, as one web page you can open anywhere.
 
 <p align="center">
   <a href="https://rtmandreyev.github.io/construct/examples/sainte-chapelle/"><img src="docs/media/assembly-sainte-chapelle.gif" width="32%" alt="The Sainte-Chapelle construct assembling itself"></a>
@@ -12,81 +12,94 @@ animated holographic model in one self-contained web page.
 <p align="center"><sub>Sainte-Chapelle · Toyota Land Cruiser FJ62 · Duomo di Milano, each built by Claude Opus in masterpiece mode. <a href="https://rtmandreyev.github.io/construct/">Open the gallery</a> to orbit them, replay the assembly and read the labels.</sub></p>
 
 ```
-description  ──►  scene (JSON)  ──►  check  ──►  build  ──►  review
-                  facts, parts,      validate,   one page,    stills; in masterpiece mode,
-                  their sources      audit       WebGL2       rounds judged by a critic
+you ask  →  the agent writes a scene  →  Construct checks it  →  Construct builds the page
+         →  the agent reviews it  →  (masterpiece) an independent critic judges each round
 ```
 
-- **Any agent, any model.** Claude Code, Hermes, any MCP client, any OpenAI-compatible endpoint, or by hand.
-- **Honest about what is known.** Every fact is verified, user supplied, inferred or decorative, and the construct shows which.
-- **One house style.** Models never choose colours, so every construct looks like it belongs with the rest.
-- **Repairs itself.** Every problem comes back with a JSON path, a code and a fix hint.
-- **No dependencies.** Python's standard library and a browser; no API keys or network service inside Construct.
+- **Any agent, any model.** Claude Code, Hermes, any MCP client or any OpenAI-compatible endpoint, or by hand.
+- **Honest about what is known.** Every fact and part says whether it is verified, supplied by you, inferred or decorative.
+- **One house style.** Models never choose the colours, so every construct looks like it belongs with the rest.
+- **It repairs itself.** Every problem comes back with where it is and how to fix it.
+- **Nothing to install.** Python's standard library and a browser; no API keys or network service inside Construct.
 
 ## What it does
 
-1. **You ask in plain words**, in your agent: *"make a construct of a Leica M3"*. The skill picks a
-   mode (fast or masterpiece), tells you which and why, and looks the subject up when it is a
-   named one.
-2. **The model writes a scene**: the facts it knows, each with its certainty and source, and the
-   parts, built from a closed vocabulary of shapes (lofts, lathes, towers, facades, shells), with
-   how they assemble, open and move.
-3. **Construct checks it.** It validates the scene, compiles it deterministically and audits it:
-   nothing floating, no claim stronger than its evidence, nothing too thin or too small to read.
-   The model repairs until the check is clean.
-4. **Construct builds it**: one `construct.html` you can open anywhere, offline.
-5. **The construct is reviewed.** Stills from every view; for a named subject, an independent
-   critic compares them with reference photos. In masterpiece mode that review becomes rounds of
-   judged improvement, each one reported to you.
+In the common case:
+
+1. **You ask for something in plain words**, in your agent: *"make a construct of a Leica M3"*,
+   or *"a masterpiece of the Sydney Opera House"*. Before any work, the skill tells you which
+   mode it will use, fast or masterpiece, why, and roughly how long it will take.
+2. **The agent looks it up.** For a specific, named subject it finds real facts and reference
+   photos. The photos are only for comparison; they are never copied into the construct or
+   published, because they belong to someone else.
+3. **The agent writes a scene.** A scene is a short text file that says what the thing is: the
+   facts, each marked with how well it is known, and the parts, built from simple shapes, with
+   how they assemble and open. The agent never draws pixels or writes graphics code.
+4. **Construct checks it.** Something floating, a claim stronger than its evidence, a part too
+   small to see: every problem comes back with where it is and how to fix it, and the agent
+   repairs the scene until the check is clean.
+5. **Construct builds the page.** One `construct.html` that opens in any browser, works offline
+   and shows the construct building itself, part by part.
+6. **The agent reviews it.** It looks at stills from every view and improves the weakest point.
+   In **masterpiece** mode an independent critic takes over the judging, round by round, and you
+   get a short report after each one.
 
 ## See it in practice
 
 <p align="center"><a href="https://rtmandreyev.github.io/construct/"><img src="docs/media/examples.jpg" alt="Example constructs made by AI agents: cars, cathedrals, watches, instruments, a planet and a galaxy"></a></p>
 
-Every example was made by an AI agent with Construct, in fast or masterpiece mode, by Claude
-Opus, GPT-6.1 Sol or DeepSeek.
+The examples are real runs: each one was made by an AI agent with Construct, in fast or
+masterpiece mode, by Claude Opus, GPT-6.1 Sol or DeepSeek. Open any of them to watch it assemble,
+turn it around and read its labels.
 
-**[Open the examples gallery →](https://rtmandreyev.github.io/construct/)** · each scene and its
-hero image are in [examples/](examples/).
+**[Open the examples gallery →](https://rtmandreyev.github.io/construct/)** · each scene and its hero image are in
+[examples/](examples/).
 
 ## How it works
 
-A scene is data, never code: the model describes what the thing is, and the compiler and viewer
-decide how it looks. In masterpiece mode the review becomes a loop judged by a fresh critic.
+A scene is data, never code: the agent says what the thing is, and Construct decides how it
+looks. That split is what keeps every construct honest and in one style. In masterpiece mode the
+review becomes a loop, judged by a critic that never saw the authoring.
 
 ```mermaid
 flowchart LR
-    A["description"] --> S["scene<br/>facts, parts, sources"]
-    S --> C{"check<br/>validate · compile · audit"}
-    C -- "fix hints" --> S
-    C --> B["build<br/>construct.html"]
-    B --> R["review<br/>stills, critic"]
-    R -- "masterpiece: a round" --> E["edit at most<br/>four defects"]
-    E --> C
-    R --> D["deliver the best version"]
+    A["you ask"] --> S["the agent writes<br/>a scene"]
+    S --> CConstruct<br/>checks it
+    C -- "problems, with fixes" --> S
+    C --> B["Construct builds<br/>construct.html"]
+    B --> R["the agent reviews<br/>its pictures"]
+    R -- "masterpiece: another round" --> Kthe critic compares<br/>with the best so far
+    K -- "better: keep it" --> S
+    K -- "not better: keep the best" --> S
+    R --> D["you get the best version"]
 ```
 
-- **Provenance on every part.** Facts and parts carry their certainty, and the provenance view
-  (press **P**) colours each part by how it is known. Unknown facts are left out, never guessed.
-- **An audit that runs to zero.** Floating parts, overclaimed evidence, unreadable detail and
-  bare surfaces are all reported with a path and a fix.
-- **An independent critic.** A fresh model that never saw the authoring compares the renders
-  with the reference photos and ranks the defects. Only the critic can call a construct "good".
-- **Masterpiece rounds.** Each round fixes at most four defects; the critic then picks the better
-  of the new version and the best so far, shown unlabelled. A win is kept, a loss reverted, so
-  the best version is always on disk, and every round ends with a short report.
-- **What it does not do.** No imported meshes, CAD or photogrammetry; one periodic motion per part;
-  hidden lines show faintly through solids and glass is never tinted, by design of the house style.
+- **You can see how each part is known.** Press **P** in any construct and every part is coloured
+  by whether it is verified, supplied by you, inferred or decorative.
+- **The check runs to zero.** Floating parts, claims without evidence and details too fine to see
+  are reported, with fixes, before anything is built.
+- **The critic is independent.** It is a fresh model that compares each new version with the best
+  so far without knowing which is which. Only a better version is kept.
+- **Masterpiece stops when it stops improving:** after two rounds without a better version, after
+  12 rounds, or after two hours. In blind comparisons nobody could see a difference after about
+  round 12, so more rounds mostly cost time.
 
-The full description is in **[docs/USING.md](docs/USING.md)** and **[docs/ABOUT.md](docs/ABOUT.md)**.
+The whole process, with a construct improving round by round, is in
+**[How a construct is made](docs/HOW-IT-IS-MADE.md)**. What you see in a construct, and why
+models never choose its colours, is in **[The Measured Light style](docs/STYLE.md)**.
 
 ## Install
+
+Construct runs from a copy of this repository; there is nothing to install system-wide. Clone it
+and build the skills for your agent:
 
 ```sh
 git clone https://github.com/rtmandreyev/construct.git
 cd construct
 python3 construct_hologram/package.py --out dist    # builds the Claude Code and Hermes skills
 ```
+
+Then add the skill to your agent, or use Construct directly:
 
 | Host | How to add it |
 | --- | --- |
@@ -98,8 +111,10 @@ python3 construct_hologram/package.py --out dist    # builds the Claude Code and
 
 ## Quick start
 
-In your agent, ask in plain words: *"make a construct of a 1970s desk fan"*, or *"a masterpiece of
-the Sydney Opera House"*. By hand:
+In your agent, just ask in plain words: *"make a construct of a 1970s desk fan"*, or *"a
+masterpiece of the Sydney Opera House"*. The agent does the rest and tells you what it is doing.
+
+To try Construct without a model, fill in a ready-made template by hand:
 
 ```sh
 C=construct_hologram/cli.py
@@ -109,13 +124,13 @@ python3 $C build book.json --out out   # out/construct.html: open it in any brow
 python3 $C review book.json --out out  # out/review/*.png: stills to judge it by
 ```
 
-In a construct: drag to orbit, scroll to zoom, **R** replays the assembly, **L** shows labels,
-**P** shows how each part is known, **1**–**6** change the view.
+Once a construct is open, drag to orbit and scroll to zoom. **R** replays the assembly, **L** shows
+the labels, **P** shows how each part is known, and **1**–**6** move between views.
 
 ## Modes
 
-Say a mode in your request, or say nothing and the skill picks one and tells you why before it
-starts.
+A mode sets how much effort goes into a construct. Say one in your request, or say nothing and
+the skill picks one and tells you why before it starts.
 
 | Mode | What it does | When it stops | Rough cost | Use it for |
 | --- | --- | --- | --- | --- |
@@ -128,6 +143,9 @@ so it can run for hours. Every round is reported, so you can stop it whenever yo
 
 ## Models
 
+Any capable model can make a construct, but some subjects need a stronger one. From the
+evaluation runs:
+
 - **Named subjects in masterpiece mode** (a car model, a landmark): GPT-6.1 Sol or Claude Opus.
   A smaller model given such a subject says so and recommends them.
 - **Simpler objects in fast mode:** DeepSeek does as well as those on objects such as a tape deck,
@@ -137,6 +155,8 @@ so it can run for hours. Every round is reported, so you can stop it whenever yo
 
 ## Requirements
 
+Construct is deliberately small. You need:
+
 - Python 3.10 or newer. Nothing else to install: no packages, no virtual environment.
 - For review stills, a Chromium-family browser you already have (Chrome, Chromium, Edge, Brave).
 - For video, ffmpeg.
@@ -144,14 +164,18 @@ so it can run for hours. Every round is reported, so you can stop it whenever yo
 
 ## Documentation
 
-- [docs/USING.md](docs/USING.md): every entry point, step by step, with a worked example
-- [docs/ABOUT.md](docs/ABOUT.md): what Construct is and where its method comes from
-- [docs/ARCHETYPES.md](docs/ARCHETYPES.md): the parameter archetypes (cases, books, guitars, synth, vessels, vehicles)
-- [docs/TERRAIN.md](docs/TERRAIN.md): places, peaks and routes from elevation data you supply
-- [docs/EVALUATION.md](docs/EVALUATION.md): cross-model results, and how to score your own model
-- [CONTRACT.md](CONTRACT.md): the `construct/0.2` scene and geometry format, for apps
-- [examples/](examples/): the example scenes, and how to rebuild the gallery
-- [CHANGELOG.md](CHANGELOG.md) and [PUBLISHING.md](PUBLISHING.md)
+Start with the first two if you are new; the full index is in [docs/README.md](docs/README.md).
+
+- [How a construct is made](docs/HOW-IT-IS-MADE.md): the process, step by step, with a construct improving over rounds
+- [The Measured Light style](docs/STYLE.md): what you see in a construct, the labels, the provenance marks and the controls
+- [Using Construct](docs/USING.md): every way to run it, from a first construct by hand to Claude Code and Hermes
+- [Troubleshooting](docs/TROUBLESHOOTING.md): common problems in plain language
+- [Archetypes](docs/ARCHETYPES.md): ready-made templates for books, CDs, guitars, bottles, cars and more
+- [Terrain](docs/TERRAIN.md): mountains, routes and planets from real elevation data
+- [About](docs/ABOUT.md): where Construct's method comes from
+- [Evaluation](docs/EVALUATION.md): how models compare, and how to score your own
+- [Development](docs/DEVELOPMENT.md): for contributors and for building Construct into your own tools
+- [CONTRACT.md](CONTRACT.md), [CHANGELOG.md](CHANGELOG.md), the [v0.2.1 release notes](docs/releases/v0.2.1.md) and [PUBLISHING.md](PUBLISHING.md)
 
 ## Contributing
 
