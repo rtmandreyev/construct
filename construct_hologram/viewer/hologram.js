@@ -629,10 +629,24 @@ void main() {
     return { ghost, collapse, build, settle, end: ghost + collapse + build + settle };
   };
   Hologram.prototype.tourStops = function () {
-    // the scene's tour is authored in seconds against its own assembly; when a film lengthens the
-    // assembly, every stop moves by the same amount, so the tour still begins after the build
-    const tour = this.geo.animation.camera.tour || [], d = this.assemblyTimes().end - this.assemblyTimes(true).end;
-    return d ? tour.map((s) => Object.assign({}, s, { at: s.at + d })) : tour;
+    // the scene's tour is authored in seconds against its own assembly. In a film (?assembly=, ?audio=)
+    // each stop keeps its place in that timeline: before the build it stays; during the build it comes
+    // when the film's build reaches the same progress, its flight scaled with the build (at most 3x and
+    // 12 s, and never into the next stop); after the build it moves by as much as the assembly's end
+    const tour = this.geo.animation.camera.tour || [], at = this.assemblyTimes(), own = this.assemblyTimes(true);
+    const start = at.ghost + at.collapse, d = at.end - own.end;
+    if ((!d && !this.audio) || !at.build) return tour;
+    const ratio = at.build / own.build;
+    const out = tour.map((s) => {
+      const fly = s.fly || 2.2;
+      if (s.at < start) return Object.assign({}, s);
+      if (s.at >= start + own.build) return Object.assign({}, s, { at: s.at + d });
+      const p = (s.at - start) / own.build;
+      return Object.assign({}, s, { at: start + (this.audio ? this.audioBuildTime(p, at.build) : p * at.build),
+                                    fly: Math.max(0.2, Math.min(fly * Math.min(ratio, 3), Math.max(fly, 12))) });
+    });
+    for (let i = 0; i + 1 < out.length; i++) out[i].fly = Math.max(0.05, Math.min(out[i].fly || 2.2, out[i + 1].at - out[i].at));
+    return out;
   };
 
   Hologram.prototype.buildSchedule = function () {
@@ -671,6 +685,14 @@ void main() {
       for (let i = 0; i < n; i++) { const e = a.energy[Math.min(a.energy.length - 1, Math.round(t0 * a.fps) + i)] || 0; s += 0.35 + 2.5 * e * e; acc[i] = s; }
       a._acc = acc; a._dur = dur; }
     const acc = a._acc, i = Math.max(0, Math.min(acc.length - 1, Math.round(tb * a.fps))); return acc[i] / acc[acc.length - 1];
+  };
+  Hologram.prototype.audioBuildTime = function (p, dur) {
+    // the inverse: the first moment (seconds into the build) the music-paced build reaches progress p
+    this.audioBuild(0, dur);
+    const acc = this.audio._acc, goal = p * acc[acc.length - 1];
+    let lo = 0, hi = acc.length - 1;
+    while (lo < hi) { const m = (lo + hi) >> 1; if (acc[m] >= goal) hi = m; else lo = m + 1; }
+    return Math.min(dur, lo / this.audio.fps);
   };
 
   Hologram.prototype.state = function (t) {

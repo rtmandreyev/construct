@@ -44,10 +44,15 @@ The construct builds for 245 seconds, its pace following the music, and the fini
 the track in it. A construct with a ceremony assembly first shows a short opening, a ghost of
 itself collapsing into place, of about a second (1.25 s); its build starts after that, so for a
 build that ends with the track, give `--assembly` the track's length minus 1.25. The video runs
-three seconds past the assembly so it can settle; set `--seconds` for a different length. If the
-scene has a camera tour, it moves with the assembly: each flight still starts as long after the
-build as the scene set it, so the camera never flies to a part that isn't built yet. A scene
+three seconds past the assembly so it can settle; set `--seconds` for a different length. A scene
 whose assembly style is `cut` appears at once, so film mode has nothing to pace there.
+
+If the scene has a camera tour, each flight keeps its place in the story. A flight the scene
+starts halfway through its build starts when the film's build is halfway, so the camera arrives
+as the parts it looks at are built, and it flies a little slower, as the build does (at most
+three times slower, and no longer than 12 seconds unless the scene's own flight is). A flight
+after the build starts as long after the film's build as the scene set it, and a flight before
+the build stays where it was.
 
 Rendering takes a while: every frame is drawn in a browser, about a frame or two a second on a
 laptop, so a four-minute film at 24 frames a second takes roughly an hour.

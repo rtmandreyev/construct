@@ -153,7 +153,7 @@ STATE_PROBE = """JSON.stringify((() => {
 CAMERA_PROBE = """JSON.stringify((() => { const h = HOLO.hologram, base = h.cameraFor("hero"), out = [];
   for (let t = 0; t <= 60; t += 0.5) out.push(h.cameraAt(t, base));
   return out; })())"""
-TOUR = [{"view": "top", "at": 8, "fly": 2}, {"view": "side", "at": 14, "fly": 3}]
+TOUR = [{"view": "top", "at": 0.5, "fly": 0.6}, {"view": "side", "at": 3.5, "fly": 2}, {"view": "front", "at": 8, "fly": 2}]
 
 
 @unittest.skipUnless(CAPTURE, "no Chromium-family browser (or HOLOGRAM_SKIP_CAPTURE=1)")
@@ -198,23 +198,55 @@ class Viewer(unittest.TestCase):
         for probe in (STATE_PROBE, CAMERA_PROBE):  # a scene with a camera tour, too
             self.assertEqual(self.probe("tour-new.html", probe), self.probe("tour-old.html", probe))
 
-    def test_a_longer_assembly_moves_the_tour_after_it(self):
+    def tour(self, **query):
         probe = """JSON.stringify((() => { const h = HOLO.hologram, base = h.cameraFor("hero");
-          return {delta: h.assemblyTimes().end - h.assemblyTimes(true).end, stops: h.tourStops().map((s) => s.at),
-                  pitch: [0, 9.9, 12, 37.5].map((t) => h.cameraAt(t, base).pitch)}; })())"""
-        film = self.probe("tour-new.html", probe, assembly="30")
-        scene_own = self.probe("tour-new.html", probe)
-        self.assertAlmostEqual(film["delta"], 30 - 4.5)  # the build is 25.5 s longer; the ghost and the settle are not
-        self.assertEqual(scene_own["delta"], 0)
-        self.assertEqual(scene_own["stops"], [s["at"] for s in TOUR])
-        for got, stop in zip(film["stops"], TOUR):
-            self.assertAlmostEqual(got, stop["at"] + film["delta"])
-        # the pitch is the tour's alone (drift turns the yaw, breathing the distance): mid-build, where the
-        # scene's own tour has already flown to the top view, the film's camera holds the hero's pitch
-        self.assertEqual(film["pitch"][1], film["pitch"][0])
-        self.assertGreater(scene_own["pitch"][1], scene_own["pitch"][0] + 20)
-        # and after the build it is where the scene's own was, delta seconds earlier
-        self.assertAlmostEqual(film["pitch"][3], scene_own["pitch"][2], places=6)
+          return {at: h.assemblyTimes(), stops: h.tourStops(),
+                  pitch: Object.fromEntries([1.2, 5.5, 10, 10.1, 22.25, 35.6].map((t) => [t, h.cameraAt(t, base).pitch]))}; })())"""
+        return self.probe("tour-new.html", probe, **query)
+
+    def test_the_tour_keeps_its_place_in_a_longer_assembly(self):
+        # cd.json: the build runs from 1.25 s (after the ghost and the collapse) for 4.5 s; the tour has one
+        # stop before it (0.5 s), one halfway through it (3.5 s) and one after it (8 s)
+        own, film = self.tour(), self.tour(assembly="30")
+        self.assertEqual(own["stops"], TOUR)  # no film: the scene's own tour, untouched
+        before, during, after = film["stops"]
+        self.assertEqual(before, TOUR[0])  # before the build: where it was
+        self.assertAlmostEqual(during["at"], 1.25 + 0.5 * 30)  # halfway through the film's build
+        self.assertAlmostEqual(during["fly"], 2 * 3)  # the flight scaled with the build, at most 3x
+        self.assertAlmostEqual(after["at"], 8 + (30 - 4.5))  # after the build: moved by as much as the end
+        self.assertEqual(after["fly"], 2)
+        # the pitch is the tour's alone (drift turns the yaw, breathing the distance). Mid-build the film's
+        # camera has finished the first flight and not begun the second, as the scene's own camera at 1.2 s
+        self.assertAlmostEqual(film["pitch"]["10"], own["pitch"]["1.2"], places=6)
+        self.assertAlmostEqual(film["pitch"]["22.25"], own["pitch"]["5.5"], places=6)  # the second flight landed
+        self.assertAlmostEqual(film["pitch"]["35.6"], own["pitch"]["10.1"], places=6)  # and the third
+
+    def test_with_music_a_tour_stop_follows_the_build(self):
+        # silence until 15 s of track time, then full energy: the build is slow first, then fast
+        n = 40 * FPS
+        energy = [0.0] * (15 * FPS) + [1.0] * (n - 15 * FPS)
+        Path(self.d, "tour-audio.json").write_text(json.dumps({"fps": FPS, "energy": energy, "high": [0.0] * n,
+                                                               "voice": [0.0] * n}), encoding="utf-8")
+
+        def reaches(p, dur, start=1.25):  # the viewer's build curve, independently: when it reaches progress p
+            acc, s = [], 0.0
+            for i in range(math.ceil(dur * FPS) + 1):
+                e = energy[min(n - 1, round(start * FPS) + i)]
+                s += 0.35 + 2.5 * e * e
+                acc.append(s)
+            return start + min(dur, next(i for i, v in enumerate(acc) if v >= p * acc[-1]) / FPS)
+
+        plain = self.tour(assembly="30")
+        for query, dur in (({"assembly": "30"}, 30.0), ({}, 4.5)):  # a film's length, or the scene's own
+            film = self.tour(audio="tour-audio.json", **query)
+            before, during, after = film["stops"]
+            self.assertEqual(before, TOUR[0])
+            self.assertAlmostEqual(during["at"], reaches(0.5, dur), places=3)
+            self.assertAlmostEqual(after["at"], 8 + (dur - 4.5))
+        # the long silence builds slowly, so halfway comes much later than in the linear build
+        film = self.tour(audio="tour-audio.json", assembly="30")
+        self.assertGreater(film["stops"][1]["at"], plain["stops"][1]["at"] + 5)
+        self.assertEqual(film["stops"][1]["fly"], plain["stops"][1]["fly"])
 
     def test_assembly_sets_the_length(self):
         at = self.probe("new.html", "JSON.stringify(HOLO.hologram.assemblyTimes())", assembly="30")

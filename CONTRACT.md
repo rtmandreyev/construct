@@ -271,10 +271,14 @@ Film mode lets an assembly span a piece of music, for video.
   seconds the audit warns `long-assembly`: a construct assembles in at most 20 s, and a film
   usually keeps the scene short and sets the length when rendering.
 - **Viewer parameters.** `assembly=<seconds>` sets the assembly's length for this view,
-  overriding the scene; the camera tour, authored against the scene's own assembly, moves later by
-  as much as the assembly's end does. `audio=<features.json>` loads audio features: the build
-  advances by `0.35 + 2.5·energy²` per frame, normalised so that it still ends exactly on time;
-  the light scales by `0.82 + 0.36·energy`; and while `voice` is above 0.25 the construct shimmers.
+  overriding the scene. The camera tour is authored against the scene's own assembly, and each
+  stop keeps its place in it: a stop before the build stays; a stop during the build comes when the
+  film's build reaches the same progress (with `audio=`, the music-paced build), its `fly` scaled
+  by the build's ratio (at most 3×, and at most 12 s unless the authored `fly` is longer); a stop
+  after the build moves by as much as the assembly's end. A flight never runs into the next stop.
+  `audio=<features.json>` loads audio features: the build advances by `0.35 + 2.5·energy²` per
+  frame, normalised so that it still ends exactly on time; the light scales by
+  `0.82 + 0.36·energy`; and while `voice` is above 0.25 the construct shimmers.
 - **The features file** (`construct audio`): `{"format": "construct-audio", "version": 1, "fps",
   "frames", "scale", "energy": [...], "high": [...], "voice": [...], "range_db"}`, one value per
   frame, each 0..1, indexed by track time from the start of the page's clock. `energy` is the
