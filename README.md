@@ -2,21 +2,27 @@
 
 **Holographic constructs any AI agent can build: from a description, honestly.**
 
+[![License: MIT](https://img.shields.io/badge/license-MIT-d16bd0)](LICENSE)
+[![Version 0.2.1](https://img.shields.io/badge/version-0.2.1-d16bd0)](CHANGELOG.md)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-d16bd0)](docs/USING.md#requirements)
+[![Standard library only](https://img.shields.io/badge/dependencies-none-d16bd0)](NOTICE)
+
 <table>
 <tr>
-<td width="33%"><a href="https://rtmandreyev.github.io/construct/examples/toyota-land-cruiser-fj62/"><img src="docs/media/assembly-toyota-land-cruiser-fj62.gif" alt="A Toyota Land Cruiser FJ62 construct assembling itself"></a></td>
 <td width="33%"><a href="https://rtmandreyev.github.io/construct/examples/sainte-chapelle/"><img src="docs/media/assembly-sainte-chapelle.gif" alt="A Sainte-Chapelle construct assembling itself"></a></td>
-<td width="33%"><a href="https://rtmandreyev.github.io/construct/examples/leica-m3/"><img src="docs/media/assembly-leica-m3.gif" alt="A Leica M3 construct assembling itself"></a></td>
+<td width="33%"><a href="https://rtmandreyev.github.io/construct/examples/toyota-land-cruiser-fj62/"><img src="docs/media/assembly-toyota-land-cruiser-fj62.gif" alt="A Toyota Land Cruiser FJ62 construct assembling itself"></a></td>
+<td width="33%"><a href="https://rtmandreyev.github.io/construct/examples/duomo-di-milano/"><img src="docs/media/assembly-duomo-di-milano.gif" alt="A Duomo di Milano construct assembling itself"></a></td>
 </tr>
 <tr>
-<td align="center"><b>Toyota Land Cruiser FJ62</b><br><sub>Claude Opus · masterpiece</sub></td>
 <td align="center"><b>Sainte-Chapelle</b><br><sub>Claude Opus · masterpiece</sub></td>
-<td align="center"><b>Leica M3</b><br><sub>GPT-6.1 Sol · fast</sub></td>
+<td align="center"><b>Toyota Land Cruiser FJ62</b><br><sub>Claude Opus · masterpiece</sub></td>
+<td align="center"><b>Duomo di Milano</b><br><sub>Claude Opus · masterpiece</sub></td>
 </tr>
 </table>
 
-<p align="center"><a href="https://rtmandreyev.github.io/construct/"><b>See all 23 examples live →</b></a>
-&nbsp;·&nbsp; click any construct to orbit it, replay its assembly and read its labels</p>
+<p align="center"><a href="https://rtmandreyev.github.io/construct/"><img src="docs/media/examples.jpg" alt="23 constructs made by AI agents: cars, cathedrals, watches, instruments, a planet and a galaxy"></a></p>
+
+<p align="center"><a href="https://rtmandreyev.github.io/construct/"><b>See all 23 examples live</b></a> · open any construct to orbit it, replay its assembly and read its labels</p>
 
 Construct is an agent skill and toolkit that turns a description of a real or fictional thing
 into an animated holographic model: line light over smoked glass, built part by part on screen,
@@ -33,6 +39,10 @@ service: Python's standard library and any browser.
 - **One house style.** Models never choose colours, so a construct by a small model sits next to
   one by a frontier model.
 - **Repairs itself.** Every problem comes back with a JSON path, a code and a fix hint.
+
+**Contents:** [Quick start](#quick-start) · [Three modes](#three-modes) ·
+[Recommended models](#recommended-models) · [How it works](#how-it-works) · [Examples](#examples) ·
+[Documentation](#documentation) · [Limitations](#limitations) · [License and credits](#license-and-credits)
 
 ## Quick start
 
@@ -122,11 +132,9 @@ reference outline with `construct compare`.
 
 ## Examples
 
-[![23 constructs made by AI agents](docs/media/examples.jpg)](https://rtmandreyev.github.io/construct/)
-
-Twenty-three constructs made by Claude Opus, GPT-6.1 Sol and DeepSeek, from a Leica to the
-Andromeda Galaxy. Open the **[live gallery](https://rtmandreyev.github.io/construct/)**, or see
-[examples/](examples/) for each scene and how it was made.
+Twenty-three constructs made by Claude Opus, GPT-6.1 Sol and DeepSeek, from the Sainte-Chapelle
+to a Yamaha concert grand. Open the **[live gallery](https://rtmandreyev.github.io/construct/)**, or see [examples/](examples/) for
+each scene, its hero image and how it was made.
 
 ## Documentation
 

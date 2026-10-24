@@ -23,6 +23,18 @@ Commits here use the GitHub private address `269336670+rtmandreyev@users.noreply
 If "Block command line pushes that expose my email" is on in your GitHub email settings,
 pushes still go through.
 
+**Reviewing it privately first?** Create it with `--private` instead. Everything in `main`
+renders the same; GitHub Pages for a private repository needs a paid plan, so the gallery links
+in the README work once the repository is public (or Pages is enabled on such a plan).
+Making it public later: **Settings → General → Danger Zone → Change visibility**, then step 4.
+
+**About and topics** (the repository page's gear icon next to "About"):
+
+- Description: *Holographic constructs any AI agent can build: from a description, honestly.*
+- Website: https://rtmandreyev.github.io/construct/
+- Topics: `ai-agents`, `agent-skills`, `claude-code`, `mcp`, `webgl`, `hologram`,
+  `procedural-generation`, `3d-visualization`, `llm`, `python`
+
 ## 2. Push `main` and the tag
 
 ```sh
@@ -76,4 +88,4 @@ others, and rebuild.
 
 Nothing but static files: every link is relative, each construct is one self-contained
 `construct.html` (plain WebGL2, no external scripts, fonts or styles), and `.nojekyll` tells
-GitHub Pages to serve the files as they are. It is about 37 MB.
+GitHub Pages to serve the files as they are. It is about 41 MB.

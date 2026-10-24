@@ -28,7 +28,7 @@ geometry should accept both geometry ids until 0.3. The v0.1 construction sheets
 A renderer consumes **geometry**, never scenes: everything in it is explicit (line segments,
 triangles, sprites, styles, phases, transform slots, face quads). No renderer needs to
 interpret shapes, run code or fetch anything. Its structure and budgets are published as
-[`geometry.schema.json`](geometry.schema.json) (JSON Schema 2020-12); a consumer re-validates
+[`geometry.schema.json`](construct_hologram/geometry.schema.json) (JSON Schema 2020-12); a consumer re-validates
 structure, budgets and `scene_sha256` itself and never trusts compiler output blindly. Keep
 the source scene next to its geometry; `scene_sha256` binds them. The v1 `tessera-geometry`
 segment list stays available (`build --v1`, `scene.to_v1`).
