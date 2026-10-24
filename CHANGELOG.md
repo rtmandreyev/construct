@@ -1,16 +1,27 @@
 # Changelog
 
-## Unreleased
+## 0.3.0 — not yet released
 
 - **Film mode** ([FILM.md](docs/FILM.md)): a construct can assemble across a whole track of
-  music. `construct audio` measures a track per video frame (loudness, brightness, and a voice
-  stem if you have one), each track against its own range by default (`--scale fixed` keeps one
-  fixed window). `video --assembly S --audio features.json --sound track.wav` renders an assembly
-  of S seconds whose pace and light follow the music, with the track in the MP4. Scenes may now
-  set an assembly of up to 1200 seconds, with a `long-assembly` warning above 20. The viewer
-  takes `?assembly=` and `?audio=`; without them it draws exactly as before, which a test checks
-  against the 0.2.1 viewer. An optional three.js loader for filmmakers ships in
-  `construct_hologram/film/`.
+  music, and you can see the music in it.
+  - `construct audio` measures a track per video frame: loudness, brightness, attacks
+    (`onset`), the moments it changes section, and a voice stem if you have one. Each track is
+    measured against its own range by default (`--scale fixed` keeps one fixed window).
+  - `video --assembly S --audio features.json --sound track.wav` renders an assembly of S
+    seconds with the track in the MP4. The build nearly pauses in quiet passages and surges in
+    loud ones, the light swells and dims (60–140%), strong attacks flare the build front, and
+    each new section starts a new stage of the construct. `--reactivity` (0..2, default 1) sets
+    how strongly; 0 is an even build.
+  - `--camera tour|steady|still` chooses the camera; a scene's own tour keeps its place in a
+    longer assembly.
+  - Scenes may set an assembly of up to 1200 seconds, with a `long-assembly` warning above 20.
+  - The skill knows the film workflow, for requests like "a construct of X that assembles
+    across this track".
+  - Strictly optional: film mode is its own script (`viewer/film.js`), embedded only with
+    `build --film` or a film option to `video`. Without it Construct writes exactly what 0.2.1
+    wrote: the viewer is the 0.2.1 viewer, byte for byte, and `check`, `build`, `review` and
+    `video` give identical files for stock examples.
+  - An optional three.js loader for filmmakers ships in `construct_hologram/film/`.
 - **Docs for people new to Construct:** [How a construct is made](docs/HOW-IT-IS-MADE.md) (with a
   construct improving round by round), [The Measured Light style](docs/STYLE.md) (with annotated
   pictures), [Troubleshooting](docs/TROUBLESHOOTING.md), a docs index with a short glossary, and

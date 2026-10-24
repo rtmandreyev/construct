@@ -1,6 +1,6 @@
 ---
 name: {{NAME}}
-description: Build a construct — an animated, audited holographic model — of a real or fictional object, building, machine, creature or product (CD, book, guitar, lamp, lighthouse, jellyfish...) from a request and its evidence. Produces an audited declarative scene, a self-contained animated WebGL page (staged construction, opening, idle life, reduced-motion still) and reviewed captures. Use when someone wants a construct or a hologram: a holographic model, wireframe light model or animated 3-D presentation of a thing; not for photorealistic rendering, meshes for games, or retrieving cover art.
+description: Build a construct — an animated, audited holographic model — of a real or fictional object, building, machine, creature or product (CD, book, guitar, lamp, lighthouse, jellyfish...) from a request and its evidence. Produces an audited declarative scene, a self-contained animated WebGL page (staged construction, opening, idle life, reduced-motion still) and reviewed captures, and on request a film of the construct assembling across a track of music. Use when someone wants a construct or a hologram: a holographic model, wireframe light model or animated 3-D presentation of a thing; not for photorealistic rendering, meshes for games, or retrieving cover art.
 ---
 
 # {{TITLE}}
@@ -149,6 +149,26 @@ if no browser is available, say so and deliver the HTML without captures.
    generated decoration, what you reviewed, and — if a limit stopped you — what the next
    improvement would be. Never call a generic reconstruction exact, and never present
    generated art as a real cover.
+
+## A construct that assembles across a track (film mode)
+
+Only when the user asks for a film or video of a construct assembling to music, or hands you a
+track for it ("make a construct of X that assembles across this track"). Otherwise ignore this.
+
+1. **Author the construct as usual**, with the loop above. Keep its own assembly short (at most 20 s);
+   the film sets the long one.
+2. **Measure the track:** `python3 TOOLS audio track.wav --out audio.json` (add `--voice vocals.wav`
+   if there is a vocal stem). Note the track's length in seconds.
+3. **Render the film:** `python3 TOOLS video scene.json --out film.mp4 --assembly <length - 1.25>
+   --audio audio.json --sound track.wav --camera steady --size 1920x1080 --fps 24` (1.25 s is the
+   ceremony opening; use the full length for another assembly style). `--camera steady` keeps the
+   whole construct in view; use `tour` when the scene's own camera flights should play. Leave
+   `--reactivity` at its default unless the user asks for a calmer (0.5) or stronger (1.5) film.
+   It takes about an hour for four minutes of film; say so before you start.
+4. **Review the film** by sampling frames, for example
+   `ffmpeg -i film.mp4 -vf fps=1/10 frame-%02d.png`, and look at them: the build should visibly
+   move on with the music and end with the whole construct. Report what you made, its length,
+   and the reactivity and camera you used. Details: `docs/FILM.md` in the Construct repository.
 
 ## Rules that keep it honest and safe
 

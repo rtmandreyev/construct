@@ -46,7 +46,7 @@ RUNTIME_MODULES = ["__init__.py", "__main__.py", "product.py", "hologram.py", "s
                    "trace.py", "terrain.py", "tiers.py", "globe.py", "critic.py", "compare.py", "archkit.py", "rounds.py",
                    "film_audio.py"]
 FILM = ["construct-three.js"]  # film mode's optional three.js loader, shipped as runtime/film/
-VIEWER_FILES = ["hologram.js", "template.html"]
+VIEWER_FILES = ["hologram.js", "film.js", "template.html"]
 PROMPT_EXAMPLES = ["case-jewel.params.json", "book.json"]
 
 # How each host names the skill's own folder inside SKILL.md.

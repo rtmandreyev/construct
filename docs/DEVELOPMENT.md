@@ -8,7 +8,7 @@ just want to make constructs, [USING.md](USING.md) is the page for you.
 
 | Path | What it holds |
 | --- | --- |
-| `construct_hologram/` | the toolkit: the scene compiler (`scene.py`), the audit (`audit.py`), diagnostics (`diagnose.py`), the archetypes (`params.py`), the viewer (`viewer/`), captures (`render.py`), film mode (`film_audio.py`, and the optional three.js loader in `film/`), the command line (`studio.py`, `cli.py`) and the tests |
+| `construct_hologram/` | the toolkit: the scene compiler (`scene.py`), the audit (`audit.py`), diagnostics (`diagnose.py`), the archetypes (`params.py`), the viewer (`viewer/`), captures (`render.py`), film mode (`film_audio.py`, `viewer/film.js`, and the optional three.js loader in `film/`), the command line (`studio.py`, `cli.py`) and the tests |
 | `construct_hologram/skill/` | the agent skill: `SKILL.md` and its references (vocabulary, composition, craft, rounds, review, tracing and more) |
 | `construct_hologram/prompts/` | the same rules for other models and hosts, generated from `prompts.py` |
 | `construct_hologram/examples/v2/` | the skill's own examples and the archetypes' golden documents |
@@ -42,7 +42,8 @@ Every command is `python3 construct_hologram/cli.py <command>`:
 | `review scene.json --out out/ [--size WxH] [--sheets ...]` | stills and contact sheets in `out/review/` |
 | `video scene.json --out out/x.mp4 --seconds 12` | a video (needs ffmpeg) |
 | `audio track.wav --out audio.json [--voice stem.wav] [--scale track\|fixed]` | film mode: per-frame audio features ([FILM.md](FILM.md)) |
-| `video ... --assembly S --audio audio.json --sound track.wav [--camera tour\|steady\|still]` | film mode: an assembly of S seconds paced by the music, with the track in the video, and the camera you choose |
+| `video ... --assembly S --audio audio.json --sound track.wav [--camera tour\|steady\|still] [--reactivity 0..2]` | film mode: an assembly of S seconds shaped by the music, with the track in the video, and the camera you choose |
+| `build scene.json --out out/ --film` | a page that also carries film mode, for previewing `?assembly=`, `?audio=`, `?reactivity=` and `?camera=steady` |
 | `author "request" --base-url ... --model ... --key-env ...` | the whole loop with any OpenAI-compatible model |
 | `critique scene.json --reference view=photo.jpg` | a packet for an independent critic; `--record answer.json` records its answer |
 | `rounds start/change/packet/record/run/pause/status/report` | the masterpiece loop on disk |

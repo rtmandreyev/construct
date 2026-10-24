@@ -3,8 +3,7 @@
  *
  * Everything is a pure function of the geometry, the seed and a time t, so any frame
  * can be reproduced exactly (?t=3.2) for review captures. The renderer only draws what
- * the compiler produced: it runs no scene-supplied code and fetches nothing (except, in film mode, the
- * audio features file named by ?audio).
+ * the compiler produced: it runs no scene-supplied code and fetches nothing.
  *
  * URL parameters: t (freeze time, seconds), view (hero|front|side|back|top|three-quarter|<scene view>),
  * motion (full|reduced), mode (light|provenance), ui (1|0), labels (1|0), caption (1|0),
@@ -12,12 +11,7 @@
  * sheet (assembly|views|motion|life|provenance|all), fps (15|20|30|60|0), capture (1),
  * open (0..1: hold the articulations at this opening instead of playing them),
  * shift (x,y: move the framed object across the screen, in fractions of the half-viewport),
- * zoom (>1 pulls the camera back to leave room around the object),
- * camera (still: the view's framing held, no tour, drift or breathing; steady: no tour, but the drift and
- * breathing go on).
- * Film mode: assembly (seconds: the assembly lasts this long, e.g. a whole track), audio (a features file
- * written by `construct audio`, fetched beside the page: the build, the light and a voice shimmer follow
- * it). Without these the viewer behaves exactly as without film mode.
+ * zoom (>1 pulls the camera back to leave room around the object).
  */
 (function () {
   "use strict";
@@ -622,33 +616,12 @@ void main() {
   };
 
   // ------------------------------------------------------------------------- time
-  Hologram.prototype.assemblyTimes = function (authored) {
-    // authored: the scene's own assembly, ignoring a film's ?assembly= override
+  Hologram.prototype.assemblyTimes = function () {
     const asm = this.geo.animation.assembly;
     if (this.opt.reduced || asm.style === "cut") return { ghost: 0, collapse: 0, build: 0, settle: 0, end: 0 };
     const ghost = asm.interference && asm.style === "ceremony" ? 0.9 : 0, collapse = ghost ? 0.35 : 0;
-    const build = Math.max(0.2, (!authored && this.opt.assembly) || asm.seconds), settle = asm.style === "ceremony" ? 1.1 : 0.4;
+    const build = Math.max(0.2, asm.seconds), settle = asm.style === "ceremony" ? 1.1 : 0.4;
     return { ghost, collapse, build, settle, end: ghost + collapse + build + settle };
-  };
-  Hologram.prototype.tourStops = function () {
-    // the scene's tour is authored in seconds against its own assembly. In a film (?assembly=, ?audio=)
-    // each stop keeps its place in that timeline: before the build it stays; during the build it comes
-    // when the film's build reaches the same progress, its flight scaled with the build (at most 3x and
-    // 12 s, and never into the next stop); after the build it moves by as much as the assembly's end
-    const tour = this.geo.animation.camera.tour || [], at = this.assemblyTimes(), own = this.assemblyTimes(true);
-    const start = at.ghost + at.collapse, d = at.end - own.end;
-    if ((!d && !this.audio) || !at.build) return tour;
-    const ratio = at.build / own.build;
-    const out = tour.map((s) => {
-      const fly = s.fly || 2.2;
-      if (s.at < start) return Object.assign({}, s);
-      if (s.at >= start + own.build) return Object.assign({}, s, { at: s.at + d });
-      const p = (s.at - start) / own.build;
-      return Object.assign({}, s, { at: start + (this.audio ? this.audioBuildTime(p, at.build) : p * at.build),
-                                    fly: Math.max(0.2, Math.min(fly * Math.min(ratio, 3), Math.max(fly, 12))) });
-    });
-    for (let i = 0; i + 1 < out.length; i++) out[i].fly = Math.max(0.05, Math.min(out[i].fly || 2.2, out[i + 1].at - out[i].at));
-    return out;
   };
 
   Hologram.prototype.buildSchedule = function () {
@@ -675,34 +648,12 @@ void main() {
     return out;
   };
 
-  // film mode: audio features {fps, energy[], high[], voice[]} (0..1 per frame) shape the assembly and the idle light
-  Hologram.prototype.audioAt = function (t) {
-    const a = this.audio, i = Math.max(0, Math.min(a.energy.length - 1, Math.round(t * a.fps)));
-    return { energy: a.energy[i] || 0, high: (a.high && a.high[i]) || 0, voice: (a.voice && a.voice[i]) || 0 };
-  };
-  Hologram.prototype.audioBuild = function (tb, dur) {
-    // progress advances by (base + k·energy²) per frame, normalised so the build ends exactly at the assembly's duration
-    const a = this.audio, t0 = this.assemblyTimes().ghost + this.assemblyTimes().collapse;
-    if (!a._acc || a._dur !== dur) { const n = Math.ceil(dur * a.fps) + 1, acc = new Float32Array(n); let s = 0;
-      for (let i = 0; i < n; i++) { const e = a.energy[Math.min(a.energy.length - 1, Math.round(t0 * a.fps) + i)] || 0; s += 0.35 + 2.5 * e * e; acc[i] = s; }
-      a._acc = acc; a._dur = dur; }
-    const acc = a._acc, i = Math.max(0, Math.min(acc.length - 1, Math.round(tb * a.fps))); return acc[i] / acc[acc.length - 1];
-  };
-  Hologram.prototype.audioBuildTime = function (p, dur) {
-    // the inverse: the first moment (seconds into the build) the music-paced build reaches progress p
-    this.audioBuild(0, dur);
-    const acc = this.audio._acc, goal = p * acc[acc.length - 1];
-    let lo = 0, hi = acc.length - 1;
-    while (lo < hi) { const m = (lo + hi) >> 1; if (acc[m] >= goal) hi = m; else lo = m + 1; }
-    return Math.min(dur, lo / this.audio.fps);
-  };
-
   Hologram.prototype.state = function (t) {
     const g = this.geo, at = this.assemblyTimes(), s = { build: 2, ghost: 0, stabilise: 0, globalAlpha: 1, event: [0, 0, 0, 0], eventP: [0, 0, 0, 0], scan: [0, 0] };
     if (t < at.end) {
       if (t < at.ghost) { s.ghost = 1; s.build = 2; s.globalAlpha = 0.18 + 0.1 * Math.sin(t * 40) * Math.sin(t * 7); }
       else if (t < at.ghost + at.collapse) { const k = (t - at.ghost) / at.collapse; s.ghost = 1 - k; s.build = 2; s.globalAlpha = 0.2 * (1 - k); }
-      else if (t < at.ghost + at.collapse + at.build) { const tb = t - at.ghost - at.collapse; const k = this.audio ? this.audioBuild(tb, at.build) : tb / at.build; s.build = k; s.scan = [k * 1.05, 0.6]; }
+      else if (t < at.ghost + at.collapse + at.build) { const k = (t - at.ghost - at.collapse) / at.build; s.build = k; s.scan = [k * 1.05, 0.6]; }
       else { const k = (t - at.ghost - at.collapse - at.build) / at.settle; s.build = 2; s.stabilise = Math.exp(-3.5 * k) * (1 - k); }
     }
     for (const e of this.schedule) {
@@ -716,10 +667,6 @@ void main() {
         break;
       }
       if (e.t0 > t) break;
-    }
-    if (this.audio) {   // film mode: the light breathes with the music, and the hologram shimmers while the voice is present
-      const f = this.audioAt(t); s.globalAlpha *= 0.82 + 0.36 * f.energy;
-      if (s.event[0] === 0 && f.voice > 0.25) s.event = [EVENT_CODE.shimmer, (t * 0.35) % 1, 0.35 + 0.6 * f.voice, 7];
     }
     s.life = this.opt.reduced || g.animation.idle.life === "off" ? 0 : 1;
     return s;
@@ -837,10 +784,9 @@ void main() {
     // the base camera, then the scene's tour (flights between views), then drift and breathing
     const anim = this.geo.animation.camera, reduced = this.opt.reduced;
     let cam = Object.assign({}, base);
-    // without a tour of its own, an object that opens turns to its "open" view while it opens;
-    // camera=steady flies no tour at all, one long shot from the view
-    let tour = this.opt.steadyCamera ? [] : this.tourStops();
-    if (!tour.length && !this.opt.steadyCamera && (this.geo.articulations || []).length && (this.geo.presentation.views || []).some((v) => v.id === "open")) {
+    // without a tour of its own, an object that opens turns to its "open" view while it opens
+    let tour = anim.tour;
+    if (!tour.length && (this.geo.articulations || []).length && (this.geo.presentation.views || []).some((v) => v.id === "open")) {
       const op = this.openTimes();
       tour = [{ view: "open", at: op.start, fly: Math.max(1.5, op.end - op.start) }];
     }
@@ -1058,7 +1004,6 @@ void main() {
     const prefersReduced = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const opt = {
       t: q.has("t") ? parseFloat(q.get("t")) : null,
-      audio: q.get("audio"), assembly: q.has("assembly") ? Math.max(0.2, Math.min(3600, parseFloat(q.get("assembly")) || 0)) : null,
       view: q.get("view") || "hero",
       reduced: q.get("motion") === "reduced" || (prefersReduced && q.get("motion") !== "full"),
       mode: q.get("mode") === "provenance" ? "provenance" : "light",
@@ -1070,8 +1015,6 @@ void main() {
       palette: q.get("palette"), identity: q.get("identity"),
       // camera=still: the view's own fitted framing, no tour, drift or breathing (the review's hero)
       freezeCamera: q.get("camera") === "still",
-      // camera=steady: no tour, but the drift and the breathing go on (a single long shot, for a film)
-      steadyCamera: q.get("camera") === "steady",
     };
     const stage = document.getElementById("stage");
     const canvas = document.getElementById("holo");
@@ -1130,7 +1073,6 @@ void main() {
     };
     setUi();
 
-    if (opt.audio) { window.HOLO_AUDIO_READY = fetch(opt.audio).then((r) => r.json()).then((a) => { holo.audio = a; holo.schedule = holo.buildSchedule(); }).catch((e) => console.error("audio features:", e)); }
     let clock0 = performance.now(), paused = false, pausedAt = 0, frozen = opt.t;
     const now = () => frozen !== null ? frozen : paused ? pausedAt : (performance.now() - clock0) / 1000;
 
@@ -1184,7 +1126,7 @@ void main() {
       if (kind === "motion") { const op = holo.openTimes(), span = Math.max(7.5, op.end - end + 1.5);
         return [0, 0.2, 0.4, 0.6, 0.8, 1].map((k) => ({ label: "MOTION " + (end + k * span).toFixed(1) + " S", t: end + k * span, view: "hero" })); }
       if (kind === "provenance") return ["hero", "front", "side"].map((v) => ({ label: "PROVENANCE " + v.toUpperCase(), t: end + 0.01, view: v, reduced: true, mode: "provenance" }));
-      if (kind === "tour") return holo.tourStops().map((s) => ({ label: "TOUR " + s.view.toUpperCase() + " " + (s.at + (s.fly || 2.2)).toFixed(1) + " S", t: s.at + (s.fly || 2.2) + 0.05, view: "hero" }));
+      if (kind === "tour") return (geo.animation.camera.tour || []).map((s) => ({ label: "TOUR " + s.view.toUpperCase() + " " + (s.at + (s.fly || 2.2)).toFixed(1) + " S", t: s.at + (s.fly || 2.2) + 0.05, view: "hero" }));
       return [];
     }
 

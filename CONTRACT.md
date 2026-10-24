@@ -28,7 +28,7 @@ geometry should accept both geometry ids until 0.3. The v0.1 construction sheets
 A renderer consumes **geometry**, never scenes: everything in it is explicit (line segments,
 triangles, sprites, styles, phases, transform slots, face quads). No renderer needs to
 interpret shapes, run code or fetch anything (the one exception is film mode's optional audio
-features file, below). Its structure and budgets are published as
+features file, below, in a page built for film). Its structure and budgets are published as
 [`geometry.schema.json`](construct_hologram/geometry.schema.json) (JSON Schema 2020-12); a consumer re-validates
 structure, budgets and `scene_sha256` itself and never trusts compiler output blindly. Keep
 the source scene next to its geometry; `scene_sha256` binds them. The v1 `tessera-geometry`
@@ -263,35 +263,53 @@ A scene or parameter document may carry `authoring`, which compiles to
 `outcome` `good | limit | unreviewed`; `next` up to 8 improvement notes. It says how the
 construct was made so a host can regenerate it at a higher tier; readers may ignore it.
 
-## Film mode (an addition within 0.2)
+## Film mode (0.3.0, optional)
 
-Film mode lets an assembly span a piece of music, for video.
+Film mode lets an assembly span a piece of music, for video. It is strictly optional: it lives in
+its own script, `viewer/film.js`, which a page carries only when it is built for film
+(`construct build --film`, or `construct video` with a film option). A page built without it is the
+stock viewer, byte for byte, and a page built with it behaves exactly like the stock one until a
+film parameter is given.
 
 - **Long assemblies.** `animation.assembly.seconds` accepts up to 1200 (20 minutes). Above 20
   seconds the audit warns `long-assembly`: a construct assembles in at most 20 s, and a film
   usually keeps the scene short and sets the length when rendering.
-- **Viewer parameters.** `assembly=<seconds>` sets the assembly's length for this view,
-  overriding the scene. The camera tour is authored against the scene's own assembly, and each
-  stop keeps its place in it: a stop before the build stays; a stop during the build comes when the
-  film's build reaches the same progress (with `audio=`, the music-paced build), its `fly` scaled
-  by the build's ratio (at most 3×, and at most 12 s unless the authored `fly` is longer); a stop
-  after the build moves by as much as the assembly's end. A flight never runs into the next stop.
-  `camera=steady` flies no tour (neither the scene's nor the automatic turn to its open view) but
-  keeps the drift and the breathing; `camera=still` holds the view with no motion at all.
-  `audio=<features.json>` loads audio features: the build advances by `0.35 + 2.5·energy²` per
-  frame, normalised so that it still ends exactly on time; the light scales by
-  `0.82 + 0.36·energy`; and while `voice` is above 0.25 the construct shimmers.
-- **The features file** (`construct audio`): `{"format": "construct-audio", "version": 1, "fps",
-  "frames", "scale", "energy": [...], "high": [...], "voice": [...], "range_db"}`, one value per
-  frame, each 0..1, indexed by track time from the start of the page's clock. `energy` is the
-  music's loudness (each track mapped to its own range, or a fixed -40..-10 dBFS window),
-  `high` its brightness and attacks, `voice` a voice stem's level.
-- **The one fetch.** With `audio=`, the portable viewer fetches that one file, a JSON document of
-  numbers beside the page. It fetches nothing else, and nothing at all without the parameter.
-  Without `audio=` and `assembly=` the viewer behaves exactly as it does without film mode.
+- **Viewer parameters** (a page built for film).
+  - `assembly=<seconds>` sets the assembly's length for this view, overriding the scene.
+  - `audio=<features.json>` loads audio features (below), and `reactivity=<0..2>` (default 1) sets
+    how strongly they show. At reactivity r: each frame of the build advances by
+    `exp(4r·(rank − 0.5)) · (0.15 + 0.85·min(1, energy/0.15))^r`, where rank is the frame's energy
+    ranked among the build's frames (0..1), smoothed over 2 s and normalised so the build still
+    ends exactly on time; at each section boundary inside the build (the strongest first, at most
+    one per stage) the build is pinned to the start of a stage; the light scales by
+    `1 + 0.4r·(2·energy − 1)`; each onset above `0.75 − 0.2r` gives an accent
+    `((onset − floor)/(1 − floor))^1.5`, as does each section boundary (1), decaying with a 0.2 s
+    time constant, which lights a scan band at the build front's height, a glow surplus on what is
+    built and 10% more light; and while `voice` is above 0.25 the construct shimmers. At r = 0
+    the build is even and none of these apply.
+  - `camera=steady` flies no tour (neither the scene's nor the automatic turn to its open view) but
+    keeps the drift and the breathing; `camera=still` (any page) holds the view with no motion.
+  - The camera tour is authored against the scene's own assembly, and each stop keeps its place in
+    it: a stop before the build stays; a stop during the build comes when the film's build reaches
+    the same progress, its `fly` scaled by the build's ratio (at most 3×, and at most 12 s unless the
+    authored `fly` is longer); a stop after the build moves by as much as the assembly's end. A
+    flight never runs into the next stop.
+- **The features file** (`construct audio`, version 2): `{"format": "construct-audio", "version": 2,
+  "fps", "frames", "scale", "energy": [...], "high": [...], "onset": [...], "voice": [...],
+  "sections": [{"t", "strength"}], "range_db"}`, one value per frame, each 0..1, indexed by track
+  time from the start of the page's clock. `energy` is the music's loudness (each track mapped to
+  its own range, or a fixed -40..-10 dBFS window), `high` its brightness and attacks, `onset` the
+  strongest attack in the frame (peak-picked rises in three bands, at least 0.2 s apart, relative
+  to the track's strong attacks), `voice` a voice stem's level, and `sections` the moments (track
+  seconds) where the music changes, from the novelty of its smoothed loudness and brightness, at
+  least 10 s apart. Version 1 files (no `onset` or `sections`) still work: no accents and no
+  staging.
+- **The one fetch.** With `audio=`, the film script fetches that one file, a JSON document of
+  numbers beside the page. It fetches nothing else, and a page without film mode fetches nothing.
 - **Hosts with their own renderer** can read the same features. `film/construct-three.js` is an
   optional three.js loader that draws compiled geometry in a three.js scene and takes
-  `build`, `time`, `energy`, `high` and `voice` every frame.
+  `build`, `time`, `energy`, `high` and `voice` every frame; its `makeBuildCurve` is the simpler
+  `0.35 + 2.5·energy²` pace and does not stage sections or flare on onsets.
 
 ## Planned for 0.3 (not in 0.2)
 

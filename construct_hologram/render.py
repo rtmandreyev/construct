@@ -75,7 +75,9 @@ def embed_assets(geometry, asset_root):
     return out, notes
 
 
-def build_html(geometry, asset_root=None):
+def build_html(geometry, asset_root=None, film=False):
+    """The construct page. `film` also embeds film mode (viewer/film.js) after the viewer; without it the page
+    is the stock viewer, unchanged."""
     template = (VIEWER / "template.html").read_text(encoding="utf-8")
     viewer = (VIEWER / "hologram.js").read_text(encoding="utf-8")
     assets, notes = embed_assets(geometry, asset_root)
@@ -84,6 +86,11 @@ def build_html(geometry, asset_root=None):
             .replace("__GEOMETRY__", _script_json(geometry))
             .replace("__ASSETS__", _script_json(assets))
             .replace("__VIEWER__", viewer.replace("</script", "<\\/script")))
+    if film:  # a script of its own, right after the viewer's, so it runs before the viewer starts
+        code = (VIEWER / "film.js").read_text(encoding="utf-8").replace("</script", "<\\/script")
+        mark = "\n</script>\n<script>\n  // the improvement rounds"
+        assert html.count(mark) == 1
+        html = html.replace(mark, "\n</script>\n<script>\n" + code + "\n</script>\n<script>\n  // the improvement rounds")
     return html, notes
 
 
@@ -374,7 +381,8 @@ def stills(html_path, out_dir, views, width=1280, height=800, scale=1.0, browser
 def frames(html_path, out_dir, seconds, fps=24, start=0.0, width=1280, height=720, scale=1.0, view=None, browser=None,
            extra=None):
     """Frames of the animation from `start`, `seconds` long. `extra` adds URL parameters, for film mode:
-    {"assembly": seconds, "audio": "features.json"} (the features file beside the page), "camera": "steady"."""
+    {"assembly": seconds, "audio": "features.json"} (the features file beside the page), "camera": "steady",
+    "reactivity": 0..2 (a page built with film mode)."""
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)
     b = open_browser(_url(html_path, t="%.3f" % start, ui=0, capture=1, view=view, **(extra or {})), width, height, scale,

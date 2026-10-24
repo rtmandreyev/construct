@@ -56,7 +56,7 @@ def build(out):
     (rt / "viewer").mkdir(parents=True)
     for m in RUNTIME:
         shutil.copyfile(PKG / m, rt / m)
-    for v in ("hologram.js", "template.html"):
+    for v in ("hologram.js", "film.js", "template.html"):
         shutil.copyfile(PKG / "viewer" / v, rt / "viewer" / v)
     (rt / "examples" / "v2").mkdir(parents=True, exist_ok=True)
     for e in ("case-jewel.params.json", "book.json"):  # the prompts quote these (critique, author, prompts)
