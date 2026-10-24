@@ -11,6 +11,7 @@ import tempfile
 import unittest
 import wave
 from pathlib import Path
+from unittest import mock
 
 from . import diagnose, film_audio, render, scene, studio
 
@@ -129,11 +130,20 @@ class LongAssembly(unittest.TestCase):
 
 class Cli(unittest.TestCase):
     def test_the_film_flags(self):
-        for command, flags in (("video", ("--audio", "--assembly", "--sound")), ("audio", ("--out", "--voice", "--scale"))):
+        for command, flags in (("video", ("--audio", "--assembly", "--sound", "--camera")), ("audio", ("--out", "--voice", "--scale"))):
             r = subprocess.run([sys.executable, str(HERE / "cli.py"), command, "--help"], capture_output=True, text=True)
             self.assertEqual(r.returncode, 0, r.stderr)
             for flag in flags:
                 self.assertIn(flag, r.stdout, (command, flag))
+
+    def test_the_camera_flag_reaches_the_page(self):
+        from . import __main__ as cli
+        for choice, expected in ((None, None), ("tour", None), ("steady", "steady"), ("still", "still")):
+            with tempfile.TemporaryDirectory() as d, mock.patch.object(render, "frames") as frames, \
+                    mock.patch.object(render, "encode_video"), mock.patch("sys.stdout"):
+                argv = ["video", str(EXAMPLES / "cd.json"), "--out", str(Path(d, "x.mp4"))]
+                self.assertEqual(cli.main(argv + (["--camera", choice] if choice else [])), 0)
+                self.assertEqual(frames.call_args.kwargs["extra"].get("camera"), expected, choice)
 
     def test_the_loader_is_shipped_and_neutral(self):
         text = (HERE / "film" / "construct-three.js").read_text(encoding="utf-8")
@@ -220,6 +230,21 @@ class Viewer(unittest.TestCase):
         self.assertAlmostEqual(film["pitch"]["10"], own["pitch"]["1.2"], places=6)
         self.assertAlmostEqual(film["pitch"]["22.25"], own["pitch"]["5.5"], places=6)  # the second flight landed
         self.assertAlmostEqual(film["pitch"]["35.6"], own["pitch"]["10.1"], places=6)  # and the third
+
+    def test_a_steady_camera_flies_no_tour_but_keeps_drifting(self):
+        probe = """JSON.stringify((() => { const h = HOLO.hologram, base = h.cameraFor("hero");
+          return {base, cams: [0, 5.5, 12, 40].map((t) => h.cameraAt(t, base))}; })())"""
+        for query in ({}, {"assembly": "30"}):
+            steady = self.probe("tour-new.html", probe, camera="steady", **query)
+            still = self.probe("tour-new.html", probe, camera="still", **query)
+            toured = self.probe("tour-new.html", probe, **query)
+            base = steady["base"]
+            for cam in steady["cams"]:  # no flight: the view's own target and pitch, all the way
+                self.assertEqual((cam["target"], cam["pitch"]), (base["target"], base["pitch"]), query)
+            self.assertGreater(steady["cams"][3]["yaw"], steady["cams"][0]["yaw"] + 1)  # but it drifts
+            self.assertNotEqual(steady["cams"][3]["dist"], base["dist"])  # and breathes
+            self.assertEqual(still["cams"], [base] * 4)  # still: nothing moves
+            self.assertTrue(any(c["pitch"] != base["pitch"] for c in toured["cams"]))  # the tour flies
 
     def test_with_music_a_tour_stop_follows_the_build(self):
         # silence until 15 s of track time, then full energy: the build is slow first, then fast

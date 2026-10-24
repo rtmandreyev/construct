@@ -424,6 +424,9 @@ def add_commands(sub):
     p.add_argument("--audio", help="film mode: audio features from `audio` (energy, high, voice); the build and the "
                                    "light follow them")
     p.add_argument("--sound", help="film mode: an audio file to put in the MP4, from --start, cut to the video's length")
+    p.add_argument("--camera", choices=("tour", "steady", "still"), default="tour",
+                   help="tour: the scene's own camera choreography (the default); steady: one long shot from the "
+                        "view, drifting and breathing; still: the view held, no motion")
     p = sub.add_parser("audio", help="film mode: per-frame audio features (energy, high, voice) for `video --audio`")
     p.add_argument("music", help="the track (any format ffmpeg reads)")
     p.add_argument("--out", required=True, help="the features JSON")
@@ -671,6 +674,8 @@ def run(args):
                     extra["audio"] = "audio.json"
                 if args.assembly:
                     extra["assembly"] = "%.3f" % args.assembly
+                if args.camera != "tour":
+                    extra["camera"] = args.camera
                 render.frames(page_in(tmp), str(Path(tmp, "frames")), seconds, args.fps,
                               args.start, w, h, view=args.view, extra=extra)
                 out.parent.mkdir(parents=True, exist_ok=True)

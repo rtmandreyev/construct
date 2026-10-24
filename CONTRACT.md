@@ -276,6 +276,8 @@ Film mode lets an assembly span a piece of music, for video.
   film's build reaches the same progress (with `audio=`, the music-paced build), its `fly` scaled
   by the build's ratio (at most 3×, and at most 12 s unless the authored `fly` is longer); a stop
   after the build moves by as much as the assembly's end. A flight never runs into the next stop.
+  `camera=steady` flies no tour (neither the scene's nor the automatic turn to its open view) but
+  keeps the drift and the breathing; `camera=still` holds the view with no motion at all.
   `audio=<features.json>` loads audio features: the build advances by `0.35 + 2.5·energy²` per
   frame, normalised so that it still ends exactly on time; the light scales by
   `0.82 + 0.36·energy`; and while `voice` is above 0.25 the construct shimmers.

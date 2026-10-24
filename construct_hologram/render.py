@@ -374,7 +374,7 @@ def stills(html_path, out_dir, views, width=1280, height=800, scale=1.0, browser
 def frames(html_path, out_dir, seconds, fps=24, start=0.0, width=1280, height=720, scale=1.0, view=None, browser=None,
            extra=None):
     """Frames of the animation from `start`, `seconds` long. `extra` adds URL parameters, for film mode:
-    {"assembly": seconds, "audio": "features.json"} (the features file beside the page)."""
+    {"assembly": seconds, "audio": "features.json"} (the features file beside the page), "camera": "steady"."""
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)
     b = open_browser(_url(html_path, t="%.3f" % start, ui=0, capture=1, view=view, **(extra or {})), width, height, scale,

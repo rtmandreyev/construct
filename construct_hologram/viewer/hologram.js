@@ -12,7 +12,9 @@
  * sheet (assembly|views|motion|life|provenance|all), fps (15|20|30|60|0), capture (1),
  * open (0..1: hold the articulations at this opening instead of playing them),
  * shift (x,y: move the framed object across the screen, in fractions of the half-viewport),
- * zoom (>1 pulls the camera back to leave room around the object).
+ * zoom (>1 pulls the camera back to leave room around the object),
+ * camera (still: the view's framing held, no tour, drift or breathing; steady: no tour, but the drift and
+ * breathing go on).
  * Film mode: assembly (seconds: the assembly lasts this long, e.g. a whole track), audio (a features file
  * written by `construct audio`, fetched beside the page: the build, the light and a voice shimmer follow
  * it). Without these the viewer behaves exactly as without film mode.
@@ -835,9 +837,10 @@ void main() {
     // the base camera, then the scene's tour (flights between views), then drift and breathing
     const anim = this.geo.animation.camera, reduced = this.opt.reduced;
     let cam = Object.assign({}, base);
-    // without a tour of its own, an object that opens turns to its "open" view while it opens
-    let tour = this.tourStops();
-    if (!tour.length && (this.geo.articulations || []).length && (this.geo.presentation.views || []).some((v) => v.id === "open")) {
+    // without a tour of its own, an object that opens turns to its "open" view while it opens;
+    // camera=steady flies no tour at all, one long shot from the view
+    let tour = this.opt.steadyCamera ? [] : this.tourStops();
+    if (!tour.length && !this.opt.steadyCamera && (this.geo.articulations || []).length && (this.geo.presentation.views || []).some((v) => v.id === "open")) {
       const op = this.openTimes();
       tour = [{ view: "open", at: op.start, fly: Math.max(1.5, op.end - op.start) }];
     }
@@ -1067,6 +1070,8 @@ void main() {
       palette: q.get("palette"), identity: q.get("identity"),
       // camera=still: the view's own fitted framing, no tour, drift or breathing (the review's hero)
       freezeCamera: q.get("camera") === "still",
+      // camera=steady: no tour, but the drift and the breathing go on (a single long shot, for a film)
+      steadyCamera: q.get("camera") === "steady",
     };
     const stage = document.getElementById("stage");
     const canvas = document.getElementById("holo");

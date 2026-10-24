@@ -54,6 +54,20 @@ three times slower, and no longer than 12 seconds unless the scene's own flight 
 after the build starts as long after the film's build as the scene set it, and a flight before
 the build stays where it was.
 
+### Choose the camera
+
+`--camera` decides how the camera moves:
+
+| Camera | What it does | Pick it when |
+| --- | --- | --- |
+| `tour` (the default) | plays the scene's own camera choreography: flights to its close-ups and views | the scene's tour tells the story you want, part by part |
+| `steady` | no flights; one long shot from the view, slowly drifting and breathing | a single long shot, or a film that should end on the whole construct |
+| `still` | the view held exactly, nothing moves but the construct | a locked-off shot, or one you will move in your editor |
+
+A tour that flies to close-ups during the build ends wherever it was going when the build ends,
+which may be a detail rather than the whole construct; `steady` keeps the whole construct in view
+from start to end. Choose the view with `--view` (`hero` by default).
+
 Rendering takes a while: every frame is drawn in a browser, about a frame or two a second on a
 laptop, so a four-minute film at 24 frames a second takes roughly an hour.
 
@@ -77,6 +91,7 @@ and open it with the film options:
 python3 construct_hologram/cli.py build scene.json --out out
 cp track-audio.json out/
 # then open out/construct.html?assembly=245&audio=track-audio.json, and play the track alongside
+# (add &camera=steady or &camera=still for the other cameras)
 ```
 
 The page doesn't play the audio itself; it follows the measurements in time.
