@@ -63,6 +63,12 @@
    "model": "DeepSeek"
   },
   {
+   "slug": "apollo-lunar-module",
+   "title": "Apollo Lunar Module (LM-5 \"Eagle\")",
+   "mode": "masterpiece",
+   "model": "DeepSeek"
+  },
+  {
    "slug": "leica-m3",
    "title": "Leica M3",
    "mode": "fast",

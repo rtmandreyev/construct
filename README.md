@@ -46,7 +46,7 @@ In the common case:
 
 ## See it in practice
 
-<p align="center"><a href="https://rtmandreyev.github.io/construct/"><img src="docs/media/examples.jpg" alt="Example constructs made by AI agents: cars, cathedrals, watches, instruments, a planet and a galaxy"></a></p>
+<p align="center"><a href="https://rtmandreyev.github.io/construct/"><img src="docs/media/examples.jpg" alt="Example constructs made by AI agents: cars, cathedrals, watches, instruments, a lunar lander, a planet and a galaxy"></a></p>
 
 The examples are real runs: each one was made by an AI agent with Construct, in fast or
 masterpiece mode, by Claude Opus, GPT-6.1 Sol or DeepSeek. Open any of them to watch it assemble,
@@ -64,11 +64,11 @@ review becomes a loop, judged by a critic that never saw the authoring.
 ```mermaid
 flowchart LR
     A["you ask"] --> S["the agent writes<br/>a scene"]
-    S --> CConstruct<br/>checks it
+    S --> C["Construct<br/>checks it"]
     C -- "problems, with fixes" --> S
     C --> B["Construct builds<br/>construct.html"]
     B --> R["the agent reviews<br/>its pictures"]
-    R -- "masterpiece: another round" --> Kthe critic compares<br/>with the best so far
+    R -- "masterpiece: another round" --> K["the critic compares<br/>with the best so far"]
     K -- "better: keep it" --> S
     K -- "not better: keep the best" --> S
     R --> D["you get the best version"]

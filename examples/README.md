@@ -16,6 +16,7 @@ made with earlier versions of Construct; all of them build with this release.
 | [![Sydney Opera House](sydney-opera-house/thumb.jpg)](sydney-opera-house/) | [Sydney Opera House](sydney-opera-house/) | masterpiece | GPT-6.1 Sol |
 | [![Saturn](saturn/thumb.jpg)](saturn/) | [Saturn](saturn/) | masterpiece | DeepSeek |
 | [![Andromeda Galaxy (M31)](andromeda-galaxy/thumb.jpg)](andromeda-galaxy/) | [Andromeda Galaxy (M31)](andromeda-galaxy/) | masterpiece | DeepSeek |
+| [![Apollo Lunar Module (LM-5 "Eagle")](apollo-lunar-module/thumb.jpg)](apollo-lunar-module/) | [Apollo Lunar Module (LM-5 "Eagle")](apollo-lunar-module/) | masterpiece | DeepSeek |
 | [![Leica M3](leica-m3/thumb.jpg)](leica-m3/) | [Leica M3](leica-m3/) | fast | GPT-6.1 Sol |
 | [![Patek Philippe 5320G](patek-philippe-5320g/thumb.jpg)](patek-philippe-5320g/) | [Patek Philippe 5320G](patek-philippe-5320g/) | fast | GPT-6.1 Sol |
 | [![Jackson Juggernaut ET7](jackson-juggernaut-et7/thumb.jpg)](jackson-juggernaut-et7/) | [Jackson Juggernaut ET7](jackson-juggernaut-et7/) | fast | GPT-6.1 Sol |
