@@ -1,0 +1,3398 @@
+{
+  "format": "construct-scene",
+  "version": 2,
+  "id": "omega-speedmaster-moonwatch-321",
+  "title": "Omega Speedmaster Professional Moonwatch - calibre 321, exploded",
+  "subject": {
+    "category": "machine",
+    "summary": "An exploded 42 mm Omega Speedmaster Professional 'Moonwatch': steel case with twisted lugs and tachymeter bezel, triple-register dial with its chronograph hands, and the calibre 321 column-wheel movement beneath, its balance wheel oscillating. Layer outlines are measured from reference photographs; the key sizes come from Omega's published specifications.",
+    "accuracy": "approximate",
+    "synthetic": false
+  },
+  "units": "m",
+  "seed": 321,
+  "sources": [
+    {
+      "id": "request",
+      "kind": "user_request",
+      "title": "Public-showcase request: exploded Omega Speedmaster Professional Moonwatch with calibre 321",
+      "rights": "user_private"
+    },
+    {
+      "id": "omega-moonwatch",
+      "kind": "document",
+      "title": "OMEGA Moonwatch Professional 3570.50.00 product page and specifications",
+      "rights": "reference_only",
+      "ref": "https://omegawatches.com/en-us/watch-omega-speedmaster-moonwatch-chronograph-42-mm-35705000 - 42 mm case, 13.80 mm thickness, 48.20 mm lug-to-lug, 20 mm between lugs, hesalite crystal, small seconds / 30-minute / 12-hour registers"
+    },
+    {
+      "id": "omega-321",
+      "kind": "document",
+      "title": "OMEGA Speedmaster Calibre 321 42 mm product page",
+      "rights": "reference_only",
+      "ref": "https://www.omegawatches.com/en-ch/watch-omega-speedmaster-calibre-321-professional-chronograph-42-mm-31190423099002 - calibre 321, manual winding, 55 h, 2.5 Hz, transparent caseback, column wheel and Breguet balance-spring"
+    },
+    {
+      "id": "emmywatch-321",
+      "kind": "dataset",
+      "title": "EmmyWatch movement database: Omega 321",
+      "rights": "reference_only",
+      "ref": "https://www.emmywatch.com/db/movement/omega--321 - 27.5 mm diameter, 6.74 mm height, 17 jewels, 18,000 vph, 44 h (vintage)"
+    },
+    {
+      "id": "watchbase-moonwatch",
+      "kind": "dataset",
+      "title": "WatchBase: Omega Speedmaster Professional Moonwatch 3861 references",
+      "rights": "reference_only",
+      "ref": "https://watchbase.com/omega/speedmaster/310-30-42-50-04-001 - 42 mm asymmetrical case, 47.50 mm lug-to-lug, 13.18 mm, black anodised aluminium tachymeter bezel with dot over 90"
+    },
+    {
+      "id": "cosmo-registers",
+      "kind": "document",
+      "title": "Up Close with the Omega Speedmaster Moonwatch Professional",
+      "rights": "reference_only",
+      "ref": "https://cosmo.org/up-close-with-the-omega-speedmaster-moonwatch-professional/ - running seconds at 9, 30-minute counter at 3, 12-hour counter at 6"
+    },
+    {
+      "id": "wikipedia-speedmaster",
+      "kind": "document",
+      "title": "Wikipedia: Omega Speedmaster",
+      "rights": "reference_only",
+      "ref": "https://en.wikipedia.org/wiki/Omega_Speedmaster - calibre 321 used 1957-1968, triple-register layout, hesalite, asymmetric Professional case"
+    },
+    {
+      "id": "dial-photo",
+      "kind": "observation",
+      "title": "Reference photograph: straight-on dial of an Omega Speedmaster Professional (Wikimedia Commons)",
+      "rights": "reference_only",
+      "ref": "https://commons.wikimedia.org/wiki/File:Dial_of_Omega_Speedmaster_Professional.jpg - looked at and measured; not embedded"
+    },
+    {
+      "id": "front-photo",
+      "kind": "observation",
+      "title": "Reference photograph: Omega Speedmaster Professional, three-quarter front (Wikimedia Commons)",
+      "rights": "reference_only",
+      "ref": "https://commons.wikimedia.org/wiki/File:OMEGA-Speedmaster-Professional-Front.jpg - looked at and measured; not embedded"
+    },
+    {
+      "id": "movement-photo",
+      "kind": "observation",
+      "title": "Reference photograph: Omega calibre 321 chronograph movement (Wikimedia Commons)",
+      "rights": "reference_only",
+      "ref": "https://commons.wikimedia.org/wiki/File:Omega_Cal._321_Chronograph_movement.jpg - bridge layout, balance position; looked at and measured, not embedded"
+    },
+    {
+      "id": "side-photo",
+      "kind": "observation",
+      "title": "Reference photograph: side view of an Omega Speedmaster Professional (Wikimedia Commons)",
+      "rights": "reference_only",
+      "ref": "https://commons.wikimedia.org/wiki/File:Side_view_on_Omega_Speedmaster_Professional_(cropped_twice).jpg - case profile and crystal dome; looked at and measured, not embedded"
+    },
+    {
+      "id": "caseback-photo",
+      "kind": "observation",
+      "title": "Reference photograph: Speedmaster caseback (Wikimedia Commons)",
+      "rights": "reference_only",
+      "ref": "https://commons.wikimedia.org/wiki/File:Omega_MoonWatch_Back2r.jpg - caseback ring and transparent centre; looked at, not embedded"
+    }
+  ],
+  "facts": [
+    {
+      "key": "case.diameter",
+      "value": 0.042,
+      "unit": "m",
+      "certainty": "verified",
+      "source": "omega-moonwatch",
+      "note": "published case diameter, 42 mm"
+    },
+    {
+      "key": "case.thickness",
+      "value": 0.0138,
+      "unit": "m",
+      "certainty": "verified",
+      "source": "omega-moonwatch",
+      "note": "published thickness of the 3570.50.00 Moonwatch, 13.80 mm"
+    },
+    {
+      "key": "case.lug_to_lug",
+      "value": 0.0482,
+      "unit": "m",
+      "certainty": "verified",
+      "source": "omega-moonwatch",
+      "note": "published lug-to-lug, 48.20 mm"
+    },
+    {
+      "key": "case.lug_width",
+      "value": 0.02,
+      "unit": "m",
+      "certainty": "verified",
+      "source": "omega-moonwatch",
+      "note": "published between-lugs width, 20 mm"
+    },
+    {
+      "key": "bezel.feature",
+      "value": "tachymeter scale with dot over 90",
+      "certainty": "verified",
+      "source": "watchbase-moonwatch",
+      "note": "the bezel is an identifying feature of this reference"
+    },
+    {
+      "key": "crystal.material",
+      "value": "hesalite",
+      "certainty": "verified",
+      "source": "omega-moonwatch",
+      "note": "the classic Moonwatch crystal"
+    },
+    {
+      "key": "dial.registers",
+      "value": "running seconds at 9, 30-minute counter at 3, 12-hour counter at 6",
+      "certainty": "verified",
+      "source": "cosmo-registers",
+      "note": "triple-register chronograph layout"
+    },
+    {
+      "key": "movement.calibre",
+      "value": "Omega 321",
+      "certainty": "verified",
+      "source": "omega-321",
+      "note": "the column-wheel calibre used in the pre-1969 Moonwatch, reintroduced by Omega"
+    },
+    {
+      "key": "movement.frequency",
+      "value": 2.5,
+      "unit": "Hz",
+      "certainty": "verified",
+      "source": "omega-321",
+      "note": "18,000 vph"
+    },
+    {
+      "key": "movement.power_reserve",
+      "value": 55,
+      "unit": "h",
+      "certainty": "verified",
+      "source": "omega-321",
+      "note": "modern 321 rating; the vintage movement was listed at 44 h"
+    },
+    {
+      "key": "movement.jewels",
+      "value": 17,
+      "certainty": "verified",
+      "source": "emmywatch-321",
+      "note": "17 jewels"
+    },
+    {
+      "key": "movement.diameter",
+      "value": 0.0275,
+      "unit": "m",
+      "certainty": "verified",
+      "source": "emmywatch-321",
+      "note": "27.5 mm movement diameter"
+    },
+    {
+      "key": "movement.height",
+      "value": 0.00674,
+      "unit": "m",
+      "certainty": "verified",
+      "source": "emmywatch-321",
+      "note": "6.74 mm movement height"
+    },
+    {
+      "key": "movement.layout",
+      "value": "column wheel and Breguet balance-spring",
+      "certainty": "verified",
+      "source": "omega-321",
+      "note": "horizontal-clutch column-wheel chronograph"
+    },
+    {
+      "key": "dial.opening",
+      "value": 0.03,
+      "unit": "m",
+      "certainty": "inferred",
+      "source": "dial-photo",
+      "note": "measured from the straight-on dial photograph: the dial opening is about 0.71 of the 42 mm case"
+    },
+    {
+      "key": "dial.subdial_diameter",
+      "value": 0.0074,
+      "unit": "m",
+      "certainty": "inferred",
+      "source": "dial-photo",
+      "note": "measured from the dial photograph as about 0.245 of the dial opening"
+    },
+    {
+      "key": "dial.subdial_offset",
+      "value": 0.0076,
+      "unit": "m",
+      "certainty": "inferred",
+      "source": "dial-photo",
+      "note": "measured subdial centres at about 0.25 dial-opening diameters from the centre, at 3, 6 and 9"
+    },
+    {
+      "key": "hands.hour_length",
+      "value": 0.0103,
+      "unit": "m",
+      "certainty": "inferred",
+      "source": "dial-photo",
+      "note": "traced from the dial photograph as a fraction of the dial opening"
+    },
+    {
+      "key": "hands.minute_length",
+      "value": 0.0145,
+      "unit": "m",
+      "certainty": "inferred",
+      "source": "dial-photo",
+      "note": "traced from the dial photograph; reaches close to the minute track"
+    },
+    {
+      "key": "hands.chrono_length",
+      "value": 0.015,
+      "unit": "m",
+      "certainty": "inferred",
+      "source": "dial-photo",
+      "note": "traced from the dial photograph; the needle reaches the minute track"
+    },
+    {
+      "key": "hands.style",
+      "value": "lumed baton hour and minute hands, needle chronograph seconds with a lozenge",
+      "certainty": "inferred",
+      "source": "dial-photo",
+      "note": "traced from the straight-on dial photograph"
+    },
+    {
+      "key": "dial.markers",
+      "value": "applied baton hour markers with a split 12",
+      "certainty": "inferred",
+      "source": "dial-photo",
+      "note": "traced from the straight-on dial photograph: batons at every hour and two dots flanking the 12 o'clock marker"
+    },
+    {
+      "key": "balance.diameter",
+      "value": 0.0058,
+      "unit": "m",
+      "certainty": "inferred",
+      "source": "movement-photo",
+      "note": "measured across the balance rim in the calibre 321 photograph, about 0.21 of the movement diameter"
+    },
+    {
+      "key": "crystal.dome_height",
+      "value": 0.0028,
+      "unit": "m",
+      "certainty": "inferred",
+      "source": "side-photo",
+      "note": "measured from the side-profile photograph as a fraction of the 13.8 mm case thickness"
+    },
+    {
+      "key": "lug.shape",
+      "value": "twisted lyre lugs curving down from the case band",
+      "certainty": "inferred",
+      "source": "side-photo",
+      "note": "traced from the three-quarter and side photographs"
+    }
+  ],
+  "assets": [],
+  "parts": [
+    {
+      "id": "caseback-ring",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 0,
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.0146,
+            0.0
+          ],
+          [
+            0.0202,
+            0.0
+          ],
+          [
+            0.0208,
+            0.0007
+          ],
+          [
+            0.0208,
+            0.0022
+          ],
+          [
+            0.0146,
+            0.0022
+          ]
+        ],
+        "segments": 64,
+        "meridians": 16
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "basis": [
+        "case.diameter"
+      ],
+      "note": "caseback ring traced from the caseback photograph; 42 mm case"
+    },
+    {
+      "id": "caseback-glass",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 0,
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.0144,
+        "height": 0.0006,
+        "segments": 48
+      },
+      "at": [
+        0,
+        0.0006,
+        0
+      ],
+      "look": {
+        "fill": "glass",
+        "tone": "faint",
+        "alpha": 0.5
+      },
+      "basis": [
+        "case.diameter"
+      ],
+      "note": "sapphire exhibition window of the calibre 321 caseback"
+    },
+    {
+      "id": "caseback-rim",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 0,
+      "shape": {
+        "type": "torus",
+        "major": 0.0178,
+        "minor": 0.00035,
+        "segments": 64,
+        "sides": 6,
+        "rings": 4
+      },
+      "at": [
+        0,
+        0.00215,
+        0
+      ],
+      "basis": [
+        "case.diameter"
+      ],
+      "note": "engraved outer rim of the caseback"
+    },
+    {
+      "id": "case-band",
+      "role": "mass",
+      "certainty": "inferred",
+      "stage": 0,
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.0154,
+            0.0022
+          ],
+          [
+            0.0202,
+            0.0022
+          ],
+          [
+            0.021,
+            0.0032
+          ],
+          [
+            0.021,
+            0.0086
+          ],
+          [
+            0.02,
+            0.0096
+          ],
+          [
+            0.0154,
+            0.0096
+          ],
+          [
+            0.0152,
+            0.006
+          ]
+        ],
+        "segments": 64,
+        "meridians": 16
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "basis": [
+        "case.diameter",
+        "case.thickness"
+      ],
+      "note": "asymmetric case band; outer diameter 42 mm, band height measured from the side photograph"
+    },
+    {
+      "id": "lugs",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 0,
+      "shape": {
+        "type": "extrude",
+        "profile": [
+          [
+            -0.0168,
+            0.003
+          ],
+          [
+            -0.02,
+            0.0031
+          ],
+          [
+            -0.0233,
+            0.0039
+          ],
+          [
+            -0.0241,
+            0.0048
+          ],
+          [
+            -0.0228,
+            0.0061
+          ],
+          [
+            -0.0196,
+            0.0072
+          ],
+          [
+            -0.0168,
+            0.0075
+          ]
+        ],
+        "height": 0.0032,
+        "axis": "x",
+        "ribs": 0
+      },
+      "at": [
+        -0.0106,
+        0,
+        0
+      ],
+      "repeat": {
+        "count": 2,
+        "step": {
+          "at": [
+            0,
+            0,
+            0
+          ],
+          "rotate": [
+            0,
+            180,
+            0
+          ]
+        }
+      },
+      "mirror": "x",
+      "basis": [
+        "case.lug_to_lug",
+        "case.lug_width",
+        "lug.shape"
+      ],
+      "note": "twisted lugs traced from the side and three-quarter photographs; 48.2 mm lug-to-lug"
+    },
+    {
+      "id": "crown-tube",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 0,
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.0019,
+        "height": 0.0022,
+        "segments": 16,
+        "ribs": 2
+      },
+      "at": [
+        0.0204,
+        0.0064,
+        0
+      ],
+      "rotate": [
+        0,
+        0,
+        -90
+      ],
+      "basis": [
+        "case.diameter"
+      ],
+      "note": "crown tube at 3 o'clock"
+    },
+    {
+      "id": "crown",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 0,
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.0032,
+        "height": 0.0038,
+        "segments": 20,
+        "ribs": 16,
+        "rings": 2
+      },
+      "at": [
+        0.0222,
+        0.0064,
+        0
+      ],
+      "rotate": [
+        0,
+        0,
+        -90
+      ],
+      "basis": [
+        "case.diameter"
+      ],
+      "note": "knurled winding crown at 3 o'clock, traced from the front photograph"
+    },
+    {
+      "id": "pushers",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 0,
+      "shape": {
+        "type": "cone",
+        "radius_bottom": 0.0014,
+        "radius_top": 0.002,
+        "height": 0.0046,
+        "segments": 16,
+        "ribs": 2,
+        "rings": 1,
+        "caps": true
+      },
+      "at": [
+        0.0156,
+        0.0062,
+        -0.009
+      ],
+      "rotate": [
+        0,
+        30,
+        -90
+      ],
+      "mirror": "z",
+      "basis": [
+        "case.diameter"
+      ],
+      "note": "chronograph pushers at 2 and 4 o'clock"
+    },
+    {
+      "id": "pusher-caps",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 0,
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.0022,
+        "height": 0.001,
+        "segments": 16,
+        "ribs": 8,
+        "rings": 1
+      },
+      "at": [
+        0.019,
+        0.0062,
+        -0.011
+      ],
+      "rotate": [
+        0,
+        30,
+        -90
+      ],
+      "mirror": "z",
+      "basis": [
+        "case.diameter"
+      ],
+      "note": "pusher collars"
+    },
+    {
+      "id": "crown-guards",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 0,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.0022,
+          0.003,
+          0.0018
+        ]
+      },
+      "at": [
+        0.0192,
+        0.006,
+        -0.005
+      ],
+      "mirror": "z",
+      "basis": [
+        "case.diameter"
+      ],
+      "note": "crown guards of the asymmetric Professional case"
+    },
+    {
+      "id": "movement-ring",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 0,
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.01375,
+            0.0028
+          ],
+          [
+            0.0156,
+            0.0028
+          ],
+          [
+            0.0156,
+            0.004
+          ],
+          [
+            0.01375,
+            0.004
+          ]
+        ],
+        "segments": 64,
+        "meridians": 12
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "basis": [
+        "movement.diameter",
+        "case.diameter"
+      ],
+      "note": "movement spacer ring, 27.5 mm aperture"
+    },
+    {
+      "id": "mov-plate",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 1,
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.01375,
+        "height": 0.0036,
+        "segments": 48,
+        "ribs": 24,
+        "rings": 1
+      },
+      "at": [
+        0,
+        0.0018,
+        0
+      ],
+      "basis": [
+        "movement.diameter",
+        "movement.height"
+      ],
+      "note": "calibre 321 main plate, 27.5 mm across and 6.5 mm through the visible stack; movement shown bridge-side up for the exploded view"
+    },
+    {
+      "id": "mov-face",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 1,
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.01345,
+        "height": 0.00015,
+        "segments": 48
+      },
+      "at": [
+        0,
+        0.00542,
+        0
+      ],
+      "basis": [
+        "movement.diameter"
+      ],
+      "note": "main-plate face"
+    },
+    {
+      "id": "mov-ring-1",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 1,
+      "shape": {
+        "type": "torus",
+        "major": 0.004,
+        "minor": 0.0001,
+        "segments": 40,
+        "sides": 4,
+        "rings": 2
+      },
+      "at": [
+        0,
+        0.00548,
+        0
+      ],
+      "basis": [
+        "movement.diameter"
+      ],
+      "note": "perlage-like plate ring (decorative detail)"
+    },
+    {
+      "id": "mov-ring-2",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 1,
+      "shape": {
+        "type": "torus",
+        "major": 0.0072,
+        "minor": 0.0001,
+        "segments": 40,
+        "sides": 4,
+        "rings": 2
+      },
+      "at": [
+        0,
+        0.00548,
+        0
+      ],
+      "basis": [
+        "movement.diameter"
+      ],
+      "note": "perlage-like plate ring (decorative detail)"
+    },
+    {
+      "id": "mov-ring-3",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 1,
+      "shape": {
+        "type": "torus",
+        "major": 0.0104,
+        "minor": 0.0001,
+        "segments": 40,
+        "sides": 4,
+        "rings": 2
+      },
+      "at": [
+        0,
+        0.00548,
+        0
+      ],
+      "basis": [
+        "movement.diameter"
+      ],
+      "note": "perlage-like plate ring (decorative detail)"
+    },
+    {
+      "id": "chrono-bridge",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 1,
+      "shape": {
+        "type": "extrude",
+        "profile": [
+          [
+            -0.0125,
+            -0.0035
+          ],
+          [
+            -0.0118,
+            -0.0075
+          ],
+          [
+            -0.008,
+            -0.0105
+          ],
+          [
+            -0.003,
+            -0.0108
+          ],
+          [
+            -0.001,
+            -0.008
+          ],
+          [
+            -0.0025,
+            -0.005
+          ],
+          [
+            -0.001,
+            -0.001
+          ],
+          [
+            -0.004,
+            0.0025
+          ],
+          [
+            -0.0085,
+            0.0015
+          ],
+          [
+            -0.0105,
+            -0.001
+          ],
+          [
+            -0.0122,
+            0.0
+          ]
+        ],
+        "height": 0.0007,
+        "axis": "y",
+        "ribs": 0
+      },
+      "at": [
+        0,
+        0.0054,
+        0
+      ],
+      "look": {
+        "tone": "bright"
+      },
+      "basis": [
+        "movement.layout",
+        "movement.diameter"
+      ],
+      "note": "chronograph bridge over the column wheel, traced from the calibre 321 photograph"
+    },
+    {
+      "id": "train-bridge",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 1,
+      "shape": {
+        "type": "extrude",
+        "profile": [
+          [
+            0.0,
+            -0.011
+          ],
+          [
+            0.0048,
+            -0.0105
+          ],
+          [
+            0.0085,
+            -0.008
+          ],
+          [
+            0.01,
+            -0.004
+          ],
+          [
+            0.008,
+            -0.001
+          ],
+          [
+            0.005,
+            -0.002
+          ],
+          [
+            0.003,
+            -0.0055
+          ],
+          [
+            0.0,
+            -0.006
+          ]
+        ],
+        "height": 0.0007,
+        "axis": "y",
+        "ribs": 0
+      },
+      "at": [
+        0,
+        0.0054,
+        0
+      ],
+      "look": {
+        "tone": "bright"
+      },
+      "basis": [
+        "movement.layout",
+        "movement.diameter"
+      ],
+      "note": "going-train bridge, traced from the calibre 321 photograph"
+    },
+    {
+      "id": "balance-cock",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 1,
+      "shape": {
+        "type": "extrude",
+        "profile": [
+          [
+            0.0124,
+            0.0
+          ],
+          [
+            0.0122,
+            0.003
+          ],
+          [
+            0.01,
+            0.0042
+          ],
+          [
+            0.0083,
+            0.0038
+          ],
+          [
+            0.0083,
+            0.0022
+          ],
+          [
+            0.0096,
+            0.0014
+          ],
+          [
+            0.0112,
+            0.0012
+          ]
+        ],
+        "height": 0.0007,
+        "axis": "y",
+        "ribs": 0
+      },
+      "at": [
+        0,
+        0.0076,
+        0
+      ],
+      "look": {
+        "tone": "bright"
+      },
+      "basis": [
+        "movement.layout",
+        "balance.diameter"
+      ],
+      "note": "balance cock over the balance at about 3 o'clock, traced from the movement photograph"
+    },
+    {
+      "id": "barrel-wheel",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 1,
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.0036,
+        "height": 0.0006,
+        "segments": 28,
+        "ribs": 18,
+        "rings": 2
+      },
+      "at": [
+        -0.0035,
+        0.0061,
+        -0.006
+      ],
+      "basis": [
+        "movement.diameter"
+      ],
+      "note": "ratchet/barrel wheel, upper left of the movement"
+    },
+    {
+      "id": "center-wheel",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 1,
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.0025,
+        "height": 0.0005,
+        "segments": 24,
+        "ribs": 12,
+        "rings": 1
+      },
+      "at": [
+        0.0005,
+        0.0061,
+        0.001
+      ],
+      "basis": [
+        "movement.diameter"
+      ],
+      "note": "centre chronograph wheel"
+    },
+    {
+      "id": "third-wheel",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 1,
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.0018,
+        "height": 0.0005,
+        "segments": 22,
+        "ribs": 10
+      },
+      "at": [
+        0.0045,
+        0.0061,
+        0.007
+      ],
+      "basis": [
+        "movement.diameter"
+      ],
+      "note": "third wheel"
+    },
+    {
+      "id": "fourth-wheel",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 1,
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.0015,
+        "height": 0.0005,
+        "segments": 20,
+        "ribs": 8
+      },
+      "at": [
+        0.0018,
+        0.0061,
+        0.0048
+      ],
+      "basis": [
+        "movement.diameter"
+      ],
+      "note": "fourth wheel"
+    },
+    {
+      "id": "escape-wheel",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 1,
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.0012,
+        "height": 0.0004,
+        "segments": 16,
+        "ribs": 8
+      },
+      "at": [
+        0.004,
+        0.0061,
+        0.0028
+      ],
+      "basis": [
+        "movement.diameter"
+      ],
+      "note": "escape wheel beside the balance"
+    },
+    {
+      "id": "column-wheel",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 1,
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.0018,
+        "height": 0.0008,
+        "segments": 18,
+        "ribs": 8,
+        "rings": 1
+      },
+      "at": [
+        -0.0078,
+        0.0062,
+        -0.001
+      ],
+      "basis": [
+        "movement.layout"
+      ],
+      "note": "column wheel, the 321's signature chronograph control"
+    },
+    {
+      "id": "balance-rim",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 1,
+      "shape": {
+        "type": "torus",
+        "major": 0.0029,
+        "minor": 0.00028,
+        "segments": 48,
+        "sides": 8,
+        "rings": 8
+      },
+      "at": [
+        0.0083,
+        0.007,
+        0.0018
+      ],
+      "motion": {
+        "type": "swing",
+        "axis": [
+          0,
+          1,
+          0
+        ],
+        "pivot": [
+          0.0083,
+          0.007,
+          0.0018
+        ],
+        "degrees": 42,
+        "period": 0.8
+      },
+      "basis": [
+        "balance.diameter"
+      ],
+      "note": "balance rim, 5.8 mm across, measured in the calibre 321 photograph"
+    },
+    {
+      "id": "balance-spokes",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 1,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.0026,
+          0.00022,
+          0.00035
+        ]
+      },
+      "at": [
+        0.0096,
+        0.007,
+        0.0018
+      ],
+      "repeat": {
+        "count": 3,
+        "radial": {
+          "axis": "y",
+          "center": [
+            0.0083,
+            0.007,
+            0.0018
+          ],
+          "span": 360
+        }
+      },
+      "motion": {
+        "type": "swing",
+        "axis": [
+          0,
+          1,
+          0
+        ],
+        "pivot": [
+          0.0083,
+          0.007,
+          0.0018
+        ],
+        "degrees": 42,
+        "period": 0.8
+      },
+      "basis": [
+        "balance.diameter"
+      ],
+      "note": "three balance spokes"
+    },
+    {
+      "id": "balance-hub",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 1,
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.0006,
+        "height": 0.0005,
+        "segments": 16,
+        "ribs": 4
+      },
+      "at": [
+        0.0083,
+        0.0068,
+        0.0018
+      ],
+      "motion": {
+        "type": "swing",
+        "axis": [
+          0,
+          1,
+          0
+        ],
+        "pivot": [
+          0.0083,
+          0.007,
+          0.0018
+        ],
+        "degrees": 42,
+        "period": 0.8
+      },
+      "basis": [
+        "balance.diameter"
+      ],
+      "note": "balance hub"
+    },
+    {
+      "id": "balance-marker",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 1,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.0008,
+          0.0004,
+          0.0006
+        ]
+      },
+      "at": [
+        0.0111,
+        0.007,
+        0.0018
+      ],
+      "motion": {
+        "type": "swing",
+        "axis": [
+          0,
+          1,
+          0
+        ],
+        "pivot": [
+          0.0083,
+          0.007,
+          0.0018
+        ],
+        "degrees": 42,
+        "period": 0.8
+      },
+      "basis": [
+        "balance.diameter"
+      ],
+      "note": "timing dot on the rim; makes the oscillation legible"
+    },
+    {
+      "id": "hairspring",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 1,
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.0007,
+            0.0,
+            0.0
+          ],
+          [
+            0.0006923570243823024,
+            0.0,
+            0.00018801400743248824
+          ],
+          [
+            0.0006339241015676642,
+            0.0,
+            0.0003717027828944087
+          ],
+          [
+            0.0005265587536514666,
+            0.0,
+            0.0005372908955356018
+          ],
+          [
+            0.0003758618949214432,
+            0.0,
+            0.0006717172459348146
+          ],
+          [
+            0.0001909194116528434,
+            0.0,
+            0.0007636519421943586
+          ],
+          [
+            -1.623173885311443e-05,
+            0.0,
+            0.0008044234097755487
+          ],
+          [
+            -0.00023138266433498581,
+            0.0,
+            0.0007887814831241476
+          ],
+          [
+            -0.000439126798194781,
+            0.0,
+            0.0007154321683219141
+          ],
+          [
+            -0.0006239625078285885,
+            0.0,
+            0.0005872949693555208
+          ],
+          [
+            -0.0007714451826654173,
+            0.0,
+            0.0004114531263059621
+          ],
+          [
+            -0.0008693034811581815,
+            0.0,
+            0.00019878945747856132
+          ],
+          [
+            -0.0009084342619400177,
+            0.0,
+            -3.667589400017178e-05
+          ],
+          [
+            -0.0008836970657074973,
+            0.0,
+            -0.00027870639962364904
+          ],
+          [
+            -0.0007944415573489783,
+            0.0,
+            -0.0005099685261928307
+          ],
+          [
+            -0.0006447193082927731,
+            0.0,
+            -0.0007132724001663908
+          ],
+          [
+            -0.00044315348949484717,
+            0.0,
+            -0.0008728450026222257
+          ],
+          [
+            -0.00020246489601210462,
+            0.0,
+            -0.0009755418920894249
+          ],
+          [
+            6.13215679363405e-05,
+            0.0,
+            -0.0010119051235585924
+          ],
+          [
+            0.00032994116393564126,
+            0.0,
+            -0.0009769836905055929
+          ],
+          [
+            0.0005841538665552269,
+            0.0,
+            -0.0008708480037938204
+          ],
+          [
+            0.0008051216407376037,
+            0.0,
+            -0.0006987506740205707
+          ],
+          [
+            0.0009757999129830232,
+            0.0,
+            -0.0004709107759552598
+          ],
+          [
+            0.0010822407515076865,
+            0.0,
+            -0.00020192609063695555
+          ],
+          [
+            0.0011147088507782858,
+            0.0,
+            9.015443677891987e-05
+          ],
+          [
+            0.0010685224555599267,
+            0.0,
+            0.00038503967790893705
+          ],
+          [
+            0.000944549230142163,
+            0.0,
+            0.0006616059125481589
+          ],
+          [
+            0.0007493106253770238,
+            0.0,
+            0.0008994091123698204
+          ],
+          [
+            0.0004946759136484829,
+            0.0,
+            0.0010801917103754738
+          ],
+          [
+            0.00019715680185393748,
+            0.0,
+            0.0011892730994758087
+          ],
+          [
+            -0.00012315675784472038,
+            0.0,
+            0.0012167186751885586
+          ],
+          [
+            -0.0004439514621824055,
+            0.0,
+            0.0011581957199187116
+          ],
+          [
+            -0.0007422450013536365,
+            0.0,
+            0.0010154450168222257
+          ],
+          [
+            -0.0009960315796282992,
+            0.0,
+            0.0007963234313854364
+          ],
+          [
+            -0.0011859008600451054,
+            0.0,
+            0.0005144030023789803
+          ],
+          [
+            -0.0012965115252759822,
+            0.0,
+            0.0001881442005904591
+          ],
+          [
+            -0.001317808289986835,
+            0.0,
+            -0.00016030737931685133
+          ],
+          [
+            -0.0012458871842383865,
+            0.0,
+            -0.0005066228693607629
+          ],
+          [
+            -0.0010834372715793602,
+            0.0,
+            -0.0008259887660882084
+          ],
+          [
+            -0.0008397161245276007,
+            0.0,
+            -0.0010948837572350763
+          ],
+          [
+            -0.0005300493472227734,
+            0.0,
+            -0.0012928065758690674
+          ],
+          [
+            -0.00017487887943434132,
+            0.0,
+            -0.001403828253397565
+          ],
+          [
+            0.0002015817519959843,
+            0.0,
+            -0.001417851935899766
+          ],
+          [
+            0.000572997117926759,
+            0.0,
+            -0.0013314819706020313
+          ],
+          [
+            0.0009127521894949578,
+            0.0,
+            -0.0011484300975836948
+          ],
+          [
+            0.001195858379769939,
+            0.0,
+            -0.0008794185523551239
+          ],
+          [
+            0.0014007869011703339,
+            0.0,
+            -0.000541575490015519
+          ],
+          [
+            0.0015110952297877212,
+            0.0,
+            -0.00015735486178519863
+          ],
+          [
+            0.0015167244868112301,
+            0.0,
+            0.00024695194313004
+          ],
+          [
+            0.0014148667015089953,
+            0.0,
+            0.000643014328081835
+          ],
+          [
+            0.0012103298602316212,
+            0.0,
+            0.001002447659278681
+          ],
+          [
+            0.000915363427408892,
+            0.0,
+            0.0012988462726139344
+          ],
+          [
+            0.0005489452388817574,
+            0.0,
+            0.0015097187902865608
+          ],
+          [
+            0.00013556960891751113,
+            0.0,
+            0.0016181842083158391
+          ],
+          [
+            -0.00029638665231507884,
+            0.0,
+            0.0016143015350481903
+          ],
+          [
+            -0.0007166115594955427,
+            0.0,
+            0.0014959295779904433
+          ],
+          [
+            -0.0010949850250533402,
+            0.0,
+            0.0012690452526025978
+          ],
+          [
+            -0.001403736424095474,
+            0.0,
+            0.0009474863754176099
+          ],
+          [
+            -0.0016194781908474244,
+            0.0,
+            0.0005521256957877749
+          ],
+          [
+            -0.001724966837402556,
+            0.0,
+            0.00010952402495057735
+          ],
+          [
+            -0.001710459476275715,
+            0.0,
+            -0.00034985122945913283
+          ],
+          [
+            -0.001574560456806041,
+            0.0,
+            -0.0007937228509428576
+          ],
+          [
+            -0.0013244873595335334,
+            0.0,
+            -0.001190271656869885
+          ],
+          [
+            -0.000975725981747374,
+            0.0,
+            -0.0015104160587983498
+          ],
+          [
+            -0.0005510872821017173,
+            0.0,
+            -0.0017299401267138182
+          ],
+          [
+            -7.922245972177937e-05,
+            0.0,
+            -0.0018313147467641144
+          ],
+          [
+            0.0004073076947994692,
+            0.0,
+            -0.001805075593952664
+          ],
+          [
+            0.0008742792618075854,
+            0.0,
+            -0.0016506509266774369
+          ],
+          [
+            0.0012882125052917862,
+            0.0,
+            -0.0013765697202736862
+          ],
+          [
+            0.0016187707119904007,
+            0.0,
+            -0.001000023836075101
+          ],
+          [
+            0.001840978781531971,
+            0.0,
+            -0.0005458037621455369
+          ],
+          [
+            0.0019370996342226966,
+            0.0,
+            -4.4672709560632386e-05
+          ],
+          [
+            0.0018980281432997655,
+            0.0,
+            0.0004687147609627949
+          ],
+          [
+            0.001724094383514739,
+            0.0,
+            0.0009582089154289917
+          ],
+          [
+            0.0014252083896838142,
+            0.0,
+            0.0013887101629846996
+          ],
+          [
+            0.001020324575259624,
+            0.0,
+            0.0017286843051309208
+          ],
+          [
+            0.0005362522647245217,
+            0.0,
+            0.0019524675828551548
+          ],
+          [
+            5.886015962275767e-06,
+            0.0,
+            0.0020421933525333453
+          ],
+          [
+            -0.0005340278570567102,
+            0.0,
+            0.0019891964347320532
+          ],
+          [
+            -0.0010454370442677596,
+            0.0,
+            0.0017947861045927236
+          ],
+          [
+            -0.001491664927785858,
+            0.0,
+            0.0014703219979440973
+          ],
+          [
+            -0.00184003922241428,
+            0.0,
+            0.0010365759243852713
+          ],
+          [
+            -0.0020642792867853524,
+            0.0,
+            0.0005224133026212474
+          ],
+          [
+            -0.002146467996178028,
+            0.0,
+            -3.7122937839765775e-05
+          ],
+          [
+            -0.0020784609167079273,
+            0.0,
+            -0.0006031991547796223
+          ],
+          [
+            -0.0018626233216340027,
+            0.0,
+            -0.0011358860368665036
+          ],
+          [
+            -0.001511831808736103,
+            0.0,
+            -0.001596974867218019
+          ],
+          [
+            -0.0010487287359535924,
+            0.0,
+            -0.0019527163883067387
+          ],
+          [
+            -0.000504270790041834,
+            0.0,
+            -0.002176286063086952
+          ],
+          [
+            8.433603240072991e-05,
+            0.0,
+            -0.00224979598807744
+          ],
+          [
+            0.0006761775965352868,
+            0.0,
+            -0.0021657032579473737
+          ],
+          [
+            0.0012294754865788786,
+            0.0,
+            -0.0019275052927570748
+          ],
+          [
+            0.001704535884411913,
+            0.0,
+            -0.0015496617758649603
+          ],
+          [
+            0.0020665953460327433,
+            0.0,
+            -0.0010567370272001118
+          ],
+          [
+            0.0022883595807242536,
+            0.0,
+            -0.00048181205800359355
+          ],
+          [
+            0.0023520501661711286,
+            0.0,
+            0.00013573171968946543
+          ],
+          [
+            0.0022508064289722437,
+            0.0,
+            0.0007529089255369496
+          ],
+          [
+            0.0019893333732476596,
+            0.0,
+            0.00132612224204057
+          ],
+          [
+            0.0015837385982886067,
+            0.0,
+            0.0018142417854005097
+          ],
+          [
+            0.0010605580155137765,
+            0.0,
+            0.002181554336966599
+          ],
+          [
+            0.0004550278676540929,
+            0.0,
+            0.0024003710937743595
+          ],
+          [
+            -0.00019128503280789057,
+            0.0,
+            0.002453103869816607
+          ],
+          [
+            -0.0008333357178851622,
+            0.0,
+            0.002333654782921775
+          ],
+          [
+            -0.0014257404593543245,
+            0.0,
+            0.0020480110851124407
+          ],
+          [
+            -0.0019259843477474504,
+            0.0,
+            0.001613991773522017
+          ],
+          [
+            -0.002297470380884804,
+            0.0,
+            0.0010601521519379613
+          ],
+          [
+            -0.002512191527666728,
+            0.0,
+            0.0004239124215130359
+          ],
+          [
+            -0.002552831025958188,
+            0.0,
+            -0.00025096759780062486
+          ],
+          [
+            -0.0024141341355970055,
+            0.0,
+            -0.0009173974166019909
+          ],
+          [
+            -0.0021034441853748703,
+            0.0,
+            -0.0015282416559604204
+          ]
+        ],
+        "smooth": true,
+        "closed": false
+      },
+      "at": [
+        0.0083,
+        0.0066,
+        0.0018
+      ],
+      "look": {
+        "tone": "faint",
+        "weight": 0.6
+      },
+      "basis": [
+        "movement.layout",
+        "balance.diameter"
+      ],
+      "note": "Breguet hairspring spiral, drawn as a hairline"
+    },
+    {
+      "id": "balance-jewel",
+      "role": "data",
+      "certainty": "inferred",
+      "stage": 1,
+      "shape": {
+        "type": "marker",
+        "sprite": "ring",
+        "size_px": 6
+      },
+      "at": [
+        0.0083,
+        0.0084,
+        0.0018
+      ],
+      "look": {
+        "glow": 0.65
+      },
+      "basis": [
+        "balance.diameter"
+      ],
+      "note": "balance-cock jewel, a point accent"
+    },
+    {
+      "id": "column-jewel",
+      "role": "data",
+      "certainty": "inferred",
+      "stage": 1,
+      "shape": {
+        "type": "marker",
+        "sprite": "ring",
+        "size_px": 4
+      },
+      "at": [
+        -0.0078,
+        0.0071,
+        -0.001
+      ],
+      "look": {
+        "glow": 0.5
+      },
+      "basis": [
+        "movement.layout"
+      ],
+      "note": "column-wheel jewel accent"
+    },
+    {
+      "id": "wheel-jewel-1",
+      "role": "data",
+      "certainty": "inferred",
+      "stage": 1,
+      "shape": {
+        "type": "marker",
+        "sprite": "disc",
+        "size_px": 3
+      },
+      "at": [
+        -0.0035,
+        0.0067,
+        -0.006
+      ],
+      "look": {
+        "glow": 0.4
+      },
+      "basis": [
+        "movement.diameter"
+      ],
+      "note": "barrel jewel accent"
+    },
+    {
+      "id": "wheel-jewel-2",
+      "role": "data",
+      "certainty": "inferred",
+      "stage": 1,
+      "shape": {
+        "type": "marker",
+        "sprite": "disc",
+        "size_px": 3
+      },
+      "at": [
+        0.0005,
+        0.0066,
+        0.001
+      ],
+      "look": {
+        "glow": 0.4
+      },
+      "basis": [
+        "movement.diameter"
+      ],
+      "note": "centre-wheel jewel accent"
+    },
+    {
+      "id": "wheel-jewel-3",
+      "role": "data",
+      "certainty": "inferred",
+      "stage": 1,
+      "shape": {
+        "type": "marker",
+        "sprite": "disc",
+        "size_px": 3
+      },
+      "at": [
+        0.0045,
+        0.0066,
+        0.007
+      ],
+      "look": {
+        "glow": 0.4
+      },
+      "basis": [
+        "movement.diameter"
+      ],
+      "note": "third-wheel jewel accent"
+    },
+    {
+      "id": "screw-heads",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 1,
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.0007,
+        "height": 0.00025,
+        "segments": 12,
+        "ribs": 2
+      },
+      "at": [
+        0,
+        0.00615,
+        -0.0098
+      ],
+      "repeat": {
+        "count": 6,
+        "radial": {
+          "axis": "y",
+          "center": [
+            0,
+            0,
+            0
+          ],
+          "span": 360
+        }
+      },
+      "basis": [
+        "movement.diameter"
+      ],
+      "note": "movement screws around the plate"
+    },
+    {
+      "id": "dial",
+      "role": "mass",
+      "certainty": "inferred",
+      "stage": 2,
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.015,
+        "height": 0.0006,
+        "segments": 64,
+        "rings": 1
+      },
+      "at": [
+        0,
+        0.0098,
+        0
+      ],
+      "basis": [
+        "dial.opening",
+        "dial.registers"
+      ],
+      "note": "black dial; opening 30 mm, measured from the straight-on dial photograph"
+    },
+    {
+      "id": "dial-chapter",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 2,
+      "shape": {
+        "type": "torus",
+        "major": 0.0147,
+        "minor": 0.00016,
+        "segments": 64,
+        "sides": 6,
+        "rings": 3
+      },
+      "at": [
+        0,
+        0.0104,
+        0
+      ],
+      "basis": [
+        "dial.opening"
+      ],
+      "note": "chapter ring at the dial edge"
+    },
+    {
+      "id": "dial-ticks",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 2,
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0,
+            0,
+            -0.0136
+          ],
+          [
+            0,
+            0,
+            -0.0148
+          ]
+        ],
+        "smooth": false,
+        "closed": false
+      },
+      "at": [
+        0,
+        0.01046,
+        0
+      ],
+      "repeat": {
+        "count": 60,
+        "radial": {
+          "axis": "y",
+          "center": [
+            0,
+            0,
+            0
+          ],
+          "span": 360
+        }
+      },
+      "basis": [
+        "dial.opening"
+      ],
+      "note": "60 printed minute ticks, measured from the dial photograph"
+    },
+    {
+      "id": "dial-ticks-major",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 2,
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0,
+            0,
+            -0.0132
+          ],
+          [
+            0,
+            0,
+            -0.0148
+          ]
+        ],
+        "smooth": false,
+        "closed": false
+      },
+      "at": [
+        0,
+        0.01047,
+        0
+      ],
+      "repeat": {
+        "count": 12,
+        "radial": {
+          "axis": "y",
+          "center": [
+            0,
+            0,
+            0
+          ],
+          "span": 360
+        }
+      },
+      "basis": [
+        "dial.opening"
+      ],
+      "note": "longer five-minute ticks"
+    },
+    {
+      "id": "hour-markers",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 2,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.0009,
+          0.00035,
+          0.0024
+        ]
+      },
+      "at": [
+        0,
+        0.01058,
+        -0.0128
+      ],
+      "repeat": {
+        "count": 12,
+        "radial": {
+          "axis": "y",
+          "center": [
+            0,
+            0,
+            0
+          ],
+          "span": 360
+        }
+      },
+      "basis": [
+        "dial.markers",
+        "dial.opening"
+      ],
+      "note": "applied baton hour markers"
+    },
+    {
+      "id": "twelve-dots",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 2,
+      "shape": {
+        "type": "sphere",
+        "radius": 0.0008,
+        "lat": 8,
+        "lon": 12
+      },
+      "at": [
+        -0.0022,
+        0.01055,
+        -0.0129
+      ],
+      "mirror": "x",
+      "basis": [
+        "dial.markers"
+      ],
+      "note": "the two dots flanking the 12 o'clock marker"
+    },
+    {
+      "id": "subdial-ring-3",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 2,
+      "shape": {
+        "type": "torus",
+        "major": 0.0037,
+        "minor": 0.0001,
+        "segments": 32,
+        "sides": 6,
+        "rings": 3
+      },
+      "at": [
+        0.0076,
+        0.01042,
+        0.0
+      ],
+      "basis": [
+        "dial.subdial_diameter",
+        "dial.subdial_offset"
+      ],
+      "note": "recessed register outline, measured from the dial photograph"
+    },
+    {
+      "id": "subdial-hand-3",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 2,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.0004,
+          0.00012,
+          0.0026
+        ]
+      },
+      "at": [
+        0.0076,
+        0.01052,
+        0.0
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "basis": [
+        "dial.subdial_diameter"
+      ],
+      "note": "small register hand"
+    },
+    {
+      "id": "subdial-hub-3",
+      "role": "data",
+      "certainty": "inferred",
+      "stage": 2,
+      "shape": {
+        "type": "marker",
+        "sprite": "ring",
+        "size_px": 3
+      },
+      "at": [
+        0.0076,
+        0.01055,
+        0.0
+      ],
+      "look": {
+        "glow": 0.35
+      },
+      "basis": [
+        "dial.subdial_diameter"
+      ],
+      "note": "register-hand hub accent"
+    },
+    {
+      "id": "subdial-ring-6",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 2,
+      "shape": {
+        "type": "torus",
+        "major": 0.0037,
+        "minor": 0.0001,
+        "segments": 32,
+        "sides": 6,
+        "rings": 3
+      },
+      "at": [
+        0.0,
+        0.01042,
+        0.0076
+      ],
+      "basis": [
+        "dial.subdial_diameter",
+        "dial.subdial_offset"
+      ],
+      "note": "recessed register outline, measured from the dial photograph"
+    },
+    {
+      "id": "subdial-hand-6",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 2,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.0004,
+          0.00012,
+          0.0026
+        ]
+      },
+      "at": [
+        0.0,
+        0.01052,
+        0.0076
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "basis": [
+        "dial.subdial_diameter"
+      ],
+      "note": "small register hand"
+    },
+    {
+      "id": "subdial-hub-6",
+      "role": "data",
+      "certainty": "inferred",
+      "stage": 2,
+      "shape": {
+        "type": "marker",
+        "sprite": "ring",
+        "size_px": 3
+      },
+      "at": [
+        0.0,
+        0.01055,
+        0.0076
+      ],
+      "look": {
+        "glow": 0.35
+      },
+      "basis": [
+        "dial.subdial_diameter"
+      ],
+      "note": "register-hand hub accent"
+    },
+    {
+      "id": "subdial-ring-9",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 2,
+      "shape": {
+        "type": "torus",
+        "major": 0.0037,
+        "minor": 0.0001,
+        "segments": 32,
+        "sides": 6,
+        "rings": 3
+      },
+      "at": [
+        -0.0076,
+        0.01042,
+        0.0
+      ],
+      "basis": [
+        "dial.subdial_diameter",
+        "dial.subdial_offset"
+      ],
+      "note": "recessed register outline, measured from the dial photograph"
+    },
+    {
+      "id": "subdial-hand-9",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 2,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.0004,
+          0.00012,
+          0.0026
+        ]
+      },
+      "at": [
+        -0.0076,
+        0.01052,
+        0.0
+      ],
+      "rotate": [
+        0,
+        42,
+        0
+      ],
+      "basis": [
+        "dial.subdial_diameter"
+      ],
+      "note": "small register hand"
+    },
+    {
+      "id": "subdial-hub-9",
+      "role": "data",
+      "certainty": "inferred",
+      "stage": 2,
+      "shape": {
+        "type": "marker",
+        "sprite": "ring",
+        "size_px": 3
+      },
+      "at": [
+        -0.0076,
+        0.01055,
+        0.0
+      ],
+      "look": {
+        "glow": 0.35
+      },
+      "basis": [
+        "dial.subdial_diameter"
+      ],
+      "note": "register-hand hub accent"
+    },
+    {
+      "id": "hour-hand",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 3,
+      "shape": {
+        "type": "extrude",
+        "profile": [
+          [
+            -0.0009,
+            0.0018
+          ],
+          [
+            -0.0009,
+            -0.0042
+          ],
+          [
+            -0.001,
+            -0.0056
+          ],
+          [
+            -0.0006,
+            -0.0086
+          ],
+          [
+            0.0,
+            -0.0103
+          ],
+          [
+            0.0006,
+            -0.0086
+          ],
+          [
+            0.001,
+            -0.0056
+          ],
+          [
+            0.0009,
+            -0.0042
+          ],
+          [
+            0.0009,
+            0.0018
+          ]
+        ],
+        "height": 0.00022,
+        "axis": "y",
+        "ribs": 0
+      },
+      "at": [
+        0,
+        0.01062,
+        0
+      ],
+      "rotate": [
+        0,
+        60,
+        0
+      ],
+      "look": {
+        "tone": "bright"
+      },
+      "basis": [
+        "hands.hour_length",
+        "hands.style"
+      ],
+      "note": "broad lumed hour hand pointing to 10 o'clock"
+    },
+    {
+      "id": "hour-lume",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 3,
+      "shape": {
+        "type": "extrude",
+        "profile": [
+          [
+            -0.00045,
+            -0.003
+          ],
+          [
+            -0.0005,
+            -0.0055
+          ],
+          [
+            -0.00025,
+            -0.0087
+          ],
+          [
+            0.0,
+            -0.0099
+          ],
+          [
+            0.00025,
+            -0.0087
+          ],
+          [
+            0.0005,
+            -0.0055
+          ],
+          [
+            0.00045,
+            -0.003
+          ]
+        ],
+        "height": 0.0001,
+        "axis": "y",
+        "ribs": 0
+      },
+      "at": [
+        0,
+        0.01082,
+        0
+      ],
+      "rotate": [
+        0,
+        60,
+        0
+      ],
+      "look": {
+        "tone": "bright",
+        "glow": 0.25
+      },
+      "basis": [
+        "hands.style"
+      ],
+      "note": "luminous inlay of the hour hand"
+    },
+    {
+      "id": "minute-hand",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 3,
+      "shape": {
+        "type": "extrude",
+        "profile": [
+          [
+            -0.0007,
+            0.0022
+          ],
+          [
+            -0.0007,
+            -0.005
+          ],
+          [
+            -0.0008,
+            -0.007
+          ],
+          [
+            -0.00045,
+            -0.0122
+          ],
+          [
+            0.0,
+            -0.0145
+          ],
+          [
+            0.00045,
+            -0.0122
+          ],
+          [
+            0.0008,
+            -0.007
+          ],
+          [
+            0.0007,
+            -0.005
+          ],
+          [
+            0.0007,
+            0.0022
+          ]
+        ],
+        "height": 0.00022,
+        "axis": "y",
+        "ribs": 0
+      },
+      "at": [
+        0,
+        0.01062,
+        0
+      ],
+      "rotate": [
+        0,
+        -60,
+        0
+      ],
+      "look": {
+        "tone": "bright"
+      },
+      "basis": [
+        "hands.minute_length",
+        "hands.style"
+      ],
+      "note": "minute hand at 2 o'clock, reaching the minute track"
+    },
+    {
+      "id": "minute-lume",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 3,
+      "shape": {
+        "type": "extrude",
+        "profile": [
+          [
+            -0.00035,
+            -0.0045
+          ],
+          [
+            -0.0004,
+            -0.007
+          ],
+          [
+            -0.00025,
+            -0.012
+          ],
+          [
+            0.0,
+            -0.0137
+          ],
+          [
+            0.00025,
+            -0.012
+          ],
+          [
+            0.0004,
+            -0.007
+          ],
+          [
+            0.00035,
+            -0.0045
+          ]
+        ],
+        "height": 0.0001,
+        "axis": "y",
+        "ribs": 0
+      },
+      "at": [
+        0,
+        0.01082,
+        0
+      ],
+      "rotate": [
+        0,
+        -60,
+        0
+      ],
+      "look": {
+        "tone": "bright",
+        "glow": 0.25
+      },
+      "basis": [
+        "hands.style"
+      ],
+      "note": "luminous inlay of the minute hand"
+    },
+    {
+      "id": "chrono-hand",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 3,
+      "shape": {
+        "type": "extrude",
+        "profile": [
+          [
+            -0.00018,
+            0.0038
+          ],
+          [
+            -0.00022,
+            0.0005
+          ],
+          [
+            -0.00018,
+            -0.009
+          ],
+          [
+            -0.00085,
+            -0.01
+          ],
+          [
+            -0.00025,
+            -0.011
+          ],
+          [
+            0.0,
+            -0.015
+          ],
+          [
+            0.00025,
+            -0.011
+          ],
+          [
+            0.00085,
+            -0.01
+          ],
+          [
+            0.00018,
+            -0.009
+          ],
+          [
+            0.00022,
+            0.0005
+          ],
+          [
+            0.00018,
+            0.0038
+          ]
+        ],
+        "height": 0.00016,
+        "axis": "y",
+        "ribs": 0
+      },
+      "at": [
+        0,
+        0.01068,
+        0
+      ],
+      "look": {
+        "tone": "bright"
+      },
+      "basis": [
+        "hands.chrono_length",
+        "hands.style"
+      ],
+      "note": "central chronograph seconds, reset at 12, with its lozenge"
+    },
+    {
+      "id": "hand-cap",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 3,
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.0011,
+        "height": 0.0003,
+        "segments": 20,
+        "ribs": 6
+      },
+      "at": [
+        0,
+        0.01066,
+        0
+      ],
+      "basis": [
+        "hands.style"
+      ],
+      "note": "central hand boss"
+    },
+    {
+      "id": "bezel",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 4,
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.0152,
+            0.0094
+          ],
+          [
+            0.02,
+            0.0094
+          ],
+          [
+            0.021,
+            0.01
+          ],
+          [
+            0.0208,
+            0.0112
+          ],
+          [
+            0.0196,
+            0.0118
+          ],
+          [
+            0.0152,
+            0.0118
+          ]
+        ],
+        "segments": 64,
+        "meridians": 16
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "basis": [
+        "bezel.feature",
+        "case.diameter",
+        "case.thickness"
+      ],
+      "note": "tachymeter bezel over the case, 42 mm across"
+    },
+    {
+      "id": "bezel-insert",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 4,
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.0154,
+            0.0118
+          ],
+          [
+            0.0196,
+            0.0118
+          ],
+          [
+            0.0196,
+            0.012
+          ],
+          [
+            0.0154,
+            0.012
+          ]
+        ],
+        "segments": 64,
+        "meridians": 4
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "basis": [
+        "bezel.feature"
+      ],
+      "note": "flat tachymeter insert ring"
+    },
+    {
+      "id": "bezel-ticks",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 4,
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0,
+            0,
+            -0.0169
+          ],
+          [
+            0,
+            0,
+            -0.0181
+          ]
+        ],
+        "smooth": false,
+        "closed": false
+      },
+      "at": [
+        0,
+        0.01215,
+        0
+      ],
+      "repeat": {
+        "count": 60,
+        "radial": {
+          "axis": "y",
+          "center": [
+            0,
+            0,
+            0
+          ],
+          "span": 360
+        }
+      },
+      "basis": [
+        "bezel.feature"
+      ],
+      "note": "60 tachymeter graduations"
+    },
+    {
+      "id": "bezel-ticks-major",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 4,
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0,
+            0,
+            -0.0166
+          ],
+          [
+            0,
+            0,
+            -0.0184
+          ]
+        ],
+        "smooth": false,
+        "closed": false
+      },
+      "at": [
+        0,
+        0.01216,
+        0
+      ],
+      "repeat": {
+        "count": 12,
+        "radial": {
+          "axis": "y",
+          "center": [
+            0,
+            0,
+            0
+          ],
+          "span": 360
+        }
+      },
+      "basis": [
+        "bezel.feature"
+      ],
+      "note": "major tachymeter graduations at the fifths"
+    },
+    {
+      "id": "dot-over-90",
+      "role": "data",
+      "certainty": "inferred",
+      "stage": 4,
+      "shape": {
+        "type": "marker",
+        "sprite": "disc",
+        "size_px": 5
+      },
+      "at": [
+        0,
+        0.0122,
+        -0.0154
+      ],
+      "look": {
+        "glow": 0.55
+      },
+      "basis": [
+        "bezel.feature"
+      ],
+      "note": "the dot over 90 at twelve, an identifying Moonwatch detail"
+    },
+    {
+      "id": "crystal",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 5,
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.0,
+            0.0138
+          ],
+          [
+            0.004,
+            0.0136
+          ],
+          [
+            0.008,
+            0.0131
+          ],
+          [
+            0.0115,
+            0.0122
+          ],
+          [
+            0.0138,
+            0.0114
+          ],
+          [
+            0.015,
+            0.011
+          ]
+        ],
+        "segments": 64,
+        "meridians": 16
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "fill": "glass",
+        "tone": "bright",
+        "alpha": 0.5
+      },
+      "basis": [
+        "crystal.material",
+        "crystal.dome_height",
+        "case.diameter"
+      ],
+      "note": "domed hesalite crystal; dome height measured from the side photograph"
+    },
+    {
+      "id": "crystal-edge",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "shape": {
+        "type": "torus",
+        "major": 0.0149,
+        "minor": 0.00012,
+        "segments": 64,
+        "sides": 4,
+        "rings": 2
+      },
+      "at": [
+        0,
+        0.01105,
+        0
+      ],
+      "basis": [
+        "case.diameter"
+      ],
+      "note": "crystal seating edge"
+    }
+  ],
+  "articulations": [
+    {
+      "id": "crystal-lift",
+      "type": "lift",
+      "parts": [
+        "crystal",
+        "crystal-edge"
+      ],
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "amount": 0.07,
+      "order": 0
+    },
+    {
+      "id": "crystal-stagger",
+      "type": "slide",
+      "parts": [
+        "crystal",
+        "crystal-edge"
+      ],
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "amount": 0.012,
+      "order": 0
+    },
+    {
+      "id": "bezel-lift",
+      "type": "lift",
+      "parts": [
+        "bezel",
+        "bezel-insert",
+        "bezel-ticks",
+        "bezel-ticks-major",
+        "dot-over-90"
+      ],
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "amount": 0.066,
+      "order": 0
+    },
+    {
+      "id": "bezel-stagger",
+      "type": "slide",
+      "parts": [
+        "bezel",
+        "bezel-insert",
+        "bezel-ticks",
+        "bezel-ticks-major",
+        "dot-over-90"
+      ],
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "amount": 0.009,
+      "order": 0
+    },
+    {
+      "id": "hands-lift",
+      "type": "lift",
+      "parts": [
+        "hour-hand",
+        "hour-lume",
+        "minute-hand",
+        "minute-lume",
+        "chrono-hand",
+        "hand-cap"
+      ],
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "amount": 0.054,
+      "order": 1
+    },
+    {
+      "id": "hands-stagger",
+      "type": "slide",
+      "parts": [
+        "hour-hand",
+        "hour-lume",
+        "minute-hand",
+        "minute-lume",
+        "chrono-hand",
+        "hand-cap"
+      ],
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "amount": 0.006,
+      "order": 1
+    },
+    {
+      "id": "dial-lift",
+      "type": "lift",
+      "parts": [
+        "dial",
+        "dial-chapter",
+        "dial-ticks",
+        "dial-ticks-major",
+        "hour-markers",
+        "twelve-dots",
+        "subdial-ring-3",
+        "subdial-ring-6",
+        "subdial-ring-9",
+        "subdial-hand-3",
+        "subdial-hand-6",
+        "subdial-hand-9",
+        "subdial-hub-3",
+        "subdial-hub-6",
+        "subdial-hub-9"
+      ],
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "amount": 0.04,
+      "order": 2
+    },
+    {
+      "id": "dial-stagger",
+      "type": "slide",
+      "parts": [
+        "dial",
+        "dial-chapter",
+        "dial-ticks",
+        "dial-ticks-major",
+        "hour-markers",
+        "twelve-dots",
+        "subdial-ring-3",
+        "subdial-ring-6",
+        "subdial-ring-9",
+        "subdial-hand-3",
+        "subdial-hand-6",
+        "subdial-hand-9",
+        "subdial-hub-3",
+        "subdial-hub-6",
+        "subdial-hub-9"
+      ],
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "amount": 0.003,
+      "order": 2
+    },
+    {
+      "id": "movement-lift",
+      "type": "lift",
+      "parts": [
+        "mov-plate",
+        "mov-face",
+        "mov-ring-1",
+        "mov-ring-2",
+        "mov-ring-3",
+        "chrono-bridge",
+        "train-bridge",
+        "balance-cock",
+        "barrel-wheel",
+        "center-wheel",
+        "third-wheel",
+        "fourth-wheel",
+        "escape-wheel",
+        "column-wheel",
+        "balance-rim",
+        "balance-spokes",
+        "balance-hub",
+        "balance-marker",
+        "hairspring",
+        "balance-jewel",
+        "column-jewel",
+        "wheel-jewel-1",
+        "wheel-jewel-2",
+        "wheel-jewel-3",
+        "screw-heads"
+      ],
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "amount": 0.016,
+      "order": 3
+    }
+  ],
+  "labels": [],
+  "annotations": [
+    {
+      "id": "crystal",
+      "text": "Hesalite crystal",
+      "part": "crystal",
+      "offset": [
+        0.016,
+        -0.008,
+        0.0
+      ]
+    },
+    {
+      "id": "bezel",
+      "text": "Tachymeter bezel, dot over 90",
+      "part": "bezel",
+      "offset": [
+        -0.028,
+        -0.004,
+        0.0
+      ]
+    },
+    {
+      "id": "dial",
+      "text": "Dial, 3-6-9 registers",
+      "part": "dial",
+      "offset": [
+        -0.03,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "id": "movement",
+      "text": "Calibre 321, column wheel",
+      "part": "mov-plate",
+      "offset": [
+        0.03,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "id": "balance",
+      "text": "Balance wheel, oscillating",
+      "part": "balance-rim",
+      "offset": [
+        0.012,
+        0.008,
+        0.0
+      ]
+    }
+  ],
+  "presentation": {
+    "framing": {
+      "yaw": 25,
+      "pitch": 32,
+      "fit": 1.0
+    },
+    "views": [
+      {
+        "id": "open",
+        "label": "Exploded",
+        "yaw": 25,
+        "pitch": 30,
+        "distance": 1.0
+      },
+      {
+        "id": "dial",
+        "label": "Dial",
+        "yaw": 0,
+        "pitch": 58,
+        "distance": 1.45,
+        "target": "dial"
+      },
+      {
+        "id": "movement",
+        "label": "Movement",
+        "yaw": 8,
+        "pitch": 26,
+        "distance": 1.7,
+        "target": "mov-plate"
+      },
+      {
+        "id": "balance",
+        "label": "Balance",
+        "yaw": 62,
+        "pitch": 34,
+        "distance": 1.9,
+        "target": "balance-rim"
+      },
+      {
+        "id": "profile",
+        "label": "Profile",
+        "yaw": 88,
+        "pitch": 8,
+        "distance": 1.0
+      }
+    ],
+    "atmosphere": {
+      "haze": 0.6,
+      "scanlines": true,
+      "vignette": true,
+      "grid": true,
+      "projector": false,
+      "motes": 0.25
+    },
+    "occlusion": "xray",
+    "still_pose": "open"
+  },
+  "animation": {
+    "assembly": {
+      "style": "ceremony",
+      "seconds": 7.0,
+      "interference": true
+    },
+    "idle": {
+      "life": "calm",
+      "events": [
+        "scan",
+        "sweep",
+        "shimmer"
+      ],
+      "cadence": [
+        6,
+        12
+      ],
+      "strength": 0.5
+    },
+    "camera": {
+      "drift": 5,
+      "breathe": 0.02,
+      "tour": [
+        {
+          "view": "balance",
+          "at": 15,
+          "fly": 3
+        },
+        {
+          "view": "movement",
+          "at": 22,
+          "fly": 3
+        },
+        {
+          "view": "open",
+          "at": 30,
+          "fly": 3.5
+        }
+      ]
+    },
+    "reduced_motion": "still"
+  }
+}

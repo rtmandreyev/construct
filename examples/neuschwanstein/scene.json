@@ -1,0 +1,9567 @@
+{
+ "format": "construct-scene",
+ "version": 2,
+ "id": "neuschwanstein",
+ "title": "Neuschwanstein Castle",
+ "subject": {
+  "category": "architecture",
+  "accuracy": "approximate",
+  "synthetic": false,
+  "summary": "Neuschwanstein Castle above the Pöllat gorge, Schwangau, Bavaria: the five-storey Palas with its 65 m northern stair tower, the Knights' House, the 45 m square tower, the Bower and the east-facing gatehouse, massed from the traced ground plan and the north elevation, on a sketched rock ridge."
+ },
+ "units": "m",
+ "seed": 1869,
+ "sources": [
+  {
+   "id": "request",
+   "kind": "user_request",
+   "title": "The request: a masterpiece-tier construct of Neuschwanstein Castle",
+   "rights": "user_private"
+  },
+  {
+   "id": "wiki-de",
+   "kind": "document",
+   "title": "Schloss Neuschwanstein, German Wikipedia: storeys, layout, gables",
+   "rights": "reference_only",
+   "ref": "https://de.wikipedia.org/wiki/Schloss_Neuschwanstein"
+  },
+  {
+   "id": "wiki-en",
+   "kind": "document",
+   "title": "Neuschwanstein Castle, English Wikipedia: tower heights, layout",
+   "rights": "reference_only",
+   "ref": "https://en.wikipedia.org/wiki/Neuschwanstein_Castle"
+  },
+  {
+   "id": "ref-plan",
+   "kind": "drawing",
+   "title": "Schloss Neuschwanstein - Grundriss der Gesamtanlage (public domain), traced",
+   "rights": "reference_only",
+   "ref": "https://commons.wikimedia.org/wiki/File:Schloss_Neuschwanstein_-_Grundriss_der_Gesamtanlage.jpg"
+  },
+  {
+   "id": "ref-elevation",
+   "kind": "reference_image",
+   "title": "Aerial image of Neuschwanstein Castle (view from the northwest), CC BY-SA 4.0; private comparison only",
+   "rights": "reference_only",
+   "ref": "https://commons.wikimedia.org/wiki/File:Aerial_image_of_Neuschwanstein_Castle_(view_from_the_northwest).jpg"
+  },
+  {
+   "id": "ref-three-quarter",
+   "kind": "reference_image",
+   "title": "Neuschwanstein Castle from Marienbrücke, 2011 May, CC BY-SA 3.0; private comparison only",
+   "rights": "reference_only",
+   "ref": "https://commons.wikimedia.org/wiki/File:Neuschwanstein_Castle_from_Marienbr%C3%BCcke,_2011_May.jpg"
+  }
+ ],
+ "facts": [
+  {
+   "key": "name",
+   "value": "Neuschwanstein Castle",
+   "certainty": "verified",
+   "source": "wiki-en"
+  },
+  {
+   "key": "north_tower_height",
+   "value": 65,
+   "unit": "m",
+   "certainty": "verified",
+   "source": "wiki-en",
+   "note": "the Palas's northern stair tower, the tallest"
+  },
+  {
+   "key": "square_tower_height",
+   "value": 45,
+   "unit": "m",
+   "certainty": "verified",
+   "source": "wiki-en",
+   "note": "from its foot at the lower court, about 5 m above the Palas's north foot"
+  },
+  {
+   "key": "palas_storeys",
+   "value": 5,
+   "certainty": "verified",
+   "source": "wiki-de"
+  },
+  {
+   "key": "knights_house_storeys",
+   "value": 3,
+   "certainty": "verified",
+   "source": "wiki-de"
+  },
+  {
+   "key": "bower_storeys",
+   "value": 3,
+   "certainty": "verified",
+   "source": "wiki-de"
+  },
+  {
+   "key": "gatehouse",
+   "value": "faces east, flanked by two stair towers, stepped gable",
+   "certainty": "verified",
+   "source": "wiki-de"
+  },
+  {
+   "key": "complex_length_quoted",
+   "value": 150,
+   "unit": "m",
+   "certainty": "verified",
+   "source": "wiki-de",
+   "note": "'rund 150 Metern', rounded; at the photo-consistent plan scale the buildings span about 114 m"
+  },
+  {
+   "key": "plan_scale",
+   "value": 0.062,
+   "unit": "m/px",
+   "certainty": "inferred",
+   "source": "ref-plan",
+   "note": "no scale bar on the plan: fitted so the Palas and tower widths agree with the 65 m tower in both photographs"
+  },
+  {
+   "key": "palas_eave",
+   "value": 31.0,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "ref-elevation",
+   "note": "above the north foot, measured against the 65 m tower in the north aerial"
+  }
+ ],
+ "parts": [
+  {
+   "id": "rock-ridge",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      8.06,
+      3.19
+     ],
+     [
+      0.93,
+      3.19
+     ],
+     [
+      0.93,
+      10.63
+     ],
+     [
+      -13.33,
+      10.63
+     ],
+     [
+      -13.33,
+      -18.955
+     ],
+     [
+      -13.02,
+      -18.144
+     ],
+     [
+      -3.1,
+      -20.443
+     ],
+     [
+      8.06,
+      -19.18
+     ]
+    ],
+    "height": 2.5,
+    "axis": "y"
+   },
+   "at": [
+    0,
+    17.5,
+    0
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.82,
+    "glow": 0.06,
+    "weight": 0.7
+   }
+  },
+  {
+   "id": "rock-stratum-1",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      8.06,
+      -5.31
+     ],
+     [
+      0.93,
+      -5.31
+     ],
+     [
+      0.93,
+      2.13
+     ],
+     [
+      -13.33,
+      2.13
+     ],
+     [
+      -13.33,
+      8.104
+     ],
+     [
+      -27.776,
+      8.104
+     ],
+     [
+      -27.776,
+      12.01
+     ],
+     [
+      -35.03,
+      12.01
+     ],
+     [
+      -49.104,
+      12.01
+     ],
+     [
+      -49.104,
+      -23.326
+     ],
+     [
+      -27.28,
+      -24.364
+     ],
+     [
+      -13.02,
+      -19.508
+     ],
+     [
+      -3.1,
+      -22.328
+     ],
+     [
+      8.06,
+      -19.73
+     ]
+    ],
+    "height": 2.5,
+    "axis": "y"
+   },
+   "at": [
+    0,
+    15.0,
+    0
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.82,
+    "glow": 0.06,
+    "weight": 0.7
+   }
+  },
+  {
+   "id": "rock-stratum-2",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      8.06,
+      -12.11
+     ],
+     [
+      0.93,
+      -12.11
+     ],
+     [
+      0.93,
+      -4.67
+     ],
+     [
+      -13.33,
+      -4.67
+     ],
+     [
+      -13.33,
+      1.304
+     ],
+     [
+      -27.776,
+      1.304
+     ],
+     [
+      -27.776,
+      5.21
+     ],
+     [
+      -35.03,
+      5.21
+     ],
+     [
+      -49.104,
+      5.21
+     ],
+     [
+      -49.104,
+      7.06
+     ],
+     [
+      -57.536,
+      7.06
+     ],
+     [
+      -57.536,
+      -7.632
+     ],
+     [
+      -57.04,
+      -17.892
+     ],
+     [
+      -52.7,
+      -23.924
+     ],
+     [
+      -27.28,
+      -24.131
+     ],
+     [
+      -13.02,
+      -20.865
+     ],
+     [
+      -3.1,
+      -21.737
+     ],
+     [
+      8.06,
+      -20.28
+     ]
+    ],
+    "height": 2.0,
+    "axis": "y"
+   },
+   "at": [
+    0,
+    13.0,
+    0
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.82,
+    "glow": 0.06,
+    "weight": 0.7
+   }
+  },
+  {
+   "id": "rock-stratum-3",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      8.06,
+      -18.91
+     ],
+     [
+      0.93,
+      -18.91
+     ],
+     [
+      0.93,
+      -11.47
+     ],
+     [
+      -13.33,
+      -11.47
+     ],
+     [
+      -13.33,
+      -5.496
+     ],
+     [
+      -27.776,
+      -5.496
+     ],
+     [
+      -27.776,
+      -1.59
+     ],
+     [
+      -35.03,
+      -1.59
+     ],
+     [
+      -49.104,
+      -1.59
+     ],
+     [
+      -49.104,
+      0.26
+     ],
+     [
+      -57.536,
+      0.26
+     ],
+     [
+      -57.536,
+      -8.182
+     ],
+     [
+      -57.04,
+      -20.604
+     ],
+     [
+      -52.7,
+      -23.073
+     ],
+     [
+      -27.28,
+      -22.553
+     ],
+     [
+      -13.02,
+      -19.533
+     ],
+     [
+      -3.1,
+      -21.223
+     ],
+     [
+      8.06,
+      -20.83
+     ]
+    ],
+    "height": 2.0,
+    "axis": "y"
+   },
+   "at": [
+    0,
+    11.0,
+    0
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.82,
+    "glow": 0.06,
+    "weight": 0.7
+   }
+  },
+  {
+   "id": "rock-stratum-4",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      56.42,
+      1.95
+     ],
+     [
+      8.06,
+      1.95
+     ],
+     [
+      -13.33,
+      -13.996
+     ],
+     [
+      -27.776,
+      -13.996
+     ],
+     [
+      -27.776,
+      -10.09
+     ],
+     [
+      -35.03,
+      -10.09
+     ],
+     [
+      -49.104,
+      -10.09
+     ],
+     [
+      -49.104,
+      -24.976
+     ],
+     [
+      -27.28,
+      -24.338
+     ],
+     [
+      -13.02,
+      -19.516
+     ],
+     [
+      -3.1,
+      -23.93
+     ],
+     [
+      11.78,
+      -19.292
+     ],
+     [
+      12.4,
+      -10.633
+     ],
+     [
+      21.7,
+      -12.681
+     ],
+     [
+      33.356,
+      -13.678
+     ],
+     [
+      40.3,
+      -11.591
+     ],
+     [
+      56.42,
+      -15.361
+     ]
+    ],
+    "height": 2.5,
+    "axis": "y"
+   },
+   "at": [
+    0,
+    8.5,
+    0
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.82,
+    "glow": 0.06,
+    "weight": 0.7
+   }
+  },
+  {
+   "id": "rock-stratum-5",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      56.42,
+      -6.55
+     ],
+     [
+      8.06,
+      -6.55
+     ],
+     [
+      -27.776,
+      -18.59
+     ],
+     [
+      -35.03,
+      -18.59
+     ],
+     [
+      -49.104,
+      -18.59
+     ],
+     [
+      -49.104,
+      -25.526
+     ],
+     [
+      -27.28,
+      -27.396
+     ],
+     [
+      -13.02,
+      -22.689
+     ],
+     [
+      -3.1,
+      -25.815
+     ],
+     [
+      11.78,
+      -22.566
+     ],
+     [
+      12.4,
+      -13.395
+     ],
+     [
+      21.7,
+      -14.277
+     ],
+     [
+      33.356,
+      -14.83
+     ],
+     [
+      40.3,
+      -12.119
+     ],
+     [
+      56.42,
+      -15.911
+     ]
+    ],
+    "height": 2.5,
+    "axis": "y"
+   },
+   "at": [
+    0,
+    6.0,
+    0
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.82,
+    "glow": 0.06,
+    "weight": 0.7
+   }
+  },
+  {
+   "id": "rock-stratum-6",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      56.42,
+      -15.05
+     ],
+     [
+      8.06,
+      -15.05
+     ],
+     [
+      8.06,
+      -22.48
+     ],
+     [
+      11.78,
+      -23.56
+     ],
+     [
+      12.4,
+      -15.41
+     ],
+     [
+      21.7,
+      -12.345
+     ],
+     [
+      33.356,
+      -13.865
+     ],
+     [
+      40.3,
+      -15.198
+     ],
+     [
+      56.42,
+      -16.461
+     ]
+    ],
+    "height": 6.0,
+    "axis": "y"
+   },
+   "at": [
+    0,
+    0.0,
+    0
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.82,
+    "glow": 0.06,
+    "weight": 0.7
+   }
+  },
+  {
+   "id": "rock-seam-0",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      57.164,
+      9.8,
+      -13.79
+     ],
+     [
+      40.3,
+      9.8,
+      -10.876
+     ],
+     [
+      33.356,
+      9.8,
+      -11.62
+     ],
+     [
+      21.7,
+      9.8,
+      -10.07
+     ],
+     [
+      12.4,
+      9.8,
+      -11.0
+     ],
+     [
+      11.78,
+      9.8,
+      -19.06
+     ],
+     [
+      -3.1,
+      9.8,
+      -21.54
+     ],
+     [
+      -13.02,
+      9.8,
+      -19.37
+     ],
+     [
+      -27.28,
+      9.8,
+      -23.276
+     ],
+     [
+      -52.7,
+      9.8,
+      -23.276
+     ],
+     [
+      -57.04,
+      9.8,
+      -18.44
+     ],
+     [
+      -57.66,
+      9.8,
+      -4.18
+     ]
+    ],
+    "smooth": false
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "none",
+    "alpha": 0.32,
+    "glow": 0.05,
+    "weight": 0.5
+   }
+  },
+  {
+   "id": "rock-seam-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      57.164,
+      7.0,
+      -14.29
+     ],
+     [
+      40.3,
+      7.0,
+      -11.376
+     ],
+     [
+      33.356,
+      7.0,
+      -12.12
+     ],
+     [
+      21.7,
+      7.0,
+      -10.57
+     ],
+     [
+      12.4,
+      7.0,
+      -11.5
+     ],
+     [
+      11.78,
+      7.0,
+      -19.56
+     ],
+     [
+      -3.1,
+      7.0,
+      -22.04
+     ],
+     [
+      -13.02,
+      7.0,
+      -19.87
+     ],
+     [
+      -27.28,
+      7.0,
+      -23.776
+     ],
+     [
+      -52.7,
+      7.0,
+      -23.776
+     ],
+     [
+      -57.04,
+      7.0,
+      -18.94
+     ],
+     [
+      -57.66,
+      7.0,
+      -4.68
+     ]
+    ],
+    "smooth": false
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "none",
+    "alpha": 0.32,
+    "glow": 0.05,
+    "weight": 0.5
+   }
+  },
+  {
+   "id": "rock-seam-2",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      57.164,
+      2.5,
+      -14.79
+     ],
+     [
+      40.3,
+      2.5,
+      -11.876
+     ],
+     [
+      33.356,
+      2.5,
+      -12.62
+     ],
+     [
+      21.7,
+      2.5,
+      -11.07
+     ],
+     [
+      12.4,
+      2.5,
+      -12.0
+     ],
+     [
+      11.78,
+      2.5,
+      -20.06
+     ],
+     [
+      -3.1,
+      2.5,
+      -22.54
+     ],
+     [
+      -13.02,
+      2.5,
+      -20.37
+     ],
+     [
+      -27.28,
+      2.5,
+      -24.276
+     ],
+     [
+      -52.7,
+      2.5,
+      -24.276
+     ],
+     [
+      -57.04,
+      2.5,
+      -19.44
+     ],
+     [
+      -57.66,
+      2.5,
+      -5.18
+     ]
+    ],
+    "smooth": false
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "none",
+    "alpha": 0.32,
+    "glow": 0.05,
+    "weight": 0.5
+   }
+  },
+  {
+   "id": "rock-crack-0-0",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      57.997,
+      11.0,
+      -13.44
+     ],
+     [
+      56.449,
+      8.004,
+      -13.88
+     ],
+     [
+      57.053,
+      4.833,
+      -14.32
+     ],
+     [
+      57.991,
+      2.195,
+      -14.76
+     ]
+    ],
+    "smooth": false
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "alpha": 0.45,
+    "weight": 0.55,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "rock-crack-0-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      53.344,
+      11.0,
+      -12.851
+     ],
+     [
+      54.653,
+      8.115,
+      -13.291
+     ],
+     [
+      53.257,
+      5.988,
+      -13.731
+     ],
+     [
+      53.357,
+      4.368,
+      -14.171
+     ],
+     [
+      54.652,
+      2.538,
+      -14.611
+     ]
+    ],
+    "smooth": false
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "alpha": 0.45,
+    "weight": 0.55,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "rock-crack-1-0",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      41.053,
+      11.0,
+      -10.526
+     ],
+     [
+      39.494,
+      8.27,
+      -10.966
+     ],
+     [
+      40.36,
+      6.306,
+      -11.406
+     ],
+     [
+      41.045,
+      4.706,
+      -11.846
+     ],
+     [
+      39.488,
+      2.735,
+      -12.286
+     ]
+    ],
+    "smooth": false
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "alpha": 0.45,
+    "weight": 0.55,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "rock-crack-1-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      36.639,
+      11.0,
+      -10.891
+     ],
+     [
+      37.763,
+      9.353,
+      -11.331
+     ],
+     [
+      36.26,
+      7.587,
+      -11.771
+     ],
+     [
+      36.653,
+      5.121,
+      -12.211
+     ],
+     [
+      37.759,
+      2.014,
+      -12.651
+     ]
+    ],
+    "smooth": false
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "alpha": 0.45,
+    "weight": 0.55,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "rock-crack-2-0",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      32.874,
+      11.0,
+      -11.27
+     ],
+     [
+      32.944,
+      8.764,
+      -11.71
+     ],
+     [
+      34.255,
+      5.794,
+      -12.15
+     ],
+     [
+      32.861,
+      2.613,
+      -12.59
+     ]
+    ],
+    "smooth": false
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "alpha": 0.45,
+    "weight": 0.55,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "rock-crack-2-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      30.807,
+      11.0,
+      -10.817
+     ],
+     [
+      29.739,
+      7.806,
+      -11.257
+     ],
+     [
+      29.295,
+      4.892,
+      -11.697
+     ],
+     [
+      30.811,
+      2.73,
+      -12.137
+     ],
+     [
+      29.724,
+      1.102,
+      -12.577
+     ]
+    ],
+    "smooth": false
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "alpha": 0.45,
+    "weight": 0.55,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "rock-crack-3-0",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      20.875,
+      11.0,
+      -9.72
+     ],
+     [
+      21.806,
+      9.201,
+      -10.16
+     ],
+     [
+      22.418,
+      6.681,
+      -10.6
+     ],
+     [
+      20.869,
+      3.551,
+      -11.04
+     ]
+    ],
+    "smooth": false
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "alpha": 0.45,
+    "weight": 0.55,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "rock-crack-3-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      19.151,
+      11.0,
+      -10.061
+     ],
+     [
+      17.628,
+      8.026,
+      -10.501
+     ],
+     [
+      18.098,
+      4.847,
+      -10.941
+     ],
+     [
+      19.146,
+      2.179,
+      -11.381
+     ]
+    ],
+    "smooth": false
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "alpha": 0.45,
+    "weight": 0.55,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "rock-crack-4-0",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      13.109,
+      11.0,
+      -10.65
+     ],
+     [
+      11.563,
+      8.99,
+      -11.09
+     ],
+     [
+      12.536,
+      7.388,
+      -11.53
+     ],
+     [
+      13.1,
+      5.461,
+      -11.97
+     ],
+     [
+      11.558,
+      2.774,
+      -12.41
+     ]
+    ],
+    "smooth": false
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "alpha": 0.45,
+    "weight": 0.55,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "rock-crack-4-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      8.812,
+      11.0,
+      -19.175
+     ],
+     [
+      9.841,
+      9.266,
+      -19.615
+     ],
+     [
+      8.308,
+      6.852,
+      -20.055
+     ],
+     [
+      8.827,
+      3.771,
+      -20.495
+     ],
+     [
+      9.836,
+      0.65,
+      -20.935
+     ]
+    ],
+    "smooth": false
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "alpha": 0.45,
+    "weight": 0.55,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "rock-crack-5-0",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      11.965,
+      11.0,
+      -18.71
+     ],
+     [
+      10.926,
+      9.179,
+      -19.15
+     ],
+     [
+      12.457,
+      7.556,
+      -19.59
+     ],
+     [
+      11.95,
+      5.418,
+      -20.03
+     ],
+     [
+      10.931,
+      2.522,
+      -20.47
+     ]
+    ],
+    "smooth": false
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "alpha": 0.45,
+    "weight": 0.55,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "rock-crack-5-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      8.803,
+      11.0,
+      -19.278
+     ],
+     [
+      8.833,
+      9.105,
+      -19.718
+     ],
+     [
+      7.47,
+      6.455,
+      -20.158
+     ],
+     [
+      8.816,
+      3.281,
+      -20.598
+     ]
+    ],
+    "smooth": false
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "alpha": 0.45,
+    "weight": 0.55,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "rock-crack-6-0",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -2.403,
+      20.0,
+      -21.19
+     ],
+     [
+      -2.96,
+      18.39,
+      -21.63
+     ],
+     [
+      -3.938,
+      16.314,
+      -22.07
+     ],
+     [
+      -2.394,
+      13.473,
+      -22.51
+     ],
+     [
+      -2.975,
+      10.273,
+      -22.95
+     ],
+     [
+      -3.933,
+      7.449,
+      -23.39
+     ],
+     [
+      -2.385,
+      5.392,
+      -23.83
+     ],
+     [
+      -2.99,
+      3.785,
+      -24.27
+     ],
+     [
+      -3.927,
+      1.9,
+      -24.71
+     ]
+    ],
+    "smooth": false
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "alpha": 0.45,
+    "weight": 0.55,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "rock-crack-6-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -7.41,
+      20.0,
+      -20.444
+     ],
+     [
+      -6.038,
+      17.414,
+      -20.884
+     ],
+     [
+      -6.087,
+      14.259,
+      -21.324
+     ],
+     [
+      -7.409,
+      11.229,
+      -21.764
+     ],
+     [
+      -6.025,
+      8.903,
+      -22.204
+     ],
+     [
+      -6.1,
+      7.213,
+      -22.644
+     ],
+     [
+      -7.409,
+      5.507,
+      -23.084
+     ],
+     [
+      -6.013,
+      3.146,
+      -23.524
+     ]
+    ],
+    "smooth": false
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "alpha": 0.45,
+    "weight": 0.55,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "rock-crack-7-0",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -13.437,
+      20.0,
+      -19.02
+     ],
+     [
+      -12.121,
+      17.792,
+      -19.46
+     ],
+     [
+      -13.511,
+      16.149,
+      -19.9
+     ],
+     [
+      -13.423,
+      14.376,
+      -20.34
+     ],
+     [
+      -12.122,
+      11.895,
+      -20.78
+     ],
+     [
+      -13.524,
+      8.782,
+      -21.22
+     ],
+     [
+      -13.41,
+      5.692,
+      -21.66
+     ],
+     [
+      -12.123,
+      3.259,
+      -22.1
+     ],
+     [
+      -13.536,
+      1.514,
+      -22.54
+     ]
+    ],
+    "smooth": false
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "alpha": 0.45,
+    "weight": 0.55,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "rock-crack-7-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -16.633,
+      20.0,
+      -19.954
+     ],
+     [
+      -17.085,
+      18.359,
+      -20.394
+     ],
+     [
+      -15.566,
+      16.156,
+      -20.834
+     ],
+     [
+      -16.647,
+      13.21,
+      -21.274
+     ],
+     [
+      -17.074,
+      10.023,
+      -21.714
+     ],
+     [
+      -15.562,
+      7.319,
+      -22.154
+     ],
+     [
+      -16.662,
+      5.376,
+      -22.594
+     ],
+     [
+      -17.064,
+      3.776,
+      -23.034
+     ],
+     [
+      -15.558,
+      1.782,
+      -23.474
+     ]
+    ],
+    "smooth": false
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "alpha": 0.45,
+    "weight": 0.55,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "rock-crack-8-0",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -27.2,
+      20.0,
+      -22.926
+     ],
+     [
+      -28.094,
+      18.206,
+      -23.366
+     ],
+     [
+      -26.538,
+      16.573,
+      -23.806
+     ],
+     [
+      -27.215,
+      14.396,
+      -24.246
+     ],
+     [
+      -28.088,
+      11.47,
+      -24.686
+     ],
+     [
+      -26.53,
+      8.278,
+      -25.126
+     ],
+     [
+      -27.23,
+      5.549,
+      -25.566
+     ],
+     [
+      -28.081,
+      3.585,
+      -26.006
+     ],
+     [
+      -26.521,
+      1.985,
+      -26.446
+     ]
+    ],
+    "smooth": false
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "alpha": 0.45,
+    "weight": 0.55,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "rock-crack-8-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -30.168,
+      20.0,
+      -22.926
+     ],
+     [
+      -30.321,
+      18.073,
+      -23.366
+     ],
+     [
+      -31.585,
+      15.385,
+      -23.806
+     ],
+     [
+      -30.156,
+      12.202,
+      -24.246
+     ],
+     [
+      -30.335,
+      9.243,
+      -24.686
+     ],
+     [
+      -31.583,
+      7.022,
+      -25.126
+     ],
+     [
+      -30.143,
+      5.375,
+      -25.566
+     ],
+     [
+      -30.349,
+      3.609,
+      -26.006
+     ],
+     [
+      -31.581,
+      1.142,
+      -26.446
+     ]
+    ],
+    "smooth": false
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "alpha": 0.45,
+    "weight": 0.55,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "rock-crack-9-0",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -52.403,
+      20.0,
+      -22.926
+     ],
+     [
+      -52.117,
+      18.047,
+      -23.366
+     ],
+     [
+      -53.586,
+      16.447,
+      -23.806
+     ],
+     [
+      -52.389,
+      14.464,
+      -24.246
+     ],
+     [
+      -52.128,
+      11.715,
+      -24.686
+     ],
+     [
+      -53.589,
+      8.521,
+      -25.126
+     ],
+     [
+      -52.375,
+      5.611,
+      -25.566
+     ],
+     [
+      -52.14,
+      3.455,
+      -26.006
+     ],
+     [
+      -53.591,
+      1.828,
+      -26.446
+     ]
+    ],
+    "smooth": false
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "alpha": 0.45,
+    "weight": 0.55,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "rock-crack-9-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -56.888,
+      20.0,
+      -19.126
+     ],
+     [
+      -56.107,
+      18.226,
+      -19.566
+     ],
+     [
+      -55.335,
+      15.745,
+      -20.006
+     ],
+     [
+      -56.896,
+      12.632,
+      -20.446
+     ],
+     [
+      -56.092,
+      9.542,
+      -20.886
+     ],
+     [
+      -55.342,
+      7.109,
+      -21.326
+     ],
+     [
+      -56.903,
+      5.365,
+      -21.766
+     ],
+     [
+      -56.077,
+      3.705,
+      -22.206
+     ],
+     [
+      -55.35,
+      1.45,
+      -22.646
+     ]
+    ],
+    "smooth": false
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "alpha": 0.45,
+    "weight": 0.55,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "palas-pier-n-1",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      10.85,
+      13.6
+     ],
+     [
+      11.45,
+      13.0
+     ],
+     [
+      13.05,
+      6.0
+     ],
+     [
+      14.85,
+      0.0
+     ],
+     [
+      10.85,
+      0.0
+     ]
+    ],
+    "height": 1.8,
+    "axis": "x"
+   },
+   "at": [
+    50.56,
+    11.0,
+    0
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "palas-pier-n-2",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      10.85,
+      13.6
+     ],
+     [
+      11.45,
+      13.0
+     ],
+     [
+      13.05,
+      6.0
+     ],
+     [
+      14.85,
+      0.0
+     ],
+     [
+      10.85,
+      0.0
+     ]
+    ],
+    "height": 1.8,
+    "axis": "x"
+   },
+   "at": [
+    42.5,
+    11.0,
+    0
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "palas-pier-n-3",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      10.85,
+      13.6
+     ],
+     [
+      11.45,
+      13.0
+     ],
+     [
+      13.05,
+      6.0
+     ],
+     [
+      14.85,
+      0.0
+     ],
+     [
+      10.85,
+      0.0
+     ]
+    ],
+    "height": 1.8,
+    "axis": "x"
+   },
+   "at": [
+    34.44,
+    11.0,
+    0
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "palas-pier-n-4",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      10.85,
+      13.6
+     ],
+     [
+      11.45,
+      13.0
+     ],
+     [
+      13.05,
+      6.0
+     ],
+     [
+      14.85,
+      0.0
+     ],
+     [
+      10.85,
+      0.0
+     ]
+    ],
+    "height": 1.8,
+    "axis": "x"
+   },
+   "at": [
+    26.38,
+    11.0,
+    0
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "palas-pier-n-5",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      10.85,
+      13.6
+     ],
+     [
+      11.45,
+      13.0
+     ],
+     [
+      13.05,
+      6.0
+     ],
+     [
+      14.85,
+      0.0
+     ],
+     [
+      10.85,
+      0.0
+     ]
+    ],
+    "height": 1.8,
+    "axis": "x"
+   },
+   "at": [
+    18.32,
+    11.0,
+    0
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "palas-pier-n-6",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      10.85,
+      13.6
+     ],
+     [
+      11.45,
+      13.0
+     ],
+     [
+      13.05,
+      6.0
+     ],
+     [
+      14.85,
+      0.0
+     ],
+     [
+      10.85,
+      0.0
+     ]
+    ],
+    "height": 1.8,
+    "axis": "x"
+   },
+   "at": [
+    10.26,
+    11.0,
+    0
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "palas-pier-s-1",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      -7.75,
+      0.0
+     ],
+     [
+      -11.75,
+      0.0
+     ],
+     [
+      -9.95,
+      6.0
+     ],
+     [
+      -8.35,
+      13.0
+     ],
+     [
+      -7.75,
+      13.6
+     ]
+    ],
+    "height": 1.8,
+    "axis": "x"
+   },
+   "at": [
+    50.56,
+    11.0,
+    0
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "palas-pier-s-2",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      -7.75,
+      0.0
+     ],
+     [
+      -11.75,
+      0.0
+     ],
+     [
+      -9.95,
+      6.0
+     ],
+     [
+      -8.35,
+      13.0
+     ],
+     [
+      -7.75,
+      13.6
+     ]
+    ],
+    "height": 1.8,
+    "axis": "x"
+   },
+   "at": [
+    42.5,
+    11.0,
+    0
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "palas-pier-s-3",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      -7.75,
+      0.0
+     ],
+     [
+      -11.75,
+      0.0
+     ],
+     [
+      -9.95,
+      6.0
+     ],
+     [
+      -8.35,
+      13.0
+     ],
+     [
+      -7.75,
+      13.6
+     ]
+    ],
+    "height": 1.8,
+    "axis": "x"
+   },
+   "at": [
+    34.44,
+    11.0,
+    0
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "palas-pier-s-4",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      -7.75,
+      0.0
+     ],
+     [
+      -11.75,
+      0.0
+     ],
+     [
+      -9.95,
+      6.0
+     ],
+     [
+      -8.35,
+      13.0
+     ],
+     [
+      -7.75,
+      13.6
+     ]
+    ],
+    "height": 1.8,
+    "axis": "x"
+   },
+   "at": [
+    26.38,
+    11.0,
+    0
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "palas-pier-s-5",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      -7.75,
+      0.0
+     ],
+     [
+      -11.75,
+      0.0
+     ],
+     [
+      -9.95,
+      6.0
+     ],
+     [
+      -8.35,
+      13.0
+     ],
+     [
+      -7.75,
+      13.6
+     ]
+    ],
+    "height": 1.8,
+    "axis": "x"
+   },
+   "at": [
+    18.32,
+    11.0,
+    0
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "palas-pier-s-6",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      -7.75,
+      0.0
+     ],
+     [
+      -11.75,
+      0.0
+     ],
+     [
+      -9.95,
+      6.0
+     ],
+     [
+      -8.35,
+      13.0
+     ],
+     [
+      -7.75,
+      13.6
+     ]
+    ],
+    "height": 1.8,
+    "axis": "x"
+   },
+   "at": [
+    10.26,
+    11.0,
+    0
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "upper-court-terrace",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     38.44,
+     9.0,
+     10.54
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -11.16,
+    11.0,
+    -0.31
+   ],
+   "source": "ref-plan",
+   "label": "Upper court (raised)",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "upper-court-retaining-arcade",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 1,
+    "cols": 5,
+    "arch": "round",
+    "kind": "arcade",
+    "outline": false,
+    "size": [
+     9.54,
+     5.0
+    ]
+   },
+   "at": [
+    -30.41,
+    15.0,
+    -0.31
+   ],
+   "source": "ref-plan",
+   "look": {
+    "fill": "none",
+    "glow": 0.35,
+    "weight": 1.0
+   },
+   "rotate": [
+    0,
+    -90,
+    0
+   ]
+  },
+  {
+   "id": "upper-court-retaining-merlons",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "battlements",
+    "height": 1.0,
+    "merlon": 0.75,
+    "gap": 0.55,
+    "thickness": 0.5,
+    "path": [
+     [
+      -0.3,
+      -5.27
+     ],
+     [
+      0.3,
+      -5.27
+     ],
+     [
+      0.3,
+      5.27
+     ],
+     [
+      -0.3,
+      5.27
+     ]
+    ]
+   },
+   "at": [
+    -30.38,
+    20.0,
+    -0.31
+   ],
+   "source": "ref-plan",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.6,
+    "glow": 0.3,
+    "weight": 0.9
+   }
+  },
+  {
+   "id": "court-stair-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.2,
+     4.625,
+     4.0
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -39.98,
+    11.0,
+    -3.38
+   ],
+   "source": "ref-plan",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "court-stair-2",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.2,
+     5.25,
+     4.0
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -38.78,
+    11.0,
+    -3.38
+   ],
+   "source": "ref-plan",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "court-stair-3",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.2,
+     5.875,
+     4.0
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -37.58,
+    11.0,
+    -3.38
+   ],
+   "source": "ref-plan",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "court-stair-4",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.2,
+     6.5,
+     4.0
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -36.38,
+    11.0,
+    -3.38
+   ],
+   "source": "ref-plan",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "court-stair-5",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.2,
+     7.125,
+     4.0
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -35.18,
+    11.0,
+    -3.38
+   ],
+   "source": "ref-plan",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "court-stair-6",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.2,
+     7.75,
+     4.0
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -33.98,
+    11.0,
+    -3.38
+   ],
+   "source": "ref-plan",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "court-stair-7",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.2,
+     8.375,
+     4.0
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -32.78,
+    11.0,
+    -3.38
+   ],
+   "source": "ref-plan",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "court-stair-8",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.2,
+     9.0,
+     4.0
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -31.58,
+    11.0,
+    -3.38
+   ],
+   "source": "ref-plan",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "lower-court-terrace",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     18.6,
+     4.0,
+     28.83
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -39.68,
+    11.0,
+    -6.355
+   ],
+   "source": "ref-plan",
+   "label": "Lower court",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "upper-court",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "grid",
+    "size": [
+     38.44,
+     10.54
+    ],
+    "divisions": 8
+   },
+   "at": [
+    -11.16,
+    20.03,
+    -0.31
+   ],
+   "source": "ref-plan",
+   "look": {
+    "fill": "none",
+    "alpha": 0.32,
+    "glow": 0.05,
+    "weight": 0.5
+   }
+  },
+  {
+   "id": "lower-court",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "grid",
+    "size": [
+     18.6,
+     28.83
+    ],
+    "divisions": 8
+   },
+   "at": [
+    -39.68,
+    15.03,
+    -6.355
+   ],
+   "source": "ref-plan",
+   "look": {
+    "fill": "none",
+    "alpha": 0.32,
+    "glow": 0.05,
+    "weight": 0.5
+   }
+  },
+  {
+   "id": "palas",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     47.74,
+     31.0,
+     18.6
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    31.93,
+    11.0,
+    1.55
+   ],
+   "source": "ref-plan",
+   "label": "Palas (five storeys)",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.86,
+    "glow": 0.08,
+    "weight": 0.7
+   }
+  },
+  {
+   "id": "palas-roof",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "roof",
+    "size": [
+     47.74,
+     18.6
+    ],
+    "height": 13.0,
+    "style": "gable",
+    "ridge": "x",
+    "overhang": 0.5,
+    "courses": 7
+   },
+   "at": [
+    31.93,
+    42.0,
+    1.55
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.88,
+    "glow": 0.14,
+    "weight": 0.95
+   }
+  },
+  {
+   "id": "palas-n-windows-1-1",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 1,
+    "cols": 10,
+    "arch": "round",
+    "kind": "windows",
+    "outline": false,
+    "opening": [
+     0.95,
+     2.6679999999999997
+    ],
+    "size": [
+     41.74,
+     4.6
+    ]
+   },
+   "at": [
+    31.31,
+    17.0,
+    10.88
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "none",
+    "alpha": 0.55,
+    "glow": 0.18,
+    "weight": 0.72
+   }
+  },
+  {
+   "id": "palas-n-windows-1-2",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 1,
+    "cols": 10,
+    "arch": "round",
+    "kind": "windows",
+    "outline": false,
+    "opening": [
+     0.95,
+     2.6679999999999997
+    ],
+    "size": [
+     41.74,
+     4.6
+    ]
+   },
+   "at": [
+    32.55,
+    17.0,
+    10.88
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "none",
+    "alpha": 0.55,
+    "glow": 0.18,
+    "weight": 0.72
+   }
+  },
+  {
+   "id": "palas-n-windows-2-1",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 1,
+    "cols": 10,
+    "arch": "round",
+    "kind": "windows",
+    "outline": false,
+    "opening": [
+     0.95,
+     3.036
+    ],
+    "size": [
+     41.74,
+     4.6
+    ]
+   },
+   "at": [
+    31.31,
+    21.6,
+    10.88
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "none",
+    "alpha": 0.55,
+    "glow": 0.18,
+    "weight": 0.72
+   }
+  },
+  {
+   "id": "palas-n-windows-2-2",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 1,
+    "cols": 10,
+    "arch": "round",
+    "kind": "windows",
+    "outline": false,
+    "opening": [
+     0.95,
+     3.036
+    ],
+    "size": [
+     41.74,
+     4.6
+    ]
+   },
+   "at": [
+    32.55,
+    21.6,
+    10.88
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "none",
+    "alpha": 0.55,
+    "glow": 0.18,
+    "weight": 0.72
+   }
+  },
+  {
+   "id": "palas-n-windows-3-1",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 1,
+    "cols": 10,
+    "arch": "round",
+    "kind": "windows",
+    "outline": false,
+    "opening": [
+     0.95,
+     2.6679999999999997
+    ],
+    "size": [
+     41.74,
+     4.6
+    ]
+   },
+   "at": [
+    31.31,
+    26.2,
+    10.88
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "none",
+    "alpha": 0.55,
+    "glow": 0.18,
+    "weight": 0.72
+   }
+  },
+  {
+   "id": "palas-n-windows-3-2",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 1,
+    "cols": 10,
+    "arch": "round",
+    "kind": "windows",
+    "outline": false,
+    "opening": [
+     0.95,
+     2.6679999999999997
+    ],
+    "size": [
+     41.74,
+     4.6
+    ]
+   },
+   "at": [
+    32.55,
+    26.2,
+    10.88
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "none",
+    "alpha": 0.55,
+    "glow": 0.18,
+    "weight": 0.72
+   }
+  },
+  {
+   "id": "palas-n-windows-4-1",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 1,
+    "cols": 10,
+    "arch": "round",
+    "kind": "windows",
+    "outline": false,
+    "opening": [
+     0.8,
+     4.232
+    ],
+    "size": [
+     41.74,
+     4.6
+    ]
+   },
+   "at": [
+    30.88,
+    30.8,
+    10.88
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "none",
+    "alpha": 0.55,
+    "glow": 0.18,
+    "weight": 0.72
+   }
+  },
+  {
+   "id": "palas-n-windows-4-2",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 1,
+    "cols": 10,
+    "arch": "round",
+    "kind": "windows",
+    "outline": false,
+    "opening": [
+     0.8,
+     4.232
+    ],
+    "size": [
+     41.74,
+     4.6
+    ]
+   },
+   "at": [
+    31.93,
+    30.8,
+    10.88
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "none",
+    "alpha": 0.55,
+    "glow": 0.18,
+    "weight": 0.72
+   }
+  },
+  {
+   "id": "palas-n-windows-4-3",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 1,
+    "cols": 10,
+    "arch": "round",
+    "kind": "windows",
+    "outline": false,
+    "opening": [
+     0.8,
+     4.232
+    ],
+    "size": [
+     41.74,
+     4.6
+    ]
+   },
+   "at": [
+    32.98,
+    30.8,
+    10.88
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "none",
+    "alpha": 0.55,
+    "glow": 0.18,
+    "weight": 0.72
+   }
+  },
+  {
+   "id": "palas-n-windows-5-1",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 1,
+    "cols": 10,
+    "arch": "round",
+    "kind": "windows",
+    "outline": false,
+    "opening": [
+     0.95,
+     2.6679999999999997
+    ],
+    "size": [
+     41.74,
+     4.6
+    ]
+   },
+   "at": [
+    31.31,
+    35.4,
+    10.88
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "none",
+    "alpha": 0.55,
+    "glow": 0.18,
+    "weight": 0.72
+   }
+  },
+  {
+   "id": "palas-n-windows-5-2",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 1,
+    "cols": 10,
+    "arch": "round",
+    "kind": "windows",
+    "outline": false,
+    "opening": [
+     0.95,
+     2.6679999999999997
+    ],
+    "size": [
+     41.74,
+     4.6
+    ]
+   },
+   "at": [
+    32.55,
+    35.4,
+    10.88
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "none",
+    "alpha": 0.55,
+    "glow": 0.18,
+    "weight": 0.72
+   }
+  },
+  {
+   "id": "palas-n-plinth-windows",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 1,
+    "cols": 10,
+    "arch": "flat",
+    "kind": "windows",
+    "outline": false,
+    "size": [
+     41.74,
+     4.5
+    ]
+   },
+   "at": [
+    31.93,
+    12.0,
+    10.88
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "none",
+    "alpha": 0.32,
+    "glow": 0.05,
+    "weight": 0.5
+   }
+  },
+  {
+   "id": "palas-n-singers-course",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      8.06,
+      30.8,
+      10.93
+     ],
+     [
+      55.8,
+      30.8,
+      10.93
+     ]
+    ],
+    "smooth": false
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "weight": 1.0,
+    "glow": 0.3
+   }
+  },
+  {
+   "id": "palas-s-windows-1-1",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 1,
+    "cols": 10,
+    "arch": "round",
+    "kind": "windows",
+    "outline": false,
+    "opening": [
+     0.95,
+     2.6679999999999997
+    ],
+    "size": [
+     41.74,
+     4.6
+    ]
+   },
+   "at": [
+    31.31,
+    17.0,
+    -7.78
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "none",
+    "alpha": 0.55,
+    "glow": 0.18,
+    "weight": 0.72
+   },
+   "rotate": [
+    0,
+    180,
+    0
+   ]
+  },
+  {
+   "id": "palas-s-windows-1-2",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 1,
+    "cols": 10,
+    "arch": "round",
+    "kind": "windows",
+    "outline": false,
+    "opening": [
+     0.95,
+     2.6679999999999997
+    ],
+    "size": [
+     41.74,
+     4.6
+    ]
+   },
+   "at": [
+    32.55,
+    17.0,
+    -7.78
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "none",
+    "alpha": 0.55,
+    "glow": 0.18,
+    "weight": 0.72
+   },
+   "rotate": [
+    0,
+    180,
+    0
+   ]
+  },
+  {
+   "id": "palas-s-windows-2-1",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 1,
+    "cols": 10,
+    "arch": "round",
+    "kind": "windows",
+    "outline": false,
+    "opening": [
+     0.95,
+     3.036
+    ],
+    "size": [
+     41.74,
+     4.6
+    ]
+   },
+   "at": [
+    31.31,
+    21.6,
+    -7.78
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "none",
+    "alpha": 0.55,
+    "glow": 0.18,
+    "weight": 0.72
+   },
+   "rotate": [
+    0,
+    180,
+    0
+   ]
+  },
+  {
+   "id": "palas-s-windows-2-2",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 1,
+    "cols": 10,
+    "arch": "round",
+    "kind": "windows",
+    "outline": false,
+    "opening": [
+     0.95,
+     3.036
+    ],
+    "size": [
+     41.74,
+     4.6
+    ]
+   },
+   "at": [
+    32.55,
+    21.6,
+    -7.78
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "none",
+    "alpha": 0.55,
+    "glow": 0.18,
+    "weight": 0.72
+   },
+   "rotate": [
+    0,
+    180,
+    0
+   ]
+  },
+  {
+   "id": "palas-s-windows-3-1",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 1,
+    "cols": 10,
+    "arch": "round",
+    "kind": "windows",
+    "outline": false,
+    "opening": [
+     0.95,
+     2.6679999999999997
+    ],
+    "size": [
+     41.74,
+     4.6
+    ]
+   },
+   "at": [
+    31.31,
+    26.2,
+    -7.78
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "none",
+    "alpha": 0.55,
+    "glow": 0.18,
+    "weight": 0.72
+   },
+   "rotate": [
+    0,
+    180,
+    0
+   ]
+  },
+  {
+   "id": "palas-s-windows-3-2",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 1,
+    "cols": 10,
+    "arch": "round",
+    "kind": "windows",
+    "outline": false,
+    "opening": [
+     0.95,
+     2.6679999999999997
+    ],
+    "size": [
+     41.74,
+     4.6
+    ]
+   },
+   "at": [
+    32.55,
+    26.2,
+    -7.78
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "none",
+    "alpha": 0.55,
+    "glow": 0.18,
+    "weight": 0.72
+   },
+   "rotate": [
+    0,
+    180,
+    0
+   ]
+  },
+  {
+   "id": "palas-s-windows-4-1",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 1,
+    "cols": 10,
+    "arch": "round",
+    "kind": "windows",
+    "outline": false,
+    "opening": [
+     0.8,
+     4.232
+    ],
+    "size": [
+     41.74,
+     4.6
+    ]
+   },
+   "at": [
+    30.88,
+    30.8,
+    -7.78
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "none",
+    "alpha": 0.55,
+    "glow": 0.18,
+    "weight": 0.72
+   },
+   "rotate": [
+    0,
+    180,
+    0
+   ]
+  },
+  {
+   "id": "palas-s-windows-4-2",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 1,
+    "cols": 10,
+    "arch": "round",
+    "kind": "windows",
+    "outline": false,
+    "opening": [
+     0.8,
+     4.232
+    ],
+    "size": [
+     41.74,
+     4.6
+    ]
+   },
+   "at": [
+    31.93,
+    30.8,
+    -7.78
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "none",
+    "alpha": 0.55,
+    "glow": 0.18,
+    "weight": 0.72
+   },
+   "rotate": [
+    0,
+    180,
+    0
+   ]
+  },
+  {
+   "id": "palas-s-windows-4-3",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 1,
+    "cols": 10,
+    "arch": "round",
+    "kind": "windows",
+    "outline": false,
+    "opening": [
+     0.8,
+     4.232
+    ],
+    "size": [
+     41.74,
+     4.6
+    ]
+   },
+   "at": [
+    32.98,
+    30.8,
+    -7.78
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "none",
+    "alpha": 0.55,
+    "glow": 0.18,
+    "weight": 0.72
+   },
+   "rotate": [
+    0,
+    180,
+    0
+   ]
+  },
+  {
+   "id": "palas-s-windows-5-1",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 1,
+    "cols": 10,
+    "arch": "round",
+    "kind": "windows",
+    "outline": false,
+    "opening": [
+     0.95,
+     2.6679999999999997
+    ],
+    "size": [
+     41.74,
+     4.6
+    ]
+   },
+   "at": [
+    31.31,
+    35.4,
+    -7.78
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "none",
+    "alpha": 0.55,
+    "glow": 0.18,
+    "weight": 0.72
+   },
+   "rotate": [
+    0,
+    180,
+    0
+   ]
+  },
+  {
+   "id": "palas-s-windows-5-2",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 1,
+    "cols": 10,
+    "arch": "round",
+    "kind": "windows",
+    "outline": false,
+    "opening": [
+     0.95,
+     2.6679999999999997
+    ],
+    "size": [
+     41.74,
+     4.6
+    ]
+   },
+   "at": [
+    32.55,
+    35.4,
+    -7.78
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "none",
+    "alpha": 0.55,
+    "glow": 0.18,
+    "weight": 0.72
+   },
+   "rotate": [
+    0,
+    180,
+    0
+   ]
+  },
+  {
+   "id": "palas-s-plinth-windows",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 1,
+    "cols": 10,
+    "arch": "flat",
+    "kind": "windows",
+    "outline": false,
+    "size": [
+     41.74,
+     4.5
+    ]
+   },
+   "at": [
+    31.93,
+    12.0,
+    -7.78
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "none",
+    "alpha": 0.32,
+    "glow": 0.05,
+    "weight": 0.5
+   },
+   "rotate": [
+    0,
+    180,
+    0
+   ]
+  },
+  {
+   "id": "palas-s-singers-course",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      8.06,
+      30.8,
+      -7.83
+     ],
+     [
+      55.8,
+      30.8,
+      -7.83
+     ]
+    ],
+    "smooth": false
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "weight": 1.0,
+    "glow": 0.3
+   }
+  },
+  {
+   "id": "palas-west-windows-1-1",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 1,
+    "cols": 4,
+    "arch": "round",
+    "kind": "windows",
+    "outline": false,
+    "opening": [
+     0.95,
+     2.852
+    ],
+    "size": [
+     13.6,
+     4.6
+    ]
+   },
+   "at": [
+    55.83,
+    17.0,
+    0.93
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "none",
+    "alpha": 0.55,
+    "glow": 0.18,
+    "weight": 0.72
+   },
+   "rotate": [
+    0,
+    90,
+    0
+   ]
+  },
+  {
+   "id": "palas-west-windows-1-2",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 1,
+    "cols": 4,
+    "arch": "round",
+    "kind": "windows",
+    "outline": false,
+    "opening": [
+     0.95,
+     2.852
+    ],
+    "size": [
+     13.6,
+     4.6
+    ]
+   },
+   "at": [
+    55.83,
+    17.0,
+    2.17
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "none",
+    "alpha": 0.55,
+    "glow": 0.18,
+    "weight": 0.72
+   },
+   "rotate": [
+    0,
+    90,
+    0
+   ]
+  },
+  {
+   "id": "palas-west-windows-2-1",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 1,
+    "cols": 4,
+    "arch": "round",
+    "kind": "windows",
+    "outline": false,
+    "opening": [
+     0.95,
+     2.852
+    ],
+    "size": [
+     13.6,
+     4.6
+    ]
+   },
+   "at": [
+    55.83,
+    21.6,
+    0.93
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "none",
+    "alpha": 0.55,
+    "glow": 0.18,
+    "weight": 0.72
+   },
+   "rotate": [
+    0,
+    90,
+    0
+   ]
+  },
+  {
+   "id": "palas-west-windows-2-2",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 1,
+    "cols": 4,
+    "arch": "round",
+    "kind": "windows",
+    "outline": false,
+    "opening": [
+     0.95,
+     2.852
+    ],
+    "size": [
+     13.6,
+     4.6
+    ]
+   },
+   "at": [
+    55.83,
+    21.6,
+    2.17
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "none",
+    "alpha": 0.55,
+    "glow": 0.18,
+    "weight": 0.72
+   },
+   "rotate": [
+    0,
+    90,
+    0
+   ]
+  },
+  {
+   "id": "palas-west-windows-3-1",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 1,
+    "cols": 4,
+    "arch": "round",
+    "kind": "windows",
+    "outline": false,
+    "opening": [
+     0.95,
+     2.852
+    ],
+    "size": [
+     13.6,
+     4.6
+    ]
+   },
+   "at": [
+    55.83,
+    26.2,
+    0.93
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "none",
+    "alpha": 0.55,
+    "glow": 0.18,
+    "weight": 0.72
+   },
+   "rotate": [
+    0,
+    90,
+    0
+   ]
+  },
+  {
+   "id": "palas-west-windows-3-2",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 1,
+    "cols": 4,
+    "arch": "round",
+    "kind": "windows",
+    "outline": false,
+    "opening": [
+     0.95,
+     2.852
+    ],
+    "size": [
+     13.6,
+     4.6
+    ]
+   },
+   "at": [
+    55.83,
+    26.2,
+    2.17
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "none",
+    "alpha": 0.55,
+    "glow": 0.18,
+    "weight": 0.72
+   },
+   "rotate": [
+    0,
+    90,
+    0
+   ]
+  },
+  {
+   "id": "palas-west-windows-4-1",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 1,
+    "cols": 4,
+    "arch": "round",
+    "kind": "windows",
+    "outline": false,
+    "opening": [
+     0.95,
+     2.852
+    ],
+    "size": [
+     13.6,
+     4.6
+    ]
+   },
+   "at": [
+    55.83,
+    30.8,
+    0.93
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "none",
+    "alpha": 0.55,
+    "glow": 0.18,
+    "weight": 0.72
+   },
+   "rotate": [
+    0,
+    90,
+    0
+   ]
+  },
+  {
+   "id": "palas-west-windows-4-2",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 1,
+    "cols": 4,
+    "arch": "round",
+    "kind": "windows",
+    "outline": false,
+    "opening": [
+     0.95,
+     2.852
+    ],
+    "size": [
+     13.6,
+     4.6
+    ]
+   },
+   "at": [
+    55.83,
+    30.8,
+    2.17
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "none",
+    "alpha": 0.55,
+    "glow": 0.18,
+    "weight": 0.72
+   },
+   "rotate": [
+    0,
+    90,
+    0
+   ]
+  },
+  {
+   "id": "palas-west-windows-5-1",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 1,
+    "cols": 4,
+    "arch": "round",
+    "kind": "windows",
+    "outline": false,
+    "opening": [
+     0.95,
+     2.852
+    ],
+    "size": [
+     13.6,
+     4.6
+    ]
+   },
+   "at": [
+    55.83,
+    35.4,
+    0.93
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "none",
+    "alpha": 0.55,
+    "glow": 0.18,
+    "weight": 0.72
+   },
+   "rotate": [
+    0,
+    90,
+    0
+   ]
+  },
+  {
+   "id": "palas-west-windows-5-2",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 1,
+    "cols": 4,
+    "arch": "round",
+    "kind": "windows",
+    "outline": false,
+    "opening": [
+     0.95,
+     2.852
+    ],
+    "size": [
+     13.6,
+     4.6
+    ]
+   },
+   "at": [
+    55.83,
+    35.4,
+    2.17
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "none",
+    "alpha": 0.55,
+    "glow": 0.18,
+    "weight": 0.72
+   },
+   "rotate": [
+    0,
+    90,
+    0
+   ]
+  },
+  {
+   "id": "palas-court-windows",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 4,
+    "cols": 4,
+    "arch": "round",
+    "kind": "windows",
+    "outline": false,
+    "size": [
+     13.6,
+     18.0
+    ]
+   },
+   "at": [
+    8.03,
+    22.0,
+    1.55
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "none",
+    "alpha": 0.5,
+    "glow": 0.1,
+    "weight": 0.6
+   },
+   "rotate": [
+    0,
+    -90,
+    0
+   ]
+  },
+  {
+   "id": "palas-cornice-n",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      8.06,
+      41.6,
+      10.91
+     ],
+     [
+      55.8,
+      41.6,
+      10.91
+     ]
+    ],
+    "smooth": false
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "weight": 1.3,
+    "glow": 0.4
+   }
+  },
+  {
+   "id": "palas-lesene-n-0",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.7,
+     29.6,
+     0.35
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    11.06,
+    12.0,
+    11.03
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "palas-lesene-n-2",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.7,
+     29.6,
+     0.35
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    19.408,
+    12.0,
+    11.03
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "palas-lesene-n-4",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.7,
+     29.6,
+     0.35
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    27.756,
+    12.0,
+    11.03
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "palas-lesene-n-6",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.7,
+     29.6,
+     0.35
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    36.104,
+    12.0,
+    11.03
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "palas-lesene-n-8",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.7,
+     29.6,
+     0.35
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    44.452,
+    12.0,
+    11.03
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "palas-lesene-n-10",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.7,
+     29.6,
+     0.35
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    52.8,
+    12.0,
+    11.03
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "palas-cornice-s",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      8.06,
+      41.6,
+      -7.81
+     ],
+     [
+      55.8,
+      41.6,
+      -7.81
+     ]
+    ],
+    "smooth": false
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "weight": 1.3,
+    "glow": 0.4
+   }
+  },
+  {
+   "id": "palas-lesene-s-0",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.7,
+     29.6,
+     0.35
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    11.06,
+    12.0,
+    -7.93
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "palas-lesene-s-2",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.7,
+     29.6,
+     0.35
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    19.408,
+    12.0,
+    -7.93
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "palas-lesene-s-4",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.7,
+     29.6,
+     0.35
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    27.756,
+    12.0,
+    -7.93
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "palas-lesene-s-6",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.7,
+     29.6,
+     0.35
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    36.104,
+    12.0,
+    -7.93
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "palas-lesene-s-8",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.7,
+     29.6,
+     0.35
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    44.452,
+    12.0,
+    -7.93
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "palas-lesene-s-10",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.7,
+     29.6,
+     0.35
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    52.8,
+    12.0,
+    -7.93
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "palas-west-gable",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      55.8,
+      42.0,
+      -7.75
+     ],
+     [
+      55.8,
+      55.0,
+      1.55
+     ],
+     [
+      55.8,
+      42.0,
+      10.85
+     ]
+    ],
+    "smooth": false
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "weight": 1.5,
+    "glow": 0.5
+   }
+  },
+  {
+   "id": "palas-west-gable-figure",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.4,
+     1.0,
+     1.4
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    55.8,
+    55.0,
+    1.55
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "dark",
+    "glow": 0.6,
+    "weight": 1.1
+   }
+  },
+  {
+   "id": "palas-west-gable-figure-body",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.65,
+    "height": 2.6,
+    "segments": 8
+   },
+   "at": [
+    55.8,
+    56.0,
+    1.55
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "dark",
+    "glow": 0.6,
+    "weight": 1.1
+   }
+  },
+  {
+   "id": "palas-west-gable-figure-head",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "sphere",
+    "radius": 0.55,
+    "lat": 5,
+    "lon": 8,
+    "anchor": "base"
+   },
+   "at": [
+    55.8,
+    58.6,
+    1.55
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "dark",
+    "glow": 0.6,
+    "weight": 1.1
+   }
+  },
+  {
+   "id": "palas-west-gable-figure-shield",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.2,
+     1.4,
+     1.0
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    56.5,
+    56.6,
+    1.15
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "dark",
+    "glow": 0.6,
+    "weight": 1.1
+   }
+  },
+  {
+   "id": "palas-west-gable-figure-lance",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.1,
+    "height": 6.0,
+    "segments": 6
+   },
+   "at": [
+    55.8,
+    56.0,
+    2.4
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "dark",
+    "glow": 0.6,
+    "weight": 1.1
+   }
+  },
+  {
+   "id": "palas-court-gable",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      8.06,
+      42.0,
+      -7.75
+     ],
+     [
+      8.06,
+      55.0,
+      1.55
+     ],
+     [
+      8.06,
+      42.0,
+      10.85
+     ]
+    ],
+    "smooth": false
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "weight": 1.5,
+    "glow": 0.5
+   }
+  },
+  {
+   "id": "palas-court-gable-figure",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.4,
+     1.0,
+     1.4
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    8.06,
+    55.0,
+    1.55
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "dark",
+    "glow": 0.6,
+    "weight": 1.1
+   }
+  },
+  {
+   "id": "palas-court-gable-figure-body",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.65,
+    "height": 2.6,
+    "segments": 8
+   },
+   "at": [
+    8.06,
+    56.0,
+    1.55
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "dark",
+    "glow": 0.6,
+    "weight": 1.1
+   }
+  },
+  {
+   "id": "palas-court-gable-figure-head",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "sphere",
+    "radius": 0.55,
+    "lat": 5,
+    "lon": 8,
+    "anchor": "base"
+   },
+   "at": [
+    8.06,
+    58.6,
+    1.55
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "dark",
+    "glow": 0.6,
+    "weight": 1.1
+   }
+  },
+  {
+   "id": "palas-turret-corbel-0",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "lathe",
+    "profile": [
+     [
+      0.35,
+      0
+     ],
+     [
+      0.6299999999999999,
+      1.1
+     ],
+     [
+      1.15,
+      2.0
+     ]
+    ],
+    "segments": 28,
+    "meridians": 14
+   },
+   "at": [
+    55.8,
+    34.0,
+    10.85
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "palas-turret-0",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "tower",
+    "radius": 1.15,
+    "height": 9.5,
+    "sides": 8,
+    "roof": "spire",
+    "roof_height": 8.5,
+    "windows": [
+     2,
+     4
+    ]
+   },
+   "at": [
+    55.8,
+    36.0,
+    10.85
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.75,
+    "glow": 0.5,
+    "weight": 1.45
+   }
+  },
+  {
+   "id": "palas-turret-corbel-1",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "lathe",
+    "profile": [
+     [
+      0.35,
+      0
+     ],
+     [
+      0.6299999999999999,
+      1.1
+     ],
+     [
+      1.15,
+      2.0
+     ]
+    ],
+    "segments": 28,
+    "meridians": 14
+   },
+   "at": [
+    55.8,
+    34.0,
+    -7.75
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "palas-turret-1",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "tower",
+    "radius": 1.15,
+    "height": 9.5,
+    "sides": 8,
+    "roof": "spire",
+    "roof_height": 8.5,
+    "windows": [
+     2,
+     4
+    ]
+   },
+   "at": [
+    55.8,
+    36.0,
+    -7.75
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.75,
+    "glow": 0.5,
+    "weight": 1.45
+   }
+  },
+  {
+   "id": "palas-turret-corbel-2",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "lathe",
+    "profile": [
+     [
+      0.35,
+      0
+     ],
+     [
+      0.6299999999999999,
+      1.1
+     ],
+     [
+      1.15,
+      2.0
+     ]
+    ],
+    "segments": 28,
+    "meridians": 14
+   },
+   "at": [
+    8.06,
+    34.0,
+    10.85
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "palas-turret-2",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "tower",
+    "radius": 1.15,
+    "height": 9.5,
+    "sides": 8,
+    "roof": "spire",
+    "roof_height": 8.5,
+    "windows": [
+     2,
+     4
+    ]
+   },
+   "at": [
+    8.06,
+    36.0,
+    10.85
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.75,
+    "glow": 0.5,
+    "weight": 1.45
+   }
+  },
+  {
+   "id": "palas-turret-corbel-3",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "lathe",
+    "profile": [
+     [
+      0.35,
+      0
+     ],
+     [
+      0.6299999999999999,
+      1.1
+     ],
+     [
+      1.15,
+      2.0
+     ]
+    ],
+    "segments": 28,
+    "meridians": 14
+   },
+   "at": [
+    8.06,
+    34.0,
+    -7.75
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "palas-turret-3",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "tower",
+    "radius": 1.15,
+    "height": 9.5,
+    "sides": 8,
+    "roof": "spire",
+    "roof_height": 8.5,
+    "windows": [
+     2,
+     4
+    ]
+   },
+   "at": [
+    8.06,
+    36.0,
+    -7.75
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.75,
+    "glow": 0.5,
+    "weight": 1.45
+   }
+  },
+  {
+   "id": "palas-dormers-n-1",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "dormer",
+    "width": 1.3,
+    "height": 1.9,
+    "depth": 2.4,
+    "roof_height": 0.78
+   },
+   "at": [
+    13.06,
+    43.0,
+    8.535
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.7,
+    "glow": 0.35,
+    "weight": 1.25
+   },
+   "repeat": {
+    "count": 9,
+    "step": {
+     "at": [
+      4.717,
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "palas-dormers-n-2",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "dormer",
+    "width": 0.9,
+    "height": 1.3,
+    "depth": 2.4,
+    "roof_height": 0.54
+   },
+   "at": [
+    13.06,
+    48.5,
+    4.6
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   },
+   "repeat": {
+    "count": 7,
+    "step": {
+     "at": [
+      6.29,
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "palas-stacks-n",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "tower",
+    "radius": 1.0,
+    "height": 4.2,
+    "sides": 4,
+    "roof": "spire",
+    "roof_height": 2.2
+   },
+   "at": [
+    16.56,
+    49.15,
+    5.735
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   },
+   "repeat": {
+    "count": 5,
+    "step": {
+     "at": [
+      7.685,
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "palas-dormers-s-1",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "dormer",
+    "width": 1.3,
+    "height": 1.9,
+    "depth": 2.4,
+    "roof_height": 0.78
+   },
+   "at": [
+    13.06,
+    43.0,
+    -5.435
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.7,
+    "glow": 0.35,
+    "weight": 1.25
+   },
+   "rotate": [
+    0,
+    180,
+    0
+   ],
+   "repeat": {
+    "count": 9,
+    "step": {
+     "at": [
+      4.717,
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "palas-dormers-s-2",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "dormer",
+    "width": 0.9,
+    "height": 1.3,
+    "depth": 2.4,
+    "roof_height": 0.54
+   },
+   "at": [
+    13.06,
+    48.5,
+    -1.5
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   },
+   "rotate": [
+    0,
+    180,
+    0
+   ],
+   "repeat": {
+    "count": 7,
+    "step": {
+     "at": [
+      6.29,
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "palas-stacks-s",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "tower",
+    "radius": 1.0,
+    "height": 4.2,
+    "sides": 4,
+    "roof": "spire",
+    "roof_height": 2.2
+   },
+   "at": [
+    16.56,
+    49.15,
+    -2.635
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   },
+   "repeat": {
+    "count": 5,
+    "step": {
+     "at": [
+      7.685,
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "palas-west-loggia",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     5.0,
+     13.2,
+     9.0
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    58.3,
+    13.0,
+    2.15
+   ],
+   "source": "ref-three-quarter",
+   "label": "West Söller (loggia)",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "palas-west-loggia-arcade-w-1",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 1,
+    "cols": 3,
+    "arch": "round",
+    "kind": "arcade",
+    "outline": false,
+    "size": [
+     8.5,
+     4.6
+    ]
+   },
+   "at": [
+    60.83,
+    26.2,
+    2.15
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "none",
+    "glow": 0.4,
+    "weight": 1.05
+   },
+   "rotate": [
+    0,
+    90,
+    0
+   ]
+  },
+  {
+   "id": "palas-west-loggia-arcade-n-1",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 1,
+    "cols": 2,
+    "arch": "round",
+    "kind": "arcade",
+    "outline": false,
+    "size": [
+     4.5,
+     4.6
+    ]
+   },
+   "at": [
+    58.3,
+    26.2,
+    6.68
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "none",
+    "glow": 0.4,
+    "weight": 1.05
+   }
+  },
+  {
+   "id": "palas-west-loggia-arcade-s-1",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 1,
+    "cols": 2,
+    "arch": "round",
+    "kind": "arcade",
+    "outline": false,
+    "size": [
+     4.5,
+     4.6
+    ]
+   },
+   "at": [
+    58.3,
+    26.2,
+    -2.38
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "none",
+    "glow": 0.4,
+    "weight": 1.05
+   },
+   "rotate": [
+    0,
+    180,
+    0
+   ]
+  },
+  {
+   "id": "palas-west-loggia-floor-1",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     5.4,
+     0.35,
+     9.4
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    58.3,
+    30.8,
+    2.15
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "palas-west-loggia-arcade-w-2",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 1,
+    "cols": 3,
+    "arch": "round",
+    "kind": "arcade",
+    "outline": false,
+    "size": [
+     8.5,
+     4.6
+    ]
+   },
+   "at": [
+    60.83,
+    30.8,
+    2.15
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "none",
+    "glow": 0.4,
+    "weight": 1.05
+   },
+   "rotate": [
+    0,
+    90,
+    0
+   ]
+  },
+  {
+   "id": "palas-west-loggia-arcade-n-2",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 1,
+    "cols": 2,
+    "arch": "round",
+    "kind": "arcade",
+    "outline": false,
+    "size": [
+     4.5,
+     4.6
+    ]
+   },
+   "at": [
+    58.3,
+    30.8,
+    6.68
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "none",
+    "glow": 0.4,
+    "weight": 1.05
+   }
+  },
+  {
+   "id": "palas-west-loggia-arcade-s-2",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 1,
+    "cols": 2,
+    "arch": "round",
+    "kind": "arcade",
+    "outline": false,
+    "size": [
+     4.5,
+     4.6
+    ]
+   },
+   "at": [
+    58.3,
+    30.8,
+    -2.38
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "none",
+    "glow": 0.4,
+    "weight": 1.05
+   },
+   "rotate": [
+    0,
+    180,
+    0
+   ]
+  },
+  {
+   "id": "palas-west-loggia-floor-2",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     5.4,
+     0.35,
+     9.4
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    58.3,
+    35.4,
+    2.15
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "palas-west-loggia-parapet",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "battlements",
+    "height": 0.9,
+    "merlon": 0.75,
+    "gap": 0.55,
+    "thickness": 0.5,
+    "path": [
+     [
+      -2.5,
+      -4.5
+     ],
+     [
+      2.5,
+      -4.5
+     ],
+     [
+      2.5,
+      4.5
+     ],
+     [
+      -2.5,
+      4.5
+     ]
+    ]
+   },
+   "at": [
+    58.3,
+    35.75,
+    2.15
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.6,
+    "glow": 0.3,
+    "weight": 0.9
+   }
+  },
+  {
+   "id": "north-tower-shaft",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "tower",
+    "radius": 3.0,
+    "height": 50.3,
+    "sides": 0,
+    "roof": "none",
+    "windows": [
+     8,
+     3
+    ]
+   },
+   "at": [
+    39.06,
+    11.0,
+    12.524
+   ],
+   "source": "ref-elevation",
+   "label": "North stair tower (65 m)",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.7,
+    "glow": 0.35,
+    "weight": 1.25
+   }
+  },
+  {
+   "id": "north-tower-gallery-corbel",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "lathe",
+    "profile": [
+     [
+      3.0,
+      0
+     ],
+     [
+      3.2275,
+      0.77
+     ],
+     [
+      3.65,
+      1.4
+     ]
+    ],
+    "segments": 28,
+    "meridians": 14
+   },
+   "at": [
+    39.06,
+    59.9,
+    12.524
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "north-tower-gallery-deck",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "cylinder",
+    "radius": 3.65,
+    "height": 0.35,
+    "segments": 32
+   },
+   "at": [
+    39.06,
+    61.3,
+    12.524
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "north-tower-gallery-merlons",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "battlements",
+    "height": 1.2,
+    "merlon": 0.75,
+    "gap": 0.55,
+    "thickness": 0.5,
+    "radius": 3.5
+   },
+   "at": [
+    39.06,
+    61.65,
+    12.524
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.6,
+    "glow": 0.3,
+    "weight": 0.9
+   }
+  },
+  {
+   "id": "north-tower-drum",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "tower",
+    "radius": 2.35,
+    "height": 4.0,
+    "sides": 0,
+    "roof": "none",
+    "windows": [
+     1,
+     8
+    ]
+   },
+   "at": [
+    39.06,
+    61.65,
+    12.524
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.7,
+    "glow": 0.35,
+    "weight": 1.25
+   }
+  },
+  {
+   "id": "north-tower-crown-corbel",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "lathe",
+    "profile": [
+     [
+      2.35,
+      0
+     ],
+     [
+      2.49,
+      0.55
+     ],
+     [
+      2.75,
+      1.0
+     ]
+    ],
+    "segments": 28,
+    "meridians": 14
+   },
+   "at": [
+    39.06,
+    64.65,
+    12.524
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "north-tower-crown-merlons",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "battlements",
+    "height": 1.0,
+    "merlon": 0.75,
+    "gap": 0.55,
+    "thickness": 0.5,
+    "radius": 2.6
+   },
+   "at": [
+    39.06,
+    65.65,
+    12.524
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.6,
+    "glow": 0.3,
+    "weight": 0.9
+   }
+  },
+  {
+   "id": "north-tower-spire",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "tower",
+    "radius": 2.45,
+    "height": 0.6,
+    "sides": 0,
+    "roof": "spire",
+    "roof_height": 9.75
+   },
+   "at": [
+    39.06,
+    65.65,
+    12.524
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.75,
+    "glow": 0.5,
+    "weight": 1.45
+   }
+  },
+  {
+   "id": "north-tower-finial",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.1,
+    "height": 2.4,
+    "segments": 6
+   },
+   "at": [
+    39.06,
+    76.0,
+    12.524
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.75,
+    "glow": 0.5,
+    "weight": 1.45
+   }
+  },
+  {
+   "id": "north-tower-finial-cross",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.2,
+     0.12,
+     0.12
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    39.06,
+    77.6,
+    12.524
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.75,
+    "glow": 0.5,
+    "weight": 1.45
+   }
+  },
+  {
+   "id": "north-tower-stair-turret",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "tower",
+    "radius": 0.9,
+    "height": 10.8,
+    "sides": 8,
+    "roof": "spire",
+    "roof_height": 5.0
+   },
+   "at": [
+    36.61,
+    58.3,
+    13.874
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.75,
+    "glow": 0.5,
+    "weight": 1.45
+   }
+  },
+  {
+   "id": "south-tower-shaft",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "tower",
+    "radius": 1.85,
+    "height": 42.0,
+    "sides": 0,
+    "roof": "none",
+    "windows": [
+     8,
+     2
+    ]
+   },
+   "at": [
+    33.356,
+    11.0,
+    -7.254
+   ],
+   "source": "ref-three-quarter",
+   "label": "South stair tower",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.7,
+    "glow": 0.35,
+    "weight": 1.25
+   }
+  },
+  {
+   "id": "south-tower-crown-corbel",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "lathe",
+    "profile": [
+     [
+      1.85,
+      0
+     ],
+     [
+      2.0425,
+      0.66
+     ],
+     [
+      2.4,
+      1.2
+     ]
+    ],
+    "segments": 28,
+    "meridians": 14
+   },
+   "at": [
+    33.356,
+    51.8,
+    -7.254
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "south-tower-merlons",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "battlements",
+    "height": 1.2,
+    "merlon": 0.75,
+    "gap": 0.55,
+    "thickness": 0.5,
+    "radius": 2.25
+   },
+   "at": [
+    33.356,
+    53.0,
+    -7.254
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.6,
+    "glow": 0.3,
+    "weight": 0.9
+   }
+  },
+  {
+   "id": "south-tower-spire",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "tower",
+    "radius": 2.1,
+    "height": 0.6,
+    "sides": 0,
+    "roof": "spire",
+    "roof_height": 10.5
+   },
+   "at": [
+    33.356,
+    53.0,
+    -7.254
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.75,
+    "glow": 0.5,
+    "weight": 1.45
+   }
+  },
+  {
+   "id": "chair-tower",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     5.58,
+     29.0,
+     4.03
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    18.91,
+    11.0,
+    12.865
+   ],
+   "source": "ref-plan",
+   "label": "Chair tower",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.7,
+    "glow": 0.35,
+    "weight": 1.25
+   }
+  },
+  {
+   "id": "chair-tower-roof",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "tower",
+    "radius": 3.934,
+    "height": 0.3,
+    "sides": 4,
+    "roof": "pyramid",
+    "roof_height": 7.0
+   },
+   "at": [
+    18.91,
+    40.0,
+    12.865
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.75,
+    "glow": 0.5,
+    "weight": 1.45
+   }
+  },
+  {
+   "id": "chair-tower-windows",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 5,
+    "cols": 1,
+    "arch": "round",
+    "kind": "windows",
+    "outline": false,
+    "opening": [
+     1.2,
+     2.76
+    ],
+    "size": [
+     3.98,
+     23.0
+    ]
+   },
+   "at": [
+    18.91,
+    17.0,
+    14.91
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "none",
+    "alpha": 0.55,
+    "glow": 0.18,
+    "weight": 0.72
+   }
+  },
+  {
+   "id": "chair-tower-windows-w",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 5,
+    "cols": 1,
+    "arch": "round",
+    "kind": "windows",
+    "outline": false,
+    "opening": [
+     0.9,
+     2.53
+    ],
+    "size": [
+     2.83,
+     23.0
+    ]
+   },
+   "at": [
+    21.73,
+    17.0,
+    12.865
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "none",
+    "alpha": 0.5,
+    "glow": 0.1,
+    "weight": 0.6
+   },
+   "rotate": [
+    0,
+    90,
+    0
+   ]
+  },
+  {
+   "id": "chair-tower-windows-e",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 5,
+    "cols": 1,
+    "arch": "round",
+    "kind": "windows",
+    "outline": false,
+    "opening": [
+     0.9,
+     2.53
+    ],
+    "size": [
+     2.83,
+     23.0
+    ]
+   },
+   "at": [
+    16.09,
+    17.0,
+    12.865
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "none",
+    "alpha": 0.5,
+    "glow": 0.1,
+    "weight": 0.6
+   },
+   "rotate": [
+    0,
+    -90,
+    0
+   ]
+  },
+  {
+   "id": "conservatory",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     8.0,
+     4.6,
+     3.6
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    12.276,
+    30.8,
+    12.65
+   ],
+   "source": "ref-elevation",
+   "label": "Conservatory (glazed)",
+   "look": {
+    "fill": "glass",
+    "alpha": 0.55,
+    "glow": 0.4,
+    "weight": 1.0
+   }
+  },
+  {
+   "id": "conservatory-glazing",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 2,
+    "cols": 6,
+    "arch": "flat",
+    "kind": "windows",
+    "outline": false,
+    "opening": [
+     1.0,
+     1.7
+    ],
+    "size": [
+     7.7,
+     4.199999999999999
+    ]
+   },
+   "at": [
+    12.276,
+    31.0,
+    14.48
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "none",
+    "glow": 0.45,
+    "weight": 0.9
+   }
+  },
+  {
+   "id": "conservatory-mullion-0",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      9.609,
+      30.8,
+      14.5
+     ],
+     [
+      9.609,
+      35.4,
+      14.5
+     ]
+    ],
+    "smooth": false
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "weight": 0.6,
+    "alpha": 0.6
+   }
+  },
+  {
+   "id": "conservatory-mullion-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      10.943,
+      30.8,
+      14.5
+     ],
+     [
+      10.943,
+      35.4,
+      14.5
+     ]
+    ],
+    "smooth": false
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "weight": 0.6,
+    "alpha": 0.6
+   }
+  },
+  {
+   "id": "conservatory-mullion-2",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      12.276,
+      30.8,
+      14.5
+     ],
+     [
+      12.276,
+      35.4,
+      14.5
+     ]
+    ],
+    "smooth": false
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "weight": 0.6,
+    "alpha": 0.6
+   }
+  },
+  {
+   "id": "conservatory-mullion-3",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      13.609,
+      30.8,
+      14.5
+     ],
+     [
+      13.609,
+      35.4,
+      14.5
+     ]
+    ],
+    "smooth": false
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "weight": 0.6,
+    "alpha": 0.6
+   }
+  },
+  {
+   "id": "conservatory-mullion-4",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      14.943,
+      30.8,
+      14.5
+     ],
+     [
+      14.943,
+      35.4,
+      14.5
+     ]
+    ],
+    "smooth": false
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "weight": 0.6,
+    "alpha": 0.6
+   }
+  },
+  {
+   "id": "court-range",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     7.13,
+     14.0,
+     7.13
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    4.495,
+    20.0,
+    8.525
+   ],
+   "source": "ref-plan",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.86,
+    "glow": 0.08,
+    "weight": 0.7
+   }
+  },
+  {
+   "id": "court-range-merlons",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "battlements",
+    "height": 1.2,
+    "merlon": 0.75,
+    "gap": 0.55,
+    "thickness": 0.5,
+    "path": [
+     [
+      -3.565,
+      -3.565
+     ],
+     [
+      3.565,
+      -3.565
+     ],
+     [
+      3.565,
+      3.565
+     ],
+     [
+      -3.565,
+      3.565
+     ]
+    ]
+   },
+   "at": [
+    4.495,
+    34.0,
+    8.525
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.6,
+    "glow": 0.3,
+    "weight": 0.9
+   }
+  },
+  {
+   "id": "court-range-windows",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 3,
+    "cols": 3,
+    "arch": "round",
+    "kind": "windows",
+    "outline": false,
+    "size": [
+     5.93,
+     14
+    ]
+   },
+   "at": [
+    4.495,
+    21.0,
+    12.12
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "none",
+    "alpha": 0.5,
+    "glow": 0.1,
+    "weight": 0.6
+   }
+  },
+  {
+   "id": "knights-house",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     14.26,
+     15.0,
+     14.57
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -6.2,
+    20.0,
+    12.245
+   ],
+   "source": "ref-plan",
+   "label": "Knights' House (three storeys)",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.86,
+    "glow": 0.08,
+    "weight": 0.7
+   }
+  },
+  {
+   "id": "knights-house-roof",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "roof",
+    "size": [
+     14.26,
+     14.57
+    ],
+    "height": 7.5,
+    "style": "gable",
+    "ridge": "z",
+    "overhang": 0.45,
+    "courses": 4
+   },
+   "at": [
+    -6.2,
+    35.0,
+    12.245
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.88,
+    "glow": 0.14,
+    "weight": 0.95
+   }
+  },
+  {
+   "id": "knights-house-north-windows",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 3,
+    "cols": 4,
+    "arch": "round",
+    "kind": "windows",
+    "outline": false,
+    "size": [
+     12.26,
+     14
+    ]
+   },
+   "at": [
+    -6.2,
+    22.0,
+    19.56
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "none",
+    "alpha": 0.7,
+    "glow": 0.22,
+    "weight": 0.8
+   }
+  },
+  {
+   "id": "knights-house-west-windows",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 3,
+    "cols": 5,
+    "arch": "round",
+    "kind": "windows",
+    "outline": false,
+    "size": [
+     12.57,
+     14
+    ]
+   },
+   "at": [
+    0.96,
+    22.0,
+    12.245
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "none",
+    "alpha": 0.5,
+    "glow": 0.1,
+    "weight": 0.6
+   },
+   "rotate": [
+    0,
+    90,
+    0
+   ]
+  },
+  {
+   "id": "knights-house-east-windows",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 3,
+    "cols": 5,
+    "arch": "round",
+    "kind": "windows",
+    "outline": false,
+    "size": [
+     12.57,
+     14
+    ]
+   },
+   "at": [
+    -13.36,
+    21.0,
+    12.245
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "none",
+    "alpha": 0.5,
+    "glow": 0.1,
+    "weight": 0.6
+   },
+   "rotate": [
+    0,
+    -90,
+    0
+   ]
+  },
+  {
+   "id": "knights-house-gable",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -13.33,
+      35.0,
+      19.58
+     ],
+     [
+      -6.2,
+      42.5,
+      19.58
+     ],
+     [
+      0.93,
+      35.0,
+      19.58
+     ]
+    ],
+    "smooth": false
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "weight": 1.4,
+    "glow": 0.45
+   }
+  },
+  {
+   "id": "knights-turret",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "tower",
+    "radius": 1.9,
+    "height": 20.5,
+    "sides": 0,
+    "roof": "none",
+    "windows": [
+     4,
+     3
+    ]
+   },
+   "at": [
+    -11.904,
+    20.0,
+    16.616
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.7,
+    "glow": 0.35,
+    "weight": 1.25
+   }
+  },
+  {
+   "id": "knights-turret-corbel",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "lathe",
+    "profile": [
+     [
+      1.9,
+      0
+     ],
+     [
+      2.04,
+      0.49500000000000005
+     ],
+     [
+      2.3,
+      0.9
+     ]
+    ],
+    "segments": 28,
+    "meridians": 14
+   },
+   "at": [
+    -11.904,
+    39.6,
+    16.616
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "knights-turret-merlons",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "battlements",
+    "height": 1.0,
+    "merlon": 0.75,
+    "gap": 0.55,
+    "thickness": 0.5,
+    "radius": 2.15
+   },
+   "at": [
+    -11.904,
+    40.5,
+    16.616
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.6,
+    "glow": 0.3,
+    "weight": 0.9
+   }
+  },
+  {
+   "id": "knights-turret-cone",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "tower",
+    "radius": 2.2,
+    "height": 0.5,
+    "sides": 0,
+    "roof": "cone",
+    "roof_height": 5.5
+   },
+   "at": [
+    -11.904,
+    40.5,
+    16.616
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.75,
+    "glow": 0.5,
+    "weight": 1.45
+   }
+  },
+  {
+   "id": "gallery",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     14.446,
+     13.0,
+     3.968
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -20.553,
+    16.0,
+    9.92
+   ],
+   "source": "ref-plan",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.86,
+    "glow": 0.08,
+    "weight": 0.7
+   }
+  },
+  {
+   "id": "gallery-roof",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "roof",
+    "size": [
+     14.446,
+     3.968
+    ],
+    "height": 3.0,
+    "style": "gable",
+    "ridge": "x",
+    "overhang": 0.45,
+    "courses": 2
+   },
+   "at": [
+    -20.553,
+    29.0,
+    9.92
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "gallery-blind-arcade",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 1,
+    "cols": 10,
+    "arch": "round",
+    "kind": "arcade",
+    "outline": false,
+    "size": [
+     13.246,
+     10
+    ]
+   },
+   "at": [
+    -20.553,
+    17.0,
+    11.934
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "none",
+    "glow": 0.3,
+    "weight": 0.9
+   }
+  },
+  {
+   "id": "square-tower",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     7.254,
+     31.0,
+     8.06
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -31.403,
+    16.0,
+    11.78
+   ],
+   "source": "ref-elevation",
+   "label": "Square tower (45 m)",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.7,
+    "glow": 0.35,
+    "weight": 1.25
+   }
+  },
+  {
+   "id": "square-tower-lancets-n",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "facade",
+    "rows": 1,
+    "cols": 3,
+    "arch": "pointed",
+    "kind": "windows",
+    "outline": false,
+    "opening": [
+     1.3,
+     5.0
+    ],
+    "size": [
+     6.054,
+     5.5
+    ]
+   },
+   "at": [
+    -31.403,
+    40.5,
+    15.84
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "none",
+    "glow": 0.4,
+    "weight": 1.05
+   }
+  },
+  {
+   "id": "square-tower-windows-n",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 4,
+    "cols": 1,
+    "arch": "round",
+    "kind": "windows",
+    "outline": false,
+    "size": [
+     6.054,
+     18.0
+    ]
+   },
+   "at": [
+    -31.403,
+    20.0,
+    15.84
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "none",
+    "alpha": 0.5,
+    "glow": 0.1,
+    "weight": 0.6
+   }
+  },
+  {
+   "id": "square-tower-lancets-s",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "facade",
+    "rows": 1,
+    "cols": 3,
+    "arch": "pointed",
+    "kind": "windows",
+    "outline": false,
+    "opening": [
+     1.3,
+     5.0
+    ],
+    "size": [
+     6.054,
+     5.5
+    ]
+   },
+   "at": [
+    -31.403,
+    40.5,
+    7.72
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "none",
+    "glow": 0.4,
+    "weight": 1.05
+   },
+   "rotate": [
+    0,
+    180,
+    0
+   ]
+  },
+  {
+   "id": "square-tower-windows-s",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 4,
+    "cols": 1,
+    "arch": "round",
+    "kind": "windows",
+    "outline": false,
+    "size": [
+     6.054,
+     18.0
+    ]
+   },
+   "at": [
+    -31.403,
+    20.0,
+    7.72
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "none",
+    "alpha": 0.5,
+    "glow": 0.1,
+    "weight": 0.6
+   },
+   "rotate": [
+    0,
+    180,
+    0
+   ]
+  },
+  {
+   "id": "square-tower-lancets-e",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "facade",
+    "rows": 1,
+    "cols": 3,
+    "arch": "pointed",
+    "kind": "windows",
+    "outline": false,
+    "opening": [
+     1.3,
+     5.0
+    ],
+    "size": [
+     6.86,
+     5.5
+    ]
+   },
+   "at": [
+    -35.06,
+    40.5,
+    11.78
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "none",
+    "glow": 0.4,
+    "weight": 1.05
+   },
+   "rotate": [
+    0,
+    -90,
+    0
+   ]
+  },
+  {
+   "id": "square-tower-windows-e",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 4,
+    "cols": 1,
+    "arch": "round",
+    "kind": "windows",
+    "outline": false,
+    "size": [
+     6.86,
+     18.0
+    ]
+   },
+   "at": [
+    -35.06,
+    20.0,
+    11.78
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "none",
+    "alpha": 0.5,
+    "glow": 0.1,
+    "weight": 0.6
+   },
+   "rotate": [
+    0,
+    -90,
+    0
+   ]
+  },
+  {
+   "id": "square-tower-lancets-w",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "facade",
+    "rows": 1,
+    "cols": 3,
+    "arch": "pointed",
+    "kind": "windows",
+    "outline": false,
+    "opening": [
+     1.3,
+     5.0
+    ],
+    "size": [
+     6.86,
+     5.5
+    ]
+   },
+   "at": [
+    -27.746,
+    40.5,
+    11.78
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "none",
+    "glow": 0.4,
+    "weight": 1.05
+   },
+   "rotate": [
+    0,
+    90,
+    0
+   ]
+  },
+  {
+   "id": "square-tower-windows-w",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 4,
+    "cols": 1,
+    "arch": "round",
+    "kind": "windows",
+    "outline": false,
+    "size": [
+     6.86,
+     18.0
+    ]
+   },
+   "at": [
+    -27.746,
+    20.0,
+    11.78
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "none",
+    "alpha": 0.5,
+    "glow": 0.1,
+    "weight": 0.6
+   },
+   "rotate": [
+    0,
+    90,
+    0
+   ]
+  },
+  {
+   "id": "square-tower-platform",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     8.254,
+     0.5,
+     9.06
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -31.403,
+    47.0,
+    11.78
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "square-tower-platform-merlons",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "battlements",
+    "height": 1.2,
+    "merlon": 0.75,
+    "gap": 0.55,
+    "thickness": 0.5,
+    "path": [
+     [
+      -4.027,
+      -4.43
+     ],
+     [
+      4.027,
+      -4.43
+     ],
+     [
+      4.027,
+      4.43
+     ],
+     [
+      -4.027,
+      4.43
+     ]
+    ]
+   },
+   "at": [
+    -31.403,
+    47.5,
+    11.78
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.6,
+    "glow": 0.3,
+    "weight": 0.9
+   }
+  },
+  {
+   "id": "square-tower-lookout-corbel",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "lathe",
+    "profile": [
+     [
+      2.6,
+      0
+     ],
+     [
+      2.88,
+      0.55
+     ],
+     [
+      3.4,
+      1.0
+     ]
+    ],
+    "segments": 28,
+    "meridians": 14
+   },
+   "at": [
+    -31.403,
+    47.5,
+    11.78
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "square-tower-lookout",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "tower",
+    "radius": 3.4,
+    "height": 6.4,
+    "sides": 0,
+    "roof": "none",
+    "windows": [
+     2,
+     8
+    ]
+   },
+   "at": [
+    -31.403,
+    48.5,
+    11.78
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.7,
+    "glow": 0.35,
+    "weight": 1.25
+   }
+  },
+  {
+   "id": "square-tower-lookout-merlons",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "battlements",
+    "height": 1.0,
+    "merlon": 0.75,
+    "gap": 0.55,
+    "thickness": 0.5,
+    "radius": 3.3
+   },
+   "at": [
+    -31.403,
+    54.9,
+    11.78
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.6,
+    "glow": 0.3,
+    "weight": 0.9
+   }
+  },
+  {
+   "id": "square-tower-cap",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "tower",
+    "radius": 3.6,
+    "height": 0.4,
+    "sides": 0,
+    "roof": "cone",
+    "roof_height": 5.4,
+    "segments": 32
+   },
+   "at": [
+    -31.403,
+    54.9,
+    11.78
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.75,
+    "glow": 0.5,
+    "weight": 1.45
+   }
+  },
+  {
+   "id": "connecting-range",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     14.074,
+     13.0,
+     4.96
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -42.067,
+    16.0,
+    13.33
+   ],
+   "source": "ref-plan",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.86,
+    "glow": 0.08,
+    "weight": 0.7
+   }
+  },
+  {
+   "id": "connecting-range-roof",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "roof",
+    "size": [
+     14.074,
+     4.96
+    ],
+    "height": 4.5,
+    "style": "gable",
+    "ridge": "x",
+    "overhang": 0.45,
+    "courses": 3
+   },
+   "at": [
+    -42.067,
+    29.0,
+    13.33
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "connecting-range-windows",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 2,
+    "cols": 8,
+    "arch": "round",
+    "kind": "windows",
+    "outline": false,
+    "size": [
+     12.874,
+     9
+    ]
+   },
+   "at": [
+    -42.067,
+    18.0,
+    15.84
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "none",
+    "alpha": 0.5,
+    "glow": 0.1,
+    "weight": 0.6
+   }
+  },
+  {
+   "id": "gatehouse",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     5.952,
+     17.0,
+     26.66
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -52.08,
+    15.0,
+    -0.62
+   ],
+   "source": "ref-plan",
+   "label": "Gatehouse",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.86,
+    "glow": 0.08,
+    "weight": 0.7
+   }
+  },
+  {
+   "id": "gatehouse-roof",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "roof",
+    "size": [
+     5.952,
+     26.66
+    ],
+    "height": 6.0,
+    "style": "gable",
+    "ridge": "z",
+    "overhang": 0.45,
+    "courses": 4
+   },
+   "at": [
+    -52.08,
+    32.0,
+    -0.62
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.88,
+    "glow": 0.14,
+    "weight": 0.95
+   }
+  },
+  {
+   "id": "gatehouse-east-windows",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 2,
+    "cols": 9,
+    "arch": "round",
+    "kind": "windows",
+    "outline": false,
+    "size": [
+     24.26,
+     10
+    ]
+   },
+   "at": [
+    -55.086,
+    20.0,
+    -0.62
+   ],
+   "source": "ref-plan",
+   "look": {
+    "fill": "none",
+    "alpha": 0.5,
+    "glow": 0.1,
+    "weight": 0.6
+   },
+   "rotate": [
+    0,
+    -90,
+    0
+   ]
+  },
+  {
+   "id": "gatehouse-court-windows",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 3,
+    "cols": 9,
+    "arch": "round",
+    "kind": "windows",
+    "outline": false,
+    "size": [
+     24.26,
+     13
+    ]
+   },
+   "at": [
+    -49.074,
+    17.0,
+    -0.62
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "none",
+    "alpha": 0.5,
+    "glow": 0.1,
+    "weight": 0.6
+   },
+   "rotate": [
+    0,
+    90,
+    0
+   ]
+  },
+  {
+   "id": "gatehouse-gate",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "facade",
+    "size": [
+     6.0,
+     9.0
+    ],
+    "rows": 1,
+    "cols": 1,
+    "kind": "arcade",
+    "arch": "round",
+    "opening": [
+     3.6,
+     6.2
+    ],
+    "outline": true
+   },
+   "at": [
+    -55.106,
+    15.0,
+    -0.62
+   ],
+   "source": "ref-plan",
+   "look": {
+    "fill": "none",
+    "glow": 0.5,
+    "weight": 1.3
+   },
+   "rotate": [
+    0,
+    -90,
+    0
+   ]
+  },
+  {
+   "id": "gatehouse-stepped-gable-east",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      -4.5,
+      0.0
+     ],
+     [
+      -4.5,
+      1.6
+     ],
+     [
+      -3.6,
+      1.6
+     ],
+     [
+      -3.6,
+      3.2
+     ],
+     [
+      -2.7,
+      3.2
+     ],
+     [
+      -2.7,
+      4.8
+     ],
+     [
+      -1.8,
+      4.8
+     ],
+     [
+      -1.8,
+      6.4
+     ],
+     [
+      -0.9,
+      6.4
+     ],
+     [
+      -0.9,
+      8.0
+     ],
+     [
+      0.0,
+      8.0
+     ],
+     [
+      0.9,
+      8.0
+     ],
+     [
+      0.9,
+      6.4
+     ],
+     [
+      1.8,
+      6.4
+     ],
+     [
+      1.8,
+      4.8
+     ],
+     [
+      2.7,
+      4.8
+     ],
+     [
+      2.7,
+      3.2
+     ],
+     [
+      3.6,
+      3.2
+     ],
+     [
+      3.6,
+      1.6
+     ],
+     [
+      4.5,
+      1.6
+     ],
+     [
+      4.5,
+      0.0
+     ]
+    ],
+    "height": 0.8,
+    "axis": "x"
+   },
+   "at": [
+    -55.856,
+    31.0,
+    -0.62
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.7,
+    "glow": 0.35,
+    "weight": 1.25
+   }
+  },
+  {
+   "id": "gatehouse-stepped-gable-west",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      -4.5,
+      0.0
+     ],
+     [
+      -4.5,
+      1.6
+     ],
+     [
+      -3.6,
+      1.6
+     ],
+     [
+      -3.6,
+      3.2
+     ],
+     [
+      -2.7,
+      3.2
+     ],
+     [
+      -2.7,
+      4.8
+     ],
+     [
+      -1.8,
+      4.8
+     ],
+     [
+      -1.8,
+      6.4
+     ],
+     [
+      -0.9,
+      6.4
+     ],
+     [
+      -0.9,
+      8.0
+     ],
+     [
+      0.0,
+      8.0
+     ],
+     [
+      0.9,
+      8.0
+     ],
+     [
+      0.9,
+      6.4
+     ],
+     [
+      1.8,
+      6.4
+     ],
+     [
+      1.8,
+      4.8
+     ],
+     [
+      2.7,
+      4.8
+     ],
+     [
+      2.7,
+      3.2
+     ],
+     [
+      3.6,
+      3.2
+     ],
+     [
+      3.6,
+      1.6
+     ],
+     [
+      4.5,
+      1.6
+     ],
+     [
+      4.5,
+      0.0
+     ]
+    ],
+    "height": 0.8,
+    "axis": "x"
+   },
+   "at": [
+    -49.104,
+    31.0,
+    -0.62
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.7,
+    "glow": 0.35,
+    "weight": 1.25
+   }
+  },
+  {
+   "id": "gatehouse-end-gable-north",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      -3.276,
+      0.0
+     ],
+     [
+      -3.276,
+      1.32
+     ],
+     [
+      -2.621,
+      1.32
+     ],
+     [
+      -2.621,
+      2.64
+     ],
+     [
+      -1.966,
+      2.64
+     ],
+     [
+      -1.966,
+      3.96
+     ],
+     [
+      -1.31,
+      3.96
+     ],
+     [
+      -1.31,
+      5.28
+     ],
+     [
+      -0.655,
+      5.28
+     ],
+     [
+      -0.655,
+      6.6
+     ],
+     [
+      0.0,
+      6.6
+     ],
+     [
+      0.655,
+      6.6
+     ],
+     [
+      0.655,
+      5.28
+     ],
+     [
+      1.31,
+      5.28
+     ],
+     [
+      1.31,
+      3.96
+     ],
+     [
+      1.966,
+      3.96
+     ],
+     [
+      1.966,
+      2.64
+     ],
+     [
+      2.621,
+      2.64
+     ],
+     [
+      2.621,
+      1.32
+     ],
+     [
+      3.276,
+      1.32
+     ],
+     [
+      3.276,
+      0.0
+     ]
+    ],
+    "height": 0.8,
+    "axis": "z"
+   },
+   "at": [
+    -52.08,
+    32.0,
+    12.31
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.7,
+    "glow": 0.35,
+    "weight": 1.25
+   }
+  },
+  {
+   "id": "gatehouse-end-gable-south",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      -3.276,
+      0.0
+     ],
+     [
+      -3.276,
+      1.32
+     ],
+     [
+      -2.621,
+      1.32
+     ],
+     [
+      -2.621,
+      2.64
+     ],
+     [
+      -1.966,
+      2.64
+     ],
+     [
+      -1.966,
+      3.96
+     ],
+     [
+      -1.31,
+      3.96
+     ],
+     [
+      -1.31,
+      5.28
+     ],
+     [
+      -0.655,
+      5.28
+     ],
+     [
+      -0.655,
+      6.6
+     ],
+     [
+      0.0,
+      6.6
+     ],
+     [
+      0.655,
+      6.6
+     ],
+     [
+      0.655,
+      5.28
+     ],
+     [
+      1.31,
+      5.28
+     ],
+     [
+      1.31,
+      3.96
+     ],
+     [
+      1.966,
+      3.96
+     ],
+     [
+      1.966,
+      2.64
+     ],
+     [
+      2.621,
+      2.64
+     ],
+     [
+      2.621,
+      1.32
+     ],
+     [
+      3.276,
+      1.32
+     ],
+     [
+      3.276,
+      0.0
+     ]
+    ],
+    "height": 0.8,
+    "axis": "z"
+   },
+   "at": [
+    -52.08,
+    32.0,
+    -14.35
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.7,
+    "glow": 0.35,
+    "weight": 1.25
+   }
+  },
+  {
+   "id": "gatehouse-tower-north",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "tower",
+    "radius": 2.05,
+    "height": 21.0,
+    "sides": 0,
+    "roof": "none",
+    "windows": [
+     4,
+     3
+    ]
+   },
+   "at": [
+    -54.56,
+    15.0,
+    14.88
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.7,
+    "glow": 0.35,
+    "weight": 1.25
+   }
+  },
+  {
+   "id": "gatehouse-tower-north-corbel",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "lathe",
+    "profile": [
+     [
+      2.05,
+      0
+     ],
+     [
+      2.2075,
+      0.55
+     ],
+     [
+      2.5,
+      1.0
+     ]
+    ],
+    "segments": 28,
+    "meridians": 14
+   },
+   "at": [
+    -54.56,
+    35.0,
+    14.88
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "gatehouse-tower-north-merlons",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "battlements",
+    "height": 1.0,
+    "merlon": 0.75,
+    "gap": 0.55,
+    "thickness": 0.5,
+    "radius": 2.35
+   },
+   "at": [
+    -54.56,
+    36.0,
+    14.88
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.6,
+    "glow": 0.3,
+    "weight": 0.9
+   }
+  },
+  {
+   "id": "gatehouse-tower-north-cap",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "tower",
+    "radius": 2.4,
+    "height": 0.5,
+    "sides": 0,
+    "roof": "cone",
+    "roof_height": 3.0
+   },
+   "at": [
+    -54.56,
+    36.0,
+    14.88
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.75,
+    "glow": 0.5,
+    "weight": 1.45
+   }
+  },
+  {
+   "id": "gatehouse-tower-south",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "tower",
+    "radius": 2.05,
+    "height": 21.0,
+    "sides": 0,
+    "roof": "none",
+    "windows": [
+     4,
+     3
+    ]
+   },
+   "at": [
+    -54.56,
+    15.0,
+    -14.384
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.7,
+    "glow": 0.35,
+    "weight": 1.25
+   }
+  },
+  {
+   "id": "gatehouse-tower-south-corbel",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "lathe",
+    "profile": [
+     [
+      2.05,
+      0
+     ],
+     [
+      2.2075,
+      0.55
+     ],
+     [
+      2.5,
+      1.0
+     ]
+    ],
+    "segments": 28,
+    "meridians": 14
+   },
+   "at": [
+    -54.56,
+    35.0,
+    -14.384
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "gatehouse-tower-south-merlons",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "battlements",
+    "height": 1.0,
+    "merlon": 0.75,
+    "gap": 0.55,
+    "thickness": 0.5,
+    "radius": 2.35
+   },
+   "at": [
+    -54.56,
+    36.0,
+    -14.384
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.6,
+    "glow": 0.3,
+    "weight": 0.9
+   }
+  },
+  {
+   "id": "gatehouse-tower-south-cap",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "tower",
+    "radius": 2.4,
+    "height": 0.5,
+    "sides": 0,
+    "roof": "cone",
+    "roof_height": 3.0
+   },
+   "at": [
+    -54.56,
+    36.0,
+    -14.384
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.75,
+    "glow": 0.5,
+    "weight": 1.45
+   }
+  },
+  {
+   "id": "bower",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     24.8,
+     16.5,
+     11.16
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -0.62,
+    11.0,
+    -11.16
+   ],
+   "source": "ref-three-quarter",
+   "label": "Bower (Kemenate)",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.86,
+    "glow": 0.08,
+    "weight": 0.7
+   }
+  },
+  {
+   "id": "bower-substructure-arch",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 1,
+    "cols": 1,
+    "arch": "round",
+    "kind": "arcade",
+    "outline": false,
+    "opening": [
+     4.6,
+     6.0
+    ],
+    "size": [
+     8.0,
+     6.5
+    ]
+   },
+   "at": [
+    -0.62,
+    11.0,
+    -16.77
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "none",
+    "glow": 0.4,
+    "weight": 1.1
+   },
+   "rotate": [
+    0,
+    180,
+    0
+   ]
+  },
+  {
+   "id": "bower-rustication-0",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -13.02,
+      12.6,
+      -16.8
+     ],
+     [
+      11.78,
+      12.6,
+      -16.8
+     ]
+    ],
+    "smooth": false
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "alpha": 0.4,
+    "weight": 0.55
+   }
+  },
+  {
+   "id": "bower-rustication-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -13.02,
+      14.2,
+      -16.8
+     ],
+     [
+      11.78,
+      14.2,
+      -16.8
+     ]
+    ],
+    "smooth": false
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "alpha": 0.4,
+    "weight": 0.55
+   }
+  },
+  {
+   "id": "bower-rustication-2",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -13.02,
+      15.8,
+      -16.8
+     ],
+     [
+      11.78,
+      15.8,
+      -16.8
+     ]
+    ],
+    "smooth": false
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "alpha": 0.4,
+    "weight": 0.55
+   }
+  },
+  {
+   "id": "bower-rustication-3",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -13.02,
+      17.4,
+      -16.8
+     ],
+     [
+      11.78,
+      17.4,
+      -16.8
+     ]
+    ],
+    "smooth": false
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "alpha": 0.4,
+    "weight": 0.55
+   }
+  },
+  {
+   "id": "bower-roof",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "roof",
+    "size": [
+     24.8,
+     11.16
+    ],
+    "height": 6.0,
+    "style": "hip",
+    "ridge": "x",
+    "overhang": 0.45,
+    "courses": 3
+   },
+   "at": [
+    -0.62,
+    27.5,
+    -11.16
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.88,
+    "glow": 0.14,
+    "weight": 0.95
+   }
+  },
+  {
+   "id": "bower-south-windows",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 2,
+    "cols": 9,
+    "arch": "round",
+    "kind": "windows",
+    "outline": false,
+    "size": [
+     22.8,
+     8.5
+    ]
+   },
+   "at": [
+    -0.62,
+    18.0,
+    -16.77
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "none",
+    "alpha": 0.7,
+    "glow": 0.22,
+    "weight": 0.8
+   },
+   "rotate": [
+    0,
+    180,
+    0
+   ]
+  },
+  {
+   "id": "bower-court-windows",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 2,
+    "cols": 9,
+    "arch": "round",
+    "kind": "windows",
+    "outline": false,
+    "size": [
+     22.8,
+     9
+    ]
+   },
+   "at": [
+    -0.62,
+    21.0,
+    -5.55
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "none",
+    "alpha": 0.5,
+    "glow": 0.1,
+    "weight": 0.6
+   }
+  },
+  {
+   "id": "bower-tower-west",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     6.2,
+     18.5,
+     6.324
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    8.06,
+    11.0,
+    -13.578
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.7,
+    "glow": 0.35,
+    "weight": 1.25
+   }
+  },
+  {
+   "id": "bower-tower-west-windows",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 3,
+    "cols": 2,
+    "arch": "round",
+    "kind": "windows",
+    "outline": false,
+    "size": [
+     4.6,
+     12.5
+    ]
+   },
+   "at": [
+    8.06,
+    15.0,
+    -16.77
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "none",
+    "alpha": 0.5,
+    "glow": 0.1,
+    "weight": 0.6
+   },
+   "rotate": [
+    0,
+    180,
+    0
+   ]
+  },
+  {
+   "id": "bower-tower-west-roof",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "tower",
+    "radius": 4.371,
+    "height": 0.3,
+    "sides": 4,
+    "roof": "pyramid",
+    "roof_height": 7.0
+   },
+   "at": [
+    8.06,
+    29.5,
+    -13.578
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.75,
+    "glow": 0.5,
+    "weight": 1.45
+   }
+  },
+  {
+   "id": "bower-tower-east",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     6.2,
+     18.5,
+     6.324
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -9.92,
+    11.0,
+    -13.578
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.7,
+    "glow": 0.35,
+    "weight": 1.25
+   }
+  },
+  {
+   "id": "bower-tower-east-windows",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "facade",
+    "rows": 3,
+    "cols": 2,
+    "arch": "round",
+    "kind": "windows",
+    "outline": false,
+    "size": [
+     4.6,
+     12.5
+    ]
+   },
+   "at": [
+    -9.92,
+    15.0,
+    -16.77
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "none",
+    "alpha": 0.5,
+    "glow": 0.1,
+    "weight": 0.6
+   },
+   "rotate": [
+    0,
+    180,
+    0
+   ]
+  },
+  {
+   "id": "bower-tower-east-roof",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "tower",
+    "radius": 4.371,
+    "height": 0.3,
+    "sides": 4,
+    "roof": "pyramid",
+    "roof_height": 7.0
+   },
+   "at": [
+    -9.92,
+    29.5,
+    -13.578
+   ],
+   "source": "ref-three-quarter",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.75,
+    "glow": 0.5,
+    "weight": 1.45
+   }
+  },
+  {
+   "id": "court-wall-0",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     15.691,
+     4.0,
+     1.0
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -20.15,
+    15.0,
+    -19.437
+   ],
+   "source": "ref-plan",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   },
+   "rotate": [
+    0,
+    166.08,
+    0
+   ]
+  },
+  {
+   "id": "court-wall-1",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     26.11,
+     4.0,
+     1.0
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -39.835,
+    15.0,
+    -21.204
+   ],
+   "source": "ref-plan",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   },
+   "rotate": [
+    0,
+    -180.0,
+    0
+   ]
+  },
+  {
+   "id": "court-wall-2",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     5.464,
+     4.0,
+     1.0
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -52.39,
+    15.0,
+    -18.972
+   ],
+   "source": "ref-plan",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.5,
+    "glow": 0.12,
+    "weight": 0.85
+   },
+   "rotate": [
+    0,
+    -90.0,
+    0
+   ]
+  },
+  {
+   "id": "court-wall-merlons",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "battlements",
+    "height": 1.0,
+    "merlon": 0.75,
+    "gap": 0.55,
+    "thickness": 0.5,
+    "path": [
+     [
+      -13.02,
+      -17.67
+     ],
+     [
+      -27.28,
+      -21.204
+     ],
+     [
+      -52.39,
+      -21.204
+     ],
+     [
+      -52.39,
+      -16.74
+     ]
+    ]
+   },
+   "at": [
+    0,
+    19.0,
+    0
+   ],
+   "source": "ref-elevation",
+   "look": {
+    "fill": "dark",
+    "alpha": 0.6,
+    "glow": 0.3,
+    "weight": 0.9
+   }
+  }
+ ],
+ "annotations": [
+  {
+   "id": "a-north",
+   "text": "Northern stair tower · 65 m",
+   "part": "north-tower-spire",
+   "offset": [
+    0,
+    3,
+    0
+   ]
+  },
+  {
+   "id": "a-square",
+   "text": "Square tower · 45 m",
+   "part": "square-tower-cap",
+   "offset": [
+    0,
+    3,
+    0
+   ]
+  },
+  {
+   "id": "a-gate",
+   "text": "Gatehouse (east)",
+   "part": "gatehouse-roof",
+   "offset": [
+    0,
+    4,
+    0
+   ]
+  },
+  {
+   "id": "a-rock",
+   "text": "Rock ridge (sketched)",
+   "part": "rock-stratum-6",
+   "offset": [
+    -30,
+    -2,
+    -8
+   ]
+  }
+ ],
+ "presentation": {
+  "framing": {
+   "yaw": 159,
+   "pitch": 3,
+   "fit": 0.9
+  },
+  "views": [
+   {
+    "id": "north-aerial",
+    "label": "North front from the north-west",
+    "yaw": 25,
+    "pitch": 18
+   },
+   {
+    "id": "marienbruecke",
+    "label": "From the Marienbrücke",
+    "yaw": 160,
+    "pitch": 4,
+    "distance": 0.95
+   },
+   {
+    "id": "towers",
+    "label": "Palas and stair towers",
+    "yaw": 150,
+    "pitch": 8,
+    "distance": 2.05,
+    "target": "palas"
+   },
+   {
+    "id": "gatehouse-front",
+    "label": "Gatehouse · stepped gables",
+    "yaw": -90,
+    "pitch": 5,
+    "distance": 2.1,
+    "target": "gatehouse"
+   },
+   {
+    "id": "plan",
+    "label": "Traced plan",
+    "yaw": 180,
+    "pitch": 89,
+    "distance": 1.0
+   }
+  ],
+  "atmosphere": {
+   "haze": 0.35,
+   "scanlines": false,
+   "vignette": true,
+   "grid": false,
+   "projector": false,
+   "motes": 0.12
+  },
+  "occlusion": "xray",
+  "certainty_style": "subtle",
+  "background": "deep"
+ },
+ "animation": {
+  "assembly": {
+   "style": "ceremony",
+   "seconds": 10,
+   "interference": false
+  },
+  "idle": {
+   "life": "calm",
+   "events": [
+    "shimmer",
+    "scan"
+   ],
+   "cadence": [
+    9,
+    16
+   ],
+   "strength": 0.2
+  },
+  "camera": {
+   "drift": 2,
+   "breathe": 0.008,
+   "tour": [
+    {
+     "view": "towers",
+     "at": 16,
+     "fly": 4
+    },
+    {
+     "view": "gatehouse-front",
+     "at": 25,
+     "fly": 4
+    },
+    {
+     "view": "hero",
+     "at": 34,
+     "fly": 5
+    }
+   ]
+  },
+  "reduced_motion": "still"
+ },
+ "authoring": {
+  "tier": "masterpiece",
+  "research": "done",
+  "sources": [
+   "wiki-de",
+   "wiki-en",
+   "ref-plan",
+   "ref-elevation",
+   "ref-three-quarter"
+  ],
+  "review_rounds": 8,
+  "outcome": "self-reviewed",
+  "compare": [
+   {
+    "view": "north-aerial",
+    "reference": "ref-elevation",
+    "iou": 0.8443,
+    "edge": 0.0144,
+    "pass": true,
+    "scene_sha256": "87c9aa66d014611ff1aaa9d93127fa01a963883f5772d7af41e174ed03344b62"
+   }
+  ],
+  "critic": {
+   "scene_sha256": "87c9aa66d014611ff1aaa9d93127fa01a963883f5772d7af41e174ed03344b62",
+   "verdict": "improve",
+   "scores": {
+    "silhouette": 2,
+    "proportions": 2,
+    "identity": 2,
+    "depth": 2,
+    "composition": 2,
+    "assembly": 2,
+    "motion": 2,
+    "density": 2,
+    "honesty": 3
+   },
+   "round": 7,
+   "defects": 8
+  },
+  "identity": [
+   {
+    "feature": "Palas: tall five-storey block under a steep slate roof, gabled at both ends (knight west, lion to the court)",
+    "parts": [
+     "palas",
+     "palas-roof",
+     "palas-west-gable",
+     "palas-court-gable",
+     "palas-west-gable-figure",
+     "palas-court-gable-figure"
+    ]
+   },
+   {
+    "feature": "Northern stair tower, the tallest (65 m): corbelled gallery, narrower upper drum, crown, spire",
+    "parts": [
+     "north-tower-shaft",
+     "north-tower-gallery-merlons",
+     "north-tower-drum",
+     "north-tower-crown-merlons",
+     "north-tower-spire"
+    ]
+   },
+   {
+    "feature": "Slender stair turret beside the north tower's drum",
+    "parts": [
+     "north-tower-stair-turret"
+    ]
+   },
+   {
+    "feature": "Southern stair tower before the south front, crenellated crown and spire",
+    "parts": [
+     "south-tower-shaft",
+     "south-tower-merlons",
+     "south-tower-spire"
+    ]
+   },
+   {
+    "feature": "Four corbelled, spired corner turrets on the Palas",
+    "parts": [
+     "palas-turret-0",
+     "palas-turret-1",
+     "palas-turret-2",
+     "palas-turret-3"
+    ]
+   },
+   {
+    "feature": "Paired round-arched windows on five storeys, the Singers' Hall arcade (storey 4), cornice and lesenes on the Palas fronts",
+    "parts": [
+     "palas-n-windows-1-1",
+     "palas-s-windows-1-1",
+     "palas-s-windows-4-1",
+     "palas-cornice-n",
+     "palas-cornice-s",
+     "palas-lesene-n-2",
+     "palas-lesene-s-2"
+    ]
+   },
+   {
+    "feature": "Dormers in two rows and pinnacled stacks on the Palas roof",
+    "parts": [
+     "palas-dormers-n-1",
+     "palas-dormers-s-1",
+     "palas-dormers-n-2",
+     "palas-dormers-s-2",
+     "palas-stacks-n",
+     "palas-stacks-s"
+    ]
+   },
+   {
+    "feature": "Two-storey Söller loggia on the west front",
+    "parts": [
+     "palas-west-loggia",
+     "palas-west-loggia-arcade-w-1",
+     "palas-west-loggia-arcade-w-2"
+    ]
+   },
+   {
+    "feature": "Chair tower (pyramid roof) and glazed conservatory on the north front",
+    "parts": [
+     "chair-tower",
+     "chair-tower-roof",
+     "conservatory"
+    ]
+   },
+   {
+    "feature": "Knights' House, gabled to the north, with its round crenellated turret",
+    "parts": [
+     "knights-house",
+     "knights-house-roof",
+     "knights-house-gable",
+     "knights-turret",
+     "knights-turret-cone"
+    ]
+   },
+   {
+    "feature": "Gallery with blind arcades linking the Knights' House and the square tower",
+    "parts": [
+     "gallery",
+     "gallery-blind-arcade"
+    ]
+   },
+   {
+    "feature": "Square tower (45 m): pointed openings at the top, corbelled platform, round crenellated lookout and cap",
+    "parts": [
+     "square-tower",
+     "square-tower-lancets-n",
+     "square-tower-platform-merlons",
+     "square-tower-lookout",
+     "square-tower-cap"
+    ]
+   },
+   {
+    "feature": "Gatehouse facing east: round-arched gate under stepped gables, two round crenellated corner towers",
+    "parts": [
+     "gatehouse",
+     "gatehouse-gate",
+     "gatehouse-stepped-gable-east",
+     "gatehouse-stepped-gable-west",
+     "gatehouse-end-gable-north",
+     "gatehouse-end-gable-south",
+     "gatehouse-tower-north",
+     "gatehouse-tower-south"
+    ]
+   },
+   {
+    "feature": "Bower (Kemenate) on the south of the upper court with two pyramid-roofed towers",
+    "parts": [
+     "bower",
+     "bower-roof",
+     "bower-tower-west-roof",
+     "bower-tower-east-roof"
+    ]
+   },
+   {
+    "feature": "Towers and turrets, counted: 14, each at its own height",
+    "parts": [
+     "north-tower-shaft",
+     "north-tower-stair-turret",
+     "south-tower-shaft",
+     "palas-turret-0",
+     "palas-turret-1",
+     "palas-turret-2",
+     "palas-turret-3",
+     "chair-tower",
+     "knights-turret",
+     "square-tower",
+     "gatehouse-tower-north",
+     "gatehouse-tower-south",
+     "bower-tower-west",
+     "bower-tower-east"
+    ]
+   },
+   {
+    "feature": "Two courts on two levels and the crenellated wall on the cliff edge; the castle on its rock ridge",
+    "parts": [
+     "upper-court-terrace",
+     "upper-court-retaining-arcade",
+     "court-stair-1",
+     "lower-court-terrace",
+     "court-wall-merlons",
+     "rock-ridge",
+     "rock-stratum-1",
+     "rock-stratum-2",
+     "rock-stratum-3",
+     "rock-stratum-4",
+     "rock-stratum-5",
+     "rock-stratum-6"
+    ]
+   }
+  ],
+  "next": [
+   "Deeper crag: the main-elevation photo shows forest below the castle, so rock deeper than this stepped wedge shows under the north front and fails compare (3 m more: IoU 0.84 to 0.76). A far photo with the cliff visible would allow full depth.",
+   "Critics disagreed on the north tower's gallery height and the storey-4 windows; both were settled by measuring the Marienbruecke photo (grouped lights; short drum, spire about 2.5x the drum).",
+   "The plan turns the Palas west block about 8-10 degrees; it is drawn here as one orthogonal block.",
+   "In x-ray occlusion the far-face windows print through the near fronts at 24%; a depth fade per part would clear the doubled grids.",
+   "Gable figures (knight, lion) are stacked primitives; traced silhouettes would read better."
+  ]
+ }
+}

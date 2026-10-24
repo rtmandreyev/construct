@@ -1,0 +1,6654 @@
+{
+  "format": "construct-scene",
+  "version": 2,
+  "id": "o4-juggernaut",
+  "title": "Jackson Juggernaut ET7 | Seven strings, one equilibrium",
+  "subject": {
+    "category": "object",
+    "accuracy": "approximate",
+    "synthetic": false,
+    "summary": "Exact-model reconstruction of Jackson Pro Plus Signature Misha Mansoor Juggernaut ET7, model 2914017554. Asymmetric body and compact AT-1 4x3 headstock traced from official front/back photographs; documented 26.5-inch scale, 24 frets, HH MM1 electronics and EverTune F7. Image-derived geometry remains inferred, not factory CAD."
+  },
+  "units": "m",
+  "seed": 17,
+  "sources": [
+    {
+      "id": "request",
+      "kind": "user_request",
+      "title": "Public showcase: Jackson Juggernaut ET7 seven-string electric guitar",
+      "rights": "user_private"
+    },
+    {
+      "id": "jackson",
+      "kind": "document",
+      "title": "Jackson Pro Plus Series Signature Misha Mansoor Juggernaut ET7, model 2914017554",
+      "rights": "reference_only",
+      "ref": "https://www.jacksonguitars.com/products/pro-plus-series-signature-misha-mansoor-juggernaut-et7"
+    },
+    {
+      "id": "front",
+      "kind": "observation",
+      "title": "Official exact-model front photograph, 3000 by 895 pixels; visually measured, not copied",
+      "rights": "reference_only",
+      "ref": "https://www.jacksonguitars.com/cdn/shop/files/2914017554_jac_ins_frt_1_rr.png?width=3000"
+    },
+    {
+      "id": "back",
+      "kind": "observation",
+      "title": "Official exact-model back photograph, 3000 by 885 pixels",
+      "rights": "reference_only",
+      "ref": "https://www.jacksonguitars.com/cdn/shop/files/2914017554_jac_ins_bck_1_rl.png?width=3000"
+    },
+    {
+      "id": "bridge-photo",
+      "kind": "observation",
+      "title": "Official oblique bridge and controls detail",
+      "rights": "reference_only",
+      "ref": "https://www.fmicassets.com/Damroot/Original/10124/jksn_2914017554_highlight2.jpg"
+    },
+    {
+      "id": "neck-photo",
+      "kind": "observation",
+      "title": "Official oblique rear neck and heel detail",
+      "rights": "reference_only",
+      "ref": "https://www.fmicassets.com/Damroot/Original/10124/jksn_2914017554_highlight1.jpg"
+    },
+    {
+      "id": "evertune-tech",
+      "kind": "document",
+      "title": "EverTune Bridge Tech Specs: 10.4 mm saddle spacing; F7 is F plus 10.4 mm width",
+      "rights": "reference_only",
+      "ref": "https://www.evertune.com/resources/bridge_tech_specs.php"
+    },
+    {
+      "id": "evertune-plan",
+      "kind": "document",
+      "title": "EverTune ET001 F and T overall dimensions, 2017e01; six-string plan, not guitar-body plan",
+      "rights": "reference_only",
+      "ref": "https://evertune.com/resources/instructions_drawings_and_CAD/PDF/EVERTUNE__ET001FT-Overall-Dimensions__2017e01.pdf"
+    },
+    {
+      "id": "evertune-guide",
+      "kind": "document",
+      "title": "EverTune Quick Start Guide: independent saddles, tuning, intonation and action",
+      "rights": "reference_only",
+      "ref": "https://www.evertune.com/resources/quick_start_guide.php"
+    }
+  ],
+  "facts": [
+    {
+      "key": "maker",
+      "value": "Jackson",
+      "certainty": "verified",
+      "source": "jackson"
+    },
+    {
+      "key": "model",
+      "value": "Juggernaut ET7",
+      "certainty": "verified",
+      "source": "jackson"
+    },
+    {
+      "key": "artist",
+      "value": "Misha Mansoor",
+      "certainty": "verified",
+      "source": "jackson"
+    },
+    {
+      "key": "catalogue",
+      "value": "2914017554",
+      "certainty": "verified",
+      "source": "jackson"
+    },
+    {
+      "key": "series",
+      "value": "Pro Plus Series Signature",
+      "certainty": "verified",
+      "source": "jackson"
+    },
+    {
+      "key": "scale",
+      "value": 0.6731,
+      "certainty": "verified",
+      "source": "jackson",
+      "unit": "m",
+      "note": "26.5 inches converted exactly; manufacturer also rounds this to 673 mm."
+    },
+    {
+      "key": "nut-width",
+      "value": 0.04445,
+      "certainty": "verified",
+      "source": "jackson",
+      "unit": "m"
+    },
+    {
+      "key": "radius",
+      "value": 0.508,
+      "certainty": "verified",
+      "source": "jackson",
+      "unit": "m"
+    },
+    {
+      "key": "frets",
+      "value": 24,
+      "certainty": "verified",
+      "source": "jackson"
+    },
+    {
+      "key": "strings",
+      "value": 7,
+      "certainty": "verified",
+      "source": "jackson"
+    },
+    {
+      "key": "body-material",
+      "value": "Poplar",
+      "certainty": "verified",
+      "source": "jackson"
+    },
+    {
+      "key": "neck-material",
+      "value": "Caramelized maple",
+      "certainty": "verified",
+      "source": "jackson"
+    },
+    {
+      "key": "board-material",
+      "value": "Ebony",
+      "certainty": "verified",
+      "source": "jackson"
+    },
+    {
+      "key": "neck-joint",
+      "value": "Bolt-on, graphite reinforced, scarf joint, wrap-around heel",
+      "certainty": "verified",
+      "source": "jackson"
+    },
+    {
+      "key": "headstock",
+      "value": "Jackson AT-1 4x3",
+      "certainty": "verified",
+      "source": "jackson"
+    },
+    {
+      "key": "pickups",
+      "value": "Two uncovered direct-mount Jackson MM1 humbuckers",
+      "certainty": "verified",
+      "source": "jackson"
+    },
+    {
+      "key": "bridge",
+      "value": "EverTune F7",
+      "certainty": "verified",
+      "source": "jackson"
+    },
+    {
+      "key": "controls",
+      "value": "Five-position blade, volume, push/pull tone",
+      "certainty": "verified",
+      "source": "jackson"
+    },
+    {
+      "key": "tuners",
+      "value": "Seven sealed die-cast locking tuners",
+      "certainty": "verified",
+      "source": "jackson"
+    },
+    {
+      "key": "heel-fasteners",
+      "value": 4,
+      "certainty": "verified",
+      "source": "jackson"
+    },
+    {
+      "key": "inlays",
+      "value": "Offset dots and Luminlay side dots",
+      "certainty": "verified",
+      "source": "jackson"
+    },
+    {
+      "key": "truss-adjustment",
+      "value": "Heel-mount wheel",
+      "certainty": "verified",
+      "source": "jackson"
+    },
+    {
+      "key": "pickguard",
+      "value": "None",
+      "certainty": "verified",
+      "source": "jackson"
+    },
+    {
+      "key": "saddle-spacing",
+      "value": 0.0104,
+      "certainty": "verified",
+      "source": "evertune-tech",
+      "unit": "m"
+    },
+    {
+      "key": "f-width",
+      "value": 0.0812,
+      "certainty": "verified",
+      "source": "evertune-plan",
+      "unit": "m",
+      "note": "Plan states 3.197 [81.2] across six-string bridge."
+    },
+    {
+      "key": "f-rear-reach",
+      "value": 0.0582,
+      "certainty": "verified",
+      "source": "evertune-plan",
+      "unit": "m",
+      "note": "Scale-length origin to rear end: 2.291 [58.2]."
+    },
+    {
+      "key": "f-front-reach",
+      "value": 0.0103,
+      "certainty": "verified",
+      "source": "evertune-plan",
+      "unit": "m",
+      "note": "Front faceplate edge to scale origin .406 [10.3]."
+    },
+    {
+      "key": "f7-width",
+      "value": 0.0916,
+      "certainty": "inferred",
+      "source": "evertune-tech",
+      "unit": "m",
+      "note": "Derived 81.2 mm F width plus documented 10.4 mm F7 increment; not a directly printed F7 dimension."
+    },
+    {
+      "key": "f7-length",
+      "value": 0.0685,
+      "certainty": "inferred",
+      "source": "evertune-plan",
+      "unit": "m",
+      "note": "Derived 58.2 + 10.3 mm from six-string F plan; F7 differs only in width per tech page."
+    },
+    {
+      "key": "front-calibration",
+      "value": "Nut u=2398; saddle break u=350; tail datum u=25; centerline v=449+(u-350)*25/2048.",
+      "certainty": "inferred",
+      "source": "front",
+      "note": "Visual pixel estimates on 3000 x 895 photo; scale 673.1/2048 mm per pixel. De-skewed to neck centerline. Not metrology."
+    },
+    {
+      "key": "body-trace",
+      "value": "Hand-traced asymmetric double cutaway: long bass horn, shorter hooked treble horn, concave waist and rounded skewed lower bout.",
+      "certainty": "inferred",
+      "source": "front",
+      "note": "All outline coordinates inferred from official front photo; 1-4 mm visual uncertainty; no manufacturer outline coordinates found."
+    },
+    {
+      "key": "body-width",
+      "value": 0.294,
+      "certainty": "inferred",
+      "source": "front",
+      "unit": "m",
+      "note": "Approximate measured 895-pixel lower bout at calibration scale; not a factory specification."
+    },
+    {
+      "key": "body-thickness",
+      "value": 0.04445,
+      "certainty": "inferred",
+      "source": "neck-photo",
+      "unit": "m",
+      "note": "Section estimate consistent with oblique photographs and usual F7 installation; not a Jackson dimension."
+    },
+    {
+      "key": "bevel-trace",
+      "value": "Continuous chamfer around the front and rear, broad outer bouts and horn cutaways.",
+      "certainty": "inferred",
+      "source": "bridge-photo",
+      "note": "Bevel width changes inferred visually; contour is schematic, not factory CAD."
+    },
+    {
+      "key": "head-trace",
+      "value": "Compact wedge AT-1 with curved nut flare, oblique 4-post edge and swept pointed tip.",
+      "certainty": "inferred",
+      "source": "front",
+      "note": "Polygon and post centers traced from headstock crop [2360,260,3000,650]; no claimed headstock angle specification."
+    },
+    {
+      "key": "neck-section",
+      "value": "Taper from 44.45 mm nut to approximately 63 mm at fret 24; rounded back, shallow heel transition.",
+      "certainty": "inferred",
+      "source": "neck-photo",
+      "note": "Taper and back section inferred; board face follows documented 508 mm radius."
+    },
+    {
+      "key": "hardware-layout",
+      "value": "Neck pickup u=768; bridge pickup u=496; volume (398,703); tone (240,742); switch endpoints (455,750)-(547,675).",
+      "certainty": "inferred",
+      "source": "front",
+      "note": "Original front image pixel estimates. Physical Y increases with image u; X follows de-skewed image v. Pickup sizes and heights inferred."
+    },
+    {
+      "key": "back-layout",
+      "value": "Rear EverTune plate, seven string-access slots, larger asymmetric electronics cover on treble lower bout and four recessed heel screws.",
+      "certainty": "inferred",
+      "source": "back",
+      "note": "Back image is mirrored to align front; dimensions and locations visually estimated; no hidden spring mechanism invented."
+    },
+    {
+      "key": "fret-layout",
+      "value": "Equal-tempered positions L*(1-2^(-n/12)), n=1..24.",
+      "certainty": "inferred",
+      "source": "front",
+      "note": "Mathematical reconstruction from documented scale and observed straight frets; manufacturing offsets not measured."
+    },
+    {
+      "key": "inlay-layout",
+      "value": "Treble-edge dots at 3,5,7,9; double 12; bass-edge 15,17,19,21; double treble-edge 24.",
+      "certainty": "inferred",
+      "source": "front",
+      "note": "Direct visual observation of exact front photo, including crossover after fret 12."
+    },
+    {
+      "key": "presentation-motion",
+      "value": "Illustrative slow control demonstration: volume rotation, tone pull and turn, selector pivot; no tremolo and no rotating fixed bridge.",
+      "certainty": "decorative",
+      "source": "request",
+      "note": "Motion ranges and timing chosen for presentation, not measured kinematics. Guitar at rest remains assembled."
+    }
+  ],
+  "assets": [],
+  "parts": [
+    {
+      "id": "juggernaut-body",
+      "label": "Juggernaut Body",
+      "role": "mass",
+      "certainty": "inferred",
+      "stage": 0,
+      "source": "front",
+      "basis": [
+        "body-trace",
+        "front-calibration",
+        "body-thickness"
+      ],
+      "shape": {
+        "type": "extrude",
+        "profile": [
+          [
+            -0.0310854,
+            0.3378646
+          ],
+          [
+            -0.0365322,
+            0.3263615
+          ],
+          [
+            -0.0453379,
+            0.3207742
+          ],
+          [
+            -0.055847,
+            0.3201169
+          ],
+          [
+            -0.066725,
+            0.3227462
+          ],
+          [
+            -0.0766611,
+            0.3289908
+          ],
+          [
+            -0.084994,
+            0.338522
+          ],
+          [
+            -0.0920403,
+            0.3503538
+          ],
+          [
+            -0.0974754,
+            0.3648149
+          ],
+          [
+            -0.101616,
+            0.3809194
+          ],
+          [
+            -0.1034639,
+            0.3976812
+          ],
+          [
+            -0.1039731,
+            0.4124709
+          ],
+          [
+            -0.1028069,
+            0.4246314
+          ],
+          [
+            -0.1002859,
+            0.4335053
+          ],
+          [
+            -0.1019774,
+            0.4374493
+          ],
+          [
+            -0.106246,
+            0.4371206
+          ],
+          [
+            -0.1120937,
+            0.4315333
+          ],
+          [
+            -0.1182299,
+            0.4226595
+          ],
+          [
+            -0.1243301,
+            0.4108276
+          ],
+          [
+            -0.1300695,
+            0.3963665
+          ],
+          [
+            -0.1334962,
+            0.3809194
+          ],
+          [
+            -0.1346223,
+            0.3654723
+          ],
+          [
+            -0.1334317,
+            0.3487105
+          ],
+          [
+            -0.1302531,
+            0.3306341
+          ],
+          [
+            -0.1250985,
+            0.312229
+          ],
+          [
+            -0.1189619,
+            0.2941526
+          ],
+          [
+            -0.1125007,
+            0.2764048
+          ],
+          [
+            -0.1073822,
+            0.2609577
+          ],
+          [
+            -0.103911,
+            0.2458393
+          ],
+          [
+            -0.1034018,
+            0.2310495
+          ],
+          [
+            -0.1051972,
+            0.2165883
+          ],
+          [
+            -0.1089606,
+            0.2017985
+          ],
+          [
+            -0.1143513,
+            0.1856941
+          ],
+          [
+            -0.1203873,
+            0.1686037
+          ],
+          [
+            -0.1273972,
+            0.1505272
+          ],
+          [
+            -0.134395,
+            0.1314648
+          ],
+          [
+            -0.1400943,
+            0.1137171
+          ],
+          [
+            -0.144507,
+            0.09827
+          ],
+          [
+            -0.1466391,
+            0.0844662
+          ],
+          [
+            -0.146138,
+            0.0703337
+          ],
+          [
+            -0.1430035,
+            0.0558726
+          ],
+          [
+            -0.1375844,
+            0.0427261
+          ],
+          [
+            -0.1295561,
+            0.0312229
+          ],
+          [
+            -0.1195799,
+            0.0216917
+          ],
+          [
+            -0.1079804,
+            0.0138038
+          ],
+          [
+            -0.0944291,
+            0.0075592
+          ],
+          [
+            -0.0795911,
+            0.0036153
+          ],
+          [
+            -0.0624726,
+            0.0013146
+          ],
+          [
+            -0.0430695,
+            0.0003287
+          ],
+          [
+            -0.0203918,
+            0.0003287
+          ],
+          [
+            0.0026145,
+            0.0003287
+          ],
+          [
+            0.0269315,
+            0.0006573
+          ],
+          [
+            0.0505912,
+            0.000986
+          ],
+          [
+            0.0709522,
+            0.0023006
+          ],
+          [
+            0.0903031,
+            0.0055873
+          ],
+          [
+            0.1069927,
+            0.0115032
+          ],
+          [
+            0.1206922,
+            0.0200484
+          ],
+          [
+            0.1317383,
+            0.0305656
+          ],
+          [
+            0.1394697,
+            0.0433834
+          ],
+          [
+            0.1445478,
+            0.0581732
+          ],
+          [
+            0.1466518,
+            0.0742776
+          ],
+          [
+            0.1457859,
+            0.0913681
+          ],
+          [
+            0.1429399,
+            0.1091158
+          ],
+          [
+            0.1387793,
+            0.1268636
+          ],
+          [
+            0.1333081,
+            0.1442827
+          ],
+          [
+            0.1265182,
+            0.1620304
+          ],
+          [
+            0.1194037,
+            0.1794495
+          ],
+          [
+            0.1123092,
+            0.1952253
+          ],
+          [
+            0.1068781,
+            0.2093578
+          ],
+          [
+            0.104429,
+            0.2215183
+          ],
+          [
+            0.104966,
+            0.2313781
+          ],
+          [
+            0.1081162,
+            0.2425526
+          ],
+          [
+            0.113547,
+            0.2553705
+          ],
+          [
+            0.1199357,
+            0.2704889
+          ],
+          [
+            0.1263284,
+            0.2852787
+          ],
+          [
+            0.1307491,
+            0.3000685
+          ],
+          [
+            0.1331979,
+            0.3148583
+          ],
+          [
+            0.1330253,
+            0.3289908
+          ],
+          [
+            0.1305562,
+            0.3427946
+          ],
+          [
+            0.1261352,
+            0.3549551
+          ],
+          [
+            0.1200949,
+            0.3651436
+          ],
+          [
+            0.1144354,
+            0.3710595
+          ],
+          [
+            0.1108001,
+            0.3727028
+          ],
+          [
+            0.1098381,
+            0.3707309
+          ],
+          [
+            0.1112852,
+            0.359885
+          ],
+          [
+            0.1108004,
+            0.3457525
+          ],
+          [
+            0.1086723,
+            0.3316201
+          ],
+          [
+            0.1052295,
+            0.3174876
+          ],
+          [
+            0.0991494,
+            0.3040125
+          ],
+          [
+            0.0913979,
+            0.2928379
+          ],
+          [
+            0.0816384,
+            0.2846214
+          ],
+          [
+            0.0721593,
+            0.2803488
+          ],
+          [
+            0.0626482,
+            0.2787055
+          ],
+          [
+            0.0537582,
+            0.2800201
+          ],
+          [
+            0.0461549,
+            0.2836354
+          ],
+          [
+            0.0398381,
+            0.2895513
+          ],
+          [
+            0.0341345,
+            0.2990825
+          ]
+        ],
+        "height": 0.04445,
+        "axis": "z"
+      },
+      "at": [
+        0,
+        0,
+        -0.022225
+      ],
+      "note": "Exact-model image trace; silhouette coordinates inferred, not verified. No pickguard. Rounded outline sampled from front photograph.",
+      "look": {
+        "fill": "glass",
+        "weight": 0.8,
+        "alpha": 0.86
+      }
+    },
+    {
+      "id": "sculpted-front-bevel",
+      "label": "Sculpted Front Bevel",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 1,
+      "source": "front",
+      "basis": [
+        "bevel-trace",
+        "body-trace"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.0322957,
+            0.3293194,
+            0.0227
+          ],
+          [
+            -0.0416424,
+            0.314201,
+            0.0227
+          ],
+          [
+            -0.0540433,
+            0.3069704,
+            0.0227
+          ],
+          [
+            -0.0675344,
+            0.3082851,
+            0.0227
+          ],
+          [
+            -0.0801038,
+            0.3148583,
+            0.0227
+          ],
+          [
+            -0.0907775,
+            0.3276761,
+            0.0227
+          ],
+          [
+            -0.0992388,
+            0.3477245,
+            0.0227
+          ],
+          [
+            -0.106129,
+            0.3736888,
+            0.0227
+          ],
+          [
+            -0.1067866,
+            0.4006391,
+            0.0227
+          ],
+          [
+            -0.1044382,
+            0.4236455,
+            0.0227
+          ],
+          [
+            -0.1025906,
+            0.433834,
+            0.0227
+          ],
+          [
+            -0.1083741,
+            0.4229881,
+            0.0227
+          ],
+          [
+            -0.1144421,
+            0.408527,
+            0.0227
+          ],
+          [
+            -0.1184981,
+            0.3907792,
+            0.0227
+          ],
+          [
+            -0.1192434,
+            0.3710595,
+            0.0227
+          ],
+          [
+            -0.116694,
+            0.3506825,
+            0.0227
+          ],
+          [
+            -0.1118279,
+            0.3289908,
+            0.0227
+          ],
+          [
+            -0.1049819,
+            0.3066417,
+            0.0227
+          ],
+          [
+            -0.0954824,
+            0.2823208,
+            0.0227
+          ],
+          [
+            -0.0873017,
+            0.2583284,
+            0.0227
+          ],
+          [
+            -0.0854377,
+            0.240252,
+            0.0227
+          ],
+          [
+            -0.0884916,
+            0.2211896,
+            0.0227
+          ],
+          [
+            -0.0954494,
+            0.1988406,
+            0.0227
+          ],
+          [
+            -0.1040384,
+            0.1755056,
+            0.0227
+          ],
+          [
+            -0.1126114,
+            0.1508559,
+            0.0227
+          ],
+          [
+            -0.120519,
+            0.1255489,
+            0.0227
+          ],
+          [
+            -0.1271321,
+            0.1018853,
+            0.0227
+          ],
+          [
+            -0.1314766,
+            0.0808509,
+            0.0227
+          ],
+          [
+            -0.1312439,
+            0.0617885,
+            0.0227
+          ],
+          [
+            -0.1267747,
+            0.045684,
+            0.0227
+          ],
+          [
+            -0.1174036,
+            0.0318802,
+            0.0227
+          ],
+          [
+            -0.1031508,
+            0.0220204,
+            0.0227
+          ],
+          [
+            -0.0859801,
+            0.0154471,
+            0.0227
+          ],
+          [
+            -0.0658876,
+            0.0118318,
+            0.0227
+          ],
+          [
+            -0.0435265,
+            0.0108458,
+            0.0227
+          ],
+          [
+            -0.0126323,
+            0.0108458,
+            0.0227
+          ],
+          [
+            0.0215526,
+            0.0105172,
+            0.0227
+          ],
+          [
+            0.0547314,
+            0.0118318,
+            0.0227
+          ],
+          [
+            0.0786916,
+            0.0144611,
+            0.0227
+          ],
+          [
+            0.0989884,
+            0.0210344,
+            0.0227
+          ],
+          [
+            0.1136579,
+            0.0308942,
+            0.0227
+          ],
+          [
+            0.1240066,
+            0.044698,
+            0.0227
+          ],
+          [
+            0.1297139,
+            0.0617885,
+            0.0227
+          ],
+          [
+            0.1308038,
+            0.0801936,
+            0.0227
+          ],
+          [
+            0.1292605,
+            0.0989273,
+            0.0227
+          ],
+          [
+            0.1250598,
+            0.1199617,
+            0.0227
+          ],
+          [
+            0.1182097,
+            0.1426394,
+            0.0227
+          ],
+          [
+            0.109047,
+            0.166303,
+            0.0227
+          ],
+          [
+            0.0995716,
+            0.1886521,
+            0.0227
+          ],
+          [
+            0.0920923,
+            0.2090291,
+            0.0227
+          ],
+          [
+            0.0886131,
+            0.2248049,
+            0.0227
+          ],
+          [
+            0.090116,
+            0.2363081,
+            0.0227
+          ],
+          [
+            0.0971941,
+            0.2487972,
+            0.0227
+          ],
+          [
+            0.1052422,
+            0.262601,
+            0.0227
+          ],
+          [
+            0.1132421,
+            0.2803488,
+            0.0227
+          ],
+          [
+            0.1189253,
+            0.2994112,
+            0.0227
+          ],
+          [
+            0.1213219,
+            0.3184736,
+            0.0227
+          ],
+          [
+            0.1200992,
+            0.3378646,
+            0.0227
+          ],
+          [
+            0.1159587,
+            0.3539691,
+            0.0227
+          ],
+          [
+            0.1121749,
+            0.3677729,
+            0.0227
+          ],
+          [
+            0.1160469,
+            0.3467385,
+            0.0227
+          ],
+          [
+            0.113987,
+            0.3270188,
+            0.0227
+          ],
+          [
+            0.1076465,
+            0.3079564,
+            0.0227
+          ],
+          [
+            0.0983078,
+            0.2921806,
+            0.0227
+          ],
+          [
+            0.0862998,
+            0.2796915,
+            0.0227
+          ],
+          [
+            0.0732576,
+            0.2711462,
+            0.0227
+          ],
+          [
+            0.060492,
+            0.2668736,
+            0.0227
+          ],
+          [
+            0.0506241,
+            0.267531,
+            0.0227
+          ],
+          [
+            0.0413533,
+            0.2731182,
+            0.0227
+          ],
+          [
+            0.0346678,
+            0.2823208,
+            0.0227
+          ],
+          [
+            0.0302427,
+            0.2948099,
+            0.0227
+          ]
+        ],
+        "closed": true,
+        "smooth": false
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "fill": "none",
+        "weight": 1.1
+      }
+    },
+    {
+      "id": "rear-belly-and-horn-scoop",
+      "label": "Rear Belly And Horn Scoop",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 1,
+      "source": "back",
+      "basis": [
+        "back-layout",
+        "bevel-trace"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.1117807,
+            0.4058977,
+            -0.0228
+          ],
+          [
+            -0.1146662,
+            0.3730315,
+            -0.0228
+          ],
+          [
+            -0.1085574,
+            0.3303054,
+            -0.0228
+          ],
+          [
+            -0.0955667,
+            0.2892227,
+            -0.0228
+          ],
+          [
+            -0.083013,
+            0.2570138,
+            -0.0228
+          ],
+          [
+            -0.0783793,
+            0.2274342,
+            -0.0228
+          ],
+          [
+            -0.0852809,
+            0.2004839,
+            -0.0228
+          ],
+          [
+            -0.0947356,
+            0.167289,
+            -0.0228
+          ],
+          [
+            -0.1054648,
+            0.1308075,
+            -0.0228
+          ],
+          [
+            -0.1135967,
+            0.0969553,
+            -0.0228
+          ],
+          [
+            -0.1148469,
+            0.0647464,
+            -0.0228
+          ],
+          [
+            -0.1046941,
+            0.0407541,
+            -0.0228
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "caramelized-maple-neck",
+      "label": "Caramelized Maple Neck",
+      "role": "mass",
+      "certainty": "inferred",
+      "stage": 2,
+      "source": "neck-photo",
+      "basis": [
+        "neck-section",
+        "neck-joint",
+        "nut-width"
+      ],
+      "shape": {
+        "type": "tube",
+        "path": [
+          [
+            0,
+            0.252,
+            0.005
+          ],
+          [
+            0,
+            0.3,
+            0.007
+          ],
+          [
+            0,
+            0.48,
+            0.009
+          ],
+          [
+            0,
+            0.67,
+            0.01
+          ],
+          [
+            0,
+            0.7799152,
+            0.011
+          ]
+        ],
+        "radius": [
+          0.03,
+          0.029,
+          0.025,
+          0.0225,
+          0.022225
+        ],
+        "sides": 12,
+        "samples": 3,
+        "longitudinal": 6,
+        "ring_every": 0,
+        "caps": true
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "note": "Elliptical D-back approximation, not a measured neck-profile drawing.",
+      "scale": [
+        1,
+        1,
+        0.57
+      ]
+    },
+    {
+      "id": "ebony-fingerboard",
+      "label": "Ebony Fingerboard",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "front",
+      "basis": [
+        "neck-section",
+        "radius",
+        "fret-layout"
+      ],
+      "shape": {
+        "type": "extrude",
+        "profile": [
+          [
+            -0.0315,
+            0.2670902
+          ],
+          [
+            0.0315,
+            0.2670902
+          ],
+          [
+            0.022225,
+            0.7799152
+          ],
+          [
+            -0.022225,
+            0.7799152
+          ]
+        ],
+        "axis": "z",
+        "height": 0.0065
+      },
+      "at": [
+        0,
+        0,
+        0.0175
+      ],
+      "note": "Board taper traced; face camber indicated by fret arcs. Cross section simplified."
+    },
+    {
+      "id": "fret-01",
+      "label": "Fret 01",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "front",
+      "basis": [
+        "frets",
+        "scale",
+        "radius",
+        "fret-layout"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.0229083,
+            0.742137,
+            0.0247832
+          ],
+          [
+            -0.0152722,
+            0.742137,
+            0.0250704
+          ],
+          [
+            -0.0076361,
+            0.742137,
+            0.0252426
+          ],
+          [
+            0.0,
+            0.742137,
+            0.0253
+          ],
+          [
+            0.0076361,
+            0.742137,
+            0.0252426
+          ],
+          [
+            0.0152722,
+            0.742137,
+            0.0250704
+          ],
+          [
+            0.0229083,
+            0.742137,
+            0.0247832
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 1.0,
+        "fill": "none"
+      }
+    },
+    {
+      "id": "fret-02",
+      "label": "Fret 02",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "front",
+      "basis": [
+        "frets",
+        "scale",
+        "radius",
+        "fret-layout"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.0235532,
+            0.7064791,
+            0.0247537
+          ],
+          [
+            -0.0157021,
+            0.7064791,
+            0.0250573
+          ],
+          [
+            -0.0078511,
+            0.7064791,
+            0.0252393
+          ],
+          [
+            0.0,
+            0.7064791,
+            0.0253
+          ],
+          [
+            0.0078511,
+            0.7064791,
+            0.0252393
+          ],
+          [
+            0.0157021,
+            0.7064791,
+            0.0250573
+          ],
+          [
+            0.0235532,
+            0.7064791,
+            0.0247537
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 1.0,
+        "fill": "none"
+      }
+    },
+    {
+      "id": "fret-03",
+      "label": "Fret 03",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "front",
+      "basis": [
+        "frets",
+        "scale",
+        "radius",
+        "fret-layout"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.0241619,
+            0.6728226,
+            0.0247251
+          ],
+          [
+            -0.0161079,
+            0.6728226,
+            0.0250446
+          ],
+          [
+            -0.008054,
+            0.6728226,
+            0.0252362
+          ],
+          [
+            0.0,
+            0.6728226,
+            0.0253
+          ],
+          [
+            0.008054,
+            0.6728226,
+            0.0252362
+          ],
+          [
+            0.0161079,
+            0.6728226,
+            0.0250446
+          ],
+          [
+            0.0241619,
+            0.6728226,
+            0.0247251
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 1.0,
+        "fill": "none"
+      }
+    },
+    {
+      "id": "fret-04",
+      "label": "Fret 04",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "front",
+      "basis": [
+        "frets",
+        "scale",
+        "radius",
+        "fret-layout"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.0247364,
+            0.641055,
+            0.0246974
+          ],
+          [
+            -0.016491,
+            0.641055,
+            0.0250323
+          ],
+          [
+            -0.0082455,
+            0.641055,
+            0.0252331
+          ],
+          [
+            0.0,
+            0.641055,
+            0.0253
+          ],
+          [
+            0.0082455,
+            0.641055,
+            0.0252331
+          ],
+          [
+            0.016491,
+            0.641055,
+            0.0250323
+          ],
+          [
+            0.0247364,
+            0.641055,
+            0.0246974
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 1.0,
+        "fill": "none"
+      }
+    },
+    {
+      "id": "fret-05",
+      "label": "Fret 05",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "front",
+      "basis": [
+        "frets",
+        "scale",
+        "radius",
+        "fret-layout"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.0252787,
+            0.6110704,
+            0.0246707
+          ],
+          [
+            -0.0168525,
+            0.6110704,
+            0.0250204
+          ],
+          [
+            -0.0084262,
+            0.6110704,
+            0.0252301
+          ],
+          [
+            -0.0,
+            0.6110704,
+            0.0253
+          ],
+          [
+            0.0084262,
+            0.6110704,
+            0.0252301
+          ],
+          [
+            0.0168525,
+            0.6110704,
+            0.0250204
+          ],
+          [
+            0.0252787,
+            0.6110704,
+            0.0246707
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 1.0,
+        "fill": "none"
+      }
+    },
+    {
+      "id": "fret-06",
+      "label": "Fret 06",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "front",
+      "basis": [
+        "frets",
+        "scale",
+        "radius",
+        "fret-layout"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.0257906,
+            0.5827688,
+            0.0246449
+          ],
+          [
+            -0.0171937,
+            0.5827688,
+            0.0250089
+          ],
+          [
+            -0.0085969,
+            0.5827688,
+            0.0252273
+          ],
+          [
+            0.0,
+            0.5827688,
+            0.0253
+          ],
+          [
+            0.0085969,
+            0.5827688,
+            0.0252273
+          ],
+          [
+            0.0171937,
+            0.5827688,
+            0.0250089
+          ],
+          [
+            0.0257906,
+            0.5827688,
+            0.0246449
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 1.0,
+        "fill": "none"
+      }
+    },
+    {
+      "id": "fret-07",
+      "label": "Fret 07",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "front",
+      "basis": [
+        "frets",
+        "scale",
+        "radius",
+        "fret-layout"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.0262737,
+            0.5560555,
+            0.0246201
+          ],
+          [
+            -0.0175158,
+            0.5560555,
+            0.0249979
+          ],
+          [
+            -0.0087579,
+            0.5560555,
+            0.0252245
+          ],
+          [
+            0.0,
+            0.5560555,
+            0.0253
+          ],
+          [
+            0.0087579,
+            0.5560555,
+            0.0252245
+          ],
+          [
+            0.0175158,
+            0.5560555,
+            0.0249979
+          ],
+          [
+            0.0262737,
+            0.5560555,
+            0.0246201
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 1.0,
+        "fill": "none"
+      }
+    },
+    {
+      "id": "fret-08",
+      "label": "Fret 08",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "front",
+      "basis": [
+        "frets",
+        "scale",
+        "radius",
+        "fret-layout"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.0267298,
+            0.5308416,
+            0.0245963
+          ],
+          [
+            -0.0178198,
+            0.5308416,
+            0.0249874
+          ],
+          [
+            -0.0089099,
+            0.5308416,
+            0.0252219
+          ],
+          [
+            0.0,
+            0.5308416,
+            0.0253
+          ],
+          [
+            0.0089099,
+            0.5308416,
+            0.0252219
+          ],
+          [
+            0.0178198,
+            0.5308416,
+            0.0249874
+          ],
+          [
+            0.0267298,
+            0.5308416,
+            0.0245963
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 1.0,
+        "fill": "none"
+      }
+    },
+    {
+      "id": "fret-09",
+      "label": "Fret 09",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "front",
+      "basis": [
+        "frets",
+        "scale",
+        "radius",
+        "fret-layout"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.0271602,
+            0.5070428,
+            0.0245734
+          ],
+          [
+            -0.0181068,
+            0.5070428,
+            0.0249772
+          ],
+          [
+            -0.0090534,
+            0.5070428,
+            0.0252193
+          ],
+          [
+            0.0,
+            0.5070428,
+            0.0253
+          ],
+          [
+            0.0090534,
+            0.5070428,
+            0.0252193
+          ],
+          [
+            0.0181068,
+            0.5070428,
+            0.0249772
+          ],
+          [
+            0.0271602,
+            0.5070428,
+            0.0245734
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 1.0,
+        "fill": "none"
+      }
+    },
+    {
+      "id": "fret-10",
+      "label": "Fret 10",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "front",
+      "basis": [
+        "frets",
+        "scale",
+        "radius",
+        "fret-layout"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.0275665,
+            0.4845798,
+            0.0245515
+          ],
+          [
+            -0.0183776,
+            0.4845798,
+            0.0249675
+          ],
+          [
+            -0.0091888,
+            0.4845798,
+            0.0252169
+          ],
+          [
+            0.0,
+            0.4845798,
+            0.0253
+          ],
+          [
+            0.0091888,
+            0.4845798,
+            0.0252169
+          ],
+          [
+            0.0183776,
+            0.4845798,
+            0.0249675
+          ],
+          [
+            0.0275665,
+            0.4845798,
+            0.0245515
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 1.0,
+        "fill": "none"
+      }
+    },
+    {
+      "id": "fret-11",
+      "label": "Fret 11",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "front",
+      "basis": [
+        "frets",
+        "scale",
+        "radius",
+        "fret-layout"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.0279499,
+            0.4633775,
+            0.0245305
+          ],
+          [
+            -0.0186333,
+            0.4633775,
+            0.0249582
+          ],
+          [
+            -0.0093166,
+            0.4633775,
+            0.0252146
+          ],
+          [
+            0.0,
+            0.4633775,
+            0.0253
+          ],
+          [
+            0.0093166,
+            0.4633775,
+            0.0252146
+          ],
+          [
+            0.0186333,
+            0.4633775,
+            0.0249582
+          ],
+          [
+            0.0279499,
+            0.4633775,
+            0.0245305
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 1.0,
+        "fill": "none"
+      }
+    },
+    {
+      "id": "fret-12",
+      "label": "Fret 12",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "front",
+      "basis": [
+        "frets",
+        "scale",
+        "radius",
+        "fret-layout"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.0283119,
+            0.4433652,
+            0.0245104
+          ],
+          [
+            -0.0188746,
+            0.4433652,
+            0.0249492
+          ],
+          [
+            -0.0094373,
+            0.4433652,
+            0.0252123
+          ],
+          [
+            -0.0,
+            0.4433652,
+            0.0253
+          ],
+          [
+            0.0094373,
+            0.4433652,
+            0.0252123
+          ],
+          [
+            0.0188746,
+            0.4433652,
+            0.0249492
+          ],
+          [
+            0.0283119,
+            0.4433652,
+            0.0245104
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 1.0,
+        "fill": "none"
+      }
+    },
+    {
+      "id": "fret-13",
+      "label": "Fret 13",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "front",
+      "basis": [
+        "frets",
+        "scale",
+        "radius",
+        "fret-layout"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.0286535,
+            0.4244761,
+            0.0244913
+          ],
+          [
+            -0.0191023,
+            0.4244761,
+            0.0249407
+          ],
+          [
+            -0.0095512,
+            0.4244761,
+            0.0252102
+          ],
+          [
+            0.0,
+            0.4244761,
+            0.0253
+          ],
+          [
+            0.0095512,
+            0.4244761,
+            0.0252102
+          ],
+          [
+            0.0191023,
+            0.4244761,
+            0.0249407
+          ],
+          [
+            0.0286535,
+            0.4244761,
+            0.0244913
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 1.0,
+        "fill": "none"
+      }
+    },
+    {
+      "id": "fret-14",
+      "label": "Fret 14",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "front",
+      "basis": [
+        "frets",
+        "scale",
+        "radius",
+        "fret-layout"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.028976,
+            0.4066471,
+            0.0244729
+          ],
+          [
+            -0.0193173,
+            0.4066471,
+            0.0249326
+          ],
+          [
+            -0.0096587,
+            0.4066471,
+            0.0252082
+          ],
+          [
+            0.0,
+            0.4066471,
+            0.0253
+          ],
+          [
+            0.0096587,
+            0.4066471,
+            0.0252082
+          ],
+          [
+            0.0193173,
+            0.4066471,
+            0.0249326
+          ],
+          [
+            0.028976,
+            0.4066471,
+            0.0244729
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 1.0,
+        "fill": "none"
+      }
+    },
+    {
+      "id": "fret-15",
+      "label": "Fret 15",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "front",
+      "basis": [
+        "frets",
+        "scale",
+        "radius",
+        "fret-layout"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.0292803,
+            0.3898189,
+            0.0244555
+          ],
+          [
+            -0.0195202,
+            0.3898189,
+            0.0249248
+          ],
+          [
+            -0.0097601,
+            0.3898189,
+            0.0252062
+          ],
+          [
+            0.0,
+            0.3898189,
+            0.0253
+          ],
+          [
+            0.0097601,
+            0.3898189,
+            0.0252062
+          ],
+          [
+            0.0195202,
+            0.3898189,
+            0.0249248
+          ],
+          [
+            0.0292803,
+            0.3898189,
+            0.0244555
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 1.0,
+        "fill": "none"
+      }
+    },
+    {
+      "id": "fret-16",
+      "label": "Fret 16",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "front",
+      "basis": [
+        "frets",
+        "scale",
+        "radius",
+        "fret-layout"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.0295676,
+            0.3739351,
+            0.0244388
+          ],
+          [
+            -0.0197117,
+            0.3739351,
+            0.0249174
+          ],
+          [
+            -0.0098559,
+            0.3739351,
+            0.0252044
+          ],
+          [
+            0.0,
+            0.3739351,
+            0.0253
+          ],
+          [
+            0.0098559,
+            0.3739351,
+            0.0252044
+          ],
+          [
+            0.0197117,
+            0.3739351,
+            0.0249174
+          ],
+          [
+            0.0295676,
+            0.3739351,
+            0.0244388
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 1.0,
+        "fill": "none"
+      }
+    },
+    {
+      "id": "fret-17",
+      "label": "Fret 17",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "front",
+      "basis": [
+        "frets",
+        "scale",
+        "radius",
+        "fret-layout"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.0298387,
+            0.3589428,
+            0.0244229
+          ],
+          [
+            -0.0198925,
+            0.3589428,
+            0.0249104
+          ],
+          [
+            -0.0099462,
+            0.3589428,
+            0.0252026
+          ],
+          [
+            0.0,
+            0.3589428,
+            0.0253
+          ],
+          [
+            0.0099462,
+            0.3589428,
+            0.0252026
+          ],
+          [
+            0.0198925,
+            0.3589428,
+            0.0249104
+          ],
+          [
+            0.0298387,
+            0.3589428,
+            0.0244229
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 1.0,
+        "fill": "none"
+      }
+    },
+    {
+      "id": "fret-18",
+      "label": "Fret 18",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "front",
+      "basis": [
+        "frets",
+        "scale",
+        "radius",
+        "fret-layout"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.0300947,
+            0.344792,
+            0.0244078
+          ],
+          [
+            -0.0200631,
+            0.344792,
+            0.0249037
+          ],
+          [
+            -0.0100316,
+            0.344792,
+            0.0252009
+          ],
+          [
+            0.0,
+            0.344792,
+            0.0253
+          ],
+          [
+            0.0100316,
+            0.344792,
+            0.0252009
+          ],
+          [
+            0.0200631,
+            0.344792,
+            0.0249037
+          ],
+          [
+            0.0300947,
+            0.344792,
+            0.0244078
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 1.0,
+        "fill": "none"
+      }
+    },
+    {
+      "id": "fret-19",
+      "label": "Fret 19",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "front",
+      "basis": [
+        "frets",
+        "scale",
+        "radius",
+        "fret-layout"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.0303362,
+            0.3314354,
+            0.0243934
+          ],
+          [
+            -0.0202242,
+            0.3314354,
+            0.0248973
+          ],
+          [
+            -0.0101121,
+            0.3314354,
+            0.0251993
+          ],
+          [
+            0.0,
+            0.3314354,
+            0.0253
+          ],
+          [
+            0.0101121,
+            0.3314354,
+            0.0251993
+          ],
+          [
+            0.0202242,
+            0.3314354,
+            0.0248973
+          ],
+          [
+            0.0303362,
+            0.3314354,
+            0.0243934
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 1.0,
+        "fill": "none"
+      }
+    },
+    {
+      "id": "fret-20",
+      "label": "Fret 20",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "front",
+      "basis": [
+        "frets",
+        "scale",
+        "radius",
+        "fret-layout"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.0305643,
+            0.3188284,
+            0.0243797
+          ],
+          [
+            -0.0203762,
+            0.3188284,
+            0.0248912
+          ],
+          [
+            -0.0101881,
+            0.3188284,
+            0.0251978
+          ],
+          [
+            0.0,
+            0.3188284,
+            0.0253
+          ],
+          [
+            0.0101881,
+            0.3188284,
+            0.0251978
+          ],
+          [
+            0.0203762,
+            0.3188284,
+            0.0248912
+          ],
+          [
+            0.0305643,
+            0.3188284,
+            0.0243797
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 1.0,
+        "fill": "none"
+      }
+    },
+    {
+      "id": "fret-21",
+      "label": "Fret 21",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "front",
+      "basis": [
+        "frets",
+        "scale",
+        "radius",
+        "fret-layout"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.0307795,
+            0.306929,
+            0.0243667
+          ],
+          [
+            -0.0205196,
+            0.306929,
+            0.0248854
+          ],
+          [
+            -0.0102598,
+            0.306929,
+            0.0251964
+          ],
+          [
+            0.0,
+            0.306929,
+            0.0253
+          ],
+          [
+            0.0102598,
+            0.306929,
+            0.0251964
+          ],
+          [
+            0.0205196,
+            0.306929,
+            0.0248854
+          ],
+          [
+            0.0307795,
+            0.306929,
+            0.0243667
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 1.0,
+        "fill": "none"
+      }
+    },
+    {
+      "id": "fret-22",
+      "label": "Fret 22",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "front",
+      "basis": [
+        "frets",
+        "scale",
+        "radius",
+        "fret-layout"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.0309826,
+            0.2956975,
+            0.0243543
+          ],
+          [
+            -0.0206551,
+            0.2956975,
+            0.0248799
+          ],
+          [
+            -0.0103275,
+            0.2956975,
+            0.025195
+          ],
+          [
+            0.0,
+            0.2956975,
+            0.0253
+          ],
+          [
+            0.0103275,
+            0.2956975,
+            0.025195
+          ],
+          [
+            0.0206551,
+            0.2956975,
+            0.0248799
+          ],
+          [
+            0.0309826,
+            0.2956975,
+            0.0243543
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 1.0,
+        "fill": "none"
+      }
+    },
+    {
+      "id": "fret-23",
+      "label": "Fret 23",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "front",
+      "basis": [
+        "frets",
+        "scale",
+        "radius",
+        "fret-layout"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.0311743,
+            0.2850963,
+            0.0243426
+          ],
+          [
+            -0.0207829,
+            0.2850963,
+            0.0248747
+          ],
+          [
+            -0.0103914,
+            0.2850963,
+            0.0251937
+          ],
+          [
+            -0.0,
+            0.2850963,
+            0.0253
+          ],
+          [
+            0.0103914,
+            0.2850963,
+            0.0251937
+          ],
+          [
+            0.0207829,
+            0.2850963,
+            0.0248747
+          ],
+          [
+            0.0311743,
+            0.2850963,
+            0.0243426
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 1.0,
+        "fill": "none"
+      }
+    },
+    {
+      "id": "fret-24",
+      "label": "Fret 24",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "front",
+      "basis": [
+        "frets",
+        "scale",
+        "radius",
+        "fret-layout"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.0313553,
+            0.2750902,
+            0.0243314
+          ],
+          [
+            -0.0209035,
+            0.2750902,
+            0.0248697
+          ],
+          [
+            -0.0104518,
+            0.2750902,
+            0.0251925
+          ],
+          [
+            0.0,
+            0.2750902,
+            0.0253
+          ],
+          [
+            0.0104518,
+            0.2750902,
+            0.0251925
+          ],
+          [
+            0.0209035,
+            0.2750902,
+            0.0248697
+          ],
+          [
+            0.0313553,
+            0.2750902,
+            0.0243314
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 1.0,
+        "fill": "none"
+      }
+    },
+    {
+      "id": "nut",
+      "label": "Nut",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "front",
+      "basis": [
+        "nut-width",
+        "scale"
+      ],
+      "shape": {
+        "type": "box",
+        "size": [
+          0.04445,
+          0.004,
+          0.008
+        ]
+      },
+      "at": [
+        0,
+        0.7799152,
+        0.023
+      ]
+    },
+    {
+      "id": "at1-four-by-three-headstock",
+      "label": "At1 Four By Three Headstock",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 2,
+      "source": "front",
+      "basis": [
+        "head-trace",
+        "headstock"
+      ],
+      "shape": {
+        "type": "extrude",
+        "profile": [
+          [
+            -0.0216917,
+            0.7799152
+          ],
+          [
+            -0.0257841,
+            0.7920757
+          ],
+          [
+            -0.0324897,
+            0.8029215
+          ],
+          [
+            -0.04148,
+            0.8124527
+          ],
+          [
+            -0.03742,
+            0.8298718
+          ],
+          [
+            -0.030839,
+            0.8561648
+          ],
+          [
+            -0.0246068,
+            0.8841011
+          ],
+          [
+            -0.0180459,
+            0.9120374
+          ],
+          [
+            -0.0107836,
+            0.9363583
+          ],
+          [
+            -0.0037977,
+            0.9564067
+          ],
+          [
+            0.0150039,
+            0.9777698
+          ],
+          [
+            0.0159099,
+            0.9573927
+          ],
+          [
+            0.0171687,
+            0.9350437
+          ],
+          [
+            0.0207563,
+            0.910394
+          ],
+          [
+            0.0279992,
+            0.8824578
+          ],
+          [
+            0.0378915,
+            0.8528782
+          ],
+          [
+            0.0475113,
+            0.8186973
+          ],
+          [
+            0.0357998,
+            0.8088375
+          ],
+          [
+            0.0286735,
+            0.8002922
+          ],
+          [
+            0.0232147,
+            0.789775
+          ],
+          [
+            0.0200484,
+            0.7799152
+          ]
+        ],
+        "height": 0.015,
+        "axis": "z"
+      },
+      "at": [
+        0,
+        0,
+        0.006
+      ],
+      "note": "Measured outline including pointed tip. Planar approximation; rearward rake is uncertain and not imposed as a specification."
+    },
+    {
+      "id": "scarf-joint-seam",
+      "label": "Scarf Joint Seam",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "neck-photo",
+      "basis": [
+        "neck-joint",
+        "neck-section"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.021,
+            0.7509152,
+            -0.003
+          ],
+          [
+            0,
+            0.7369152,
+            -0.006
+          ],
+          [
+            0.021,
+            0.7239152,
+            -0.003
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "locking-tuner-1",
+      "label": "Locking Tuner 1",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "neck-photo",
+      "basis": [
+        "head-trace",
+        "tuners"
+      ],
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.0055,
+            0
+          ],
+          [
+            0.0075,
+            0.003
+          ],
+          [
+            0.0075,
+            0.013
+          ],
+          [
+            0.004,
+            0.016
+          ],
+          [
+            0.003,
+            0.033
+          ]
+        ],
+        "segments": 10,
+        "meridians": 3
+      },
+      "at": [
+        -0.0251953,
+        0.8246132,
+        -0.012
+      ],
+      "note": "Sealed housing/post section inferred from rear photo; position traced from front.",
+      "rotate": [
+        90,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tuning-key-1",
+      "label": "Tuning Key 1",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "front",
+      "basis": [
+        "head-trace",
+        "tuners"
+      ],
+      "shape": {
+        "type": "sphere",
+        "radii": [
+          0.009,
+          0.0065,
+          0.0038
+        ],
+        "lat": 4,
+        "lon": 8
+      },
+      "at": [
+        -0.0461953,
+        0.8286132,
+        -0.006
+      ],
+      "note": "Four bass and three treble side keys; button contours inferred."
+    },
+    {
+      "id": "tuner-shaft-1",
+      "label": "Tuner Shaft 1",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "front",
+      "basis": [
+        "head-trace",
+        "tuners"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.0251953,
+            0.8246132,
+            -0.006
+          ],
+          [
+            -0.0461953,
+            0.8286132,
+            -0.006
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "locking-tuner-2",
+      "label": "Locking Tuner 2",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "neck-photo",
+      "basis": [
+        "head-trace",
+        "tuners"
+      ],
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.0055,
+            0
+          ],
+          [
+            0.0075,
+            0.003
+          ],
+          [
+            0.0075,
+            0.013
+          ],
+          [
+            0.004,
+            0.016
+          ],
+          [
+            0.003,
+            0.033
+          ]
+        ],
+        "segments": 10,
+        "meridians": 3
+      },
+      "at": [
+        -0.0180012,
+        0.8545215,
+        -0.012
+      ],
+      "note": "Sealed housing/post section inferred from rear photo; position traced from front.",
+      "rotate": [
+        90,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tuning-key-2",
+      "label": "Tuning Key 2",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "front",
+      "basis": [
+        "head-trace",
+        "tuners"
+      ],
+      "shape": {
+        "type": "sphere",
+        "radii": [
+          0.009,
+          0.0065,
+          0.0038
+        ],
+        "lat": 4,
+        "lon": 8
+      },
+      "at": [
+        -0.0390012,
+        0.8585215,
+        -0.006
+      ],
+      "note": "Four bass and three treble side keys; button contours inferred."
+    },
+    {
+      "id": "tuner-shaft-2",
+      "label": "Tuner Shaft 2",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "front",
+      "basis": [
+        "head-trace",
+        "tuners"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.0180012,
+            0.8545215,
+            -0.006
+          ],
+          [
+            -0.0390012,
+            0.8585215,
+            -0.006
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "locking-tuner-3",
+      "label": "Locking Tuner 3",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "neck-photo",
+      "basis": [
+        "head-trace",
+        "tuners"
+      ],
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.0055,
+            0
+          ],
+          [
+            0.0075,
+            0.003
+          ],
+          [
+            0.0075,
+            0.013
+          ],
+          [
+            0.004,
+            0.016
+          ],
+          [
+            0.003,
+            0.033
+          ]
+        ],
+        "segments": 10,
+        "meridians": 3
+      },
+      "at": [
+        -0.0114724,
+        0.8850871,
+        -0.012
+      ],
+      "note": "Sealed housing/post section inferred from rear photo; position traced from front.",
+      "rotate": [
+        90,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tuning-key-3",
+      "label": "Tuning Key 3",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "front",
+      "basis": [
+        "head-trace",
+        "tuners"
+      ],
+      "shape": {
+        "type": "sphere",
+        "radii": [
+          0.009,
+          0.0065,
+          0.0038
+        ],
+        "lat": 4,
+        "lon": 8
+      },
+      "at": [
+        -0.0324724,
+        0.8890871,
+        -0.006
+      ],
+      "note": "Four bass and three treble side keys; button contours inferred."
+    },
+    {
+      "id": "tuner-shaft-3",
+      "label": "Tuner Shaft 3",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "front",
+      "basis": [
+        "head-trace",
+        "tuners"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.0114724,
+            0.8850871,
+            -0.006
+          ],
+          [
+            -0.0324724,
+            0.8890871,
+            -0.006
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "locking-tuner-4",
+      "label": "Locking Tuner 4",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "neck-photo",
+      "basis": [
+        "head-trace",
+        "tuners"
+      ],
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.0055,
+            0
+          ],
+          [
+            0.0075,
+            0.003
+          ],
+          [
+            0.0075,
+            0.013
+          ],
+          [
+            0.004,
+            0.016
+          ],
+          [
+            0.003,
+            0.033
+          ]
+        ],
+        "segments": 10,
+        "meridians": 3
+      },
+      "at": [
+        -0.0039335,
+        0.9136807,
+        -0.012
+      ],
+      "note": "Sealed housing/post section inferred from rear photo; position traced from front.",
+      "rotate": [
+        90,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tuning-key-4",
+      "label": "Tuning Key 4",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "front",
+      "basis": [
+        "head-trace",
+        "tuners"
+      ],
+      "shape": {
+        "type": "sphere",
+        "radii": [
+          0.009,
+          0.0065,
+          0.0038
+        ],
+        "lat": 4,
+        "lon": 8
+      },
+      "at": [
+        -0.0249335,
+        0.9176807,
+        -0.006
+      ],
+      "note": "Four bass and three treble side keys; button contours inferred."
+    },
+    {
+      "id": "tuner-shaft-4",
+      "label": "Tuner Shaft 4",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "front",
+      "basis": [
+        "head-trace",
+        "tuners"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.0039335,
+            0.9136807,
+            -0.006
+          ],
+          [
+            -0.0249335,
+            0.9176807,
+            -0.006
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "locking-tuner-5",
+      "label": "Locking Tuner 5",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "neck-photo",
+      "basis": [
+        "head-trace",
+        "tuners"
+      ],
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.0055,
+            0
+          ],
+          [
+            0.0075,
+            0.003
+          ],
+          [
+            0.0075,
+            0.013
+          ],
+          [
+            0.004,
+            0.016
+          ],
+          [
+            0.003,
+            0.033
+          ]
+        ],
+        "segments": 10,
+        "meridians": 3
+      },
+      "at": [
+        0.0259837,
+        0.8321725,
+        -0.012
+      ],
+      "note": "Sealed housing/post section inferred from rear photo; position traced from front.",
+      "rotate": [
+        90,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tuning-key-5",
+      "label": "Tuning Key 5",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "front",
+      "basis": [
+        "head-trace",
+        "tuners"
+      ],
+      "shape": {
+        "type": "sphere",
+        "radii": [
+          0.009,
+          0.0065,
+          0.0038
+        ],
+        "lat": 4,
+        "lon": 8
+      },
+      "at": [
+        0.0469837,
+        0.8361725,
+        -0.006
+      ],
+      "note": "Four bass and three treble side keys; button contours inferred."
+    },
+    {
+      "id": "tuner-shaft-5",
+      "label": "Tuner Shaft 5",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "front",
+      "basis": [
+        "head-trace",
+        "tuners"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.0259837,
+            0.8321725,
+            -0.006
+          ],
+          [
+            0.0469837,
+            0.8361725,
+            -0.006
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "locking-tuner-6",
+      "label": "Locking Tuner 6",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "neck-photo",
+      "basis": [
+        "head-trace",
+        "tuners"
+      ],
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.0055,
+            0
+          ],
+          [
+            0.0075,
+            0.003
+          ],
+          [
+            0.0075,
+            0.013
+          ],
+          [
+            0.004,
+            0.016
+          ],
+          [
+            0.003,
+            0.033
+          ]
+        ],
+        "segments": 10,
+        "meridians": 3
+      },
+      "at": [
+        0.0170895,
+        0.8607661,
+        -0.012
+      ],
+      "note": "Sealed housing/post section inferred from rear photo; position traced from front.",
+      "rotate": [
+        90,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tuning-key-6",
+      "label": "Tuning Key 6",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "front",
+      "basis": [
+        "head-trace",
+        "tuners"
+      ],
+      "shape": {
+        "type": "sphere",
+        "radii": [
+          0.009,
+          0.0065,
+          0.0038
+        ],
+        "lat": 4,
+        "lon": 8
+      },
+      "at": [
+        0.0380895,
+        0.8647661,
+        -0.006
+      ],
+      "note": "Four bass and three treble side keys; button contours inferred."
+    },
+    {
+      "id": "tuner-shaft-6",
+      "label": "Tuner Shaft 6",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "front",
+      "basis": [
+        "head-trace",
+        "tuners"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.0170895,
+            0.8607661,
+            -0.006
+          ],
+          [
+            0.0380895,
+            0.8647661,
+            -0.006
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "locking-tuner-7",
+      "label": "Locking Tuner 7",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "neck-photo",
+      "basis": [
+        "head-trace",
+        "tuners"
+      ],
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.0055,
+            0
+          ],
+          [
+            0.0075,
+            0.003
+          ],
+          [
+            0.0075,
+            0.013
+          ],
+          [
+            0.004,
+            0.016
+          ],
+          [
+            0.003,
+            0.033
+          ]
+        ],
+        "segments": 10,
+        "meridians": 3
+      },
+      "at": [
+        0.0105199,
+        0.8873877,
+        -0.012
+      ],
+      "note": "Sealed housing/post section inferred from rear photo; position traced from front.",
+      "rotate": [
+        90,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tuning-key-7",
+      "label": "Tuning Key 7",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "front",
+      "basis": [
+        "head-trace",
+        "tuners"
+      ],
+      "shape": {
+        "type": "sphere",
+        "radii": [
+          0.009,
+          0.0065,
+          0.0038
+        ],
+        "lat": 4,
+        "lon": 8
+      },
+      "at": [
+        0.0315199,
+        0.8913877,
+        -0.006
+      ],
+      "note": "Four bass and three treble side keys; button contours inferred."
+    },
+    {
+      "id": "tuner-shaft-7",
+      "label": "Tuner Shaft 7",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "front",
+      "basis": [
+        "head-trace",
+        "tuners"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.0105199,
+            0.8873877,
+            -0.006
+          ],
+          [
+            0.0315199,
+            0.8913877,
+            -0.006
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "heel-truss-adjustment-wheel",
+      "label": "Heel Truss Adjustment Wheel",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "front",
+      "basis": [
+        "truss-adjustment",
+        "hardware-layout"
+      ],
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.0075,
+        "height": 0.013,
+        "segments": 12,
+        "ribs": 6
+      },
+      "at": [
+        -0.0065,
+        0.2590902,
+        0.019
+      ],
+      "rotate": [
+        0,
+        0,
+        -90
+      ]
+    },
+    {
+      "id": "bridge-mm1-base",
+      "label": "Bridge Mm1 Base",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "front",
+      "basis": [
+        "pickups",
+        "hardware-layout"
+      ],
+      "shape": {
+        "type": "box",
+        "size": [
+          0.084,
+          0.04,
+          0.005
+        ]
+      },
+      "at": [
+        -0.0002571,
+        0.1547999,
+        0.024
+      ]
+    },
+    {
+      "id": "bridge-mm1-bobbin-m1",
+      "label": "Bridge Mm1 Bobbin M1",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "front",
+      "basis": [
+        "pickups",
+        "hardware-layout"
+      ],
+      "shape": {
+        "type": "extrude",
+        "axis": "z",
+        "height": 0.009,
+        "profile": [
+          [
+            -0.035,
+            -0.008
+          ],
+          [
+            -0.039,
+            -0.004
+          ],
+          [
+            -0.039,
+            0.004
+          ],
+          [
+            -0.035,
+            0.008
+          ],
+          [
+            0.035,
+            0.008
+          ],
+          [
+            0.039,
+            0.004
+          ],
+          [
+            0.039,
+            -0.004
+          ],
+          [
+            0.035,
+            -0.008
+          ]
+        ]
+      },
+      "at": [
+        -0.0002571,
+        0.1452999,
+        0.025
+      ],
+      "look": {
+        "fill": "glass",
+        "weight": 0.8
+      }
+    },
+    {
+      "id": "bridge-pole-row-m1",
+      "label": "Bridge Pole Row M1",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "front",
+      "basis": [
+        "pickups",
+        "hardware-layout"
+      ],
+      "shape": {
+        "type": "marker",
+        "sprite": "ring",
+        "size_px": 2.2
+      },
+      "at": [
+        -0.0314571,
+        0.1452999,
+        0.035
+      ],
+      "repeat": {
+        "count": 7,
+        "step": {
+          "at": [
+            0.0104,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": "bridge-mm1-bobbin-1",
+      "label": "Bridge Mm1 Bobbin 1",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "front",
+      "basis": [
+        "pickups",
+        "hardware-layout"
+      ],
+      "shape": {
+        "type": "extrude",
+        "axis": "z",
+        "height": 0.009,
+        "profile": [
+          [
+            -0.035,
+            -0.008
+          ],
+          [
+            -0.039,
+            -0.004
+          ],
+          [
+            -0.039,
+            0.004
+          ],
+          [
+            -0.035,
+            0.008
+          ],
+          [
+            0.035,
+            0.008
+          ],
+          [
+            0.039,
+            0.004
+          ],
+          [
+            0.039,
+            -0.004
+          ],
+          [
+            0.035,
+            -0.008
+          ]
+        ]
+      },
+      "at": [
+        -0.0002571,
+        0.1642999,
+        0.025
+      ],
+      "look": {
+        "fill": "glass",
+        "weight": 0.8
+      }
+    },
+    {
+      "id": "bridge-pole-row-1",
+      "label": "Bridge Pole Row 1",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "front",
+      "basis": [
+        "pickups",
+        "hardware-layout"
+      ],
+      "shape": {
+        "type": "marker",
+        "sprite": "ring",
+        "size_px": 2.2
+      },
+      "at": [
+        -0.0314571,
+        0.1642999,
+        0.035
+      ],
+      "repeat": {
+        "count": 7,
+        "step": {
+          "at": [
+            0.0104,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": "neck-mm1-base",
+      "label": "Neck Mm1 Base",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "front",
+      "basis": [
+        "pickups",
+        "hardware-layout"
+      ],
+      "shape": {
+        "type": "box",
+        "size": [
+          0.084,
+          0.04,
+          0.005
+        ]
+      },
+      "at": [
+        -0.0013483,
+        0.2441959,
+        0.024
+      ]
+    },
+    {
+      "id": "neck-mm1-bobbin-m1",
+      "label": "Neck Mm1 Bobbin M1",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "front",
+      "basis": [
+        "pickups",
+        "hardware-layout"
+      ],
+      "shape": {
+        "type": "extrude",
+        "axis": "z",
+        "height": 0.009,
+        "profile": [
+          [
+            -0.035,
+            -0.008
+          ],
+          [
+            -0.039,
+            -0.004
+          ],
+          [
+            -0.039,
+            0.004
+          ],
+          [
+            -0.035,
+            0.008
+          ],
+          [
+            0.035,
+            0.008
+          ],
+          [
+            0.039,
+            0.004
+          ],
+          [
+            0.039,
+            -0.004
+          ],
+          [
+            0.035,
+            -0.008
+          ]
+        ]
+      },
+      "at": [
+        -0.0013483,
+        0.2346959,
+        0.025
+      ],
+      "look": {
+        "fill": "glass",
+        "weight": 0.8
+      }
+    },
+    {
+      "id": "neck-pole-row-m1",
+      "label": "Neck Pole Row M1",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "front",
+      "basis": [
+        "pickups",
+        "hardware-layout"
+      ],
+      "shape": {
+        "type": "marker",
+        "sprite": "ring",
+        "size_px": 2.2
+      },
+      "at": [
+        -0.0325483,
+        0.2346959,
+        0.035
+      ],
+      "repeat": {
+        "count": 7,
+        "step": {
+          "at": [
+            0.0104,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": "neck-mm1-bobbin-1",
+      "label": "Neck Mm1 Bobbin 1",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "front",
+      "basis": [
+        "pickups",
+        "hardware-layout"
+      ],
+      "shape": {
+        "type": "extrude",
+        "axis": "z",
+        "height": 0.009,
+        "profile": [
+          [
+            -0.035,
+            -0.008
+          ],
+          [
+            -0.039,
+            -0.004
+          ],
+          [
+            -0.039,
+            0.004
+          ],
+          [
+            -0.035,
+            0.008
+          ],
+          [
+            0.035,
+            0.008
+          ],
+          [
+            0.039,
+            0.004
+          ],
+          [
+            0.039,
+            -0.004
+          ],
+          [
+            0.035,
+            -0.008
+          ]
+        ]
+      },
+      "at": [
+        -0.0013483,
+        0.2536959,
+        0.025
+      ],
+      "look": {
+        "fill": "glass",
+        "weight": 0.8
+      }
+    },
+    {
+      "id": "neck-pole-row-1",
+      "label": "Neck Pole Row 1",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "front",
+      "basis": [
+        "pickups",
+        "hardware-layout"
+      ],
+      "shape": {
+        "type": "marker",
+        "sprite": "ring",
+        "size_px": 2.2
+      },
+      "at": [
+        -0.0325483,
+        0.2536959,
+        0.035
+      ],
+      "repeat": {
+        "count": 7,
+        "step": {
+          "at": [
+            0.0104,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": "evertune-f7-faceplate",
+      "label": "Evertune F7 Faceplate",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "evertune-plan",
+      "basis": [
+        "f7-width",
+        "f7-length",
+        "bridge"
+      ],
+      "shape": {
+        "type": "box",
+        "size": [
+          0.0916,
+          0.0685,
+          0.006
+        ]
+      },
+      "at": [
+        0,
+        0.0828652,
+        0.025
+      ],
+      "note": "Dimensions derived from published six-string F plan and F7 width increment, never asserted as traced body coordinates."
+    },
+    {
+      "id": "evertune-saddle-window",
+      "label": "Evertune Saddle Window",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "bridge-photo",
+      "basis": [
+        "hardware-layout",
+        "bridge"
+      ],
+      "shape": {
+        "type": "box",
+        "size": [
+          0.078,
+          0.039,
+          0.004
+        ]
+      },
+      "at": [
+        0,
+        0.0988152,
+        0.029
+      ]
+    },
+    {
+      "id": "evertune-rear-intonation-bar",
+      "label": "Evertune Rear Intonation Bar",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "bridge-photo",
+      "basis": [
+        "bridge",
+        "hardware-layout"
+      ],
+      "shape": {
+        "type": "box",
+        "size": [
+          0.0916,
+          0.024,
+          0.007
+        ]
+      },
+      "at": [
+        0,
+        0.0618152,
+        0.029
+      ]
+    },
+    {
+      "id": "evertune-saddle-1",
+      "label": "Evertune Saddle 1",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "bridge-photo",
+      "basis": [
+        "bridge",
+        "saddle-spacing",
+        "hardware-layout"
+      ],
+      "shape": {
+        "type": "box",
+        "size": [
+          0.0086,
+          0.025,
+          0.007
+        ]
+      },
+      "at": [
+        -0.0312,
+        0.0988152,
+        0.034
+      ],
+      "note": "Independent saddle module; exact screw and saddle contours estimated from official close-up."
+    },
+    {
+      "id": "evertune-saddle-2",
+      "label": "Evertune Saddle 2",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "bridge-photo",
+      "basis": [
+        "bridge",
+        "saddle-spacing",
+        "hardware-layout"
+      ],
+      "shape": {
+        "type": "box",
+        "size": [
+          0.0086,
+          0.025,
+          0.007
+        ]
+      },
+      "at": [
+        -0.0208,
+        0.0988152,
+        0.034
+      ],
+      "note": "Independent saddle module; exact screw and saddle contours estimated from official close-up."
+    },
+    {
+      "id": "evertune-saddle-3",
+      "label": "Evertune Saddle 3",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "bridge-photo",
+      "basis": [
+        "bridge",
+        "saddle-spacing",
+        "hardware-layout"
+      ],
+      "shape": {
+        "type": "box",
+        "size": [
+          0.0086,
+          0.025,
+          0.007
+        ]
+      },
+      "at": [
+        -0.0104,
+        0.0988152,
+        0.034
+      ],
+      "note": "Independent saddle module; exact screw and saddle contours estimated from official close-up."
+    },
+    {
+      "id": "evertune-saddle-4",
+      "label": "Evertune Saddle 4",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "bridge-photo",
+      "basis": [
+        "bridge",
+        "saddle-spacing",
+        "hardware-layout"
+      ],
+      "shape": {
+        "type": "box",
+        "size": [
+          0.0086,
+          0.025,
+          0.007
+        ]
+      },
+      "at": [
+        0.0,
+        0.0988152,
+        0.034
+      ],
+      "note": "Independent saddle module; exact screw and saddle contours estimated from official close-up."
+    },
+    {
+      "id": "evertune-saddle-5",
+      "label": "Evertune Saddle 5",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "bridge-photo",
+      "basis": [
+        "bridge",
+        "saddle-spacing",
+        "hardware-layout"
+      ],
+      "shape": {
+        "type": "box",
+        "size": [
+          0.0086,
+          0.025,
+          0.007
+        ]
+      },
+      "at": [
+        0.0104,
+        0.0988152,
+        0.034
+      ],
+      "note": "Independent saddle module; exact screw and saddle contours estimated from official close-up."
+    },
+    {
+      "id": "evertune-saddle-6",
+      "label": "Evertune Saddle 6",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "bridge-photo",
+      "basis": [
+        "bridge",
+        "saddle-spacing",
+        "hardware-layout"
+      ],
+      "shape": {
+        "type": "box",
+        "size": [
+          0.0086,
+          0.025,
+          0.007
+        ]
+      },
+      "at": [
+        0.0208,
+        0.0988152,
+        0.034
+      ],
+      "note": "Independent saddle module; exact screw and saddle contours estimated from official close-up."
+    },
+    {
+      "id": "evertune-saddle-7",
+      "label": "Evertune Saddle 7",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "bridge-photo",
+      "basis": [
+        "bridge",
+        "saddle-spacing",
+        "hardware-layout"
+      ],
+      "shape": {
+        "type": "box",
+        "size": [
+          0.0086,
+          0.025,
+          0.007
+        ]
+      },
+      "at": [
+        0.0312,
+        0.0988152,
+        0.034
+      ],
+      "note": "Independent saddle module; exact screw and saddle contours estimated from official close-up."
+    },
+    {
+      "id": "seven-intonation-screw-heads",
+      "label": "Seven Intonation Screw Heads",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "bridge-photo",
+      "basis": [
+        "bridge",
+        "saddle-spacing"
+      ],
+      "shape": {
+        "type": "marker",
+        "sprite": "ring",
+        "size_px": 3
+      },
+      "at": [
+        -0.0312,
+        0.0698152,
+        0.0335
+      ],
+      "repeat": {
+        "count": 7,
+        "step": {
+          "at": [
+            0.0104,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": "seven-saddle-hex-heads",
+      "label": "Seven Saddle Hex Heads",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "bridge-photo",
+      "basis": [
+        "bridge",
+        "saddle-spacing"
+      ],
+      "shape": {
+        "type": "marker",
+        "sprite": "ring",
+        "size_px": 2.5
+      },
+      "at": [
+        -0.0312,
+        0.0948152,
+        0.038
+      ],
+      "repeat": {
+        "count": 7,
+        "step": {
+          "at": [
+            0.0104,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": "string-1",
+      "label": "String 1",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "front",
+      "basis": [
+        "strings",
+        "scale",
+        "nut-width",
+        "head-trace",
+        "saddle-spacing"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.0312,
+            0.1068152,
+            0.038
+          ],
+          [
+            -0.0189,
+            0.7799152,
+            0.028
+          ],
+          [
+            -0.0251953,
+            0.8246132,
+            0.0225
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "note": "Seven fixed-end strings; no tremolo arm. Diameters not exaggerated into structural rods.",
+      "look": {
+        "fill": "none",
+        "weight": 0.9,
+        "alpha": 0.9
+      }
+    },
+    {
+      "id": "string-2",
+      "label": "String 2",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "front",
+      "basis": [
+        "strings",
+        "scale",
+        "nut-width",
+        "head-trace",
+        "saddle-spacing"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.0208,
+            0.1068152,
+            0.038
+          ],
+          [
+            -0.0126,
+            0.7799152,
+            0.028
+          ],
+          [
+            -0.0180012,
+            0.8545215,
+            0.0225
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "note": "Seven fixed-end strings; no tremolo arm. Diameters not exaggerated into structural rods.",
+      "look": {
+        "fill": "none",
+        "weight": 0.9,
+        "alpha": 0.9
+      }
+    },
+    {
+      "id": "string-3",
+      "label": "String 3",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "front",
+      "basis": [
+        "strings",
+        "scale",
+        "nut-width",
+        "head-trace",
+        "saddle-spacing"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.0104,
+            0.1068152,
+            0.038
+          ],
+          [
+            -0.0063,
+            0.7799152,
+            0.028
+          ],
+          [
+            -0.0114724,
+            0.8850871,
+            0.0225
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "note": "Seven fixed-end strings; no tremolo arm. Diameters not exaggerated into structural rods.",
+      "look": {
+        "fill": "none",
+        "weight": 0.9,
+        "alpha": 0.9
+      }
+    },
+    {
+      "id": "string-4",
+      "label": "String 4",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "front",
+      "basis": [
+        "strings",
+        "scale",
+        "nut-width",
+        "head-trace",
+        "saddle-spacing"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.0,
+            0.1068152,
+            0.038
+          ],
+          [
+            0.0,
+            0.7799152,
+            0.028
+          ],
+          [
+            -0.0039335,
+            0.9136807,
+            0.0225
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "note": "Seven fixed-end strings; no tremolo arm. Diameters not exaggerated into structural rods.",
+      "look": {
+        "fill": "none",
+        "weight": 0.9,
+        "alpha": 0.9
+      }
+    },
+    {
+      "id": "string-5",
+      "label": "String 5",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "front",
+      "basis": [
+        "strings",
+        "scale",
+        "nut-width",
+        "head-trace",
+        "saddle-spacing"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.0104,
+            0.1068152,
+            0.038
+          ],
+          [
+            0.0063,
+            0.7799152,
+            0.028
+          ],
+          [
+            0.0105199,
+            0.8873877,
+            0.0225
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "note": "Seven fixed-end strings; no tremolo arm. Diameters not exaggerated into structural rods.",
+      "look": {
+        "fill": "none",
+        "weight": 0.65,
+        "alpha": 0.9
+      }
+    },
+    {
+      "id": "string-6",
+      "label": "String 6",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "front",
+      "basis": [
+        "strings",
+        "scale",
+        "nut-width",
+        "head-trace",
+        "saddle-spacing"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.0208,
+            0.1068152,
+            0.038
+          ],
+          [
+            0.0126,
+            0.7799152,
+            0.028
+          ],
+          [
+            0.0170895,
+            0.8607661,
+            0.0225
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "note": "Seven fixed-end strings; no tremolo arm. Diameters not exaggerated into structural rods.",
+      "look": {
+        "fill": "none",
+        "weight": 0.65,
+        "alpha": 0.9
+      }
+    },
+    {
+      "id": "string-7",
+      "label": "String 7",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "front",
+      "basis": [
+        "strings",
+        "scale",
+        "nut-width",
+        "head-trace",
+        "saddle-spacing"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.0312,
+            0.1068152,
+            0.038
+          ],
+          [
+            0.0189,
+            0.7799152,
+            0.028
+          ],
+          [
+            0.0259837,
+            0.8321725,
+            0.0225
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "note": "Seven fixed-end strings; no tremolo arm. Diameters not exaggerated into structural rods.",
+      "look": {
+        "fill": "none",
+        "weight": 0.65,
+        "alpha": 0.9
+      }
+    },
+    {
+      "id": "inlay-3-0",
+      "label": "Inlay 3 0",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 6,
+      "source": "front",
+      "basis": [
+        "inlays",
+        "inlay-layout",
+        "fret-layout"
+      ],
+      "shape": {
+        "type": "marker",
+        "sprite": "disc",
+        "size_px": 3.1
+      },
+      "at": [
+        0.0178619,
+        0.6894078,
+        0.0246
+      ]
+    },
+    {
+      "id": "luminous-side-dot-3",
+      "label": "Luminous Side Dot 3",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 6,
+      "source": "front",
+      "basis": [
+        "inlays",
+        "inlay-layout"
+      ],
+      "shape": {
+        "type": "marker",
+        "sprite": "disc",
+        "size_px": 2
+      },
+      "at": [
+        -0.0241619,
+        0.6894078,
+        0.02
+      ]
+    },
+    {
+      "id": "inlay-5-0",
+      "label": "Inlay 5 0",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 6,
+      "source": "front",
+      "basis": [
+        "inlays",
+        "inlay-layout",
+        "fret-layout"
+      ],
+      "shape": {
+        "type": "marker",
+        "sprite": "disc",
+        "size_px": 3.1
+      },
+      "at": [
+        0.0190115,
+        0.6258462,
+        0.0246
+      ]
+    },
+    {
+      "id": "luminous-side-dot-5",
+      "label": "Luminous Side Dot 5",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 6,
+      "source": "front",
+      "basis": [
+        "inlays",
+        "inlay-layout"
+      ],
+      "shape": {
+        "type": "marker",
+        "sprite": "disc",
+        "size_px": 2
+      },
+      "at": [
+        -0.0253115,
+        0.6258462,
+        0.02
+      ]
+    },
+    {
+      "id": "inlay-7-0",
+      "label": "Inlay 7 0",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 6,
+      "source": "front",
+      "basis": [
+        "inlays",
+        "inlay-layout",
+        "fret-layout"
+      ],
+      "shape": {
+        "type": "marker",
+        "sprite": "disc",
+        "size_px": 3.1
+      },
+      "at": [
+        0.0200357,
+        0.5692193,
+        0.0246
+      ]
+    },
+    {
+      "id": "luminous-side-dot-7",
+      "label": "Luminous Side Dot 7",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 6,
+      "source": "front",
+      "basis": [
+        "inlays",
+        "inlay-layout"
+      ],
+      "shape": {
+        "type": "marker",
+        "sprite": "disc",
+        "size_px": 2
+      },
+      "at": [
+        -0.0263357,
+        0.5692193,
+        0.02
+      ]
+    },
+    {
+      "id": "inlay-9-0",
+      "label": "Inlay 9 0",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 6,
+      "source": "front",
+      "basis": [
+        "inlays",
+        "inlay-layout",
+        "fret-layout"
+      ],
+      "shape": {
+        "type": "marker",
+        "sprite": "disc",
+        "size_px": 3.1
+      },
+      "at": [
+        0.0209481,
+        0.5187704,
+        0.0246
+      ]
+    },
+    {
+      "id": "luminous-side-dot-9",
+      "label": "Luminous Side Dot 9",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 6,
+      "source": "front",
+      "basis": [
+        "inlays",
+        "inlay-layout"
+      ],
+      "shape": {
+        "type": "marker",
+        "sprite": "disc",
+        "size_px": 2
+      },
+      "at": [
+        -0.0272481,
+        0.5187704,
+        0.02
+      ]
+    },
+    {
+      "id": "inlay-12-0",
+      "label": "Inlay 12 0",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 6,
+      "source": "front",
+      "basis": [
+        "inlays",
+        "inlay-layout",
+        "fret-layout"
+      ],
+      "shape": {
+        "type": "marker",
+        "sprite": "disc",
+        "size_px": 3.1
+      },
+      "at": [
+        0.0221335,
+        0.4532269,
+        0.0246
+      ]
+    },
+    {
+      "id": "inlay-12-1",
+      "label": "Inlay 12 1",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 6,
+      "source": "front",
+      "basis": [
+        "inlays",
+        "inlay-layout",
+        "fret-layout"
+      ],
+      "shape": {
+        "type": "marker",
+        "sprite": "disc",
+        "size_px": 3.1
+      },
+      "at": [
+        0.0151335,
+        0.4532269,
+        0.0246
+      ]
+    },
+    {
+      "id": "luminous-side-dot-12",
+      "label": "Luminous Side Dot 12",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 6,
+      "source": "front",
+      "basis": [
+        "inlays",
+        "inlay-layout"
+      ],
+      "shape": {
+        "type": "marker",
+        "sprite": "disc",
+        "size_px": 2
+      },
+      "at": [
+        -0.0284335,
+        0.4532269,
+        0.02
+      ]
+    },
+    {
+      "id": "inlay-15-0",
+      "label": "Inlay 15 0",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 6,
+      "source": "front",
+      "basis": [
+        "inlays",
+        "inlay-layout",
+        "fret-layout"
+      ],
+      "shape": {
+        "type": "marker",
+        "sprite": "disc",
+        "size_px": 3.1
+      },
+      "at": [
+        -0.0231303,
+        0.3981115,
+        0.0246
+      ]
+    },
+    {
+      "id": "luminous-side-dot-15",
+      "label": "Luminous Side Dot 15",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 6,
+      "source": "front",
+      "basis": [
+        "inlays",
+        "inlay-layout"
+      ],
+      "shape": {
+        "type": "marker",
+        "sprite": "disc",
+        "size_px": 2
+      },
+      "at": [
+        -0.0294303,
+        0.3981115,
+        0.02
+      ]
+    },
+    {
+      "id": "inlay-17-0",
+      "label": "Inlay 17 0",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 6,
+      "source": "front",
+      "basis": [
+        "inlays",
+        "inlay-layout",
+        "fret-layout"
+      ],
+      "shape": {
+        "type": "marker",
+        "sprite": "disc",
+        "size_px": 3.1
+      },
+      "at": [
+        -0.0237051,
+        0.3663307,
+        0.0246
+      ]
+    },
+    {
+      "id": "luminous-side-dot-17",
+      "label": "Luminous Side Dot 17",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 6,
+      "source": "front",
+      "basis": [
+        "inlays",
+        "inlay-layout"
+      ],
+      "shape": {
+        "type": "marker",
+        "sprite": "disc",
+        "size_px": 2
+      },
+      "at": [
+        -0.0300051,
+        0.3663307,
+        0.02
+      ]
+    },
+    {
+      "id": "inlay-19-0",
+      "label": "Inlay 19 0",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 6,
+      "source": "front",
+      "basis": [
+        "inlays",
+        "inlay-layout",
+        "fret-layout"
+      ],
+      "shape": {
+        "type": "marker",
+        "sprite": "disc",
+        "size_px": 3.1
+      },
+      "at": [
+        -0.0242172,
+        0.3380172,
+        0.0246
+      ]
+    },
+    {
+      "id": "luminous-side-dot-19",
+      "label": "Luminous Side Dot 19",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 6,
+      "source": "front",
+      "basis": [
+        "inlays",
+        "inlay-layout"
+      ],
+      "shape": {
+        "type": "marker",
+        "sprite": "disc",
+        "size_px": 2
+      },
+      "at": [
+        -0.0305172,
+        0.3380172,
+        0.02
+      ]
+    },
+    {
+      "id": "inlay-21-0",
+      "label": "Inlay 21 0",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 6,
+      "source": "front",
+      "basis": [
+        "inlays",
+        "inlay-layout",
+        "fret-layout"
+      ],
+      "shape": {
+        "type": "marker",
+        "sprite": "disc",
+        "size_px": 3.1
+      },
+      "at": [
+        -0.0246734,
+        0.3127928,
+        0.0246
+      ]
+    },
+    {
+      "id": "luminous-side-dot-21",
+      "label": "Luminous Side Dot 21",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 6,
+      "source": "front",
+      "basis": [
+        "inlays",
+        "inlay-layout"
+      ],
+      "shape": {
+        "type": "marker",
+        "sprite": "disc",
+        "size_px": 2
+      },
+      "at": [
+        -0.0309734,
+        0.3127928,
+        0.02
+      ]
+    },
+    {
+      "id": "inlay-24-0",
+      "label": "Inlay 24 0",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 6,
+      "source": "front",
+      "basis": [
+        "inlays",
+        "inlay-layout",
+        "fret-layout"
+      ],
+      "shape": {
+        "type": "marker",
+        "sprite": "disc",
+        "size_px": 3.1
+      },
+      "at": [
+        0.0252661,
+        0.280021,
+        0.0246
+      ]
+    },
+    {
+      "id": "inlay-24-1",
+      "label": "Inlay 24 1",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 6,
+      "source": "front",
+      "basis": [
+        "inlays",
+        "inlay-layout",
+        "fret-layout"
+      ],
+      "shape": {
+        "type": "marker",
+        "sprite": "disc",
+        "size_px": 3.1
+      },
+      "at": [
+        0.0182661,
+        0.280021,
+        0.0246
+      ]
+    },
+    {
+      "id": "luminous-side-dot-24",
+      "label": "Luminous Side Dot 24",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 6,
+      "source": "front",
+      "basis": [
+        "inlays",
+        "inlay-layout"
+      ],
+      "shape": {
+        "type": "marker",
+        "sprite": "disc",
+        "size_px": 2
+      },
+      "at": [
+        -0.0315661,
+        0.280021,
+        0.02
+      ]
+    },
+    {
+      "id": "volume-dome-knob",
+      "label": "Volume Dome Knob",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 6,
+      "source": "bridge-photo",
+      "basis": [
+        "controls",
+        "hardware-layout"
+      ],
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.0105,
+            0
+          ],
+          [
+            0.0115,
+            0.002
+          ],
+          [
+            0.0108,
+            0.009
+          ],
+          [
+            0.008,
+            0.014
+          ],
+          [
+            0.004,
+            0.016
+          ],
+          [
+            0,
+            0.017
+          ]
+        ],
+        "segments": 12,
+        "meridians": 6
+      },
+      "at": [
+        0.0832876,
+        0.122591,
+        0.023
+      ],
+      "note": "Control position measured from front photograph; dome section inferred. Motion range is decorative demonstration.",
+      "rotate": [
+        90,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "volume-index-mark",
+      "label": "Decorative Volume Position Witness",
+      "note": "Invented position witness for the rotation demonstration, not a factory marking.",
+      "role": "ornament",
+      "certainty": "decorative",
+      "stage": 6,
+      "source": "bridge-photo",
+      "basis": [
+        "controls"
+      ],
+      "shape": {
+        "type": "marker",
+        "sprite": "disc",
+        "size_px": 2.5
+      },
+      "at": [
+        0.0832876,
+        0.115591,
+        0.0402
+      ]
+    },
+    {
+      "id": "tone-dome-knob",
+      "label": "Tone Dome Knob",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 6,
+      "source": "bridge-photo",
+      "basis": [
+        "controls",
+        "hardware-layout"
+      ],
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.0105,
+            0
+          ],
+          [
+            0.0115,
+            0.002
+          ],
+          [
+            0.0108,
+            0.009
+          ],
+          [
+            0.008,
+            0.014
+          ],
+          [
+            0.004,
+            0.016
+          ],
+          [
+            0,
+            0.017
+          ]
+        ],
+        "segments": 12,
+        "meridians": 6
+      },
+      "at": [
+        0.0967393,
+        0.0706624,
+        0.023
+      ],
+      "note": "Control position measured from front photograph; dome section inferred. Motion range is decorative demonstration.",
+      "rotate": [
+        90,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "tone-index-mark",
+      "label": "Decorative Tone Position Witness",
+      "note": "Invented position witness for the rotation demonstration, not a factory marking.",
+      "role": "ornament",
+      "certainty": "decorative",
+      "stage": 6,
+      "source": "bridge-photo",
+      "basis": [
+        "controls"
+      ],
+      "shape": {
+        "type": "marker",
+        "sprite": "disc",
+        "size_px": 2.5
+      },
+      "at": [
+        0.0967393,
+        0.0636624,
+        0.0402
+      ]
+    },
+    {
+      "id": "five-way-selector-slot",
+      "label": "Five Way Selector Slot",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 6,
+      "source": "front",
+      "basis": [
+        "controls",
+        "hardware-layout"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.098506,
+            0.1413247,
+            0.024
+          ],
+          [
+            0.0734873,
+            0.1715616,
+            0.024
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "selector-lever",
+      "label": "Selector Lever",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 6,
+      "source": "front",
+      "basis": [
+        "controls",
+        "hardware-layout"
+      ],
+      "shape": {
+        "type": "tube",
+        "path": [
+          [
+            0.0859967,
+            0.1564432,
+            0.024
+          ],
+          [
+            0.0819967,
+            0.1594432,
+            0.041
+          ]
+        ],
+        "radius": 0.0016,
+        "sides": 6,
+        "longitudinal": 3,
+        "samples": 1
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "note": "Lever angle is illustrative. Five-way travel is a presentation gesture, not measured."
+    },
+    {
+      "id": "selector-tip",
+      "label": "Selector Tip",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 6,
+      "source": "front",
+      "basis": [
+        "controls",
+        "hardware-layout"
+      ],
+      "shape": {
+        "type": "sphere",
+        "radii": [
+          0.0045,
+          0.006,
+          0.0055
+        ]
+      },
+      "at": [
+        0.0819967,
+        0.1594432,
+        0.041
+      ]
+    },
+    {
+      "id": "rear-evertune-access-plate",
+      "label": "Rear Evertune Access Plate",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "back",
+      "basis": [
+        "back-layout",
+        "bridge"
+      ],
+      "shape": {
+        "type": "box",
+        "size": [
+          0.093,
+          0.163,
+          0.002
+        ]
+      },
+      "at": [
+        0,
+        0.126,
+        -0.0232
+      ],
+      "note": "Rectangular rear plate visually measured; the spring hardware remains concealed, not invented."
+    },
+    {
+      "id": "rear-string-access-slot-0",
+      "label": "Rear String Access Slot 0",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "back",
+      "basis": [
+        "back-layout"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.0342,
+            0.075,
+            -0.0245
+          ],
+          [
+            -0.0282,
+            0.075,
+            -0.0245
+          ],
+          [
+            -0.0282,
+            0.091,
+            -0.0245
+          ],
+          [
+            -0.0342,
+            0.091,
+            -0.0245
+          ]
+        ],
+        "closed": true,
+        "smooth": false
+      },
+      "at": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "rear-string-access-slot-1",
+      "label": "Rear String Access Slot 1",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "back",
+      "basis": [
+        "back-layout"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.0238,
+            0.075,
+            -0.0245
+          ],
+          [
+            -0.0178,
+            0.075,
+            -0.0245
+          ],
+          [
+            -0.0178,
+            0.091,
+            -0.0245
+          ],
+          [
+            -0.0238,
+            0.091,
+            -0.0245
+          ]
+        ],
+        "closed": true,
+        "smooth": false
+      },
+      "at": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "rear-string-access-slot-2",
+      "label": "Rear String Access Slot 2",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "back",
+      "basis": [
+        "back-layout"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.0134,
+            0.075,
+            -0.0245
+          ],
+          [
+            -0.0074,
+            0.075,
+            -0.0245
+          ],
+          [
+            -0.0074,
+            0.091,
+            -0.0245
+          ],
+          [
+            -0.0134,
+            0.091,
+            -0.0245
+          ]
+        ],
+        "closed": true,
+        "smooth": false
+      },
+      "at": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "rear-string-access-slot-3",
+      "label": "Rear String Access Slot 3",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "back",
+      "basis": [
+        "back-layout"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.003,
+            0.075,
+            -0.0245
+          ],
+          [
+            0.003,
+            0.075,
+            -0.0245
+          ],
+          [
+            0.003,
+            0.091,
+            -0.0245
+          ],
+          [
+            -0.003,
+            0.091,
+            -0.0245
+          ]
+        ],
+        "closed": true,
+        "smooth": false
+      },
+      "at": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "rear-string-access-slot-4",
+      "label": "Rear String Access Slot 4",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "back",
+      "basis": [
+        "back-layout"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.0074,
+            0.075,
+            -0.0245
+          ],
+          [
+            0.0134,
+            0.075,
+            -0.0245
+          ],
+          [
+            0.0134,
+            0.091,
+            -0.0245
+          ],
+          [
+            0.0074,
+            0.091,
+            -0.0245
+          ]
+        ],
+        "closed": true,
+        "smooth": false
+      },
+      "at": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "rear-string-access-slot-5",
+      "label": "Rear String Access Slot 5",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "back",
+      "basis": [
+        "back-layout"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.0178,
+            0.075,
+            -0.0245
+          ],
+          [
+            0.0238,
+            0.075,
+            -0.0245
+          ],
+          [
+            0.0238,
+            0.091,
+            -0.0245
+          ],
+          [
+            0.0178,
+            0.091,
+            -0.0245
+          ]
+        ],
+        "closed": true,
+        "smooth": false
+      },
+      "at": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "rear-string-access-slot-6",
+      "label": "Rear String Access Slot 6",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "back",
+      "basis": [
+        "back-layout"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.0282,
+            0.075,
+            -0.0245
+          ],
+          [
+            0.0342,
+            0.075,
+            -0.0245
+          ],
+          [
+            0.0342,
+            0.091,
+            -0.0245
+          ],
+          [
+            0.0282,
+            0.091,
+            -0.0245
+          ]
+        ],
+        "closed": true,
+        "smooth": false
+      },
+      "at": [
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "rear-electronics-cover",
+      "label": "Rear Electronics Cover",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "back",
+      "basis": [
+        "back-layout"
+      ],
+      "shape": {
+        "type": "extrude",
+        "profile": [
+          [
+            0.056,
+            0.029
+          ],
+          [
+            0.103,
+            0.018
+          ],
+          [
+            0.132,
+            0.031
+          ],
+          [
+            0.138,
+            0.064
+          ],
+          [
+            0.133,
+            0.112
+          ],
+          [
+            0.124,
+            0.171
+          ],
+          [
+            0.11,
+            0.183
+          ],
+          [
+            0.061,
+            0.184
+          ],
+          [
+            0.05,
+            0.174
+          ],
+          [
+            0.048,
+            0.062
+          ]
+        ],
+        "height": 0.002,
+        "axis": "z"
+      },
+      "at": [
+        0,
+        0,
+        -0.0243
+      ],
+      "look": {
+        "fill": "none"
+      }
+    },
+    {
+      "id": "heel-recessed-screw-0",
+      "label": "Heel Recessed Screw 0",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "neck-photo",
+      "basis": [
+        "heel-fasteners",
+        "back-layout"
+      ],
+      "shape": {
+        "type": "marker",
+        "sprite": "ring",
+        "size_px": 4
+      },
+      "at": [
+        -0.017,
+        0.322,
+        -0.023
+      ]
+    },
+    {
+      "id": "heel-recessed-screw-1",
+      "label": "Heel Recessed Screw 1",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "neck-photo",
+      "basis": [
+        "heel-fasteners",
+        "back-layout"
+      ],
+      "shape": {
+        "type": "marker",
+        "sprite": "ring",
+        "size_px": 4
+      },
+      "at": [
+        -0.017,
+        0.282,
+        -0.023
+      ]
+    },
+    {
+      "id": "heel-recessed-screw-2",
+      "label": "Heel Recessed Screw 2",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "neck-photo",
+      "basis": [
+        "heel-fasteners",
+        "back-layout"
+      ],
+      "shape": {
+        "type": "marker",
+        "sprite": "ring",
+        "size_px": 4
+      },
+      "at": [
+        0.017,
+        0.309,
+        -0.023
+      ]
+    },
+    {
+      "id": "heel-recessed-screw-3",
+      "label": "Heel Recessed Screw 3",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "neck-photo",
+      "basis": [
+        "heel-fasteners",
+        "back-layout"
+      ],
+      "shape": {
+        "type": "marker",
+        "sprite": "ring",
+        "size_px": 4
+      },
+      "at": [
+        0.017,
+        0.281,
+        -0.023
+      ]
+    },
+    {
+      "id": "rear-plate-screws",
+      "label": "Rear Plate Screws",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "back",
+      "basis": [
+        "back-layout"
+      ],
+      "shape": {
+        "type": "marker",
+        "sprite": "ring",
+        "size_px": 2.5
+      },
+      "at": [
+        -0.041,
+        0.052,
+        -0.0246
+      ],
+      "repeat": {
+        "count": 3,
+        "step": {
+          "at": [
+            0.041,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": "rear-plate-upper-screws",
+      "label": "Rear Plate Upper Screws",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "back",
+      "basis": [
+        "back-layout"
+      ],
+      "shape": {
+        "type": "marker",
+        "sprite": "ring",
+        "size_px": 2.5
+      },
+      "at": [
+        -0.041,
+        0.2,
+        -0.0246
+      ],
+      "repeat": {
+        "count": 3,
+        "step": {
+          "at": [
+            0.041,
+            0,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": "bass-horn-strap-button",
+      "label": "Bass Horn Strap Button",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 6,
+      "source": "front",
+      "basis": [
+        "body-trace"
+      ],
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.003,
+            0
+          ],
+          [
+            0.003,
+            0.006
+          ],
+          [
+            0.006,
+            0.007
+          ],
+          [
+            0.006,
+            0.011
+          ],
+          [
+            0.003,
+            0.012
+          ]
+        ],
+        "segments": 8,
+        "meridians": 3
+      },
+      "at": [
+        -0.101316,
+        0.4371206,
+        0
+      ],
+      "note": "Dunlop dual-lock button observed on horn; fastening section inferred.",
+      "rotate": [
+        0,
+        0,
+        -40
+      ]
+    },
+    {
+      "id": "tail-strap-button",
+      "label": "Tail Strap Button",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 0,
+      "source": "front",
+      "basis": [
+        "body-trace"
+      ],
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.003,
+            0
+          ],
+          [
+            0.003,
+            0.006
+          ],
+          [
+            0.006,
+            0.007
+          ],
+          [
+            0.006,
+            0.012
+          ],
+          [
+            0.003,
+            0.013
+          ]
+        ],
+        "segments": 8,
+        "meridians": 3
+      },
+      "at": [
+        0,
+        0.002,
+        0
+      ],
+      "note": "Tail button observed on source image.",
+      "rotate": [
+        0,
+        0,
+        180
+      ]
+    },
+    {
+      "id": "headstock-maker-label-carrier",
+      "label": "Headstock Maker Label Carrier",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 7,
+      "source": "front",
+      "basis": [
+        "maker",
+        "head-trace"
+      ],
+      "shape": {
+        "type": "box",
+        "size": [
+          0.022,
+          0.058,
+          0.001
+        ]
+      },
+      "at": [
+        0.001,
+        0.8739152,
+        0.022
+      ],
+      "look": {
+        "line": "none",
+        "fill": "none"
+      }
+    }
+  ],
+  "labels": [
+    {
+      "id": "maker-wordmark",
+      "part": "headstock-maker-label-carrier",
+      "face": "front",
+      "field": "maker",
+      "role": "creator",
+      "orientation": "vertical-up",
+      "region": [
+        0,
+        0,
+        1,
+        1
+      ]
+    }
+  ],
+  "articulations": [
+    {
+      "id": "volume-demonstration",
+      "type": "turn",
+      "parts": [
+        "volume-dome-knob",
+        "volume-index-mark"
+      ],
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "pivot": [
+        0.0832876,
+        0.122591,
+        0.023
+      ],
+      "amount": 65,
+      "order": 0
+    },
+    {
+      "id": "tone-push-pull-demonstration",
+      "type": "lift",
+      "parts": [
+        "tone-dome-knob",
+        "tone-index-mark"
+      ],
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "amount": 0.003,
+      "order": 1
+    },
+    {
+      "id": "tone-rotation-demonstration",
+      "type": "turn",
+      "parts": [
+        "tone-dome-knob",
+        "tone-index-mark"
+      ],
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "pivot": [
+        0.0967393,
+        0.0706624,
+        0.023
+      ],
+      "amount": 28,
+      "order": 1
+    },
+    {
+      "id": "selector-position-demonstration",
+      "type": "hinge",
+      "parts": [
+        "selector-lever",
+        "selector-tip"
+      ],
+      "axis": [
+        0.77,
+        0.64,
+        0
+      ],
+      "pivot": [
+        0.0859967,
+        0.1564432,
+        0.024
+      ],
+      "amount": 14,
+      "order": 2
+    }
+  ],
+  "anchors": {
+    "front": {
+      "part": "evertune-f7-faceplate",
+      "face": "front"
+    },
+    "base": {
+      "point": [
+        0,
+        -0.011,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ]
+    }
+  },
+  "annotations": [
+    {
+      "id": "evertune",
+      "text": "EverTune F7 / seven independent saddles; geometry inferred",
+      "part": "evertune-f7-faceplate",
+      "offset": [
+        -0.1,
+        -0.015,
+        0.015
+      ]
+    },
+    {
+      "id": "at1",
+      "text": "AT-1 / 4 + 3 locking tuners; outline traced",
+      "part": "at1-four-by-three-headstock",
+      "offset": [
+        0.07,
+        0.015,
+        0.01
+      ]
+    },
+    {
+      "id": "mm1",
+      "text": "Direct-mount MM1 / uncovered HH",
+      "part": "neck-mm1-base",
+      "offset": [
+        -0.1,
+        0.01,
+        0.01
+      ]
+    },
+    {
+      "id": "control-motion",
+      "text": "Control gesture / decorative travel, not measured",
+      "part": "tone-dome-knob",
+      "offset": [
+        0.09,
+        -0.025,
+        0.01
+      ]
+    }
+  ],
+  "presentation": {
+    "framing": {
+      "yaw": -17,
+      "pitch": 6,
+      "fit": 1.08
+    },
+    "views": [
+      {
+        "id": "silhouette",
+        "label": "Measured front silhouette",
+        "yaw": 0,
+        "pitch": 0,
+        "distance": 1.03
+      },
+      {
+        "id": "evertune",
+        "label": "Seven independent saddles",
+        "yaw": -12,
+        "pitch": 12,
+        "distance": 2.4,
+        "target": "evertune-f7-faceplate"
+      },
+      {
+        "id": "at1",
+        "label": "Compact AT-1 4 by 3",
+        "yaw": -10,
+        "pitch": 3,
+        "distance": 1.65,
+        "target": "at1-four-by-three-headstock"
+      },
+      {
+        "id": "rear-construction",
+        "label": "Bolt-on heel and rear service plates",
+        "yaw": 178,
+        "pitch": 7,
+        "distance": 1.04
+      },
+      {
+        "id": "open",
+        "label": "Push pull tone and selector",
+        "yaw": -18,
+        "pitch": 8,
+        "distance": 1.45,
+        "target": "juggernaut-body"
+      }
+    ],
+    "atmosphere": {
+      "haze": 0.18,
+      "scanlines": false,
+      "vignette": true,
+      "grid": false,
+      "projector": false,
+      "motes": 0
+    },
+    "occlusion": "xray",
+    "certainty_style": "subtle",
+    "float": 0,
+    "still_pose": "closed"
+  },
+  "animation": {
+    "assembly": {
+      "style": "ceremony",
+      "seconds": 10,
+      "interference": false
+    },
+    "idle": {
+      "life": "calm",
+      "events": [
+        "scan",
+        "shimmer"
+      ],
+      "cadence": [
+        10,
+        19
+      ],
+      "strength": 0.22
+    },
+    "camera": {
+      "drift": 1.7,
+      "breathe": 0.012,
+      "tour": [
+        {
+          "view": "evertune",
+          "at": 15,
+          "fly": 3.5
+        },
+        {
+          "view": "at1",
+          "at": 24,
+          "fly": 4
+        },
+        {
+          "view": "rear-construction",
+          "at": 34,
+          "fly": 5
+        },
+        {
+          "view": "hero",
+          "at": 46,
+          "fly": 5
+        }
+      ]
+    },
+    "reduced_motion": "still"
+  }
+}

@@ -3,7 +3,8 @@
 Every entry point does the same thing: a model (or you) writes a scene or a parameter
 document; Construct checks it, and the draft is repaired until it is clean; then it is built
 and, optionally, reviewed and filmed. Paths below are relative to a checkout of
-`https://github.com/rtmandreyev/construct`.
+`https://github.com/rtmandreyev/construct`. To see what the results look like, open the
+[examples gallery](https://rtmandreyev.github.io/construct/).
 
 ## Requirements
 
@@ -119,14 +120,14 @@ it before any work (never unbounded):
 
 | mode | what it does | stops | costs | for |
 |---|---|---|---|---|
-| **fast** (`--mode fast`, the default here) | one pass with self-review, no rounds loop: the standard tier, or showcase for a richer subject | 10 min and 2 reviews (30 min and 4) | cents with DeepSeek (below) | generic subjects, simple objects, quick asks |
+| **fast** (`--mode fast`, the default here) | one pass with self-review, no rounds loop: the standard tier, or showcase for a richer subject | 10 min and 2 reviews (30 min and 4) | cents with DeepSeek (below) | generic subjects, simple objects, quick requests |
 | **masterpiece** (`--mode masterpiece`) | the critic every round, each version judged against the best so far | 2 rounds without a win, every criterion 3, 12 rounds, or 2 hours of active work | frontier-model tokens for up to 2 hours | a named subject whose likeness matters: a car model, a landmark, a named building |
 | **unbounded** (`--mode unbounded`) | the same rounds with only the stop rules | 2 rounds without a win (or every criterion 3), or you | many rounds and hours at a high token cost | only on explicit request |
 
 Unbounded has no round cap and no time ceiling. The critic finds a win almost every round, so
-it can run for many rounds and hours; the per-round report lets you stop it at any time. In the
-owner's blind comparisons no visible gain showed after about 12 rounds, which is where
-masterpiece stops. The old tier names still work: `--tier quick|standard|showcase` are fast,
+it can run for many rounds and hours; the per-round report lets you stop it at any time. In
+blind comparisons no visible gain showed after about 12 rounds, which is where masterpiece
+stops. The old tier names still work: `--tier quick|standard|showcase` are fast,
 `--tier masterpiece` is masterpiece; `mode: ...` or `tier: ...` in a request is read too.
 
 The effort tier bounds the whole run, and `author` enforces it: whichever comes first ends

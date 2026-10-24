@@ -1,0 +1,477 @@
+{
+  "format": "tessera-hologram",
+  "version": 2,
+  "id": "p3-blackhole",
+  "title": "Black hole — light at the edge",
+  "subject": {
+    "category": "other",
+    "accuracy": "generic",
+    "synthetic": false,
+    "summary": "A generic, interpretive black-hole showcase: a dark central shadow, a thin photon ring, a broad rotating accretion disk and opposed polar jets. Display metres, proportions, lensing arcs, filament patterns and animation speeds are designed, not astronomical measurements. The sphere represents the apparent shadow, not a visible solid surface or an event-horizon measurement. Jets begin outside it; no escaping material from inside a horizon is depicted. This is not a relativistic simulation or an image of a particular black hole."
+  },
+  "units": "m",
+  "seed": 7319,
+  "sources": [
+    {
+      "id": "request",
+      "kind": "user_request",
+      "title": "Public showcase black-hole hologram request",
+      "rights": "user_private",
+      "ref": "A black hole with a glowing, rotating accretion disk, a photon ring and two jets streaming from its poles."
+    }
+  ],
+  "facts": [
+    {
+      "key": "subject",
+      "value": "A black hole",
+      "certainty": "user_supplied",
+      "source": "request"
+    },
+    {
+      "key": "disk",
+      "value": "Glowing, rotating accretion disk",
+      "certainty": "user_supplied",
+      "source": "request"
+    },
+    {
+      "key": "photon-ring",
+      "value": "A photon ring",
+      "certainty": "user_supplied",
+      "source": "request"
+    },
+    {
+      "key": "jets",
+      "value": "Two jets streaming from opposite poles",
+      "certainty": "user_supplied",
+      "source": "request"
+    },
+    {
+      "key": "display-proportions",
+      "value": "Shadow radius 0.96; disk inner radius 1.38 and outer radius 3.55; jet tips 4.1 above and below the centre",
+      "unit": "display m",
+      "certainty": "inferred",
+      "note": "Designed from the request: a wide, thin disk crossed by slender bipolar outflows, with a clear central void. These are model-space dimensions, not estimates of a real object's size."
+    },
+    {
+      "key": "shadow-model",
+      "value": "A dark sphere is a negative-space proxy for the apparent black-hole shadow",
+      "certainty": "inferred",
+      "note": "A legibility device for a three-dimensional hologram, not a visible surface, a measured silhouette, or a general-relativistic shadow calculation."
+    },
+    {
+      "key": "ring-model",
+      "value": "A narrow apparent ring surrounds the shadow, in the showcase's front image plane",
+      "certainty": "inferred",
+      "note": "An illustrative image-plane feature rather than a physical hoop in space. Ring thickness and radius are chosen for recognition; they do not infer mass or spin."
+    },
+    {
+      "key": "disk-structure",
+      "value": "Thin annular emitting body, raised inner lip, five curved flow filaments and separated orbital highlights",
+      "certainty": "inferred",
+      "note": "Designed geometry for readable rotation; filament count, local thickness and density are not observed features of a named source."
+    },
+    {
+      "key": "lensing-interpretation",
+      "value": "Upper and lower curved secondary disk images behind the shadow",
+      "certainty": "inferred",
+      "note": "Schematic gravitational-lensing cues only. The arcs are not ray-traced and do not establish an inclination, a spacetime metric or a photon-orbit radius."
+    },
+    {
+      "key": "jet-structure",
+      "value": "Two outward-widening sheaths, narrow cores and helically wound emission tracers, with launch regions outside the shadow proxy",
+      "certainty": "inferred",
+      "note": "A stylized jet-bearing system chosen to satisfy the request, not a claim that every black hole has jets. The drawn launch geometry and helix are not resolved observations or a magnetic-field measurement."
+    },
+    {
+      "key": "motion-design",
+      "value": "Disk highlights orbit in one direction with faster inner highlights; rotating jet helices create outward-travelling emission patterns",
+      "certainty": "inferred",
+      "note": "Slow showcase animation, not physical rpm, velocities, relativistic beaming or an accretion calculation. The axial cores remain continuously present, so the jets do not blink off."
+    },
+    {
+      "key": "assembly-design",
+      "value": "Shadow, disk body, disk flow, photon ring and secondary images, jet envelopes, jet cores, then travelling tracers and faint atmosphere",
+      "certainty": "inferred",
+      "note": "A staged explanatory reveal, not a chronology of black-hole formation. All emitting structures are intentionally suspended in space. Host ceremony and reduced-motion defaults are retained."
+    },
+    {
+      "key": "atmosphere",
+      "value": "Sparse background stars and faint emission motes at the two jet tips",
+      "certainty": "decorative",
+      "note": "Invented showcase atmosphere, not a star catalogue, source image, measured ejecta or synthetic scientific dataset."
+    }
+  ],
+  "assets": [],
+  "parts": [
+    {
+      "id": "shadow",
+      "label": "Central shadow proxy",
+      "role": "mass",
+      "certainty": "inferred",
+      "basis": ["subject", "shadow-model", "display-proportions"],
+      "stage": 0,
+      "floating": true,
+      "shape": {"type": "sphere", "radius": 0.96, "lat": 24, "lon": 24, "segments": 64},
+      "at": [0, 4.45, 0],
+      "look": {"line": "none", "fill": "dark"},
+      "note": "An unlit negative-space occluder; no luminous globe or surface grid."
+    },
+    {
+      "id": "disk-body",
+      "label": "Broad thin accretion disk",
+      "role": "identity",
+      "certainty": "inferred",
+      "basis": ["disk", "disk-structure", "display-proportions"],
+      "stage": 1,
+      "floating": true,
+      "shape": {
+        "type": "lathe",
+        "profile": [[1.38, 0.015], [1.55, 0.075], [1.92, 0.11], [2.35, 0.095], [2.8, 0.065], [3.2, 0.035], [3.55, 0]],
+        "segments": 72,
+        "meridians": 12
+      },
+      "at": [0, 4.45, 0]
+    },
+    {
+      "id": "disk-underside",
+      "label": "Accretion disk lower thickness",
+      "role": "mass",
+      "certainty": "inferred",
+      "basis": ["disk", "disk-structure", "display-proportions"],
+      "stage": 1,
+      "floating": true,
+      "shape": {
+        "type": "lathe",
+        "profile": [[1.39, -0.04], [1.84, -0.09], [2.6, -0.085], [3.25, -0.045], [3.54, -0.012]],
+        "segments": 64,
+        "meridians": 8
+      },
+      "at": [0, 4.45, 0]
+    },
+    {
+      "id": "inner-emission-lip",
+      "label": "Inner emitting edge of disk",
+      "role": "data",
+      "certainty": "inferred",
+      "basis": ["disk", "disk-structure"],
+      "stage": 2,
+      "floating": true,
+      "shape": {"type": "torus", "major": 1.42, "minor": 0.045, "segments": 72, "sides": 6, "rings": 4},
+      "at": [0, 4.47, 0]
+    },
+    {
+      "id": "accretion-spirals",
+      "label": "Five orbiting flow filaments",
+      "role": "structure",
+      "certainty": "inferred",
+      "basis": ["disk", "disk-structure", "motion-design"],
+      "stage": 2,
+      "floating": true,
+      "shape": {
+        "type": "tube",
+        "path": [[3.42, 0.045, 0], [2.95, 0.1, 0.95], [2.02, 0.145, 1.78], [0.66, 0.15, 1.97], [-0.53, 0.12, 1.64], [-1.3, 0.07, 0.66]],
+        "radius": [0.012, 0.024, 0.037, 0.043, 0.03, 0.014],
+        "sides": 5,
+        "samples": 7,
+        "longitudinal": 2,
+        "ring_every": 0,
+        "caps": false
+      },
+      "at": [0, 4.45, 0],
+      "repeat": {"count": 5, "radial": {"axis": "y", "center": [0, 4.45, 0], "span": 360}},
+      "motion": {"type": "spin", "axis": [0, 1, 0], "pivot": [0, 4.45, 0], "rpm": 3.2},
+      "note": "Non-axisymmetric filaments make the requested rotation visible without rotating a featureless ring."
+    },
+    {
+      "id": "inner-orbit-highlights",
+      "label": "Fast inner emission arcs",
+      "role": "data",
+      "certainty": "inferred",
+      "basis": ["disk", "disk-structure", "motion-design"],
+      "stage": 2,
+      "floating": true,
+      "shape": {
+        "type": "tube",
+        "path": [[1.6, 0.13, 0], [1.54, 0.135, 0.46], [1.34, 0.14, 0.88], [1.06, 0.135, 1.21]],
+        "radius": [0.014, 0.025, 0.031, 0.01],
+        "sides": 5,
+        "samples": 6,
+        "longitudinal": 2,
+        "ring_every": 0,
+        "caps": false
+      },
+      "at": [0, 4.45, 0],
+      "repeat": {"count": 3, "radial": {"axis": "y", "center": [0, 4.45, 0], "span": 360}},
+      "motion": {"type": "spin", "axis": [0, 1, 0], "pivot": [0, 4.45, 0], "rpm": 5.4}
+    },
+    {
+      "id": "outer-orbit-streaks",
+      "label": "Slow outer disk streaks",
+      "role": "detail",
+      "certainty": "inferred",
+      "basis": ["disk", "disk-structure", "motion-design"],
+      "stage": 2,
+      "floating": true,
+      "shape": {
+        "type": "curve",
+        "points": [[3.32, 0.06, 0], [3.22, 0.065, 0.72], [2.98, 0.07, 1.4], [2.63, 0.075, 1.98], [2.15, 0.08, 2.49]],
+        "smooth": true,
+        "closed": false
+      },
+      "at": [0, 4.45, 0],
+      "repeat": {"count": 4, "radial": {"axis": "y", "center": [0, 4.45, 0], "span": 360}},
+      "motion": {"type": "spin", "axis": [0, 1, 0], "pivot": [0, 4.45, 0], "rpm": 1.8}
+    },
+    {
+      "id": "photon-ring",
+      "label": "Apparent photon ring",
+      "role": "identity",
+      "certainty": "inferred",
+      "basis": ["photon-ring", "ring-model", "display-proportions"],
+      "stage": 3,
+      "floating": true,
+      "shape": {"type": "torus", "major": 1.13, "minor": 0.028, "segments": 96, "sides": 8, "rings": 4},
+      "at": [0, 4.45, 0.08],
+      "rotate": [90, 0, 0],
+      "note": "A slender apparent image ring. Kept separate from the broad equatorial accretion disk and the shadow."
+    },
+    {
+      "id": "upper-lensed-disk",
+      "label": "Schematic upper secondary disk image",
+      "role": "structure",
+      "certainty": "inferred",
+      "basis": ["disk", "lensing-interpretation"],
+      "stage": 3,
+      "floating": true,
+      "shape": {
+        "type": "tube",
+        "path": [[-2.08, 0.025, -0.22], [-1.7, 0.55, -0.25], [-1.3, 1.15, -0.28], [-0.72, 1.53, -0.3], [0, 1.65, -0.31], [0.72, 1.53, -0.3], [1.3, 1.15, -0.28], [1.7, 0.55, -0.25], [2.08, 0.025, -0.22]],
+        "radius": [0.022, 0.042, 0.055, 0.062, 0.064, 0.062, 0.055, 0.042, 0.022],
+        "sides": 6,
+        "samples": 6,
+        "longitudinal": 3,
+        "ring_every": 0,
+        "caps": false
+      },
+      "at": [0, 4.45, 0]
+    },
+    {
+      "id": "lower-lensed-disk",
+      "label": "Schematic lower secondary disk image",
+      "role": "structure",
+      "certainty": "inferred",
+      "basis": ["disk", "lensing-interpretation"],
+      "stage": 3,
+      "floating": true,
+      "shape": {
+        "type": "tube",
+        "path": [[-1.95, -0.035, -0.25], [-1.57, -0.48, -0.27], [-1.12, -0.97, -0.29], [-0.6, -1.25, -0.31], [0, -1.35, -0.32], [0.6, -1.25, -0.31], [1.12, -0.97, -0.29], [1.57, -0.48, -0.27], [1.95, -0.035, -0.25]],
+        "radius": [0.012, 0.02, 0.028, 0.032, 0.035, 0.032, 0.028, 0.02, 0.012],
+        "sides": 5,
+        "samples": 6,
+        "longitudinal": 2,
+        "ring_every": 0,
+        "caps": false
+      },
+      "at": [0, 4.45, 0]
+    },
+    {
+      "id": "upper-jet-sheath",
+      "label": "Upper polar jet envelope",
+      "role": "mass",
+      "certainty": "inferred",
+      "basis": ["jets", "jet-structure", "display-proportions"],
+      "stage": 4,
+      "floating": true,
+      "shape": {
+        "type": "lathe",
+        "profile": [[0.16, 1.08], [0.21, 1.4], [0.19, 1.85], [0.24, 2.35], [0.31, 2.95], [0.43, 3.6], [0.52, 4.1]],
+        "segments": 36,
+        "meridians": 6
+      },
+      "at": [0, 4.45, 0]
+    },
+    {
+      "id": "lower-jet-sheath",
+      "label": "Lower polar jet envelope",
+      "role": "mass",
+      "certainty": "inferred",
+      "basis": ["jets", "jet-structure", "display-proportions"],
+      "stage": 4,
+      "floating": true,
+      "shape": {
+        "type": "lathe",
+        "profile": [[0.16, 1.08], [0.21, 1.4], [0.19, 1.85], [0.24, 2.35], [0.31, 2.95], [0.43, 3.6], [0.52, 4.1]],
+        "segments": 36,
+        "meridians": 6
+      },
+      "at": [0, 4.45, 0],
+      "rotate": [180, 0, 0]
+    },
+    {
+      "id": "upper-jet-core",
+      "label": "Continuous upper outflow core",
+      "role": "identity",
+      "certainty": "inferred",
+      "basis": ["jets", "jet-structure"],
+      "stage": 5,
+      "floating": true,
+      "shape": {
+        "type": "tube",
+        "path": [[0, 1.07, 0], [0, 1.45, 0], [0.015, 2.05, 0], [-0.015, 2.75, 0], [0.015, 3.45, 0], [0, 4.1, 0]],
+        "radius": [0.065, 0.095, 0.082, 0.067, 0.046, 0.014],
+        "sides": 8,
+        "samples": 6,
+        "longitudinal": 3,
+        "ring_every": 0,
+        "caps": false
+      },
+      "at": [0, 4.45, 0]
+    },
+    {
+      "id": "lower-jet-core",
+      "label": "Continuous lower outflow core",
+      "role": "identity",
+      "certainty": "inferred",
+      "basis": ["jets", "jet-structure"],
+      "stage": 5,
+      "floating": true,
+      "shape": {
+        "type": "tube",
+        "path": [[0, 1.07, 0], [0, 1.45, 0], [0.015, 2.05, 0], [-0.015, 2.75, 0], [0.015, 3.45, 0], [0, 4.1, 0]],
+        "radius": [0.065, 0.095, 0.082, 0.067, 0.046, 0.014],
+        "sides": 8,
+        "samples": 6,
+        "longitudinal": 3,
+        "ring_every": 0,
+        "caps": false
+      },
+      "at": [0, 4.45, 0],
+      "rotate": [180, 0, 0]
+    },
+    {
+      "id": "upper-jet-emission-helix",
+      "label": "Upper outward-travelling emission pattern",
+      "role": "data",
+      "certainty": "inferred",
+      "basis": ["jets", "jet-structure", "motion-design"],
+      "stage": 6,
+      "floating": true,
+      "shape": {
+        "type": "tube",
+        "path": [[0.12, 1.1, 0], [0, 1.4, 0.15], [-0.15, 1.7, 0], [0, 2, -0.17], [0.2, 2.3, 0], [0, 2.6, 0.23], [-0.27, 2.9, 0], [0, 3.2, -0.31], [0.36, 3.5, 0], [0, 3.8, 0.42], [-0.47, 4.08, 0]],
+        "radius": [0.012, 0.017, 0.021, 0.023, 0.025, 0.026, 0.025, 0.024, 0.021, 0.016, 0.006],
+        "sides": 5,
+        "samples": 5,
+        "longitudinal": 2,
+        "ring_every": 0,
+        "caps": false
+      },
+      "at": [0, 4.45, 0],
+      "repeat": {"count": 2, "radial": {"axis": "y", "center": [0, 4.45, 0], "span": 360}},
+      "motion": {"type": "spin", "axis": [0, 1, 0], "pivot": [0, 4.45, 0], "rpm": 5},
+      "note": "For the specified handedness, positive rotation about +Y advances a fixed-azimuth helix crossing toward the upper tip. This is a repeating emission pattern, not tracked plasma or a measured speed."
+    },
+    {
+      "id": "lower-jet-emission-helix",
+      "label": "Lower outward-travelling emission pattern",
+      "role": "data",
+      "certainty": "inferred",
+      "basis": ["jets", "jet-structure", "motion-design"],
+      "stage": 6,
+      "floating": true,
+      "shape": {
+        "type": "tube",
+        "path": [[0.12, 1.1, 0], [0, 1.4, 0.15], [-0.15, 1.7, 0], [0, 2, -0.17], [0.2, 2.3, 0], [0, 2.6, 0.23], [-0.27, 2.9, 0], [0, 3.2, -0.31], [0.36, 3.5, 0], [0, 3.8, 0.42], [-0.47, 4.08, 0]],
+        "radius": [0.012, 0.017, 0.021, 0.023, 0.025, 0.026, 0.025, 0.024, 0.021, 0.016, 0.006],
+        "sides": 5,
+        "samples": 5,
+        "longitudinal": 2,
+        "ring_every": 0,
+        "caps": false
+      },
+      "at": [0, 4.45, 0],
+      "rotate": [180, 0, 0],
+      "repeat": {"count": 2, "radial": {"axis": "y", "center": [0, 4.45, 0], "span": 360}},
+      "motion": {"type": "spin", "axis": [0, -1, 0], "pivot": [0, 4.45, 0], "rpm": 5},
+      "note": "The opposed world axis preserves outward pattern propagation toward the lower tip; neither jet oscillates bodily back into the centre."
+    },
+    {
+      "id": "upper-recollimation-knot",
+      "label": "Schematic upper emission knot",
+      "role": "data",
+      "certainty": "inferred",
+      "basis": ["jets", "jet-structure", "motion-design"],
+      "stage": 6,
+      "floating": true,
+      "shape": {"type": "sphere", "radii": [0.13, 0.21, 0.13], "lat": 6, "lon": 6, "segments": 24},
+      "at": [0, 6.42, 0],
+      "motion": {"type": "pulse", "period": 6.8, "amount": 0.14},
+      "note": "An invented modest emission knot, not a measured shock position."
+    },
+    {
+      "id": "lower-recollimation-knot",
+      "label": "Schematic lower emission knot",
+      "role": "data",
+      "certainty": "inferred",
+      "basis": ["jets", "jet-structure", "motion-design"],
+      "stage": 6,
+      "floating": true,
+      "shape": {"type": "sphere", "radii": [0.13, 0.21, 0.13], "lat": 6, "lon": 6, "segments": 24},
+      "at": [0, 2.48, 0],
+      "motion": {"type": "pulse", "period": 7.4, "amount": 0.12},
+      "note": "An invented modest emission knot; no physical jet asymmetry is inferred from different presentation periods."
+    },
+    {
+      "id": "upper-terminal-motes",
+      "label": "Decorative upper-tip emission motes",
+      "role": "ornament",
+      "certainty": "decorative",
+      "basis": ["atmosphere"],
+      "stage": 7,
+      "floating": true,
+      "shape": {"type": "points", "count": 34, "region": {"box": [0.78, 0.7, 0.78]}, "sprite": "soft", "size_px": 2.5},
+      "at": [0, 8.3, 0]
+    },
+    {
+      "id": "lower-terminal-motes",
+      "label": "Decorative lower-tip emission motes",
+      "role": "ornament",
+      "certainty": "decorative",
+      "basis": ["atmosphere"],
+      "stage": 7,
+      "floating": true,
+      "shape": {"type": "points", "count": 34, "region": {"box": [0.78, 0.7, 0.78]}, "sprite": "soft", "size_px": 2.5},
+      "at": [0, 0.6, 0]
+    },
+    {
+      "id": "background-stars",
+      "label": "Invented background star field",
+      "role": "ornament",
+      "certainty": "decorative",
+      "basis": ["atmosphere"],
+      "stage": 7,
+      "floating": true,
+      "shape": {"type": "points", "count": 90, "region": {"box": [9, 9.4, 0.7]}, "sprite": "disc", "size_px": 1.4},
+      "at": [0, 4.45, -3.4],
+      "note": "A sparse invented backdrop behind the subject, not a survey or a named sky."
+    }
+  ],
+  "articulations": [],
+  "labels": [],
+  "anchors": {},
+  "annotations": [
+    {"id": "shadow-note", "part": "shadow", "text": "Shadow proxy — inferred, not a solid surface", "offset": [-1.5, 0.1, 0]},
+    {"id": "ring-note", "part": "photon-ring", "text": "Photon ring — requested; geometry illustrative", "offset": [1.15, 0.15, 0]},
+    {"id": "disk-note", "part": "disk-body", "text": "Rotating accretion disk — requested; proportions designed", "offset": [1.4, -0.6, 0]},
+    {"id": "jet-note", "part": "upper-jet-core", "text": "Bipolar jets — requested; emission pattern schematic", "offset": [0.8, 0.1, 0]}
+  ],
+  "presentation": {
+    "views": [
+      {"id": "ring-study", "label": "Shadow and photon ring", "yaw": 8, "pitch": 9, "distance": 2.1, "target": "photon-ring"},
+      {"id": "disk-flow", "label": "Rotating annulus and spiral flow", "yaw": 30, "pitch": 42, "distance": 1.3, "target": "disk-body"},
+      {"id": "polar-outflow", "label": "Upper outflow and helical emission", "yaw": 25, "pitch": 8, "distance": 1.75, "target": "upper-jet-sheath"},
+      {"id": "equatorial", "label": "Disk, lensed arcs and opposed jets", "yaw": 0, "pitch": 12, "distance": 1.08}
+    ]
+  }
+}

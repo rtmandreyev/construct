@@ -1,0 +1,167 @@
+{
+ "format": "construct-examples",
+ "version": 1,
+ "examples": [
+  {
+   "slug": "toyota-land-cruiser-fj62",
+   "title": "Toyota Land Cruiser FJ62",
+   "model": "Claude Opus",
+   "how": "masterpiece rounds, round 11",
+   "build": "a Construct 0.2.1 release-candidate build (the c2p rounds variant)"
+  },
+  {
+   "slug": "sainte-chapelle",
+   "title": "Sainte-Chapelle",
+   "model": "Claude Opus",
+   "how": "masterpiece rounds, round 15",
+   "build": "Construct 0.2.1 (the released rounds loop)"
+  },
+  {
+   "slug": "leica-m3",
+   "title": "Leica M3",
+   "model": "GPT-6.1 Sol",
+   "how": "research first, standard (10 minutes)",
+   "build": "a Construct 0.2.0 development build"
+  },
+  {
+   "slug": "jackson-juggernaut-et7",
+   "title": "Jackson Juggernaut ET7",
+   "model": "GPT-6.1 Sol",
+   "how": "research first, standard (10 minutes)",
+   "build": "a Construct 0.2.0 development build"
+  },
+  {
+   "slug": "aston-martin-db5",
+   "title": "Aston Martin DB5",
+   "model": "Claude Opus",
+   "how": "masterpiece rounds, round 5",
+   "build": "a Construct 0.2.1 development build"
+  },
+  {
+   "slug": "duomo-di-milano",
+   "title": "Duomo di Milano",
+   "model": "Claude Opus",
+   "how": "masterpiece rounds, round 6",
+   "build": "a Construct 0.2.1 development build"
+  },
+  {
+   "slug": "the-last-light",
+   "title": "The Last Light: sea cliff at dusk",
+   "model": "GPT-6.1 Sol",
+   "how": "a single first pass",
+   "build": "a Construct 0.2.0 development build"
+  },
+  {
+   "slug": "ferrari-f40",
+   "title": "Ferrari F40",
+   "model": "GPT-6.1 Sol",
+   "how": "masterpiece",
+   "build": "a Construct 0.2.1 development build"
+  },
+  {
+   "slug": "neuschwanstein",
+   "title": "Neuschwanstein",
+   "model": "Claude Opus",
+   "how": "masterpiece, stopped at the 2-hour limit",
+   "build": "a Construct 0.2.1 development build"
+  },
+  {
+   "slug": "patek-philippe-5320g",
+   "title": "Patek Philippe 5320G",
+   "model": "GPT-6.1 Sol",
+   "how": "research first, standard (10 minutes)",
+   "build": "a Construct 0.2.0 development build"
+  },
+  {
+   "slug": "revox-a77",
+   "title": "Revox A77",
+   "model": "DeepSeek",
+   "how": "showcase (30 minutes)",
+   "build": "a Construct 0.2.1 development build"
+  },
+  {
+   "slug": "sagrada-familia",
+   "title": "Sagrada Família",
+   "model": "GPT-6.1 Sol",
+   "how": "masterpiece",
+   "build": "a Construct 0.2.1 development build"
+  },
+  {
+   "slug": "sydney-opera-house",
+   "title": "Sydney Opera House",
+   "model": "GPT-6.1 Sol",
+   "how": "masterpiece",
+   "build": "a Construct 0.2.1 development build"
+  },
+  {
+   "slug": "brass-orrery",
+   "title": "Brass orrery",
+   "model": "GPT-6.1 Sol",
+   "how": "a single first pass",
+   "build": "a Construct 0.2.0 development build"
+  },
+  {
+   "slug": "black-hole",
+   "title": "Black hole",
+   "model": "GPT-6.1 Sol",
+   "how": "a single first pass",
+   "build": "a Construct 0.2.0 development build"
+  },
+  {
+   "slug": "tea-house",
+   "title": "Tea house",
+   "model": "GPT-6.1 Sol",
+   "how": "a single first pass",
+   "build": "a Construct 0.2.0 development build"
+  },
+  {
+   "slug": "gothic-cathedral-nave",
+   "title": "Gothic cathedral nave",
+   "model": "GPT-6.1 Sol",
+   "how": "a single first pass",
+   "build": "a Construct 0.2.0 development build"
+  },
+  {
+   "slug": "yamaha-cfx",
+   "title": "Yamaha CFX",
+   "model": "DeepSeek",
+   "how": "standard (10 minutes)",
+   "build": "Construct 0.2.0"
+  },
+  {
+   "slug": "omega-speedmaster-321",
+   "title": "Omega Speedmaster, calibre 321",
+   "model": "DeepSeek",
+   "how": "research first, standard (10 minutes)",
+   "build": "a Construct 0.2.0 development build"
+  },
+  {
+   "slug": "arturia-minifreak",
+   "title": "Arturia MiniFreak",
+   "model": "DeepSeek",
+   "how": "a single first pass",
+   "build": "a Construct 0.2.0 development build"
+  },
+  {
+   "slug": "porsche-911-964",
+   "title": "Porsche 911 (964)",
+   "model": "GPT-6.1 Sol",
+   "how": "masterpiece",
+   "build": "Construct 0.2.0"
+  }
+ ],
+ "pending": [
+  {
+   "slug": "saturn",
+   "title": "Saturn",
+   "model": "DeepSeek",
+   "how": "masterpiece"
+  },
+  {
+   "slug": "andromeda",
+   "title": "Andromeda",
+   "model": "DeepSeek",
+   "how": "masterpiece"
+  }
+ ]
+}

@@ -1,0 +1,1620 @@
+{
+ "format": "construct-scene",
+ "version": 2,
+ "id": "yamaha-cfx",
+ "title": "Yamaha CFX concert grand piano",
+ "subject": {
+  "category": "object",
+  "summary": "Yamaha's 275 cm (9') concert grand: a curved rim tapering to a rounded tail on three casters, a raised lid on its prop stick, a full 88-key keyboard and the strung, cast-plate interior under the lid.",
+  "accuracy": "approximate",
+  "synthetic": false
+ },
+ "units": "m",
+ "seed": 275,
+ "sources": [
+  {
+   "id": "request",
+   "kind": "user_request",
+   "title": "The user's request",
+   "rights": "user_private"
+  },
+  {
+   "id": "yamaha-specs",
+   "kind": "document",
+   "title": "Yamaha CFX specifications (Yamaha USA product page)",
+   "ref": "https://usa.yamaha.com/products/musical_instruments/pianos/grand_pianos/cfx_02/specs.html",
+   "rights": "reference_only"
+  }
+ ],
+ "facts": [
+  {
+   "key": "length",
+   "value": 2.75,
+   "unit": "m",
+   "certainty": "verified",
+   "source": "yamaha-specs",
+   "note": "depth 275 cm (9')"
+  },
+  {
+   "key": "width",
+   "value": 1.6,
+   "unit": "m",
+   "certainty": "verified",
+   "source": "yamaha-specs",
+   "note": "width 160 cm"
+  },
+  {
+   "key": "height",
+   "value": 1.03,
+   "unit": "m",
+   "certainty": "verified",
+   "source": "yamaha-specs",
+   "note": "height 103 cm with the lid closed"
+  },
+  {
+   "key": "keys",
+   "value": 88,
+   "unit": "keys",
+   "certainty": "verified",
+   "source": "yamaha-specs"
+  },
+  {
+   "key": "pedals",
+   "value": 3,
+   "unit": "pedals",
+   "certainty": "verified",
+   "source": "yamaha-specs",
+   "note": "sostenuto type"
+  },
+  {
+   "key": "lid_prop_positions",
+   "value": 3,
+   "unit": "positions",
+   "certainty": "verified",
+   "source": "yamaha-specs"
+  },
+  {
+   "key": "brand",
+   "value": "YAMAHA",
+   "certainty": "verified",
+   "source": "yamaha-specs"
+  },
+  {
+   "key": "keyboard_height",
+   "value": 0.72,
+   "unit": "m",
+   "certainty": "inferred",
+   "note": "typical grand key height; not in the spec sheet"
+  }
+ ],
+ "assets": [],
+ "parts": [
+  {
+   "id": "caster-wheel",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "torus",
+    "major": 0.03,
+    "minor": 0.012,
+    "segments": 20,
+    "sides": 6
+   },
+   "at": [
+    -0.62,
+    0.042,
+    1.06
+   ],
+   "rotate": [
+    0,
+    0,
+    90
+   ],
+   "mirror": "x"
+  },
+  {
+   "id": "caster-rear",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "torus",
+    "major": 0.03,
+    "minor": 0.012,
+    "segments": 20,
+    "sides": 6
+   },
+   "at": [
+    0.06,
+    0.042,
+    -1.12
+   ],
+   "rotate": [
+    0,
+    0,
+    90
+   ]
+  },
+  {
+   "id": "leg-front",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "cone",
+    "radius_bottom": 0.058,
+    "radius_top": 0.098,
+    "height": 0.665,
+    "segments": 6
+   },
+   "at": [
+    -0.62,
+    0.062,
+    1.06
+   ],
+   "rotate": [
+    0,
+    30,
+    0
+   ],
+   "mirror": "x"
+  },
+  {
+   "id": "leg-rear",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "cone",
+    "radius_bottom": 0.054,
+    "radius_top": 0.09,
+    "height": 0.665,
+    "segments": 6
+   },
+   "at": [
+    0.06,
+    0.062,
+    -1.12
+   ],
+   "rotate": [
+    0,
+    30,
+    0
+   ]
+  },
+  {
+   "id": "lyre-box",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.3,
+     0.09,
+     0.15
+    ]
+   },
+   "at": [
+    0,
+    0.135,
+    1.07
+   ]
+  },
+  {
+   "id": "lyre-post",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      0,
+      0,
+      0
+     ],
+     [
+      0,
+      0.48,
+      0
+     ]
+    ],
+    "radius": 0.012,
+    "sides": 6,
+    "smooth": false
+   },
+   "at": [
+    0.1,
+    0.16,
+    1.07
+   ],
+   "mirror": "x"
+  },
+  {
+   "id": "pedals",
+   "role": "detail",
+   "certainty": "verified",
+   "stage": 1,
+   "basis": [
+    "pedals"
+   ],
+   "shape": {
+    "type": "box",
+    "size": [
+     0.032,
+     0.012,
+     0.11
+    ]
+   },
+   "at": [
+    -0.09,
+    0.115,
+    1.135
+   ],
+   "repeat": {
+    "count": 3,
+    "step": {
+     "at": [
+      0.09,
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "case-body",
+   "label": "Rim",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 1,
+   "basis": [
+    "length",
+    "width",
+    "height"
+   ],
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      0.7944,
+      1.1
+     ],
+     [
+      0.7811,
+      0.8592
+     ],
+     [
+      0.7569,
+      0.6023
+     ],
+     [
+      0.7222,
+      0.3489
+     ],
+     [
+      0.6767,
+      0.1013
+     ],
+     [
+      0.62,
+      -0.1381
+     ],
+     [
+      0.5516,
+      -0.3673
+     ],
+     [
+      0.4711,
+      -0.5839
+     ],
+     [
+      0.3781,
+      -0.7857
+     ],
+     [
+      0.2722,
+      -0.9705
+     ],
+     [
+      0.153,
+      -1.136
+     ],
+     [
+      0.02,
+      -1.28
+     ],
+     [
+      -0.0681,
+      -1.3166
+     ],
+     [
+      -0.1655,
+      -1.3441
+     ],
+     [
+      -0.2692,
+      -1.3626
+     ],
+     [
+      -0.3763,
+      -1.3725
+     ],
+     [
+      -0.4838,
+      -1.3739
+     ],
+     [
+      -0.5889,
+      -1.3672
+     ],
+     [
+      -0.6886,
+      -1.3525
+     ],
+     [
+      -0.78,
+      -1.33
+     ],
+     [
+      -0.8,
+      -1.33
+     ],
+     [
+      -0.8,
+      1.1
+     ]
+    ],
+    "height": 0.288
+   },
+   "at": [
+    0,
+    0.72,
+    0
+   ],
+   "look": {
+    "fill": "glass",
+    "alpha": 0.45
+   }
+  },
+  {
+   "id": "case-rim",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      0.7943794594352408,
+      1.008,
+      1.1
+     ],
+     [
+      0.7811111111111113,
+      1.008,
+      0.8592361111111113
+     ],
+     [
+      0.7568750000000001,
+      1.008,
+      0.602265625
+     ],
+     [
+      0.7222222222222223,
+      1.008,
+      0.3488888888888891
+     ],
+     [
+      0.676736111111111,
+      1.008,
+      0.10134548611111094
+     ],
+     [
+      0.6199999999999999,
+      1.008,
+      -0.13812500000000003
+     ],
+     [
+      0.5515972222222223,
+      1.008,
+      -0.36728298611111126
+     ],
+     [
+      0.4711111111111112,
+      1.008,
+      -0.5838888888888889
+     ],
+     [
+      0.37812499999999993,
+      1.008,
+      -0.7857031250000001
+     ],
+     [
+      0.27222222222222214,
+      1.008,
+      -0.9704861111111113
+     ],
+     [
+      0.15298611111111118,
+      1.008,
+      -1.1359982638888888
+     ],
+     [
+      0.02,
+      1.008,
+      -1.28
+     ],
+     [
+      -0.06810546875000001,
+      1.008,
+      -1.3166015625
+     ],
+     [
+      -0.16546875,
+      1.008,
+      -1.3440625
+     ],
+     [
+      -0.26916015625,
+      1.008,
+      -1.3626171875
+     ],
+     [
+      -0.3762500000000001,
+      1.008,
+      -1.3724999999999998
+     ],
+     [
+      -0.48380859375,
+      1.008,
+      -1.3739453125
+     ],
+     [
+      -0.5889062500000001,
+      1.008,
+      -1.3671875
+     ],
+     [
+      -0.6886132812500001,
+      1.008,
+      -1.3524609375
+     ],
+     [
+      -0.78,
+      1.008,
+      -1.33
+     ],
+     [
+      -0.8,
+      1.008,
+      -1.33
+     ],
+     [
+      -0.8,
+      1.008,
+      1.1
+     ]
+    ],
+    "closed": true
+   },
+   "look": {
+    "tone": "structure",
+    "weight": 1.6
+   }
+  },
+  {
+   "id": "soundboard",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      0.748,
+      0.8685
+     ],
+     [
+      0.7413,
+      0.7785
+     ],
+     [
+      0.7119,
+      0.5243
+     ],
+     [
+      0.671,
+      0.2749
+     ],
+     [
+      0.6178,
+      0.0333
+     ],
+     [
+      0.5513,
+      -0.1963
+     ],
+     [
+      0.4712,
+      -0.4077
+     ],
+     [
+      0.3814,
+      -0.5912
+     ],
+     [
+      0.2981,
+      -0.7445
+     ],
+     [
+      0.2247,
+      -0.8941
+     ],
+     [
+      0.1359,
+      -1.0476
+     ],
+     [
+      0.0245,
+      -1.1901
+     ],
+     [
+      -0.0527,
+      -1.2279
+     ],
+     [
+      -0.1395,
+      -1.2579
+     ],
+     [
+      -0.2334,
+      -1.28
+     ],
+     [
+      -0.3317,
+      -1.2943
+     ],
+     [
+      -0.4317,
+      -1.3006
+     ],
+     [
+      -0.5303,
+      -1.2989
+     ],
+     [
+      -0.6247,
+      -1.2891
+     ],
+     [
+      -0.7116,
+      -1.2715
+     ],
+     [
+      -0.7309,
+      -1.2723
+     ],
+     [
+      -0.757,
+      0.8709
+     ]
+    ],
+    "height": 0.02
+   },
+   "at": [
+    0,
+    0.748,
+    0
+   ],
+   "look": {
+    "fill": "glass",
+    "alpha": 0.35,
+    "tone": "faint"
+   }
+  },
+  {
+   "id": "keybed",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.6,
+     0.1,
+     0.475
+    ]
+   },
+   "at": [
+    0,
+    0.67,
+    1.1375
+   ]
+  },
+  {
+   "id": "cheek",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.16,
+     0.1,
+     0.28
+    ]
+   },
+   "at": [
+    0.72,
+    0.77,
+    1.235
+   ],
+   "mirror": "x"
+  },
+  {
+   "id": "key-slip",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.24,
+     0.055,
+     0.02
+    ]
+   },
+   "at": [
+    0,
+    0.715,
+    1.362
+   ]
+  },
+  {
+   "id": "white-keys",
+   "label": "Keyboard, 88 keys",
+   "role": "identity",
+   "certainty": "verified",
+   "stage": 2,
+   "basis": [
+    "keys"
+   ],
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0225,
+     0.022,
+     0.15
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -0.599,
+    0.72,
+    1.185
+   ],
+   "repeat": {
+    "count": 52,
+    "step": {
+     "at": [
+      0.0235,
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "black-keys-0",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0125,
+     0.014,
+     0.095
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -0.5405,
+    0.742,
+    1.223
+   ],
+   "repeat": {
+    "count": 7,
+    "step": {
+     "at": [
+      0.1645,
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "black-keys-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0125,
+     0.014,
+     0.095
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -0.517,
+    0.742,
+    1.223
+   ],
+   "repeat": {
+    "count": 7,
+    "step": {
+     "at": [
+      0.1645,
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "black-keys-2",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0125,
+     0.014,
+     0.095
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -0.47,
+    0.742,
+    1.223
+   ],
+   "repeat": {
+    "count": 7,
+    "step": {
+     "at": [
+      0.1645,
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "black-keys-3",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0125,
+     0.014,
+     0.095
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -0.4465,
+    0.742,
+    1.223
+   ],
+   "repeat": {
+    "count": 7,
+    "step": {
+     "at": [
+      0.1645,
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "black-keys-4",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0125,
+     0.014,
+     0.095
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -0.423,
+    0.742,
+    1.223
+   ],
+   "repeat": {
+    "count": 7,
+    "step": {
+     "at": [
+      0.1645,
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "black-key-a0",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0125,
+     0.014,
+     0.095
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -0.5875,
+    0.742,
+    1.223
+   ]
+  },
+  {
+   "id": "nameplate",
+   "role": "detail",
+   "certainty": "verified",
+   "stage": 2,
+   "basis": [
+    "brand"
+   ],
+   "shape": {
+    "type": "box",
+    "size": [
+     0.46,
+     0.055,
+     0.006
+    ]
+   },
+   "at": [
+    0,
+    0.855,
+    1.103
+   ]
+  },
+  {
+   "id": "lid",
+   "label": "Lid",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 3,
+   "basis": [
+    "length",
+    "width"
+   ],
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      0.7944,
+      1.1
+     ],
+     [
+      0.7811,
+      0.8592
+     ],
+     [
+      0.7569,
+      0.6023
+     ],
+     [
+      0.7222,
+      0.3489
+     ],
+     [
+      0.6767,
+      0.1013
+     ],
+     [
+      0.62,
+      -0.1381
+     ],
+     [
+      0.5516,
+      -0.3673
+     ],
+     [
+      0.4711,
+      -0.5839
+     ],
+     [
+      0.3781,
+      -0.7857
+     ],
+     [
+      0.2722,
+      -0.9705
+     ],
+     [
+      0.153,
+      -1.136
+     ],
+     [
+      0.02,
+      -1.28
+     ],
+     [
+      -0.0681,
+      -1.3166
+     ],
+     [
+      -0.1655,
+      -1.3441
+     ],
+     [
+      -0.2692,
+      -1.3626
+     ],
+     [
+      -0.3763,
+      -1.3725
+     ],
+     [
+      -0.4838,
+      -1.3739
+     ],
+     [
+      -0.5889,
+      -1.3672
+     ],
+     [
+      -0.6886,
+      -1.3525
+     ],
+     [
+      -0.78,
+      -1.33
+     ],
+     [
+      -0.8,
+      -1.33
+     ],
+     [
+      -0.8,
+      1.1
+     ]
+    ],
+    "height": 0.022
+   },
+   "at": [
+    0,
+    1.008,
+    0
+   ],
+   "look": {
+    "fill": "glass",
+    "alpha": 0.4
+   }
+  },
+  {
+   "id": "lid-hinge",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.035,
+     0.02,
+     0.07
+    ]
+   },
+   "at": [
+    -0.795,
+    0.998,
+    -0.85
+   ],
+   "repeat": {
+    "count": 3,
+    "step": {
+     "at": [
+      0,
+      0,
+      0.85
+     ]
+    }
+   }
+  },
+  {
+   "id": "prop",
+   "label": "Prop stick",
+   "role": "detail",
+   "certainty": "verified",
+   "stage": 3,
+   "basis": [
+    "lid_prop_positions"
+   ],
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      0,
+      0,
+      0
+     ],
+     [
+      -0.99,
+      0,
+      0
+     ]
+    ],
+    "radius": 0.009,
+    "sides": 5,
+    "smooth": false
+   },
+   "at": [
+    0.55,
+    0.98,
+    0.45
+   ]
+  },
+  {
+   "id": "music-desk",
+   "label": "Music desk",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.86,
+     0.3,
+     0.018
+    ],
+    "ribs": 4
+   },
+   "at": [
+    0,
+    0.862,
+    0.93
+   ],
+   "rotate": [
+    -22,
+    0,
+    0
+   ],
+   "look": {
+    "fill": "glass",
+    "alpha": 0.3
+   }
+  },
+  {
+   "id": "plate",
+   "label": "Cast-iron plate",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      0.69869669062447,
+      0.795,
+      0.7393215729602515
+     ],
+     [
+      0.6928336158381229,
+      0.795,
+      0.6797727894313667
+     ],
+     [
+      0.6571252951652596,
+      0.795,
+      0.4289162771922215
+     ],
+     [
+      0.608632842853837,
+      0.795,
+      0.18427584902052072
+     ],
+     [
+      0.5460176960781598,
+      0.795,
+      -0.050023916250374
+     ],
+     [
+      0.46772326553162225,
+      0.795,
+      -0.2677853105797886
+     ],
+     [
+      0.3733329739235677,
+      0.795,
+      -0.45795744656451354
+     ],
+     [
+      0.2718890152710363,
+      0.795,
+      -0.6015115030277737
+     ],
+     [
+      0.19974661127453122,
+      0.795,
+      -0.6952534128075027
+     ],
+     [
+      0.1659924390279513,
+      0.795,
+      -0.8010304143567731
+     ],
+     [
+      0.11489642622794384,
+      0.795,
+      -0.9396588233643192
+     ],
+     [
+      0.03001623491806926,
+      0.795,
+      -1.0802509698695233
+     ],
+     [
+      -0.033793235587905576,
+      0.795,
+      -1.1195668684600162
+     ],
+     [
+      -0.1076198498191813,
+      0.795,
+      -1.152611449473058
+     ],
+     [
+      -0.18947472169639168,
+      0.795,
+      -1.1791771931694215
+     ],
+     [
+      -0.27705735955595984,
+      0.795,
+      -1.1988312921630975
+     ],
+     [
+      -0.36771155442716646,
+      0.795,
+      -1.2110911524043106
+     ],
+     [
+      -0.4584839078118722,
+      0.795,
+      -1.2155629219852109
+     ],
+     [
+      -0.5462283125310828,
+      0.795,
+      -1.2120098047779284
+     ],
+     [
+      -0.6277057249447463,
+      0.795,
+      -1.2003602924047008
+     ],
+     [
+      -0.6462010851089597,
+      0.795,
+      -1.2021489390801214
+     ],
+     [
+      -0.7031307102368337,
+      0.795,
+      0.7450247426040478
+     ]
+    ],
+    "closed": true
+   },
+   "look": {
+    "tone": "bright",
+    "weight": 1.6
+   }
+  },
+  {
+   "id": "strings-treble",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      0,
+      0.822,
+      0
+     ],
+     [
+      0.1,
+      0.822,
+      1.0
+     ],
+     [
+      0.22,
+      0.822,
+      2.0
+     ]
+    ],
+    "smooth": true
+   },
+   "at": [
+    -0.5,
+    0,
+    -1.05
+   ],
+   "repeat": {
+    "count": 22,
+    "step": {
+     "at": [
+      0.024,
+      0,
+      0
+     ],
+     "rotate": [
+      0,
+      0.45,
+      0
+     ]
+    }
+   },
+   "look": {
+    "tone": "bright",
+    "weight": 1.0
+   }
+  },
+  {
+   "id": "strings-bass",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      0,
+      0.845,
+      0
+     ],
+     [
+      0.32,
+      0.845,
+      -0.85
+     ],
+     [
+      0.5,
+      0.845,
+      -1.6
+     ]
+    ],
+    "smooth": true
+   },
+   "at": [
+    -0.6,
+    0,
+    0.7
+   ],
+   "repeat": {
+    "count": 10,
+    "step": {
+     "at": [
+      0.022,
+      0,
+      0
+     ],
+     "rotate": [
+      0,
+      0.25,
+      0
+     ]
+    }
+   },
+   "look": {
+    "tone": "structure",
+    "weight": 1.2
+   }
+  },
+  {
+   "id": "bridge",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      0.02,
+      0.8,
+      0.6
+     ],
+     [
+      0.12,
+      0.8,
+      -0.05
+     ],
+     [
+      0.02,
+      0.8,
+      -0.7
+     ]
+    ],
+    "smooth": true
+   }
+  },
+  {
+   "id": "dampers",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.01,
+     0.06,
+     0.012
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -0.48,
+    0.826,
+    0.95
+   ],
+   "repeat": {
+    "count": 28,
+    "step": {
+     "at": [
+      0.0345,
+      0,
+      0.002
+     ]
+    }
+   }
+  },
+  {
+   "id": "hammers",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.012,
+     0.042,
+     0.02
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -0.48,
+    0.762,
+    1.05
+   ],
+   "repeat": {
+    "count": 28,
+    "step": {
+     "at": [
+      0.0345,
+      0,
+      -0.002
+     ]
+    }
+   }
+  }
+ ],
+ "articulations": [
+  {
+   "id": "lid-open",
+   "type": "hinge",
+   "parts": [
+    "lid"
+   ],
+   "axis": [
+    0,
+    0,
+    1
+   ],
+   "pivot": [
+    -0.8,
+    1.008,
+    0
+   ],
+   "amount": 42,
+   "order": 0
+  },
+  {
+   "id": "prop-rise",
+   "type": "turn",
+   "parts": [
+    "prop"
+   ],
+   "axis": [
+    0,
+    0,
+    1
+   ],
+   "pivot": [
+    0.55,
+    0.98,
+    0.45
+   ],
+   "amount": -69,
+   "order": 1
+  }
+ ],
+ "labels": [
+  {
+   "id": "brand",
+   "part": "nameplate",
+   "face": "front",
+   "field": "brand",
+   "role": "creator",
+   "region": [
+    0.08,
+    0.25,
+    0.92,
+    0.78
+   ],
+   "align": "center"
+  }
+ ],
+ "anchors": {
+  "front": {
+   "part": "white-keys",
+   "face": "front"
+  },
+  "base": {
+   "point": [
+    0,
+    0,
+    0
+   ]
+  }
+ },
+ "annotations": [
+  {
+   "id": "lid",
+   "text": "Lid, on the long prop",
+   "part": "lid",
+   "offset": [
+    -1.25,
+    0.55,
+    -0.4
+   ]
+  },
+  {
+   "id": "keys",
+   "text": "88 keys",
+   "part": "white-keys",
+   "offset": [
+    0,
+    0.22,
+    0.1
+   ]
+  },
+  {
+   "id": "plate",
+   "text": "Plate and strings (inferred)",
+   "part": "plate",
+   "offset": [
+    0.3,
+    0.3,
+    0
+   ]
+  }
+ ],
+ "presentation": {
+  "framing": {
+   "yaw": -36,
+   "pitch": 22,
+   "fit": 0.85
+  },
+  "views": [
+   {
+    "id": "open",
+    "label": "Lid open",
+    "yaw": -42,
+    "pitch": 26,
+    "distance": 1.05
+   },
+   {
+    "id": "keyboard",
+    "label": "Keyboard",
+    "yaw": 6,
+    "pitch": 16,
+    "distance": 1.15,
+    "target": "white-keys"
+   },
+   {
+    "id": "interior",
+    "label": "Interior",
+    "yaw": -52,
+    "pitch": 42,
+    "distance": 1.5,
+    "target": "plate"
+   }
+  ],
+  "atmosphere": {
+   "haze": 0.7,
+   "grid": true,
+   "projector": false,
+   "motes": 0.3
+  },
+  "occlusion": "xray"
+ },
+ "animation": {
+  "assembly": {
+   "style": "ceremony",
+   "seconds": 6.0,
+   "interference": true
+  },
+  "idle": {
+   "life": "calm",
+   "events": [
+    "scan",
+    "shimmer",
+    "sweep"
+   ],
+   "cadence": [
+    6,
+    12
+   ],
+   "strength": 0.5
+  },
+  "camera": {
+   "drift": 5,
+   "breathe": 0.025,
+   "tour": [
+    {
+     "view": "keyboard",
+     "at": 14,
+     "fly": 3
+    },
+    {
+     "view": "interior",
+     "at": 21,
+     "fly": 3
+    },
+    {
+     "view": "hero",
+     "at": 28,
+     "fly": 3.5
+    }
+   ]
+  },
+  "reduced_motion": "still"
+ },
+ "authoring": {
+  "tier": "standard",
+  "research": "done",
+  "sources": [
+   "yamaha-specs"
+  ],
+  "review_rounds": 2,
+  "outcome": "good",
+  "next": [
+   "trace the rim outline from a plan-view photo",
+   "model the lid's two-piece front flap and the CFX plate cut-outs"
+  ]
+ }
+}

@@ -1,140 +1,162 @@
 # Construct
 
-**Holographic constructs any agent can build — from a description, honestly.**
+**Holographic constructs any AI agent can build: from a description, honestly.**
 
-![A lighthouse construct assembling](docs/media/hero.gif)
+<table>
+<tr>
+<td width="33%"><a href="https://rtmandreyev.github.io/construct/examples/toyota-land-cruiser-fj62/"><img src="docs/media/assembly-toyota-land-cruiser-fj62.gif" alt="A Toyota Land Cruiser FJ62 construct assembling itself"></a></td>
+<td width="33%"><a href="https://rtmandreyev.github.io/construct/examples/sainte-chapelle/"><img src="docs/media/assembly-sainte-chapelle.gif" alt="A Sainte-Chapelle construct assembling itself"></a></td>
+<td width="33%"><a href="https://rtmandreyev.github.io/construct/examples/leica-m3/"><img src="docs/media/assembly-leica-m3.gif" alt="A Leica M3 construct assembling itself"></a></td>
+</tr>
+<tr>
+<td align="center"><b>Toyota Land Cruiser FJ62</b><br><sub>Claude Opus · masterpiece</sub></td>
+<td align="center"><b>Sainte-Chapelle</b><br><sub>Claude Opus · masterpiece</sub></td>
+<td align="center"><b>Leica M3</b><br><sub>GPT-6.1 Sol · fast</sub></td>
+</tr>
+</table>
+
+<p align="center"><a href="https://rtmandreyev.github.io/construct/"><b>See all 21 examples live →</b></a>
+&nbsp;·&nbsp; click any construct to orbit it, replay its assembly and read its labels</p>
 
 Construct is an agent skill and toolkit that turns a description of a real or fictional thing
-into an honest, animated holographic construct. A model — any model — writes a short declarative scene, or
-fills an archetype's parameters. Construct validates it, audits it, compiles it
-deterministically and renders it in one holographic style: line light over smoked glass,
-staged assembly, opening and idle life, and a visible certainty for every fact and part.
+into an animated holographic model: line light over smoked glass, built part by part on screen,
+with every fact and part marked by how it is known. An AI model writes a short declarative
+scene (or fills in an archetype's parameters); Construct validates it, audits it, compiles it
+and renders it into one self-contained web page. No graphics code, no API keys, no network
+service: Python's standard library and any browser.
 
-- **Any agent, any model.** Hermes, Claude Code, any MCP client, a CLI, Python, or any
-  OpenAI-compatible endpoint. No API key, model or network service inside Construct.
-- **Honest about what is known.** Every fact is `verified` (with a source), `user_supplied`,
-  `inferred` or `decorative`. Unknown facts are left out, never guessed. Text on an object
-  comes only from facts; artwork only from images the user supplied, checked by hash.
-- **One style for everyone.** Agents never choose colours, so an entry written by a small
-  model sits on the shelf next to one written by a frontier model.
-- **Repairs itself.** Every problem comes back with a JSON path, a code and a fix hint, and the
-  repair loop runs until the draft is valid and free of visible defects.
-- Python 3.10+, standard library only. MIT licensed.
+- **Any agent, any model.** Claude Code, Hermes, any MCP client, any OpenAI-compatible endpoint,
+  or by hand.
+- **Honest about what is known.** Every fact is verified (with a source), user supplied,
+  inferred or decorative, and the construct shows which. Unknown facts are left out, never
+  guessed.
+- **One house style.** Models never choose colours, so a construct by a small model sits next to
+  one by a frontier model.
+- **Repairs itself.** Every problem comes back with a JSON path, a code and a fix hint.
 
-![Twelve constructs built with Construct](docs/media/gallery.jpg)
-
-## Install
+## Quick start
 
 ```sh
-git clone https://github.com/rtmandreyev/construct
+git clone https://github.com/rtmandreyev/construct.git
 cd construct
-python3 construct_hologram/package.py --out dist     # builds the Hermes and Claude Code skills
+python3 construct_hologram/package.py --out dist     # builds the Claude Code and Hermes skills
 ```
-
-Nothing to install for the CLI, MCP server or Python use: they run from the checkout. Review
-stills need a Chromium-family browser you already have (Chrome, Chromium, Edge, Brave);
-video needs ffmpeg.
-
-## Use it from any agent
 
 | Where | How |
 |---|---|
-| **Hermes** | Copy `dist/hermes/construct` into `~/.hermes/skills/` (or a project's `.hermes/skills/` and run `hermes skills trust` there). Then ask in plain words: *"make a construct of a 1970s desk fan"*. |
-| **Claude Code** | `claude --plugin-dir dist/claude-code/construct` for a session, or copy `dist/claude-code/construct/skills/construct` into `.claude/skills/`. Ask in plain words, or `/construct:construct`. |
-| **Any MCP agent** | Add `{"mcpServers": {"construct": {"command": "python3", "args": ["/path/to/construct/construct_hologram/server.py"]}}}`. Seven read-only tools: `construct_diagnose`, `construct_params_template`, `construct_expand_params`, `construct_compile`, and the legacy `hologram_template`, `hologram_validate`, `hologram_compile`. |
+| **Claude Code** | `claude --plugin-dir dist/claude-code/construct` for one session, or copy `dist/claude-code/construct/skills/construct` into `.claude/skills/`. Then ask in plain words: *"make a construct of a Leica M3"*. |
+| **Hermes** | Copy `dist/hermes/construct` into `~/.hermes/skills/` (or a project's `.hermes/skills/`, then `hermes skills trust`). Ask in plain words. |
+| **Any MCP agent** | `{"mcpServers": {"construct": {"command": "python3", "args": ["/path/to/construct/construct_hologram/server.py"]}}}`: read-only tools to check, expand, compile and look up limits. |
 | **Any OpenAI-compatible model** | `python3 construct_hologram/cli.py author "a can of porter" --params --base-url https://api.deepseek.com/v1 --model deepseek-chat --key-env DEEPSEEK_API_KEY --out can.json` (also OpenRouter, OpenAI, Ollama, llama.cpp, LM Studio). |
-| **By hand, no model** | `params` → `check` → `build` → `review` → `video` (below). |
-| **Python** | `from construct_hologram import diagnose, params, scene, render` |
+| **By hand, no model** | `params` → `check` → `build` → `review` (below). |
 
-A complete walk-through of every entry point, with costs and timings from live runs, is in
-[docs/USING.md](docs/USING.md).
-
-## Thirty seconds, by hand
+Requirements: Python 3.10 or newer. Review stills need a Chromium-family browser you already
+have (Chrome, Chromium, Edge, Brave); video needs ffmpeg. Nothing is downloaded or installed.
 
 ```sh
 C=construct_hologram/cli.py
 python3 $C params book --variant paperback --output book.json   # fill in the facts you know
-python3 $C check book.json        # audit: PASS (0 errors, 0 warnings) — or paths and fix hints
-python3 $C build book.json --out out    # out/construct.html: open it in any browser
-python3 $C review book.json --out out   # out/review/*.png: stills to judge it by
-python3 $C video book.json --out out/book.mp4 --seconds 12
+python3 $C check book.json             # audit: PASS, or paths and fix hints
+python3 $C build book.json --out out   # out/construct.html: open it in any browser
+python3 $C review book.json --out out  # out/review/*.png: stills to judge it by
 ```
-
-![A CD case opening: lid, disc and booklet](docs/media/opening.gif)
-
-## What makes it honest
-
-![Provenance view: certainty as colour](docs/media/provenance.png)
-
-The provenance view shows how every part is known. The audit refuses `verified` without a
-source, refuses a `null` or placeholder fact, flags parts that float or barely render, and
-requires the documented-accuracy claim to be backed. Generated artwork is labelled
-**generated decoration**, and a real cover is shown only from bytes the user supplied.
-
-Likeness is a separate question. The audit proves a construct is valid and honest, not that it
-looks like the thing: for free-form subjects that depends on the model and on a visual review
-(a person, or a model that can see the renders). Parameter archetypes look the same from every
-model.
 
 ## Three modes
 
-Say one in the request, or say nothing and the skill picks one and tells you first: the mode,
-why, the rough time and cost, and how to switch.
+Say a mode in your request, or say nothing: the skill picks one and tells you before it starts
+(which mode, why, roughly how long and what it costs, and how to switch).
 
-| mode | what it does | stops | costs | for |
+| mode | what it does | when it stops | rough cost | use it for |
 |---|---|---|---|---|
-| **fast** | one pass with self-review | 10 min (30 for a richer subject) | cents with a DeepSeek-class model | generic subjects, simple objects, quick asks |
-| **masterpiece** | rounds judged by an independent critic, each version against the best so far | 2 rounds without a win, 12 rounds or 2 hours of active work | frontier-model tokens for up to 2 hours | a named car, landmark or building whose likeness matters |
-| **unbounded** | the same rounds, no cap | only after 2 rounds without a win | many rounds and hours, a high token cost | only when you ask for it by name |
+| **fast** | one pass with self-review | about 10 minutes (30 for a richer subject) | cents with DeepSeek | generic subjects ("a watch", "a car"), simple objects, quick requests |
+| **masterpiece** | rounds judged by an independent critic, each version compared with the best so far | 2 rounds without a win, 12 rounds, or 2 hours of active work | up to 2 hours of frontier-model tokens | a named car, landmark or building whose likeness matters |
+| **unbounded** | the same rounds, with no cap and no time limit | only after 2 rounds without a win | many rounds and hours, a high token cost | only when you ask for it by name |
 
-The skill never picks unbounded: the critic finds a win almost every round, so it can run for
-hours. Every round is reported, so you can stop it at any time. The old tier names still work
-(quick, standard and showcase are fast).
+The skill never picks unbounded on its own: the critic finds an improvement almost every round,
+so it can run for hours. Every round is reported, so you can stop it whenever you like. In blind
+comparisons no visible gain showed after about 12 rounds, which is why masterpiece stops there.
+The older tier names still work (quick, standard and showcase mean fast).
 
 ## Recommended models
 
-From the evaluation runs:
-
-- **Hard subjects in masterpiece mode** (a named car, a landmark): GPT-6.1 Sol or Claude Opus.
-  A smaller model on such a subject says so and recommends them.
-- **Simpler objects in fast mode:** DeepSeek works as well as those, with no
-  regression on objects such as a tape deck, a watch or a camera.
-- **Small or free models** (MiniMax, Inkling, Nemotron) are not recommended. In about half of
+- **Hard named subjects in masterpiece mode** (a car model, a landmark): GPT-6.1 Sol or Claude
+  Opus. A smaller model given such a subject says so and recommends them.
+- **Simpler objects in fast mode:** DeepSeek does as well as those, on objects such as a tape
+  deck, a watch or a camera.
+- **Small or free models** (MiniMax, Inkling, Nemotron) are not recommended: in about half of
   their runs they failed to save a scene at all, and they made scale errors.
+
+## How it works
+
+```
+request ─▶ research ─▶ scene (JSON) ─▶ check ─────────────▶ build ─────────▶ review
+           (named      facts, parts,   validate, compile,    one self-        renders and an
+            subjects)  sources         audit; fix hints      contained page   independent critic
+```
+
+1. **Scene.** The model writes what the thing is made of: facts with their certainty and
+   sources, parts built from a closed vocabulary of shapes (lofts, lathes, towers, facades,
+   shells...), and how it assembles, opens and moves.
+2. **Check.** Construct validates the scene, compiles it deterministically and audits it: no
+   floating parts, no claim stronger than its evidence, nothing too thin or tiny to read. Every
+   problem names its JSON path and a fix, and the model repairs until it is clean.
+3. **Build.** One `construct.html`: plain WebGL2, no dependencies, works offline.
+4. **Review.** Stills from every view; for a named subject, an **independent critic** (a fresh
+   model that never saw the authoring) compares them with reference photos and ranks the
+   defects. Only the critic can call a construct "good" or "outstanding".
+
+**The masterpiece loop** (`construct rounds`) repeats review and repair in small, judged rounds:
+
+- the author fixes at most four defects per round, tagging each edit;
+- one fresh critic judges the new version on its own, then picks the better of the new version
+  and the best so far, shown unlabelled and in random order;
+- a version that wins is kept, and one that loses is reverted, so the best is always on disk;
+- after every round a short report says what the critic asked for, what changed, whether it
+  won, and how long it took; the run can be paused and resumed at any time.
+
+![Provenance view: every part coloured by how it is known](docs/media/provenance.png)
+
+The provenance view (press **P**) shows how every part is known. The audit proves a construct
+is valid and honest; likeness is judged by the critic, and can be measured against a traced
+reference outline with `construct compare`.
+
+## Examples
+
+[![21 constructs made by AI agents](docs/media/examples.jpg)](https://rtmandreyev.github.io/construct/)
+
+Twenty-one constructs made by Claude Opus, GPT-6.1 Sol and DeepSeek, from a Leica to the
+Sagrada Família. Open the **[live gallery](https://rtmandreyev.github.io/construct/)**, or see
+[examples/](examples/) for each scene and how it was made.
 
 ## Documentation
 
-- [docs/ABOUT.md](docs/ABOUT.md) — what Construct is, where its method comes from, how to talk about it
-- [docs/USING.md](docs/USING.md) — every entry point, step by step, with a worked example
-- [docs/ARCHETYPES.md](docs/ARCHETYPES.md) — the parameter archetypes (cases, books, guitars, synth, vessels)
-- [docs/TERRAIN.md](docs/TERRAIN.md) — places, peaks and routes from elevation data you supply; Earth from coastline data
-- [CONTRACT.md](CONTRACT.md) — the `construct/0.2` scene and geometry contract for apps
-- [docs/EVALUATION.md](docs/EVALUATION.md) — cross-model results and how to score your own model
-- [CONTRIBUTING.md](CONTRIBUTING.md) · [CHANGELOG.md](CHANGELOG.md)
-
-## Credits
-
-Construct is inspired by **Anatomy's truth-first construction method**
-([wheresryan22/anatomy](https://github.com/wheresryan22/anatomy), MIT): true numbers first, a
-parts list before geometry, an audit run to zero, rendered images read before delivery, and
-never copying a reference image. Construct shares the method, not code: nothing from Anatomy
-is included. Its holographic look and construction grew out of NODE's Measured Light holograms
-by the same author. See [docs/ABOUT.md](docs/ABOUT.md).
-
-## Integrations: Tessera
-
-Tessera (a collection app) consumes Construct as a pinned dependency. Its atlas renders
-compiled geometry natively, re-validates it, drives the articulations and turns to the `open`
-view, and sets labels in its own type from each item's live facts. Its agent pipeline wraps
-`diagnose`, `params.expand` and `compile_scene`. The previous ids `tessera.hologram/0.2` and
-`tessera-hologram*` are still read for one release.
+- [docs/USING.md](docs/USING.md): every entry point, step by step, with a worked example
+- [docs/ABOUT.md](docs/ABOUT.md): what Construct is and where its method comes from
+- [docs/ARCHETYPES.md](docs/ARCHETYPES.md): the parameter archetypes (cases, books, guitars, synth, vessels, vehicles)
+- [docs/TERRAIN.md](docs/TERRAIN.md): places, peaks and routes from elevation data you supply
+- [CONTRACT.md](CONTRACT.md): the `construct/0.2` scene and geometry format, for apps
+- [docs/EVALUATION.md](docs/EVALUATION.md): cross-model results, and how to score your own model
+- [CONTRIBUTING.md](CONTRIBUTING.md) · [CHANGELOG.md](CHANGELOG.md) · [PUBLISHING.md](PUBLISHING.md)
 
 ## Limitations
 
-- One periodic motion per part; articulations nest, periodic motions do not.
 - A closed procedural vocabulary: no imported meshes, CAD, photogrammetry or booleans.
-- Artwork is a flat image on a face; liquids in glasses read faintly.
-- Terrain reads ESRI ASCII grids and XYZ exports (convert GeoTIFF first), the globe GeoJSON; see [docs/TERRAIN.md](docs/TERRAIN.md).
-- Tested on macOS; Linux and Windows review capture is untested.
+- One periodic motion per part; articulations nest, periodic motions do not.
+- Hidden lines show faintly through solid parts, glass cannot be tinted, and stills show the
+  closed pose: that is the house style.
+- Terrain reads ESRI ASCII grids and XYZ exports (convert GeoTIFF first), the globe GeoJSON.
+- Tested on macOS; review capture on Linux and Windows is untested.
 
-MIT licence — see [LICENSE](LICENSE) and [NOTICE](NOTICE).
+## License and credits
+
+MIT licensed: see [LICENSE](LICENSE) and [NOTICE](NOTICE).
+
+Construct's working method is inspired by **Anatomy's truth-first construction method**
+([wheresryan22/anatomy](https://github.com/wheresryan22/anatomy), MIT): true numbers first, a
+parts list before geometry, an audit run to zero, rendered images read before delivery, and
+never copying a reference image. Construct shares the method, not code. Its holographic look
+grew out of the same author's earlier Measured Light holograms.
+
+Product, vehicle and place names in the examples belong to their owners. Each example is an
+independent reconstruction from public references, not an official model; the scenes cite
+their sources, and no reference photograph is included.

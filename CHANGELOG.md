@@ -1,157 +1,89 @@
 # Changelog
 
-## 0.2.1 (release candidate)
+## 0.2.1 — 2026-10-23
 
-- **Three modes, and the skill chooses** (from the fifth rounds experiment: C2's rounds won
-  the owner's blind pick, and the owner saw no visible gain after about round 12):
-  - **fast:** one pass with self-review, no rounds loop (the standard tier, or showcase for a
-    richer subject). For generic subjects, simple objects and quick asks; DeepSeek-class models
-    do these well.
-  - **masterpiece:** the rounds loop, stopping after 2 rounds without a pairwise win, at every
-    criterion 3, at a default cap of **12 rounds**, or at 2 hours of active work. For a named
-    subject whose likeness matters.
-  - **unbounded:** the same loop with only its stop rules: no round cap, no time ceiling. Only
-    on explicit request: the critic finds a win almost every round, so it can run many rounds
-    and hours at a high token cost; the per-round report lets the user stop it.
-  - **the old tier names are aliases:** quick, standard and showcase mean fast; masterpiece
-    means masterpiece. `--mode` (or `--tier`), `mode:` or `tier:` in a request,
-    `CONSTRUCT_TIER` for the Claude Code hook and the MCP `construct_limits` tool all take
-    either.
-  - **the skill picks when the user says nothing,** and announces it before any work: the
-    mode, why, the rough time and cost, and how to switch. Fast for generic and simple
-    subjects; masterpiece for a named car, landmark or building; never unbounded
-    (`tiers.choose` gives the same answer from the author's judgement of the subject).
-  - **model-aware:** a smaller or cheaper model on a hard named subject says so and recommends
-    GPT-6.1 Sol or Claude Opus (`construct author` logs the same note).
+Construct 0.2.1 makes long runs pay off and makes the result easy to choose and to trust: three
+modes, a masterpiece loop judged by an independent critic, drawing rules that keep constructs
+detailed, and a gallery of 21 examples made by AI agents.
 
-- **Contours, detail and fair rounds** (build C2, from the fifth rounds experiment: build C's
-  rounds won every blind comparison; a later build's renders lost their surface contours):
-  - **the contour rule:** main surfaces keep a faint contour wire (weight about 0.4–0.5, alpha
-    about 0.5–0.6) over their dark fill; `line: "none"` is for occluders and backings. `check`
-    warns `bare-surface` when a visible main surface (role mass, or a large loft or extrude) has
-    no lines. The critic is told that faint surface contours give form and are not clutter. The
-    911 example's glasshouse and bumpers get their contour back.
-  - **the density bar:** at hero scale one clear object; up close every region still has
-    something true to find; a bare face or an empty corner is unfinished (`craft.md`, the
-    critic). The audit's clutter warning stays for real clutter.
-  - **fair timing:** author time comes from the run folder's own activity and stops at the
-    packet; the critic's time is logged separately; `rounds pause`.
-  - **a blind packet:** the references are copied into it, and the pair's pictures are
-    re-encoded and named at random; the header counts the ledger items actually shown.
-  - **the medium:** hidden lines showing through, untinted glass and the closed still pose are
-    seeded as known limits; an ask the critic files under one never enters the ledger.
-  - **a finish-cap log line:** each round says whether a 4-round finish cap would stop there
-    (finish starts at the first round with no critical or major silhouette, proportions or
-    identity item open). Log only.
+### Three modes, and the skill picks one
 
-- **Masterpiece rounds that keep what is good** (`construct rounds`,
-  `references/rounds.md`):
-  - **one critic a round, three parts:** this version blind, then against the best so far
-    (the same views, unlabelled, in a random A/B order, beside the references), then the
-    defect ledger;
-  - **the pairwise pick decides:** a version is kept when it wins overall, and its
-    regressions lead the next round (repair, don't revert); it is reverted only when it
-    loses;
-  - **small rounds:** at most 4 ledger items, every edit tagged with its id;
-  - **a defect ledger** (`ledger.json`): known limits only from kept rounds without progress,
-    or what the tools cannot express, reported as skill gaps;
-  - **stop rules:** every criterion at 3, two rounds without a win, or a 2-hour safety stop
-    on active time (Masterpiece's new default; interruptions do not count);
-  - **a log a person can read and resume:** a chat report after every Masterpiece round
-    (Showcase: once, at the end), `rounds.md`, `checkpoints/round-NN/`, `state.json`
-    (`rounds status`), and the round timeline in `construct.html` and `review`
-    (`rounds.png`).
+- **fast:** one pass with self-review, about 10 minutes (30 for a richer subject). For generic
+  subjects, simple objects and quick requests; cheaper models such as DeepSeek do these well.
+- **masterpiece:** rounds judged by an independent critic, each new version compared with the
+  best so far. It stops after two rounds without a win, at 12 rounds, or after 2 hours of active
+  work. For a named car, landmark or building whose likeness matters.
+- **unbounded:** the same rounds without the cap or the time limit, only when you ask for it.
+  The critic finds an improvement almost every round, so it can run for hours at a high token
+  cost; every round is reported, so you can stop it at any time.
+- When you name no mode, the skill picks one and tells you before it starts: which mode, why,
+  roughly how long and what it costs, and how to switch. It never picks unbounded. A smaller
+  model asked for a hard named subject says so and recommends GPT-6.1 Sol or Claude Opus.
+- The old tier names still work: quick, standard and showcase are fast, masterpiece is
+  masterpiece. `--mode`, `mode:` in a request, the MCP `construct_limits` tool and the Claude
+  Code budget hook all accept them.
 
-  A critique's score below 3 must cite a defect of its criterion. The README and USING
-  recommend models: Sol or Opus for hard subjects at Masterpiece, DeepSeek for simpler
-  objects, and not small free models.
+### The masterpiece loop (`construct rounds`)
 
-- **Drawing craft** (`references/craft.md`, linked from the authoring recipe and the scene
-  prompt): five rules from the strongest constructs: a line-weight hierarchy, dark depth-writing
-  fills that hide the construction mesh, a sub-volume per feature, density where the identity
-  lives, and a critic round answered by a refine pass, with excerpts of the scripts that drew
-  them.
-- **Six new examples**: a Leica M3, an open-reel tape recorder, a sea cliff at dusk, a Jackson
-  Juggernaut ET7, a Porsche 911 (964) and the Sagrada Família, drawn with that craft. The two
-  older scenes are converted to `construct-scene`; hairlines are role `detail`, closing points
-  repeated in lathe profiles are dropped, a label carrier is seated on its lens, and a
-  comparison record those edits made stale is removed. No reference photos ship.
+- **One fresh critic a round, in three parts:** it judges the new version on its own, then
+  picks the better of the new version and the best so far (unlabelled, in random order, from the
+  same views, beside the references), then updates the list of open defects.
+- **The pairwise pick decides.** A version that wins is kept and its regressions are repaired
+  next; one that loses is reverted. Scores are recorded, but every score below 3 must name the
+  defect that holds it back.
+- **Small rounds:** at most four defects worked on per round, each edit tagged with the defect
+  it addresses, so it is clear what helped.
+- **What the renderer cannot draw** (hidden lines showing faintly through solids, tinted glass,
+  an opening in a still) is known from the start and never sent back as work.
+- **Fair timing:** active time is measured from the run folder's own activity; the critic's
+  time is logged separately, and `rounds pause` marks a break.
+- **A record you can read and resume:** a short report in chat after every round, `rounds.md`,
+  a checkpoint per round, `rounds status` after any interruption, and the round timeline in
+  `construct.html`.
 
-- **The packaged skill runs critique**: the Claude Code package and the Hermes draft ship the
-  two examples the prompts read, and the Hermes draft ships `prompts.py`; `critique`, `author`
-  and `prompts` crashed from an install before.
-- **`compare` measures the object**: ornament and decorative parts (a shadow ring, motes) are
-  left out of the silhouette; a tyre drawn as a wire torus (and the well under its arch) is
-  filled as a solid disc, so a car's side is no longer measured with holes in it; a plan trace
-  drawn any way round (nose up, down, left or right, mirrored) is found, the result names the
-  orientation, and a trace drawn across the view is warned about.
+### Drawing that reads
 
-- **Round caps inside any host.** `check` warns `tier-rounds` when `authoring.review_rounds`
-  passes the tier's cap; the skill counts rounds in the scene before each review. A Claude Code
-  budget hook (`hosts/claude-code/`, opt-in, shipped in the plugin switched off) refuses review
-  commands past the rounds and, past the wall clock, every tool but reading, `check` and
-  `build`; Hermes runs take `--run-budget` and `--max-turns`.
-- **Cars that are cars.** A `loft` shape (rounded sections back to front: plan and side profile
-  together) and a `vehicle` archetype (wedge, coupe, sedan): a lofted lower body with a narrow,
-  rounded nose and leaning sides, a glasshouse loft, tyres on the ground in arches, lights.
-  Car guidance in the prompts and composition reference: trace side and plan first, never a
-  box.
-- **A clean globe from dense data.** Shared coastline edges are drawn once; when a file is over
-  the line budget, islands too small to read are left out first and lines are never simplified
-  below about a pixel (no beading). Natural Earth 1:50m now reads as cleanly as 1:110m.
+- **A drawing-craft guide** (`references/craft.md`): a line-weight hierarchy, dark fills under
+  a faint contour wire, a sub-volume per feature, density where the identity lives, and a
+  critic round answered by a refine pass, with excerpts from the strongest constructs.
+- **Main surfaces keep their contour.** A body, roof or tower drawn as a flat dark shape reads
+  as cardboard; `check` now warns `bare-surface`, and the critic is told that faint surface
+  contours are form, not clutter.
+- **Detail everywhere:** one clear object at full view, and something true to find in every
+  region up close. A bare face or an empty corner is unfinished work.
 
-### Milestone 2: the quality bar
+### An independent critic, and likeness you can measure
 
-- **An independent critic.** `construct critique` writes a packet for a fresh context (the
-  critic's instructions, the request, the identity checklist, the scene's hash, renders from
-  the views of the reference photos beside them); a subagent, a delegated task or a second
-  model call (`--base-url`) answers a `construct-critique` (0–3 scores with strict anchors,
-  the checklist checked item by item, defects ranked by severity). `--record` binds it to the
-  scene's hash and recomputes the verdict from the scores; only the critic can record "good"
-  or "outstanding" (the audit flags `self-graded`, `critic-stale` and `critic-claim`), and the
-  author's own review records "self-reviewed".
-- **Identity checklist.** `authoring.identity`: the features research says make the subject
-  itself, each with the parts that build it (`identity-unbuilt`, `no-checklist`).
-- **The masterpiece tier.** For hard subjects on request: no wall clock and no round cap; it
-  stops only when the critic scores every criterion 3, at an optional cost ceiling, or when the
-  user stops it, and checkpoints every round. `construct author --critic` / `--tier
-  masterpiece`; the Claude Code budget hook knows it.
+- `construct critique` writes a packet for a fresh model (instructions, the request, an identity
+  checklist, renders beside the reference photos) and records its answer bound to the scene's
+  hash. Only the critic can call a construct "good" or "outstanding".
+- `authoring.identity`: the features that make the subject itself, each mapped to the parts
+  that build it.
+- `construct compare` measures the construct's silhouette against a traced reference outline,
+  and `construct loft-from-traces` builds a body from side, top and front traces.
 
-### Milestone 3: likeness, measured
+### New shapes
 
-- **`construct compare`**: the construct's silhouette from a named view, projected from the
-  geometry (no browser), against a traced reference outline: IoU and the mean distance between
-  the outlines (as a share of the view's width), the better of the reference as traced or
-  mirrored, and an overlay PNG. Thresholds for vehicles (IoU 0.88, 1.2%) and landmark buildings
-  (0.82, 2%). `--record` binds it to the scene (`authoring.compare`); an outstanding vehicle or
-  landmark needs a passing comparison (`likeness`, `compare-stale`; the critic's verdict is
-  held at "good" without one).
-- **`construct loft-from-traces`**: side, top and front traces reconciled into loft stations
-  (crowded at the nose and tail; the front sets how the cabin narrows), checked against the
-  documented height and width; `--into scene --part body --drop glasshouse` swaps it into an
-  archetype.
+- A `loft` shape and a `vehicle` archetype, so cars come out as cars; an architecture kit
+  (`tower`, `roof`, `dormer`, `facade`, `battlements`, `buttress`), parabolic towers and ribbed
+  `shell` roofs; measured terrain as a building's site; a cleaner globe from dense coastline data.
 
-### Milestone 4: the architecture kit
+### Examples
 
-- New shapes: `tower` (round or polygonal; cone, pyramid, spire, onion or flat roof; taper,
-  eave, arched windows in rows), `roof` (gable or hip, either ridge, overhang, tile courses),
-  `dormer`, `facade` (window grids with round, pointed or flat heads and mullions, or an
-  arcade), `battlements` (round or along a wall path) and `buttress` (stepped). Every
-  variant compiles without warnings; `examples/castle.json` uses them all.
-- Massing from a traced plan and elevations (`trace` + `extrude`) in the composition guide.
-- `construct terrain --into scene.json`: measured terrain at real scale as a building's
-  plinth, the ground at the site's centre at `y = 0`.
+- **21 example constructs** in `examples/`, each with its scene, a hero image and how it was
+  made, and a live gallery built from them (`scripts/build_site.py`). All of them reproduce
+  with this release.
+- Six new skill examples drawn with the craft guide: a Leica M3, an open-reel tape recorder, a
+  sea cliff at dusk, a Jackson Juggernaut ET7, a Porsche 911 (964) and the Sagrada Família.
 
-### From the baseline runs
+### Fixes
 
-- `tube-outline`: a vehicle (or a scene without surfaces) whose outline is drawn with long thin
-  tubes is warned: they render as glowing wire, not a body (both weak live cars did this).
-- The section method for cars in the composition guide and scene prompt: traced side skins,
-  filled cross-section slices, smooth section curves (how the best-liked cars were built).
-- `tower` `profile: parabolic`: shafts that narrow ever faster towards the top (the Sagrada
-  Família's bell towers).
-- `shell`: a ribbed sail rising back from a base edge, bulging forward (the Sydney Opera
-  House's roofs; pair and turn them with `rotate`).
+- The packaged skills ship the examples and prompts that `critique`, `author` and `prompts`
+  read; they crashed from an install before.
+- `compare` leaves ornament out of the silhouette, fills a tyre drawn as a wire torus, and finds
+  a plan trace drawn in any orientation.
+- `check` warns when a car's outline is drawn with thin tubes (`tube-outline`) and when a run
+  passes its review rounds (`tier-rounds`); an opt-in Claude Code hook enforces the limits.
 
 ## 0.2.0 — Construct (2026-10-19)
 

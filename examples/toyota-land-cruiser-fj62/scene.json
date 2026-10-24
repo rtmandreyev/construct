@@ -1,0 +1,7155 @@
+{
+  "format": "construct-scene",
+  "version": 2,
+  "id": "toyota-land-cruiser-fj62",
+  "title": "Toyota Land Cruiser FJ62",
+  "subject": {
+    "category": "vehicle",
+    "accuracy": "approximate",
+    "synthetic": false,
+    "summary": "Approximate 1988-90 Toyota Land Cruiser FJ62 four-door wagon: side, plan and front traced from a 60-series blueprint scaled to the documented wheelbase, details from photographs of 1989-90 FJ62s."
+  },
+  "units": "m",
+  "seed": 62,
+  "sources": [
+    {
+      "id": "request",
+      "kind": "user_request",
+      "title": "Toyota Land Cruiser FJ62 (1980s four-door wagon), Masterpiece tier",
+      "rights": "user_private"
+    },
+    {
+      "id": "specs-oulu",
+      "kind": "document",
+      "title": "LC home J6 technical data (FJ60/BJ60/HJ60/HJ61/FJ62): wheelbase, length, width",
+      "ref": "https://cc.oulu.fi/~thu/LC/HJ61/J6.html",
+      "rights": "reference_only"
+    },
+    {
+      "id": "specs-tlc",
+      "kind": "document",
+      "title": "TLC4x4 FJ62 vehicle page: wheelbase 107.5 in, length 184 in, width 70.9 in, height 69.9 in",
+      "ref": "https://www.tlc4x4.com/vehicles/fj62/",
+      "rights": "reference_only"
+    },
+    {
+      "id": "specs-fcc",
+      "kind": "document",
+      "title": "fastcarcheck.uk Land Cruiser FJ62V standard-roof specification: height 1805 mm, wheelbase 2730 mm, length 4750 mm",
+      "ref": "https://fastcarcheck.uk/specs/make/toyota/land-cruiser/192085",
+      "rights": "reference_only"
+    },
+    {
+      "id": "ref-blueprint",
+      "kind": "reference_image",
+      "title": "the-blueprints.com: Toyota Land Cruiser FJ61 (1989) side, plan, front and rear elevations; high roof lowered to the standard roof",
+      "ref": "https://the-blueprints.com/blueprints/cars/toyota/39189/view/toyota_land_cruiser_fj61_1989",
+      "rights": "reference_only"
+    },
+    {
+      "id": "ref-front34",
+      "kind": "reference_image",
+      "title": "Wikimedia Commons: 1989 Toyota Land Cruiser Wagon in Beige Metallic, front left",
+      "ref": "https://commons.wikimedia.org/wiki/File:1989_Toyota_Land_Cruiser_Wagon_in_Beige_Metallic,_front_left.jpg",
+      "rights": "reference_only"
+    },
+    {
+      "id": "ref-rear34",
+      "kind": "reference_image",
+      "title": "Wikimedia Commons: 1989 Toyota Land Cruiser Wagon in Beige Metallic, rear left",
+      "ref": "https://commons.wikimedia.org/wiki/File:1989_Toyota_Land_Cruiser_Wagon_in_Beige_Metallic,_rear_left.jpg",
+      "rights": "reference_only"
+    }
+  ],
+  "facts": [
+    {
+      "key": "wheelbase",
+      "value": 2.73,
+      "unit": "m",
+      "certainty": "verified",
+      "source": "specs-oulu"
+    },
+    {
+      "key": "length",
+      "value": 4.75,
+      "unit": "m",
+      "certainty": "verified",
+      "source": "specs-oulu",
+      "note": "with the rear step bumper; 4.675 m without"
+    },
+    {
+      "key": "width",
+      "value": 1.8,
+      "unit": "m",
+      "certainty": "verified",
+      "source": "specs-oulu"
+    },
+    {
+      "key": "height",
+      "value": 1.8,
+      "unit": "m",
+      "certainty": "verified",
+      "source": "specs-fcc",
+      "note": "standard roof: 1.775 m (TLC4x4, 69.9 in) to 1.805 m (FJ62V) by market"
+    },
+    {
+      "key": "tyre-diameter",
+      "value": 0.79,
+      "unit": "m",
+      "certainty": "inferred",
+      "source": "ref-blueprint",
+      "note": "measured on the blueprint against the 2.73 m wheelbase"
+    },
+    {
+      "key": "grille-badge",
+      "value": "TOYOTA",
+      "certainty": "verified",
+      "source": "ref-front34",
+      "note": "grille lettering, typeset, not a reproduced logo"
+    },
+    {
+      "key": "tailgate-badge",
+      "value": "TOYOTA",
+      "certainty": "verified",
+      "source": "ref-rear34"
+    },
+    {
+      "key": "rear-badge-4wd",
+      "value": "4WD",
+      "certainty": "verified",
+      "source": "ref-rear34",
+      "note": "drop-gate badge, typeset"
+    },
+    {
+      "key": "quarter-script",
+      "value": "LAND CRUISER",
+      "certainty": "verified",
+      "source": "ref-rear34",
+      "note": "rear-quarter script, typeset"
+    }
+  ],
+  "assets": [],
+  "parts": [
+    {
+      "id": "tyre-front",
+      "role": "structure",
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.395,
+        "height": 0.225,
+        "segments": 40,
+        "ribs": 30,
+        "rings": 4,
+        "caps": true
+      },
+      "certainty": "inferred",
+      "stage": 0,
+      "source": "ref-blueprint",
+      "at": [
+        0.6225,
+        0.395,
+        1.365
+      ],
+      "rotate": [
+        0,
+        0,
+        -90
+      ],
+      "mirror": "x",
+      "look": {
+        "fill": "dark",
+        "weight": 0.6,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "sidewall-front",
+      "role": "structure",
+      "shape": {
+        "type": "torus",
+        "major": 0.34500000000000003,
+        "minor": 0.05,
+        "segments": 40,
+        "sides": 6,
+        "rings": 2
+      },
+      "certainty": "inferred",
+      "stage": 0,
+      "source": "ref-blueprint",
+      "at": [
+        0.835,
+        0.395,
+        1.365
+      ],
+      "rotate": [
+        0,
+        0,
+        90
+      ],
+      "mirror": "x",
+      "look": {
+        "fill": "dark",
+        "weight": 0.55,
+        "alpha": 0.5
+      }
+    },
+    {
+      "id": "rim-front",
+      "role": "structure",
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.04,
+            -0.045
+          ],
+          [
+            0.13,
+            -0.045
+          ],
+          [
+            0.155,
+            -0.03
+          ],
+          [
+            0.165,
+            -0.012
+          ],
+          [
+            0.19,
+            -0.006
+          ],
+          [
+            0.2,
+            0.0
+          ]
+        ],
+        "segments": 36,
+        "meridians": 12
+      },
+      "certainty": "inferred",
+      "stage": 1,
+      "source": "ref-blueprint",
+      "at": [
+        0.865,
+        0.395,
+        1.365
+      ],
+      "rotate": [
+        0,
+        0,
+        -90
+      ],
+      "mirror": "x",
+      "look": {
+        "fill": "dark",
+        "weight": 0.9
+      }
+    },
+    {
+      "id": "rim-lip-front",
+      "role": "detail",
+      "shape": {
+        "type": "torus",
+        "major": 0.195,
+        "minor": 0.012,
+        "segments": 36,
+        "sides": 5,
+        "rings": 1
+      },
+      "certainty": "inferred",
+      "stage": 1,
+      "source": "ref-blueprint",
+      "at": [
+        0.86,
+        0.395,
+        1.365
+      ],
+      "rotate": [
+        0,
+        0,
+        90
+      ],
+      "mirror": "x",
+      "look": {
+        "weight": 1.0
+      }
+    },
+    {
+      "id": "hub-front",
+      "role": "detail",
+      "shape": {
+        "type": "cone",
+        "radius_bottom": 0.07,
+        "radius_top": 0.045,
+        "height": 0.055,
+        "segments": 18
+      },
+      "certainty": "inferred",
+      "stage": 1,
+      "source": "ref-blueprint",
+      "at": [
+        0.82,
+        0.395,
+        1.365
+      ],
+      "rotate": [
+        0,
+        0,
+        -90
+      ],
+      "mirror": "x",
+      "look": {
+        "weight": 0.85
+      }
+    },
+    {
+      "id": "lug-front",
+      "role": "detail",
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.02,
+        "height": 0.025,
+        "segments": 6
+      },
+      "certainty": "inferred",
+      "stage": 1,
+      "source": "ref-blueprint",
+      "at": [
+        0.82,
+        0.48,
+        1.365
+      ],
+      "rotate": [
+        0,
+        0,
+        -90
+      ],
+      "mirror": "x",
+      "look": {
+        "weight": 0.6,
+        "alpha": 0.5
+      },
+      "repeat": {
+        "count": 6,
+        "radial": {
+          "axis": "x",
+          "center": [
+            0.82,
+            0.395,
+            1.365
+          ],
+          "span": 360
+        }
+      }
+    },
+    {
+      "id": "rim-slot-front",
+      "role": "detail",
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.022,
+        "height": 0.012,
+        "segments": 10
+      },
+      "certainty": "inferred",
+      "stage": 1,
+      "source": "ref-blueprint",
+      "at": [
+        0.82,
+        0.51,
+        1.365
+      ],
+      "rotate": [
+        0,
+        0,
+        -90
+      ],
+      "mirror": "x",
+      "look": {
+        "weight": 0.8,
+        "alpha": 0.8
+      },
+      "repeat": {
+        "count": 6,
+        "radial": {
+          "axis": "x",
+          "center": [
+            0.82,
+            0.395,
+            1.365
+          ],
+          "span": 360
+        }
+      }
+    },
+    {
+      "id": "axle-front",
+      "role": "structure",
+      "shape": {
+        "type": "tube",
+        "path": [
+          [
+            -0.6849999999999999,
+            0.395,
+            1.365
+          ],
+          [
+            0.6849999999999999,
+            0.395,
+            1.365
+          ]
+        ],
+        "radius": 0.045,
+        "sides": 8
+      },
+      "certainty": "inferred",
+      "stage": 0,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 0.6,
+        "alpha": 0.5
+      }
+    },
+    {
+      "id": "diff-front",
+      "role": "structure",
+      "shape": {
+        "type": "sphere",
+        "radii": [
+          0.15,
+          0.14,
+          0.13
+        ],
+        "lat": 6,
+        "lon": 12
+      },
+      "certainty": "inferred",
+      "stage": 0,
+      "source": "ref-blueprint",
+      "at": [
+        0.12,
+        0.395,
+        1.365
+      ],
+      "look": {
+        "fill": "dark",
+        "weight": 0.6,
+        "alpha": 0.5
+      }
+    },
+    {
+      "id": "leaf-front",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.52,
+            0.55,
+            1.985
+          ],
+          [
+            0.52,
+            0.47,
+            1.565
+          ],
+          [
+            0.52,
+            0.45,
+            1.365
+          ],
+          [
+            0.52,
+            0.47,
+            1.165
+          ],
+          [
+            0.52,
+            0.55,
+            0.745
+          ]
+        ],
+        "smooth": true
+      },
+      "certainty": "inferred",
+      "stage": 1,
+      "source": "ref-blueprint",
+      "mirror": "x",
+      "look": {
+        "weight": 0.6,
+        "alpha": 0.5
+      }
+    },
+    {
+      "id": "tyre-rear",
+      "role": "structure",
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.395,
+        "height": 0.225,
+        "segments": 40,
+        "ribs": 30,
+        "rings": 4,
+        "caps": true
+      },
+      "certainty": "inferred",
+      "stage": 0,
+      "source": "ref-blueprint",
+      "at": [
+        0.6225,
+        0.395,
+        -1.365
+      ],
+      "rotate": [
+        0,
+        0,
+        -90
+      ],
+      "mirror": "x",
+      "look": {
+        "fill": "dark",
+        "weight": 0.6,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "sidewall-rear",
+      "role": "structure",
+      "shape": {
+        "type": "torus",
+        "major": 0.34500000000000003,
+        "minor": 0.05,
+        "segments": 40,
+        "sides": 6,
+        "rings": 2
+      },
+      "certainty": "inferred",
+      "stage": 0,
+      "source": "ref-blueprint",
+      "at": [
+        0.835,
+        0.395,
+        -1.365
+      ],
+      "rotate": [
+        0,
+        0,
+        90
+      ],
+      "mirror": "x",
+      "look": {
+        "fill": "dark",
+        "weight": 0.55,
+        "alpha": 0.5
+      }
+    },
+    {
+      "id": "rim-rear",
+      "role": "structure",
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.04,
+            -0.045
+          ],
+          [
+            0.13,
+            -0.045
+          ],
+          [
+            0.155,
+            -0.03
+          ],
+          [
+            0.165,
+            -0.012
+          ],
+          [
+            0.19,
+            -0.006
+          ],
+          [
+            0.2,
+            0.0
+          ]
+        ],
+        "segments": 36,
+        "meridians": 12
+      },
+      "certainty": "inferred",
+      "stage": 1,
+      "source": "ref-blueprint",
+      "at": [
+        0.865,
+        0.395,
+        -1.365
+      ],
+      "rotate": [
+        0,
+        0,
+        -90
+      ],
+      "mirror": "x",
+      "look": {
+        "fill": "dark",
+        "weight": 0.9
+      }
+    },
+    {
+      "id": "rim-lip-rear",
+      "role": "detail",
+      "shape": {
+        "type": "torus",
+        "major": 0.195,
+        "minor": 0.012,
+        "segments": 36,
+        "sides": 5,
+        "rings": 1
+      },
+      "certainty": "inferred",
+      "stage": 1,
+      "source": "ref-blueprint",
+      "at": [
+        0.86,
+        0.395,
+        -1.365
+      ],
+      "rotate": [
+        0,
+        0,
+        90
+      ],
+      "mirror": "x",
+      "look": {
+        "weight": 1.0
+      }
+    },
+    {
+      "id": "hub-rear",
+      "role": "detail",
+      "shape": {
+        "type": "cone",
+        "radius_bottom": 0.07,
+        "radius_top": 0.045,
+        "height": 0.055,
+        "segments": 18
+      },
+      "certainty": "inferred",
+      "stage": 1,
+      "source": "ref-blueprint",
+      "at": [
+        0.82,
+        0.395,
+        -1.365
+      ],
+      "rotate": [
+        0,
+        0,
+        -90
+      ],
+      "mirror": "x",
+      "look": {
+        "weight": 0.85
+      }
+    },
+    {
+      "id": "lug-rear",
+      "role": "detail",
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.02,
+        "height": 0.025,
+        "segments": 6
+      },
+      "certainty": "inferred",
+      "stage": 1,
+      "source": "ref-blueprint",
+      "at": [
+        0.82,
+        0.48,
+        -1.365
+      ],
+      "rotate": [
+        0,
+        0,
+        -90
+      ],
+      "mirror": "x",
+      "look": {
+        "weight": 0.6,
+        "alpha": 0.5
+      },
+      "repeat": {
+        "count": 6,
+        "radial": {
+          "axis": "x",
+          "center": [
+            0.82,
+            0.395,
+            -1.365
+          ],
+          "span": 360
+        }
+      }
+    },
+    {
+      "id": "rim-slot-rear",
+      "role": "detail",
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.022,
+        "height": 0.012,
+        "segments": 10
+      },
+      "certainty": "inferred",
+      "stage": 1,
+      "source": "ref-blueprint",
+      "at": [
+        0.82,
+        0.51,
+        -1.365
+      ],
+      "rotate": [
+        0,
+        0,
+        -90
+      ],
+      "mirror": "x",
+      "look": {
+        "weight": 0.8,
+        "alpha": 0.8
+      },
+      "repeat": {
+        "count": 6,
+        "radial": {
+          "axis": "x",
+          "center": [
+            0.82,
+            0.395,
+            -1.365
+          ],
+          "span": 360
+        }
+      }
+    },
+    {
+      "id": "axle-rear",
+      "role": "structure",
+      "shape": {
+        "type": "tube",
+        "path": [
+          [
+            -0.6849999999999999,
+            0.395,
+            -1.365
+          ],
+          [
+            0.6849999999999999,
+            0.395,
+            -1.365
+          ]
+        ],
+        "radius": 0.045,
+        "sides": 8
+      },
+      "certainty": "inferred",
+      "stage": 0,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 0.6,
+        "alpha": 0.5
+      }
+    },
+    {
+      "id": "diff-rear",
+      "role": "structure",
+      "shape": {
+        "type": "sphere",
+        "radii": [
+          0.15,
+          0.14,
+          0.13
+        ],
+        "lat": 6,
+        "lon": 12
+      },
+      "certainty": "inferred",
+      "stage": 0,
+      "source": "ref-blueprint",
+      "at": [
+        -0.05,
+        0.395,
+        -1.365
+      ],
+      "look": {
+        "fill": "dark",
+        "weight": 0.6,
+        "alpha": 0.5
+      }
+    },
+    {
+      "id": "leaf-rear",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.52,
+            0.55,
+            -0.745
+          ],
+          [
+            0.52,
+            0.47,
+            -1.165
+          ],
+          [
+            0.52,
+            0.45,
+            -1.365
+          ],
+          [
+            0.52,
+            0.47,
+            -1.565
+          ],
+          [
+            0.52,
+            0.55,
+            -1.985
+          ]
+        ],
+        "smooth": true
+      },
+      "certainty": "inferred",
+      "stage": 1,
+      "source": "ref-blueprint",
+      "mirror": "x",
+      "look": {
+        "weight": 0.6,
+        "alpha": 0.5
+      }
+    },
+    {
+      "id": "frame-rail",
+      "role": "structure",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.07,
+          0.14,
+          4.2
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 0,
+      "source": "ref-blueprint",
+      "at": [
+        0.45,
+        0.5,
+        -0.25
+      ],
+      "mirror": "x",
+      "look": {
+        "fill": "dark",
+        "weight": 0.6,
+        "alpha": 0.45
+      }
+    },
+    {
+      "id": "frame-crossmember",
+      "role": "structure",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.9,
+          0.08,
+          0.07
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 0,
+      "source": "ref-blueprint",
+      "at": [
+        0,
+        0.5,
+        0.6
+      ],
+      "look": {
+        "weight": 0.6,
+        "alpha": 0.5
+      },
+      "repeat": {
+        "count": 4,
+        "step": {
+          "at": [
+            0,
+            0,
+            -0.95
+          ]
+        }
+      }
+    },
+    {
+      "id": "fuel-tank",
+      "role": "structure",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.7,
+          0.22,
+          0.6
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 0,
+      "source": "ref-blueprint",
+      "at": [
+        -0.1,
+        0.55,
+        -0.55
+      ],
+      "look": {
+        "fill": "dark",
+        "weight": 0.5,
+        "alpha": 0.4
+      }
+    },
+    {
+      "id": "spare-tyre",
+      "role": "structure",
+      "shape": {
+        "type": "torus",
+        "major": 0.29,
+        "minor": 0.09,
+        "segments": 32,
+        "sides": 6,
+        "rings": 2
+      },
+      "certainty": "inferred",
+      "stage": 0,
+      "source": "ref-blueprint",
+      "at": [
+        0,
+        0.53,
+        -2.1
+      ],
+      "look": {
+        "fill": "dark",
+        "weight": 0.55,
+        "alpha": 0.5
+      }
+    },
+    {
+      "id": "exhaust",
+      "role": "structure",
+      "shape": {
+        "type": "tube",
+        "path": [
+          [
+            0.3,
+            0.45,
+            1.4
+          ],
+          [
+            0.35,
+            0.4,
+            0
+          ],
+          [
+            0.4,
+            0.4,
+            -1.8
+          ],
+          [
+            0.55,
+            0.4,
+            -2.45
+          ]
+        ],
+        "radius": 0.03,
+        "sides": 6
+      },
+      "certainty": "inferred",
+      "stage": 0,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 0.6,
+        "alpha": 0.5
+      }
+    },
+    {
+      "id": "body",
+      "role": "mass",
+      "shape": {
+        "type": "loft",
+        "sections": [
+          [
+            -2.55,
+            0.885,
+            0.58,
+            1.246,
+            0.873
+          ],
+          [
+            -2.5,
+            0.885,
+            0.58,
+            1.246,
+            0.873
+          ],
+          [
+            -2.3,
+            0.9,
+            0.58,
+            1.246,
+            0.888
+          ],
+          [
+            -2.1,
+            0.9,
+            0.47,
+            1.246,
+            0.888
+          ],
+          [
+            -1.95,
+            0.9,
+            0.47,
+            1.246,
+            0.888
+          ],
+          [
+            -1.885,
+            0.9,
+            0.47,
+            1.246,
+            0.888
+          ],
+          [
+            -1.8107,
+            0.9,
+            0.686,
+            1.246,
+            0.888
+          ],
+          [
+            -1.7364,
+            0.9,
+            0.7839,
+            1.246,
+            0.888
+          ],
+          [
+            -1.6621,
+            0.9,
+            0.8163,
+            1.246,
+            0.888
+          ],
+          [
+            -1.5879,
+            0.9,
+            0.8293,
+            1.246,
+            0.888
+          ],
+          [
+            -1.5136,
+            0.9,
+            0.8339,
+            1.246,
+            0.888
+          ],
+          [
+            -1.4393,
+            0.9,
+            0.8349,
+            1.246,
+            0.888
+          ],
+          [
+            -1.365,
+            0.9,
+            0.835,
+            1.246,
+            0.888
+          ],
+          [
+            -1.2907,
+            0.9,
+            0.8349,
+            1.246,
+            0.888
+          ],
+          [
+            -1.2164,
+            0.9,
+            0.8339,
+            1.246,
+            0.888
+          ],
+          [
+            -1.1421,
+            0.9,
+            0.8293,
+            1.246,
+            0.888
+          ],
+          [
+            -1.0679,
+            0.9,
+            0.8163,
+            1.246,
+            0.888
+          ],
+          [
+            -0.9936,
+            0.9,
+            0.7839,
+            1.246,
+            0.888
+          ],
+          [
+            -0.9193,
+            0.9,
+            0.686,
+            1.246,
+            0.888
+          ],
+          [
+            -0.845,
+            0.9,
+            0.47,
+            1.246,
+            0.888
+          ],
+          [
+            -0.6,
+            0.9,
+            0.47,
+            1.246,
+            0.888
+          ],
+          [
+            -0.3,
+            0.9,
+            0.47,
+            1.246,
+            0.888
+          ],
+          [
+            0.0,
+            0.9,
+            0.47,
+            1.246,
+            0.888
+          ],
+          [
+            0.3,
+            0.9,
+            0.47,
+            1.246,
+            0.888
+          ],
+          [
+            0.59,
+            0.9,
+            0.47,
+            1.246,
+            0.888
+          ]
+        ],
+        "round": 0.12
+      },
+      "certainty": "inferred",
+      "stage": 1,
+      "source": "ref-blueprint",
+      "look": {
+        "fill": "dark",
+        "weight": 0.45,
+        "alpha": 0.55
+      }
+    },
+    {
+      "id": "front-wing",
+      "role": "mass",
+      "shape": {
+        "type": "loft",
+        "sections": [
+          [
+            0.59,
+            0.115,
+            0.47,
+            1.262,
+            0.1
+          ],
+          [
+            0.8,
+            0.115,
+            0.47,
+            1.2456,
+            0.1
+          ],
+          [
+            0.845,
+            0.115,
+            0.47,
+            1.2421,
+            0.1
+          ],
+          [
+            0.975,
+            0.115,
+            0.7807,
+            1.232,
+            0.1
+          ],
+          [
+            1.105,
+            0.115,
+            0.8301,
+            1.2218,
+            0.1
+          ],
+          [
+            1.235,
+            0.115,
+            0.8394,
+            1.2117,
+            0.1
+          ],
+          [
+            1.365,
+            0.115,
+            0.84,
+            1.2016,
+            0.1
+          ],
+          [
+            1.495,
+            0.115,
+            0.8394,
+            1.1914,
+            0.1
+          ],
+          [
+            1.625,
+            0.115,
+            0.8301,
+            1.1813,
+            0.1
+          ],
+          [
+            1.755,
+            0.115,
+            0.7807,
+            1.1711,
+            0.1
+          ],
+          [
+            1.885,
+            0.115,
+            0.47,
+            1.161,
+            0.1
+          ],
+          [
+            1.96,
+            0.115,
+            0.64,
+            1.1551,
+            0.1
+          ],
+          [
+            2.03,
+            0.105,
+            0.64,
+            1.1197,
+            0.08
+          ]
+        ],
+        "round": 0.45
+      },
+      "certainty": "inferred",
+      "stage": 1,
+      "source": "ref-blueprint",
+      "at": [
+        0.785,
+        0,
+        0
+      ],
+      "mirror": "x",
+      "look": {
+        "fill": "dark",
+        "weight": 0.45,
+        "alpha": 0.55
+      }
+    },
+    {
+      "id": "bonnet",
+      "role": "mass",
+      "shape": {
+        "type": "loft",
+        "sections": [
+          [
+            0.59,
+            0.7,
+            1.106,
+            1.266,
+            0.685
+          ],
+          [
+            0.866,
+            0.7,
+            1.0892,
+            1.2492,
+            0.685
+          ],
+          [
+            1.142,
+            0.7,
+            1.0706,
+            1.2306,
+            0.685
+          ],
+          [
+            1.418,
+            0.7,
+            1.049,
+            1.209,
+            0.685
+          ],
+          [
+            1.694,
+            0.7,
+            1.0246,
+            1.1846,
+            0.685
+          ],
+          [
+            1.97,
+            0.7,
+            0.9984,
+            1.1584,
+            0.685
+          ],
+          [
+            2.0,
+            0.7,
+            1.0184,
+            1.1334,
+            0.68
+          ],
+          [
+            2.022,
+            0.69,
+            1.0184,
+            1.0934,
+            0.66
+          ]
+        ],
+        "round": 0.35
+      },
+      "certainty": "inferred",
+      "stage": 2,
+      "source": "ref-blueprint",
+      "look": {
+        "fill": "dark",
+        "weight": 0.45,
+        "alpha": 0.55
+      }
+    },
+    {
+      "id": "front-panel",
+      "role": "structure",
+      "shape": {
+        "type": "box",
+        "size": [
+          1.32,
+          0.44,
+          0.06
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 1,
+      "source": "ref-blueprint",
+      "at": [
+        0,
+        0.86,
+        1.99
+      ],
+      "look": {
+        "fill": "dark",
+        "line": "none"
+      }
+    },
+    {
+      "id": "glasshouse",
+      "role": "mass",
+      "shape": {
+        "type": "loft",
+        "sections": [
+          [
+            -2.54,
+            0.87,
+            1.246,
+            1.28,
+            0.86
+          ],
+          [
+            -2.52,
+            0.87,
+            1.246,
+            1.48,
+            0.8385
+          ],
+          [
+            -2.5,
+            0.87,
+            1.246,
+            1.68,
+            0.814
+          ],
+          [
+            -2.48,
+            0.872,
+            1.246,
+            1.7449999999999999,
+            0.79
+          ],
+          [
+            -2.44,
+            0.875,
+            1.246,
+            1.785,
+            0.8
+          ],
+          [
+            -2.38,
+            0.878,
+            1.246,
+            1.802,
+            0.8049999999999999
+          ],
+          [
+            -2.2,
+            0.88,
+            1.246,
+            1.805,
+            0.81
+          ],
+          [
+            -1.6,
+            0.88,
+            1.246,
+            1.805,
+            0.81
+          ],
+          [
+            -1.0,
+            0.88,
+            1.246,
+            1.805,
+            0.81
+          ],
+          [
+            -0.4,
+            0.88,
+            1.246,
+            1.805,
+            0.81
+          ],
+          [
+            0.06,
+            0.88,
+            1.246,
+            1.8,
+            0.81
+          ],
+          [
+            0.12,
+            0.88,
+            1.246,
+            1.77,
+            0.81
+          ],
+          [
+            0.18,
+            0.88,
+            1.246,
+            1.72,
+            0.81
+          ],
+          [
+            0.25,
+            0.88,
+            1.246,
+            1.63,
+            0.81
+          ],
+          [
+            0.36,
+            0.88,
+            1.246,
+            1.51,
+            0.81
+          ],
+          [
+            0.48,
+            0.88,
+            1.246,
+            1.38,
+            0.81
+          ],
+          [
+            0.59,
+            0.88,
+            1.246,
+            1.266,
+            0.81
+          ]
+        ],
+        "round": 0.1
+      },
+      "certainty": "inferred",
+      "stage": 2,
+      "source": "ref-blueprint",
+      "look": {
+        "fill": "dark",
+        "weight": 0.45,
+        "alpha": 0.55
+      }
+    },
+    {
+      "id": "roof",
+      "role": "mass",
+      "shape": {
+        "type": "loft",
+        "sections": [
+          [
+            -2.475,
+            0.8,
+            1.76,
+            1.795,
+            0.745
+          ],
+          [
+            -2.42,
+            0.815,
+            1.775,
+            1.811,
+            0.76
+          ],
+          [
+            -1.9,
+            0.815,
+            1.775,
+            1.811,
+            0.76
+          ],
+          [
+            -1.2,
+            0.815,
+            1.775,
+            1.811,
+            0.76
+          ],
+          [
+            -0.5,
+            0.815,
+            1.775,
+            1.811,
+            0.76
+          ],
+          [
+            0.07,
+            0.815,
+            1.775,
+            1.811,
+            0.76
+          ]
+        ],
+        "round": 0.6
+      },
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "ref-blueprint",
+      "look": {
+        "fill": "dark",
+        "weight": 0.45,
+        "alpha": 0.5
+      }
+    },
+    {
+      "id": "drip-rail",
+      "role": "identity",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.835,
+            1.76,
+            0.13
+          ],
+          [
+            0.825,
+            1.783,
+            0.05
+          ],
+          [
+            0.818,
+            1.787,
+            -1.0
+          ],
+          [
+            0.815,
+            1.787,
+            -2.3
+          ],
+          [
+            0.808,
+            1.775,
+            -2.42
+          ],
+          [
+            0.8,
+            1.76,
+            -2.455
+          ]
+        ],
+        "smooth": true
+      },
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "ref-blueprint",
+      "mirror": "x",
+      "look": {
+        "weight": 1.15
+      }
+    },
+    {
+      "id": "roof-rib-0",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.66,
+            1.803,
+            -0.2
+          ],
+          [
+            0,
+            1.811,
+            -0.2
+          ],
+          [
+            0.66,
+            1.803,
+            -0.2
+          ]
+        ],
+        "smooth": true
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 0.45,
+        "alpha": 0.3
+      }
+    },
+    {
+      "id": "roof-rib-1",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.66,
+            1.803,
+            -0.75
+          ],
+          [
+            0,
+            1.811,
+            -0.75
+          ],
+          [
+            0.66,
+            1.803,
+            -0.75
+          ]
+        ],
+        "smooth": true
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 0.45,
+        "alpha": 0.3
+      }
+    },
+    {
+      "id": "roof-rib-2",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.66,
+            1.803,
+            -1.3
+          ],
+          [
+            0,
+            1.811,
+            -1.3
+          ],
+          [
+            0.66,
+            1.803,
+            -1.3
+          ]
+        ],
+        "smooth": true
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 0.45,
+        "alpha": 0.3
+      }
+    },
+    {
+      "id": "roof-rib-3",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.66,
+            1.803,
+            -1.85
+          ],
+          [
+            0,
+            1.811,
+            -1.85
+          ],
+          [
+            0.66,
+            1.803,
+            -1.85
+          ]
+        ],
+        "smooth": true
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 0.45,
+        "alpha": 0.3
+      }
+    },
+    {
+      "id": "win-front-door",
+      "role": "identity",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.8665,
+            1.25,
+            0.34
+          ],
+          [
+            0.8074,
+            1.722,
+            0.03
+          ],
+          [
+            0.8074,
+            1.722,
+            -0.45
+          ],
+          [
+            0.8665,
+            1.25,
+            -0.45
+          ]
+        ],
+        "closed": true
+      },
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "ref-blueprint",
+      "mirror": "x",
+      "look": {
+        "weight": 1.3,
+        "glow": 0.35
+      }
+    },
+    {
+      "id": "win-rear-door",
+      "role": "identity",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.8665,
+            1.25,
+            -0.53
+          ],
+          [
+            0.8074,
+            1.722,
+            -0.53
+          ],
+          [
+            0.8074,
+            1.722,
+            -1.25
+          ],
+          [
+            0.8665,
+            1.25,
+            -1.25
+          ]
+        ],
+        "closed": true
+      },
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "ref-blueprint",
+      "mirror": "x",
+      "look": {
+        "weight": 1.3,
+        "glow": 0.35
+      }
+    },
+    {
+      "id": "win-quarter",
+      "role": "identity",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.8665,
+            1.25,
+            -1.35
+          ],
+          [
+            0.8074,
+            1.722,
+            -1.35
+          ],
+          [
+            0.8074,
+            1.722,
+            -2.27
+          ],
+          [
+            0.8149,
+            1.662,
+            -2.35
+          ],
+          [
+            0.8665,
+            1.25,
+            -2.35
+          ]
+        ],
+        "closed": true
+      },
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "ref-blueprint",
+      "mirror": "x",
+      "look": {
+        "weight": 1.3,
+        "glow": 0.35
+      }
+    },
+    {
+      "id": "rear-door-divider",
+      "role": "identity",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.863,
+            1.25,
+            -1.02
+          ],
+          [
+            0.81,
+            1.722,
+            -1.02
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "ref-blueprint",
+      "mirror": "x",
+      "look": {
+        "weight": 1.15
+      }
+    },
+    {
+      "id": "quarter-divider",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.861,
+            1.25,
+            -1.8
+          ],
+          [
+            0.81,
+            1.722,
+            -1.8
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "ref-blueprint",
+      "mirror": "x",
+      "look": {
+        "weight": 0.85
+      }
+    },
+    {
+      "id": "belt-line",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.88,
+            1.246,
+            0.59
+          ],
+          [
+            0.88,
+            1.246,
+            -2.53
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "ref-blueprint",
+      "mirror": "x",
+      "look": {
+        "weight": 0.95
+      }
+    },
+    {
+      "id": "windscreen-frame",
+      "role": "identity",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.7,
+            1.276,
+            0.57
+          ],
+          [
+            0.7,
+            1.276,
+            0.57
+          ],
+          [
+            0.72,
+            1.735,
+            0.175
+          ],
+          [
+            -0.72,
+            1.735,
+            0.175
+          ]
+        ],
+        "closed": true
+      },
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 1.4,
+        "glow": 0.35
+      }
+    },
+    {
+      "id": "a-pillar",
+      "role": "identity",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.86,
+            1.256,
+            0.585
+          ],
+          [
+            0.81,
+            1.78,
+            0.12
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "ref-blueprint",
+      "mirror": "x",
+      "look": {
+        "weight": 1.2
+      }
+    },
+    {
+      "id": "liftgate-glass",
+      "role": "identity",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.72,
+            1.29,
+            -2.542
+          ],
+          [
+            0.72,
+            1.29,
+            -2.542
+          ],
+          [
+            0.66,
+            1.68,
+            -2.498
+          ],
+          [
+            -0.66,
+            1.68,
+            -2.498
+          ]
+        ],
+        "closed": true
+      },
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 1.3,
+        "glow": 0.35
+      }
+    },
+    {
+      "id": "face-surround",
+      "role": "identity",
+      "shape": {
+        "type": "box",
+        "size": [
+          1.76,
+          0.23,
+          0.03
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "ref-blueprint",
+      "at": [
+        0,
+        0.89,
+        2.028
+      ],
+      "look": {
+        "fill": "dark",
+        "weight": 1.4,
+        "glow": 0.45
+      }
+    },
+    {
+      "id": "grille",
+      "role": "identity",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.8,
+          0.2,
+          0.012
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "ref-blueprint",
+      "at": [
+        0,
+        0.89,
+        2.01
+      ],
+      "look": {
+        "fill": "dark",
+        "weight": 1.0,
+        "glow": 0.25
+      }
+    },
+    {
+      "id": "eggcrate-1",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.325,
+            0.8,
+            2.0165
+          ],
+          [
+            -0.325,
+            0.98,
+            2.0165
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 0.5,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "eggcrate-2",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.26,
+            0.8,
+            2.0165
+          ],
+          [
+            -0.26,
+            0.98,
+            2.0165
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 0.5,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "eggcrate-3",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.195,
+            0.8,
+            2.0165
+          ],
+          [
+            -0.195,
+            0.98,
+            2.0165
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 0.5,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "eggcrate-4",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.13,
+            0.8,
+            2.0165
+          ],
+          [
+            -0.13,
+            0.98,
+            2.0165
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 0.5,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "eggcrate-5",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.065,
+            0.8,
+            2.0165
+          ],
+          [
+            -0.065,
+            0.98,
+            2.0165
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 0.5,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "eggcrate-6",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.0,
+            0.8,
+            2.0165
+          ],
+          [
+            -0.0,
+            0.98,
+            2.0165
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 0.5,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "eggcrate-7",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.065,
+            0.8,
+            2.0165
+          ],
+          [
+            0.065,
+            0.98,
+            2.0165
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 0.5,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "eggcrate-8",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.13,
+            0.8,
+            2.0165
+          ],
+          [
+            0.13,
+            0.98,
+            2.0165
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 0.5,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "eggcrate-9",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.195,
+            0.8,
+            2.0165
+          ],
+          [
+            0.195,
+            0.98,
+            2.0165
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 0.5,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "eggcrate-10",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.26,
+            0.8,
+            2.0165
+          ],
+          [
+            0.26,
+            0.98,
+            2.0165
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 0.5,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "eggcrate-11",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.325,
+            0.8,
+            2.0165
+          ],
+          [
+            0.325,
+            0.98,
+            2.0165
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 0.5,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "eggcrate-row-0",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.39,
+            0.83,
+            2.0165
+          ],
+          [
+            0.39,
+            0.83,
+            2.0165
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 0.4,
+        "alpha": 0.3
+      }
+    },
+    {
+      "id": "eggcrate-row-1",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.39,
+            0.87,
+            2.0165
+          ],
+          [
+            0.39,
+            0.87,
+            2.0165
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 0.4,
+        "alpha": 0.3
+      }
+    },
+    {
+      "id": "eggcrate-row-2",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.39,
+            0.91,
+            2.0165
+          ],
+          [
+            0.39,
+            0.91,
+            2.0165
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 0.4,
+        "alpha": 0.3
+      }
+    },
+    {
+      "id": "eggcrate-row-3",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.39,
+            0.95,
+            2.0165
+          ],
+          [
+            0.39,
+            0.95,
+            2.0165
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 0.4,
+        "alpha": 0.3
+      }
+    },
+    {
+      "id": "grille-bar-0",
+      "role": "identity",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.78,
+          0.012,
+          0.032
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-blueprint",
+      "at": [
+        0,
+        0.81,
+        2.032
+      ],
+      "look": {
+        "weight": 0.95,
+        "alpha": 0.9
+      }
+    },
+    {
+      "id": "grille-bar-1",
+      "role": "identity",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.78,
+          0.012,
+          0.032
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-blueprint",
+      "at": [
+        0,
+        0.85,
+        2.032
+      ],
+      "look": {
+        "weight": 0.95,
+        "alpha": 0.9
+      }
+    },
+    {
+      "id": "grille-bar-2",
+      "role": "identity",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.2,
+          0.012,
+          0.032
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-blueprint",
+      "at": [
+        0.29,
+        0.89,
+        2.032
+      ],
+      "mirror": "x",
+      "look": {
+        "weight": 0.95,
+        "alpha": 0.9
+      }
+    },
+    {
+      "id": "grille-bar-3",
+      "role": "identity",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.78,
+          0.012,
+          0.032
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-blueprint",
+      "at": [
+        0,
+        0.93,
+        2.032
+      ],
+      "look": {
+        "weight": 0.95,
+        "alpha": 0.9
+      }
+    },
+    {
+      "id": "grille-bar-4",
+      "role": "identity",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.78,
+          0.012,
+          0.032
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-blueprint",
+      "at": [
+        0,
+        0.97,
+        2.032
+      ],
+      "look": {
+        "weight": 0.95,
+        "alpha": 0.9
+      }
+    },
+    {
+      "id": "badge-plinth",
+      "role": "detail",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.36,
+          0.055,
+          0.01
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-blueprint",
+      "at": [
+        0,
+        0.893,
+        2.043
+      ],
+      "look": {
+        "fill": "dark",
+        "line": "none"
+      }
+    },
+    {
+      "id": "badge-carrier",
+      "role": "detail",
+      "shape": {
+        "type": "plane",
+        "size": [
+          0.36,
+          0.06
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-blueprint",
+      "at": [
+        0,
+        0.893,
+        2.0485
+      ],
+      "look": {
+        "line": "none",
+        "fill": "none"
+      }
+    },
+    {
+      "id": "headlamp-inner-l",
+      "role": "identity",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.165,
+          0.1,
+          0.012
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-blueprint",
+      "at": [
+        0.495,
+        0.89,
+        2.039
+      ],
+      "look": {
+        "fill": "glass",
+        "weight": 1.25,
+        "glow": 0.7
+      }
+    },
+    {
+      "id": "lens-inner-l--25",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.425,
+            0.865,
+            2.0455
+          ],
+          [
+            0.565,
+            0.865,
+            2.0455
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 0.5,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "lens-inner-l-0",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.425,
+            0.89,
+            2.0455
+          ],
+          [
+            0.565,
+            0.89,
+            2.0455
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 0.5,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "lens-inner-l-25",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.425,
+            0.915,
+            2.0455
+          ],
+          [
+            0.565,
+            0.915,
+            2.0455
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 0.5,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "flute-inner-l-4",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.455,
+            0.846,
+            2.0455
+          ],
+          [
+            0.455,
+            0.934,
+            2.0455
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 0.45,
+        "alpha": 0.55
+      }
+    },
+    {
+      "id": "flute-inner-l0",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.495,
+            0.846,
+            2.0455
+          ],
+          [
+            0.495,
+            0.934,
+            2.0455
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 0.45,
+        "alpha": 0.55
+      }
+    },
+    {
+      "id": "flute-inner-l4",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.535,
+            0.846,
+            2.0455
+          ],
+          [
+            0.535,
+            0.934,
+            2.0455
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 0.45,
+        "alpha": 0.55
+      }
+    },
+    {
+      "id": "reflector-inner-l",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.435,
+            0.857,
+            2.0455
+          ],
+          [
+            0.555,
+            0.857,
+            2.0455
+          ],
+          [
+            0.555,
+            0.923,
+            2.0455
+          ],
+          [
+            0.435,
+            0.923,
+            2.0455
+          ]
+        ],
+        "closed": true
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 0.8,
+        "alpha": 0.8,
+        "glow": 0.3
+      }
+    },
+    {
+      "id": "bezel-inner-l",
+      "role": "identity",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.4065,
+            0.834,
+            2.0452
+          ],
+          [
+            0.5835,
+            0.834,
+            2.0452
+          ],
+          [
+            0.5835,
+            0.946,
+            2.0452
+          ],
+          [
+            0.4065,
+            0.946,
+            2.0452
+          ]
+        ],
+        "closed": true
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 1.3,
+        "glow": 0.5
+      }
+    },
+    {
+      "id": "headlamp-outer-l",
+      "role": "identity",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.165,
+          0.1,
+          0.012
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-blueprint",
+      "at": [
+        0.68,
+        0.89,
+        2.039
+      ],
+      "look": {
+        "fill": "glass",
+        "weight": 1.25,
+        "glow": 0.7
+      }
+    },
+    {
+      "id": "lens-outer-l--25",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.61,
+            0.865,
+            2.0455
+          ],
+          [
+            0.75,
+            0.865,
+            2.0455
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 0.5,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "lens-outer-l-0",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.61,
+            0.89,
+            2.0455
+          ],
+          [
+            0.75,
+            0.89,
+            2.0455
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 0.5,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "lens-outer-l-25",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.61,
+            0.915,
+            2.0455
+          ],
+          [
+            0.75,
+            0.915,
+            2.0455
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 0.5,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "flute-outer-l-4",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.64,
+            0.846,
+            2.0455
+          ],
+          [
+            0.64,
+            0.934,
+            2.0455
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 0.45,
+        "alpha": 0.55
+      }
+    },
+    {
+      "id": "flute-outer-l0",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.68,
+            0.846,
+            2.0455
+          ],
+          [
+            0.68,
+            0.934,
+            2.0455
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 0.45,
+        "alpha": 0.55
+      }
+    },
+    {
+      "id": "flute-outer-l4",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.72,
+            0.846,
+            2.0455
+          ],
+          [
+            0.72,
+            0.934,
+            2.0455
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 0.45,
+        "alpha": 0.55
+      }
+    },
+    {
+      "id": "reflector-outer-l",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.62,
+            0.857,
+            2.0455
+          ],
+          [
+            0.74,
+            0.857,
+            2.0455
+          ],
+          [
+            0.74,
+            0.923,
+            2.0455
+          ],
+          [
+            0.62,
+            0.923,
+            2.0455
+          ]
+        ],
+        "closed": true
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 0.8,
+        "alpha": 0.8,
+        "glow": 0.3
+      }
+    },
+    {
+      "id": "bezel-outer-l",
+      "role": "identity",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.5915,
+            0.834,
+            2.0452
+          ],
+          [
+            0.7685,
+            0.834,
+            2.0452
+          ],
+          [
+            0.7685,
+            0.946,
+            2.0452
+          ],
+          [
+            0.5915,
+            0.946,
+            2.0452
+          ]
+        ],
+        "closed": true
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 1.3,
+        "glow": 0.5
+      }
+    },
+    {
+      "id": "face-divider-l410",
+      "role": "identity",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.41,
+            0.79,
+            2.045
+          ],
+          [
+            0.41,
+            0.99,
+            2.045
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 1.0,
+        "alpha": 0.85
+      }
+    },
+    {
+      "id": "face-divider-l585",
+      "role": "identity",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.585,
+            0.79,
+            2.045
+          ],
+          [
+            0.585,
+            0.99,
+            2.045
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 1.0,
+        "alpha": 0.85
+      }
+    },
+    {
+      "id": "face-divider-l770",
+      "role": "identity",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.77,
+            0.79,
+            2.045
+          ],
+          [
+            0.77,
+            0.99,
+            2.045
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 1.0,
+        "alpha": 0.85
+      }
+    },
+    {
+      "id": "corner-lamp-l",
+      "role": "identity",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.085,
+          0.1,
+          0.012
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-blueprint",
+      "at": [
+        0.826,
+        0.89,
+        2.039
+      ],
+      "look": {
+        "fill": "glass",
+        "weight": 1.0,
+        "glow": 0.45
+      }
+    },
+    {
+      "id": "turn-lamp-l",
+      "role": "identity",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.355,
+          0.05,
+          0.02
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-blueprint",
+      "at": [
+        0.5875,
+        0.74,
+        2.038
+      ],
+      "look": {
+        "fill": "glass",
+        "weight": 1.0,
+        "glow": 0.55
+      }
+    },
+    {
+      "id": "side-marker-front-l",
+      "role": "detail",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.012,
+          0.035,
+          0.09
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-blueprint",
+      "at": [
+        0.905,
+        1.02,
+        1.86
+      ],
+      "look": {
+        "fill": "glass",
+        "weight": 0.8,
+        "glow": 0.4
+      }
+    },
+    {
+      "id": "headlamp-inner-r",
+      "role": "identity",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.165,
+          0.1,
+          0.012
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-blueprint",
+      "at": [
+        -0.495,
+        0.89,
+        2.039
+      ],
+      "look": {
+        "fill": "glass",
+        "weight": 1.25,
+        "glow": 0.7
+      }
+    },
+    {
+      "id": "lens-inner-r--25",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.425,
+            0.865,
+            2.0455
+          ],
+          [
+            -0.565,
+            0.865,
+            2.0455
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 0.5,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "lens-inner-r-0",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.425,
+            0.89,
+            2.0455
+          ],
+          [
+            -0.565,
+            0.89,
+            2.0455
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 0.5,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "lens-inner-r-25",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.425,
+            0.915,
+            2.0455
+          ],
+          [
+            -0.565,
+            0.915,
+            2.0455
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 0.5,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "flute-inner-r-4",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.535,
+            0.846,
+            2.0455
+          ],
+          [
+            -0.535,
+            0.934,
+            2.0455
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 0.45,
+        "alpha": 0.55
+      }
+    },
+    {
+      "id": "flute-inner-r0",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.495,
+            0.846,
+            2.0455
+          ],
+          [
+            -0.495,
+            0.934,
+            2.0455
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 0.45,
+        "alpha": 0.55
+      }
+    },
+    {
+      "id": "flute-inner-r4",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.455,
+            0.846,
+            2.0455
+          ],
+          [
+            -0.455,
+            0.934,
+            2.0455
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 0.45,
+        "alpha": 0.55
+      }
+    },
+    {
+      "id": "reflector-inner-r",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.555,
+            0.857,
+            2.0455
+          ],
+          [
+            -0.435,
+            0.857,
+            2.0455
+          ],
+          [
+            -0.435,
+            0.923,
+            2.0455
+          ],
+          [
+            -0.555,
+            0.923,
+            2.0455
+          ]
+        ],
+        "closed": true
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 0.8,
+        "alpha": 0.8,
+        "glow": 0.3
+      }
+    },
+    {
+      "id": "bezel-inner-r",
+      "role": "identity",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.5835,
+            0.834,
+            2.0452
+          ],
+          [
+            -0.4065,
+            0.834,
+            2.0452
+          ],
+          [
+            -0.4065,
+            0.946,
+            2.0452
+          ],
+          [
+            -0.5835,
+            0.946,
+            2.0452
+          ]
+        ],
+        "closed": true
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 1.3,
+        "glow": 0.5
+      }
+    },
+    {
+      "id": "headlamp-outer-r",
+      "role": "identity",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.165,
+          0.1,
+          0.012
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-blueprint",
+      "at": [
+        -0.68,
+        0.89,
+        2.039
+      ],
+      "look": {
+        "fill": "glass",
+        "weight": 1.25,
+        "glow": 0.7
+      }
+    },
+    {
+      "id": "lens-outer-r--25",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.61,
+            0.865,
+            2.0455
+          ],
+          [
+            -0.75,
+            0.865,
+            2.0455
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 0.5,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "lens-outer-r-0",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.61,
+            0.89,
+            2.0455
+          ],
+          [
+            -0.75,
+            0.89,
+            2.0455
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 0.5,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "lens-outer-r-25",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.61,
+            0.915,
+            2.0455
+          ],
+          [
+            -0.75,
+            0.915,
+            2.0455
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 0.5,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "flute-outer-r-4",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.72,
+            0.846,
+            2.0455
+          ],
+          [
+            -0.72,
+            0.934,
+            2.0455
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 0.45,
+        "alpha": 0.55
+      }
+    },
+    {
+      "id": "flute-outer-r0",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.68,
+            0.846,
+            2.0455
+          ],
+          [
+            -0.68,
+            0.934,
+            2.0455
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 0.45,
+        "alpha": 0.55
+      }
+    },
+    {
+      "id": "flute-outer-r4",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.64,
+            0.846,
+            2.0455
+          ],
+          [
+            -0.64,
+            0.934,
+            2.0455
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 0.45,
+        "alpha": 0.55
+      }
+    },
+    {
+      "id": "reflector-outer-r",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.74,
+            0.857,
+            2.0455
+          ],
+          [
+            -0.62,
+            0.857,
+            2.0455
+          ],
+          [
+            -0.62,
+            0.923,
+            2.0455
+          ],
+          [
+            -0.74,
+            0.923,
+            2.0455
+          ]
+        ],
+        "closed": true
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 0.8,
+        "alpha": 0.8,
+        "glow": 0.3
+      }
+    },
+    {
+      "id": "bezel-outer-r",
+      "role": "identity",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.7685,
+            0.834,
+            2.0452
+          ],
+          [
+            -0.5915,
+            0.834,
+            2.0452
+          ],
+          [
+            -0.5915,
+            0.946,
+            2.0452
+          ],
+          [
+            -0.7685,
+            0.946,
+            2.0452
+          ]
+        ],
+        "closed": true
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 1.3,
+        "glow": 0.5
+      }
+    },
+    {
+      "id": "face-divider-r410",
+      "role": "identity",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.41,
+            0.79,
+            2.045
+          ],
+          [
+            -0.41,
+            0.99,
+            2.045
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 1.0,
+        "alpha": 0.85
+      }
+    },
+    {
+      "id": "face-divider-r585",
+      "role": "identity",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.585,
+            0.79,
+            2.045
+          ],
+          [
+            -0.585,
+            0.99,
+            2.045
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 1.0,
+        "alpha": 0.85
+      }
+    },
+    {
+      "id": "face-divider-r770",
+      "role": "identity",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.77,
+            0.79,
+            2.045
+          ],
+          [
+            -0.77,
+            0.99,
+            2.045
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 1.0,
+        "alpha": 0.85
+      }
+    },
+    {
+      "id": "corner-lamp-r",
+      "role": "identity",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.085,
+          0.1,
+          0.012
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-blueprint",
+      "at": [
+        -0.826,
+        0.89,
+        2.039
+      ],
+      "look": {
+        "fill": "glass",
+        "weight": 1.0,
+        "glow": 0.45
+      }
+    },
+    {
+      "id": "turn-lamp-r",
+      "role": "identity",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.355,
+          0.05,
+          0.02
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-blueprint",
+      "at": [
+        -0.5875,
+        0.74,
+        2.038
+      ],
+      "look": {
+        "fill": "glass",
+        "weight": 1.0,
+        "glow": 0.55
+      }
+    },
+    {
+      "id": "side-marker-front-r",
+      "role": "detail",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.012,
+          0.035,
+          0.09
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-blueprint",
+      "at": [
+        -0.905,
+        1.02,
+        1.86
+      ],
+      "look": {
+        "fill": "glass",
+        "weight": 0.8,
+        "glow": 0.4
+      }
+    },
+    {
+      "id": "grille-chin",
+      "role": "identity",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.82,
+          0.045,
+          0.03
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "ref-blueprint",
+      "at": [
+        0,
+        0.7525,
+        2.028
+      ],
+      "look": {
+        "fill": "dark",
+        "weight": 1.2,
+        "glow": 0.35
+      }
+    },
+    {
+      "id": "valance-line",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.85,
+            0.68,
+            2.025
+          ],
+          [
+            0.85,
+            0.68,
+            2.025
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 0.85
+      }
+    },
+    {
+      "id": "bonnet-lip",
+      "role": "identity",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.66,
+            1.085,
+            2.024
+          ],
+          [
+            0.66,
+            1.085,
+            2.024
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 1.1
+      }
+    },
+    {
+      "id": "bumper-front",
+      "role": "mass",
+      "shape": {
+        "type": "box",
+        "size": [
+          1.36,
+          0.16,
+          0.07
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 2,
+      "source": "ref-front34",
+      "at": [
+        0,
+        0.565,
+        2.055
+      ],
+      "look": {
+        "fill": "dark",
+        "weight": 0.9,
+        "alpha": 0.8
+      }
+    },
+    {
+      "id": "bumper-channel-front-12",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.67,
+            0.553,
+            2.091
+          ],
+          [
+            0.67,
+            0.553,
+            2.091
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-front34",
+      "look": {
+        "weight": 0.7,
+        "alpha": 0.65
+      }
+    },
+    {
+      "id": "bumper-channel-front12",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.67,
+            0.577,
+            2.091
+          ],
+          [
+            0.67,
+            0.577,
+            2.091
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-front34",
+      "look": {
+        "weight": 0.7,
+        "alpha": 0.65
+      }
+    },
+    {
+      "id": "front-plate",
+      "role": "detail",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.3,
+          0.15,
+          0.006
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-front34",
+      "at": [
+        -0.12,
+        0.565,
+        2.093
+      ],
+      "look": {
+        "fill": "dark",
+        "weight": 0.85,
+        "alpha": 0.8
+      }
+    },
+    {
+      "id": "bumper-return-front",
+      "role": "structure",
+      "shape": {
+        "type": "box",
+        "size": [
+          1.36,
+          0.03,
+          0.05
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 2,
+      "source": "ref-front34",
+      "at": [
+        0,
+        0.47,
+        2.045
+      ],
+      "look": {
+        "fill": "dark",
+        "weight": 0.6,
+        "alpha": 0.5
+      }
+    },
+    {
+      "id": "bumper-cap-front",
+      "role": "structure",
+      "shape": {
+        "type": "tube",
+        "path": [
+          [
+            0.68,
+            0.565,
+            2.01
+          ],
+          [
+            0.8,
+            0.565,
+            2.0
+          ],
+          [
+            0.875,
+            0.565,
+            1.96
+          ],
+          [
+            0.8250000000000001,
+            0.565,
+            1.88
+          ],
+          [
+            0.8250000000000001,
+            0.565,
+            1.8099999999999998
+          ]
+        ],
+        "radius": 0.08,
+        "sides": 8
+      },
+      "certainty": "inferred",
+      "stage": 2,
+      "source": "ref-front34",
+      "mirror": "x",
+      "look": {
+        "fill": "dark",
+        "weight": 0.9,
+        "alpha": 0.75
+      }
+    },
+    {
+      "id": "bumper-cap-joint-front",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.68,
+            0.485,
+            2.092
+          ],
+          [
+            0.68,
+            0.645,
+            2.092
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-front34",
+      "mirror": "x",
+      "look": {
+        "weight": 1.1,
+        "glow": 0.2
+      }
+    },
+    {
+      "id": "bumper-front-edge",
+      "role": "identity",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.67,
+            0.635,
+            2.091
+          ],
+          [
+            0.67,
+            0.635,
+            2.091
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "ref-front34",
+      "look": {
+        "weight": 1.15
+      }
+    },
+    {
+      "id": "bumper-front-lower",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.67,
+            0.505,
+            2.091
+          ],
+          [
+            0.67,
+            0.505,
+            2.091
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-front34",
+      "look": {
+        "weight": 0.6,
+        "alpha": 0.5
+      }
+    },
+    {
+      "id": "bumper-rear",
+      "role": "mass",
+      "shape": {
+        "type": "box",
+        "size": [
+          1.36,
+          0.12,
+          0.1
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 2,
+      "source": "ref-rear34",
+      "at": [
+        0,
+        0.595,
+        -2.635
+      ],
+      "look": {
+        "fill": "dark",
+        "weight": 0.9,
+        "alpha": 0.8
+      }
+    },
+    {
+      "id": "bumper-channel-rear-12",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.67,
+            0.583,
+            -2.686
+          ],
+          [
+            0.67,
+            0.583,
+            -2.686
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-rear34",
+      "look": {
+        "weight": 0.7,
+        "alpha": 0.65
+      }
+    },
+    {
+      "id": "bumper-channel-rear12",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.67,
+            0.607,
+            -2.686
+          ],
+          [
+            0.67,
+            0.607,
+            -2.686
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-rear34",
+      "look": {
+        "weight": 0.7,
+        "alpha": 0.65
+      }
+    },
+    {
+      "id": "bumper-return-rear",
+      "role": "structure",
+      "shape": {
+        "type": "box",
+        "size": [
+          1.36,
+          0.03,
+          0.05
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 2,
+      "source": "ref-rear34",
+      "at": [
+        0,
+        0.52,
+        -2.64
+      ],
+      "look": {
+        "fill": "dark",
+        "weight": 0.6,
+        "alpha": 0.5
+      }
+    },
+    {
+      "id": "bumper-cap-rear",
+      "role": "structure",
+      "shape": {
+        "type": "tube",
+        "path": [
+          [
+            0.68,
+            0.595,
+            -2.625
+          ],
+          [
+            0.8,
+            0.595,
+            -2.615
+          ],
+          [
+            0.875,
+            0.595,
+            -2.575
+          ],
+          [
+            0.845,
+            0.595,
+            -2.495
+          ],
+          [
+            0.845,
+            0.595,
+            -2.425
+          ]
+        ],
+        "radius": 0.06,
+        "sides": 8
+      },
+      "certainty": "inferred",
+      "stage": 2,
+      "source": "ref-rear34",
+      "mirror": "x",
+      "look": {
+        "fill": "dark",
+        "weight": 0.9,
+        "alpha": 0.75
+      }
+    },
+    {
+      "id": "bumper-cap-joint-rear",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.68,
+            0.535,
+            -2.687
+          ],
+          [
+            0.68,
+            0.655,
+            -2.687
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-rear34",
+      "mirror": "x",
+      "look": {
+        "weight": 1.1,
+        "glow": 0.2
+      }
+    },
+    {
+      "id": "bumper-rear-edge",
+      "role": "identity",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.67,
+            0.645,
+            -2.686
+          ],
+          [
+            0.67,
+            0.645,
+            -2.686
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "ref-rear34",
+      "look": {
+        "weight": 1.15
+      }
+    },
+    {
+      "id": "bumper-rear-lower",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.67,
+            0.555,
+            -2.686
+          ],
+          [
+            0.67,
+            0.555,
+            -2.686
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-rear34",
+      "look": {
+        "weight": 0.6,
+        "alpha": 0.5
+      }
+    },
+    {
+      "id": "flare-panel-front",
+      "role": "mass",
+      "shape": {
+        "type": "extrude",
+        "profile": [
+          [
+            1.925,
+            0.62
+          ],
+          [
+            1.865,
+            0.895
+          ],
+          [
+            1.685,
+            0.975
+          ],
+          [
+            1.065,
+            0.975
+          ],
+          [
+            0.925,
+            0.905
+          ],
+          [
+            0.765,
+            0.86
+          ],
+          [
+            0.62,
+            0.75
+          ],
+          [
+            0.695,
+            0.75
+          ],
+          [
+            0.84,
+            0.86
+          ],
+          [
+            1.0,
+            0.905
+          ],
+          [
+            1.065,
+            0.9
+          ],
+          [
+            1.685,
+            0.9
+          ],
+          [
+            1.79,
+            0.895
+          ],
+          [
+            1.85,
+            0.62
+          ]
+        ],
+        "axis": "x",
+        "height": 0.03
+      },
+      "certainty": "inferred",
+      "stage": 2,
+      "source": "ref-blueprint",
+      "at": [
+        0.895,
+        0,
+        0
+      ],
+      "mirror": "x",
+      "look": {
+        "fill": "dark",
+        "weight": 0.45,
+        "alpha": 0.55
+      }
+    },
+    {
+      "id": "flare-panel-rear",
+      "role": "mass",
+      "shape": {
+        "type": "extrude",
+        "profile": [
+          [
+            -0.815,
+            0.62
+          ],
+          [
+            -0.875,
+            0.86
+          ],
+          [
+            -1.045,
+            0.94
+          ],
+          [
+            -1.665,
+            0.94
+          ],
+          [
+            -1.805,
+            0.84
+          ],
+          [
+            -1.945,
+            0.55
+          ],
+          [
+            -1.87,
+            0.55
+          ],
+          [
+            -1.73,
+            0.84
+          ],
+          [
+            -1.665,
+            0.865
+          ],
+          [
+            -1.045,
+            0.865
+          ],
+          [
+            -0.95,
+            0.86
+          ],
+          [
+            -0.89,
+            0.62
+          ]
+        ],
+        "axis": "x",
+        "height": 0.03
+      },
+      "certainty": "inferred",
+      "stage": 2,
+      "source": "ref-blueprint",
+      "at": [
+        0.895,
+        0,
+        0
+      ],
+      "mirror": "x",
+      "look": {
+        "fill": "dark",
+        "weight": 0.45,
+        "alpha": 0.55
+      }
+    },
+    {
+      "id": "flare-front",
+      "role": "identity",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.926,
+            0.62,
+            1.925
+          ],
+          [
+            0.926,
+            0.895,
+            1.865
+          ],
+          [
+            0.926,
+            0.975,
+            1.685
+          ],
+          [
+            0.926,
+            0.975,
+            1.065
+          ],
+          [
+            0.926,
+            0.905,
+            0.925
+          ],
+          [
+            0.926,
+            0.86,
+            0.765
+          ],
+          [
+            0.926,
+            0.75,
+            0.62
+          ]
+        ],
+        "smooth": true
+      },
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "ref-blueprint",
+      "mirror": "x",
+      "look": {
+        "weight": 1.35,
+        "glow": 0.35
+      }
+    },
+    {
+      "id": "flare-front-inner",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.916,
+            0.64,
+            1.865
+          ],
+          [
+            0.916,
+            0.845,
+            1.695
+          ],
+          [
+            0.916,
+            0.85,
+            1.085
+          ],
+          [
+            0.916,
+            0.66,
+            0.865
+          ]
+        ],
+        "smooth": true
+      },
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "ref-blueprint",
+      "mirror": "x",
+      "look": {
+        "weight": 0.85
+      }
+    },
+    {
+      "id": "flare-rear",
+      "role": "identity",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.926,
+            0.62,
+            -0.815
+          ],
+          [
+            0.926,
+            0.86,
+            -0.875
+          ],
+          [
+            0.926,
+            0.94,
+            -1.045
+          ],
+          [
+            0.926,
+            0.94,
+            -1.665
+          ],
+          [
+            0.926,
+            0.84,
+            -1.805
+          ],
+          [
+            0.926,
+            0.55,
+            -1.945
+          ]
+        ],
+        "smooth": true
+      },
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "ref-blueprint",
+      "mirror": "x",
+      "look": {
+        "weight": 1.35,
+        "glow": 0.35
+      }
+    },
+    {
+      "id": "flare-rear-inner",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.916,
+            0.55,
+            -0.865
+          ],
+          [
+            0.916,
+            0.83,
+            -1.065
+          ],
+          [
+            0.916,
+            0.835,
+            -1.665
+          ],
+          [
+            0.916,
+            0.6,
+            -1.865
+          ]
+        ],
+        "smooth": true
+      },
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "ref-blueprint",
+      "mirror": "x",
+      "look": {
+        "weight": 0.85
+      }
+    },
+    {
+      "id": "waist-crease",
+      "role": "identity",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.904,
+            1.055,
+            1.98
+          ],
+          [
+            0.904,
+            1.055,
+            -2.53
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "ref-blueprint",
+      "mirror": "x",
+      "look": {
+        "weight": 1.15
+      }
+    },
+    {
+      "id": "lower-crease",
+      "role": "identity",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.911,
+            0.738,
+            0.62
+          ],
+          [
+            0.911,
+            0.738,
+            -0.815
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "ref-blueprint",
+      "mirror": "x",
+      "look": {
+        "weight": 1.15,
+        "glow": 0.25
+      }
+    },
+    {
+      "id": "lower-crease-step",
+      "role": "detail",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.012,
+          0.018,
+          1.435
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 2,
+      "source": "ref-blueprint",
+      "at": [
+        0.904,
+        0.729,
+        -0.0975
+      ],
+      "mirror": "x",
+      "look": {
+        "fill": "dark",
+        "weight": 0.6,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "lower-crease-shadow",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.902,
+            0.718,
+            0.62
+          ],
+          [
+            0.902,
+            0.718,
+            -0.815
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-blueprint",
+      "mirror": "x",
+      "look": {
+        "weight": 0.6,
+        "alpha": 0.5
+      }
+    },
+    {
+      "id": "rocker-trim",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.91,
+            0.51,
+            0.745
+          ],
+          [
+            0.91,
+            0.51,
+            -0.765
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-blueprint",
+      "mirror": "x",
+      "look": {
+        "weight": 0.8
+      }
+    },
+    {
+      "id": "running-board",
+      "role": "structure",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.13,
+          0.022,
+          1.5699999999999998
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 2,
+      "source": "ref-rear34",
+      "at": [
+        0.935,
+        0.459,
+        -0.02
+      ],
+      "mirror": "x",
+      "look": {
+        "fill": "dark",
+        "weight": 0.65,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "running-board-trim",
+      "role": "identity",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            1.0,
+            0.466,
+            0.765
+          ],
+          [
+            1.0,
+            0.466,
+            -0.805
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-rear34",
+      "mirror": "x",
+      "look": {
+        "weight": 1.1,
+        "glow": 0.3
+      }
+    },
+    {
+      "id": "mud-flap-front",
+      "role": "detail",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.2,
+          0.36,
+          0.008
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-rear34",
+      "at": [
+        0.755,
+        0.42,
+        0.895
+      ],
+      "mirror": "x",
+      "look": {
+        "fill": "dark",
+        "weight": 0.6,
+        "alpha": 0.55
+      }
+    },
+    {
+      "id": "mud-flap-rear",
+      "role": "detail",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.2,
+          0.36,
+          0.008
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-rear34",
+      "at": [
+        0.755,
+        0.42,
+        -1.835
+      ],
+      "mirror": "x",
+      "look": {
+        "fill": "dark",
+        "weight": 0.6,
+        "alpha": 0.55
+      }
+    },
+    {
+      "id": "door-front-seam",
+      "role": "identity",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.903,
+            1.246,
+            0.58
+          ],
+          [
+            0.903,
+            0.52,
+            0.58
+          ],
+          [
+            0.903,
+            0.52,
+            -0.47
+          ],
+          [
+            0.903,
+            1.246,
+            -0.47
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-blueprint",
+      "mirror": "x",
+      "look": {
+        "weight": 1.15,
+        "glow": 0.2
+      }
+    },
+    {
+      "id": "door-rear-seam",
+      "role": "identity",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.903,
+            1.246,
+            -0.51
+          ],
+          [
+            0.903,
+            0.52,
+            -0.51
+          ],
+          [
+            0.903,
+            0.52,
+            -0.82
+          ],
+          [
+            0.903,
+            0.62,
+            -0.9
+          ],
+          [
+            0.903,
+            0.86,
+            -1.12
+          ],
+          [
+            0.903,
+            0.9,
+            -1.3
+          ],
+          [
+            0.903,
+            1.246,
+            -1.3
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-blueprint",
+      "mirror": "x",
+      "look": {
+        "weight": 1.15,
+        "glow": 0.2
+      }
+    },
+    {
+      "id": "quarter-seam",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.903,
+            1.246,
+            -2.53
+          ],
+          [
+            0.903,
+            0.62,
+            -2.53
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-blueprint",
+      "mirror": "x",
+      "look": {
+        "weight": 0.7,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "handle-front",
+      "role": "detail",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.02,
+          0.035,
+          0.13
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-blueprint",
+      "at": [
+        0.91,
+        1.12,
+        -0.33
+      ],
+      "mirror": "x",
+      "look": {
+        "weight": 0.8
+      }
+    },
+    {
+      "id": "handle-rear",
+      "role": "detail",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.02,
+          0.035,
+          0.13
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-blueprint",
+      "at": [
+        0.91,
+        1.12,
+        -1.14
+      ],
+      "mirror": "x",
+      "look": {
+        "weight": 0.8
+      }
+    },
+    {
+      "id": "wing-vent-0",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.908,
+            0.88,
+            0.64
+          ],
+          [
+            0.908,
+            0.892,
+            0.73
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-front34",
+      "mirror": "x",
+      "look": {
+        "weight": 0.75,
+        "alpha": 0.75
+      }
+    },
+    {
+      "id": "wing-vent-1",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.908,
+            0.908,
+            0.652
+          ],
+          [
+            0.908,
+            0.92,
+            0.742
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-front34",
+      "mirror": "x",
+      "look": {
+        "weight": 0.75,
+        "alpha": 0.75
+      }
+    },
+    {
+      "id": "wing-vent-2",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.908,
+            0.936,
+            0.664
+          ],
+          [
+            0.908,
+            0.948,
+            0.754
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-front34",
+      "mirror": "x",
+      "look": {
+        "weight": 0.75,
+        "alpha": 0.75
+      }
+    },
+    {
+      "id": "wing-vent-3",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.908,
+            0.964,
+            0.676
+          ],
+          [
+            0.908,
+            0.976,
+            0.766
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-front34",
+      "mirror": "x",
+      "look": {
+        "weight": 0.75,
+        "alpha": 0.75
+      }
+    },
+    {
+      "id": "wing-vent-4",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.908,
+            0.992,
+            0.688
+          ],
+          [
+            0.908,
+            1.004,
+            0.778
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-front34",
+      "mirror": "x",
+      "look": {
+        "weight": 0.75,
+        "alpha": 0.75
+      }
+    },
+    {
+      "id": "wing-vent-5",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.908,
+            1.02,
+            0.7
+          ],
+          [
+            0.908,
+            1.032,
+            0.79
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-front34",
+      "mirror": "x",
+      "look": {
+        "weight": 0.75,
+        "alpha": 0.75
+      }
+    },
+    {
+      "id": "wing-vent-frame",
+      "role": "identity",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.908,
+            0.865,
+            0.625
+          ],
+          [
+            0.908,
+            0.865,
+            0.74
+          ],
+          [
+            0.908,
+            1.04,
+            0.81
+          ],
+          [
+            0.908,
+            1.04,
+            0.695
+          ]
+        ],
+        "closed": true
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-front34",
+      "mirror": "x",
+      "look": {
+        "weight": 1.0,
+        "glow": 0.2
+      }
+    },
+    {
+      "id": "wing-vent-recess",
+      "role": "detail",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.012,
+          0.17,
+          0.1
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-front34",
+      "at": [
+        0.901,
+        0.952,
+        0.717
+      ],
+      "rotate": [
+        22,
+        0,
+        0
+      ],
+      "mirror": "x",
+      "look": {
+        "fill": "dark",
+        "weight": 0.5,
+        "alpha": 0.5
+      }
+    },
+    {
+      "id": "pillar-vent-0",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.8627,
+            1.4,
+            -2.38
+          ],
+          [
+            0.8627,
+            1.4,
+            -2.455
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-rear34",
+      "mirror": "x",
+      "look": {
+        "weight": 0.7,
+        "alpha": 0.7
+      }
+    },
+    {
+      "id": "pillar-vent-1",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.8592,
+            1.428,
+            -2.38
+          ],
+          [
+            0.8592,
+            1.428,
+            -2.455
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-rear34",
+      "mirror": "x",
+      "look": {
+        "weight": 0.7,
+        "alpha": 0.7
+      }
+    },
+    {
+      "id": "pillar-vent-2",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.8557,
+            1.456,
+            -2.38
+          ],
+          [
+            0.8557,
+            1.456,
+            -2.455
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-rear34",
+      "mirror": "x",
+      "look": {
+        "weight": 0.7,
+        "alpha": 0.7
+      }
+    },
+    {
+      "id": "pillar-vent-3",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.8522,
+            1.484,
+            -2.38
+          ],
+          [
+            0.8522,
+            1.484,
+            -2.455
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-rear34",
+      "mirror": "x",
+      "look": {
+        "weight": 0.7,
+        "alpha": 0.7
+      }
+    },
+    {
+      "id": "pillar-vent-4",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.8487,
+            1.512,
+            -2.38
+          ],
+          [
+            0.8487,
+            1.512,
+            -2.455
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-rear34",
+      "mirror": "x",
+      "look": {
+        "weight": 0.7,
+        "alpha": 0.7
+      }
+    },
+    {
+      "id": "pillar-vent-5",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.8452,
+            1.54,
+            -2.38
+          ],
+          [
+            0.8452,
+            1.54,
+            -2.455
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-rear34",
+      "mirror": "x",
+      "look": {
+        "weight": 0.7,
+        "alpha": 0.7
+      }
+    },
+    {
+      "id": "pillar-vent-frame",
+      "role": "identity",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.8646,
+            1.385,
+            -2.37
+          ],
+          [
+            0.8646,
+            1.385,
+            -2.465
+          ],
+          [
+            0.8433,
+            1.555,
+            -2.465
+          ],
+          [
+            0.8433,
+            1.555,
+            -2.37
+          ]
+        ],
+        "closed": true
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-rear34",
+      "mirror": "x",
+      "look": {
+        "weight": 0.95,
+        "glow": 0.2
+      }
+    },
+    {
+      "id": "mirror-arm",
+      "role": "structure",
+      "shape": {
+        "type": "tube",
+        "path": [
+          [
+            0.86,
+            1.28,
+            0.38
+          ],
+          [
+            0.95,
+            1.3,
+            0.37
+          ],
+          [
+            1.0,
+            1.32,
+            0.36
+          ]
+        ],
+        "radius": 0.016,
+        "sides": 6
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-front34",
+      "mirror": "x"
+    },
+    {
+      "id": "mirror-head",
+      "role": "identity",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.07,
+          0.19,
+          0.15
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-front34",
+      "at": [
+        1.02,
+        1.38,
+        0.36
+      ],
+      "mirror": "x",
+      "look": {
+        "fill": "glass",
+        "weight": 1.0,
+        "glow": 0.3
+      }
+    },
+    {
+      "id": "fuel-door",
+      "role": "detail",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.008,
+          0.13,
+          0.15
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-blueprint",
+      "at": [
+        0.904,
+        1.0,
+        -1.85
+      ],
+      "look": {
+        "weight": 0.6,
+        "alpha": 0.5
+      }
+    },
+    {
+      "id": "tailgate-seam",
+      "role": "identity",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.77,
+            1.0,
+            -2.557
+          ],
+          [
+            0.77,
+            1.0,
+            -2.557
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "ref-rear34",
+      "look": {
+        "weight": 1.5,
+        "glow": 0.45
+      }
+    },
+    {
+      "id": "tailgate-seam-shadow",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.77,
+            0.988,
+            -2.555
+          ],
+          [
+            0.77,
+            0.988,
+            -2.555
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-rear34",
+      "look": {
+        "weight": 0.6,
+        "alpha": 0.5
+      }
+    },
+    {
+      "id": "liftgate-outline",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.77,
+            1.0,
+            -2.553
+          ],
+          [
+            -0.77,
+            1.48,
+            -2.519
+          ],
+          [
+            -0.72,
+            1.735,
+            -2.485
+          ],
+          [
+            0.72,
+            1.735,
+            -2.485
+          ],
+          [
+            0.77,
+            1.48,
+            -2.519
+          ],
+          [
+            0.77,
+            1.0,
+            -2.553
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "ref-rear34",
+      "look": {
+        "weight": 0.85
+      }
+    },
+    {
+      "id": "tailgate-outline",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.77,
+            0.99,
+            -2.553
+          ],
+          [
+            -0.77,
+            0.66,
+            -2.553
+          ],
+          [
+            0.77,
+            0.66,
+            -2.553
+          ],
+          [
+            0.77,
+            0.99,
+            -2.553
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "ref-rear34",
+      "look": {
+        "weight": 0.85
+      }
+    },
+    {
+      "id": "tailgate-strip",
+      "role": "identity",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.62,
+          0.045,
+          0.02
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-rear34",
+      "at": [
+        0,
+        0.94,
+        -2.563
+      ],
+      "look": {
+        "weight": 1.0,
+        "glow": 0.3
+      }
+    },
+    {
+      "id": "rear-badge-carrier",
+      "role": "detail",
+      "shape": {
+        "type": "plane",
+        "size": [
+          0.22,
+          0.03
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-rear34",
+      "at": [
+        0,
+        0.94,
+        -2.575
+      ],
+      "rotate": [
+        0,
+        180,
+        0
+      ],
+      "look": {
+        "line": "none",
+        "fill": "none"
+      }
+    },
+    {
+      "id": "plate-recess",
+      "role": "detail",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.36,
+          0.19,
+          0.015
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-rear34",
+      "at": [
+        0,
+        0.81,
+        -2.561
+      ],
+      "look": {
+        "fill": "dark",
+        "weight": 1.0,
+        "glow": 0.2
+      }
+    },
+    {
+      "id": "plate-frame",
+      "role": "identity",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.18,
+            0.715,
+            -2.5685
+          ],
+          [
+            0.18,
+            0.715,
+            -2.5685
+          ],
+          [
+            0.18,
+            0.905,
+            -2.5685
+          ],
+          [
+            -0.18,
+            0.905,
+            -2.5685
+          ]
+        ],
+        "closed": true
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-rear34",
+      "look": {
+        "weight": 1.1,
+        "glow": 0.25
+      }
+    },
+    {
+      "id": "badge-4wd-carrier",
+      "role": "detail",
+      "shape": {
+        "type": "plane",
+        "size": [
+          0.1,
+          0.04
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-rear34",
+      "at": [
+        -0.52,
+        0.86,
+        -2.5535
+      ],
+      "rotate": [
+        0,
+        180,
+        0
+      ],
+      "look": {
+        "line": "none",
+        "fill": "none"
+      }
+    },
+    {
+      "id": "tail-amber-l",
+      "role": "identity",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.125,
+          0.15,
+          0.016
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-rear34",
+      "at": [
+        0.8325,
+        1.11,
+        -2.552
+      ],
+      "look": {
+        "fill": "glass",
+        "weight": 1.2,
+        "glow": 0.45
+      }
+    },
+    {
+      "id": "tail-reverse-l",
+      "role": "identity",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.125,
+          0.09,
+          0.016
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-rear34",
+      "at": [
+        0.8325,
+        0.99,
+        -2.552
+      ],
+      "look": {
+        "fill": "glass",
+        "weight": 1.1,
+        "glow": 0.3
+      }
+    },
+    {
+      "id": "tail-lamp-l",
+      "role": "identity",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.125,
+          0.22,
+          0.016
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-rear34",
+      "at": [
+        0.8325,
+        0.835,
+        -2.552
+      ],
+      "look": {
+        "fill": "glass",
+        "weight": 1.3,
+        "glow": 0.65
+      }
+    },
+    {
+      "id": "tail-wrap-l",
+      "role": "identity",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.012,
+          0.46,
+          0.04
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-rear34",
+      "at": [
+        0.902,
+        0.955,
+        -2.53
+      ],
+      "look": {
+        "fill": "glass",
+        "weight": 1.0,
+        "glow": 0.45
+      }
+    },
+    {
+      "id": "tail-rib-l0",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.7775,
+            0.79,
+            -2.5605
+          ],
+          [
+            0.8875,
+            0.79,
+            -2.5605
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-rear34",
+      "look": {
+        "weight": 0.45,
+        "alpha": 0.4
+      }
+    },
+    {
+      "id": "tail-rib-l1",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.7775,
+            0.835,
+            -2.5605
+          ],
+          [
+            0.8875,
+            0.835,
+            -2.5605
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-rear34",
+      "look": {
+        "weight": 0.45,
+        "alpha": 0.4
+      }
+    },
+    {
+      "id": "tail-rib-l2",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.7775,
+            0.88,
+            -2.5605
+          ],
+          [
+            0.8875,
+            0.88,
+            -2.5605
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-rear34",
+      "look": {
+        "weight": 0.45,
+        "alpha": 0.4
+      }
+    },
+    {
+      "id": "tail-rib-l3",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.7775,
+            0.925,
+            -2.5605
+          ],
+          [
+            0.8875,
+            0.925,
+            -2.5605
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-rear34",
+      "look": {
+        "weight": 0.45,
+        "alpha": 0.4
+      }
+    },
+    {
+      "id": "side-marker-rear-l",
+      "role": "detail",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.012,
+          0.035,
+          0.09
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-rear34",
+      "at": [
+        0.905,
+        0.8,
+        -2.25
+      ],
+      "look": {
+        "fill": "glass",
+        "weight": 0.8,
+        "glow": 0.4
+      }
+    },
+    {
+      "id": "tail-amber-r",
+      "role": "identity",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.125,
+          0.15,
+          0.016
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-rear34",
+      "at": [
+        -0.8325,
+        1.11,
+        -2.552
+      ],
+      "look": {
+        "fill": "glass",
+        "weight": 1.2,
+        "glow": 0.45
+      }
+    },
+    {
+      "id": "tail-reverse-r",
+      "role": "identity",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.125,
+          0.09,
+          0.016
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-rear34",
+      "at": [
+        -0.8325,
+        0.99,
+        -2.552
+      ],
+      "look": {
+        "fill": "glass",
+        "weight": 1.1,
+        "glow": 0.3
+      }
+    },
+    {
+      "id": "tail-lamp-r",
+      "role": "identity",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.125,
+          0.22,
+          0.016
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-rear34",
+      "at": [
+        -0.8325,
+        0.835,
+        -2.552
+      ],
+      "look": {
+        "fill": "glass",
+        "weight": 1.3,
+        "glow": 0.65
+      }
+    },
+    {
+      "id": "tail-wrap-r",
+      "role": "identity",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.012,
+          0.46,
+          0.04
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-rear34",
+      "at": [
+        -0.902,
+        0.955,
+        -2.53
+      ],
+      "look": {
+        "fill": "glass",
+        "weight": 1.0,
+        "glow": 0.45
+      }
+    },
+    {
+      "id": "tail-rib-r0",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.7775,
+            0.79,
+            -2.5605
+          ],
+          [
+            -0.8875,
+            0.79,
+            -2.5605
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-rear34",
+      "look": {
+        "weight": 0.45,
+        "alpha": 0.4
+      }
+    },
+    {
+      "id": "tail-rib-r1",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.7775,
+            0.835,
+            -2.5605
+          ],
+          [
+            -0.8875,
+            0.835,
+            -2.5605
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-rear34",
+      "look": {
+        "weight": 0.45,
+        "alpha": 0.4
+      }
+    },
+    {
+      "id": "tail-rib-r2",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.7775,
+            0.88,
+            -2.5605
+          ],
+          [
+            -0.8875,
+            0.88,
+            -2.5605
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-rear34",
+      "look": {
+        "weight": 0.45,
+        "alpha": 0.4
+      }
+    },
+    {
+      "id": "tail-rib-r3",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.7775,
+            0.925,
+            -2.5605
+          ],
+          [
+            -0.8875,
+            0.925,
+            -2.5605
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-rear34",
+      "look": {
+        "weight": 0.45,
+        "alpha": 0.4
+      }
+    },
+    {
+      "id": "side-marker-rear-r",
+      "role": "detail",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.012,
+          0.035,
+          0.09
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-rear34",
+      "at": [
+        -0.905,
+        0.8,
+        -2.25
+      ],
+      "look": {
+        "fill": "glass",
+        "weight": 0.8,
+        "glow": 0.4
+      }
+    },
+    {
+      "id": "rear-wiper",
+      "role": "detail",
+      "shape": {
+        "type": "tube",
+        "path": [
+          [
+            0.0,
+            1.31,
+            -2.573
+          ],
+          [
+            0.18,
+            1.36,
+            -2.568
+          ],
+          [
+            0.42,
+            1.42,
+            -2.553
+          ]
+        ],
+        "radius": 0.007,
+        "sides": 4
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-rear34",
+      "look": {
+        "weight": 0.6,
+        "alpha": 0.5
+      }
+    },
+    {
+      "id": "quarter-script-carrier",
+      "role": "detail",
+      "shape": {
+        "type": "plane",
+        "size": [
+          0.3,
+          0.04
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-rear34",
+      "at": [
+        0.902,
+        1.12,
+        -1.75
+      ],
+      "rotate": [
+        0,
+        90,
+        0
+      ],
+      "look": {
+        "line": "none",
+        "fill": "none"
+      }
+    },
+    {
+      "id": "wiper--55",
+      "role": "detail",
+      "shape": {
+        "type": "tube",
+        "path": [
+          [
+            -0.55,
+            1.29,
+            0.5599999999999999
+          ],
+          [
+            -0.30000000000000004,
+            1.31,
+            0.5399999999999999
+          ],
+          [
+            -0.050000000000000044,
+            1.33,
+            0.52
+          ]
+        ],
+        "radius": 0.007,
+        "sides": 4
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-front34",
+      "look": {
+        "weight": 0.6,
+        "alpha": 0.5
+      }
+    },
+    {
+      "id": "wiper-5",
+      "role": "detail",
+      "shape": {
+        "type": "tube",
+        "path": [
+          [
+            0.05,
+            1.29,
+            0.5599999999999999
+          ],
+          [
+            0.3,
+            1.31,
+            0.5399999999999999
+          ],
+          [
+            0.55,
+            1.33,
+            0.52
+          ]
+        ],
+        "radius": 0.007,
+        "sides": 4
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-front34",
+      "look": {
+        "weight": 0.6,
+        "alpha": 0.5
+      }
+    },
+    {
+      "id": "cowl-vent",
+      "role": "detail",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.6,
+            1.275,
+            0.62
+          ],
+          [
+            0.6,
+            1.275,
+            0.62
+          ]
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-blueprint",
+      "look": {
+        "weight": 0.6,
+        "alpha": 0.5
+      }
+    },
+    {
+      "id": "steering-wheel",
+      "role": "detail",
+      "shape": {
+        "type": "torus",
+        "major": 0.19,
+        "minor": 0.015,
+        "segments": 24,
+        "sides": 4,
+        "rings": 1
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-blueprint",
+      "at": [
+        0.38,
+        1.36,
+        0.12
+      ],
+      "rotate": [
+        60,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.45,
+        "alpha": 0.3
+      }
+    },
+    {
+      "id": "seat-front",
+      "role": "detail",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.5,
+          0.7,
+          0.14
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-blueprint",
+      "at": [
+        0.38,
+        1.1,
+        -0.55
+      ],
+      "rotate": [
+        -12,
+        0,
+        0
+      ],
+      "mirror": "x",
+      "look": {
+        "weight": 0.45,
+        "alpha": 0.3
+      }
+    },
+    {
+      "id": "seat-rear",
+      "role": "detail",
+      "shape": {
+        "type": "box",
+        "size": [
+          1.4,
+          0.66,
+          0.14
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-blueprint",
+      "at": [
+        0,
+        1.08,
+        -1.45
+      ],
+      "rotate": [
+        -10,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.45,
+        "alpha": 0.3
+      }
+    },
+    {
+      "id": "dash",
+      "role": "detail",
+      "shape": {
+        "type": "box",
+        "size": [
+          1.6,
+          0.18,
+          0.3
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 4,
+      "source": "ref-blueprint",
+      "at": [
+        0,
+        1.2,
+        0.35
+      ],
+      "look": {
+        "weight": 0.45,
+        "alpha": 0.3
+      }
+    },
+    {
+      "id": "antenna",
+      "role": "detail",
+      "shape": {
+        "type": "tube",
+        "path": [
+          [
+            -0.86,
+            1.24,
+            0.45
+          ],
+          [
+            -0.86,
+            1.9,
+            0.36
+          ]
+        ],
+        "radius": 0.004,
+        "sides": 3
+      },
+      "certainty": "inferred",
+      "stage": 5,
+      "source": "ref-front34",
+      "look": {
+        "weight": 0.6,
+        "alpha": 0.5
+      }
+    },
+    {
+      "id": "liftgate-panel",
+      "role": "structure",
+      "shape": {
+        "type": "extrude",
+        "profile": [
+          [
+            -2.557,
+            1.0
+          ],
+          [
+            -2.523,
+            1.48
+          ],
+          [
+            -2.489,
+            1.735
+          ],
+          [
+            -2.479,
+            1.735
+          ],
+          [
+            -2.513,
+            1.48
+          ],
+          [
+            -2.547,
+            1.0
+          ]
+        ],
+        "axis": "x",
+        "height": 1.54
+      },
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "ref-rear34",
+      "at": [
+        -0.77,
+        0,
+        0
+      ],
+      "look": {
+        "fill": "dark",
+        "weight": 0.45,
+        "alpha": 0.5
+      }
+    },
+    {
+      "id": "dropgate-panel",
+      "role": "structure",
+      "shape": {
+        "type": "box",
+        "size": [
+          1.54,
+          0.32999999999999996,
+          0.01
+        ]
+      },
+      "certainty": "inferred",
+      "stage": 3,
+      "source": "ref-rear34",
+      "at": [
+        0,
+        0.835,
+        -2.552
+      ],
+      "look": {
+        "fill": "dark",
+        "weight": 0.45,
+        "alpha": 0.5
+      }
+    }
+  ],
+  "articulations": [
+    {
+      "id": "tailgate-down",
+      "type": "hinge",
+      "parts": [
+        "tailgate-outline",
+        "tailgate-strip",
+        "rear-badge-carrier",
+        "plate-recess",
+        "tailgate-seam-shadow",
+        "dropgate-panel",
+        "plate-frame",
+        "badge-4wd-carrier"
+      ],
+      "axis": [
+        -1,
+        0,
+        0
+      ],
+      "pivot": [
+        0,
+        0.66,
+        -2.553
+      ],
+      "amount": 85,
+      "order": 0
+    }
+  ],
+  "labels": [
+    {
+      "id": "grille-toyota",
+      "part": "badge-carrier",
+      "face": "front",
+      "field": "grille-badge",
+      "role": "meta",
+      "orientation": "horizontal"
+    },
+    {
+      "id": "tailgate-toyota",
+      "part": "rear-badge-carrier",
+      "face": "front",
+      "field": "tailgate-badge",
+      "role": "meta",
+      "orientation": "horizontal"
+    },
+    {
+      "id": "badge-4wd",
+      "part": "badge-4wd-carrier",
+      "face": "front",
+      "field": "rear-badge-4wd",
+      "role": "meta",
+      "orientation": "horizontal"
+    },
+    {
+      "id": "quarter-script",
+      "part": "quarter-script-carrier",
+      "face": "front",
+      "field": "quarter-script",
+      "role": "meta",
+      "orientation": "horizontal"
+    }
+  ],
+  "anchors": {},
+  "annotations": [
+    {
+      "id": "evidence",
+      "text": "Approximate: blueprint-traced profile, photo details",
+      "part": "roof",
+      "offset": [
+        0,
+        0.2,
+        0
+      ]
+    }
+  ],
+  "presentation": {
+    "framing": {
+      "yaw": 36,
+      "pitch": 9,
+      "fit": 1.04
+    },
+    "views": [
+      {
+        "id": "nose-detail",
+        "label": "Quad rectangular headlamps and grille",
+        "yaw": 22,
+        "pitch": 6,
+        "distance": 1.6,
+        "target": "grille"
+      },
+      {
+        "id": "side",
+        "label": "Traced side elevation",
+        "yaw": 90,
+        "pitch": 0,
+        "distance": 1.0
+      },
+      {
+        "id": "front-three-quarter",
+        "label": "Front three-quarter (as ref-front34)",
+        "yaw": 34,
+        "pitch": 5,
+        "distance": 1.0
+      },
+      {
+        "id": "rear-three-quarter",
+        "label": "Rear three-quarter (as ref-rear34)",
+        "yaw": 142,
+        "pitch": 6,
+        "distance": 1.0
+      },
+      {
+        "id": "rear-detail",
+        "label": "Split tailgate and vertical lamps",
+        "yaw": 150,
+        "pitch": 12,
+        "distance": 1.0
+      },
+      {
+        "id": "open",
+        "label": "Drop gate lowered",
+        "yaw": 155,
+        "pitch": 14,
+        "distance": 1.0
+      }
+    ],
+    "atmosphere": {
+      "haze": 0.25,
+      "grid": true,
+      "projector": false,
+      "motes": 0.05,
+      "scanlines": false,
+      "vignette": true
+    },
+    "occlusion": "xray",
+    "certainty_style": "subtle",
+    "background": "deep",
+    "float": 0,
+    "still_pose": "closed"
+  },
+  "animation": {
+    "assembly": {
+      "style": "build",
+      "seconds": 8,
+      "interference": true
+    },
+    "idle": {
+      "life": "alive",
+      "events": [
+        "scan",
+        "sweep",
+        "shimmer"
+      ],
+      "cadence": [
+        6,
+        10
+      ],
+      "strength": 0.45
+    },
+    "camera": {
+      "drift": 3,
+      "breathe": 0.01,
+      "tour": [
+        {
+          "view": "nose-detail",
+          "at": 10,
+          "fly": 2.5
+        },
+        {
+          "view": "open",
+          "at": 17,
+          "fly": 3
+        },
+        {
+          "view": "hero",
+          "at": 25,
+          "fly": 3
+        }
+      ]
+    },
+    "reduced_motion": "still"
+  },
+  "authoring": {
+    "tier": "masterpiece",
+    "research": "done",
+    "sources": [
+      "specs-oulu",
+      "specs-tlc",
+      "ref-blueprint",
+      "ref-front34",
+      "ref-rear34"
+    ],
+    "review_rounds": 11,
+    "outcome": "self-reviewed",
+    "next": [
+      "independent critic rounds"
+    ],
+    "identity": [
+      {
+        "feature": "Boxy upright 60-series wagon: long flat bonnet, near-vertical side glass, flat roof with drip rails, long rear overhang",
+        "parts": [
+          "body",
+          "glasshouse",
+          "roof",
+          "bonnet",
+          "front-wing",
+          "drip-rail"
+        ]
+      },
+      {
+        "feature": "FJ62 face: quad rectangular headlamps in chrome bezels either side of a horizontal-bar grille with TOYOTA lettering, amber turn lamps below",
+        "parts": [
+          "headlamp-inner-l",
+          "headlamp-outer-l",
+          "face-surround",
+          "grille",
+          "grille-bar-0",
+          "turn-lamp-l"
+        ]
+      },
+      {
+        "feature": "Squared flared wheel arches, the front flare sweeping back to the door, with waist and lower creases along the flanks",
+        "parts": [
+          "flare-front",
+          "flare-rear",
+          "waist-crease",
+          "lower-crease"
+        ]
+      },
+      {
+        "feature": "Four doors plus rear quarter windows; split tailgate (lift glass over drop gate) with tall corner tail lamps",
+        "parts": [
+          "win-front-door",
+          "win-rear-door",
+          "win-quarter",
+          "liftgate-glass",
+          "tailgate-seam",
+          "tail-lamp-l"
+        ]
+      },
+      {
+        "feature": "Chrome bumpers with black end caps, square chrome door mirrors, six-lug steel wheels",
+        "parts": [
+          "bumper-front",
+          "bumper-rear",
+          "mirror-head",
+          "rim-front",
+          "lug-front"
+        ]
+      }
+    ],
+    "critic": {
+      "scene_sha256": "a5e5a80857d7074e66afd574b330a0e7948f199814825e6ead097f15b8ffc1e6",
+      "verdict": "improve",
+      "scores": {
+        "silhouette": 2,
+        "proportions": 2,
+        "identity": 2,
+        "depth": 2,
+        "composition": 2,
+        "assembly": 3,
+        "motion": 2,
+        "density": 2,
+        "honesty": 3
+      },
+      "round": 1,
+      "defects": 7
+    }
+  }
+}

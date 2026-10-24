@@ -1,0 +1,433 @@
+{
+  "format": "tessera-hologram",
+  "version": 2,
+  "id": "s1-cliff",
+  "title": "The Last Light — sea cliff at dusk",
+  "subject": {
+    "category": "architecture",
+    "accuracy": "generic",
+    "synthetic": false,
+    "summary": "A roughly 60 m sea cliff carries an edge-set lighthouse above a recessed switchback stair and breaking surf. A sweeping lantern beam crowns a rugged, jointed headland. This is a designed generic interpretation of a real request, not a surveyed place: only the requested features and approximate cliff height are supplied; rock geometry, tower, stair layout, sea state and light timing are inferred. Twilight embellishments are decorative."
+  },
+  "units": "m",
+  "seed": 6019,
+  "sources": [
+    {
+      "id": "request",
+      "kind": "user_request",
+      "title": "Public showcase: a sea cliff at dusk",
+      "rights": "user_private",
+      "ref": "A sea cliff at dusk: a tall rock headland with a lighthouse at its edge whose beam sweeps the sea, a stair cut into the rock, and waves breaking at the base. About 60 m from the water to the top of the cliff."
+    },
+    {
+      "id": "design",
+      "kind": "generated",
+      "title": "Scene author's generic spatial interpretation; no survey, real station or measured sea state is asserted",
+      "rights": "permitted",
+      "ref": "Original declarative geometry and staging, designed for this request. No external artwork, photographs or authentic station characteristics are used."
+    }
+  ],
+  "facts": [
+    {"key": "setting", "value": "A tall rock headland in the sea at dusk", "certainty": "user_supplied", "source": "request"},
+    {"key": "cliff.height", "value": 60, "unit": "m", "certainty": "user_supplied", "source": "request", "note": "User said about 60 m from water to cliff top. Water is y=0; the summit is y=60. This does not include the lighthouse and is not a surveyed elevation."},
+    {"key": "lighthouse", "value": "A lighthouse at the edge, with its beam sweeping the sea", "certainty": "user_supplied", "source": "request"},
+    {"key": "stair", "value": "A stair cut into the rock", "certainty": "user_supplied", "source": "request"},
+    {"key": "surf", "value": "Waves breaking at the base", "certainty": "user_supplied", "source": "request"},
+    {"key": "headland.design", "value": "An approximately 80 m wide, 50 m deep faceted promontory with a broad rear spine, steep fractured shoulders and a wave-cut apron", "certainty": "inferred", "source": "design", "note": "Chosen proportions, not a particular coastline or geological formation. The main silhouette rises to 60 m above the water datum."},
+    {"key": "cliff.design", "value": "Four diagonal rock-cut recesses, irregular shoulder facets and sparse joint traces", "certainty": "inferred", "source": "design", "note": "Front rock is explicitly split around the stair openings; the stair is not just a line drawn across a solid face. Joints are designed, not identified strata."},
+    {"key": "tower.design", "value": "A tapered 20 m masonry shaft on the 60 m summit, with a gallery, glazed lantern and conical cap; total structure about 27 m above the cliff", "certainty": "inferred", "source": "design", "note": "Base radius 3.6 m. Tower centre x=20, z=2, on the outer headland. Its dimensions and architecture were not provided."},
+    {"key": "stair.design", "value": "Four alternating 15 m rises with 60 steps each, 3.6 m clear depth and end landings; nominal rise 0.25 m and run about 0.73 m", "certainty": "inferred", "source": "design", "note": "A designed coastal stair with deep treads for a legible winding descent. Not a measured stair, accessible route or building-code claim. Low stone parapets follow the exposed edge."},
+    {"key": "light.design", "value": "One visible diverging beam rotates about the lantern at 2.5 rpm; beam geometry is truncated for the display", "certainty": "inferred", "source": "design", "note": "A 24 s rotation and an 8 degree downward display inclination are design choices, not a real navigational characteristic. The depicted cone is visible air above the sea, not a water-contact ray or claimed visibility range."},
+    {"key": "wave.design", "value": "Three offset approaching breakers, curled lips, foam wash and spray around a low rock apron", "certainty": "inferred", "source": "design", "note": "Small phase-offset translations and crest bobbing suggest incoming, breaking water. Periods, amplitudes and geometry are presentation-scale estimates, not a fluid simulation or measured tide."},
+    {"key": "twilight.design", "value": "Sparse early stars, thin horizon afterglow and two distant cloud ribbons", "certainty": "decorative", "source": "design", "note": "Atmosphere only; no date, position of the sun, constellation or weather observation is implied. The renderer owns colour."},
+    {"key": "height.caption", "value": "ABOUT 60 m / WATER TO CLIFF TOP", "certainty": "user_supplied", "source": "request", "note": "Approximate supplied height, not the height including the tower."},
+    {"key": "scene.caption", "value": "SEA CLIFF AT DUSK", "certainty": "user_supplied", "source": "request"},
+    {"key": "reconstruction.caption", "value": "GENERIC INTERPRETATION / DESIGNED DETAILS", "certainty": "inferred", "source": "design", "note": "Public-showcase disclosure, not a real location name."},
+    {"key": "composition.design", "value": "Silhouette: a tall crag with a small crown of lighthouse against open water. Identity: tapering tower with glazed lantern and sweeping beam; a four-flight recessed rock stair; curled surf at the foot. Assemble water and reef, rock spine, cut-face structure, stairs, tower, lantern, surf, then light and atmosphere.", "certainty": "inferred", "source": "design", "note": "Recognition and stage plan. Stone remains fixed; only optic, beam, water and spray move. No one-shot opening is appropriate. Captures and visual rendering are intentionally omitted at the user's instruction; geometric checking is a separate gate."}
+  ],
+  "assets": [],
+  "parts": [
+    {
+      "id": "sea-datum", "label": "Water datum and cropped sea", "role": "ground", "certainty": "inferred", "stage": 0,
+      "basis": ["setting", "wave.design"],
+      "shape": {"type": "extrude", "axis": "y", "height": 0.35, "profile": [[-63,-27],[-45,-40],[32,-40],[62,-22],[68,12],[61,51],[36,62],[-30,62],[-62,44],[-68,9]]},
+      "at": [0,-0.35,0], "look": {"fill": "glass", "alpha": 0.22}
+    },
+    {
+      "id": "intertidal-apron", "label": "Wave-cut rock apron", "role": "mass", "certainty": "inferred", "stage": 0,
+      "basis": ["headland.design", "cliff.height"],
+      "shape": {"type": "extrude", "axis": "y", "height": 3.4, "profile": [[-48,-9],[-40,-26],[-16,-34],[18,-30],[38,-15],[42,4],[37,20],[24,25],[13,23],[4,28],[-12,25],[-28,29],[-41,22],[-49,10]]},
+      "at": [0,-3.0,0], "look": {"alpha": 0.75}
+    },
+    {
+      "id": "rear-headland", "label": "Sixty-metre rock spine", "role": "mass", "certainty": "inferred", "stage": 1,
+      "basis": ["cliff.height", "headland.design"],
+      "shape": {"type": "extrude", "axis": "z", "height": 43, "profile": [[-40,-2],[35,-2],[35,9],[31,22],[32,35],[29,48],[28,57],[24,60],[-26,60],[-34,53],[-37,37],[-35,23],[-41,10]]},
+      "at": [0,0,-31], "look": {"fill": "glass", "alpha": 0.76},
+      "note": "The rear spine ends at z=12. Front face wedges end at z=17.5, leaving genuine diagonal recesses for the stairs."
+    },
+    {
+      "id": "western-buttress", "label": "Fractured west shoulder", "role": "mass", "certainty": "inferred", "stage": 1,
+      "basis": ["headland.design", "cliff.design"],
+      "shape": {"type": "extrude", "axis": "z", "height": 27, "profile": [[-47,-1],[-32,-1],[-29,13],[-31,29],[-28,45],[-29,55],[-33,58],[-37,48],[-36,35],[-41,26],[-40,13],[-46,8]]},
+      "at": [0,0,-9], "look": {"alpha": 0.83}
+    },
+    {
+      "id": "outer-prow", "label": "Lighthouse headland prow", "role": "mass", "certainty": "inferred", "stage": 1,
+      "basis": ["headland.design", "cliff.design", "lighthouse"],
+      "shape": {"type": "extrude", "axis": "z", "height": 29, "profile": [[25,-1],[40,-1],[39,8],[35,18],[36,29],[33,41],[31,49],[29,58],[25,60],[24,48],[27,34],[25,17]]},
+      "at": [0,0,-14], "look": {"alpha": 0.88}
+    },
+    {
+      "id": "left-reef-fang", "label": "Low fractured reef", "role": "structure", "certainty": "inferred", "stage": 1,
+      "basis": ["headland.design"],
+      "shape": {"type": "extrude", "axis": "z", "height": 7, "profile": [[-44,0],[-33,0],[-34,4],[-38,6],[-41,4]]}, "at": [0,0,20]
+    },
+    {
+      "id": "right-reef-fang", "role": "structure", "certainty": "inferred", "stage": 1,
+      "basis": ["headland.design"],
+      "shape": {"type": "extrude", "axis": "z", "height": 8, "profile": [[29,0],[41,0],[39,4],[35,7],[31,5]]}, "at": [0,0,20]
+    },
+    {
+      "id": "cut-1-below", "label": "Rock below the first flight", "role": "mass", "certainty": "inferred", "stage": 2,
+      "basis": ["stair", "cliff.design"],
+      "shape": {"type": "extrude", "axis": "z", "height": 5.5, "profile": [[-22.68,0],[28,0],[28,15],[21.32,15]]}, "at": [0,0,12]
+    },
+    {
+      "id": "cut-1-above", "role": "mass", "certainty": "inferred", "stage": 2, "basis": ["stair", "cliff.design"],
+      "shape": {"type": "extrude", "axis": "z", "height": 5.5, "profile": [[-32,0.072727],[-32,15],[11.786667,15]]}, "at": [0,0,12]
+    },
+    {
+      "id": "cut-2-below", "role": "mass", "certainty": "inferred", "stage": 2, "basis": ["stair", "cliff.design"],
+      "shape": {"type": "extrude", "axis": "z", "height": 5.5, "profile": [[-32,15],[18.68,15],[-25.32,30],[-32,30]]}, "at": [0,0,12]
+    },
+    {
+      "id": "cut-2-above", "role": "mass", "certainty": "inferred", "stage": 2, "basis": ["stair", "cliff.design"],
+      "shape": {"type": "extrude", "axis": "z", "height": 5.5, "profile": [[28,15.072727],[28,30],[-15.786667,30]]}, "at": [0,0,12]
+    },
+    {
+      "id": "cut-3-below", "role": "mass", "certainty": "inferred", "stage": 2, "basis": ["stair", "cliff.design"],
+      "shape": {"type": "extrude", "axis": "z", "height": 5.5, "profile": [[-22.68,30],[28,30],[28,45],[21.32,45]]}, "at": [0,0,12]
+    },
+    {
+      "id": "cut-3-above", "role": "mass", "certainty": "inferred", "stage": 2, "basis": ["stair", "cliff.design"],
+      "shape": {"type": "extrude", "axis": "z", "height": 5.5, "profile": [[-32,30.072727],[-32,45],[11.786667,45]]}, "at": [0,0,12]
+    },
+    {
+      "id": "cut-4-below", "role": "mass", "certainty": "inferred", "stage": 2, "basis": ["stair", "cliff.design"],
+      "shape": {"type": "extrude", "axis": "z", "height": 5.5, "profile": [[-32,45],[18.68,45],[-25.32,60],[-26,60],[-32,55]]}, "at": [0,0,12]
+    },
+    {
+      "id": "cut-4-above", "role": "mass", "certainty": "inferred", "stage": 2, "basis": ["stair", "cliff.design"],
+      "shape": {"type": "extrude", "axis": "z", "height": 5.5, "profile": [[28,45.072727],[28,57],[24,60],[-15.786667,60]]}, "at": [0,0,12]
+    },
+    {
+      "id": "stair-flight-1", "label": "Recessed stair, lower ascent", "role": "identity", "certainty": "inferred", "stage": 3,
+      "basis": ["stair", "stair.design", "cliff.height"],
+      "shape": {"type": "box", "size": [0.74,0.7,3.6]}, "at": [-23.633333,-0.1,15.8],
+      "repeat": {"count": 60, "step": {"at": [0.7333333333333333,0.25,0]}},
+      "note": "Tread tops start at 0.25 m and finish at 15 m. The cut-face wedges stop below the tread undersides and above the head clearance."
+    },
+    {
+      "id": "stair-flight-2", "label": "Recessed stair, second ascent", "role": "identity", "certainty": "inferred", "stage": 3,
+      "basis": ["stair", "stair.design", "cliff.height"],
+      "shape": {"type": "box", "size": [0.74,0.7,3.6]}, "at": [19.633333,14.9,15.8],
+      "repeat": {"count": 60, "step": {"at": [-0.7333333333333333,0.25,0]}}
+    },
+    {
+      "id": "stair-flight-3", "label": "Recessed stair, third ascent", "role": "identity", "certainty": "inferred", "stage": 3,
+      "basis": ["stair", "stair.design", "cliff.height"],
+      "shape": {"type": "box", "size": [0.74,0.7,3.6]}, "at": [-23.633333,29.9,15.8],
+      "repeat": {"count": 60, "step": {"at": [0.7333333333333333,0.25,0]}}
+    },
+    {
+      "id": "stair-flight-4", "label": "Recessed stair, summit ascent", "role": "identity", "certainty": "inferred", "stage": 3,
+      "basis": ["stair", "stair.design", "cliff.height"],
+      "shape": {"type": "box", "size": [0.74,0.7,3.6]}, "at": [19.633333,44.9,15.8],
+      "repeat": {"count": 60, "step": {"at": [-0.7333333333333333,0.25,0]}}
+    },
+    {
+      "id": "stair-foot-landing", "role": "structure", "certainty": "inferred", "stage": 3, "basis": ["stair.design"],
+      "shape": {"type": "box", "size": [4.5,0.7,4.2]}, "at": [-26.2,-0.35,15.5]
+    },
+    {
+      "id": "east-switchback-landings", "role": "structure", "certainty": "inferred", "stage": 3, "basis": ["stair.design"],
+      "shape": {"type": "box", "size": [4.6,0.7,4.2]}, "at": [22.2,14.65,15.5],
+      "repeat": {"count": 2, "step": {"at": [0,30,0]}}
+    },
+    {
+      "id": "west-middle-landing", "role": "structure", "certainty": "inferred", "stage": 3, "basis": ["stair.design"],
+      "shape": {"type": "box", "size": [4.6,0.7,4.2]}, "at": [-26.2,29.65,15.5]
+    },
+    {
+      "id": "summit-landing", "role": "structure", "certainty": "inferred", "stage": 3, "basis": ["stair.design"],
+      "shape": {"type": "box", "size": [4.6,0.7,7.2]}, "at": [-26.2,59.65,14]
+    },
+    {
+      "id": "stair-parapet-1", "label": "Continuous cut-stone stair parapet", "role": "structure", "certainty": "inferred", "stage": 3,
+      "basis": ["stair.design"],
+      "shape": {"type": "extrude", "axis": "z", "height": 0.3, "profile": [[-24,0], [20,15], [20,15.95], [-24,0.95]]}, "at": [0,0,17.25]
+    },
+    {
+      "id": "stair-parapet-2", "role": "structure", "certainty": "inferred", "stage": 3, "basis": ["stair.design"],
+      "shape": {"type": "extrude", "axis": "z", "height": 0.3, "profile": [[20,15],[-24,30],[-24,30.95],[20,15.95]]}, "at": [0,0,17.25]
+    },
+    {
+      "id": "stair-parapet-3", "role": "structure", "certainty": "inferred", "stage": 3, "basis": ["stair.design"],
+      "shape": {"type": "extrude", "axis": "z", "height": 0.3, "profile": [[-24,30],[20,45],[20,45.95],[-24,30.95]]}, "at": [0,0,17.25]
+    },
+    {
+      "id": "stair-parapet-4", "role": "structure", "certainty": "inferred", "stage": 3, "basis": ["stair.design"],
+      "shape": {"type": "extrude", "axis": "z", "height": 0.3, "profile": [[20,45],[-24,60],[-24,60.95],[20,45.95]]}, "at": [0,0,17.25]
+    },
+    {
+      "id": "western-joint", "label": "Designed rock fracture", "role": "detail", "certainty": "inferred", "stage": 3, "basis": ["cliff.design"],
+      "shape": {"type": "curve", "points": [[-39,4,18.1],[-37,13,18.1],[-38.2,22,18.1],[-34.5,30,18.1],[-35.8,40,18.1],[-32,52,18.1]]}
+    },
+    {
+      "id": "prow-joint", "role": "detail", "certainty": "inferred", "stage": 3, "basis": ["cliff.design"],
+      "shape": {"type": "curve", "points": [[35,3,15.1],[32.4,12,15.1],[33,23,15.1],[30,32,15.1],[31.2,42,15.1],[28.5,55,15.1]]}
+    },
+    {
+      "id": "back-joint", "role": "detail", "certainty": "inferred", "stage": 3, "basis": ["cliff.design"],
+      "shape": {"type": "curve", "points": [[-18,2,-31.1],[-15,17,-31.1],[-17,30,-31.1],[-13,45,-31.1],[-15,60,-31.1]]}
+    },
+    {
+      "id": "summit-track", "label": "Path from stair to tower", "role": "structure", "certainty": "inferred", "stage": 3,
+      "basis": ["stair.design", "tower.design"],
+      "shape": {"type": "curve", "smooth": true, "points": [[-26,60.06,12],[-22,60.06,8],[-12,60.06,6],[-1,60.06,9],[10,60.06,7],[17,60.06,4.5]]}
+    },
+    {
+      "id": "summit-path-edge", "role": "detail", "certainty": "inferred", "stage": 3, "basis": ["stair.design", "tower.design"],
+      "shape": {"type": "curve", "smooth": true, "points": [[-24,60.08,13],[-21,60.08,10],[-12,60.08,8],[-1,60.08,11],[10,60.08,9],[18,60.08,6.2]]}
+    },
+    {
+      "id": "tower-footing", "label": "Edge-set tower foundation", "role": "structure", "certainty": "inferred", "stage": 4,
+      "basis": ["tower.design", "cliff.height"],
+      "shape": {"type": "cylinder", "radius": 4.25, "height": 0.6, "segments": 24, "ribs": 0}, "at": [20,60,2]
+    },
+    {
+      "id": "tower-shaft", "label": "Tapered lighthouse tower", "role": "mass", "certainty": "inferred", "stage": 4,
+      "basis": ["lighthouse", "tower.design"],
+      "shape": {"type": "lathe", "segments": 32, "meridians": 8, "profile": [[3.6,0],[3.55,1.5],[3.25,5],[3.02,9],[2.8,13],[2.56,17],[2.48,19.4]]}, "at": [20,60.6,2]
+    },
+    {
+      "id": "tower-belt-low", "role": "structure", "certainty": "inferred", "stage": 4, "basis": ["tower.design"],
+      "shape": {"type": "lathe", "segments": 32, "meridians": 4, "profile": [[3.28,0],[3.2,1.3]]}, "at": [20,65.6,2]
+    },
+    {
+      "id": "tower-belt-high", "role": "structure", "certainty": "inferred", "stage": 4, "basis": ["tower.design"],
+      "shape": {"type": "lathe", "segments": 32, "meridians": 4, "profile": [[2.83,0],[2.75,1.3]]}, "at": [20,73.6,2]
+    },
+    {
+      "id": "tower-entrance", "label": "Tall entrance reveal", "role": "detail", "certainty": "inferred", "stage": 4,
+      "basis": ["tower.design"],
+      "shape": {"type": "plane", "size": [1.6,3.2]}, "at": [20,62.4,5.5]
+    },
+    {
+      "id": "tower-window-low", "role": "detail", "certainty": "inferred", "stage": 4, "basis": ["tower.design"],
+      "shape": {"type": "plane", "size": [1.0,3.5]}, "at": [20,69.7,5.03]
+    },
+    {
+      "id": "tower-window-high", "role": "detail", "certainty": "inferred", "stage": 4, "basis": ["tower.design"],
+      "shape": {"type": "plane", "size": [1.0,3.5]}, "at": [22.2,76.1,3.27], "rotate": [0,60,0]
+    },
+    {
+      "id": "gallery-corbelling", "label": "Flared gallery corbel", "role": "structure", "certainty": "inferred", "stage": 5,
+      "basis": ["tower.design"],
+      "shape": {"type": "lathe", "segments": 32, "meridians": 8, "profile": [[2.48,0],[2.65,0.25],[3.15,0.65],[3.95,1.05],[4.2,1.2]]}, "at": [20,78.8,2]
+    },
+    {
+      "id": "gallery-deck", "label": "Circular lighthouse gallery", "role": "identity", "certainty": "inferred", "stage": 5,
+      "basis": ["tower.design", "lighthouse"],
+      "shape": {"type": "cylinder", "radius": 4.35, "height": 0.35, "segments": 32, "ribs": 0}, "at": [20,80,2]
+    },
+    {
+      "id": "gallery-guard", "label": "Gallery guard with radial uprights", "role": "structure", "certainty": "inferred", "stage": 5,
+      "basis": ["tower.design"],
+      "shape": {"type": "cylinder", "radius": 4.15, "height": 1.2, "segments": 32, "ribs": 12, "rings": 0, "caps": false}, "at": [20,80.35,2], "look": {"fill": "none"}
+    },
+    {
+      "id": "lantern-room", "label": "Eight-bay glazed lantern", "role": "identity", "certainty": "inferred", "stage": 5,
+      "basis": ["lighthouse", "tower.design"],
+      "shape": {"type": "cylinder", "radius": 2.45, "height": 3.5, "segments": 24, "ribs": 8, "rings": 1, "caps": false}, "at": [20,80.35,2],
+      "look": {"fill": "glass", "alpha": 0.72}
+    },
+    {
+      "id": "lantern-roof", "label": "Peaked lantern cap", "role": "mass", "certainty": "inferred", "stage": 5,
+      "basis": ["tower.design"],
+      "shape": {"type": "lathe", "segments": 32, "meridians": 8, "profile": [[2.9,0],[2.85,0.3],[2.1,1.1],[1.15,2.0],[0.32,2.6],[0.2,3.0]]}, "at": [20,83.85,2]
+    },
+    {
+      "id": "optic", "label": "Rotating faceted optic", "role": "data", "certainty": "inferred", "stage": 5,
+      "basis": ["lighthouse", "light.design"],
+      "shape": {"type": "lathe", "segments": 16, "meridians": 4, "profile": [[0.7,0],[1.1,0.45],[1.2,1.3],[1.1,2.15],[0.7,2.6]]}, "at": [20,80.7,2],
+      "motion": {"type": "spin", "axis": [0,1,0], "pivot": [20,82,2], "rpm": 2.5},
+      "note": "The optic and beam use the same world axis, pivot and rotational speed. Architectural stone and lantern enclosure stay fixed."
+    },
+    {
+      "id": "lamp", "label": "Lantern source", "role": "data", "certainty": "inferred", "stage": 5,
+      "basis": ["lighthouse", "light.design"],
+      "shape": {"type": "sphere", "radius": 1.0, "lat": 4, "lon": 8}, "at": [20,82,2],
+      "motion": {"type": "pulse", "period": 8, "amount": 0.12},
+      "note": "Small display-glow modulation only; not a claimed flash characteristic."
+    },
+    {
+      "id": "breaker-near", "label": "Curling breaker against the reef", "role": "identity", "certainty": "inferred", "stage": 6,
+      "basis": ["surf", "wave.design"],
+      "shape": {"type": "extrude", "axis": "x", "height": 30, "profile": [[-1.8,0.1],[1.8,0.1],[1.3,1.1],[0.5,2.5],[-0.8,3.2],[-2.0,2.8],[-2.35,2.0],[-1.45,2.15],[-0.7,1.4]]}, "at": [-18,0,26.5],
+      "motion": {"type": "bob", "axis": [0,0.18,-1], "distance": 1.3, "period": 7, "phase": 0},
+      "look": {"fill": "glass", "alpha": 0.62}
+    },
+    {
+      "id": "breaker-near-lip", "label": "Overhanging whitewater lip", "role": "structure", "certainty": "inferred", "stage": 6,
+      "basis": ["surf", "wave.design"],
+      "shape": {"type": "tube", "path": [[-19,2.3,26.0],[-13,3.05,25.6],[-4,3.2,25.7],[4,2.8,25.5],[12,2.4,26.0]], "radius": [0.16,0.3,0.35,0.27,0.12], "sides": 5, "samples": 4, "longitudinal": 2, "ring_every": 0},
+      "motion": {"type": "bob", "axis": [0,0.18,-1], "distance": 1.3, "period": 7, "phase": 0}
+    },
+    {
+      "id": "breaker-east", "label": "Surf wrapping the prow", "role": "structure", "certainty": "inferred", "stage": 6,
+      "basis": ["surf", "wave.design"],
+      "shape": {"type": "extrude", "axis": "x", "height": 21, "profile": [[-1.6,0.1],[2.0,0.1],[1.2,1.0],[0.2,2.0],[-0.9,2.7],[-1.8,2.4],[-2.1,1.8],[-1.1,1.85],[-0.4,1.2]]}, "at": [17,0,29], "rotate": [0,-25,0],
+      "motion": {"type": "bob", "axis": [-0.3,0.16,-1], "distance": 1.1, "period": 7.8, "phase": 0.3},
+      "look": {"fill": "glass", "alpha": 0.5}
+    },
+    {
+      "id": "breaker-east-lip", "role": "structure", "certainty": "inferred", "stage": 6, "basis": ["surf", "wave.design"],
+      "shape": {"type": "tube", "path": [[0,2.2,-0.9],[6,2.6,-1.0],[13,2.5,-0.8],[21,2.0,-0.5]], "radius": [0.15,0.3,0.26,0.1], "sides": 5, "samples": 4, "longitudinal": 2, "ring_every": 0}, "at": [17,0,29], "rotate": [0,-25,0],
+      "motion": {"type": "bob", "axis": [-0.3,0.16,-1], "distance": 1.1, "period": 7.8, "phase": 0.3}
+    },
+    {
+      "id": "breaker-outer", "label": "Incoming swell", "role": "structure", "certainty": "inferred", "stage": 6,
+      "basis": ["surf", "wave.design"],
+      "shape": {"type": "extrude", "axis": "x", "height": 44, "profile": [[-2.8,0.05],[3.1,0.05],[1.9,0.7],[0.8,1.35],[-0.6,1.8],[-1.8,1.3]]}, "at": [-26,0,42], "rotate": [0,7,0],
+      "motion": {"type": "bob", "axis": [0,0.12,-1], "distance": 1.8, "period": 8.8, "phase": 0.65},
+      "look": {"fill": "glass", "alpha": 0.38}
+    },
+    {
+      "id": "breaker-outer-lip", "role": "structure", "certainty": "inferred", "stage": 6, "basis": ["surf", "wave.design"],
+      "shape": {"type": "curve", "smooth": true, "points": [[0,1.4,-0.6],[10,1.8,-0.4],[22,1.65,-0.6],[34,1.6,-0.3],[44,1.2,-0.6]]}, "at": [-26,0,42], "rotate": [0,7,0],
+      "motion": {"type": "bob", "axis": [0,0.12,-1], "distance": 1.8, "period": 8.8, "phase": 0.65}
+    },
+    {
+      "id": "foam-foot", "label": "Broken wash along the cliff foot", "role": "structure", "certainty": "inferred", "stage": 6,
+      "basis": ["surf", "wave.design"],
+      "shape": {"type": "curve", "smooth": true, "points": [[-32,0.7,24],[-25,1.1,23],[-18,0.6,25],[-11,1.2,23.8],[-3,0.8,25.5],[4,1.0,25],[12,0.6,23.5],[22,0.8,24.5],[29,0.6,23]]},
+      "motion": {"type": "pulse", "period": 7, "amount": 0.35}
+    },
+    {
+      "id": "foam-west", "role": "structure", "certainty": "inferred", "stage": 6, "basis": ["surf", "wave.design"],
+      "shape": {"type": "curve", "smooth": true, "points": [[-49,0.4,9],[-47,0.9,17],[-43,1.5,24],[-37,0.9,28],[-30,0.4,30],[-24,0.3,29]]},
+      "motion": {"type": "pulse", "period": 7.8, "phase": 0.2, "amount": 0.4}
+    },
+    {
+      "id": "foam-east", "role": "structure", "certainty": "inferred", "stage": 6, "basis": ["surf", "wave.design"],
+      "shape": {"type": "curve", "smooth": true, "points": [[42,0.5,5],[43,1.0,13],[41,1.3,20],[38,0.8,26],[31,0.7,28],[26,0.4,27]]},
+      "motion": {"type": "pulse", "period": 7.8, "phase": 0.3, "amount": 0.35}
+    },
+    {
+      "id": "foam-backwash", "role": "structure", "certainty": "inferred", "stage": 6, "basis": ["surf", "wave.design"],
+      "shape": {"type": "curve", "smooth": true, "points": [[-29,0.2,33],[-20,0.35,32],[-10,0.25,35],[1,0.4,33],[11,0.25,34],[20,0.3,32]]},
+      "motion": {"type": "bob", "axis": [0,0.05,1], "distance": 0.7, "period": 7, "phase": 0.4}
+    },
+    {
+      "id": "near-spray", "label": "Impact spray", "role": "detail", "certainty": "inferred", "stage": 6, "floating": true,
+      "basis": ["surf", "wave.design"],
+      "shape": {"type": "points", "count": 80, "region": {"box": [26,3.6,3.5]}, "sprite": "soft", "size_px": 1.7}, "at": [-3,3.1,23.4],
+      "motion": {"type": "bob", "axis": [0,1,0], "distance": 0.65, "period": 7, "phase": 0.1}
+    },
+    {
+      "id": "east-spray", "role": "detail", "certainty": "inferred", "stage": 6, "floating": true, "basis": ["surf", "wave.design"],
+      "shape": {"type": "points", "count": 48, "region": {"box": [8,4.0,5]}, "sprite": "soft", "size_px": 1.5}, "at": [36,3.0,23],
+      "motion": {"type": "bob", "axis": [0,1,0], "distance": 0.8, "period": 7.8, "phase": 0.4}
+    },
+    {
+      "id": "west-spray", "role": "detail", "certainty": "inferred", "stage": 6, "floating": true, "basis": ["surf", "wave.design"],
+      "shape": {"type": "points", "count": 44, "region": {"box": [9,3.5,4]}, "sprite": "soft", "size_px": 1.5}, "at": [-40,2.6,24],
+      "motion": {"type": "bob", "axis": [0,1,0], "distance": 0.7, "period": 7.8, "phase": 0.25}
+    },
+    {
+      "id": "sea-glints", "label": "Sparse wavelet traces", "role": "ground", "certainty": "inferred", "stage": 6, "basis": ["wave.design"],
+      "shape": {"type": "curve", "smooth": true, "points": [[-30,0.1,51],[-24,0.16,50.5],[-17,0.1,51]]},
+      "repeat": {"count": 4, "step": {"at": [14,0,-3.8]}}, "look": {"alpha": 0.3}
+    },
+    {
+      "id": "sweeping-beam", "label": "Sweeping beam above the sea", "role": "data", "certainty": "inferred", "stage": 7, "floating": true,
+      "basis": ["lighthouse", "light.design"],
+      "shape": {"type": "cone", "radius_bottom": 0.45, "radius_top": 5.2, "height": 52, "segments": 16, "ribs": 4, "rings": 0, "caps": false},
+      "at": [20,82,2], "rotate": [98,35,0],
+      "motion": {"type": "spin", "axis": [0,1,0], "pivot": [20,82,2], "rpm": 2.5},
+      "look": {"fill": "glass", "alpha": 0.46, "glow": 0.75},
+      "note": "This truncated luminous air volume is inferred visualization of the requested sweeping light, not a measured beam range."
+    },
+    {
+      "id": "dusk-horizon-west", "role": "ornament", "certainty": "decorative", "stage": 7, "floating": true, "basis": ["twilight.design"],
+      "shape": {"type": "curve", "smooth": true, "points": [[-61,3,-35],[-52,3.4,-36],[-43,3.5,-37],[-34,3.2,-36]]}, "look": {"alpha": 0.25}
+    },
+    {
+      "id": "dusk-horizon-east", "role": "ornament", "certainty": "decorative", "stage": 7, "floating": true, "basis": ["twilight.design"],
+      "shape": {"type": "curve", "smooth": true, "points": [[34,3,-35],[43,3.4,-36],[54,3.5,-37],[62,3.2,-35]]}, "look": {"alpha": 0.25}
+    },
+    {
+      "id": "twilight-cloud-west", "role": "ornament", "certainty": "decorative", "stage": 7, "floating": true, "basis": ["twilight.design"],
+      "shape": {"type": "curve", "smooth": true, "points": [[-58,23,-30],[-52,24.2,-31],[-45,24.6,-32],[-36,24,-32],[-30,24.3,-31]]}, "look": {"alpha": 0.2}
+    },
+    {
+      "id": "twilight-cloud-east", "role": "ornament", "certainty": "decorative", "stage": 7, "floating": true, "basis": ["twilight.design"],
+      "shape": {"type": "curve", "smooth": true, "points": [[37,33,-28],[44,34,-29],[51,33.7,-30],[59,34.4,-30]]}, "look": {"alpha": 0.2}
+    },
+    {
+      "id": "early-stars", "role": "ornament", "certainty": "decorative", "stage": 7, "floating": true, "basis": ["twilight.design"],
+      "shape": {"type": "points", "count": 18, "region": {"box": [103,23,5]}, "sprite": "disc", "size_px": 1.1}, "at": [0,70,-34], "look": {"alpha": 0.27}
+    },
+    {
+      "id": "title-carrier", "label": "Showcase caption, not a physical sign", "role": "data", "certainty": "decorative", "stage": 7, "floating": true,
+      "shape": {"type": "plane", "size": [52,8]}, "at": [-5,-8,42], "look": {"line": "none", "fill": "none"},
+      "note": "Typography outside the physical scene. Labels inherit the certainty of their fact fields; this carrier is presentation-only."
+    }
+  ],
+  "articulations": [],
+  "labels": [
+    {"id": "scene-title", "part": "title-carrier", "field": "scene.caption", "role": "title", "region": [0.02,0.02,0.98,0.37], "align": "center"},
+    {"id": "approximate-height", "part": "title-carrier", "field": "height.caption", "role": "meta", "region": [0.02,0.43,0.98,0.65], "align": "center"},
+    {"id": "generic-disclosure", "part": "title-carrier", "field": "reconstruction.caption", "role": "meta", "region": [0.02,0.73,0.98,0.95], "align": "center"}
+  ],
+  "anchors": {"base": {"point": [0,-3,0], "up": [0,1,0]}},
+  "annotations": [
+    {"id": "cliff-height-note", "part": "rear-headland", "text": "About 60 m to the cliff top (user supplied)", "offset": [-29,1,8], "certainty": "user_supplied"},
+    {"id": "tower-note", "part": "lantern-room", "text": "Edge-set lighthouse (architecture inferred)", "offset": [5,3,0], "certainty": "inferred"},
+    {"id": "stair-note", "part": "stair-flight-3", "text": "Rock-cut switchbacks (layout inferred)", "offset": [-8,4,4], "certainty": "inferred"},
+    {"id": "surf-note", "part": "breaker-near", "text": "Breaking surf (motion inferred)", "offset": [0,2,7], "certainty": "inferred"},
+    {"id": "beam-note", "part": "sweeping-beam", "text": "Sweeping beam (display extent, not range)", "offset": [1,3,0], "certainty": "inferred"}
+  ],
+  "presentation": {
+    "framing": {"yaw": 24, "pitch": 14, "fit": 1.02},
+    "views": [
+      {"id": "sea-approach", "label": "Sea approach", "yaw": 9, "pitch": 7, "distance": 1.05},
+      {"id": "lantern", "label": "Lantern, gallery and rotating optic", "yaw": 32, "pitch": 12, "distance": 2.5, "target": "lantern-room"},
+      {"id": "stair-cut", "label": "Recessed stair and rock face", "yaw": 3, "pitch": 8, "distance": 1.55, "target": "stair-flight-3"},
+      {"id": "surf", "label": "Curling lip and reef", "yaw": 30, "pitch": 20, "distance": 2.5, "target": "breaker-near"},
+      {"id": "summit", "label": "Summit path and headland edge", "yaw": 39, "pitch": 36, "distance": 2.8, "target": "tower-footing"}
+    ],
+    "atmosphere": {"haze": 0.55, "scanlines": true, "vignette": true, "grid": false, "projector": false, "motes": 0.07},
+    "occlusion": "xray",
+    "certainty_style": "subtle",
+    "background": "deep",
+    "float": 0
+  },
+  "animation": {
+    "assembly": {"style": "ceremony", "seconds": 11, "interference": true},
+    "idle": {"life": "calm", "events": ["shimmer", "sweep", "propagate"], "cadence": [11,19], "strength": 0.24},
+    "camera": {
+      "drift": 1.2, "breathe": 0.012,
+      "tour": [
+        {"view": "sea-approach", "at": 15, "fly": 3.5},
+        {"view": "stair-cut", "at": 23, "fly": 4},
+        {"view": "lantern", "at": 33, "fly": 4},
+        {"view": "surf", "at": 43, "fly": 4},
+        {"view": "hero", "at": 53, "fly": 5}
+      ]
+    },
+    "reduced_motion": "still"
+  }
+}

@@ -1,0 +1,79 @@
+# Publishing the repository and the examples gallery
+
+This repository has two branches to publish:
+
+- `main`: the source, tagged `v0.2.1`;
+- `gh-pages`: the examples gallery, a static site served from the branch's root.
+
+The public addresses below come from one place: `OWNER` and `REPO` at the top of
+`scripts/build_site.py`. To publish under another name, run
+`python3 scripts/build_site.py --set-url OWNER/REPO`, rebuild the gallery (step 5), and
+commit; every link in the documents follows.
+
+## 1. Create the repository
+
+On GitHub, create an **empty public** repository named `construct` under `rtmandreyev`: no
+README, no licence, no .gitignore (they are already here). With the GitHub CLI:
+
+```sh
+gh repo create rtmandreyev/construct --public --description "Holographic constructs any AI agent can build: from a description, honestly."
+```
+
+Commits here use the GitHub private address `269336670+rtmandreyev@users.noreply.github.com`.
+If "Block command line pushes that expose my email" is on in your GitHub email settings,
+pushes still go through.
+
+## 2. Push `main` and the tag
+
+```sh
+cd ~/construct-public
+git remote add origin https://github.com/rtmandreyev/construct.git
+git push -u origin main
+git push origin v0.2.1
+```
+
+## 3. Push the gallery
+
+```sh
+git push origin gh-pages
+```
+
+## 4. Turn on GitHub Pages
+
+In the repository: **Settings → Pages → Build and deployment → Source: Deploy from a
+branch**, branch **gh-pages**, folder **/ (root)**, then **Save**. Or with the CLI:
+
+```sh
+gh api -X POST repos/rtmandreyev/construct/pages -f "source[branch]=gh-pages" -f "source[path]=/"
+```
+
+After a minute or two the gallery is at https://rtmandreyev.github.io/construct/ (Settings →
+Pages shows the address once it is live). Open it, open two or three examples, and check
+that they assemble and that the README's animations link to them.
+
+Optionally, publish a release: **Releases → Draft a new release**, tag `v0.2.1`, the 0.2.1
+section of CHANGELOG.md as the notes.
+
+## 5. Update the gallery later
+
+```sh
+cd ~/construct-public
+python3 scripts/build_site.py --out site              # compiles every example with this checkout
+python3 -m http.server 8000 --directory site          # preview at http://localhost:8000/
+git worktree add ../construct-pages gh-pages
+rsync -a --delete --exclude .git site/ ../construct-pages/
+git -C ../construct-pages add -A
+git -C ../construct-pages commit -m "Gallery: rebuild"
+git -C ../construct-pages push origin gh-pages
+git worktree remove ../construct-pages
+```
+
+To add an example: put its `scene.json`, `hero.jpg` (1440 × 900) and `thumb.jpg` (720 × 450)
+in `examples/<slug>/`, add an entry to `examples/examples.json`, write its `README.md` like the
+others, and rebuild.
+
+## What the gallery needs
+
+Nothing but static files: every link is relative, each construct is one self-contained
+`construct.html` (plain WebGL2, no external scripts, fonts or styles), and `.nojekyll` tells
+GitHub Pages to serve the files as they are. It is about 37 MB.

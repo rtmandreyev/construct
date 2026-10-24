@@ -133,3 +133,43 @@ class Packages(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class ExamplesGallery(unittest.TestCase):
+    """The example constructs and the static gallery built from them."""
+
+    def test_every_example_is_complete_and_checks_clean(self):
+        from . import diagnose
+        root = HERE.parent / "examples"
+        doc = json.loads((root / "examples.json").read_text(encoding="utf-8"))
+        self.assertGreaterEqual(len(doc["examples"]), 21)
+        for ex in doc["examples"]:
+            d = root / ex["slug"]
+            for name in ("scene.json", "hero.jpg", "thumb.jpg", "README.md"):
+                self.assertTrue((d / name).is_file(), (ex["slug"], name))
+            for key in ("title", "model", "how", "build"):
+                self.assertTrue(ex.get(key), (ex["slug"], key))
+            text = (d / "scene.json").read_text(encoding="utf-8")
+            self.assertIsNone(re.search(r"/Users/|/private/|/var/folders|references/", text), ex["slug"])
+            self.assertTrue(diagnose.diagnose_text(text)["ok"], ex["slug"])
+
+    def test_the_site_has_only_relative_links_that_resolve(self):
+        spec = __import__("importlib.util").util.spec_from_file_location("build_site", HERE.parent / "scripts" / "build_site.py")
+        site = __import__("importlib.util").util.module_from_spec(spec)
+        spec.loader.exec_module(site)
+        with tempfile.TemporaryDirectory() as d:
+            out = site.build(Path(d, "site"))
+            self.assertTrue((out / ".nojekyll").exists())
+            pages = [p for p in out.rglob("*.html") if p.name != "construct.html"]
+            self.assertEqual(len([p for p in pages if p.name == "index.html"]), len(site._load_examples()) + 1)
+            for page in pages:
+                for ref in re.findall(r'(?:href|src)="([^"]+)"', page.read_text(encoding="utf-8")):
+                    if ref.startswith(("https://", "http://")):
+                        self.assertTrue(ref.startswith((site.SITE_URL, site.REPO_URL)), (page, ref))
+                        continue
+                    target = (page.parent / ref.split("?")[0]).resolve()
+                    if ref.endswith("/"):
+                        target = target / "index.html"
+                    self.assertTrue(target.exists(), (page, ref))
+            html_ = (out / "examples" / "leica-m3" / "construct.html").read_text(encoding="utf-8")
+            self.assertIsNone(re.search(r'<script[^>]+src=|<link[^>]+href="http', html_))  # self-contained
