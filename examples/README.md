@@ -1,11 +1,11 @@
 # Examples
 
-Twenty-one constructs made by AI agents with Construct, each with its scene, a hero image and how
-it was made. See them live, assembling, in the [examples gallery](https://rtmandreyev.github.io/construct/).
+Twenty-three constructs made by AI agents with Construct, each with its scene, a hero image and
+how it was made. See them live, assembling, in the [examples gallery](https://rtmandreyev.github.io/construct/).
 
 Some were made with earlier builds (Construct 0.2.0, or 0.2.1 development and release-candidate
-builds). Every one of them was checked again with Construct 0.2.1: all pass `check`, and the
-0.2.1 compiler renders each hero exactly as the build that made it did, so the gallery is built
+builds). Every one was checked again with Construct 0.2.1, without changing a scene: all pass
+`check`, and the 0.2.1 compiler builds the same construct each time, so the gallery is built
 from these scenes with the release.
 
 | | example | model | how | made with |
@@ -30,13 +30,13 @@ from these scenes with the release.
 | [![Yamaha CFX](yamaha-cfx/thumb.jpg)](yamaha-cfx/) | [Yamaha CFX](yamaha-cfx/) | DeepSeek | standard (10 minutes) | Construct 0.2.0 |
 | [![Omega Speedmaster, calibre 321](omega-speedmaster-321/thumb.jpg)](omega-speedmaster-321/) | [Omega Speedmaster, calibre 321](omega-speedmaster-321/) | DeepSeek | research first, standard (10 minutes) | a Construct 0.2.0 development build |
 | [![Arturia MiniFreak](arturia-minifreak/thumb.jpg)](arturia-minifreak/) | [Arturia MiniFreak](arturia-minifreak/) | DeepSeek | a single first pass | a Construct 0.2.0 development build |
+| [![Saturn](saturn/thumb.jpg)](saturn/) | [Saturn](saturn/) | DeepSeek | masterpiece mode, through Hermes | Construct 0.2.1 |
 | [![Porsche 911 (964)](porsche-911-964/thumb.jpg)](porsche-911-964/) | [Porsche 911 (964)](porsche-911-964/) | GPT-6.1 Sol | masterpiece | Construct 0.2.0 |
-
-Two more, Saturn and Andromeda (DeepSeek, masterpiece mode), are on their way.
+| [![Andromeda Galaxy (M31)](andromeda-galaxy/thumb.jpg)](andromeda-galaxy/) | [Andromeda Galaxy (M31)](andromeda-galaxy/) | DeepSeek | masterpiece mode, through Hermes (last round self-reviewed) | Construct 0.2.1 |
 
 Product and place names belong to their owners. Each construct is an independent reconstruction
 from public references, not an official model; the scenes cite their sources, and no reference
 photograph is included here.
 
-Build the gallery yourself: `python3 scripts/build_site.py --out site`, then open
-`site/index.html` through any static server (see [PUBLISHING.md](../PUBLISHING.md)).
+Build the gallery yourself: `python3 scripts/build_site.py --out site`, then serve `site/` with
+any static server (see [PUBLISHING.md](../PUBLISHING.md)).

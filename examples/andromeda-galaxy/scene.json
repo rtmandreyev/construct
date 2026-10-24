@@ -1,0 +1,10218 @@
+{
+ "format": "construct-scene",
+ "version": 2,
+ "id": "andromeda",
+ "title": "Andromeda Galaxy (M31)",
+ "subject": {
+  "category": "object",
+  "summary": "M31, the Andromeda Galaxy: a barred spiral of about a trillion stars 2.5 million light-years away, seen at its measured 77-degree inclination, with its bulge, its near-side dust lanes, the 10 kpc star-forming ring, and the companions M32 and M110.",
+  "accuracy": "approximate",
+  "synthetic": false
+ },
+ "units": "m",
+ "seed": 31,
+ "sources": [
+  {
+   "id": "request",
+   "kind": "user_request",
+   "title": "The user's request",
+   "rights": "user_private"
+  },
+  {
+   "id": "nasa-m31",
+   "kind": "document",
+   "rights": "reference_only",
+   "title": "NASA Science, Messier 31 (The Andromeda Galaxy), Hubble Messier catalogue",
+   "ref": "science.nasa.gov/mission/hubble/science/explore-the-night-sky/hubble-messier-catalog/messier-31"
+  },
+  {
+   "id": "wikipedia-m31",
+   "kind": "document",
+   "rights": "reference_only",
+   "title": "Andromeda Galaxy, Wikipedia (RC3 D25 diameter, inclination)",
+   "ref": "en.wikipedia.org/wiki/Andromeda_Galaxy"
+  },
+  {
+   "id": "gordon-2006",
+   "kind": "document",
+   "rights": "reference_only",
+   "title": "Gordon et al. 2006, Spitzer/MIPS infrared imaging of M31: ring and spiral structure",
+   "ref": "ApJ 638, L87, doi:10.1086/501046"
+  },
+  {
+   "id": "mnras-2017",
+   "kind": "document",
+   "rights": "reference_only",
+   "title": "Blana et al. 2017, Andromeda chained to the box: bulge and bar models",
+   "ref": "MNRAS 466, 4279"
+  },
+  {
+   "id": "nrao-orientation",
+   "kind": "document",
+   "rights": "reference_only",
+   "title": "NRAO, The Andromeda Galaxy's orientation relative to us (near side is north-west)",
+   "ref": "public.nrao.edu/ask/the-andromeda-galaxys-orientation-relative-to-us"
+  },
+  {
+   "id": "wikipedia-satellites",
+   "kind": "document",
+   "rights": "reference_only",
+   "title": "List of Andromeda's satellite galaxies, Wikipedia (types and coordinates)",
+   "ref": "en.wikipedia.org/wiki/List_of_Andromeda%27s_satellite_galaxies"
+  },
+  {
+   "id": "ref-wide",
+   "kind": "reference_image",
+   "rights": "reference_only",
+   "title": "Wide-field image of M31 with M32 and M110 (RGB, H-alpha and OIII)",
+   "ref": "Reference photograph: wide-field M31 with M32 and M110 (RGB, H-alpha, OIII). Held outside the scene, for comparison only."
+  },
+  {
+   "id": "ref-ir",
+   "kind": "reference_image",
+   "rights": "reference_only",
+   "title": "Spitzer infrared / radio image of M31's dust, ring and arms",
+   "ref": "Reference image: Spitzer infrared/radio map of M31's dust, ring and arms. Held outside the scene, for comparison only."
+  },
+  {
+   "id": "ref-heic",
+   "kind": "reference_image",
+   "rights": "reference_only",
+   "title": "ESA/Hubble wide-field image of M31 (heic0512d)",
+   "ref": "Reference photograph: ESA/Hubble wide-field image of M31 (heic0512d). Held outside the scene, for comparison only."
+  }
+ ],
+ "facts": [
+  {
+   "key": "distance_ly",
+   "value": 2500000,
+   "unit": "ly",
+   "certainty": "verified",
+   "source": "nasa-m31",
+   "note": "2.5 million light-years (NASA)."
+  },
+  {
+   "key": "inclination_deg",
+   "value": 77,
+   "unit": "deg",
+   "certainty": "verified",
+   "source": "nasa-m31",
+   "note": "Tilted 77 degrees relative to Earth's view; 90 would be edge-on."
+  },
+  {
+   "key": "disc_diameter",
+   "value": 152000,
+   "unit": "ly",
+   "certainty": "verified",
+   "source": "wikipedia-m31",
+   "note": "D25 isophotal diameter, 46.56 kpc (RC3). Modelled as 152 scene units of 1 kly."
+  },
+  {
+   "key": "disc_thickness",
+   "value": 2600,
+   "unit": "ly",
+   "certainty": "inferred",
+   "note": "A thin stellar disc; the model's drawn thickness, slightly generous so it reads."
+  },
+  {
+   "key": "bulge_extent",
+   "value": 3.2,
+   "unit": "kpc",
+   "certainty": "verified",
+   "source": "mnras-2017",
+   "note": "The box/peanut bulge extends to 3.2 kpc in the disc plane (10.4 kly)."
+  },
+  {
+   "key": "ring_radius",
+   "value": 9.8,
+   "unit": "kpc",
+   "certainty": "verified",
+   "source": "gordon-2006",
+   "note": "Star-forming ring of radius 9.8 kpc (32 kly), fitted as a circle offset from the nucleus."
+  },
+  {
+   "key": "arm_pitch",
+   "value": 9.5,
+   "unit": "deg",
+   "certainty": "verified",
+   "source": "gordon-2006",
+   "note": "Two logarithmic spirals with pitch angles of 9 and 9.5 degrees."
+  },
+  {
+   "key": "arm_phase",
+   "value": 166,
+   "unit": "deg",
+   "certainty": "verified",
+   "source": "gordon-2006",
+   "note": "The two spirals are phase-shifted by 166 degrees."
+  },
+  {
+   "key": "arms_segmented",
+   "value": true,
+   "certainty": "verified",
+   "source": "gordon-2006",
+   "note": "The arms are not continuous but composed of spiral segments."
+  },
+  {
+   "key": "near_side",
+   "value": "north-west",
+   "certainty": "verified",
+   "source": "nrao-orientation",
+   "note": "The north-west half of the disc is nearest to us; the dust is silhouetted there."
+  },
+  {
+   "key": "m32_offset",
+   "value": 17.5,
+   "unit": "kly",
+   "certainty": "inferred",
+   "source": "wikipedia-satellites",
+   "note": "Projected separation from the nucleus: 24 arcmin at 2.5 Mly."
+  },
+  {
+   "key": "m32_size",
+   "value": 6300,
+   "unit": "ly",
+   "certainty": "inferred",
+   "source": "ref-wide",
+   "note": "About 8.7 by 6.5 arcmin, traced from the reference image."
+  },
+  {
+   "key": "m110_offset",
+   "value": 26.9,
+   "unit": "kly",
+   "certainty": "inferred",
+   "source": "wikipedia-satellites",
+   "note": "Projected separation: 37 arcmin at 2.5 Mly."
+  },
+  {
+   "key": "m110_size",
+   "value": 16000,
+   "unit": "ly",
+   "certainty": "inferred",
+   "source": "ref-wide",
+   "note": "21.9 by 11.0 arcmin, traced from the reference image."
+  },
+  {
+   "key": "halo_extent",
+   "value": 62000,
+   "unit": "ly",
+   "certainty": "inferred",
+   "note": "The radius drawn; M31's stellar halo is known to reach about 1.3 Mly."
+  },
+  {
+   "key": "stars",
+   "value": 1000000000000,
+   "certainty": "verified",
+   "source": "nasa-m31",
+   "note": "About one trillion stars."
+  },
+  {
+   "key": "scale",
+   "value": "1 unit = 1,000 light-years",
+   "certainty": "inferred",
+   "note": "Scene units are metres by contract; this construct is a scale model at 1 m = 1 kly."
+  }
+ ],
+ "assets": [],
+ "parts": [
+  {
+   "id": "halo",
+   "label": "Stellar halo and globular clusters",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "points",
+    "count": 90,
+    "region": {
+     "sphere": 58
+    },
+    "sprite": "soft",
+    "size_px": 2
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": [
+    1,
+    1,
+    0.16
+   ],
+   "basis": [
+    "halo_extent"
+   ],
+   "floating": true,
+   "look": {
+    "tone": "dust",
+    "alpha": 0.28
+   },
+   "note": "Halo stars and globular clusters; drawn far flatter and smaller than the real 1.3 Mly halo."
+  },
+  {
+   "id": "disc-0",
+   "label": "Disc star cloud (r = 76 kly)",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "points",
+    "count": 1050,
+    "region": {
+     "sphere": 76
+    },
+    "sprite": "soft",
+    "size_px": 4
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": [
+    1,
+    1,
+    0.028
+   ],
+   "basis": [
+    "disc_diameter"
+   ],
+   "floating": true,
+   "look": {
+    "tone": "structure",
+    "alpha": 0.24
+   }
+  },
+  {
+   "id": "disc-1",
+   "label": "Disc star cloud (r = 62 kly)",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "points",
+    "count": 900,
+    "region": {
+     "sphere": 62
+    },
+    "sprite": "soft",
+    "size_px": 4
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": [
+    1,
+    1,
+    0.028
+   ],
+   "basis": [
+    "disc_diameter"
+   ],
+   "floating": true,
+   "look": {
+    "tone": "structure",
+    "alpha": 0.34
+   }
+  },
+  {
+   "id": "disc-2",
+   "label": "Disc star cloud (r = 48 kly)",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "points",
+    "count": 820,
+    "region": {
+     "sphere": 48
+    },
+    "sprite": "soft",
+    "size_px": 5
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": [
+    1,
+    1,
+    0.04
+   ],
+   "basis": [
+    "disc_diameter"
+   ],
+   "floating": true,
+   "look": {
+    "tone": "hairline",
+    "alpha": 0.46
+   }
+  },
+  {
+   "id": "disc-3",
+   "label": "Disc star cloud (r = 34 kly)",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "points",
+    "count": 520,
+    "region": {
+     "sphere": 34
+    },
+    "sprite": "soft",
+    "size_px": 5
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": [
+    1,
+    1,
+    0.04
+   ],
+   "basis": [
+    "disc_diameter"
+   ],
+   "floating": true,
+   "look": {
+    "tone": "hairline",
+    "alpha": 0.56
+   }
+  },
+  {
+   "id": "disc-4",
+   "label": "Disc star cloud (r = 22 kly)",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "points",
+    "count": 280,
+    "region": {
+     "sphere": 22
+    },
+    "sprite": "soft",
+    "size_px": 6
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": [
+    1,
+    1,
+    0.04
+   ],
+   "basis": [
+    "disc_diameter"
+   ],
+   "floating": true,
+   "look": {
+    "tone": "bright",
+    "alpha": 0.62
+   }
+  },
+  {
+   "id": "disc-5",
+   "label": "Disc star cloud (r = 14 kly)",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "points",
+    "count": 150,
+    "region": {
+     "sphere": 14
+    },
+    "sprite": "soft",
+    "size_px": 6
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": [
+    1,
+    1,
+    0.04
+   ],
+   "basis": [
+    "disc_diameter"
+   ],
+   "floating": true,
+   "look": {
+    "tone": "bright",
+    "alpha": 0.7
+   }
+  },
+  {
+   "id": "glow-0",
+   "label": "Diffuse disc light",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "points",
+    "count": 110,
+    "region": {
+     "sphere": 46
+    },
+    "sprite": "soft",
+    "size_px": 22
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": [
+    1,
+    1,
+    0.03
+   ],
+   "basis": [
+    "disc_diameter"
+   ],
+   "floating": true,
+   "look": {
+    "tone": "structure",
+    "alpha": 0.1
+   }
+  },
+  {
+   "id": "glow-1",
+   "label": "Diffuse disc light",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "points",
+    "count": 90,
+    "region": {
+     "sphere": 24
+    },
+    "sprite": "soft",
+    "size_px": 22
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": [
+    1,
+    1,
+    0.05
+   ],
+   "basis": [
+    "disc_diameter"
+   ],
+   "floating": true,
+   "look": {
+    "tone": "bright",
+    "alpha": 0.13
+   }
+  },
+  {
+   "id": "arm-ne-0",
+   "label": "Arm (ne), dust lane segment 1",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 0.2,
+    "profile": [
+     [
+      8.379,
+      4.208
+     ],
+     [
+      8.1,
+      4.735
+     ],
+     [
+      7.789,
+      5.244
+     ],
+     [
+      7.447,
+      5.733
+     ],
+     [
+      7.075,
+      6.201
+     ],
+     [
+      6.675,
+      6.646
+     ],
+     [
+      6.248,
+      7.066
+     ],
+     [
+      5.795,
+      7.459
+     ],
+     [
+      5.318,
+      7.824
+     ],
+     [
+      4.819,
+      8.16
+     ],
+     [
+      4.3,
+      8.465
+     ],
+     [
+      3.762,
+      8.738
+     ],
+     [
+      3.207,
+      8.978
+     ],
+     [
+      2.637,
+      9.184
+     ],
+     [
+      2.054,
+      9.355
+     ],
+     [
+      1.461,
+      9.49
+     ],
+     [
+      0.927,
+      9.799
+     ],
+     [
+      0.36,
+      10.078
+     ],
+     [
+      -0.238,
+      10.325
+     ],
+     [
+      -0.864,
+      10.537
+     ],
+     [
+      -1.518,
+      10.712
+     ],
+     [
+      -2.198,
+      10.846
+     ],
+     [
+      -2.899,
+      10.938
+     ],
+     [
+      -3.621,
+      10.985
+     ],
+     [
+      -4.36,
+      10.986
+     ],
+     [
+      -5.113,
+      10.937
+     ],
+     [
+      -5.877,
+      10.838
+     ],
+     [
+      -6.648,
+      10.687
+     ],
+     [
+      -7.424,
+      10.482
+     ],
+     [
+      -8.2,
+      10.223
+     ],
+     [
+      -8.973,
+      9.908
+     ],
+     [
+      -10.697,
+      12.722
+     ],
+     [
+      -9.85,
+      13.332
+     ],
+     [
+      -8.971,
+      13.887
+     ],
+     [
+      -8.061,
+      14.386
+     ],
+     [
+      -7.124,
+      14.827
+     ],
+     [
+      -6.165,
+      15.21
+     ],
+     [
+      -5.186,
+      15.531
+     ],
+     [
+      -4.191,
+      15.792
+     ],
+     [
+      -3.185,
+      15.99
+     ],
+     [
+      -2.17,
+      16.126
+     ],
+     [
+      -1.151,
+      16.199
+     ],
+     [
+      -0.131,
+      16.21
+     ],
+     [
+      0.886,
+      16.158
+     ],
+     [
+      1.895,
+      16.044
+     ],
+     [
+      2.895,
+      15.868
+     ],
+     [
+      3.88,
+      15.631
+     ],
+     [
+      4.754,
+      15.136
+     ],
+     [
+      5.582,
+      14.594
+     ],
+     [
+      6.363,
+      14.01
+     ],
+     [
+      7.094,
+      13.387
+     ],
+     [
+      7.773,
+      12.729
+     ],
+     [
+      8.4,
+      12.04
+     ],
+     [
+      8.972,
+      11.324
+     ],
+     [
+      9.49,
+      10.585
+     ],
+     [
+      9.952,
+      9.827
+     ],
+     [
+      10.358,
+      9.053
+     ],
+     [
+      10.709,
+      8.268
+     ],
+     [
+      11.003,
+      7.476
+     ],
+     [
+      11.243,
+      6.679
+     ],
+     [
+      11.428,
+      5.883
+     ],
+     [
+      11.559,
+      5.09
+     ]
+    ]
+   },
+   "at": [
+    -0.0,
+    -4.8907,
+    1.0396
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [
+    "arm_pitch",
+    "arm_phase"
+   ],
+   "floating": true,
+   "look": {
+    "fill": "dark",
+    "weight": 0.25,
+    "alpha": 0.1
+   }
+  },
+  {
+   "id": "cloud-ne-0-0",
+   "label": "Star cloud (ne arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 6
+   },
+   "at": [
+    -12.5103,
+    1.456,
+    6.8501
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.55,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-ne-0-1",
+   "label": "Star cloud (ne arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 7
+   },
+   "at": [
+    -11.6836,
+    1.815,
+    8.5387
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.5750000000000001,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-ne-0-2",
+   "label": "Star cloud (ne arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 8
+   },
+   "at": [
+    -10.6207,
+    2.1542,
+    10.1348
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.6000000000000001,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-ne-0-3",
+   "label": "Star cloud (ne arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 9
+   },
+   "at": [
+    -9.332,
+    2.4671,
+    11.607
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.625,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-ne-0-4",
+   "label": "Star cloud (ne arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 10
+   },
+   "at": [
+    -7.8323,
+    2.7473,
+    12.925
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.65,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-ne-0-5",
+   "label": "Star cloud (ne arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 6
+   },
+   "at": [
+    -6.1404,
+    2.9886,
+    14.0601
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.675,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-ne-0-6",
+   "label": "Star cloud (ne arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 7
+   },
+   "at": [
+    -4.2792,
+    3.1854,
+    14.9859
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.7000000000000001,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-ne-0-7",
+   "label": "Star cloud (ne arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 8
+   },
+   "at": [
+    -2.2754,
+    3.3326,
+    15.6785
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.7250000000000001,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-ne-0-8",
+   "label": "Star cloud (ne arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 9
+   },
+   "at": [
+    -0.1592,
+    3.4258,
+    16.1173
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.75,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-ne-0-9",
+   "label": "Star cloud (ne arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 10
+   },
+   "at": [
+    2.036,
+    3.4616,
+    16.2854
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.775,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-ne-0-10",
+   "label": "Star cloud (ne arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 6
+   },
+   "at": [
+    4.2746,
+    3.437,
+    16.17
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.8,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-ne-0-11",
+   "label": "Star cloud (ne arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 7
+   },
+   "at": [
+    6.5186,
+    3.3505,
+    15.7627
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.8250000000000001,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-ne-0-12",
+   "label": "Star cloud (ne arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 8
+   },
+   "at": [
+    8.7285,
+    3.2011,
+    15.06
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.8500000000000001,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-ne-0-13",
+   "label": "Star cloud (ne arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 9
+   },
+   "at": [
+    10.864,
+    2.9893,
+    14.0635
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.875,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "arm-ne-1",
+   "label": "Arm (ne), dust lane segment 2",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 0.2,
+    "profile": [
+     [
+      -14.326,
+      3.419
+     ],
+     [
+      -14.562,
+      2.519
+     ],
+     [
+      -14.742,
+      1.603
+     ],
+     [
+      -14.866,
+      0.674
+     ],
+     [
+      -14.934,
+      -0.264
+     ],
+     [
+      -14.944,
+      -1.207
+     ],
+     [
+      -14.896,
+      -2.153
+     ],
+     [
+      -14.79,
+      -3.097
+     ],
+     [
+      -14.626,
+      -4.038
+     ],
+     [
+      -14.404,
+      -4.97
+     ],
+     [
+      -14.124,
+      -5.89
+     ],
+     [
+      -13.787,
+      -6.796
+     ],
+     [
+      -13.394,
+      -7.683
+     ],
+     [
+      -12.945,
+      -8.549
+     ],
+     [
+      -12.442,
+      -9.389
+     ],
+     [
+      -11.886,
+      -10.201
+     ],
+     [
+      -11.49,
+      -11.115
+     ],
+     [
+      -11.026,
+      -12.02
+     ],
+     [
+      -10.496,
+      -12.911
+     ],
+     [
+      -9.897,
+      -13.783
+     ],
+     [
+      -9.232,
+      -14.631
+     ],
+     [
+      -8.5,
+      -15.45
+     ],
+     [
+      -7.703,
+      -16.235
+     ],
+     [
+      -6.841,
+      -16.982
+     ],
+     [
+      -5.916,
+      -17.686
+     ],
+     [
+      -4.931,
+      -18.34
+     ],
+     [
+      -3.888,
+      -18.942
+     ],
+     [
+      -2.79,
+      -19.486
+     ],
+     [
+      -1.639,
+      -19.968
+     ],
+     [
+      -0.439,
+      -20.383
+     ],
+     [
+      0.806,
+      -20.726
+     ],
+     [
+      0.276,
+      -24.439
+     ],
+     [
+      -1.247,
+      -24.3
+     ],
+     [
+      -2.753,
+      -24.069
+     ],
+     [
+      -4.234,
+      -23.748
+     ],
+     [
+      -5.687,
+      -23.338
+     ],
+     [
+      -7.107,
+      -22.842
+     ],
+     [
+      -8.488,
+      -22.263
+     ],
+     [
+      -9.825,
+      -21.602
+     ],
+     [
+      -11.114,
+      -20.864
+     ],
+     [
+      -12.351,
+      -20.051
+     ],
+     [
+      -13.531,
+      -19.167
+     ],
+     [
+      -14.651,
+      -18.216
+     ],
+     [
+      -15.706,
+      -17.202
+     ],
+     [
+      -16.694,
+      -16.129
+     ],
+     [
+      -17.61,
+      -15.001
+     ],
+     [
+      -18.454,
+      -13.823
+     ],
+     [
+      -18.994,
+      -12.492
+     ],
+     [
+      -19.444,
+      -11.149
+     ],
+     [
+      -19.803,
+      -9.8
+     ],
+     [
+      -20.073,
+      -8.45
+     ],
+     [
+      -20.255,
+      -7.105
+     ],
+     [
+      -20.35,
+      -5.771
+     ],
+     [
+      -20.361,
+      -4.453
+     ],
+     [
+      -20.29,
+      -3.156
+     ],
+     [
+      -20.139,
+      -1.885
+     ],
+     [
+      -19.912,
+      -0.645
+     ],
+     [
+      -19.612,
+      0.56
+     ],
+     [
+      -19.241,
+      1.726
+     ],
+     [
+      -18.805,
+      2.849
+     ],
+     [
+      -18.306,
+      3.925
+     ],
+     [
+      -17.749,
+      4.951
+     ]
+    ]
+   },
+   "at": [
+    -0.0,
+    -4.8907,
+    1.0396
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [
+    "arm_pitch",
+    "arm_phase"
+   ],
+   "floating": true,
+   "look": {
+    "fill": "dark",
+    "weight": 0.25,
+    "alpha": 0.1
+   }
+  },
+  {
+   "id": "cloud-ne-1-0",
+   "label": "Star cloud (ne arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 6
+   },
+   "at": [
+    19.654,
+    0.7489,
+    3.5233
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.55,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-ne-1-1",
+   "label": "Star cloud (ne arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 7
+   },
+   "at": [
+    20.3289,
+    0.2111,
+    0.9933
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.5750000000000001,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-ne-1-2",
+   "label": "Star cloud (ne arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 8
+   },
+   "at": [
+    20.6668,
+    -0.3507,
+    -1.65
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.6000000000000001,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-ne-1-3",
+   "label": "Star cloud (ne arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 9
+   },
+   "at": [
+    20.6488,
+    -0.9276,
+    -4.3639
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.625,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-ne-1-4",
+   "label": "Star cloud (ne arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 10
+   },
+   "at": [
+    20.2616,
+    -1.5098,
+    -7.1031
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.65,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-ne-1-5",
+   "label": "Star cloud (ne arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 6
+   },
+   "at": [
+    19.498,
+    -2.0873,
+    -9.82
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.675,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-ne-1-6",
+   "label": "Star cloud (ne arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 7
+   },
+   "at": [
+    18.3571,
+    -2.6496,
+    -12.4655
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.7000000000000001,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-ne-1-7",
+   "label": "Star cloud (ne arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 8
+   },
+   "at": [
+    16.8446,
+    -3.1862,
+    -14.9899
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.7250000000000001,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-ne-1-8",
+   "label": "Star cloud (ne arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 9
+   },
+   "at": [
+    14.973,
+    -3.6866,
+    -17.3439
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.75,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-ne-1-9",
+   "label": "Star cloud (ne arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 10
+   },
+   "at": [
+    12.7616,
+    -4.1404,
+    -19.4789
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.775,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-ne-1-10",
+   "label": "Star cloud (ne arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 6
+   },
+   "at": [
+    10.2365,
+    -4.5378,
+    -21.3485
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.8,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-ne-1-11",
+   "label": "Star cloud (ne arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 7
+   },
+   "at": [
+    7.4303,
+    -4.8695,
+    -22.9092
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.8250000000000001,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-ne-1-12",
+   "label": "Star cloud (ne arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 8
+   },
+   "at": [
+    4.3819,
+    -5.1271,
+    -24.1212
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.8500000000000001,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-ne-1-13",
+   "label": "Star cloud (ne arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 9
+   },
+   "at": [
+    1.136,
+    -5.3031,
+    -24.9492
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.875,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "arm-ne-2",
+   "label": "Arm (ne), dust lane segment 3",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 0.2,
+    "profile": [
+     [
+      13.662,
+      -18.386
+     ],
+     [
+      14.864,
+      -17.588
+     ],
+     [
+      16.021,
+      -16.713
+     ],
+     [
+      17.128,
+      -15.765
+     ],
+     [
+      18.18,
+      -14.745
+     ],
+     [
+      19.174,
+      -13.657
+     ],
+     [
+      20.105,
+      -12.503
+     ],
+     [
+      20.968,
+      -11.288
+     ],
+     [
+      21.76,
+      -10.015
+     ],
+     [
+      22.477,
+      -8.688
+     ],
+     [
+      23.116,
+      -7.312
+     ],
+     [
+      23.672,
+      -5.891
+     ],
+     [
+      24.144,
+      -4.429
+     ],
+     [
+      24.528,
+      -2.933
+     ],
+     [
+      24.822,
+      -1.406
+     ],
+     [
+      25.023,
+      0.146
+     ],
+     [
+      25.407,
+      1.683
+     ],
+     [
+      25.699,
+      3.267
+     ],
+     [
+      25.894,
+      4.894
+     ],
+     [
+      25.987,
+      6.559
+     ],
+     [
+      25.974,
+      8.254
+     ],
+     [
+      25.853,
+      9.973
+     ],
+     [
+      25.621,
+      11.709
+     ],
+     [
+      25.273,
+      13.456
+     ],
+     [
+      24.81,
+      15.205
+     ],
+     [
+      24.228,
+      16.949
+     ],
+     [
+      23.526,
+      18.68
+     ],
+     [
+      22.704,
+      20.391
+     ],
+     [
+      21.762,
+      22.073
+     ],
+     [
+      20.7,
+      23.718
+     ],
+     [
+      19.519,
+      25.317
+     ],
+     [
+      22.628,
+      28.141
+     ],
+     [
+      24.196,
+      26.52
+     ],
+     [
+      25.653,
+      24.816
+     ],
+     [
+      26.995,
+      23.036
+     ],
+     [
+      28.218,
+      21.188
+     ],
+     [
+      29.32,
+      19.279
+     ],
+     [
+      30.297,
+      17.317
+     ],
+     [
+      31.148,
+      15.31
+     ],
+     [
+      31.87,
+      13.265
+     ],
+     [
+      32.462,
+      11.192
+     ],
+     [
+      32.923,
+      9.097
+     ],
+     [
+      33.254,
+      6.988
+     ],
+     [
+      33.454,
+      4.875
+     ],
+     [
+      33.523,
+      2.764
+     ],
+     [
+      33.463,
+      0.663
+     ],
+     [
+      33.275,
+      -1.42
+     ],
+     [
+      32.691,
+      -3.409
+     ],
+     [
+      31.992,
+      -5.331
+     ],
+     [
+      31.185,
+      -7.182
+     ],
+     [
+      30.277,
+      -8.954
+     ],
+     [
+      29.272,
+      -10.643
+     ],
+     [
+      28.179,
+      -12.244
+     ],
+     [
+      27.004,
+      -13.753
+     ],
+     [
+      25.754,
+      -15.166
+     ],
+     [
+      24.437,
+      -16.479
+     ],
+     [
+      23.058,
+      -17.69
+     ],
+     [
+      21.627,
+      -18.797
+     ],
+     [
+      20.15,
+      -19.798
+     ],
+     [
+      18.635,
+      -20.691
+     ],
+     [
+      17.09,
+      -21.476
+     ],
+     [
+      15.52,
+      -22.153
+     ]
+    ]
+   },
+   "at": [
+    -0.0,
+    -4.8907,
+    1.0396
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [
+    "arm_pitch",
+    "arm_phase"
+   ],
+   "floating": true,
+   "look": {
+    "fill": "dark",
+    "weight": 0.25,
+    "alpha": 0.1
+   }
+  },
+  {
+   "id": "cloud-ne-2-0",
+   "label": "Star cloud (ne arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 6
+   },
+   "at": [
+    -18.3064,
+    -4.5377,
+    -21.3482
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.55,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-ne-2-1",
+   "label": "Star cloud (ne arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 7
+   },
+   "at": [
+    -21.4217,
+    -4.079,
+    -19.1903
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.5750000000000001,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-ne-2-2",
+   "label": "Star cloud (ne arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 8
+   },
+   "at": [
+    -24.2775,
+    -3.529,
+    -16.6026
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.6000000000000001,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-ne-2-3",
+   "label": "Star cloud (ne arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 9
+   },
+   "at": [
+    -26.8126,
+    -2.8937,
+    -13.614
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.625,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-ne-2-4",
+   "label": "Star cloud (ne arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 10
+   },
+   "at": [
+    -28.9689,
+    -2.1812,
+    -10.2617
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.65,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-ne-2-5",
+   "label": "Star cloud (ne arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 6
+   },
+   "at": [
+    -30.6927,
+    -1.4009,
+    -6.5908
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.675,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-ne-2-6",
+   "label": "Star cloud (ne arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 7
+   },
+   "at": [
+    -31.9358,
+    -0.5641,
+    -2.6539
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.7000000000000001,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-ne-2-7",
+   "label": "Star cloud (ne arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 8
+   },
+   "at": [
+    -32.6566,
+    0.3166,
+    1.4895
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.7250000000000001,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-ne-2-8",
+   "label": "Star cloud (ne arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 9
+   },
+   "at": [
+    -32.8209,
+    1.2273,
+    5.7738
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.75,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-ne-2-9",
+   "label": "Star cloud (ne arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 10
+   },
+   "at": [
+    -32.4033,
+    2.1528,
+    10.1283
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.775,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-ne-2-10",
+   "label": "Star cloud (ne arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 6
+   },
+   "at": [
+    -31.3874,
+    3.0774,
+    14.478
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.8,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-ne-2-11",
+   "label": "Star cloud (ne arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 7
+   },
+   "at": [
+    -29.7671,
+    3.9844,
+    18.745
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.8250000000000001,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-ne-2-12",
+   "label": "Star cloud (ne arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 8
+   },
+   "at": [
+    -27.5466,
+    4.8569,
+    22.8498
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.8500000000000001,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-ne-2-13",
+   "label": "Star cloud (ne arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 9
+   },
+   "at": [
+    -24.741,
+    5.6779,
+    26.7123
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.875,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "arm-ne-3",
+   "label": "Arm (ne), dust lane segment 4",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 0.2,
+    "profile": [
+     [
+      2.006,
+      35.284
+     ],
+     [
+      -0.196,
+      35.578
+     ],
+     [
+      -2.428,
+      35.738
+     ],
+     [
+      -4.68,
+      35.762
+     ],
+     [
+      -6.944,
+      35.647
+     ],
+     [
+      -9.213,
+      35.392
+     ],
+     [
+      -11.478,
+      34.995
+     ],
+     [
+      -13.73,
+      34.458
+     ],
+     [
+      -15.961,
+      33.778
+     ],
+     [
+      -18.162,
+      32.958
+     ],
+     [
+      -20.324,
+      31.998
+     ],
+     [
+      -22.439,
+      30.899
+     ],
+     [
+      -24.498,
+      29.664
+     ],
+     [
+      -26.492,
+      28.295
+     ],
+     [
+      -28.413,
+      26.796
+     ],
+     [
+      -30.252,
+      25.17
+     ],
+     [
+      -32.214,
+      23.647
+     ],
+     [
+      -34.106,
+      21.979
+     ],
+     [
+      -35.916,
+      20.169
+     ],
+     [
+      -37.636,
+      18.221
+     ],
+     [
+      -39.254,
+      16.138
+     ],
+     [
+      -40.761,
+      13.925
+     ],
+     [
+      -42.147,
+      11.588
+     ],
+     [
+      -43.403,
+      9.134
+     ],
+     [
+      -44.519,
+      6.57
+     ],
+     [
+      -45.487,
+      3.902
+     ],
+     [
+      -46.297,
+      1.14
+     ],
+     [
+      -46.944,
+      -1.707
+     ],
+     [
+      -47.417,
+      -4.631
+     ],
+     [
+      -47.712,
+      -7.619
+     ],
+     [
+      -47.822,
+      -10.663
+     ],
+     [
+      -52.467,
+      -10.876
+     ],
+     [
+      -52.672,
+      -7.541
+     ],
+     [
+      -52.672,
+      -4.222
+     ],
+     [
+      -52.47,
+      -0.933
+     ],
+     [
+      -52.069,
+      2.315
+     ],
+     [
+      -51.474,
+      5.511
+     ],
+     [
+      -50.69,
+      8.643
+     ],
+     [
+      -49.721,
+      11.701
+     ],
+     [
+      -48.575,
+      14.674
+     ],
+     [
+      -47.257,
+      17.552
+     ],
+     [
+      -45.775,
+      20.326
+     ],
+     [
+      -44.136,
+      22.986
+     ],
+     [
+      -42.349,
+      25.524
+     ],
+     [
+      -40.422,
+      27.933
+     ],
+     [
+      -38.364,
+      30.205
+     ],
+     [
+      -36.184,
+      32.333
+     ],
+     [
+      -33.709,
+      34.06
+     ],
+     [
+      -31.163,
+      35.611
+     ],
+     [
+      -28.559,
+      36.983
+     ],
+     [
+      -25.908,
+      38.174
+     ],
+     [
+      -23.222,
+      39.185
+     ],
+     [
+      -20.514,
+      40.016
+     ],
+     [
+      -17.794,
+      40.669
+     ],
+     [
+      -15.074,
+      41.144
+     ],
+     [
+      -12.365,
+      41.445
+     ],
+     [
+      -9.677,
+      41.574
+     ],
+     [
+      -7.022,
+      41.536
+     ],
+     [
+      -4.41,
+      41.335
+     ],
+     [
+      -1.849,
+      40.977
+     ],
+     [
+      0.651,
+      40.466
+     ],
+     [
+      3.082,
+      39.808
+     ]
+    ]
+   },
+   "at": [
+    -0.0,
+    -4.8907,
+    1.0396
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [
+    "arm_pitch",
+    "arm_phase"
+   ],
+   "floating": true,
+   "look": {
+    "fill": "dark",
+    "weight": 0.25,
+    "alpha": 0.1
+   }
+  },
+  {
+   "id": "cloud-ne-3-0",
+   "label": "Star cloud (ne arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 6
+   },
+   "at": [
+    0.2623,
+    8.5868,
+    40.3979
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.55,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-ne-3-1",
+   "label": "Star cloud (ne arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 7
+   },
+   "at": [
+    5.7855,
+    8.6801,
+    40.8367
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.5750000000000001,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-ne-3-2",
+   "label": "Star cloud (ne arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 8
+   },
+   "at": [
+    11.4337,
+    8.6213,
+    40.56
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.6000000000000001,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-ne-3-3",
+   "label": "Star cloud (ne arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 9
+   },
+   "at": [
+    17.111,
+    8.4051,
+    39.5428
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.625,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-ne-3-4",
+   "label": "Star cloud (ne arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 10
+   },
+   "at": [
+    22.717,
+    8.0288,
+    37.7726
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.65,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-ne-3-5",
+   "label": "Star cloud (ne arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 6
+   },
+   "at": [
+    28.1481,
+    7.4926,
+    35.2497
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.675,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-ne-3-6",
+   "label": "Star cloud (ne arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 7
+   },
+   "at": [
+    33.2999,
+    6.7992,
+    31.9877
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.7000000000000001,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-ne-3-7",
+   "label": "Star cloud (ne arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 8
+   },
+   "at": [
+    38.0682,
+    5.9546,
+    28.0143
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.7250000000000001,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-ne-3-8",
+   "label": "Star cloud (ne arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 9
+   },
+   "at": [
+    42.3515,
+    4.9676,
+    23.3707
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.75,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-ne-3-9",
+   "label": "Star cloud (ne arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 10
+   },
+   "at": [
+    46.0526,
+    3.8498,
+    18.1121
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.775,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-ne-3-10",
+   "label": "Star cloud (ne arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 6
+   },
+   "at": [
+    49.0808,
+    2.6159,
+    12.3069
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.8,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-ne-3-11",
+   "label": "Star cloud (ne arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 7
+   },
+   "at": [
+    51.3532,
+    1.283,
+    6.0362
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.8250000000000001,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-ne-3-12",
+   "label": "Star cloud (ne arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 8
+   },
+   "at": [
+    52.7974,
+    -0.129,
+    -0.6071
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.8500000000000001,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-ne-3-13",
+   "label": "Star cloud (ne arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 9
+   },
+   "at": [
+    53.3524,
+    -1.5983,
+    -7.5195
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.875,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "arm-sw-0",
+   "label": "Arm (sw), dust lane segment 1",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 0.2,
+    "profile": [
+     [
+      -8.56,
+      -1.927
+     ],
+     [
+      -8.414,
+      -2.466
+     ],
+     [
+      -8.236,
+      -2.994
+     ],
+     [
+      -8.025,
+      -3.51
+     ],
+     [
+      -7.783,
+      -4.012
+     ],
+     [
+      -7.51,
+      -4.498
+     ],
+     [
+      -7.208,
+      -4.966
+     ],
+     [
+      -6.878,
+      -5.415
+     ],
+     [
+      -6.521,
+      -5.842
+     ],
+     [
+      -6.138,
+      -6.247
+     ],
+     [
+      -5.731,
+      -6.627
+     ],
+     [
+      -5.301,
+      -6.982
+     ],
+     [
+      -4.85,
+      -7.309
+     ],
+     [
+      -4.379,
+      -7.609
+     ],
+     [
+      -3.891,
+      -7.879
+     ],
+     [
+      -3.386,
+      -8.119
+     ],
+     [
+      -2.982,
+      -8.515
+     ],
+     [
+      -2.542,
+      -8.893
+     ],
+     [
+      -2.066,
+      -9.249
+     ],
+     [
+      -1.556,
+      -9.581
+     ],
+     [
+      -1.014,
+      -9.885
+     ],
+     [
+      -0.439,
+      -10.159
+     ],
+     [
+      0.165,
+      -10.4
+     ],
+     [
+      0.798,
+      -10.606
+     ],
+     [
+      1.457,
+      -10.774
+     ],
+     [
+      2.14,
+      -10.901
+     ],
+     [
+      2.844,
+      -10.985
+     ],
+     [
+      3.567,
+      -11.024
+     ],
+     [
+      4.306,
+      -11.016
+     ],
+     [
+      5.057,
+      -10.96
+     ],
+     [
+      5.818,
+      -10.852
+     ],
+     [
+      6.838,
+      -13.991
+     ],
+     [
+      5.937,
+      -14.368
+     ],
+     [
+      5.015,
+      -14.688
+     ],
+     [
+      4.077,
+      -14.951
+     ],
+     [
+      3.126,
+      -15.155
+     ],
+     [
+      2.165,
+      -15.301
+     ],
+     [
+      1.199,
+      -15.386
+     ],
+     [
+      0.231,
+      -15.413
+     ],
+     [
+      -0.736,
+      -15.379
+     ],
+     [
+      -1.698,
+      -15.287
+     ],
+     [
+      -2.652,
+      -15.135
+     ],
+     [
+      -3.594,
+      -14.925
+     ],
+     [
+      -4.52,
+      -14.658
+     ],
+     [
+      -5.427,
+      -14.335
+     ],
+     [
+      -6.312,
+      -13.957
+     ],
+     [
+      -7.171,
+      -13.525
+     ],
+     [
+      -7.865,
+      -12.87
+     ],
+     [
+      -8.506,
+      -12.182
+     ],
+     [
+      -9.094,
+      -11.465
+     ],
+     [
+      -9.627,
+      -10.724
+     ],
+     [
+      -10.104,
+      -9.963
+     ],
+     [
+      -10.526,
+      -9.184
+     ],
+     [
+      -10.891,
+      -8.393
+     ],
+     [
+      -11.201,
+      -7.592
+     ],
+     [
+      -11.455,
+      -6.786
+     ],
+     [
+      -11.654,
+      -5.979
+     ],
+     [
+      -11.798,
+      -5.174
+     ],
+     [
+      -11.89,
+      -4.374
+     ],
+     [
+      -11.929,
+      -3.584
+     ],
+     [
+      -11.918,
+      -2.805
+     ],
+     [
+      -11.858,
+      -2.042
+     ]
+    ]
+   },
+   "at": [
+    -0.0,
+    -4.8907,
+    1.0396
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [
+    "arm_pitch",
+    "arm_phase"
+   ],
+   "floating": true,
+   "look": {
+    "fill": "dark",
+    "weight": 0.25,
+    "alpha": 0.1
+   }
+  },
+  {
+   "id": "cloud-sw-0-0",
+   "label": "Star cloud (sw arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 6
+   },
+   "at": [
+    13.24,
+    -0.75,
+    -3.5283
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.55,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-sw-0-1",
+   "label": "Star cloud (sw arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 7
+   },
+   "at": [
+    12.8575,
+    -1.1218,
+    -5.2778
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.5750000000000001,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-sw-0-2",
+   "label": "Star cloud (sw arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 8
+   },
+   "at": [
+    12.2351,
+    -1.486,
+    -6.991
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.6000000000000001,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-sw-0-3",
+   "label": "Star cloud (sw arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 9
+   },
+   "at": [
+    11.3758,
+    -1.8357,
+    -8.6365
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.625,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-sw-0-4",
+   "label": "Star cloud (sw arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 10
+   },
+   "at": [
+    10.2869,
+    -2.1645,
+    -10.1833
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.65,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-sw-0-5",
+   "label": "Star cloud (sw arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 6
+   },
+   "at": [
+    8.9798,
+    -2.4658,
+    -11.6009
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.675,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-sw-0-6",
+   "label": "Star cloud (sw arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 7
+   },
+   "at": [
+    7.4704,
+    -2.7335,
+    -12.8601
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.7000000000000001,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-sw-0-7",
+   "label": "Star cloud (sw arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 8
+   },
+   "at": [
+    5.7783,
+    -2.9617,
+    -13.9335
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.7250000000000001,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-sw-0-8",
+   "label": "Star cloud (sw arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 9
+   },
+   "at": [
+    3.9271,
+    -3.145,
+    -14.796
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.75,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-sw-0-9",
+   "label": "Star cloud (sw arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 10
+   },
+   "at": [
+    1.9441,
+    -3.2788,
+    -15.4253
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.775,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-sw-0-10",
+   "label": "Star cloud (sw arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 6
+   },
+   "at": [
+    -0.1404,
+    -3.3589,
+    -15.8024
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.8,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-sw-0-11",
+   "label": "Star cloud (sw arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 7
+   },
+   "at": [
+    -2.2931,
+    -3.3822,
+    -15.9121
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.8250000000000001,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-sw-0-12",
+   "label": "Star cloud (sw arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 8
+   },
+   "at": [
+    -4.4785,
+    -3.3463,
+    -15.7433
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.8500000000000001,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-sw-0-13",
+   "label": "Star cloud (sw arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 9
+   },
+   "at": [
+    -6.6592,
+    -3.2499,
+    -15.2895
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.875,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "arm-sw-1",
+   "label": "Arm (sw), dust lane segment 2",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 0.2,
+    "profile": [
+     [
+      11.972,
+      -6.2
+     ],
+     [
+      12.364,
+      -5.444
+     ],
+     [
+      12.709,
+      -4.664
+     ],
+     [
+      13.007,
+      -3.863
+     ],
+     [
+      13.256,
+      -3.043
+     ],
+     [
+      13.454,
+      -2.207
+     ],
+     [
+      13.602,
+      -1.359
+     ],
+     [
+      13.697,
+      -0.501
+     ],
+     [
+      13.739,
+      0.363
+     ],
+     [
+      13.729,
+      1.231
+     ],
+     [
+      13.665,
+      2.099
+     ],
+     [
+      13.548,
+      2.964
+     ],
+     [
+      13.378,
+      3.823
+     ],
+     [
+      13.155,
+      4.672
+     ],
+     [
+      12.879,
+      5.509
+     ],
+     [
+      12.552,
+      6.33
+     ],
+     [
+      12.41,
+      7.214
+     ],
+     [
+      12.207,
+      8.105
+     ],
+     [
+      11.943,
+      8.998
+     ],
+     [
+      11.615,
+      9.89
+     ],
+     [
+      11.222,
+      10.777
+     ],
+     [
+      10.765,
+      11.653
+     ],
+     [
+      10.243,
+      12.514
+     ],
+     [
+      9.656,
+      13.356
+     ],
+     [
+      9.005,
+      14.174
+     ],
+     [
+      8.289,
+      14.963
+     ],
+     [
+      7.511,
+      15.719
+     ],
+     [
+      6.671,
+      16.436
+     ],
+     [
+      5.771,
+      17.109
+     ],
+     [
+      4.814,
+      17.736
+     ],
+     [
+      3.802,
+      18.31
+     ],
+     [
+      5.184,
+      21.796
+     ],
+     [
+      6.515,
+      21.356
+     ],
+     [
+      7.812,
+      20.838
+     ],
+     [
+      9.07,
+      20.242
+     ],
+     [
+      10.286,
+      19.573
+     ],
+     [
+      11.455,
+      18.833
+     ],
+     [
+      12.573,
+      18.025
+     ],
+     [
+      13.636,
+      17.152
+     ],
+     [
+      14.641,
+      16.219
+     ],
+     [
+      15.584,
+      15.228
+     ],
+     [
+      16.462,
+      14.185
+     ],
+     [
+      17.271,
+      13.092
+     ],
+     [
+      18.011,
+      11.955
+     ],
+     [
+      18.677,
+      10.777
+     ],
+     [
+      19.269,
+      9.564
+     ],
+     [
+      19.783,
+      8.319
+     ],
+     [
+      19.975,
+      6.997
+     ],
+     [
+      20.081,
+      5.684
+     ],
+     [
+      20.105,
+      4.385
+     ],
+     [
+      20.047,
+      3.105
+     ],
+     [
+      19.91,
+      1.849
+     ],
+     [
+      19.698,
+      0.622
+     ],
+     [
+      19.413,
+      -0.571
+     ],
+     [
+      19.058,
+      -1.728
+     ],
+     [
+      18.637,
+      -2.843
+     ],
+     [
+      18.154,
+      -3.914
+     ],
+     [
+      17.612,
+      -4.936
+     ],
+     [
+      17.016,
+      -5.907
+     ],
+     [
+      16.369,
+      -6.825
+     ],
+     [
+      15.676,
+      -7.686
+     ],
+     [
+      14.942,
+      -8.489
+     ]
+    ]
+   },
+   "at": [
+    -0.0,
+    -4.8907,
+    1.0396
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [
+    "arm_pitch",
+    "arm_phase"
+   ],
+   "floating": true,
+   "look": {
+    "fill": "dark",
+    "weight": 0.25,
+    "alpha": 0.1
+   }
+  },
+  {
+   "id": "cloud-sw-1-0",
+   "label": "Star cloud (sw arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 6
+   },
+   "at": [
+    -17.042,
+    -1.6062,
+    -7.5566
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.55,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-sw-1-1",
+   "label": "Star cloud (sw arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 7
+   },
+   "at": [
+    -18.2191,
+    -1.148,
+    -5.4007
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.5750000000000001,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-sw-1-2",
+   "label": "Star cloud (sw arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 8
+   },
+   "at": [
+    -19.1138,
+    -0.6532,
+    -3.073
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.6000000000000001,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-sw-1-3",
+   "label": "Star cloud (sw arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 9
+   },
+   "at": [
+    -19.7004,
+    -0.1293,
+    -0.6083
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.625,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-sw-1-4",
+   "label": "Star cloud (sw arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 10
+   },
+   "at": [
+    -19.9575,
+    0.4155,
+    1.9546
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.65,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-sw-1-5",
+   "label": "Star cloud (sw arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 6
+   },
+   "at": [
+    -19.8688,
+    0.9722,
+    4.5739
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.675,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-sw-1-6",
+   "label": "Star cloud (sw arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 7
+   },
+   "at": [
+    -19.4235,
+    1.5316,
+    7.2054
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.7000000000000001,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-sw-1-7",
+   "label": "Star cloud (sw arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 8
+   },
+   "at": [
+    -18.6167,
+    2.0837,
+    9.803
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.7250000000000001,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-sw-1-8",
+   "label": "Star cloud (sw arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 9
+   },
+   "at": [
+    -17.4496,
+    2.6186,
+    12.3195
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.75,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-sw-1-9",
+   "label": "Star cloud (sw arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 10
+   },
+   "at": [
+    -15.9298,
+    3.1262,
+    14.7074
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.775,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-sw-1-10",
+   "label": "Star cloud (sw arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 6
+   },
+   "at": [
+    -14.0714,
+    3.5964,
+    16.9199
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.8,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-sw-1-11",
+   "label": "Star cloud (sw arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 7
+   },
+   "at": [
+    -11.895,
+    4.0197,
+    18.9113
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.8250000000000001,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-sw-1-12",
+   "label": "Star cloud (sw arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 8
+   },
+   "at": [
+    -9.4276,
+    4.3868,
+    20.6383
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.8500000000000001,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-sw-1-13",
+   "label": "Star cloud (sw arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 9
+   },
+   "at": [
+    -6.7021,
+    4.6892,
+    22.0608
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.875,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "arm-sw-2",
+   "label": "Arm (sw), dust lane segment 3",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 0.2,
+    "profile": [
+     [
+      -7.91,
+      18.942
+     ],
+     [
+      -9.118,
+      18.484
+     ],
+     [
+      -10.3,
+      17.952
+     ],
+     [
+      -11.453,
+      17.346
+     ],
+     [
+      -12.57,
+      16.667
+     ],
+     [
+      -13.649,
+      15.918
+     ],
+     [
+      -14.685,
+      15.101
+     ],
+     [
+      -15.673,
+      14.218
+     ],
+     [
+      -16.609,
+      13.272
+     ],
+     [
+      -17.49,
+      12.266
+     ],
+     [
+      -18.312,
+      11.203
+     ],
+     [
+      -19.071,
+      10.086
+     ],
+     [
+      -19.764,
+      8.919
+     ],
+     [
+      -20.387,
+      7.706
+     ],
+     [
+      -20.938,
+      6.451
+     ],
+     [
+      -21.413,
+      5.158
+     ],
+     [
+      -22.073,
+      3.93
+     ],
+     [
+      -22.664,
+      2.641
+     ],
+     [
+      -23.18,
+      1.293
+     ],
+     [
+      -23.618,
+      -0.108
+     ],
+     [
+      -23.972,
+      -1.558
+     ],
+     [
+      -24.239,
+      -3.053
+     ],
+     [
+      -24.413,
+      -4.587
+     ],
+     [
+      -24.492,
+      -6.155
+     ],
+     [
+      -24.471,
+      -7.75
+     ],
+     [
+      -24.347,
+      -9.367
+     ],
+     [
+      -24.119,
+      -10.998
+     ],
+     [
+      -23.783,
+      -12.638
+     ],
+     [
+      -23.337,
+      -14.278
+     ],
+     [
+      -22.78,
+      -15.913
+     ],
+     [
+      -22.112,
+      -17.534
+     ],
+     [
+      -25.794,
+      -19.554
+     ],
+     [
+      -26.833,
+      -17.821
+     ],
+     [
+      -27.76,
+      -16.037
+     ],
+     [
+      -28.572,
+      -14.207
+     ],
+     [
+      -29.267,
+      -12.34
+     ],
+     [
+      -29.843,
+      -10.443
+     ],
+     [
+      -30.3,
+      -8.523
+     ],
+     [
+      -30.636,
+      -6.586
+     ],
+     [
+      -30.853,
+      -4.642
+     ],
+     [
+      -30.949,
+      -2.696
+     ],
+     [
+      -30.926,
+      -0.756
+     ],
+     [
+      -30.785,
+      1.171
+     ],
+     [
+      -30.527,
+      3.077
+     ],
+     [
+      -30.154,
+      4.957
+     ],
+     [
+      -29.668,
+      6.803
+     ],
+     [
+      -29.072,
+      8.608
+     ],
+     [
+      -28.122,
+      10.236
+     ],
+     [
+      -27.085,
+      11.781
+     ],
+     [
+      -25.968,
+      13.239
+     ],
+     [
+      -24.778,
+      14.606
+     ],
+     [
+      -23.521,
+      15.879
+     ],
+     [
+      -22.205,
+      17.055
+     ],
+     [
+      -20.836,
+      18.131
+     ],
+     [
+      -19.422,
+      19.106
+     ],
+     [
+      -17.969,
+      19.978
+     ],
+     [
+      -16.485,
+      20.747
+     ],
+     [
+      -14.976,
+      21.412
+     ],
+     [
+      -13.45,
+      21.973
+     ],
+     [
+      -11.914,
+      22.43
+     ],
+     [
+      -10.374,
+      22.785
+     ],
+     [
+      -8.837,
+      23.038
+     ]
+    ]
+   },
+   "at": [
+    -0.0,
+    -4.8907,
+    1.0396
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [
+    "arm_pitch",
+    "arm_phase"
+   ],
+   "floating": true,
+   "look": {
+    "fill": "dark",
+    "weight": 0.25,
+    "alpha": 0.1
+   }
+  },
+  {
+   "id": "cloud-sw-2-0",
+   "label": "Star cloud (sw arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 6
+   },
+   "at": [
+    11.4218,
+    4.8712,
+    22.9173
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.55,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-sw-2-1",
+   "label": "Star cloud (sw arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 7
+   },
+   "at": [
+    14.6574,
+    4.6016,
+    21.6486
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.5750000000000001,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-sw-2-2",
+   "label": "Star cloud (sw arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 8
+   },
+   "at": [
+    17.7521,
+    4.2397,
+    19.9464
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.6000000000000001,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-sw-2-3",
+   "label": "Star cloud (sw arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 9
+   },
+   "at": [
+    20.6456,
+    3.7888,
+    17.8247
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.625,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-sw-2-4",
+   "label": "Star cloud (sw arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 10
+   },
+   "at": [
+    23.2791,
+    3.2533,
+    15.3055
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.65,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-sw-2-5",
+   "label": "Star cloud (sw arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 6
+   },
+   "at": [
+    25.5959,
+    2.6396,
+    12.4184
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.675,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-sw-2-6",
+   "label": "Star cloud (sw arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 7
+   },
+   "at": [
+    27.543,
+    1.9557,
+    9.2009
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.7000000000000001,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-sw-2-7",
+   "label": "Star cloud (sw arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 8
+   },
+   "at": [
+    29.0717,
+    1.2111,
+    5.6977
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.7250000000000001,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-sw-2-8",
+   "label": "Star cloud (sw arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 9
+   },
+   "at": [
+    30.1389,
+    0.4167,
+    1.9603
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.75,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-sw-2-9",
+   "label": "Star cloud (sw arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 10
+   },
+   "at": [
+    30.7083,
+    -0.4153,
+    -1.9537
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.775,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-sw-2-10",
+   "label": "Star cloud (sw arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 6
+   },
+   "at": [
+    30.7507,
+    -1.2714,
+    -5.9815
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.8,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-sw-2-11",
+   "label": "Star cloud (sw arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 7
+   },
+   "at": [
+    30.2452,
+    -2.1374,
+    -10.0558
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.8250000000000001,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-sw-2-12",
+   "label": "Star cloud (sw arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 8
+   },
+   "at": [
+    29.18,
+    -2.9983,
+    -14.1058
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.8500000000000001,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-sw-2-13",
+   "label": "Star cloud (sw arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 9
+   },
+   "at": [
+    27.5524,
+    -3.8384,
+    -18.0584
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.875,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "arm-sw-3",
+   "label": "Arm (sw), dust lane segment 4",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 0.2,
+    "profile": [
+     [
+      -9.175,
+      -29.63
+     ],
+     [
+      -7.351,
+      -30.314
+     ],
+     [
+      -5.478,
+      -30.888
+     ],
+     [
+      -3.563,
+      -31.349
+     ],
+     [
+      -1.612,
+      -31.693
+     ],
+     [
+      0.368,
+      -31.919
+     ],
+     [
+      2.37,
+      -32.025
+     ],
+     [
+      4.386,
+      -32.007
+     ],
+     [
+      6.409,
+      -31.865
+     ],
+     [
+      8.433,
+      -31.598
+     ],
+     [
+      10.448,
+      -31.206
+     ],
+     [
+      12.449,
+      -30.688
+     ],
+     [
+      14.426,
+      -30.044
+     ],
+     [
+      16.372,
+      -29.276
+     ],
+     [
+      18.28,
+      -28.384
+     ],
+     [
+      20.142,
+      -27.371
+     ],
+     [
+      22.104,
+      -26.508
+     ],
+     [
+      24.037,
+      -25.509
+     ],
+     [
+      25.932,
+      -24.372
+     ],
+     [
+      27.78,
+      -23.101
+     ],
+     [
+      29.572,
+      -21.695
+     ],
+     [
+      31.298,
+      -20.156
+     ],
+     [
+      32.948,
+      -18.489
+     ],
+     [
+      34.513,
+      -16.695
+     ],
+     [
+      35.984,
+      -14.779
+     ],
+     [
+      37.352,
+      -12.746
+     ],
+     [
+      38.608,
+      -10.6
+     ],
+     [
+      39.744,
+      -8.349
+     ],
+     [
+      40.751,
+      -5.997
+     ],
+     [
+      41.621,
+      -3.554
+     ],
+     [
+      42.347,
+      -1.025
+     ],
+     [
+      46.913,
+      -1.903
+     ],
+     [
+      46.425,
+      -4.788
+     ],
+     [
+      45.764,
+      -7.621
+     ],
+     [
+      44.936,
+      -10.391
+     ],
+     [
+      43.946,
+      -13.09
+     ],
+     [
+      42.799,
+      -15.708
+     ],
+     [
+      41.5,
+      -18.236
+     ],
+     [
+      40.058,
+      -20.666
+     ],
+     [
+      38.478,
+      -22.99
+     ],
+     [
+      36.768,
+      -25.2
+     ],
+     [
+      34.935,
+      -27.289
+     ],
+     [
+      32.989,
+      -29.252
+     ],
+     [
+      30.937,
+      -31.081
+     ],
+     [
+      28.789,
+      -32.772
+     ],
+     [
+      26.552,
+      -34.32
+     ],
+     [
+      24.237,
+      -35.721
+     ],
+     [
+      21.734,
+      -36.684
+     ],
+     [
+      19.206,
+      -37.48
+     ],
+     [
+      16.666,
+      -38.109
+     ],
+     [
+      14.123,
+      -38.572
+     ],
+     [
+      11.588,
+      -38.872
+     ],
+     [
+      9.072,
+      -39.011
+     ],
+     [
+      6.583,
+      -38.993
+     ],
+     [
+      4.131,
+      -38.822
+     ],
+     [
+      1.726,
+      -38.503
+     ],
+     [
+      -0.624,
+      -38.039
+     ],
+     [
+      -2.911,
+      -37.438
+     ],
+     [
+      -5.126,
+      -36.705
+     ],
+     [
+      -7.264,
+      -35.846
+     ],
+     [
+      -9.316,
+      -34.868
+     ],
+     [
+      -11.276,
+      -33.778
+     ]
+    ]
+   },
+   "at": [
+    -0.0,
+    -4.8907,
+    1.0396
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [
+    "arm_pitch",
+    "arm_phase"
+   ],
+   "floating": true,
+   "look": {
+    "fill": "dark",
+    "weight": 0.25,
+    "alpha": 0.1
+   }
+  },
+  {
+   "id": "cloud-sw-3-0",
+   "label": "Star cloud (sw arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 6
+   },
+   "at": [
+    8.7006,
+    -7.4567,
+    -35.0812
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.55,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-sw-3-1",
+   "label": "Star cloud (sw arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 7
+   },
+   "at": [
+    4.0037,
+    -7.7759,
+    -36.5828
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.5750000000000001,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-sw-3-2",
+   "label": "Star cloud (sw arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 8
+   },
+   "at": [
+    -0.947,
+    -7.9683,
+    -37.488
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.6000000000000001,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-sw-3-3",
+   "label": "Star cloud (sw arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 9
+   },
+   "at": [
+    -6.0732,
+    -8.0256,
+    -37.7574
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.625,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-sw-3-4",
+   "label": "Star cloud (sw arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 10
+   },
+   "at": [
+    -11.2904,
+    -7.9415,
+    -37.3616
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.65,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-sw-3-5",
+   "label": "Star cloud (sw arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 6
+   },
+   "at": [
+    -16.5089,
+    -7.7119,
+    -36.2815
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.675,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-sw-3-6",
+   "label": "Star cloud (sw arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 7
+   },
+   "at": [
+    -21.6357,
+    -7.3352,
+    -34.5095
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.7000000000000001,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-sw-3-7",
+   "label": "Star cloud (sw arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 8
+   },
+   "at": [
+    -26.5758,
+    -6.8125,
+    -32.0503
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.7250000000000001,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-sw-3-8",
+   "label": "Star cloud (sw arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 9
+   },
+   "at": [
+    -31.2336,
+    -6.1473,
+    -28.9208
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.75,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-sw-3-9",
+   "label": "Star cloud (sw arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 10
+   },
+   "at": [
+    -35.5149,
+    -5.3459,
+    -25.1503
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.775,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-sw-3-10",
+   "label": "Star cloud (sw arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 6
+   },
+   "at": [
+    -39.3283,
+    -4.4172,
+    -20.7811
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.8,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-sw-3-11",
+   "label": "Star cloud (sw arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 7
+   },
+   "at": [
+    -42.5873,
+    -3.3727,
+    -15.8674
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.8250000000000001,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-sw-3-12",
+   "label": "Star cloud (sw arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 8
+   },
+   "at": [
+    -45.2118,
+    -2.2267,
+    -10.4757
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.8500000000000001,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "cloud-sw-3-13",
+   "label": "Star cloud (sw arm)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 9
+   },
+   "at": [
+    -47.1299,
+    -0.9955,
+    -4.6833
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "data",
+    "alpha": 0.875,
+    "glow": 0.55
+   }
+  },
+  {
+   "id": "ring-10kpc",
+   "label": "10 kpc star-forming ring",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -28.232,
+      -16.3,
+      0
+     ],
+     [
+      -26.946,
+      -18.349,
+      0
+     ],
+     [
+      -25.51,
+      -20.298,
+      0
+     ],
+     [
+      -23.934,
+      -22.134,
+      0
+     ],
+     [
+      -22.227,
+      -23.848,
+      0
+     ],
+     [
+      -20.396,
+      -25.431,
+      0
+     ],
+     [
+      -18.454,
+      -26.874,
+      0
+     ],
+     [
+      -16.409,
+      -28.169,
+      0
+     ],
+     [
+      -14.275,
+      -29.309,
+      0
+     ],
+     [
+      -12.061,
+      -30.287,
+      0
+     ],
+     [
+      -9.781,
+      -31.098,
+      0
+     ],
+     [
+      -7.448,
+      -31.738,
+      0
+     ],
+     [
+      -5.073,
+      -32.203,
+      0
+     ],
+     [
+      -2.67,
+      -32.49,
+      0
+     ],
+     [
+      -0.253,
+      -32.599,
+      0
+     ],
+     [
+      2.166,
+      -32.528,
+      0
+     ],
+     [
+      4.573,
+      -32.278,
+      0
+     ],
+     [
+      6.954,
+      -31.85,
+      0
+     ],
+     [
+      9.298,
+      -31.246,
+      0
+     ],
+     [
+      11.59,
+      -30.47,
+      0
+     ],
+     [
+      13.818,
+      -29.527,
+      0
+     ],
+     [
+      15.97,
+      -28.42,
+      0
+     ],
+     [
+      18.035,
+      -27.157,
+      0
+     ],
+     [
+      19.999,
+      -25.745,
+      0
+     ],
+     [
+      21.854,
+      -24.19,
+      0
+     ],
+     [
+      23.588,
+      -22.503,
+      0
+     ],
+     [
+      25.192,
+      -20.691,
+      0
+     ],
+     [
+      26.658,
+      -18.765,
+      0
+     ],
+     [
+      27.976,
+      -16.736,
+      0
+     ],
+     [
+      29.141,
+      -14.615,
+      0
+     ],
+     [
+      30.144,
+      -12.413,
+      0
+     ],
+     [
+      30.982,
+      -10.143,
+      0
+     ],
+     [
+      31.649,
+      -7.817,
+      0
+     ],
+     [
+      32.142,
+      -5.447,
+      0
+     ],
+     [
+      32.457,
+      -3.048,
+      0
+     ],
+     [
+      32.594,
+      -0.632,
+      0
+     ],
+     [
+      32.551,
+      1.787,
+      0
+     ],
+     [
+      32.329,
+      4.197,
+      0
+     ],
+     [
+      31.928,
+      6.583,
+      0
+     ],
+     [
+      31.352,
+      8.934,
+      0
+     ],
+     [
+      30.603,
+      11.235,
+      0
+     ],
+     [
+      29.685,
+      13.474,
+      0
+     ],
+     [
+      28.604,
+      15.639,
+      0
+     ],
+     [
+      27.365,
+      17.717,
+      0
+     ],
+     [
+      25.976,
+      19.698,
+      0
+     ],
+     [
+      24.443,
+      21.571,
+      0
+     ],
+     [
+      22.775,
+      23.325,
+      0
+     ],
+     [
+      20.983,
+      24.95,
+      0
+     ],
+     [
+      19.074,
+      26.438,
+      0
+     ],
+     [
+      17.06,
+      27.78,
+      0
+     ],
+     [
+      14.953,
+      28.969,
+      0
+     ],
+     [
+      12.763,
+      29.998,
+      0
+     ],
+     [
+      10.502,
+      30.862,
+      0
+     ],
+     [
+      8.184,
+      31.556,
+      0
+     ],
+     [
+      5.821,
+      32.076,
+      0
+     ],
+     [
+      3.426,
+      32.42,
+      0
+     ],
+     [
+      1.011,
+      32.584,
+      0
+     ],
+     [
+      -1.408,
+      32.57,
+      0
+     ],
+     [
+      -3.821,
+      32.375,
+      0
+     ],
+     [
+      -6.212,
+      32.003,
+      0
+     ],
+     [
+      -8.568,
+      31.454,
+      0
+     ],
+     [
+      -10.878,
+      30.732,
+      0
+     ],
+     [
+      -13.127,
+      29.84,
+      0
+     ],
+     [
+      -15.305,
+      28.784,
+      0
+     ]
+    ],
+    "smooth": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [
+    "ring_radius"
+   ],
+   "floating": true,
+   "look": {
+    "tone": "accent",
+    "weight": 0.9,
+    "alpha": 0.4,
+    "glow": 0.2
+   }
+  },
+  {
+   "id": "ring-knots",
+   "label": "Ring of HII regions",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -28.232,
+      -16.3,
+      0
+     ],
+     [
+      -27.358,
+      -17.729,
+      0
+     ],
+     [
+      -26.411,
+      -19.111,
+      0
+     ],
+     [
+      -25.394,
+      -20.443,
+      0
+     ],
+     [
+      -24.31,
+      -21.721,
+      0
+     ],
+     [
+      -23.162,
+      -22.941,
+      0
+     ],
+     [
+      -21.953,
+      -24.101,
+      0
+     ],
+     [
+      -20.685,
+      -25.197,
+      0
+     ],
+     [
+      -19.364,
+      -26.226,
+      0
+     ],
+     [
+      -17.991,
+      -27.186,
+      0
+     ],
+     [
+      -16.57,
+      -28.075,
+      0
+     ],
+     [
+      -15.106,
+      -28.889,
+      0
+     ],
+     [
+      -13.601,
+      -29.627,
+      0
+     ],
+     [
+      -12.061,
+      -30.287,
+      0
+     ],
+     [
+      -10.489,
+      -30.866,
+      0
+     ],
+     [
+      -8.89,
+      -31.365,
+      0
+     ],
+     [
+      -7.266,
+      -31.78,
+      0
+     ],
+     [
+      -5.624,
+      -32.111,
+      0
+     ],
+     [
+      -3.967,
+      -32.358,
+      0
+     ],
+     [
+      -2.299,
+      -32.519,
+      0
+     ],
+     [
+      -0.625,
+      -32.594,
+      0
+     ],
+     [
+      1.05,
+      -32.583,
+      0
+     ],
+     [
+      2.723,
+      -32.486,
+      0
+     ],
+     [
+      4.388,
+      -32.303,
+      0
+     ],
+     [
+      6.042,
+      -32.035,
+      0
+     ],
+     [
+      7.68,
+      -31.682,
+      0
+     ],
+     [
+      9.298,
+      -31.246,
+      0
+     ],
+     [
+      10.891,
+      -30.727,
+      0
+     ],
+     [
+      12.455,
+      -30.127,
+      0
+     ],
+     [
+      13.987,
+      -29.447,
+      0
+     ],
+     [
+      15.481,
+      -28.69,
+      0
+     ],
+     [
+      16.935,
+      -27.856,
+      0
+     ],
+     [
+      18.344,
+      -26.949,
+      0
+     ],
+     [
+      19.704,
+      -25.971,
+      0
+     ],
+     [
+      21.012,
+      -24.925,
+      0
+     ],
+     [
+      22.265,
+      -23.812,
+      0
+     ],
+     [
+      23.459,
+      -22.637,
+      0
+     ],
+     [
+      24.591,
+      -21.402,
+      0
+     ],
+     [
+      25.658,
+      -20.11,
+      0
+     ],
+     [
+      26.658,
+      -18.765,
+      0
+     ],
+     [
+      27.587,
+      -17.371,
+      0
+     ],
+     [
+      28.443,
+      -15.93,
+      0
+     ],
+     [
+      29.224,
+      -14.448,
+      0
+     ],
+     [
+      29.927,
+      -12.928,
+      0
+     ],
+     [
+      30.552,
+      -11.373,
+      0
+     ],
+     [
+      31.096,
+      -9.788,
+      0
+     ],
+     [
+      31.558,
+      -8.178,
+      0
+     ],
+     [
+      31.936,
+      -6.545,
+      0
+     ],
+     [
+      32.23,
+      -4.896,
+      0
+     ],
+     [
+      32.439,
+      -3.233,
+      0
+     ],
+     [
+      32.563,
+      -1.563,
+      0
+     ],
+     [
+      32.6,
+      0.113,
+      0
+     ],
+     [
+      32.551,
+      1.787,
+      0
+     ],
+     [
+      32.416,
+      3.457,
+      0
+     ],
+     [
+      32.196,
+      5.118,
+      0
+     ],
+     [
+      31.89,
+      6.766,
+      0
+     ],
+     [
+      31.5,
+      8.395,
+      0
+     ],
+     [
+      31.028,
+      10.003,
+      0
+     ],
+     [
+      30.473,
+      11.584,
+      0
+     ],
+     [
+      29.837,
+      13.134,
+      0
+     ],
+     [
+      29.123,
+      14.649,
+      0
+     ],
+     [
+      28.332,
+      16.126,
+      0
+     ],
+     [
+      27.466,
+      17.561,
+      0
+     ],
+     [
+      26.527,
+      18.949,
+      0
+     ],
+     [
+      25.519,
+      20.287,
+      0
+     ],
+     [
+      24.443,
+      21.571,
+      0
+     ],
+     [
+      23.302,
+      22.798,
+      0
+     ],
+     [
+      22.1,
+      23.965,
+      0
+     ],
+     [
+      20.84,
+      25.069,
+      0
+     ],
+     [
+      19.524,
+      26.107,
+      0
+     ],
+     [
+      18.157,
+      27.075,
+      0
+     ],
+     [
+      16.742,
+      27.973,
+      0
+     ],
+     [
+      15.283,
+      28.796,
+      0
+     ],
+     [
+      13.783,
+      29.543,
+      0
+     ],
+     [
+      12.247,
+      30.212,
+      0
+     ],
+     [
+      10.679,
+      30.801,
+      0
+     ],
+     [
+      9.082,
+      31.309,
+      0
+     ],
+     [
+      7.461,
+      31.735,
+      0
+     ],
+     [
+      5.821,
+      32.076,
+      0
+     ],
+     [
+      4.165,
+      32.333,
+      0
+     ],
+     [
+      2.499,
+      32.504,
+      0
+     ],
+     [
+      0.825,
+      32.59,
+      0
+     ],
+     [
+      -0.85,
+      32.589,
+      0
+     ],
+     [
+      -2.523,
+      32.502,
+      0
+     ],
+     [
+      -4.19,
+      32.33,
+      0
+     ],
+     [
+      -5.846,
+      32.072,
+      0
+     ],
+     [
+      -7.486,
+      31.729,
+      0
+     ],
+     [
+      -9.106,
+      31.302,
+      0
+     ],
+     [
+      -10.702,
+      30.793,
+      0
+     ],
+     [
+      -12.27,
+      30.203,
+      0
+     ],
+     [
+      -13.806,
+      29.532,
+      0
+     ],
+     [
+      -15.305,
+      28.784,
+      0
+     ]
+    ],
+    "smooth": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [
+    "ring_radius"
+   ],
+   "floating": true,
+   "look": {
+    "tone": "accent",
+    "line": "dotted",
+    "weight": 1.9,
+    "alpha": 0.55,
+    "glow": 0.25
+   }
+  },
+  {
+   "id": "bar",
+   "label": "Nuclear bar",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      5.569,
+      0.585,
+      0
+     ],
+     [
+      5.468,
+      0.889,
+      0
+     ],
+     [
+      5.232,
+      1.171,
+      0
+     ],
+     [
+      4.867,
+      1.425,
+      0
+     ],
+     [
+      4.383,
+      1.643,
+      0
+     ],
+     [
+      3.79,
+      1.82,
+      0
+     ],
+     [
+      3.104,
+      1.953,
+      0
+     ],
+     [
+      2.342,
+      2.038,
+      0
+     ],
+     [
+      1.522,
+      2.073,
+      0
+     ],
+     [
+      0.665,
+      2.056,
+      0
+     ],
+     [
+      -0.209,
+      1.989,
+      0
+     ],
+     [
+      -1.078,
+      1.873,
+      0
+     ],
+     [
+      -1.92,
+      1.711,
+      0
+     ],
+     [
+      -2.715,
+      1.507,
+      0
+     ],
+     [
+      -3.443,
+      1.265,
+      0
+     ],
+     [
+      -4.086,
+      0.993,
+      0
+     ],
+     [
+      -4.629,
+      0.696,
+      0
+     ],
+     [
+      -5.057,
+      0.381,
+      0
+     ],
+     [
+      -5.361,
+      0.058,
+      0
+     ],
+     [
+      -5.533,
+      -0.267,
+      0
+     ],
+     [
+      -5.569,
+      -0.585,
+      0
+     ],
+     [
+      -5.468,
+      -0.889,
+      0
+     ],
+     [
+      -5.232,
+      -1.171,
+      0
+     ],
+     [
+      -4.867,
+      -1.425,
+      0
+     ],
+     [
+      -4.383,
+      -1.643,
+      0
+     ],
+     [
+      -3.79,
+      -1.82,
+      0
+     ],
+     [
+      -3.104,
+      -1.953,
+      0
+     ],
+     [
+      -2.342,
+      -2.038,
+      0
+     ],
+     [
+      -1.522,
+      -2.073,
+      0
+     ],
+     [
+      -0.665,
+      -2.056,
+      0
+     ],
+     [
+      0.209,
+      -1.989,
+      0
+     ],
+     [
+      1.078,
+      -1.873,
+      0
+     ],
+     [
+      1.92,
+      -1.711,
+      0
+     ],
+     [
+      2.715,
+      -1.507,
+      0
+     ],
+     [
+      3.443,
+      -1.265,
+      0
+     ],
+     [
+      4.086,
+      -0.993,
+      0
+     ],
+     [
+      4.629,
+      -0.696,
+      0
+     ],
+     [
+      5.057,
+      -0.381,
+      0
+     ],
+     [
+      5.361,
+      -0.058,
+      0
+     ],
+     [
+      5.533,
+      0.267,
+      0
+     ]
+    ],
+    "closed": true,
+    "smooth": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [
+    "bulge_extent"
+   ],
+   "floating": true,
+   "look": {
+    "tone": "structure",
+    "weight": 0.6,
+    "alpha": 0.35
+   }
+  },
+  {
+   "id": "bulge-glow-48",
+   "label": "Bulge glow",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 48
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [
+    "bulge_extent"
+   ],
+   "floating": true,
+   "look": {
+    "tone": "bright",
+    "alpha": 0.34,
+    "glow": 1
+   }
+  },
+  {
+   "id": "bulge-glow-44",
+   "label": "Bulge glow",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 44
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [
+    "bulge_extent"
+   ],
+   "floating": true,
+   "look": {
+    "tone": "bright",
+    "alpha": 0.48,
+    "glow": 1
+   }
+  },
+  {
+   "id": "bulge-glow-30",
+   "label": "Bulge glow",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 30
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [
+    "bulge_extent"
+   ],
+   "floating": true,
+   "look": {
+    "tone": "bright",
+    "alpha": 0.7,
+    "glow": 1
+   }
+  },
+  {
+   "id": "bulge-stars",
+   "label": "Bulge star cloud",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "points",
+    "count": 620,
+    "region": {
+     "sphere": 10.5
+    },
+    "sprite": "soft",
+    "size_px": 8
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": [
+    1,
+    1,
+    0.8
+   ],
+   "basis": [
+    "bulge_extent"
+   ],
+   "floating": true,
+   "look": {
+    "tone": "bright",
+    "alpha": 1.0
+   }
+  },
+  {
+   "id": "bulge-lift-0",
+   "label": "Bulge contour (below)",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      9.6,
+      0.0,
+      0
+     ],
+     [
+      9.54,
+      1.075,
+      0
+     ],
+     [
+      9.359,
+      2.136,
+      0
+     ],
+     [
+      9.061,
+      3.171,
+      0
+     ],
+     [
+      8.649,
+      4.165,
+      0
+     ],
+     [
+      8.129,
+      5.108,
+      0
+     ],
+     [
+      7.506,
+      5.986,
+      0
+     ],
+     [
+      6.788,
+      6.788,
+      0
+     ],
+     [
+      5.986,
+      7.506,
+      0
+     ],
+     [
+      5.108,
+      8.129,
+      0
+     ],
+     [
+      4.165,
+      8.649,
+      0
+     ],
+     [
+      3.171,
+      9.061,
+      0
+     ],
+     [
+      2.136,
+      9.359,
+      0
+     ],
+     [
+      1.075,
+      9.54,
+      0
+     ],
+     [
+      0.0,
+      9.6,
+      0
+     ],
+     [
+      -1.075,
+      9.54,
+      0
+     ],
+     [
+      -2.136,
+      9.359,
+      0
+     ],
+     [
+      -3.171,
+      9.061,
+      0
+     ],
+     [
+      -4.165,
+      8.649,
+      0
+     ],
+     [
+      -5.108,
+      8.129,
+      0
+     ],
+     [
+      -5.986,
+      7.506,
+      0
+     ],
+     [
+      -6.788,
+      6.788,
+      0
+     ],
+     [
+      -7.506,
+      5.986,
+      0
+     ],
+     [
+      -8.129,
+      5.108,
+      0
+     ],
+     [
+      -8.649,
+      4.165,
+      0
+     ],
+     [
+      -9.061,
+      3.171,
+      0
+     ],
+     [
+      -9.359,
+      2.136,
+      0
+     ],
+     [
+      -9.54,
+      1.075,
+      0
+     ],
+     [
+      -9.6,
+      0.0,
+      0
+     ],
+     [
+      -9.54,
+      -1.075,
+      0
+     ],
+     [
+      -9.359,
+      -2.136,
+      0
+     ],
+     [
+      -9.061,
+      -3.171,
+      0
+     ],
+     [
+      -8.649,
+      -4.165,
+      0
+     ],
+     [
+      -8.129,
+      -5.108,
+      0
+     ],
+     [
+      -7.506,
+      -5.986,
+      0
+     ],
+     [
+      -6.788,
+      -6.788,
+      0
+     ],
+     [
+      -5.986,
+      -7.506,
+      0
+     ],
+     [
+      -5.108,
+      -8.129,
+      0
+     ],
+     [
+      -4.165,
+      -8.649,
+      0
+     ],
+     [
+      -3.171,
+      -9.061,
+      0
+     ],
+     [
+      -2.136,
+      -9.359,
+      0
+     ],
+     [
+      -1.075,
+      -9.54,
+      0
+     ],
+     [
+      -0.0,
+      -9.6,
+      0
+     ],
+     [
+      1.075,
+      -9.54,
+      0
+     ],
+     [
+      2.136,
+      -9.359,
+      0
+     ],
+     [
+      3.171,
+      -9.061,
+      0
+     ],
+     [
+      4.165,
+      -8.649,
+      0
+     ],
+     [
+      5.108,
+      -8.129,
+      0
+     ],
+     [
+      5.986,
+      -7.506,
+      0
+     ],
+     [
+      6.788,
+      -6.788,
+      0
+     ],
+     [
+      7.506,
+      -5.986,
+      0
+     ],
+     [
+      8.129,
+      -5.108,
+      0
+     ],
+     [
+      8.649,
+      -4.165,
+      0
+     ],
+     [
+      9.061,
+      -3.171,
+      0
+     ],
+     [
+      9.359,
+      -2.136,
+      0
+     ],
+     [
+      9.54,
+      -1.075,
+      0
+     ]
+    ],
+    "closed": true,
+    "smooth": true
+   },
+   "at": [
+    -0.0,
+    -5.0864,
+    1.0811
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [
+    "bulge_extent"
+   ],
+   "floating": true,
+   "look": {
+    "tone": "bright",
+    "weight": 0.45,
+    "alpha": 0.3
+   }
+  },
+  {
+   "id": "bulge-lift-2",
+   "label": "Bulge contour (above)",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      9.6,
+      0.0,
+      0
+     ],
+     [
+      9.54,
+      1.075,
+      0
+     ],
+     [
+      9.359,
+      2.136,
+      0
+     ],
+     [
+      9.061,
+      3.171,
+      0
+     ],
+     [
+      8.649,
+      4.165,
+      0
+     ],
+     [
+      8.129,
+      5.108,
+      0
+     ],
+     [
+      7.506,
+      5.986,
+      0
+     ],
+     [
+      6.788,
+      6.788,
+      0
+     ],
+     [
+      5.986,
+      7.506,
+      0
+     ],
+     [
+      5.108,
+      8.129,
+      0
+     ],
+     [
+      4.165,
+      8.649,
+      0
+     ],
+     [
+      3.171,
+      9.061,
+      0
+     ],
+     [
+      2.136,
+      9.359,
+      0
+     ],
+     [
+      1.075,
+      9.54,
+      0
+     ],
+     [
+      0.0,
+      9.6,
+      0
+     ],
+     [
+      -1.075,
+      9.54,
+      0
+     ],
+     [
+      -2.136,
+      9.359,
+      0
+     ],
+     [
+      -3.171,
+      9.061,
+      0
+     ],
+     [
+      -4.165,
+      8.649,
+      0
+     ],
+     [
+      -5.108,
+      8.129,
+      0
+     ],
+     [
+      -5.986,
+      7.506,
+      0
+     ],
+     [
+      -6.788,
+      6.788,
+      0
+     ],
+     [
+      -7.506,
+      5.986,
+      0
+     ],
+     [
+      -8.129,
+      5.108,
+      0
+     ],
+     [
+      -8.649,
+      4.165,
+      0
+     ],
+     [
+      -9.061,
+      3.171,
+      0
+     ],
+     [
+      -9.359,
+      2.136,
+      0
+     ],
+     [
+      -9.54,
+      1.075,
+      0
+     ],
+     [
+      -9.6,
+      0.0,
+      0
+     ],
+     [
+      -9.54,
+      -1.075,
+      0
+     ],
+     [
+      -9.359,
+      -2.136,
+      0
+     ],
+     [
+      -9.061,
+      -3.171,
+      0
+     ],
+     [
+      -8.649,
+      -4.165,
+      0
+     ],
+     [
+      -8.129,
+      -5.108,
+      0
+     ],
+     [
+      -7.506,
+      -5.986,
+      0
+     ],
+     [
+      -6.788,
+      -6.788,
+      0
+     ],
+     [
+      -5.986,
+      -7.506,
+      0
+     ],
+     [
+      -5.108,
+      -8.129,
+      0
+     ],
+     [
+      -4.165,
+      -8.649,
+      0
+     ],
+     [
+      -3.171,
+      -9.061,
+      0
+     ],
+     [
+      -2.136,
+      -9.359,
+      0
+     ],
+     [
+      -1.075,
+      -9.54,
+      0
+     ],
+     [
+      -0.0,
+      -9.6,
+      0
+     ],
+     [
+      1.075,
+      -9.54,
+      0
+     ],
+     [
+      2.136,
+      -9.359,
+      0
+     ],
+     [
+      3.171,
+      -9.061,
+      0
+     ],
+     [
+      4.165,
+      -8.649,
+      0
+     ],
+     [
+      5.108,
+      -8.129,
+      0
+     ],
+     [
+      5.986,
+      -7.506,
+      0
+     ],
+     [
+      6.788,
+      -6.788,
+      0
+     ],
+     [
+      7.506,
+      -5.986,
+      0
+     ],
+     [
+      8.129,
+      -5.108,
+      0
+     ],
+     [
+      8.649,
+      -4.165,
+      0
+     ],
+     [
+      9.061,
+      -3.171,
+      0
+     ],
+     [
+      9.359,
+      -2.136,
+      0
+     ],
+     [
+      9.54,
+      -1.075,
+      0
+     ]
+    ],
+    "closed": true,
+    "smooth": true
+   },
+   "at": [
+    0.0,
+    5.0864,
+    -1.0811
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [
+    "bulge_extent"
+   ],
+   "floating": true,
+   "look": {
+    "tone": "bright",
+    "weight": 0.45,
+    "alpha": 0.3
+   }
+  },
+  {
+   "id": "dust-inner",
+   "label": "Dust lane (near side)",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 0.22,
+    "profile": [
+     [
+      12.517,
+      2.507
+     ],
+     [
+      11.852,
+      3.566
+     ],
+     [
+      11.103,
+      4.52
+     ],
+     [
+      10.286,
+      5.362
+     ],
+     [
+      9.413,
+      6.09
+     ],
+     [
+      8.501,
+      6.701
+     ],
+     [
+      7.562,
+      7.194
+     ],
+     [
+      6.612,
+      7.57
+     ],
+     [
+      5.664,
+      7.832
+     ],
+     [
+      4.731,
+      7.984
+     ],
+     [
+      3.826,
+      8.033
+     ],
+     [
+      2.958,
+      7.984
+     ],
+     [
+      2.139,
+      7.847
+     ],
+     [
+      1.377,
+      7.63
+     ],
+     [
+      0.68,
+      7.344
+     ],
+     [
+      -0.039,
+      7.232
+     ],
+     [
+      -0.732,
+      7.05
+     ],
+     [
+      -1.39,
+      6.803
+     ],
+     [
+      -2.008,
+      6.496
+     ],
+     [
+      -2.581,
+      6.134
+     ],
+     [
+      -3.104,
+      5.721
+     ],
+     [
+      -3.574,
+      5.266
+     ],
+     [
+      -3.985,
+      4.773
+     ],
+     [
+      -4.336,
+      4.25
+     ],
+     [
+      -4.625,
+      3.702
+     ],
+     [
+      -4.85,
+      3.138
+     ],
+     [
+      -5.01,
+      2.564
+     ],
+     [
+      -5.105,
+      1.986
+     ],
+     [
+      -5.137,
+      1.412
+     ],
+     [
+      -6.601,
+      1.083
+     ],
+     [
+      -6.845,
+      1.798
+     ],
+     [
+      -7.01,
+      2.574
+     ],
+     [
+      -7.084,
+      3.399
+     ],
+     [
+      -7.061,
+      4.265
+     ],
+     [
+      -6.932,
+      5.157
+     ],
+     [
+      -6.692,
+      6.065
+     ],
+     [
+      -6.338,
+      6.974
+     ],
+     [
+      -5.867,
+      7.87
+     ],
+     [
+      -5.279,
+      8.739
+     ],
+     [
+      -4.574,
+      9.565
+     ],
+     [
+      -3.756,
+      10.334
+     ],
+     [
+      -2.83,
+      11.031
+     ],
+     [
+      -1.802,
+      11.643
+     ],
+     [
+      -0.68,
+      12.156
+     ],
+     [
+      0.568,
+      12.311
+     ],
+     [
+      1.836,
+      12.337
+     ],
+     [
+      3.112,
+      12.231
+     ],
+     [
+      4.382,
+      11.994
+     ],
+     [
+      5.632,
+      11.624
+     ],
+     [
+      6.849,
+      11.125
+     ],
+     [
+      8.02,
+      10.499
+     ],
+     [
+      9.131,
+      9.751
+     ],
+     [
+      10.17,
+      8.886
+     ],
+     [
+      11.125,
+      7.912
+     ],
+     [
+      11.985,
+      6.837
+     ],
+     [
+      12.739,
+      5.671
+     ],
+     [
+      13.378,
+      4.423
+     ],
+     [
+      13.893,
+      3.106
+     ]
+    ]
+   },
+   "at": [
+    0.0,
+    2.9344,
+    -0.6237
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [
+    "near_side"
+   ],
+   "floating": true,
+   "look": {
+    "fill": "dark",
+    "weight": 0.25,
+    "alpha": 0.12
+   },
+   "note": "Silhouetted against the bulge: the near side is the north-west half of the disc."
+  },
+  {
+   "id": "dust-outer",
+   "label": "Outer dust arm",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 0.24,
+    "profile": [
+     [
+      19.414,
+      16.461
+     ],
+     [
+      18.349,
+      17.965
+     ],
+     [
+      17.168,
+      19.399
+     ],
+     [
+      15.878,
+      20.754
+     ],
+     [
+      14.482,
+      22.022
+     ],
+     [
+      12.987,
+      23.193
+     ],
+     [
+      11.4,
+      24.262
+     ],
+     [
+      9.728,
+      25.221
+     ],
+     [
+      7.978,
+      26.063
+     ],
+     [
+      6.159,
+      26.782
+     ],
+     [
+      4.28,
+      27.373
+     ],
+     [
+      2.349,
+      27.831
+     ],
+     [
+      0.376,
+      28.151
+     ],
+     [
+      -1.63,
+      28.331
+     ],
+     [
+      -3.657,
+      28.367
+     ],
+     [
+      -5.696,
+      28.257
+     ],
+     [
+      -7.762,
+      28.424
+     ],
+     [
+      -9.879,
+      28.437
+     ],
+     [
+      -12.036,
+      28.29
+     ],
+     [
+      -14.221,
+      27.977
+     ],
+     [
+      -16.421,
+      27.494
+     ],
+     [
+      -18.622,
+      26.838
+     ],
+     [
+      -20.811,
+      26.005
+     ],
+     [
+      -22.974,
+      24.994
+     ],
+     [
+      -25.095,
+      23.805
+     ],
+     [
+      -27.162,
+      22.439
+     ],
+     [
+      -29.158,
+      20.898
+     ],
+     [
+      -31.07,
+      19.185
+     ],
+     [
+      -32.884,
+      17.305
+     ],
+     [
+      -34.583,
+      15.263
+     ],
+     [
+      -36.156,
+      13.066
+     ],
+     [
+      -37.14,
+      13.612
+     ],
+     [
+      -35.881,
+      16.11
+     ],
+     [
+      -34.456,
+      18.5
+     ],
+     [
+      -32.872,
+      20.771
+     ],
+     [
+      -31.14,
+      22.911
+     ],
+     [
+      -29.27,
+      24.913
+     ],
+     [
+      -27.273,
+      26.766
+     ],
+     [
+      -25.159,
+      28.463
+     ],
+     [
+      -22.942,
+      29.997
+     ],
+     [
+      -20.633,
+      31.361
+     ],
+     [
+      -18.246,
+      32.55
+     ],
+     [
+      -15.793,
+      33.56
+     ],
+     [
+      -13.288,
+      34.388
+     ],
+     [
+      -10.743,
+      35.03
+     ],
+     [
+      -8.173,
+      35.487
+     ],
+     [
+      -5.591,
+      35.756
+     ],
+     [
+      -3.047,
+      35.415
+     ],
+     [
+      -0.578,
+      34.897
+     ],
+     [
+      1.802,
+      34.211
+     ],
+     [
+      4.083,
+      33.365
+     ],
+     [
+      6.255,
+      32.372
+     ],
+     [
+      8.308,
+      31.242
+     ],
+     [
+      10.233,
+      29.986
+     ],
+     [
+      12.024,
+      28.618
+     ],
+     [
+      13.675,
+      27.149
+     ],
+     [
+      15.18,
+      25.593
+     ],
+     [
+      16.535,
+      23.962
+     ],
+     [
+      17.738,
+      22.271
+     ],
+     [
+      18.786,
+      20.532
+     ],
+     [
+      19.68,
+      18.759
+     ],
+     [
+      20.42,
+      16.964
+     ]
+    ]
+   },
+   "at": [
+    0.0,
+    2.9344,
+    -0.6237
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "fill": "dark",
+    "weight": 0.25,
+    "alpha": 0.12
+   }
+  },
+  {
+   "id": "dust-mid",
+   "label": "Dust lane (middle disc)",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 0.24,
+    "profile": [
+     [
+      18.746,
+      5.492
+     ],
+     [
+      18.34,
+      7.492
+     ],
+     [
+      17.715,
+      9.457
+     ],
+     [
+      16.869,
+      11.356
+     ],
+     [
+      15.807,
+      13.159
+     ],
+     [
+      14.538,
+      14.836
+     ],
+     [
+      13.076,
+      16.356
+     ],
+     [
+      11.442,
+      17.692
+     ],
+     [
+      9.659,
+      18.82
+     ],
+     [
+      7.758,
+      19.719
+     ],
+     [
+      5.769,
+      20.374
+     ],
+     [
+      3.729,
+      20.774
+     ],
+     [
+      1.673,
+      20.914
+     ],
+     [
+      -0.362,
+      20.797
+     ],
+     [
+      -2.401,
+      20.843
+     ],
+     [
+      -4.451,
+      20.631
+     ],
+     [
+      -6.476,
+      20.161
+     ],
+     [
+      -8.441,
+      19.437
+     ],
+     [
+      -10.31,
+      18.472
+     ],
+     [
+      -12.052,
+      17.282
+     ],
+     [
+      -13.639,
+      15.89
+     ],
+     [
+      -15.046,
+      14.32
+     ],
+     [
+      -16.257,
+      12.6
+     ],
+     [
+      -17.255,
+      10.761
+     ],
+     [
+      -18.034,
+      8.833
+     ],
+     [
+      -18.59,
+      6.848
+     ],
+     [
+      -18.926,
+      4.834
+     ],
+     [
+      -19.886,
+      4.843
+     ],
+     [
+      -19.96,
+      7.008
+     ],
+     [
+      -19.785,
+      9.237
+     ],
+     [
+      -19.344,
+      11.499
+     ],
+     [
+      -18.623,
+      13.757
+     ],
+     [
+      -17.613,
+      15.972
+     ],
+     [
+      -16.313,
+      18.102
+     ],
+     [
+      -14.729,
+      20.103
+     ],
+     [
+      -12.874,
+      21.933
+     ],
+     [
+      -10.768,
+      23.55
+     ],
+     [
+      -8.438,
+      24.916
+     ],
+     [
+      -5.919,
+      25.997
+     ],
+     [
+      -3.25,
+      26.764
+     ],
+     [
+      -0.475,
+      27.196
+     ],
+     [
+      2.313,
+      26.861
+     ],
+     [
+      5.007,
+      26.188
+     ],
+     [
+      7.563,
+      25.196
+     ],
+     [
+      9.939,
+      23.912
+     ],
+     [
+      12.1,
+      22.37
+     ],
+     [
+      14.018,
+      20.606
+     ],
+     [
+      15.671,
+      18.661
+     ],
+     [
+      17.044,
+      16.577
+     ],
+     [
+      18.131,
+      14.399
+     ],
+     [
+      18.931,
+      12.167
+     ],
+     [
+      19.451,
+      9.922
+     ],
+     [
+      19.703,
+      7.7
+     ],
+     [
+      19.705,
+      5.534
+     ]
+    ]
+   },
+   "at": [
+    0.0,
+    2.9344,
+    -0.6237
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "fill": "dark",
+    "weight": 0.25,
+    "alpha": 0.09
+   }
+  },
+  {
+   "id": "m32-glow",
+   "label": "M32 glow",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 26
+   },
+   "at": [
+    -13.5,
+    -8.248,
+    7.156
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "bright",
+    "alpha": 0.45,
+    "glow": 1
+   }
+  },
+  {
+   "id": "m32",
+   "label": "M32 (NGC 221)",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "points",
+    "count": 260,
+    "region": {
+     "sphere": 3.3
+    },
+    "sprite": "soft",
+    "size_px": 2
+   },
+   "at": [
+    -13.5,
+    -8.248,
+    7.156
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": [
+    1,
+    0.95,
+    0.9
+   ],
+   "basis": [
+    "m32_offset",
+    "m32_size"
+   ],
+   "floating": true,
+   "look": {
+    "tone": "bright",
+    "alpha": 0.9
+   },
+   "note": "Compact elliptical companion (dE2), in front of the disc."
+  },
+  {
+   "id": "m32-iso",
+   "label": "M32 isophote",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      3.4,
+      0.0,
+      0
+     ],
+     [
+      3.358,
+      0.532,
+      0
+     ],
+     [
+      3.234,
+      1.051,
+      0
+     ],
+     [
+      3.029,
+      1.544,
+      0
+     ],
+     [
+      2.751,
+      1.998,
+      0
+     ],
+     [
+      2.404,
+      2.404,
+      0
+     ],
+     [
+      1.998,
+      2.751,
+      0
+     ],
+     [
+      1.544,
+      3.029,
+      0
+     ],
+     [
+      1.051,
+      3.234,
+      0
+     ],
+     [
+      0.532,
+      3.358,
+      0
+     ],
+     [
+      0.0,
+      3.4,
+      0
+     ],
+     [
+      -0.532,
+      3.358,
+      0
+     ],
+     [
+      -1.051,
+      3.234,
+      0
+     ],
+     [
+      -1.544,
+      3.029,
+      0
+     ],
+     [
+      -1.998,
+      2.751,
+      0
+     ],
+     [
+      -2.404,
+      2.404,
+      0
+     ],
+     [
+      -2.751,
+      1.998,
+      0
+     ],
+     [
+      -3.029,
+      1.544,
+      0
+     ],
+     [
+      -3.234,
+      1.051,
+      0
+     ],
+     [
+      -3.358,
+      0.532,
+      0
+     ],
+     [
+      -3.4,
+      0.0,
+      0
+     ],
+     [
+      -3.358,
+      -0.532,
+      0
+     ],
+     [
+      -3.234,
+      -1.051,
+      0
+     ],
+     [
+      -3.029,
+      -1.544,
+      0
+     ],
+     [
+      -2.751,
+      -1.998,
+      0
+     ],
+     [
+      -2.404,
+      -2.404,
+      0
+     ],
+     [
+      -1.998,
+      -2.751,
+      0
+     ],
+     [
+      -1.544,
+      -3.029,
+      0
+     ],
+     [
+      -1.051,
+      -3.234,
+      0
+     ],
+     [
+      -0.532,
+      -3.358,
+      0
+     ],
+     [
+      -0.0,
+      -3.4,
+      0
+     ],
+     [
+      0.532,
+      -3.358,
+      0
+     ],
+     [
+      1.051,
+      -3.234,
+      0
+     ],
+     [
+      1.544,
+      -3.029,
+      0
+     ],
+     [
+      1.998,
+      -2.751,
+      0
+     ],
+     [
+      2.404,
+      -2.404,
+      0
+     ],
+     [
+      2.751,
+      -1.998,
+      0
+     ],
+     [
+      3.029,
+      -1.544,
+      0
+     ],
+     [
+      3.234,
+      -1.051,
+      0
+     ],
+     [
+      3.358,
+      -0.532,
+      0
+     ]
+    ],
+    "closed": true,
+    "smooth": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [
+    "m32_size"
+   ],
+   "floating": true,
+   "look": {
+    "tone": "bright",
+    "weight": 1.0,
+    "alpha": 0.7
+   }
+  },
+  {
+   "id": "m32-core",
+   "label": "M32 nucleus",
+   "role": "data",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 7
+   },
+   "at": [
+    -13.5,
+    -8.248,
+    7.156
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "bright",
+    "alpha": 1,
+    "glow": 0.7
+   }
+  },
+  {
+   "id": "m110-glow",
+   "label": "M110 glow",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 40
+   },
+   "at": [
+    4.0,
+    -27.761,
+    4.118
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "structure",
+    "alpha": 0.3,
+    "glow": 1
+   }
+  },
+  {
+   "id": "m110",
+   "label": "M110 (NGC 205)",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "points",
+    "count": 300,
+    "region": {
+     "sphere": 7.4
+    },
+    "sprite": "soft",
+    "size_px": 2
+   },
+   "at": [
+    4.0,
+    -27.761,
+    4.118
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": [
+    1,
+    0.6,
+    0.45
+   ],
+   "basis": [
+    "m110_offset",
+    "m110_size"
+   ],
+   "floating": true,
+   "look": {
+    "tone": "structure",
+    "alpha": 0.8
+   },
+   "note": "Larger, fainter elliptical (dE6) beyond the disc, with its own dust patches."
+  },
+  {
+   "id": "m110-iso-0",
+   "label": "M110 isophote 1",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      8.318,
+      1.169,
+      0
+     ],
+     [
+      8.164,
+      1.754,
+      0
+     ],
+     [
+      7.869,
+      2.308,
+      0
+     ],
+     [
+      7.44,
+      2.823,
+      0
+     ],
+     [
+      6.884,
+      3.29,
+      0
+     ],
+     [
+      6.21,
+      3.701,
+      0
+     ],
+     [
+      5.429,
+      4.048,
+      0
+     ],
+     [
+      4.556,
+      4.326,
+      0
+     ],
+     [
+      3.605,
+      4.529,
+      0
+     ],
+     [
+      2.592,
+      4.656,
+      0
+     ],
+     [
+      1.535,
+      4.703,
+      0
+     ],
+     [
+      0.451,
+      4.669,
+      0
+     ],
+     [
+      -0.64,
+      4.555,
+      0
+     ],
+     [
+      -1.72,
+      4.364,
+      0
+     ],
+     [
+      -2.771,
+      4.097,
+      0
+     ],
+     [
+      -3.775,
+      3.761,
+      0
+     ],
+     [
+      -4.714,
+      3.36,
+      0
+     ],
+     [
+      -5.572,
+      2.902,
+      0
+     ],
+     [
+      -6.335,
+      2.394,
+      0
+     ],
+     [
+      -6.989,
+      1.846,
+      0
+     ],
+     [
+      -7.524,
+      1.265,
+      0
+     ],
+     [
+      -7.93,
+      0.663,
+      0
+     ],
+     [
+      -8.201,
+      0.05,
+      0
+     ],
+     [
+      -8.331,
+      -0.564,
+      0
+     ],
+     [
+      -8.318,
+      -1.169,
+      0
+     ],
+     [
+      -8.164,
+      -1.754,
+      0
+     ],
+     [
+      -7.869,
+      -2.308,
+      0
+     ],
+     [
+      -7.44,
+      -2.823,
+      0
+     ],
+     [
+      -6.884,
+      -3.29,
+      0
+     ],
+     [
+      -6.21,
+      -3.701,
+      0
+     ],
+     [
+      -5.429,
+      -4.048,
+      0
+     ],
+     [
+      -4.556,
+      -4.326,
+      0
+     ],
+     [
+      -3.605,
+      -4.529,
+      0
+     ],
+     [
+      -2.592,
+      -4.656,
+      0
+     ],
+     [
+      -1.535,
+      -4.703,
+      0
+     ],
+     [
+      -0.451,
+      -4.669,
+      0
+     ],
+     [
+      0.64,
+      -4.555,
+      0
+     ],
+     [
+      1.72,
+      -4.364,
+      0
+     ],
+     [
+      2.771,
+      -4.097,
+      0
+     ],
+     [
+      3.775,
+      -3.761,
+      0
+     ],
+     [
+      4.714,
+      -3.36,
+      0
+     ],
+     [
+      5.572,
+      -2.902,
+      0
+     ],
+     [
+      6.335,
+      -2.394,
+      0
+     ],
+     [
+      6.989,
+      -1.846,
+      0
+     ],
+     [
+      7.524,
+      -1.265,
+      0
+     ],
+     [
+      7.93,
+      -0.663,
+      0
+     ],
+     [
+      8.201,
+      -0.05,
+      0
+     ],
+     [
+      8.331,
+      0.564,
+      0
+     ]
+    ],
+    "closed": true,
+    "smooth": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [
+    "m110_size"
+   ],
+   "floating": true,
+   "look": {
+    "tone": "structure",
+    "weight": 0.65,
+    "alpha": 0.36
+   }
+  },
+  {
+   "id": "m110-iso-1",
+   "label": "M110 isophote 2",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      5.546,
+      0.779,
+      0
+     ],
+     [
+      5.444,
+      1.16,
+      0
+     ],
+     [
+      5.248,
+      1.522,
+      0
+     ],
+     [
+      4.964,
+      1.857,
+      0
+     ],
+     [
+      4.594,
+      2.16,
+      0
+     ],
+     [
+      4.145,
+      2.427,
+      0
+     ],
+     [
+      3.626,
+      2.652,
+      0
+     ],
+     [
+      3.045,
+      2.831,
+      0
+     ],
+     [
+      2.411,
+      2.962,
+      0
+     ],
+     [
+      1.736,
+      3.043,
+      0
+     ],
+     [
+      1.032,
+      3.071,
+      0
+     ],
+     [
+      0.31,
+      3.047,
+      0
+     ],
+     [
+      -0.418,
+      2.971,
+      0
+     ],
+     [
+      -1.138,
+      2.844,
+      0
+     ],
+     [
+      -1.839,
+      2.668,
+      0
+     ],
+     [
+      -2.508,
+      2.446,
+      0
+     ],
+     [
+      -3.134,
+      2.183,
+      0
+     ],
+     [
+      -3.707,
+      1.882,
+      0
+     ],
+     [
+      -4.216,
+      1.55,
+      0
+     ],
+     [
+      -4.654,
+      1.19,
+      0
+     ],
+     [
+      -5.011,
+      0.81,
+      0
+     ],
+     [
+      -5.283,
+      0.417,
+      0
+     ],
+     [
+      -5.465,
+      0.016,
+      0
+     ],
+     [
+      -5.553,
+      -0.385,
+      0
+     ],
+     [
+      -5.546,
+      -0.779,
+      0
+     ],
+     [
+      -5.444,
+      -1.16,
+      0
+     ],
+     [
+      -5.248,
+      -1.522,
+      0
+     ],
+     [
+      -4.964,
+      -1.857,
+      0
+     ],
+     [
+      -4.594,
+      -2.16,
+      0
+     ],
+     [
+      -4.145,
+      -2.427,
+      0
+     ],
+     [
+      -3.626,
+      -2.652,
+      0
+     ],
+     [
+      -3.045,
+      -2.831,
+      0
+     ],
+     [
+      -2.411,
+      -2.962,
+      0
+     ],
+     [
+      -1.736,
+      -3.043,
+      0
+     ],
+     [
+      -1.032,
+      -3.071,
+      0
+     ],
+     [
+      -0.31,
+      -3.047,
+      0
+     ],
+     [
+      0.418,
+      -2.971,
+      0
+     ],
+     [
+      1.138,
+      -2.844,
+      0
+     ],
+     [
+      1.839,
+      -2.668,
+      0
+     ],
+     [
+      2.508,
+      -2.446,
+      0
+     ],
+     [
+      3.134,
+      -2.183,
+      0
+     ],
+     [
+      3.707,
+      -1.882,
+      0
+     ],
+     [
+      4.216,
+      -1.55,
+      0
+     ],
+     [
+      4.654,
+      -1.19,
+      0
+     ],
+     [
+      5.011,
+      -0.81,
+      0
+     ],
+     [
+      5.283,
+      -0.417,
+      0
+     ],
+     [
+      5.465,
+      -0.016,
+      0
+     ],
+     [
+      5.553,
+      0.385,
+      0
+     ]
+    ],
+    "closed": true,
+    "smooth": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [
+    "m110_size"
+   ],
+   "floating": true,
+   "look": {
+    "tone": "structure",
+    "weight": 0.65,
+    "alpha": 0.3
+   }
+  },
+  {
+   "id": "m110-core",
+   "label": "M110 nucleus",
+   "role": "data",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 5
+   },
+   "at": [
+    4.0,
+    -27.761,
+    4.118
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "bright",
+    "alpha": 0.9,
+    "glow": 0.5
+   }
+  },
+  {
+   "id": "nucleus-glow-1",
+   "label": "Nucleus",
+   "role": "data",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 40
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "bright",
+    "alpha": 0.3,
+    "glow": 1
+   },
+   "motion": {
+    "type": "pulse",
+    "period": 7.5,
+    "amount": 0.22
+   }
+  },
+  {
+   "id": "nucleus-glow-2",
+   "label": "Nucleus",
+   "role": "data",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 20
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "bright",
+    "alpha": 0.55,
+    "glow": 1
+   },
+   "motion": {
+    "type": "pulse",
+    "period": 7.5,
+    "amount": 0.22
+   }
+  },
+  {
+   "id": "nucleus",
+   "label": "Nucleus",
+   "role": "data",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 9
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "rotate": [
+    102,
+    0,
+    180
+   ],
+   "scale": 1,
+   "basis": [],
+   "floating": true,
+   "look": {
+    "tone": "bright",
+    "alpha": 1,
+    "glow": 1
+   }
+  }
+ ],
+ "annotations": [
+  {
+   "id": "a-ring",
+   "text": "10 kpc star-forming ring",
+   "part": "ring-knots",
+   "offset": [
+    -8.0,
+    7.0,
+    0
+   ]
+  },
+  {
+   "id": "a-dust",
+   "text": "Dust lane, near side",
+   "part": "dust-inner",
+   "offset": [
+    -13.0,
+    -3.5,
+    0
+   ]
+  },
+  {
+   "id": "a-bulge",
+   "text": "Bulge (3.2 kpc)",
+   "part": "bulge-lift-0",
+   "offset": [
+    2.0,
+    4.2,
+    0
+   ]
+  },
+  {
+   "id": "a-m32",
+   "text": "M32",
+   "part": "m32-core",
+   "offset": [
+    3.6,
+    0.6,
+    0
+   ]
+  },
+  {
+   "id": "a-m110",
+   "text": "M110 (NGC 205)",
+   "part": "m110-core",
+   "offset": [
+    5.0,
+    0.6,
+    0
+   ]
+  }
+ ],
+ "presentation": {
+  "framing": {
+   "yaw": 0,
+   "pitch": 25,
+   "fit": 0.66
+  },
+  "views": [
+   {
+    "id": "face-on",
+    "label": "Face-on (deprojected)",
+    "yaw": 180,
+    "pitch": 52,
+    "distance": 0.86
+   },
+   {
+    "id": "dust",
+    "label": "Dust lane",
+    "yaw": 0,
+    "pitch": 20,
+    "distance": 2.6,
+    "target": "dust-inner"
+   },
+   {
+    "id": "bulge",
+    "label": "Bulge and nucleus",
+    "yaw": 4,
+    "pitch": 14,
+    "distance": 3.4,
+    "target": "bulge-stars"
+   },
+   {
+    "id": "ring",
+    "label": "The 10 kpc ring",
+    "yaw": 0,
+    "pitch": 36,
+    "distance": 2.6,
+    "target": "ring-knots"
+   },
+   {
+    "id": "m32",
+    "label": "M32",
+    "yaw": 0,
+    "pitch": 18,
+    "distance": 2.8,
+    "target": "m32"
+   },
+   {
+    "id": "m110",
+    "label": "M110",
+    "yaw": 0,
+    "pitch": 18,
+    "distance": 2.2,
+    "target": "m110"
+   },
+   {
+    "id": "edge-on",
+    "label": "Edge-on",
+    "yaw": 90,
+    "pitch": 4,
+    "distance": 0.95
+   }
+  ],
+  "atmosphere": {
+   "haze": 0.32,
+   "scanlines": true,
+   "vignette": true,
+   "grid": false,
+   "projector": false,
+   "motes": 0.3
+  },
+  "occlusion": "xray",
+  "certainty_style": "subtle",
+  "background": "deep",
+  "float": 20
+ },
+ "animation": {
+  "assembly": {
+   "style": "ceremony",
+   "seconds": 8,
+   "interference": true
+  },
+  "idle": {
+   "life": "alive",
+   "events": [
+    "shimmer",
+    "scan",
+    "propagate"
+   ],
+   "cadence": [
+    6,
+    12
+   ],
+   "strength": 0.5
+  },
+  "camera": {
+   "drift": 4,
+   "breathe": 0.02,
+   "tour": [
+    {
+     "view": "dust",
+     "at": 14,
+     "fly": 3
+    },
+    {
+     "view": "ring",
+     "at": 22,
+     "fly": 3
+    },
+    {
+     "view": "m32",
+     "at": 29,
+     "fly": 2.5
+    },
+    {
+     "view": "m110",
+     "at": 34,
+     "fly": 2.5
+    },
+    {
+     "view": "hero",
+     "at": 42,
+     "fly": 3.5
+    }
+   ]
+  },
+  "reduced_motion": "still"
+ },
+ "authoring": {
+  "tier": "masterpiece",
+  "research": "done",
+  "sources": [
+   "request",
+   "nasa-m31",
+   "wikipedia-m31",
+   "gordon-2006",
+   "mnras-2017",
+   "nrao-orientation",
+   "wikipedia-satellites",
+   "ref-wide",
+   "ref-ir",
+   "ref-heic"
+  ],
+  "identity": [
+   {
+    "feature": "A thin disc at 77 degrees inclination, about four times longer than it is tall",
+    "parts": [
+     "disc-0",
+     "disc-3",
+     "disc-5"
+    ],
+    "source": "nasa-m31"
+   },
+   {
+    "feature": "A bright central bulge with a compact nucleus, fatter than the disc",
+    "parts": [
+     "bulge-stars",
+     "bulge-glow-44",
+     "nucleus"
+    ],
+    "source": "mnras-2017"
+   },
+   {
+    "feature": "Dark dust lanes silhouetted on the near side, crossing the face of the bulge",
+    "parts": [
+     "dust-inner",
+     "dust-outer"
+    ],
+    "source": "nrao-orientation"
+   },
+   {
+    "feature": "Two tightly wound spiral arms, broken into segments, with blue star clouds",
+    "parts": [
+     "cloud-ne-1-3",
+     "cloud-sw-2-6",
+     "cloud-ne-3-8"
+    ],
+    "source": "gordon-2006"
+   },
+   {
+    "feature": "The offset 10 kpc ring of star formation",
+    "parts": [
+     "ring-10kpc",
+     "ring-knots"
+    ],
+    "source": "gordon-2006"
+   },
+   {
+    "feature": "Two bright companions: compact M32 in front of the disc, large faint M110 beyond it",
+    "parts": [
+     "m32",
+     "m110"
+    ],
+    "source": "ref-wide"
+   }
+  ],
+  "review_rounds": 3,
+  "outcome": "self-reviewed",
+  "next": [
+   "in the front and side views the concentric contours and the flat dust ribbons stack into visible shelves; replace them with graded sprite fields (this is the worst remaining defect)",
+   "draw the arms as broad star-cloud bands with a visible pitch, not thin near-concentric arcs (critic D2, open)",
+   "raise the disc's sprite density 3-5x and carry it out to the D25 isophote (critic D5, open)",
+   "build M32 and M110 from nested sprite populations with elliptical envelopes (critic D7, open)",
+   "resolve the double nucleus (two peaks about 5 pc apart) once the render can hold detail that fine",
+   "the giant stellar stream and the north-east shelf, which the wide reference shows"
+  ],
+  "critic": {
+   "verdict": "improve",
+   "scores": {
+    "silhouette": 2,
+    "proportions": 2,
+    "identity": 1,
+    "depth": 2,
+    "composition": 2,
+    "assembly": 2,
+    "motion": 3,
+    "density": 1,
+    "honesty": 3
+   },
+   "round": 2,
+   "model": "independent critic, fresh context (rounds packet)",
+   "scene_sha256": "2973826d29aec10fd56450a0ed6b9d07bfd904410b90d79a36eef1809a095c29"
+  },
+  "rounds": [
+   {
+    "round": 1,
+    "result": "baseline",
+    "minutes": 0.1,
+    "changes": [
+     "draft"
+    ],
+    "summary": "The dust lanes are not drawn. Nothing dark crosses the bulge in any view: view-dust shows a clean bright spindle with no silhouette, and her"
+   },
+   {
+    "round": 2,
+    "result": "reverted",
+    "minutes": 2.1,
+    "changes": [
+     "D1",
+     "D2",
+     "D3",
+     "D5"
+    ],
+    "summary": "The dust lane, the one feature that makes M31 M31, does not appear in any view. The bulge is a field of sparse sprites with no luminous body"
+   }
+  ]
+ }
+}

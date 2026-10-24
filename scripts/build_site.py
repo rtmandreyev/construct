@@ -107,7 +107,7 @@ def index_page(examples):
 
 
 def example_page(ex):
-    body = ("<div class=\"viewer\"><div class=\"bar\"><h1>%s</h1><p class=\"prov\">%s</p><nav>"
+    body = ("<div class=\"viewer\"><div class=\"bar\"><h1>%s</h1><p class=\"prov\">%s%s</p><nav>"
             "<a class=\"button\" href=\"../../\">All examples</a>"
             "<a class=\"button\" href=\"construct.html\">Full screen</a>"
             "<a class=\"button\" href=\"scene.json\">Scene</a>"
@@ -116,9 +116,9 @@ def example_page(ex):
             "allowfullscreen></iframe></div>"
             "<p class=\"hint\">Drag to orbit, scroll to zoom. Click the construct first, then <kbd>R</kbd> replays the "
             "assembly, <kbd>L</kbd> shows labels, <kbd>P</kbd> shows how each part is known, <kbd>1</kbd>–<kbd>6</kbd> "
-            "change the view and <kbd>space</kbd> pauses.%s</p></div>"
-            % (html.escape(ex["title"]), html.escape(provenance(ex)), REPO_URL, ex["slug"], html.escape(ex["title"]),
-               " " + html.escape(ex["note"]) if ex.get("note") else ""))
+            "change the view and <kbd>space</kbd> pauses.</p></div>"
+            % (html.escape(ex["title"]), html.escape(provenance(ex)),
+               ". " + html.escape(ex["note"]) if ex.get("note") else "", REPO_URL, ex["slug"], html.escape(ex["title"])))
     return _page("%s · Construct" % ex["title"], body, 2, "%s: a holographic construct. %s" % (ex["title"], provenance(ex)))
 
 

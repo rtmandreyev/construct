@@ -143,25 +143,26 @@
    "build": "a Construct 0.2.0 development build"
   },
   {
+   "slug": "saturn",
+   "title": "Saturn",
+   "model": "DeepSeek",
+   "how": "masterpiece mode, through Hermes",
+   "build": "Construct 0.2.1"
+  },
+  {
    "slug": "porsche-911-964",
    "title": "Porsche 911 (964)",
    "model": "GPT-6.1 Sol",
    "how": "masterpiece",
    "build": "Construct 0.2.0"
-  }
- ],
- "pending": [
-  {
-   "slug": "saturn",
-   "title": "Saturn",
-   "model": "DeepSeek",
-   "how": "masterpiece"
   },
   {
-   "slug": "andromeda",
-   "title": "Andromeda",
+   "slug": "andromeda-galaxy",
+   "title": "Andromeda Galaxy (M31)",
    "model": "DeepSeek",
-   "how": "masterpiece"
+   "how": "masterpiece mode, through Hermes (last round self-reviewed)",
+   "build": "Construct 0.2.1",
+   "note": "Its last round was self-reviewed, not judged by the critic: the host's limit on helper agents ended the critic rounds early."
   }
  ]
 }

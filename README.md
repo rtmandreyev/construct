@@ -15,7 +15,7 @@
 </tr>
 </table>
 
-<p align="center"><a href="https://rtmandreyev.github.io/construct/"><b>See all 21 examples live →</b></a>
+<p align="center"><a href="https://rtmandreyev.github.io/construct/"><b>See all 23 examples live →</b></a>
 &nbsp;·&nbsp; click any construct to orbit it, replay its assembly and read its labels</p>
 
 Construct is an agent skill and toolkit that turns a description of a real or fictional thing
@@ -122,10 +122,10 @@ reference outline with `construct compare`.
 
 ## Examples
 
-[![21 constructs made by AI agents](docs/media/examples.jpg)](https://rtmandreyev.github.io/construct/)
+[![23 constructs made by AI agents](docs/media/examples.jpg)](https://rtmandreyev.github.io/construct/)
 
-Twenty-one constructs made by Claude Opus, GPT-6.1 Sol and DeepSeek, from a Leica to the
-Sagrada Família. Open the **[live gallery](https://rtmandreyev.github.io/construct/)**, or see
+Twenty-three constructs made by Claude Opus, GPT-6.1 Sol and DeepSeek, from a Leica to the
+Andromeda Galaxy. Open the **[live gallery](https://rtmandreyev.github.io/construct/)**, or see
 [examples/](examples/) for each scene and how it was made.
 
 ## Documentation

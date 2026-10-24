@@ -72,6 +72,24 @@ shows its designed no-art face.
 The skill's body refers to its own runtime through `${HERMES_SKILL_DIR}`; nothing else is
 configured.
 
+**Masterpiece mode in Hermes: two things to set up.**
+
+- **Allow enough critics.** The masterpiece loop uses one fresh critic, a subagent, every
+  round. A one-shot run (`hermes chat -q` or `--oneshot`) may spawn only
+  `delegation.oneshot_max_children` subagents in all, and the default is 2. With the default,
+  the critic rounds end after two, and later rounds are only self-reviewed: in one live run the
+  third round went unjudged. For masterpiece, raise it in Hermes's `config.yaml` (for example
+  `oneshot_max_children: 14` under `delegation:`, twelve rounds and a margin; `0` means
+  unlimited, for unbounded mode), or run Hermes interactively, which is not capped. Or let the
+  critic be a second model call instead of a subagent: `rounds run --base-url ... --model ...
+  --key-env ...`.
+- **Keep images small.** Hermes's websocket carries at most 8 MB in one frame. A turn that
+  attaches several full-size review stills (up to about 1 MB each as PNG, more once encoded)
+  can pass that, and one live run crashed this way just after saving its result. Review at a
+  smaller size (`review --size 1280x800`), render only the sheets you will look at (`--sheets
+  assembly,views`), and look at the stills a few at a time. Because the skill saves a valid
+  scene after every round, a crash costs at most the round in progress.
+
 ## Claude Code
 
 `claude --plugin-dir dist/claude-code/construct` loads it for one session (nothing is

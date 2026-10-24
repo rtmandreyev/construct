@@ -4,7 +4,7 @@
 
 Construct 0.2.1 makes long runs pay off and makes the result easy to choose and to trust: three
 modes, a masterpiece loop judged by an independent critic, drawing rules that keep constructs
-detailed, and a gallery of 21 examples made by AI agents.
+detailed, and a gallery of 23 examples made by AI agents.
 
 ### Three modes, and the skill picks one
 
@@ -70,7 +70,7 @@ detailed, and a gallery of 21 examples made by AI agents.
 
 ### Examples
 
-- **21 example constructs** in `examples/`, each with its scene, a hero image and how it was
+- **23 example constructs** in `examples/`, each with its scene, a hero image and how it was
   made, and a live gallery built from them (`scripts/build_site.py`). All of them reproduce
   with this release.
 - Six new skill examples drawn with the craft guide: a Leica M3, an open-reel tape recorder, a
