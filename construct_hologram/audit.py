@@ -146,6 +146,12 @@ def audit(scene, geometry):
                 "a main surface drawn with line \"none\": with no contour it reads as a flat cardboard shape. Keep a "
                 "faint contour wire over its dark fill (look weight about 0.4-0.5, alpha about 0.5-0.6); line \"none\" "
                 "is for occluders and backings only.")
+    asm_s = ((scene.get("animation") or {}).get("assembly") or {}).get("seconds", 0)
+    if isinstance(asm_s, (int, float)) and asm_s > scene_mod.ASSEMBLY_S:
+        add(warnings, "long-assembly", None,
+            "the assembly lasts %g s: long assemblies are for film mode (a construct assembles in at most %d s). "
+            "For a film, keep the scene's assembly short and set the length when you render: `video --assembly`."
+            % (asm_s, scene_mod.ASSEMBLY_S))
     styles = geometry["styles"]
     stride = geometry["line_stride"]
     lines = geometry["lines"]

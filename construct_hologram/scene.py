@@ -70,6 +70,8 @@ IDENTITIES = ("none", "warm-wood", "stone", "steel", "brass", "bio", "ember", "i
 MOTIONS = ("spin", "swing", "bob", "pulse")
 EVENTS = ("scan", "sweep", "wave", "shimmer", "glitch", "brownout", "propagate", "tear", "burst")
 ASSEMBLY = ("ceremony", "build", "cut")
+ASSEMBLY_S = 20  # a construct's assembly, in seconds
+LONG_ASSEMBLY_S = 1200  # film mode: an assembly that spans a track
 LIFE = ("off", "calm", "alive")
 SHAPE_TYPES = ("box", "cylinder", "cone", "sphere", "torus", "lathe", "extrude", "tube",
                "curve", "plane", "grid", "points", "marker", "terrain", "globe", "loft",
@@ -938,7 +940,9 @@ def _animation_check(c, an, pr):
         if "style" in asm:
             c.choice(asm["style"], ASSEMBLY, w + ".assembly.style")
         if "seconds" in asm:
-            c.num(asm["seconds"], w + ".assembly.seconds", 0, 20)
+            # up to 20 s for a construct; up to 1200 s for film mode, where an assembly can span a whole
+            # track (the audit warns above 20 s: `long-assembly`)
+            c.num(asm["seconds"], w + ".assembly.seconds", 0, LONG_ASSEMBLY_S)
         if "interference" in asm and not isinstance(asm["interference"], bool):
             c.err(w + ".assembly.interference", "expected true or false")
     idle = an.get("idle", {})
