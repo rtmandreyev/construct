@@ -122,6 +122,19 @@ def example_page(ex):
     return _page("%s · Construct" % ex["title"], body, 2, "%s: a holographic construct. %s" % (ex["title"], provenance(ex)))
 
 
+def _public_scene(path, tmp):
+    """The scene the gallery compiles: the approved scene without its round history
+    (`authoring.rounds`), so a published construct page never shows the round timeline, whatever
+    its URL. The scene file in examples/ (and its copy on the site) stays as approved."""
+    doc = json.loads(Path(path).read_text(encoding="utf-8"))
+    if not (doc.get("authoring") or {}).pop("rounds", None):
+        return path
+    tmp.mkdir(parents=True, exist_ok=True)
+    scene = tmp / ("%s.scene.json" % Path(path).parent.name)
+    scene.write_text(json.dumps(doc, ensure_ascii=False), encoding="utf-8")
+    return scene
+
+
 def build(out):
     sys.path.insert(0, str(ROOT))
     studio = importlib.import_module("construct_hologram.studio")
@@ -139,7 +152,7 @@ def build(out):
             shutil.copyfile(src / "construct.html", dst / "construct.html")
         else:
             tmp = out / ".build" / ex["slug"]
-            studio.build(str(src / "scene.json"), str(tmp))
+            studio.build(str(_public_scene(src / "scene.json", tmp.parent)), str(tmp), asset_root=str(src))
             shutil.copyfile(studio.page_in(tmp), dst / "construct.html")
         for name in ("scene.json", "hero.jpg", "thumb.jpg"):
             shutil.copyfile(src / name, dst / name)

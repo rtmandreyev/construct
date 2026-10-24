@@ -175,5 +175,9 @@ class ExamplesGallery(unittest.TestCase):
             page = (out / "examples" / "sainte-chapelle" / "index.html").read_text(encoding="utf-8")
             self.assertIn("construct.html?ui=0&amp;rounds=0", page)  # the gallery never shows a round timeline
             self.assertIn('href="construct.html?rounds=0"', page)
+            for slug in ("sainte-chapelle", "saturn", "andromeda-galaxy"):  # nor its direct URL: no round history in it
+                built = (out / "examples" / slug / "construct.html").read_text(encoding="utf-8")
+                self.assertNotRegex(built, r'"rounds":\s*\[\{', slug)
+                self.assertIn('"rounds"', (out / "examples" / slug / "scene.json").read_text(encoding="utf-8"))
             html_ = (out / "examples" / "leica-m3" / "construct.html").read_text(encoding="utf-8")
             self.assertIsNone(re.search(r'<script[^>]+src=|<link[^>]+href="http', html_))  # self-contained
