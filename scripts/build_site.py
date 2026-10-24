@@ -74,8 +74,8 @@ def _load_examples():
 
 
 def provenance(ex):
-    """The one-line provenance every card, page and README carries."""
-    return "%s · %s · made with %s" % (ex["model"], ex["how"], ex["build"])
+    """The one line every card, page and README carries: the mode and the model."""
+    return "%s · %s" % (ex["mode"], ex["model"])
 
 
 def _page(title, body, depth, description):
@@ -96,8 +96,9 @@ def index_page(examples):
     body = ("<header class=\"site\"><div class=\"eyebrow\">Construct · examples</div>"
             "<h1>Holographic constructs, built by AI agents</h1>"
             "<p>Each construct was written as a short declarative scene by a model, then validated, audited, compiled "
-            "and rendered by Construct. Open one to watch it assemble; drag to orbit, press R to replay and L for "
-            "labels.</p><div class=\"links\"><a class=\"button\" href=\"%s\">Construct on GitHub</a>"
+            "and rendered by Construct, in fast or masterpiece mode. Open one to watch it assemble; drag to orbit, "
+            "press R to replay and L for labels. Some were made with earlier versions of Construct.</p>"
+            "<div class=\"links\"><a class=\"button\" href=\"%s\">Construct on GitHub</a>"
             "<a class=\"button\" href=\"%s#three-modes\">How they were made</a></div></header>"
             "<main><div class=\"grid\">\n%s\n</div></main>"
             "<footer class=\"site\">Construct is MIT licensed. Product and place names belong to their owners; each "
@@ -107,18 +108,17 @@ def index_page(examples):
 
 
 def example_page(ex):
-    body = ("<div class=\"viewer\"><div class=\"bar\"><h1>%s</h1><p class=\"prov\">%s%s</p><nav>"
+    body = ("<div class=\"viewer\"><div class=\"bar\"><h1>%s</h1><p class=\"prov\">%s</p><nav>"
             "<a class=\"button\" href=\"../../\">All examples</a>"
-            "<a class=\"button\" href=\"construct.html\">Full screen</a>"
+            "<a class=\"button\" href=\"construct.html?rounds=0\">Full screen</a>"
             "<a class=\"button\" href=\"scene.json\">Scene</a>"
             "<a class=\"button\" href=\"%s/tree/main/examples/%s\">Source</a></nav></div>"
-            "<div class=\"stage\"><iframe src=\"construct.html?ui=0\" title=\"%s, live construct\" "
+            "<div class=\"stage\"><iframe src=\"construct.html?ui=0&amp;rounds=0\" title=\"%s, live construct\" "
             "allowfullscreen></iframe></div>"
             "<p class=\"hint\">Drag to orbit, scroll to zoom. Click the construct first, then <kbd>R</kbd> replays the "
             "assembly, <kbd>L</kbd> shows labels, <kbd>P</kbd> shows how each part is known, <kbd>1</kbd>–<kbd>6</kbd> "
             "change the view and <kbd>space</kbd> pauses.</p></div>"
-            % (html.escape(ex["title"]), html.escape(provenance(ex)),
-               ". " + html.escape(ex["note"]) if ex.get("note") else "", REPO_URL, ex["slug"], html.escape(ex["title"])))
+            % (html.escape(ex["title"]), html.escape(provenance(ex)), REPO_URL, ex["slug"], html.escape(ex["title"])))
     return _page("%s · Construct" % ex["title"], body, 2, "%s: a holographic construct. %s" % (ex["title"], provenance(ex)))
 
 

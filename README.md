@@ -14,9 +14,9 @@
 <td width="33%"><a href="https://rtmandreyev.github.io/construct/examples/duomo-di-milano/"><img src="docs/media/assembly-duomo-di-milano.gif" alt="A Duomo di Milano construct assembling itself"></a></td>
 </tr>
 <tr>
-<td align="center"><b>Sainte-Chapelle</b><br><sub>Claude Opus · masterpiece</sub></td>
-<td align="center"><b>Toyota Land Cruiser FJ62</b><br><sub>Claude Opus · masterpiece</sub></td>
-<td align="center"><b>Duomo di Milano</b><br><sub>Claude Opus · masterpiece</sub></td>
+<td align="center"><b>Sainte-Chapelle</b><br><sub>masterpiece · Claude Opus</sub></td>
+<td align="center"><b>Toyota Land Cruiser FJ62</b><br><sub>masterpiece · Claude Opus</sub></td>
+<td align="center"><b>Duomo di Milano</b><br><sub>masterpiece · Claude Opus</sub></td>
 </tr>
 </table>
 
@@ -133,8 +133,8 @@ reference outline with `construct compare`.
 ## Examples
 
 Twenty-three constructs made by Claude Opus, GPT-6.1 Sol and DeepSeek, from the Sainte-Chapelle
-to a Yamaha concert grand. Open the **[live gallery](https://rtmandreyev.github.io/construct/)**, or see [examples/](examples/) for
-each scene, its hero image and how it was made.
+to a Yamaha concert grand, in fast or masterpiece mode. Open the **[live gallery](https://rtmandreyev.github.io/construct/)**, or see
+[examples/](examples/) for each scene and its hero image.
 
 ## Documentation
 

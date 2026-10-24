@@ -7,6 +7,7 @@
  *
  * URL parameters: t (freeze time, seconds), view (hero|front|side|back|top|three-quarter|<scene view>),
  * motion (full|reduced), mode (light|provenance), ui (1|0), labels (1|0), caption (1|0),
+ * rounds (1|0: show or never show the round timeline a `construct rounds` run recorded),
  * sheet (assembly|views|motion|life|provenance|all), fps (15|20|30|60|0), capture (1),
  * open (0..1: hold the articulations at this opening instead of playing them),
  * shift (x,y: move the framed object across the screen, in fractions of the half-viewport),

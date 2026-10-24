@@ -59,9 +59,10 @@ __VIEWER__
 </script>
 <script>
   // the improvement rounds, when a run recorded them (`construct rounds`): one line per round
+  // (?rounds=1 shows them even without the UI; ?rounds=0 never shows them, as in a public gallery)
   (function () {
     var g = window.HOLOGRAM_GEOMETRY || {}, a = (g.provenance || {}).authoring || {}, rs = a.rounds || [];
-    if (!rs.length) return;
+    if (!rs.length || /[?&]rounds=0\b/.test(location.search)) return;
     var forced = /[?&]rounds=1\b/.test(location.search), box = document.createElement("div");
     var best = rs.filter(function (r) { return r.result !== "reverted"; }).slice(-1)[0];
     box.className = "rounds" + (forced ? " forced" : "");

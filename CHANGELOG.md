@@ -70,9 +70,9 @@ detailed, and a gallery of 23 examples made by AI agents.
 
 ### Examples
 
-- **23 example constructs** in `examples/`, each with its scene, a hero image and how it was
-  made, and a live gallery built from them (`scripts/build_site.py`). All of them reproduce
-  with this release.
+- **23 example constructs** in `examples/`, each with its scene, a hero image, its mode and
+  the model that made it, and a live gallery built from them (`scripts/build_site.py`). All of
+  them build with this release.
 - Six new skill examples drawn with the craft guide: a Leica M3, an open-reel tape recorder, a
   sea cliff at dusk, a Jackson Juggernaut ET7, a Porsche 911 (964) and the Sagrada Família.
 

@@ -147,8 +147,9 @@ class ExamplesGallery(unittest.TestCase):
             d = root / ex["slug"]
             for name in ("scene.json", "hero.jpg", "thumb.jpg", "README.md"):
                 self.assertTrue((d / name).is_file(), (ex["slug"], name))
-            for key in ("title", "model", "how", "build"):
-                self.assertTrue(ex.get(key), (ex["slug"], key))
+            self.assertEqual(set(ex), {"slug", "title", "mode", "model"}, ex["slug"])  # the label: object, mode, model
+            self.assertIn(ex["mode"], ("fast", "masterpiece"), ex["slug"])
+            self.assertIn(ex["model"], ("Claude Opus", "GPT-6.1 Sol", "DeepSeek"), ex["slug"])
             text = (d / "scene.json").read_text(encoding="utf-8")
             self.assertIsNone(re.search(r"/Users/|/private/|/var/folders|references/", text), ex["slug"])
             self.assertTrue(diagnose.diagnose_text(text)["ok"], ex["slug"])
@@ -171,5 +172,8 @@ class ExamplesGallery(unittest.TestCase):
                     if ref.endswith("/"):
                         target = target / "index.html"
                     self.assertTrue(target.exists(), (page, ref))
+            page = (out / "examples" / "sainte-chapelle" / "index.html").read_text(encoding="utf-8")
+            self.assertIn("construct.html?ui=0&amp;rounds=0", page)  # the gallery never shows a round timeline
+            self.assertIn('href="construct.html?rounds=0"', page)
             html_ = (out / "examples" / "leica-m3" / "construct.html").read_text(encoding="utf-8")
             self.assertIsNone(re.search(r'<script[^>]+src=|<link[^>]+href="http', html_))  # self-contained
