@@ -1,0 +1,6520 @@
+{
+  "format": "tessera-hologram",
+  "version": 2,
+  "id": "s2-cathedral",
+  "title": "The vaulted nave — Gothic cathedral interior",
+  "subject": {
+    "category": "architecture",
+    "accuracy": "generic",
+    "synthetic": false,
+    "summary": "An interior-first, six-bay Gothic nave: paired clustered piers carry pointed arcades, a triforium and high clerestories beneath a luminous ribbed vault; a twelve-light rose terminates the long perspective. Generic designed reconstruction, not an identified cathedral or a surveyed building. All dimensions, bay counts, tracery and furnishings are inferred design choices; dust and light effects are decorative."
+  },
+  "units": "m",
+  "seed": 217,
+  "sources": [
+    {
+      "id": "request",
+      "kind": "user_request",
+      "title": "Public-showcase cathedral hologram request",
+      "rights": "user_private",
+      "ref": "The nave of a gothic cathedral seen from inside: two rows of piers with pointed arches, a ribbed vault overhead, clerestory windows and a rose window at the far end."
+    }
+  ],
+  "facts": [
+    {
+      "key": "brief.subject",
+      "value": "Gothic cathedral nave, seen from inside",
+      "certainty": "user_supplied",
+      "note": "The user named the subject and interior viewpoint, not a particular cathedral.",
+      "source": "request"
+    },
+    {
+      "key": "brief.piers",
+      "value": "Two rows of piers with pointed arches",
+      "certainty": "user_supplied",
+      "note": "Requested structural rhythm; no measurements or pier counts were supplied.",
+      "source": "request"
+    },
+    {
+      "key": "brief.vault",
+      "value": "Ribbed vault overhead",
+      "certainty": "user_supplied",
+      "note": "Requested overhead structure; no vault plan or stonework survey was supplied.",
+      "source": "request"
+    },
+    {
+      "key": "brief.windows",
+      "value": "Clerestory windows and a rose window at the far end",
+      "certainty": "user_supplied",
+      "note": "Requested identity features; no authentic glazing design was supplied.",
+      "source": "request"
+    },
+    {
+      "key": "design.dimensions",
+      "value": "48 m long nave; 14 m clear centre span; 25.6 m overall floor width; vault spring 25.6 m and crown 34.6 m",
+      "certainty": "inferred",
+      "note": "Chosen monumental yet slender proportions for this generic reconstruction, not historical measurements."
+    },
+    {
+      "key": "design.bays",
+      "value": 6,
+      "certainty": "inferred",
+      "note": "Six 8 m bays, seven piers in each row, chosen to produce a strong interior vanishing point."
+    },
+    {
+      "key": "design.arcade",
+      "value": "Pier cores at x = ±7 m; arcade spring 9.8 m, clear arch span 6.4 m and rise 4.8 m",
+      "certainty": "inferred",
+      "note": "Designed two-centred pointed arches and clustered supports, not a claim about a named monument."
+    },
+    {
+      "key": "design.vault",
+      "value": "Transverse pointed ribs, crossing diagonal ribs, longitudinal ridge and simplified continuous pointed web shell",
+      "certainty": "inferred",
+      "note": "A legible ribbed-vault interpretation. Thin web geometry simplifies masonry curvature and does not claim authentic quadripartite stereotomy."
+    },
+    {
+      "key": "design.clerestory",
+      "value": "Paired lancets and a small oculus inside each high pointed opening; blind triplet triforium below",
+      "certainty": "inferred",
+      "note": "A designed Gothic elevation hierarchy added to make the requested interior intelligible."
+    },
+    {
+      "key": "design.rose",
+      "value": "Twelve radial lights, petalled tracery, central roundel and an annular stone surround; centre 20 m above the floor",
+      "certainty": "inferred",
+      "note": "Invented geometric tracery, not copied or authenticated stained glass. No saint, donor, date, dedication or cathedral identity is asserted."
+    },
+    {
+      "key": "design.aisles",
+      "value": "Two narrow side aisles with lower pointed transverse vault ribs and lancet openings",
+      "certainty": "inferred",
+      "note": "Secondary spaces chosen to give the two nave arcades believable depth and support."
+    },
+    {
+      "key": "design.furnishings",
+      "value": "Three shallow sanctuary steps, a plain altar and two tall candle stands",
+      "certainty": "inferred",
+      "note": "Restrained designed furnishings for scale; their presence is not evidence about a specific church."
+    },
+    {
+      "key": "design.joints",
+      "value": "Small open joints between adjacent repeated masonry panels",
+      "certainty": "inferred",
+      "note": "Masonry-panel joints preserve legibility without coincident wireframe edges."
+    },
+    {
+      "key": "display.life",
+      "value": "Slow dust drift and candle-light breathing; architecture remains rigid",
+      "certainty": "decorative",
+      "note": "Atmosphere only. No moving stone, opening roof, spinning rose or fictitious structural articulation."
+    },
+    {
+      "key": "display.review",
+      "value": "Geometric validation only; no rendered visual review",
+      "certainty": "decorative",
+      "note": "Rendering, captures and video were explicitly excluded by the user."
+    }
+  ],
+  "assets": [],
+  "parts": [
+    {
+      "id": "nave-foundation",
+      "label": "Continuous floor and foundation",
+      "role": "mass",
+      "certainty": "inferred",
+      "stage": 0,
+      "basis": [
+        "design.dimensions"
+      ],
+      "shape": {
+        "type": "box",
+        "size": [
+          25.6,
+          0.5,
+          51
+        ]
+      },
+      "at": [
+        0,
+        -0.25,
+        0
+      ],
+      "look": {
+        "fill": "glass",
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "floor-longitudinal-joints",
+      "label": "Longitudinal paving courses",
+      "role": "ground",
+      "certainty": "inferred",
+      "stage": 0,
+      "basis": [
+        "design.dimensions"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            3.4,
+            0.012,
+            -24.8
+          ],
+          [
+            3.4,
+            0.012,
+            24.8
+          ]
+        ],
+        "smooth": false,
+        "closed": false
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "mirror": "x"
+    },
+    {
+      "id": "floor-bay-joints",
+      "label": "Transverse floor courses",
+      "role": "ground",
+      "certainty": "inferred",
+      "stage": 0,
+      "basis": [
+        "design.dimensions"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -12.3,
+            0.014,
+            0
+          ],
+          [
+            12.3,
+            0.014,
+            0
+          ]
+        ],
+        "smooth": false,
+        "closed": false
+      },
+      "at": [
+        0,
+        0,
+        -24
+      ],
+      "repeat": {
+        "count": 13,
+        "step": {
+          "at": [
+            0,
+            0,
+            4
+          ]
+        }
+      }
+    },
+    {
+      "id": "sanctuary-first-step",
+      "label": "Sanctuary first step",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 0,
+      "basis": [
+        "design.furnishings"
+      ],
+      "shape": {
+        "type": "box",
+        "size": [
+          11,
+          0.14,
+          6
+        ]
+      },
+      "at": [
+        0,
+        0.07,
+        -21.5
+      ]
+    },
+    {
+      "id": "sanctuary-second-step",
+      "label": "Sanctuary second step",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 0,
+      "basis": [
+        "design.furnishings"
+      ],
+      "shape": {
+        "type": "box",
+        "size": [
+          10.2,
+          0.14,
+          5.5
+        ]
+      },
+      "at": [
+        0,
+        0.21,
+        -21.75
+      ]
+    },
+    {
+      "id": "sanctuary-third-step",
+      "label": "Sanctuary third step",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 0,
+      "basis": [
+        "design.furnishings"
+      ],
+      "shape": {
+        "type": "box",
+        "size": [
+          9.4,
+          0.14,
+          5
+        ]
+      },
+      "at": [
+        0,
+        0.35,
+        -22
+      ]
+    },
+    {
+      "id": "pier-bases",
+      "label": "Paired octagonal pier plinths",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 1,
+      "basis": [
+        "brief.piers",
+        "design.arcade",
+        "design.bays"
+      ],
+      "shape": {
+        "type": "cylinder",
+        "radius": 1.1,
+        "height": 0.48,
+        "segments": 8,
+        "ribs": 8
+      },
+      "at": [
+        7,
+        0,
+        -24
+      ],
+      "repeat": {
+        "count": 7,
+        "step": {
+          "at": [
+            0,
+            0,
+            8
+          ]
+        }
+      },
+      "mirror": "x"
+    },
+    {
+      "id": "pier-cores",
+      "label": "Two rows of load-bearing piers",
+      "role": "mass",
+      "certainty": "inferred",
+      "stage": 1,
+      "basis": [
+        "brief.piers",
+        "design.arcade",
+        "design.bays"
+      ],
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.64,
+        "height": 8.62,
+        "segments": 12,
+        "ribs": 6
+      },
+      "at": [
+        7,
+        0.48,
+        -24
+      ],
+      "repeat": {
+        "count": 7,
+        "step": {
+          "at": [
+            0,
+            0,
+            8
+          ]
+        }
+      },
+      "mirror": "x"
+    },
+    {
+      "id": "pier-shaft-front",
+      "label": "Clustered pier colonnettes front",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 1,
+      "basis": [
+        "design.arcade",
+        "design.bays"
+      ],
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.21,
+        "height": 8.62,
+        "segments": 6,
+        "ribs": 3
+      },
+      "at": [
+        7,
+        0.48,
+        -23.39
+      ],
+      "repeat": {
+        "count": 7,
+        "step": {
+          "at": [
+            0,
+            0,
+            8
+          ]
+        }
+      },
+      "mirror": "x"
+    },
+    {
+      "id": "pier-shaft-back",
+      "label": "Clustered pier colonnettes back",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 1,
+      "basis": [
+        "design.arcade",
+        "design.bays"
+      ],
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.21,
+        "height": 8.62,
+        "segments": 6,
+        "ribs": 3
+      },
+      "at": [
+        7,
+        0.48,
+        -24.61
+      ],
+      "repeat": {
+        "count": 7,
+        "step": {
+          "at": [
+            0,
+            0,
+            8
+          ]
+        }
+      },
+      "mirror": "x"
+    },
+    {
+      "id": "pier-shaft-outer",
+      "label": "Clustered pier colonnettes outer",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 1,
+      "basis": [
+        "design.arcade",
+        "design.bays"
+      ],
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.21,
+        "height": 8.62,
+        "segments": 6,
+        "ribs": 3
+      },
+      "at": [
+        7.61,
+        0.48,
+        -24
+      ],
+      "repeat": {
+        "count": 7,
+        "step": {
+          "at": [
+            0,
+            0,
+            8
+          ]
+        }
+      },
+      "mirror": "x"
+    },
+    {
+      "id": "pier-capitals",
+      "label": "Flared moulded capitals",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 1,
+      "basis": [
+        "design.arcade"
+      ],
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.68,
+            0
+          ],
+          [
+            0.72,
+            0.18
+          ],
+          [
+            0.94,
+            0.44
+          ],
+          [
+            0.98,
+            0.56
+          ],
+          [
+            0.98,
+            0.7
+          ]
+        ],
+        "segments": 12,
+        "meridians": 6
+      },
+      "at": [
+        7,
+        9.1,
+        -24
+      ],
+      "repeat": {
+        "count": 7,
+        "step": {
+          "at": [
+            0,
+            0,
+            8
+          ]
+        }
+      },
+      "mirror": "x"
+    },
+    {
+      "id": "vault-responds",
+      "label": "Unbroken engaged vault shafts",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 1,
+      "basis": [
+        "design.vault",
+        "design.arcade"
+      ],
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.19,
+        "height": 25.02,
+        "segments": 6,
+        "ribs": 3
+      },
+      "at": [
+        6.48,
+        0.48,
+        -24
+      ],
+      "repeat": {
+        "count": 7,
+        "step": {
+          "at": [
+            0,
+            0,
+            8
+          ]
+        }
+      },
+      "mirror": "x"
+    },
+    {
+      "id": "aisle-wall-plinths",
+      "label": "Low side-aisle masonry",
+      "role": "mass",
+      "certainty": "inferred",
+      "stage": 1,
+      "basis": [
+        "design.aisles"
+      ],
+      "shape": {
+        "type": "box",
+        "size": [
+          0.7,
+          3.3,
+          49.2
+        ]
+      },
+      "at": [
+        12.1,
+        1.65,
+        0
+      ],
+      "mirror": "x"
+    },
+    {
+      "id": "aisle-wall-piers",
+      "label": "Aisle wall supports",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 1,
+      "basis": [
+        "design.aisles"
+      ],
+      "shape": {
+        "type": "box",
+        "size": [
+          0.7,
+          8.9,
+          2.6
+        ]
+      },
+      "at": [
+        12.1,
+        7.75,
+        -24
+      ],
+      "repeat": {
+        "count": 7,
+        "step": {
+          "at": [
+            0,
+            0,
+            8
+          ]
+        }
+      },
+      "mirror": "x"
+    },
+    {
+      "id": "arcade-spandrels",
+      "label": "Masonry over the pointed arcade openings",
+      "role": "mass",
+      "certainty": "inferred",
+      "stage": 2,
+      "basis": [
+        "brief.piers",
+        "design.arcade",
+        "design.joints"
+      ],
+      "shape": {
+        "type": "extrude",
+        "profile": [
+          [
+            -3.98,
+            9.8
+          ],
+          [
+            -3.2,
+            9.8
+          ],
+          [
+            -3.175049,
+            10.308787
+          ],
+          [
+            -3.100437,
+            10.812691
+          ],
+          [
+            -2.976879,
+            11.306878
+          ],
+          [
+            -2.80556,
+            11.786603
+          ],
+          [
+            -2.588126,
+            12.247265
+          ],
+          [
+            -2.326662,
+            12.684441
+          ],
+          [
+            -2.023677,
+            13.093937
+          ],
+          [
+            -1.68208,
+            13.471823
+          ],
+          [
+            -1.305148,
+            13.814473
+          ],
+          [
+            -0.896499,
+            14.118599
+          ],
+          [
+            -0.460053,
+            14.381281
+          ],
+          [
+            0,
+            14.6
+          ],
+          [
+            0.460053,
+            14.381281
+          ],
+          [
+            0.896499,
+            14.118599
+          ],
+          [
+            1.305148,
+            13.814473
+          ],
+          [
+            1.68208,
+            13.471823
+          ],
+          [
+            2.023677,
+            13.093937
+          ],
+          [
+            2.326662,
+            12.684441
+          ],
+          [
+            2.588126,
+            12.247265
+          ],
+          [
+            2.80556,
+            11.786603
+          ],
+          [
+            2.976879,
+            11.306878
+          ],
+          [
+            3.100437,
+            10.812691
+          ],
+          [
+            3.175049,
+            10.308787
+          ],
+          [
+            3.2,
+            9.8
+          ],
+          [
+            3.98,
+            9.8
+          ],
+          [
+            3.98,
+            17.8
+          ],
+          [
+            -3.98,
+            17.8
+          ]
+        ],
+        "height": 0.8,
+        "axis": "x"
+      },
+      "at": [
+        6.6,
+        0,
+        -20
+      ],
+      "repeat": {
+        "count": 6,
+        "step": {
+          "at": [
+            0,
+            0,
+            8
+          ]
+        }
+      },
+      "mirror": "x",
+      "look": {
+        "fill": "glass",
+        "alpha": 0.38
+      }
+    },
+    {
+      "id": "pointed-arcades-near",
+      "label": "Two-centred pointed arcade arch near",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 2,
+      "basis": [
+        "brief.piers",
+        "design.arcade"
+      ],
+      "shape": {
+        "type": "tube",
+        "path": [
+          [
+            0,
+            9.8,
+            -3.2
+          ],
+          [
+            0,
+            10.308787,
+            -3.175049
+          ],
+          [
+            0,
+            10.812691,
+            -3.100437
+          ],
+          [
+            0,
+            11.306878,
+            -2.976879
+          ],
+          [
+            0,
+            11.786603,
+            -2.80556
+          ],
+          [
+            0,
+            12.247265,
+            -2.588126
+          ],
+          [
+            0,
+            12.684441,
+            -2.326662
+          ],
+          [
+            0,
+            13.093937,
+            -2.023677
+          ],
+          [
+            0,
+            13.471823,
+            -1.68208
+          ],
+          [
+            0,
+            13.814473,
+            -1.305148
+          ],
+          [
+            0,
+            14.118599,
+            -0.896499
+          ],
+          [
+            0,
+            14.381281,
+            -0.460053
+          ],
+          [
+            0,
+            14.6,
+            0
+          ]
+        ],
+        "radius": 0.17,
+        "sides": 6,
+        "samples": 1,
+        "smooth": false,
+        "longitudinal": 3,
+        "ring_every": 0
+      },
+      "at": [
+        6.5,
+        0,
+        -20
+      ],
+      "repeat": {
+        "count": 6,
+        "step": {
+          "at": [
+            0,
+            0,
+            8
+          ]
+        }
+      },
+      "mirror": "x",
+      "look": {
+        "fill": "none",
+        "weight": 1.35
+      }
+    },
+    {
+      "id": "pointed-arcades-far",
+      "label": "Two-centred pointed arcade arch far",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 2,
+      "basis": [
+        "brief.piers",
+        "design.arcade"
+      ],
+      "shape": {
+        "type": "tube",
+        "path": [
+          [
+            0,
+            14.6,
+            0
+          ],
+          [
+            0,
+            14.381281,
+            0.460053
+          ],
+          [
+            0,
+            14.118599,
+            0.896499
+          ],
+          [
+            0,
+            13.814473,
+            1.305148
+          ],
+          [
+            0,
+            13.471823,
+            1.68208
+          ],
+          [
+            0,
+            13.093937,
+            2.023677
+          ],
+          [
+            0,
+            12.684441,
+            2.326662
+          ],
+          [
+            0,
+            12.247265,
+            2.588126
+          ],
+          [
+            0,
+            11.786603,
+            2.80556
+          ],
+          [
+            0,
+            11.306878,
+            2.976879
+          ],
+          [
+            0,
+            10.812691,
+            3.100437
+          ],
+          [
+            0,
+            10.308787,
+            3.175049
+          ],
+          [
+            0,
+            9.8,
+            3.2
+          ]
+        ],
+        "radius": 0.17,
+        "sides": 6,
+        "samples": 1,
+        "smooth": false,
+        "longitudinal": 3,
+        "ring_every": 0
+      },
+      "at": [
+        6.5,
+        0,
+        -20
+      ],
+      "repeat": {
+        "count": 6,
+        "step": {
+          "at": [
+            0,
+            0,
+            8
+          ]
+        }
+      },
+      "mirror": "x",
+      "look": {
+        "fill": "none",
+        "weight": 1.35
+      }
+    },
+    {
+      "id": "arcade-outer-moulding",
+      "label": "Outer archivolt moulding",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 2,
+      "basis": [
+        "design.arcade"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0,
+            9.8,
+            -3.45
+          ],
+          [
+            0,
+            10.343766,
+            -3.423027
+          ],
+          [
+            0,
+            10.882193,
+            -3.342373
+          ],
+          [
+            0,
+            11.409995,
+            -3.20883
+          ],
+          [
+            0,
+            11.92199,
+            -3.023709
+          ],
+          [
+            0,
+            12.413151,
+            -2.788828
+          ],
+          [
+            0,
+            12.878656,
+            -2.506492
+          ],
+          [
+            0,
+            13.313935,
+            -2.179474
+          ],
+          [
+            0,
+            13.714714,
+            -1.810984
+          ],
+          [
+            0,
+            14.077059,
+            -1.40464
+          ],
+          [
+            0,
+            14.397411,
+            -0.964432
+          ],
+          [
+            0,
+            14.672625,
+            -0.494681
+          ],
+          [
+            0,
+            14.9,
+            0
+          ],
+          [
+            0,
+            14.672625,
+            0.494681
+          ],
+          [
+            0,
+            14.397411,
+            0.964432
+          ],
+          [
+            0,
+            14.077059,
+            1.40464
+          ],
+          [
+            0,
+            13.714714,
+            1.810984
+          ],
+          [
+            0,
+            13.313935,
+            2.179474
+          ],
+          [
+            0,
+            12.878656,
+            2.506492
+          ],
+          [
+            0,
+            12.413151,
+            2.788828
+          ],
+          [
+            0,
+            11.92199,
+            3.023709
+          ],
+          [
+            0,
+            11.409995,
+            3.20883
+          ],
+          [
+            0,
+            10.882193,
+            3.342373
+          ],
+          [
+            0,
+            10.343766,
+            3.423027
+          ],
+          [
+            0,
+            9.8,
+            3.45
+          ]
+        ],
+        "smooth": false,
+        "closed": false
+      },
+      "at": [
+        6.48,
+        0,
+        -20
+      ],
+      "repeat": {
+        "count": 6,
+        "step": {
+          "at": [
+            0,
+            0,
+            8
+          ]
+        }
+      },
+      "mirror": "x"
+    },
+    {
+      "id": "triforium-stringcourse",
+      "label": "Arcade and triforium stringcourse",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 2,
+      "basis": [
+        "design.clerestory"
+      ],
+      "shape": {
+        "type": "box",
+        "size": [
+          0.98,
+          0.24,
+          48.5
+        ]
+      },
+      "at": [
+        7,
+        17.8,
+        0
+      ],
+      "mirror": "x"
+    },
+    {
+      "id": "aisle-transverse-ribs",
+      "label": "Lower pointed aisle vault ribs",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 2,
+      "basis": [
+        "design.aisles"
+      ],
+      "shape": {
+        "type": "tube",
+        "path": [
+          [
+            -2.55,
+            9.8,
+            0
+          ],
+          [
+            -2.529772,
+            10.185156,
+            0
+          ],
+          [
+            -2.469311,
+            10.566074,
+            0
+          ],
+          [
+            -2.369282,
+            10.938563,
+            0
+          ],
+          [
+            -2.230786,
+            11.298525,
+            0
+          ],
+          [
+            -2.055346,
+            11.642,
+            0
+          ],
+          [
+            -1.844893,
+            11.965208,
+            0
+          ],
+          [
+            -1.601742,
+            12.264593,
+            0
+          ],
+          [
+            -1.328569,
+            12.536862,
+            0
+          ],
+          [
+            -1.028379,
+            12.779019,
+            0
+          ],
+          [
+            -0.704474,
+            12.988399,
+            0
+          ],
+          [
+            -0.36042,
+            13.162698,
+            0
+          ],
+          [
+            0,
+            13.3,
+            0
+          ],
+          [
+            0.36042,
+            13.162698,
+            0
+          ],
+          [
+            0.704474,
+            12.988399,
+            0
+          ],
+          [
+            1.028379,
+            12.779019,
+            0
+          ],
+          [
+            1.328569,
+            12.536862,
+            0
+          ],
+          [
+            1.601742,
+            12.264593,
+            0
+          ],
+          [
+            1.844893,
+            11.965208,
+            0
+          ],
+          [
+            2.055346,
+            11.642,
+            0
+          ],
+          [
+            2.230786,
+            11.298525,
+            0
+          ],
+          [
+            2.369282,
+            10.938563,
+            0
+          ],
+          [
+            2.469311,
+            10.566074,
+            0
+          ],
+          [
+            2.529772,
+            10.185156,
+            0
+          ],
+          [
+            2.55,
+            9.8,
+            0
+          ]
+        ],
+        "radius": 0.1,
+        "sides": 6,
+        "samples": 1,
+        "smooth": false,
+        "longitudinal": 3,
+        "ring_every": 0
+      },
+      "at": [
+        9.55,
+        0,
+        -24
+      ],
+      "repeat": {
+        "count": 7,
+        "step": {
+          "at": [
+            0,
+            0,
+            8
+          ]
+        }
+      },
+      "mirror": "x",
+      "look": {
+        "fill": "none"
+      }
+    },
+    {
+      "id": "aisle-window-head-masonry",
+      "label": "Masonry above aisle lancets",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 2,
+      "basis": [
+        "design.aisles"
+      ],
+      "shape": {
+        "type": "extrude",
+        "profile": [
+          [
+            -2.68,
+            7.6
+          ],
+          [
+            -2.6,
+            7.6
+          ],
+          [
+            -2.579412,
+            7.994623
+          ],
+          [
+            -2.517872,
+            8.384961
+          ],
+          [
+            -2.416048,
+            8.766777
+          ],
+          [
+            -2.275045,
+            9.135923
+          ],
+          [
+            -2.096395,
+            9.488394
+          ],
+          [
+            -1.882037,
+            9.82036
+          ],
+          [
+            -1.634299,
+            10.128219
+          ],
+          [
+            -1.355871,
+            10.408627
+          ],
+          [
+            -1.049775,
+            10.65854
+          ],
+          [
+            -0.719335,
+            10.875244
+          ],
+          [
+            -0.368139,
+            11.056386
+          ],
+          [
+            0,
+            11.2
+          ],
+          [
+            0.368139,
+            11.056386
+          ],
+          [
+            0.719335,
+            10.875244
+          ],
+          [
+            1.049775,
+            10.65854
+          ],
+          [
+            1.355871,
+            10.408627
+          ],
+          [
+            1.634299,
+            10.128219
+          ],
+          [
+            1.882037,
+            9.82036
+          ],
+          [
+            2.096395,
+            9.488394
+          ],
+          [
+            2.275045,
+            9.135923
+          ],
+          [
+            2.416048,
+            8.766777
+          ],
+          [
+            2.517872,
+            8.384961
+          ],
+          [
+            2.579412,
+            7.994623
+          ],
+          [
+            2.6,
+            7.6
+          ],
+          [
+            2.68,
+            7.6
+          ],
+          [
+            2.68,
+            12.2
+          ],
+          [
+            -2.68,
+            12.2
+          ]
+        ],
+        "height": 0.7,
+        "axis": "x"
+      },
+      "at": [
+        11.75,
+        0,
+        -20
+      ],
+      "repeat": {
+        "count": 6,
+        "step": {
+          "at": [
+            0,
+            0,
+            8
+          ]
+        }
+      },
+      "mirror": "x",
+      "look": {
+        "fill": "glass",
+        "alpha": 0.23
+      }
+    },
+    {
+      "id": "aisle-lancet-outlines",
+      "label": "Lower side-aisle lancets",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "basis": [
+        "design.aisles"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0,
+            3.3,
+            -2.6
+          ],
+          [
+            0,
+            7.6,
+            -2.6
+          ],
+          [
+            0,
+            7.994623,
+            -2.579412
+          ],
+          [
+            0,
+            8.384961,
+            -2.517872
+          ],
+          [
+            0,
+            8.766777,
+            -2.416048
+          ],
+          [
+            0,
+            9.135923,
+            -2.275045
+          ],
+          [
+            0,
+            9.488394,
+            -2.096395
+          ],
+          [
+            0,
+            9.82036,
+            -1.882037
+          ],
+          [
+            0,
+            10.128219,
+            -1.634299
+          ],
+          [
+            0,
+            10.408627,
+            -1.355871
+          ],
+          [
+            0,
+            10.65854,
+            -1.049775
+          ],
+          [
+            0,
+            10.875244,
+            -0.719335
+          ],
+          [
+            0,
+            11.056386,
+            -0.368139
+          ],
+          [
+            0,
+            11.2,
+            0
+          ],
+          [
+            0,
+            11.056386,
+            0.368139
+          ],
+          [
+            0,
+            10.875244,
+            0.719335
+          ],
+          [
+            0,
+            10.65854,
+            1.049775
+          ],
+          [
+            0,
+            10.408627,
+            1.355871
+          ],
+          [
+            0,
+            10.128219,
+            1.634299
+          ],
+          [
+            0,
+            9.82036,
+            1.882037
+          ],
+          [
+            0,
+            9.488394,
+            2.096395
+          ],
+          [
+            0,
+            9.135923,
+            2.275045
+          ],
+          [
+            0,
+            8.766777,
+            2.416048
+          ],
+          [
+            0,
+            8.384961,
+            2.517872
+          ],
+          [
+            0,
+            7.994623,
+            2.579412
+          ],
+          [
+            0,
+            7.6,
+            2.6
+          ],
+          [
+            0,
+            3.3,
+            2.6
+          ],
+          [
+            0,
+            3.3,
+            -2.6
+          ]
+        ],
+        "smooth": false,
+        "closed": false
+      },
+      "at": [
+        11.7,
+        0,
+        -20
+      ],
+      "repeat": {
+        "count": 6,
+        "step": {
+          "at": [
+            0,
+            0,
+            8
+          ]
+        }
+      },
+      "mirror": "x"
+    },
+    {
+      "id": "clerestory-sill-band",
+      "label": "High clerestory sill",
+      "role": "mass",
+      "certainty": "inferred",
+      "stage": 3,
+      "basis": [
+        "brief.windows",
+        "design.clerestory"
+      ],
+      "shape": {
+        "type": "box",
+        "size": [
+          0.8,
+          1.05,
+          48.5
+        ]
+      },
+      "at": [
+        7,
+        18.225,
+        0
+      ],
+      "mirror": "x"
+    },
+    {
+      "id": "clerestory-wall-posts",
+      "label": "Solid masonry between clerestory openings",
+      "role": "mass",
+      "certainty": "inferred",
+      "stage": 3,
+      "basis": [
+        "design.clerestory",
+        "design.joints"
+      ],
+      "shape": {
+        "type": "box",
+        "size": [
+          0.8,
+          6.85,
+          3.16
+        ]
+      },
+      "at": [
+        7,
+        22.175,
+        -24
+      ],
+      "repeat": {
+        "count": 7,
+        "step": {
+          "at": [
+            0,
+            0,
+            8
+          ]
+        }
+      },
+      "mirror": "x",
+      "look": {
+        "fill": "glass",
+        "alpha": 0.35
+      }
+    },
+    {
+      "id": "clerestory-head-spandrels",
+      "label": "Pointed clerestory head masonry",
+      "role": "mass",
+      "certainty": "inferred",
+      "stage": 3,
+      "basis": [
+        "brief.windows",
+        "design.clerestory"
+      ],
+      "shape": {
+        "type": "extrude",
+        "profile": [
+          [
+            -2.42,
+            21.8
+          ],
+          [
+            -2.4,
+            21.8
+          ],
+          [
+            -2.380847,
+            22.156816
+          ],
+          [
+            -2.32361,
+            22.509531
+          ],
+          [
+            -2.228944,
+            22.854093
+          ],
+          [
+            -2.09794,
+            23.186541
+          ],
+          [
+            -1.932101,
+            23.503056
+          ],
+          [
+            -1.733333,
+            23.8
+          ],
+          [
+            -1.503922,
+            24.073961
+          ],
+          [
+            -1.246502,
+            24.32179
+          ],
+          [
+            -0.964033,
+            24.540641
+          ],
+          [
+            -0.65976,
+            24.727997
+          ],
+          [
+            -0.33718,
+            24.881705
+          ],
+          [
+            0,
+            25.0
+          ],
+          [
+            0.33718,
+            24.881705
+          ],
+          [
+            0.65976,
+            24.727997
+          ],
+          [
+            0.964033,
+            24.540641
+          ],
+          [
+            1.246502,
+            24.32179
+          ],
+          [
+            1.503922,
+            24.073961
+          ],
+          [
+            1.733333,
+            23.8
+          ],
+          [
+            1.932101,
+            23.503056
+          ],
+          [
+            2.09794,
+            23.186541
+          ],
+          [
+            2.228944,
+            22.854093
+          ],
+          [
+            2.32361,
+            22.509531
+          ],
+          [
+            2.380847,
+            22.156816
+          ],
+          [
+            2.4,
+            21.8
+          ],
+          [
+            2.42,
+            21.8
+          ],
+          [
+            2.42,
+            25.62
+          ],
+          [
+            -2.42,
+            25.62
+          ]
+        ],
+        "height": 0.8,
+        "axis": "x"
+      },
+      "at": [
+        6.6,
+        0,
+        -20
+      ],
+      "repeat": {
+        "count": 6,
+        "step": {
+          "at": [
+            0,
+            0,
+            8
+          ]
+        }
+      },
+      "mirror": "x",
+      "look": {
+        "fill": "glass",
+        "alpha": 0.32
+      }
+    },
+    {
+      "id": "clerestory-pointed-surrounds",
+      "label": "Tall clerestory window surrounds",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 3,
+      "basis": [
+        "brief.windows",
+        "design.clerestory"
+      ],
+      "shape": {
+        "type": "tube",
+        "path": [
+          [
+            0,
+            18.75,
+            -2.4
+          ],
+          [
+            0,
+            21.8,
+            -2.4
+          ],
+          [
+            0,
+            22.156816,
+            -2.380847
+          ],
+          [
+            0,
+            22.509531,
+            -2.32361
+          ],
+          [
+            0,
+            22.854093,
+            -2.228944
+          ],
+          [
+            0,
+            23.186541,
+            -2.09794
+          ],
+          [
+            0,
+            23.503056,
+            -1.932101
+          ],
+          [
+            0,
+            23.8,
+            -1.733333
+          ],
+          [
+            0,
+            24.073961,
+            -1.503922
+          ],
+          [
+            0,
+            24.32179,
+            -1.246502
+          ],
+          [
+            0,
+            24.540641,
+            -0.964033
+          ],
+          [
+            0,
+            24.727997,
+            -0.65976
+          ],
+          [
+            0,
+            24.881705,
+            -0.33718
+          ],
+          [
+            0,
+            25.0,
+            0
+          ],
+          [
+            0,
+            24.881705,
+            0.33718
+          ],
+          [
+            0,
+            24.727997,
+            0.65976
+          ],
+          [
+            0,
+            24.540641,
+            0.964033
+          ],
+          [
+            0,
+            24.32179,
+            1.246502
+          ],
+          [
+            0,
+            24.073961,
+            1.503922
+          ],
+          [
+            0,
+            23.8,
+            1.733333
+          ],
+          [
+            0,
+            23.503056,
+            1.932101
+          ],
+          [
+            0,
+            23.186541,
+            2.09794
+          ],
+          [
+            0,
+            22.854093,
+            2.228944
+          ],
+          [
+            0,
+            22.509531,
+            2.32361
+          ],
+          [
+            0,
+            22.156816,
+            2.380847
+          ],
+          [
+            0,
+            21.8,
+            2.4
+          ],
+          [
+            0,
+            18.75,
+            2.4
+          ]
+        ],
+        "radius": 0.105,
+        "sides": 6,
+        "samples": 1,
+        "smooth": false,
+        "longitudinal": 3,
+        "ring_every": 0
+      },
+      "at": [
+        6.52,
+        0,
+        -20
+      ],
+      "repeat": {
+        "count": 6,
+        "step": {
+          "at": [
+            0,
+            0,
+            8
+          ]
+        }
+      },
+      "mirror": "x",
+      "look": {
+        "fill": "none"
+      }
+    },
+    {
+      "id": "vault-impost",
+      "label": "Vault springing cornice",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 3,
+      "basis": [
+        "design.vault"
+      ],
+      "shape": {
+        "type": "box",
+        "size": [
+          0.98,
+          0.23,
+          49
+        ]
+      },
+      "at": [
+        7,
+        25.6,
+        0
+      ],
+      "mirror": "x"
+    },
+    {
+      "id": "terminal-low-wall",
+      "label": "Far-end masonry dado",
+      "role": "mass",
+      "certainty": "inferred",
+      "stage": 1,
+      "basis": [
+        "design.dimensions"
+      ],
+      "shape": {
+        "type": "box",
+        "size": [
+          14.8,
+          3,
+          0.9
+        ]
+      },
+      "at": [
+        0,
+        1.5,
+        -24.5
+      ]
+    },
+    {
+      "id": "terminal-lancet-post-0",
+      "label": "Far-end lancet masonry pier",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 2,
+      "basis": [
+        "design.dimensions"
+      ],
+      "shape": {
+        "type": "box",
+        "size": [
+          1.7,
+          10.2,
+          0.9
+        ]
+      },
+      "at": [
+        -6.15,
+        8.1,
+        -24.5
+      ]
+    },
+    {
+      "id": "terminal-lancet-post-1",
+      "label": "Far-end lancet masonry pier",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 2,
+      "basis": [
+        "design.dimensions"
+      ],
+      "shape": {
+        "type": "box",
+        "size": [
+          1.7,
+          10.2,
+          0.9
+        ]
+      },
+      "at": [
+        -2.05,
+        8.1,
+        -24.5
+      ]
+    },
+    {
+      "id": "terminal-lancet-post-2",
+      "label": "Far-end lancet masonry pier",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 2,
+      "basis": [
+        "design.dimensions"
+      ],
+      "shape": {
+        "type": "box",
+        "size": [
+          1.7,
+          10.2,
+          0.9
+        ]
+      },
+      "at": [
+        2.05,
+        8.1,
+        -24.5
+      ]
+    },
+    {
+      "id": "terminal-lancet-post-3",
+      "label": "Far-end lancet masonry pier",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 2,
+      "basis": [
+        "design.dimensions"
+      ],
+      "shape": {
+        "type": "box",
+        "size": [
+          1.7,
+          10.2,
+          0.9
+        ]
+      },
+      "at": [
+        6.15,
+        8.1,
+        -24.5
+      ]
+    },
+    {
+      "id": "terminal-lancet-cap-0",
+      "label": "Far-end pointed lancet spandrel",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 2,
+      "basis": [
+        "design.clerestory"
+      ],
+      "shape": {
+        "type": "extrude",
+        "profile": [
+          [
+            -1.2,
+            9.5
+          ],
+          [
+            -1.190733,
+            9.697262
+          ],
+          [
+            -1.163014,
+            9.892786
+          ],
+          [
+            -1.117087,
+            10.084851
+          ],
+          [
+            -1.053357,
+            10.271764
+          ],
+          [
+            -0.972384,
+            10.451879
+          ],
+          [
+            -0.874883,
+            10.62361
+          ],
+          [
+            -0.761711,
+            10.785444
+          ],
+          [
+            -0.633867,
+            10.935956
+          ],
+          [
+            -0.492475,
+            11.07382
+          ],
+          [
+            -0.338781,
+            11.197822
+          ],
+          [
+            -0.17414,
+            11.306868
+          ],
+          [
+            0,
+            11.4
+          ],
+          [
+            0.17414,
+            11.306868
+          ],
+          [
+            0.338781,
+            11.197822
+          ],
+          [
+            0.492475,
+            11.07382
+          ],
+          [
+            0.633867,
+            10.935956
+          ],
+          [
+            0.761711,
+            10.785444
+          ],
+          [
+            0.874883,
+            10.62361
+          ],
+          [
+            0.972384,
+            10.451879
+          ],
+          [
+            1.053357,
+            10.271764
+          ],
+          [
+            1.117087,
+            10.084851
+          ],
+          [
+            1.163014,
+            9.892786
+          ],
+          [
+            1.190733,
+            9.697262
+          ],
+          [
+            1.2,
+            9.5
+          ],
+          [
+            1.2,
+            13.2
+          ],
+          [
+            -1.2,
+            13.2
+          ]
+        ],
+        "height": 0.9,
+        "axis": "z"
+      },
+      "at": [
+        -4.1,
+        0,
+        -24.95
+      ]
+    },
+    {
+      "id": "terminal-lancet-0",
+      "label": "Far-end lower lancet",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 3,
+      "basis": [
+        "design.clerestory"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -1.2,
+            3,
+            0
+          ],
+          [
+            -1.2,
+            9.5,
+            0
+          ],
+          [
+            -1.190733,
+            9.697262,
+            0
+          ],
+          [
+            -1.163014,
+            9.892786,
+            0
+          ],
+          [
+            -1.117087,
+            10.084851,
+            0
+          ],
+          [
+            -1.053357,
+            10.271764,
+            0
+          ],
+          [
+            -0.972384,
+            10.451879,
+            0
+          ],
+          [
+            -0.874883,
+            10.62361,
+            0
+          ],
+          [
+            -0.761711,
+            10.785444,
+            0
+          ],
+          [
+            -0.633867,
+            10.935956,
+            0
+          ],
+          [
+            -0.492475,
+            11.07382,
+            0
+          ],
+          [
+            -0.338781,
+            11.197822,
+            0
+          ],
+          [
+            -0.17414,
+            11.306868,
+            0
+          ],
+          [
+            0,
+            11.4,
+            0
+          ],
+          [
+            0.17414,
+            11.306868,
+            0
+          ],
+          [
+            0.338781,
+            11.197822,
+            0
+          ],
+          [
+            0.492475,
+            11.07382,
+            0
+          ],
+          [
+            0.633867,
+            10.935956,
+            0
+          ],
+          [
+            0.761711,
+            10.785444,
+            0
+          ],
+          [
+            0.874883,
+            10.62361,
+            0
+          ],
+          [
+            0.972384,
+            10.451879,
+            0
+          ],
+          [
+            1.053357,
+            10.271764,
+            0
+          ],
+          [
+            1.117087,
+            10.084851,
+            0
+          ],
+          [
+            1.163014,
+            9.892786,
+            0
+          ],
+          [
+            1.190733,
+            9.697262,
+            0
+          ],
+          [
+            1.2,
+            9.5,
+            0
+          ],
+          [
+            1.2,
+            3,
+            0
+          ]
+        ],
+        "smooth": false,
+        "closed": false
+      },
+      "at": [
+        -4.1,
+        0,
+        -24
+      ]
+    },
+    {
+      "id": "terminal-lancet-cap-1",
+      "label": "Far-end pointed lancet spandrel",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 2,
+      "basis": [
+        "design.clerestory"
+      ],
+      "shape": {
+        "type": "extrude",
+        "profile": [
+          [
+            -1.2,
+            9.5
+          ],
+          [
+            -1.190733,
+            9.697262
+          ],
+          [
+            -1.163014,
+            9.892786
+          ],
+          [
+            -1.117087,
+            10.084851
+          ],
+          [
+            -1.053357,
+            10.271764
+          ],
+          [
+            -0.972384,
+            10.451879
+          ],
+          [
+            -0.874883,
+            10.62361
+          ],
+          [
+            -0.761711,
+            10.785444
+          ],
+          [
+            -0.633867,
+            10.935956
+          ],
+          [
+            -0.492475,
+            11.07382
+          ],
+          [
+            -0.338781,
+            11.197822
+          ],
+          [
+            -0.17414,
+            11.306868
+          ],
+          [
+            0,
+            11.4
+          ],
+          [
+            0.17414,
+            11.306868
+          ],
+          [
+            0.338781,
+            11.197822
+          ],
+          [
+            0.492475,
+            11.07382
+          ],
+          [
+            0.633867,
+            10.935956
+          ],
+          [
+            0.761711,
+            10.785444
+          ],
+          [
+            0.874883,
+            10.62361
+          ],
+          [
+            0.972384,
+            10.451879
+          ],
+          [
+            1.053357,
+            10.271764
+          ],
+          [
+            1.117087,
+            10.084851
+          ],
+          [
+            1.163014,
+            9.892786
+          ],
+          [
+            1.190733,
+            9.697262
+          ],
+          [
+            1.2,
+            9.5
+          ],
+          [
+            1.2,
+            13.2
+          ],
+          [
+            -1.2,
+            13.2
+          ]
+        ],
+        "height": 0.9,
+        "axis": "z"
+      },
+      "at": [
+        0,
+        0,
+        -24.95
+      ]
+    },
+    {
+      "id": "terminal-lancet-1",
+      "label": "Far-end lower lancet",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 3,
+      "basis": [
+        "design.clerestory"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -1.2,
+            3,
+            0
+          ],
+          [
+            -1.2,
+            9.5,
+            0
+          ],
+          [
+            -1.190733,
+            9.697262,
+            0
+          ],
+          [
+            -1.163014,
+            9.892786,
+            0
+          ],
+          [
+            -1.117087,
+            10.084851,
+            0
+          ],
+          [
+            -1.053357,
+            10.271764,
+            0
+          ],
+          [
+            -0.972384,
+            10.451879,
+            0
+          ],
+          [
+            -0.874883,
+            10.62361,
+            0
+          ],
+          [
+            -0.761711,
+            10.785444,
+            0
+          ],
+          [
+            -0.633867,
+            10.935956,
+            0
+          ],
+          [
+            -0.492475,
+            11.07382,
+            0
+          ],
+          [
+            -0.338781,
+            11.197822,
+            0
+          ],
+          [
+            -0.17414,
+            11.306868,
+            0
+          ],
+          [
+            0,
+            11.4,
+            0
+          ],
+          [
+            0.17414,
+            11.306868,
+            0
+          ],
+          [
+            0.338781,
+            11.197822,
+            0
+          ],
+          [
+            0.492475,
+            11.07382,
+            0
+          ],
+          [
+            0.633867,
+            10.935956,
+            0
+          ],
+          [
+            0.761711,
+            10.785444,
+            0
+          ],
+          [
+            0.874883,
+            10.62361,
+            0
+          ],
+          [
+            0.972384,
+            10.451879,
+            0
+          ],
+          [
+            1.053357,
+            10.271764,
+            0
+          ],
+          [
+            1.117087,
+            10.084851,
+            0
+          ],
+          [
+            1.163014,
+            9.892786,
+            0
+          ],
+          [
+            1.190733,
+            9.697262,
+            0
+          ],
+          [
+            1.2,
+            9.5,
+            0
+          ],
+          [
+            1.2,
+            3,
+            0
+          ]
+        ],
+        "smooth": false,
+        "closed": false
+      },
+      "at": [
+        0,
+        0,
+        -24
+      ]
+    },
+    {
+      "id": "terminal-lancet-cap-2",
+      "label": "Far-end pointed lancet spandrel",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 2,
+      "basis": [
+        "design.clerestory"
+      ],
+      "shape": {
+        "type": "extrude",
+        "profile": [
+          [
+            -1.2,
+            9.5
+          ],
+          [
+            -1.190733,
+            9.697262
+          ],
+          [
+            -1.163014,
+            9.892786
+          ],
+          [
+            -1.117087,
+            10.084851
+          ],
+          [
+            -1.053357,
+            10.271764
+          ],
+          [
+            -0.972384,
+            10.451879
+          ],
+          [
+            -0.874883,
+            10.62361
+          ],
+          [
+            -0.761711,
+            10.785444
+          ],
+          [
+            -0.633867,
+            10.935956
+          ],
+          [
+            -0.492475,
+            11.07382
+          ],
+          [
+            -0.338781,
+            11.197822
+          ],
+          [
+            -0.17414,
+            11.306868
+          ],
+          [
+            0,
+            11.4
+          ],
+          [
+            0.17414,
+            11.306868
+          ],
+          [
+            0.338781,
+            11.197822
+          ],
+          [
+            0.492475,
+            11.07382
+          ],
+          [
+            0.633867,
+            10.935956
+          ],
+          [
+            0.761711,
+            10.785444
+          ],
+          [
+            0.874883,
+            10.62361
+          ],
+          [
+            0.972384,
+            10.451879
+          ],
+          [
+            1.053357,
+            10.271764
+          ],
+          [
+            1.117087,
+            10.084851
+          ],
+          [
+            1.163014,
+            9.892786
+          ],
+          [
+            1.190733,
+            9.697262
+          ],
+          [
+            1.2,
+            9.5
+          ],
+          [
+            1.2,
+            13.2
+          ],
+          [
+            -1.2,
+            13.2
+          ]
+        ],
+        "height": 0.9,
+        "axis": "z"
+      },
+      "at": [
+        4.1,
+        0,
+        -24.95
+      ]
+    },
+    {
+      "id": "terminal-lancet-2",
+      "label": "Far-end lower lancet",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 3,
+      "basis": [
+        "design.clerestory"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -1.2,
+            3,
+            0
+          ],
+          [
+            -1.2,
+            9.5,
+            0
+          ],
+          [
+            -1.190733,
+            9.697262,
+            0
+          ],
+          [
+            -1.163014,
+            9.892786,
+            0
+          ],
+          [
+            -1.117087,
+            10.084851,
+            0
+          ],
+          [
+            -1.053357,
+            10.271764,
+            0
+          ],
+          [
+            -0.972384,
+            10.451879,
+            0
+          ],
+          [
+            -0.874883,
+            10.62361,
+            0
+          ],
+          [
+            -0.761711,
+            10.785444,
+            0
+          ],
+          [
+            -0.633867,
+            10.935956,
+            0
+          ],
+          [
+            -0.492475,
+            11.07382,
+            0
+          ],
+          [
+            -0.338781,
+            11.197822,
+            0
+          ],
+          [
+            -0.17414,
+            11.306868,
+            0
+          ],
+          [
+            0,
+            11.4,
+            0
+          ],
+          [
+            0.17414,
+            11.306868,
+            0
+          ],
+          [
+            0.338781,
+            11.197822,
+            0
+          ],
+          [
+            0.492475,
+            11.07382,
+            0
+          ],
+          [
+            0.633867,
+            10.935956,
+            0
+          ],
+          [
+            0.761711,
+            10.785444,
+            0
+          ],
+          [
+            0.874883,
+            10.62361,
+            0
+          ],
+          [
+            0.972384,
+            10.451879,
+            0
+          ],
+          [
+            1.053357,
+            10.271764,
+            0
+          ],
+          [
+            1.117087,
+            10.084851,
+            0
+          ],
+          [
+            1.163014,
+            9.892786,
+            0
+          ],
+          [
+            1.190733,
+            9.697262,
+            0
+          ],
+          [
+            1.2,
+            9.5,
+            0
+          ],
+          [
+            1.2,
+            3,
+            0
+          ]
+        ],
+        "smooth": false,
+        "closed": false
+      },
+      "at": [
+        4.1,
+        0,
+        -24
+      ]
+    },
+    {
+      "id": "terminal-gallery-band",
+      "label": "Far-end gallery and rose sill",
+      "role": "mass",
+      "certainty": "inferred",
+      "stage": 3,
+      "basis": [
+        "design.rose"
+      ],
+      "shape": {
+        "type": "box",
+        "size": [
+          14.8,
+          2.12,
+          0.9
+        ]
+      },
+      "at": [
+        0,
+        14.26,
+        -24.5
+      ]
+    },
+    {
+      "id": "rose-flanking-masonry",
+      "label": "Masonry beside the circular rose opening",
+      "role": "mass",
+      "certainty": "inferred",
+      "stage": 3,
+      "basis": [
+        "design.rose"
+      ],
+      "shape": {
+        "type": "box",
+        "size": [
+          2.35,
+          9.36,
+          0.9
+        ]
+      },
+      "at": [
+        5.855,
+        20,
+        -24.5
+      ],
+      "mirror": "x",
+      "look": {
+        "fill": "glass",
+        "alpha": 0.38
+      }
+    },
+    {
+      "id": "rose-corner-upper-right",
+      "label": "Rose opening curved corner masonry",
+      "role": "mass",
+      "certainty": "inferred",
+      "stage": 3,
+      "basis": [
+        "design.rose"
+      ],
+      "shape": {
+        "type": "extrude",
+        "profile": [
+          [
+            4.68,
+            24.68
+          ],
+          [
+            4.68,
+            20.0
+          ],
+          [
+            4.639962,
+            20.610863
+          ],
+          [
+            4.520533,
+            21.211273
+          ],
+          [
+            4.323756,
+            21.790958
+          ],
+          [
+            4.052999,
+            22.34
+          ],
+          [
+            3.712894,
+            22.849003
+          ],
+          [
+            3.30926,
+            23.30926
+          ],
+          [
+            2.849003,
+            23.712894
+          ],
+          [
+            2.34,
+            24.052999
+          ],
+          [
+            1.790958,
+            24.323756
+          ],
+          [
+            1.211273,
+            24.520533
+          ],
+          [
+            0.610863,
+            24.639962
+          ],
+          [
+            0.0,
+            24.68
+          ]
+        ],
+        "height": 0.9,
+        "axis": "z"
+      },
+      "at": [
+        0,
+        0,
+        -24.95
+      ],
+      "look": {
+        "fill": "glass",
+        "alpha": 0.28
+      }
+    },
+    {
+      "id": "rose-corner-upper-left",
+      "label": "Rose opening curved corner masonry",
+      "role": "mass",
+      "certainty": "inferred",
+      "stage": 3,
+      "basis": [
+        "design.rose"
+      ],
+      "shape": {
+        "type": "extrude",
+        "profile": [
+          [
+            -4.68,
+            24.68
+          ],
+          [
+            -4.68,
+            20.0
+          ],
+          [
+            -4.639962,
+            20.610863
+          ],
+          [
+            -4.520533,
+            21.211273
+          ],
+          [
+            -4.323756,
+            21.790958
+          ],
+          [
+            -4.052999,
+            22.34
+          ],
+          [
+            -3.712894,
+            22.849003
+          ],
+          [
+            -3.30926,
+            23.30926
+          ],
+          [
+            -2.849003,
+            23.712894
+          ],
+          [
+            -2.34,
+            24.052999
+          ],
+          [
+            -1.790958,
+            24.323756
+          ],
+          [
+            -1.211273,
+            24.520533
+          ],
+          [
+            -0.610863,
+            24.639962
+          ],
+          [
+            -0.0,
+            24.68
+          ]
+        ],
+        "height": 0.9,
+        "axis": "z"
+      },
+      "at": [
+        0,
+        0,
+        -24.95
+      ],
+      "look": {
+        "fill": "glass",
+        "alpha": 0.28
+      }
+    },
+    {
+      "id": "rose-corner-lower-right",
+      "label": "Rose opening curved corner masonry",
+      "role": "mass",
+      "certainty": "inferred",
+      "stage": 3,
+      "basis": [
+        "design.rose"
+      ],
+      "shape": {
+        "type": "extrude",
+        "profile": [
+          [
+            4.68,
+            15.32
+          ],
+          [
+            4.68,
+            20.0
+          ],
+          [
+            4.639962,
+            19.389137
+          ],
+          [
+            4.520533,
+            18.788727
+          ],
+          [
+            4.323756,
+            18.209042
+          ],
+          [
+            4.052999,
+            17.66
+          ],
+          [
+            3.712894,
+            17.150997
+          ],
+          [
+            3.30926,
+            16.69074
+          ],
+          [
+            2.849003,
+            16.287106
+          ],
+          [
+            2.34,
+            15.947001
+          ],
+          [
+            1.790958,
+            15.676244
+          ],
+          [
+            1.211273,
+            15.479467
+          ],
+          [
+            0.610863,
+            15.360038
+          ],
+          [
+            0.0,
+            15.32
+          ]
+        ],
+        "height": 0.9,
+        "axis": "z"
+      },
+      "at": [
+        0,
+        0,
+        -24.95
+      ],
+      "look": {
+        "fill": "glass",
+        "alpha": 0.28
+      }
+    },
+    {
+      "id": "rose-corner-lower-left",
+      "label": "Rose opening curved corner masonry",
+      "role": "mass",
+      "certainty": "inferred",
+      "stage": 3,
+      "basis": [
+        "design.rose"
+      ],
+      "shape": {
+        "type": "extrude",
+        "profile": [
+          [
+            -4.68,
+            15.32
+          ],
+          [
+            -4.68,
+            20.0
+          ],
+          [
+            -4.639962,
+            19.389137
+          ],
+          [
+            -4.520533,
+            18.788727
+          ],
+          [
+            -4.323756,
+            18.209042
+          ],
+          [
+            -4.052999,
+            17.66
+          ],
+          [
+            -3.712894,
+            17.150997
+          ],
+          [
+            -3.30926,
+            16.69074
+          ],
+          [
+            -2.849003,
+            16.287106
+          ],
+          [
+            -2.34,
+            15.947001
+          ],
+          [
+            -1.790958,
+            15.676244
+          ],
+          [
+            -1.211273,
+            15.479467
+          ],
+          [
+            -0.610863,
+            15.360038
+          ],
+          [
+            -0.0,
+            15.32
+          ]
+        ],
+        "height": 0.9,
+        "axis": "z"
+      },
+      "at": [
+        0,
+        0,
+        -24.95
+      ],
+      "look": {
+        "fill": "glass",
+        "alpha": 0.28
+      }
+    },
+    {
+      "id": "terminal-pointed-tympanum",
+      "label": "Far-end wall under the pointed vault",
+      "role": "mass",
+      "certainty": "inferred",
+      "stage": 3,
+      "basis": [
+        "design.vault",
+        "design.rose"
+      ],
+      "shape": {
+        "type": "extrude",
+        "profile": [
+          [
+            -7.03,
+            24.68
+          ],
+          [
+            7.03,
+            24.68
+          ],
+          [
+            7,
+            25.6
+          ],
+          [
+            6.968318,
+            26.366409
+          ],
+          [
+            6.873487,
+            27.127589
+          ],
+          [
+            6.716154,
+            27.878344
+          ],
+          [
+            6.497394,
+            28.613553
+          ],
+          [
+            6.218699,
+            29.328197
+          ],
+          [
+            5.88197,
+            30.0174
+          ],
+          [
+            5.489506,
+            30.676459
+          ],
+          [
+            5.043985,
+            31.300877
+          ],
+          [
+            4.548446,
+            31.886393
+          ],
+          [
+            4.006272,
+            32.429011
+          ],
+          [
+            3.421162,
+            32.925029
+          ],
+          [
+            2.797109,
+            33.371061
+          ],
+          [
+            2.138372,
+            33.764065
+          ],
+          [
+            1.449444,
+            34.101357
+          ],
+          [
+            0.735029,
+            34.380638
+          ],
+          [
+            0,
+            34.6
+          ],
+          [
+            -0.735029,
+            34.380638
+          ],
+          [
+            -1.449444,
+            34.101357
+          ],
+          [
+            -2.138372,
+            33.764065
+          ],
+          [
+            -2.797109,
+            33.371061
+          ],
+          [
+            -3.421162,
+            32.925029
+          ],
+          [
+            -4.006272,
+            32.429011
+          ],
+          [
+            -4.548446,
+            31.886393
+          ],
+          [
+            -5.043985,
+            31.300877
+          ],
+          [
+            -5.489506,
+            30.676459
+          ],
+          [
+            -5.88197,
+            30.0174
+          ],
+          [
+            -6.218699,
+            29.328197
+          ],
+          [
+            -6.497394,
+            28.613553
+          ],
+          [
+            -6.716154,
+            27.878344
+          ],
+          [
+            -6.873487,
+            27.127589
+          ],
+          [
+            -6.968318,
+            26.366409
+          ],
+          [
+            -7,
+            25.6
+          ]
+        ],
+        "height": 0.9,
+        "axis": "z"
+      },
+      "at": [
+        0,
+        0,
+        -24.95
+      ],
+      "look": {
+        "fill": "glass",
+        "alpha": 0.35
+      }
+    },
+    {
+      "id": "vault-web-shell",
+      "label": "Thin pointed vault web envelope",
+      "role": "mass",
+      "certainty": "inferred",
+      "stage": 4,
+      "basis": [
+        "brief.vault",
+        "design.vault"
+      ],
+      "shape": {
+        "type": "extrude",
+        "profile": [
+          [
+            -7,
+            25.6
+          ],
+          [
+            -6.968318,
+            26.366409
+          ],
+          [
+            -6.873487,
+            27.127589
+          ],
+          [
+            -6.716154,
+            27.878344
+          ],
+          [
+            -6.497394,
+            28.613553
+          ],
+          [
+            -6.218699,
+            29.328197
+          ],
+          [
+            -5.88197,
+            30.0174
+          ],
+          [
+            -5.489506,
+            30.676459
+          ],
+          [
+            -5.043985,
+            31.300877
+          ],
+          [
+            -4.548446,
+            31.886393
+          ],
+          [
+            -4.006272,
+            32.429011
+          ],
+          [
+            -3.421162,
+            32.925029
+          ],
+          [
+            -2.797109,
+            33.371061
+          ],
+          [
+            -2.138372,
+            33.764065
+          ],
+          [
+            -1.449444,
+            34.101357
+          ],
+          [
+            -0.735029,
+            34.380638
+          ],
+          [
+            0,
+            34.6
+          ],
+          [
+            0,
+            34.78
+          ],
+          [
+            -0.735029,
+            34.560638
+          ],
+          [
+            -1.449444,
+            34.281357
+          ],
+          [
+            -2.138372,
+            33.944065
+          ],
+          [
+            -2.797109,
+            33.551061
+          ],
+          [
+            -3.421162,
+            33.105029
+          ],
+          [
+            -4.006272,
+            32.609011
+          ],
+          [
+            -4.548446,
+            32.066393
+          ],
+          [
+            -5.043985,
+            31.480877
+          ],
+          [
+            -5.489506,
+            30.856459
+          ],
+          [
+            -5.88197,
+            30.1974
+          ],
+          [
+            -6.218699,
+            29.508197
+          ],
+          [
+            -6.497394,
+            28.793553
+          ],
+          [
+            -6.716154,
+            28.058344
+          ],
+          [
+            -6.873487,
+            27.307589
+          ],
+          [
+            -6.968318,
+            26.546409
+          ],
+          [
+            -7,
+            25.78
+          ]
+        ],
+        "height": 48,
+        "axis": "z"
+      },
+      "at": [
+        0,
+        0,
+        -24
+      ],
+      "mirror": "x",
+      "look": {
+        "fill": "glass",
+        "alpha": 0.2,
+        "weight": 0.65
+      },
+      "note": "Simplified pointed web envelope rather than an exact historical masonry tessellation."
+    },
+    {
+      "id": "vault-transverse-ribs",
+      "label": "High pointed transverse half-ribs",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 4,
+      "basis": [
+        "brief.vault",
+        "design.vault"
+      ],
+      "shape": {
+        "type": "tube",
+        "path": [
+          [
+            -7,
+            25.6,
+            0
+          ],
+          [
+            -6.968318,
+            26.366409,
+            0
+          ],
+          [
+            -6.873487,
+            27.127589,
+            0
+          ],
+          [
+            -6.716154,
+            27.878344,
+            0
+          ],
+          [
+            -6.497394,
+            28.613553,
+            0
+          ],
+          [
+            -6.218699,
+            29.328197,
+            0
+          ],
+          [
+            -5.88197,
+            30.0174,
+            0
+          ],
+          [
+            -5.489506,
+            30.676459,
+            0
+          ],
+          [
+            -5.043985,
+            31.300877,
+            0
+          ],
+          [
+            -4.548446,
+            31.886393,
+            0
+          ],
+          [
+            -4.006272,
+            32.429011,
+            0
+          ],
+          [
+            -3.421162,
+            32.925029,
+            0
+          ],
+          [
+            -2.797109,
+            33.371061,
+            0
+          ],
+          [
+            -2.138372,
+            33.764065,
+            0
+          ],
+          [
+            -1.449444,
+            34.101357,
+            0
+          ],
+          [
+            -0.735029,
+            34.380638,
+            0
+          ],
+          [
+            0,
+            34.6,
+            0
+          ]
+        ],
+        "radius": 0.16,
+        "sides": 6,
+        "samples": 1,
+        "smooth": false,
+        "longitudinal": 3,
+        "ring_every": 0
+      },
+      "at": [
+        0,
+        0,
+        -24
+      ],
+      "repeat": {
+        "count": 7,
+        "step": {
+          "at": [
+            0,
+            0,
+            8
+          ]
+        }
+      },
+      "mirror": "x",
+      "look": {
+        "fill": "none",
+        "weight": 1.4
+      }
+    },
+    {
+      "id": "vault-diagonal-forward",
+      "label": "Crossing diagonal vault ribs forward",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 4,
+      "basis": [
+        "brief.vault",
+        "design.vault"
+      ],
+      "shape": {
+        "type": "tube",
+        "path": [
+          [
+            -7,
+            25.565,
+            -4.0
+          ],
+          [
+            -6.968318,
+            26.331409,
+            -3.981896
+          ],
+          [
+            -6.873487,
+            27.092589,
+            -3.927707
+          ],
+          [
+            -6.716154,
+            27.843344,
+            -3.837802
+          ],
+          [
+            -6.497394,
+            28.578553,
+            -3.712797
+          ],
+          [
+            -6.218699,
+            29.293197,
+            -3.553542
+          ],
+          [
+            -5.88197,
+            29.9824,
+            -3.361126
+          ],
+          [
+            -5.489506,
+            30.641459,
+            -3.136861
+          ],
+          [
+            -5.043985,
+            31.265877,
+            -2.882277
+          ],
+          [
+            -4.548446,
+            31.851393,
+            -2.599112
+          ],
+          [
+            -4.006272,
+            32.394011,
+            -2.289299
+          ],
+          [
+            -3.421162,
+            32.890029,
+            -1.95495
+          ],
+          [
+            -2.797109,
+            33.336061,
+            -1.598348
+          ],
+          [
+            -2.138372,
+            33.729065,
+            -1.221927
+          ],
+          [
+            -1.449444,
+            34.066357,
+            -0.828254
+          ],
+          [
+            -0.735029,
+            34.345638,
+            -0.420016
+          ],
+          [
+            0,
+            34.565,
+            0.0
+          ]
+        ],
+        "radius": 0.12,
+        "sides": 6,
+        "samples": 1,
+        "smooth": false,
+        "longitudinal": 3,
+        "ring_every": 0
+      },
+      "at": [
+        0,
+        0,
+        -20
+      ],
+      "repeat": {
+        "count": 6,
+        "step": {
+          "at": [
+            0,
+            0,
+            8
+          ]
+        }
+      },
+      "mirror": "x",
+      "look": {
+        "fill": "none",
+        "weight": 1.2,
+        "glow": 0.3
+      }
+    },
+    {
+      "id": "vault-diagonal-backward",
+      "label": "Crossing diagonal vault ribs backward",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 4,
+      "basis": [
+        "brief.vault",
+        "design.vault"
+      ],
+      "shape": {
+        "type": "tube",
+        "path": [
+          [
+            -7,
+            25.565,
+            4.0
+          ],
+          [
+            -6.968318,
+            26.331409,
+            3.981896
+          ],
+          [
+            -6.873487,
+            27.092589,
+            3.927707
+          ],
+          [
+            -6.716154,
+            27.843344,
+            3.837802
+          ],
+          [
+            -6.497394,
+            28.578553,
+            3.712797
+          ],
+          [
+            -6.218699,
+            29.293197,
+            3.553542
+          ],
+          [
+            -5.88197,
+            29.9824,
+            3.361126
+          ],
+          [
+            -5.489506,
+            30.641459,
+            3.136861
+          ],
+          [
+            -5.043985,
+            31.265877,
+            2.882277
+          ],
+          [
+            -4.548446,
+            31.851393,
+            2.599112
+          ],
+          [
+            -4.006272,
+            32.394011,
+            2.289299
+          ],
+          [
+            -3.421162,
+            32.890029,
+            1.95495
+          ],
+          [
+            -2.797109,
+            33.336061,
+            1.598348
+          ],
+          [
+            -2.138372,
+            33.729065,
+            1.221927
+          ],
+          [
+            -1.449444,
+            34.066357,
+            0.828254
+          ],
+          [
+            -0.735029,
+            34.345638,
+            0.420016
+          ],
+          [
+            0,
+            34.565,
+            0.0
+          ]
+        ],
+        "radius": 0.12,
+        "sides": 6,
+        "samples": 1,
+        "smooth": false,
+        "longitudinal": 3,
+        "ring_every": 0
+      },
+      "at": [
+        0,
+        0,
+        -20
+      ],
+      "repeat": {
+        "count": 6,
+        "step": {
+          "at": [
+            0,
+            0,
+            8
+          ]
+        }
+      },
+      "mirror": "x",
+      "look": {
+        "fill": "none",
+        "weight": 1.2,
+        "glow": 0.3
+      }
+    },
+    {
+      "id": "vault-longitudinal-ridge",
+      "label": "Unbroken ridge rib",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 4,
+      "basis": [
+        "design.vault"
+      ],
+      "shape": {
+        "type": "tube",
+        "path": [
+          [
+            0,
+            34.59,
+            -24
+          ],
+          [
+            0,
+            34.59,
+            24
+          ]
+        ],
+        "radius": 0.13,
+        "sides": 6,
+        "samples": 1,
+        "smooth": false,
+        "longitudinal": 3,
+        "ring_every": 0
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "fill": "none"
+      }
+    },
+    {
+      "id": "vault-bosses",
+      "label": "Bosses at the diagonal rib crossings",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 4,
+      "basis": [
+        "design.vault"
+      ],
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.18,
+            0
+          ],
+          [
+            0.5,
+            0.12
+          ],
+          [
+            0.56,
+            0.3
+          ],
+          [
+            0.36,
+            0.5
+          ]
+        ],
+        "segments": 10,
+        "meridians": 5
+      },
+      "at": [
+        0,
+        34.25,
+        -20
+      ],
+      "repeat": {
+        "count": 6,
+        "step": {
+          "at": [
+            0,
+            0,
+            8
+          ]
+        }
+      },
+      "look": {
+        "fill": "none"
+      }
+    },
+    {
+      "id": "triforium-blind-arch-0",
+      "label": "Blind triforium triplet",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "basis": [
+        "design.clerestory"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0,
+            15.0,
+            -0.79
+          ],
+          [
+            0,
+            16.0,
+            -0.79
+          ],
+          [
+            0,
+            16.178178,
+            -0.775905
+          ],
+          [
+            0,
+            16.351924,
+            -0.73397
+          ],
+          [
+            0,
+            16.516915,
+            -0.665238
+          ],
+          [
+            0,
+            16.669048,
+            -0.57142
+          ],
+          [
+            0,
+            16.804537,
+            -0.454848
+          ],
+          [
+            0,
+            16.920012,
+            -0.318424
+          ],
+          [
+            0,
+            17.012601,
+            -0.16554
+          ],
+          [
+            0,
+            17.08,
+            0
+          ],
+          [
+            0,
+            17.012601,
+            0.16554
+          ],
+          [
+            0,
+            16.920012,
+            0.318424
+          ],
+          [
+            0,
+            16.804537,
+            0.454848
+          ],
+          [
+            0,
+            16.669048,
+            0.57142
+          ],
+          [
+            0,
+            16.516915,
+            0.665238
+          ],
+          [
+            0,
+            16.351924,
+            0.73397
+          ],
+          [
+            0,
+            16.178178,
+            0.775905
+          ],
+          [
+            0,
+            16.0,
+            0.79
+          ],
+          [
+            0,
+            15,
+            0.79
+          ],
+          [
+            0,
+            15,
+            -0.79
+          ]
+        ],
+        "smooth": false,
+        "closed": false
+      },
+      "at": [
+        6.49,
+        0,
+        -22.15
+      ],
+      "repeat": {
+        "count": 6,
+        "step": {
+          "at": [
+            0,
+            0,
+            8
+          ]
+        }
+      },
+      "mirror": "x"
+    },
+    {
+      "id": "triforium-blind-arch-1",
+      "label": "Blind triforium triplet",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "basis": [
+        "design.clerestory"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0,
+            15.0,
+            -0.79
+          ],
+          [
+            0,
+            16.0,
+            -0.79
+          ],
+          [
+            0,
+            16.178178,
+            -0.775905
+          ],
+          [
+            0,
+            16.351924,
+            -0.73397
+          ],
+          [
+            0,
+            16.516915,
+            -0.665238
+          ],
+          [
+            0,
+            16.669048,
+            -0.57142
+          ],
+          [
+            0,
+            16.804537,
+            -0.454848
+          ],
+          [
+            0,
+            16.920012,
+            -0.318424
+          ],
+          [
+            0,
+            17.012601,
+            -0.16554
+          ],
+          [
+            0,
+            17.08,
+            0
+          ],
+          [
+            0,
+            17.012601,
+            0.16554
+          ],
+          [
+            0,
+            16.920012,
+            0.318424
+          ],
+          [
+            0,
+            16.804537,
+            0.454848
+          ],
+          [
+            0,
+            16.669048,
+            0.57142
+          ],
+          [
+            0,
+            16.516915,
+            0.665238
+          ],
+          [
+            0,
+            16.351924,
+            0.73397
+          ],
+          [
+            0,
+            16.178178,
+            0.775905
+          ],
+          [
+            0,
+            16.0,
+            0.79
+          ],
+          [
+            0,
+            15,
+            0.79
+          ],
+          [
+            0,
+            15,
+            -0.79
+          ]
+        ],
+        "smooth": false,
+        "closed": false
+      },
+      "at": [
+        6.49,
+        0,
+        -20
+      ],
+      "repeat": {
+        "count": 6,
+        "step": {
+          "at": [
+            0,
+            0,
+            8
+          ]
+        }
+      },
+      "mirror": "x"
+    },
+    {
+      "id": "triforium-blind-arch-2",
+      "label": "Blind triforium triplet",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "basis": [
+        "design.clerestory"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0,
+            15.0,
+            -0.79
+          ],
+          [
+            0,
+            16.0,
+            -0.79
+          ],
+          [
+            0,
+            16.178178,
+            -0.775905
+          ],
+          [
+            0,
+            16.351924,
+            -0.73397
+          ],
+          [
+            0,
+            16.516915,
+            -0.665238
+          ],
+          [
+            0,
+            16.669048,
+            -0.57142
+          ],
+          [
+            0,
+            16.804537,
+            -0.454848
+          ],
+          [
+            0,
+            16.920012,
+            -0.318424
+          ],
+          [
+            0,
+            17.012601,
+            -0.16554
+          ],
+          [
+            0,
+            17.08,
+            0
+          ],
+          [
+            0,
+            17.012601,
+            0.16554
+          ],
+          [
+            0,
+            16.920012,
+            0.318424
+          ],
+          [
+            0,
+            16.804537,
+            0.454848
+          ],
+          [
+            0,
+            16.669048,
+            0.57142
+          ],
+          [
+            0,
+            16.516915,
+            0.665238
+          ],
+          [
+            0,
+            16.351924,
+            0.73397
+          ],
+          [
+            0,
+            16.178178,
+            0.775905
+          ],
+          [
+            0,
+            16.0,
+            0.79
+          ],
+          [
+            0,
+            15,
+            0.79
+          ],
+          [
+            0,
+            15,
+            -0.79
+          ]
+        ],
+        "smooth": false,
+        "closed": false
+      },
+      "at": [
+        6.49,
+        0,
+        -17.85
+      ],
+      "repeat": {
+        "count": 6,
+        "step": {
+          "at": [
+            0,
+            0,
+            8
+          ]
+        }
+      },
+      "mirror": "x"
+    },
+    {
+      "id": "clerestory-lancet-0",
+      "label": "Paired high clerestory lancets",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 5,
+      "basis": [
+        "brief.windows",
+        "design.clerestory"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0,
+            18.8,
+            -0.98
+          ],
+          [
+            0,
+            21.65,
+            -0.98
+          ],
+          [
+            0,
+            21.850222,
+            -0.969205
+          ],
+          [
+            0,
+            22.048123,
+            -0.936946
+          ],
+          [
+            0,
+            22.241409,
+            -0.883595
+          ],
+          [
+            0,
+            22.427838,
+            -0.809773
+          ],
+          [
+            0,
+            22.605249,
+            -0.716334
+          ],
+          [
+            0,
+            22.771585,
+            -0.604363
+          ],
+          [
+            0,
+            22.924919,
+            -0.475156
+          ],
+          [
+            0,
+            23.063472,
+            -0.330213
+          ],
+          [
+            0,
+            23.185637,
+            -0.171213
+          ],
+          [
+            0,
+            23.29,
+            0
+          ],
+          [
+            0,
+            23.185637,
+            0.171213
+          ],
+          [
+            0,
+            23.063472,
+            0.330213
+          ],
+          [
+            0,
+            22.924919,
+            0.475156
+          ],
+          [
+            0,
+            22.771585,
+            0.604363
+          ],
+          [
+            0,
+            22.605249,
+            0.716334
+          ],
+          [
+            0,
+            22.427838,
+            0.809773
+          ],
+          [
+            0,
+            22.241409,
+            0.883595
+          ],
+          [
+            0,
+            22.048123,
+            0.936946
+          ],
+          [
+            0,
+            21.850222,
+            0.969205
+          ],
+          [
+            0,
+            21.65,
+            0.98
+          ],
+          [
+            0,
+            18.8,
+            0.98
+          ]
+        ],
+        "smooth": false,
+        "closed": true
+      },
+      "at": [
+        6.5,
+        0,
+        -21.15
+      ],
+      "repeat": {
+        "count": 6,
+        "step": {
+          "at": [
+            0,
+            0,
+            8
+          ]
+        }
+      },
+      "mirror": "x"
+    },
+    {
+      "id": "clerestory-glazing-0",
+      "label": "Designed abstract clerestory glazing",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "basis": [
+        "design.clerestory"
+      ],
+      "shape": {
+        "type": "extrude",
+        "profile": [
+          [
+            -0.98,
+            18.8
+          ],
+          [
+            -0.98,
+            21.65
+          ],
+          [
+            -0.969205,
+            21.850222
+          ],
+          [
+            -0.936946,
+            22.048123
+          ],
+          [
+            -0.883595,
+            22.241409
+          ],
+          [
+            -0.809773,
+            22.427838
+          ],
+          [
+            -0.716334,
+            22.605249
+          ],
+          [
+            -0.604363,
+            22.771585
+          ],
+          [
+            -0.475156,
+            22.924919
+          ],
+          [
+            -0.330213,
+            23.063472
+          ],
+          [
+            -0.171213,
+            23.185637
+          ],
+          [
+            0,
+            23.29
+          ],
+          [
+            0.171213,
+            23.185637
+          ],
+          [
+            0.330213,
+            23.063472
+          ],
+          [
+            0.475156,
+            22.924919
+          ],
+          [
+            0.604363,
+            22.771585
+          ],
+          [
+            0.716334,
+            22.605249
+          ],
+          [
+            0.809773,
+            22.427838
+          ],
+          [
+            0.883595,
+            22.241409
+          ],
+          [
+            0.936946,
+            22.048123
+          ],
+          [
+            0.969205,
+            21.850222
+          ],
+          [
+            0.98,
+            21.65
+          ],
+          [
+            0.98,
+            18.8
+          ]
+        ],
+        "height": 0.018,
+        "axis": "x"
+      },
+      "at": [
+        6.93,
+        0,
+        -21.15
+      ],
+      "repeat": {
+        "count": 6,
+        "step": {
+          "at": [
+            0,
+            0,
+            8
+          ]
+        }
+      },
+      "mirror": "x",
+      "look": {
+        "fill": "glass",
+        "alpha": 0.18,
+        "weight": 0.55
+      }
+    },
+    {
+      "id": "clerestory-lancet-1",
+      "label": "Paired high clerestory lancets",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 5,
+      "basis": [
+        "brief.windows",
+        "design.clerestory"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0,
+            18.8,
+            -0.98
+          ],
+          [
+            0,
+            21.65,
+            -0.98
+          ],
+          [
+            0,
+            21.850222,
+            -0.969205
+          ],
+          [
+            0,
+            22.048123,
+            -0.936946
+          ],
+          [
+            0,
+            22.241409,
+            -0.883595
+          ],
+          [
+            0,
+            22.427838,
+            -0.809773
+          ],
+          [
+            0,
+            22.605249,
+            -0.716334
+          ],
+          [
+            0,
+            22.771585,
+            -0.604363
+          ],
+          [
+            0,
+            22.924919,
+            -0.475156
+          ],
+          [
+            0,
+            23.063472,
+            -0.330213
+          ],
+          [
+            0,
+            23.185637,
+            -0.171213
+          ],
+          [
+            0,
+            23.29,
+            0
+          ],
+          [
+            0,
+            23.185637,
+            0.171213
+          ],
+          [
+            0,
+            23.063472,
+            0.330213
+          ],
+          [
+            0,
+            22.924919,
+            0.475156
+          ],
+          [
+            0,
+            22.771585,
+            0.604363
+          ],
+          [
+            0,
+            22.605249,
+            0.716334
+          ],
+          [
+            0,
+            22.427838,
+            0.809773
+          ],
+          [
+            0,
+            22.241409,
+            0.883595
+          ],
+          [
+            0,
+            22.048123,
+            0.936946
+          ],
+          [
+            0,
+            21.850222,
+            0.969205
+          ],
+          [
+            0,
+            21.65,
+            0.98
+          ],
+          [
+            0,
+            18.8,
+            0.98
+          ]
+        ],
+        "smooth": false,
+        "closed": true
+      },
+      "at": [
+        6.5,
+        0,
+        -18.85
+      ],
+      "repeat": {
+        "count": 6,
+        "step": {
+          "at": [
+            0,
+            0,
+            8
+          ]
+        }
+      },
+      "mirror": "x"
+    },
+    {
+      "id": "clerestory-glazing-1",
+      "label": "Designed abstract clerestory glazing",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "basis": [
+        "design.clerestory"
+      ],
+      "shape": {
+        "type": "extrude",
+        "profile": [
+          [
+            -0.98,
+            18.8
+          ],
+          [
+            -0.98,
+            21.65
+          ],
+          [
+            -0.969205,
+            21.850222
+          ],
+          [
+            -0.936946,
+            22.048123
+          ],
+          [
+            -0.883595,
+            22.241409
+          ],
+          [
+            -0.809773,
+            22.427838
+          ],
+          [
+            -0.716334,
+            22.605249
+          ],
+          [
+            -0.604363,
+            22.771585
+          ],
+          [
+            -0.475156,
+            22.924919
+          ],
+          [
+            -0.330213,
+            23.063472
+          ],
+          [
+            -0.171213,
+            23.185637
+          ],
+          [
+            0,
+            23.29
+          ],
+          [
+            0.171213,
+            23.185637
+          ],
+          [
+            0.330213,
+            23.063472
+          ],
+          [
+            0.475156,
+            22.924919
+          ],
+          [
+            0.604363,
+            22.771585
+          ],
+          [
+            0.716334,
+            22.605249
+          ],
+          [
+            0.809773,
+            22.427838
+          ],
+          [
+            0.883595,
+            22.241409
+          ],
+          [
+            0.936946,
+            22.048123
+          ],
+          [
+            0.969205,
+            21.850222
+          ],
+          [
+            0.98,
+            21.65
+          ],
+          [
+            0.98,
+            18.8
+          ]
+        ],
+        "height": 0.018,
+        "axis": "x"
+      },
+      "at": [
+        6.93,
+        0,
+        -18.85
+      ],
+      "repeat": {
+        "count": 6,
+        "step": {
+          "at": [
+            0,
+            0,
+            8
+          ]
+        }
+      },
+      "mirror": "x",
+      "look": {
+        "fill": "glass",
+        "alpha": 0.18,
+        "weight": 0.55
+      }
+    },
+    {
+      "id": "clerestory-crown-oculi",
+      "label": "Small clerestory tracery oculi",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "basis": [
+        "design.clerestory"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0,
+            0.0,
+            0.63
+          ],
+          [
+            0,
+            0.163056,
+            0.608533
+          ],
+          [
+            0,
+            0.315,
+            0.545596
+          ],
+          [
+            0,
+            0.445477,
+            0.445477
+          ],
+          [
+            0,
+            0.545596,
+            0.315
+          ],
+          [
+            0,
+            0.608533,
+            0.163056
+          ],
+          [
+            0,
+            0.63,
+            0.0
+          ],
+          [
+            0,
+            0.608533,
+            -0.163056
+          ],
+          [
+            0,
+            0.545596,
+            -0.315
+          ],
+          [
+            0,
+            0.445477,
+            -0.445477
+          ],
+          [
+            0,
+            0.315,
+            -0.545596
+          ],
+          [
+            0,
+            0.163056,
+            -0.608533
+          ],
+          [
+            0,
+            0.0,
+            -0.63
+          ],
+          [
+            0,
+            -0.163056,
+            -0.608533
+          ],
+          [
+            0,
+            -0.315,
+            -0.545596
+          ],
+          [
+            0,
+            -0.445477,
+            -0.445477
+          ],
+          [
+            0,
+            -0.545596,
+            -0.315
+          ],
+          [
+            0,
+            -0.608533,
+            -0.163056
+          ],
+          [
+            0,
+            -0.63,
+            -0.0
+          ],
+          [
+            0,
+            -0.608533,
+            0.163056
+          ],
+          [
+            0,
+            -0.545596,
+            0.315
+          ],
+          [
+            0,
+            -0.445477,
+            0.445477
+          ],
+          [
+            0,
+            -0.315,
+            0.545596
+          ],
+          [
+            0,
+            -0.163056,
+            0.608533
+          ]
+        ],
+        "smooth": false,
+        "closed": true
+      },
+      "at": [
+        6.49,
+        23.87,
+        -20
+      ],
+      "repeat": {
+        "count": 6,
+        "step": {
+          "at": [
+            0,
+            0,
+            8
+          ]
+        }
+      },
+      "mirror": "x"
+    },
+    {
+      "id": "clerestory-glazing-transoms",
+      "label": "Clerestory glazing horizontal bars",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "basis": [
+        "design.clerestory"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0,
+            20.15,
+            -2.1
+          ],
+          [
+            0,
+            20.15,
+            2.1
+          ]
+        ],
+        "smooth": false,
+        "closed": false
+      },
+      "at": [
+        6.46,
+        0,
+        -20
+      ],
+      "repeat": {
+        "count": 6,
+        "step": {
+          "at": [
+            0,
+            0,
+            8
+          ]
+        }
+      },
+      "mirror": "x"
+    },
+    {
+      "id": "rose-stone-surround",
+      "label": "Far-end rose window stone ring",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 5,
+      "basis": [
+        "brief.windows",
+        "design.rose"
+      ],
+      "shape": {
+        "type": "torus",
+        "major": 4.65,
+        "minor": 0.23,
+        "segments": 64,
+        "sides": 6,
+        "rings": 8
+      },
+      "at": [
+        0,
+        20,
+        -23.98
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "look": {
+        "fill": "none",
+        "weight": 1.6
+      }
+    },
+    {
+      "id": "rose-inner-ring",
+      "label": "Rose window inner tracery ring",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 5,
+      "basis": [
+        "design.rose"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            4.13,
+            0.0,
+            0
+          ],
+          [
+            4.110113,
+            0.404811,
+            0
+          ],
+          [
+            4.050643,
+            0.805723,
+            0
+          ],
+          [
+            3.952164,
+            1.198876,
+            0
+          ],
+          [
+            3.815622,
+            1.580483,
+            0
+          ],
+          [
+            3.642335,
+            1.946869,
+            0
+          ],
+          [
+            3.433969,
+            2.294505,
+            0
+          ],
+          [
+            3.192533,
+            2.620044,
+            0
+          ],
+          [
+            2.920351,
+            2.920351,
+            0
+          ],
+          [
+            2.620044,
+            3.192533,
+            0
+          ],
+          [
+            2.294505,
+            3.433969,
+            0
+          ],
+          [
+            1.946869,
+            3.642335,
+            0
+          ],
+          [
+            1.580483,
+            3.815622,
+            0
+          ],
+          [
+            1.198876,
+            3.952164,
+            0
+          ],
+          [
+            0.805723,
+            4.050643,
+            0
+          ],
+          [
+            0.404811,
+            4.110113,
+            0
+          ],
+          [
+            0.0,
+            4.13,
+            0
+          ],
+          [
+            -0.404811,
+            4.110113,
+            0
+          ],
+          [
+            -0.805723,
+            4.050643,
+            0
+          ],
+          [
+            -1.198876,
+            3.952164,
+            0
+          ],
+          [
+            -1.580483,
+            3.815622,
+            0
+          ],
+          [
+            -1.946869,
+            3.642335,
+            0
+          ],
+          [
+            -2.294505,
+            3.433969,
+            0
+          ],
+          [
+            -2.620044,
+            3.192533,
+            0
+          ],
+          [
+            -2.920351,
+            2.920351,
+            0
+          ],
+          [
+            -3.192533,
+            2.620044,
+            0
+          ],
+          [
+            -3.433969,
+            2.294505,
+            0
+          ],
+          [
+            -3.642335,
+            1.946869,
+            0
+          ],
+          [
+            -3.815622,
+            1.580483,
+            0
+          ],
+          [
+            -3.952164,
+            1.198876,
+            0
+          ],
+          [
+            -4.050643,
+            0.805723,
+            0
+          ],
+          [
+            -4.110113,
+            0.404811,
+            0
+          ],
+          [
+            -4.13,
+            0.0,
+            0
+          ],
+          [
+            -4.110113,
+            -0.404811,
+            0
+          ],
+          [
+            -4.050643,
+            -0.805723,
+            0
+          ],
+          [
+            -3.952164,
+            -1.198876,
+            0
+          ],
+          [
+            -3.815622,
+            -1.580483,
+            0
+          ],
+          [
+            -3.642335,
+            -1.946869,
+            0
+          ],
+          [
+            -3.433969,
+            -2.294505,
+            0
+          ],
+          [
+            -3.192533,
+            -2.620044,
+            0
+          ],
+          [
+            -2.920351,
+            -2.920351,
+            0
+          ],
+          [
+            -2.620044,
+            -3.192533,
+            0
+          ],
+          [
+            -2.294505,
+            -3.433969,
+            0
+          ],
+          [
+            -1.946869,
+            -3.642335,
+            0
+          ],
+          [
+            -1.580483,
+            -3.815622,
+            0
+          ],
+          [
+            -1.198876,
+            -3.952164,
+            0
+          ],
+          [
+            -0.805723,
+            -4.050643,
+            0
+          ],
+          [
+            -0.404811,
+            -4.110113,
+            0
+          ],
+          [
+            -0.0,
+            -4.13,
+            0
+          ],
+          [
+            0.404811,
+            -4.110113,
+            0
+          ],
+          [
+            0.805723,
+            -4.050643,
+            0
+          ],
+          [
+            1.198876,
+            -3.952164,
+            0
+          ],
+          [
+            1.580483,
+            -3.815622,
+            0
+          ],
+          [
+            1.946869,
+            -3.642335,
+            0
+          ],
+          [
+            2.294505,
+            -3.433969,
+            0
+          ],
+          [
+            2.620044,
+            -3.192533,
+            0
+          ],
+          [
+            2.920351,
+            -2.920351,
+            0
+          ],
+          [
+            3.192533,
+            -2.620044,
+            0
+          ],
+          [
+            3.433969,
+            -2.294505,
+            0
+          ],
+          [
+            3.642335,
+            -1.946869,
+            0
+          ],
+          [
+            3.815622,
+            -1.580483,
+            0
+          ],
+          [
+            3.952164,
+            -1.198876,
+            0
+          ],
+          [
+            4.050643,
+            -0.805723,
+            0
+          ],
+          [
+            4.110113,
+            -0.404811,
+            0
+          ]
+        ],
+        "smooth": false,
+        "closed": true
+      },
+      "at": [
+        0,
+        20,
+        -23.94
+      ]
+    },
+    {
+      "id": "rose-central-roundel",
+      "label": "Rose central roundel",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 5,
+      "basis": [
+        "design.rose"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.86,
+            0.0,
+            0
+          ],
+          [
+            0.843475,
+            0.167778,
+            0
+          ],
+          [
+            0.794536,
+            0.329108,
+            0
+          ],
+          [
+            0.715064,
+            0.47779,
+            0
+          ],
+          [
+            0.608112,
+            0.608112,
+            0
+          ],
+          [
+            0.47779,
+            0.715064,
+            0
+          ],
+          [
+            0.329108,
+            0.794536,
+            0
+          ],
+          [
+            0.167778,
+            0.843475,
+            0
+          ],
+          [
+            0.0,
+            0.86,
+            0
+          ],
+          [
+            -0.167778,
+            0.843475,
+            0
+          ],
+          [
+            -0.329108,
+            0.794536,
+            0
+          ],
+          [
+            -0.47779,
+            0.715064,
+            0
+          ],
+          [
+            -0.608112,
+            0.608112,
+            0
+          ],
+          [
+            -0.715064,
+            0.47779,
+            0
+          ],
+          [
+            -0.794536,
+            0.329108,
+            0
+          ],
+          [
+            -0.843475,
+            0.167778,
+            0
+          ],
+          [
+            -0.86,
+            0.0,
+            0
+          ],
+          [
+            -0.843475,
+            -0.167778,
+            0
+          ],
+          [
+            -0.794536,
+            -0.329108,
+            0
+          ],
+          [
+            -0.715064,
+            -0.47779,
+            0
+          ],
+          [
+            -0.608112,
+            -0.608112,
+            0
+          ],
+          [
+            -0.47779,
+            -0.715064,
+            0
+          ],
+          [
+            -0.329108,
+            -0.794536,
+            0
+          ],
+          [
+            -0.167778,
+            -0.843475,
+            0
+          ],
+          [
+            -0.0,
+            -0.86,
+            0
+          ],
+          [
+            0.167778,
+            -0.843475,
+            0
+          ],
+          [
+            0.329108,
+            -0.794536,
+            0
+          ],
+          [
+            0.47779,
+            -0.715064,
+            0
+          ],
+          [
+            0.608112,
+            -0.608112,
+            0
+          ],
+          [
+            0.715064,
+            -0.47779,
+            0
+          ],
+          [
+            0.794536,
+            -0.329108,
+            0
+          ],
+          [
+            0.843475,
+            -0.167778,
+            0
+          ]
+        ],
+        "smooth": false,
+        "closed": true
+      },
+      "at": [
+        0,
+        20,
+        -23.9
+      ],
+      "look": {
+        "weight": 1.3
+      }
+    },
+    {
+      "id": "rose-radial-mullions",
+      "label": "Twelve rose window radial mullions",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 5,
+      "basis": [
+        "design.rose"
+      ],
+      "shape": {
+        "type": "tube",
+        "path": [
+          [
+            0,
+            0.86,
+            0
+          ],
+          [
+            0,
+            4.42,
+            0
+          ]
+        ],
+        "radius": 0.055,
+        "sides": 6,
+        "samples": 1,
+        "smooth": false,
+        "longitudinal": 3,
+        "ring_every": 0
+      },
+      "at": [
+        0,
+        20,
+        -23.92
+      ],
+      "repeat": {
+        "count": 12,
+        "radial": {
+          "axis": "z",
+          "center": [
+            0,
+            20,
+            -23.92
+          ],
+          "span": 360
+        }
+      },
+      "look": {
+        "fill": "none"
+      }
+    },
+    {
+      "id": "rose-petalled-tracery",
+      "label": "Twelve pointed rose tracery petals",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 5,
+      "basis": [
+        "design.rose"
+      ],
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0,
+            1.04,
+            0
+          ],
+          [
+            -0.38,
+            1.55,
+            0
+          ],
+          [
+            -0.64,
+            2.45,
+            0
+          ],
+          [
+            -0.6,
+            3.28,
+            0
+          ],
+          [
+            -0.37,
+            3.91,
+            0
+          ],
+          [
+            0,
+            4.13,
+            0
+          ],
+          [
+            0.37,
+            3.91,
+            0
+          ],
+          [
+            0.6,
+            3.28,
+            0
+          ],
+          [
+            0.64,
+            2.45,
+            0
+          ],
+          [
+            0.38,
+            1.55,
+            0
+          ]
+        ],
+        "smooth": false,
+        "closed": true
+      },
+      "at": [
+        0,
+        20,
+        -23.87
+      ],
+      "rotate": [
+        0,
+        0,
+        15
+      ],
+      "repeat": {
+        "count": 12,
+        "radial": {
+          "axis": "z",
+          "center": [
+            0,
+            20,
+            -23.87
+          ],
+          "span": 360
+        }
+      },
+      "look": {
+        "weight": 1.2
+      }
+    },
+    {
+      "id": "rose-geometric-glazing",
+      "label": "Invented geometric rose glazing lights",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 5,
+      "basis": [
+        "design.rose"
+      ],
+      "shape": {
+        "type": "extrude",
+        "profile": [
+          [
+            -0.202456,
+            0.876933
+          ],
+          [
+            -0.9178,
+            3.97543
+          ],
+          [
+            -0.690946,
+            4.021069
+          ],
+          [
+            -0.461869,
+            4.053773
+          ],
+          [
+            -0.231307,
+            4.073438
+          ],
+          [
+            0.0,
+            4.08
+          ],
+          [
+            0.231307,
+            4.073438
+          ],
+          [
+            0.461869,
+            4.053773
+          ],
+          [
+            0.690946,
+            4.021069
+          ],
+          [
+            0.9178,
+            3.97543
+          ],
+          [
+            0.202456,
+            0.876933
+          ]
+        ],
+        "height": 0.018,
+        "axis": "z"
+      },
+      "at": [
+        0,
+        20,
+        -24.17
+      ],
+      "rotate": [
+        0,
+        0,
+        15
+      ],
+      "repeat": {
+        "count": 12,
+        "radial": {
+          "axis": "z",
+          "center": [
+            0,
+            20,
+            -24.17
+          ],
+          "span": 360
+        }
+      },
+      "look": {
+        "fill": "glass",
+        "alpha": 0.23,
+        "weight": 0.5
+      },
+      "note": "Original abstract geometry only; no historical stained-glass artwork is claimed."
+    },
+    {
+      "id": "altar-supports",
+      "label": "Plain altar supports",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 6,
+      "basis": [
+        "design.furnishings"
+      ],
+      "shape": {
+        "type": "box",
+        "size": [
+          0.75,
+          1.1,
+          1.3
+        ]
+      },
+      "at": [
+        1.8,
+        0.97,
+        -21.9
+      ],
+      "mirror": "x"
+    },
+    {
+      "id": "altar-table",
+      "label": "Plain altar table",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 6,
+      "basis": [
+        "design.furnishings"
+      ],
+      "shape": {
+        "type": "box",
+        "size": [
+          5.2,
+          0.28,
+          1.8
+        ]
+      },
+      "at": [
+        0,
+        1.66,
+        -21.9
+      ]
+    },
+    {
+      "id": "candle-stands",
+      "label": "Two tall candle stands",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 6,
+      "basis": [
+        "design.furnishings"
+      ],
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.48,
+            0
+          ],
+          [
+            0.48,
+            0.18
+          ],
+          [
+            0.18,
+            0.35
+          ],
+          [
+            0.12,
+            1.8
+          ],
+          [
+            0.32,
+            1.95
+          ],
+          [
+            0.32,
+            2.1
+          ],
+          [
+            0.12,
+            2.15
+          ],
+          [
+            0.12,
+            2.65
+          ]
+        ],
+        "segments": 8,
+        "meridians": 4
+      },
+      "at": [
+        3.8,
+        0.42,
+        -20.2
+      ],
+      "mirror": "x",
+      "look": {
+        "fill": "none"
+      }
+    },
+    {
+      "id": "candle-light",
+      "label": "Candlelight breathing — decorative",
+      "role": "ornament",
+      "certainty": "decorative",
+      "stage": 7,
+      "basis": [
+        "display.life"
+      ],
+      "shape": {
+        "type": "marker",
+        "sprite": "soft",
+        "size_px": 6
+      },
+      "at": [
+        3.8,
+        3.1,
+        -20.2
+      ],
+      "mirror": "x",
+      "motion": {
+        "type": "pulse",
+        "period": 6.5,
+        "amount": 0.18
+      }
+    },
+    {
+      "id": "nave-air-motes",
+      "label": "Slow drifting dust — decorative",
+      "role": "ornament",
+      "certainty": "decorative",
+      "stage": 7,
+      "basis": [
+        "display.life"
+      ],
+      "shape": {
+        "type": "points",
+        "count": 100,
+        "region": {
+          "box": [
+            11,
+            19,
+            43
+          ]
+        },
+        "sprite": "soft",
+        "size_px": 1.8
+      },
+      "at": [
+        0,
+        12,
+        0
+      ],
+      "floating": true,
+      "motion": {
+        "type": "bob",
+        "axis": [
+          0,
+          1,
+          0
+        ],
+        "distance": 0.24,
+        "period": 24,
+        "phase": 0.2
+      }
+    }
+  ],
+  "articulations": [],
+  "labels": [],
+  "anchors": {
+    "base": {
+      "point": [
+        0,
+        -0.5,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ]
+    }
+  },
+  "annotations": [
+    {
+      "id": "arcade-note",
+      "text": "Two pointed arcades · inferred proportions",
+      "part": "pointed-arcades-near",
+      "offset": [
+        -1.5,
+        -0.5,
+        1
+      ]
+    },
+    {
+      "id": "vault-note",
+      "text": "Ribbed vault · designed reconstruction",
+      "part": "vault-diagonal-forward",
+      "offset": [
+        0,
+        0.8,
+        0
+      ]
+    },
+    {
+      "id": "clerestory-note",
+      "text": "High clerestory · invented tracery",
+      "part": "clerestory-pointed-surrounds",
+      "offset": [
+        -1,
+        0.5,
+        0
+      ]
+    },
+    {
+      "id": "rose-note",
+      "text": "Twelve-light rose · invented geometric glazing",
+      "part": "rose-stone-surround",
+      "offset": [
+        0,
+        1.1,
+        0
+      ]
+    }
+  ],
+  "presentation": {
+    "framing": {
+      "yaw": 0,
+      "pitch": -18,
+      "fit": 1,
+      "target": "rose-stone-surround"
+    },
+    "views": [
+      {
+        "id": "hero",
+        "label": "Inside the nave toward the rose",
+        "yaw": 0,
+        "pitch": -18,
+        "distance": 2.45,
+        "target": "rose-stone-surround"
+      },
+      {
+        "id": "nave-interior",
+        "label": "Interior, slightly off axis",
+        "yaw": 4,
+        "pitch": -17,
+        "distance": 2.25,
+        "target": "rose-stone-surround"
+      },
+      {
+        "id": "vault",
+        "label": "Overhead pointed rib network",
+        "yaw": 0,
+        "pitch": -60,
+        "distance": 0.3,
+        "target": "vault-web-shell"
+      },
+      {
+        "id": "clerestory",
+        "label": "Clerestory and triforium rhythm",
+        "yaw": -65,
+        "pitch": -8,
+        "distance": 0.63,
+        "target": "clerestory-pointed-surrounds"
+      },
+      {
+        "id": "rose",
+        "label": "Rose, tracery and terminal lancets",
+        "yaw": 0,
+        "pitch": -10,
+        "distance": 1.55,
+        "target": "rose-stone-surround"
+      },
+      {
+        "id": "construction",
+        "label": "Open-front architectural cutaway",
+        "yaw": 27,
+        "pitch": 16,
+        "distance": 1.03
+      }
+    ],
+    "atmosphere": {
+      "haze": 0.22,
+      "scanlines": false,
+      "vignette": true,
+      "grid": false,
+      "projector": false,
+      "motes": 0.12
+    },
+    "occlusion": "xray",
+    "certainty_style": "subtle",
+    "background": "deep",
+    "float": 0
+  },
+  "animation": {
+    "assembly": {
+      "style": "ceremony",
+      "seconds": 14,
+      "interference": false
+    },
+    "idle": {
+      "life": "calm",
+      "events": [
+        "shimmer",
+        "sweep"
+      ],
+      "cadence": [
+        12,
+        22
+      ],
+      "strength": 0.22
+    },
+    "camera": {
+      "drift": 0,
+      "breathe": 0.008,
+      "tour": [
+        {
+          "view": "nave-interior",
+          "at": 19,
+          "fly": 5
+        },
+        {
+          "view": "vault",
+          "at": 31,
+          "fly": 5
+        },
+        {
+          "view": "rose",
+          "at": 43,
+          "fly": 6
+        },
+        {
+          "view": "hero",
+          "at": 56,
+          "fly": 7
+        }
+      ]
+    },
+    "reduced_motion": "still"
+  }
+}

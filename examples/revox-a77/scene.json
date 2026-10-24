@@ -1,0 +1,6278 @@
+{
+  "format": "construct-scene",
+  "version": 2,
+  "id": "o3-revox-a77",
+  "title": "ReVox A77 \u2014 reel-to-reel tape recorder",
+  "subject": {
+    "category": "machine",
+    "accuracy": "approximate",
+    "synthetic": false,
+    "summary": "A ReVox A77 studio tape recorder with two 10.5-inch reels turning and quarter-inch tape threaded across three heads. Cabinet, reel diameter, tape speed, head count and control layout come from the maker's service manual and a collector's specification; axle spacing, pack radii and the head-cover-off presentation are traced from reference photographs. The tape ribbon is a fixed geometric path while the reels, capstan and pinch roller turn."
+  },
+  "units": "m",
+  "seed": 77,
+  "sources": [
+    {
+      "id": "request",
+      "kind": "user_request",
+      "title": "The user's request",
+      "rights": "user_private"
+    },
+    {
+      "id": "manual",
+      "kind": "document",
+      "title": "ReVox A77 Service Manual (front panel, tape path, head cover)",
+      "rights": "reference_only"
+    },
+    {
+      "id": "spec",
+      "kind": "document",
+      "title": "ReVox A77 performance specification (reeltoreel.de) and Museum of Magnetic Sound Recording A77 MK IV page",
+      "rights": "reference_only"
+    },
+    {
+      "id": "photo-front",
+      "kind": "reference_image",
+      "title": "Front and three-quarter photographs of the A77 (Wikimedia Commons, CC BY / CC BY-SA)",
+      "rights": "reference_only"
+    }
+  ],
+  "facts": [
+    {
+      "key": "subject",
+      "value": "ReVox A77 reel-to-reel tape recorder",
+      "certainty": "user_supplied",
+      "source": "request"
+    },
+    {
+      "key": "motion.request",
+      "value": "Both reels turning, tape running past the heads",
+      "certainty": "user_supplied",
+      "source": "request"
+    },
+    {
+      "key": "body.size",
+      "value": "0.413 x 0.359 x 0.216 m (16 1/4 x 14 1/8 x 8 1/2 in), wooden cabinet model",
+      "certainty": "verified",
+      "source": "spec",
+      "note": "Maker/collector specification of the A77 cabinet, measured without reels."
+    },
+    {
+      "key": "reel.diameter",
+      "value": 0.267,
+      "certainty": "verified",
+      "unit": "m",
+      "source": "spec",
+      "note": "10.5 in (26.7 cm) maximum reel; flange radius 0.1335 m."
+    },
+    {
+      "key": "reel.type",
+      "value": "10.5-inch NAB metal reel, three large windows, three-tab hub",
+      "certainty": "verified",
+      "source": "photo-front",
+      "note": "Reels in the reference photographs; the deck accepts standard NAB reels."
+    },
+    {
+      "key": "reel.spacing",
+      "value": 0.274,
+      "certainty": "inferred",
+      "unit": "m",
+      "note": "Axle spacing traced from the front photograph: the flanges almost touch between the spools."
+    },
+    {
+      "key": "head.count",
+      "value": 3,
+      "certainty": "verified",
+      "source": "spec",
+      "note": "Separate erase, record and playback heads ('True Radius' design)."
+    },
+    {
+      "key": "head.kind",
+      "value": "erase, record and playback heads in a row ahead of the capstan",
+      "certainty": "verified",
+      "source": "manual",
+      "note": "Service manual front-panel and tape-path drawings; head order visible in museum photographs."
+    },
+    {
+      "key": "tape.width",
+      "value": 0.00635,
+      "certainty": "verified",
+      "unit": "m",
+      "source": "spec",
+      "note": "Quarter-inch tape."
+    },
+    {
+      "key": "tape.speed",
+      "value": 0.1905,
+      "certainty": "verified",
+      "unit": "m/s",
+      "source": "spec",
+      "note": "7.5 ips at the standard speed setting."
+    },
+    {
+      "key": "transport",
+      "value": "solenoid push buttons: rewind, fast forward, play, stop, record",
+      "certainty": "verified",
+      "source": "manual"
+    },
+    {
+      "key": "panel.layout",
+      "value": "five transport buttons, four rotary controls, three jack sockets, two VU meters and a power switch",
+      "certainty": "verified",
+      "source": "photo-front",
+      "note": "Layout read from the front photograph and the manual's key to figs 2.1-1/2.1-2."
+    },
+    {
+      "key": "brand",
+      "value": "REVOX",
+      "certainty": "verified",
+      "source": "manual",
+      "note": "Name on the stainless band above the control panel."
+    },
+    {
+      "key": "model.text",
+      "value": "A 77  \u00b7  STEREO  \u00b7  TAPERECORDER",
+      "certainty": "verified",
+      "source": "photo-front",
+      "note": "Lettering under the REVOX name on the MK III/IV trim band."
+    },
+    {
+      "key": "legend.volume",
+      "value": "VOLUME",
+      "certainty": "verified",
+      "source": "photo-front"
+    },
+    {
+      "key": "legend.balance",
+      "value": "BALANCE",
+      "certainty": "verified",
+      "source": "photo-front"
+    },
+    {
+      "key": "legend.phones",
+      "value": "PHONES",
+      "certainty": "verified",
+      "source": "photo-front"
+    },
+    {
+      "key": "legend.mic1",
+      "value": "MIC CH 1",
+      "certainty": "verified",
+      "source": "photo-front"
+    },
+    {
+      "key": "legend.mic2",
+      "value": "MIC CH 2",
+      "certainty": "verified",
+      "source": "photo-front"
+    },
+    {
+      "key": "legend.level",
+      "value": "LEVEL",
+      "certainty": "verified",
+      "source": "photo-front"
+    },
+    {
+      "key": "legend.power",
+      "value": "POWER",
+      "certainty": "verified",
+      "source": "photo-front"
+    },
+    {
+      "key": "legend.rec1",
+      "value": "REC CH 1",
+      "certainty": "verified",
+      "source": "photo-front"
+    },
+    {
+      "key": "legend.rec2",
+      "value": "REC CH 2",
+      "certainty": "verified",
+      "source": "photo-front"
+    },
+    {
+      "key": "legend.monitor",
+      "value": "MONITOR",
+      "certainty": "verified",
+      "source": "photo-front"
+    },
+    {
+      "key": "reel.rpm",
+      "value": "supply 17.5 rpm, take-up 25.3 rpm",
+      "certainty": "inferred",
+      "note": "Computed as 60v/(2*pi*r) for 7.5 ips and the modelled pack radii; the packs stay fixed, so this is an illustrative short loop."
+    },
+    {
+      "key": "tape.path",
+      "value": "pack tangent - guide - across three heads - capstan/pinch - guide - pack tangent",
+      "certainty": "inferred",
+      "note": "Routed from the reference photographs and the service-manual tape path; the ribbon is a fixed geometric locus, the transport rotates."
+    },
+    {
+      "key": "heads.exposed",
+      "value": "head cover removed for threading, as in the manual's tape-path photographs",
+      "certainty": "inferred",
+      "note": "The A77's head cover is not modelled, so the tape at the heads is visible."
+    },
+    {
+      "key": "needles",
+      "value": "VU needles swing illustratively, not from audio",
+      "certainty": "decorative"
+    }
+  ],
+  "assets": [],
+  "parts": [
+    {
+      "id": "feet",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 0,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.034,
+          0.012,
+          0.03
+        ]
+      },
+      "at": [
+        -0.185,
+        0.006,
+        -0.078
+      ],
+      "basis": [
+        "body.size"
+      ],
+      "look": {
+        "weight": 0.8,
+        "fill": "dark"
+      },
+      "repeat": {
+        "count": 2,
+        "step": {
+          "at": [
+            0,
+            0,
+            0.156
+          ]
+        }
+      },
+      "mirror": "x"
+    },
+    {
+      "id": "carcass",
+      "role": "mass",
+      "certainty": "verified",
+      "stage": 1,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.401,
+          0.323,
+          0.208
+        ]
+      },
+      "at": [
+        0,
+        0.1835,
+        -0.004
+      ],
+      "basis": [
+        "body.size"
+      ],
+      "look": {
+        "fill": "dark",
+        "weight": 0.65,
+        "alpha": 0.9
+      }
+    },
+    {
+      "id": "base-plate",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 1,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.407,
+          0.01,
+          0.212
+        ]
+      },
+      "at": [
+        0,
+        0.017,
+        -0.002
+      ],
+      "basis": [
+        "body.size"
+      ],
+      "look": {
+        "weight": 0.9
+      }
+    },
+    {
+      "id": "top-lid",
+      "role": "structure",
+      "certainty": "verified",
+      "stage": 1,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.415,
+          0.014,
+          0.216
+        ]
+      },
+      "at": [
+        0,
+        0.352,
+        -0.004
+      ],
+      "basis": [
+        "body.size"
+      ],
+      "look": {
+        "weight": 1.0,
+        "fill": "dark"
+      }
+    },
+    {
+      "id": "lid-lip",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 1,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.415,
+          0.003,
+          0.006
+        ]
+      },
+      "at": [
+        0,
+        0.3575,
+        0.102
+      ],
+      "look": {
+        "weight": 0.55,
+        "alpha": 0.5
+      }
+    },
+    {
+      "id": "side-rail",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 1,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.008,
+          0.33,
+          0.214
+        ]
+      },
+      "at": [
+        0.2045,
+        0.187,
+        -0.004
+      ],
+      "basis": [
+        "body.size"
+      ],
+      "look": {
+        "weight": 0.9,
+        "fill": "dark",
+        "alpha": 0.8
+      },
+      "mirror": "x"
+    },
+    {
+      "id": "control-panel",
+      "role": "mass",
+      "certainty": "verified",
+      "stage": 2,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.401,
+          0.12,
+          0.016
+        ]
+      },
+      "at": [
+        0,
+        0.082,
+        0.1
+      ],
+      "basis": [
+        "body.size",
+        "panel.layout"
+      ],
+      "look": {
+        "fill": "dark",
+        "weight": 0.6,
+        "alpha": 0.95
+      }
+    },
+    {
+      "id": "panel-top-edge",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 2,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.403,
+          0.0035,
+          0.019
+        ]
+      },
+      "at": [
+        0,
+        0.1402,
+        0.101
+      ],
+      "look": {
+        "weight": 1.4,
+        "glow": 0.25
+      }
+    },
+    {
+      "id": "panel-bottom-edge",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 2,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.403,
+          0.003,
+          0.018
+        ]
+      },
+      "at": [
+        0,
+        0.024,
+        0.1
+      ],
+      "look": {
+        "weight": 0.6,
+        "alpha": 0.45
+      }
+    },
+    {
+      "id": "name-band",
+      "role": "identity",
+      "certainty": "verified",
+      "stage": 2,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.401,
+          0.027999999999999997,
+          0.01
+        ]
+      },
+      "at": [
+        0,
+        0.158,
+        0.1025
+      ],
+      "basis": [
+        "body.size"
+      ],
+      "look": {
+        "fill": "glass",
+        "alpha": 0.35,
+        "weight": 1.3,
+        "glow": 0.3
+      }
+    },
+    {
+      "id": "name-band-lip",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 2,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.403,
+          0.002,
+          0.012
+        ]
+      },
+      "at": [
+        0,
+        0.173,
+        0.1025
+      ],
+      "look": {
+        "weight": 1.5,
+        "glow": 0.35
+      }
+    },
+    {
+      "id": "deck-plate",
+      "role": "mass",
+      "certainty": "verified",
+      "stage": 2,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.401,
+          0.187,
+          0.012
+        ]
+      },
+      "at": [
+        0,
+        0.2655,
+        0.088
+      ],
+      "basis": [
+        "body.size"
+      ],
+      "look": {
+        "fill": "dark",
+        "weight": 0.55,
+        "alpha": 0.92
+      }
+    },
+    {
+      "id": "deck-cheek",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 2,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.013,
+          0.187,
+          0.02
+        ]
+      },
+      "at": [
+        0.2,
+        0.2655,
+        0.092
+      ],
+      "look": {
+        "weight": 0.85,
+        "fill": "dark",
+        "alpha": 0.75
+      },
+      "mirror": "x"
+    },
+    {
+      "id": "counter-window",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 3,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.064,
+          0.019,
+          0.009
+        ]
+      },
+      "at": [
+        0,
+        0.238,
+        0.095
+      ],
+      "look": {
+        "fill": "dark",
+        "weight": 0.7
+      }
+    },
+    {
+      "id": "counter-digits",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 3,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.054,
+          0.01,
+          0.002
+        ]
+      },
+      "at": [
+        0,
+        0.238,
+        0.0995
+      ],
+      "look": {
+        "fill": "glass",
+        "alpha": 0.6,
+        "weight": 0.4,
+        "glow": 0.2
+      }
+    },
+    {
+      "id": "counter-ticks",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 3,
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.02,
+            0.2335,
+            0.1006
+          ],
+          [
+            -0.012,
+            0.2335,
+            0.1006
+          ],
+          [
+            -0.004,
+            0.2335,
+            0.1006
+          ],
+          [
+            0.004,
+            0.2335,
+            0.1006
+          ],
+          [
+            0.012,
+            0.2335,
+            0.1006
+          ],
+          [
+            0.02,
+            0.2335,
+            0.1006
+          ]
+        ],
+        "smooth": false
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "alpha": 0.5,
+        "weight": 0.5,
+        "line": "dotted"
+      }
+    },
+    {
+      "id": "reel-table-l",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 3,
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.052,
+            0
+          ],
+          [
+            0.052,
+            0.005
+          ],
+          [
+            0.047,
+            0.007
+          ],
+          [
+            0.012,
+            0.008
+          ]
+        ],
+        "segments": 56,
+        "meridians": 4
+      },
+      "at": [
+        -0.137,
+        0.315,
+        0.094
+      ],
+      "basis": [
+        "reel.diameter"
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.85,
+        "fill": "dark",
+        "alpha": 0.8
+      }
+    },
+    {
+      "id": "spindle-l",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 3,
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.0056,
+        "height": 0.042,
+        "segments": 20
+      },
+      "at": [
+        -0.137,
+        0.315,
+        0.096
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.8
+      }
+    },
+    {
+      "id": "reel-table-r",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 3,
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.052,
+            0
+          ],
+          [
+            0.052,
+            0.005
+          ],
+          [
+            0.047,
+            0.007
+          ],
+          [
+            0.012,
+            0.008
+          ]
+        ],
+        "segments": 56,
+        "meridians": 4
+      },
+      "at": [
+        0.137,
+        0.315,
+        0.094
+      ],
+      "basis": [
+        "reel.diameter"
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.85,
+        "fill": "dark",
+        "alpha": 0.8
+      }
+    },
+    {
+      "id": "spindle-r",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 3,
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.0056,
+        "height": 0.042,
+        "segments": 20
+      },
+      "at": [
+        0.137,
+        0.315,
+        0.096
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.8
+      }
+    },
+    {
+      "id": "sup-flange-back-rim",
+      "role": "structure",
+      "certainty": "verified",
+      "stage": 4,
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.1245,
+            0
+          ],
+          [
+            0.1335,
+            0
+          ],
+          [
+            0.1335,
+            0.004
+          ],
+          [
+            0.1245,
+            0.004
+          ]
+        ],
+        "segments": 64,
+        "meridians": 2
+      },
+      "at": [
+        -0.137,
+        0.315,
+        0.1
+      ],
+      "basis": [
+        "reel.diameter"
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.55,
+        "alpha": 0.45
+      },
+      "motion": {
+        "type": "spin",
+        "axis": [
+          0,
+          0,
+          1
+        ],
+        "pivot": [
+          -0.137,
+          0.315,
+          0.112
+        ],
+        "rpm": -17.49
+      }
+    },
+    {
+      "id": "sup-flange-back-sectors",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 4,
+      "shape": {
+        "type": "extrude",
+        "axis": "z",
+        "height": 0.004,
+        "profile": [
+          [
+            0.029444863728670917,
+            -0.016999999999999998
+          ],
+          [
+            0.11388234059765369,
+            -0.06574999999999999
+          ],
+          [
+            0.11917947399531947,
+            -0.05557430141890197
+          ],
+          [
+            0.12356957963334696,
+            -0.04497564884732543
+          ],
+          [
+            0.1270192461570125,
+            -0.03403470443098148
+          ],
+          [
+            0.12950221952110536,
+            -0.022834735363201335
+          ],
+          [
+            0.13099960279906456,
+            -0.011460980171317052
+          ],
+          [
+            0.1315,
+            0.0
+          ],
+          [
+            0.13099960279906456,
+            0.011460980171317052
+          ],
+          [
+            0.12950221952110536,
+            0.022834735363201342
+          ],
+          [
+            0.1270192461570125,
+            0.034034704430981486
+          ],
+          [
+            0.12356957963334696,
+            0.04497564884732543
+          ],
+          [
+            0.11917947399531947,
+            0.05557430141890197
+          ],
+          [
+            0.11388234059765369,
+            0.06574999999999999
+          ],
+          [
+            0.029444863728670917,
+            0.016999999999999998
+          ]
+        ]
+      },
+      "at": [
+        -0.137,
+        0.315,
+        0.1
+      ],
+      "rotate": [
+        0,
+        0,
+        0.24434609527920614
+      ],
+      "look": {
+        "weight": 0.55,
+        "fill": "dark",
+        "alpha": 0.4
+      },
+      "repeat": {
+        "count": 3,
+        "radial": {
+          "axis": "z",
+          "center": [
+            -0.137,
+            0.315,
+            0.1
+          ]
+        }
+      },
+      "motion": {
+        "type": "spin",
+        "axis": [
+          0,
+          0,
+          1
+        ],
+        "pivot": [
+          -0.137,
+          0.315,
+          0.112
+        ],
+        "rpm": -17.49
+      }
+    },
+    {
+      "id": "sup-pack",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 4,
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.032,
+            0
+          ],
+          [
+            0.032,
+            0.0065
+          ],
+          [
+            0.032,
+            0.0062
+          ],
+          [
+            0.056,
+            0.0065
+          ],
+          [
+            0.056,
+            0.0062
+          ],
+          [
+            0.08,
+            0.0065
+          ],
+          [
+            0.08,
+            0.0062
+          ],
+          [
+            0.104,
+            0.0065
+          ],
+          [
+            0.104,
+            0
+          ]
+        ],
+        "segments": 64,
+        "meridians": 4
+      },
+      "at": [
+        -0.137,
+        0.315,
+        0.105
+      ],
+      "basis": [
+        "tape.width",
+        "tape.speed"
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "look": {
+        "tone": "identity",
+        "weight": 0.8,
+        "glow": 0.22,
+        "fill": "dark",
+        "alpha": 0.85
+      },
+      "motion": {
+        "type": "spin",
+        "axis": [
+          0,
+          0,
+          1
+        ],
+        "pivot": [
+          -0.137,
+          0.315,
+          0.112
+        ],
+        "rpm": -17.49
+      }
+    },
+    {
+      "id": "sup-flange-front-rim",
+      "role": "identity",
+      "certainty": "verified",
+      "stage": 4,
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.1245,
+            0
+          ],
+          [
+            0.1335,
+            0
+          ],
+          [
+            0.1335,
+            0.004
+          ],
+          [
+            0.1245,
+            0.004
+          ]
+        ],
+        "segments": 64,
+        "meridians": 3
+      },
+      "at": [
+        -0.137,
+        0.315,
+        0.118
+      ],
+      "basis": [
+        "reel.diameter"
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 1.3,
+        "glow": 0.4
+      },
+      "motion": {
+        "type": "spin",
+        "axis": [
+          0,
+          0,
+          1
+        ],
+        "pivot": [
+          -0.137,
+          0.315,
+          0.112
+        ],
+        "rpm": -17.49
+      }
+    },
+    {
+      "id": "sup-flange-front-sectors",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 4,
+      "shape": {
+        "type": "extrude",
+        "axis": "z",
+        "height": 0.004,
+        "profile": [
+          [
+            0.029444863728670917,
+            -0.016999999999999998
+          ],
+          [
+            0.11388234059765369,
+            -0.06574999999999999
+          ],
+          [
+            0.11917947399531947,
+            -0.05557430141890197
+          ],
+          [
+            0.12356957963334696,
+            -0.04497564884732543
+          ],
+          [
+            0.1270192461570125,
+            -0.03403470443098148
+          ],
+          [
+            0.12950221952110536,
+            -0.022834735363201335
+          ],
+          [
+            0.13099960279906456,
+            -0.011460980171317052
+          ],
+          [
+            0.1315,
+            0.0
+          ],
+          [
+            0.13099960279906456,
+            0.011460980171317052
+          ],
+          [
+            0.12950221952110536,
+            0.022834735363201342
+          ],
+          [
+            0.1270192461570125,
+            0.034034704430981486
+          ],
+          [
+            0.12356957963334696,
+            0.04497564884732543
+          ],
+          [
+            0.11917947399531947,
+            0.05557430141890197
+          ],
+          [
+            0.11388234059765369,
+            0.06574999999999999
+          ],
+          [
+            0.029444863728670917,
+            0.016999999999999998
+          ]
+        ]
+      },
+      "at": [
+        -0.137,
+        0.315,
+        0.118
+      ],
+      "rotate": [
+        0,
+        0,
+        0.24434609527920614
+      ],
+      "look": {
+        "weight": 1.25,
+        "glow": 0.22,
+        "fill": "dark",
+        "alpha": 0.95
+      },
+      "repeat": {
+        "count": 3,
+        "radial": {
+          "axis": "z",
+          "center": [
+            -0.137,
+            0.315,
+            0.118
+          ]
+        }
+      },
+      "motion": {
+        "type": "spin",
+        "axis": [
+          0,
+          0,
+          1
+        ],
+        "pivot": [
+          -0.137,
+          0.315,
+          0.112
+        ],
+        "rpm": -17.49
+      }
+    },
+    {
+      "id": "sup-hub",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 4,
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.033,
+            0
+          ],
+          [
+            0.034,
+            0.002
+          ],
+          [
+            0.034,
+            0.03
+          ],
+          [
+            0.02,
+            0.034
+          ],
+          [
+            0.0,
+            0.034
+          ]
+        ],
+        "segments": 40,
+        "meridians": 4
+      },
+      "at": [
+        -0.137,
+        0.315,
+        0.098
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 1.3,
+        "glow": 0.3
+      },
+      "motion": {
+        "type": "spin",
+        "axis": [
+          0,
+          0,
+          1
+        ],
+        "pivot": [
+          -0.137,
+          0.315,
+          0.112
+        ],
+        "rpm": -17.49
+      }
+    },
+    {
+      "id": "sup-hub-tabs",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 4,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.019,
+          0.011,
+          0.006
+        ]
+      },
+      "at": [
+        -0.096,
+        0.315,
+        0.134
+      ],
+      "rotate": [
+        0,
+        0,
+        0.24434609527920614
+      ],
+      "look": {
+        "weight": 1.2,
+        "glow": 0.25,
+        "fill": "dark"
+      },
+      "repeat": {
+        "count": 3,
+        "radial": {
+          "axis": "z",
+          "center": [
+            -0.137,
+            0.315,
+            0.134
+          ]
+        }
+      },
+      "motion": {
+        "type": "spin",
+        "axis": [
+          0,
+          0,
+          1
+        ],
+        "pivot": [
+          -0.137,
+          0.315,
+          0.112
+        ],
+        "rpm": -17.49
+      }
+    },
+    {
+      "id": "tak-flange-back-rim",
+      "role": "structure",
+      "certainty": "verified",
+      "stage": 4,
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.1245,
+            0
+          ],
+          [
+            0.1335,
+            0
+          ],
+          [
+            0.1335,
+            0.004
+          ],
+          [
+            0.1245,
+            0.004
+          ]
+        ],
+        "segments": 64,
+        "meridians": 2
+      },
+      "at": [
+        0.137,
+        0.315,
+        0.1
+      ],
+      "basis": [
+        "reel.diameter"
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.55,
+        "alpha": 0.45
+      },
+      "motion": {
+        "type": "spin",
+        "axis": [
+          0,
+          0,
+          1
+        ],
+        "pivot": [
+          0.137,
+          0.315,
+          0.112
+        ],
+        "rpm": -25.27
+      }
+    },
+    {
+      "id": "tak-flange-back-sectors",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 4,
+      "shape": {
+        "type": "extrude",
+        "axis": "z",
+        "height": 0.004,
+        "profile": [
+          [
+            0.029444863728670917,
+            -0.016999999999999998
+          ],
+          [
+            0.11388234059765369,
+            -0.06574999999999999
+          ],
+          [
+            0.11917947399531947,
+            -0.05557430141890197
+          ],
+          [
+            0.12356957963334696,
+            -0.04497564884732543
+          ],
+          [
+            0.1270192461570125,
+            -0.03403470443098148
+          ],
+          [
+            0.12950221952110536,
+            -0.022834735363201335
+          ],
+          [
+            0.13099960279906456,
+            -0.011460980171317052
+          ],
+          [
+            0.1315,
+            0.0
+          ],
+          [
+            0.13099960279906456,
+            0.011460980171317052
+          ],
+          [
+            0.12950221952110536,
+            0.022834735363201342
+          ],
+          [
+            0.1270192461570125,
+            0.034034704430981486
+          ],
+          [
+            0.12356957963334696,
+            0.04497564884732543
+          ],
+          [
+            0.11917947399531947,
+            0.05557430141890197
+          ],
+          [
+            0.11388234059765369,
+            0.06574999999999999
+          ],
+          [
+            0.029444863728670917,
+            0.016999999999999998
+          ]
+        ]
+      },
+      "at": [
+        0.137,
+        0.315,
+        0.1
+      ],
+      "rotate": [
+        0,
+        0,
+        0.0
+      ],
+      "look": {
+        "weight": 0.55,
+        "fill": "dark",
+        "alpha": 0.4
+      },
+      "repeat": {
+        "count": 3,
+        "radial": {
+          "axis": "z",
+          "center": [
+            0.137,
+            0.315,
+            0.1
+          ]
+        }
+      },
+      "motion": {
+        "type": "spin",
+        "axis": [
+          0,
+          0,
+          1
+        ],
+        "pivot": [
+          0.137,
+          0.315,
+          0.112
+        ],
+        "rpm": -25.27
+      }
+    },
+    {
+      "id": "tak-pack",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 4,
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.032,
+            0
+          ],
+          [
+            0.032,
+            0.0065
+          ],
+          [
+            0.032,
+            0.0062
+          ],
+          [
+            0.056,
+            0.0065
+          ],
+          [
+            0.056,
+            0.0062
+          ],
+          [
+            0.08,
+            0.0065
+          ],
+          [
+            0.08,
+            0.0062
+          ],
+          [
+            0.072,
+            0.0065
+          ],
+          [
+            0.072,
+            0
+          ]
+        ],
+        "segments": 64,
+        "meridians": 4
+      },
+      "at": [
+        0.137,
+        0.315,
+        0.105
+      ],
+      "basis": [
+        "tape.width",
+        "tape.speed"
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "look": {
+        "tone": "identity",
+        "weight": 0.8,
+        "glow": 0.22,
+        "fill": "dark",
+        "alpha": 0.85
+      },
+      "motion": {
+        "type": "spin",
+        "axis": [
+          0,
+          0,
+          1
+        ],
+        "pivot": [
+          0.137,
+          0.315,
+          0.112
+        ],
+        "rpm": -25.27
+      }
+    },
+    {
+      "id": "tak-flange-front-rim",
+      "role": "identity",
+      "certainty": "verified",
+      "stage": 4,
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.1245,
+            0
+          ],
+          [
+            0.1335,
+            0
+          ],
+          [
+            0.1335,
+            0.004
+          ],
+          [
+            0.1245,
+            0.004
+          ]
+        ],
+        "segments": 64,
+        "meridians": 3
+      },
+      "at": [
+        0.137,
+        0.315,
+        0.118
+      ],
+      "basis": [
+        "reel.diameter"
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 1.3,
+        "glow": 0.4
+      },
+      "motion": {
+        "type": "spin",
+        "axis": [
+          0,
+          0,
+          1
+        ],
+        "pivot": [
+          0.137,
+          0.315,
+          0.112
+        ],
+        "rpm": -25.27
+      }
+    },
+    {
+      "id": "tak-flange-front-sectors",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 4,
+      "shape": {
+        "type": "extrude",
+        "axis": "z",
+        "height": 0.004,
+        "profile": [
+          [
+            0.029444863728670917,
+            -0.016999999999999998
+          ],
+          [
+            0.11388234059765369,
+            -0.06574999999999999
+          ],
+          [
+            0.11917947399531947,
+            -0.05557430141890197
+          ],
+          [
+            0.12356957963334696,
+            -0.04497564884732543
+          ],
+          [
+            0.1270192461570125,
+            -0.03403470443098148
+          ],
+          [
+            0.12950221952110536,
+            -0.022834735363201335
+          ],
+          [
+            0.13099960279906456,
+            -0.011460980171317052
+          ],
+          [
+            0.1315,
+            0.0
+          ],
+          [
+            0.13099960279906456,
+            0.011460980171317052
+          ],
+          [
+            0.12950221952110536,
+            0.022834735363201342
+          ],
+          [
+            0.1270192461570125,
+            0.034034704430981486
+          ],
+          [
+            0.12356957963334696,
+            0.04497564884732543
+          ],
+          [
+            0.11917947399531947,
+            0.05557430141890197
+          ],
+          [
+            0.11388234059765369,
+            0.06574999999999999
+          ],
+          [
+            0.029444863728670917,
+            0.016999999999999998
+          ]
+        ]
+      },
+      "at": [
+        0.137,
+        0.315,
+        0.118
+      ],
+      "rotate": [
+        0,
+        0,
+        0.0
+      ],
+      "look": {
+        "weight": 1.25,
+        "glow": 0.22,
+        "fill": "dark",
+        "alpha": 0.95
+      },
+      "repeat": {
+        "count": 3,
+        "radial": {
+          "axis": "z",
+          "center": [
+            0.137,
+            0.315,
+            0.118
+          ]
+        }
+      },
+      "motion": {
+        "type": "spin",
+        "axis": [
+          0,
+          0,
+          1
+        ],
+        "pivot": [
+          0.137,
+          0.315,
+          0.112
+        ],
+        "rpm": -25.27
+      }
+    },
+    {
+      "id": "tak-hub",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 4,
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.033,
+            0
+          ],
+          [
+            0.034,
+            0.002
+          ],
+          [
+            0.034,
+            0.03
+          ],
+          [
+            0.02,
+            0.034
+          ],
+          [
+            0.0,
+            0.034
+          ]
+        ],
+        "segments": 40,
+        "meridians": 4
+      },
+      "at": [
+        0.137,
+        0.315,
+        0.098
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 1.3,
+        "glow": 0.3
+      },
+      "motion": {
+        "type": "spin",
+        "axis": [
+          0,
+          0,
+          1
+        ],
+        "pivot": [
+          0.137,
+          0.315,
+          0.112
+        ],
+        "rpm": -25.27
+      }
+    },
+    {
+      "id": "tak-hub-tabs",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 4,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.019,
+          0.011,
+          0.006
+        ]
+      },
+      "at": [
+        0.178,
+        0.315,
+        0.134
+      ],
+      "rotate": [
+        0,
+        0,
+        0.0
+      ],
+      "look": {
+        "weight": 1.2,
+        "glow": 0.25,
+        "fill": "dark"
+      },
+      "repeat": {
+        "count": 3,
+        "radial": {
+          "axis": "z",
+          "center": [
+            0.137,
+            0.315,
+            0.134
+          ]
+        }
+      },
+      "motion": {
+        "type": "spin",
+        "axis": [
+          0,
+          0,
+          1
+        ],
+        "pivot": [
+          0.137,
+          0.315,
+          0.112
+        ],
+        "rpm": -25.27
+      }
+    },
+    {
+      "id": "tape-1",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 6,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.09702613753542144,
+          0.00635,
+          0.0008
+        ]
+      },
+      "at": [
+        -0.05433,
+        0.23559,
+        0.1135
+      ],
+      "basis": [
+        "tape.width",
+        "tape.speed"
+      ],
+      "rotate": [
+        0,
+        0,
+        -108.97280044251416
+      ],
+      "look": {
+        "tone": "bright",
+        "weight": 1.2,
+        "glow": 0.35,
+        "fill": "glass",
+        "alpha": 0.55
+      }
+    },
+    {
+      "id": "tape-edge-1",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 6,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.09682613753542144,
+          0.0006,
+          0.0008
+        ]
+      },
+      "at": [
+        -0.05433,
+        0.23877,
+        0.1137
+      ],
+      "rotate": [
+        0,
+        0,
+        -108.97280044251416
+      ],
+      "look": {
+        "alpha": 0.25,
+        "weight": 0.45
+      }
+    },
+    {
+      "id": "tape-2",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 6,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.1266,
+          0.00635,
+          0.0008
+        ]
+      },
+      "at": [
+        -0.007,
+        0.19,
+        0.1135
+      ],
+      "basis": [
+        "tape.width",
+        "tape.speed"
+      ],
+      "rotate": [
+        0,
+        0,
+        0.0
+      ],
+      "look": {
+        "tone": "bright",
+        "weight": 1.2,
+        "glow": 0.35,
+        "fill": "glass",
+        "alpha": 0.55
+      }
+    },
+    {
+      "id": "tape-edge-2",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 6,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.1264,
+          0.0006,
+          0.0008
+        ]
+      },
+      "at": [
+        -0.007,
+        0.19318,
+        0.1137
+      ],
+      "rotate": [
+        0,
+        0,
+        0.0
+      ],
+      "look": {
+        "alpha": 0.25,
+        "weight": 0.45
+      }
+    },
+    {
+      "id": "tape-3",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 6,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.018599999999999995,
+          0.00635,
+          0.0008
+        ]
+      },
+      "at": [
+        0.065,
+        0.19,
+        0.1135
+      ],
+      "basis": [
+        "tape.width",
+        "tape.speed"
+      ],
+      "rotate": [
+        0,
+        0,
+        0.0
+      ],
+      "look": {
+        "tone": "bright",
+        "weight": 1.2,
+        "glow": 0.35,
+        "fill": "glass",
+        "alpha": 0.55
+      }
+    },
+    {
+      "id": "tape-edge-3",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 6,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.018399999999999996,
+          0.0006,
+          0.0008
+        ]
+      },
+      "at": [
+        0.065,
+        0.19318,
+        0.1137
+      ],
+      "rotate": [
+        0,
+        0,
+        0.0
+      ],
+      "look": {
+        "alpha": 0.25,
+        "weight": 0.45
+      }
+    },
+    {
+      "id": "tape-4",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 6,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.12064165943538105,
+          0.00635,
+          0.0008
+        ]
+      },
+      "at": [
+        0.0696,
+        0.24986,
+        0.1135
+      ],
+      "basis": [
+        "tape.width",
+        "tape.speed"
+      ],
+      "rotate": [
+        0,
+        0,
+        94.20687920494692
+      ],
+      "look": {
+        "tone": "bright",
+        "weight": 1.2,
+        "glow": 0.35,
+        "fill": "glass",
+        "alpha": 0.55
+      }
+    },
+    {
+      "id": "tape-edge-4",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 6,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.12044165943538104,
+          0.0006,
+          0.0008
+        ]
+      },
+      "at": [
+        0.0696,
+        0.25303,
+        0.1137
+      ],
+      "rotate": [
+        0,
+        0,
+        94.20687920494692
+      ],
+      "look": {
+        "alpha": 0.25,
+        "weight": 0.45
+      }
+    },
+    {
+      "id": "head-plate",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 3,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.23,
+          0.07,
+          0.008
+        ]
+      },
+      "at": [
+        -0.002,
+        0.196,
+        0.098
+      ],
+      "look": {
+        "fill": "dark",
+        "weight": 0.8,
+        "alpha": 0.9
+      }
+    },
+    {
+      "id": "head-mount",
+      "role": "structure",
+      "certainty": "verified",
+      "stage": 3,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.178,
+          0.05,
+          0.014
+        ]
+      },
+      "at": [
+        -0.004,
+        0.194,
+        0.104
+      ],
+      "basis": [
+        "head.count"
+      ],
+      "look": {
+        "fill": "dark",
+        "weight": 0.9
+      }
+    },
+    {
+      "id": "head-mount-top",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 3,
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.09,
+            0.22,
+            0.104
+          ],
+          [
+            0.086,
+            0.22,
+            0.104
+          ]
+        ],
+        "smooth": false
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.6,
+        "alpha": 0.5
+      }
+    },
+    {
+      "id": "cover-post-l",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 4,
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.0045,
+        "height": 0.014,
+        "segments": 16
+      },
+      "at": [
+        -0.112,
+        0.2,
+        0.102
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 1.1,
+        "glow": 0.2
+      }
+    },
+    {
+      "id": "cover-post-cap-l",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 4,
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.0065,
+        "height": 0.003,
+        "segments": 16
+      },
+      "at": [
+        -0.112,
+        0.2,
+        0.11
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.7,
+        "alpha": 0.7
+      }
+    },
+    {
+      "id": "cover-post-r",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 4,
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.0045,
+        "height": 0.014,
+        "segments": 16
+      },
+      "at": [
+        0.106,
+        0.2,
+        0.102
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 1.1,
+        "glow": 0.2
+      }
+    },
+    {
+      "id": "cover-post-cap-r",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 4,
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.0065,
+        "height": 0.003,
+        "segments": 16
+      },
+      "at": [
+        0.106,
+        0.2,
+        0.11
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.7,
+        "alpha": 0.7
+      }
+    },
+    {
+      "id": "head-shield-0",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 4,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.022,
+          0.044,
+          0.016
+        ]
+      },
+      "at": [
+        -0.046,
+        0.19,
+        0.104
+      ],
+      "basis": [
+        "head.kind"
+      ],
+      "look": {
+        "fill": "dark",
+        "weight": 0.95,
+        "alpha": 0.9
+      }
+    },
+    {
+      "id": "head-0",
+      "role": "identity",
+      "certainty": "verified",
+      "stage": 4,
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.0085,
+            0
+          ],
+          [
+            0.0085,
+            0.014
+          ],
+          [
+            0.0072,
+            0.0175
+          ],
+          [
+            0.005,
+            0.019
+          ]
+        ],
+        "segments": 24,
+        "meridians": 2
+      },
+      "at": [
+        -0.046,
+        0.19,
+        0.098
+      ],
+      "basis": [
+        "head.kind"
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 1.35,
+        "glow": 0.35
+      }
+    },
+    {
+      "id": "head-collar-0",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 4,
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.0086,
+            0
+          ],
+          [
+            0.0102,
+            0
+          ],
+          [
+            0.0102,
+            0.002
+          ],
+          [
+            0.0086,
+            0.002
+          ]
+        ],
+        "segments": 20,
+        "meridians": 2
+      },
+      "at": [
+        -0.046,
+        0.19,
+        0.109
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.8,
+        "glow": 0.2
+      }
+    },
+    {
+      "id": "head-gap-0",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 6,
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0,
+            -0.0062,
+            0
+          ],
+          [
+            0,
+            0.0062,
+            0
+          ]
+        ],
+        "smooth": false
+      },
+      "at": [
+        -0.046,
+        0.19,
+        0.1141
+      ],
+      "look": {
+        "tone": "bright",
+        "weight": 1.5,
+        "glow": 0.55
+      }
+    },
+    {
+      "id": "head-lead-0",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.01,
+            0.004,
+            0
+          ],
+          [
+            0.01,
+            0.004,
+            0
+          ]
+        ],
+        "smooth": false
+      },
+      "at": [
+        -0.046,
+        0.19,
+        0.108
+      ],
+      "look": {
+        "alpha": 0.4,
+        "weight": 0.45
+      }
+    },
+    {
+      "id": "head-shield-1",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 4,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.03,
+          0.044,
+          0.016
+        ]
+      },
+      "at": [
+        -0.008,
+        0.19,
+        0.104
+      ],
+      "basis": [
+        "head.kind"
+      ],
+      "look": {
+        "fill": "dark",
+        "weight": 0.95,
+        "alpha": 0.9
+      }
+    },
+    {
+      "id": "head-1",
+      "role": "identity",
+      "certainty": "verified",
+      "stage": 4,
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.0085,
+            0
+          ],
+          [
+            0.0085,
+            0.014
+          ],
+          [
+            0.0072,
+            0.0175
+          ],
+          [
+            0.005,
+            0.019
+          ]
+        ],
+        "segments": 24,
+        "meridians": 2
+      },
+      "at": [
+        -0.008,
+        0.19,
+        0.098
+      ],
+      "basis": [
+        "head.kind"
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 1.35,
+        "glow": 0.35
+      }
+    },
+    {
+      "id": "head-collar-1",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 4,
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.0086,
+            0
+          ],
+          [
+            0.0102,
+            0
+          ],
+          [
+            0.0102,
+            0.002
+          ],
+          [
+            0.0086,
+            0.002
+          ]
+        ],
+        "segments": 20,
+        "meridians": 2
+      },
+      "at": [
+        -0.008,
+        0.19,
+        0.109
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.8,
+        "glow": 0.2
+      }
+    },
+    {
+      "id": "head-gap-1",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 6,
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0,
+            -0.0062,
+            0
+          ],
+          [
+            0,
+            0.0062,
+            0
+          ]
+        ],
+        "smooth": false
+      },
+      "at": [
+        -0.008,
+        0.19,
+        0.1141
+      ],
+      "look": {
+        "tone": "bright",
+        "weight": 1.5,
+        "glow": 0.55
+      }
+    },
+    {
+      "id": "head-lead-1",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.01,
+            0.004,
+            0
+          ],
+          [
+            0.01,
+            0.004,
+            0
+          ]
+        ],
+        "smooth": false
+      },
+      "at": [
+        -0.008,
+        0.19,
+        0.108
+      ],
+      "look": {
+        "alpha": 0.4,
+        "weight": 0.45
+      }
+    },
+    {
+      "id": "head-shield-2",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 4,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.03,
+          0.044,
+          0.016
+        ]
+      },
+      "at": [
+        0.03,
+        0.19,
+        0.104
+      ],
+      "basis": [
+        "head.kind"
+      ],
+      "look": {
+        "fill": "dark",
+        "weight": 0.95,
+        "alpha": 0.9
+      }
+    },
+    {
+      "id": "head-2",
+      "role": "identity",
+      "certainty": "verified",
+      "stage": 4,
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.0085,
+            0
+          ],
+          [
+            0.0085,
+            0.014
+          ],
+          [
+            0.0072,
+            0.0175
+          ],
+          [
+            0.005,
+            0.019
+          ]
+        ],
+        "segments": 24,
+        "meridians": 2
+      },
+      "at": [
+        0.03,
+        0.19,
+        0.098
+      ],
+      "basis": [
+        "head.kind"
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 1.35,
+        "glow": 0.35
+      }
+    },
+    {
+      "id": "head-collar-2",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 4,
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.0086,
+            0
+          ],
+          [
+            0.0102,
+            0
+          ],
+          [
+            0.0102,
+            0.002
+          ],
+          [
+            0.0086,
+            0.002
+          ]
+        ],
+        "segments": 20,
+        "meridians": 2
+      },
+      "at": [
+        0.03,
+        0.19,
+        0.109
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.8,
+        "glow": 0.2
+      }
+    },
+    {
+      "id": "head-gap-2",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 6,
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0,
+            -0.0062,
+            0
+          ],
+          [
+            0,
+            0.0062,
+            0
+          ]
+        ],
+        "smooth": false
+      },
+      "at": [
+        0.03,
+        0.19,
+        0.1141
+      ],
+      "look": {
+        "tone": "bright",
+        "weight": 1.5,
+        "glow": 0.55
+      }
+    },
+    {
+      "id": "head-lead-2",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.01,
+            0.004,
+            0
+          ],
+          [
+            0.01,
+            0.004,
+            0
+          ]
+        ],
+        "smooth": false
+      },
+      "at": [
+        0.03,
+        0.19,
+        0.108
+      ],
+      "look": {
+        "alpha": 0.4,
+        "weight": 0.45
+      }
+    },
+    {
+      "id": "guide-post-l",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 4,
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.0032,
+        "height": 0.038,
+        "segments": 16
+      },
+      "at": [
+        -0.07,
+        0.19,
+        0.1
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.9
+      }
+    },
+    {
+      "id": "guide-flange-l",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 4,
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.0034,
+            0
+          ],
+          [
+            0.0085,
+            0
+          ],
+          [
+            0.0085,
+            0.0025
+          ],
+          [
+            0.0034,
+            0.0025
+          ]
+        ],
+        "segments": 20,
+        "meridians": 3
+      },
+      "at": [
+        -0.07,
+        0.19,
+        0.1035
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 1.0,
+        "glow": 0.2
+      },
+      "repeat": {
+        "count": 2,
+        "step": {
+          "at": [
+            0,
+            0,
+            0.016
+          ]
+        }
+      }
+    },
+    {
+      "id": "guide-post-r",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 4,
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.0032,
+        "height": 0.038,
+        "segments": 16
+      },
+      "at": [
+        0.056,
+        0.19,
+        0.1
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.9
+      }
+    },
+    {
+      "id": "guide-flange-r",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 4,
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.0034,
+            0
+          ],
+          [
+            0.0085,
+            0
+          ],
+          [
+            0.0085,
+            0.0025
+          ],
+          [
+            0.0034,
+            0.0025
+          ]
+        ],
+        "segments": 20,
+        "meridians": 3
+      },
+      "at": [
+        0.056,
+        0.19,
+        0.1035
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 1.0,
+        "glow": 0.2
+      },
+      "repeat": {
+        "count": 2,
+        "step": {
+          "at": [
+            0,
+            0,
+            0.016
+          ]
+        }
+      }
+    },
+    {
+      "id": "capstan",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 4,
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.0045,
+        "height": 0.03,
+        "segments": 20
+      },
+      "at": [
+        0.074,
+        0.19,
+        0.1095
+      ],
+      "basis": [
+        "tape.speed"
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 1.25,
+        "glow": 0.3
+      },
+      "motion": {
+        "type": "spin",
+        "axis": [
+          0,
+          0,
+          1
+        ],
+        "pivot": [
+          0.074,
+          0.19,
+          0.1135
+        ],
+        "rpm": 118
+      }
+    },
+    {
+      "id": "pinch-roller",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 4,
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.0105,
+            0
+          ],
+          [
+            0.0135,
+            0.0015
+          ],
+          [
+            0.0135,
+            0.009
+          ],
+          [
+            0.0105,
+            0.0105
+          ]
+        ],
+        "segments": 28,
+        "meridians": 2
+      },
+      "at": [
+        0.074,
+        0.19,
+        0.127
+      ],
+      "basis": [
+        "head.kind"
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 1.2,
+        "glow": 0.2,
+        "fill": "dark",
+        "alpha": 0.95
+      },
+      "motion": {
+        "type": "spin",
+        "axis": [
+          0,
+          0,
+          1
+        ],
+        "pivot": [
+          0.074,
+          0.19,
+          0
+        ],
+        "rpm": -118
+      }
+    },
+    {
+      "id": "pinch-arm",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 4,
+      "shape": {
+        "type": "tube",
+        "path": [
+          [
+            0.114,
+            0.174,
+            0.106
+          ],
+          [
+            0.096,
+            0.186,
+            0.106
+          ],
+          [
+            0.076,
+            0.196,
+            0.106
+          ]
+        ],
+        "radius": [
+          0.007,
+          0.006,
+          0.0045
+        ],
+        "sides": 8
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.8,
+        "fill": "dark",
+        "alpha": 0.8
+      }
+    },
+    {
+      "id": "pinch-pivot",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 4,
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.008,
+        "height": 0.012,
+        "segments": 20
+      },
+      "at": [
+        0.114,
+        0.174,
+        0.106
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.8
+      }
+    },
+    {
+      "id": "rear-panel",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 2,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.395,
+          0.315,
+          0.006
+        ]
+      },
+      "at": [
+        0,
+        0.185,
+        -0.106
+      ],
+      "look": {
+        "fill": "dark",
+        "weight": 0.7,
+        "alpha": 0.9
+      }
+    },
+    {
+      "id": "rear-socket-0",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 5,
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.0085,
+        "height": 0.01,
+        "segments": 16
+      },
+      "at": [
+        0.01,
+        0.15,
+        -0.11
+      ],
+      "rotate": [
+        -90,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.8,
+        "fill": "dark"
+      }
+    },
+    {
+      "id": "rear-socket-ring-0",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.006,
+            0
+          ],
+          [
+            0.01,
+            0
+          ],
+          [
+            0.01,
+            0.002
+          ],
+          [
+            0.006,
+            0.002
+          ]
+        ],
+        "segments": 16,
+        "meridians": 2
+      },
+      "at": [
+        0.01,
+        0.15,
+        -0.114
+      ],
+      "rotate": [
+        -90,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.6,
+        "alpha": 0.7
+      }
+    },
+    {
+      "id": "rear-socket-1",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 5,
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.0085,
+        "height": 0.01,
+        "segments": 16
+      },
+      "at": [
+        0.06,
+        0.15,
+        -0.11
+      ],
+      "rotate": [
+        -90,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.8,
+        "fill": "dark"
+      }
+    },
+    {
+      "id": "rear-socket-ring-1",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.006,
+            0
+          ],
+          [
+            0.01,
+            0
+          ],
+          [
+            0.01,
+            0.002
+          ],
+          [
+            0.006,
+            0.002
+          ]
+        ],
+        "segments": 16,
+        "meridians": 2
+      },
+      "at": [
+        0.06,
+        0.15,
+        -0.114
+      ],
+      "rotate": [
+        -90,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.6,
+        "alpha": 0.7
+      }
+    },
+    {
+      "id": "rear-socket-2",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 5,
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.0085,
+        "height": 0.01,
+        "segments": 16
+      },
+      "at": [
+        0.11,
+        0.15,
+        -0.11
+      ],
+      "rotate": [
+        -90,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.8,
+        "fill": "dark"
+      }
+    },
+    {
+      "id": "rear-socket-ring-2",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.006,
+            0
+          ],
+          [
+            0.01,
+            0
+          ],
+          [
+            0.01,
+            0.002
+          ],
+          [
+            0.006,
+            0.002
+          ]
+        ],
+        "segments": 16,
+        "meridians": 2
+      },
+      "at": [
+        0.11,
+        0.15,
+        -0.114
+      ],
+      "rotate": [
+        -90,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.6,
+        "alpha": 0.7
+      }
+    },
+    {
+      "id": "rear-din",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 5,
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.011,
+        "height": 0.01,
+        "segments": 20
+      },
+      "at": [
+        0.075,
+        0.25,
+        -0.11
+      ],
+      "rotate": [
+        -90,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.85,
+        "fill": "dark"
+      }
+    },
+    {
+      "id": "rear-din-ring",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.0075,
+            0
+          ],
+          [
+            0.0125,
+            0
+          ],
+          [
+            0.0125,
+            0.002
+          ],
+          [
+            0.0075,
+            0.002
+          ]
+        ],
+        "segments": 20,
+        "meridians": 2
+      },
+      "at": [
+        0.075,
+        0.25,
+        -0.114
+      ],
+      "rotate": [
+        -90,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.6,
+        "alpha": 0.7
+      }
+    },
+    {
+      "id": "rear-fuse",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.0075,
+        "height": 0.008,
+        "segments": 16
+      },
+      "at": [
+        0.15,
+        0.12,
+        -0.108
+      ],
+      "rotate": [
+        -90,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.75
+      }
+    },
+    {
+      "id": "rear-volts",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.011,
+            0
+          ],
+          [
+            0.014,
+            0
+          ],
+          [
+            0.014,
+            0.006
+          ],
+          [
+            0.008,
+            0.008
+          ]
+        ],
+        "segments": 20,
+        "meridians": 4
+      },
+      "at": [
+        0.15,
+        0.2,
+        -0.108
+      ],
+      "rotate": [
+        -90,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.75,
+        "fill": "dark"
+      }
+    },
+    {
+      "id": "rear-vent-0",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.07,
+          0.004,
+          0.004
+        ]
+      },
+      "at": [
+        -0.11,
+        0.08,
+        -0.108
+      ],
+      "look": {
+        "alpha": 0.45,
+        "weight": 0.45
+      }
+    },
+    {
+      "id": "rear-vent-1",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.07,
+          0.004,
+          0.004
+        ]
+      },
+      "at": [
+        -0.11,
+        0.09,
+        -0.108
+      ],
+      "look": {
+        "alpha": 0.45,
+        "weight": 0.45
+      }
+    },
+    {
+      "id": "rear-vent-2",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.07,
+          0.004,
+          0.004
+        ]
+      },
+      "at": [
+        -0.11,
+        0.1,
+        -0.108
+      ],
+      "look": {
+        "alpha": 0.45,
+        "weight": 0.45
+      }
+    },
+    {
+      "id": "rear-vent-3",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.07,
+          0.004,
+          0.004
+        ]
+      },
+      "at": [
+        -0.11,
+        0.11,
+        -0.108
+      ],
+      "look": {
+        "alpha": 0.45,
+        "weight": 0.45
+      }
+    },
+    {
+      "id": "rear-vent-4",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.07,
+          0.004,
+          0.004
+        ]
+      },
+      "at": [
+        -0.11,
+        0.12,
+        -0.108
+      ],
+      "look": {
+        "alpha": 0.45,
+        "weight": 0.45
+      }
+    },
+    {
+      "id": "rear-vent-5",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.07,
+          0.004,
+          0.004
+        ]
+      },
+      "at": [
+        -0.11,
+        0.13,
+        -0.108
+      ],
+      "look": {
+        "alpha": 0.45,
+        "weight": 0.45
+      }
+    },
+    {
+      "id": "rear-vent-6",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.07,
+          0.004,
+          0.004
+        ]
+      },
+      "at": [
+        -0.11,
+        0.14,
+        -0.108
+      ],
+      "look": {
+        "alpha": 0.45,
+        "weight": 0.45
+      }
+    },
+    {
+      "id": "button-body-0",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 3,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.0105,
+          0.026,
+          0.009
+        ]
+      },
+      "at": [
+        -0.173,
+        0.107,
+        0.11
+      ],
+      "look": {
+        "fill": "dark",
+        "weight": 0.7
+      }
+    },
+    {
+      "id": "button-paddle-0",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 3,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.0105,
+          0.029,
+          0.0032
+        ]
+      },
+      "at": [
+        -0.173,
+        0.108,
+        0.1175
+      ],
+      "rotate": [
+        18,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 1.2,
+        "glow": 0.25
+      }
+    },
+    {
+      "id": "button-body-1",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 3,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.0105,
+          0.026,
+          0.009
+        ]
+      },
+      "at": [
+        -0.158,
+        0.107,
+        0.11
+      ],
+      "look": {
+        "fill": "dark",
+        "weight": 0.7
+      }
+    },
+    {
+      "id": "button-paddle-1",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 3,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.0105,
+          0.029,
+          0.0032
+        ]
+      },
+      "at": [
+        -0.158,
+        0.108,
+        0.1175
+      ],
+      "rotate": [
+        18,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 1.2,
+        "glow": 0.25
+      }
+    },
+    {
+      "id": "button-body-2",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 3,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.0105,
+          0.026,
+          0.009
+        ]
+      },
+      "at": [
+        -0.143,
+        0.107,
+        0.11
+      ],
+      "look": {
+        "fill": "dark",
+        "weight": 0.7
+      }
+    },
+    {
+      "id": "button-paddle-2",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 3,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.0105,
+          0.029,
+          0.0032
+        ]
+      },
+      "at": [
+        -0.143,
+        0.108,
+        0.1175
+      ],
+      "rotate": [
+        18,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 1.2,
+        "glow": 0.25
+      }
+    },
+    {
+      "id": "button-body-3",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 3,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.0105,
+          0.026,
+          0.009
+        ]
+      },
+      "at": [
+        -0.128,
+        0.107,
+        0.11
+      ],
+      "look": {
+        "fill": "dark",
+        "weight": 0.7
+      }
+    },
+    {
+      "id": "button-paddle-3",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 3,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.0105,
+          0.029,
+          0.0032
+        ]
+      },
+      "at": [
+        -0.128,
+        0.108,
+        0.1175
+      ],
+      "rotate": [
+        18,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 1.2,
+        "glow": 0.25
+      }
+    },
+    {
+      "id": "button-body-4",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 3,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.0105,
+          0.026,
+          0.009
+        ]
+      },
+      "at": [
+        -0.113,
+        0.107,
+        0.11
+      ],
+      "look": {
+        "fill": "dark",
+        "weight": 0.7
+      }
+    },
+    {
+      "id": "button-paddle-4",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 3,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.0105,
+          0.029,
+          0.0032
+        ]
+      },
+      "at": [
+        -0.113,
+        0.108,
+        0.1175
+      ],
+      "rotate": [
+        18,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 1.2,
+        "glow": 0.25
+      }
+    },
+    {
+      "id": "rec-mark",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 3,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.0035,
+          0.014,
+          0.0022
+        ]
+      },
+      "at": [
+        -0.113,
+        0.112,
+        0.1168
+      ],
+      "look": {
+        "tone": "data",
+        "weight": 1.0,
+        "glow": 0.5
+      }
+    },
+    {
+      "id": "vol-skirt",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 3,
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.012,
+            0
+          ],
+          [
+            0.02,
+            0
+          ],
+          [
+            0.02,
+            0.0045
+          ],
+          [
+            0.014,
+            0.006
+          ]
+        ],
+        "segments": 40,
+        "meridians": 3
+      },
+      "at": [
+        -0.169,
+        0.066,
+        0.108
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 1.15,
+        "glow": 0.2
+      }
+    },
+    {
+      "id": "vol-body",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 3,
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.01,
+            0
+          ],
+          [
+            0.013000000000000001,
+            0
+          ],
+          [
+            0.012,
+            0.012
+          ],
+          [
+            0.008,
+            0.017
+          ],
+          [
+            0.006,
+            0.019
+          ]
+        ],
+        "segments": 40,
+        "meridians": 4
+      },
+      "at": [
+        -0.169,
+        0.066,
+        0.113
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 1.35,
+        "glow": 0.3
+      }
+    },
+    {
+      "id": "vol-pointer",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 3,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.0025,
+          0.018000000000000002,
+          0.003
+        ]
+      },
+      "at": [
+        -0.169,
+        0.066,
+        0.13
+      ],
+      "rotate": [
+        0,
+        0,
+        90
+      ],
+      "look": {
+        "tone": "bright",
+        "weight": 1.0,
+        "glow": 0.35
+      }
+    },
+    {
+      "id": "vol-scale",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 3,
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.14350000000000002,
+            0.066,
+            0.1088
+          ],
+          [
+            -0.14436889142962878,
+            0.07259988565011428,
+            0.1088
+          ],
+          [
+            -0.14691635220349683,
+            0.07875,
+            0.1088
+          ],
+          [
+            -0.15096877707974304,
+            0.08403122292025697,
+            0.1088
+          ],
+          [
+            -0.15625,
+            0.08808364779650318,
+            0.1088
+          ],
+          [
+            -0.16240011434988574,
+            0.09063110857037124,
+            0.1088
+          ],
+          [
+            -0.169,
+            0.0915,
+            0.1088
+          ],
+          [
+            -0.1755998856501143,
+            0.09063110857037124,
+            0.1088
+          ],
+          [
+            -0.18175000000000002,
+            0.08808364779650318,
+            0.1088
+          ],
+          [
+            -0.18703122292025698,
+            0.08403122292025697,
+            0.1088
+          ],
+          [
+            -0.1910836477965032,
+            0.07875,
+            0.1088
+          ],
+          [
+            -0.19363110857037125,
+            0.07259988565011428,
+            0.1088
+          ],
+          [
+            -0.1945,
+            0.066,
+            0.1088
+          ],
+          [
+            -0.19363110857037125,
+            0.05940011434988572,
+            0.1088
+          ],
+          [
+            -0.1910836477965032,
+            0.05325,
+            0.1088
+          ],
+          [
+            -0.18703122292025698,
+            0.04796877707974304,
+            0.1088
+          ],
+          [
+            -0.18175000000000002,
+            0.04391635220349682,
+            0.1088
+          ],
+          [
+            -0.17559988565011428,
+            0.04136889142962876,
+            0.1088
+          ],
+          [
+            -0.169,
+            0.0405,
+            0.1088
+          ],
+          [
+            -0.16240011434988574,
+            0.041368891429628754,
+            0.1088
+          ],
+          [
+            -0.15625,
+            0.04391635220349682,
+            0.1088
+          ],
+          [
+            -0.15096877707974304,
+            0.047968777079743036,
+            0.1088
+          ],
+          [
+            -0.14691635220349683,
+            0.05324999999999999,
+            0.1088
+          ],
+          [
+            -0.14436889142962878,
+            0.05940011434988572,
+            0.1088
+          ]
+        ],
+        "closed": true
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "alpha": 0.22,
+        "weight": 0.5,
+        "line": "dotted"
+      }
+    },
+    {
+      "id": "bal-skirt",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 3,
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.012,
+            0
+          ],
+          [
+            0.02,
+            0
+          ],
+          [
+            0.02,
+            0.0045
+          ],
+          [
+            0.014,
+            0.006
+          ]
+        ],
+        "segments": 40,
+        "meridians": 3
+      },
+      "at": [
+        -0.101,
+        0.066,
+        0.108
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 1.15,
+        "glow": 0.2
+      }
+    },
+    {
+      "id": "bal-body",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 3,
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.01,
+            0
+          ],
+          [
+            0.013000000000000001,
+            0
+          ],
+          [
+            0.012,
+            0.012
+          ],
+          [
+            0.008,
+            0.017
+          ],
+          [
+            0.006,
+            0.019
+          ]
+        ],
+        "segments": 40,
+        "meridians": 4
+      },
+      "at": [
+        -0.101,
+        0.066,
+        0.113
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 1.35,
+        "glow": 0.3
+      }
+    },
+    {
+      "id": "bal-pointer",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 3,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.0025,
+          0.018000000000000002,
+          0.003
+        ]
+      },
+      "at": [
+        -0.101,
+        0.066,
+        0.13
+      ],
+      "rotate": [
+        0,
+        0,
+        90
+      ],
+      "look": {
+        "tone": "bright",
+        "weight": 1.0,
+        "glow": 0.35
+      }
+    },
+    {
+      "id": "bal-scale",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 3,
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.07550000000000001,
+            0.066,
+            0.1088
+          ],
+          [
+            -0.07636889142962877,
+            0.07259988565011428,
+            0.1088
+          ],
+          [
+            -0.07891635220349683,
+            0.07875,
+            0.1088
+          ],
+          [
+            -0.08296877707974304,
+            0.08403122292025697,
+            0.1088
+          ],
+          [
+            -0.08825,
+            0.08808364779650318,
+            0.1088
+          ],
+          [
+            -0.09440011434988572,
+            0.09063110857037124,
+            0.1088
+          ],
+          [
+            -0.101,
+            0.0915,
+            0.1088
+          ],
+          [
+            -0.10759988565011429,
+            0.09063110857037124,
+            0.1088
+          ],
+          [
+            -0.11375,
+            0.08808364779650318,
+            0.1088
+          ],
+          [
+            -0.11903122292025697,
+            0.08403122292025697,
+            0.1088
+          ],
+          [
+            -0.12308364779650319,
+            0.07875,
+            0.1088
+          ],
+          [
+            -0.12563110857037124,
+            0.07259988565011428,
+            0.1088
+          ],
+          [
+            -0.1265,
+            0.066,
+            0.1088
+          ],
+          [
+            -0.12563110857037124,
+            0.05940011434988572,
+            0.1088
+          ],
+          [
+            -0.12308364779650319,
+            0.05325,
+            0.1088
+          ],
+          [
+            -0.11903122292025697,
+            0.04796877707974304,
+            0.1088
+          ],
+          [
+            -0.11375000000000002,
+            0.04391635220349682,
+            0.1088
+          ],
+          [
+            -0.10759988565011429,
+            0.04136889142962876,
+            0.1088
+          ],
+          [
+            -0.101,
+            0.0405,
+            0.1088
+          ],
+          [
+            -0.09440011434988574,
+            0.041368891429628754,
+            0.1088
+          ],
+          [
+            -0.08825,
+            0.04391635220349682,
+            0.1088
+          ],
+          [
+            -0.08296877707974304,
+            0.047968777079743036,
+            0.1088
+          ],
+          [
+            -0.07891635220349683,
+            0.05324999999999999,
+            0.1088
+          ],
+          [
+            -0.07636889142962877,
+            0.05940011434988572,
+            0.1088
+          ]
+        ],
+        "closed": true
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "alpha": 0.22,
+        "weight": 0.5,
+        "line": "dotted"
+      }
+    },
+    {
+      "id": "lev1-skirt",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 3,
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.012,
+            0
+          ],
+          [
+            0.019,
+            0
+          ],
+          [
+            0.019,
+            0.0045
+          ],
+          [
+            0.013,
+            0.006
+          ]
+        ],
+        "segments": 40,
+        "meridians": 3
+      },
+      "at": [
+        0.062,
+        0.067,
+        0.108
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 1.15,
+        "glow": 0.2
+      }
+    },
+    {
+      "id": "lev1-body",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 3,
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.01,
+            0
+          ],
+          [
+            0.012,
+            0
+          ],
+          [
+            0.011,
+            0.012
+          ],
+          [
+            0.006999999999999999,
+            0.017
+          ],
+          [
+            0.006,
+            0.019
+          ]
+        ],
+        "segments": 40,
+        "meridians": 4
+      },
+      "at": [
+        0.062,
+        0.067,
+        0.113
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 1.35,
+        "glow": 0.3
+      }
+    },
+    {
+      "id": "lev1-pointer",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 3,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.0025,
+          0.017,
+          0.003
+        ]
+      },
+      "at": [
+        0.062,
+        0.067,
+        0.13
+      ],
+      "rotate": [
+        0,
+        0,
+        90
+      ],
+      "look": {
+        "tone": "bright",
+        "weight": 1.0,
+        "glow": 0.35
+      }
+    },
+    {
+      "id": "lev1-scale",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 3,
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.0865,
+            0.067,
+            0.1088
+          ],
+          [
+            0.08566518274408218,
+            0.07334106660501176,
+            0.1088
+          ],
+          [
+            0.08321762239271875,
+            0.07925,
+            0.1088
+          ],
+          [
+            0.07932411613907042,
+            0.08432411613907041,
+            0.1088
+          ],
+          [
+            0.07425000000000001,
+            0.08821762239271874,
+            0.1088
+          ],
+          [
+            0.06834106660501175,
+            0.09066518274408218,
+            0.1088
+          ],
+          [
+            0.062,
+            0.0915,
+            0.1088
+          ],
+          [
+            0.05565893339498824,
+            0.09066518274408218,
+            0.1088
+          ],
+          [
+            0.04975,
+            0.08821762239271876,
+            0.1088
+          ],
+          [
+            0.04467588386092959,
+            0.08432411613907043,
+            0.1088
+          ],
+          [
+            0.04078237760728125,
+            0.07925,
+            0.1088
+          ],
+          [
+            0.03833481725591783,
+            0.07334106660501177,
+            0.1088
+          ],
+          [
+            0.0375,
+            0.067,
+            0.1088
+          ],
+          [
+            0.03833481725591782,
+            0.06065893339498824,
+            0.1088
+          ],
+          [
+            0.040782377607281255,
+            0.05475,
+            0.1088
+          ],
+          [
+            0.04467588386092958,
+            0.049675883860929596,
+            0.1088
+          ],
+          [
+            0.04974999999999999,
+            0.045782377607281266,
+            0.1088
+          ],
+          [
+            0.055658933394988244,
+            0.043334817255917826,
+            0.1088
+          ],
+          [
+            0.06199999999999999,
+            0.0425,
+            0.1088
+          ],
+          [
+            0.06834106660501174,
+            0.043334817255917826,
+            0.1088
+          ],
+          [
+            0.07425000000000001,
+            0.04578237760728126,
+            0.1088
+          ],
+          [
+            0.07932411613907041,
+            0.04967588386092958,
+            0.1088
+          ],
+          [
+            0.08321762239271874,
+            0.05474999999999999,
+            0.1088
+          ],
+          [
+            0.08566518274408218,
+            0.06065893339498825,
+            0.1088
+          ]
+        ],
+        "closed": true
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "alpha": 0.22,
+        "weight": 0.5,
+        "line": "dotted"
+      }
+    },
+    {
+      "id": "lev2-skirt",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 3,
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.012,
+            0
+          ],
+          [
+            0.019,
+            0
+          ],
+          [
+            0.019,
+            0.0045
+          ],
+          [
+            0.013,
+            0.006
+          ]
+        ],
+        "segments": 40,
+        "meridians": 3
+      },
+      "at": [
+        0.128,
+        0.067,
+        0.108
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 1.15,
+        "glow": 0.2
+      }
+    },
+    {
+      "id": "lev2-body",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 3,
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.01,
+            0
+          ],
+          [
+            0.012,
+            0
+          ],
+          [
+            0.011,
+            0.012
+          ],
+          [
+            0.006999999999999999,
+            0.017
+          ],
+          [
+            0.006,
+            0.019
+          ]
+        ],
+        "segments": 40,
+        "meridians": 4
+      },
+      "at": [
+        0.128,
+        0.067,
+        0.113
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 1.35,
+        "glow": 0.3
+      }
+    },
+    {
+      "id": "lev2-pointer",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 3,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.0025,
+          0.017,
+          0.003
+        ]
+      },
+      "at": [
+        0.128,
+        0.067,
+        0.13
+      ],
+      "rotate": [
+        0,
+        0,
+        90
+      ],
+      "look": {
+        "tone": "bright",
+        "weight": 1.0,
+        "glow": 0.35
+      }
+    },
+    {
+      "id": "lev2-scale",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 3,
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.1525,
+            0.067,
+            0.1088
+          ],
+          [
+            0.15166518274408217,
+            0.07334106660501176,
+            0.1088
+          ],
+          [
+            0.14921762239271874,
+            0.07925,
+            0.1088
+          ],
+          [
+            0.14532411613907043,
+            0.08432411613907041,
+            0.1088
+          ],
+          [
+            0.14025,
+            0.08821762239271874,
+            0.1088
+          ],
+          [
+            0.13434106660501177,
+            0.09066518274408218,
+            0.1088
+          ],
+          [
+            0.128,
+            0.0915,
+            0.1088
+          ],
+          [
+            0.12165893339498825,
+            0.09066518274408218,
+            0.1088
+          ],
+          [
+            0.11575,
+            0.08821762239271876,
+            0.1088
+          ],
+          [
+            0.1106758838609296,
+            0.08432411613907043,
+            0.1088
+          ],
+          [
+            0.10678237760728125,
+            0.07925,
+            0.1088
+          ],
+          [
+            0.10433481725591784,
+            0.07334106660501177,
+            0.1088
+          ],
+          [
+            0.10350000000000001,
+            0.067,
+            0.1088
+          ],
+          [
+            0.10433481725591782,
+            0.06065893339498824,
+            0.1088
+          ],
+          [
+            0.10678237760728126,
+            0.05475,
+            0.1088
+          ],
+          [
+            0.11067588386092958,
+            0.049675883860929596,
+            0.1088
+          ],
+          [
+            0.11574999999999999,
+            0.045782377607281266,
+            0.1088
+          ],
+          [
+            0.12165893339498825,
+            0.043334817255917826,
+            0.1088
+          ],
+          [
+            0.128,
+            0.0425,
+            0.1088
+          ],
+          [
+            0.13434106660501174,
+            0.043334817255917826,
+            0.1088
+          ],
+          [
+            0.14025,
+            0.04578237760728126,
+            0.1088
+          ],
+          [
+            0.14532411613907043,
+            0.04967588386092958,
+            0.1088
+          ],
+          [
+            0.14921762239271874,
+            0.05474999999999999,
+            0.1088
+          ],
+          [
+            0.15166518274408217,
+            0.06065893339498825,
+            0.1088
+          ]
+        ],
+        "closed": true
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "alpha": 0.22,
+        "weight": 0.5,
+        "line": "dotted"
+      }
+    },
+    {
+      "id": "jack-0",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 3,
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.0048,
+        "height": 0.007,
+        "segments": 16
+      },
+      "at": [
+        -0.049,
+        0.057,
+        0.109
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.85,
+        "fill": "dark"
+      }
+    },
+    {
+      "id": "jack-ring-0",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 3,
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.0038,
+            0
+          ],
+          [
+            0.0058,
+            0
+          ],
+          [
+            0.0058,
+            0.002
+          ],
+          [
+            0.0038,
+            0.002
+          ]
+        ],
+        "segments": 16,
+        "meridians": 3
+      },
+      "at": [
+        -0.049,
+        0.057,
+        0.112
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.7,
+        "alpha": 0.7
+      }
+    },
+    {
+      "id": "jack-1",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 3,
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.0048,
+        "height": 0.007,
+        "segments": 16
+      },
+      "at": [
+        -0.018,
+        0.057,
+        0.109
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.85,
+        "fill": "dark"
+      }
+    },
+    {
+      "id": "jack-ring-1",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 3,
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.0038,
+            0
+          ],
+          [
+            0.0058,
+            0
+          ],
+          [
+            0.0058,
+            0.002
+          ],
+          [
+            0.0038,
+            0.002
+          ]
+        ],
+        "segments": 16,
+        "meridians": 3
+      },
+      "at": [
+        -0.018,
+        0.057,
+        0.112
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.7,
+        "alpha": 0.7
+      }
+    },
+    {
+      "id": "jack-2",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 3,
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.0048,
+        "height": 0.007,
+        "segments": 16
+      },
+      "at": [
+        0.013,
+        0.057,
+        0.109
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.85,
+        "fill": "dark"
+      }
+    },
+    {
+      "id": "jack-ring-2",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 3,
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.0038,
+            0
+          ],
+          [
+            0.0058,
+            0
+          ],
+          [
+            0.0058,
+            0.002
+          ],
+          [
+            0.0038,
+            0.002
+          ]
+        ],
+        "segments": 16,
+        "meridians": 3
+      },
+      "at": [
+        0.013,
+        0.057,
+        0.112
+      ],
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.7,
+        "alpha": 0.7
+      }
+    },
+    {
+      "id": "meter-housing-0",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 3,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.058,
+          0.029,
+          0.011
+        ]
+      },
+      "at": [
+        0.06,
+        0.11,
+        0.11
+      ],
+      "look": {
+        "fill": "dark",
+        "weight": 0.85
+      }
+    },
+    {
+      "id": "meter-face-0",
+      "role": "identity",
+      "certainty": "verified",
+      "stage": 4,
+      "shape": {
+        "type": "plane",
+        "size": [
+          0.049,
+          0.02
+        ]
+      },
+      "at": [
+        0.06,
+        0.11,
+        0.1155
+      ],
+      "basis": [
+        "panel.layout"
+      ],
+      "look": {
+        "tone": "bright",
+        "fill": "auto",
+        "alpha": 0.55,
+        "weight": 1.0,
+        "glow": 0.25
+      }
+    },
+    {
+      "id": "meter-arc-0",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 5,
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.03899999999999999,
+            0.101,
+            0.1156
+          ],
+          [
+            0.048,
+            0.106,
+            0.1156
+          ],
+          [
+            0.068,
+            0.107,
+            0.1156
+          ],
+          [
+            0.079,
+            0.104,
+            0.1156
+          ]
+        ]
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.55,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "meter-needle-0",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 5,
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            -0.008,
+            0.017,
+            0
+          ]
+        ],
+        "smooth": false
+      },
+      "at": [
+        0.062,
+        0.1005,
+        0.1157
+      ],
+      "look": {
+        "tone": "bright",
+        "weight": 0.8,
+        "glow": 0.4
+      },
+      "motion": {
+        "type": "swing",
+        "axis": [
+          0,
+          0,
+          1
+        ],
+        "degrees": 5.5,
+        "period": 7.4,
+        "pivot": [
+          0.062,
+          0.1005,
+          0.1157
+        ],
+        "phase": 0.0
+      }
+    },
+    {
+      "id": "meter-flange-0",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 3,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.002,
+          0.031,
+          0.012
+        ]
+      },
+      "at": [
+        0.0295,
+        0.11,
+        0.11
+      ],
+      "look": {
+        "weight": 0.6,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "meter-housing-1",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 3,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.058,
+          0.029,
+          0.011
+        ]
+      },
+      "at": [
+        0.126,
+        0.11,
+        0.11
+      ],
+      "look": {
+        "fill": "dark",
+        "weight": 0.85
+      }
+    },
+    {
+      "id": "meter-face-1",
+      "role": "identity",
+      "certainty": "verified",
+      "stage": 4,
+      "shape": {
+        "type": "plane",
+        "size": [
+          0.049,
+          0.02
+        ]
+      },
+      "at": [
+        0.126,
+        0.11,
+        0.1155
+      ],
+      "basis": [
+        "panel.layout"
+      ],
+      "look": {
+        "tone": "bright",
+        "fill": "auto",
+        "alpha": 0.55,
+        "weight": 1.0,
+        "glow": 0.25
+      }
+    },
+    {
+      "id": "meter-arc-1",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 5,
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.105,
+            0.101,
+            0.1156
+          ],
+          [
+            0.114,
+            0.106,
+            0.1156
+          ],
+          [
+            0.134,
+            0.107,
+            0.1156
+          ],
+          [
+            0.145,
+            0.104,
+            0.1156
+          ]
+        ]
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.55,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "meter-needle-1",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 5,
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            -0.008,
+            0.017,
+            0
+          ]
+        ],
+        "smooth": false
+      },
+      "at": [
+        0.128,
+        0.1005,
+        0.1157
+      ],
+      "look": {
+        "tone": "bright",
+        "weight": 0.8,
+        "glow": 0.4
+      },
+      "motion": {
+        "type": "swing",
+        "axis": [
+          0,
+          0,
+          1
+        ],
+        "degrees": 5.5,
+        "period": 8.700000000000001,
+        "pivot": [
+          0.128,
+          0.1005,
+          0.1157
+        ],
+        "phase": 0.4
+      }
+    },
+    {
+      "id": "meter-flange-1",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 3,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.002,
+          0.031,
+          0.012
+        ]
+      },
+      "at": [
+        0.0955,
+        0.11,
+        0.11
+      ],
+      "look": {
+        "weight": 0.6,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "power-switch",
+      "role": "structure",
+      "certainty": "inferred",
+      "stage": 3,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.016,
+          0.028,
+          0.012
+        ]
+      },
+      "at": [
+        0.18,
+        0.072,
+        0.112
+      ],
+      "rotate": [
+        0,
+        0,
+        -12
+      ],
+      "look": {
+        "fill": "dark",
+        "weight": 0.9
+      }
+    },
+    {
+      "id": "power-rock",
+      "role": "identity",
+      "certainty": "inferred",
+      "stage": 3,
+      "shape": {
+        "type": "box",
+        "size": [
+          0.01,
+          0.02,
+          0.004
+        ]
+      },
+      "at": [
+        0.18,
+        0.074,
+        0.119
+      ],
+      "rotate": [
+        14,
+        0,
+        -12
+      ],
+      "look": {
+        "weight": 1.1,
+        "glow": 0.2
+      }
+    },
+    {
+      "id": "pilot-lamp",
+      "role": "data",
+      "certainty": "inferred",
+      "stage": 5,
+      "shape": {
+        "type": "sphere",
+        "radius": 0.0038,
+        "lat": 8,
+        "lon": 12
+      },
+      "at": [
+        0.18,
+        0.101,
+        0.113
+      ],
+      "look": {
+        "glow": 0.8,
+        "weight": 1.0
+      }
+    },
+    {
+      "id": "legend-volume",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "shape": {
+        "type": "plane",
+        "size": [
+          0.03,
+          0.0045
+        ]
+      },
+      "at": [
+        -0.169,
+        0.03,
+        0.1092
+      ],
+      "look": {
+        "fill": "none",
+        "line": "none"
+      }
+    },
+    {
+      "id": "legend-balance",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "shape": {
+        "type": "plane",
+        "size": [
+          0.03,
+          0.0045
+        ]
+      },
+      "at": [
+        -0.101,
+        0.03,
+        0.1092
+      ],
+      "look": {
+        "fill": "none",
+        "line": "none"
+      }
+    },
+    {
+      "id": "legend-phones",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "shape": {
+        "type": "plane",
+        "size": [
+          0.024,
+          0.0045
+        ]
+      },
+      "at": [
+        -0.049,
+        0.036,
+        0.1092
+      ],
+      "look": {
+        "fill": "none",
+        "line": "none"
+      }
+    },
+    {
+      "id": "legend-mic1",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "shape": {
+        "type": "plane",
+        "size": [
+          0.024,
+          0.0045
+        ]
+      },
+      "at": [
+        -0.018,
+        0.036,
+        0.1092
+      ],
+      "look": {
+        "fill": "none",
+        "line": "none"
+      }
+    },
+    {
+      "id": "legend-mic2",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "shape": {
+        "type": "plane",
+        "size": [
+          0.024,
+          0.0045
+        ]
+      },
+      "at": [
+        0.013,
+        0.036,
+        0.1092
+      ],
+      "look": {
+        "fill": "none",
+        "line": "none"
+      }
+    },
+    {
+      "id": "legend-level1",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "shape": {
+        "type": "plane",
+        "size": [
+          0.022,
+          0.0045
+        ]
+      },
+      "at": [
+        0.062,
+        0.032,
+        0.1092
+      ],
+      "look": {
+        "fill": "none",
+        "line": "none"
+      }
+    },
+    {
+      "id": "legend-level2",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "shape": {
+        "type": "plane",
+        "size": [
+          0.022,
+          0.0045
+        ]
+      },
+      "at": [
+        0.128,
+        0.032,
+        0.1092
+      ],
+      "look": {
+        "fill": "none",
+        "line": "none"
+      }
+    },
+    {
+      "id": "legend-power",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "shape": {
+        "type": "plane",
+        "size": [
+          0.018,
+          0.0045
+        ]
+      },
+      "at": [
+        0.18,
+        0.054,
+        0.1092
+      ],
+      "look": {
+        "fill": "none",
+        "line": "none"
+      }
+    },
+    {
+      "id": "legend-rec1",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "shape": {
+        "type": "plane",
+        "size": [
+          0.024,
+          0.0045
+        ]
+      },
+      "at": [
+        0.06,
+        0.128,
+        0.1092
+      ],
+      "look": {
+        "fill": "none",
+        "line": "none"
+      }
+    },
+    {
+      "id": "legend-rec2",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "shape": {
+        "type": "plane",
+        "size": [
+          0.024,
+          0.0045
+        ]
+      },
+      "at": [
+        0.126,
+        0.128,
+        0.1092
+      ],
+      "look": {
+        "fill": "none",
+        "line": "none"
+      }
+    },
+    {
+      "id": "legend-monitor",
+      "role": "detail",
+      "certainty": "inferred",
+      "stage": 5,
+      "shape": {
+        "type": "plane",
+        "size": [
+          0.026,
+          0.0045
+        ]
+      },
+      "at": [
+        -0.135,
+        0.086,
+        0.1092
+      ],
+      "look": {
+        "fill": "none",
+        "line": "none"
+      }
+    }
+  ],
+  "labels": [
+    {
+      "id": "legend-volume-text",
+      "part": "legend-volume",
+      "field": "legend.volume",
+      "role": "meta",
+      "align": "center",
+      "region": [
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "legend-balance-text",
+      "part": "legend-balance",
+      "field": "legend.balance",
+      "role": "meta",
+      "align": "center",
+      "region": [
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "legend-phones-text",
+      "part": "legend-phones",
+      "field": "legend.phones",
+      "role": "meta",
+      "align": "center",
+      "region": [
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "legend-mic1-text",
+      "part": "legend-mic1",
+      "field": "legend.mic1",
+      "role": "meta",
+      "align": "center",
+      "region": [
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "legend-mic2-text",
+      "part": "legend-mic2",
+      "field": "legend.mic2",
+      "role": "meta",
+      "align": "center",
+      "region": [
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "legend-level1-text",
+      "part": "legend-level1",
+      "field": "legend.level",
+      "role": "meta",
+      "align": "center",
+      "region": [
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "legend-level2-text",
+      "part": "legend-level2",
+      "field": "legend.level",
+      "role": "meta",
+      "align": "center",
+      "region": [
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "legend-power-text",
+      "part": "legend-power",
+      "field": "legend.power",
+      "role": "meta",
+      "align": "center",
+      "region": [
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "legend-rec1-text",
+      "part": "legend-rec1",
+      "field": "legend.rec1",
+      "role": "meta",
+      "align": "center",
+      "region": [
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "legend-rec2-text",
+      "part": "legend-rec2",
+      "field": "legend.rec2",
+      "role": "meta",
+      "align": "center",
+      "region": [
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "legend-monitor-text",
+      "part": "legend-monitor",
+      "field": "legend.monitor",
+      "role": "meta",
+      "align": "center",
+      "region": [
+        0,
+        0,
+        1,
+        1
+      ]
+    },
+    {
+      "id": "brand-text",
+      "part": "name-band",
+      "field": "brand",
+      "role": "title",
+      "face": "front",
+      "align": "center",
+      "region": [
+        0.6,
+        0.1,
+        0.78,
+        0.58
+      ]
+    },
+    {
+      "id": "model-text",
+      "part": "name-band",
+      "field": "model.text",
+      "role": "meta",
+      "face": "front",
+      "align": "center",
+      "region": [
+        0.46,
+        0.62,
+        0.92,
+        0.96
+      ]
+    }
+  ],
+  "anchors": {
+    "front": {
+      "part": "control-panel",
+      "face": "front"
+    },
+    "base": {
+      "point": [
+        0,
+        0,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ]
+    }
+  },
+  "annotations": [
+    {
+      "id": "meter-note",
+      "text": "VU needles illustrative",
+      "part": "meter-housing-1",
+      "offset": [
+        0.02,
+        0.032,
+        0.02
+      ]
+    }
+  ],
+  "presentation": {
+    "framing": {
+      "yaw": 20,
+      "pitch": 10,
+      "fit": 1.0
+    },
+    "views": [
+      {
+        "id": "hero",
+        "label": "Front three-quarter",
+        "yaw": 22,
+        "pitch": 11
+      },
+      {
+        "id": "front",
+        "label": "Front elevation",
+        "yaw": 0,
+        "pitch": 3
+      },
+      {
+        "id": "reels",
+        "label": "Reels and tape packs",
+        "yaw": 10,
+        "pitch": 6,
+        "target": "sup-flange-front-rim",
+        "distance": 1.55
+      },
+      {
+        "id": "transport",
+        "label": "Tape past the three heads",
+        "yaw": 6,
+        "pitch": 15,
+        "target": "head-mount",
+        "distance": 1.35
+      },
+      {
+        "id": "controls",
+        "label": "Control panel",
+        "yaw": 4,
+        "pitch": 6,
+        "target": "control-panel",
+        "distance": 1.25
+      }
+    ],
+    "atmosphere": {
+      "haze": 0.55,
+      "scanlines": true,
+      "vignette": true,
+      "grid": true,
+      "projector": false,
+      "motes": 0.3
+    },
+    "occlusion": "xray",
+    "certainty_style": "subtle",
+    "background": "deep",
+    "float": 0
+  },
+  "animation": {
+    "assembly": {
+      "style": "build",
+      "seconds": 5.5,
+      "interference": true
+    },
+    "idle": {
+      "life": "alive",
+      "events": [
+        "scan",
+        "sweep",
+        "shimmer"
+      ],
+      "cadence": [
+        6,
+        11
+      ],
+      "strength": 0.55
+    },
+    "camera": {
+      "drift": 5,
+      "breathe": 0.03,
+      "tour": [
+        {
+          "view": "transport",
+          "at": 13,
+          "fly": 3
+        },
+        {
+          "view": "reels",
+          "at": 20,
+          "fly": 3
+        },
+        {
+          "view": "hero",
+          "at": 27,
+          "fly": 3.5
+        }
+      ]
+    },
+    "reduced_motion": "still"
+  },
+  "authoring": {
+    "tier": "showcase",
+    "research": "done",
+    "sources": [
+      "request",
+      "manual",
+      "spec",
+      "photo-front"
+    ],
+    "identity": [
+      {
+        "feature": "two 10.5-inch open reels, wider than the cabinet, almost touching between the spools",
+        "parts": [
+          "sup-flange-front-rim",
+          "tak-flange-front-rim",
+          "sup-flange-front-sectors",
+          "tak-flange-front-sectors",
+          "sup-hub",
+          "tak-hub"
+        ]
+      },
+      {
+        "feature": "stainless name band carrying REVOX / A 77 STEREO TAPERECORDER above the control panel",
+        "parts": [
+          "name-band",
+          "name-band-lip"
+        ]
+      },
+      {
+        "feature": "console under the name band: five lever buttons, four knurled knobs, two VU meters, power switch",
+        "parts": [
+          "button-paddle-0",
+          "vol-body",
+          "bal-body",
+          "meter-face-0",
+          "meter-face-1",
+          "power-switch",
+          "pilot-lamp"
+        ]
+      },
+      {
+        "feature": "quarter-inch tape threaded from the supply pack across three heads past the capstan to the take-up pack",
+        "parts": [
+          "tape-1",
+          "tape-2",
+          "tape-3",
+          "tape-4",
+          "head-0",
+          "head-1",
+          "head-2",
+          "capstan",
+          "pinch-roller",
+          "sup-pack",
+          "tak-pack"
+        ]
+      }
+    ],
+    "review_rounds": 3,
+    "outcome": "self-reviewed",
+    "next": [
+      "Rebuild the three head faces as rectilinear pole pieces with a curved front and a visible gap slit; the cylindrical drums read as rings at close range.",
+      "Add the sprung tape-tension arms with rollers that flank the head block on the real deck, and thread the ribbon over them.",
+      "Reel windows are wedge gaps between three spokes; the ReVox reel's windows are rounded trapezoids, traceable from the front photograph.",
+      "The tape ribbon is a fixed geometric path: the reels, guides and capstan turn but the ribbon itself does not travel. A splice marker would make the transport read as running.",
+      "Rear connector panel exists but is simplified; the back view still reads as a plain crate."
+    ]
+  }
+}

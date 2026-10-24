@@ -1,0 +1,4469 @@
+{
+  "format": "construct-scene",
+  "version": 2,
+  "id": "o1-leica-m3",
+  "title": "Leica M3 · 1954 / Summicron 5 cm 1:2",
+  "subject": {
+    "category": "object",
+    "summary": "Approximate measured reconstruction of an early double-stroke Leica M3 with the original collapsible 50 mm Summicron. Opening presents manual lens extension and an illustrative locking twist, not an automatic camera mechanism.",
+    "accuracy": "approximate",
+    "synthetic": false
+  },
+  "units": "m",
+  "seed": 1954,
+  "sources": [
+    {
+      "id": "request",
+      "title": "Public showcase commission",
+      "ref": "Leica M3 (1954), collapsible 50 mm Summicron extends on presentation opening; no reference images or assigned palette.",
+      "kind": "user_request",
+      "rights": "user_private"
+    },
+    {
+      "id": "leica-history",
+      "title": "Leica official 1954 chronology",
+      "ref": "https://timeline.leica-camera.com/en/years/1954",
+      "kind": "document",
+      "rights": "reference_only"
+    },
+    {
+      "id": "auction",
+      "title": "Leitz Auction A02280, M3 700074 with Summicron 1115548",
+      "ref": "https://www.leitz-auction.com/en/Leica-M3-First-Batch-Double-Corner/A02280",
+      "kind": "document",
+      "rights": "reference_only"
+    },
+    {
+      "id": "dimensions",
+      "title": "Published M3 specification",
+      "ref": "https://en.wikipedia.org/wiki/Leica_M3 ; https://www.lomography.com/magazine/257219-lomopedia-leica-m3 ; https://leica-m.de/leica-m3/",
+      "kind": "document",
+      "rights": "reference_only"
+    },
+    {
+      "id": "lens-spec",
+      "title": "KJ Vogelius: collapsible Summicron specifications and operation",
+      "ref": "https://gear.vogelius.se/-reviews/leica-summicron-50-collapsible/index.html",
+      "kind": "document",
+      "rights": "reference_only"
+    },
+    {
+      "id": "leica-lens",
+      "title": "Leica Classic: 1954 M-mount Summicron 2/5cm SOOIC-M",
+      "ref": "https://classic.leica-camera.com/en/Leica-Summicron-2-5cm-collapsible-SOOIC-M/35868-6",
+      "kind": "document",
+      "rights": "reference_only"
+    },
+    {
+      "id": "a1",
+      "title": "Auction photograph A1",
+      "ref": "https://www.leitz-auction.com/media/dc/20/0c/1756994722/A02280_1.jpg",
+      "kind": "observation",
+      "rights": "reference_only"
+    },
+    {
+      "id": "a2",
+      "title": "Auction photograph A2",
+      "ref": "https://www.leitz-auction.com/media/73/ff/2a/1756994725/A02280_2.jpg",
+      "kind": "observation",
+      "rights": "reference_only"
+    },
+    {
+      "id": "a3",
+      "title": "Auction photograph A3",
+      "ref": "https://www.leitz-auction.com/media/bb/60/1c/1756994729/A02280_3.jpg",
+      "kind": "observation",
+      "rights": "reference_only"
+    },
+    {
+      "id": "a4",
+      "title": "Auction photograph A4",
+      "ref": "https://www.leitz-auction.com/media/f8/02/4b/1756994733/A02280_4.jpg",
+      "kind": "observation",
+      "rights": "reference_only"
+    },
+    {
+      "id": "a5",
+      "title": "Auction photograph A5",
+      "ref": "https://www.leitz-auction.com/media/57/c1/d3/1756994737/A02280_5.jpg",
+      "kind": "observation",
+      "rights": "reference_only"
+    },
+    {
+      "id": "a6",
+      "title": "Auction photograph A6",
+      "ref": "https://www.leitz-auction.com/media/1c/e3/cc/1756994740/A02280_6.jpg",
+      "kind": "observation",
+      "rights": "reference_only"
+    },
+    {
+      "id": "a7",
+      "title": "Auction photograph A7",
+      "ref": "https://www.leitz-auction.com/media/92/30/68/1756994744/A02280_7.jpg",
+      "kind": "observation",
+      "rights": "reference_only"
+    },
+    {
+      "id": "a8",
+      "title": "Auction photograph A8",
+      "ref": "https://www.leitz-auction.com/media/82/92/e6/1756994748/A02280_8.jpg",
+      "kind": "observation",
+      "rights": "reference_only"
+    },
+    {
+      "id": "a9",
+      "title": "Auction photograph A9",
+      "ref": "https://www.leitz-auction.com/media/c3/19/63/1756994752/A02280_9.jpg",
+      "kind": "observation",
+      "rights": "reference_only"
+    },
+    {
+      "id": "lens-photo",
+      "title": "Leica Classic three-quarter lens photograph",
+      "ref": "https://classic.leica-camera.com/media/88/2a/85/1782211229/35868_6_a.jpg",
+      "kind": "observation",
+      "rights": "reference_only"
+    },
+    {
+      "id": "section",
+      "title": "Summicron optical schematic, not a prescription",
+      "ref": "https://gear.vogelius.se/-reviews/leica-summicron-50-collapsible/summicron-50-collapsible-diagram.png",
+      "kind": "observation",
+      "rights": "reference_only"
+    },
+    {
+      "id": "studio",
+      "title": "Reconstruction studio presentation design",
+      "ref": "Assembly, quiet scan, camera tour, lock-turn angle and animation timing are decorative choices.",
+      "kind": "generated",
+      "rights": "synthetic"
+    }
+  ],
+  "facts": [
+    {
+      "key": "model",
+      "value": "Leica M3",
+      "certainty": "verified",
+      "source": "leica-history"
+    },
+    {
+      "key": "year",
+      "value": 1954,
+      "certainty": "verified",
+      "source": "leica-history"
+    },
+    {
+      "key": "width",
+      "value": 0.138,
+      "certainty": "verified",
+      "source": "dimensions",
+      "note": "Published nominal body specification; excludes lens. Not outline coordinates. Depth convention differs from Camera-wiki (38 mm).",
+      "unit": "m"
+    },
+    {
+      "key": "height",
+      "value": 0.077,
+      "certainty": "verified",
+      "source": "dimensions",
+      "note": "Published nominal body specification; excludes lens. Not outline coordinates. Depth convention differs from Camera-wiki (38 mm).",
+      "unit": "m"
+    },
+    {
+      "key": "depth",
+      "value": 0.0335,
+      "certainty": "verified",
+      "source": "dimensions",
+      "note": "Published nominal body specification; excludes lens. Not outline coordinates. Depth convention differs from Camera-wiki (38 mm).",
+      "unit": "m"
+    },
+    {
+      "key": "early-advance",
+      "value": "Double-stroke film advance",
+      "certainty": "verified",
+      "source": "auction"
+    },
+    {
+      "key": "early-top",
+      "value": "First-batch two-corner top plate",
+      "certainty": "verified",
+      "source": "auction"
+    },
+    {
+      "key": "lens",
+      "value": "Summicron 5 cm 1:2",
+      "certainty": "verified",
+      "source": "auction"
+    },
+    {
+      "key": "lens-focal-length",
+      "value": 50,
+      "certainty": "verified",
+      "source": "leica-lens",
+      "unit": "mm"
+    },
+    {
+      "key": "lens-aperture",
+      "value": 2,
+      "certainty": "verified",
+      "source": "leica-lens"
+    },
+    {
+      "key": "lens-extended-length",
+      "value": 0.04,
+      "certainty": "verified",
+      "source": "lens-spec",
+      "unit": "m"
+    },
+    {
+      "key": "lens-collapsed-length",
+      "value": 0.026,
+      "certainty": "verified",
+      "source": "lens-spec",
+      "unit": "m"
+    },
+    {
+      "key": "lens-extension",
+      "value": 0.014,
+      "certainty": "inferred",
+      "source": "lens-spec",
+      "note": "Calculated 40 minus 26 mm; source does not separately specify travel.",
+      "unit": "m"
+    },
+    {
+      "key": "filter-thread",
+      "value": 0.039,
+      "certainty": "verified",
+      "source": "lens-spec",
+      "unit": "m"
+    },
+    {
+      "key": "optical-elements",
+      "value": 7,
+      "certainty": "verified",
+      "source": "lens-spec"
+    },
+    {
+      "key": "optical-groups",
+      "value": 6,
+      "certainty": "verified",
+      "source": "lens-spec"
+    },
+    {
+      "key": "diaphragm-blades",
+      "value": 10,
+      "certainty": "verified",
+      "source": "lens-spec"
+    },
+    {
+      "key": "extension-operation",
+      "value": "Pull forward to stop, then twist to lock",
+      "certainty": "verified",
+      "source": "lens-spec"
+    },
+    {
+      "key": "body-outline",
+      "value": "138 mm rounded capsule, 33.5 mm deep; covering 4..52 mm; lower deck 69 mm; raised top 77 mm",
+      "certainty": "inferred",
+      "source": "a6",
+      "note": "A6 body side ~331x798 pixels; 77/798 mm per pixel. Round-end radius 16.75 mm is a fitted primitive, not a factory coordinate."
+    },
+    {
+      "key": "front-layout",
+      "value": "Window x=-32.1,+10.6,+36.8 mm; lens x=+5.3,y=31 mm; timer x=-44.9 mm",
+      "certainty": "inferred",
+      "source": "a5",
+      "note": "A5 width x163..1320 at 1500x1000 preview, scaled to 138 mm; perspective correction and heights approximate."
+    },
+    {
+      "key": "finder-outlines",
+      "value": "Bevelled rectangular finder and illuminator rims; small isolated rangefinder window",
+      "certainty": "inferred",
+      "source": "a3",
+      "note": "A3 outline measurements, cross-checked A5: main rim 24x19, central rim 20x17, small rim 11x8 mm."
+    },
+    {
+      "key": "top-layout",
+      "value": "Rewind x=+62.8, shoe +1.9, speed -18.2, release -44.5, counter -59.2 mm",
+      "certainty": "inferred",
+      "source": "a9",
+      "note": "A9 image width~1140 pixels, scaled to 138 mm and mirrored relative to front view."
+    },
+    {
+      "key": "rear-layout",
+      "value": "Inset 92x43 mm loading panel, 25 mm reminder disc, eyepiece and paired flash sockets",
+      "certainty": "inferred",
+      "source": "a7",
+      "note": "Rear oblique image proportions; no factory rear panel coordinates located."
+    },
+    {
+      "key": "lens-profile",
+      "value": "Mount diameter 53 mm, focus 50, telescope 32, head 44, front clear glass 33 mm",
+      "certainty": "inferred",
+      "source": "lens-photo",
+      "note": "Fitted diameter ratios head/base~0.88, tube/base~0.64; E39 is the documented thread, not outer diameter."
+    },
+    {
+      "key": "optical-profile",
+      "value": "Seven schematic optical forms in six groups",
+      "certainty": "inferred",
+      "source": "section",
+      "note": "Diagram x170..686, axis y437; relative element centres estimated 0.09,0.23,0.30,0.35,0.44,0.77,0.96. Not an optical prescription."
+    },
+    {
+      "key": "top-maker",
+      "value": "Leica",
+      "certainty": "inferred",
+      "source": "a9",
+      "note": "Observed engraved word; normal typeface label, not a copied script logo."
+    },
+    {
+      "key": "top-origin",
+      "value": "ERNST LEITZ GMBH / WETZLAR GERMANY",
+      "certainty": "inferred",
+      "source": "a9",
+      "note": "Text read from A9; placement and font simplified."
+    },
+    {
+      "key": "aperture-scale",
+      "value": "2   2.8   4   5.6   8   11   16",
+      "certainty": "inferred",
+      "source": "a9",
+      "note": "Observed aperture scale; flattened typesetting is a reconstruction abstraction."
+    },
+    {
+      "key": "speed-scale",
+      "value": "1  2  5  10  25  50  100  200  500  1000",
+      "certainty": "inferred",
+      "source": "a9",
+      "note": "Early speed progression visible in A9, not later normalized scale."
+    },
+    {
+      "key": "film-reminder",
+      "value": "ASA / DIN",
+      "certainty": "inferred",
+      "source": "a7",
+      "note": "Observed rear reminder inscription; scale ticks simplified."
+    },
+    {
+      "key": "opening-design",
+      "value": "14 mm lens deployment, then illustrative 12 degree locking twist; body remains closed",
+      "certainty": "decorative",
+      "source": "studio",
+      "note": "Presentation opening is not mechanically coupled to a rear door or powered extension. Twist angle is not measured."
+    }
+  ],
+  "parts": [
+    {
+      "id": "removable-baseplate",
+      "label": "Removable Baseplate",
+      "role": "mass",
+      "stage": 0,
+      "certainty": "inferred",
+      "shape": {
+        "type": "extrude",
+        "profile": [
+          [
+            0.05225,
+            -0.01675
+          ],
+          [
+            0.0565852,
+            -0.0161793
+          ],
+          [
+            0.060625,
+            -0.0145059
+          ],
+          [
+            0.064094,
+            -0.011844
+          ],
+          [
+            0.0667559,
+            -0.008375
+          ],
+          [
+            0.0684293,
+            -0.0043352
+          ],
+          [
+            0.069,
+            0.0
+          ],
+          [
+            0.0684293,
+            0.0043352
+          ],
+          [
+            0.0667559,
+            0.008375
+          ],
+          [
+            0.064094,
+            0.011844
+          ],
+          [
+            0.060625,
+            0.0145059
+          ],
+          [
+            0.0565852,
+            0.0161793
+          ],
+          [
+            0.05225,
+            0.01675
+          ],
+          [
+            -0.05225,
+            0.01675
+          ],
+          [
+            -0.0565852,
+            0.0161793
+          ],
+          [
+            -0.060625,
+            0.0145059
+          ],
+          [
+            -0.064094,
+            0.011844
+          ],
+          [
+            -0.0667559,
+            0.008375
+          ],
+          [
+            -0.0684293,
+            0.0043352
+          ],
+          [
+            -0.069,
+            0.0
+          ],
+          [
+            -0.0684293,
+            -0.0043352
+          ],
+          [
+            -0.0667559,
+            -0.008375
+          ],
+          [
+            -0.064094,
+            -0.011844
+          ],
+          [
+            -0.060625,
+            -0.0145059
+          ],
+          [
+            -0.0565852,
+            -0.0161793
+          ],
+          [
+            -0.05225,
+            -0.01675
+          ]
+        ],
+        "height": 0.004,
+        "axis": "y"
+      },
+      "at": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source": "a6",
+      "basis": [
+        "body-outline"
+      ],
+      "note": "A6 side and A9 plan: fitted capsule footprint, 138x33.5 mm; 4 mm base lip inferred."
+    },
+    {
+      "id": "rounded-main-shell",
+      "label": "Rounded Main Shell",
+      "role": "mass",
+      "stage": 1,
+      "certainty": "inferred",
+      "shape": {
+        "type": "extrude",
+        "profile": [
+          [
+            0.05225,
+            -0.01675
+          ],
+          [
+            0.0565852,
+            -0.0161793
+          ],
+          [
+            0.060625,
+            -0.0145059
+          ],
+          [
+            0.064094,
+            -0.011844
+          ],
+          [
+            0.0667559,
+            -0.008375
+          ],
+          [
+            0.0684293,
+            -0.0043352
+          ],
+          [
+            0.069,
+            0.0
+          ],
+          [
+            0.0684293,
+            0.0043352
+          ],
+          [
+            0.0667559,
+            0.008375
+          ],
+          [
+            0.064094,
+            0.011844
+          ],
+          [
+            0.060625,
+            0.0145059
+          ],
+          [
+            0.0565852,
+            0.0161793
+          ],
+          [
+            0.05225,
+            0.01675
+          ],
+          [
+            -0.05225,
+            0.01675
+          ],
+          [
+            -0.0565852,
+            0.0161793
+          ],
+          [
+            -0.060625,
+            0.0145059
+          ],
+          [
+            -0.064094,
+            0.011844
+          ],
+          [
+            -0.0667559,
+            0.008375
+          ],
+          [
+            -0.0684293,
+            0.0043352
+          ],
+          [
+            -0.069,
+            0.0
+          ],
+          [
+            -0.0684293,
+            -0.0043352
+          ],
+          [
+            -0.0667559,
+            -0.008375
+          ],
+          [
+            -0.064094,
+            -0.011844
+          ],
+          [
+            -0.060625,
+            -0.0145059
+          ],
+          [
+            -0.0565852,
+            -0.0161793
+          ],
+          [
+            -0.05225,
+            -0.01675
+          ]
+        ],
+        "height": 0.048,
+        "axis": "y"
+      },
+      "at": [
+        0.0,
+        0.004,
+        0.0
+      ],
+      "source": "a6",
+      "basis": [
+        "body-outline"
+      ],
+      "note": "A5/A6/A9: rounded-ended shell under vulcanite. Curved plan and elevations inferred, not verified geometry."
+    },
+    {
+      "id": "low-top-deck",
+      "label": "Low Top Deck",
+      "role": "mass",
+      "stage": 2,
+      "certainty": "inferred",
+      "shape": {
+        "type": "extrude",
+        "profile": [
+          [
+            0.05225,
+            -0.01675
+          ],
+          [
+            0.0565852,
+            -0.0161793
+          ],
+          [
+            0.060625,
+            -0.0145059
+          ],
+          [
+            0.064094,
+            -0.011844
+          ],
+          [
+            0.0667559,
+            -0.008375
+          ],
+          [
+            0.0684293,
+            -0.0043352
+          ],
+          [
+            0.069,
+            0.0
+          ],
+          [
+            0.0684293,
+            0.0043352
+          ],
+          [
+            0.0667559,
+            0.008375
+          ],
+          [
+            0.064094,
+            0.011844
+          ],
+          [
+            0.060625,
+            0.0145059
+          ],
+          [
+            0.0565852,
+            0.0161793
+          ],
+          [
+            0.05225,
+            0.01675
+          ],
+          [
+            -0.05225,
+            0.01675
+          ],
+          [
+            -0.0565852,
+            0.0161793
+          ],
+          [
+            -0.060625,
+            0.0145059
+          ],
+          [
+            -0.064094,
+            0.011844
+          ],
+          [
+            -0.0667559,
+            0.008375
+          ],
+          [
+            -0.0684293,
+            0.0043352
+          ],
+          [
+            -0.069,
+            0.0
+          ],
+          [
+            -0.0684293,
+            -0.0043352
+          ],
+          [
+            -0.0667559,
+            -0.008375
+          ],
+          [
+            -0.064094,
+            -0.011844
+          ],
+          [
+            -0.060625,
+            -0.0145059
+          ],
+          [
+            -0.0565852,
+            -0.0161793
+          ],
+          [
+            -0.05225,
+            -0.01675
+          ]
+        ],
+        "height": 0.017,
+        "axis": "y"
+      },
+      "at": [
+        0.0,
+        0.052,
+        0.0
+      ],
+      "source": "a6",
+      "basis": [
+        "body-outline"
+      ],
+      "note": "A1/A5: lower deck for advance at viewer left and rewind recess at far right; fitted height69 mm."
+    },
+    {
+      "id": "early-raised-finder-housing",
+      "label": "Early Raised Finder Housing",
+      "role": "identity",
+      "stage": 2,
+      "certainty": "inferred",
+      "shape": {
+        "type": "extrude",
+        "profile": [
+          [
+            -0.018,
+            -0.01675
+          ],
+          [
+            0.053,
+            -0.01675
+          ],
+          [
+            0.055,
+            -0.01475
+          ],
+          [
+            0.055,
+            0.01475
+          ],
+          [
+            0.053,
+            0.01675
+          ],
+          [
+            -0.016,
+            0.01675
+          ],
+          [
+            -0.018,
+            0.01475
+          ]
+        ],
+        "height": 0.008,
+        "axis": "y"
+      },
+      "at": [
+        0.0,
+        0.069,
+        0.0
+      ],
+      "source": "a9",
+      "basis": [
+        "early-top",
+        "body-outline"
+      ],
+      "note": "A9 first-batch stepped, slightly angular top silhouette; bevel vertices inferred from photograph."
+    },
+    {
+      "id": "vulcanite-front-left",
+      "label": "Vulcanite Front Left",
+      "role": "structure",
+      "stage": 1,
+      "certainty": "inferred",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.048,
+          0.047,
+          0.0009
+        ]
+      },
+      "at": [
+        -0.043,
+        0.0275,
+        0.0167
+      ],
+      "source": "a5",
+      "basis": [
+        "body-outline"
+      ],
+      "note": "Measured visual approximation; see research.md. No outline coordinates are documented."
+    },
+    {
+      "id": "vulcanite-front-right",
+      "label": "Vulcanite Front Right",
+      "role": "structure",
+      "stage": 1,
+      "certainty": "inferred",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.036,
+          0.047,
+          0.0009
+        ]
+      },
+      "at": [
+        0.049,
+        0.0275,
+        0.0167
+      ],
+      "source": "a5",
+      "basis": [
+        "body-outline"
+      ],
+      "note": "Measured visual approximation; see research.md. No outline coordinates are documented."
+    },
+    {
+      "id": "rear-loading-panel",
+      "label": "Rear Loading Panel",
+      "role": "structure",
+      "stage": 2,
+      "certainty": "inferred",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.092,
+          0.043,
+          0.0014
+        ]
+      },
+      "at": [
+        0.0,
+        0.027,
+        -0.01715
+      ],
+      "source": "a7",
+      "basis": [
+        "rear-layout"
+      ],
+      "note": "Measured visual approximation; see research.md. No outline coordinates are documented."
+    },
+    {
+      "id": "rear-panel-inset",
+      "label": "Rear Panel Inset",
+      "role": "detail",
+      "stage": 3,
+      "certainty": "inferred",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.083,
+          0.035,
+          0.0008
+        ]
+      },
+      "at": [
+        0.0,
+        0.027,
+        -0.0181
+      ],
+      "source": "a7",
+      "basis": [
+        "rear-layout"
+      ],
+      "note": "Measured visual approximation; see research.md. No outline coordinates are documented."
+    },
+    {
+      "id": "film-door-hinge",
+      "label": "Film Door Hinge",
+      "role": "structure",
+      "stage": 2,
+      "certainty": "inferred",
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.00125,
+        "height": 0.091,
+        "segments": 40,
+        "ribs": 4,
+        "rings": 0
+      },
+      "at": [
+        0.0455,
+        0.049,
+        -0.0178
+      ],
+      "source": "a7",
+      "basis": [
+        "rear-layout"
+      ],
+      "note": "Measured visual approximation; see research.md. No outline coordinates are documented.",
+      "rotate": [
+        0,
+        0,
+        90
+      ]
+    },
+    {
+      "id": "film-reminder-rim",
+      "label": "Film Reminder Rim",
+      "role": "identity",
+      "stage": 3,
+      "certainty": "inferred",
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.0125,
+        "height": 0.001,
+        "segments": 40,
+        "ribs": 0,
+        "rings": 0
+      },
+      "at": [
+        0.0,
+        0.027,
+        -0.0184
+      ],
+      "source": "a7",
+      "basis": [
+        "rear-layout"
+      ],
+      "note": "Measured visual approximation; see research.md. No outline coordinates are documented.",
+      "rotate": [
+        -90,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "film-reminder-inner",
+      "label": "Film Reminder Inner",
+      "role": "detail",
+      "stage": 3,
+      "certainty": "inferred",
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.0083,
+        "height": 0.0007,
+        "segments": 40,
+        "ribs": 0,
+        "rings": 0
+      },
+      "at": [
+        0.0,
+        0.027,
+        -0.0194
+      ],
+      "source": "a7",
+      "basis": [
+        "rear-layout"
+      ],
+      "note": "Measured visual approximation; see research.md. No outline coordinates are documented.",
+      "rotate": [
+        -90,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "rangefinder-bezel",
+      "label": "Rangefinder Bezel",
+      "role": "identity",
+      "stage": 4,
+      "certainty": "inferred",
+      "shape": {
+        "type": "tube",
+        "path": [
+          [
+            -0.0361,
+            0.0615,
+            0.0175
+          ],
+          [
+            -0.0281,
+            0.0615,
+            0.0175
+          ],
+          [
+            -0.0271,
+            0.0625,
+            0.0175
+          ],
+          [
+            -0.0271,
+            0.0675,
+            0.0175
+          ],
+          [
+            -0.0281,
+            0.0685,
+            0.0175
+          ],
+          [
+            -0.0361,
+            0.0685,
+            0.0175
+          ],
+          [
+            -0.0371,
+            0.0675,
+            0.0175
+          ],
+          [
+            -0.0371,
+            0.0625,
+            0.0175
+          ],
+          [
+            -0.0361,
+            0.0615,
+            0.0175
+          ]
+        ],
+        "radius": 0.00065,
+        "sides": 6,
+        "samples": 8,
+        "smooth": false,
+        "caps": true,
+        "longitudinal": 2,
+        "ring_every": 0
+      },
+      "at": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source": "a3",
+      "basis": [
+        "front-layout",
+        "finder-outlines"
+      ],
+      "note": "Measured visual approximation; see research.md. No outline coordinates are documented."
+    },
+    {
+      "id": "rangefinder-glass",
+      "label": "Rangefinder Glass",
+      "role": "identity",
+      "stage": 4,
+      "certainty": "inferred",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.0076,
+          0.0046,
+          0.0007
+        ]
+      },
+      "at": [
+        -0.0321,
+        0.065,
+        0.0172
+      ],
+      "source": "a3",
+      "basis": [
+        "finder-outlines"
+      ],
+      "note": "Measured visual approximation; see research.md. No outline coordinates are documented.",
+      "look": {
+        "fill": "glass"
+      }
+    },
+    {
+      "id": "rangefinder-inset",
+      "label": "Rangefinder Inset",
+      "role": "detail",
+      "stage": 7,
+      "certainty": "inferred",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.03562,
+            0.062025,
+            0.0179
+          ],
+          [
+            -0.02858,
+            0.062025,
+            0.0179
+          ],
+          [
+            -0.0277,
+            0.062875,
+            0.0179
+          ],
+          [
+            -0.0277,
+            0.067125,
+            0.0179
+          ],
+          [
+            -0.02858,
+            0.067975,
+            0.0179
+          ],
+          [
+            -0.03562,
+            0.067975,
+            0.0179
+          ],
+          [
+            -0.0365,
+            0.067125,
+            0.0179
+          ],
+          [
+            -0.0365,
+            0.062875,
+            0.0179
+          ]
+        ],
+        "closed": true,
+        "smooth": false
+      },
+      "at": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source": "a3",
+      "basis": [
+        "finder-outlines"
+      ],
+      "note": "Measured visual approximation; see research.md. No outline coordinates are documented."
+    },
+    {
+      "id": "frameline-illuminator-bezel",
+      "label": "Frameline Illuminator Bezel",
+      "role": "identity",
+      "stage": 4,
+      "certainty": "inferred",
+      "shape": {
+        "type": "tube",
+        "path": [
+          [
+            0.00185,
+            0.0583,
+            0.0175
+          ],
+          [
+            0.01935,
+            0.0583,
+            0.0175
+          ],
+          [
+            0.02035,
+            0.0593,
+            0.0175
+          ],
+          [
+            0.02035,
+            0.0743,
+            0.0175
+          ],
+          [
+            0.01935,
+            0.0753,
+            0.0175
+          ],
+          [
+            0.00185,
+            0.0753,
+            0.0175
+          ],
+          [
+            0.00085,
+            0.0743,
+            0.0175
+          ],
+          [
+            0.00085,
+            0.0593,
+            0.0175
+          ],
+          [
+            0.00185,
+            0.0583,
+            0.0175
+          ]
+        ],
+        "radius": 0.00065,
+        "sides": 6,
+        "samples": 8,
+        "smooth": false,
+        "caps": true,
+        "longitudinal": 2,
+        "ring_every": 0
+      },
+      "at": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source": "a3",
+      "basis": [
+        "front-layout",
+        "finder-outlines"
+      ],
+      "note": "Measured visual approximation; see research.md. No outline coordinates are documented."
+    },
+    {
+      "id": "frameline-illuminator-glass",
+      "label": "Frameline Illuminator Glass",
+      "role": "identity",
+      "stage": 4,
+      "certainty": "inferred",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.0171,
+          0.0146,
+          0.0007
+        ]
+      },
+      "at": [
+        0.0106,
+        0.0668,
+        0.0172
+      ],
+      "source": "a3",
+      "basis": [
+        "finder-outlines"
+      ],
+      "note": "Measured visual approximation; see research.md. No outline coordinates are documented.",
+      "look": {
+        "fill": "glass"
+      }
+    },
+    {
+      "id": "frameline-illuminator-inset",
+      "label": "Frameline Illuminator Inset",
+      "role": "detail",
+      "stage": 7,
+      "certainty": "inferred",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.0029,
+            0.059575,
+            0.0179
+          ],
+          [
+            0.0183,
+            0.059575,
+            0.0179
+          ],
+          [
+            0.01918,
+            0.060425,
+            0.0179
+          ],
+          [
+            0.01918,
+            0.073175,
+            0.0179
+          ],
+          [
+            0.0183,
+            0.074025,
+            0.0179
+          ],
+          [
+            0.0029,
+            0.074025,
+            0.0179
+          ],
+          [
+            0.00202,
+            0.073175,
+            0.0179
+          ],
+          [
+            0.00202,
+            0.060425,
+            0.0179
+          ]
+        ],
+        "closed": true,
+        "smooth": false
+      },
+      "at": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source": "a3",
+      "basis": [
+        "finder-outlines"
+      ],
+      "note": "Measured visual approximation; see research.md. No outline coordinates are documented."
+    },
+    {
+      "id": "main-viewfinder-bezel",
+      "label": "Main Viewfinder Bezel",
+      "role": "identity",
+      "stage": 4,
+      "certainty": "inferred",
+      "shape": {
+        "type": "tube",
+        "path": [
+          [
+            0.0263,
+            0.0573,
+            0.0175
+          ],
+          [
+            0.0473,
+            0.0573,
+            0.0175
+          ],
+          [
+            0.0483,
+            0.0583,
+            0.0175
+          ],
+          [
+            0.0483,
+            0.0753,
+            0.0175
+          ],
+          [
+            0.0473,
+            0.0763,
+            0.0175
+          ],
+          [
+            0.0263,
+            0.0763,
+            0.0175
+          ],
+          [
+            0.0253,
+            0.0753,
+            0.0175
+          ],
+          [
+            0.0253,
+            0.0583,
+            0.0175
+          ],
+          [
+            0.0263,
+            0.0573,
+            0.0175
+          ]
+        ],
+        "radius": 0.00065,
+        "sides": 6,
+        "samples": 8,
+        "smooth": false,
+        "caps": true,
+        "longitudinal": 2,
+        "ring_every": 0
+      },
+      "at": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source": "a3",
+      "basis": [
+        "front-layout",
+        "finder-outlines"
+      ],
+      "note": "Measured visual approximation; see research.md. No outline coordinates are documented."
+    },
+    {
+      "id": "main-viewfinder-glass",
+      "label": "Main Viewfinder Glass",
+      "role": "identity",
+      "stage": 4,
+      "certainty": "inferred",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.0206,
+          0.0166,
+          0.0007
+        ]
+      },
+      "at": [
+        0.0368,
+        0.0668,
+        0.0172
+      ],
+      "source": "a3",
+      "basis": [
+        "finder-outlines"
+      ],
+      "note": "Measured visual approximation; see research.md. No outline coordinates are documented.",
+      "look": {
+        "fill": "glass"
+      }
+    },
+    {
+      "id": "main-viewfinder-inset",
+      "label": "Main Viewfinder Inset",
+      "role": "detail",
+      "stage": 7,
+      "certainty": "inferred",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.02756,
+            0.058725,
+            0.0179
+          ],
+          [
+            0.04604,
+            0.058725,
+            0.0179
+          ],
+          [
+            0.04692,
+            0.059575,
+            0.0179
+          ],
+          [
+            0.04692,
+            0.074025,
+            0.0179
+          ],
+          [
+            0.04604,
+            0.074875,
+            0.0179
+          ],
+          [
+            0.02756,
+            0.074875,
+            0.0179
+          ],
+          [
+            0.02668,
+            0.074025,
+            0.0179
+          ],
+          [
+            0.02668,
+            0.059575,
+            0.0179
+          ]
+        ],
+        "closed": true,
+        "smooth": false
+      },
+      "at": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source": "a3",
+      "basis": [
+        "finder-outlines"
+      ],
+      "note": "Measured visual approximation; see research.md. No outline coordinates are documented."
+    },
+    {
+      "id": "rear-eyepiece",
+      "label": "Rear Eyepiece",
+      "role": "identity",
+      "stage": 4,
+      "certainty": "inferred",
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.0085,
+            0.0
+          ],
+          [
+            0.0085,
+            0.0018
+          ],
+          [
+            0.0075,
+            0.0025
+          ],
+          [
+            0.0058,
+            0.0025
+          ],
+          [
+            0.0058,
+            0.0
+          ],
+          [
+            0.0085,
+            0.0
+          ]
+        ],
+        "segments": 48,
+        "meridians": 8
+      },
+      "at": [
+        0.043,
+        0.065,
+        -0.0168
+      ],
+      "source": "a7",
+      "basis": [
+        "rear-layout"
+      ],
+      "note": "Measured visual approximation; see research.md. No outline coordinates are documented.",
+      "rotate": [
+        -90,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "rear-ocular-glass",
+      "label": "Rear Ocular Glass",
+      "role": "identity",
+      "stage": 4,
+      "certainty": "inferred",
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.0058,
+        "height": 0.0006,
+        "segments": 40,
+        "ribs": 0,
+        "rings": 0
+      },
+      "at": [
+        0.043,
+        0.065,
+        -0.0186
+      ],
+      "source": "a7",
+      "basis": [
+        "rear-layout"
+      ],
+      "note": "Measured visual approximation; see research.md. No outline coordinates are documented.",
+      "rotate": [
+        -90,
+        0,
+        0
+      ],
+      "look": {
+        "fill": "glass"
+      }
+    },
+    {
+      "id": "flash-socket-1",
+      "label": "Flash Socket 1",
+      "role": "detail",
+      "stage": 3,
+      "certainty": "inferred",
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.0046,
+        "height": 0.002,
+        "segments": 40,
+        "ribs": 0,
+        "rings": 1
+      },
+      "at": [
+        0.015,
+        0.065,
+        -0.0168
+      ],
+      "source": "a7",
+      "basis": [
+        "rear-layout"
+      ],
+      "note": "Measured visual approximation; see research.md. No outline coordinates are documented.",
+      "rotate": [
+        -90,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "flash-socket-2",
+      "label": "Flash Socket 2",
+      "role": "detail",
+      "stage": 3,
+      "certainty": "inferred",
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.0046,
+        "height": 0.002,
+        "segments": 40,
+        "ribs": 0,
+        "rings": 1
+      },
+      "at": [
+        -0.002,
+        0.065,
+        -0.0168
+      ],
+      "source": "a7",
+      "basis": [
+        "rear-layout"
+      ],
+      "note": "Measured visual approximation; see research.md. No outline coordinates are documented.",
+      "rotate": [
+        -90,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "m-bayonet-flange",
+      "label": "M Bayonet Flange",
+      "role": "identity",
+      "stage": 3,
+      "certainty": "inferred",
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.0265,
+            0.0
+          ],
+          [
+            0.0265,
+            0.0025
+          ],
+          [
+            0.0253,
+            0.0032
+          ],
+          [
+            0.0215,
+            0.0032
+          ],
+          [
+            0.0215,
+            0.0
+          ],
+          [
+            0.0265,
+            0.0
+          ]
+        ],
+        "segments": 48,
+        "meridians": 8
+      },
+      "at": [
+        0.0053,
+        0.031,
+        0.0168
+      ],
+      "source": "a5",
+      "basis": [
+        "front-layout",
+        "lens-profile"
+      ],
+      "note": "Measured visual approximation; see research.md. No outline coordinates are documented.",
+      "rotate": [
+        90,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "fixed-distance-and-dof-ring",
+      "label": "Fixed Distance And Dof Ring",
+      "role": "identity",
+      "stage": 4,
+      "certainty": "inferred",
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.0252,
+            0.0
+          ],
+          [
+            0.0252,
+            0.0044
+          ],
+          [
+            0.0244,
+            0.0052
+          ],
+          [
+            0.0244,
+            0.007
+          ],
+          [
+            0.02,
+            0.007
+          ],
+          [
+            0.02,
+            0.0
+          ],
+          [
+            0.0252,
+            0.0
+          ]
+        ],
+        "segments": 48,
+        "meridians": 8
+      },
+      "at": [
+        0.0053,
+        0.031,
+        0.02
+      ],
+      "source": "a2",
+      "basis": [
+        "lens-profile"
+      ],
+      "note": "Measured visual approximation; see research.md. No outline coordinates are documented.",
+      "rotate": [
+        90,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "focus-ring",
+      "label": "Focus Ring",
+      "role": "structure",
+      "stage": 4,
+      "certainty": "inferred",
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.0246,
+            0.0
+          ],
+          [
+            0.025,
+            0.0006
+          ],
+          [
+            0.025,
+            0.0022
+          ],
+          [
+            0.0238,
+            0.0028
+          ],
+          [
+            0.0167,
+            0.0028
+          ],
+          [
+            0.0167,
+            0.0
+          ],
+          [
+            0.0246,
+            0.0
+          ]
+        ],
+        "segments": 48,
+        "meridians": 24
+      },
+      "at": [
+        0.0053,
+        0.031,
+        0.027
+      ],
+      "source": "a2",
+      "basis": [
+        "lens-profile"
+      ],
+      "note": "Measured visual approximation; see research.md. No outline coordinates are documented.",
+      "rotate": [
+        90,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "telescoping-inner-barrel",
+      "label": "Telescoping Inner Barrel",
+      "role": "identity",
+      "stage": 5,
+      "certainty": "inferred",
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.016,
+            0.0
+          ],
+          [
+            0.016,
+            0.026
+          ],
+          [
+            0.0151,
+            0.026
+          ],
+          [
+            0.0151,
+            0.0
+          ],
+          [
+            0.016,
+            0.0
+          ]
+        ],
+        "segments": 48,
+        "meridians": 8
+      },
+      "at": [
+        0.0053,
+        0.031,
+        0.00975
+      ],
+      "source": "a6",
+      "basis": [
+        "lens-profile",
+        "lens-collapsed-length",
+        "lens-extended-length"
+      ],
+      "note": "A6 and lens-spec: slender tube telescopes through fixed focus mount. Hidden rear length fitted; opening translates +14 mm.",
+      "rotate": [
+        90,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "aperture-ring",
+      "label": "Aperture Ring",
+      "role": "identity",
+      "stage": 6,
+      "certainty": "inferred",
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.021,
+            0.0
+          ],
+          [
+            0.0215,
+            0.0007
+          ],
+          [
+            0.0215,
+            0.0052
+          ],
+          [
+            0.0205,
+            0.006
+          ],
+          [
+            0.0172,
+            0.006
+          ],
+          [
+            0.0172,
+            0.0
+          ],
+          [
+            0.021,
+            0.0
+          ]
+        ],
+        "segments": 48,
+        "meridians": 8
+      },
+      "at": [
+        0.0053,
+        0.031,
+        0.03475
+      ],
+      "source": "lens-photo",
+      "basis": [
+        "lens-profile"
+      ],
+      "note": "Measured visual approximation; see research.md. No outline coordinates are documented.",
+      "rotate": [
+        90,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "front-optical-head",
+      "label": "Front Optical Head",
+      "role": "identity",
+      "stage": 6,
+      "certainty": "inferred",
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.0218,
+            0.0
+          ],
+          [
+            0.022,
+            0.0008
+          ],
+          [
+            0.022,
+            0.005
+          ],
+          [
+            0.0214,
+            0.0058
+          ],
+          [
+            0.0195,
+            0.0058
+          ],
+          [
+            0.0195,
+            0.0048
+          ],
+          [
+            0.017,
+            0.0048
+          ],
+          [
+            0.017,
+            0.0
+          ],
+          [
+            0.0218,
+            0.0
+          ]
+        ],
+        "segments": 48,
+        "meridians": 8
+      },
+      "at": [
+        0.0053,
+        0.031,
+        0.03975
+      ],
+      "source": "a2",
+      "basis": [
+        "lens-profile"
+      ],
+      "note": "A2/A6 and Leica Classic lens photo: stepped head; outer radius22 mm and internal profile inferred. Closed tip45.55 mm, open59.55 mm.",
+      "rotate": [
+        90,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "lens-name-annulus",
+      "label": "Lens Name Annulus",
+      "role": "detail",
+      "stage": 6,
+      "certainty": "inferred",
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.0205,
+        "height": 0.0006,
+        "segments": 40,
+        "ribs": 0,
+        "rings": 0
+      },
+      "at": [
+        0.0053,
+        0.031,
+        0.0443
+      ],
+      "source": "a2",
+      "basis": [
+        "lens-profile"
+      ],
+      "note": "Measured visual approximation; see research.md. No outline coordinates are documented.",
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "look": {
+        "fill": "none"
+      }
+    },
+    {
+      "id": "optical-element-1",
+      "label": "Optical Element 1",
+      "role": "identity",
+      "stage": 6,
+      "certainty": "inferred",
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.01155,
+            0.00015
+          ],
+          [
+            0.0165,
+            0.0007
+          ],
+          [
+            0.01551,
+            0.0014
+          ],
+          [
+            0.010725,
+            0.0016
+          ],
+          [
+            0.0,
+            0.0017
+          ]
+        ],
+        "segments": 48,
+        "meridians": 4
+      },
+      "at": [
+        0.0053,
+        0.031,
+        0.0426
+      ],
+      "source": "section",
+      "basis": [
+        "optical-elements",
+        "optical-groups",
+        "optical-profile"
+      ],
+      "note": "Section diagram inferred curvature/spacing; schematic element 1. Not a measured optical prescription.",
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "look": {
+        "fill": "glass",
+        "alpha": 0.75
+      }
+    },
+    {
+      "id": "optical-element-2",
+      "label": "Optical Element 2",
+      "role": "detail",
+      "stage": 6,
+      "certainty": "inferred",
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0112,
+            0.00015
+          ],
+          [
+            0.016,
+            0.0008
+          ],
+          [
+            0.01504,
+            0.0016
+          ],
+          [
+            0.0104,
+            0.0018
+          ],
+          [
+            0.0,
+            0.0019
+          ]
+        ],
+        "segments": 48,
+        "meridians": 4
+      },
+      "at": [
+        0.0053,
+        0.031,
+        0.0404
+      ],
+      "source": "section",
+      "basis": [
+        "optical-elements",
+        "optical-groups",
+        "optical-profile"
+      ],
+      "note": "Section diagram inferred curvature/spacing; schematic element 2. Not a measured optical prescription.",
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "look": {
+        "fill": "glass",
+        "alpha": 0.3
+      }
+    },
+    {
+      "id": "optical-element-3",
+      "label": "Optical Element 3",
+      "role": "detail",
+      "stage": 6,
+      "certainty": "inferred",
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.00889,
+            0.00015
+          ],
+          [
+            0.0127,
+            0.00035
+          ],
+          [
+            0.011938,
+            0.0007
+          ],
+          [
+            0.008255,
+            0.0009
+          ],
+          [
+            0.0,
+            0.001
+          ]
+        ],
+        "segments": 48,
+        "meridians": 4
+      },
+      "at": [
+        0.0053,
+        0.031,
+        0.0385
+      ],
+      "source": "section",
+      "basis": [
+        "optical-elements",
+        "optical-groups",
+        "optical-profile"
+      ],
+      "note": "Section diagram inferred curvature/spacing; schematic element 3. Not a measured optical prescription.",
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "look": {
+        "fill": "glass",
+        "alpha": 0.3
+      }
+    },
+    {
+      "id": "optical-element-4",
+      "label": "Optical Element 4",
+      "role": "detail",
+      "stage": 6,
+      "certainty": "inferred",
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.00889,
+            0.00015
+          ],
+          [
+            0.0127,
+            0.00035
+          ],
+          [
+            0.011938,
+            0.0007
+          ],
+          [
+            0.008255,
+            0.0009
+          ],
+          [
+            0.0,
+            0.001
+          ]
+        ],
+        "segments": 48,
+        "meridians": 4
+      },
+      "at": [
+        0.0053,
+        0.031,
+        0.0378
+      ],
+      "source": "section",
+      "basis": [
+        "optical-elements",
+        "optical-groups",
+        "optical-profile"
+      ],
+      "note": "Section diagram inferred curvature/spacing; schematic element 4. Not a measured optical prescription.",
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "look": {
+        "fill": "glass",
+        "alpha": 0.3
+      }
+    },
+    {
+      "id": "optical-element-5",
+      "label": "Optical Element 5",
+      "role": "detail",
+      "stage": 6,
+      "certainty": "inferred",
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.00861,
+            0.00015
+          ],
+          [
+            0.0123,
+            0.00055
+          ],
+          [
+            0.011562,
+            0.0011
+          ],
+          [
+            0.007995,
+            0.0013
+          ],
+          [
+            0.0,
+            0.0014
+          ]
+        ],
+        "segments": 48,
+        "meridians": 4
+      },
+      "at": [
+        0.0053,
+        0.031,
+        0.0359
+      ],
+      "source": "section",
+      "basis": [
+        "optical-elements",
+        "optical-groups",
+        "optical-profile"
+      ],
+      "note": "Section diagram inferred curvature/spacing; schematic element 5. Not a measured optical prescription.",
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "look": {
+        "fill": "glass",
+        "alpha": 0.3
+      }
+    },
+    {
+      "id": "optical-element-6",
+      "label": "Optical Element 6",
+      "role": "detail",
+      "stage": 6,
+      "certainty": "inferred",
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.00728,
+            0.00015
+          ],
+          [
+            0.0104,
+            0.0007
+          ],
+          [
+            0.009776,
+            0.0014
+          ],
+          [
+            0.00676,
+            0.0016
+          ],
+          [
+            0.0,
+            0.0017
+          ]
+        ],
+        "segments": 48,
+        "meridians": 4
+      },
+      "at": [
+        0.0053,
+        0.031,
+        0.0314
+      ],
+      "source": "section",
+      "basis": [
+        "optical-elements",
+        "optical-groups",
+        "optical-profile"
+      ],
+      "note": "Section diagram inferred curvature/spacing; schematic element 6. Not a measured optical prescription.",
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "look": {
+        "fill": "glass",
+        "alpha": 0.3
+      }
+    },
+    {
+      "id": "optical-element-7",
+      "label": "Optical Element 7",
+      "role": "detail",
+      "stage": 6,
+      "certainty": "inferred",
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0084,
+            0.00015
+          ],
+          [
+            0.012,
+            0.00055
+          ],
+          [
+            0.01128,
+            0.0011
+          ],
+          [
+            0.0078,
+            0.0013
+          ],
+          [
+            0.0,
+            0.0014
+          ]
+        ],
+        "segments": 48,
+        "meridians": 4
+      },
+      "at": [
+        0.0053,
+        0.031,
+        0.0286
+      ],
+      "source": "section",
+      "basis": [
+        "optical-elements",
+        "optical-groups",
+        "optical-profile"
+      ],
+      "note": "Section diagram inferred curvature/spacing; schematic element 7. Not a measured optical prescription.",
+      "rotate": [
+        90,
+        0,
+        0
+      ],
+      "look": {
+        "fill": "glass",
+        "alpha": 0.3
+      }
+    },
+    {
+      "id": "iris-blade-1",
+      "label": "Iris Blade 1",
+      "role": "detail",
+      "stage": 6,
+      "certainty": "inferred",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.0151,
+            0.031,
+            0.034
+          ],
+          [
+            0.0112083,
+            0.0337097,
+            0.034
+          ],
+          [
+            0.0103542,
+            0.0350872,
+            0.034
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source": "section",
+      "basis": [
+        "diaphragm-blades",
+        "optical-profile"
+      ],
+      "note": "Ten blades documented by lens-spec; individual outlines are schematic inferences, not traced blade engineering."
+    },
+    {
+      "id": "iris-blade-2",
+      "label": "Iris Blade 2",
+      "role": "detail",
+      "stage": 6,
+      "certainty": "inferred",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.0132284,
+            0.0367603,
+            0.034
+          ],
+          [
+            0.0084872,
+            0.036665,
+            0.034
+          ],
+          [
+            0.0069866,
+            0.0372774,
+            0.034
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source": "section",
+      "basis": [
+        "diaphragm-blades",
+        "optical-profile"
+      ],
+      "note": "Ten blades documented by lens-spec; individual outlines are schematic inferences, not traced blade engineering."
+    },
+    {
+      "id": "iris-blade-3",
+      "label": "Iris Blade 3",
+      "role": "detail",
+      "stage": 6,
+      "certainty": "inferred",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.0083284,
+            0.0403204,
+            0.034
+          ],
+          [
+            0.0045487,
+            0.0374564,
+            0.034
+          ],
+          [
+            0.0029747,
+            0.0370699,
+            0.034
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source": "section",
+      "basis": [
+        "diaphragm-blades",
+        "optical-profile"
+      ],
+      "note": "Ten blades documented by lens-spec; individual outlines are schematic inferences, not traced blade engineering."
+    },
+    {
+      "id": "iris-blade-4",
+      "label": "Iris Blade 4",
+      "role": "detail",
+      "stage": 6,
+      "certainty": "inferred",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.0022716,
+            0.0403204,
+            0.034
+          ],
+          [
+            0.0008972,
+            0.0357818,
+            0.034
+          ],
+          [
+            -0.000149,
+            0.0345439,
+            0.034
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source": "section",
+      "basis": [
+        "diaphragm-blades",
+        "optical-profile"
+      ],
+      "note": "Ten blades documented by lens-spec; individual outlines are schematic inferences, not traced blade engineering."
+    },
+    {
+      "id": "iris-blade-5",
+      "label": "Iris Blade 5",
+      "role": "detail",
+      "stage": 6,
+      "certainty": "inferred",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.0026284,
+            0.0367603,
+            0.034
+          ],
+          [
+            -0.0010726,
+            0.0322806,
+            0.034
+          ],
+          [
+            -0.0011913,
+            0.0306642,
+            0.034
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source": "section",
+      "basis": [
+        "diaphragm-blades",
+        "optical-profile"
+      ],
+      "note": "Ten blades documented by lens-spec; individual outlines are schematic inferences, not traced blade engineering."
+    },
+    {
+      "id": "iris-blade-6",
+      "label": "Iris Blade 6",
+      "role": "detail",
+      "stage": 6,
+      "certainty": "inferred",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.0045,
+            0.031,
+            0.034
+          ],
+          [
+            -0.0006083,
+            0.0282903,
+            0.034
+          ],
+          [
+            0.0002458,
+            0.0269128,
+            0.034
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source": "section",
+      "basis": [
+        "diaphragm-blades",
+        "optical-profile"
+      ],
+      "note": "Ten blades documented by lens-spec; individual outlines are schematic inferences, not traced blade engineering."
+    },
+    {
+      "id": "iris-blade-7",
+      "label": "Iris Blade 7",
+      "role": "detail",
+      "stage": 6,
+      "certainty": "inferred",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.0026284,
+            0.0252397,
+            0.034
+          ],
+          [
+            0.0021128,
+            0.025335,
+            0.034
+          ],
+          [
+            0.0036134,
+            0.0247226,
+            0.034
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source": "section",
+      "basis": [
+        "diaphragm-blades",
+        "optical-profile"
+      ],
+      "note": "Ten blades documented by lens-spec; individual outlines are schematic inferences, not traced blade engineering."
+    },
+    {
+      "id": "iris-blade-8",
+      "label": "Iris Blade 8",
+      "role": "detail",
+      "stage": 6,
+      "certainty": "inferred",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.0022716,
+            0.0216796,
+            0.034
+          ],
+          [
+            0.0060513,
+            0.0245436,
+            0.034
+          ],
+          [
+            0.0076253,
+            0.0249301,
+            0.034
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source": "section",
+      "basis": [
+        "diaphragm-blades",
+        "optical-profile"
+      ],
+      "note": "Ten blades documented by lens-spec; individual outlines are schematic inferences, not traced blade engineering."
+    },
+    {
+      "id": "iris-blade-9",
+      "label": "Iris Blade 9",
+      "role": "detail",
+      "stage": 6,
+      "certainty": "inferred",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.0083284,
+            0.0216796,
+            0.034
+          ],
+          [
+            0.0097028,
+            0.0262182,
+            0.034
+          ],
+          [
+            0.010749,
+            0.0274561,
+            0.034
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source": "section",
+      "basis": [
+        "diaphragm-blades",
+        "optical-profile"
+      ],
+      "note": "Ten blades documented by lens-spec; individual outlines are schematic inferences, not traced blade engineering."
+    },
+    {
+      "id": "iris-blade-10",
+      "label": "Iris Blade 10",
+      "role": "detail",
+      "stage": 6,
+      "certainty": "inferred",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.0132284,
+            0.0252397,
+            0.034
+          ],
+          [
+            0.0116726,
+            0.0297194,
+            0.034
+          ],
+          [
+            0.0117913,
+            0.0313358,
+            0.034
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source": "section",
+      "basis": [
+        "diaphragm-blades",
+        "optical-profile"
+      ],
+      "note": "Ten blades documented by lens-spec; individual outlines are schematic inferences, not traced blade engineering."
+    },
+    {
+      "id": "infinity-lock-arm",
+      "label": "Infinity Lock Arm",
+      "role": "identity",
+      "stage": 4,
+      "certainty": "inferred",
+      "shape": {
+        "type": "extrude",
+        "profile": [
+          [
+            -0.018,
+            -0.016
+          ],
+          [
+            -0.024,
+            -0.019
+          ],
+          [
+            -0.027,
+            -0.014
+          ],
+          [
+            -0.025,
+            -0.008
+          ],
+          [
+            -0.02,
+            -0.009
+          ]
+        ],
+        "height": 0.002,
+        "axis": "z"
+      },
+      "at": [
+        0.0053,
+        0.031,
+        0.028
+      ],
+      "source": "a2",
+      "basis": [
+        "lens-profile"
+      ],
+      "note": "A2 triangular lower-left infinity-lock arm, fitted to fixed focusing ring."
+    },
+    {
+      "id": "infinity-lock-button",
+      "label": "Infinity Lock Button",
+      "role": "detail",
+      "stage": 4,
+      "certainty": "inferred",
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.003,
+        "height": 0.003,
+        "segments": 40,
+        "ribs": 0,
+        "rings": 1
+      },
+      "at": [
+        -0.019,
+        0.016,
+        0.0293
+      ],
+      "source": "a2",
+      "basis": [
+        "lens-profile"
+      ],
+      "note": "Measured visual approximation; see research.md. No outline coordinates are documented.",
+      "rotate": [
+        90,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "self-timer-lever",
+      "label": "Self Timer Lever",
+      "role": "identity",
+      "stage": 3,
+      "certainty": "inferred",
+      "shape": {
+        "type": "extrude",
+        "profile": [
+          [
+            -0.005,
+            -0.001
+          ],
+          [
+            -0.004,
+            -0.004
+          ],
+          [
+            0.0,
+            -0.005
+          ],
+          [
+            0.004,
+            -0.004
+          ],
+          [
+            0.005,
+            -0.001
+          ],
+          [
+            0.004,
+            0.003
+          ],
+          [
+            0.002,
+            0.017
+          ],
+          [
+            0.0,
+            0.019
+          ],
+          [
+            -0.002,
+            0.017
+          ],
+          [
+            -0.004,
+            0.003
+          ]
+        ],
+        "height": 0.0018,
+        "axis": "z"
+      },
+      "at": [
+        -0.0449,
+        0.022,
+        0.0171
+      ],
+      "source": "a4",
+      "basis": [
+        "front-layout"
+      ],
+      "note": "A4 pear-shaped self-timer silhouette; paddle reaches y41 mm, pivot at22 mm. Inferred traced profile."
+    },
+    {
+      "id": "timer-pivot",
+      "label": "Timer Pivot",
+      "role": "detail",
+      "stage": 4,
+      "certainty": "inferred",
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.004,
+        "height": 0.0015,
+        "segments": 40,
+        "ribs": 0,
+        "rings": 0
+      },
+      "at": [
+        -0.0449,
+        0.022,
+        0.0188
+      ],
+      "source": "a4",
+      "basis": [
+        "front-layout"
+      ],
+      "note": "Measured visual approximation; see research.md. No outline coordinates are documented.",
+      "rotate": [
+        90,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "timer-upper-button",
+      "label": "Timer Upper Button",
+      "role": "detail",
+      "stage": 4,
+      "certainty": "inferred",
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.0025,
+        "height": 0.001,
+        "segments": 40,
+        "ribs": 0,
+        "rings": 0
+      },
+      "at": [
+        -0.0449,
+        0.039,
+        0.0188
+      ],
+      "source": "a4",
+      "basis": [
+        "front-layout"
+      ],
+      "note": "Measured visual approximation; see research.md. No outline coordinates are documented.",
+      "rotate": [
+        90,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "rewind-release-lever",
+      "label": "Rewind Release Lever",
+      "role": "detail",
+      "stage": 3,
+      "certainty": "inferred",
+      "shape": {
+        "type": "extrude",
+        "profile": [
+          [
+            -0.0024,
+            -0.001
+          ],
+          [
+            -0.0015,
+            -0.0025
+          ],
+          [
+            0.0015,
+            -0.0025
+          ],
+          [
+            0.0024,
+            -0.001
+          ],
+          [
+            0.0018,
+            0.008
+          ],
+          [
+            0.0,
+            0.0095
+          ],
+          [
+            -0.0018,
+            0.008
+          ]
+        ],
+        "height": 0.0015,
+        "axis": "z"
+      },
+      "at": [
+        -0.0443,
+        0.053,
+        0.017
+      ],
+      "source": "a4",
+      "basis": [
+        "front-layout"
+      ],
+      "note": "Measured visual approximation; see research.md. No outline coordinates are documented."
+    },
+    {
+      "id": "lens-release-button",
+      "label": "Lens Release Button",
+      "role": "detail",
+      "stage": 3,
+      "certainty": "inferred",
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.0034,
+        "height": 0.0025,
+        "segments": 40,
+        "ribs": 0,
+        "rings": 1
+      },
+      "at": [
+        -0.0255,
+        0.0305,
+        0.0172
+      ],
+      "source": "a4",
+      "basis": [
+        "front-layout"
+      ],
+      "note": "Measured visual approximation; see research.md. No outline coordinates are documented.",
+      "rotate": [
+        90,
+        0,
+        0
+      ]
+    },
+    {
+      "id": "shutter-release-hub",
+      "label": "Shutter Release Hub",
+      "role": "identity",
+      "stage": 3,
+      "certainty": "inferred",
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.007,
+        "height": 0.004,
+        "segments": 40,
+        "ribs": 0,
+        "rings": 0
+      },
+      "at": [
+        -0.0445,
+        0.069,
+        0.0
+      ],
+      "source": "a9",
+      "basis": [
+        "top-layout"
+      ],
+      "note": "Measured visual approximation; see research.md. No outline coordinates are documented."
+    },
+    {
+      "id": "shutter-release-button",
+      "label": "Shutter Release Button",
+      "role": "detail",
+      "stage": 4,
+      "certainty": "inferred",
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.0037,
+        "height": 0.003,
+        "segments": 40,
+        "ribs": 0,
+        "rings": 1
+      },
+      "at": [
+        -0.0445,
+        0.073,
+        0.0
+      ],
+      "source": "a9",
+      "basis": [
+        "top-layout"
+      ],
+      "note": "Measured visual approximation; see research.md. No outline coordinates are documented."
+    },
+    {
+      "id": "frame-counter-rim",
+      "label": "Frame Counter Rim",
+      "role": "detail",
+      "stage": 3,
+      "certainty": "inferred",
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.0054,
+        "height": 0.0013,
+        "segments": 40,
+        "ribs": 0,
+        "rings": 0
+      },
+      "at": [
+        -0.0592,
+        0.069,
+        0.002
+      ],
+      "source": "a9",
+      "basis": [
+        "top-layout"
+      ],
+      "note": "Measured visual approximation; see research.md. No outline coordinates are documented."
+    },
+    {
+      "id": "frame-counter-face",
+      "label": "Frame Counter Face",
+      "role": "detail",
+      "stage": 4,
+      "certainty": "inferred",
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.0044,
+        "height": 0.0007,
+        "segments": 40,
+        "ribs": 0,
+        "rings": 0
+      },
+      "at": [
+        -0.0592,
+        0.0703,
+        0.002
+      ],
+      "source": "a9",
+      "basis": [
+        "top-layout"
+      ],
+      "note": "Measured visual approximation; see research.md. No outline coordinates are documented."
+    },
+    {
+      "id": "early-shutter-speed-dial",
+      "label": "Early Shutter Speed Dial",
+      "role": "identity",
+      "stage": 3,
+      "certainty": "inferred",
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.0081,
+        "height": 0.005,
+        "segments": 40,
+        "ribs": 20,
+        "rings": 1
+      },
+      "at": [
+        -0.0182,
+        0.069,
+        0.0
+      ],
+      "source": "a9",
+      "basis": [
+        "top-layout"
+      ],
+      "note": "Measured visual approximation; see research.md. No outline coordinates are documented."
+    },
+    {
+      "id": "rewind-knob",
+      "label": "Rewind Knob",
+      "role": "identity",
+      "stage": 3,
+      "certainty": "inferred",
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.0067,
+        "height": 0.0072,
+        "segments": 40,
+        "ribs": 16,
+        "rings": 1
+      },
+      "at": [
+        0.061,
+        0.069,
+        0.0
+      ],
+      "source": "a9",
+      "basis": [
+        "top-layout"
+      ],
+      "note": "Measured visual approximation; see research.md. No outline coordinates are documented."
+    },
+    {
+      "id": "metal-double-stroke-advance",
+      "label": "Metal Double Stroke Advance",
+      "role": "identity",
+      "stage": 4,
+      "certainty": "inferred",
+      "shape": {
+        "type": "extrude",
+        "profile": [
+          [
+            -0.0445,
+            -0.006
+          ],
+          [
+            -0.039,
+            -0.005
+          ],
+          [
+            -0.035,
+            -0.002
+          ],
+          [
+            -0.031,
+            0.003
+          ],
+          [
+            -0.026,
+            0.008
+          ],
+          [
+            -0.023,
+            0.011
+          ],
+          [
+            -0.024,
+            0.014
+          ],
+          [
+            -0.027,
+            0.014
+          ],
+          [
+            -0.032,
+            0.01
+          ],
+          [
+            -0.038,
+            0.005
+          ],
+          [
+            -0.044,
+            0.003
+          ],
+          [
+            -0.049,
+            0.003
+          ],
+          [
+            -0.051,
+            0.0
+          ],
+          [
+            -0.049,
+            -0.004
+          ]
+        ],
+        "height": 0.0024,
+        "axis": "y"
+      },
+      "at": [
+        0.0,
+        0.072,
+        -0.003
+      ],
+      "source": "a9",
+      "basis": [
+        "early-advance",
+        "top-layout"
+      ],
+      "note": "A9 curved tapered metal lever silhouette, no later plastic thumb tip. Closed/rest position; the two-stroke operating cycle is documented, not continuously motorized."
+    },
+    {
+      "id": "cold-shoe-floor",
+      "label": "Cold Shoe Floor",
+      "role": "structure",
+      "stage": 3,
+      "certainty": "inferred",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.018,
+          0.0012,
+          0.018
+        ]
+      },
+      "at": [
+        0.0019,
+        0.0774,
+        -0.006
+      ],
+      "source": "a9",
+      "basis": [
+        "top-layout"
+      ],
+      "note": "Measured visual approximation; see research.md. No outline coordinates are documented."
+    },
+    {
+      "id": "cold-shoe-left-rail",
+      "label": "Cold Shoe Left Rail",
+      "role": "structure",
+      "stage": 4,
+      "certainty": "inferred",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.002,
+          0.0023,
+          0.018
+        ]
+      },
+      "at": [
+        -0.0063,
+        0.079,
+        -0.006
+      ],
+      "source": "a9",
+      "basis": [
+        "top-layout"
+      ],
+      "note": "Measured visual approximation; see research.md. No outline coordinates are documented."
+    },
+    {
+      "id": "cold-shoe-right-rail",
+      "label": "Cold Shoe Right Rail",
+      "role": "structure",
+      "stage": 4,
+      "certainty": "inferred",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.002,
+          0.0023,
+          0.018
+        ]
+      },
+      "at": [
+        0.0101,
+        0.079,
+        -0.006
+      ],
+      "source": "a9",
+      "basis": [
+        "top-layout"
+      ],
+      "note": "Measured visual approximation; see research.md. No outline coordinates are documented."
+    },
+    {
+      "id": "left-strap-eye",
+      "label": "Left Strap Eye",
+      "role": "structure",
+      "stage": 3,
+      "certainty": "inferred",
+      "shape": {
+        "type": "tube",
+        "path": [
+          [
+            -0.0679,
+            0.044,
+            -0.003
+          ],
+          [
+            -0.072,
+            0.05,
+            -0.003
+          ],
+          [
+            -0.073,
+            0.054,
+            -0.003
+          ],
+          [
+            -0.071,
+            0.057,
+            -0.003
+          ],
+          [
+            -0.068,
+            0.056,
+            -0.003
+          ],
+          [
+            -0.0679,
+            0.044,
+            -0.003
+          ]
+        ],
+        "radius": 0.00125,
+        "sides": 6,
+        "samples": 5,
+        "smooth": false,
+        "caps": true,
+        "longitudinal": 2,
+        "ring_every": 0
+      },
+      "at": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source": "a4",
+      "basis": [
+        "body-outline"
+      ],
+      "note": "A4/A8 elongated pierced early strap lug. Rounded tube is an inferred outline approximation to the forged bracket."
+    },
+    {
+      "id": "right-strap-eye",
+      "label": "Right Strap Eye",
+      "role": "structure",
+      "stage": 3,
+      "certainty": "inferred",
+      "shape": {
+        "type": "tube",
+        "path": [
+          [
+            0.0679,
+            0.044,
+            -0.003
+          ],
+          [
+            0.072,
+            0.05,
+            -0.003
+          ],
+          [
+            0.073,
+            0.054,
+            -0.003
+          ],
+          [
+            0.071,
+            0.057,
+            -0.003
+          ],
+          [
+            0.068,
+            0.056,
+            -0.003
+          ],
+          [
+            0.0679,
+            0.044,
+            -0.003
+          ]
+        ],
+        "radius": 0.00125,
+        "sides": 6,
+        "samples": 5,
+        "smooth": false,
+        "caps": true,
+        "longitudinal": 2,
+        "ring_every": 0
+      },
+      "at": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source": "a4",
+      "basis": [
+        "body-outline"
+      ],
+      "note": "A4/A8 elongated pierced early strap lug. Rounded tube is an inferred outline approximation to the forged bracket."
+    },
+    {
+      "id": "speed-tick-0",
+      "label": "Speed Tick 0",
+      "role": "detail",
+      "stage": 7,
+      "certainty": "inferred",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.0121,
+            0.0741,
+            0.0
+          ],
+          [
+            -0.0109,
+            0.0741,
+            0.0
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source": "a9",
+      "basis": [
+        "top-layout"
+      ],
+      "note": "A9 observed engraved scale, evenly-spaced simplification; inferred tick positions."
+    },
+    {
+      "id": "speed-tick-1",
+      "label": "Speed Tick 1",
+      "role": "detail",
+      "stage": 7,
+      "certainty": "inferred",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.013265,
+            0.0741,
+            0.0035855
+          ],
+          [
+            -0.0122942,
+            0.0741,
+            0.0042908
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source": "a9",
+      "basis": [
+        "top-layout"
+      ],
+      "note": "A9 observed engraved scale, evenly-spaced simplification; inferred tick positions."
+    },
+    {
+      "id": "speed-tick-2",
+      "label": "Speed Tick 2",
+      "role": "detail",
+      "stage": 7,
+      "certainty": "inferred",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.016315,
+            0.0741,
+            0.0058014
+          ],
+          [
+            -0.0159442,
+            0.0741,
+            0.0069427
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source": "a9",
+      "basis": [
+        "top-layout"
+      ],
+      "note": "A9 observed engraved scale, evenly-spaced simplification; inferred tick positions."
+    },
+    {
+      "id": "speed-tick-3",
+      "label": "Speed Tick 3",
+      "role": "detail",
+      "stage": 7,
+      "certainty": "inferred",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.020085,
+            0.0741,
+            0.0058014
+          ],
+          [
+            -0.0204558,
+            0.0741,
+            0.0069427
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source": "a9",
+      "basis": [
+        "top-layout"
+      ],
+      "note": "A9 observed engraved scale, evenly-spaced simplification; inferred tick positions."
+    },
+    {
+      "id": "speed-tick-4",
+      "label": "Speed Tick 4",
+      "role": "detail",
+      "stage": 7,
+      "certainty": "inferred",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.023135,
+            0.0741,
+            0.0035855
+          ],
+          [
+            -0.0241058,
+            0.0741,
+            0.0042908
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source": "a9",
+      "basis": [
+        "top-layout"
+      ],
+      "note": "A9 observed engraved scale, evenly-spaced simplification; inferred tick positions."
+    },
+    {
+      "id": "speed-tick-5",
+      "label": "Speed Tick 5",
+      "role": "detail",
+      "stage": 7,
+      "certainty": "inferred",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.0243,
+            0.0741,
+            0.0
+          ],
+          [
+            -0.0255,
+            0.0741,
+            0.0
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source": "a9",
+      "basis": [
+        "top-layout"
+      ],
+      "note": "A9 observed engraved scale, evenly-spaced simplification; inferred tick positions."
+    },
+    {
+      "id": "speed-tick-6",
+      "label": "Speed Tick 6",
+      "role": "detail",
+      "stage": 7,
+      "certainty": "inferred",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.023135,
+            0.0741,
+            -0.0035855
+          ],
+          [
+            -0.0241058,
+            0.0741,
+            -0.0042908
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source": "a9",
+      "basis": [
+        "top-layout"
+      ],
+      "note": "A9 observed engraved scale, evenly-spaced simplification; inferred tick positions."
+    },
+    {
+      "id": "speed-tick-7",
+      "label": "Speed Tick 7",
+      "role": "detail",
+      "stage": 7,
+      "certainty": "inferred",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.020085,
+            0.0741,
+            -0.0058014
+          ],
+          [
+            -0.0204558,
+            0.0741,
+            -0.0069427
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source": "a9",
+      "basis": [
+        "top-layout"
+      ],
+      "note": "A9 observed engraved scale, evenly-spaced simplification; inferred tick positions."
+    },
+    {
+      "id": "speed-tick-8",
+      "label": "Speed Tick 8",
+      "role": "detail",
+      "stage": 7,
+      "certainty": "inferred",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.016315,
+            0.0741,
+            -0.0058014
+          ],
+          [
+            -0.0159442,
+            0.0741,
+            -0.0069427
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source": "a9",
+      "basis": [
+        "top-layout"
+      ],
+      "note": "A9 observed engraved scale, evenly-spaced simplification; inferred tick positions."
+    },
+    {
+      "id": "speed-tick-9",
+      "label": "Speed Tick 9",
+      "role": "detail",
+      "stage": 7,
+      "certainty": "inferred",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.013265,
+            0.0741,
+            -0.0035855
+          ],
+          [
+            -0.0122942,
+            0.0741,
+            -0.0042908
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source": "a9",
+      "basis": [
+        "top-layout"
+      ],
+      "note": "A9 observed engraved scale, evenly-spaced simplification; inferred tick positions."
+    },
+    {
+      "id": "counter-tick-0",
+      "label": "Counter Tick 0",
+      "role": "detail",
+      "stage": 7,
+      "certainty": "inferred",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.0564,
+            0.0711,
+            0.002
+          ],
+          [
+            -0.0552,
+            0.0711,
+            0.002
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source": "a9",
+      "basis": [
+        "top-layout"
+      ],
+      "note": "A9 observed engraved scale, evenly-spaced simplification; inferred tick positions."
+    },
+    {
+      "id": "counter-tick-1",
+      "label": "Counter Tick 1",
+      "role": "detail",
+      "stage": 7,
+      "certainty": "inferred",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.0572201,
+            0.0711,
+            0.0039799
+          ],
+          [
+            -0.0563716,
+            0.0711,
+            0.0048284
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source": "a9",
+      "basis": [
+        "top-layout"
+      ],
+      "note": "A9 observed engraved scale, evenly-spaced simplification; inferred tick positions."
+    },
+    {
+      "id": "counter-tick-2",
+      "label": "Counter Tick 2",
+      "role": "detail",
+      "stage": 7,
+      "certainty": "inferred",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.0592,
+            0.0711,
+            0.0048
+          ],
+          [
+            -0.0592,
+            0.0711,
+            0.006
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source": "a9",
+      "basis": [
+        "top-layout"
+      ],
+      "note": "A9 observed engraved scale, evenly-spaced simplification; inferred tick positions."
+    },
+    {
+      "id": "counter-tick-3",
+      "label": "Counter Tick 3",
+      "role": "detail",
+      "stage": 7,
+      "certainty": "inferred",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.0611799,
+            0.0711,
+            0.0039799
+          ],
+          [
+            -0.0620284,
+            0.0711,
+            0.0048284
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source": "a9",
+      "basis": [
+        "top-layout"
+      ],
+      "note": "A9 observed engraved scale, evenly-spaced simplification; inferred tick positions."
+    },
+    {
+      "id": "counter-tick-4",
+      "label": "Counter Tick 4",
+      "role": "detail",
+      "stage": 7,
+      "certainty": "inferred",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.062,
+            0.0711,
+            0.002
+          ],
+          [
+            -0.0632,
+            0.0711,
+            0.002
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source": "a9",
+      "basis": [
+        "top-layout"
+      ],
+      "note": "A9 observed engraved scale, evenly-spaced simplification; inferred tick positions."
+    },
+    {
+      "id": "counter-tick-5",
+      "label": "Counter Tick 5",
+      "role": "detail",
+      "stage": 7,
+      "certainty": "inferred",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.0611799,
+            0.0711,
+            2.01e-05
+          ],
+          [
+            -0.0620284,
+            0.0711,
+            -0.0008284
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source": "a9",
+      "basis": [
+        "top-layout"
+      ],
+      "note": "A9 observed engraved scale, evenly-spaced simplification; inferred tick positions."
+    },
+    {
+      "id": "counter-tick-6",
+      "label": "Counter Tick 6",
+      "role": "detail",
+      "stage": 7,
+      "certainty": "inferred",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.0592,
+            0.0711,
+            -0.0008
+          ],
+          [
+            -0.0592,
+            0.0711,
+            -0.002
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source": "a9",
+      "basis": [
+        "top-layout"
+      ],
+      "note": "A9 observed engraved scale, evenly-spaced simplification; inferred tick positions."
+    },
+    {
+      "id": "counter-tick-7",
+      "label": "Counter Tick 7",
+      "role": "detail",
+      "stage": 7,
+      "certainty": "inferred",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.0572201,
+            0.0711,
+            2.01e-05
+          ],
+          [
+            -0.0563716,
+            0.0711,
+            -0.0008284
+          ]
+        ],
+        "closed": false,
+        "smooth": false
+      },
+      "at": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source": "a9",
+      "basis": [
+        "top-layout"
+      ],
+      "note": "A9 observed engraved scale, evenly-spaced simplification; inferred tick positions."
+    },
+    {
+      "id": "top-engraving-field",
+      "label": "Top Engraving Field",
+      "role": "detail",
+      "stage": 7,
+      "certainty": "inferred",
+      "shape": {
+        "type": "plane",
+        "size": [
+          0.047,
+          0.025
+        ]
+      },
+      "at": [
+        0.028,
+        0.07712,
+        0.0
+      ],
+      "source": "a9",
+      "basis": [
+        "top-maker",
+        "top-origin"
+      ],
+      "note": "Measured visual approximation; see research.md. No outline coordinates are documented.",
+      "rotate": [
+        -90,
+        0,
+        0
+      ],
+      "look": {
+        "line": "none",
+        "fill": "none"
+      }
+    }
+  ],
+  "presentation": {
+    "framing": {
+      "yaw": -27,
+      "pitch": 19,
+      "fit": 1.06
+    },
+    "views": [
+      {
+        "id": "open",
+        "label": "Summicron deployed",
+        "yaw": -32,
+        "pitch": 15,
+        "distance": 1.05
+      },
+      {
+        "id": "finder",
+        "label": "M3 three-window finder",
+        "yaw": 8,
+        "pitch": 7,
+        "distance": 2.8,
+        "target": "main-viewfinder-bezel"
+      },
+      {
+        "id": "lens",
+        "label": "Collapsible Summicron",
+        "yaw": -20,
+        "pitch": 12,
+        "distance": 2,
+        "target": "front-optical-head"
+      },
+      {
+        "id": "controls",
+        "label": "Early double-stroke controls",
+        "yaw": 155,
+        "pitch": 65,
+        "distance": 1.08
+      },
+      {
+        "id": "rear-detail",
+        "label": "Film reminder and ocular",
+        "yaw": 170,
+        "pitch": 17,
+        "distance": 1.05
+      },
+      {
+        "id": "side-section",
+        "label": "Collapsible lens profile",
+        "yaw": 88,
+        "pitch": 5,
+        "distance": 1.03
+      }
+    ],
+    "still_pose": "open",
+    "atmosphere": {
+      "haze": 0.15,
+      "scanlines": false,
+      "vignette": true,
+      "grid": false,
+      "projector": false,
+      "motes": 0
+    },
+    "occlusion": "xray",
+    "certainty_style": "subtle",
+    "float": 0
+  },
+  "animation": {
+    "assembly": {
+      "style": "ceremony",
+      "seconds": 9,
+      "interference": false
+    },
+    "idle": {
+      "life": "calm",
+      "events": [
+        "scan",
+        "shimmer"
+      ],
+      "cadence": [
+        12,
+        21
+      ],
+      "strength": 0.22
+    },
+    "camera": {
+      "drift": 2,
+      "breathe": 0.012,
+      "tour": [
+        {
+          "view": "lens",
+          "at": 16,
+          "fly": 3.5
+        },
+        {
+          "view": "controls",
+          "at": 25,
+          "fly": 4
+        },
+        {
+          "view": "rear-detail",
+          "at": 34,
+          "fly": 4
+        },
+        {
+          "view": "hero",
+          "at": 44,
+          "fly": 5
+        }
+      ]
+    },
+    "reduced_motion": "still"
+  },
+  "assets": [],
+  "labels": [
+    {
+      "id": "maker",
+      "part": "top-engraving-field",
+      "field": "top-maker",
+      "face": "front",
+      "region": [
+        0.08,
+        0.08,
+        0.92,
+        0.42
+      ],
+      "role": "title"
+    },
+    {
+      "id": "origin",
+      "part": "top-engraving-field",
+      "field": "top-origin",
+      "face": "front",
+      "region": [
+        0.03,
+        0.55,
+        0.97,
+        0.95
+      ],
+      "role": "meta"
+    },
+    {
+      "id": "lens-inscription",
+      "part": "lens-name-annulus",
+      "field": "lens",
+      "face": "top",
+      "region": [
+        0.18,
+        0.02,
+        0.82,
+        0.15
+      ],
+      "role": "meta"
+    },
+    {
+      "id": "rear-asa",
+      "part": "film-reminder-rim",
+      "field": "film-reminder",
+      "face": "top",
+      "region": [
+        0.2,
+        0.76,
+        0.8,
+        0.94
+      ],
+      "role": "meta"
+    }
+  ],
+  "articulations": [
+    {
+      "id": "extend-collapsible-summicron",
+      "type": "slide",
+      "parts": [
+        "telescoping-inner-barrel",
+        "aperture-ring",
+        "front-optical-head",
+        "lens-name-annulus",
+        "optical-element-1",
+        "optical-element-2",
+        "optical-element-3",
+        "optical-element-4",
+        "optical-element-5",
+        "optical-element-6",
+        "optical-element-7",
+        "iris-blade-1",
+        "iris-blade-2",
+        "iris-blade-3",
+        "iris-blade-4",
+        "iris-blade-5",
+        "iris-blade-6",
+        "iris-blade-7",
+        "iris-blade-8",
+        "iris-blade-9",
+        "iris-blade-10"
+      ],
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "amount": 0.014,
+      "order": 0
+    },
+    {
+      "id": "illustrative-lock-turn",
+      "type": "turn",
+      "parts": [
+        "telescoping-inner-barrel",
+        "aperture-ring",
+        "front-optical-head",
+        "lens-name-annulus",
+        "optical-element-1",
+        "optical-element-2",
+        "optical-element-3",
+        "optical-element-4",
+        "optical-element-5",
+        "optical-element-6",
+        "optical-element-7",
+        "iris-blade-1",
+        "iris-blade-2",
+        "iris-blade-3",
+        "iris-blade-4",
+        "iris-blade-5",
+        "iris-blade-6",
+        "iris-blade-7",
+        "iris-blade-8",
+        "iris-blade-9",
+        "iris-blade-10"
+      ],
+      "axis": [
+        0,
+        0,
+        1
+      ],
+      "pivot": [
+        0.0053,
+        0.031,
+        0.04
+      ],
+      "amount": 12,
+      "order": 1
+    }
+  ],
+  "annotations": [
+    {
+      "id": "finder-note",
+      "text": "Three-window M3 finder / outlines inferred",
+      "part": "main-viewfinder-bezel",
+      "offset": [
+        0.01,
+        0.012,
+        0
+      ]
+    },
+    {
+      "id": "lens-note",
+      "text": "Summicron 5 cm f/2 / 14 mm deployment inferred from 40–26 mm",
+      "part": "front-optical-head",
+      "offset": [
+        0.009,
+        -0.01,
+        0.015
+      ]
+    },
+    {
+      "id": "motion-note",
+      "text": "Manual pull-and-lock; opening choreography decorative",
+      "part": "telescoping-inner-barrel",
+      "offset": [
+        -0.01,
+        -0.02,
+        0.01
+      ]
+    },
+    {
+      "id": "body-note",
+      "text": "1954 double-stroke / no later frame selector",
+      "part": "early-raised-finder-housing",
+      "offset": [
+        0,
+        0.014,
+        0
+      ]
+    }
+  ],
+  "anchors": {
+    "front": {
+      "part": "main-viewfinder-glass",
+      "face": "front"
+    },
+    "base": {
+      "point": [
+        0,
+        0,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ]
+    }
+  }
+}

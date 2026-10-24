@@ -1,0 +1,2270 @@
+{
+ "format": "tessera-hologram",
+ "version": 2,
+ "id": "arturia-minifreak",
+ "title": "Arturia MiniFreak \u2014 polyphonic hybrid synthesizer",
+ "subject": {
+  "category": "machine",
+  "summary": "Arturia's 6-voice hybrid synth: 37 slim keys with aftertouch, two digital engines into a polyphonic analog filter, a 7 x 13 modulation matrix, OLED display, 16 step buttons and two touch strips beside the keybed. Overall size, layout and features are documented by Arturia; panel proportions, key widths and control spacings are estimated from them.",
+  "accuracy": "approximate",
+  "synthetic": false
+ },
+ "units": "m",
+ "seed": 578,
+ "sources": [
+  {
+   "id": "request",
+   "kind": "user_request",
+   "rights": "user_private",
+   "title": "Public showcase request: a hologram of an Arturia MiniFreak"
+  },
+  {
+   "id": "arturia-product",
+   "kind": "document",
+   "rights": "reference_only",
+   "title": "Arturia MiniFreak product page: overview, details and specifications",
+   "ref": "https://www.arturia.com/products/hardware-synths/minifreak/overview and .../details (size 578 x 55 x 231 mm, 2.94 kg, 37 slim keys, 2 engines, analog filters, 3 FX slots, OLED, 64-step sequencer)"
+  },
+  {
+   "id": "arturia-manual",
+   "kind": "document",
+   "rights": "reference_only",
+   "title": "Arturia MiniFreak User Manual 3.0.0 EN: front panel, touch strips, rear panel",
+   "ref": "https://downloads.arturia.net/products/minifreak/manual/minifreak_Manual_1_0_0_EN.pdf (sections 3.1-3.3, 12.7: panel order, 7x13 matrix, 30 capacitive buttons, two LED-ladder touch strips, connector list)"
+  }
+ ],
+ "facts": [
+  {
+   "key": "maker",
+   "value": "Arturia",
+   "certainty": "verified",
+   "source": "arturia-product"
+  },
+  {
+   "key": "model",
+   "value": "MiniFreak",
+   "certainty": "verified",
+   "source": "arturia-product"
+  },
+  {
+   "key": "product_type",
+   "value": "6-voice polyphonic hybrid synthesizer with dual digital engines and analog filters",
+   "certainty": "verified",
+   "source": "arturia-product"
+  },
+  {
+   "key": "size.width",
+   "value": 0.578,
+   "unit": "m",
+   "certainty": "verified",
+   "source": "arturia-product",
+   "note": "Arturia: 578 mm wide"
+  },
+  {
+   "key": "size.depth",
+   "value": 0.231,
+   "unit": "m",
+   "certainty": "verified",
+   "source": "arturia-product",
+   "note": "Arturia: 231 mm deep"
+  },
+  {
+   "key": "size.height",
+   "value": 0.055,
+   "unit": "m",
+   "certainty": "verified",
+   "source": "arturia-product",
+   "note": "Arturia: 55 mm high"
+  },
+  {
+   "key": "weight",
+   "value": 2.94,
+   "unit": "kg",
+   "certainty": "verified",
+   "source": "arturia-product"
+  },
+  {
+   "key": "keyboard.keys",
+   "value": 37,
+   "certainty": "verified",
+   "source": "arturia-product",
+   "note": "37-note slim-key keybed"
+  },
+  {
+   "key": "keyboard.actions",
+   "value": "velocity-sensitive slim keys with aftertouch",
+   "certainty": "verified",
+   "source": "arturia-product"
+  },
+  {
+   "key": "keyboard.layout",
+   "value": "three octaves C to C: 22 white keys and 15 black keys",
+   "certainty": "inferred",
+   "note": "derived from the verified 37 notes"
+  },
+  {
+   "key": "engines",
+   "value": "2 digital sound engines; Engine 2 can process Engine 1",
+   "certainty": "verified",
+   "source": "arturia-product"
+  },
+  {
+   "key": "osc_modes",
+   "value": "22 oscillator modes in total across the two engines",
+   "certainty": "verified",
+   "source": "arturia-product",
+   "note": "Arturia pages differ (22 vs 23 modes); the manual counts 16 Engine 1 types and 21 Engine 2 types with shared modes. The count is not used in the geometry."
+  },
+  {
+   "key": "filter",
+   "value": "polyphonic analog state-variable filter: low-pass, band-pass, high-pass",
+   "certainty": "verified",
+   "source": "arturia-product"
+  },
+  {
+   "key": "envelope",
+   "value": "one ADSR envelope and one cycling envelope per voice",
+   "certainty": "verified",
+   "source": "arturia-product"
+  },
+  {
+   "key": "lfos",
+   "value": 2,
+   "certainty": "verified",
+   "source": "arturia-product"
+  },
+  {
+   "key": "modmatrix",
+   "value": "7 modulation sources by 13 destinations, 4 hardwired and 9 assignable",
+   "certainty": "verified",
+   "source": "arturia-manual",
+   "note": "manual section 3.1.1: seven rows of sources, up to thirteen destinations in seven columns"
+  },
+  {
+   "key": "fx",
+   "value": "3 digital FX slots, insert or send",
+   "certainty": "verified",
+   "source": "arturia-product"
+  },
+  {
+   "key": "sequencer",
+   "value": "64-step sequencer in 4 pages of 16, with 4 modulation lanes",
+   "certainty": "verified",
+   "source": "arturia-product"
+  },
+  {
+   "key": "arpeggiator",
+   "value": "arpeggiator with ratchet, octave randomize and other performance controls",
+   "certainty": "verified",
+   "source": "arturia-product"
+  },
+  {
+   "key": "display",
+   "value": "OLED display",
+   "certainty": "verified",
+   "source": "arturia-product"
+  },
+  {
+   "key": "touchstrips",
+   "value": "two capacitive touch strips with their own LED ladders, plus three mode buttons",
+   "certainty": "verified",
+   "source": "arturia-manual",
+   "note": "manual 3.2 and 12.7"
+  },
+  {
+   "key": "panel.layout",
+   "value": "top row: modulation matrix, oscillators, analog filter, digital effects, master; centre row: Shift/octave/hold/chord/glide, LFO, OLED display, cycling envelope, ADSR envelope; front row: arp/seq transport and 16 step buttons; touch strips at the left of the keybed",
+   "certainty": "verified",
+   "source": "arturia-manual",
+   "note": "manual 3.1 walks the front panel left to right, row by row"
+  },
+  {
+   "key": "rear.connectors",
+   "value": "MIDI in/out/thru on 5-pin DIN, USB type B, sustain, audio in, balanced stereo outs, headphones, clock in/out and reset out on 3.5 mm, 12 V DC input",
+   "certainty": "verified",
+   "source": "arturia-manual",
+   "note": "manual 3.3 rear panel"
+  },
+  {
+   "key": "panel.depth",
+   "value": 0.1275,
+   "unit": "m",
+   "certainty": "inferred",
+   "note": "total depth less a typical 88 mm slim-key keybed and a 15 mm front lip"
+  },
+  {
+   "key": "keybed.depth",
+   "value": 0.088,
+   "unit": "m",
+   "certainty": "inferred",
+   "note": "typical playable depth of slim keys"
+  },
+  {
+   "key": "knob.diameter",
+   "value": 0.013,
+   "unit": "m",
+   "certainty": "inferred",
+   "note": "typical 13 mm synth knob, proportioned to the 578 mm width"
+  },
+  {
+   "key": "strips.position",
+   "value": "left of the keybed, running front to back",
+   "certainty": "inferred",
+   "note": "manual calls them two left-hand touch strips; exact placement estimated"
+  }
+ ],
+ "parts": [
+  {
+   "certainty": "inferred",
+   "id": "feet",
+   "role": "structure",
+   "stage": 0,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.012,
+    "height": 0.006,
+    "segments": 8,
+    "ribs": 1
+   },
+   "at": [
+    -0.245,
+    0.0,
+    0.088
+   ],
+   "mirror": "x",
+   "repeat": {
+    "count": 2,
+    "step": {
+     "at": [
+      0,
+      0,
+      -0.176
+     ]
+    }
+   }
+  },
+  {
+   "certainty": "verified",
+   "id": "body",
+   "label": "Chassis",
+   "role": "mass",
+   "stage": 1,
+   "basis": [
+    "size.width",
+    "size.depth",
+    "size.height"
+   ],
+   "source": "arturia-product",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.578,
+     0.024,
+     0.231
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0,
+    0.006,
+    0
+   ]
+  },
+  {
+   "certainty": "inferred",
+   "id": "front-lip",
+   "role": "structure",
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.578,
+     0.004,
+     0.0095
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0,
+    0.03,
+    0.11075
+   ]
+  },
+  {
+   "certainty": "inferred",
+   "id": "panel-deck",
+   "label": "Control panel",
+   "role": "structure",
+   "stage": 2,
+   "basis": [
+    "size.width",
+    "panel.depth"
+   ],
+   "shape": {
+    "type": "box",
+    "size": [
+     0.468,
+     0.014,
+     0.1275
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0.029,
+    0.03,
+    -0.05175
+   ]
+  },
+  {
+   "certainty": "inferred",
+   "id": "left-cheek",
+   "role": "structure",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.084,
+     0.014,
+     0.231
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -0.247,
+    0.03,
+    0
+   ]
+  },
+  {
+   "certainty": "inferred",
+   "id": "right-cheek",
+   "role": "structure",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.026,
+     0.014,
+     0.231
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0.276,
+    0.03,
+    0
+   ]
+  },
+  {
+   "certainty": "inferred",
+   "id": "white-keys",
+   "label": "37-note slim keybed",
+   "role": "identity",
+   "stage": 3,
+   "basis": [
+    "keyboard.keys",
+    "keyboard.layout"
+   ],
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0208,
+     0.006,
+     0.088
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -0.1885,
+    0.03,
+    0.062
+   ],
+   "repeat": {
+    "count": 22,
+    "step": {
+     "at": [
+      0.021,
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "certainty": "inferred",
+   "id": "black-keys-0",
+   "role": "identity",
+   "stage": 3,
+   "basis": [
+    "keyboard.layout"
+   ],
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0124,
+     0.007,
+     0.052
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -0.17800000000000002,
+    0.036,
+    0.052
+   ],
+   "repeat": {
+    "count": 3,
+    "step": {
+     "at": [
+      0.14700000000000002,
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "certainty": "inferred",
+   "id": "black-keys-1",
+   "role": "identity",
+   "stage": 3,
+   "basis": [
+    "keyboard.layout"
+   ],
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0124,
+     0.007,
+     0.052
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -0.157,
+    0.036,
+    0.052
+   ],
+   "repeat": {
+    "count": 3,
+    "step": {
+     "at": [
+      0.14700000000000002,
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "certainty": "inferred",
+   "id": "black-keys-2",
+   "role": "identity",
+   "stage": 3,
+   "basis": [
+    "keyboard.layout"
+   ],
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0124,
+     0.007,
+     0.052
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -0.115,
+    0.036,
+    0.052
+   ],
+   "repeat": {
+    "count": 3,
+    "step": {
+     "at": [
+      0.14700000000000002,
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "certainty": "inferred",
+   "id": "black-keys-3",
+   "role": "identity",
+   "stage": 3,
+   "basis": [
+    "keyboard.layout"
+   ],
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0124,
+     0.007,
+     0.052
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -0.094,
+    0.036,
+    0.052
+   ],
+   "repeat": {
+    "count": 3,
+    "step": {
+     "at": [
+      0.14700000000000002,
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "certainty": "inferred",
+   "id": "black-keys-4",
+   "role": "identity",
+   "stage": 3,
+   "basis": [
+    "keyboard.layout"
+   ],
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0124,
+     0.007,
+     0.052
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -0.07300000000000001,
+    0.036,
+    0.052
+   ],
+   "repeat": {
+    "count": 3,
+    "step": {
+     "at": [
+      0.14700000000000002,
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "certainty": "inferred",
+   "id": "matrix-plate",
+   "label": "Modulation matrix",
+   "role": "structure",
+   "stage": 4,
+   "basis": [
+    "modmatrix"
+   ],
+   "shape": {
+    "type": "box",
+    "size": [
+     0.07,
+     0.0018,
+     0.04
+    ]
+   },
+   "at": [
+    -0.1665,
+    0.0431,
+    -0.079
+   ],
+   "look": {
+    "fill": "dark"
+   }
+  },
+  {
+   "certainty": "inferred",
+   "id": "matrix-vlines",
+   "role": "identity",
+   "stage": 4,
+   "basis": [
+    "modmatrix"
+   ],
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0007,
+     0.0005,
+     0.026
+    ]
+   },
+   "at": [
+    -0.195,
+    0.0452,
+    -0.079
+   ],
+   "repeat": {
+    "count": 13,
+    "step": {
+     "at": [
+      0.00475,
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "certainty": "inferred",
+   "id": "matrix-hlines",
+   "role": "identity",
+   "stage": 4,
+   "basis": [
+    "modmatrix"
+   ],
+   "shape": {
+    "type": "box",
+    "size": [
+     0.057,
+     0.0005,
+     0.0007
+    ]
+   },
+   "at": [
+    -0.1665,
+    0.0452,
+    -0.092
+   ],
+   "repeat": {
+    "count": 7,
+    "step": {
+     "at": [
+      0,
+      0,
+      0.00433
+     ]
+    }
+   }
+  },
+  {
+   "certainty": "decorative",
+   "id": "matrix-led-0",
+   "role": "data",
+   "stage": 4,
+   "note": "a lit routing chosen for presentation; the preset's routings are unknown",
+   "shape": {
+    "type": "marker",
+    "sprite": "disc",
+    "size_px": 7
+   },
+   "at": [
+    -0.157,
+    0.0453,
+    -0.092
+   ],
+   "look": {
+    "tone": "data",
+    "glow": 0.9
+   }
+  },
+  {
+   "certainty": "decorative",
+   "id": "matrix-led-1",
+   "role": "data",
+   "stage": 4,
+   "note": "a lit routing chosen for presentation; the preset's routings are unknown",
+   "shape": {
+    "type": "marker",
+    "sprite": "disc",
+    "size_px": 7
+   },
+   "at": [
+    -0.18075000000000002,
+    0.0453,
+    -0.08334
+   ],
+   "look": {
+    "tone": "data",
+    "glow": 0.9
+   }
+  },
+  {
+   "certainty": "decorative",
+   "id": "matrix-led-2",
+   "role": "data",
+   "stage": 4,
+   "note": "a lit routing chosen for presentation; the preset's routings are unknown",
+   "shape": {
+    "type": "marker",
+    "sprite": "disc",
+    "size_px": 7
+   },
+   "at": [
+    -0.14275000000000002,
+    0.0453,
+    -0.07468
+   ],
+   "look": {
+    "tone": "data",
+    "glow": 0.9
+   }
+  },
+  {
+   "certainty": "decorative",
+   "id": "matrix-led-3",
+   "role": "data",
+   "stage": 4,
+   "note": "a lit routing chosen for presentation; the preset's routings are unknown",
+   "shape": {
+    "type": "marker",
+    "sprite": "disc",
+    "size_px": 7
+   },
+   "at": [
+    -0.17125,
+    0.0453,
+    -0.06602
+   ],
+   "look": {
+    "tone": "data",
+    "glow": 0.9
+   }
+  },
+  {
+   "certainty": "inferred",
+   "id": "matrix-knob",
+   "role": "detail",
+   "stage": 4,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.007,
+    "height": 0.01,
+    "segments": 10,
+    "ribs": 4
+   },
+   "at": [
+    -0.122,
+    0.044,
+    -0.079
+   ]
+  },
+  {
+   "certainty": "inferred",
+   "id": "osc-select",
+   "role": "detail",
+   "stage": 4,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0042,
+    "height": 0.0028,
+    "segments": 8,
+    "ribs": 1
+   },
+   "at": [
+    -0.103,
+    0.044,
+    -0.079
+   ]
+  },
+  {
+   "certainty": "inferred",
+   "id": "osc-tune",
+   "role": "detail",
+   "stage": 4,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.006,
+    "height": 0.01,
+    "segments": 10,
+    "ribs": 6
+   },
+   "at": [
+    -0.085,
+    0.044,
+    -0.079
+   ]
+  },
+  {
+   "certainty": "inferred",
+   "id": "osc-knobs",
+   "role": "identity",
+   "stage": 4,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0068,
+    "height": 0.0105,
+    "segments": 12,
+    "ribs": 3
+   },
+   "at": [
+    -0.064,
+    0.044,
+    -0.079
+   ],
+   "look": {
+    "glow": 0.18
+   },
+   "repeat": {
+    "count": 4,
+    "step": {
+     "at": [
+      0.02,
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "certainty": "inferred",
+   "id": "osc-volume",
+   "role": "detail",
+   "stage": 4,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.006,
+    "height": 0.01,
+    "segments": 10,
+    "ribs": 4
+   },
+   "at": [
+    0.016,
+    0.044,
+    -0.079
+   ]
+  },
+  {
+   "certainty": "inferred",
+   "id": "filter-type",
+   "role": "detail",
+   "stage": 4,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0042,
+    "height": 0.0028,
+    "segments": 8,
+    "ribs": 1
+   },
+   "at": [
+    0.043,
+    0.044,
+    -0.079
+   ]
+  },
+  {
+   "certainty": "inferred",
+   "id": "filter-cutoff",
+   "role": "detail",
+   "stage": 4,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0072,
+    "height": 0.01,
+    "segments": 10,
+    "ribs": 5
+   },
+   "at": [
+    0.061,
+    0.044,
+    -0.079
+   ]
+  },
+  {
+   "certainty": "inferred",
+   "id": "filter-resonance",
+   "role": "detail",
+   "stage": 4,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0068,
+    "height": 0.01,
+    "segments": 10,
+    "ribs": 5
+   },
+   "at": [
+    0.079,
+    0.044,
+    -0.079
+   ]
+  },
+  {
+   "certainty": "inferred",
+   "id": "filter-env",
+   "role": "detail",
+   "stage": 4,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0062,
+    "height": 0.01,
+    "segments": 10,
+    "ribs": 4
+   },
+   "at": [
+    0.097,
+    0.044,
+    -0.079
+   ]
+  },
+  {
+   "certainty": "inferred",
+   "id": "fx-select",
+   "role": "detail",
+   "stage": 4,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0042,
+    "height": 0.0028,
+    "segments": 8,
+    "ribs": 1
+   },
+   "at": [
+    0.115,
+    0.044,
+    -0.079
+   ]
+  },
+  {
+   "certainty": "inferred",
+   "id": "fx-type",
+   "role": "detail",
+   "stage": 4,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.006,
+    "height": 0.01,
+    "segments": 10,
+    "ribs": 5
+   },
+   "at": [
+    0.133,
+    0.044,
+    -0.079
+   ]
+  },
+  {
+   "certainty": "inferred",
+   "id": "fx-time",
+   "role": "detail",
+   "stage": 4,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0064,
+    "height": 0.01,
+    "segments": 10,
+    "ribs": 4
+   },
+   "at": [
+    0.151,
+    0.044,
+    -0.079
+   ]
+  },
+  {
+   "certainty": "inferred",
+   "id": "fx-intensity",
+   "role": "detail",
+   "stage": 4,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0064,
+    "height": 0.01,
+    "segments": 10,
+    "ribs": 4
+   },
+   "at": [
+    0.169,
+    0.044,
+    -0.079
+   ]
+  },
+  {
+   "certainty": "inferred",
+   "id": "fx-amount",
+   "role": "detail",
+   "stage": 4,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0064,
+    "height": 0.01,
+    "segments": 10,
+    "ribs": 4
+   },
+   "at": [
+    0.187,
+    0.044,
+    -0.079
+   ]
+  },
+  {
+   "certainty": "inferred",
+   "id": "master",
+   "role": "detail",
+   "stage": 4,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.008,
+    "height": 0.011,
+    "segments": 10,
+    "ribs": 6
+   },
+   "at": [
+    0.22,
+    0.044,
+    -0.079
+   ]
+  },
+  {
+   "certainty": "inferred",
+   "id": "general-buttons",
+   "role": "detail",
+   "stage": 5,
+   "basis": [
+    "panel.layout"
+   ],
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0042,
+    "height": 0.0028,
+    "segments": 8,
+    "ribs": 1
+   },
+   "at": [
+    -0.198,
+    0.044,
+    -0.028
+   ],
+   "repeat": {
+    "count": 5,
+    "step": {
+     "at": [
+      0.0185,
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "certainty": "inferred",
+   "id": "glide",
+   "role": "detail",
+   "stage": 4,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.006,
+    "height": 0.01,
+    "segments": 10,
+    "ribs": 4
+   },
+   "at": [
+    -0.102,
+    0.044,
+    -0.028
+   ]
+  },
+  {
+   "certainty": "inferred",
+   "id": "lfo-select",
+   "role": "detail",
+   "stage": 4,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0042,
+    "height": 0.0028,
+    "segments": 8,
+    "ribs": 1
+   },
+   "at": [
+    -0.088,
+    0.044,
+    -0.028
+   ]
+  },
+  {
+   "certainty": "inferred",
+   "id": "lfo-rate",
+   "role": "detail",
+   "stage": 4,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0062,
+    "height": 0.01,
+    "segments": 10,
+    "ribs": 3
+   },
+   "at": [
+    -0.072,
+    0.044,
+    -0.028
+   ]
+  },
+  {
+   "certainty": "inferred",
+   "id": "lfo-wave",
+   "role": "detail",
+   "stage": 4,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0062,
+    "height": 0.01,
+    "segments": 10,
+    "ribs": 3
+   },
+   "at": [
+    -0.056,
+    0.044,
+    -0.028
+   ]
+  },
+  {
+   "certainty": "inferred",
+   "id": "lfo-led-1",
+   "role": "data",
+   "stage": 5,
+   "basis": [
+    "lfos"
+   ],
+   "shape": {
+    "type": "marker",
+    "sprite": "disc",
+    "size_px": 8
+   },
+   "at": [
+    -0.064,
+    0.0452,
+    -0.038
+   ],
+   "look": {
+    "tone": "data",
+    "glow": 0.9
+   },
+   "motion": {
+    "type": "pulse",
+    "period": 2.2,
+    "amount": 0.7
+   }
+  },
+  {
+   "certainty": "inferred",
+   "id": "lfo-led-2",
+   "role": "data",
+   "stage": 5,
+   "basis": [
+    "lfos"
+   ],
+   "shape": {
+    "type": "marker",
+    "sprite": "disc",
+    "size_px": 8
+   },
+   "at": [
+    -0.054,
+    0.0452,
+    -0.038
+   ],
+   "look": {
+    "tone": "data",
+    "glow": 0.9
+   },
+   "motion": {
+    "type": "pulse",
+    "period": 3.1,
+    "amount": 0.6
+   }
+  },
+  {
+   "certainty": "inferred",
+   "id": "display-bezel",
+   "role": "structure",
+   "stage": 5,
+   "basis": [
+    "display"
+   ],
+   "shape": {
+    "type": "box",
+    "size": [
+     0.066,
+     0.0025,
+     0.032
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0.005,
+    0.044,
+    -0.028
+   ],
+   "look": {
+    "fill": "dark"
+   }
+  },
+  {
+   "certainty": "inferred",
+   "id": "display-glass",
+   "role": "identity",
+   "stage": 5,
+   "basis": [
+    "display"
+   ],
+   "shape": {
+    "type": "plane",
+    "size": [
+     0.056,
+     0.024
+    ]
+   },
+   "at": [
+    0.005,
+    0.0466,
+    -0.028
+   ],
+   "rotate": [
+    -90,
+    0,
+    0
+   ],
+   "look": {
+    "tone": "bright",
+    "fill": "glass",
+    "glow": 0.55
+   }
+  },
+  {
+   "certainty": "decorative",
+   "id": "display-trace",
+   "role": "data",
+   "stage": 5,
+   "note": "an oscilloscope trace drawn for presentation",
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -0.023,
+      0.0471,
+      -0.028
+     ],
+     [
+      -0.019166666666666665,
+      0.0471,
+      -0.02372206632633069
+     ],
+     [
+      -0.015333333333333334,
+      0.0471,
+      -0.025021787830303732
+     ],
+     [
+      -0.011499999999999998,
+      0.0471,
+      -0.029033045457332287
+     ],
+     [
+      -0.007666666666666667,
+      0.0471,
+      -0.030881811559306124
+     ],
+     [
+      -0.0038333333333333344,
+      0.0471,
+      -0.029256114812563593
+     ],
+     [
+      3.469446951953614e-18,
+      0.0471,
+      -0.02678185741087851
+     ],
+     [
+      0.0038333333333333344,
+      0.0471,
+      -0.026239826843927536
+     ],
+     [
+      0.007666666666666665,
+      0.0471,
+      -0.027659155594919275
+     ],
+     [
+      0.011499999999999996,
+      0.0471,
+      -0.029040858960154032
+     ],
+     [
+      0.01533333333333333,
+      0.0471,
+      -0.028972129101572434
+     ],
+     [
+      0.019166666666666665,
+      0.0471,
+      -0.02792095817554207
+     ],
+     [
+      0.023000000000000007,
+      0.0471,
+      -0.027239062045999782
+     ]
+    ],
+    "smooth": true
+   },
+   "look": {
+    "tone": "data",
+    "glow": 0.9
+   }
+  },
+  {
+   "certainty": "inferred",
+   "id": "display-button-1",
+   "role": "detail",
+   "stage": 5,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0042,
+    "height": 0.0028,
+    "segments": 8,
+    "ribs": 1
+   },
+   "at": [
+    -0.038,
+    0.044,
+    -0.036
+   ]
+  },
+  {
+   "certainty": "inferred",
+   "id": "display-button-2",
+   "role": "detail",
+   "stage": 5,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0042,
+    "height": 0.0028,
+    "segments": 8,
+    "ribs": 1
+   },
+   "at": [
+    -0.038,
+    0.044,
+    -0.02
+   ]
+  },
+  {
+   "certainty": "inferred",
+   "id": "preset-encoder",
+   "role": "detail",
+   "stage": 5,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0065,
+    "height": 0.01,
+    "segments": 10,
+    "ribs": 6
+   },
+   "at": [
+    0.05,
+    0.044,
+    -0.028
+   ]
+  },
+  {
+   "certainty": "inferred",
+   "id": "cyc-mode",
+   "role": "detail",
+   "stage": 5,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0042,
+    "height": 0.0028,
+    "segments": 8,
+    "ribs": 1
+   },
+   "at": [
+    0.075,
+    0.044,
+    -0.028
+   ]
+  },
+  {
+   "certainty": "inferred",
+   "id": "cyc-knobs",
+   "role": "detail",
+   "stage": 5,
+   "basis": [
+    "envelope"
+   ],
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0058,
+    "height": 0.009,
+    "segments": 12,
+    "ribs": 2
+   },
+   "at": [
+    0.093,
+    0.044,
+    -0.028
+   ],
+   "repeat": {
+    "count": 3,
+    "step": {
+     "at": [
+      0.016,
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "certainty": "inferred",
+   "id": "env-mode",
+   "role": "detail",
+   "stage": 5,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0042,
+    "height": 0.0028,
+    "segments": 8,
+    "ribs": 1
+   },
+   "at": [
+    0.142,
+    0.044,
+    -0.028
+   ]
+  },
+  {
+   "certainty": "inferred",
+   "id": "env-knobs",
+   "role": "detail",
+   "stage": 5,
+   "basis": [
+    "envelope"
+   ],
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0058,
+    "height": 0.009,
+    "segments": 12,
+    "ribs": 2
+   },
+   "at": [
+    0.158,
+    0.044,
+    -0.028
+   ],
+   "repeat": {
+    "count": 4,
+    "step": {
+     "at": [
+      0.016,
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "certainty": "inferred",
+   "id": "arp-mode-buttons",
+   "role": "detail",
+   "stage": 6,
+   "basis": [
+    "arpeggiator"
+   ],
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.004,
+    "height": 0.0028,
+    "segments": 8,
+    "ribs": 1
+   },
+   "at": [
+    -0.198,
+    0.044,
+    0.01
+   ],
+   "repeat": {
+    "count": 3,
+    "step": {
+     "at": [
+      0.0145,
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "certainty": "inferred",
+   "id": "transport-buttons",
+   "role": "detail",
+   "stage": 6,
+   "basis": [
+    "sequencer"
+   ],
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.004,
+    "height": 0.0028,
+    "segments": 8,
+    "ribs": 1
+   },
+   "at": [
+    -0.198,
+    0.044,
+    -0.004
+   ],
+   "repeat": {
+    "count": 4,
+    "step": {
+     "at": [
+      0.0145,
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "certainty": "inferred",
+   "id": "step-buttons",
+   "label": "16 step buttons",
+   "role": "identity",
+   "stage": 6,
+   "basis": [
+    "sequencer"
+   ],
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0115,
+     0.003,
+     0.0115
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -0.1343,
+    0.044,
+    0.002
+   ],
+   "repeat": {
+    "count": 16,
+    "step": {
+     "at": [
+      0.018,
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "certainty": "inferred",
+   "id": "page-buttons",
+   "role": "detail",
+   "stage": 6,
+   "basis": [
+    "sequencer"
+   ],
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.004,
+    "height": 0.0028,
+    "segments": 8,
+    "ribs": 1
+   },
+   "at": [
+    0.15,
+    0.044,
+    0.002
+   ],
+   "repeat": {
+    "count": 3,
+    "step": {
+     "at": [
+      0.016,
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "certainty": "inferred",
+   "id": "shaper-buttons",
+   "role": "detail",
+   "stage": 6,
+   "basis": [
+    "lfos"
+   ],
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0035,
+    "height": 0.0028,
+    "segments": 10,
+    "ribs": 2
+   },
+   "at": [
+    0.198,
+    0.044,
+    0.002
+   ],
+   "repeat": {
+    "count": 4,
+    "step": {
+     "at": [
+      0.014,
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "certainty": "inferred",
+   "id": "strip-recess",
+   "role": "structure",
+   "stage": 6,
+   "basis": [
+    "touchstrips"
+   ],
+   "shape": {
+    "type": "box",
+    "size": [
+     0.042,
+     0.0012,
+     0.1
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -0.247,
+    0.044,
+    -0.03
+   ],
+   "look": {
+    "fill": "dark"
+   }
+  },
+  {
+   "certainty": "inferred",
+   "id": "touch-strips",
+   "label": "Touch strips",
+   "role": "identity",
+   "stage": 6,
+   "basis": [
+    "touchstrips"
+   ],
+   "shape": {
+    "type": "box",
+    "size": [
+     0.014,
+     0.0018,
+     0.09
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -0.258,
+    0.0452,
+    -0.03
+   ],
+   "repeat": {
+    "count": 2,
+    "step": {
+     "at": [
+      0.022,
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "certainty": "inferred",
+   "id": "strip-leds-a",
+   "role": "data",
+   "stage": 6,
+   "basis": [
+    "touchstrips"
+   ],
+   "shape": {
+    "type": "marker",
+    "sprite": "disc",
+    "size_px": 4
+   },
+   "at": [
+    -0.258,
+    0.047,
+    -0.068
+   ],
+   "repeat": {
+    "count": 10,
+    "step": {
+     "at": [
+      0,
+      0,
+      0.0085
+     ]
+    }
+   },
+   "look": {
+    "tone": "data",
+    "glow": 0.5
+   }
+  },
+  {
+   "certainty": "inferred",
+   "id": "strip-leds-b",
+   "role": "data",
+   "stage": 6,
+   "basis": [
+    "touchstrips"
+   ],
+   "shape": {
+    "type": "marker",
+    "sprite": "disc",
+    "size_px": 4
+   },
+   "at": [
+    -0.236,
+    0.047,
+    -0.068
+   ],
+   "repeat": {
+    "count": 10,
+    "step": {
+     "at": [
+      0,
+      0,
+      0.0085
+     ]
+    }
+   },
+   "look": {
+    "tone": "data",
+    "glow": 0.5
+   }
+  },
+  {
+   "certainty": "inferred",
+   "id": "strip-mode-buttons",
+   "role": "detail",
+   "stage": 6,
+   "basis": [
+    "touchstrips"
+   ],
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0042,
+    "height": 0.0028,
+    "segments": 8,
+    "ribs": 1
+   },
+   "at": [
+    -0.262,
+    0.044,
+    0.045
+   ],
+   "repeat": {
+    "count": 3,
+    "step": {
+     "at": [
+      0.024,
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "certainty": "inferred",
+   "id": "brand-plate",
+   "role": "detail",
+   "stage": 6,
+   "shape": {
+    "type": "plane",
+    "size": [
+     0.072,
+     0.01
+    ]
+   },
+   "at": [
+    -0.24,
+    0.0441,
+    -0.095
+   ],
+   "rotate": [
+    -90,
+    0,
+    0
+   ],
+   "look": {
+    "line": "none",
+    "fill": "none"
+   }
+  },
+  {
+   "certainty": "inferred",
+   "id": "maker-plate",
+   "role": "detail",
+   "stage": 6,
+   "shape": {
+    "type": "plane",
+    "size": [
+     0.06,
+     0.007
+    ]
+   },
+   "at": [
+    0.205,
+    0.018,
+    0.1156
+   ],
+   "look": {
+    "line": "none",
+    "fill": "none"
+   }
+  },
+  {
+   "certainty": "inferred",
+   "id": "rear-plate",
+   "role": "structure",
+   "stage": 7,
+   "basis": [
+    "rear.connectors"
+   ],
+   "shape": {
+    "type": "box",
+    "size": [
+     0.5,
+     0.02,
+     0.002
+    ]
+   },
+   "at": [
+    0,
+    0.02,
+    -0.1165
+   ],
+   "look": {
+    "fill": "dark"
+   }
+  },
+  {
+   "certainty": "inferred",
+   "id": "midi-dins",
+   "label": "MIDI in / out / thru",
+   "role": "detail",
+   "stage": 7,
+   "basis": [
+    "rear.connectors"
+   ],
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.009,
+    "height": 0.006,
+    "segments": 8,
+    "ribs": 2
+   },
+   "at": [
+    -0.245,
+    0.02,
+    -0.1175
+   ],
+   "rotate": [
+    -90,
+    0,
+    0
+   ],
+   "repeat": {
+    "count": 3,
+    "step": {
+     "at": [
+      0.025,
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "certainty": "inferred",
+   "id": "usb-socket",
+   "role": "detail",
+   "stage": 7,
+   "basis": [
+    "rear.connectors"
+   ],
+   "shape": {
+    "type": "box",
+    "size": [
+     0.013,
+     0.011,
+     0.006
+    ]
+   },
+   "at": [
+    -0.168,
+    0.02,
+    -0.1205
+   ]
+  },
+  {
+   "certainty": "inferred",
+   "id": "jack-audio",
+   "role": "detail",
+   "stage": 7,
+   "basis": [
+    "rear.connectors"
+   ],
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0045,
+    "height": 0.005,
+    "segments": 8,
+    "ribs": 1
+   },
+   "at": [
+    -0.14,
+    0.02,
+    -0.1175
+   ],
+   "rotate": [
+    -90,
+    0,
+    0
+   ],
+   "repeat": {
+    "count": 3,
+    "step": {
+     "at": [
+      0.017,
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "certainty": "inferred",
+   "id": "jack-clock",
+   "role": "detail",
+   "stage": 7,
+   "basis": [
+    "rear.connectors"
+   ],
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.003,
+    "height": 0.005,
+    "segments": 8,
+    "ribs": 2
+   },
+   "at": [
+    -0.086,
+    0.02,
+    -0.1175
+   ],
+   "rotate": [
+    -90,
+    0,
+    0
+   ],
+   "repeat": {
+    "count": 3,
+    "step": {
+     "at": [
+      0.014,
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "certainty": "inferred",
+   "id": "jack-out",
+   "role": "detail",
+   "stage": 7,
+   "basis": [
+    "rear.connectors"
+   ],
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0045,
+    "height": 0.005,
+    "segments": 8,
+    "ribs": 1
+   },
+   "at": [
+    -0.038,
+    0.02,
+    -0.1175
+   ],
+   "rotate": [
+    -90,
+    0,
+    0
+   ],
+   "repeat": {
+    "count": 3,
+    "step": {
+     "at": [
+      0.018,
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "certainty": "inferred",
+   "id": "dc-in",
+   "role": "detail",
+   "stage": 7,
+   "basis": [
+    "rear.connectors"
+   ],
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0045,
+    "height": 0.005,
+    "segments": 8,
+    "ribs": 1
+   },
+   "at": [
+    0.022,
+    0.02,
+    -0.1175
+   ],
+   "rotate": [
+    -90,
+    0,
+    0
+   ]
+  }
+ ],
+ "articulations": [],
+ "labels": [
+  {
+   "id": "brand",
+   "part": "brand-plate",
+   "face": "front",
+   "field": "model",
+   "role": "title",
+   "orientation": "horizontal",
+   "region": [
+    0.04,
+    0.16,
+    0.96,
+    0.84
+   ],
+   "align": "center"
+  },
+  {
+   "id": "maker",
+   "part": "maker-plate",
+   "face": "front",
+   "field": "maker",
+   "role": "creator",
+   "orientation": "horizontal",
+   "region": [
+    0.08,
+    0.14,
+    0.92,
+    0.86
+   ],
+   "align": "center"
+  }
+ ],
+ "anchors": {
+  "front": {
+   "part": "body",
+   "face": "front"
+  },
+  "base": {
+   "point": [
+    0,
+    0,
+    0
+   ],
+   "up": [
+    0,
+    1,
+    0
+   ]
+  }
+ },
+ "annotations": [
+  {
+   "id": "matrix",
+   "text": "Modulation matrix, 7 x 13",
+   "part": "matrix-vlines",
+   "offset": [
+    0.0,
+    0.045,
+    -0.02
+   ]
+  },
+  {
+   "id": "keys",
+   "text": "37 slim keys, aftertouch",
+   "part": "white-keys",
+   "offset": [
+    0.0,
+    0.035,
+    0.02
+   ]
+  },
+  {
+   "id": "strips",
+   "text": "Touch strips and LED ladders",
+   "part": "touch-strips",
+   "offset": [
+    -0.005,
+    0.05,
+    0.015
+   ]
+  },
+  {
+   "id": "display",
+   "text": "OLED display",
+   "part": "display-glass",
+   "offset": [
+    0.015,
+    0.04,
+    0.005
+   ]
+  },
+  {
+   "id": "steps",
+   "text": "16 step buttons (4 pages)",
+   "part": "step-buttons",
+   "offset": [
+    0.0,
+    0.04,
+    0.03
+   ]
+  },
+  {
+   "id": "filter",
+   "text": "Analog filter",
+   "part": "filter-cutoff",
+   "offset": [
+    0.0,
+    0.05,
+    0.005
+   ]
+  },
+  {
+   "id": "rear",
+   "text": "MIDI, USB and audio connectors",
+   "part": "midi-dins",
+   "offset": [
+    0.0,
+    0.03,
+    -0.04
+   ]
+  }
+ ],
+ "presentation": {
+  "style_hint": {
+   "palette": "amber",
+   "identity": "ember"
+  },
+  "framing": {
+   "yaw": -30,
+   "pitch": 32,
+   "fit": 1.02
+  },
+  "views": [
+   {
+    "id": "panel",
+    "label": "Panel",
+    "yaw": -8,
+    "pitch": 58,
+    "distance": 1.55,
+    "target": "panel-deck"
+   },
+   {
+    "id": "keys",
+    "label": "Keybed",
+    "yaw": -22,
+    "pitch": 14,
+    "distance": 1.5,
+    "target": "white-keys"
+   },
+   {
+    "id": "strips",
+    "label": "Touch strips",
+    "yaw": -52,
+    "pitch": 34,
+    "distance": 2.3,
+    "target": "touch-strips"
+   },
+   {
+    "id": "rear",
+    "label": "Rear panel",
+    "yaw": 152,
+    "pitch": 20,
+    "distance": 1.8,
+    "target": "midi-dins"
+   }
+  ],
+  "atmosphere": {
+   "haze": 0.62,
+   "scanlines": true,
+   "vignette": true,
+   "grid": true,
+   "projector": false,
+   "motes": 0.22
+  },
+  "occlusion": "xray",
+  "certainty_style": "subtle",
+  "background": "deep",
+  "float": 0
+ },
+ "animation": {
+  "assembly": {
+   "style": "ceremony",
+   "seconds": 7.0,
+   "interference": true
+  },
+  "idle": {
+   "life": "calm",
+   "events": [
+    "scan",
+    "propagate",
+    "shimmer"
+   ],
+   "cadence": [
+    7,
+    13
+   ],
+   "strength": 0.55
+  },
+  "camera": {
+   "drift": 5,
+   "breathe": 0.022,
+   "tour": [
+    {
+     "view": "panel",
+     "at": 12,
+     "fly": 3
+    },
+    {
+     "view": "keys",
+     "at": 20,
+     "fly": 3
+    },
+    {
+     "view": "hero",
+     "at": 28,
+     "fly": 3.5
+    }
+   ]
+  },
+  "reduced_motion": "still"
+ }
+}
