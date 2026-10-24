@@ -149,6 +149,11 @@ STATE_PROBE = """JSON.stringify((() => {
   const h = HOLO.hologram, out = {at: h.assemblyTimes(), timeline: HOLO.timeline(), s: []};
   for (let t = 0; t <= 40; t += 0.25) out.s.push(h.state(t));
   return out; })())"""
+# the camera over time, from the hero view: the tour's flights, the drift and the breathing
+CAMERA_PROBE = """JSON.stringify((() => { const h = HOLO.hologram, base = h.cameraFor("hero"), out = [];
+  for (let t = 0; t <= 60; t += 0.5) out.push(h.cameraAt(t, base));
+  return out; })())"""
+TOUR = [{"view": "top", "at": 8, "fly": 2}, {"view": "side", "at": 14, "fly": 3}]
 
 
 @unittest.skipUnless(CAPTURE, "no Chromium-family browser (or HOLOGRAM_SKIP_CAPTURE=1)")
@@ -159,13 +164,16 @@ class Viewer(unittest.TestCase):
     def setUpClass(cls):
         cls.tmp = tempfile.TemporaryDirectory()
         cls.d = Path(cls.tmp.name)
-        geometry = scene.compile_scene(studio.load(str(EXAMPLES / "cd.json")))
-        html, _ = render.build_html(geometry, str(EXAMPLES))
         new = (HERE / "viewer" / "hologram.js").read_text(encoding="utf-8").replace("</script", "<\\/script")
         old = (HERE / "testdata" / "hologram-0.2.1.js").read_text(encoding="utf-8").replace("</script", "<\\/script")
-        assert html.count(new) == 1
-        Path(cls.d, "new.html").write_text(html, encoding="utf-8")
-        Path(cls.d, "old.html").write_text(html.replace(new, old), encoding="utf-8")
+        cd = studio.load(str(EXAMPLES / "cd.json"))
+        toured = json.loads(json.dumps(cd))
+        toured["animation"]["camera"]["tour"] = TOUR  # a camera tour authored against the scene's own assembly
+        for name, doc in (("", cd), ("tour-", toured)):
+            html, _ = render.build_html(scene.compile_scene(doc), str(EXAMPLES))
+            assert html.count(new) == 1
+            Path(cls.d, name + "new.html").write_text(html, encoding="utf-8")
+            Path(cls.d, name + "old.html").write_text(html.replace(new, old), encoding="utf-8")
 
     @classmethod
     def tearDownClass(cls):
@@ -187,6 +195,26 @@ class Viewer(unittest.TestCase):
         pixels = "(() => { const out = []; for (const t of [1.5, 4, 9, 30]) { HOLO.renderAt(t); " \
                  "out.push(document.querySelector('canvas').toDataURL()); } return JSON.stringify(out); })()"
         self.assertEqual(self.probe("new.html", pixels), self.probe("old.html", pixels))
+        for probe in (STATE_PROBE, CAMERA_PROBE):  # a scene with a camera tour, too
+            self.assertEqual(self.probe("tour-new.html", probe), self.probe("tour-old.html", probe))
+
+    def test_a_longer_assembly_moves_the_tour_after_it(self):
+        probe = """JSON.stringify((() => { const h = HOLO.hologram, base = h.cameraFor("hero");
+          return {delta: h.assemblyTimes().end - h.assemblyTimes(true).end, stops: h.tourStops().map((s) => s.at),
+                  pitch: [0, 9.9, 12, 37.5].map((t) => h.cameraAt(t, base).pitch)}; })())"""
+        film = self.probe("tour-new.html", probe, assembly="30")
+        scene_own = self.probe("tour-new.html", probe)
+        self.assertAlmostEqual(film["delta"], 30 - 4.5)  # the build is 25.5 s longer; the ghost and the settle are not
+        self.assertEqual(scene_own["delta"], 0)
+        self.assertEqual(scene_own["stops"], [s["at"] for s in TOUR])
+        for got, stop in zip(film["stops"], TOUR):
+            self.assertAlmostEqual(got, stop["at"] + film["delta"])
+        # the pitch is the tour's alone (drift turns the yaw, breathing the distance): mid-build, where the
+        # scene's own tour has already flown to the top view, the film's camera holds the hero's pitch
+        self.assertEqual(film["pitch"][1], film["pitch"][0])
+        self.assertGreater(scene_own["pitch"][1], scene_own["pitch"][0] + 20)
+        # and after the build it is where the scene's own was, delta seconds earlier
+        self.assertAlmostEqual(film["pitch"][3], scene_own["pitch"][2], places=6)
 
     def test_assembly_sets_the_length(self):
         at = self.probe("new.html", "JSON.stringify(HOLO.hologram.assemblyTimes())", assembly="30")

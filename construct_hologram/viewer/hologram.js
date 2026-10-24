@@ -620,12 +620,19 @@ void main() {
   };
 
   // ------------------------------------------------------------------------- time
-  Hologram.prototype.assemblyTimes = function () {
+  Hologram.prototype.assemblyTimes = function (authored) {
+    // authored: the scene's own assembly, ignoring a film's ?assembly= override
     const asm = this.geo.animation.assembly;
     if (this.opt.reduced || asm.style === "cut") return { ghost: 0, collapse: 0, build: 0, settle: 0, end: 0 };
     const ghost = asm.interference && asm.style === "ceremony" ? 0.9 : 0, collapse = ghost ? 0.35 : 0;
-    const build = Math.max(0.2, this.opt.assembly || asm.seconds), settle = asm.style === "ceremony" ? 1.1 : 0.4;
+    const build = Math.max(0.2, (!authored && this.opt.assembly) || asm.seconds), settle = asm.style === "ceremony" ? 1.1 : 0.4;
     return { ghost, collapse, build, settle, end: ghost + collapse + build + settle };
+  };
+  Hologram.prototype.tourStops = function () {
+    // the scene's tour is authored in seconds against its own assembly; when a film lengthens the
+    // assembly, every stop moves by the same amount, so the tour still begins after the build
+    const tour = this.geo.animation.camera.tour || [], d = this.assemblyTimes().end - this.assemblyTimes(true).end;
+    return d ? tour.map((s) => Object.assign({}, s, { at: s.at + d })) : tour;
   };
 
   Hologram.prototype.buildSchedule = function () {
@@ -807,7 +814,7 @@ void main() {
     const anim = this.geo.animation.camera, reduced = this.opt.reduced;
     let cam = Object.assign({}, base);
     // without a tour of its own, an object that opens turns to its "open" view while it opens
-    let tour = anim.tour;
+    let tour = this.tourStops();
     if (!tour.length && (this.geo.articulations || []).length && (this.geo.presentation.views || []).some((v) => v.id === "open")) {
       const op = this.openTimes();
       tour = [{ view: "open", at: op.start, fly: Math.max(1.5, op.end - op.start) }];
@@ -1150,7 +1157,7 @@ void main() {
       if (kind === "motion") { const op = holo.openTimes(), span = Math.max(7.5, op.end - end + 1.5);
         return [0, 0.2, 0.4, 0.6, 0.8, 1].map((k) => ({ label: "MOTION " + (end + k * span).toFixed(1) + " S", t: end + k * span, view: "hero" })); }
       if (kind === "provenance") return ["hero", "front", "side"].map((v) => ({ label: "PROVENANCE " + v.toUpperCase(), t: end + 0.01, view: v, reduced: true, mode: "provenance" }));
-      if (kind === "tour") return (geo.animation.camera.tour || []).map((s) => ({ label: "TOUR " + s.view.toUpperCase() + " " + (s.at + (s.fly || 2.2)).toFixed(1) + " S", t: s.at + (s.fly || 2.2) + 0.05, view: "hero" }));
+      if (kind === "tour") return holo.tourStops().map((s) => ({ label: "TOUR " + s.view.toUpperCase() + " " + (s.at + (s.fly || 2.2)).toFixed(1) + " S", t: s.at + (s.fly || 2.2) + 0.05, view: "hero" }));
       return [];
     }
 
