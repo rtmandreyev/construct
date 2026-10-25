@@ -98,8 +98,8 @@ skill could not express.
 At the first of:
 - 2 rounds in a row that don't beat the best (any pairwise win resets the count);
 - every criterion at 3;
-- **masterpiece only:** 12 rounds (a default cap: in blind comparisons no visible gain showed
-  after about 12 rounds);
+- **masterpiece only:** 12 rounds (a default cap: in the author's own blind comparisons, on two
+  subjects, no visible gain showed after about 12 rounds);
 - **masterpiece only:** 2 hours of **active time**: the author's time from `start` or `record` to the
   next `packet`, measured from the run folder's own activity (edits, a generator writing the
   scene, builds). Time after the last write counts only if the next command comes within 10

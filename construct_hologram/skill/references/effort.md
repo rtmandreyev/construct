@@ -39,8 +39,8 @@ The user picks a mode by saying its name, or says nothing and you pick one (belo
 
 **Unbounded, plainly:** the critic finds a win almost every round, so an unbounded run can go
 on for many rounds and hours, at a high token cost. The per-round report lets the user stop it
-at any time. In blind comparisons the owner saw no visible gain after about 12 rounds, which is
-why masterpiece stops there. Offer unbounded only when asked; never choose it yourself.
+at any time. In the author's own blind comparisons, on two subjects, there was no visible gain
+after about 12 rounds, which is why masterpiece stops there. Offer unbounded only when asked; never choose it yourself.
 
 The old tier names still work: quick, standard and showcase are fast; masterpiece is
 masterpiece. `tier: showcase` or `mode: masterpiece` in a request is honoured.

@@ -46,9 +46,9 @@ you ask  →  the agent looks it up  →  it writes a scene  →  Construct chec
    short report after every round: what the critic asked for, what changed, and whether it won.
 
    The run stops when it stops getting better (two rounds in a row without a win), or after 12
-   rounds, or after two hours of the agent's own working time. Why 12: in blind comparisons of
-   long runs, nobody could see a difference after about round 12, so more rounds mostly cost
-   time. If you really want to keep going, ask for **unbounded** mode, which keeps the rounds
+   rounds, or after two hours of the agent's own working time. Why 12: in the author's own blind
+   comparisons of long runs, on two subjects, there was no visible improvement after about round
+   12, so more rounds mostly cost time. If you really want to keep going, ask for **unbounded** mode, which keeps the rounds
    coming until the critic stops finding improvements.
 
 ## A construct improving over rounds

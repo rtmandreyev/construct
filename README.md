@@ -91,8 +91,8 @@ flowchart LR
 - **The critic is independent.** It is a fresh model that compares each new version with the best
   so far without knowing which is which. Only a better version is kept.
 - **Masterpiece stops when it stops improving:** after two rounds without a better version, after
-  12 rounds, or after two hours. In blind comparisons nobody could see a difference after about
-  round 12, so more rounds mostly cost time.
+  12 rounds, or after two hours. In the author's own blind comparisons, on two subjects, there was
+  no visible improvement after about round 12, so more rounds mostly cost time.
 
 <p align="center"><img src="docs/media/style-provenance.jpg" width="80%" alt="Saturn in the provenance view: the rings, taken from published data, drawn in white; the globe's cloud bands, designed by the model, drawn in amber"></p>
 <p align="center"><sub>Honest about what is known: Saturn in the provenance view (<b>P</b>). The rings come from published data and are drawn in white; the cloud bands were designed by the model and are drawn in amber.</sub></p>
