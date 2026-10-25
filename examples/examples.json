@@ -6,31 +6,31 @@
    "slug": "sainte-chapelle",
    "title": "Sainte-Chapelle",
    "mode": "masterpiece",
-   "model": "Claude Opus"
+   "model": "Claude Opus 5.5"
   },
   {
    "slug": "toyota-land-cruiser-fj62",
    "title": "Toyota Land Cruiser FJ62",
    "mode": "masterpiece",
-   "model": "Claude Opus"
+   "model": "Claude Opus 5.5"
   },
   {
    "slug": "duomo-di-milano",
    "title": "Duomo di Milano",
    "mode": "masterpiece",
-   "model": "Claude Opus"
+   "model": "Claude Opus 5.5"
   },
   {
    "slug": "aston-martin-db5",
    "title": "Aston Martin DB5",
    "mode": "masterpiece",
-   "model": "Claude Opus"
+   "model": "Claude Opus 5.5"
   },
   {
    "slug": "neuschwanstein",
    "title": "Neuschwanstein",
    "mode": "masterpiece",
-   "model": "Claude Opus"
+   "model": "Claude Opus 5.5"
   },
   {
    "slug": "sagrada-familia",
@@ -54,19 +54,19 @@
    "slug": "saturn",
    "title": "Saturn",
    "mode": "masterpiece",
-   "model": "DeepSeek"
+   "model": "DeepSeek V4.1 Flash"
   },
   {
    "slug": "andromeda-galaxy",
    "title": "Andromeda Galaxy (M31)",
    "mode": "masterpiece",
-   "model": "DeepSeek"
+   "model": "DeepSeek V4.1 Flash"
   },
   {
    "slug": "apollo-lunar-module",
    "title": "Apollo Lunar Module (LM-5 \"Eagle\")",
    "mode": "masterpiece",
-   "model": "DeepSeek"
+   "model": "DeepSeek V4.1 Flash"
   },
   {
    "slug": "leica-m3",
@@ -90,13 +90,13 @@
    "slug": "omega-speedmaster-321",
    "title": "Omega Speedmaster, calibre 321",
    "mode": "fast",
-   "model": "DeepSeek"
+   "model": "DeepSeek V4.1 Flash"
   },
   {
    "slug": "revox-a77",
    "title": "Revox A77",
    "mode": "fast",
-   "model": "DeepSeek"
+   "model": "DeepSeek V4.1 Flash"
   },
   {
    "slug": "the-last-light",
@@ -132,13 +132,13 @@
    "slug": "arturia-minifreak",
    "title": "Arturia MiniFreak",
    "mode": "fast",
-   "model": "DeepSeek"
+   "model": "DeepSeek V4.1 Flash"
   },
   {
    "slug": "yamaha-cfx",
    "title": "Yamaha CFX",
    "mode": "fast",
-   "model": "DeepSeek"
+   "model": "DeepSeek V4.1 Flash"
   },
   {
    "slug": "porsche-911-964",

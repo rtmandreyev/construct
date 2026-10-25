@@ -14,8 +14,8 @@ one point each for **valid**, **factual** (the user's facts kept, nothing unknow
 | Claude Haiku | prompts + CLI, round 1 | 13/15 | ABV as text, a 330 ml can for 440 ml |
 | Claude Haiku | after the prompt fixes | 15/15 | |
 | Claude Sonnet | prompts + CLI | 15/15 | |
-| Claude Opus | prompts + CLI | 15/15 | |
-| DeepSeek (`deepseek-flash`) | live, through Hermes | 15/15 | $0.038 for all five, 258 s |
+| Claude Opus 5.5 | prompts + CLI | 15/15 | |
+| DeepSeek V4.1 Flash (1017; `deepseek-flash`) | live, through Hermes | 15/15 | $0.038 for all five, 258 s |
 | GPT-6.1 Sol | live, through Hermes (ChatGPT plan) | 15/15 | 357 s |
 
 No model invented an author, year, label or brewery the user did not know. Parameter entries

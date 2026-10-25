@@ -2,7 +2,7 @@
 
 [![Omega Speedmaster, calibre 321, a holographic construct](hero.jpg)](https://rtmandreyev.github.io/construct/examples/omega-speedmaster-321/)
 
-**fast · DeepSeek**
+**fast · DeepSeek V4.1 Flash**
 
 [Open the live construct](https://rtmandreyev.github.io/construct/examples/omega-speedmaster-321/): drag to orbit, R replays the assembly, L shows
 labels. The scene it was built from: [scene.json](scene.json).

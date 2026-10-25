@@ -71,7 +71,7 @@ Tracing works with any model that can see images: Claude, GPT, Gemini and DeepSe
 
 - **Hermes:** with the vision toolset enabled, attach the photo (`/paste`, or an image path)
   or let the agent call `vision_analyze` on the image, with the `trace.md` instructions as its
-  question. Both DeepSeek and GPT models describe and trace images this way.
+  question. DeepSeek V4.1 Flash and GPT-6.1 Sol both describe and trace images this way.
 - **Claude Code:** the agent reads image files directly; put the user's photo in the working
   folder.
 - **Any OpenAI-compatible vision model:** `construct trace-image photo.jpg --what "the guitar

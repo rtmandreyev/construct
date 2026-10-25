@@ -1,5 +1,12 @@
 # Film mode
 
+<p align="center">
+  <a href="https://rtmandreyev.github.io/construct/films/james-webb-space-telescope/"><img src="media/film-james-webb-space-telescope.gif" width="32%" alt="The James Webb Space Telescope construct assembling across a piece of music"></a>
+  <a href="https://rtmandreyev.github.io/construct/films/voyager-1/"><img src="media/film-voyager-1.gif" width="32%" alt="The Voyager 1 construct assembling across a piece of music"></a>
+  <a href="https://rtmandreyev.github.io/construct/films/arecibo-observatory/"><img src="media/film-arecibo-observatory.gif" width="32%" alt="The Arecibo Observatory construct assembling across a piece of music"></a>
+</p>
+<p align="center"><sub><a href="https://rtmandreyev.github.io/construct/films/james-webb-space-telescope/">James Webb Space Telescope</a> · <a href="https://rtmandreyev.github.io/construct/films/voyager-1/">Voyager 1</a> · <a href="https://rtmandreyev.github.io/construct/films/arecibo-observatory/">Arecibo Observatory</a>: three constructs made by DeepSeek V4.1 Flash, each assembling across a piece of music. Open one to watch the film, or its live construct.</sub></p>
+
 Film mode lets a construct assemble across a piece of music. Instead of building itself in a few
 seconds, it builds for as long as the track lasts, and you can see the music in it: the build
 nearly pauses in the quiet passages and surges in the loud ones, the light swells and dims with
@@ -95,7 +102,7 @@ the music is clearly visible even on calm, ambient tracks.
 | `1` (the default) | pace from about a tenth to three times an even build, light from 60% to 140%, accents and sections |
 | `1.5`, `2` | stronger still: quiet passages pause, loud ones race, more attacks flare |
 
-On five calm synth tracks of about a minute each, at the default, the build ran up to 8–27%
+On calm synth tracks of about a minute each, at the default, the build ran up to 8–27%
 ahead of or behind an even build, its speed over any four seconds ranged from 0.07–0.33× to
 1.9–3.3× an even build, and the light from 0.60 to 1.53. Before film mode had these settings, the
 same tracks gave 5–16%, 0.23–0.42× to 1.2–1.5×, and 0.82 to 1.18.
@@ -191,25 +198,27 @@ what you need to add them in your own engine: `onset` per frame and `sections` w
 
 ## Film examples
 
-Five constructs made by DeepSeek in masterpiece mode, each assembling across a track of music.
-Play them in the [gallery's film section](https://rtmandreyev.github.io/construct/#films), where
-each film also has a page with its construct live:
+The three films at the top of this page were made by DeepSeek V4.1 Flash in masterpiece mode,
+each assembling across a piece of music. Each has a page in the
+[gallery's film section](https://rtmandreyev.github.io/construct/#films) with both versions:
 
-| Film | Track |
-| --- | --- |
-| [Soyuz](https://rtmandreyev.github.io/construct/films/soyuz/) | "Enter Orbit" |
-| [Voyager 1](https://rtmandreyev.github.io/construct/films/voyager-1/) | "Far Horizons" |
-| [Arecibo Observatory](https://rtmandreyev.github.io/construct/films/arecibo-observatory/) | "First Encounter" |
-| [James Webb Space Telescope](https://rtmandreyev.github.io/construct/films/james-webb-space-telescope/) | "Slow Drift" |
-| [Brass refractor](https://rtmandreyev.github.io/construct/films/brass-refractor/) | "Stargazing" |
+| Construct | The film | The live construct |
+| --- | --- | --- |
+| James Webb Space Telescope | [Watch the film](https://rtmandreyev.github.io/construct/films/james-webb-space-telescope/) | [Open the live construct](https://rtmandreyev.github.io/construct/films/james-webb-space-telescope/#live) |
+| Voyager 1 | [Watch the film](https://rtmandreyev.github.io/construct/films/voyager-1/) | [Open the live construct](https://rtmandreyev.github.io/construct/films/voyager-1/#live) |
+| Arecibo Observatory | [Watch the film](https://rtmandreyev.github.io/construct/films/arecibo-observatory/) | [Open the live construct](https://rtmandreyev.github.io/construct/films/arecibo-observatory/#live) |
 
-Music by Artyom Andreyev, used with permission. The scenes are in
-[examples/films/](../examples/films/); the videos are published with the gallery only.
+**Why a film?** The film carries the music and plays the long, music-shaped assembly exactly as
+it was rendered. The live construct is the construct itself, to orbit, replay and read its labels,
+but a browser page doesn't play the track: to see the music driving the build, watch the film.
+
+The scenes are in [examples/films/](../examples/films/); the videos are published with the
+gallery only.
 
 ![Arecibo Observatory halfway through its film: the dish and towers built, the cables and the platform being drawn](media/film-arecibo-midway.jpg)
 
-*Arecibo halfway through "First Encounter": the dish and the towers are built, and the cables
-and the suspended platform are being drawn.*
+*Arecibo halfway through its film: the dish and the towers are built, and the cables and the
+suspended platform are being drawn.*
 
 ![The same moment a frame apart: before an attack, and on it, with the construct flaring](media/film-arecibo-flare.jpg)
 

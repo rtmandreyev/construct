@@ -78,15 +78,26 @@ p.section { color: var(--dim); max-width: 760px; margin: 0 0 16px; }
 section.films { margin-bottom: 44px; }
 .card.film { cursor: default; }
 .card.film:hover { transform: none; }
-.card video, .film-player video { display: block; width: 100%; aspect-ratio: 16 / 9; background: #000; }
+.card.film > a img { aspect-ratio: 16 / 9; height: auto; }
 .card h2 a { text-decoration: none; }
 .card h2 a:hover { text-decoration: underline; }
-.credit { font-size: 12.5px; color: var(--dim); margin: 6px 0 0; }
-.film-player { width: 100%; max-width: 1180px; margin: 0 auto; padding: 18px 20px 6px; }
-.film-player .credit { font-size: 13.5px; margin: 10px 0 0; }
-.live { width: 100%; max-width: 1180px; margin: 0 auto; padding: 22px 20px 0; }
-.film-hint { width: 100%; max-width: 1180px; margin: 0 auto; }
-.live .stage { min-height: 0; aspect-ratio: 16 / 9; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.card .choose { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.card .choose .button { font-size: 13px; padding: 7px 13px; }
+.button.primary { border-color: var(--accent); }
+.film-view { width: 100%; max-width: 1180px; margin: 0 auto; padding: 18px 20px 0; }
+.tabs { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 14px; }
+.tabs input { position: absolute; opacity: 0; pointer-events: none; }
+.tabs label { padding: 10px 18px; border: 1px solid var(--line); border-radius: 999px; background: var(--panel);
+              cursor: pointer; font-size: 15px; }
+.tabs label:hover { border-color: var(--accent); }
+.tabs input:focus-visible + label { outline: 2px solid var(--accent); outline-offset: 3px; }
+#watch:checked + label, #live:checked + label { border-color: var(--accent); box-shadow: 0 0 18px var(--glow); }
+.pane { display: none; width: 100%; }
+#watch:checked ~ .panes .pane.film, #live:checked ~ .panes .pane.live { display: block; }
+.pane video { display: block; width: 100%; aspect-ratio: 16 / 9; background: #000; border-radius: 12px; }
+.pane .stage { min-height: 0; aspect-ratio: 16 / 9; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
+.pane .hint { padding: 10px 0 0; }
+.why { color: var(--dim); font-size: 14px; max-width: 820px; margin: 16px 0 28px; }
 """
 
 
@@ -100,12 +111,13 @@ def _load_films():
 
 
 def film_label(film):
-    """A film's line: the object, the mode, the model and the track."""
-    return "%s · %s · %s · %s" % (film["title"], film["mode"], film["model"], film["track"])
+    """A film's line: the object, the mode and the model."""
+    return "%s · %s · %s" % (film["title"], film["mode"], film["model"])
 
 
-def film_credit(film):
-    return 'Music: "%s" by Artyom Andreyev, used with permission.' % film["track"]
+WHY_FILM = ("Why a film? The film carries the music and plays the long, music-shaped assembly exactly as it was "
+            "rendered. The live construct is the construct itself, to orbit, replay and read; but a page doesn't play "
+            "the track, so to see the music driving the build, watch the film.")
 
 
 def provenance(ex):
@@ -124,15 +136,17 @@ def _page(title, body, depth, description):
 
 def index_page(examples, films=()):
     film_cards = "\n".join(
-        "<div class=\"card film\"><video controls preload=\"none\" playsinline poster=\"films/%s/poster.jpg\" "
-        "src=\"films/%s/film.mp4\" aria-label=\"%s, a film\"></video><div class=\"body\"><h2><a href=\"films/%s/\">%s</a>"
-        "</h2><p class=\"prov\">%s</p><p class=\"credit\">%s</p></div></div>"
-        % (f["slug"], f["slug"], html.escape(f["title"]), f["slug"], html.escape(f["title"]), html.escape(film_label(f)),
-           html.escape(film_credit(f)))
+        "<div class=\"card film\"><a href=\"films/%s/\"><img src=\"films/%s/poster.jpg\" alt=\"%s, the finished construct "
+        "of its film\" loading=\"lazy\" width=\"1280\" height=\"720\"></a><div class=\"body\"><h2><a href=\"films/%s/\">%s</a>"
+        "</h2><p class=\"prov\">%s</p><div class=\"choose\"><a class=\"button primary\" href=\"films/%s/\">Watch the film</a>"
+        "<a class=\"button\" href=\"films/%s/#live\">Open the live construct</a></div></div></div>"
+        % (f["slug"], f["slug"], html.escape(f["title"]), f["slug"], html.escape(f["title"]),
+           html.escape("%s · %s" % (f["mode"], f["model"])), f["slug"], f["slug"])
         for f in films)
     film_section = ("<section class=\"films\" id=\"films\"><h2 class=\"section\">Films</h2><p class=\"section\">Constructs "
-                    "assembling across a track of music with film mode: the build follows the music's pace, flares on "
-                    "its attacks and moves on with its sections. Play one, or open it to see the construct live.</p>"
+                    "assembling across a piece of music with film mode: the build follows the music's pace, flares on "
+                    "its attacks and moves on with its sections. Watch the film to see the music shape it, or open the "
+                    "live construct to turn it around and read its labels.</p>"
                     "<div class=\"grid\">\n%s\n</div></section><h2 class=\"section\">Constructs</h2>" % film_cards
                     if films else "")
     cards = "\n".join(
@@ -177,18 +191,26 @@ def film_page(film):
             "<a class=\"button\" href=\"construct.html?rounds=0\">Live construct, full screen</a>"
             "<a class=\"button\" href=\"scene.json\">Scene</a>"
             "<a class=\"button\" href=\"%s/tree/main/examples/films/%s\">Source</a></nav></div>"
-            "<div class=\"film-player\"><video controls preload=\"metadata\" playsinline poster=\"poster.jpg\" "
-            "src=\"film.mp4\" aria-label=\"%s, a film\"></video><p class=\"credit\">%s</p></div>"
-            "<div class=\"live\"><h2 class=\"section\">The construct, live</h2><p class=\"section\">The same construct "
-            "as a page: it assembles in its own short time here, without the music.</p>"
-            "<div class=\"stage\"><iframe src=\"construct.html?ui=0&amp;rounds=0\" title=\"%s, live construct\" "
-            "allowfullscreen loading=\"lazy\"></iframe></div></div>"
-            "<p class=\"hint film-hint\">Drag to orbit, scroll to zoom. Click the construct first, then <kbd>R</kbd> replays the "
+            "<div class=\"film-view\"><div class=\"tabs\">"
+            "<input type=\"radio\" name=\"view\" id=\"watch\" checked><label for=\"watch\">Watch the film</label>"
+            "<input type=\"radio\" name=\"view\" id=\"live\"><label for=\"live\">Open the live construct</label>"
+            "<div class=\"panes\" style=\"width: 100%%\">"
+            "<div class=\"pane film\"><video controls preload=\"metadata\" playsinline poster=\"poster.jpg\" src=\"film.mp4\" "
+            "aria-label=\"%s, a film\"></video></div>"
+            "<div class=\"pane live\"><div class=\"stage\"><iframe src=\"construct.html?ui=0&amp;rounds=0\" "
+            "title=\"%s, live construct\" allowfullscreen loading=\"lazy\"></iframe></div>"
+            "<p class=\"hint\">Drag to orbit, scroll to zoom. Click the construct first, then <kbd>R</kbd> replays the "
             "assembly, <kbd>L</kbd> shows labels and <kbd>P</kbd> shows how each part is known.</p></div>"
-            % (html.escape(film["title"]), html.escape(film_label(film)), REPO_URL, film["slug"], html.escape(film["title"]),
-               html.escape(film_credit(film)), html.escape(film["title"])))
+            "</div></div><p class=\"why\">%s</p></div></div>"
+            "<script>(function () { var v = document.querySelector('video'), live = document.getElementById('live'),"
+            " watch = document.getElementById('watch');"
+            " live.addEventListener('change', function () { if (v) v.pause(); history.replaceState(null, '', '#live'); });"
+            " watch.addEventListener('change', function () { history.replaceState(null, '', location.pathname); });"
+            " if (location.hash === '#live') live.checked = true; })();</script>"
+            % (html.escape(film["title"]), html.escape("%s · %s" % (film["mode"], film["model"])), REPO_URL, film["slug"],
+               html.escape(film["title"]), html.escape(film["title"]), html.escape(WHY_FILM)))
     return _page("%s · film · Construct" % film["title"], body, 2,
-                 "%s assembling across \"%s\": a Construct film. %s" % (film["title"], film["track"], film_credit(film)))
+                 "%s assembling across a piece of music: a Construct film, and the live construct." % film["title"])
 
 
 def _film(film, films_dir, out, studio):

@@ -46,7 +46,7 @@ detailed, and a gallery of 24 examples made by AI agents.
 ### Three modes, and the skill picks one
 
 - **fast:** one pass with self-review, about 10 minutes (30 for a richer subject). For generic
-  subjects, simple objects and quick requests; cheaper models such as DeepSeek do these well.
+  subjects, simple objects and quick requests; cheaper models such as DeepSeek V4.1 Flash do these well.
 - **masterpiece:** rounds judged by an independent critic, each new version compared with the
   best so far. It stops after two rounds without a win, at 12 rounds, or after 2 hours of active
   work. For a named car, landmark or building whose likeness matters.
@@ -55,7 +55,7 @@ detailed, and a gallery of 24 examples made by AI agents.
   cost; every round is reported, so you can stop it at any time.
 - When you name no mode, the skill picks one and tells you before it starts: which mode, why,
   roughly how long and what it costs, and how to switch. It never picks unbounded. A smaller
-  model asked for a hard named subject says so and recommends GPT-6.1 Sol or Claude Opus.
+  model asked for a hard named subject says so and recommends GPT-6.1 Sol or Claude Opus 5.5.
 - The old tier names still work: quick, standard and showcase are fast, masterpiece is
   masterpiece. `--mode`, `mode:` in a request, the MCP `construct_limits` tool and the Claude
   Code budget hook all accept them.
@@ -144,7 +144,7 @@ The first release as **Construct**, an independent MIT-licensed project.
 - **Research and effort, bounded.** Research is optional and decided by the request: none for
   a generic subject; for a concrete, named one, preferred whenever the model is unsure of its
   identity-defining shape — the maker's pages, specs and reference photos first, viewed and
-  measured with vision (any model that can see, DeepSeek included), then authoring; the user can
+  measured with vision (any model that can see, DeepSeek V4.1 Flash included), then authoring; the user can
   say "research: on/off". Three effort tiers — quick, standard (default), showcase — with
   wall-clock, check-round, review-round and research limits. The aim is genuinely good
   (an art-direction rubric in `references/review.md` and `prompts/vision-review.md`: silhouette,
@@ -194,7 +194,7 @@ The first release as **Construct**, an independent MIT-licensed project.
 
 ## 0.2.0-pre — as hologram-studio (2026-10-19)
 
-From the first live runs (Hermes with DeepSeek and GPT-6.1 Sol), which passed the audit with
+From the first live runs (Hermes with DeepSeek V4.1 Flash and GPT-6.1 Sol), which passed the audit with
 visible defects:
 
 - `detached`: a part whose real surfaces and segments come within 1% of the object's size of

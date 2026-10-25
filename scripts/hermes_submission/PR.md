@@ -44,7 +44,7 @@ them it still checks and builds the construct's HTML page.
 - [x] No external dependencies beyond what is available: Python standard library; an already
       installed browser and ffmpeg are optional and never installed by the skill.
 - [x] Tested end to end through Hermes 0.22 (one-shot, toolsets terminal+file+skills) on five
-      synthetic tasks: DeepSeek (`deepseek-flash`) 15/15, $0.038 total, 258 s; GPT-6.1 Sol
+      synthetic tasks: DeepSeek V4.1 Flash (`deepseek-flash`) 15/15, $0.038 total, 258 s; GPT-6.1 Sol
       15/15, 357 s; no invented facts. To re-run:
       `hermes --toolsets skills -q "Use the construct skill to make a construct of a desk lamp with a weighted base and a conical shade"`
 

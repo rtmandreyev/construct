@@ -60,9 +60,9 @@ USE = {"quick": "fast mode: bulk imports and simple archetypes (the parameter pa
        "unbounded": "only on explicit request: the same rounds with only the stop rules (two rounds without a win, "
                     "or every criterion 3); no round cap, no time ceiling; many rounds and hours at a high token cost"}
 # what each mode costs, for the announcement and the docs (from the evaluation runs)
-COST = {"fast": "10 minutes (30 for a richer subject); cents with a DeepSeek-class model",
+COST = {"fast": "10 minutes (30 for a richer subject); cents with a DeepSeek-class model (tested: DeepSeek V4.1 Flash)",
         "masterpiece": "up to 12 rounds and 2 hours of active work, plus the critic's time; the most tokens of a "
-                       "normal run, so use a frontier model (GPT-6.1 Sol or Claude Opus)",
+                       "normal run, so use a frontier model (tested: GPT-6.1 Sol, Claude Opus 5.5)",
         "unbounded": "no cap: many rounds and hours, at a high token cost; stop it at any round"}
 # overrides may raise a limit, never remove it
 CEILING = {"wall_clock_s": 7200, "review_rounds": 12, "check_rounds": 30, "searches": 40, "sources": 20, "images": 20}
@@ -172,7 +172,7 @@ def model_note(model, mode_name):
     """A recommendation when a smaller or cheaper model runs a rounds mode, or None."""
     if mode_name not in ROUNDS or not model or any(f in str(model).lower() for f in FRONTIER):
         return None
-    return ("%s on a hard named subject: the evaluation runs recommend GPT-6.1 Sol or Claude Opus for %s; smaller or "
+    return ("%s on a hard named subject: the evaluation runs recommend GPT-6.1 Sol or Claude Opus 5.5 for %s; smaller or "
             "cheaper models made scale errors or failed to save a scene. Fast mode suits them." % (model, mode_name))
 
 

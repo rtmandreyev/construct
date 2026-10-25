@@ -41,7 +41,7 @@ if no browser is available, say so and deliver the HTML without captures.
    ([effort](references/effort.md)); the user can just say one:
    - **fast:** one pass with self-review, no rounds loop: ≤10 minutes and 2 reviews (≤30 and
      4 for a richer subject). Generic subjects, simple objects, quick asks. Cents with a
-     DeepSeek-class model.
+     DeepSeek-class model (tested: DeepSeek V4.1 Flash).
    - **masterpiece:** judged rounds ([rounds](references/rounds.md)): a defect ledger, at most
      4 items a round, one critic who compares each version with the best so far; it stops
      after 2 rounds without a win, at every criterion 3, at 12 rounds or at 2 hours of active
@@ -57,7 +57,7 @@ if no browser is available, say so and deliver the HTML without captures.
    subject, a simple mechanical object or a quick ask; masterpiece for a specific named
    subject whose likeness matters (a car model, a landmark, a named building); never
    unbounded. If you are a smaller or cheaper model and the subject is a hard named one, say
-   so and recommend GPT-6.1 Sol or Claude Opus for masterpiece, with fast as the option on
+   so and recommend GPT-6.1 Sol or Claude Opus 5.5 (or a model of that class) for masterpiece, with fast as the option on
    this model. The limits are ceilings, not targets. A
    generic subject ("a desk lamp") needs no research; a concrete, named one (a brand and
    model, a named building or peak, a species) is researched whenever you are unsure of its

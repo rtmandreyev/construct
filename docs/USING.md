@@ -162,7 +162,7 @@ archetypes, a lamp and a fictional creature), both models scored full marks with
 
 | Model | Cost | Time |
 | --- | --- | --- |
-| DeepSeek (`deepseek-flash`) | about $0.003 per archetype, $0.01–0.02 per full scene | 258 s for all five |
+| DeepSeek V4.1 Flash (1017; `deepseek-flash`) | about $0.003 per archetype, $0.01–0.02 per full scene | 258 s for all five |
 | GPT-6.1 Sol (through a ChatGPT plan) | covered by the plan | 357 s for all five |
 
 A masterpiece run uses a frontier model for up to two hours of working time plus the critic's

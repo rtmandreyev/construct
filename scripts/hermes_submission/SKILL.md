@@ -43,8 +43,8 @@ recreating real cover art (artwork is shown only from images the user supplies).
 
 - Python 3.10+ (standard library only). Nothing is installed or downloaded.
 - Optional: the `web` and `vision` toolsets, for researching a named subject and looking at
-  references and captures. Any model that can see images works (DeepSeek and GPT models
-  included). Without them, the construct is built from general knowledge and labelled so.
+  references and captures. Any model that can see images works (tested: DeepSeek V4.1 Flash,
+  GPT-6.1 Sol). Without them, the construct is built from general knowledge and labelled so.
 - For review stills and video: a Chromium-family browser already on the machine (Chrome,
   Chromium, Edge, Brave, or `HOLOGRAM_CHROME=/path`) and `ffmpeg`. Without them you can still
   check and build; say that captures were not made.
@@ -91,7 +91,7 @@ Work in a folder of your own. `out/construct.html` opens in any browser.
 1. **Mode and research.** Three modes (`references/effort.md`); the user can just say one:
    - **fast:** one pass with self-review, no rounds loop: at most 10 minutes, 2 review rounds,
      5 searches, 3 sources, 3 reference images (30 minutes and 4 reviews for a richer
-     subject). Generic subjects, simple objects, quick asks; DeepSeek is fine here.
+     subject). Generic subjects, simple objects, quick asks; DeepSeek V4.1 Flash is fine here.
    - **masterpiece:** judged rounds (below), stopping after 2 rounds without a win, at every
      criterion 3, at 12 rounds or at 2 hours of active work. A named subject whose likeness
      matters. Frontier-model token cost.
@@ -104,7 +104,7 @@ Work in a folder of your own. `out/construct.html` opens in any browser.
    switch. Fast for generic subjects, simple mechanical objects and quick asks; masterpiece
    for a specific named subject whose likeness matters (a car model, a landmark, a named
    building); never unbounded. On a smaller or cheaper model with a hard named subject, say so
-   and recommend GPT-6.1 Sol or Claude Opus for masterpiece, with fast as the option here. A
+   and recommend GPT-6.1 Sol or Claude Opus 5.5 (or a model of that class) for masterpiece, with fast as the option here. A
    generic subject ("a desk lamp") needs no research. For a concrete, named one (a brand and
    model, a named building or peak, a species) research first whenever you are unsure of its
    shape or specs: the maker's or official pages, specs and reference photos, looked at with

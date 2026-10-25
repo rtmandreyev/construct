@@ -150,7 +150,7 @@ class ExamplesGallery(unittest.TestCase):
                 self.assertTrue((d / name).is_file(), (ex["slug"], name))
             self.assertEqual(set(ex), {"slug", "title", "mode", "model"}, ex["slug"])  # the label: object, mode, model
             self.assertIn(ex["mode"], ("fast", "masterpiece"), ex["slug"])
-            self.assertIn(ex["model"], ("Claude Opus", "GPT-6.1 Sol", "DeepSeek"), ex["slug"])
+            self.assertIn(ex["model"], ("Claude Opus 5.5", "GPT-6.1 Sol", "DeepSeek V4.1 Flash"), ex["slug"])  # exact names
             text = (d / "scene.json").read_text(encoding="utf-8")
             self.assertIsNone(re.search(r"/Users/|/private/|/var/folders|references/", text), ex["slug"])
             self.assertTrue(diagnose.diagnose_text(text)["ok"], ex["slug"])
@@ -187,9 +187,9 @@ class ExamplesGallery(unittest.TestCase):
         from . import diagnose
         root = HERE.parent / "examples"
         films = json.loads((root / "films.json").read_text(encoding="utf-8"))["films"]
-        self.assertEqual(len(films), 5)
+        self.assertEqual([f["slug"] for f in films], ["james-webb-space-telescope", "voyager-1", "arecibo-observatory"])
         for film in films:
-            self.assertEqual(set(film), {"slug", "title", "mode", "model", "track", "video"}, film["slug"])
+            self.assertEqual(set(film), {"slug", "title", "mode", "model", "video"}, film["slug"])  # no track names
             self.assertEqual(sorted(p.name for p in (root / "films" / film["slug"]).iterdir()), ["scene.json"])  # no video
             text = (root / "films" / film["slug"] / "scene.json").read_text(encoding="utf-8")
             self.assertIsNone(re.search(r"/Users/|/private/|/var/folders|references/", text), film["slug"])
@@ -215,23 +215,28 @@ class ExamplesGallery(unittest.TestCase):
                 dst = out / "films" / film["slug"]
                 for name in ("index.html", "film.mp4", "poster.jpg", "construct.html", "scene.json"):
                     self.assertTrue((dst / name).is_file(), (film["slug"], name))
-                label = "%s · masterpiece · DeepSeek · %s" % (film["title"], film["track"])
-                credit = "Music: &quot;%s&quot; by Artyom Andreyev, used with permission." % film["track"]
                 page = (dst / "index.html").read_text(encoding="utf-8")
                 for text in (index, page):
-                    self.assertIn(label, text)
-                    self.assertIn(credit, text)
+                    self.assertIn("masterpiece · DeepSeek V4.1 Flash", text)
+                    self.assertNotIn("Music:", text)  # no music credit or track names
+                # the choice: the film, or the live construct, both on the film's page
+                self.assertIn('href="films/%s/"' % film["slug"], index)
+                self.assertIn('href="films/%s/#live"' % film["slug"], index)
+                for words in ("Watch the film", "Open the live construct", "Why a film?"):
+                    self.assertIn(words, page)
+                self.assertIn('src="film.mp4"', page)
                 self.assertIn("construct.html?ui=0&amp;rounds=0", page)  # the live construct
                 self.assertNotRegex((dst / "construct.html").read_text(encoding="utf-8"), r'"rounds":\s*\[\{')
-            for video in re.findall(r"<video[^>]*>", index):  # controls, never autoplaying
-                self.assertIn("controls", video)
-                self.assertIn('preload="none"', video)
-                self.assertNotIn("autoplay", video)
+            for page in out.glob("films/*/index.html"):  # controls, never autoplaying
+                for video in re.findall(r"<video[^>]*>", page.read_text(encoding="utf-8")):
+                    self.assertIn("controls", video)
+                    self.assertNotIn("autoplay", video)
             for page in [p for p in out.rglob("*.html") if p.name != "construct.html"]:
                 for ref in re.findall(r'(?:href|src|poster)="([^"]+)"', page.read_text(encoding="utf-8")):
                     if not ref.startswith(("https://", "http://")):
-                        target = (page.parent / ref.split("?")[0]).resolve()
-                        self.assertTrue((target / "index.html" if ref.endswith("/") else target).exists(), (page, ref))
+                        path = ref.split("#")[0].split("?")[0]
+                        target = (page.parent / path).resolve()
+                        self.assertTrue((target / "index.html" if path.endswith("/") else target).exists(), (page, ref))
         r = subprocess.run([sys.executable, str(HERE.parent / "scripts" / "build_site.py"), "--out", str(Path(d, "x"))],
                            capture_output=True, text=True)
         self.assertNotEqual(r.returncode, 0)  # films listed: the videos must be given, or --no-films

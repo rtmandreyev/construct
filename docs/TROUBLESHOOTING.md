@@ -68,15 +68,15 @@ guide in `construct_hologram/skill/references/craft.md` explains what makes a co
 ## The likeness is off
 
 Proportions are hard to get from text alone. For a named subject, use **masterpiece** mode with a
-recommended model (GPT-6.1 Sol or Claude Opus) and make sure the agent can find reference photos;
+recommended model (tested: GPT-6.1 Sol, Claude Opus 5.5) and make sure the agent can find reference photos;
 the critic compares every version with them. For shapes like a guitar body or a car's side,
 tracing an outline from a photo helps most ([USING.md](USING.md#getting-the-likeness-right)).
 
 ## A small model doesn't finish
 
-Small or free models (MiniMax, Inkling, Nemotron, for example) often fail to save a scene at all or
-get the scale wrong. For common things, ask for the archetype path (`author ... --params`), which
-small models handle well; for anything else, use DeepSeek or one of the recommended models.
+Small models (tested: MiniMax M3.1 Flash, Thinking Machines Inkling, NVIDIA Nemotron 3.5 Super VL)
+often fail to save a scene at all or get the scale wrong. For common things, ask for the archetype path (`author ... --params`), which
+small models handle well; for anything else, use DeepSeek V4.1 Flash or one of the recommended models.
 
 ## The labels are missing
 

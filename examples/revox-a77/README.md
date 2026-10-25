@@ -2,7 +2,7 @@
 
 [![Revox A77, a holographic construct](hero.jpg)](https://rtmandreyev.github.io/construct/examples/revox-a77/)
 
-**fast · DeepSeek**
+**fast · DeepSeek V4.1 Flash**
 
 [Open the live construct](https://rtmandreyev.github.io/construct/examples/revox-a77/): drag to orbit, R replays the assembly, L shows
 labels. The scene it was built from: [scene.json](scene.json).

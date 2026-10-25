@@ -2,7 +2,7 @@
 
 [![Saturn, a holographic construct](hero.jpg)](https://rtmandreyev.github.io/construct/examples/saturn/)
 
-**masterpiece · DeepSeek**
+**masterpiece · DeepSeek V4.1 Flash**
 
 [Open the live construct](https://rtmandreyev.github.io/construct/examples/saturn/): drag to orbit, R replays the assembly, L shows
 labels. The scene it was built from: [scene.json](scene.json).

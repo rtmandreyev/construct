@@ -9,7 +9,17 @@ agent for a thing in plain words, and it builds an animated holographic model of
   <a href="https://rtmandreyev.github.io/construct/examples/toyota-land-cruiser-fj62/"><img src="docs/media/assembly-toyota-land-cruiser-fj62.gif" width="32%" alt="The Toyota Land Cruiser FJ62 construct assembling itself"></a>
   <a href="https://rtmandreyev.github.io/construct/examples/duomo-di-milano/"><img src="docs/media/assembly-duomo-di-milano.gif" width="32%" alt="The Duomo di Milano construct assembling itself"></a>
 </p>
-<p align="center"><sub>Sainte-Chapelle · Toyota Land Cruiser FJ62 · Duomo di Milano, each built by Claude Opus in masterpiece mode. <a href="https://rtmandreyev.github.io/construct/">Open the gallery</a> to orbit them, replay the assembly and read the labels.</sub></p>
+<p align="center"><sub>Sainte-Chapelle · Toyota Land Cruiser FJ62 · Duomo di Milano, each built by Claude Opus 5.5 in masterpiece mode. <a href="https://rtmandreyev.github.io/construct/">Open the gallery</a> to orbit them, replay the assembly and read the labels.</sub></p>
+
+**Film mode.** A construct can also assemble across a whole piece of music: the build pauses, surges
+and flares with it, and you get a video with the music in it. See [Film mode](docs/FILM.md).
+
+<p align="center">
+  <a href="https://rtmandreyev.github.io/construct/films/james-webb-space-telescope/"><img src="docs/media/film-james-webb-space-telescope.gif" width="32%" alt="The James Webb Space Telescope construct assembling across a piece of music"></a>
+  <a href="https://rtmandreyev.github.io/construct/films/voyager-1/"><img src="docs/media/film-voyager-1.gif" width="32%" alt="The Voyager 1 construct assembling across a piece of music"></a>
+  <a href="https://rtmandreyev.github.io/construct/films/arecibo-observatory/"><img src="docs/media/film-arecibo-observatory.gif" width="32%" alt="The Arecibo Observatory construct assembling across a piece of music"></a>
+</p>
+<p align="center"><sub><a href="https://rtmandreyev.github.io/construct/films/james-webb-space-telescope/">James Webb Space Telescope</a> · <a href="https://rtmandreyev.github.io/construct/films/voyager-1/">Voyager 1</a> · <a href="https://rtmandreyev.github.io/construct/films/arecibo-observatory/">Arecibo Observatory</a>, each assembling across a piece of music. Open one to watch the film, or to turn the live construct around.</sub></p>
 
 ```
 you ask  →  the agent writes a scene  →  Construct checks it  →  Construct builds the page
@@ -46,17 +56,14 @@ In the common case:
 
 ## See it in practice
 
+The examples are real runs: each one was made by an AI agent with Construct, in fast or
+masterpiece mode, by Claude Opus 5.5, GPT-6.1 Sol or DeepSeek V4.1 Flash. Open any of them to
+watch it assemble, turn it around and read its labels.
+
 <p align="center"><a href="https://rtmandreyev.github.io/construct/"><img src="docs/media/examples.jpg" alt="Example constructs made by AI agents: cars, cathedrals, watches, instruments, a lunar lander, a planet and a galaxy"></a></p>
 
-The examples are real runs: each one was made by an AI agent with Construct, in fast or
-masterpiece mode, by Claude Opus, GPT-6.1 Sol or DeepSeek. Open any of them to watch it assemble,
-turn it around and read its labels.
-
-**[Open the examples gallery →](https://rtmandreyev.github.io/construct/)** · each scene and its hero image are in
+**[See all 24 examples in the gallery →](https://rtmandreyev.github.io/construct/)** · each scene and its hero image are in
 [examples/](examples/).
-
-**Film mode.** A construct can also assemble across a track of music, pausing, surging and flaring
-with it: see [Film mode](docs/FILM.md) and the [films in the gallery](https://rtmandreyev.github.io/construct/#films).
 
 ## How it works
 
@@ -86,6 +93,12 @@ flowchart LR
 - **Masterpiece stops when it stops improving:** after two rounds without a better version, after
   12 rounds, or after two hours. In blind comparisons nobody could see a difference after about
   round 12, so more rounds mostly cost time.
+
+<p align="center"><img src="docs/media/style-provenance.jpg" width="80%" alt="Saturn in the provenance view: the rings, taken from published data, drawn in white; the globe's cloud bands, designed by the model, drawn in amber"></p>
+<p align="center"><sub>Honest about what is known: Saturn in the provenance view (<b>P</b>). The rings come from published data and are drawn in white; the cloud bands were designed by the model and are drawn in amber.</sub></p>
+
+<p align="center"><img src="docs/media/rounds-sainte-chapelle.jpg" alt="The Sainte-Chapelle at round 1, round 8 and round 15 of a masterpiece run: the flèche gains its tiers, and the window tracery, buttresses and pinnacles fill in"></p>
+<p align="center"><sub>The critic at work: the Sainte-Chapelle at rounds 1, 8 and 15 of a masterpiece run by Claude Opus 5.5. The flèche gains its tiers, and the window tracery, buttresses and pinnacles fill in.</sub></p>
 
 The whole process, with a construct improving round by round, is in
 **[How a construct is made](docs/HOW-IT-IS-MADE.md)**. What you see in a construct, and why
@@ -137,7 +150,7 @@ the skill picks one and tells you why before it starts.
 
 | Mode | What it does | When it stops | Rough cost | Use it for |
 | --- | --- | --- | --- | --- |
-| **fast** | One pass with self-review | About 10 minutes (30 for a richer subject) | Cents with DeepSeek | Generic subjects, simple objects, quick requests |
+| **fast** | One pass with self-review | About 10 minutes (30 for a richer subject) | Cents with DeepSeek V4.1 Flash | Generic subjects, simple objects, quick requests |
 | **masterpiece** | Rounds judged by an independent critic, each version compared with the best so far | Two rounds without a win, 12 rounds, or 2 hours of active work | Up to 2 hours of frontier-model tokens | A named car, landmark or building whose likeness matters |
 | **unbounded** | The same rounds, with no cap and no time limit | Only after two rounds without a win | Many rounds and hours, a high token cost | Only when you ask for it by name |
 
@@ -149,12 +162,14 @@ so it can run for hours. Every round is reported, so you can stop it whenever yo
 Any capable model can make a construct, but some subjects need a stronger one. From the
 evaluation runs:
 
-- **Named subjects in masterpiece mode** (a car model, a landmark): GPT-6.1 Sol or Claude Opus.
-  A smaller model given such a subject says so and recommends them.
-- **Simpler objects in fast mode:** DeepSeek does as well as those on objects such as a tape deck,
-  a watch or a camera.
-- **Small free models** (MiniMax, Inkling, Nemotron) are not recommended: in about half of their
-  runs they did not save a scene, and they made scale errors.
+- **Named subjects in masterpiece mode** (a car model, a landmark): a Sol or Opus class model
+  (tested: GPT-6.1 Sol, Claude Opus 5.5). A smaller model given such a subject says so and
+  recommends them.
+- **Simpler objects in fast mode:** DeepSeek V4.1 Flash does as well as those on objects such as a
+  tape deck, a watch or a camera.
+- **Small models** (tested: MiniMax M3.1 Flash, Thinking Machines Inkling, NVIDIA Nemotron 3.5
+  Super VL) are not recommended: in about half of their runs they did not save a scene, and they
+  made scale errors.
 
 ## Requirements
 

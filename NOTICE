@@ -15,7 +15,7 @@ Example artwork (construct_hologram/examples/v2/assets) is synthetic, generated 
 labelled as generated decoration. No authentic artwork, private data, credentials or model
 weights are included.
 
-Example constructs (examples/): scenes written by AI models (Claude Opus, GPT-6.1 Sol, DeepSeek)
+Example constructs (examples/): scenes written by AI models (Claude Opus 5.5, GPT-6.1 Sol, DeepSeek V4.1 Flash)
 with Construct, with hero images and animations rendered by Construct's own viewer. They are
 independent reconstructions from public references; the scenes cite those references by URL and
 include no reference photograph. Product, vehicle and place names belong to their owners, and

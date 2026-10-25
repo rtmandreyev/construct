@@ -55,7 +55,7 @@ you ask  →  the agent looks it up  →  it writes a scene  →  Construct chec
 
 ![The Sainte-Chapelle at round 1, round 8 and round 15 of a masterpiece run: the flèche gains its tiers, and the window tracery, buttresses and pinnacles fill in](media/rounds-sainte-chapelle.jpg)
 
-The same Sainte-Chapelle, made by Claude Opus in masterpiece mode, at round 1, round 8 and
+The same Sainte-Chapelle, made by Claude Opus 5.5 in masterpiece mode, at round 1, round 8 and
 round 15. Round 1 is already recognisable. By round 8 the flèche has gained its tiers; by round
 15 the window tracery, the buttresses and the pinnacles have filled in and the whole building
 reads as more solid. Every step was kept only because the critic, comparing the two
@@ -67,7 +67,7 @@ versions blind, preferred it. You can open the final version
 | | fast | masterpiece |
 | --- | --- | --- |
 | **The skill** | installed in your agent ([install](../README.md#install)) | the same |
-| **A model** | any capable model; DeepSeek does well | GPT-6.1 Sol or Claude Opus |
+| **A model** | any capable model; DeepSeek V4.1 Flash does well | a Sol or Opus class model (tested: GPT-6.1 Sol, Claude Opus 5.5) |
 | **Seeing pictures** | helpful: the agent reviews its own stills | needed: the critic compares pictures with reference photos |
 | **A browser** | a Chromium-family browser (Chrome, Edge, Brave) on the same machine for review stills | the same |
 | **A critic** | not used | a helper agent your agent can start, or a second model you point it at |
@@ -77,7 +77,7 @@ from what the model knows and says so.
 
 ## How long it takes and what it costs
 
-- **fast:** about 10 minutes, or up to 30 for a richer subject. With DeepSeek a full construct
+- **fast:** about 10 minutes, or up to 30 for a richer subject. With DeepSeek V4.1 Flash a full construct
   costs about one or two cents in model use; parameter-based things like a book or a CD cost
   less than a cent.
 - **masterpiece:** up to two hours of the agent's own working time, plus the critic's time each
@@ -87,7 +87,8 @@ from what the model knows and says so.
   cost. You can stop it after any round, and the best version so far is always saved.
 
 Which model to use: for a named car, landmark or building in masterpiece mode, **GPT-6.1 Sol**
-or **Claude Opus**. For simpler objects in fast mode, **DeepSeek** does as well as either. If
+or **Claude Opus 5.5**. For simpler objects in fast mode, **DeepSeek V4.1 Flash** does as well as
+either. If
 you ask a smaller model for a hard named subject, it tells you so and suggests one of those.
 
 ## Learn more

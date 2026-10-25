@@ -33,8 +33,8 @@ The user picks a mode by saying its name, or says nothing and you pick one (belo
 
 | mode | what it does | stops at | costs | for |
 |---|---|---|---|---|
-| **fast** | one pass with self-review, no rounds loop (the standard tier; showcase for a richer subject) | the tier's limits: 10 min and 2 reviews, or 30 min and 4 | 10 minutes (30 for a richer subject); cents with a DeepSeek-class model | generic subjects ("a watch", "a car"), simple mechanical objects, quick asks; DeepSeek-class models do these well |
-| **masterpiece** | the rounds loop: a defect ledger and one independent critic a round, each version judged pairwise against the best so far ([rounds](rounds.md)) | 2 rounds in a row without a pairwise win, every criterion 3, **12 rounds**, or **2 hours of active work** | up to 12 rounds and 2 hours of active work, plus the critic's time; the most tokens of a normal run, so use a frontier model (GPT-6.1 Sol or Claude Opus) | a specific named subject whose likeness matters: a car model, a landmark, a named building |
+| **fast** | one pass with self-review, no rounds loop (the standard tier; showcase for a richer subject) | the tier's limits: 10 min and 2 reviews, or 30 min and 4 | 10 minutes (30 for a richer subject); cents with a DeepSeek-class model (tested: DeepSeek V4.1 Flash) | generic subjects ("a watch", "a car"), simple mechanical objects, quick asks; DeepSeek-class models do these well |
+| **masterpiece** | the rounds loop: a defect ledger and one independent critic a round, each version judged pairwise against the best so far ([rounds](rounds.md)) | 2 rounds in a row without a pairwise win, every criterion 3, **12 rounds**, or **2 hours of active work** | up to 12 rounds and 2 hours of active work, plus the critic's time; the most tokens of a normal run, so use a frontier model (tested: GPT-6.1 Sol, Claude Opus 5.5) | a specific named subject whose likeness matters: a car model, a landmark, a named building |
 | **unbounded** | the same loop with **only** its stop rules: no round cap, no time ceiling | 2 rounds in a row without a pairwise win (or every criterion 3), or the user | no cap: many rounds and hours, at a high token cost; stop it at any round | only when the user asks for it by name |
 
 **Unbounded, plainly:** the critic finds a win almost every round, so an unbounded run can go
@@ -60,8 +60,8 @@ why, the rough time and cost, and how to switch. For example:
 - **unbounded:** never chosen automatically.
 
 **Say which model fits.** If you are a smaller or cheaper model and the subject is a hard named
-one, say so in the announcement and recommend GPT-6.1 Sol or Claude Opus for masterpiece (the
-evaluation runs: small and free models made scale errors and often failed to save a scene);
+one, say so in the announcement and recommend GPT-6.1 Sol or Claude Opus 5.5 (or a model of that class) for masterpiece (the
+evaluation runs: small models made scale errors and often failed to save a scene);
 offer fast mode as the alternative on the current model.
 
 ## The tiers behind the modes

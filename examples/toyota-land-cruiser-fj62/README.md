@@ -2,7 +2,7 @@
 
 [![Toyota Land Cruiser FJ62, a holographic construct](hero.jpg)](https://rtmandreyev.github.io/construct/examples/toyota-land-cruiser-fj62/)
 
-**masterpiece · Claude Opus**
+**masterpiece · Claude Opus 5.5**
 
 [Open the live construct](https://rtmandreyev.github.io/construct/examples/toyota-land-cruiser-fj62/): drag to orbit, R replays the assembly, L shows
 labels. The scene it was built from: [scene.json](scene.json).
