@@ -190,7 +190,7 @@ class ExamplesGallery(unittest.TestCase):
         self.assertEqual([f["slug"] for f in films], ["james-webb-space-telescope", "voyager-1", "arecibo-observatory"])
         for film in films:
             self.assertEqual(set(film), {"slug", "title", "mode", "model", "video"}, film["slug"])  # no track names
-            self.assertEqual(sorted(p.name for p in (root / "films" / film["slug"]).iterdir()), ["scene.json"])  # no video
+            self.assertEqual(sorted(p.name for p in (root / "films" / film["slug"]).iterdir()), ["poster.jpg", "scene.json"])  # no video
             text = (root / "films" / film["slug"] / "scene.json").read_text(encoding="utf-8")
             self.assertIsNone(re.search(r"/Users/|/private/|/var/folders|references/", text), film["slug"])
             self.assertTrue(diagnose.diagnose_text(text)["ok"], film["slug"])

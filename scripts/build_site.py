@@ -8,8 +8,9 @@ Every example in examples/ (listed in examples/examples.json) is compiled with t
 compiler into a self-contained construct.html, beside its hero image and its own page. The films
 (examples/films.json, their scenes in examples/films/) get a page each, with the video, its poster
 and the live construct. The videos are not in the repository: they come from --films DIR, a folder
-holding the files films.json names, and go only into the built site. ffmpeg draws each poster
-from the film's last frame. The site uses relative links only, needs no server code and loads
+holding the files films.json names, and go only into the built site. The pictures (each example's
+hero.jpg and thumb.jpg, each film's poster.jpg) are framed close to the construct by
+scripts/gallery_images.py. The site uses relative links only, needs no server code and loads
 nothing from other hosts.
 
 The public addresses come from OWNER and REPO below and nowhere else: `--set-url` rewrites them
@@ -22,7 +23,6 @@ import importlib
 import json
 import re
 import shutil
-import subprocess
 import sys
 from pathlib import Path
 
@@ -44,7 +44,8 @@ html, body { margin: 0; background: var(--bg); color: var(--ink);
              font: 16px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
 a { color: var(--ink); }
 a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
-header.site { padding: 56px 20px 28px; max-width: 1180px; margin: 0 auto; }
+header.site { padding: 48px 24px 24px; max-width: 1680px; margin: 0 auto; }
+header.site p, header.site h1 { max-width: 900px; }
 header.site .eyebrow { letter-spacing: .22em; font-size: 12px; color: var(--accent); text-transform: uppercase; }
 header.site h1 { font-size: clamp(30px, 5vw, 48px); line-height: 1.1; margin: 10px 0 12px; font-weight: 650; }
 header.site p { color: var(--dim); max-width: 760px; margin: 0 0 18px; }
@@ -52,16 +53,21 @@ header.site p { color: var(--dim); max-width: 760px; margin: 0 0 18px; }
 .button { display: inline-block; padding: 9px 16px; border: 1px solid var(--line); border-radius: 999px;
           text-decoration: none; font-size: 14px; background: var(--panel); }
 .button:hover { border-color: var(--accent); box-shadow: 0 0 18px var(--glow); }
-main { max-width: 1180px; margin: 0 auto; padding: 0 20px 64px; }
-.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); gap: 18px; }
+main { max-width: 1680px; margin: 0 auto; padding: 0 24px 64px; }
+.grid { display: grid; grid-template-columns: 1fr; gap: 18px; }
+@media (min-width: 700px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1100px) { .grid { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 1700px) { .grid { grid-template-columns: repeat(4, 1fr); } }
+@media (min-width: 1700px) { section.films .grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 480px) { header.site, main { padding-left: 16px; padding-right: 16px; } }
 .card { display: block; text-decoration: none; background: var(--panel); border: 1px solid var(--line);
         border-radius: 14px; overflow: hidden; transition: border-color .15s, box-shadow .15s, transform .15s; }
 .card:hover { border-color: var(--accent); box-shadow: 0 0 26px var(--glow); transform: translateY(-2px); }
-.card img { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; background: #000; }
-.card .body { padding: 12px 14px 15px; }
-.card h2 { font-size: 17px; margin: 0 0 4px; font-weight: 600; }
-.card .prov { font-size: 13px; color: var(--dim); margin: 0; }
-footer.site { max-width: 1180px; margin: 0 auto; padding: 24px 20px 48px; color: var(--dim); font-size: 13px;
+.card img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: contain; background: #050205; }
+.card .body { padding: 9px 13px 11px; }
+.card h2 { font-size: 16px; margin: 0 0 2px; font-weight: 600; }
+.card .prov { font-size: 12.5px; color: var(--dim); margin: 0; }
+footer.site { max-width: 1680px; margin: 0 auto; padding: 24px 24px 48px; color: var(--dim); font-size: 13px;
               border-top: 1px solid var(--line); }
 .viewer { display: flex; flex-direction: column; min-height: 100vh; }
 .bar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; padding: 12px 20px;
@@ -78,13 +84,12 @@ p.section { color: var(--dim); max-width: 760px; margin: 0 0 16px; }
 section.films { margin-bottom: 44px; }
 .card.film { cursor: default; }
 .card.film:hover { transform: none; }
-.card.film > a img { aspect-ratio: 16 / 9; height: auto; }
 .card h2 a { text-decoration: none; }
 .card h2 a:hover { text-decoration: underline; }
-.card .choose { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+.card .choose { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
 .card .choose .button { font-size: 13px; padding: 7px 13px; }
 .button.primary { border-color: var(--accent); }
-.film-view { width: 100%; max-width: 1180px; margin: 0 auto; padding: 18px 20px 0; }
+.film-view { width: 100%; max-width: 1400px; margin: 0 auto; padding: 18px 24px 0; }
 .tabs { display: flex; flex-wrap: wrap; gap: 10px; margin: 0 0 14px; }
 .tabs input { position: absolute; opacity: 0; pointer-events: none; }
 .tabs label { padding: 10px 18px; border: 1px solid var(--line); border-radius: 999px; background: var(--panel);
@@ -137,7 +142,7 @@ def _page(title, body, depth, description):
 def index_page(examples, films=()):
     film_cards = "\n".join(
         "<div class=\"card film\"><a href=\"films/%s/\"><img src=\"films/%s/poster.jpg\" alt=\"%s, the finished construct "
-        "of its film\" loading=\"lazy\" width=\"1280\" height=\"720\"></a><div class=\"body\"><h2><a href=\"films/%s/\">%s</a>"
+        "of its film\" loading=\"lazy\" width=\"1200\" height=\"750\"></a><div class=\"body\"><h2><a href=\"films/%s/\">%s</a>"
         "</h2><p class=\"prov\">%s</p><div class=\"choose\"><a class=\"button primary\" href=\"films/%s/\">Watch the film</a>"
         "<a class=\"button\" href=\"films/%s/#live\">Open the live construct</a></div></div></div>"
         % (f["slug"], f["slug"], html.escape(f["title"]), f["slug"], html.escape(f["title"]),
@@ -151,7 +156,7 @@ def index_page(examples, films=()):
                     if films else "")
     cards = "\n".join(
         "<a class=\"card\" href=\"examples/%s/\"><img src=\"examples/%s/thumb.jpg\" alt=\"%s, a holographic construct\" "
-        "loading=\"lazy\" width=\"720\" height=\"450\"><div class=\"body\"><h2>%s</h2><p class=\"prov\">%s</p></div></a>"
+        "loading=\"lazy\" width=\"1200\" height=\"750\"><div class=\"body\"><h2>%s</h2><p class=\"prov\">%s</p></div></a>"
         % (e["slug"], e["slug"], html.escape(e["title"]), html.escape(e["title"]), html.escape(provenance(e)))
         for e in examples)
     body = ("<header class=\"site\"><div class=\"eyebrow\">Construct · examples</div>"
@@ -223,8 +228,7 @@ def _film(film, films_dir, out, studio):
         raise SystemExit("%s is %.1f MB, more than %d MB: re-encode it" % (video, video.stat().st_size / 1e6, FILM_MAX_MB))
     dst.mkdir(parents=True)
     shutil.copyfile(video, dst / "film.mp4")
-    subprocess.run(["ffmpeg", "-v", "error", "-y", "-sseof", "-0.5", "-i", str(video), "-frames:v", "1",
-                    "-vf", "scale=1280:-2", "-q:v", "4", str(dst / "poster.jpg")], check=True)
+    shutil.copyfile(src / "poster.jpg", dst / "poster.jpg")  # framed close by scripts/gallery_images.py
     tmp = out / ".build" / ("film-" + film["slug"])
     studio.build(str(_public_scene(src / "scene.json", tmp.parent)), str(tmp), asset_root=str(src))
     shutil.copyfile(studio.page_in(tmp), dst / "construct.html")

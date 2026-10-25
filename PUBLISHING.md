@@ -80,16 +80,18 @@ git -C ../construct-pages push origin gh-pages
 git worktree remove ../construct-pages
 ```
 
-To add an example: put its `scene.json`, `hero.jpg` (1440 × 900) and `thumb.jpg` (720 × 450)
-in `examples/<slug>/`, add an entry to `examples/examples.json`, write its `README.md` like the
-others, and rebuild.
+To add an example: put its `scene.json` in `examples/<slug>/`, add an entry to
+`examples/examples.json`, write its `README.md` like the others, draw its pictures with
+`python3 scripts/gallery_images.py <slug>` (`hero.jpg`, 1440 × 900, and `thumb.jpg`, 1200 × 750,
+framed close to the construct), and rebuild.
 
 The films are the exception to "everything is in the repository": their videos are published
 with the gallery only, never in `main`. `--films DIR` names the folder that holds them (the file
 names in `examples/films.json`); `--no-films` builds the gallery without them. To add a film: put
 its scene in `examples/films/<slug>/scene.json`, add an entry to `examples/films.json` (the object,
-mode, model, track and video file), keep the video at about 20 MB or less (re-encode it with
-ffmpeg if needed), and rebuild with `--films`. The poster is drawn from the film's last frame.
+mode, model and video file), keep the video at about 20 MB or less (re-encode it with ffmpeg if
+needed), draw its poster with `python3 scripts/gallery_images.py <slug>`, and rebuild with
+`--films`.
 
 ## What the gallery needs
 
