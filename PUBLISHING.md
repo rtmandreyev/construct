@@ -2,7 +2,7 @@
 
 This repository has two branches to publish:
 
-- `main`: the source, tagged `v0.2.1`;
+- `main`: the source, tagged at each release (the latest is `v0.3.0`);
 - `gh-pages`: the examples gallery, a static site served from the branch's root.
 
 The public addresses below come from one place: `OWNER` and `REPO` at the top of
@@ -41,7 +41,7 @@ Making it public later: **Settings → General → Danger Zone → Change visibi
 cd ~/construct-public
 git remote add origin https://github.com/rtmandreyev/construct.git
 git push -u origin main
-git push origin v0.2.1
+git push origin v0.3.0
 ```
 
 ## 3. Push the gallery
@@ -63,14 +63,14 @@ After a minute or two the gallery is at https://rtmandreyev.github.io/construct/
 Pages shows the address once it is live). Open it, open two or three examples, and check
 that they assemble and that the README's animations link to them.
 
-Optionally, publish a release: **Releases → Draft a new release**, tag `v0.2.1`, the 0.2.1
-section of CHANGELOG.md as the notes.
+Optionally, publish a release: **Releases → Draft a new release**, tag `v0.3.0`, and
+[docs/releases/v0.3.0.md](docs/releases/v0.3.0.md) as the notes.
 
 ## 5. Update the gallery later
 
 ```sh
 cd ~/construct-public
-python3 scripts/build_site.py --out site              # compiles every example with this checkout
+python3 scripts/build_site.py --out site --films DIR  # compiles every example with this checkout
 python3 -m http.server 8000 --directory site          # preview at http://localhost:8000/
 git worktree add ../construct-pages gh-pages
 rsync -a --delete --exclude .git site/ ../construct-pages/
@@ -83,6 +83,13 @@ git worktree remove ../construct-pages
 To add an example: put its `scene.json`, `hero.jpg` (1440 × 900) and `thumb.jpg` (720 × 450)
 in `examples/<slug>/`, add an entry to `examples/examples.json`, write its `README.md` like the
 others, and rebuild.
+
+The films are the exception to "everything is in the repository": their videos are published
+with the gallery only, never in `main`. `--films DIR` names the folder that holds them (the file
+names in `examples/films.json`); `--no-films` builds the gallery without them. To add a film: put
+its scene in `examples/films/<slug>/scene.json`, add an entry to `examples/films.json` (the object,
+mode, model, track and video file), keep the video at about 20 MB or less (re-encode it with
+ffmpeg if needed), and rebuild with `--films`. The poster is drawn from the film's last frame.
 
 ## What the gallery needs
 

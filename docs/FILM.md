@@ -191,4 +191,27 @@ what you need to add them in your own engine: `onset` per frame and `sections` w
 
 ## Film examples
 
-Examples of constructs assembling across music will be added here.
+Five constructs made by DeepSeek in masterpiece mode, each assembling across a track of music.
+Play them in the [gallery's film section](https://rtmandreyev.github.io/construct/#films), where
+each film also has a page with its construct live:
+
+| Film | Track |
+| --- | --- |
+| [Soyuz](https://rtmandreyev.github.io/construct/films/soyuz/) | "Enter Orbit" |
+| [Voyager 1](https://rtmandreyev.github.io/construct/films/voyager-1/) | "Far Horizons" |
+| [Arecibo Observatory](https://rtmandreyev.github.io/construct/films/arecibo-observatory/) | "First Encounter" |
+| [James Webb Space Telescope](https://rtmandreyev.github.io/construct/films/james-webb-space-telescope/) | "Slow Drift" |
+| [Brass refractor](https://rtmandreyev.github.io/construct/films/brass-refractor/) | "Stargazing" |
+
+Music by Artyom Andreyev, used with permission. The scenes are in
+[examples/films/](../examples/films/); the videos are published with the gallery only.
+
+![Arecibo Observatory halfway through its film: the dish and towers built, the cables and the platform being drawn](media/film-arecibo-midway.jpg)
+
+*Arecibo halfway through "First Encounter": the dish and the towers are built, and the cables
+and the suspended platform are being drawn.*
+
+![The same moment a frame apart: before an attack, and on it, with the construct flaring](media/film-arecibo-flare.jpg)
+
+*An accent, one frame apart: just before a strong attack in the music (left), and on it (right),
+when what is built glows and the height being drawn flares brightest.*

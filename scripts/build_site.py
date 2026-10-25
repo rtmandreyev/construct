@@ -1,11 +1,16 @@
 """Build the examples gallery as a static site (for the gh-pages branch, served from its root).
 
-    python3 scripts/build_site.py --out site                 # build the site into ./site
+    python3 scripts/build_site.py --out site --films DIR      # build the site into ./site
+    python3 scripts/build_site.py --out site --no-films      # the same, without the film section
     python3 scripts/build_site.py --set-url OWNER/REPO       # move every link to another repository
 
 Every example in examples/ (listed in examples/examples.json) is compiled with this checkout's
-compiler into a self-contained construct.html, beside its hero image and its own page. The site
-uses relative links only, needs no server code and loads nothing from other hosts.
+compiler into a self-contained construct.html, beside its hero image and its own page. The films
+(examples/films.json, their scenes in examples/films/) get a page each, with the video, its poster
+and the live construct. The videos are not in the repository: they come from --films DIR, a folder
+holding the files films.json names, and go only into the built site. ffmpeg draws each poster
+from the film's last frame. The site uses relative links only, needs no server code and loads
+nothing from other hosts.
 
 The public addresses come from OWNER and REPO below and nowhere else: `--set-url` rewrites them
 here and in the documents that link to the site.
@@ -17,6 +22,7 @@ import importlib
 import json
 import re
 import shutil
+import subprocess
 import sys
 from pathlib import Path
 
@@ -28,6 +34,7 @@ REPO_URL = "https://github.com/%s/%s" % (OWNER, REPO)
 ROOT = Path(__file__).resolve().parent.parent
 EXAMPLES = ROOT / "examples"
 LINKED = ["README.md", "PUBLISHING.md", "examples/README.md"]  # documents that link to the site, and docs/**/*.md
+FILM_MAX_MB = 25  # a film larger than this is refused: re-encode it (see docs/FILM.md)
 
 CSS = """
 :root { color-scheme: dark; --bg: #050205; --panel: #0e0810; --line: #2a1d30; --ink: #f1e9f7; --dim: #a597b3;
@@ -66,11 +73,39 @@ footer.site { max-width: 1180px; margin: 0 auto; padding: 24px 20px 48px; color:
 .stage iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 .hint { padding: 10px 20px 18px; color: var(--dim); font-size: 13px; }
 .hint kbd { border: 1px solid var(--line); border-radius: 4px; padding: 0 5px; font-size: 12px; color: var(--ink); }
+h2.section { font-size: 22px; font-weight: 620; margin: 8px 0 6px; }
+p.section { color: var(--dim); max-width: 760px; margin: 0 0 16px; }
+section.films { margin-bottom: 44px; }
+.card.film { cursor: default; }
+.card.film:hover { transform: none; }
+.card video, .film-player video { display: block; width: 100%; aspect-ratio: 16 / 9; background: #000; }
+.card h2 a { text-decoration: none; }
+.card h2 a:hover { text-decoration: underline; }
+.credit { font-size: 12.5px; color: var(--dim); margin: 6px 0 0; }
+.film-player { width: 100%; max-width: 1180px; margin: 0 auto; padding: 18px 20px 6px; }
+.film-player .credit { font-size: 13.5px; margin: 10px 0 0; }
+.live { width: 100%; max-width: 1180px; margin: 0 auto; padding: 22px 20px 0; }
+.film-hint { width: 100%; max-width: 1180px; margin: 0 auto; }
+.live .stage { min-height: 0; aspect-ratio: 16 / 9; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
 """
 
 
 def _load_examples():
     return json.loads((EXAMPLES / "examples.json").read_text(encoding="utf-8"))["examples"]
+
+
+def _load_films():
+    path = EXAMPLES / "films.json"
+    return json.loads(path.read_text(encoding="utf-8"))["films"] if path.exists() else []
+
+
+def film_label(film):
+    """A film's line: the object, the mode, the model and the track."""
+    return "%s · %s · %s · %s" % (film["title"], film["mode"], film["model"], film["track"])
+
+
+def film_credit(film):
+    return 'Music: "%s" by Artyom Andreyev, used with permission.' % film["track"]
 
 
 def provenance(ex):
@@ -87,7 +122,19 @@ def _page(title, body, depth, description):
             % (html.escape(title), html.escape(description), up, body))
 
 
-def index_page(examples):
+def index_page(examples, films=()):
+    film_cards = "\n".join(
+        "<div class=\"card film\"><video controls preload=\"none\" playsinline poster=\"films/%s/poster.jpg\" "
+        "src=\"films/%s/film.mp4\" aria-label=\"%s, a film\"></video><div class=\"body\"><h2><a href=\"films/%s/\">%s</a>"
+        "</h2><p class=\"prov\">%s</p><p class=\"credit\">%s</p></div></div>"
+        % (f["slug"], f["slug"], html.escape(f["title"]), f["slug"], html.escape(f["title"]), html.escape(film_label(f)),
+           html.escape(film_credit(f)))
+        for f in films)
+    film_section = ("<section class=\"films\" id=\"films\"><h2 class=\"section\">Films</h2><p class=\"section\">Constructs "
+                    "assembling across a track of music with film mode: the build follows the music's pace, flares on "
+                    "its attacks and moves on with its sections. Play one, or open it to see the construct live.</p>"
+                    "<div class=\"grid\">\n%s\n</div></section><h2 class=\"section\">Constructs</h2>" % film_cards
+                    if films else "")
     cards = "\n".join(
         "<a class=\"card\" href=\"examples/%s/\"><img src=\"examples/%s/thumb.jpg\" alt=\"%s, a holographic construct\" "
         "loading=\"lazy\" width=\"720\" height=\"450\"><div class=\"body\"><h2>%s</h2><p class=\"prov\">%s</p></div></a>"
@@ -99,11 +146,13 @@ def index_page(examples):
             "Measured Light style. Open one to watch it build itself: drag to turn it around, press R to replay the "
             "assembly and L to read its labels. Some were made with earlier versions of Construct.</p>"
             "<div class=\"links\"><a class=\"button\" href=\"%s\">Construct on GitHub</a>"
-            "<a class=\"button\" href=\"%s/blob/main/docs/HOW-IT-IS-MADE.md\">How they were made</a></div></header>"
-            "<main><div class=\"grid\">\n%s\n</div></main>"
+            "<a class=\"button\" href=\"%s/blob/main/docs/HOW-IT-IS-MADE.md\">How they were made</a>%s</div></header>"
+            "<main>%s<div class=\"grid\">\n%s\n</div></main>"
             "<footer class=\"site\">Construct is MIT licensed. Product and place names belong to their owners; each "
             "construct is an independent reconstruction from public references, not an official model. "
-            "<a href=\"%s\">Source and documentation</a>.</footer>" % (REPO_URL, REPO_URL, cards, REPO_URL))
+            "<a href=\"%s\">Source and documentation</a>.</footer>"
+            % (REPO_URL, REPO_URL, ("<a class=\"button\" href=\"%s/blob/main/docs/FILM.md\">Film mode</a>" % REPO_URL)
+               if films else "", film_section, cards, REPO_URL))
     return _page("Construct · examples", body, 0, "A gallery of holographic constructs built by AI agents with Construct.")
 
 
@@ -122,6 +171,45 @@ def example_page(ex):
     return _page("%s · Construct" % ex["title"], body, 2, "%s: a holographic construct. %s" % (ex["title"], provenance(ex)))
 
 
+def film_page(film):
+    body = ("<div class=\"viewer\"><div class=\"bar\"><h1>%s</h1><p class=\"prov\">%s</p><nav>"
+            "<a class=\"button\" href=\"../../\">All examples</a>"
+            "<a class=\"button\" href=\"construct.html?rounds=0\">Live construct, full screen</a>"
+            "<a class=\"button\" href=\"scene.json\">Scene</a>"
+            "<a class=\"button\" href=\"%s/tree/main/examples/films/%s\">Source</a></nav></div>"
+            "<div class=\"film-player\"><video controls preload=\"metadata\" playsinline poster=\"poster.jpg\" "
+            "src=\"film.mp4\" aria-label=\"%s, a film\"></video><p class=\"credit\">%s</p></div>"
+            "<div class=\"live\"><h2 class=\"section\">The construct, live</h2><p class=\"section\">The same construct "
+            "as a page: it assembles in its own short time here, without the music.</p>"
+            "<div class=\"stage\"><iframe src=\"construct.html?ui=0&amp;rounds=0\" title=\"%s, live construct\" "
+            "allowfullscreen loading=\"lazy\"></iframe></div></div>"
+            "<p class=\"hint film-hint\">Drag to orbit, scroll to zoom. Click the construct first, then <kbd>R</kbd> replays the "
+            "assembly, <kbd>L</kbd> shows labels and <kbd>P</kbd> shows how each part is known.</p></div>"
+            % (html.escape(film["title"]), html.escape(film_label(film)), REPO_URL, film["slug"], html.escape(film["title"]),
+               html.escape(film_credit(film)), html.escape(film["title"])))
+    return _page("%s · film · Construct" % film["title"], body, 2,
+                 "%s assembling across \"%s\": a Construct film. %s" % (film["title"], film["track"], film_credit(film)))
+
+
+def _film(film, films_dir, out, studio):
+    """One film's folder on the site: the video as given, its poster, the live construct and the scene."""
+    src, dst = EXAMPLES / "films" / film["slug"], out / "films" / film["slug"]
+    video = Path(films_dir) / film["video"]
+    if not video.is_file():
+        raise SystemExit("missing film: %s" % video)
+    if video.stat().st_size > FILM_MAX_MB * 1e6:
+        raise SystemExit("%s is %.1f MB, more than %d MB: re-encode it" % (video, video.stat().st_size / 1e6, FILM_MAX_MB))
+    dst.mkdir(parents=True)
+    shutil.copyfile(video, dst / "film.mp4")
+    subprocess.run(["ffmpeg", "-v", "error", "-y", "-sseof", "-0.5", "-i", str(video), "-frames:v", "1",
+                    "-vf", "scale=1280:-2", "-q:v", "4", str(dst / "poster.jpg")], check=True)
+    tmp = out / ".build" / ("film-" + film["slug"])
+    studio.build(str(_public_scene(src / "scene.json", tmp.parent)), str(tmp), asset_root=str(src))
+    shutil.copyfile(studio.page_in(tmp), dst / "construct.html")
+    shutil.copyfile(src / "scene.json", dst / "scene.json")
+    (dst / "index.html").write_text(film_page(film), encoding="utf-8")
+
+
 def _public_scene(path, tmp):
     """The scene the gallery compiles: the approved scene without its round history
     (`authoring.rounds`), so a published construct page never shows the round timeline, whatever
@@ -135,7 +223,8 @@ def _public_scene(path, tmp):
     return scene
 
 
-def build(out):
+def build(out, films_dir=None):
+    """The site in `out`; with `films_dir` (the folder holding the videos films.json names) also the films."""
     sys.path.insert(0, str(ROOT))
     studio = importlib.import_module("construct_hologram.studio")
     out = Path(out)
@@ -157,8 +246,11 @@ def build(out):
         for name in ("scene.json", "hero.jpg", "thumb.jpg"):
             shutil.copyfile(src / name, dst / name)
         (dst / "index.html").write_text(example_page(ex), encoding="utf-8")
+    films = _load_films() if films_dir else []
+    for film in films:
+        _film(film, films_dir, out, studio)
     shutil.rmtree(out / ".build", ignore_errors=True)
-    (out / "index.html").write_text(index_page(examples), encoding="utf-8")
+    (out / "index.html").write_text(index_page(examples, films), encoding="utf-8")
     (out / "404.html").write_text(_page("Not found · Construct", "<header class=\"site\"><h1>Not here</h1><p>That page "
                                         "does not exist.</p><a class=\"button\" href=\"%s\">All examples</a></header>"
                                         % SITE_URL, 0, "Page not found."), encoding="utf-8")
@@ -189,14 +281,19 @@ def set_url(owner_repo):
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--out", default="site", help="the folder to build into (it is replaced)")
+    ap.add_argument("--films", metavar="DIR", help="the folder holding the film videos (kept outside the repository)")
+    ap.add_argument("--no-films", action="store_true", help="build without the film section")
     ap.add_argument("--set-url", metavar="OWNER/REPO", help="move every public link to another repository")
     args = ap.parse_args(argv)
     if args.set_url:
         set_url(args.set_url)
         return 0
-    out = build(args.out)
+    if _load_films() and not (args.films or args.no_films):
+        ap.error("examples/films.json lists films: give --films DIR (the videos), or --no-films")
+    out = build(args.out, None if args.no_films else args.films)
     size = sum(f.stat().st_size for f in out.rglob("*") if f.is_file())
-    print("site: %s (%d examples, %.1f MB)" % (out, len(_load_examples()), size / 1e6))
+    print("site: %s (%d examples, %d films, %.1f MB)" % (out, len(_load_examples()), 0 if args.no_films else len(_load_films()),
+                                                          size / 1e6))
     return 0
 
 

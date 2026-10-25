@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.3.0 — not yet released
+## 0.3.0 — 2026-10-24
 
 - **Film mode** ([FILM.md](docs/FILM.md)): a construct can assemble across a whole track of
   music, and you can see the music in it.

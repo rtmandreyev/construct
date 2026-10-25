@@ -311,7 +311,10 @@ film parameter is given.
   `build`, `time`, `energy`, `high` and `voice` every frame; its `makeBuildCurve` is the simpler
   `0.35 + 2.5·energy²` pace and does not stage sections or flare on onsets.
 
-## Planned for 0.3 (not in 0.2)
+## Planned (not yet in the contract)
+
+Terrain is in already, as the `terrain` shape and the `construct terrain` tool
+([TERRAIN.md](docs/TERRAIN.md)). Still planned:
 
 - `terrain` archetype: a heightfield or contour set with `scale.class` (`spot | site | valley |
   massif | range`) and `extent_m`, mapped to a stage size through a logarithmic scale ladder;

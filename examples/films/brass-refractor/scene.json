@@ -1,0 +1,3395 @@
+{
+ "format": "construct-scene",
+ "version": 2,
+ "id": "brass-equatorial-refractor",
+ "title": "Nineteenth-century brass equatorial refractor on a mahogany tripod",
+ "subject": {
+  "category": "object",
+  "summary": "An approximation of the portable three-inch refractors the London and York makers built in the 1840s-1880s, after the Troughton & Simms and Cooke pattern: a long lacquered brass tube with its dew shield and objective cell, a finder scope, a rack-and-pinion focuser, and a German equatorial head with an hour circle, a declination circle and a turned counterweight, carried on a folding mahogany tripod. Not a copy of any one instrument.",
+  "accuracy": "approximate",
+  "synthetic": false
+ },
+ "units": "m",
+ "seed": 1848,
+ "sources": [
+  {
+   "id": "request",
+   "kind": "user_request",
+   "title": "The request: a classic 19th-century brass refractor for stargazing",
+   "rights": "user_private"
+  },
+  {
+   "id": "ref-equatorial",
+   "kind": "reference_image",
+   "title": "Antique Telescopes: a mid-19th-century lacquered brass refractor, 3-inch objective, signed Troughton & Simms London 1848, on a folding equatorial stand",
+   "rights": "reference_only",
+   "ref": "Reference image, viewed for comparison only; not copied or published"
+  },
+  {
+   "id": "ref-portable",
+   "kind": "reference_image",
+   "title": "Antique Telescopes: an early 19th-century lacquered brass refractor, 3-inch objective, 35-inch tube, cabriole-leg tripod",
+   "rights": "reference_only",
+   "ref": "Reference image, viewed for comparison only; not copied or published"
+  },
+  {
+   "id": "ref-german",
+   "kind": "reference_image",
+   "title": "Institute of Astronomy Library, Cambridge: a Cooke refractor of 1871 on a German equatorial mount (CC BY 4.0)",
+   "rights": "public_domain",
+   "ref": "Reference image, viewed for comparison only; not copied or published"
+  },
+  {
+   "id": "ref-stand",
+   "kind": "reference_image",
+   "title": "Royal Museums Greenwich: portable refractor with a 1676 mm mahogany tripod stand and brass equatorial head",
+   "rights": "public_domain",
+   "ref": "https://rmg.co.uk/collections/objects/rmgc-object-11073"
+  }
+ ],
+ "facts": [
+  {
+   "key": "aperture",
+   "value": 0.0762,
+   "unit": "m",
+   "certainty": "verified",
+   "source": "ref-equatorial",
+   "note": "3-inch objective lens (the reference instrument's own description)"
+  },
+  {
+   "key": "tube.length",
+   "value": 1.08,
+   "unit": "m",
+   "certainty": "inferred",
+   "note": "a 3-inch f/15 objective needs about 1.14 m of focal length: 1.08 m of tube, the cell and the drawtube making up the rest"
+  },
+  {
+   "key": "focal_ratio",
+   "value": 15,
+   "unit": "ratio",
+   "certainty": "inferred",
+   "note": "a 3-inch Victorian refractor is typically f/11-f/16; the tube is drawn at f/14.6 with the cell and drawtube"
+  },
+  {
+   "key": "tripod.height",
+   "value": 0.72,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "ref-equatorial",
+   "note": "the RMG portable stand stands 1.676 m tall; this one is set low so the long tube, not the stand, carries the silhouette"
+  },
+  {
+   "key": "hour_circle.scale",
+   "value": "24 hours, roman numerals, vernier subdivision",
+   "certainty": "verified",
+   "source": "ref-equatorial",
+   "note": "engraved on the equatorial circle of the 1848 Troughton & Simms instrument"
+  },
+  {
+   "key": "dec_circle.scale",
+   "value": "two quadrants, vernier",
+   "certainty": "verified",
+   "source": "ref-equatorial"
+  },
+  {
+   "key": "finder.aperture",
+   "value": 0.03,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "ref-german",
+   "note": "finders on this class of instrument are 25-50 mm; a Cooke finder of the period is about 30 mm"
+  },
+  {
+   "key": "mount.latitude",
+   "value": 40,
+   "unit": "degrees",
+   "certainty": "decorative",
+   "note": "chosen for a mid-latitude European site and for the pose; no particular observatory is implied"
+  },
+  {
+   "key": "tube.elevation",
+   "value": 34,
+   "unit": "degrees",
+   "certainty": "decorative",
+   "note": "chosen so the long tube reads across the tripod and the dew shield faces the sky"
+  }
+ ],
+ "parts": [
+  {
+   "id": "shoe",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "lathe",
+    "segments": 18,
+    "meridians": 6,
+    "profile": [
+     [
+      0.022,
+      0.0
+     ],
+     [
+      0.044,
+      0.003
+     ],
+     [
+      0.042,
+      0.022
+     ],
+     [
+      0.034,
+      0.034
+     ],
+     [
+      0.03,
+      0.038
+     ]
+    ]
+   },
+   "at": [
+    0.32909,
+    0.0,
+    0.19
+   ],
+   "rotate": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.85,
+    "alpha": 0.6
+   },
+   "repeat": {
+    "count": 3,
+    "radial": {
+     "axis": "y",
+     "center": [
+      0,
+      0,
+      0
+     ]
+    }
+   },
+   "note": "brass shoe screwed onto the foot of each leg (the RMG stand has three screw-on feet)"
+  },
+  {
+   "id": "leg",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "cone",
+    "radius_bottom": 0.029,
+    "radius_top": 0.062,
+    "height": 0.7525,
+    "segments": 10,
+    "caps": true,
+    "rings": 2,
+    "ribs": 6
+   },
+   "at": [
+    0.32909,
+    0.038,
+    0.19
+   ],
+   "rotate": [
+    -24.9985,
+    60.0,
+    0.0
+   ],
+   "basis": [
+    "tripod.height"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.66,
+    "alpha": 0.42
+   },
+   "repeat": {
+    "count": 3,
+    "radial": {
+     "axis": "y",
+     "center": [
+      0,
+      0,
+      0
+     ]
+    }
+   },
+   "note": "tapered mahogany leg, wide at the folding knuckle, narrow at the shoe"
+  },
+  {
+   "id": "leg-edge-a",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      0.3435896534380867,
+      0.038,
+      0.16488526329025133
+     ],
+     [
+      0.08469357503463512,
+      0.72,
+      -0.02269357503463519
+     ]
+    ]
+   },
+   "at": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "rotate": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "look": {
+    "weight": 0.9,
+    "alpha": 0.72
+   },
+   "repeat": {
+    "count": 3,
+    "radial": {
+     "axis": "y",
+     "center": [
+      0,
+      0,
+      0
+     ]
+    }
+   },
+   "note": "silhouette edge of a tapered leg, repeated to all three"
+  },
+  {
+   "id": "leg-edge-b",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      0.31458965343808665,
+      0.038,
+      0.2151147367097488
+     ],
+     [
+      0.022693575034635115,
+      0.72,
+      0.08469357503463519
+     ]
+    ]
+   },
+   "at": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "rotate": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "look": {
+    "weight": 0.9,
+    "alpha": 0.72
+   },
+   "repeat": {
+    "count": 3,
+    "radial": {
+     "axis": "y",
+     "center": [
+      0,
+      0,
+      0
+     ]
+    }
+   },
+   "note": "silhouette edge of a tapered leg, repeated to all three"
+  },
+  {
+   "id": "shoe-collar",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "torus",
+    "major": 0.036,
+    "minor": 0.0035,
+    "segments": 16,
+    "sides": 5,
+    "rings": 0
+   },
+   "at": [
+    0.32909,
+    0.03,
+    0.19
+   ],
+   "rotate": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "look": {
+    "weight": 0.58,
+    "alpha": 0.42
+   },
+   "repeat": {
+    "count": 3,
+    "radial": {
+     "axis": "y",
+     "center": [
+      0,
+      0,
+      0
+     ]
+    }
+   },
+   "note": "the collar turned on each brass shoe"
+  },
+  {
+   "id": "leg-ferrule",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.044,
+    "height": 0.046,
+    "segments": 18,
+    "rings": 1
+   },
+   "at": [
+    0.24954,
+    0.235,
+    0.14407
+   ],
+   "rotate": [
+    -24.9985,
+    60.0,
+    0.0
+   ],
+   "look": {
+    "weight": 1.0,
+    "alpha": 0.66,
+    "glow": 0.2
+   },
+   "repeat": {
+    "count": 3,
+    "radial": {
+     "axis": "y",
+     "center": [
+      0,
+      0,
+      0
+     ]
+    }
+   },
+   "note": "brass ferrule banding each leg at a third of its height"
+  },
+  {
+   "id": "leg-pin",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.005,
+    "height": 0.082,
+    "segments": 10
+   },
+   "at": [
+    0.02713,
+    0.702,
+    0.06301
+   ],
+   "rotate": [
+    0,
+    60.0,
+    90
+   ],
+   "look": {
+    "weight": 0.58,
+    "alpha": 0.42
+   },
+   "repeat": {
+    "count": 3,
+    "radial": {
+     "axis": "y",
+     "center": [
+      0,
+      0,
+      0
+     ]
+    }
+   },
+   "note": "the hinge pin through each folding knuckle"
+  },
+  {
+   "id": "leg-knuckle",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.062,
+     0.072,
+     0.062
+    ],
+    "ribs": 1
+   },
+   "at": [
+    0.04763,
+    0.702,
+    0.0275
+   ],
+   "rotate": [
+    0,
+    60.0,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.95,
+    "alpha": 0.6,
+    "glow": 0.2
+   },
+   "repeat": {
+    "count": 3,
+    "radial": {
+     "axis": "y",
+     "center": [
+      0,
+      0,
+      0
+     ]
+    }
+   },
+   "note": "brass folding knuckle where each leg meets the head"
+  },
+  {
+   "id": "chain",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "tube",
+    "sides": 5,
+    "samples": 6,
+    "caps": false,
+    "radius": 0.0065,
+    "path": [
+     [
+      0.1829116763383074,
+      0.4,
+      0.10560410557184752
+     ],
+     [
+      0.03290896534380867,
+      0.4,
+      0.019000000000000003
+     ]
+    ]
+   },
+   "at": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "rotate": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "look": {
+    "weight": 0.58,
+    "alpha": 0.42
+   },
+   "repeat": {
+    "count": 3,
+    "radial": {
+     "axis": "y",
+     "center": [
+      0,
+      0,
+      0
+     ]
+    }
+   },
+   "note": "brass chain spreader holding the three legs apart"
+  },
+  {
+   "id": "spreader-hub",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "lathe",
+    "segments": 16,
+    "meridians": 6,
+    "profile": [
+     [
+      0.03,
+      0.0
+     ],
+     [
+      0.04,
+      0.01
+     ],
+     [
+      0.037,
+      0.03
+     ],
+     [
+      0.018,
+      0.042
+     ]
+    ]
+   },
+   "at": [
+    0.0,
+    0.358,
+    0.0
+   ],
+   "rotate": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.66,
+    "alpha": 0.42
+   }
+  },
+  {
+   "id": "head-casting",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "lathe",
+    "segments": 32,
+    "meridians": 12,
+    "profile": [
+     [
+      0.116,
+      0.0
+     ],
+     [
+      0.12,
+      0.02
+     ],
+     [
+      0.102,
+      0.044
+     ],
+     [
+      0.078,
+      0.064
+     ],
+     [
+      0.06,
+      0.08
+     ],
+     [
+      0.054,
+      0.09
+     ]
+    ]
+   },
+   "at": [
+    0.0,
+    0.71,
+    0.0
+   ],
+   "rotate": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.8,
+    "alpha": 0.5
+   },
+   "note": "the brass tripod crown the equatorial head bolts onto"
+  },
+  {
+   "id": "crown-step",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "torus",
+    "major": 0.064,
+    "minor": 0.004,
+    "segments": 26,
+    "sides": 6,
+    "rings": 0
+   },
+   "at": [
+    0.0,
+    0.808,
+    0.0
+   ],
+   "rotate": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "look": {
+    "weight": 0.58,
+    "alpha": 0.42
+   },
+   "note": "the turned step where the crown plate meets the casting"
+  },
+  {
+   "id": "crown-plate",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.066,
+    "height": 0.016,
+    "segments": 28,
+    "rings": 1
+   },
+   "at": [
+    0.0,
+    0.794,
+    0.0
+   ],
+   "rotate": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.8,
+    "alpha": 0.5
+   }
+  },
+  {
+   "id": "fork-cheek",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "extrude",
+    "axis": "x",
+    "height": 0.013,
+    "profile": [
+     [
+      -0.064,
+      0.8099999999999999
+     ],
+     [
+      0.094,
+      0.8099999999999999
+     ],
+     [
+      0.094,
+      0.8819999999999999
+     ],
+     [
+      0.066,
+      0.9359999999999999
+     ],
+     [
+      -0.012,
+      0.9359999999999999
+     ],
+     [
+      -0.064,
+      0.8819999999999999
+     ]
+    ],
+    "ribs": 0
+   },
+   "at": [
+    0.07,
+    0.0,
+    0.0
+   ],
+   "rotate": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.7,
+    "alpha": 0.45
+   },
+   "mirror": "x",
+   "note": "the two cheeks carrying the polar axis trunnion"
+  },
+  {
+   "id": "trunnion",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.04,
+    "height": 0.156,
+    "segments": 20,
+    "rings": 1
+   },
+   "at": [
+    -0.078,
+    0.884,
+    0.01
+   ],
+   "rotate": [
+    0.0,
+    0.0,
+    -90.0
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.05,
+    "alpha": 0.7,
+    "glow": 0.26
+   },
+   "note": "the trunnion the whole equatorial turns on when the latitude is set"
+  },
+  {
+   "id": "latitude-quadrant",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "extrude",
+    "axis": "x",
+    "height": 0.01,
+    "profile": [
+     [
+      0.02308227149024615,
+      0.9770851984617075
+     ],
+     [
+      0.015387619951027935,
+      0.9778454769888419
+     ],
+     [
+      0.00765651497662115,
+      0.9779707831080766
+     ],
+     [
+      -5.8733630745709184e-05,
+      0.9774602689796348
+     ],
+     [
+      -0.0077059233553739125,
+      0.9763173888177823
+     ],
+     [
+      -0.015233312178053607,
+      0.974549875519102
+     ],
+     [
+      -0.02258996867023546,
+      0.9721696883405689
+     ],
+     [
+      -0.029726116603625743,
+      0.969192931981445
+     ],
+     [
+      -0.03659347174352517,
+      0.9656397476164968
+     ],
+     [
+      -0.043145568547118054,
+      0.9615341766178216
+     ],
+     [
+      -0.049338074556222467,
+      0.9569039978873598
+     ],
+     [
+      -0.05512909035727367,
+      0.9517805399007272
+     ],
+     [
+      -0.06047943307896702,
+      0.9461984687341047
+     ],
+     [
+      -0.06535290150937315,
+      0.940195553508429
+     ],
+     [
+      -0.06971652103870404,
+      0.9338124108379211
+     ],
+     [
+      -0.05942945478083766,
+      0.9149119848737607
+     ],
+     [
+      -0.056654006475754255,
+      0.9205136059672295
+     ],
+     [
+      -0.05342756728281899,
+      0.9258681705903596
+     ],
+     [
+      -0.0497719677678622,
+      0.9309394489652109
+     ],
+     [
+      -0.04571194225906679,
+      0.9356931280705898
+     ],
+     [
+      -0.04127496149083765,
+      0.9400970438090378
+     ],
+     [
+      -0.03649104673274048,
+      0.9441213986338818
+     ],
+     [
+      -0.031392566661142055,
+      0.9477389631638521
+     ],
+     [
+      -0.026014018347947893,
+      0.950925260421112
+     ],
+     [
+      -0.02039179384830031,
+      0.9536587314461181
+     ],
+     [
+      -0.01456393396653896,
+      0.9559208811687364
+     ],
+     [
+      -0.008569870866479949,
+      0.9576964035486281
+     ],
+     [
+      -0.002450161267550467,
+      0.9589732851381876
+     ],
+     [
+      0.0037537879679865127,
+      0.9597428863673092
+     ],
+     [
+      0.01,
+      0.9599999999999999
+     ]
+    ],
+    "ribs": 0
+   },
+   "at": [
+    0.083,
+    0.0,
+    0.0
+   ],
+   "rotate": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "look": {
+    "weight": 1.35,
+    "glow": 0.4
+   },
+   "note": "graduated latitude arc, the mark of a mount set for one site"
+  },
+  {
+   "id": "latitude-clamp",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.022,
+     0.032,
+     0.034
+    ],
+    "ribs": 0
+   },
+   "at": [
+    0.096,
+    0.95371,
+    -0.04849
+   ],
+   "rotate": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.05,
+    "alpha": 0.7,
+    "glow": 0.26
+   }
+  },
+  {
+   "id": "latitude-screw",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.01,
+    "height": 0.038,
+    "segments": 12,
+    "ribs": 8
+   },
+   "at": [
+    0.097,
+    0.95371,
+    -0.04849
+   ],
+   "rotate": [
+    0,
+    0,
+    -90
+   ],
+   "look": {
+    "weight": 0.58,
+    "alpha": 0.42
+   }
+  },
+  {
+   "id": "level-glass",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0078,
+    "height": 0.05,
+    "segments": 10,
+    "caps": true,
+    "ribs": 3
+   },
+   "at": [
+    -0.042,
+    0.802,
+    0.062
+   ],
+   "rotate": [
+    0,
+    0,
+    -90
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.8,
+    "alpha": 0.8,
+    "glow": 0.32
+   },
+   "note": "spirit level on the head, as the period instruments carry"
+  },
+  {
+   "id": "polar-body",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "lathe",
+    "segments": 24,
+    "meridians": 6,
+    "profile": [
+     [
+      0.028,
+      0.0
+     ],
+     [
+      0.044,
+      0.008
+     ],
+     [
+      0.048,
+      0.03
+     ],
+     [
+      0.048,
+      0.15
+     ],
+     [
+      0.042,
+      0.178
+     ],
+     [
+      0.03,
+      0.196
+     ]
+    ]
+   },
+   "at": [
+    0.0,
+    0.86472,
+    0.03298
+   ],
+   "rotate": [
+    -40.0,
+    0.0,
+    0.0
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.85,
+    "alpha": 0.62
+   },
+   "note": "polar axis set to the latitude of the site: a turned housing, not a plain bar"
+  },
+  {
+   "id": "polar-drum",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "lathe",
+    "segments": 24,
+    "meridians": 6,
+    "profile": [
+     [
+      0.042,
+      0.0
+     ],
+     [
+      0.052,
+      0.006
+     ],
+     [
+      0.052,
+      0.05
+     ],
+     [
+      0.047,
+      0.06
+     ],
+     [
+      0.047,
+      0.082
+     ],
+     [
+      0.042,
+      0.088
+     ]
+    ]
+   },
+   "at": [
+    0.0,
+    0.90971,
+    -0.02064
+   ],
+   "rotate": [
+    -40.0,
+    0.0,
+    0.0
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.05,
+    "alpha": 0.7,
+    "glow": 0.26
+   },
+   "note": "the drum around the polar axis that carries the hour circle"
+  },
+  {
+   "id": "hour-circle",
+   "role": "identity",
+   "certainty": "verified",
+   "stage": 4,
+   "shape": {
+    "type": "lathe",
+    "segments": 40,
+    "meridians": 4,
+    "profile": [
+     [
+      0.04,
+      0.0
+     ],
+     [
+      0.09,
+      0.0
+     ],
+     [
+      0.09,
+      0.008
+     ],
+     [
+      0.04,
+      0.008
+     ]
+    ]
+   },
+   "at": [
+    0.0,
+    0.98042,
+    -0.10491
+   ],
+   "rotate": [
+    -40.0,
+    0.0,
+    0.0
+   ],
+   "basis": [
+    "hour_circle.scale"
+   ],
+   "look": {
+    "weight": 1.4,
+    "glow": 0.4
+   },
+   "note": "the face of the 24-hour equatorial circle"
+  },
+  {
+   "id": "hour-scale",
+   "role": "identity",
+   "certainty": "verified",
+   "stage": 4,
+   "shape": {
+    "type": "lathe",
+    "segments": 48,
+    "meridians": 48,
+    "profile": [
+     [
+      0.078,
+      0.0
+     ],
+     [
+      0.09,
+      0.0
+     ],
+     [
+      0.09,
+      0.005
+     ],
+     [
+      0.078,
+      0.005
+     ]
+    ]
+   },
+   "at": [
+    0.0,
+    0.98556,
+    -0.11104
+   ],
+   "rotate": [
+    -40.0,
+    0.0,
+    0.0
+   ],
+   "basis": [
+    "hour_circle.scale"
+   ],
+   "look": {
+    "weight": 1.5,
+    "glow": 0.45
+   },
+   "note": "the divided rim: 48 engraved divisions of the hour circle"
+  },
+  {
+   "id": "hour-rim",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "torus",
+    "major": 0.09,
+    "minor": 0.0055,
+    "segments": 40,
+    "sides": 6,
+    "rings": 0
+   },
+   "at": [
+    0.0,
+    0.98942,
+    -0.11563
+   ],
+   "rotate": [
+    -40.0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 1.35,
+    "glow": 0.38
+   },
+   "note": "the raised rim of the hour circle"
+  },
+  {
+   "id": "hour-index",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.02,
+     0.046,
+     0.008
+    ],
+    "ribs": 0
+   },
+   "at": [
+    0.0,
+    1.05327,
+    -0.06727
+   ],
+   "rotate": [
+    -40.0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 1.35,
+    "glow": 0.4
+   },
+   "note": "the fixed index the hour circle is read against"
+  },
+  {
+   "id": "polar-cap",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "lathe",
+    "segments": 16,
+    "meridians": 6,
+    "profile": [
+     [
+      0.018,
+      0.0
+     ],
+     [
+      0.028,
+      0.008
+     ],
+     [
+      0.024,
+      0.022
+     ],
+     [
+      0.008,
+      0.028
+     ]
+    ]
+   },
+   "at": [
+    0.0,
+    1.00742,
+    -0.13708
+   ],
+   "rotate": [
+    -40.0,
+    0.0,
+    0.0
+   ],
+   "look": {
+    "weight": 1.35,
+    "glow": 0.4
+   }
+  },
+  {
+   "id": "dec-head",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.04,
+    "height": 0.096,
+    "segments": 20,
+    "rings": 2,
+    "ribs": 8
+   },
+   "at": [
+    -0.048,
+    1.00292,
+    -0.13172
+   ],
+   "rotate": [
+    0,
+    0,
+    -90
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.85,
+    "alpha": 0.62
+   },
+   "note": "the declination head at the top of the polar axis"
+  },
+  {
+   "id": "dec-shaft",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.021,
+    "height": 0.362,
+    "segments": 16,
+    "ribs": 6
+   },
+   "at": [
+    -0.292,
+    1.00292,
+    -0.13172
+   ],
+   "rotate": [
+    0,
+    0,
+    -90
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.05,
+    "alpha": 0.7,
+    "glow": 0.26
+   },
+   "note": "declination shaft: the tube on one side, the counterweight on the other"
+  },
+  {
+   "id": "dec-circle",
+   "role": "identity",
+   "certainty": "verified",
+   "stage": 4,
+   "shape": {
+    "type": "lathe",
+    "segments": 26,
+    "meridians": 4,
+    "profile": [
+     [
+      0.018,
+      0.0
+     ],
+     [
+      0.05,
+      0.0
+     ],
+     [
+      0.05,
+      0.008
+     ],
+     [
+      0.018,
+      0.008
+     ]
+    ]
+   },
+   "at": [
+    0.07,
+    1.00292,
+    -0.13172
+   ],
+   "rotate": [
+    0,
+    0,
+    -90
+   ],
+   "basis": [
+    "dec_circle.scale"
+   ],
+   "look": {
+    "weight": 1.3,
+    "glow": 0.38
+   },
+   "note": "the face of the declination circle"
+  },
+  {
+   "id": "dec-scale",
+   "role": "identity",
+   "certainty": "verified",
+   "stage": 4,
+   "shape": {
+    "type": "lathe",
+    "segments": 36,
+    "meridians": 36,
+    "profile": [
+     [
+      0.04,
+      0.0
+     ],
+     [
+      0.05,
+      0.0
+     ],
+     [
+      0.05,
+      0.005
+     ],
+     [
+      0.04,
+      0.005
+     ]
+    ]
+   },
+   "at": [
+    0.078,
+    1.00292,
+    -0.13172
+   ],
+   "rotate": [
+    0,
+    0,
+    -90
+   ],
+   "basis": [
+    "dec_circle.scale"
+   ],
+   "look": {
+    "weight": 1.4,
+    "glow": 0.42
+   },
+   "note": "the divided rim of the declination circle, two quadrants with a vernier (reference)"
+  },
+  {
+   "id": "dec-index",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.014,
+     0.044,
+     0.012
+    ],
+    "ribs": 0
+   },
+   "at": [
+    0.082,
+    1.04492,
+    -0.13172
+   ],
+   "rotate": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "look": {
+    "weight": 1.35,
+    "glow": 0.4
+   },
+   "note": "the vernier arm on the declination circle"
+  },
+  {
+   "id": "counterweight",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "lathe",
+    "segments": 34,
+    "meridians": 4,
+    "profile": [
+     [
+      0.0,
+      0.0
+     ],
+     [
+      0.038,
+      0.008
+     ],
+     [
+      0.062,
+      0.034
+     ],
+     [
+      0.062,
+      0.078
+     ],
+     [
+      0.05,
+      0.106
+     ],
+     [
+      0.026,
+      0.118
+     ]
+    ]
+   },
+   "at": [
+    -0.176,
+    1.00292,
+    -0.13172
+   ],
+   "rotate": [
+    0,
+    0,
+    90
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.3,
+    "alpha": 0.8,
+    "glow": 0.28
+   },
+   "note": "turned brass counterweight, the balance of the long tube"
+  },
+  {
+   "id": "counterweight-face",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "torus",
+    "major": 0.04,
+    "minor": 0.0035,
+    "segments": 26,
+    "sides": 6,
+    "rings": 0
+   },
+   "at": [
+    -0.288,
+    1.00292,
+    -0.13172
+   ],
+   "rotate": [
+    0,
+    0,
+    90
+   ],
+   "look": {
+    "weight": 0.58,
+    "alpha": 0.42
+   },
+   "note": "the turned ring on the weight's outer face"
+  },
+  {
+   "id": "counterweight-knob",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.021,
+    "height": 0.026,
+    "segments": 14,
+    "ribs": 8
+   },
+   "at": [
+    -0.15,
+    1.00292,
+    -0.13172
+   ],
+   "rotate": [
+    0,
+    0,
+    90
+   ],
+   "look": {
+    "weight": 0.58,
+    "alpha": 0.42
+   }
+  },
+  {
+   "id": "slow-rod-ra",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "tube",
+    "sides": 6,
+    "samples": 10,
+    "caps": false,
+    "radius": 0.0062,
+    "path": [
+     [
+      0.058,
+      0.9359999999999999,
+      -0.046
+     ],
+     [
+      0.198,
+      0.7739999999999999,
+      0.058
+     ],
+     [
+      0.292,
+      0.6139999999999999,
+      0.19
+     ]
+    ]
+   },
+   "at": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "rotate": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "look": {
+    "weight": 1.0,
+    "glow": 0.26
+   },
+   "note": "long slow-motion rod: the period observer's hand control"
+  },
+  {
+   "id": "slow-knob-ra",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.016,
+    "height": 0.036,
+    "segments": 12,
+    "ribs": 8
+   },
+   "at": [
+    0.292,
+    0.614,
+    0.19
+   ],
+   "rotate": [
+    52,
+    0,
+    -22
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.05,
+    "alpha": 0.7,
+    "glow": 0.26
+   }
+  },
+  {
+   "id": "slow-rod-dec",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "tube",
+    "sides": 6,
+    "samples": 10,
+    "caps": false,
+    "radius": 0.0062,
+    "path": [
+     [
+      0.086,
+      0.9789157077920096,
+      -0.1617182219770109
+     ],
+     [
+      0.18,
+      0.754,
+      -0.238
+     ],
+     [
+      0.252,
+      0.6089999999999999,
+      -0.148
+     ]
+    ]
+   },
+   "at": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "rotate": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "look": {
+    "weight": 1.0,
+    "glow": 0.26
+   }
+  },
+  {
+   "id": "slow-knob-dec",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.015,
+    "height": 0.034,
+    "segments": 12,
+    "ribs": 8
+   },
+   "at": [
+    0.252,
+    0.609,
+    -0.148
+   ],
+   "rotate": [
+    -22,
+    0,
+    18
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.05,
+    "alpha": 0.7,
+    "glow": 0.26
+   }
+  },
+  {
+   "id": "dec-neck",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.034,
+    "height": 0.062,
+    "segments": 18,
+    "ribs": 5,
+    "rings": 1
+   },
+   "at": [
+    0.1,
+    1.06276,
+    -0.15185
+   ],
+   "rotate": [
+    56.0,
+    0,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.95,
+    "alpha": 0.62
+   },
+   "note": "the clamp neck that bolts the saddle to the declination head"
+  },
+  {
+   "id": "saddle",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.112,
+     0.31,
+     0.034
+    ],
+    "ribs": 2
+   },
+   "at": [
+    0.1,
+    1.04121,
+    -0.13731
+   ],
+   "rotate": [
+    56.0,
+    0,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.7,
+    "alpha": 0.42
+   },
+   "note": "the saddle bar clamped on the declination shaft"
+  },
+  {
+   "id": "saddle-screw",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.011,
+    "height": 0.034,
+    "segments": 12,
+    "ribs": 8
+   },
+   "at": [
+    0.06,
+    1.03623,
+    -0.13395
+   ],
+   "rotate": [
+    56.0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.58,
+    "alpha": 0.42
+   }
+  },
+  {
+   "id": "ring-a",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "torus",
+    "major": 0.05,
+    "minor": 0.009,
+    "segments": 28,
+    "sides": 8,
+    "rings": 0
+   },
+   "at": [
+    0.1,
+    1.19108,
+    -0.01525
+   ],
+   "rotate": [
+    56.0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 1.15,
+    "glow": 0.3
+   },
+   "note": "brass tube ring, hinged and clamped"
+  },
+  {
+   "id": "ring-block-a",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.06,
+     0.06,
+     0.034
+    ],
+    "ribs": 0
+   },
+   "at": [
+    0.1,
+    1.15129,
+    0.01159
+   ],
+   "rotate": [
+    56.0,
+    0,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.8,
+    "alpha": 0.5
+   }
+  },
+  {
+   "id": "ring-hinge-a",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.012,
+     0.042,
+     0.028
+    ],
+    "ribs": 0
+   },
+   "at": [
+    0.15,
+    1.1944,
+    -0.01749
+   ],
+   "rotate": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "look": {
+    "weight": 0.58,
+    "alpha": 0.42
+   }
+  },
+  {
+   "id": "ring-thumb-a",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.009,
+    "height": 0.032,
+    "segments": 10
+   },
+   "at": [
+    0.052,
+    1.17616,
+    -0.00519
+   ],
+   "rotate": [
+    0,
+    0,
+    -90
+   ],
+   "look": {
+    "weight": 0.58,
+    "alpha": 0.42
+   }
+  },
+  {
+   "id": "ring-b",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "torus",
+    "major": 0.05,
+    "minor": 0.009,
+    "segments": 28,
+    "sides": 8,
+    "rings": 0
+   },
+   "at": [
+    0.1,
+    0.98977,
+    -0.31371
+   ],
+   "rotate": [
+    56.0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 1.15,
+    "glow": 0.3
+   },
+   "note": "brass tube ring, hinged and clamped"
+  },
+  {
+   "id": "ring-block-b",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.06,
+     0.06,
+     0.034
+    ],
+    "ribs": 0
+   },
+   "at": [
+    0.1,
+    0.94998,
+    -0.28687
+   ],
+   "rotate": [
+    56.0,
+    0,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.8,
+    "alpha": 0.5
+   }
+  },
+  {
+   "id": "ring-hinge-b",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.012,
+     0.042,
+     0.028
+    ],
+    "ribs": 0
+   },
+   "at": [
+    0.15,
+    0.99309,
+    -0.31594
+   ],
+   "rotate": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "look": {
+    "weight": 0.58,
+    "alpha": 0.42
+   }
+  },
+  {
+   "id": "ring-thumb-b",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.009,
+    "height": 0.032,
+    "segments": 10
+   },
+   "at": [
+    0.052,
+    0.97485,
+    -0.30364
+   ],
+   "rotate": [
+    0,
+    0,
+    -90
+   ],
+   "look": {
+    "weight": 0.58,
+    "alpha": 0.42
+   }
+  },
+  {
+   "id": "main-tube",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.044,
+    "height": 1.08,
+    "segments": 44,
+    "rings": 0,
+    "ribs": 8
+   },
+   "at": [
+    0.1,
+    0.78567,
+    -0.61631
+   ],
+   "rotate": [
+    56.0,
+    0,
+    0
+   ],
+   "basis": [
+    "tube.length"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.0,
+    "alpha": 0.78
+   },
+   "note": "lacquered brass tube: 1.04 m of body for a 3-inch f/15 objective"
+  },
+  {
+   "id": "tube-edge-a",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      0.14400000000000002,
+      0.7890231771272637,
+      -0.6113310173504725
+     ],
+     [
+      0.14400000000000002,
+      1.3862411980340212,
+      0.2740811101383121
+     ]
+    ]
+   },
+   "at": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "rotate": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "look": {
+    "weight": 1.25,
+    "alpha": 0.88,
+    "glow": 0.24
+   },
+   "note": "the tube's silhouette edge"
+  },
+  {
+   "id": "tube-edge-b",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      0.05600000000000001,
+      0.7890231771272637,
+      -0.6113310173504725
+     ],
+     [
+      0.05600000000000001,
+      1.3862411980340212,
+      0.2740811101383121
+     ]
+    ]
+   },
+   "at": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "rotate": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "look": {
+    "weight": 1.25,
+    "alpha": 0.88,
+    "glow": 0.24
+   },
+   "note": "the tube's silhouette edge"
+  },
+  {
+   "id": "tube-seam",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      0.1,
+      0.8135594296108617,
+      -0.6182311850340243
+     ],
+     [
+      0.1,
+      1.4018303640620875,
+      0.2539163412938797
+     ]
+    ]
+   },
+   "at": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "rotate": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "look": {
+    "weight": 0.45,
+    "alpha": 0.3
+   }
+  },
+  {
+   "id": "tube-band-1",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0472,
+    "height": 0.016,
+    "segments": 26,
+    "ribs": 6,
+    "rings": 0
+   },
+   "at": [
+    0.1,
+    0.83711,
+    -0.54003
+   ],
+   "rotate": [
+    56.0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.95,
+    "alpha": 0.62,
+    "glow": 0.25
+   }
+  },
+  {
+   "id": "tube-band-2",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0472,
+    "height": 0.016,
+    "segments": 26,
+    "ribs": 6,
+    "rings": 0
+   },
+   "at": [
+    0.1,
+    1.3292,
+    0.18952
+   ],
+   "rotate": [
+    56.0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.95,
+    "alpha": 0.62,
+    "glow": 0.25
+   }
+  },
+  {
+   "id": "objective-cell",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0488,
+    "height": 0.074,
+    "segments": 34,
+    "rings": 2,
+    "ribs": 10
+   },
+   "at": [
+    0.1,
+    1.3896,
+    0.27906
+   ],
+   "rotate": [
+    56.0,
+    0,
+    0
+   ],
+   "basis": [
+    "aperture"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.4,
+    "alpha": 0.82,
+    "glow": 0.34
+   },
+   "note": "the objective cell holding the 3-inch lens"
+  },
+  {
+   "id": "cell-knurl-1",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "torus",
+    "major": 0.0493,
+    "minor": 0.0042,
+    "segments": 34,
+    "sides": 6,
+    "rings": 0
+   },
+   "at": [
+    0.1,
+    1.39631,
+    0.289
+   ],
+   "rotate": [
+    56.0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 1.1,
+    "glow": 0.4
+   }
+  },
+  {
+   "id": "cell-knurl-2",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "torus",
+    "major": 0.0493,
+    "minor": 0.0042,
+    "segments": 34,
+    "sides": 6,
+    "rings": 0
+   },
+   "at": [
+    0.1,
+    1.42203,
+    0.32714
+   ],
+   "rotate": [
+    56.0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 1.1,
+    "glow": 0.4
+   }
+  },
+  {
+   "id": "objective-lens",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "lathe",
+    "segments": 36,
+    "meridians": 12,
+    "profile": [
+     [
+      0.0,
+      0.0
+     ],
+     [
+      0.0445,
+      0.0
+     ],
+     [
+      0.0445,
+      0.005
+     ],
+     [
+      0.028,
+      0.011
+     ],
+     [
+      0.0,
+      0.013
+     ]
+    ]
+   },
+   "at": [
+    0.1,
+    1.42874,
+    0.33709
+   ],
+   "rotate": [
+    56.0,
+    0,
+    0
+   ],
+   "basis": [
+    "aperture"
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 1.6,
+    "glow": 0.75,
+    "alpha": 0.9
+   },
+   "motion": {
+    "type": "pulse",
+    "period": 11,
+    "amount": 0.3
+   },
+   "note": "the objective: light enters here, so it is the construct's one live point"
+  },
+  {
+   "id": "dew-shield",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0492,
+    "height": 0.14,
+    "segments": 38,
+    "ribs": 8,
+    "caps": false,
+    "rings": 0
+   },
+   "at": [
+    0.1,
+    1.43098,
+    0.3404
+   ],
+   "rotate": [
+    56.0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 1.3,
+    "glow": 0.28
+   },
+   "note": "the parallel sleeve of the dew shield, sliding over the cell"
+  },
+  {
+   "id": "dew-mouth",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "cone",
+    "radius_bottom": 0.0492,
+    "radius_top": 0.0548,
+    "height": 0.042,
+    "segments": 38,
+    "ribs": 8,
+    "caps": false,
+    "rings": 0
+   },
+   "at": [
+    0.1,
+    1.50926,
+    0.45647
+   ],
+   "rotate": [
+    56.0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 1.35,
+    "glow": 0.3
+   },
+   "note": "the stepped-out mouth of the dew shield"
+  },
+  {
+   "id": "dew-rim",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "torus",
+    "major": 0.0548,
+    "minor": 0.0044,
+    "segments": 38,
+    "sides": 6,
+    "rings": 0
+   },
+   "at": [
+    0.1,
+    1.53163,
+    0.48963
+   ],
+   "rotate": [
+    56.0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 1.35,
+    "glow": 0.4
+   }
+  },
+  {
+   "id": "nameplate",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.006,
+     0.05,
+     0.02
+    ],
+    "ribs": 0
+   },
+   "at": [
+    0.142,
+    1.17151,
+    -0.04427
+   ],
+   "rotate": [
+    56.0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.58,
+    "alpha": 0.42
+   },
+   "note": "the engraved maker's plate, left blank: this instrument is unsigned"
+  },
+  {
+   "id": "focuser-body",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 7,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.034,
+    "height": 0.08,
+    "segments": 24,
+    "rings": 2,
+    "ribs": 8
+   },
+   "at": [
+    0.1,
+    0.74093,
+    -0.68263
+   ],
+   "rotate": [
+    56.0,
+    0,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.3,
+    "alpha": 0.78,
+    "glow": 0.3
+   },
+   "note": "rack-and-pinion focuser"
+  },
+  {
+   "id": "focuser-flange",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 7,
+   "shape": {
+    "type": "torus",
+    "major": 0.0445,
+    "minor": 0.0058,
+    "segments": 28,
+    "sides": 6,
+    "rings": 0
+   },
+   "at": [
+    0.1,
+    0.78119,
+    -0.62294
+   ],
+   "rotate": [
+    56.0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 1.15,
+    "glow": 0.3
+   }
+  },
+  {
+   "id": "pinion",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 7,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.07,
+     0.046,
+     0.038
+    ],
+    "ribs": 2
+   },
+   "at": [
+    0.1,
+    0.72574,
+    -0.61931
+   ],
+   "rotate": [
+    0.0,
+    0.0,
+    0.0
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.05,
+    "alpha": 0.7,
+    "glow": 0.26
+   },
+   "note": "the pinion block under the focuser body"
+  },
+  {
+   "id": "focus-knob-a",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 7,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.026,
+    "height": 0.022,
+    "segments": 20,
+    "ribs": 12
+   },
+   "at": [
+    0.142,
+    0.72574,
+    -0.61931
+   ],
+   "rotate": [
+    0,
+    0,
+    -90
+   ],
+   "look": {
+    "weight": 1.2,
+    "glow": 0.32
+   },
+   "note": "one of the two knurled knobs of the rack and pinion"
+  },
+  {
+   "id": "focus-knob-b",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 7,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.020999999999999998,
+    "height": 0.022,
+    "segments": 20,
+    "ribs": 12
+   },
+   "at": [
+    0.058,
+    0.72574,
+    -0.61931
+   ],
+   "rotate": [
+    0,
+    0,
+    -90
+   ],
+   "look": {
+    "weight": 1.2,
+    "glow": 0.32
+   },
+   "note": "one of the two knurled knobs of the rack and pinion"
+  },
+  {
+   "id": "drawtube",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 7,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0198,
+    "height": 0.07,
+    "segments": 20,
+    "rings": 1,
+    "ribs": 6
+   },
+   "at": [
+    0.1,
+    0.70179,
+    -0.74066
+   ],
+   "rotate": [
+    56.0,
+    0,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.05,
+    "alpha": 0.7,
+    "glow": 0.26
+   }
+  },
+  {
+   "id": "eyepiece-barrel",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 7,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0178,
+    "height": 0.054,
+    "segments": 18,
+    "rings": 1,
+    "ribs": 8
+   },
+   "at": [
+    0.1,
+    0.67495,
+    -0.78045
+   ],
+   "rotate": [
+    56.0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 1.25,
+    "glow": 0.35
+   }
+  },
+  {
+   "id": "eyepiece-knurl",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 7,
+   "shape": {
+    "type": "torus",
+    "major": 0.0188,
+    "minor": 0.0032,
+    "segments": 20,
+    "sides": 6,
+    "rings": 0
+   },
+   "at": [
+    0.1,
+    0.68613,
+    -0.76387
+   ],
+   "rotate": [
+    56.0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.58,
+    "alpha": 0.42
+   }
+  },
+  {
+   "id": "eyecup",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 7,
+   "shape": {
+    "type": "cone",
+    "radius_bottom": 0.0182,
+    "radius_top": 0.0248,
+    "height": 0.021,
+    "segments": 18,
+    "caps": true,
+    "ribs": 6
+   },
+   "at": [
+    0.1,
+    0.66376,
+    -0.79704
+   ],
+   "rotate": [
+    56.0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 1.2,
+    "glow": 0.3
+   }
+  },
+  {
+   "id": "finder-tube",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 7,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0148,
+    "height": 0.42,
+    "segments": 18,
+    "rings": 1,
+    "ribs": 8
+   },
+   "at": [
+    0.178,
+    0.77097,
+    -0.6667
+   ],
+   "rotate": [
+    56.0,
+    0,
+    0
+   ],
+   "basis": [
+    "finder.aperture"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.2,
+    "alpha": 0.72,
+    "glow": 0.3
+   },
+   "note": "finder scope, mounted parallel to the main tube"
+  },
+  {
+   "id": "finder-cell",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 7,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0186,
+    "height": 0.034,
+    "segments": 16,
+    "rings": 1,
+    "ribs": 8
+   },
+   "at": [
+    0.178,
+    1.00583,
+    -0.31851
+   ],
+   "rotate": [
+    56.0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 1.1,
+    "glow": 0.3
+   }
+  },
+  {
+   "id": "finder-shield",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 7,
+   "shape": {
+    "type": "cone",
+    "radius_bottom": 0.018,
+    "radius_top": 0.0198,
+    "height": 0.05,
+    "segments": 16,
+    "caps": false,
+    "ribs": 6
+   },
+   "at": [
+    0.178,
+    1.02485,
+    -0.29032
+   ],
+   "rotate": [
+    56.0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 1.0,
+    "glow": 0.22
+   }
+  },
+  {
+   "id": "finder-eyepiece",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 7,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0112,
+    "height": 0.048,
+    "segments": 14,
+    "rings": 1,
+    "ribs": 6
+   },
+   "at": [
+    0.178,
+    0.74413,
+    -0.7065
+   ],
+   "rotate": [
+    56.0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 1.0,
+    "glow": 0.25
+   }
+  },
+  {
+   "id": "finder-eyecup",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 7,
+   "shape": {
+    "type": "cone",
+    "radius_bottom": 0.0115,
+    "radius_top": 0.015,
+    "height": 0.014,
+    "segments": 14,
+    "caps": true,
+    "ribs": 5
+   },
+   "at": [
+    0.178,
+    0.7363,
+    -0.7181
+   ],
+   "rotate": [
+    56.0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.58,
+    "alpha": 0.42
+   }
+  },
+  {
+   "id": "finder-bracket-a",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 7,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.056,
+     0.05,
+     0.016
+    ],
+    "ribs": 0
+   },
+   "at": [
+    0.148,
+    0.82026,
+    -0.57933
+   ],
+   "rotate": [
+    56.0,
+    0,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.05,
+    "alpha": 0.7,
+    "glow": 0.26
+   }
+  },
+  {
+   "id": "finder-ring-a",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 7,
+   "shape": {
+    "type": "torus",
+    "major": 0.017,
+    "minor": 0.004,
+    "segments": 16,
+    "sides": 6,
+    "rings": 0
+   },
+   "at": [
+    0.178,
+    0.82689,
+    -0.5838
+   ],
+   "rotate": [
+    56.0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.58,
+    "alpha": 0.42
+   }
+  },
+  {
+   "id": "finder-bracket-b",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 7,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.056,
+     0.05,
+     0.016
+    ],
+    "ribs": 0
+   },
+   "at": [
+    0.148,
+    1.36268,
+    0.22484
+   ],
+   "rotate": [
+    56.0,
+    0,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.05,
+    "alpha": 0.7,
+    "glow": 0.26
+   }
+  },
+  {
+   "id": "finder-ring-b",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 7,
+   "shape": {
+    "type": "torus",
+    "major": 0.017,
+    "minor": 0.004,
+    "segments": 16,
+    "sides": 6,
+    "rings": 0
+   },
+   "at": [
+    0.178,
+    1.36931,
+    0.22037
+   ],
+   "rotate": [
+    56.0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.58,
+    "alpha": 0.42
+   }
+  }
+ ],
+ "annotations": [
+  {
+   "id": "an-dew",
+   "text": "Dew shield",
+   "part": "dew-shield",
+   "offset": [
+    0,
+    0.01,
+    0
+   ]
+  },
+  {
+   "id": "an-cell",
+   "text": "Objective cell",
+   "part": "objective-cell",
+   "offset": [
+    0,
+    0.01,
+    0
+   ]
+  },
+  {
+   "id": "an-finder",
+   "text": "Finder scope",
+   "part": "finder-tube",
+   "offset": [
+    0,
+    0.01,
+    0
+   ]
+  },
+  {
+   "id": "an-hour",
+   "text": "Hour circle",
+   "part": "hour-circle",
+   "offset": [
+    0,
+    0.01,
+    0
+   ]
+  },
+  {
+   "id": "an-cw",
+   "text": "Counterweight",
+   "part": "counterweight",
+   "offset": [
+    0,
+    0.01,
+    0
+   ]
+  },
+  {
+   "id": "an-focus",
+   "text": "Focuser and eyepiece",
+   "part": "focuser-body",
+   "offset": [
+    0,
+    0.01,
+    0
+   ]
+  }
+ ],
+ "presentation": {
+  "framing": {
+   "yaw": 34,
+   "pitch": 8,
+   "fit": 0.95
+  },
+  "views": [
+   {
+    "id": "mount",
+    "label": "Equatorial head",
+    "yaw": 62,
+    "pitch": 12,
+    "distance": 2.2,
+    "target": "hour-circle"
+   },
+   {
+    "id": "objective",
+    "label": "Objective and dew shield",
+    "yaw": 46,
+    "pitch": 24,
+    "distance": 2.1,
+    "target": "objective-cell"
+   },
+   {
+    "id": "eyepiece",
+    "label": "Focuser and eyepiece",
+    "yaw": 18,
+    "pitch": 4,
+    "distance": 2.0,
+    "target": "focuser-body"
+   }
+  ],
+  "atmosphere": {
+   "haze": 0.72,
+   "scanlines": true,
+   "vignette": true,
+   "grid": true,
+   "motes": 0.35
+  },
+  "occlusion": "xray",
+  "certainty_style": "subtle",
+  "background": "deep"
+ },
+ "animation": {
+  "assembly": {
+   "style": "build",
+   "seconds": 20.0,
+   "interference": false
+  },
+  "idle": {
+   "life": "calm",
+   "events": [
+    "propagate",
+    "scan",
+    "shimmer",
+    "sweep"
+   ],
+   "cadence": [
+    7,
+    14
+   ],
+   "strength": 0.55
+  },
+  "camera": {
+   "drift": 3.5,
+   "breathe": 0.025,
+   "tour": [
+    {
+     "view": "mount",
+     "at": 24.0,
+     "fly": 3.5
+    },
+    {
+     "view": "objective",
+     "at": 35.0,
+     "fly": 4.0
+    },
+    {
+     "view": "hero",
+     "at": 47.0,
+     "fly": 5.0
+    }
+   ]
+  },
+  "reduced_motion": "still"
+ },
+ "authoring": {
+  "tier": "masterpiece",
+  "research": "done",
+  "sources": [
+   "ref-equatorial",
+   "ref-portable",
+   "ref-german",
+   "ref-stand"
+  ],
+  "review_rounds": 6,
+  "outcome": "good",
+  "identity": [
+   {
+    "feature": "a long slender lacquered brass tube with brass bands, a knurled objective cell and a flaring dew shield",
+    "parts": [
+     "main-tube",
+     "tube-band-1",
+     "tube-band-2",
+     "objective-cell",
+     "dew-shield",
+     "dew-mouth",
+     "dew-rim"
+    ],
+    "source": "ref-portable"
+   },
+   {
+    "feature": "a German equatorial head: inclined polar axis, graduated hour circle, declination circle, turned counterweight",
+    "parts": [
+     "polar-body",
+     "polar-drum",
+     "hour-circle",
+     "hour-scale",
+     "dec-head",
+     "dec-shaft",
+     "dec-circle",
+     "dec-scale",
+     "counterweight"
+    ],
+    "source": "ref-german"
+   },
+   {
+    "feature": "a folding mahogany tripod with brass shoes, ferrules and knuckles, braced by a chain spreader",
+    "parts": [
+     "leg",
+     "shoe",
+     "leg-ferrule",
+     "leg-knuckle",
+     "chain",
+     "head-casting"
+    ],
+    "source": "ref-stand"
+   },
+   {
+    "feature": "a small finder scope on two brackets, parallel to the main tube",
+    "parts": [
+     "finder-tube",
+     "finder-cell",
+     "finder-shield",
+     "finder-bracket-a",
+     "finder-bracket-b"
+    ],
+    "source": "ref-german"
+   },
+   {
+    "feature": "a rack-and-pinion focuser with twin knurled knobs and a drawtube eyepiece",
+    "parts": [
+     "focuser-body",
+     "focuser-flange",
+     "pinion",
+     "focus-knob-a",
+     "focus-knob-b",
+     "drawtube",
+     "eyepiece-barrel"
+    ],
+    "source": "ref-equatorial"
+   },
+   {
+    "feature": "long slow-motion rods with knurled knobs hanging from the mount",
+    "parts": [
+     "slow-rod-ra",
+     "slow-knob-ra",
+     "slow-rod-dec",
+     "slow-knob-dec"
+    ],
+    "source": "ref-equatorial"
+   }
+  ],
+  "next": [
+   "the saddle is still a flat plate crossing the tube: give it a curved cradle with a strap over the tube",
+   "the hour circle needs engraved numerals and a needle that touches its rim (only the dec circle has a scale and index)",
+   "the slow-motion rods should be straight screw rods with knurled knobs, not bowed wires",
+   "the chain spreader wants drawn links and each leg a visible knuckle block; the legs still read as dowels",
+   "at hero scale the head's drum, latitude quadrant and two circles still crowd: separate them further along the polar axis",
+   "engrave a maker's name on the objective cell (the reference cell carries one; this instrument is left unsigned on purpose)"
+  ],
+  "critic": {
+   "scene_sha256": "5e1f10414a25cacf17b0c06c865bc098ff0a41ecc0e0636a645dc2df7255b6a4",
+   "verdict": "good",
+   "round": 6,
+   "defects": 13,
+   "scores": {
+    "silhouette": 2,
+    "proportions": 2,
+    "identity": 2,
+    "depth": 2,
+    "composition": 2,
+    "assembly": 2,
+    "motion": 2,
+    "density": 2,
+    "honesty": 2
+   }
+  },
+  "rounds": [
+   {
+    "round": 1,
+    "result": "baseline",
+    "minutes": 4.4,
+    "changes": [
+     "draft"
+    ],
+    "summary": "The tube is not connected to the declination axis. The tube axis is at X = +0.130, the saddle and ring blocks at X 0.099..0.161, the dec hea"
+   },
+   {
+    "round": 2,
+    "result": "kept",
+    "minutes": 1.2,
+    "changes": [
+     "D1",
+     "D2",
+     "D3",
+     "D4"
+    ],
+    "summary": "The tube is short for its stand. Still-side measures mouth-to-eyepiece at about 542 px against 659 px of shoe-to-mouth height (0.82); ref-tr"
+   },
+   {
+    "round": 3,
+    "result": "reverted",
+    "minutes": 1.6,
+    "changes": [
+     "D1",
+     "D13",
+     "D14",
+     "D20"
+    ],
+    "summary": "No fill, so no mass. The tube's interior samples 10.7/255 against a 9.7 background - about 1/255 - and the same holds for the dew shield, th"
+   },
+   {
+    "round": 4,
+    "result": "kept",
+    "minutes": 0.9,
+    "changes": [
+     "D13",
+     "D7",
+     "D8",
+     "D9"
+    ],
+    "summary": "The head is a 90 px knot where polar-body is a flat-faced hexagonal prism and both circles are bare spoke fans running to a visible hub; no "
+   },
+   {
+    "round": 5,
+    "result": "kept",
+    "minutes": 1.1,
+    "changes": [
+     "D13",
+     "D16",
+     "D21",
+     "D7"
+    ],
+    "summary": "still-side measures 607 px mouth-to-eyepiece against 650 px from the dew rim to the lowest shoe (0.93), where ref-troughton-simms-21 reads a"
+   },
+   {
+    "round": 6,
+    "result": "kept",
+    "minutes": 0.6,
+    "changes": [
+     "D13",
+     "D16",
+     "D17",
+     "D5"
+    ],
+    "summary": "The head-to-tube junction still has no designed outline. The saddle is drawn as a flat rectangular plate whose straight top edge crosses the"
+   }
+  ]
+ }
+}

@@ -182,3 +182,57 @@ class ExamplesGallery(unittest.TestCase):
                 self.assertIn('"rounds"', (out / "examples" / slug / "scene.json").read_text(encoding="utf-8"))
             html_ = (out / "examples" / "leica-m3" / "construct.html").read_text(encoding="utf-8")
             self.assertIsNone(re.search(r'<script[^>]+src=|<link[^>]+href="http', html_))  # self-contained
+
+    def test_every_film_is_complete_and_checks_clean(self):
+        from . import diagnose
+        root = HERE.parent / "examples"
+        films = json.loads((root / "films.json").read_text(encoding="utf-8"))["films"]
+        self.assertEqual(len(films), 5)
+        for film in films:
+            self.assertEqual(set(film), {"slug", "title", "mode", "model", "track", "video"}, film["slug"])
+            self.assertEqual(sorted(p.name for p in (root / "films" / film["slug"]).iterdir()), ["scene.json"])  # no video
+            text = (root / "films" / film["slug"] / "scene.json").read_text(encoding="utf-8")
+            self.assertIsNone(re.search(r"/Users/|/private/|/var/folders|references/", text), film["slug"])
+            self.assertTrue(diagnose.diagnose_text(text)["ok"], film["slug"])
+        self.assertEqual(list(root.rglob("*.mp4")), [])  # the films live on the site only
+
+    @unittest.skipUnless(shutil.which("ffmpeg"), "ffmpeg is not installed")
+    def test_the_films_on_the_site(self):
+        spec = __import__("importlib.util").util.spec_from_file_location("build_site", HERE.parent / "scripts" / "build_site.py")
+        site = __import__("importlib.util").util.module_from_spec(spec)
+        spec.loader.exec_module(site)
+        films = site._load_films()
+        with tempfile.TemporaryDirectory() as d:
+            videos = Path(d, "videos")
+            videos.mkdir()
+            for film in films:  # a second of test picture with a tone stands in for each film
+                subprocess.run(["ffmpeg", "-v", "error", "-f", "lavfi", "-i", "testsrc=size=320x180:rate=12:duration=1",
+                                "-f", "lavfi", "-i", "sine=duration=1", "-shortest", "-pix_fmt", "yuv420p",
+                                str(videos / film["video"])], check=True)
+            out = site.build(Path(d, "site"), videos)
+            index = (out / "index.html").read_text(encoding="utf-8")
+            for film in films:
+                dst = out / "films" / film["slug"]
+                for name in ("index.html", "film.mp4", "poster.jpg", "construct.html", "scene.json"):
+                    self.assertTrue((dst / name).is_file(), (film["slug"], name))
+                label = "%s · masterpiece · DeepSeek · %s" % (film["title"], film["track"])
+                credit = "Music: &quot;%s&quot; by Artyom Andreyev, used with permission." % film["track"]
+                page = (dst / "index.html").read_text(encoding="utf-8")
+                for text in (index, page):
+                    self.assertIn(label, text)
+                    self.assertIn(credit, text)
+                self.assertIn("construct.html?ui=0&amp;rounds=0", page)  # the live construct
+                self.assertNotRegex((dst / "construct.html").read_text(encoding="utf-8"), r'"rounds":\s*\[\{')
+            for video in re.findall(r"<video[^>]*>", index):  # controls, never autoplaying
+                self.assertIn("controls", video)
+                self.assertIn('preload="none"', video)
+                self.assertNotIn("autoplay", video)
+            for page in [p for p in out.rglob("*.html") if p.name != "construct.html"]:
+                for ref in re.findall(r'(?:href|src|poster)="([^"]+)"', page.read_text(encoding="utf-8")):
+                    if not ref.startswith(("https://", "http://")):
+                        target = (page.parent / ref.split("?")[0]).resolve()
+                        self.assertTrue((target / "index.html" if ref.endswith("/") else target).exists(), (page, ref))
+        r = subprocess.run([sys.executable, str(HERE.parent / "scripts" / "build_site.py"), "--out", str(Path(d, "x"))],
+                           capture_output=True, text=True)
+        self.assertNotEqual(r.returncode, 0)  # films listed: the videos must be given, or --no-films
+        self.assertIn("--films", r.stderr)

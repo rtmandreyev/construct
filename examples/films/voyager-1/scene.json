@@ -1,0 +1,5652 @@
+{
+ "format": "construct-scene",
+ "version": 2,
+ "id": "voyager-1",
+ "title": "Voyager 1",
+ "subject": {
+  "category": "machine",
+  "summary": "The Voyager 1 robotic interstellar probe: a 3.66 m high-gain dish on a ten-sided bus, with the three-RTG power boom, the science boom and its two-axis scan platform, the 13 m magnetometer mast, two 10 m whip antennas and the Golden Record bolted to a bus face. Assembled here as a hologram; overall dimensions follow the published figures, the truss detail is traced from photographs.",
+  "accuracy": "approximate",
+  "synthetic": false
+ },
+ "units": "m",
+ "seed": 1977,
+ "sources": [
+  {
+   "id": "request",
+   "kind": "user_request",
+   "rights": "user_private",
+   "title": "The user's request: Voyager 1, dish above the bus, RTG boom, science boom with the scan platform, the 13 m magnetometer boom, the Golden Record on the bus"
+  },
+  {
+   "id": "nasa-helio",
+   "kind": "document",
+   "rights": "public_domain",
+   "title": "NASA Heliophysics Data Portal: Voyager 1 spacecraft description",
+   "ref": "https://helio.data.nasa.gov/mission/Voyager1"
+  },
+  {
+   "id": "ntrs-voyager",
+   "kind": "document",
+   "rights": "public_domain",
+   "title": "The Voyager Spacecraft (NASA NTRS 19790008720): structure, dish support ring, booms, RTGs",
+   "ref": "https://archive.org/details/NASA_NTRS_Archive_19790008720"
+  },
+  {
+   "id": "pds-vg1",
+   "kind": "document",
+   "rights": "public_domain",
+   "title": "NASA PDS instrument host profile: Voyager 1 (bus, booms, magnetometer boom)",
+   "ref": "https://pds.nasa.gov/ds-view/pds/viewHostProfile.jsp?INSTRUMENT_HOST_ID=VG1"
+  },
+  {
+   "id": "jpl-quicklook",
+   "kind": "document",
+   "rights": "public_domain",
+   "title": "JPL Voyager Quicklook: 3.7 m HGA, 13 m mag boom, 2-DOF scan platform",
+   "ref": "https://space.jpl.nasa.gov/msl/QuickLooks/voyagerQL.html"
+  },
+  {
+   "id": "jpl-pia14113",
+   "kind": "document",
+   "rights": "public_domain",
+   "title": "JPL PIA14113: Voyager's special cargo, the 12-inch Golden Record and its cover",
+   "ref": "https://www.jpl.nasa.gov/images/pia14113-voyagers-special-cargo-the-golden-record/"
+  },
+  {
+   "id": "ref-profile",
+   "kind": "reference_image",
+   "rights": "reference_only",
+   "title": "Voyager side elevation, JPL photograph (Wikimedia Commons, Voyager.jpg)",
+   "ref": "Reference image, viewed for comparison only; not copied or published"
+  },
+  {
+   "id": "ref-model",
+   "kind": "reference_image",
+   "rights": "reference_only",
+   "title": "Voyager spacecraft model, three-quarter (Wikimedia Commons)",
+   "ref": "Reference image, viewed for comparison only; not copied or published"
+  },
+  {
+   "id": "ref-diagram",
+   "kind": "drawing",
+   "rights": "public_domain",
+   "title": "Voyager spacecraft structure, annotated schematic (Wikimedia Commons)",
+   "ref": "Reference image, viewed for comparison only; not copied or published"
+  },
+  {
+   "id": "ref-scan",
+   "kind": "reference_image",
+   "rights": "reference_only",
+   "title": "Voyager science boom and scan platform, JPL close-up",
+   "ref": "Reference image, viewed for comparison only; not copied or published"
+  },
+  {
+   "id": "ref-mag",
+   "kind": "reference_image",
+   "rights": "reference_only",
+   "title": "Voyager magnetometer mast, deployment (JPL PIA21738)",
+   "ref": "Reference image, viewed for comparison only; not copied or published"
+  },
+  {
+   "id": "ref-record",
+   "kind": "reference_image",
+   "rights": "reference_only",
+   "title": "Installing the Golden Record cover on the Voyager bus, 1977 (JPL)",
+   "ref": "Reference image, viewed for comparison only; not copied or published"
+  }
+ ],
+ "facts": [
+  {
+   "key": "hga.diameter",
+   "value": 3.66,
+   "unit": "m",
+   "certainty": "verified",
+   "source": "nasa-helio",
+   "note": "3.66 m diameter parabolic high-gain antenna"
+  },
+  {
+   "key": "hga.ring",
+   "value": 1.78,
+   "unit": "m",
+   "certainty": "verified",
+   "source": "ntrs-voyager",
+   "note": "the dish is attached along a 1.78 m support ring"
+  },
+  {
+   "key": "bus.width",
+   "value": 1.78,
+   "unit": "m",
+   "certainty": "verified",
+   "source": "nasa-helio",
+   "note": "decahedral bus, 1.78 m across flat to flat"
+  },
+  {
+   "key": "bus.height",
+   "value": 0.47,
+   "unit": "m",
+   "certainty": "verified",
+   "source": "nasa-helio",
+   "note": "bus depth 47 cm"
+  },
+  {
+   "key": "bus.sides",
+   "value": 10,
+   "certainty": "verified",
+   "source": "pds-vg1",
+   "note": "decagonal prism, ten bays"
+  },
+  {
+   "key": "scienceboom.length",
+   "value": 2.3,
+   "unit": "m",
+   "certainty": "verified",
+   "source": "ntrs-voyager",
+   "note": "graphite-epoxy boom, scan platform at its end"
+  },
+  {
+   "key": "magboom.length",
+   "value": 13.0,
+   "unit": "m",
+   "certainty": "verified",
+   "source": "pds-vg1",
+   "note": "13 m deployable astromast, two low-field sensors"
+  },
+  {
+   "key": "magboom.canister",
+   "value": "0.23 m x 0.66 m",
+   "unit": "m",
+   "certainty": "verified",
+   "source": "ntrs-voyager",
+   "note": "the mast is stowed in a 23 cm cylinder 66 cm long"
+  },
+  {
+   "key": "rtg.diameter",
+   "value": 0.406,
+   "unit": "m",
+   "certainty": "verified",
+   "source": "nasa-helio",
+   "note": "each RTG 40.6 cm across"
+  },
+  {
+   "key": "rtg.length",
+   "value": 0.508,
+   "unit": "m",
+   "certainty": "verified",
+   "source": "nasa-helio",
+   "note": "each RTG 50.8 cm long, three in tandem"
+  },
+  {
+   "key": "rtg.count",
+   "value": 3,
+   "certainty": "verified",
+   "source": "pds-vg1"
+  },
+  {
+   "key": "record.diameter",
+   "value": 0.3048,
+   "unit": "m",
+   "certainty": "verified",
+   "source": "jpl-pia14113",
+   "note": "a 12-inch gold-plated phonograph record"
+  },
+  {
+   "key": "whip.length",
+   "value": 10.0,
+   "unit": "m",
+   "certainty": "verified",
+   "source": "nasa-helio",
+   "note": "two 10 m whip antennas, perpendicular to each other"
+  },
+  {
+   "key": "scanplatform.axes",
+   "value": 2,
+   "certainty": "verified",
+   "source": "jpl-quicklook",
+   "note": "two-degree-of-freedom pointing platform"
+  }
+ ],
+ "assets": [],
+ "parts": [
+  {
+   "id": "keel-ring",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.63,
+    "height": 0.07,
+    "segments": 20,
+    "ribs": 10,
+    "rings": 1
+   },
+   "at": [
+    4.17,
+    2.335,
+    -1.03
+   ],
+   "look": {
+    "weight": 0.99,
+    "alpha": 0.95
+   }
+  },
+  {
+   "id": "bus",
+   "role": "mass",
+   "certainty": "verified",
+   "stage": 0,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.9358013795720579,
+    "height": 0.47,
+    "segments": 10,
+    "ribs": 10,
+    "rings": 2
+   },
+   "at": [
+    4.17,
+    2.425,
+    -1.03
+   ],
+   "basis": [
+    "bus.width",
+    "bus.height",
+    "bus.sides"
+   ],
+   "source": "nasa-helio",
+   "look": {
+    "fill": "dark",
+    "weight": 0.99,
+    "alpha": 0.936,
+    "glow": 0.16
+   },
+   "floating": true
+  },
+  {
+   "id": "bus-deck-top",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.84,
+    "height": 0.035,
+    "segments": 10,
+    "ribs": 10
+   },
+   "at": [
+    4.17,
+    2.885,
+    -1.03
+   ],
+   "look": {
+    "weight": 0.935,
+    "alpha": 0.95
+   }
+  },
+  {
+   "id": "bus-deck-bottom",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.84,
+    "height": 0.035,
+    "segments": 10,
+    "ribs": 10
+   },
+   "at": [
+    4.17,
+    2.42,
+    -1.03
+   ],
+   "look": {
+    "weight": 0.88,
+    "alpha": 0.95
+   }
+  },
+  {
+   "id": "bay-panel",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.44,
+     0.26,
+     0.024
+    ],
+    "ribs": 3
+   },
+   "at": [
+    4.17,
+    2.665,
+    -0.132
+   ],
+   "look": {
+    "weight": 0.55,
+    "alpha": 0.546
+   },
+   "repeat": {
+    "count": 10,
+    "radial": {
+     "axis": "y",
+     "center": [
+      4.17,
+      2.66,
+      -1.03
+     ],
+     "span": 360
+    }
+   }
+  },
+  {
+   "id": "bay-vent",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.26,
+     0.05,
+     0.012
+    ]
+   },
+   "at": [
+    4.17,
+    2.83,
+    -0.105
+   ],
+   "look": {
+    "weight": 0.495,
+    "alpha": 0.39
+   },
+   "repeat": {
+    "count": 10,
+    "radial": {
+     "axis": "y",
+     "center": [
+      4.17,
+      2.66,
+      -1.03
+     ],
+     "span": 360
+    }
+   }
+  },
+  {
+   "id": "bus-skirt",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "cone",
+    "radius_bottom": 0.8,
+    "radius_top": 0.9,
+    "height": 0.1,
+    "segments": 20,
+    "ribs": 10,
+    "rings": 1
+   },
+   "at": [
+    4.17,
+    2.325,
+    -1.03
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.935,
+    "alpha": 0.715
+   }
+  },
+  {
+   "id": "propulsion",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "cone",
+    "radius_bottom": 0.34,
+    "radius_top": 0.24,
+    "height": 0.15,
+    "segments": 16,
+    "ribs": 8,
+    "rings": 1
+   },
+   "at": [
+    4.17,
+    2.165,
+    -1.03
+   ],
+   "look": {
+    "weight": 0.935,
+    "alpha": 0.95
+   }
+  },
+  {
+   "id": "bus-box-0",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.26,
+     0.13,
+     0.2
+    ],
+    "ribs": 2
+   },
+   "at": [
+    3.83,
+    2.9,
+    -0.73
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.77,
+    "alpha": 0.715
+   }
+  },
+  {
+   "id": "bus-box-1",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.26,
+     0.13,
+     0.2
+    ],
+    "ribs": 2
+   },
+   "at": [
+    4.47,
+    2.9,
+    -1.37
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.77,
+    "alpha": 0.715
+   }
+  },
+  {
+   "id": "bus-box-2",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.26,
+     0.13,
+     0.2
+    ],
+    "ribs": 2
+   },
+   "at": [
+    4.59,
+    2.9,
+    -0.73
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.77,
+    "alpha": 0.715
+   }
+  },
+  {
+   "id": "louver-band",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.4,
+     0.085,
+     0.022
+    ],
+    "ribs": 6
+   },
+   "at": [
+    4.17,
+    2.565,
+    -0.128
+   ],
+   "look": {
+    "weight": 0.66,
+    "alpha": 0.65
+   },
+   "repeat": {
+    "count": 10,
+    "radial": {
+     "axis": "y",
+     "center": [
+      4.17,
+      2.66,
+      -1.03
+     ],
+     "span": 360
+    }
+   }
+  },
+  {
+   "id": "bus-cable-0",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      5.00693,
+      2.76,
+      -0.75807
+     ],
+     [
+      4.75883,
+      2.76,
+      -0.37603
+     ],
+     [
+      4.35296,
+      2.76,
+      -0.16923
+     ],
+     [
+      3.89807,
+      2.76,
+      -0.19307
+     ],
+     [
+      3.51603,
+      2.76,
+      -0.44117
+     ],
+     [
+      3.30923,
+      2.76,
+      -0.84704
+     ],
+     [
+      3.33307,
+      2.76,
+      -1.30193
+     ],
+     [
+      3.58117,
+      2.76,
+      -1.68397
+     ],
+     [
+      3.98704,
+      2.76,
+      -1.89077
+     ],
+     [
+      4.44193,
+      2.76,
+      -1.86693
+     ],
+     [
+      4.82397,
+      2.76,
+      -1.61883
+     ],
+     [
+      5.03077,
+      2.76,
+      -1.21296
+     ],
+     [
+      5.00693,
+      2.76,
+      -0.75807
+     ]
+    ],
+    "closed": false,
+    "smooth": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.495,
+    "alpha": 0.52
+   }
+  },
+  {
+   "id": "bus-cable-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      4.85389,
+      2.53,
+      -0.4762
+     ],
+     [
+      4.48536,
+      2.53,
+      -0.20845
+     ],
+     [
+      4.03234,
+      2.53,
+      -0.16083
+     ],
+     [
+      3.6162,
+      2.53,
+      -0.34611
+     ],
+     [
+      3.34845,
+      2.53,
+      -0.71464
+     ],
+     [
+      3.30083,
+      2.53,
+      -1.16766
+     ],
+     [
+      3.48611,
+      2.53,
+      -1.5838
+     ],
+     [
+      3.85464,
+      2.53,
+      -1.85155
+     ],
+     [
+      4.30766,
+      2.53,
+      -1.89917
+     ],
+     [
+      4.7238,
+      2.53,
+      -1.71389
+     ],
+     [
+      4.99155,
+      2.53,
+      -1.34536
+     ],
+     [
+      5.03917,
+      2.53,
+      -0.89234
+     ],
+     [
+      4.85389,
+      2.53,
+      -0.4762
+     ]
+    ],
+    "closed": false,
+    "smooth": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.495,
+    "alpha": 0.52
+   }
+  },
+  {
+   "id": "thruster-plate",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.72,
+    "height": 0.035,
+    "segments": 20,
+    "ribs": 10
+   },
+   "at": [
+    4.17,
+    2.38,
+    -1.03
+   ],
+   "look": {
+    "weight": 0.825,
+    "alpha": 0.78
+   }
+  },
+  {
+   "id": "thruster",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "cone",
+    "radius_bottom": 0.028,
+    "radius_top": 0.042,
+    "height": 0.1,
+    "segments": 8
+   },
+   "at": [
+    4.79,
+    2.365,
+    -1.03
+   ],
+   "rotate": [
+    180,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.495,
+    "alpha": 0.455
+   },
+   "repeat": {
+    "count": 16,
+    "radial": {
+     "axis": "y",
+     "center": [
+      4.17,
+      2.66,
+      -1.03
+     ],
+     "span": 360
+    }
+   }
+  },
+  {
+   "id": "fuel-tank",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "sphere",
+    "radius": 0.29,
+    "lat": 10,
+    "lon": 14
+   },
+   "at": [
+    4.17,
+    2.66,
+    -1.03
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.44,
+    "alpha": 0.286
+   }
+  },
+  {
+   "id": "hga-ring",
+   "role": "structure",
+   "certainty": "verified",
+   "stage": 1,
+   "shape": {
+    "type": "torus",
+    "major": 0.89,
+    "minor": 0.028,
+    "segments": 40,
+    "sides": 6,
+    "rings": 0
+   },
+   "at": [
+    4.17,
+    3.24299,
+    -1.03
+   ],
+   "basis": [
+    "hga.ring"
+   ],
+   "source": "ntrs-voyager",
+   "look": {
+    "weight": 1.045,
+    "alpha": 0.95
+   }
+  },
+  {
+   "id": "hga-mast",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.1,
+    "height": 0.34,
+    "segments": 12,
+    "ribs": 4
+   },
+   "at": [
+    4.17,
+    2.875,
+    -1.03
+   ],
+   "look": {
+    "weight": 0.935,
+    "alpha": 0.95
+   }
+  },
+  {
+   "id": "hga-strut",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      4.73,
+      2.875,
+      -1.03
+     ],
+     [
+      5.06,
+      3.23299,
+      -1.03
+     ]
+    ],
+    "radius": 0.03,
+    "sides": 4,
+    "samples": 2,
+    "longitudinal": 1,
+    "ring_every": 0
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.99,
+    "alpha": 0.95
+   },
+   "repeat": {
+    "count": 8,
+    "radial": {
+     "axis": "y",
+     "center": [
+      4.17,
+      2.66,
+      -1.03
+     ],
+     "span": 360
+    }
+   }
+  },
+  {
+   "id": "hga-dish",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "lathe",
+    "profile": [
+     [
+      0.0,
+      0.0
+     ],
+     [
+      0.52,
+      0.042
+     ],
+     [
+      0.95,
+      0.1401
+     ],
+     [
+      1.32,
+      0.2706
+     ],
+     [
+      1.62,
+      0.4075
+     ],
+     [
+      1.83,
+      0.52
+     ]
+    ],
+    "segments": 48,
+    "meridians": 16
+   },
+   "at": [
+    4.17,
+    3.16,
+    -1.03
+   ],
+   "basis": [
+    "hga.diameter"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.935,
+    "alpha": 0.95,
+    "glow": 0.35
+   }
+  },
+  {
+   "id": "hga-dish-back",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "lathe",
+    "profile": [
+     [
+      0.0,
+      0.0
+     ],
+     [
+      0.52,
+      0.042
+     ],
+     [
+      0.95,
+      0.1401
+     ],
+     [
+      1.32,
+      0.2706
+     ],
+     [
+      1.62,
+      0.4075
+     ],
+     [
+      1.83,
+      0.52
+     ]
+    ],
+    "segments": 48,
+    "meridians": 8
+   },
+   "at": [
+    4.17,
+    3.125,
+    -1.03
+   ],
+   "basis": [
+    "hga.diameter"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.66,
+    "alpha": 0.715
+   }
+  },
+  {
+   "id": "hga-rib",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      4.41,
+      3.11394,
+      -1.03
+     ],
+     [
+      5.02,
+      3.22219,
+      -1.03
+     ],
+     [
+      5.59,
+      3.4281,
+      -1.03
+     ],
+     [
+      5.97,
+      3.62309,
+      -1.03
+     ]
+    ],
+    "radius": 0.02,
+    "sides": 3,
+    "samples": 3,
+    "longitudinal": 1,
+    "ring_every": 0
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.88,
+    "alpha": 0.91
+   },
+   "repeat": {
+    "count": 8,
+    "radial": {
+     "axis": "y",
+     "center": [
+      4.17,
+      2.66,
+      -1.03
+     ],
+     "span": 360
+    }
+   }
+  },
+  {
+   "id": "hga-lip",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "cone",
+    "radius_bottom": 1.83,
+    "radius_top": 1.805,
+    "height": 0.045,
+    "segments": 48,
+    "ribs": 24
+   },
+   "at": [
+    4.17,
+    3.63,
+    -1.03
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.21,
+    "alpha": 0.95
+   }
+  },
+  {
+   "id": "hga-rim",
+   "role": "identity",
+   "certainty": "verified",
+   "stage": 1,
+   "shape": {
+    "type": "torus",
+    "major": 1.83,
+    "minor": 0.026,
+    "segments": 72,
+    "sides": 6,
+    "rings": 0
+   },
+   "at": [
+    4.17,
+    3.68,
+    -1.03
+   ],
+   "basis": [
+    "hga.diameter"
+   ],
+   "source": "nasa-helio",
+   "look": {
+    "weight": 1.87,
+    "glow": 0.6,
+    "alpha": 0.95
+   }
+  },
+  {
+   "id": "hga-hub",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.115,
+    "height": 0.05,
+    "segments": 16,
+    "ribs": 6
+   },
+   "at": [
+    4.17,
+    3.15,
+    -1.03
+   ],
+   "look": {
+    "weight": 0.88,
+    "alpha": 0.95
+   }
+  },
+  {
+   "id": "lga-strut",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      5.33,
+      3.34894,
+      -1.03
+     ],
+     [
+      4.27,
+      4.02,
+      -1.03
+     ]
+    ],
+    "radius": 0.026,
+    "sides": 4,
+    "samples": 2,
+    "longitudinal": 1,
+    "ring_every": 0
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 1.43,
+    "alpha": 0.95
+   },
+   "repeat": {
+    "count": 3,
+    "radial": {
+     "axis": "y",
+     "center": [
+      4.17,
+      2.66,
+      -1.03
+     ],
+     "span": 360
+    }
+   }
+  },
+  {
+   "id": "lga-horn",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "cone",
+    "radius_bottom": 0.09,
+    "radius_top": 0.15,
+    "height": 0.19,
+    "segments": 16,
+    "ribs": 4
+   },
+   "at": [
+    4.17,
+    4.0,
+    -1.03
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.375,
+    "glow": 0.3,
+    "alpha": 0.95
+   }
+  },
+  {
+   "id": "lga-cap",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.152,
+    "height": 0.028,
+    "segments": 16,
+    "ribs": 1
+   },
+   "at": [
+    4.17,
+    4.19,
+    -1.03
+   ],
+   "look": {
+    "weight": 0.99,
+    "alpha": 0.95
+   }
+  },
+  {
+   "id": "downlink",
+   "role": "data",
+   "certainty": "decorative",
+   "stage": 7,
+   "shape": {
+    "type": "marker",
+    "sprite": "soft",
+    "size_px": 7
+   },
+   "at": [
+    4.17,
+    4.21,
+    -1.03
+   ],
+   "look": {
+    "glow": 0.7,
+    "alpha": 0.76,
+    "weight": 1.1
+   },
+   "motion": {
+    "type": "pulse",
+    "period": 7.5,
+    "amount": 0.55
+   }
+  },
+  {
+   "id": "sci-longeron-0",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      4.91051,
+      2.66752,
+      -0.92857
+     ],
+     [
+      7.13676,
+      3.22395,
+      -0.77289
+     ]
+    ],
+    "radius": 0.022,
+    "sides": 4,
+    "samples": 2,
+    "longitudinal": 1,
+    "ring_every": 0
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 1.198,
+    "alpha": 0.95
+   }
+  },
+  {
+   "id": "sci-brace-0-0",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      4.99614,
+      2.68893,
+      -0.92258
+     ],
+     [
+      5.14175,
+      2.85544,
+      -0.98619
+     ]
+    ],
+    "radius": 0.01584,
+    "sides": 3,
+    "samples": 2,
+    "longitudinal": 1,
+    "ring_every": 0
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.975,
+    "alpha": 0.95
+   },
+   "repeat": {
+    "count": 6,
+    "step": {
+     "at": [
+      0.3425,
+      0.0856,
+      0.02395
+     ]
+    }
+   }
+  },
+  {
+   "id": "sci-brace-0-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      5.16739,
+      2.73173,
+      -0.9106
+     ],
+     [
+      5.313,
+      2.89824,
+      -0.97421
+     ]
+    ],
+    "radius": 0.01584,
+    "sides": 3,
+    "samples": 2,
+    "longitudinal": 1,
+    "ring_every": 0
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.975,
+    "alpha": 0.95
+   },
+   "repeat": {
+    "count": 6,
+    "step": {
+     "at": [
+      0.3425,
+      0.0856,
+      0.02395
+     ]
+    }
+   }
+  },
+  {
+   "id": "sci-longeron-1",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      4.88488,
+      2.79124,
+      -1.00415
+     ],
+     [
+      7.11112,
+      3.34766,
+      -0.84848
+     ]
+    ],
+    "radius": 0.022,
+    "sides": 4,
+    "samples": 2,
+    "longitudinal": 1,
+    "ring_every": 0
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 1.198,
+    "alpha": 0.95
+   }
+  },
+  {
+   "id": "sci-brace-1-0",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      4.9705,
+      2.81264,
+      -0.99816
+     ],
+     [
+      5.13148,
+      2.85544,
+      -0.83932
+     ]
+    ],
+    "radius": 0.01584,
+    "sides": 3,
+    "samples": 2,
+    "longitudinal": 1,
+    "ring_every": 0
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.975,
+    "alpha": 0.95
+   },
+   "repeat": {
+    "count": 6,
+    "step": {
+     "at": [
+      0.3425,
+      0.0856,
+      0.02395
+     ]
+    }
+   }
+  },
+  {
+   "id": "sci-brace-1-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      5.14175,
+      2.85544,
+      -0.98619
+     ],
+     [
+      5.30273,
+      2.89824,
+      -0.82735
+     ]
+    ],
+    "radius": 0.01584,
+    "sides": 3,
+    "samples": 2,
+    "longitudinal": 1,
+    "ring_every": 0
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.975,
+    "alpha": 0.95
+   },
+   "repeat": {
+    "count": 6,
+    "step": {
+     "at": [
+      0.3425,
+      0.0856,
+      0.02395
+     ]
+    }
+   }
+  },
+  {
+   "id": "sci-longeron-2",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      4.87461,
+      2.79124,
+      -0.85728
+     ],
+     [
+      7.10085,
+      3.34766,
+      -0.70161
+     ]
+    ],
+    "radius": 0.022,
+    "sides": 4,
+    "samples": 2,
+    "longitudinal": 1,
+    "ring_every": 0
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 1.198,
+    "alpha": 0.95
+   }
+  },
+  {
+   "id": "sci-brace-2-0",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      4.96023,
+      2.81264,
+      -0.8513
+     ],
+     [
+      5.16739,
+      2.73173,
+      -0.9106
+     ]
+    ],
+    "radius": 0.01584,
+    "sides": 3,
+    "samples": 2,
+    "longitudinal": 1,
+    "ring_every": 0
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.975,
+    "alpha": 0.95
+   },
+   "repeat": {
+    "count": 6,
+    "step": {
+     "at": [
+      0.3425,
+      0.0856,
+      0.02395
+     ]
+    }
+   }
+  },
+  {
+   "id": "sci-brace-2-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      5.13148,
+      2.85544,
+      -0.83932
+     ],
+     [
+      5.33864,
+      2.77453,
+      -0.89863
+     ]
+    ],
+    "radius": 0.01584,
+    "sides": 3,
+    "samples": 2,
+    "longitudinal": 1,
+    "ring_every": 0
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.975,
+    "alpha": 0.95
+   },
+   "repeat": {
+    "count": 6,
+    "step": {
+     "at": [
+      0.3425,
+      0.0856,
+      0.02395
+     ]
+    }
+   }
+  },
+  {
+   "id": "sci-mount",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.18,
+     0.26,
+     0.26
+    ],
+    "ribs": 1
+   },
+   "at": [
+    4.87,
+    2.73,
+    -0.93
+   ],
+   "look": {
+    "weight": 0.88,
+    "alpha": 0.95
+   }
+  },
+  {
+   "id": "crs",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.26,
+     0.3,
+     0.24
+    ],
+    "ribs": 2
+   },
+   "at": [
+    5.42236,
+    3.04306,
+    -0.89277
+   ],
+   "basis": [
+    "scienceboom.length"
+   ],
+   "rotate": [
+    3.881,
+    0,
+    -75.9672
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.66,
+    "alpha": 0.715
+   }
+  },
+  {
+   "id": "crs-telescope",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.075,
+    "height": 0.22,
+    "segments": 12,
+    "ribs": 6
+   },
+   "at": [
+    5.42236,
+    3.22306,
+    -0.89277
+   ],
+   "rotate": [
+    3.881,
+    0,
+    -75.9672
+   ],
+   "look": {
+    "weight": 0.605,
+    "alpha": 0.65
+   }
+  },
+  {
+   "id": "lecp",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.2,
+     0.22,
+     0.2
+    ],
+    "ribs": 2
+   },
+   "at": [
+    5.85793,
+    2.82192,
+    -0.86232
+   ],
+   "rotate": [
+    3.881,
+    0,
+    -75.9672
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.66,
+    "alpha": 0.715
+   }
+  },
+  {
+   "id": "lecp-head",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.085,
+    "height": 0.13,
+    "segments": 12,
+    "ribs": 8
+   },
+   "at": [
+    5.85793,
+    2.69192,
+    -0.86232
+   ],
+   "rotate": [
+    3.881,
+    0,
+    -75.9672
+   ],
+   "look": {
+    "weight": 0.605,
+    "alpha": 0.715
+   }
+  },
+  {
+   "id": "pls",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.085,
+    "height": 0.22,
+    "segments": 12,
+    "ribs": 6,
+    "rings": 1
+   },
+   "at": [
+    6.26446,
+    3.29353,
+    -0.83389
+   ],
+   "rotate": [
+    3.881,
+    0,
+    -75.9672
+   ],
+   "look": {
+    "weight": 0.66,
+    "alpha": 0.78
+   }
+  },
+  {
+   "id": "pls-aperture",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "cone",
+    "radius_bottom": 0.085,
+    "radius_top": 0.115,
+    "height": 0.1,
+    "segments": 12
+   },
+   "at": [
+    6.37094,
+    3.32014,
+    -0.82644
+   ],
+   "rotate": [
+    3.881,
+    0,
+    -75.9672
+   ],
+   "look": {
+    "weight": 0.55,
+    "alpha": 0.585
+   }
+  },
+  {
+   "id": "scan-post",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.058,
+    "height": 0.18,
+    "segments": 14,
+    "ribs": 4
+   },
+   "at": [
+    7.13624,
+    3.32642,
+    -0.77433
+   ],
+   "look": {
+    "weight": 0.99,
+    "alpha": 0.95
+   }
+  },
+  {
+   "id": "scan-head",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.1,
+    "height": 0.075,
+    "segments": 16,
+    "ribs": 8
+   },
+   "at": [
+    7.13624,
+    3.48642,
+    -0.77433
+   ],
+   "look": {
+    "weight": 1.045,
+    "alpha": 0.95
+   },
+   "motion": {
+    "type": "swing",
+    "axis": [
+     0,
+     1,
+     0
+    ],
+    "degrees": 12,
+    "period": 47,
+    "pivot": [
+     7.13624,
+     3.34642,
+     -0.77433
+    ]
+   }
+  },
+  {
+   "id": "scan-bearing",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "torus",
+    "major": 0.115,
+    "minor": 0.014,
+    "segments": 20,
+    "sides": 5,
+    "rings": 0
+   },
+   "at": [
+    7.13624,
+    3.53142,
+    -0.77433
+   ],
+   "look": {
+    "weight": 0.935,
+    "alpha": 0.95
+   },
+   "motion": {
+    "type": "swing",
+    "axis": [
+     0,
+     1,
+     0
+    ],
+    "degrees": 12,
+    "period": 47,
+    "pivot": [
+     7.13624,
+     3.34642,
+     -0.77433
+    ]
+   }
+  },
+  {
+   "id": "scan-yoke",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.09,
+     0.2,
+     0.34
+    ],
+    "ribs": 1
+   },
+   "at": [
+    7.16624,
+    3.60642,
+    -0.77433
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.935,
+    "alpha": 0.806
+   },
+   "motion": {
+    "type": "swing",
+    "axis": [
+     0,
+     1,
+     0
+    ],
+    "degrees": 12,
+    "period": 47,
+    "pivot": [
+     7.13624,
+     3.34642,
+     -0.77433
+    ]
+   }
+  },
+  {
+   "id": "scan-plate",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.62,
+     0.045,
+     0.56
+    ],
+    "ribs": 3
+   },
+   "at": [
+    7.21624,
+    3.71142,
+    -0.77433
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.045,
+    "alpha": 0.884
+   },
+   "motion": {
+    "type": "swing",
+    "axis": [
+     0,
+     1,
+     0
+    ],
+    "degrees": 12,
+    "period": 47,
+    "pivot": [
+     7.13624,
+     3.34642,
+     -0.77433
+    ]
+   }
+  },
+  {
+   "id": "cam-narrow",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.072,
+    "height": 0.52,
+    "segments": 16,
+    "ribs": 6,
+    "rings": 2
+   },
+   "at": [
+    7.09624,
+    3.82642,
+    -0.60933
+   ],
+   "rotate": [
+    0,
+    0,
+    -96
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.54,
+    "glow": 0.3,
+    "alpha": 0.95
+   },
+   "motion": {
+    "type": "swing",
+    "axis": [
+     0,
+     1,
+     0
+    ],
+    "degrees": 12,
+    "period": 47,
+    "pivot": [
+     7.13624,
+     3.34642,
+     -0.77433
+    ]
+   }
+  },
+  {
+   "id": "cam-narrow-hood",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "cone",
+    "radius_bottom": 0.094,
+    "radius_top": 0.074,
+    "height": 0.16,
+    "segments": 16,
+    "ribs": 0
+   },
+   "at": [
+    7.33624,
+    3.80442,
+    -0.60933
+   ],
+   "rotate": [
+    0,
+    0,
+    -96
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.32,
+    "alpha": 0.95
+   },
+   "motion": {
+    "type": "swing",
+    "axis": [
+     0,
+     1,
+     0
+    ],
+    "degrees": 12,
+    "period": 47,
+    "pivot": [
+     7.13624,
+     3.34642,
+     -0.77433
+    ]
+   }
+  },
+  {
+   "id": "cam-wide",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.34,
+     0.26,
+     0.22
+    ],
+    "ribs": 2
+   },
+   "at": [
+    7.13624,
+    3.83642,
+    -0.80433
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.43,
+    "glow": 0.3,
+    "alpha": 0.95
+   },
+   "motion": {
+    "type": "swing",
+    "axis": [
+     0,
+     1,
+     0
+    ],
+    "degrees": 12,
+    "period": 47,
+    "pivot": [
+     7.13624,
+     3.34642,
+     -0.77433
+    ]
+   }
+  },
+  {
+   "id": "cam-wide-lens",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.078,
+    "height": 0.1,
+    "segments": 16,
+    "ribs": 4
+   },
+   "at": [
+    7.30624,
+    3.83142,
+    -0.80433
+   ],
+   "rotate": [
+    0,
+    0,
+    -96
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.32,
+    "alpha": 0.95
+   },
+   "motion": {
+    "type": "swing",
+    "axis": [
+     0,
+     1,
+     0
+    ],
+    "degrees": 12,
+    "period": 47,
+    "pivot": [
+     7.13624,
+     3.34642,
+     -0.77433
+    ]
+   }
+  },
+  {
+   "id": "cam-narrow-lens",
+   "role": "detail",
+   "certainty": "decorative",
+   "stage": 4,
+   "shape": {
+    "type": "torus",
+    "major": 0.062,
+    "minor": 0.009,
+    "segments": 20,
+    "sides": 4,
+    "rings": 0
+   },
+   "at": [
+    7.41124,
+    3.79642,
+    -0.60933
+   ],
+   "rotate": [
+    0,
+    0,
+    90
+   ],
+   "look": {
+    "glow": 0.5,
+    "weight": 1.1,
+    "alpha": 0.76
+   },
+   "motion": {
+    "type": "swing",
+    "axis": [
+     0,
+     1,
+     0
+    ],
+    "degrees": 12,
+    "period": 47,
+    "pivot": [
+     7.13624,
+     3.34642,
+     -0.77433
+    ]
+   }
+  },
+  {
+   "id": "cam-wide-lens-ring",
+   "role": "detail",
+   "certainty": "decorative",
+   "stage": 4,
+   "shape": {
+    "type": "torus",
+    "major": 0.07,
+    "minor": 0.009,
+    "segments": 20,
+    "sides": 4,
+    "rings": 0
+   },
+   "at": [
+    7.36124,
+    3.81642,
+    -0.80433
+   ],
+   "rotate": [
+    0,
+    0,
+    90
+   ],
+   "look": {
+    "glow": 0.5,
+    "weight": 1.1,
+    "alpha": 0.76
+   },
+   "motion": {
+    "type": "swing",
+    "axis": [
+     0,
+     1,
+     0
+    ],
+    "degrees": 12,
+    "period": 47,
+    "pivot": [
+     7.13624,
+     3.34642,
+     -0.77433
+    ]
+   }
+  },
+  {
+   "id": "iris",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.1,
+    "height": 0.3,
+    "segments": 16,
+    "ribs": 8,
+    "rings": 2
+   },
+   "at": [
+    7.15624,
+    3.55142,
+    -0.97433
+   ],
+   "rotate": [
+    0,
+    0,
+    -88
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.375,
+    "alpha": 0.95
+   },
+   "motion": {
+    "type": "swing",
+    "axis": [
+     0,
+     1,
+     0
+    ],
+    "degrees": 12,
+    "period": 47,
+    "pivot": [
+     7.13624,
+     3.34642,
+     -0.77433
+    ]
+   }
+  },
+  {
+   "id": "iris-baffle",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "cone",
+    "radius_bottom": 0.1,
+    "radius_top": 0.15,
+    "height": 0.12,
+    "segments": 16,
+    "ribs": 0
+   },
+   "at": [
+    7.28624,
+    3.55842,
+    -0.97433
+   ],
+   "rotate": [
+    0,
+    0,
+    -88
+   ],
+   "look": {
+    "weight": 0.825,
+    "alpha": 0.78
+   },
+   "motion": {
+    "type": "swing",
+    "axis": [
+     0,
+     1,
+     0
+    ],
+    "degrees": 12,
+    "period": 47,
+    "pivot": [
+     7.13624,
+     3.34642,
+     -0.77433
+    ]
+   }
+  },
+  {
+   "id": "iris-ring",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "torus",
+    "major": 0.128,
+    "minor": 0.008,
+    "segments": 20,
+    "sides": 4,
+    "rings": 0
+   },
+   "at": [
+    7.37124,
+    3.56142,
+    -0.97433
+   ],
+   "rotate": [
+    0,
+    0,
+    90
+   ],
+   "look": {
+    "weight": 0.66,
+    "alpha": 0.715
+   },
+   "motion": {
+    "type": "swing",
+    "axis": [
+     0,
+     1,
+     0
+    ],
+    "degrees": 12,
+    "period": 47,
+    "pivot": [
+     7.13624,
+     3.34642,
+     -0.77433
+    ]
+   }
+  },
+  {
+   "id": "pps",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.048,
+    "height": 0.22,
+    "segments": 12,
+    "ribs": 4
+   },
+   "at": [
+    7.15624,
+    3.77642,
+    -0.50933
+   ],
+   "rotate": [
+    0,
+    0,
+    -88
+   ],
+   "look": {
+    "weight": 0.77,
+    "alpha": 0.78
+   },
+   "motion": {
+    "type": "swing",
+    "axis": [
+     0,
+     1,
+     0
+    ],
+    "degrees": 12,
+    "period": 47,
+    "pivot": [
+     7.13624,
+     3.34642,
+     -0.77433
+    ]
+   }
+  },
+  {
+   "id": "uvs",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.17,
+     0.18,
+     0.15
+    ],
+    "ribs": 2
+   },
+   "at": [
+    6.87624,
+    3.78642,
+    -0.67433
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.88,
+    "alpha": 0.78
+   },
+   "motion": {
+    "type": "swing",
+    "axis": [
+     0,
+     1,
+     0
+    ],
+    "degrees": 12,
+    "period": 47,
+    "pivot": [
+     7.13624,
+     3.34642,
+     -0.77433
+    ]
+   }
+  },
+  {
+   "id": "uvs-aperture",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "torus",
+    "major": 0.055,
+    "minor": 0.009,
+    "segments": 16,
+    "sides": 4,
+    "rings": 0
+   },
+   "at": [
+    6.79124,
+    3.78642,
+    -0.67433
+   ],
+   "rotate": [
+    0,
+    0,
+    90
+   ],
+   "look": {
+    "weight": 0.66,
+    "alpha": 0.65
+   },
+   "motion": {
+    "type": "swing",
+    "axis": [
+     0,
+     1,
+     0
+    ],
+    "degrees": 12,
+    "period": 47,
+    "pivot": [
+     7.13624,
+     3.34642,
+     -0.77433
+    ]
+   }
+  },
+  {
+   "id": "rtgb-longeron-0",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      3.51153,
+      2.56782,
+      -1.12416
+     ],
+     [
+      1.22924,
+      1.01327,
+      -1.44492
+     ]
+    ],
+    "radius": 0.026,
+    "sides": 4,
+    "samples": 2,
+    "longitudinal": 1,
+    "ring_every": 0
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 1.132,
+    "alpha": 0.95
+   }
+  },
+  {
+   "id": "rtgb-brace-0-0",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      3.38474,
+      2.48146,
+      -1.14198
+     ],
+     [
+      3.05981,
+      2.402,
+      -1.12206
+     ]
+    ],
+    "radius": 0.018719999999999997,
+    "sides": 3,
+    "samples": 2,
+    "longitudinal": 1,
+    "ring_every": 0
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.886,
+    "alpha": 0.95
+   },
+   "repeat": {
+    "count": 4,
+    "step": {
+     "at": [
+      -0.50718,
+      -0.34546,
+      -0.07128
+     ]
+    }
+   }
+  },
+  {
+   "id": "rtgb-brace-0-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      3.13115,
+      2.30873,
+      -1.17762
+     ],
+     [
+      2.80622,
+      2.22927,
+      -1.1577
+     ]
+    ],
+    "radius": 0.018719999999999997,
+    "sides": 3,
+    "samples": 2,
+    "longitudinal": 1,
+    "ring_every": 0
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.886,
+    "alpha": 0.95
+   },
+   "repeat": {
+    "count": 4,
+    "step": {
+     "at": [
+      -0.50718,
+      -0.34546,
+      -0.07128
+     ]
+    }
+   }
+  },
+  {
+   "id": "rtgb-longeron-1",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      3.44019,
+      2.66109,
+      -1.0686
+     ],
+     [
+      1.1579,
+      1.10653,
+      -1.38935
+     ]
+    ],
+    "radius": 0.026,
+    "sides": 4,
+    "samples": 2,
+    "longitudinal": 1,
+    "ring_every": 0
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 1.132,
+    "alpha": 0.95
+   }
+  },
+  {
+   "id": "rtgb-brace-1-0",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      3.3134,
+      2.57472,
+      -1.08642
+     ],
+     [
+      3.07789,
+      2.402,
+      -1.2507
+     ]
+    ],
+    "radius": 0.018719999999999997,
+    "sides": 3,
+    "samples": 2,
+    "longitudinal": 1,
+    "ring_every": 0
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.886,
+    "alpha": 0.95
+   },
+   "repeat": {
+    "count": 4,
+    "step": {
+     "at": [
+      -0.50718,
+      -0.34546,
+      -0.07128
+     ]
+    }
+   }
+  },
+  {
+   "id": "rtgb-brace-1-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      3.05981,
+      2.402,
+      -1.12206
+     ],
+     [
+      2.8243,
+      2.22927,
+      -1.28634
+     ]
+    ],
+    "radius": 0.018719999999999997,
+    "sides": 3,
+    "samples": 2,
+    "longitudinal": 1,
+    "ring_every": 0
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.886,
+    "alpha": 0.95
+   },
+   "repeat": {
+    "count": 4,
+    "step": {
+     "at": [
+      -0.50718,
+      -0.34546,
+      -0.07128
+     ]
+    }
+   }
+  },
+  {
+   "id": "rtgb-longeron-2",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      3.45827,
+      2.66109,
+      -1.19724
+     ],
+     [
+      1.17598,
+      1.10653,
+      -1.51799
+     ]
+    ],
+    "radius": 0.026,
+    "sides": 4,
+    "samples": 2,
+    "longitudinal": 1,
+    "ring_every": 0
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 1.132,
+    "alpha": 0.95
+   }
+  },
+  {
+   "id": "rtgb-brace-2-0",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      3.33148,
+      2.57472,
+      -1.21506
+     ],
+     [
+      3.13115,
+      2.30873,
+      -1.17762
+     ]
+    ],
+    "radius": 0.018719999999999997,
+    "sides": 3,
+    "samples": 2,
+    "longitudinal": 1,
+    "ring_every": 0
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.886,
+    "alpha": 0.95
+   },
+   "repeat": {
+    "count": 4,
+    "step": {
+     "at": [
+      -0.50718,
+      -0.34546,
+      -0.07128
+     ]
+    }
+   }
+  },
+  {
+   "id": "rtgb-brace-2-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      3.07789,
+      2.402,
+      -1.2507
+     ],
+     [
+      2.87756,
+      2.136,
+      -1.21326
+     ]
+    ],
+    "radius": 0.018719999999999997,
+    "sides": 3,
+    "samples": 2,
+    "longitudinal": 1,
+    "ring_every": 0
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.886,
+    "alpha": 0.95
+   },
+   "repeat": {
+    "count": 4,
+    "step": {
+     "at": [
+      -0.50718,
+      -0.34546,
+      -0.07128
+     ]
+    }
+   }
+  },
+  {
+   "id": "rtg-outrigger-0",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      3.59,
+      2.5,
+      -0.865
+     ],
+     [
+      3.01847,
+      2.32244,
+      -1.19346
+     ]
+    ],
+    "radius": 0.024,
+    "sides": 4,
+    "samples": 2,
+    "longitudinal": 1,
+    "ring_every": 0
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.825,
+    "alpha": 0.95
+   }
+  },
+  {
+   "id": "rtg-outrigger-1",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      3.59,
+      2.5,
+      -1.195
+     ],
+     [
+      3.01847,
+      2.32244,
+      -1.19346
+     ]
+    ],
+    "radius": 0.024,
+    "sides": 4,
+    "samples": 2,
+    "longitudinal": 1,
+    "ring_every": 0
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.825,
+    "alpha": 0.95
+   }
+  },
+  {
+   "id": "rtg-spine",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.06,
+     0.06,
+     0.06
+    ]
+   },
+   "at": [
+    3.47,
+    2.63,
+    -1.13
+   ],
+   "look": {
+    "weight": 0.77,
+    "alpha": 0.95
+   }
+  },
+  {
+   "id": "rtg-1",
+   "role": "identity",
+   "certainty": "verified",
+   "stage": 5,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.203,
+    "height": 0.508,
+    "segments": 18,
+    "ribs": 8,
+    "rings": 3
+   },
+   "at": [
+    2.84114,
+    2.20166,
+    -1.21838
+   ],
+   "basis": [
+    "rtg.diameter",
+    "rtg.length"
+   ],
+   "source": "nasa-helio",
+   "rotate": [
+    -6.6255,
+    0,
+    124.2602
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.265,
+    "glow": 0.35,
+    "alpha": 0.95
+   }
+  },
+  {
+   "id": "rtg-1-fins",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.252,
+    "height": 0.5,
+    "segments": 8,
+    "ribs": 8,
+    "rings": 0
+   },
+   "at": [
+    2.83785,
+    2.19942,
+    -1.21884
+   ],
+   "rotate": [
+    -6.6255,
+    0,
+    124.2602
+   ],
+   "look": {
+    "fill": "none",
+    "weight": 1.045,
+    "alpha": 0.936,
+    "glow": 0.2
+   }
+  },
+  {
+   "id": "rtg-1-fin-a",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.245,
+    "height": 0.022,
+    "segments": 18,
+    "ribs": 8
+   },
+   "at": [
+    2.84114,
+    2.20166,
+    -1.21838
+   ],
+   "rotate": [
+    -6.6255,
+    0,
+    124.2602
+   ],
+   "look": {
+    "weight": 0.605,
+    "alpha": 0.65
+   }
+  },
+  {
+   "id": "rtg-1-fin-b",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.245,
+    "height": 0.022,
+    "segments": 18,
+    "ribs": 8
+   },
+   "at": [
+    2.42408,
+    1.91759,
+    -1.27699
+   ],
+   "rotate": [
+    -6.6255,
+    0,
+    124.2602
+   ],
+   "look": {
+    "weight": 0.605,
+    "alpha": 0.65
+   }
+  },
+  {
+   "id": "rtg-1-band",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "torus",
+    "major": 0.205,
+    "minor": 0.012,
+    "segments": 18,
+    "sides": 4,
+    "rings": 0
+   },
+   "at": [
+    2.63261,
+    2.05962,
+    -1.24769
+   ],
+   "rotate": [
+    -6.6255,
+    0,
+    124.2602
+   ],
+   "look": {
+    "weight": 0.55,
+    "alpha": 0.585
+   }
+  },
+  {
+   "id": "rtg-2",
+   "role": "identity",
+   "certainty": "verified",
+   "stage": 5,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.203,
+    "height": 0.508,
+    "segments": 18,
+    "ribs": 8,
+    "rings": 3
+   },
+   "at": [
+    2.39371,
+    1.8969,
+    -1.28126
+   ],
+   "basis": [
+    "rtg.diameter",
+    "rtg.length"
+   ],
+   "source": "nasa-helio",
+   "rotate": [
+    -6.6255,
+    0,
+    124.2602
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.265,
+    "glow": 0.35,
+    "alpha": 0.95
+   }
+  },
+  {
+   "id": "rtg-2-fins",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.252,
+    "height": 0.5,
+    "segments": 8,
+    "ribs": 8,
+    "rings": 0
+   },
+   "at": [
+    2.39043,
+    1.89466,
+    -1.28172
+   ],
+   "rotate": [
+    -6.6255,
+    0,
+    124.2602
+   ],
+   "look": {
+    "fill": "none",
+    "weight": 1.045,
+    "alpha": 0.936,
+    "glow": 0.2
+   }
+  },
+  {
+   "id": "rtg-2-fin-a",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.245,
+    "height": 0.022,
+    "segments": 18,
+    "ribs": 8
+   },
+   "at": [
+    2.39371,
+    1.8969,
+    -1.28126
+   ],
+   "rotate": [
+    -6.6255,
+    0,
+    124.2602
+   ],
+   "look": {
+    "weight": 0.605,
+    "alpha": 0.65
+   }
+  },
+  {
+   "id": "rtg-2-fin-b",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.245,
+    "height": 0.022,
+    "segments": 18,
+    "ribs": 8
+   },
+   "at": [
+    1.97666,
+    1.61283,
+    -1.33988
+   ],
+   "rotate": [
+    -6.6255,
+    0,
+    124.2602
+   ],
+   "look": {
+    "weight": 0.605,
+    "alpha": 0.65
+   }
+  },
+  {
+   "id": "rtg-2-band",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "torus",
+    "major": 0.205,
+    "minor": 0.012,
+    "segments": 18,
+    "sides": 4,
+    "rings": 0
+   },
+   "at": [
+    2.18518,
+    1.75486,
+    -1.31057
+   ],
+   "rotate": [
+    -6.6255,
+    0,
+    124.2602
+   ],
+   "look": {
+    "weight": 0.55,
+    "alpha": 0.585
+   }
+  },
+  {
+   "id": "rtg-3",
+   "role": "identity",
+   "certainty": "verified",
+   "stage": 5,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.203,
+    "height": 0.508,
+    "segments": 18,
+    "ribs": 8,
+    "rings": 3
+   },
+   "at": [
+    1.94628,
+    1.59214,
+    -1.34414
+   ],
+   "basis": [
+    "rtg.diameter",
+    "rtg.length"
+   ],
+   "source": "nasa-helio",
+   "rotate": [
+    -6.6255,
+    0,
+    124.2602
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.265,
+    "glow": 0.35,
+    "alpha": 0.95
+   }
+  },
+  {
+   "id": "rtg-3-fins",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.252,
+    "height": 0.5,
+    "segments": 8,
+    "ribs": 8,
+    "rings": 0
+   },
+   "at": [
+    1.943,
+    1.5899,
+    -1.34461
+   ],
+   "rotate": [
+    -6.6255,
+    0,
+    124.2602
+   ],
+   "look": {
+    "fill": "none",
+    "weight": 1.045,
+    "alpha": 0.936,
+    "glow": 0.2
+   }
+  },
+  {
+   "id": "rtg-3-fin-a",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.245,
+    "height": 0.022,
+    "segments": 18,
+    "ribs": 8
+   },
+   "at": [
+    1.94628,
+    1.59214,
+    -1.34414
+   ],
+   "rotate": [
+    -6.6255,
+    0,
+    124.2602
+   ],
+   "look": {
+    "weight": 0.605,
+    "alpha": 0.65
+   }
+  },
+  {
+   "id": "rtg-3-fin-b",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.245,
+    "height": 0.022,
+    "segments": 18,
+    "ribs": 8
+   },
+   "at": [
+    1.52923,
+    1.30807,
+    -1.40276
+   ],
+   "rotate": [
+    -6.6255,
+    0,
+    124.2602
+   ],
+   "look": {
+    "weight": 0.605,
+    "alpha": 0.65
+   }
+  },
+  {
+   "id": "rtg-3-band",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "torus",
+    "major": 0.205,
+    "minor": 0.012,
+    "segments": 18,
+    "sides": 4,
+    "rings": 0
+   },
+   "at": [
+    1.73775,
+    1.4501,
+    -1.37345
+   ],
+   "rotate": [
+    -6.6255,
+    0,
+    124.2602
+   ],
+   "look": {
+    "weight": 0.55,
+    "alpha": 0.585
+   }
+  },
+  {
+   "id": "rtg-tip",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.1,
+     0.1,
+     0.1
+    ],
+    "ribs": 1
+   },
+   "at": [
+    1.22054,
+    1.09781,
+    -1.44614
+   ],
+   "look": {
+    "weight": 0.825,
+    "alpha": 0.95
+   }
+  },
+  {
+   "id": "mag-canister",
+   "role": "structure",
+   "certainty": "verified",
+   "stage": 6,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.115,
+    "height": 0.66,
+    "segments": 16,
+    "ribs": 8,
+    "rings": 2
+   },
+   "at": [
+    3.99601,
+    2.73185,
+    -2.19679
+   ],
+   "basis": [
+    "magboom.canister"
+   ],
+   "source": "pds-vg1",
+   "rotate": [
+    29.6786,
+    0,
+    99.2177
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.88,
+    "alpha": 0.78
+   }
+  },
+  {
+   "id": "mag-canister-ring",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "torus",
+    "major": 0.118,
+    "minor": 0.014,
+    "segments": 20,
+    "sides": 4,
+    "rings": 0
+   },
+   "at": [
+    3.43,
+    2.64,
+    -1.87
+   ],
+   "rotate": [
+    29.6786,
+    0,
+    99.2177
+   ],
+   "look": {
+    "weight": 0.66,
+    "alpha": 0.65
+   }
+  },
+  {
+   "id": "mag-longeron-0",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      3.43904,
+      2.56573,
+      -1.87522
+     ],
+     [
+      -7.70973,
+      0.75648,
+      4.56152
+     ]
+    ],
+    "radius": 0.02,
+    "sides": 4,
+    "samples": 2,
+    "longitudinal": 1,
+    "ring_every": 0
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 1.065,
+    "alpha": 0.95
+   }
+  },
+  {
+   "id": "mag-brace-0-0",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      3.3094,
+      2.54469,
+      -1.80037
+     ],
+     [
+      3.06905,
+      2.61402,
+      -1.5866
+     ]
+    ],
+    "radius": 0.0144,
+    "sides": 3,
+    "samples": 2,
+    "longitudinal": 1,
+    "ring_every": 0
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.796,
+    "alpha": 0.95
+   },
+   "repeat": {
+    "count": 21,
+    "step": {
+     "at": [
+      -0.51855,
+      -0.08415,
+      0.29938
+     ]
+    }
+   }
+  },
+  {
+   "id": "mag-brace-0-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      3.05013,
+      2.50262,
+      -1.65068
+     ],
+     [
+      2.80977,
+      2.57195,
+      -1.43691
+     ]
+    ],
+    "radius": 0.0144,
+    "sides": 3,
+    "samples": 2,
+    "longitudinal": 1,
+    "ring_every": 0
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.796,
+    "alpha": 0.95
+   },
+   "repeat": {
+    "count": 21,
+    "step": {
+     "at": [
+      -0.51855,
+      -0.08415,
+      0.29938
+     ]
+    }
+   }
+  },
+  {
+   "id": "mag-longeron-1",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      3.45796,
+      2.67714,
+      -1.81114
+     ],
+     [
+      -7.69081,
+      0.86788,
+      4.6256
+     ]
+    ],
+    "radius": 0.02,
+    "sides": 4,
+    "samples": 2,
+    "longitudinal": 1,
+    "ring_every": 0
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 1.065,
+    "alpha": 0.95
+   }
+  },
+  {
+   "id": "mag-brace-1-0",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      3.32832,
+      2.6561,
+      -1.73629
+     ],
+     [
+      3.00409,
+      2.61402,
+      -1.6991
+     ]
+    ],
+    "radius": 0.0144,
+    "sides": 3,
+    "samples": 2,
+    "longitudinal": 1,
+    "ring_every": 0
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.796,
+    "alpha": 0.95
+   },
+   "repeat": {
+    "count": 21,
+    "step": {
+     "at": [
+      -0.51855,
+      -0.08415,
+      0.29938
+     ]
+    }
+   }
+  },
+  {
+   "id": "mag-brace-1-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      3.06905,
+      2.61402,
+      -1.5866
+     ],
+     [
+      2.74482,
+      2.57195,
+      -1.54941
+     ]
+    ],
+    "radius": 0.0144,
+    "sides": 3,
+    "samples": 2,
+    "longitudinal": 1,
+    "ring_every": 0
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.796,
+    "alpha": 0.95
+   },
+   "repeat": {
+    "count": 21,
+    "step": {
+     "at": [
+      -0.51855,
+      -0.08415,
+      0.29938
+     ]
+    }
+   }
+  },
+  {
+   "id": "mag-longeron-2",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      3.393,
+      2.67714,
+      -1.92364
+     ],
+     [
+      -7.75576,
+      0.86788,
+      4.5131
+     ]
+    ],
+    "radius": 0.02,
+    "sides": 4,
+    "samples": 2,
+    "longitudinal": 1,
+    "ring_every": 0
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 1.065,
+    "alpha": 0.95
+   }
+  },
+  {
+   "id": "mag-brace-2-0",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      3.26337,
+      2.6561,
+      -1.84879
+     ],
+     [
+      3.05013,
+      2.50262,
+      -1.65068
+     ]
+    ],
+    "radius": 0.0144,
+    "sides": 3,
+    "samples": 2,
+    "longitudinal": 1,
+    "ring_every": 0
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.796,
+    "alpha": 0.95
+   },
+   "repeat": {
+    "count": 21,
+    "step": {
+     "at": [
+      -0.51855,
+      -0.08415,
+      0.29938
+     ]
+    }
+   }
+  },
+  {
+   "id": "mag-brace-2-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      3.00409,
+      2.61402,
+      -1.6991
+     ],
+     [
+      2.79086,
+      2.46054,
+      -1.50099
+     ]
+    ],
+    "radius": 0.0144,
+    "sides": 3,
+    "samples": 2,
+    "longitudinal": 1,
+    "ring_every": 0
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.796,
+    "alpha": 0.95
+   },
+   "repeat": {
+    "count": 21,
+    "step": {
+     "at": [
+      -0.51855,
+      -0.08415,
+      0.29938
+     ]
+    }
+   }
+  },
+  {
+   "id": "mag-sensor-end",
+   "role": "identity",
+   "certainty": "verified",
+   "stage": 6,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.1,
+    "height": 0.3,
+    "segments": 12,
+    "ribs": 6
+   },
+   "at": [
+    -7.71876,
+    0.83075,
+    4.56674
+   ],
+   "basis": [
+    "magboom.length"
+   ],
+   "source": "pds-vg1",
+   "rotate": [
+    29.6786,
+    0,
+    99.2177
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.21,
+    "glow": 0.4,
+    "alpha": 0.95
+   }
+  },
+  {
+   "id": "mag-sensor-mid",
+   "role": "identity",
+   "certainty": "verified",
+   "stage": 6,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.085,
+    "height": 0.26,
+    "segments": 12,
+    "ribs": 6
+   },
+   "at": [
+    -5.03449,
+    1.26636,
+    3.01697
+   ],
+   "basis": [
+    "magboom.length"
+   ],
+   "source": "pds-vg1",
+   "rotate": [
+    29.6786,
+    0,
+    99.2177
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.1,
+    "glow": 0.35,
+    "alpha": 0.95
+   }
+  },
+  {
+   "id": "mag-high-field",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.13,
+     0.13,
+     0.24
+    ],
+    "ribs": 2
+   },
+   "at": [
+    2.65816,
+    2.67474,
+    -1.42438
+   ],
+   "rotate": [
+    29.6786,
+    0,
+    99.2177
+   ],
+   "look": {
+    "weight": 0.88,
+    "alpha": 0.95
+   }
+  },
+  {
+   "id": "mag-sensor-bracket",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.16,
+     0.1,
+     0.16
+    ],
+    "ribs": 1
+   },
+   "at": [
+    -5.03449,
+    1.13636,
+    3.01697
+   ],
+   "rotate": [
+    29.6786,
+    0,
+    99.2177
+   ],
+   "look": {
+    "weight": 0.825,
+    "alpha": 0.78
+   }
+  },
+  {
+   "id": "mag-loom",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      2.91544,
+      2.6565,
+      -1.48292
+     ],
+     [
+      -0.85799,
+      2.04413,
+      0.69567
+     ],
+     [
+      -7.54725,
+      0.95858,
+      4.55772
+     ]
+    ],
+    "radius": 0.012,
+    "sides": 3,
+    "samples": 2,
+    "longitudinal": 1,
+    "ring_every": 0
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.495,
+    "alpha": 0.455
+   }
+  },
+  {
+   "id": "mag-sensor-strut",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.014,
+    "height": 0.14,
+    "segments": 6
+   },
+   "at": [
+    -7.73876,
+    0.73075,
+    4.53674
+   ],
+   "rotate": [
+    29.6786,
+    0,
+    99.2177
+   ],
+   "look": {
+    "weight": 0.55,
+    "alpha": 0.585
+   }
+  },
+  {
+   "id": "record-plate",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 7,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.37,
+     0.37,
+     0.035
+    ],
+    "ribs": 1
+   },
+   "at": [
+    4.17,
+    2.655,
+    -0.145
+   ],
+   "look": {
+    "weight": 0.935,
+    "alpha": 0.806
+   }
+  },
+  {
+   "id": "record-jacket",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 7,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.176,
+    "height": 0.022,
+    "segments": 40,
+    "ribs": 12
+   },
+   "at": [
+    4.17,
+    2.655,
+    -0.136
+   ],
+   "rotate": [
+    90,
+    0,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.825,
+    "alpha": 0.78
+   }
+  },
+  {
+   "id": "golden-record",
+   "role": "identity",
+   "certainty": "verified",
+   "stage": 7,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.1524,
+    "height": 0.008,
+    "segments": 48,
+    "ribs": 24
+   },
+   "at": [
+    4.17,
+    2.655,
+    -0.114
+   ],
+   "basis": [
+    "record.diameter"
+   ],
+   "source": "jpl-pia14113",
+   "rotate": [
+    90,
+    0,
+    0
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 1.65,
+    "glow": 0.75,
+    "alpha": 0.95
+   }
+  },
+  {
+   "id": "record-groove-0",
+   "role": "detail",
+   "certainty": "decorative",
+   "stage": 7,
+   "shape": {
+    "type": "torus",
+    "major": 0.058,
+    "minor": 0.0022,
+    "segments": 44,
+    "sides": 3,
+    "rings": 0
+   },
+   "at": [
+    4.17,
+    2.655,
+    -0.1055
+   ],
+   "rotate": [
+    90,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.44,
+    "alpha": 0.354
+   }
+  },
+  {
+   "id": "record-groove-1",
+   "role": "detail",
+   "certainty": "decorative",
+   "stage": 7,
+   "shape": {
+    "type": "torus",
+    "major": 0.078,
+    "minor": 0.0022,
+    "segments": 44,
+    "sides": 3,
+    "rings": 0
+   },
+   "at": [
+    4.17,
+    2.655,
+    -0.1055
+   ],
+   "rotate": [
+    90,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.44,
+    "alpha": 0.354
+   }
+  },
+  {
+   "id": "record-groove-2",
+   "role": "detail",
+   "certainty": "decorative",
+   "stage": 7,
+   "shape": {
+    "type": "torus",
+    "major": 0.096,
+    "minor": 0.0022,
+    "segments": 44,
+    "sides": 3,
+    "rings": 0
+   },
+   "at": [
+    4.17,
+    2.655,
+    -0.1055
+   ],
+   "rotate": [
+    90,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.44,
+    "alpha": 0.354
+   }
+  },
+  {
+   "id": "record-groove-3",
+   "role": "detail",
+   "certainty": "decorative",
+   "stage": 7,
+   "shape": {
+    "type": "torus",
+    "major": 0.114,
+    "minor": 0.0022,
+    "segments": 44,
+    "sides": 3,
+    "rings": 0
+   },
+   "at": [
+    4.17,
+    2.655,
+    -0.1055
+   ],
+   "rotate": [
+    90,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.44,
+    "alpha": 0.354
+   }
+  },
+  {
+   "id": "record-groove-4",
+   "role": "detail",
+   "certainty": "decorative",
+   "stage": 7,
+   "shape": {
+    "type": "torus",
+    "major": 0.132,
+    "minor": 0.0022,
+    "segments": 44,
+    "sides": 3,
+    "rings": 0
+   },
+   "at": [
+    4.17,
+    2.655,
+    -0.1055
+   ],
+   "rotate": [
+    90,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.44,
+    "alpha": 0.354
+   }
+  },
+  {
+   "id": "record-groove-5",
+   "role": "detail",
+   "certainty": "decorative",
+   "stage": 7,
+   "shape": {
+    "type": "torus",
+    "major": 0.147,
+    "minor": 0.0022,
+    "segments": 44,
+    "sides": 3,
+    "rings": 0
+   },
+   "at": [
+    4.17,
+    2.655,
+    -0.1055
+   ],
+   "rotate": [
+    90,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.44,
+    "alpha": 0.354
+   }
+  },
+  {
+   "id": "record-label",
+   "role": "detail",
+   "certainty": "decorative",
+   "stage": 7,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.05,
+    "height": 0.003,
+    "segments": 32,
+    "ribs": 8
+   },
+   "at": [
+    4.17,
+    2.655,
+    -0.1055
+   ],
+   "rotate": [
+    90,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.66,
+    "glow": 0.3,
+    "alpha": 0.76
+   }
+  },
+  {
+   "id": "record-edge",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 7,
+   "shape": {
+    "type": "torus",
+    "major": 0.1524,
+    "minor": 0.006,
+    "segments": 44,
+    "sides": 4,
+    "rings": 0
+   },
+   "at": [
+    4.17,
+    2.655,
+    -0.1075
+   ],
+   "rotate": [
+    90,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 1.1,
+    "glow": 0.4,
+    "alpha": 0.95
+   }
+  },
+  {
+   "id": "record-etch",
+   "role": "detail",
+   "certainty": "decorative",
+   "stage": 7,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.052,
+     0.006,
+     0.002
+    ]
+   },
+   "at": [
+    4.17,
+    2.722,
+    -0.105
+   ],
+   "look": {
+    "weight": 0.495,
+    "alpha": 0.468
+   },
+   "repeat": {
+    "count": 9,
+    "radial": {
+     "axis": "z",
+     "center": [
+      4.17,
+      2.655,
+      -0.105
+     ],
+     "span": 96
+    }
+   }
+  },
+  {
+   "id": "record-clamp",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 7,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.045,
+     0.075,
+     0.03
+    ]
+   },
+   "at": [
+    4.17,
+    2.828,
+    -0.111
+   ],
+   "look": {
+    "weight": 0.605,
+    "alpha": 0.715
+   },
+   "repeat": {
+    "count": 3,
+    "radial": {
+     "axis": "z",
+     "center": [
+      4.17,
+      2.655,
+      -0.109
+     ],
+     "span": 360
+    }
+   }
+  },
+  {
+   "id": "whip-a",
+   "role": "detail",
+   "certainty": "verified",
+   "stage": 7,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      3.31,
+      2.58,
+      -0.73
+     ],
+     [
+      -6.15658,
+      0.84352,
+      -3.4445
+     ]
+    ],
+    "radius": [
+     0.026,
+     0.012
+    ],
+    "sides": 4,
+    "samples": 2,
+    "longitudinal": 1,
+    "ring_every": 0
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "whip.length"
+   ],
+   "source": "nasa-helio",
+   "look": {
+    "weight": 0.88,
+    "alpha": 0.91
+   }
+  },
+  {
+   "id": "whip-b",
+   "role": "detail",
+   "certainty": "verified",
+   "stage": 7,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      3.61,
+      2.56,
+      -1.89
+     ],
+     [
+      -5.80801,
+      1.16827,
+      1.1701
+     ]
+    ],
+    "radius": [
+     0.026,
+     0.012
+    ],
+    "sides": 4,
+    "samples": 2,
+    "longitudinal": 1,
+    "ring_every": 0
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "whip.length"
+   ],
+   "source": "nasa-helio",
+   "look": {
+    "weight": 0.88,
+    "alpha": 0.91
+   }
+  },
+  {
+   "id": "cal-target",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 7,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.52,
+     0.02,
+     0.52
+    ],
+    "ribs": 3
+   },
+   "at": [
+    4.52,
+    3.02,
+    -0.41
+   ],
+   "rotate": [
+    42,
+    -18,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.77,
+    "alpha": 0.715
+   }
+  },
+  {
+   "id": "cal-target-arm",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 7,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.05,
+     0.3,
+     0.05
+    ]
+   },
+   "at": [
+    4.49,
+    2.88,
+    -0.48
+   ],
+   "rotate": [
+    12,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.66,
+    "alpha": 0.95
+   }
+  },
+  {
+   "id": "mm-shield",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 7,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.42,
+     0.015,
+     0.22
+    ]
+   },
+   "at": [
+    4.17,
+    2.945,
+    -0.23
+   ],
+   "rotate": [
+    24,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.55,
+    "alpha": 0.455
+   },
+   "repeat": {
+    "count": 5,
+    "radial": {
+     "axis": "y",
+     "center": [
+      4.17,
+      2.66,
+      -1.03
+     ],
+     "span": 360
+    }
+   }
+  },
+  {
+   "id": "blanket-seam-0",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 7,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      5.06875,
+      2.5,
+      -0.73798
+     ],
+     [
+      5.012,
+      2.5,
+      -0.60098
+     ],
+     [
+      4.93452,
+      2.5,
+      -0.47454
+     ],
+     [
+      4.83822,
+      2.5,
+      -0.36178
+     ],
+     [
+      4.72546,
+      2.5,
+      -0.26548
+     ],
+     [
+      4.59902,
+      2.5,
+      -0.188
+     ],
+     [
+      4.46202,
+      2.5,
+      -0.13125
+     ],
+     [
+      4.31783,
+      2.5,
+      -0.09663
+     ],
+     [
+      4.17,
+      2.5,
+      -0.085
+     ],
+     [
+      4.02217,
+      2.5,
+      -0.09663
+     ],
+     [
+      3.87798,
+      2.5,
+      -0.13125
+     ],
+     [
+      3.74098,
+      2.5,
+      -0.188
+     ],
+     [
+      3.61454,
+      2.5,
+      -0.26548
+     ],
+     [
+      3.50178,
+      2.5,
+      -0.36178
+     ],
+     [
+      3.40548,
+      2.5,
+      -0.47454
+     ],
+     [
+      3.328,
+      2.5,
+      -0.60098
+     ],
+     [
+      3.27125,
+      2.5,
+      -0.73798
+     ],
+     [
+      3.23663,
+      2.5,
+      -0.88217
+     ],
+     [
+      3.225,
+      2.5,
+      -1.03
+     ],
+     [
+      3.23663,
+      2.5,
+      -1.17783
+     ],
+     [
+      3.27125,
+      2.5,
+      -1.32202
+     ],
+     [
+      3.328,
+      2.5,
+      -1.45902
+     ],
+     [
+      3.40548,
+      2.5,
+      -1.58546
+     ],
+     [
+      3.50178,
+      2.5,
+      -1.69822
+     ],
+     [
+      3.61454,
+      2.5,
+      -1.79452
+     ],
+     [
+      3.74098,
+      2.5,
+      -1.872
+     ],
+     [
+      3.87798,
+      2.5,
+      -1.92875
+     ],
+     [
+      4.02217,
+      2.5,
+      -1.96337
+     ],
+     [
+      4.17,
+      2.5,
+      -1.975
+     ],
+     [
+      4.31783,
+      2.5,
+      -1.96337
+     ],
+     [
+      4.46202,
+      2.5,
+      -1.92875
+     ],
+     [
+      4.59902,
+      2.5,
+      -1.872
+     ],
+     [
+      4.72546,
+      2.5,
+      -1.79452
+     ],
+     [
+      4.83822,
+      2.5,
+      -1.69822
+     ],
+     [
+      4.93452,
+      2.5,
+      -1.58546
+     ],
+     [
+      5.012,
+      2.5,
+      -1.45902
+     ],
+     [
+      5.06875,
+      2.5,
+      -1.32202
+     ]
+    ],
+    "closed": false,
+    "smooth": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.44,
+    "alpha": 0.364
+   }
+  },
+  {
+   "id": "blanket-seam-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 7,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      5.07541,
+      2.61,
+      -0.73582
+     ],
+     [
+      5.01824,
+      2.61,
+      -0.5978
+     ],
+     [
+      4.94018,
+      2.61,
+      -0.47043
+     ],
+     [
+      4.84317,
+      2.61,
+      -0.35683
+     ],
+     [
+      4.72957,
+      2.61,
+      -0.25982
+     ],
+     [
+      4.6022,
+      2.61,
+      -0.18176
+     ],
+     [
+      4.46418,
+      2.61,
+      -0.12459
+     ],
+     [
+      4.31893,
+      2.61,
+      -0.08972
+     ],
+     [
+      4.17,
+      2.61,
+      -0.078
+     ],
+     [
+      4.02107,
+      2.61,
+      -0.08972
+     ],
+     [
+      3.87582,
+      2.61,
+      -0.12459
+     ],
+     [
+      3.7378,
+      2.61,
+      -0.18176
+     ],
+     [
+      3.61043,
+      2.61,
+      -0.25982
+     ],
+     [
+      3.49683,
+      2.61,
+      -0.35683
+     ],
+     [
+      3.39982,
+      2.61,
+      -0.47043
+     ],
+     [
+      3.32176,
+      2.61,
+      -0.5978
+     ],
+     [
+      3.26459,
+      2.61,
+      -0.73582
+     ],
+     [
+      3.22972,
+      2.61,
+      -0.88107
+     ],
+     [
+      3.218,
+      2.61,
+      -1.03
+     ],
+     [
+      3.22972,
+      2.61,
+      -1.17893
+     ],
+     [
+      3.26459,
+      2.61,
+      -1.32418
+     ],
+     [
+      3.32176,
+      2.61,
+      -1.4622
+     ],
+     [
+      3.39982,
+      2.61,
+      -1.58957
+     ],
+     [
+      3.49683,
+      2.61,
+      -1.70317
+     ],
+     [
+      3.61043,
+      2.61,
+      -1.80018
+     ],
+     [
+      3.7378,
+      2.61,
+      -1.87824
+     ],
+     [
+      3.87582,
+      2.61,
+      -1.93541
+     ],
+     [
+      4.02107,
+      2.61,
+      -1.97028
+     ],
+     [
+      4.17,
+      2.61,
+      -1.982
+     ],
+     [
+      4.31893,
+      2.61,
+      -1.97028
+     ],
+     [
+      4.46418,
+      2.61,
+      -1.93541
+     ],
+     [
+      4.6022,
+      2.61,
+      -1.87824
+     ],
+     [
+      4.72957,
+      2.61,
+      -1.80018
+     ],
+     [
+      4.84317,
+      2.61,
+      -1.70317
+     ],
+     [
+      4.94018,
+      2.61,
+      -1.58957
+     ],
+     [
+      5.01824,
+      2.61,
+      -1.4622
+     ],
+     [
+      5.07541,
+      2.61,
+      -1.32418
+     ]
+    ],
+    "closed": false,
+    "smooth": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.44,
+    "alpha": 0.364
+   }
+  },
+  {
+   "id": "blanket-seam-2",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 7,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      5.0716,
+      2.76,
+      -0.73705
+     ],
+     [
+      5.01467,
+      2.76,
+      -0.59962
+     ],
+     [
+      4.93695,
+      2.76,
+      -0.47278
+     ],
+     [
+      4.84034,
+      2.76,
+      -0.35966
+     ],
+     [
+      4.72722,
+      2.76,
+      -0.26305
+     ],
+     [
+      4.60038,
+      2.76,
+      -0.18533
+     ],
+     [
+      4.46295,
+      2.76,
+      -0.1284
+     ],
+     [
+      4.3183,
+      2.76,
+      -0.09367
+     ],
+     [
+      4.17,
+      2.76,
+      -0.082
+     ],
+     [
+      4.0217,
+      2.76,
+      -0.09367
+     ],
+     [
+      3.87705,
+      2.76,
+      -0.1284
+     ],
+     [
+      3.73962,
+      2.76,
+      -0.18533
+     ],
+     [
+      3.61278,
+      2.76,
+      -0.26305
+     ],
+     [
+      3.49966,
+      2.76,
+      -0.35966
+     ],
+     [
+      3.40305,
+      2.76,
+      -0.47278
+     ],
+     [
+      3.32533,
+      2.76,
+      -0.59962
+     ],
+     [
+      3.2684,
+      2.76,
+      -0.73705
+     ],
+     [
+      3.23367,
+      2.76,
+      -0.8817
+     ],
+     [
+      3.222,
+      2.76,
+      -1.03
+     ],
+     [
+      3.23367,
+      2.76,
+      -1.1783
+     ],
+     [
+      3.2684,
+      2.76,
+      -1.32295
+     ],
+     [
+      3.32533,
+      2.76,
+      -1.46038
+     ],
+     [
+      3.40305,
+      2.76,
+      -1.58722
+     ],
+     [
+      3.49966,
+      2.76,
+      -1.70034
+     ],
+     [
+      3.61278,
+      2.76,
+      -1.79695
+     ],
+     [
+      3.73962,
+      2.76,
+      -1.87467
+     ],
+     [
+      3.87705,
+      2.76,
+      -1.9316
+     ],
+     [
+      4.0217,
+      2.76,
+      -1.96633
+     ],
+     [
+      4.17,
+      2.76,
+      -1.978
+     ],
+     [
+      4.3183,
+      2.76,
+      -1.96633
+     ],
+     [
+      4.46295,
+      2.76,
+      -1.9316
+     ],
+     [
+      4.60038,
+      2.76,
+      -1.87467
+     ],
+     [
+      4.72722,
+      2.76,
+      -1.79695
+     ],
+     [
+      4.84034,
+      2.76,
+      -1.70034
+     ],
+     [
+      4.93695,
+      2.76,
+      -1.58722
+     ],
+     [
+      5.01467,
+      2.76,
+      -1.46038
+     ],
+     [
+      5.0716,
+      2.76,
+      -1.32295
+     ]
+    ],
+    "closed": false,
+    "smooth": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.44,
+    "alpha": 0.364
+   }
+  },
+  {
+   "id": "cable-sci",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 7,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      4.77,
+      2.82,
+      -0.83
+     ],
+     [
+      5.12,
+      2.86,
+      -0.81
+     ],
+     [
+      5.52,
+      2.88,
+      -0.83
+     ],
+     [
+      6.17,
+      2.96,
+      -0.87
+     ]
+    ],
+    "closed": false,
+    "smooth": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.495,
+    "alpha": 0.39
+   }
+  },
+  {
+   "id": "cable-rtg",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 7,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      3.59,
+      2.54,
+      -1.05
+     ],
+     [
+      2.97,
+      2.38,
+      -1.11
+     ],
+     [
+      2.17,
+      2.11,
+      -1.19
+     ],
+     [
+      1.51,
+      1.86,
+      -1.27
+     ]
+    ],
+    "closed": false,
+    "smooth": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.495,
+    "alpha": 0.39
+   }
+  }
+ ],
+ "labels": [],
+ "anchors": {
+  "base": {
+   "point": [
+    0,
+    0.0,
+    0
+   ],
+   "up": [
+    0,
+    1,
+    0
+   ]
+  }
+ },
+ "annotations": [
+  {
+   "id": "a-hga",
+   "text": "High-gain antenna, 3.66 m",
+   "part": "hga-dish",
+   "offset": [
+    -0.95,
+    0.5,
+    0.0
+   ]
+  },
+  {
+   "id": "a-bus",
+   "text": "Bus, 1.78 m",
+   "part": "bus",
+   "offset": [
+    -2.55,
+    -0.55,
+    0.0
+   ]
+  },
+  {
+   "id": "a-scan",
+   "text": "Scan platform",
+   "part": "scan-plate",
+   "offset": [
+    -0.6,
+    0.42,
+    0.0
+   ]
+  },
+  {
+   "id": "a-rtg",
+   "text": "Three RTGs",
+   "part": "rtg-2",
+   "offset": [
+    -0.85,
+    -0.6,
+    0.0
+   ]
+  },
+  {
+   "id": "a-record",
+   "text": "Golden Record",
+   "part": "golden-record",
+   "offset": [
+    0.1,
+    -0.42,
+    0.0
+   ]
+  },
+  {
+   "id": "a-mag",
+   "text": "Magnetometer mast, 13 m",
+   "part": "mag-sensor-mid",
+   "offset": [
+    0.2,
+    0.34,
+    0.0
+   ]
+  }
+ ],
+ "presentation": {
+  "framing": {
+   "yaw": 30,
+   "pitch": 24,
+   "fit": 1.16,
+   "target": "hga-dish"
+  },
+  "views": [
+   {
+    "id": "hero",
+    "label": "The probe",
+    "yaw": 30,
+    "pitch": 24
+   },
+   {
+    "id": "overview",
+    "label": "Whole spacecraft",
+    "yaw": 34,
+    "pitch": 22
+   },
+   {
+    "id": "dish",
+    "label": "High-gain antenna",
+    "yaw": 24,
+    "pitch": 26,
+    "distance": 1.9,
+    "target": "hga-dish"
+   },
+   {
+    "id": "body",
+    "label": "Bus and Golden Record",
+    "yaw": 18,
+    "pitch": 13,
+    "distance": 3.6,
+    "target": "golden-record"
+   },
+   {
+    "id": "record",
+    "label": "The Golden Record",
+    "yaw": 12,
+    "pitch": 8,
+    "distance": 2.0,
+    "target": "golden-record"
+   },
+   {
+    "id": "scan",
+    "label": "Scan platform",
+    "yaw": 348,
+    "pitch": 16,
+    "distance": 2.0,
+    "target": "scan-plate"
+   },
+   {
+    "id": "power",
+    "label": "RTG boom",
+    "yaw": 192,
+    "pitch": 12,
+    "distance": 3.0,
+    "target": "rtg-2"
+   },
+   {
+    "id": "mag",
+    "label": "Magnetometer mast",
+    "yaw": 60,
+    "pitch": 12,
+    "distance": 3.4,
+    "target": "mag-sensor-mid"
+   },
+   {
+    "id": "back",
+    "label": "From behind",
+    "yaw": 214,
+    "pitch": 14
+   }
+  ],
+  "atmosphere": {
+   "haze": 0.5,
+   "scanlines": true,
+   "vignette": true,
+   "grid": false,
+   "projector": false,
+   "motes": 0.5
+  },
+  "occlusion": "xray",
+  "certainty_style": "subtle",
+  "background": "deep",
+  "float": 0
+ },
+ "animation": {
+  "assembly": {
+   "style": "build",
+   "seconds": 19.4,
+   "interference": false
+  },
+  "idle": {
+   "life": "calm",
+   "events": [
+    "scan",
+    "shimmer",
+    "propagate"
+   ],
+   "cadence": [
+    5,
+    10
+   ],
+   "strength": 0.68
+  },
+  "camera": {
+   "drift": 2.6,
+   "breathe": 0.02,
+   "tour": [
+    {
+     "view": "body",
+     "at": 0,
+     "fly": 0.8
+    },
+    {
+     "view": "hero",
+     "at": 7.5,
+     "fly": 5.0
+    },
+    {
+     "view": "overview",
+     "at": 17,
+     "fly": 6.0
+    },
+    {
+     "view": "body",
+     "at": 33,
+     "fly": 5.0
+    },
+    {
+     "view": "hero",
+     "at": 46,
+     "fly": 6.0
+    }
+   ]
+  },
+  "reduced_motion": "still"
+ },
+ "authoring": {
+  "tier": "masterpiece",
+  "research": "done",
+  "sources": [
+   "request",
+   "nasa-helio",
+   "ntrs-voyager",
+   "pds-vg1",
+   "jpl-quicklook",
+   "jpl-pia14113",
+   "ref-profile",
+   "ref-model",
+   "ref-diagram",
+   "ref-scan",
+   "ref-mag",
+   "ref-record"
+  ],
+  "identity": [
+   {
+    "feature": "the 3.66 m shallow parabolic high-gain dish on a short tubular truss over the bus, with the low-gain horn on its tripod above the face",
+    "parts": [
+     "hga-dish",
+     "hga-rim",
+     "hga-ring",
+     "hga-strut",
+     "lga-horn",
+     "lga-strut"
+    ],
+    "source": "ref-profile"
+   },
+   {
+    "feature": "the ten-sided bus, one bay per face, dish face up",
+    "parts": [
+     "bus",
+     "bay-panel",
+     "bus-deck-top"
+    ],
+    "source": "ref-diagram"
+   },
+   {
+    "feature": "three RTGs in tandem on a long down-angled power boom",
+    "parts": [
+     "rtg-1",
+     "rtg-2",
+     "rtg-3",
+     "rtgb-longeron-0"
+    ],
+    "source": "ref-profile"
+   },
+   {
+    "feature": "the science boom carrying the two-axis scan platform with the two vidicon cameras and the baffled IRIS",
+    "parts": [
+     "cam-narrow",
+     "cam-wide",
+     "iris",
+     "scan-plate",
+     "scan-post"
+    ],
+    "source": "ref-scan"
+   },
+   {
+    "feature": "the 13 m triangular magnetometer astromast, sensors at 10 m and at its tip",
+    "parts": [
+     "mag-longeron-0",
+     "mag-sensor-end",
+     "mag-sensor-mid"
+    ],
+    "source": "ref-mag"
+   },
+   {
+    "feature": "two 10 m whip antennas trailing from the bus",
+    "parts": [
+     "whip-a",
+     "whip-b"
+    ],
+    "source": "ref-profile"
+   },
+   {
+    "feature": "the Golden Record bolted flat to a bus face on its mounting plate",
+    "parts": [
+     "golden-record",
+     "record-cover",
+     "record-plate",
+     "record-clamp"
+    ],
+    "source": "ref-record"
+   }
+  ],
+  "review_rounds": 5,
+  "outcome": "limit",
+  "next": [
+   "scan platform: close the two vidicon barrels with a lens plate and shutter, and shape the gimbal as two visible perpendicular rings so the two-axis mount reads in the close view",
+   "magnetometer mast: give it a true tapered triangular section and a third longeron that reads at hero scale (it is a 13 m ribbon from most angles)",
+   "bus bays: dress six of the ten faces with louvres, the square sunshade and a Canopus star tracker, so no bay is an empty quad up close",
+   "the built-in still/side/front framing fits the whole 15.6 m envelope, so the probe is small in those captures; author explicit still views with a tighter fit",
+   "assembly: the format caps the build at 20 s; for a 57 s build render the page at 0.35x (tools/slow_render.py does this)"
+  ]
+ }
+}

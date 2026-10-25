@@ -31,6 +31,11 @@ made with earlier versions of Construct; all of them build with this release.
 | [![Yamaha CFX](yamaha-cfx/thumb.jpg)](yamaha-cfx/) | [Yamaha CFX](yamaha-cfx/) | fast | DeepSeek |
 | [![Porsche 911 (964)](porsche-911-964/thumb.jpg)](porsche-911-964/) | [Porsche 911 (964)](porsche-911-964/) | masterpiece | GPT-6.1 Sol |
 
+**Films.** [films/](films/) holds the scenes of five constructs that assemble across a track of
+music ([film mode](../docs/FILM.md)), listed in [films.json](films.json). Their videos are in the
+[gallery's film section](https://rtmandreyev.github.io/construct/#films) only; the music is by
+Artyom Andreyev, used with permission.
+
 Product and place names belong to their owners. Each construct is an independent reconstruction
 from public references, not an official model; the scenes cite their sources, and no reference
 photograph is included here.

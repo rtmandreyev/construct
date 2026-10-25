@@ -55,6 +55,9 @@ turn it around and read its labels.
 **[Open the examples gallery →](https://rtmandreyev.github.io/construct/)** · each scene and its hero image are in
 [examples/](examples/).
 
+**Film mode.** A construct can also assemble across a track of music, pausing, surging and flaring
+with it: see [Film mode](docs/FILM.md) and the [films in the gallery](https://rtmandreyev.github.io/construct/#films).
+
 ## How it works
 
 A scene is data, never code: the agent says what the thing is, and Construct decides how it
@@ -176,7 +179,7 @@ Start with the first two if you are new; the full index is in [docs/README.md](d
 - [About](docs/ABOUT.md): where Construct's method comes from
 - [Evaluation](docs/EVALUATION.md): how models compare, and how to score your own
 - [Development](docs/DEVELOPMENT.md): for contributors and for building Construct into your own tools
-- [CONTRACT.md](CONTRACT.md), [CHANGELOG.md](CHANGELOG.md), the [v0.2.1 release notes](docs/releases/v0.2.1.md) and [PUBLISHING.md](PUBLISHING.md)
+- [CONTRACT.md](CONTRACT.md), [CHANGELOG.md](CHANGELOG.md), the [v0.3.0](docs/releases/v0.3.0.md) and [v0.2.1](docs/releases/v0.2.1.md) release notes and [PUBLISHING.md](PUBLISHING.md)
 
 ## Contributing
 

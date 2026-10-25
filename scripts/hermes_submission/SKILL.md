@@ -1,7 +1,7 @@
 ---
 name: construct
 description: Turn a description into an animated holographic construct.
-version: 0.2.1
+version: 0.3.0
 author: OWNER NAME (rtmandreyev)
 license: MIT
 platforms: [macos, linux]
@@ -13,7 +13,7 @@ metadata:
     category: creative
     related_skills: [anatomy]
     requires_toolsets: [terminal]
-    upstream: https://github.com/rtmandreyev/construct (v0.2.1)
+    upstream: https://github.com/rtmandreyev/construct (v0.3.0)
 ---
 
 # Construct

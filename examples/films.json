@@ -1,0 +1,46 @@
+{
+ "format": "construct-films",
+ "version": 1,
+ "films": [
+  {
+   "slug": "soyuz",
+   "title": "Soyuz",
+   "mode": "masterpiece",
+   "model": "DeepSeek",
+   "track": "Enter Orbit",
+   "video": "1-soyuz-enter-orbit.mp4"
+  },
+  {
+   "slug": "voyager-1",
+   "title": "Voyager 1",
+   "mode": "masterpiece",
+   "model": "DeepSeek",
+   "track": "Far Horizons",
+   "video": "2-voyager-far-horizons.mp4"
+  },
+  {
+   "slug": "arecibo-observatory",
+   "title": "Arecibo Observatory",
+   "mode": "masterpiece",
+   "model": "DeepSeek",
+   "track": "First Encounter",
+   "video": "3-arecibo-first-encounter.mp4"
+  },
+  {
+   "slug": "james-webb-space-telescope",
+   "title": "James Webb Space Telescope",
+   "mode": "masterpiece",
+   "model": "DeepSeek",
+   "track": "Slow Drift",
+   "video": "4-webb-slow-drift.mp4"
+  },
+  {
+   "slug": "brass-refractor",
+   "title": "Brass refractor",
+   "mode": "masterpiece",
+   "model": "DeepSeek",
+   "track": "Stargazing",
+   "video": "5-refractor-stargazing.mp4"
+  }
+ ]
+}
