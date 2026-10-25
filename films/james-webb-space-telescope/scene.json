@@ -1,0 +1,8079 @@
+{
+ "format": "construct-scene",
+ "version": 2,
+ "id": "jwst-at-l2",
+ "title": "James Webb Space Telescope — built at L2",
+ "subject": {
+  "category": "machine",
+  "summary": "The deployed James Webb Space Telescope drifting at Sun-Earth L2, assembled in eight stages: spacecraft bus, power and comms, sunshield rigging, the five membranes, the OTE tower and backplane, the eighteen gold hexagons, and finally the secondary mirror on its three struts. Published dimensions (21.197 x 14.162 m shield, 6.5 m aperture, 1.32 m segments, 0.74 m secondary, 0.6 m antenna) are cited; the arrangement of masses, the bus envelope and the tower heights are reconstructed from the reference renders and blueprint.",
+  "accuracy": "approximate",
+  "synthetic": false
+ },
+ "units": "m",
+ "seed": 41,
+ "sources": [
+  {
+   "id": "request",
+   "kind": "user_request",
+   "title": "The user's request",
+   "rights": "user_private",
+   "ref": "The James Webb Space Telescope at L2: 18 gold hexagonal segments, the secondary on three struts, the five-layer sunshield, the bus, the solar array, the high-gain antenna; assembling slowly across a 55-second ambient piece, then calm idle life."
+  },
+  {
+   "id": "nasa-sunshield",
+   "kind": "document",
+   "title": "NASA Science — Webb's Sunshield",
+   "rights": "public_domain",
+   "ref": "https://science.nasa.gov/mission/webb/webbs-sunshield/"
+  },
+  {
+   "id": "nasa-fact-sheet",
+   "kind": "document",
+   "title": "NASA — James Webb Space Telescope Fact Sheet",
+   "rights": "public_domain",
+   "ref": "https://science.nasa.gov/mission/webb/fact-sheet/"
+  },
+  {
+   "id": "nasa-telescope-overview",
+   "kind": "document",
+   "title": "NASA Science — Telescope Overview",
+   "rights": "public_domain",
+   "ref": "https://science.nasa.gov/mission/webb/science-overview/science-explainers/telescope-overview/"
+  },
+  {
+   "id": "jwst-docs-telescope",
+   "kind": "document",
+   "title": "JWST User Documentation — JWST Telescope",
+   "rights": "public_domain",
+   "ref": "https://jwst-docs.stsci.edu/jwst-observatory-hardware/jwst-telescope"
+  },
+  {
+   "id": "ntrs-design",
+   "kind": "document",
+   "title": "The Design, Verification, and Performance of JWST (NTRS 20230009106)",
+   "rights": "public_domain",
+   "ref": "https://ntrs.nasa.gov/api/citations/20230009106/downloads/"
+  },
+  {
+   "id": "ref-three-quarter",
+   "kind": "reference_image",
+   "title": "Artist's impression, three-quarter view of the deployed observatory",
+   "rights": "public_domain",
+   "ref": "Local research copy of the reference image, kept out of the scene and out of any build"
+  },
+  {
+   "id": "ref-side",
+   "kind": "reference_image",
+   "title": "Artist's impression, side elevation with the mirror face on",
+   "rights": "public_domain",
+   "ref": "Local research copy of the reference image, kept out of the scene and out of any build"
+  },
+  {
+   "id": "ref-top",
+   "kind": "reference_image",
+   "title": "Rendered view showing the 18-segment mirror field and the shield planform",
+   "rights": "public_domain",
+   "ref": "Local research copy of the reference image, kept out of the scene and out of any build"
+  },
+  {
+   "id": "ref-bottom",
+   "kind": "reference_image",
+   "title": "Sun-facing underside: bus, solar array, antenna, layered shield edges",
+   "rights": "public_domain",
+   "ref": "Local research copy of the reference image, kept out of the scene and out of any build"
+  },
+  {
+   "id": "ref-blueprint",
+   "kind": "drawing",
+   "title": "Blueprint side elevation of the deployed observatory",
+   "rights": "public_domain",
+   "ref": "Local research copy of the reference image, kept out of the scene and out of any build"
+  }
+ ],
+ "facts": [
+  {
+   "key": "sunshield.length",
+   "value": 21.197,
+   "unit": "m",
+   "certainty": "verified",
+   "source": "nasa-sunshield",
+   "note": "Deployed sunshield dimension given by NASA."
+  },
+  {
+   "key": "sunshield.width",
+   "value": 14.162,
+   "unit": "m",
+   "certainty": "verified",
+   "source": "nasa-sunshield",
+   "note": "Deployed sunshield dimension given by NASA."
+  },
+  {
+   "key": "sunshield.layers",
+   "value": 5,
+   "certainty": "verified",
+   "source": "nasa-sunshield",
+   "note": "Five Kapton layers; layers 1-2 doped-silicon on the Sun side."
+  },
+  {
+   "key": "sunshield.material",
+   "value": "Kapton E, 0.002 in on layers 1-2 and 0.001 in on 3-5",
+   "certainty": "verified",
+   "source": "ntrs-design",
+   "note": "NTRS design paper, section 4.1.3."
+  },
+  {
+   "key": "mirror.diameter",
+   "value": 6.5,
+   "unit": "m",
+   "certainty": "verified",
+   "source": "nasa-fact-sheet",
+   "note": "6.5 m across the deployed array; 25.4 m2 collecting area."
+  },
+  {
+   "key": "segment.width",
+   "value": 1.32,
+   "unit": "m",
+   "certainty": "verified",
+   "source": "jwst-docs-telescope",
+   "note": "Each hexagon is 1.32 m flat to flat."
+  },
+  {
+   "key": "segment.count",
+   "value": 18,
+   "certainty": "verified",
+   "source": "nasa-fact-sheet"
+  },
+  {
+   "key": "segment.mass",
+   "value": 20.1,
+   "unit": "kg",
+   "certainty": "verified",
+   "source": "nasa-fact-sheet",
+   "note": "Beryllium mirror blank; 39.48 kg for the assembly."
+  },
+  {
+   "key": "mirror.coating",
+   "value": "gold, 100 nm",
+   "certainty": "verified",
+   "source": "nasa-fact-sheet",
+   "note": "About 48 g of gold over 25 m2."
+  },
+  {
+   "key": "secondary.diameter",
+   "value": 0.74,
+   "unit": "m",
+   "certainty": "verified",
+   "source": "jwst-docs-telescope",
+   "note": "Convex circular secondary."
+  },
+  {
+   "key": "secondary.struts",
+   "value": 3,
+   "certainty": "verified",
+   "source": "ref-blueprint",
+   "note": "Three deployable support struts; length inferred from the drawings."
+  },
+  {
+   "key": "hga.diameter",
+   "value": 0.6,
+   "unit": "m",
+   "certainty": "verified",
+   "source": "ntrs-design",
+   "note": "Ka-band dish, 42.3 dBi peak gain."
+  },
+  {
+   "key": "array.panels",
+   "value": 5,
+   "certainty": "verified",
+   "source": "ntrs-design",
+   "note": "Five-panel triple-junction array; the 2009 artist impressions show an older two-wing design."
+  },
+  {
+   "key": "array.power",
+   "value": 2000,
+   "unit": "W",
+   "certainty": "verified",
+   "source": "nasa-telescope-overview"
+  },
+  {
+   "key": "bus.size",
+   "value": "about 3.2 x 2.4 x 2.4 m",
+   "certainty": "inferred",
+   "note": "Scaled from the reference renders; the bus is not published dimension by dimension."
+  },
+  {
+   "key": "ote.height",
+   "value": "mirror centre 5.4 m above the shield hub",
+   "certainty": "inferred",
+   "note": "Reconstruction from the side elevation: the OTE stands on a tower above the shield."
+  },
+  {
+   "key": "orbit",
+   "value": "Sun-Earth L2, 1.5 million km from Earth",
+   "certainty": "verified",
+   "source": "nasa-fact-sheet"
+  },
+  {
+   "key": "mass",
+   "value": 6200,
+   "unit": "kg",
+   "certainty": "verified",
+   "source": "nasa-fact-sheet"
+  },
+  {
+   "key": "sunshield.separation",
+   "value": "layers converge at the hub and fan about 0.3 m apart at the corners",
+   "certainty": "inferred",
+   "note": "Read from the reference side elevations, not a published figure."
+  }
+ ],
+ "parts": [
+  {
+   "id": "survey-ring",
+   "role": "ground",
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      4.6,
+      -3.55,
+      0.0
+     ],
+     [
+      4.53,
+      -3.55,
+      0.903
+     ],
+     [
+      4.323,
+      -3.55,
+      1.779
+     ],
+     [
+      3.984,
+      -3.55,
+      2.6
+     ],
+     [
+      3.524,
+      -3.55,
+      3.342
+     ],
+     [
+      2.957,
+      -3.55,
+      3.983
+     ],
+     [
+      2.3,
+      -3.55,
+      4.503
+     ],
+     [
+      1.573,
+      -3.55,
+      4.886
+     ],
+     [
+      0.799,
+      -3.55,
+      5.121
+     ],
+     [
+      0.0,
+      -3.55,
+      5.2
+     ],
+     [
+      -0.799,
+      -3.55,
+      5.121
+     ],
+     [
+      -1.573,
+      -3.55,
+      4.886
+     ],
+     [
+      -2.3,
+      -3.55,
+      4.503
+     ],
+     [
+      -2.957,
+      -3.55,
+      3.983
+     ],
+     [
+      -3.524,
+      -3.55,
+      3.342
+     ],
+     [
+      -3.984,
+      -3.55,
+      2.6
+     ],
+     [
+      -4.323,
+      -3.55,
+      1.779
+     ],
+     [
+      -4.53,
+      -3.55,
+      0.903
+     ],
+     [
+      -4.6,
+      -3.55,
+      0.0
+     ],
+     [
+      -4.53,
+      -3.55,
+      -0.903
+     ],
+     [
+      -4.323,
+      -3.55,
+      -1.779
+     ],
+     [
+      -3.984,
+      -3.55,
+      -2.6
+     ],
+     [
+      -3.524,
+      -3.55,
+      -3.342
+     ],
+     [
+      -2.957,
+      -3.55,
+      -3.983
+     ],
+     [
+      -2.3,
+      -3.55,
+      -4.503
+     ],
+     [
+      -1.573,
+      -3.55,
+      -4.886
+     ],
+     [
+      -0.799,
+      -3.55,
+      -5.121
+     ],
+     [
+      -0.0,
+      -3.55,
+      -5.2
+     ],
+     [
+      0.799,
+      -3.55,
+      -5.121
+     ],
+     [
+      1.573,
+      -3.55,
+      -4.886
+     ],
+     [
+      2.3,
+      -3.55,
+      -4.503
+     ],
+     [
+      2.957,
+      -3.55,
+      -3.983
+     ],
+     [
+      3.524,
+      -3.55,
+      -3.342
+     ],
+     [
+      3.984,
+      -3.55,
+      -2.6
+     ],
+     [
+      4.323,
+      -3.55,
+      -1.779
+     ],
+     [
+      4.53,
+      -3.55,
+      -0.903
+     ],
+     [
+      4.6,
+      -3.55,
+      -0.0
+     ]
+    ],
+    "closed": false
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 0,
+   "certainty": "inferred",
+   "look": {
+    "tone": "faint",
+    "weight": 0.55,
+    "alpha": 0.34
+   },
+   "floating": true,
+   "note": "Holographic position plot at L2, not hardware."
+  },
+  {
+   "id": "bus",
+   "role": "mass",
+   "shape": {
+    "type": "box",
+    "size": [
+     3.2,
+     2.4,
+     2.4
+    ],
+    "ribs": 5
+   },
+   "at": [
+    0,
+    -1.7,
+    0
+   ],
+   "stage": 0,
+   "certainty": "inferred",
+   "label": "Spacecraft bus",
+   "basis": [
+    "bus.size"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.9,
+    "alpha": 0.9
+   }
+  },
+  {
+   "id": "bus-floor",
+   "role": "structure",
+   "shape": {
+    "type": "box",
+    "size": [
+     3.34,
+     0.12,
+     2.54
+    ],
+    "ribs": 4
+   },
+   "at": [
+    0,
+    -2.86,
+    0
+   ],
+   "stage": 0,
+   "certainty": "inferred",
+   "basis": [
+    "bus.size"
+   ]
+  },
+  {
+   "id": "bus-mast",
+   "role": "structure",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.3,
+     0.6,
+     1.3
+    ],
+    "ribs": 3
+   },
+   "at": [
+    0,
+    -0.8,
+    0
+   ],
+   "stage": 0,
+   "certainty": "inferred",
+   "basis": [
+    "bus.size"
+   ],
+   "note": "Upper deck carrying the sunshield hub."
+  },
+  {
+   "id": "bus-radiator-p",
+   "role": "structure",
+   "shape": {
+    "type": "box",
+    "size": [
+     2.6,
+     1.7,
+     0.1
+    ],
+    "ribs": 6
+   },
+   "at": [
+    0,
+    -1.62,
+    1.27
+   ],
+   "stage": 0,
+   "certainty": "inferred",
+   "basis": [
+    "bus.size"
+   ],
+   "look": {
+    "fill": "dark",
+    "alpha": 0.55,
+    "weight": 0.6
+   },
+   "note": "Thermal radiator panel on the sun side."
+  },
+  {
+   "id": "thruster-p-1",
+   "role": "detail",
+   "shape": {
+    "type": "cone",
+    "radius_bottom": 0.14,
+    "radius_top": 0.06,
+    "height": 0.26,
+    "segments": 8
+   },
+   "at": [
+    -1.3,
+    -2.84,
+    1.0
+   ],
+   "stage": 0,
+   "certainty": "inferred",
+   "basis": [
+    "bus.size"
+   ],
+   "look": {
+    "weight": 0.55,
+    "alpha": 0.5
+   },
+   "rotate": [
+    180,
+    0,
+    0
+   ]
+  },
+  {
+   "id": "thruster-p1",
+   "role": "detail",
+   "shape": {
+    "type": "cone",
+    "radius_bottom": 0.14,
+    "radius_top": 0.06,
+    "height": 0.26,
+    "segments": 8
+   },
+   "at": [
+    1.3,
+    -2.84,
+    1.0
+   ],
+   "stage": 0,
+   "certainty": "inferred",
+   "basis": [
+    "bus.size"
+   ],
+   "look": {
+    "weight": 0.55,
+    "alpha": 0.5
+   },
+   "rotate": [
+    180,
+    0,
+    0
+   ]
+  },
+  {
+   "id": "bus-radiator-s",
+   "role": "structure",
+   "shape": {
+    "type": "box",
+    "size": [
+     2.6,
+     1.7,
+     0.1
+    ],
+    "ribs": 6
+   },
+   "at": [
+    0,
+    -1.62,
+    -1.27
+   ],
+   "stage": 0,
+   "certainty": "inferred",
+   "basis": [
+    "bus.size"
+   ],
+   "look": {
+    "fill": "dark",
+    "alpha": 0.55,
+    "weight": 0.6
+   },
+   "note": "Thermal radiator panel on the sun side."
+  },
+  {
+   "id": "thruster-s-1",
+   "role": "detail",
+   "shape": {
+    "type": "cone",
+    "radius_bottom": 0.14,
+    "radius_top": 0.06,
+    "height": 0.26,
+    "segments": 8
+   },
+   "at": [
+    -1.3,
+    -2.84,
+    -1.0
+   ],
+   "stage": 0,
+   "certainty": "inferred",
+   "basis": [
+    "bus.size"
+   ],
+   "look": {
+    "weight": 0.55,
+    "alpha": 0.5
+   },
+   "rotate": [
+    180,
+    0,
+    0
+   ]
+  },
+  {
+   "id": "thruster-s1",
+   "role": "detail",
+   "shape": {
+    "type": "cone",
+    "radius_bottom": 0.14,
+    "radius_top": 0.06,
+    "height": 0.26,
+    "segments": 8
+   },
+   "at": [
+    1.3,
+    -2.84,
+    -1.0
+   ],
+   "stage": 0,
+   "certainty": "inferred",
+   "basis": [
+    "bus.size"
+   ],
+   "look": {
+    "weight": 0.55,
+    "alpha": 0.5
+   },
+   "rotate": [
+    180,
+    0,
+    0
+   ]
+  },
+  {
+   "id": "bus-seam-p0",
+   "role": "detail",
+   "shape": {
+    "type": "box",
+    "size": [
+     3.16,
+     0.03,
+     0.02
+    ]
+   },
+   "at": [
+    0,
+    -2.3,
+    -1.205
+   ],
+   "stage": 0,
+   "certainty": "inferred",
+   "basis": [
+    "bus.size"
+   ],
+   "look": {
+    "weight": 0.45,
+    "alpha": 0.5
+   }
+  },
+  {
+   "id": "bus-seam-s0",
+   "role": "detail",
+   "shape": {
+    "type": "box",
+    "size": [
+     3.16,
+     0.03,
+     0.02
+    ]
+   },
+   "at": [
+    0,
+    -2.3,
+    1.205
+   ],
+   "stage": 0,
+   "certainty": "inferred",
+   "basis": [
+    "bus.size"
+   ],
+   "look": {
+    "weight": 0.45,
+    "alpha": 0.5
+   }
+  },
+  {
+   "id": "bus-seam-p1",
+   "role": "detail",
+   "shape": {
+    "type": "box",
+    "size": [
+     3.16,
+     0.03,
+     0.02
+    ]
+   },
+   "at": [
+    0,
+    -1.58,
+    -1.205
+   ],
+   "stage": 0,
+   "certainty": "inferred",
+   "basis": [
+    "bus.size"
+   ],
+   "look": {
+    "weight": 0.45,
+    "alpha": 0.5
+   }
+  },
+  {
+   "id": "bus-seam-s1",
+   "role": "detail",
+   "shape": {
+    "type": "box",
+    "size": [
+     3.16,
+     0.03,
+     0.02
+    ]
+   },
+   "at": [
+    0,
+    -1.58,
+    1.205
+   ],
+   "stage": 0,
+   "certainty": "inferred",
+   "basis": [
+    "bus.size"
+   ],
+   "look": {
+    "weight": 0.45,
+    "alpha": 0.5
+   }
+  },
+  {
+   "id": "bus-seam-p2",
+   "role": "detail",
+   "shape": {
+    "type": "box",
+    "size": [
+     3.16,
+     0.03,
+     0.02
+    ]
+   },
+   "at": [
+    0,
+    -0.86,
+    -1.205
+   ],
+   "stage": 0,
+   "certainty": "inferred",
+   "basis": [
+    "bus.size"
+   ],
+   "look": {
+    "weight": 0.45,
+    "alpha": 0.5
+   }
+  },
+  {
+   "id": "bus-seam-s2",
+   "role": "detail",
+   "shape": {
+    "type": "box",
+    "size": [
+     3.16,
+     0.03,
+     0.02
+    ]
+   },
+   "at": [
+    0,
+    -0.86,
+    1.205
+   ],
+   "stage": 0,
+   "certainty": "inferred",
+   "basis": [
+    "bus.size"
+   ],
+   "look": {
+    "weight": 0.45,
+    "alpha": 0.5
+   }
+  },
+  {
+   "id": "bus-harness-p",
+   "role": "detail",
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      -1.55,
+      -0.62,
+      -1.18
+     ],
+     [
+      -1.55,
+      -2.55,
+      -1.18
+     ]
+    ],
+    "radius": 0.035,
+    "sides": 4,
+    "samples": 3
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 0,
+   "certainty": "inferred",
+   "basis": [
+    "bus.size"
+   ],
+   "look": {
+    "weight": 0.45,
+    "alpha": 0.5
+   }
+  },
+  {
+   "id": "bus-harness-s",
+   "role": "detail",
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      -1.55,
+      -0.62,
+      1.18
+     ],
+     [
+      -1.55,
+      -2.55,
+      1.18
+     ]
+    ],
+    "radius": 0.035,
+    "sides": 4,
+    "samples": 3
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 0,
+   "certainty": "inferred",
+   "basis": [
+    "bus.size"
+   ],
+   "look": {
+    "weight": 0.45,
+    "alpha": 0.5
+   }
+  },
+  {
+   "id": "bus-louvers",
+   "role": "detail",
+   "shape": {
+    "type": "box",
+    "size": [
+     2.2,
+     0.9,
+     0.04
+    ],
+    "ribs": 7
+   },
+   "at": [
+    0.05,
+    -1.62,
+    1.32
+   ],
+   "stage": 0,
+   "certainty": "inferred",
+   "basis": [
+    "bus.size"
+   ],
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.6
+   }
+  },
+  {
+   "id": "battery",
+   "role": "structure",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.55,
+     0.9,
+     1.1
+    ],
+    "ribs": 2
+   },
+   "at": [
+    -1.68,
+    -1.72,
+    0
+   ],
+   "stage": 0,
+   "certainty": "inferred",
+   "basis": [
+    "bus.size"
+   ],
+   "look": {
+    "fill": "dark",
+    "alpha": 0.6
+   }
+  },
+  {
+   "id": "star-tracker-a",
+   "role": "detail",
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.11,
+    "height": 0.42,
+    "segments": 10
+   },
+   "at": [
+    1.58,
+    -0.95,
+    0.72
+   ],
+   "stage": 0,
+   "certainty": "inferred",
+   "basis": [
+    "bus.size"
+   ],
+   "look": {
+    "weight": 0.6,
+    "alpha": 0.6
+   },
+   "rotate": [
+    0,
+    0,
+    -90
+   ]
+  },
+  {
+   "id": "star-tracker-b",
+   "role": "detail",
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.11,
+    "height": 0.42,
+    "segments": 10
+   },
+   "at": [
+    1.58,
+    -0.95,
+    -0.72
+   ],
+   "stage": 0,
+   "certainty": "inferred",
+   "basis": [
+    "bus.size"
+   ],
+   "look": {
+    "weight": 0.6,
+    "alpha": 0.6
+   },
+   "rotate": [
+    0,
+    0,
+    -90
+   ]
+  },
+  {
+   "id": "array-boom",
+   "role": "structure",
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      0.0,
+      -1.95,
+      -1.1
+     ],
+     [
+      0.05,
+      -2.12,
+      -2.0
+     ],
+     [
+      0.1,
+      -2.24,
+      -2.6
+     ]
+    ],
+    "radius": [
+     0.075,
+     0.065,
+     0.055
+    ],
+    "sides": 6,
+    "samples": 6
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 1,
+   "certainty": "inferred",
+   "label": "Solar array boom",
+   "basis": [
+    "array.panels"
+   ]
+  },
+  {
+   "id": "array-gimbal",
+   "role": "structure",
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.13,
+    "height": 0.22,
+    "segments": 10
+   },
+   "at": [
+    0.1,
+    -2.24,
+    -2.62
+   ],
+   "stage": 1,
+   "certainty": "inferred",
+   "basis": [
+    "array.panels"
+   ],
+   "look": {
+    "weight": 0.65
+   },
+   "rotate": [
+    90,
+    0,
+    0
+   ]
+  },
+  {
+   "id": "array-spine",
+   "role": "structure",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.92,
+     0.1,
+     0.09
+    ]
+   },
+   "at": [
+    0.1,
+    -2.52,
+    -4.55
+   ],
+   "stage": 1,
+   "certainty": "inferred",
+   "basis": [
+    "array.panels"
+   ],
+   "look": {
+    "weight": 0.8
+   },
+   "rotate": [
+    16,
+    0,
+    0
+   ]
+  },
+  {
+   "id": "array-panel-1",
+   "role": "identity",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.84,
+     0.05,
+     0.8
+    ],
+    "ribs": 4
+   },
+   "at": [
+    0.1,
+    -2.046,
+    -6.203
+   ],
+   "stage": 1,
+   "certainty": "inferred",
+   "basis": [
+    "array.panels",
+    "array.power"
+   ],
+   "look": {
+    "weight": 1.1,
+    "glow": 0.3,
+    "alpha": 0.95
+   },
+   "rotate": [
+    16,
+    0,
+    0
+   ],
+   "note": "One of the five panels of the single flight wing."
+  },
+  {
+   "id": "array-hinge-1",
+   "role": "detail",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.8,
+     0.03,
+     0.03
+    ]
+   },
+   "at": [
+    0.1,
+    -2.164,
+    -5.79
+   ],
+   "stage": 1,
+   "certainty": "inferred",
+   "basis": [
+    "array.panels"
+   ],
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.5
+   },
+   "rotate": [
+    16,
+    0,
+    0
+   ]
+  },
+  {
+   "id": "array-panel-2",
+   "role": "identity",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.84,
+     0.05,
+     0.8
+    ],
+    "ribs": 4
+   },
+   "at": [
+    0.1,
+    -2.283,
+    -5.377
+   ],
+   "stage": 1,
+   "certainty": "inferred",
+   "basis": [
+    "array.panels",
+    "array.power"
+   ],
+   "look": {
+    "weight": 1.12,
+    "glow": 0.3,
+    "alpha": 0.95
+   },
+   "rotate": [
+    16,
+    0,
+    0
+   ],
+   "note": "One of the five panels of the single flight wing."
+  },
+  {
+   "id": "array-hinge-2",
+   "role": "detail",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.8,
+     0.03,
+     0.03
+    ]
+   },
+   "at": [
+    0.1,
+    -2.401,
+    -4.963
+   ],
+   "stage": 1,
+   "certainty": "inferred",
+   "basis": [
+    "array.panels"
+   ],
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.5
+   },
+   "rotate": [
+    16,
+    0,
+    0
+   ]
+  },
+  {
+   "id": "array-panel-3",
+   "role": "identity",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.84,
+     0.05,
+     0.8
+    ],
+    "ribs": 4
+   },
+   "at": [
+    0.1,
+    -2.52,
+    -4.55
+   ],
+   "stage": 1,
+   "certainty": "inferred",
+   "label": "Five-panel solar array",
+   "basis": [
+    "array.panels",
+    "array.power"
+   ],
+   "look": {
+    "weight": 1.1400000000000001,
+    "glow": 0.3,
+    "alpha": 0.95
+   },
+   "rotate": [
+    16,
+    0,
+    0
+   ],
+   "note": "One of the five panels of the single flight wing."
+  },
+  {
+   "id": "array-hinge-3",
+   "role": "detail",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.8,
+     0.03,
+     0.03
+    ]
+   },
+   "at": [
+    0.1,
+    -2.639,
+    -4.137
+   ],
+   "stage": 1,
+   "certainty": "inferred",
+   "basis": [
+    "array.panels"
+   ],
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.5
+   },
+   "rotate": [
+    16,
+    0,
+    0
+   ]
+  },
+  {
+   "id": "array-panel-4",
+   "role": "identity",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.84,
+     0.05,
+     0.8
+    ],
+    "ribs": 4
+   },
+   "at": [
+    0.1,
+    -2.757,
+    -3.723
+   ],
+   "stage": 1,
+   "certainty": "inferred",
+   "basis": [
+    "array.panels",
+    "array.power"
+   ],
+   "look": {
+    "weight": 1.1600000000000001,
+    "glow": 0.3,
+    "alpha": 0.95
+   },
+   "rotate": [
+    16,
+    0,
+    0
+   ],
+   "note": "One of the five panels of the single flight wing."
+  },
+  {
+   "id": "array-hinge-4",
+   "role": "detail",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.8,
+     0.03,
+     0.03
+    ]
+   },
+   "at": [
+    0.1,
+    -2.876,
+    -3.31
+   ],
+   "stage": 1,
+   "certainty": "inferred",
+   "basis": [
+    "array.panels"
+   ],
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.5
+   },
+   "rotate": [
+    16,
+    0,
+    0
+   ]
+  },
+  {
+   "id": "array-panel-5",
+   "role": "identity",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.84,
+     0.05,
+     0.8
+    ],
+    "ribs": 4
+   },
+   "at": [
+    0.1,
+    -2.994,
+    -2.897
+   ],
+   "stage": 1,
+   "certainty": "inferred",
+   "basis": [
+    "array.panels",
+    "array.power"
+   ],
+   "look": {
+    "weight": 1.1800000000000002,
+    "glow": 0.3,
+    "alpha": 0.95
+   },
+   "rotate": [
+    16,
+    0,
+    0
+   ],
+   "note": "One of the five panels of the single flight wing."
+  },
+  {
+   "id": "array-hinge-5",
+   "role": "detail",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.8,
+     0.03,
+     0.03
+    ]
+   },
+   "at": [
+    0.1,
+    -3.113,
+    -2.483
+   ],
+   "stage": 1,
+   "certainty": "inferred",
+   "basis": [
+    "array.panels"
+   ],
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.5
+   },
+   "rotate": [
+    16,
+    0,
+    0
+   ]
+  },
+  {
+   "id": "array-backbone",
+   "role": "structure",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.94,
+     0.06,
+     4.46
+    ],
+    "ribs": 5
+   },
+   "at": [
+    0.1,
+    -2.568,
+    -4.564
+   ],
+   "stage": 1,
+   "certainty": "inferred",
+   "basis": [
+    "array.panels"
+   ],
+   "look": {
+    "weight": 0.75
+   },
+   "rotate": [
+    16,
+    0,
+    0
+   ]
+  },
+  {
+   "id": "array-frame-a",
+   "role": "structure",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.1,
+     0.09,
+     4.42
+    ]
+   },
+   "at": [
+    0.94,
+    -2.52,
+    -4.55
+   ],
+   "stage": 1,
+   "certainty": "inferred",
+   "basis": [
+    "array.panels"
+   ],
+   "look": {
+    "weight": 0.7
+   },
+   "rotate": [
+    16,
+    0,
+    0
+   ]
+  },
+  {
+   "id": "array-frame-b",
+   "role": "structure",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.1,
+     0.09,
+     4.42
+    ]
+   },
+   "at": [
+    -0.74,
+    -2.52,
+    -4.55
+   ],
+   "stage": 1,
+   "certainty": "inferred",
+   "basis": [
+    "array.panels"
+   ],
+   "look": {
+    "weight": 0.7
+   },
+   "rotate": [
+    16,
+    0,
+    0
+   ]
+  },
+  {
+   "id": "hga-arm",
+   "role": "structure",
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      -1.2,
+      -2.84,
+      0.55
+     ],
+     [
+      -1.65,
+      -3.02,
+      0.86
+     ],
+     [
+      -1.9,
+      -3.1,
+      1.02
+     ]
+    ],
+    "radius": [
+     0.07,
+     0.06,
+     0.05
+    ],
+    "sides": 6,
+    "samples": 5
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 1,
+   "certainty": "inferred",
+   "label": "High-gain antenna mount",
+   "basis": [
+    "hga.diameter"
+   ]
+  },
+  {
+   "id": "hga-dish",
+   "role": "identity",
+   "shape": {
+    "type": "lathe",
+    "segments": 20,
+    "meridians": 6,
+    "profile": [
+     [
+      0.02,
+      0.0
+     ],
+     [
+      0.16,
+      0.012
+     ],
+     [
+      0.34,
+      0.05
+     ],
+     [
+      0.3,
+      0.075
+     ],
+     [
+      0.17,
+      0.035
+     ],
+     [
+      0.0,
+      0.03
+     ]
+    ]
+   },
+   "at": [
+    -1.92,
+    -3.12,
+    1.03
+   ],
+   "stage": 1,
+   "certainty": "inferred",
+   "label": "High-gain antenna",
+   "basis": [
+    "hga.diameter"
+   ],
+   "look": {
+    "weight": 1.05,
+    "glow": 0.2
+   },
+   "rotate": [
+    0,
+    0,
+    -58
+   ],
+   "note": "0.6 m Ka-band dish."
+  },
+  {
+   "id": "hga-feed-0",
+   "role": "detail",
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      -1.92,
+      -3.12,
+      1.03
+     ],
+     [
+      -1.6,
+      -2.8,
+      1.19
+     ]
+    ],
+    "radius": 0.014,
+    "sides": 4,
+    "samples": 2
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 1,
+   "certainty": "inferred",
+   "basis": [
+    "hga.diameter"
+   ],
+   "look": {
+    "weight": 0.45,
+    "alpha": 0.5
+   }
+  },
+  {
+   "id": "hga-feed-1",
+   "role": "detail",
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      -1.92,
+      -3.12,
+      1.03
+     ],
+     [
+      -1.7385640646055103,
+      -2.8,
+      0.95
+     ]
+    ],
+    "radius": 0.014,
+    "sides": 4,
+    "samples": 2
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 1,
+   "certainty": "inferred",
+   "basis": [
+    "hga.diameter"
+   ],
+   "look": {
+    "weight": 0.45,
+    "alpha": 0.5
+   }
+  },
+  {
+   "id": "hga-feed-2",
+   "role": "detail",
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      -1.92,
+      -3.12,
+      1.03
+     ],
+     [
+      -1.46143593539449,
+      -2.8,
+      0.95
+     ]
+    ],
+    "radius": 0.014,
+    "sides": 4,
+    "samples": 2
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 1,
+   "certainty": "inferred",
+   "basis": [
+    "hga.diameter"
+   ],
+   "look": {
+    "weight": 0.45,
+    "alpha": 0.5
+   }
+  },
+  {
+   "id": "mga",
+   "role": "detail",
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.12,
+    "height": 0.26,
+    "segments": 8
+   },
+   "at": [
+    -1.62,
+    -1.3,
+    -0.95
+   ],
+   "stage": 1,
+   "certainty": "inferred",
+   "basis": [
+    "hga.diameter"
+   ],
+   "look": {
+    "weight": 0.6,
+    "alpha": 0.6
+   },
+   "rotate": [
+    0,
+    0,
+    90
+   ]
+  },
+  {
+   "id": "shield-hub",
+   "role": "mass",
+   "shape": {
+    "type": "box",
+    "size": [
+     4.0,
+     0.7,
+     2.4
+    ],
+    "ribs": 6
+   },
+   "at": [
+    -0.8,
+    0.07,
+    0
+   ],
+   "stage": 2,
+   "certainty": "inferred",
+   "label": "Sunshield hub and rim",
+   "basis": [
+    "sunshield.length"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.85,
+    "alpha": 0.8
+   }
+  },
+  {
+   "id": "mid-boom-p",
+   "role": "structure",
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      0.0,
+      0.05,
+      -1.05
+     ],
+     [
+      0.0,
+      0.02,
+      -4.1
+     ],
+     [
+      0.0,
+      0.0,
+      -7.25
+     ]
+    ],
+    "radius": [
+     0.11,
+     0.085,
+     0.07
+    ],
+    "sides": 8,
+    "samples": 7
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 2,
+   "certainty": "inferred",
+   "label": "Mid-boom",
+   "basis": [
+    "sunshield.width"
+   ],
+   "look": {
+    "weight": 0.95
+   }
+  },
+  {
+   "id": "mid-boom-tip-p",
+   "role": "detail",
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      0.0,
+      0.0,
+      -7.25
+     ],
+     [
+      0.0,
+      0.0,
+      -7.62
+     ]
+    ],
+    "radius": 0.035,
+    "sides": 6,
+    "samples": 2
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 2,
+   "certainty": "inferred",
+   "basis": [
+    "sunshield.width"
+   ],
+   "look": {
+    "weight": 0.55,
+    "alpha": 0.65
+   }
+  },
+  {
+   "id": "ups-p",
+   "role": "mass",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.95,
+     0.26,
+     5.6
+    ],
+    "ribs": 8
+   },
+   "at": [
+    -8.95,
+    -0.42,
+    0
+   ],
+   "stage": 2,
+   "certainty": "inferred",
+   "label": "Pallet structure",
+   "basis": [
+    "sunshield.length"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.8,
+    "alpha": 0.7
+   },
+   "note": "Unitized pallet that carried the folded membranes."
+  },
+  {
+   "id": "ups-lip-p",
+   "role": "detail",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.22,
+     0.1,
+     5.2
+    ],
+    "ribs": 10
+   },
+   "at": [
+    -8.55,
+    -0.2,
+    0
+   ],
+   "stage": 2,
+   "certainty": "inferred",
+   "basis": [
+    "sunshield.length"
+   ],
+   "look": {
+    "weight": 0.6,
+    "alpha": 0.6
+   }
+  },
+  {
+   "id": "mid-boom-s",
+   "role": "structure",
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      0.0,
+      0.05,
+      1.05
+     ],
+     [
+      0.0,
+      0.02,
+      4.1
+     ],
+     [
+      0.0,
+      0.0,
+      7.25
+     ]
+    ],
+    "radius": [
+     0.11,
+     0.085,
+     0.07
+    ],
+    "sides": 8,
+    "samples": 7
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 2,
+   "certainty": "inferred",
+   "label": "Mid-boom",
+   "basis": [
+    "sunshield.width"
+   ],
+   "look": {
+    "weight": 0.95
+   }
+  },
+  {
+   "id": "mid-boom-tip-s",
+   "role": "detail",
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      0.0,
+      0.0,
+      7.25
+     ],
+     [
+      0.0,
+      0.0,
+      7.62
+     ]
+    ],
+    "radius": 0.035,
+    "sides": 6,
+    "samples": 2
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 2,
+   "certainty": "inferred",
+   "basis": [
+    "sunshield.width"
+   ],
+   "look": {
+    "weight": 0.55,
+    "alpha": 0.65
+   }
+  },
+  {
+   "id": "ups-s",
+   "role": "mass",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.95,
+     0.26,
+     5.6
+    ],
+    "ribs": 8
+   },
+   "at": [
+    8.95,
+    -0.42,
+    0
+   ],
+   "stage": 2,
+   "certainty": "inferred",
+   "label": "Pallet structure",
+   "basis": [
+    "sunshield.length"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.8,
+    "alpha": 0.7
+   },
+   "note": "Unitized pallet that carried the folded membranes."
+  },
+  {
+   "id": "ups-lip-s",
+   "role": "detail",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.22,
+     0.1,
+     5.2
+    ],
+    "ribs": 10
+   },
+   "at": [
+    8.55,
+    -0.2,
+    0
+   ],
+   "stage": 2,
+   "certainty": "inferred",
+   "basis": [
+    "sunshield.length"
+   ],
+   "look": {
+    "weight": 0.6,
+    "alpha": 0.6
+   }
+  },
+  {
+   "id": "trim-flap",
+   "role": "detail",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.9,
+     0.03,
+     1.9
+    ],
+    "ribs": 3
+   },
+   "at": [
+    -10.1,
+    -0.2,
+    0
+   ],
+   "stage": 2,
+   "certainty": "inferred",
+   "basis": [
+    "sunshield.length"
+   ],
+   "look": {
+    "weight": 0.6,
+    "alpha": 0.6
+   },
+   "rotate": [
+    0,
+    0,
+    14
+   ],
+   "note": "Momentum trim tab."
+  },
+  {
+   "id": "shield-layer-1",
+   "role": "mass",
+   "shape": {
+    "type": "loft",
+    "sections": [
+     [
+      -10.598,
+      0.06,
+      -0.582,
+      -0.537
+     ],
+     [
+      -7.0,
+      6.05,
+      -0.279,
+      -0.234
+     ],
+     [
+      -3.6,
+      6.95,
+      -0.078,
+      -0.033
+     ],
+     [
+      0.0,
+      7.081,
+      0.018,
+      0.062
+     ],
+     [
+      3.6,
+      6.95,
+      -0.078,
+      -0.033
+     ],
+     [
+      7.0,
+      6.05,
+      -0.279,
+      -0.234
+     ],
+     [
+      10.598,
+      0.06,
+      -0.582,
+      -0.537
+     ]
+    ],
+    "round": 0.06
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 3,
+   "certainty": "inferred",
+   "label": "Sunshield layer 1",
+   "basis": [
+    "sunshield.length",
+    "sunshield.width"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.42,
+    "alpha": 0.46
+   },
+   "rotate": [
+    0,
+    90,
+    0
+   ],
+   "note": "Kapton membrane; layer 1 faces the Sun (doped-silicon, lavender)."
+  },
+  {
+   "id": "shield-layer-2",
+   "role": "mass",
+   "shape": {
+    "type": "loft",
+    "sections": [
+     [
+      -10.514,
+      0.06,
+      -0.273,
+      -0.228
+     ],
+     [
+      -6.944,
+      6.002,
+      -0.014,
+      0.031
+     ],
+     [
+      -3.571,
+      6.894,
+      0.156,
+      0.201
+     ],
+     [
+      0.0,
+      7.024,
+      0.238,
+      0.283
+     ],
+     [
+      3.571,
+      6.894,
+      0.156,
+      0.201
+     ],
+     [
+      6.944,
+      6.002,
+      -0.014,
+      0.031
+     ],
+     [
+      10.514,
+      0.06,
+      -0.273,
+      -0.228
+     ]
+    ],
+    "round": 0.06
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 3,
+   "certainty": "inferred",
+   "basis": [
+    "sunshield.length",
+    "sunshield.width"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.34,
+    "alpha": 0.43000000000000005
+   },
+   "rotate": [
+    0,
+    90,
+    0
+   ],
+   "motion": {
+    "type": "bob",
+    "axis": [
+     0,
+     1,
+     0
+    ],
+    "distance": 0.03,
+    "period": 19,
+    "phase": 0.26
+   },
+   "note": "Kapton membrane; layer 1 faces the Sun (doped-silicon, lavender)."
+  },
+  {
+   "id": "shield-layer-3",
+   "role": "mass",
+   "shape": {
+    "type": "loft",
+    "sections": [
+     [
+      -10.429,
+      0.059,
+      0.037,
+      0.082
+     ],
+     [
+      -6.888,
+      5.953,
+      0.25,
+      0.295
+     ],
+     [
+      -3.542,
+      6.839,
+      0.391,
+      0.436
+     ],
+     [
+      0.0,
+      6.968,
+      0.457,
+      0.502
+     ],
+     [
+      3.542,
+      6.839,
+      0.391,
+      0.436
+     ],
+     [
+      6.888,
+      5.953,
+      0.25,
+      0.295
+     ],
+     [
+      10.429,
+      0.059,
+      0.037,
+      0.082
+     ]
+    ],
+    "round": 0.06
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 3,
+   "certainty": "inferred",
+   "basis": [
+    "sunshield.length",
+    "sunshield.width"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.34,
+    "alpha": 0.4
+   },
+   "rotate": [
+    0,
+    90,
+    0
+   ],
+   "motion": {
+    "type": "bob",
+    "axis": [
+     0,
+     1,
+     0
+    ],
+    "distance": 0.03,
+    "period": 21,
+    "phase": 0.39
+   },
+   "note": "Kapton membrane; layer 1 faces the Sun (doped-silicon, lavender)."
+  },
+  {
+   "id": "shield-layer-4",
+   "role": "mass",
+   "shape": {
+    "type": "loft",
+    "sections": [
+     [
+      -10.344,
+      0.059,
+      0.348,
+      0.393
+     ],
+     [
+      -6.832,
+      5.905,
+      0.514,
+      0.559
+     ],
+     [
+      -3.514,
+      6.783,
+      0.625,
+      0.67
+     ],
+     [
+      0.0,
+      6.911,
+      0.678,
+      0.723
+     ],
+     [
+      3.514,
+      6.783,
+      0.625,
+      0.67
+     ],
+     [
+      6.832,
+      5.905,
+      0.514,
+      0.559
+     ],
+     [
+      10.344,
+      0.059,
+      0.348,
+      0.393
+     ]
+    ],
+    "round": 0.06
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 3,
+   "certainty": "inferred",
+   "basis": [
+    "sunshield.length",
+    "sunshield.width"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.34,
+    "alpha": 0.37
+   },
+   "rotate": [
+    0,
+    90,
+    0
+   ],
+   "motion": {
+    "type": "bob",
+    "axis": [
+     0,
+     1,
+     0
+    ],
+    "distance": 0.03,
+    "period": 23,
+    "phase": 0.52
+   },
+   "note": "Kapton membrane; layer 1 faces the Sun (doped-silicon, lavender)."
+  },
+  {
+   "id": "shield-layer-5",
+   "role": "mass",
+   "shape": {
+    "type": "loft",
+    "sections": [
+     [
+      -10.259,
+      0.058,
+      0.658,
+      0.703
+     ],
+     [
+      -6.776,
+      5.856,
+      0.779,
+      0.824
+     ],
+     [
+      -3.485,
+      6.728,
+      0.859,
+      0.904
+     ],
+     [
+      0.0,
+      6.854,
+      0.898,
+      0.943
+     ],
+     [
+      3.485,
+      6.728,
+      0.859,
+      0.904
+     ],
+     [
+      6.776,
+      5.856,
+      0.779,
+      0.824
+     ],
+     [
+      10.259,
+      0.058,
+      0.658,
+      0.703
+     ]
+    ],
+    "round": 0.06
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 3,
+   "certainty": "inferred",
+   "label": "Sunshield layer 5",
+   "basis": [
+    "sunshield.length",
+    "sunshield.width"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.34,
+    "alpha": 0.34
+   },
+   "rotate": [
+    0,
+    90,
+    0
+   ],
+   "motion": {
+    "type": "bob",
+    "axis": [
+     0,
+     1,
+     0
+    ],
+    "distance": 0.03,
+    "period": 25,
+    "phase": 0.65
+   },
+   "note": "Kapton membrane; layer 1 faces the Sun (doped-silicon, lavender)."
+  },
+  {
+   "id": "layer-1-outline",
+   "role": "identity",
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -10.598,
+      -0.536,
+      0.02
+     ],
+     [
+      -7.0,
+      -0.232,
+      -6.2
+     ],
+     [
+      -3.5,
+      -0.027,
+      -6.75
+     ],
+     [
+      0.0,
+      0.064,
+      -7.081
+     ],
+     [
+      3.5,
+      -0.027,
+      -6.75
+     ],
+     [
+      7.0,
+      -0.232,
+      -6.2
+     ],
+     [
+      10.598,
+      -0.536,
+      0.02
+     ],
+     [
+      7.0,
+      -0.232,
+      6.2
+     ],
+     [
+      3.5,
+      -0.027,
+      6.75
+     ],
+     [
+      0.0,
+      0.064,
+      7.081
+     ],
+     [
+      -3.5,
+      -0.027,
+      6.75
+     ],
+     [
+      -7.0,
+      -0.232,
+      6.2
+     ]
+    ],
+    "closed": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 3,
+   "certainty": "inferred",
+   "basis": [
+    "sunshield.length",
+    "sunshield.width"
+   ],
+   "look": {
+    "weight": 1.65,
+    "glow": 0.28,
+    "alpha": 0.9
+   },
+   "note": "Tensioned edge of the outer membrane."
+  },
+  {
+   "id": "layer-1-border",
+   "role": "structure",
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -9.11,
+      -0.532,
+      0.02
+     ],
+     [
+      -6.02,
+      -0.228,
+      -5.33
+     ],
+     [
+      -3.01,
+      -0.023,
+      -5.8
+     ],
+     [
+      0.0,
+      0.068,
+      -6.09
+     ],
+     [
+      3.01,
+      -0.023,
+      -5.8
+     ],
+     [
+      6.02,
+      -0.228,
+      -5.33
+     ],
+     [
+      9.11,
+      -0.532,
+      0.02
+     ],
+     [
+      6.02,
+      -0.228,
+      5.33
+     ],
+     [
+      3.01,
+      -0.023,
+      5.8
+     ],
+     [
+      0.0,
+      0.068,
+      6.09
+     ],
+     [
+      -3.01,
+      -0.023,
+      5.8
+     ],
+     [
+      -6.02,
+      -0.228,
+      5.33
+     ]
+    ],
+    "closed": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 3,
+   "certainty": "inferred",
+   "label": "Membrane tension border",
+   "basis": [
+    "sunshield.length",
+    "sunshield.width"
+   ],
+   "look": {
+    "weight": 0.95,
+    "alpha": 0.7
+   },
+   "note": "The catenary border each membrane is tensioned against."
+  },
+  {
+   "id": "layer-1-keel",
+   "role": "detail",
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -10.6,
+      -0.534,
+      0.0
+     ],
+     [
+      -7.4,
+      -0.26,
+      0.0
+     ],
+     [
+      -3.7,
+      -0.034,
+      0.0
+     ],
+     [
+      0,
+      0.066,
+      0.0
+     ],
+     [
+      3.7,
+      -0.034,
+      0.0
+     ],
+     [
+      7.4,
+      -0.26,
+      0.0
+     ],
+     [
+      10.6,
+      -0.534,
+      0.0
+     ]
+    ],
+    "smooth": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 3,
+   "certainty": "inferred",
+   "basis": [
+    "sunshield.length"
+   ],
+   "look": {
+    "weight": 0.7,
+    "alpha": 0.5
+   }
+  },
+  {
+   "id": "catenary-1-p46",
+   "role": "detail",
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -9.6,
+      -0.454,
+      -3.28
+     ],
+     [
+      -6.0,
+      -0.166,
+      -4.08
+     ],
+     [
+      -3.0,
+      -0.003,
+      -4.47
+     ],
+     [
+      0.0,
+      0.07,
+      -4.6
+     ],
+     [
+      3.0,
+      -0.003,
+      -4.47
+     ],
+     [
+      6.0,
+      -0.166,
+      -4.08
+     ],
+     [
+      9.6,
+      -0.454,
+      -3.28
+     ]
+    ],
+    "smooth": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 3,
+   "certainty": "inferred",
+   "basis": [
+    "sunshield.length",
+    "sunshield.width"
+   ],
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.32
+   }
+  },
+  {
+   "id": "catenary-1-p23",
+   "role": "detail",
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -9.6,
+      -0.454,
+      -1.64
+     ],
+     [
+      -6.0,
+      -0.166,
+      -2.04
+     ],
+     [
+      -3.0,
+      -0.003,
+      -2.24
+     ],
+     [
+      0.0,
+      0.07,
+      -2.3
+     ],
+     [
+      3.0,
+      -0.003,
+      -2.24
+     ],
+     [
+      6.0,
+      -0.166,
+      -2.04
+     ],
+     [
+      9.6,
+      -0.454,
+      -1.64
+     ]
+    ],
+    "smooth": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 3,
+   "certainty": "inferred",
+   "basis": [
+    "sunshield.length",
+    "sunshield.width"
+   ],
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.32
+   }
+  },
+  {
+   "id": "catenary-1-s23",
+   "role": "detail",
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -9.6,
+      -0.454,
+      1.64
+     ],
+     [
+      -6.0,
+      -0.166,
+      2.04
+     ],
+     [
+      -3.0,
+      -0.003,
+      2.24
+     ],
+     [
+      0.0,
+      0.07,
+      2.3
+     ],
+     [
+      3.0,
+      -0.003,
+      2.24
+     ],
+     [
+      6.0,
+      -0.166,
+      2.04
+     ],
+     [
+      9.6,
+      -0.454,
+      1.64
+     ]
+    ],
+    "smooth": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 3,
+   "certainty": "inferred",
+   "basis": [
+    "sunshield.length",
+    "sunshield.width"
+   ],
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.32
+   }
+  },
+  {
+   "id": "catenary-1-s46",
+   "role": "detail",
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -9.6,
+      -0.454,
+      3.28
+     ],
+     [
+      -6.0,
+      -0.166,
+      4.08
+     ],
+     [
+      -3.0,
+      -0.003,
+      4.47
+     ],
+     [
+      0.0,
+      0.07,
+      4.6
+     ],
+     [
+      3.0,
+      -0.003,
+      4.47
+     ],
+     [
+      6.0,
+      -0.166,
+      4.08
+     ],
+     [
+      9.6,
+      -0.454,
+      3.28
+     ]
+    ],
+    "smooth": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 3,
+   "certainty": "inferred",
+   "basis": [
+    "sunshield.length",
+    "sunshield.width"
+   ],
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.32
+   }
+  },
+  {
+   "id": "catenary-5-p46",
+   "role": "detail",
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -9.6,
+      0.421,
+      -3.28
+     ],
+     [
+      -6.0,
+      0.514,
+      -4.08
+     ],
+     [
+      -3.0,
+      0.567,
+      -4.47
+     ],
+     [
+      0.0,
+      0.59,
+      -4.6
+     ],
+     [
+      3.0,
+      0.567,
+      -4.47
+     ],
+     [
+      6.0,
+      0.514,
+      -4.08
+     ],
+     [
+      9.6,
+      0.421,
+      -3.28
+     ]
+    ],
+    "smooth": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 3,
+   "certainty": "inferred",
+   "basis": [
+    "sunshield.length",
+    "sunshield.width"
+   ],
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.32
+   }
+  },
+  {
+   "id": "catenary-5-p23",
+   "role": "detail",
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -9.6,
+      0.421,
+      -1.64
+     ],
+     [
+      -6.0,
+      0.514,
+      -2.04
+     ],
+     [
+      -3.0,
+      0.567,
+      -2.24
+     ],
+     [
+      0.0,
+      0.59,
+      -2.3
+     ],
+     [
+      3.0,
+      0.567,
+      -2.24
+     ],
+     [
+      6.0,
+      0.514,
+      -2.04
+     ],
+     [
+      9.6,
+      0.421,
+      -1.64
+     ]
+    ],
+    "smooth": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 3,
+   "certainty": "inferred",
+   "basis": [
+    "sunshield.length",
+    "sunshield.width"
+   ],
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.32
+   }
+  },
+  {
+   "id": "catenary-5-s23",
+   "role": "detail",
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -9.6,
+      0.421,
+      1.64
+     ],
+     [
+      -6.0,
+      0.514,
+      2.04
+     ],
+     [
+      -3.0,
+      0.567,
+      2.24
+     ],
+     [
+      0.0,
+      0.59,
+      2.3
+     ],
+     [
+      3.0,
+      0.567,
+      2.24
+     ],
+     [
+      6.0,
+      0.514,
+      2.04
+     ],
+     [
+      9.6,
+      0.421,
+      1.64
+     ]
+    ],
+    "smooth": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 3,
+   "certainty": "inferred",
+   "basis": [
+    "sunshield.length",
+    "sunshield.width"
+   ],
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.32
+   }
+  },
+  {
+   "id": "catenary-5-s46",
+   "role": "detail",
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -9.6,
+      0.421,
+      3.28
+     ],
+     [
+      -6.0,
+      0.514,
+      4.08
+     ],
+     [
+      -3.0,
+      0.567,
+      4.47
+     ],
+     [
+      0.0,
+      0.59,
+      4.6
+     ],
+     [
+      3.0,
+      0.567,
+      4.47
+     ],
+     [
+      6.0,
+      0.514,
+      4.08
+     ],
+     [
+      9.6,
+      0.421,
+      3.28
+     ]
+    ],
+    "smooth": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 3,
+   "certainty": "inferred",
+   "basis": [
+    "sunshield.length",
+    "sunshield.width"
+   ],
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.32
+   }
+  },
+  {
+   "id": "crease-1-n51",
+   "role": "detail",
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -9.2,
+      -0.413,
+      -4.25
+     ],
+     [
+      -6.6,
+      -0.226,
+      -4.66
+     ],
+     [
+      -3.3,
+      -0.053,
+      -4.99
+     ],
+     [
+      0.0,
+      0.025,
+      -5.1
+     ],
+     [
+      3.3,
+      -0.053,
+      -4.99
+     ],
+     [
+      6.6,
+      -0.226,
+      -4.66
+     ],
+     [
+      9.2,
+      -0.413,
+      -4.25
+     ]
+    ],
+    "smooth": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 3,
+   "certainty": "inferred",
+   "basis": [
+    "sunshield.length",
+    "sunshield.width"
+   ],
+   "look": {
+    "weight": 0.4,
+    "alpha": 0.26
+   }
+  },
+  {
+   "id": "crease-1-n34",
+   "role": "detail",
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -9.2,
+      -0.409,
+      -2.84
+     ],
+     [
+      -6.6,
+      -0.217,
+      -3.11
+     ],
+     [
+      -3.3,
+      -0.04,
+      -3.33
+     ],
+     [
+      0.0,
+      0.04,
+      -3.4
+     ],
+     [
+      3.3,
+      -0.04,
+      -3.33
+     ],
+     [
+      6.6,
+      -0.217,
+      -3.11
+     ],
+     [
+      9.2,
+      -0.409,
+      -2.84
+     ]
+    ],
+    "smooth": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 3,
+   "certainty": "inferred",
+   "basis": [
+    "sunshield.length",
+    "sunshield.width"
+   ],
+   "look": {
+    "weight": 0.4,
+    "alpha": 0.26
+   }
+  },
+  {
+   "id": "crease-1-n17",
+   "role": "detail",
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -9.2,
+      -0.405,
+      -1.42
+     ],
+     [
+      -6.6,
+      -0.207,
+      -1.55
+     ],
+     [
+      -3.3,
+      -0.026,
+      -1.66
+     ],
+     [
+      0.0,
+      0.055,
+      -1.7
+     ],
+     [
+      3.3,
+      -0.026,
+      -1.66
+     ],
+     [
+      6.6,
+      -0.207,
+      -1.55
+     ],
+     [
+      9.2,
+      -0.405,
+      -1.42
+     ]
+    ],
+    "smooth": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 3,
+   "certainty": "inferred",
+   "basis": [
+    "sunshield.length",
+    "sunshield.width"
+   ],
+   "look": {
+    "weight": 0.4,
+    "alpha": 0.26
+   }
+  },
+  {
+   "id": "crease-1-17",
+   "role": "detail",
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -9.2,
+      -0.405,
+      1.42
+     ],
+     [
+      -6.6,
+      -0.207,
+      1.55
+     ],
+     [
+      -3.3,
+      -0.026,
+      1.66
+     ],
+     [
+      0.0,
+      0.055,
+      1.7
+     ],
+     [
+      3.3,
+      -0.026,
+      1.66
+     ],
+     [
+      6.6,
+      -0.207,
+      1.55
+     ],
+     [
+      9.2,
+      -0.405,
+      1.42
+     ]
+    ],
+    "smooth": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 3,
+   "certainty": "inferred",
+   "basis": [
+    "sunshield.length",
+    "sunshield.width"
+   ],
+   "look": {
+    "weight": 0.4,
+    "alpha": 0.26
+   }
+  },
+  {
+   "id": "crease-1-34",
+   "role": "detail",
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -9.2,
+      -0.409,
+      2.84
+     ],
+     [
+      -6.6,
+      -0.217,
+      3.11
+     ],
+     [
+      -3.3,
+      -0.04,
+      3.33
+     ],
+     [
+      0.0,
+      0.04,
+      3.4
+     ],
+     [
+      3.3,
+      -0.04,
+      3.33
+     ],
+     [
+      6.6,
+      -0.217,
+      3.11
+     ],
+     [
+      9.2,
+      -0.409,
+      2.84
+     ]
+    ],
+    "smooth": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 3,
+   "certainty": "inferred",
+   "basis": [
+    "sunshield.length",
+    "sunshield.width"
+   ],
+   "look": {
+    "weight": 0.4,
+    "alpha": 0.26
+   }
+  },
+  {
+   "id": "crease-1-51",
+   "role": "detail",
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -9.2,
+      -0.413,
+      4.25
+     ],
+     [
+      -6.6,
+      -0.226,
+      4.66
+     ],
+     [
+      -3.3,
+      -0.053,
+      4.99
+     ],
+     [
+      0.0,
+      0.025,
+      5.1
+     ],
+     [
+      3.3,
+      -0.053,
+      4.99
+     ],
+     [
+      6.6,
+      -0.226,
+      4.66
+     ],
+     [
+      9.2,
+      -0.413,
+      4.25
+     ]
+    ],
+    "smooth": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 3,
+   "certainty": "inferred",
+   "basis": [
+    "sunshield.length",
+    "sunshield.width"
+   ],
+   "look": {
+    "weight": 0.4,
+    "alpha": 0.26
+   }
+  },
+  {
+   "id": "crease-3-n51",
+   "role": "detail",
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -9.05,
+      0.169,
+      -4.19
+     ],
+     [
+      -6.49,
+      0.295,
+      -4.59
+     ],
+     [
+      -3.25,
+      0.412,
+      -4.91
+     ],
+     [
+      0.0,
+      0.465,
+      -5.02
+     ],
+     [
+      3.25,
+      0.412,
+      -4.91
+     ],
+     [
+      6.49,
+      0.295,
+      -4.59
+     ],
+     [
+      9.05,
+      0.169,
+      -4.19
+     ]
+    ],
+    "smooth": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 3,
+   "certainty": "inferred",
+   "basis": [
+    "sunshield.length",
+    "sunshield.width"
+   ],
+   "look": {
+    "weight": 0.4,
+    "alpha": 0.26
+   }
+  },
+  {
+   "id": "crease-3-n34",
+   "role": "detail",
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -9.05,
+      0.172,
+      -2.79
+     ],
+     [
+      -6.49,
+      0.304,
+      -3.06
+     ],
+     [
+      -3.25,
+      0.425,
+      -3.27
+     ],
+     [
+      0.0,
+      0.48,
+      -3.35
+     ],
+     [
+      3.25,
+      0.425,
+      -3.27
+     ],
+     [
+      6.49,
+      0.304,
+      -3.06
+     ],
+     [
+      9.05,
+      0.172,
+      -2.79
+     ]
+    ],
+    "smooth": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 3,
+   "certainty": "inferred",
+   "basis": [
+    "sunshield.length",
+    "sunshield.width"
+   ],
+   "look": {
+    "weight": 0.4,
+    "alpha": 0.26
+   }
+  },
+  {
+   "id": "crease-3-n17",
+   "role": "detail",
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -9.05,
+      0.176,
+      -1.4
+     ],
+     [
+      -6.49,
+      0.313,
+      -1.53
+     ],
+     [
+      -3.25,
+      0.439,
+      -1.64
+     ],
+     [
+      0.0,
+      0.495,
+      -1.67
+     ],
+     [
+      3.25,
+      0.439,
+      -1.64
+     ],
+     [
+      6.49,
+      0.313,
+      -1.53
+     ],
+     [
+      9.05,
+      0.176,
+      -1.4
+     ]
+    ],
+    "smooth": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 3,
+   "certainty": "inferred",
+   "basis": [
+    "sunshield.length",
+    "sunshield.width"
+   ],
+   "look": {
+    "weight": 0.4,
+    "alpha": 0.26
+   }
+  },
+  {
+   "id": "crease-3-17",
+   "role": "detail",
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -9.05,
+      0.176,
+      1.4
+     ],
+     [
+      -6.49,
+      0.313,
+      1.53
+     ],
+     [
+      -3.25,
+      0.439,
+      1.64
+     ],
+     [
+      0.0,
+      0.495,
+      1.67
+     ],
+     [
+      3.25,
+      0.439,
+      1.64
+     ],
+     [
+      6.49,
+      0.313,
+      1.53
+     ],
+     [
+      9.05,
+      0.176,
+      1.4
+     ]
+    ],
+    "smooth": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 3,
+   "certainty": "inferred",
+   "basis": [
+    "sunshield.length",
+    "sunshield.width"
+   ],
+   "look": {
+    "weight": 0.4,
+    "alpha": 0.26
+   }
+  },
+  {
+   "id": "crease-3-34",
+   "role": "detail",
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -9.05,
+      0.172,
+      2.79
+     ],
+     [
+      -6.49,
+      0.304,
+      3.06
+     ],
+     [
+      -3.25,
+      0.425,
+      3.27
+     ],
+     [
+      0.0,
+      0.48,
+      3.35
+     ],
+     [
+      3.25,
+      0.425,
+      3.27
+     ],
+     [
+      6.49,
+      0.304,
+      3.06
+     ],
+     [
+      9.05,
+      0.172,
+      2.79
+     ]
+    ],
+    "smooth": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 3,
+   "certainty": "inferred",
+   "basis": [
+    "sunshield.length",
+    "sunshield.width"
+   ],
+   "look": {
+    "weight": 0.4,
+    "alpha": 0.26
+   }
+  },
+  {
+   "id": "crease-3-51",
+   "role": "detail",
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -9.05,
+      0.169,
+      4.19
+     ],
+     [
+      -6.49,
+      0.295,
+      4.59
+     ],
+     [
+      -3.25,
+      0.412,
+      4.91
+     ],
+     [
+      0.0,
+      0.465,
+      5.02
+     ],
+     [
+      3.25,
+      0.412,
+      4.91
+     ],
+     [
+      6.49,
+      0.295,
+      4.59
+     ],
+     [
+      9.05,
+      0.169,
+      4.19
+     ]
+    ],
+    "smooth": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 3,
+   "certainty": "inferred",
+   "basis": [
+    "sunshield.length",
+    "sunshield.width"
+   ],
+   "look": {
+    "weight": 0.4,
+    "alpha": 0.26
+   }
+  },
+  {
+   "id": "crease-5-n51",
+   "role": "detail",
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -8.91,
+      0.75,
+      -4.12
+     ],
+     [
+      -6.39,
+      0.815,
+      -4.52
+     ],
+     [
+      -3.19,
+      0.876,
+      -4.83
+     ],
+     [
+      0.0,
+      0.905,
+      -4.94
+     ],
+     [
+      3.19,
+      0.876,
+      -4.83
+     ],
+     [
+      6.39,
+      0.815,
+      -4.52
+     ],
+     [
+      8.91,
+      0.75,
+      -4.12
+     ]
+    ],
+    "smooth": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 3,
+   "certainty": "inferred",
+   "basis": [
+    "sunshield.length",
+    "sunshield.width"
+   ],
+   "look": {
+    "weight": 0.4,
+    "alpha": 0.26
+   }
+  },
+  {
+   "id": "crease-5-n34",
+   "role": "detail",
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -8.91,
+      0.754,
+      -2.75
+     ],
+     [
+      -6.39,
+      0.824,
+      -3.01
+     ],
+     [
+      -3.19,
+      0.89,
+      -3.22
+     ],
+     [
+      0.0,
+      0.92,
+      -3.29
+     ],
+     [
+      3.19,
+      0.89,
+      -3.22
+     ],
+     [
+      6.39,
+      0.824,
+      -3.01
+     ],
+     [
+      8.91,
+      0.754,
+      -2.75
+     ]
+    ],
+    "smooth": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 3,
+   "certainty": "inferred",
+   "basis": [
+    "sunshield.length",
+    "sunshield.width"
+   ],
+   "look": {
+    "weight": 0.4,
+    "alpha": 0.26
+   }
+  },
+  {
+   "id": "crease-5-n17",
+   "role": "detail",
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -8.91,
+      0.758,
+      -1.37
+     ],
+     [
+      -6.39,
+      0.834,
+      -1.51
+     ],
+     [
+      -3.19,
+      0.903,
+      -1.61
+     ],
+     [
+      0.0,
+      0.935,
+      -1.65
+     ],
+     [
+      3.19,
+      0.903,
+      -1.61
+     ],
+     [
+      6.39,
+      0.834,
+      -1.51
+     ],
+     [
+      8.91,
+      0.758,
+      -1.37
+     ]
+    ],
+    "smooth": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 3,
+   "certainty": "inferred",
+   "basis": [
+    "sunshield.length",
+    "sunshield.width"
+   ],
+   "look": {
+    "weight": 0.4,
+    "alpha": 0.26
+   }
+  },
+  {
+   "id": "crease-5-17",
+   "role": "detail",
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -8.91,
+      0.758,
+      1.37
+     ],
+     [
+      -6.39,
+      0.834,
+      1.51
+     ],
+     [
+      -3.19,
+      0.903,
+      1.61
+     ],
+     [
+      0.0,
+      0.935,
+      1.65
+     ],
+     [
+      3.19,
+      0.903,
+      1.61
+     ],
+     [
+      6.39,
+      0.834,
+      1.51
+     ],
+     [
+      8.91,
+      0.758,
+      1.37
+     ]
+    ],
+    "smooth": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 3,
+   "certainty": "inferred",
+   "basis": [
+    "sunshield.length",
+    "sunshield.width"
+   ],
+   "look": {
+    "weight": 0.4,
+    "alpha": 0.26
+   }
+  },
+  {
+   "id": "crease-5-34",
+   "role": "detail",
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -8.91,
+      0.754,
+      2.75
+     ],
+     [
+      -6.39,
+      0.824,
+      3.01
+     ],
+     [
+      -3.19,
+      0.89,
+      3.22
+     ],
+     [
+      0.0,
+      0.92,
+      3.29
+     ],
+     [
+      3.19,
+      0.89,
+      3.22
+     ],
+     [
+      6.39,
+      0.824,
+      3.01
+     ],
+     [
+      8.91,
+      0.754,
+      2.75
+     ]
+    ],
+    "smooth": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 3,
+   "certainty": "inferred",
+   "basis": [
+    "sunshield.length",
+    "sunshield.width"
+   ],
+   "look": {
+    "weight": 0.4,
+    "alpha": 0.26
+   }
+  },
+  {
+   "id": "crease-5-51",
+   "role": "detail",
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -8.91,
+      0.75,
+      4.12
+     ],
+     [
+      -6.39,
+      0.815,
+      4.52
+     ],
+     [
+      -3.19,
+      0.876,
+      4.83
+     ],
+     [
+      0.0,
+      0.905,
+      4.94
+     ],
+     [
+      3.19,
+      0.876,
+      4.83
+     ],
+     [
+      6.39,
+      0.815,
+      4.52
+     ],
+     [
+      8.91,
+      0.75,
+      4.12
+     ]
+    ],
+    "smooth": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 3,
+   "certainty": "inferred",
+   "basis": [
+    "sunshield.length",
+    "sunshield.width"
+   ],
+   "look": {
+    "weight": 0.4,
+    "alpha": 0.26
+   }
+  },
+  {
+   "id": "spreader-ap",
+   "role": "structure",
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      -7.0,
+      -0.256,
+      -6.2
+     ],
+     [
+      -6.944,
+      0.011,
+      -6.15
+     ],
+     [
+      -6.888,
+      0.278,
+      -6.101
+     ],
+     [
+      -6.832,
+      0.544,
+      -6.051
+     ],
+     [
+      -6.776,
+      0.808,
+      -6.002
+     ]
+    ],
+    "radius": [
+     0.075,
+     0.07,
+     0.065,
+     0.06,
+     0.055
+    ],
+    "sides": 6,
+    "samples": 9
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 3,
+   "certainty": "inferred",
+   "label": "Corner spreader bar",
+   "basis": [
+    "sunshield.length",
+    "sunshield.width"
+   ],
+   "look": {
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "spreader-as",
+   "role": "structure",
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      -7.0,
+      -0.256,
+      6.2
+     ],
+     [
+      -6.944,
+      0.011,
+      6.15
+     ],
+     [
+      -6.888,
+      0.278,
+      6.101
+     ],
+     [
+      -6.832,
+      0.544,
+      6.051
+     ],
+     [
+      -6.776,
+      0.808,
+      6.002
+     ]
+    ],
+    "radius": [
+     0.075,
+     0.07,
+     0.065,
+     0.06,
+     0.055
+    ],
+    "sides": 6,
+    "samples": 9
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 3,
+   "certainty": "inferred",
+   "label": "Corner spreader bar",
+   "basis": [
+    "sunshield.length",
+    "sunshield.width"
+   ],
+   "look": {
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "spreader-fp",
+   "role": "structure",
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      7.0,
+      -0.256,
+      -6.2
+     ],
+     [
+      6.944,
+      0.011,
+      -6.15
+     ],
+     [
+      6.888,
+      0.278,
+      -6.101
+     ],
+     [
+      6.832,
+      0.544,
+      -6.051
+     ],
+     [
+      6.776,
+      0.808,
+      -6.002
+     ]
+    ],
+    "radius": [
+     0.075,
+     0.07,
+     0.065,
+     0.06,
+     0.055
+    ],
+    "sides": 6,
+    "samples": 9
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 3,
+   "certainty": "inferred",
+   "label": "Corner spreader bar",
+   "basis": [
+    "sunshield.length",
+    "sunshield.width"
+   ],
+   "look": {
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "spreader-fs",
+   "role": "structure",
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      7.0,
+      -0.256,
+      6.2
+     ],
+     [
+      6.944,
+      0.011,
+      6.15
+     ],
+     [
+      6.888,
+      0.278,
+      6.101
+     ],
+     [
+      6.832,
+      0.544,
+      6.051
+     ],
+     [
+      6.776,
+      0.808,
+      6.002
+     ]
+    ],
+    "radius": [
+     0.075,
+     0.07,
+     0.065,
+     0.06,
+     0.055
+    ],
+    "sides": 6,
+    "samples": 9
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 3,
+   "certainty": "inferred",
+   "label": "Corner spreader bar",
+   "basis": [
+    "sunshield.length",
+    "sunshield.width"
+   ],
+   "look": {
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "tower-leg-00",
+   "role": "structure",
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      -1.55,
+      0.42,
+      -0.55
+     ],
+     [
+      -1.55,
+      1.7,
+      -0.55
+     ],
+     [
+      -1.55,
+      2.9,
+      -0.55
+     ]
+    ],
+    "radius": [
+     0.08,
+     0.075,
+     0.07
+    ],
+    "sides": 6,
+    "samples": 4
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 4,
+   "certainty": "inferred",
+   "label": "Deployable tower",
+   "basis": [
+    "ote.height"
+   ],
+   "look": {
+    "weight": 0.8
+   }
+  },
+  {
+   "id": "tower-leg-01",
+   "role": "structure",
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      -1.55,
+      0.42,
+      0.55
+     ],
+     [
+      -1.55,
+      1.7,
+      0.55
+     ],
+     [
+      -1.55,
+      2.9,
+      0.55
+     ]
+    ],
+    "radius": [
+     0.08,
+     0.075,
+     0.07
+    ],
+    "sides": 6,
+    "samples": 4
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 4,
+   "certainty": "inferred",
+   "basis": [
+    "ote.height"
+   ],
+   "look": {
+    "weight": 0.8
+   }
+  },
+  {
+   "id": "tower-leg-10",
+   "role": "structure",
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      -2.65,
+      0.42,
+      -0.55
+     ],
+     [
+      -2.65,
+      1.7,
+      -0.55
+     ],
+     [
+      -2.65,
+      2.9,
+      -0.55
+     ]
+    ],
+    "radius": [
+     0.08,
+     0.075,
+     0.07
+    ],
+    "sides": 6,
+    "samples": 4
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 4,
+   "certainty": "inferred",
+   "basis": [
+    "ote.height"
+   ],
+   "look": {
+    "weight": 0.8
+   }
+  },
+  {
+   "id": "tower-leg-11",
+   "role": "structure",
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      -2.65,
+      0.42,
+      0.55
+     ],
+     [
+      -2.65,
+      1.7,
+      0.55
+     ],
+     [
+      -2.65,
+      2.9,
+      0.55
+     ]
+    ],
+    "radius": [
+     0.08,
+     0.075,
+     0.07
+    ],
+    "sides": 6,
+    "samples": 4
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 4,
+   "certainty": "inferred",
+   "basis": [
+    "ote.height"
+   ],
+   "look": {
+    "weight": 0.8
+   }
+  },
+  {
+   "id": "tower-brace--10",
+   "role": "structure",
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      -1.55,
+      0.42,
+      -0.55
+     ],
+     [
+      -2.65,
+      1.66,
+      -0.55
+     ]
+    ],
+    "radius": 0.07,
+    "sides": 4,
+    "samples": 2
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 4,
+   "certainty": "inferred",
+   "basis": [
+    "ote.height"
+   ],
+   "look": {
+    "weight": 0.55,
+    "alpha": 0.65
+   }
+  },
+  {
+   "id": "tower-brace-b--10",
+   "role": "structure",
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      -2.65,
+      0.42,
+      -0.55
+     ],
+     [
+      -1.55,
+      1.66,
+      -0.55
+     ]
+    ],
+    "radius": 0.07,
+    "sides": 4,
+    "samples": 2
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 4,
+   "certainty": "inferred",
+   "basis": [
+    "ote.height"
+   ],
+   "look": {
+    "weight": 0.55,
+    "alpha": 0.65
+   }
+  },
+  {
+   "id": "tower-brace--11",
+   "role": "structure",
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      -1.55,
+      1.66,
+      -0.55
+     ],
+     [
+      -2.65,
+      2.9,
+      -0.55
+     ]
+    ],
+    "radius": 0.07,
+    "sides": 4,
+    "samples": 2
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 4,
+   "certainty": "inferred",
+   "basis": [
+    "ote.height"
+   ],
+   "look": {
+    "weight": 0.55,
+    "alpha": 0.65
+   }
+  },
+  {
+   "id": "tower-brace-b--11",
+   "role": "structure",
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      -2.65,
+      1.66,
+      -0.55
+     ],
+     [
+      -1.55,
+      2.9,
+      -0.55
+     ]
+    ],
+    "radius": 0.07,
+    "sides": 4,
+    "samples": 2
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 4,
+   "certainty": "inferred",
+   "basis": [
+    "ote.height"
+   ],
+   "look": {
+    "weight": 0.55,
+    "alpha": 0.65
+   }
+  },
+  {
+   "id": "tower-brace-10",
+   "role": "structure",
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      -1.55,
+      0.42,
+      0.55
+     ],
+     [
+      -2.65,
+      1.66,
+      0.55
+     ]
+    ],
+    "radius": 0.07,
+    "sides": 4,
+    "samples": 2
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 4,
+   "certainty": "inferred",
+   "basis": [
+    "ote.height"
+   ],
+   "look": {
+    "weight": 0.55,
+    "alpha": 0.65
+   }
+  },
+  {
+   "id": "tower-brace-b-10",
+   "role": "structure",
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      -2.65,
+      0.42,
+      0.55
+     ],
+     [
+      -1.55,
+      1.66,
+      0.55
+     ]
+    ],
+    "radius": 0.07,
+    "sides": 4,
+    "samples": 2
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 4,
+   "certainty": "inferred",
+   "basis": [
+    "ote.height"
+   ],
+   "look": {
+    "weight": 0.55,
+    "alpha": 0.65
+   }
+  },
+  {
+   "id": "tower-brace-11",
+   "role": "structure",
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      -1.55,
+      1.66,
+      0.55
+     ],
+     [
+      -2.65,
+      2.9,
+      0.55
+     ]
+    ],
+    "radius": 0.07,
+    "sides": 4,
+    "samples": 2
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 4,
+   "certainty": "inferred",
+   "basis": [
+    "ote.height"
+   ],
+   "look": {
+    "weight": 0.55,
+    "alpha": 0.65
+   }
+  },
+  {
+   "id": "tower-brace-b-11",
+   "role": "structure",
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      -2.65,
+      1.66,
+      0.55
+     ],
+     [
+      -1.55,
+      2.9,
+      0.55
+     ]
+    ],
+    "radius": 0.07,
+    "sides": 4,
+    "samples": 2
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 4,
+   "certainty": "inferred",
+   "basis": [
+    "ote.height"
+   ],
+   "look": {
+    "weight": 0.55,
+    "alpha": 0.65
+   }
+  },
+  {
+   "id": "tower-deck",
+   "role": "structure",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.3,
+     0.1,
+     1.3
+    ],
+    "ribs": 3
+   },
+   "at": [
+    -2.1,
+    0.47,
+    0
+   ],
+   "stage": 4,
+   "certainty": "inferred",
+   "basis": [
+    "ote.height"
+   ]
+  },
+  {
+   "id": "isim",
+   "role": "mass",
+   "shape": {
+    "type": "box",
+    "size": [
+     3.2,
+     2.8,
+     3.2
+    ],
+    "ribs": 6
+   },
+   "at": [
+    -2.1,
+    4.3,
+    0
+   ],
+   "stage": 4,
+   "certainty": "inferred",
+   "label": "Science instrument module",
+   "basis": [
+    "ote.height"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.9,
+    "alpha": 0.85
+   }
+  },
+  {
+   "id": "isim-radiator-p",
+   "role": "structure",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.9,
+     2.4,
+     0.1
+    ],
+    "ribs": 5
+   },
+   "at": [
+    -2.1,
+    4.3,
+    -1.66
+   ],
+   "stage": 4,
+   "certainty": "inferred",
+   "basis": [
+    "ote.height"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.6,
+    "alpha": 0.6
+   }
+  },
+  {
+   "id": "isim-radiator-s",
+   "role": "structure",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.9,
+     2.4,
+     0.1
+    ],
+    "ribs": 5
+   },
+   "at": [
+    -2.1,
+    4.3,
+    1.66
+   ],
+   "stage": 4,
+   "certainty": "inferred",
+   "basis": [
+    "ote.height"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.6,
+    "alpha": 0.6
+   }
+  },
+  {
+   "id": "isim-cover",
+   "role": "structure",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.3,
+     2.2,
+     2.2
+    ],
+    "ribs": 4
+   },
+   "at": [
+    -3.72,
+    4.3,
+    0
+   ],
+   "stage": 4,
+   "certainty": "inferred",
+   "basis": [
+    "ote.height"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.55,
+    "alpha": 0.6
+   }
+  },
+  {
+   "id": "backplane",
+   "role": "mass",
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      3.0831,
+      1.78
+     ],
+     [
+      0.0,
+      3.56
+     ],
+     [
+      -3.0831,
+      1.78
+     ],
+     [
+      -3.0831,
+      -1.78
+     ],
+     [
+      -0.0,
+      -3.56
+     ],
+     [
+      3.0831,
+      -1.78
+     ]
+    ],
+    "height": 0.42,
+    "axis": "x"
+   },
+   "at": [
+    -0.52,
+    5.4,
+    0
+   ],
+   "stage": 4,
+   "certainty": "inferred",
+   "label": "Backplane structure",
+   "basis": [
+    "mirror.diameter"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.2,
+    "alpha": 0.9
+   }
+  },
+  {
+   "id": "backplane-beam-0",
+   "role": "structure",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.34,
+     0.16,
+     3.56
+    ]
+   },
+   "at": [
+    -0.36,
+    5.4,
+    3.08
+   ],
+   "stage": 4,
+   "certainty": "inferred",
+   "basis": [
+    "mirror.diameter"
+   ],
+   "look": {
+    "weight": 1.05
+   },
+   "rotate": [
+    270,
+    0,
+    0
+   ]
+  },
+  {
+   "id": "backplane-beam-1",
+   "role": "structure",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.34,
+     0.16,
+     3.56
+    ]
+   },
+   "at": [
+    -0.36,
+    8.0674,
+    1.54
+   ],
+   "stage": 4,
+   "certainty": "inferred",
+   "basis": [
+    "mirror.diameter"
+   ],
+   "look": {
+    "weight": 1.05
+   },
+   "rotate": [
+    210,
+    0,
+    0
+   ]
+  },
+  {
+   "id": "backplane-beam-2",
+   "role": "structure",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.34,
+     0.16,
+     3.56
+    ]
+   },
+   "at": [
+    -0.36,
+    8.0674,
+    -1.54
+   ],
+   "stage": 4,
+   "certainty": "inferred",
+   "basis": [
+    "mirror.diameter"
+   ],
+   "look": {
+    "weight": 1.05
+   },
+   "rotate": [
+    150,
+    0,
+    0
+   ]
+  },
+  {
+   "id": "backplane-beam-3",
+   "role": "structure",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.34,
+     0.16,
+     3.56
+    ]
+   },
+   "at": [
+    -0.36,
+    5.4,
+    -3.08
+   ],
+   "stage": 4,
+   "certainty": "inferred",
+   "basis": [
+    "mirror.diameter"
+   ],
+   "look": {
+    "weight": 1.05
+   },
+   "rotate": [
+    90,
+    0,
+    0
+   ]
+  },
+  {
+   "id": "backplane-beam-4",
+   "role": "structure",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.34,
+     0.16,
+     3.56
+    ]
+   },
+   "at": [
+    -0.36,
+    2.7326,
+    -1.54
+   ],
+   "stage": 4,
+   "certainty": "inferred",
+   "basis": [
+    "mirror.diameter"
+   ],
+   "look": {
+    "weight": 1.05
+   },
+   "rotate": [
+    30,
+    0,
+    0
+   ]
+  },
+  {
+   "id": "backplane-beam-5",
+   "role": "structure",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.34,
+     0.16,
+     3.56
+    ]
+   },
+   "at": [
+    -0.36,
+    2.7326,
+    1.54
+   ],
+   "stage": 4,
+   "certainty": "inferred",
+   "basis": [
+    "mirror.diameter"
+   ],
+   "look": {
+    "weight": 1.05
+   },
+   "rotate": [
+    -30,
+    0,
+    0
+   ]
+  },
+  {
+   "id": "backplane-spar-0",
+   "role": "structure",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.22,
+     0.12,
+     2.3
+    ]
+   },
+   "at": [
+    -0.62,
+    6.55,
+    0.0
+   ],
+   "stage": 4,
+   "certainty": "inferred",
+   "basis": [
+    "mirror.diameter"
+   ],
+   "look": {
+    "weight": 0.65,
+    "alpha": 0.7
+   },
+   "rotate": [
+    -90,
+    0,
+    0
+   ]
+  },
+  {
+   "id": "backplane-spar-1",
+   "role": "structure",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.22,
+     0.12,
+     2.3
+    ]
+   },
+   "at": [
+    -0.62,
+    4.825,
+    -0.9959
+   ],
+   "stage": 4,
+   "certainty": "inferred",
+   "basis": [
+    "mirror.diameter"
+   ],
+   "look": {
+    "weight": 0.65,
+    "alpha": 0.7
+   },
+   "rotate": [
+    -210,
+    0,
+    0
+   ]
+  },
+  {
+   "id": "backplane-spar-2",
+   "role": "structure",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.22,
+     0.12,
+     2.3
+    ]
+   },
+   "at": [
+    -0.62,
+    4.825,
+    0.9959
+   ],
+   "stage": 4,
+   "certainty": "inferred",
+   "basis": [
+    "mirror.diameter"
+   ],
+   "look": {
+    "weight": 0.65,
+    "alpha": 0.7
+   },
+   "rotate": [
+    -330,
+    0,
+    0
+   ]
+  },
+  {
+   "id": "aos",
+   "role": "identity",
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      0.72,
+      0.0
+     ],
+     [
+      0.36,
+      0.6235
+     ],
+     [
+      -0.36,
+      0.6235
+     ],
+     [
+      -0.72,
+      0.0
+     ],
+     [
+      -0.36,
+      -0.6235
+     ],
+     [
+      0.36,
+      -0.6235
+     ]
+    ],
+    "height": 0.55,
+    "axis": "x"
+   },
+   "at": [
+    -0.3,
+    5.4,
+    0
+   ],
+   "stage": 4,
+   "certainty": "inferred",
+   "label": "Aft optics subsystem",
+   "basis": [
+    "mirror.diameter"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.15,
+    "alpha": 0.95,
+    "glow": 0.2
+   },
+   "note": "The black aperture at the centre of the 18 segments."
+  },
+  {
+   "id": "aos-cover",
+   "role": "structure",
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.6,
+    "height": 0.06,
+    "segments": 6
+   },
+   "at": [
+    -0.02,
+    5.4,
+    0
+   ],
+   "stage": 4,
+   "certainty": "inferred",
+   "basis": [
+    "mirror.diameter"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.75,
+    "alpha": 0.95,
+    "glow": 0.08
+   },
+   "rotate": [
+    0,
+    0,
+    -90
+   ]
+  },
+  {
+   "id": "aos-rim",
+   "role": "identity",
+   "shape": {
+    "type": "curve",
+    "closed": true,
+    "points": [
+     [
+      0.012,
+      5.4,
+      0.777
+     ],
+     [
+      0.012,
+      6.073,
+      0.389
+     ],
+     [
+      0.012,
+      6.073,
+      -0.389
+     ],
+     [
+      0.012,
+      5.4,
+      -0.777
+     ],
+     [
+      0.012,
+      4.727,
+      -0.389
+     ],
+     [
+      0.012,
+      4.727,
+      0.389
+     ]
+    ]
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 4,
+   "certainty": "inferred",
+   "basis": [
+    "mirror.diameter"
+   ],
+   "look": {
+    "weight": 1.3,
+    "alpha": 0.9,
+    "glow": 0.25
+   },
+   "note": "Rim of the central aperture."
+  },
+  {
+   "id": "mirror-segment-01",
+   "role": "identity",
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      0.7499,
+      0.0
+     ],
+     [
+      0.375,
+      0.6494
+     ],
+     [
+      -0.375,
+      0.6494
+     ],
+     [
+      -0.7499,
+      0.0
+     ],
+     [
+      -0.375,
+      -0.6494
+     ],
+     [
+      0.375,
+      -0.6494
+     ]
+    ],
+    "height": 0.1,
+    "axis": "x"
+   },
+   "at": [
+    -0.1,
+    2.76,
+    0.0
+   ],
+   "stage": 5,
+   "certainty": "inferred",
+   "basis": [
+    "mirror.diameter",
+    "segment.width",
+    "segment.count"
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 1.3,
+    "glow": 0.62,
+    "alpha": 0.9
+   },
+   "note": "One of the 18 segments; gaps are the inter-segment seams."
+  },
+  {
+   "id": "mirror-bevel-01",
+   "role": "detail",
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      0.6599,
+      0.0
+     ],
+     [
+      0.33,
+      0.5715
+     ],
+     [
+      -0.33,
+      0.5715
+     ],
+     [
+      -0.6599,
+      0.0
+     ],
+     [
+      -0.33,
+      -0.5715
+     ],
+     [
+      0.33,
+      -0.5715
+     ]
+    ],
+    "height": 0.02,
+    "axis": "x"
+   },
+   "at": [
+    0.005,
+    2.76,
+    0.0
+   ],
+   "stage": 5,
+   "certainty": "inferred",
+   "basis": [
+    "segment.width",
+    "segment.count"
+   ],
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.45
+   },
+   "note": "Chamfered edge band of one segment."
+  },
+  {
+   "id": "mirror-segment-02",
+   "role": "identity",
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      0.7499,
+      0.0
+     ],
+     [
+      0.375,
+      0.6494
+     ],
+     [
+      -0.375,
+      0.6494
+     ],
+     [
+      -0.7499,
+      0.0
+     ],
+     [
+      -0.375,
+      -0.6494
+     ],
+     [
+      0.375,
+      -0.6494
+     ]
+    ],
+    "height": 0.1,
+    "axis": "x"
+   },
+   "at": [
+    -0.1,
+    3.42,
+    -1.1432
+   ],
+   "stage": 5,
+   "certainty": "inferred",
+   "basis": [
+    "mirror.diameter",
+    "segment.width",
+    "segment.count"
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 1.32,
+    "glow": 0.6799999999999999,
+    "alpha": 0.9
+   },
+   "note": "One of the 18 segments; gaps are the inter-segment seams."
+  },
+  {
+   "id": "mirror-bevel-02",
+   "role": "detail",
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      0.6599,
+      0.0
+     ],
+     [
+      0.33,
+      0.5715
+     ],
+     [
+      -0.33,
+      0.5715
+     ],
+     [
+      -0.6599,
+      0.0
+     ],
+     [
+      -0.33,
+      -0.5715
+     ],
+     [
+      0.33,
+      -0.5715
+     ]
+    ],
+    "height": 0.02,
+    "axis": "x"
+   },
+   "at": [
+    0.005,
+    3.42,
+    -1.1432
+   ],
+   "stage": 5,
+   "certainty": "inferred",
+   "basis": [
+    "segment.width",
+    "segment.count"
+   ],
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.45
+   },
+   "note": "Chamfered edge band of one segment."
+  },
+  {
+   "id": "mirror-segment-03",
+   "role": "identity",
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      0.7499,
+      0.0
+     ],
+     [
+      0.375,
+      0.6494
+     ],
+     [
+      -0.375,
+      0.6494
+     ],
+     [
+      -0.7499,
+      0.0
+     ],
+     [
+      -0.375,
+      -0.6494
+     ],
+     [
+      0.375,
+      -0.6494
+     ]
+    ],
+    "height": 0.1,
+    "axis": "x"
+   },
+   "at": [
+    -0.1,
+    3.42,
+    1.1432
+   ],
+   "stage": 5,
+   "certainty": "inferred",
+   "basis": [
+    "mirror.diameter",
+    "segment.width",
+    "segment.count"
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 1.34,
+    "glow": 0.74,
+    "alpha": 0.9
+   },
+   "note": "One of the 18 segments; gaps are the inter-segment seams."
+  },
+  {
+   "id": "mirror-bevel-03",
+   "role": "detail",
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      0.6599,
+      0.0
+     ],
+     [
+      0.33,
+      0.5715
+     ],
+     [
+      -0.33,
+      0.5715
+     ],
+     [
+      -0.6599,
+      0.0
+     ],
+     [
+      -0.33,
+      -0.5715
+     ],
+     [
+      0.33,
+      -0.5715
+     ]
+    ],
+    "height": 0.02,
+    "axis": "x"
+   },
+   "at": [
+    0.005,
+    3.42,
+    1.1432
+   ],
+   "stage": 5,
+   "certainty": "inferred",
+   "basis": [
+    "segment.width",
+    "segment.count"
+   ],
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.45
+   },
+   "note": "Chamfered edge band of one segment."
+  },
+  {
+   "id": "mirror-segment-04",
+   "role": "identity",
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      0.7499,
+      0.0
+     ],
+     [
+      0.375,
+      0.6494
+     ],
+     [
+      -0.375,
+      0.6494
+     ],
+     [
+      -0.7499,
+      0.0
+     ],
+     [
+      -0.375,
+      -0.6494
+     ],
+     [
+      0.375,
+      -0.6494
+     ]
+    ],
+    "height": 0.1,
+    "axis": "x"
+   },
+   "at": [
+    -0.1,
+    4.08,
+    -2.2863
+   ],
+   "stage": 6,
+   "certainty": "inferred",
+   "basis": [
+    "mirror.diameter",
+    "segment.width",
+    "segment.count"
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 1.36,
+    "glow": 0.62,
+    "alpha": 0.9
+   },
+   "note": "One of the 18 segments; gaps are the inter-segment seams."
+  },
+  {
+   "id": "mirror-bevel-04",
+   "role": "detail",
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      0.6599,
+      0.0
+     ],
+     [
+      0.33,
+      0.5715
+     ],
+     [
+      -0.33,
+      0.5715
+     ],
+     [
+      -0.6599,
+      0.0
+     ],
+     [
+      -0.33,
+      -0.5715
+     ],
+     [
+      0.33,
+      -0.5715
+     ]
+    ],
+    "height": 0.02,
+    "axis": "x"
+   },
+   "at": [
+    0.005,
+    4.08,
+    -2.2863
+   ],
+   "stage": 6,
+   "certainty": "inferred",
+   "basis": [
+    "segment.width",
+    "segment.count"
+   ],
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.45
+   },
+   "note": "Chamfered edge band of one segment."
+  },
+  {
+   "id": "mirror-segment-05",
+   "role": "identity",
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      0.7499,
+      0.0
+     ],
+     [
+      0.375,
+      0.6494
+     ],
+     [
+      -0.375,
+      0.6494
+     ],
+     [
+      -0.7499,
+      0.0
+     ],
+     [
+      -0.375,
+      -0.6494
+     ],
+     [
+      0.375,
+      -0.6494
+     ]
+    ],
+    "height": 0.1,
+    "axis": "x"
+   },
+   "at": [
+    -0.1,
+    4.08,
+    0.0
+   ],
+   "stage": 5,
+   "certainty": "inferred",
+   "label": "Gold-coated beryllium segment",
+   "basis": [
+    "mirror.diameter",
+    "segment.width",
+    "segment.count"
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 1.3,
+    "glow": 0.6799999999999999,
+    "alpha": 0.9
+   },
+   "note": "One of the 18 segments; gaps are the inter-segment seams."
+  },
+  {
+   "id": "mirror-bevel-05",
+   "role": "detail",
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      0.6599,
+      0.0
+     ],
+     [
+      0.33,
+      0.5715
+     ],
+     [
+      -0.33,
+      0.5715
+     ],
+     [
+      -0.6599,
+      0.0
+     ],
+     [
+      -0.33,
+      -0.5715
+     ],
+     [
+      0.33,
+      -0.5715
+     ]
+    ],
+    "height": 0.02,
+    "axis": "x"
+   },
+   "at": [
+    0.005,
+    4.08,
+    0.0
+   ],
+   "stage": 5,
+   "certainty": "inferred",
+   "basis": [
+    "segment.width",
+    "segment.count"
+   ],
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.45
+   },
+   "note": "Chamfered edge band of one segment."
+  },
+  {
+   "id": "mirror-segment-06",
+   "role": "identity",
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      0.7499,
+      0.0
+     ],
+     [
+      0.375,
+      0.6494
+     ],
+     [
+      -0.375,
+      0.6494
+     ],
+     [
+      -0.7499,
+      0.0
+     ],
+     [
+      -0.375,
+      -0.6494
+     ],
+     [
+      0.375,
+      -0.6494
+     ]
+    ],
+    "height": 0.1,
+    "axis": "x"
+   },
+   "at": [
+    -0.1,
+    4.08,
+    2.2863
+   ],
+   "stage": 6,
+   "certainty": "inferred",
+   "basis": [
+    "mirror.diameter",
+    "segment.width",
+    "segment.count"
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 1.32,
+    "glow": 0.74,
+    "alpha": 0.9
+   },
+   "note": "One of the 18 segments; gaps are the inter-segment seams."
+  },
+  {
+   "id": "mirror-bevel-06",
+   "role": "detail",
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      0.6599,
+      0.0
+     ],
+     [
+      0.33,
+      0.5715
+     ],
+     [
+      -0.33,
+      0.5715
+     ],
+     [
+      -0.6599,
+      0.0
+     ],
+     [
+      -0.33,
+      -0.5715
+     ],
+     [
+      0.33,
+      -0.5715
+     ]
+    ],
+    "height": 0.02,
+    "axis": "x"
+   },
+   "at": [
+    0.005,
+    4.08,
+    2.2863
+   ],
+   "stage": 6,
+   "certainty": "inferred",
+   "basis": [
+    "segment.width",
+    "segment.count"
+   ],
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.45
+   },
+   "note": "Chamfered edge band of one segment."
+  },
+  {
+   "id": "mirror-segment-07",
+   "role": "identity",
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      0.7499,
+      0.0
+     ],
+     [
+      0.375,
+      0.6494
+     ],
+     [
+      -0.375,
+      0.6494
+     ],
+     [
+      -0.7499,
+      0.0
+     ],
+     [
+      -0.375,
+      -0.6494
+     ],
+     [
+      0.375,
+      -0.6494
+     ]
+    ],
+    "height": 0.1,
+    "axis": "x"
+   },
+   "at": [
+    -0.1,
+    4.74,
+    -1.1432
+   ],
+   "stage": 5,
+   "certainty": "inferred",
+   "basis": [
+    "mirror.diameter",
+    "segment.width",
+    "segment.count"
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 1.34,
+    "glow": 0.62,
+    "alpha": 0.9
+   },
+   "note": "One of the 18 segments; gaps are the inter-segment seams."
+  },
+  {
+   "id": "mirror-bevel-07",
+   "role": "detail",
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      0.6599,
+      0.0
+     ],
+     [
+      0.33,
+      0.5715
+     ],
+     [
+      -0.33,
+      0.5715
+     ],
+     [
+      -0.6599,
+      0.0
+     ],
+     [
+      -0.33,
+      -0.5715
+     ],
+     [
+      0.33,
+      -0.5715
+     ]
+    ],
+    "height": 0.02,
+    "axis": "x"
+   },
+   "at": [
+    0.005,
+    4.74,
+    -1.1432
+   ],
+   "stage": 5,
+   "certainty": "inferred",
+   "basis": [
+    "segment.width",
+    "segment.count"
+   ],
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.45
+   },
+   "note": "Chamfered edge band of one segment."
+  },
+  {
+   "id": "mirror-segment-08",
+   "role": "identity",
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      0.7499,
+      0.0
+     ],
+     [
+      0.375,
+      0.6494
+     ],
+     [
+      -0.375,
+      0.6494
+     ],
+     [
+      -0.7499,
+      0.0
+     ],
+     [
+      -0.375,
+      -0.6494
+     ],
+     [
+      0.375,
+      -0.6494
+     ]
+    ],
+    "height": 0.1,
+    "axis": "x"
+   },
+   "at": [
+    -0.1,
+    4.74,
+    1.1432
+   ],
+   "stage": 5,
+   "certainty": "inferred",
+   "basis": [
+    "mirror.diameter",
+    "segment.width",
+    "segment.count"
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 1.36,
+    "glow": 0.6799999999999999,
+    "alpha": 0.9
+   },
+   "note": "One of the 18 segments; gaps are the inter-segment seams."
+  },
+  {
+   "id": "mirror-bevel-08",
+   "role": "detail",
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      0.6599,
+      0.0
+     ],
+     [
+      0.33,
+      0.5715
+     ],
+     [
+      -0.33,
+      0.5715
+     ],
+     [
+      -0.6599,
+      0.0
+     ],
+     [
+      -0.33,
+      -0.5715
+     ],
+     [
+      0.33,
+      -0.5715
+     ]
+    ],
+    "height": 0.02,
+    "axis": "x"
+   },
+   "at": [
+    0.005,
+    4.74,
+    1.1432
+   ],
+   "stage": 5,
+   "certainty": "inferred",
+   "basis": [
+    "segment.width",
+    "segment.count"
+   ],
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.45
+   },
+   "note": "Chamfered edge band of one segment."
+  },
+  {
+   "id": "mirror-segment-09",
+   "role": "identity",
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      0.7499,
+      0.0
+     ],
+     [
+      0.375,
+      0.6494
+     ],
+     [
+      -0.375,
+      0.6494
+     ],
+     [
+      -0.7499,
+      0.0
+     ],
+     [
+      -0.375,
+      -0.6494
+     ],
+     [
+      0.375,
+      -0.6494
+     ]
+    ],
+    "height": 0.1,
+    "axis": "x"
+   },
+   "at": [
+    -0.1,
+    5.4,
+    -2.2863
+   ],
+   "stage": 6,
+   "certainty": "inferred",
+   "basis": [
+    "mirror.diameter",
+    "segment.width",
+    "segment.count"
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 1.3,
+    "glow": 0.74,
+    "alpha": 0.9
+   },
+   "note": "One of the 18 segments; gaps are the inter-segment seams."
+  },
+  {
+   "id": "mirror-bevel-09",
+   "role": "detail",
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      0.6599,
+      0.0
+     ],
+     [
+      0.33,
+      0.5715
+     ],
+     [
+      -0.33,
+      0.5715
+     ],
+     [
+      -0.6599,
+      0.0
+     ],
+     [
+      -0.33,
+      -0.5715
+     ],
+     [
+      0.33,
+      -0.5715
+     ]
+    ],
+    "height": 0.02,
+    "axis": "x"
+   },
+   "at": [
+    0.005,
+    5.4,
+    -2.2863
+   ],
+   "stage": 6,
+   "certainty": "inferred",
+   "basis": [
+    "segment.width",
+    "segment.count"
+   ],
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.45
+   },
+   "note": "Chamfered edge band of one segment."
+  },
+  {
+   "id": "mirror-segment-10",
+   "role": "identity",
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      0.7499,
+      0.0
+     ],
+     [
+      0.375,
+      0.6494
+     ],
+     [
+      -0.375,
+      0.6494
+     ],
+     [
+      -0.7499,
+      0.0
+     ],
+     [
+      -0.375,
+      -0.6494
+     ],
+     [
+      0.375,
+      -0.6494
+     ]
+    ],
+    "height": 0.1,
+    "axis": "x"
+   },
+   "at": [
+    -0.1,
+    5.4,
+    2.2863
+   ],
+   "stage": 6,
+   "certainty": "inferred",
+   "basis": [
+    "mirror.diameter",
+    "segment.width",
+    "segment.count"
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 1.32,
+    "glow": 0.62,
+    "alpha": 0.9
+   },
+   "note": "One of the 18 segments; gaps are the inter-segment seams."
+  },
+  {
+   "id": "mirror-bevel-10",
+   "role": "detail",
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      0.6599,
+      0.0
+     ],
+     [
+      0.33,
+      0.5715
+     ],
+     [
+      -0.33,
+      0.5715
+     ],
+     [
+      -0.6599,
+      0.0
+     ],
+     [
+      -0.33,
+      -0.5715
+     ],
+     [
+      0.33,
+      -0.5715
+     ]
+    ],
+    "height": 0.02,
+    "axis": "x"
+   },
+   "at": [
+    0.005,
+    5.4,
+    2.2863
+   ],
+   "stage": 6,
+   "certainty": "inferred",
+   "basis": [
+    "segment.width",
+    "segment.count"
+   ],
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.45
+   },
+   "note": "Chamfered edge band of one segment."
+  },
+  {
+   "id": "mirror-segment-11",
+   "role": "identity",
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      0.7499,
+      0.0
+     ],
+     [
+      0.375,
+      0.6494
+     ],
+     [
+      -0.375,
+      0.6494
+     ],
+     [
+      -0.7499,
+      0.0
+     ],
+     [
+      -0.375,
+      -0.6494
+     ],
+     [
+      0.375,
+      -0.6494
+     ]
+    ],
+    "height": 0.1,
+    "axis": "x"
+   },
+   "at": [
+    -0.1,
+    6.06,
+    -1.1432
+   ],
+   "stage": 5,
+   "certainty": "inferred",
+   "basis": [
+    "mirror.diameter",
+    "segment.width",
+    "segment.count"
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 1.34,
+    "glow": 0.6799999999999999,
+    "alpha": 0.9
+   },
+   "note": "One of the 18 segments; gaps are the inter-segment seams."
+  },
+  {
+   "id": "mirror-bevel-11",
+   "role": "detail",
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      0.6599,
+      0.0
+     ],
+     [
+      0.33,
+      0.5715
+     ],
+     [
+      -0.33,
+      0.5715
+     ],
+     [
+      -0.6599,
+      0.0
+     ],
+     [
+      -0.33,
+      -0.5715
+     ],
+     [
+      0.33,
+      -0.5715
+     ]
+    ],
+    "height": 0.02,
+    "axis": "x"
+   },
+   "at": [
+    0.005,
+    6.06,
+    -1.1432
+   ],
+   "stage": 5,
+   "certainty": "inferred",
+   "basis": [
+    "segment.width",
+    "segment.count"
+   ],
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.45
+   },
+   "note": "Chamfered edge band of one segment."
+  },
+  {
+   "id": "mirror-segment-12",
+   "role": "identity",
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      0.7499,
+      0.0
+     ],
+     [
+      0.375,
+      0.6494
+     ],
+     [
+      -0.375,
+      0.6494
+     ],
+     [
+      -0.7499,
+      0.0
+     ],
+     [
+      -0.375,
+      -0.6494
+     ],
+     [
+      0.375,
+      -0.6494
+     ]
+    ],
+    "height": 0.1,
+    "axis": "x"
+   },
+   "at": [
+    -0.1,
+    6.06,
+    1.1432
+   ],
+   "stage": 5,
+   "certainty": "inferred",
+   "basis": [
+    "mirror.diameter",
+    "segment.width",
+    "segment.count"
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 1.36,
+    "glow": 0.74,
+    "alpha": 0.9
+   },
+   "note": "One of the 18 segments; gaps are the inter-segment seams."
+  },
+  {
+   "id": "mirror-bevel-12",
+   "role": "detail",
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      0.6599,
+      0.0
+     ],
+     [
+      0.33,
+      0.5715
+     ],
+     [
+      -0.33,
+      0.5715
+     ],
+     [
+      -0.6599,
+      0.0
+     ],
+     [
+      -0.33,
+      -0.5715
+     ],
+     [
+      0.33,
+      -0.5715
+     ]
+    ],
+    "height": 0.02,
+    "axis": "x"
+   },
+   "at": [
+    0.005,
+    6.06,
+    1.1432
+   ],
+   "stage": 5,
+   "certainty": "inferred",
+   "basis": [
+    "segment.width",
+    "segment.count"
+   ],
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.45
+   },
+   "note": "Chamfered edge band of one segment."
+  },
+  {
+   "id": "mirror-segment-13",
+   "role": "identity",
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      0.7499,
+      0.0
+     ],
+     [
+      0.375,
+      0.6494
+     ],
+     [
+      -0.375,
+      0.6494
+     ],
+     [
+      -0.7499,
+      0.0
+     ],
+     [
+      -0.375,
+      -0.6494
+     ],
+     [
+      0.375,
+      -0.6494
+     ]
+    ],
+    "height": 0.1,
+    "axis": "x"
+   },
+   "at": [
+    -0.1,
+    6.72,
+    -2.2863
+   ],
+   "stage": 6,
+   "certainty": "inferred",
+   "basis": [
+    "mirror.diameter",
+    "segment.width",
+    "segment.count"
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 1.3,
+    "glow": 0.62,
+    "alpha": 0.9
+   },
+   "note": "One of the 18 segments; gaps are the inter-segment seams."
+  },
+  {
+   "id": "mirror-bevel-13",
+   "role": "detail",
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      0.6599,
+      0.0
+     ],
+     [
+      0.33,
+      0.5715
+     ],
+     [
+      -0.33,
+      0.5715
+     ],
+     [
+      -0.6599,
+      0.0
+     ],
+     [
+      -0.33,
+      -0.5715
+     ],
+     [
+      0.33,
+      -0.5715
+     ]
+    ],
+    "height": 0.02,
+    "axis": "x"
+   },
+   "at": [
+    0.005,
+    6.72,
+    -2.2863
+   ],
+   "stage": 6,
+   "certainty": "inferred",
+   "basis": [
+    "segment.width",
+    "segment.count"
+   ],
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.45
+   },
+   "note": "Chamfered edge band of one segment."
+  },
+  {
+   "id": "mirror-segment-14",
+   "role": "identity",
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      0.7499,
+      0.0
+     ],
+     [
+      0.375,
+      0.6494
+     ],
+     [
+      -0.375,
+      0.6494
+     ],
+     [
+      -0.7499,
+      0.0
+     ],
+     [
+      -0.375,
+      -0.6494
+     ],
+     [
+      0.375,
+      -0.6494
+     ]
+    ],
+    "height": 0.1,
+    "axis": "x"
+   },
+   "at": [
+    -0.1,
+    6.72,
+    0.0
+   ],
+   "stage": 5,
+   "certainty": "inferred",
+   "basis": [
+    "mirror.diameter",
+    "segment.width",
+    "segment.count"
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 1.32,
+    "glow": 0.6799999999999999,
+    "alpha": 0.9
+   },
+   "note": "One of the 18 segments; gaps are the inter-segment seams."
+  },
+  {
+   "id": "mirror-bevel-14",
+   "role": "detail",
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      0.6599,
+      0.0
+     ],
+     [
+      0.33,
+      0.5715
+     ],
+     [
+      -0.33,
+      0.5715
+     ],
+     [
+      -0.6599,
+      0.0
+     ],
+     [
+      -0.33,
+      -0.5715
+     ],
+     [
+      0.33,
+      -0.5715
+     ]
+    ],
+    "height": 0.02,
+    "axis": "x"
+   },
+   "at": [
+    0.005,
+    6.72,
+    0.0
+   ],
+   "stage": 5,
+   "certainty": "inferred",
+   "basis": [
+    "segment.width",
+    "segment.count"
+   ],
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.45
+   },
+   "note": "Chamfered edge band of one segment."
+  },
+  {
+   "id": "mirror-segment-15",
+   "role": "identity",
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      0.7499,
+      0.0
+     ],
+     [
+      0.375,
+      0.6494
+     ],
+     [
+      -0.375,
+      0.6494
+     ],
+     [
+      -0.7499,
+      0.0
+     ],
+     [
+      -0.375,
+      -0.6494
+     ],
+     [
+      0.375,
+      -0.6494
+     ]
+    ],
+    "height": 0.1,
+    "axis": "x"
+   },
+   "at": [
+    -0.1,
+    6.72,
+    2.2863
+   ],
+   "stage": 6,
+   "certainty": "inferred",
+   "basis": [
+    "mirror.diameter",
+    "segment.width",
+    "segment.count"
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 1.34,
+    "glow": 0.74,
+    "alpha": 0.9
+   },
+   "note": "One of the 18 segments; gaps are the inter-segment seams."
+  },
+  {
+   "id": "mirror-bevel-15",
+   "role": "detail",
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      0.6599,
+      0.0
+     ],
+     [
+      0.33,
+      0.5715
+     ],
+     [
+      -0.33,
+      0.5715
+     ],
+     [
+      -0.6599,
+      0.0
+     ],
+     [
+      -0.33,
+      -0.5715
+     ],
+     [
+      0.33,
+      -0.5715
+     ]
+    ],
+    "height": 0.02,
+    "axis": "x"
+   },
+   "at": [
+    0.005,
+    6.72,
+    2.2863
+   ],
+   "stage": 6,
+   "certainty": "inferred",
+   "basis": [
+    "segment.width",
+    "segment.count"
+   ],
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.45
+   },
+   "note": "Chamfered edge band of one segment."
+  },
+  {
+   "id": "mirror-segment-16",
+   "role": "identity",
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      0.7499,
+      0.0
+     ],
+     [
+      0.375,
+      0.6494
+     ],
+     [
+      -0.375,
+      0.6494
+     ],
+     [
+      -0.7499,
+      0.0
+     ],
+     [
+      -0.375,
+      -0.6494
+     ],
+     [
+      0.375,
+      -0.6494
+     ]
+    ],
+    "height": 0.1,
+    "axis": "x"
+   },
+   "at": [
+    -0.1,
+    7.38,
+    -1.1432
+   ],
+   "stage": 5,
+   "certainty": "inferred",
+   "basis": [
+    "mirror.diameter",
+    "segment.width",
+    "segment.count"
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 1.36,
+    "glow": 0.62,
+    "alpha": 0.9
+   },
+   "note": "One of the 18 segments; gaps are the inter-segment seams."
+  },
+  {
+   "id": "mirror-bevel-16",
+   "role": "detail",
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      0.6599,
+      0.0
+     ],
+     [
+      0.33,
+      0.5715
+     ],
+     [
+      -0.33,
+      0.5715
+     ],
+     [
+      -0.6599,
+      0.0
+     ],
+     [
+      -0.33,
+      -0.5715
+     ],
+     [
+      0.33,
+      -0.5715
+     ]
+    ],
+    "height": 0.02,
+    "axis": "x"
+   },
+   "at": [
+    0.005,
+    7.38,
+    -1.1432
+   ],
+   "stage": 5,
+   "certainty": "inferred",
+   "basis": [
+    "segment.width",
+    "segment.count"
+   ],
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.45
+   },
+   "note": "Chamfered edge band of one segment."
+  },
+  {
+   "id": "mirror-segment-17",
+   "role": "identity",
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      0.7499,
+      0.0
+     ],
+     [
+      0.375,
+      0.6494
+     ],
+     [
+      -0.375,
+      0.6494
+     ],
+     [
+      -0.7499,
+      0.0
+     ],
+     [
+      -0.375,
+      -0.6494
+     ],
+     [
+      0.375,
+      -0.6494
+     ]
+    ],
+    "height": 0.1,
+    "axis": "x"
+   },
+   "at": [
+    -0.1,
+    7.38,
+    1.1432
+   ],
+   "stage": 5,
+   "certainty": "inferred",
+   "basis": [
+    "mirror.diameter",
+    "segment.width",
+    "segment.count"
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 1.3,
+    "glow": 0.6799999999999999,
+    "alpha": 0.9
+   },
+   "note": "One of the 18 segments; gaps are the inter-segment seams."
+  },
+  {
+   "id": "mirror-bevel-17",
+   "role": "detail",
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      0.6599,
+      0.0
+     ],
+     [
+      0.33,
+      0.5715
+     ],
+     [
+      -0.33,
+      0.5715
+     ],
+     [
+      -0.6599,
+      0.0
+     ],
+     [
+      -0.33,
+      -0.5715
+     ],
+     [
+      0.33,
+      -0.5715
+     ]
+    ],
+    "height": 0.02,
+    "axis": "x"
+   },
+   "at": [
+    0.005,
+    7.38,
+    1.1432
+   ],
+   "stage": 5,
+   "certainty": "inferred",
+   "basis": [
+    "segment.width",
+    "segment.count"
+   ],
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.45
+   },
+   "note": "Chamfered edge band of one segment."
+  },
+  {
+   "id": "mirror-segment-18",
+   "role": "identity",
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      0.7499,
+      0.0
+     ],
+     [
+      0.375,
+      0.6494
+     ],
+     [
+      -0.375,
+      0.6494
+     ],
+     [
+      -0.7499,
+      0.0
+     ],
+     [
+      -0.375,
+      -0.6494
+     ],
+     [
+      0.375,
+      -0.6494
+     ]
+    ],
+    "height": 0.1,
+    "axis": "x"
+   },
+   "at": [
+    -0.1,
+    8.04,
+    0.0
+   ],
+   "stage": 5,
+   "certainty": "inferred",
+   "basis": [
+    "mirror.diameter",
+    "segment.width",
+    "segment.count"
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 1.32,
+    "glow": 0.74,
+    "alpha": 0.9
+   },
+   "note": "One of the 18 segments; gaps are the inter-segment seams."
+  },
+  {
+   "id": "mirror-bevel-18",
+   "role": "detail",
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      0.6599,
+      0.0
+     ],
+     [
+      0.33,
+      0.5715
+     ],
+     [
+      -0.33,
+      0.5715
+     ],
+     [
+      -0.6599,
+      0.0
+     ],
+     [
+      -0.33,
+      -0.5715
+     ],
+     [
+      0.33,
+      -0.5715
+     ]
+    ],
+    "height": 0.02,
+    "axis": "x"
+   },
+   "at": [
+    0.005,
+    8.04,
+    0.0
+   ],
+   "stage": 5,
+   "certainty": "inferred",
+   "basis": [
+    "segment.width",
+    "segment.count"
+   ],
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.45
+   },
+   "note": "Chamfered edge band of one segment."
+  },
+  {
+   "id": "strut-0",
+   "role": "structure",
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      -0.34,
+      8.85,
+      0.0
+     ],
+     [
+      2.223,
+      7.803,
+      0.0
+     ],
+     [
+      4.787,
+      6.859,
+      0.0
+     ],
+     [
+      7.35,
+      6.02,
+      0.0
+     ]
+    ],
+    "radius": [
+     0.085,
+     0.07,
+     0.055,
+     0.045
+    ],
+    "sides": 8,
+    "samples": 6
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 7,
+   "certainty": "inferred",
+   "label": "Secondary mirror support strut",
+   "basis": [
+    "secondary.struts"
+   ],
+   "look": {
+    "weight": 0.95
+   }
+  },
+  {
+   "id": "strut-collar-0",
+   "role": "detail",
+   "shape": {
+    "type": "sphere",
+    "radii": [
+     0.13,
+     0.13,
+     0.13
+    ],
+    "lat": 6,
+    "lon": 8
+   },
+   "at": [
+    7.35,
+    6.02,
+    0.0
+   ],
+   "stage": 7,
+   "certainty": "inferred",
+   "basis": [
+    "secondary.struts"
+   ],
+   "look": {
+    "weight": 0.55,
+    "alpha": 0.7
+   }
+  },
+  {
+   "id": "strut-1",
+   "role": "structure",
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      -0.34,
+      3.675,
+      -2.988
+     ],
+     [
+      2.223,
+      4.043,
+      -2.171
+     ],
+     [
+      4.787,
+      4.514,
+      -1.354
+     ],
+     [
+      7.35,
+      5.09,
+      -0.537
+     ]
+    ],
+    "radius": [
+     0.085,
+     0.07,
+     0.055,
+     0.045
+    ],
+    "sides": 8,
+    "samples": 6
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 7,
+   "certainty": "inferred",
+   "basis": [
+    "secondary.struts"
+   ],
+   "look": {
+    "weight": 0.95
+   }
+  },
+  {
+   "id": "strut-collar-1",
+   "role": "detail",
+   "shape": {
+    "type": "sphere",
+    "radii": [
+     0.13,
+     0.13,
+     0.13
+    ],
+    "lat": 6,
+    "lon": 8
+   },
+   "at": [
+    7.35,
+    5.09,
+    -0.5369
+   ],
+   "stage": 7,
+   "certainty": "inferred",
+   "basis": [
+    "secondary.struts"
+   ],
+   "look": {
+    "weight": 0.55,
+    "alpha": 0.7
+   }
+  },
+  {
+   "id": "strut-2",
+   "role": "structure",
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      -0.34,
+      3.675,
+      2.988
+     ],
+     [
+      2.223,
+      4.043,
+      2.171
+     ],
+     [
+      4.787,
+      4.514,
+      1.354
+     ],
+     [
+      7.35,
+      5.09,
+      0.537
+     ]
+    ],
+    "radius": [
+     0.085,
+     0.07,
+     0.055,
+     0.045
+    ],
+    "sides": 8,
+    "samples": 6
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 7,
+   "certainty": "inferred",
+   "basis": [
+    "secondary.struts"
+   ],
+   "look": {
+    "weight": 0.95
+   }
+  },
+  {
+   "id": "strut-collar-2",
+   "role": "detail",
+   "shape": {
+    "type": "sphere",
+    "radii": [
+     0.13,
+     0.13,
+     0.13
+    ],
+    "lat": 6,
+    "lon": 8
+   },
+   "at": [
+    7.35,
+    5.09,
+    0.5369
+   ],
+   "stage": 7,
+   "certainty": "inferred",
+   "basis": [
+    "secondary.struts"
+   ],
+   "look": {
+    "weight": 0.55,
+    "alpha": 0.7
+   }
+  },
+  {
+   "id": "sm-hub",
+   "role": "structure",
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.3,
+    "height": 0.78,
+    "segments": 12
+   },
+   "at": [
+    6.85,
+    5.4,
+    0
+   ],
+   "stage": 7,
+   "certainty": "inferred",
+   "basis": [
+    "secondary.diameter"
+   ],
+   "look": {
+    "weight": 0.85
+   },
+   "rotate": [
+    0,
+    0,
+    -90
+   ]
+  },
+  {
+   "id": "sm-dish",
+   "role": "identity",
+   "shape": {
+    "type": "lathe",
+    "segments": 24,
+    "meridians": 8,
+    "profile": [
+     [
+      0.02,
+      0.0
+     ],
+     [
+      0.2,
+      0.045
+     ],
+     [
+      0.34,
+      0.02
+     ],
+     [
+      0.37,
+      0.0
+     ],
+     [
+      0.35,
+      0.06
+     ],
+     [
+      0.18,
+      0.09
+     ],
+     [
+      0.02,
+      0.1
+     ]
+    ]
+   },
+   "at": [
+    6.9,
+    5.4,
+    0
+   ],
+   "stage": 7,
+   "certainty": "inferred",
+   "label": "Secondary mirror",
+   "basis": [
+    "secondary.diameter"
+   ],
+   "look": {
+    "weight": 1.25,
+    "glow": 0.5,
+    "alpha": 0.95
+   },
+   "rotate": [
+    0,
+    0,
+    90
+   ],
+   "note": "0.74 m convex beryllium mirror."
+  },
+  {
+   "id": "sm-baffle",
+   "role": "structure",
+   "shape": {
+    "type": "cone",
+    "radius_bottom": 0.44,
+    "radius_top": 0.3,
+    "height": 0.3,
+    "segments": 14
+   },
+   "at": [
+    7.3,
+    5.18,
+    0
+   ],
+   "stage": 7,
+   "certainty": "inferred",
+   "basis": [
+    "secondary.diameter"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.6,
+    "alpha": 0.55
+   },
+   "rotate": [
+    0,
+    0,
+    -90
+   ]
+  }
+ ],
+ "assets": [],
+ "articulations": [],
+ "annotations": [
+  {
+   "id": "an-mirror",
+   "text": "18 gold hexagons, 6.5 m",
+   "part": "mirror-segment-05",
+   "offset": [
+    0,
+    0.9,
+    0
+   ]
+  },
+  {
+   "id": "an-secondary",
+   "text": "Secondary mirror on three struts",
+   "part": "sm-dish",
+   "offset": [
+    0.4,
+    0.7,
+    0
+   ]
+  },
+  {
+   "id": "an-shield",
+   "text": "Five-layer sunshield, 21.2 x 14.2 m",
+   "part": "shield-layer-1",
+   "offset": [
+    2.5,
+    1.6,
+    5.2
+   ]
+  }
+ ],
+ "presentation": {
+  "framing": {
+   "yaw": 58,
+   "pitch": 21,
+   "fit": 0.9
+  },
+  "views": [
+   {
+    "id": "hero",
+    "label": "Hero: the sail and the eye",
+    "yaw": 56,
+    "pitch": 22
+   },
+   {
+    "id": "mirror",
+    "label": "Mirror field",
+    "yaw": 76,
+    "pitch": 10,
+    "target": "backplane",
+    "distance": 1.35
+   },
+   {
+    "id": "shield",
+    "label": "Sunshield layers",
+    "yaw": 26,
+    "pitch": 30,
+    "target": "shield-layer-1",
+    "distance": 1.05
+   },
+   {
+    "id": "sunside",
+    "label": "Sun side: bus, array, antenna",
+    "yaw": 152,
+    "pitch": -20
+   },
+   {
+    "id": "secondary",
+    "label": "Secondary mirror and struts",
+    "yaw": 66,
+    "pitch": 12,
+    "target": "sm-dish",
+    "distance": 2.2
+   }
+  ],
+  "atmosphere": {
+   "haze": 0.5,
+   "scanlines": true,
+   "vignette": true,
+   "grid": false,
+   "projector": false,
+   "motes": 0.32
+  },
+  "occlusion": "xray",
+  "certainty_style": "subtle",
+  "background": "deep",
+  "float": 2.0
+ },
+ "animation": {
+  "assembly": {
+   "style": "ceremony",
+   "seconds": 20,
+   "interference": true
+  },
+  "idle": {
+   "life": "calm",
+   "events": [
+    "shimmer",
+    "propagate",
+    "wave",
+    "scan"
+   ],
+   "cadence": [
+    6,
+    11
+   ],
+   "strength": 0.55
+  },
+  "camera": {
+   "drift": 9,
+   "breathe": 0.03,
+   "tour": [
+    {
+     "view": "mirror",
+     "at": 28,
+     "fly": 6
+    },
+    {
+     "view": "hero",
+     "at": 46,
+     "fly": 7
+    }
+   ]
+  },
+  "reduced_motion": "still"
+ },
+ "authoring": {
+  "tier": "masterpiece",
+  "research": "done",
+  "sources": [
+   "nasa-sunshield",
+   "nasa-fact-sheet",
+   "nasa-telescope-overview",
+   "jwst-docs-telescope",
+   "ntrs-design",
+   "ref-three-quarter",
+   "ref-side",
+   "ref-top",
+   "ref-bottom",
+   "ref-blueprint"
+  ],
+  "review_rounds": 4,
+  "outcome": "limit",
+  "identity": [
+   {
+    "feature": "Eighteen gold hexagonal segments tiling a 6.6 m aperture with the AOS at the centre",
+    "parts": [
+     "mirror-segment-01",
+     "backplane",
+     "aos"
+    ],
+    "source": "ref-top"
+   },
+   {
+    "feature": "Five-layer sunshield, 21.2 m x 14.2 m, pointed at both ends and fanned at the corners",
+    "parts": [
+     "shield-layer-1",
+     "shield-layer-5",
+     "spreader-fs",
+     "mid-boom-s"
+    ],
+    "source": "ref-side"
+   },
+   {
+    "feature": "Secondary mirror standing 7.4 m ahead on three long struts",
+    "parts": [
+     "sm-dish",
+     "strut-0",
+     "strut-1",
+     "strut-2"
+    ],
+    "source": "ref-blueprint"
+   },
+   {
+    "feature": "Sun-side bus with the five-panel solar array and the 0.6 m antenna",
+    "parts": [
+     "bus",
+     "array-panel-1",
+     "array-panel-3",
+     "array-panel-5",
+     "hga-dish"
+    ],
+    "source": "ref-bottom"
+   }
+  ],
+  "next": [
+   "the five membranes are still the emptiest surface: bow each catenary 0.15-0.2 m below the plane and scallop the border between tie points",
+   "the four sunshield corners read as stepped tabs, not the fan of membrane panels the references show",
+   "the bus and ISIM want real blanket/louver detail; they are still plain boxes at close range",
+   "the ceremony's 0.9 s ghost preview is the reason the assembly sheet reads backwards; drop interference for a strict build order",
+   "the secondary dish still reads as a spoked wheel up close: give it a smooth paraboloid with a rim bezel",
+   "no gold tint is possible in this palette (the renderer owns colour); the mirror reads as light plates, not gold"
+  ]
+ }
+}

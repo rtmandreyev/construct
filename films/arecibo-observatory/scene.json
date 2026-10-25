@@ -1,0 +1,8436 @@
+{
+ "format": "construct-scene",
+ "version": 2,
+ "id": "arecibo-telescope",
+ "title": "Arecibo — the 305 m spherical reflector",
+ "subject": {
+  "category": "architecture",
+  "summary": "The Arecibo Observatory radio telescope: a 305 m spherical aluminium reflector laid in a karst sinkhole, a 900-ton instrument platform hung 150 m above it on 18 cables from three reinforced-concrete towers, with its rotating bow-shaped azimuth arm and Gregorian dome. Overall dimensions come from published parameters; the truss detail, equipment, terrain and signal cone are a reconstruction made for display.",
+  "accuracy": "documented",
+  "synthetic": false
+ },
+ "units": "m",
+ "seed": 1963,
+ "sources": [
+  {
+   "id": "request",
+   "kind": "user_request",
+   "title": "The user's request",
+   "rights": "user_private",
+   "ref": "The Arecibo Observatory radio telescope: the 305 m spherical dish in a karst sinkhole, three reinforced-concrete support towers, the cables, and the 900-ton suspended platform with its azimuth arm and Gregorian dome."
+  },
+  {
+   "id": "wiki",
+   "kind": "document",
+   "title": "Arecibo Telescope — Wikipedia",
+   "rights": "reference_only",
+   "ref": "https://en.wikipedia.org/wiki/Arecibo_Telescope — dimensions, cable count, tower heights, platform mass, azimuth arm, Gregorian upgrade, panels."
+  },
+  {
+   "id": "naic",
+   "kind": "measurement",
+   "title": "Some parameters of the old Arecibo telescope platform and dish (NAIC/NRAO note)",
+   "rights": "reference_only",
+   "ref": "https://naic.nrao.edu/arecibo/phil/hardware/arecibo2.0/doc/Arecibo%202.0%20-%20fixed%20spherical%20primary,%20active%20secondary,%20Rx%20at%20vertex.pdf — dish depth 50 m, radius of curvature 265 m, 213 m illuminated surface, 15 m ground screen, 22 m Gregorian secondary, tower heights 111/80/80 m."
+  },
+  {
+   "id": "ref-photos",
+   "kind": "reference_image",
+   "title": "Wikimedia Commons photographs of the telescope (viewed locally, not embedded)",
+   "rights": "reference_only",
+   "ref": "Aerial site view, platform close-ups, tower, catwalk, dish interior; used to read the platform truss, dome, cable fan and tower crowns."
+  },
+  {
+   "id": "design",
+   "kind": "generated",
+   "title": "Scene author's reconstruction and staging",
+   "rights": "synthetic",
+   "ref": "Declarative geometry, truss detail, terrain simplification, assembly staging, survey grid and signal cone. No external artwork or photograph is embedded."
+  }
+ ],
+ "facts": [
+  {
+   "key": "dish.diameter",
+   "value": 305,
+   "unit": "m",
+   "certainty": "verified",
+   "source": "wiki",
+   "note": "305 m (1000 ft) spherical reflector."
+  },
+  {
+   "key": "dish.radius",
+   "value": 265,
+   "unit": "m",
+   "certainty": "verified",
+   "source": "wiki",
+   "note": "Radius of curvature of the spherical cap."
+  },
+  {
+   "key": "dish.depth",
+   "value": 50,
+   "unit": "m",
+   "certainty": "verified",
+   "source": "naic",
+   "note": "Vertex-to-rim depth of the reflector."
+  },
+  {
+   "key": "illuminated.diameter",
+   "value": 213,
+   "unit": "m",
+   "certainty": "verified",
+   "source": "naic",
+   "note": "Diameter of the illuminated surface at L-band."
+  },
+  {
+   "key": "panels.count",
+   "value": 38778,
+   "unit": "panels",
+   "certainty": "verified",
+   "source": "wiki",
+   "note": "Perforated aluminium panels, about 1 x 2 m each."
+  },
+  {
+   "key": "platform.height",
+   "value": 150,
+   "unit": "m",
+   "certainty": "verified",
+   "source": "wiki",
+   "note": "Platform suspended 150 m above the dish."
+  },
+  {
+   "key": "platform.weight",
+   "value": 900,
+   "unit": "short tons",
+   "certainty": "verified",
+   "source": "wiki",
+   "note": "Platform mass after the Gregorian upgrade (820 t)."
+  },
+  {
+   "key": "cables.count",
+   "value": 18,
+   "unit": "main cables",
+   "certainty": "verified",
+   "source": "wiki",
+   "note": "Eighteen main cables, six per tower, 8 cm bundles."
+  },
+  {
+   "key": "tower.heights",
+   "value": "111 m, 81 m, 81 m",
+   "certainty": "verified",
+   "source": "wiki",
+   "note": "One 111 m and two 81 m reinforced-concrete towers; tops at the same elevation."
+  },
+  {
+   "key": "arm.length",
+   "value": 93,
+   "unit": "m",
+   "certainty": "verified",
+   "source": "wiki",
+   "note": "Rotating bow-shaped azimuth arm track."
+  },
+  {
+   "key": "dome.diameter",
+   "value": 22,
+   "unit": "m",
+   "certainty": "verified",
+   "source": "naic",
+   "note": "Gregorian secondary reflector, installed 1997."
+  },
+  {
+   "key": "screen.height",
+   "value": 15,
+   "unit": "m",
+   "certainty": "verified",
+   "source": "naic",
+   "note": "Perimeter ground screen around the reflector."
+  },
+  {
+   "key": "site.karst",
+   "value": "A karst sinkhole in the northern Puerto Rico hills",
+   "certainty": "verified",
+   "source": "wiki",
+   "note": "Built into a natural sinkhole; the hills ring is a display simplification."
+  },
+  {
+   "key": "reconstruction.design",
+   "value": "Platform truss, tower crowns, backstay anchors, equipment, survey grid and signal cone",
+   "certainty": "inferred",
+   "source": "design",
+   "note": "Designed from the references for legibility; not a survey of the structure."
+  },
+  {
+   "key": "corners.plan",
+   "value": "Triangular platform, 52 m sides, corners at 30 m radius; arms 93 m",
+   "certainty": "inferred",
+   "source": "design",
+   "note": "Derived from the photographs' proportions, not from a published plan."
+  },
+  {
+   "key": "scene.caption",
+   "value": "ARECIBO / 305 m SPHERICAL REFLECTOR",
+   "certainty": "user_supplied",
+   "source": "request"
+  },
+  {
+   "key": "scale.caption",
+   "value": "DISH 305 m / PLATFORM 150 m ABOVE / TOWERS 111 + 81 m",
+   "certainty": "verified",
+   "source": "wiki"
+  },
+  {
+   "key": "reconstruction.caption",
+   "value": "DOCUMENTED DIMENSIONS / RECONSTRUCTED DETAIL",
+   "certainty": "inferred",
+   "source": "design"
+  }
+ ],
+ "assets": [],
+ "parts": [
+  {
+   "id": "karst-plateau",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "lathe",
+    "profile": [
+     [
+      136,
+      0
+     ],
+     [
+      150,
+      40
+     ],
+     [
+      152.5,
+      47.8
+     ],
+     [
+      158,
+      49.2
+     ],
+     [
+      172,
+      49.6
+     ],
+     [
+      186,
+      47.5
+     ],
+     [
+      196,
+      40
+     ],
+     [
+      204,
+      24
+     ],
+     [
+      210,
+      8
+     ],
+     [
+      212,
+      0
+     ]
+    ],
+    "segments": 80,
+    "meridians": 16
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "label": "Karst sinkhole lip",
+   "basis": [
+    "site.karst"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.38,
+    "alpha": 0.4,
+    "glow": 0.02
+   },
+   "note": "Sinkhole lip drawn as a plateau ring: a display simplification of the Mogote karst terrain."
+  },
+  {
+   "id": "karst-hill-01",
+   "role": "ground",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "cone",
+    "radius_bottom": 44,
+    "radius_top": 8.93,
+    "height": 90.2,
+    "segments": 9,
+    "ribs": 3,
+    "rings": 2,
+    "caps": true
+   },
+   "at": [
+    57.477,
+    -2,
+    176.897
+   ],
+   "basis": [
+    "site.karst"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.45,
+    "alpha": 0.5,
+    "glow": 0.02
+   },
+   "rotate": [
+    0,
+    4,
+    0
+   ]
+  },
+  {
+   "id": "karst-hill-02",
+   "role": "ground",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "cone",
+    "radius_bottom": 38,
+    "radius_top": 3.8,
+    "height": 82.3,
+    "segments": 8,
+    "ribs": 3,
+    "rings": 2,
+    "caps": true
+   },
+   "at": [
+    166.217,
+    -2,
+    103.864
+   ],
+   "basis": [
+    "site.karst"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.45,
+    "alpha": 0.5,
+    "glow": 0.02
+   },
+   "rotate": [
+    0,
+    17,
+    0
+   ]
+  },
+  {
+   "id": "karst-hill-03",
+   "role": "ground",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "cone",
+    "radius_bottom": 30,
+    "radius_top": 3.51,
+    "height": 73.4,
+    "segments": 10,
+    "ribs": 3,
+    "rings": 2,
+    "caps": true
+   },
+   "at": [
+    179.014,
+    -2,
+    -18.815
+   ],
+   "basis": [
+    "site.karst"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.45,
+    "alpha": 0.5,
+    "glow": 0.02
+   },
+   "rotate": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "id": "karst-hill-04",
+   "role": "ground",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "cone",
+    "radius_bottom": 42,
+    "radius_top": 5.64,
+    "height": 97.5,
+    "segments": 9,
+    "ribs": 3,
+    "rings": 2,
+    "caps": true
+   },
+   "at": [
+    152.874,
+    -2,
+    -119.438
+   ],
+   "basis": [
+    "site.karst"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.45,
+    "alpha": 0.5,
+    "glow": 0.02
+   },
+   "rotate": [
+    0,
+    9,
+    0
+   ]
+  },
+  {
+   "id": "karst-hill-05",
+   "role": "ground",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "cone",
+    "radius_bottom": 34,
+    "radius_top": 5.15,
+    "height": 70.2,
+    "segments": 7,
+    "ribs": 3,
+    "rings": 2,
+    "caps": true
+   },
+   "at": [
+    26.165,
+    -2,
+    -186.17
+   ],
+   "basis": [
+    "site.karst"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.45,
+    "alpha": 0.5,
+    "glow": 0.02
+   },
+   "rotate": [
+    0,
+    22,
+    0
+   ]
+  },
+  {
+   "id": "karst-hill-06",
+   "role": "ground",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "cone",
+    "radius_bottom": 46,
+    "radius_top": 7.75,
+    "height": 94.0,
+    "segments": 10,
+    "ribs": 3,
+    "rings": 2,
+    "caps": true
+   },
+   "at": [
+    -83.678,
+    -2,
+    -179.449
+   ],
+   "basis": [
+    "site.karst"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.45,
+    "alpha": 0.5,
+    "glow": 0.02
+   },
+   "rotate": [
+    0,
+    3,
+    0
+   ]
+  },
+  {
+   "id": "karst-hill-07",
+   "role": "ground",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "cone",
+    "radius_bottom": 32,
+    "radius_top": 5.94,
+    "height": 72.5,
+    "segments": 8,
+    "ribs": 3,
+    "rings": 2,
+    "caps": true
+   },
+   "at": [
+    -154.345,
+    -2,
+    -96.445
+   ],
+   "basis": [
+    "site.karst"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.45,
+    "alpha": 0.5,
+    "glow": 0.02
+   },
+   "rotate": [
+    0,
+    12,
+    0
+   ]
+  },
+  {
+   "id": "karst-hill-08",
+   "role": "ground",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "cone",
+    "radius_bottom": 40,
+    "radius_top": 8.11,
+    "height": 89.8,
+    "segments": 9,
+    "ribs": 3,
+    "rings": 2,
+    "caps": true
+   },
+   "at": [
+    -182.603,
+    -2,
+    59.331
+   ],
+   "basis": [
+    "site.karst"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.45,
+    "alpha": 0.5,
+    "glow": 0.02
+   },
+   "rotate": [
+    0,
+    6,
+    0
+   ]
+  },
+  {
+   "id": "karst-hill-09",
+   "role": "ground",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "cone",
+    "radius_bottom": 28,
+    "radius_top": 2.8,
+    "height": 70.0,
+    "segments": 7,
+    "ribs": 3,
+    "rings": 2,
+    "caps": true
+   },
+   "at": [
+    -119.105,
+    -2,
+    132.28
+   ],
+   "basis": [
+    "site.karst"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.45,
+    "alpha": 0.5,
+    "glow": 0.02
+   },
+   "rotate": [
+    0,
+    19,
+    0
+   ]
+  },
+  {
+   "id": "karst-hill-10",
+   "role": "ground",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "cone",
+    "radius_bottom": 36,
+    "radius_top": 7.3,
+    "height": 77.1,
+    "segments": 8,
+    "ribs": 3,
+    "rings": 2,
+    "caps": true
+   },
+   "at": [
+    -40.751,
+    -2,
+    191.717
+   ],
+   "basis": [
+    "site.karst"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.45,
+    "alpha": 0.5,
+    "glow": 0.02
+   },
+   "rotate": [
+    0,
+    1,
+    0
+   ]
+  },
+  {
+   "id": "karst-spur-1",
+   "role": "ground",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "cone",
+    "radius_bottom": 30,
+    "radius_top": 5.57,
+    "height": 43.2,
+    "segments": 7,
+    "ribs": 3,
+    "rings": 2,
+    "caps": true
+   },
+   "at": [
+    131.129,
+    -2,
+    -156.273
+   ],
+   "basis": [
+    "site.karst"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.45,
+    "alpha": 0.5,
+    "glow": 0.02
+   },
+   "rotate": [
+    0,
+    8,
+    0
+   ]
+  },
+  {
+   "id": "karst-spur-2",
+   "role": "ground",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "cone",
+    "radius_bottom": 34,
+    "radius_top": 6.9,
+    "height": 51.0,
+    "segments": 8,
+    "ribs": 3,
+    "rings": 2,
+    "caps": true
+   },
+   "at": [
+    -201.231,
+    -2,
+    -17.605
+   ],
+   "basis": [
+    "site.karst"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.45,
+    "alpha": 0.5,
+    "glow": 0.02
+   },
+   "rotate": [
+    0,
+    15,
+    0
+   ]
+  },
+  {
+   "id": "karst-tower-knoll-1",
+   "role": "ground",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "cone",
+    "radius_bottom": 34,
+    "radius_top": 12,
+    "height": 99.0,
+    "segments": 12,
+    "ribs": 5,
+    "rings": 3,
+    "caps": true
+   },
+   "at": [
+    76.071,
+    -2,
+    -163.135
+   ],
+   "basis": [
+    "site.karst",
+    "tower.heights"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.45,
+    "alpha": 0.5,
+    "glow": 0.03
+   }
+  },
+  {
+   "id": "karst-tower-knoll-2",
+   "role": "ground",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "cone",
+    "radius_bottom": 34,
+    "radius_top": 12,
+    "height": 99.0,
+    "segments": 12,
+    "ribs": 5,
+    "rings": 3,
+    "caps": true
+   },
+   "at": [
+    -179.315,
+    -2,
+    15.688
+   ],
+   "basis": [
+    "site.karst",
+    "tower.heights"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.45,
+    "alpha": 0.5,
+    "glow": 0.03
+   }
+  },
+  {
+   "id": "karst-tall-knoll",
+   "role": "ground",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "cone",
+    "radius_bottom": 32,
+    "radius_top": 14,
+    "height": 69.0,
+    "segments": 10,
+    "ribs": 5,
+    "rings": 2,
+    "caps": true
+   },
+   "at": [
+    125.04,
+    -2,
+    178.575
+   ],
+   "basis": [
+    "site.karst"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.42,
+    "alpha": 0.48,
+    "glow": 0.02
+   }
+  },
+  {
+   "id": "survey-grid",
+   "role": "ground",
+   "certainty": "decorative",
+   "stage": 0,
+   "shape": {
+    "type": "grid",
+    "size": [
+     290,
+     290
+    ],
+    "divisions": 9
+   },
+   "at": [
+    0,
+    0.6,
+    0
+   ],
+   "look": {
+    "weight": 0.35,
+    "alpha": 0.22
+   },
+   "note": "Site-survey grid: presentation only, laid on the sinkhole floor."
+  },
+  {
+   "id": "survey-ring",
+   "role": "ground",
+   "certainty": "decorative",
+   "stage": 0,
+   "shape": {
+    "type": "torus",
+    "major": 160,
+    "minor": 0.4,
+    "segments": 96,
+    "sides": 4,
+    "rings": 0
+   },
+   "at": [
+    0,
+    1.4,
+    0
+   ],
+   "look": {
+    "weight": 0.6,
+    "alpha": 0.35
+   },
+   "note": "Setting-out ring at the reflector's 305 m diameter."
+  },
+  {
+   "id": "rim-ring",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "torus",
+    "major": 152.5,
+    "minor": 0.7,
+    "segments": 96,
+    "sides": 6,
+    "rings": 4
+   },
+   "at": [
+    0,
+    48.277,
+    0
+   ],
+   "label": "Reflector rim",
+   "basis": [
+    "dish.diameter"
+   ],
+   "look": {
+    "weight": 1.4,
+    "alpha": 0.9,
+    "glow": 0.4
+   }
+  },
+  {
+   "id": "ground-screen",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "cylinder",
+    "radius": 153.4,
+    "height": 15,
+    "segments": 96,
+    "ribs": 48,
+    "rings": 5,
+    "caps": false
+   },
+   "at": [
+    0,
+    48.277,
+    0
+   ],
+   "basis": [
+    "screen.height"
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.6,
+    "alpha": 0.45,
+    "glow": 0.2
+   },
+   "note": "Wire-mesh ground screen: 15 m high around the rim (display mesh coarser)."
+  },
+  {
+   "id": "screen-top-rail",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "torus",
+    "major": 153.5,
+    "minor": 0.28,
+    "segments": 96,
+    "sides": 4,
+    "rings": 0
+   },
+   "at": [
+    0,
+    63.277,
+    0
+   ],
+   "basis": [
+    "screen.height"
+   ],
+   "look": {
+    "weight": 0.9,
+    "alpha": 0.7,
+    "glow": 0.25
+   }
+  },
+  {
+   "id": "access-road",
+   "role": "ground",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      136.15,
+      38.0,
+      140.99
+     ],
+     [
+      144.59,
+      26.75,
+      139.63
+     ],
+     [
+      153.09,
+      14.17,
+      137.84
+     ],
+     [
+      161.64,
+      1.0,
+      135.63
+     ],
+     [
+      170.21,
+      1.0,
+      132.98
+     ],
+     [
+      178.79,
+      1.0,
+      129.9
+     ],
+     [
+      187.36,
+      1.0,
+      126.38
+     ],
+     [
+      195.9,
+      1.0,
+      122.41
+     ],
+     [
+      204.38,
+      1.0,
+      118.0
+     ]
+    ],
+    "smooth": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "site.karst"
+   ],
+   "look": {
+    "weight": 0.65,
+    "alpha": 0.45
+   },
+   "note": "Service road (drawn in plan, not surveyed)."
+  },
+  {
+   "id": "ops-building",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     26,
+     8,
+     15
+    ],
+    "ribs": 3,
+    "anchor": "base"
+   },
+   "at": [
+    138.69,
+    47.0,
+    108.36
+   ],
+   "basis": [
+    "site.karst"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.55,
+    "alpha": 0.55
+   }
+  },
+  {
+   "id": "reflector-core",
+   "role": "identity",
+   "certainty": "verified",
+   "stage": 1,
+   "shape": {
+    "type": "lathe",
+    "profile": [
+     [
+      0.0,
+      0.0
+     ],
+     [
+      7.45,
+      0.1
+     ],
+     [
+      14.91,
+      0.42
+     ],
+     [
+      22.36,
+      0.95
+     ],
+     [
+      29.82,
+      1.68
+     ],
+     [
+      37.27,
+      2.63
+     ],
+     [
+      44.73,
+      3.8
+     ],
+     [
+      52.18,
+      5.19
+     ],
+     [
+      59.64,
+      6.8
+     ],
+     [
+      67.09,
+      8.63
+     ],
+     [
+      74.55,
+      10.7
+     ],
+     [
+      82.0,
+      13.01
+     ]
+    ],
+    "segments": 96,
+    "meridians": 48
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "label": "305 m spherical reflector",
+   "basis": [
+    "dish.diameter",
+    "dish.radius"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.68,
+    "glow": 0.14
+   },
+   "note": "Spherical cap sampled from the published 265 m radius of curvature; the inner third of the bowl, panelled at display density.",
+   "source": "naic"
+  },
+  {
+   "id": "reflector-outer",
+   "role": "identity",
+   "certainty": "verified",
+   "stage": 1,
+   "shape": {
+    "type": "lathe",
+    "profile": [
+     [
+      80.0,
+      12.36
+     ],
+     [
+      86.59,
+      14.55
+     ],
+     [
+      93.18,
+      16.92
+     ],
+     [
+      99.77,
+      19.5
+     ],
+     [
+      106.36,
+      22.28
+     ],
+     [
+      112.95,
+      25.28
+     ],
+     [
+      119.55,
+      28.5
+     ],
+     [
+      126.14,
+      31.95
+     ],
+     [
+      132.73,
+      35.63
+     ],
+     [
+      139.32,
+      39.58
+     ],
+     [
+      145.91,
+      43.79
+     ],
+     [
+      152.5,
+      48.28
+     ]
+    ],
+    "segments": 96,
+    "meridians": 48
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "label": "Reflector, outer panel field",
+   "basis": [
+    "dish.diameter",
+    "dish.radius"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.66,
+    "glow": 0.12
+   },
+   "note": "Outer panel field, meridian seams interleaved with the core to read as a mesh.",
+   "source": "naic",
+   "rotate": [
+    0,
+    3.75,
+    0
+   ]
+  },
+  {
+   "id": "reflector-illuminated-annulus",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "torus",
+    "major": 106.5,
+    "minor": 0.22,
+    "segments": 96,
+    "sides": 4,
+    "rings": 0
+   },
+   "at": [
+    0,
+    22.492,
+    0
+   ],
+   "basis": [
+    "dish.diameter",
+    "illuminated.diameter"
+   ],
+   "look": {
+    "weight": 0.9,
+    "alpha": 0.6
+   },
+   "note": "Ring at the 213 m illuminated aperture (L-band)."
+  },
+  {
+   "id": "reflector-rim-course",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "torus",
+    "major": 149.0,
+    "minor": 0.22,
+    "segments": 96,
+    "sides": 4,
+    "rings": 0
+   },
+   "at": [
+    0,
+    46.006,
+    0
+   ],
+   "basis": [
+    "dish.diameter",
+    "illuminated.diameter"
+   ],
+   "look": {
+    "weight": 0.8,
+    "alpha": 0.6
+   },
+   "note": "Ring at the 213 m illuminated aperture (L-band)."
+  },
+  {
+   "id": "reflector-seam-a",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "torus",
+    "major": 38.0,
+    "minor": 0.22,
+    "segments": 96,
+    "sides": 4,
+    "rings": 0
+   },
+   "at": [
+    0,
+    2.889,
+    0
+   ],
+   "basis": [
+    "dish.diameter",
+    "illuminated.diameter"
+   ],
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.6
+   },
+   "note": "Ring at the 213 m illuminated aperture (L-band)."
+  },
+  {
+   "id": "reflector-seam-b",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "torus",
+    "major": 76.0,
+    "minor": 0.22,
+    "segments": 96,
+    "sides": 4,
+    "rings": 0
+   },
+   "at": [
+    0,
+    11.282,
+    0
+   ],
+   "basis": [
+    "dish.diameter",
+    "illuminated.diameter"
+   ],
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.6
+   },
+   "note": "Ring at the 213 m illuminated aperture (L-band)."
+  },
+  {
+   "id": "reflector-seam-c",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "torus",
+    "major": 122.0,
+    "minor": 0.22,
+    "segments": 96,
+    "sides": 4,
+    "rings": 0
+   },
+   "at": [
+    0,
+    29.903,
+    0
+   ],
+   "basis": [
+    "dish.diameter",
+    "illuminated.diameter"
+   ],
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.6
+   },
+   "note": "Ring at the 213 m illuminated aperture (L-band)."
+  },
+  {
+   "id": "tower-tall-plinth",
+   "role": "structure",
+   "certainty": "verified",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     13,
+     8,
+     13
+    ],
+    "ribs": 2,
+    "anchor": "base"
+   },
+   "at": [
+    125.04,
+    59.0,
+    178.58
+   ],
+   "basis": [
+    "tower.heights"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.6,
+    "alpha": 0.6
+   },
+   "source": "naic"
+  },
+  {
+   "id": "tower-tall-shaft",
+   "role": "mass",
+   "certainty": "verified",
+   "stage": 2,
+   "shape": {
+    "type": "tower",
+    "radius": 8.6,
+    "height": 111.0,
+    "sides": 4,
+    "taper": 0.62,
+    "roof": "flat"
+   },
+   "at": [
+    125.04,
+    67.0,
+    178.58
+   ],
+   "label": "111 m tall tower",
+   "basis": [
+    "tower.heights"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.72,
+    "alpha": 0.82,
+    "glow": 0.06
+   },
+   "source": "naic",
+   "rotate": [
+    0,
+    45,
+    0
+   ]
+  },
+  {
+   "id": "tower-tall-crown",
+   "role": "identity",
+   "certainty": "verified",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     10.4,
+     3.2,
+     10.4
+    ],
+    "ribs": 3,
+    "anchor": "base"
+   },
+   "at": [
+    125.04,
+    178.0,
+    178.58
+   ],
+   "basis": [
+    "tower.heights"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.15,
+    "alpha": 0.85,
+    "glow": 0.4
+   },
+   "source": "naic"
+  },
+  {
+   "id": "tower-tall-head-brace",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      129.64,
+      178.2,
+      178.58
+     ],
+     [
+      128.44,
+      180.8,
+      178.58
+     ]
+    ],
+    "radius": 0.3,
+    "sides": 4,
+    "samples": 2,
+    "longitudinal": 2
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "tower.heights"
+   ],
+   "look": {
+    "weight": 0.7,
+    "alpha": 0.7
+   },
+   "repeat": {
+    "count": 4,
+    "radial": {
+     "axis": "y",
+     "center": [
+      125.04,
+      0,
+      178.58
+     ],
+     "span": 360
+    }
+   }
+  },
+  {
+   "id": "tower-tall-lug-ring",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "torus",
+    "major": 5.0,
+    "minor": 0.35,
+    "segments": 16,
+    "sides": 4,
+    "rings": 0
+   },
+   "at": [
+    125.04,
+    181.0,
+    178.58
+   ],
+   "basis": [
+    "tower.heights"
+   ],
+   "look": {
+    "weight": 0.9,
+    "alpha": 0.8,
+    "glow": 0.3
+   }
+  },
+  {
+   "id": "tower-a-plinth",
+   "role": "structure",
+   "certainty": "verified",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     13,
+     8,
+     13
+    ],
+    "ribs": 2,
+    "anchor": "base"
+   },
+   "at": [
+    76.07,
+    89.0,
+    -163.14
+   ],
+   "basis": [
+    "tower.heights"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.6,
+    "alpha": 0.6
+   },
+   "source": "naic"
+  },
+  {
+   "id": "tower-a-shaft",
+   "role": "mass",
+   "certainty": "verified",
+   "stage": 2,
+   "shape": {
+    "type": "tower",
+    "radius": 8.6,
+    "height": 81.0,
+    "sides": 4,
+    "taper": 0.62,
+    "roof": "flat"
+   },
+   "at": [
+    76.07,
+    97.0,
+    -163.14
+   ],
+   "label": "81 m tower",
+   "basis": [
+    "tower.heights"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.72,
+    "alpha": 0.82,
+    "glow": 0.06
+   },
+   "source": "naic",
+   "rotate": [
+    0,
+    45,
+    0
+   ]
+  },
+  {
+   "id": "tower-a-crown",
+   "role": "identity",
+   "certainty": "verified",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     10.4,
+     3.2,
+     10.4
+    ],
+    "ribs": 3,
+    "anchor": "base"
+   },
+   "at": [
+    76.07,
+    178.0,
+    -163.14
+   ],
+   "basis": [
+    "tower.heights"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.15,
+    "alpha": 0.85,
+    "glow": 0.4
+   },
+   "source": "naic"
+  },
+  {
+   "id": "tower-a-head-brace",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      80.67,
+      178.2,
+      -163.14
+     ],
+     [
+      79.47,
+      180.8,
+      -163.14
+     ]
+    ],
+    "radius": 0.3,
+    "sides": 4,
+    "samples": 2,
+    "longitudinal": 2
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "tower.heights"
+   ],
+   "look": {
+    "weight": 0.7,
+    "alpha": 0.7
+   },
+   "repeat": {
+    "count": 4,
+    "radial": {
+     "axis": "y",
+     "center": [
+      76.07,
+      0,
+      -163.14
+     ],
+     "span": 360
+    }
+   }
+  },
+  {
+   "id": "tower-a-lug-ring",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "torus",
+    "major": 5.0,
+    "minor": 0.35,
+    "segments": 16,
+    "sides": 4,
+    "rings": 0
+   },
+   "at": [
+    76.07,
+    181.0,
+    -163.14
+   ],
+   "basis": [
+    "tower.heights"
+   ],
+   "look": {
+    "weight": 0.9,
+    "alpha": 0.8,
+    "glow": 0.3
+   }
+  },
+  {
+   "id": "tower-b-plinth",
+   "role": "structure",
+   "certainty": "verified",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     13,
+     8,
+     13
+    ],
+    "ribs": 2,
+    "anchor": "base"
+   },
+   "at": [
+    -179.32,
+    89.0,
+    15.69
+   ],
+   "basis": [
+    "tower.heights"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.6,
+    "alpha": 0.6
+   },
+   "source": "naic"
+  },
+  {
+   "id": "tower-b-shaft",
+   "role": "mass",
+   "certainty": "verified",
+   "stage": 2,
+   "shape": {
+    "type": "tower",
+    "radius": 8.6,
+    "height": 81.0,
+    "sides": 4,
+    "taper": 0.62,
+    "roof": "flat"
+   },
+   "at": [
+    -179.32,
+    97.0,
+    15.69
+   ],
+   "label": "81 m tower",
+   "basis": [
+    "tower.heights"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.72,
+    "alpha": 0.82,
+    "glow": 0.06
+   },
+   "source": "naic",
+   "rotate": [
+    0,
+    45,
+    0
+   ]
+  },
+  {
+   "id": "tower-b-crown",
+   "role": "identity",
+   "certainty": "verified",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     10.4,
+     3.2,
+     10.4
+    ],
+    "ribs": 3,
+    "anchor": "base"
+   },
+   "at": [
+    -179.32,
+    178.0,
+    15.69
+   ],
+   "basis": [
+    "tower.heights"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.15,
+    "alpha": 0.85,
+    "glow": 0.4
+   },
+   "source": "naic"
+  },
+  {
+   "id": "tower-b-head-brace",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      -174.72,
+      178.2,
+      15.69
+     ],
+     [
+      -175.92,
+      180.8,
+      15.69
+     ]
+    ],
+    "radius": 0.3,
+    "sides": 4,
+    "samples": 2,
+    "longitudinal": 2
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "tower.heights"
+   ],
+   "look": {
+    "weight": 0.7,
+    "alpha": 0.7
+   },
+   "repeat": {
+    "count": 4,
+    "radial": {
+     "axis": "y",
+     "center": [
+      -179.32,
+      0,
+      15.69
+     ],
+     "span": 360
+    }
+   }
+  },
+  {
+   "id": "tower-b-lug-ring",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "torus",
+    "major": 5.0,
+    "minor": 0.35,
+    "segments": 16,
+    "sides": 4,
+    "rings": 0
+   },
+   "at": [
+    -179.32,
+    181.0,
+    15.69
+   ],
+   "basis": [
+    "tower.heights"
+   ],
+   "look": {
+    "weight": 0.9,
+    "alpha": 0.8,
+    "glow": 0.3
+   }
+  },
+  {
+   "id": "main-cable-01",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      125.04,
+      181.0,
+      178.58
+     ],
+     [
+      71.59,
+      169.0,
+      101.25
+     ],
+     [
+      34.18,
+      162.62,
+      47.11
+     ],
+     [
+      18.15,
+      160.2,
+      23.91
+     ]
+    ],
+    "radius": 0.42,
+    "sides": 5,
+    "samples": 6,
+    "longitudinal": 3,
+    "ring_every": 4
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "cables.count",
+    "tower.heights"
+   ],
+   "look": {
+    "weight": 0.9,
+    "alpha": 0.8,
+    "glow": 0.12
+   },
+   "note": "One of the 18 main cables: six per tower, taut into the platform corner posts."
+  },
+  {
+   "id": "main-cable-02",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      125.04,
+      181.0,
+      178.58
+     ],
+     [
+      71.12,
+      168.92000000000002,
+      101.57
+     ],
+     [
+      33.38,
+      162.49,
+      47.67
+     ],
+     [
+      17.21,
+      160.05,
+      24.57
+     ]
+    ],
+    "radius": 0.42,
+    "sides": 5,
+    "samples": 6,
+    "longitudinal": 3,
+    "ring_every": 4
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "cables.count",
+    "tower.heights"
+   ],
+   "look": {
+    "weight": 0.9,
+    "alpha": 0.8,
+    "glow": 0.12
+   },
+   "note": "One of the 18 main cables: six per tower, taut into the platform corner posts."
+  },
+  {
+   "id": "main-cable-03",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      125.04,
+      181.0,
+      178.58
+     ],
+     [
+      70.65,
+      168.85,
+      101.9
+     ],
+     [
+      32.58,
+      162.36,
+      48.24
+     ],
+     [
+      16.27,
+      159.9,
+      25.23
+     ]
+    ],
+    "radius": 0.42,
+    "sides": 5,
+    "samples": 6,
+    "longitudinal": 3,
+    "ring_every": 4
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "cables.count",
+    "tower.heights"
+   ],
+   "look": {
+    "weight": 0.9,
+    "alpha": 0.8,
+    "glow": 0.12
+   },
+   "note": "One of the 18 main cables: six per tower, taut into the platform corner posts."
+  },
+  {
+   "id": "main-cable-04",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      125.04,
+      181.0,
+      178.58
+     ],
+     [
+      68.34,
+      169.0,
+      75.45
+     ],
+     [
+      28.65,
+      162.62,
+      3.26
+     ],
+     [
+      11.64,
+      160.2,
+      -27.68
+     ]
+    ],
+    "radius": 0.42,
+    "sides": 5,
+    "samples": 6,
+    "longitudinal": 3,
+    "ring_every": 4
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "cables.count",
+    "tower.heights"
+   ],
+   "look": {
+    "weight": 0.9,
+    "alpha": 0.8,
+    "glow": 0.12
+   },
+   "note": "One of the 18 main cables: six per tower, taut into the platform corner posts."
+  },
+  {
+   "id": "main-cable-05",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      125.04,
+      181.0,
+      178.58
+     ],
+     [
+      68.86,
+      168.92000000000002,
+      75.69
+     ],
+     [
+      29.53,
+      162.49,
+      3.68
+     ],
+     [
+      12.68,
+      160.05,
+      -27.19
+     ]
+    ],
+    "radius": 0.42,
+    "sides": 5,
+    "samples": 6,
+    "longitudinal": 3,
+    "ring_every": 4
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "cables.count",
+    "tower.heights"
+   ],
+   "look": {
+    "weight": 0.9,
+    "alpha": 0.8,
+    "glow": 0.12
+   },
+   "note": "One of the 18 main cables: six per tower, taut into the platform corner posts."
+  },
+  {
+   "id": "main-cable-06",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      125.04,
+      181.0,
+      178.58
+     ],
+     [
+      69.38,
+      168.85,
+      75.94
+     ],
+     [
+      30.42,
+      162.36,
+      4.09
+     ],
+     [
+      13.72,
+      159.9,
+      -26.7
+     ]
+    ],
+    "radius": 0.42,
+    "sides": 5,
+    "samples": 6,
+    "longitudinal": 3,
+    "ring_every": 4
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "cables.count",
+    "tower.heights"
+   ],
+   "look": {
+    "weight": 0.9,
+    "alpha": 0.8,
+    "glow": 0.12
+   },
+   "note": "One of the 18 main cables: six per tower, taut into the platform corner posts."
+  },
+  {
+   "id": "main-cable-07",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      76.07,
+      181.0,
+      -163.14
+     ],
+     [
+      43.85,
+      169.0,
+      -95.41
+     ],
+     [
+      21.3,
+      162.62,
+      -47.99
+     ],
+     [
+      11.64,
+      160.2,
+      -27.68
+     ]
+    ],
+    "radius": 0.42,
+    "sides": 5,
+    "samples": 6,
+    "longitudinal": 3,
+    "ring_every": 4
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "cables.count",
+    "tower.heights"
+   ],
+   "look": {
+    "weight": 0.9,
+    "alpha": 0.8,
+    "glow": 0.12
+   },
+   "note": "One of the 18 main cables: six per tower, taut into the platform corner posts."
+  },
+  {
+   "id": "main-cable-08",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      76.07,
+      181.0,
+      -163.14
+     ],
+     [
+      44.37,
+      168.92000000000002,
+      -95.16
+     ],
+     [
+      22.19,
+      162.49,
+      -47.58
+     ],
+     [
+      12.68,
+      160.05,
+      -27.19
+     ]
+    ],
+    "radius": 0.42,
+    "sides": 5,
+    "samples": 6,
+    "longitudinal": 3,
+    "ring_every": 4
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "cables.count",
+    "tower.heights"
+   ],
+   "look": {
+    "weight": 0.9,
+    "alpha": 0.8,
+    "glow": 0.12
+   },
+   "note": "One of the 18 main cables: six per tower, taut into the platform corner posts."
+  },
+  {
+   "id": "main-cable-09",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      76.07,
+      181.0,
+      -163.14
+     ],
+     [
+      44.9,
+      168.85,
+      -94.92
+     ],
+     [
+      23.07,
+      162.36,
+      -47.17
+     ],
+     [
+      13.72,
+      159.9,
+      -26.7
+     ]
+    ],
+    "radius": 0.42,
+    "sides": 5,
+    "samples": 6,
+    "longitudinal": 3,
+    "ring_every": 4
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "cables.count",
+    "tower.heights"
+   ],
+   "look": {
+    "weight": 0.9,
+    "alpha": 0.8,
+    "glow": 0.12
+   },
+   "note": "One of the 18 main cables: six per tower, taut into the platform corner posts."
+  },
+  {
+   "id": "main-cable-10",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      76.07,
+      181.0,
+      -163.14
+     ],
+     [
+      23.14,
+      169.0,
+      -79.69
+     ],
+     [
+      -13.91,
+      162.62,
+      -21.27
+     ],
+     [
+      -29.79,
+      160.2,
+      3.76
+     ]
+    ],
+    "radius": 0.42,
+    "sides": 5,
+    "samples": 6,
+    "longitudinal": 3,
+    "ring_every": 4
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "cables.count",
+    "tower.heights"
+   ],
+   "look": {
+    "weight": 0.9,
+    "alpha": 0.8,
+    "glow": 0.12
+   },
+   "note": "One of the 18 main cables: six per tower, taut into the platform corner posts."
+  },
+  {
+   "id": "main-cable-11",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      76.07,
+      181.0,
+      -163.14
+     ],
+     [
+      23.09,
+      168.92000000000002,
+      -80.26
+     ],
+     [
+      -13.99,
+      162.49,
+      -22.25
+     ],
+     [
+      -29.89,
+      160.05,
+      2.61
+     ]
+    ],
+    "radius": 0.42,
+    "sides": 5,
+    "samples": 6,
+    "longitudinal": 3,
+    "ring_every": 4
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "cables.count",
+    "tower.heights"
+   ],
+   "look": {
+    "weight": 0.9,
+    "alpha": 0.8,
+    "glow": 0.12
+   },
+   "note": "One of the 18 main cables: six per tower, taut into the platform corner posts."
+  },
+  {
+   "id": "main-cable-12",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      76.07,
+      181.0,
+      -163.14
+     ],
+     [
+      23.04,
+      168.85,
+      -80.83
+     ],
+     [
+      -14.08,
+      162.36,
+      -23.22
+     ],
+     [
+      -29.99,
+      159.9,
+      1.47
+     ]
+    ],
+    "radius": 0.42,
+    "sides": 5,
+    "samples": 6,
+    "longitudinal": 3,
+    "ring_every": 4
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "cables.count",
+    "tower.heights"
+   ],
+   "look": {
+    "weight": 0.9,
+    "alpha": 0.8,
+    "glow": 0.12
+   },
+   "note": "One of the 18 main cables: six per tower, taut into the platform corner posts."
+  },
+  {
+   "id": "main-cable-13",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      -179.32,
+      181.0,
+      15.69
+     ],
+     [
+      -104.55,
+      169.0,
+      9.72
+     ],
+     [
+      -52.22,
+      162.62,
+      5.55
+     ],
+     [
+      -29.79,
+      160.2,
+      3.76
+     ]
+    ],
+    "radius": 0.42,
+    "sides": 5,
+    "samples": 6,
+    "longitudinal": 3,
+    "ring_every": 4
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "cables.count",
+    "tower.heights"
+   ],
+   "look": {
+    "weight": 0.9,
+    "alpha": 0.8,
+    "glow": 0.12
+   },
+   "note": "One of the 18 main cables: six per tower, taut into the platform corner posts."
+  },
+  {
+   "id": "main-cable-14",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      -179.32,
+      181.0,
+      15.69
+     ],
+     [
+      -104.6,
+      168.92000000000002,
+      9.15
+     ],
+     [
+      -52.3,
+      162.49,
+      4.58
+     ],
+     [
+      -29.89,
+      160.05,
+      2.61
+     ]
+    ],
+    "radius": 0.42,
+    "sides": 5,
+    "samples": 6,
+    "longitudinal": 3,
+    "ring_every": 4
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "cables.count",
+    "tower.heights"
+   ],
+   "look": {
+    "weight": 0.9,
+    "alpha": 0.8,
+    "glow": 0.12
+   },
+   "note": "One of the 18 main cables: six per tower, taut into the platform corner posts."
+  },
+  {
+   "id": "main-cable-15",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      -179.32,
+      181.0,
+      15.69
+     ],
+     [
+      -104.65,
+      168.85,
+      8.58
+     ],
+     [
+      -52.39,
+      162.36,
+      3.6
+     ],
+     [
+      -29.99,
+      159.9,
+      1.47
+     ]
+    ],
+    "radius": 0.42,
+    "sides": 5,
+    "samples": 6,
+    "longitudinal": 3,
+    "ring_every": 4
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "cables.count",
+    "tower.heights"
+   ],
+   "look": {
+    "weight": 0.9,
+    "alpha": 0.8,
+    "glow": 0.12
+   },
+   "note": "One of the 18 main cables: six per tower, taut into the platform corner posts."
+  },
+  {
+   "id": "main-cable-16",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      -179.32,
+      181.0,
+      15.69
+     ],
+     [
+      -83.84,
+      169.0,
+      -5.99
+     ],
+     [
+      -17.01,
+      162.62,
+      -21.17
+     ],
+     [
+      11.64,
+      160.2,
+      -27.68
+     ]
+    ],
+    "radius": 0.42,
+    "sides": 5,
+    "samples": 6,
+    "longitudinal": 3,
+    "ring_every": 4
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "cables.count",
+    "tower.heights"
+   ],
+   "look": {
+    "weight": 0.9,
+    "alpha": 0.8,
+    "glow": 0.12
+   },
+   "note": "One of the 18 main cables: six per tower, taut into the platform corner posts."
+  },
+  {
+   "id": "main-cable-17",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      -179.32,
+      181.0,
+      15.69
+     ],
+     [
+      -83.32,
+      168.92000000000002,
+      -5.75
+     ],
+     [
+      -16.12,
+      162.49,
+      -20.76
+     ],
+     [
+      12.68,
+      160.05,
+      -27.19
+     ]
+    ],
+    "radius": 0.42,
+    "sides": 5,
+    "samples": 6,
+    "longitudinal": 3,
+    "ring_every": 4
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "cables.count",
+    "tower.heights"
+   ],
+   "look": {
+    "weight": 0.9,
+    "alpha": 0.8,
+    "glow": 0.12
+   },
+   "note": "One of the 18 main cables: six per tower, taut into the platform corner posts."
+  },
+  {
+   "id": "main-cable-18",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      -179.32,
+      181.0,
+      15.69
+     ],
+     [
+      -82.8,
+      168.85,
+      -5.51
+     ],
+     [
+      -15.23,
+      162.36,
+      -20.34
+     ],
+     [
+      13.72,
+      159.9,
+      -26.7
+     ]
+    ],
+    "radius": 0.42,
+    "sides": 5,
+    "samples": 6,
+    "longitudinal": 3,
+    "ring_every": 4
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "cables.count",
+    "tower.heights"
+   ],
+   "look": {
+    "weight": 0.9,
+    "alpha": 0.8,
+    "glow": 0.12
+   },
+   "note": "One of the 18 main cables: six per tower, taut into the platform corner posts."
+  },
+  {
+   "id": "backstay-01",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      125.04,
+      181.0,
+      178.58
+     ],
+     [
+      104.25,
+      92.5,
+      203.93
+     ],
+     [
+      83.45,
+      4.0,
+      229.28
+     ]
+    ],
+    "radius": 0.34,
+    "sides": 5,
+    "samples": 6,
+    "longitudinal": 3,
+    "ring_every": 4
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "cables.count"
+   ],
+   "look": {
+    "weight": 0.7,
+    "alpha": 0.65
+   },
+   "note": "Backstay to a rock anchor; the count and anchors are inferred."
+  },
+  {
+   "id": "backstay-02",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      125.04,
+      181.0,
+      178.58
+     ],
+     [
+      135.36,
+      92.5,
+      193.32
+     ],
+     [
+      145.69,
+      4.0,
+      208.06
+     ]
+    ],
+    "radius": 0.34,
+    "sides": 5,
+    "samples": 6,
+    "longitudinal": 3,
+    "ring_every": 4
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "cables.count"
+   ],
+   "look": {
+    "weight": 0.7,
+    "alpha": 0.65
+   },
+   "note": "Backstay to a rock anchor; the count and anchors are inferred."
+  },
+  {
+   "id": "backstay-03",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      125.04,
+      181.0,
+      178.58
+     ],
+     [
+      163.64,
+      92.5,
+      174.14
+     ],
+     [
+      202.24,
+      4.0,
+      169.7
+     ]
+    ],
+    "radius": 0.34,
+    "sides": 5,
+    "samples": 6,
+    "longitudinal": 3,
+    "ring_every": 4
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "cables.count"
+   ],
+   "look": {
+    "weight": 0.7,
+    "alpha": 0.65
+   },
+   "note": "Backstay to a rock anchor; the count and anchors are inferred."
+  },
+  {
+   "id": "backstay-04",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      76.07,
+      181.0,
+      -163.14
+     ],
+     [
+      104.24,
+      92.5,
+      -160.47
+     ],
+     [
+      132.41,
+      4.0,
+      -157.81
+     ]
+    ],
+    "radius": 0.34,
+    "sides": 5,
+    "samples": 6,
+    "longitudinal": 3,
+    "ring_every": 4
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "cables.count"
+   ],
+   "look": {
+    "weight": 0.7,
+    "alpha": 0.65
+   },
+   "note": "Backstay to a rock anchor; the count and anchors are inferred."
+  },
+  {
+   "id": "backstay-05",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      76.07,
+      181.0,
+      -163.14
+     ],
+     [
+      83.68,
+      92.5,
+      -179.45
+     ],
+     [
+      91.29,
+      4.0,
+      -195.76
+     ]
+    ],
+    "radius": 0.34,
+    "sides": 5,
+    "samples": 6,
+    "longitudinal": 3,
+    "ring_every": 4
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "cables.count"
+   ],
+   "look": {
+    "weight": 0.7,
+    "alpha": 0.65
+   },
+   "note": "Backstay to a rock anchor; the count and anchors are inferred."
+  },
+  {
+   "id": "backstay-06",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      76.07,
+      181.0,
+      -163.14
+     ],
+     [
+      57.66,
+      92.5,
+      -192.85
+     ],
+     [
+      39.24,
+      4.0,
+      -222.57
+     ]
+    ],
+    "radius": 0.34,
+    "sides": 5,
+    "samples": 6,
+    "longitudinal": 3,
+    "ring_every": 4
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "cables.count"
+   ],
+   "look": {
+    "weight": 0.7,
+    "alpha": 0.65
+   },
+   "note": "Backstay to a rock anchor; the count and anchors are inferred."
+  },
+  {
+   "id": "backstay-07",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      -179.32,
+      181.0,
+      15.69
+     ],
+     [
+      -191.09,
+      92.5,
+      -10.04
+     ],
+     [
+      -202.87,
+      4.0,
+      -35.77
+     ]
+    ],
+    "radius": 0.34,
+    "sides": 5,
+    "samples": 6,
+    "longitudinal": 3,
+    "ring_every": 4
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "cables.count"
+   ],
+   "look": {
+    "weight": 0.7,
+    "alpha": 0.65
+   },
+   "note": "Backstay to a rock anchor; the count and anchors are inferred."
+  },
+  {
+   "id": "backstay-08",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      -179.32,
+      181.0,
+      15.69
+     ],
+     [
+      -197.25,
+      92.5,
+      17.26
+     ],
+     [
+      -215.18,
+      4.0,
+      18.83
+     ]
+    ],
+    "radius": 0.34,
+    "sides": 5,
+    "samples": 6,
+    "longitudinal": 3,
+    "ring_every": 4
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "cables.count"
+   ],
+   "look": {
+    "weight": 0.7,
+    "alpha": 0.65
+   },
+   "note": "Backstay to a rock anchor; the count and anchors are inferred."
+  },
+  {
+   "id": "backstay-09",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      -179.32,
+      181.0,
+      15.69
+     ],
+     [
+      -195.84,
+      92.5,
+      46.49
+     ],
+     [
+      -212.37,
+      4.0,
+      77.3
+     ]
+    ],
+    "radius": 0.34,
+    "sides": 5,
+    "samples": 6,
+    "longitudinal": 3,
+    "ring_every": 4
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "cables.count"
+   ],
+   "look": {
+    "weight": 0.7,
+    "alpha": 0.65
+   },
+   "note": "Backstay to a rock anchor; the count and anchors are inferred."
+  },
+  {
+   "id": "tie-down-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      16.52,
+      143.0,
+      23.59
+     ],
+     [
+      12.62,
+      70,
+      18.02
+     ],
+     [
+      25.24,
+      4.08,
+      36.04
+     ]
+    ],
+    "radius": 0.3,
+    "sides": 4,
+    "samples": 5,
+    "longitudinal": 3
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "platform.height"
+   ],
+   "look": {
+    "weight": 0.6,
+    "alpha": 0.6
+   },
+   "note": "Platform tie-down to a winch on the reflector (three pairs in reality)."
+  },
+  {
+   "id": "tie-down-2",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      12.17,
+      143.0,
+      -26.1
+     ],
+     [
+      9.3,
+      70,
+      -19.94
+     ],
+     [
+      18.6,
+      4.08,
+      -39.88
+     ]
+    ],
+    "radius": 0.3,
+    "sides": 4,
+    "samples": 5,
+    "longitudinal": 3
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "platform.height"
+   ],
+   "look": {
+    "weight": 0.6,
+    "alpha": 0.6
+   },
+   "note": "Platform tie-down to a winch on the reflector (three pairs in reality)."
+  },
+  {
+   "id": "tie-down-3",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      -28.69,
+      143.0,
+      2.51
+     ],
+     [
+      -21.92,
+      70,
+      1.92
+     ],
+     [
+      -43.83,
+      4.08,
+      3.83
+     ]
+    ],
+    "radius": 0.3,
+    "sides": 4,
+    "samples": 5,
+    "longitudinal": 3
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "platform.height"
+   ],
+   "look": {
+    "weight": 0.6,
+    "alpha": 0.6
+   },
+   "note": "Platform tie-down to a winch on the reflector (three pairs in reality)."
+  },
+  {
+   "id": "cableway",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      52.67,
+      51.28,
+      144.71
+     ],
+     [
+      35.27,
+      101.14,
+      91.29
+     ],
+     [
+      14.0,
+      142.0,
+      26.0
+     ]
+    ],
+    "radius": 0.24,
+    "sides": 4,
+    "samples": 6,
+    "longitudinal": 3
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "platform.height"
+   ],
+   "look": {
+    "weight": 0.6,
+    "alpha": 0.55
+   },
+   "note": "Cable-car line to the platform (the gondola itself arrives at stage 6)."
+  },
+  {
+   "id": "platform-top-chord-1",
+   "role": "detail",
+   "certainty": "verified",
+   "stage": 4,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      17.20729309053138,
+      150.0,
+      24.574561328669756
+     ],
+     [
+      14.942920471376183,
+      150.5,
+      -1.307336141214872
+     ],
+     [
+      12.678547852220985,
+      150.0,
+      -27.1892336110995
+     ]
+    ],
+    "radius": 0.85,
+    "sides": 6,
+    "samples": 4,
+    "longitudinal": 4
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "platform.height"
+   ],
+   "look": {
+    "weight": 1.0,
+    "alpha": 0.9,
+    "glow": 0.2
+   },
+   "source": "naic"
+  },
+  {
+   "id": "platform-bottom-chord-1",
+   "role": "detail",
+   "certainty": "verified",
+   "stage": 4,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      17.20729309053138,
+      141.5,
+      24.574561328669756
+     ],
+     [
+      14.942920471376183,
+      141.0,
+      -1.307336141214872
+     ],
+     [
+      12.678547852220985,
+      141.5,
+      -27.1892336110995
+     ]
+    ],
+    "radius": 0.75,
+    "sides": 6,
+    "samples": 4,
+    "longitudinal": 4
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "platform.height"
+   ],
+   "look": {
+    "weight": 0.95,
+    "alpha": 0.85,
+    "glow": 0.15
+   },
+   "source": "naic"
+  },
+  {
+   "id": "platform-web-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      17.21,
+      150.4,
+      24.57
+     ],
+     [
+      16.7,
+      141.3,
+      18.82
+     ],
+     [
+      16.2,
+      150.4,
+      13.07
+     ],
+     [
+      15.7,
+      141.3,
+      7.32
+     ],
+     [
+      15.19,
+      150.4,
+      1.57
+     ],
+     [
+      14.69,
+      141.3,
+      -4.18
+     ],
+     [
+      14.19,
+      150.4,
+      -9.93
+     ],
+     [
+      13.68,
+      141.3,
+      -15.69
+     ],
+     [
+      13.18,
+      150.4,
+      -21.44
+     ],
+     [
+      12.68,
+      141.3,
+      -27.19
+     ]
+    ],
+    "radius": 0.32,
+    "sides": 4,
+    "samples": 2,
+    "longitudinal": 2,
+    "ring_every": 0
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "platform.height"
+   ],
+   "look": {
+    "weight": 0.7,
+    "alpha": 0.7
+   }
+  },
+  {
+   "id": "platform-deck-1",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     5.2,
+     0.55,
+     50.36
+    ],
+    "ribs": 8
+   },
+   "at": [
+    14.943,
+    141.8,
+    -1.307
+   ],
+   "basis": [
+    "platform.height"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.8,
+    "alpha": 0.7
+   },
+   "rotate": [
+    0,
+    -175.0,
+    0
+   ]
+  },
+  {
+   "id": "platform-rail-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      17.20729309053138,
+      144.0,
+      24.574561328669756
+     ],
+     [
+      14.942920471376183,
+      144.3,
+      -1.307336141214872
+     ],
+     [
+      12.678547852220985,
+      144.0,
+      -27.1892336110995
+     ]
+    ],
+    "radius": 0.16,
+    "sides": 4,
+    "samples": 3,
+    "longitudinal": 2
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "platform.height"
+   ],
+   "look": {
+    "weight": 0.55,
+    "alpha": 0.6
+   }
+  },
+  {
+   "id": "platform-mid-rail-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      17.20729309053138,
+      143.0,
+      24.574561328669756
+     ],
+     [
+      14.942920471376183,
+      143.3,
+      -1.307336141214872
+     ],
+     [
+      12.678547852220985,
+      143.0,
+      -27.1892336110995
+     ]
+    ],
+    "radius": 0.12,
+    "sides": 4,
+    "samples": 3,
+    "longitudinal": 2
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "platform.height"
+   ],
+   "look": {
+    "weight": 0.4,
+    "alpha": 0.45
+   }
+  },
+  {
+   "id": "platform-top-chord-2",
+   "role": "detail",
+   "certainty": "verified",
+   "stage": 4,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      12.678547852220985,
+      150.0,
+      -27.1892336110995
+     ],
+     [
+      -8.60364654526569,
+      150.5,
+      -12.287280664334881
+     ],
+     [
+      -29.885840942752367,
+      150.0,
+      2.6146722824297366
+     ]
+    ],
+    "radius": 0.85,
+    "sides": 6,
+    "samples": 4,
+    "longitudinal": 4
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "platform.height"
+   ],
+   "look": {
+    "weight": 1.0,
+    "alpha": 0.9,
+    "glow": 0.2
+   },
+   "source": "naic"
+  },
+  {
+   "id": "platform-bottom-chord-2",
+   "role": "detail",
+   "certainty": "verified",
+   "stage": 4,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      12.678547852220985,
+      141.5,
+      -27.1892336110995
+     ],
+     [
+      -8.60364654526569,
+      141.0,
+      -12.287280664334881
+     ],
+     [
+      -29.885840942752367,
+      141.5,
+      2.6146722824297366
+     ]
+    ],
+    "radius": 0.75,
+    "sides": 6,
+    "samples": 4,
+    "longitudinal": 4
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "platform.height"
+   ],
+   "look": {
+    "weight": 0.95,
+    "alpha": 0.85,
+    "glow": 0.15
+   },
+   "source": "naic"
+  },
+  {
+   "id": "platform-web-2",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      12.68,
+      150.4,
+      -27.19
+     ],
+     [
+      7.95,
+      141.3,
+      -23.88
+     ],
+     [
+      3.22,
+      150.4,
+      -20.57
+     ],
+     [
+      -1.51,
+      141.3,
+      -17.25
+     ],
+     [
+      -6.24,
+      150.4,
+      -13.94
+     ],
+     [
+      -10.97,
+      141.3,
+      -10.63
+     ],
+     [
+      -15.7,
+      150.4,
+      -7.32
+     ],
+     [
+      -20.43,
+      141.3,
+      -4.01
+     ],
+     [
+      -25.16,
+      150.4,
+      -0.7
+     ],
+     [
+      -29.89,
+      141.3,
+      2.61
+     ]
+    ],
+    "radius": 0.32,
+    "sides": 4,
+    "samples": 2,
+    "longitudinal": 2,
+    "ring_every": 0
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "platform.height"
+   ],
+   "look": {
+    "weight": 0.7,
+    "alpha": 0.7
+   }
+  },
+  {
+   "id": "platform-deck-2",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     5.2,
+     0.55,
+     50.36
+    ],
+    "ribs": 8
+   },
+   "at": [
+    -8.604,
+    141.8,
+    -12.287
+   ],
+   "basis": [
+    "platform.height"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.8,
+    "alpha": 0.7
+   },
+   "rotate": [
+    0,
+    -55.000000000000014,
+    0
+   ]
+  },
+  {
+   "id": "platform-rail-2",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      12.678547852220985,
+      144.0,
+      -27.1892336110995
+     ],
+     [
+      -8.60364654526569,
+      144.3,
+      -12.287280664334881
+     ],
+     [
+      -29.885840942752367,
+      144.0,
+      2.6146722824297366
+     ]
+    ],
+    "radius": 0.16,
+    "sides": 4,
+    "samples": 3,
+    "longitudinal": 2
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "platform.height"
+   ],
+   "look": {
+    "weight": 0.55,
+    "alpha": 0.6
+   }
+  },
+  {
+   "id": "platform-mid-rail-2",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      12.678547852220985,
+      143.0,
+      -27.1892336110995
+     ],
+     [
+      -8.60364654526569,
+      143.3,
+      -12.287280664334881
+     ],
+     [
+      -29.885840942752367,
+      143.0,
+      2.6146722824297366
+     ]
+    ],
+    "radius": 0.12,
+    "sides": 4,
+    "samples": 3,
+    "longitudinal": 2
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "platform.height"
+   ],
+   "look": {
+    "weight": 0.4,
+    "alpha": 0.45
+   }
+  },
+  {
+   "id": "platform-top-chord-3",
+   "role": "detail",
+   "certainty": "verified",
+   "stage": 4,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      -29.885840942752367,
+      150.0,
+      2.6146722824297366
+     ],
+     [
+      -6.339273926110494,
+      150.5,
+      13.594616805549746
+     ],
+     [
+      17.20729309053138,
+      150.0,
+      24.574561328669756
+     ]
+    ],
+    "radius": 0.85,
+    "sides": 6,
+    "samples": 4,
+    "longitudinal": 4
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "platform.height"
+   ],
+   "look": {
+    "weight": 1.0,
+    "alpha": 0.9,
+    "glow": 0.2
+   },
+   "source": "naic"
+  },
+  {
+   "id": "platform-bottom-chord-3",
+   "role": "detail",
+   "certainty": "verified",
+   "stage": 4,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      -29.885840942752367,
+      141.5,
+      2.6146722824297366
+     ],
+     [
+      -6.339273926110494,
+      141.0,
+      13.594616805549746
+     ],
+     [
+      17.20729309053138,
+      141.5,
+      24.574561328669756
+     ]
+    ],
+    "radius": 0.75,
+    "sides": 6,
+    "samples": 4,
+    "longitudinal": 4
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "platform.height"
+   ],
+   "look": {
+    "weight": 0.95,
+    "alpha": 0.85,
+    "glow": 0.15
+   },
+   "source": "naic"
+  },
+  {
+   "id": "platform-web-3",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      -29.89,
+      150.4,
+      2.61
+     ],
+     [
+      -24.65,
+      141.3,
+      5.05
+     ],
+     [
+      -19.42,
+      150.4,
+      7.49
+     ],
+     [
+      -14.19,
+      141.3,
+      9.93
+     ],
+     [
+      -8.96,
+      150.4,
+      12.37
+     ],
+     [
+      -3.72,
+      141.3,
+      14.81
+     ],
+     [
+      1.51,
+      150.4,
+      17.25
+     ],
+     [
+      6.74,
+      141.3,
+      19.69
+     ],
+     [
+      11.97,
+      150.4,
+      22.13
+     ],
+     [
+      17.21,
+      141.3,
+      24.57
+     ]
+    ],
+    "radius": 0.32,
+    "sides": 4,
+    "samples": 2,
+    "longitudinal": 2,
+    "ring_every": 0
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "platform.height"
+   ],
+   "look": {
+    "weight": 0.7,
+    "alpha": 0.7
+   }
+  },
+  {
+   "id": "platform-deck-3",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     5.2,
+     0.55,
+     50.36
+    ],
+    "ribs": 8
+   },
+   "at": [
+    -6.339,
+    141.8,
+    13.595
+   ],
+   "basis": [
+    "platform.height"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.8,
+    "alpha": 0.7
+   },
+   "rotate": [
+    0,
+    64.99999999999999,
+    0
+   ]
+  },
+  {
+   "id": "platform-rail-3",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      -29.885840942752367,
+      144.0,
+      2.6146722824297366
+     ],
+     [
+      -6.339273926110494,
+      144.3,
+      13.594616805549746
+     ],
+     [
+      17.20729309053138,
+      144.0,
+      24.574561328669756
+     ]
+    ],
+    "radius": 0.16,
+    "sides": 4,
+    "samples": 3,
+    "longitudinal": 2
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "platform.height"
+   ],
+   "look": {
+    "weight": 0.55,
+    "alpha": 0.6
+   }
+  },
+  {
+   "id": "platform-mid-rail-3",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      -29.885840942752367,
+      143.0,
+      2.6146722824297366
+     ],
+     [
+      -6.339273926110494,
+      143.3,
+      13.594616805549746
+     ],
+     [
+      17.20729309053138,
+      143.0,
+      24.574561328669756
+     ]
+    ],
+    "radius": 0.12,
+    "sides": 4,
+    "samples": 3,
+    "longitudinal": 2
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "platform.height"
+   ],
+   "look": {
+    "weight": 0.4,
+    "alpha": 0.45
+   }
+  },
+  {
+   "id": "platform-frame-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      16.75441856670034,
+      149.7,
+      19.398181834692828
+     ],
+     [
+      16.75441856670034,
+      141.1,
+      19.398181834692828
+     ]
+    ],
+    "radius": 0.28,
+    "sides": 4,
+    "samples": 2,
+    "longitudinal": 2
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "platform.height"
+   ],
+   "look": {
+    "weight": 0.55,
+    "alpha": 0.6
+   },
+   "repeat": {
+    "count": 5,
+    "step": {
+     "at": [
+      -0.755,
+      0,
+      -8.627
+     ]
+    }
+   }
+  },
+  {
+   "id": "platform-frame-2",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      8.422108972723649,
+      149.7,
+      -24.208843021746578
+     ],
+     [
+      8.422108972723649,
+      141.1,
+      -24.208843021746578
+     ]
+    ],
+    "radius": 0.28,
+    "sides": 4,
+    "samples": 2,
+    "longitudinal": 2
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "platform.height"
+   ],
+   "look": {
+    "weight": 0.55,
+    "alpha": 0.6
+   },
+   "repeat": {
+    "count": 5,
+    "step": {
+     "at": [
+      -7.094,
+      0,
+      4.967
+     ]
+    }
+   }
+  },
+  {
+   "id": "platform-frame-3",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      -25.176527539423994,
+      149.7,
+      4.810661187053738
+     ],
+     [
+      -25.176527539423994,
+      141.1,
+      4.810661187053738
+     ]
+    ],
+    "radius": 0.28,
+    "sides": 4,
+    "samples": 2,
+    "longitudinal": 2
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "platform.height"
+   ],
+   "look": {
+    "weight": 0.55,
+    "alpha": 0.6
+   },
+   "repeat": {
+    "count": 5,
+    "step": {
+     "at": [
+      7.849,
+      0,
+      3.66
+     ]
+    }
+   }
+  },
+  {
+   "id": "platform-floor-beam-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      -29.885840942752367,
+      141.9,
+      2.6146722824297366
+     ],
+     [
+      14.942920471376183,
+      141.6,
+      -1.307336141214872
+     ]
+    ],
+    "radius": 0.24,
+    "sides": 4,
+    "samples": 3,
+    "longitudinal": 2
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "platform.height"
+   ],
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.55
+   }
+  },
+  {
+   "id": "platform-floor-beam-2",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      17.20729309053138,
+      141.9,
+      24.574561328669756
+     ],
+     [
+      -8.60364654526569,
+      141.6,
+      -12.287280664334881
+     ]
+    ],
+    "radius": 0.24,
+    "sides": 4,
+    "samples": 3,
+    "longitudinal": 2
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "platform.height"
+   ],
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.55
+   }
+  },
+  {
+   "id": "platform-floor-beam-3",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      12.678547852220985,
+      141.9,
+      -27.1892336110995
+     ],
+     [
+      -6.339273926110494,
+      141.6,
+      13.594616805549746
+     ]
+    ],
+    "radius": 0.24,
+    "sides": 4,
+    "samples": 3,
+    "longitudinal": 2
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "platform.height"
+   ],
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.55
+   }
+  },
+  {
+   "id": "platform-rack-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.4,
+     1.8,
+     1.6
+    ],
+    "ribs": 3,
+    "anchor": "base"
+   },
+   "at": [
+    -2.0,
+    139.6,
+    -3.0
+   ],
+   "basis": [
+    "platform.height"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.45,
+    "alpha": 0.5
+   }
+  },
+  {
+   "id": "platform-rack-2",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.4,
+     1.8,
+     1.6
+    ],
+    "ribs": 3,
+    "anchor": "base"
+   },
+   "at": [
+    3.0,
+    139.6,
+    4.0
+   ],
+   "basis": [
+    "platform.height"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.45,
+    "alpha": 0.5
+   }
+  },
+  {
+   "id": "platform-rack-3",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.4,
+     1.8,
+     1.6
+    ],
+    "ribs": 3,
+    "anchor": "base"
+   },
+   "at": [
+    9.0,
+    139.6,
+    3.0
+   ],
+   "basis": [
+    "platform.height"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.45,
+    "alpha": 0.5
+   }
+  },
+  {
+   "id": "platform-rack-4",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.4,
+     1.8,
+     1.6
+    ],
+    "ribs": 3,
+    "anchor": "base"
+   },
+   "at": [
+    -8.0,
+    139.6,
+    -1.0
+   ],
+   "basis": [
+    "platform.height"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.45,
+    "alpha": 0.5
+   }
+  },
+  {
+   "id": "platform-corner-1",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     5.4,
+     10.5,
+     5.4
+    ],
+    "ribs": 2
+   },
+   "at": [
+    17.207,
+    145.5,
+    24.575
+   ],
+   "basis": [
+    "platform.height"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.0,
+    "alpha": 0.85,
+    "glow": 0.25
+   }
+  },
+  {
+   "id": "platform-corner-2",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     5.4,
+     10.5,
+     5.4
+    ],
+    "ribs": 2
+   },
+   "at": [
+    12.679,
+    145.5,
+    -27.189
+   ],
+   "basis": [
+    "platform.height"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.0,
+    "alpha": 0.85,
+    "glow": 0.25
+   }
+  },
+  {
+   "id": "platform-corner-3",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     5.4,
+     10.5,
+     5.4
+    ],
+    "ribs": 2
+   },
+   "at": [
+    -29.886,
+    145.5,
+    2.615
+   ],
+   "basis": [
+    "platform.height"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.0,
+    "alpha": 0.85,
+    "glow": 0.25
+   }
+  },
+  {
+   "id": "platform-deck-plate",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      15.64,
+      24.18
+     ],
+     [
+      16.23,
+      23.79
+     ],
+     [
+      16.81,
+      23.39
+     ],
+     [
+      17.37,
+      22.97
+     ],
+     [
+      13.12,
+      -25.64
+     ],
+     [
+      12.49,
+      -25.95
+     ],
+     [
+      11.85,
+      -26.25
+     ],
+     [
+      11.21,
+      -26.53
+     ],
+     [
+      -28.76,
+      1.46
+     ],
+     [
+      -28.72,
+      2.16
+     ],
+     [
+      -28.66,
+      2.86
+     ],
+     [
+      -28.58,
+      3.56
+     ]
+    ],
+    "height": 1.1,
+    "axis": "y",
+    "ribs": 0
+   },
+   "at": [
+    0,
+    141.4,
+    0
+   ],
+   "basis": [
+    "platform.height"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.7,
+    "alpha": 0.55
+   },
+   "note": "Deck plating: triangulated walkway surface, drawn as one plate."
+  },
+  {
+   "id": "platform-corner-brace-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      19.80729309053138,
+      142.0,
+      24.574561328669756
+     ],
+     [
+      18.10729309053138,
+      150.6,
+      24.574561328669756
+     ]
+    ],
+    "radius": 0.22,
+    "sides": 4,
+    "samples": 2,
+    "longitudinal": 2
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "platform.height"
+   ],
+   "look": {
+    "weight": 0.6,
+    "alpha": 0.6
+   },
+   "repeat": {
+    "count": 4,
+    "radial": {
+     "axis": "y",
+     "center": [
+      17.20729309053138,
+      0,
+      24.574561328669756
+     ],
+     "span": 360
+    }
+   }
+  },
+  {
+   "id": "platform-corner-brace-2",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      15.278547852220985,
+      142.0,
+      -27.1892336110995
+     ],
+     [
+      13.578547852220986,
+      150.6,
+      -27.1892336110995
+     ]
+    ],
+    "radius": 0.22,
+    "sides": 4,
+    "samples": 2,
+    "longitudinal": 2
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "platform.height"
+   ],
+   "look": {
+    "weight": 0.6,
+    "alpha": 0.6
+   },
+   "repeat": {
+    "count": 4,
+    "radial": {
+     "axis": "y",
+     "center": [
+      12.678547852220985,
+      0,
+      -27.1892336110995
+     ],
+     "span": 360
+    }
+   }
+  },
+  {
+   "id": "platform-corner-brace-3",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      -27.285840942752365,
+      142.0,
+      2.6146722824297366
+     ],
+     [
+      -28.985840942752368,
+      150.6,
+      2.6146722824297366
+     ]
+    ],
+    "radius": 0.22,
+    "sides": 4,
+    "samples": 2,
+    "longitudinal": 2
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "platform.height"
+   ],
+   "look": {
+    "weight": 0.6,
+    "alpha": 0.6
+   },
+   "repeat": {
+    "count": 4,
+    "radial": {
+     "axis": "y",
+     "center": [
+      -29.885840942752367,
+      0,
+      2.6146722824297366
+     ],
+     "span": 360
+    }
+   }
+  },
+  {
+   "id": "platform-mast",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.85,
+    "height": 8.0,
+    "segments": 10,
+    "ribs": 6,
+    "rings": 2,
+    "caps": false
+   },
+   "at": [
+    0,
+    150.0,
+    0
+   ],
+   "basis": [
+    "platform.height"
+   ],
+   "look": {
+    "weight": 1.0,
+    "alpha": 0.85,
+    "glow": 0.3
+   }
+  },
+  {
+   "id": "platform-mast-cap",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "cone",
+    "radius_bottom": 1.05,
+    "radius_top": 0.2,
+    "height": 1.6,
+    "segments": 8,
+    "caps": false
+   },
+   "at": [
+    0,
+    158.0,
+    0
+   ],
+   "basis": [
+    "platform.height"
+   ],
+   "look": {
+    "weight": 0.7,
+    "alpha": 0.7
+   }
+  },
+  {
+   "id": "equipment-carriage-house",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     13,
+     6.5,
+     9.0
+    ],
+    "ribs": 3,
+    "anchor": "base"
+   },
+   "at": [
+    7.0,
+    142.6,
+    -6.5
+   ],
+   "basis": [
+    "platform.height"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.7,
+    "alpha": 0.65
+   }
+  },
+  {
+   "id": "equipment-receiver-box-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     5.4,
+     3.4,
+     4.0
+    ],
+    "ribs": 3,
+    "anchor": "base"
+   },
+   "at": [
+    -9.0,
+    142.6,
+    7.5
+   ],
+   "basis": [
+    "platform.height"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.7,
+    "alpha": 0.65
+   }
+  },
+  {
+   "id": "equipment-receiver-box-2",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     3.8,
+     2.6,
+     3.0
+    ],
+    "ribs": 3,
+    "anchor": "base"
+   },
+   "at": [
+    -4.0,
+    142.6,
+    9.6
+   ],
+   "basis": [
+    "platform.height"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.7,
+    "alpha": 0.65
+   }
+  },
+  {
+   "id": "equipment-transmitter-house",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     9.0,
+     5.2,
+     7.0
+    ],
+    "ribs": 3,
+    "anchor": "base"
+   },
+   "at": [
+    -15.0,
+    142.6,
+    -6.0
+   ],
+   "basis": [
+    "platform.height"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.7,
+    "alpha": 0.65
+   }
+  },
+  {
+   "id": "equipment-tank-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "cylinder",
+    "radius": 2.2,
+    "height": 5.0,
+    "segments": 12,
+    "ribs": 4,
+    "rings": 1
+   },
+   "at": [
+    -16,
+    142.6,
+    6
+   ],
+   "basis": [
+    "platform.height"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.6,
+    "alpha": 0.6
+   }
+  },
+  {
+   "id": "equipment-tank-2",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "cylinder",
+    "radius": 2.2,
+    "height": 5.0,
+    "segments": 12,
+    "ribs": 4,
+    "rings": 1
+   },
+   "at": [
+    -19,
+    142.6,
+    2
+   ],
+   "basis": [
+    "platform.height"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.6,
+    "alpha": 0.6
+   }
+  },
+  {
+   "id": "platform-hanging-deck",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     7.5,
+     0.6,
+     5.5
+    ],
+    "ribs": 4
+   },
+   "at": [
+    6.0,
+    135.0,
+    6.0
+   ],
+   "basis": [
+    "platform.height"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.7,
+    "alpha": 0.6
+   }
+  },
+  {
+   "id": "platform-hanging-rod-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      3.0,
+      135.0,
+      4.0
+     ],
+     [
+      3.0,
+      141.6,
+      4.0
+     ]
+    ],
+    "radius": 0.1,
+    "sides": 4,
+    "samples": 2,
+    "longitudinal": 2
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "platform.height"
+   ],
+   "look": {
+    "weight": 0.45,
+    "alpha": 0.55
+   }
+  },
+  {
+   "id": "platform-hanging-rod-2",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      9.0,
+      135.0,
+      4.0
+     ],
+     [
+      9.0,
+      141.6,
+      4.0
+     ]
+    ],
+    "radius": 0.1,
+    "sides": 4,
+    "samples": 2,
+    "longitudinal": 2
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "platform.height"
+   ],
+   "look": {
+    "weight": 0.45,
+    "alpha": 0.55
+   }
+  },
+  {
+   "id": "platform-hanging-rod-3",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      3.0,
+      135.0,
+      8.0
+     ],
+     [
+      3.0,
+      141.6,
+      8.0
+     ]
+    ],
+    "radius": 0.1,
+    "sides": 4,
+    "samples": 2,
+    "longitudinal": 2
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "platform.height"
+   ],
+   "look": {
+    "weight": 0.45,
+    "alpha": 0.55
+   }
+  },
+  {
+   "id": "platform-hanging-rod-4",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      9.0,
+      135.0,
+      8.0
+     ],
+     [
+      9.0,
+      141.6,
+      8.0
+     ]
+    ],
+    "radius": 0.1,
+    "sides": 4,
+    "samples": 2,
+    "longitudinal": 2
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "platform.height"
+   ],
+   "look": {
+    "weight": 0.45,
+    "alpha": 0.55
+   }
+  },
+  {
+   "id": "azimuth-arm-top",
+   "role": "identity",
+   "certainty": "verified",
+   "stage": 5,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      -35.41,
+      144.0,
+      30.2
+     ],
+     [
+      -32.93,
+      140.01,
+      26.51
+     ],
+     [
+      -30.38,
+      137.88,
+      22.92
+     ],
+     [
+      -27.74,
+      137.5,
+      19.43
+     ],
+     [
+      -25.02,
+      137.5,
+      16.04
+     ],
+     [
+      -22.22,
+      137.5,
+      12.76
+     ],
+     [
+      -19.33,
+      137.5,
+      9.59
+     ],
+     [
+      -16.37,
+      137.5,
+      6.52
+     ],
+     [
+      -13.32,
+      137.5,
+      3.55
+     ],
+     [
+      -10.19,
+      137.5,
+      0.69
+     ],
+     [
+      -6.98,
+      137.5,
+      -2.07
+     ],
+     [
+      -3.69,
+      137.5,
+      -4.73
+     ],
+     [
+      -0.32,
+      137.5,
+      -7.28
+     ],
+     [
+      3.13,
+      137.5,
+      -9.72
+     ],
+     [
+      6.67,
+      137.5,
+      -12.07
+     ],
+     [
+      10.28,
+      137.5,
+      -14.3
+     ],
+     [
+      13.98,
+      137.5,
+      -16.44
+     ],
+     [
+      17.76,
+      137.5,
+      -18.47
+     ],
+     [
+      21.62,
+      137.5,
+      -20.39
+     ],
+     [
+      25.56,
+      137.5,
+      -22.21
+     ],
+     [
+      29.58,
+      137.88,
+      -23.93
+     ],
+     [
+      33.69,
+      140.01,
+      -25.54
+     ],
+     [
+      37.87,
+      144.0,
+      -27.05
+     ]
+    ],
+    "radius": 0.8,
+    "sides": 6,
+    "samples": 4,
+    "longitudinal": 4
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "label": "93 m azimuth arm",
+   "basis": [
+    "arm.length"
+   ],
+   "look": {
+    "weight": 1.3,
+    "alpha": 0.9,
+    "glow": 0.4
+   },
+   "motion": {
+    "type": "spin",
+    "axis": [
+     0,
+     1,
+     0
+    ],
+    "rpm": 0.18,
+    "pivot": [
+     0,
+     0,
+     0
+    ]
+   },
+   "source": "naic"
+  },
+  {
+   "id": "azimuth-arm-bottom",
+   "role": "identity",
+   "certainty": "verified",
+   "stage": 5,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      -35.41,
+      142.0,
+      30.2
+     ],
+     [
+      -32.93,
+      136.76,
+      26.51
+     ],
+     [
+      -30.38,
+      133.39,
+      22.92
+     ],
+     [
+      -27.74,
+      131.77,
+      19.43
+     ],
+     [
+      -25.02,
+      130.52,
+      16.04
+     ],
+     [
+      -22.22,
+      130.3,
+      12.76
+     ],
+     [
+      -19.33,
+      130.3,
+      9.59
+     ],
+     [
+      -16.37,
+      130.3,
+      6.52
+     ],
+     [
+      -13.32,
+      130.3,
+      3.55
+     ],
+     [
+      -10.19,
+      130.3,
+      0.69
+     ],
+     [
+      -6.98,
+      130.3,
+      -2.07
+     ],
+     [
+      -3.69,
+      130.3,
+      -4.73
+     ],
+     [
+      -0.32,
+      130.3,
+      -7.28
+     ],
+     [
+      3.13,
+      130.3,
+      -9.72
+     ],
+     [
+      6.67,
+      130.3,
+      -12.07
+     ],
+     [
+      10.28,
+      130.3,
+      -14.3
+     ],
+     [
+      13.98,
+      130.3,
+      -16.44
+     ],
+     [
+      17.76,
+      130.3,
+      -18.47
+     ],
+     [
+      21.62,
+      130.52,
+      -20.39
+     ],
+     [
+      25.56,
+      131.77,
+      -22.21
+     ],
+     [
+      29.58,
+      133.39,
+      -23.93
+     ],
+     [
+      33.69,
+      136.76,
+      -25.54
+     ],
+     [
+      37.87,
+      142.0,
+      -27.05
+     ]
+    ],
+    "radius": 0.7,
+    "sides": 6,
+    "samples": 4,
+    "longitudinal": 4
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "arm.length"
+   ],
+   "look": {
+    "weight": 1.15,
+    "alpha": 0.85,
+    "glow": 0.3
+   },
+   "motion": {
+    "type": "spin",
+    "axis": [
+     0,
+     1,
+     0
+    ],
+    "rpm": 0.18,
+    "pivot": [
+     0,
+     0,
+     0
+    ]
+   },
+   "source": "naic"
+  },
+  {
+   "id": "azimuth-arm-web",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      -35.41,
+      144.0,
+      30.2
+     ],
+     [
+      -32.93,
+      136.76,
+      26.51
+     ],
+     [
+      -30.38,
+      137.88,
+      22.92
+     ],
+     [
+      -27.74,
+      131.77,
+      19.43
+     ],
+     [
+      -25.02,
+      137.5,
+      16.04
+     ],
+     [
+      -22.22,
+      130.3,
+      12.76
+     ],
+     [
+      -19.33,
+      137.5,
+      9.59
+     ],
+     [
+      -16.37,
+      130.3,
+      6.52
+     ],
+     [
+      -13.32,
+      137.5,
+      3.55
+     ],
+     [
+      -10.19,
+      130.3,
+      0.69
+     ],
+     [
+      -6.98,
+      137.5,
+      -2.07
+     ],
+     [
+      -3.69,
+      130.3,
+      -4.73
+     ],
+     [
+      -0.32,
+      137.5,
+      -7.28
+     ],
+     [
+      3.13,
+      130.3,
+      -9.72
+     ],
+     [
+      6.67,
+      137.5,
+      -12.07
+     ],
+     [
+      10.28,
+      130.3,
+      -14.3
+     ],
+     [
+      13.98,
+      137.5,
+      -16.44
+     ],
+     [
+      17.76,
+      130.3,
+      -18.47
+     ],
+     [
+      21.62,
+      137.5,
+      -20.39
+     ],
+     [
+      25.56,
+      131.77,
+      -22.21
+     ],
+     [
+      29.58,
+      137.88,
+      -23.93
+     ],
+     [
+      33.69,
+      136.76,
+      -25.54
+     ],
+     [
+      37.87,
+      144.0,
+      -27.05
+     ]
+    ],
+    "radius": 0.3,
+    "sides": 4,
+    "samples": 2,
+    "longitudinal": 2,
+    "ring_every": 0
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "arm.length"
+   ],
+   "look": {
+    "weight": 0.7,
+    "alpha": 0.7
+   },
+   "motion": {
+    "type": "spin",
+    "axis": [
+     0,
+     1,
+     0
+    ],
+    "rpm": 0.18,
+    "pivot": [
+     0,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "id": "azimuth-arm-rail-a",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      -32.93,
+      140.91,
+      25.41
+     ],
+     [
+      -30.38,
+      138.78,
+      21.82
+     ],
+     [
+      -27.74,
+      138.4,
+      18.33
+     ],
+     [
+      -25.02,
+      138.4,
+      14.94
+     ],
+     [
+      -22.22,
+      138.4,
+      11.66
+     ],
+     [
+      -19.33,
+      138.4,
+      8.49
+     ],
+     [
+      -16.37,
+      138.4,
+      5.42
+     ],
+     [
+      -13.32,
+      138.4,
+      2.4499999999999997
+     ],
+     [
+      -10.19,
+      138.4,
+      -0.41000000000000014
+     ],
+     [
+      -6.98,
+      138.4,
+      -3.17
+     ],
+     [
+      -3.69,
+      138.4,
+      -5.83
+     ],
+     [
+      -0.32,
+      138.4,
+      -8.38
+     ],
+     [
+      3.13,
+      138.4,
+      -10.82
+     ],
+     [
+      6.67,
+      138.4,
+      -13.17
+     ],
+     [
+      10.28,
+      138.4,
+      -15.4
+     ],
+     [
+      13.98,
+      138.4,
+      -17.540000000000003
+     ],
+     [
+      17.76,
+      138.4,
+      -19.57
+     ],
+     [
+      21.62,
+      138.4,
+      -21.490000000000002
+     ],
+     [
+      25.56,
+      138.4,
+      -23.310000000000002
+     ],
+     [
+      29.58,
+      138.78,
+      -25.03
+     ]
+    ],
+    "radius": 0.14,
+    "sides": 4,
+    "samples": 4,
+    "longitudinal": 3
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "arm.length"
+   ],
+   "look": {
+    "weight": 0.6,
+    "alpha": 0.65
+   },
+   "motion": {
+    "type": "spin",
+    "axis": [
+     0,
+     1,
+     0
+    ],
+    "rpm": 0.18,
+    "pivot": [
+     0,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "id": "azimuth-arm-rail-b",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      -32.93,
+      140.91,
+      27.610000000000003
+     ],
+     [
+      -30.38,
+      138.78,
+      24.020000000000003
+     ],
+     [
+      -27.74,
+      138.4,
+      20.53
+     ],
+     [
+      -25.02,
+      138.4,
+      17.14
+     ],
+     [
+      -22.22,
+      138.4,
+      13.86
+     ],
+     [
+      -19.33,
+      138.4,
+      10.69
+     ],
+     [
+      -16.37,
+      138.4,
+      7.619999999999999
+     ],
+     [
+      -13.32,
+      138.4,
+      4.65
+     ],
+     [
+      -10.19,
+      138.4,
+      1.79
+     ],
+     [
+      -6.98,
+      138.4,
+      -0.9699999999999998
+     ],
+     [
+      -3.69,
+      138.4,
+      -3.6300000000000003
+     ],
+     [
+      -0.32,
+      138.4,
+      -6.18
+     ],
+     [
+      3.13,
+      138.4,
+      -8.620000000000001
+     ],
+     [
+      6.67,
+      138.4,
+      -10.97
+     ],
+     [
+      10.28,
+      138.4,
+      -13.200000000000001
+     ],
+     [
+      13.98,
+      138.4,
+      -15.340000000000002
+     ],
+     [
+      17.76,
+      138.4,
+      -17.369999999999997
+     ],
+     [
+      21.62,
+      138.4,
+      -19.29
+     ],
+     [
+      25.56,
+      138.4,
+      -21.11
+     ],
+     [
+      29.58,
+      138.78,
+      -22.83
+     ]
+    ],
+    "radius": 0.14,
+    "sides": 4,
+    "samples": 4,
+    "longitudinal": 3
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "arm.length"
+   ],
+   "look": {
+    "weight": 0.6,
+    "alpha": 0.65
+   },
+   "motion": {
+    "type": "spin",
+    "axis": [
+     0,
+     1,
+     0
+    ],
+    "rpm": 0.18,
+    "pivot": [
+     0,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "id": "counterweight",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "box",
+    "size": [
+     11.0,
+     5.0,
+     8.5
+    ],
+    "ribs": 4,
+    "anchor": "base"
+   },
+   "at": [
+    -30.252,
+    127.5,
+    23.001
+   ],
+   "label": "Counterweight",
+   "basis": [
+    "arm.length"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.0,
+    "alpha": 0.85,
+    "glow": 0.2
+   },
+   "motion": {
+    "type": "spin",
+    "axis": [
+     0,
+     1,
+     0
+    ],
+    "rpm": 0.18,
+    "pivot": [
+     0,
+     0,
+     0
+    ]
+   },
+   "rotate": [
+    0,
+    -38.0,
+    0
+   ]
+  },
+  {
+   "id": "counterweight-stem",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      -30.25223937471826,
+      132.2,
+      23.001130685571656
+     ],
+     [
+      -28.45456176898252,
+      138.0,
+      22.865649226189888
+     ]
+    ],
+    "radius": 0.5,
+    "sides": 5,
+    "samples": 2,
+    "longitudinal": 3
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "arm.length"
+   ],
+   "look": {
+    "weight": 0.8,
+    "alpha": 0.8
+   },
+   "motion": {
+    "type": "spin",
+    "axis": [
+     0,
+     1,
+     0
+    ],
+    "rpm": 0.18,
+    "pivot": [
+     0,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "id": "dome-carriage",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "box",
+    "size": [
+     9.0,
+     3.6,
+     7.0
+    ],
+    "ribs": 3
+   },
+   "at": [
+    16.068,
+    137.5,
+    -11.919
+   ],
+   "basis": [
+    "dome.diameter"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.0,
+    "alpha": 0.85,
+    "glow": 0.25
+   },
+   "motion": {
+    "type": "spin",
+    "axis": [
+     0,
+     1,
+     0
+    ],
+    "rpm": 0.18,
+    "pivot": [
+     0,
+     0,
+     0
+    ]
+   },
+   "rotate": [
+    0,
+    -38.0,
+    0
+   ]
+  },
+  {
+   "id": "dome-hanger-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      12.742586527361722,
+      135.9,
+      -11.757605563748921
+     ],
+     [
+      13.781792553122827,
+      129.0,
+      -11.808111365611698
+     ]
+    ],
+    "radius": 0.22,
+    "sides": 4,
+    "samples": 2,
+    "longitudinal": 2
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "dome.diameter"
+   ],
+   "look": {
+    "weight": 0.6,
+    "alpha": 0.7
+   },
+   "motion": {
+    "type": "spin",
+    "axis": [
+     0,
+     1,
+     0
+    ],
+    "rpm": 0.18,
+    "pivot": [
+     0,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "id": "dome-hanger-2",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      17.029365026982283,
+      135.9,
+      -15.1068039895205
+     ],
+     [
+      16.72895277161197,
+      129.0,
+      -14.11068528332966
+     ]
+    ],
+    "radius": 0.22,
+    "sides": 4,
+    "samples": 2,
+    "longitudinal": 2
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "dome.diameter"
+   ],
+   "look": {
+    "weight": 0.6,
+    "alpha": 0.7
+   },
+   "motion": {
+    "type": "spin",
+    "axis": [
+     0,
+     1,
+     0
+    ],
+    "rpm": 0.18,
+    "pivot": [
+     0,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "id": "dome-hanger-3",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      15.10672659261225,
+      135.9,
+      -8.731644269899109
+     ],
+     [
+      15.407138847982566,
+      129.0,
+      -9.72776297608995
+     ]
+    ],
+    "radius": 0.22,
+    "sides": 4,
+    "samples": 2,
+    "longitudinal": 2
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "dome.diameter"
+   ],
+   "look": {
+    "weight": 0.6,
+    "alpha": 0.7
+   },
+   "motion": {
+    "type": "spin",
+    "axis": [
+     0,
+     1,
+     0
+    ],
+    "rpm": 0.18,
+    "pivot": [
+     0,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "id": "dome-hanger-4",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      19.39350509223281,
+      135.9,
+      -12.080842695670688
+     ],
+     [
+      18.354299066471707,
+      129.0,
+      -12.030336893807913
+     ]
+    ],
+    "radius": 0.22,
+    "sides": 4,
+    "samples": 2,
+    "longitudinal": 2
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "dome.diameter"
+   ],
+   "look": {
+    "weight": 0.6,
+    "alpha": 0.7
+   },
+   "motion": {
+    "type": "spin",
+    "axis": [
+     0,
+     1,
+     0
+    ],
+    "rpm": 0.18,
+    "pivot": [
+     0,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "id": "gregorian-dome",
+   "role": "identity",
+   "certainty": "verified",
+   "stage": 6,
+   "shape": {
+    "type": "lathe",
+    "profile": [
+     [
+      5.4,
+      -7.4
+     ],
+     [
+      8.0,
+      -6.9
+     ],
+     [
+      9.9,
+      -5.2
+     ],
+     [
+      10.8,
+      -2.6
+     ],
+     [
+      11.0,
+      0.0
+     ],
+     [
+      10.8,
+      2.2
+     ],
+     [
+      9.9,
+      4.3
+     ],
+     [
+      8.0,
+      5.8
+     ],
+     [
+      4.9,
+      6.9
+     ],
+     [
+      0.0,
+      7.6
+     ]
+    ],
+    "segments": 40,
+    "meridians": 8
+   },
+   "at": [
+    16.068,
+    122.8,
+    -11.919
+   ],
+   "label": "Gregorian dome",
+   "basis": [
+    "dome.diameter"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.2,
+    "alpha": 0.9,
+    "glow": 0.5
+   },
+   "motion": {
+    "type": "spin",
+    "axis": [
+     0,
+     1,
+     0
+    ],
+    "rpm": 0.18,
+    "pivot": [
+     0,
+     0,
+     0
+    ]
+   },
+   "source": "wiki"
+  },
+  {
+   "id": "dome-facet-net-a",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      16.07,
+      115.4,
+      -9.41
+     ],
+     [
+      17.74,
+      116.18,
+      -6.78
+     ],
+     [
+      20.7,
+      117.49,
+      -5.55
+     ],
+     [
+      23.93,
+      119.23,
+      -6.21
+     ],
+     [
+      26.31,
+      121.26,
+      -8.59
+     ],
+     [
+      27.03,
+      123.4,
+      -11.92
+     ],
+     [
+      25.85,
+      125.5,
+      -15.1
+     ],
+     [
+      23.16,
+      127.39,
+      -17.08
+     ],
+     [
+      19.92,
+      128.9,
+      -17.23
+     ],
+     [
+      17.25,
+      129.93,
+      -15.55
+     ],
+     [
+      16.07,
+      130.38,
+      -12.7
+     ]
+    ],
+    "radius": 0.13,
+    "sides": 3,
+    "samples": 3,
+    "longitudinal": 3,
+    "ring_every": 0
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "dome.diameter"
+   ],
+   "look": {
+    "weight": 0.8,
+    "alpha": 0.75,
+    "glow": 0.3
+   },
+   "note": "Triangular facet seams of the radome (helical lattice).",
+   "motion": {
+    "type": "spin",
+    "axis": [
+     0,
+     1,
+     0
+    ],
+    "rpm": 0.18,
+    "pivot": [
+     0,
+     0,
+     0
+    ]
+   },
+   "repeat": {
+    "count": 6,
+    "radial": {
+     "axis": "y",
+     "center": [
+      16.068045809797265,
+      122.8,
+      -11.919224129709804
+     ],
+     "span": 360
+    }
+   }
+  },
+  {
+   "id": "dome-facet-net-b",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      16.07,
+      115.4,
+      -9.41
+     ],
+     [
+      14.4,
+      116.18,
+      -6.78
+     ],
+     [
+      11.44,
+      117.49,
+      -5.55
+     ],
+     [
+      8.21,
+      119.23,
+      -6.21
+     ],
+     [
+      5.82,
+      121.26,
+      -8.59
+     ],
+     [
+      5.1,
+      123.4,
+      -11.92
+     ],
+     [
+      6.29,
+      125.5,
+      -15.1
+     ],
+     [
+      8.97,
+      127.39,
+      -17.08
+     ],
+     [
+      12.21,
+      128.9,
+      -17.23
+     ],
+     [
+      14.89,
+      129.93,
+      -15.55
+     ],
+     [
+      16.07,
+      130.38,
+      -12.7
+     ]
+    ],
+    "radius": 0.13,
+    "sides": 3,
+    "samples": 3,
+    "longitudinal": 3,
+    "ring_every": 0
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "dome.diameter"
+   ],
+   "look": {
+    "weight": 0.8,
+    "alpha": 0.75,
+    "glow": 0.3
+   },
+   "note": "Triangular facet seams of the radome (helical lattice).",
+   "motion": {
+    "type": "spin",
+    "axis": [
+     0,
+     1,
+     0
+    ],
+    "rpm": 0.18,
+    "pivot": [
+     0,
+     0,
+     0
+    ]
+   },
+   "repeat": {
+    "count": 6,
+    "radial": {
+     "axis": "y",
+     "center": [
+      16.068045809797265,
+      122.8,
+      -11.919224129709804
+     ],
+     "span": 360
+    }
+   }
+  },
+  {
+   "id": "gregorian-rim",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "torus",
+    "major": 5.6,
+    "minor": 0.5,
+    "segments": 40,
+    "sides": 5,
+    "rings": 2
+   },
+   "at": [
+    16.068,
+    115.3,
+    -11.919
+   ],
+   "basis": [
+    "dome.diameter"
+   ],
+   "look": {
+    "weight": 1.0,
+    "alpha": 0.85,
+    "glow": 0.35
+   },
+   "motion": {
+    "type": "spin",
+    "axis": [
+     0,
+     1,
+     0
+    ],
+    "rpm": 0.18,
+    "pivot": [
+     0,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "id": "gregorian-aperture",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "cone",
+    "radius_bottom": 5.2,
+    "radius_top": 3.8,
+    "height": 1.4,
+    "segments": 24,
+    "caps": false
+   },
+   "at": [
+    16.068,
+    114.0,
+    -11.919
+   ],
+   "basis": [
+    "dome.diameter"
+   ],
+   "look": {
+    "fill": "dark",
+    "line": "none",
+    "alpha": 0.9
+   },
+   "note": "Dark under-opening of the dome (occluder).",
+   "motion": {
+    "type": "spin",
+    "axis": [
+     0,
+     1,
+     0
+    ],
+    "rpm": 0.18,
+    "pivot": [
+     0,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "id": "dome-receiver-hang",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "box",
+    "size": [
+     3.0,
+     4.4,
+     3.0
+    ],
+    "ribs": 2,
+    "anchor": "base"
+   },
+   "at": [
+    16.068,
+    110.6,
+    -11.919
+   ],
+   "basis": [
+    "dome.diameter"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.7,
+    "alpha": 0.7
+   },
+   "motion": {
+    "type": "spin",
+    "axis": [
+     0,
+     1,
+     0
+    ],
+    "rpm": 0.18,
+    "pivot": [
+     0,
+     0,
+     0
+    ]
+   }
+  },
+  {
+   "id": "cableway-gondola",
+   "role": "detail",
+   "certainty": "decorative",
+   "stage": 6,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.6,
+     3.0,
+     2.6
+    ],
+    "ribs": 2,
+    "anchor": "base"
+   },
+   "at": [
+    37.976,
+    98.539,
+    99.602
+   ],
+   "basis": [
+    "platform.height"
+   ],
+   "look": {
+    "weight": 0.6,
+    "alpha": 0.6
+   }
+  },
+  {
+   "id": "signal-cone",
+   "role": "data",
+   "certainty": "decorative",
+   "stage": 7,
+   "shape": {
+    "type": "cone",
+    "radius_bottom": 27.0,
+    "radius_top": 7.5,
+    "height": 107.0,
+    "segments": 28,
+    "caps": false
+   },
+   "at": [
+    16.068,
+    2.379,
+    -11.919
+   ],
+   "look": {
+    "tone": "data",
+    "fill": "none",
+    "glow": 0.75,
+    "alpha": 0.4,
+    "weight": 0.4
+   },
+   "note": "Display only: the receive path drawn as a faint cone, not a visible beam.",
+   "motion": {
+    "type": "spin",
+    "axis": [
+     0,
+     1,
+     0
+    ],
+    "rpm": 0.18,
+    "pivot": [
+     0,
+     0,
+     0
+    ]
+   },
+   "floating": true
+  },
+  {
+   "id": "focal-glint",
+   "role": "data",
+   "certainty": "decorative",
+   "stage": 7,
+   "shape": {
+    "type": "marker",
+    "sprite": "ring",
+    "size_px": 16
+   },
+   "at": [
+    16.068,
+    113.4,
+    -11.919
+   ],
+   "look": {
+    "tone": "data",
+    "glow": 0.9
+   },
+   "motion": {
+    "type": "pulse",
+    "period": 9.0,
+    "amount": 0.5
+   },
+   "floating": true
+  },
+  {
+   "id": "air-motes",
+   "role": "ornament",
+   "certainty": "decorative",
+   "stage": 7,
+   "shape": {
+    "type": "points",
+    "count": 420,
+    "region": {
+     "sphere": 300
+    },
+    "sprite": "soft",
+    "size_px": 2.0
+   },
+   "at": [
+    0,
+    90,
+    0
+   ],
+   "look": {
+    "tone": "dust",
+    "alpha": 0.5
+   },
+   "floating": true
+  },
+  {
+   "id": "rim-glints",
+   "role": "ornament",
+   "certainty": "decorative",
+   "stage": 7,
+   "shape": {
+    "type": "points",
+    "count": 160,
+    "region": {
+     "shell": 158
+    },
+    "sprite": "disc",
+    "size_px": 2.4
+   },
+   "at": [
+    0,
+    48.277,
+    0
+   ],
+   "look": {
+    "tone": "dust",
+    "alpha": 0.4
+   },
+   "floating": true
+  },
+  {
+   "id": "tower-tall-joint-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "basis": [
+    "tower.heights"
+   ],
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      130.36,
+      103.63,
+      183.89
+     ],
+     [
+      130.36,
+      103.63,
+      173.26
+     ],
+     [
+      119.72,
+      103.63,
+      173.26
+     ],
+     [
+      119.72,
+      103.63,
+      183.89
+     ]
+    ],
+    "closed": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.45
+   }
+  },
+  {
+   "id": "tower-tall-joint-2",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "basis": [
+    "tower.heights"
+   ],
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      129.6,
+      140.26,
+      183.13
+     ],
+     [
+      129.6,
+      140.26,
+      174.02
+     ],
+     [
+      120.48,
+      140.26,
+      174.02
+     ],
+     [
+      120.48,
+      140.26,
+      183.13
+     ]
+    ],
+    "closed": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.45
+   }
+  },
+  {
+   "id": "tower-a-joint-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "basis": [
+    "tower.heights"
+   ],
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      81.39,
+      123.73,
+      -157.82
+     ],
+     [
+      81.39,
+      123.73,
+      -168.45
+     ],
+     [
+      70.75,
+      123.73,
+      -168.45
+     ],
+     [
+      70.75,
+      123.73,
+      -157.82
+     ]
+    ],
+    "closed": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.45
+   }
+  },
+  {
+   "id": "tower-a-joint-2",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "basis": [
+    "tower.heights"
+   ],
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      80.63,
+      150.46,
+      -158.58
+     ],
+     [
+      80.63,
+      150.46,
+      -167.69
+     ],
+     [
+      71.52,
+      150.46,
+      -167.69
+     ],
+     [
+      71.52,
+      150.46,
+      -158.58
+     ]
+    ],
+    "closed": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.45
+   }
+  },
+  {
+   "id": "tower-b-joint-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "basis": [
+    "tower.heights"
+   ],
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -174.0,
+      123.73,
+      21.01
+     ],
+     [
+      -174.0,
+      123.73,
+      10.37
+     ],
+     [
+      -184.63,
+      123.73,
+      10.37
+     ],
+     [
+      -184.63,
+      123.73,
+      21.01
+     ]
+    ],
+    "closed": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.45
+   }
+  },
+  {
+   "id": "tower-b-joint-2",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "basis": [
+    "tower.heights"
+   ],
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -174.76,
+      150.46,
+      20.24
+     ],
+     [
+      -174.76,
+      150.46,
+      11.13
+     ],
+     [
+      -183.87,
+      150.46,
+      11.13
+     ],
+     [
+      -183.87,
+      150.46,
+      20.24
+     ]
+    ],
+    "closed": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.45
+   }
+  },
+  {
+   "id": "platform-post-1",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 4,
+   "basis": [
+    "platform.height"
+   ],
+   "shape": {
+    "type": "cylinder",
+    "radius": 1.0,
+    "height": 8.4,
+    "segments": 8,
+    "ribs": 4,
+    "rings": 2,
+    "caps": true
+   },
+   "at": [
+    17.21,
+    150.4,
+    24.57
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.1,
+    "alpha": 0.9,
+    "glow": 0.38
+   },
+   "note": "Anchor post that takes the six cables at each platform corner."
+  },
+  {
+   "id": "platform-post-2",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 4,
+   "basis": [
+    "platform.height"
+   ],
+   "shape": {
+    "type": "cylinder",
+    "radius": 1.0,
+    "height": 8.4,
+    "segments": 8,
+    "ribs": 4,
+    "rings": 2,
+    "caps": true
+   },
+   "at": [
+    12.68,
+    150.4,
+    -27.19
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.1,
+    "alpha": 0.9,
+    "glow": 0.38
+   },
+   "note": "Anchor post that takes the six cables at each platform corner."
+  },
+  {
+   "id": "platform-post-3",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 4,
+   "basis": [
+    "platform.height"
+   ],
+   "shape": {
+    "type": "cylinder",
+    "radius": 1.0,
+    "height": 8.4,
+    "segments": 8,
+    "ribs": 4,
+    "rings": 2,
+    "caps": true
+   },
+   "at": [
+    -29.89,
+    150.4,
+    2.61
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.1,
+    "alpha": 0.9,
+    "glow": 0.38
+   },
+   "note": "Anchor post that takes the six cables at each platform corner."
+  },
+  {
+   "id": "platform-track-ring",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 4,
+   "basis": [
+    "platform.height"
+   ],
+   "shape": {
+    "type": "torus",
+    "major": 24.0,
+    "minor": 0.5,
+    "segments": 64,
+    "sides": 4,
+    "rings": 0
+   },
+   "at": [
+    0,
+    138.6,
+    0
+   ],
+   "look": {
+    "weight": 0.95,
+    "alpha": 0.8,
+    "glow": 0.22
+   },
+   "note": "Circular azimuth track under the platform; the arm carriage rides it."
+  },
+  {
+   "id": "platform-hut-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "basis": [
+    "platform.height"
+   ],
+   "shape": {
+    "type": "box",
+    "size": [
+     5.6,
+     3.4,
+     3.0
+    ],
+    "ribs": 3,
+    "anchor": "base"
+   },
+   "at": [
+    8.6,
+    142.6,
+    7.2
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.55,
+    "alpha": 0.6
+   }
+  },
+  {
+   "id": "platform-hut-2",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "basis": [
+    "platform.height"
+   ],
+   "shape": {
+    "type": "box",
+    "size": [
+     4.8,
+     3.0,
+     2.8
+    ],
+    "ribs": 3,
+    "anchor": "base"
+   },
+   "at": [
+    -8.4,
+    142.6,
+    -8.2
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.55,
+    "alpha": 0.6
+   }
+  },
+  {
+   "id": "platform-hut-3",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "basis": [
+    "platform.height"
+   ],
+   "shape": {
+    "type": "box",
+    "size": [
+     3.8,
+     2.6,
+     2.4
+    ],
+    "ribs": 3,
+    "anchor": "base"
+   },
+   "at": [
+    1.0,
+    142.6,
+    -12.4
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.55,
+    "alpha": 0.6
+   }
+  },
+  {
+   "id": "anchor-pad-1",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 3,
+   "basis": [
+    "cables.count"
+   ],
+   "shape": {
+    "type": "box",
+    "size": [
+     7.0,
+     3.0,
+     7.0
+    ],
+    "ribs": 2,
+    "anchor": "base"
+   },
+   "at": [
+    83.45,
+    3.0,
+    229.28
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.6,
+    "alpha": 0.6
+   }
+  },
+  {
+   "id": "anchor-pad-2",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 3,
+   "basis": [
+    "cables.count"
+   ],
+   "shape": {
+    "type": "box",
+    "size": [
+     7.0,
+     3.0,
+     7.0
+    ],
+    "ribs": 2,
+    "anchor": "base"
+   },
+   "at": [
+    145.69,
+    3.0,
+    208.06
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.6,
+    "alpha": 0.6
+   }
+  },
+  {
+   "id": "anchor-pad-3",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 3,
+   "basis": [
+    "cables.count"
+   ],
+   "shape": {
+    "type": "box",
+    "size": [
+     7.0,
+     3.0,
+     7.0
+    ],
+    "ribs": 2,
+    "anchor": "base"
+   },
+   "at": [
+    202.24,
+    3.0,
+    169.7
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.6,
+    "alpha": 0.6
+   }
+  },
+  {
+   "id": "anchor-pad-4",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 3,
+   "basis": [
+    "cables.count"
+   ],
+   "shape": {
+    "type": "box",
+    "size": [
+     7.0,
+     3.0,
+     7.0
+    ],
+    "ribs": 2,
+    "anchor": "base"
+   },
+   "at": [
+    132.41,
+    3.0,
+    -157.81
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.6,
+    "alpha": 0.6
+   }
+  },
+  {
+   "id": "anchor-pad-5",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 3,
+   "basis": [
+    "cables.count"
+   ],
+   "shape": {
+    "type": "box",
+    "size": [
+     7.0,
+     3.0,
+     7.0
+    ],
+    "ribs": 2,
+    "anchor": "base"
+   },
+   "at": [
+    91.29,
+    3.0,
+    -195.76
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.6,
+    "alpha": 0.6
+   }
+  },
+  {
+   "id": "anchor-pad-6",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 3,
+   "basis": [
+    "cables.count"
+   ],
+   "shape": {
+    "type": "box",
+    "size": [
+     7.0,
+     3.0,
+     7.0
+    ],
+    "ribs": 2,
+    "anchor": "base"
+   },
+   "at": [
+    39.24,
+    3.0,
+    -222.57
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.6,
+    "alpha": 0.6
+   }
+  },
+  {
+   "id": "anchor-pad-7",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 3,
+   "basis": [
+    "cables.count"
+   ],
+   "shape": {
+    "type": "box",
+    "size": [
+     7.0,
+     3.0,
+     7.0
+    ],
+    "ribs": 2,
+    "anchor": "base"
+   },
+   "at": [
+    -202.87,
+    3.0,
+    -35.77
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.6,
+    "alpha": 0.6
+   }
+  },
+  {
+   "id": "anchor-pad-8",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 3,
+   "basis": [
+    "cables.count"
+   ],
+   "shape": {
+    "type": "box",
+    "size": [
+     7.0,
+     3.0,
+     7.0
+    ],
+    "ribs": 2,
+    "anchor": "base"
+   },
+   "at": [
+    -215.18,
+    3.0,
+    18.83
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.6,
+    "alpha": 0.6
+   }
+  },
+  {
+   "id": "anchor-pad-9",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 3,
+   "basis": [
+    "cables.count"
+   ],
+   "shape": {
+    "type": "box",
+    "size": [
+     7.0,
+     3.0,
+     7.0
+    ],
+    "ribs": 2,
+    "anchor": "base"
+   },
+   "at": [
+    -212.37,
+    3.0,
+    77.3
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.6,
+    "alpha": 0.6
+   }
+  },
+  {
+   "id": "karst-outcrop-01",
+   "role": "ground",
+   "certainty": "inferred",
+   "stage": 0,
+   "basis": [
+    "site.karst"
+   ],
+   "shape": {
+    "type": "cone",
+    "radius_bottom": 9,
+    "radius_top": 1.6199999999999999,
+    "height": 20,
+    "segments": 7,
+    "ribs": 3,
+    "rings": 2,
+    "caps": true
+   },
+   "at": [
+    35.76,
+    42.0,
+    168.24
+   ],
+   "rotate": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.45,
+    "alpha": 0.45,
+    "glow": 0.02
+   }
+  },
+  {
+   "id": "karst-outcrop-02",
+   "role": "ground",
+   "certainty": "inferred",
+   "stage": 0,
+   "basis": [
+    "site.karst"
+   ],
+   "shape": {
+    "type": "cone",
+    "radius_bottom": 12,
+    "radius_top": 2.16,
+    "height": 26,
+    "segments": 6,
+    "ribs": 3,
+    "rings": 2,
+    "caps": true
+   },
+   "at": [
+    131.64,
+    41.2,
+    122.76
+   ],
+   "rotate": [
+    0,
+    23,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.45,
+    "alpha": 0.45,
+    "glow": 0.02
+   }
+  },
+  {
+   "id": "karst-outcrop-03",
+   "role": "ground",
+   "certainty": "inferred",
+   "stage": 0,
+   "basis": [
+    "site.karst"
+   ],
+   "shape": {
+    "type": "cone",
+    "radius_bottom": 8,
+    "radius_top": 1.44,
+    "height": 16,
+    "segments": 8,
+    "ribs": 3,
+    "rings": 2,
+    "caps": true
+   },
+   "at": [
+    166.75,
+    42.4,
+    20.47
+   ],
+   "rotate": [
+    0,
+    46,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.45,
+    "alpha": 0.45,
+    "glow": 0.02
+   }
+  },
+  {
+   "id": "karst-outcrop-04",
+   "role": "ground",
+   "certainty": "inferred",
+   "stage": 0,
+   "basis": [
+    "site.karst"
+   ],
+   "shape": {
+    "type": "cone",
+    "radius_bottom": 11,
+    "radius_top": 1.98,
+    "height": 24,
+    "segments": 7,
+    "ribs": 3,
+    "rings": 2,
+    "caps": true
+   },
+   "at": [
+    150.86,
+    41.6,
+    -90.65
+   ],
+   "rotate": [
+    0,
+    69,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.45,
+    "alpha": 0.45,
+    "glow": 0.02
+   }
+  },
+  {
+   "id": "karst-outcrop-05",
+   "role": "ground",
+   "certainty": "inferred",
+   "stage": 0,
+   "basis": [
+    "site.karst"
+   ],
+   "shape": {
+    "type": "cone",
+    "radius_bottom": 9,
+    "radius_top": 1.6199999999999999,
+    "height": 18,
+    "segments": 9,
+    "ribs": 3,
+    "rings": 2,
+    "caps": true
+   },
+   "at": [
+    44.0,
+    42.2,
+    -164.21
+   ],
+   "rotate": [
+    0,
+    92,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.45,
+    "alpha": 0.45,
+    "glow": 0.02
+   }
+  },
+  {
+   "id": "karst-outcrop-06",
+   "role": "ground",
+   "certainty": "inferred",
+   "stage": 0,
+   "basis": [
+    "site.karst"
+   ],
+   "shape": {
+    "type": "cone",
+    "radius_bottom": 13,
+    "radius_top": 2.34,
+    "height": 28,
+    "segments": 6,
+    "ribs": 3,
+    "rings": 2,
+    "caps": true
+   },
+   "at": [
+    -55.01,
+    41.4,
+    -169.29
+   ],
+   "rotate": [
+    0,
+    115,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.45,
+    "alpha": 0.45,
+    "glow": 0.02
+   }
+  },
+  {
+   "id": "karst-outcrop-07",
+   "role": "ground",
+   "certainty": "inferred",
+   "stage": 0,
+   "basis": [
+    "site.karst"
+   ],
+   "shape": {
+    "type": "cone",
+    "radius_bottom": 8,
+    "radius_top": 1.44,
+    "height": 17,
+    "segments": 8,
+    "ribs": 3,
+    "rings": 2,
+    "caps": true
+   },
+   "at": [
+    -135.77,
+    42.2,
+    -102.31
+   ],
+   "rotate": [
+    0,
+    138,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.45,
+    "alpha": 0.45,
+    "glow": 0.02
+   }
+  },
+  {
+   "id": "karst-outcrop-08",
+   "role": "ground",
+   "certainty": "inferred",
+   "stage": 0,
+   "basis": [
+    "site.karst"
+   ],
+   "shape": {
+    "type": "cone",
+    "radius_bottom": 12,
+    "radius_top": 2.16,
+    "height": 25,
+    "segments": 7,
+    "ribs": 3,
+    "rings": 2,
+    "caps": true
+   },
+   "at": [
+    -176.97,
+    41.5,
+    3.09
+   ],
+   "rotate": [
+    0,
+    161,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.45,
+    "alpha": 0.45,
+    "glow": 0.02
+   }
+  },
+  {
+   "id": "karst-outcrop-09",
+   "role": "ground",
+   "certainty": "inferred",
+   "stage": 0,
+   "basis": [
+    "site.karst"
+   ],
+   "shape": {
+    "type": "cone",
+    "radius_bottom": 9,
+    "radius_top": 1.6199999999999999,
+    "height": 19,
+    "segments": 9,
+    "ribs": 3,
+    "rings": 2,
+    "caps": true
+   },
+   "at": [
+    -136.72,
+    42.3,
+    99.34
+   ],
+   "rotate": [
+    0,
+    184,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.45,
+    "alpha": 0.45,
+    "glow": 0.02
+   }
+  },
+  {
+   "id": "karst-outcrop-10",
+   "role": "ground",
+   "certainty": "inferred",
+   "stage": 0,
+   "basis": [
+    "site.karst"
+   ],
+   "shape": {
+    "type": "cone",
+    "radius_bottom": 11,
+    "radius_top": 1.98,
+    "height": 23,
+    "segments": 6,
+    "ribs": 3,
+    "rings": 2,
+    "caps": true
+   },
+   "at": [
+    -67.8,
+    41.1,
+    167.82
+   ],
+   "rotate": [
+    0,
+    207,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.45,
+    "alpha": 0.45,
+    "glow": 0.02
+   }
+  },
+  {
+   "id": "tower-tall-sockets",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "basis": [
+    "tower.heights"
+   ],
+   "shape": {
+    "type": "box",
+    "size": [
+     1.3,
+     1.1,
+     1.3
+    ],
+    "ribs": 2,
+    "anchor": "base"
+   },
+   "at": [
+    129.24,
+    181.8,
+    178.58
+   ],
+   "repeat": {
+    "count": 6,
+    "radial": {
+     "axis": "y",
+     "center": [
+      125.04,
+      0,
+      178.58
+     ],
+     "span": 360
+    }
+   },
+   "look": {
+    "fill": "dark",
+    "weight": 0.7,
+    "alpha": 0.75,
+    "glow": 0.25
+   }
+  },
+  {
+   "id": "tower-a-sockets",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "basis": [
+    "tower.heights"
+   ],
+   "shape": {
+    "type": "box",
+    "size": [
+     1.3,
+     1.1,
+     1.3
+    ],
+    "ribs": 2,
+    "anchor": "base"
+   },
+   "at": [
+    80.27,
+    181.8,
+    -163.14
+   ],
+   "repeat": {
+    "count": 6,
+    "radial": {
+     "axis": "y",
+     "center": [
+      76.07,
+      0,
+      -163.14
+     ],
+     "span": 360
+    }
+   },
+   "look": {
+    "fill": "dark",
+    "weight": 0.7,
+    "alpha": 0.75,
+    "glow": 0.25
+   }
+  },
+  {
+   "id": "tower-b-sockets",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "basis": [
+    "tower.heights"
+   ],
+   "shape": {
+    "type": "box",
+    "size": [
+     1.3,
+     1.1,
+     1.3
+    ],
+    "ribs": 2,
+    "anchor": "base"
+   },
+   "at": [
+    -175.12,
+    181.8,
+    15.69
+   ],
+   "repeat": {
+    "count": 6,
+    "radial": {
+     "axis": "y",
+     "center": [
+      -179.32,
+      0,
+      15.69
+     ],
+     "span": 360
+    }
+   },
+   "look": {
+    "fill": "dark",
+    "weight": 0.7,
+    "alpha": 0.75,
+    "glow": 0.25
+   }
+  }
+ ],
+ "annotations": [
+  {
+   "id": "dish-note",
+   "part": "reflector-core",
+   "text": "305 m spherical reflector (265 m radius)",
+   "offset": [
+    -70,
+    26,
+    60
+   ],
+   "certainty": "verified"
+  },
+  {
+   "id": "tower-note",
+   "part": "tower-tall-crown",
+   "text": "Three concrete towers, tops level",
+   "offset": [
+    6,
+    4,
+    0
+   ],
+   "certainty": "verified"
+  },
+  {
+   "id": "cable-note",
+   "part": "main-cable-01",
+   "text": "18 main cables (6 per tower)",
+   "offset": [
+    0,
+    6,
+    0
+   ],
+   "certainty": "verified"
+  },
+  {
+   "id": "platform-note",
+   "part": "platform-corner-1",
+   "text": "900-ton suspended platform",
+   "offset": [
+    4,
+    6,
+    0
+   ],
+   "certainty": "verified"
+  },
+  {
+   "id": "dome-note",
+   "part": "gregorian-dome",
+   "text": "22 m Gregorian dome (1997)",
+   "offset": [
+    10,
+    10,
+    0
+   ],
+   "certainty": "verified"
+  },
+  {
+   "id": "arm-note",
+   "part": "azimuth-arm-top",
+   "text": "93 m azimuth arm (drive extent inferred)",
+   "offset": [
+    -30,
+    8,
+    0
+   ],
+   "certainty": "inferred"
+  },
+  {
+   "id": "cone-note",
+   "part": "signal-cone",
+   "text": "Receive path drawn faint (decorative)",
+   "offset": [
+    16,
+    2,
+    0
+   ],
+   "certainty": "decorative"
+  }
+ ],
+ "presentation": {
+  "framing": {
+   "yaw": 88,
+   "pitch": 15,
+   "fit": 0.8
+  },
+  "views": [
+   {
+    "id": "dish",
+    "label": "The 305 m bowl",
+    "yaw": 100,
+    "pitch": 30,
+    "distance": 1.3,
+    "target": "rim-ring"
+   },
+   {
+    "id": "towers",
+    "label": "Concrete towers and the cable fan",
+    "yaw": 88,
+    "pitch": 12,
+    "distance": 1.5,
+    "target": "tower-tall-shaft"
+   },
+   {
+    "id": "platform",
+    "label": "Suspended platform",
+    "yaw": 42,
+    "pitch": 24,
+    "distance": 2.1,
+    "target": "platform-deck-plate"
+   },
+   {
+    "id": "dome",
+    "label": "Azimuth arm and Gregorian dome",
+    "yaw": 70,
+    "pitch": 8,
+    "distance": 3.4,
+    "target": "gregorian-dome"
+   },
+   {
+    "id": "plan",
+    "label": "Plan: tripod, bowl and arm",
+    "yaw": 0,
+    "pitch": 80,
+    "distance": 1.0
+   }
+  ],
+  "atmosphere": {
+   "haze": 0.7,
+   "scanlines": true,
+   "vignette": true,
+   "grid": false,
+   "projector": false,
+   "motes": 0.28
+  },
+  "occlusion": "xray",
+  "certainty_style": "subtle",
+  "background": "deep",
+  "float": 0
+ },
+ "animation": {
+  "assembly": {
+   "style": "build",
+   "seconds": 20,
+   "interference": false
+  },
+  "idle": {
+   "life": "calm",
+   "events": [
+    "shimmer",
+    "scan",
+    "propagate"
+   ],
+   "cadence": [
+    12,
+    24
+   ],
+   "strength": 0.3
+  },
+  "camera": {
+   "drift": 2.0,
+   "breathe": 0.018,
+   "tour": [
+    {
+     "view": "dish",
+     "at": 5,
+     "fly": 4.5
+    },
+    {
+     "view": "towers",
+     "at": 12,
+     "fly": 4.5
+    },
+    {
+     "view": "platform",
+     "at": 19,
+     "fly": 4.5
+    },
+    {
+     "view": "dome",
+     "at": 30,
+     "fly": 5
+    },
+    {
+     "view": "plan",
+     "at": 46,
+     "fly": 5.5
+    },
+    {
+     "view": "hero",
+     "at": 64,
+     "fly": 6
+    }
+   ]
+  },
+  "reduced_motion": "still"
+ },
+ "authoring": {
+  "tier": "masterpiece",
+  "research": "done",
+  "sources": [
+   "wiki",
+   "naic",
+   "ref-photos"
+  ],
+  "review_rounds": 4,
+  "outcome": "self-reviewed",
+  "identity": [
+   {
+    "feature": "305 m spherical reflector laid in the karst sinkhole, with its mesh rim screen",
+    "parts": [
+     "reflector-core",
+     "reflector-outer",
+     "rim-ring",
+     "ground-screen"
+    ]
+   },
+   {
+    "feature": "Three reinforced-concrete towers, one 111 m and two 81 m, tops at one level",
+    "parts": [
+     "tower-tall-shaft",
+     "tower-tall-crown",
+     "tower-a-shaft",
+     "tower-b-shaft"
+    ]
+   },
+   {
+    "feature": "18 taut main cables into the triangular 900-ton platform",
+    "parts": [
+     "main-cable-01",
+     "platform-post-1",
+     "platform-top-chord-1"
+    ]
+   },
+   {
+    "feature": "Bow-shaped 93 m azimuth arm, 22 m Gregorian dome and counterweight",
+    "parts": [
+     "azimuth-arm-top",
+     "gregorian-dome",
+     "counterweight"
+    ]
+   }
+  ],
+  "next": [
+   "the renderer caps a lathe at 48 meridians, so the 38,778-panel surface is drawn at 1/8 of its real density",
+   "a true geodesic (triangular) dome shell needs a triangle primitive; the helical net only approximates the facets",
+   "the staged build is capped at 20 s by the scene schema; for the 87-second film the build phase has to be stretched by the host (see arecibo-87s.json)"
+  ],
+  "critic": {
+   "scene_sha256": "6fc9d16ab853ee5e27b9fd59450be9b5b65f717d21b57fd4d862e3b747fd7956",
+   "verdict": "improve",
+   "scores": {
+    "silhouette": 2,
+    "proportions": 2,
+    "identity": 2,
+    "depth": 2,
+    "composition": 2,
+    "assembly": 2,
+    "motion": 2,
+    "density": 1,
+    "honesty": 2
+   },
+   "round": 1,
+   "defects": 12
+  },
+  "rounds": [
+   {
+    "round": 1,
+    "result": "baseline",
+    "minutes": 0.2,
+    "changes": [],
+    "summary": "The 305 m bowl, which is most of the subject's area, is a bare net: the reflector lathe has 13 profile points and 24 meridians (~12 m spacin"
+   },
+   {
+    "round": 2,
+    "result": "kept",
+    "minutes": 3.3,
+    "changes": [
+     "D1",
+     "D2",
+     "D4",
+     "D5"
+    ],
+    "summary": "The site is not a sinkhole. Around the rim there is one smooth scalloped skirt and a ring of ten identical hollow hexagonal drums with flat "
+   },
+   {
+    "round": 3,
+    "result": "reverted",
+    "minutes": 1.8,
+    "changes": [
+     "D11",
+     "D13",
+     "D3"
+    ],
+    "summary": "the suspension reads as a cable bridge. Each tower crown sends 3-4 strands into one shallow catenary that runs on over the top of the deck t"
+   },
+   {
+    "round": 4,
+    "result": "reverted",
+    "minutes": 2.1,
+    "changes": [
+     "D1",
+     "D11",
+     "D4",
+     "D7"
+    ],
+    "summary": "The Gregorian dome is an open wire cage: about 14 meridians, 5 parallels, one bright equatorial belt and a 5.4 m open bottom ring, with the "
+   }
+  ]
+ }
+}

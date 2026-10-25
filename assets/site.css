@@ -34,3 +34,17 @@ footer.site { max-width: 1180px; margin: 0 auto; padding: 24px 20px 48px; color:
 .stage iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 .hint { padding: 10px 20px 18px; color: var(--dim); font-size: 13px; }
 .hint kbd { border: 1px solid var(--line); border-radius: 4px; padding: 0 5px; font-size: 12px; color: var(--ink); }
+h2.section { font-size: 22px; font-weight: 620; margin: 8px 0 6px; }
+p.section { color: var(--dim); max-width: 760px; margin: 0 0 16px; }
+section.films { margin-bottom: 44px; }
+.card.film { cursor: default; }
+.card.film:hover { transform: none; }
+.card video, .film-player video { display: block; width: 100%; aspect-ratio: 16 / 9; background: #000; }
+.card h2 a { text-decoration: none; }
+.card h2 a:hover { text-decoration: underline; }
+.credit { font-size: 12.5px; color: var(--dim); margin: 6px 0 0; }
+.film-player { width: 100%; max-width: 1180px; margin: 0 auto; padding: 18px 20px 6px; }
+.film-player .credit { font-size: 13.5px; margin: 10px 0 0; }
+.live { width: 100%; max-width: 1180px; margin: 0 auto; padding: 22px 20px 0; }
+.film-hint { width: 100%; max-width: 1180px; margin: 0 auto; }
+.live .stage { min-height: 0; aspect-ratio: 16 / 9; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
