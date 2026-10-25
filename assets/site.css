@@ -16,6 +16,8 @@ header.site p { color: var(--dim); max-width: 760px; margin: 0 0 18px; }
 .button:hover { border-color: var(--accent); box-shadow: 0 0 18px var(--glow); }
 main { max-width: 1680px; margin: 0 auto; padding: 0 24px 64px; }
 .grid { display: grid; grid-template-columns: 1fr; gap: 18px; }
+.grid > * { min-width: 0; }
+h1, h2, p, .button { overflow-wrap: anywhere; }
 @media (min-width: 700px) { .grid { grid-template-columns: repeat(2, 1fr); } }
 @media (min-width: 1100px) { .grid { grid-template-columns: repeat(3, 1fr); } }
 @media (min-width: 1700px) { .grid { grid-template-columns: repeat(4, 1fr); } }
