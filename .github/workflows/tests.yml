@@ -35,4 +35,4 @@ jobs:
         run: python3 -m unittest discover -s construct_hologram -t . -p 'test_*.py'
 
       - name: Build the examples gallery
-        run: python3 scripts/build_site.py --out "$RUNNER_TEMP/site"
+        run: python3 scripts/build_site.py --out "$RUNNER_TEMP/site" --no-films   # the films live on gh-pages, not in main
