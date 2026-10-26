@@ -65,6 +65,21 @@ watch it assemble, turn it around and read its labels.
 **[See all 24 examples in the gallery →](https://rtmandreyev.github.io/construct/)** · each scene and its hero image are in
 [examples/](examples/).
 
+## Beyond objects
+
+Construct draws things, but the same visual language works for ideas and data. This example
+takes a classic agent-based model from NetLogo, Uri Wilensky's *Simple Viral Marketing*: five
+hundred people, one product, word of mouth and a little advertising. The model was rebuilt to run
+live in the browser and drawn as a construct. The floor is the social network, and each person
+rises to the moment they adopted, so you can watch an idea spread and see who it reaches last,
+and why. You can build new networks, run them tick by tick, and compare a hundred runs with
+NetLogo's own results.
+
+<p align="center"><a href="https://rtmandreyev.github.io/construct/examples/netlogo-viral-marketing/"><img src="examples/netlogo-viral-marketing/hero.jpg" width="80%" alt="The Simple Viral Marketing model at tick 200: the social network on the floor, each adoption rising as a line of light, the gold ring marking now"></a></p>
+
+**[Open the live model →](https://rtmandreyev.github.io/construct/examples/netlogo-viral-marketing/)** · the model is
+© 2012 Uri Wilensky, and this example is under CC BY-NC-SA 3.0 (see [License](#license)).
+
 ## How it works
 
 A scene is data, never code: the agent says what the thing is, and Construct decides how it
