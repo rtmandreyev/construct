@@ -37,6 +37,9 @@ them it still checks and builds the construct's HTML page.
 - `assets/examples/` — eleven example scenes the references cite (synthetic objects, an archetype
   and agent-made constructs) and two generated (labelled) cover images
 - `tests/skills/test_construct_skill.py` — stdlib + pytest; no network, no browser
+- `website/docs/reference/optional-skills-catalog.md`, `website/sidebars.ts` and
+  `website/docs/user-guide/skills/optional/creative/creative-construct.md`, written by
+  `website/scripts/generate-skill-docs.py` (the catalog test requires them)
 
 ## Checklist (For New Skills)
 
@@ -76,8 +79,9 @@ video from the installed location. No inline-shell snippets, no binaries.
 
 ## Lint (to discuss before opening)
 
-Hermes's tests pass with the skill in place (1,495 in `tests/skills/`, including the authoring
-standards), and `check-windows-footguns.py` is clean. `scripts/check` is not: the bundled runtime is
+Hermes's tests pass with the skill and its generated docs in place (1,731 in `tests/skills/` and
+`tests/website/test_generate_skill_docs.py`, the authoring standards and the catalog contract
+included), and `check-windows-footguns.py` is clean. `scripts/check` is not: the bundled runtime is
 Construct's own stdlib code, written in its upstream style, so ruff reports 565 findings (523 of them
 UP031, `%` formatting) and the code-health ratchet flags a dozen long functions (the scene compiler and
 the audit among them). Before opening, ask the maintainers whether they would take an optional skill
