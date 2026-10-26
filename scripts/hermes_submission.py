@@ -1,6 +1,7 @@
 """Assemble a draft submission of Construct as a Hermes optional skill (nothing is submitted).
 
     python3 scripts/hermes_submission.py [--out .local/hermes-submission] [--hermes ~/.hermes/hermes-agent]
+    python3 scripts/hermes_submission.py --hub          # refresh skills/construct/ in this repository
 
 Writes the folders as they would sit in NousResearch/hermes-agent:
     optional-skills/creative/construct/   SKILL.md, references/, scripts/ (the runtime), assets/examples/, LICENSE
@@ -8,6 +9,10 @@ Writes the folders as they would sit in NousResearch/hermes-agent:
     PR.md                                 the pull-request text and checklist
 and, when a local Hermes checkout is given, runs its skill scanner and the hardline authoring
 checks against the draft (read-only: it imports Hermes's code, it changes nothing there).
+
+`--hub` writes the same skill folder to skills/construct/ in this repository, so Hermes can install it
+straight from GitHub (`hermes skills install rtmandreyev/construct/skills/construct`) and a tap of the
+repository finds it. A test keeps it identical to a fresh build.
 """
 
 import argparse
@@ -115,7 +120,15 @@ def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("--out", default=str(ROOT / ".local" / "hermes-submission"))
     ap.add_argument("--hermes", default=str(Path.home() / ".hermes" / "hermes-agent"))
+    ap.add_argument("--hub", action="store_true", help="refresh skills/construct/ in this repository and stop")
     args = ap.parse_args(argv)
+    if args.hub:
+        hub = ROOT / "skills" / "construct"
+        skill = build(ROOT / ".local" / "hermes-hub")
+        shutil.rmtree(hub, ignore_errors=True)
+        shutil.copytree(skill, hub)
+        print("hub: %s (%d files)" % (hub, sum(1 for p in hub.rglob("*") if p.is_file())))
+        return 0
     out = Path(args.out)
     skill = build(out)
     files = [p for p in skill.rglob("*") if p.is_file()]

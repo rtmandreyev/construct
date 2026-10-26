@@ -256,3 +256,21 @@ class ExamplesGallery(unittest.TestCase):
                            capture_output=True, text=True)
         self.assertNotEqual(r.returncode, 0)  # films listed: the videos must be given, or --no-films
         self.assertIn("--films", r.stderr)
+
+
+class HermesHub(unittest.TestCase):
+    """skills/construct/: the Hermes skill as `hermes skills install rtmandreyev/construct/skills/construct` fetches it."""
+
+    def test_it_matches_a_fresh_build(self):
+        spec = __import__("importlib.util").util.spec_from_file_location("hs", HERE.parent / "scripts" / "hermes_submission.py")
+        hs = __import__("importlib.util").util.module_from_spec(spec)
+        spec.loader.exec_module(hs)
+        hub = HERE.parent / "skills" / "construct"
+        with tempfile.TemporaryDirectory() as d:
+            fresh = hs.build(Path(d, "draft"))
+            want = {str(p.relative_to(fresh)): p.read_bytes() for p in fresh.rglob("*") if p.is_file()}
+            have = {str(p.relative_to(hub)): p.read_bytes() for p in hub.rglob("*") if p.is_file() and "__pycache__" not in p.parts}
+            self.assertEqual(sorted(have), sorted(want), "run: python3 scripts/hermes_submission.py --hub")
+            stale = [k for k in want if have[k] != want[k]]
+            self.assertEqual(stale, [], "run: python3 scripts/hermes_submission.py --hub")
+        self.assertNotIn("{{", (hub / "SKILL.md").read_text(encoding="utf-8"))

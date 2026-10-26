@@ -78,8 +78,9 @@ checks it, builds it and reviews it. You can also start it with `/construct:cons
 
 ## In Hermes
 
-Copy `dist/hermes/construct` into `~/.hermes/skills/`, or into a project's `.hermes/skills/` and
-run `hermes skills trust` there. Then ask in plain words: *"Make a construct of my CD: Glass
+Install it from this repository with `hermes skills install rtmandreyev/construct/skills/construct`
+(Hermes scans it and asks before installing), or copy `dist/hermes/construct` into
+`~/.hermes/skills/`, or into a project's `.hermes/skills/` and run `hermes skills trust` there. Then ask in plain words: *"Make a construct of my CD: Glass
 Harbour by The Lantern Choir, a normal jewel case."* Hermes finds the skill from its description.
 
 **Masterpiece mode in Hermes needs two settings.** Without them a masterpiece run can end early

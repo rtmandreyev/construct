@@ -1,0 +1,388 @@
+{
+ "format": "construct-scene",
+ "version": 2,
+ "id": "castle",
+ "title": "Hilltop castle (synthetic example)",
+ "subject": {
+  "category": "architecture",
+  "accuracy": "generic",
+  "synthetic": true,
+  "summary": "A synthetic castle built with the architecture kit: towers, roofs, dormers, facades, battlements, buttresses."
+ },
+ "units": "m",
+ "seed": 7,
+ "sources": [
+  {
+   "id": "req",
+   "kind": "user_request",
+   "title": "test",
+   "rights": "synthetic"
+  }
+ ],
+ "facts": [
+  {
+   "key": "height",
+   "value": 52,
+   "unit": "m",
+   "certainty": "inferred",
+   "note": "synthetic"
+  }
+ ],
+ "parts": [
+  {
+   "id": "rock",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     70,
+     6,
+     36
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "id": "palace",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     40,
+     18,
+     16
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0,
+    6,
+    0
+   ]
+  },
+  {
+   "id": "palace-front",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "facade",
+    "size": [
+     40,
+     18
+    ],
+    "rows": 4,
+    "cols": 10,
+    "arch": "round",
+    "outline": false
+   },
+   "at": [
+    0,
+    6,
+    8.01
+   ]
+  },
+  {
+   "id": "palace-back",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "facade",
+    "size": [
+     40,
+     18
+    ],
+    "rows": 4,
+    "cols": 10,
+    "arch": "round",
+    "outline": false
+   },
+   "at": [
+    0,
+    6,
+    -8.01
+   ],
+   "rotate": [
+    0,
+    180,
+    0
+   ]
+  },
+  {
+   "id": "palace-roof",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "roof",
+    "size": [
+     40,
+     16
+    ],
+    "height": 9,
+    "style": "gable",
+    "overhang": 0.6,
+    "courses": 6
+   },
+   "at": [
+    0,
+    24,
+    0
+   ]
+  },
+  {
+   "id": "dormers",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "dormer",
+    "width": 3.0,
+    "height": 3.0,
+    "depth": 2.4
+   },
+   "at": [
+    -14,
+    24.6,
+    5.2
+   ],
+   "repeat": {
+    "count": 5,
+    "step": {
+     "at": [
+      7,
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "gable-tower",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "tower",
+    "radius": 2.6,
+    "height": 30,
+    "sides": 0,
+    "roof": "spire",
+    "windows": [
+     4,
+     4
+    ],
+    "eave": 0.3
+   },
+   "at": [
+    21,
+    6,
+    7
+   ]
+  },
+  {
+   "id": "main-tower",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "tower",
+    "radius": 4.2,
+    "height": 38,
+    "sides": 8,
+    "roof": "pyramid",
+    "roof_height": 10,
+    "windows": [
+     5,
+     8
+    ]
+   },
+   "at": [
+    -22,
+    6,
+    -4
+   ]
+  },
+  {
+   "id": "main-battlements",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "battlements",
+    "radius": 4.6,
+    "height": 1.2,
+    "merlon": 1.0,
+    "gap": 0.8,
+    "thickness": 0.6
+   },
+   "at": [
+    -22,
+    44,
+    -4
+   ]
+  },
+  {
+   "id": "turret-left",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "tower",
+    "radius": 1.6,
+    "height": 26,
+    "roof": "cone",
+    "roof_height": 7,
+    "windows": [
+     3,
+     3
+    ]
+   },
+   "at": [
+    -17,
+    6,
+    7.5
+   ]
+  },
+  {
+   "id": "turret-right",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "tower",
+    "radius": 1.4,
+    "height": 22,
+    "roof": "onion",
+    "windows": [
+     2,
+     3
+    ]
+   },
+   "at": [
+    15,
+    6,
+    -7.5
+   ]
+  },
+  {
+   "id": "gatehouse",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     12,
+     14,
+     10
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0,
+    6,
+    14
+   ]
+  },
+  {
+   "id": "gate-arcade",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "facade",
+    "size": [
+     12,
+     14
+    ],
+    "rows": 1,
+    "cols": 3,
+    "kind": "arcade",
+    "arch": "pointed",
+    "outline": false
+   },
+   "at": [
+    0,
+    6,
+    19.01
+   ]
+  },
+  {
+   "id": "gate-roof",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "roof",
+    "size": [
+     12,
+     10
+    ],
+    "height": 5,
+    "style": "hip",
+    "overhang": 0.4
+   },
+   "at": [
+    0,
+    20,
+    14
+   ]
+  },
+  {
+   "id": "buttresses",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "buttress",
+    "width": 1.2,
+    "depth": 2.2,
+    "height": 12,
+    "steps": 2
+   },
+   "at": [
+    -18,
+    6,
+    8
+   ],
+   "repeat": {
+    "count": 4,
+    "step": {
+     "at": [
+      12,
+      0,
+      0
+     ]
+    }
+   }
+  }
+ ],
+ "presentation": {
+  "framing": {
+   "yaw": 30,
+   "pitch": 12,
+   "fit": 1.0
+  },
+  "views": [
+   {
+    "id": "gate",
+    "label": "Gatehouse",
+    "yaw": 12,
+    "pitch": 6,
+    "distance": 0.55,
+    "target": "gatehouse"
+   }
+  ]
+ }
+}
