@@ -1,0 +1,789 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Viral Marketing, Live</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #050205; --ink: #efe6f5; --dim: #9c8ea9; --faint: #5f5170; --hair: rgba(239,230,245,.12); --hair2: rgba(239,230,245,.22);
+    --accent: #d16bd0; --bright: #f6eaff; --data: #8fd3ff; --gold: #ffd56b; --dust: #9682d7;
+    --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --serif: "Instrument Serif", "Iowan Old Style", Georgia, serif;
+    --rail: 268px; --read: 336px; --foot: 86px;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--ink); font: 400 12px/1.45 var(--mono); overflow: hidden; -webkit-font-smoothing: antialiased; }
+  button { font: inherit; color: inherit; }
+  canvas#gl { position: fixed; inset: 0; width: 100%; height: 100%; display: block; }
+  #vignette { position: fixed; inset: 0; pointer-events: none;
+    background: radial-gradient(ellipse 70% 65% at 50% 45%, transparent 55%, rgba(3,1,3,.75) 100%); }
+  #labels { position: fixed; inset: 0; pointer-events: none; overflow: hidden; }
+
+  /* labels anchored in 3D */
+  .lab { position: absolute; left: 0; top: 0; white-space: nowrap; font-size: 11px; letter-spacing: .03em; color: var(--ink); will-change: transform; transition: opacity .3s; }
+  .lab .dot { position: absolute; left: -2.5px; top: 50%; width: 5px; height: 5px; margin-top: -2.5px; background: currentColor; transform: rotate(45deg); box-shadow: 0 0 8px currentColor; }
+  .lab .txt { display: inline-block; margin-left: 10px; padding-left: 8px; border-left: 1px solid currentColor; text-shadow: 0 0 3px #000, 0 0 8px #000, 0 0 14px #050205; }
+  .lab.flip .txt { margin-left: 0; margin-right: 10px; padding-left: 0; padding-right: 8px; border-left: 0; border-right: 1px solid currentColor; text-align: right; }
+  .lab.flip .dot { left: auto; right: -2.5px; }
+  .lab .txt small { display: block; color: var(--dim); font-size: 10px; letter-spacing: .08em; }
+  .lab.ring { color: var(--bright); }
+  .lab.now { color: var(--gold); }
+  .lab.iso { color: var(--accent); }
+  .lab.seed { color: var(--gold); }
+  .lab.axis { color: var(--faint); font-size: 10px; }
+  .lab.axis .dot { display: none; } .lab.axis .txt { border: 0; margin-left: 6px; padding: 0; }
+
+  /* the instrument rail */
+  #rail { position: fixed; left: 0; top: 0; bottom: 0; width: var(--rail); padding: 26px 24px 18px; overflow-y: auto; scrollbar-width: none;
+    background: linear-gradient(90deg, rgba(5,2,5,.92) 0%, rgba(5,2,5,.78) 80%, rgba(5,2,5,.55) 100%); border-right: 1px solid var(--hair); }
+  #rail::-webkit-scrollbar { display: none; }
+  .kicker { font-size: 10px; letter-spacing: .2em; color: var(--dim); text-transform: uppercase; }
+  h1 { margin: 8px 0 0; font: 400 34px/0.98 var(--serif); letter-spacing: -.01em; }
+  h1 em { color: var(--accent); }
+  .lede { margin: 10px 0 18px; color: var(--dim); font-size: 11.5px; line-height: 1.55; }
+  section { margin: 0 0 14px; }
+  .sec { display: flex; align-items: baseline; gap: 10px; margin: 0 0 8px; font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--dim); }
+  .sec span { color: var(--faint); letter-spacing: .05em; }
+  .sec b { margin-left: auto; color: var(--ink); font-weight: 500; letter-spacing: .06em; text-transform: none; font-size: 11px; }
+
+  .switch { display: flex; border-top: 1px solid var(--hair); border-bottom: 1px solid var(--hair); }
+  .switch button { position: relative; flex: 1; padding: 9px 4px 8px; border: 0; background: none; color: var(--dim); font-size: 11px; letter-spacing: .06em; cursor: pointer; transition: color .2s; }
+  .switch button + button { border-left: 1px solid var(--hair); }
+  .switch button:hover:not(:disabled) { color: var(--ink); }
+  .switch button.on { color: var(--ink); }
+  .switch button::after { content: ""; position: absolute; left: 22%; right: 22%; bottom: -1px; height: 2px; background: var(--accent); box-shadow: 0 0 10px var(--accent);
+    transform: scaleX(0); transition: transform .25s; }
+  .switch button.on::after { transform: scaleX(1); }
+  .switch button:disabled { cursor: default; opacity: .45; }
+
+  .meter { display: flex; gap: 4px; align-items: flex-end; height: 28px; }
+  .meter button { flex: 1; height: 100%; padding: 0; border: 1px solid var(--hair2); background: transparent; cursor: pointer; transition: background .15s, border-color .15s, box-shadow .15s; }
+  .meter button.on { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 10px rgba(209,107,208,.55); }
+  .meter button:hover:not(:disabled) { border-color: var(--ink); }
+  .meter button:disabled { cursor: default; opacity: .5; }
+  .meter-scale { display: flex; justify-content: space-between; margin-top: 4px; font-size: 9.5px; color: var(--faint); }
+
+  .seedrow { display: flex; align-items: baseline; gap: 10px; }
+  .seedrow input { flex: 1; min-width: 0; padding: 4px 0; border: 0; border-bottom: 1px solid var(--hair2); background: transparent; color: var(--ink); font: 500 15px var(--mono); letter-spacing: .08em; outline: none; }
+  .seedrow input:focus { border-bottom-color: var(--accent); }
+  .seedrow input::-webkit-inner-spin-button { display: none; }
+  .link { padding: 0; border: 0; background: none; color: var(--dim); font-size: 11px; letter-spacing: .06em; cursor: pointer; transition: color .2s; }
+  .link:hover:not(:disabled) { color: var(--ink); }
+  .link:disabled { opacity: .4; cursor: default; }
+
+  .keys { display: flex; gap: 6px; }
+  .key { flex: 1; display: flex; align-items: center; justify-content: center; gap: 8px; height: 40px; padding: 0 6px; border: 1px solid rgba(239,230,245,.2); border-radius: 3px;
+    background: linear-gradient(180deg, #1a0e1d 0%, #0c060e 100%); color: var(--ink); font-weight: 600; font-size: 10.5px; letter-spacing: .2em; text-transform: uppercase; cursor: pointer;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.06), 0 2px 0 rgba(0,0,0,.65); transition: border-color .2s, transform .05s; }
+  .key:hover { border-color: rgba(239,230,245,.42); }
+  .key:active { transform: translateY(1px); box-shadow: inset 0 1px 0 rgba(255,255,255,.03), 0 1px 0 rgba(0,0,0,.65); }
+  .key i { width: 6px; height: 6px; border-radius: 50%; background: #3a2b40; box-shadow: inset 0 0 1px #000; transition: background .2s, box-shadow .2s; }
+  .key.lit i { background: var(--gold); box-shadow: 0 0 9px var(--gold); }
+  .key.flash i { background: var(--accent); box-shadow: 0 0 9px var(--accent); }
+
+  input[type=range].needle { -webkit-appearance: none; appearance: none; width: 100%; height: 26px; margin: 0; background: transparent; cursor: pointer; }
+  input[type=range].needle::-webkit-slider-runnable-track { height: 26px;
+    background: linear-gradient(var(--hair2), var(--hair2)) 0 13px / 100% 1px no-repeat,
+                repeating-linear-gradient(90deg, rgba(239,230,245,.3) 0 1px, transparent 1px 10%) 0 17px / 100% 6px no-repeat; }
+  input[type=range].needle::-webkit-slider-thumb { -webkit-appearance: none; width: 11px; height: 26px; border: 0; background:
+    linear-gradient(var(--gold), var(--gold)) center / 2px 100% no-repeat; filter: drop-shadow(0 0 4px rgba(255,213,107,.7)); }
+  input[type=range].needle::-moz-range-track { height: 1px; background: var(--hair2); }
+  input[type=range].needle::-moz-range-thumb { width: 2px; height: 26px; border: 0; border-radius: 0; background: var(--gold); }
+
+  .links { display: flex; justify-content: space-between; padding-top: 12px; border-top: 1px solid var(--hair); }
+  .fine { color: var(--faint); font-size: 10.5px; line-height: 1.55; margin: 14px 0 0; }
+  .fine b { color: var(--dim); font-weight: 500; }
+  .fine a { color: var(--dim); text-decoration: underline; text-underline-offset: 2px; }
+
+  /* the readout */
+  #readout { position: fixed; right: 0; top: 0; bottom: 0; width: var(--read); padding: 26px 24px 18px; overflow-y: auto; scrollbar-width: none;
+    background: linear-gradient(270deg, rgba(5,2,5,.92) 0%, rgba(5,2,5,.78) 80%, rgba(5,2,5,.55) 100%); border-left: 1px solid var(--hair); }
+  #readout::-webkit-scrollbar { display: none; }
+  .big { display: flex; align-items: flex-end; gap: 12px; }
+  .num { font: 400 84px/0.82 var(--serif); letter-spacing: -.02em; font-variant-numeric: tabular-nums; }
+  .big .of { padding-bottom: 6px; color: var(--dim); font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; line-height: 1.5; }
+  .bar { display: flex; height: 6px; margin: 18px 0 12px; background: rgba(239,230,245,.06); }
+  .bar i { display: block; height: 100%; transition: width .15s; }
+  .figs { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 14px; margin-bottom: 20px; }
+  .fig { border-top: 1px solid var(--hair); padding-top: 7px; }
+  .fig .v { font: 400 30px/1 var(--serif); font-variant-numeric: tabular-nums; }
+  .fig .v small { font: 400 15px var(--serif); color: var(--dim); }
+  .fig .l { display: flex; align-items: center; gap: 7px; margin-top: 3px; font-size: 9.5px; letter-spacing: .14em; color: var(--dim); text-transform: uppercase; }
+  .fig .l i { width: 10px; height: 2px; box-shadow: 0 0 6px currentColor; }
+  canvas#plot { width: 100%; height: 150px; display: block; cursor: ew-resize; }
+  .plotcap { display: flex; justify-content: space-between; margin: 6px 0 18px; font-size: 9.5px; letter-spacing: .14em; color: var(--faint); text-transform: uppercase; }
+  .legend { display: grid; gap: 9px; padding-top: 14px; border-top: 1px solid var(--hair); font-size: 11px; color: var(--dim); }
+  .legend div { display: grid; grid-template-columns: 26px 1fr; gap: 10px; align-items: start; }
+  .legend svg { margin-top: 2px; }
+  .legend b { color: var(--ink); font-weight: 500; }
+
+  /* the timeline */
+  #timeline { position: fixed; left: var(--rail); right: var(--read); bottom: 0; height: var(--foot); padding: 14px 24px 12px; display: flex; gap: 18px; align-items: center;
+    background: linear-gradient(0deg, rgba(5,2,5,.9), rgba(5,2,5,.0)); }
+  #play { flex: 0 0 48px; height: 48px; border-radius: 50%; padding: 0; font-size: 14px; letter-spacing: 0; }
+  #play i { display: none; }
+  canvas#ruler { flex: 1; height: 56px; min-width: 0; cursor: ew-resize; }
+  #tickout { flex: 0 0 auto; text-align: right; }
+  #tickout .num { font-size: 44px; }
+  #tickout .of { display: block; margin-top: 4px; color: var(--dim); font-size: 10px; letter-spacing: .14em; text-transform: uppercase; }
+
+  /* framed overlays: tooltip, card, Monte Carlo */
+  .frame { position: fixed; background: rgba(8,3,9,.94); border: 1px solid var(--hair); }
+  .frame::before, .frame::after { content: ""; position: absolute; width: 10px; height: 10px; border: 1px solid var(--ink); pointer-events: none; }
+  .frame::before { left: -1px; top: -1px; border-right: 0; border-bottom: 0; }
+  .frame::after { right: -1px; bottom: -1px; border-left: 0; border-top: 0; }
+  #tip { pointer-events: none; padding: 8px 11px; font-size: 11px; line-height: 1.5; display: none; max-width: 300px; z-index: 5; }
+  #tip b, #card b { font-weight: 600; }
+  #tip .d { color: var(--dim); }
+  #card { left: calc(var(--rail) + 20px); top: 22px; width: 340px; padding: 14px 16px; display: none; font-size: 11px; line-height: 1.6; }
+  #card .x, #mc .x { position: absolute; right: 10px; top: 6px; border: 0; background: none; color: var(--dim); font-size: 16px; cursor: pointer; }
+  #card .who { font: 400 26px/1 var(--serif); }
+  #card .chain { margin-top: 10px; color: var(--gold); word-break: break-word; }
+  #card .note { margin-top: 8px; color: var(--faint); font-size: 10.5px; }
+  #mc { left: 50%; top: 46%; transform: translate(-50%, -50%); width: min(600px, 92vw); padding: 22px 24px; display: none; z-index: 6; }
+  #mc h2 { margin: 0 0 4px; font: 400 30px/1 var(--serif); }
+  #mc .sub { color: var(--dim); font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; }
+  #mc table { width: 100%; border-collapse: collapse; margin: 16px 0 10px; font-size: 12px; font-variant-numeric: tabular-nums; }
+  #mc th { font-weight: 500; color: var(--dim); font-size: 10px; letter-spacing: .14em; }
+  #mc th, #mc td { text-align: right; padding: 7px 6px; border-bottom: 1px solid var(--hair); }
+  #mc th:first-child, #mc td:first-child { text-align: left; }
+  #mc td.nl { color: var(--dim); }
+  #mc canvas { width: 100%; height: 90px; display: block; margin-top: 10px; }
+  #mc .note { color: var(--faint); font-size: 10.5px; line-height: 1.55; }
+  #err { position: fixed; left: calc(var(--rail) + 20px); bottom: 100px; color: #ffb1b1; white-space: pre-wrap; font-size: 11px; }
+
+  @media (max-width: 1180px) { :root { --rail: 236px; --read: 292px; } .num { font-size: 68px; } h1 { font-size: 32px; } }
+  @media (max-width: 860px) {
+    :root { --rail: 0px; --read: 0px; }
+    #rail { width: 220px; bottom: auto; max-height: 60vh; } #readout { top: auto; height: 34vh; width: 100%; } #readout .legend, #readout canvas#plot, #readout .plotcap { display: none; }
+    #timeline { left: 0; right: 0; bottom: 34vh; }
+  }
+</style>
+<script src="svm-model.js"></script>
+<script src="netlogo-run.js"></script>
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+</head>
+<body>
+<canvas id="gl"></canvas>
+<div id="vignette"></div>
+<div id="labels"></div>
+
+<aside id="rail">
+  <div class="kicker">NetLogo · IABM ch. 8 · Wilensky 2012</div>
+  <h1>Simple Viral<br><em>Marketing</em></h1>
+  <p class="lede">Five hundred people and one product. The floor is who knows whom. Height is when each person adopted.</p>
+
+  <section>
+    <div class="sec"><span>01</span>Source</div>
+    <div class="switch" id="source"><button data-v="live" class="on">live model</button><button data-v="netlogo">NetLogo run</button></div>
+  </section>
+  <section>
+    <div class="sec"><span>02</span>Network</div>
+    <div class="switch" id="network"><button data-v="random" class="on">random</button><button data-v="preferential-attachment">pref. attach.</button></div>
+  </section>
+  <section>
+    <div class="sec"><span>03</span>Seeding</div>
+    <div class="switch" id="seeding"><button data-v="betweenness" class="on">betweenness</button><button data-v="random">random</button></div>
+  </section>
+  <section>
+    <div class="sec"><span>04</span>Budget <b id="budgetv">3 seeds</b></div>
+    <div class="meter" id="budget"></div>
+    <div class="meter-scale"><span>1</span><span>10</span></div>
+  </section>
+  <section>
+    <div class="sec"><span>05</span>Random seed</div>
+    <div class="seedrow"><input id="seed" type="number" value="2026"><button class="link" id="dice">reroll ↻</button></div>
+  </section>
+  <section class="keys">
+    <button class="key" id="setup"><i></i>Setup</button>
+    <button class="key" id="go"><i></i>Go</button>
+    <button class="key" id="step"><i></i>Step</button>
+  </section>
+  <section>
+    <div class="sec"><span>06</span>Speed <b id="speedv">12 ticks / s</b></div>
+    <input id="speed" class="needle" type="range" min="1" max="60" step="1" value="12">
+  </section>
+  <section class="links">
+    <button class="link" id="orbit">↻ orbit on</button>
+    <button class="link" id="mcbtn">∑ 100 runs</button>
+  </section>
+  <p class="fine" id="srcnote"></p>
+  <p class="fine">space go · → step · S setup<br>click any light to trace who convinced whom</p>
+  <p class="fine">Model: <b>Simple Viral Marketing</b> © 2012 Uri Wilensky, NetLogo Models Library (Wilensky &amp; Rand, <i>An Introduction to Agent-Based Modeling</i>, MIT Press, 2015). This page, its port of the model and the NetLogo run: <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/">CC BY-NC-SA 3.0</a>. Drawn with <a href="https://rtmandreyev.github.io/construct/">Construct</a>.</p>
+</aside>
+
+<aside id="readout">
+  <div class="big"><span class="num" id="s-adopted">0</span><span class="of">of 500<br>have adopted</span></div>
+  <div class="bar" id="bar"><i style="background:var(--bright)"></i><i style="background:var(--data)"></i><i style="background:var(--accent)"></i><i style="background:var(--gold)"></i></div>
+  <div class="figs">
+    <div class="fig"><div class="v" id="s-nb">0</div><div class="l"><i style="background:var(--bright);color:var(--bright)"></i>through a neighbour</div></div>
+    <div class="fig"><div class="v" id="s-ad">0</div><div class="l"><i style="background:var(--data);color:var(--data)"></i>through advertising</div></div>
+    <div class="fig"><div class="v" id="s-iso">0</div><div class="l"><i style="background:var(--accent);color:var(--accent)"></i>no links · reached</div></div>
+    <div class="fig"><div class="v" id="s-wait">0</div><div class="l"><i style="background:var(--faint);color:var(--faint)"></i>still waiting</div></div>
+  </div>
+  <canvas id="plot"></canvas>
+  <div class="plotcap"><span>adopters over time</span><span>drag to scrub</span></div>
+  <div class="legend">
+    <div><svg width="26" height="12"><circle cx="5" cy="6" r="3" fill="none" stroke="#6f6080"/><line x1="8" y1="6" x2="17" y2="6" stroke="#6f6080"/><circle cx="21" cy="6" r="3" fill="none" stroke="#6f6080"/></svg>
+      <span><b>The floor</b> is the social network: each ring is a person, each line a link. A ring lights up when that person adopts.</span></div>
+    <div><svg width="26" height="14"><line x1="3" y1="12" x2="22" y2="2" stroke="#f6eaff" stroke-width="1.5"/></svg>
+      <span><b>A rising line</b> joins a person to an adopted neighbour, lifted to the moment they adopted.</span></div>
+    <div><svg width="26" height="14"><line x1="13" y1="13" x2="13" y2="1" stroke="#8fd3ff" stroke-width="1.5"/></svg>
+      <span><b>A vertical line</b> marks adoption through advertising (1% a tick).</span></div>
+    <div><svg width="26" height="14"><line x1="8" y1="13" x2="8" y2="3" stroke="#d16bd0" stroke-width="1.5"/><line x1="18" y1="13" x2="18" y2="6" stroke="#d16bd0" stroke-width="1.5"/></svg>
+      <span><b>On the rim</b>, the people with no links. Only advertising can reach them; the taller the spike, the longer it took.</span></div>
+    <div><svg width="26" height="14"><ellipse cx="13" cy="7" rx="11" ry="4" fill="none" stroke="#ffd56b"/></svg>
+      <span><b>The gold disc</b> is now. Height is time, on a square-root scale.</span></div>
+  </div>
+</aside>
+
+<footer id="timeline">
+  <button class="key" id="play">▶</button>
+  <canvas id="ruler"></canvas>
+  <div id="tickout"><span class="num" id="tnum">0</span><span class="of" id="tof">tick</span></div>
+</footer>
+
+<div id="tip" class="frame"></div>
+<div id="card" class="frame"></div>
+<div id="mc" class="frame"></div>
+<div id="err"></div>
+
+<script type="module">
+import * as THREE from "three";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { LineSegments2 } from "three/addons/lines/LineSegments2.js";
+import { LineSegmentsGeometry } from "three/addons/lines/LineSegmentsGeometry.js";
+import { LineMaterial } from "three/addons/lines/LineMaterial.js";
+import { EffectComposer } from "three/addons/postprocessing/EffectComposer.js";
+import { RenderPass } from "three/addons/postprocessing/RenderPass.js";
+import { UnrealBloomPass } from "three/addons/postprocessing/UnrealBloomPass.js";
+import { OutputPass } from "three/addons/postprocessing/OutputPass.js";
+
+const SVM = window.SVM, N = SVM.N;
+const R_IN = 9, R_OUT = 11, H = 14, RIM = R_OUT + 0.9;
+const C = {                                       // Construct's house palette (Measured Light)
+  floor: new THREE.Color("#6f6080"), floorOn: new THREE.Color("#b7a4c8"), bright: new THREE.Color("#f6eaff"),
+  data: new THREE.Color("#8fd3ff"), accent: new THREE.Color("#d16bd0"), gold: new THREE.Color("#ffd56b"), dust: new THREE.Color("#9682d7"),
+};
+const $ = (id) => document.getElementById(id);
+const fail = (e) => { $("err").textContent = "Something went wrong: " + (e && e.message || e); console.error(e); };
+window.addEventListener("error", (e) => fail(e.error || e.message));
+const css = (v) => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+
+// ------------------------------------------------------------------------------------------ state
+const ui = { source: "live", networkType: "random", seeding: "betweenness", budget: 3, seed: 2026, speed: 12, orbit: true };
+let run = null, playhead = 0, playing = false, selected = -1;
+
+// ------------------------------------------------------------------------------------------ three
+const canvas = $("gl");
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: "high-performance" });
+renderer.setPixelRatio(Math.min(1.5, window.devicePixelRatio || 1));
+renderer.setClearColor(0x050205, 1);
+const scene = new THREE.Scene();
+scene.fog = new THREE.FogExp2(0x050205, 0.011);
+const camera = new THREE.PerspectiveCamera(36, 1, 0.1, 400);
+const controls = new OrbitControls(camera, canvas);
+controls.enableDamping = true; controls.dampingFactor = 0.08; controls.minDistance = 10; controls.maxDistance = 130;
+controls.maxPolarAngle = THREE.MathUtils.degToRad(92);
+controls.target.set(0, 5.2, 0);
+camera.position.setFromSphericalCoords(55, THREE.MathUtils.degToRad(66), THREE.MathUtils.degToRad(32)).add(controls.target);
+controls.autoRotateSpeed = 0.3;
+
+const composer = new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene, camera));
+const bloom = new UnrealBloomPass(new THREE.Vector2(256, 256), 0.42, 0.5, 0.2);
+composer.addPass(bloom);
+composer.addPass(new OutputPass());
+
+{ // a faint survey grid under everything
+  const g = new THREE.PolarGridHelper(RIM + 2.5, 24, 6, 96, 0x24162a, 0x160c19);
+  g.position.y = -0.02; g.material.transparent = true; g.material.opacity = 0.6; scene.add(g);
+}
+
+const lineMats = [];
+function makeLines(width, opacity) {
+  const m = new LineMaterial({ linewidth: width, vertexColors: true, transparent: true, opacity, depthWrite: false, worldUnits: false });
+  m.blending = THREE.AdditiveBlending; lineMats.push(m);
+  const obj = new LineSegments2(new LineSegmentsGeometry(), m); obj.frustumCulled = false; scene.add(obj); return obj;
+}
+const floorLines = makeLines(1.0, 0.9);
+const cascadeLines = makeLines(1.3, 0.9);
+const chainLines = makeLines(3.0, 1.0);
+const ringLines = makeLines(1.1, 0.7);
+const axisLines = makeLines(1.0, 0.55);
+const nowRing = makeLines(2.0, 0.95);
+const nowDisc = new THREE.Mesh(new THREE.CircleGeometry(RIM, 96),
+  new THREE.MeshBasicMaterial({ color: 0x3a2a12, transparent: true, opacity: 0.13, depthWrite: false, side: THREE.DoubleSide, blending: THREE.AdditiveBlending }));
+nowDisc.rotation.x = -Math.PI / 2; scene.add(nowDisc);
+
+const pointMat = new THREE.ShaderMaterial({
+  transparent: true, depthWrite: false, blending: THREE.AdditiveBlending, uniforms: { uScale: { value: 600 } },
+  vertexShader: `attribute float size; attribute float alpha; attribute float kind; attribute vec3 color;
+    varying vec3 vC; varying float vA; varying float vK; uniform float uScale;
+    void main(){ vC = color; vA = alpha; vK = kind; vec4 mv = modelViewMatrix * vec4(position, 1.);
+      gl_PointSize = max(1.5, size * uScale / -mv.z); gl_Position = projectionMatrix * mv; }`,
+  fragmentShader: `varying vec3 vC; varying float vA; varying float vK;
+    void main(){ float r = length(gl_PointCoord - .5); if (r > .5) discard;
+      float dot = pow(smoothstep(.5, .0, r), 1.7);
+      float ring = smoothstep(.5, .42, r) * smoothstep(.24, .34, r);
+      float a = mix(dot, ring, vK) * vA; if (a < .004) discard; gl_FragColor = vec4(vC * a, a); }`,
+});
+function makePoints(n) {
+  const g = new THREE.BufferGeometry();
+  for (const [k, w] of [["position", 3], ["color", 3], ["size", 1], ["alpha", 1], ["kind", 1]])
+    g.setAttribute(k, new THREE.BufferAttribute(new Float32Array(n * w), w).setUsage(THREE.DynamicDrawUsage));
+  const p = new THREE.Points(g, pointMat); p.frustumCulled = false; scene.add(p); return p;
+}
+const floorPts = makePoints(N), liftPts = makePoints(N);
+
+// ------------------------------------------------------------------------------------------ layout
+function springLayout(adj, linked, seed) {
+  // Fruchterman-Reingold in a unit disc, with a little gravity so small groups stay near the middle
+  const rand = SVM.rng(seed ^ 0x5bd1e995), n = linked.length, x = new Float64Array(n), y = new Float64Array(n);
+  const idx = new Map(linked.map((v, i) => [v, i]));
+  for (let i = 0; i < n; i++) { const a = rand() * Math.PI * 2, r = Math.sqrt(rand()); x[i] = r * Math.cos(a); y[i] = r * Math.sin(a); }
+  const k = Math.sqrt(Math.PI / n), dx = new Float64Array(n), dy = new Float64Array(n);
+  let temp = 0.12;
+  for (let it = 0; it < 260; it++) {
+    dx.fill(0); dy.fill(0);
+    for (let i = 0; i < n; i++) for (let j = i + 1; j < n; j++) {
+      const ex = x[i] - x[j], ey = y[i] - y[j], d2 = ex * ex + ey * ey + 1e-9, f = (k * k) / d2;
+      dx[i] += ex * f; dy[i] += ey * f; dx[j] -= ex * f; dy[j] -= ey * f;
+    }
+    for (let i = 0; i < n; i++) for (const w of adj[linked[i]]) {
+      const j = idx.get(w); if (j <= i) continue;
+      const ex = x[i] - x[j], ey = y[i] - y[j], d = Math.sqrt(ex * ex + ey * ey) + 1e-9, f = d / k;
+      dx[i] -= ex * f; dy[i] -= ey * f; dx[j] += ex * f; dy[j] += ey * f;
+    }
+    for (let i = 0; i < n; i++) {
+      dx[i] -= x[i] * 9 * k; dy[i] -= y[i] * 9 * k;                     // gravity
+      const d = Math.sqrt(dx[i] * dx[i] + dy[i] * dy[i]) + 1e-9, s = Math.min(d, temp) / d;
+      x[i] += dx[i] * s; y[i] += dy[i] * s;
+    }
+    temp *= 0.985;
+  }
+  return linked.map((v, i) => [x[i], y[i]]);
+}
+
+// ------------------------------------------------------------------------------------------ prepare a run
+function prepare(r, pos2d) {
+  const adj = r.adj || (() => { const a = Array.from({ length: N }, () => []); for (const [p, q] of r.links) { a[p].push(q); a[q].push(p); } return a; })();
+  const isolated = adj.map((a) => a.length === 0), linked = [...Array(N).keys()].filter((i) => !isolated[i]);
+  const raw = pos2d ? linked.map((i) => pos2d[i]) : springLayout(adj, linked, r.seed || 1);
+  const cx = raw.reduce((s, p) => s + p[0], 0) / raw.length, cy = raw.reduce((s, p) => s + p[1], 0) / raw.length;
+  const rmax = Math.max(...raw.map((p) => Math.hypot(p[0] - cx, p[1] - cy))) || 1;
+  const pos = new Array(N);
+  linked.forEach((v, i) => { pos[v] = [(raw[i][0] - cx) / rmax * R_IN, -(raw[i][1] - cy) / rmax * R_IN]; });
+  const iso = [...Array(N).keys()].filter((i) => isolated[i]);
+  if (pos2d) iso.sort((a, b) => Math.atan2(-(pos2d[a][1] - cy), pos2d[a][0] - cx) - Math.atan2(-(pos2d[b][1] - cy), pos2d[b][0] - cx));
+  iso.forEach((v, i) => { const a = (2 * Math.PI * i) / iso.length; pos[v] = [R_OUT * Math.cos(a), R_OUT * Math.sin(a)]; });
+
+  const tick = r.tick, Tmax = Math.max(...tick);
+  const h = (t) => H * Math.sqrt(Math.max(0, t) / Tmax);
+  const order = [...Array(N).keys()].sort((a, b) => tick[a] - tick[b]);
+  const cum = { nb: new Int32Array(Tmax + 1), ad: new Int32Array(Tmax + 1), iso: new Int32Array(Tmax + 1), all: new Int32Array(Tmax + 1) };
+  const per = { nb: new Int32Array(Tmax + 1), ad: new Int32Array(Tmax + 1), iso: new Int32Array(Tmax + 1) };
+  for (const i of order) {
+    const t = tick[i], kind = r.cause[i] === "neighbour" ? "nb" : r.cause[i] === "ad" ? (isolated[i] ? "iso" : "ad") : null;
+    if (kind) { cum[kind][t]++; per[kind][t]++; }
+    cum.all[t]++;
+  }
+  for (const k of Object.keys(cum)) for (let t = 1; t <= Tmax; t++) cum[k][t] += cum[k][t - 1];
+  const firstAt = (q) => { const need = Math.ceil(q * N); for (let t = 0; t <= Tmax; t++) if (cum.all[t] >= need) return t; return Tmax; };
+  const milestones = [0.5, 0.9, 0.99, 1].map((q) => ({ q, t: firstAt(q) }));
+  const startIdx = new Int32Array(Tmax + 2); { let j = 0; for (let t = 0; t <= Tmax + 1; t++) { while (j < N && tick[order[j]] < t) j++; startIdx[t] = j; } }
+  return { ...r, adj, isolated, pos, Tmax, h, order, cum, per, milestones, nIso: iso.length, startIdx,
+    seeds: [...Array(N).keys()].filter((i) => r.cause[i] === "seed") };
+}
+
+// ------------------------------------------------------------------------------------------ geometry
+const lifted = (i) => [run.pos[i][0], run.h(run.tick[i]), run.pos[i][1]];
+const ground = (i) => [run.pos[i][0], 0, run.pos[i][1]];
+function colorOf(i) { const c = run.cause[i]; return c === "neighbour" ? C.bright : c === "ad" ? (run.isolated[i] ? C.accent : C.data) : C.gold; }
+let cascadeTicks = [];
+function setSegs(obj, segs, cols) {
+  obj.geometry.dispose(); obj.geometry = new LineSegmentsGeometry();
+  if (!segs.length) { obj.visible = false; return; }
+  obj.visible = true; obj.geometry.setPositions(segs.flat(2)); obj.geometry.setColors(cols.flat(2));
+}
+const circle = (y, rr, n, dashed) => { const s = []; for (let k = 0; k < n; k++) { if (dashed && k % 2) continue;
+  const a0 = (k / n) * Math.PI * 2, a1 = ((k + 1) / n) * Math.PI * 2; s.push([[rr * Math.cos(a0), y, rr * Math.sin(a0)], [rr * Math.cos(a1), y, rr * Math.sin(a1)]]); } return s; };
+function build() {
+  const fs = [], fc = [], f = C.floor.toArray();
+  for (const [a, b] of run.links) { fs.push([ground(a), ground(b)]); fc.push([f, f]); }
+  setSegs(floorLines, fs, fc);
+  const cs = [], cc = []; cascadeTicks = [];
+  for (const i of run.order) {
+    const c = run.cause[i]; if (c === "seed") continue;
+    const col = colorOf(i).toArray().map((v) => v * 0.8);
+    if (c === "neighbour" && run.src[i] >= 0) { cs.push([lifted(run.src[i]), lifted(i)]); cc.push([col.map((v) => v * 0.45), col]); }
+    else { cs.push([ground(i), lifted(i)]); cc.push([col.map((v) => v * 0.12), col]); }
+    cascadeTicks.push(run.tick[i]);
+  }
+  setSegs(cascadeLines, cs, cc);
+  const rs = [], rc = [], d = C.dust.toArray();
+  for (const m of run.milestones) for (const s of circle(run.h(m.t), RIM, 120, true)) { rs.push(s); rc.push([d, d]); }
+  setSegs(ringLines, rs, rc); ringLines.userData.perRing = rs.length / run.milestones.length;
+  const g = C.gold.toArray(); setSegs(nowRing, circle(0, RIM, 120, false), circle(0, RIM, 120, false).map(() => [g, g]));
+  for (const [pts, fn] of [[floorPts, ground], [liftPts, lifted]]) {
+    const P = pts.geometry.attributes.position.array;
+    for (let i = 0; i < N; i++) P.set(fn(i), i * 3);
+    pts.geometry.attributes.position.needsUpdate = true; pts.geometry.computeBoundingSphere();
+  }
+  buildLabels(); lastAz = null;
+  selected = -1; showChain(-1);
+}
+
+// ------------------------------------------------------------------------------------------ labels anchored in 3D
+const labelsEl = $("labels"); let labels = [];
+function addLabel(cls, html, pos, show) {
+  const el = document.createElement("div"); el.className = "lab " + cls; el.innerHTML = `<span class="dot"></span><span class="txt">${html}</span>`;
+  labelsEl.appendChild(el); const L = { el, pos, show: show || (() => true) }; labels.push(L); return L;
+}
+const azimuth = () => { const v = new THREE.Vector3().subVectors(camera.position, controls.target); return Math.atan2(v.x, v.z); };
+const onRim = (y, rr, turn) => { const a = azimuth() + turn; return new THREE.Vector3(rr * Math.sin(a), y, rr * Math.cos(a)); };
+function buildLabels() {
+  labelsEl.innerHTML = ""; labels = [];
+  for (const m of run.milestones)
+    addLabel("ring", `${Math.round(m.q * 100)}% adopted<small>by tick ${m.t}</small>`, () => onRim(run.h(m.t), RIM, Math.PI / 2), () => playhead >= m.t);
+  const now = addLabel("now", "", () => onRim(run.h(playhead), RIM, -Math.PI / 2 + 0.5), () => playhead > 0.5 && playhead < run.Tmax);
+  now.update = () => { const t = Math.floor(playhead); if (now.t !== t) { now.t = t; now.el.querySelector(".txt").innerHTML = `now<small>tick ${t}</small>`; now.w = 0; } };
+  if (run.nIso) addLabel("iso", `${run.nIso} people with no links<small>only advertising reaches them</small>`, () => onRim(0.2, R_OUT, -Math.PI / 5));
+  const s0 = run.seeds[0];
+  if (s0 !== undefined) addLabel("seed", `${run.seeds.length === 1 ? "the seed" : `${run.seeds.length} seeds`}<small>${run.seeding === "random" ? "chosen at random" : "highest betweenness"}</small>`,
+    () => new THREE.Vector3(...ground(s0)), () => playhead < 12);
+  axisTicks = [1, 5, 10, 25, 50, 100, 250, 500, 1000, 2000].filter((t) => t < run.Tmax * 0.92).concat([run.Tmax]);
+  for (const t of axisTicks) addLabel("axis", t === run.Tmax ? `${t} ticks` : `${t}`, () => onRim(run.h(t), RIM + 2.0, -Math.PI * 0.84));
+  labels.forEach((L) => { L.el.style.opacity = 0; });
+}
+let axisTicks = [], lastAz = null;
+function updateAxis() {
+  const az = azimuth(); if (lastAz !== null && Math.abs(az - lastAz) < 0.004) return; lastAz = az;
+  const a = az - Math.PI * 0.84, sx = Math.sin(a), sz = Math.cos(a), r0 = RIM + 1.4, col = C.floor.toArray(), segs = [[[r0 * sx, 0, r0 * sz], [r0 * sx, H, r0 * sz]]];
+  for (const t of axisTicks) { const y = run.h(t); segs.push([[(r0 - 0.3) * sx, y, (r0 - 0.3) * sz], [(r0 + 0.3) * sx, y, (r0 + 0.3) * sz]]); }
+  axisLines.geometry.setPositions(segs.flat(2)); axisLines.geometry.setColors(segs.map(() => [col, col]).flat(2));
+}
+const v3 = new THREE.Vector3();
+let railW = 0, readW = 0;
+function placeLabels() {
+  const w = canvas.clientWidth, hgt = canvas.clientHeight;
+  for (const L of labels) {
+    if (L.update) L.update();
+    v3.copy(L.pos()).project(camera);
+    const vis = L.show() && v3.z < 1 && Math.abs(v3.x) < 1.05 && Math.abs(v3.y) < 1.05;
+    L.el.style.opacity = vis ? 1 : 0;
+    if (!vis) continue;
+    if (!L.w) L.w = L.el.offsetWidth;
+    const x = ((v3.x + 1) / 2) * w, y = ((1 - v3.y) / 2) * hgt, lw = L.w;
+    // keep a label clear of the side panels: flip it to the other side of its point when it would run under one
+    const flip = x + lw > w - readW - 6 && x - lw > railW + 6;
+    L.el.classList.toggle("flip", flip);
+    L.el.style.transform = flip ? `translate(${x - lw}px, ${y}px) translateY(-50%)` : `translate(${x}px, ${y}px) translateY(-50%)`;
+  }
+}
+
+// ------------------------------------------------------------------------------------------ per-frame state
+let lastTick = -1, sparksLive = false;
+function applyPlayhead() {
+  // the full state at the playhead; run when the tick changes (between ticks only the sparks fade)
+  const T = playhead, ti = Math.floor(T); lastTick = ti;
+  let k = 0; while (k < cascadeTicks.length && cascadeTicks[k] <= ti) k++;
+  if (cascadeLines.visible) cascadeLines.geometry.instanceCount = k;
+  ringLines.geometry.instanceCount = (ringLines.userData.perRing || 0) * run.milestones.filter((m) => T >= m.t).length;
+  const y = run.h(Math.min(T, run.Tmax)), live = T > 0 && T < run.Tmax;
+  nowRing.position.y = y; nowDisc.position.y = y; nowRing.visible = live; nowDisc.visible = live;
+  const fa = floorPts.geometry.attributes, la = liftPts.geometry.attributes;
+  for (let i = 0; i < N; i++) {
+    const t = run.tick[i], on = t <= ti, age = T - t, spark = on && age < 1.8 ? 1 - age / 1.8 : 0, col = on ? colorOf(i) : C.floor;
+    fa.color.array.set([col.r * 0.7, col.g * 0.7, col.b * 0.7], i * 3);
+    fa.size.array[i] = on ? 0.4 + spark : 0.55; fa.alpha.array[i] = on ? 0.5 + 0.5 * spark : 0.6; fa.kind.array[i] = on ? 0 : 1;
+    const lc = i === selected ? C.gold : colorOf(i);
+    la.color.array.set([lc.r, lc.g, lc.b], i * 3);
+    la.size.array[i] = !on ? 0 : i === selected ? 1.7 : 0.45 + 2.2 * spark; la.alpha.array[i] = on ? 0.8 + 0.7 * spark : 0; la.kind.array[i] = 0;
+  }
+  for (const a of ["color", "size", "alpha", "kind"]) { fa[a].needsUpdate = true; la[a].needsUpdate = true; }
+  sparksLive = true;
+  if (floorLines.visible) {
+    const buf = floorLines.geometry.attributes.instanceColorStart.data, arr = buf.array;
+    run.links.forEach(([a, b], s) => {
+      const both = run.tick[a] <= ti && run.tick[b] <= ti, c = both ? C.floorOn : C.floor, m = both ? 0.5 : 0.42;
+      arr[s * 6] = arr[s * 6 + 3] = c.r * m; arr[s * 6 + 1] = arr[s * 6 + 4] = c.g * m; arr[s * 6 + 2] = arr[s * 6 + 5] = c.b * m;
+    });
+    buf.needsUpdate = true;
+  }
+  updateReadout(ti);
+}
+function updateSparks() {
+  // between ticks only the newest adopters change: their flash fades and the now disc rises
+  const T = playhead, ti = Math.floor(T), fa = floorPts.geometry.attributes, la = liftPts.geometry.attributes;
+  const a0 = run.startIdx[Math.max(0, ti - 1)], a1 = run.startIdx[Math.min(run.Tmax + 1, ti + 1)];
+  let live = false;
+  for (let j = a0; j < a1; j++) {
+    const i = run.order[j], age = T - run.tick[i]; if (age < 0) continue;
+    const spark = age < 1.8 ? 1 - age / 1.8 : 0; if (spark > 0) live = true;
+    fa.size.array[i] = 0.4 + spark; fa.alpha.array[i] = 0.5 + 0.5 * spark;
+    if (i !== selected) { la.size.array[i] = 0.45 + 2.2 * spark; la.alpha.array[i] = 0.8 + 0.7 * spark; }
+  }
+  fa.size.needsUpdate = fa.alpha.needsUpdate = la.size.needsUpdate = la.alpha.needsUpdate = true;
+  sparksLive = live;
+  const y = run.h(Math.min(T, run.Tmax)); nowRing.position.y = y; nowDisc.position.y = y;
+}
+function updateReadout(ti) {
+  const t = Math.min(ti, run.Tmax), c = run.cum, s = run.seeds.length;
+  $("s-adopted").textContent = c.all[t];
+  $("s-nb").textContent = c.nb[t];
+  $("s-ad").textContent = c.ad[t];
+  $("s-iso").innerHTML = `${c.iso[t]}<small> / ${run.nIso}</small>`;
+  $("s-wait").textContent = N - c.all[t];
+  const segs = $("bar").children, w = [c.nb[t], c.ad[t], c.iso[t], s];
+  w.forEach((v, i) => (segs[i].style.width = (v / N) * 100 + "%"));
+  $("tnum").textContent = t; $("tof").textContent = `tick of ${run.Tmax}`;
+  drawPlot(); drawRuler();
+}
+
+// ------------------------------------------------------------------------------------------ the plot
+const plot = $("plot"), pctx = plot.getContext("2d");
+function fit(cv, ctx) {
+  const dpr = Math.min(2, window.devicePixelRatio || 1), W = cv.clientWidth, Hh = cv.clientHeight;
+  if (cv.width !== Math.round(W * dpr) || cv.height !== Math.round(Hh * dpr)) { cv.width = Math.round(W * dpr); cv.height = Math.round(Hh * dpr); }
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, W, Hh); return [W, Hh];
+}
+const MONO = '10px "IBM Plex Mono", ui-monospace, Menlo, monospace';
+function drawPlot() {
+  const [W, Hh] = fit(plot, pctx), L = 26, B = 4, Tm = run.Tmax;
+  const X = (t) => L + (t / Tm) * (W - L - 2), Y = (n) => Hh - B - (n / N) * (Hh - B - 4);
+  pctx.font = MONO; pctx.fillStyle = "#5f5170"; pctx.strokeStyle = "rgba(239,230,245,.08)"; pctx.lineWidth = 1;
+  for (const n of [0, 250, 500]) { pctx.beginPath(); pctx.moveTo(L, Y(n) + .5); pctx.lineTo(W, Y(n) + .5); pctx.stroke(); pctx.fillText(String(n), 0, Y(n) + 3); }
+  const tNow = Math.min(Math.floor(playhead), Tm), base = new Float64Array(Tm + 1).fill(run.seeds.length);
+  for (const [k, col] of [["nb", "rgba(246,234,255,.5)"], ["ad", "rgba(143,211,255,.6)"], ["iso", "rgba(209,107,208,.8)"]]) {
+    pctx.beginPath(); pctx.moveTo(X(0), Y(base[0]));
+    for (let t = 0; t <= tNow; t++) pctx.lineTo(X(t), Y(base[t] + run.cum[k][t]));
+    for (let t = tNow; t >= 0; t--) pctx.lineTo(X(t), Y(base[t]));
+    pctx.closePath(); pctx.fillStyle = col; pctx.fill();
+    for (let t = 0; t <= Tm; t++) base[t] += run.cum[k][t];
+  }
+  pctx.beginPath(); for (let t = 0; t <= Tm; t++) { const y = Y(run.cum.all[t]); t ? pctx.lineTo(X(t), y) : pctx.moveTo(X(t), y); }
+  pctx.strokeStyle = "rgba(239,230,245,.22)"; pctx.setLineDash([2, 3]); pctx.stroke(); pctx.setLineDash([]);
+  const x = X(Math.min(playhead, Tm)); pctx.strokeStyle = "#ffd56b"; pctx.lineWidth = 1.5; pctx.beginPath(); pctx.moveTo(x, 0); pctx.lineTo(x, Hh); pctx.stroke();
+}
+
+// ------------------------------------------------------------------------------------------ the ruler (timeline)
+const ruler = $("ruler"), rctx = ruler.getContext("2d");
+function drawRuler() {
+  const [W, Hh] = fit(ruler, rctx), Tm = run.Tmax, X = (t) => 4 + (t / Tm) * (W - 8), base = 34;
+  let mx = 1; for (let t = 1; t <= Tm; t++) mx = Math.max(mx, run.per.nb[t] + run.per.ad[t] + run.per.iso[t]);
+  const ti = Math.floor(playhead);
+  for (let t = 1; t <= Tm; t++) {
+    const n = run.per.nb[t] + run.per.ad[t] + run.per.iso[t]; if (!n) continue;
+    const hgt = Math.max(1.5, Math.sqrt(n / mx) * 24), past = t <= ti;
+    rctx.fillStyle = run.per.iso[t] ? (past ? "#d16bd0" : "rgba(209,107,208,.35)") : past ? "rgba(246,234,255,.85)" : "rgba(246,234,255,.22)";
+    rctx.fillRect(X(t) - 0.6, base - hgt, Math.max(1.2, (W - 8) / Tm - 0.4), hgt);
+  }
+  rctx.fillStyle = "rgba(239,230,245,.22)"; rctx.fillRect(4, base, W - 8, 1);
+  rctx.fillStyle = "rgba(255,213,107,.55)"; rctx.fillRect(4, base, X(Math.min(playhead, Tm)) - 4, 1);
+  rctx.font = MONO; rctx.textAlign = "center";
+  const step = Tm > 600 ? 100 : Tm > 250 ? 50 : 25;
+  for (let t = 0; t <= Tm; t += step / 5) {
+    const major = t % step === 0; rctx.fillStyle = major ? "rgba(239,230,245,.45)" : "rgba(239,230,245,.18)";
+    rctx.fillRect(Math.round(X(t)), base + 1, 1, major ? 6 : 3);
+    if (major && X(t) < W - 30) { rctx.fillStyle = "#5f5170"; rctx.fillText(String(t), X(t), base + 18); }
+  }
+  for (const m of run.milestones) {
+    if (m.q === 1) continue;
+    const x = X(m.t); rctx.fillStyle = playhead >= m.t ? "#9682d7" : "rgba(150,130,215,.4)";
+    rctx.beginPath(); rctx.moveTo(x, 2); rctx.lineTo(x + 5, 5); rctx.lineTo(x, 8); rctx.fill(); rctx.fillRect(x, 2, 1, base - 2);
+    rctx.textAlign = "left"; rctx.fillText(`${Math.round(m.q * 100)}%`, x + 7, 9); rctx.textAlign = "center";
+  }
+  const x = X(Math.min(playhead, Tm));
+  rctx.fillStyle = "#ffd56b"; rctx.shadowColor = "#ffd56b"; rctx.shadowBlur = 8; rctx.fillRect(x - 1, 0, 2, base + 8);
+  rctx.beginPath(); rctx.arc(x, base + 8, 3.5, 0, Math.PI * 2); rctx.fill(); rctx.shadowBlur = 0;
+}
+function dragSeek(cv, pad) {
+  let on = false;
+  const go = (e) => { const r = cv.getBoundingClientRect(), f = (e.clientX - r.left - pad[0]) / (r.width - pad[0] - pad[1]); seek(Math.max(0, Math.min(1, f)) * run.Tmax); };
+  cv.addEventListener("pointerdown", (e) => { on = true; cv.setPointerCapture(e.pointerId); playing = false; syncPlay(); go(e); });
+  cv.addEventListener("pointermove", (e) => { if (on) go(e); });
+  cv.addEventListener("pointerup", () => { on = false; });
+}
+dragSeek(plot, [26, 2]); dragSeek(ruler, [4, 4]);
+
+// ------------------------------------------------------------------------------------------ who convinced whom
+function chainOf(i) { const c = [i]; let g = 0; while (run.cause[c[c.length - 1]] === "neighbour" && run.src[c[c.length - 1]] >= 0 && g++ < 600) c.push(run.src[c[c.length - 1]]); return c.reverse(); }
+function showChain(i) {
+  const card = $("card");
+  if (i < 0) { chainLines.visible = false; card.style.display = "none"; return; }
+  const ch = chainOf(i), segs = [], cols = [], g = C.gold.toArray(), root = ch[0];
+  if (run.cause[root] === "ad") { segs.push([ground(root), lifted(root)]); cols.push([g.map((v) => v * .4), g]); }
+  for (let k = 1; k < ch.length; k++) { segs.push([lifted(ch[k - 1]), lifted(ch[k])]); cols.push([g, g]); }
+  segs.push([ground(i), lifted(i)]); cols.push([g.map((v) => v * .3), g]);
+  setSegs(chainLines, segs, cols);
+  const step = (j) => run.cause[j] === "seed" ? `seed ${j}` : run.cause[j] === "ad" ? `${j}<span style="color:#8fd3ff"> (ad, t${run.tick[j]})</span>` : `${j} (t${run.tick[j]})`;
+  const why = run.cause[i] === "seed" ? "was seeded at tick 0."
+    : run.cause[i] === "ad" ? `adopted at tick ${run.tick[i]} through advertising${run.isolated[i] ? ". With no links, nothing else could reach them." : "."}`
+    : `adopted at tick ${run.tick[i]} through a neighbour.`;
+  card.innerHTML = `<button class="x" title="close">×</button><div class="who">Person ${i}</div>
+    <div style="color:#9c8ea9;margin:4px 0 8px">${run.adj[i].length} link${run.adj[i].length === 1 ? "" : "s"}</div>${why}`
+    + (ch.length > 1 ? `<div class="chain">${ch.map(step).join(" → ")}</div><div class="note">${ch.length - 1} step${ch.length > 2 ? "s" : ""} from ${run.cause[root] === "seed" ? "a seed" : "someone the advertising reached"}. Each step credits one neighbour who had already adopted, chosen at random for the drawing; the model's rule uses the share of adopted neighbours.</div>` : "");
+  card.style.display = "block";
+  card.querySelector(".x").onclick = () => { selected = -1; showChain(-1); applyPlayhead(); };
+}
+
+// ------------------------------------------------------------------------------------------ hover and click
+const ray = new THREE.Raycaster(); ray.params.Points.threshold = 0.3;
+const mouse = new THREE.Vector2(); let downAt = null;
+function pick(e) {
+  const r = canvas.getBoundingClientRect(); mouse.set(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
+  ray.setFromCamera(mouse, camera);
+  const ti = Math.floor(playhead);
+  const hits = [...ray.intersectObject(liftPts).filter((h) => run.tick[h.index] <= ti), ...ray.intersectObject(floorPts)];
+  hits.sort((a, b) => a.distanceToRay - b.distanceToRay || a.distance - b.distance);
+  return hits.length ? hits[0].index : -1;
+}
+canvas.addEventListener("pointermove", (e) => {
+  const tip = $("tip");
+  if (!run || e.buttons) { tip.style.display = "none"; return; }
+  const i = pick(e);
+  if (i < 0) { tip.style.display = "none"; canvas.style.cursor = ""; return; }
+  const t = run.tick[i], on = t <= Math.floor(playhead);
+  const what = !on ? "has not adopted yet" : run.cause[i] === "seed" ? "seeded at tick 0" : run.cause[i] === "ad" ? `adopted at tick ${t}, through advertising` : `adopted at tick ${t}, through a neighbour`;
+  tip.innerHTML = `<b>Person ${i}</b> <span class="d">· ${run.adj[i].length} link${run.adj[i].length === 1 ? "" : "s"}</span><br>${what}${on ? `<br><span class="d">click to trace</span>` : ""}`;
+  tip.style.display = "block"; tip.style.left = e.clientX + 16 + "px"; tip.style.top = e.clientY + 14 + "px"; canvas.style.cursor = "pointer";
+});
+canvas.addEventListener("pointerdown", (e) => { downAt = [e.clientX, e.clientY]; });
+canvas.addEventListener("pointerup", (e) => {
+  if (!downAt || Math.hypot(e.clientX - downAt[0], e.clientY - downAt[1]) > 4) return;
+  const i = pick(e); selected = i >= 0 && run.tick[i] <= Math.floor(playhead) ? i : -1; showChain(selected); applyPlayhead();
+});
+
+// ------------------------------------------------------------------------------------------ controls
+function bindSwitch(id, key) {
+  $(id).querySelectorAll("button").forEach((b) => b.addEventListener("click", () => { if (!b.disabled) { ui[key] = b.dataset.v; setSwitch(id, ui[key]); setup(); } }));
+}
+function setSwitch(id, v) { $(id).querySelectorAll("button").forEach((x) => x.classList.toggle("on", x.dataset.v === String(v))); }
+bindSwitch("source", "source"); bindSwitch("network", "networkType"); bindSwitch("seeding", "seeding");
+const meter = $("budget");
+for (let b = 1; b <= 10; b++) { const el = document.createElement("button"); el.title = `budget ${b}`; el.addEventListener("click", () => { if (!el.disabled) { ui.budget = b; setMeter(b); setup(); } }); meter.appendChild(el); }
+function setMeter(v) { [...meter.children].forEach((el, i) => el.classList.toggle("on", i < v)); $("budgetv").textContent = `${v} seed${v === 1 ? "" : "s"}`; }
+$("seed").addEventListener("change", (e) => { ui.seed = Math.floor(+e.target.value) || 1; setup(); });
+$("dice").addEventListener("click", () => { ui.seed = 1 + Math.floor(Math.random() * 99999); $("seed").value = ui.seed; setup(); });
+$("speed").addEventListener("input", (e) => { ui.speed = +e.target.value; $("speedv").textContent = `${ui.speed} ticks / s`; });
+$("setup").addEventListener("click", () => { const k = $("setup"); k.classList.add("flash"); setTimeout(() => k.classList.remove("flash"), 350); setup(); });
+$("go").addEventListener("click", () => togglePlay());
+$("play").addEventListener("click", () => togglePlay());
+$("step").addEventListener("click", () => stepBy(1));
+$("orbit").addEventListener("click", () => { ui.orbit = !ui.orbit; $("orbit").textContent = `↻ orbit ${ui.orbit ? "on" : "off"}`; });
+window.addEventListener("keydown", (e) => {
+  if (e.target.tagName === "INPUT" && e.target.type === "number") return;
+  if (e.code === "Space") { e.preventDefault(); togglePlay(); }
+  else if (e.code === "ArrowRight") stepBy(1);
+  else if (e.code === "ArrowLeft") stepBy(-1);
+  else if (e.key === "s" || e.key === "S") setup();
+  else if (e.key === "Escape") { selected = -1; showChain(-1); applyPlayhead(); $("mc").style.display = "none"; }
+});
+function stepBy(d) { playing = false; syncPlay(); seek(d > 0 ? Math.floor(playhead) + 1 : Math.ceil(playhead) - 1); }
+function togglePlay() { if (playhead >= run.Tmax) seek(0); playing = !playing; syncPlay(); }
+function syncPlay() { $("play").textContent = playing ? "❚❚" : "▶"; $("go").lastChild.textContent = playing ? "Pause" : "Go"; $("go").classList.toggle("lit", playing); }
+function seek(t) { playhead = Math.max(0, Math.min(run.Tmax, t)); applyPlayhead(); }
+
+// setup prepares a run, as in NetLogo: a new network, seeded, waiting at tick 0. Go runs it.
+function setup() {
+  playing = false; syncPlay();
+  const nl = ui.source === "netlogo";
+  for (const id of ["network", "seeding"]) $(id).querySelectorAll("button").forEach((b) => (b.disabled = nl));
+  [...meter.children].forEach((b) => (b.disabled = nl)); $("seed").disabled = nl; $("dice").disabled = nl;
+  let r;
+  if (nl) {
+    const d = window.NETLOGO_RUN;
+    setSwitch("network", d.settings.networkType); setSwitch("seeding", d.settings.seeding); setMeter(d.settings.budget); $("seed").value = d.settings.seed;
+    r = prepare({ links: d.links, tick: d.tick, cause: d.cause, src: d.src, seeding: d.settings.seeding }, d.x.map((x, i) => [x, d.y[i]]));
+    $("srcnote").innerHTML = `Replaying <b>one run exported from NetLogo 7.0.4</b> (random network, betweenness, budget 3, random-seed 2026), laid out by NetLogo's own spring layout. Every adoption is NetLogo's.`;
+  } else {
+    setSwitch("network", ui.networkType); setSwitch("seeding", ui.seeding); setMeter(ui.budget); $("seed").value = ui.seed;
+    const res = SVM.run({ networkType: ui.networkType, seeding: ui.seeding, budget: ui.budget, seed: ui.seed });
+    r = prepare({ ...res, seed: ui.seed, seeding: ui.seeding });
+    $("srcnote").innerHTML = `<b>The model runs here, in your browser</b>: NetLogo's Simple Viral Marketing, rebuilt rule for rule and checked against NetLogo BehaviorSpace runs. SETUP builds a new network and seeds it; GO runs it tick by tick.`;
+  }
+  run = r; build(); seek(0);
+}
+
+// ------------------------------------------------------------------------------------------ Monte Carlo
+const NETLOGO_BEHAVIORSPACE = { 1: [13.3, 49.6, 104.9, 246.1, 471.5], 3: [12.6, 50.1, 104.9, 248.9, 478.7], 10: [10.8, 50.7, 107.9, 258.1, 503.8] };
+$("mcbtn").addEventListener("click", () => {
+  const box = $("mc"), s = { ...ui }, R = 100, qs = [0.5, 0.9, 0.95, 0.99, 1], sums = qs.map(() => 0), t100 = [];
+  box.style.display = "block"; box.innerHTML = `<h2>Running it 100 times…</h2><div class="sub" id="mcp">0 / ${R}</div>`;
+  let r = 0;
+  const chunk = () => {
+    for (let k = 0; k < 5 && r < R; k++, r++) {
+      const res = SVM.run({ networkType: s.networkType, seeding: s.seeding, budget: s.budget, seed: 7919 * (r + 1) + s.budget });
+      qs.forEach((q, i) => (sums[i] += SVM.firstTick(res.curve, q))); t100.push(SVM.firstTick(res.curve, 1));
+    }
+    if (r < R) { $("mcp").textContent = `${r} / ${R}`; setTimeout(chunk, 0); return; }
+    const m = sums.map((x) => (x / R).toFixed(1)), nl = s.networkType === "random" && s.seeding === "betweenness" && NETLOGO_BEHAVIORSPACE[s.budget];
+    box.innerHTML = `<button class="x" title="close">×</button><h2>One hundred runs</h2>
+      <div class="sub">${s.networkType} network · ${s.seeding} seeding · budget ${s.budget}</div>
+      <table><tr><th></th><th>T50</th><th>T90</th><th>T95</th><th>T99</th><th>T100</th></tr>
+      <tr><td>this page</td>${m.map((x) => `<td>${x}</td>`).join("")}</tr>
+      ${nl ? `<tr><td class="nl">NetLogo, 100 BehaviorSpace runs</td>${nl.map((x) => `<td class="nl">${x}</td>`).join("")}</tr>` : ""}</table>
+      <div class="note">The mean first tick by which at least 50, 90, 95, 99 and 100% of people had adopted. Full adoption took anywhere from ${Math.min(...t100)} to ${Math.max(...t100)} ticks: the last few take about as long as everyone else, because people with no links can only be reached by the 1% advertising chance.${nl ? " The grey row is the same experiment run 100 times in NetLogo's BehaviorSpace." : ""}</div>
+      <canvas id="mch"></canvas>`;
+    box.querySelector(".x").onclick = () => (box.style.display = "none");
+    const cv = $("mch"), x = cv.getContext("2d"), [W, Hh] = fit(cv, x), hi = Math.max(...t100), bins = 32, cnt = new Array(bins).fill(0);
+    t100.forEach((v) => cnt[Math.min(bins - 1, Math.floor((v / (hi + 1)) * bins))]++);
+    const mx = Math.max(...cnt), bw = (W - 4) / bins;
+    cnt.forEach((c, i) => { const bh = (c / mx) * (Hh - 20); x.fillStyle = "rgba(209,107,208,.8)"; x.fillRect(2 + i * bw, Hh - 16 - bh, bw - 2, bh); });
+    x.fillStyle = "#5f5170"; x.font = MONO; x.fillText("full adoption (T100) across the 100 runs →", 2, Hh - 3); x.textAlign = "right"; x.fillText(`${hi} ticks`, W - 2, Hh - 3);
+  };
+  setTimeout(chunk, 40);
+});
+
+// ------------------------------------------------------------------------------------------ loop
+function resize() {
+  const w = window.innerWidth, h = window.innerHeight;
+  renderer.setSize(w, h, false); composer.setSize(w, h); bloom.setSize(w, h);
+  camera.aspect = w / h;
+  // centre the construct in the space between the rail, the readout and the timeline
+  const rail = parseFloat(css("--rail")) || 0, read = parseFloat(css("--read")) || 0, foot = parseFloat(css("--foot")) || 0;
+  railW = rail; readW = read;
+  camera.setViewOffset(w, h, ((w - rail - read) / 2 + rail - w / 2) * -1, foot * 0.35, w, h);
+  camera.updateProjectionMatrix();
+  for (const m of lineMats) m.resolution.set(w * renderer.getPixelRatio(), h * renderer.getPixelRatio());
+  pointMat.uniforms.uScale.value = h * renderer.getPixelRatio() * 0.9;
+  if (run) applyPlayhead();
+}
+window.addEventListener("resize", resize);
+let last = performance.now();
+function frame(now) {
+  const dt = Math.min(0.1, (now - last) / 1000); last = now;
+  if (run && playing) {
+    playhead = Math.min(run.Tmax, playhead + dt * ui.speed);
+    if (playhead >= run.Tmax) { playing = false; syncPlay(); }
+  }
+  if (run) { if (Math.floor(playhead) !== lastTick) applyPlayhead(); else if (sparksLive || playing) updateSparks(); }
+  controls.autoRotate = ui.orbit; controls.update();
+  if (run) { updateAxis(); placeLabels(); }
+  composer.render();
+  requestAnimationFrame(frame);
+}
+// ?source=netlogo, ?t=<tick> (open at that tick), ?orbit=0
+const Q = new URLSearchParams(location.search);
+if (Q.get("source") === "netlogo") { ui.source = "netlogo"; setSwitch("source", "netlogo"); }
+if (Q.get("orbit") === "0") { ui.orbit = false; $("orbit").textContent = "↻ orbit off"; }
+try {
+  resize(); setup();
+  if (Q.has("t")) seek(+Q.get("t"));
+  requestAnimationFrame(frame);
+} catch (e) { fail(e); }
+document.fonts && document.fonts.ready.then(() => { labels.forEach((L) => (L.w = 0)); if (run) applyPlayhead(); });
+</script>
+</body>
+</html>

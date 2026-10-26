@@ -45,10 +45,12 @@ footer.site { max-width: 1680px; margin: 0 auto; padding: 24px 24px 48px; color:
 h2.section { font-size: 22px; font-weight: 620; margin: 8px 0 6px; }
 p.section { color: var(--dim); max-width: 760px; margin: 0 0 16px; }
 section.films { margin-bottom: 44px; }
+section.beyond { margin-top: 44px; }
 .card.film { cursor: default; }
 .card.film:hover { transform: none; }
 .card h2 a { text-decoration: none; }
 .card h2 a:hover { text-decoration: underline; }
+.card .credit { font-size: 12.5px; color: var(--dim); margin: 4px 0 0; }
 .card .choose { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
 .card .choose .button { font-size: 13px; padding: 7px 13px; }
 .button.primary { border-color: var(--accent); }
