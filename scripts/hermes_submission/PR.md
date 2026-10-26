@@ -74,6 +74,16 @@ a period and no marketing words, no machine-local paths, size, paste-safe shell 
 clean Hermes profile, the skill lists as enabled and its CLI checks, builds and renders a film-mode
 video from the installed location. No inline-shell snippets, no binaries.
 
+## Lint (to discuss before opening)
+
+Hermes's tests pass with the skill in place (1,495 in `tests/skills/`, including the authoring
+standards), and `check-windows-footguns.py` is clean. `scripts/check` is not: the bundled runtime is
+Construct's own stdlib code, written in its upstream style, so ruff reports 565 findings (523 of them
+UP031, `%` formatting) and the code-health ratchet flags a dozen long functions (the scene compiler and
+the audit among them). Before opening, ask the maintainers whether they would take an optional skill
+with a sizeable bundled runtime (with a lint exclusion for its `scripts/` folder, or after a restyle),
+or would rather see it on the Skills Hub: `hermes skills install rtmandreyev/construct/skills/construct`.
+
 ## Credits
 
 Author: Artyom Andreyev (rtmandreyev). Method inspired by Anatomy by Ryan (wheresryan22), MIT.

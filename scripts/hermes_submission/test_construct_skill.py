@@ -13,7 +13,8 @@ EXAMPLES = sorted((SKILL / "assets" / "examples").glob("*.json"))
 
 
 def run(*args, cwd=None):
-    return subprocess.run([sys.executable, "-I", str(CLI), *args], cwd=cwd, capture_output=True, text=True, timeout=120)
+    return subprocess.run([sys.executable, "-I", str(CLI), *args], cwd=cwd, capture_output=True, timeout=120,
+                          text=True, encoding="utf-8", errors="replace")
 
 
 @pytest.mark.parametrize("example", EXAMPLES, ids=lambda p: p.name)
@@ -26,9 +27,9 @@ def test_every_bundled_example_passes_the_audit(example):
 
 def test_params_check_build_from_a_temp_folder(tmp_path):
     assert run("params", "vessel", "--variant", "can", "--output", "can.json", cwd=tmp_path).returncode == 0
-    doc = json.loads((tmp_path / "can.json").read_text())
+    doc = json.loads((tmp_path / "can.json").read_text(encoding="utf-8-sig"))
     doc["facts"] = [{"key": "title", "value": "Synthetic Stout", "certainty": "user_supplied", "source": "request"}]
-    (tmp_path / "can.json").write_text(json.dumps(doc))
+    (tmp_path / "can.json").write_text(json.dumps(doc), encoding="utf-8")
     r = run("check", "can.json", "--json", cwd=tmp_path)
     assert json.loads(r.stdout)["ok"] is True
     assert run("build", "can.json", "--out", "out", cwd=tmp_path).returncode == 0
@@ -36,10 +37,10 @@ def test_params_check_build_from_a_temp_folder(tmp_path):
 
 
 def test_unknown_facts_and_colours_are_refused(tmp_path):
-    bad = json.loads((SKILL / "assets" / "examples" / "case-jewel.params.json").read_text())
+    bad = json.loads((SKILL / "assets" / "examples" / "case-jewel.params.json").read_text(encoding="utf-8-sig"))
     bad["facts"].append({"key": "year", "value": "unknown", "certainty": "inferred"})
     bad["colour"] = "red"
-    (tmp_path / "bad.json").write_text(json.dumps(bad))
+    (tmp_path / "bad.json").write_text(json.dumps(bad), encoding="utf-8")
     report = json.loads(run("check", "bad.json", "--json", cwd=tmp_path).stdout)
     codes = {d["code"] for d in report["diagnostics"]}
     assert not report["ok"] and {"unknown-fact", "style"} <= codes
