@@ -2,14 +2,14 @@
 name: construct
 description: Turn a description into an animated holographic construct.
 version: 0.3.0
-author: OWNER NAME (rtmandreyev)
+author: Artyom Andreyev (rtmandreyev)
 license: MIT
 platforms: [macos, linux]
 prerequisites:
   commands: [python3]
 metadata:
   hermes:
-    tags: [creative, 3d, construct, hologram, webgl, animation, visualization, html, provenance]
+    tags: [creative, 3d, construct, hologram, webgl, animation, visualization, html, provenance, video, music]
     category: creative
     related_skills: [anatomy]
     requires_toolsets: [terminal]
@@ -35,6 +35,8 @@ method, not code, and adds 3-D animation, certainty as material and a repair loo
   lighthouse", "show this guitar as a construct", "a fictional creature for my game".
 - A collection entry needs a consistent animated figure: CDs and their cases, books,
   guitars, synths, bottles, cans, glasses and cars have ready archetypes.
+- The user wants a video of a construct assembling across a piece of music ("make a construct
+  of X that assembles across this track"): film mode, step 7 below.
 
 Do **not** use it for photoreal renders, meshes for games or CAD, charts, or for finding or
 recreating real cover art (artwork is shown only from images the user supplies).
@@ -85,6 +87,7 @@ Work in a folder of your own. `out/construct.html` opens in any browser.
 | an independent critic (fresh subagent or second call) | `critique scene.json --reference side=photo.jpg`, then `--record critique.json` |
 | the art-direction rubric | `references/review.md` |
 | the modes (fast, masterpiece, unbounded), research policy and limits | `references/effort.md` |
+| film mode: measure a track, then render the construct assembling across it | `audio track.wav --out audio.json`, then `video scene.json --out film.mp4 --assembly <seconds> --audio audio.json --sound track.wav --camera steady` |
 
 ## Procedure
 
@@ -162,6 +165,17 @@ Work in a folder of your own. `out/construct.html` opens in any browser.
    plainly what is evidence, what is inferred or designed, which artwork is the user's own
    and which is generated decoration, and — if a limit stopped you — what the next
    improvement would be. Never call a generic reconstruction exact.
+7. **Film mode (only when asked).** For a construct that assembles across a piece of music,
+   author the construct as above (keep its own assembly at most 20 s), then:
+   `scripts/cli.py audio track.wav --out audio.json` (add `--voice vocals.wav` for a vocal stem)
+   and `scripts/cli.py video scene.json --out film.mp4 --assembly <track seconds - 1.25>
+   --audio audio.json --sound track.wav --camera steady --size 1920x1080 --fps 24` (the 1.25 s is
+   the ceremony opening; use the full length for another assembly style). `--camera steady`
+   keeps the whole construct in view; `tour` plays the scene's own camera flights. Leave
+   `--reactivity` at its default unless the user asks for a calmer (0.5) or stronger (1.5) film.
+   It renders about a frame or two a second, so say how long it will take before starting.
+   Review it by sampling frames (`ffmpeg -i film.mp4 -vf fps=1/10 frame-%02d.png`) and look at
+   them with `vision_analyze`: the build should visibly move with the music and end whole.
 
 ## Pitfalls
 
@@ -178,6 +192,14 @@ Work in a folder of your own. `out/construct.html` opens in any browser.
   run budget applies on top. A scene held only in context is lost when the budget ends: save a
   valid draft by 40% and keep it valid. When a limit is reached, deliver the saved version
   with its `next` notes.
+- **A masterpiece critic that stops after two rounds.** In a one-shot run (`hermes chat -q`),
+  Hermes lets a session start only two helper agents by default (`delegation.oneshot_max_children`),
+  and the critic is a fresh helper each round. Tell the user to raise it in `config.yaml`
+  (14 covers a masterpiece run; `0` means no limit), to run interactively, or use a second model
+  as the critic (`rounds run --base-url ... --model ... --key-env ...`).
+- **Messages that are too large.** A message larger than about 8 MB stops the run. Do not attach
+  several full-size review stills at once: ask for smaller ones (`review --size 1280x800`) and
+  only the sheets you need (`--sheets assembly,views`). The saved scene survives the stop.
 - **Captures without a browser.** If no Chromium-family browser exists, deliver the HTML and
   say the review stills were not made; do not install one.
 

@@ -50,3 +50,12 @@ def test_the_prompts_build_for_the_critic(tmp_path):
     r = run("prompts", "--out", "pr", cwd=tmp_path)
     assert r.returncode == 0, r.stdout + r.stderr
     assert (tmp_path / "pr" / "critic.md").exists()
+
+
+def test_film_mode_is_bundled():
+    # film mode: the audio command and the video's film options are there; the film script ships with the viewer
+    assert (SKILL / "scripts" / "construct_hologram" / "viewer" / "film.js").is_file()
+    r = run("audio", "--help")
+    assert r.returncode == 0 and "--voice" in r.stdout
+    r = run("video", "--help")
+    assert r.returncode == 0 and all(f in r.stdout for f in ("--assembly", "--audio", "--sound", "--camera", "--reactivity"))
