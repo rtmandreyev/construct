@@ -75,7 +75,7 @@ Work in a folder of your own. `out/construct.html` opens in any browser.
 | check: every problem with a path, code and fix hint | `check file.json --json` (`ok`, `needs_repair`, `diagnostics`, `repair_text`) |
 | build the construct | `build file.json --out out` |
 | review images | `review file.json --out out` → `out/review/hero.png`, `sheet-views.png`, `view-open.png` |
-| examples to start from | `${HERMES_SKILL_DIR}/assets/examples/` |
+| examples to start from | the scenes beside `${HERMES_SKILL_DIR}/assets/examples/cd.json` (a CD, a book, a lighthouse, a castle, cars, a camera) |
 | shapes, fields, roles, motion, labels, anchors | `references/vocabulary.md` |
 | recognition and composition | `references/composition.md` |
 | masterpiece rounds: ledger, pairwise gate, stop rules, resume | `references/rounds.md` |
@@ -130,7 +130,7 @@ Work in a folder of your own. `out/construct.html` opens in any browser.
    contour wire (never a main surface with `line: "none"`), a sub-volume per feature, density
    where the identity lives and true detail everywhere (one clear object at hero scale,
    something true in every region up close), and a critic round answered by a refine pass; the
-   examples in `assets/examples/` show all five.
+   example scenes beside `assets/examples/castle.json` show all five.
    When the identity is a shape text cannot give (a guitar body, a car, an elevation) and you
    can see images, trace it from a reference (`references/tracing.md`: the user's photo or a
    web image viewed with `vision_analyze`), then `scripts/cli.py trace` fits it to a verified
