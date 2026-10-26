@@ -10,8 +10,10 @@ compiler into a self-contained construct.html, beside its hero image and its own
 and the live construct. The videos are not in the repository: they come from --films DIR, a folder
 holding the files films.json names, and go only into the built site. The pictures (each example's
 hero.jpg and thumb.jpg, each film's poster.jpg) are framed close to the construct by
-scripts/gallery_images.py. The site uses relative links only, needs no server code and loads
-nothing from other hosts.
+scripts/gallery_images.py. "Beyond objects" (examples/beyond.json) lists pages made with Construct
+that are more than one construct: each folder is published as it is, beside the construct built from
+its scene, and keeps its own licence. The site uses relative links only and needs no server code;
+the constructs load nothing from other hosts (a "beyond" page may, as its README says).
 
 The public addresses come from OWNER and REPO below and nowhere else: `--set-url` rewrites them
 here and in the documents that link to the site.
@@ -84,10 +86,12 @@ footer.site { max-width: 1680px; margin: 0 auto; padding: 24px 24px 48px; color:
 h2.section { font-size: 22px; font-weight: 620; margin: 8px 0 6px; }
 p.section { color: var(--dim); max-width: 760px; margin: 0 0 16px; }
 section.films { margin-bottom: 44px; }
+section.beyond { margin-top: 44px; }
 .card.film { cursor: default; }
 .card.film:hover { transform: none; }
 .card h2 a { text-decoration: none; }
 .card h2 a:hover { text-decoration: underline; }
+.card .credit { font-size: 12.5px; color: var(--dim); margin: 4px 0 0; }
 .card .choose { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
 .card .choose .button { font-size: 13px; padding: 7px 13px; }
 .button.primary { border-color: var(--accent); }
@@ -117,6 +121,11 @@ def _load_films():
     return json.loads(path.read_text(encoding="utf-8"))["films"] if path.exists() else []
 
 
+def _load_beyond():
+    path = EXAMPLES / "beyond.json"
+    return json.loads(path.read_text(encoding="utf-8"))["beyond"] if path.exists() else []
+
+
 def film_label(film):
     """A film's line: the object, the mode and the model."""
     return "%s · %s · %s" % (film["title"], film["mode"], film["model"])
@@ -141,7 +150,7 @@ def _page(title, body, depth, description):
             % (html.escape(title), html.escape(description), up, body))
 
 
-def index_page(examples, films=()):
+def index_page(examples, films=(), beyond=()):
     film_cards = "\n".join(
         "<div class=\"card film\"><a href=\"films/%s/\"><img src=\"films/%s/poster.jpg\" alt=\"%s, the finished construct "
         "of its film\" loading=\"lazy\" width=\"1200\" height=\"750\"></a><div class=\"body\"><h2><a href=\"films/%s/\">%s</a>"
@@ -161,6 +170,18 @@ def index_page(examples, films=()):
         "loading=\"lazy\" width=\"1200\" height=\"750\"><div class=\"body\"><h2>%s</h2><p class=\"prov\">%s</p></div></a>"
         % (e["slug"], e["slug"], html.escape(e["title"]), html.escape(e["title"]), html.escape(provenance(e)))
         for e in examples)
+    beyond_cards = "\n".join(
+        "<div class=\"card film\"><a href=\"examples/%s/\"><img src=\"examples/%s/thumb.jpg\" alt=\"%s, a live page\" "
+        "loading=\"lazy\" width=\"1200\" height=\"750\"></a><div class=\"body\"><h2><a href=\"examples/%s/\">%s</a></h2>"
+        "<p class=\"prov\">%s</p><p class=\"credit\">%s</p><div class=\"choose\"><a class=\"button primary\" "
+        "href=\"examples/%s/\">Open the live model</a><a class=\"button\" href=\"examples/%s/construct.html?rounds=0\">"
+        "The construct</a></div></div></div>"
+        % (b["slug"], b["slug"], html.escape(b["title"]), b["slug"], html.escape(b["title"]), html.escape(b["label"]),
+           html.escape(b["credit"]), b["slug"], b["slug"])
+        for b in beyond)
+    beyond_section = ("<section class=\"beyond\" id=\"beyond\"><h2 class=\"section\">Beyond objects</h2><p class=\"section\">"
+                      "%s</p><div class=\"grid\">\n%s\n</div></section>" % (html.escape(beyond[0]["line"]) if len(beyond) == 1 else
+                      "Pages made with Construct that are more than one object.", beyond_cards) if beyond else "")
     body = ("<header class=\"site\"><div class=\"eyebrow\">Construct · examples</div>"
             "<h1>Holographic constructs, built by AI agents</h1>"
             "<p>Each of these was made by an AI agent with Construct, in fast or masterpiece mode, and drawn in the "
@@ -168,12 +189,13 @@ def index_page(examples, films=()):
             "assembly and L to read its labels. Some were made with earlier versions of Construct.</p>"
             "<div class=\"links\"><a class=\"button\" href=\"%s\">Construct on GitHub</a>"
             "<a class=\"button\" href=\"%s/blob/main/docs/HOW-IT-IS-MADE.md\">How they were made</a>%s</div></header>"
-            "<main>%s<div class=\"grid\">\n%s\n</div></main>"
+            "<main>%s<div class=\"grid\">\n%s\n</div>%s</main>"
             "<footer class=\"site\">Construct is MIT licensed. Product and place names belong to their owners; each "
-            "construct is an independent reconstruction from public references, not an official model. "
+            "construct is an independent reconstruction from public references, not an official model. %s"
             "<a href=\"%s\">Source and documentation</a>.</footer>"
             % (REPO_URL, REPO_URL, ("<a class=\"button\" href=\"%s/blob/main/docs/FILM.md\">Film mode</a>" % REPO_URL)
-               if films else "", film_section, cards, REPO_URL))
+               if films else "", film_section, cards, beyond_section,
+               "The pages under Beyond objects keep their own licences, given on each. " if beyond else "", REPO_URL))
     return _page("Construct · examples", body, 0, "A gallery of holographic constructs built by AI agents with Construct.")
 
 
@@ -277,8 +299,17 @@ def build(out, films_dir=None):
     films = _load_films() if films_dir else []
     for film in films:
         _film(film, films_dir, out, studio)
+    beyond = _load_beyond()
+    for item in beyond:  # published as it is (its own licence), beside the construct built from its scene
+        src, dst = EXAMPLES / item["slug"], out / "examples" / item["slug"]
+        dst.mkdir(parents=True)
+        for name in item["files"]:
+            shutil.copyfile(src / name, dst / name)
+        tmp = out / ".build" / ("beyond-" + item["slug"])
+        studio.build(str(_public_scene(src / "scene.json", tmp.parent)), str(tmp), asset_root=str(src))
+        shutil.copyfile(studio.page_in(tmp), dst / "construct.html")
     shutil.rmtree(out / ".build", ignore_errors=True)
-    (out / "index.html").write_text(index_page(examples, films), encoding="utf-8")
+    (out / "index.html").write_text(index_page(examples, films, beyond), encoding="utf-8")
     (out / "404.html").write_text(_page("Not found · Construct", "<header class=\"site\"><h1>Not here</h1><p>That page "
                                         "does not exist.</p><a class=\"button\" href=\"%s\">All examples</a></header>"
                                         % SITE_URL, 0, "Page not found."), encoding="utf-8")

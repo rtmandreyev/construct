@@ -1,0 +1,14 @@
+{
+ "format": "construct-beyond",
+ "version": 1,
+ "beyond": [
+  {
+   "slug": "netlogo-viral-marketing",
+   "title": "Simple Viral Marketing (NetLogo)",
+   "line": "A NetLogo agent-based model of viral marketing, rebuilt to run live in the browser and drawn as a construct.",
+   "label": "live model · DeepSeek V4.1 Flash scene",
+   "credit": "Model © 2012 Uri Wilensky · CC BY-NC-SA 3.0",
+   "files": ["index.html", "svm-model.js", "netlogo-run.js", "scene.json", "LICENSE", "hero.jpg", "thumb.jpg"]
+  }
+ ]
+}

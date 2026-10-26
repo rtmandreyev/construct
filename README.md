@@ -204,7 +204,9 @@ See [CONTRIBUTING.md](CONTRIBUTING.md). Run the tests with
 
 ## License
 
-[MIT](LICENSE) — Copyright (c) 2026 Artyom Andreyev.
+[MIT](LICENSE) — Copyright (c) 2026 Artyom Andreyev. One example folder,
+[examples/netlogo-viral-marketing/](examples/netlogo-viral-marketing/), derives from Uri Wilensky's
+NetLogo model and is under CC BY-NC-SA 3.0 instead (see its LICENSE).
 
 Construct's working method is inspired by [Anatomy](https://github.com/wheresryan22/anatomy)'s
 truth-first construction (MIT); it shares the method, not code. Product, vehicle and place names

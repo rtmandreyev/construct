@@ -97,4 +97,5 @@ needed), draw its poster with `python3 scripts/gallery_images.py <slug>`, and re
 
 Nothing but static files: every link is relative, each construct is one self-contained
 `construct.html` (plain WebGL2, no external scripts, fonts or styles), and `.nojekyll` tells
-GitHub Pages to serve the files as they are. It is about 41 MB.
+GitHub Pages to serve the files as they are. The pages under Beyond objects (`examples/beyond.json`) are published as
+they are and may load from other hosts: the NetLogo page loads three.js and its fonts from CDNs. It is about 90 MB, most of it the three films.

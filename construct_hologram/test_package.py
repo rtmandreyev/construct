@@ -163,11 +163,13 @@ class ExamplesGallery(unittest.TestCase):
             out = site.build(Path(d, "site"))
             self.assertTrue((out / ".nojekyll").exists())
             pages = [p for p in out.rglob("*.html") if p.name != "construct.html"]
-            self.assertEqual(len([p for p in pages if p.name == "index.html"]), len(site._load_examples()) + 1)
+            beyond = {b["slug"] for b in site._load_beyond()}
+            self.assertEqual(len([p for p in pages if p.name == "index.html"]), len(site._load_examples()) + len(beyond) + 1)
             for page in pages:
+                own = page.parent.name in beyond  # a "beyond" page, published as it is: its fonts, licence link
                 for ref in re.findall(r'(?:href|src)="([^"]+)"', page.read_text(encoding="utf-8")):
                     if ref.startswith(("https://", "http://")):
-                        self.assertTrue(ref.startswith((site.SITE_URL, site.REPO_URL)), (page, ref))
+                        self.assertTrue(own or ref.startswith((site.SITE_URL, site.REPO_URL)), (page, ref))
                         continue
                     target = (page.parent / ref.split("?")[0]).resolve()
                     if ref.endswith("/"):
@@ -182,6 +184,19 @@ class ExamplesGallery(unittest.TestCase):
                 self.assertIn('"rounds"', (out / "examples" / slug / "scene.json").read_text(encoding="utf-8"))
             html_ = (out / "examples" / "leica-m3" / "construct.html").read_text(encoding="utf-8")
             self.assertIsNone(re.search(r'<script[^>]+src=|<link[^>]+href="http', html_))  # self-contained
+
+    def test_the_netlogo_example_keeps_its_licence_and_credit(self):
+        from . import diagnose
+        d = HERE.parent / "examples" / "netlogo-viral-marketing"
+        page = (d / "index.html").read_text(encoding="utf-8")
+        self.assertIn("© 2012 Uri Wilensky", page)  # the credit, on the page itself
+        self.assertIn("https://creativecommons.org/licenses/by-nc-sa/3.0/", page)
+        self.assertIn("NetLogo, 100 BehaviorSpace runs", page)  # the neutral wording
+        self.assertNotRegex(page, r"(?i)week 2|my behaviorspace|/Users/|@asu")
+        self.assertIn("CC BY-NC-SA 3.0", (d / "LICENSE").read_text(encoding="utf-8"))
+        self.assertIn("Uri Wilensky", (d / "README.md").read_text(encoding="utf-8"))
+        self.assertIn("examples/netlogo-viral-marketing/", (HERE.parent / "NOTICE").read_text(encoding="utf-8"))
+        self.assertTrue(diagnose.diagnose_text((d / "scene.json").read_text(encoding="utf-8"))["ok"])
 
     def test_every_film_is_complete_and_checks_clean(self):
         from . import diagnose
