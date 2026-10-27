@@ -1,6 +1,6 @@
 ---
 name: construct
-description: Turn a description into an animated holographic construct.
+description: Turn a description into a hologram and a 3D model.
 version: 0.3.0
 author: Artyom Andreyev (rtmandreyev)
 license: MIT
