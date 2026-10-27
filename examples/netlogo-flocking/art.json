@@ -249,16 +249,6 @@
     -2.0,
     0
    ]
-  },
-  {
-   "id": "tick-5",
-   "part": "time-axis",
-   "text": "tick 300",
-   "offset": [
-    -0.35,
-    0.0,
-    0
-   ]
   }
  ],
  "looks": {
