@@ -3,7 +3,7 @@ name: construct
 description: Turn a description into a hologram and a 3D model.
 version: 1.0.0
 author: Artyom Andreyev (rtmandreyev)
-license: MIT
+license: Apache-2.0
 platforms: [macos, linux]
 prerequisites:
   commands: [python3]

@@ -85,5 +85,5 @@ Don't say:
 
 ## Licence
 
-MIT. Anatomy is MIT-licensed too; no part of it is included. Third-party software: none is
+Apache-2.0 (up to 0.3.0, MIT); the Blender add-on is GPL-3.0-or-later. Anatomy is MIT-licensed; no part of it is included. Third-party software: none is
 bundled (Python standard library; an optional local browser and ffmpeg are used if present).

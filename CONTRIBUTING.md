@@ -60,7 +60,7 @@ description what you deliberately did not do.
 
 ## Credit and licence
 
-By contributing you agree that your work is released under the [MIT licence](LICENSE).
+By contributing you agree that your work is released under the [Apache License 2.0](LICENSE).
 Construct's method is inspired by Anatomy's truth-first construction
 ([wheresryan22/anatomy](https://github.com/wheresryan22/anatomy)); do not copy code, assets or
 text from Anatomy or any other project into this one.

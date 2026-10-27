@@ -259,8 +259,9 @@ def index_page(examples, films=(), beyond=()):
             "pipeline</a><a class=\"button\" href=\"#models\">Models come alive</a>"
             "<a class=\"button\" href=\"%s/blob/main/docs/HOW-IT-IS-MADE.md\">How they are made</a></div></header>"
             "<main>%s%s%s</main>"
-            "<footer class=\"site\">Construct is MIT licensed. Product and place names belong to their owners; each "
-            "construct is an independent reconstruction from public references, not an official model. %s"
+            "<footer class=\"site\">Construct is Apache-2.0 licensed; its Blender add-on is GPL-3.0-or-later. Product and "
+            "place names belong to their owners; each construct is an independent reconstruction from public "
+            "references, not an official model. %s"
             "<a href=\"%s\">Source and documentation</a>.</footer>%s"
             % (REPO_URL, REPO_URL, shelf, pipeline, alive,
                "The pages under Models come alive keep their own licences, given on each. " if models else "",

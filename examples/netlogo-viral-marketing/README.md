@@ -16,7 +16,7 @@ times to compare with NetLogo's own BehaviorSpace results.
 Rand, W., *An Introduction to Agent-Based Modeling*, MIT Press, 2015), licensed under
 [CC BY-NC-SA 3.0](https://creativecommons.org/licenses/by-nc-sa/3.0/).
 
-**License:** unlike the rest of Construct (MIT), **this folder is under CC BY-NC-SA 3.0**, because
+**License:** unlike the rest of Construct (Apache-2.0), **this folder is under CC BY-NC-SA 3.0**, because
 everything in it derives from the model: the page, the port of the model, the NetLogo run and the
 construct. See [LICENSE](LICENSE).
 

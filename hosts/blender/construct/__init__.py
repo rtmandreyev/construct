@@ -1,3 +1,6 @@
+# SPDX-License-Identifier: GPL-3.0-or-later
+# Copyright (c) 2026 Artyom Andreyev
+
 """Construct for Blender: import a construct as a 3D model with its parts, joints and build.
 
 File > Import > Construct (.json, .glb) reads a construct scene (or a parameter document), compiles

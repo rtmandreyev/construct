@@ -4,7 +4,7 @@
     python3 scripts/hermes_submission.py --hub          # refresh skills/construct/ in this repository
 
 Writes the folders as they would sit in NousResearch/hermes-agent:
-    optional-skills/creative/construct/   SKILL.md, references/, scripts/ (the runtime), assets/examples/, LICENSE
+    optional-skills/creative/construct/   SKILL.md, references/, scripts/ (the runtime), assets/examples/, LICENSE, NOTICE
     tests/skills/test_construct_skill.py
     PR.md                                 the pull-request text and checklist
 and, when a local Hermes checkout is given, runs its skill scanner and the hardline authoring
@@ -76,6 +76,7 @@ def build(out):
     for a in (PKG / "examples" / "v2" / "assets").glob("*.png"):
         shutil.copyfile(a, ex / "assets" / a.name)
     shutil.copyfile(ROOT / "LICENSE", skill / "LICENSE")
+    shutil.copyfile(ROOT / "NOTICE", skill / "NOTICE")   # Apache-2.0: the notice travels with copies
     tests = out / "tests" / "skills"
     tests.mkdir(parents=True)
     shutil.copyfile(HERE / "test_construct_skill.py", tests / "test_construct_skill.py")

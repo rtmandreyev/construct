@@ -1,5 +1,6 @@
 Construct
-Copyright (c) 2026 Artyom Andreyev. Licensed under the MIT License (see LICENSE).
+Copyright (c) 2026 Artyom Andreyev. Licensed under the Apache License, Version 2.0 (see LICENSE);
+versions up to 0.3.0 were released under the MIT License.
 
 Independently authored. Its look and construction grew out of NODE's Measured Light holograms
 (same author); no NODE code, fonts, shaders or assets are included. Its working method is
@@ -26,7 +27,7 @@ Simple Viral Marketing model, Copyright 2012 Uri Wilensky (NetLogo Models Librar
 Rand, An Introduction to Agent-Based Modeling, MIT Press, 2015), licensed under Creative Commons
 Attribution-NonCommercial-ShareAlike 3.0. Everything in that folder (its page, its JavaScript
 port of the model, the exported NetLogo run and its construct) is under CC BY-NC-SA 3.0, not
-MIT; see its LICENSE. That page loads three.js from cdn.jsdelivr.net and its fonts from Google
+Apache-2.0; see its LICENSE. That page loads three.js from cdn.jsdelivr.net and its fonts from Google
 Fonts when opened; nothing from it is bundled into the toolkit or its packages.
 
 Three more folders are licensed the same way: examples/netlogo-flocking/, examples/netlogo-wolf-sheep/
@@ -34,8 +35,14 @@ and examples/netlogo-fire/ derive from NetLogo's Flocking (Copyright 1998 Uri Wi
 Predation and Fire (Copyright 1997 Uri Wilensky) models, NetLogo Models Library, licensed under
 Creative Commons Attribution-NonCommercial-ShareAlike 3.0. Each folder (the model with Construct's
 recording added, its experiment, the construct of one recorded run and its pictures) is under
-CC BY-NC-SA 3.0, not MIT; see its LICENSE. construct.nls, the recorder they include, is part of
-Construct and MIT.
+CC BY-NC-SA 3.0, not Apache-2.0; see its LICENSE. construct.nls, the recorder they include, is
+part of Construct and Apache-2.0.
+
+One more folder is licensed differently: hosts/blender/, the Blender add-on, is under the GNU
+General Public License v3.0 or later (see hosts/blender/LICENSE), as Blender's extensions platform
+requires of add-ons. Its zip bundles part of Construct (the scene compiler and the 3D export),
+which remains Apache-2.0, with Construct's LICENSE and this NOTICE beside it.
 
 History: extracted from the hologram-skill branch of the Tessera project, where the same
-author wrote it (first under Apache-2.0); relicensed under MIT by its author.
+author wrote it (first under Apache-2.0); relicensed under MIT by its author for 0.2.1 to 0.3.0,
+and under Apache-2.0 again from 1.0.0.

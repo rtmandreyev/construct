@@ -62,6 +62,8 @@ The add-on uses Blender's own glTF importer for the parts, the stages and the mo
 
 ## Licence
 
-MIT, like the rest of Construct. Blender's extensions platform (extensions.blender.org) lists only
-add-ons under GPL-3.0-or-later; listing it there would mean releasing this folder under that
-licence as well.
+GPL-3.0-or-later ([LICENSE](LICENSE)), as Blender's extensions platform requires of every add-on:
+an add-on runs inside Blender, which is GPL. The rest of Construct is Apache-2.0. The zip bundles
+the part of Construct the add-on needs (the scene compiler and the 3D export) with its Apache-2.0
+licence and NOTICE beside it; Apache-2.0 code may be included in a GPL-3.0 work. What you make with the add-on (your imported
+models, your .blend files and your renders) is yours, under either licence.

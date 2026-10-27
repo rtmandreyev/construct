@@ -7,7 +7,7 @@ name = "construct-hologram"   # the distribution: keep in step with construct_ho
 version = "1.0.0"
 description = "Construct: holographic constructs any agent can build — from a description, honestly."
 readme = "README.md"
-license = "MIT"
+license = "Apache-2.0"
 license-files = ["LICENSE", "NOTICE"]
 requires-python = ">=3.10"
 dependencies = []

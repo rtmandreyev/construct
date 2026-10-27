@@ -7,6 +7,9 @@ Construct 1.0 takes a construct beyond the hologram: into Blender, game engines 
 recorded run drawn in time. The scene and geometry contract keeps its id, `construct/0.2`: 1.0
 adds to it and changes nothing in it. [Release notes](docs/releases/v1.0.0.md).
 
+- **Licence: Apache-2.0** from 1.0 (versions up to 0.3.0 stay MIT): as open as before, with the
+  NOTICE file kept in every copy, no right to Construct's name, and a patent grant. The Blender
+  add-on is GPL-3.0-or-later, as Blender's extensions platform requires.
 - **3D export** ([EXPORT.md](docs/EXPORT.md)): `construct export scene.json --out model.glb|.obj`,
   the MCP tool `construct_export`, and a step in the skill.
   - glTF 2.0 (.glb): every part a named node under its stage, with its role, certainty and source;
@@ -24,7 +27,9 @@ adds to it and changes nothing in it. [Release notes](docs/releases/v1.0.0.md).
   Construct reads a scene or a `.glb`; the construct gets three controls, **Build**, **Open** and
   **Light ↔ Metal**, plus the line thickness and an operator that keyframes a reveal. The controls
   are custom properties driving the joints, materials and line art, so a .blend works without the
-  add-on. In Blender 5.2 the opened joints land exactly where the compiler puts them.
+  add-on. In Blender 5.2 the opened joints land exactly where the compiler puts them. The add-on
+  is GPL-3.0-or-later (`hosts/blender/LICENSE`), as Blender's extensions platform requires of
+  add-ons; its zip bundles the scene compiler and the export under their Apache-2.0 licence.
 - **From light to metal** ([examples/light-to-metal](examples/light-to-metal/README.md)), the full
   pipeline in the gallery: four gallery constructs (the FJ62, the James Webb Space Telescope,
   the Revox A77 and the MiniFreak) as their exported files, lit live with three.js: a scan line

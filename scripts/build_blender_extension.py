@@ -4,7 +4,9 @@
     python3 scripts/build_blender_extension.py [--out dist/]
 
 The zip holds the add-on (hosts/blender/construct/), its manifest and the part of Construct it
-needs to compile a scene and export it (standard library only). Install it in Blender with
+needs to compile a scene and export it (standard library only). The extension is GPL-3.0-or-later,
+as Blender's extensions platform requires of add-ons (hosts/blender/LICENSE); the bundled part of
+Construct keeps its Apache-2.0 licence, which GPL-3.0 allows, with its LICENSE and NOTICE beside it. Install it in Blender with
 Edit > Preferences > Get Extensions > Install from Disk, or drag it into Blender's window.
 """
 
@@ -32,8 +34,8 @@ type = "add-on"
 website = "{repo}"
 tags = ["Import-Export", "Animation"]
 blender_version_min = "4.2.0"
-license = ["SPDX:MIT"]
-copyright = ["2026 The Construct authors"]
+license = ["SPDX:GPL-3.0-or-later"]
+copyright = ["2026 Artyom Andreyev"]
 
 [permissions]
 files = "Import construct scenes and models from disk"
@@ -45,7 +47,7 @@ def stage(into):
     """Lay out the extension's files in a folder."""
     into.mkdir(parents=True, exist_ok=True)
     shutil.copyfile(ADDON / "__init__.py", into / "__init__.py")
-    shutil.copyfile(ROOT / "LICENSE", into / "LICENSE")
+    shutil.copyfile(ADDON.parent / "LICENSE", into / "LICENSE")   # the extension: GPL-3.0-or-later
     (into / "blender_manifest.toml").write_text(MANIFEST.format(version=product.VERSION, repo=product.REPO),
                                                 encoding="utf-8")
     rt = into / "construct_hologram"
@@ -53,6 +55,8 @@ def stage(into):
     (rt / "__init__.py").write_text(RUNTIME_INIT, encoding="utf-8")
     for m in RUNTIME:
         shutil.copyfile(ROOT / "construct_hologram" / m, rt / m)
+    shutil.copyfile(ROOT / "LICENSE", rt / "LICENSE")              # the bundled part of Construct: Apache-2.0
+    shutil.copyfile(ROOT / "NOTICE", rt / "NOTICE")                # which Apache-2.0 asks to travel with it
     return into
 
 

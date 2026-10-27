@@ -353,7 +353,7 @@
     "sub": "{TAGLINE}",
     "in": 0.2,
     "out": 3.9,
-    "mono": "{INSTALL}\nfree and open source · MIT"
+    "mono": "{INSTALL}\nfree and open source · Apache-2.0"
    }
   }
  ],

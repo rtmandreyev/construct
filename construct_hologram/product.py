@@ -13,7 +13,7 @@ TITLE = "Construct"                      # the product, in prose
 DIST = "construct-hologram"              # the Python distribution (PyPI "construct" is another project)
 TAGLINE = "Holographic constructs any agent can build — from a description, honestly."
 VERSION = "1.0.0"
-LICENSE = "MIT"
+LICENSE = "Apache-2.0"
 AUTHORS = "The Construct authors"
 REPO = "https://github.com/rtmandreyev/construct"
 

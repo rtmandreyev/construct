@@ -1,4 +1,4 @@
-;; construct.nls: record a NetLogo run for Construct (https://github.com/rtmandreyev/construct). MIT.
+;; construct.nls: record a NetLogo run for Construct (https://github.com/rtmandreyev/construct). Apache-2.0.
 ;;
 ;; Add it to a model with   __includes ["construct.nls"]   and, at the end of setup (after clear-all and
 ;; reset-ticks, so nothing clears it):
