@@ -182,7 +182,8 @@ Work in a folder of your own. `out/construct.html` opens in any browser.
 8. **A 3D model (only when asked).** `scripts/cli.py export scene.json --out model.glb` writes
    glTF 2.0: every part a named object, its joints as the `open` animation, periodic motion as
    `idle`, each vertex's build phase as `_PHASE`. `--out model.obj` writes OBJ and its `.mtl`.
-   `--wire tubes` makes the line art solid for game engines, `--pose open` rests it open, and
+   `--merge --wire seams` makes a game-ready prop (static parts merged, design lines as dark seams),
+   `--wire tubes` keeps all the line art as geometry, `--pose open` rests it open, and
    `--materials map.json` colours and finishes parts by id (paint, brushed, chrome, wood, rubber,
    plastic, glass, light) when the user wants a finished model; keep it beside the scene, never in it. A `no-surface` audit
    warning names a part that would be missing: give it a solid shape. Say what it is: correctly

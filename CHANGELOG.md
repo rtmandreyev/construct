@@ -38,6 +38,12 @@
   drawn as lines (seams, creases, outlines) stay as seams. In the add-on and on the example page.
 - **Fixed in the Blender add-on:** the line art's tubes rendered with Blender's default material
   (geometry made by a modifier carries none); each tone now has a node group that sets it.
+- **Game-ready export:** `--merge` merges every part that does not move into one mesh per material
+  (the FJ62 goes from about 300 draw calls to 27, its tailgate still opening); `--wire seams` makes
+  tubes of the design lines only, in a dark seam material, for a finished model; surfaces carry
+  box-projected texture coordinates (also in OBJ); a part named for its glazing gets glass, and
+  glass also carries a translucent base colour for engines without transmission. Checked in
+  Godot 4.7.2 (`CONSTRUCT_GODOT`).
 - **Audit:** `no-surface` warns when a main or structural part is drawn only as lines, so it would
   be missing from a 3D export.
 

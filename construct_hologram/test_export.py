@@ -31,7 +31,7 @@ def glb_of(sc, **kw):
 
 # ---------------------------------------------------------------------------- a small glTF reader
 
-COMPONENTS = {"SCALAR": 1, "VEC3": 3, "VEC4": 4}
+COMPONENTS = {"SCALAR": 1, "VEC2": 2, "VEC3": 3, "VEC4": 4}
 CTYPES = {5126: "f", 5125: "I", 5123: "H"}
 
 
@@ -276,6 +276,97 @@ class Finishes(unittest.TestCase):
                 self.assertEqual([i for i in solid if not any(fnmatch.fnmatchcase(i, q) for r in rules
                                                                for q in r["patterns"])], [])
                 self.assertIn("not facts of the construct", json.loads((maps / (name + ".json")).read_text())["about"])
+
+
+class GameReady(unittest.TestCase):
+    def test_merge_keeps_moving_parts_and_their_exact_joints(self):
+        sc = load("open-reel")
+        g = scene.compile_scene(sc, solid=True)
+        doc, binary = glb_of(sc, merge=True)
+        Structure().check(doc, binary)
+        merged = doc["nodes"][node_named(doc, "merged")]
+        self.assertGreater(len(merged["extras"]["construct"]["merged_parts"]), 0)
+        moving = {p["id"] for p in g["parts"] if p["joint"] >= 0 or any(i["motion_slot"] >= 0 for i in p["instances"])}
+        names = {n.get("name") for n in doc["nodes"]}
+        self.assertTrue(moving <= names)                                  # moving parts keep their nodes
+        self.assertFalse(set(merged["extras"]["construct"]["merged_parts"]) & moving)
+        materials = [p["material"] for p in doc["meshes"][merged["mesh"]]["primitives"]]
+        self.assertEqual(len(materials), len(set(materials)))            # one primitive per material
+        anim = next(a for a in doc["animations"] if a["name"] == "open")
+        end = max(max(accessor(doc, binary, s["input"])) for s in anim["samplers"])
+        for p in g["parts"]:
+            if p["joint"] >= 0:
+                ni = node_named(doc, p["id"])
+                for a, b in zip(world_points(doc, binary, ni, sample(doc, binary, anim, 0.0)),
+                                world_points(doc, binary, ni, sample(doc, binary, anim, end))):
+                    want = scene._chain_apply(g["joints"][p["joint"]], g["articulations"], a)
+                    self.assertLess(max(abs(want[k] - b[k]) for k in range(3)), TOL)
+
+    def test_surfaces_have_texture_coordinates(self):
+        doc, binary = glb_of(load("castle"))
+        for m in doc["meshes"]:
+            for p in m["primitives"]:
+                if p["mode"] == 4:
+                    self.assertIn("TEXCOORD_0", p["attributes"])
+                    self.assertEqual(len(accessor(doc, binary, p["attributes"]["TEXCOORD_0"])),
+                                     doc["accessors"][p["attributes"]["POSITION"]]["count"])
+
+    def test_seams_are_dark_tubes_for_the_parts_drawn_as_lines_only(self):
+        sc = load("lighthouse")
+        g = scene.compile_scene(sc, solid=True)
+        doc, _ = glb_of(sc, wire="seams")
+        self.assertNotIn(1, [p["mode"] for m in doc["meshes"] for p in m["primitives"]])
+        surfaced = {g["parts"][int(g["styles"][int(g["fills"][i + 3])][6])]["id"] for i in range(0, len(g["fills"]), 5)}
+        for m in doc["meshes"]:
+            for p in m["primitives"]:
+                if doc["materials"][p["material"]]["name"] == "construct:seam":
+                    self.assertNotIn(m["name"], surfaced)
+        seam = next(x for x in doc["materials"] if x["name"] == "construct:seam")
+        self.assertNotIn("extensions", seam)                            # lit like a surface, not unlit light
+
+    def test_glazing_is_glass_and_glass_falls_back_to_alpha(self):
+        sc = studio.starter("machine")
+        sc["parts"][2]["id"] = "rear-window"   # the mast, renamed: nothing else refers to it
+        doc, _ = glb_of(sc)
+        glass = next(m for m in doc["materials"] if m["name"] == "construct:glass")
+        self.assertIn("KHR_materials_transmission", glass["extensions"])
+        self.assertEqual((glass["alphaMode"], glass["pbrMetallicRoughness"]["baseColorFactor"][3]), ("BLEND", 0.35))
+
+    def test_obj_has_texture_coordinates(self):
+        out, _ = export.render(load("cd"), "obj", wire="none")
+        self.assertIn("\nvt ", out["obj"])
+        f = next(ln for ln in out["obj"].splitlines() if ln.startswith("f "))
+        self.assertRegex(f, r"^f \d+/\d+/\d+ ")
+
+
+@unittest.skipUnless(os.environ.get("CONSTRUCT_GODOT"), "set CONSTRUCT_GODOT to a Godot 4 binary to run")
+class Godot(unittest.TestCase):
+    """Godot's own glTF loader: the game-ready file arrives with its parts, glass and joints."""
+
+    def test_godot_loads_a_game_ready_model(self):
+        script = ("extends SceneTree\n"
+                  "func _init() -> void:\n"
+                  "\tvar doc = GLTFDocument.new()\n"
+                  "\tvar state = GLTFState.new()\n"
+                  "\tvar err = doc.append_from_file(\"res://cd.glb\", state)\n"
+                  "\tvar scene = doc.generate_scene(state)\n"
+                  "\tvar anims = []\n"
+                  "\tfor p in scene.find_children(\"*\", \"AnimationPlayer\", true, false):\n"
+                  "\t\tanims += Array(p.get_animation_list())\n"
+                  "\tprint(\"RESULT \" + JSON.stringify({\"err\": err, \"meshes\": scene.find_children(\"*\", "
+                  "\"MeshInstance3D\", true, false).size(), \"anims\": anims}))\n"
+                  "\tscene.free()\n"
+                  "\tquit()\n")
+        with tempfile.TemporaryDirectory() as d:
+            Path(d, "project.godot").write_text("config_version=5\n", encoding="utf-8")
+            Path(d, "check.gd").write_text(script, encoding="utf-8")
+            export.export(load("cd"), Path(d, "cd.glb"), merge=True, wire="seams")
+            r = subprocess.run([os.environ["CONSTRUCT_GODOT"], "--headless", "--path", d, "--script", "res://check.gd"],
+                               capture_output=True, text=True, timeout=300, encoding="utf-8", errors="replace")
+        res = json.loads(next(ln for ln in r.stdout.splitlines() if ln.startswith("RESULT "))[7:])
+        self.assertEqual(res["err"], 0)
+        self.assertGreater(res["meshes"], 0)
+        self.assertIn("open", res["anims"])
 
 
 class Motion(unittest.TestCase):

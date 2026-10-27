@@ -111,9 +111,10 @@ TOOLS += [
                     "text with its MTL. Opens in Blender, Godot, Unreal, Unity (glTFast) and three.js.",
      "inputSchema": {"type": "object", "properties": {
          "document": _DOC, "format": {"type": "string", "enum": ["glb", "obj"]},
-         "wire": {"type": "string", "enum": ["edges", "tubes", "none"]},
+         "wire": {"type": "string", "enum": ["edges", "tubes", "seams", "none"]},
          "pose": {"type": "string", "enum": ["closed", "open"]},
          "frame": {"type": "string", "enum": ["y-up", "z-up"]},
+         "merge": {"type": "boolean", "description": "merge the parts that do not move, one mesh per material"},
          "materials": {"type": "object", "description": "a material map: {\"materials\": [{\"parts\": [...], "
                                                         "\"color\": \"#rrggbb\", \"metallic\", \"roughness\"}]}"}},
                      "required": ["document"], "additionalProperties": False},
@@ -195,7 +196,7 @@ V2_TOOLS = {"construct_diagnose": ({"text", "document"}, set()),
             "construct_params_template": ({"archetype", "variant"}, set()),
             "construct_expand_params": ({"params"}, {"params"}),
             "construct_compile": ({"document"}, {"document"}),
-            "construct_export": ({"document", "format", "wire", "pose", "frame", "materials"}, {"document"}),
+            "construct_export": ({"document", "format", "wire", "pose", "frame", "materials", "merge"}, {"document"}),
             "construct_limits": ({"tier", "request", "overrides"}, set())}
 # the 0.2 pre-release names: still answered for one release, no longer listed
 DEPRECATED = {"hologram_diagnose": "construct_diagnose", "hologram_params_template": "construct_params_template",
@@ -248,7 +249,8 @@ def _call_v2(name, args):
     if name == "construct_export":
         try:
             out, summary = export.render(built, args.get("format", "glb"), args.get("wire", "edges"),
-                                         args.get("pose", "closed"), args.get("materials"), args.get("frame", "y-up"))
+                                         args.get("pose", "closed"), args.get("materials"), args.get("frame", "y-up"),
+                                         merge=bool(args.get("merge", False)))
         except (export.ExportError, scene.SceneError) as exc:
             return _tool_result({"error": str(exc)}, is_error=True)
         if "glb" in out:

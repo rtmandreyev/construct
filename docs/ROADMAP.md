@@ -73,7 +73,8 @@ So that an exported construct drops into a game engine as it is:
   prop is a handful of draw calls instead of one per part;
 - a glass material for glazing parts (transmission), instead of opaque grey;
 - simple texture coordinates for every shape, so a model can be textured and lightmapped;
-- checked by importing into Godot, and with the Khronos glTF validator.
+- checked by importing into Godot (done: Godot 4.7.2), and with the Khronos glTF validator
+  (pending the owner's OK to download it).
 
 ### Phase 4: NetLogo bridge
 

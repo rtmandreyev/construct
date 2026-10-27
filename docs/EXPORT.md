@@ -24,7 +24,8 @@ construct export scene.json --out model.glb
 | Option | What it does |
 | --- | --- |
 | `--out FILE.glb` or `FILE.obj` | glTF 2.0 binary, or Wavefront OBJ with an `.mtl` beside it |
-| `--wire edges` (default), `tubes`, `none` | the line art: as edges (Blender keeps them), as thin tubes (for game engines, which drop plain lines), or left out |
+| `--wire edges` (default), `tubes`, `seams`, `none` | the line art: as edges (Blender keeps them); as thin tubes (game engines drop plain lines); as dark tubes for the design lines only, the parts drawn as lines (door seams, creases, outlines), for a finished model; or left out |
+| `--merge` | glTF: every part that does not move merged into one mesh per material, for game engines; moving parts keep their own nodes and animations |
 | `--wire-radius M` | the tubes' radius in metres (default: from the object's size) |
 | `--pose closed` (default) or `open` | the pose the model rests in; a glTF carries the opening animation either way |
 | `--materials map.json` | colours and finishes for parts, by id or pattern (below) |
@@ -39,7 +40,7 @@ Agents use the same export through the skill, and MCP clients through the `const
 | --- | --- |
 | each part | a named node (the part's id), under a node for its assembly stage (`stage-0`, `stage-1`, …); its role, certainty, source and basis are in `extras.construct` |
 | the construct's facts and sources | `extras.construct` on the root node, with the scene's hash and the contract |
-| surfaces | triangle meshes with smoothed normals (a crease keeps hard edges hard); one material per role, named `construct:mass`, `construct:identity` and so on |
+| surfaces | triangle meshes with smoothed normals (a crease keeps hard edges hard) and box-projected texture coordinates in metres (`TEXCOORD_0`); one material per role, named `construct:mass`, `construct:identity` and so on, and glass (`construct:glass`) for a part named for its glazing (glass, window, windscreen, canopy…) |
 | the line art | line primitives with unlit materials in the house palette's tones (`construct:light:…`), or tubes, or nothing |
 | points (lights, motes) | a point primitive |
 | hinges, turns, slides, lifts | pivot nodes; the animation `open` plays them in their order groups (1.5 s each), `open:<id>` plays one; a joint that rides on another is nested inside it |
@@ -63,8 +64,22 @@ build phase.
   `--wire tubes` to render them.
 - **three.js** (tested with 0.160): `GLTFLoader`. The build phase is `geometry.attributes._phase`,
   the animations are in `gltf.animations` for an `AnimationMixer`, the extras in `userData`.
-- **Godot, Unreal, Unity, Babylon.js:** they import glTF 2.0 (Unity with Unity's glTFast package).
-  Use `--wire tubes` if you want the line art, since game engines usually drop line primitives.
+- **Godot** (tested with 4.7.2): its glTF loader brings in the parts, the materials, the texture
+  coordinates and the `open` and `idle` animations. It ignores transmission and clear coat, so glass
+  also carries a translucent base colour (alpha 0.35, blended), which Godot shows.
+- **Unreal, Unity, Babylon.js:** they import glTF 2.0 (Unity with Unity's glTFast package); not
+  tested here.
+
+**For a game,** export the finished model merged, with its seams:
+
+```sh
+construct export scene.json --out prop.glb --materials prop.materials.json --merge --wire seams
+```
+
+The Toyota Land Cruiser FJ62 comes out at about 21,000 triangles in 27 draw calls (from about 300
+unmerged), with its tailgate still opening; the Arturia MiniFreak at about 4,500 triangles. The
+texture coordinates are a box projection: enough to texture a part or tile a material, and an
+engine can generate lightmap coordinates from them on import.
 
 **A build reveal.** Because every vertex knows when it appears, a shader can assemble the model:
 draw a fragment only when its `_PHASE` is at most a build value you animate from 0 to 1. In
@@ -112,8 +127,8 @@ person who exports, kept beside the scene, never in it: `examples/light-to-metal
   starting point for modelling.
 - **It is not** a finished hero asset. Shapes come from Construct's own vocabulary (boxes,
   cylinders, lathes, lofts, tubes, extrusions…); overlapping parts are not merged, so the model is
-  not watertight for 3D printing; there are no texture coordinates or textures, and glass is
-  opaque until a material map says otherwise. Joints are mechanical (hinges, slides); there is no
+  not watertight for 3D printing; there are no textures and no levels of detail, and the texture
+  coordinates are a simple box projection. Joints are mechanical (hinges, slides); there is no
   skinned rig. It is not CAD.
 - **Sizes are as true as their certainty.** A part marked `verified` has a source; one marked
   `inferred` was designed; the extras say which.
@@ -127,5 +142,6 @@ The tests export the small examples (a CD case whose booklet lifts and then slid
 that slides and turns, an amplifier, an open-reel deck with spinning reels) and replay the file's
 own animations in a small glTF evaluator: every vertex of an opened joint and a spinning part
 lands where the compiler puts it, to a fraction of a millimetre. They also check the file's
-structure, the OBJ, the material map, the command line and the MCP tool, and, when
-`CONSTRUCT_BLENDER` names a Blender binary, Blender's own importer.
+structure, the OBJ, the material map, the merged and seam-only files, the command line and the MCP
+tool; when `CONSTRUCT_BLENDER` names a Blender binary, Blender's own importer, and when
+`CONSTRUCT_GODOT` names a Godot 4 binary, Godot's glTF loader.

@@ -6,9 +6,12 @@ surfaces, not only the hologram's fills. Nothing is invented on the way out.
 glTF (.glb):
   - each part is a named node under its stage (`stage-0`, `stage-1`, …), with its role, certainty,
     source and basis in `extras.construct`; the construct's facts and sources are on the root;
-  - surfaces are triangle meshes with smoothed normals and a material per role (or from a
-    material map); the line art comes as edges (`wire="edges"`), as thin tubes (`"tubes"`) or not
-    at all (`"none"`), with an unlit material per tone; points come as a point primitive;
+  - surfaces are triangle meshes with smoothed normals, box-projected texture coordinates and a
+    material per role (or from a material map; parts named for glazing get glass); the line art
+    comes as edges (`wire="edges"`), as thin tubes (`"tubes"`), as tubes for the design lines only
+    (`"seams"`: the parts drawn as lines, not the edges of surfaces) or not at all (`"none"`), with an
+    unlit material per tone; points come as a point primitive;
+  - `merge` merges every part that does not move into one mesh per material, for game engines;
   - articulations are pivot nodes: the animation `open` plays them in their order groups, and
     `open:<id>` plays one; periodic motions (spin, swing, bob) loop in the animation `idle`;
   - every vertex carries its build phase (0..1, the assembly order) as the attribute `_PHASE`.
@@ -27,7 +30,7 @@ from pathlib import Path
 from . import product, scene as scene_mod
 
 FORMATS = ("glb", "obj")
-WIRES = ("edges", "tubes", "none")
+WIRES = ("edges", "tubes", "seams", "none")
 POSES = ("closed", "open")
 FRAMES = ("y-up", "z-up")
 
@@ -130,6 +133,23 @@ def smooth_normals(tris, crease=CREASE_DEGREES):
             n = _unit(acc)
             out.append(n if n != (0.0, 0.0, 0.0) else f)
     return out
+
+
+def box_uvs(tris):
+    """Texture coordinates for every triangle corner by box projection, in metres: each triangle is
+    projected along the axis its face points most along. Enough to texture a part or lightmap it
+    after an engine repacks the coordinates; no shape needs unwrapping by hand."""
+    out = []
+    for a, b, c in tris:
+        n = _cross(_sub(b, a), _sub(c, a))
+        ax = max(range(3), key=lambda k: abs(n[k]))
+        u, v = {0: (2, 1), 1: (0, 2), 2: (0, 1)}[ax]
+        out.extend([(p[u], p[v]) for p in (a, b, c)])
+    return out
+
+
+# a part named for its glazing gets glass when no material map says otherwise
+GLASS_WORDS = ("glass", "glazing", "window", "windscreen", "windshield", "visor", "canopy")
 
 
 def _tube(a, b, r):
@@ -272,11 +292,12 @@ def _f32(v):
     return struct.unpack("<f", struct.pack("<f", v))[0]
 
 
-def _primitive(b, mode, positions, normals, phases, material):
+def _primitive(b, mode, positions, normals, phases, material, uvs=None):
     """Indexed vertices (deduplicated), as one glTF primitive."""
     index, verts, idx = {}, [], []
     for i, p in enumerate(positions):
-        k = (tuple(_f32(x) for x in p), tuple(_f32(x) for x in normals[i]) if normals else None, _f32(phases[i]))
+        k = (tuple(_f32(x) for x in p), tuple(_f32(x) for x in normals[i]) if normals else None, _f32(phases[i]),
+             tuple(_f32(x) for x in uvs[i]) if uvs else None)
         if k not in index:
             index[k] = len(verts)
             verts.append(k)
@@ -284,6 +305,8 @@ def _primitive(b, mode, positions, normals, phases, material):
     attrs = {"POSITION": b.add("fff", [v[0] for v in verts], "VEC3", 5126, 34962, minmax=True)}
     if normals:
         attrs["NORMAL"] = b.add("fff", [v[1] for v in verts], "VEC3", 5126, 34962)
+    if uvs:
+        attrs["TEXCOORD_0"] = b.add("ff", [v[3] for v in verts], "VEC2", 5126, 34962)
     attrs["_PHASE"] = b.add("f", [v[2] for v in verts], "SCALAR", 5126, 34962)
     small = len(verts) < 65536
     prim = {"attributes": attrs, "mode": mode, "material": material,
@@ -291,8 +314,10 @@ def _primitive(b, mode, positions, normals, phases, material):
     return prim
 
 
-def to_gltf(g, wire="edges", pose="closed", materials=None, wire_radius=None):
-    """The glTF document (a dict) and its binary chunk, from a solid compile."""
+def to_gltf(g, wire="edges", pose="closed", materials=None, wire_radius=None, merge=False):
+    """The glTF document (a dict) and its binary chunk, from a solid compile. With `merge`, every part
+    that does not move is merged into one mesh per material (a game engine's handful of draw calls);
+    the parts that move keep their own nodes, pivots and animations."""
     if wire not in WIRES:
         raise ExportError("wire: one of %s" % ", ".join(WIRES))
     if pose not in POSES:
@@ -321,6 +346,9 @@ def to_gltf(g, wire="edges", pose="closed", materials=None, wire_radius=None):
         if extra.get("transmission"):
             ext["KHR_materials_transmission"] = {"transmissionFactor": extra["transmission"]}
             ext["KHR_materials_ior"] = {"ior": 1.5}
+            # engines without transmission (Godot's importer, for one) still see through it
+            m["pbrMetallicRoughness"]["baseColorFactor"][3] = 0.35
+            m["alphaMode"] = "BLEND"
         if extra.get("glow"):
             ext["KHR_materials_emissive_strength"] = {"emissiveStrength": extra["glow"]}
         if ext:
@@ -337,12 +365,18 @@ def to_gltf(g, wire="edges", pose="closed", materials=None, wire_radius=None):
             if any(fnmatch.fnmatchcase(part["id"], p) for p in r["patterns"]):
                 return material(("map", r["name"]), (r["name"], r["color"], r["metallic"], r["roughness"],
                                                      r["emissive"], False), r)
+        if any(w in part["id"].lower() for w in GLASS_WORDS):
+            f = FINISHES["glass"]
+            return material(("glass", None), ("construct:glass", _hex("#cfd8de", "glass"), f["metallic"],
+                                              f["roughness"], None, False), dict(f, finish="glass"))
         rgb, metallic, rough = ROLE_MATERIAL.get(part["role"], ROLE_MATERIAL["mass"])
         emissive = _hex(rgb, "role") if part["role"] == "data" else None
         return material(("role", part["role"]), ("construct:" + part["role"], _hex(rgb, "role"), metallic, rough,
                                                  emissive, False))
 
     def light_material(tone):
+        if wire == "seams":   # the design lines of a finished model: dark seams, lit like any surface
+            return material(("seam", None), ("construct:seam", _hex("#141416", "seam"), 0.0, 1.0, None, False))
         rgb = _hex(TONE_COLOR[tone], "tone")
         return material(("light", tone), ("construct:light:" + tone, rgb, 0.0, 1.0, rgb, True))
 
@@ -363,41 +397,67 @@ def to_gltf(g, wire="edges", pose="closed", materials=None, wire_radius=None):
     radius = _wire_radius(g, wire_radius)
     counts = {"triangles": 0, "edges": 0, "points": 0}
 
+    merged, merged_parts = {}, []   # (mode, material) -> positions, normals, phases, uvs
+
+    def bucket(mode, mat, pos, nor, ph, uv):
+        m = merged.setdefault((mode, mat), ([], [], [], []))
+        for lst, add in zip(m, (pos, nor or [], ph, uv or [])):
+            lst.extend(add)
+
     for pi, part in enumerate(parts):
         keys = sorted(k for k in groups if k[0] == pi)
+        moving = [k for k in keys if k[1] >= 0 or k[2] >= 0]
+        if merge and keys and not moving:
+            merged_parts.append(part["id"])
         extras = {"construct": {k: part[k] for k in ("id", "label", "role", "certainty", "basis", "source", "stage",
                                                      "shape", "floating") if k in part}}
         extras["construct"]["instances"] = len(part["instances"])
-        pnode = node({"name": part["id"], "extras": extras})
-        nodes[stage_nodes[part["stage"]]]["children"].append(pnode)
+        pnode = None
+        if not (merge and keys and not moving):
+            pnode = node({"name": part["id"], "extras": extras})
+            nodes[stage_nodes[part["stage"]]]["children"].append(pnode)
         if not keys:
             continue
+        surfaced = any(groups[k]["tris"] for k in keys)   # its lines are construction lines, not seams
         for k in keys:
             _, jt, slot = k
             gr = groups[k]
             prims = []
+            static = merge and jt < 0 and slot < 0
             if gr["tris"]:
                 pos = [p for t in gr["tris"] for p in t]
-                prims.append(_primitive(b, 4, pos, smooth_normals(gr["tris"]), [x for t in gr["tri_phase"] for x in t],
-                                        solid_material(part)))
+                nor, ph, uv = smooth_normals(gr["tris"]), [x for t in gr["tri_phase"] for x in t], box_uvs(gr["tris"])
+                if static:
+                    bucket(4, solid_material(part), pos, nor, ph, uv)
+                else:
+                    prims.append(_primitive(b, 4, pos, nor, ph, solid_material(part), uv))
                 counts["triangles"] += len(gr["tris"])
             for tone, segs in sorted(gr["segs"].items()):
                 if wire == "edges":
-                    prims.append(_primitive(b, 1, [p for s in segs for p in s[:2]], None,
-                                            [x for s in segs for x in s[2:]], light_material(tone)))
+                    pos, ph = [p for s in segs for p in s[:2]], [x for s in segs for x in s[2:]]
+                    if static:
+                        bucket(1, light_material(tone), pos, None, ph, None)
+                    else:
+                        prims.append(_primitive(b, 1, pos, None, ph, light_material(tone)))
                     counts["edges"] += len(segs)
-                elif wire == "tubes":
+                elif wire == "tubes" or (wire == "seams" and not surfaced):
                     pos, nor, ph = [], [], []
                     for a, c, pa, pc in segs:
                         tris, norms, ends = _tube(a, c, radius)
                         pos += [p for t in tris for p in t]
                         nor += norms
                         ph += [pc if e else pa for e in ends]
-                    if pos:
+                    if pos and static:
+                        bucket(4, light_material(tone), pos, nor, ph, None)
+                        counts["triangles"] += len(pos) // 3
+                    elif pos:
                         prims.append(_primitive(b, 4, pos, nor, ph, light_material(tone)))
                         counts["triangles"] += len(pos) // 3
             for tone, pts in sorted(gr["pts"].items()):
-                prims.append(_primitive(b, 0, [p for p, _ in pts], None, [x for _, x in pts], light_material(tone)))
+                if static:
+                    bucket(0, light_material(tone), [p for p, _ in pts], None, [x for _, x in pts], None)
+                else:
+                    prims.append(_primitive(b, 0, [p for p, _ in pts], None, [x for _, x in pts], light_material(tone)))
                 counts["points"] += len(pts)
             if not prims:
                 continue
@@ -436,6 +496,14 @@ def to_gltf(g, wire="edges", pose="closed", materials=None, wire_radius=None):
                       "extras": {"construct": {"part": part["id"], "role": part["role"]}}})
             nodes[parent].setdefault("children", []).append(n)
 
+    if merged:
+        prims = [_primitive(b, mode, pos, nor or None, ph, mat, uv or None)
+                 for (mode, mat), (pos, nor, ph, uv) in sorted(merged.items())]
+        meshes.append({"name": "merged", "primitives": prims})
+        n = node({"name": "merged", "mesh": len(meshes) - 1,
+                  "extras": {"construct": {"merged_parts": merged_parts,
+                                           "note": "every part that does not move, one primitive per material"}}})
+        nodes[root]["children"].append(n)
     animations = _animations(b, arts, motions, art_nodes, motion_nodes)
     for n in nodes:
         if "translation" in n and all(abs(x) < 1e-12 for x in n["translation"]):
@@ -604,6 +672,9 @@ def to_obj(g, name, wire="edges", pose="closed", materials=None, frame="y-up", w
         return nm
 
     def lightname(tone):
+        if wire == "seams":
+            used.setdefault("construct-seam", (_hex("#141416", "seam"), 1.0, None, 1.0))
+            return "construct-seam"
         nm = "construct-light-" + tone
         if nm not in used:
             rgb = _hex(TONE_COLOR[tone], "tone")
@@ -614,7 +685,7 @@ def to_obj(g, name, wire="edges", pose="closed", materials=None, frame="y-up", w
     out = ["# %s %s: %s" % (product.TITLE, product.VERSION, g["title"]),
            "# metres, %s, pose %s; contract %s" % ("Z up" if frame == "z-up" else "Y up", pose, g["contract"]),
            "mtllib %s.mtl" % name]
-    nv = nn = 0
+    nv = nn = nt = 0
     counts = {"triangles": 0, "edges": 0}
     named = {}
     for (pi, jt, _), gr in sorted(groups.items()):
@@ -629,16 +700,19 @@ def to_obj(g, name, wire="edges", pose="closed", materials=None, frame="y-up", w
             for t in gr["tris"]:
                 for p in t:
                     out.append("v %.6f %.6f %.6f" % place(p, jt))
+            for uv in box_uvs(gr["tris"]):
+                out.append("vt %.5f %.5f" % uv)
             for n in normals:
                 out.append("vn %.5f %.5f %.5f" % placen(n, jt))
             for k in range(len(gr["tris"])):
-                a = nv + 3 * k + 1
-                out.append("f %d//%d %d//%d %d//%d" % (a, nn + 3 * k + 1, a + 1, nn + 3 * k + 2, a + 2, nn + 3 * k + 3))
+                a, t0, n0 = nv + 3 * k + 1, nt + 3 * k + 1, nn + 3 * k + 1
+                out.append("f %d/%d/%d %d/%d/%d %d/%d/%d" % (a, t0, n0, a + 1, t0 + 1, n0 + 1, a + 2, t0 + 2, n0 + 2))
             nv += 3 * len(gr["tris"])
+            nt += 3 * len(gr["tris"])
             nn += 3 * len(gr["tris"])
             counts["triangles"] += len(gr["tris"])
         for tone, segs in sorted(gr["segs"].items()):
-            if wire == "none":
+            if wire == "none" or (wire == "seams" and gr["tris"]):   # seams: only the parts drawn as lines
                 continue
             out.append("usemtl %s" % lightname(tone))
             if wire == "edges":
@@ -675,7 +749,7 @@ def to_obj(g, name, wire="edges", pose="closed", materials=None, frame="y-up", w
 # ---------------------------------------------------------------------------- one call
 
 def render(scene, fmt="glb", wire="edges", pose="closed", materials=None, frame="y-up", wire_radius=None,
-           name="construct"):
+           name="construct", merge=False):
     """Compile `scene` solid and export it in memory: {"glb": bytes} or {"obj": text, "mtl": text}, with a
     summary."""
     if fmt not in FORMATS:
@@ -686,7 +760,7 @@ def render(scene, fmt="glb", wire="edges", pose="closed", materials=None, frame=
         raise ExportError("glTF is Y up by definition; --frame z-up is for OBJ")
     g = scene_mod.compile_scene(scene, solid=True)
     if fmt == "glb":
-        doc, binary, summary = to_gltf(g, wire, pose, materials, wire_radius)
+        doc, binary, summary = to_gltf(g, wire, pose, materials, wire_radius, merge)
         out = {"glb": pack_glb(doc, binary)}
         summary["bytes"] = len(out["glb"])
     else:
@@ -697,11 +771,12 @@ def render(scene, fmt="glb", wire="edges", pose="closed", materials=None, frame=
     return out, summary
 
 
-def export(scene, path, fmt=None, wire="edges", pose="closed", materials=None, frame="y-up", wire_radius=None):
+def export(scene, path, fmt=None, wire="edges", pose="closed", materials=None, frame="y-up", wire_radius=None,
+           merge=False):
     """Compile `scene` solid and write it to `path` (.glb, or .obj with its .mtl beside it). Returns a summary."""
     path = Path(path)
     fmt = fmt or path.suffix.lower().lstrip(".")
-    out, summary = render(scene, fmt, wire, pose, materials, frame, wire_radius, name=path.stem)
+    out, summary = render(scene, fmt, wire, pose, materials, frame, wire_radius, name=path.stem, merge=merge)
     path.parent.mkdir(parents=True, exist_ok=True)
     if fmt == "glb":
         path.write_bytes(out["glb"])

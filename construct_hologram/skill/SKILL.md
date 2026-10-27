@@ -178,7 +178,8 @@ OBJ of the construct. Author and review the construct first, as above; then:
 - `python3 TOOLS export scene.json --out model.glb` (glTF 2.0: every part a named object, its
   joints as the `open` animation, periodic motion as `idle`, each vertex's build phase as
   `_PHASE`). For OBJ: `--out model.obj` (an `.mtl` beside it; `--frame z-up` for Z-up tools).
-- `--wire tubes` turns the line art into thin geometry for game engines (they drop plain lines);
+- For a game engine: `--merge --wire seams` (static parts merged per material, the design lines as
+  dark seams); `--wire tubes` keeps all the line art as thin geometry instead;
   `--pose open` rests the model open; `--materials map.json` colours and finishes parts by id or
   pattern (`{"materials": [{"parts": ["body", "door-*"], "color": "#2b4a6f", "finish": "paint"}]}`;
   finishes: paint, brushed, chrome, wood, rubber, plastic, glass, light), when the user wants a

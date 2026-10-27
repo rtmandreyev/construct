@@ -7,7 +7,7 @@
   review <scene.json> --out DIR [--asset-root DIR]      build, then capture the review set
   video <scene.json> --out FILE.mp4|.gif [--seconds S] [--fps N] [--start S] [--view V]
   export <scene.json> --out FILE.glb|.obj [--wire edges|tubes|none] [--pose closed|open]
-                      [--materials map.json] [--frame y-up|z-up]    a 3D model (docs/EXPORT.md)
+                      [--materials map.json] [--frame y-up|z-up] [--merge]    a 3D model (docs/EXPORT.md)
 
 Exit status: 0 success, 1 the scene or audit has errors, 2 capture unavailable.
 """
@@ -439,13 +439,16 @@ def add_commands(sub):
     p.add_argument("scene")
     p.add_argument("--out", required=True, help="FILE.glb or FILE.obj (an .mtl is written beside it)")
     p.add_argument("--format", choices=("glb", "obj"), help="default: from the file's extension")
-    p.add_argument("--wire", choices=("edges", "tubes", "none"), default="edges",
-                   help="the line art: edges (default), thin tubes (for engines that drop lines) or none")
+    p.add_argument("--wire", choices=("edges", "tubes", "seams", "none"), default="edges",
+                   help="the line art: edges (default), thin tubes (for engines that drop lines), tubes for the "
+                        "design lines only (seams, creases, outlines: for finished game models) or none")
     p.add_argument("--wire-radius", type=float, help="the tubes' radius in metres (default: from the object's size)")
     p.add_argument("--pose", choices=("closed", "open"), default="closed",
                    help="the pose the model rests in; glTF also carries the open animation either way")
     p.add_argument("--materials", help="a material map: part ids or patterns to colour, metalness and roughness")
     p.add_argument("--frame", choices=("y-up", "z-up"), default="y-up", help="OBJ only (glTF is always Y up)")
+    p.add_argument("--merge", action="store_true",
+                   help="glTF: merge every part that does not move into one mesh per material (for game engines)")
     p = sub.add_parser("audio", help="film mode: per-frame audio features (energy, high, voice) for `video --audio`")
     p.add_argument("music", help="the track (any format ffmpeg reads)")
     p.add_argument("--out", required=True, help="the features JSON")
@@ -680,7 +683,7 @@ def run(args):
             from . import export as export_mod
             try:
                 s = export_mod.export(load(args.scene), args.out, args.format, args.wire, args.pose, args.materials,
-                                      args.frame, args.wire_radius)
+                                      args.frame, args.wire_radius, args.merge)
             except export_mod.ExportError as exc:
                 sys.stderr.write("export: %s\n" % exc)
                 return 1
