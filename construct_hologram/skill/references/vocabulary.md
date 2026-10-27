@@ -71,6 +71,7 @@ errors: the closed vocabulary is the safety boundary.
 | `extrude` | `profile [[u,v], ...]` (simple polygon), `height`, `axis` `y` (footprint in XZ, rises) · `z` (front elevation in XY, runs back) · `x`, `ribs` | building plans, gabled houses, book spines, brackets |
 | `tube` | `path [[x,y,z], ...]` (Catmull-Rom smoothed), `radius` or one per point (taper), `sides` 3–24, `samples`, `longitudinal`, `ring_every`, `caps` | limbs, tentacles, tonearms, pipes, cables, branches |
 | `curve` | `points`, `smooth`, `closed` | edges, paths, outlines, shine strokes |
+| `paths` | `paths` (up to 4,000 polylines of `[x, y, z]` points, 30,000 points in all), `detail` | many lines in one part: agent tracks, network edges, measured curves (the NetLogo bridge writes them) |
 | `plane` | `size [w,h]` facing +Z, `divisions` | doors, windows, signs, artwork faces |
 | `grid` | `size [w,d]`, `divisions` | ground plans, decks |
 | `points` | `count` ≤ 2000, `region` `{"box":[w,h,d]}` · `{"sphere": r}` · `{"shell": r}`, `sprite` `disc, ring, square, soft`, `size_px` | dust, spores, stars, sparks |

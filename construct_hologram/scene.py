@@ -43,6 +43,8 @@ MAX_TOUR = 12
 MAX_PROFILE = 128
 MAX_PATH = 64
 MAX_CURVE = 256
+MAX_PATHS = 4000         # polylines in one `paths` shape
+MAX_PATH_POINTS = 30000  # points in all of them
 MAX_EXTENT = 500.0          # metres from the origin: from a ring to a cathedral
 MIN_SIZE = 1e-4             # 0.1 mm
 
@@ -75,7 +77,7 @@ ASSEMBLY_S = 20  # a construct's assembly, in seconds
 LONG_ASSEMBLY_S = 1200  # film mode: an assembly that spans a track
 LIFE = ("off", "calm", "alive")
 SHAPE_TYPES = ("box", "cylinder", "cone", "sphere", "torus", "lathe", "extrude", "tube",
-               "curve", "plane", "grid", "points", "marker", "terrain", "globe", "loft",
+               "curve", "paths", "plane", "grid", "points", "marker", "terrain", "globe", "loft",
                "tower", "roof", "dormer", "facade", "battlements", "buttress", "shell")
 MAX_TERRAIN = 128
 MAX_GLOBE_POINTS = 20000
@@ -390,6 +392,26 @@ def _shape_check(c, shape, where):
         for k in ("smooth", "closed"):
             if k in shape and not isinstance(shape[k], bool):
                 c.err("%s.%s" % (where, k), "expected true or false")
+    elif t == "paths":
+        lines = shape.get("paths")
+        if not isinstance(lines, list) or not 1 <= len(lines) <= MAX_PATHS:
+            c.err(where + ".paths", "expected 1..%d polylines, each a list of [x, y, z] points" % MAX_PATHS)
+        else:
+            total = 0
+            for i, pts in enumerate(lines):
+                if not isinstance(pts, list) or not 2 <= len(pts) <= MAX_CURVE:
+                    c.err("%s.paths[%d]" % (where, i), "expected 2..%d points" % MAX_CURVE)
+                    break
+                total += len(pts)
+                for j, q in enumerate(pts):
+                    if not (isinstance(q, list) and len(q) == 3 and all(isinstance(x, (int, float)) and not
+                                                                        isinstance(x, bool) and math.isfinite(x) for x in q)):
+                        c.err("%s.paths[%d][%d]" % (where, i, j), "expected [x, y, z] numbers")
+                        break
+            if total > MAX_PATH_POINTS:
+                c.err(where + ".paths", "%d points in all; at most %d" % (total, MAX_PATH_POINTS))
+        if "detail" in shape and not isinstance(shape["detail"], bool):
+            c.err(where + ".detail", "expected true or false")
     elif t == "plane":
         c.vec(shape.get("size"), where + ".size", 2, **pos)
         if "divisions" in shape:
@@ -566,6 +588,7 @@ _SHAPE_KEYS = {
     "extrude": {"type", "profile", "height", "axis", "ribs"},
     "tube": {"type", "path", "radius", "sides", "smooth", "samples", "longitudinal", "ring_every", "caps"},
     "curve": {"type", "points", "smooth", "closed"},
+    "paths": {"type", "paths", "detail"},
     "plane": {"type", "size", "divisions"},
     "grid": {"type", "size", "divisions"},
     "terrain": {"type", "size", "heights", "contour", "index", "grid_every", "skirt"},
@@ -1285,6 +1308,8 @@ def _local_mesh(shape, seed):
                            shape.get("longitudinal", 4), shape.get("caps", False))
     if t == "curve":
         return shapes.curve([tuple(p) for p in shape["points"]], shape.get("smooth", False), shape.get("closed", False))
+    if t == "paths":
+        return shapes.paths(shape["paths"], shape.get("detail", False))
     if t == "plane":
         return shapes.plane(shape["size"][0], shape["size"][1], shape.get("divisions", 0))
     if t == "grid":
@@ -1444,7 +1469,7 @@ def cross_section(p):
     if t == "tube":
         r = sh["radius"]
         return 2 * (max(r) if isinstance(r, list) else r) * k  # a tapered tube is as thick as its widest point
-    if t == "curve":
+    if t in ("curve", "paths"):
         return 0.0
     if t in ("cylinder", "cone"):
         d = 2 * (sh["radius"] if t == "cylinder" else max(sh["radius_bottom"], sh["radius_top"]))

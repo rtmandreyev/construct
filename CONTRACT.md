@@ -245,6 +245,13 @@ The shape `loft` `{sections: [[z, half_width, y_bottom, y_top, half_width_top?],
 round?: 0..1}` runs back to front along +Z through rounded trapezoid sections. It compiles to
 ordinary lines and triangles.
 
+## Paths (an addition within 0.2)
+
+The shape `paths` `{paths: [[[x, y, z], ...], ...], detail?: bool}` draws up to 4,000 open polylines
+(2 to 256 points each, 30,000 in all) in one part: agent tracks, network edges, measured curves. It
+compiles to ordinary lines; readers need nothing new. `detail` draws them as detail lines (thinner,
+fading first with distance). The NetLogo bridge (`construct netlogo`) writes it.
+
 ## Globe (an addition within 0.2)
 
 The shape `globe` `{radius, paths: [[[lon, lat], ...], ...], graticule?: 0|10|15|20|30|45,

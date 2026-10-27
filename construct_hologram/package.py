@@ -44,7 +44,8 @@ TAGS = ["Construct", "Hologram", "3D", "Visualization", "WebGL", "Animation", "D
 RUNTIME_MODULES = ["__init__.py", "__main__.py", "product.py", "hologram.py", "scene.py", "shapes.py",
                    "audit.py", "diagnose.py", "params.py", "prompts.py", "render.py", "runner.py", "studio.py", "png.py",
                    "trace.py", "terrain.py", "tiers.py", "globe.py", "critic.py", "compare.py", "archkit.py", "rounds.py",
-                   "film_audio.py", "export.py"]
+                   "film_audio.py", "export.py", "netlogo.py"]
+DATA_FILES = ["construct.nls"]  # the NetLogo recorder, copied beside a model by `netlogo-instrument`
 FILM = ["construct-three.js"]  # film mode's optional three.js loader, shipped as runtime/film/
 VIEWER_FILES = ["hologram.js", "film.js", "template.html"]
 PROMPT_EXAMPLES = ["case-jewel.params.json", "book.json"]
@@ -143,7 +144,7 @@ def write_skill(host, root):
     (root / "SKILL.md").write_text(render_skill_md(host), encoding="utf-8")
     for ref in sorted((HERE / "skill" / "references").glob("*.md")):
         _copy(ref, root / "references" / ref.name)
-    for module in RUNTIME_MODULES:
+    for module in RUNTIME_MODULES + DATA_FILES:
         _copy(HERE / module, root / "runtime" / PACKAGE / module)
     for name in VIEWER_FILES:
         _copy(HERE / "viewer" / name, root / "runtime" / PACKAGE / "viewer" / name)

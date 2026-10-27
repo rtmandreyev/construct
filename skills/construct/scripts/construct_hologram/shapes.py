@@ -416,6 +416,15 @@ def curve(points, smooth=False, closed=False, samples=8, cls=OUTLINE):
     return m
 
 
+def paths(polylines, detail=False):
+    """Many open polylines in one part (agent tracks, network edges, measured curves): lines only."""
+    m = Mesh()
+    cls = DETAIL if detail else OUTLINE
+    for pts in polylines:
+        m.loop([tuple(p) for p in pts], cls, closed=False)
+    return m
+
+
 def plane(width, height, divisions=0):
     """A flat rectangle facing +Z (an artwork face, a sign, a panel)."""
     hw, hh = width / 2, height / 2

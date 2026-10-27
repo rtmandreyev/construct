@@ -28,7 +28,8 @@ ROOT = Path(__file__).resolve().parent.parent
 PKG = ROOT / "construct_hologram"
 HERE = ROOT / "scripts" / "hermes_submission"
 RUNTIME = ["__init__.py", "__main__.py", "product.py", "hologram.py", "scene.py", "shapes.py", "audit.py", "prompts.py",
-           "diagnose.py", "params.py", "render.py", "studio.py", "png.py", "trace.py", "terrain.py", "tiers.py", "globe.py", "critic.py", "compare.py", "archkit.py", "rounds.py", "runner.py", "film_audio.py", "export.py"]
+           "diagnose.py", "params.py", "render.py", "studio.py", "png.py", "trace.py", "terrain.py", "tiers.py", "globe.py", "critic.py", "compare.py", "archkit.py", "rounds.py", "runner.py", "film_audio.py", "export.py",
+           "netlogo.py", "construct.nls"]
 # the examples the skill's references cite, and the one its test needs (case-jewel); a skill over ~50
 # files draws a scanner notice, so only these ship
 EXAMPLES = ["cd.json", "book.json", "lighthouse.json", "castle.json", "case-jewel.params.json",

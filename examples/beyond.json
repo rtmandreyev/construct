@@ -9,8 +9,28 @@
    "label": "live page · 3D export · four gallery constructs",
    "credit": "Exported unedited; the hero is a Blender render of the exported file",
    "files": ["index.html", "README.md", "hero.jpg", "thumb.jpg", "maps/fj62.json", "maps/jwst.json", "maps/revox.json", "maps/minifreak.json"],
-   "exports": {"fj62.glb": {"scene": "toyota-land-cruiser-fj62", "materials": "maps/fj62.json"}, "jwst.glb": {"scene": "films/james-webb-space-telescope", "materials": "maps/jwst.json"}, "revox.glb": {"scene": "revox-a77", "materials": "maps/revox.json"}, "minifreak.glb": {"scene": "arturia-minifreak", "materials": "maps/minifreak.json"}},
-   "buttons": [["Open the live page", ""], ["Download the FJ62 (.glb)", "fj62.glb"]]
+   "exports": {
+    "fj62.glb": {
+     "scene": "toyota-land-cruiser-fj62",
+     "materials": "maps/fj62.json"
+    },
+    "jwst.glb": {
+     "scene": "films/james-webb-space-telescope",
+     "materials": "maps/jwst.json"
+    },
+    "revox.glb": {
+     "scene": "revox-a77",
+     "materials": "maps/revox.json"
+    },
+    "minifreak.glb": {
+     "scene": "arturia-minifreak",
+     "materials": "maps/minifreak.json"
+    }
+   },
+   "buttons": [
+    ["Open the live page", ""],
+    ["Download the FJ62 (.glb)", "fj62.glb"]
+   ]
   },
   {
    "slug": "netlogo-viral-marketing",
@@ -19,6 +39,45 @@
    "label": "live model · DeepSeek V4.1 Flash scene",
    "credit": "Model © 2012 Uri Wilensky · CC BY-NC-SA 3.0",
    "files": ["index.html", "svm-model.js", "netlogo-run.js", "scene.json", "LICENSE", "hero.jpg", "thumb.jpg"]
+  },
+  {
+   "slug": "netlogo-flocking",
+   "title": "Flocking (NetLogo)",
+   "line": "Each bird's track rising with time: random flight near the floor, flocks higher up.",
+   "label": "recorded NetLogo run · NetLogo bridge",
+   "credit": "Model © 1998 Uri Wilensky · CC BY-NC-SA 3.0",
+   "files": ["scene.json", "README.md", "LICENSE", "hero.jpg", "thumb.jpg", "Flocking-construct.nlogox", "construct-experiment.xml"],
+   "pictures": "construct",
+   "buttons": [
+    ["Open the construct", ""],
+    ["The recorded model", "Flocking-construct.nlogox"]
+   ]
+  },
+  {
+   "slug": "netlogo-wolf-sheep",
+   "title": "Wolf Sheep Predation (NetLogo)",
+   "line": "The predator-prey cycle rising in time: sheep across, wolves front to back, ticks up.",
+   "label": "recorded NetLogo run · NetLogo bridge",
+   "credit": "Model © 1997 Uri Wilensky · CC BY-NC-SA 3.0",
+   "files": ["scene.json", "README.md", "LICENSE", "hero.jpg", "thumb.jpg", "Wolf Sheep Predation-construct.nlogox", "construct-experiment.xml"],
+   "pictures": "construct",
+   "buttons": [
+    ["Open the construct", ""],
+    ["The recorded model", "Wolf Sheep Predation-construct.nlogox"]
+   ]
+  },
+  {
+   "slug": "netlogo-fire",
+   "title": "Fire (NetLogo)",
+   "line": "The fire's front, every few ticks, raised to its tick as it crosses the forest.",
+   "label": "recorded NetLogo run · NetLogo bridge",
+   "credit": "Model © 1997 Uri Wilensky · CC BY-NC-SA 3.0",
+   "files": ["scene.json", "README.md", "LICENSE", "hero.jpg", "thumb.jpg", "Fire-construct.nlogox", "construct-experiment.xml"],
+   "pictures": "construct",
+   "buttons": [
+    ["Open the construct", ""],
+    ["The recorded model", "Fire-construct.nlogox"]
+   ]
   }
  ]
 }

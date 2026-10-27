@@ -1,0 +1,154 @@
+;; construct.nls: record a NetLogo run for Construct (https://github.com/rtmandreyev/construct). MIT.
+;;
+;; Add it to a model with   __includes ["construct.nls"]   and, at the end of setup (after clear-all and
+;; reset-ticks, so nothing clears it):
+;;
+;;   construct-start "Flocking" "flocking-run.jsonl"      ; a title and the file to write
+;;   construct-seed 42                                    ; optional: the seed your run used (random-seed 42)
+;;   construct-track-turtles ["heading"]                  ; optional: turtle variables or reporters to record
+;;   construct-track-reporters ["count sheep" "count wolves"]   ; optional: observer reporters, each record
+;;   construct-track-patches "pcolor" 5                   ; optional: a patch reporter, every 5 ticks
+;;   construct-skip-turtles                               ; optional: no turtles (reporters or patches only)
+;;   construct-record                                     ; the first record, at tick 0
+;;
+;; then  construct-record  at the end of go (each tick), and  construct-finish  when the run ends (or as
+;; a BehaviorSpace post-run command). The file is JSON Lines: one header, then one line per record.
+;; Every turtle is recorded with its who, breed, xcor, ycor and color; links when their number changes.
+;; Then:   construct netlogo flocking-run.jsonl --view space-time --out scene.json
+;;
+;; With BehaviorSpace, give each run its own file (for example with behaviorspace-run-number in the
+;; name), since parallel runs would otherwise write to one file.
+
+globals [
+  construct-file construct-title construct-seed-value construct-turtle-vars construct-reporters
+  construct-patch-reporter construct-patch-every construct-every construct-header? construct-link-count
+  construct-turtles? construct-reporter-tasks construct-patch-task construct-turtle-tasks
+]
+
+to construct-start [ title path ]
+  set construct-title title
+  set construct-file path
+  set construct-seed-value "null"
+  set construct-turtle-vars []
+  set construct-turtle-tasks []
+  set construct-reporters []
+  set construct-reporter-tasks []
+  set construct-patch-reporter ""
+  set construct-patch-every 0
+  set construct-every 1
+  set construct-header? false
+  set construct-link-count -1
+  set construct-turtles? true
+  file-close-all
+  if file-exists? construct-file [ file-delete construct-file ]
+end
+
+to construct-seed [ n ]
+  set construct-seed-value n
+end
+
+;; each source compiled once into an anonymous reporter, not once per agent and tick
+to-report construct-task [ source ]
+  report runresult (word "[ [] -> " source " ]")
+end
+
+to construct-track-turtles [ names ]
+  set construct-turtle-vars names
+  set construct-turtle-tasks map [ v -> construct-task v ] names
+end
+
+to construct-track-reporters [ sources ]
+  set construct-reporters sources
+  set construct-reporter-tasks map [ v -> construct-task v ] sources
+end
+
+to construct-track-patches [ source n ]
+  set construct-patch-reporter source
+  set construct-patch-task construct-task source
+  set construct-patch-every max list 1 n
+end
+
+to construct-skip-turtles
+  set construct-turtles? false
+end
+
+to construct-record-every [ n ]
+  set construct-every max list 1 n
+end
+
+to construct-record
+  if ticks mod construct-every != 0 [ stop ]
+  file-open construct-file
+  if not construct-header? [
+    file-print (word "{\"construct-netlogo\":1,\"title\":" construct-json construct-title
+      ",\"netlogo\":" construct-json netlogo-version ",\"seed\":" construct-seed-value
+      ",\"world\":{\"min-pxcor\":" min-pxcor ",\"max-pxcor\":" max-pxcor ",\"min-pycor\":" min-pycor
+      ",\"max-pycor\":" max-pycor "}"
+      ",\"turtle-vars\":" construct-json construct-turtle-vars ",\"reporters\":" construct-json construct-reporters
+      ",\"patch-reporter\":" construct-json construct-patch-reporter ",\"patch-every\":" construct-patch-every "}")
+    set construct-header? true
+  ]
+  ;; streamed piece by piece: a long record is never built up as one string
+  file-type (word "{\"t\":" ticks)
+  if construct-turtles? [
+    file-type ",\"turtles\":"
+    construct-write map [ a -> construct-turtle a ] sort turtles
+  ]
+  if not empty? construct-reporters [
+    file-type ",\"reporters\":"
+    construct-write map [ r -> runresult r ] construct-reporter-tasks
+  ]
+  if construct-turtles? and count links != construct-link-count [
+    set construct-link-count count links
+    file-type ",\"links\":"
+    construct-write map [ l -> [ (list [who] of end1 [who] of end2 (word breed)) ] of l ] sort links
+  ]
+  if construct-patch-reporter != "" and ticks mod construct-patch-every = 0 [
+    file-type ",\"patches\":"
+    construct-write map [ q -> [ runresult construct-patch-task ] of q ] sort patches
+  ]
+  file-print "}"
+  file-close
+end
+
+;; a list, written to the open file as a JSON array
+to construct-write [ xs ]
+  file-type "["
+  if not empty? xs [
+    file-type construct-json first xs
+    foreach but-first xs [ x -> file-type "," file-type construct-json x ]
+  ]
+  file-type "]"
+end
+
+to construct-finish
+  file-open construct-file
+  file-print (word "{\"end\":" ticks "}")
+  file-close
+end
+
+to-report construct-turtle [ a ]
+  report [ (sentence who (word breed) precision xcor 4 precision ycor 4 color map [ v -> runresult v ] construct-turtle-tasks) ] of a
+end
+
+;; a NetLogo value as JSON: numbers, booleans, strings, lists, agents (a turtle as its who) and nobody
+to-report construct-json [ v ]
+  if is-number? v [ report (word v) ]
+  if is-boolean? v [ report ifelse-value v [ "true" ] [ "false" ] ]
+  if is-string? v [ report (word "\"" construct-escape v "\"") ]
+  if is-list? v [
+    if empty? v [ report "[]" ]
+    report (word "[" reduce [ [ a b ] -> (word a "," b) ] map [ x -> construct-json x ] v "]")
+  ]
+  if is-turtle? v [ report (word [who] of v) ]
+  if is-patch? v [ report construct-json [ (list pxcor pycor) ] of v ]
+  report "null"
+end
+
+to-report construct-escape [ s ]
+  let out ""
+  foreach n-values length s [ i -> item i s ] [ c ->
+    set out (word out ifelse-value (c = "\"" or c = "\\") [ (word "\\" c) ] [ c ])
+  ]
+  report out
+end

@@ -170,6 +170,21 @@ track for it ("make a construct of X that assembles across this track"). Otherwi
    move on with the music and end with the whole construct. Report what you made, its length,
    and the reactivity and camera you used. Details: `docs/FILM.md` in the Construct repository.
 
+## A NetLogo model as a construct
+
+Only when the user asks to visualise a NetLogo model or run. No scene authoring is needed: the
+bridge computes the construct from a recorded run (details: `docs/NETLOGO.md`).
+
+1. `python3 TOOLS netlogo-instrument Model.nlogox --title "Model" --out run/` with what to record:
+   `--turtles a,b`, `--reporters "count sheep;count wolves"`, `--patches pcolor:4`, `--no-turtles`,
+   `--seed N`, `--ticks N`. Tell the user to run it in NetLogo (setup, go), or headless with the
+   command it prints, if NetLogo is installed.
+2. `python3 TOOLS netlogo run/run.jsonl --view <view> --out scene.json`: `space-time` (moving agents),
+   `network-time --state var` (spreading on a network), `phase --x R1 --z R2` (two quantities in a
+   cycle; `--smooth N`), `field` (spreading over patches). `--time sqrt` when most change comes early.
+3. Build and review it as usual; you may add views, labels or annotations, but keep the data parts
+   as they are, and credit the model as its Info tab asks.
+
 ## A 3D model of a construct (export)
 
 Only when the user asks for a 3D model, a file for Blender, Godot, Unity or Unreal, a glTF, GLB or

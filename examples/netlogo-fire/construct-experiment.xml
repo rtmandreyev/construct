@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<experiments>
+  <experiment name="construct" repetitions="1" sequentialRunOrder="true" runMetricsEveryStep="false" timeLimit="1000">
+    <setup>random-seed 3
+setup</setup>
+    <go>go</go>
+    <postRun>construct-finish</postRun>
+    <constants>
+      <enumeratedValueSet variable="density"><value value="61"></value></enumeratedValueSet>
+    </constants>
+    <metrics>
+      <metric>ticks</metric>
+    </metrics>
+  </experiment>
+</experiments>

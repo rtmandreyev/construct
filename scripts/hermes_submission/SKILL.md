@@ -185,9 +185,15 @@ Work in a folder of your own. `out/construct.html` opens in any browser.
    `--merge --wire seams` makes a game-ready prop (static parts merged, design lines as dark seams),
    `--wire tubes` keeps all the line art as geometry, `--pose open` rests it open, and
    `--materials map.json` colours and finishes parts by id (paint, brushed, chrome, wood, rubber,
-   plastic, glass, light) when the user wants a finished model; keep it beside the scene, never in it. A `no-surface` audit
-   warning names a part that would be missing: give it a solid shape. Say what it is: correctly
-   sized named parts with working joints, without textures; a blockout or prop, not a hero asset.
+   plastic, glass, light) when the user wants a finished model; keep it beside the scene, never in
+   it. A `no-surface` audit warning names a part that would be missing: give it a solid shape. Say
+   what it is: correctly sized named parts with working joints, without textures; a blockout or
+   prop, not a hero asset.
+9. **A NetLogo model (only when asked).** `scripts/cli.py netlogo-instrument Model.nlogox --title
+   "Model" --out run/` (with `--turtles`, `--reporters "a;b"`, `--patches pcolor:4`, `--seed`,
+   `--ticks`) makes the model record itself; after the user runs it, `scripts/cli.py netlogo
+   run/run.jsonl --view space-time|network-time|phase|field --out scene.json` computes the construct
+   from the run, no authoring needed. Credit the model as its Info tab asks.
 
 ## Pitfalls
 

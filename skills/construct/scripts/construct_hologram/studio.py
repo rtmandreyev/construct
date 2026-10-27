@@ -449,6 +449,36 @@ def add_commands(sub):
     p.add_argument("--frame", choices=("y-up", "z-up"), default="y-up", help="OBJ only (glTF is always Y up)")
     p.add_argument("--merge", action="store_true",
                    help="glTF: merge every part that does not move into one mesh per material (for game engines)")
+    p = sub.add_parser("netlogo-instrument", help="a copy of a NetLogo model that records its run for Construct, "
+                                                  "and a headless experiment (docs/NETLOGO.md)")
+    p.add_argument("model", help="the model (.nlogox)")
+    p.add_argument("--title", required=True, help="the model's name, as the construct will cite it")
+    p.add_argument("--out", required=True, help="a folder for the copy, construct.nls and the experiment")
+    p.add_argument("--run-file", default="run.jsonl", help="the recording's name, beside the model (default run.jsonl)")
+    p.add_argument("--turtles", default="", help="turtle variables or reporters to record, comma-separated")
+    p.add_argument("--reporters", default="", help="observer reporters to record each tick, separated by ';'")
+    p.add_argument("--patches", help="a patch reporter and how often, as REPORTER:EVERY (for example pcolor:5)")
+    p.add_argument("--every", type=int, default=1, help="record every N ticks (default 1)")
+    p.add_argument("--seed", type=int, help="the random seed the experiment sets (recorded with the run)")
+    p.add_argument("--ticks", type=int, default=500, help="the experiment's time limit (default 500)")
+    p.add_argument("--no-turtles", action="store_true", help="record no turtles (reporters or patches only)")
+    p = sub.add_parser("netlogo", help="a construct of a recorded NetLogo run (docs/NETLOGO.md)")
+    p.add_argument("run", help="the recording (.jsonl, written by construct.nls)")
+    p.add_argument("--view", required=True, choices=("space-time", "network-time", "phase", "field"))
+    p.add_argument("--out", required=True, help="the scene to write (.json); then `build` it")
+    p.add_argument("--title", help="the construct's title (default: the model's)")
+    p.add_argument("--state", help="network-time: the turtle variable whose turning true lifts a node")
+    p.add_argument("--x", help="phase: the reporter across the floor (default: the first recorded)")
+    p.add_argument("--z", help="phase: the reporter front to back (default: the second)")
+    p.add_argument("--change", choices=("first", "last"), default="first", help="field: lift each patch to its "
+                                                                               "first or its last change")
+    p.add_argument("--max-agents", type=int, help="space-time: draw at most this many turtles (default 150)")
+    p.add_argument("--smooth", type=int, help="phase: a centred moving average over N records (recorded as a fact)")
+    p.add_argument("--levels", type=int, help="field: how many fronts to draw (default 32)")
+    p.add_argument("--resolution", type=int, help="field: blocks across the world (default 64)")
+    p.add_argument("--time", choices=("linear", "sqrt"), default="linear",
+                   help="height from ticks: linear (default) or sqrt, to stretch a run whose changes come early")
+    p.add_argument("--force", action="store_true")
     p = sub.add_parser("audio", help="film mode: per-frame audio features (energy, high, voice) for `video --audio`")
     p.add_argument("music", help="the track (any format ffmpeg reads)")
     p.add_argument("--out", required=True, help="the features JSON")
@@ -459,7 +489,7 @@ def add_commands(sub):
 
 
 COMMANDS = ("new", "params", "expand", "prompts", "author", "trace", "trace-image", "terrain", "globe", "critique", "rounds", "compare", "loft-from-traces", "check", "build", "review",
-            "video", "audio", "export")
+            "video", "audio", "export", "netlogo", "netlogo-instrument")
 
 
 def run(args):
@@ -679,6 +709,46 @@ def run(args):
             paths = render.review(page_in(args.out), str(Path(args.out, "review")), w, h, sheets=sheets)
             sys.stdout.write("captured:\n  %s\n" % "\n  ".join(paths))
             return 0 if report["ok"] else 1
+        if args.command in ("netlogo", "netlogo-instrument"):
+            from . import netlogo as nl
+            try:
+                if args.command == "netlogo-instrument":
+                    src = Path(args.model)
+                    patches = None
+                    if args.patches:
+                        rep_, _, every = args.patches.rpartition(":")
+                        patches = (rep_, int(every)) if rep_ and every.isdigit() else (args.patches, 1)
+                    model, xml = nl.instrument(src.read_text(encoding="utf-8"), args.title, args.run_file,
+                                               [t.strip() for t in args.turtles.split(",") if t.strip()],
+                                               [r.strip() for r in args.reporters.split(";") if r.strip()],
+                                               patches, args.every, args.seed, args.ticks, args.no_turtles)
+                    out = Path(args.out)
+                    out.mkdir(parents=True, exist_ok=True)
+                    target = out / (src.stem + "-construct.nlogox")
+                    target.write_text(model, encoding="utf-8")
+                    shutil.copyfile(nl.NLS, out / "construct.nls")
+                    (out / "construct-experiment.xml").write_text(xml, encoding="utf-8")
+                    sys.stdout.write("wrote %s, construct.nls and construct-experiment.xml in %s\n"
+                                     "Run it in NetLogo (setup, go), or headless:\n"
+                                     "  NetLogo_Console --headless --model \"%s\" --setup-file \"%s\" "
+                                     "--experiment construct --threads 1\n"
+                                     "then: construct netlogo %s --view space-time --out scene.json\n"
+                                     % (target.name, out, target, out / "construct-experiment.xml",
+                                        out / args.run_file))
+                    return 0
+                scene = nl.scene_from_run(nl.read_run(args.run), args.view, args.title, state=args.state, x=args.x,
+                                          z=args.z, change=args.change, max_agents=args.max_agents,
+                                          time=args.time, smooth=args.smooth, levels=args.levels,
+                                          resolution=args.resolution)
+            except nl.NetLogoError as exc:
+                sys.stderr.write("netlogo: %s\n" % exc)
+                return 1
+            text = json.dumps(scene, separators=(",", ":"), ensure_ascii=False) + "\n"   # data: compact
+            _write(args.out, text, args.force)
+            g = scene_mod.compile_scene(scene)
+            sys.stdout.write("wrote %s: %s, %d parts, %d lines, %d triangles\n"
+                             % (args.out, args.view, len(scene["parts"]), g["counts"]["lines"], g["counts"]["triangles"]))
+            return 0
         if args.command == "export":
             from . import export as export_mod
             try:

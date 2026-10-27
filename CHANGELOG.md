@@ -44,6 +44,14 @@
   box-projected texture coordinates (also in OBJ); a part named for its glazing gets glass, and
   glass also carries a translucent base colour for engines without transmission. Checked in
   Godot 4.7.2 (`CONSTRUCT_GODOT`).
+- **The NetLogo bridge** ([NETLOGO.md](docs/NETLOGO.md)): `construct.nls`, a NetLogo include file that
+  records a run (turtles, links, reporters, patch fields, the seed) as JSON Lines, streamed so a
+  63,000-patch world records in seconds; `construct netlogo-instrument` adds it to a copy of a model
+  with a headless experiment; `construct netlogo run.jsonl --view space-time|network-time|phase|field`
+  draws the run as a construct, deterministically, every data part verified against the recording.
+  It reproduces the Simple Viral Marketing example's run exactly. Three new examples: Flocking,
+  Wolf Sheep Predation and Fire (each CC BY-NC-SA 3.0, like its model).
+- **A new shape, `paths`:** up to 4,000 polylines in one part (a contract addition within 0.2).
 - **Audit:** `no-surface` warns when a main or structural part is drawn only as lines, so it would
   be missing from a 3D export.
 

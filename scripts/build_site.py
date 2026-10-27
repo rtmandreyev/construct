@@ -220,6 +220,22 @@ def example_page(ex):
     return _page("%s · Construct" % ex["title"], body, 2, "%s: a holographic construct. %s" % (ex["title"], provenance(ex)))
 
 
+def data_page(item):
+    """A "beyond" construct with no page of its own (a recorded NetLogo run): the live construct, its credit."""
+    body = ("<div class=\"viewer\"><div class=\"bar\"><h1>%s</h1><p class=\"prov\">%s · %s</p><nav>"
+            "<a class=\"button\" href=\"../../\">All examples</a>"
+            "<a class=\"button\" href=\"construct.html?rounds=0\">Full screen</a>"
+            "<a class=\"button\" href=\"scene.json\">Scene</a>"
+            "<a class=\"button\" href=\"%s/tree/main/examples/%s\">Source and licence</a></nav></div>"
+            "<div class=\"stage\"><iframe src=\"construct.html?ui=0&amp;rounds=0\" title=\"%s, live construct\" "
+            "allowfullscreen></iframe></div>"
+            "<p class=\"hint\">%s Drag to orbit, scroll to zoom; <kbd>R</kbd> replays the assembly, which rises with the "
+            "run's ticks.</p></div>"
+            % (html.escape(item["title"]), html.escape(item["label"]), html.escape(item["credit"]), REPO_URL,
+               item["slug"], html.escape(item["title"]), html.escape(item["line"])))
+    return _page("%s · Construct" % item["title"], body, 2, "%s: %s" % (item["title"], item["line"]))
+
+
 def film_page(film):
     body = ("<div class=\"viewer\"><div class=\"bar\"><h1>%s</h1><p class=\"prov\">%s</p><nav>"
             "<a class=\"button\" href=\"../../\">All examples</a>"
@@ -322,6 +338,8 @@ def build(out, films_dir=None):
             tmp = out / ".build" / ("beyond-" + item["slug"])
             studio.build(str(_public_scene(src / "scene.json", tmp.parent)), str(tmp), asset_root=str(src))
             shutil.copyfile(studio.page_in(tmp), dst / "construct.html")
+        if "index.html" not in item["files"]:
+            (dst / "index.html").write_text(data_page(item), encoding="utf-8")
     shutil.rmtree(out / ".build", ignore_errors=True)
     (out / "index.html").write_text(index_page(examples, films, beyond), encoding="utf-8")
     (out / "404.html").write_text(_page("Not found · Construct", "<header class=\"site\"><h1>Not here</h1><p>That page "

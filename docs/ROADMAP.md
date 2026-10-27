@@ -76,21 +76,20 @@ So that an exported construct drops into a game engine as it is:
 - checked by importing into Godot (done: Godot 4.7.2), and with the Khronos glTF validator
   (pending the owner's OK to download it).
 
-### Phase 4: NetLogo bridge
+### Phase 4: NetLogo bridge (done)
 
-Bring an agent-based model to life without writing a converter.
+Bring an agent-based model to life without writing a converter ([NETLOGO.md](NETLOGO.md)).
 
-- **`construct.nls`**, a NetLogo include file: `construct-start`, `construct-record` each tick,
-  `construct-finish` (also as a BehaviorSpace post-run). It records turtles, links, chosen
-  variables and patch fields, with the model's name, settings and random seed.
-- **`construct netlogo run.json --view network-time | space-time | field`** writes a valid
-  construct directly from the recording, without a model; an agent may then add art direction.
-  Every data part is `verified` against the recorded run.
-- The build order is the tick, so the assembly replays the run; an optional replay control
-  (`build --replay`) adds a tick scrubber.
-- Examples: three of the best-known models in NetLogo's Models Library (Wolf Sheep Predation,
-  Segregation, Flocking), each under its own licence like the Simple Viral Marketing example.
-- If the bridge turns out harder than expected, it moves to v1.1 and v1.0 ships without it.
+- **`construct.nls`**, a NetLogo include file, and `construct netlogo-instrument`, which adds it to a
+  copy of a model with a headless experiment. It records turtles, links, reporters and patch
+  fields, with the model's name, NetLogo's version and the seed.
+- **`construct netlogo run.jsonl --view space-time | network-time | phase | field`** writes a valid
+  construct directly from the recording, without a model; every data part is `verified` against
+  it, and the assembly replays the run. A new shape, `paths`, holds many polylines in one part.
+- Checked: the Simple Viral Marketing example's run is reproduced exactly (all 500 adoption ticks).
+- Examples: Flocking (space-time), Wolf Sheep Predation (phase) and Fire (field). Fire replaced
+  Segregation, whose story is its colours, which a construct does not draw.
+- Later: a replay control with a tick scrubber (`build --replay`); a NetLogo extension.
 
 ### Phase 5: who it is for
 

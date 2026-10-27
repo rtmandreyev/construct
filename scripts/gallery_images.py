@@ -1,7 +1,8 @@
 """Render the gallery's pictures, framed close to each construct: python3 scripts/gallery_images.py [slug ...]
 
-For every example (examples/examples.json) it writes hero.jpg (1440 x 900) and thumb.jpg (1200 x 750),
-and for every film (examples/films.json) poster.jpg (1200 x 750). Each construct is drawn by Construct's
+For every example (examples/examples.json), and every "beyond" item drawn from its construct
+(`"pictures": "construct"` in examples/beyond.json), it writes hero.jpg (1440 x 900) and thumb.jpg
+(1200 x 750), and for every film (examples/films.json) poster.jpg (1200 x 750). Each construct is drawn by Construct's
 own viewer, built as the gallery builds it, in its hero view, assembled and at rest (reduced motion).
 
 The picture is framed on what the construct draws, not on its labels: a render without labels finds
@@ -115,8 +116,10 @@ def main(argv):
     films = [f["slug"] for f in site._load_films()]
     wanted = set(argv)
     with tempfile.TemporaryDirectory() as tmp:
+        beyond = [b["slug"] for b in site._load_beyond() if b.get("pictures") == "construct"]
         for kind, slugs, src_of in (("example", examples, lambda s: site.EXAMPLES / s),
-                                    ("film", films, lambda s: site.EXAMPLES / "films" / s)):
+                                    ("film", films, lambda s: site.EXAMPLES / "films" / s),
+                                    ("beyond", beyond, lambda s: site.EXAMPLES / s)):
             for slug in slugs:
                 if wanted and slug not in wanted:
                     continue
