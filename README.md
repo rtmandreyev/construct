@@ -80,9 +80,9 @@ The examples are real runs: each one was made by an AI agent with Construct, in 
 masterpiece mode, by Claude Opus 5.5, GPT-6.1 Sol or DeepSeek V4.1 Flash. Open any of them to
 watch it assemble, turn it around and read its labels.
 
-<p align="center"><a href="https://rtmandreyev.github.io/construct/"><img src="docs/media/examples.jpg" alt="Example constructs made by AI agents: cars, cathedrals, watches, instruments, a planet and a galaxy"></a></p>
+<p align="center"><a href="https://rtmandreyev.github.io/construct/"><img src="docs/media/examples.jpg" alt="Example constructs made by AI agents: cars, cathedrals, watches, instruments, a planet, a galaxy and a black hole"></a></p>
 
-**[See all 21 constructs in the gallery →](https://rtmandreyev.github.io/construct/)** · each scene and its hero image are in
+**[See all 22 constructs in the gallery →](https://rtmandreyev.github.io/construct/)** · each scene and its hero image are in
 [examples/](examples/).
 
 ## How it works

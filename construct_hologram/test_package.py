@@ -254,9 +254,10 @@ class ExamplesGallery(unittest.TestCase):
                 for text in (index, page):
                     self.assertIn("masterpiece · DeepSeek V4.1 Flash", text)
                     self.assertNotIn("Music:", text)  # no music credit or track names
-                # the choice: the film, or the live construct, both on the film's page
+                # the choice: the live construct (the default), or the film, both on the film's page
                 self.assertIn('href="films/%s/"' % film["slug"], index)
-                self.assertIn('href="films/%s/#live"' % film["slug"], index)
+                self.assertIn('href="films/%s/#film"' % film["slug"], index)
+                self.assertIn('id="live" checked', page)
                 for words in ("Watch the film", "Open the live construct", "Why a film?"):
                     self.assertIn(words, page)
                 self.assertIn('src="film.mp4"', page)

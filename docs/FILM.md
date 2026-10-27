@@ -204,9 +204,9 @@ each assembling across a piece of music. Each has a page in the
 
 | Construct | The film | The live construct |
 | --- | --- | --- |
-| James Webb Space Telescope | [Watch the film](https://rtmandreyev.github.io/construct/films/james-webb-space-telescope/) | [Open the live construct](https://rtmandreyev.github.io/construct/films/james-webb-space-telescope/#live) |
-| Voyager 1 | [Watch the film](https://rtmandreyev.github.io/construct/films/voyager-1/) | [Open the live construct](https://rtmandreyev.github.io/construct/films/voyager-1/#live) |
-| Arecibo Observatory | [Watch the film](https://rtmandreyev.github.io/construct/films/arecibo-observatory/) | [Open the live construct](https://rtmandreyev.github.io/construct/films/arecibo-observatory/#live) |
+| James Webb Space Telescope | [Watch the film](https://rtmandreyev.github.io/construct/films/james-webb-space-telescope/#film) | [Open the live construct](https://rtmandreyev.github.io/construct/films/james-webb-space-telescope/#live) |
+| Voyager 1 | [Watch the film](https://rtmandreyev.github.io/construct/films/voyager-1/#film) | [Open the live construct](https://rtmandreyev.github.io/construct/films/voyager-1/#live) |
+| Arecibo Observatory | [Watch the film](https://rtmandreyev.github.io/construct/films/arecibo-observatory/#film) | [Open the live construct](https://rtmandreyev.github.io/construct/films/arecibo-observatory/#live) |
 
 **Why a film?** The film carries the music and plays the long, music-shaped assembly exactly as
 it was rendered. The live construct is the construct itself, to orbit, replay and read its labels,

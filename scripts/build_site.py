@@ -62,7 +62,7 @@ h1, h2, p, .button { overflow-wrap: anywhere; }
 @media (min-width: 700px) { .grid { grid-template-columns: repeat(2, 1fr); } }
 @media (min-width: 1100px) { .grid { grid-template-columns: repeat(3, 1fr); } }
 @media (min-width: 1700px) { .grid { grid-template-columns: repeat(4, 1fr); } }
-@media (min-width: 1700px) { section.films .grid { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 1100px) { section.films .grid { grid-template-columns: repeat(3, 1fr); } }
 @media (max-width: 480px) { header.site, main { padding-left: 16px; padding-right: 16px; } }
 .card { display: block; text-decoration: none; background: var(--panel); border: 1px solid var(--line);
         border-radius: 14px; overflow: hidden; transition: border-color .15s, box-shadow .15s, transform .15s; }
@@ -129,6 +129,7 @@ header.site h1 em { font-style: normal; color: var(--accent); }
          border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); scrollbar-width: thin;
          -webkit-mask-image: linear-gradient(#000 92%, transparent); mask-image: linear-gradient(#000 92%, transparent); }
 .shelf .grid { padding-top: 14px; }
+@media (min-width: 1100px) { .shelf .grid { grid-template-columns: repeat(4, 1fr); } }
 .shelf .card { scroll-snap-align: start; }
 .shelf-count { color: var(--dim); font-size: 13px; margin: 10px 0 0; }
 .part p.section kbd { border: 1px solid var(--line); border-radius: 4px; padding: 0 5px; font-size: 12px; color: var(--ink); }
@@ -203,13 +204,13 @@ SHELF_JS = ("<script>(function(){var s=document.getElementById('shelf');if(!s)re
 
 
 def index_page(examples, films=(), beyond=()):
-    """The landing page, in three parts: the full pipeline (from a hologram to a finished 3D model), the
-    constructs and films (a compact scroller), and models come alive (a live simulation, then recorded runs)."""
+    """The landing page, in four parts: the full pipeline (from a hologram to a finished 3D model), the
+    constructs (a compact scroller), film mode, and models come alive (a live simulation, then recorded runs)."""
     film_cards = [
         "<div class=\"card film\"><a href=\"films/%s/\"><img src=\"films/%s/poster.jpg\" alt=\"%s, the finished construct "
         "of its film\" loading=\"lazy\" width=\"1200\" height=\"750\"></a><div class=\"body\"><h2><a href=\"films/%s/\">%s</a>"
-        "</h2><p class=\"prov\">film · %s</p><div class=\"choose\"><a class=\"button primary\" href=\"films/%s/\">Watch the film</a>"
-        "<a class=\"button\" href=\"films/%s/#live\">The live construct</a></div></div></div>"
+        "</h2><p class=\"prov\">film · %s</p><div class=\"choose\"><a class=\"button primary\" href=\"films/%s/\">Open the live "
+        "construct</a><a class=\"button\" href=\"films/%s/#film\">Watch the film</a></div></div></div>"
         % (f["slug"], f["slug"], html.escape(f["title"]), f["slug"], html.escape(f["title"]),
            html.escape("%s · %s" % (f["mode"], f["model"])), f["slug"], f["slug"])
         for f in films]
@@ -220,14 +221,19 @@ def index_page(examples, films=(), beyond=()):
         for e in examples]
     shelf = ("<section class=\"part\" id=\"constructs\"><div class=\"part-head\"><div><div class=\"eyebrow\">2 · Constructs"
              "</div><h2 class=\"section\">Anything you can describe</h2><p class=\"section\">Each made by an AI agent from "
-             "a description, in fast or masterpiece mode%s. Open one to watch it build itself; drag to turn it, "
+             "a description, in fast or masterpiece mode. Open one to watch it build itself; drag to turn it, "
              "<kbd>R</kbd> replays the assembly, <kbd>P</kbd> shows how each part is known.</p></div>"
              "<div class=\"shelf-nav\" aria-hidden=\"true\"><button type=\"button\" data-shelf=\"-1\" title=\"Back\">"
              "&#8593;</button><button type=\"button\" data-shelf=\"1\" title=\"More\">&#8595;</button></div></div>"
              "<div class=\"shelf\" id=\"shelf\" tabindex=\"0\"><div class=\"grid\">\n%s\n</div></div>"
-             "<p class=\"shelf-count\">%d constructs%s · scroll, or use the arrows</p></section>"
-             % (", and the films across a piece of music" if films else "", "\n".join(film_cards + cards),
-                len(examples), " and %d films" % len(films) if films else ""))
+             "<p class=\"shelf-count\">%d constructs · scroll, or use the arrows</p></section>"
+             % ("\n".join(cards), len(examples)))
+    film_part = ("<section class=\"part films\" id=\"films\"><div class=\"eyebrow\">3 · Film mode</div>"
+                 "<h2 class=\"section\">Constructs that assemble to music</h2><p class=\"section\">A construct can "
+                 "assemble across a whole piece of music: the build pauses, surges and flares with it, and you get a "
+                 "video with the music in it. Each opens on its live construct; the film is one click away. "
+                 "<a href=\"%s/blob/main/docs/FILM.md\">Film mode</a>.</p>"
+                 "<div class=\"grid\">\n%s\n</div></section>" % (REPO_URL, "\n".join(film_cards))) if films else ""
     pipe = [b for b in beyond if b.get("section") == "pipeline"]
     models = [b for b in beyond if b.get("section") != "pipeline"]
     live = [b for b in models if b.get("kind") == "simulation"]
@@ -270,7 +276,7 @@ def index_page(examples, films=(), beyond=()):
         % (b["slug"], b["slug"], html.escape(b["title"]), b["slug"], html.escape(b["title"]), html.escape(b["line"]),
            html.escape(b["credit"] + (" · art direction: %s" % b["art"] if b.get("art") else "")), _beyond_buttons(b))
         for b in recorded)
-    alive = ("<section class=\"part\" id=\"models\"><div class=\"eyebrow\">3 · Models come alive</div>"
+    alive = ("<section class=\"part\" id=\"models\"><div class=\"eyebrow\">4 · Models come alive</div>"
              "<h2 class=\"section\">Agent-based models, two ways</h2><p class=\"section\">A NetLogo model can come "
              "into Construct as a live simulation you run on the page, or as one recorded run, drawn with time as "
              "height.</p>%s"
@@ -287,14 +293,15 @@ def index_page(examples, films=(), beyond=()):
             "simulation, a model's whole run drawn in time.</p>"
             "<div class=\"links\"><a class=\"button\" href=\"%s\">Construct on GitHub</a>"
             "<a class=\"button\" href=\"#pipeline\">The full pipeline</a><a class=\"button\" href=\"#constructs\">"
-            "Constructs</a><a class=\"button\" href=\"#models\">Models come alive</a>"
+            "Constructs</a><a class=\"button\" href=\"#films\">Film mode</a><a class=\"button\" href=\"#models\">"
+            "Models come alive</a>"
             "<a class=\"button\" href=\"%s/blob/main/docs/HOW-IT-IS-MADE.md\">How they are made</a></div></header>"
-            "<main>%s%s%s</main>"
+            "<main>%s%s%s%s</main>"
             "<footer class=\"site\">Construct is Apache-2.0 licensed; its Blender add-on is GPL-3.0-or-later. Product and "
             "place names belong to their owners; each construct is an independent reconstruction from public "
             "references, not an official model. %s"
             "<a href=\"%s\">Source and documentation</a>.</footer>%s"
-            % (REPO_URL, REPO_URL, pipeline, shelf, alive,
+            % (REPO_URL, REPO_URL, pipeline, shelf, film_part, alive,
                "The pages under Models come alive keep their own licences, given on each. " if models else "",
                REPO_URL, SHELF_JS))
     return _page("Construct · examples", body, 0, "Holographic constructs built by AI agents, the 3D models they "
@@ -370,21 +377,22 @@ def film_page(film):
             "<a class=\"button\" href=\"scene.json\">Scene</a>"
             "<a class=\"button\" href=\"%s/tree/main/examples/films/%s\">Source</a></nav></div>"
             "<div class=\"film-view\"><div class=\"tabs\">"
-            "<input type=\"radio\" name=\"view\" id=\"watch\" checked><label for=\"watch\">Watch the film</label>"
-            "<input type=\"radio\" name=\"view\" id=\"live\"><label for=\"live\">Open the live construct</label>"
+            "<input type=\"radio\" name=\"view\" id=\"live\" checked><label for=\"live\">Open the live construct</label>"
+            "<input type=\"radio\" name=\"view\" id=\"watch\"><label for=\"watch\">Watch the film</label>"
             "<div class=\"panes\" style=\"width: 100%%\">"
             "<div class=\"pane film\"><video controls preload=\"metadata\" playsinline poster=\"poster.jpg\" src=\"film.mp4\" "
             "aria-label=\"%s, a film\"></video></div>"
             "<div class=\"pane live\"><div class=\"stage\"><iframe src=\"construct.html?ui=0&amp;rounds=0\" "
-            "title=\"%s, live construct\" allowfullscreen loading=\"lazy\"></iframe></div>"
+            "title=\"%s, live construct\" allowfullscreen></iframe></div>"
             "<p class=\"hint\">Drag to orbit, scroll to zoom. Click the construct first, then <kbd>R</kbd> replays the "
             "assembly, <kbd>L</kbd> shows labels and <kbd>P</kbd> shows how each part is known.</p></div>"
             "</div></div><p class=\"why\">%s</p></div></div>"
             "<script>(function () { var v = document.querySelector('video'), live = document.getElementById('live'),"
             " watch = document.getElementById('watch');"
-            " live.addEventListener('change', function () { if (v) v.pause(); history.replaceState(null, '', '#live'); });"
-            " watch.addEventListener('change', function () { history.replaceState(null, '', location.pathname); });"
-            " if (location.hash === '#live') live.checked = true; })();</script>"
+            " live.addEventListener('change', function () { if (v) v.pause(); history.replaceState(null, '', location.pathname); });"
+            " watch.addEventListener('change', function () { history.replaceState(null, '', '#film'); });"
+            " function pick() { if (location.hash === '#film') watch.checked = true; else if (location.hash === '#live') live.checked = true; }"
+            " pick(); addEventListener('hashchange', pick); })();</script>"
             % (html.escape(film["title"]), html.escape("%s · %s" % (film["mode"], film["model"])), REPO_URL, film["slug"],
                html.escape(film["title"]), html.escape(film["title"]), html.escape(WHY_FILM)))
     return _page("%s · film · Construct" % film["title"], body, 2,

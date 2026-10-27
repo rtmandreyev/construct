@@ -3,20 +3,32 @@
  "version": 1,
  "examples": [
   {
-   "slug": "sainte-chapelle",
-   "title": "Sainte-Chapelle",
-   "mode": "masterpiece",
-   "model": "Claude Opus 5.5"
-  },
-  {
    "slug": "toyota-land-cruiser-fj62",
    "title": "Toyota Land Cruiser FJ62",
    "mode": "masterpiece",
    "model": "Claude Opus 5.5"
   },
   {
-   "slug": "duomo-di-milano",
-   "title": "Duomo di Milano",
+   "slug": "revox-a77",
+   "title": "Revox A77",
+   "mode": "fast",
+   "model": "DeepSeek V4.1 Flash"
+  },
+  {
+   "slug": "sainte-chapelle",
+   "title": "Sainte-Chapelle",
+   "mode": "masterpiece",
+   "model": "Claude Opus 5.5"
+  },
+  {
+   "slug": "yamaha-cfx",
+   "title": "Yamaha CFX",
+   "mode": "fast",
+   "model": "DeepSeek V4.1 Flash"
+  },
+  {
+   "slug": "neuschwanstein",
+   "title": "Neuschwanstein",
    "mode": "masterpiece",
    "model": "Claude Opus 5.5"
   },
@@ -27,16 +39,22 @@
    "model": "Claude Opus 5.5"
   },
   {
-   "slug": "neuschwanstein",
-   "title": "Neuschwanstein",
-   "mode": "masterpiece",
-   "model": "Claude Opus 5.5"
+   "slug": "leica-m3",
+   "title": "Leica M3",
+   "mode": "fast",
+   "model": "GPT-6.1 Sol"
   },
   {
    "slug": "sagrada-familia",
    "title": "Sagrada Família",
    "mode": "masterpiece",
    "model": "GPT-6.1 Sol"
+  },
+  {
+   "slug": "duomo-di-milano",
+   "title": "Duomo di Milano",
+   "mode": "masterpiece",
+   "model": "Claude Opus 5.5"
   },
   {
    "slug": "ferrari-f40",
@@ -63,12 +81,6 @@
    "model": "DeepSeek V4.1 Flash"
   },
   {
-   "slug": "leica-m3",
-   "title": "Leica M3",
-   "mode": "fast",
-   "model": "GPT-6.1 Sol"
-  },
-  {
    "slug": "patek-philippe-5320g",
    "title": "Patek Philippe 5320G",
    "mode": "fast",
@@ -83,12 +95,6 @@
   {
    "slug": "omega-speedmaster-321",
    "title": "Omega Speedmaster, calibre 321",
-   "mode": "fast",
-   "model": "DeepSeek V4.1 Flash"
-  },
-  {
-   "slug": "revox-a77",
-   "title": "Revox A77",
    "mode": "fast",
    "model": "DeepSeek V4.1 Flash"
   },
@@ -111,6 +117,12 @@
    "model": "GPT-6.1 Sol"
   },
   {
+   "slug": "black-hole",
+   "title": "Black hole",
+   "mode": "fast",
+   "model": "GPT-6.1 Sol"
+  },
+  {
    "slug": "tea-house",
    "title": "Tea house",
    "mode": "fast",
@@ -119,12 +131,6 @@
   {
    "slug": "arturia-minifreak",
    "title": "Arturia MiniFreak",
-   "mode": "fast",
-   "model": "DeepSeek V4.1 Flash"
-  },
-  {
-   "slug": "yamaha-cfx",
-   "title": "Yamaha CFX",
    "mode": "fast",
    "model": "DeepSeek V4.1 Flash"
   }
