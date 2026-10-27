@@ -1,0 +1,19 @@
+This folder (examples/netlogo-fire/) is licensed differently from the rest of Construct.
+
+Fire
+Copyright 1997 Uri Wilensky.
+Wilensky, U. (1997). NetLogo Fire model. http://ccl.northwestern.edu/netlogo/models/Fire. Center for Connected Learning and Computer-Based Modeling, Northwestern University, Evanston, IL.
+
+The model is licensed under the Creative Commons Attribution-NonCommercial-ShareAlike 3.0 License.
+Everything in this folder derives from it: the model with Construct's recording added (Fire-construct.nlogox), its
+experiment (construct-experiment.xml), the construct scene of the recorded run (scene.json) and its
+pictures. They are therefore distributed under the same license:
+
+  Creative Commons Attribution-NonCommercial-ShareAlike 3.0 Unported (CC BY-NC-SA 3.0)
+  https://creativecommons.org/licenses/by-nc-sa/3.0/
+  Legal code: https://creativecommons.org/licenses/by-nc-sa/3.0/legalcode
+
+NetLogo itself is free software under the GNU General Public License; see
+https://ccl.northwestern.edu/netlogo/docs/copyright.html. The rest of Construct, outside this
+folder, is under the Apache License 2.0 (see the LICENSE file at the root of the repository); that
+includes construct.nls, the recorder this model includes.

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<experiments>
+  <experiment name="construct" repetitions="1" sequentialRunOrder="true" runMetricsEveryStep="false" timeLimit="300">
+    <setup>random-seed 7
+setup</setup>
+    <go>go</go>
+    <postRun>construct-finish</postRun>
+    <metrics>
+      <metric>ticks</metric>
+    </metrics>
+  </experiment>
+</experiments>

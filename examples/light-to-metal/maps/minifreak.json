@@ -1,0 +1,14 @@
+{
+ "about": "A finish for the Arturia MiniFreak construct, chosen for this page: the standard black instrument. Colours are the exporter's choice, not facts of the construct.",
+ "materials": [
+  {"parts": ["display-glass"], "name": "display", "color": "#0e1218", "finish": "glass"},
+  {"parts": ["white-keys"], "name": "white keys", "color": "#f1f0ec", "finish": "plastic", "roughness": 0.35},
+  {"parts": ["black-keys-*", "touch-strips"], "name": "gloss black", "color": "#101011", "finish": "plastic", "roughness": 0.2},
+  {"parts": ["midi-dins", "usb-socket", "jack-*", "dc-in"], "name": "metal sockets", "color": "#9fa2a8", "finish": "brushed"},
+  {"parts": ["feet"], "name": "rubber", "color": "#161617", "finish": "rubber"},
+  {"parts": ["*-buttons", "*-button-*", "*-select", "*-mode", "*-type", "preset-encoder"], "name": "buttons", "color": "#2a2a2d", "finish": "plastic"},
+  {"parts": ["matrix-knob", "osc-*", "filter-*", "fx-*", "master", "glide", "lfo-*", "cyc-knobs", "env-knobs"], "name": "knobs", "color": "#19191b", "finish": "plastic", "roughness": 0.4},
+  {"parts": ["brand-plate", "maker-plate"], "name": "plate", "color": "#2e2e31", "finish": "brushed"},
+  {"parts": ["*"], "name": "black body", "color": "#1b1b1d", "finish": "paint", "roughness": 0.55}
+ ]
+}

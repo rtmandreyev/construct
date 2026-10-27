@@ -1,0 +1,258 @@
+{
+ "credit": "Claude Opus 5.5",
+ "title": "Wolf Sheep Predation: the cycle, rising",
+ "summary": "One run of NetLogo's Wolf Sheep Predation: across the floor the number of sheep, front to back the number of wolves, height is time. The populations chase each other in a loop: the sheep peak first (tick 80) and the wolves 61 ticks later, and the sheep peak 9 times as the loop climbs to tick 1500. Its shadow on the floor is the classic phase plot.",
+ "facts": [
+  {
+   "key": "first_sheep_peak",
+   "value": "tick 80, 243 sheep",
+   "certainty": "inferred",
+   "source": "art",
+   "note": "Computed from run.jsonl with the scene's own smoothing (a centred moving average over 25 records): a peak is the highest value within 60 ticks either side."
+  },
+  {
+   "key": "first_wolf_peak",
+   "value": "tick 141, 88 wolves",
+   "certainty": "inferred",
+   "source": "art",
+   "note": "Computed from run.jsonl with the scene's own smoothing (a centred moving average over 25 records): a peak is the highest value within 60 ticks either side."
+  },
+  {
+   "key": "sheep_peaks",
+   "value": 9,
+   "certainty": "inferred",
+   "source": "art",
+   "note": "Computed from run.jsonl with the scene's own smoothing (a centred moving average over 25 records): a peak is the highest value within 60 ticks either side. The number of sheep peaks in the run."
+  }
+ ],
+ "parts": [
+  {
+   "id": "sheep-peak",
+   "label": "Sheep peak · tick 80",
+   "role": "data",
+   "certainty": "inferred",
+   "source": "art",
+   "stage": 0,
+   "basis": [
+    "first_sheep_peak"
+   ],
+   "floating": true,
+   "at": [
+    5.0,
+    0.32,
+    4.456
+   ],
+   "look": {
+    "weight": 1.3,
+    "glow": 1.0,
+    "tone": "bright"
+   },
+   "shape": {
+    "type": "marker"
+   }
+  },
+  {
+   "id": "wolf-peak",
+   "label": "Wolves peak · tick 141",
+   "role": "data",
+   "certainty": "inferred",
+   "source": "art",
+   "stage": 0,
+   "basis": [
+    "first_wolf_peak"
+   ],
+   "floating": true,
+   "at": [
+    0.05,
+    0.564,
+    -3.599
+   ],
+   "look": {
+    "weight": 1.3,
+    "glow": 1.0,
+    "tone": "accent"
+   },
+   "shape": {
+    "type": "marker"
+   }
+  },
+  {
+   "id": "more-sheep",
+   "label": "More sheep",
+   "role": "data",
+   "certainty": "inferred",
+   "source": "art",
+   "stage": 0,
+   "basis": [],
+   "floating": true,
+   "at": [
+    5.4,
+    0,
+    5.0
+   ],
+   "look": {
+    "weight": 1.3,
+    "glow": 1.0,
+    "tone": "faint"
+   },
+   "shape": {
+    "type": "marker"
+   }
+  },
+  {
+   "id": "more-wolves",
+   "label": "More wolves",
+   "role": "data",
+   "certainty": "inferred",
+   "source": "art",
+   "stage": 0,
+   "basis": [],
+   "floating": true,
+   "at": [
+    -5.4,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 1.3,
+    "glow": 1.0,
+    "tone": "faint"
+   },
+   "shape": {
+    "type": "marker"
+   }
+  }
+ ],
+ "annotations": [
+  {
+   "id": "sheep-peak-note",
+   "part": "sheep-peak",
+   "text": "sheep peak · tick 80",
+   "offset": [
+    0,
+    0.3,
+    0
+   ]
+  },
+  {
+   "id": "wolf-peak-note",
+   "part": "wolf-peak",
+   "text": "wolves follow, 61 ticks later",
+   "offset": [
+    0,
+    0.3,
+    0
+   ]
+  },
+  {
+   "id": "sheep-axis",
+   "part": "more-sheep",
+   "text": "sheep 87 → 243",
+   "offset": [
+    0,
+    0.2,
+    0
+   ]
+  },
+  {
+   "id": "wolf-axis",
+   "part": "more-wolves",
+   "text": "wolves 30 → 98",
+   "offset": [
+    0,
+    0.2,
+    0
+   ]
+  },
+  {
+   "id": "tick-1",
+   "part": "time-axis",
+   "text": "tick 300",
+   "offset": [
+    -0.35,
+    -4.8,
+    0
+   ]
+  },
+  {
+   "id": "tick-2",
+   "part": "time-axis",
+   "text": "tick 600",
+   "offset": [
+    -0.35,
+    -3.6,
+    0
+   ]
+  },
+  {
+   "id": "tick-3",
+   "part": "time-axis",
+   "text": "tick 900",
+   "offset": [
+    -0.35,
+    -2.4,
+    0
+   ]
+  },
+  {
+   "id": "tick-4",
+   "part": "time-axis",
+   "text": "tick 1200",
+   "offset": [
+    -0.35,
+    -1.2,
+    0
+   ]
+  },
+  {
+   "id": "tick-5",
+   "part": "time-axis",
+   "text": "tick 1500",
+   "offset": [
+    -0.35,
+    0.0,
+    0
+   ]
+  }
+ ],
+ "looks": {
+  "phase": {
+   "label": "Sheep and wolves, rising with time",
+   "look": {
+    "glow": 0.5
+   }
+  },
+  "wall-x": {
+   "label": "Sheep over time, on a wall"
+  },
+  "wall-z": {
+   "label": "Wolves over time, on a wall"
+  },
+  "axes": {
+   "label": "Sheep (left to right), wolves (front to back)"
+  }
+ },
+ "presentation": {
+  "views": [
+   {
+    "id": "hero",
+    "label": "Hero",
+    "yaw": 35,
+    "pitch": 24
+   },
+   {
+    "id": "side",
+    "label": "Side",
+    "yaw": 90,
+    "pitch": 4
+   },
+   {
+    "id": "top",
+    "label": "From above",
+    "yaw": 0,
+    "pitch": 88,
+    "distance": 1.6
+   }
+  ]
+ }
+}
