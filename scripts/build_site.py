@@ -129,7 +129,7 @@ header.site h1 em { font-style: normal; color: var(--accent); }
          border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); scrollbar-width: thin;
          -webkit-mask-image: linear-gradient(#000 92%, transparent); mask-image: linear-gradient(#000 92%, transparent); }
 .shelf .grid { padding-top: 14px; }
-@media (min-width: 1100px) { .shelf .grid { grid-template-columns: repeat(4, 1fr); } }
+@media (min-width: 1100px) { .shelf .grid { grid-template-columns: repeat(3, 1fr); } }   /* 21 constructs: 7 full rows */
 .shelf .card { scroll-snap-align: start; }
 .shelf-count { color: var(--dim); font-size: 13px; margin: 10px 0 0; }
 .part p.section kbd { border: 1px solid var(--line); border-radius: 4px; padding: 0 5px; font-size: 12px; color: var(--ink); }

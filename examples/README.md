@@ -25,7 +25,6 @@ made with earlier versions of Construct; all of them build with this release.
 | [![The Last Light: sea cliff at dusk](the-last-light/thumb.jpg)](the-last-light/) | [The Last Light: sea cliff at dusk](the-last-light/) | fast | GPT-6.1 Sol |
 | [![Brass orrery](brass-orrery/thumb.jpg)](brass-orrery/) | [Brass orrery](brass-orrery/) | fast | GPT-6.1 Sol |
 | [![Gothic cathedral nave](gothic-cathedral-nave/thumb.jpg)](gothic-cathedral-nave/) | [Gothic cathedral nave](gothic-cathedral-nave/) | fast | GPT-6.1 Sol |
-| [![Black hole](black-hole/thumb.jpg)](black-hole/) | [Black hole](black-hole/) | fast | GPT-6.1 Sol |
 | [![Tea house](tea-house/thumb.jpg)](tea-house/) | [Tea house](tea-house/) | fast | GPT-6.1 Sol |
 | [![Arturia MiniFreak](arturia-minifreak/thumb.jpg)](arturia-minifreak/) | [Arturia MiniFreak](arturia-minifreak/) | fast | DeepSeek V4.1 Flash |
 

@@ -117,12 +117,6 @@
    "model": "GPT-6.1 Sol"
   },
   {
-   "slug": "black-hole",
-   "title": "Black hole",
-   "mode": "fast",
-   "model": "GPT-6.1 Sol"
-  },
-  {
    "slug": "tea-house",
    "title": "Tea house",
    "mode": "fast",
