@@ -1,8 +1,9 @@
 # Construct
 
-**Holographic constructs any AI agent can build, from a description, honestly.** You ask your
-agent for a thing in plain words, and it builds an animated holographic model of it in the
-**Measured Light** style, as one web page you can open anywhere.
+**Describe a thing. Get a hologram, a 3D model and its parts.** You ask any AI agent for a thing
+in plain words, and it builds an animated holographic model of it in the **Measured Light** style,
+as one web page you can open anywhere, honest about what is known. The same construct exports
+as a 3D model with named parts and working joints, for Blender, game engines and the web.
 
 <p align="center">
   <a href="https://rtmandreyev.github.io/construct/examples/sainte-chapelle/"><img src="docs/media/assembly-sainte-chapelle.gif" width="32%" alt="The Sainte-Chapelle construct assembling itself"></a>
@@ -10,6 +11,24 @@ agent for a thing in plain words, and it builds an animated holographic model of
   <a href="https://rtmandreyev.github.io/construct/examples/duomo-di-milano/"><img src="docs/media/assembly-duomo-di-milano.gif" width="32%" alt="The Duomo di Milano construct assembling itself"></a>
 </p>
 <p align="center"><sub>Sainte-Chapelle · Toyota Land Cruiser FJ62 · Duomo di Milano, each built by Claude Opus 5.5 in masterpiece mode. <a href="https://rtmandreyev.github.io/construct/">Open the gallery</a> to orbit them, replay the assembly and read the labels.</sub></p>
+
+- **Any agent, any model.** Claude Code, Hermes, any MCP client or any OpenAI-compatible endpoint, or by hand.
+- **Honest about what is known.** Every fact and part says whether it is verified, supplied by you, inferred or decorative.
+- **One house style.** Models never choose the colours, so every construct looks like it belongs with the rest.
+- **It repairs itself.** Every problem comes back with where it is and how to fix it.
+- **Nothing to install.** Python's standard library and a browser; no API keys or network service inside Construct.
+
+## Who it is for
+
+| You are… | Construct gives you | Start with |
+| --- | --- | --- |
+| **A game developer** | Props and blockouts with named parts, working joints and real dimensions, as glTF for Godot, Unity or Unreal; the line-light look for scanners, holograms and UI | [3D export](docs/EXPORT.md) |
+| **A 3D artist** | A construct imported into Blender with its build, joints and finish on sliders, ready to light, render or model over | [Blender add-on](hosts/blender/README.md) |
+| **In film and motion** | A construct that assembles across a track of music, rendered to video | [Film mode](docs/FILM.md) |
+| **An educator or researcher** | An agent-based model's run drawn as a construct, computed from the recording, with the data locked | [NetLogo bridge](docs/NETLOGO.md) |
+| **A museum or archive** | Reconstructions that say how each part is known (verified, supplied, inferred or decorative), so a visitor can tell evidence from design | [The Measured Light style](docs/STYLE.md) |
+
+## What you can make
 
 **Film mode.** A construct can also assemble across a whole piece of music: the build pauses, surges
 and flares with it, and you get a video with the music in it. See [Film mode](docs/FILM.md).
@@ -21,25 +40,23 @@ and flares with it, and you get a video with the music in it. See [Film mode](do
 </p>
 <p align="center"><sub><a href="https://rtmandreyev.github.io/construct/films/james-webb-space-telescope/">James Webb Space Telescope</a> · <a href="https://rtmandreyev.github.io/construct/films/voyager-1/">Voyager 1</a> · <a href="https://rtmandreyev.github.io/construct/films/arecibo-observatory/">Arecibo Observatory</a>, each assembling across a piece of music. Open one to watch the film, or to turn the live construct around.</sub></p>
 
-**Beyond objects.** The same visual language works for ideas and data. Here a classic NetLogo
-agent-based model, Uri Wilensky's *Simple Viral Marketing*, was rebuilt to run live in the browser
-and drawn as a construct: five hundred people, one product, word of mouth and a little advertising.
+**From light to a finished 3D model.** Every construct is also a 3D model: what the agent wrote
+(named parts in metres, joints, the order they assemble in) exports as one glTF file, and a
+material map finishes it with paint, chrome, glass and wood. See [3D export](docs/EXPORT.md) and the
+[Blender add-on](hosts/blender/README.md).
+
+<p align="center"><a href="https://rtmandreyev.github.io/construct/examples/light-to-metal/"><img src="examples/light-to-metal/hero.jpg" width="100%" alt="The Toyota Land Cruiser FJ62 in three stages, rendered in Blender from its exported file: lines of light, a plain model of named parts, and the finished model in paint, chrome and glass"></a></p>
+<p align="center"><sub>The FJ62 construct exported unedited and rendered in Blender: the hologram, the plain model and the finished one. <a href="https://rtmandreyev.github.io/construct/examples/light-to-metal/">Open the live page</a> to move between them and download the files.</sub></p>
+
+**Models come alive.** The same visual language works for ideas and data. The
+[NetLogo bridge](docs/NETLOGO.md) records an agent-based model's run and draws it with time as
+height, so its assembly replays the run. Here Uri Wilensky's *Simple Viral Marketing*, rebuilt to
+run live in the browser: five hundred people, one product, word of mouth and a little advertising.
 The floor is the social network, and each person rises to the moment they adopted, so you can
 watch an idea spread and see who it reaches last, and why.
 
 <p align="center"><a href="https://rtmandreyev.github.io/construct/examples/netlogo-viral-marketing/"><img src="docs/media/netlogo-viral-marketing.gif" width="100%" alt="The Simple Viral Marketing model running: adoptions spread through the social network on the floor and rise as lines of light, the gold ring marking now, while the counters climb to 500 of 500"></a></p>
-<p align="center"><sub><a href="https://rtmandreyev.github.io/construct/examples/netlogo-viral-marketing/">Open the live model</a> to build new networks, run them tick by tick and compare a hundred runs with NetLogo's own. The model is © 2012 Uri Wilensky; this example is under CC BY-NC-SA 3.0 (see <a href="#license">License</a>).</sub></p>
-
-```
-you ask  →  the agent writes a scene  →  Construct checks it  →  Construct builds the page
-         →  the agent reviews it  →  (masterpiece) an independent critic judges each round
-```
-
-- **Any agent, any model.** Claude Code, Hermes, any MCP client or any OpenAI-compatible endpoint, or by hand.
-- **Honest about what is known.** Every fact and part says whether it is verified, supplied by you, inferred or decorative.
-- **One house style.** Models never choose the colours, so every construct looks like it belongs with the rest.
-- **It repairs itself.** Every problem comes back with where it is and how to fix it.
-- **Nothing to install.** Python's standard library and a browser; no API keys or network service inside Construct.
+<p align="center"><sub><a href="https://rtmandreyev.github.io/construct/examples/netlogo-viral-marketing/">Open the live model</a> to build new networks, run them tick by tick and compare a hundred runs with NetLogo's own. <a href="docs/NETLOGO.md">Flocking, Wolf Sheep Predation and Fire</a> were recorded with the bridge. The models are © Uri Wilensky; these examples are under CC BY-NC-SA 3.0 (see <a href="#license">License</a>).</sub></p>
 
 ## What it does
 
@@ -133,6 +150,7 @@ Then add the skill to your agent, or use Construct directly:
 | Any MCP client | Add `{"mcpServers": {"construct": {"command": "python3", "args": ["/path/to/construct/construct_hologram/server.py"]}}}` |
 | Any OpenAI-compatible model | `python3 construct_hologram/cli.py author "..." --base-url ... --model ... --key-env ... --out scene.json` |
 | By hand | The command line below; no model needed |
+| Blender | `python3 scripts/build_blender_extension.py`, then **Edit → Preferences → Get Extensions → Install from Disk** with the zip in `dist/` |
 
 ## Quick start
 
@@ -187,6 +205,7 @@ Construct is deliberately small. You need:
 - Python 3.10 or newer. Nothing else to install: no packages, no virtual environment.
 - For review stills, a Chromium-family browser you already have (Chrome, Chromium, Edge, Brave).
 - For video, ffmpeg.
+- For the Blender add-on, Blender 4.2 or newer; for the NetLogo bridge, NetLogo 6 or 7.
 - Tested on macOS; review capture on Linux and Windows is untested.
 
 ## Documentation
@@ -200,6 +219,8 @@ Start with the first two if you are new; the full index is in [docs/README.md](d
 - [Archetypes](docs/ARCHETYPES.md): ready-made templates for books, CDs, guitars, bottles, cars and more
 - [Terrain](docs/TERRAIN.md): mountains, routes and planets from real elevation data
 - [Film mode](docs/FILM.md): a construct that assembles across a track of music, for videos and films
+- [3D export](docs/EXPORT.md) and the [Blender add-on](hosts/blender/README.md): a construct as a 3D model, plain or finished, for Blender, game engines and the web
+- [The NetLogo bridge](docs/NETLOGO.md): an agent-based model's run drawn as a construct, with optional art direction
 - [About](docs/ABOUT.md): where Construct's method comes from
 - [Evaluation](docs/EVALUATION.md): how models compare, and how to score your own
 - [Development](docs/DEVELOPMENT.md): for contributors and for building Construct into your own tools
@@ -213,9 +234,10 @@ See [CONTRIBUTING.md](CONTRIBUTING.md). Run the tests with
 
 ## License
 
-[MIT](LICENSE) — Copyright (c) 2026 Artyom Andreyev. One example folder,
-[examples/netlogo-viral-marketing/](examples/netlogo-viral-marketing/), derives from Uri Wilensky's
-NetLogo model and is under CC BY-NC-SA 3.0 instead (see its LICENSE).
+[MIT](LICENSE) — Copyright (c) 2026 Artyom Andreyev. The four NetLogo example folders
+([viral marketing](examples/netlogo-viral-marketing/), [flocking](examples/netlogo-flocking/),
+[wolf sheep](examples/netlogo-wolf-sheep/) and [fire](examples/netlogo-fire/)) derive from Uri
+Wilensky's NetLogo models and are under CC BY-NC-SA 3.0 instead (see each LICENSE).
 
 Construct's working method is inspired by [Anatomy](https://github.com/wheresryan22/anatomy)'s
 truth-first construction (MIT); it shares the method, not code. Product, vehicle and place names
