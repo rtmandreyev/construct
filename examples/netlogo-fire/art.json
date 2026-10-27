@@ -264,7 +264,8 @@
     "id": "top",
     "label": "The burned forest",
     "yaw": 0,
-    "pitch": 88
+    "pitch": 88,
+    "distance": 1.45
    },
    {
     "id": "side",

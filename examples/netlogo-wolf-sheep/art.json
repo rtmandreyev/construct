@@ -109,9 +109,9 @@
    "basis": [],
    "floating": true,
    "at": [
-    -5.0,
+    -5.4,
     0,
-    -5.4
+    0
    ],
    "look": {
     "weight": 1.3,
@@ -250,7 +250,8 @@
     "id": "top",
     "label": "From above",
     "yaw": 0,
-    "pitch": 88
+    "pitch": 88,
+    "distance": 1.6
    }
   ]
  }
