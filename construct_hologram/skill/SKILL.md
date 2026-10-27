@@ -179,9 +179,11 @@ OBJ of the construct. Author and review the construct first, as above; then:
   joints as the `open` animation, periodic motion as `idle`, each vertex's build phase as
   `_PHASE`). For OBJ: `--out model.obj` (an `.mtl` beside it; `--frame z-up` for Z-up tools).
 - `--wire tubes` turns the line art into thin geometry for game engines (they drop plain lines);
-  `--pose open` rests the model open; `--materials map.json` colours parts by id or pattern
-  (`{"materials": [{"parts": ["body", "door-*"], "color": "#2b4a6f", "metallic": 0.6,
-  "roughness": 0.35}]}`), when the user gives colours or finishes.
+  `--pose open` rests the model open; `--materials map.json` colours and finishes parts by id or
+  pattern (`{"materials": [{"parts": ["body", "door-*"], "color": "#2b4a6f", "finish": "paint"}]}`;
+  finishes: paint, brushed, chrome, wood, rubber, plastic, glass, light), when the user wants a
+  finished model. Keep the map beside the scene as `<scene>.materials.json`: colours are the
+  user's choice, never facts in the scene.
 - A `no-surface` audit warning names a main or structural part drawn only as lines: it would be
   missing from the model, so give it a solid shape (a tube, a box) when the export matters.
 - Say what the model is: correctly sized named parts with working joints, built from simple

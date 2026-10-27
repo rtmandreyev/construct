@@ -242,6 +242,42 @@ class Parts(unittest.TestCase):
                 glb_of(sc, materials=bad)
 
 
+class Finishes(unittest.TestCase):
+    def test_finishes_become_standard_gltf_materials(self):
+        sc = load("cd")
+        ids = [p["id"] for p in sc["parts"] if scene._local_mesh(p["shape"], 0).tris]   # parts with a surface
+        rules = [{"parts": ids[0], "name": "glass", "color": "#d8e2e8", "finish": "glass"},
+                 {"parts": ids[1], "name": "paint", "color": "#99191d", "finish": "paint"},
+                 {"parts": ids[2], "name": "lamp", "color": "#fff3dc", "finish": "light"},
+                 {"parts": ids[3], "name": "chrome", "color": "#dddddd", "finish": "chrome", "roughness": 0.1}]
+        doc, _ = glb_of(sc, materials={"materials": rules})
+        mats = {m["name"]: m for m in doc["materials"]}
+        self.assertEqual(mats["glass"]["extensions"]["KHR_materials_transmission"]["transmissionFactor"], 0.92)
+        self.assertIn("KHR_materials_ior", mats["glass"]["extensions"])
+        self.assertEqual(mats["paint"]["extensions"]["KHR_materials_clearcoat"]["clearcoatFactor"], 1.0)
+        self.assertEqual(mats["lamp"]["extensions"]["KHR_materials_emissive_strength"]["emissiveStrength"], 4.0)
+        self.assertEqual(mats["chrome"]["pbrMetallicRoughness"]["metallicFactor"], 1.0)
+        self.assertEqual(mats["chrome"]["pbrMetallicRoughness"]["roughnessFactor"], 0.1)   # the rule's own wins
+        self.assertEqual(mats["glass"]["extras"]["construct"]["finish"], "glass")
+        for e in ("KHR_materials_transmission", "KHR_materials_clearcoat", "KHR_materials_emissive_strength"):
+            self.assertIn(e, doc["extensionsUsed"])
+        with self.assertRaises(export.ExportError):
+            glb_of(sc, materials={"materials": [{"parts": "x", "finish": "velvet"}]})
+
+    def test_the_example_maps_cover_every_surface(self):
+        import fnmatch
+        maps = ROOT / "examples" / "light-to-metal" / "maps"
+        for name, slug in (("fj62", "toyota-land-cruiser-fj62"), ("revox", "revox-a77"),
+                           ("jwst", "films/james-webb-space-telescope"), ("minifreak", "arturia-minifreak")):
+            with self.subTest(name):
+                sc = studio.load(str(ROOT / "examples" / slug / "scene.json"))
+                rules = export._load_materials(maps / (name + ".json"))
+                solid = [p["id"] for p in sc["parts"] if scene._local_mesh(p["shape"], 0).tris]
+                self.assertEqual([i for i in solid if not any(fnmatch.fnmatchcase(i, q) for r in rules
+                                                               for q in r["patterns"])], [])
+                self.assertIn("not facts of the construct", json.loads((maps / (name + ".json")).read_text())["about"])
+
+
 class Motion(unittest.TestCase):
     """The animations land every vertex exactly where the compiler's own maths puts it."""
 

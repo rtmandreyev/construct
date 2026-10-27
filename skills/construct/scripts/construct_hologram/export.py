@@ -48,7 +48,19 @@ ROLE_MATERIAL = {
 # the house palette's tones, for the light (edges, tubes, points)
 TONE_COLOR = dict(zip(scene_mod.TONES, ("#d16bd0", "#f6eaff", "#eadcf3", "#b7a4c8", "#9682d7", "#eadcf3",
                                         "#8fd3ff", "#6f6080")))
-MATERIAL_KEYS = {"parts", "name", "color", "metallic", "roughness", "emissive"}
+MATERIAL_KEYS = {"parts", "name", "color", "metallic", "roughness", "emissive", "finish"}
+# a material map's finishes: physically based defaults (a rule's own metallic and roughness win),
+# exported with standard glTF extensions; the Blender add-on turns each into its procedural shader
+FINISHES = {
+    "paint": {"metallic": 0.0, "roughness": 0.38, "clearcoat": 1.0},
+    "brushed": {"metallic": 1.0, "roughness": 0.32},
+    "chrome": {"metallic": 1.0, "roughness": 0.05},
+    "wood": {"metallic": 0.0, "roughness": 0.55},
+    "rubber": {"metallic": 0.0, "roughness": 0.92},
+    "plastic": {"metallic": 0.0, "roughness": 0.45},
+    "glass": {"metallic": 0.0, "roughness": 0.03, "transmission": 0.92},
+    "light": {"metallic": 0.0, "roughness": 0.4, "glow": 4.0},
+}
 
 
 class ExportError(ValueError):
@@ -146,7 +158,7 @@ def _tube(a, b, r):
 # ---------------------------------------------------------------------------- reading a compile
 
 def _load_materials(materials):
-    """A material map: {"materials": [{"parts": ["hull", "tile-*"], "color": "#rrggbb", "metallic",
+    """A material map: {"materials": [{"parts": ["hull", "tile-*"], "color": "#rrggbb", "finish", "metallic",
     "roughness", "emissive", "name"}]}; the first rule whose pattern matches a part id wins."""
     if materials is None:
         return []
@@ -167,10 +179,17 @@ def _load_materials(materials):
         for k in ("metallic", "roughness"):
             if k in r and not (isinstance(r[k], (int, float)) and 0 <= r[k] <= 1):
                 raise ExportError("%s.%s: a number from 0 to 1" % (w, k))
-        out.append({"patterns": pats, "name": str(r.get("name", "map:%d" % i)),
-                    "color": _hex(r.get("color", "#cccccc"), w + ".color"),
-                    "metallic": float(r.get("metallic", 0.0)), "roughness": float(r.get("roughness", 0.5)),
-                    "emissive": _hex(r["emissive"], w + ".emissive") if "emissive" in r else None})
+        finish = r.get("finish")
+        if finish is not None and finish not in FINISHES:
+            raise ExportError("%s.finish: one of %s" % (w, ", ".join(FINISHES)))
+        f = FINISHES.get(finish, {})
+        color = _hex(r.get("color", "#cccccc"), w + ".color")
+        out.append({"patterns": pats, "name": str(r.get("name", "map:%d" % i)), "color": color, "finish": finish,
+                    "metallic": float(r.get("metallic", f.get("metallic", 0.0))),
+                    "roughness": float(r.get("roughness", f.get("roughness", 0.5))),
+                    "emissive": _hex(r["emissive"], w + ".emissive") if "emissive" in r else
+                    (color if finish == "light" else None),
+                    "clearcoat": f.get("clearcoat"), "transmission": f.get("transmission"), "glow": f.get("glow")})
     return out
 
 
@@ -282,21 +301,33 @@ def to_gltf(g, wire="edges", pose="closed", materials=None, wire_radius=None):
     parts, arts, motions, joints = g["parts"], g["articulations"], g["motions"], g["joints"]
     b = _Bin()
     nodes, meshes, mats, mat_index = [], [], [], {}
-    unlit = False
+    used_ext = set()
 
-    def material(key, spec):
-        nonlocal unlit
+    def material(key, spec, extra=None):
         if key in mat_index:
             return mat_index[key]
         name, rgb, metallic, rough, emissive, is_unlit = spec
+        extra = extra or {}
         m = {"name": name, "doubleSided": True,
              "pbrMetallicRoughness": {"baseColorFactor": list(_linear(rgb)) + [1.0], "metallicFactor": metallic,
                                       "roughnessFactor": rough}}
         if emissive:
             m["emissiveFactor"] = list(_linear(emissive))
+        ext = {}
         if is_unlit:
-            m["extensions"] = {"KHR_materials_unlit": {}}
-            unlit = True
+            ext["KHR_materials_unlit"] = {}
+        if extra.get("clearcoat"):
+            ext["KHR_materials_clearcoat"] = {"clearcoatFactor": extra["clearcoat"], "clearcoatRoughnessFactor": 0.08}
+        if extra.get("transmission"):
+            ext["KHR_materials_transmission"] = {"transmissionFactor": extra["transmission"]}
+            ext["KHR_materials_ior"] = {"ior": 1.5}
+        if extra.get("glow"):
+            ext["KHR_materials_emissive_strength"] = {"emissiveStrength": extra["glow"]}
+        if ext:
+            m["extensions"] = ext
+            used_ext.update(ext)
+        if extra.get("finish"):
+            m["extras"] = {"construct": {"finish": extra["finish"]}}
         mats.append(m)
         mat_index[key] = len(mats) - 1
         return mat_index[key]
@@ -305,7 +336,7 @@ def to_gltf(g, wire="edges", pose="closed", materials=None, wire_radius=None):
         for r in rules:
             if any(fnmatch.fnmatchcase(part["id"], p) for p in r["patterns"]):
                 return material(("map", r["name"]), (r["name"], r["color"], r["metallic"], r["roughness"],
-                                                     r["emissive"], False))
+                                                     r["emissive"], False), r)
         rgb, metallic, rough = ROLE_MATERIAL.get(part["role"], ROLE_MATERIAL["mass"])
         emissive = _hex(rgb, "role") if part["role"] == "data" else None
         return material(("role", part["role"]), ("construct:" + part["role"], _hex(rgb, "role"), metallic, rough,
@@ -417,8 +448,8 @@ def to_gltf(g, wire="edges", pose="closed", materials=None, wire_radius=None):
     }
     if animations:
         doc["animations"] = animations
-    if unlit:
-        doc["extensionsUsed"] = ["KHR_materials_unlit"]
+    if used_ext:
+        doc["extensionsUsed"] = sorted(used_ext)
     nodes[root]["extras"] = {"construct": {
         "format": g["format"], "contract": g["contract"], "id": g["id"], "title": g["title"],
         "subject": g["subject"], "scene_sha256": g["scene_sha256"], "frame": g["frame"],
@@ -561,12 +592,12 @@ def to_obj(g, name, wire="edges", pose="closed", materials=None, frame="y-up", w
     def matname(part):
         for r in rules:
             if any(fnmatch.fnmatchcase(part["id"], p) for p in r["patterns"]):
-                spec = (r["color"], r["roughness"], r["emissive"])
+                spec = (r["color"], r["roughness"], r["emissive"], 0.25 if r["finish"] == "glass" else 1.0)
                 nm = r["name"]
                 break
         else:
             rgb, _, rough = ROLE_MATERIAL.get(part["role"], ROLE_MATERIAL["mass"])
-            spec, nm = (_hex(rgb, "role"), rough, None), "construct-" + part["role"]
+            spec, nm = (_hex(rgb, "role"), rough, None, 1.0), "construct-" + part["role"]
         nm = nm.replace(" ", "_")
         if nm not in used:
             used[nm] = spec
@@ -576,7 +607,7 @@ def to_obj(g, name, wire="edges", pose="closed", materials=None, frame="y-up", w
         nm = "construct-light-" + tone
         if nm not in used:
             rgb = _hex(TONE_COLOR[tone], "tone")
-            used[nm] = (rgb, 1.0, rgb)
+            used[nm] = (rgb, 1.0, rgb, 1.0)
         return nm
 
     groups = _groups(g)
@@ -632,9 +663,9 @@ def to_obj(g, name, wire="edges", pose="closed", materials=None, frame="y-up", w
                     nv += 3 * len(tris)
                     nn += 3 * len(tris)
                     counts["triangles"] += len(tris)
-    for nm, (rgb, rough, emissive) in used.items():
+    for nm, (rgb, rough, emissive, opacity) in used.items():
         mtl += ["newmtl %s" % nm, "Kd %.4f %.4f %.4f" % rgb, "Ks 0.04 0.04 0.04",
-                "Ns %.1f" % (900 * (1 - rough) ** 2 + 4), "d 1.0", "illum 2"]
+                "Ns %.1f" % (900 * (1 - rough) ** 2 + 4), "d %.2f" % opacity, "illum 2"]
         if emissive:
             mtl.append("Ke %.4f %.4f %.4f" % emissive)
         mtl.append("")

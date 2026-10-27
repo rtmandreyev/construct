@@ -4,12 +4,12 @@
  "beyond": [
   {
    "slug": "light-to-metal",
-   "title": "From light to metal",
-   "line": "Gallery constructs exported as 3D models (glTF) and lit live: from the hologram to the solid model, with their named parts, working joints and build order.",
+   "title": "From light to a finished model",
+   "line": "Gallery constructs exported as 3D models (glTF) and lit live: from the hologram to the plain model to the finished one, with their named parts, working joints and build order.",
    "label": "live page · 3D export · four gallery constructs",
    "credit": "Exported unedited; the hero is a Blender render of the exported file",
-   "files": ["index.html", "README.md", "hero.jpg", "thumb.jpg"],
-   "exports": {"fj62.glb": "toyota-land-cruiser-fj62", "jwst.glb": "films/james-webb-space-telescope", "revox.glb": "revox-a77", "minifreak.glb": "arturia-minifreak"},
+   "files": ["index.html", "README.md", "hero.jpg", "thumb.jpg", "maps/fj62.json", "maps/jwst.json", "maps/revox.json", "maps/minifreak.json"],
+   "exports": {"fj62.glb": {"scene": "toyota-land-cruiser-fj62", "materials": "maps/fj62.json"}, "jwst.glb": {"scene": "films/james-webb-space-telescope", "materials": "maps/jwst.json"}, "revox.glb": {"scene": "revox-a77", "materials": "maps/revox.json"}, "minifreak.glb": {"scene": "arturia-minifreak", "materials": "maps/minifreak.json"}},
    "buttons": [["Open the live page", ""], ["Download the FJ62 (.glb)", "fj62.glb"]]
   },
   {

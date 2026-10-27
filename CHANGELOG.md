@@ -26,6 +26,15 @@
   from the hologram to the solid model, the build, the joints, an exploded view with each part's
   name, role, certainty and size, and a download of each file. The site build exports the files
   (`exports` in `examples/beyond.json`); a beyond card may name its own buttons.
+- **Finished models:** a material map's rules take a `finish` (paint, brushed, chrome, wood, rubber,
+  plastic, glass, light), exported with standard glTF extensions (clear coat, transmission and IOR,
+  emissive strength) and kept in `extras.construct.finish`. The Blender add-on adds a **Plain ↔
+  Finished** control, reads `<scene>.materials.json` beside a scene (or a map chosen on import),
+  and makes wood, brushed metal and rubber procedural. The example page gains the same control and
+  material maps for its four constructs; its hero shows the hologram, the plain model and the
+  finished one in one Blender render.
+- **Fixed in the Blender add-on:** the line art's tubes rendered with Blender's default material
+  (geometry made by a modifier carries none); each tone now has a node group that sets it.
 - **Audit:** `no-surface` warns when a main or structural part is drawn only as lines, so it would
   be missing from a 3D export.
 

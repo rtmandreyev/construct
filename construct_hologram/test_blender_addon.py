@@ -67,7 +67,7 @@ bpy.ops.wm.read_factory_settings(use_empty=True)
 addon.register()
 res = {"op": list(bpy.ops.import_scene.construct(filepath=scene_path))}
 root = bpy.context.view_layer.objects.active
-res["props"] = sorted(k for k in ("build", "open", "metal", "wire") if k in root)
+res["props"] = sorted(k for k in ("build", "open", "metal", "finish", "wire") if k in root)
 objs = list(bpy.data.objects)
 rt = addon.c_export.scene_mod
 g = rt.compile_scene(json.load(open(scene_path, encoding="utf-8")), solid=True)
@@ -95,6 +95,7 @@ res["drivers_valid"] = all(fc.driver.is_valid for o in objs if o.animation_data 
 lights = [o for o in objs if o.name.endswith(":light")]
 e = lights[0].evaluated_get(bpy.context.evaluated_depsgraph_get())
 res["lights"], res["light_faces"], res["light_phase"] = len(lights), len(e.data.polygons), "_PHASE" in e.data.attributes
+res["light_material"] = bool(e.data.materials) and e.data.materials[0] is not None and ":light:" in e.data.materials[0].name
 res["open_actions"] = [a.name for a in bpy.data.actions if a.name.startswith("open")]
 bpy.ops.construct.animate_reveal()
 res["reveal_keyed"] = root.animation_data is not None and root.animation_data.action is not None
@@ -120,7 +121,8 @@ class InBlender(unittest.TestCase):
             with self.subTest(name):
                 res = self.run_in_blender(name)
                 self.assertEqual(res["op"], ["FINISHED"])
-                self.assertEqual(res["props"], ["build", "metal", "open", "wire"])
+                self.assertEqual(res["props"], ["build", "finish", "metal", "open", "wire"])
+                self.assertTrue(res["light_material"])   # the tubes carry the line material, not Blender's default
                 self.assertTrue(res["drivers_valid"])
                 self.assertGreater(res["joint_vertices"], 100)
                 self.assertLess(res["joint_worst"], 1e-4)
@@ -129,6 +131,33 @@ class InBlender(unittest.TestCase):
                 self.assertTrue(res["light_phase"])
                 self.assertEqual(res["open_actions"], [])
                 self.assertTrue(res["reveal_keyed"])
+
+    def test_a_material_map_finishes_the_model(self):
+        script = BLENDER_TEST.split("res[\"props\"]")[0] + (
+            "import os\n"
+            "mats = {m.name: m for m in bpy.data.materials}\n"
+            "kinds = lambda m: {n.type for n in m.node_tree.nodes}\n"
+            "res['wood'] = 'TEX_WAVE' in kinds(mats['case'])\n"
+            "res['brushed'] = 'TEX_NOISE' in kinds(mats['front'])\n"
+            "res['finish_mix'] = any(n.type == 'VALUE' and n.label == 'finish' for n in mats['case'].node_tree.nodes)\n"
+            "print('RESULT ' + json.dumps(res))\n")
+        with tempfile.TemporaryDirectory() as d:
+            _builder().stage(Path(d, "construct"))
+            sc = json.loads((EXAMPLES / "cd.json").read_text(encoding="utf-8"))
+            ids = [p["id"] for p in scene.compile_scene(sc, solid=True)["parts"]]
+            Path(d, "cd.json").write_text(json.dumps(sc), encoding="utf-8")
+            Path(d, "cd.materials.json").write_text(json.dumps({"materials": [
+                {"parts": ids[0], "name": "case", "color": "#8a5a32", "finish": "wood"},
+                {"parts": "*", "name": "front", "color": "#c8cbd0", "finish": "brushed"}]}), encoding="utf-8")
+            Path(d, "t.py").write_text(script, encoding="utf-8")
+            r = subprocess.run([BLENDER, "-b", "--factory-startup", "--python", str(Path(d, "t.py")), "--", d,
+                                str(Path(d, "cd.json"))], capture_output=True, text=True, timeout=600,
+                               encoding="utf-8", errors="replace")
+        line = next((ln for ln in r.stdout.splitlines() if ln.startswith("RESULT ")), None)
+        self.assertIsNotNone(line, r.stdout[-2000:] + r.stderr[-2000:])
+        res = json.loads(line[7:])
+        self.assertEqual(res["op"], ["FINISHED"])   # the map beside the scene was found and used
+        self.assertTrue(res["wood"] and res["brushed"] and res["finish_mix"])
 
     def test_the_zip_validates(self):
         with tempfile.TemporaryDirectory() as d:

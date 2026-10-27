@@ -1,7 +1,7 @@
 # 3D export
 
 <p align="center"><a href="https://rtmandreyev.github.io/construct/examples/light-to-metal/"><img src="../examples/light-to-metal/hero.jpg" width="100%" alt="The Toyota Land Cruiser FJ62 construct exported as a 3D model and rendered in Blender: the hologram on the left turning to the solid model on the right"></a></p>
-<p align="center"><sub>The FJ62 construct exported with <code>construct export</code> and rendered in Blender, unedited. <a href="https://rtmandreyev.github.io/construct/examples/light-to-metal/">From light to metal</a> shows four gallery constructs as these files, live.</sub></p>
+<p align="center"><sub>The FJ62 construct exported with <code>construct export</code> and rendered in Blender, unedited: the hologram, the plain model and the model finished by a material map. <a href="https://rtmandreyev.github.io/construct/examples/light-to-metal/">From light to a finished model</a> shows four gallery constructs as these files, live.</sub></p>
 
 A construct already describes a thing as named parts in metres, with an assembly order, joints and
 motions. `construct export` writes that description out as a 3D model, so the same construct can
@@ -27,7 +27,7 @@ construct export scene.json --out model.glb
 | `--wire edges` (default), `tubes`, `none` | the line art: as edges (Blender keeps them), as thin tubes (for game engines, which drop plain lines), or left out |
 | `--wire-radius M` | the tubes' radius in metres (default: from the object's size) |
 | `--pose closed` (default) or `open` | the pose the model rests in; a glTF carries the opening animation either way |
-| `--materials map.json` | colours, metalness and roughness for parts, by id or pattern (below) |
+| `--materials map.json` | colours and finishes for parts, by id or pattern (below) |
 | `--frame z-up` | OBJ only, for Z-up tools; glTF is Y up by definition |
 
 Agents use the same export through the skill, and MCP clients through the `construct_export` tool
@@ -71,21 +71,39 @@ draw a fragment only when its `_PHASE` is at most a build value you animate from
 Blender, an Attribute node reading `_PHASE`, a Greater Than node and a Mix Shader with a
 Transparent BSDF do it; in three.js, compare `_phase` in the material's shader.
 
-## A material map
+## A material map: the finished model
 
-By default every part gets a neutral material for its role. To colour parts, give a map:
+By default every part gets a neutral material for its role: the plain model. A material map
+finishes it:
 
 ```json
 {"materials": [
-  {"parts": ["body", "door-*", "tailgate"], "name": "paint", "color": "#2b4a6f", "metallic": 0.6, "roughness": 0.35},
-  {"parts": "tyre-*", "name": "rubber", "color": "#1a1a1a", "roughness": 0.9},
-  {"parts": "headlamp-*", "name": "lamp", "color": "#fff4d6", "emissive": "#fff4d6"}
+  {"parts": "glasshouse", "name": "tinted glass", "color": "#2c3540", "finish": "glass"},
+  {"parts": "headlamp-*", "name": "headlamp", "color": "#fff3dc", "finish": "light"},
+  {"parts": ["bumper-*", "handle-*"], "name": "chrome", "color": "#d9dde2", "finish": "chrome"},
+  {"parts": "tyre-*", "name": "rubber", "color": "#1b1b1c", "finish": "rubber"},
+  {"parts": ["body", "bonnet", "roof"], "name": "Freeborn Red", "color": "#99191d", "finish": "paint"}
 ]}
 ```
 
 `parts` is a part id, a pattern (`*`, `?`) or a list of them; the first rule that matches a part
-wins. `color` and `emissive` are `#rrggbb`; `metallic` and `roughness` run from 0 to 1. Colour is
-a host's choice in Construct, so a map belongs to the person who exports, never to the scene.
+wins. `color` and `emissive` are `#rrggbb`; `metallic` and `roughness` (0 to 1) override the
+finish's own. The finishes:
+
+| finish | in the glTF | in Blender, with the add-on |
+| --- | --- | --- |
+| `paint` | a clear coat (`KHR_materials_clearcoat`) | as imported |
+| `brushed` | metallic, roughness 0.32 | streaks along the part |
+| `chrome` | metallic, roughness 0.05 | as imported |
+| `wood` | roughness 0.55 | wood grain |
+| `rubber` | roughness 0.92 | a fine tooth |
+| `plastic` | roughness 0.45 | as imported |
+| `glass` | transmission and IOR (`KHR_materials_transmission`, `KHR_materials_ior`) | as imported |
+| `light` | emissive, at strength 4 (`KHR_materials_emissive_strength`) | as imported |
+
+Each material keeps its finish in `extras.construct.finish`. The grain and streaks are procedural
+and need no texture coordinates. Colour is a host's choice in Construct, so a map belongs to the
+person who exports, kept beside the scene, never in it: `examples/light-to-metal/maps/` has four.
 
 ## What it is, and what it is not
 

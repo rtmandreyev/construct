@@ -10,6 +10,8 @@ driving the scene, so the .blend keeps working without the add-on:
   open    0..1  every joint, in its order groups (hinges, turns, slides, lifts)
   metal   0..1  light to metal: 0 is the hologram (light lines over dark glass), 1 the solid model
               with its lines as dark seams
+  finish  0..1  plain to finished: 0 is the plain model in clay, 1 its materials (a material map's
+              colours and finishes: paint, brushed metal, chrome, wood, rubber, plastic, glass, light)
 
 and `wire` (metres), the thickness of the line art. The Construct panel in the sidebar (N) shows
 them, with an operator that keyframes a reveal.
@@ -30,7 +32,9 @@ from .construct_hologram import export as c_export, params as c_params, product 
 
 PROPS = (("build", 1.0, "Assembly: each part appears at its build phase"),
          ("open", 0.0, "Opens every joint, in its order groups"),
-         ("metal", 1.0, "Light to metal: 0 is the hologram, 1 the solid model"))
+         ("metal", 1.0, "Light to metal: 0 is the hologram, 1 the solid model"),
+         ("finish", 1.0, "Plain to finished: 0 is the plain model in clay, 1 its materials"))
+CLAY = "#c9c6c1"
 # the line art's tone for each role (as the hologram draws it), in the house palette
 ROLE_TONE = {"mass": "hairline", "structure": "structure", "detail": "structure", "identity": "identity",
              "data": "accent", "ornament": "dust", "ground": "faint", "artwork": "hairline"}
@@ -45,7 +49,15 @@ def _rgb(hex_color):
 
 # ---------------------------------------------------------------------------- reading
 
-def _glb_of(path, wire_radius=None):
+def _materials_for(path, materials=""):
+    """The material map to use: the one given, or `<scene>.materials.json` beside the scene."""
+    if materials:
+        return bpy.path.abspath(materials)
+    beside = os.path.splitext(path)[0] + ".materials.json"
+    return beside if os.path.exists(beside) else None
+
+
+def _glb_of(path, materials=None):
     """A .glb path for the file: itself, or a construct compiled and exported to a temporary file."""
     if path.lower().endswith(".glb"):
         return path, None
@@ -53,7 +65,7 @@ def _glb_of(path, wire_radius=None):
         doc = json.load(fh)
     if c_params.is_params(doc):
         doc = c_params.expand(doc)
-    out, _ = c_export.render(doc, "glb", wire="edges", wire_radius=wire_radius)
+    out, _ = c_export.render(doc, "glb", wire="edges", materials=materials)
     fd, tmp = tempfile.mkstemp(suffix=".glb", prefix="construct-")
     with os.fdopen(fd, "wb") as fh:
         fh.write(out["glb"])
@@ -125,8 +137,19 @@ def _surface(mat, root):
     shader = out.inputs["Surface"].links[0].from_node if out.inputs["Surface"].links else None
     if shader is None:
         shader = nodes.new("ShaderNodeBsdfPrincipled")
+    _procedural(mat, shader)
     visible, glow = _reveal(nodes, links, root)
     metal = _value_node(nodes, root, "metal", (-900, -400))
+    # the plain model: clay; the finished one: the material's own surface, by `finish`
+    clay = nodes.new("ShaderNodeBsdfPrincipled")
+    clay.inputs["Base Color"].default_value = _rgb(CLAY)
+    clay.inputs["Roughness"].default_value = 0.55
+    finish = _value_node(nodes, root, "finish", (-900, -800))
+    finished = nodes.new("ShaderNodeMixShader")
+    links.new(finish.outputs[0], finished.inputs[0])
+    links.new(clay.outputs[0], finished.inputs[1])
+    links.new(shader.outputs[0], finished.inputs[2])
+    clay.location, finished.location = (-300, 250), (-50, 150)
     # the hologram's surface: near-black glass whose edges catch the accent, as in the viewer
     dark = nodes.new("ShaderNodeBsdfPrincipled")
     dark.inputs["Base Color"].default_value = (0.004, 0.002, 0.005, 1.0)
@@ -142,7 +165,7 @@ def _surface(mat, root):
     look = nodes.new("ShaderNodeMixShader")
     links.new(metal.outputs[0], look.inputs[0])
     links.new(glass.outputs[0], look.inputs[1])
-    links.new(shader.outputs[0], look.inputs[2])
+    links.new(finished.outputs[0], look.inputs[2])
     clear = nodes.new("ShaderNodeBsdfTransparent")
     mix = nodes.new("ShaderNodeMixShader")
     links.new(visible, mix.inputs[0])
@@ -162,6 +185,50 @@ def _surface(mat, root):
         mat.surface_render_method = "DITHERED"
 
 
+def _procedural(mat, shader):
+    """A material map's finish as a procedural surface (no texture coordinates needed): wood grain,
+    brushed streaks, rubber's fine tooth. Paint, chrome, plastic, glass and light come in as they are."""
+    finish = _info(mat).get("finish")
+    if shader.type != "BSDF_PRINCIPLED" or finish not in ("wood", "brushed", "rubber"):
+        return
+    nodes, links = mat.node_tree.nodes, mat.node_tree.links
+    base = tuple(shader.inputs["Base Color"].default_value)
+    coord = nodes.new("ShaderNodeTexCoord")
+    if finish == "wood":
+        wave = nodes.new("ShaderNodeTexWave")
+        wave.wave_type, wave.bands_direction = "RINGS", "Z"
+        wave.inputs["Scale"].default_value, wave.inputs["Distortion"].default_value = 3.0, 6.0
+        wave.inputs["Detail"].default_value = 3.0
+        links.new(coord.outputs["Object"], wave.inputs["Vector"])
+        ramp = nodes.new("ShaderNodeValToRGB")
+        ramp.color_ramp.elements[0].color = tuple(c * 0.55 for c in base[:3]) + (1.0,)
+        ramp.color_ramp.elements[1].color = base
+        links.new(wave.outputs["Fac"], ramp.inputs["Fac"])
+        links.new(ramp.outputs["Color"], shader.inputs["Base Color"])
+    elif finish == "brushed":
+        stretch = nodes.new("ShaderNodeMapping")
+        stretch.inputs["Scale"].default_value = (1.0, 1.0, 80.0)
+        links.new(coord.outputs["Object"], stretch.inputs["Vector"])
+        noise = nodes.new("ShaderNodeTexNoise")
+        noise.inputs["Scale"].default_value, noise.inputs["Detail"].default_value = 60.0, 4.0
+        links.new(stretch.outputs[0], noise.inputs["Vector"])
+        rough = nodes.new("ShaderNodeMapRange")
+        rough.inputs["To Min"].default_value = max(0.0, shader.inputs["Roughness"].default_value - 0.12)
+        rough.inputs["To Max"].default_value = min(1.0, shader.inputs["Roughness"].default_value + 0.12)
+        links.new(noise.outputs["Fac"], rough.inputs["Value"])
+        links.new(rough.outputs["Result"], shader.inputs["Roughness"])
+        if "Anisotropic" in shader.inputs:
+            shader.inputs["Anisotropic"].default_value = 0.6
+    else:
+        noise = nodes.new("ShaderNodeTexNoise")
+        noise.inputs["Scale"].default_value = 400.0
+        links.new(coord.outputs["Object"], noise.inputs["Vector"])
+        bump = nodes.new("ShaderNodeBump")
+        bump.inputs["Strength"].default_value = 0.15
+        links.new(noise.outputs["Fac"], bump.inputs["Height"])
+        links.new(bump.outputs["Normal"], shader.inputs["Normal"])
+
+
 def _light_material(tone, root, name):
     """The line art: light in the hologram, dark seams on the metal, revealed by the build."""
     mat = bpy.data.materials.new(name)
@@ -177,7 +244,9 @@ def _light_material(tone, root, name):
     links.new(_math(nodes, links, "MULTIPLY_ADD", glow, 10.0, (-300, 200), c=4.0), light.inputs["Strength"])
     seam = nodes.new("ShaderNodeBsdfPrincipled")
     seam.inputs["Base Color"].default_value = (0.012, 0.012, 0.014, 1.0)
-    seam.inputs["Roughness"].default_value = 0.6
+    seam.inputs["Roughness"].default_value = 1.0
+    if "Specular IOR Level" in seam.inputs:   # a seam is a shadow line: no glints on its thin tubes
+        seam.inputs["Specular IOR Level"].default_value = 0.0
     look = nodes.new("ShaderNodeMixShader")
     links.new(metal.outputs[0], look.inputs[0])
     links.new(light.outputs[0], look.inputs[1])
@@ -194,9 +263,10 @@ def _light_material(tone, root, name):
     return mat
 
 
-def _tube_group(root, name):
-    """Geometry nodes: line art (loose edges) to thin tubes, keeping the build phase; the radius
-    follows the construct's `wire`."""
+def _tube_group(root, name, material):
+    """Geometry nodes: line art (loose edges) to thin tubes in `material`, keeping the build phase;
+    the radius follows the construct's `wire`. (Geometry the modifier makes carries no material of
+    its own, so the group sets it.)"""
     ng = bpy.data.node_groups.new(name, "GeometryNodeTree")
     ng.interface.new_socket("Geometry", in_out="INPUT", socket_type="NodeSocketGeometry")
     ng.interface.new_socket("Geometry", in_out="OUTPUT", socket_type="NodeSocketGeometry")
@@ -204,14 +274,17 @@ def _tube_group(root, name):
     gi, go = n.new("NodeGroupInput"), n.new("NodeGroupOutput")
     to_curve, circle, to_mesh = n.new("GeometryNodeMeshToCurve"), n.new("GeometryNodeCurvePrimitiveCircle"), \
         n.new("GeometryNodeCurveToMesh")
+    paint = n.new("GeometryNodeSetMaterial")
+    paint.inputs["Material"].default_value = material
     circle.inputs["Resolution"].default_value = 4
     _drive(circle.inputs["Radius"], "default_value", None, root, ["wire"], "wire")
     ln.new(gi.outputs[0], to_curve.inputs["Mesh"])
     ln.new(to_curve.outputs[0], to_mesh.inputs["Curve"])
     ln.new(circle.outputs["Curve"], to_mesh.inputs["Profile Curve"])
-    ln.new(to_mesh.outputs[0], go.inputs[0])
-    gi.location, to_curve.location, circle.location, to_mesh.location, go.location = \
-        (-600, 0), (-350, 80), (-350, -150), (-100, 0), (150, 0)
+    ln.new(to_mesh.outputs[0], paint.inputs["Geometry"])
+    ln.new(paint.outputs[0], go.inputs[0])
+    gi.location, to_curve.location, circle.location, to_mesh.location, paint.location, go.location = \
+        (-600, 0), (-350, 80), (-350, -150), (-100, 0), (120, 0), (340, 0)
     return ng
 
 
@@ -302,7 +375,7 @@ def setup(root, objects, wire_radius, metal=1.0, keep_animations=False):
                 done.add(m)
 
     # the line art: its own objects, as tubes, light or seams
-    group, lights = _tube_group(root, "%s:light" % info.get("id", "construct")), {}
+    groups, lights = {}, {}
     for o in list(objects):
         if o.type != "MESH":
             continue
@@ -311,23 +384,26 @@ def setup(root, objects, wire_radius, metal=1.0, keep_animations=False):
             continue
         tone = ROLE_TONE.get(_info(o).get("role"), "hairline")
         if tone not in lights:
-            lights[tone] = _light_material(tone, root, "%s:light:%s" % (info.get("id", "construct"), tone))
+            name = "%s:light:%s" % (info.get("id", "construct"), tone)
+            lights[tone] = _light_material(tone, root, name)
+            groups[tone] = _tube_group(root, name, lights[tone])
         lo = bpy.data.objects.new(o.name.replace(":mesh", "") + ":light", me)
         for col in o.users_collection:
             col.objects.link(lo)
         lo.parent = o
         lo.data.materials.append(lights[tone])
         mod = lo.modifiers.new("Construct Light", "NODES")
-        mod.node_group = group
+        mod.node_group = groups[tone]
     for m in list(bpy.data.materials):
         if m.name.startswith("construct:light") and m.users == 0:
             bpy.data.materials.remove(m)
     return root
 
 
-def import_construct(path, wire_scale=1.0, metal=1.0, keep_animations=False):
-    """Import a construct (.json scene or parameter document, or a Construct .glb). Returns its root."""
-    glb, tmp = _glb_of(path)
+def import_construct(path, wire_scale=1.0, metal=1.0, keep_animations=False, materials=""):
+    """Import a construct (.json scene or parameter document, or a Construct .glb), with a material map
+    if one is given or sits beside the scene as `<scene>.materials.json`. Returns its root."""
+    glb, tmp = _glb_of(path, _materials_for(path, materials))
     before = set(bpy.data.objects)
     try:
         bpy.ops.import_scene.gltf(filepath=glb)
@@ -373,13 +449,16 @@ class CONSTRUCT_OT_import(bpy.types.Operator, ImportHelper):
     start_as: bpy.props.EnumProperty(name="Start as", default="METAL",
                                      items=(("METAL", "Metal", "The solid model"),
                                             ("LIGHT", "Light", "The hologram")))
+    materials: StringProperty(name="Material map", subtype="FILE_PATH", default="",
+                              description="A material map (.json) for the finished model; by default "
+                                          "<scene>.materials.json beside the scene, if there is one")
     keep_animations: BoolProperty(name="Keep open animations", default=False,
                                   description="Keep the file's open actions besides the Open control")
 
     def execute(self, context):
         try:
             root = import_construct(self.filepath, self.wire_scale, 1.0 if self.start_as == "METAL" else 0.0,
-                                    self.keep_animations)
+                                    self.keep_animations, self.materials)
         except Exception as exc:   # a scene the compiler refuses, a file that is not a construct
             self.report({"ERROR"}, str(exc))
             return {"CANCELLED"}
@@ -392,13 +471,14 @@ class CONSTRUCT_OT_import(bpy.types.Operator, ImportHelper):
 
 
 class CONSTRUCT_OT_animate(bpy.types.Operator):
-    """Keyframe a reveal on the active construct: assemble as light, turn to metal, then open"""
+    """Keyframe a reveal on the active construct: assemble as light, turn to metal, finish, then open"""
     bl_idname = "construct.animate_reveal"
     bl_label = "Keyframe a Reveal"
     bl_options = {"REGISTER", "UNDO"}
 
     assemble: IntProperty(name="Assemble (frames)", default=120, min=1)
     to_metal: IntProperty(name="To metal (frames)", default=48, min=1)
+    to_finish: IntProperty(name="To finished (frames)", default=48, min=0)
     open_frames: IntProperty(name="Open (frames)", default=48, min=0)
 
     @classmethod
@@ -408,11 +488,16 @@ class CONSTRUCT_OT_animate(bpy.types.Operator):
     def execute(self, context):
         root = construct_root(context.active_object)
         f0 = context.scene.frame_current
-        keys = [("build", f0, 0.0), ("metal", f0, 0.0), ("open", f0, 0.0), ("build", f0 + self.assemble, 1.0),
-                ("metal", f0 + self.assemble, 0.0), ("metal", f0 + self.assemble + self.to_metal, 1.0)]
+        metal_end = f0 + self.assemble + self.to_metal
+        keys = [("build", f0, 0.0), ("metal", f0, 0.0), ("open", f0, 0.0), ("finish", f0, 0.0),
+                ("build", f0 + self.assemble, 1.0), ("metal", f0 + self.assemble, 0.0), ("metal", metal_end, 1.0)]
+        end = metal_end
+        if self.to_finish:
+            keys += [("finish", metal_end, 0.0), ("finish", metal_end + self.to_finish, 1.0)]
+            end = metal_end + self.to_finish
         if self.open_frames:
-            end = f0 + self.assemble + self.to_metal
             keys += [("open", end, 0.0), ("open", end + self.open_frames, 1.0)]
+        keys.sort(key=lambda k: k[1])
         for name, frame, value in keys:
             root[name] = value
             root.keyframe_insert('["%s"]' % name, frame=frame)
@@ -435,7 +520,8 @@ class CONSTRUCT_PT_panel(bpy.types.Panel):
             return
         info = _info(root)
         col.label(text=info.get("title", root.name))
-        for name, label in (("build", "Build"), ("open", "Open"), ("metal", "Light ↔ Metal"), ("wire", "Lines")):
+        for name, label in (("build", "Build"), ("open", "Open"), ("metal", "Light ↔ Metal"), ("finish", "Plain ↔ Finished"),
+                            ("wire", "Lines")):
             col.prop(root, '["%s"]' % name, text=label, slider=name != "wire")
         col.separator()
         col.operator(CONSTRUCT_OT_animate.bl_idname, icon="KEY_HLT")

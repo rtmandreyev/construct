@@ -310,11 +310,14 @@ def build(out, films_dir=None):
         src, dst = EXAMPLES / item["slug"], out / "examples" / item["slug"]
         dst.mkdir(parents=True)
         for name in item["files"]:
+            (dst / name).parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(src / name, dst / name)
-        for name, scene_dir in item.get("exports", {}).items():  # 3D models of gallery constructs, exported here
+        for name, spec in item.get("exports", {}).items():  # 3D models of gallery constructs, exported here
             export = importlib.import_module("construct_hologram.export")
-            public = _public_scene(EXAMPLES / scene_dir / "scene.json", out / ".build" / ("export-" + Path(name).stem))
-            export.export(studio.load(str(public)), dst / name)
+            spec = spec if isinstance(spec, dict) else {"scene": spec}   # a scene folder, and a material map
+            public = _public_scene(EXAMPLES / spec["scene"] / "scene.json", out / ".build" / ("export-" + Path(name).stem))
+            export.export(studio.load(str(public)), dst / name,
+                          materials=str(src / spec["materials"]) if spec.get("materials") else None)
         if (src / "scene.json").exists():
             tmp = out / ".build" / ("beyond-" + item["slug"])
             studio.build(str(_public_scene(src / "scene.json", tmp.parent)), str(tmp), asset_root=str(src))

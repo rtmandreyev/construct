@@ -1,0 +1,19 @@
+{
+ "about": "A finish for the Toyota Land Cruiser FJ62 construct, chosen for this page: Freeborn Red, a factory colour of the 60 Series, with chrome bumpers and black end caps, as on period examples. Colours are the exporter's choice, not facts of the construct.",
+ "materials": [
+  {"parts": "glasshouse", "name": "tinted glass", "color": "#2c3540", "finish": "glass"},
+  {"parts": ["headlamp-*"], "name": "headlamp", "color": "#fff3dc", "finish": "light"},
+  {"parts": ["corner-lamp-*", "turn-lamp-*", "side-marker-*", "tail-amber-*"], "name": "amber lens", "color": "#e38a1d", "finish": "plastic", "roughness": 0.15},
+  {"parts": ["tail-reverse-*"], "name": "clear lens", "color": "#e9eaea", "finish": "plastic", "roughness": 0.15},
+  {"parts": ["tail-lamp-*", "tail-wrap-*"], "name": "red lens", "color": "#a3141c", "finish": "plastic", "roughness": 0.15},
+  {"parts": ["bumper-cap-*"], "name": "black trim", "color": "#151516", "finish": "plastic"},
+  {"parts": ["bumper-front", "bumper-rear", "bumper-return-*", "handle-*", "grille-bar-*", "badge-*", "rear-badge-carrier", "rim-lip-*", "hub-*", "lug-*", "quarter-script-carrier"], "name": "chrome", "color": "#d9dde2", "finish": "chrome"},
+  {"parts": ["tyre-*", "spare-tyre", "mud-flap-*", "sidewall-*"], "name": "rubber", "color": "#1b1b1c", "finish": "rubber"},
+  {"parts": ["rim-front", "rim-rear", "rim-slot-*"], "name": "wheel paint", "color": "#c4c7cc", "finish": "paint"},
+  {"parts": ["grille", "grille-chin", "mirror-head", "mirror-arm", "wing-vent-recess", "plate-recess", "tailgate-strip", "rear-wiper", "wiper-*", "antenna", "running-board", "face-surround"], "name": "black trim", "color": "#151516", "finish": "plastic"},
+  {"parts": ["seat-*", "dash", "steering-wheel"], "name": "interior", "color": "#4a3d33", "finish": "plastic", "roughness": 0.7},
+  {"parts": ["frame-*", "fuel-tank", "axle-*", "diff-*", "exhaust"], "name": "chassis", "color": "#2a2a2c", "finish": "paint", "roughness": 0.6},
+  {"parts": "front-plate", "name": "plate", "color": "#ecebe6", "finish": "plastic"},
+  {"parts": ["body", "front-wing", "bonnet", "roof", "front-panel", "flare-panel-*", "liftgate-panel", "dropgate-panel", "lower-crease-step", "fuel-door"], "name": "Freeborn Red", "color": "#99191d", "finish": "paint"}
+ ]
+}
