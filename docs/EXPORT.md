@@ -50,9 +50,13 @@ build phase.
 
 ## Opening it
 
-- **Blender** (tested with 5.2): File → Import → glTF 2.0. The parts arrive as named objects under
-  their stages, the `open` and `idle` animations as actions, `_PHASE` as a mesh attribute, and the
-  extras as custom properties. Edges show in the viewport; give them a material or use
+- **Blender, with the Construct add-on** ([hosts/blender](../hosts/blender/README.md), Blender 4.2
+  and later, tested with 5.2): File → Import → Construct reads a scene or a `.glb` and gives the
+  construct three controls: **Build** (the assembly), **Open** (every joint) and **Light ↔ Metal**
+  (from the hologram to the solid model), with the line art as real tubes.
+- **Blender, without the add-on:** File → Import → glTF 2.0. The parts arrive as named objects
+  under their stages, the `open` and `idle` animations as actions, `_PHASE` as a mesh attribute,
+  and the extras as custom properties. Edges show in the viewport; give them a material or use
   `--wire tubes` to render them.
 - **three.js** (tested with 0.160): `GLTFLoader`. The build phase is `geometry.attributes._phase`,
   the animations are in `gltf.animations` for an `AnimationMixer`, the extras in `userData`.

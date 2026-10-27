@@ -74,9 +74,10 @@ museums (honest provenance), and film and motion (film mode).
 
 ### Phase 6: release
 
-A release candidate, the full test suite and CI, a new release video and posts, then v1.0.0. The
-package version becomes 1.0.0; the scene and geometry contract keeps its id (`construct/0.2`),
-because nothing in it changes.
+A release candidate, the full test suite and CI, then v1.0.0. The release videos (the X and
+LinkedIn cuts) are redone around the 3D export: constructs turning from light to metal, rendered in
+Blender from their exported files, with new posts to match. The package version becomes 1.0.0;
+the scene and geometry contract keeps its id (`construct/0.2`), because nothing in it changes.
 
 ## Later
 

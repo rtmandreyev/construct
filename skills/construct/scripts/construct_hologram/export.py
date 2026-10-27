@@ -381,7 +381,8 @@ def to_gltf(g, wire="edges", pose="closed", materials=None, wire_radius=None):
                 a = arts[ai]
                 piv = tuple(a["pivot"]) if a["type"] in ("hinge", "turn") and a.get("pivot") else origin
                 base = _sub(piv, origin)
-                spec = {"name": "%s:%s" % (part["id"], a["id"]), "translation": list(base)}
+                spec = {"name": "%s:%s" % (part["id"], a["id"]), "translation": list(base),
+                        "extras": {"construct": {"part": part["id"], "articulation": a["id"]}}}
                 if pose == "open":
                     if a["type"] in ("hinge", "turn"):
                         spec["rotation"] = list(_quat(a["axis"], a["amount"]))
@@ -395,11 +396,13 @@ def to_gltf(g, wire="edges", pose="closed", materials=None, wire_radius=None):
                 m = motions[slot]
                 piv = tuple(m["pivot"]) if m["type"] in ("spin", "swing") else origin
                 base = _sub(piv, origin)
-                n = node({"name": "%s:motion-%d" % (part["id"], slot), "translation": list(base)})
+                n = node({"name": "%s:motion-%d" % (part["id"], slot), "translation": list(base),
+                          "extras": {"construct": {"part": part["id"], "motion": slot}}})
                 nodes[parent].setdefault("children", []).append(n)
                 motion_nodes[slot].append((n, base))
                 parent, origin = n, piv
-            n = node({"name": "%s:mesh" % part["id"], "mesh": mesh, "translation": [-x for x in origin]})
+            n = node({"name": "%s:mesh" % part["id"], "mesh": mesh, "translation": [-x for x in origin],
+                      "extras": {"construct": {"part": part["id"], "role": part["role"]}}})
             nodes[parent].setdefault("children", []).append(n)
 
     animations = _animations(b, arts, motions, art_nodes, motion_nodes)

@@ -14,6 +14,12 @@
     shape's surfaces; the hologram's own compile is unchanged.
   - Checked against the compiler: every vertex of an opened joint or a spinning part lands where
     the compiler puts it, in a pure-Python glTF evaluator and in Blender 5.2's importer.
+- **Construct for Blender** ([hosts/blender](hosts/blender/README.md)): an add-on (a Blender
+  extension, 4.2 and later) built by `scripts/build_blender_extension.py`. File → Import →
+  Construct reads a scene or a `.glb`; the construct gets three controls, **Build**, **Open** and
+  **Light ↔ Metal**, plus the line thickness and an operator that keyframes a reveal. The controls
+  are custom properties driving the joints, materials and line art, so a .blend works without the
+  add-on. In Blender 5.2 the opened joints land exactly where the compiler puts them.
 - **Audit:** `no-surface` warns when a main or structural part is drawn only as lines, so it would
   be missing from a 3D export.
 
