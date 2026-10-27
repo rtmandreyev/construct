@@ -56,7 +56,9 @@ The add-on uses Blender's own glTF importer for the parts, the stages and the mo
   (wood grain, brushed streaks and rubber's tooth are procedural, so no texture coordinates are
   needed), is revealed by **Build** through the `_PHASE` attribute, glows at the build front, and
   turns to dark glass toward **Light**; the line art is light in the hologram and a dark seam on
-  the metal.
+  the metal. Only design lines (parts drawn as lines: door seams, creases, window outlines) stay as
+  seams: a part's construction lines, the edges of its own surfaces, fade as it turns solid, faint
+  on the plain model and gone on the finished one.
 
 ## Licence
 

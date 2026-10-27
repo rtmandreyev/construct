@@ -188,7 +188,7 @@ composer.addPass(new OutputPass());
 // one set of uniforms shared by every material of the current model
 const U = {
   uBuild: { value: 1 }, uScan: { value: 1.05 }, uMinY: { value: 0 }, uMaxY: { value: 1 }, uCert: { value: 0 },
-  uLines: { value: 1 }, uAccent: { value: new THREE.Color(TONE.accent) },
+  uLines: { value: 1 }, uFinish: { value: 1 }, uAccent: { value: new THREE.Color(TONE.accent) },
 };
 
 // a surface: its own colour and finish, a dark glass with a violet rim while it is light, a scan line turning it to metal
@@ -226,20 +226,24 @@ function surface(src, certColor) {
   return m;
 }
 
-// the line art: light while it is a hologram, dark seams once it is metal
-function lines(tone) {
+// the line art: light while it is a hologram, dark seams once it is metal. A part's construction
+// lines (the edges of its own surfaces) are not seams on a real object: they fade as it turns solid,
+// and only the design lines (parts drawn as lines: seams, creases, outlines) stay
+function lines(tone, construction) {
   return new THREE.ShaderMaterial({
-    uniforms: Object.assign({ uColor: { value: new THREE.Color(TONE[tone] || TONE.hairline) } }, U),
+    uniforms: Object.assign({ uColor: { value: new THREE.Color(TONE[tone] || TONE.hairline) }, uConstr: { value: construction ? 1 : 0 } }, U),
     vertexShader: `attribute float _phase; varying float vPhase; varying vec3 vWorld;
       void main() { vPhase = _phase; vec4 w = modelMatrix * vec4(position, 1.0); vWorld = w.xyz; gl_Position = projectionMatrix * viewMatrix * w; gl_PointSize = 4.0; }`,
-    fragmentShader: `uniform float uBuild, uScan, uMinY, uMaxY, uLines; uniform vec3 uColor, uAccent; varying float vPhase; varying vec3 vWorld;
+    fragmentShader: `uniform float uBuild, uScan, uMinY, uMaxY, uLines, uFinish, uConstr; uniform vec3 uColor, uAccent; varying float vPhase; varying vec3 vWorld;
       void main() {
         if (vPhase > uBuild + 0.0001 || uLines < 0.5) discard;
         float h = (vWorld.y - uMinY) / max(uMaxY - uMinY, 1e-4);
         float metal = smoothstep(uScan + 0.012, uScan - 0.012, h);
         float front = uBuild < 0.999 ? 1.0 - smoothstep(0.0, 0.03, uBuild - vPhase) : 0.0;
         vec3 col = mix(uColor * 0.95, vec3(0.018, 0.016, 0.02), metal) + uAccent * front * 2.0;
-        gl_FragColor = vec4(col, mix(0.9, 0.75, metal));
+        float keep = 1.0 - uConstr * metal * (0.65 + 0.35 * uFinish);
+        if (keep < 0.01) discard;
+        gl_FragColor = vec4(col, mix(0.9, 0.75, metal) * keep);
       }`,
     transparent: true, depthWrite: false,
   });
@@ -284,7 +288,7 @@ async function load(i) {
     if (!o.userData.src) o.userData.src = o.material;
     const p = partOf(o), cert = p ? p.userData.construct.certainty : "inferred";
     if (o.isMesh) { o.material = surface(o.userData.src, CERT[cert] || CERT.inferred); meshes.push(o); }
-    else { o.material = lines(toneOf(o.userData.src.name)); o.renderOrder = 1; }
+    else { o.material = lines(toneOf(o.userData.src.name), !!(o.parent && o.parent.children.some((c) => c.isMesh))); o.renderOrder = 1; }
   });
   // framing, the scan range, explode directions
   model.updateMatrixWorld(true);
@@ -338,6 +342,7 @@ const S = { metal: 1, finish: 1, build: 1, open: 0, explode: 0 };
 function setS(k, v) { S[k] = v; const el = $(k); el.value = v; el.style.setProperty("--p", (v * 100) + "%"); $(k + "-v").textContent = Math.round(v * 100) + "%"; }
 function apply() {
   U.uBuild.value = S.build;
+  U.uFinish.value = S.finish;
   U.uScan.value = -0.02 + S.metal * 1.04;
   bloom.strength = 0.1 + 0.5 * (1 - S.metal);
   for (const o of meshes) finishMaterial(o.material, S.finish);

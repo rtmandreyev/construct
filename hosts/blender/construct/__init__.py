@@ -229,8 +229,13 @@ def _procedural(mat, shader):
         links.new(bump.outputs["Normal"], shader.inputs["Normal"])
 
 
-def _light_material(tone, root, name):
-    """The line art: light in the hologram, dark seams on the metal, revealed by the build."""
+def _light_material(tone, root, name, construction=False):
+    """The line art: light in the hologram, dark seams on the metal, revealed by the build.
+
+    Construction lines (the edges of a part's own surfaces: a loft's sections, a box's edges) make the
+    hologram readable but are not seams on a real object: they fade as it turns solid, faint on the
+    plain model and gone on the finished one. A part drawn only as lines (a door seam, a crease, a
+    window outline) is a design line and stays, as a seam."""
     mat = bpy.data.materials.new(name)
     mat.use_nodes = True
     nodes, links = mat.node_tree.nodes, mat.node_tree.links
@@ -253,6 +258,12 @@ def _light_material(tone, root, name):
     links.new(seam.outputs[0], look.inputs[2])
     clear = nodes.new("ShaderNodeBsdfTransparent")
     show = nodes.new("ShaderNodeMixShader")
+    if construction:
+        finish = _value_node(nodes, root, "finish", (-900, -600))
+        fade = _math(nodes, links, "MULTIPLY", metal.outputs[0],
+                     _math(nodes, links, "MULTIPLY_ADD", finish.outputs[0], 0.35, (-700, -600), c=0.65), (-500, -500))
+        keep = _math(nodes, links, "SUBTRACT", 1.0, fade, (-300, -500), clamp=True)
+        visible = _math(nodes, links, "MULTIPLY", visible, keep, (-100, -400))
     links.new(visible, show.inputs[0])
     links.new(clear.outputs[0], show.inputs[1])
     links.new(look.outputs[0], show.inputs[2])
@@ -383,17 +394,18 @@ def setup(root, objects, wire_radius, metal=1.0, keep_animations=False):
         if me is None:
             continue
         tone = ROLE_TONE.get(_info(o).get("role"), "hairline")
-        if tone not in lights:
-            name = "%s:light:%s" % (info.get("id", "construct"), tone)
-            lights[tone] = _light_material(tone, root, name)
-            groups[tone] = _tube_group(root, name, lights[tone])
+        key = (tone, len(o.data.polygons) > 0)        # lines of a part with surfaces are construction lines
+        if key not in lights:
+            name = "%s:light:%s%s" % (info.get("id", "construct"), tone, ":edges" if key[1] else "")
+            lights[key] = _light_material(tone, root, name, key[1])
+            groups[key] = _tube_group(root, name, lights[key])
         lo = bpy.data.objects.new(o.name.replace(":mesh", "") + ":light", me)
         for col in o.users_collection:
             col.objects.link(lo)
         lo.parent = o
-        lo.data.materials.append(lights[tone])
+        lo.data.materials.append(lights[key])
         mod = lo.modifiers.new("Construct Light", "NODES")
-        mod.node_group = groups[tone]
+        mod.node_group = groups[key]
     for m in list(bpy.data.materials):
         if m.name.startswith("construct:light") and m.users == 0:
             bpy.data.materials.remove(m)

@@ -20,7 +20,8 @@ On the page:
 - **Light ↔ Metal** sweeps a scan line up the model: below it the solid model, its lines as dark
   seams; above it the hologram, lines of light over dark glass.
 - **Plain ↔ Finished** turns the plain model (clay) into the finished one: paint, chrome, glass,
-  brushed metal, rubber, lamps.
+  brushed metal, rubber, lamps. As the model turns solid, the construction lines (the edges of each
+  part's surfaces) fade, and only the design lines stay as seams: doors, creases, outlines.
 - **Build** replays the assembly from each vertex's build phase, with its bright front.
 - **Open** plays the model's own joints, from the file's `open` animation.
 - **Explode** takes the model apart into its named parts; hover a part to read its name, role,

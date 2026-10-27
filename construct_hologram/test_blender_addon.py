@@ -96,6 +96,7 @@ lights = [o for o in objs if o.name.endswith(":light")]
 e = lights[0].evaluated_get(bpy.context.evaluated_depsgraph_get())
 res["lights"], res["light_faces"], res["light_phase"] = len(lights), len(e.data.polygons), "_PHASE" in e.data.attributes
 res["light_material"] = bool(e.data.materials) and e.data.materials[0] is not None and ":light:" in e.data.materials[0].name
+res["edge_materials"] = sorted({m.name.endswith(":edges") for m in bpy.data.materials if ":light:" in m.name and not m.name.startswith("construct:")})
 res["open_actions"] = [a.name for a in bpy.data.actions if a.name.startswith("open")]
 bpy.ops.construct.animate_reveal()
 res["reveal_keyed"] = root.animation_data is not None and root.animation_data.action is not None
@@ -123,6 +124,7 @@ class InBlender(unittest.TestCase):
                 self.assertEqual(res["op"], ["FINISHED"])
                 self.assertEqual(res["props"], ["build", "finish", "metal", "open", "wire"])
                 self.assertTrue(res["light_material"])   # the tubes carry the line material, not Blender's default
+                self.assertEqual(res["edge_materials"], [False, True])   # design lines and construction lines
                 self.assertTrue(res["drivers_valid"])
                 self.assertGreater(res["joint_vertices"], 100)
                 self.assertLess(res["joint_worst"], 1e-4)

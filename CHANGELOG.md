@@ -33,6 +33,9 @@
   and makes wood, brushed metal and rubber procedural. The example page gains the same control and
   material maps for its four constructs; its hero shows the hologram, the plain model and the
   finished one in one Blender render.
+- **Seams, not wireframes:** on the solid and finished model, a part's construction lines (the
+  edges of its own surfaces) fade, faint on the plain model and gone on the finished one; parts
+  drawn as lines (seams, creases, outlines) stay as seams. In the add-on and on the example page.
 - **Fixed in the Blender add-on:** the line art's tubes rendered with Blender's default material
   (geometry made by a modifier carries none); each tone now has a node group that sets it.
 - **Audit:** `no-surface` warns when a main or structural part is drawn only as lines, so it would
