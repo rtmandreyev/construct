@@ -10,7 +10,31 @@ as a 3D model with named parts and working joints, for Blender, game engines and
   <a href="https://rtmandreyev.github.io/construct/examples/toyota-land-cruiser-fj62/"><img src="docs/media/assembly-toyota-land-cruiser-fj62.gif" width="32%" alt="The Toyota Land Cruiser FJ62 construct assembling itself"></a>
   <a href="https://rtmandreyev.github.io/construct/examples/duomo-di-milano/"><img src="docs/media/assembly-duomo-di-milano.gif" width="32%" alt="The Duomo di Milano construct assembling itself"></a>
 </p>
-<p align="center"><sub>Sainte-Chapelle · Toyota Land Cruiser FJ62 · Duomo di Milano, each built by Claude Opus 5.5 in masterpiece mode. <a href="https://rtmandreyev.github.io/construct/">Open the gallery</a> to orbit them, replay the assembly and read the labels.</sub></p>
+<p align="center"><sub><b>Constructs.</b> Sainte-Chapelle · Toyota Land Cruiser FJ62 · Duomo di Milano, each built by Claude Opus 5.5 in masterpiece mode. <a href="https://rtmandreyev.github.io/construct/">Open the gallery</a> to orbit them, replay the assembly and read the labels.</sub></p>
+
+<p align="center">
+  <a href="https://rtmandreyev.github.io/construct/films/james-webb-space-telescope/"><img src="docs/media/film-james-webb-space-telescope.gif" width="32%" alt="The James Webb Space Telescope construct assembling across a piece of music"></a>
+  <a href="https://rtmandreyev.github.io/construct/films/voyager-1/"><img src="docs/media/film-voyager-1.gif" width="32%" alt="The Voyager 1 construct assembling across a piece of music"></a>
+  <a href="https://rtmandreyev.github.io/construct/films/arecibo-observatory/"><img src="docs/media/film-arecibo-observatory.gif" width="32%" alt="The Arecibo Observatory construct assembling across a piece of music"></a>
+</p>
+<p align="center"><sub><b><a href="docs/FILM.md">Film mode.</a></b> <a href="https://rtmandreyev.github.io/construct/films/james-webb-space-telescope/">James Webb Space Telescope</a> · <a href="https://rtmandreyev.github.io/construct/films/voyager-1/">Voyager 1</a> · <a href="https://rtmandreyev.github.io/construct/films/arecibo-observatory/">Arecibo Observatory</a>, each assembling across a piece of music: the build pauses, surges and flares with it, and you get a video with the music in it.</sub></p>
+
+<p align="center">
+  <a href="https://rtmandreyev.github.io/construct/examples/light-to-metal/"><img src="docs/media/pipeline-fj62.gif" width="32%" alt="The Toyota Land Cruiser FJ62 in Blender: it assembles in lines of light, turns into a plain model of named parts, then into the finished model in paint, chrome and glass"></a>
+  <a href="https://rtmandreyev.github.io/construct/examples/light-to-metal/"><img src="docs/media/pipeline-revox.gif" width="32%" alt="The Revox A77 tape recorder in Blender: from lines of light to a plain model, then finished in brushed metal with its reels"></a>
+  <a href="https://rtmandreyev.github.io/construct/examples/light-to-metal/"><img src="docs/media/pipeline-minifreak.gif" width="32%" alt="The Arturia MiniFreak synthesizer in Blender: from lines of light to a plain model, then finished with its black and white keys"></a>
+</p>
+<p align="center"><sub><b><a href="docs/EXPORT.md">From light to a finished 3D model.</a></b> Toyota Land Cruiser FJ62 · Revox A77 · Arturia MiniFreak, exported unedited as glTF and revealed in Blender by the <a href="hosts/blender/README.md">add-on</a>: the hologram, the plain model of named parts, then the model finished from a material map. <a href="https://rtmandreyev.github.io/construct/examples/light-to-metal/">Open the live page</a> to download the files.</sub></p>
+
+<p align="center">
+  <a href="https://rtmandreyev.github.io/construct/examples/netlogo-flocking/"><img src="docs/media/netlogo-flocking.gif" width="32%" alt="Flocking: each bird's track rising with time, random near the floor and in parallel streams higher up"></a>
+  <a href="https://rtmandreyev.github.io/construct/examples/netlogo-wolf-sheep/"><img src="docs/media/netlogo-wolf-sheep.gif" width="32%" alt="Wolf Sheep Predation: the predator-prey cycle rising in time, sheep across the floor and wolves front to back"></a>
+  <a href="https://rtmandreyev.github.io/construct/examples/netlogo-fire/"><img src="docs/media/netlogo-fire.gif" width="32%" alt="Fire: the fire's front, every few ticks, rising as it crosses the forest"></a>
+</p>
+<p align="center"><sub><b><a href="docs/NETLOGO.md">Models come alive.</a></b> Flocking · Wolf Sheep Predation · Fire: NetLogo runs recorded by the bridge and drawn with time as height, so each assembly replays its run. The data comes from the run; labels and milestones are an art-direction pass on top.</sub></p>
+
+<p align="center"><a href="https://rtmandreyev.github.io/construct/examples/netlogo-viral-marketing/"><img src="docs/media/netlogo-viral-marketing.gif" width="100%" alt="The Simple Viral Marketing model running: adoptions spread through the social network on the floor and rise as lines of light, the gold ring marking now, while the counters climb to 500 of 500"></a></p>
+<p align="center"><sub><b>Simple Viral Marketing</b>, rebuilt to run live in the browser: five hundred people, one product, word of mouth and a little advertising. The floor is the social network, and each person rises to the moment they adopted, so you can watch an idea spread and see who it reaches last, and why. <a href="https://rtmandreyev.github.io/construct/examples/netlogo-viral-marketing/">Open the live model</a> to run it tick by tick and compare a hundred runs with NetLogo's own. The NetLogo models are © Uri Wilensky; these examples are under CC BY-NC-SA 3.0 (see <a href="#license">License</a>).</sub></p>
 
 - **Any agent, any model.** Claude Code, Hermes, any MCP client or any OpenAI-compatible endpoint, or by hand.
 - **Honest about what is known.** Every fact and part says whether it is verified, supplied by you, inferred or decorative.
@@ -27,36 +51,6 @@ as a 3D model with named parts and working joints, for Blender, game engines and
 | **In film and motion** | A construct that assembles across a track of music, rendered to video | [Film mode](docs/FILM.md) |
 | **An educator or researcher** | An agent-based model's run drawn as a construct, computed from the recording, with the data locked | [NetLogo bridge](docs/NETLOGO.md) |
 | **A museum or archive** | Reconstructions that say how each part is known (verified, supplied, inferred or decorative), so a visitor can tell evidence from design | [The Measured Light style](docs/STYLE.md) |
-
-## What you can make
-
-**Film mode.** A construct can also assemble across a whole piece of music: the build pauses, surges
-and flares with it, and you get a video with the music in it. See [Film mode](docs/FILM.md).
-
-<p align="center">
-  <a href="https://rtmandreyev.github.io/construct/films/james-webb-space-telescope/"><img src="docs/media/film-james-webb-space-telescope.gif" width="32%" alt="The James Webb Space Telescope construct assembling across a piece of music"></a>
-  <a href="https://rtmandreyev.github.io/construct/films/voyager-1/"><img src="docs/media/film-voyager-1.gif" width="32%" alt="The Voyager 1 construct assembling across a piece of music"></a>
-  <a href="https://rtmandreyev.github.io/construct/films/arecibo-observatory/"><img src="docs/media/film-arecibo-observatory.gif" width="32%" alt="The Arecibo Observatory construct assembling across a piece of music"></a>
-</p>
-<p align="center"><sub><a href="https://rtmandreyev.github.io/construct/films/james-webb-space-telescope/">James Webb Space Telescope</a> · <a href="https://rtmandreyev.github.io/construct/films/voyager-1/">Voyager 1</a> · <a href="https://rtmandreyev.github.io/construct/films/arecibo-observatory/">Arecibo Observatory</a>, each assembling across a piece of music. Open one to watch the film, or to turn the live construct around.</sub></p>
-
-**From light to a finished 3D model.** Every construct is also a 3D model: what the agent wrote
-(named parts in metres, joints, the order they assemble in) exports as one glTF file, and a
-material map finishes it with paint, chrome, glass and wood. See [3D export](docs/EXPORT.md) and the
-[Blender add-on](hosts/blender/README.md).
-
-<p align="center"><a href="https://rtmandreyev.github.io/construct/examples/light-to-metal/"><img src="examples/light-to-metal/hero.jpg" width="100%" alt="The Toyota Land Cruiser FJ62 in three stages, rendered in Blender from its exported file: lines of light, a plain model of named parts, and the finished model in paint, chrome and glass"></a></p>
-<p align="center"><sub>The FJ62 construct exported unedited and rendered in Blender: the hologram, the plain model and the finished one. <a href="https://rtmandreyev.github.io/construct/examples/light-to-metal/">Open the live page</a> to move between them and download the files.</sub></p>
-
-**Models come alive.** The same visual language works for ideas and data. The
-[NetLogo bridge](docs/NETLOGO.md) records an agent-based model's run and draws it with time as
-height, so its assembly replays the run. Here Uri Wilensky's *Simple Viral Marketing*, rebuilt to
-run live in the browser: five hundred people, one product, word of mouth and a little advertising.
-The floor is the social network, and each person rises to the moment they adopted, so you can
-watch an idea spread and see who it reaches last, and why.
-
-<p align="center"><a href="https://rtmandreyev.github.io/construct/examples/netlogo-viral-marketing/"><img src="docs/media/netlogo-viral-marketing.gif" width="100%" alt="The Simple Viral Marketing model running: adoptions spread through the social network on the floor and rise as lines of light, the gold ring marking now, while the counters climb to 500 of 500"></a></p>
-<p align="center"><sub><a href="https://rtmandreyev.github.io/construct/examples/netlogo-viral-marketing/">Open the live model</a> to build new networks, run them tick by tick and compare a hundred runs with NetLogo's own. <a href="docs/NETLOGO.md">Flocking, Wolf Sheep Predation and Fire</a> were recorded with the bridge. The models are © Uri Wilensky; these examples are under CC BY-NC-SA 3.0 (see <a href="#license">License</a>).</sub></p>
 
 ## What it does
 
@@ -234,10 +228,12 @@ See [CONTRIBUTING.md](CONTRIBUTING.md). Run the tests with
 
 ## License
 
-[MIT](LICENSE) — Copyright (c) 2026 Artyom Andreyev. The four NetLogo example folders
+[Apache-2.0](LICENSE) — Copyright (c) 2026 Artyom Andreyev (see [NOTICE](NOTICE)); versions up to 0.3.0 were MIT. The four NetLogo example folders
 ([viral marketing](examples/netlogo-viral-marketing/), [flocking](examples/netlogo-flocking/),
 [wolf sheep](examples/netlogo-wolf-sheep/) and [fire](examples/netlogo-fire/)) derive from Uri
-Wilensky's NetLogo models and are under CC BY-NC-SA 3.0 instead (see each LICENSE).
+Wilensky's NetLogo models and are under CC BY-NC-SA 3.0 instead (see each LICENSE). The [Blender
+add-on](hosts/blender/) is under GPL-3.0-or-later, as Blender's extensions platform requires; what
+you make with it is yours.
 
 Construct's working method is inspired by [Anatomy](https://github.com/wheresryan22/anatomy)'s
 truth-first construction (MIT); it shares the method, not code. Product, vehicle and place names
