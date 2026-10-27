@@ -122,10 +122,52 @@ the scene and geometry contract keeps its id (`construct/0.2`), because nothing 
   add-on is GPL-3.0-or-later, for Blender's extensions platform.
 - Left: the release videos and posts, and the add-on's listing on extensions.blender.org.
 
-## Later
+## v1.1: models come alive
 
-- A NetLogo extension (`extensions [construct]`), listed in NetLogo's extension manager, if the
-  include file is adopted.
+Make agent-based models exciting to learn from: a simulation's whole run as an animated hologram a
+student wants to explore (why does it take this shape? how do I read it?), accurate to the run,
+and exportable to Blender as a real 3D model. The core stays free, fast and reliable; the heavy
+work (art direction, critic rounds, 3D models) is opt-in.
+
+### Phase A: a reliable core (done)
+
+- The recorder's own names never clash with a model's (5 stock models failed on names like `n`).
+- The instrumenter follows `reset-ticks` and `tick` into helper procedures, reads every NetLogo 7
+  file and takes setup and go commands with inputs: 348 of the 445 two-dimensional stock models
+  record with no hand edits (291 before), and a refusal says what to do.
+- A run of the whole Models Library is a regression test: how many record, and why the rest don't.
+- Every NetLogo construct gets a legend, shown from the start, and no decoration that could be
+  read as data (the projector's rings are off).
+
+### Phase B: an official NetLogo extension (built; listing next)
+
+- `extensions [construct]`: the recording as primitives (`construct:start`, `construct:track-…`,
+  `construct:record`) and `construct:draw`, which writes the construct beside the model and opens
+  it. In Java, tested in NetLogo 7.0.4 ([hosts/netlogo](../hosts/netlogo/README.md)).
+- The same recording format, so the command line, art direction and the data lock keep working.
+- Next: listing it in NetLogo's Extensions Manager, through a pull request to NetLogo-Libraries.
+
+### Phase C: learners first (opt-in polish)
+
+- A replay control: scrub the run tick by tick and watch the shape form, with the tick and the
+  model's own counts on screen.
+- "How to read it" on the page: the legend plus what each part of the shape means, from the art
+  layer.
+- Critic rounds for the art layer: an independent model compares versions, as in masterpiece
+  mode; the data lock keeps every round honest.
+- Legends placed to stay inside the frame (one on the frame's edge can be cut off today).
+
+### Phase D: real 3D models of a run (opt-in)
+
+- NetLogo constructs export to glTF as proper geometry: tracks and links as tubes, agents as
+  solids, one named object per breed or part, the run as the build animation. Tested in Blender.
+
+### Phase E: every agent
+
+- NetLogo tools in the MCP server (instrument, draw, art direction), so Hermes and any MCP client
+  can drive the bridge, and the skills' steps to match.
+
+## Later
 - Texture coordinates for every shape.
 - An optional surface finish per part (paint, metal, glass…), as a contract addition.
 - USD and USDZ export.

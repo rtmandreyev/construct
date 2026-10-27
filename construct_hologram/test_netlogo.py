@@ -1,17 +1,21 @@
 """The NetLogo bridge: instrumenting a model, reading a recording, every view's construct, the data lock
-and the art-direction layer, the `paths` shape, and (with CONSTRUCT_NETLOGO set to NetLogo's folder) a headless run end to end."""
+and the art-direction layer, the `paths` shape, and (with CONSTRUCT_NETLOGO set to NetLogo's folder) a headless run end to end; with CONSTRUCT_JAVAC too, the
+NetLogo extension built, run and checked against the recorder it replaces."""
 
+import io
 import json
 import os
 import subprocess
 import tempfile
 import unittest
+import zipfile
 from pathlib import Path
 
 from . import audit, cli, netlogo, scene, studio
 
 HERE = Path(__file__).resolve().parent
 NETLOGO = os.environ.get("CONSTRUCT_NETLOGO")
+JAVAC = os.environ.get("CONSTRUCT_JAVAC")   # a Java 17 or newer javac, for the extension
 
 MODEL = """<?xml version="1.0" encoding="utf-8"?>
 <model version="NetLogo 7.0.4" snapToGrid="false">
@@ -86,6 +90,24 @@ class Instrument(unittest.TestCase):
         with self.assertRaises(netlogo.NetLogoError):
             netlogo.instrument("<model></model>", "T", "run.jsonl")
 
+    def test_escaped_code_helper_procedures_and_commands(self):
+        m = MODEL.replace("  reset-ticks\nend", "  setup-world\nend\n\nto setup-world\n  reset-ticks\nend")
+        m = m.replace("  tick\nend]]>", "  step\nend\n\nto step\n  if count turtles > 0 [ ]\n  tick\nend]]>")
+        code = m.split("<![CDATA[")[1].split("]]>")[0]
+        m = m.replace("<![CDATA[" + code + "]]>", code.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;"))
+        self.assertNotIn("CDATA", m)
+        model, xml = netlogo.instrument(m, "T", "run.jsonl")
+        self.assertIn("  if count turtles &gt; 0 [ ]", model)   # written back escaped, as it came
+        self.assertIn("to setup-world\n  reset-ticks\n  construct-start", model)
+        self.assertIn("  tick\n  construct-record\nend", model)
+        inputs = MODEL.replace("to setup\n", "to setup [ n ]\n").replace(
+            "</widgets>", '<button kind="Observer" display="setup">setup 20</button></widgets>')
+        with self.assertRaises(netlogo.NetLogoError) as e:
+            netlogo.instrument(inputs, "T", "run.jsonl")
+        self.assertIn('--setup "setup 20"', str(e.exception))
+        model, xml = netlogo.instrument(inputs, "T", "run.jsonl", setup="setup 20")
+        self.assertIn("<setup>setup 20</setup>", xml)
+
     def test_the_recorder_ships_with_the_package(self):
         text = netlogo.NLS.read_text(encoding="utf-8")
         for proc in ("to construct-start", "to construct-record", "to construct-finish", "to construct-skip-turtles",
@@ -116,6 +138,25 @@ class Views(unittest.TestCase):
                            ("field", {"levels": 4})):
             with self.subTest(view):
                 self.check(netlogo.scene_from_run(self.run, view, **opts))
+
+    def test_a_legend_shown_from_the_start(self):
+        sc = netlogo.scene_from_run(self.run, "network-time", state="infected?")
+        legend = {a["part"]: a["text"] for a in sc["annotations"]}
+        self.assertEqual(set(legend), {p["id"] for p in sc["parts"] if p["role"] != "mass"})
+        self.assertTrue(all(legend[p["id"]] == p["label"][:80] for p in sc["parts"] if p["id"] in legend))
+        self.assertIs(sc["presentation"]["labels"], True)
+        self.assertFalse(sc["presentation"]["atmosphere"]["projector"])   # nothing that looks like data and isn't
+        self.assertIs(scene.compile_scene(sc)["presentation"]["labels"], True)
+        plain = json.loads(json.dumps(sc))
+        del plain["presentation"]["labels"]
+        self.assertNotIn("labels", scene.compile_scene(plain)["presentation"])   # other constructs: unchanged
+        plain["presentation"]["labels"] = "yes"
+        self.assertTrue(any("labels" in e for e in scene.validate(plain)))
+
+    def test_the_field_hangs_at_its_ticks(self):
+        sc = netlogo.scene_from_run(self.run, "field", levels=4)
+        self.assertIs(next(p for p in sc["parts"] if p["id"] == "fronts")["floating"], True)
+        self.assertEqual([e["code"] for e in audit.audit(sc, scene.compile_scene(sc))["errors"]], [])
 
     def test_time_is_height(self):
         sc = netlogo.scene_from_run(self.run, "space-time")
@@ -213,8 +254,16 @@ class ArtDirection(unittest.TestCase):
         world = next(p for p in out["parts"] if p["id"] == "world")
         self.assertEqual((world["label"], world["look"]["alpha"], world["look"]["weight"]), ("The world", 0.3, 0.5))
         self.assertEqual((out["title"], out["presentation"]["framing"]["yaw"]), ("A run, directed", 20))
-        self.assertTrue(out["presentation"]["atmosphere"]["projector"])
+        self.assertFalse(out["presentation"]["atmosphere"]["projector"])   # the bridge's atmosphere, kept
         self.assertNotIn("art", [s["id"] for s in self.sc["sources"]])   # the bridge's scene is left as it was
+
+    def test_the_legend_follows_the_art(self):
+        art = dict(self.ART, looks={"tracks-walkers": {"label": "Every walker, rising"}})
+        out = netlogo.apply_art(self.sc, art)
+        self.assertEqual(next(a for a in out["annotations"] if a["id"] == "legend-tracks-walkers")["text"], "Every walker, rising")
+        out = netlogo.apply_art(self.sc, dict(art, legend=False))
+        self.assertEqual([a["id"] for a in out["annotations"]], ["milestone-note"])
+        self.assertIsNone(netlogo.lock_problem(out))
 
     def test_art_never_touches_the_data(self):
         part = dict(self.ART["parts"][0], source="run")
@@ -289,6 +338,61 @@ class Headless(unittest.TestCase):
                 if view == "network-time":
                     continue   # this model has no links
                 self.assertEqual(scene.validate(netlogo.scene_from_run(run, view, **opts)), [])
+
+
+@unittest.skipUnless(NETLOGO and JAVAC, "set CONSTRUCT_NETLOGO and CONSTRUCT_JAVAC (Java 17 or newer) to run")
+class Extension(unittest.TestCase):
+    """The NetLogo extension: built, loaded by NetLogo beside a model, its recording the same as construct.nls's."""
+
+    def test_build_record_and_draw(self):
+        root, folder = HERE.parent, Path(NETLOGO)
+        java = folder / "runtime" / "Contents" / "Home" / "bin" / "java"
+        jar = next(folder.glob("app/netlogo-*.jar"))
+        with tempfile.TemporaryDirectory() as d:
+            subprocess.run(["python3", str(root / "scripts" / "build_netlogo_extension.py"), "--netlogo", NETLOGO,
+                            "--javac", JAVAC, "--out", d], check=True, capture_output=True)
+            z = zipfile.ZipFile(next(Path(d).glob("construct-*.zip")))
+            self.assertIn("construct.jar", z.namelist())
+            self.assertIn("construct_hologram/netlogo.py", z.namelist())
+            manifest = zipfile.ZipFile(io.BytesIO(z.read("construct.jar"))).read("META-INF/MANIFEST.MF").decode()
+            self.assertIn("Class-Manager: construct.netlogo.ConstructExtension", manifest)
+            self.assertIn("NetLogo-Extension-API-Version: 7.0", manifest)
+            z.extractall(Path(d, "construct"))
+            subprocess.run([JAVAC, "--release", "17", "-cp", str(jar), "-d", d, str(root / "hosts/netlogo/test/Drive.java")],
+                           check=True)
+            Path(d, "m.nlogox").write_text(MODEL.replace("turtles-own", "extensions [construct]\nturtles-own"),
+                                           encoding="utf-8")
+
+            def drive(*commands):
+                return subprocess.run([str(java), "-Djava.awt.headless=true", "-cp", os.pathsep.join([str(jar), d]), "Drive",
+                                       str(Path(d, "m.nlogox"))] + list(commands), cwd=d, capture_output=True, text=True,
+                                      timeout=600)
+            r = drive('random-seed 4 setup construct:start "Contagion" construct:seed 4 '
+                      'construct:track-turtles ["infected?"] construct:track-reporter "infected" [-> count turtles with [infected?]] '
+                      'construct:record', "repeat 30 [ go construct:record ]", "construct:finish", '(construct:draw "space-time" "max-agents" 10 "time" "sqrt")')
+            self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+            ext = netlogo.read_run(Path(d, "contagion-run.jsonl"))
+            self.assertEqual((ext["header"]["seed"], ext["header"]["reporters"], ext["end"], len(ext["frames"])),
+                             (4, ["infected"], 30, 31))
+            self.assertTrue(Path(d, "contagion-construct", "construct.html").is_file())
+            self.assertEqual(json.loads(Path(d, "contagion-construct", "audit.json").read_text())["errors"], [])
+            r = drive("setup construct:record")
+            self.assertIn("construct:start first", r.stdout)
+            r = drive('setup construct:start "C" construct:record', '(construct:draw "phase" "y" "infected")')
+            self.assertIn('no option "y"', r.stdout)
+
+            # the same run through construct.nls: the same turtles, tick by tick
+            Path(d, "plain.nlogox").write_text(MODEL, encoding="utf-8")
+            self.assertEqual(cli.main(["netlogo-instrument", str(Path(d, "plain.nlogox")), "--title", "Contagion", "--out",
+                                       str(Path(d, "nls")), "--turtles", "infected?", "--seed", "4", "--ticks", "30"]), 0)
+            env = dict(os.environ, JAVA_HOME=str(folder / "runtime" / "Contents" / "Home"))
+            r = subprocess.run([str(folder / "netlogo-headless.sh"), "--model", str(Path(d, "nls", "plain-construct.nlogox")),
+                                "--setup-file", str(Path(d, "nls", "construct-experiment.xml")), "--experiment", "construct",
+                                "--threads", "1", "--table", "-"], cwd=folder, capture_output=True, text=True, timeout=600,
+                               env=env, encoding="utf-8", errors="replace")
+            self.assertEqual(r.returncode, 0, r.stderr[-1500:])
+            nls = netlogo.read_run(Path(d, "nls", "run.jsonl"))
+            self.assertEqual([f["turtles"] for f in ext["frames"]], [f["turtles"] for f in nls["frames"]])
 
 
 if __name__ == "__main__":

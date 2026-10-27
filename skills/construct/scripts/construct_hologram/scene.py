@@ -897,8 +897,10 @@ def _motion_check(c, mo, w):
 def _presentation_check(c, pr, part_ids):
     w = "scene.presentation"
     if not c.keys(pr, {"framing", "views", "atmosphere", "occlusion", "certainty_style", "background", "float",
-                       "style_hint", "still_pose"}, set(), w):
+                       "style_hint", "still_pose", "labels"}, set(), w):
         return
+    if "labels" in pr and not isinstance(pr["labels"], bool):
+        c.err(w + ".labels", "expected true or false")
     hint = pr.get("style_hint", {})
     if c.keys(hint, {"palette", "identity"}, set(), w + ".style_hint"):
         if "palette" in hint:
@@ -1802,7 +1804,7 @@ def _normal_presentation(scene):
     pr = scene.get("presentation", {})
     at = pr.get("atmosphere", {})
     fr = pr.get("framing", {})
-    return {
+    out = {
         "framing": {"yaw": fr.get("yaw", 35.0), "pitch": fr.get("pitch", 18.0), "fit": fr.get("fit", 1.0),
                     "target": fr.get("target")},
         "views": [dict(v) for v in pr.get("views", [])],
@@ -1818,6 +1820,9 @@ def _normal_presentation(scene):
         "style_hint": dict(HOUSE_STYLE),
         "still_pose": pr.get("still_pose", "open"),
     }
+    if pr.get("labels") is True:   # open with the labels showing (a reading, such as a NetLogo run's legend)
+        out["labels"] = True
+    return out
 
 
 def _normal_animation(scene):

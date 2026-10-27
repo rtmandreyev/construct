@@ -462,6 +462,8 @@ def add_commands(sub):
     p.add_argument("--seed", type=int, help="the random seed the experiment sets (recorded with the run)")
     p.add_argument("--ticks", type=int, default=500, help="the experiment's time limit (default 500)")
     p.add_argument("--no-turtles", action="store_true", help="record no turtles (reporters or patches only)")
+    p.add_argument("--setup", default="setup", help="the model's setup command, if not `setup` (with its inputs, if it takes any: \"setup 3\")")
+    p.add_argument("--go", default="go", help="the model's go command, if not `go`")
     p = sub.add_parser("netlogo", help="a construct of a recorded NetLogo run (docs/NETLOGO.md)")
     p.add_argument("run", help="the recording (.jsonl, written by construct.nls)")
     p.add_argument("--view", required=True, choices=("space-time", "network-time", "phase", "field"))
@@ -723,7 +725,8 @@ def run(args):
                     model, xml = nl.instrument(src.read_text(encoding="utf-8"), args.title, args.run_file,
                                                [t.strip() for t in args.turtles.split(",") if t.strip()],
                                                [r.strip() for r in args.reporters.split(";") if r.strip()],
-                                               patches, args.every, args.seed, args.ticks, args.no_turtles)
+                                               patches, args.every, args.seed, args.ticks, args.no_turtles,
+                                               args.setup, args.go)
                     out = Path(args.out)
                     out.mkdir(parents=True, exist_ok=True)
                     target = out / (src.stem + "-construct.nlogox")
@@ -734,7 +737,10 @@ def run(args):
                                      "Run it in NetLogo (setup, go), or headless:\n"
                                      "  NetLogo_Console --headless --model \"%s\" --setup-file \"%s\" "
                                      "--experiment construct --threads 1\n"
-                                     "then: construct netlogo %s --view space-time --out scene.json\n"
+                                     "then: construct netlogo %s --view VIEW --out scene.json\n"
+                                     "  (VIEW: space-time for moving agents, network-time --state VAR for spreading "
+                                     "on a network,\n   phase for two reporters in a cycle, field for patches; "
+                                     "docs/NETLOGO.md)\n"
                                      % (target.name, out, target, out / "construct-experiment.xml",
                                         out / args.run_file))
                     return 0

@@ -118,6 +118,8 @@ hinge too. Later `order`s ride on earlier ones (the booklet slides out of the op
 Positive rotation follows the right-hand rule about `axis`: a lid hinged on its left edge
 (front +Z) opens towards the viewer with `axis [0, -1, 0]` and a positive amount.
 `presentation.still_pose`: `open` (default) or `closed` for the still frame.
+`presentation.labels`: `true` opens the page with the labels showing (a reading the construct
+needs, such as a NetLogo run's legend); otherwise they wait for **L**.
 
 ## Labels (text the renderer sets from facts)
 

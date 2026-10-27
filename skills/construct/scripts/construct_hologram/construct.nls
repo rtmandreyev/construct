@@ -25,9 +25,9 @@ globals [
   construct-turtles? construct-reporter-tasks construct-patch-task construct-turtle-tasks
 ]
 
-to construct-start [ title path ]
-  set construct-title title
-  set construct-file path
+to construct-start [ construct-run-title construct-path ]
+  set construct-title construct-run-title
+  set construct-file construct-path
   set construct-seed-value "null"
   set construct-turtle-vars []
   set construct-turtle-tasks []
@@ -43,37 +43,37 @@ to construct-start [ title path ]
   if file-exists? construct-file [ file-delete construct-file ]
 end
 
-to construct-seed [ n ]
-  set construct-seed-value n
+to construct-seed [ construct-n ]
+  set construct-seed-value construct-n
 end
 
 ;; each source compiled once into an anonymous reporter, not once per agent and tick
-to-report construct-task [ source ]
-  report runresult (word "[ [] -> " source " ]")
+to-report construct-task [ construct-source ]
+  report runresult (word "[ [] -> " construct-source " ]")
 end
 
-to construct-track-turtles [ names ]
-  set construct-turtle-vars names
-  set construct-turtle-tasks map [ v -> construct-task v ] names
+to construct-track-turtles [ construct-names ]
+  set construct-turtle-vars construct-names
+  set construct-turtle-tasks map [ construct-v -> construct-task construct-v ] construct-names
 end
 
-to construct-track-reporters [ sources ]
-  set construct-reporters sources
-  set construct-reporter-tasks map [ v -> construct-task v ] sources
+to construct-track-reporters [ construct-sources ]
+  set construct-reporters construct-sources
+  set construct-reporter-tasks map [ construct-v -> construct-task construct-v ] construct-sources
 end
 
-to construct-track-patches [ source n ]
-  set construct-patch-reporter source
-  set construct-patch-task construct-task source
-  set construct-patch-every max list 1 n
+to construct-track-patches [ construct-source construct-n ]
+  set construct-patch-reporter construct-source
+  set construct-patch-task construct-task construct-source
+  set construct-patch-every max list 1 construct-n
 end
 
 to construct-skip-turtles
   set construct-turtles? false
 end
 
-to construct-record-every [ n ]
-  set construct-every max list 1 n
+to construct-record-every [ construct-n ]
+  set construct-every max list 1 construct-n
 end
 
 to construct-record
@@ -92,31 +92,31 @@ to construct-record
   file-type (word "{\"t\":" ticks)
   if construct-turtles? [
     file-type ",\"turtles\":"
-    construct-write map [ a -> construct-turtle a ] sort turtles
+    construct-write map [ construct-a -> construct-turtle construct-a ] sort turtles
   ]
   if not empty? construct-reporters [
     file-type ",\"reporters\":"
-    construct-write map [ r -> runresult r ] construct-reporter-tasks
+    construct-write map [ construct-r -> runresult construct-r ] construct-reporter-tasks
   ]
   if construct-turtles? and count links != construct-link-count [
     set construct-link-count count links
     file-type ",\"links\":"
-    construct-write map [ l -> [ (list [who] of end1 [who] of end2 (word breed)) ] of l ] sort links
+    construct-write map [ construct-l -> [ (list [who] of end1 [who] of end2 (word breed)) ] of construct-l ] sort links
   ]
   if construct-patch-reporter != "" and ticks mod construct-patch-every = 0 [
     file-type ",\"patches\":"
-    construct-write map [ q -> [ runresult construct-patch-task ] of q ] sort patches
+    construct-write map [ construct-q -> [ runresult construct-patch-task ] of construct-q ] sort patches
   ]
   file-print "}"
   file-close
 end
 
 ;; a list, written to the open file as a JSON array
-to construct-write [ xs ]
+to construct-write [ construct-xs ]
   file-type "["
-  if not empty? xs [
-    file-type construct-json first xs
-    foreach but-first xs [ x -> file-type "," file-type construct-json x ]
+  if not empty? construct-xs [
+    file-type construct-json first construct-xs
+    foreach but-first construct-xs [ construct-x -> file-type "," file-type construct-json construct-x ]
   ]
   file-type "]"
 end
@@ -127,28 +127,28 @@ to construct-finish
   file-close
 end
 
-to-report construct-turtle [ a ]
-  report [ (sentence who (word breed) precision xcor 4 precision ycor 4 color map [ v -> runresult v ] construct-turtle-tasks) ] of a
+to-report construct-turtle [ construct-a ]
+  report [ (sentence who (word breed) precision xcor 4 precision ycor 4 color map [ construct-v -> runresult construct-v ] construct-turtle-tasks) ] of construct-a
 end
 
 ;; a NetLogo value as JSON: numbers, booleans, strings, lists, agents (a turtle as its who) and nobody
-to-report construct-json [ v ]
-  if is-number? v [ report (word v) ]
-  if is-boolean? v [ report ifelse-value v [ "true" ] [ "false" ] ]
-  if is-string? v [ report (word "\"" construct-escape v "\"") ]
-  if is-list? v [
-    if empty? v [ report "[]" ]
-    report (word "[" reduce [ [ a b ] -> (word a "," b) ] map [ x -> construct-json x ] v "]")
+to-report construct-json [ construct-v ]
+  if is-number? construct-v [ report (word construct-v) ]
+  if is-boolean? construct-v [ report ifelse-value construct-v [ "true" ] [ "false" ] ]
+  if is-string? construct-v [ report (word "\"" construct-escape construct-v "\"") ]
+  if is-list? construct-v [
+    if empty? construct-v [ report "[]" ]
+    report (word "[" reduce [ [ construct-a construct-b ] -> (word construct-a "," construct-b) ] map [ construct-x -> construct-json construct-x ] construct-v "]")
   ]
-  if is-turtle? v [ report (word [who] of v) ]
-  if is-patch? v [ report construct-json [ (list pxcor pycor) ] of v ]
+  if is-turtle? construct-v [ report (word [who] of construct-v) ]
+  if is-patch? construct-v [ report construct-json [ (list pxcor pycor) ] of construct-v ]
   report "null"
 end
 
-to-report construct-escape [ s ]
-  let out ""
-  foreach n-values length s [ i -> item i s ] [ c ->
-    set out (word out ifelse-value (c = "\"" or c = "\\") [ (word "\\" c) ] [ c ])
+to-report construct-escape [ construct-s ]
+  let construct-out ""
+  foreach n-values length construct-s [ construct-i -> item construct-i construct-s ] [ construct-c ->
+    set construct-out (word construct-out ifelse-value (construct-c = "\"" or construct-c = "\\") [ (word "\\" construct-c) ] [ construct-c ])
   ]
-  report out
+  report construct-out
 end

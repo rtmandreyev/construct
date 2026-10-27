@@ -49,7 +49,7 @@ as a 3D model with named parts and working joints, for Blender, game engines and
 | **A game developer** | Props and blockouts with named parts, working joints and real dimensions, as glTF for Godot, Unity or Unreal; the line-light look for scanners, holograms and UI | [3D export](docs/EXPORT.md) |
 | **A 3D artist** | A construct imported into Blender with its build, joints and finish on sliders, ready to light, render or model over | [Blender add-on](hosts/blender/README.md) |
 | **In film and motion** | A construct that assembles across a track of music, rendered to video | [Film mode](docs/FILM.md) |
-| **An educator or researcher** | An agent-based model's run drawn as a construct, computed from the recording, with the data locked | [NetLogo bridge](docs/NETLOGO.md) |
+| **An educator or researcher** | An agent-based model's run drawn as a construct, computed from the recording, with the data locked; from inside NetLogo with the extension | [NetLogo bridge](docs/NETLOGO.md), [extension](hosts/netlogo/README.md) |
 | **A museum or archive** | Reconstructions that say how each part is known (verified, supplied, inferred or decorative), so a visitor can tell evidence from design | [The Measured Light style](docs/STYLE.md) |
 
 ## What it does
@@ -199,7 +199,8 @@ Construct is deliberately small. You need:
 - Python 3.10 or newer. Nothing else to install: no packages, no virtual environment.
 - For review stills, a Chromium-family browser you already have (Chrome, Chromium, Edge, Brave).
 - For video, ffmpeg.
-- For the Blender add-on, Blender 4.2 or newer; for the NetLogo bridge, NetLogo 6 or 7.
+- For the Blender add-on, Blender 4.2 or newer; for the NetLogo bridge, NetLogo 6 or 7 (the
+  extension: NetLogo 7).
 - Tested on macOS; review capture on Linux and Windows is untested.
 
 ## Documentation
@@ -214,7 +215,7 @@ Start with the first two if you are new; the full index is in [docs/README.md](d
 - [Terrain](docs/TERRAIN.md): mountains, routes and planets from real elevation data
 - [Film mode](docs/FILM.md): a construct that assembles across a track of music, for videos and films
 - [3D export](docs/EXPORT.md) and the [Blender add-on](hosts/blender/README.md): a construct as a 3D model, plain or finished, for Blender, game engines and the web
-- [The NetLogo bridge](docs/NETLOGO.md): an agent-based model's run drawn as a construct, with optional art direction
+- [The NetLogo bridge](docs/NETLOGO.md) and the [NetLogo extension](hosts/netlogo/README.md): an agent-based model's run drawn as a construct, with optional art direction
 - [About](docs/ABOUT.md): where Construct's method comes from
 - [Evaluation](docs/EVALUATION.md): how models compare, and how to score your own
 - [Development](docs/DEVELOPMENT.md): for contributors and for building Construct into your own tools

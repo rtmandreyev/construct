@@ -1,5 +1,29 @@
 # Changelog
 
+## Unreleased (1.1)
+
+Models come alive: the NetLogo bridge, made reliable on the whole Models Library and usable from
+inside NetLogo. Plan: [ROADMAP.md](docs/ROADMAP.md#v11-models-come-alive).
+
+- **Construct for NetLogo** ([hosts/netlogo](hosts/netlogo/README.md)): a NetLogo 7 extension,
+  built by `scripts/build_netlogo_extension.py`. `extensions [construct]`, a few `construct:` lines
+  in setup and go, then `construct:draw "phase"` in the Command Center draws the run and opens it.
+  It writes the same recording as `construct.nls` (the same turtles, tick by tick, in the tests);
+  recording needs only NetLogo, drawing runs the Construct it carries with Python 3.10 or newer.
+  Its errors say what to do ("construct:start first", the options a view takes).
+- **Instrumenting, on the whole Models Library:** 348 of NetLogo 7.0.4's 445 two-dimensional models
+  now record with no change but the instrumenting (291 before). It finds `reset-ticks` and `tick`
+  in the procedures setup and go call, reads models whose code is escaped XML, takes `--setup` and
+  `--go` commands (with inputs: `--setup "setup 4"`, which a refusal suggests from the model's own
+  buttons), and the recorder's names can no longer clash with a model's (all `construct-`).
+- **A legend on every NetLogo construct,** each part named where it is and shown from the start;
+  no projector or drifting motes on a construct of data. An art layer's `"legend": false` drops it
+  where its own annotations replace it (the three examples). A scene may now ask to open with its
+  labels showing (`presentation.labels`); other pages are unchanged.
+- **The field view's fronts are declared floating** (each hangs at its own tick), so a run whose
+  earliest front sits above the floor passes the audit; the Fire example's data lock changes for
+  this alone.
+
 ## 1.0.0 — 2026-10-27
 
 Construct 1.0 takes a construct beyond the hologram: into Blender, game engines and the web as a

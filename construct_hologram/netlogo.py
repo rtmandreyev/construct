@@ -24,10 +24,12 @@ Python standard library only.
 """
 
 import hashlib
+import html
 import json
 import math
 import re
 from pathlib import Path
+from xml.sax.saxutils import escape
 
 from . import product
 
@@ -45,7 +47,8 @@ FRAMING = {"space-time": {"yaw": 32, "pitch": 20}, "network-time": {"yaw": 30, "
 LOCK = "data_lock"     # the fact that holds the fingerprint
 LOCKED_FACTS = ("view", "coordinates")   # the bridge's own facts beside the run's: how the data is drawn
 LOOSE = ("label", "look", "note")        # how a data part is shown, which art direction may change
-ART_KEYS = {"title", "summary", "credit", "facts", "parts", "annotations", "looks", "presentation", "animation"}
+ART_KEYS = {"title", "summary", "credit", "facts", "parts", "annotations", "looks", "presentation", "animation",
+            "legend"}
 
 
 class NetLogoError(ValueError):
@@ -59,14 +62,19 @@ def _list(items):
 
 
 def instrument(text, title, run_file, turtles=(), reporters=(), patches=None, every=1, seed=None, ticks=500,
-               skip_turtles=False):
+               skip_turtles=False, setup="setup", go="go"):
     """A NetLogo model (.nlogox text) that records itself: `__includes ["construct.nls"]`, the recording
-    set up after setup's `reset-ticks`, `construct-record` after go's `tick`. Returns (model text,
-    experiment XML for `NetLogo_Console --headless --setup-file`)."""
+    set up after setup's `reset-ticks`, `construct-record` after go's `tick` (in a procedure they call,
+    when not in their own body). Returns (model text, experiment XML for `NetLogo_Console --headless
+    --setup-file`)."""
     m = re.search(r"<code><!\[CDATA\[(.*?)\]\]></code>", text, re.S)
+    escaped = False
+    if not m:   # some files keep the code as escaped XML instead of a CDATA section
+        m = re.search(r"<code>(.*?)</code>", text, re.S)
+        escaped = True
     if not m:
         raise NetLogoError("not a NetLogo 7 model (.nlogox): no <code> section")
-    code = m.group(1)
+    code = html.unescape(m.group(1)) if escaped else m.group(1)
     if "construct-record" in code:
         raise NetLogoError("this model already records itself (construct-record is in its code)")
     if re.search(r"__includes\s*\[", code):
@@ -88,28 +96,64 @@ def instrument(text, title, run_file, turtles=(), reporters=(), patches=None, ev
         start.append("construct-skip-turtles")
     start.append("construct-record")
 
-    def after(proc, word, lines, code):
-        b = re.search(r"(?mi)^\s*to\s+%s\b.*?^\s*end\b" % proc, code, re.S)
+    def proc_body(name, code):
+        return re.search(r"(?mi)^\s*to(?:-report)?\s+%s(?=[\s\[]).*?^\s*end\b" % re.escape(name), code, re.S)
+
+    def holder(proc, word, code, depth=0, seen=()):
+        """The procedure where `word` happens: proc itself, or one it calls (a few levels down)."""
+        b = proc_body(proc, code)
         if not b:
-            raise NetLogoError("no `to %s` procedure in the model" % proc)
+            return None
+        body = re.sub(r";[^\n]*", "", b.group(0))
+        if re.search(r"(?mi)^\s*%s\b" % word, body):
+            return proc
+        if depth >= 3:
+            return None
+        for name in re.findall(r"[A-Za-z][\w\-?!.]*", body.split("\n", 1)[1] if "\n" in body else ""):
+            if name not in seen and name != proc and proc_body(name, code):
+                found = holder(name, word, code, depth + 1, seen + (proc,))
+                if found:
+                    return found
+        return None
+
+    def after(proc, word, lines, code):
+        if not proc_body(proc, code):
+            raise NetLogoError("no `to %s` procedure in the model (name it with --setup or --go)" % proc)
+        where = holder(proc, word, code)
+        if not where:
+            raise NetLogoError("no `%s` in `%s` or the procedures it calls: add the construct lines by hand "
+                               "(see construct.nls)" % (word, proc))
+        b = proc_body(where, code)
         body = b.group(0)
         hits = list(re.finditer(r"(?m)^(\s*)(%s)\b(.*)$" % word, body))
-        if not hits:
-            raise NetLogoError("no `%s` in `%s`: add the construct lines by hand (see construct.nls)" % (word, proc))
         h = hits[-1] if word == "tick" else hits[0]
         pad = h.group(1)
         new = body[:h.end()] + "".join("\n%s%s" % (pad, ln) for ln in lines) + body[h.end():]
         return code[:b.start()] + new + code[b.end():]
 
-    code = after("setup", "reset-ticks", start, code)
-    code = after("go", "tick", ["construct-record"], code)
+    for cmd in (setup, go):   # a procedure with inputs needs them in the command: --setup "setup 3"
+        b = proc_body(cmd.split()[0], code) if cmd.split() else None
+        inputs = re.match(r"(?i)\s*to\s+\S+\s*\[([^\]]*)\]", b.group(0)) if b else None
+        if inputs and inputs.group(1).split() and len(cmd.split()) == 1:
+            flag = "setup" if cmd is setup else "go"
+            buttons = [html.unescape(x).strip() for x in re.findall(r"<button[^>]*>([^<]+)</button>", text)]
+            buttons = [x for x in buttons if flag in x and "\n" not in x]
+            raise NetLogoError("`%s` takes inputs (%s): give the command with --%s%s" % (
+                cmd, " ".join(inputs.group(1).split()), flag,
+                ", such as one of this model's buttons: " + ", ".join('--%s "%s"' % (flag, x) for x in buttons[:3])
+                if buttons else ' "%s ..."' % cmd))
+    code = after(setup.split()[0], "reset-ticks", start, code)
+    code = after(go.split()[0], "tick", ["construct-record"], code)
+    if escaped:
+        code = code.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
     model = text[:m.start(1)] + code + text[m.end(1):]
-    setup = ("random-seed %d\n" % seed if seed is not None else "") + "setup"
+    go_cmd = escape(go)
+    setup = ("random-seed %d\n" % seed if seed is not None else "") + escape(setup)
     xml = ('<?xml version="1.0" encoding="UTF-8"?>\n<experiments>\n'
            '  <experiment name="construct" repetitions="1" sequentialRunOrder="true" runMetricsEveryStep="false" '
-           'timeLimit="%d">\n    <setup>%s</setup>\n    <go>go</go>\n    <postRun>construct-finish</postRun>\n'
+           'timeLimit="%d">\n    <setup>%s</setup>\n    <go>%s</go>\n    <postRun>construct-finish</postRun>\n'
            '    <metrics>\n      <metric>ticks</metric>\n    </metrics>\n  </experiment>\n</experiments>\n'
-           % (ticks, setup))
+           % (ticks, setup, go_cmd))
     return model, xml
 
 
@@ -431,6 +475,7 @@ def _field(run, world, opts):
     fronts.sort(key=len, reverse=True)
     parts = [_part("fronts", "Where the %s %s changed, every %s ticks, raised to its tick" % (
         src, mode, round((t1 - t0) / (levels + 1), 1)), "identity", {"type": "paths", "paths": fronts[:4000]})]
+    parts[0]["floating"] = True   # each front hangs at its own tick, above the floor
     summary = ("The front of change: where each patch's %s %s changed, drawn every few ticks and raised to its "
                "tick, so the run's spread rises as a stack of fronts; where nothing changed, nothing is drawn."
                % (src, mode))
@@ -484,11 +529,39 @@ def scene_from_run(run, view, title=None, **opts):
                     {"id": "run", "kind": "dataset", "title": "A run of %s, recorded with construct.nls" % model,
                      "rights": "permitted"}],
         "facts": facts, "parts": parts,
-        "presentation": {"framing": FRAMING[view], "atmosphere": {"haze": 0.6, "grid": False, "projector": True}},
+        "annotations": _legend(parts, time == "sqrt"),
+        # no projector or motes: on a construct of data, nothing should look like data that isn't
+        "presentation": {"framing": FRAMING[view], "atmosphere": {"haze": 0.6, "grid": False, "projector": False,
+                                                                   "motes": 0},
+                         "labels": True},   # the legend is how a run is read: shown from the start
         "animation": {"assembly": {"style": "build", "seconds": 12.0},
                       "idle": {"life": "calm", "events": ["scan"], "cadence": [8, 14], "strength": 0.4},
                       "camera": {"drift": 4, "breathe": 0.02}},
     })
+
+
+# ---------------------------------------------------------------------------- the legend
+
+LEGEND_DIRS = ((1, 0.4, 1), (-1, 0.4, 1), (1, 0.4, -1), (-1, 0.4, -1), (0, 1, 0), (0.2, 0.2, 1))
+
+
+def _legend(parts, sqrt=False):
+    """The automatic legend: each part from the run labelled with what it is (its own label), the label's
+    dot on a real point of the part, a different side for each so they don't pile up. L shows them."""
+    out = []
+    for i, p in enumerate(q for q in parts if q.get("source") == "run" and q["role"] != "mass"):
+        pts = [v for path in p["shape"].get("paths", []) for v in path]
+        if not pts:
+            continue
+        lo = [min(v[k] for v in pts) for k in range(3)]
+        hi = [max(v[k] for v in pts) for k in range(3)]
+        anchor = [(lo[0] + hi[0]) / 2, hi[1], (lo[2] + hi[2]) / 2]   # the compiler's anchor: the box's top centre
+        d = LEGEND_DIRS[i % len(LEGEND_DIRS)]
+        best = max(pts, key=lambda v: v[0] * d[0] + v[1] * d[1] + v[2] * d[2])
+        text = p["label"] + (" (height: the square root of time)" if sqrt and p["id"] == "time-axis" else "")
+        out.append({"id": "legend-" + p["id"], "part": p["id"], "text": text[:80],
+                    "offset": [round(best[k] - anchor[k], 3) for k in range(3)]})
+    return out
 
 
 # ---------------------------------------------------------------------------- the data lock
@@ -578,6 +651,12 @@ def apply_art(scene, art):
                 raise NetLogoError("art.%s: %r claims the recording; art's own %s use source \"art\" (or none)"
                                    % (kind, item.get("id") or item.get("key"), kind))
             out[kind].append(dict(item))
+    for a in out.get("annotations", []):   # the automatic legend follows a data part's new label
+        part = next((p for p in out["parts"] if "legend-" + p["id"] == a["id"]), None)
+        if part is not None:
+            a["text"] = part["label"][:80]
+    if art.get("legend") is False:
+        out["annotations"] = [a for a in out.get("annotations", []) if not a["id"].startswith("legend-")]
     if art.get("annotations"):
         out["annotations"] = out.get("annotations", []) + [dict(a) for a in art["annotations"]]
     if "presentation" in art:

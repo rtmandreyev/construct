@@ -91,7 +91,18 @@ def build_html(geometry, asset_root=None, film=False):
         mark = "\n</script>\n<script>\n  // the improvement rounds"
         assert html.count(mark) == 1
         html = html.replace(mark, "\n</script>\n<script>\n" + code + "\n</script>\n<script>\n  // the improvement rounds")
+    if geometry.get("presentation", {}).get("labels"):   # the scene opens with its labels showing; ?labels=0 still hides them
+        mark = "\n</script>\n<script>\n  // the improvement rounds"
+        assert html.count(mark) == 1
+        html = html.replace(mark, "\n</script>\n<script>\n" + LABELS_ON + "\n</script>\n<script>\n  // the improvement rounds")
     return html, notes
+
+
+LABELS_ON = """(() => {
+  const on = () => { const h = window.HOLO && window.HOLO.hologram;
+    if (h && !new URLSearchParams(location.search).has("labels")) { h.opt.labels = true; window.dispatchEvent(new Event("resize")); } };
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", on); else on();
+})();"""
 
 
 # ---------------------------------------------------------------------------- browser

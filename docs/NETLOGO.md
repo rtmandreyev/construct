@@ -17,6 +17,10 @@ NetLogo (setup, go)   ──►  run.jsonl
 run.jsonl             ──►  construct netlogo --view …    ──►  scene.json  ──►  construct build
 ```
 
+Or, inside NetLogo 7, with the [Construct extension](../hosts/netlogo/README.md): a few
+`construct:` lines in the model record the run, and `construct:draw "phase"` in the Command Center
+draws it and opens it in the browser. Both write the same recording.
+
 No AI model is needed for any of it: the construct is computed from the recording, so the same run
 always gives the same construct, and every data part is marked `verified` against the recording
 (a dataset source that names the model, NetLogo's version and the random seed). An optional
@@ -25,7 +29,35 @@ milestones on top, and the data lock makes sure it never changes the data.
 
 ## 1. Record a run
 
-The fastest way is to let Construct instrument a copy of your model:
+**With the extension** (NetLogo 7): install it (unzip `construct-<version>.zip` into a folder
+called `construct` in NetLogo's `extensions` folder, or beside your model; build it with
+`scripts/build_netlogo_extension.py`) and add to the model:
+
+```
+extensions [construct]
+
+to setup
+  ...
+  reset-ticks
+  construct:start "Wolf Sheep Predation"
+  construct:track-reporter "sheep" [-> count sheep]
+  construct:track-reporter "wolves" [-> count wolves]
+  construct:record
+end
+
+to go
+  ...
+  tick
+  construct:record
+end
+```
+
+Run it, then type `(construct:draw "phase" "smooth" 25)` in the Command Center: the construct is
+written beside the model and opens. Every primitive is in [its README](../hosts/netlogo/README.md).
+Recording needs only NetLogo; drawing runs Construct, which the extension carries, with Python 3.10
+or newer.
+
+**Without changing the model by hand**, let Construct instrument a copy of it:
 
 ```sh
 construct netlogo-instrument "Wolf Sheep Predation.nlogox" --title "Wolf Sheep Predation" --out run/ \
@@ -34,7 +66,8 @@ construct netlogo-instrument "Wolf Sheep Predation.nlogox" --title "Wolf Sheep P
 
 It writes, into `run/`, the model with three things added (and nothing else changed):
 `__includes ["construct.nls"]`, the recording set up after setup's `reset-ticks`, and
-`construct-record` after go's `tick`; it copies `construct.nls` beside it and writes a BehaviorSpace
+`construct-record` after go's `tick` (in the procedure setup or go calls that has them, when they
+are not in setup or go itself); it copies `construct.nls` beside it and writes a BehaviorSpace
 experiment, `construct-experiment.xml`. Then either open the model in NetLogo and press setup and
 go, or run it headless:
 
@@ -46,7 +79,9 @@ NetLogo_Console --headless --model "run/Wolf Sheep Predation-construct.nlogox" \
 (On a Mac the console is inside the NetLogo folder; `netlogo-headless.sh` there runs it, with
 `JAVA_HOME` set to NetLogo's own `runtime/Contents/Home`.) The experiment sets the seed, runs up to
 `--ticks` and calls `construct-finish`. To change the model's settings, add BehaviorSpace
-`<constants>` to the experiment, as for any experiment.
+`<constants>` to the experiment, as for any experiment. When the model's setup or go is called
+something else, or takes inputs, give the command: `--setup "setup-random"`, `--setup "setup 4"`,
+`--go "go-once"` (a refusal names the model's own buttons that fit).
 
 | Option | What it records |
 | --- | --- |
@@ -92,6 +127,10 @@ construct build scene.json --out out/
 cascade happens in its first tenth). Each construct records what was drawn as facts: the model, the
 seed, the ticks, which agents, how the data was sampled.
 
+Every construct carries its legend: each part named where it is ("Each turtle, risen to the tick
+infected? turned true"), shown from the start (**L** hides it). Nothing decorative is added: no
+projector, no drifting motes, nothing that looks like data and isn't.
+
 ## 3. Art direction (optional)
 
 The bridge's construct is exact but plain: no names on the axes, no milestones, one view. An
@@ -111,6 +150,7 @@ construct netlogo run.jsonl --view field --levels 24 --art art.json --out scene.
 | `parts`, `facts`, `annotations` | its own: milestone rings, tick marks, axis names, callouts. Source `art` (or none), `inferred` when computed from the run (the note says how) or `decorative` |
 | `presentation` | views, framing and atmosphere, merged over the bridge's |
 | `animation` | assembly, idle and camera, in place of the bridge's |
+| `legend` | `false` drops the bridge's legend, when the layer's own annotations replace it; otherwise a part relabelled in `looks` has its legend relabelled too |
 
 **The data lock.** Every scene the bridge draws carries a `data_lock` fact: the fingerprint of its
 data (each part from the run, the run's facts, the view and the coordinates). `construct check` and
@@ -135,15 +175,25 @@ What makes a good pass:
   the same. The recorder uses no randomness, so it never changes a run.
 - The three examples were recorded headless in NetLogo 7.0.4: Flocking (300 ticks, 4.5 seconds),
   Wolf Sheep Predation (1,500 ticks) and Fire (673 ticks over 63,001 patches, 8 seconds).
-- The tests check instrumenting, reading a recording, every view, the data lock (a moved point, a
-  dropped part, a changed tick or a part that claims the run fails; a restyled or reformatted scene
-  passes) and the art layer on small recordings, and, when
-  `CONSTRUCT_NETLOGO` names NetLogo's folder, a headless run end to end.
+- **The whole Models Library.** Of NetLogo 7.0.4's 445 two-dimensional models (leaving out the 3D
+  models and Code Examples), 348 record in a 50-tick headless run with no change but the
+  instrumenting. Of the other 97, 75 have no setup with `reset-ticks` or go with `tick` to attach to
+  (a few have no go at all) and need the lines by hand, 8 need their setup's inputs (`--setup`, which
+  the refusal suggests), and 14 use an extension or files a headless run lacks, or were too large
+  or slow for the test.
+- **The extension writes the same recording.** Virus on a Network (200 ticks) and the tests' model,
+  recorded by the extension and by `construct.nls` with the same seed, give the same turtles,
+  positions, colours, variables and links, tick by tick.
+- The tests check instrumenting, reading a recording, every view, the legend, the data lock (a
+  moved point, a dropped part, a changed tick or a part that claims the run fails; a restyled or
+  reformatted scene passes) and the art layer on small recordings; when `CONSTRUCT_NETLOGO` names
+  NetLogo's folder, a headless run end to end; and with `CONSTRUCT_JAVAC` (Java 17 or newer) too,
+  the extension built, loaded by NetLogo, its errors and its recording against `construct.nls`'s.
 
 ## Limits
 
-- Desktop NetLogo 6.x and 7 (`.nlogox` for instrumenting); NetLogo Web does not support include
-  files. NetLogo 3D's third coordinate is not recorded.
+- Desktop NetLogo 6.x and 7 (`.nlogox` for instrumenting; the extension needs 7); NetLogo Web
+  supports neither include files nor extensions. NetLogo 3D's third coordinate is not recorded.
 - A construct holds 24,000 lines, so a long run of many agents is sampled; the facts say how.
 - Construct does not colour by data (the renderer owns colour): a view shows a quantity by position,
   not by hue.
