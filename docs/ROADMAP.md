@@ -117,10 +117,10 @@ LinkedIn cuts) are redone around the 3D export: constructs turning from light to
 Blender from their exported files, with new posts to match. The package version becomes 1.0.0;
 the scene and geometry contract keeps its id (`construct/0.2`), because nothing in it changes.
 
-- Done for the release candidate: the version is 1.0.0, the changelog and the
-  [release notes](releases/v1.0.0.md) are written, the full suite passes, and every export option
-  passes the Khronos glTF Validator.
-- Left: the release videos and posts, then the tag, the gallery and the release itself.
+- Released 2026-10-27 ([release notes](releases/v1.0.0.md)): the full suite passes, and every
+  export option passes the Khronos glTF Validator. Construct is Apache-2.0 from 1.0; the Blender
+  add-on is GPL-3.0-or-later, for Blender's extensions platform.
+- Left: the release videos and posts, and the add-on's listing on extensions.blender.org.
 
 ## Later
 

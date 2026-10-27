@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.0.0 — release candidate (the date is set when it is tagged)
+## 1.0.0 — 2026-10-27
 
 Construct 1.0 takes a construct beyond the hologram: into Blender, game engines and the web as a
 3D model with named parts and working joints, plain or finished, and, for a NetLogo model, a
