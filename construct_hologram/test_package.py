@@ -168,6 +168,8 @@ class ExamplesGallery(unittest.TestCase):
             for page in pages:
                 own = page.parent.name in beyond  # a "beyond" page, published as it is: its fonts, licence link
                 for ref in re.findall(r'(?:href|src)="([^"]+)"', page.read_text(encoding="utf-8")):
+                    if ref.startswith("#"):   # a place on the same page
+                        continue
                     if ref.startswith(("https://", "http://")):
                         self.assertTrue(own or ref.startswith((site.SITE_URL, site.REPO_URL)), (page, ref))
                         continue

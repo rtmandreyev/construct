@@ -109,6 +109,33 @@ section.beyond { margin-top: 44px; }
 .pane .stage { min-height: 0; aspect-ratio: 16 / 9; border: 1px solid var(--line); border-radius: 12px; overflow: hidden; }
 .pane .hint { padding: 10px 0 0; }
 .why { color: var(--dim); font-size: 14px; max-width: 820px; margin: 16px 0 28px; }
+section.part { margin: 8px 0 56px; }
+section.part .eyebrow, header.site .eyebrow { letter-spacing: .22em; font-size: 12px; color: var(--accent); text-transform: uppercase; }
+header.site h1 em { font-style: normal; color: var(--accent); }
+.part-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 18px; }
+.shelf-nav { display: flex; gap: 8px; flex: 0 0 auto; margin-bottom: 16px; }
+.shelf-nav button { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--line); background: var(--panel);
+                    color: var(--ink); font-size: 18px; cursor: pointer; }
+.shelf-nav button:hover { border-color: var(--accent); box-shadow: 0 0 18px var(--glow); }
+.shelf { max-height: min(78vh, 760px); overflow-y: auto; scroll-snap-type: y proximity; padding: 4px 6px 8px 2px;
+         border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); scrollbar-width: thin;
+         -webkit-mask-image: linear-gradient(#000 92%, transparent); mask-image: linear-gradient(#000 92%, transparent); }
+.shelf .grid { padding-top: 14px; }
+.shelf .card { scroll-snap-align: start; }
+.shelf-count { color: var(--dim); font-size: 13px; margin: 10px 0 0; }
+.part p.section kbd { border: 1px solid var(--line); border-radius: 4px; padding: 0 5px; font-size: 12px; color: var(--ink); }
+.feature { display: grid; grid-template-columns: 1fr; gap: 22px; align-items: center; background: var(--panel);
+           border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+.feature-img img { display: block; width: 100%; height: auto; }
+.feature-text { padding: 4px 22px 22px; }
+.feature-text p { color: var(--dim); margin: 0 0 12px; }
+.feature-text .credit { font-size: 13px; }
+.steps { margin: 0 0 14px; padding-left: 20px; color: var(--dim); }
+.steps li { margin: 4px 0; } .steps b { color: var(--ink); font-weight: 600; }
+@media (min-width: 1000px) { .feature { grid-template-columns: 1.5fr 1fr; } .feature-text { padding: 22px 26px 22px 0; } }
+@media (min-width: 1100px) { .grid.models { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1500px) { .grid.models { grid-template-columns: repeat(4, 1fr); } }
+@media (max-width: 600px) { .part-head { align-items: flex-start; } .shelf { max-height: 72vh; } }
 """
 
 
@@ -158,51 +185,87 @@ def _beyond_buttons(b):
                    for i, (label, href) in enumerate(buttons))
 
 
+SHELF_JS = ("<script>(function(){var s=document.getElementById('shelf');if(!s)return;"
+            "document.querySelectorAll('[data-shelf]').forEach(function(b){b.addEventListener('click',function(){"
+            "var c=s.querySelector('.card');var h=c?c.getBoundingClientRect().height+18:300;"
+            "s.scrollBy({top:h*Number(b.getAttribute('data-shelf')),behavior:'smooth'});});});})();</script>")
+
+
 def index_page(examples, films=(), beyond=()):
-    film_cards = "\n".join(
+    """The landing page, in three parts: the constructs and films (a compact scroller), the full pipeline
+    (from a hologram to a finished 3D model), and models come alive (recorded agent-based models)."""
+    film_cards = [
         "<div class=\"card film\"><a href=\"films/%s/\"><img src=\"films/%s/poster.jpg\" alt=\"%s, the finished construct "
         "of its film\" loading=\"lazy\" width=\"1200\" height=\"750\"></a><div class=\"body\"><h2><a href=\"films/%s/\">%s</a>"
-        "</h2><p class=\"prov\">%s</p><div class=\"choose\"><a class=\"button primary\" href=\"films/%s/\">Watch the film</a>"
-        "<a class=\"button\" href=\"films/%s/#live\">Open the live construct</a></div></div></div>"
+        "</h2><p class=\"prov\">film · %s</p><div class=\"choose\"><a class=\"button primary\" href=\"films/%s/\">Watch the film</a>"
+        "<a class=\"button\" href=\"films/%s/#live\">The live construct</a></div></div></div>"
         % (f["slug"], f["slug"], html.escape(f["title"]), f["slug"], html.escape(f["title"]),
            html.escape("%s · %s" % (f["mode"], f["model"])), f["slug"], f["slug"])
-        for f in films)
-    film_section = ("<section class=\"films\" id=\"films\"><h2 class=\"section\">Films</h2><p class=\"section\">Constructs "
-                    "assembling across a piece of music with film mode: the build follows the music's pace, flares on "
-                    "its attacks and moves on with its sections. Watch the film to see the music shape it, or open the "
-                    "live construct to turn it around and read its labels.</p>"
-                    "<div class=\"grid\">\n%s\n</div></section><h2 class=\"section\">Constructs</h2>" % film_cards
-                    if films else "")
-    cards = "\n".join(
+        for f in films]
+    cards = [
         "<a class=\"card\" href=\"examples/%s/\"><img src=\"examples/%s/thumb.jpg\" alt=\"%s, a holographic construct\" "
         "loading=\"lazy\" width=\"1200\" height=\"750\"><div class=\"body\"><h2>%s</h2><p class=\"prov\">%s</p></div></a>"
         % (e["slug"], e["slug"], html.escape(e["title"]), html.escape(e["title"]), html.escape(provenance(e)))
-        for e in examples)
-    beyond_cards = "\n".join(
-        "<div class=\"card film\"><a href=\"examples/%s/\"><img src=\"examples/%s/thumb.jpg\" alt=\"%s, a live page\" "
-        "loading=\"lazy\" width=\"1200\" height=\"750\"></a><div class=\"body\"><h2><a href=\"examples/%s/\">%s</a></h2>"
-        "<p class=\"prov\">%s</p><p class=\"credit\">%s</p><div class=\"choose\">%s</div></div></div>"
-        % (b["slug"], b["slug"], html.escape(b["title"]), b["slug"], html.escape(b["title"]), html.escape(b["label"]),
+        for e in examples]
+    shelf = ("<section class=\"part\" id=\"constructs\"><div class=\"part-head\"><div><div class=\"eyebrow\">1 · Constructs"
+             "</div><h2 class=\"section\">Anything you can describe</h2><p class=\"section\">Each made by an AI agent from "
+             "a description, in fast or masterpiece mode%s. Open one to watch it build itself; drag to turn it, "
+             "<kbd>R</kbd> replays the assembly, <kbd>P</kbd> shows how each part is known.</p></div>"
+             "<div class=\"shelf-nav\" aria-hidden=\"true\"><button type=\"button\" data-shelf=\"-1\" title=\"Back\">"
+             "&#8593;</button><button type=\"button\" data-shelf=\"1\" title=\"More\">&#8595;</button></div></div>"
+             "<div class=\"shelf\" id=\"shelf\" tabindex=\"0\"><div class=\"grid\">\n%s\n</div></div>"
+             "<p class=\"shelf-count\">%d constructs%s · scroll, or use the arrows</p></section>"
+             % (", and the films across a piece of music" if films else "", "\n".join(film_cards + cards),
+                len(examples), " and %d films" % len(films) if films else ""))
+    pipe = [b for b in beyond if b.get("section") == "pipeline"]
+    models = [b for b in beyond if b.get("section") != "pipeline"]
+    pipeline = "".join(
+        "<section class=\"part\" id=\"pipeline\"><div class=\"eyebrow\">2 · The full pipeline</div>"
+        "<h2 class=\"section\">From light to a finished 3D model</h2>"
+        "<div class=\"feature\"><a class=\"feature-img\" href=\"examples/%s/\"><img src=\"examples/%s/hero.jpg\" alt=\"%s\" "
+        "loading=\"lazy\" width=\"1440\" height=\"900\"></a><div class=\"feature-text\">"
+        "<p>Every construct is also a 3D model. What the agent wrote (named parts in metres, joints, the order "
+        "they assemble in) exports as one glTF file, and a material map finishes it.</p>"
+        "<ol class=\"steps\"><li><b>Hologram.</b> Lines of light, as the agent built it.</li>"
+        "<li><b>Plain model.</b> Every part a solid, named object; joints that open.</li>"
+        "<li><b>Finished.</b> Paint, chrome, glass, wood: one map per object, kept beside it.</li></ol>"
+        "<p class=\"credit\">%s</p><div class=\"choose\"><a class=\"button primary\" href=\"examples/%s/\">Open the live "
+        "page</a><a class=\"button\" href=\"examples/%s/fj62.glb\">Download a .glb</a>"
+        "<a class=\"button\" href=\"%s/blob/main/hosts/blender/README.md\">Blender add-on</a>"
+        "<a class=\"button\" href=\"%s/blob/main/docs/EXPORT.md\">3D export</a></div></div></div></section>"
+        % (b["slug"], b["slug"], html.escape(b["title"]), html.escape(b["credit"]), b["slug"], b["slug"], REPO_URL, REPO_URL)
+        for b in pipe)
+    model_cards = "\n".join(
+        "<div class=\"card film\"><a href=\"examples/%s/\"><img src=\"examples/%s/thumb.jpg\" alt=\"%s, a construct of a "
+        "model's run\" loading=\"lazy\" width=\"1200\" height=\"750\"></a><div class=\"body\"><h2><a href=\"examples/%s/\">%s</a>"
+        "</h2><p class=\"prov\">%s</p><p class=\"credit\">%s</p><div class=\"choose\">%s</div></div></div>"
+        % (b["slug"], b["slug"], html.escape(b["title"]), b["slug"], html.escape(b["title"]), html.escape(b["line"]),
            html.escape(b["credit"]), _beyond_buttons(b))
-        for b in beyond)
-    beyond_section = ("<section class=\"beyond\" id=\"beyond\"><h2 class=\"section\">Beyond objects</h2><p class=\"section\">"
-                      "%s</p><div class=\"grid\">\n%s\n</div></section>" % (html.escape(beyond[0]["line"]) if len(beyond) == 1 else
-                      "Pages made with Construct that are more than one object.", beyond_cards) if beyond else "")
+        for b in models)
+    alive = ("<section class=\"part\" id=\"models\"><div class=\"eyebrow\">3 · Models come alive</div>"
+             "<h2 class=\"section\">Agent-based models, recorded and drawn</h2><p class=\"section\">A NetLogo model's "
+             "run, recorded by Construct's bridge and drawn with time as height, so its assembly replays the run; "
+             "the data comes from the run, never from an AI. <a href=\"%s/blob/main/docs/NETLOGO.md\">The NetLogo "
+             "bridge</a>.</p>"
+             "<div class=\"grid models\">\n%s\n</div></section>" % (REPO_URL, model_cards)) if models else ""
     body = ("<header class=\"site\"><div class=\"eyebrow\">Construct · examples</div>"
-            "<h1>Holographic constructs, built by AI agents</h1>"
-            "<p>Each of these was made by an AI agent with Construct, in fast or masterpiece mode, and drawn in the "
-            "Measured Light style. Open one to watch it build itself: drag to turn it around, press R to replay the "
-            "assembly and L to read its labels. Some were made with earlier versions of Construct.</p>"
+            "<h1>Describe a thing. Get a hologram, <em>a 3D model and its parts</em>.</h1>"
+            "<p>Construct lets any AI agent build an animated holographic model of a thing from a description, and "
+            "takes it further: into Blender and game engines as a 3D model with working parts, or, for a "
+            "simulation, a model's whole run drawn in time.</p>"
             "<div class=\"links\"><a class=\"button\" href=\"%s\">Construct on GitHub</a>"
-            "<a class=\"button\" href=\"%s/blob/main/docs/HOW-IT-IS-MADE.md\">How they were made</a>%s</div></header>"
-            "<main>%s<div class=\"grid\">\n%s\n</div>%s</main>"
+            "<a class=\"button\" href=\"#constructs\">Constructs</a><a class=\"button\" href=\"#pipeline\">The full "
+            "pipeline</a><a class=\"button\" href=\"#models\">Models come alive</a>"
+            "<a class=\"button\" href=\"%s/blob/main/docs/HOW-IT-IS-MADE.md\">How they are made</a></div></header>"
+            "<main>%s%s%s</main>"
             "<footer class=\"site\">Construct is MIT licensed. Product and place names belong to their owners; each "
             "construct is an independent reconstruction from public references, not an official model. %s"
-            "<a href=\"%s\">Source and documentation</a>.</footer>"
-            % (REPO_URL, REPO_URL, ("<a class=\"button\" href=\"%s/blob/main/docs/FILM.md\">Film mode</a>" % REPO_URL)
-               if films else "", film_section, cards, beyond_section,
-               "The pages under Beyond objects keep their own licences, given on each. " if beyond else "", REPO_URL))
-    return _page("Construct · examples", body, 0, "A gallery of holographic constructs built by AI agents with Construct.")
+            "<a href=\"%s\">Source and documentation</a>.</footer>%s"
+            % (REPO_URL, REPO_URL, shelf, pipeline, alive,
+               "The pages under Models come alive keep their own licences, given on each. " if models else "",
+               REPO_URL, SHELF_JS))
+    return _page("Construct · examples", body, 0, "Holographic constructs built by AI agents, the 3D models they "
+                                               "export, and agent-based models drawn in time.")
 
 
 def example_page(ex):
