@@ -29,7 +29,7 @@ named parts below it. Select it and open the **Construct** tab in the sidebar (N
 | --- | --- |
 | **Build** (0–1) | the assembly: every vertex appears at its build phase, behind a bright front |
 | **Open** (0–1) | every joint (hinges, turns, slides, lifts), in its order groups |
-| **Light ↔ Metal** (0–1) | 0 is the hologram: lines of light over ghosted surfaces; 1 is the solid model, its lines as dark seams |
+| **Light ↔ Metal** (0–1) | 0 is the hologram: lines of light over dark glass with a violet rim; 1 is the solid model, its lines as dark seams |
 | **Lines** | the line art's thickness, in metres |
 | **Keyframe a Reveal** | keys an assembly in light, the turn to metal and the opening, from the current frame |
 
@@ -50,7 +50,7 @@ The add-on uses Blender's own glTF importer for the parts, the stages and the mo
 - moves each part's line art into its own object, made into thin tubes by a geometry-nodes
   modifier that keeps each vertex's build phase;
 - rebuilds the materials: each surface keeps its colour, is revealed by **Build** through the
-  `_PHASE` attribute, glows at the build front, and fades to a ghost toward **Light**; the line art
+  `_PHASE` attribute, glows at the build front, and turns to dark glass toward **Light**; the line art
   is light in the hologram and a dark seam on the metal.
 
 ## Licence

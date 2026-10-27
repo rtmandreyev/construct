@@ -150,6 +150,14 @@ def _page(title, body, depth, description):
             % (html.escape(title), html.escape(description), up, body))
 
 
+def _beyond_buttons(b):
+    """A "beyond" card's buttons: its own (label, path in its folder), or the live model and its construct."""
+    buttons = b.get("buttons") or [["Open the live model", ""], ["The construct", "construct.html?rounds=0"]]
+    return "".join("<a class=\"button%s\" href=\"examples/%s/%s\">%s</a>" % (" primary" if i == 0 else "", b["slug"],
+                                                                         html.escape(href), html.escape(label))
+                   for i, (label, href) in enumerate(buttons))
+
+
 def index_page(examples, films=(), beyond=()):
     film_cards = "\n".join(
         "<div class=\"card film\"><a href=\"films/%s/\"><img src=\"films/%s/poster.jpg\" alt=\"%s, the finished construct "
@@ -173,11 +181,9 @@ def index_page(examples, films=(), beyond=()):
     beyond_cards = "\n".join(
         "<div class=\"card film\"><a href=\"examples/%s/\"><img src=\"examples/%s/thumb.jpg\" alt=\"%s, a live page\" "
         "loading=\"lazy\" width=\"1200\" height=\"750\"></a><div class=\"body\"><h2><a href=\"examples/%s/\">%s</a></h2>"
-        "<p class=\"prov\">%s</p><p class=\"credit\">%s</p><div class=\"choose\"><a class=\"button primary\" "
-        "href=\"examples/%s/\">Open the live model</a><a class=\"button\" href=\"examples/%s/construct.html?rounds=0\">"
-        "The construct</a></div></div></div>"
+        "<p class=\"prov\">%s</p><p class=\"credit\">%s</p><div class=\"choose\">%s</div></div></div>"
         % (b["slug"], b["slug"], html.escape(b["title"]), b["slug"], html.escape(b["title"]), html.escape(b["label"]),
-           html.escape(b["credit"]), b["slug"], b["slug"])
+           html.escape(b["credit"]), _beyond_buttons(b))
         for b in beyond)
     beyond_section = ("<section class=\"beyond\" id=\"beyond\"><h2 class=\"section\">Beyond objects</h2><p class=\"section\">"
                       "%s</p><div class=\"grid\">\n%s\n</div></section>" % (html.escape(beyond[0]["line"]) if len(beyond) == 1 else
@@ -305,9 +311,14 @@ def build(out, films_dir=None):
         dst.mkdir(parents=True)
         for name in item["files"]:
             shutil.copyfile(src / name, dst / name)
-        tmp = out / ".build" / ("beyond-" + item["slug"])
-        studio.build(str(_public_scene(src / "scene.json", tmp.parent)), str(tmp), asset_root=str(src))
-        shutil.copyfile(studio.page_in(tmp), dst / "construct.html")
+        for name, scene_dir in item.get("exports", {}).items():  # 3D models of gallery constructs, exported here
+            export = importlib.import_module("construct_hologram.export")
+            public = _public_scene(EXAMPLES / scene_dir / "scene.json", out / ".build" / ("export-" + Path(name).stem))
+            export.export(studio.load(str(public)), dst / name)
+        if (src / "scene.json").exists():
+            tmp = out / ".build" / ("beyond-" + item["slug"])
+            studio.build(str(_public_scene(src / "scene.json", tmp.parent)), str(tmp), asset_root=str(src))
+            shutil.copyfile(studio.page_in(tmp), dst / "construct.html")
     shutil.rmtree(out / ".build", ignore_errors=True)
     (out / "index.html").write_text(index_page(examples, films, beyond), encoding="utf-8")
     (out / "404.html").write_text(_page("Not found · Construct", "<header class=\"site\"><h1>Not here</h1><p>That page "

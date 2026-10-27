@@ -3,6 +3,16 @@
  "version": 1,
  "beyond": [
   {
+   "slug": "light-to-metal",
+   "title": "From light to metal",
+   "line": "Gallery constructs exported as 3D models (glTF) and lit live: from the hologram to the solid model, with their named parts, working joints and build order.",
+   "label": "live page · 3D export · four gallery constructs",
+   "credit": "Exported unedited; the hero is a Blender render of the exported file",
+   "files": ["index.html", "README.md", "hero.jpg", "thumb.jpg"],
+   "exports": {"fj62.glb": "toyota-land-cruiser-fj62", "jwst.glb": "films/james-webb-space-telescope", "revox.glb": "revox-a77", "minifreak.glb": "arturia-minifreak"},
+   "buttons": [["Open the live page", ""], ["Download the FJ62 (.glb)", "fj62.glb"]]
+  },
+  {
    "slug": "netlogo-viral-marketing",
    "title": "Simple Viral Marketing (NetLogo)",
    "line": "A NetLogo agent-based model of viral marketing, rebuilt to run live in the browser and drawn as a construct.",

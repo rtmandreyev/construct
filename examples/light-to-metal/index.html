@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>From Light to Metal</title>
+<meta name="description" content="Gallery constructs exported as 3D models (glTF) and lit live: from the hologram to the solid model, with their parts, joints and build order.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    color-scheme: dark;
+    --bg: #050205; --ink: #efe6f5; --dim: #9c8ea9; --faint: #5f5170; --hair: rgba(239,230,245,.12); --hair2: rgba(239,230,245,.22);
+    --accent: #d16bd0; --bright: #f6eaff; --data: #8fd3ff; --dust: #9682d7;
+    --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    --serif: "Instrument Serif", "Iowan Old Style", Georgia, serif;
+    --rail: 318px;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; background: var(--bg); color: var(--ink); font: 400 12px/1.5 var(--mono); overflow: hidden; -webkit-font-smoothing: antialiased; }
+  button, a { font: inherit; color: inherit; }
+  canvas#gl { position: fixed; inset: 0; width: 100%; height: 100%; display: block; touch-action: none; }
+  #vignette { position: fixed; inset: 0; pointer-events: none; background: radial-gradient(ellipse 70% 65% at 58% 48%, transparent 52%, rgba(3,1,3,.78) 100%); }
+
+  #rail { position: fixed; left: 0; top: 0; bottom: 0; width: var(--rail); padding: 26px 24px 20px; overflow-y: auto; scrollbar-width: none;
+    background: linear-gradient(90deg, rgba(5,2,5,.94) 0%, rgba(5,2,5,.82) 82%, rgba(5,2,5,.55) 100%); border-right: 1px solid var(--hair); }
+  #rail::-webkit-scrollbar { display: none; }
+  .kicker { font-size: 10px; letter-spacing: .2em; color: var(--dim); text-transform: uppercase; }
+  .kicker a { text-decoration: none; }
+  h1 { margin: 8px 0 0; font: 400 38px/0.98 var(--serif); letter-spacing: -.01em; }
+  h1 em { color: var(--accent); }
+  .lede { margin: 10px 0 16px; color: var(--dim); font-size: 11.5px; line-height: 1.6; }
+  .sec { display: flex; align-items: baseline; gap: 10px; margin: 16px 0 8px; font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--dim); }
+  .sec b { margin-left: auto; color: var(--ink); font-weight: 500; letter-spacing: .04em; text-transform: none; font-size: 11px; }
+
+  .objects { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--hair); border-left: 1px solid var(--hair); }
+  .objects button { padding: 9px 8px 8px; border: 0; border-right: 1px solid var(--hair); border-bottom: 1px solid var(--hair); background: none;
+    color: var(--dim); text-align: left; cursor: pointer; font-size: 11px; transition: color .2s, background .2s; }
+  .objects button small { display: block; font-size: 9.5px; color: var(--faint); letter-spacing: .04em; }
+  .objects button:hover { color: var(--ink); }
+  .objects button.on { color: var(--ink); background: rgba(209,107,208,.08); box-shadow: inset 2px 0 0 var(--accent); }
+
+  .slider { margin: 0 0 12px; }
+  .slider label { display: flex; justify-content: space-between; color: var(--dim); font-size: 10.5px; letter-spacing: .06em; margin-bottom: 4px; }
+  .slider label span { color: var(--ink); }
+  .slider.big label { font-size: 11.5px; color: var(--ink); }
+  .slider.off { opacity: .35; }
+  input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 22px; background: none; margin: 0; cursor: pointer; }
+  input[type=range]::-webkit-slider-runnable-track { height: 2px; background: linear-gradient(90deg, var(--accent) var(--p, 0%), var(--hair2) var(--p, 0%)); }
+  input[type=range]::-moz-range-track { height: 2px; background: var(--hair2); }
+  input[type=range]::-moz-range-progress { height: 2px; background: var(--accent); }
+  input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 12px; height: 12px; margin-top: -5px; border-radius: 50%; background: var(--bright); box-shadow: 0 0 10px var(--accent); }
+  input[type=range]::-moz-range-thumb { width: 12px; height: 12px; border: 0; border-radius: 50%; background: var(--bright); box-shadow: 0 0 10px var(--accent); }
+  .slider.big input[type=range]::-webkit-slider-runnable-track { height: 3px; }
+  .ends { display: flex; justify-content: space-between; font-size: 9.5px; color: var(--faint); letter-spacing: .08em; text-transform: uppercase; margin-top: -2px; }
+
+  .row { display: flex; gap: 6px; flex-wrap: wrap; margin: 2px 0 6px; }
+  .chip { padding: 6px 10px; border: 1px solid var(--hair2); border-radius: 999px; background: none; color: var(--dim); cursor: pointer; font-size: 10.5px; letter-spacing: .04em; }
+  .chip:hover { color: var(--ink); border-color: var(--dim); }
+  .chip.on { color: var(--ink); border-color: var(--accent); box-shadow: 0 0 12px rgba(209,107,208,.28); }
+  .chip.primary { color: var(--bg); background: var(--bright); border-color: var(--bright); font-weight: 600; }
+  .chip.primary:hover { box-shadow: 0 0 16px rgba(246,234,255,.4); }
+
+  .facts { display: grid; grid-template-columns: auto 1fr; gap: 3px 12px; font-size: 11px; }
+  .facts dt { color: var(--dim); }
+  .facts dd { margin: 0; text-align: right; }
+  .by { color: var(--faint); font-size: 10.5px; margin-top: 6px; }
+  .why { margin: 0; padding: 0; list-style: none; }
+  .why li { margin: 0 0 9px; color: var(--dim); font-size: 11px; line-height: 1.55; }
+  .why b { color: var(--ink); font-weight: 500; }
+  .note { color: var(--faint); font-size: 10.5px; line-height: 1.55; margin: 14px 0 0; }
+  .note a, .why a { color: var(--dim); }
+
+  #tip { position: fixed; pointer-events: none; padding: 7px 10px; border-left: 1px solid var(--accent); background: rgba(5,2,5,.88); font-size: 11px;
+    opacity: 0; transition: opacity .15s; white-space: nowrap; }
+  #tip b { font-weight: 500; }
+  #tip small { display: block; color: var(--dim); font-size: 10px; }
+  #legend { position: fixed; right: 18px; bottom: 16px; display: none; gap: 14px; font-size: 10.5px; color: var(--dim); }
+  #legend i { display: inline-block; width: 9px; height: 9px; margin-right: 6px; vertical-align: -1px; border-radius: 2px; }
+  #status { position: fixed; right: 18px; top: 16px; font-size: 10px; letter-spacing: .14em; text-transform: uppercase; color: var(--faint); }
+
+  @media (max-width: 760px) {
+    #rail { top: auto; width: 100%; height: 46vh; border-right: 0; border-top: 1px solid var(--hair); padding: 16px 16px 24px;
+      background: rgba(5,2,5,.94); }
+    h1 { font-size: 30px; }
+    #vignette { background: radial-gradient(ellipse 80% 50% at 50% 26%, transparent 50%, rgba(3,1,3,.7) 100%); }
+    #legend { left: 16px; right: auto; top: 14px; bottom: auto; flex-wrap: wrap; }
+    #status { display: none; }
+  }
+</style>
+</head>
+<body>
+<canvas id="gl" aria-label="A construct, live: drag to turn it, hover a part to read it"></canvas>
+<div id="vignette"></div>
+<div id="tip"></div>
+<div id="legend"><span><i style="background:#f6eaff"></i>verified</span><span><i style="background:#8fd3ff"></i>supplied by you</span><span><i style="background:#9682d7"></i>inferred</span><span><i style="background:#5f5170"></i>decorative</span></div>
+<div id="status">loading</div>
+
+<aside id="rail">
+  <div class="kicker"><a href="../../">Construct</a> · beyond objects</div>
+  <h1>From light <em>to metal</em></h1>
+  <p class="lede">Every construct is also a 3D model. What an agent writes (named parts in metres, joints, the order they assemble in) exports as one glTF file. These are gallery constructs, exported unedited and lit here live.</p>
+
+  <div class="objects" id="objects"></div>
+
+  <div class="sec">Model</div>
+  <div class="slider big"><label for="metal">Light ↔ Metal <span id="metal-v"></span></label>
+    <input type="range" id="metal" min="0" max="1" step="0.001" value="1"><div class="ends"><span>hologram</span><span>solid</span></div></div>
+  <div class="slider"><label for="build">Build <span id="build-v"></span></label><input type="range" id="build" min="0" max="1" step="0.001" value="1"></div>
+  <div class="slider" id="open-s"><label for="open">Open <span id="open-v"></span></label><input type="range" id="open" min="0" max="1" step="0.001" value="0"></div>
+  <div class="slider"><label for="explode">Explode <span id="explode-v"></span></label><input type="range" id="explode" min="0" max="1" step="0.001" value="0"></div>
+  <div class="row">
+    <button class="chip primary" id="play">▶ Play</button>
+    <button class="chip" id="cert" aria-pressed="false">Certainty</button>
+    <button class="chip on" id="motion" aria-pressed="true">Motion</button>
+    <button class="chip on" id="lines" aria-pressed="true">Lines</button>
+  </div>
+
+  <div class="sec">This file <b id="fname"></b></div>
+  <dl class="facts" id="facts"></dl>
+  <div class="by" id="by"></div>
+  <div class="row" style="margin-top:10px"><a class="chip" id="download" download>Download .glb</a>
+    <a class="chip" href="https://github.com/rtmandreyev/construct/blob/main/hosts/blender/README.md">Blender add-on</a></div>
+
+  <div class="sec">Why it matters</div>
+  <ul class="why">
+    <li><b>Real parts.</b> Each part is its own named object, sized in metres, carrying its role and how well it is known.</li>
+    <li><b>Joints that work.</b> The FJ62's tailgate swings about its own hinge, here, in Blender or in a game engine.</li>
+    <li><b>The build travels with it.</b> Every vertex knows when it appears, so an engine can assemble the model or scan it in.</li>
+    <li><b>One description, two looks.</b> The hologram and the solid are the same file.</li>
+  </ul>
+  <p class="note">Shapes come from Construct's own vocabulary; there are no textures, and parts are not merged. A blockout, a prop or a teaching model, not a finished hero asset. How it works: <a href="https://github.com/rtmandreyev/construct/blob/main/docs/EXPORT.md">3D export</a>.</p>
+</aside>
+
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+<script type="module">
+import * as THREE from "three";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
+import { EffectComposer } from "three/addons/postprocessing/EffectComposer.js";
+import { RenderPass } from "three/addons/postprocessing/RenderPass.js";
+import { UnrealBloomPass } from "three/addons/postprocessing/UnrealBloomPass.js";
+import { OutputPass } from "three/addons/postprocessing/OutputPass.js";
+
+// the gallery constructs exported for this page (the site build writes the .glb files)
+const OBJECTS = [
+  { file: "fj62.glb", name: "Toyota Land Cruiser FJ62", short: "Land Cruiser FJ62", kind: "vehicle", by: "masterpiece · Claude Opus 5.5", view: [38, 16] },
+  { file: "jwst.glb", name: "James Webb Space Telescope", short: "James Webb", kind: "spacecraft", by: "masterpiece · DeepSeek V4.1 Flash", view: [32, 22] },
+  { file: "revox.glb", name: "Revox A77", short: "Revox A77", kind: "tape recorder", by: "fast · DeepSeek V4.1 Flash", view: [24, 14] },
+  { file: "minifreak.glb", name: "Arturia MiniFreak", short: "MiniFreak", kind: "synthesizer", by: "fast · DeepSeek V4.1 Flash", view: [12, 36] },
+];
+const TONE = { accent: "#d16bd0", bright: "#f6eaff", hairline: "#eadcf3", structure: "#b7a4c8", dust: "#9682d7", identity: "#eadcf3", data: "#8fd3ff", faint: "#6f6080" };
+const CERT = { verified: "#f6eaff", user_supplied: "#8fd3ff", inferred: "#9682d7", decorative: "#5f5170" };
+const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const $ = (id) => document.getElementById(id);
+
+// ------------------------------------------------------------------ renderer, scene, light
+const canvas = $("gl");
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 0.9;
+const scene = new THREE.Scene();
+scene.background = new THREE.Color("#050205");
+scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), 0.04).texture;
+scene.environmentIntensity = 0.32;
+const key = new THREE.DirectionalLight(0xfff4ea, 1.5); key.position.set(4, 7, 5); scene.add(key);
+const rim = new THREE.DirectionalLight(0xb8a0ff, 0.8); rim.position.set(-6, 3, -5); scene.add(rim);
+scene.add(new THREE.HemisphereLight(0x5a4870, 0x080408, 0.35));
+const camera = new THREE.PerspectiveCamera(30, 1, 0.01, 1000);
+const controls = new OrbitControls(camera, canvas);
+controls.enableDamping = true; controls.autoRotate = !reduced; controls.autoRotateSpeed = 0.55;
+const composer = new EffectComposer(renderer);
+composer.addPass(new RenderPass(scene, camera));
+const bloom = new UnrealBloomPass(new THREE.Vector2(1, 1), 0.6, 0.35, 0.42);
+composer.addPass(bloom);
+composer.addPass(new OutputPass());
+
+// one set of uniforms shared by every material of the current model
+const U = {
+  uBuild: { value: 1 }, uScan: { value: 1.05 }, uMinY: { value: 0 }, uMaxY: { value: 1 }, uCert: { value: 0 },
+  uLines: { value: 1 }, uAccent: { value: new THREE.Color(TONE.accent) },
+};
+
+// a surface: its own colour and finish, a dark glass with a violet rim while it is light, a scan line turning it to metal
+function surface(src, certColor) {
+  const m = new THREE.MeshStandardMaterial({ color: src.color, metalness: Math.max(src.metalness, 0.15), roughness: Math.min(src.roughness, 0.6),
+    side: THREE.DoubleSide, polygonOffset: true, polygonOffsetFactor: 1, polygonOffsetUnits: 1 });
+  const cert = { value: new THREE.Color(certColor) };
+  m.onBeforeCompile = (sh) => {
+    Object.assign(sh.uniforms, U, { uCertColor: cert });
+    sh.vertexShader = sh.vertexShader
+      .replace("#include <common>", "#include <common>\nattribute float _phase;\nvarying float vPhase;\nvarying vec3 vWorld;")
+      .replace("#include <fog_vertex>", "#include <fog_vertex>\nvPhase = _phase;\nvWorld = (modelMatrix * vec4(transformed, 1.0)).xyz;");
+    sh.fragmentShader = sh.fragmentShader
+      .replace("#include <common>", "#include <common>\nuniform float uBuild, uScan, uMinY, uMaxY, uCert;\nuniform vec3 uAccent, uCertColor;\nvarying float vPhase;\nvarying vec3 vWorld;")
+      .replace("#include <clipping_planes_fragment>", "if (vPhase > uBuild + 0.0001) discard;\n#include <clipping_planes_fragment>")
+      .replace("#include <color_fragment>", "#include <color_fragment>\ndiffuseColor.rgb = mix(diffuseColor.rgb, uCertColor, uCert);")
+      .replace("#include <dithering_fragment>", `#include <dithering_fragment>
+        float h = (vWorld.y - uMinY) / max(uMaxY - uMinY, 1e-4);
+        float metal = smoothstep(uScan + 0.012, uScan - 0.012, h);
+        float rimf = pow(1.0 - abs(dot(normalize(normal), normalize(vViewPosition))), 2.4);
+        vec3 glass = vec3(0.010, 0.005, 0.012) + mix(uAccent, uCertColor, uCert) * rimf * 0.32;
+        vec3 col = mix(glass, gl_FragColor.rgb, metal);
+        float band = (1.0 - smoothstep(0.0, 0.008, abs(h - uScan))) * step(0.0, uScan) * step(uScan, 1.0);
+        col += uAccent * band * 3.0;
+        float front = uBuild < 0.999 ? 1.0 - smoothstep(0.0, 0.03, uBuild - vPhase) : 0.0;
+        col += uAccent * front * 1.8;
+        gl_FragColor.rgb = col;`);
+  };
+  m.customProgramCacheKey = () => "construct-surface";
+  m.userData.cert = cert;
+  return m;
+}
+
+// the line art: light while it is a hologram, dark seams once it is metal
+function lines(tone) {
+  return new THREE.ShaderMaterial({
+    uniforms: Object.assign({ uColor: { value: new THREE.Color(TONE[tone] || TONE.hairline) } }, U),
+    vertexShader: `attribute float _phase; varying float vPhase; varying vec3 vWorld;
+      void main() { vPhase = _phase; vec4 w = modelMatrix * vec4(position, 1.0); vWorld = w.xyz; gl_Position = projectionMatrix * viewMatrix * w; gl_PointSize = 4.0; }`,
+    fragmentShader: `uniform float uBuild, uScan, uMinY, uMaxY, uLines; uniform vec3 uColor, uAccent; varying float vPhase; varying vec3 vWorld;
+      void main() {
+        if (vPhase > uBuild + 0.0001 || uLines < 0.5) discard;
+        float h = (vWorld.y - uMinY) / max(uMaxY - uMinY, 1e-4);
+        float metal = smoothstep(uScan + 0.012, uScan - 0.012, h);
+        float front = uBuild < 0.999 ? 1.0 - smoothstep(0.0, 0.03, uBuild - vPhase) : 0.0;
+        vec3 col = mix(uColor * 0.95, vec3(0.018, 0.016, 0.02), metal) + uAccent * front * 2.0;
+        gl_FragColor = vec4(col, mix(0.9, 0.75, metal));
+      }`,
+    transparent: true, depthWrite: false,
+  });
+}
+
+// ------------------------------------------------------------------ a model
+let model = null, mixer = null, openAction = null, idleAction = null, parts = [], meshes = [], info = {}, R = 1;
+const cache = {};
+
+function partOf(o) {
+  while (o && !(o.userData.construct && o.userData.construct.instances !== undefined)) o = o.parent;
+  return o;
+}
+
+async function load(i) {
+  const obj = OBJECTS[i];
+  $("status").textContent = "loading " + obj.short;
+  document.querySelectorAll("#objects button").forEach((b, k) => b.classList.toggle("on", k === i));
+  if (!cache[obj.file]) {
+    const res = await fetch(obj.file);
+    const buf = await res.arrayBuffer();
+    cache[obj.file] = { gltf: await new GLTFLoader().parseAsync(buf, ""), bytes: buf.byteLength };
+  }
+  const { gltf, bytes } = cache[obj.file];
+  if (model) scene.remove(model);
+  model = gltf.scene; scene.add(model);
+  info = model.children[0].userData.construct || {};
+  parts = []; meshes = [];
+  model.traverse((o) => {
+    if (o.userData.construct && o.userData.construct.instances !== undefined) parts.push(o);
+    if (!o.material) return;
+    if (!o.userData.src) o.userData.src = o.material;
+    const p = partOf(o), cert = p ? p.userData.construct.certainty : "inferred";
+    if (o.isMesh) { o.material = surface(o.userData.src, CERT[cert] || CERT.inferred); meshes.push(o); }
+    else { o.material = lines(toneOf(o.userData.src.name)); o.renderOrder = 1; }
+  });
+  // framing, the scan range, explode directions
+  model.updateMatrixWorld(true);
+  const box = new THREE.Box3().setFromObject(model), c = box.getCenter(new THREE.Vector3()), size = box.getSize(new THREE.Vector3());
+  R = size.length() / 2;
+  U.uMinY.value = box.min.y; U.uMaxY.value = box.max.y;
+  for (const p of parts) {
+    if (!p.userData.rest) p.userData.rest = p.position.clone();
+    const pc = new THREE.Box3().setFromObject(p).getCenter(new THREE.Vector3());
+    p.userData.dir = pc.sub(c).multiplyScalar(0.9);
+  }
+  controls.target.copy(c);
+  const [yaw, pitch] = obj.view, d = fitDistance();
+  camera.position.set(c.x + d * Math.cos(pitch * Math.PI / 180) * Math.sin(yaw * Math.PI / 180), c.y + d * Math.sin(pitch * Math.PI / 180),
+                      c.z + d * Math.cos(pitch * Math.PI / 180) * Math.cos(yaw * Math.PI / 180));
+  camera.near = R / 100; camera.far = R * 60; camera.updateProjectionMatrix();
+  // animations: the joints by the Open slider, periodic motion running
+  mixer = new THREE.AnimationMixer(model);
+  const openClip = gltf.animations.find((a) => a.name === "open"), idleClip = gltf.animations.find((a) => a.name === "idle");
+  openAction = openClip ? mixer.clipAction(openClip) : null;
+  if (openAction) { openAction.play(); openAction.paused = true; }
+  idleAction = idleClip ? mixer.clipAction(idleClip) : null;
+  if (idleAction) idleAction.play();
+  $("open-s").classList.toggle("off", !openAction);
+  $("open").disabled = !openAction;
+  // the readout
+  let tris = 0;
+  for (const m of meshes) tris += (m.geometry.index ? m.geometry.index.count : m.geometry.attributes.position.count) / 3;
+  const arts = (info.articulations || []).length, motions = (info.motions || []).filter((m) => m.type !== "pulse").length;
+  $("fname").textContent = obj.file;
+  $("facts").innerHTML = [["object", obj.kind], ["parts", parts.length], ["joints", arts || "none"], ["moving parts", motions || "none"],
+    ["triangles", Math.round(tris).toLocaleString("en")], ["size", [size.x, size.y, size.z].map(fmt).join(" × ")], ["file", Math.round(bytes / 1024) + " KB"]]
+    .map(([k, v]) => `<dt>${k}</dt><dd>${v}</dd>`).join("");
+  $("by").textContent = obj.name + " · made " + obj.by;
+  $("download").href = obj.file;
+  $("status").textContent = obj.short;
+  apply();
+}
+
+// the distance that fits the model in the part of the screen the rail leaves free
+function fitDistance() {
+  const phone = innerWidth < 760, t = Math.tan(THREE.MathUtils.degToRad(camera.fov / 2));
+  const tv = t * (phone ? 0.54 : 1), th = t * camera.aspect * (phone ? 1 : (innerWidth - 318) / innerWidth);
+  return R / Math.min(tv, th) * 1.08;
+}
+function toneOf(name) { const m = /light:([a-z_]+)/.exec(name || ""); return m ? m[1] : "hairline"; }
+function fmt(m) { return m < 1 ? Math.round(m * 1000) + " mm" : m.toFixed(2) + " m"; }
+
+// ------------------------------------------------------------------ controls
+const S = { metal: 1, build: 1, open: 0, explode: 0 };
+function setS(k, v) { S[k] = v; const el = $(k); el.value = v; el.style.setProperty("--p", (v * 100) + "%"); $(k + "-v").textContent = Math.round(v * 100) + "%"; }
+function apply() {
+  U.uBuild.value = S.build;
+  U.uScan.value = -0.02 + S.metal * 1.04;
+  bloom.strength = 0.1 + 0.5 * (1 - S.metal);
+  if (openAction) { openAction.time = S.open * openAction.getClip().duration; mixer.update(0); }
+  for (const p of parts) p.position.copy(p.userData.rest).addScaledVector(p.userData.dir, S.explode);
+}
+for (const k of Object.keys(S)) {
+  setS(k, S[k]);
+  $(k).addEventListener("input", (e) => { story = null; setS(k, +e.target.value); apply(); });
+}
+OBJECTS.forEach((o, i) => {
+  const b = document.createElement("button");
+  b.innerHTML = `${o.short}<small>${o.kind}</small>`;
+  b.onclick = () => { load(i).then(() => { if (!reduced) play(); }); };
+  $("objects").appendChild(b);
+});
+function toggle(id, on) { $(id).classList.toggle("on", on); $(id).setAttribute("aria-pressed", on); }
+$("cert").onclick = () => { const on = U.uCert.value < 0.5; U.uCert.value = on ? 1 : 0; toggle("cert", on); $("legend").style.display = on ? "flex" : "none"; };
+$("lines").onclick = () => { const on = U.uLines.value < 0.5; U.uLines.value = on ? 1 : 0; toggle("lines", on); };
+let motionOn = true;
+$("motion").onclick = () => { motionOn = !motionOn; toggle("motion", motionOn); };
+$("play").onclick = () => play();
+
+// the story: assemble in light, scan to metal, open, take apart, put back
+let story = null;
+const ease = (x) => x <= 0 ? 0 : x >= 1 ? 1 : x * x * (3 - 2 * x);
+function play() { story = performance.now(); }
+function storyAt(t) {
+  const hasOpen = !!openAction;
+  setS("build", ease(t / 4.2));
+  setS("metal", ease((t - 4.8) / 3.2));
+  setS("open", hasOpen ? ease((t - 8.4) / 1.6) : 0);
+  setS("explode", ease((t - (hasOpen ? 10.4 : 8.6)) / 1.6) * 0.55 - ease((t - (hasOpen ? 13.2 : 11.4)) / 1.6) * 0.55);
+  apply();
+  return t > (hasOpen ? 15 : 13.2);
+}
+
+// hover: name, role, certainty, size
+const ray = new THREE.Raycaster(), ptr = new THREE.Vector2(), tip = $("tip");
+canvas.addEventListener("pointermove", (e) => {
+  ptr.set(e.clientX / innerWidth * 2 - 1, -e.clientY / innerHeight * 2 + 1);
+  ray.setFromCamera(ptr, camera);
+  const hit = ray.intersectObjects(meshes, false).find((h) => h.object.visible);
+  const p = hit && partOf(hit.object);
+  if (!p) { tip.style.opacity = 0; return; }
+  const c = p.userData.construct, s = new THREE.Box3().setFromObject(p).getSize(new THREE.Vector3());
+  tip.innerHTML = `<b>${c.label || c.id}</b><small>${c.role} · ${c.certainty.replace("_", " ")}${c.instances > 1 ? " · " + c.instances + " copies" : ""}</small><small>${[s.x, s.y, s.z].map(fmt).join(" × ")}</small>`;
+  tip.style.left = Math.min(e.clientX + 16, innerWidth - 240) + "px"; tip.style.top = (e.clientY + 14) + "px"; tip.style.opacity = 1;
+});
+canvas.addEventListener("pointerleave", () => { tip.style.opacity = 0; });
+
+// ------------------------------------------------------------------ loop
+function resize() {
+  const w = innerWidth, h = innerHeight, phone = w < 760;
+  renderer.setSize(w, h, false); composer.setSize(w, h); bloom.setSize(w, h);
+  camera.aspect = w / h;
+  const rail = phone ? 0 : 318, foot = phone ? h * 0.46 : 0;   // centre the model in the space beside (or above) the rail
+  camera.setViewOffset(w, h, -rail / 2, foot / 2, w, h);
+  camera.updateProjectionMatrix();
+}
+addEventListener("resize", resize);
+let last = performance.now();
+function frame(now) {
+  const dt = Math.min(0.1, (now - last) / 1000); last = now;
+  if (story !== null && storyAt((now - story) / 1000)) story = null;
+  if (mixer) { if (idleAction) idleAction.paused = !motionOn || reduced; mixer.update(motionOn ? dt : 0); if (openAction) { openAction.time = S.open * openAction.getClip().duration; mixer.update(0); } }
+  controls.update();
+  composer.render();
+  requestAnimationFrame(frame);
+}
+resize();
+load(0).then(() => { if (!reduced) play(); requestAnimationFrame(frame); })
+  .catch((e) => { $("status").textContent = "could not load the model"; console.error(e); });
+</script>
+</body>
+</html>

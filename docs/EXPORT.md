@@ -1,5 +1,8 @@
 # 3D export
 
+<p align="center"><a href="https://rtmandreyev.github.io/construct/examples/light-to-metal/"><img src="../examples/light-to-metal/hero.jpg" width="100%" alt="The Toyota Land Cruiser FJ62 construct exported as a 3D model and rendered in Blender: the hologram on the left turning to the solid model on the right"></a></p>
+<p align="center"><sub>The FJ62 construct exported with <code>construct export</code> and rendered in Blender, unedited. <a href="https://rtmandreyev.github.io/construct/examples/light-to-metal/">From light to metal</a> shows four gallery constructs as these files, live.</sub></p>
+
 A construct already describes a thing as named parts in metres, with an assembly order, joints and
 motions. `construct export` writes that description out as a 3D model, so the same construct can
 go into Blender, a game engine or a web page as an object, not only as a hologram.

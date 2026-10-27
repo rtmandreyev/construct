@@ -50,6 +50,31 @@ with the file to download and a render made in Blender from it, unedited.
 Also tested on a well-documented object built from its manual (a synthesizer), to check the
 exported parts and dimensions against the documentation.
 
+### Phase 3a: finished models
+
+The full pipeline, from a hologram to a plain model to a finished one:
+
+- **Finishes in the material map:** besides a colour, a finish per part (paint, brushed metal,
+  chrome, wood, rubber, plastic, glass, light), exported as standard glTF materials, glass with
+  real transmission.
+- **In Blender,** the add-on turns each finish into a procedural shader that needs no texture
+  coordinates (wood grain, brushed streaks, chrome, glass), and adds a **Finish** control (0–1)
+  from the plain model to the finished one.
+- **On the page,** the same **Finish** control; and for each of the FJ62, the James Webb Space
+  Telescope, the Revox A77 and the MiniFreak a material map chosen from reference photographs.
+  The colours are the exporter's choice, kept beside the construct, never facts in it.
+- **The showpiece:** one Blender render of the FJ62 in three panels (hologram, plain, finished).
+
+### Phase 3b: game-ready
+
+So that an exported construct drops into a game engine as it is:
+
+- `--merge`: parts merged per material, keeping the ones that move (joints, motion) separate, so a
+  prop is a handful of draw calls instead of one per part;
+- a glass material for glazing parts (transmission), instead of opaque grey;
+- simple texture coordinates for every shape, so a model can be textured and lightmapped;
+- checked by importing into Godot, and with the Khronos glTF validator.
+
 ### Phase 4: NetLogo bridge
 
 Bring an agent-based model to life without writing a converter.
@@ -71,6 +96,16 @@ Bring an agent-based model to life without writing a converter.
 The README and the gallery, reorganised around what people make with Construct: game developers
 (props, blockouts, scanner effects), 3D artists (Blender), educators and researchers (NetLogo),
 museums (honest provenance), and film and motion (film mode).
+
+The gallery, in three parts, in this order:
+
+1. **Constructs:** the individual constructs and the films (the long, music-driven assemblies)
+   first, in compact rows that scroll with a click, so the page opens on a few and holds them all
+   without growing long.
+2. **The full pipeline:** a detailed showcase of the finished models, from hologram to plain model
+   to finished model, with the files to download and the Blender add-on.
+3. **Models come alive:** the agent-based models (the NetLogo examples) last, once the bridge is
+   done.
 
 ### Phase 6: release
 

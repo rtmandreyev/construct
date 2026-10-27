@@ -8,7 +8,7 @@ driving the scene, so the .blend keeps working without the add-on:
 
   build   0..1  the assembly: every vertex appears at its build phase, with a bright front
   open    0..1  every joint, in its order groups (hinges, turns, slides, lifts)
-  metal   0..1  light to metal: 0 is the hologram (light lines, ghost surfaces), 1 the solid model
+  metal   0..1  light to metal: 0 is the hologram (light lines over dark glass), 1 the solid model
               with its lines as dark seams
 
 and `wire` (metres), the thickness of the line art. The Construct panel in the sidebar (N) shows
@@ -117,7 +117,8 @@ def _reveal(nodes, links, root, x=-900):
 
 
 def _surface(mat, root):
-    """A solid material: its own surface, ghosted in the hologram, revealed by the build, glowing at the front."""
+    """A solid material: dark glass with a violet rim in the hologram, its own surface as metal,
+    revealed by the build and glowing at its front."""
     mat.use_nodes = True
     nodes, links = mat.node_tree.nodes, mat.node_tree.links
     out = next(n for n in nodes if n.type == "OUTPUT_MATERIAL")
@@ -126,13 +127,27 @@ def _surface(mat, root):
         shader = nodes.new("ShaderNodeBsdfPrincipled")
     visible, glow = _reveal(nodes, links, root)
     metal = _value_node(nodes, root, "metal", (-900, -400))
-    ghost = _math(nodes, links, "MULTIPLY_ADD", metal.outputs[0], 0.94, (-700, -400), c=0.06)
-    alpha = _math(nodes, links, "MULTIPLY", ghost, visible, (-500, -300))
+    # the hologram's surface: near-black glass whose edges catch the accent, as in the viewer
+    dark = nodes.new("ShaderNodeBsdfPrincipled")
+    dark.inputs["Base Color"].default_value = (0.004, 0.002, 0.005, 1.0)
+    dark.inputs["Roughness"].default_value = 0.22
+    facing = nodes.new("ShaderNodeLayerWeight")
+    facing.inputs["Blend"].default_value = 0.35
+    edge = nodes.new("ShaderNodeEmission")
+    edge.inputs["Color"].default_value = _rgb(ACCENT)
+    links.new(_math(nodes, links, "POWER", facing.outputs["Facing"], 2.2, (-500, -700)), edge.inputs["Strength"])
+    glass = nodes.new("ShaderNodeAddShader")
+    links.new(dark.outputs[0], glass.inputs[0])
+    links.new(edge.outputs[0], glass.inputs[1])
+    look = nodes.new("ShaderNodeMixShader")
+    links.new(metal.outputs[0], look.inputs[0])
+    links.new(glass.outputs[0], look.inputs[1])
+    links.new(shader.outputs[0], look.inputs[2])
     clear = nodes.new("ShaderNodeBsdfTransparent")
     mix = nodes.new("ShaderNodeMixShader")
-    links.new(alpha, mix.inputs[0])
+    links.new(visible, mix.inputs[0])
     links.new(clear.outputs[0], mix.inputs[1])
-    links.new(shader.outputs[0], mix.inputs[2])
+    links.new(look.outputs[0], mix.inputs[2])
     front = nodes.new("ShaderNodeEmission")
     front.inputs["Color"].default_value = _rgb(ACCENT)
     strength = _math(nodes, links, "MULTIPLY", glow, 14.0, (-300, -500))
@@ -141,7 +156,8 @@ def _surface(mat, root):
     links.new(mix.outputs[0], add.inputs[0])
     links.new(front.outputs[0], add.inputs[1])
     links.new(add.outputs[0], out.inputs["Surface"])
-    mix.location, add.location, out.location = (200, 0), (400, 0), (600, 0)
+    dark.location, facing.location, edge.location, glass.location = (-300, -250), (-700, -700), (-300, -650), (-50, -400)
+    look.location, mix.location, add.location, out.location = (150, -100), (350, 0), (550, 0), (750, 0)
     if hasattr(mat, "surface_render_method"):
         mat.surface_render_method = "DITHERED"
 
@@ -274,7 +290,7 @@ def setup(root, objects, wire_radius, metal=1.0, keep_animations=False):
         if act.users == 0:
             bpy.data.actions.remove(act)
 
-    # the surfaces: revealed by the build, ghosted in the hologram
+    # the surfaces: revealed by the build, dark glass in the hologram
     done = set()
     for o in objects:
         if o.type != "MESH":

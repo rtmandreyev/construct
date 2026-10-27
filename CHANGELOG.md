@@ -20,6 +20,12 @@
   **Light ↔ Metal**, plus the line thickness and an operator that keyframes a reveal. The controls
   are custom properties driving the joints, materials and line art, so a .blend works without the
   add-on. In Blender 5.2 the opened joints land exactly where the compiler puts them.
+- **From light to metal** ([examples/light-to-metal](examples/light-to-metal/README.md)), under
+  Beyond objects in the gallery: four gallery constructs (the FJ62, the James Webb Space Telescope,
+  the Revox A77 and the MiniFreak) as their exported files, lit live with three.js: a scan line
+  from the hologram to the solid model, the build, the joints, an exploded view with each part's
+  name, role, certainty and size, and a download of each file. The site build exports the files
+  (`exports` in `examples/beyond.json`); a beyond card may name its own buttons.
 - **Audit:** `no-surface` warns when a main or structural part is drawn only as lines, so it would
   be missing from a 3D export.
 
