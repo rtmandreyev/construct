@@ -191,6 +191,13 @@ def audit(scene, geometry):
 
     _contact_and_thickness(scene, geometry, add, warnings)
 
+    # ---- a construct drawn from recorded data (the NetLogo bridge) keeps that data as it was drawn
+    if "data_lock" in facts_by_key:
+        from . import netlogo
+        problem = netlogo.lock_problem(scene)
+        if problem:
+            add(errors, "data-lock", None, problem)
+
     lo, hi = geometry["bounds"]["min"], geometry["bounds"]["max"]
     dims = [round(hi[k] - lo[k], 4) for k in range(3)]
     info.update({"dimensions_m": {"width": dims[0], "height": dims[1], "depth": dims[2]},

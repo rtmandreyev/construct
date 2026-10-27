@@ -14,9 +14,16 @@
 
 Every data part is `verified` against the recording (a `dataset` source naming the model, NetLogo's
 version and the seed); the build rises from the floor, so a construct's assembly replays the run.
+
+  data_lock(scene)                the fingerprint of what the recording says, kept as the `data_lock`
+                                  fact; the audit refuses a scene whose data no longer matches it
+  apply_art(scene, art)           an art-direction layer on top: views, emphasis, labels, milestones
+                                  and callouts, never the data
+
 Python standard library only.
 """
 
+import hashlib
 import json
 import math
 import re
@@ -33,6 +40,12 @@ TONES = ("identity", "data", "accent", "bright", "dust", "structure")
 # each view's hero: a field's fronts climb like a slope, so it is seen from above its rise
 FRAMING = {"space-time": {"yaw": 32, "pitch": 20}, "network-time": {"yaw": 30, "pitch": 26},
            "phase": {"yaw": 35, "pitch": 24}, "field": {"yaw": -38, "pitch": 46}}
+
+
+LOCK = "data_lock"     # the fact that holds the fingerprint
+LOCKED_FACTS = ("view", "coordinates")   # the bridge's own facts beside the run's: how the data is drawn
+LOOSE = ("label", "look", "note")        # how a data part is shown, which art direction may change
+ART_KEYS = {"title", "summary", "credit", "facts", "parts", "annotations", "looks", "presentation", "animation"}
 
 
 class NetLogoError(ValueError):
@@ -461,7 +474,7 @@ def scene_from_run(run, view, title=None, **opts):
         facts.append({"key": "seed", "value": seed, "certainty": "verified", "source": "run"})
     facts += [{"key": k, "value": v, "certainty": "verified", "source": "run"} for k, v in extra]
     slug = re.sub(r"[^a-z0-9]+", "-", title.lower()).strip("-")[:48] or "netlogo-run"
-    return {
+    return lock({
         "format": product.SCENE_FORMAT, "version": 2, "id": "netlogo-%s-%s" % (slug, view), "title": title,
         "subject": {"category": "other", "accuracy": "documented", "synthetic": False,
                     "summary": "One run of NetLogo's %s. %s" % (h["title"], summary)},
@@ -475,4 +488,100 @@ def scene_from_run(run, view, title=None, **opts):
         "animation": {"assembly": {"style": "build", "seconds": 12.0},
                       "idle": {"life": "calm", "events": ["scan"], "cadence": [8, 14], "strength": 0.4},
                       "camera": {"drift": 4, "breathe": 0.02}},
-    }
+    })
+
+
+# ---------------------------------------------------------------------------- the data lock
+
+def _canon(v):
+    """Numbers as rounded floats, so rewriting 1.0 as 1, or reformatting the file, keeps the fingerprint."""
+    if isinstance(v, bool) or v is None or isinstance(v, str):
+        return v
+    if isinstance(v, (int, float)):
+        return round(float(v), 5)
+    if isinstance(v, dict):
+        return {k: _canon(x) for k, x in v.items()}
+    return [_canon(x) for x in v]
+
+
+def data_lock(scene):
+    """The fingerprint of what the recording says: the run's source, its facts and how the data is drawn
+    (view, coordinates), and every part from the run, without how a part is shown (label, look, note)."""
+    facts = sorted(({k: v for k, v in f.items() if k != "note"} for f in scene.get("facts", [])
+                    if f.get("key") != LOCK and (f.get("source") == "run" or f.get("key") in LOCKED_FACTS)),
+                   key=lambda f: f["key"])
+    parts = sorted(({k: v for k, v in p.items() if k not in LOOSE} for p in scene.get("parts", [])
+                    if p.get("source") == "run"), key=lambda p: p["id"])
+    data = {"source": [s for s in scene.get("sources", []) if s.get("id") == "run"], "facts": facts, "parts": parts}
+    text = json.dumps(_canon(data), sort_keys=True, separators=(",", ":"), ensure_ascii=False)
+    return "sha256:" + hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+
+def lock(scene):
+    """The scene with its data_lock fact."""
+    run_parts = [p["id"] for p in scene["parts"] if p.get("source") == "run"]
+    scene["facts"] = [f for f in scene["facts"] if f["key"] != LOCK] + [
+        {"key": LOCK, "value": data_lock(scene), "certainty": "verified", "source": "run",
+         "note": "The data as the bridge drew it from the recording: %d parts (%s), the run's facts and the view. "
+                 "The audit refuses the scene if any of it changes." % (len(run_parts), ", ".join(run_parts))[:600]}]
+    return scene
+
+
+def lock_problem(scene):
+    """None when the scene has no data lock or its data is as the bridge drew it; else what is wrong."""
+    fact = next((f for f in scene.get("facts", []) if f.get("key") == LOCK), None)
+    if fact is None or fact.get("value") == data_lock(scene):
+        return None
+    return ("the data drawn from the NetLogo recording changed since the bridge drew it (a part, fact or source "
+            "with source \"run\", or the view or coordinates fact). Restore them from `construct netlogo`; art "
+            "direction may change only a data part's label, look and note, and adds its own parts and facts "
+            "with another source (docs/NETLOGO.md, Art direction).")
+
+
+# ---------------------------------------------------------------------------- art direction
+
+def apply_art(scene, art):
+    """An art-direction layer (art.json) on a locked scene: a title and summary, views and atmosphere,
+    the label, look or note of data parts (`looks`), and new parts, facts and annotations of its own, credited
+    to `credit` (the model that directed it). Never the data: the result keeps the bridge's lock."""
+    if not isinstance(art, dict):
+        raise NetLogoError("art: expected a JSON object")
+    unknown = sorted(set(art) - ART_KEYS)
+    if unknown:
+        raise NetLogoError("art: unknown key %s (one of %s)" % (", ".join(unknown), ", ".join(sorted(ART_KEYS))))
+    if lock_problem(scene) or not any(f["key"] == LOCK for f in scene["facts"]):
+        raise NetLogoError("art goes on a scene as `construct netlogo` drew it (locked, unchanged)")
+    out = json.loads(json.dumps(scene))
+    credit = art.get("credit")
+    if not isinstance(credit, str) or not credit.strip():
+        raise NetLogoError("art.credit: name the model (or person) that directed it, e.g. \"Claude Opus 5.5\"")
+    out["sources"].append({"id": "art", "kind": "generated", "title": "Art direction by %s" % credit.strip(),
+                           "rights": "synthetic"})
+    if "title" in art:
+        out["title"] = art["title"]
+    if "summary" in art:
+        out["subject"]["summary"] = art["summary"]
+    data_ids = {p["id"] for p in out["parts"]}
+    for pid, change in (art.get("looks") or {}).items():
+        if pid not in data_ids:
+            raise NetLogoError("art.looks: no data part %r (one of %s)" % (pid, ", ".join(sorted(data_ids))))
+        if not isinstance(change, dict) or set(change) - set(LOOSE):
+            raise NetLogoError("art.looks.%s: only %s" % (pid, ", ".join(LOOSE)))
+        part = next(p for p in out["parts"] if p["id"] == pid)
+        for k, v in change.items():
+            part[k] = dict(part.get("look", {}), **v) if k == "look" else v
+    for kind in ("facts", "parts"):
+        for item in art.get(kind) or []:
+            if not isinstance(item, dict):
+                raise NetLogoError("art.%s: expected objects" % kind)
+            if item.get("source") == "run" or (kind == "facts" and item.get("key") in LOCKED_FACTS + (LOCK,)):
+                raise NetLogoError("art.%s: %r claims the recording; art's own %s use source \"art\" (or none)"
+                                   % (kind, item.get("id") or item.get("key"), kind))
+            out[kind].append(dict(item))
+    if art.get("annotations"):
+        out["annotations"] = out.get("annotations", []) + [dict(a) for a in art["annotations"]]
+    if "presentation" in art:
+        out["presentation"] = dict(out["presentation"], **art["presentation"])
+    if "animation" in art:
+        out["animation"] = art["animation"]
+    return out

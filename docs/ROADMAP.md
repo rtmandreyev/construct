@@ -89,6 +89,9 @@ Bring an agent-based model to life without writing a converter ([NETLOGO.md](NET
 - Checked: the Simple Viral Marketing example's run is reproduced exactly (all 500 adoption ticks).
 - Examples: Flocking (space-time), Wolf Sheep Predation (phase) and Fire (field). Fire replaced
   Segregation, whose story is its colours, which a construct does not draw.
+- Optional art direction (done): an `art.json` layer of views, labels and milestones on top of the
+  data, which a `data_lock` fact keeps exactly as the bridge drew it. The three examples were
+  art-directed by Claude Opus 5.5.
 - Later: a replay control with a tick scrubber (`build --replay`); a NetLogo extension.
 
 ### Phase 5: who it is for

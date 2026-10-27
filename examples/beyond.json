@@ -48,7 +48,8 @@
    "line": "Each bird's track rising with time: random flight near the floor, flocks higher up.",
    "label": "recorded NetLogo run · NetLogo bridge",
    "credit": "Model © 1998 Uri Wilensky · CC BY-NC-SA 3.0",
-   "files": ["scene.json", "README.md", "LICENSE", "hero.jpg", "thumb.jpg", "Flocking-construct.nlogox", "construct-experiment.xml"],
+   "art": "Claude Opus 5.5",
+   "files": ["scene.json", "art.json", "README.md", "LICENSE", "hero.jpg", "thumb.jpg", "Flocking-construct.nlogox", "construct-experiment.xml"],
    "pictures": "construct",
    "buttons": [
     ["Open the construct", ""],
@@ -62,7 +63,8 @@
    "line": "The predator-prey cycle rising in time: sheep across, wolves front to back, ticks up.",
    "label": "recorded NetLogo run · NetLogo bridge",
    "credit": "Model © 1997 Uri Wilensky · CC BY-NC-SA 3.0",
-   "files": ["scene.json", "README.md", "LICENSE", "hero.jpg", "thumb.jpg", "Wolf Sheep Predation-construct.nlogox", "construct-experiment.xml"],
+   "art": "Claude Opus 5.5",
+   "files": ["scene.json", "art.json", "README.md", "LICENSE", "hero.jpg", "thumb.jpg", "Wolf Sheep Predation-construct.nlogox", "construct-experiment.xml"],
    "pictures": "construct",
    "buttons": [
     ["Open the construct", ""],
@@ -76,7 +78,8 @@
    "line": "The fire's front, every few ticks, raised to its tick as it crosses the forest.",
    "label": "recorded NetLogo run · NetLogo bridge",
    "credit": "Model © 1997 Uri Wilensky · CC BY-NC-SA 3.0",
-   "files": ["scene.json", "README.md", "LICENSE", "hero.jpg", "thumb.jpg", "Fire-construct.nlogox", "construct-experiment.xml"],
+   "art": "Claude Opus 5.5",
+   "files": ["scene.json", "art.json", "README.md", "LICENSE", "hero.jpg", "thumb.jpg", "Fire-construct.nlogox", "construct-experiment.xml"],
    "pictures": "construct",
    "buttons": [
     ["Open the construct", ""],

@@ -1,0 +1,297 @@
+{
+ "credit": "Claude Opus 5.5",
+ "title": "Flocking: from random to aligned",
+ "summary": "One run of NetLogo's Flocking: 300 birds, each following three rules (align, cohere, separate). Each bird's track rises with time: near the floor they fly every which way; by tick 49 half the headings agree, by tick 81 nearly all, and the tracks lean together as parallel streams.",
+ "facts": [
+  {
+   "key": "alignment_start",
+   "value": 0.04,
+   "certainty": "inferred",
+   "source": "art",
+   "note": "Computed from run.jsonl: the length of the mean of the 300 birds' heading vectors (0 when headings are random, 1 when all fly the same way), at every tick. At tick 0."
+  },
+  {
+   "key": "alignment_half",
+   "value": "tick 49",
+   "certainty": "inferred",
+   "source": "art",
+   "note": "Computed from run.jsonl: the length of the mean of the 300 birds' heading vectors (0 when headings are random, 1 when all fly the same way), at every tick. The first tick it reaches 0.5."
+  },
+  {
+   "key": "alignment_most",
+   "value": "tick 81",
+   "certainty": "inferred",
+   "source": "art",
+   "note": "Computed from run.jsonl: the length of the mean of the 300 birds' heading vectors (0 when headings are random, 1 when all fly the same way), at every tick. The first tick it reaches 0.9."
+  },
+  {
+   "key": "alignment_end",
+   "value": 0.98,
+   "certainty": "inferred",
+   "source": "art",
+   "note": "Computed from run.jsonl: the length of the mean of the 300 birds' heading vectors (0 when headings are random, 1 when all fly the same way), at every tick. At tick 300."
+  }
+ ],
+ "parts": [
+  {
+   "id": "aligned-half",
+   "label": "Half aligned · tick 49",
+   "role": "data",
+   "certainty": "inferred",
+   "source": "art",
+   "stage": 0,
+   "basis": [
+    "alignment_half"
+   ],
+   "floating": true,
+   "look": {
+    "line": "dashed",
+    "weight": 0.6,
+    "alpha": 0.45,
+    "tone": "faint"
+   },
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -5.0,
+      1.633,
+      -5.0
+     ],
+     [
+      5.0,
+      1.633,
+      -5.0
+     ],
+     [
+      5.0,
+      1.633,
+      5.0
+     ],
+     [
+      -5.0,
+      1.633,
+      5.0
+     ]
+    ],
+    "smooth": false,
+    "closed": true
+   }
+  },
+  {
+   "id": "aligned-most",
+   "label": "90% aligned · tick 81",
+   "role": "data",
+   "certainty": "inferred",
+   "source": "art",
+   "stage": 0,
+   "basis": [
+    "alignment_most"
+   ],
+   "floating": true,
+   "look": {
+    "line": "dashed",
+    "weight": 0.6,
+    "alpha": 0.45,
+    "tone": "faint"
+   },
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -5.0,
+      2.7,
+      -5.0
+     ],
+     [
+      5.0,
+      2.7,
+      -5.0
+     ],
+     [
+      5.0,
+      2.7,
+      5.0
+     ],
+     [
+      -5.0,
+      2.7,
+      5.0
+     ]
+    ],
+    "smooth": false,
+    "closed": true
+   }
+  },
+  {
+   "id": "aligned-end",
+   "label": "Alignment 0.98 · tick 300",
+   "role": "data",
+   "certainty": "inferred",
+   "source": "art",
+   "stage": 0,
+   "basis": [
+    "alignment_end"
+   ],
+   "floating": true,
+   "look": {
+    "line": "dashed",
+    "weight": 0.6,
+    "alpha": 0.3,
+    "tone": "faint"
+   },
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -5.0,
+      10.0,
+      -5.0
+     ],
+     [
+      5.0,
+      10.0,
+      -5.0
+     ],
+     [
+      5.0,
+      10.0,
+      5.0
+     ],
+     [
+      -5.0,
+      10.0,
+      5.0
+     ]
+    ],
+    "smooth": false,
+    "closed": true
+   }
+  }
+ ],
+ "annotations": [
+  {
+   "id": "half-note",
+   "part": "aligned-half",
+   "text": "half aligned · tick 49",
+   "offset": [
+    5.0,
+    0,
+    5.0
+   ]
+  },
+  {
+   "id": "most-note",
+   "part": "aligned-most",
+   "text": "90% aligned · tick 81",
+   "offset": [
+    5.0,
+    0,
+    5.0
+   ]
+  },
+  {
+   "id": "start-note",
+   "part": "world",
+   "text": "tick 0: random headings (alignment 0.04)",
+   "offset": [
+    5.0,
+    0,
+    5.0
+   ]
+  },
+  {
+   "id": "end-note",
+   "part": "aligned-end",
+   "text": "parallel streams (alignment 0.98)",
+   "offset": [
+    5.0,
+    0,
+    5.0
+   ]
+  },
+  {
+   "id": "tick-1",
+   "part": "time-axis",
+   "text": "tick 60",
+   "offset": [
+    -0.35,
+    -8.0,
+    0
+   ]
+  },
+  {
+   "id": "tick-2",
+   "part": "time-axis",
+   "text": "tick 120",
+   "offset": [
+    -0.35,
+    -6.0,
+    0
+   ]
+  },
+  {
+   "id": "tick-3",
+   "part": "time-axis",
+   "text": "tick 180",
+   "offset": [
+    -0.35,
+    -4.0,
+    0
+   ]
+  },
+  {
+   "id": "tick-4",
+   "part": "time-axis",
+   "text": "tick 240",
+   "offset": [
+    -0.35,
+    -2.0,
+    0
+   ]
+  },
+  {
+   "id": "tick-5",
+   "part": "time-axis",
+   "text": "tick 300",
+   "offset": [
+    -0.35,
+    0.0,
+    0
+   ]
+  }
+ ],
+ "looks": {
+  "tracks-turtles": {
+   "label": "Each bird's track, rising with time",
+   "look": {
+    "alpha": 0.7
+   }
+  },
+  "world": {
+   "label": "The world, 71 x 71 patches, wrapping at its edges"
+  }
+ },
+ "presentation": {
+  "views": [
+   {
+    "id": "hero",
+    "label": "Hero",
+    "yaw": 32,
+    "pitch": 20
+   },
+   {
+    "id": "side",
+    "label": "Side: the lean",
+    "yaw": 90,
+    "pitch": 4
+   },
+   {
+    "id": "top",
+    "label": "From above",
+    "yaw": 0,
+    "pitch": 88
+   }
+  ]
+ }
+}

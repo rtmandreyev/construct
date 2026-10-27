@@ -51,6 +51,12 @@
   draws the run as a construct, deterministically, every data part verified against the recording.
   It reproduces the Simple Viral Marketing example's run exactly. Three new examples: Flocking,
   Wolf Sheep Predation and Fire (each CC BY-NC-SA 3.0, like its model).
+- **Art direction for a recorded run, with a data lock:** every scene the bridge draws carries a
+  `data_lock` fact, the fingerprint of its data, and the audit (so `check` and `build`) refuses a
+  scene whose data no longer matches it. `construct netlogo … --art art.json` adds an art-direction
+  layer on top (title, views, a data part's label and look, milestones and callouts of its own,
+  credited), never the data. The three examples are art-directed by Claude Opus 5.5, every
+  milestone computed from the run; the gallery opens them with their labels on.
 - **A new shape, `paths`:** up to 4,000 polylines in one part (a contract addition within 0.2).
 - **Audit:** `no-surface` warns when a main or structural part is drawn only as lines, so it would
   be missing from a 3D export.

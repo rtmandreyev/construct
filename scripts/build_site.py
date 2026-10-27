@@ -240,13 +240,14 @@ def index_page(examples, films=(), beyond=()):
         "model's run\" loading=\"lazy\" width=\"1200\" height=\"750\"></a><div class=\"body\"><h2><a href=\"examples/%s/\">%s</a>"
         "</h2><p class=\"prov\">%s</p><p class=\"credit\">%s</p><div class=\"choose\">%s</div></div></div>"
         % (b["slug"], b["slug"], html.escape(b["title"]), b["slug"], html.escape(b["title"]), html.escape(b["line"]),
-           html.escape(b["credit"]), _beyond_buttons(b))
+           html.escape(b["credit"] + (" · art direction: %s" % b["art"] if b.get("art") else "")), _beyond_buttons(b))
         for b in models)
     alive = ("<section class=\"part\" id=\"models\"><div class=\"eyebrow\">3 · Models come alive</div>"
              "<h2 class=\"section\">Agent-based models, recorded and drawn</h2><p class=\"section\">A NetLogo model's "
              "run, recorded by Construct's bridge and drawn with time as height, so its assembly replays the run; "
-             "the data comes from the run, never from an AI. <a href=\"%s/blob/main/docs/NETLOGO.md\">The NetLogo "
-             "bridge</a>.</p>"
+             "the data comes from the run, never from an AI. An AI art-direction pass adds the labels and "
+             "milestones on top, and a data lock keeps it off the data. <a href=\"%s/blob/main/docs/NETLOGO.md\">"
+             "The NetLogo bridge</a>.</p>"
              "<div class=\"grid models\">\n%s\n</div></section>" % (REPO_URL, model_cards)) if models else ""
     body = ("<header class=\"site\"><div class=\"eyebrow\">Construct · examples</div>"
             "<h1>Describe a thing. Get a hologram, <em>a 3D model and its parts</em>.</h1>"
@@ -284,18 +285,23 @@ def example_page(ex):
 
 
 def data_page(item):
-    """A "beyond" construct with no page of its own (a recorded NetLogo run): the live construct, its credit."""
-    body = ("<div class=\"viewer\"><div class=\"bar\"><h1>%s</h1><p class=\"prov\">%s · %s</p><nav>"
+    """A "beyond" construct with no page of its own (a recorded NetLogo run): the live construct, its credit.
+    An art-directed one (`"art"`: who directed it) opens with its labels on and credits the direction."""
+    art = item.get("art")
+    q = "rounds=0&amp;labels=1" if art else "rounds=0"
+    body = ("<div class=\"viewer\"><div class=\"bar\"><h1>%s</h1><p class=\"prov\">%s · %s%s</p><nav>"
             "<a class=\"button\" href=\"../../\">All examples</a>"
-            "<a class=\"button\" href=\"construct.html?rounds=0\">Full screen</a>"
+            "<a class=\"button\" href=\"construct.html?%s\">Full screen</a>"
             "<a class=\"button\" href=\"scene.json\">Scene</a>"
             "<a class=\"button\" href=\"%s/tree/main/examples/%s\">Source and licence</a></nav></div>"
-            "<div class=\"stage\"><iframe src=\"construct.html?ui=0&amp;rounds=0\" title=\"%s, live construct\" "
+            "<div class=\"stage\"><iframe src=\"construct.html?ui=0&amp;%s\" title=\"%s, live construct\" "
             "allowfullscreen></iframe></div>"
             "<p class=\"hint\">%s Drag to orbit, scroll to zoom; <kbd>R</kbd> replays the assembly, which rises with the "
-            "run's ticks.</p></div>"
-            % (html.escape(item["title"]), html.escape(item["label"]), html.escape(item["credit"]), REPO_URL,
-               item["slug"], html.escape(item["title"]), html.escape(item["line"])))
+            "run's ticks%s.</p></div>"
+            % (html.escape(item["title"]), html.escape(item["label"]), html.escape(item["credit"]),
+               html.escape(" · art direction: %s" % art) if art else "", q, REPO_URL, item["slug"], q,
+               html.escape(item["title"]), html.escape(item["line"]),
+               "; click it, then <kbd>L</kbd> hides the art direction's labels" if art else ""))
     return _page("%s · Construct" % item["title"], body, 2, "%s: %s" % (item["title"], item["line"]))
 
 

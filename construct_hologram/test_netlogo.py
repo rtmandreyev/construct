@@ -1,5 +1,5 @@
-"""The NetLogo bridge: instrumenting a model, reading a recording, every view's construct, the `paths`
-shape, and (with CONSTRUCT_NETLOGO set to NetLogo's folder) a headless run end to end."""
+"""The NetLogo bridge: instrumenting a model, reading a recording, every view's construct, the data lock
+and the art-direction layer, the `paths` shape, and (with CONSTRUCT_NETLOGO set to NetLogo's folder) a headless run end to end."""
 
 import json
 import os
@@ -8,7 +8,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from . import cli, netlogo, scene, studio
+from . import audit, cli, netlogo, scene, studio
 
 HERE = Path(__file__).resolve().parent
 NETLOGO = os.environ.get("CONSTRUCT_NETLOGO")
@@ -163,6 +163,72 @@ class Views(unittest.TestCase):
                 self.assertIn("examples/%s/" % slug, (HERE.parent / "NOTICE").read_text(encoding="utf-8"))
                 model = next(d.glob("*-construct.nlogox")).read_text(encoding="utf-8")
                 self.assertIn('__includes ["construct.nls"]', model)
+                self.assertIn(netlogo.LOCK, {f["key"] for f in sc["facts"]})
+                self.assertIsNone(netlogo.lock_problem(sc))
+
+
+class ArtDirection(unittest.TestCase):
+    ART = {"credit": "Claude Opus 5.5", "title": "A run, directed",
+           "looks": {"world": {"label": "The world", "look": {"alpha": 0.3}}},
+           "parts": [{"id": "milestone", "label": "Half infected", "role": "data", "certainty": "inferred",
+                      "source": "art", "stage": 1, "floating": True,
+                      "shape": {"type": "curve", "points": [[-4, 3, -4], [4, 3, -4], [4, 3, 4]]}}],
+           "annotations": [{"id": "milestone-note", "part": "milestone", "text": "half infected"}],
+           "presentation": {"framing": {"yaw": 20, "pitch": 30}}}
+
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory()
+        self.run = netlogo.read_run(recording(Path(self.tmp.name, "run.jsonl")))
+        self.sc = netlogo.scene_from_run(self.run, "space-time")
+
+    def tearDown(self):
+        self.tmp.cleanup()
+
+    def errors(self, sc):
+        return [e["code"] for e in audit.audit(sc, scene.compile_scene(sc))["errors"]]
+
+    def test_the_lock_holds_the_data_not_its_look(self):
+        self.assertEqual(self.errors(self.sc), [])
+        same = json.loads(json.dumps(self.sc).replace(".0,", ","))   # 1.0 written as 1
+        self.assertIsNone(netlogo.lock_problem(same))
+        restyled = json.loads(json.dumps(self.sc))
+        tracks = next(p for p in restyled["parts"] if p["id"].startswith("tracks"))
+        tracks.update(label="Each track", look={"tone": "accent", "alpha": 0.9}, note="emphasised")
+        self.assertEqual(self.errors(restyled), [])
+        tracks["shape"]["paths"][0][1][1] += 0.5   # a point moved
+        self.assertEqual(self.errors(restyled), ["data-lock"])
+        for change in (lambda s: s["parts"].pop(),                                     # a data part removed
+                       lambda s: s["parts"].append(dict(s["parts"][0], id="extra")),   # one more claims the run
+                       lambda s: next(f for f in s["facts"] if f["key"] == "ticks").update(value=99),
+                       lambda s: next(f for f in s["facts"] if f["key"] == "coordinates").update(value="Y is down.")):
+            moved = json.loads(json.dumps(self.sc))
+            change(moved)
+            self.assertIsNotNone(netlogo.lock_problem(moved))
+
+    def test_art_adds_its_own_and_keeps_the_data(self):
+        out = netlogo.apply_art(self.sc, self.ART)
+        self.assertEqual(scene.validate(out), [])
+        self.assertEqual(self.errors(out), [])
+        self.assertIn("Art direction by Claude Opus 5.5", [s["title"] for s in out["sources"]])
+        world = next(p for p in out["parts"] if p["id"] == "world")
+        self.assertEqual((world["label"], world["look"]["alpha"], world["look"]["weight"]), ("The world", 0.3, 0.5))
+        self.assertEqual((out["title"], out["presentation"]["framing"]["yaw"]), ("A run, directed", 20))
+        self.assertTrue(out["presentation"]["atmosphere"]["projector"])
+        self.assertNotIn("art", [s["id"] for s in self.sc["sources"]])   # the bridge's scene is left as it was
+
+    def test_art_never_touches_the_data(self):
+        part = dict(self.ART["parts"][0], source="run")
+        for bad in ({"title": "no credit"}, dict(self.ART, colour="red"),
+                    dict(self.ART, looks={"world": {"shape": {"type": "box", "size": [1, 1, 1]}}}),
+                    dict(self.ART, looks={"nope": {"label": "x"}}), dict(self.ART, parts=[part]),
+                    dict(self.ART, facts=[{"key": "ticks", "value": 3, "certainty": "verified", "source": "run"}]),
+                    dict(self.ART, facts=[{"key": "view", "value": "phase", "certainty": "inferred"}])):
+            with self.assertRaises(netlogo.NetLogoError, msg=str(bad)[:80]):
+                netlogo.apply_art(self.sc, bad)
+        moved = json.loads(json.dumps(self.sc))
+        moved["parts"].pop()
+        with self.assertRaises(netlogo.NetLogoError):
+            netlogo.apply_art(moved, self.ART)
 
 
 class Paths(unittest.TestCase):
@@ -185,6 +251,13 @@ class Command(unittest.TestCase):
             self.assertEqual(cli.main(["netlogo", str(run), "--view", "phase", "--smooth", "3", "--out", str(out)]), 0)
             self.assertEqual(scene.validate(json.loads(out.read_text(encoding="utf-8"))), [])
             self.assertEqual(cli.main(["netlogo", str(run), "--view", "network-time", "--out", str(out), "--force"]), 1)
+            Path(d, "art.json").write_text(json.dumps(ArtDirection.ART), encoding="utf-8")
+            self.assertEqual(cli.main(["netlogo", str(run), "--view", "space-time", "--art", str(Path(d, "art.json")),
+                                       "--out", str(out), "--force"]), 0)
+            self.assertEqual(json.loads(out.read_text(encoding="utf-8"))["title"], "A run, directed")
+            Path(d, "art.json").write_text("{not json", encoding="utf-8")
+            self.assertEqual(cli.main(["netlogo", str(run), "--view", "space-time", "--art", str(Path(d, "art.json")),
+                                       "--out", str(out), "--force"]), 1)
             Path(d, "m.nlogox").write_text(MODEL, encoding="utf-8")
             self.assertEqual(cli.main(["netlogo-instrument", str(Path(d, "m.nlogox")), "--title", "M", "--out",
                                        str(Path(d, "inst")), "--turtles", "infected?", "--patches", "pcolor:3"]), 0)

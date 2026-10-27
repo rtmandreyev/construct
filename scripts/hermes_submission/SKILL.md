@@ -193,7 +193,11 @@ Work in a folder of your own. `out/construct.html` opens in any browser.
    "Model" --out run/` (with `--turtles`, `--reporters "a;b"`, `--patches pcolor:4`, `--seed`,
    `--ticks`) makes the model record itself; after the user runs it, `scripts/cli.py netlogo
    run/run.jsonl --view space-time|network-time|phase|field --out scene.json` computes the construct
-   from the run, no authoring needed. Credit the model as its Info tab asks.
+   from the run, no authoring needed. Credit the model as its Info tab asks. For art direction
+   (only when asked), never edit the data: write an `art.json` layer (`credit` with your exact model
+   name, `title`, `summary`, `looks` by data part id, its own `parts`, `facts` and `annotations` with
+   source `art`, `presentation`) and redraw with `--art art.json`; compute milestones from
+   `run.jsonl` with a script. The scene's `data_lock` fact makes `check` refuse any data change.
 
 ## Pitfalls
 

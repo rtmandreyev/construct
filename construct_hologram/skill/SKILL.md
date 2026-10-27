@@ -182,8 +182,15 @@ bridge computes the construct from a recorded run (details: `docs/NETLOGO.md`).
 2. `python3 TOOLS netlogo run/run.jsonl --view <view> --out scene.json`: `space-time` (moving agents),
    `network-time --state var` (spreading on a network), `phase --x R1 --z R2` (two quantities in a
    cycle; `--smooth N`), `field` (spreading over patches). `--time sqrt` when most change comes early.
-3. Build and review it as usual; you may add views, labels or annotations, but keep the data parts
-   as they are, and credit the model as its Info tab asks.
+3. Build and review it as usual, and credit the model as its Info tab asks.
+4. **Art direction (optional, when the user wants it to look good).** Never edit the data: write a
+   layer, `art.json`, and redraw with `--art art.json`. It holds `credit` (your exact model name),
+   `title`, `summary`, `looks` (a data part's label, look or note, by id), its own `parts`, `facts`
+   and `annotations` (source `art`, or none; `inferred` with a note when computed from the run,
+   else `decorative`), `presentation` (views, framing) and `animation`. Compute every milestone
+   (half adopted, the last burn, a peak) with a short script over `run.jsonl`, never by eye; keep
+   every data part visible; review before and after each change and keep only what reads better.
+   The scene's `data_lock` fact makes `check` refuse any change to the data.
 
 ## A 3D model of a construct (export)
 

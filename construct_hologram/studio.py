@@ -478,6 +478,8 @@ def add_commands(sub):
     p.add_argument("--resolution", type=int, help="field: blocks across the world (default 64)")
     p.add_argument("--time", choices=("linear", "sqrt"), default="linear",
                    help="height from ticks: linear (default) or sqrt, to stretch a run whose changes come early")
+    p.add_argument("--art", help="an art-direction layer (art.json) on top of the data: views, emphasis, labels, "
+                                 "milestones; never the data itself (docs/NETLOGO.md)")
     p.add_argument("--force", action="store_true")
     p = sub.add_parser("audio", help="film mode: per-frame audio features (energy, high, voice) for `video --audio`")
     p.add_argument("music", help="the track (any format ffmpeg reads)")
@@ -740,7 +742,9 @@ def run(args):
                                           z=args.z, change=args.change, max_agents=args.max_agents,
                                           time=args.time, smooth=args.smooth, levels=args.levels,
                                           resolution=args.resolution)
-            except nl.NetLogoError as exc:
+                if args.art:
+                    scene = nl.apply_art(scene, json.loads(Path(args.art).read_text(encoding="utf-8")))
+            except (nl.NetLogoError, json.JSONDecodeError) as exc:
                 sys.stderr.write("netlogo: %s\n" % exc)
                 return 1
             text = json.dumps(scene, separators=(",", ":"), ensure_ascii=False) + "\n"   # data: compact
