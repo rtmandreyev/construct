@@ -63,12 +63,6 @@
    "model": "DeepSeek V4.1 Flash"
   },
   {
-   "slug": "apollo-lunar-module",
-   "title": "Apollo Lunar Module (LM-5 \"Eagle\")",
-   "mode": "masterpiece",
-   "model": "DeepSeek V4.1 Flash"
-  },
-  {
    "slug": "leica-m3",
    "title": "Leica M3",
    "mode": "fast",
@@ -117,12 +111,6 @@
    "model": "GPT-6.1 Sol"
   },
   {
-   "slug": "black-hole",
-   "title": "Black hole",
-   "mode": "fast",
-   "model": "GPT-6.1 Sol"
-  },
-  {
    "slug": "tea-house",
    "title": "Tea house",
    "mode": "fast",
@@ -139,12 +127,6 @@
    "title": "Yamaha CFX",
    "mode": "fast",
    "model": "DeepSeek V4.1 Flash"
-  },
-  {
-   "slug": "porsche-911-964",
-   "title": "Porsche 911 (964)",
-   "mode": "masterpiece",
-   "model": "GPT-6.1 Sol"
   }
  ]
 }

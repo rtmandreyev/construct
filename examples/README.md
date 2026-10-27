@@ -16,7 +16,6 @@ made with earlier versions of Construct; all of them build with this release.
 | [![Sydney Opera House](sydney-opera-house/thumb.jpg)](sydney-opera-house/) | [Sydney Opera House](sydney-opera-house/) | masterpiece | GPT-6.1 Sol |
 | [![Saturn](saturn/thumb.jpg)](saturn/) | [Saturn](saturn/) | masterpiece | DeepSeek V4.1 Flash |
 | [![Andromeda Galaxy (M31)](andromeda-galaxy/thumb.jpg)](andromeda-galaxy/) | [Andromeda Galaxy (M31)](andromeda-galaxy/) | masterpiece | DeepSeek V4.1 Flash |
-| [![Apollo Lunar Module (LM-5 "Eagle")](apollo-lunar-module/thumb.jpg)](apollo-lunar-module/) | [Apollo Lunar Module (LM-5 "Eagle")](apollo-lunar-module/) | masterpiece | DeepSeek V4.1 Flash |
 | [![Leica M3](leica-m3/thumb.jpg)](leica-m3/) | [Leica M3](leica-m3/) | fast | GPT-6.1 Sol |
 | [![Patek Philippe 5320G](patek-philippe-5320g/thumb.jpg)](patek-philippe-5320g/) | [Patek Philippe 5320G](patek-philippe-5320g/) | fast | GPT-6.1 Sol |
 | [![Jackson Juggernaut ET7](jackson-juggernaut-et7/thumb.jpg)](jackson-juggernaut-et7/) | [Jackson Juggernaut ET7](jackson-juggernaut-et7/) | fast | GPT-6.1 Sol |
@@ -25,11 +24,9 @@ made with earlier versions of Construct; all of them build with this release.
 | [![The Last Light: sea cliff at dusk](the-last-light/thumb.jpg)](the-last-light/) | [The Last Light: sea cliff at dusk](the-last-light/) | fast | GPT-6.1 Sol |
 | [![Brass orrery](brass-orrery/thumb.jpg)](brass-orrery/) | [Brass orrery](brass-orrery/) | fast | GPT-6.1 Sol |
 | [![Gothic cathedral nave](gothic-cathedral-nave/thumb.jpg)](gothic-cathedral-nave/) | [Gothic cathedral nave](gothic-cathedral-nave/) | fast | GPT-6.1 Sol |
-| [![Black hole](black-hole/thumb.jpg)](black-hole/) | [Black hole](black-hole/) | fast | GPT-6.1 Sol |
 | [![Tea house](tea-house/thumb.jpg)](tea-house/) | [Tea house](tea-house/) | fast | GPT-6.1 Sol |
 | [![Arturia MiniFreak](arturia-minifreak/thumb.jpg)](arturia-minifreak/) | [Arturia MiniFreak](arturia-minifreak/) | fast | DeepSeek V4.1 Flash |
 | [![Yamaha CFX](yamaha-cfx/thumb.jpg)](yamaha-cfx/) | [Yamaha CFX](yamaha-cfx/) | fast | DeepSeek V4.1 Flash |
-| [![Porsche 911 (964)](porsche-911-964/thumb.jpg)](porsche-911-964/) | [Porsche 911 (964)](porsche-911-964/) | masterpiece | GPT-6.1 Sol |
 
 **Films.** [films/](films/) holds the scenes of three constructs that assemble across a piece of
 music ([film mode](../docs/FILM.md)), listed in [films.json](films.json). Their videos are in the
