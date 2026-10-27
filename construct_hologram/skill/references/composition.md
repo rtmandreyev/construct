@@ -46,7 +46,8 @@ identity features**, in that order. Neon on a wrong silhouette is still wrong.
   as identity, each a separate part so it can move; small controls as detail. Show it in
   use (record on the platter, lid open) when that is recognisable.
 - **Vehicle**: never a box body, and never a body outlined with thin tubes (they render as
-  glowing wire, not a surface: the audit warns `tube-outline`). Trace the side silhouette and the plan (top) outline first
+  glowing wire, not a surface: the audit warns `tube-outline`; a main or structural part drawn
+  only as lines has no surface for the 3D export: the audit warns `no-surface`). Trace the side silhouette and the plan (top) outline first
   — from references when the car is a named model ([tracing](tracing.md)) — and loft the
   lower body through them: half-widths from the plan, sill and shoulder heights from the
   side, the sides leaning in (`half_width_top` about 0.9 of the bottom). Round the plan at

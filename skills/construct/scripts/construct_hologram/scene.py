@@ -31,6 +31,7 @@ MAX_INSTANCES = 1024
 MAX_REPEAT = 64
 MAX_LINES = 24000
 MAX_TRIS = 24000
+MAX_SOLID_TRIS = 200000  # a solid compile, for the 3D export only
 MAX_POINTS = 6000
 MAX_MOTIONS = 32
 MAX_FACTS = 160
@@ -1456,8 +1457,11 @@ def cross_section(p):
     return None
 
 
-def compile_scene(scene):
-    """Validate and compile; raises SceneError listing every problem."""
+def compile_scene(scene, solid=False):
+    """Validate and compile; raises SceneError listing every problem.
+
+    `solid` keeps every shape's surfaces, not only the hologram's fills: the 3D export reads it
+    (export.py). A solid compile is never drawn by the viewer, and its triangle budget is larger."""
     errors = validate(scene)
     if errors:
         raise SceneError("\n".join(errors))
@@ -1535,7 +1539,7 @@ def compile_scene(scene):
                                 "amount": mo.get("amount", 0.0),
                                 "phase": (mo.get("phase", 0.0) + phase) % 1.0, "part": part["id"]})
             inst_lines = [(xf(a), xf(b), cls) for a, b, cls in mesh.lines]
-            inst_tris = [(xf(a), xf(b), xf(c)) for a, b, c in mesh.tris] if fill in ("glass", "dark") else []
+            inst_tris = [(xf(a), xf(b), xf(c)) for a, b, c in mesh.tris] if solid or fill in ("glass", "dark") else []
             inst_pts = [(xf(p), s) for p, s in mesh.points]
             lo, hi = [math.inf] * 3, [-math.inf] * 3
             for seq in ([p for a, b, _ in inst_lines for p in (a, b)], [p for t in inst_tris for p in t],
@@ -1650,9 +1654,10 @@ def compile_scene(scene):
                             "phase": phase(part["stage"], min(c[1] for c in corners))})
 
     n_lines, n_tris, n_points = len(lines) // 9, len(fills) // 15, len(points) // 7
-    if n_lines > MAX_LINES or n_tris > MAX_TRIS or n_points > MAX_POINTS:
+    max_tris = MAX_SOLID_TRIS if solid else MAX_TRIS
+    if n_lines > MAX_LINES or n_tris > max_tris or n_points > MAX_POINTS:
         raise SceneError("geometry budget exceeded: %d lines (max %d), %d triangles (max %d), %d points (max %d)"
-                         % (n_lines, MAX_LINES, n_tris, MAX_TRIS, n_points, MAX_POINTS))
+                         % (n_lines, MAX_LINES, n_tris, max_tris, n_points, MAX_POINTS))
 
     lo, hi = [math.inf] * 3, [-math.inf] * 3
     for pinfo in part_out:

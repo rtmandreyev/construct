@@ -60,3 +60,11 @@ def test_film_mode_is_bundled():
     assert r.returncode == 0 and "--voice" in r.stdout
     r = run("video", "--help")
     assert r.returncode == 0 and all(f in r.stdout for f in ("--assembly", "--audio", "--sound", "--camera", "--reactivity"))
+
+
+def test_export_writes_a_glb_and_an_obj(tmp_path):
+    cd = SKILL / "assets" / "examples" / "cd.json"
+    assert run("export", str(cd), "--out", "cd.glb", cwd=tmp_path).returncode == 0
+    assert (tmp_path / "cd.glb").read_bytes()[:4] == b"glTF"
+    assert run("export", str(cd), "--out", "cd.obj", "--wire", "tubes", cwd=tmp_path).returncode == 0
+    assert (tmp_path / "cd.mtl").is_file()

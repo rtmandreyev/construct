@@ -11,10 +11,11 @@ hologram_compile_scene are still answered for one release. Every tool works
 only on the JSON in the request.
 """
 
+import base64
 import json
 import sys
 
-from . import diagnose, hologram, params, product, scene, tiers, __version__
+from . import diagnose, export, hologram, params, product, scene, tiers, __version__
 
 PROTOCOL_VERSION = "2025-11-25"
 MAX_REQUEST_BYTES = 1024 * 1024
@@ -104,6 +105,19 @@ TOOLS += [
      "inputSchema": {"type": "object", "properties": {"document": _DOC}, "required": ["document"],
                      "additionalProperties": False},
      "annotations": _READ_ONLY},
+    {"name": "construct_export",
+     "description": "A 3D model of a valid v2 scene or parameter document: glTF 2.0 (base64 .glb: named parts, "
+                    "materials by role, the open and idle animations, each vertex's build phase as _PHASE) or OBJ "
+                    "text with its MTL. Opens in Blender, Godot, Unreal, Unity (glTFast) and three.js.",
+     "inputSchema": {"type": "object", "properties": {
+         "document": _DOC, "format": {"type": "string", "enum": ["glb", "obj"]},
+         "wire": {"type": "string", "enum": ["edges", "tubes", "none"]},
+         "pose": {"type": "string", "enum": ["closed", "open"]},
+         "frame": {"type": "string", "enum": ["y-up", "z-up"]},
+         "materials": {"type": "object", "description": "a material map: {\"materials\": [{\"parts\": [...], "
+                                                        "\"color\": \"#rrggbb\", \"metallic\", \"roughness\"}]}"}},
+                     "required": ["document"], "additionalProperties": False},
+     "annotations": _READ_ONLY},
     {"name": "construct_limits",
      "description": "The limits of a mode (fast, masterpiece, unbounded) or tier (wall clock, check and review "
                     "rounds, research counts) with any overrides applied, for the host to enforce: aim for genuinely "
@@ -181,6 +195,7 @@ V2_TOOLS = {"construct_diagnose": ({"text", "document"}, set()),
             "construct_params_template": ({"archetype", "variant"}, set()),
             "construct_expand_params": ({"params"}, {"params"}),
             "construct_compile": ({"document"}, {"document"}),
+            "construct_export": ({"document", "format", "wire", "pose", "frame", "materials"}, {"document"}),
             "construct_limits": ({"tier", "request", "overrides"}, set())}
 # the 0.2 pre-release names: still answered for one release, no longer listed
 DEPRECATED = {"hologram_diagnose": "construct_diagnose", "hologram_params_template": "construct_params_template",
@@ -230,6 +245,15 @@ def _call_v2(name, args):
         if not params.is_params(doc):
             raise _RpcError(-32602, "not a construct-params document")
         return _tool_result(built)
+    if name == "construct_export":
+        try:
+            out, summary = export.render(built, args.get("format", "glb"), args.get("wire", "edges"),
+                                         args.get("pose", "closed"), args.get("materials"), args.get("frame", "y-up"))
+        except (export.ExportError, scene.SceneError) as exc:
+            return _tool_result({"error": str(exc)}, is_error=True)
+        if "glb" in out:
+            out = {"glb_base64": base64.b64encode(out["glb"]).decode("ascii")}
+        return _tool_result({**out, "summary": summary})
     return _tool_result(scene.compile_scene(built))
 
 

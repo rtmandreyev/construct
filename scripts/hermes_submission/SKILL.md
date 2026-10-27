@@ -37,8 +37,10 @@ method, not code, and adds 3-D animation, certainty as material and a repair loo
   guitars, synths, bottles, cans, glasses and cars have ready archetypes.
 - The user wants a video of a construct assembling across a piece of music ("make a construct
   of X that assembles across this track"): film mode, step 7 below.
+- The user wants a 3D model of the thing for Blender, a game engine or the web (glTF, GLB, OBJ):
+  author the construct, then export it, step 8 below.
 
-Do **not** use it for photoreal renders, meshes for games or CAD, charts, or for finding or
+Do **not** use it for photoreal renders, rigged characters or CAD, charts, or for finding or
 recreating real cover art (artwork is shown only from images the user supplies).
 
 ## Prerequisites
@@ -88,6 +90,7 @@ Work in a folder of your own. `out/construct.html` opens in any browser.
 | the art-direction rubric | `references/review.md` |
 | the modes (fast, masterpiece, unbounded), research policy and limits | `references/effort.md` |
 | film mode: measure a track, then render the construct assembling across it | `audio track.wav --out audio.json`, then `video scene.json --out film.mp4 --assembly <seconds> --audio audio.json --sound track.wav --camera steady` |
+| a 3D model (glTF or OBJ) for Blender, game engines, the web | `export scene.json --out model.glb` (`--wire tubes`, `--pose open`, `--materials map.json`) |
 
 ## Procedure
 
@@ -176,6 +179,13 @@ Work in a folder of your own. `out/construct.html` opens in any browser.
    It renders about a frame or two a second, so say how long it will take before starting.
    Review it by sampling frames (`ffmpeg -i film.mp4 -vf fps=1/10 frame-%02d.png`) and look at
    them with `vision_analyze`: the build should visibly move with the music and end whole.
+8. **A 3D model (only when asked).** `scripts/cli.py export scene.json --out model.glb` writes
+   glTF 2.0: every part a named object, its joints as the `open` animation, periodic motion as
+   `idle`, each vertex's build phase as `_PHASE`. `--out model.obj` writes OBJ and its `.mtl`.
+   `--wire tubes` makes the line art solid for game engines, `--pose open` rests it open, and
+   `--materials map.json` colours parts by id when the user gives colours. A `no-surface` audit
+   warning names a part that would be missing: give it a solid shape. Say what it is: correctly
+   sized named parts with working joints, without textures; a blockout or prop, not a hero asset.
 
 ## Pitfalls
 

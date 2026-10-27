@@ -218,9 +218,9 @@ class TestMCP(unittest.TestCase):
         self.assertEqual(lines[0]["result"]["protocolVersion"], "2025-11-25")
         names = [t["name"] for t in lines[1]["result"]["tools"]]
         self.assertEqual(names[:3], ["hologram_template", "hologram_validate", "hologram_compile"])
-        self.assertEqual(len(names), 8)
+        self.assertEqual(len(names), 9)
         self.assertEqual(names[3:], ["construct_diagnose", "construct_params_template", "construct_expand_params",
-                                     "construct_compile", "construct_limits"])
+                                     "construct_compile", "construct_export", "construct_limits"])
 
     def test_compile_and_validation_error(self):
         sheet = _cd()

@@ -6,6 +6,8 @@
                      [--v1]                             … plus geometry.v1.json for v1 consumers
   review <scene.json> --out DIR [--asset-root DIR]      build, then capture the review set
   video <scene.json> --out FILE.mp4|.gif [--seconds S] [--fps N] [--start S] [--view V]
+  export <scene.json> --out FILE.glb|.obj [--wire edges|tubes|none] [--pose closed|open]
+                      [--materials map.json] [--frame y-up|z-up]    a 3D model (docs/EXPORT.md)
 
 Exit status: 0 success, 1 the scene or audit has errors, 2 capture unavailable.
 """
@@ -432,6 +434,18 @@ def add_commands(sub):
                         "view, drifting and breathing; still: the view held, no motion")
     p.add_argument("--reactivity", type=float, help="film mode, with --audio: how strongly the music shows, 0..2 "
                                                     "(default 1; 0 is an even build with no light or accents)")
+    p = sub.add_parser("export", help="a 3D model: glTF (.glb) for Blender, game engines and the web, or OBJ "
+                                      "(docs/EXPORT.md)")
+    p.add_argument("scene")
+    p.add_argument("--out", required=True, help="FILE.glb or FILE.obj (an .mtl is written beside it)")
+    p.add_argument("--format", choices=("glb", "obj"), help="default: from the file's extension")
+    p.add_argument("--wire", choices=("edges", "tubes", "none"), default="edges",
+                   help="the line art: edges (default), thin tubes (for engines that drop lines) or none")
+    p.add_argument("--wire-radius", type=float, help="the tubes' radius in metres (default: from the object's size)")
+    p.add_argument("--pose", choices=("closed", "open"), default="closed",
+                   help="the pose the model rests in; glTF also carries the open animation either way")
+    p.add_argument("--materials", help="a material map: part ids or patterns to colour, metalness and roughness")
+    p.add_argument("--frame", choices=("y-up", "z-up"), default="y-up", help="OBJ only (glTF is always Y up)")
     p = sub.add_parser("audio", help="film mode: per-frame audio features (energy, high, voice) for `video --audio`")
     p.add_argument("music", help="the track (any format ffmpeg reads)")
     p.add_argument("--out", required=True, help="the features JSON")
@@ -442,7 +456,7 @@ def add_commands(sub):
 
 
 COMMANDS = ("new", "params", "expand", "prompts", "author", "trace", "trace-image", "terrain", "globe", "critique", "rounds", "compare", "loft-from-traces", "check", "build", "review",
-            "video", "audio")
+            "video", "audio", "export")
 
 
 def run(args):
@@ -662,6 +676,19 @@ def run(args):
             paths = render.review(page_in(args.out), str(Path(args.out, "review")), w, h, sheets=sheets)
             sys.stdout.write("captured:\n  %s\n" % "\n  ".join(paths))
             return 0 if report["ok"] else 1
+        if args.command == "export":
+            from . import export as export_mod
+            try:
+                s = export_mod.export(load(args.scene), args.out, args.format, args.wire, args.pose, args.materials,
+                                      args.frame, args.wire_radius)
+            except export_mod.ExportError as exc:
+                sys.stderr.write("export: %s\n" % exc)
+                return 1
+            anims = ", ".join(s.get("animations", [])) or "none"
+            sys.stdout.write("wrote %s: %d parts, %d triangles, %d edges%s\n"
+                             % (", ".join(s["files"]), s["parts"], s["triangles"], s["edges"],
+                                "; animations: " + anims if s["format"] == "glb" else ""))
+            return 0
         if args.command == "audio":
             from . import film_audio
             n = film_audio.features(args.music, args.voice, args.fps, args.out, args.scale)

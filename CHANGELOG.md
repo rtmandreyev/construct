@@ -1,5 +1,22 @@
 # Changelog
 
+## Unreleased (toward 1.0.0, [roadmap](docs/ROADMAP.md))
+
+- **3D export** ([EXPORT.md](docs/EXPORT.md)): `construct export scene.json --out model.glb|.obj`,
+  the MCP tool `construct_export`, and a step in the skill.
+  - glTF 2.0 (.glb): every part a named node under its stage, with its role, certainty and source;
+    surfaces with smoothed normals and a material per role (or from `--materials map.json`); the
+    line art as edges, thin tubes (`--wire tubes`) or nothing; the articulations as the `open`
+    animation (and `open:<id>` for each), nested so a chain still rides; spin, swing and bob as
+    the looping `idle` animation; each vertex's build phase as `_PHASE`.
+  - OBJ with its MTL: the same surfaces and edges in one pose (`--pose`, `--frame z-up`).
+  - The export reads a solid compile (`compile_scene(scene, solid=True)`), which keeps every
+    shape's surfaces; the hologram's own compile is unchanged.
+  - Checked against the compiler: every vertex of an opened joint or a spinning part lands where
+    the compiler puts it, in a pure-Python glTF evaluator and in Blender 5.2's importer.
+- **Audit:** `no-surface` warns when a main or structural part is drawn only as lines, so it would
+  be missing from a 3D export.
+
 ## 0.3.0 — 2026-10-24
 
 - **Film mode** ([FILM.md](docs/FILM.md)): a construct can assemble across a whole track of

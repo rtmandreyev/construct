@@ -44,7 +44,7 @@ TAGS = ["Construct", "Hologram", "3D", "Visualization", "WebGL", "Animation", "D
 RUNTIME_MODULES = ["__init__.py", "__main__.py", "product.py", "hologram.py", "scene.py", "shapes.py",
                    "audit.py", "diagnose.py", "params.py", "prompts.py", "render.py", "runner.py", "studio.py", "png.py",
                    "trace.py", "terrain.py", "tiers.py", "globe.py", "critic.py", "compare.py", "archkit.py", "rounds.py",
-                   "film_audio.py"]
+                   "film_audio.py", "export.py"]
 FILM = ["construct-three.js"]  # film mode's optional three.js loader, shipped as runtime/film/
 VIEWER_FILES = ["hologram.js", "film.js", "template.html"]
 PROMPT_EXAMPLES = ["case-jewel.params.json", "book.json"]

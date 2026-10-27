@@ -182,6 +182,12 @@ def audit(scene, geometry):
         carriers |= {a["part"] for a in geometry.get("anchors", {}).values() if isinstance(a, dict) and a.get("part")}
         if p["id"] not in carriers and not any(int(styles[s][6]) == parts.index(p) for s in range(len(styles))):
             add(warnings, "invisible", p["id"], "produces nothing to draw (line \"none\" and no fill).")
+        # the 3D export keeps every surface: a load-bearing part drawn only as lines has none
+        if p["role"] in ("mass", "structure") and p["id"] in scene_parts and \
+                not scene_mod._local_mesh(scene_parts[p["id"]]["shape"], 0).tris:
+            add(warnings, "no-surface", p["id"],
+                "is a %s with no surface (shape %s): it will be missing from a 3D export. Use a tube, a box or "
+                "another solid shape." % (p["role"], p["shape"]))
 
     _contact_and_thickness(scene, geometry, add, warnings)
 

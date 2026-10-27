@@ -1,6 +1,6 @@
 ---
 name: {{NAME}}
-description: Build a construct — an animated, audited holographic model — of a real or fictional object, building, machine, creature or product (CD, book, guitar, lamp, lighthouse, jellyfish...) from a request and its evidence. Produces an audited declarative scene, a self-contained animated WebGL page (staged construction, opening, idle life, reduced-motion still) and reviewed captures, and on request a film of the construct assembling across a track of music. Use when someone wants a construct or a hologram: a holographic model, wireframe light model or animated 3-D presentation of a thing; not for photorealistic rendering, meshes for games, or retrieving cover art.
+description: Build a construct — an animated, audited holographic model — of a real or fictional object, building, machine, creature or product (CD, book, guitar, lamp, lighthouse, jellyfish...) from a request and its evidence. Produces an audited declarative scene, a self-contained animated WebGL page (staged construction, opening, idle life, reduced-motion still) and reviewed captures; on request, a film of the construct assembling across a track of music, or a 3D model of it (glTF or OBJ, with named parts and working joints) for Blender, game engines and the web. Use when someone wants a construct or a hologram: a holographic model, wireframe light model or animated 3-D presentation of a thing, or a quick parts-and-joints 3D model of one; not for photorealistic rendering, rigged characters, CAD, or retrieving cover art.
 ---
 
 # {{TITLE}}
@@ -169,6 +169,24 @@ track for it ("make a construct of X that assembles across this track"). Otherwi
    `ffmpeg -i film.mp4 -vf fps=1/10 frame-%02d.png`, and look at them: the build should visibly
    move on with the music and end with the whole construct. Report what you made, its length,
    and the reactivity and camera you used. Details: `docs/FILM.md` in the Construct repository.
+
+## A 3D model of a construct (export)
+
+Only when the user asks for a 3D model, a file for Blender, Godot, Unity or Unreal, a glTF, GLB or
+OBJ of the construct. Author and review the construct first, as above; then:
+
+- `python3 TOOLS export scene.json --out model.glb` (glTF 2.0: every part a named object, its
+  joints as the `open` animation, periodic motion as `idle`, each vertex's build phase as
+  `_PHASE`). For OBJ: `--out model.obj` (an `.mtl` beside it; `--frame z-up` for Z-up tools).
+- `--wire tubes` turns the line art into thin geometry for game engines (they drop plain lines);
+  `--pose open` rests the model open; `--materials map.json` colours parts by id or pattern
+  (`{"materials": [{"parts": ["body", "door-*"], "color": "#2b4a6f", "metallic": 0.6,
+  "roughness": 0.35}]}`), when the user gives colours or finishes.
+- A `no-surface` audit warning names a main or structural part drawn only as lines: it would be
+  missing from the model, so give it a solid shape (a tube, a box) when the export matters.
+- Say what the model is: correctly sized named parts with working joints, built from simple
+  shapes, without textures; good for blockouts, props and previews, not a finished hero asset.
+  Details: `docs/EXPORT.md` in the Construct repository.
 
 ## Rules that keep it honest and safe
 
