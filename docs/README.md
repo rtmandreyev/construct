@@ -18,7 +18,7 @@ Start with the first two pages if you are new to Construct; the rest are there w
 | contribute, or build Construct into your own tools | [DEVELOPMENT.md](DEVELOPMENT.md) |
 | read the scene and geometry format, for apps | [CONTRACT.md](../CONTRACT.md) |
 | see what comes next | [ROADMAP.md](ROADMAP.md) |
-| read what changed in each version | [CHANGELOG.md](../CHANGELOG.md) and the release notes for [v0.3.0](releases/v0.3.0.md) and [v0.2.1](releases/v0.2.1.md) |
+| read what changed in each version | [CHANGELOG.md](../CHANGELOG.md) and the release notes for [v1.0.0](releases/v1.0.0.md), [v0.3.0](releases/v0.3.0.md) and [v0.2.1](releases/v0.2.1.md) |
 | publish the examples gallery yourself | [PUBLISHING.md](../PUBLISHING.md) |
 
 ## Glossary

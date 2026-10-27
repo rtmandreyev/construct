@@ -1,6 +1,11 @@
 # Changelog
 
-## Unreleased (toward 1.0.0, [roadmap](docs/ROADMAP.md))
+## 1.0.0 — release candidate (the date is set when it is tagged)
+
+Construct 1.0 takes a construct beyond the hologram: into Blender, game engines and the web as a
+3D model with named parts and working joints, plain or finished, and, for a NetLogo model, a
+recorded run drawn in time. The scene and geometry contract keeps its id, `construct/0.2`: 1.0
+adds to it and changes nothing in it. [Release notes](docs/releases/v1.0.0.md).
 
 - **3D export** ([EXPORT.md](docs/EXPORT.md)): `construct export scene.json --out model.glb|.obj`,
   the MCP tool `construct_export`, and a step in the skill.
@@ -20,8 +25,8 @@
   **Light ↔ Metal**, plus the line thickness and an operator that keyframes a reveal. The controls
   are custom properties driving the joints, materials and line art, so a .blend works without the
   add-on. In Blender 5.2 the opened joints land exactly where the compiler puts them.
-- **From light to metal** ([examples/light-to-metal](examples/light-to-metal/README.md)), under
-  Beyond objects in the gallery: four gallery constructs (the FJ62, the James Webb Space Telescope,
+- **From light to metal** ([examples/light-to-metal](examples/light-to-metal/README.md)), the full
+  pipeline in the gallery: four gallery constructs (the FJ62, the James Webb Space Telescope,
   the Revox A77 and the MiniFreak) as their exported files, lit live with three.js: a scan line
   from the hologram to the solid model, the build, the joints, an exploded view with each part's
   name, role, certainty and size, and a download of each file. The site build exports the files
@@ -60,6 +65,14 @@
 - **A new shape, `paths`:** up to 4,000 polylines in one part (a contract addition within 0.2).
 - **Audit:** `no-surface` warns when a main or structural part is drawn only as lines, so it would
   be missing from a 3D export.
+- **Fixed in the export:** a merged file whose stage had all its parts merged kept an empty list
+  of children, which glTF forbids. Eleven exports (finished, merged, seam-only, tubes, open,
+  plain, animated, a NetLogo run) now pass the Khronos glTF Validator with no errors or warnings.
+- **Who it is for:** the README opens on what people make, for game developers, 3D artists, film
+  and motion, educators and researchers, and museums, and the skills' descriptions name the 3D
+  model and the NetLogo bridge.
+- **The gallery in three parts:** the constructs and films in a compact scroller that moves with a
+  click, then the full pipeline from hologram to finished model, then the recorded NetLogo models.
 
 ## 0.3.0 — 2026-10-24
 

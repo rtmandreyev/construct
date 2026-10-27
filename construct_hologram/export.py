@@ -508,6 +508,8 @@ def to_gltf(g, wire="edges", pose="closed", materials=None, wire_radius=None, me
     for n in nodes:
         if "translation" in n and all(abs(x) < 1e-12 for x in n["translation"]):
             del n["translation"]
+        if "children" in n and not n["children"]:   # glTF forbids an empty array (a stage merged away)
+            del n["children"]
     doc = {
         "asset": {"version": "2.0", "generator": "%s %s (%s)" % (product.TITLE, product.VERSION, product.CONTRACT)},
         "scene": 0, "scenes": [{"name": g["title"], "nodes": [root]}],

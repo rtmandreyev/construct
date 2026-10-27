@@ -2,7 +2,7 @@
 
 This repository has two branches to publish:
 
-- `main`: the source, tagged at each release (the latest is `v0.3.0`);
+- `main`: the source, tagged at each release (the latest is `v1.0.0`);
 - `gh-pages`: the examples gallery, a static site served from the branch's root.
 
 The public addresses below come from one place: `OWNER` and `REPO` at the top of
@@ -30,10 +30,11 @@ Making it public later: **Settings → General → Danger Zone → Change visibi
 
 **About and topics** (the repository page's gear icon next to "About"):
 
-- Description: *Holographic constructs any AI agent can build: from a description, honestly.*
+- Description: *Describe a thing, get a hologram, a 3D model and its parts: built by any AI agent, honestly.*
 - Website: https://rtmandreyev.github.io/construct/
 - Topics: `ai-agents`, `agent-skills`, `claude-code`, `mcp`, `webgl`, `hologram`,
-  `procedural-generation`, `3d-visualization`, `llm`, `python`
+  `procedural-generation`, `3d-visualization`, `gltf`, `blender-addon`, `game-assets`, `netlogo`,
+  `agent-based-modeling`, `llm`, `python` (GitHub allows 20)
 
 ## 2. Push `main` and the tag
 
@@ -41,7 +42,7 @@ Making it public later: **Settings → General → Danger Zone → Change visibi
 cd ~/construct-public
 git remote add origin https://github.com/rtmandreyev/construct.git
 git push -u origin main
-git push origin v0.3.0
+git push origin v1.0.0
 ```
 
 ## 3. Push the gallery
@@ -63,8 +64,8 @@ After a minute or two the gallery is at https://rtmandreyev.github.io/construct/
 Pages shows the address once it is live). Open it, open two or three examples, and check
 that they assemble and that the README's animations link to them.
 
-Optionally, publish a release: **Releases → Draft a new release**, tag `v0.3.0`, and
-[docs/releases/v0.3.0.md](docs/releases/v0.3.0.md) as the notes.
+Optionally, publish a release: **Releases → Draft a new release**, tag `v1.0.0`, and
+[docs/releases/v1.0.0.md](docs/releases/v1.0.0.md) as the notes.
 
 ## 5. Update the gallery later
 

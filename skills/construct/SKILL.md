@@ -1,7 +1,7 @@
 ---
 name: construct
 description: Turn a description into a hologram and a 3D model.
-version: 0.3.0
+version: 1.0.0
 author: Artyom Andreyev (rtmandreyev)
 license: MIT
 platforms: [macos, linux]
@@ -13,7 +13,7 @@ metadata:
     category: creative
     related_skills: [anatomy]
     requires_toolsets: [terminal]
-    upstream: https://github.com/rtmandreyev/construct (v0.3.0)
+    upstream: https://github.com/rtmandreyev/construct (v1.0.0)
 ---
 
 # Construct

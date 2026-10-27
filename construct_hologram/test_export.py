@@ -135,6 +135,7 @@ class Structure(unittest.TestCase):
             self.assertLessEqual(size, v["byteLength"])
         parents = {}
         for i, n in enumerate(doc["nodes"]):
+            self.assertNotEqual(n.get("children"), [], "node %d: an empty array is invalid glTF" % i)
             for c in n.get("children", []):
                 self.assertNotIn(c, parents, "a node has one parent")
                 parents[c] = i

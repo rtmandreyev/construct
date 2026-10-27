@@ -94,7 +94,7 @@ Bring an agent-based model to life without writing a converter ([NETLOGO.md](NET
   art-directed by Claude Opus 5.5.
 - Later: a replay control with a tick scrubber (`build --replay`); a NetLogo extension.
 
-### Phase 5: who it is for
+### Phase 5: who it is for (done)
 
 The README and the gallery, reorganised around what people make with Construct: game developers
 (props, blockouts, scanner effects), 3D artists (Blender), educators and researchers (NetLogo),
@@ -116,6 +116,11 @@ A release candidate, the full test suite and CI, then v1.0.0. The release videos
 LinkedIn cuts) are redone around the 3D export: constructs turning from light to metal, rendered in
 Blender from their exported files, with new posts to match. The package version becomes 1.0.0;
 the scene and geometry contract keeps its id (`construct/0.2`), because nothing in it changes.
+
+- Done for the release candidate: the version is 1.0.0, the changelog and the
+  [release notes](releases/v1.0.0.md) are written, the full suite passes, and every export option
+  passes the Khronos glTF Validator.
+- Left: the release videos and posts, then the tag, the gallery and the release itself.
 
 ## Later
 

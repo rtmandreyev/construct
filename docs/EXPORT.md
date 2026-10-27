@@ -145,3 +145,11 @@ lands where the compiler puts it, to a fraction of a millimetre. They also check
 structure, the OBJ, the material map, the merged and seam-only files, the command line and the MCP
 tool; when `CONSTRUCT_BLENDER` names a Blender binary, Blender's own importer, and when
 `CONSTRUCT_GODOT` names a Godot 4 binary, Godot's glTF loader.
+
+For 1.0.0, eleven files were checked with the [Khronos glTF Validator](https://github.com/KhronosGroup/glTF-Validator)
+(2.0.0-dev.3.10): the finished, merged, seam-only, tube, open-pose and plain FJ62; the finished
+James Webb, Revox (game-ready) and MiniFreak; the orrery's motion; Saturn; the Sagrada Família
+merged; and a NetLogo run. All have no errors and no warnings. It found one error in merged files
+(a stage whose parts were all merged kept an empty list of children), now fixed and tested. Its
+remaining notes are informational: texture coordinates that no texture uses yet (they are there
+for you to texture), and a few triangles of zero area.

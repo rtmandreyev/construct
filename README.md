@@ -224,7 +224,7 @@ Start with the first two if you are new; the full index is in [docs/README.md](d
 - [About](docs/ABOUT.md): where Construct's method comes from
 - [Evaluation](docs/EVALUATION.md): how models compare, and how to score your own
 - [Development](docs/DEVELOPMENT.md): for contributors and for building Construct into your own tools
-- [CONTRACT.md](CONTRACT.md), [CHANGELOG.md](CHANGELOG.md), the [v0.3.0](docs/releases/v0.3.0.md) and [v0.2.1](docs/releases/v0.2.1.md) release notes and [PUBLISHING.md](PUBLISHING.md)
+- [CONTRACT.md](CONTRACT.md), [CHANGELOG.md](CHANGELOG.md), the [v1.0.0](docs/releases/v1.0.0.md), [v0.3.0](docs/releases/v0.3.0.md) and [v0.2.1](docs/releases/v0.2.1.md) release notes and [PUBLISHING.md](PUBLISHING.md)
 
 ## Contributing
 
