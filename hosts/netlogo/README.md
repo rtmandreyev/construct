@@ -25,7 +25,9 @@ end
 ```
 
 Run the model, then type `construct:draw "phase"` in the Command Center. The construct is written
-beside the model (`wolf-sheep-predation-construct/construct.html`) and opens in the browser.
+beside the model (`wolf-sheep-predation-construct/construct.html`) and opens in the browser, with
+its legend, a **How to read it** panel and a replay bar that draws the run up to any tick, with the
+tracked counts at that tick.
 
 ## Primitives
 

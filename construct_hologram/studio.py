@@ -12,9 +12,11 @@
 Exit status: 0 success, 1 the scene or audit has errors, 2 capture unavailable.
 """
 
+import html
 import importlib
 import json
 import os
+import re
 import shutil
 import sys
 import tempfile
@@ -462,8 +464,9 @@ def add_commands(sub):
     p.add_argument("--seed", type=int, help="the random seed the experiment sets (recorded with the run)")
     p.add_argument("--ticks", type=int, default=500, help="the experiment's time limit (default 500)")
     p.add_argument("--no-turtles", action="store_true", help="record no turtles (reporters or patches only)")
-    p.add_argument("--setup", default="setup", help="the model's setup command, if not `setup` (with its inputs, if it takes any: \"setup 3\")")
-    p.add_argument("--go", default="go", help="the model's go command, if not `go`")
+    p.add_argument("--setup", help="the model's setup command (default: its `setup`, else its setup button; with "
+                   "inputs, if it takes any: \"setup 3\")")
+    p.add_argument("--go", help="the model's go command (default: its `go`, else its forever button)")
     p = sub.add_parser("netlogo", help="a construct of a recorded NetLogo run (docs/NETLOGO.md)")
     p.add_argument("run", help="the recording (.jsonl, written by construct.nls)")
     p.add_argument("--view", required=True, choices=("space-time", "network-time", "phase", "field"))
@@ -733,15 +736,19 @@ def run(args):
                     target.write_text(model, encoding="utf-8")
                     shutil.copyfile(nl.NLS, out / "construct.nls")
                     (out / "construct-experiment.xml").write_text(xml, encoding="utf-8")
+                    run_with = [html.unescape(re.search(r"<%s>(.*?)</%s>" % (k, k), xml, re.S).group(1)) for k in ("setup", "go")]
+                    run_with = ["; ".join(ln.strip() for ln in c.splitlines()
+                                          if ln.strip() and not ln.strip().startswith(("construct-", "random-seed")))
+                                for c in run_with]
                     sys.stdout.write("wrote %s, construct.nls and construct-experiment.xml in %s\n"
-                                     "Run it in NetLogo (setup, go), or headless:\n"
+                                     "Run it in NetLogo (setup: %s; go: %s), or headless:\n"
                                      "  NetLogo_Console --headless --model \"%s\" --setup-file \"%s\" "
                                      "--experiment construct --threads 1\n"
                                      "then: construct netlogo %s --view VIEW --out scene.json\n"
                                      "  (VIEW: space-time for moving agents, network-time --state VAR for spreading "
                                      "on a network,\n   phase for two reporters in a cycle, field for patches; "
                                      "docs/NETLOGO.md)\n"
-                                     % (target.name, out, target, out / "construct-experiment.xml",
+                                     % (target.name, out, run_with[0], run_with[1], target, out / "construct-experiment.xml",
                                         out / args.run_file))
                     return 0
                 scene = nl.scene_from_run(nl.read_run(args.run), args.view, args.title, state=args.state, x=args.x,

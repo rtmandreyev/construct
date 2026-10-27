@@ -133,8 +133,9 @@ work (art direction, critic rounds, 3D models) is opt-in.
 
 - The recorder's own names never clash with a model's (5 stock models failed on names like `n`).
 - The instrumenter follows `reset-ticks` and `tick` into helper procedures, reads every NetLogo 7
-  file and takes setup and go commands with inputs: 348 of the 445 two-dimensional stock models
-  record with no hand edits (291 before), and a refusal says what to do.
+  file, takes setup and go from the model's own buttons and records models that never tick: 427 of
+  the 445 two-dimensional stock models record with no hand edits (291 at 1.0), and a refusal says
+  what to do.
 - A run of the whole Models Library is a regression test: how many record, and why the rest don't.
 - Every NetLogo construct gets a legend, shown from the start, and no decoration that could be
   read as data (the projector's rings are off).
@@ -147,15 +148,15 @@ work (art direction, critic rounds, 3D models) is opt-in.
 - The same recording format, so the command line, art direction and the data lock keep working.
 - Next: listing it in NetLogo's Extensions Manager, through a pull request to NetLogo-Libraries.
 
-### Phase C: learners first (opt-in polish)
+### Phase C: learners first (opt-in polish; reading and replay done)
 
 - A replay control: scrub the run tick by tick and watch the shape form, with the tick and the
-  model's own counts on screen.
-- "How to read it" on the page: the legend plus what each part of the shape means, from the art
-  layer.
+  model's own counts on screen. (Done.)
+- "How to read it" on the page: the legend plus what each part of the shape means, from the bridge
+  or the art layer. (Done.)
 - Critic rounds for the art layer: an independent model compares versions, as in masterpiece
   mode; the data lock keeps every round honest.
-- Legends placed to stay inside the frame (one on the frame's edge can be cut off today).
+- Legends placed to stay inside the frame. (Done.)
 
 ### Phase D: real 3D models of a run (opt-in)
 

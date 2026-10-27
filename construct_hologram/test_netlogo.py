@@ -86,9 +86,43 @@ class Instrument(unittest.TestCase):
         model, _ = netlogo.instrument(m, "T", "run.jsonl")
         self.assertIn('__includes ["construct.nls" "other.nls"]', model)
         with self.assertRaises(netlogo.NetLogoError):
-            netlogo.instrument(MODEL.replace("  reset-ticks\n", ""), "T", "run.jsonl")
-        with self.assertRaises(netlogo.NetLogoError):
             netlogo.instrument("<model></model>", "T", "run.jsonl")
+        with self.assertRaises(netlogo.NetLogoError):   # no setup procedure and no button that sets up
+            netlogo.instrument(MODEL.replace("to setup", "to prepare"), "T", "run.jsonl")
+
+    def test_a_model_that_never_ticks_or_has_only_buttons(self):
+        never = MODEL.replace("  reset-ticks\n", "").replace("  tick\n", "")
+        model, xml = netlogo.instrument(never, "T", "run.jsonl")
+        self.assertIn('  construct-record\nend\n\nto go', model)            # the end of setup
+        self.assertIn("  construct-record\nend]]>", model)                     # the end of go
+        self.assertIn("<metric>count turtles</metric>", xml)    # not ticks: the counter may never start
+        buttons = MODEL.replace("to setup", "to prepare").replace("to go", "to step").replace(
+            "</widgets>", '<button kind="Observer" forever="false" display="prepare">prepare</button>'
+            '<button kind="Observer" forever="true" display="run">step</button></widgets>')
+        model, xml = netlogo.instrument(buttons, "T", "run.jsonl")
+        self.assertIn("<setup>prepare</setup>", xml)
+        self.assertIn("<go>step</go>", xml)
+        inline = MODEL.replace("  tick\n", "").replace(
+            "</widgets>", '<button kind="Observer" forever="true" display="go">go\ntick</button></widgets>')
+        inline = inline.replace("to go", "to go-step").replace("go\ntick</button>", "go-step\ntick</button>")
+        model, xml = netlogo.instrument(inline, "T", "run.jsonl")
+        self.assertIn("<go>go-step\ntick\nconstruct-record</go>", xml)
+        self.assertIn(">go-step\ntick\nconstruct-record</button>", model)   # pressing the button records too
+        own = MODEL.replace("</widgets>", '<button kind="Observer" forever="false">setup\nask turtles [ set color 15 ]'
+                            '</button><button kind="Observer" forever="true">go\nask turtles [ rt 5 ]</button></widgets>')
+        model, xml = netlogo.instrument(own, "T", "run.jsonl")               # the model's own buttons, whole
+        self.assertIn("<setup>setup\nask turtles [ set color 15 ]</setup>", xml)
+        self.assertIn("<go>go\nask turtles [ rt 5 ]</go>", xml)
+        turtle = MODEL.replace("to go\n  ask turtles [ fd 1 ]", "to step-on\n  ask turtles [ fd 1 ]").replace(
+            "to setup", "to walk\n  fd 1\nend\n\nto go\n  walk\nend\n\nto setup").replace(
+            "</widgets>", '<button kind="Turtle" forever="true">go</button></widgets>')
+        model, xml = netlogo.instrument(turtle, "T", "run.jsonl")            # go, asked of every turtle
+        self.assertIn("<go>ask turtles [ go ]\nconstruct-record</go>", xml)
+        self.assertIn('<button kind="Turtle" forever="true">go</button>', model)   # a turtle button stays as it was
+        step = MODEL.replace("to go", "to step-once").replace(
+            "</widgets>", '<button kind="Observer" forever="false">step-once</button></widgets>')
+        model, xml = netlogo.instrument(step, "T", "run.jsonl")              # no forever button: a step button
+        self.assertIn("<go>step-once</go>", xml)
 
     def test_escaped_code_helper_procedures_and_commands(self):
         m = MODEL.replace("  reset-ticks\nend", "  setup-world\nend\n\nto setup-world\n  reset-ticks\nend")
@@ -102,11 +136,13 @@ class Instrument(unittest.TestCase):
         self.assertIn("  tick\n  construct-record\nend", model)
         inputs = MODEL.replace("to setup\n", "to setup [ n ]\n").replace(
             "</widgets>", '<button kind="Observer" display="setup">setup 20</button></widgets>')
-        with self.assertRaises(netlogo.NetLogoError) as e:
-            netlogo.instrument(inputs, "T", "run.jsonl")
-        self.assertIn('--setup "setup 20"', str(e.exception))
-        model, xml = netlogo.instrument(inputs, "T", "run.jsonl", setup="setup 20")
+        model, xml = netlogo.instrument(inputs, "T", "run.jsonl")    # the model's own button gives the input
         self.assertIn("<setup>setup 20</setup>", xml)
+        with self.assertRaises(netlogo.NetLogoError) as e:
+            netlogo.instrument(inputs, "T", "run.jsonl", setup="setup")
+        self.assertIn('--setup "setup 20"', str(e.exception))
+        model, xml = netlogo.instrument(inputs, "T", "run.jsonl", setup="setup 7")
+        self.assertIn("<setup>setup 7</setup>", xml)
 
     def test_the_recorder_ships_with_the_package(self):
         text = netlogo.NLS.read_text(encoding="utf-8")
@@ -152,6 +188,56 @@ class Views(unittest.TestCase):
         self.assertNotIn("labels", scene.compile_scene(plain)["presentation"])   # other constructs: unchanged
         plain["presentation"]["labels"] = "yes"
         self.assertTrue(any("labels" in e for e in scene.validate(plain)))
+
+    def test_a_run_by_steps_says_steps(self):
+        run = netlogo.read_run(recording(Path(self.tmp.name, "steps.jsonl"), header={"clock": "steps"}))
+        sc = netlogo.scene_from_run(run, "space-time")
+        self.check(sc)
+        text = json.dumps([p["label"] for p in sc["parts"]] + [a["text"] for a in sc["annotations"]]
+                          + [sc["subject"]["summary"]] + [f["value"] for f in sc["facts"] if isinstance(f["value"], str)])
+        self.assertNotRegex(text, r"\btick")
+        self.assertIn("Time, step 0 to 11", text)
+        self.assertEqual(next(f for f in sc["facts"] if f["key"] == "clock")["value"], "steps")
+
+    def test_a_reading_and_a_replay(self):
+        for view, opts in (("space-time", {}), ("network-time", {"state": "infected?"}), ("phase", {}),
+                           ("field", {"levels": 4})):
+            with self.subTest(view):
+                sc = netlogo.scene_from_run(self.run, view, **opts)
+                r = sc["reading"]
+                self.assertTrue(3 <= len(r["how"]) <= 8)
+                self.assertEqual(r["clock"], {"label": "tick", "from": 0, "to": 11, "top": sc["reading"]["clock"]["top"],
+                                              "scale": "linear"})
+                g = scene.compile_scene(sc)
+                a, b = g["reading"]["clock"]["phase"]
+                self.assertAlmostEqual(a * 0 + b, 0.0, delta=0.01)                     # tick 0: the build's start
+                self.assertAlmostEqual(a * r["clock"]["top"] + b, 0.82, delta=0.01)    # the last tick: its end
+        sc = netlogo.scene_from_run(self.run, "phase")
+        self.assertEqual([s["name"] for s in sc["reading"]["series"]], ["count prey", "count predators"])
+        self.assertEqual(len(sc["reading"]["series"][0]["values"]), 12)
+        bare = netlogo.read_run(recording(Path(self.tmp.name, "bare.jsonl"), header={"reporters": []}))
+        sc = netlogo.scene_from_run(bare, "network-time", state="infected?")   # no reporters: the state's count
+        self.assertEqual([v[1] for v in sc["reading"]["series"][0]["values"][:4]], [1, 1, 2, 2])
+        moved = json.loads(json.dumps(sc))
+        moved["reading"]["series"][0]["values"][3][1] = 99                 # a count changed: the lock sees it
+        self.assertIsNotNone(netlogo.lock_problem(moved))
+        reworded = json.loads(json.dumps(sc))
+        reworded["reading"]["how"] = ["Read it from the floor up."]          # the words are not data
+        self.assertIsNone(netlogo.lock_problem(reworded))
+
+    def test_a_reading_is_checked_and_its_page_carries_the_replay(self):
+        from . import render
+        sc = netlogo.scene_from_run(self.run, "space-time")
+        for bad in ({"how": "one line"}, {"how": ["x"], "series": [{"name": "n", "values": [[0, 1]]}]},
+                    {"clock": {"label": "tick", "from": 5, "to": 5, "top": 6}}, {"colour": "red"}):
+            wrong = dict(sc, reading=bad)
+            self.assertTrue(any("reading" in e for e in scene.validate(wrong)), bad)
+        page, _ = render.build_html(scene.compile_scene(sc))
+        self.assertIn("HOW TO READ IT", page)
+        self.assertIn("rd-bar", page)
+        stock = studio.load(str(HERE / "examples" / "v2" / "cd.json"))
+        page, _ = render.build_html(scene.compile_scene(stock))
+        self.assertNotIn("HOW TO READ IT", page)   # a construct that asks for nothing: the stock page
 
     def test_the_field_hangs_at_its_ticks(self):
         sc = netlogo.scene_from_run(self.run, "field", levels=4)
@@ -264,6 +350,21 @@ class ArtDirection(unittest.TestCase):
         out = netlogo.apply_art(self.sc, dict(art, legend=False))
         self.assertEqual([a["id"] for a in out["annotations"]], ["milestone-note"])
         self.assertIsNone(netlogo.lock_problem(out))
+
+    def test_the_replay_follows_the_data_under_art_of_another_stage(self):
+        out = netlogo.apply_art(self.sc, self.ART)            # its milestone is in stage 1, built after the data
+        a, b = scene.compile_scene(out)["reading"]["clock"]["phase"]
+        top = out["reading"]["clock"]["top"]
+        self.assertAlmostEqual(b, 0.0, delta=0.01)
+        self.assertAlmostEqual(a * top + b, 0.41, delta=0.01)   # the data's stage: the first half of the build
+
+    def test_art_rewords_the_reading_and_nothing_else_of_it(self):
+        out = netlogo.apply_art(self.sc, dict(self.ART, reading={"how": ["Each line is a walker."]}))
+        self.assertEqual(out["reading"]["how"], ["Each line is a walker."])
+        self.assertEqual(out["reading"]["clock"], self.sc["reading"]["clock"])
+        self.assertIsNone(netlogo.lock_problem(out))
+        with self.assertRaises(netlogo.NetLogoError):
+            netlogo.apply_art(self.sc, dict(self.ART, reading={"how": ["x"], "clock": {"label": "day"}}))
 
     def test_art_never_touches_the_data(self):
         part = dict(self.ART["parts"][0], source="run")

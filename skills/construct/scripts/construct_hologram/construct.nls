@@ -12,7 +12,8 @@
 ;;   construct-record                                     ; the first record, at tick 0
 ;;
 ;; then  construct-record  at the end of go (each tick), and  construct-finish  when the run ends (or as
-;; a BehaviorSpace post-run command). The file is JSON Lines: one header, then one line per record.
+;; a BehaviorSpace post-run command). A model that never starts the tick counter is recorded by steps:
+;; its records are numbered 0, 1, 2 ... instead. The file is JSON Lines: one header, then one line per record.
 ;; Every turtle is recorded with its who, breed, xcor, ycor and color; links when their number changes.
 ;; Then:   construct netlogo flocking-run.jsonl --view space-time --out scene.json
 ;;
@@ -23,6 +24,7 @@ globals [
   construct-file construct-title construct-seed-value construct-turtle-vars construct-reporters
   construct-patch-reporter construct-patch-every construct-every construct-header? construct-link-count
   construct-turtles? construct-reporter-tasks construct-patch-task construct-turtle-tasks
+  construct-steps construct-last
 ]
 
 to construct-start [ construct-run-title construct-path ]
@@ -39,6 +41,8 @@ to construct-start [ construct-run-title construct-path ]
   set construct-header? false
   set construct-link-count -1
   set construct-turtles? true
+  set construct-steps 0
+  set construct-last -1
   file-close-all
   if file-exists? construct-file [ file-delete construct-file ]
 end
@@ -76,12 +80,25 @@ to construct-record-every [ construct-n ]
   set construct-every max list 1 construct-n
 end
 
+;; the run's clock: ticks, or the records so far in a model that never starts the tick counter
+to-report construct-ticking?
+  let construct-ok? true
+  carefully [ if ticks < 0 [ ] ] [ set construct-ok? false ]
+  report construct-ok?
+end
+
 to construct-record
-  if ticks mod construct-every != 0 [ stop ]
+  let construct-ticks? construct-ticking?
+  let construct-t ifelse-value construct-ticks? [ ticks ] [ construct-steps ]
+  if not construct-ticks? [ set construct-steps construct-steps + 1 ]
+  if construct-t = construct-last [ stop ]                ; once a tick, even when go stops and records again
+  if construct-t mod construct-every != 0 [ stop ]
+  set construct-last construct-t
   file-open construct-file
   if not construct-header? [
     file-print (word "{\"construct-netlogo\":1,\"title\":" construct-json construct-title
       ",\"netlogo\":" construct-json netlogo-version ",\"seed\":" construct-seed-value
+      ifelse-value construct-ticks? [ "" ] [ ",\"clock\":\"steps\"" ]
       ",\"world\":{\"min-pxcor\":" min-pxcor ",\"max-pxcor\":" max-pxcor ",\"min-pycor\":" min-pycor
       ",\"max-pycor\":" max-pycor "}"
       ",\"turtle-vars\":" construct-json construct-turtle-vars ",\"reporters\":" construct-json construct-reporters
@@ -89,7 +106,7 @@ to construct-record
     set construct-header? true
   ]
   ;; streamed piece by piece: a long record is never built up as one string
-  file-type (word "{\"t\":" ticks)
+  file-type (word "{\"t\":" construct-t)
   if construct-turtles? [
     file-type ",\"turtles\":"
     construct-write map [ construct-a -> construct-turtle construct-a ] sort turtles
@@ -103,7 +120,7 @@ to construct-record
     file-type ",\"links\":"
     construct-write map [ construct-l -> [ (list [who] of end1 [who] of end2 (word breed)) ] of construct-l ] sort links
   ]
-  if construct-patch-reporter != "" and ticks mod construct-patch-every = 0 [
+  if construct-patch-reporter != "" and construct-t mod construct-patch-every = 0 [
     file-type ",\"patches\":"
     construct-write map [ construct-q -> [ runresult construct-patch-task ] of construct-q ] sort patches
   ]
@@ -123,7 +140,7 @@ end
 
 to construct-finish
   file-open construct-file
-  file-print (word "{\"end\":" ticks "}")
+  file-print (word "{\"end\":" ifelse-value construct-ticking? [ ticks ] [ max list 0 construct-last ] "}")
   file-close
 end
 

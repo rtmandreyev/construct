@@ -49,6 +49,7 @@ public class ConstructExtension extends DefaultClassManager {
   static String file = null, title = "", seed = "null", patchVar = "";
   static int every = 1, patchEvery = 0, linkCount = -1;
   static double lastT = Double.NaN;
+  static long steps = 0;   // the clock of a model that never starts the tick counter
   static boolean turtles = true, headerDone = false;
   static List<String> turtleVars = new ArrayList<>();
   static List<String> reporterNames = new ArrayList<>();
@@ -112,7 +113,7 @@ public class ConstructExtension extends DefaultClassManager {
       String name = args.length > 1 ? args[1].getString() : slug(title) + "-run.jsonl";
       File f = new File(name);
       file = (f.isAbsolute() ? f : new File(modelDir(c), name)).getPath();
-      seed = "null"; every = 1; patchVar = ""; patchEvery = 0; linkCount = -1; turtles = true; headerDone = false; lastT = Double.NaN;
+      seed = "null"; every = 1; patchVar = ""; patchEvery = 0; linkCount = -1; turtles = true; headerDone = false; lastT = Double.NaN; steps = 0;
       turtleVars = new ArrayList<>(); reporterNames = new ArrayList<>(); reporters = new ArrayList<>();
       new File(file).delete();
     }
@@ -176,14 +177,15 @@ public class ConstructExtension extends DefaultClassManager {
     public void perform(Argument[] args, Context c) throws ExtensionException {
       need();
       org.nlogo.agent.World w = (org.nlogo.agent.World) c.world();
-      double t = w.ticks();
+      boolean ticking = w.ticks() >= 0;
+      double t = ticking ? w.ticks() : steps++;
       if (((long) t) % every != 0 || t == lastT) return;   // once a tick, even when a model's go stops and records again
       lastT = t;
       try {
         if (out == null) out = new BufferedWriter(new FileWriter(file, StandardCharsets.UTF_8, true));
         if (!headerDone) {
           out.write("{\"construct-netlogo\":1,\"title\":" + json(title) + ",\"netlogo\":" + json(version())
-              + ",\"seed\":" + seed + ",\"world\":{\"min-pxcor\":" + w.minPxcor() + ",\"max-pxcor\":" + w.maxPxcor()
+              + ",\"seed\":" + seed + (ticking ? "" : ",\"clock\":\"steps\"") + ",\"world\":{\"min-pxcor\":" + w.minPxcor() + ",\"max-pxcor\":" + w.maxPxcor()
               + ",\"min-pycor\":" + w.minPycor() + ",\"max-pycor\":" + w.maxPycor() + "},\"turtle-vars\":" + jsonList(turtleVars)
               + ",\"reporters\":" + jsonList(reporterNames) + ",\"patch-reporter\":" + json(patchVar) + ",\"patch-every\":" + patchEvery + "}\n");
           headerDone = true;
@@ -274,7 +276,8 @@ public class ConstructExtension extends DefaultClassManager {
       need();
       try {
         if (out == null) out = new BufferedWriter(new FileWriter(file, StandardCharsets.UTF_8, true));
-        out.write("{\"end\":" + num(c.world().ticks()) + "}\n");
+        double end = c.world().ticks() >= 0 ? c.world().ticks() : Math.max(0, Double.isNaN(lastT) ? 0 : lastT);
+        out.write("{\"end\":" + num(end) + "}\n");
       } catch (IOException e) {
         throw new ExtensionException("construct: could not write " + file + ": " + e.getMessage());
       }

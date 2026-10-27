@@ -120,6 +120,10 @@ Positive rotation follows the right-hand rule about `axis`: a lid hinged on its 
 `presentation.still_pose`: `open` (default) or `closed` for the still frame.
 `presentation.labels`: `true` opens the page with the labels showing (a reading the construct
 needs, such as a NetLogo run's legend); otherwise they wait for **L**.
+`reading` (optional, top level): `how`, up to 8 short lines on how to read the construct, shown
+in a panel (**H**); for a construct whose height is time, `clock` (`label`, `from`, `to`, `top` in
+metres, `scale` linear or sqrt) and `series` (up to 6, each a `name` and up to 400 `[time, value]`
+pairs) add a replay bar that draws it up to a moment, with the counts at that moment.
 
 ## Labels (text the renderer sets from facts)
 

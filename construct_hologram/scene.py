@@ -117,7 +117,7 @@ SPRITE_CODE = {"disc": 0, "ring": 1, "square": 2, "soft": 3}
 
 SCENE_KEYS = {"format", "version", "id", "title", "subject", "units", "seed", "sources", "facts",
               "parts", "assets", "annotations", "articulations", "labels", "anchors", "presentation",
-              "animation", "authoring"}
+              "animation", "authoring", "reading"}
 SCENE_REQUIRED = {"format", "version", "id", "title", "subject", "units", "seed", "sources", "facts", "parts"}
 
 
@@ -866,7 +866,48 @@ def _validate(scene):
     c.known["view"] = {"hero", "front", "side", "back", "top", "three-quarter"} | {
         v.get("id") for v in (scene.get("presentation", {}) or {}).get("views", []) or [] if isinstance(v, dict)}
     _animation_check(c, scene.get("animation", {}), scene.get("presentation", {}))
+    if "reading" in scene:
+        _reading_check(c, scene["reading"])
     return c
+
+
+def _reading_check(c, r):
+    """scene.reading: how to read the construct and, for a construct of a run, its clock and counts."""
+    w = "scene.reading"
+    if not c.keys(r, {"how", "clock", "series"}, set(), w):
+        return
+    how = r.get("how", [])
+    if not isinstance(how, list) or len(how) > 8:
+        c.err(w + ".how", "expected at most 8 lines")
+    else:
+        for i, line in enumerate(how):
+            c.text(line, "%s.how[%d]" % (w, i), 240)
+    clock = r.get("clock")
+    if clock is not None and c.keys(clock, {"label", "from", "to", "top", "scale", "stage"}, {"label", "from", "to", "top"},
+                                    w + ".clock"):
+        c.text(clock["label"], w + ".clock.label", 20)
+        c.num(clock["from"], w + ".clock.from")
+        c.num(clock["to"], w + ".clock.to")
+        c.num(clock["top"], w + ".clock.top", 0.01, MAX_EXTENT)
+        if isinstance(clock.get("from"), (int, float)) and isinstance(clock.get("to"), (int, float)) and clock["to"] <= clock["from"]:
+            c.err(w + ".clock.to", "expected after `from`")
+        if "scale" in clock:
+            c.choice(clock["scale"], ("linear", "sqrt"), w + ".clock.scale")
+    series = r.get("series", [])
+    if series and clock is None:
+        c.err(w + ".series", "needs a clock")
+    if not isinstance(series, list) or len(series) > 6:
+        c.err(w + ".series", "expected at most 6 series")
+        return
+    for i, s in enumerate(series):
+        sw = "%s.series[%d]" % (w, i)
+        if c.keys(s, {"name", "values"}, {"name", "values"}, sw):
+            c.text(s["name"], sw + ".name", 40)
+            vals = s["values"]
+            if not isinstance(vals, list) or not 1 <= len(vals) <= 400 or not all(
+                    isinstance(v, list) and len(v) == 2 and all(isinstance(x, (int, float)) and not isinstance(x, bool)
+                                                                for x in v) for v in vals):
+                c.err(sw + ".values", "expected 1 to 400 [time, value] pairs of numbers")
 
 
 def _motion_check(c, mo, w):
@@ -1739,6 +1780,17 @@ def compile_scene(scene, solid=False):
                 for k in range(3):
                     open_lo[k], open_hi[k] = min(open_lo[k], inst["open_min"][k]), max(open_hi[k], inst["open_max"][k])
 
+    reading = None
+    if scene.get("reading"):   # how to read it; with a clock, height maps to the build: phase = a * y + b
+        reading = json.loads(json.dumps(scene["reading"]))
+        clock = reading.get("clock")
+        if clock:
+            s = clock.get("stage", stages[0]) if clock.get("stage", stages[0]) in stage_index else stages[0]
+            ylo, yhi = yr.get(s, (0.0, 1.0))
+            span = (yhi - ylo) if yhi - ylo > 1e-9 else 1.0
+            clock.setdefault("scale", "linear")
+            clock["phase"] = [round(0.82 / (span * nst), 8), round((stage_index[s] - 0.82 * ylo / span) / nst, 8)]
+
     return {
         "format": GEOMETRY_FORMAT, "version": GEOMETRY_VERSION, "generator": GENERATOR,
         "contract": product.CONTRACT,
@@ -1748,6 +1800,7 @@ def compile_scene(scene, solid=False):
         "provenance": {"sources": [dict(s) for s in scene["sources"]], "facts": [dict(f) for f in scene["facts"]],
                        "assets": [dict(a) for a in scene.get("assets", [])],
                        **({"authoring": json.loads(json.dumps(scene["authoring"]))} if scene.get("authoring") else {})},
+        **({"reading": reading} if reading else {}),
         "bounds": {"min": [_r(x) for x in lo], "max": [_r(x) for x in hi], "center": centre, "radius": radius,
                    "open_min": [_r(x) for x in open_lo], "open_max": [_r(x) for x in open_hi]},
         "anchors": anchors,

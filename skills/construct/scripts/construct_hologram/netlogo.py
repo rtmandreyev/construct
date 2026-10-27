@@ -48,7 +48,7 @@ LOCK = "data_lock"     # the fact that holds the fingerprint
 LOCKED_FACTS = ("view", "coordinates")   # the bridge's own facts beside the run's: how the data is drawn
 LOOSE = ("label", "look", "note")        # how a data part is shown, which art direction may change
 ART_KEYS = {"title", "summary", "credit", "facts", "parts", "annotations", "looks", "presentation", "animation",
-            "legend"}
+            "legend", "reading"}
 
 
 class NetLogoError(ValueError):
@@ -61,12 +61,24 @@ def _list(items):
     return "[" + " ".join(json.dumps(i) for i in items) + "]"
 
 
+def _buttons(text):
+    """The Interface's buttons, in order: (command, forever?, kind: Observer, Turtle, Patch or Link)."""
+    out = []
+    for m in re.finditer(r"<button([^>]*)>([^<]*)</button>", text):
+        attrs, cmd = m.group(1), html.unescape(m.group(2)).strip()
+        kind = re.search(r'kind="(\w+)"', attrs)
+        if cmd:
+            out.append((cmd, 'forever="true"' in attrs, kind.group(1) if kind else "Observer"))
+    return out
+
+
 def instrument(text, title, run_file, turtles=(), reporters=(), patches=None, every=1, seed=None, ticks=500,
-               skip_turtles=False, setup="setup", go="go"):
+               skip_turtles=False, setup=None, go=None):
     """A NetLogo model (.nlogox text) that records itself: `__includes ["construct.nls"]`, the recording
     set up after setup's `reset-ticks`, `construct-record` after go's `tick` (in a procedure they call,
-    when not in their own body). Returns (model text, experiment XML for `NetLogo_Console --headless
-    --setup-file`)."""
+    when not in their own body; at the end of setup and go in a model that never ticks). Setup and go
+    are the model's `setup` and `go`, else the commands of its own buttons. Returns (model text,
+    experiment XML for `NetLogo_Console --headless --setup-file`)."""
     m = re.search(r"<code><!\[CDATA\[(.*?)\]\]></code>", text, re.S)
     escaped = False
     if not m:   # some files keep the code as escaped XML instead of a CDATA section
@@ -99,6 +111,15 @@ def instrument(text, title, run_file, turtles=(), reporters=(), patches=None, ev
     def proc_body(name, code):
         return re.search(r"(?mi)^\s*to(?:-report)?\s+%s(?=[\s\[]).*?^\s*end\b" % re.escape(name), code, re.S)
 
+    def inputs(name):
+        b = proc_body(name, code)
+        i = re.match(r"(?i)\s*to\s+\S+\s*\[([^\]]*)\]", b.group(0)) if b else None
+        return i.group(1).split() if i else []
+
+    def procs(cmd):   # the model's procedures a command calls, in order
+        words = re.findall(r"[A-Za-z][\w\-?!.]*", re.sub(r";[^\n]*", "", cmd))
+        return [w for i, w in enumerate(words) if w not in words[:i] and proc_body(w, code)]
+
     def holder(proc, word, code, depth=0, seen=()):
         """The procedure where `word` happens: proc itself, or one it calls (a few levels down)."""
         b = proc_body(proc, code)
@@ -116,44 +137,98 @@ def instrument(text, title, run_file, turtles=(), reporters=(), patches=None, ev
                     return found
         return None
 
-    def after(proc, word, lines, code):
-        if not proc_body(proc, code):
-            raise NetLogoError("no `to %s` procedure in the model (name it with --setup or --go)" % proc)
-        where = holder(proc, word, code)
-        if not where:
-            raise NetLogoError("no `%s` in `%s` or the procedures it calls: add the construct lines by hand "
-                               "(see construct.nls)" % (word, proc))
-        b = proc_body(where, code)
-        body = b.group(0)
-        hits = list(re.finditer(r"(?m)^(\s*)(%s)\b(.*)$" % word, body))
-        h = hits[-1] if word == "tick" else hits[0]
-        pad = h.group(1)
-        new = body[:h.end()] + "".join("\n%s%s" % (pad, ln) for ln in lines) + body[h.end():]
-        return code[:b.start()] + new + code[b.end():]
+    # setup and go: the model's own button for them (its whole command), its own procedure, else its other
+    # buttons (a forever button is go; a turtle's forever button is asked of every turtle; a step button)
+    buttons = [(c, f) for c, f, k in _buttons(text) if k == "Observer"]
+    asked = set()   # commands run by asking the turtles: recorded after the ask, never inside it
 
-    for cmd in (setup, go):   # a procedure with inputs needs them in the command: --setup "setup 3"
-        b = proc_body(cmd.split()[0], code) if cmd.split() else None
-        inputs = re.match(r"(?i)\s*to\s+\S+\s*\[([^\]]*)\]", b.group(0)) if b else None
-        if inputs and inputs.group(1).split() and len(cmd.split()) == 1:
-            flag = "setup" if cmd is setup else "go"
-            buttons = [html.unescape(x).strip() for x in re.findall(r"<button[^>]*>([^<]+)</button>", text)]
-            buttons = [x for x in buttons if flag in x and "\n" not in x]
-            raise NetLogoError("`%s` takes inputs (%s): give the command with --%s%s" % (
-                cmd, " ".join(inputs.group(1).split()), flag,
-                ", such as one of this model's buttons: " + ", ".join('--%s "%s"' % (flag, x) for x in buttons[:3])
-                if buttons else ' "%s ..."' % cmd))
-    code = after(setup.split()[0], "reset-ticks", start, code)
-    code = after(go.split()[0], "tick", ["construct-record"], code)
+    def choose(flag, given):
+        if given:
+            if len(given.split()) == 1 and inputs(given):
+                hint = [c for c, _ in buttons if flag in c and "\n" not in c]
+                raise NetLogoError("`%s` takes inputs (%s): give the command with --%s%s" % (
+                    given, " ".join(inputs(given)), flag,
+                    ", such as one of this model's buttons: " + ", ".join('--%s "%s"' % (flag, x) for x in hint[:3])
+                    if hint else ' "%s ..."' % given))
+            if not procs(given) and not re.search(r"\b(reset-ticks|tick)\b", given):
+                raise NetLogoError("no `to %s` procedure in the model (name it with --setup or --go)" % given.split()[0])
+            return given
+        own = [c for c, f in buttons if c.split()[0].lower() == flag and (f or flag == "setup")
+               and not (len(c.split()) == 1 and inputs(c))]
+        if own:
+            return own[0]
+        if flag == "go":   # go as a turtle procedure, behind a turtle's forever button
+            turtle = [c for c, f, k in _buttons(text) if f and k == "Turtle" and c.split()[0].lower() == "go"]
+            if turtle:
+                asked.add("ask turtles [ %s ]" % turtle[0])
+                return "ask turtles [ %s ]" % turtle[0]
+        if proc_body(flag, code) and not inputs(flag):
+            return flag
+        ok = [c for c, f in buttons if (f if flag == "go" else not f) and not (len(c.split()) == 1 and inputs(c))]
+        words = ("go",) if flag == "go" else ("setup", "reset", "init", "new", "start")
+        for w in words:
+            for c in ok:
+                if re.search(r"(?i)\b%s" % w, c):
+                    return c
+        if ok:
+            return ok[0]
+        if flag == "go":
+            turtle = [c for c, f, k in _buttons(text) if f and k == "Turtle"]
+            if turtle:
+                asked.add("ask turtles [ %s ]" % turtle[0])
+                return "ask turtles [ %s ]" % turtle[0]
+            step = [c for c, f in buttons if not f and re.search(r"(?i)\b(go|step|iterate|run|once|next)", c)
+                    and not re.search(r"(?i)\b(setup|reset|clear)", c)]
+            if step:
+                return step[0]
+        if proc_body(flag, code):
+            return choose(flag, flag)   # it takes inputs: say so, with the buttons that give them
+        raise NetLogoError("no `to %s` procedure and no %s button in the model: name the command with --%s" % (
+            flag, "forever" if flag == "go" else "setup", flag))
+
+    setup, go = choose("setup", setup), choose("go", go)
+
+    def place(cmd, word, lines):
+        """`lines` after `word` in the procedures cmd calls; else at the end of the first one (a model
+        that never ticks); else after the command itself. Returns the command the experiment runs."""
+        nonlocal code
+        if cmd in asked:   # a turtle's command: the record follows the ask, in the observer's context
+            return cmd + "\n" + "\n".join(lines)
+        for proc in procs(cmd):
+            where = holder(proc, word, code)
+            if where:
+                b = proc_body(where, code)
+                body = b.group(0)
+                hits = list(re.finditer(r"(?m)^(\s*)(%s)\b(.*)$" % word, body))
+                h = hits[-1] if word == "tick" else hits[0]
+                new = body[:h.end()] + "".join("\n%s%s" % (h.group(1), ln) for ln in lines) + body[h.end():]
+                code = code[:b.start()] + new + code[b.end():]
+                return cmd
+        if procs(cmd) and not re.search(r"(?m)^\s*%s\b" % word, cmd):
+            b = proc_body(procs(cmd)[0], code)
+            body = b.group(0)
+            e = list(re.finditer(r"(?mi)^\s*end\b", body))[-1]
+            new = body[:e.start()].rstrip() + "".join("\n  %s" % ln for ln in lines) + "\n" + body[e.start():]
+            code = code[:b.start()] + new + code[b.end():]
+            return cmd
+        return cmd + "\n" + "\n".join(lines)   # the button's own code holds it: the button records too
+
+    new_setup = place(setup, "reset-ticks", start)
+    new_go = place(go, "tick", ["construct-record"])
     if escaped:
         code = code.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
     model = text[:m.start(1)] + code + text[m.end(1):]
-    go_cmd = escape(go)
-    setup = ("random-seed %d\n" % seed if seed is not None else "") + escape(setup)
+    for old, new in ((setup, new_setup), (go, new_go)):
+        if new != old and old not in asked:   # rewrite the button, so pressing it in NetLogo records as the experiment does
+            model = re.sub(r"(<button[^>]*>)([^<]*)(</button>)",
+                           lambda b: b.group(1) + escape(new) + b.group(3) if html.unescape(b.group(2)).strip() == old
+                           else b.group(0), model)
+    setup_cmd = ("random-seed %d\n" % seed if seed is not None else "") + escape(new_setup)
     xml = ('<?xml version="1.0" encoding="UTF-8"?>\n<experiments>\n'
            '  <experiment name="construct" repetitions="1" sequentialRunOrder="true" runMetricsEveryStep="false" '
            'timeLimit="%d">\n    <setup>%s</setup>\n    <go>%s</go>\n    <postRun>construct-finish</postRun>\n'
-           '    <metrics>\n      <metric>ticks</metric>\n    </metrics>\n  </experiment>\n</experiments>\n'
-           % (ticks, setup, go_cmd))
+           '    <metrics>\n      <metric>count turtles</metric>\n    </metrics>\n  </experiment>\n</experiments>\n'
+           % (ticks, setup_cmd, escape(new_go)))
     return model, xml
 
 
@@ -519,7 +594,7 @@ def scene_from_run(run, view, title=None, **opts):
         facts.append({"key": "seed", "value": seed, "certainty": "verified", "source": "run"})
     facts += [{"key": k, "value": v, "certainty": "verified", "source": "run"} for k, v in extra]
     slug = re.sub(r"[^a-z0-9]+", "-", title.lower()).strip("-")[:48] or "netlogo-run"
-    return lock({
+    sc = {
         "format": product.SCENE_FORMAT, "version": 2, "id": "netlogo-%s-%s" % (slug, view), "title": title,
         "subject": {"category": "other", "accuracy": "documented", "synthetic": False,
                     "summary": "One run of NetLogo's %s. %s" % (h["title"], summary)},
@@ -537,7 +612,11 @@ def scene_from_run(run, view, title=None, **opts):
         "animation": {"assembly": {"style": "build", "seconds": 12.0},
                       "idle": {"life": "calm", "events": ["scan"], "cadence": [8, 14], "strength": 0.4},
                       "camera": {"drift": 4, "breathe": 0.02}},
-    })
+    }
+    sc["reading"] = _reading(run, view, world, opts, time)
+    if h.get("clock") == "steps":   # a model that never starts the tick counter: its records are steps
+        sc = _in_steps(sc)
+    return lock(sc)
 
 
 # ---------------------------------------------------------------------------- the legend
@@ -586,8 +665,98 @@ def data_lock(scene):
     parts = sorted(({k: v for k, v in p.items() if k not in LOOSE} for p in scene.get("parts", [])
                     if p.get("source") == "run"), key=lambda p: p["id"])
     data = {"source": [s for s in scene.get("sources", []) if s.get("id") == "run"], "facts": facts, "parts": parts}
+    r = scene.get("reading") or {}
+    if r.get("clock") or r.get("series"):   # the replay's clock and counts are the run's data too
+        data["reading"] = {"clock": r.get("clock"), "series": r.get("series", [])}
     text = json.dumps(_canon(data), sort_keys=True, separators=(",", ":"), ensure_ascii=False)
     return "sha256:" + hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+
+def _sampled(frames, n=300):
+    """At most n frames, evenly by record, the first and last kept."""
+    if len(frames) <= n:
+        return frames
+    return [frames[round(i * (len(frames) - 1) / (n - 1))] for i in range(n)]
+
+
+def _reading(run, view, world, opts, time):
+    """How to read the construct, its clock (time to height) and counts over time, for the page's replay."""
+    h, frames = run["header"], run["frames"]
+    last = world.last
+    sq = time == "sqrt"
+    how = {
+        "space-time": [
+            "The floor is the NetLogo world; height is time, from tick 0 on the floor to tick %d at the top%s." % (
+                last, " (the square root of time, so the early ticks are stretched)" if sq else ""),
+            "Each line is one turtle's path: upright where it stood still, leaning where it moved, flatter the "
+            "faster it went.",
+            "Lines that run side by side are turtles moving together.",
+            "A line that starts above the floor is a turtle born then; one that stops before the top, a turtle "
+            "that died or left."],
+        "network-time": [
+            "The floor is the network as NetLogo laid it out.",
+            "Each turtle rises to the tick its %s first turned true; one left on the floor never turned." % opts.get("state"),
+            "A link climbs from the earlier of its two turtles to the later: the steeper the climb, the longer it "
+            "took to pass along that link.",
+            "Height is time, tick 0 to %d%s." % (last, ", as its square root, so the early spread is stretched" if sq else "")],
+        "phase": [
+            "Across the floor: %s; front to back: %s; height: time, tick 0 to %d." % (
+                opts.get("x") or (h["reporters"] + ["", ""])[0], opts.get("z") or (h["reporters"] + ["", ""])[1], last),
+            "Its shadow on the floor is the classic phase plot, and the walls show each quantity against time.",
+            "A loop that rises is a cycle repeating; a spiral that narrows is a cycle settling down; a line "
+            "that runs to a wall is one quantity running out."],
+        "field": [
+            "Each contour is where the patches' %s had changed by that tick, raised to its tick: the fronts "
+            "of change, stacked in time." % h.get("patch-reporter"),
+            "Contours close together: the change moved slowly there; far apart: it moved fast.",
+            "Where nothing changed, nothing is drawn."],
+    }[view]
+    picked = _sampled(frames)
+    series = []
+    if h.get("reporters"):
+        for i, name in enumerate(h["reporters"][:4]):
+            vals = [[f["t"], round(f["reporters"][i], 4)] for f in picked
+                    if isinstance((f.get("reporters") or [None] * (i + 1))[i], (int, float))
+                    and not isinstance(f["reporters"][i], bool)]
+            if vals:
+                series.append({"name": name[:40], "values": vals})
+    elif view == "network-time":
+        vi = 5 + h["turtle-vars"].index(opts.get("state"))
+        series.append({"name": (opts.get("state") + " now")[:40], "values": [
+            [f["t"], sum(1 for r in f.get("turtles", []) if len(r) > vi and r[vi] is True)] for f in picked]})
+    elif view == "space-time":
+        series.append({"name": "turtles", "values": [[f["t"], len(f.get("turtles", []))] for f in picked
+                                                     if "turtles" in f]})
+    elif view == "field":
+        sampled = _sampled([f for f in frames if "patches" in f])
+        first = sampled[0]["patches"] if sampled else []
+        series.append({"name": "patches changed", "values": [
+            [f["t"], sum(1 for a, b in zip(first, f["patches"]) if a != b)] for f in sampled]})
+    reading = {"how": how, "clock": {"label": "tick", "from": 0, "to": last, "top": world.top,
+                                     "scale": "sqrt" if sq else "linear"}}
+    series = [s for s in series if len({v[1] for v in s["values"]}) > 1]   # a count that never moves says nothing
+    if series:
+        reading["series"] = series
+    return reading
+
+
+def _in_steps(scene):
+    """The scene's words for time as steps, not ticks, and a fact that says why."""
+    word = lambda s: re.sub(r"\btick(s?)\b", r"step\1", s) if isinstance(s, str) else s
+    for p in scene["parts"]:
+        p["label"] = word(p["label"])
+    for a in scene.get("annotations", []):
+        a["text"] = word(a["text"])
+    scene["subject"]["summary"] = word(scene["subject"]["summary"])
+    if scene.get("reading"):
+        scene["reading"]["how"] = [word(x) for x in scene["reading"]["how"]]
+        scene["reading"]["clock"]["label"] = "step"
+    for f in scene["facts"]:
+        f["value"] = word(f["value"])
+    scene["facts"].append({"key": "clock", "value": "steps", "certainty": "verified", "source": "run",
+                           "note": "The model never starts NetLogo's tick counter, so each record is one step "
+                                   "(one go), numbered from 0."})
+    return scene
 
 
 def lock(scene):
@@ -634,6 +803,11 @@ def apply_art(scene, art):
         out["title"] = art["title"]
     if "summary" in art:
         out["subject"]["summary"] = art["summary"]
+    if "reading" in art:   # its own way of reading the construct; the clock and counts stay the run's
+        r = art["reading"]
+        if not isinstance(r, dict) or set(r) - {"how"} or not isinstance(r.get("how"), list):
+            raise NetLogoError("art.reading: only `how`, a list of lines (the clock and counts are the run's)")
+        out["reading"] = dict(out.get("reading") or {}, how=list(r["how"]))
     data_ids = {p["id"] for p in out["parts"]}
     for pid, change in (art.get("looks") or {}).items():
         if pid not in data_ids:

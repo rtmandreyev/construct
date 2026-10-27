@@ -1309,6 +1309,35 @@
      "maximum": 1024
     }
    }
+  },
+  "reading": {
+   "type": "object",
+   "additionalProperties": false,
+   "description": "Optional: how to read the construct (`how`), and for a construct of a run its clock (time to height, and `phase`: build phase = phase[0] * y + phase[1]) and counts over time (`series`).",
+   "properties": {
+    "how": {
+     "type": "array",
+     "items": {
+      "type": "string"
+     },
+     "maxItems": 8
+    },
+    "clock": {
+     "type": "object",
+     "required": [
+      "label",
+      "from",
+      "to",
+      "top",
+      "scale",
+      "phase"
+     ]
+    },
+    "series": {
+     "type": "array",
+     "maxItems": 6
+    }
+   }
   }
  }
 }

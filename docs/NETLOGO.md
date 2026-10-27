@@ -67,7 +67,8 @@ construct netlogo-instrument "Wolf Sheep Predation.nlogox" --title "Wolf Sheep P
 It writes, into `run/`, the model with three things added (and nothing else changed):
 `__includes ["construct.nls"]`, the recording set up after setup's `reset-ticks`, and
 `construct-record` after go's `tick` (in the procedure setup or go calls that has them, when they
-are not in setup or go itself); it copies `construct.nls` beside it and writes a BehaviorSpace
+are not in setup or go itself; at the end of setup and go in a model that never starts the tick
+counter, whose records are then numbered as steps); it copies `construct.nls` beside it and writes a BehaviorSpace
 experiment, `construct-experiment.xml`. Then either open the model in NetLogo and press setup and
 go, or run it headless:
 
@@ -79,9 +80,11 @@ NetLogo_Console --headless --model "run/Wolf Sheep Predation-construct.nlogox" \
 (On a Mac the console is inside the NetLogo folder; `netlogo-headless.sh` there runs it, with
 `JAVA_HOME` set to NetLogo's own `runtime/Contents/Home`.) The experiment sets the seed, runs up to
 `--ticks` and calls `construct-finish`. To change the model's settings, add BehaviorSpace
-`<constants>` to the experiment, as for any experiment. When the model's setup or go is called
-something else, or takes inputs, give the command: `--setup "setup-random"`, `--setup "setup 4"`,
-`--go "go-once"` (a refusal names the model's own buttons that fit).
+`<constants>` to the experiment, as for any experiment. Setup and go are the model's `setup` and
+`go`; when it has none (or they take inputs), they are the commands of its own buttons: the forever
+button is go, and a setup button is setup. When a button's own code holds the `tick`, the button is
+rewritten to record too. To choose, give the commands: `--setup "setup-random"`, `--setup "setup 4"`,
+`--go "go-once"`.
 
 | Option | What it records |
 | --- | --- |
@@ -128,8 +131,16 @@ cascade happens in its first tenth). Each construct records what was drawn as fa
 seed, the ticks, which agents, how the data was sampled.
 
 Every construct carries its legend: each part named where it is ("Each turtle, risen to the tick
-infected? turned true"), shown from the start (**L** hides it). Nothing decorative is added: no
-projector, no drifting motes, nothing that looks like data and isn't.
+infected? turned true"), shown from the start (**L** hides it) and kept inside the window. Nothing
+decorative is added: no projector, no drifting motes, nothing that looks like data and isn't.
+
+**Reading it.** The page has a **How to read it** panel (**H**): a few lines for the view, such as
+"A link climbs from the earlier of its two turtles to the later: the steeper the climb, the longer
+it took to pass along that link". And a replay bar: drag it, or press play, and the construct is
+drawn up to that tick, with the tick and the run's counts beside it (the recorded reporters; else,
+for a network, how many turtles have the state now, and for a field, how many patches have
+changed). The counts and the clock are the run's data, under the data lock like the parts; an art
+layer may reword the panel (`"reading": {"how": [...]}`) and nothing else of it.
 
 ## 3. Art direction (optional)
 
@@ -150,6 +161,7 @@ construct netlogo run.jsonl --view field --levels 24 --art art.json --out scene.
 | `parts`, `facts`, `annotations` | its own: milestone rings, tick marks, axis names, callouts. Source `art` (or none), `inferred` when computed from the run (the note says how) or `decorative` |
 | `presentation` | views, framing and atmosphere, merged over the bridge's |
 | `animation` | assembly, idle and camera, in place of the bridge's |
+| `reading` | `{"how": [...]}`: the panel's lines, in the layer's own words (the clock and counts stay the run's) |
 | `legend` | `false` drops the bridge's legend, when the layer's own annotations replace it; otherwise a part relabelled in `looks` has its legend relabelled too |
 
 **The data lock.** Every scene the bridge draws carries a `data_lock` fact: the fingerprint of its
@@ -176,11 +188,12 @@ What makes a good pass:
 - The three examples were recorded headless in NetLogo 7.0.4: Flocking (300 ticks, 4.5 seconds),
   Wolf Sheep Predation (1,500 ticks) and Fire (673 ticks over 63,001 patches, 8 seconds).
 - **The whole Models Library.** Of NetLogo 7.0.4's 445 two-dimensional models (leaving out the 3D
-  models and Code Examples), 348 record in a 50-tick headless run with no change but the
-  instrumenting. Of the other 97, 75 have no setup with `reset-ticks` or go with `tick` to attach to
-  (a few have no go at all) and need the lines by hand, 8 need their setup's inputs (`--setup`, which
-  the refusal suggests), and 14 use an extension or files a headless run lacks, or were too large
-  or slow for the test.
+  models and Code Examples), 427 record in a 50-tick headless run with no change but the
+  instrumenting, one model at a time. 57 of them are HubNet activities, which run but do little
+  without participants. Of the other 18: 6 need the `import-a` extension, which NetLogo doesn't
+  bundle; 4 have no run to record (one-shot demonstrations, one needing an Arduino); 4 need a person
+  at the keyboard or a classroom; 3 were slower than the test allows; and one builds its city in
+  phases before it can run.
 - **The extension writes the same recording.** Virus on a Network (200 ticks) and the tests' model,
   recorded by the extension and by `construct.nls` with the same seed, give the same turtles,
   positions, colours, variables and links, tick by tick.

@@ -23,6 +23,21 @@ inside NetLogo. Plan: [ROADMAP.md](docs/ROADMAP.md#v11-models-come-alive).
 - **The field view's fronts are declared floating** (each hangs at its own tick), so a run whose
   earliest front sits above the floor passes the audit; the Fire example's data lock changes for
   this alone.
+- **The whole Models Library, nearly:** 427 of the 445 two-dimensional stock models now record with
+  no hand edits (348 at the extension's commit). Setup and go come from the model's own buttons when
+  it has them (their whole command), a turtle's forever button is asked of every turtle, a model
+  with only step buttons steps, and a model that never starts the tick counter is recorded by steps
+  (`"clock": "steps"`, and its construct says "step"); the recorder and the extension record each
+  tick once even when go stops and records again. The 18 left need an extension NetLogo doesn't
+  bundle or a person or a classroom, have no run to record, or were too slow for the test
+  ([NETLOGO.md](docs/NETLOGO.md#how-it-was-checked)).
+- **Reading a construct** (Phase C): a scene may carry a `reading`, how to read it and, for a run,
+  its clock and counts. Its page then has a **How to read it** panel (**H**) and a replay bar that
+  draws the run up to any tick, with the tick and the counts beside it; labels stay inside the
+  window, on a phone too. The bridge writes a reading for every view; an art layer may reword it;
+  the clock and counts are under the data lock (the three examples' locks change for this). Pages
+  whose scene has no reading are the stock viewer, unchanged (`viewer/reading.js` is added only to
+  pages that ask).
 
 ## 1.0.0 — 2026-10-27
 
