@@ -2,7 +2,7 @@
 
 [![The Toyota Land Cruiser FJ62 construct, exported as a 3D model and rendered in Blender: the hologram at the rear, the plain model in the middle, the finished model in Freeborn Red at the front](hero.jpg)](https://rtmandreyev.github.io/construct/examples/light-to-metal/)
 
-**[Open the live page →](https://rtmandreyev.github.io/construct/examples/light-to-metal/)**
+**[See the four models in 3D →](https://rtmandreyev.github.io/construct/examples/light-to-metal/)**
 
 Every construct is also a 3D model. What an agent writes (named parts in metres, joints, the
 order they assemble in) exports as one glTF file with `construct export`, and a material map

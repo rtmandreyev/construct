@@ -1,6 +1,7 @@
 """Tests for the host packages: structure, frontmatter, manifests and an isolated run."""
 
 import hashlib
+import importlib.util
 import json
 import os
 import re
@@ -199,6 +200,23 @@ class ExamplesGallery(unittest.TestCase):
         self.assertIn("Uri Wilensky", (d / "README.md").read_text(encoding="utf-8"))
         self.assertIn("examples/netlogo-viral-marketing/", (HERE.parent / "NOTICE").read_text(encoding="utf-8"))
         self.assertTrue(diagnose.diagnose_text((d / "scene.json").read_text(encoding="utf-8"))["ok"])
+
+    def test_recorded_runs_have_a_legend_and_the_live_model_stands_apart(self):
+        spec = importlib.util.spec_from_file_location("build_site", HERE.parent / "scripts" / "build_site.py")
+        site = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(site)
+        items = {b["slug"]: b for b in site._load_beyond()}
+        for slug in ("netlogo-flocking", "netlogo-wolf-sheep", "netlogo-fire"):
+            with self.subTest(slug):
+                page = site.data_page(items[slug])
+                self.assertIn('class="legend"', page)
+                self.assertGreaterEqual(page.count("<svg"), 4)
+                self.assertTrue(all(g in site.GLYPHS and t in site.TONE_HEX for g, t, _, _ in items[slug]["legend"]))
+        self.assertEqual(items["netlogo-viral-marketing"].get("kind"), "simulation")
+        index = site.index_page([], (), list(items.values()))
+        self.assertIn("Run the simulation", index)
+        self.assertIn("No simulation runs on", index)
+        self.assertLess(index.index('id="pipeline"'), index.index('id="constructs"'))   # the pipeline first
 
     def test_every_film_is_complete_and_checks_clean(self):
         from . import diagnose

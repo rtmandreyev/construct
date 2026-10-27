@@ -24,17 +24,17 @@ as a 3D model with named parts and working joints, for Blender, game engines and
   <a href="https://rtmandreyev.github.io/construct/examples/light-to-metal/"><img src="docs/media/pipeline-revox.gif" width="32%" alt="The Revox A77 tape recorder in Blender: from lines of light to a plain model, then finished in brushed metal with its reels"></a>
   <a href="https://rtmandreyev.github.io/construct/examples/light-to-metal/"><img src="docs/media/pipeline-minifreak.gif" width="32%" alt="The Arturia MiniFreak synthesizer in Blender: from lines of light to a plain model, then finished with its black and white keys"></a>
 </p>
-<p align="center"><sub><b><a href="docs/EXPORT.md">From light to a finished 3D model.</a></b> Toyota Land Cruiser FJ62 · Revox A77 · Arturia MiniFreak, exported unedited as glTF and revealed in Blender by the <a href="hosts/blender/README.md">add-on</a>: the hologram, the plain model of named parts, then the model finished from a material map. <a href="https://rtmandreyev.github.io/construct/examples/light-to-metal/">Open the live page</a> to download the files.</sub></p>
+<p align="center"><sub><b><a href="docs/EXPORT.md">From light to a finished 3D model.</a></b> Toyota Land Cruiser FJ62 · Revox A77 · Arturia MiniFreak, exported unedited as glTF and revealed in Blender by the <a href="hosts/blender/README.md">add-on</a>: the hologram, the plain model of named parts, then the model finished from a material map. <a href="https://rtmandreyev.github.io/construct/examples/light-to-metal/">See the four models in 3D</a> (with the James Webb Space Telescope): slide each from hologram to finished, open it, take it apart, download it.</sub></p>
 
 <p align="center">
   <a href="https://rtmandreyev.github.io/construct/examples/netlogo-flocking/"><img src="docs/media/netlogo-flocking.gif" width="32%" alt="Flocking: each bird's track rising with time, random near the floor and in parallel streams higher up"></a>
   <a href="https://rtmandreyev.github.io/construct/examples/netlogo-wolf-sheep/"><img src="docs/media/netlogo-wolf-sheep.gif" width="32%" alt="Wolf Sheep Predation: the predator-prey cycle rising in time, sheep across the floor and wolves front to back"></a>
   <a href="https://rtmandreyev.github.io/construct/examples/netlogo-fire/"><img src="docs/media/netlogo-fire.gif" width="32%" alt="Fire: the fire's front, every few ticks, rising as it crosses the forest"></a>
 </p>
-<p align="center"><sub><b><a href="docs/NETLOGO.md">Models come alive.</a></b> Flocking · Wolf Sheep Predation · Fire: NetLogo runs recorded by the bridge and drawn with time as height, so each assembly replays its run. The data comes from the run; labels and milestones are an art-direction pass on top.</sub></p>
+<p align="center"><sub><b><a href="docs/NETLOGO.md">Models come alive: recorded runs.</a></b> Flocking · Wolf Sheep Predation · Fire. Each is one NetLogo run, recorded by the bridge and drawn with time as height, so its assembly replays the run; no simulation runs on the page. The data comes from the run; labels and milestones are an art-direction pass on top.</sub></p>
 
 <p align="center"><a href="https://rtmandreyev.github.io/construct/examples/netlogo-viral-marketing/"><img src="docs/media/netlogo-viral-marketing.gif" width="100%" alt="The Simple Viral Marketing model running: adoptions spread through the social network on the floor and rise as lines of light, the gold ring marking now, while the counters climb to 500 of 500"></a></p>
-<p align="center"><sub><b>Simple Viral Marketing</b>, rebuilt to run live in the browser: five hundred people, one product, word of mouth and a little advertising. The floor is the social network, and each person rises to the moment they adopted, so you can watch an idea spread and see who it reaches last, and why. <a href="https://rtmandreyev.github.io/construct/examples/netlogo-viral-marketing/">Open the live model</a> to run it tick by tick and compare a hundred runs with NetLogo's own. The NetLogo models are © Uri Wilensky; these examples are under CC BY-NC-SA 3.0 (see <a href="#license">License</a>).</sub></p>
+<p align="center"><sub><b>Models come alive: a live simulation.</b> Unlike the recorded runs above, here the model itself runs on the page: Simple Viral Marketing, rebuilt rule for rule to run in the browser. Five hundred people, one product, word of mouth and a little advertising. The floor is the social network, and each person rises to the moment they adopted, so you can watch an idea spread and see who it reaches last, and why. <a href="https://rtmandreyev.github.io/construct/examples/netlogo-viral-marketing/">Run the simulation</a> to build new networks, run them tick by tick and compare a hundred runs with NetLogo's own. The NetLogo models are © Uri Wilensky; these examples are under CC BY-NC-SA 3.0 (see <a href="#license">License</a>).</sub></p>
 
 - **Any agent, any model.** Claude Code, Hermes, any MCP client or any OpenAI-compatible endpoint, or by hand.
 - **Honest about what is known.** Every fact and part says whether it is verified, supplied by you, inferred or decorative.
@@ -80,9 +80,9 @@ The examples are real runs: each one was made by an AI agent with Construct, in 
 masterpiece mode, by Claude Opus 5.5, GPT-6.1 Sol or DeepSeek V4.1 Flash. Open any of them to
 watch it assemble, turn it around and read its labels.
 
-<p align="center"><a href="https://rtmandreyev.github.io/construct/"><img src="docs/media/examples.jpg" alt="Example constructs made by AI agents: cars, cathedrals, watches, instruments, a lunar lander, a planet and a galaxy"></a></p>
+<p align="center"><a href="https://rtmandreyev.github.io/construct/"><img src="docs/media/examples.jpg" alt="Example constructs made by AI agents: cars, cathedrals, watches, instruments, a planet and a galaxy"></a></p>
 
-**[See all 24 examples in the gallery →](https://rtmandreyev.github.io/construct/)** · each scene and its hero image are in
+**[See all 21 constructs in the gallery →](https://rtmandreyev.github.io/construct/)** · each scene and its hero image are in
 [examples/](examples/).
 
 ## How it works

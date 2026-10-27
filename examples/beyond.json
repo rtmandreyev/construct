@@ -6,7 +6,7 @@
    "slug": "light-to-metal",
    "title": "From light to a finished model",
    "line": "Gallery constructs exported as 3D models (glTF) and lit live: from the hologram to the plain model to the finished one, with their named parts, working joints and build order.",
-   "label": "live page · 3D export · four gallery constructs",
+   "label": "interactive 3D page · four gallery constructs as glTF files",
    "credit": "Exported unedited; the hero is a Blender render of the exported file",
    "files": ["index.html", "README.md", "hero.jpg", "thumb.jpg", "maps/fj62.json", "maps/jwst.json", "maps/revox.json", "maps/minifreak.json"],
    "exports": {
@@ -28,7 +28,7 @@
     }
    },
    "buttons": [
-    ["Open the live page", ""],
+    ["See the four models in 3D", ""],
     ["Download the FJ62 (.glb)", "fj62.glb"]
    ],
    "section": "pipeline"
@@ -37,7 +37,8 @@
    "slug": "netlogo-viral-marketing",
    "title": "Simple Viral Marketing (NetLogo)",
    "line": "A NetLogo agent-based model of viral marketing, rebuilt to run live in the browser and drawn as a construct.",
-   "label": "live model · DeepSeek V4.1 Flash scene",
+   "label": "live simulation · DeepSeek V4.1 Flash scene",
+   "kind": "simulation",
    "credit": "Model © 2012 Uri Wilensky · CC BY-NC-SA 3.0",
    "files": ["index.html", "svm-model.js", "netlogo-run.js", "scene.json", "LICENSE", "hero.jpg", "thumb.jpg"],
    "section": "models"
@@ -55,6 +56,13 @@
     ["Open the construct", ""],
     ["The recorded model", "Flocking-construct.nlogox"]
    ],
+   "legend": [
+    ["tracks", "identity", "Each line", "is one bird's track. The floor is NetLogo's world; height is time, tick 0 at the floor to tick 300 at the top."],
+    ["rise", "identity", "A leaning line", "is a bird in flight. Near the floor the tracks cross every which way; higher up they run side by side: flocks."],
+    ["ring", "faint", "The dashed rings", "mark alignment, how far the birds' headings agree: half at tick 49, nine in ten at tick 81, 0.98 by the end."],
+    ["floor", "structure", "The floor", "is the 71 x 71 patch world. It wraps at its edges, so a track that leaves one side comes back on the other."],
+    ["axis", "hairline", "The axis", "at the back corner counts ticks, a mark every 60."]
+   ],
    "section": "models"
   },
   {
@@ -70,6 +78,13 @@
     ["Open the construct", ""],
     ["The recorded model", "Wolf Sheep Predation-construct.nlogox"]
    ],
+   "legend": [
+    ["loop", "identity", "The bright curve", "is both populations at once: sheep across the floor, wolves front to back, rising with time. Each turn of it is one cycle."],
+    ["shadow", "faint", "Its shadow on the floor", "is the classic phase plot, the same loop seen from above."],
+    ["wall", "data", "One wall", "carries the number of sheep against time, the other (in violet) the wolves: the two waves, a little out of step."],
+    ["marker", "bright", "The markers", "show the first sheep peak (tick 80) and the wolves' peak 61 ticks later: predators follow their prey."],
+    ["axis", "hairline", "The axis", "counts ticks, 0 to 1,500, a mark every 300. Counts are smoothed over 25 ticks."]
+   ],
    "section": "models"
   },
   {
@@ -84,6 +99,13 @@
    "buttons": [
     ["Open the construct", ""],
     ["The recorded model", "Fire-construct.nlogox"]
+   ],
+   "legend": [
+    ["front", "identity", "Each contour", "is the fire's front at one moment, drawn every 26 ticks and lifted to its tick, so the burn climbs as it crosses the forest."],
+    ["ladder", "identity", "A ladder", "of stacked fronts is a pocket that kept burning long after the front had passed."],
+    ["ring", "faint", "The dashed rings", "mark half the burn done (tick 220) and the front reaching the far edge (tick 392)."],
+    ["marker", "accent", "The marker", "is the last tree to catch, at tick 664, in a pocket left behind."],
+    ["floor", "structure", "The floor", "is the forest, 251 x 251 patches, lit along its left edge. Where nothing burned, nothing is drawn."]
    ],
    "section": "models"
   }

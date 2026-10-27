@@ -82,6 +82,14 @@ footer.site { max-width: 1680px; margin: 0 auto; padding: 24px 24px 48px; color:
 .stage { position: relative; flex: 1 1 auto; min-height: 62vh; background: #000; }
 .stage iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 .hint { padding: 10px 20px 18px; color: var(--dim); font-size: 13px; }
+.with-legend { display: flex; flex-direction: column; flex: 1 1 auto; }
+.legend { display: grid; gap: 11px; align-content: start; padding: 16px 20px; border-top: 1px solid var(--line);
+          font-size: 12px; line-height: 1.5; color: var(--dim); }
+.legend div { display: grid; grid-template-columns: 26px 1fr; gap: 10px; align-items: start; }
+.legend svg { margin-top: 3px; }
+.legend b { color: var(--ink); font-weight: 500; }
+@media (min-width: 1000px) { .with-legend { flex-direction: row; } .with-legend .stage { flex: 1 1 auto; }
+  .legend { width: 300px; flex: 0 0 300px; border-top: 0; border-left: 1px solid var(--line); padding: 22px 22px; } }
 .hint kbd { border: 1px solid var(--line); border-radius: 4px; padding: 0 5px; font-size: 12px; color: var(--ink); }
 h2.section { font-size: 22px; font-weight: 620; margin: 8px 0 6px; }
 p.section { color: var(--dim); max-width: 760px; margin: 0 0 16px; }
@@ -133,8 +141,11 @@ header.site h1 em { font-style: normal; color: var(--accent); }
 .steps { margin: 0 0 14px; padding-left: 20px; color: var(--dim); }
 .steps li { margin: 4px 0; } .steps b { color: var(--ink); font-weight: 600; }
 @media (min-width: 1000px) { .feature { grid-template-columns: 1.5fr 1fr; } .feature-text { padding: 22px 26px 22px 0; } }
-@media (min-width: 1100px) { .grid.models { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 1500px) { .grid.models { grid-template-columns: repeat(4, 1fr); } }
+@media (min-width: 900px) { .grid.models { grid-template-columns: repeat(3, 1fr); } }
+.feature.live { margin: 8px 0 34px; }
+.feature .kind { letter-spacing: .18em; font-size: 11px; color: var(--accent); text-transform: uppercase; margin-bottom: 6px; }
+.feature h3 { margin: 0 0 10px; font-size: 22px; }
+h3.sub { margin: 6px 0 4px; font-size: 18px; }
 @media (max-width: 600px) { .part-head { align-items: flex-start; } .shelf { max-height: 72vh; } }
 """
 
@@ -192,8 +203,8 @@ SHELF_JS = ("<script>(function(){var s=document.getElementById('shelf');if(!s)re
 
 
 def index_page(examples, films=(), beyond=()):
-    """The landing page, in three parts: the constructs and films (a compact scroller), the full pipeline
-    (from a hologram to a finished 3D model), and models come alive (recorded agent-based models)."""
+    """The landing page, in three parts: the full pipeline (from a hologram to a finished 3D model), the
+    constructs and films (a compact scroller), and models come alive (a live simulation, then recorded runs)."""
     film_cards = [
         "<div class=\"card film\"><a href=\"films/%s/\"><img src=\"films/%s/poster.jpg\" alt=\"%s, the finished construct "
         "of its film\" loading=\"lazy\" width=\"1200\" height=\"750\"></a><div class=\"body\"><h2><a href=\"films/%s/\">%s</a>"
@@ -207,7 +218,7 @@ def index_page(examples, films=(), beyond=()):
         "loading=\"lazy\" width=\"1200\" height=\"750\"><div class=\"body\"><h2>%s</h2><p class=\"prov\">%s</p></div></a>"
         % (e["slug"], e["slug"], html.escape(e["title"]), html.escape(e["title"]), html.escape(provenance(e)))
         for e in examples]
-    shelf = ("<section class=\"part\" id=\"constructs\"><div class=\"part-head\"><div><div class=\"eyebrow\">1 · Constructs"
+    shelf = ("<section class=\"part\" id=\"constructs\"><div class=\"part-head\"><div><div class=\"eyebrow\">2 · Constructs"
              "</div><h2 class=\"section\">Anything you can describe</h2><p class=\"section\">Each made by an AI agent from "
              "a description, in fast or masterpiece mode%s. Open one to watch it build itself; drag to turn it, "
              "<kbd>R</kbd> replays the assembly, <kbd>P</kbd> shows how each part is known.</p></div>"
@@ -219,8 +230,10 @@ def index_page(examples, films=(), beyond=()):
                 len(examples), " and %d films" % len(films) if films else ""))
     pipe = [b for b in beyond if b.get("section") == "pipeline"]
     models = [b for b in beyond if b.get("section") != "pipeline"]
+    live = [b for b in models if b.get("kind") == "simulation"]
+    recorded = [b for b in models if b.get("kind") != "simulation"]
     pipeline = "".join(
-        "<section class=\"part\" id=\"pipeline\"><div class=\"eyebrow\">2 · The full pipeline</div>"
+        "<section class=\"part\" id=\"pipeline\"><div class=\"eyebrow\">1 · The full pipeline</div>"
         "<h2 class=\"section\">From light to a finished 3D model</h2>"
         "<div class=\"feature\"><a class=\"feature-img\" href=\"examples/%s/\"><img src=\"examples/%s/hero.jpg\" alt=\"%s\" "
         "loading=\"lazy\" width=\"1440\" height=\"900\"></a><div class=\"feature-text\">"
@@ -229,41 +242,59 @@ def index_page(examples, films=(), beyond=()):
         "<ol class=\"steps\"><li><b>Hologram.</b> Lines of light, as the agent built it.</li>"
         "<li><b>Plain model.</b> Every part a solid, named object; joints that open.</li>"
         "<li><b>Finished.</b> Paint, chrome, glass, wood: one map per object, kept beside it.</li></ol>"
-        "<p class=\"credit\">%s</p><div class=\"choose\"><a class=\"button primary\" href=\"examples/%s/\">Open the live "
-        "page</a><a class=\"button\" href=\"examples/%s/fj62.glb\">Download a .glb</a>"
+        "<p>The page shows four gallery constructs as their exported files: the Land Cruiser FJ62, the James Webb "
+        "Space Telescope, the Revox A77 and the MiniFreak. Slide each from hologram to plain to finished, open "
+        "its joints, take it apart, and download it.</p>"
+        "<p class=\"credit\">%s</p><div class=\"choose\"><a class=\"button primary\" href=\"examples/%s/\">See the four "
+        "models in 3D</a><a class=\"button\" href=\"examples/%s/fj62.glb\">Download the FJ62 (.glb)</a>"
         "<a class=\"button\" href=\"%s/blob/main/hosts/blender/README.md\">Blender add-on</a>"
         "<a class=\"button\" href=\"%s/blob/main/docs/EXPORT.md\">3D export</a></div></div></div></section>"
         % (b["slug"], b["slug"], html.escape(b["title"]), html.escape(b["credit"]), b["slug"], b["slug"], REPO_URL, REPO_URL)
         for b in pipe)
+    live_features = "".join(
+        "<div class=\"feature live\"><a class=\"feature-img\" href=\"examples/%s/\"><img src=\"examples/%s/hero.jpg\" "
+        "alt=\"%s running in the browser\" loading=\"lazy\" width=\"1440\" height=\"900\"></a><div class=\"feature-text\">"
+        "<div class=\"kind\">A live simulation</div><h3>%s</h3>"
+        "<p>The model itself runs on the page: rebuilt rule for rule in JavaScript, so you can build new networks, "
+        "change the settings, run it tick by tick and compare a hundred runs with NetLogo's own, while the "
+        "construct grows with the run.</p><p class=\"credit\">%s</p><div class=\"choose\">"
+        "<a class=\"button primary\" href=\"examples/%s/\">Run the simulation</a>"
+        "<a class=\"button\" href=\"examples/%s/construct.html?rounds=0\">The construct</a></div></div></div>"
+        % (b["slug"], b["slug"], html.escape(b["title"]), html.escape(b["title"]), html.escape(b["credit"]),
+           b["slug"], b["slug"])
+        for b in live)
     model_cards = "\n".join(
         "<div class=\"card film\"><a href=\"examples/%s/\"><img src=\"examples/%s/thumb.jpg\" alt=\"%s, a construct of a "
         "model's run\" loading=\"lazy\" width=\"1200\" height=\"750\"></a><div class=\"body\"><h2><a href=\"examples/%s/\">%s</a>"
         "</h2><p class=\"prov\">%s</p><p class=\"credit\">%s</p><div class=\"choose\">%s</div></div></div>"
         % (b["slug"], b["slug"], html.escape(b["title"]), b["slug"], html.escape(b["title"]), html.escape(b["line"]),
            html.escape(b["credit"] + (" · art direction: %s" % b["art"] if b.get("art") else "")), _beyond_buttons(b))
-        for b in models)
+        for b in recorded)
     alive = ("<section class=\"part\" id=\"models\"><div class=\"eyebrow\">3 · Models come alive</div>"
-             "<h2 class=\"section\">Agent-based models, recorded and drawn</h2><p class=\"section\">A NetLogo model's "
-             "run, recorded by Construct's bridge and drawn with time as height, so its assembly replays the run; "
-             "the data comes from the run, never from an AI. An AI art-direction pass adds the labels and "
-             "milestones on top, and a data lock keeps it off the data. <a href=\"%s/blob/main/docs/NETLOGO.md\">"
-             "The NetLogo bridge</a>.</p>"
-             "<div class=\"grid models\">\n%s\n</div></section>" % (REPO_URL, model_cards)) if models else ""
+             "<h2 class=\"section\">Agent-based models, two ways</h2><p class=\"section\">A NetLogo model can come "
+             "into Construct as a live simulation you run on the page, or as one recorded run, drawn with time as "
+             "height.</p>%s"
+             "<h3 class=\"sub\">Recorded runs, drawn by the bridge</h3><p class=\"section\">No simulation runs on "
+             "these pages. Each is one run, recorded in NetLogo by Construct's bridge and drawn from the "
+             "recording, so its assembly replays the run; the data comes from the run, never from an AI. An AI "
+             "art-direction pass adds the labels and milestones on top, and a data lock keeps it off the data. "
+             "<a href=\"%s/blob/main/docs/NETLOGO.md\">The NetLogo bridge</a>.</p>"
+             "<div class=\"grid models\">\n%s\n</div></section>" % (live_features, REPO_URL, model_cards)) if models else ""
     body = ("<header class=\"site\"><div class=\"eyebrow\">Construct · examples</div>"
             "<h1>Describe a thing. Get a hologram, <em>a 3D model and its parts</em>.</h1>"
             "<p>Construct lets any AI agent build an animated holographic model of a thing from a description, and "
             "takes it further: into Blender and game engines as a 3D model with working parts, or, for a "
             "simulation, a model's whole run drawn in time.</p>"
             "<div class=\"links\"><a class=\"button\" href=\"%s\">Construct on GitHub</a>"
-            "<a class=\"button\" href=\"#constructs\">Constructs</a><a class=\"button\" href=\"#pipeline\">The full "
-            "pipeline</a><a class=\"button\" href=\"#models\">Models come alive</a>"
+            "<a class=\"button\" href=\"#pipeline\">The full pipeline</a><a class=\"button\" href=\"#constructs\">"
+            "Constructs</a><a class=\"button\" href=\"#models\">Models come alive</a>"
             "<a class=\"button\" href=\"%s/blob/main/docs/HOW-IT-IS-MADE.md\">How they are made</a></div></header>"
             "<main>%s%s%s</main>"
             "<footer class=\"site\">Construct is Apache-2.0 licensed; its Blender add-on is GPL-3.0-or-later. Product and "
             "place names belong to their owners; each construct is an independent reconstruction from public "
             "references, not an official model. %s"
             "<a href=\"%s\">Source and documentation</a>.</footer>%s"
-            % (REPO_URL, REPO_URL, shelf, pipeline, alive,
+            % (REPO_URL, REPO_URL, pipeline, shelf, alive,
                "The pages under Models come alive keep their own licences, given on each. " if models else "",
                REPO_URL, SHELF_JS))
     return _page("Construct · examples", body, 0, "Holographic constructs built by AI agents, the 3D models they "
@@ -285,6 +316,32 @@ def example_page(ex):
     return _page("%s · Construct" % ex["title"], body, 2, "%s: a holographic construct. %s" % (ex["title"], provenance(ex)))
 
 
+# a legend's glyphs, drawn in the viewer's own tones (the violet palette), as on the Simple Viral Marketing page
+TONE_HEX = {"accent": "#d16bd0", "bright": "#f6eaff", "hairline": "#eadcf3", "structure": "#b7a4c8", "dust": "#9682d7",
+            "identity": "#eadcf3", "data": "#8fd3ff", "faint": "#6f6080"}
+GLYPHS = {
+    "floor": '<rect x="2" y="4" width="22" height="7" fill="none" stroke="{c}"/>',
+    "rise": '<line x1="3" y1="12" x2="22" y2="2" stroke="{c}" stroke-width="1.5"/>',
+    "tracks": '<path d="M2 12 L9 9 L14 7 M5 13 L12 8 L22 3 M3 9 L10 6 L20 2" fill="none" stroke="{c}" stroke-width="1.1"/>',
+    "loop": '<path d="M4 12 C1 6 10 1 14 5 C18 9 25 6 22 2" fill="none" stroke="{c}" stroke-width="1.5"/>',
+    "shadow": '<path d="M3 10 C6 6 12 13 16 9 C19 6 23 9 23 9" fill="none" stroke="{c}"/>',
+    "wall": '<path d="M2 11 L6 4 L9 10 L13 3 L16 9 L20 4 L24 10" fill="none" stroke="{c}" stroke-width="1.2"/>',
+    "front": '<path d="M2 9 C5 4 8 12 12 7 C15 3 19 11 24 6" fill="none" stroke="{c}" stroke-width="1.4"/>',
+    "ladder": '<path d="M8 13 L8 1 M18 13 L18 1 M8 10 L18 10 M8 6 L18 6 M8 2 L18 2" fill="none" stroke="{c}"/>',
+    "ring": '<ellipse cx="13" cy="7" rx="11" ry="4" fill="none" stroke="{c}" stroke-dasharray="3 2"/>',
+    "marker": '<circle cx="13" cy="7" r="3.2" fill="{c}"/>',
+    "axis": '<path d="M5 13 L5 1 M5 9 L8 9 M5 5 L8 5" fill="none" stroke="{c}"/>',
+}
+
+
+def _legend(items):
+    """A legend: rows of [glyph, tone, lead, text], each glyph drawn in the construct's own tone."""
+    rows = "".join(
+        "<div><svg width=\"26\" height=\"14\" aria-hidden=\"true\">%s</svg><span><b>%s</b> %s</span></div>"
+        % (GLYPHS[g].format(c=TONE_HEX[tone]), html.escape(lead), html.escape(text)) for g, tone, lead, text in items)
+    return "<aside class=\"legend\" aria-label=\"Legend\">%s</aside>" % rows
+
+
 def data_page(item):
     """A "beyond" construct with no page of its own (a recorded NetLogo run): the live construct, its credit.
     An art-directed one (`"art"`: who directed it) opens with its labels on and credits the direction."""
@@ -295,13 +352,13 @@ def data_page(item):
             "<a class=\"button\" href=\"construct.html?%s\">Full screen</a>"
             "<a class=\"button\" href=\"scene.json\">Scene</a>"
             "<a class=\"button\" href=\"%s/tree/main/examples/%s\">Source and licence</a></nav></div>"
-            "<div class=\"stage\"><iframe src=\"construct.html?ui=0&amp;%s\" title=\"%s, live construct\" "
-            "allowfullscreen></iframe></div>"
+            "<div class=\"with-legend\"><div class=\"stage\"><iframe src=\"construct.html?ui=0&amp;%s\" title=\"%s, live "
+            "construct\" allowfullscreen></iframe></div>%s</div>"
             "<p class=\"hint\">%s Drag to orbit, scroll to zoom; <kbd>R</kbd> replays the assembly, which rises with the "
             "run's ticks%s.</p></div>"
             % (html.escape(item["title"]), html.escape(item["label"]), html.escape(item["credit"]),
                html.escape(" · art direction: %s" % art) if art else "", q, REPO_URL, item["slug"], q,
-               html.escape(item["title"]), html.escape(item["line"]),
+               html.escape(item["title"]), _legend(item["legend"]) if item.get("legend") else "", html.escape(item["line"]),
                "; click it, then <kbd>L</kbd> hides the art direction's labels" if art else ""))
     return _page("%s · Construct" % item["title"], body, 2, "%s: %s" % (item["title"], item["line"]))
 
