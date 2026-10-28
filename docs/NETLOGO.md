@@ -222,6 +222,34 @@ recording like everything else, under the data lock; without `--solid`, nothing 
 Blender 5.2 with the add-on: Virus on a Network, Wolf Sheep Predation, Rumor Mill and Flocking
 import with each part a named object, and **Build** halfway shows the run halfway.
 
+## 5. Music (optional)
+
+A run can follow a track. In NetLogo, `construct:music "track.mp3"` (or `(construct:music
+"track.mp3" 24)` for 24 ticks a second; 30 by default) analyses the track once, with `construct
+audio` and ffmpeg, into `<track>-audio-<rate>.json` beside the run, and from then on tick *t* is
+second *t* ÷ rate of the track. The model's code can read the music at the current tick:
+
+| Reporter | What it reports, 0 to 1 |
+| --- | --- |
+| `construct:kick` | the low end's attacks: a pulse on each kick or bass hit, even over a bass that never stops (how far the level below about 150 Hz jumps above its last half second, scaled to the track's typical kick) |
+| `construct:energy` | the loudness, smoothed like a meter, scaled to the track's own range |
+| `construct:high` | the brightness and attacks (a simple high-pass) |
+| `construct:hit` | the strongest attacks in three bands, at most five a second |
+| `construct:music-time` | the seconds of the track (not 0 to 1) |
+
+How a model listens is the model's own code, and it is part of the run like any other rule:
+Flocking with `set max-separate-turn 1.5 + 12 * construct:kick` bursts apart on every kick.
+`construct:run` then runs for the length of the track. The recording names the track, its SHA-256
+and the clock; the construct carries the features, adds a `music` fact, keeps time linear (height is
+the track's time; `--time sqrt` is refused) and puts the track beside the scene. Its page is film
+mode by itself: the build follows the run's clock (a tick every 1/rate of a second, from the first
+moment), the light follows the energy, kicks and strong attacks flare the build front, and the
+replay bar's play button plays the track with the run. The data lock covers the track's name,
+fingerprint and clock: a construct drawn to another track is another construct.
+
+A construct holds at most 24,000 line segments, so a long run with many moving agents is sampled
+(the `sampling` fact says how much); the construct is the run's shape, and the replay its timing.
+
 ## How it was checked
 
 - **The bridge reproduces a run exactly.** The [Simple Viral Marketing](../examples/netlogo-viral-marketing/)

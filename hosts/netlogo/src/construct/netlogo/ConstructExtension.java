@@ -11,10 +11,16 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.nlogo.api.AnonymousCommand;
 import org.nlogo.api.AnonymousReporter;
@@ -43,6 +49,11 @@ import org.nlogo.core.SyntaxJ;
  *   setup: ... reset-ticks  construct:start "Wolf Sheep"  construct:track-reporter "sheep" [-> count sheep]  construct:record
  *   go:    ... tick  construct:record
  *   then:  construct:draw "phase"    (writes <title>-construct/construct.html beside the model and opens it)
+ *
+ * With music (construct:music "track.mp3"), a tick is a moment of the track: 30 ticks a second by default.
+ * construct:kick, construct:energy, construct:high and construct:hit report the music at the current tick, so
+ * a model's own code can follow it, construct:run lasts the track, and the run's replay, video and 3D model
+ * play in time with it.
  */
 public class ConstructExtension extends DefaultClassManager {
 
@@ -57,6 +68,12 @@ public class ConstructExtension extends DefaultClassManager {
   static List<Object> reporters = new ArrayList<>();   // anonymous reporters, or the extension's own (a breed's count)
   static BufferedWriter out = null;
   static String python = System.getProperty("os.name", "").toLowerCase().contains("win") ? "python" : "python3";
+
+  // ------------------------------------------------------------------ the music, kept across runs until construct:music ""
+  static File track = null, features = null;
+  static int tps = 30, musicTicks = 0;
+  static String trackSha = "";
+  static Map<String, double[]> music = new HashMap<>();
 
   @Override
   public void load(PrimitiveManager pm) {
@@ -74,6 +91,12 @@ public class ConstructExtension extends DefaultClassManager {
     pm.addPrimitive("set-python", new SetPython());
     pm.addPrimitive("run", new RunModel(false));
     pm.addPrimitive("run-for", new RunModel(true));
+    pm.addPrimitive("music", new Music());
+    pm.addPrimitive("kick", new MusicAt("kick"));
+    pm.addPrimitive("energy", new MusicAt("energy"));
+    pm.addPrimitive("high", new MusicAt("high"));
+    pm.addPrimitive("hit", new MusicAt("onset"));
+    pm.addPrimitive("music-time", new MusicTime());
   }
 
   @Override
@@ -212,7 +235,10 @@ public class ConstructExtension extends DefaultClassManager {
           out.write("{\"construct-netlogo\":1,\"title\":" + json(title) + ",\"netlogo\":" + json(version())
               + ",\"seed\":" + seed + (ticking ? "" : ",\"clock\":\"steps\"") + ",\"world\":{\"min-pxcor\":" + w.minPxcor() + ",\"max-pxcor\":" + w.maxPxcor()
               + ",\"min-pycor\":" + w.minPycor() + ",\"max-pycor\":" + w.maxPycor() + "},\"turtle-vars\":" + jsonList(turtleVars)
-              + ",\"reporters\":" + jsonList(reporterNames) + ",\"patch-reporter\":" + json(patchVar) + ",\"patch-every\":" + patchEvery + "}\n");
+              + ",\"reporters\":" + jsonList(reporterNames) + ",\"patch-reporter\":" + json(patchVar) + ",\"patch-every\":" + patchEvery
+              + (track == null ? "" : ",\"music\":{\"track\":" + json(track.getName()) + ",\"path\":" + json(track.getAbsolutePath())
+                  + ",\"sha256\":" + json(trackSha) + ",\"ticks-per-second\":" + tps + ",\"ticks\":" + musicTicks
+                  + ",\"features\":" + json(features.getName()) + "}") + "}\n");
           headerDone = true;
         }
         StringBuilder s = new StringBuilder("{\"t\":").append(num(t));
@@ -370,7 +396,9 @@ public class ConstructExtension extends DefaultClassManager {
       return report;
   }
 
-  static String run(List<String> cmd, File dir) throws ExtensionException {
+  static String run(List<String> cmd, File dir) throws ExtensionException { return run(cmd, dir, "construct:draw"); }
+
+  static String run(List<String> cmd, File dir, String what) throws ExtensionException {
     File runtime = runtimeDir();
     ProcessBuilder pb = new ProcessBuilder(cmd).directory(dir).redirectErrorStream(true);
     pb.environment().put("PYTHONPATH", runtime.getPath());
@@ -383,19 +411,19 @@ public class ConstructExtension extends DefaultClassManager {
         String line;
         while ((line = r.readLine()) != null) sb.append(line).append('\n');
       }
-      if (!p.waitFor(10, TimeUnit.MINUTES)) { p.destroy(); throw new ExtensionException("construct:draw took too long"); }
+      if (!p.waitFor(10, TimeUnit.MINUTES)) { p.destroy(); throw new ExtensionException(what + " took too long"); }
       code = p.exitValue();
       text = sb.toString().trim();
     } catch (IOException e) {
-      throw new ExtensionException("construct:draw needs Python 3.10 or newer (" + python + " was not found). "
+      throw new ExtensionException(what + " needs Python 3.10 or newer (" + python + " was not found). "
           + "Install it, or point to it with construct:set-python \"/path/to/python3\".");
     } catch (InterruptedException e) {
       Thread.currentThread().interrupt();
-      throw new ExtensionException("construct:draw was interrupted");
+      throw new ExtensionException(what + " was interrupted");
     }
     if (code != 0) {   // Construct's own message, without its usage text
       int at = text.lastIndexOf("error: ");
-      throw new ExtensionException("construct:draw: " + (text.isEmpty() ? "failed" : at >= 0 ? text.substring(at + 7) : text));
+      throw new ExtensionException(what + ": " + (text.isEmpty() ? "failed" : at >= 0 ? text.substring(at + 7) : text));
     }
     return text;
   }
@@ -412,7 +440,7 @@ public class ConstructExtension extends DefaultClassManager {
       return counted ? SyntaxJ.commandSyntax(new int[] {Syntax.NumberType()}) : SyntaxJ.commandSyntax();
     }
     public void perform(Argument[] args, Context c) throws ExtensionException {
-      int limit = counted ? Math.max(1, args[0].getIntValue()) : SAFETY;
+      int limit = counted ? Math.max(1, args[0].getIntValue()) : track != null ? Math.max(SAFETY, musicTicks + 1) : SAFETY;
       String[] cmds = buttons(c);
       org.nlogo.agent.World w = (org.nlogo.agent.World) c.world();
       check(compiled(cmds[0], "setup", c), "setup", c);
@@ -429,6 +457,7 @@ public class ConstructExtension extends DefaultClassManager {
         runs++;
         if (before >= 0 && w.ticks() == before) { stopped = true; break; }   // go stopped without a tick: the run is over
         recordNow(c);
+        if (track != null && !counted && (w.ticks() >= 0 ? w.ticks() : steps) >= musicTicks) break;   // the track is over
       }
       try {
         if (out == null) out = new BufferedWriter(new FileWriter(file, StandardCharsets.UTF_8, true));
@@ -438,10 +467,94 @@ public class ConstructExtension extends DefaultClassManager {
       }
       close();
       say(c, stopped ? "construct: " + model + " stopped by itself after " + runs + " runs of " + cmds[1].split("\\s+")[0] + "; drawing it."
+          : track != null && !counted ? "construct: ran " + model + " for the length of " + track.getName() + " (" + runs + " runs of go); drawing it."
           : counted ? "construct: ran " + model + " for " + runs + " runs of go; drawing it."
           : "construct: " + model + " was still running after " + runs + " runs of go; drew those. For a longer run: construct:run-for 3000");
       String report = draw("auto", new ArrayList<>());
       for (String line : report.split("\n")) if (line.startsWith("view:")) say(c, "construct: " + line);
+    }
+  }
+
+  // ------------------------------------------------------------------ music: a tick is a moment of the track
+
+  /** construct:music "track.mp3"   or   (construct:music "track.mp3" 24)   (ticks a second, 30 by default);
+   *  construct:music "" forgets it. The track is analysed once (construct audio, with ffmpeg) into a features
+   *  file beside the run; a track beside the model can be named alone. */
+  static class Music implements Command {
+    public Syntax getSyntax() {
+      return SyntaxJ.commandSyntax(new int[] {Syntax.StringType(), Syntax.NumberType() | Syntax.RepeatableType()}, 1);
+    }
+    public void perform(Argument[] args, Context c) throws ExtensionException {
+      String name = args[0].getString();
+      if (name.isEmpty()) { track = null; features = null; music = new HashMap<>(); musicTicks = 0; return; }
+      int rate = args.length > 1 ? args[1].getIntValue() : 30;
+      if (rate < 1 || rate > 120) throw new ExtensionException("construct:music: ticks a second is 1 to 120, not " + rate);
+      File f = new File(name);
+      if (!f.isAbsolute()) {
+        try { f = new File(c.attachCurrentDirectory(name)); } catch (IOException e) { /* as it is */ }
+      }
+      if (!f.isFile()) throw new ExtensionException("construct:music: there is no file " + f.getPath());
+      File out = new File(modelDir(c), slug(f.getName().replaceAll("\\.[^.]+$", "")) + "-audio-" + rate + ".json");
+      if (!out.isFile() || out.lastModified() < f.lastModified())
+        run(List.of(python, "-m", "construct_hologram", "audio", f.getAbsolutePath(), "--fps", String.valueOf(rate),
+            "--out", out.getPath()), out.getParentFile(), "construct:music");
+      Map<String, double[]> m = new HashMap<>();
+      try {
+        String doc = Files.readString(out.toPath(), StandardCharsets.UTF_8);
+        for (String key : List.of("energy", "high", "kick", "onset")) {
+          Matcher mm = Pattern.compile("\"" + key + "\":\\[([^\\]]*)\\]").matcher(doc);
+          if (!mm.find()) throw new ExtensionException("construct:music: " + out.getName() + " has no " + key
+              + "; delete it and run construct:music again");
+          String body = mm.group(1).trim();
+          String[] xs = body.isEmpty() ? new String[0] : body.split(",");
+          double[] v = new double[xs.length];
+          for (int i = 0; i < xs.length; i++) v[i] = Double.parseDouble(xs[i].trim());
+          m.put(key, v);
+        }
+        trackSha = sha256(f);
+      } catch (IOException | NumberFormatException e) {
+        throw new ExtensionException("construct:music could not read " + out.getPath() + ": " + e.getMessage());
+      }
+      track = f; features = out; tps = rate; music = m; musicTicks = m.get("energy").length;
+      say(c, "construct: " + f.getName() + ", " + num(Math.round(musicTicks * 10.0 / rate) / 10.0) + " s: " + musicTicks
+          + " ticks at " + rate + " a second");
+    }
+  }
+
+  static String sha256(File f) throws IOException {
+    try {
+      byte[] d = MessageDigest.getInstance("SHA-256").digest(Files.readAllBytes(f.toPath()));
+      StringBuilder s = new StringBuilder();
+      for (byte b : d) s.append(String.format("%02x", b));
+      return s.toString();
+    } catch (java.security.NoSuchAlgorithmException e) {
+      throw new IOException(e);
+    }
+  }
+
+  static double musicClock(Context c) {
+    return c.world().ticks() >= 0 ? c.world().ticks() : steps;
+  }
+
+  /** construct:kick, construct:energy, construct:high, construct:hit: the music at this tick, 0 to 1 (0 after the track). */
+  static class MusicAt implements Reporter {
+    final String key;
+    MusicAt(String key) { this.key = key; }
+    public Syntax getSyntax() { return SyntaxJ.reporterSyntax(Syntax.NumberType()); }
+    public Object report(Argument[] args, Context c) throws ExtensionException {
+      if (track == null) throw new ExtensionException("construct:music \"track.mp3\" first");
+      double[] v = music.get(key);
+      int i = (int) Math.floor(musicClock(c));
+      return i >= 0 && i < v.length ? v[i] : 0.0;
+    }
+  }
+
+  /** construct:music-time: the seconds of the track at this tick. */
+  static class MusicTime implements Reporter {
+    public Syntax getSyntax() { return SyntaxJ.reporterSyntax(Syntax.NumberType()); }
+    public Object report(Argument[] args, Context c) throws ExtensionException {
+      if (track == null) throw new ExtensionException("construct:music \"track.mp3\" first");
+      return musicClock(c) / tps;
     }
   }
 

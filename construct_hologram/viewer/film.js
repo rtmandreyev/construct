@@ -20,6 +20,12 @@
  *             strongest most, so a busy track still reads as accents rather than flicker
  *   voice     while a voice stem is present the hologram shimmers
  * It fetches the one features file named by ?audio and nothing else.
+ *
+ * A run with music (a scene whose reading carries `music`: a NetLogo run recorded with construct:music) is
+ * film mode with no URL parameters: the features are in the page, the build follows the run's own clock, a
+ * tick every 1/ticks-per-second of a second from the first moment (no ghost, no pacing, no stages), so the
+ * viewer's time is the track's time; the light follows the energy, and every strong onset or kick flares the
+ * build front.
  */
 (function () {
   "use strict";
@@ -27,13 +33,16 @@
   if (!HV) return;
   const q = new URLSearchParams(location.search);
   const clamp = (x, lo, hi) => Math.max(lo, Math.min(hi, x));
+  const G = window.HOLOGRAM_GEOMETRY || {}, R = G.reading || {};
+  const RUN = R.music && R.clock && R.clock.phase ? { tps: R.music.ticks_per_second, from: R.clock.from, to: R.clock.to } : null;
   const FILM = {
+    run: RUN,
     assembly: q.has("assembly") ? clamp(parseFloat(q.get("assembly")) || 0, 0.2, 3600) : null,
     audio: q.get("audio"),
     steady: q.get("camera") === "steady",
     reactivity: q.has("reactivity") ? clamp(parseFloat(q.get("reactivity")) || 0, 0, 2) : 1,
   };
-  if (!FILM.assembly && !FILM.audio && !FILM.steady) return;  // no film option: the stock viewer, untouched
+  if (!FILM.assembly && !FILM.audio && !FILM.steady && !RUN) return;  // no film option: the stock viewer, untouched
   const P = HV.Hologram.prototype;
   const SCAN = 1, SHIMMER = 4;  // the viewer's event codes
   const SMOOTH_S = 2.0, ACCENT_S = 0.2, PACE = 4;
@@ -44,6 +53,10 @@
   P.assemblyTimes = function (authored) {
     // authored: the scene's own assembly, ignoring ?assembly=
     const at = ownTimes.call(this);
+    if (RUN && !authored && !this.opt.reduced) {   // the run's clock: the build starts at once and takes the track
+      const build = Math.max(0.2, (RUN.to - RUN.from) / RUN.tps);
+      return { ghost: 0, collapse: 0, build, settle: 0.4, end: build + 0.4 };
+    }
     if (authored || !FILM.assembly || !at.build) return at;
     const build = Math.max(0.2, FILM.assembly);
     return Object.assign({}, at, { build, end: at.ghost + at.collapse + build + at.settle });
@@ -59,6 +72,7 @@
     const at = this.assemblyTimes(), a = this.audio, r = FILM.reactivity, key = at.build + "/" + r;
     if (this._film && this._film.key === key) return this._film;
     const fps = a.fps, t0 = at.ghost + at.collapse, n = Math.max(2, Math.ceil(at.build * fps) + 1), i0 = Math.round(t0 * fps);
+    if (RUN) return (this._film = this.runCurve(key, fps, n));
     const E = new Float64Array(n);
     for (let i = 0; i < n; i++) E[i] = a.energy[clamp(i0 + i, 0, a.energy.length - 1)] || 0;
     // rank: where each frame's loudness stands among the build's frames (ties share their mean rank)
@@ -103,6 +117,23 @@
     for (let i = 0; i < m; i++) env[i] = Math.max(hit[i], i ? env[i - 1] * decay : 0);
     this._film = { key, fps, n, p, env, sections: anchors.slice(1, -1).map(([j, pr]) => ({ t: t0 + j / fps, progress: pr })) };
     return this._film;
+  };
+  P.runCurve = function (key, fps, n) {
+    // a run's build: at each frame, the height of the tick the music has reached (phase = a * y + b)
+    const c = R.clock, a = this.audio, p = new Float64Array(n), span = c.to - c.from;
+    for (let i = 0; i < n; i++) {
+      const f = clamp((i / fps) * RUN.tps / span, 0, 1);
+      p[i] = clamp(c.phase[0] * c.top * f + c.phase[1], 0, 1);
+    }
+    // accents: strong onsets and kicks flare at once and decay over about 0.2 s
+    const m = a.energy.length, env = new Float64Array(m), decay = Math.exp(-1 / (ACCENT_S * fps));
+    const floor = clamp(0.75 - 0.2 * FILM.reactivity, 0.2, 0.75);
+    for (let i = 0; i < m; i++) {
+      const o = (a.onset || [])[i] || 0, k = (a.kick || [])[i] || 0;
+      const hit = Math.max(o > floor ? Math.pow((o - floor) / (1 - floor), 1.5) : 0, k > 0.45 ? Math.pow((k - 0.45) / 0.55, 1.2) : 0);
+      env[i] = Math.max(hit, i ? env[i - 1] * decay : 0);
+    }
+    return { key, fps, n, p, env, sections: [] };
   };
   P.filmBuild = function (tb) {
     const c = this.filmCurve();
@@ -190,7 +221,10 @@
     const holo = window.HOLO && window.HOLO.hologram;
     if (!holo) return;
     holo.schedule = holo.buildSchedule();  // the idle life begins after the film's assembly
-    if (FILM.audio) {
+    if (RUN && !FILM.audio) {   // the run's music is in the page
+      holo.audio = R.music.audio; holo._film = null; holo.schedule = holo.buildSchedule();
+      window.HOLO_AUDIO_READY = Promise.resolve(true);
+    } else if (FILM.audio) {
       window.HOLO_AUDIO_READY = fetch(FILM.audio).then((res) => res.json())
         .then((a) => { holo.audio = a; holo._film = null; holo.schedule = holo.buildSchedule(); })
         .catch((e) => console.error("audio features:", e));

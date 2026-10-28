@@ -41,7 +41,7 @@ def scene_with_assembly(seconds):
 
 
 class Features(unittest.TestCase):
-    """`construct audio`: energy, high and voice per video frame, 0..1."""
+    """`construct audio`: energy, high, kick and voice per video frame, 0..1."""
 
     def test_silence_is_zero_and_a_loud_tone_is_full(self):
         doc = film_audio.analyse([0] * (2 * RATE) + tone(3, 0.6), FPS)
@@ -106,6 +106,19 @@ class Features(unittest.TestCase):
         self.assertEqual(set(film_audio.analyse([0] * (2 * RATE), FPS)["onset"]), {0.0})
         gaps = [b - a for a, b in zip(hits, hits[1:])]
         self.assertGreaterEqual(min(gaps), film_audio.ONSET_GAP_S)
+
+    def test_kick_pulses_on_low_hits_even_over_a_held_bass(self):
+        sig = tone(4, 0.25, 55.0)   # a bass that never stops
+        expected = [0.5 + 0.5 * k for k in range(7)]
+        for at in expected:   # a low thump every half second
+            s0 = int(at * RATE)
+            for i, x in enumerate(tone(0.12, 0.6, 70.0)):
+                sig[s0 + i] += int(x * math.exp(-25 * i / RATE))
+        kick = film_audio.analyse(sig, FPS)["kick"]
+        peaks = [i / FPS for i in range(1, len(kick) - 1) if kick[i] > 0.5 and kick[i] >= kick[i - 1] and kick[i] > kick[i + 1]]
+        self.assertTrue(all(any(abs(p - e) <= 2 / FPS for p in peaks) for e in expected), peaks)   # every thump
+        self.assertTrue(all(any(abs(p - e) <= 2 / FPS for e in expected) for p in peaks), peaks)   # and only thumps
+        self.assertLess(max(film_audio.analyse(tone(4, 0.25, 55.0), FPS)["kick"][FPS:]), 0.2)     # the held bass alone: none
 
     def test_sections_are_where_the_music_changes(self):
         quiet, loud = tone(25, 0.08, 150.0), tone(25, 0.6, 2500.0)

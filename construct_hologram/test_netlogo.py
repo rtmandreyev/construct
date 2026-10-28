@@ -5,6 +5,7 @@ NetLogo extension built, run and checked against the recorder it replaces."""
 import io
 import json
 import os
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -262,6 +263,40 @@ class Views(unittest.TestCase):
         stock = studio.load(str(HERE / "examples" / "v2" / "cd.json"))
         page, _ = render.build_html(scene.compile_scene(stock))
         self.assertNotIn("HOW TO READ IT", page)   # a construct that asks for nothing: the stock page
+
+    def test_a_run_with_music(self):
+        from . import render
+        d = Path(self.tmp.name)
+        n = 12
+        (d / "beat-audio-30.json").write_text(json.dumps({"format": "construct-audio", "version": 2, "fps": 30, "frames": n,
+                                                          "energy": [0.5] * n, "high": [0.2] * n, "kick": [0, 1] * (n // 2),
+                                                          "onset": [0.0] * n, "voice": [0.0] * n, "sections": []}))
+        (d / "beat.wav").write_bytes(b"RIFF")
+        music = {"track": "beat.wav", "path": str(d / "beat.wav"), "sha256": "a" * 64, "ticks-per-second": 30, "ticks": n,
+                 "features": "beat-audio-30.json"}
+        run = netlogo.read_run(recording(d / "music.jsonl", header={"music": music}))
+        sc = netlogo.scene_from_run(run, "space-time")
+        m = sc["reading"]["music"]
+        self.assertEqual((m["track"], m["ticks_per_second"], m["seconds"], m["audio"]["kick"][:2]), ("beat.wav", 30, 0.4, [0, 1]))
+        self.assertIn("Press play", sc["reading"]["how"][-1])
+        self.assertTrue(any(f["key"] == "music" and f["source"] == "run" for f in sc["facts"]))
+        self.assertEqual([e for e in scene.validate(sc) if "music" in e], [])
+        self.assertIsNone(netlogo.lock_problem(sc))
+        other = json.loads(json.dumps(sc))
+        other["reading"]["music"]["sha256"] = "b" * 64            # another track: the lock sees it
+        self.assertIsNotNone(netlogo.lock_problem(other))
+        self.assertEqual(netlogo.music_track(run), d / "beat.wav")
+        with self.assertRaises(netlogo.NetLogoError):              # height is the track's time: never stretched
+            netlogo.scene_from_run(run, "network-time", state="infected?", time="sqrt")
+        page, _ = render.build_html(scene.compile_scene(sc))
+        self.assertIn("runCurve", page)                            # film mode by itself, the features in the page
+        for bad in ({"track": "../beat.wav"}, {"ticks_per_second": 0}, {"audio": dict(m["audio"], fps=24)}):
+            wrong = json.loads(json.dumps(sc))
+            wrong["reading"]["music"].update(bad)
+            self.assertTrue(any("music" in e for e in scene.validate(wrong)), bad)
+        (d / "beat-audio-30.json").unlink()
+        with self.assertRaises(netlogo.NetLogoError):              # the features must travel with the run
+            netlogo.scene_from_run(run, "space-time")
 
     def test_the_view_the_data_suits(self):
         view, opts, _ = netlogo.choose_view(self.run)          # links, and infected? turned for some turtles
@@ -632,6 +667,29 @@ class Extension(unittest.TestCase):
             self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
             frac = netlogo.read_run(Path(d, "f-run.jsonl"))
             self.assertEqual(([f["t"] for f in frac["frames"]][-3:], len(frac["frames"]), frac["end"]), ([1.5, 1.75, 2], 9, 2))
+
+            r = drive("setup show construct:kick")
+            self.assertIn('construct:music "track.mp3" first', r.stdout)
+            if shutil.which("ffmpeg"):   # music: a tick is a moment of the track, and the run lasts it
+                import math
+                import struct
+                import wave
+                with wave.open(str(Path(d, "t.wav")), "wb") as w:
+                    w.setnchannels(1)
+                    w.setsampwidth(2)
+                    w.setframerate(16000)
+                    w.writeframes(struct.pack("<32000h", *(int(9000 * math.sin(i / 9)) for i in range(32000))))
+                r = drive('(construct:music "t.wav" 10)', "random-seed 4", "construct:run")
+                self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+                self.assertIn("for the length of t.wav", r.stdout)
+                run = netlogo.read_run(Path(d, "m-run.jsonl"))
+                self.assertEqual((run["header"]["music"]["ticks-per-second"], run["header"]["music"]["ticks"], run["end"]),
+                                 (10, 20, 20))
+                self.assertTrue(Path(d, "m-construct", "t.wav").is_file())   # the track beside the page
+                r = drive('(construct:music "t.wav" 10)', "setup repeat 5 [ go ] show construct:music-time "
+                                                         "show construct:energy >= 0")
+                self.assertIn("0.5", r.stdout)
+                self.assertIn("true", r.stdout)
 
             # the same run through construct.nls: the same turtles, tick by tick
             Path(d, "plain.nlogox").write_text(MODEL, encoding="utf-8")

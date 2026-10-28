@@ -779,6 +779,12 @@ def run(args):
                 return 1
             text = json.dumps(scene, separators=(",", ":"), ensure_ascii=False) + "\n"   # data: compact
             _write(args.out, text, args.force)
+            track = nl.music_track(run_data) if (scene.get("reading") or {}).get("music") else None
+            if track is not None:   # the run's track beside the scene, where its page plays it from
+                dest = Path(args.out).resolve().parent / track.name
+                if dest != track.resolve():
+                    shutil.copyfile(track, dest)
+                sys.stdout.write("music: %s beside the scene; the replay plays it\n" % track.name)
             if args.materials_out or args.glb:
                 mats = nl.materials_from_run(run_data, scene)
                 if args.materials_out:

@@ -15,6 +15,13 @@ inside NetLogo. Plan: [ROADMAP.md](docs/ROADMAP.md#v11-models-come-alive).
   in the procedures setup and go call, reads models whose code is escaped XML, takes `--setup` and
   `--go` commands (with inputs: `--setup "setup 4"`, which a refusal suggests from the model's own
   buttons), and the recorder's names can no longer clash with a model's (all `construct-`).
+- **Runs to music:** `construct:music "track.mp3"` makes a tick a moment of a track (30 a second by
+  default), `construct:kick`, `construct:energy`, `construct:high` and `construct:hit` let a model's
+  code follow it, and `construct:run` lasts the track. The construct plays back in time with the
+  music: its page is film mode by itself (the build at the run's clock, the light and accents from
+  the track, which the replay bar plays), the track's fingerprint is under the data lock, and the
+  track is copied beside the scene. `construct audio` gains `kick`: a pulse on each kick or bass
+  hit, even over a held bass ([NETLOGO.md](docs/NETLOGO.md#5-music-optional)).
 - **A legend on every NetLogo construct,** each part named where it is and shown from the start;
   no projector or drifting motes on a construct of data. An art layer's `"legend": false` drops it
   where its own annotations replace it (the three examples). A scene may now ask to open with its

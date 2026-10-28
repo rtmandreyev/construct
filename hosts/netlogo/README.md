@@ -44,6 +44,27 @@ beside the model (`wolf-sheep-predation-construct/construct.html`) and opens in 
 its legend, a **How to read it** panel and a replay bar that draws the run up to any tick, with the
 tracked counts at that tick.
 
+**To make a model move to music,** name a track first. A tick becomes a moment of the track (30 a
+second), and the model's own code can listen:
+
+```
+construct:music "track.mp3"
+```
+
+```
+to go
+  set max-separate-turn 1.5 + 12 * construct:kick   ;; each kick bursts the flock apart
+  set max-align-turn 2 + 8 * construct:energy        ;; loud passages: the flock flies as one
+  ask turtles [ flock ]
+  ...
+  tick
+end
+```
+
+Then `construct:run` runs the model for the length of the track, and the construct plays it back
+in time with the music: press play on its replay bar to hear the run with its track. The track is
+analysed once (with ffmpeg) into a small features file beside the run; NetLogo never plays it.
+
 ## Primitives
 
 | Primitive | What it does |
@@ -62,6 +83,9 @@ tracked counts at that tick.
 | `construct:run` | setup, a recording of everything worth recording, go until the model stops (or 1000 runs), then the view the data suits, opened |
 | `construct:run-for n` | the same, for n runs of go |
 | `construct:set-python path` | the Python to draw with (default `python3`, `python` on Windows) |
+| `construct:music "track.mp3"` or `(construct:music "track.mp3" ticks-a-second)` | a track to run to: a tick is a moment of it (30 a second by default); `construct:run` then lasts the track; `construct:music ""` forgets it. Needs ffmpeg |
+| `construct:kick`, `construct:energy`, `construct:high`, `construct:hit` | the music at this tick, 0 to 1: a kick or bass hit (a pulse), the loudness, the brightness, the strongest attacks (0 after the track) |
+| `construct:music-time` | the seconds of the track at this tick |
 
 Views: `"auto"` (the one the data suits: a network where a variable turned, patches that changed,
 two counts that move together, else the agents' paths), `"space-time"` (every turtle's path rising through time), `"network-time"` (the network

@@ -1,6 +1,7 @@
 // Construct reading: for a page whose scene carries a reading (how to read it and, for a run, its clock and
 // counts) or asks for its labels. Labels show from the start (unless ?labels=0) and stay inside the window;
-// "How to read it" is a panel (H); a run gets a replay bar that scrubs it tick by tick with its counts.
+// "How to read it" is a panel (H); a run gets a replay bar that scrubs it tick by tick with its counts. A run
+// recorded with music plays with its track (the file named by reading.music.track, beside the page).
 // The viewer itself is unchanged: this drives it through window.HOLO, after it starts.
 (() => {
   const geo = window.HOLOGRAM_GEOMETRY, reading = geo.reading || {}, q = new URLSearchParams(location.search);
@@ -84,9 +85,14 @@
     const holo = H.hologram, series = reading.series || [], span = c.to - c.from;
     const times = () => holo.assemblyTimes();
     const yOf = (tick) => { const f = Math.max(0, Math.min(1, (tick - c.from) / span)); return c.top * (c.scale === "sqrt" ? Math.sqrt(f) : f); };
-    const tOf = (tick) => { const a = times(), ph = c.phase[0] * yOf(tick) + c.phase[1]; return a.ghost + a.collapse + Math.max(0, Math.min(1, ph)) * a.build; };
+    // a run with music (film.js): the viewer's time is the track's, a tick every 1/ticks-per-second of a second
+    const RUN = window.HOLO_FILM && window.HOLO_FILM.run, music = RUN && reading.music;
+    const tOf = (tick) => { const a = times();
+      if (RUN && a.build) return a.ghost + a.collapse + (Math.max(c.from, Math.min(c.to, tick)) - c.from) / RUN.tps;
+      const ph = c.phase[0] * yOf(tick) + c.phase[1]; return a.ghost + a.collapse + Math.max(0, Math.min(1, ph)) * a.build; };
     const tickOf = (t) => {   // the inverse, for the viewer's own replay
       const a = times(); if (!a.build) return c.to;
+      if (RUN) return Math.max(c.from, Math.min(c.to, c.from + (t - a.ghost - a.collapse) * RUN.tps));
       const ph = Math.max(0, Math.min(1, (t - a.ghost - a.collapse) / a.build)), f = Math.max(0, Math.min(1, ((ph - c.phase[1]) / c.phase[0]) / c.top));
       return c.from + span * (c.scale === "sqrt" ? f * f : f);
     };
@@ -97,7 +103,12 @@
     const fmt = (v) => v == null ? "–" : Number.isInteger(v) ? String(v) : v.toFixed(Math.abs(v) < 10 ? 2 : 1);
 
     const bar = el("div", "rd-box rd-bar"), play = el("button", null, "▶"), range = el("input"), read = el("div", "rd-read");
-    play.setAttribute("aria-label", "Play the run");
+    play.setAttribute("aria-label", music ? "Play the run with its music" : "Play the run");
+    // the track beside the page; if it is not there (or cannot play), the run plays in silence at the track's pace
+    const audio = music && music.track ? new Audio(music.track) : null;
+    let heard = !!audio;
+    if (audio) { audio.preload = "auto"; audio.addEventListener("error", () => { heard = false; }); }
+    const hush = () => { if (audio && !audio.paused) audio.pause(); };
     Object.assign(range, { type: "range", min: c.from, max: c.to, step: "any", value: c.to });
     range.setAttribute("aria-label", "The run's " + c.label);
     bar.append(play, range, read);
@@ -118,23 +129,29 @@
       if (holo.opt.reduced) H.renderAt(tOf(tick), { reduced: false }); else H.renderAt(tOf(tick));
       show();
     };
-    range.addEventListener("input", () => { mode = "scrub"; play.textContent = "▶"; take(parseFloat(range.value)); });
+    range.addEventListener("input", () => { mode = "scrub"; play.textContent = "▶"; hush(); take(parseFloat(range.value)); });
     play.addEventListener("click", () => {
-      if (mode === "play") { mode = "scrub"; play.textContent = "▶"; return; }
+      if (mode === "play") { mode = "scrub"; play.textContent = "▶"; hush(); return; }
       if (tick >= c.to - 1e-9) take(c.from);
       mode = "play"; play.textContent = "❚❚"; last = performance.now();
+      if (audio && heard) {
+        audio.currentTime = (tick - c.from) / RUN.tps;
+        audio.play().catch(() => { heard = false; });
+      }
     });
     window.addEventListener("keydown", (e) => {
-      if (e.key === "r" || e.key === "R") { mode = "viewer"; t0 = performance.now(); paused = false; play.textContent = "▶"; }   // the viewer's replay
+      if (e.key === "r" || e.key === "R") { mode = "viewer"; t0 = performance.now(); paused = false; play.textContent = "▶"; hush(); }   // the viewer's replay
       else if (e.key === " " && mode === "viewer") { if (paused) { t0 += performance.now() - pausedAt; paused = false; } else { pausedAt = performance.now(); paused = true; } }
     });
     const loop = (now) => {
       if (mode === "viewer" && !paused) { tick = tickOf((now - t0) / 1000); show(); }
       else if (mode === "play") {
-        const k = tick + span * (now - last) / 1000 / Math.max(6, times().build || 12);
+        const k = audio && heard && !audio.paused ? c.from + audio.currentTime * RUN.tps   // the track's clock
+          : RUN ? tick + RUN.tps * (now - last) / 1000
+          : tick + span * (now - last) / 1000 / Math.max(6, times().build || 12);
         last = now;
         take(k);
-        if (tick >= c.to) { mode = "scrub"; play.textContent = "▶"; }
+        if (tick >= c.to) { mode = "scrub"; play.textContent = "▶"; hush(); }
       }
       requestAnimationFrame(loop);
     };

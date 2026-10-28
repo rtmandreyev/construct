@@ -15,6 +15,7 @@ structure and detail support them.
 import hashlib
 import json
 import math
+import re
 
 from . import product, shapes
 
@@ -874,7 +875,7 @@ def _validate(scene):
 def _reading_check(c, r):
     """scene.reading: how to read the construct and, for a construct of a run, its clock and counts."""
     w = "scene.reading"
-    if not c.keys(r, {"how", "clock", "series"}, set(), w):
+    if not c.keys(r, {"how", "clock", "series", "music"}, set(), w):
         return
     how = r.get("how", [])
     if not isinstance(how, list) or len(how) > 8:
@@ -893,6 +894,10 @@ def _reading_check(c, r):
             c.err(w + ".clock.to", "expected after `from`")
         if "scale" in clock:
             c.choice(clock["scale"], ("linear", "sqrt"), w + ".clock.scale")
+    if "music" in r:
+        _music_check(c, r["music"], w + ".music")
+        if clock is None:
+            c.err(w + ".music", "needs a clock")
     series = r.get("series", [])
     if series and clock is None:
         c.err(w + ".series", "needs a clock")
@@ -908,6 +913,38 @@ def _reading_check(c, r):
                     isinstance(v, list) and len(v) == 2 and all(isinstance(x, (int, float)) and not isinstance(x, bool)
                                                                 for x in v) for v in vals):
                 c.err(sw + ".values", "expected 1 to 400 [time, value] pairs of numbers")
+
+
+def _music_check(c, m, w):
+    """scene.reading.music: the track a run was recorded to, its clock, and its features for the page."""
+    if not c.keys(m, {"track", "sha256", "ticks_per_second", "seconds", "audio"},
+                  {"track", "ticks_per_second", "seconds", "audio"}, w):
+        return
+    c.text(m["track"], w + ".track", 200)
+    if "/" in str(m["track"]) or "\\" in str(m["track"]):
+        c.err(w + ".track", "expected a file name beside the page, not a path")
+    if "sha256" in m and not re.fullmatch(r"[0-9a-f]{64}|", str(m["sha256"])):
+        c.err(w + ".sha256", "expected 64 hexadecimal digits")
+    tps = m["ticks_per_second"]
+    if not isinstance(tps, int) or isinstance(tps, bool) or not 1 <= tps <= 120:
+        c.err(w + ".ticks_per_second", "expected a whole number from 1 to 120")
+        return
+    c.num(m["seconds"], w + ".seconds", 0.01, 3600)
+    a = m["audio"]
+    if not c.keys(a, {"fps", "energy", "high", "kick", "onset"}, {"fps", "energy", "high", "kick", "onset"}, w + ".audio"):
+        return
+    if a["fps"] != tps:
+        c.err(w + ".audio.fps", "expected the run's ticks a second (%d)" % tps)
+    n = None
+    for k in ("energy", "high", "kick", "onset"):
+        v = a[k]
+        if not isinstance(v, list) or not 1 <= len(v) <= 120 * 3600 or not all(
+                isinstance(x, (int, float)) and not isinstance(x, bool) and 0 <= x <= 1 for x in v):
+            c.err("%s.audio.%s" % (w, k), "expected 1 to %d numbers from 0 to 1" % (120 * 3600))
+        elif n is not None and len(v) != n:
+            c.err("%s.audio.%s" % (w, k), "expected as many values as energy (%d)" % n)
+        elif n is None:
+            n = len(v)
 
 
 def _motion_check(c, mo, w):

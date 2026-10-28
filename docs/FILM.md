@@ -90,6 +90,17 @@ built in stages, foundation first, and each section boundary is where the next s
 stage before it finishes, a short breath, and the new one starts as the music changes. If a track
 has no clear sections, the build simply follows the pace.
 
+**Kicks.** The features also carry `kick`: a pulse on each kick or bass hit, found as a jump of the
+level below about 150 Hz above its last half second, so it pulses even over a bass that never
+stops. A typical kick of the track is near 1. NetLogo models read it as `construct:kick`, and a
+run with music flares on it ([NETLOGO.md](NETLOGO.md#5-music-optional)).
+
+**A run with music.** A construct of a NetLogo run recorded to a track is film mode by itself, with
+no options: the build follows the run's own clock instead of the pace (tick *t* at second *t* ÷
+ticks a second, from the first moment), there are no stages to match to sections, and the light,
+accents and kicks come from the features carried in the page. Its replay bar plays the track with
+the run.
+
 ## How strongly: the reactivity
 
 `--reactivity` sets how strongly the music shows, from 0 to 2. The default, 1, is made so that
@@ -156,7 +167,8 @@ without `--film` is the ordinary construct and ignores these options.
   track.
 - **It listens in mono, at 16 kHz.** Stereo movement and very high frequencies are not used.
 - **The browser preview is silent**, and it is not synchronised to a player: play the track
-  yourself alongside, or watch the rendered film.
+  yourself alongside, or watch the rendered film. (A run with music is the exception: its replay
+  bar plays its track, and the run follows it.)
 
 ## Long assemblies in a scene
 

@@ -2,14 +2,18 @@
 
     construct audio track.wav --out audio.json [--voice stem.wav] [--fps 24] [--scale track|fixed]
 
-writes {"format": "construct-audio", "version": 2, "fps", "energy": [...], "high": [...], "onset": [...],
-"voice": [...], "sections": [...], ...}, one value per video frame, each 0..1, and the sections:
+writes {"format": "construct-audio", "version": 2, "fps", "energy": [...], "high": [...], "kick": [...],
+"onset": [...], "voice": [...], "sections": [...], ...}, one value per video frame, each 0..1, and the sections:
 
 energy[f]  the music's short-term loudness at frame f, smoothed like a meter (fast up, slow down). By default
            each track is mapped to its own range, its 5th to 95th percentile of loudness, so a loud master
            still moves between quiet and loud; `scale="fixed"` keeps the older fixed -40..-10 dBFS window.
 high[f]    brightness and attacks: the level of the first difference of the signal (a simple high-pass),
            mapped to the track's own range the same way and smoothed quickly.
+kick[f]    the low end's attacks: how far the level below about 150 Hz (a two-pole low-pass) jumps above its
+           last half second (at least 1 dB), relative to the track's own kicks (the 80th percentile of its
+           jumps' peaks, at least 2.5 dB: a typical kick is near 1), then decaying in about 0.12 s: a pulse on each kick or bass hit, even where the bass
+           never stops.
 onset[f]   the strongest attack in frame f, 0 for none: a peak in the rise of the level in three bands (low,
            whole, high), at least 0.2 s from the next, relative to the track's own strong attacks.
 voice[f]   a voice stem's level (-60..-10 dBFS), or zeros without a stem.
@@ -31,6 +35,7 @@ MIN_SPAN_DB = 12.0  # a track's range is at least this wide, so a steady tone do
 FIXED = (-40.0, -10.0)  # the older window, for `scale="fixed"`
 ONSET_GAP_S = 0.2  # attacks closer than this are one attack: no flicker faster than 5 a second
 SECTION_WINDOW_S = 8.0  # sections: how much music each side of a moment is compared
+KICK_MIN_DB = 1.0  # a kick jumps at least this far above the low end's last half second; less is a held note's wobble
 
 
 def _decode(path, sr=RATE):
@@ -62,6 +67,41 @@ def levels(samples, fps, sr=RATE):
         loud.append(_db(ms))
         high.append(_db(dms / hop / 4.0))  # a first difference can be twice the signal's swing
     return loud, high
+
+
+def low_levels(samples, fps, sr=RATE, cutoff=150.0):
+    """Per frame: the level in dBFS below about `cutoff` Hz (two one-pole low-passes in a row)."""
+    hop = sr // fps
+    a = math.exp(-2 * math.pi * cutoff / sr)
+    l1 = l2 = 0.0
+    out = []
+    for i in range(0, len(samples) - hop + 1, hop):
+        e = 0.0
+        for x in samples[i:i + hop]:
+            l1 = a * l1 + (1 - a) * x
+            l2 = a * l2 + (1 - a) * l1
+            e += l2 * l2
+        out.append(_db(e / hop))
+    return out
+
+
+def kicks(low, fps):
+    """Per frame, 0..1: the low band's rise above its last half second (see the module docstring)."""
+    w = max(1, round(0.5 * fps))
+    rise = [0.0] * len(low)
+    for i in range(1, len(low)):
+        if low[i] > SILENT_DB:
+            past = low[max(0, i - w):i]
+            r = low[i] - sum(max(x, SILENT_DB) for x in past) / len(past)
+            rise[i] = r if r >= KICK_MIN_DB else 0.0
+    peaks = [r for i, r in enumerate(rise) if r > 0 and r >= rise[i - 1] and (i + 1 == len(rise) or r > rise[i + 1])]
+    ref = max(_percentile(peaks, 0.8), 2.5 * KICK_MIN_DB)
+    decay = math.exp(-1.0 / (0.12 * fps))
+    out, s = [], 0.0
+    for r in rise:
+        s = max(min(1.0, r / ref), s * decay)
+        out.append(round(s, 3))
+    return out
 
 
 def band_levels(samples, hop, sr=RATE):
@@ -205,6 +245,7 @@ def analyse(samples, fps=24, scale="track", voice_samples=None, sr=RATE):
     high_window = track_range(high) if scale == "track" else (FIXED[0] - 10, FIXED[1] - 10)
     energy = _scaled(loud, window, 0.08, 0.02)
     brightness = _scaled(high, high_window, 0.6, 0.25)
+    kick = kicks(low_levels(samples, fps, sr), fps)
     voice = [0.0] * len(energy)
     if voice_samples is not None:
         vl, _ = levels(voice_samples, fps, sr)
@@ -216,7 +257,7 @@ def analyse(samples, fps=24, scale="track", voice_samples=None, sr=RATE):
     onset = onsets(samples, fps, sr)[:len(energy)]
     onset += [0.0] * (len(energy) - len(onset))
     doc = {"format": "construct-audio", "version": 2, "fps": fps, "frames": len(energy), "scale": scale,
-           "energy": energy, "high": brightness, "onset": onset, "voice": voice, "sections": sections(loud, high, fps)}
+           "energy": energy, "high": brightness, "kick": kick, "onset": onset, "voice": voice, "sections": sections(loud, high, fps)}
     if window is not None:
         doc["range_db"] = [round(window[0], 1), round(window[1], 1)]
     return doc
