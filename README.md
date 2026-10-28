@@ -48,7 +48,7 @@ as a 3D model with named parts and working joints, for Blender, game engines and
 | --- | --- | --- |
 | **A game developer** | Props and blockouts with named parts, working joints and real dimensions, as glTF for Godot, Unity or Unreal; the line-light look for scanners, holograms and UI | [3D export](docs/EXPORT.md) |
 | **A 3D artist** | A construct imported into Blender with its build, joints and finish on sliders, ready to light, render or model over | [Blender add-on](hosts/blender/README.md) |
-| **In film and motion** | A construct that assembles across a track of music, rendered to video | [Film mode](docs/FILM.md) |
+| **In film and motion** | A construct that assembles across a track of music, rendered to video; a song or a score as a construct; a construct that hears the room | [Film mode](docs/FILM.md) |
 | **An educator or researcher** | An agent-based model's run drawn as a construct, computed from the recording, with the data locked; from inside NetLogo with the extension | [NetLogo bridge](docs/NETLOGO.md), [extension](hosts/netlogo/README.md) |
 | **A museum or archive** | Reconstructions that say how each part is known (verified, supplied, inferred or decorative), so a visitor can tell evidence from design | [The Measured Light style](docs/STYLE.md) |
 
@@ -107,6 +107,20 @@ Construct turns a NetLogo model's run into something to explore, play to music a
 
 Everything drawn comes from the recording, under a data lock. See [the NetLogo bridge](docs/NETLOGO.md)
 and [the extension](hosts/netlogo/README.md).
+
+## Music: songs, scores and the room
+
+- **A song as a construct.** `construct song track.mp3` draws a track as a tower of sound, each
+  moment a ring shaped by its frequencies, rising with time; its page builds in time with the track
+  and plays it.
+- **A score as a construct.** `construct song piece.mid` stands every note of a MIDI file as a line
+  of light around the circle of fifths, rising through time, each track in its own tone.
+- **In Blender, in time.** Exported to glTF, a song, a score with its audio, or a run to music keeps
+  its clock: **Keyframe to Its Track** in the add-on keys the build to the music and adds the track.
+- **Live.** `?live=1` on a film or kiosk page listens to the room after a touch: its light follows
+  the sound, kicks pulse its glow, and nothing is recorded.
+
+See [film mode](docs/FILM.md).
 
 ## How it works
 
