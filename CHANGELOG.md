@@ -37,6 +37,14 @@ inside NetLogo. Plan: [ROADMAP.md](docs/ROADMAP.md#v11-models-come-alive).
   the clock and counts are under the data lock (the three examples' locks change for this). Pages
   whose scene has no reading are the stock viewer, unchanged (`viewer/reading.js` is added only to
   pages that ask).
+- **A run as a 3D model** (Phase D, opt-in): `construct netlogo … --solid --glb run.glb` adds solids
+  (each turtle a sphere where it rose, a cycle as a tube, a spread as a surface) and exports the
+  run in its own NetLogo colours, its build replaying the run in Blender; `--materials-out` writes
+  the colour map, and `construct:draw … "model" true` does it from NetLogo.
+- **NetLogo for every agent** (Phase E): the MCP server gains `construct_netlogo_instrument` (a model's
+  text in, the recording copy, its experiment and the recorder out) and `construct_netlogo_draw` (a
+  recording in, the locked construct out, with an art layer, solids and the run's colours on
+  request); the skill's NetLogo steps cover the extension, the reading and 3D models.
 
 ## 1.0.0 — 2026-10-27
 

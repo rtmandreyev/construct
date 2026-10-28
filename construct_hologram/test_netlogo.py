@@ -239,6 +239,46 @@ class Views(unittest.TestCase):
         page, _ = render.build_html(scene.compile_scene(stock))
         self.assertNotIn("HOW TO READ IT", page)   # a construct that asks for nothing: the stock page
 
+    def test_solids_for_a_3d_model(self):
+        plain = netlogo.scene_from_run(self.run, "network-time", state="infected?")
+        sc = netlogo.scene_from_run(self.run, "network-time", state="infected?", solid=True)
+        self.check(sc)
+        nodes = [p for p in sc["parts"] if p["id"].startswith("node-")]
+        self.assertEqual((len(nodes), len(sc["parts"]) - len(nodes)), (6, len(plain["parts"])))   # added, nothing else
+        self.assertTrue(all(p["shape"]["type"] == "sphere" and p["source"] == "run" for p in nodes))
+        risen = next(p for p in nodes if p["id"] == "node-5")             # turtle 5 turns at tick 10
+        self.assertAlmostEqual(risen["at"][1], netlogo._World(self.run["header"], 11).height(10), places=2)
+        self.assertNotEqual(netlogo.data_lock(sc), netlogo.data_lock(plain))   # the solids are locked data too
+        self.assertIn("node-* (6)", next(f for f in sc["facts"] if f["key"] == netlogo.LOCK)["note"])
+        sc = netlogo.scene_from_run(self.run, "phase", solid=True)
+        self.check(sc)
+        tubes = [p for p in sc["parts"] if p["id"].startswith("phase-solid-")]
+        self.assertTrue(1 <= len(tubes) <= netlogo.SOLID_TUBES)
+        self.assertTrue(all(2 <= len(p["shape"]["path"]) <= netlogo.MAX_TUBE for p in tubes))
+        sc = netlogo.scene_from_run(self.run, "field", levels=4, solid=True)
+        self.check(sc)
+        surf = next(p for p in sc["parts"] if p["id"] == "surface")
+        self.assertEqual(surf["shape"]["type"], "terrain")
+        hs = [h for row in surf["shape"]["heights"] for h in row]
+        self.assertAlmostEqual(max(hs), netlogo._World(self.run["header"], 11).top, places=2)   # never changed: the top
+
+    def test_the_runs_own_colours(self):
+        self.assertEqual(netlogo.netlogo_rgb(15), "#d73229")      # red
+        self.assertEqual(netlogo.netlogo_rgb(10), "#000000")      # the darkest red is black
+        self.assertEqual(netlogo.netlogo_rgb([10, 20, 30]), "#0a141e")
+        sc = netlogo.scene_from_run(self.run, "network-time", state="infected?", solid=True)
+        mats = netlogo.materials_from_run(self.run, sc)
+        where = {pid: m["color"] for m in mats["materials"] for pid in m["parts"]}
+        self.assertEqual(where["node-0"], netlogo.netlogo_rgb(15))   # each turtle in its own last colour
+        self.assertEqual(where["world"], "#1a1a1e")
+        from . import export
+        with tempfile.TemporaryDirectory() as d:
+            export.export(sc, Path(d, "run.glb"), wire="tubes", materials=mats)
+            doc, _ = export.read_glb(Path(d, "run.glb").read_bytes())
+            names = {n.get("name") for n in doc["nodes"]}
+            self.assertTrue({"node-0", "node-5", "network"} <= names)
+            self.assertIn("netlogo #d73229", {m["name"] for m in doc["materials"]})
+
     def test_the_field_hangs_at_its_ticks(self):
         sc = netlogo.scene_from_run(self.run, "field", levels=4)
         self.assertIs(next(p for p in sc["parts"] if p["id"] == "fronts")["floating"], True)
@@ -381,6 +421,40 @@ class ArtDirection(unittest.TestCase):
             netlogo.apply_art(moved, self.ART)
 
 
+class Mcp(unittest.TestCase):
+    """The NetLogo tools over MCP: instrument a model, draw a run with solids and colours, export it."""
+
+    def test_instrument_draw_export(self):
+        import base64
+        import sys
+        from . import export
+        with tempfile.TemporaryDirectory() as d:
+            run = recording(Path(d, "run.jsonl")).read_text(encoding="utf-8")
+        call = lambda i, name, args: {"jsonrpc": "2.0", "id": i, "method": "tools/call",
+                                      "params": {"name": name, "arguments": args}}
+        msgs = [{"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {}},
+                call(2, "construct_netlogo_instrument", {"model": MODEL, "title": "Contagion", "turtles": ["infected?"],
+                                                         "seed": 3, "ticks": 40}),
+                call(3, "construct_netlogo_draw", {"recording": run, "view": "network-time", "state": "infected?",
+                                                   "solid": True, "materials": True,
+                                                   "art": {"credit": "Claude Opus 5.5", "reading": {"how": ["Read it up."]}}}),
+                call(4, "construct_netlogo_draw", {"recording": "{not json", "view": "phase"})]
+        r = subprocess.run([sys.executable, "-m", __package__ + ".mcp_server"], cwd=HERE.parent, capture_output=True,
+                           text=True, input="".join(json.dumps(m) + "\n" for m in msgs))
+        out = {x["id"]: x for x in (json.loads(l) for l in r.stdout.splitlines() if l.strip())}
+        inst = out[2]["result"]["structuredContent"]
+        self.assertIn('__includes ["construct.nls"]', inst["model"])
+        self.assertIn("random-seed 3", inst["experiment"])
+        self.assertIn("to construct-record", inst["recorder"])
+        drawn = out[3]["result"]["structuredContent"]
+        self.assertEqual((drawn["data_lock"], drawn["scene"]["reading"]["how"]), ("intact", ["Read it up."]))
+        self.assertTrue(any(p["id"] == "node-0" for p in drawn["scene"]["parts"]))
+        self.assertTrue(out[4]["result"]["isError"])
+        glb, _ = export.render(drawn["scene"], "glb", "tubes", materials=drawn["materials"])
+        doc, _ = export.read_glb(glb["glb"])
+        self.assertIn("node-0", {n.get("name") for n in doc["nodes"]})
+
+
 class Paths(unittest.TestCase):
     def test_the_paths_shape(self):
         sc = studio.starter("object")
@@ -470,12 +544,13 @@ class Extension(unittest.TestCase):
                                       timeout=600)
             r = drive('random-seed 4 setup construct:start "Contagion" construct:seed 4 '
                       'construct:track-turtles ["infected?"] construct:track-reporter "infected" [-> count turtles with [infected?]] '
-                      'construct:record', "repeat 30 [ go construct:record ]", "construct:finish", '(construct:draw "space-time" "max-agents" 10 "time" "sqrt")')
+                      'construct:record', "repeat 30 [ go construct:record ]", "construct:finish", '(construct:draw "space-time" "max-agents" 10 "time" "sqrt" "model" true)')
             self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
             ext = netlogo.read_run(Path(d, "contagion-run.jsonl"))
             self.assertEqual((ext["header"]["seed"], ext["header"]["reporters"], ext["end"], len(ext["frames"])),
                              (4, ["infected"], 30, 31))
             self.assertTrue(Path(d, "contagion-construct", "construct.html").is_file())
+            self.assertTrue(Path(d, "contagion-construct", "run.glb").stat().st_size > 1000)   # "model" true: the 3D model
             self.assertEqual(json.loads(Path(d, "contagion-construct", "audit.json").read_text())["errors"], [])
             r = drive("setup construct:record")
             self.assertIn("construct:start first", r.stdout)

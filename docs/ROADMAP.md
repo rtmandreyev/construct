@@ -158,12 +158,12 @@ work (art direction, critic rounds, 3D models) is opt-in.
   mode; the data lock keeps every round honest.
 - Legends placed to stay inside the frame. (Done.)
 
-### Phase D: real 3D models of a run (opt-in)
+### Phase D: real 3D models of a run (opt-in; built, Blender check next)
 
 - NetLogo constructs export to glTF as proper geometry: tracks and links as tubes, agents as
   solids, one named object per breed or part, the run as the build animation. Tested in Blender.
 
-### Phase E: every agent
+### Phase E: every agent (MCP tools and skill done)
 
 - NetLogo tools in the MCP server (instrument, draw, art direction), so Hermes and any MCP client
   can drive the bridge, and the skills' steps to match.

@@ -299,7 +299,8 @@ public class ConstructExtension extends DefaultClassManager {
     public void perform(Argument[] args, Context c) throws ExtensionException { python = args[0].getString(); }
   }
 
-  static final List<String> OPTIONS = List.of("state", "x", "z", "change", "time", "max-agents", "smooth", "levels", "resolution", "title", "art");
+  static final List<String> OPTIONS = List.of("state", "x", "z", "change", "time", "max-agents", "smooth", "levels", "resolution", "title", "art",
+      "model");
 
   /** construct:draw "phase"   or   (construct:draw "network-time" "state" "infected?" "time" "sqrt")   or   (construct:draw "phase" "smooth" 25) */
   static class Draw implements Command {
@@ -320,8 +321,13 @@ public class ConstructExtension extends DefaultClassManager {
         Object name = args[i].get(), v = args[i + 1].get();
         if (!(name instanceof String) || !OPTIONS.contains(name))
           throw new ExtensionException("construct:draw has no option " + Dump.logoObject(name, true, false) + "; it has " + String.join(", ", OPTIONS));
+        String value = v instanceof Double ? num((Double) v) : v instanceof String ? (String) v : Dump.logoObject(v);
+        if (name.equals("model")) {   // ("model" true): solids and a 3D model of the run, run.glb beside the page
+          if (value.equals("true")) { draw.add("--solid"); draw.add("--glb"); draw.add(new File(dir, "run.glb").getPath()); }
+          continue;
+        }
         draw.add("--" + name);
-        draw.add(v instanceof Double ? num((Double) v) : v instanceof String ? (String) v : Dump.logoObject(v));
+        draw.add(value);
       }
       run(draw, dir);
       run(List.of(python, "-m", "construct_hologram", "build", new File(dir, "scene.json").getPath(), "--out", dir.getPath()), dir);

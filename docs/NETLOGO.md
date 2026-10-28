@@ -20,6 +20,9 @@ run.jsonl             ──►  construct netlogo --view …    ──►  scen
 Or, inside NetLogo 7, with the [Construct extension](../hosts/netlogo/README.md): a few
 `construct:` lines in the model record the run, and `construct:draw "phase"` in the Command Center
 draws it and opens it in the browser. Both write the same recording.
+An AI agent can do all of it over MCP: `construct_netlogo_instrument` returns the recording copy of
+a model, and `construct_netlogo_draw` turns a recording into a construct (with an art layer, solids
+and the run's colours on request), for `construct_compile` and `construct_export`.
 
 No AI model is needed for any of it: the construct is computed from the recording, so the same run
 always gives the same construct, and every data part is marked `verified` against the recording
@@ -178,6 +181,24 @@ What makes a good pass:
 - **A few rounds, looked at.** `construct review scene.json --out out/` before and after each change;
   keep a change only when the construct reads better. The house style is in [STYLE.md](STYLE.md).
 - The layer is kept beside the scene, so the pass is reviewable and redrawn with the run.
+
+## 4. A 3D model (optional)
+
+A run can also leave as a 3D model, for Blender, a game engine or a print:
+
+```sh
+construct netlogo run.jsonl --view network-time --state infected? --solid --glb run.glb --out scene.json
+```
+
+`--solid` adds solid parts to the construct: each turtle as a sphere where it rose (network-time;
+up to 200, chosen evenly by who), the cycle as a tube (phase), and the spread as a surface, each
+place at the height of the tick it changed (field; places that never changed sit at the top). The
+tracks of space-time leave as tubes. `--glb` exports the model in the run's own NetLogo colours
+(each turtle's last colour, each breed's most common one, the colour patches changed to), with
+the build as `_PHASE`, so the Blender add-on's **Build** replays the run; `--materials-out` writes
+that colour map for `construct export`. In NetLogo, `(construct:draw "network-time" "state"
+"infected?" "model" true)` writes `run.glb` beside the page. The solids are drawn from the
+recording like everything else, under the data lock; without `--solid`, nothing changes.
 
 ## How it was checked
 

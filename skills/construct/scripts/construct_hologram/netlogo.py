@@ -35,6 +35,9 @@ from . import product
 
 FLOOR = 10.0         # metres: the world's longer side on the floor
 HEIGHT = 6.0         # metres: tick 0 to the last tick (a space-time cube is as tall as it is wide)
+SOLID_NODES = 200    # --solid: at most this many turtles as spheres (a scene holds 256 parts)
+SOLID_TUBES = 12     # --solid: the phase cycle as at most this many tubes of MAX_TUBE points
+MAX_TUBE = 64        # points in one tube (the scene's limit)
 MAX_SEGMENTS = 18000  # of the line budget (24,000), for the data; the scene stays under 1 MB
 VIEWS = ("space-time", "network-time", "phase", "field")
 NLS = Path(__file__).resolve().parent / "construct.nls"   # the recorder, copied beside a model
@@ -235,8 +238,13 @@ def instrument(text, title, run_file, turtles=(), reporters=(), patches=None, ev
 # ---------------------------------------------------------------------------- the recording
 
 def read_run(path):
+    return parse_run(Path(path).read_text(encoding="utf-8"))
+
+
+def parse_run(text):
+    """A recording (construct.nls or the extension's JSON Lines) as {header, frames, end}."""
     header, frames, end = None, [], None
-    for n, line in enumerate(Path(path).read_text(encoding="utf-8").splitlines(), 1):
+    for n, line in enumerate(text.splitlines(), 1):
         if not line.strip():
             continue
         try:
@@ -393,6 +401,20 @@ def _network_time(run, world, opts):
     summary = ("The network on the floor; each turtle rises to the tick its %s first turned true, and each link "
                "between two risen turtles climbs from the earlier to the later." % var)
     facts = [("state", var), ("turned", "%d of %d turtles" % (len(when), len(pos)))]
+    if opts.get("solid"):   # a solid for each turtle, for a 3D model: risen where it turned, else on the floor
+        who = sorted(pos)
+        pick = who if len(who) <= SOLID_NODES else [who[round(i * (len(who) - 1) / (SOLID_NODES - 1))]
+                                                    for i in range(SOLID_NODES)]
+        r = round(0.012 * FLOOR, 3)
+        for w in pick:
+            at = world.floor(*pos[w], when.get(w, 0))
+            node = _part("node-%d" % w, "Turtle %d%s" % (w, ", risen at tick %g" % when[w] if w in when else ""), "data",
+                         {"type": "sphere", "radius": r, "lat": 3, "lon": 5})
+            node["at"] = [at[0], round(at[1] + (0 if w in when else r), 3), at[2]]
+            node["floating"] = w in when
+            parts.append(node)
+        facts.append(("solids", "a sphere for %d of %d turtles%s" % (len(pick), len(who),
+                                                                     ", chosen evenly by who" if len(pick) < len(who) else "")))
     return parts, summary, facts
 
 
@@ -451,6 +473,21 @@ def _phase(run, world, opts):
              ("z", "%s, %g to %g" % (zs, round(lo_z, 2), round(hi_z, 2)))]
     if win > 1:
         facts.append(("smoothing", "a centred moving average over %d records" % win))
+    if opts.get("solid"):   # the rising cycle as a solid: a chain of tubes along it, for a 3D model
+        line = [v for chunk in rising for v in chunk]
+        step = max(1, math.ceil((len(line) - 1) / (SOLID_TUBES * (MAX_TUBE - 1))))
+        line = line[::step] + ([line[-1]] if (len(line) - 1) % step else [])
+        k = 0
+        for i in range(0, len(line) - 1, MAX_TUBE - 1):
+            seg = line[i:i + MAX_TUBE]
+            if len(seg) >= 2:
+                tube = _part("phase-solid-%d" % k, "%s and %s, rising with time, as a solid" % (xs, zs), "data",
+                             {"type": "tube", "path": seg, "radius": round(0.008 * FLOOR, 3), "sides": 8,
+                              "samples": 2, "longitudinal": 0, "ring_every": 16})
+                tube["floating"] = True
+                parts.append(tube)
+                k += 1
+        facts.append(("solids", "the rising cycle as %d tubes through %d of its points" % (k, len(line))))
     return [p for p in parts if p["shape"].get("paths", True)], summary, facts
 
 
@@ -558,6 +595,24 @@ def _field(run, world, opts):
              ("fronts", "%d levels, tick %d to %d" % (levels, t0, t1))]
     if step > 1:
         facts.append(("grid", "%d x %d patches in blocks of %d" % (cols, rows, step)))
+    if opts.get("solid"):   # the change as a surface, for a 3D model: each block at the height of its tick
+        gr, gc = len(grid), len(grid[0])
+        keep = max(1, math.ceil(max(gr, gc) / 128))   # the scene's terrain holds 128 x 128
+        rows_k = list(range(0, gr, keep)); cols_k = list(range(0, gc, keep))
+        heights = [[round(world.height(grid[r][c]) if grid[r][c] is not None else world.top, 3) for c in cols_k]
+                   for r in rows_k]
+        if len(rows_k) >= 2 and len(cols_k) >= 2:
+            x0 = w["min-pxcor"] + step / 2 - 0.5
+            y0 = w["max-pycor"] - step / 2 + 0.5
+            a = world.floor(x0, y0)
+            b = world.floor(x0 + cols_k[-1] * step, y0 - rows_k[-1] * step)
+            surf = _part("surface", "When each place changed, as a surface (at the top: never in the run)", "data",
+                         {"type": "terrain", "size": [round(b[0] - a[0], 3), round(b[2] - a[2], 3)], "heights": heights,
+                          "grid_every": 0, "skirt": True})
+            surf["at"] = [round((a[0] + b[0]) / 2, 3), 0, round((a[2] + b[2]) / 2, 3)]
+            parts.append(surf)
+            facts.append(("solids", "a surface of %d x %d blocks; blocks that never changed sit at the top" %
+                          (len(cols_k), len(rows_k))))
     return parts, summary, facts
 
 
@@ -622,6 +677,70 @@ def scene_from_run(run, view, title=None, **opts):
 # ---------------------------------------------------------------------------- the legend
 
 LEGEND_DIRS = ((1, 0.4, 1), (-1, 0.4, 1), (1, 0.4, -1), (-1, 0.4, -1), (0, 1, 0), (0.2, 0.2, 1))
+
+
+# NetLogo's colours: a number 0..140, ten to a hue (5, 15, 25 ... the base colours), 0 black to 9.9 white
+NL_BASE = [(141, 141, 141), (215, 50, 41), (241, 105, 19), (156, 109, 70), (237, 237, 47), (87, 176, 58),
+           (42, 209, 57), (27, 158, 119), (82, 196, 196), (43, 140, 190), (52, 93, 169), (124, 80, 164),
+           (167, 27, 106), (224, 127, 150)]
+
+
+def netlogo_rgb(c):
+    """A NetLogo colour (a number, or an RGB(A) list) as '#rrggbb'."""
+    if isinstance(c, list) and len(c) >= 3:
+        rgb = [max(0, min(255, int(round(v)))) for v in c[:3]]
+    elif isinstance(c, (int, float)) and not isinstance(c, bool):
+        c = float(c) % 140
+        base = NL_BASE[int(c // 10)]
+        shade = c % 10 - 5   # -5 black .. 0 the base .. +4.9 near white
+        if shade < 0:
+            rgb = [round(v * (1 + shade / 5)) for v in base]
+        else:
+            rgb = [round(v + (255 - v) * shade / 5) for v in base]
+    else:
+        rgb = [200, 200, 200]
+    return "#%02x%02x%02x" % tuple(rgb)
+
+
+def materials_from_run(run, scene):
+    """A material map (export --materials) in the run's own colours: each turtle's last colour, each breed's
+    most common one, the colour patches changed to; the frame dark, the time axis grey."""
+    from collections import Counter
+    last = run["frames"][-1].get("turtles") or next((f["turtles"] for f in reversed(run["frames"]) if f.get("turtles")), [])
+    colour = {r[0]: netlogo_rgb(r[4]) for r in last}
+    breed = {}
+    for r in last:
+        breed.setdefault(r[1], Counter())[colour[r[0]]] += 1
+    groups = {}
+    accent = "#d16bd0"
+    patch = None
+    h = run["header"]
+    if h.get("patch-reporter") == "pcolor":
+        samples = [f["patches"] for f in run["frames"] if "patches" in f]
+        if len(samples) >= 2:
+            changed = Counter(netlogo_rgb(b) for a, b in zip(samples[0], samples[-1]) if a != b)
+            patch = changed.most_common(1)[0][0] if changed else None
+    for part in scene["parts"]:
+        pid = part["id"]
+        if part["role"] == "mass":                 # the world's floor plate
+            c = "#1a1a1e"
+        elif part["role"] == "ground":             # axes, the time axis, what is drawn on the floor
+            c = "#8d8d8d"
+        elif pid.startswith("node-") and pid[5:].isdigit():
+            c = colour.get(int(pid[5:]), accent)
+        elif pid.startswith("tracks-") and pid[7:] in breed:
+            c = breed[pid[7:]].most_common(1)[0][0]
+        elif pid in ("surface", "fronts"):
+            c = patch or accent
+        elif part.get("source") == "run":
+            c = accent
+        else:
+            continue
+        groups.setdefault(c, []).append(pid)
+    return {"about": "Colours from the NetLogo run itself (each turtle's last colour, each breed's most common one, "
+                     "the colour patches changed to); written by construct netlogo --materials-out.",
+            "materials": [{"parts": ids, "name": "netlogo %s" % c, "color": c, "finish": "plastic", "roughness": 0.5}
+                          for c, ids in groups.items()]}
 
 
 def _legend(parts, sqrt=False):
@@ -759,13 +878,25 @@ def _in_steps(scene):
     return scene
 
 
+def _id_groups(ids):
+    """Part ids for a note, numbered ones as a group: "network, risen, node-* (150)"."""
+    out, seen = [], {}
+    for i in ids:
+        m = re.match(r"(.*-)\d+$", i)
+        key = m.group(1) + "*" if m else i
+        seen[key] = seen.get(key, 0) + 1
+        if seen[key] == 1:
+            out.append(key)
+    return ", ".join(k if seen[k] == 1 else "%s (%d)" % (k, seen[k]) for k in out)
+
+
 def lock(scene):
     """The scene with its data_lock fact."""
     run_parts = [p["id"] for p in scene["parts"] if p.get("source") == "run"]
     scene["facts"] = [f for f in scene["facts"] if f["key"] != LOCK] + [
         {"key": LOCK, "value": data_lock(scene), "certainty": "verified", "source": "run",
-         "note": "The data as the bridge drew it from the recording: %d parts (%s), the run's facts and the view. "
-                 "The audit refuses the scene if any of it changes." % (len(run_parts), ", ".join(run_parts))[:600]}]
+         "note": ("The data as the bridge drew it from the recording: %d parts (%s), the run's facts and the view. "
+                 "The audit refuses the scene if any of it changes." % (len(run_parts), _id_groups(run_parts)))[:600]}]
     return scene
 
 

@@ -483,6 +483,10 @@ def add_commands(sub):
     p.add_argument("--resolution", type=int, help="field: blocks across the world (default 64)")
     p.add_argument("--time", choices=("linear", "sqrt"), default="linear",
                    help="height from ticks: linear (default) or sqrt, to stretch a run whose changes come early")
+    p.add_argument("--solid", action="store_true", help="add solids for a 3D model: each turtle as a sphere "
+                   "(network-time), the cycle as a tube (phase), the change as a surface (field)")
+    p.add_argument("--materials-out", help="also write a material map in the run's own NetLogo colours (for export)")
+    p.add_argument("--glb", help="also export the 3D model (.glb: tubes, solids, the run's colours, the build)")
     p.add_argument("--art", help="an art-direction layer (art.json) on top of the data: views, emphasis, labels, "
                                  "milestones; never the data itself (docs/NETLOGO.md)")
     p.add_argument("--force", action="store_true")
@@ -754,7 +758,8 @@ def run(args):
                 scene = nl.scene_from_run(nl.read_run(args.run), args.view, args.title, state=args.state, x=args.x,
                                           z=args.z, change=args.change, max_agents=args.max_agents,
                                           time=args.time, smooth=args.smooth, levels=args.levels,
-                                          resolution=args.resolution)
+                                          resolution=args.resolution, solid=args.solid)
+                run_data = nl.read_run(args.run)
                 if args.art:
                     scene = nl.apply_art(scene, json.loads(Path(args.art).read_text(encoding="utf-8")))
             except (nl.NetLogoError, json.JSONDecodeError) as exc:
@@ -762,6 +767,14 @@ def run(args):
                 return 1
             text = json.dumps(scene, separators=(",", ":"), ensure_ascii=False) + "\n"   # data: compact
             _write(args.out, text, args.force)
+            if args.materials_out or args.glb:
+                mats = nl.materials_from_run(run_data, scene)
+                if args.materials_out:
+                    _write(args.materials_out, json.dumps(mats, indent=1) + "\n", args.force)
+                if args.glb:
+                    from . import export as export_mod
+                    export_mod.export(scene, args.glb, wire="tubes", materials=mats)
+                    sys.stdout.write("wrote %s: the 3D model (tubes, solids, the run's colours)\n" % args.glb)
             g = scene_mod.compile_scene(scene)
             sys.stdout.write("wrote %s: %s, %d parts, %d lines, %d triangles\n"
                              % (args.out, args.view, len(scene["parts"]), g["counts"]["lines"], g["counts"]["triangles"]))

@@ -173,24 +173,35 @@ track for it ("make a construct of X that assembles across this track"). Otherwi
 ## A NetLogo model as a construct
 
 Only when the user asks to visualise a NetLogo model or run. No scene authoring is needed: the
-bridge computes the construct from a recorded run (details: `docs/NETLOGO.md`).
+bridge computes the construct from a recorded run (details: `docs/NETLOGO.md`). Over MCP, the same
+steps are `construct_netlogo_instrument` and `construct_netlogo_draw`.
 
-1. `python3 TOOLS netlogo-instrument Model.nlogox --title "Model" --out run/` with what to record:
-   `--turtles a,b`, `--reporters "count sheep;count wolves"`, `--patches pcolor:4`, `--no-turtles`,
-   `--seed N`, `--ticks N`. Tell the user to run it in NetLogo (setup, go), or headless with the
-   command it prints, if NetLogo is installed.
+1. Record. If the user works in NetLogo 7, the Construct extension is simplest (`extensions
+   [construct]`, `construct:start`, `construct:record`, then `construct:draw` in the Command
+   Center: `hosts/netlogo/README.md`). Otherwise `python3 TOOLS netlogo-instrument Model.nlogox
+   --title "Model" --out run/` with what to record: `--turtles a,b`, `--reporters "count sheep;count
+   wolves"`, `--patches pcolor:4`, `--no-turtles`, `--seed N`, `--ticks N`. Setup and go come from
+   the model's own buttons when it has no `setup`/`go`; `--setup "setup 4"` when setup takes inputs
+   (a refusal names the buttons). Tell the user to run it in NetLogo (setup, go), or headless with
+   the command it prints, if NetLogo is installed.
 2. `python3 TOOLS netlogo run/run.jsonl --view <view> --out scene.json`: `space-time` (moving agents),
    `network-time --state var` (spreading on a network), `phase --x R1 --z R2` (two quantities in a
    cycle; `--smooth N`), `field` (spreading over patches). `--time sqrt` when most change comes early.
+   The scene carries its legend, how-to-read lines and a replay of the run with its counts.
 3. Build and review it as usual, and credit the model as its Info tab asks.
 4. **Art direction (optional, when the user wants it to look good).** Never edit the data: write a
    layer, `art.json`, and redraw with `--art art.json`. It holds `credit` (your exact model name),
    `title`, `summary`, `looks` (a data part's label, look or note, by id), its own `parts`, `facts`
    and `annotations` (source `art`, or none; `inferred` with a note when computed from the run,
-   else `decorative`), `presentation` (views, framing) and `animation`. Compute every milestone
-   (half adopted, the last burn, a peak) with a short script over `run.jsonl`, never by eye; keep
-   every data part visible; review before and after each change and keep only what reads better.
-   The scene's `data_lock` fact makes `check` refuse any change to the data.
+   else `decorative`), `presentation` (views, framing), `animation`, `reading` (`{"how": [...]}`,
+   the panel's lines in your words) and `legend` (`false` when your annotations replace it).
+   Compute every milestone (half adopted, the last burn, a peak) with a short script over
+   `run.jsonl`, never by eye; keep every data part visible; review before and after each change
+   and keep only what reads better. The scene's `data_lock` fact makes `check` refuse any change to
+   the data.
+5. **A 3D model of the run (optional, when asked):** add `--solid --glb run.glb` (each turtle a
+   sphere where it rose, a cycle as a tube, a spread as a surface, in the run's own colours; the
+   build replays the run in Blender).
 
 ## A 3D model of a construct (export)
 

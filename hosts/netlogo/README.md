@@ -50,6 +50,8 @@ Views: `"space-time"` (every turtle's path rising through time), `"network-time"
 on the floor, each turtle risen to when its state changed: `(construct:draw "network-time" "state"
 "infected?")`), `"phase"` (two tracked reporters against each other, rising through time) and
 `"field"` (a tracked patch variable as stacked layers). `"time" "sqrt"` stretches the early ticks.
+`"model" true` also writes `run.glb` beside the page: a 3D model of the run for Blender or a game
+engine, in the run's own colours (each turtle a sphere, a cycle as a tube, a spread as a surface).
 
 The recording is the same JSON Lines file `construct netlogo-instrument` writes, so everything in
 Construct's command line works on it too: `construct netlogo run.jsonl --view ...`, art

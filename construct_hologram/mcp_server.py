@@ -119,6 +119,47 @@ TOOLS += [
                                                         "\"color\": \"#rrggbb\", \"metallic\", \"roughness\"}]}"}},
                      "required": ["document"], "additionalProperties": False},
      "annotations": _READ_ONLY},
+    {"name": "construct_netlogo_instrument",
+     "description": "A NetLogo 7 model (.nlogox text) that records its run for Construct: the recorder included, "
+                    "set up after setup's reset-ticks and recording after go's tick (or the model's own buttons; a model "
+                    "that never ticks records by steps). Returns the model, a headless BehaviorSpace experiment and the "
+                    "recorder (construct.nls) to save beside it; run it in NetLogo, then draw run.jsonl with "
+                    "construct_netlogo_draw. NetLogo models in the library keep their own licence.",
+     "inputSchema": {"type": "object", "properties": {
+         "model": {"type": "string", "maxLength": 900000, "description": "the .nlogox file's text"},
+         "title": {"type": "string", "maxLength": 120},
+         "turtles": {"type": "array", "items": {"type": "string"}, "description": "turtle variables or reporters, per turtle"},
+         "reporters": {"type": "array", "items": {"type": "string"}, "description": "observer reporters, each record"},
+         "patches": {"type": "object", "properties": {"reporter": {"type": "string"}, "every": {"type": "integer", "minimum": 1}},
+                     "required": ["reporter"], "additionalProperties": False},
+         "every": {"type": "integer", "minimum": 1}, "seed": {"type": "integer"},
+         "ticks": {"type": "integer", "minimum": 1, "description": "the experiment's length"},
+         "skip_turtles": {"type": "boolean"},
+         "setup": {"type": "string", "description": "the setup command, if not the model's own (with inputs: \"setup 4\")"},
+         "go": {"type": "string", "description": "the go command, if not the model's own"}},
+                     "required": ["model", "title"], "additionalProperties": False},
+     "annotations": _READ_ONLY},
+    {"name": "construct_netlogo_draw",
+     "description": "A construct of a recorded NetLogo run (the JSON Lines a run writes), computed from the data alone, "
+                    "with its legend, how-to-read lines, replay clock and counts, and a data lock. Views: space-time "
+                    "(moving agents), network-time (spreading on a network; give state), phase (two reporters in a "
+                    "cycle), field (spreading over patches). Optional: an art-direction layer (art: views, labels, "
+                    "milestones; never the data), solid (spheres, tubes, a surface, for a 3D model) and materials (the "
+                    "run's own colours, for construct_export). Compile or export the scene with the other tools.",
+     "inputSchema": {"type": "object", "properties": {
+         "recording": {"type": "string", "maxLength": 950000, "description": "the run's JSON Lines (a larger run: "
+                       "record with every > 1, or draw it with the command line)"},
+         "view": {"type": "string", "enum": ["space-time", "network-time", "phase", "field"]},
+         "title": {"type": "string", "maxLength": 120},
+         "state": {"type": "string"}, "x": {"type": "string"}, "z": {"type": "string"},
+         "change": {"type": "string", "enum": ["first", "last"]}, "time": {"type": "string", "enum": ["linear", "sqrt"]},
+         "max_agents": {"type": "integer", "minimum": 1}, "smooth": {"type": "integer", "minimum": 1},
+         "levels": {"type": "integer", "minimum": 1}, "resolution": {"type": "integer", "minimum": 4},
+         "solid": {"type": "boolean"}, "materials": {"type": "boolean"},
+         "art": {"type": "object", "description": "an art-direction layer (docs/NETLOGO.md: credit, title, summary, "
+                                                  "looks, parts, facts, annotations, presentation, animation, reading, legend)"}},
+                     "required": ["recording", "view"], "additionalProperties": False},
+     "annotations": _READ_ONLY},
     {"name": "construct_limits",
      "description": "The limits of a mode (fast, masterpiece, unbounded) or tier (wall clock, check and review "
                     "rounds, research counts) with any overrides applied, for the host to enforce: aim for genuinely "
@@ -197,7 +238,11 @@ V2_TOOLS = {"construct_diagnose": ({"text", "document"}, set()),
             "construct_expand_params": ({"params"}, {"params"}),
             "construct_compile": ({"document"}, {"document"}),
             "construct_export": ({"document", "format", "wire", "pose", "frame", "materials", "merge"}, {"document"}),
-            "construct_limits": ({"tier", "request", "overrides"}, set())}
+            "construct_limits": ({"tier", "request", "overrides"}, set()),
+            "construct_netlogo_instrument": ({"model", "title", "turtles", "reporters", "patches", "every", "seed", "ticks",
+                                              "skip_turtles", "setup", "go"}, {"model", "title"}),
+            "construct_netlogo_draw": ({"recording", "view", "title", "state", "x", "z", "change", "time", "max_agents",
+                                        "smooth", "levels", "resolution", "solid", "materials", "art"}, {"recording", "view"})}
 # the 0.2 pre-release names: still answered for one release, no longer listed
 DEPRECATED = {"hologram_diagnose": "construct_diagnose", "hologram_params_template": "construct_params_template",
               "hologram_expand_params": "construct_expand_params", "hologram_compile_scene": "construct_compile"}
@@ -227,6 +272,8 @@ def _call_v2(name, args):
         return _tool_result({"limits": lim, "mode": lim["mode"], "research": asked.get("research", "auto"),
                              "stop": "the review judges it genuinely good, or any limit is reached; then deliver the "
                                      "best version so far with authoring.next"})
+    if name in ("construct_netlogo_instrument", "construct_netlogo_draw"):
+        return _call_netlogo(name, args)
     if name == "construct_params_template":
         if "archetype" not in args:
             return _tool_result({"archetypes": {a: sorted(v) for a, v in params.VARIANTS.items()},
@@ -257,6 +304,36 @@ def _call_v2(name, args):
             out = {"glb_base64": base64.b64encode(out["glb"]).decode("ascii")}
         return _tool_result({**out, "summary": summary})
     return _tool_result(scene.compile_scene(built))
+
+
+def _call_netlogo(name, args):
+    from . import netlogo
+    try:
+        if name == "construct_netlogo_instrument":
+            pat = args.get("patches")
+            model, xml = netlogo.instrument(args["model"], args["title"], "run.jsonl", tuple(args.get("turtles", ())),
+                                            tuple(args.get("reporters", ())),
+                                            (pat["reporter"], pat.get("every", 1)) if pat else None, args.get("every", 1),
+                                            args.get("seed"), args.get("ticks", 500), bool(args.get("skip_turtles")),
+                                            args.get("setup"), args.get("go"))
+            return _tool_result({"model": model, "experiment": xml, "recorder": netlogo.NLS.read_text(encoding="utf-8"),
+                                 "save": {"model": "Model-construct.nlogox", "experiment": "construct-experiment.xml",
+                                          "recorder": "construct.nls (beside the model)"},
+                                 "next": "Run it in NetLogo (setup, go), or headless: NetLogo_Console --headless --model "
+                                         "Model-construct.nlogox --setup-file construct-experiment.xml --experiment "
+                                         "construct --threads 1. It writes run.jsonl; draw it with construct_netlogo_draw."})
+        run = netlogo.parse_run(args["recording"])
+        opts = {k: args[k] for k in ("state", "x", "z", "change", "time", "max_agents", "smooth", "levels", "resolution")
+                if k in args}
+        sc = netlogo.scene_from_run(run, args["view"], args.get("title"), solid=bool(args.get("solid")), **opts)
+        if "art" in args:
+            sc = netlogo.apply_art(sc, args["art"])
+        out = {"scene": sc, "data_lock": "intact" if netlogo.lock_problem(sc) is None else "broken"}
+        if args.get("materials"):
+            out["materials"] = netlogo.materials_from_run(run, sc)
+        return _tool_result(out)
+    except netlogo.NetLogoError as exc:
+        return _tool_result({"error": str(exc)}, is_error=True)
 
 
 def _handle(msg, state):
