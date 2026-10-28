@@ -221,9 +221,9 @@ Construct is deliberately small. You need:
 
 - Python 3.10 or newer. Nothing else to install: no packages, no virtual environment.
 - For review stills, a Chromium-family browser you already have (Chrome, Chromium, Edge, Brave).
-- For video, ffmpeg.
-- For the Blender add-on, Blender 4.2 or newer; for the NetLogo bridge, NetLogo 6 or 7 (the
-  extension: NetLogo 7).
+- For video and for runs to music, ffmpeg.
+- For the Blender add-on, Blender 4.2 or newer (the film of a run: checked in Blender 5.2); for the
+  NetLogo bridge, NetLogo 6 or 7 (the extension: NetLogo 7, and NetLogo 3D 7).
 - Tested on macOS; review capture on Linux and Windows is untested.
 
 ## Documentation
