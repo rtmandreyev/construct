@@ -138,8 +138,8 @@ infected? turned true"), shown from the start (**L** hides it) and kept inside t
 decorative is added: no projector, no drifting motes, nothing that looks like data and isn't.
 
 **Reading it.** The page has a **How to read it** panel (**H**): a few lines for the view, such as
-"A link climbs from the earlier of its two turtles to the later: the steeper the climb, the longer
-it took to pass along that link". And a replay bar: drag it, or press play, and the construct is
+"A link climbs from the earlier of its two turtles to the later: a steep climb joins two turtles
+that turned far apart in time". And a replay bar: drag it, or press play, and the construct is
 drawn up to that tick, with the tick and the run's counts beside it (the recorded reporters; else,
 for a network, how many turtles have the state now, and for a field, how many patches have
 changed). The counts and the clock are the run's data, under the data lock like the parts; an art
@@ -181,6 +181,16 @@ What makes a good pass:
 - **A few rounds, looked at.** `construct review scene.json --out out/` before and after each change;
   keep a change only when the construct reads better. The house style is in [STYLE.md](STYLE.md).
 - The layer is kept beside the scene, so the pass is reviewable and redrawn with the run.
+
+**Critic rounds (opt-in).** For a layer worth the time, run Construct's improvement rounds on the
+scene (`construct rounds start scene.json --mode masterpiece`, redrawing with `--art` between
+rounds): an independent model, which never saw the authoring, judges each version and only a
+version it prefers is kept. For a run, the critic gets the recording's facts, the layer's own facts
+and milestones with how each was computed, the legend, the reading lines and the counts over
+time, and it scores the usual criteria with a run's meaning: above all accuracy (every label and
+number must agree with the recording) and whether a student could read the run. Checked with
+GPT-6.1 Sol through Hermes: given a layer with one planted error (a peak of 97 at tick 18, where
+the recording says 79 at tick 260), it ranked that error first, as critical.
 
 ## 4. A 3D model (optional)
 

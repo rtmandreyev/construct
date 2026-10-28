@@ -815,8 +815,8 @@ def _reading(run, view, world, opts, time):
         "network-time": [
             "The floor is the network as NetLogo laid it out.",
             "Each turtle rises to the tick its %s first turned true; one left on the floor never turned." % opts.get("state"),
-            "A link climbs from the earlier of its two turtles to the later: the steeper the climb, the longer it "
-            "took to pass along that link.",
+            "A link climbs from the earlier of its two turtles to the later: a steep climb joins two turtles that "
+            "turned far apart in time (the link need not be the way it spread).",
             "Height is time, tick 0 to %d%s." % (last, ", as its square root, so the early spread is stretched" if sq else "")],
         "phase": [
             "Across the floor: %s; front to back: %s; height: time, tick 0 to %d." % (

@@ -406,6 +406,22 @@ class ArtDirection(unittest.TestCase):
         with self.assertRaises(netlogo.NetLogoError):
             netlogo.apply_art(self.sc, dict(self.ART, reading={"how": ["x"], "clock": {"label": "day"}}))
 
+    def test_the_critic_of_a_run(self):
+        from . import critic, prompts
+        out = netlogo.apply_art(self.sc, self.ART)
+        brief = critic._run_brief(out)
+        self.assertIn("ticks", [f["key"] for f in brief["facts"]])
+        self.assertTrue(brief["reading"] and brief["legend"])
+        pk = {"title": out["title"], "scene_sha256": "0" * 64, "request": "readable", "pairs": [], "renders": ["renders/hero.png"],
+              "identity": [{"feature": "Half infected", "parts": ["milestone"]}], "run": brief}
+        text = critic.packet_text(pk)
+        self.assertIn("construct of a NetLogo run", text)              # the run's critic, not the object's
+        self.assertIn("The recording's facts", text)
+        self.assertNotIn("No reference images", text)
+        run_prompt = prompts.build()["critic-run.md"]
+        for word in ("accuracy", "critical", "major", "minor", "student"):
+            self.assertIn(word, run_prompt)
+
     def test_art_never_touches_the_data(self):
         part = dict(self.ART["parts"][0], source="run")
         for bad in ({"title": "no credit"}, dict(self.ART, colour="red"),

@@ -148,14 +148,14 @@ work (art direction, critic rounds, 3D models) is opt-in.
 - The same recording format, so the command line, art direction and the data lock keep working.
 - Next: listing it in NetLogo's Extensions Manager, through a pull request to NetLogo-Libraries.
 
-### Phase C: learners first (opt-in polish; reading and replay done)
+### Phase C: learners first (opt-in polish; done)
 
 - A replay control: scrub the run tick by tick and watch the shape form, with the tick and the
   model's own counts on screen. (Done.)
 - "How to read it" on the page: the legend plus what each part of the shape means, from the bridge
   or the art layer. (Done.)
 - Critic rounds for the art layer: an independent model compares versions, as in masterpiece
-  mode; the data lock keeps every round honest.
+  mode; the data lock keeps every round honest. (Done: the run critic.)
 - Legends placed to stay inside the frame. (Done.)
 
 ### Phase D: real 3D models of a run (opt-in; built, Blender check next)

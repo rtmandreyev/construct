@@ -188,14 +188,34 @@ def packet(scene_path, out_dir, references=(), request=None, width=1280, height=
           "title": scene.get("title"), "request": request or (scene.get("subject") or {}).get("summary", ""),
           "identity": [{"feature": i["feature"], "parts": i["parts"]} for i in a.get("identity", [])],
           "pairs": pairs, "renders": sorted("renders/" + n for n in names if n.endswith(".png"))}
+    if any(f.get("key") == "data_lock" for f in scene.get("facts", [])):   # a NetLogo run: judged for reading and truth
+        pk["run"] = _run_brief(scene)
+        if not pk["identity"]:   # what to check: every claim of the art layer
+            pk["identity"] = [{"feature": p["label"], "parts": [p["id"]]} for p in scene["parts"] if p.get("source") == "art"]
+            pk["identity"] += [{"feature": n["text"], "parts": [n["part"]]} for n in scene.get("annotations", [])
+                               if not n["id"].startswith("legend-")]
     (out / "packet.json").write_text(json.dumps(pk, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     (out / "packet.md").write_text(packet_text(pk), encoding="utf-8")
     return pk
 
 
+def _run_brief(scene):
+    """What a run's critic checks claims against: the recording's facts, the art's own, the reading, the counts."""
+    def fact(f):
+        return {k: f[k] for k in ("key", "value", "source", "note") if k in f}
+    r = scene.get("reading") or {}
+    return {"facts": [fact(f) for f in scene["facts"] if f.get("source") == "run" and f["key"] != "data_lock"],
+            "art_facts": [fact(f) for f in scene["facts"] if f.get("source") == "art"],
+            "legend": [n["text"] for n in scene.get("annotations", []) if n["id"].startswith("legend-")],
+            "reading": r.get("how", []), "clock": {k: v for k, v in (r.get("clock") or {}).items() if k != "phase"},
+            "counts": [{"name": s["name"], "values": s["values"][::max(1, len(s["values"]) // 40)]}
+                       for s in r.get("series", [])]}
+
+
 def packet_text(pk):
     from . import prompts
-    lines = [prompts.build()["critic.md"], "", "## This packet", "",
+    run = pk.get("run")
+    lines = [prompts.build()["critic-run.md" if run else "critic.md"], "", "## This packet", "",
              "- Scene: %s (scene_sha256 `%s`: copy it into your answer)" % (pk["title"], pk["scene_sha256"]),
              "- The request: %s" % (pk["request"] or "(not given)")]
     if pk["identity"]:
@@ -206,8 +226,18 @@ def packet_text(pk):
     if pk["pairs"]:
         lines.append("- Compare each reference with the render from the same view:")
         lines += ["  - %s: reference %s beside %s" % (p["view"], p["reference"], p["render"]) for p in pk["pairs"]]
-    else:
+    elif not run:   # a run has none: the recording is its reference
         lines.append("- No reference images: judge against what you know of the subject, and say so.")
+    if run:
+        lines.append("- The recording's facts (true by construction): " + json.dumps(run["facts"], ensure_ascii=False))
+        lines.append("- The art layer's facts (check each against the recording): " + json.dumps(run["art_facts"], ensure_ascii=False))
+        lines.append("- The legend: " + json.dumps(run["legend"], ensure_ascii=False))
+        lines.append("- The reading lines: " + json.dumps(run["reading"], ensure_ascii=False))
+        if run["clock"]:
+            lines.append("- The clock: " + json.dumps(run["clock"]))
+        for cnt in run["counts"]:
+            lines.append("- Counts over time, %s, as [%s, value]: %s" % (cnt["name"], run["clock"].get("label", "tick"),
+                                                                       json.dumps(cnt["values"])))
     lines.append("- Renders: " + ", ".join(pk["renders"]))
     return "\n".join(lines) + "\n"
 

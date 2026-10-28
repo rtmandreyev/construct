@@ -198,7 +198,9 @@ steps are `construct_netlogo_instrument` and `construct_netlogo_draw`.
    Compute every milestone (half adopted, the last burn, a peak) with a short script over
    `run.jsonl`, never by eye; keep every data part visible; review before and after each change
    and keep only what reads better. The scene's `data_lock` fact makes `check` refuse any change to
-   the data.
+   the data. In masterpiece or unbounded mode, judge the layer with the rounds as for any construct
+   (`rounds start scene.json`, redrawing with `--art` between rounds): the critic of a run checks
+   every label and milestone against the recording and judges how well a student could read it.
 5. **A 3D model of the run (optional, when asked):** add `--solid --glb run.glb` (each turtle a
    sphere where it rose, a cycle as a tube, a spread as a surface, in the run's own colours; the
    build replays the run in Blender).

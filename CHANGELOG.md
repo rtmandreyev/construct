@@ -37,6 +37,10 @@ inside NetLogo. Plan: [ROADMAP.md](docs/ROADMAP.md#v11-models-come-alive).
   the clock and counts are under the data lock (the three examples' locks change for this). Pages
   whose scene has no reading are the stock viewer, unchanged (`viewer/reading.js` is added only to
   pages that ask).
+- **Critic rounds for a run** (Phase C, opt-in): the rounds' critic, given a NetLogo construct, checks
+  every label and milestone against the recording's facts and counts and judges how a student
+  would read it (`critic-run.md`); with GPT-6.1 Sol it ranked a planted false milestone first. The
+  network view's reading line no longer claims the change passed along a link.
 - **A run as a 3D model** (Phase D, opt-in): `construct netlogo … --solid --glb run.glb` adds solids
   (each turtle a sphere where it rose, a cycle as a tube, a spread as a surface) and exports the
   run in its own NetLogo colours, its build replaying the run in Blender; `--materials-out` writes
