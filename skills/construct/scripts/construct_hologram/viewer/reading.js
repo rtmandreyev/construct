@@ -3,7 +3,8 @@
 // "How to read it" is a panel (H); a run gets a replay bar that scrubs it tick by tick with its counts. A run
 // recorded with music plays with its track (the file named by reading.music.track, beside the page).
 // A run's panel also offers its counts as CSV and a citation of the run (model, NetLogo, seed, ticks, the data
-// lock), for a spreadsheet or a report.
+// lock), for a spreadsheet or a report. Printed (Cmd/Ctrl+P), the page is a worksheet: the construct as it is
+// on screen, how to read it, the counts at that tick, the citation and three questions with room to answer.
 // The viewer itself is unchanged: this drives it through window.HOLO, after it starts.
 (() => {
   const geo = window.HOLOGRAM_GEOMETRY, reading = geo.reading || {}, q = new URLSearchParams(location.search);
@@ -30,6 +31,21 @@
   .rd-bar input { width: 100%; accent-color: var(--accent); margin: 0; }
   .rd-bar .rd-read { grid-column: 1 / -1; color: #d9c9e6; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .rd-bar .rd-read b { color: var(--ink); font-weight: 600; }
+  .rd-sheet { display: none; }
+  @media print {
+    #stage, .rd-box, .help, .legend { display: none !important; }
+    html, body { background: #fff !important; height: auto !important; overflow: visible !important; }
+    .rd-sheet { display: block; color: #111; font: 11pt/1.45 Georgia, "Times New Roman", serif; padding: 0 4mm; }
+    .rd-sheet h1 { font-size: 20pt; font-weight: normal; margin: 0 0 4mm; }
+    .rd-sheet h2 { font: 600 8.5pt/1 "IBM Plex Mono", ui-monospace, monospace; letter-spacing: .12em; text-transform: uppercase;
+      margin: 6mm 0 2mm; color: #555; }
+    .rd-sheet img { display: block; width: 100%; max-height: 92mm; object-fit: contain; background: #050205; border-radius: 2mm; }
+    .rd-sheet .rd-now { font: 9pt/1.4 "IBM Plex Mono", ui-monospace, monospace; color: #333; margin: 2mm 0 0; }
+    .rd-sheet ol { margin: 0; padding-left: 5mm; } .rd-sheet li { margin: 1mm 0; }
+    .rd-sheet .rd-small { font-size: 8.5pt; color: #555; overflow-wrap: anywhere; }
+    .rd-sheet .rd-q { margin: 4mm 0 1mm; page-break-inside: avoid; }
+    .rd-sheet .rd-lines { height: 15mm; background: repeating-linear-gradient(transparent 0, transparent 7mm, #bbb 7mm, #bbb 7.3mm); }
+  }
   @media (max-width: 700px) { .rd-bar { left: 16px; right: 16px; width: auto; bottom: 96px; } .rd-how { right: 16px; top: 60px; width: calc(100% - 32px); }
     #overlay .labels .label { white-space: normal; width: max-content; max-width: calc(100vw - 28px); } }`;
 
@@ -205,6 +221,31 @@
     return bar;
   }
 
+  // printed, the page is a worksheet, filled the moment it is printed: the construct as it is on screen
+  function worksheet() {
+    const sheet = el("div", "rd-sheet");
+    document.body.appendChild(sheet);
+    const fill = () => {
+      sheet.replaceChildren(el("h1", null, geo.title || ""));
+      const canvas = document.getElementById("holo");
+      try { const img = new Image(); img.src = canvas.toDataURL("image/png"); img.alt = geo.title || ""; sheet.append(img); } catch (e) { /* no picture */ }
+      const now = document.querySelector(".rd-bar .rd-read");
+      if (now) sheet.append(el("p", "rd-now", now.textContent));
+      const list = el("ol");
+      (reading.how || []).forEach((line) => list.append(el("li", null, line)));
+      sheet.append(el("h2", null, "How to read it"), list);
+      const cite = document.querySelector(".rd-cite");
+      if (cite) sheet.append(el("p", "rd-small", cite.textContent));
+      sheet.append(el("h2", null, "Questions"));
+      ["What do you notice first in its shape?", "Where does it change fastest, and what in the model makes it do that?",
+       "What would you change in the model to give it another shape? Predict it, then try it."].forEach((qn) => {
+        sheet.append(el("p", "rd-q", qn), el("div", "rd-lines"));
+      });
+    };
+    window.addEventListener("beforeprint", fill);
+    window.HOLO_WORKSHEET = fill;   // for a printing tool that fires no beforeprint
+  }
+
   const on = () => {
     const H = window.HOLO;
     if (!H || !H.hologram) return;
@@ -215,6 +256,7 @@
       const how = howPanel(overlay), bar = replayBar(overlay, H);
       if (how) parts.push(how);
       if (bar) parts.push(bar);
+      if (how) worksheet();
     }
     keepInside(() => parts);
     window.dispatchEvent(new Event("resize"));   // the viewer redraws, labels and all

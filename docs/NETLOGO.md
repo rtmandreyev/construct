@@ -161,6 +161,10 @@ track if any, Construct's version and the data lock, ready to paste. `construct 
 counts.csv` writes the counts at every record from the recording itself (the clock, each tracked
 reporter, each breed's turtles).
 
+**A worksheet.** Printed (Cmd/Ctrl+P, or Save as PDF), a construct's page is a one-page worksheet: the
+construct as it is on screen (scrub the replay to the moment you want first), how to read it, the
+counts at that tick, the citation, and three questions with room to answer.
+
 **Two runs side by side.** `construct netlogo-compare a.jsonl b.jsonl --labels "vision 3,vision 6"
 --out scene.json` draws two runs of a model the same way, on one time scale (the longer run's): A on
 the left, B on the right, every label, fact and count marked with its run, and one data lock over

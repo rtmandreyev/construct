@@ -283,6 +283,31 @@ class Views(unittest.TestCase):
         page, _ = render.build_html(scene.compile_scene(stock))
         self.assertNotIn("HOW TO READ IT", page)   # a construct that asks for nothing: the stock page
 
+    @unittest.skipUnless(__import__("construct_hologram.render", fromlist=["x"]).find_browser()
+                         and os.environ.get("HOLOGRAM_SKIP_CAPTURE") != "1", "needs a Chromium-family browser")
+    def test_printed_it_is_a_worksheet(self):
+        from . import render
+        page, _ = render.build_html(scene.compile_scene(netlogo.scene_from_run(self.run, "phase")))
+        d = Path(self.tmp.name)
+        (d / "w.html").write_text(page, encoding="utf-8")
+        b = render.Browser(1000, 700, 1.0, gpu=False)
+        try:
+            b.open(render._url(str(d / "w.html")))
+            b.evaluate("HOLO.ready.then(() => new Promise((r) => setTimeout(r, 300)))")
+            b.evaluate("HOLO_WORKSHEET()")
+            got = json.loads(b.evaluate("JSON.stringify({title: document.querySelector('.rd-sheet h1').textContent, "
+                                        "picture: (document.querySelector('.rd-sheet img') || {}).src.slice(0, 21), "
+                                        "how: document.querySelectorAll('.rd-sheet li').length, "
+                                        "questions: document.querySelectorAll('.rd-sheet .rd-q').length})"))
+            b.call("Emulation.setEmulatedMedia", media="print")
+            shown = b.evaluate("[getComputedStyle(document.querySelector('.rd-sheet')).display, "
+                               "getComputedStyle(document.getElementById('stage')).display]")
+        finally:
+            b.close()
+        self.assertEqual(got["picture"], "data:image/png;base64")
+        self.assertEqual((got["how"] > 2, got["questions"]), (True, 3))
+        self.assertEqual(shown, ["block", "none"])   # printed: the worksheet, not the viewer
+
     def test_the_counts_as_csv_and_a_citation_on_the_page(self):
         from . import render
         csv = netlogo.counts_csv(self.run).splitlines()

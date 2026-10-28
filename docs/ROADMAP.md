@@ -191,7 +191,7 @@ work (art direction, critic rounds, 3D models) is opt-in.
 - A run's counts as CSV and a citation of the run, from its How to read it panel.
 - Live in NetLogo: `construct:play` and `construct:sync`, the model in time with its track.
 - Two runs side by side for a lesson (`construct netlogo-compare`: a slider moved, or another seed).
-- Next (1.2): a printable "how to read it" sheet.
+- A printable worksheet: the page, printed, with its picture, how to read it, the citation and questions.
 
 ### Phase H: music as a material (begun)
 

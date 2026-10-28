@@ -51,6 +51,8 @@ inside NetLogo. Plan: [ROADMAP.md](docs/ROADMAP.md#v11-models-come-alive).
 - **Two runs side by side:** `construct netlogo-compare a.jsonl b.jsonl` draws two runs the same way on
   one time scale, A on the left and B on the right, each part, fact, label and count marked with its
   run, under one data lock (a run's lock covers every `run…` source in the scene).
+- **A worksheet:** printed, a construct with a reading is a one-page worksheet: its picture as on
+  screen, how to read it, the counts at that tick, the citation and three questions with room to answer.
 - **For a spreadsheet or a report:** a run's *How to read it* panel offers its counts as CSV and a
   citation of the run (model, NetLogo version, seed, ticks, track, Construct's version, data lock);
   `construct netlogo … --csv` writes the counts at every record.
