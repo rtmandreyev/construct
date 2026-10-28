@@ -805,6 +805,12 @@ class Extension(unittest.TestCase):
                 took = float(next(ln for ln in reversed(r.stdout.splitlines()) if ln.startswith("observer:")).split(":")[1])
                 self.assertTrue(0.9 <= took <= 1.6, r.stdout)        # 10 ticks at 10 a second: a second
                 self.assertIn("keeps time with the clock", r.stdout)
+                r = drive('(construct:music "t.wav" 10)', "setup construct:play repeat 8 [ go wait 0.25 construct:sync ] "
+                                                         "show construct:music-time construct:stop-music")
+                self.assertEqual(r.returncode, 0, r.stdout + r.stderr)   # slower than its track: it follows the sound
+                heard = float(next(ln for ln in reversed(r.stdout.splitlines()) if ln.startswith("observer:")).split(":")[1])
+                self.assertTrue(heard >= 1.8, r.stdout)              # 8 ticks a quarter second apart: 2 s heard, not 0.8
+                self.assertIn("follows the music as you hear it", r.stdout)
 
             # NetLogo 3D: each turtle's height last in its row, the world's depth in the header, no 3D patches
             Path(d, "m3.nlogox3d").write_text(MODEL3D, encoding="utf-8")

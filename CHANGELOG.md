@@ -20,7 +20,8 @@ museums. Plan: [ROADMAP.md](docs/ROADMAP.md#v11-models-come-alive); the story:
   buttons), and the recorder's names can no longer clash with a model's (all `construct-`).
 - **Live in NetLogo:** `construct:play` plays the track from the current tick, and `construct:sync`
   in go waits until the music reaches each tick, so a model moves in time with its track in NetLogo's
-  own view, with the sound (or with the clock, without an audio output); `construct:stop-music`.
+  own view, with the sound (or with the clock, without an audio output); `construct:stop-music`. A
+  model slower than its track follows the music as heard, and says so.
 - **Runs to music:** `construct:music "track.mp3"` makes a tick a moment of a track (30 a second by
   default), `construct:kick`, `construct:energy`, `construct:high` and `construct:hit` let a model's
   code follow it, and `construct:run` lasts the track. The construct plays back in time with the

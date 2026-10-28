@@ -267,7 +267,9 @@ fingerprint and clock: a construct drawn to another track is another construct.
 **Live in NetLogo.** With `construct:sync` after `tick` in go, `construct:play` plays the track from
 the current tick's moment and each run of go waits until the music reaches its tick: the model
 moves in time with the track in NetLogo's own view, with the sound (Java's own audio, from a WAV
-that ffmpeg makes once). Without an audio output the run keeps time with the clock.
+that ffmpeg makes once). Without an audio output the run keeps time with the clock. A model slower
+in the window than its track can't reach each tick in time; it then follows the music as it is heard
+(the strongest kick and hit since its last tick) and says so.
 `construct:stop-music` stops it; `construct:run`, which records as fast as it can, ignores sync.
 
 A construct holds at most 24,000 line segments, so a long run with many moving agents is sampled

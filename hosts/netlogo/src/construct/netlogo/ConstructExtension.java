@@ -572,6 +572,12 @@ public class ConstructExtension extends DefaultClassManager {
     public Object report(Argument[] args, Context c) throws ExtensionException {
       if (track == null) throw new ExtensionException("construct:music \"track.mp3\" first");
       double[] v = music.get(key);
+      if (liveTo >= 0) {   // live, the model behind the track: what is heard now; a kick or hit since the last tick
+        double x = liveTo < v.length ? v[liveTo] : 0.0;
+        if (key.equals("kick") || key.equals("onset"))
+          for (int i = Math.max(0, liveFrom + 1); i < Math.min(liveTo, v.length); i++) x = Math.max(x, v[i]);
+        return x;
+      }
       int i = (int) Math.floor(musicClock(c));
       return i >= 0 && i < v.length ? v[i] : 0.0;
     }
@@ -582,7 +588,7 @@ public class ConstructExtension extends DefaultClassManager {
     public Syntax getSyntax() { return SyntaxJ.reporterSyntax(Syntax.NumberType()); }
     public Object report(Argument[] args, Context c) throws ExtensionException {
       if (track == null) throw new ExtensionException("construct:music \"track.mp3\" first");
-      return musicClock(c) / tps;
+      return (liveTo >= 0 ? liveTo : musicClock(c)) / tps;
     }
   }
 
@@ -592,6 +598,10 @@ public class ConstructExtension extends DefaultClassManager {
   static long playStart = 0;
   static double playFrom = 0;
   static boolean playing = false;
+  /** A model slower than its track (in the window, redrawing the view) cannot keep its ticks' moments: while it is
+   *  behind, it follows the music heard instead, from the frame after liveFrom to liveTo (-1: in time, tick by tick). */
+  static int liveFrom = -1, liveTo = -1;
+  static boolean saidBehind = false;
 
   /** construct:play: the track from the current tick's moment, heard as the model runs (with construct:sync in go).
    *  Without an audio output (a server, a headless run), the run keeps time with the clock instead. */
@@ -657,6 +667,18 @@ public class ConstructExtension extends DefaultClassManager {
       } catch (InterruptedException e) {
         Thread.currentThread().interrupt();
       }
+      int now = (int) Math.floor(heard() * tps), at = (int) Math.floor(musicClock(c));
+      if (playing && now > at + 1) {   // more than a tick behind the track: follow what is heard
+        liveFrom = liveTo >= 0 ? liveTo : at - 1;
+        liveTo = now;
+        if (!saidBehind) {
+          saidBehind = true;
+          say(c, "construct: this model runs slower here than its track's " + (int) tps + " ticks a second, so it follows "
+              + "the music as you hear it (construct:run keeps every tick at its moment)");
+        }
+      } else {
+        liveFrom = liveTo = -1;
+      }
     }
   }
 
@@ -668,6 +690,8 @@ public class ConstructExtension extends DefaultClassManager {
 
   static void stopMusic() {
     playing = false;
+    liveFrom = liveTo = -1;
+    saidBehind = false;
     if (clip != null) {
       clip.stop();
       clip.close();

@@ -74,7 +74,11 @@ construct:play
 ```
 
 and press go (forever). `construct:sync` waits until the track reaches each tick, so the model moves
-in time with the music in NetLogo's own view; `construct:stop-music` stops it.
+in time with the music in NetLogo's own view; `construct:stop-music` stops it. A model that runs
+slower in the window than its track (a view redrawn several times a tick is capped at the view's
+frame rate) follows the music as it is heard instead, and says so: `construct:kick` and `construct:hit`
+then give the strongest kick or hit since the last tick, so none is missed. `construct:run` always
+keeps every tick at its moment.
 
 ## Primitives
 
@@ -98,7 +102,7 @@ in time with the music in NetLogo's own view; `construct:stop-music` stops it.
 | `construct:kick`, `construct:energy`, `construct:high`, `construct:hit` | the music at this tick, 0 to 1: a kick or bass hit (a pulse), the loudness, the brightness, the strongest attacks (0 after the track) |
 | `construct:music-time` | the seconds of the track at this tick |
 | `construct:play` | plays the track from the current tick's moment, heard as the model runs (without an audio output, the run keeps time with the clock) |
-| `construct:sync` | in go, after tick: waits until the track reaches this tick, so the model moves in time with it (nothing until `construct:play`) |
+| `construct:sync` | in go, after tick: waits until the track reaches this tick, so the model moves in time with it; a model slower than its track follows the music as heard (nothing until `construct:play`) |
 | `construct:stop-music` | stops the track |
 
 `construct:draw` options include `"model" true` (a 3D model of the run, `run.glb`, beside the page)
