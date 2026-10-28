@@ -9,6 +9,8 @@
  * browser plays sound only after a touch, unless the kiosk browser is started to allow it). The screen is kept
  * awake where the browser allows it, and the cursor hides when it is still.
  *
+ * In a show (`construct kiosk`), it tells the show when it is touched, so the show waits while someone explores.
+ *
  * URL parameters: hold, idle (seconds); kiosk=0 turns it off.
  */
 (function () {
@@ -64,6 +66,7 @@
     };
     const touch = () => {
       touched = moved = performance.now();
+      if (window.parent !== window) window.parent.postMessage({ construct: "touch" }, "*");   // a show waits
       document.body.classList.add("touched");
       document.body.classList.remove("still");
       if (!sound) {

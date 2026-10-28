@@ -199,4 +199,10 @@ loudness, and kicks and claps pulse its glow (the sound is analysed on the devic
 [FILM.md](FILM.md#live-the-rooms-sound)). The page is a single file: open it in the screen's
 browser, offline.
 
+**A show of several.** `construct kiosk a.json b.json c.json --out show --each 90` builds each scene
+as a kiosk page in its own folder (a track beside a scene goes with it) and writes `show/index.html`,
+which shows them one after another with a fade, 90 seconds each; a visitor's touch holds the one they
+are exploring until it has been left alone for that long again. `--live` makes every page listen to
+the room.
+
 If something goes wrong, see [TROUBLESHOOTING.md](TROUBLESHOOTING.md).

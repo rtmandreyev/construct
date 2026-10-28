@@ -454,6 +454,11 @@ def add_commands(sub):
     p.add_argument("--frame", choices=("y-up", "z-up"), default="y-up", help="OBJ only (glTF is always Y up)")
     p.add_argument("--merge", action="store_true",
                    help="glTF: merge every part that does not move into one mesh per material (for game engines)")
+    p = sub.add_parser("kiosk", help="a show for a museum screen: several constructs as kiosk pages, one after another")
+    p.add_argument("scenes", nargs="+", help="the scenes (scene.json), in order; a track beside a scene goes with it")
+    p.add_argument("--out", required=True, help="the show's folder (index.html, and a folder for each construct)")
+    p.add_argument("--each", type=float, default=90, help="seconds on each construct when nobody touches it (default 90)")
+    p.add_argument("--live", action="store_true", help="every page listens to the room (?live=1)")
     p = sub.add_parser("song", help="a track as a construct (a tower of sound that builds in time with it; needs ffmpeg), "
                                     "or a MIDI file's score (every note a line of light)")
     p.add_argument("track", help="the track (any format ffmpeg reads), or a MIDI file (.mid)")
@@ -525,8 +530,40 @@ def add_commands(sub):
                    help="track (default): each track mapped to its own loudness range; fixed: the older -40..-10 dB window")
 
 
+KIOSK_SHOW = """<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Construct: a show</title>
+<style>html, body { margin: 0; height: 100%; background: #050205; overflow: hidden; }
+iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; opacity: 0; transition: opacity 1.2s; }
+iframe.on { opacity: 1; }</style></head>
+<body>
+<script>
+// Construct kiosk show: each construct for EACH seconds, then the next, with a fade; a touch on a page holds it
+// until the page has gone untouched for EACH seconds again. Made by `construct kiosk`.
+const PAGES = __PAGES__, EACH = __EACH__ * 1000;
+let i = 0, since = performance.now();
+const frames = [0, 1].map(() => document.body.appendChild(document.createElement("iframe")));
+frames.forEach((f) => f.setAttribute("allow", "microphone; fullscreen; autoplay"));
+function show(k) {
+  const next = frames[k % 2], last = frames[(k + 1) % 2];
+  next.src = PAGES[k % PAGES.length];
+  next.onload = () => {   // once: blanking the last page loads it too
+    next.onload = null;
+    next.classList.add("on"); last.classList.remove("on");
+    setTimeout(() => { if (!last.classList.contains("on")) { last.onload = null; last.src = "about:blank"; } }, 1500);
+  };
+  since = performance.now();
+}
+window.addEventListener("message", (e) => { if (e.data && e.data.construct === "touch") since = performance.now(); });
+show(0);
+if (PAGES.length > 1) setInterval(() => { if (performance.now() - since > EACH) { i += 1; show(i); } }, 1000);
+</script>
+</body></html>
+"""
+
+
 COMMANDS = ("new", "params", "expand", "prompts", "author", "trace", "trace-image", "terrain", "globe", "critique", "rounds", "compare", "loft-from-traces", "check", "build", "review",
-            "video", "audio", "export", "netlogo", "netlogo-instrument", "netlogo-film", "song")
+            "video", "audio", "export", "netlogo", "netlogo-instrument", "netlogo-film", "song", "kiosk")
 
 
 def run(args):
@@ -747,6 +784,23 @@ def run(args):
             paths = render.review(page_in(args.out), str(Path(args.out, "review")), w, h, sheets=sheets)
             sys.stdout.write("captured:\n  %s\n" % "\n  ".join(paths))
             return 0 if report["ok"] else 1
+        if args.command == "kiosk":
+            out = Path(args.out)
+            out.mkdir(parents=True, exist_ok=True)
+            pages = []
+            for i, sp in enumerate(args.scenes, 1):
+                d = out / str(i)
+                build(sp, d, kiosk=True)
+                sc = load(sp)
+                track = ((sc.get("reading") or {}).get("music") or {}).get("track")
+                if track and (Path(sp).resolve().parent / track).is_file():   # its track goes with it
+                    shutil.copyfile(Path(sp).resolve().parent / track, d / track)
+                pages.append("%d/construct.html%s" % (i, "?live=1" if args.live else ""))
+            (out / "index.html").write_text(KIOSK_SHOW.replace("__PAGES__", json.dumps(pages)).replace(
+                "__EACH__", "%g" % max(10.0, args.each)), encoding="utf-8")
+            sys.stdout.write("wrote %s: %d constructs, %g s each; open it full screen on the exhibit's browser\n"
+                             % (out / "index.html", len(pages), max(10.0, args.each)))
+            return 0
         if args.command == "song":
             from . import score as score_mod, song as song_mod
             midi = Path(args.track).suffix.lower() in (".mid", ".midi")

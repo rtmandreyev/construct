@@ -791,8 +791,11 @@ def scene_from_run(run, view, title=None, **opts):
     sc["reading"] = _reading(run, view, world, opts, time)
     if music:
         sc["reading"]["music"] = music
-        sc["reading"]["how"] = sc["reading"]["how"][:7] + [
-            "Time is the track: %d ticks a second. Press play to hear the run with its music." % music["ticks_per_second"]]
+        dense = view == "space-time" and any(k == "sampling" and v != "every 1 record" for k, v in extra)
+        sc["reading"]["how"] = sc["reading"]["how"][:6 if dense else 7] + [
+            "Time is the track: %d ticks a second. Press play to hear the run with its music." % music["ticks_per_second"]] + (
+            ["A long run of moving agents is dense here: this is its shape; for its motion, every agent at every "
+             "tick, make its film (construct netlogo-film)."] if dense else [])
     if h.get("clock") == "steps":   # a model that never starts the tick counter: its records are steps
         sc = _in_steps(sc)
     return lock(sc)

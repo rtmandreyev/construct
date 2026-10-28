@@ -50,6 +50,8 @@ inside NetLogo. Plan: [ROADMAP.md](docs/ROADMAP.md#v11-models-come-alive).
   `construct netlogo … --csv` writes the counts at every record.
 - **Live:** `?live=1` on a film or kiosk page listens to the room after a touch: the light follows the
   microphone's loudness and kicks pulse the glow, analysed in the page and never recorded or sent.
+- **A show:** `construct kiosk a.json b.json … --out show` builds kiosk pages and a full-screen show
+  that moves from one to the next, holding while a visitor explores (`--each`, `--live`).
 - **Kiosk pages:** `construct build --kiosk` makes a page for a museum screen or a classroom wall:
   full screen, a label, an attract loop that replays the construct once it has settled, touch to
   explore, sound for a run with music after the first touch, the screen kept awake

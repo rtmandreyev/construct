@@ -198,6 +198,35 @@ class Kiosk(unittest.TestCase):
         self.assertEqual(got, {"kiosk": True, "title": sc["title"], "help": "none"})
 
 
+class Show(unittest.TestCase):
+    """`construct kiosk`: several constructs as kiosk pages, one after another."""
+
+    def test_a_show_of_two(self):
+        from . import cli
+        with tempfile.TemporaryDirectory() as d:
+            self.assertEqual(cli.main(["kiosk", str(EXAMPLES / "cd.json"), str(EXAMPLES / "lighthouse.json"), "--out", d,
+                                       "--each", "10"]), 0)
+            index = Path(d, "index.html").read_text()
+            self.assertIn('["1/construct.html", "2/construct.html"]', index)
+            self.assertIn("Construct kiosk", Path(d, "2", "construct.html").read_text())
+            if not CAPTURE:
+                return
+            import time
+            b = render.Browser(800, 500, 1.0, gpu=False)
+            try:
+                b.open(render._url(str(Path(d, "1", "construct.html"))))
+                b.evaluate("location.href = %r" % render._url(str(Path(d, "index.html"))))
+                seen = []
+                for _ in range(14):
+                    time.sleep(1)
+                    seen.append(b.evaluate("(document.querySelector('iframe.on') || {getAttribute: () => null})"
+                                           ".getAttribute('src')"))
+            finally:
+                b.close()
+            self.assertEqual([s for i, s in enumerate(seen) if s and (i == 0 or s != seen[i - 1])][:2],
+                             ["1/construct.html", "2/construct.html"])
+
+
 class Live(unittest.TestCase):
     """?live=1: the room's sound, from the microphone, after a touch; a kiosk page carries it."""
 
