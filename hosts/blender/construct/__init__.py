@@ -18,6 +18,10 @@ driving the scene, so the .blend keeps working without the add-on:
 
 and `wire` (metres), the thickness of the line art. The Construct panel in the sidebar (N) shows
 them, with an operator that keyframes a reveal.
+
+File > Import > NetLogo run (.jsonl) reads a recording from Construct for NetLogo as a film: every
+turtle at every tick as light that moves, with its trail, in time with the run's track if it was
+recorded with construct:music (runfilm.py).
 """
 
 import json
@@ -31,6 +35,7 @@ import mathutils
 from bpy.props import BoolProperty, FloatProperty, IntProperty, StringProperty
 from bpy_extras.io_utils import ImportHelper
 
+from . import runfilm
 from .construct_hologram import export as c_export, params as c_params, product as c_product
 
 PROPS = (("build", 1.0, "Assembly: each part appears at its build phase"),
@@ -548,20 +553,45 @@ class CONSTRUCT_PT_panel(bpy.types.Panel):
             box.label(text="certainty: %s" % p.get("certainty"))
 
 
+class CONSTRUCT_OT_import_run(bpy.types.Operator, ImportHelper):
+    """Import a NetLogo run (a Construct recording) as a film: every turtle as moving light, with its track"""
+    bl_idname = "import_scene.construct_run"
+    bl_label = "Import NetLogo Run"
+    bl_options = {"REGISTER", "UNDO"}
+
+    filename_ext = ".jsonl"
+    filter_glob: StringProperty(default="*.jsonl", options={"HIDDEN"})
+    trail: FloatProperty(name="Trail (seconds)", default=runfilm.TRAIL_S, min=0.0, soft_max=3.0,
+                         description="How long a light trail each turtle leaves")
+    camera: BoolProperty(name="Camera", default=True, description="Add a camera that orbits the world slowly")
+
+    def execute(self, context):
+        try:
+            coll = runfilm.build(self.filepath, context.scene, trail_seconds=self.trail, camera=self.camera)
+        except (OSError, ValueError, RuntimeError) as exc:
+            self.report({"ERROR"}, str(exc))
+            return {"CANCELLED"}
+        self.report({"INFO"}, "Imported %s: frames %d to %d" % (coll.name, context.scene.frame_start, context.scene.frame_end))
+        return {"FINISHED"}
+
+
 def _menu(self, context):
     self.layout.operator(CONSTRUCT_OT_import.bl_idname, text="Construct (.json, .glb)")
+    self.layout.operator(CONSTRUCT_OT_import_run.bl_idname, text="NetLogo Run (.jsonl)")
 
 
-CLASSES = (CONSTRUCT_OT_import, CONSTRUCT_OT_animate, CONSTRUCT_PT_panel)
+CLASSES = (CONSTRUCT_OT_import, CONSTRUCT_OT_import_run, CONSTRUCT_OT_animate, CONSTRUCT_PT_panel)
 
 
 def register():
     for c in CLASSES:
         bpy.utils.register_class(c)
     bpy.types.TOPBAR_MT_file_import.append(_menu)
+    runfilm.register()
 
 
 def unregister():
+    runfilm.unregister()
     bpy.types.TOPBAR_MT_file_import.remove(_menu)
     for c in reversed(CLASSES):
         bpy.utils.unregister_class(c)

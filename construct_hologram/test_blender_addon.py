@@ -161,6 +161,75 @@ class InBlender(unittest.TestCase):
         self.assertEqual(res["op"], ["FINISHED"])   # the map beside the scene was found and used
         self.assertTrue(res["wood"] and res["brushed"] and res["finish_mix"])
 
+    def test_a_netlogo_run_as_a_film(self):
+        """Every turtle where the recording puts it, at the run's own clock; a wrap cuts its trail, a death hides
+        it; the frames span the track, which is a sound strip."""
+        import math
+        import struct
+        import wave
+        script = r'''
+import bpy, sys, json, importlib
+stage, run = sys.argv[sys.argv.index("--") + 1:]
+sys.path.insert(0, stage)
+addon = importlib.import_module("construct")
+bpy.ops.wm.read_factory_settings(use_empty=True)
+addon.register()
+sc = bpy.context.scene
+res = {"op": list(bpy.ops.import_scene.construct_run(filepath=run)), "frames": [sc.frame_start, sc.frame_end]}
+agents, trails = bpy.data.objects["agents"], bpy.data.objects["trails"]
+def at(frame):
+    sc.frame_set(frame)
+    return ([tuple(round(c, 4) for c in v.co) for v in agents.data.vertices],
+            [a.value for a in agents.data.attributes["alive"].data], [tuple(v.co) for v in trails.data.vertices])
+res["f7"], res["alive7"], _ = at(7)          # tick 2 at 10 ticks a second, 30 frames a second
+_, res["alive16"], trail = at(13)            # tick 4: the wrapped turtle's trail
+n = len(trail) // 3
+res["trail_step"] = max(sum((a - b) ** 2 for a, b in zip(trail[n + j], trail[n + j + 1])) ** 0.5 for j in range(n - 1))
+_, res["alive16"], _ = at(16)                # tick 5: the third turtle has died
+e = trails.evaluated_get(bpy.context.evaluated_depsgraph_get())
+res["tube_faces"] = len(e.data.polygons)
+ed = sc.sequence_editor
+res["sound"] = len(ed.strips if hasattr(ed, "strips") else ed.sequences) if ed else 0
+print("RESULT " + json.dumps(res))
+'''
+        with tempfile.TemporaryDirectory() as d:
+            _builder().stage(Path(d, "construct"))
+            music = {"track": "beat.wav", "sha256": "", "ticks-per-second": 10, "ticks": 6, "features": "beat-audio-10.json"}
+            rows = [{"construct-netlogo": 1, "title": "Walkers", "netlogo": "7.0.4", "seed": 1, "turtle-vars": [],
+                     "reporters": [], "patch-reporter": "", "patch-every": 0, "music": music,
+                     "world": {"min-pxcor": -8, "max-pxcor": 8, "min-pycor": -8, "max-pycor": 8}}]
+            for tick in range(7):
+                turtles = [[0, "turtles", -6 + tick, 0, 45], [1, "turtles", (6 + tick + 8.5) % 17 - 8.5, 3, 15]]
+                if tick < 5:
+                    turtles.append([2, "turtles", 0, -4, 105])
+                rows.append({"t": tick, "turtles": turtles})
+            rows.append({"end": 6})
+            Path(d, "walk.jsonl").write_text("\n".join(json.dumps(r) for r in rows) + "\n", encoding="utf-8")
+            Path(d, "beat-audio-10.json").write_text(json.dumps({"fps": 10, "energy": [0.5] * 6, "kick": [0, 1] * 3,
+                                                                 "onset": [0] * 6}), encoding="utf-8")
+            with wave.open(str(Path(d, "beat.wav")), "wb") as w:
+                w.setnchannels(1)
+                w.setsampwidth(2)
+                w.setframerate(16000)
+                w.writeframes(struct.pack("<9600h", *(int(8000 * math.sin(i / 7)) for i in range(9600))))
+            Path(d, "t.py").write_text(script, encoding="utf-8")
+            r = subprocess.run([BLENDER, "-b", "--factory-startup", "--python", str(Path(d, "t.py")), "--", d,
+                                str(Path(d, "walk.jsonl"))], capture_output=True, text=True, timeout=600,
+                               encoding="utf-8", errors="replace")
+        line = next((ln for ln in r.stdout.splitlines() if ln.startswith("RESULT ")), None)
+        self.assertIsNotNone(line, r.stdout[-2000:] + r.stderr[-2000:])
+        res = json.loads(line[7:])
+        s = 10 / 17   # the world, 17 patches across, is 10 m
+        self.assertEqual(res["op"], ["FINISHED"])
+        self.assertEqual(res["frames"], [1, 19])                                  # 0.6 s of run at 30 frames a second
+        self.assertAlmostEqual(res["f7"][0][0], -4 * s, places=3)                # the walker at tick 2
+        self.assertAlmostEqual(res["f7"][2][1], -4 * s, places=3)
+        self.assertEqual(res["alive7"], [1.0, 1.0, 1.0])
+        self.assertEqual(res["alive16"], [1.0, 1.0, 0.0])                         # the third has died
+        self.assertLess(res["trail_step"], 5.0)                                   # the wrap never crosses the world
+        self.assertGreater(res["tube_faces"], 0)
+        self.assertEqual(res["sound"], 1)
+
     def test_the_zip_validates(self):
         with tempfile.TemporaryDirectory() as d:
             path = _builder().build(d)

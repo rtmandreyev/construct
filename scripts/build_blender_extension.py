@@ -47,6 +47,7 @@ def stage(into):
     """Lay out the extension's files in a folder."""
     into.mkdir(parents=True, exist_ok=True)
     shutil.copyfile(ADDON / "__init__.py", into / "__init__.py")
+    shutil.copyfile(ADDON / "runfilm.py", into / "runfilm.py")      # a NetLogo run as a film
     shutil.copyfile(ADDON.parent / "LICENSE", into / "LICENSE")   # the extension: GPL-3.0-or-later
     (into / "blender_manifest.toml").write_text(MANIFEST.format(version=product.VERSION, repo=product.REPO),
                                                 encoding="utf-8")
