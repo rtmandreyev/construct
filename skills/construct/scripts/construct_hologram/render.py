@@ -422,7 +422,11 @@ def frames(html_path, out_dir, seconds, fps=24, start=0.0, width=1280, height=72
 def encode_video(frame_dir, out_path, fps=24, sound=None, sound_start=0.0):
     """MP4 (H.264) or GIF from captured frames with ffmpeg, when it is installed. With `sound` (any audio file
     ffmpeg reads), an MP4 carries that audio from `sound_start` seconds, cut or padded to the video's length."""
-    ffmpeg = shutil.which("ffmpeg")
+    from . import film_audio
+    try:
+        ffmpeg = film_audio.find_ffmpeg()
+    except FileNotFoundError:
+        ffmpeg = None
     if not ffmpeg:
         raise CaptureError("ffmpeg is not installed: the frames are in %s" % frame_dir)
     pattern = str(Path(frame_dir) / "frame-%05d.png")

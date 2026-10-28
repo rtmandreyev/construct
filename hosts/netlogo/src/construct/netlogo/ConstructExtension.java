@@ -600,7 +600,7 @@ public class ConstructExtension extends DefaultClassManager {
       try {
         if (System.getenv("CONSTRUCT_SILENT") != null) throw new IOException("CONSTRUCT_SILENT is set");
         if (!wav.isFile() || wav.lastModified() < track.lastModified()) {
-          Process p = new ProcessBuilder("ffmpeg", "-v", "error", "-y", "-i", track.getAbsolutePath(), "-ac", "2", "-ar",
+          Process p = new ProcessBuilder(ffmpeg(), "-v", "error", "-y", "-i", track.getAbsolutePath(), "-ac", "2", "-ar",
               "44100", "-sample_fmt", "s16", wav.getAbsolutePath()).redirectErrorStream(true).start();
           if (!p.waitFor(5, TimeUnit.MINUTES) || p.exitValue() != 0) throw new IOException("ffmpeg could not convert the track");
         }
@@ -616,6 +616,19 @@ public class ConstructExtension extends DefaultClassManager {
       playStart = System.nanoTime();
       playing = true;
     }
+  }
+
+  /** ffmpeg: $CONSTRUCT_FFMPEG, the PATH, or where it is usually installed (NetLogo opened from the Finder does not
+   *  see a shell's PATH). */
+  static String ffmpeg() throws IOException {
+    List<String> cands = new ArrayList<>();
+    if (System.getenv("CONSTRUCT_FFMPEG") != null) cands.add(System.getenv("CONSTRUCT_FFMPEG"));
+    String path = System.getenv("PATH");
+    boolean win = System.getProperty("os.name", "").toLowerCase().contains("win");
+    if (path != null) for (String d : path.split(File.pathSeparator)) cands.add(new File(d, win ? "ffmpeg.exe" : "ffmpeg").getPath());
+    cands.addAll(List.of("/opt/homebrew/bin/ffmpeg", "/usr/local/bin/ffmpeg", "/usr/bin/ffmpeg", "C:\\ffmpeg\\bin\\ffmpeg.exe"));
+    for (String c : cands) if (new File(c).canExecute()) return c;
+    throw new IOException("ffmpeg is needed: install it (macOS: brew install ffmpeg) or set CONSTRUCT_FFMPEG");
   }
 
   static double heard() {

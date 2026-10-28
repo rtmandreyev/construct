@@ -38,9 +38,25 @@ SECTION_WINDOW_S = 8.0  # sections: how much music each side of a moment is comp
 KICK_MIN_DB = 1.0  # a kick jumps at least this far above the low end's last half second; less is a held note's wobble
 
 
+FFMPEG_PLACES = ("/opt/homebrew/bin/ffmpeg", "/usr/local/bin/ffmpeg", "/usr/bin/ffmpeg", "/snap/bin/ffmpeg",
+                 r"C:\ffmpeg\bin\ffmpeg.exe")
+
+
+def find_ffmpeg():
+    """ffmpeg: $CONSTRUCT_FFMPEG, the PATH, or where it is usually installed (an app opened from the Finder,
+    such as NetLogo, does not see a shell's PATH)."""
+    import os
+    import shutil
+    for c in (os.environ.get("CONSTRUCT_FFMPEG"), shutil.which("ffmpeg")) + FFMPEG_PLACES:
+        if c and os.path.isfile(c):
+            return c
+    raise FileNotFoundError("ffmpeg is needed for music: install it (macOS: brew install ffmpeg; ffmpeg.org) or "
+                            "set CONSTRUCT_FFMPEG to it")
+
+
 def _decode(path, sr=RATE):
     """The audio as 16-bit mono samples at sr, decoded by ffmpeg."""
-    raw = subprocess.run(["ffmpeg", "-v", "error", "-i", str(path), "-ac", "1", "-ar", str(sr), "-f", "s16le", "-"],
+    raw = subprocess.run([find_ffmpeg(), "-v", "error", "-i", str(path), "-ac", "1", "-ar", str(sr), "-f", "s16le", "-"],
                          capture_output=True, check=True).stdout
     n = len(raw) // 2
     return struct.unpack("<%dh" % n, raw[:n * 2])

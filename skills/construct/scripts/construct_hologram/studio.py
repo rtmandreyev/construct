@@ -950,7 +950,12 @@ def run(args):
             return 0
         if args.command == "audio":
             from . import film_audio
-            n = film_audio.features(args.music, args.voice, args.fps, args.out, args.scale)
+            try:
+                n = film_audio.features(args.music, args.voice, args.fps, args.out, args.scale)
+            except (FileNotFoundError, subprocess.CalledProcessError) as exc:
+                sys.stderr.write("audio: %s\n" % (exc if isinstance(exc, FileNotFoundError) else
+                                                   "ffmpeg could not read %s" % args.music))
+                return 1
             sys.stdout.write("wrote %s (%d frames at %d fps)\n" % (args.out, n, args.fps))
             return 0
         if args.command == "video":
