@@ -49,7 +49,7 @@ as a 3D model with named parts and working joints, for Blender, game engines and
 | **A game developer** | Props and blockouts with named parts, working joints and real dimensions, as glTF for Godot, Unity or Unreal; the line-light look for scanners, holograms and UI | [3D export](docs/EXPORT.md) |
 | **A 3D artist** | A construct imported into Blender with its build, joints and finish on sliders, ready to light, render or model over | [Blender add-on](hosts/blender/README.md) |
 | **In film and motion** | A construct that assembles across a track of music, rendered to video; a song or a score as a construct; a construct that hears the room | [Film mode](docs/FILM.md) |
-| **An educator or researcher** | An agent-based model's run drawn as a construct, computed from the recording, with the data locked; from inside NetLogo with the extension | [NetLogo bridge](docs/NETLOGO.md), [extension](hosts/netlogo/README.md) |
+| **An educator or researcher** | An agent-based model's run drawn as a construct, computed from the recording, with the data locked; from inside NetLogo with the extension; two runs compared, a printable worksheet, a museum kiosk | [In a classroom and a museum](docs/CLASSROOM.md), [NetLogo bridge](docs/NETLOGO.md), [extension](hosts/netlogo/README.md) |
 | **A museum or archive** | Reconstructions that say how each part is known (verified, supplied, inferred or decorative), so a visitor can tell evidence from design | [The Measured Light style](docs/STYLE.md) |
 
 ## What it does
@@ -253,6 +253,7 @@ Start with the first two if you are new; the full index is in [docs/README.md](d
 - [Film mode](docs/FILM.md): a construct that assembles across a track of music, for videos and films
 - [3D export](docs/EXPORT.md) and the [Blender add-on](hosts/blender/README.md): a construct as a 3D model, plain or finished, for Blender, game engines and the web
 - [The NetLogo bridge](docs/NETLOGO.md) and the [NetLogo extension](hosts/netlogo/README.md): an agent-based model's run drawn as a construct, with optional art direction
+- [In a classroom and a museum](docs/CLASSROOM.md): a lesson with two runs compared and a worksheet, a lesson with music, an exhibit
 - [About](docs/ABOUT.md): where Construct's method comes from
 - [Evaluation](docs/EVALUATION.md): how models compare, and how to score your own
 - [Development](docs/DEVELOPMENT.md): for contributors and for building Construct into your own tools
