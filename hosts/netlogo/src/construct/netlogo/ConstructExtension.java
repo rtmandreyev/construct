@@ -92,12 +92,23 @@ public class ConstructExtension extends DefaultClassManager {
     if (file == null) throw new ExtensionException("construct:start first (in setup, after reset-ticks)");
   }
 
+  /** Where a run is written: beside the model, unless the model is in NetLogo's own Models Library (or unsaved):
+   *  then in Documents/NetLogo Constructs, so NetLogo's installation stays as it came. */
   static String modelDir(Context c) {
+    String d = null;
     try {
-      String d = c.workspace().getModelDir();
-      if (d != null && !d.isEmpty()) return d;
+      d = c.workspace().getModelDir();
     } catch (Exception e) { /* an unsaved model */ }
-    return System.getProperty("user.dir");
+    String library = System.getProperty("netlogo.models.dir");
+    boolean inLibrary = false;
+    try {
+      inLibrary = d != null && library != null && !library.isEmpty()
+          && new File(d).getCanonicalPath().startsWith(new File(library).getCanonicalPath() + File.separator);
+    } catch (IOException e) { /* not comparable: beside the model */ }
+    if (d != null && !d.isEmpty() && !inLibrary) return d;
+    File docs = new File(new File(System.getProperty("user.home"), "Documents"), "NetLogo Constructs");
+    docs.mkdirs();
+    return docs.getPath();
   }
 
   static String slug(String s) {
@@ -494,8 +505,10 @@ public class ConstructExtension extends DefaultClassManager {
       if (observer && !forever && step == null && b[0].matches("(?is).*\\b(go|step|iterate|run|once|next).*")
           && !b[0].matches("(?is).*\\b(setup|reset|clear).*")) step = b[0];
     }
-    for (String[] b : found)   // a setup button by another name, or the first one-shot button
-      if (setup == null && b[2].equals("Observer") && b[1].equals("false") && b[0].matches("(?is).*\\b(setup|reset|init|new|start).*")) setup = b[0];
+    for (int pass = 0; pass < 2; pass++)   // a setup button by another name; one that fills the world before one that empties it
+      for (String[] b : found)
+        if (setup == null && b[2].equals("Observer") && b[1].equals("false") && b[0].matches("(?is).*\\b(setup|reset|init|new|start).*")
+            && (pass == 1 || !b[0].matches("(?is).*(blank|clear|empty|erase).*"))) setup = b[0];
     for (String[] b : found)
       if (go == null && b[2].equals("Observer") && b[1].equals("true")) go = b[0];
     return new String[] {setup != null ? setup : "setup", go != null ? go : turtleGo != null ? turtleGo : step != null ? step : "go"};

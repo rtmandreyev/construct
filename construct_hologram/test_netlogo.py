@@ -254,6 +254,19 @@ class Views(unittest.TestCase):
         for f in run["frames"]:
             f.pop("reporters", None)
         self.assertEqual(netlogo.choose_view(run)[0], "space-time")
+        still = json.loads(json.dumps(run))
+        for f in still["frames"]:                                  # agents that never move: said so, not "moving"
+            for r in f["turtles"]:
+                r[2], r[3] = still["frames"][0]["turtles"][r[0]][2:4]
+        self.assertIn("barely move", netlogo.choose_view(still)[2])
+        grew = json.loads(json.dumps(self.run))                    # a network that grows: each turtle at its arrival
+        for f in grew["frames"]:
+            f["turtles"] = [r[:5] + [False] for r in f["turtles"] if r[0] <= f["t"] // 2]
+        view, opts, why = netlogo.choose_view(grew)
+        self.assertEqual((view, opts["state"]), ("network-time", netlogo.APPEARED))
+        sc = netlogo.scene_from_run(grew, "auto")
+        self.check(sc)
+        self.assertIn("appeared", next(p for p in sc["parts"] if p["id"] == "risen")["label"])
 
     def test_solids_for_a_3d_model(self):
         plain = netlogo.scene_from_run(self.run, "network-time", state="infected?")

@@ -40,7 +40,10 @@ inside NetLogo. Plan: [ROADMAP.md](docs/ROADMAP.md#v11-models-come-alive).
 - **One command:** `construct:run` in the Command Center runs the model as its buttons do, records
   what is worth recording, lets it run until it stops by itself (or 1000 runs of go;
   `construct:run-for n`), picks the view the data suits and opens the construct; the step-by-step
-  commands are unchanged. `--view auto` makes the same choice from the command line.
+  commands are unchanged. `--view auto` makes the same choice from the command line: a network that
+  grows rises by each turtle's arrival, and static agents are a last resort, said so. A run of a
+  model in NetLogo's own Models Library (or unsaved) is written to Documents/NetLogo Constructs,
+  not into NetLogo's installation; a setup that fills the world is preferred to one that empties it.
 - **Critic rounds for a run** (Phase C, opt-in): the rounds' critic, given a NetLogo construct, checks
   every label and milestone against the recording's facts and counts and judges how a student
   would read it (`critic-run.md`); with GPT-6.1 Sol it ranked a planted false milestone first. The

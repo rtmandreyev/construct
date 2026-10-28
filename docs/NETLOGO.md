@@ -136,7 +136,10 @@ construct build scene.json --out out/
 | `phase` | two quantities in a cycle (predator and prey) | `--x` across the floor and `--z` front to back (the first two reporters by default), height is ticks; its shadow on the floor is the classic phase plot, and the walls carry each against time. `--smooth N` averages over N records, recorded as a fact |
 | `field` | something spreading over patches (fire, contagion, settlement) | the front of change: where each patch's reporter first (`--change last`: last) changed, drawn every few ticks and raised to its tick; nothing where nothing changed. `--levels` fronts (32), over about `--resolution` blocks (64) |
 
-`--time sqrt` stretches the early ticks, for a run whose changes come early (most of an adoption
+`--view auto` chooses: a network where a true-or-false variable turned (network-time), a network
+that grew (network-time, each turtle at the tick it appeared), patches that changed (field), two
+counts that move together (phase), else the agents' paths (space-time; when the agents barely move
+it says so). `--time sqrt` stretches the early ticks, for a run whose changes come early (most of an adoption
 cascade happens in its first tenth). Each construct records what was drawn as facts: the model, the
 seed, the ticks, which agents, how the data was sampled.
 

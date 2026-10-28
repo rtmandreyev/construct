@@ -169,6 +169,8 @@ def instrument(text, title, run_file, turtles=(), reporters=(), patches=None, ev
             return flag
         ok = [c for c, f in buttons if (f if flag == "go" else not f) and not (len(c.split()) == 1 and inputs(c))]
         words = ("go",) if flag == "go" else ("setup", "reset", "init", "new", "start")
+        if flag == "setup":   # one that fills the world before one that empties it (setup-random before setup-blank)
+            ok = sorted(ok, key=lambda c: bool(re.search(r"(?i)blank|clear|empty|erase", c)))
         for w in words:
             for c in ok:
                 if re.search(r"(?i)\b%s" % w, c):
@@ -365,13 +367,16 @@ def _space_time(run, world, opts):
     return parts, summary, facts
 
 
+APPEARED = "@appeared"   # network-time's state for a network that grows: each turtle at the tick it appeared
+
+
 def _network_time(run, world, opts):
     var = opts.get("state")
     names = run["header"]["turtle-vars"]
-    if var not in names:
+    if var != APPEARED and var not in names:
         raise NetLogoError("network-time needs --state, a turtle variable the recording tracked (%s)" %
                            (", ".join(names) or "none were: use construct-track-turtles"))
-    vi = 5 + names.index(var)
+    vi = 5 + names.index(var) if var != APPEARED else None
     links = next((f["links"] for f in reversed(run["frames"]) if "links" in f), None)
     if not links:
         raise NetLogoError("network-time needs links in the recording")
@@ -380,7 +385,7 @@ def _network_time(run, world, opts):
     when = {}
     for f in run["frames"]:
         for r in f["turtles"]:
-            v = r[vi]
+            v = True if vi is None else r[vi]
             if r[0] not in when and (v is True or (isinstance(v, (int, float)) and not isinstance(v, bool) and v != 0)):
                 when[r[0]] = f["t"]
     floor_paths = [[world.floor(*pos[a]), world.floor(*pos[b])] for a, b, _ in links if a in pos and b in pos]
@@ -393,14 +398,17 @@ def _network_time(run, world, opts):
     parts = [_part("network", "The network, as NetLogo laid it out", "ground", {"type": "paths", "paths": floor_paths,
                                                                               "detail": True}, tone="faint")]
     if stems:
-        parts.append(_part("risen", "Each turtle, risen to the tick %s turned true" % var, "data",
+        parts.append(_part("risen", "Each turtle, risen to the tick it appeared" if vi is None else
+                           "Each turtle, risen to the tick %s turned true" % var, "data",
                            {"type": "paths", "paths": stems}, tone="dust", weight=0.6))
     if climb:
         parts.append(_part("climb", "Links between risen turtles, from the earlier to the later", "identity",
                            {"type": "paths", "paths": climb}))
-    summary = ("The network on the floor; each turtle rises to the tick its %s first turned true, and each link "
-               "between two risen turtles climbs from the earlier to the later." % var)
-    facts = [("state", var), ("turned", "%d of %d turtles" % (len(when), len(pos)))]
+    summary = ("The network on the floor; each turtle rises to the tick %s, and each link between two risen "
+               "turtles climbs from the earlier to the later." % ("it appeared" if vi is None else
+                                                                 "its %s first turned true" % var))
+    facts = [("state", "the tick each turtle appeared" if vi is None else var),
+             ("turned", "%d of %d turtles" % (len(when), len(pos)))]
     if opts.get("solid"):   # a solid for each turtle, for a 3D model: risen where it turned, else on the floor
         who = sorted(pos)
         pick = who if len(who) <= SOLID_NODES else [who[round(i * (len(who) - 1) / (SOLID_NODES - 1))]
@@ -637,6 +645,15 @@ def choose_view(run):
             early = best[2][len(best[2]) // 2] < 0.3 * last
             return "network-time", dict(state=best[0], time="sqrt" if early else "linear"), \
                 "a network, and %s turned true for %d turtles" % (best[0], best[1])
+        born = {}
+        for f in frames:
+            for r in f.get("turtles", []):
+                born.setdefault(r[0], f["t"])
+        later = [t for t in born.values() if t > frames[0]["t"]]
+        if len(later) >= max(3, 0.1 * len(born)):
+            early = sorted(born.values())[len(born) // 2] < 0.3 * last
+            return "network-time", dict(state=APPEARED, time="sqrt" if early else "linear"), \
+                "a network that grew: %d of %d turtles appeared during the run" % (len(later), len(born))
     samples = [f["patches"] for f in frames if "patches" in f]
     if len(samples) >= 2:
         changed = sum(1 for a, b in zip(samples[0], samples[-1]) if a != b)
@@ -652,8 +669,21 @@ def choose_view(run):
     if len(moving) >= 2:
         x, z = [n for _, n in sorted(moving, reverse=True)[:2]]
         return "phase", dict(x=x, z=z, smooth=max(1, len(frames) // 150)), "%s and %s move together" % (x, z)
-    if any(f.get("turtles") for f in frames):
+    w = h["world"]
+    size = max(w["max-pxcor"] - w["min-pxcor"], w["max-pycor"] - w["min-pycor"]) or 1
+    first = {r[0]: (r[2], r[3]) for r in next((f["turtles"] for f in frames if f.get("turtles")), [])}
+    moved = []
+    for f in frames[1:]:
+        for r in f.get("turtles", []):
+            if r[0] in first:
+                moved.append(abs(r[2] - first[r[0]][0]) + abs(r[3] - first[r[0]][1]))
+    moving = bool(moved) and sorted(moved)[len(moved) // 2] > 0.02 * size
+    if moving:
         return "space-time", {}, "agents that move"
+    if len(samples) >= 2 and any(a != b for a, b in zip(samples[0], samples[-1])):
+        return "field", {}, "the agents barely move; the patches changed"
+    if any(f.get("turtles") for f in frames):
+        return "space-time", {}, "the agents barely move and nothing else changed: where they stood, over time"
     raise NetLogoError("nothing in the recording to draw: no turtles, no changing patches, no two moving counts")
 
 
@@ -858,7 +888,8 @@ def _reading(run, view, world, opts, time):
             "that died or left."],
         "network-time": [
             "The floor is the network as NetLogo laid it out.",
-            "Each turtle rises to the tick its %s first turned true; one left on the floor never turned." % opts.get("state"),
+            ("Each turtle rises to the tick it appeared: the network as it grew." if opts.get("state") == APPEARED else
+             "Each turtle rises to the tick its %s first turned true; one left on the floor never turned." % opts.get("state")),
             "A link climbs from the earlier of its two turtles to the later: a steep climb joins two turtles that "
             "turned far apart in time (the link need not be the way it spread).",
             "Height is time, tick 0 to %d%s." % (last, ", as its square root, so the early spread is stretched" if sq else "")],
@@ -883,6 +914,8 @@ def _reading(run, view, world, opts, time):
                     and not isinstance(f["reporters"][i], bool)]
             if vals:
                 series.append({"name": name[:40], "values": vals})
+    elif view == "network-time" and opts.get("state") == APPEARED:
+        series.append({"name": "turtles", "values": [[f["t"], len(f.get("turtles", []))] for f in picked if "turtles" in f]})
     elif view == "network-time":
         vi = 5 + h["turtle-vars"].index(opts.get("state"))
         series.append({"name": (opts.get("state") + " now")[:40], "values": [

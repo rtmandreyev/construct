@@ -168,6 +168,30 @@ work (art direction, critic rounds, 3D models) is opt-in.
 - NetLogo tools in the MCP server (instrument, draw, art direction), so Hermes and any MCP client
   can drive the bridge, and the skills' steps to match.
 
+### Phase F: richer constructs by default
+
+The bridge's constructs are exact but can look plain: thin lines in one tone, few landmarks. Make
+the default construct of a run look as considered as an art-directed one, without art direction
+and without ever bending the data:
+- emphasis from the data itself: tone and weight by breed, state or speed; the busiest moments
+  brighter; the run's own colours in the hologram as well as in the 3D model;
+- automatic landmarks: the peak, the half-way point and the end, computed from the counts and
+  marked as inferred, like an art layer's milestones;
+- views and framing chosen per view (the cycle from above, the spread from the side), and a
+  calmer floor;
+- a survey of the stock models as the yardstick: which constructs read well, which don't, and why.
+  The first, of 15 models with `construct:run` (2026-10-27): Traffic Basic, Heroes and Cowards,
+  Flocking, Virus on a Network, Rumor Mill and Fire read well; these need more:
+  - **strata**, a new view: the world at a few moments stacked in time, agents and patches as
+    they were, for models where things jump or flip rather than travel (Segregation, Life, Wealth
+    Distribution, Sandpile, Termites);
+  - **links in time**: a link's creation and removal recorded even when their number stays the
+    same, so rewiring shows (Small Worlds, Giant Component's growth);
+  - **globals worth recording**: numeric globals that change (Climate Change's temperature),
+    recorded by `construct:run` and offered to the phase view;
+  - **meaningful states first**: prefer a model's own state variables over its bookkeeping
+    (Giant Component chose `explored?`).
+
 ## Later
 - Texture coordinates for every shape.
 - An optional surface finish per part (paint, metal, glass…), as a contract addition.
