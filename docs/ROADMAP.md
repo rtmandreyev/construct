@@ -133,9 +133,9 @@ work (art direction, critic rounds, 3D models) is opt-in.
 
 - The recorder's own names never clash with a model's (5 stock models failed on names like `n`).
 - The instrumenter follows `reset-ticks` and `tick` into helper procedures, reads every NetLogo 7
-  file, takes setup and go from the model's own buttons and records models that never tick: 427 of
-  the 445 two-dimensional stock models record with no hand edits (291 at 1.0), and a refusal says
-  what to do.
+  file, takes setup and go from the model's own buttons and records models that never tick or tick
+  in fractions: 388 of the 445 two-dimensional stock models record a run unattended (256 at 1.0;
+  most of the rest wait for a player or a classroom), and a refusal says what to do.
 - A run of the whole Models Library is a regression test: how many record, and why the rest don't.
 - Every NetLogo construct gets a legend, shown from the start, and no decoration that could be
   read as data (the projector's rings are off).

@@ -188,12 +188,14 @@ What makes a good pass:
 - The three examples were recorded headless in NetLogo 7.0.4: Flocking (300 ticks, 4.5 seconds),
   Wolf Sheep Predation (1,500 ticks) and Fire (673 ticks over 63,001 patches, 8 seconds).
 - **The whole Models Library.** Of NetLogo 7.0.4's 445 two-dimensional models (leaving out the 3D
-  models and Code Examples), 427 record in a 50-tick headless run with no change but the
-  instrumenting, one model at a time. 57 of them are HubNet activities, which run but do little
-  without participants. Of the other 18: 6 need the `import-a` extension, which NetLogo doesn't
-  bundle; 4 have no run to record (one-shot demonstrations, one needing an Arduino); 4 need a person
-  at the keyboard or a classroom; 3 were slower than the test allows; and one builds its city in
-  phases before it can run.
+  models and Code Examples), 388 record a run (at least two records) in a 50-step headless test
+  with no change but the instrumenting, one model at a time; 41 of them are HubNet activities,
+  which run but do little without participants. Of the other 57, 39 wait at setup for someone:
+  games and mouse-driven models wait for a player, HubNet activities for a classroom, and a few
+  finish at once; 6 need the `import-a` extension, which NetLogo doesn't bundle; 4 have no run to
+  record (one-shot demonstrations, one needing an Arduino); 5 need typed input or participants, or
+  build in phases before they run; and 3 were slower than the test allows. With the extension, a
+  person running any of them in NetLogo is recorded like any other run.
 - **The extension writes the same recording.** Virus on a Network (200 ticks) and the tests' model,
   recorded by the extension and by `construct.nls` with the same seed, give the same turtles,
   positions, colours, variables and links, tick by tick.

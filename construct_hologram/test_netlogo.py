@@ -481,6 +481,11 @@ class Extension(unittest.TestCase):
             self.assertIn("construct:start first", r.stdout)
             r = drive('setup construct:start "C" construct:record', '(construct:draw "phase" "y" "infected")')
             self.assertIn('no option "y"', r.stdout)
+            r = drive('setup construct:start "F" construct:record', "repeat 8 [ tick-advance 0.25 construct:record ]",
+                      "construct:record", "construct:finish")    # a clock in fractions: every step, each once
+            self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+            frac = netlogo.read_run(Path(d, "f-run.jsonl"))
+            self.assertEqual(([f["t"] for f in frac["frames"]][-3:], len(frac["frames"]), frac["end"]), ([1.5, 1.75, 2], 9, 2))
 
             # the same run through construct.nls: the same turtles, tick by tick
             Path(d, "plain.nlogox").write_text(MODEL, encoding="utf-8")

@@ -48,7 +48,7 @@ public class ConstructExtension extends DefaultClassManager {
   // ------------------------------------------------------------------ the recording's state
   static String file = null, title = "", seed = "null", patchVar = "";
   static int every = 1, patchEvery = 0, linkCount = -1;
-  static double lastT = Double.NaN;
+  static double lastT = Double.NaN, lastPatchT = Double.NaN;
   static long steps = 0;   // the clock of a model that never starts the tick counter
   static boolean turtles = true, headerDone = false;
   static List<String> turtleVars = new ArrayList<>();
@@ -113,7 +113,7 @@ public class ConstructExtension extends DefaultClassManager {
       String name = args.length > 1 ? args[1].getString() : slug(title) + "-run.jsonl";
       File f = new File(name);
       file = (f.isAbsolute() ? f : new File(modelDir(c), name)).getPath();
-      seed = "null"; every = 1; patchVar = ""; patchEvery = 0; linkCount = -1; turtles = true; headerDone = false; lastT = Double.NaN; steps = 0;
+      seed = "null"; every = 1; patchVar = ""; patchEvery = 0; linkCount = -1; turtles = true; headerDone = false; lastT = Double.NaN; lastPatchT = Double.NaN; steps = 0;
       turtleVars = new ArrayList<>(); reporterNames = new ArrayList<>(); reporters = new ArrayList<>();
       new File(file).delete();
     }
@@ -179,7 +179,9 @@ public class ConstructExtension extends DefaultClassManager {
       org.nlogo.agent.World w = (org.nlogo.agent.World) c.world();
       boolean ticking = w.ticks() >= 0;
       double t = ticking ? w.ticks() : steps++;
-      if (((long) t) % every != 0 || t == lastT) return;   // once a tick, even when a model's go stops and records again
+      // once each time the clock moves (with `every`: each time it enters a new block of ticks), so a tick is recorded
+      // once even when go stops and records again; a clock that moves in fractions (tick-advance) counts
+      if (t == lastT || (every > 1 && !Double.isNaN(lastT) && Math.floor(t / every) == Math.floor(lastT / every))) return;
       lastT = t;
       try {
         if (out == null) out = new BufferedWriter(new FileWriter(file, StandardCharsets.UTF_8, true));
@@ -230,7 +232,8 @@ public class ConstructExtension extends DefaultClassManager {
           }
           s.append(']');
         }
-        if (!patchVar.isEmpty() && ((long) t) % patchEvery == 0) {
+        if (!patchVar.isEmpty() && (Double.isNaN(lastPatchT) || Math.floor(t / patchEvery) != Math.floor(lastPatchT / patchEvery))) {
+          lastPatchT = t;
           int idx = w.patchesOwnIndexOf(patchVar.toUpperCase());
           if (idx < 0) throw new ExtensionException("no patch variable called " + patchVar);
           s.append(",\"patches\":[");

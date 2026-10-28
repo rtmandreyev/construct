@@ -24,7 +24,7 @@ globals [
   construct-file construct-title construct-seed-value construct-turtle-vars construct-reporters
   construct-patch-reporter construct-patch-every construct-every construct-header? construct-link-count
   construct-turtles? construct-reporter-tasks construct-patch-task construct-turtle-tasks
-  construct-steps construct-last
+  construct-steps construct-last construct-patch-last
 ]
 
 to construct-start [ construct-run-title construct-path ]
@@ -43,6 +43,7 @@ to construct-start [ construct-run-title construct-path ]
   set construct-turtles? true
   set construct-steps 0
   set construct-last -1
+  set construct-patch-last -1
   file-close-all
   if file-exists? construct-file [ file-delete construct-file ]
 end
@@ -91,8 +92,10 @@ to construct-record
   let construct-ticks? construct-ticking?
   let construct-t ifelse-value construct-ticks? [ ticks ] [ construct-steps ]
   if not construct-ticks? [ set construct-steps construct-steps + 1 ]
-  if construct-t = construct-last [ stop ]                ; once a tick, even when go stops and records again
-  if construct-t mod construct-every != 0 [ stop ]
+  ;; once each time the clock moves (with `every`: each time it enters a new block of ticks), so a tick is
+  ;; recorded once even when go stops and records again; a clock that moves in fractions (tick-advance) counts
+  if construct-t = construct-last or (construct-every > 1 and
+    floor (construct-t / construct-every) = floor (construct-last / construct-every)) [ stop ]
   set construct-last construct-t
   file-open construct-file
   if not construct-header? [
@@ -120,7 +123,8 @@ to construct-record
     file-type ",\"links\":"
     construct-write map [ construct-l -> [ (list [who] of end1 [who] of end2 (word breed)) ] of construct-l ] sort links
   ]
-  if construct-patch-reporter != "" and construct-t mod construct-patch-every = 0 [
+  if construct-patch-reporter != "" and floor (construct-t / construct-patch-every) != floor (construct-patch-last / construct-patch-every) [
+    set construct-patch-last construct-t
     file-type ",\"patches\":"
     construct-write map [ construct-q -> [ runresult construct-patch-task ] of construct-q ] sort patches
   ]

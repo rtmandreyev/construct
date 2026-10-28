@@ -11,8 +11,7 @@ inside NetLogo. Plan: [ROADMAP.md](docs/ROADMAP.md#v11-models-come-alive).
   It writes the same recording as `construct.nls` (the same turtles, tick by tick, in the tests);
   recording needs only NetLogo, drawing runs the Construct it carries with Python 3.10 or newer.
   Its errors say what to do ("construct:start first", the options a view takes).
-- **Instrumenting, on the whole Models Library:** 348 of NetLogo 7.0.4's 445 two-dimensional models
-  now record with no change but the instrumenting (291 before). It finds `reset-ticks` and `tick`
+- **Instrumenting, on the whole Models Library:** It finds `reset-ticks` and `tick`
   in the procedures setup and go call, reads models whose code is escaped XML, takes `--setup` and
   `--go` commands (with inputs: `--setup "setup 4"`, which a refusal suggests from the model's own
   buttons), and the recorder's names can no longer clash with a model's (all `construct-`).
@@ -23,14 +22,14 @@ inside NetLogo. Plan: [ROADMAP.md](docs/ROADMAP.md#v11-models-come-alive).
 - **The field view's fronts are declared floating** (each hangs at its own tick), so a run whose
   earliest front sits above the floor passes the audit; the Fire example's data lock changes for
   this alone.
-- **The whole Models Library, nearly:** 427 of the 445 two-dimensional stock models now record with
-  no hand edits (348 at the extension's commit). Setup and go come from the model's own buttons when
-  it has them (their whole command), a turtle's forever button is asked of every turtle, a model
-  with only step buttons steps, and a model that never starts the tick counter is recorded by steps
-  (`"clock": "steps"`, and its construct says "step"); the recorder and the extension record each
-  tick once even when go stops and records again. The 18 left need an extension NetLogo doesn't
-  bundle or a person or a classroom, have no run to record, or were too slow for the test
-  ([NETLOGO.md](docs/NETLOGO.md#how-it-was-checked)).
+- **The Models Library, unattended:** 388 of the 445 two-dimensional stock models now record a run
+  with no hand edits (256 at 1.0, counted the same way: at least two records). Setup and go come
+  from the model's own buttons when it has them (their whole command), a turtle's forever button is
+  asked of every turtle, a model with only step buttons steps, a model that never starts the tick
+  counter is recorded by steps (`"clock": "steps"`, and its construct says "step"), and a clock
+  that moves in fractions (`tick-advance`: GasLab, Connected Chemistry, system dynamics) records
+  each step; the recorder and the extension record each moment once. Most of the 57 left wait for
+  a player or a classroom ([NETLOGO.md](docs/NETLOGO.md#how-it-was-checked)).
 - **Reading a construct** (Phase C): a scene may carry a `reading`, how to read it and, for a run,
   its clock and counts. Its page then has a **How to read it** panel (**H**) and a replay bar that
   draws the run up to any tick, with the tick and the counts beside it; labels stay inside the
