@@ -160,7 +160,7 @@ work (art direction, critic rounds, 3D models) is opt-in.
   mode; the data lock keeps every round honest. (Done: the run critic.)
 - Legends placed to stay inside the frame. (Done.)
 
-### Phase D: real 3D models of a run (opt-in; built, Blender check next)
+### Phase D: real 3D models of a run (opt-in; done, checked in Blender)
 
 - NetLogo constructs export to glTF as proper geometry: tracks and links as tubes, agents as
   solids, one named object per breed or part, the run as the build animation. Tested in Blender.

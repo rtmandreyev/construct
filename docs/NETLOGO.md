@@ -218,7 +218,9 @@ tracks of space-time leave as tubes. `--glb` exports the model in the run's own 
 the build as `_PHASE`, so the Blender add-on's **Build** replays the run; `--materials-out` writes
 that colour map for `construct export`. In NetLogo, `(construct:draw "network-time" "state"
 "infected?" "model" true)` writes `run.glb` beside the page. The solids are drawn from the
-recording like everything else, under the data lock; without `--solid`, nothing changes.
+recording like everything else, under the data lock; without `--solid`, nothing changes. Checked in
+Blender 5.2 with the add-on: Virus on a Network, Wolf Sheep Predation, Rumor Mill and Flocking
+import with each part a named object, and **Build** halfway shows the run halfway.
 
 ## How it was checked
 
