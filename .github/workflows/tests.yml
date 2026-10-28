@@ -2,7 +2,8 @@ name: tests
 
 # The whole suite, standard library only: nothing to install. Review captures need a local
 # Chromium-family browser with WebGL, so CI skips those few tests (HOLOGRAM_SKIP_CAPTURE=1);
-# run them locally with a browser. Nothing here reaches the network or a model.
+# run them locally with a browser. The python job reaches neither the network nor a model; the
+# netlogo job downloads NetLogo 7.0.4 from its GitHub release to test the bridge and the extension.
 on:
   push:
   pull_request:
@@ -11,16 +12,22 @@ on:
 permissions:
   contents: read
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   test:
-    name: python ${{ matrix.python-version }}
-    runs-on: macos-latest
+    name: python ${{ matrix.python-version }} on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
+        os: [macos-latest, ubuntu-latest, windows-latest]
         python-version: ["3.10", "3.x"]
     env:
       HOLOGRAM_SKIP_CAPTURE: "1"
+      PYTHONUTF8: "1"
     steps:
       - uses: actions/checkout@v4
 
@@ -29,10 +36,55 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Byte-compile
-        run: python3 -m compileall -q construct_hologram scripts
+        run: python -m compileall -q construct_hologram scripts
 
       - name: Test suite
-        run: python3 -m unittest discover -s construct_hologram -t . -p 'test_*.py'
+        run: python -m unittest discover -s construct_hologram -t . -p 'test_*.py'
 
       - name: Build the examples gallery
-        run: python3 scripts/build_site.py --out "$RUNNER_TEMP/site" --no-films   # the films live on gh-pages, not in main
+        run: python scripts/build_site.py --out "$RUNNER_TEMP/site" --no-films   # the films live on gh-pages, not in main
+
+  netlogo:
+    name: NetLogo 7.0.4 on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    env:
+      HOLOGRAM_SKIP_CAPTURE: "1"
+      PYTHONUTF8: "1"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: NetLogo (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          curl -sSL -o "$RUNNER_TEMP/netlogo.tgz" https://github.com/NetLogo/NetLogo/releases/download/v7.0.4/NetLogo-7.0.4-64.tgz
+          mkdir -p "$RUNNER_TEMP/netlogo" && tar -xzf "$RUNNER_TEMP/netlogo.tgz" -C "$RUNNER_TEMP/netlogo"
+          jar=$(find "$RUNNER_TEMP/netlogo" -name 'netlogo-7.0.4.jar' | head -1)
+          echo "CONSTRUCT_NETLOGO=$(dirname "$(dirname "$jar")")" >> "$GITHUB_ENV"
+
+      - name: NetLogo (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          Invoke-WebRequest https://github.com/NetLogo/NetLogo/releases/download/v7.0.4/NetLogo-7.0.4-64.msi -OutFile "$env:RUNNER_TEMP\netlogo.msi"
+          Start-Process msiexec -ArgumentList '/i', "$env:RUNNER_TEMP\netlogo.msi", '/qn', '/norestart' -Wait
+          $jar = Get-ChildItem -Path "C:\Program Files" -Recurse -Filter 'netlogo-7.0.4.jar' -ErrorAction SilentlyContinue | Select-Object -First 1
+          "CONSTRUCT_NETLOGO=$($jar.Directory.Parent.FullName)" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+
+      - name: The bridge and the extension, headless
+        run: |
+          echo "NetLogo: $CONSTRUCT_NETLOGO"
+          export CONSTRUCT_JAVAC="$JAVA_HOME/bin/javac"
+          python -m unittest construct_hologram.test_netlogo -v

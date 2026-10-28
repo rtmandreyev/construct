@@ -6,6 +6,7 @@ import io
 import json
 import os
 import subprocess
+import sys
 import tempfile
 import unittest
 import zipfile
@@ -38,6 +39,29 @@ end]]></code>
   </widgets>
 </model>
 """
+
+
+def netlogo_java(folder):
+    """NetLogo's own Java (macOS app, Linux tarball, Windows install), else the one on PATH."""
+    for rel in ("runtime/Contents/Home/bin/java", "lib/runtime/bin/java", "runtime/bin/java.exe", "runtime/bin/java"):
+        if Path(folder, rel).exists():
+            return str(Path(folder, rel))
+    return "java"
+
+
+def netlogo_jar(folder):
+    return next(Path(folder).glob("**/app/netlogo-*.jar"))
+
+
+def headless(folder, *args, cwd=None):
+    """NetLogo headless, run as its launchers do: its Java, its jar, its bundled extensions."""
+    folder = Path(folder)
+    ext = next((str(p) for p in (folder / "extensions", folder / "app" / "extensions", folder / "lib" / "app" / "extensions")
+                if p.is_dir()), None)
+    cmd = [netlogo_java(folder), "-Xmx1536m", "-Dfile.encoding=UTF-8"] + (["-Dnetlogo.extensions.dir=" + ext] if ext else []) \
+        + ["-cp", str(netlogo_jar(folder)), "org.nlogo.headless.Main"] + list(args)
+    return subprocess.run(cmd, cwd=cwd or folder, capture_output=True, text=True, timeout=600, encoding="utf-8",
+                          errors="replace")
 
 
 def recording(path, frames=12, header=None, **extra):
@@ -545,11 +569,8 @@ class Headless(unittest.TestCase):
             self.assertEqual(cli.main(["netlogo-instrument", str(Path(d, "m.nlogox")), "--title", "Contagion", "--out", d,
                                        "--turtles", "infected?", "--reporters", "count turtles with [infected?];ticks",
                                        "--seed", "4", "--ticks", "30"]), 0)
-            env = dict(os.environ, JAVA_HOME=str(folder / "runtime" / "Contents" / "Home"))
-            r = subprocess.run([str(folder / "netlogo-headless.sh"), "--model", str(Path(d, "m-construct.nlogox")),
-                                "--setup-file", str(Path(d, "construct-experiment.xml")), "--experiment", "construct",
-                                "--threads", "1", "--table", "-"], cwd=folder, capture_output=True, text=True,
-                               timeout=600, env=env, encoding="utf-8", errors="replace")
+            r = headless(folder, "--model", str(Path(d, "m-construct.nlogox")), "--setup-file",
+                         str(Path(d, "construct-experiment.xml")), "--experiment", "construct", "--threads", "1", "--table", "-")
             self.assertEqual(r.returncode, 0, r.stdout[-1500:] + r.stderr[-1500:])
             run = netlogo.read_run(Path(d, "run.jsonl"))
             self.assertEqual((run["header"]["seed"], run["end"]), (4, 30))
@@ -566,10 +587,10 @@ class Extension(unittest.TestCase):
 
     def test_build_record_and_draw(self):
         root, folder = HERE.parent, Path(NETLOGO)
-        java = folder / "runtime" / "Contents" / "Home" / "bin" / "java"
-        jar = next(folder.glob("app/netlogo-*.jar"))
+        java = netlogo_java(folder)
+        jar = netlogo_jar(folder)
         with tempfile.TemporaryDirectory() as d:
-            subprocess.run(["python3", str(root / "scripts" / "build_netlogo_extension.py"), "--netlogo", NETLOGO,
+            subprocess.run([sys.executable, str(root / "scripts" / "build_netlogo_extension.py"), "--netlogo", NETLOGO,
                             "--javac", JAVAC, "--out", d], check=True, capture_output=True)
             z = zipfile.ZipFile(next(Path(d).glob("construct-*.zip")))
             self.assertIn("construct.jar", z.namelist())
@@ -616,11 +637,9 @@ class Extension(unittest.TestCase):
             Path(d, "plain.nlogox").write_text(MODEL, encoding="utf-8")
             self.assertEqual(cli.main(["netlogo-instrument", str(Path(d, "plain.nlogox")), "--title", "Contagion", "--out",
                                        str(Path(d, "nls")), "--turtles", "infected?", "--seed", "4", "--ticks", "30"]), 0)
-            env = dict(os.environ, JAVA_HOME=str(folder / "runtime" / "Contents" / "Home"))
-            r = subprocess.run([str(folder / "netlogo-headless.sh"), "--model", str(Path(d, "nls", "plain-construct.nlogox")),
-                                "--setup-file", str(Path(d, "nls", "construct-experiment.xml")), "--experiment", "construct",
-                                "--threads", "1", "--table", "-"], cwd=folder, capture_output=True, text=True, timeout=600,
-                               env=env, encoding="utf-8", errors="replace")
+            r = headless(folder, "--model", str(Path(d, "nls", "plain-construct.nlogox")), "--setup-file",
+                         str(Path(d, "nls", "construct-experiment.xml")), "--experiment", "construct", "--threads", "1",
+                         "--table", "-")
             self.assertEqual(r.returncode, 0, r.stderr[-1500:])
             nls = netlogo.read_run(Path(d, "nls", "run.jsonl"))
             self.assertEqual([f["turtles"] for f in ext["frames"]], [f["turtles"] for f in nls["frames"]])

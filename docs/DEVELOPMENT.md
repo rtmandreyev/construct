@@ -25,9 +25,26 @@ python3 -m unittest discover -s construct_hologram -t . -p 'test_*.py'
 The suite uses the standard library only and needs no network and no model. A Chromium-family
 browser enables the capture tests (review stills, critic packets); without one, or with
 `HOLOGRAM_SKIP_CAPTURE=1`, they are skipped. CI (`.github/workflows/tests.yml`) runs the suite
-on every push and pull request with the captures skipped. The tests compile every example,
-check the prompts against their generator, build the host packages and the gallery, and check
-the gallery's links.
+on every push and pull request with the captures skipped, on macOS, Linux and Windows. The tests
+compile every example, check the prompts against their generator, build the host packages and
+the gallery, and check the gallery's links.
+
+With `CONSTRUCT_NETLOGO` set to a NetLogo 7 folder (and `CONSTRUCT_JAVAC` to a Java 17 `javac`),
+the NetLogo tests also run NetLogo itself: the bridge headless, and the extension built, loaded
+and checked against the include-file recorder. CI does this on Linux and Windows with NetLogo
+7.0.4 from its GitHub release.
+
+**The machine checks** run the whole Models Library through `construct:run`, with no AI:
+
+```sh
+python3 scripts/library_check.py --netlogo "/Applications/NetLogo 7.0.4" --javac "$(which javac)" --out /tmp/check
+```
+
+For each two-dimensional model it checks the audit, the data lock, the replay's clock and counts,
+and, in headless Chrome, labels that leave the window, overlap, or sit under the reading panel or
+the replay bar. About an hour, one model at a time, at most about 2 GB of memory. Use it before
+and after a change to the bridge's defaults: a change that only presents the data must leave
+every data lock as it was.
 
 ## The command line
 
