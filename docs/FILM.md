@@ -138,7 +138,9 @@ page, film mode by itself: the tower builds in time with the track, and the repl
 `construct export scene.json --out tower.glb` takes it into Blender, where **Keyframe to Its Track**
 in the Construct panel keys the build in time with the track and adds it as a sound strip
 ([the add-on](../hosts/blender/README.md#in-time-with-its-track)). `--rings` sets how many moments (56
-by default), `--title` the name.
+by default), `--title` the name, and `--solid` adds the tower as a closed body through its rings
+(watertight, faces outward): `construct export scene.json --out tower.obj` gives a file a slicer
+can print, scaled to taste.
 
 **A score.** Given a MIDI file instead, `construct song piece.mid --out scene.json` draws its notes:
 each note a line of light rising from its start to its end, standing at its pitch's place on the

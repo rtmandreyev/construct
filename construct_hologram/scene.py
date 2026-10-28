@@ -43,6 +43,7 @@ MAX_VIEWS = 12
 MAX_TOUR = 12
 MAX_PROFILE = 128
 MAX_PATH = 64
+MAX_RINGS = 512
 MAX_CURVE = 256
 MAX_PATHS = 4000         # polylines in one `paths` shape
 MAX_PATH_POINTS = 30000  # points in all of them
@@ -78,7 +79,7 @@ ASSEMBLY_S = 20  # a construct's assembly, in seconds
 LONG_ASSEMBLY_S = 1200  # film mode: an assembly that spans a track
 LIFE = ("off", "calm", "alive")
 SHAPE_TYPES = ("box", "cylinder", "cone", "sphere", "torus", "lathe", "extrude", "tube",
-               "curve", "paths", "plane", "grid", "points", "marker", "terrain", "globe", "loft",
+               "curve", "paths", "plane", "grid", "points", "marker", "terrain", "globe", "loft", "rings",
                "tower", "roof", "dormer", "facade", "battlements", "buttress", "shell")
 MAX_TERRAIN = 128
 MAX_GLOBE_POINTS = 20000
@@ -518,6 +519,17 @@ def _shape_check(c, shape, where):
                 last = sec[0]
         if "round" in shape:
             c.num(shape["round"], where + ".round", 0, 1)
+    elif t == "rings":
+        rs = shape.get("rings")
+        if not (isinstance(rs, list) and 2 <= len(rs) <= MAX_RINGS and all(isinstance(r, list) and 3 <= len(r) <= 256 for r in rs)):
+            c.err(where + ".rings", "expected 2..%d closed rings, each 3..256 [x, y, z] points, bottom to top" % MAX_RINGS)
+        elif len({len(r) for r in rs}) != 1:
+            c.err(where + ".rings", "expected every ring to have the same number of points")
+        elif not all(isinstance(p, list) and len(p) == 3 and all(isinstance(v, (int, float)) and not isinstance(v, bool)
+                                                                  and math.isfinite(v) for v in p) for r in rs for p in r):
+            c.err(where + ".rings", "expected [x, y, z] points (metres)")
+        if "caps" in shape and not isinstance(shape["caps"], bool):
+            c.err(where + ".caps", "expected true or false")
     elif t == "globe":
         c.num(shape.get("radius"), where + ".radius", **pos)
         ps = shape.get("paths")
@@ -595,6 +607,7 @@ _SHAPE_KEYS = {
     "terrain": {"type", "size", "heights", "contour", "index", "grid_every", "skirt"},
     "globe": {"type", "radius", "paths", "graticule", "faces"},
     "loft": {"type", "sections", "round"},
+    "rings": {"type", "rings", "caps"},
     "tower": {"type", "radius", "height", "sides", "roof", "roof_height", "taper", "eave", "windows", "segments",
               "profile"},
     "roof": {"type", "size", "height", "style", "ridge", "overhang", "courses"},
@@ -1418,6 +1431,8 @@ def _local_mesh(shape, seed):
         return archkit.buttress(shape["width"], shape["depth"], shape["height"], shape.get("steps", 2))
     if t == "loft":
         return shapes.loft([list(x) for x in shape["sections"]], shape.get("round", 0.35))
+    if t == "rings":
+        return shapes.rings_surface(shape["rings"], shape.get("caps", True))
     if t == "globe":
         return shapes.globe(shape["radius"], shape["paths"], shape.get("graticule", 30), shape.get("faces", True))
     if t == "terrain":

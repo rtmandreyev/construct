@@ -128,7 +128,7 @@ def audit(scene, geometry):
         if r <= 0.02 * size and length >= 0.25 * size:
             wires.append(sp["id"])
     surfaces = [sp for sp in scene["parts"] if sp["role"] == "mass" and sp["shape"]["type"] in
-                ("box", "loft", "extrude", "lathe", "sphere", "cylinder", "cone")]
+                ("box", "loft", "extrude", "lathe", "sphere", "cylinder", "cone", "rings")]
     if (scene["subject"]["category"] == "vehicle" and len(wires) >= 6) or (len(wires) >= 8 and len(surfaces) <= 1):
         add(warnings, "tube-outline", None, "%d long thin tubes (%s) trace the outline: they render as glowing wires, "
             "not a body. Build the body as a loft through its sections (or filled slices with section curves), and keep "
@@ -396,6 +396,8 @@ def _freeform_points(shape):
         return sum(len(r) for r in shape.get("heights", []))  # relief is a shape: verified only from data
     if shape.get("type") == "loft":
         return len(shape.get("sections", [])) * 4  # a loft's sections are a traced or designed shape
+    if shape.get("type") == "rings":
+        return sum(len(r) for r in shape.get("rings", []))  # a measured or computed form
     if shape.get("type") == "globe":
         return sum(len(q) for q in shape.get("paths", []))  # coastlines too
     return 0

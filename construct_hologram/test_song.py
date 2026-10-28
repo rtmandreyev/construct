@@ -39,6 +39,29 @@ class Spectrum(unittest.TestCase):
         self.assertLess(sum(lv[0]), sum(lv[3]))
 
 
+class Rings(unittest.TestCase):
+    def test_a_closed_surface_through_rings(self):
+        from collections import Counter
+        from . import shapes
+        rings = [[[math.cos(2 * math.pi * j / 8) * (1 + 0.3 * i), i * 0.5, math.sin(2 * math.pi * j / 8) * (1 + 0.3 * i)]
+                  for j in range(8)] for i in range(5)]
+        for order in (rings, [list(reversed(r)) for r in rings]):   # either winding: faces point outward
+            m = shapes.rings_surface(order)
+            key = lambda p: tuple(round(v, 6) for v in p)
+            edges = Counter(tuple(sorted((key(u), key(v)))) for a, b, c in m.tris for u, v in ((a, b), (b, c), (c, a)))
+            self.assertEqual(set(edges.values()), {2})   # watertight: every edge between two faces
+            vol = sum(a[0] * (b[1] * c[2] - b[2] * c[1]) - a[1] * (b[0] * c[2] - b[2] * c[0]) + a[2] * (b[0] * c[1] - b[1] * c[0])
+                      for a, b, c in m.tris)
+            self.assertGreater(vol, 0)
+        self.assertEqual(len(shapes.rings_surface(rings).tris), 4 * 8 * 2 + 2 * 8)
+        good = {"id": "x", "label": "x", "role": "mass", "certainty": "verified", "source": "s", "shape": {"type": "rings",
+                "rings": rings}}
+        for bad in ({"rings": rings[:1]}, {"rings": [rings[0], rings[1][:5]]}, {"rings": rings, "caps": "yes"}):
+            sc = json.loads((HERE / "examples" / "v2" / "cd.json").read_text())
+            sc["parts"].append(dict(good, shape=dict(good["shape"], **bad)))
+            self.assertTrue(any("rings" in e or "caps" in e for e in scene.validate(sc)), bad)
+
+
 class Scene(unittest.TestCase):
     @unittest.skipUnless(shutil.which("ffmpeg"), "ffmpeg is not installed")
     def test_a_track_is_a_locked_tower_that_plays_with_its_track(self):
@@ -67,6 +90,13 @@ class Scene(unittest.TestCase):
             self.assertTrue(Path(d, "out", "t.wav").is_file())
             with self.assertRaises(song.SongError):
                 song.scene_from_track(Path(d, "t.wav"), rings=4)
+            solid = song.scene_from_track(Path(d, "t.wav"), "Test", rings=16, solid=True)   # a body to print
+            body = next(p for p in solid["parts"] if p["id"] == "body")
+            self.assertEqual((body["shape"]["type"], len(body["shape"]["rings"])), ("rings", 16))
+            gs = scene.compile_scene(solid)
+            self.assertEqual(audit.audit(solid, gs)["errors"], [])
+            self.assertGreater(sum(len(p.get("tris", [])) for p in gs["parts"]) if gs["parts"] and "tris" in gs["parts"][0]
+                               else 1, 0)
 
 
 def _vl(n):

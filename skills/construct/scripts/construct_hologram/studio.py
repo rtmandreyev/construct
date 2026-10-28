@@ -465,6 +465,8 @@ def add_commands(sub):
     p.add_argument("--track", dest="audio", help="for a MIDI file: the piece as audio, to build in time with and play")
     p.add_argument("--out", required=True, help="the scene (scene.json); the track is copied beside it")
     p.add_argument("--rings", type=int, default=56, help="moments of the track, one ring each (16 to 240)")
+    p.add_argument("--solid", action="store_true", help="a track: also the tower as a closed body through its rings, "
+                                                         "for Blender or a 3D print (construct export ... --out tower.obj)")
     p.add_argument("--title", help="the construct's title (default: the file's name)")
     p.add_argument("--force", action="store_true")
     p = sub.add_parser("netlogo-film", help="a NetLogo run as a film in Blender: every turtle as moving light, in "
@@ -806,7 +808,7 @@ def run(args):
             midi = Path(args.track).suffix.lower() in (".mid", ".midi")
             try:
                 sc = (score_mod.scene_from_midi(args.track, args.title, args.audio) if midi
-                      else song_mod.scene_from_track(args.track, args.title, args.rings))
+                      else song_mod.scene_from_track(args.track, args.title, args.rings, args.solid))
             except (song_mod.SongError, score_mod.ScoreError, subprocess.CalledProcessError, OSError) as exc:
                 sys.stderr.write("song: %s\n" % exc)
                 return 1
@@ -824,7 +826,7 @@ def run(args):
             g = scene_mod.compile_scene(sc)
             sys.stdout.write("wrote %s: %s, %d rings, %d lines; the track beside it\n"
                              % (args.out, sc["reading"]["music"]["track"], args.rings, g["stats"]["lines"]
-                                if "stats" in g else sum(len(p) - 1 for q in sc["parts"] for p in q["shape"]["paths"])))
+                                if "stats" in g else sum(len(p) - 1 for q in sc["parts"] for p in q["shape"].get("paths", []))))
             return 0
         if args.command == "netlogo-film":
             from . import runfilm

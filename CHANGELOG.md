@@ -29,6 +29,9 @@ inside NetLogo. Plan: [ROADMAP.md](docs/ROADMAP.md#v11-models-come-alive).
   sound, each moment a ring shaped by the loudness of 24 bands of frequencies, rising with time, the
   section changes in the accent; its page builds in time with the track and plays it, under a data
   lock (the lock now covers the source its fact names: `run` or `track`).
+- **A printable song:** `construct song … --solid` adds the tower as a closed body through its rings,
+  with a new optional shape, `rings` (a surface lofted through closed rings of the same number of
+  points, capped, faces outward); `construct export … --out tower.obj` writes a file a slicer can print.
 - **A score as a construct:** `construct song piece.mid` reads a MIDI file (standard library: tempo map,
   time signature, track names) and stands each note as a line of light around the circle of fifths,
   rising through time, each track a tone, a ring at each bar; `--track` builds it in time with the

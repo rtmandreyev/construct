@@ -149,7 +149,7 @@ def _clock(seconds):
     return "%d:%02d" % (int(seconds) // 60, int(round(seconds)) % 60) if seconds >= 60 else "%.0f s" % seconds
 
 
-def scene_from_track(path, title=None, rings=56):
+def scene_from_track(path, title=None, rings=56, solid=False):
     """A construct-scene v2 of the track (see the module docstring)."""
     path = Path(path)
     if not 16 <= rings <= 240:
@@ -181,8 +181,12 @@ def scene_from_track(path, title=None, rings=56):
              _part("meridians", "The same band through time", "detail", meridians, tone="dust", weight=0.4, alpha=0.35)]
     if section_rings:
         parts.append(_part("sections", "Where the track changes section", "data", section_rings, tone="accent", weight=1.4))
+    if solid:   # the tower as a closed body, through every ring, capped: for Blender, or to print
+        body = _part("body", "The tower as a solid, through every ring", "mass", [], alpha=0.25, weight=0.5)
+        body["shape"] = {"type": "rings", "rings": [r[:-1] for r in ring_paths], "caps": True}
+        parts.insert(2, body)
     for p in parts:   # each ring hangs at its own moment, above the floor
-        if p["id"] in ("rings", "meridians", "sections"):
+        if p["id"] in ("rings", "meridians", "sections", "body"):
             p["floating"] = True
     how = ["Height is time: the track starts on the floor and ends at the top, %s in all." % _clock(seconds),
            "Each ring is one moment (%.1f s): around it, the frequencies, the lowest at the front and the highest "

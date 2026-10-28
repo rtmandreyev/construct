@@ -68,6 +68,7 @@ errors: the closed vocabulary is the safety boundary.
 | `shell` | `span, height, reach, bulge, ribs, rows`: a sail from a base edge (on y = 0, `span` wide) up to an apex `height` high and `reach` behind, bulging forward, ribbed | the Sydney Opera House's roofs; pair them with `rotate [0, 180, 0]` and a podium |
 | `buttress` | `width, depth, height, steps` (against z = 0, out along +Z) | cathedral and castle walls (with `repeat`) |
 | `loft` | `sections [[z, half_width, y_bottom, y_top(, half_width_top)], ...]` back to front along +Z, `round` 0–1 | car bodies and glasshouses, hulls, fuselages: the plan (half-widths) and side profile (bottoms, tops) together |
+| `rings` | `rings [[[x, y, z], ...], ...]` closed rings bottom to top, each the same number of points; `caps` (default true) | a closed surface through measured or computed sections: a sculpture of data, a vase, a scanned form (faces point outward; capped, it can be printed) |
 | `extrude` | `profile [[u,v], ...]` (simple polygon), `height`, `axis` `y` (footprint in XZ, rises) · `z` (front elevation in XY, runs back) · `x`, `ribs` | building plans, gabled houses, book spines, brackets |
 | `tube` | `path [[x,y,z], ...]` (Catmull-Rom smoothed), `radius` or one per point (taper), `sides` 3–24, `samples`, `longitudinal`, `ring_every`, `caps` | limbs, tentacles, tonearms, pipes, cables, branches |
 | `curve` | `points`, `smooth`, `closed` | edges, paths, outlines, shine strokes |
