@@ -2,7 +2,7 @@
 
 This repository has two branches to publish:
 
-- `main`: the source, tagged at each release (the latest is `v1.0.0`);
+- `main`: the source, tagged at each release (the latest is `v1.1.0`);
 - `gh-pages`: the examples gallery, a static site served from the branch's root.
 
 The public addresses below come from one place: `OWNER` and `REPO` at the top of
@@ -42,7 +42,7 @@ Making it public later: **Settings → General → Danger Zone → Change visibi
 cd ~/construct-public
 git remote add origin https://github.com/rtmandreyev/construct.git
 git push -u origin main
-git push origin v1.0.0
+git push origin v1.1.0
 ```
 
 ## 3. Push the gallery
@@ -64,8 +64,10 @@ After a minute or two the gallery is at https://rtmandreyev.github.io/construct/
 Pages shows the address once it is live). Open it, open two or three examples, and check
 that they assemble and that the README's animations link to them.
 
-Optionally, publish a release: **Releases → Draft a new release**, tag `v1.0.0`, and
-[docs/releases/v1.0.0.md](docs/releases/v1.0.0.md) as the notes.
+Optionally, publish a release: **Releases → Draft a new release**, tag `v1.1.0`, and
+[docs/releases/v1.1.0.md](docs/releases/v1.1.0.md) as the notes. Attach the two zips from `dist/`:
+`construct-blender-1.1.0.zip` (`python3 scripts/build_blender_extension.py`) and `construct-1.1.0.zip`,
+the NetLogo extension (`python3 scripts/build_netlogo_extension.py --netlogo "<NetLogo 7 folder>"`).
 
 ## 5. Update the gallery later
 

@@ -124,6 +124,8 @@ the scene and geometry contract keeps its id (`construct/0.2`), because nothing 
 
 ## v1.1: models come alive
 
+Phases A to E are built for 1.1.0 ([release notes](releases/v1.1.0.md)); F comes after.
+
 Make agent-based models exciting to learn from: a simulation's whole run as an animated hologram a
 student wants to explore (why does it take this shape? how do I read it?), accurate to the run,
 and exportable to Blender as a real 3D model. The core stays free, fast and reliable; the heavy

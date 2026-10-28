@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased (1.1)
+## 1.1.0 — unreleased
 
 Models come alive: the NetLogo bridge, made reliable on the whole Models Library and usable from
 inside NetLogo. Plan: [ROADMAP.md](docs/ROADMAP.md#v11-models-come-alive).
