@@ -211,7 +211,7 @@ steps are `construct_netlogo_instrument` and `construct_netlogo_draw`.
    `python3 TOOLS netlogo-film run.jsonl --out film.mp4` (or `--blend`; it takes minutes at full
    size, so offer `--seconds 10 --size 960x540` first). A page for a museum screen: `build --kiosk`.
    A track by itself as a construct (a tower of sound that builds with it): `python3 TOOLS song
-   track.mp3 --out scene.json`, then build it.
+   track.mp3 --out scene.json`, then build it; a MIDI file's score: `song piece.mid` (`--track` its audio).
 
 ## A 3D model of a construct (export)
 

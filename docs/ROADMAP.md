@@ -203,8 +203,8 @@ come back in 2.1, depending on how 1.1 is received.
   and the look.
 - **A song as a construct:** a MIDI file or a track drawn with time as height (notes, sections,
   loudness), like a NetLogo run: a sculpture of a song, to orbit, replay or 3D-print. (Begun in 1.1:
-  `construct song` draws a track's spectrum as a tower of rings that builds with it; next, MIDI notes,
-  and a solid surface to print.)
+  `construct song` draws a track's spectrum as a tower of rings that builds with it, and a MIDI file's
+  notes around the circle of fifths; next, a solid surface to print.)
 - **Stems to parts:** each stem (drums, bass, voice) drives its own group of parts, beyond film
   mode's one voice stem.
 - **Your gear:** a musician's synth, guitar or rig as a construct, its knobs and switches moving

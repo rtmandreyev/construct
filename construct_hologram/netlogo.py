@@ -1090,9 +1090,10 @@ def lock_problem(scene):
     fact = next((f for f in scene.get("facts", []) if f.get("key") == LOCK), None)
     if fact is None or fact.get("value") == data_lock(scene):
         return None
-    if _locked_source(scene) == "track":
-        return ("the data drawn from the track changed since `construct song` drew it (a part or fact with source "
-                "\"track\", or the view or coordinates fact). Draw it again with `construct song`.")
+    if _locked_source(scene) in ("track", "score"):
+        return ("the data drawn from the %s changed since `construct song` drew it (a part or fact with source "
+                "\"%s\", or the view or coordinates fact). Draw it again with `construct song`."
+                % ((_locked_source(scene),) * 2))
     return ("the data drawn from the NetLogo recording changed since the bridge drew it (a part, fact or source "
             "with source \"run\", or the view or coordinates fact). Restore them from `construct netlogo`; art "
             "direction may change only a data part's label, look and note, and adds its own parts and facts "

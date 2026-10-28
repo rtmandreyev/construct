@@ -140,6 +140,13 @@ in the Construct panel keys the build in time with the track and adds it as a so
 ([the add-on](../hosts/blender/README.md#in-time-with-its-track)). `--rings` sets how many moments (56
 by default), `--title` the name.
 
+**A score.** Given a MIDI file instead, `construct song piece.mid --out scene.json` draws its notes:
+each note a line of light rising from its start to its end, standing at its pitch's place on the
+circle of fifths (C at the front, so a key's notes stand together and a chord is a cluster), each
+octave further out, each MIDI track in a tone of its own (named as the file names it), with a faint
+ring at each bar from its tempo and time signature. `--track piece.mp3` (the piece as audio) makes
+its page build in time with it and play it; without, it builds over the piece's own length.
+
 ## Choose the camera
 
 `--camera` decides how the camera moves:

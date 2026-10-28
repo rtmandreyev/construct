@@ -29,6 +29,10 @@ inside NetLogo. Plan: [ROADMAP.md](docs/ROADMAP.md#v11-models-come-alive).
   sound, each moment a ring shaped by the loudness of 24 bands of frequencies, rising with time, the
   section changes in the accent; its page builds in time with the track and plays it, under a data
   lock (the lock now covers the source its fact names: `run` or `track`).
+- **A score as a construct:** `construct song piece.mid` reads a MIDI file (standard library: tempo map,
+  time signature, track names) and stands each note as a line of light around the circle of fifths,
+  rising through time, each track a tone, a ring at each bar; `--track` builds it in time with the
+  piece's audio.
 - **In Blender, in time with the track:** a construct of a track or of a run to music carries its clock
   into the glTF (`music`: the track, its length and the build's range); the add-on's **Keyframe to Its
   Track** keys the build linearly over the track and adds it as a sound strip (Blender 4 and 5).

@@ -454,8 +454,10 @@ def add_commands(sub):
     p.add_argument("--frame", choices=("y-up", "z-up"), default="y-up", help="OBJ only (glTF is always Y up)")
     p.add_argument("--merge", action="store_true",
                    help="glTF: merge every part that does not move into one mesh per material (for game engines)")
-    p = sub.add_parser("song", help="a track as a construct: a tower of sound that builds in time with it (needs ffmpeg)")
-    p.add_argument("track", help="the track (any format ffmpeg reads)")
+    p = sub.add_parser("song", help="a track as a construct (a tower of sound that builds in time with it; needs ffmpeg), "
+                                    "or a MIDI file's score (every note a line of light)")
+    p.add_argument("track", help="the track (any format ffmpeg reads), or a MIDI file (.mid)")
+    p.add_argument("--track", dest="audio", help="for a MIDI file: the piece as audio, to build in time with and play")
     p.add_argument("--out", required=True, help="the scene (scene.json); the track is copied beside it")
     p.add_argument("--rings", type=int, default=56, help="moments of the track, one ring each (16 to 240)")
     p.add_argument("--title", help="the construct's title (default: the file's name)")
@@ -746,16 +748,25 @@ def run(args):
             sys.stdout.write("captured:\n  %s\n" % "\n  ".join(paths))
             return 0 if report["ok"] else 1
         if args.command == "song":
-            from . import song as song_mod
+            from . import score as score_mod, song as song_mod
+            midi = Path(args.track).suffix.lower() in (".mid", ".midi")
             try:
-                sc = song_mod.scene_from_track(args.track, args.title, args.rings)
-            except (song_mod.SongError, subprocess.CalledProcessError, OSError) as exc:
+                sc = (score_mod.scene_from_midi(args.track, args.title, args.audio) if midi
+                      else song_mod.scene_from_track(args.track, args.title, args.rings))
+            except (song_mod.SongError, score_mod.ScoreError, subprocess.CalledProcessError, OSError) as exc:
                 sys.stderr.write("song: %s\n" % exc)
                 return 1
             _write(args.out, json.dumps(sc, separators=(",", ":"), ensure_ascii=False) + "\n", args.force)
-            dest = Path(args.out).resolve().parent / Path(args.track).name
-            if dest != Path(args.track).resolve():   # the track beside the scene, where its page plays it from
-                shutil.copyfile(args.track, dest)
+            audio = args.audio if midi else args.track
+            if audio:   # the track beside the scene, where its page plays it from
+                dest = Path(args.out).resolve().parent / Path(audio).name
+                if dest != Path(audio).resolve():
+                    shutil.copyfile(audio, dest)
+            if midi:
+                sys.stdout.write("wrote %s: %d notes, %s%s\n" % (args.out, next(f["value"] for f in sc["facts"] if f["key"] == "notes"),
+                                 sc["reading"]["how"][0].split(", ")[-1].rstrip("."),
+                                 "; the track beside it" if audio else ""))
+                return 0
             g = scene_mod.compile_scene(sc)
             sys.stdout.write("wrote %s: %s, %d rings, %d lines; the track beside it\n"
                              % (args.out, sc["reading"]["music"]["track"], args.rings, g["stats"]["lines"]

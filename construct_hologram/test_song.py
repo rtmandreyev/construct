@@ -69,5 +69,62 @@ class Scene(unittest.TestCase):
                 song.scene_from_track(Path(d, "t.wav"), rings=4)
 
 
+def _vl(n):
+    out = [n & 0x7F]
+    n >>= 7
+    while n:
+        out.insert(0, (n & 0x7F) | 0x80)
+        n >>= 7
+    return bytes(out)
+
+
+def _track(events, name=None):
+    data, last = (_vl(0) + b"\xff\x03" + _vl(len(name)) + name.encode()) if name else b"", 0
+    for t, ev in sorted(events, key=lambda e: e[0]):
+        data += _vl(t - last) + ev
+        last = t
+    data += _vl(0) + b"\xff\x2f\x00"
+    return b"MTrk" + struct.pack(">I", len(data)) + data
+
+
+def midi_file(path):
+    """A small piece: a tempo track (120 bpm, 4/4), a scale of 8 notes and a C major chord held for a bar."""
+    div = 480
+    meta = [(0, b"\xff\x51\x03" + (500000).to_bytes(3, "big")), (0, b"\xff\x58\x04\x04\x02\x18\x08")]
+    mel = [e for i, p in enumerate([60, 62, 64, 65, 67, 69, 71, 72])
+           for e in ((i * div, bytes([0x90, p, 90])), (i * div + div // 2, bytes([0x90, p, 0])))]   # note-on 0: off
+    chord = [e for p in (48, 52, 55) for e in ((0, bytes([0x91, p, 70])), (4 * div, bytes([0x81, p, 0])))]
+    Path(path).write_bytes(b"MThd" + struct.pack(">IHHH", 6, 1, 3, div) + _track(meta) + _track(mel, "Melody")
+                           + _track(chord, "Chords"))
+
+
+class Score(unittest.TestCase):
+    def test_a_midi_file_read_and_drawn(self):
+        from . import score
+        with tempfile.TemporaryDirectory() as d:
+            midi_file(Path(d, "p.mid"))
+            m = score.read_midi(Path(d, "p.mid"))
+            self.assertEqual((len(m["notes"]), m["length"], m["meter"], m["tempo"], m["names"]),
+                             (11, 3.75, "4/4", 120.0, {1: "Melody", 2: "Chords"}))
+            first = m["notes"][0]
+            self.assertEqual((first[0], first[1]), (0.0, 0.25))     # half a beat at 120 bpm
+            self.assertEqual(len(m["bars"]), 2)                       # bars at 0 and 2 s
+            sc = score.scene_from_midi(Path(d, "p.mid"), "Piece")
+            self.assertEqual([e for e in scene.validate(sc)], [])
+            self.assertEqual(audit.audit(sc, scene.compile_scene(sc))["errors"], [])
+            self.assertIsNone(netlogo.lock_problem(sc))
+            labels = sorted(p["label"].split(":")[0] for p in sc["parts"] if p["id"].startswith("notes"))
+            self.assertEqual(labels, ["Chords", "Melody"])
+            c, g = score._place(60, 4), score._place(67, 4)        # C at the front, G one step round the circle of fifths
+            self.assertAlmostEqual(c[0], 0.0, places=6)
+            self.assertAlmostEqual(math.atan2(g[0], g[1]), math.pi / 6, places=6)
+            moved = json.loads(json.dumps(sc))
+            next(p for p in moved["parts"] if p["id"].startswith("notes"))["shape"]["paths"][0][1][1] += 1
+            self.assertIn("score", netlogo.lock_problem(moved))
+            Path(d, "bad.mid").write_bytes(b"RIFF")
+            with self.assertRaises(score.ScoreError):
+                score.read_midi(Path(d, "bad.mid"))
+
+
 if __name__ == "__main__":
     unittest.main()
