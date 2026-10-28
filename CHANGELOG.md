@@ -22,6 +22,10 @@ inside NetLogo. Plan: [ROADMAP.md](docs/ROADMAP.md#v11-models-come-alive).
   the track, which the replay bar plays), the track's fingerprint is under the data lock, and the
   track is copied beside the scene. `construct audio` gains `kick`: a pulse on each kick or bass
   hit, even over a held bass ([NETLOGO.md](docs/NETLOGO.md#5-music-optional)).
+- **A song as a construct:** `construct song track.mp3 --out scene.json` draws a track as a tower of
+  sound, each moment a ring shaped by the loudness of 24 bands of frequencies, rising with time, the
+  section changes in the accent; its page builds in time with the track and plays it, under a data
+  lock (the lock now covers the source its fact names: `run` or `track`).
 - **A run as a film** (Blender): File > Import > NetLogo Run (.jsonl), `construct netlogo-film run.jsonl
   --out film.mp4` (or `--blend`; it finds Blender), or `(construct:draw … "film" true)` in NetLogo
   (`film.blend` beside the page), draws a recording itself, every turtle at every tick as glowing light with a trail in

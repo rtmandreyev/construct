@@ -933,8 +933,8 @@ def _music_check(c, m, w):
     a = m["audio"]
     if not c.keys(a, {"fps", "energy", "high", "kick", "onset"}, {"fps", "energy", "high", "kick", "onset"}, w + ".audio"):
         return
-    if a["fps"] != tps:
-        c.err(w + ".audio.fps", "expected the run's ticks a second (%d)" % tps)
+    if not isinstance(a["fps"], int) or isinstance(a["fps"], bool) or not 1 <= a["fps"] <= 120:
+        c.err(w + ".audio.fps", "expected a whole number of frames a second from 1 to 120")
     n = None
     for k in ("energy", "high", "kick", "onset"):
         v = a[k]

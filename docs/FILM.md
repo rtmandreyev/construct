@@ -118,6 +118,17 @@ ahead of or behind an even build, its speed over any four seconds ranged from 0.
 1.9–3.3× an even build, and the light from 0.60 to 1.53. Before film mode had these settings, the
 same tracks gave 5–16%, 0.23–0.42× to 1.2–1.5×, and 0.82 to 1.18.
 
+## A song as a construct
+
+`construct song track.mp3 --out scene.json` draws the track itself: a tower of sound, each moment a
+ring whose radius at each angle is how loud that band of frequencies is (the lowest at the front,
+the highest at the back, mirrored), rising with time from the floor to the top. The rings where the
+track changes section are drawn in the accent. `construct build scene.json --out out` makes its
+page, film mode by itself: the tower builds in time with the track, and the replay bar plays it
+(the track is copied beside the scene). Everything drawn comes from the analysis, under a data lock;
+`construct export scene.json --out tower.glb` takes it into Blender as tubes. `--rings` sets how many
+moments (56 by default), `--title` the name.
+
 ## Choose the camera
 
 `--camera` decides how the camera moves:

@@ -454,6 +454,12 @@ def add_commands(sub):
     p.add_argument("--frame", choices=("y-up", "z-up"), default="y-up", help="OBJ only (glTF is always Y up)")
     p.add_argument("--merge", action="store_true",
                    help="glTF: merge every part that does not move into one mesh per material (for game engines)")
+    p = sub.add_parser("song", help="a track as a construct: a tower of sound that builds in time with it (needs ffmpeg)")
+    p.add_argument("track", help="the track (any format ffmpeg reads)")
+    p.add_argument("--out", required=True, help="the scene (scene.json); the track is copied beside it")
+    p.add_argument("--rings", type=int, default=56, help="moments of the track, one ring each (16 to 240)")
+    p.add_argument("--title", help="the construct's title (default: the file's name)")
+    p.add_argument("--force", action="store_true")
     p = sub.add_parser("netlogo-film", help="a NetLogo run as a film in Blender: every turtle as moving light, in "
                                             "time with its track (needs Blender; docs/NETLOGO.md)")
     p.add_argument("run", help="the recording (.jsonl)")
@@ -518,7 +524,7 @@ def add_commands(sub):
 
 
 COMMANDS = ("new", "params", "expand", "prompts", "author", "trace", "trace-image", "terrain", "globe", "critique", "rounds", "compare", "loft-from-traces", "check", "build", "review",
-            "video", "audio", "export", "netlogo", "netlogo-instrument", "netlogo-film")
+            "video", "audio", "export", "netlogo", "netlogo-instrument", "netlogo-film", "song")
 
 
 def run(args):
@@ -739,6 +745,22 @@ def run(args):
             paths = render.review(page_in(args.out), str(Path(args.out, "review")), w, h, sheets=sheets)
             sys.stdout.write("captured:\n  %s\n" % "\n  ".join(paths))
             return 0 if report["ok"] else 1
+        if args.command == "song":
+            from . import song as song_mod
+            try:
+                sc = song_mod.scene_from_track(args.track, args.title, args.rings)
+            except (song_mod.SongError, subprocess.CalledProcessError, OSError) as exc:
+                sys.stderr.write("song: %s\n" % exc)
+                return 1
+            _write(args.out, json.dumps(sc, separators=(",", ":"), ensure_ascii=False) + "\n", args.force)
+            dest = Path(args.out).resolve().parent / Path(args.track).name
+            if dest != Path(args.track).resolve():   # the track beside the scene, where its page plays it from
+                shutil.copyfile(args.track, dest)
+            g = scene_mod.compile_scene(sc)
+            sys.stdout.write("wrote %s: %s, %d rings, %d lines; the track beside it\n"
+                             % (args.out, sc["reading"]["music"]["track"], args.rings, g["stats"]["lines"]
+                                if "stats" in g else sum(len(p) - 1 for q in sc["parts"] for p in q["shape"]["paths"])))
+            return 0
         if args.command == "netlogo-film":
             from . import runfilm
             if not (args.out or args.blend):

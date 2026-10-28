@@ -323,7 +323,7 @@ class Views(unittest.TestCase):
             netlogo.scene_from_run(run, "network-time", state="infected?", time="sqrt")
         page, _ = render.build_html(scene.compile_scene(sc))
         self.assertIn("runCurve", page)                            # film mode by itself, the features in the page
-        for bad in ({"track": "../beat.wav"}, {"ticks_per_second": 0}, {"audio": dict(m["audio"], fps=24)}):
+        for bad in ({"track": "../beat.wav"}, {"ticks_per_second": 0}, {"audio": dict(m["audio"], fps=0)}):
             wrong = json.loads(json.dumps(sc))
             wrong["reading"]["music"].update(bad)
             self.assertTrue(any("music" in e for e in scene.validate(wrong)), bad)

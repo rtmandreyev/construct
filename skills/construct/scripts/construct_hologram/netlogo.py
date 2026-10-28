@@ -899,15 +899,23 @@ def _canon(v):
     return [_canon(x) for x in v]
 
 
-def data_lock(scene):
-    """The fingerprint of what the recording says: the run's source, its facts and how the data is drawn
-    (view, coordinates), and every part from the run, without how a part is shown (label, look, note)."""
+def _locked_source(scene):
+    """The source the data lock covers: the lock fact's own (`run` for a NetLogo run, `track` for a song)."""
+    fact = next((f for f in scene.get("facts", []) if f.get("key") == LOCK), None)
+    return (fact or {}).get("source") or "run"
+
+
+def data_lock(scene, source=None):
+    """The fingerprint of what the data says: its source (the recording, or a track), its facts and how the
+    data is drawn (view, coordinates), and every part from it, without how a part is shown (label, look,
+    note)."""
+    src = source or _locked_source(scene)
     facts = sorted(({k: v for k, v in f.items() if k != "note"} for f in scene.get("facts", [])
-                    if f.get("key") != LOCK and (f.get("source") == "run" or f.get("key") in LOCKED_FACTS)),
+                    if f.get("key") != LOCK and (f.get("source") == src or f.get("key") in LOCKED_FACTS)),
                    key=lambda f: f["key"])
     parts = sorted(({k: v for k, v in p.items() if k not in LOOSE} for p in scene.get("parts", [])
-                    if p.get("source") == "run"), key=lambda p: p["id"])
-    data = {"source": [s for s in scene.get("sources", []) if s.get("id") == "run"], "facts": facts, "parts": parts}
+                    if p.get("source") == src), key=lambda p: p["id"])
+    data = {"source": [s for s in scene.get("sources", []) if s.get("id") == src], "facts": facts, "parts": parts}
     r = scene.get("reading") or {}
     if r.get("clock") or r.get("series"):   # the replay's clock and counts are the run's data too
         data["reading"] = {"clock": r.get("clock"), "series": r.get("series", [])}
@@ -1082,6 +1090,9 @@ def lock_problem(scene):
     fact = next((f for f in scene.get("facts", []) if f.get("key") == LOCK), None)
     if fact is None or fact.get("value") == data_lock(scene):
         return None
+    if _locked_source(scene) == "track":
+        return ("the data drawn from the track changed since `construct song` drew it (a part or fact with source "
+                "\"track\", or the view or coordinates fact). Draw it again with `construct song`.")
     return ("the data drawn from the NetLogo recording changed since the bridge drew it (a part, fact or source "
             "with source \"run\", or the view or coordinates fact). Restore them from `construct netlogo`; art "
             "direction may change only a data part's label, look and note, and adds its own parts and facts "

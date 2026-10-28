@@ -210,6 +210,8 @@ steps are `construct_netlogo_instrument` and `construct_netlogo_draw`.
    the track. A film of the run in Blender, every agent as moving light in time with its track:
    `python3 TOOLS netlogo-film run.jsonl --out film.mp4` (or `--blend`; it takes minutes at full
    size, so offer `--seconds 10 --size 960x540` first). A page for a museum screen: `build --kiosk`.
+   A track by itself as a construct (a tower of sound that builds with it): `python3 TOOLS song
+   track.mp3 --out scene.json`, then build it.
 
 ## A 3D model of a construct (export)
 
