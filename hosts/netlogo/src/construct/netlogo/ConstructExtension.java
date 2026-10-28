@@ -97,11 +97,15 @@ public class ConstructExtension extends DefaultClassManager {
     pm.addPrimitive("high", new MusicAt("high"));
     pm.addPrimitive("hit", new MusicAt("onset"));
     pm.addPrimitive("music-time", new MusicTime());
+    pm.addPrimitive("play", new Play());
+    pm.addPrimitive("sync", new Sync());
+    pm.addPrimitive("stop-music", new StopMusic());
   }
 
   @Override
   public void unload(ExtensionManager em) {
     close();
+    stopMusic();
   }
 
   static void close() {
@@ -574,6 +578,80 @@ public class ConstructExtension extends DefaultClassManager {
     public Object report(Argument[] args, Context c) throws ExtensionException {
       if (track == null) throw new ExtensionException("construct:music \"track.mp3\" first");
       return musicClock(c) / tps;
+    }
+  }
+
+  // ------------------------------------------------------------------ live: the track heard while NetLogo runs
+
+  static javax.sound.sampled.Clip clip = null;
+  static long playStart = 0;
+  static double playFrom = 0;
+  static boolean playing = false;
+
+  /** construct:play: the track from the current tick's moment, heard as the model runs (with construct:sync in go).
+   *  Without an audio output (a server, a headless run), the run keeps time with the clock instead. */
+  static class Play implements Command {
+    public Syntax getSyntax() { return SyntaxJ.commandSyntax(); }
+    public void perform(Argument[] args, Context c) throws ExtensionException {
+      if (track == null) throw new ExtensionException("construct:music \"track.mp3\" first");
+      stopMusic();
+      playFrom = Math.max(0, musicClock(c)) / tps;
+      File wav = new File(features.getParentFile(), features.getName().replaceAll("-audio-\\d+\\.json$", "") + "-play.wav");
+      try {
+        if (System.getenv("CONSTRUCT_SILENT") != null) throw new IOException("CONSTRUCT_SILENT is set");
+        if (!wav.isFile() || wav.lastModified() < track.lastModified()) {
+          Process p = new ProcessBuilder("ffmpeg", "-v", "error", "-y", "-i", track.getAbsolutePath(), "-ac", "2", "-ar",
+              "44100", "-sample_fmt", "s16", wav.getAbsolutePath()).redirectErrorStream(true).start();
+          if (!p.waitFor(5, TimeUnit.MINUTES) || p.exitValue() != 0) throw new IOException("ffmpeg could not convert the track");
+        }
+        javax.sound.sampled.Clip cl = javax.sound.sampled.AudioSystem.getClip();
+        cl.open(javax.sound.sampled.AudioSystem.getAudioInputStream(wav));
+        cl.setMicrosecondPosition((long) (playFrom * 1e6));
+        cl.start();
+        clip = cl;
+      } catch (Exception e) {   // no sound here: keep time with the clock
+        clip = null;
+        say(c, "construct: no sound (" + e.getMessage() + "); the run keeps time with the clock");
+      }
+      playStart = System.nanoTime();
+      playing = true;
+    }
+  }
+
+  static double heard() {
+    return clip != null ? clip.getMicrosecondPosition() / 1e6 : playFrom + (System.nanoTime() - playStart) / 1e9;
+  }
+
+  /** construct:sync (in go, after tick): wait until the track reaches this tick, so the run moves in time with it.
+   *  Does nothing unless construct:play has started the track. */
+  static class Sync implements Command {
+    public Syntax getSyntax() { return SyntaxJ.commandSyntax(); }
+    public void perform(Argument[] args, Context c) throws ExtensionException {
+      if (!playing) return;
+      double target = musicClock(c) / tps;
+      try {
+        for (double now = heard(); now < target && playing; now = heard()) {
+          if (clip != null && !clip.isRunning() && clip.getMicrosecondPosition() >= clip.getMicrosecondLength()) break;   // the track is over
+          Thread.sleep(Math.max(1, Math.min(20, (long) ((target - now) * 1000))));
+        }
+      } catch (InterruptedException e) {
+        Thread.currentThread().interrupt();
+      }
+    }
+  }
+
+  /** construct:stop-music: stop the track (construct:play starts it again from the current tick). */
+  static class StopMusic implements Command {
+    public Syntax getSyntax() { return SyntaxJ.commandSyntax(); }
+    public void perform(Argument[] args, Context c) { stopMusic(); }
+  }
+
+  static void stopMusic() {
+    playing = false;
+    if (clip != null) {
+      clip.stop();
+      clip.close();
+      clip = null;
     }
   }
 

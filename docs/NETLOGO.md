@@ -253,6 +253,12 @@ moment), the light follows the energy, kicks and strong attacks flare the build 
 replay bar's play button plays the track with the run. The data lock covers the track's name,
 fingerprint and clock: a construct drawn to another track is another construct.
 
+**Live in NetLogo.** With `construct:sync` after `tick` in go, `construct:play` plays the track from
+the current tick's moment and each run of go waits until the music reaches its tick: the model
+moves in time with the track in NetLogo's own view, with the sound (Java's own audio, from a WAV
+that ffmpeg makes once). Without an audio output the run keeps time with the clock.
+`construct:stop-music` stops it; `construct:run`, which records as fast as it can, ignores sync.
+
 A construct holds at most 24,000 line segments, so a long run with many moving agents is sampled
 (the `sampling` fact says how much); the construct is the run's shape, and the replay its timing.
 

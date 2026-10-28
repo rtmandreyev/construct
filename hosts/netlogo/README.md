@@ -63,7 +63,18 @@ end
 
 Then `construct:run` runs the model for the length of the track, and the construct plays it back
 in time with the music: press play on its replay bar to hear the run with its track. The track is
-analysed once (with ffmpeg) into a small features file beside the run; NetLogo never plays it.
+analysed once (with ffmpeg) into a small features file beside the run.
+
+**To watch it live in NetLogo, with the sound,** add `construct:sync` after `tick` in go, then:
+
+```
+construct:music "track.mp3"
+setup
+construct:play
+```
+
+and press go (forever). `construct:sync` waits until the track reaches each tick, so the model moves
+in time with the music in NetLogo's own view; `construct:stop-music` stops it.
 
 ## Primitives
 
@@ -86,6 +97,9 @@ analysed once (with ffmpeg) into a small features file beside the run; NetLogo n
 | `construct:music "track.mp3"` or `(construct:music "track.mp3" ticks-a-second)` | a track to run to: a tick is a moment of it (30 a second by default); `construct:run` then lasts the track; `construct:music ""` forgets it. Needs ffmpeg |
 | `construct:kick`, `construct:energy`, `construct:high`, `construct:hit` | the music at this tick, 0 to 1: a kick or bass hit (a pulse), the loudness, the brightness, the strongest attacks (0 after the track) |
 | `construct:music-time` | the seconds of the track at this tick |
+| `construct:play` | plays the track from the current tick's moment, heard as the model runs (without an audio output, the run keeps time with the clock) |
+| `construct:sync` | in go, after tick: waits until the track reaches this tick, so the model moves in time with it (nothing until `construct:play`) |
+| `construct:stop-music` | stops the track |
 
 `construct:draw` options include `"model" true` (a 3D model of the run, `run.glb`, beside the page)
 and `"film" true` (the run as a film in Blender, `film.blend`, beside the page; needs Blender).

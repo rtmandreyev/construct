@@ -15,6 +15,9 @@ inside NetLogo. Plan: [ROADMAP.md](docs/ROADMAP.md#v11-models-come-alive).
   in the procedures setup and go call, reads models whose code is escaped XML, takes `--setup` and
   `--go` commands (with inputs: `--setup "setup 4"`, which a refusal suggests from the model's own
   buttons), and the recorder's names can no longer clash with a model's (all `construct-`).
+- **Live in NetLogo:** `construct:play` plays the track from the current tick, and `construct:sync`
+  in go waits until the music reaches each tick, so a model moves in time with its track in NetLogo's
+  own view, with the sound (or with the clock, without an audio output); `construct:stop-music`.
 - **Runs to music:** `construct:music "track.mp3"` makes a tick a moment of a track (30 a second by
   default), `construct:kick`, `construct:energy`, `construct:high` and `construct:hit` let a model's
   code follow it, and `construct:run` lasts the track. The construct plays back in time with the

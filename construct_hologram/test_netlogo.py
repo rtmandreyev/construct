@@ -686,10 +686,10 @@ class Extension(unittest.TestCase):
             Path(d, "m.nlogox").write_text(MODEL.replace("turtles-own", "extensions [construct]\nturtles-own"),
                                            encoding="utf-8")
 
-            def drive(*commands):
+            def drive(*commands):   # silent: construct:play keeps time with the clock, never sounding
                 return subprocess.run([str(java), "-Djava.awt.headless=true", "-cp", os.pathsep.join([str(jar), d]), "Drive",
                                        str(Path(d, "m.nlogox"))] + list(commands), cwd=d, capture_output=True, text=True,
-                                      timeout=600)
+                                      timeout=600, env=dict(os.environ, CONSTRUCT_SILENT="1"))
             r = drive('random-seed 4 setup construct:start "Contagion" construct:seed 4 '
                       'construct:track-turtles ["infected?"] construct:track-reporter "infected" [-> count turtles with [infected?]] '
                       'construct:record', "repeat 30 [ go construct:record ]", "construct:finish", '(construct:draw "space-time" "max-agents" 10 "time" "sqrt" "model" true)')
@@ -746,6 +746,12 @@ class Extension(unittest.TestCase):
                                                          "show construct:energy >= 0")
                 self.assertIn("0.5", r.stdout)
                 self.assertIn("true", r.stdout)
+                r = drive('(construct:music "t.wav" 10)', "setup construct:play reset-timer repeat 10 [ go construct:sync ] "
+                                                         "show timer construct:stop-music")   # live: in time with the track
+                self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+                took = float(next(ln for ln in reversed(r.stdout.splitlines()) if ln.startswith("observer:")).split(":")[1])
+                self.assertTrue(0.9 <= took <= 1.6, r.stdout)        # 10 ticks at 10 a second: a second
+                self.assertIn("keeps time with the clock", r.stdout)
 
             # NetLogo 3D: each turtle's height last in its row, the world's depth in the header, no 3D patches
             Path(d, "m3.nlogox3d").write_text(MODEL3D, encoding="utf-8")
