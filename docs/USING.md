@@ -183,4 +183,17 @@ time, so it costs far more than a fast one.
 - **The skill's references** in `construct_hologram/skill/references/` go deeper: the
   vocabulary of shapes, composition, the drawing craft, animation and review.
 
+## On a museum screen or a classroom wall
+
+`construct build scene.json --out exhibit --kiosk` makes a page meant to run on its own: it fills
+the screen with no help line or legend, puts the construct's title and the first sentence of its
+summary in the corner, and loops: once the construct has assembled and settled, it holds for 20
+seconds and plays again. A visitor can touch, drag and zoom it as anywhere; after 45 seconds
+untouched, the loop takes over again. The first touch asks for full screen, and on a construct of a
+NetLogo run recorded to music, lets the run play with its track from then on (a browser plays sound
+only after a touch; a kiosk browser can be started to allow it, as Chrome's
+`--autoplay-policy=no-user-gesture-required`). The screen is kept awake where the browser allows,
+and the cursor hides when still. `?hold=` and `?idle=` change the times; `?kiosk=0` turns it off.
+The page is a single file: open it in the screen's browser, offline.
+
 If something goes wrong, see [TROUBLESHOOTING.md](TROUBLESHOOTING.md).

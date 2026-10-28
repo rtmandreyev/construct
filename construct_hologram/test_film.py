@@ -166,6 +166,38 @@ class LongAssembly(unittest.TestCase):
         self.assertTrue(diagnose.diagnose(scene_with_assembly(1200))["ok"])
 
 
+class Kiosk(unittest.TestCase):
+    """`construct build --kiosk`: a page for a museum screen; every other page stays the stock viewer."""
+
+    def test_only_a_kiosk_build_embeds_it(self):
+        g = scene.compile_scene(json.loads((EXAMPLES / "lighthouse.json").read_text()))
+        stock, _ = render.build_html(g)
+        kiosk, _ = render.build_html(g, kiosk=True)
+        self.assertNotIn("Construct kiosk", stock)
+        self.assertIn("Construct kiosk", kiosk)
+        with tempfile.TemporaryDirectory() as d:
+            from . import cli
+            self.assertEqual(cli.main(["build", str(EXAMPLES / "lighthouse.json"), "--out", d, "--kiosk"]), 0)
+            self.assertIn("Construct kiosk", Path(d, "construct.html").read_text())
+
+    @unittest.skipUnless(CAPTURE, "needs a Chromium-family browser")
+    def test_the_label_and_no_help_line(self):
+        sc = json.loads((EXAMPLES / "lighthouse.json").read_text())
+        g = scene.compile_scene(sc)
+        with tempfile.TemporaryDirectory() as d:
+            page, _ = render.build_html(g, kiosk=True)
+            Path(d, "k.html").write_text(page, encoding="utf-8")
+            b = render.open_browser(render._url(str(Path(d, "k.html"))), 900, 600, 1.0)
+            try:
+                b.evaluate("HOLO.ready.then(() => new Promise((r) => setTimeout(r, 200)))")
+                got = json.loads(b.evaluate("JSON.stringify({kiosk: document.body.classList.contains('kiosk'), "
+                                            "title: (document.querySelector('.kiosk-label b') || {}).textContent, "
+                                            "help: getComputedStyle(document.querySelector('.help')).display})"))
+            finally:
+                b.close()
+        self.assertEqual(got, {"kiosk": True, "title": sc["title"], "help": "none"})
+
+
 class Cli(unittest.TestCase):
     def test_the_film_flags(self):
         for command, flags in (("video", ("--audio", "--assembly", "--sound", "--camera", "--reactivity")),

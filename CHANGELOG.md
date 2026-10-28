@@ -30,6 +30,10 @@ inside NetLogo. Plan: [ROADMAP.md](docs/ROADMAP.md#v11-models-come-alive).
 - **NetLogo 3D:** the extension records each turtle's height (last in its row, so 2D readers are
   unchanged) and the world's depth, and skips 3D patches; a NetLogo 3D model opens headless in the
   tests' driver. The film flies the turtles at their heights inside the world's box.
+- **Kiosk pages:** `construct build --kiosk` makes a page for a museum screen or a classroom wall:
+  full screen, a label, an attract loop that replays the construct once it has settled, touch to
+  explore, sound for a run with music after the first touch, the screen kept awake
+  (`viewer/kiosk.js`, embedded only when asked; [USING.md](docs/USING.md#on-a-museum-screen-or-a-classroom-wall)).
 - **A legend on every NetLogo construct,** each part named where it is and shown from the start;
   no projector or drifting motes on a construct of data. An art layer's `"legend": false` drops it
   where its own annotations replace it (the three examples). A scene may now ask to open with its

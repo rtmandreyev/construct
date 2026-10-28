@@ -111,7 +111,7 @@ def load(path):
 
 
 def build(scene_path, out_dir, asset_root=None, v1=False, force=True, frame="y-up", palette=None, identity=None,
-          film=False):
+          film=False, kiosk=False):
     scene = load(scene_path)
     geometry = scene_mod.compile_scene(scene)
     if palette or identity:  # the person's choice, never the model's
@@ -121,7 +121,7 @@ def build(scene_path, out_dir, asset_root=None, v1=False, force=True, frame="y-u
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)
     root = asset_root or str(Path(scene_path).resolve().parent)
-    html, notes = render.build_html(geometry, root, film=film)
+    html, notes = render.build_html(geometry, root, film=film, kiosk=kiosk)
     _write(out / "geometry.json", json.dumps(geometry, separators=(",", ":")) + "\n", force)
     _write(out / "construct.html", html, force)
     _write(out / "audit.json", json.dumps(report, indent=2) + "\n", force)
@@ -405,6 +405,8 @@ def add_commands(sub):
                    help="also write geometry.z-up.json for consumers with a Z-up object frame")
     p.add_argument("--palette", choices=scene_mod.PALETTES, help="a colour the person chose (the default is the house palette)")
     p.add_argument("--identity", choices=scene_mod.IDENTITIES, help="an identity tint the person chose")
+    p.add_argument("--kiosk", action="store_true", help="a page for a museum screen or a classroom wall: full "
+                   "screen, a label, an attract loop that replays it, touch to explore (viewer/kiosk.js; ?hold=, ?idle=)")
     p.add_argument("--film", action="store_true", help="also embed film mode, for ?assembly=, ?audio=, ?reactivity= "
                                                         "and ?camera=steady (docs/FILM.md)")
     p = sub.add_parser("review", help="build, then capture contact sheets and stills")
@@ -711,7 +713,8 @@ def run(args):
             return 0 if report["ok"] else 1
         if args.command == "build":
             _, report, text = build(args.scene, args.out, args.asset_root, args.v1, frame=args.frame,
-                                    palette=args.palette, identity=args.identity, film=args.film)
+                                    palette=args.palette, identity=args.identity, film=args.film,
+                                    kiosk=args.kiosk)
             sys.stdout.write(text + "\nwrote %s\n" % Path(args.out, "construct.html"))
             return 0 if report["ok"] else 1
         if args.command == "review":

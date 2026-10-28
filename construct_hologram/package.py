@@ -47,7 +47,7 @@ RUNTIME_MODULES = ["__init__.py", "__main__.py", "product.py", "hologram.py", "s
                    "film_audio.py", "export.py", "netlogo.py"]
 DATA_FILES = ["construct.nls"]  # the NetLogo recorder, copied beside a model by `netlogo-instrument`
 FILM = ["construct-three.js"]  # film mode's optional three.js loader, shipped as runtime/film/
-VIEWER_FILES = ["hologram.js", "film.js", "reading.js", "template.html"]
+VIEWER_FILES = ["hologram.js", "film.js", "reading.js", "kiosk.js", "template.html"]
 PROMPT_EXAMPLES = ["case-jewel.params.json", "book.json"]
 
 # How each host names the skill's own folder inside SKILL.md.
