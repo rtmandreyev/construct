@@ -2,8 +2,11 @@
 
 ## 1.1.0 — unreleased
 
-Models come alive: the NetLogo bridge, made reliable on the whole Models Library and usable from
-inside NetLogo. Plan: [ROADMAP.md](docs/ROADMAP.md#v11-models-come-alive).
+Models come alive, and music becomes something to build with: the NetLogo bridge, made reliable on
+the whole Models Library and usable from inside NetLogo; models that follow a track, live or replayed;
+runs as films and 3D models in Blender; songs and scores as constructs; and pages for classrooms and
+museums. Plan: [ROADMAP.md](docs/ROADMAP.md#v11-models-come-alive); the story:
+[release notes](docs/releases/v1.1.0.md).
 
 - **Construct for NetLogo** ([hosts/netlogo](hosts/netlogo/README.md)): a NetLogo 7 extension,
   built by `scripts/build_netlogo_extension.py`. `extensions [construct]`, a few `construct:` lines
