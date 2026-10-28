@@ -198,10 +198,20 @@ work (art direction, critic rounds, 3D models) is opt-in.
 - `construct song`: a track as a tower of sound (`--solid`: a body to print), a MIDI score around the
   circle of fifths; Keyframe to Its Track in Blender for any construct with a clock and a track.
 
+## v1.5: makers (decided)
+
+Decided on 28 October 2026: 1.5 takes constructs into making things. Its plan is to be written
+before work starts; what is fixed now is the direction:
+
+- **3D printer integration:** a construct (or a song, or a run) to a printable, watertight model
+  and on to the printer: STL and 3MF export, and a hand-off to a slicer and the printer.
+- **FreeCAD:** constructs in FreeCAD as parts with their names, sizes and joints, for engineering
+  work and CAD formats (STEP).
+
 ## Ideas (unordered)
 
 What could come after 1.1, grouped by direction and in no order: each release picks from here
-what is most worth building then. 1.5 and 2.0 look beyond research; research and teaching may
+what is most worth building then (1.5 is decided, above). 1.5 and 2.0 look beyond research; research and teaching may
 come back in 2.1, depending on how 1.1 is received.
 
 ### Music
