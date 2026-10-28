@@ -469,6 +469,16 @@ def add_commands(sub):
                                                          "for Blender or a 3D print (construct export ... --out tower.obj)")
     p.add_argument("--title", help="the construct's title (default: the file's name)")
     p.add_argument("--force", action="store_true")
+    p = sub.add_parser("netlogo-compare", help="two NetLogo runs side by side, drawn the same way on one time scale "
+                                               "(a slider moved, another seed)")
+    p.add_argument("run_a")
+    p.add_argument("run_b")
+    p.add_argument("--view", default="auto", help="space-time, network-time, phase, field or auto (default)")
+    p.add_argument("--labels", default="A,B", help="the two runs' names, as 'vision 3,vision 6' (default A,B)")
+    p.add_argument("--state", help="network-time: the variable that turns")
+    p.add_argument("--title")
+    p.add_argument("--out", required=True)
+    p.add_argument("--force", action="store_true")
     p = sub.add_parser("netlogo-film", help="a NetLogo run as a film in Blender: every turtle as moving light, in "
                                             "time with its track (needs Blender; docs/NETLOGO.md)")
     p.add_argument("run", help="the recording (.jsonl)")
@@ -565,7 +575,7 @@ if (PAGES.length > 1) setInterval(() => { if (performance.now() - since > EACH) 
 
 
 COMMANDS = ("new", "params", "expand", "prompts", "author", "trace", "trace-image", "terrain", "globe", "critique", "rounds", "compare", "loft-from-traces", "check", "build", "review",
-            "video", "audio", "export", "netlogo", "netlogo-instrument", "netlogo-film", "song", "kiosk")
+            "video", "audio", "export", "netlogo", "netlogo-instrument", "netlogo-film", "netlogo-compare", "song", "kiosk")
 
 
 def run(args):
@@ -827,6 +837,18 @@ def run(args):
             sys.stdout.write("wrote %s: %s, %d rings, %d lines; the track beside it\n"
                              % (args.out, sc["reading"]["music"]["track"], args.rings, g["stats"]["lines"]
                                 if "stats" in g else sum(len(p) - 1 for q in sc["parts"] for p in q["shape"].get("paths", []))))
+            return 0
+        if args.command == "netlogo-compare":
+            from . import netlogo as nl
+            labels = tuple(x.strip() for x in args.labels.split(",", 1)) if "," in args.labels else ("A", "B")
+            try:
+                sc = nl.compare_runs(nl.read_run(args.run_a), nl.read_run(args.run_b), args.view, labels, args.title,
+                                     state=args.state)
+            except nl.NetLogoError as exc:
+                sys.stderr.write("netlogo-compare: %s\n" % exc)
+                return 1
+            _write(args.out, json.dumps(sc, separators=(",", ":"), ensure_ascii=False) + "\n", args.force)
+            sys.stdout.write("wrote %s: %s and %s side by side; build it as any scene\n" % (args.out, *labels))
             return 0
         if args.command == "netlogo-film":
             from . import runfilm

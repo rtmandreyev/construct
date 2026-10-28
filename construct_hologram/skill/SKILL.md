@@ -201,7 +201,9 @@ steps are `construct_netlogo_instrument` and `construct_netlogo_draw`.
    the data. In masterpiece or unbounded mode, judge the layer with the rounds as for any construct
    (`rounds start scene.json`, redrawing with `--art` between rounds): the critic of a run checks
    every label and milestone against the recording and judges how well a student could read it.
-5. **A 3D model of the run (optional, when asked):** add `--solid --glb run.glb` (each turtle a
+5. **Two runs compared (when the user asks what a parameter changes):** record both, then `python3 TOOLS
+   netlogo-compare a.jsonl b.jsonl --labels "vision 3,vision 6" --out scene.json` and build it.
+5b. **A 3D model of the run (optional, when asked):** add `--solid --glb run.glb` (each turtle a
    sphere where it rose, a cycle as a tube, a spread as a surface, in the run's own colours; the
    build replays the run in Blender).
 6. **Music, films and exhibits (optional, when asked).** In NetLogo, `construct:music "track.mp3"`

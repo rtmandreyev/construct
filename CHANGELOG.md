@@ -48,6 +48,9 @@ inside NetLogo. Plan: [ROADMAP.md](docs/ROADMAP.md#v11-models-come-alive).
 - **NetLogo 3D:** the extension records each turtle's height (last in its row, so 2D readers are
   unchanged) and the world's depth, and skips 3D patches; a NetLogo 3D model opens headless in the
   tests' driver. The film flies the turtles at their heights inside the world's box.
+- **Two runs side by side:** `construct netlogo-compare a.jsonl b.jsonl` draws two runs the same way on
+  one time scale, A on the left and B on the right, each part, fact, label and count marked with its
+  run, under one data lock (a run's lock covers every `run…` source in the scene).
 - **For a spreadsheet or a report:** a run's *How to read it* panel offers its counts as CSV and a
   citation of the run (model, NetLogo version, seed, ticks, track, Construct's version, data lock);
   `construct netlogo … --csv` writes the counts at every record.

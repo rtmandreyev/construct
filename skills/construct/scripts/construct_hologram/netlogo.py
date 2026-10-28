@@ -740,7 +740,7 @@ def scene_from_run(run, view, title=None, **opts):
         if asked_time == "sqrt":
             raise NetLogoError("time: a run with music is drawn with linear time, so it plays in time with its track")
         time = "linear"
-    world = _World(h, last, FLOOR if view == "space-time" else HEIGHT, time)
+    world = _World(h, max(last, opts.get("span") or 0), FLOOR if view == "space-time" else HEIGHT, time)   # span: a shared scale
     data, summary, extra = {"space-time": _space_time, "network-time": _network_time, "phase": _phase,
                             "field": _field}[view](run, world, opts)
     if view == "phase":
@@ -913,12 +913,15 @@ def data_lock(scene, source=None):
     data is drawn (view, coordinates), and every part from it, without how a part is shown (label, look,
     note)."""
     src = source or _locked_source(scene)
+    ids = [s.get("id") for s in scene.get("sources", [])]
+    # a run's lock covers every run in the scene (two runs compared: run-a and run-b); a track's, the track
+    srcs = {i for i in ids if i == src or (src.startswith("run") and isinstance(i, str) and i.startswith("run"))} or {src}
     facts = sorted(({k: v for k, v in f.items() if k != "note"} for f in scene.get("facts", [])
-                    if f.get("key") != LOCK and (f.get("source") == src or f.get("key") in LOCKED_FACTS)),
+                    if f.get("key") != LOCK and (f.get("source") in srcs or f.get("key") in LOCKED_FACTS)),
                    key=lambda f: f["key"])
     parts = sorted(({k: v for k, v in p.items() if k not in LOOSE} for p in scene.get("parts", [])
-                    if p.get("source") == src), key=lambda p: p["id"])
-    data = {"source": [s for s in scene.get("sources", []) if s.get("id") == src], "facts": facts, "parts": parts}
+                    if p.get("source") in srcs), key=lambda p: p["id"])
+    data = {"source": [s for s in scene.get("sources", []) if s.get("id") in srcs], "facts": facts, "parts": parts}
     r = scene.get("reading") or {}
     if r.get("clock") or r.get("series"):   # the replay's clock and counts are the run's data too
         data["reading"] = {"clock": r.get("clock"), "series": r.get("series", [])}
@@ -957,6 +960,65 @@ def music_track(run):
         if p.name and p.is_file():
             return p
     return None
+
+
+def compare_runs(run_a, run_b, view, labels=("A", "B"), title=None, **opts):
+    """Two runs side by side, drawn the same way on one time scale (the longer run's): A on the left, B on the
+    right, every part, fact, label and count marked with its run, one data lock over both recordings. For a
+    lesson: the same model with a slider moved, or another seed."""
+    if view == "auto":
+        view, auto, _ = choose_view(run_a)
+        opts = dict(auto, **{k: v for k, v in opts.items() if v not in (None, False)})
+    end = lambda r: r["end"] if r["end"] is not None else r["frames"][-1]["t"]
+    span = max(end(run_a), end(run_b))
+    scenes = [scene_from_run(r, view, title, span=span, **opts) for r in (run_a, run_b)]
+    gap = FLOOR * 1.35
+    parts, facts, sources, notes, series = [], [], [], [], []
+    for k, (sc, tag) in enumerate(zip(scenes, labels)):
+        sid, px, dx = "run-" + "ab"[k], "ab"[k] + "-", (-gap / 2, gap / 2)[k]
+        for p in sc["parts"]:
+            q = json.loads(json.dumps(p))
+            q["id"], q["label"] = px + p["id"], ("%s: %s" % (tag, p["label"]))[:80]
+            if q.get("source") == "run":
+                q["source"] = sid
+            at = q.get("at") or [0, 0, 0]
+            q["at"] = [round(at[0] + dx, 3), at[1], at[2]]
+            parts.append(q)
+        for f in sc["facts"]:
+            if f["key"] == LOCK or (k and f["key"] in LOCKED_FACTS):
+                continue
+            g = dict(f)
+            if f["key"] not in LOCKED_FACTS:
+                g["key"] = "%s_%s" % ("ab"[k], f["key"])
+                if f.get("source") == "run":
+                    g["source"] = sid
+            facts.append(g)
+        for s in sc["sources"]:
+            if s["id"] == "run":
+                sources.append(dict(s, id=sid, title=("%s: %s" % (tag, s["title"]))[:200]))
+            elif k == 0:
+                sources.append(dict(s))
+        roles = {p["id"]: p["role"] for p in sc["parts"]}
+        for a in sc.get("annotations", []):   # the full legend on the left; on the right, its main part's alone
+            if k == 0 or roles.get(a["part"]) == "identity":
+                notes.append(dict(a, id=px + a["id"], part=px + a["part"], text=("%s: %s" % (tag, a["text"]))[:80]))
+        for s in (sc["reading"].get("series") or [])[:3]:
+            series.append(dict(s, name=("%s: %s" % (tag, s["name"]))[:40]))
+    a, h = scenes[0], run_a["header"]
+    out = dict(a, id=("netlogo-compare-%s" % a["id"].replace("netlogo-", ""))[:64], parts=parts, facts=facts,
+               sources=sources, annotations=notes,
+               title=title or "%s: %s and %s" % (h["title"], labels[0], labels[1]),
+               subject=dict(a["subject"], summary="Two runs of NetLogo's %s side by side, drawn the same way on one "
+                                                  "time scale: %s on the left, %s on the right." % (h["title"], *labels)))
+    out["presentation"] = dict(a["presentation"], framing={"yaw": 0, "pitch": 26})
+    out["reading"] = {"how": (["Two runs side by side, drawn the same way: %s on the left, %s on the right, on one "
+                               "time scale (the longer run's)." % labels] + a["reading"]["how"])[:8],
+                      "clock": dict(a["reading"]["clock"])}
+    if series:
+        out["reading"]["series"] = series
+    out["facts"].append({"key": LOCK, "value": data_lock(out, "run-a"), "certainty": "verified", "source": "run-a",
+                         "note": "Both runs' data as the bridge drew them, under one lock (sources run-a and run-b)."})
+    return out
 
 
 def counts_csv(run):

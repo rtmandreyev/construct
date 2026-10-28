@@ -65,6 +65,7 @@ Every command is `python3 construct_hologram/cli.py <command>`:
 | `netlogo run.jsonl --view auto --out scene.json [--csv counts.csv] [--solid --glb run.glb]` | a construct of a NetLogo run, with its counts as CSV and a 3D model ([NETLOGO.md](NETLOGO.md)) |
 | `song piece.mid --out scene.json [--track piece.mp3]` | a MIDI file's score: every note a line of light, around the circle of fifths |
 | `song track.mp3 --out scene.json [--rings 56]` | a track as a tower of sound that builds in time with it ([FILM.md](FILM.md#a-song-as-a-construct)) |
+| `netlogo-compare a.jsonl b.jsonl --labels "A,B" --out scene.json` | two runs side by side, drawn the same way on one time scale |
 | `netlogo-film run.jsonl --out film.mp4 [--blend film.blend] [--from S --seconds S]` | the run as a film in Blender, every agent as moving light, in time with its track (needs Blender) |
 | `build scene.json --out out/ --film` | a page that also carries film mode, for previewing `?assembly=`, `?audio=`, `?reactivity=` and `?camera=steady` |
 | `author "request" --base-url ... --model ... --key-env ...` | the whole loop with any OpenAI-compatible model |

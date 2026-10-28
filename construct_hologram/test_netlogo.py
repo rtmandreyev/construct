@@ -292,6 +292,27 @@ class Views(unittest.TestCase):
         self.assertIn("DATA (CSV)", page)
         self.assertIn("CITE THIS RUN", page)
 
+    def test_two_runs_side_by_side(self):
+        d = Path(self.tmp.name)
+        short = netlogo.read_run(recording(d / "short.jsonl", frames=6))
+        sc = netlogo.compare_runs(self.run, short, "space-time", ("seed 1", "seed 2"))
+        self.assertEqual([e for e in scene.validate(sc)], [])
+        g = scene.compile_scene(sc)
+        self.assertEqual(audit.audit(sc, g)["errors"], [])
+        self.assertEqual(sc["reading"]["clock"]["to"], 11)                  # one time scale: the longer run's
+        ids = {p["id"] for p in sc["parts"]}
+        self.assertTrue({"a-tracks-walkers", "b-tracks-walkers"} <= ids)
+        a_at = next(p for p in sc["parts"] if p["id"] == "a-world")["at"][0]
+        b_at = next(p for p in sc["parts"] if p["id"] == "b-world")["at"][0]
+        self.assertLess(a_at, 0)
+        self.assertGreater(b_at, 0)                                          # A on the left, B on the right
+        self.assertEqual({f["value"] for f in sc["facts"] if f["key"].endswith("_ticks")}, {11, 5})
+        self.assertIsNone(netlogo.lock_problem(sc))
+        moved = json.loads(json.dumps(sc))
+        next(p for p in moved["parts"] if p["id"] == "b-tracks-walkers")["shape"]["paths"][0][0][0] += 1
+        self.assertIsNotNone(netlogo.lock_problem(moved))                    # the lock covers both runs
+        self.assertTrue(all(a["text"].startswith(("seed 1:", "seed 2:")) for a in sc["annotations"]))
+
     def test_hidden_is_a_look_not_a_spread(self):
         run = netlogo.read_run(recording(Path(self.tmp.name, "hid.jsonl"), header={"turtle-vars": ["hidden?"]}))
         view, opts, _ = netlogo.choose_view(run)   # the ring's links and a variable that turns: but it is hidden?
