@@ -170,6 +170,26 @@ work (art direction, critic rounds, 3D models) is opt-in.
 - NetLogo tools in the MCP server (instrument, draw, art direction), so Hermes and any MCP client
   can drive the bridge, and the skills' steps to match.
 
+### Phase F: runs to music, and runs as films (done)
+
+- `construct:music`: a tick is a moment of a track; `construct:kick`, `energy`, `high` and `hit` let
+  a model's own code follow it, and `construct:run` lasts the track. The construct plays back in
+  time with the music, its track's fingerprint under the data lock.
+- The run as a film in Blender, drawn from the recording itself (nothing sampled): every turtle as
+  moving light with a trail, in time with the track; from the add-on, `construct netlogo-film`, or
+  `"film" true` in NetLogo.
+- NetLogo 3D runs recorded with their heights and flown in the film; hidden turtles recorded and
+  kept unlit.
+- Demonstrations: Fireflies entraining to the beat (its flashes lock to the kicks), Flocking 3D to
+  drum and bass.
+
+### Phase G: museums and classrooms (kiosk done)
+
+- `construct build --kiosk`: a page that runs on its own on a museum screen or a classroom wall
+  (full screen, a label, an attract loop, touch to explore, sound after the first touch).
+- Next (1.2): two runs side by side for a lesson (parameter A against B), a printable "how to
+  read it" sheet, a run's record as CSV and a citable run record.
+
 ## Ideas (unordered)
 
 What could come after 1.1, grouped by direction and in no order: each release picks from here

@@ -85,6 +85,29 @@ watch it assemble, turn it around and read its labels.
 **[See all 21 constructs in the gallery →](https://rtmandreyev.github.io/construct/)** · each scene and its hero image are in
 [examples/](examples/).
 
+## Agent-based models: runs that come alive
+
+Construct turns a NetLogo model's run into something to explore, play to music and film.
+
+- **One command in NetLogo.** Add `extensions [construct]` and type `construct:run`: it runs the
+  model as its buttons do, records what is worth recording and opens the run as a construct, with
+  time as height, a legend, a *How to read it* panel and a replay bar. 388 of the 445 stock
+  two-dimensional models record unattended.
+- **Runs to music.** `construct:music "track.mp3"` makes each tick a moment of a track, and the
+  model can listen: `construct:kick`, `construct:energy`, `construct:high` and `construct:hit`.
+  Flocking bursts apart on every kick; Fireflies, given the beat as one more flash to see, lock
+  their flashing to the kicks. The construct plays back in time with the track.
+- **Runs as films.** `(construct:draw "auto" "film" true)`, or `construct netlogo-film run.jsonl
+  --out film.mp4`, renders the recording itself in Blender: every agent as moving light with a
+  trail, in its own colours, in time with the music. NetLogo 3D flocks fly in their box.
+- **Runs as 3D models.** `"model" true` exports the run to glTF, its build replaying the run in
+  Blender or a game engine.
+- **On a museum screen.** `construct build --kiosk` makes a page that loops by itself and opens to
+  a touch.
+
+Everything drawn comes from the recording, under a data lock. See [the NetLogo bridge](docs/NETLOGO.md)
+and [the extension](hosts/netlogo/README.md).
+
 ## How it works
 
 A scene is data, never code: the agent says what the thing is, and Construct decides how it
