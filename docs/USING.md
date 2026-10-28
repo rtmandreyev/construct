@@ -194,6 +194,9 @@ NetLogo run recorded to music, lets the run play with its track from then on (a 
 only after a touch; a kiosk browser can be started to allow it, as Chrome's
 `--autoplay-policy=no-user-gesture-required`). The screen is kept awake where the browser allows,
 and the cursor hides when still. `?hold=` and `?idle=` change the times; `?kiosk=0` turns it off.
-The page is a single file: open it in the screen's browser, offline.
+With `?live=1` the exhibit also hears its room: after the first touch its light follows the
+loudness, and kicks and claps pulse its glow (the sound is analysed on the device and never kept;
+[FILM.md](FILM.md#live-the-rooms-sound)). The page is a single file: open it in the screen's
+browser, offline.
 
 If something goes wrong, see [TROUBLESHOOTING.md](TROUBLESHOOTING.md).

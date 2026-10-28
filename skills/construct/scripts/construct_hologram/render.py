@@ -86,9 +86,9 @@ def build_html(geometry, asset_root=None, film=False, kiosk=False):
             .replace("__GEOMETRY__", _script_json(geometry))
             .replace("__ASSETS__", _script_json(assets))
             .replace("__VIEWER__", viewer.replace("</script", "<\\/script")))
-    if film or (geometry.get("reading") or {}).get("music"):
+    if film or kiosk or (geometry.get("reading") or {}).get("music"):
         # a script of its own, right after the viewer's, so it runs before the viewer starts (a run with music
-        # is film mode by itself: its features are in the page)
+        # is film mode by itself: its features are in the page; a kiosk carries it for ?live=1)
         code = (VIEWER / "film.js").read_text(encoding="utf-8").replace("</script", "<\\/script")
         mark = "\n</script>\n<script>\n  // the improvement rounds"
         assert html.count(mark) == 1

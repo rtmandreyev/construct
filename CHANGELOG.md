@@ -38,6 +38,8 @@ inside NetLogo. Plan: [ROADMAP.md](docs/ROADMAP.md#v11-models-come-alive).
 - **For a spreadsheet or a report:** a run's *How to read it* panel offers its counts as CSV and a
   citation of the run (model, NetLogo version, seed, ticks, track, Construct's version, data lock);
   `construct netlogo … --csv` writes the counts at every record.
+- **Live:** `?live=1` on a film or kiosk page listens to the room after a touch: the light follows the
+  microphone's loudness and kicks pulse the glow, analysed in the page and never recorded or sent.
 - **Kiosk pages:** `construct build --kiosk` makes a page for a museum screen or a classroom wall:
   full screen, a label, an attract loop that replays the construct once it has settled, touch to
   explore, sound for a run with music after the first touch, the screen kept awake

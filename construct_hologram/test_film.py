@@ -198,6 +198,41 @@ class Kiosk(unittest.TestCase):
         self.assertEqual(got, {"kiosk": True, "title": sc["title"], "help": "none"})
 
 
+class Live(unittest.TestCase):
+    """?live=1: the room's sound, from the microphone, after a touch; a kiosk page carries it."""
+
+    @unittest.skipUnless(CAPTURE, "needs a Chromium-family browser")
+    def test_a_kiosk_listens_after_a_touch(self):
+        import time
+        g = scene.compile_scene(json.loads((EXAMPLES / "cd.json").read_text()))
+        page, _ = render.build_html(g, kiosk=True)
+        real = render.subprocess.Popen
+
+        def fake_mic(args, *a, **k):   # Chrome's fake microphone: a beep
+            if args and "chrom" in str(args[0]).lower():
+                args = args[:-1] + ["--use-fake-ui-for-media-stream", "--use-fake-device-for-media-stream"] + args[-1:]
+            return real(args, *a, **k)
+        with tempfile.TemporaryDirectory() as d, mock.patch.object(render.subprocess, "Popen", fake_mic):
+            Path(d, "k.html").write_text(page, encoding="utf-8")
+            b = render.Browser(900, 600, 1.0, gpu=False)
+            try:
+                b.open(render._url(str(Path(d, "k.html")), live=1))
+                b.evaluate("HOLO.ready.then(() => new Promise((r) => setTimeout(r, 300)))")
+                before = json.loads(b.evaluate("JSON.stringify(HOLO.hologram.audioAt(0))"))
+                b.evaluate("window.dispatchEvent(new PointerEvent('pointerdown'))")
+                energy = 0.0
+                for _ in range(20):
+                    time.sleep(0.2)
+                    energy = max(energy, json.loads(b.evaluate("JSON.stringify(HOLO.hologram.audioAt(0))"))["energy"])
+                said = b.evaluate("[...document.querySelectorAll('#overlay div')].map((d) => d.textContent)"
+                                  ".filter((t) => /listen/i.test(t))[0]")
+            finally:
+                b.close()
+        self.assertEqual(before["energy"], 0)       # nothing heard before the touch
+        self.assertGreater(energy, 0.2)             # the beep, heard
+        self.assertEqual(said, "Listening · on this device only")
+
+
 class Cli(unittest.TestCase):
     def test_the_film_flags(self):
         for command, flags in (("video", ("--audio", "--assembly", "--sound", "--camera", "--reactivity")),

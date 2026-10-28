@@ -118,6 +118,15 @@ ahead of or behind an even build, its speed over any four seconds ranged from 0.
 1.9–3.3× an even build, and the light from 0.60 to 1.53. Before film mode had these settings, the
 same tracks gave 5–16%, 0.23–0.42× to 1.2–1.5×, and 0.82 to 1.18.
 
+## Live: the room's sound
+
+Any film-mode page, and any kiosk page, listens to the room with `?live=1`: after a touch or a key
+(a browser asks before it listens), the microphone is analysed in the page, frame by frame, and
+never recorded or sent anywhere. The construct's light follows the room's loudness, and each kick
+or clap pulses the glow of what is built; the assembly and the idle life are the viewer's own. A
+small line in the corner says it is listening. On a museum screen: `construct build scene.json
+--out exhibit --kiosk`, then open `exhibit/construct.html?live=1`.
+
 ## A song as a construct
 
 `construct song track.mp3 --out scene.json` draws the track itself: a tower of sound, each moment a

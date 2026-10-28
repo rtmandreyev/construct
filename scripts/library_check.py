@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """The machine checks: NetLogo's Models Library through `construct:run`, with no AI and no judgement of taste.
 
-    python3 scripts/library_check.py --netlogo "/Applications/NetLogo 7.0.4" --javac PATH --out DIR [--only NAME ...]
+    python3 scripts/library_check.py --netlogo "/Applications/NetLogo 7.0.4" --javac PATH --out DIR [--only NAME ...] [--software]
 
 For each two-dimensional model (3D models and Code Examples left out), one at a time: a copy with
 `extensions [construct]` added runs `random-seed 5` then `construct:run` headless (Drive.java), and
@@ -117,6 +117,7 @@ def main():
     ap.add_argument("--out", required=True)
     ap.add_argument("--only", nargs="*", default=[], help="model names (stems) to check, instead of the whole library")
     ap.add_argument("--timeout", type=int, default=180)
+    ap.add_argument("--software", action="store_true", help="software WebGL for the label probe, leaving the GPU free")
     a = ap.parse_args()
     out = Path(a.out)
     out.mkdir(parents=True, exist_ok=True)
@@ -142,7 +143,10 @@ def main():
             if (built / "construct.html").exists() and run_file.exists():
                 entry.update(check(built, run_file))
                 try:
-                    if browser is None:
+                    if browser is None and a.software:
+                        browser = render.Browser(1280, 800, 1.0, gpu=False)
+                        browser.open(render._url(built / "construct.html", t=30, m=slug))
+                    elif browser is None:
                         browser = render.open_browser(render._url(built / "construct.html", t=30, m=slug), 1280, 800, 1.0)
                     else:
                         browser.open(render._url(built / "construct.html", t=30, m=slug))
