@@ -203,10 +203,10 @@ steps are `construct_netlogo_instrument` and `construct_netlogo_draw`.
    every label and milestone against the recording and judges how well a student could read it.
 5. **Two runs compared (when the user asks what a parameter changes):** record both, then `python3 TOOLS
    netlogo-compare a.jsonl b.jsonl --labels "vision 3,vision 6" --out scene.json` and build it.
-5b. **A 3D model of the run (optional, when asked):** add `--solid --glb run.glb` (each turtle a
+6. **A 3D model of the run (optional, when asked):** add `--solid --glb run.glb` (each turtle a
    sphere where it rose, a cycle as a tube, a spread as a surface, in the run's own colours; the
    build replays the run in Blender).
-6. **Music, films and exhibits (optional, when asked).** In NetLogo, `construct:music "track.mp3"`
+7. **Music, films and exhibits (optional, when asked).** In NetLogo, `construct:music "track.mp3"`
    makes each tick a moment of the track; the model's code can read `construct:kick`, `energy`,
    `high`, `hit` (write that into the model only as the user wants it), and `construct:run` lasts
    the track. A film of the run in Blender, every agent as moving light in time with its track:
