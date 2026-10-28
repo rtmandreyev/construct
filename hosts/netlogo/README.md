@@ -4,6 +4,21 @@ A NetLogo 7 extension that records a model's run and draws it as a construct: a 
 run in which height is time. Recording needs nothing but NetLogo; drawing runs Construct, which
 the extension carries, with Python 3.10 or newer.
 
+**The quickest way:** add `extensions [construct]` at the top of the model's Code tab, then type
+in the Command Center:
+
+```
+construct:run
+```
+
+It runs the model's own setup and go (as its buttons do), records what is worth recording (each
+turtle, its true-or-false variables, each breed's count, the patches' colours), lets the run go
+until the model stops by itself, picks the view the data suits and opens the construct. A model
+that never stops is drawn after 1000 runs of go, and says so; `construct:run-for 3000` runs it as
+long as you like.
+
+**To choose what is recorded and how it is drawn,** use the commands one by one:
+
 ```
 extensions [construct]
 
@@ -44,9 +59,12 @@ tracked counts at that tick.
 | `construct:finish` | marks the end of the run and closes the file |
 | `construct:file` | reports the recording's path |
 | `construct:draw view` or `(construct:draw view option value ...)` | draws the recording so far and opens it, such as `(construct:draw "phase" "smooth" 25)` |
+| `construct:run` | setup, a recording of everything worth recording, go until the model stops (or 1000 runs), then the view the data suits, opened |
+| `construct:run-for n` | the same, for n runs of go |
 | `construct:set-python path` | the Python to draw with (default `python3`, `python` on Windows) |
 
-Views: `"space-time"` (every turtle's path rising through time), `"network-time"` (the network
+Views: `"auto"` (the one the data suits: a network where a variable turned, patches that changed,
+two counts that move together, else the agents' paths), `"space-time"` (every turtle's path rising through time), `"network-time"` (the network
 on the floor, each turtle risen to when its state changed: `(construct:draw "network-time" "state"
 "infected?")`), `"phase"` (two tracked reporters against each other, rising through time) and
 `"field"` (a tracked patch variable as stacked layers). `"time" "sqrt"` stretches the early ticks.

@@ -37,6 +37,10 @@ inside NetLogo. Plan: [ROADMAP.md](docs/ROADMAP.md#v11-models-come-alive).
   the clock and counts are under the data lock (the three examples' locks change for this). Pages
   whose scene has no reading are the stock viewer, unchanged (`viewer/reading.js` is added only to
   pages that ask).
+- **One command:** `construct:run` in the Command Center runs the model as its buttons do, records
+  what is worth recording, lets it run until it stops by itself (or 1000 runs of go;
+  `construct:run-for n`), picks the view the data suits and opens the construct; the step-by-step
+  commands are unchanged. `--view auto` makes the same choice from the command line.
 - **Critic rounds for a run** (Phase C, opt-in): the rounds' critic, given a NetLogo construct, checks
   every label and milestone against the recording's facts and counts and judges how a student
   would read it (`critic-run.md`); with GPT-6.1 Sol it ranked a planted false milestone first. The

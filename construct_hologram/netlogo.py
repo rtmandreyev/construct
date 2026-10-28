@@ -616,8 +616,52 @@ def _field(run, world, opts):
     return parts, summary, facts
 
 
+def choose_view(run):
+    """The view that shows a recording best, and its options, with the reason: a network with a variable that
+    turned (network-time), patches that changed (field), two counts that move (phase), else the agents' paths."""
+    h, frames = run["header"], run["frames"]
+    last = frames[-1]["t"] or 1
+    links = any(f.get("links") for f in frames)
+    if links:
+        best = None
+        for i, var in enumerate(h.get("turtle-vars", [])):
+            turned = {}
+            for f in frames:
+                for r in f.get("turtles", []):
+                    if len(r) > 5 + i and r[5 + i] is True and r[0] not in turned:
+                        turned[r[0]] = f["t"]
+            if len(set(turned.values())) > 1:   # it turned at different times: a spread to show
+                if best is None or len(turned) > best[1]:
+                    best = (var, len(turned), sorted(turned.values()))
+        if best:
+            early = best[2][len(best[2]) // 2] < 0.3 * last
+            return "network-time", dict(state=best[0], time="sqrt" if early else "linear"), \
+                "a network, and %s turned true for %d turtles" % (best[0], best[1])
+    samples = [f["patches"] for f in frames if "patches" in f]
+    if len(samples) >= 2:
+        changed = sum(1 for a, b in zip(samples[0], samples[-1]) if a != b)
+        if changed >= 0.02 * len(samples[0]):
+            return "field", {}, "%d of %d patches changed" % (changed, len(samples[0]))
+    names = h.get("reporters", [])
+    moving = []
+    for i, n in enumerate(names):
+        vals = [f["reporters"][i] for f in frames if isinstance((f.get("reporters") or [None] * (i + 1))[i], (int, float))]
+        if len(set(vals)) > 2:
+            mean = sum(vals) / len(vals)
+            moving.append((sum((v - mean) ** 2 for v in vals) / len(vals) / (abs(mean) + 1), n))
+    if len(moving) >= 2:
+        x, z = [n for _, n in sorted(moving, reverse=True)[:2]]
+        return "phase", dict(x=x, z=z, smooth=max(1, len(frames) // 150)), "%s and %s move together" % (x, z)
+    if any(f.get("turtles") for f in frames):
+        return "space-time", {}, "agents that move"
+    raise NetLogoError("nothing in the recording to draw: no turtles, no changing patches, no two moving counts")
+
+
 def scene_from_run(run, view, title=None, **opts):
-    """A construct-scene v2 from a recording, for one of VIEWS."""
+    """A construct-scene v2 from a recording, for one of VIEWS ("auto": the one choose_view picks)."""
+    if view == "auto":
+        view, auto, _ = choose_view(run)
+        opts = dict(auto, **{k: v for k, v in opts.items() if v not in (None, False)})
     if view not in VIEWS:
         raise NetLogoError("view: one of %s" % ", ".join(VIEWS))
     h, frames = run["header"], run["frames"]

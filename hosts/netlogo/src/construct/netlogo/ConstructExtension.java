@@ -16,6 +16,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.nlogo.api.AnonymousCommand;
 import org.nlogo.api.AnonymousReporter;
 import org.nlogo.api.Argument;
 import org.nlogo.api.Command;
@@ -53,7 +54,7 @@ public class ConstructExtension extends DefaultClassManager {
   static boolean turtles = true, headerDone = false;
   static List<String> turtleVars = new ArrayList<>();
   static List<String> reporterNames = new ArrayList<>();
-  static List<AnonymousReporter> reporters = new ArrayList<>();
+  static List<Object> reporters = new ArrayList<>();   // anonymous reporters, or the extension's own (a breed's count)
   static BufferedWriter out = null;
   static String python = System.getProperty("os.name", "").toLowerCase().contains("win") ? "python" : "python3";
 
@@ -71,6 +72,8 @@ public class ConstructExtension extends DefaultClassManager {
     pm.addPrimitive("file", new FileName());
     pm.addPrimitive("draw", new Draw());
     pm.addPrimitive("set-python", new SetPython());
+    pm.addPrimitive("run", new RunModel(false));
+    pm.addPrimitive("run-for", new RunModel(true));
   }
 
   @Override
@@ -108,15 +111,19 @@ public class ConstructExtension extends DefaultClassManager {
       return SyntaxJ.commandSyntax(new int[] {Syntax.StringType(), Syntax.StringType() | Syntax.RepeatableType()}, 1);
     }
     public void perform(Argument[] args, Context c) throws ExtensionException {
+      start(c, args[0].getString(), args.length > 1 ? args[1].getString() : null);
+    }
+  }
+
+  static void start(Context c, String runTitle, String fileName) {
       close();
-      title = args[0].getString();
-      String name = args.length > 1 ? args[1].getString() : slug(title) + "-run.jsonl";
+      title = runTitle;
+      String name = fileName != null ? fileName : slug(title) + "-run.jsonl";
       File f = new File(name);
       file = (f.isAbsolute() ? f : new File(modelDir(c), name)).getPath();
       seed = "null"; every = 1; patchVar = ""; patchEvery = 0; linkCount = -1; turtles = true; headerDone = false; lastT = Double.NaN; lastPatchT = Double.NaN; steps = 0;
       turtleVars = new ArrayList<>(); reporterNames = new ArrayList<>(); reporters = new ArrayList<>();
       new File(file).delete();
-    }
   }
 
   static class Seed implements Command {
@@ -176,6 +183,11 @@ public class ConstructExtension extends DefaultClassManager {
     public Syntax getSyntax() { return SyntaxJ.commandSyntax(); }
     public void perform(Argument[] args, Context c) throws ExtensionException {
       need();
+      recordNow(c);
+    }
+  }
+
+  static void recordNow(Context c) throws ExtensionException {
       org.nlogo.agent.World w = (org.nlogo.agent.World) c.world();
       boolean ticking = w.ticks() >= 0;
       double t = ticking ? w.ticks() : steps++;
@@ -214,7 +226,9 @@ public class ConstructExtension extends DefaultClassManager {
           s.append(",\"reporters\":[");
           for (int i = 0; i < reporters.size(); i++) {
             if (i > 0) s.append(',');
-            s.append(value(reporters.get(i).report(c, new Object[0])));
+            Object r = reporters.get(i);
+            s.append(value(r instanceof AnonymousReporter ? ((AnonymousReporter) r).report(c, new Object[0])
+                : ((java.util.function.Supplier<?>) r).get()));
           }
           s.append(']');
         }
@@ -250,7 +264,6 @@ public class ConstructExtension extends DefaultClassManager {
       } catch (IOException e) {
         throw new ExtensionException("construct: could not write " + file + ": " + e.getMessage());
       }
-    }
   }
 
   static String breed(Turtle t) { return t.getBreed().printName().toLowerCase(); }
@@ -309,16 +322,24 @@ public class ConstructExtension extends DefaultClassManager {
     }
     public void perform(Argument[] args, Context c) throws ExtensionException {
       need();
+      if (args.length % 2 != 1) throw new ExtensionException("construct:draw takes a view, then option names and values in pairs");
+      List<Object> pairs = new ArrayList<>();
+      for (int i = 1; i < args.length; i++) pairs.add(args[i].get());
+      draw(args[0].getString(), pairs);
+    }
+  }
+
+  /** Draws the recording so far with a view and option pairs, builds the page and opens it; returns Construct's report. */
+  static String draw(String view, List<Object> pairs) throws ExtensionException {
       if (out != null) {   // the run so far, saved
         try { out.flush(); } catch (IOException e) { /* reported below if the file is unreadable */ }
       }
-      if (args.length % 2 != 1) throw new ExtensionException("construct:draw takes a view, then option names and values in pairs");
       File dir = new File(new File(file).getParentFile(), slug(title) + "-construct");
       dir.mkdirs();
-      List<String> draw = new ArrayList<>(List.of(python, "-m", "construct_hologram", "netlogo", file, "--view", args[0].getString(),
+      List<String> draw = new ArrayList<>(List.of(python, "-m", "construct_hologram", "netlogo", file, "--view", view,
           "--out", new File(dir, "scene.json").getPath(), "--force"));
-      for (int i = 1; i < args.length; i += 2) {
-        Object name = args[i].get(), v = args[i + 1].get();
+      for (int i = 0; i < pairs.size(); i += 2) {
+        Object name = pairs.get(i), v = pairs.get(i + 1);
         if (!(name instanceof String) || !OPTIONS.contains(name))
           throw new ExtensionException("construct:draw has no option " + Dump.logoObject(name, true, false) + "; it has " + String.join(", ", OPTIONS));
         String value = v instanceof Double ? num((Double) v) : v instanceof String ? (String) v : Dump.logoObject(v);
@@ -329,16 +350,16 @@ public class ConstructExtension extends DefaultClassManager {
         draw.add("--" + name);
         draw.add(value);
       }
-      run(draw, dir);
+      String report = run(draw, dir);
       run(List.of(python, "-m", "construct_hologram", "build", new File(dir, "scene.json").getPath(), "--out", dir.getPath()), dir);
       File page = new File(dir, "construct.html");
       if (!GraphicsEnvironment.isHeadless() && Desktop.isDesktopSupported()) {
         try { Desktop.getDesktop().browse(page.toURI()); } catch (Exception e) { /* the page is still there */ }
       }
-    }
+      return report;
   }
 
-  static void run(List<String> cmd, File dir) throws ExtensionException {
+  static String run(List<String> cmd, File dir) throws ExtensionException {
     File runtime = runtimeDir();
     ProcessBuilder pb = new ProcessBuilder(cmd).directory(dir).redirectErrorStream(true);
     pb.environment().put("PYTHONPATH", runtime.getPath());
@@ -365,6 +386,141 @@ public class ConstructExtension extends DefaultClassManager {
       int at = text.lastIndexOf("error: ");
       throw new ExtensionException("construct:draw: " + (text.isEmpty() ? "failed" : at >= 0 ? text.substring(at + 7) : text));
     }
+    return text;
+  }
+
+  // ------------------------------------------------------------------ one command: run the model, draw it
+  static final int SAFETY = 1000;   // go runs for a model that never stops by itself, unless construct:run-for says
+
+  /** construct:run: setup and go as the model's own buttons do, everything worth recording, until the model stops
+   *  (or SAFETY runs of go), then the view the data suits, opened. construct:run-for 3000: that many runs of go. */
+  static class RunModel implements Command {
+    final boolean counted;
+    RunModel(boolean counted) { this.counted = counted; }
+    public Syntax getSyntax() {
+      return counted ? SyntaxJ.commandSyntax(new int[] {Syntax.NumberType()}) : SyntaxJ.commandSyntax();
+    }
+    public void perform(Argument[] args, Context c) throws ExtensionException {
+      int limit = counted ? Math.max(1, args[0].getIntValue()) : SAFETY;
+      String[] cmds = buttons(c);
+      org.nlogo.agent.World w = (org.nlogo.agent.World) c.world();
+      check(compiled(cmds[0], "setup", c), "setup", c);
+      String model = modelName(c);
+      start(c, model, null);
+      autoTrack(w);
+      recordNow(c);
+      int runs = 0;
+      boolean stopped = false;
+      AnonymousCommand go = compiled(cmds[1], "go", c);
+      while (runs < limit) {
+        double before = w.ticks();
+        check(go, "go", c);
+        runs++;
+        if (before >= 0 && w.ticks() == before) { stopped = true; break; }   // go stopped without a tick: the run is over
+        recordNow(c);
+      }
+      try {
+        if (out == null) out = new BufferedWriter(new FileWriter(file, StandardCharsets.UTF_8, true));
+        out.write("{\"end\":" + num(Double.isNaN(lastT) ? 0 : lastT) + "}\n");
+      } catch (IOException e) {
+        throw new ExtensionException("construct: could not write " + file + ": " + e.getMessage());
+      }
+      close();
+      say(c, stopped ? "construct: " + model + " stopped by itself after " + runs + " runs of " + cmds[1].split("\\s+")[0] + "; drawing it."
+          : counted ? "construct: ran " + model + " for " + runs + " runs of go; drawing it."
+          : "construct: " + model + " was still running after " + runs + " runs of go; drew those. For a longer run: construct:run-for 3000");
+      String report = draw("auto", new ArrayList<>());
+      for (String line : report.split("\n")) if (line.startsWith("view:")) say(c, "construct: " + line);
+    }
+  }
+
+  /** The model's own code as an anonymous command, compiled once in the running context (so its random numbers
+   *  and agents are the model's own, as when its buttons are pressed). */
+  static AnonymousCommand compiled(String code, String what, Context c) throws ExtensionException {
+    try {
+      org.nlogo.nvm.ExtensionContext ec = (org.nlogo.nvm.ExtensionContext) c;
+      org.nlogo.nvm.Context ctx = ec.nvmContext();
+      org.nlogo.nvm.Procedure p = ec.workspace().compileForRun("[ -> " + code + "\n]", ctx, true);
+      return (AnonymousCommand) ctx.callReporterProcedure(org.nlogo.nvm.Activation.forRunOrRunresult(p, ctx.activation, ctx.ip));
+    } catch (Exception e) {
+      throw new ExtensionException("construct:run could not use the model's " + what + " (" + code + "): " + e.getMessage());
+    }
+  }
+
+  static void check(AnonymousCommand cmd, String what, Context c) throws ExtensionException {
+    try {
+      cmd.perform(c, new Object[0]);
+    } catch (org.nlogo.api.LogoException e) {
+      throw new ExtensionException("construct:run: the model's " + what + " failed: " + e.getMessage());
+    }
+  }
+
+  static void say(Context c, String text) {
+    try {
+      c.workspace().outputObject(text, null, true, false, org.nlogo.api.OutputDestinationJ.NORMAL());
+    } catch (Exception e) { /* nowhere to say it: the page still opens */ }
+  }
+
+  static String modelName(Context c) {
+    try {
+      String path = c.workspace().getModelPath();
+      if (path != null && !path.isEmpty()) return new File(path).getName().replaceAll("\\.nlogox?$", "");
+    } catch (Exception e) { /* an unsaved model */ }
+    return "NetLogo run";
+  }
+
+  /** setup and go: the model's own buttons (their whole command), else setup and go by name. */
+  static String[] buttons(Context c) {
+    String setup = null, go = null, turtleGo = null, step = null;
+    List<String[]> found = new ArrayList<>();   // command, forever?, kind
+    try {
+      String path = c.workspace().getModelPath();
+      if (path != null && new File(path).isFile()) {
+        String text = new String(java.nio.file.Files.readAllBytes(new File(path).toPath()), StandardCharsets.UTF_8);
+        java.util.regex.Matcher m = java.util.regex.Pattern.compile("<button([^>]*)>([^<]*)</button>").matcher(text);
+        while (m.find()) {
+          String cmd = m.group(2).replace("&lt;", "<").replace("&gt;", ">").replace("&quot;", "\"").replace("&amp;", "&").trim();
+          java.util.regex.Matcher k = java.util.regex.Pattern.compile("kind=\"(\\w+)\"").matcher(m.group(1));
+          if (!cmd.isEmpty()) found.add(new String[] {cmd, String.valueOf(m.group(1).contains("forever=\"true\"")), k.find() ? k.group(1) : "Observer"});
+        }
+      }
+    } catch (IOException e) { /* no file: the names */ }
+    for (String[] b : found) {
+      boolean forever = b[1].equals("true"), observer = b[2].equals("Observer");
+      String first = b[0].split("\\s+")[0].toLowerCase();
+      if (observer && !forever && setup == null && first.equals("setup")) setup = b[0];
+      if (observer && forever && go == null && first.equals("go")) go = b[0];
+      if (!observer && forever && turtleGo == null && b[2].equals("Turtle")) turtleGo = "ask turtles [ " + b[0] + " ]";
+      if (observer && !forever && step == null && b[0].matches("(?is).*\\b(go|step|iterate|run|once|next).*")
+          && !b[0].matches("(?is).*\\b(setup|reset|clear).*")) step = b[0];
+    }
+    for (String[] b : found)   // a setup button by another name, or the first one-shot button
+      if (setup == null && b[2].equals("Observer") && b[1].equals("false") && b[0].matches("(?is).*\\b(setup|reset|init|new|start).*")) setup = b[0];
+    for (String[] b : found)
+      if (go == null && b[2].equals("Observer") && b[1].equals("true")) go = b[0];
+    return new String[] {setup != null ? setup : "setup", go != null ? go : turtleGo != null ? turtleGo : step != null ? step : "go"};
+  }
+
+  /** What to record without being told: each turtle variable that is true or false, each breed's count, patch colours. */
+  static void autoTrack(org.nlogo.agent.World w) {
+    turtleVars = new ArrayList<>();
+    List<String> own = scala.jdk.javaapi.CollectionConverters.asJava(w.program().turtlesOwn());
+    Turtle any = null;
+    for (org.nlogo.api.Agent a : w.turtles().agents()) { any = (Turtle) a; break; }
+    for (int i = 13; i < own.size() && any != null; i++) {   // past NetLogo's 13 built-in turtle variables
+      Object v = any.getVariable(w.turtlesOwnIndexOf(own.get(i)));
+      if (v instanceof Boolean) turtleVars.add(own.get(i).toLowerCase());
+    }
+    reporterNames = new ArrayList<>(); reporters = new ArrayList<>();
+    for (String b : scala.jdk.javaapi.CollectionConverters.asJava(w.program().breeds()).keySet()) {
+      final org.nlogo.agent.AgentSet set = w.getBreed(b);
+      if (set == null) continue;
+      reporterNames.add("count " + b.toLowerCase());
+      reporters.add((java.util.function.Supplier<Object>) () -> (double) set.count());
+    }
+    int n = w.patches().count();
+    patchVar = "pcolor";
+    patchEvery = Math.max(1, Math.min(4, (int) Math.ceil(n / 16000.0)));   // a large world: its colours every few ticks
   }
 
   /** The folder that holds the bundled construct_hologram package: beside construct.jar. */

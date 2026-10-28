@@ -32,7 +32,14 @@ milestones on top, and the data lock makes sure it never changes the data.
 
 ## 1. Record a run
 
-**With the extension** (NetLogo 7): install it (unzip `construct-<version>.zip` into a folder
+**The quickest way** (NetLogo 7, with the extension installed): add `extensions [construct]` at the
+top of the model's Code tab and type `construct:run` in the Command Center. It runs the model as
+its buttons do, records what is worth recording, waits for the model to stop (a model that never
+stops is drawn after 1000 runs of go; `construct:run-for 3000` for longer), chooses the view and
+opens the construct. `construct netlogo run.jsonl --view auto` makes the same choice from the
+command line.
+
+**With the extension, step by step** (NetLogo 7): install it (unzip `construct-<version>.zip` into a folder
 called `construct` in NetLogo's `extensions` folder, or beside your model; build it with
 `scripts/build_netlogo_extension.py`) and add to the model:
 

@@ -239,6 +239,22 @@ class Views(unittest.TestCase):
         page, _ = render.build_html(scene.compile_scene(stock))
         self.assertNotIn("HOW TO READ IT", page)   # a construct that asks for nothing: the stock page
 
+    def test_the_view_the_data_suits(self):
+        view, opts, _ = netlogo.choose_view(self.run)          # links, and infected? turned for some turtles
+        self.assertEqual((view, opts["state"]), ("network-time", "infected?"))
+        self.assertIn("network-time", netlogo.scene_from_run(self.run, "auto")["id"])
+        run = json.loads(json.dumps(self.run))
+        for f in run["frames"]:
+            f.pop("links", None)
+        self.assertEqual(netlogo.choose_view(run)[0], "field")    # no network: the patches that changed
+        for f in run["frames"]:
+            f.pop("patches", None)
+        view, opts, _ = netlogo.choose_view(run)
+        self.assertEqual((view, {opts["x"], opts["z"]}), ("phase", {"count prey", "count predators"}))
+        for f in run["frames"]:
+            f.pop("reporters", None)
+        self.assertEqual(netlogo.choose_view(run)[0], "space-time")
+
     def test_solids_for_a_3d_model(self):
         plain = netlogo.scene_from_run(self.run, "network-time", state="infected?")
         sc = netlogo.scene_from_run(self.run, "network-time", state="infected?", solid=True)
@@ -568,6 +584,11 @@ class Extension(unittest.TestCase):
             self.assertTrue(Path(d, "contagion-construct", "construct.html").is_file())
             self.assertTrue(Path(d, "contagion-construct", "run.glb").stat().st_size > 1000)   # "model" true: the 3D model
             self.assertEqual(json.loads(Path(d, "contagion-construct", "audit.json").read_text())["errors"], [])
+            r = drive("random-seed 4", "construct:run-for 20")              # one command: setup, run, draw
+            self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+            self.assertIn("ran m for 20 runs of go", r.stdout)
+            self.assertIn("view: space-time", r.stdout)
+            self.assertEqual(len(netlogo.read_run(Path(d, "m-run.jsonl"))["frames"]), 21)
             r = drive("setup construct:record")
             self.assertIn("construct:start first", r.stdout)
             r = drive('setup construct:start "C" construct:record', '(construct:draw "phase" "y" "infected")')
