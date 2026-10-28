@@ -22,6 +22,14 @@ inside NetLogo. Plan: [ROADMAP.md](docs/ROADMAP.md#v11-models-come-alive).
   the track, which the replay bar plays), the track's fingerprint is under the data lock, and the
   track is copied beside the scene. `construct audio` gains `kick`: a pulse on each kick or bass
   hit, even over a held bass ([NETLOGO.md](docs/NETLOGO.md#5-music-optional)).
+- **A run as a film** (Blender): File > Import > NetLogo Run (.jsonl), or `scripts/run_film.py`
+  headless, draws a recording itself, every turtle at every tick as glowing light with a trail in
+  its own NetLogo colour, the world's edge as a line of light, bloom and an orbiting camera; a run
+  recorded to music plays with its track at the run's clock, its light following the music. Nothing
+  is sampled, so a long run of many agents loses nothing.
+- **NetLogo 3D:** the extension records each turtle's height (last in its row, so 2D readers are
+  unchanged) and the world's depth, and skips 3D patches; a NetLogo 3D model opens headless in the
+  tests' driver. The film flies the turtles at their heights inside the world's box.
 - **A legend on every NetLogo construct,** each part named where it is and shown from the start;
   no projector or drifting motes on a construct of data. An art layer's `"legend": false` drops it
   where its own annotations replace it (the three examples). A scene may now ask to open with its

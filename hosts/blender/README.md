@@ -44,6 +44,32 @@ one; see [3D export](../../docs/EXPORT.md#a-material-map-the-finished-model)), t
 whether the construct starts as metal or light, and whether to keep the file's own `open` actions
 beside the Open control.
 
+### A NetLogo run as a film
+
+**File → Import → NetLogo Run (.jsonl)** reads a recording from [Construct for
+NetLogo](../netlogo/README.md) (`construct:run`, or `construct.nls`) and plays it as a film: every
+turtle at every tick as a small glowing arrowhead in its own NetLogo colour, pointing where it
+goes, with a light trail behind it; the world's edge as a line of light (a box, for a NetLogo 3D
+run, whose turtles fly at their own heights); bloom; and a camera that orbits slowly. A run
+recorded with `construct:music` plays with its track: the scene's frames span the run at its own
+clock (tick *t* at second *t* ÷ ticks a second), the track is a sound strip, and the light swells
+with the music's energy and flashes on each kick.
+
+It draws the recording itself, not a construct of it, so a run of any length and any number of
+turtles loses nothing; between two records a turtle moves on a straight line (never across a wrap
+of the world), and the trail stops where the turtle wrapped. A frame handler moves the turtles as
+the scene plays or renders; the objects keep the recording's path, so a saved .blend replays it
+wherever the add-on is installed. Import options: the trail's length in seconds, and the camera.
+
+Headless, to a film with its sound:
+
+```sh
+blender -b --factory-startup --python scripts/run_film.py -- flocking-run.jsonl --out flocking.mp4 --size 1920x1080
+```
+
+`--from` and `--seconds` render a part of it, `--samples` sets EEVEE's quality, `--blend` also saves
+the scene.
+
 ## How it works
 
 The add-on uses Blender's own glTF importer for the parts, the stages and the motion, then:

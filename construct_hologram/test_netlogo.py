@@ -42,6 +42,25 @@ end]]></code>
 """
 
 
+MODEL3D = """<?xml version="1.0" encoding="utf-8"?>
+<model version="NetLogo 3D 7.0.4" snapToGrid="false">
+  <code><![CDATA[extensions [construct]
+to setup
+  clear-all
+  create-turtles 8 [ setxyz random-xcor random-ycor random-zcor ]
+  reset-ticks
+end
+to go
+  ask turtles [ tilt-up 10 fd 1 ]
+  tick
+end]]></code>
+  <widgets>
+    <view3d wrappingAllowedZ="true" x="0" wrappingAllowedX="true" y="0" minPycor="-5" height="200" showTickCounter="true" patchSize="10.0" fontSize="10" wrappingAllowedY="true" width="200" tickCounterLabel="ticks" maxPycor="5" updateMode="1" frameRate="30.0" maxPzcor="4" maxPxcor="5" minPxcor="-5" minPzcor="-4"></view3d>
+  </widgets>
+</model>
+"""
+
+
 def netlogo_java(folder):
     """NetLogo's own Java (macOS app, Linux tarball, Windows install), else the one on PATH."""
     for rel in ("runtime/Contents/Home/bin/java", "lib/runtime/bin/java", "runtime/bin/java.exe", "runtime/bin/java"):
@@ -690,6 +709,19 @@ class Extension(unittest.TestCase):
                                                          "show construct:energy >= 0")
                 self.assertIn("0.5", r.stdout)
                 self.assertIn("true", r.stdout)
+
+            # NetLogo 3D: each turtle's height last in its row, the world's depth in the header, no 3D patches
+            Path(d, "m3.nlogox3d").write_text(MODEL3D, encoding="utf-8")
+            r = subprocess.run([str(java), "-Djava.awt.headless=true", "-cp", os.pathsep.join([str(jar), d]), "Drive",
+                                str(Path(d, "m3.nlogox3d")), "random-seed 2", "construct:run-for 5"], cwd=d,
+                               capture_output=True, text=True, timeout=600)
+            self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+            run3 = netlogo.read_run(Path(d, "m3-run.jsonl"))
+            h3 = run3["header"]
+            self.assertEqual((h3.get("zcor"), h3["world"]["min-pzcor"], h3["world"]["max-pzcor"], h3["patch-reporter"]),
+                             (True, -4, 4, ""))
+            self.assertEqual({len(row) for f in run3["frames"] for row in f["turtles"]}, {6})
+            self.assertTrue(all(-4.5 <= row[5] <= 4.5 for f in run3["frames"] for row in f["turtles"]))
 
             # the same run through construct.nls: the same turtles, tick by tick
             Path(d, "plain.nlogox").write_text(MODEL, encoding="utf-8")

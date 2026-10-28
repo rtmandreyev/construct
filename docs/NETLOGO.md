@@ -250,6 +250,25 @@ fingerprint and clock: a construct drawn to another track is another construct.
 A construct holds at most 24,000 line segments, so a long run with many moving agents is sampled
 (the `sampling` fact says how much); the construct is the run's shape, and the replay its timing.
 
+## 6. A run as a film (Blender)
+
+A construct is the run's shape; a film is its motion. The Blender add-on imports a recording
+itself (**File → Import → NetLogo Run (.jsonl)**, or headless with `scripts/run_film.py`): every
+turtle at every tick as moving light with a trail, in its own colours, the world's edge as a line
+of light, and for a run recorded with `construct:music`, its track, at the run's own clock, with
+the light following the music. Nothing is sampled: a three-minute flock of 200 birds is 200 birds
+for three minutes. NetLogo 3D runs fly at their recorded heights inside the world's box.
+([hosts/blender](../hosts/blender/README.md#a-netlogo-run-as-a-film))
+
+```
+construct:music "track.mp3"
+construct:run
+```
+
+```sh
+blender -b --factory-startup --python scripts/run_film.py -- flocking-run.jsonl --out flocking.mp4
+```
+
 ## How it was checked
 
 - **The bridge reproduces a run exactly.** The [Simple Viral Marketing](../examples/netlogo-viral-marketing/)
@@ -284,7 +303,9 @@ A construct holds at most 24,000 line segments, so a long run with many moving a
 ## Limits
 
 - Desktop NetLogo 6.x and 7 (`.nlogox` for instrumenting; the extension needs 7); NetLogo Web
-  supports neither include files nor extensions. NetLogo 3D's third coordinate is not recorded.
+  supports neither include files nor extensions. NetLogo 3D runs are recorded with each turtle's
+  height (the extension; `construct.nls` records two dimensions), but the four views draw the floor
+  only: the height is for the film (below).
 - A construct holds 24,000 lines, so a long run of many agents is sampled; the facts say how.
 - Construct does not colour by data (the renderer owns colour): a view shows a quantity by position,
   not by hue.

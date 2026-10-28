@@ -32,7 +32,7 @@ except ImportError:   # Blender always bundles NumPy; this module needs it
     np = None
 
 WORLD = 10.0          # metres across the world's longer side, as a construct of a run draws it
-TRAIL_S = 0.5         # seconds of trail behind each turtle
+TRAIL_S = 0.35        # seconds of trail behind each turtle
 TRAIL_POINTS = 12     # points along each trail
 ARROW = 0.11          # an arrowhead's length, metres
 ACCENT = (0.82, 0.42, 0.82)
@@ -96,11 +96,12 @@ def read(path):
             pos[t, i, 1] = (row[3] - (y0 + y1) / 2) * scale
             alive[t, i] = True
             colour[t, i] = netlogo_rgb(row[4])
-            if len(row) > 5 and header.get("zcor"):   # a NetLogo 3D run: zcor follows the colour
+            if header.get("zcor"):   # a NetLogo 3D run: the height last in each row, the floor at the world's bottom
                 has_z = True
-                pos[t, i, 2] = (row[5] - header["world"].get("min-pzcor", 0) + 0.5) * scale
+                pos[t, i, 2] = (row[-1] - w.get("min-pzcor", 0) + 0.5) * scale
     data = {"header": header, "ticks": np.array([f["t"] for f in frames], dtype=np.float64), "pos": pos, "alive": alive,
             "colour": colour, "end": end, "size": ((x1 - x0) * scale, (y1 - y0) * scale), "jump": 0.5 * WORLD,
+            "depth": (w.get("max-pzcor", 0) - w.get("min-pzcor", 0) + 1) * scale if header.get("zcor") else 0.0,
             "music": _music(header, os.path.dirname(path)), "has_z": has_z, "path": path}
     _CACHE.clear()
     _CACHE[key] = data
@@ -311,11 +312,16 @@ def build(path, scene=None, trail_seconds=TRAIL_S, fps=30, camera=True):
     trails.modifiers.new("trails", "NODES").node_group = _trails_nodes(tmat, ARROW * 0.09)
 
     w, h = data["size"]
-    edge = _mesh_object("world", [(-w / 2, -h / 2, 0), (w / 2, -h / 2, 0), (w / 2, h / 2, 0), (-w / 2, h / 2, 0)],
-                        [(0, 1), (1, 2), (2, 3), (3, 0)], coll)
+    z = data["depth"]
+    box = [(-w / 2, -h / 2, 0), (w / 2, -h / 2, 0), (w / 2, h / 2, 0), (-w / 2, h / 2, 0)]
+    lines = [(0, 1), (1, 2), (2, 3), (3, 0)]
+    if z:   # a NetLogo 3D world: its box, the floor and the ceiling joined at the corners
+        box += [(x, y, z) for x, y, _ in box]
+        lines += [(4, 5), (5, 6), (6, 7), (7, 4), (0, 4), (1, 5), (2, 6), (3, 7)]
+    edge = _mesh_object("world", box, lines, coll)
     emat = _emission("Construct run: world", "fade")
-    edge.data.attributes.new("fade", "FLOAT", "POINT").data.foreach_set("value", [0.25] * 4)
-    edge.data.attributes.new("col", "FLOAT_COLOR", "POINT").data.foreach_set("color", list(ACCENT + (1,)) * 4)
+    edge.data.attributes.new("fade", "FLOAT", "POINT").data.foreach_set("value", [0.25] * len(box))
+    edge.data.attributes.new("col", "FLOAT_COLOR", "POINT").data.foreach_set("color", list(ACCENT + (1,)) * len(box))
     edge.modifiers.new("world", "NODES").node_group = _trails_nodes(emat, 0.006)
     _scale_trail_input(edge)
 
@@ -331,7 +337,7 @@ def build(path, scene=None, trail_seconds=TRAIL_S, fps=30, camera=True):
         strips = ed.strips if hasattr(ed, "strips") else ed.sequences
         strips.new_sound(name=os.path.basename(m["track"]), filepath=m["track"], channel=1, frame_start=1)
     if camera:
-        _camera(sc, coll, max(w, h), data["has_z"])
+        _camera(sc, coll, max(w, h), z)
     _look(sc)
     update(sc, sc.frame_start)
     return coll
@@ -346,20 +352,22 @@ def _scale_trail_input(obj):
     tube.inputs["Scale"].default_value = 1.0
 
 
-def _camera(sc, coll, size, has_z):
-    """A slow orbit around the world, high enough to read the flock, close enough to feel it."""
+def _camera(sc, coll, size, depth=0.0):
+    """A slow orbit around the world, high enough to read the flock, close enough to feel it (further out
+    for a 3D world, aimed at its middle)."""
     cam = bpy.data.objects.new("camera", bpy.data.cameras.new("camera"))
     coll.objects.link(cam)
     sc.camera = cam
     cam.data.lens = 35
     cam.data.clip_end = size * 20
     target = bpy.data.objects.new("camera target", None)
-    target.location = (0, 0, size * (0.15 if has_z else 0.0))
+    target.location = (0, 0, depth / 2)
     coll.objects.link(target)
     track = cam.constraints.new("TRACK_TO")
     track.target = target
     track.track_axis, track.up_axis = "TRACK_NEGATIVE_Z", "UP_Y"
-    cam["construct_run_camera"] = {"radius": size * 0.95, "height": size * 0.62, "degrees_per_second": 4.0}
+    cam["construct_run_camera"] = {"radius": size * (1.45 if depth else 0.95), "height": depth / 2 + size * (0.45 if depth else 0.62),
+                                   "degrees_per_second": 4.0}
 
 
 def _look(sc):

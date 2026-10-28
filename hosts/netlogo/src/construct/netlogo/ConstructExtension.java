@@ -234,7 +234,10 @@ public class ConstructExtension extends DefaultClassManager {
         if (!headerDone) {
           out.write("{\"construct-netlogo\":1,\"title\":" + json(title) + ",\"netlogo\":" + json(version())
               + ",\"seed\":" + seed + (ticking ? "" : ",\"clock\":\"steps\"") + ",\"world\":{\"min-pxcor\":" + w.minPxcor() + ",\"max-pxcor\":" + w.maxPxcor()
-              + ",\"min-pycor\":" + w.minPycor() + ",\"max-pycor\":" + w.maxPycor() + "},\"turtle-vars\":" + jsonList(turtleVars)
+              + ",\"min-pycor\":" + w.minPycor() + ",\"max-pycor\":" + w.maxPycor()
+              + (w instanceof org.nlogo.api.World3D ? ",\"min-pzcor\":" + ((org.nlogo.api.World3D) w).minPzcor()
+                  + ",\"max-pzcor\":" + ((org.nlogo.api.World3D) w).maxPzcor() : "")
+              + "}" + (w instanceof org.nlogo.api.World3D ? ",\"zcor\":true" : "") + ",\"turtle-vars\":" + jsonList(turtleVars)
               + ",\"reporters\":" + jsonList(reporterNames) + ",\"patch-reporter\":" + json(patchVar) + ",\"patch-every\":" + patchEvery
               + (track == null ? "" : ",\"music\":{\"track\":" + json(track.getName()) + ",\"path\":" + json(track.getAbsolutePath())
                   + ",\"sha256\":" + json(trackSha) + ",\"ticks-per-second\":" + tps + ",\"ticks\":" + musicTicks
@@ -255,6 +258,8 @@ public class ConstructExtension extends DefaultClassManager {
                 .append(num(Math.round(tu.xcor() * 1e4) / 1e4)).append(',').append(num(Math.round(tu.ycor() * 1e4) / 1e4))
                 .append(',').append(value(tu.color()));
             for (String v : turtleVars) s.append(',').append(value(turtleVar(w, tu, v)));
+            if (tu instanceof org.nlogo.api.Turtle3D)   // NetLogo 3D: the height last, so a 2D reader reads the rest as ever
+              s.append(',').append(num(Math.round(((org.nlogo.api.Turtle3D) tu).zcor() * 1e4) / 1e4));
             s.append(']');
           }
           s.append(']');
@@ -588,7 +593,7 @@ public class ConstructExtension extends DefaultClassManager {
   static String modelName(Context c) {
     try {
       String path = c.workspace().getModelPath();
-      if (path != null && !path.isEmpty()) return new File(path).getName().replaceAll("\\.nlogox?$", "");
+      if (path != null && !path.isEmpty()) return new File(path).getName().replaceAll("\\.nlogox?(3d)?$", "");
     } catch (Exception e) { /* an unsaved model */ }
     return "NetLogo run";
   }
@@ -644,6 +649,7 @@ public class ConstructExtension extends DefaultClassManager {
       reporterNames.add("count " + b.toLowerCase());
       reporters.add((java.util.function.Supplier<Object>) () -> (double) set.count());
     }
+    if (w instanceof org.nlogo.api.World3D) { patchVar = ""; patchEvery = 0; return; }   // 3D: the views draw no 3D patches
     int n = w.patches().count();
     patchVar = "pcolor";
     patchEvery = Math.max(1, Math.min(4, (int) Math.ceil(n / 16000.0)));   // a large world: its colours every few ticks
