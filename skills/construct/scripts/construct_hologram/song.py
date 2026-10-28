@@ -145,6 +145,20 @@ def _part(pid, label, role, paths, tone=None, weight=None, alpha=None):
     return p
 
 
+def _by_loudness(ring_paths, levels):
+    """The rings in three parts by how loud each moment is (its mean level): the quietest third faint, the
+    loudest third bright, so the loud passages glow and the quiet ones recede."""
+    loud = [sum(row) / len(row) for row in levels]
+    order = sorted(range(len(loud)), key=lambda r: loud[r])
+    third = max(1, len(order) // 3)
+    groups = [sorted(order[:third]), sorted(order[third:-third] if len(order) > 2 * third else []), sorted(order[-third:])]
+    looks = [("rings-quiet", "The quietest third of the moments", "detail", dict(tone="dust", weight=0.6, alpha=0.5)),
+             ("rings", "Each ring a moment of the track: further out, louder", "identity", dict(weight=0.8)),
+             ("rings-loud", "The loudest third of the moments", "identity", dict(tone="bright", weight=1.0))]
+    return [_part(pid, label, role, [ring_paths[r] for r in g], **look)
+            for (pid, label, role, look), g in zip(looks, groups) if g]
+
+
 def _clock(seconds):
     return "%d:%02d" % (int(seconds) // 60, int(round(seconds)) % 60) if seconds >= 60 else "%.0f s" % seconds
 
@@ -177,7 +191,7 @@ def scene_from_track(path, title=None, rings=56, solid=False):
 
     parts = [_part("floor", "The floor: the start of the track", "ground", floor, alpha=0.5, weight=0.6),
              _part("time-axis", "Time, 0 to %s, a mark each minute" % _clock(seconds), "ground", axis),
-             _part("rings", "Each ring a moment of the track: further out, louder", "identity", ring_paths, weight=0.8),
+             *_by_loudness(ring_paths, levels),
              _part("meridians", "The same band through time", "detail", meridians, tone="dust", weight=0.4, alpha=0.35)]
     if section_rings:
         parts.append(_part("sections", "Where the track changes section", "data", section_rings, tone="accent", weight=1.4))
@@ -186,7 +200,7 @@ def scene_from_track(path, title=None, rings=56, solid=False):
         body["shape"] = {"type": "rings", "rings": [r[:-1] for r in ring_paths], "caps": True}
         parts.insert(2, body)
     for p in parts:   # each ring hangs at its own moment, above the floor
-        if p["id"] in ("rings", "meridians", "sections", "body"):
+        if p["id"] in ("rings", "rings-quiet", "rings-loud", "meridians", "sections", "body"):
             p["floating"] = True
     how = ["Height is time: the track starts on the floor and ends at the top, %s in all." % _clock(seconds),
            "Each ring is one moment (%.1f s): around it, the frequencies, the lowest at the front and the highest "
@@ -209,7 +223,7 @@ def scene_from_track(path, title=None, rings=56, solid=False):
               "certainty": "verified", "source": "track"}]
     slug = "".join(ch if ch.isalnum() else "-" for ch in title.lower()).strip("-")[:48] or "song"
     annotations = []
-    for i, p in enumerate(q for q in parts if q["id"] in ("time-axis", "rings", "sections")):   # each label on a real point
+    for i, p in enumerate(q for q in parts if q["id"] in ("time-axis", "rings-loud", "sections")):   # each label on a real point
         pts = [v for path in p["shape"]["paths"] for v in path]
         lo = [min(v[k] for v in pts) for k in range(3)]
         hi = [max(v[k] for v in pts) for k in range(3)]
