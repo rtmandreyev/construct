@@ -124,7 +124,7 @@ the scene and geometry contract keeps its id (`construct/0.2`), because nothing 
 
 ## v1.1: models come alive
 
-Phases A to E are built for 1.1.0 ([release notes](releases/v1.1.0.md)); F comes after.
+Phases A to E are built for 1.1.0 ([release notes](releases/v1.1.0.md)).
 
 Make agent-based models exciting to learn from: a simulation's whole run as an animated hologram a
 student wants to explore (why does it take this shape? how do I read it?), accurate to the run,
@@ -170,32 +170,87 @@ work (art direction, critic rounds, 3D models) is opt-in.
 - NetLogo tools in the MCP server (instrument, draw, art direction), so Hermes and any MCP client
   can drive the bridge, and the skills' steps to match.
 
-### Phase F: richer constructs by default
+## Ideas (unordered)
 
-The bridge's constructs are exact but can look plain: thin lines in one tone, few landmarks. Make
-the default construct of a run look as considered as an art-directed one, without art direction
-and without ever bending the data:
-- emphasis from the data itself: tone and weight by breed, state or speed; the busiest moments
-  brighter; the run's own colours in the hologram as well as in the 3D model;
-- automatic landmarks: the peak, the half-way point and the end, computed from the counts and
-  marked as inferred, like an art layer's milestones;
-- views and framing chosen per view (the cycle from above, the spread from the side), and a
-  calmer floor;
-- a survey of the stock models as the yardstick: which constructs read well, which don't, and why.
-  The first, of 15 models with `construct:run` (2026-10-27): Traffic Basic, Heroes and Cowards,
-  Flocking, Virus on a Network, Rumor Mill and Fire read well; these need more:
-  - **strata**, a new view: the world at a few moments stacked in time, agents and patches as
-    they were, for models where things jump or flip rather than travel (Segregation, Life, Wealth
-    Distribution, Sandpile, Termites);
-  - **links in time**: a link's creation and removal recorded even when their number stays the
-    same, so rewiring shows (Small Worlds, Giant Component's growth);
-  - **globals worth recording**: numeric globals that change (Climate Change's temperature),
-    recorded by `construct:run` and offered to the phase view;
-  - **meaningful states first**: prefer a model's own state variables over its bookkeeping
-    (Giant Component chose `explored?`).
+What could come after 1.1, grouped by direction and in no order: each release picks from here
+what is most worth building then. 1.5 and 2.0 look beyond research; research and teaching may
+come back in 2.1, depending on how 1.1 is received.
 
-## Later
-- Texture coordinates for every shape.
-- An optional surface finish per part (paint, metal, glass…), as a contract addition.
-- USD and USDZ export.
-- Short guides for Godot and Unity.
+### Music
+
+- **Live mode:** constructs that react to live audio (a microphone or a line in) in real time,
+  for performances, streams and installations; MIDI controllers mapped to the build, the joints
+  and the look.
+- **A song as a construct:** a MIDI file or a track drawn with time as height (notes, sections,
+  loudness), like a NetLogo run: a sculpture of a song, to orbit, replay or 3D-print.
+- **Stems to parts:** each stem (drums, bass, voice) drives its own group of parts, beyond film
+  mode's one voice stem.
+- **Your gear:** a musician's synth, guitar or rig as a construct, its knobs and switches moving
+  with the track's automation.
+- **Loops for streaming services and video:** short vertical loops (Spotify Canvas, Reels) and
+  full-length visualisers rendered from a construct and a track.
+
+### Film and video
+
+- **Holographic screen graphics:** the hologram itself as a film asset, rendered with a
+  transparent background and separate passes, for compositing in After Effects, Nuke or
+  Resolve; camera moves imported from a tracked shot.
+- **Previs:** a scene's sets, vehicles and props described in words, blocked out at their real
+  sizes in Blender, with camera paths and a parts list for the art department.
+- **Reconstructions for documentaries:** historical places and objects that say what is known
+  and what is reconstructed, on screen.
+- **Title sequences and trailers:** constructs assembling to a cut, from an edit's markers.
+
+### Games
+
+- **Blockout kits:** props and buildings at real sizes, with colliders and levels of detail, for
+  greyboxing a level.
+- **Engine packages:** importers or templates for Godot, Unity and Unreal; short guides for each.
+- **The hologram in game:** the Measured Light look as a runtime shader, for scanners,
+  blueprints and holographic interfaces, with build and open as game events.
+- **Variants without end:** the parametric archetypes as generators: a seed in, a new vehicle or
+  building out, in the editor or at runtime.
+- **Break-apart:** named parts and joints as the pieces for destruction and assembly mechanics.
+- **Texture coordinates for every shape,** for texturing in any engine.
+
+### Makers and 3D
+
+- **3D printing:** STL and 3MF export, with a solid, printable version of a construct or a run.
+- **USD and USDZ export:** one tap opens a construct in AR on an iPhone or iPad.
+- **From a photo:** a reference image traced into a first draft, then built from facts.
+- **An optional surface finish per part** (paint, metal, glass) in the scene itself, as a
+  contract addition.
+- **Versions and differences:** what changed between two versions of a construct; branches of an
+  art layer.
+
+### Immersive
+
+- **WebXR:** walk around a hologram in a headset, in the browser, with no app.
+- **Room scale:** a construct at its real size in the room, its parts apart around you.
+- **Museum kiosks:** a construct on a touch table, with what is known and what is reconstructed.
+
+### Sharing and community
+
+- **A community gallery:** submitted constructs, each with its audit and provenance shown.
+- **Embeds:** a construct in any article, course page or wiki, with its reading.
+- **A desktop or web studio:** Construct without a terminal, for people who don't code.
+
+### Research and teaching
+
+- **Richer runs by default:** the critic's general findings as defaults (computed landmarks, the
+  run's own colours, readable time axes, milestones with contrast), gated by the machine checks.
+- **Strata,** a view for models where things flip or jump rather than travel (Segregation, Life,
+  Sandpile); **links in time,** so rewiring and growth show; **numeric globals** recorded and offered
+  to the phase view; **meaningful states first** over a model's bookkeeping.
+- **Comparing runs:** two seeds or settings side by side, or a BehaviorSpace sweep as small
+  multiples.
+- **Predict, then replay:** the shape hidden until the student has guessed it.
+- **Ask the construct:** a "why this shape?" question answered from the scene's facts (opt-in, a
+  model call).
+- **For a course:** one file with the page and a short handout, for Canvas or any LMS.
+- **More simulation worlds:** Mesa (Python), then GAMA, Repast, AnyLogic exports and plain time
+  series; a JavaScript recorder for NetLogo Web.
+- **Live runs:** a construct drawn while the model is still running.
+- The first survey's findings, for reference (15 models, 2026-10-27): Traffic Basic, Heroes and
+  Cowards, Flocking, Virus on a Network, Rumor Mill and Fire read well; Segregation, Life, Small
+  Worlds, Wealth Distribution and Termites need the views above.
