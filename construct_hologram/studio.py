@@ -758,7 +758,14 @@ def run(args):
                                         out / args.run_file))
                     return 0
                 if args.view == "auto":
-                    picked, _, why = nl.choose_view(nl.read_run(args.run))
+                    run_auto = nl.read_run(args.run)
+                    picked, _, why = nl.choose_view(run_auto)
+                    if picked == "field":
+                        try:
+                            nl.scene_from_run(run_auto, "field")
+                        except nl.NetLogoError:
+                            picked, _, why = nl.choose_view(run_auto, exclude=("field",))
+                            why += "; the patches changed all at once"
                     sys.stdout.write("view: %s (%s)\n" % (picked, why))
                 scene = nl.scene_from_run(nl.read_run(args.run), args.view, args.title, state=args.state, x=args.x,
                                           z=args.z, change=args.change, max_agents=args.max_agents,

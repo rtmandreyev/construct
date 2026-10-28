@@ -40,6 +40,18 @@
           const L = r.left + dx, R = r.right + dx, T = r.top + dy, B = r.bottom + dy;
           if (L < b.right && R > b.left && T < b.bottom && B > b.top) dy += (b.top > Hh / 2 ? b.top - B - 6 : b.bottom - T + 6);
         }
+        const clear = (d) => {   // this label moved by d stays in the window, off the panel, the bar and the others
+          const L = r.left + dx, R = r.right + dx, T = r.top + d, B = r.bottom + d;
+          if (T < M || B > Hh - M) return false;
+          const hits = (o) => L < o.right && R > o.left && T < o.bottom && B > o.top;
+          return !blocks.some(hits) && ![...tags].slice(0, i).some((x) => hits(x.getBoundingClientRect()));
+        };
+        if (!clear(dy)) {   // the nearest place, up or down, where it is clear
+          for (let step = 6; step < Hh; step += 6) {
+            if (clear(dy - step)) { dy -= step; break; }
+            if (clear(dy + step)) { dy += step; break; }
+          }
+        }
         if (!dx && !dy) continue;
         t.style.left = (parseFloat(t.style.left) + dx) + "px"; t.style.top = (parseFloat(t.style.top) + dy) + "px";
         const ln = lines[i];

@@ -44,6 +44,10 @@ inside NetLogo. Plan: [ROADMAP.md](docs/ROADMAP.md#v11-models-come-alive).
   grows rises by each turtle's arrival, and static agents are a last resort, said so. A run of a
   model in NetLogo's own Models Library (or unsaved) is written to Documents/NetLogo Constructs,
   not into NetLogo's installation; a setup that fills the world is preferred to one that empties it.
+  Checked over the whole Models Library with the new machine checks (`scripts/library_check.py`):
+  373 of 445 models draw, every data lock holds, and no label leaves the window or covers another;
+  the run fixed a breed born mid-run (now declared floating), fields whose patches all change at
+  once (the next view is chosen) and a field over the scene's point budget.
 - **Critic rounds for a run** (Phase C, opt-in): the rounds' critic, given a NetLogo construct, checks
   every label and milestone against the recording's facts and counts and judges how a student
   would read it (`critic-run.md`); with GPT-6.1 Sol it ranked a planted false milestone first. The

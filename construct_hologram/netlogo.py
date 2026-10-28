@@ -358,6 +358,8 @@ def _space_time(run, world, opts):
                            "The %s, tick by tick" % breed, "identity", {"type": "paths", "paths": paths[:4000],
                                                                        "detail": True},
                            tone=TONES[i], alpha=0.6))
+        if min(v[1] for path in paths[:4000] for v in path) > 0.001:   # a breed born mid-run: its tracks start in the air
+            parts[-1]["floating"] = True
     n_all = len(tracks)
     summary = ("Each turtle's track rising with time: the floor is the world, height is ticks, so a turtle that "
                "stands still draws a vertical line and a moving one leans.")
@@ -593,8 +595,18 @@ def _field(run, world, opts):
                    for r, c in line]
             fronts.extend(_chunks([[p[0], round(y, 3), p[2]] for p in pts]))
     fronts.sort(key=len, reverse=True)
+    kept, budget = [], 20000   # within one part's 4000 polylines and 30000 points, and the scene's 24000 lines
+    for f in fronts[:4000]:
+        if len(f) > budget:
+            break
+        kept.append(f)
+        budget -= len(f)
+    fronts = kept
+    if not fronts:
+        raise NetLogoError("field: the patches' %s changed all at once, so there is no front to draw; try another view"
+                           % src)
     parts = [_part("fronts", "Where the %s %s changed, every %s ticks, raised to its tick" % (
-        src, mode, round((t1 - t0) / (levels + 1), 1)), "identity", {"type": "paths", "paths": fronts[:4000]})]
+        src, mode, round((t1 - t0) / (levels + 1), 1)), "identity", {"type": "paths", "paths": fronts})]
     parts[0]["floating"] = True   # each front hangs at its own tick, above the floor
     summary = ("The front of change: where each patch's %s %s changed, drawn every few ticks and raised to its "
                "tick, so the run's spread rises as a stack of fronts; where nothing changed, nothing is drawn."
@@ -624,7 +636,7 @@ def _field(run, world, opts):
     return parts, summary, facts
 
 
-def choose_view(run):
+def choose_view(run, exclude=()):
     """The view that shows a recording best, and its options, with the reason: a network with a variable that
     turned (network-time), patches that changed (field), two counts that move (phase), else the agents' paths."""
     h, frames = run["header"], run["frames"]
@@ -657,7 +669,16 @@ def choose_view(run):
     samples = [f["patches"] for f in frames if "patches" in f]
     if len(samples) >= 2:
         changed = sum(1 for a, b in zip(samples[0], samples[-1]) if a != b)
-        if changed >= 0.02 * len(samples[0]):
+        moments = set()   # when each patch first changed: a front needs changes at several different times
+        stamps = [f["t"] for f in frames if "patches" in f]
+        for i in range(len(samples[0])):
+            for k in range(1, len(samples)):
+                if samples[k][i] != samples[k - 1][i]:
+                    moments.add(stamps[k])
+                    break
+            if len(moments) >= 4:
+                break
+        if changed >= 0.02 * len(samples[0]) and len(moments) >= 4 and "field" not in exclude:
             return "field", {}, "%d of %d patches changed" % (changed, len(samples[0]))
     names = h.get("reporters", [])
     moving = []
@@ -680,10 +701,14 @@ def choose_view(run):
     moving = bool(moved) and sorted(moved)[len(moved) // 2] > 0.02 * size
     if moving:
         return "space-time", {}, "agents that move"
-    if len(samples) >= 2 and any(a != b for a, b in zip(samples[0], samples[-1])):
+    if len(samples) >= 2 and any(a != b for a, b in zip(samples[0], samples[-1])) and "field" not in exclude:
         return "field", {}, "the agents barely move; the patches changed"
     if any(f.get("turtles") for f in frames):
         return "space-time", {}, "the agents barely move and nothing else changed: where they stood, over time"
+    if "field" in exclude:
+        raise NetLogoError("the patches change everywhere at once, which none of the four views can draw yet (no "
+                           "turtles that move, no two counts that move): track two counts with construct:track-reporter "
+                           "for the phase view")
     raise NetLogoError("nothing in the recording to draw: no turtles, no changing patches, no two moving counts")
 
 
@@ -691,7 +716,13 @@ def scene_from_run(run, view, title=None, **opts):
     """A construct-scene v2 from a recording, for one of VIEWS ("auto": the one choose_view picks)."""
     if view == "auto":
         view, auto, _ = choose_view(run)
-        opts = dict(auto, **{k: v for k, v in opts.items() if v not in (None, False)})
+        given = {k: v for k, v in opts.items() if v not in (None, False)}
+        if view == "field":   # patches that changed, but perhaps all at once: no fronts, then the next view
+            try:
+                return scene_from_run(run, "field", title, **dict(auto, **given))
+            except NetLogoError:
+                view, auto, _ = choose_view(run, exclude=("field",))
+        opts = dict(auto, **given)
     if view not in VIEWS:
         raise NetLogoError("view: one of %s" % ", ".join(VIEWS))
     h, frames = run["header"], run["frames"]

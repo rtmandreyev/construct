@@ -237,6 +237,11 @@ recording like everything else, under the data lock; without `--solid`, nothing 
   record (one-shot demonstrations, one needing an Arduino); 5 need typed input or participants, or
   build in phases before they run; and 3 were slower than the test allows. With the extension, a
   person running any of them in NetLogo is recorded like any other run.
+- **The machine checks** (`scripts/library_check.py`, no AI): with `construct:run`, 373 of the 445
+  models draw a construct; every data lock holds, every replay's clock and counts agree with the
+  run, and no label leaves the window, overlaps another or hides under the panel or the replay bar.
+  Most of the others wait for a player or a classroom; five change every patch at once, which none
+  of the four views can draw yet.
 - **The extension writes the same recording.** Virus on a Network (200 ticks) and the tests' model,
   recorded by the extension and by `construct.nls` with the same seed, give the same turtles,
   positions, colours, variables and links, tick by tick.
