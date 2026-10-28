@@ -552,6 +552,20 @@ class ArtDirection(unittest.TestCase):
 class Mcp(unittest.TestCase):
     """The NetLogo tools over MCP: instrument a model, draw a run with solids and colours, export it."""
 
+    def test_a_run_with_music_takes_its_features(self):
+        from . import mcp_server
+        with tempfile.TemporaryDirectory() as d:
+            n = 12
+            music = {"track": "beat.wav", "sha256": "", "ticks-per-second": 30, "ticks": n, "features": "beat-audio-30.json"}
+            text = Path(recording(Path(d, "m.jsonl"), header={"music": music})).read_text()
+        feats = {"fps": 30, "energy": [0.5] * n, "high": [0.1] * n, "kick": [0.0] * n, "onset": [0.0] * n}
+        res = json.loads(mcp_server._call_netlogo("construct_netlogo_draw", {"recording": text, "view": "space-time",
+                                                                             "features": feats})["content"][0]["text"])
+        self.assertEqual((res["scene"]["reading"]["music"]["seconds"], res["data_lock"]), (0.4, "intact"))
+        res = json.loads(mcp_server._call_netlogo("construct_netlogo_draw", {"recording": text, "view": "space-time"})
+                         ["content"][0]["text"])
+        self.assertIn("MCP: features", res["error"])
+
     def test_instrument_draw_export(self):
         import base64
         import sys

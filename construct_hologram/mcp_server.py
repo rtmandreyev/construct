@@ -145,7 +145,8 @@ TOOLS += [
                     "(moving agents), network-time (spreading on a network; give state), phase (two reporters in a "
                     "cycle), field (spreading over patches). Optional: an art-direction layer (art: views, labels, "
                     "milestones; never the data), solid (spheres, tubes, a surface, for a 3D model) and materials (the "
-                    "run's own colours, for construct_export). Compile or export the scene with the other tools.",
+                    "run's own colours, for construct_export). A run recorded with construct:music needs its features "
+                    "(the <track>-audio-<rate>.json beside it) as features. Compile or export the scene with the other tools.",
      "inputSchema": {"type": "object", "properties": {
          "recording": {"type": "string", "maxLength": 950000, "description": "the run's JSON Lines (a larger run: "
                        "record with every > 1, or draw it with the command line)"},
@@ -156,6 +157,8 @@ TOOLS += [
          "max_agents": {"type": "integer", "minimum": 1}, "smooth": {"type": "integer", "minimum": 1},
          "levels": {"type": "integer", "minimum": 1}, "resolution": {"type": "integer", "minimum": 4},
          "solid": {"type": "boolean"}, "materials": {"type": "boolean"},
+         "features": {"type": "object", "description": "a run with music: its features file's JSON (construct:music "
+                                                       "writes it beside the run)"},
          "art": {"type": "object", "description": "an art-direction layer (docs/NETLOGO.md: credit, title, summary, "
                                                   "looks, parts, facts, annotations, presentation, animation, reading, legend)"}},
                      "required": ["recording", "view"], "additionalProperties": False},
@@ -323,6 +326,8 @@ def _call_netlogo(name, args):
                                          "Model-construct.nlogox --setup-file construct-experiment.xml --experiment "
                                          "construct --threads 1. It writes run.jsonl; draw it with construct_netlogo_draw."})
         run = netlogo.parse_run(args["recording"])
+        if isinstance(args.get("features"), dict):
+            run["features"] = args["features"]
         opts = {k: args[k] for k in ("state", "x", "z", "change", "time", "max_agents", "smooth", "levels", "resolution")
                 if k in args}
         sc = netlogo.scene_from_run(run, args["view"], args.get("title"), solid=bool(args.get("solid")), **opts)

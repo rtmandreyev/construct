@@ -924,10 +924,13 @@ def _music(run):
     if not m:
         return None
     path = Path(run.get("dir") or ".") / m.get("features", "")
-    try:
-        doc = json.loads(path.read_text(encoding="utf-8"))
-    except (OSError, ValueError):
-        raise NetLogoError("the run's music features (%s) are not beside the run: run construct:music again" % path.name)
+    doc = run.get("features")   # given with the recording (over MCP), else the file beside the run
+    if not isinstance(doc, dict):
+        try:
+            doc = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            raise NetLogoError("the run's music features (%s) are not beside the run: run construct:music again, or "
+                               "give them with the recording (MCP: features)" % path.name)
     tps = int(m["ticks-per-second"])
     if doc.get("fps") != tps:
         raise NetLogoError("%s is at %s frames a second, the run at %d ticks a second" % (path.name, doc.get("fps"), tps))
