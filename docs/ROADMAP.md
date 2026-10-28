@@ -124,7 +124,7 @@ the scene and geometry contract keeps its id (`construct/0.2`), because nothing 
 
 ## v1.1: models come alive
 
-Phases A to E are built for 1.1.0 ([release notes](releases/v1.1.0.md)).
+Phases A to H are built for 1.1.0 ([release notes](releases/v1.1.0.md)).
 
 Make agent-based models exciting to learn from: a simulation's whole run as an animated hologram a
 student wants to explore (why does it take this shape? how do I read it?), accurate to the run,
@@ -183,12 +183,20 @@ work (art direction, critic rounds, 3D models) is opt-in.
 - Demonstrations: Fireflies entraining to the beat (its flashes lock to the kicks), Flocking 3D to
   drum and bass.
 
-### Phase G: museums and classrooms (kiosk done)
+### Phase G: museums and classrooms (done)
 
 - `construct build --kiosk`: a page that runs on its own on a museum screen or a classroom wall
-  (full screen, a label, an attract loop, touch to explore, sound after the first touch).
+  (full screen, a label, an attract loop, touch to explore, sound after the first touch);
+  `construct kiosk` a show of several; `?live=1` an exhibit that hears its room.
+- A run's counts as CSV and a citation of the run, from its How to read it panel.
+- Live in NetLogo: `construct:play` and `construct:sync`, the model in time with its track.
 - Next (1.2): two runs side by side for a lesson (parameter A against B), a printable "how to
-  read it" sheet, a run's record as CSV and a citable run record.
+  read it" sheet.
+
+### Phase H: music as a material (begun)
+
+- `construct song`: a track as a tower of sound (`--solid`: a body to print), a MIDI score around the
+  circle of fifths; Keyframe to Its Track in Blender for any construct with a clock and a track.
 
 ## Ideas (unordered)
 
