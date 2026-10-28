@@ -160,7 +160,8 @@ def _by_loudness(ring_paths, levels):
 
 
 def _clock(seconds):
-    return "%d:%02d" % (int(seconds) // 60, int(round(seconds)) % 60) if seconds >= 60 else "%.0f s" % seconds
+    s = int(round(seconds))
+    return "%d:%02d" % divmod(s, 60) if s >= 60 else "%d s" % s
 
 
 def scene_from_track(path, title=None, rings=56, solid=False):
@@ -168,6 +169,8 @@ def scene_from_track(path, title=None, rings=56, solid=False):
     path = Path(path)
     if not 16 <= rings <= 240:
         raise SongError("rings: 16 to 240 (each ring is 64 lines, and a construct holds 24,000)")
+    if solid and rings > 180:
+        raise SongError("--solid takes at most 180 rings (each adds 128 triangles; a construct holds 24,000)")
     samples = film_audio._decode(path)
     seconds = len(samples) / RATE
     levels = normalised(spectra(samples, rings))

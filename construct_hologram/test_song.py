@@ -154,6 +154,21 @@ class Score(unittest.TestCase):
             Path(d, "bad.mid").write_bytes(b"RIFF")
             with self.assertRaises(score.ScoreError):
                 score.read_midi(Path(d, "bad.mid"))
+            Path(d, "cut.mid").write_bytes(Path(d, "p.mid").read_bytes()[:60])   # cut short: a clear error
+            with self.assertRaises(score.ScoreError):
+                score.read_midi(Path(d, "cut.mid"))
+
+    def test_a_meter_change_and_the_clock(self):
+        from . import score
+        div = 480
+        meta = [(0, b"\xff\x51\x03" + (500000).to_bytes(3, "big")), (0, b"\xff\x58\x04\x03\x02\x18\x08"),
+                (4 * 3 * div, b"\xff\x58\x04\x04\x02\x18\x08")]   # a waltz, then 4/4 after four bars
+        mel = [e for i in range(24) for e in ((i * div, bytes([0x90, 60, 80])), (i * div + 200, bytes([0x80, 60, 0])))]
+        with tempfile.TemporaryDirectory() as d:
+            Path(d, "w.mid").write_bytes(b"MThd" + struct.pack(">IHHH", 6, 1, 2, div) + _track(meta) + _track(mel))
+            m = score.read_midi(Path(d, "w.mid"))
+        self.assertEqual((m["meter"], [round(x, 2) for x in m["bars"]]), ("3/4", [0.0, 1.5, 3.0, 4.5, 6.0, 8.0, 10.0]))
+        self.assertEqual((song._clock(119.6), song._clock(59.7), song._clock(12.4)), ("2:00", "1:00", "12 s"))
 
 
 if __name__ == "__main__":

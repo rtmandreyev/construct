@@ -47,11 +47,20 @@ def read_midi(path):
     hlen, fmt, ntrk, div = struct.unpack(">IHHH", data[4:14])
     if div & 0x8000:
         raise ScoreError("SMPTE-timed MIDI files are not read; save it with a tempo (ticks per beat)")
+    try:
+        return _read(data, hlen, fmt, ntrk, div, Path(path).name)
+    except (IndexError, struct.error, ValueError) as exc:
+        if isinstance(exc, ScoreError):
+            raise
+        raise ScoreError("%s is damaged or cut short" % Path(path).name)
+
+
+def _read(data, hlen, fmt, ntrk, div, name):
     i = 8 + hlen
-    events, tempos, meters, names = [], [(0, 500000)], [(0, 4, 4)], {}
+    events, tempos, meters, names = [], [(0, 500000)], [], {}
     for trk in range(ntrk):
         if data[i:i + 4] != b"MTrk":
-            raise ScoreError("track %d of %s is damaged" % (trk, Path(path).name))
+            raise ScoreError("track %d of %s is damaged" % (trk, name))
         n = struct.unpack(">I", data[i + 4:i + 8])[0]
         j, end, t, status = i + 8, i + 8 + n, 0, 0
         while j < end:
@@ -108,18 +117,21 @@ def read_midi(path):
             t0, v = held[key].pop(0)
             notes.append((seconds(t0), seconds(t), pitch, v, trk))
     if not notes:
-        raise ScoreError("%s has no notes" % Path(path).name)
+        raise ScoreError("%s has no notes" % name)
     length = max(n[1] for n in notes)
-    beats = sorted({0} | {tt for tt, _ in tempos})
-    meter = sorted(meters)[-1] if meters else (0, 4, 4)
-    bar_ticks = div * meter[1] * 4 // meter[2]
-    bars, tk = [], 0
-    while seconds(tk) <= length:
-        bars.append(seconds(tk))
-        tk += bar_ticks
+    # the bars, meter by meter (4/4 until the file says otherwise), never a bar shorter than a tick
+    meters = sorted({t: (t, n, d) for t, n, d in ([(0, 4, 4)] + sorted(meters))}.values())
+    bars = []
+    for k, (t0, num, den) in enumerate(meters):
+        t1 = meters[k + 1][0] if k + 1 < len(meters) else None
+        step = max(1, div * max(1, num) * 4 // max(1, den))
+        tk = t0
+        while (t1 is None or tk < t1) and seconds(tk) <= length:
+            bars.append(seconds(tk))
+            tk += step
     return {"notes": sorted(notes), "length": length, "bars": bars, "division": div, "format": fmt, "tracks": ntrk,
             "names": names,
-            "meter": "%d/%d" % (meter[1], meter[2]), "tempo": round(60e6 / tempos[0][1], 2)}
+            "meter": "%d/%d" % (meters[0][1], meters[0][2]), "tempo": round(60e6 / tempos[0][1], 2)}
 
 
 def _part(pid, label, role, paths, tone=None, weight=None, alpha=None):
@@ -166,12 +178,14 @@ def scene_from_midi(path, title=None, track=None):
     parts[0]["floating"] = False
     for k, (trk, paths) in enumerate(sorted(by_track.items(), key=lambda kv: -len(kv[1]))):
         name = m["names"].get(trk) or "Track %d" % (sorted(by_track).index(trk) + 1)
-        parts.append(_part("notes-track-%d" % trk, "%s: %d notes, each rising from its start to its end"
-                           % (name, len(paths)), "identity" if k == 0 else "data", paths,
-                           tone=TONES[k % len(TONES)], weight=1.0 if k == 0 else 0.8))
+        for c in range(0, len(paths), 4000):   # a shape holds 4,000 lines: a long part in pieces
+            parts.append(_part("notes-track-%d%s" % (trk, "-%d" % (c // 4000 + 1) if c else ""),
+                               "%s: %d notes, each rising from its start to its end" % (name, len(paths)),
+                               "identity" if k == 0 else "data", paths[c:c + 4000],
+                               tone=TONES[k % len(TONES)], weight=1.0 if k == 0 else 0.8))
     sha = hashlib.sha256(path.read_bytes()).hexdigest()
     title = title or path.stem
-    clock = lambda s: "%d:%02d" % (int(s) // 60, int(round(s)) % 60)
+    clock = lambda s: "%d:%02d" % divmod(int(round(s)), 60)
     facts = [{"key": "score", "value": path.name, "certainty": "verified", "source": "score"},
              {"key": "sha256", "value": sha, "certainty": "verified", "source": "score"},
              {"key": "notes", "value": len(notes), "certainty": "verified", "source": "score"},

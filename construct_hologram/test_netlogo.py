@@ -337,6 +337,9 @@ class Views(unittest.TestCase):
         next(p for p in moved["parts"] if p["id"] == "b-tracks-walkers")["shape"]["paths"][0][0][0] += 1
         self.assertIsNotNone(netlogo.lock_problem(moved))                    # the lock covers both runs
         self.assertTrue(all(a["text"].startswith(("seed 1:", "seed 2:")) for a in sc["annotations"]))
+        art = json.loads(json.dumps(sc))
+        art["sources"].append({"id": "runway-photo", "kind": "photo", "title": "Art", "rights": "permitted"})
+        self.assertIsNone(netlogo.lock_problem(art))                        # another source is not the runs' data
 
     def test_hidden_is_a_look_not_a_spread(self):
         run = netlogo.read_run(recording(Path(self.tmp.name, "hid.jsonl"), header={"turtle-vars": ["hidden?"]}))

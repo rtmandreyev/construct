@@ -66,38 +66,43 @@ def _db(ms):
     return 10 * math.log10(ms / 32768.0 ** 2 + 1e-12)
 
 
+def _frames(n, fps, sr=RATE):
+    """(start, end) of each whole frame of n samples at fps: frame i starts at round(i * sr / fps), so the
+    frames never drift from the sound, whatever the rate (a hop of sr // fps samples would run fast)."""
+    count = int(n * fps // sr)
+    return [(round(i * sr / fps), round((i + 1) * sr / fps)) for i in range(count)]
+
+
 def levels(samples, fps, sr=RATE):
     """Per frame: (loudness, high) in dBFS. Loudness is the frame's RMS level; high is the RMS level of the
     first difference x[n] - x[n-1], which weights the upper frequencies and the attacks."""
-    hop = sr // fps
     loud, high = [], []
     prev = 0
-    for i in range(0, len(samples) - hop + 1, hop):
-        seg = samples[i:i + hop]
-        ms = sum(x * x for x in seg) / hop
+    for a, b in _frames(len(samples), fps, sr):
+        seg = samples[a:b]
+        ms = sum(x * x for x in seg) / len(seg)
         dms = 0
         for x in seg:
             d = x - prev
             dms += d * d
             prev = x
         loud.append(_db(ms))
-        high.append(_db(dms / hop / 4.0))  # a first difference can be twice the signal's swing
+        high.append(_db(dms / len(seg) / 4.0))  # a first difference can be twice the signal's swing
     return loud, high
 
 
 def low_levels(samples, fps, sr=RATE, cutoff=150.0):
     """Per frame: the level in dBFS below about `cutoff` Hz (two one-pole low-passes in a row)."""
-    hop = sr // fps
     a = math.exp(-2 * math.pi * cutoff / sr)
     l1 = l2 = 0.0
     out = []
-    for i in range(0, len(samples) - hop + 1, hop):
+    for s, e_ in _frames(len(samples), fps, sr):
         e = 0.0
-        for x in samples[i:i + hop]:
+        for x in samples[s:e_]:
             l1 = a * l1 + (1 - a) * x
             l2 = a * l2 + (1 - a) * l1
             e += l2 * l2
-        out.append(_db(e / hop))
+        out.append(_db(e / (e_ - s)))
     return out
 
 
@@ -120,28 +125,28 @@ def kicks(low, fps):
     return out
 
 
-def band_levels(samples, hop, sr=RATE):
-    """Per hop: the level in dBFS of the low band (below about 250 Hz, a one-pole low-pass), the whole signal,
-    and the high band (the first difference)."""
+def band_levels(samples, rate, sr=RATE):
+    """Per short frame (`rate` a second): the level in dBFS of the low band (below about 250 Hz, a one-pole
+    low-pass), the whole signal, and the high band (the first difference)."""
     a = math.exp(-2 * math.pi * 250.0 / sr)
     lp, prev, out = 0.0, 0, []
-    for i in range(0, len(samples) - hop + 1, hop):
+    for s, e in _frames(len(samples), rate, sr):
         el = ef = eh = 0.0
-        for x in samples[i:i + hop]:
+        for x in samples[s:e]:
             lp = a * lp + (1 - a) * x
             d = x - prev
             prev = x
             el += lp * lp
             ef += x * x
             eh += d * d
-        out.append((_db(el / hop), _db(ef / hop), _db(eh / hop / 4.0)))
+        n = e - s
+        out.append((_db(el / n), _db(ef / n), _db(eh / n / 4.0)))
     return out
 
 
 def onsets(samples, fps, sr=RATE, sub=4):
     """Per video frame, the strongest attack in it (0..1, 0 for none); see the module docstring."""
-    hop = max(1, sr // (fps * sub))
-    bands = band_levels(samples, hop, sr)
+    bands = band_levels(samples, fps * sub, sr)
     n = len(bands)
     flux = [0.0] * n
     for h in range(4, n):
@@ -168,7 +173,7 @@ def onsets(samples, fps, sr=RATE, sub=4):
     for f, h in sorted(peaks, reverse=True):
         if all(abs(h - k) >= gap for _, k in kept):
             kept.append((f, h))
-    frames = len(samples) // (sr // fps) if fps else 0
+    frames = int(len(samples) * fps // sr) if fps else 0
     out = [0.0] * frames
     if kept:
         ref = _percentile([f for f, _ in kept], 0.9) or 1.0

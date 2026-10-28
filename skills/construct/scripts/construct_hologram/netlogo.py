@@ -914,8 +914,8 @@ def data_lock(scene, source=None):
     note)."""
     src = source or _locked_source(scene)
     ids = [s.get("id") for s in scene.get("sources", [])]
-    # a run's lock covers every run in the scene (two runs compared: run-a and run-b); a track's, the track
-    srcs = {i for i in ids if i == src or (src.startswith("run") and isinstance(i, str) and i.startswith("run"))} or {src}
+    # a lock covers its own source; two runs compared (run-a and run-b) are locked together
+    srcs = ({"run-a", "run-b"} & set(ids) if src in ("run-a", "run-b") else {src}) or {src}
     facts = sorted(({k: v for k, v in f.items() if k != "note"} for f in scene.get("facts", [])
                     if f.get("key") != LOCK and (f.get("source") in srcs or f.get("key") in LOCKED_FACTS)),
                    key=lambda f: f["key"])

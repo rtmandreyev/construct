@@ -822,6 +822,10 @@ def run(args):
             except (song_mod.SongError, score_mod.ScoreError, subprocess.CalledProcessError, OSError) as exc:
                 sys.stderr.write("song: %s\n" % exc)
                 return 1
+            problems = scene_mod.validate(sc)
+            if problems:   # never leave a scene that cannot be built
+                sys.stderr.write("song: the scene would not build: %s\n" % problems[0])
+                return 1
             _write(args.out, json.dumps(sc, separators=(",", ":"), ensure_ascii=False) + "\n", args.force)
             audio = args.audio if midi else args.track
             if audio:   # the track beside the scene, where its page plays it from
