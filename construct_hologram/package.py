@@ -71,9 +71,9 @@ if __name__ == "__main__":
 NOTICE = """{name} {version}
 Copyright 2026 {author}. Licensed under {license} (see LICENSE).
 
-Independently authored. Its look and construction grew out of NODE's Measured Light holograms
-(same author); its working method is inspired by Anatomy (github.com/wheresryan22/anatomy, MIT).
-No NODE or Anatomy code, fonts, shaders, assets or text are included. No third-party code,
+Independently authored. Its look and construction grew out of the author's earlier Measured
+Light holograms; its working method is inspired by Anatomy (github.com/wheresryan22/anatomy, MIT).
+No code, fonts, shaders, assets or text from either are included. No third-party code,
 fonts, models or datasets are bundled: the runtime is Python standard library, the viewer is
 plain WebGL2 using system fonts. Optional external programs it can call if already installed:
 a Chromium-family browser (captures) and ffmpeg (video); each keeps its own licence and is

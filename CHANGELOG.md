@@ -266,7 +266,7 @@ The first release as **Construct**, an independent MIT-licensed project.
   chooses another colour, through a host option (`build --palette`, `--identity`, or the viewer's
   `?palette=`). The examples no longer carry colour hints.
 - **Legibility:** thin or small mass and structure parts get a minimum visual weight.
-- **Docs:** README with pictures, `docs/ABOUT.md` (what it is, the Anatomy and NODE credits, how
+- **Docs:** README with pictures, `docs/ABOUT.md` (what it is, its credits, how
   to talk about it), `docs/USING.md` (every entry point, a worked example, costs and times),
   `docs/ARCHETYPES.md`, `docs/EVALUATION.md`, `CONTRIBUTING.md`; `scripts/docs_media.py` and
   `scripts/release_video.py` render the pictures and the release video.

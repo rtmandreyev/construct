@@ -55,12 +55,12 @@ assets or text from Anatomy are included. From Anatomy's `SKILL.md` and README:
   for small models, prompts for any host, MCP tools, and an OpenAI-compatible runner.
 - **A cross-model evaluation** with a scorer that needs no model ([EVALUATION.md](EVALUATION.md)).
 
-### NODE
+### Measured Light
 
-Construct's holographic look and construction method grew out of NODE's Measured Light
-holograms, by the same author, and the style keeps that name: see
-[The Measured Light style](STYLE.md). Construct is an independent re-creation: it contains no NODE
-code, fonts, shaders or assets.
+Construct's holographic look and construction method grew out of the author's earlier Measured
+Light holograms, and the style keeps that name: see [The Measured Light style](STYLE.md).
+Construct is an independent re-creation: it contains no code, fonts, shaders or assets from that
+work.
 
 ## How to talk about it
 

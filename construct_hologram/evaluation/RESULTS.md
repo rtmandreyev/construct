@@ -1,6 +1,6 @@
 # Cross-model evaluation, 2026-10-19
 
-Synthetic objects only (every name invented; no private data, no NODE source, no keys).
+Synthetic objects only (every name invented; no private data, no private source, no keys).
 
 ## Method
 

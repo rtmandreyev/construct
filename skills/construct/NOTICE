@@ -2,8 +2,8 @@ Construct
 Copyright (c) 2026 Artyom Andreyev. Licensed under the Apache License, Version 2.0 (see LICENSE);
 versions up to 0.3.0 were released under the MIT License.
 
-Independently authored. Its look and construction grew out of NODE's Measured Light holograms
-(same author); no NODE code, fonts, shaders or assets are included. Its working method is
+Independently authored. Its look and construction grew out of the author's earlier Measured
+Light holograms; no code, fonts, shaders or assets from that work are included. Its working method is
 inspired by Anatomy (github.com/wheresryan22/anatomy, MIT): no Anatomy code, assets or text
 are included.
 

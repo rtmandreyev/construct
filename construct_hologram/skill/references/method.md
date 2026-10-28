@@ -1,7 +1,7 @@
-# The method, and what it carries over from NODE
+# The method, and where it comes from
 
-This toolkit generalises the method used to build NODE's Measured Light places (an
-independent recreation: no NODE code, fonts or assets are included).
+This toolkit generalises the method its author used to build Measured Light holograms of
+real places (an independent recreation: no code, fonts or assets from that work are included).
 
 **facts → recognisable parts / construction sheet → deterministic construction →
 geometric audit → fixed-view and animation captures → visual critique → correction.**
@@ -21,13 +21,13 @@ What made it work, and how the skill keeps it:
 | Alive but calm; events, not constant motion | seeded idle events, `calm` life |
 | Reduced motion is a first-class state | `reduced_motion: still`, checked in review |
 
-NODE-specific concepts (acoustic places, listener seats, loudspeakers, measured
-positions) are deliberately absent: an arbitrary object has its own facts.
+Concepts specific to those places (listener seats, loudspeakers, measured positions) are
+deliberately absent: an arbitrary object has its own facts.
 
 ## Time budget
 
 Most time goes to research, facts and visual judgment, not JSON. With the vocabulary in hand
-a first scene takes minutes. NODE's places were finished when they were genuinely striking,
+a first scene takes minutes. Those places were finished when they were genuinely striking,
 not merely accurate; here that aim is bounded by a mode (fast, masterpiece, or unbounded
 when the user asks for it) whose limits are ceilings, never targets: see [effort](effort.md). Write down your facts and
 identity features before the first part.

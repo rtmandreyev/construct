@@ -46,7 +46,7 @@ critic can record "good" or "outstanding".
 
 ## The independent critic
 
-Fresh eyes, the method NODE's places were finished with. The critic is not the author: a
+Fresh eyes, the method the original places were finished with. The critic is not the author: a
 subagent, a delegated task or a second model call with a fresh context, which sees only the
 packet:
 

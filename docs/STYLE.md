@@ -5,8 +5,8 @@ smoked glass, built part by part in front of you, with every fact and part marke
 it is known. This page explains what you are looking at when you open a construct, and why it
 looks the way it does.
 
-The style grew out of the Measured Light holograms in the author's earlier NODE project.
-Construct is an independent re-creation of that look; it contains none of NODE's code.
+The style grew out of the author's earlier Measured Light holograms. Construct is an
+independent re-creation of that look; it contains none of that work's code.
 
 ## The look
 
