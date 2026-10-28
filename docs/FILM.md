@@ -135,8 +135,10 @@ the highest at the back, mirrored), rising with time from the floor to the top. 
 track changes section are drawn in the accent. `construct build scene.json --out out` makes its
 page, film mode by itself: the tower builds in time with the track, and the replay bar plays it
 (the track is copied beside the scene). Everything drawn comes from the analysis, under a data lock;
-`construct export scene.json --out tower.glb` takes it into Blender as tubes. `--rings` sets how many
-moments (56 by default), `--title` the name.
+`construct export scene.json --out tower.glb` takes it into Blender, where **Keyframe to Its Track**
+in the Construct panel keys the build in time with the track and adds it as a sound strip
+([the add-on](../hosts/blender/README.md#in-time-with-its-track)). `--rings` sets how many moments (56
+by default), `--title` the name.
 
 ## Choose the camera
 

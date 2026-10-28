@@ -434,6 +434,7 @@ def import_construct(path, wire_scale=1.0, metal=1.0, keep_animations=False, mat
     if not roots:
         raise ValueError("not a construct: no Construct root in %s" % os.path.basename(path))
     root = roots[0]
+    root["construct_file"] = os.path.abspath(path)   # where its track, if it has one, sits beside it
     lo, hi = [math.inf] * 3, [-math.inf] * 3
     for o in objects:
         if o.type == "MESH":
@@ -524,6 +525,59 @@ class CONSTRUCT_OT_animate(bpy.types.Operator):
         return {"FINISHED"}
 
 
+def fcurves(obj):
+    """An object's animation curves, in Blender 4 (action.fcurves) and 5 (an action's layers and slots)."""
+    ad = obj.animation_data
+    act = ad.action if ad else None
+    if act is None:
+        return []
+    if hasattr(act, "fcurves"):
+        return list(act.fcurves)
+    try:
+        from bpy_extras import anim_utils
+        bag = anim_utils.action_get_channelbag_for_slot(act, ad.action_slot)
+        return list(bag.fcurves) if bag else []
+    except (ImportError, AttributeError):
+        return []
+
+
+class CONSTRUCT_OT_keyframe_track(bpy.types.Operator):
+    """Keyframe the build in time with the construct's track (a song or a run recorded to music), and add the
+    track as a sound strip"""
+    bl_idname = "construct.keyframe_track"
+    bl_label = "Keyframe to Its Track"
+    bl_options = {"REGISTER", "UNDO"}
+
+    @classmethod
+    def poll(cls, context):
+        root = construct_root(context.active_object)
+        return root is not None and "music" in _info(root)
+
+    def execute(self, context):
+        root = construct_root(context.active_object)
+        m, sc = _info(root)["music"], context.scene
+        f0, fps = sc.frame_current, sc.render.fps / sc.render.fps_base
+        f1 = f0 + int(round(m["seconds"] * fps))
+        for frame, value in ((f0, m["build"][0]), (f1, m["build"][1])):
+            root["build"] = value
+            root.keyframe_insert('["build"]', frame=frame)
+        for fc in fcurves(root):
+            if fc.data_path == '["build"]':
+                for k in fc.keyframe_points:
+                    k.interpolation = "LINEAR"   # the build's front moves with the clock, never eased
+        sc.frame_end = max(sc.frame_end, f1 + 12)
+        track = os.path.join(os.path.dirname(root.get("construct_file", "")), m["track"])
+        if os.path.isfile(track):
+            ed = sc.sequence_editor_create()
+            strips = ed.strips if hasattr(ed, "strips") else ed.sequences
+            strips.new_sound(name=m["track"], filepath=track, channel=1, frame_start=f0)
+            self.report({"INFO"}, "Keyed the build over %.1f s with %s" % (m["seconds"], m["track"]))
+        else:
+            self.report({"WARNING"}, "Keyed the build over %.1f s; %s is not beside the file: add it as a sound strip "
+                                     "at frame %d" % (m["seconds"], m["track"], f0))
+        return {"FINISHED"}
+
+
 class CONSTRUCT_PT_panel(bpy.types.Panel):
     bl_label = "Construct"
     bl_space_type = "VIEW_3D"
@@ -544,6 +598,8 @@ class CONSTRUCT_PT_panel(bpy.types.Panel):
             col.prop(root, '["%s"]' % name, text=label, slider=name != "wire")
         col.separator()
         col.operator(CONSTRUCT_OT_animate.bl_idname, icon="KEY_HLT")
+        if "music" in info:
+            col.operator(CONSTRUCT_OT_keyframe_track.bl_idname, icon="SOUND")
         part = context.active_object
         if part is not root and "certainty" in _info(part):
             p = _info(part)
@@ -579,7 +635,8 @@ def _menu(self, context):
     self.layout.operator(CONSTRUCT_OT_import_run.bl_idname, text="NetLogo Run (.jsonl)")
 
 
-CLASSES = (CONSTRUCT_OT_import, CONSTRUCT_OT_import_run, CONSTRUCT_OT_animate, CONSTRUCT_PT_panel)
+CLASSES = (CONSTRUCT_OT_import, CONSTRUCT_OT_import_run, CONSTRUCT_OT_animate, CONSTRUCT_OT_keyframe_track,
+           CONSTRUCT_PT_panel)
 
 
 def register():

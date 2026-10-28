@@ -44,6 +44,14 @@ one; see [3D export](../../docs/EXPORT.md#a-material-map-the-finished-model)), t
 whether the construct starts as metal or light, and whether to keep the file's own `open` actions
 beside the Open control.
 
+### In time with its track
+
+A construct of a track (`construct song`) or of a NetLogo run recorded to music carries its clock
+into the glTF. Select it and press **Keyframe to Its Track** in the Construct panel: the build is
+keyed linearly over the track's length from the current frame, so each frame shows what the music
+has reached, and the track (beside the imported file) is added as a sound strip. Render it with any
+look the controls give, from the hologram to the finished model: a 3D visualiser of the music.
+
 ### A NetLogo run as a film
 
 **File → Import → NetLogo Run (.jsonl)** reads a recording from [Construct for
