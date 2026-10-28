@@ -647,6 +647,8 @@ def choose_view(run, exclude=()):
     if links:
         best = None
         for i, var in enumerate(h.get("turtle-vars", [])):
+            if var == "hidden?":   # being hidden is how a turtle is shown, not a spread
+                continue
             turned = {}
             for f in frames:
                 for r in f.get("turtles", []):

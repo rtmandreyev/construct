@@ -642,6 +642,8 @@ public class ConstructExtension extends DefaultClassManager {
       Object v = any.getVariable(w.turtlesOwnIndexOf(own.get(i)));
       if (v instanceof Boolean) turtleVars.add(own.get(i).toLowerCase());
     }
+    for (org.nlogo.api.Agent a : w.turtles().agents())   // a model that hides turtles (an unlit firefly): which, tick by tick
+      if (((Turtle) a).hidden()) { turtleVars.add("hidden?"); break; }
     reporterNames = new ArrayList<>(); reporters = new ArrayList<>();
     for (String b : scala.jdk.javaapi.CollectionConverters.asJava(w.program().breeds()).keySet()) {
       final org.nlogo.agent.AgentSet set = w.getBreed(b);

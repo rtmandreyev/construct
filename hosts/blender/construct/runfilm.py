@@ -89,6 +89,8 @@ def read(path):
     alive = np.zeros((T, N), dtype=bool)
     colour = np.zeros((T, N, 3), dtype=np.float32)
     has_z = False
+    vars_ = header.get("turtle-vars", [])
+    hid = 5 + vars_.index("hidden?") if "hidden?" in vars_ else None   # recorded when a model hides turtles
     for t, f in enumerate(frames):
         for row in f["turtles"]:
             i = col[row[0]]
@@ -96,6 +98,8 @@ def read(path):
             pos[t, i, 1] = (row[3] - (y0 + y1) / 2) * scale
             alive[t, i] = True
             colour[t, i] = netlogo_rgb(row[4])
+            if hid is not None and len(row) > hid and row[hid] is True:   # hidden in NetLogo: unlit here, barely there
+                colour[t, i] *= 0.12
             if header.get("zcor"):   # a NetLogo 3D run: the height last in each row, the floor at the world's bottom
                 has_z = True
                 pos[t, i, 2] = (row[-1] - w.get("min-pzcor", 0) + 0.5) * scale
@@ -188,10 +192,16 @@ def _emission(name, strength_attr=None):
     attr = nt.nodes.new("ShaderNodeAttribute")
     attr.attribute_name = "col"
     attr.attribute_type = "INSTANCER" if strength_attr is None else "GEOMETRY"
-    mix = nt.nodes.new("ShaderNodeMix")   # the colour, a little toward white: line light, not paint
-    mix.data_type = "RGBA"
-    mix.inputs["Factor"].default_value = 0.35
+    mix = nt.nodes.new("ShaderNodeMix")   # the colour, a little toward white (line light, not paint), as bright as
+    mix.data_type = "RGBA"                # it is: a dark turtle (an unlit firefly) stays dark
     mix.inputs["B"].default_value = (1, 1, 1, 1)
+    lum = nt.nodes.new("ShaderNodeRGBToBW")
+    toward = nt.nodes.new("ShaderNodeMath")
+    toward.operation = "MULTIPLY"
+    toward.inputs[1].default_value = 0.6
+    nt.links.new(attr.outputs["Color"], lum.inputs[0])
+    nt.links.new(lum.outputs[0], toward.inputs[0])
+    nt.links.new(toward.outputs[0], mix.inputs["Factor"])
     nt.links.new(attr.outputs["Color"], mix.inputs["A"])
     nt.links.new(mix.outputs["Result"], em.inputs["Color"])
     level = nt.nodes.new("ShaderNodeValue")

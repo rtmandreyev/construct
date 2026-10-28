@@ -283,6 +283,11 @@ class Views(unittest.TestCase):
         page, _ = render.build_html(scene.compile_scene(stock))
         self.assertNotIn("HOW TO READ IT", page)   # a construct that asks for nothing: the stock page
 
+    def test_hidden_is_a_look_not_a_spread(self):
+        run = netlogo.read_run(recording(Path(self.tmp.name, "hid.jsonl"), header={"turtle-vars": ["hidden?"]}))
+        view, opts, _ = netlogo.choose_view(run)   # the ring's links and a variable that turns: but it is hidden?
+        self.assertNotEqual(opts.get("state"), "hidden?")
+
     def test_a_run_with_music(self):
         from . import render
         d = Path(self.tmp.name)
