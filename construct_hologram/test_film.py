@@ -208,6 +208,7 @@ class Show(unittest.TestCase):
                                        "--each", "10"]), 0)
             index = Path(d, "index.html").read_text()
             self.assertIn('["1/construct.html", "2/construct.html"]', index)
+            self.assertIn("Touch to start", index)   # the first touch: full screen, and sound for its pages
             self.assertIn("Construct kiosk", Path(d, "2", "construct.html").read_text())
             if not CAPTURE:
                 return
@@ -217,10 +218,12 @@ class Show(unittest.TestCase):
                 b.open(render._url(str(Path(d, "1", "construct.html"))))
                 b.evaluate("location.href = %r" % render._url(str(Path(d, "index.html"))))
                 seen = []
-                for _ in range(14):
+                for _ in range(45):   # a page holds the show until it has assembled, then EACH seconds more
                     time.sleep(1)
                     seen.append(b.evaluate("(document.querySelector('iframe.on') || {getAttribute: () => null})"
                                            ".getAttribute('src')"))
+                    if seen[-1] and seen[-1].startswith("2/"):
+                        break
             finally:
                 b.close()
             self.assertEqual([s for i, s in enumerate(seen) if s and (i == 0 or s != seen[i - 1])][:2],

@@ -245,7 +245,8 @@ public class ConstructExtension extends DefaultClassManager {
               + ",\"reporters\":" + jsonList(reporterNames) + ",\"patch-reporter\":" + json(patchVar) + ",\"patch-every\":" + patchEvery
               + (track == null ? "" : ",\"music\":{\"track\":" + json(track.getName()) + ",\"path\":" + json(track.getAbsolutePath())
                   + ",\"sha256\":" + json(trackSha) + ",\"ticks-per-second\":" + tps + ",\"ticks\":" + musicTicks
-                  + ",\"features\":" + json(features.getName()) + "}") + "}\n");
+                  + ",\"features\":" + json(features.getName()) + ",\"features-path\":" + json(features.getAbsolutePath())
+                  + "}") + "}\n");
           headerDone = true;
         }
         StringBuilder s = new StringBuilder("{\"t\":").append(num(t));
@@ -509,6 +510,7 @@ public class ConstructExtension extends DefaultClassManager {
     }
     public void perform(Argument[] args, Context c) throws ExtensionException {
       String name = args[0].getString();
+      stopMusic();   // another track, or none: the one playing stops
       if (name.isEmpty()) { track = null; features = null; music = new HashMap<>(); musicTicks = 0; return; }
       int rate = args.length > 1 ? args[1].getIntValue() : 30;
       if (rate < 1 || rate > 120) throw new ExtensionException("construct:music: ticks a second is 1 to 120, not " + rate);
@@ -517,7 +519,10 @@ public class ConstructExtension extends DefaultClassManager {
         try { f = new File(c.attachCurrentDirectory(name)); } catch (IOException e) { /* as it is */ }
       }
       if (!f.isFile()) throw new ExtensionException("construct:music: there is no file " + f.getPath());
-      File out = new File(modelDir(c), slug(f.getName().replaceAll("\\.[^.]+$", "")) + "-audio-" + rate + ".json");
+      String sha;
+      try { sha = sha256(f); } catch (IOException e) { throw new ExtensionException("construct:music could not read " + f.getPath()); }
+      // keyed by the track's fingerprint: two different files of one name never share their features
+      File out = new File(modelDir(c), slug(f.getName().replaceAll("\\.[^.]+$", "")) + "-" + sha.substring(0, 8) + "-audio-" + rate + ".json");
       if (!out.isFile() || out.lastModified() < f.lastModified())
         run(List.of(python, "-m", "construct_hologram", "audio", f.getAbsolutePath(), "--fps", String.valueOf(rate),
             "--out", out.getPath()), out.getParentFile(), "construct:music");
@@ -534,7 +539,7 @@ public class ConstructExtension extends DefaultClassManager {
           for (int i = 0; i < xs.length; i++) v[i] = Double.parseDouble(xs[i].trim());
           m.put(key, v);
         }
-        trackSha = sha256(f);
+        trackSha = sha;
       } catch (IOException | NumberFormatException e) {
         throw new ExtensionException("construct:music could not read " + out.getPath() + ": " + e.getMessage());
       }
@@ -605,7 +610,9 @@ public class ConstructExtension extends DefaultClassManager {
           if (!p.waitFor(5, TimeUnit.MINUTES) || p.exitValue() != 0) throw new IOException("ffmpeg could not convert the track");
         }
         javax.sound.sampled.Clip cl = javax.sound.sampled.AudioSystem.getClip();
-        cl.open(javax.sound.sampled.AudioSystem.getAudioInputStream(wav));
+        try (javax.sound.sampled.AudioInputStream in = javax.sound.sampled.AudioSystem.getAudioInputStream(wav)) {
+          cl.open(in);   // the clip holds the sound; the file is free again (Windows locks open files)
+        }
         cl.setMicrosecondPosition((long) (playFrom * 1e6));
         cl.start();
         clip = cl;

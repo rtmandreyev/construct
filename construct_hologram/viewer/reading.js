@@ -166,7 +166,7 @@
     const bar = el("div", "rd-box rd-bar"), play = el("button", null, "▶"), range = el("input"), read = el("div", "rd-read");
     play.setAttribute("aria-label", music ? "Play the run with its music" : "Play the run");
     // the track beside the page; if it is not there (or cannot play), the run plays in silence at the track's pace
-    const audio = music && music.track ? new Audio(music.track) : null;
+    const audio = music && music.track ? new Audio(encodeURIComponent(music.track)) : null;   // a name with # ? % or spaces
     let heard = !!audio;
     if (audio) { audio.preload = "auto"; audio.addEventListener("error", () => { heard = false; }); }
     const hush = () => { if (audio && !audio.paused) audio.pause(); };

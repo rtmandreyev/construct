@@ -376,9 +376,13 @@ class Views(unittest.TestCase):
             wrong = json.loads(json.dumps(sc))
             wrong["reading"]["music"].update(bad)
             self.assertTrue(any("music" in e for e in scene.validate(wrong)), bad)
-        (d / "beat-audio-30.json").unlink()
+        elsewhere = d / "elsewhere"
+        elsewhere.mkdir()
+        (d / "beat-audio-30.json").rename(elsewhere / "beat-audio-30.json")
         with self.assertRaises(netlogo.NetLogoError):              # the features must travel with the run
             netlogo.scene_from_run(run, "space-time")
+        run["header"]["music"]["features-path"] = str(elsewhere / "beat-audio-30.json")
+        self.assertEqual(netlogo.scene_from_run(run, "space-time")["reading"]["music"]["seconds"], 0.4)   # or be named
 
     def test_the_view_the_data_suits(self):
         view, opts, _ = netlogo.choose_view(self.run)          # links, and infected? turned for some turtles

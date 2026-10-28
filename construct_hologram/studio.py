@@ -547,18 +547,30 @@ KIOSK_SHOW = """<!doctype html>
 <title>Construct: a show</title>
 <style>html, body { margin: 0; height: 100%; background: #050205; overflow: hidden; }
 iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; opacity: 0; transition: opacity 1.2s; }
-iframe.on { opacity: 1; }</style></head>
+iframe.on { opacity: 1; }
+#start { position: absolute; inset: 0; z-index: 2; display: grid; place-items: center; cursor: pointer; background: rgba(5,2,5,.55);
+  font: 500 13px "IBM Plex Mono", ui-monospace, monospace; letter-spacing: .2em; text-transform: uppercase; color: #d16bd0; }
+</style></head>
 <body>
+<div id="start">Touch to start</div>
 <script>
-// Construct kiosk show: each construct for EACH seconds, then the next, with a fade; a touch on a page holds it
-// until the page has gone untouched for EACH seconds again. Made by `construct kiosk`.
+// Construct kiosk show: each construct for EACH seconds, then the next, with a fade; a page holds the show while
+// it plays through once and while a visitor touches it. The first touch makes the show full screen and lets
+// its pages sound. Made by `construct kiosk`.
 const PAGES = __PAGES__, EACH = __EACH__ * 1000;
-let i = 0, since = performance.now();
+let i = 0, since = performance.now(), sound = false;
+const withSound = (u) => sound ? u + (u.includes("?") ? "&" : "?") + "sound=1" : u;
+document.getElementById("start").addEventListener("click", (e) => {
+  sound = true;
+  e.target.remove();
+  if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen().catch(() => {});
+  frames.forEach((f) => { if (f.contentWindow) f.contentWindow.postMessage({ construct: "sound" }, "*"); });
+});
 const frames = [0, 1].map(() => document.body.appendChild(document.createElement("iframe")));
 frames.forEach((f) => f.setAttribute("allow", "microphone; fullscreen; autoplay"));
 function show(k) {
   const next = frames[k % 2], last = frames[(k + 1) % 2];
-  next.src = PAGES[k % PAGES.length];
+  next.src = withSound(PAGES[k % PAGES.length]);
   next.onload = () => {   // once: blanking the last page loads it too
     next.onload = null;
     next.classList.add("on"); last.classList.remove("on");

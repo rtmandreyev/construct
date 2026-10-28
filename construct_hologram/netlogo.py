@@ -938,6 +938,8 @@ def _music(run):
     if not m:
         return None
     path = Path(run.get("dir") or ".") / m.get("features", "")
+    if not path.is_file() and m.get("features-path") and Path(m["features-path"]).is_file():
+        path = Path(m["features-path"])   # a run written away from its features
     doc = run.get("features")   # given with the recording (over MCP), else the file beside the run
     if not isinstance(doc, dict):
         try:

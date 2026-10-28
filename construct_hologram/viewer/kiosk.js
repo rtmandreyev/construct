@@ -11,7 +11,11 @@
  *
  * In a show (`construct kiosk`), it tells the show when it is touched, so the show waits while someone explores.
  *
- * URL parameters: hold, idle (seconds); kiosk=0 turns it off.
+ * In a show, it holds the show until it has played through once (its assembly, or a run's or a song's whole
+ * track), and the show, not the page, asks for full screen.
+ *
+ * URL parameters: hold, idle (seconds); sound=1 (play a run's music from the start, for a kiosk browser that
+ * allows sound without a touch, or a show that has been started); kiosk=0 turns it off.
  */
 (function () {
   "use strict";
@@ -53,7 +57,10 @@
     hint.textContent = "Touch to explore";
     overlay.append(label, hint);
 
-    let cycle = performance.now(), touched = -1e9, moved = performance.now(), sound = false;
+    const inShow = window.parent !== window;
+    let cycle = performance.now(), touched = -1e9, moved = performance.now(), sound = q.get("sound") === "1";
+    const opened = performance.now();
+    window.addEventListener("message", (e) => { if (e.data && e.data.construct === "sound") sound = true; });
     const replay = () => {
       cycle = performance.now();
       const play = document.querySelector(".rd-bar button");
@@ -72,7 +79,7 @@
       if (!sound) {
         sound = true;   // a touch lets the page play sound from now on
         const el = document.documentElement;
-        if (!document.fullscreenElement && el.requestFullscreen) el.requestFullscreen().catch(() => {});
+        if (!inShow && !document.fullscreenElement && el.requestFullscreen) el.requestFullscreen().catch(() => {});
       }
     };
     window.addEventListener("pointerdown", touch, true);
@@ -80,8 +87,13 @@
     window.addEventListener("keydown", (e) => { if (e.isTrusted) touch(); }, true);
     window.addEventListener("pointermove", () => { moved = performance.now(); document.body.classList.remove("still"); }, true);
 
+    if (sound && (window.HOLOGRAM_GEOMETRY.reading || {}).music) setTimeout(replay, 500);   // allowed to sound: with its track
     setInterval(() => {
       const t = performance.now();
+      if (inShow) {   // hold the show until this construct has played through once
+        const play = document.querySelector(".rd-bar button"), settled = (H.timeline().settled || 0) * 1000;
+        if (t - opened < settled + 1500 || (play && play.textContent === "❚❚")) window.parent.postMessage({ construct: "touch" }, "*");
+      }
       if (t - moved > 3000) document.body.classList.add("still");
       if (t - touched < IDLE * 1000) return;   // someone is exploring
       document.body.classList.remove("touched");
