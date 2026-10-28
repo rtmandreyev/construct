@@ -279,6 +279,30 @@ class ExamplesGallery(unittest.TestCase):
         self.assertIn("--films", r.stderr)
 
 
+class EveryImportShips(unittest.TestCase):
+    """Every module the command line reaches (studio.py's relative imports, and theirs) ships in the skill
+    package and in the Hermes skill, so no command fails with an ImportError there."""
+
+    def test_the_runtime_lists_hold_every_module_reached(self):
+        import re
+        import importlib.util
+        reached, todo = set(), ["studio.py", "__main__.py"]
+        while todo:
+            name = todo.pop()
+            if name in reached or not (HERE / name).is_file():
+                continue
+            reached.add(name)
+            src = (HERE / name).read_text(encoding="utf-8")
+            for group in re.findall(r"from \. import ([\w, ]+(?:\([^)]*\))?)", src):
+                todo += [m.strip().split(" as ")[0] + ".py" for m in group.strip("()").split(",") if m.strip()]
+            todo += [m + ".py" for m in re.findall(r"from \.(\w+) import", src)]
+        spec = importlib.util.spec_from_file_location("hs", HERE.parent / "scripts" / "hermes_submission.py")
+        hs = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(hs)
+        self.assertEqual(sorted(reached - set(package.RUNTIME_MODULES)), [])
+        self.assertEqual(sorted(reached - set(hs.RUNTIME)), [])
+
+
 class HermesHub(unittest.TestCase):
     """skills/construct/: the Hermes skill as `hermes skills install rtmandreyev/construct/skills/construct` fetches it."""
 

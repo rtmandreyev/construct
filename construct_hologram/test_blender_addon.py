@@ -183,9 +183,13 @@ def at(frame):
             [a.value for a in agents.data.attributes["alive"].data], [tuple(v.co) for v in trails.data.vertices])
 res["f7"], res["alive7"], _ = at(7)          # tick 2 at 10 ticks a second, 30 frames a second
 _, res["alive16"], trail = at(13)            # tick 4: the wrapped turtle's trail
-n = len(trail) // 3
+n = len(trail) // 4
 res["trail_step"] = max(sum((a - b) ** 2 for a, b in zip(trail[n + j], trail[n + j + 1])) ** 0.5 for j in range(n - 1))
 _, res["alive16"], _ = at(16)                # tick 5: the third turtle has died
+_, _, trail = at(12)                         # tick 3.67: the fourth, born at tick 3, trails back to its birth only
+n = len(trail) // 4
+born = trail[3 * n:4 * n]
+res["born_spread"] = max(sum((a - b) ** 2 for a, b in zip(born[0], q)) ** 0.5 for q in born)
 e = trails.evaluated_get(bpy.context.evaluated_depsgraph_get())
 res["tube_faces"] = len(e.data.polygons)
 ed = sc.sequence_editor
@@ -202,6 +206,8 @@ print("RESULT " + json.dumps(res))
                 turtles = [[0, "turtles", -6 + tick, 0, 45], [1, "turtles", (6 + tick + 8.5) % 17 - 8.5, 3, 15]]
                 if tick < 5:
                     turtles.append([2, "turtles", 0, -4, 105])
+                if tick >= 3:
+                    turtles.append([3, "turtles", 6, 6, 25])   # born at tick 3, far from the middle
                 rows.append({"t": tick, "turtles": turtles})
             rows.append({"end": 6})
             Path(d, "walk.jsonl").write_text("\n".join(json.dumps(r) for r in rows) + "\n", encoding="utf-8")
@@ -224,8 +230,9 @@ print("RESULT " + json.dumps(res))
         self.assertEqual(res["frames"], [1, 19])                                  # 0.6 s of run at 30 frames a second
         self.assertAlmostEqual(res["f7"][0][0], -4 * s, places=3)                # the walker at tick 2
         self.assertAlmostEqual(res["f7"][2][1], -4 * s, places=3)
-        self.assertEqual(res["alive7"], [1.0, 1.0, 1.0])
-        self.assertEqual(res["alive16"], [1.0, 1.0, 0.0])                         # the third has died
+        self.assertEqual(res["alive7"], [1.0, 1.0, 1.0, 0.0])                    # the fourth not yet born
+        self.assertEqual(res["alive16"], [1.0, 1.0, 0.0, 1.0])                    # the third has died
+        self.assertLess(res["born_spread"], 1e-3)                                 # no streak from where it never was
         self.assertLess(res["trail_step"], 5.0)                                   # the wrap never crosses the world
         self.assertGreater(res["tube_faces"], 0)
         self.assertEqual(res["sound"], 1)

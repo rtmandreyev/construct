@@ -103,11 +103,20 @@ def read(path):
             if header.get("zcor"):   # a NetLogo 3D run: the height last in each row, the floor at the world's bottom
                 has_z = True
                 pos[t, i, 2] = (row[-1] - w.get("min-pzcor", 0) + 0.5) * scale
+    # where an agent is not alive (before its birth, after its death), it keeps its nearest known place, so nothing
+    # is drawn where it never was; a change of alive is never interpolated (see _at)
+    last_alive = np.where(alive, np.arange(T)[:, None], -1)
+    np.maximum.accumulate(last_alive, axis=0, out=last_alive)
+    first_alive = alive.argmax(axis=0)
+    src = np.where(last_alive < 0, first_alive[None, :], last_alive)
+    cols = np.arange(N)[None, :]
+    pos, colour = pos[src, cols], colour[src, cols]
     data = {"header": header, "ticks": np.array([f["t"] for f in frames], dtype=np.float64), "pos": pos, "alive": alive,
             "colour": colour, "end": end, "size": ((x1 - x0) * scale, (y1 - y0) * scale), "jump": 0.5 * WORLD,
             "depth": (w.get("max-pzcor", 0) - w.get("min-pzcor", 0) + 1) * scale if header.get("zcor") else 0.0,
             "music": _music(header, os.path.dirname(path)), "has_z": has_z, "path": path}
-    _CACHE.clear()
+    for old in list(_CACHE)[:-3]:   # a few runs at once, each read once
+        del _CACHE[old]
     _CACHE[key] = data
     return data
 
@@ -145,7 +154,7 @@ def _at(data, tick):
     span = ticks[k2] - ticks[k]
     u = 0.0 if span <= 0 else float(np.clip((tick - ticks[k]) / span, 0, 1))
     a, b = data["pos"][k], data["pos"][k2]
-    far = np.linalg.norm(b - a, axis=1) > data["jump"]
+    far = (np.linalg.norm(b - a, axis=1) > data["jump"]) | (data["alive"][k] != data["alive"][k2])   # a wrap, a birth, a death
     p = a + (b - a) * u
     p[far] = (a if u < 0.5 else b)[far]
     return p, data["alive"][k] & (data["alive"][k2] | (u < 0.5)), k
@@ -160,10 +169,10 @@ def state(data, tick, trail_ticks):
     d[np.linalg.norm(d, axis=1) > data["jump"]] = 0
     trail = np.empty((TRAIL_POINTS, p.shape[0], 3), dtype=np.float32)
     trail[0] = p
-    stopped = np.zeros(p.shape[0], dtype=bool)   # once a trail meets a wrap, the rest of it stays there
+    stopped = np.zeros(p.shape[0], dtype=bool)   # once a trail meets a wrap or the agent's birth, it stays there
     for j in range(1, TRAIL_POINTS):
-        trail[j], _, _ = _at(data, max(data["ticks"][0], tick - trail_ticks * j / (TRAIL_POINTS - 1)))
-        stopped |= np.linalg.norm(trail[j] - trail[j - 1], axis=1) > data["jump"]
+        trail[j], was, _ = _at(data, max(data["ticks"][0], tick - trail_ticks * j / (TRAIL_POINTS - 1)))
+        stopped |= (np.linalg.norm(trail[j] - trail[j - 1], axis=1) > data["jump"]) | ~was
         trail[j][stopped] = trail[j - 1][stopped]
     return p, d, alive, data["colour"][k], trail
 
@@ -412,7 +421,11 @@ def update(sc, frame):
         try:
             data = read(info["path"])
         except (OSError, ValueError):
-            continue
+            beside = os.path.join(os.path.dirname(bpy.data.filepath or ""), os.path.basename(info["path"]))
+            try:   # a .blend moved with its recording beside it
+                data = read(beside)
+            except (OSError, ValueError):
+                continue
         tps = data["music"]["tps"] if data["music"] else 30.0
         seconds = (frame - info.get("start", 1)) / info.get("fps", sc.render.fps)
         tick = data["ticks"][0] + seconds * tps
@@ -494,7 +507,7 @@ def find_blender(given=None):
     import glob
     import shutil
     if given:
-        return given if os.path.isfile(given) else None
+        return given if os.path.isfile(given) else shutil.which(given)
     cands = [os.environ.get("CONSTRUCT_BLENDER"), shutil.which("blender"),
              "/Applications/Blender.app/Contents/MacOS/Blender",
              os.path.expanduser("~/Applications/Blender.app/Contents/MacOS/Blender"), "/usr/bin/blender", "/snap/bin/blender"]
