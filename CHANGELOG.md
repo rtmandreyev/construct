@@ -22,8 +22,9 @@ inside NetLogo. Plan: [ROADMAP.md](docs/ROADMAP.md#v11-models-come-alive).
   the track, which the replay bar plays), the track's fingerprint is under the data lock, and the
   track is copied beside the scene. `construct audio` gains `kick`: a pulse on each kick or bass
   hit, even over a held bass ([NETLOGO.md](docs/NETLOGO.md#5-music-optional)).
-- **A run as a film** (Blender): File > Import > NetLogo Run (.jsonl), or `scripts/run_film.py`
-  headless, draws a recording itself, every turtle at every tick as glowing light with a trail in
+- **A run as a film** (Blender): File > Import > NetLogo Run (.jsonl), `construct netlogo-film run.jsonl
+  --out film.mp4` (or `--blend`; it finds Blender), or `(construct:draw … "film" true)` in NetLogo
+  (`film.blend` beside the page), draws a recording itself, every turtle at every tick as glowing light with a trail in
   its own NetLogo colour, the world's edge as a line of light, bloom and an orbiting camera; a run
   recorded to music plays with its track at the run's clock, its light following the music. Nothing
   is sampled, so a long run of many agents loses nothing.

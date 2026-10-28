@@ -87,6 +87,9 @@ analysed once (with ffmpeg) into a small features file beside the run; NetLogo n
 | `construct:kick`, `construct:energy`, `construct:high`, `construct:hit` | the music at this tick, 0 to 1: a kick or bass hit (a pulse), the loudness, the brightness, the strongest attacks (0 after the track) |
 | `construct:music-time` | the seconds of the track at this tick |
 
+`construct:draw` options include `"model" true` (a 3D model of the run, `run.glb`, beside the page)
+and `"film" true` (the run as a film in Blender, `film.blend`, beside the page; needs Blender).
+
 Views: `"auto"` (the one the data suits: a network where a variable turned, patches that changed,
 two counts that move together, else the agents' paths), `"space-time"` (every turtle's path rising through time), `"network-time"` (the network
 on the floor, each turtle risen to when its state changed: `(construct:draw "network-time" "state"

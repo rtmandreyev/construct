@@ -355,7 +355,7 @@ public class ConstructExtension extends DefaultClassManager {
   }
 
   static final List<String> OPTIONS = List.of("state", "x", "z", "change", "time", "max-agents", "smooth", "levels", "resolution", "title", "art",
-      "model");
+      "model", "film");
 
   /** construct:draw "phase"   or   (construct:draw "network-time" "state" "infected?" "time" "sqrt")   or   (construct:draw "phase" "smooth" 25) */
   static class Draw implements Command {
@@ -367,7 +367,8 @@ public class ConstructExtension extends DefaultClassManager {
       if (args.length % 2 != 1) throw new ExtensionException("construct:draw takes a view, then option names and values in pairs");
       List<Object> pairs = new ArrayList<>();
       for (int i = 1; i < args.length; i++) pairs.add(args[i].get());
-      draw(args[0].getString(), pairs);
+      for (String line : draw(args[0].getString(), pairs).split("\n"))
+        if (line.contains("film")) say(c, "construct: " + line);
     }
   }
 
@@ -380,6 +381,7 @@ public class ConstructExtension extends DefaultClassManager {
       dir.mkdirs();
       List<String> draw = new ArrayList<>(List.of(python, "-m", "construct_hologram", "netlogo", file, "--view", view,
           "--out", new File(dir, "scene.json").getPath(), "--force"));
+      boolean film = false;
       for (int i = 0; i < pairs.size(); i += 2) {
         Object name = pairs.get(i), v = pairs.get(i + 1);
         if (!(name instanceof String) || !OPTIONS.contains(name))
@@ -389,11 +391,23 @@ public class ConstructExtension extends DefaultClassManager {
           if (value.equals("true")) { draw.add("--solid"); draw.add("--glb"); draw.add(new File(dir, "run.glb").getPath()); }
           continue;
         }
+        if (name.equals("film")) {   // ("film" true): the run as a film in Blender, film.blend beside the page
+          film = value.equals("true");
+          continue;
+        }
         draw.add("--" + name);
         draw.add(value);
       }
       String report = run(draw, dir);
       run(List.of(python, "-m", "construct_hologram", "build", new File(dir, "scene.json").getPath(), "--out", dir.getPath()), dir);
+      if (film) {   // a film needs Blender: without it, the construct is still drawn, and the reason said
+        try {
+          report += "\n" + run(List.of(python, "-m", "construct_hologram", "netlogo-film", file, "--blend",
+              new File(dir, "film.blend").getPath()), dir, "the film");
+        } catch (ExtensionException e) {
+          report += "\nno film: " + e.getMessage().replace("the film: netlogo-film: ", "");
+        }
+      }
       File page = new File(dir, "construct.html");
       if (!GraphicsEnvironment.isHeadless() && Desktop.isDesktopSupported()) {
         try { Desktop.getDesktop().browse(page.toURI()); } catch (Exception e) { /* the page is still there */ }

@@ -18,6 +18,7 @@ import json
 import os
 import re
 import shutil
+import subprocess
 import sys
 import tempfile
 from pathlib import Path
@@ -453,6 +454,17 @@ def add_commands(sub):
     p.add_argument("--frame", choices=("y-up", "z-up"), default="y-up", help="OBJ only (glTF is always Y up)")
     p.add_argument("--merge", action="store_true",
                    help="glTF: merge every part that does not move into one mesh per material (for game engines)")
+    p = sub.add_parser("netlogo-film", help="a NetLogo run as a film in Blender: every turtle as moving light, in "
+                                            "time with its track (needs Blender; docs/NETLOGO.md)")
+    p.add_argument("run", help="the recording (.jsonl)")
+    p.add_argument("--out", help="render the film to this .mp4 (with the run's track, if it has one)")
+    p.add_argument("--blend", help="save the film's scene as this .blend, to play or render in Blender")
+    p.add_argument("--size", default="1920x1080")
+    p.add_argument("--from", dest="start", type=float, default=0.0, help="seconds into the run to start at")
+    p.add_argument("--seconds", type=float, help="how long (default: the whole run)")
+    p.add_argument("--samples", type=int, default=16, help="EEVEE samples per frame")
+    p.add_argument("--trail", type=float, default=0.35, help="seconds of light trail behind each turtle")
+    p.add_argument("--blender", help="the Blender to run (default: $CONSTRUCT_BLENDER, `blender`, or the usual installs)")
     p = sub.add_parser("netlogo-instrument", help="a copy of a NetLogo model that records its run for Construct, "
                                                   "and a headless experiment (docs/NETLOGO.md)")
     p.add_argument("model", help="the model (.nlogox)")
@@ -504,7 +516,7 @@ def add_commands(sub):
 
 
 COMMANDS = ("new", "params", "expand", "prompts", "author", "trace", "trace-image", "terrain", "globe", "critique", "rounds", "compare", "loft-from-traces", "check", "build", "review",
-            "video", "audio", "export", "netlogo", "netlogo-instrument")
+            "video", "audio", "export", "netlogo", "netlogo-instrument", "netlogo-film")
 
 
 def run(args):
@@ -725,6 +737,36 @@ def run(args):
             paths = render.review(page_in(args.out), str(Path(args.out, "review")), w, h, sheets=sheets)
             sys.stdout.write("captured:\n  %s\n" % "\n  ".join(paths))
             return 0 if report["ok"] else 1
+        if args.command == "netlogo-film":
+            from . import runfilm
+            if not (args.out or args.blend):
+                sys.stderr.write("netlogo-film: --out film.mp4, --blend film.blend, or both\n")
+                return 1
+            blender = runfilm.find_blender(args.blender)
+            if not blender:
+                sys.stderr.write("netlogo-film: Blender was not found; install it (blender.org) or pass --blender PATH "
+                                 "(or set CONSTRUCT_BLENDER)\n")
+                return 1
+            job = {"root": str(Path(__file__).resolve().parent.parent), "run": str(Path(args.run).resolve()),
+                   "out": args.out and str(Path(args.out).resolve()), "blend": args.blend and str(Path(args.blend).resolve()),
+                   "size": args.size, "start": args.start, "seconds": args.seconds, "samples": args.samples,
+                   "trail": args.trail}
+            code = ("import sys, json; a = json.loads(sys.argv[sys.argv.index('--') + 1]); sys.path.insert(0, a.pop('root'))\n"
+                    "from construct_hologram import runfilm\n"
+                    "f = runfilm.render(**a); print('CONSTRUCT-FILM %d %d' % f)\n")
+            r = subprocess.run([blender, "-b", "--factory-startup", "--python-exit-code", "1", "--python-expr", code, "--",
+                                json.dumps(job)], capture_output=True, text=True, encoding="utf-8", errors="replace")
+            done = next((ln for ln in r.stdout.splitlines() if ln.startswith("CONSTRUCT-FILM ")), None)
+            if r.returncode or not done:
+                tail = (r.stderr or r.stdout).strip().splitlines()[-6:]
+                sys.stderr.write("netlogo-film: Blender failed:\n%s\n" % "\n".join(tail))
+                return 1
+            first, last = (int(x) for x in done.split()[1:])
+            for path, what in ((args.blend, "the film's scene: open it in Blender with the Construct add-on and press play"),
+                               (args.out, "the film")):
+                if path:
+                    sys.stdout.write("wrote %s: %s (frames %d to %d)\n" % (path, what, first, last))
+            return 0
         if args.command in ("netlogo", "netlogo-instrument"):
             from . import netlogo as nl
             try:

@@ -35,8 +35,7 @@ import mathutils
 from bpy.props import BoolProperty, FloatProperty, IntProperty, StringProperty
 from bpy_extras.io_utils import ImportHelper
 
-from . import runfilm
-from .construct_hologram import export as c_export, params as c_params, product as c_product
+from .construct_hologram import export as c_export, params as c_params, product as c_product, runfilm
 
 PROPS = (("build", 1.0, "Assembly: each part appears at its build phase"),
          ("open", 0.0, "Opens every joint, in its order groups"),

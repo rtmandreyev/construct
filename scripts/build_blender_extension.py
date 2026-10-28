@@ -22,7 +22,7 @@ sys.path.insert(0, str(ROOT))
 from construct_hologram import product  # noqa: E402
 
 ADDON = ROOT / "hosts" / "blender" / "construct"
-RUNTIME = ["product.py", "shapes.py", "scene.py", "archkit.py", "params.py", "tiers.py", "export.py"]
+RUNTIME = ["product.py", "shapes.py", "scene.py", "archkit.py", "params.py", "tiers.py", "export.py", "runfilm.py"]
 MANIFEST = """schema_version = "1.0.0"
 
 id = "construct"
@@ -40,14 +40,13 @@ copyright = ["2026 Artyom Andreyev"]
 [permissions]
 files = "Import construct scenes and models from disk"
 """
-RUNTIME_INIT = '"""The part of Construct the Blender add-on bundles: the scene compiler and the 3D export."""\n'
+RUNTIME_INIT = '"""The part of Construct the Blender add-on bundles: the scene compiler, the 3D export and the run film."""\n'
 
 
 def stage(into):
     """Lay out the extension's files in a folder."""
     into.mkdir(parents=True, exist_ok=True)
     shutil.copyfile(ADDON / "__init__.py", into / "__init__.py")
-    shutil.copyfile(ADDON / "runfilm.py", into / "runfilm.py")      # a NetLogo run as a film
     shutil.copyfile(ADDON.parent / "LICENSE", into / "LICENSE")   # the extension: GPL-3.0-or-later
     (into / "blender_manifest.toml").write_text(MANIFEST.format(version=product.VERSION, repo=product.REPO),
                                                 encoding="utf-8")

@@ -260,14 +260,18 @@ the light following the music. Nothing is sampled: a three-minute flock of 200 b
 for three minutes. NetLogo 3D runs fly at their recorded heights inside the world's box.
 ([hosts/blender](../hosts/blender/README.md#a-netlogo-run-as-a-film))
 
-```
-construct:music "track.mp3"
-construct:run
-```
+In NetLogo, `(construct:draw "auto" "film" true)` also writes `film.blend` beside the page: open it
+in Blender with the Construct add-on and press play (or render it). From the command line:
 
 ```sh
-blender -b --factory-startup --python scripts/run_film.py -- flocking-run.jsonl --out flocking.mp4
+construct netlogo-film flocking-run.jsonl --blend flocking.blend          # the scene, to play or render
+construct netlogo-film flocking-run.jsonl --out flocking.mp4 --size 1920x1080   # the film, with its track
 ```
+
+It finds Blender (`--blender`, `$CONSTRUCT_BLENDER`, `blender` on the PATH, or the usual installs)
+and runs it in the background; `--from` and `--seconds` take a part of the run, `--samples` sets
+EEVEE's quality, `--trail` the trails' length. Rendering a long film at full size takes a while
+(about a second a frame on a laptop GPU); the `.blend` is ready in seconds.
 
 ## How it was checked
 

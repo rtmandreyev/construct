@@ -692,6 +692,15 @@ class Extension(unittest.TestCase):
             frac = netlogo.read_run(Path(d, "f-run.jsonl"))
             self.assertEqual(([f["t"] for f in frac["frames"]][-3:], len(frac["frames"]), frac["end"]), ([1.5, 1.75, 2], 9, 2))
 
+            r = drive('setup construct:start "Film" construct:record', "repeat 6 [ go construct:record ]", "construct:finish",
+                      '(construct:draw "space-time" "film" true)')   # the run as a film: a .blend, if Blender is here
+            self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
+            from . import runfilm
+            if runfilm.find_blender():
+                self.assertTrue(Path(d, "film-construct", "film.blend").is_file(), r.stdout)
+                self.assertIn("film.blend", r.stdout)
+            else:
+                self.assertIn("no film: Blender was not found", r.stdout)
             r = drive("setup show construct:kick")
             self.assertIn('construct:music "track.mp3" first', r.stdout)
             if shutil.which("ffmpeg"):   # music: a tick is a moment of the track, and the run lasts it

@@ -1,5 +1,3 @@
-# SPDX-License-Identifier: GPL-3.0-or-later
-# Copyright (c) 2026 Artyom Andreyev
 
 """A NetLogo run as a film in Blender: every recorded turtle, tick by tick, as light that moves.
 
@@ -16,20 +14,22 @@ a turtle is placed on the straight line between its recorded places (never acros
 world). The frame handler moves the agents as the scene plays or renders; the objects carry the
 recording's path, so a saved .blend replays it wherever the add-on is installed.
 
-    from construct import runfilm
-    runfilm.build("flocking-run.jsonl")          # in Blender: File > Import > NetLogo run (.jsonl)
+    from construct_hologram import runfilm
+    runfilm.build("flocking-run.jsonl")          # in Blender: File > Import > NetLogo Run (.jsonl)
+
+It runs inside Blender (bpy and the NumPy Blender bundles); outside, importing it does nothing, so the
+rest of Construct stays standard library only. `construct netlogo-film` runs it in Blender for you.
 """
 
 import json
 import math
 import os
 
-import bpy
-
-try:
+try:   # only inside Blender
+    import bpy
     import numpy as np
-except ImportError:   # Blender always bundles NumPy; this module needs it
-    np = None
+except ImportError:
+    bpy = np = None
 
 WORLD = 10.0          # metres across the world's longer side, as a construct of a run draws it
 TRAIL_S = 0.35        # seconds of trail behind each turtle
@@ -455,16 +455,67 @@ def _materials_of(obj):
                 yield n.inputs["Material"].default_value
 
 
-@bpy.app.handlers.persistent
-def _on_frame(sc, *_):
-    update(sc, sc.frame_current)
+def render(run, out=None, blend=None, size="1920x1080", start=0.0, seconds=None, samples=16, trail=TRAIL_S):
+    """In Blender: a fresh scene with the run's film, saved as `blend` and/or rendered to `out` (an .mp4 with the
+    track, if the run has one). Returns the frame range."""
+    bpy.ops.wm.read_factory_settings(use_empty=True)
+    register()
+    sc = bpy.context.scene
+    build(run, sc, trail_seconds=trail)
+    w, h = (int(x) for x in str(size).lower().split("x"))
+    sc.render.resolution_x, sc.render.resolution_y, sc.render.resolution_percentage = w, h, 100
+    first = 1 + int(round(start * sc.render.fps))
+    sc.frame_start = first
+    if seconds:
+        sc.frame_end = first + int(round(seconds * sc.render.fps)) - 1
+    sc.eevee.taa_render_samples = samples
+    s = sc.render.image_settings
+    if hasattr(s, "media_type"):
+        s.media_type = "VIDEO"
+    s.file_format = "FFMPEG"
+    sc.render.ffmpeg.format = "MPEG4"
+    sc.render.ffmpeg.codec = "H264"
+    sc.render.ffmpeg.constant_rate_factor = "HIGH"
+    sc.render.ffmpeg.audio_codec = "AAC" if sc.sequence_editor else "NONE"
+    sc.render.ffmpeg.audio_bitrate = 192
+    if out:
+        sc.render.filepath = os.path.abspath(out)
+    if blend:
+        update(sc, sc.frame_start)
+        bpy.ops.wm.save_as_mainfile(filepath=os.path.abspath(blend))
+    if out:
+        bpy.ops.render.render(animation=True)
+    return sc.frame_start, sc.frame_end
+
+
+def find_blender(given=None):
+    """A Blender to run: the one given (None if it is not there), $CONSTRUCT_BLENDER, `blender` on the PATH, or
+    the usual installs."""
+    import glob
+    import shutil
+    if given:
+        return given if os.path.isfile(given) else None
+    cands = [os.environ.get("CONSTRUCT_BLENDER"), shutil.which("blender"),
+             "/Applications/Blender.app/Contents/MacOS/Blender",
+             os.path.expanduser("~/Applications/Blender.app/Contents/MacOS/Blender"), "/usr/bin/blender", "/snap/bin/blender"]
+    cands += sorted(glob.glob(r"C:\Program Files\Blender Foundation\Blender*\blender.exe"), reverse=True)
+    return next((c for c in cands if c and os.path.isfile(c)), None)
+
+
+_HANDLER = []
 
 
 def register():
-    if _on_frame not in bpy.app.handlers.frame_change_pre:
-        bpy.app.handlers.frame_change_pre.append(_on_frame)
+    """Move the run objects on every frame change (kept across file loads)."""
+    if not _HANDLER:
+        @bpy.app.handlers.persistent
+        def on_frame(sc, *_):
+            update(sc, sc.frame_current)
+        _HANDLER.append(on_frame)
+    if _HANDLER[0] not in bpy.app.handlers.frame_change_pre:
+        bpy.app.handlers.frame_change_pre.append(_HANDLER[0])
 
 
 def unregister():
-    if _on_frame in bpy.app.handlers.frame_change_pre:
-        bpy.app.handlers.frame_change_pre.remove(_on_frame)
+    if _HANDLER and _HANDLER[0] in bpy.app.handlers.frame_change_pre:
+        bpy.app.handlers.frame_change_pre.remove(_HANDLER[0])

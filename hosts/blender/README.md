@@ -61,14 +61,15 @@ of the world), and the trail stops where the turtle wrapped. A frame handler mov
 the scene plays or renders; the objects keep the recording's path, so a saved .blend replays it
 wherever the add-on is installed. Import options: the trail's length in seconds, and the camera.
 
-Headless, to a film with its sound:
+Headless, to a film with its sound, Construct's command line runs Blender for you:
 
 ```sh
-blender -b --factory-startup --python scripts/run_film.py -- flocking-run.jsonl --out flocking.mp4 --size 1920x1080
+construct netlogo-film flocking-run.jsonl --out flocking.mp4 --size 1920x1080
 ```
 
-`--from` and `--seconds` render a part of it, `--samples` sets EEVEE's quality, `--blend` also saves
-the scene.
+`--blend` saves the scene instead (or as well); `--from` and `--seconds` render a part of it,
+`--samples` sets EEVEE's quality. In NetLogo, `(construct:draw "auto" "film" true)` writes
+`film.blend` beside the construct. (Inside Blender, `scripts/run_film.py` does the same.)
 
 ## How it works
 
