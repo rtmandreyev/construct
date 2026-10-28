@@ -283,6 +283,15 @@ class Views(unittest.TestCase):
         page, _ = render.build_html(scene.compile_scene(stock))
         self.assertNotIn("HOW TO READ IT", page)   # a construct that asks for nothing: the stock page
 
+    def test_the_counts_as_csv_and_a_citation_on_the_page(self):
+        from . import render
+        csv = netlogo.counts_csv(self.run).splitlines()
+        self.assertEqual(csv[0], "tick,count prey,count predators,count walkers")
+        self.assertEqual((len(csv), csv[1].split(",")[0], csv[1].split(",")[-1]), (13, "0", "6"))
+        page, _ = render.build_html(scene.compile_scene(netlogo.scene_from_run(self.run, "phase")))
+        self.assertIn("DATA (CSV)", page)
+        self.assertIn("CITE THIS RUN", page)
+
     def test_hidden_is_a_look_not_a_spread(self):
         run = netlogo.read_run(recording(Path(self.tmp.name, "hid.jsonl"), header={"turtle-vars": ["hidden?"]}))
         view, opts, _ = netlogo.choose_view(run)   # the ring's links and a variable that turns: but it is hidden?

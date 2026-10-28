@@ -948,6 +948,23 @@ def music_track(run):
     return None
 
 
+def counts_csv(run):
+    """The run's counts at every record, as CSV: the clock, each tracked reporter, and each breed's turtles
+    (`count <breed>`, unless the model already reports it)."""
+    h, frames = run["header"], run["frames"]
+    clock = "step" if h.get("clock") == "steps" else "tick"
+    names = list(h.get("reporters", []))
+    breeds = [b for b in sorted({row[1] for f in frames for row in f.get("turtles", [])}) if "count %s" % b not in names]
+    cell = lambda x: '"%s"' % str(x).replace('"', '""') if any(ch in str(x) for ch in ',"\n') else str(x)
+    lines = [",".join(cell(x) for x in [clock] + names + ["count %s" % b for b in breeds])]
+    for f in frames:
+        rep = f.get("reporters") or []
+        vals = [("" if v is None else v) for v in (rep + [None] * len(names))[:len(names)]]
+        counts = [sum(1 for row in f.get("turtles", []) if row[1] == b) for b in breeds] if "turtles" in f else [""] * len(breeds)
+        lines.append(",".join(cell(x) for x in [f["t"]] + vals + counts))
+    return "\n".join(lines) + "\n"
+
+
 def _sampled(frames, n=300):
     """At most n frames, evenly by record, the first and last kept."""
     if len(frames) <= n:

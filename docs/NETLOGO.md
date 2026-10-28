@@ -155,6 +155,12 @@ for a network, how many turtles have the state now, and for a field, how many pa
 changed). The counts and the clock are the run's data, under the data lock like the parts; an art
 layer may reword the panel (`"reading": {"how": [...]}`) and nothing else of it.
 
+**For a spreadsheet or a report.** A run's **How to read it** panel offers its counts as CSV (as the
+replay shows them) and **Cite this run**: the model, NetLogo's version, the seed, the ticks, the
+track if any, Construct's version and the data lock, ready to paste. `construct netlogo … --csv
+counts.csv` writes the counts at every record from the recording itself (the clock, each tracked
+reporter, each breed's turtles).
+
 ## 3. Art direction (optional)
 
 The bridge's construct is exact but plain: no names on the axes, no milestones, one view. An

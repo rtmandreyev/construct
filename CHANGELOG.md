@@ -31,6 +31,9 @@ inside NetLogo. Plan: [ROADMAP.md](docs/ROADMAP.md#v11-models-come-alive).
 - **NetLogo 3D:** the extension records each turtle's height (last in its row, so 2D readers are
   unchanged) and the world's depth, and skips 3D patches; a NetLogo 3D model opens headless in the
   tests' driver. The film flies the turtles at their heights inside the world's box.
+- **For a spreadsheet or a report:** a run's *How to read it* panel offers its counts as CSV and a
+  citation of the run (model, NetLogo version, seed, ticks, track, Construct's version, data lock);
+  `construct netlogo … --csv` writes the counts at every record.
 - **Kiosk pages:** `construct build --kiosk` makes a page for a museum screen or a classroom wall:
   full screen, a label, an attract loop that replays the construct once it has settled, touch to
   explore, sound for a run with music after the first touch, the screen kept awake

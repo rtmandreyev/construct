@@ -502,6 +502,8 @@ def add_commands(sub):
     p.add_argument("--solid", action="store_true", help="add solids for a 3D model: each turtle as a sphere "
                    "(network-time), the cycle as a tube (phase), the change as a surface (field)")
     p.add_argument("--materials-out", help="also write a material map in the run's own NetLogo colours (for export)")
+    p.add_argument("--csv", help="also write the run's counts at every record as CSV (the clock, each reporter, each "
+                                 "breed's turtles), for a spreadsheet")
     p.add_argument("--glb", help="also export the 3D model (.glb: tubes, solids, the run's colours, the build)")
     p.add_argument("--art", help="an art-direction layer (art.json) on top of the data: views, emphasis, labels, "
                                  "milestones; never the data itself (docs/NETLOGO.md)")
@@ -830,6 +832,8 @@ def run(args):
                 if dest != track.resolve():
                     shutil.copyfile(track, dest)
                 sys.stdout.write("music: %s beside the scene; the replay plays it\n" % track.name)
+            if args.csv:
+                _write(args.csv, nl.counts_csv(run_data), args.force)
             if args.materials_out or args.glb:
                 mats = nl.materials_from_run(run_data, scene)
                 if args.materials_out:
