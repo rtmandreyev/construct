@@ -207,6 +207,20 @@ before work starts; what is fixed now is the direction:
   and on to the printer: STL and 3MF export, and a hand-off to a slicer and the printer.
 - **FreeCAD:** constructs in FreeCAD as parts with their names, sizes and joints, for engineering
   work and CAD formats (STEP).
+- **A simulation you can hold** (owner's idea, 28 October 2026): a printed miniature of a run that
+  shows its process in the physical world and assembles like a building set, for any model a construct
+  can draw. A construct of a run already has time as its height, so the general form is **a stack of
+  plates, one per moment**, numbered and keyed with pins to stack in order: assembling it replays the
+  run, and taking it apart steps back through time. Each view has a physical form:
+  - a spread on a network: a base plate with the network, and a pin for each node cut to the tick it
+    turned (set in order, the pins rise as the spread did);
+  - a field's fronts: stacked contour plates, like a topographic model;
+  - a cycle (phase): the rising loop as one printed tube on a stand;
+  - moving agents (time-lapse) and rhythms: one plate per slice, the arrows or the ring's dashes
+    standing up from it.
+  To work out: every line thickened to printable ribs (about 1 mm and up), plates that fit a common
+  bed, pin tolerances, the run's own colours by filament changes, and a printed key (what each plate
+  is, the model and its data lock), so a classroom set is honest about what it shows.
 
 ## Ideas (unordered)
 
