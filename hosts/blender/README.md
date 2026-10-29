@@ -44,21 +44,14 @@ one; see [3D export](../../docs/EXPORT.md#a-material-map-the-finished-model)), t
 whether the construct starts as metal or light, and whether to keep the file's own `open` actions
 beside the Open control.
 
-### In time with its track
-
-A construct of a track (`construct song`), or of a score with its audio (`construct song piece.mid
---track piece.mp3`), carries its clock into the glTF. Select it and press **Keyframe to Its Track**
-in the Construct panel: the build is keyed linearly over the track's length from the current frame,
-so each frame shows what the music has reached, and the track (beside the imported file) is added as
-a sound strip. Render it with any look the controls give, from the hologram to the finished model: a
-3D visualiser of the music.
-
 ### A NetLogo run as a film
 
 **File → Import → NetLogo Run (.jsonl)** reads a recording from [Construct for
 NetLogo](../netlogo/README.md) (`construct:run`, or `construct.nls`) and plays it as a film: every
 turtle at every tick as a small glowing arrowhead in its own NetLogo colour, pointing where it
-goes, with a light trail behind it; the world's edge as a line of light (a box, for a NetLogo 3D
+goes, with a light trail behind it; each link as a thin line of light between its two turtles while
+the recording has it; the patches as a floor of cells in their recorded colours; the world's edge as a
+line of light (a box, for a NetLogo 3D
 run, whose turtles fly at their own heights); bloom; and a camera that orbits slowly. The scene's
 frames span the run at 30 ticks a second, in a steady light, without sound.
 

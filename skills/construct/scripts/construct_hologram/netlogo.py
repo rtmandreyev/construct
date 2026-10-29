@@ -1186,7 +1186,7 @@ def _canon(v):
 
 
 def _locked_source(scene):
-    """The source the data lock covers: the lock fact's own (`run` for a NetLogo run, `track` for a song)."""
+    """The source the data lock covers: the lock fact's own (`run` for a NetLogo run, `run-a` for two compared)."""
     fact = next((f for f in scene.get("facts", []) if f.get("key") == LOCK), None)
     return (fact or {}).get("source") or "run"
 
@@ -1208,8 +1208,6 @@ def data_lock(scene, source=None):
     r = scene.get("reading") or {}
     if r.get("clock") or r.get("series"):   # the replay's clock and counts are the run's data too
         data["reading"] = {"clock": r.get("clock"), "series": r.get("series", [])}
-        if r.get("music"):   # and a song's or a score's track, by its fingerprint
-            data["reading"]["music"] = {k: r["music"].get(k) for k in ("track", "sha256", "ticks_per_second")}
     text = json.dumps(_canon(data), sort_keys=True, separators=(",", ":"), ensure_ascii=False)
     return "sha256:" + hashlib.sha256(text.encode("utf-8")).hexdigest()
 
@@ -1423,10 +1421,6 @@ def lock_problem(scene):
     fact = next((f for f in scene.get("facts", []) if f.get("key") == LOCK), None)
     if fact is None or fact.get("value") == data_lock(scene):
         return None
-    if _locked_source(scene) in ("track", "score"):
-        return ("the data drawn from the %s changed since `construct song` drew it (a part or fact with source "
-                "\"%s\", or the view or coordinates fact). Draw it again with `construct song`."
-                % ((_locked_source(scene),) * 2))
     return ("the data drawn from the NetLogo recording changed since the bridge drew it (a part, fact or source "
             "with source \"run\", or the view or coordinates fact). Restore them from `construct netlogo`; art "
             "direction may change only a data part's label, look and note, and adds its own parts and facts "

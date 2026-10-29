@@ -1317,7 +1317,7 @@
   "reading": {
    "type": "object",
    "additionalProperties": false,
-   "description": "Optional: how to read the construct (`how`), and for a construct of a run its clock (time to height, and `phase`: build phase = phase[0] * y + phase[1]) and counts over time (`series`), and for a song, or a score with its audio, the track and its features (`music`).",
+   "description": "Optional: how to read the construct (`how`), and for a construct of a run its clock (time to height, and `phase`: build phase = phase[0] * y + phase[1]) and counts over time (`series`).",
    "properties": {
     "how": {
      "type": "array",
@@ -1340,81 +1340,6 @@
     "series": {
      "type": "array",
      "maxItems": 6
-    },
-    "music": {
-     "type": "object",
-     "additionalProperties": false,
-     "description": "A song's or a score's track: the file beside the page, its SHA-256, the construct's clock (tick t at second t / ticks_per_second), its length, and the features the page's light follows.",
-     "required": [
-      "track",
-      "ticks_per_second",
-      "seconds",
-      "audio"
-     ],
-     "properties": {
-      "track": {
-       "type": "string"
-      },
-      "sha256": {
-       "type": "string"
-      },
-      "ticks_per_second": {
-       "type": "integer",
-       "minimum": 1,
-       "maximum": 120
-      },
-      "seconds": {
-       "type": "number"
-      },
-      "audio": {
-       "type": "object",
-       "required": [
-        "fps",
-        "energy",
-        "high",
-        "kick",
-        "onset"
-       ],
-       "additionalProperties": false,
-       "properties": {
-        "fps": {
-         "type": "integer"
-        },
-        "energy": {
-         "type": "array",
-         "items": {
-          "type": "number",
-          "minimum": 0,
-          "maximum": 1
-         }
-        },
-        "high": {
-         "type": "array",
-         "items": {
-          "type": "number",
-          "minimum": 0,
-          "maximum": 1
-         }
-        },
-        "kick": {
-         "type": "array",
-         "items": {
-          "type": "number",
-          "minimum": 0,
-          "maximum": 1
-         }
-        },
-        "onset": {
-         "type": "array",
-         "items": {
-          "type": "number",
-          "minimum": 0,
-          "maximum": 1
-         }
-        }
-       }
-      }
-     }
     }
    }
   }

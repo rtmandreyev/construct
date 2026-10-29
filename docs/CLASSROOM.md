@@ -3,7 +3,7 @@
 Construct's NetLogo tools are made to be taught with: a run of a model becomes something a student can
 turn around, replay tick by tick, compare and print. This page puts them in the order a lesson or an
 exhibit uses them. Everything runs on the teacher's computer, offline, with NetLogo 7 and Python 3.10
-or newer; a song needs ffmpeg, films need Blender.
+or newer; films need Blender.
 
 ## A lesson: what a parameter does (45 minutes)
 
@@ -35,17 +35,12 @@ construct whose data was changed after it was drawn, so what students read is wh
 
 ## An exhibit
 
-1. **Build the pieces.** Any construct: an object, a NetLogo run, a song (`construct song track.mp3`),
-   a score (`construct song piece.mid`).
-2. **A show.** `construct kiosk a.json b.json c.json --out show --each 90` makes `show/index.html`: full
-   screen after its first touch ("Touch to start"), each construct playing through once and then
-   staying 90 seconds, a visitor's touch holding the one they explore. Copy the folder to the exhibit's
-   computer and open `index.html` in its browser; it needs no network.
-3. **Listening.** `--live` makes every page react to the room's sound after the first touch: the light
-   follows the loudness and kicks pulse the glow. The sound is analysed in the page and never recorded
-   or sent.
-4. **A film for the screen in the lobby.** `construct netlogo-film run.jsonl --out film.mp4` renders a
+1. **A run to explore.** A construct's page, `construct.html`, is a single file that needs no network:
+   copy it to the exhibit's computer and open it in its browser.
+2. **A film for the screen in the lobby.** `construct netlogo-film run.jsonl --out film.mp4` renders a
    run as every agent in moving light, in Blender.
+
+Pages made for a museum screen, which loop by themselves and open to a touch, come in a later release.
 
 ## Credit
 

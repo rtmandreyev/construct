@@ -317,38 +317,6 @@ def loft_ring(w, y0, y1, wt=None, rnd=0.35, arc=3):
     return pts[:1 + arc * 2] + [pts[-1]] + pts[1 + arc * 2:-1]
 
 
-def rings_surface(rings, caps=True):
-    """A closed surface lofted through a stack of closed rings (each the same number of points, bottom to top),
-    capped at both ends: a sculpture or a vase. Faces point outward (checked by the enclosed volume's sign);
-    the first and last rings are its outline."""
-    m = Mesh()
-    rs = [[tuple(p) for p in r] for r in rings]
-    n = len(rs[0])
-    tris = []
-    for i in range(len(rs) - 1):
-        a, b = rs[i], rs[i + 1]
-        for j in range(n):
-            k = (j + 1) % n
-            tris.append((a[j], a[k], b[k]))
-            tris.append((a[j], b[k], b[j]))
-    if caps:
-        for ring, up in ((rs[0], False), (rs[-1], True)):
-            c = tuple(sum(p[q] for p in ring) / n for q in range(3))
-            for j in range(n):
-                k = (j + 1) % n
-                tris.append((c, ring[k], ring[j]) if up else (c, ring[j], ring[k]))
-
-    def volume(ts):   # six times the signed volume
-        return sum(a[0] * (b[1] * c[2] - b[2] * c[1]) - a[1] * (b[0] * c[2] - b[2] * c[0]) + a[2] * (b[0] * c[1] - b[1] * c[0])
-                   for a, b, c in ts)
-    if volume(tris) < 0:   # wound inward: turn every face over
-        tris = [(a, c, b) for a, b, c in tris]
-    m.tris.extend(tris)
-    m.loop(rs[0], OUTLINE)
-    m.loop(rs[-1], OUTLINE)
-    return m
-
-
 def loft(sections, rnd=0.35):
     """A body lofted along +Z through sections [z, half_width, y_bottom, y_top(, half_width_top)]:
     each section a rounded trapezoid, so the plan (half-widths along the length) and the side

@@ -60,13 +60,9 @@ Every command is `python3 construct_hologram/cli.py <command>`:
 | `video scene.json --out out/x.mp4 --seconds 12` | a video (needs ffmpeg) |
 | `audio track.wav --out audio.json [--voice stem.wav] [--scale track\|fixed]` | film mode: per-frame audio features ([FILM.md](FILM.md)) |
 | `video ... --assembly S --audio audio.json --sound track.wav [--camera tour\|steady\|still] [--reactivity 0..2]` | film mode: an assembly of S seconds shaped by the music, with the track in the video, and the camera you choose |
-| `kiosk a.json b.json --out show/ [--each 90] [--live]` | a show of kiosk pages for a museum screen, one after another |
-| `build scene.json --out out/ --kiosk` | a page for a museum screen or a classroom wall: full screen, a label, an attract loop ([USING.md](USING.md#on-a-museum-screen-or-a-classroom-wall)) |
 | `netlogo run.jsonl --view auto --out scene.json [--csv counts.csv] [--solid --glb run.glb]` | a construct of a NetLogo run, with its counts as CSV and a 3D model ([NETLOGO.md](NETLOGO.md)) |
-| `song piece.mid --out scene.json [--track piece.mp3]` | a MIDI file's score: every note a line of light, around the circle of fifths |
-| `song track.mp3 --out scene.json [--rings 56]` | a track as a tower of sound that builds in time with it ([FILM.md](FILM.md#a-song-as-a-construct)) |
 | `netlogo-compare a.jsonl b.jsonl --labels "A,B" --out scene.json` | two runs side by side, drawn the same way on one time scale |
-| `netlogo-film run.jsonl --out film.mp4 [--blend film.blend] [--from S --seconds S]` | the run as a film in Blender, every agent as moving light, in time with its track (needs Blender) |
+| `netlogo-film run.jsonl --out film.mp4 [--blend film.blend] [--from S --seconds S]` | the run as a film in Blender, every agent as moving light, at 30 ticks a second, silent (needs Blender) |
 | `build scene.json --out out/ --film` | a page that also carries film mode, for previewing `?assembly=`, `?audio=`, `?reactivity=` and `?camera=steady` |
 | `author "request" --base-url ... --model ... --key-env ...` | the whole loop with any OpenAI-compatible model |
 | `critique scene.json --reference view=photo.jpg` | a packet for an independent critic; `--record answer.json` records its answer |

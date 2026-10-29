@@ -262,8 +262,11 @@ import with each part a named object, and **Build** halfway shows the run halfwa
 
 A construct is the run's shape; a film is its motion. The Blender add-on imports a recording
 itself (**File → Import → NetLogo Run (.jsonl)**, or headless with `scripts/run_film.py`): every
-turtle at every tick as moving light with a trail, in its own colours, the world's edge as a line
-of light, played at 30 ticks a second in a steady light, without sound. Nothing is sampled: a
+turtle at every tick as moving light with a trail, in its own colours, each link as a thin line of
+light between its two turtles while the recording has it, the patches as a floor of cells in the
+patch reporter's colours (NetLogo's colours for a colour, else dark to bright over the run's range;
+at most 128 cells a side), the world's edge as a line of light, played at 30 ticks a second in a
+steady light, without sound. Nothing is sampled: a
 three-minute flock of 200 birds is 200 birds for three minutes. NetLogo 3D runs fly at their
 recorded heights inside the world's box.
 ([hosts/blender](../hosts/blender/README.md#a-netlogo-run-as-a-film))

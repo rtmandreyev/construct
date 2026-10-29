@@ -20,17 +20,6 @@
  *             strongest most, so a busy track still reads as accents rather than flicker
  *   voice     while a voice stem is present the hologram shimmers
  * It fetches the one features file named by ?audio and nothing else.
- *
- * A construct with its track (a scene whose reading carries `music`: a song, or a score with its audio) is
- * film mode with no URL parameters: the features are in the page, the build follows the construct's own
- * clock, a tick every 1/ticks-per-second of a second from the first moment (no ghost, no pacing, no stages),
- * so the viewer's time is the track's time; the light follows the energy, and every strong onset or kick
- * flares the build front.
- *
- * Live (?live=1): the room's sound instead of a track. After a touch or a key (a browser asks before it
- * listens), the microphone is analysed in the page, frame by frame, and never recorded or sent: the light
- * follows its loudness and each kick or clap pulses the glow of what is built. The assembly and the idle life
- * are the stock viewer's. With a kiosk page, an exhibit that hears its room.
  */
 (function () {
   "use strict";
@@ -38,18 +27,13 @@
   if (!HV) return;
   const q = new URLSearchParams(location.search);
   const clamp = (x, lo, hi) => Math.max(lo, Math.min(hi, x));
-  const G = window.HOLOGRAM_GEOMETRY || {}, R = G.reading || {};
-  const RUN = R.music && R.clock && R.clock.phase ? { tps: R.music.ticks_per_second, from: R.clock.from, to: R.clock.to } : null;
-  const LIVE = q.get("live") === "1";
   const FILM = {
-    run: RUN,
-    live: LIVE,
     assembly: q.has("assembly") ? clamp(parseFloat(q.get("assembly")) || 0, 0.2, 3600) : null,
     audio: q.get("audio"),
     steady: q.get("camera") === "steady",
     reactivity: q.has("reactivity") ? clamp(parseFloat(q.get("reactivity")) || 0, 0, 2) : 1,
   };
-  if (!FILM.assembly && !FILM.audio && !FILM.steady && !RUN && !LIVE) return;  // no film option: the stock viewer, untouched
+  if (!FILM.assembly && !FILM.audio && !FILM.steady) return;  // no film option: the stock viewer, untouched
   const P = HV.Hologram.prototype;
   const SCAN = 1, SHIMMER = 4;  // the viewer's event codes
   const SMOOTH_S = 2.0, ACCENT_S = 0.2, PACE = 4;
@@ -60,19 +44,13 @@
   P.assemblyTimes = function (authored) {
     // authored: the scene's own assembly, ignoring ?assembly=
     const at = ownTimes.call(this);
-    if (RUN && !authored && !this.opt.reduced) {   // the run's clock: the build starts at once and takes the track
-      const build = Math.max(0.2, (RUN.to - RUN.from) / RUN.tps);
-      return { ghost: 0, collapse: 0, build, settle: 0.4, end: build + 0.4 };
-    }
     if (authored || !FILM.assembly || !at.build) return at;
     const build = Math.max(0.2, FILM.assembly);
     return Object.assign({}, at, { build, end: at.ghost + at.collapse + build + at.settle });
   };
 
   // ------------------------------------------------------------------ the music
-  const live = { energy: 0, high: 0, accent: 0 };   // the room, now (live mode)
   P.audioAt = function (t) {
-    if (LIVE) return { energy: live.energy, high: live.high, voice: 0 };
     const a = this.audio, i = clamp(Math.round(t * a.fps), 0, a.energy.length - 1);
     return { energy: a.energy[i] || 0, high: (a.high && a.high[i]) || 0, voice: (a.voice && a.voice[i]) || 0 };
   };
@@ -81,7 +59,6 @@
     const at = this.assemblyTimes(), a = this.audio, r = FILM.reactivity, key = at.build + "/" + r;
     if (this._film && this._film.key === key) return this._film;
     const fps = a.fps, t0 = at.ghost + at.collapse, n = Math.max(2, Math.ceil(at.build * fps) + 1), i0 = Math.round(t0 * fps);
-    if (RUN) return (this._film = this.runCurve(key, fps, n));
     const E = new Float64Array(n);
     for (let i = 0; i < n; i++) E[i] = a.energy[clamp(i0 + i, 0, a.energy.length - 1)] || 0;
     // rank: where each frame's loudness stands among the build's frames (ties share their mean rank)
@@ -127,23 +104,6 @@
     this._film = { key, fps, n, p, env, sections: anchors.slice(1, -1).map(([j, pr]) => ({ t: t0 + j / fps, progress: pr })) };
     return this._film;
   };
-  P.runCurve = function (key, fps, n) {
-    // a run's build: at each frame, the height of the tick the music has reached (phase = a * y + b)
-    const c = R.clock, a = this.audio, p = new Float64Array(n), span = c.to - c.from;
-    for (let i = 0; i < n; i++) {
-      const f = clamp((i / fps) * RUN.tps / span, 0, 1);
-      p[i] = clamp(c.phase[0] * c.top * f + c.phase[1], 0, 1);
-    }
-    // accents: strong onsets and kicks flare at once and decay over about 0.2 s
-    const m = a.energy.length, env = new Float64Array(m), decay = Math.exp(-1 / (ACCENT_S * fps));
-    const floor = clamp(0.75 - 0.2 * FILM.reactivity, 0.2, 0.75);
-    for (let i = 0; i < m; i++) {
-      const o = (a.onset || [])[i] || 0, k = (a.kick || [])[i] || 0;
-      const hit = Math.max(o > floor ? Math.pow((o - floor) / (1 - floor), 1.5) : 0, k > 0.45 ? Math.pow((k - 0.45) / 0.55, 1.2) : 0);
-      env[i] = Math.max(hit, i ? env[i - 1] * decay : 0);
-    }
-    return { key, fps, n, p, env, sections: [] };
-  };
   P.filmBuild = function (tb) {
     const c = this.filmCurve();
     return c.p[clamp(Math.round(tb * c.fps), 0, c.n - 1)];
@@ -155,7 +115,6 @@
     return Math.min(this.assemblyTimes().build, lo / c.fps);
   };
   P.accentAt = function (t) {
-    if (LIVE) return live.accent;
     const c = this.filmCurve(), i = Math.round(t * c.fps);
     return i >= 0 && i < c.env.length ? c.env[i] : 0;
   };
@@ -180,7 +139,7 @@
   P.state = function (t) {
     const s = ownState.call(this, t), a = this.audio, r = FILM.reactivity;
     if (!a || r <= 0) return s;
-    const at = this.assemblyTimes(), t0 = at.ghost + at.collapse, building = !LIVE && at.build > 0 && t >= t0 && t < t0 + at.build;
+    const at = this.assemblyTimes(), t0 = at.ghost + at.collapse, building = at.build > 0 && t >= t0 && t < t0 + at.build;
     if (building) { const k = this.filmBuild(t - t0); s.build = k; s.scan = [k * 1.05, 0.6]; }
     const f = this.audioAt(t), accent = Math.min(1, r) * this.accentAt(t);
     s.globalAlpha *= clamp(1 + 0.4 * r * (2 * f.energy - 1), 0.15, 1.8) * (1 + 0.1 * accent);
@@ -203,7 +162,7 @@
     // its flight scaled with the build (at most 3x, and 12 s unless the scene's own is longer); after the
     // build it moves by as much as the assembly's end. A flight never runs into the next stop.
     const tour = this.geo.animation.camera.tour || [], at = this.assemblyTimes(), own = this.assemblyTimes(true);
-    const start = at.ghost + at.collapse, d = at.end - own.end, paced = !LIVE && this.audio && FILM.reactivity > 0;
+    const start = at.ghost + at.collapse, d = at.end - own.end, paced = this.audio && FILM.reactivity > 0;
     if ((!d && !paced) || !at.build) return tour;
     const ratio = at.build / own.build;
     const out = tour.map((s) => {
@@ -231,62 +190,11 @@
     const holo = window.HOLO && window.HOLO.hologram;
     if (!holo) return;
     holo.schedule = holo.buildSchedule();  // the idle life begins after the film's assembly
-    if (LIVE) { listen(holo); return; }
-    if (RUN && !FILM.audio) {   // the run's music is in the page
-      holo.audio = R.music.audio; holo._film = null; holo.schedule = holo.buildSchedule();
-      window.HOLO_AUDIO_READY = Promise.resolve(true);
-    } else if (FILM.audio) {
+    if (FILM.audio) {
       window.HOLO_AUDIO_READY = fetch(FILM.audio).then((res) => res.json())
         .then((a) => { holo.audio = a; holo._film = null; holo.schedule = holo.buildSchedule(); })
         .catch((e) => console.error("audio features:", e));
     }
   }
-  // ------------------------------------------------------------------ live: the room's sound
-  function listen(holo) {
-    holo.audio = { fps: 30, energy: [0] };   // film mode on; the values come from the microphone
-    const overlay = document.getElementById("overlay") || document.body;
-    const tag = document.createElement("div");
-    tag.style.cssText = "position:absolute;left:20px;top:20px;font:500 10px 'IBM Plex Mono',monospace;letter-spacing:.16em;" +
-      "color:#d16bd0;pointer-events:none;text-transform:uppercase";
-    tag.textContent = "Touch to listen";
-    overlay.appendChild(tag);
-    let started = false;
-    const begin = () => {
-      if (started || !navigator.mediaDevices) return;
-      started = true;
-      navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: false, noiseSuppression: false, autoGainControl: false } })
-        .then((stream) => {
-          const ctx = new (window.AudioContext || window.webkitAudioContext)();
-          const an = ctx.createAnalyser();
-          an.fftSize = 2048; an.smoothingTimeConstant = 0;
-          ctx.createMediaStreamSource(stream).connect(an);
-          const wave = new Float32Array(an.fftSize), spec = new Float32Array(an.frequencyBinCount);
-          const hz = ctx.sampleRate / an.fftSize, lowBins = Math.max(1, Math.round(150 / hz)), highFrom = Math.round(4000 / hz);
-          let lowAvg = -90, last = performance.now();
-          tag.textContent = "Listening · on this device only";
-          const step = () => {
-            const now = performance.now(), dt = Math.min(0.1, (now - last) / 1000); last = now;
-            an.getFloatTimeDomainData(wave);
-            let ms = 0; for (let i = 0; i < wave.length; i++) ms += wave[i] * wave[i];
-            const db = 10 * Math.log10(ms / wave.length + 1e-12), e = clamp((db + 55) / 40, 0, 1);
-            live.energy += (e - live.energy) * (e > live.energy ? 0.3 : 0.05);
-            an.getFloatFrequencyData(spec);
-            let low = 0; for (let i = 1; i <= lowBins; i++) low += Math.pow(10, spec[i] / 10);
-            let high = 0; for (let i = highFrom; i < spec.length; i++) high += Math.pow(10, spec[i] / 10);
-            const lowDb = 10 * Math.log10(low / lowBins + 1e-12), highDb = 10 * Math.log10(high / (spec.length - highFrom) + 1e-12);
-            live.high += (clamp((highDb + 90) / 50, 0, 1) - live.high) * 0.3;
-            const kick = clamp((lowDb - lowAvg - 3) / 6, 0, 1);   // the low end jumping above its last half second
-            lowAvg += (lowDb - lowAvg) * Math.min(1, dt / 0.5);
-            live.accent = Math.max(kick, live.accent * Math.exp(-dt / ACCENT_S));
-            requestAnimationFrame(step);
-          };
-          requestAnimationFrame(step);
-        })
-        .catch(() => { started = false; tag.textContent = "No microphone: touch to try again"; });
-    };
-    window.addEventListener("pointerdown", begin, true);
-    window.addEventListener("keydown", begin, true);
-  }
-
   if (window.HOLO) start(); else document.addEventListener("DOMContentLoaded", start);
 })();

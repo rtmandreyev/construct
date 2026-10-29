@@ -29,7 +29,7 @@ PKG = ROOT / "construct_hologram"
 HERE = ROOT / "scripts" / "hermes_submission"
 RUNTIME = ["__init__.py", "__main__.py", "product.py", "hologram.py", "scene.py", "shapes.py", "audit.py", "prompts.py",
            "diagnose.py", "params.py", "render.py", "studio.py", "png.py", "trace.py", "terrain.py", "tiers.py", "globe.py", "critic.py", "compare.py", "archkit.py", "rounds.py", "runner.py", "film_audio.py", "export.py",
-           "netlogo.py", "runfilm.py", "song.py", "score.py", "construct.nls"]
+           "netlogo.py", "runfilm.py", "construct.nls"]
 # the examples the skill's references cite, and the one its test needs (case-jewel); a skill over ~50
 # files draws a scanner notice, so only these ship
 EXAMPLES = ["cd.json", "book.json", "lighthouse.json", "castle.json", "case-jewel.params.json",
@@ -63,7 +63,7 @@ def build(out):
     (rt / "viewer").mkdir(parents=True)
     for m in RUNTIME:
         shutil.copyfile(PKG / m, rt / m)
-    for v in ("hologram.js", "film.js", "reading.js", "kiosk.js", "template.html"):
+    for v in ("hologram.js", "film.js", "reading.js", "template.html"):
         shutil.copyfile(PKG / "viewer" / v, rt / "viewer" / v)
     (rt / "examples" / "v2").mkdir(parents=True, exist_ok=True)
     for e in ("case-jewel.params.json", "book.json"):  # the prompts quote these (critique, author, prompts)

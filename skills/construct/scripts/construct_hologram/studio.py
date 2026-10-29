@@ -112,7 +112,7 @@ def load(path):
 
 
 def build(scene_path, out_dir, asset_root=None, v1=False, force=True, frame="y-up", palette=None, identity=None,
-          film=False, kiosk=False):
+          film=False):
     scene = load(scene_path)
     geometry = scene_mod.compile_scene(scene)
     if palette or identity:  # the person's choice, never the model's
@@ -122,7 +122,7 @@ def build(scene_path, out_dir, asset_root=None, v1=False, force=True, frame="y-u
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)
     root = asset_root or str(Path(scene_path).resolve().parent)
-    html, notes = render.build_html(geometry, root, film=film, kiosk=kiosk)
+    html, notes = render.build_html(geometry, root, film=film)
     _write(out / "geometry.json", json.dumps(geometry, separators=(",", ":")) + "\n", force)
     _write(out / "construct.html", html, force)
     _write(out / "audit.json", json.dumps(report, indent=2) + "\n", force)
@@ -406,8 +406,6 @@ def add_commands(sub):
                    help="also write geometry.z-up.json for consumers with a Z-up object frame")
     p.add_argument("--palette", choices=scene_mod.PALETTES, help="a colour the person chose (the default is the house palette)")
     p.add_argument("--identity", choices=scene_mod.IDENTITIES, help="an identity tint the person chose")
-    p.add_argument("--kiosk", action="store_true", help="a page for a museum screen or a classroom wall: full "
-                   "screen, a label, an attract loop that replays it, touch to explore (viewer/kiosk.js; ?hold=, ?idle=)")
     p.add_argument("--film", action="store_true", help="also embed film mode, for ?assembly=, ?audio=, ?reactivity= "
                                                         "and ?camera=steady (docs/FILM.md)")
     p = sub.add_parser("review", help="build, then capture contact sheets and stills")
@@ -454,21 +452,6 @@ def add_commands(sub):
     p.add_argument("--frame", choices=("y-up", "z-up"), default="y-up", help="OBJ only (glTF is always Y up)")
     p.add_argument("--merge", action="store_true",
                    help="glTF: merge every part that does not move into one mesh per material (for game engines)")
-    p = sub.add_parser("kiosk", help="a show for a museum screen: several constructs as kiosk pages, one after another")
-    p.add_argument("scenes", nargs="+", help="the scenes (scene.json), in order; a track beside a scene goes with it")
-    p.add_argument("--out", required=True, help="the show's folder (index.html, and a folder for each construct)")
-    p.add_argument("--each", type=float, default=90, help="seconds on each construct when nobody touches it (default 90)")
-    p.add_argument("--live", action="store_true", help="every page listens to the room (?live=1)")
-    p = sub.add_parser("song", help="a track as a construct (a tower of sound that builds in time with it; needs ffmpeg), "
-                                    "or a MIDI file's score (every note a line of light)")
-    p.add_argument("track", help="the track (any format ffmpeg reads), or a MIDI file (.mid)")
-    p.add_argument("--track", dest="audio", help="for a MIDI file: the piece as audio, to build in time with and play")
-    p.add_argument("--out", required=True, help="the scene (scene.json); the track is copied beside it")
-    p.add_argument("--rings", type=int, default=56, help="moments of the track, one ring each (16 to 240)")
-    p.add_argument("--solid", action="store_true", help="a track: also the tower as a closed body through its rings, "
-                                                         "for Blender or a 3D print (construct export ... --out tower.obj)")
-    p.add_argument("--title", help="the construct's title (default: the file's name)")
-    p.add_argument("--force", action="store_true")
     p = sub.add_parser("netlogo-compare", help="two NetLogo runs side by side, drawn the same way on one time scale "
                                                "(a slider moved, another seed)")
     p.add_argument("run_a")
@@ -545,52 +528,8 @@ def add_commands(sub):
                    help="track (default): each track mapped to its own loudness range; fixed: the older -40..-10 dB window")
 
 
-KIOSK_SHOW = """<!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Construct: a show</title>
-<style>html, body { margin: 0; height: 100%; background: #050205; overflow: hidden; }
-iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; opacity: 0; transition: opacity 1.2s; }
-iframe.on { opacity: 1; }
-#start { position: absolute; inset: 0; z-index: 2; display: grid; place-items: center; cursor: pointer; background: rgba(5,2,5,.55);
-  font: 500 13px "IBM Plex Mono", ui-monospace, monospace; letter-spacing: .2em; text-transform: uppercase; color: #d16bd0; }
-</style></head>
-<body>
-<div id="start">Touch to start</div>
-<script>
-// Construct kiosk show: each construct for EACH seconds, then the next, with a fade; a page holds the show while
-// it plays through once and while a visitor touches it. The first touch makes the show full screen and lets
-// its pages sound. Made by `construct kiosk`.
-const PAGES = __PAGES__, EACH = __EACH__ * 1000;
-let i = 0, since = performance.now(), sound = false;
-const withSound = (u) => sound ? u + (u.includes("?") ? "&" : "?") + "sound=1" : u;
-document.getElementById("start").addEventListener("click", (e) => {
-  sound = true;
-  e.target.remove();
-  if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen().catch(() => {});
-  frames.forEach((f) => { if (f.contentWindow) f.contentWindow.postMessage({ construct: "sound" }, "*"); });
-});
-const frames = [0, 1].map(() => document.body.appendChild(document.createElement("iframe")));
-frames.forEach((f) => f.setAttribute("allow", "microphone; fullscreen; autoplay"));
-function show(k) {
-  const next = frames[k % 2], last = frames[(k + 1) % 2];
-  next.src = withSound(PAGES[k % PAGES.length]);
-  next.onload = () => {   // once: blanking the last page loads it too
-    next.onload = null;
-    next.classList.add("on"); last.classList.remove("on");
-    setTimeout(() => { if (!last.classList.contains("on")) { last.onload = null; last.src = "about:blank"; } }, 1500);
-  };
-  since = performance.now();
-}
-window.addEventListener("message", (e) => { if (e.data && e.data.construct === "touch") since = performance.now(); });
-show(0);
-if (PAGES.length > 1) setInterval(() => { if (performance.now() - since > EACH) { i += 1; show(i); } }, 1000);
-</script>
-</body></html>
-"""
-
-
 COMMANDS = ("new", "params", "expand", "prompts", "author", "trace", "trace-image", "terrain", "globe", "critique", "rounds", "compare", "loft-from-traces", "check", "build", "review",
-            "video", "audio", "export", "netlogo", "netlogo-instrument", "netlogo-film", "netlogo-compare", "song", "kiosk")
+            "video", "audio", "export", "netlogo", "netlogo-instrument", "netlogo-film", "netlogo-compare")
 
 
 def run(args):
@@ -799,8 +738,7 @@ def run(args):
             return 0 if report["ok"] else 1
         if args.command == "build":
             _, report, text = build(args.scene, args.out, args.asset_root, args.v1, frame=args.frame,
-                                    palette=args.palette, identity=args.identity, film=args.film,
-                                    kiosk=args.kiosk)
+                                    palette=args.palette, identity=args.identity, film=args.film)
             sys.stdout.write(text + "\nwrote %s\n" % Path(args.out, "construct.html"))
             return 0 if report["ok"] else 1
         if args.command == "review":
@@ -811,52 +749,6 @@ def run(args):
             paths = render.review(page_in(args.out), str(Path(args.out, "review")), w, h, sheets=sheets)
             sys.stdout.write("captured:\n  %s\n" % "\n  ".join(paths))
             return 0 if report["ok"] else 1
-        if args.command == "kiosk":
-            out = Path(args.out)
-            out.mkdir(parents=True, exist_ok=True)
-            pages = []
-            for i, sp in enumerate(args.scenes, 1):
-                d = out / str(i)
-                build(sp, d, kiosk=True)
-                sc = load(sp)
-                track = ((sc.get("reading") or {}).get("music") or {}).get("track")
-                if track and (Path(sp).resolve().parent / track).is_file():   # its track goes with it
-                    shutil.copyfile(Path(sp).resolve().parent / track, d / track)
-                pages.append("%d/construct.html%s" % (i, "?live=1" if args.live else ""))
-            (out / "index.html").write_text(KIOSK_SHOW.replace("__PAGES__", json.dumps(pages)).replace(
-                "__EACH__", "%g" % max(10.0, args.each)), encoding="utf-8")
-            sys.stdout.write("wrote %s: %d constructs, %g s each; open it full screen on the exhibit's browser\n"
-                             % (out / "index.html", len(pages), max(10.0, args.each)))
-            return 0
-        if args.command == "song":
-            from . import score as score_mod, song as song_mod
-            midi = Path(args.track).suffix.lower() in (".mid", ".midi")
-            try:
-                sc = (score_mod.scene_from_midi(args.track, args.title, args.audio) if midi
-                      else song_mod.scene_from_track(args.track, args.title, args.rings, args.solid))
-            except (song_mod.SongError, score_mod.ScoreError, subprocess.CalledProcessError, OSError) as exc:
-                sys.stderr.write("song: %s\n" % exc)
-                return 1
-            problems = scene_mod.validate(sc)
-            if problems:   # never leave a scene that cannot be built
-                sys.stderr.write("song: the scene would not build: %s\n" % problems[0])
-                return 1
-            _write(args.out, json.dumps(sc, separators=(",", ":"), ensure_ascii=False) + "\n", args.force)
-            audio = args.audio if midi else args.track
-            if audio:   # the track beside the scene, where its page plays it from
-                dest = Path(args.out).resolve().parent / Path(audio).name
-                if dest != Path(audio).resolve():
-                    shutil.copyfile(audio, dest)
-            if midi:
-                sys.stdout.write("wrote %s: %d notes, %s%s\n" % (args.out, next(f["value"] for f in sc["facts"] if f["key"] == "notes"),
-                                 sc["reading"]["how"][0].split(", ")[-1].rstrip("."),
-                                 "; the track beside it" if audio else ""))
-                return 0
-            g = scene_mod.compile_scene(sc)
-            sys.stdout.write("wrote %s: %s, %d rings, %d lines; the track beside it\n"
-                             % (args.out, sc["reading"]["music"]["track"], args.rings, g["stats"]["lines"]
-                                if "stats" in g else sum(len(p) - 1 for q in sc["parts"] for p in q["shape"].get("paths", []))))
-            return 0
         if args.command == "netlogo-compare":
             from . import netlogo as nl
             labels = tuple(x.strip() for x in args.labels.split(",", 1)) if "," in args.labels else ("A", "B")

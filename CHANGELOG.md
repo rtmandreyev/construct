@@ -2,9 +2,9 @@
 
 ## 1.1.0 — unreleased
 
-Models come alive, and music becomes something to build with: the NetLogo bridge, made reliable on
-the whole Models Library and usable from inside NetLogo; runs as films and 3D models in Blender; songs
-and scores as constructs; and pages for classrooms and museums. Plan:
+Models come alive: the NetLogo bridge, made reliable on the whole Models Library and usable from
+inside NetLogo; runs as films and 3D models in Blender; and runs for the classroom, compared side by
+side, printed as worksheets and cited. Plan:
 [ROADMAP.md](docs/ROADMAP.md#v11-models-come-alive-netlogo); the story:
 [release notes](docs/releases/v1.1.0.md).
 
@@ -28,27 +28,11 @@ and scores as constructs; and pages for classrooms and museums. Plan:
 - **Labels wait for their parts:** a construct's labels appear as the build reaches the point each one
   names (the geometry's annotations carry that `phase`), never over an empty frame; the viewer's
   pinned copy moves to `testdata/hologram-1.1.0.js`.
-- **Kicks:** `construct audio` gains `kick`: a pulse on each kick or bass hit, even over a held bass
-  ([FILM.md](docs/FILM.md#how-the-music-shows)).
-- **A song as a construct:** `construct song track.mp3 --out scene.json` draws a track as a tower of
-  sound, each moment a ring shaped by the loudness of 24 bands of frequencies, rising with time, the
-  section changes in the accent; its page builds in time with the track and plays it, under a data
-  lock (the lock now covers the source its fact names: `run` or `track`).
-- **A printable song:** `construct song … --solid` adds the tower as a closed body through its rings,
-  with a new optional shape, `rings` (a surface lofted through closed rings of the same number of
-  points, capped, faces outward); `construct export … --out tower.obj` writes a file a slicer can print.
-- **A score as a construct:** `construct song piece.mid` reads a MIDI file (standard library: tempo map,
-  time signature, track names) and stands each note as a line of light around the circle of fifths,
-  rising through time, each track a tone, a ring at each bar; `--track` builds it in time with the
-  piece's audio.
-- **In Blender, in time with the track:** a construct of a song, or of a score with its audio, carries
-  its clock into the glTF (`music`: the track, its length and the build's range); the add-on's
-  **Keyframe to Its Track** keys the build linearly over the track and adds it as a sound strip
-  (Blender 4 and 5).
 - **A run as a film** (Blender): File > Import > NetLogo Run (.jsonl), `construct netlogo-film run.jsonl
   --out film.mp4` (or `--blend`; it finds Blender), or `(construct:draw … "film" true)` in NetLogo
   (`film.blend` beside the page), draws a recording itself, every turtle at every tick as glowing
-  light with a trail in its own NetLogo colour, the world's edge as a line of light, bloom and an
+  light with a trail in its own NetLogo colour, each link as a line of light while it lasts, the patches
+  as a floor of cells in their recorded colours, the world's edge as a line of light, bloom and an
   orbiting camera, at 30 ticks a second, silent, in a steady light. Nothing is sampled, so a long run
   of many agents loses nothing.
 - **NetLogo 3D:** the extension records each turtle's height (last in its row, so 2D readers are
@@ -62,14 +46,6 @@ and scores as constructs; and pages for classrooms and museums. Plan:
 - **For a spreadsheet or a report:** a run's *How to read it* panel offers its counts as CSV and a
   citation of the run (model, NetLogo version, seed, ticks, Construct's version, data lock);
   `construct netlogo … --csv` writes the counts at every record.
-- **Live:** `?live=1` on a film or kiosk page listens to the room after a touch: the light follows the
-  microphone's loudness and kicks pulse the glow, analysed in the page and never recorded or sent.
-- **A show:** `construct kiosk a.json b.json … --out show` builds kiosk pages and a full-screen show
-  that moves from one to the next, holding while a visitor explores (`--each`, `--live`).
-- **Kiosk pages:** `construct build --kiosk` makes a page for a museum screen or a classroom wall:
-  full screen, a label, an attract loop that replays the construct once it has settled, touch to
-  explore, a song's track after the first touch, the screen kept awake
-  (`viewer/kiosk.js`, embedded only when asked; [USING.md](docs/USING.md#on-a-museum-screen-or-a-classroom-wall)).
 - **A legend on every NetLogo construct,** each part named where it is and shown from the start;
   no projector or drifting motes on a construct of data. An art layer's `"legend": false` drops it
   where its own annotations replace it (the three examples). A scene may now ask to open with its

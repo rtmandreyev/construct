@@ -75,9 +75,9 @@ def embed_assets(geometry, asset_root):
     return out, notes
 
 
-def build_html(geometry, asset_root=None, film=False, kiosk=False):
-    """The construct page. `film` also embeds film mode (viewer/film.js) after the viewer, and `kiosk` the kiosk
-    (viewer/kiosk.js); without them the page is the stock viewer, unchanged."""
+def build_html(geometry, asset_root=None, film=False):
+    """The construct page. `film` also embeds film mode (viewer/film.js) after the viewer; without it the page
+    is the stock viewer, unchanged."""
     template = (VIEWER / "template.html").read_text(encoding="utf-8")
     viewer = (VIEWER / "hologram.js").read_text(encoding="utf-8")
     assets, notes = embed_assets(geometry, asset_root)
@@ -86,20 +86,13 @@ def build_html(geometry, asset_root=None, film=False, kiosk=False):
             .replace("__GEOMETRY__", _script_json(geometry))
             .replace("__ASSETS__", _script_json(assets))
             .replace("__VIEWER__", viewer.replace("</script", "<\\/script")))
-    if film or kiosk or (geometry.get("reading") or {}).get("music"):
-        # a script of its own, right after the viewer's, so it runs before the viewer starts (a run with music
-        # is film mode by itself: its features are in the page; a kiosk carries it for ?live=1)
+    if film:  # a script of its own, right after the viewer's, so it runs before the viewer starts
         code = (VIEWER / "film.js").read_text(encoding="utf-8").replace("</script", "<\\/script")
         mark = "\n</script>\n<script>\n  // the improvement rounds"
         assert html.count(mark) == 1
         html = html.replace(mark, "\n</script>\n<script>\n" + code + "\n</script>\n<script>\n  // the improvement rounds")
-    if kiosk:   # an exhibit: full screen, a label, an attract loop (viewer/kiosk.js), only when asked
-        code = (VIEWER / "kiosk.js").read_text(encoding="utf-8").replace("</script", "<\\/script")
-        mark = "\n</script>\n<script>\n  // the improvement rounds"
-        assert html.count(mark) == 1
-        html = html.replace(mark, "\n</script>\n<script>\n" + code + "\n</script>\n<script>\n  // the improvement rounds")
     if geometry.get("reading") or geometry.get("presentation", {}).get("labels"):
-        # how to read it, the run's replay and labels from the start (viewer/reading.js): only for a scene
+        # how to read it, the run's replay and labels as their parts are drawn (viewer/reading.js): only for a scene
         # that asks; every other page is the stock viewer, unchanged
         code = (VIEWER / "reading.js").read_text(encoding="utf-8").replace("</script", "<\\/script")
         mark = "\n</script>\n<script>\n  // the improvement rounds"

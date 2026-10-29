@@ -90,17 +90,6 @@ built in stages, foundation first, and each section boundary is where the next s
 stage before it finishes, a short breath, and the new one starts as the music changes. If a track
 has no clear sections, the build simply follows the pace.
 
-**Kicks.** The features also carry `kick`: a pulse on each kick or bass hit, found as a jump of the
-level below about 150 Hz above its last half second, so it pulses even over a bass that never
-stops. A typical kick of the track is near 1. On a construct with its track (below), a strong kick
-flares the build front like an accent.
-
-**A construct with its track.** A song, or a score built with its audio ([below](#a-song-as-a-construct)),
-is film mode by itself, with no options: the build follows the construct's own clock instead of the
-pace (each moment drawn at the second it is heard, from the first), and there are no stages to
-match to sections. The light follows the music's loudness, and the strong attacks and kicks flare
-the build front. Its replay bar plays the track with the build.
-
 ## How strongly: the reactivity
 
 `--reactivity` sets how strongly the music shows, from 0 to 2. The default, 1, is made so that
@@ -117,37 +106,6 @@ On calm synth tracks of about a minute each, at the default, the build ran up to
 ahead of or behind an even build, its speed over any four seconds ranged from 0.07–0.33× to
 1.9–3.3× an even build, and the light from 0.60 to 1.53. Before film mode had these settings, the
 same tracks gave 5–16%, 0.23–0.42× to 1.2–1.5×, and 0.82 to 1.18.
-
-## Live: the room's sound
-
-Any film-mode page, and any kiosk page, listens to the room with `?live=1`: after a touch or a key
-(a browser asks before it listens), the microphone is analysed in the page, frame by frame, and
-never recorded or sent anywhere. The construct's light follows the room's loudness, and each kick
-or clap pulses the glow of what is built; the assembly and the idle life are the viewer's own. A
-small line in the corner says it is listening. On a museum screen: `construct build scene.json
---out exhibit --kiosk`, then open `exhibit/construct.html?live=1`.
-
-## A song as a construct
-
-`construct song track.mp3 --out scene.json` draws the track itself: a tower of sound, each moment a
-ring whose radius at each angle is how loud that band of frequencies is (the lowest at the front,
-the highest at the back, mirrored), rising with time from the floor to the top. The rings where the
-track changes section are drawn in the accent. `construct build scene.json --out out` makes its
-page, film mode by itself: the tower builds in time with the track, and the replay bar plays it
-(the track is copied beside the scene). Everything drawn comes from the analysis, under a data lock;
-`construct export scene.json --out tower.glb` takes it into Blender, where **Keyframe to Its Track**
-in the Construct panel keys the build in time with the track and adds it as a sound strip
-([the add-on](../hosts/blender/README.md#in-time-with-its-track)). `--rings` sets how many moments (56
-by default), `--title` the name, and `--solid` adds the tower as a closed body through its rings
-(watertight, faces outward): `construct export scene.json --out tower.obj` gives a file a slicer
-can print, scaled to taste.
-
-**A score.** Given a MIDI file instead, `construct song piece.mid --out scene.json` draws its notes:
-each note a line of light rising from its start to its end, standing at its pitch's place on the
-circle of fifths (C at the front, so a key's notes stand together and a chord is a cluster), each
-octave further out, each MIDI track in a tone of its own (named as the file names it), with a faint
-ring at each bar from its tempo and time signature. `--track piece.mp3` (the piece as audio) makes
-its page build in time with it and play it; without, it builds over the piece's own length.
 
 ## Choose the camera
 
@@ -198,8 +156,7 @@ without `--film` is the ordinary construct and ignores these options.
   track.
 - **It listens in mono, at 16 kHz.** Stereo movement and very high frequencies are not used.
 - **The browser preview is silent**, and it is not synchronised to a player: play the track
-  yourself alongside, or watch the rendered film. (A construct with its track is the exception:
-  its replay bar plays the track, and the build follows it.)
+  yourself alongside, or watch the rendered film.
 
 ## Long assemblies in a scene
 

@@ -206,12 +206,9 @@ steps are `construct_netlogo_instrument` and `construct_netlogo_draw`.
 6. **A 3D model of the run (optional, when asked):** add `--solid --glb run.glb` (each turtle a
    sphere where it rose, a cycle as a tube, a spread as a surface, in the run's own colours; the
    build replays the run in Blender).
-7. **Films, songs and exhibits (optional, when asked).** A film of the run in Blender, every agent
-   as moving light, silent, at 30 ticks a second: `python3 TOOLS netlogo-film run.jsonl --out
-   film.mp4` (or `--blend`; it takes minutes at full size, so offer `--seconds 10 --size 960x540`
-   first). A page for a museum screen: `build --kiosk`. A track by itself as a construct (a tower of
-   sound that builds with it): `python3 TOOLS song track.mp3 --out scene.json`, then build it; a
-   MIDI file's score: `song piece.mid` (`--track` its audio).
+7. **Films (optional, when asked).** A film of the run in Blender, every agent as moving light,
+   silent, at 30 ticks a second: `python3 TOOLS netlogo-film run.jsonl --out film.mp4` (or
+   `--blend`; it takes minutes at full size, so offer `--seconds 10 --size 960x540` first).
 
 ## A 3D model of a construct (export)
 

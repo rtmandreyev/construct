@@ -41,7 +41,7 @@ def scene_with_assembly(seconds):
 
 
 class Features(unittest.TestCase):
-    """`construct audio`: energy, high, kick and voice per video frame, 0..1."""
+    """`construct audio`: energy, high and voice per video frame, 0..1."""
 
     def test_silence_is_zero_and_a_loud_tone_is_full(self):
         doc = film_audio.analyse([0] * (2 * RATE) + tone(3, 0.6), FPS)
@@ -107,19 +107,6 @@ class Features(unittest.TestCase):
         gaps = [b - a for a, b in zip(hits, hits[1:])]
         self.assertGreaterEqual(min(gaps), film_audio.ONSET_GAP_S)
 
-    def test_kick_pulses_on_low_hits_even_over_a_held_bass(self):
-        sig = tone(4, 0.25, 55.0)   # a bass that never stops
-        expected = [0.5 + 0.5 * k for k in range(7)]
-        for at in expected:   # a low thump every half second
-            s0 = int(at * RATE)
-            for i, x in enumerate(tone(0.12, 0.6, 70.0)):
-                sig[s0 + i] += int(x * math.exp(-25 * i / RATE))
-        kick = film_audio.analyse(sig, FPS)["kick"]
-        peaks = [i / FPS for i in range(1, len(kick) - 1) if kick[i] > 0.5 and kick[i] >= kick[i - 1] and kick[i] > kick[i + 1]]
-        self.assertTrue(all(any(abs(p - e) <= 2 / FPS for p in peaks) for e in expected), peaks)   # every thump
-        self.assertTrue(all(any(abs(p - e) <= 2 / FPS for e in expected) for p in peaks), peaks)   # and only thumps
-        self.assertLess(max(film_audio.analyse(tone(4, 0.25, 55.0), FPS)["kick"][FPS:]), 0.2)     # the held bass alone: none
-
     def test_sections_are_where_the_music_changes(self):
         quiet, loud = tone(25, 0.08, 150.0), tone(25, 0.6, 2500.0)
         doc = film_audio.analyse(quiet + loud + quiet, FPS)
@@ -164,105 +151,6 @@ class LongAssembly(unittest.TestCase):
     def test_the_cap_is_1200_seconds(self):
         self.assertFalse(diagnose.diagnose(scene_with_assembly(1201))["ok"])
         self.assertTrue(diagnose.diagnose(scene_with_assembly(1200))["ok"])
-
-
-class Kiosk(unittest.TestCase):
-    """`construct build --kiosk`: a page for a museum screen; every other page stays the stock viewer."""
-
-    def test_only_a_kiosk_build_embeds_it(self):
-        g = scene.compile_scene(json.loads((EXAMPLES / "lighthouse.json").read_text()))
-        stock, _ = render.build_html(g)
-        kiosk, _ = render.build_html(g, kiosk=True)
-        self.assertNotIn("Construct kiosk", stock)
-        self.assertIn("Construct kiosk", kiosk)
-        with tempfile.TemporaryDirectory() as d:
-            from . import cli
-            self.assertEqual(cli.main(["build", str(EXAMPLES / "lighthouse.json"), "--out", d, "--kiosk"]), 0)
-            self.assertIn("Construct kiosk", Path(d, "construct.html").read_text())
-
-    @unittest.skipUnless(CAPTURE, "needs a Chromium-family browser")
-    def test_the_label_and_no_help_line(self):
-        sc = json.loads((EXAMPLES / "lighthouse.json").read_text())
-        g = scene.compile_scene(sc)
-        with tempfile.TemporaryDirectory() as d:
-            page, _ = render.build_html(g, kiosk=True)
-            Path(d, "k.html").write_text(page, encoding="utf-8")
-            b = render.open_browser(render._url(str(Path(d, "k.html"))), 900, 600, 1.0)
-            try:
-                b.evaluate("HOLO.ready.then(() => new Promise((r) => setTimeout(r, 200)))")
-                got = json.loads(b.evaluate("JSON.stringify({kiosk: document.body.classList.contains('kiosk'), "
-                                            "title: (document.querySelector('.kiosk-label b') || {}).textContent, "
-                                            "help: getComputedStyle(document.querySelector('.help')).display})"))
-            finally:
-                b.close()
-        self.assertEqual(got, {"kiosk": True, "title": sc["title"], "help": "none"})
-
-
-class Show(unittest.TestCase):
-    """`construct kiosk`: several constructs as kiosk pages, one after another."""
-
-    def test_a_show_of_two(self):
-        from . import cli
-        with tempfile.TemporaryDirectory() as d:
-            self.assertEqual(cli.main(["kiosk", str(EXAMPLES / "cd.json"), str(EXAMPLES / "lighthouse.json"), "--out", d,
-                                       "--each", "10"]), 0)
-            index = Path(d, "index.html").read_text()
-            self.assertIn('["1/construct.html", "2/construct.html"]', index)
-            self.assertIn("Touch to start", index)   # the first touch: full screen, and sound for its pages
-            self.assertIn("Construct kiosk", Path(d, "2", "construct.html").read_text())
-            if not CAPTURE:
-                return
-            import time
-            b = render.Browser(800, 500, 1.0, gpu=False)
-            try:
-                b.open(render._url(str(Path(d, "1", "construct.html"))))
-                b.evaluate("location.href = %r" % render._url(str(Path(d, "index.html"))))
-                seen = []
-                for _ in range(45):   # a page holds the show until it has assembled, then EACH seconds more
-                    time.sleep(1)
-                    seen.append(b.evaluate("(document.querySelector('iframe.on') || {getAttribute: () => null})"
-                                           ".getAttribute('src')"))
-                    if seen[-1] and seen[-1].startswith("2/"):
-                        break
-            finally:
-                b.close()
-            self.assertEqual([s for i, s in enumerate(seen) if s and (i == 0 or s != seen[i - 1])][:2],
-                             ["1/construct.html", "2/construct.html"])
-
-
-class Live(unittest.TestCase):
-    """?live=1: the room's sound, from the microphone, after a touch; a kiosk page carries it."""
-
-    @unittest.skipUnless(CAPTURE, "needs a Chromium-family browser")
-    def test_a_kiosk_listens_after_a_touch(self):
-        import time
-        g = scene.compile_scene(json.loads((EXAMPLES / "cd.json").read_text()))
-        page, _ = render.build_html(g, kiosk=True)
-        real = render.subprocess.Popen
-
-        def fake_mic(args, *a, **k):   # Chrome's fake microphone: a beep
-            if args and "chrom" in str(args[0]).lower():
-                args = args[:-1] + ["--use-fake-ui-for-media-stream", "--use-fake-device-for-media-stream"] + args[-1:]
-            return real(args, *a, **k)
-        with tempfile.TemporaryDirectory() as d, mock.patch.object(render.subprocess, "Popen", fake_mic):
-            Path(d, "k.html").write_text(page, encoding="utf-8")
-            b = render.Browser(900, 600, 1.0, gpu=False)
-            try:
-                b.open(render._url(str(Path(d, "k.html")), live=1))
-                b.evaluate("HOLO.ready.then(() => new Promise((r) => setTimeout(r, 300)))")
-                before = json.loads(b.evaluate("JSON.stringify(HOLO.hologram.audioAt(0))"))
-                b.evaluate("window.dispatchEvent(new PointerEvent('pointerdown'))")
-                energy = 0.0
-                for _ in range(20):
-                    time.sleep(0.2)
-                    energy = max(energy, json.loads(b.evaluate("JSON.stringify(HOLO.hologram.audioAt(0))"))["energy"])
-                said = b.evaluate("[...document.querySelectorAll('#overlay div')].map((d) => d.textContent)"
-                                  ".filter((t) => /listen/i.test(t))[0]")
-            finally:
-                b.close()
-        self.assertEqual(before["energy"], 0)       # nothing heard before the touch
-        self.assertGreater(energy, 0.2)             # the beep, heard
-        self.assertEqual(said, "Listening · on this device only")
 
 
 class Cli(unittest.TestCase):

@@ -531,15 +531,6 @@ def to_gltf(g, wire="edges", pose="closed", materials=None, wire_radius=None, me
                           for a in arts],
         "motions": [{k: m[k] for k in ("part", "type", "period", "rpm", "degrees", "distance", "amount", "phase")}
                     for m in motions]}}
-    r = g.get("reading") or {}
-    if r.get("music") and (r.get("clock") or {}).get("phase"):   # a construct of a track or a run to one: its clock
-        c, m = r["clock"], r["music"]
-        span = (c["to"] - c["from"]) or 1
-        nodes[root]["extras"]["construct"]["music"] = {
-            "track": m["track"], "seconds": round(span / m["ticks_per_second"], 3), "ticks_per_second": m["ticks_per_second"],
-            "build": [round(c["phase"][1], 6), round(c["phase"][0] * c["top"] + c["phase"][1], 6)],
-            "note": "the track beside this file; the build runs linearly from build[0] at its start to build[1] at "
-                    "its end, so a frame's build is in time with the track"}
     summary = {"parts": len(parts), "nodes": len(nodes), "meshes": len(meshes), "materials": len(mats),
                "animations": [a["name"] for a in animations], **counts}
     return doc, bytes(b.data), summary
