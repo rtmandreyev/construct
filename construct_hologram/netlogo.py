@@ -11,6 +11,11 @@
     phase         two reporters as the floor's axes, time as height: the phase portrait, rising
     field         the front of change: where each patch's reporter first (or last) changed, drawn every
                   few ticks and raised to its tick (isochrones), nothing where nothing changed
+    pulse         a state turtles switch on and off again and again (a flash): one ring per tick, its area the
+                  share of turtles in that state, so turtles in step make wide plates with nothing between
+
+Moving turtles (space-time) and turtles that switch on and off (pulse) are measured by their order (alignment,
+synchrony); when it forms early in a long run, the construct is drawn over that window (settle_window), and says so.
 
 Every data part is `verified` against the recording (a `dataset` source naming the model, NetLogo's
 version and the seed); the build rises from the floor, so a construct's assembly replays the run.
@@ -39,12 +44,13 @@ SOLID_NODES = 200    # --solid: at most this many turtles as spheres (a scene ho
 SOLID_TUBES = 12     # --solid: the phase cycle as at most this many tubes of MAX_TUBE points
 MAX_TUBE = 64        # points in one tube (the scene's limit)
 MAX_SEGMENTS = 18000  # of the line budget (24,000), for the data; the scene stays under 1 MB
-VIEWS = ("space-time", "network-time", "phase", "field")
+VIEWS = ("space-time", "network-time", "phase", "field", "pulse")
 NLS = Path(__file__).resolve().parent / "construct.nls"   # the recorder, copied beside a model
 TONES = ("identity", "data", "accent", "bright", "dust", "structure")
 # each view's hero: a field's fronts climb like a slope, so it is seen from above its rise
 FRAMING = {"space-time": {"yaw": 32, "pitch": 20}, "network-time": {"yaw": 30, "pitch": 26},
-           "phase": {"yaw": 35, "pitch": 24}, "field": {"yaw": -38, "pitch": 46}}
+           "phase": {"yaw": 35, "pitch": 24}, "field": {"yaw": -38, "pitch": 46},
+           "pulse": {"yaw": 30, "pitch": 16}}
 
 
 LOCK = "data_lock"     # the fact that holds the fingerprint
@@ -371,6 +377,209 @@ def _space_time(run, world, opts):
     return parts, summary, facts
 
 
+# ---- order over time: what moving turtles and turtles that switch on and off are measured by
+
+EVENT_ONSETS = 4      # pulse: at least this many turnings on per turtle, on average, to be a rhythm
+PULSE_RINGS = 700     # pulse: at most this many rings (of 24 segments), within the data budget
+SETTLED = 0.9         # the window: until the order has come this far from its start to where it stays
+
+
+def _turtle_frames(run):
+    return [f for f in run["frames"] if f.get("turtles")]
+
+
+def _event_signals(run):
+    """The states a turtle can switch on and off: each true/false turtle variable (hidden? too), and its colour.
+    For each, the event is its rarer value (a flash is the short state), with each turtle's onsets."""
+    h, tf = run["header"], _turtle_frames(run)
+    gets = [(var, lambda r, i=i: r[5 + i] if len(r) > 5 + i else None) for i, var in enumerate(h.get("turtle-vars", []))]
+    gets.append(("color", lambda r: r[4]))
+    out = []
+    for name, get in gets:
+        seq = {}
+        for f in tf:
+            for r in f["turtles"]:
+                seq.setdefault(r[0], []).append((f["t"], get(r), r[2], r[3]))
+        allv = [v for s in seq.values() for _, v, _, _ in s]
+        if not allv:
+            continue
+        if name == "color":
+            if not all(isinstance(v, (int, float)) for v in allv):
+                continue
+            usual = max(set(allv), key=allv.count)
+            on, word = (lambda v, u=usual: v != usual), "its colour changed"
+        elif all(isinstance(v, bool) for v in allv):
+            rare = sum(1 for v in allv if v) <= len(allv) / 2
+            on = (lambda v: v is True) if rare else (lambda v: v is False)
+            word = ("it was shown (hidden? turned false)" if name == "hidden?" and not rare else
+                    "%s turned %s" % (name, "true" if rare else "false"))
+        else:
+            continue
+        onsets = {w: sum(1 for (_, a, _, _), (_, b, _, _) in zip(s, s[1:]) if not on(a) and on(b)) for w, s in seq.items()}
+        out.append({"state": name, "word": word, "on": on, "seq": seq,
+                    "mean": sum(onsets.values()) / len(onsets), "repeat": sum(1 for o in onsets.values() if o >= 2) / len(onsets)})
+    return out
+
+
+def _event_choice(run):
+    """The state that switches on and off as a rhythm (at least EVENT_ONSETS times per turtle on average, for
+    most turtles), a named variable before the colour; None if none does."""
+    best = None
+    for s in _event_signals(run):
+        if s["mean"] >= EVENT_ONSETS and s["repeat"] >= 0.5 and (best is None or s["mean"] > best["mean"] * 1.05):
+            best = s
+    return best
+
+
+def _onsets(s):
+    """Each turtle's ticks of turning on, for one state."""
+    out = {}
+    for w, seq in s["seq"].items():
+        out[w] = [b[0] for a, b in zip(seq, seq[1:]) if not s["on"](a[1]) and s["on"](b[1])]
+    return out
+
+
+def _phase_at(times, t, k=0):
+    """Where a turtle is in its own cycle at tick t, from its events (0 at one, 2 pi at the next): the phase of a
+    rhythm known only by its events. None before its first event or after its last. k: a search hint."""
+    while k + 1 < len(times) and times[k + 1] <= t:
+        k += 1
+    if not times or t < times[0] or k + 1 >= len(times):
+        return None, k
+    return 2 * math.pi * (t - times[k]) / (times[k + 1] - times[k]), k
+
+
+def _value(run, state, row):
+    """A turtle's value of a state in one record's row: a turtle variable, or its colour."""
+    if state == "color":
+        return row[4]
+    i = run["header"]["turtle-vars"].index(state)
+    return row[5 + i] if len(row) > 5 + i else None
+
+
+def _headings(run, world):
+    """Each moving turtle's direction from one record to the next (unit vectors, wraps excluded), per record."""
+    tf = _turtle_frames(run)
+    out = []
+    for a, b in zip(tf, tf[1:]):
+        pos = {r[0]: (r[2], r[3], r[1]) for r in a["turtles"]}
+        dirs = []
+        for r in b["turtles"]:
+            p = pos.get(r[0])
+            if p is None or world.jump(p, (r[2], r[3])):
+                continue
+            dx, dy = r[2] - p[0], r[3] - p[1]
+            d = math.hypot(dx, dy)
+            if d > 1e-6:
+                dirs.append((r[0], p[2], p[0], p[1], dx / d, dy / d))
+        out.append((a["t"], dirs))
+    return out
+
+
+def _alignment(run, world):
+    """Moving turtles' alignment at each record: the length of their mean heading, 0 when they head every way,
+    1 when all head one way."""
+    return [(t, math.hypot(sum(d[4] for d in dirs), sum(d[5] for d in dirs)) / len(dirs))
+            for t, dirs in _headings(run, world) if len(dirs) >= 2]
+
+
+def _synchrony(run, s):
+    """Turtles that switch on and off: their synchrony at each record, the order parameter r (the length of the
+    mean of e^(i phase), each turtle's phase from its own events), 0 each on its own rhythm, 1 all in step."""
+    onsets = _onsets(s)
+    hint = {w: 0 for w in onsets}
+    out = []
+    for f in _turtle_frames(run):
+        cx = cy = 0.0
+        n = 0
+        for w, times in onsets.items():
+            ph, hint[w] = _phase_at(times, f["t"], hint[w])
+            if ph is not None:
+                cx += math.cos(ph)
+                cy += math.sin(ph)
+                n += 1
+        if n >= 2:
+            out.append((f["t"], math.hypot(cx, cy) / n))
+    return out
+
+
+def _order(run, world, view, opts):
+    """The measure of order for a view, if it has one: (its name, its values over the run)."""
+    if view == "space-time":
+        return "alignment", _alignment(run, world)
+    if view == "pulse":
+        st = opts.get("state") or (_event_choice(run) or {}).get("state")
+        sig = next((x for x in _event_signals(run) if x["state"] == st), None)
+        return ("synchrony", _synchrony(run, sig)) if sig else (None, [])
+    return None, []
+
+
+def settle_window(series, last):
+    """Where order forms: the tick by which a measure has come SETTLED of the way from its start to the level it
+    keeps, with a margin, when that is well before the end of the run; None when the order never forms or forms
+    late (the whole run is then the story)."""
+    if len(series) < 20:
+        return None
+    k = max(1, len(series) // 20)
+    smooth = [(series[i][0], sum(v for _, v in series[max(0, i - k):i + 1]) / len(series[max(0, i - k):i + 1]))
+              for i in range(len(series))]
+    start = sum(v for _, v in series[:k]) / k
+    tail = series[-max(1, len(series) * 3 // 10):]
+    keep = sum(v for _, v in tail) / len(tail)
+    if keep - start < 0.15:   # no order forms that a window would show
+        return None
+    reach = next((t for t, v in smooth[k:] if v >= start + SETTLED * (keep - start)), None)
+    if reach is None:
+        return None
+    end = int(math.ceil(min(last, reach * 1.3 + 0.05 * last)))
+    return end if end <= 0.6 * last else None
+
+
+def _pulse(run, world, opts):
+    signals = {s["state"]: s for s in _event_signals(run)}
+    state = opts.get("state") or (_event_choice(run) or {}).get("state")
+    if not state:
+        raise NetLogoError("pulse needs a turtle state that switches on and off again and again (a true/false "
+                           "variable, hidden? or the colour); none does here")
+    if state not in signals:
+        raise NetLogoError("no turtle state %r in the recording (%s)" % (state, ", ".join(sorted(signals))))
+    s = signals[state]
+    tf = _turtle_frames(run)
+    share = [(f["t"], sum(1 for r in f["turtles"] if s["on"](_value(run, state, r))) / max(1, len(f["turtles"])))
+             for f in tf]
+    group = max(1, math.ceil(len(share) / PULSE_RINGS))   # a long run: the most at once in each group of records
+    rings = []
+    R = 0.45 * min(world.w, world.h)
+    for g in range(0, len(share), group):
+        t, v = max(share[g:g + group], key=lambda tv: tv[1])
+        if v > 0.005:
+            rad = R * math.sqrt(v)   # the ring's area is the share
+            rings.append([world.floor(world.cx + rad * math.cos(2 * math.pi * k / 24),
+                                      world.cy + rad * math.sin(2 * math.pi * k / 24), t) for k in range(25)])
+    full = [[world.floor(world.cx + R * math.cos(2 * math.pi * k / 48), world.cy + R * math.sin(2 * math.pi * k / 48), t)
+             for k in range(49)] for t in (0, world.last)]
+    parts = [_part("pulse-%d" % (i // 4000), "How many at once: a ring per tick, its area the share",
+                   "identity", {"type": "paths", "paths": rings[i:i + 4000], "detail": True}, tone="bright", alpha=0.9)
+             for i in range(0, len(rings), 4000)]
+    parts.append(_part("pulse-all", "The full width: every turtle at once", "ground", {"type": "paths", "paths": full},
+                       alpha=0.3))
+    peak = max(v for _, v in share)
+    tenth = max(1, len(share) // 10)
+    top = lambda part: sorted((v for _, v in part), reverse=True)[:max(1, len(part) // 20)]
+    early, late = top(share[:tenth]), top(share[-tenth:])
+    summary = ("The run's pulse rising with time: one ring per tick, its area the share of turtles in that state "
+               "then (%s), so turtles on their own make a thin, ragged column and turtles in step make wide plates "
+               "with nothing between." % s["word"])
+    facts = [("event", "%s, %.1f times per turtle on average" % (s["word"], sum(len(v) for v in _onsets(s).values())
+                                                                / max(1, len(s["seq"])))),
+             ("together", "at most %d%% of the turtles at once; the most at once early in the run %d%%, late %d%%" % (
+                 round(100 * peak), round(100 * sum(early) / len(early)), round(100 * sum(late) / len(late))))]
+    if group > 1:
+        facts.append(("sampling", "each ring the most at once in a group of %d records" % group))
+    opts["_series"] = {"name": "at once", "values": [[t, round(v, 3)] for t, v in _sampled(share)]}
+    return parts, summary, facts
+
+
 APPEARED = "@appeared"   # network-time's state for a network that grows: each turtle at the tick it appeared
 
 
@@ -684,6 +893,10 @@ def choose_view(run, exclude=()):
                 break
         if changed >= 0.02 * len(samples[0]) and len(moments) >= 4 and "field" not in exclude:
             return "field", {}, "%d of %d patches changed" % (changed, len(samples[0]))
+    ev = _event_choice(run)
+    if ev:   # turtles switching a state on and off as a rhythm: when they do it, and whether together
+        return "pulse", dict(state=ev["state"]), "turtles switch on and off: %s, %.0f times each on average" % (
+            ev["word"], ev["mean"])
     names = h.get("reporters", [])
     moving = []
     for i, n in enumerate(names):
@@ -716,6 +929,33 @@ def choose_view(run, exclude=()):
     raise NetLogoError("nothing in the recording to draw: no turtles, no changing patches, no two moving counts")
 
 
+def _window(run, view, opts, last):
+    """The window a view is drawn over: the run up to where its order formed (settle_window), automatically for
+    moving turtles and turtles that switch on and off; `window` "whole" draws the whole run, a number ends it
+    there. None: the whole run."""
+    want = opts.get("window")
+    if view not in ("space-time", "pulse") or want == "whole" or opts.get("span"):   # a shared scale: whole runs
+        return None
+    measure, series = _order(run, _World(run["header"], last), view, opts)
+    if want not in (None, "auto"):
+        try:
+            end = int(float(want))
+        except (TypeError, ValueError):
+            raise NetLogoError("window: whole, auto, or the tick to end at")
+        if not 0 < end < last:
+            raise NetLogoError("window: a tick between 1 and %d" % (last - 1))
+    else:
+        end = settle_window(series, last) if series else None
+        if end is None:
+            return None
+    k = max(1, len(series) // 20)
+    upto = [v for t, v in series if t <= end]
+    opts["_window"] = {"measure": measure or "order", "end": end,
+                       "start": sum(v for _, v in series[:k]) / k if series else 0.0,
+                       "reached": sum(upto[-k:]) / len(upto[-k:]) if upto else 0.0}
+    return opts["_window"]
+
+
 def scene_from_run(run, view, title=None, **opts):
     """A construct-scene v2 from a recording, for one of VIEWS ("auto": the one choose_view picks)."""
     asked_time = opts.get("time")
@@ -740,14 +980,24 @@ def scene_from_run(run, view, title=None, **opts):
         if asked_time == "sqrt":
             raise NetLogoError("time: a run with music is drawn with linear time, so it plays in time with its track")
         time = "linear"
-    world = _World(h, max(last, opts.get("span") or 0), FLOOR if view == "space-time" else HEIGHT, time)   # span: a shared scale
+    tall = view in ("space-time", "pulse")   # a cube: time as tall as the world is wide
+    whole = last
+    window = _window(run, view, opts, last)
+    if window:   # the window where the order formed: the run up to its end
+        run = dict(run, frames=[f for f in frames if f["t"] <= window["end"]], end=window["end"])
+        frames, last = run["frames"], window["end"]
+    world = _World(h, max(last, opts.get("span") or 0), FLOOR if tall else HEIGHT, time)   # span: a shared scale
     data, summary, extra = {"space-time": _space_time, "network-time": _network_time, "phase": _phase,
-                            "field": _field}[view](run, world, opts)
+                            "field": _field, "pulse": _pulse}[view](run, world, opts)
+    if view == "space-time" and not opts.get("_series"):
+        align = _alignment(run, world)
+        if align:
+            opts["_series"] = {"name": "alignment", "values": [[t, round(v, 3)] for t, v in _sampled(align)]}
     if view == "phase":
         parts = [p for p in data]
     else:
         parts = _frame_axis(world) + data
-    title = title or h["title"]
+    title = title or (h["title"] + (" (ticks 0 to %d of %d)" % (last, whole) if window else ""))
     seed = h.get("seed")
     model = "%s (NetLogo %s%s)" % (h["title"], h.get("netlogo", "?"), ", random-seed %s" % seed if seed is not None else "")
     facts = [{"key": "model", "value": h["title"], "certainty": "verified", "source": "run"},
@@ -768,6 +1018,12 @@ def scene_from_run(run, view, title=None, **opts):
                       "note": "The run was recorded with construct:music: tick t is second t / %d of the track, and "
                               "the model could read the music at each tick." % music["ticks_per_second"]})
     facts += [{"key": k, "value": v, "certainty": "verified", "source": "run"} for k, v in extra]
+    if window:
+        facts.append({"key": "window", "value": "ticks 0 to %d of %d" % (last, whole), "certainty": "verified",
+                      "source": "run", "note": "Where the %s formed: %.2f at the start, %.2f by tick %d, and it stays "
+                                               "near there for the rest of the run. The whole run is in the recording "
+                                               "(and in the film); --window whole draws all of it." % (
+                                                   window["measure"], window["start"], window["reached"], last)})
     slug = re.sub(r"[^a-z0-9]+", "-", title.lower()).strip("-")[:48] or "netlogo-run"
     sc = {
         "format": product.SCENE_FORMAT, "version": 2, "id": "netlogo-%s-%s" % (slug, view), "title": title,
@@ -873,8 +1129,13 @@ def materials_from_run(run, scene):
 def _legend(parts, sqrt=False):
     """The automatic legend: each part from the run labelled with what it is (its own label), the label's
     dot on a real point of the part, a different side for each so they don't pile up. L shows them."""
-    out = []
-    for i, p in enumerate(q for q in parts if q.get("source") == "run" and q["role"] != "mass"):
+    out, named = [], set()
+    shown = []
+    for q in parts:   # a part split in pieces (over 4,000 lines) is named once
+        if q.get("source") == "run" and q["role"] != "mass" and q["label"] not in named:
+            named.add(q["label"])
+            shown.append(q)
+    for i, p in enumerate(shown):
         pts = [v for path in p["shape"].get("paths", []) for v in path]
         if not pts:
             continue
@@ -882,7 +1143,9 @@ def _legend(parts, sqrt=False):
         hi = [max(v[k] for v in pts) for k in range(3)]
         anchor = [(lo[0] + hi[0]) / 2, hi[1], (lo[2] + hi[2]) / 2]   # the compiler's anchor: the box's top centre
         d = LEGEND_DIRS[i % len(LEGEND_DIRS)]
-        best = max(pts, key=lambda v: v[0] * d[0] + v[1] * d[1] + v[2] * d[2])
+        # the dot on the lower part of what it names, so the label appears as soon as its part starts to be drawn
+        early = [v for v in pts if v[1] <= lo[1] + 0.25 * (hi[1] - lo[1])] or pts
+        best = max(early, key=lambda v: v[0] * d[0] + v[1] * d[1] + v[2] * d[2])
         text = p["label"] + (" (height: the square root of time)" if sqrt and p["id"] == "time-axis" else "")
         out.append({"id": "legend-" + p["id"], "part": p["id"], "text": text[:80],
                     "offset": [round(best[k] - anchor[k], 3) for k in range(3)]})
@@ -1079,7 +1342,21 @@ def _reading(run, view, world, opts, time):
             "of change, stacked in time." % h.get("patch-reporter"),
             "Contours close together: the change moved slowly there; far apart: it moved fast.",
             "Where nothing changed, nothing is drawn."],
+        "pulse": [
+            "Height is time, from tick 0 on the floor to tick %d at the top: one ring for each tick." % last,
+            "A ring's area is the share of turtles in that state at that tick (%s); the faint circle at the floor "
+            "and the top is every turtle at once." % (
+                (_event_choice(run) or {}).get("word") if not opts.get("state") else
+                next((s["word"] for s in _event_signals(run) if s["state"] == opts.get("state")), opts.get("state"))),
+            "A thin, ragged column is turtles on their own rhythms; wide plates with nothing between are turtles in "
+            "step, all at once.",
+            "Where the column opens into plates is where they fell into step."],
     }[view]
+    w = opts.get("_window")
+    if w:   # drawn over the window where the order formed: say so, second
+        how.insert(1, "This shows ticks 0 to %d, where the %s formed (%.2f at the start, %.2f by tick %d); after "
+                      "that it stays near there. The whole run is in the recording and its film." % (
+                          last, w["measure"], w["start"], w["reached"], last))
     picked = _sampled(frames)
     series = []
     if h.get("reporters"):
@@ -1103,6 +1380,8 @@ def _reading(run, view, world, opts, time):
         first = sampled[0]["patches"] if sampled else []
         series.append({"name": "patches changed", "values": [
             [f["t"], sum(1 for a, b in zip(first, f["patches"]) if a != b)] for f in sampled]})
+    if opts.get("_series"):   # the view's own measure (synchrony, alignment), first
+        series.insert(0, opts["_series"])
     reading = {"how": how, "clock": {"label": "tick", "from": 0, "to": last, "top": world.top,
                                      "scale": "sqrt" if sq else "linear"}}
     series = [s for s in series if len({v[1] for v in s["values"]}) > 1]   # a count that never moves says nothing

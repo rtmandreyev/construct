@@ -22,11 +22,21 @@ museums. Plan: [ROADMAP.md](docs/ROADMAP.md#v11-models-come-alive); the story:
   in go waits until the music reaches each tick, so a model moves in time with its track in NetLogo's
   own view, with the sound (or with the clock, without an audio output); `construct:stop-music`. A
   model slower than its track follows the music as heard, and says so.
+- **Pulse, and where the order forms:** a new view, `pulse`, for turtles that switch a state on and off
+  again and again (fireflies, firing cells): one ring per tick, its area the share in that state, so
+  falling into step shows as a thin, ragged column opening into wide plates; `--view auto` picks it
+  when turtles switch at least four times each on average. Moving turtles are measured by their
+  alignment and pulses by their synchrony (the order parameter r); when that order forms early in a
+  long run, space-time and pulse are drawn over the window where it formed, said in the title, a
+  `window` fact and How to read it (`--window whole|auto|TICK`; also in `construct:draw` and MCP).
+- **Labels wait for their parts:** a construct's labels appear as the build reaches the point each one
+  names (the geometry's annotations carry that `phase`), never over an empty frame; the viewer's
+  pinned copy moves to `testdata/hologram-1.1.0.js`.
 - **Runs to music:** `construct:music "track.mp3"` makes a tick a moment of a track (30 a second by
   default), `construct:kick`, `construct:energy`, `construct:high` and `construct:hit` let a model's
   code follow it, and `construct:run` lasts the track. The construct plays back in time with the
-  music: its page is film mode by itself (the build at the run's clock, the light and accents from
-  the track, which the replay bar plays), the track's fingerprint is under the data lock, and the
+  music: its page is film mode by itself (the build at the run's clock, which the replay bar plays
+  the track to; the light does not follow the beat), the track's fingerprint is under the data lock, and the
   track is copied beside the scene. `construct audio` gains `kick`: a pulse on each kick or bass
   hit, even over a held bass ([NETLOGO.md](docs/NETLOGO.md#5-music-optional)).
 - **A song as a construct:** `construct song track.mp3 --out scene.json` draws a track as a tower of

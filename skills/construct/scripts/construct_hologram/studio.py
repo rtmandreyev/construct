@@ -508,12 +508,15 @@ def add_commands(sub):
     p.add_argument("--go", help="the model's go command (default: its `go`, else its forever button)")
     p = sub.add_parser("netlogo", help="a construct of a recorded NetLogo run (docs/NETLOGO.md)")
     p.add_argument("run", help="the recording (.jsonl, written by construct.nls)")
-    p.add_argument("--view", required=True, choices=("auto", "space-time", "network-time", "phase", "field"),
-                   help="auto: the view the data suits (a network that turned, changing patches, two moving counts, "
-                        "else the agents' paths)")
+    p.add_argument("--view", required=True, choices=("auto", "space-time", "network-time", "phase", "field", "pulse"),
+                   help="auto: the view the data suits (a network that turned, changing patches, turtles switching "
+                        "on and off (pulse), two moving counts, else the agents' paths)")
     p.add_argument("--out", required=True, help="the scene to write (.json); then `build` it")
     p.add_argument("--title", help="the construct's title (default: the model's)")
-    p.add_argument("--state", help="network-time: the turtle variable whose turning true lifts a node")
+    p.add_argument("--state", help="network-time: the turtle variable whose turning true lifts a node; pulse: the "
+                                   "state that switches on and off (a true/false variable, hidden? or color)")
+    p.add_argument("--window", help="space-time and pulse: auto (default: the window where the order formed, when "
+                                    "it forms early), whole (the whole run), or the tick to end at")
     p.add_argument("--x", help="phase: the reporter across the floor (default: the first recorded)")
     p.add_argument("--z", help="phase: the reporter front to back (default: the second)")
     p.add_argument("--change", choices=("first", "last"), default="first", help="field: lift each patch to its "
@@ -944,7 +947,10 @@ def run(args):
                 scene = nl.scene_from_run(nl.read_run(args.run), args.view, args.title, state=args.state, x=args.x,
                                           z=args.z, change=args.change, max_agents=args.max_agents,
                                           time=args.time, smooth=args.smooth, levels=args.levels,
-                                          resolution=args.resolution, solid=args.solid)
+                                          resolution=args.resolution, solid=args.solid, window=args.window)
+                win = next((f for f in scene["facts"] if f["key"] == "window"), None)
+                if win:
+                    sys.stdout.write("window: %s (%s)\n" % (win["value"], win["note"].split(":")[0].lower()))
                 run_data = nl.read_run(args.run)
                 if args.art:
                     scene = nl.apply_art(scene, json.loads(Path(args.art).read_text(encoding="utf-8")))

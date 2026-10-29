@@ -1076,14 +1076,18 @@ void main() {
     let clock0 = performance.now(), paused = false, pausedAt = 0, frozen = opt.t;
     const now = () => frozen !== null ? frozen : paused ? pausedAt : (performance.now() - clock0) / 1000;
 
-    function placeLabels(vp, rect) {
+    function placeLabels(vp, rect, t) {
       labels.textContent = ""; svg.textContent = "";
       if (!opt.labels || opt.sheet) return;
+      // a label waits for its part: shown once the build has reached the point it names, never over an empty frame
+      const at = holo.assemblyTimes(), st = holo.state(t), begun = t >= at.ghost + at.collapse;
       const cw = canvas.width / holo.dpr, ch = canvas.height / holo.dpr;
       svg.setAttribute("viewBox", "0 0 " + cw + " " + ch);
       const placed = [];
       const free = (x, y, w) => !placed.some((r) => x < r[0] + r[2] + 8 && x + w + 8 > r[0] && Math.abs(y - r[1]) < 22);
       (geo.annotations || []).forEach((a, i) => {
+        const shown = !begun ? 0 : a.phase === undefined ? 1 : Math.max(0, Math.min(1, (st.build - a.phase) / 0.03));
+        if (shown <= 0) return;
         let anchor = a.anchor;
         if (a.joint >= 0 && holo.lastJoints) {  // follow the part as it opens
           const m = holo.lastJoints.subarray(a.joint * 16, a.joint * 16 + 16), q = anchor;
@@ -1100,11 +1104,13 @@ void main() {
         placed.push([right ? lx : lx - w, ly, w]);
         const line = document.createElementNS("http://www.w3.org/2000/svg", "polyline");
         line.setAttribute("points", sx + "," + sy + " " + lx + "," + ly);
+        line.style.opacity = shown;
         svg.appendChild(line);
         const dot = document.createElementNS("http://www.w3.org/2000/svg", "circle");
-        dot.setAttribute("cx", sx); dot.setAttribute("cy", sy); dot.setAttribute("r", 2.2); svg.appendChild(dot);
+        dot.setAttribute("cx", sx); dot.setAttribute("cy", sy); dot.setAttribute("r", 2.2); dot.style.opacity = shown;
+        svg.appendChild(dot);
         const tag = el("div", "label " + a.certainty, a.text);
-        tag.style.left = lx + "px"; tag.style.top = ly + "px";
+        tag.style.left = lx + "px"; tag.style.top = ly + "px"; tag.style.opacity = shown;
         if (!right) tag.classList.add("left");
         labels.appendChild(tag);
       });
@@ -1153,7 +1159,7 @@ void main() {
       const t = now();
       if (opt.sheet) { renderSheet(opt.sheet); return; }
       const out = holo.draw(t, [0, 0, canvas.width, canvas.height], opt.view, {});
-      placeLabels(out.vp, out.rect);
+      placeLabels(out.vp, out.rect, t);
     }
 
     // interaction

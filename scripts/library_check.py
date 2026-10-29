@@ -96,6 +96,7 @@ def check(built, run_file):
     found["audit"] = "pass" if not audit.get("errors") else "fail: " + "; ".join(e.get("code", "?") for e in audit["errors"])[:200]
     scene = json.loads((built / "scene.json").read_text())
     found["view"] = next((f["value"] for f in scene["facts"] if f["key"] == "view"), None)
+    found["window"] = next((f["value"] for f in scene["facts"] if f["key"] == "window"), None)
     found["lock"] = "holds" if netlogo.lock_problem(scene) is None else "broken"
     run = netlogo.read_run(run_file)
     clock = (scene.get("reading") or {}).get("clock") or {}

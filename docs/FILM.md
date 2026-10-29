@@ -92,14 +92,14 @@ has no clear sections, the build simply follows the pace.
 
 **Kicks.** The features also carry `kick`: a pulse on each kick or bass hit, found as a jump of the
 level below about 150 Hz above its last half second, so it pulses even over a bass that never
-stops. A typical kick of the track is near 1. NetLogo models read it as `construct:kick`, and a
-run with music flares on it ([NETLOGO.md](NETLOGO.md#5-music-optional)).
+stops. A typical kick of the track is near 1. NetLogo models read it as `construct:kick`
+([NETLOGO.md](NETLOGO.md#5-music-optional)).
 
 **A run with music.** A construct of a NetLogo run recorded to a track is film mode by itself, with
 no options: the build follows the run's own clock instead of the pace (tick *t* at second *t* ÷
-ticks a second, from the first moment), there are no stages to match to sections, and the light,
-accents and kicks come from the features carried in the page. Its replay bar plays the track with
-the run.
+ticks a second, from the first moment), and there are no stages to match to sections. The light
+does not follow the music: a run's construct is its data, so the track only keeps its clock. Its
+replay bar plays the track with the run.
 
 ## How strongly: the reactivity
 

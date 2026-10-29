@@ -360,7 +360,7 @@ public class ConstructExtension extends DefaultClassManager {
   }
 
   static final List<String> OPTIONS = List.of("state", "x", "z", "change", "time", "max-agents", "smooth", "levels", "resolution", "title", "art",
-      "model", "film");
+      "model", "film", "window");
 
   /** construct:draw "phase"   or   (construct:draw "network-time" "state" "infected?" "time" "sqrt")   or   (construct:draw "phase" "smooth" 25) */
   static class Draw implements Command {
@@ -373,7 +373,7 @@ public class ConstructExtension extends DefaultClassManager {
       List<Object> pairs = new ArrayList<>();
       for (int i = 1; i < args.length; i++) pairs.add(args[i].get());
       for (String line : draw(args[0].getString(), pairs).split("\n"))
-        if (line.contains("film")) say(c, "construct: " + line);
+        if (line.contains("film") || line.startsWith("window:")) say(c, "construct: " + line);
     }
   }
 
@@ -495,7 +495,7 @@ public class ConstructExtension extends DefaultClassManager {
           : counted ? "construct: ran " + model + " for " + runs + " runs of go; drawing it."
           : "construct: " + model + " was still running after " + runs + " runs of go; drew those. For a longer run: construct:run-for 3000");
       String report = draw("auto", new ArrayList<>());
-      for (String line : report.split("\n")) if (line.startsWith("view:")) say(c, "construct: " + line);
+      for (String line : report.split("\n")) if (line.startsWith("view:") || line.startsWith("window:")) say(c, "construct: " + line);
     }
   }
 

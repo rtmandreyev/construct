@@ -143,14 +143,17 @@ TOOLS += [
      "description": "A construct of a recorded NetLogo run (the JSON Lines a run writes), computed from the data alone, "
                     "with its legend, how-to-read lines, replay clock and counts, and a data lock. Views: space-time "
                     "(moving agents), network-time (spreading on a network; give state), phase (two reporters in a "
-                    "cycle), field (spreading over patches). Optional: an art-direction layer (art: views, labels, "
+                    "cycle), field (spreading over patches), pulse (turtles switching a state on and off: how many at once, "
+                    "tick by tick), auto (the one the data suits). Moving agents and pulses are drawn over the window "
+                    "where their order formed when it forms early (window: auto, whole, or a tick). Optional: an art-direction layer (art: views, labels, "
                     "milestones; never the data), solid (spheres, tubes, a surface, for a 3D model) and materials (the "
                     "run's own colours, for construct_export). A run recorded with construct:music needs its features "
                     "(the <track>-audio-<rate>.json beside it) as features. Compile or export the scene with the other tools.",
      "inputSchema": {"type": "object", "properties": {
          "recording": {"type": "string", "maxLength": 950000, "description": "the run's JSON Lines (a larger run: "
                        "record with every > 1, or draw it with the command line)"},
-         "view": {"type": "string", "enum": ["space-time", "network-time", "phase", "field"]},
+         "view": {"type": "string", "enum": ["auto", "space-time", "network-time", "phase", "field", "pulse"]},
+         "window": {"type": "string", "description": "space-time and pulse: auto (default), whole, or the tick to end at"},
          "title": {"type": "string", "maxLength": 120},
          "state": {"type": "string"}, "x": {"type": "string"}, "z": {"type": "string"},
          "change": {"type": "string", "enum": ["first", "last"]}, "time": {"type": "string", "enum": ["linear", "sqrt"]},
@@ -244,7 +247,7 @@ V2_TOOLS = {"construct_diagnose": ({"text", "document"}, set()),
             "construct_limits": ({"tier", "request", "overrides"}, set()),
             "construct_netlogo_instrument": ({"model", "title", "turtles", "reporters", "patches", "every", "seed", "ticks",
                                               "skip_turtles", "setup", "go"}, {"model", "title"}),
-            "construct_netlogo_draw": ({"recording", "view", "title", "state", "x", "z", "change", "time", "max_agents",
+            "construct_netlogo_draw": ({"recording", "view", "title", "state", "x", "z", "change", "time", "max_agents", "window",
                                         "smooth", "levels", "resolution", "solid", "materials", "art"}, {"recording", "view"})}
 # the 0.2 pre-release names: still answered for one release, no longer listed
 DEPRECATED = {"hologram_diagnose": "construct_diagnose", "hologram_params_template": "construct_params_template",
@@ -328,8 +331,8 @@ def _call_netlogo(name, args):
         run = netlogo.parse_run(args["recording"])
         if isinstance(args.get("features"), dict):
             run["features"] = args["features"]
-        opts = {k: args[k] for k in ("state", "x", "z", "change", "time", "max_agents", "smooth", "levels", "resolution")
-                if k in args}
+        opts = {k: args[k] for k in ("state", "x", "z", "change", "time", "max_agents", "smooth", "levels", "resolution",
+                                     "window") if k in args}
         sc = netlogo.scene_from_run(run, args["view"], args.get("title"), solid=bool(args.get("solid")), **opts)
         if "art" in args:
             sc = netlogo.apply_art(sc, args["art"])

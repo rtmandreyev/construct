@@ -1212,6 +1212,10 @@
        "inferred",
        "decorative"
       ]
+     },
+     "phase": {
+      "type": "number",
+      "minimum": 0
      }
     },
     "required": [

@@ -1789,14 +1789,17 @@ def compile_scene(scene, solid=False):
 
     anns = []
     by_id = {p["id"]: p for p in part_out}
+    stage_of = {p["id"]: p["stage"] for p in scene["parts"]}
     for a in scene.get("annotations", []):
         inst = by_id[a["part"]]["instances"][0]
         anchor = [(inst["min"][k] + inst["max"][k]) / 2 for k in range(3)]
         anchor[1] = inst["max"][1]
         off = a.get("offset", [0, 0, 0])
-        anns.append({"id": a["id"], "text": a["text"], "part": a["part"],
-                     "anchor": [_r(anchor[k] + off[k]) for k in range(3)], "joint": inst["joint"],
-                     "certainty": a.get("certainty", by_id[a["part"]]["certainty"])})
+        at = [_r(anchor[k] + off[k]) for k in range(3)]
+        anns.append({"id": a["id"], "text": a["text"], "part": a["part"], "anchor": at, "joint": inst["joint"],
+                     "certainty": a.get("certainty", by_id[a["part"]]["certainty"]),
+                     # when the build reaches the point it names: the label waits for its part
+                     "phase": round(phase(stage_of[a["part"]], min(at[1], inst["max"][1])), 6)})
 
     facts = {f["key"]: f for f in scene["facts"]}
     labels = []

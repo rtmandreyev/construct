@@ -508,6 +508,93 @@ class Views(unittest.TestCase):
                 self.assertIsNone(netlogo.lock_problem(sc))
 
 
+def ordered(kind, ticks=600, n=40, settle=120):
+    """A synthetic run whose order forms early and then holds: fireflies (kind "pulse") that flash every 10 ticks,
+    out of step until `settle` and in step after; or birds ("flock") that head every way until `settle`, then one
+    way."""
+    import math
+    import random
+    rnd = random.Random(3)
+    h = {"construct-netlogo": 1, "title": "Order", "netlogo": "7.0.4", "seed": 1,
+         "world": {"min-pxcor": -20, "max-pxcor": 20, "min-pycor": -20, "max-pycor": 20},
+         "turtle-vars": ["lit?"] if kind == "pulse" else [], "reporters": [], "patch-reporter": "", "patch-every": 0}
+    lines = [json.dumps(h)]
+    offs = [rnd.randrange(10) for _ in range(n)]
+    pos = [[rnd.uniform(-15, 15), rnd.uniform(-15, 15)] for _ in range(n)]
+    heads = [rnd.uniform(0, 2 * math.pi) for _ in range(n)]
+    for t in range(ticks):
+        rows = []
+        for w in range(n):
+            if kind == "pulse":
+                rows.append([w, "turtles", round(pos[w][0], 3), round(pos[w][1], 3), 45,
+                             (t - (offs[w] if t < settle else 0)) % 10 == 0])
+            else:
+                a = heads[w] if t < settle else 0.4
+                if t < settle:
+                    heads[w] += rnd.uniform(-0.6, 0.6)
+                pos[w] = [(pos[w][0] + 0.3 * math.cos(a) + 20.5) % 41 - 20.5, (pos[w][1] + 0.3 * math.sin(a) + 20.5) % 41 - 20.5]
+                rows.append([w, "birds", round(pos[w][0], 3), round(pos[w][1], 3), 45])
+        lines.append(json.dumps({"t": t, "turtles": rows}))
+    lines.append(json.dumps({"end": ticks - 1}))
+    return netlogo.parse_run("\n".join(lines) + "\n")
+
+
+class Order(unittest.TestCase):
+    """The views that show order forming: a pulse for turtles that switch on and off, the paths for movers, each
+    drawn over the window where its order formed when it forms early."""
+
+    def test_turtles_in_step_are_a_pulse_over_the_window_where_they_fell_in_step(self):
+        run = ordered("pulse")
+        self.assertEqual(netlogo.choose_view(run)[0], "pulse")
+        sc = netlogo.scene_from_run(run, "auto")
+        self.assertEqual(scene.validate(sc), [])
+        facts = {f["key"]: f for f in sc["facts"]}
+        self.assertEqual(facts["view"]["value"], "pulse")
+        end = int(facts["window"]["value"].split()[3])
+        self.assertTrue(120 <= end <= 360, facts["window"])           # just after they fell in step, not the whole run
+        self.assertIn("ticks 0 to %d of 599" % end, sc["title"])
+        self.assertIn("synchrony formed", facts["window"]["note"])
+        rings = [p for p in sc["parts"] if p["id"].startswith("pulse-") and p["id"] != "pulse-all"]
+        self.assertTrue(rings)
+        widths = [max(abs(v[0]) for v in ring) for p in rings for ring in p["shape"]["paths"]]
+        self.assertGreater(max(widths), 2 * min(widths))              # the plates once in step, wider than before
+        self.assertIn("at once", [s["name"] for s in sc["reading"]["series"]])
+        self.assertTrue(any("where the synchrony formed" in x for x in sc["reading"]["how"]))
+        whole = netlogo.scene_from_run(run, "pulse", window="whole")
+        self.assertNotIn("window", {f["key"] for f in whole["facts"]})
+        self.assertEqual(whole["reading"]["clock"]["to"], 599)
+
+    def test_birds_that_come_to_fly_one_way_are_paths_over_the_window_where_they_aligned(self):
+        run = ordered("flock")
+        self.assertEqual(netlogo.choose_view(run)[0], "space-time")
+        sc = netlogo.scene_from_run(run, "auto")
+        facts = {f["key"]: f for f in sc["facts"]}
+        end = int(facts["window"]["value"].split()[3])
+        self.assertTrue(120 <= end <= 360, facts["window"])
+        self.assertIn("alignment formed", facts["window"]["note"])
+        align = next(s for s in sc["reading"]["series"] if s["name"] == "alignment")["values"]
+        self.assertLess(align[0][1], 0.6)
+        self.assertGreater(align[-1][1], 0.95)
+        self.assertEqual(netlogo.scene_from_run(run, "space-time", window="200")["reading"]["clock"]["to"], 200)
+        with self.assertRaises(netlogo.NetLogoError):
+            netlogo.scene_from_run(run, "space-time", window="soon")
+
+    def test_order_that_never_forms_draws_the_whole_run(self):
+        run = ordered("flock", settle=10 ** 6)                        # every way, all run long
+        self.assertIsNone(netlogo.settle_window(netlogo._alignment(run, netlogo._World(run["header"], 599)), 599))
+        sc = netlogo.scene_from_run(run, "auto")
+        self.assertNotIn("window", {f["key"] for f in sc["facts"]})
+
+    def test_a_label_waits_for_its_part(self):
+        g = scene.compile_scene(netlogo.scene_from_run(ordered("flock"), "auto"))
+        self.assertTrue(g["annotations"])
+        for a in g["annotations"]:
+            self.assertGreaterEqual(a["phase"], 0)
+        top = max(g["annotations"], key=lambda a: a["anchor"][1])
+        low = min(g["annotations"], key=lambda a: a["anchor"][1])
+        self.assertGreaterEqual(top["phase"], low["phase"])           # higher up, later in the build
+
+
 class ArtDirection(unittest.TestCase):
     ART = {"credit": "Claude Opus 5.5", "title": "A run, directed",
            "looks": {"world": {"label": "The world", "look": {"alpha": 0.3}}},
