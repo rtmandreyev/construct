@@ -5,7 +5,7 @@
 Models come alive, and music becomes something to build with: the NetLogo bridge, made reliable on
 the whole Models Library and usable from inside NetLogo; runs as films and 3D models in Blender; songs
 and scores as constructs; and pages for classrooms and museums. Plan:
-[ROADMAP.md](docs/ROADMAP.md#v11-models-come-alive); the story:
+[ROADMAP.md](docs/ROADMAP.md#v11-models-come-alive-netlogo); the story:
 [release notes](docs/releases/v1.1.0.md).
 
 - **Construct for NetLogo** ([hosts/netlogo](hosts/netlogo/README.md)): a NetLogo 7 extension,

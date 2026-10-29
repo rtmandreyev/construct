@@ -1,8 +1,10 @@
 # Roadmap
 
-What comes next, in order. Each phase ends with a review before the next one starts; nothing here
-is released until it is done and tested. What is already in Construct is in the
-[changelog](../CHANGELOG.md).
+What comes next, in order. Work is divided into areas, one release each, and lands in small steps
+that are tested as they arrive; each phase ends with a review before the next one starts, and
+nothing here is released until it is done and tested. What is already in Construct is in the
+[changelog](../CHANGELOG.md). Work built ahead of its release waits on a branch (see
+[Parked work](#parked-work)).
 
 ## v1.0.0: a hologram, a 3D model and its parts
 
@@ -122,14 +124,13 @@ the scene and geometry contract keeps its id (`construct/0.2`), because nothing 
   add-on is GPL-3.0-or-later, for Blender's extensions platform.
 - Left: the release videos and posts, and the add-on's listing on extensions.blender.org.
 
-## v1.1: models come alive
+## v1.1: models come alive (NetLogo)
 
-Phases A to H are built for 1.1.0 ([release notes](releases/v1.1.0.md)).
-
-Make agent-based models exciting to learn from: a simulation's whole run as an animated hologram a
-student wants to explore (why does it take this shape? how do I read it?), accurate to the run,
-and exportable to Blender as a real 3D model. The core stays free, fast and reliable; the heavy
-work (art direction, critic rounds, 3D models) is opt-in.
+1.1 is NetLogo only: a simulation's whole run as a hologram a student wants to explore (why does it
+take this shape? how do I read it?), accurate to the run, and exportable to Blender as a real 3D
+model or a film. The core stays free, fast and reliable; the heavy work (art direction, critic
+rounds, 3D models) is opt-in. Runs to music were built and removed (28 October 2026): a run is its
+model alone.
 
 ### Phase A: a reliable core (done)
 
@@ -139,143 +140,175 @@ work (art direction, critic rounds, 3D models) is opt-in.
   in fractions: 388 of the 445 two-dimensional stock models record a run unattended (256 at 1.0;
   most of the rest wait for a player or a classroom), and a refusal says what to do.
 - A run of the whole Models Library is a regression test: how many record, and why the rest don't.
-- Every NetLogo construct gets a legend, shown from the start, and no decoration that could be
-  read as data (the projector's rings are off).
+- Every NetLogo construct gets a legend, each label shown as its part is drawn, and no decoration
+  that could be read as data.
 
-### Phase B: an official NetLogo extension (built; listing next)
+### Phase B: an official NetLogo extension (built; listing after the release)
 
-- `extensions [construct]`: the recording as primitives (`construct:start`, `construct:track-…`,
-  `construct:record`) and `construct:draw`, which writes the construct beside the model and opens
-  it. In Java, tested in NetLogo 7.0.4 ([hosts/netlogo](../hosts/netlogo/README.md)).
-- The same recording format, so the command line, art direction and the data lock keep working.
+- `extensions [construct]`: the recording as primitives and `construct:run`, one command from a
+  stock model to its construct; `construct:draw` for full control. In Java, tested in NetLogo 7.0.4
+  ([hosts/netlogo](../hosts/netlogo/README.md)).
 - Next: listing it in NetLogo's Extensions Manager, through a pull request to NetLogo-Libraries.
 
-### Phase C: learners first (opt-in polish; done)
+### Phase C: learners first (done)
 
-- A replay control: scrub the run tick by tick and watch the shape form, with the tick and the
-  model's own counts on screen. (Done.)
-- "How to read it" on the page: the legend plus what each part of the shape means, from the bridge
-  or the art layer. (Done.)
-- Critic rounds for the art layer: an independent model compares versions, as in masterpiece
-  mode; the data lock keeps every round honest. (Done: the run critic.)
-- Legends placed to stay inside the frame. (Done.)
+- A replay control, How to read it, the counts as CSV, Cite this run, a printable worksheet, two
+  runs side by side (`construct netlogo-compare`), and critic rounds for the art layer.
 
-### Phase D: real 3D models of a run (opt-in; done, checked in Blender)
+### Phase D: real 3D models of a run (done, checked in Blender)
 
 - NetLogo constructs export to glTF as proper geometry: tracks and links as tubes, agents as
-  solids, one named object per breed or part, the run as the build animation. Tested in Blender.
+  solids, one named object per breed or part, the run as the build animation.
 
-### Phase E: every agent (MCP tools and skill done)
+### Phase E: every agent (done)
 
-- NetLogo tools in the MCP server (instrument, draw, art direction), so Hermes and any MCP client
-  can drive the bridge, and the skills' steps to match.
+- NetLogo tools in the MCP server (instrument, draw, art direction), and the skills' steps to match.
 
-### Phase F: runs as films (done)
+### Phase F: runs as films (done; links and patches next)
 
 - The run as a film in Blender, drawn from the recording itself (nothing sampled): every turtle as
-  moving light with a trail, at 30 ticks a second; from the add-on, `construct netlogo-film`, or
-  `"film" true` in NetLogo.
-- NetLogo 3D runs recorded with their heights and flown in the film; hidden turtles recorded and
-  kept unlit.
+  moving light with a trail, at 30 ticks a second, silent; NetLogo 3D runs in their box; hidden
+  turtles unlit.
+- To do: **links and patches in the film** (the same film for every model: a network's links as
+  light between its agents, the patches as a floor that changes tick by tick).
 
-### Phase G: museums and classrooms (done)
+### Phase G: where the order forms (done)
 
-- `construct build --kiosk`: a page that runs on its own on a museum screen or a classroom wall
-  (full screen, a label, an attract loop, touch to explore, sound after the first touch);
-  `construct kiosk` a show of several; `?live=1` an exhibit that hears its room.
-- A run's counts as CSV and a citation of the run, from its How to read it panel.
-- Two runs side by side for a lesson (`construct netlogo-compare`: a slider moved, or another seed).
-- A printable worksheet: the page, printed, with its picture, how to read it, the citation and questions.
+- The `pulse` view for turtles that switch a state on and off at regular gaps (Fireflies), and the
+  automatic window where order forms (alignment for movers, synchrony for pulses), on by default
+  and off with `--window whole` or `--view space-time`.
 
-### Phase H: music as a material (begun)
+### Phase H: finishing 1.1
 
-- `construct song`: a track as a tower of sound (`--solid`: a body to print), a MIDI score around the
-  circle of fifths; Keyframe to Its Track in Blender for any construct with a clock and a track.
+- Take the exhibits and music work off main (they wait on their branches, see Parked work), and
+  the release notes, changelog and README to match: 1.1 says only what it ships.
+- **Richer runs by default:** the critic's general findings as defaults (computed landmarks, the
+  run's own colours, readable time axes, milestones with contrast), gated by the machine checks.
+- **NetLogo examples showing every 1.1 feature, Blender included:** a run in one command, reading
+  and replay, two runs compared, the worksheet, a 3D model, a film, a pulse and a window.
+- The Models Library check, Linux and Windows CI, the README's pictures, the 1.1 video; then the
+  release and the Extensions Manager listing.
 
-## v1.5: makers (decided)
+## v1.2: makers
 
-Decided on 28 October 2026: 1.5 takes constructs into making things. Its plan is to be written
-before work starts; what is fixed now is the direction:
+Constructs into things you make.
 
-- **3D printer integration:** a construct (or a song, or a run) to a printable, watertight model
-  and on to the printer: STL and 3MF export, and a hand-off to a slicer and the printer.
+- **3D printing:** a construct (or a run) to a printable, watertight model: STL and 3MF export, the
+  checks a slicer would make (closed, manifold, wall thickness), and a hand-off to a slicer. Tested
+  without a printer by validating the mesh and slicing it with a slicer's command line; a real print
+  before a claim of fit (pins, tolerances).
 - **FreeCAD:** constructs in FreeCAD as parts with their names, sizes and joints, for engineering
   work and CAD formats (STEP).
 - **A simulation you can hold** (owner's idea, 28 October 2026): a printed miniature of a run that
-  shows its process in the physical world and assembles like a building set, for any model a construct
-  can draw. A construct of a run already has time as its height, so the general form is **a stack of
-  plates, one per moment**, numbered and keyed with pins to stack in order: assembling it replays the
-  run, and taking it apart steps back through time. Each view has a physical form:
+  shows its process in the physical world and assembles like a building set, for any model a
+  construct can draw. A construct of a run already has time as its height, so the general form is
+  **a stack of plates, one per moment**, numbered and keyed with pins to stack in order: assembling
+  it replays the run, and taking it apart steps back through time. Each view has a physical form:
   - a spread on a network: a base plate with the network, and a pin for each node cut to the tick it
     turned (set in order, the pins rise as the spread did);
   - a field's fronts: stacked contour plates, like a topographic model;
   - a cycle (phase): the rising loop as one printed tube on a stand;
-  - moving agents (time-lapse) and rhythms: one plate per slice, the arrows or the ring's dashes
-    standing up from it.
+  - moving agents and pulses: one plate per slice.
   To work out: every line thickened to printable ribs (about 1 mm and up), plates that fit a common
   bed, pin tolerances, the run's own colours by filament changes, and a printed key (what each plate
   is, the model and its data lock), so a classroom set is honest about what it shows.
 
-## Ideas (unordered)
+## v1.3: artworks, exhibits and provenance
 
-What could come after 1.1, grouped by direction and in no order: each release picks from here
-what is most worth building then (1.5 is decided, above). 1.5 and 2.0 look beyond research; research and teaching may
-come back in 2.1, depending on how 1.1 is received.
+For educators, museums and visual artists: what is known, shown as clearly as what is beautiful.
+Its truth-first stance is inspired by [Anatomy](https://github.com/wheresryan22/anatomy); its methods
+are its own.
 
-### Music
+- **High-provenance mode:** a construct that maximises accuracy: every part with a source or
+  visibly marked as a guess, a critic that judges accuracy only, a sources panel (touch a part to
+  see where it comes from), a certainty view and a printable evidence sheet for a class or a label.
+- **Artworks as constructs:** a painting as a relief of its composition (figures, perspective, the
+  vanishing point), each element with its source (catalogue, conservation reports, X-ray and
+  infrared studies), and what lies under the paint (underdrawings, pentimenti) as marked layers.
+- **A painting as a 3D scene:** the room and the figures of a painting such as David's *The Death of
+  Socrates* built in 3D to explore, with moments before and after the painted one, reconstructed
+  from the sources (for Socrates, Plato's *Phaedo*) and marked as reconstruction.
+- **Sculpture and architecture at real size,** improved and with every guess marked.
+- **Exhibits:** kiosk pages and shows (fixed: the kiosk's title over the viewer's caption, and
+  exploring by touch in full screen), opening in the provenance view if asked; live mode with two
+  demos, one for a classroom and one for a museum.
 
-- **Live mode:** constructs that react to live audio (a microphone or a line in) in real time,
-  for performances, streams and installations; MIDI controllers mapped to the build, the joints
-  and the look.
-- **A song as a construct:** a MIDI file or a track drawn with time as height (notes, sections,
-  loudness), like a NetLogo run: a sculpture of a song, to orbit, replay or 3D-print. (Begun in 1.1:
-  `construct song` draws a track's spectrum as a tower of rings that builds with it, and a MIDI file's
-  notes around the circle of fifths, and `--solid` a closed body to print.)
-- **Stems to parts:** each stem (drums, bass, voice) drives its own group of parts, beyond film
-  mode's one voice stem.
-- **Your gear:** a musician's synth, guitar or rig as a construct, its knobs and switches moving
-  with the track's automation.
-- **Loops for streaming services and video:** short vertical loops (Spotify Canvas, Reels) and
-  full-length visualisers rendered from a construct and a track.
+## v1.4: music
 
-### Film and video
+- **A song you can hold:** a track as a sculpture to print, made unique to its track (its key,
+  tempo, stereo width and sections shaping the form; forms to choose, such as a tower, a spiral or a
+  vessel; its title and length on the base).
+- **Scores and a MIDI player:** a score as a sculpture, and a 3D construct of an instrument (a piano
+  first) that plays a MIDI file, recorded and exported to Blender and game engines; generalised to
+  other instruments if it proves itself.
+- **Instruments that don't exist yet:** from a plugin's manual (a synth, an amp simulator, a channel
+  strip), the hardware it could be: its controls from the manual (verified), its panel and body
+  designed and marked as design, to render and to model after.
 
-- **Holographic screen graphics:** the hologram itself as a film asset, rendered with a
-  transparent background and separate passes, for compositing in After Effects, Nuke or
-  Resolve; camera moves imported from a tracked shot.
-- **Previs:** a scene's sets, vehicles and props described in words, blocked out at their real
-  sizes in Blender, with camera paths and a parts list for the art department.
-- **Reconstructions for documentaries:** historical places and objects that say what is known
-  and what is reconstructed, on screen.
-- **Title sequences and trailers:** constructs assembling to a cut, from an edit's markers.
+## v1.5: games
 
-### Games
-
-- **Blockout kits:** props and buildings at real sizes, with colliders and levels of detail, for
-  greyboxing a level.
+- **Blockout kits:** props and buildings at real sizes, with colliders and levels of detail.
 - **Engine packages:** importers or templates for Godot, Unity and Unreal; short guides for each.
-- **The hologram in game:** the Measured Light look as a runtime shader, for scanners,
-  blueprints and holographic interfaces, with build and open as game events.
+- **The hologram in game:** the Measured Light look as a runtime shader, for scanners, blueprints
+  and holographic interfaces, with build and open as game events.
 - **Variants without end:** the parametric archetypes as generators: a seed in, a new vehicle or
   building out, in the editor or at runtime.
 - **Break-apart:** named parts and joints as the pieces for destruction and assembly mechanics.
 - **Texture coordinates for every shape,** for texturing in any engine.
 
+## v1.6: film and documentary
+
+- **Reconstructions for documentaries:** historical places and objects that say on screen what is
+  known and what is reconstructed (with the high-provenance mode of 1.3).
+
+## Parked work
+
+Built ahead of its release, kept on local branches until its area comes; main holds only what is
+being released.
+
+| Branch | Holds | Comes back in |
+| --- | --- | --- |
+| `parked/exhibits` | kiosk pages and shows (`construct build --kiosk`, `construct kiosk`, viewer/kiosk.js), live mode (`?live=1` in viewer/film.js) | 1.3 |
+| `parked/music` | songs as towers (`construct song`, song.py, the `rings` shape, `--solid`), MIDI scores (score.py), Keyframe to Its Track in Blender, construct audio's `kick` | 1.4 |
+
+Both branches were cut from main at `9fd80bd` (28 October 2026), before the exhibits and music work
+is taken off main for 1.1. Scrapped, not parked: runs to music (removed in `3e246d6`), the beat
+tracker, and Keyframe to Its Track as a "3D visualiser" (the MIDI player of 1.4 replaces it).
+
+## Ideas (unordered)
+
+What could come later, grouped by direction and in no order: each release picks from here what is
+most worth building then.
+
+### Music
+
+- **Stems to parts:** each stem (drums, bass, voice) drives its own group of parts.
+- **Your gear:** a musician's synth, guitar or rig as a construct, its knobs and switches moving
+  with the track's automation.
+- **Loops for streaming services and video:** short vertical loops (Spotify Canvas, Reels).
+- **Strudel:** a construct of a live-coded pattern, its exact timing drawing polyrhythms and
+  polymeters as they are, each layer its own cycle; a page that follows Strudel's clock in a
+  performance.
+
+### Film and video (to decide)
+
+- **Holographic screen graphics:** the hologram as a film asset, rendered with a transparent
+  background and separate passes, for compositing; camera moves imported from a tracked shot.
+- **Previs:** a scene's sets, vehicles and props described in words, blocked out at their real
+  sizes in Blender, with camera paths and a parts list for the art department.
+- **Title sequences and trailers:** constructs assembling to a cut, from an edit's markers.
+
 ### Makers and 3D
 
-- **3D printing:** STL and 3MF export, with a solid, printable version of a construct or a run.
 - **USD and USDZ export:** one tap opens a construct in AR on an iPhone or iPad.
 - **From a photo:** a reference image traced into a first draft, then built from facts.
-- **An optional surface finish per part** (paint, metal, glass) in the scene itself, as a
-  contract addition.
-- **Versions and differences:** what changed between two versions of a construct; branches of an
-  art layer.
+- **An optional surface finish per part** (paint, metal, glass) in the scene itself.
+- **Versions and differences:** what changed between two versions of a construct.
 
 ### Immersive
 
 - **WebXR:** walk around a hologram in a headset, in the browser, with no app.
 - **Room scale:** a construct at its real size in the room, its parts apart around you.
-- **Museum kiosks:** a construct on a touch table, with what is known and what is reconstructed.
 
 ### Sharing and community
 
@@ -285,16 +318,12 @@ come back in 2.1, depending on how 1.1 is received.
 
 ### Research and teaching
 
-- **Richer runs by default:** the critic's general findings as defaults (computed landmarks, the
-  run's own colours, readable time axes, milestones with contrast), gated by the machine checks.
 - **Strata,** a view for models where things flip or jump rather than travel (Segregation, Life,
   Sandpile); **links in time,** so rewiring and growth show; **numeric globals** recorded and offered
   to the phase view; **meaningful states first** over a model's bookkeeping.
-- **Comparing runs:** two seeds or settings side by side, or a BehaviorSpace sweep as small
-  multiples.
+- **Sweeps:** a BehaviorSpace sweep as small multiples.
 - **Predict, then replay:** the shape hidden until the student has guessed it.
-- **Ask the construct:** a "why this shape?" question answered from the scene's facts (opt-in, a
-  model call).
+- **Ask the construct:** a "why this shape?" question answered from the scene's facts (opt-in).
 - **For a course:** one file with the page and a short handout, for Canvas or any LMS.
 - **More simulation worlds:** Mesa (Python), then GAMA, Repast, AnyLogic exports and plain time
   series; a JavaScript recorder for NetLogo Web.
