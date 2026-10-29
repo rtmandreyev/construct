@@ -7,7 +7,7 @@ For each two-dimensional model (3D models and Code Examples left out), one at a 
 `extensions [construct]` added runs `random-seed 5` then `construct:run` headless (Drive.java), and
 the construct it draws is checked:
 - the audit passes and the data lock holds;
-- the replay's clock ends at the run's last tick, and its counts are numbers;
+- the replay's clock ends at the run's last tick (or its window's), and its counts are numbers;
 - in headless Chrome, how many labels leave the window, overlap another label, or sit under the
   reading panel or the replay bar.
 
@@ -101,6 +101,8 @@ def check(built, run_file):
     run = netlogo.read_run(run_file)
     clock = (scene.get("reading") or {}).get("clock") or {}
     last = run["end"] if run["end"] is not None else run["frames"][-1]["t"]
+    if found["window"]:   # drawn over the window where its order formed: the clock ends there
+        last = int(found["window"].split()[3])
     problems = []
     if clock and abs(clock.get("to", 0) - max(1, last)) > 1e-6:
         problems.append("clock ends at %s, the run at %s" % (clock.get("to"), last))

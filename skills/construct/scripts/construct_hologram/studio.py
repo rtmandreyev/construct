@@ -514,7 +514,7 @@ def add_commands(sub):
     p.add_argument("--out", required=True, help="the scene to write (.json); then `build` it")
     p.add_argument("--title", help="the construct's title (default: the model's)")
     p.add_argument("--state", help="network-time: the turtle variable whose turning true lifts a node; pulse: the "
-                                   "state that switches on and off (a true/false variable, hidden? or color)")
+                                   "true/false variable that switches on and off (hidden? too)")
     p.add_argument("--window", help="space-time and pulse: auto (default: the window where the order formed, when "
                                     "it forms early), whole (the whole run), or the tick to end at")
     p.add_argument("--x", help="phase: the reporter across the floor (default: the first recorded)")

@@ -382,51 +382,84 @@ def _space_time(run, world, opts):
 EVENT_ONSETS = 4      # pulse: at least this many turnings on per turtle, on average, to be a rhythm
 PULSE_RINGS = 700     # pulse: at most this many rings (of 24 segments), within the data budget
 SETTLED = 0.9         # the window: until the order has come this far from its start to where it stays
+SHORT_RUN = 500       # the window: only for runs at least this long
 
 
 def _turtle_frames(run):
     return [f for f in run["frames"] if f.get("turtles")]
 
 
+SAMPLE_TURTLES = 200   # turtles the measures follow, chosen evenly by who: enough for a share, quick on any run
+REGULAR = 0.5          # pulse: the spread of a turtle's gaps between events (their deviation over their mean)
+
+
+_MEMO = []   # (frames, what, value): the last few measures worked out, the frames held so their id is not reused
+
+
+def _memo(run, what, make):
+    """A measure of a run's frames, worked out once while it is among the last few."""
+    for frames, w, value in _MEMO:
+        if frames is run["frames"] and w == what:
+            return value
+    value = make()
+    _MEMO.append((run["frames"], what, value))
+    del _MEMO[:-6]
+    return value
+
+
+def _sample_whos(run):
+    """At most SAMPLE_TURTLES turtles, evenly by who, from every turtle the run recorded."""
+    whos = sorted({r[0] for f in _turtle_frames(run) for r in f["turtles"]})
+    return set(whos if len(whos) <= SAMPLE_TURTLES else [whos[int(i * len(whos) / SAMPLE_TURTLES)]
+                                                         for i in range(SAMPLE_TURTLES)])
+
+
 def _event_signals(run):
-    """The states a turtle can switch on and off: each true/false turtle variable (hidden? too), and its colour.
-    For each, the event is its rarer value (a flash is the short state), with each turtle's onsets."""
+    """The states a turtle can switch on and off: each true/false turtle variable, hidden? too (a colour that
+    changes shows a state, not a rhythm). For each, the event is its rarer value (a flash is the short state),
+    with a sample of turtles' records, their onsets per turtle and how regular their gaps are. Worked out once
+    for a run (and once for a window of it)."""
+    return _memo(run, "signals", lambda: _signals_of(run))
+
+
+def _signals_of(run):
     h, tf = run["header"], _turtle_frames(run)
-    gets = [(var, lambda r, i=i: r[5 + i] if len(r) > 5 + i else None) for i, var in enumerate(h.get("turtle-vars", []))]
-    gets.append(("color", lambda r: r[4]))
+    keep = _sample_whos(run)
     out = []
-    for name, get in gets:
+    for i, name in enumerate(h.get("turtle-vars", [])):
         seq = {}
         for f in tf:
             for r in f["turtles"]:
-                seq.setdefault(r[0], []).append((f["t"], get(r), r[2], r[3]))
-        allv = [v for s in seq.values() for _, v, _, _ in s]
-        if not allv:
+                if r[0] in keep:
+                    seq.setdefault(r[0], []).append((f["t"], r[5 + i] if len(r) > 5 + i else None, r[2], r[3]))
+        allv = [v for sq in seq.values() for _, v, _, _ in sq]
+        if not allv or not all(isinstance(v, bool) for v in allv):
             continue
-        if name == "color":
-            if not all(isinstance(v, (int, float)) for v in allv):
-                continue
-            usual = max(set(allv), key=allv.count)
-            on, word = (lambda v, u=usual: v != usual), "its colour changed"
-        elif all(isinstance(v, bool) for v in allv):
-            rare = sum(1 for v in allv if v) <= len(allv) / 2
-            on = (lambda v: v is True) if rare else (lambda v: v is False)
-            word = ("it was shown (hidden? turned false)" if name == "hidden?" and not rare else
-                    "%s turned %s" % (name, "true" if rare else "false"))
-        else:
-            continue
-        onsets = {w: sum(1 for (_, a, _, _), (_, b, _, _) in zip(s, s[1:]) if not on(a) and on(b)) for w, s in seq.items()}
+        rare = sum(1 for v in allv if v) <= len(allv) / 2
+        on = (lambda v: v is True) if rare else (lambda v: v is False)
+        word = ("it was shown (hidden? turned false)" if name == "hidden?" and not rare else
+                "%s turned %s" % (name, "true" if rare else "false"))
+        times = {w: [b[0] for a, b in zip(sq, sq[1:]) if not on(a[1]) and on(b[1])] for w, sq in seq.items()}
+        spreads = []
+        for ts in times.values():
+            gaps = [b - a for a, b in zip(ts, ts[1:])]
+            if len(gaps) >= 3:
+                m = sum(gaps) / len(gaps)
+                spreads.append(math.sqrt(sum((g - m) ** 2 for g in gaps) / len(gaps)) / m if m else 9.0)
         out.append({"state": name, "word": word, "on": on, "seq": seq,
-                    "mean": sum(onsets.values()) / len(onsets), "repeat": sum(1 for o in onsets.values() if o >= 2) / len(onsets)})
+                    "mean": sum(len(ts) for ts in times.values()) / len(times),
+                    "repeat": sum(1 for ts in times.values() if len(ts) >= 2) / len(times),
+                    "regular": sorted(spreads)[len(spreads) // 2] if spreads else 9.0})
     return out
 
 
 def _event_choice(run):
-    """The state that switches on and off as a rhythm (at least EVENT_ONSETS times per turtle on average, for
-    most turtles), a named variable before the colour; None if none does."""
+    """The state that switches on and off as a rhythm: at least EVENT_ONSETS times per turtle on average, for
+    most turtles, at gaps regular to within REGULAR; None if none does."""
     best = None
     for s in _event_signals(run):
-        if s["mean"] >= EVENT_ONSETS and s["repeat"] >= 0.5 and (best is None or s["mean"] > best["mean"] * 1.05):
+        if (s["mean"] >= EVENT_ONSETS and s["repeat"] >= 0.5 and s["regular"] <= REGULAR
+                and (best is None or s["mean"] > best["mean"] * 1.05)):
             best = s
     return best
 
@@ -458,11 +491,13 @@ def _value(run, state, row):
 
 
 def _headings(run, world):
-    """Each moving turtle's direction from one record to the next (unit vectors, wraps excluded), per record."""
+    """Each moving turtle's direction from one record to the next (unit vectors, wraps excluded), per record, for
+    a sample of turtles."""
     tf = _turtle_frames(run)
+    keep = _sample_whos(run)
     out = []
     for a, b in zip(tf, tf[1:]):
-        pos = {r[0]: (r[2], r[3], r[1]) for r in a["turtles"]}
+        pos = {r[0]: (r[2], r[3], r[1]) for r in a["turtles"] if r[0] in keep}
         dirs = []
         for r in b["turtles"]:
             p = pos.get(r[0])
@@ -478,9 +513,9 @@ def _headings(run, world):
 
 def _alignment(run, world):
     """Moving turtles' alignment at each record: the length of their mean heading, 0 when they head every way,
-    1 when all head one way."""
-    return [(t, math.hypot(sum(d[4] for d in dirs), sum(d[5] for d in dirs)) / len(dirs))
-            for t, dirs in _headings(run, world) if len(dirs) >= 2]
+    1 when all head one way. Worked out once for a run (and once for a window of it)."""
+    return _memo(run, "alignment", lambda: [(t, math.hypot(sum(d[4] for d in dirs), sum(d[5] for d in dirs)) / len(dirs))
+                                            for t, dirs in _headings(run, world) if len(dirs) >= 2])
 
 
 def _synchrony(run, s):
@@ -518,7 +553,7 @@ def settle_window(series, last):
     """Where order forms: the tick by which a measure has come SETTLED of the way from its start to the level it
     keeps, with a margin, when that is well before the end of the run; None when the order never forms or forms
     late (the whole run is then the story)."""
-    if len(series) < 20:
+    if len(series) < 20 or last < SHORT_RUN:   # a short run is not squeezed: drawn whole
         return None
     k = max(1, len(series) // 20)
     smooth = [(series[i][0], sum(v for _, v in series[max(0, i - k):i + 1]) / len(series[max(0, i - k):i + 1]))
@@ -539,8 +574,8 @@ def _pulse(run, world, opts):
     signals = {s["state"]: s for s in _event_signals(run)}
     state = opts.get("state") or (_event_choice(run) or {}).get("state")
     if not state:
-        raise NetLogoError("pulse needs a turtle state that switches on and off again and again (a true/false "
-                           "variable, hidden? or the colour); none does here")
+        raise NetLogoError("pulse needs a turtle state that switches on and off again and again at regular gaps (a "
+                           "true/false variable, hidden? too); none does here")
     if state not in signals:
         raise NetLogoError("no turtle state %r in the recording (%s)" % (state, ", ".join(sorted(signals))))
     s = signals[state]

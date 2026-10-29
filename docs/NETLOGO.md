@@ -135,22 +135,26 @@ construct build scene.json --out out/
 | `network-time` | spreading on a network (diffusion, epidemics, adoption) | the network on the floor; each turtle rises to the tick its `--state` variable first turned true, and each link between two risen turtles climbs from the earlier to the later |
 | `phase` | two quantities in a cycle (predator and prey) | `--x` across the floor and `--z` front to back (the first two reporters by default), height is ticks; its shadow on the floor is the classic phase plot, and the walls carry each against time. `--smooth N` averages over N records, recorded as a fact |
 | `field` | something spreading over patches (fire, contagion, settlement) | the front of change: where each patch's reporter first (`--change last`: last) changed, drawn every few ticks and raised to its tick; nothing where nothing changed. `--levels` fronts (32), over about `--resolution` blocks (64) |
-| `pulse` | turtles that switch a state on and off again and again (fireflies, firing cells, blinking signals) | one ring per tick, its area the share of turtles in that state then (`--state`: a true/false variable, `hidden?` or `color`): turtles on their own make a thin, ragged column, turtles in step wide plates with nothing between |
+| `pulse` | turtles that switch a state on and off again and again (fireflies, firing cells, blinking signals) | one ring per tick, its area the share of turtles in that state then (`--state`: a true/false variable, `hidden?` too): turtles on their own make a thin, ragged column, turtles in step wide plates with nothing between |
 
 `--view auto` chooses: a network where a true-or-false variable turned (network-time), a network
 that grew (network-time, each turtle at the tick it appeared), patches that changed (field), turtles
-that switch a state on and off at least four times each on average (pulse), two counts that move
-together (phase), else the agents' paths (space-time; when the agents barely move it says so).
+that switch a true/false state on and off at least four times each on average, at regular gaps
+(pulse; a colour that changes shows a state, not a rhythm), two counts that move together (phase),
+else the agents' paths (space-time; when the agents barely move it says so).
 
 **Where the order forms.** Moving turtles are measured by their alignment (how much they head one way:
 0 every way, 1 all one way) and turtles that switch on and off by their synchrony (the order parameter
 r, from each turtle's own events: 0 each on its own rhythm, 1 all in step). In a long run that order
 usually forms early and then holds, and a construct of the whole run would squeeze that moment into a
-few centimetres; so when it has formed by 60% of the run, space-time and pulse are drawn from tick 0
-to just after it formed. The construct says so: its title ("ticks 0 to 1063 of 3978"), a `window` fact
+few centimetres; so when it has formed by 60% of a run of 500 ticks or more, space-time and pulse are
+drawn from tick 0 to just after it formed. The construct says so: its title ("ticks 0 to 1063 of 3978"), a `window` fact
 with the measure at the start and by the window's end, and a line in How to read it. `--window whole`
 draws the whole run, `--window 800` ends it at tick 800; the recording, the CSV and the film always
-keep the whole run, and runs compared side by side are drawn whole. `--time sqrt` stretches the early ticks, for a run whose changes come early (most of an adoption
+keep the whole run, and runs compared side by side are drawn whole. Both measures follow at most 200
+turtles, chosen evenly by who.
+
+`--time sqrt` stretches the early ticks, for a run whose changes come early (most of an adoption
 cascade happens in its first tenth). Each construct records what was drawn as facts: the model, the
 seed, the ticks, which agents, how the data was sampled.
 

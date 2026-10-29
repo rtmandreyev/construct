@@ -21,7 +21,7 @@ and scores as constructs; and pages for classrooms and museums. Plan:
 - **Pulse, and where the order forms:** a new view, `pulse`, for turtles that switch a state on and off
   again and again (fireflies, firing cells): one ring per tick, its area the share in that state, so
   falling into step shows as a thin, ragged column opening into wide plates; `--view auto` picks it
-  when turtles switch at least four times each on average. Moving turtles are measured by their
+  when turtles switch a true/false state at least four times each on average, at regular gaps. Moving turtles are measured by their
   alignment and pulses by their synchrony (the order parameter r); when that order forms early in a
   long run, space-time and pulse are drawn over the window where it formed, said in the title, a
   `window` fact and How to read it (`--window whole|auto|TICK`; also in `construct:draw` and MCP).
