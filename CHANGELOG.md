@@ -14,6 +14,11 @@ Makers: constructs into things you make. Plan: [ROADMAP.md](docs/ROADMAP.md#v12-
   fits the bed, where it needs supports, and which parts were thickened or left out (annotations,
   and parts drawn only in lines unless `--lines`). Also the MCP tool `construct_print` and the
   skill. Checked against PrusaSlicer when it is installed: manifold, one part, and it slices.
+- **FreeCAD** ([FREECAD.md](docs/FREECAD.md)): `construct freecad scene.json --out model.FCStd --step
+  model.step` builds a construct in FreeCAD (1.0 or newer, run through its own `freecadcmd`) as named
+  solids, each part's closed pieces sewn and refined, its role, certainty, source and stage as
+  properties, in a group per stage; each articulation a nested group with its type, axis, pivot,
+  amount and an `Open` placement that opens it; then STEP with the same tree and names.
 
 ## 1.1.0 — unreleased
 

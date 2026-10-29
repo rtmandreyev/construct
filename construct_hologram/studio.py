@@ -10,6 +10,8 @@
                       [--materials map.json] [--frame y-up|z-up] [--merge]    a 3D model (docs/EXPORT.md)
   print <scene.json> --out FILE.stl|.3mf [--size MM | --scale N] [--detail MM] [--wall MM] [--join MM]
                      [--lines] [--bed WxDxH]          one watertight body to 3D print (docs/PRINTING.md)
+  freecad <scene.json> --out FILE.FCStd|.step [--step FILE.step] [--freecad PATH]
+                                                        named solids and joints in FreeCAD, and STEP (docs/FREECAD.md)
 
 Exit status: 0 success, 1 the scene or audit has errors, 2 capture unavailable.
 """
@@ -467,6 +469,13 @@ def add_commands(sub):
                    help="close gaps between parts up to this wide, in mm, so the print is one piece (default 1.6; 0: off)")
     p.add_argument("--lines", action="store_true", help="print the parts drawn only in lines as raised lines")
     p.add_argument("--bed", default="250x210x220", help="the printer's build volume in mm (default 250x210x220)")
+    p = sub.add_parser("freecad", help="named solids and joints in FreeCAD (.FCStd), and STEP; runs FreeCAD "
+                                       "(docs/FREECAD.md)")
+    p.add_argument("scene")
+    p.add_argument("--out", required=True, help="FILE.FCStd, or FILE.step for STEP alone")
+    p.add_argument("--step", help="also write STEP here")
+    p.add_argument("--freecad", help="the FreeCAD command line to run (default: $CONSTRUCT_FREECAD, `freecadcmd`, "
+                                     "or the usual installs)")
     p = sub.add_parser("netlogo-compare", help="two NetLogo runs side by side, drawn the same way on one time scale "
                                                "(a slider moved, another seed)")
     p.add_argument("run_a")
@@ -545,8 +554,13 @@ def add_commands(sub):
                    help="track (default): each track mapped to its own loudness range; fixed: the older -40..-10 dB window")
 
 
+def printing_list(ids):
+    from . import printing
+    return printing._list(ids)
+
+
 COMMANDS = ("new", "params", "expand", "prompts", "author", "trace", "trace-image", "terrain", "globe", "critique", "rounds", "compare", "loft-from-traces", "check", "build", "review",
-            "video", "audio", "export", "print", "netlogo", "netlogo-instrument", "netlogo-film", "netlogo-compare")
+            "video", "audio", "export", "print", "freecad", "netlogo", "netlogo-instrument", "netlogo-film", "netlogo-compare")
 
 
 def run(args):
@@ -917,6 +931,28 @@ def run(args):
             for line in printing.notes(r):
                 sys.stdout.write("  %s\n" % line)
             return 0 if r["watertight"] else 1
+        if args.command == "freecad":
+            from . import freecad
+            out = Path(args.out)
+            is_step = out.suffix.lower() in (".step", ".stp")
+            if not is_step and out.suffix.lower() != ".fcstd":
+                sys.stderr.write("freecad: --out FILE.FCStd or FILE.step\n")
+                return 1
+            try:
+                r = freecad.make(load(args.scene), fcstd=None if is_step else out, step=out if is_step else args.step,
+                                 freecad=args.freecad)
+            except freecad.FreeCADError as exc:
+                sys.stderr.write("freecad: %s\n" % exc)
+                return 1
+            sys.stdout.write("wrote %s: %d named parts, %d joint%s\n" % (", ".join(r["files"]), r["parts"], r["joints"],
+                                                                         "" if r["joints"] == 1 else "s"))
+            if r["surfaces"]:
+                sys.stdout.write("  surfaces, not solids (open in the construct): %s\n" % printing_list(r["surfaces"]))
+            if r["left_out"]:
+                sys.stdout.write("  drawn only in lines, left out: %s\n" % printing_list(r["left_out"]))
+            if r["invalid"]:
+                sys.stdout.write("  FreeCAD found these shapes invalid: %s\n" % printing_list(r["invalid"]))
+            return 0 if not r["invalid"] else 1
         if args.command == "audio":
             from . import film_audio
             try:

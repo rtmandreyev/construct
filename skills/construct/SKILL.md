@@ -93,6 +93,7 @@ Work in a folder of your own. `out/construct.html` opens in any browser.
 | film mode: measure a track, then render the construct assembling across it | `audio track.wav --out audio.json`, then `video scene.json --out film.mp4 --assembly <seconds> --audio audio.json --sound track.wav --camera steady` |
 | a 3D model (glTF or OBJ) for Blender, game engines, the web | `export scene.json --out model.glb` (`--wire tubes`, `--pose open`, `--materials map.json`) |
 | a 3D print (STL or 3MF): one watertight solid, checked | `print scene.json --out model.3mf` (`--size 100`, `--scale 43`, `--lines`) |
+| FreeCAD and STEP: named solids with joints (needs FreeCAD) | `freecad scene.json --out model.FCStd --step model.step` |
 
 ## Procedure
 
