@@ -964,6 +964,54 @@ def choose_view(run, exclude=()):
     raise NetLogoError("nothing in the recording to draw: no turtles, no changing patches, no two moving counts")
 
 
+def _landmarks(reading, world, view):
+    """The moments worth marking, computed from the run's first count: for a count that rises and holds, where it is
+    half way and most of the way (90%) from its start to its height; for one that rises and falls, its peak. Each a
+    dashed frame at its tick, in the accent, with its value: inferred, like an art layer's milestones, and under the
+    data lock (they are the recording's, computed)."""
+    series = (reading.get("series") or [None])[0]
+    if not series or len(series["values"]) < 5:
+        return [], []
+    vals = series["values"]
+    name = series["name"]
+    v0 = vals[0][1]
+    top_t, top = max(vals, key=lambda tv: tv[1])
+    last = vals[-1][1]
+    if top - v0 <= 1e-9:
+        return [], []
+    marks = []
+    if view == "pulse":   # a share that beats every cycle: the first time half, then all (or most), are on at once
+        for frac, word in ((0.5, "Half at once"), (0.99 if top >= 0.99 else 0.9 * top, "All at once" if top >= 0.99 else
+                                                    "Most at once")):
+            t, v = next((tv for tv in vals if tv[1] >= frac), (None, None))
+            if t is not None and (not marks or t > marks[-1][1]):
+                marks.append((word, t, v))
+    elif last >= v0 + 0.8 * (top - v0):   # rises and holds
+        for frac, word in ((0.5, "Half way"), (0.9, "Most of the way")):
+            t, v = next((tv for tv in vals if tv[1] >= v0 + frac * (top - v0)), (None, None))
+            if t is not None and (not marks or t > marks[-1][1]):
+                marks.append((word, t, v))
+    else:   # rises and falls: its peak
+        marks.append(("Peak", top_t, top))
+    share = view == "pulse"
+    fmt = lambda v: ("%d" % v) if float(v).is_integer() else ("%.2f" % v)
+    hw, hd = world.w * world.k / 2, world.h * world.k / 2
+    parts, facts = [], []
+    for i, (word, t, v) in enumerate(marks):
+        y = round(world.height(t), 3)
+        frame = [[-hw, y, -hd], [hw, y, -hd], [hw, y, hd], [-hw, y, hd], [-hw, y, -hd]]
+        key = "landmark_%d" % (i + 1)
+        what = ("%d%% of the turtles" % round(100 * v)) if share else "%s %s" % (fmt(v), name)
+        part = _part(key.replace("_", "-"), ("%s: %s · tick %s" % (word, what, fmt(t)))[:80], "data",
+                     {"type": "paths", "paths": [frame]}, certainty="inferred", tone="accent", weight=1.0, alpha=0.9)
+        part["floating"] = True
+        part["basis"] = [key]
+        part["look"]["line"] = "dashed"
+        parts.append(part)
+        facts.append((key, "%s: %s at tick %s" % (word.lower(), what, fmt(t))))
+    return parts, facts
+
+
 def _window(run, view, opts, last):
     """The window a view is drawn over: the run up to where its order formed (settle_window), automatically for
     moving turtles and turtles that switch on and off; `window` "whole" draws the whole run, a number ends it
@@ -1026,6 +1074,11 @@ def scene_from_run(run, view, title=None, **opts):
         parts = [p for p in data]
     else:
         parts = _frame_axis(world) + data
+    reading = _reading(run, view, world, opts, time)
+    if opts.get("landmarks", "on") not in ("off", False):   # the moments worth marking, from the counts
+        marks, mark_facts = _landmarks(reading, world, view)
+        parts += marks
+        extra = list(extra) + mark_facts
     title = title or (h["title"] + (" (ticks 0 to %d of %d)" % (last, whole) if window else ""))
     seed = h.get("seed")
     model = "%s (NetLogo %s%s)" % (h["title"], h.get("netlogo", "?"), ", random-seed %s" % seed if seed is not None else "")
@@ -1041,7 +1094,8 @@ def scene_from_run(run, view, title=None, **opts):
               "certainty": "user_supplied", "source": "request"}]
     if seed is not None:
         facts.append({"key": "seed", "value": seed, "certainty": "verified", "source": "run"})
-    facts += [{"key": k, "value": v, "certainty": "verified", "source": "run"} for k, v in extra]
+    facts += [{"key": k, "value": v, "certainty": "inferred" if k.startswith("landmark_") else "verified", "source": "run"}
+              for k, v in extra]
     if window:
         facts.append({"key": "window", "value": "ticks 0 to %d of %d" % (last, whole), "certainty": "verified",
                       "source": "run", "note": "Where the %s formed: %.2f at the start, %.2f by tick %d, and it stays "
@@ -1068,7 +1122,7 @@ def scene_from_run(run, view, title=None, **opts):
                       "idle": {"life": "calm", "events": ["scan"], "cadence": [8, 14], "strength": 0.4},
                       "camera": {"drift": 4, "breathe": 0.02}},
     }
-    sc["reading"] = _reading(run, view, world, opts, time)
+    sc["reading"] = reading
     if view == "space-time" and any(k == "sampling" and v != "every 1 record" for k, v in extra):
         sc["reading"]["how"].append("A long run of moving agents is dense here: this is its shape; for its motion, "
                                     "every agent at every tick, make its film (construct netlogo-film).")
@@ -1221,7 +1275,7 @@ def compare_runs(run_a, run_b, view, labels=("A", "B"), title=None, **opts):
         opts = dict(auto, **{k: v for k, v in opts.items() if v not in (None, False)})
     end = lambda r: r["end"] if r["end"] is not None else r["frames"][-1]["t"]
     span = max(end(run_a), end(run_b))
-    scenes = [scene_from_run(r, view, title, span=span, **opts) for r in (run_a, run_b)]
+    scenes = [scene_from_run(r, view, title, span=span, **dict(opts, landmarks="off")) for r in (run_a, run_b)]
     gap = FLOOR * 1.35
     parts, facts, sources, notes, series = [], [], [], [], []
     for k, (sc, tag) in enumerate(zip(scenes, labels)):

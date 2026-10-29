@@ -143,6 +143,13 @@ that switch a true/false state on and off at least four times each on average, a
 (pulse; a colour that changes shows a state, not a rhythm), two counts that move together (phase),
 else the agents' paths (space-time; when the agents barely move it says so).
 
+**Landmarks.** Every construct of a run marks the moments worth marking, computed from its first count
+(the one the replay shows first): for a count that rises and holds, where it is half way and most of
+the way (90%) from its start to its height; for one that rises and falls, its peak; for a pulse, the
+first tick half the turtles, then all of them, were on at once. Each is a dashed frame in the accent at
+its tick, labelled with its value ("Peak: 78 infected · tick 147"), marked inferred and kept under the
+data lock. `--landmarks off` leaves them out; runs compared side by side have none.
+
 **Where the order forms.** Moving turtles are measured by their alignment (how much they head one way:
 0 every way, 1 all one way) and turtles that switch on and off by their synchrony (the order parameter
 r, from each turtle's own events: 0 each on its own rhythm, 1 all in step). In a long run that order

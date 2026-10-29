@@ -25,6 +25,10 @@ side, printed as worksheets and cited. Plan:
   alignment and pulses by their synchrony (the order parameter r); when that order forms early in a
   long run, space-time and pulse are drawn over the window where it formed, said in the title, a
   `window` fact and How to read it (`--window whole|auto|TICK`; also in `construct:draw` and MCP).
+- **Landmarks:** a construct of a run marks the moments worth marking from its first count (half way and
+  most of the way, a peak, or half and all at once for a pulse): dashed frames in the accent, labelled
+  with their value and tick, inferred and under the data lock; `--landmarks off` (and in
+  `construct:draw` and MCP) leaves them out.
 - **Labels wait for their parts:** a construct's labels appear as the build reaches the point each one
   names (the geometry's annotations carry that `phase`), never over an empty frame; the viewer's
   pinned copy moves to `testdata/hologram-1.1.0.js`.

@@ -498,6 +498,8 @@ def add_commands(sub):
     p.add_argument("--title", help="the construct's title (default: the model's)")
     p.add_argument("--state", help="network-time: the turtle variable whose turning true lifts a node; pulse: the "
                                    "true/false variable that switches on and off (hidden? too)")
+    p.add_argument("--landmarks", choices=("on", "off"), default="on", help="mark the moments worth marking, computed "
+                   "from the run's first count (half way and most of the way, a peak, or half and all at once): on (default) or off")
     p.add_argument("--window", help="space-time and pulse: auto (default: the window where the order formed, when "
                                     "it forms early), whole (the whole run), or the tick to end at")
     p.add_argument("--x", help="phase: the reporter across the floor (default: the first recorded)")
@@ -839,7 +841,8 @@ def run(args):
                 scene = nl.scene_from_run(nl.read_run(args.run), args.view, args.title, state=args.state, x=args.x,
                                           z=args.z, change=args.change, max_agents=args.max_agents,
                                           time=args.time, smooth=args.smooth, levels=args.levels,
-                                          resolution=args.resolution, solid=args.solid, window=args.window)
+                                          resolution=args.resolution, solid=args.solid, window=args.window,
+                                          landmarks=args.landmarks)
                 win = next((f for f in scene["facts"] if f["key"] == "window"), None)
                 if win:
                     sys.stdout.write("window: %s (%s)\n" % (win["value"], win["note"].split(":")[0].lower()))

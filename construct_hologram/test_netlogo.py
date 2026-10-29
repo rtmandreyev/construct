@@ -210,7 +210,8 @@ class Views(unittest.TestCase):
         facts = {f["key"]: f for f in sc["facts"]}
         self.assertEqual((facts["model"]["value"], facts["seed"]["value"], facts["ticks"]["value"]), ("Test model", 5, 11))
         self.assertEqual(next(s for s in sc["sources"] if s["id"] == "run")["kind"], "dataset")
-        self.assertTrue(all(p["certainty"] == "verified" for p in sc["parts"]))
+        self.assertTrue(all(p["certainty"] == "verified" for p in sc["parts"] if not p["id"].startswith("landmark-")))
+        self.assertTrue(all(p["certainty"] == "inferred" for p in sc["parts"] if p["id"].startswith("landmark-")))
         return g
 
     def test_every_view_compiles(self):
@@ -555,6 +556,21 @@ class Order(unittest.TestCase):
         self.assertIsNone(netlogo.settle_window(netlogo._alignment(run, netlogo._World(run["header"], 599)), 599))
         sc = netlogo.scene_from_run(run, "auto")
         self.assertNotIn("window", {f["key"] for f in sc["facts"]})
+
+    def test_the_moments_worth_marking(self):
+        sc = netlogo.scene_from_run(ordered("flock"), "auto")
+        marks = [p for p in sc["parts"] if p["id"].startswith("landmark-")]
+        self.assertEqual(marks[0]["label"].split(":")[0], "Half way")   # (most of the way, here the same tick, merges)
+        self.assertTrue(all(p["certainty"] == "inferred" and p["look"]["line"] == "dashed" for p in marks))
+        facts = {f["key"]: f for f in sc["facts"]}
+        self.assertEqual(facts["landmark_1"]["certainty"], "inferred")
+        self.assertIsNone(netlogo.lock_problem(sc))
+        pulse = netlogo.scene_from_run(ordered("pulse"), "auto")
+        self.assertEqual([p["label"].split(":")[0] for p in pulse["parts"] if p["id"].startswith("landmark-")][:1],
+                         ["Half at once"])   # (all at once, here the same tick, merges)
+        plain = netlogo.scene_from_run(ordered("flock"), "auto", landmarks="off")
+        self.assertFalse([p for p in plain["parts"] if p["id"].startswith("landmark-")])
+        self.assertEqual(scene.validate(sc), [])
 
     def test_a_label_waits_for_its_part(self):
         g = scene.compile_scene(netlogo.scene_from_run(ordered("flock"), "auto"))
