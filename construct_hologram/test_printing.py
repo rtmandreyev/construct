@@ -154,5 +154,74 @@ class Print(unittest.TestCase):
             self.assertIn("estimated printing time", Path(tmp, "fj62.gcode").read_text(encoding="utf-8", errors="replace"))
 
 
+def a_run(ticks=10, n=12):
+    """A small spread: n turtles on a ring with links between neighbours, one more infected each tick."""
+    import math
+    frames = []
+    for t in range(ticks + 1):
+        turtles = [[k, "turtles", round(6 * math.cos(k), 3), round(6 * math.sin(k), 3), 15, k <= t, False] for k in range(n)]
+        f = {"t": t, "turtles": turtles, "patches": []}
+        if t == 0:
+            f["links"] = [[k, (k + 1) % n, "links"] for k in range(n)]
+        frames.append(f)
+    return {"header": {"title": "A ring", "netlogo": "7.0.4", "seed": 3, "turtle-vars": ["infected?", "resistant?"],
+                       "world": {"min-pxcor": -8, "max-pxcor": 8, "min-pycor": -8, "max-pycor": 8}},
+            "frames": frames, "end": ticks}
+
+
+class Plates(unittest.TestCase):
+    def test_a_run_as_plates_that_stack(self):
+        from . import plates
+        r = plates.make(a_run(), at=[0, 5, 10], size=60)
+        self.assertEqual([p["tick"] for p in r["plates"]], [0, 5, 10])
+        self.assertEqual([p["on"] for p in r["plates"]], [1, 6, 11])
+        self.assertEqual([p["links"] for p in r["plates"]], [12, 12, 12])
+        self.assertEqual(r["state"], "infected?")
+        meshes = [p["mesh"] for p in r["plates"]] + r["pins"] + [r["sleeves"]]
+        self.assertTrue(all(m["report"]["watertight"] for m in meshes))
+        top = [max(v[2] for v in p["mesh"]["vertices"]) for p in r["plates"]]
+        self.assertTrue(all(abs(z - (plates.THICK_MM + plates.HIGH_MM)) < 0.3 for z in top), top)
+        self.assertEqual(r["size_mm"], [76.0, 76.0])                       # 60 mm of world and its rim
+        self.assertAlmostEqual(r["stack_mm"], 3 * plates.THICK_MM + 2 * plates.GAP_MM)
+        pin = max(v[2] for v in r["pins"][1]["vertices"])
+        self.assertGreaterEqual(pin, r["stack_mm"])                        # long enough to go through them all
+        none_on = plates.make(a_run(), at=[3], size=60, tall=False)["plates"][0]
+        self.assertEqual(none_on["on"], 8)
+        self.assertEqual([p["tick"] for p in plates.make(a_run(), count=3, size=60)["plates"]], [0, 5, 10])
+
+    def test_the_key_card_and_what_cannot_be_plated(self):
+        from . import plates
+        run = a_run()
+        with tempfile.TemporaryDirectory() as tmp:
+            rec = Path(tmp, "run.jsonl")
+            rec.write_text("{}\n", encoding="utf-8")
+            r = plates.write(run, Path(tmp, "plates"), "stl", recording=rec, at=[0, 10], size=60)
+            names = sorted(p.name for p in Path(tmp, "plates").iterdir())
+            self.assertEqual(names, ["KEY.md", "pin-3mm.stl", "pin-4mm.stl", "plate-01-tick-0.stl", "plate-02-tick-10.stl",
+                                     "sleeves.stl"])
+            key = Path(tmp, "plates", "KEY.md").read_text(encoding="utf-8")
+            self.assertIn("| 2 | 10 | 12 | 11 | 12 |", key)
+            self.assertIn("sha256 `", key)
+            self.assertTrue(r["watertight"])
+        for kw, msg in (({"at": [99]}, "outside the run"), ({"state": "nope"}, "no turtle variable"),
+                        ({"count": 1}, "at least 2")):
+            with self.subTest(msg), self.assertRaisesRegex(plates.PlatesError, msg):
+                plates.make(run, size=60, **kw)
+        empty = dict(run, frames=[{"t": 0, "turtles": []}])
+        with self.assertRaisesRegex(plates.PlatesError, "no turtles"):
+            plates.make(empty)
+
+    @unittest.skipUnless(os.environ.get("CONSTRUCT_PRUSASLICER"), "set CONSTRUCT_PRUSASLICER to the PrusaSlicer binary")
+    def test_prusaslicer_reads_a_plate_as_one_part(self):
+        from . import plates
+        with tempfile.TemporaryDirectory() as tmp:
+            plates.write(a_run(), tmp, "3mf", at=[0, 10], size=60)
+            for f in ("plate-02-tick-10.3mf", "pin-4mm.3mf"):
+                info = subprocess.run([os.environ["CONSTRUCT_PRUSASLICER"], "--info", str(Path(tmp, f))],
+                                      capture_output=True, text=True, timeout=300).stdout
+                self.assertIn("manifold = yes", info)
+                self.assertRegex(info, r"number_of_parts =\s+1\b")
+
+
 if __name__ == "__main__":
     unittest.main()

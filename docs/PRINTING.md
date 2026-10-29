@@ -80,6 +80,39 @@ The tests check the first three against PrusaSlicer itself when it is installed
 (`CONSTRUCT_PRUSASLICER=/path/to/PrusaSlicer`): `--info` reads each print as manifold and one part,
 and a print slices with supports.
 
+## A run you can hold
+
+A construct of a NetLogo run has time as its height. Printed, the same idea becomes a stack of
+plates, one per moment, that you assemble in order: building the stack replays the run, and taking
+it apart steps back through time.
+
+<p align="center"><img src="media/plates-virus.jpg" width="100%" alt="Six printed plates of a Virus on a Network run stacked on pins, and the plate at the peak of the spread seen from above: the network as low ridges, each person a dot, the infected ones tall"></p>
+<p align="center"><sub>Virus on a Network, six moments from tick 0 to tick 300, previewed from the files. On the plate at the peak (tick 68), 118 of 150 people are infected: the tall dots.</sub></p>
+
+```sh
+construct netlogo-plates run.jsonl --out plates/ --at 0,20,40,68,120,300
+construct netlogo-plates fireflies.jsonl --out plates/ --plates 4 --state hidden? --tall false
+```
+
+Each plate is the world at one tick, from above: every turtle a dot where it stood, tall where its
+true/false state is on (`--state` names the variable, `--tall false` stands the false ones up),
+every link a low ridge. Two pin holes of different sizes, 3 mm and 4 mm, key the plates so they fit
+one way round, and each plate's number is engraved as dots in its corner. The folder also holds the
+two pins, eight spacer sleeves and `KEY.md`, the key card: each plate's tick and counts, how to
+stack them, the model and the recording's SHA-256, so a classroom set says exactly what it shows.
+
+| Option | What it does |
+| --- | --- |
+| `--plates N` | N plates, evenly over the run (default 6) |
+| `--at T,T,…` | the ticks to print instead (the landmarks of the run's construct are good choices) |
+| `--size MM` | the world's longer side (default 100; the plate adds an 8 mm rim) |
+| `--state VAR`, `--tall true\|false` | the variable shown by height, and which value stands tall |
+| `--format 3mf\|stl` | the files' format |
+
+The plates are made in voxels like a print, so each file is one watertight solid; the tests check
+PrusaSlicer reads a plate and a pin as manifold, one part. Plates are evenly spaced on the pins;
+spacing them by time is a later step.
+
 ## What it is not
 
 A print is the construct's form at a scale, solid, in one material. It does not hollow, split a

@@ -212,6 +212,8 @@ Constructs into things you make.
   To work out: every line thickened to printable ribs (about 1 mm and up), plates that fit a common
   bed, pin tolerances, the run's own colours by filament changes, and a printed key (what each plate
   is, the model and its data lock), so a classroom set is honest about what it shows.
+  Started: `construct netlogo-plates` (one plate per moment, dots and links, keyed pins, a key card;
+  [PRINTING.md](PRINTING.md#a-run-you-can-hold)).
 
 ## v1.3: artworks, exhibits and provenance
 

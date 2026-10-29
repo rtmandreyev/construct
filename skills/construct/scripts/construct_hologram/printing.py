@@ -392,6 +392,83 @@ def _surface(cols, n):
     return [list(p) for p in verts], faces
 
 
+def _surface_flat(cols):
+    """The same boundary as `_surface`, with each row of a flat face merged into one strip: far fewer
+    triangles for plates and slabs. Every lattice point another face uses on a strip's edge is kept on it,
+    so the surface stays watertight (no T-junctions)."""
+    import bisect
+    verts, index, faces = [], {}, []
+
+    def v(p):
+        if p not in index:
+            index[p] = len(verts)
+            verts.append(p)
+        return index[p]
+
+    def quad(a, b, c, d):
+        ia, ib, ic, id_ = v(a), v(b), v(c), v(d)
+        faces.append((ia, ib, ic))
+        faces.append((ia, ic, id_))
+
+    rows = {}   # (+1 top or -1 bottom, z, j) -> the cells' i
+    for (i, j), m in cols.items():
+        for k in _bits(m & ~(m >> 1)):
+            rows.setdefault((1, k + 1, j), []).append(i)
+        for k in _bits(m & ~(m << 1)):
+            rows.setdefault((-1, k, j), []).append(i)
+        for k in _bits(m & ~cols.get((i + 1, j), 0)):
+            quad((i + 1, j, k), (i + 1, j + 1, k), (i + 1, j + 1, k + 1), (i + 1, j, k + 1))
+        for k in _bits(m & ~cols.get((i - 1, j), 0)):
+            quad((i, j, k), (i, j, k + 1), (i, j + 1, k + 1), (i, j + 1, k))
+        for k in _bits(m & ~cols.get((i, j + 1), 0)):
+            quad((i, j + 1, k), (i, j + 1, k + 1), (i + 1, j + 1, k + 1), (i + 1, j + 1, k))
+        for k in _bits(m & ~cols.get((i, j - 1), 0)):
+            quad((i, j, k), (i + 1, j, k), (i + 1, j, k + 1), (i, j, k + 1))
+    on_line = {}   # (y, z) -> the x of every lattice point the walls use
+    for x, y, z in verts:
+        on_line.setdefault((y, z), set()).add(x)
+    on_line = {k: sorted(xs) for k, xs in on_line.items()}
+    runs = {}
+    for key, xs in rows.items():
+        xs.sort()
+        rs, start = [], xs[0]
+        for a, b in zip(xs, xs[1:] + [None]):
+            if b != a + 1:
+                rs.append((start, a + 1))
+                start = b
+        runs[key] = rs
+
+    def edge(key, y, x0, x1, other):
+        pts = {x0, x1}
+        line = on_line.get((y, key[1]), ())
+        lo = bisect.bisect_right(line, x0)
+        while lo < len(line) and line[lo] < x1:
+            pts.add(line[lo])
+            lo += 1
+        for r0, r1 in runs.get(other, ()):
+            if x0 < r0 < x1:
+                pts.add(r0)
+            if x0 < r1 < x1:
+                pts.add(r1)
+        return sorted(pts)
+
+    for key, rs in runs.items():
+        up, z, j = key
+        for x0, x1 in rs:
+            lo = edge(key, j, x0, x1, (up, z, j - 1))
+            hi = edge(key, j + 1, x0, x1, (up, z, j + 1))
+            a = b = 0
+            while a < len(lo) - 1 or b < len(hi) - 1:
+                if b == len(hi) - 1 or (a < len(lo) - 1 and lo[a + 1] <= hi[b + 1]):
+                    tri = (v((lo[a], j, z)), v((lo[a + 1], j, z)), v((hi[b], j + 1, z)))
+                    a += 1
+                else:
+                    tri = (v((lo[a], j, z)), v((hi[b + 1], j + 1, z)), v((hi[b], j + 1, z)))
+                    b += 1
+                faces.append(tri if up > 0 else (tri[0], tri[2], tri[1]))
+    return [list(p) for p in verts], faces
+
+
 def _smooth(verts, faces, steps=SMOOTH_STEPS, limit=0.5):
     """Taubin smoothing (no shrinking), each vertex kept within `limit` voxels of where it started and the
     bed (the lowest layer) kept flat."""

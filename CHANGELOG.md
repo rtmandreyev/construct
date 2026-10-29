@@ -19,6 +19,12 @@ Makers: constructs into things you make. Plan: [ROADMAP.md](docs/ROADMAP.md#v12-
   solids, each part's closed pieces sewn and refined, its role, certainty, source and stage as
   properties, in a group per stage; each articulation a nested group with its type, axis, pivot,
   amount and an `Open` placement that opens it; then STEP with the same tree and names.
+- **A run you can hold** ([PRINTING.md](docs/PRINTING.md#a-run-you-can-hold)): `construct netlogo-plates
+  run.jsonl --out plates/` prints a NetLogo run as plates, one per moment (`--plates N` or `--at
+  ticks`): every turtle a dot, tall where its true/false state is on (`--state`, `--tall`), every link
+  a ridge; keyed 3 mm and 4 mm pin holes, the plate's number engraved as dots; pins, spacer sleeves
+  and a key card with each plate's tick and counts and the recording's SHA-256. Flat faces are merged
+  into strips, so a plate is about 2 MB, not 9.
 
 ## 1.1.0 — unreleased
 

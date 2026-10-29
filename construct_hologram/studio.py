@@ -497,6 +497,19 @@ def add_commands(sub):
     p.add_argument("--samples", type=int, default=16, help="EEVEE samples per frame")
     p.add_argument("--trail", type=float, default=0.35, help="seconds of light trail behind each turtle")
     p.add_argument("--blender", help="the Blender to run (default: $CONSTRUCT_BLENDER, `blender`, or the usual installs)")
+    p = sub.add_parser("netlogo-plates", help="a NetLogo run as printed plates, one per moment, that stack in order "
+                                              "on pins: a simulation you can hold (docs/PRINTING.md)")
+    p.add_argument("run", help="the recording (.jsonl)")
+    p.add_argument("--out", required=True, help="the folder for the plates, pins, sleeves and KEY.md")
+    when = p.add_mutually_exclusive_group()
+    when.add_argument("--plates", type=int, default=6, help="how many plates, evenly over the run (default 6)")
+    when.add_argument("--at", help="the ticks to print, e.g. 0,20,68,300")
+    p.add_argument("--size", type=float, default=100.0, help="the world's longer side in mm (default 100)")
+    p.add_argument("--format", choices=("3mf", "stl"), default="3mf")
+    p.add_argument("--title", help="the title on the key card (default: the model's)")
+    p.add_argument("--state", help="the true/false turtle variable shown by a dot's height (default: the first)")
+    p.add_argument("--tall", choices=("true", "false"), default="true",
+                   help="which value stands tall (Fireflies: --state hidden? --tall false, the flashing ones)")
     p = sub.add_parser("netlogo-instrument", help="a copy of a NetLogo model that records its run for Construct, "
                                                   "and a headless experiment (docs/NETLOGO.md)")
     p.add_argument("model", help="the model (.nlogox)")
@@ -560,7 +573,7 @@ def printing_list(ids):
 
 
 COMMANDS = ("new", "params", "expand", "prompts", "author", "trace", "trace-image", "terrain", "globe", "critique", "rounds", "compare", "loft-from-traces", "check", "build", "review",
-            "video", "audio", "export", "print", "freecad", "netlogo", "netlogo-instrument", "netlogo-film", "netlogo-compare")
+            "video", "audio", "export", "print", "freecad", "netlogo-plates", "netlogo", "netlogo-instrument", "netlogo-film", "netlogo-compare")
 
 
 def run(args):
@@ -792,6 +805,25 @@ def run(args):
             _write(args.out, json.dumps(sc, separators=(",", ":"), ensure_ascii=False) + "\n", args.force)
             sys.stdout.write("wrote %s: %s and %s side by side; build it as any scene\n" % (args.out, *labels))
             return 0
+        if args.command == "netlogo-plates":
+            from . import netlogo as netlogo_mod, plates
+            try:
+                at = [int(x) for x in args.at.split(",")] if args.at else None
+            except ValueError:
+                sys.stderr.write("netlogo-plates: --at takes ticks, e.g. 0,20,68,300\n")
+                return 1
+            try:
+                run = netlogo_mod.read_run(args.run)
+                r = plates.write(run, args.out, args.format, recording=args.run, count=args.plates, at=at,
+                                 size=args.size, title=args.title, state=args.state, tall=args.tall == "true")
+            except (plates.PlatesError, netlogo_mod.NetLogoError, OSError) as exc:
+                sys.stderr.write("netlogo-plates: %s\n" % exc)
+                return 1
+            sys.stdout.write("wrote %d plates (ticks %s), 2 pins, sleeves and KEY.md to %s: %s x %s mm plates, a "
+                             "stack %s mm tall%s\n" % (len(r["plates"]), ", ".join(str(p["tick"]) for p in r["plates"]),
+                                                       args.out, r["size_mm"][0], r["size_mm"][1], r["stack_mm"],
+                                                       "; tall dots: %s %s" % (r["state"], args.tall) if r["state"] else ""))
+            return 0 if r["watertight"] else 1
         if args.command == "netlogo-film":
             from . import runfilm
             if not (args.out or args.blend):
