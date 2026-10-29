@@ -226,58 +226,55 @@ print("RESULT " + json.dumps(res))
         self.assertGreater(res["tube_faces"], 0)
         self.assertEqual(res["sound"], 0)
 
-    @unittest.skipUnless(__import__("shutil").which("ffmpeg"), "ffmpeg is not installed")
-    def test_a_song_keyed_to_its_track(self):
-        """A construct of a track, exported to glTF, keyed in Blender: the build linear over the track's length,
-        from its start to its end, and the track a sound strip at the first frame."""
-        import math
-        import struct
-        import wave
-        from . import song
+    def test_a_film_draws_links_and_patches(self):
+        """A link is a line while the recording has it and both its agents live; the patches are a floor of
+        cells in their recorded colours, record by record."""
         script = r'''
 import bpy, sys, json, importlib
-stage, glb = sys.argv[sys.argv.index("--") + 1:]
+stage, run = sys.argv[sys.argv.index("--") + 1:]
 sys.path.insert(0, stage)
 addon = importlib.import_module("construct")
 bpy.ops.wm.read_factory_settings(use_empty=True)
 addon.register()
 sc = bpy.context.scene
-sc.render.fps = 30
-sc.frame_current = 1
-res = {"import": list(bpy.ops.import_scene.construct(filepath=glb))}
-root = addon.construct_root(bpy.context.view_layer.objects.active)
-res["key"] = list(bpy.ops.construct.keyframe_track())
-fc = [f for f in addon.fcurves(root) if f.data_path == '["build"]']
-res["keys"] = [[round(k.co[0]), round(k.co[1], 3), k.interpolation] for k in fc[0].keyframe_points] if fc else None
-ed = sc.sequence_editor
-strips = list(ed.strips if hasattr(ed, "strips") else ed.sequences) if ed else []
-res["sound"] = [(s.type, s.frame_start) for s in strips]
+res = {"op": list(bpy.ops.import_scene.construct_run(filepath=run))}
+links, floor = bpy.data.objects["links"], bpy.data.objects["patches"]
+res["faces"] = len(floor.data.polygons)
+for frame in (2, 4, 6):   # ticks 1, 3 and 5
+    sc.frame_set(frame)
+    fade = [a.value for a in links.data.attributes["fade"].data]
+    res["links%d" % frame] = [fade[0], fade[2]]
+    res["cell%d" % frame] = list(floor.data.attributes["col"].data[0].color)[:3]
 print("RESULT " + json.dumps(res))
 '''
         with tempfile.TemporaryDirectory() as d:
             _builder().stage(Path(d, "construct"))
-            sig = [int(9000 * math.sin(2 * math.pi * 220 * i / 16000)) for i in range(16000 * 4)]
-            with wave.open(str(Path(d, "t.wav")), "wb") as w:
-                w.setnchannels(1)
-                w.setsampwidth(2)
-                w.setframerate(16000)
-                w.writeframes(struct.pack("<%dh" % len(sig), *sig))
-            from . import export
-            export.export(song.scene_from_track(Path(d, "t.wav"), "T", rings=16), str(Path(d, "t.glb")))
+            rows = [{"construct-netlogo": 1, "title": "Net", "netlogo": "7.0.4", "seed": 1, "turtle-vars": [],
+                     "reporters": [], "patch-reporter": "pcolor", "patch-every": 1,
+                     "world": {"min-pxcor": -2, "max-pxcor": 2, "min-pycor": -2, "max-pycor": 2}}]
+            for tick in range(6):
+                turtles = [[0, "turtles", -1, 0, 45], [1, "turtles", 1, 0, 45]] + ([[2, "turtles", 0, 1, 15]] if tick < 5 else [])
+                row = {"t": tick, "turtles": turtles, "patches": [15 if (i < 5 and tick >= 2) else 55 for i in range(25)]}
+                if tick == 0:
+                    row["links"] = [[0, 1, "links"]]
+                if tick == 3:
+                    row["links"] = [[0, 1, "links"], [1, 2, "links"]]
+                rows.append(row)
+            rows.append({"end": 5})
+            Path(d, "net.jsonl").write_text("\n".join(json.dumps(r) for r in rows) + "\n", encoding="utf-8")
             Path(d, "t.py").write_text(script, encoding="utf-8")
             r = subprocess.run([BLENDER, "-b", "--factory-startup", "--python", str(Path(d, "t.py")), "--", d,
-                                str(Path(d, "t.glb"))], capture_output=True, text=True, timeout=600,
+                                str(Path(d, "net.jsonl"))], capture_output=True, text=True, timeout=600,
                                encoding="utf-8", errors="replace")
         line = next((ln for ln in r.stdout.splitlines() if ln.startswith("RESULT ")), None)
         self.assertIsNotNone(line, r.stdout[-2000:] + r.stderr[-2000:])
         res = json.loads(line[7:])
-        self.assertEqual((res["import"], res["key"]), (["FINISHED"], ["FINISHED"]))
-        self.assertIsNotNone(res["keys"], res)
-        (f0, b0, i0), (f1, b1, _) = res["keys"][0], res["keys"][-1]
-        self.assertEqual((f0, f1, i0), (1, 121, "LINEAR"))      # 4 s at 30 frames a second
-        self.assertAlmostEqual(b0, 0.0, places=2)
-        self.assertAlmostEqual(b1, 0.82, places=2)
-        self.assertEqual(res["sound"], [["SOUND", 1.0]])
+        self.assertEqual((res["op"], res["faces"]), (["FINISHED"], 25))
+        self.assertEqual(res["links2"], [1.0, 0.0])                    # tick 1: one link
+        self.assertEqual(res["links4"], [1.0, 1.0])                    # tick 3: the second linked
+        self.assertEqual(res["links6"], [1.0, 0.0])                    # tick 5: its agent died, the link goes dark
+        self.assertGreater(res["cell2"][1], res["cell2"][0])           # tick 1: the top row green (55)
+        self.assertGreater(res["cell4"][0], res["cell4"][1])           # tick 3: red (15)
 
     def test_the_zip_validates(self):
         with tempfile.TemporaryDirectory() as d:

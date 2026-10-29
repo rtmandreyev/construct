@@ -4,8 +4,9 @@
 A construct of a run holds the run's shape (at most 24,000 line segments); this draws the recording
 itself, every turtle at every tick, so a long run with many agents loses nothing. Each turtle is a
 small glowing arrowhead in its own NetLogo colour, pointing where it goes, with a trail that fades
-behind it; the world is the floor, its edge a line of light. The film plays the run at 30 ticks a
-second.
+behind it; a link is a thin line of light between its two agents while the recording has it; the
+patches are a floor of cells in the patch reporter's colours, tick by tick; the world's edge is a line
+of light. The film plays the run at 30 ticks a second.
 
 Nothing is invented: positions, colours, births and deaths are the recording's; between two ticks
 a turtle is placed on the straight line between its recorded places (never across a wrap of the
@@ -35,6 +36,7 @@ TRAIL_S = 0.35        # seconds of trail behind each turtle
 TRAIL_POINTS = 12     # points along each trail
 ARROW = 0.11          # an arrowhead's length, metres
 ACCENT = (0.82, 0.42, 0.82)
+PATCH_CELLS = 128     # the patches' floor: at most this many cells along a side (a block of patches each)
 # NetLogo's colours: a number 0..140, ten to a hue, 0 black to 9.9 white (as Construct's bridge reads them)
 NL_BASE = [(141, 141, 141), (215, 50, 41), (241, 105, 19), (156, 109, 70), (237, 237, 47), (87, 176, 58),
            (42, 209, 57), (27, 158, 119), (82, 196, 196), (43, 140, 190), (52, 93, 169), (124, 80, 164),
@@ -63,7 +65,7 @@ def read(path):
     key = (path, os.path.getmtime(path))
     if key in _CACHE:
         return _CACHE[key]
-    header, frames, end = None, [], None
+    header, frames, end, patch_rows = None, [], None, []
     with open(path, encoding="utf-8") as fh:
         for line in fh:
             line = line.strip()
@@ -74,6 +76,8 @@ def read(path):
                 header = row
             elif "t" in row and "turtles" in row:
                 frames.append(row)
+            if "t" in row and "patches" in row:
+                patch_rows.append((row["t"], row["patches"]))
             elif "end" in row:
                 end = row["end"]
     if header is None or not frames:
@@ -110,7 +114,9 @@ def read(path):
     src = np.where(last_alive < 0, first_alive[None, :], last_alive)
     cols = np.arange(N)[None, :]
     pos, colour = pos[src, cols], colour[src, cols]
+    links, link_on = _links(frames, col)
     data = {"header": header, "ticks": np.array([f["t"] for f in frames], dtype=np.float64), "pos": pos, "alive": alive,
+            "links": links, "link_on": link_on, "patches": _patches(header, patch_rows, scale),
             "colour": colour, "end": end, "size": ((x1 - x0) * scale, (y1 - y0) * scale), "jump": 0.5 * WORLD,
             "depth": (w.get("max-pzcor", 0) - w.get("min-pzcor", 0) + 1) * scale if header.get("zcor") else 0.0,
             "has_z": has_z, "path": path}
@@ -118,6 +124,50 @@ def read(path):
         del _CACHE[old]
     _CACHE[key] = data
     return data
+
+
+def _links(frames, col):
+    """The links: every pair of agents ever linked [L, 2] (their columns), and which are linked at each record
+    [T, L]. A recording writes the links when their number changes, so each set holds until the next."""
+    pairs, now, rows = {}, set(), []
+    for f in frames:
+        if "links" in f:
+            now = set()
+            for a, b, *_ in f["links"]:
+                if a in col and b in col:
+                    key = (col[a], col[b])
+                    now.add(pairs.setdefault(key, len(pairs)))
+        rows.append(sorted(now))
+    on = np.zeros((len(frames), len(pairs)), dtype=bool)
+    for t, idx in enumerate(rows):
+        on[t, idx] = True
+    return np.array(sorted(pairs, key=pairs.get), dtype=np.int64).reshape(-1, 2), on
+
+
+def _patches(header, patch_rows, scale):
+    """The patches as a floor of cells: each cell a block of patches (at most PATCH_CELLS a side), coloured by the
+    patch reporter at each record: NetLogo's colours for a colour, else from dark to the accent over the run's
+    range. None without a patch reporter recorded."""
+    if not patch_rows or not header.get("patch-reporter"):
+        return None
+    w = header["world"]
+    cols, rows = w["max-pxcor"] - w["min-pxcor"] + 1, w["max-pycor"] - w["min-pycor"] + 1
+    step = max(1, math.ceil(max(cols, rows) / PATCH_CELLS))
+    keep = [r * cols + c for r in range(0, rows, step) for c in range(0, cols, step)]   # rows from the top (sort patches)
+    vals = np.array([[v[i] if i < len(v) and isinstance(v[i], (int, float)) and not isinstance(v[i], bool) else 0.0
+                      for i in keep] for _, v in patch_rows], dtype=np.float32)
+    if "color" in header["patch-reporter"]:
+        col = np.array([[netlogo_rgb(float(x)) for x in row] for row in vals], dtype=np.float32)
+    else:
+        lo, hi = float(vals.min()), float(vals.max())
+        f = (vals - lo) / ((hi - lo) or 1.0)
+        col = (0.04 + f[..., None] * (np.array(ACCENT, np.float32) - 0.04)).astype(np.float32)
+    nc, nr = len(range(0, cols, step)), len(range(0, rows, step))
+    cell = step * scale
+    x0 = -(cols * scale) / 2
+    y1 = (rows * scale) / 2
+    return {"ticks": np.array([t for t, _ in patch_rows], dtype=np.float64), "colour": col, "cols": nc, "rows": nr,
+            "cell": cell, "x0": x0, "y1": y1}
 
 
 def seconds_of(data):
@@ -277,8 +327,8 @@ def _mesh_object(name, verts, edges, collection):
 
 
 def build(path, scene=None, trail_seconds=TRAIL_S, fps=30, camera=True):
-    """Import a recording as a film: agents, trails, the world's edge and a camera; the scene's frames span
-    the run. Returns the collection."""
+    """Import a recording as a film: agents, trails, the links and the patches if it has them, the world's edge
+    and a camera; the scene's frames span the run. Returns the collection."""
     if np is None:
         raise RuntimeError("the NetLogo run film needs NumPy (bundled with Blender)")
     data = read(path)
@@ -315,7 +365,33 @@ def build(path, scene=None, trail_seconds=TRAIL_S, fps=30, camera=True):
     edge.modifiers.new("world", "NODES").node_group = _trails_nodes(emat, 0.006)
     _scale_trail_input(edge)
 
-    for obj in (agents, trails, edge):
+    extra = []
+    L = len(data["links"])
+    if L:   # the links: a thin line of light between the two agents, while the recording has it
+        links = _mesh_object("links", [(0, 0, 0)] * (2 * L), [(2 * i, 2 * i + 1) for i in range(L)], coll)
+        for nm, kind in (("fade", "FLOAT"), ("col", "FLOAT_COLOR")):
+            links.data.attributes.new(nm, kind, "POINT")
+        links.modifiers.new("links", "NODES").node_group = _trails_nodes(_emission("Construct run: links", "fade"),
+                                                                         ARROW * 0.035)
+        extra.append(links)
+    pt = data["patches"]
+    if pt:   # the patches: a floor of cells just under the agents, in the patch reporter's colours
+        verts, faces, c, r0 = [], [], pt["cell"], pt["y1"]
+        for r in range(pt["rows"]):
+            for k in range(pt["cols"]):
+                x, y = pt["x0"] + k * c, r0 - r * c
+                base = len(verts)
+                verts += [(x, y - c, -0.004), (x + c, y - c, -0.004), (x + c, y, -0.004), (x, y, -0.004)]
+                faces.append((base, base + 1, base + 2, base + 3))
+        me = bpy.data.meshes.new("patches")
+        me.from_pydata(verts, [], faces)
+        me.attributes.new("col", "FLOAT_COLOR", "FACE")
+        floor = bpy.data.objects.new("patches", me)
+        coll.objects.link(floor)
+        me.materials.append(_floor_material())
+        extra.append(floor)
+
+    for obj in (agents, trails, edge, *extra):
         obj["construct_run"] = {"path": data["path"], "trail": trail_seconds, "fps": fps, "start": 1}
 
     sc.render.fps = fps
@@ -326,6 +402,20 @@ def build(path, scene=None, trail_seconds=TRAIL_S, fps=30, camera=True):
     _look(sc)
     update(sc, sc.frame_start)
     return coll
+
+
+def _floor_material():
+    """The patches' floor: each cell its own colour (a face attribute), dimly lit, so the agents stay in front."""
+    mat = bpy.data.materials.new("Construct run: patches")
+    mat.use_nodes = True
+    nt = mat.node_tree
+    nt.nodes.clear()
+    out, em, attr = nt.nodes.new("ShaderNodeOutputMaterial"), nt.nodes.new("ShaderNodeEmission"), nt.nodes.new("ShaderNodeAttribute")
+    attr.attribute_name, attr.attribute_type = "col", "GEOMETRY"
+    em.inputs["Strength"].default_value = 0.55
+    nt.links.new(attr.outputs["Color"], em.inputs["Color"])
+    nt.links.new(em.outputs[0], out.inputs["Surface"])
+    return mat
 
 
 def _scale_trail_input(obj):
@@ -381,7 +471,7 @@ def _look(sc):
 # ---------------------------------------------------------------------------- each frame
 
 def update(sc, frame):
-    """Move every run object in the scene to this frame: agents, trails, the camera."""
+    """Move every run object in the scene to this frame: agents, trails, links, patches, the camera."""
     for obj in [o for o in sc.objects if "construct_run" in o]:
         info = obj["construct_run"]
         try:
@@ -411,6 +501,22 @@ def update(sc, frame):
             me.attributes["col"].data.foreach_set("color", np.repeat(np.hstack([colour, np.ones((len(p), 1), np.float32)]),
                                                                      TRAIL_POINTS, axis=0).ravel())
             level = 2.8
+        elif obj.name.startswith("links"):
+            k = int(np.clip(np.searchsorted(data["ticks"], tick, side="right") - 1, 0, len(data["ticks"]) - 1))
+            a, b = data["links"][:, 0], data["links"][:, 1]
+            me.vertices.foreach_set("co", np.stack([p[a], p[b]], axis=1).ravel())
+            on = (data["link_on"][k] & alive[a] & alive[b]).astype(np.float32)
+            me.attributes["fade"].data.foreach_set("value", np.repeat(on, 2))
+            mid = np.hstack([(colour[a] + colour[b]) / 2, np.ones((len(a), 1), np.float32)])
+            me.attributes["col"].data.foreach_set("color", np.repeat(mid, 2, axis=0).ravel())
+            level = 1.6
+        elif obj.name.startswith("patches"):
+            pt = data["patches"]
+            j = int(np.clip(np.searchsorted(pt["ticks"], tick, side="right") - 1, 0, len(pt["ticks"]) - 1))
+            me.attributes["col"].data.foreach_set("color", np.hstack([pt["colour"][j], np.ones((len(pt["colour"][j]), 1),
+                                                                                                np.float32)]).ravel())
+            me.update()
+            continue
         else:
             level = 1.9
         me.update()
