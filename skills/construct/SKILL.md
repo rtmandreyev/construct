@@ -39,6 +39,7 @@ method, not code, and adds 3-D animation, certainty as material and a repair loo
   of X that assembles across this track"): film mode, step 7 below.
 - The user wants a 3D model of the thing for Blender, a game engine or the web (glTF, GLB, OBJ):
   author the construct, then export it, step 8 below.
+- The user wants to 3D print it (STL, 3MF): author the construct, then print it, step 8 below.
 
 Do **not** use it for photoreal renders, rigged characters or CAD, charts, or for finding or
 recreating real cover art (artwork is shown only from images the user supplies).
@@ -91,6 +92,7 @@ Work in a folder of your own. `out/construct.html` opens in any browser.
 | the modes (fast, masterpiece, unbounded), research policy and limits | `references/effort.md` |
 | film mode: measure a track, then render the construct assembling across it | `audio track.wav --out audio.json`, then `video scene.json --out film.mp4 --assembly <seconds> --audio audio.json --sound track.wav --camera steady` |
 | a 3D model (glTF or OBJ) for Blender, game engines, the web | `export scene.json --out model.glb` (`--wire tubes`, `--pose open`, `--materials map.json`) |
+| a 3D print (STL or 3MF): one watertight solid, checked | `print scene.json --out model.3mf` (`--size 100`, `--scale 43`, `--lines`) |
 
 ## Procedure
 
@@ -188,7 +190,10 @@ Work in a folder of your own. `out/construct.html` opens in any browser.
    plastic, glass, light) when the user wants a finished model; keep it beside the scene, never in
    it. A `no-surface` audit warning names a part that would be missing: give it a solid shape. Say
    what it is: correctly sized named parts with working joints, without textures; a blockout or
-   prop, not a hero asset.
+   prop, not a hero asset. **A 3D print** (only when asked): `scripts/cli.py print scene.json --out
+   model.3mf` (or `.stl`) writes one watertight solid on the bed, 100 mm long (`--size`, or `--scale
+   43` for 1:43); report its size, scale and notes (supports, thickened parts, line-only parts left
+   out: `--lines` raises them). Exit status 1 means not watertight: never hand that over as printable.
 9. **A NetLogo model (only when asked).** `scripts/cli.py netlogo-instrument Model.nlogox --title
    "Model" --out run/` (with `--turtles`, `--reporters "a;b"`, `--patches pcolor:4`, `--seed`,
    `--ticks`) makes the model record itself; after the user runs it, `scripts/cli.py netlogo

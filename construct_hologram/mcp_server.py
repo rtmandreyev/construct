@@ -119,6 +119,20 @@ TOOLS += [
                                                         "\"color\": \"#rrggbb\", \"metallic\", \"roughness\"}]}"}},
                      "required": ["document"], "additionalProperties": False},
      "annotations": _READ_ONLY},
+    {"name": "construct_print",
+     "description": "One watertight body of a valid v2 scene or parameter document, to 3D print: 3MF (default) or "
+                    "binary STL, base64, in millimetres, Z up, on the bed; with the checks (watertight, separate "
+                    "pieces, fits the bed, overhangs that need supports, what was thickened) and the scale.",
+     "inputSchema": {"type": "object", "properties": {
+         "document": _DOC, "format": {"type": "string", "enum": ["3mf", "stl"]},
+         "size": {"type": "number", "description": "the longest side in mm (default 100)"},
+         "scale": {"type": "number", "description": "print at 1:N of the real size instead"},
+         "detail": {"type": "number", "description": "the voxel size in mm (default 0.4)"},
+         "wall": {"type": "number", "description": "open surfaces thickened to this wall in mm (default 0.8)"},
+         "join": {"type": "number", "description": "gaps between parts up to this wide are closed, in mm (default 1.6)"},
+         "lines": {"type": "boolean", "description": "print the parts drawn only in lines as raised lines"}},
+                     "required": ["document"], "additionalProperties": False},
+     "annotations": _READ_ONLY},
     {"name": "construct_netlogo_instrument",
      "description": "A NetLogo 7 model (.nlogox text) that records its run for Construct: the recorder included, "
                     "set up after setup's reset-ticks and recording after go's tick (or the model's own buttons; a model "
@@ -242,6 +256,7 @@ V2_TOOLS = {"construct_diagnose": ({"text", "document"}, set()),
             "construct_expand_params": ({"params"}, {"params"}),
             "construct_compile": ({"document"}, {"document"}),
             "construct_export": ({"document", "format", "wire", "pose", "frame", "materials", "merge"}, {"document"}),
+            "construct_print": ({"document", "format", "size", "scale", "detail", "wall", "join", "lines"}, {"document"}),
             "construct_limits": ({"tier", "request", "overrides"}, set()),
             "construct_netlogo_instrument": ({"model", "title", "turtles", "reporters", "patches", "every", "seed", "ticks",
                                               "skip_turtles", "setup", "go"}, {"model", "title"}),
@@ -307,6 +322,19 @@ def _call_v2(name, args):
         if "glb" in out:
             out = {"glb_base64": base64.b64encode(out["glb"]).decode("ascii")}
         return _tool_result({**out, "summary": summary})
+    if name == "construct_print":
+        from . import printing
+        fmt = args.get("format", "3mf")
+        try:
+            if fmt not in printing.FORMATS:
+                raise printing.PrintError("format: 3mf or stl")
+            kw = {k: args[k] for k in ("size", "scale", "detail", "wall", "join") if k in args}
+            p = printing.make(built, lines=bool(args.get("lines", False)), **kw)
+        except (printing.PrintError, scene.SceneError, TypeError) as exc:
+            return _tool_result({"error": str(exc)}, is_error=True)
+        data = printing.to_3mf(p) if fmt == "3mf" else printing.to_stl(p)
+        return _tool_result({fmt + "_base64": base64.b64encode(data).decode("ascii"), "report": p["report"],
+                             "notes": printing.notes(p["report"])})
     return _tool_result(scene.compile_scene(built))
 
 

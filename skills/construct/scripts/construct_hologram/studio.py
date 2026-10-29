@@ -8,6 +8,8 @@
   video <scene.json> --out FILE.mp4|.gif [--seconds S] [--fps N] [--start S] [--view V]
   export <scene.json> --out FILE.glb|.obj [--wire edges|tubes|none] [--pose closed|open]
                       [--materials map.json] [--frame y-up|z-up] [--merge]    a 3D model (docs/EXPORT.md)
+  print <scene.json> --out FILE.stl|.3mf [--size MM | --scale N] [--detail MM] [--wall MM] [--join MM]
+                     [--lines] [--bed WxDxH]          one watertight body to 3D print (docs/PRINTING.md)
 
 Exit status: 0 success, 1 the scene or audit has errors, 2 capture unavailable.
 """
@@ -452,6 +454,19 @@ def add_commands(sub):
     p.add_argument("--frame", choices=("y-up", "z-up"), default="y-up", help="OBJ only (glTF is always Y up)")
     p.add_argument("--merge", action="store_true",
                    help="glTF: merge every part that does not move into one mesh per material (for game engines)")
+    p = sub.add_parser("print", help="one watertight body to 3D print: STL or 3MF, checked (docs/PRINTING.md)")
+    p.add_argument("scene")
+    p.add_argument("--out", required=True, help="FILE.stl or FILE.3mf")
+    p.add_argument("--format", choices=("stl", "3mf"), help="default: from the file's extension")
+    size = p.add_mutually_exclusive_group()
+    size.add_argument("--size", type=float, help="the longest side in mm (default %g)" % 100.0)
+    size.add_argument("--scale", type=float, help="print at 1:N of the object's real size, e.g. 43")
+    p.add_argument("--detail", type=float, default=0.4, help="the voxel size in mm (default 0.4, a nozzle's width)")
+    p.add_argument("--wall", type=float, default=0.8, help="open surfaces are thickened to this wall in mm (default 0.8)")
+    p.add_argument("--join", type=float, default=1.6,
+                   help="close gaps between parts up to this wide, in mm, so the print is one piece (default 1.6; 0: off)")
+    p.add_argument("--lines", action="store_true", help="print the parts drawn only in lines as raised lines")
+    p.add_argument("--bed", default="250x210x220", help="the printer's build volume in mm (default 250x210x220)")
     p = sub.add_parser("netlogo-compare", help="two NetLogo runs side by side, drawn the same way on one time scale "
                                                "(a slider moved, another seed)")
     p.add_argument("run_a")
@@ -531,7 +546,7 @@ def add_commands(sub):
 
 
 COMMANDS = ("new", "params", "expand", "prompts", "author", "trace", "trace-image", "terrain", "globe", "critique", "rounds", "compare", "loft-from-traces", "check", "build", "review",
-            "video", "audio", "export", "netlogo", "netlogo-instrument", "netlogo-film", "netlogo-compare")
+            "video", "audio", "export", "print", "netlogo", "netlogo-instrument", "netlogo-film", "netlogo-compare")
 
 
 def run(args):
@@ -881,6 +896,27 @@ def run(args):
                              % (", ".join(s["files"]), s["parts"], s["triangles"], s["edges"],
                                 "; animations: " + anims if s["format"] == "glb" else ""))
             return 0
+        if args.command == "print":
+            from . import printing
+            try:
+                bed = tuple(float(x) for x in args.bed.lower().split("x"))
+                if len(bed) != 3:
+                    raise ValueError
+            except ValueError:
+                sys.stderr.write("print: --bed WxDxH in mm, e.g. 250x210x220\n")
+                return 1
+            try:
+                r = printing.write(load(args.scene), args.out, args.format, size=args.size or printing.SIZE_MM,
+                                   scale=args.scale, detail=args.detail, wall=args.wall, join=args.join,
+                                   lines=args.lines, bed=bed)
+            except printing.PrintError as exc:
+                sys.stderr.write("print: %s\n" % exc)
+                return 1
+            sys.stdout.write("wrote %s: %s mm at %s, %d triangles\n" % (
+                r["files"][0], " x ".join("%g" % x for x in r["size_mm"]), r["scale"], r["triangles"]))
+            for line in printing.notes(r):
+                sys.stdout.write("  %s\n" % line)
+            return 0 if r["watertight"] else 1
         if args.command == "audio":
             from . import film_audio
             try:

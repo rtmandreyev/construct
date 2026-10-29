@@ -236,6 +236,7 @@ Start with the first two if you are new; the full index is in [docs/README.md](d
 - [Terrain](docs/TERRAIN.md): mountains, routes and planets from real elevation data
 - [Film mode](docs/FILM.md): a construct that assembles across a track of music, for videos and films
 - [3D export](docs/EXPORT.md) and the [Blender add-on](hosts/blender/README.md): a construct as a 3D model, plain or finished, for Blender, game engines and the web
+- [3D printing](docs/PRINTING.md): a construct as one watertight solid to print, STL or 3MF, checked
 - [The NetLogo bridge](docs/NETLOGO.md) and the [NetLogo extension](hosts/netlogo/README.md): an agent-based model's run drawn as a construct, with optional art direction
 - [In a classroom and a museum](docs/CLASSROOM.md): a lesson with two runs compared and a worksheet, and a run in a museum
 - [About](docs/ABOUT.md): where Construct's method comes from

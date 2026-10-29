@@ -14,6 +14,7 @@ Start with the first two pages if you are new to Construct; the rest are there w
 | draw a NetLogo model's run as a construct | [NETLOGO.md](NETLOGO.md) |
 | teach with it, or show it in a museum | [CLASSROOM.md](CLASSROOM.md) |
 | take a construct into Blender, a game engine or the web as a 3D model | [EXPORT.md](EXPORT.md), and the [Blender add-on](../hosts/blender/README.md) |
+| 3D print a construct (STL or 3MF) | [PRINTING.md](PRINTING.md) |
 | know where Construct's method comes from | [ABOUT.md](ABOUT.md) |
 | compare models, or score your own | [EVALUATION.md](EVALUATION.md) |
 | contribute, or build Construct into your own tools | [DEVELOPMENT.md](DEVELOPMENT.md) |

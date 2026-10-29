@@ -1,6 +1,6 @@
 ---
 name: {{NAME}}
-description: Build a construct — an animated, audited holographic model — of a real or fictional object, building, machine, creature or product (CD, book, guitar, lamp, lighthouse, jellyfish...) from a request and its evidence. Produces an audited declarative scene, a self-contained animated WebGL page (staged construction, opening, idle life, reduced-motion still) and reviewed captures; on request, a film of the construct assembling across a track of music, or a 3D model of it (glTF or OBJ, with named parts and working joints) for Blender, game engines and the web; or a NetLogo model's recorded run drawn in time. Use when someone wants a construct or a hologram: a holographic model, wireframe light model or animated 3-D presentation of a thing, a quick parts-and-joints 3D model of one, or a NetLogo run visualised; not for photorealistic rendering, rigged characters, CAD, or retrieving cover art.
+description: Build a construct — an animated, audited holographic model — of a real or fictional object, building, machine, creature or product (CD, book, guitar, lamp, lighthouse, jellyfish...) from a request and its evidence. Produces an audited declarative scene, a self-contained animated WebGL page (staged construction, opening, idle life, reduced-motion still) and reviewed captures; on request, a film of the construct assembling across a track of music, or a 3D model of it (glTF or OBJ, with named parts and working joints) for Blender, game engines and the web, or a watertight 3D print (STL or 3MF); or a NetLogo model's recorded run drawn in time. Use when someone wants a construct or a hologram: a holographic model, wireframe light model or animated 3-D presentation of a thing, a quick parts-and-joints 3D model of one, or a NetLogo run visualised; not for photorealistic rendering, rigged characters, CAD, or retrieving cover art.
 ---
 
 # {{TITLE}}
@@ -230,6 +230,17 @@ OBJ of the construct. Author and review the construct first, as above; then:
 - Say what the model is: correctly sized named parts with working joints, built from simple
   shapes, without textures; good for blockouts, props and previews, not a finished hero asset.
   Details: `docs/EXPORT.md` in the Construct repository.
+
+## A 3D print of a construct
+
+Only when the user asks to 3D print it, or for an STL or 3MF. Author and review the construct
+first; then `python3 TOOLS print scene.json --out model.3mf` (or `.stl`) writes one watertight
+solid, Z up, on the bed, 100 mm on its longest side (`--size MM`, or `--scale 43` for 1:43 of the
+real size). Report what it prints: the size and scale, and its notes (overhangs that need supports,
+parts thickened to the wall, parts drawn only in lines and not printed: `--lines` prints them
+raised). Exit status 1 means it is not watertight: say so, never hand it over as printable. The user
+does not need a printer to check it: a slicer (PrusaSlicer, Bambu Studio, Cura) opens and slices it.
+Details: `docs/PRINTING.md` in the Construct repository.
 
 ## Rules that keep it honest and safe
 

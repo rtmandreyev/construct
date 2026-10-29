@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.2.0 — unreleased
+
+Makers: constructs into things you make. Plan: [ROADMAP.md](docs/ROADMAP.md#v12-makers).
+
+- **3D printing** ([PRINTING.md](docs/PRINTING.md)): `construct print scene.json --out model.3mf`
+  (or `.stl`) makes a construct one watertight solid to print, at a size (`--size`, 100 mm on its
+  longest side by default) or a scale (`--scale 43` for 1:43). It is made in voxels at the print's
+  own scale: closed parts filled, open surfaces and too-thin parts thickened to the wall, gaps
+  between parts up to `--join` closed so it is one piece, sealed cavities filled, the surface
+  smoothed and moved onto the construct's own surfaces so flat faces come out flat. The report says
+  whether it is watertight, how many pieces it is and whether any would start in the air, whether it
+  fits the bed, where it needs supports, and which parts were thickened or left out (annotations,
+  and parts drawn only in lines unless `--lines`). Also the MCP tool `construct_print` and the
+  skill. Checked against PrusaSlicer when it is installed: manifold, one part, and it slices.
+
 ## 1.1.0 — unreleased
 
 Models come alive: the NetLogo bridge, made reliable on the whole Models Library and usable from

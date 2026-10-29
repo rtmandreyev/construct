@@ -196,7 +196,7 @@ Constructs into things you make.
 - **3D printing:** a construct (or a run) to a printable, watertight model: STL and 3MF export, the
   checks a slicer would make (closed, manifold, wall thickness), and a hand-off to a slicer. Tested
   without a printer by validating the mesh and slicing it with a slicer's command line; a real print
-  before a claim of fit (pins, tolerances).
+  before a claim of fit (pins, tolerances). Started: `construct print` ([PRINTING.md](PRINTING.md)).
 - **FreeCAD:** constructs in FreeCAD as parts with their names, sizes and joints, for engineering
   work and CAD formats (STEP).
 - **A simulation you can hold** (owner's idea, 28 October 2026): a printed miniature of a run that
