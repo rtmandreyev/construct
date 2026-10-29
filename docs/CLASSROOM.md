@@ -21,7 +21,7 @@ or newer; films need Blender.
    (rename the first `…-run.jsonl` before the second run, or record each from its own copy of the model).
 4. **Side by side.** `construct netlogo-compare low.jsonl high.jsonl --labels "2.5%,6%" --out compare/scene.json`
    then `construct build compare/scene.json --out compare`. Both runs are drawn the same way on one time
-   scale: with seed 7, 2.5% dies out after 11 ticks while 6% runs for 973, and the difference is one
+   scale: with seed 7, 2.5% dies out by tick 10 while 6% runs to tick 972, and the difference is one
    glance.
 5. **The worksheet.** Scrub the replay to the moment you want, then print the page (Cmd/Ctrl+P, or Save
    as PDF): one page with the construct, how to read it, the counts at that tick, the citation and three

@@ -38,6 +38,10 @@ recording added, its experiment, the construct of one recorded run and its pictu
 CC BY-NC-SA 3.0, not Apache-2.0; see its LICENSE. construct.nls, the recorder they include, is
 part of Construct and Apache-2.0.
 
+So are examples/netlogo-virus-on-a-network/ and examples/netlogo-virus-compare/, from NetLogo's
+Virus on a Network (Copyright 2008 Uri Wilensky), and examples/netlogo-fireflies/, from Fireflies
+(Copyright 1997 Uri Wilensky): CC BY-NC-SA 3.0, not Apache-2.0; see each folder's LICENSE.
+
 One more folder is licensed differently: hosts/blender/, the Blender add-on, is under the GNU
 General Public License v3.0 or later (see hosts/blender/LICENSE), as Blender's extensions platform
 requires of add-ons. Its zip bundles part of Construct (the scene compiler and the 3D export),

@@ -994,6 +994,8 @@ def _landmarks(reading, world, view):
     else:   # rises and falls: its peak
         marks.append(("Peak", top_t, top))
     share = view == "pulse"
+    if name.endswith("? now"):   # a true/false state counted now: in words
+        name = "turtles with %s true" % name[:-4]
     fmt = lambda v: ("%d" % v) if float(v).is_integer() else ("%.2f" % v)
     hw, hd = world.w * world.k / 2, world.h * world.k / 2
     parts, facts = [], []

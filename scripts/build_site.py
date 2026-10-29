@@ -338,6 +338,7 @@ GLYPHS = {
     "ring": '<ellipse cx="13" cy="7" rx="11" ry="4" fill="none" stroke="{c}" stroke-dasharray="3 2"/>',
     "marker": '<circle cx="13" cy="7" r="3.2" fill="{c}"/>',
     "axis": '<path d="M5 13 L5 1 M5 9 L8 9 M5 5 L8 5" fill="none" stroke="{c}"/>',
+    "frame": '<rect x="3" y="2" width="20" height="10" fill="none" stroke="{c}" stroke-dasharray="3 2"/>',
 }
 
 

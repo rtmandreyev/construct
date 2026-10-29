@@ -466,7 +466,8 @@ class Views(unittest.TestCase):
             netlogo.read_run(Path(self.tmp.name, "bad.jsonl"))
 
     def test_the_examples_are_valid_and_credited(self):
-        for slug in ("netlogo-flocking", "netlogo-wolf-sheep", "netlogo-fire"):
+        for slug in ("netlogo-flocking", "netlogo-wolf-sheep", "netlogo-fire", "netlogo-virus-on-a-network",
+                     "netlogo-virus-compare", "netlogo-fireflies"):
             with self.subTest(slug):
                 d = HERE.parent / "examples" / slug
                 sc = studio.load(str(d / "scene.json"))
@@ -475,7 +476,7 @@ class Views(unittest.TestCase):
                 self.assertIn("Uri Wilensky", (d / "README.md").read_text(encoding="utf-8"))
                 self.assertIn("examples/%s/" % slug, (HERE.parent / "NOTICE").read_text(encoding="utf-8"))
                 model = next(d.glob("*-construct.nlogox")).read_text(encoding="utf-8")
-                self.assertIn('__includes ["construct.nls"]', model)
+                self.assertTrue('__includes ["construct.nls"]' in model or "extensions [construct]" in model)   # recorder or extension
                 self.assertIn(netlogo.LOCK, {f["key"] for f in sc["facts"]})
                 self.assertIsNone(netlogo.lock_problem(sc))
 

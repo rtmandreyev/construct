@@ -195,7 +195,7 @@ counts at that tick, the citation, and three questions with room to answer.
 --out scene.json` draws two runs of a model the same way, on one time scale (the longer run's): A on
 the left, B on the right, every label, fact and count marked with its run, and one data lock over
 both recordings. For a lesson: the same model with a slider moved, or with another seed. In Virus on
-a Network with seed 7, a spread chance of 2.5% dies out after 11 ticks and 6% runs for 973: side
+a Network with seed 7, a spread chance of 2.5% dies out by tick 10 and 6% runs to tick 972: side
 by side, one network stays on the floor and the other rises.
 
 ## 3. Art direction (optional)

@@ -206,7 +206,8 @@ class ExamplesGallery(unittest.TestCase):
         site = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(site)
         items = {b["slug"]: b for b in site._load_beyond()}
-        for slug in ("netlogo-flocking", "netlogo-wolf-sheep", "netlogo-fire"):
+        for slug in ("netlogo-flocking", "netlogo-wolf-sheep", "netlogo-fire", "netlogo-virus-on-a-network",
+                     "netlogo-virus-compare", "netlogo-fireflies"):
             with self.subTest(slug):
                 page = site.data_page(items[slug])
                 self.assertIn('class="legend"', page)
