@@ -1,11 +1,10 @@
-"""Render a NetLogo run as a film with Blender: every recorded turtle as light that moves, with its track.
+"""Render a NetLogo run as a film with Blender: every recorded turtle as light that moves.
 
     blender -b --factory-startup --python scripts/run_film.py -- RUN.jsonl --out film.mp4
             [--size 1920x1080] [--from SECONDS] [--seconds SECONDS] [--samples 16] [--trail 0.5] [--blend out.blend]
 
-RUN.jsonl is a recording from construct:run or construct.nls; a run recorded with construct:music plays
-with its track (its features file and the track beside the recording), in time: tick t at second
-t / ticks-per-second. The film draws the recording itself (construct_hologram/runfilm.py), so a run
+RUN.jsonl is a recording from construct:run or construct.nls, played at 30 ticks a second. The film
+draws the recording itself (construct_hologram/runfilm.py), so a run
 of any length and any number of turtles loses nothing. EEVEE; the length is the run's unless --seconds.
 """
 

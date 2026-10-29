@@ -87,19 +87,19 @@ watch it assemble, turn it around and read its labels.
 
 ## Agent-based models: runs that come alive
 
-Construct turns a NetLogo model's run into something to explore, play to music and film.
+Construct turns a NetLogo model's run into something to explore, replay and film.
 
 - **One command in NetLogo.** Add `extensions [construct]` and type `construct:run`: it runs the
   model as its buttons do, records what is worth recording and opens the run as a construct, with
   time as height, a legend, a *How to read it* panel and a replay bar. 388 of the 445 stock
   two-dimensional models record unattended.
-- **Runs to music.** `construct:music "track.mp3"` makes each tick a moment of a track, and the
-  model can listen: `construct:kick`, `construct:energy`, `construct:high` and `construct:hit`.
-  Flocking bursts apart on every kick; Fireflies, given the beat as one more flash to see, lock
-  their flashing to the kicks. The construct plays back in time with the track.
+- **Where the order forms.** The `pulse` view draws turtles that switch on and off, one ring per
+  tick, so fireflies falling into step show as a thin column opening into wide plates. When a flock
+  or a pulse falls into order early in a long run, the construct is drawn over the window where it
+  formed, and says so.
 - **Runs as films.** `(construct:draw "auto" "film" true)`, or `construct netlogo-film run.jsonl
   --out film.mp4`, renders the recording itself in Blender: every agent as moving light with a
-  trail, in its own colours, in time with the music. NetLogo 3D flocks fly in their box.
+  trail, in its own colours. NetLogo 3D flocks fly in their box.
 - **Runs as 3D models.** `"model" true` exports the run to glTF, its build replaying the run in
   Blender or a game engine.
 - **On a museum screen.** `construct build --kiosk` makes a page that loops by itself and opens to
@@ -115,8 +115,8 @@ and [the extension](hosts/netlogo/README.md).
   and plays it.
 - **A score as a construct.** `construct song piece.mid` stands every note of a MIDI file as a line
   of light around the circle of fifths, rising through time, each track in its own tone.
-- **In Blender, in time.** Exported to glTF, a song, a score with its audio, or a run to music keeps
-  its clock: **Keyframe to Its Track** in the add-on keys the build to the music and adds the track.
+- **In Blender, in time.** Exported to glTF, a song or a score with its audio keeps its clock:
+  **Keyframe to Its Track** in the add-on keys the build to the music and adds the track.
 - **Live.** `?live=1` on a film or kiosk page listens to the room after a touch: its light follows
   the sound, kicks pulse its glow, and nothing is recorded.
 
@@ -235,7 +235,7 @@ Construct is deliberately small. You need:
 
 - Python 3.10 or newer. Nothing else to install: no packages, no virtual environment.
 - For review stills, a Chromium-family browser you already have (Chrome, Chromium, Edge, Brave).
-- For video and for runs to music, ffmpeg.
+- For video and for songs, ffmpeg.
 - For the Blender add-on, Blender 4.2 or newer (the film of a run: checked in Blender 5.2); for the
   NetLogo bridge, NetLogo 6 or 7 (the extension: NetLogo 7, and NetLogo 3D 7).
 - Tested on macOS; review capture on Linux and Windows is untested.
@@ -253,7 +253,7 @@ Start with the first two if you are new; the full index is in [docs/README.md](d
 - [Film mode](docs/FILM.md): a construct that assembles across a track of music, for videos and films
 - [3D export](docs/EXPORT.md) and the [Blender add-on](hosts/blender/README.md): a construct as a 3D model, plain or finished, for Blender, game engines and the web
 - [The NetLogo bridge](docs/NETLOGO.md) and the [NetLogo extension](hosts/netlogo/README.md): an agent-based model's run drawn as a construct, with optional art direction
-- [In a classroom and a museum](docs/CLASSROOM.md): a lesson with two runs compared and a worksheet, a lesson with music, an exhibit
+- [In a classroom and a museum](docs/CLASSROOM.md): a lesson with two runs compared and a worksheet, an exhibit
 - [About](docs/ABOUT.md): where Construct's method comes from
 - [Evaluation](docs/EVALUATION.md): how models compare, and how to score your own
 - [Development](docs/DEVELOPMENT.md): for contributors and for building Construct into your own tools

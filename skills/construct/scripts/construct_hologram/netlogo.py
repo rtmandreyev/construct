@@ -247,7 +247,7 @@ def instrument(text, title, run_file, turtles=(), reporters=(), patches=None, ev
 
 def read_run(path):
     run = parse_run(Path(path).read_text(encoding="utf-8"))
-    run["dir"] = str(Path(path).resolve().parent)   # where a run's music features are, beside it
+    run["dir"] = str(Path(path).resolve().parent)   # where the run is (its model and data beside it)
     return run
 
 
@@ -958,7 +958,6 @@ def _window(run, view, opts, last):
 
 def scene_from_run(run, view, title=None, **opts):
     """A construct-scene v2 from a recording, for one of VIEWS ("auto": the one choose_view picks)."""
-    asked_time = opts.get("time")
     if view == "auto":
         view, auto, _ = choose_view(run)
         given = {k: v for k, v in opts.items() if v not in (None, False)}
@@ -975,11 +974,6 @@ def scene_from_run(run, view, title=None, **opts):
     time = opts.get("time") or "linear"
     if time not in ("linear", "sqrt"):
         raise NetLogoError("time: linear or sqrt")
-    music = _music(run)
-    if music and time == "sqrt":   # with music, height is the track's time: it cannot be stretched
-        if asked_time == "sqrt":
-            raise NetLogoError("time: a run with music is drawn with linear time, so it plays in time with its track")
-        time = "linear"
     tall = view in ("space-time", "pulse")   # a cube: time as tall as the world is wide
     whole = last
     window = _window(run, view, opts, last)
@@ -1012,11 +1006,6 @@ def scene_from_run(run, view, title=None, **opts):
               "certainty": "user_supplied", "source": "request"}]
     if seed is not None:
         facts.append({"key": "seed", "value": seed, "certainty": "verified", "source": "run"})
-    if music:
-        facts.append({"key": "music", "value": "%s, %d ticks a second (%g s)" % (
-            music["track"], music["ticks_per_second"], music["seconds"]), "certainty": "verified", "source": "run",
-                      "note": "The run was recorded with construct:music: tick t is second t / %d of the track, and "
-                              "the model could read the music at each tick." % music["ticks_per_second"]})
     facts += [{"key": k, "value": v, "certainty": "verified", "source": "run"} for k, v in extra]
     if window:
         facts.append({"key": "window", "value": "ticks 0 to %d of %d" % (last, whole), "certainty": "verified",
@@ -1045,13 +1034,9 @@ def scene_from_run(run, view, title=None, **opts):
                       "camera": {"drift": 4, "breathe": 0.02}},
     }
     sc["reading"] = _reading(run, view, world, opts, time)
-    if music:
-        sc["reading"]["music"] = music
-        dense = view == "space-time" and any(k == "sampling" and v != "every 1 record" for k, v in extra)
-        sc["reading"]["how"] = sc["reading"]["how"][:6 if dense else 7] + [
-            "Time is the track: %d ticks a second. Press play to hear the run with its music." % music["ticks_per_second"]] + (
-            ["A long run of moving agents is dense here: this is its shape; for its motion, every agent at every "
-             "tick, make its film (construct netlogo-film)."] if dense else [])
+    if view == "space-time" and any(k == "sampling" and v != "every 1 record" for k, v in extra):
+        sc["reading"]["how"].append("A long run of moving agents is dense here: this is its shape; for its motion, "
+                                    "every agent at every tick, make its film (construct netlogo-film).")
     if h.get("clock") == "steps":   # a model that never starts the tick counter: its records are steps
         sc = _in_steps(sc)
     return lock(sc)
@@ -1188,43 +1173,10 @@ def data_lock(scene, source=None):
     r = scene.get("reading") or {}
     if r.get("clock") or r.get("series"):   # the replay's clock and counts are the run's data too
         data["reading"] = {"clock": r.get("clock"), "series": r.get("series", [])}
-        if r.get("music"):   # and the track it ran to, by its fingerprint
+        if r.get("music"):   # and a song's or a score's track, by its fingerprint
             data["reading"]["music"] = {k: r["music"].get(k) for k in ("track", "sha256", "ticks_per_second")}
     text = json.dumps(_canon(data), sort_keys=True, separators=(",", ":"), ensure_ascii=False)
     return "sha256:" + hashlib.sha256(text.encode("utf-8")).hexdigest()
-
-
-def _music(run):
-    """A run recorded with construct:music: the track's name, fingerprint and clock, and its features for the
-    page (energy, high, kick, onset per tick), from the features file beside the run. None without music."""
-    m = run["header"].get("music")
-    if not m:
-        return None
-    path = Path(run.get("dir") or ".") / m.get("features", "")
-    if not path.is_file() and m.get("features-path") and Path(m["features-path"]).is_file():
-        path = Path(m["features-path"])   # a run written away from its features
-    doc = run.get("features")   # given with the recording (over MCP), else the file beside the run
-    if not isinstance(doc, dict):
-        try:
-            doc = json.loads(path.read_text(encoding="utf-8"))
-        except (OSError, ValueError):
-            raise NetLogoError("the run's music features (%s) are not beside the run: run construct:music again, or "
-                               "give them with the recording (MCP: features)" % path.name)
-    tps = int(m["ticks-per-second"])
-    if doc.get("fps") != tps:
-        raise NetLogoError("%s is at %s frames a second, the run at %d ticks a second" % (path.name, doc.get("fps"), tps))
-    return {"track": Path(m["track"]).name, "sha256": m.get("sha256", ""), "ticks_per_second": tps,
-            "seconds": round(len(doc["energy"]) / tps, 2),
-            "audio": {"fps": tps, **{k: doc.get(k) or [0.0] * len(doc["energy"]) for k in ("energy", "high", "kick", "onset")}}}
-
-
-def music_track(run):
-    """The track's file, when it is on this computer (where the run recorded it, or beside the run)."""
-    m = run["header"].get("music") or {}
-    for p in (Path(m.get("path") or ""), Path(run.get("dir") or ".") / Path(m.get("track") or "").name):
-        if p.name and p.is_file():
-            return p
-    return None
 
 
 def compare_runs(run_a, run_b, view, labels=("A", "B"), title=None, **opts):

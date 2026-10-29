@@ -154,6 +154,9 @@ keep the whole run, and runs compared side by side are drawn whole. `--time sqrt
 cascade happens in its first tenth). Each construct records what was drawn as facts: the model, the
 seed, the ticks, which agents, how the data was sampled.
 
+A construct holds at most 24,000 line segments, so a long run with many moving agents is sampled
+(the `sampling` fact says how much); the construct is the run's shape, and the replay its timing.
+
 Every construct carries its legend: each part named where it is ("Each turtle, risen to the tick
 infected? turned true"), shown as soon as the part it names is drawn (**L** hides it) and kept inside
 the window. Nothing
@@ -168,8 +171,8 @@ changed). The counts and the clock are the run's data, under the data lock like 
 layer may reword the panel (`"reading": {"how": [...]}`) and nothing else of it.
 
 **For a spreadsheet or a report.** A run's **How to read it** panel offers its counts as CSV (as the
-replay shows them) and **Cite this run**: the model, NetLogo's version, the seed, the ticks, the
-track if any, Construct's version and the data lock, ready to paste. `construct netlogo … --csv
+replay shows them) and **Cite this run**: the model, NetLogo's version, the seed, the ticks,
+Construct's version and the data lock, ready to paste. `construct netlogo … --csv
 counts.csv` writes the counts at every record from the recording itself (the clock, each tracked
 reporter, each breed's turtles).
 
@@ -251,50 +254,14 @@ recording like everything else, under the data lock; without `--solid`, nothing 
 Blender 5.2 with the add-on: Virus on a Network, Wolf Sheep Predation, Rumor Mill and Flocking
 import with each part a named object, and **Build** halfway shows the run halfway.
 
-## 5. Music (optional)
-
-A run can follow a track. In NetLogo, `construct:music "track.mp3"` (or `(construct:music
-"track.mp3" 24)` for 24 ticks a second; 30 by default) analyses the track once, with `construct
-audio` and ffmpeg, into `<track>-audio-<rate>.json` beside the run, and from then on tick *t* is
-second *t* ÷ rate of the track. The model's code can read the music at the current tick:
-
-| Reporter | What it reports, 0 to 1 |
-| --- | --- |
-| `construct:kick` | the low end's attacks: a pulse on each kick or bass hit, even over a bass that never stops (how far the level below about 150 Hz jumps above its last half second, scaled to the track's typical kick) |
-| `construct:energy` | the loudness, smoothed like a meter, scaled to the track's own range |
-| `construct:high` | the brightness and attacks (a simple high-pass) |
-| `construct:hit` | the strongest attacks in three bands, at most five a second |
-| `construct:music-time` | the seconds of the track (not 0 to 1) |
-
-How a model listens is the model's own code, and it is part of the run like any other rule:
-Flocking with `set max-separate-turn 1.5 + 12 * construct:kick` bursts apart on every kick.
-`construct:run` then runs for the length of the track. The recording names the track, its SHA-256
-and the clock; the construct carries the features, adds a `music` fact, keeps time linear (height is
-the track's time; `--time sqrt` is refused) and puts the track beside the scene. Its page is film
-mode by itself: the build follows the run's clock (a tick every 1/rate of a second, from the first
-moment), and the replay bar's play button plays the track with the run. The light does not follow the
-music: a run's construct is its data, so the track only keeps its clock. The data lock covers the track's name,
-fingerprint and clock: a construct drawn to another track is another construct.
-
-**Live in NetLogo.** With `construct:sync` after `tick` in go, `construct:play` plays the track from
-the current tick's moment and each run of go waits until the music reaches its tick: the model
-moves in time with the track in NetLogo's own view, with the sound (Java's own audio, from a WAV
-that ffmpeg makes once). Without an audio output the run keeps time with the clock. A model slower
-in the window than its track can't reach each tick in time; it then follows the music as it is heard
-(the strongest kick and hit since its last tick) and says so.
-`construct:stop-music` stops it; `construct:run`, which records as fast as it can, ignores sync.
-
-A construct holds at most 24,000 line segments, so a long run with many moving agents is sampled
-(the `sampling` fact says how much); the construct is the run's shape, and the replay its timing.
-
-## 6. A run as a film (Blender)
+## 5. A run as a film (Blender)
 
 A construct is the run's shape; a film is its motion. The Blender add-on imports a recording
 itself (**File → Import → NetLogo Run (.jsonl)**, or headless with `scripts/run_film.py`): every
 turtle at every tick as moving light with a trail, in its own colours, the world's edge as a line
-of light, and for a run recorded with `construct:music`, its track, at the run's own clock, with
-the light following the music. Nothing is sampled: a three-minute flock of 200 birds is 200 birds
-for three minutes. NetLogo 3D runs fly at their recorded heights inside the world's box.
+of light, played at 30 ticks a second in a steady light, without sound. Nothing is sampled: a
+three-minute flock of 200 birds is 200 birds for three minutes. NetLogo 3D runs fly at their
+recorded heights inside the world's box.
 ([hosts/blender](../hosts/blender/README.md#a-netlogo-run-as-a-film))
 
 In NetLogo, `(construct:draw "auto" "film" true)` also writes `film.blend` beside the page: open it
@@ -302,7 +269,7 @@ in Blender with the Construct add-on and press play (or render it). From the com
 
 ```sh
 construct netlogo-film flocking-run.jsonl --blend flocking.blend          # the scene, to play or render
-construct netlogo-film flocking-run.jsonl --out flocking.mp4 --size 1920x1080   # the film, with its track
+construct netlogo-film flocking-run.jsonl --out flocking.mp4 --size 1920x1080   # the film
 ```
 
 It finds Blender (`--blender`, `$CONSTRUCT_BLENDER`, `blender` on the PATH, or the usual installs)

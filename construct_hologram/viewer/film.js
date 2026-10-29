@@ -21,11 +21,11 @@
  *   voice     while a voice stem is present the hologram shimmers
  * It fetches the one features file named by ?audio and nothing else.
  *
- * A run with music (a scene whose reading carries `music`: a NetLogo run recorded with construct:music) is
- * film mode with no URL parameters: the features are in the page, the build follows the run's own clock, a
- * tick every 1/ticks-per-second of a second from the first moment (no ghost, no pacing, no stages), so the
- * viewer's time is the track's time. The light does not follow the music: a run's construct is its data, so
- * the track only keeps its clock.
+ * A construct with its track (a scene whose reading carries `music`: a song, or a score with its audio) is
+ * film mode with no URL parameters: the features are in the page, the build follows the construct's own
+ * clock, a tick every 1/ticks-per-second of a second from the first moment (no ghost, no pacing, no stages),
+ * so the viewer's time is the track's time; the light follows the energy, and every strong onset or kick
+ * flares the build front.
  *
  * Live (?live=1): the room's sound instead of a track. After a touch or a key (a browser asks before it
  * listens), the microphone is analysed in the page, frame by frame, and never recorded or sent: the light
@@ -134,8 +134,15 @@
       const f = clamp((i / fps) * RUN.tps / span, 0, 1);
       p[i] = clamp(c.phase[0] * c.top * f + c.phase[1], 0, 1);
     }
-    // no accents: a run replays in time with its track, without light on the beat
-    return { key, fps, n, p, env: new Float64Array(a.energy.length), sections: [] };
+    // accents: strong onsets and kicks flare at once and decay over about 0.2 s
+    const m = a.energy.length, env = new Float64Array(m), decay = Math.exp(-1 / (ACCENT_S * fps));
+    const floor = clamp(0.75 - 0.2 * FILM.reactivity, 0.2, 0.75);
+    for (let i = 0; i < m; i++) {
+      const o = (a.onset || [])[i] || 0, k = (a.kick || [])[i] || 0;
+      const hit = Math.max(o > floor ? Math.pow((o - floor) / (1 - floor), 1.5) : 0, k > 0.45 ? Math.pow((k - 0.45) / 0.55, 1.2) : 0);
+      env[i] = Math.max(hit, i ? env[i - 1] * decay : 0);
+    }
+    return { key, fps, n, p, env, sections: [] };
   };
   P.filmBuild = function (tb) {
     const c = this.filmCurve();
@@ -175,7 +182,6 @@
     if (!a || r <= 0) return s;
     const at = this.assemblyTimes(), t0 = at.ghost + at.collapse, building = !LIVE && at.build > 0 && t >= t0 && t < t0 + at.build;
     if (building) { const k = this.filmBuild(t - t0); s.build = k; s.scan = [k * 1.05, 0.6]; }
-    if (RUN && !LIVE) return s;   // a run follows its track's clock only: no light on the energy or the beat
     const f = this.audioAt(t), accent = Math.min(1, r) * this.accentAt(t);
     s.globalAlpha *= clamp(1 + 0.4 * r * (2 * f.energy - 1), 0.15, 1.8) * (1 + 0.1 * accent);
     s.stabilise = Math.max(s.stabilise, 0.8 * accent);  // a glow pulse on what is built

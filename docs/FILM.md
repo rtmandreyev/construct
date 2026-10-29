@@ -92,14 +92,14 @@ has no clear sections, the build simply follows the pace.
 
 **Kicks.** The features also carry `kick`: a pulse on each kick or bass hit, found as a jump of the
 level below about 150 Hz above its last half second, so it pulses even over a bass that never
-stops. A typical kick of the track is near 1. NetLogo models read it as `construct:kick`
-([NETLOGO.md](NETLOGO.md#5-music-optional)).
+stops. A typical kick of the track is near 1. On a construct with its track (below), a strong kick
+flares the build front like an accent.
 
-**A run with music.** A construct of a NetLogo run recorded to a track is film mode by itself, with
-no options: the build follows the run's own clock instead of the pace (tick *t* at second *t* ÷
-ticks a second, from the first moment), and there are no stages to match to sections. The light
-does not follow the music: a run's construct is its data, so the track only keeps its clock. Its
-replay bar plays the track with the run.
+**A construct with its track.** A song, or a score built with its audio ([below](#a-song-as-a-construct)),
+is film mode by itself, with no options: the build follows the construct's own clock instead of the
+pace (each moment drawn at the second it is heard, from the first), and there are no stages to
+match to sections. The light follows the music's loudness, and the strong attacks and kicks flare
+the build front. Its replay bar plays the track with the build.
 
 ## How strongly: the reactivity
 
@@ -198,8 +198,8 @@ without `--film` is the ordinary construct and ignores these options.
   track.
 - **It listens in mono, at 16 kHz.** Stereo movement and very high frequencies are not used.
 - **The browser preview is silent**, and it is not synchronised to a player: play the track
-  yourself alongside, or watch the rendered film. (A run with music is the exception: its replay
-  bar plays its track, and the run follows it.)
+  yourself alongside, or watch the rendered film. (A construct with its track is the exception:
+  its replay bar plays the track, and the build follows it.)
 
 ## Long assemblies in a scene
 

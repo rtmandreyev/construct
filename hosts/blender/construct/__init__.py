@@ -20,8 +20,7 @@ and `wire` (metres), the thickness of the line art. The Construct panel in the s
 them, with an operator that keyframes a reveal.
 
 File > Import > NetLogo run (.jsonl) reads a recording from Construct for NetLogo as a film: every
-turtle at every tick as light that moves, with its trail, in time with the run's track if it was
-recorded with construct:music (runfilm.py).
+turtle at every tick as light that moves, with its trail (runfilm.py).
 """
 
 import json
@@ -542,7 +541,7 @@ def fcurves(obj):
 
 
 class CONSTRUCT_OT_keyframe_track(bpy.types.Operator):
-    """Keyframe the build in time with the construct's track (a song or a run recorded to music), and add the
+    """Keyframe the build in time with the construct's track (a song, or a score with its audio), and add the
     track as a sound strip"""
     bl_idname = "construct.keyframe_track"
     bl_label = "Keyframe to Its Track"

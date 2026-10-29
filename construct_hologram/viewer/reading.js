@@ -1,7 +1,7 @@
 // Construct reading: for a page whose scene carries a reading (how to read it and, for a run, its clock and
-// counts) or asks for its labels. Labels show from the start (unless ?labels=0) and stay inside the window;
-// "How to read it" is a panel (H); a run gets a replay bar that scrubs it tick by tick with its counts. A run
-// recorded with music plays with its track (the file named by reading.music.track, beside the page).
+// counts) or asks for its labels. Labels show as their parts are drawn (unless ?labels=0) and stay inside the window;
+// "How to read it" is a panel (H); a run gets a replay bar that scrubs it tick by tick with its counts. A song or
+// a score with its audio plays with its track (the file named by reading.music.track, beside the page).
 // A run's panel also offers its counts as CSV and a citation of the run (model, NetLogo, seed, ticks, the data
 // lock), for a spreadsheet or a report. Printed (Cmd/Ctrl+P), the page is a worksheet: the construct as it is
 // on screen, how to read it, the counts at that tick, the citation and three questions with room to answer.

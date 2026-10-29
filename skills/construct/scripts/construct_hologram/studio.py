@@ -479,10 +479,10 @@ def add_commands(sub):
     p.add_argument("--title")
     p.add_argument("--out", required=True)
     p.add_argument("--force", action="store_true")
-    p = sub.add_parser("netlogo-film", help="a NetLogo run as a film in Blender: every turtle as moving light, in "
-                                            "time with its track (needs Blender; docs/NETLOGO.md)")
+    p = sub.add_parser("netlogo-film", help="a NetLogo run as a film in Blender: every turtle as moving light "
+                                            "(needs Blender; docs/NETLOGO.md)")
     p.add_argument("run", help="the recording (.jsonl)")
-    p.add_argument("--out", help="render the film to this .mp4 (with the run's track, if it has one)")
+    p.add_argument("--out", help="render the film to this .mp4")
     p.add_argument("--blend", help="save the film's scene as this .blend, to play or render in Blender")
     p.add_argument("--size", default="1920x1080")
     p.add_argument("--from", dest="start", type=float, default=0.0, help="seconds into the run to start at")
@@ -959,12 +959,6 @@ def run(args):
                 return 1
             text = json.dumps(scene, separators=(",", ":"), ensure_ascii=False) + "\n"   # data: compact
             _write(args.out, text, args.force)
-            track = nl.music_track(run_data) if (scene.get("reading") or {}).get("music") else None
-            if track is not None:   # the run's track beside the scene, where its page plays it from
-                dest = Path(args.out).resolve().parent / track.name
-                if dest != track.resolve():
-                    shutil.copyfile(track, dest)
-                sys.stdout.write("music: %s beside the scene; the replay plays it\n" % track.name)
             if args.csv:
                 _write(args.csv, nl.counts_csv(run_data), args.force)
             if args.materials_out or args.glb:

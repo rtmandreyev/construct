@@ -46,11 +46,12 @@ beside the Open control.
 
 ### In time with its track
 
-A construct of a track (`construct song`) or of a NetLogo run recorded to music carries its clock
-into the glTF. Select it and press **Keyframe to Its Track** in the Construct panel: the build is
-keyed linearly over the track's length from the current frame, so each frame shows what the music
-has reached, and the track (beside the imported file) is added as a sound strip. Render it with any
-look the controls give, from the hologram to the finished model: a 3D visualiser of the music.
+A construct of a track (`construct song`), or of a score with its audio (`construct song piece.mid
+--track piece.mp3`), carries its clock into the glTF. Select it and press **Keyframe to Its Track**
+in the Construct panel: the build is keyed linearly over the track's length from the current frame,
+so each frame shows what the music has reached, and the track (beside the imported file) is added as
+a sound strip. Render it with any look the controls give, from the hologram to the finished model: a
+3D visualiser of the music.
 
 ### A NetLogo run as a film
 
@@ -58,10 +59,8 @@ look the controls give, from the hologram to the finished model: a 3D visualiser
 NetLogo](../netlogo/README.md) (`construct:run`, or `construct.nls`) and plays it as a film: every
 turtle at every tick as a small glowing arrowhead in its own NetLogo colour, pointing where it
 goes, with a light trail behind it; the world's edge as a line of light (a box, for a NetLogo 3D
-run, whose turtles fly at their own heights); bloom; and a camera that orbits slowly. A run
-recorded with `construct:music` plays with its track: the scene's frames span the run at its own
-clock (tick *t* at second *t* ÷ ticks a second), the track is a sound strip, and the light swells
-with the music's energy and flashes on each kick.
+run, whose turtles fly at their own heights); bloom; and a camera that orbits slowly. The scene's
+frames span the run at 30 ticks a second, in a steady light, without sound.
 
 It draws the recording itself, not a construct of it, so a run of any length and any number of
 turtles loses nothing; between two records a turtle moves on a straight line (never across a wrap
@@ -69,7 +68,7 @@ of the world), and the trail stops where the turtle wrapped. A frame handler mov
 the scene plays or renders; the objects keep the recording's path, so a saved .blend replays it
 wherever the add-on is installed. Import options: the trail's length in seconds, and the camera.
 
-Headless, to a film with its sound, Construct's command line runs Blender for you:
+Headless, to a film, Construct's command line runs Blender for you:
 
 ```sh
 construct netlogo-film flocking-run.jsonl --out flocking.mp4 --size 1920x1080

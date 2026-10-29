@@ -189,11 +189,11 @@ time, so it costs far more than a fast one.
 the screen with no help line or legend, puts the construct's title and the first sentence of its
 summary in the corner, and loops: once the construct has assembled and settled, it holds for 20
 seconds and plays again. A visitor can touch, drag and zoom it as anywhere; after 45 seconds
-untouched, the loop takes over again. The first touch asks for full screen, and on a construct of a
-NetLogo run recorded to music, lets the run play with its track from then on (a browser plays sound
-only after a touch; for sound from the start, open the page with `?sound=1` in a browser started to
-allow it, as Chrome with `--autoplay-policy=no-user-gesture-required`). The screen is kept awake where the browser allows,
-and the cursor hides when still. `?hold=` and `?idle=` change the times; `?kiosk=0` turns it off.
+untouched, the loop takes over again. The first touch asks for full screen, and on a song or a score
+with its audio, lets it play with its track from then on (a browser plays sound only after a touch;
+for sound from the start, open the page with `?sound=1` in a browser started to allow it, as Chrome
+with `--autoplay-policy=no-user-gesture-required`). The screen is kept awake where the browser
+allows, and the cursor hides when still. `?hold=` and `?idle=` change the times; `?kiosk=0` turns it off.
 With `?live=1` the exhibit also hears its room: after the first touch its light follows the
 loudness, and kicks and claps pulse its glow (the sound is analysed on the device and never kept;
 [FILM.md](FILM.md#live-the-rooms-sound)). The page is a single file: open it in the screen's
@@ -202,7 +202,7 @@ browser, offline.
 **A show of several.** `construct kiosk a.json b.json c.json --out show --each 90` builds each scene
 as a kiosk page in its own folder (a track beside a scene goes with it) and writes `show/index.html`,
 which shows them one after another with a fade: each plays through once (its assembly, or a song's
-or run's whole track), then stays 90 seconds; a visitor's touch holds the one they are exploring
+whole track), then stays 90 seconds; a visitor's touch holds the one they are exploring
 until it has been left alone for that long again. It opens on "Touch to start": that touch makes it
 full screen and lets its pages sound. `--live` makes every page listen to
 the room.

@@ -1317,7 +1317,7 @@
   "reading": {
    "type": "object",
    "additionalProperties": false,
-   "description": "Optional: how to read the construct (`how`), and for a construct of a run its clock (time to height, and `phase`: build phase = phase[0] * y + phase[1]) and counts over time (`series`), and for a run recorded to music, the track and its features (`music`).",
+   "description": "Optional: how to read the construct (`how`), and for a construct of a run its clock (time to height, and `phase`: build phase = phase[0] * y + phase[1]) and counts over time (`series`), and for a song, or a score with its audio, the track and its features (`music`).",
    "properties": {
     "how": {
      "type": "array",
@@ -1344,7 +1344,7 @@
     "music": {
      "type": "object",
      "additionalProperties": false,
-     "description": "A run recorded with construct:music: the track beside the page, its SHA-256, the run's clock (tick t at second t / ticks_per_second), its length, and the features the page's light follows.",
+     "description": "A song's or a score's track: the file beside the page, its SHA-256, the construct's clock (tick t at second t / ticks_per_second), its length, and the features the page's light follows.",
      "required": [
       "track",
       "ticks_per_second",

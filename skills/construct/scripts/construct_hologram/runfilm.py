@@ -4,10 +4,8 @@
 A construct of a run holds the run's shape (at most 24,000 line segments); this draws the recording
 itself, every turtle at every tick, so a long run with many agents loses nothing. Each turtle is a
 small glowing arrowhead in its own NetLogo colour, pointing where it goes, with a trail that fades
-behind it; the world is the floor, its edge a line of light. A run recorded with construct:music
-plays with its track: the scene's clock is the run's (tick t at second t / ticks-per-second), the
-track is a sound strip, and the light follows the music, swelling with the energy and flashing on
-each kick.
+behind it; the world is the floor, its edge a line of light. The film plays the run at 30 ticks a
+second.
 
 Nothing is invented: positions, colours, births and deaths are the recording's; between two ticks
 a turtle is placed on the straight line between its recorded places (never across a wrap of the
@@ -32,6 +30,7 @@ except ImportError:
     bpy = np = None
 
 WORLD = 10.0          # metres across the world's longer side, as a construct of a run draws it
+TPS = 30.0            # the film's clock: ticks a second
 TRAIL_S = 0.35        # seconds of trail behind each turtle
 TRAIL_POINTS = 12     # points along each trail
 ARROW = 0.11          # an arrowhead's length, metres
@@ -59,7 +58,7 @@ def netlogo_rgb(c):
 
 def read(path):
     """The recording as arrays: positions [ticks, agents, 2] in metres, alive [ticks, agents], each agent's
-    colour per tick, the ticks, the world's size, and its music (features and track) if it has any."""
+    colour per tick, the ticks and the world's size."""
     path = os.path.abspath(path)
     key = (path, os.path.getmtime(path))
     if key in _CACHE:
@@ -114,33 +113,16 @@ def read(path):
     data = {"header": header, "ticks": np.array([f["t"] for f in frames], dtype=np.float64), "pos": pos, "alive": alive,
             "colour": colour, "end": end, "size": ((x1 - x0) * scale, (y1 - y0) * scale), "jump": 0.5 * WORLD,
             "depth": (w.get("max-pzcor", 0) - w.get("min-pzcor", 0) + 1) * scale if header.get("zcor") else 0.0,
-            "music": _music(header, os.path.dirname(path)), "has_z": has_z, "path": path}
+            "has_z": has_z, "path": path}
     for old in list(_CACHE)[:-3]:   # a few runs at once, each read once
         del _CACHE[old]
     _CACHE[key] = data
     return data
 
 
-def _music(header, folder):
-    """A run's music: its clock, features and track (the track beside the run, or where it was recorded)."""
-    m = header.get("music")
-    if not m:
-        return None
-    feats = {}
-    try:
-        with open(os.path.join(folder, m["features"]), encoding="utf-8") as fh:
-            doc = json.load(fh)
-        feats = {k: np.array(doc.get(k) or [], dtype=np.float32) for k in ("energy", "kick", "onset")}
-    except (OSError, ValueError, KeyError):
-        pass
-    track = next((p for p in (os.path.join(folder, m.get("track", "")), m.get("path") or "") if p and os.path.isfile(p)), None)
-    return {"tps": float(m["ticks-per-second"]), "features": feats, "track": track, "name": m.get("track")}
-
-
 def seconds_of(data):
-    """How long the film is: the run at its music's clock, or 30 ticks a second without music."""
-    tps = data["music"]["tps"] if data["music"] else 30.0
-    return (data["ticks"][-1] - data["ticks"][0]) / tps
+    """How long the film is: the run at TPS ticks a second."""
+    return (data["ticks"][-1] - data["ticks"][0]) / TPS
 
 
 # ---------------------------------------------------------------------------- where everything is at a moment
@@ -177,17 +159,6 @@ def state(data, tick, trail_ticks):
     return p, d, alive, data["colour"][k], trail
 
 
-def light(data, seconds):
-    """The music's light at a moment: (energy, kick), 0..1, or a steady (0.6, 0) without music."""
-    m = data["music"]
-    if not m or not len(m["features"].get("energy", [])):
-        return 0.6, 0.0
-    f = m["features"]
-    i = int(round(seconds * m["tps"]))
-    get = lambda a: float(a[min(max(i, 0), len(a) - 1)]) if len(a) else 0.0
-    return get(f["energy"]), max(get(f["kick"]), 0.7 * get(f.get("onset", np.zeros(0))))
-
-
 # ---------------------------------------------------------------------------- the objects
 
 def _emission(name, strength_attr=None):
@@ -214,7 +185,7 @@ def _emission(name, strength_attr=None):
     nt.links.new(attr.outputs["Color"], mix.inputs["A"])
     nt.links.new(mix.outputs["Result"], em.inputs["Color"])
     level = nt.nodes.new("ShaderNodeValue")
-    level.name = level.label = "music"
+    level.name = level.label = "glow"
     level.outputs[0].default_value = 3.0
     if strength_attr:
         fade = nt.nodes.new("ShaderNodeAttribute")
@@ -306,8 +277,8 @@ def _mesh_object(name, verts, edges, collection):
 
 
 def build(path, scene=None, trail_seconds=TRAIL_S, fps=30, camera=True):
-    """Import a recording as a film: agents, trails, the world's edge, the music (light and track), a
-    camera; the scene's frames span the run. Returns the collection."""
+    """Import a recording as a film: agents, trails, the world's edge and a camera; the scene's frames span
+    the run. Returns the collection."""
     if np is None:
         raise RuntimeError("the NetLogo run film needs NumPy (bundled with Blender)")
     data = read(path)
@@ -350,11 +321,6 @@ def build(path, scene=None, trail_seconds=TRAIL_S, fps=30, camera=True):
     sc.render.fps = fps
     sc.frame_start = 1
     sc.frame_end = 1 + int(math.ceil(seconds_of(data) * fps))
-    m = data["music"]
-    if m and m["track"]:
-        ed = sc.sequence_editor_create()
-        strips = ed.strips if hasattr(ed, "strips") else ed.sequences
-        strips.new_sound(name=os.path.basename(m["track"]), filepath=m["track"], channel=1, frame_start=1)
     if camera:
         _camera(sc, coll, max(w, h), z)
     _look(sc)
@@ -415,7 +381,7 @@ def _look(sc):
 # ---------------------------------------------------------------------------- each frame
 
 def update(sc, frame):
-    """Move every run object in the scene to this frame: agents, trails, the music's light, the camera."""
+    """Move every run object in the scene to this frame: agents, trails, the camera."""
     for obj in [o for o in sc.objects if "construct_run" in o]:
         info = obj["construct_run"]
         try:
@@ -426,18 +392,16 @@ def update(sc, frame):
                 data = read(beside)
             except (OSError, ValueError):
                 continue
-        tps = data["music"]["tps"] if data["music"] else 30.0
         seconds = (frame - info.get("start", 1)) / info.get("fps", sc.render.fps)
-        tick = data["ticks"][0] + seconds * tps
-        energy, kick = light(data, seconds)
-        p, d, alive, colour, trail = state(data, tick, info.get("trail", TRAIL_S) * tps)
+        tick = data["ticks"][0] + seconds * TPS
+        p, d, alive, colour, trail = state(data, tick, info.get("trail", TRAIL_S) * TPS)
         me = obj.data
         if obj.name.startswith("agents"):
             me.vertices.foreach_set("co", p.ravel())
             me.attributes["alive"].data.foreach_set("value", alive.astype(np.float32))
             me.attributes["dir"].data.foreach_set("vector", d.ravel())
             me.attributes["col"].data.foreach_set("color", np.hstack([colour, np.ones((len(p), 1), np.float32)]).ravel())
-            level = 2.5 + 3.0 * energy + 8.0 * kick
+            level = 4.3
         elif obj.name.startswith("trails"):
             pts = trail.transpose(1, 0, 2)   # agent by agent, newest first
             me.vertices.foreach_set("co", pts.ravel())
@@ -446,12 +410,12 @@ def update(sc, frame):
             me.attributes["fade"].data.foreach_set("value", fade.ravel())
             me.attributes["col"].data.foreach_set("color", np.repeat(np.hstack([colour, np.ones((len(p), 1), np.float32)]),
                                                                      TRAIL_POINTS, axis=0).ravel())
-            level = 1.6 + 2.0 * energy + 5.0 * kick
+            level = 2.8
         else:
-            level = 1.0 + 1.5 * energy + 3.0 * kick
+            level = 1.9
         me.update()
         for mat in _materials_of(obj):
-            node = mat.node_tree.nodes.get("music")
+            node = mat.node_tree.nodes.get("glow")
             if node:
                 node.outputs[0].default_value = level
     for cam in [o for o in sc.objects if "construct_run_camera" in o]:
@@ -469,8 +433,8 @@ def _materials_of(obj):
 
 
 def render(run, out=None, blend=None, size="1920x1080", start=0.0, seconds=None, samples=16, trail=TRAIL_S):
-    """In Blender: a fresh scene with the run's film, saved as `blend` and/or rendered to `out` (an .mp4 with the
-    track, if the run has one). Returns the frame range."""
+    """In Blender: a fresh scene with the run's film, saved as `blend` and/or rendered to `out` (an .mp4). Returns
+    the frame range."""
     bpy.ops.wm.read_factory_settings(use_empty=True)
     register()
     sc = bpy.context.scene
@@ -489,8 +453,7 @@ def render(run, out=None, blend=None, size="1920x1080", start=0.0, seconds=None,
     sc.render.ffmpeg.format = "MPEG4"
     sc.render.ffmpeg.codec = "H264"
     sc.render.ffmpeg.constant_rate_factor = "HIGH"
-    sc.render.ffmpeg.audio_codec = "AAC" if sc.sequence_editor else "NONE"
-    sc.render.ffmpeg.audio_bitrate = 192
+    sc.render.ffmpeg.audio_codec = "NONE"
     if out:
         sc.render.filepath = os.path.abspath(out)
     if blend:

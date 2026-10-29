@@ -3,9 +3,9 @@
 ## 1.1.0 — unreleased
 
 Models come alive, and music becomes something to build with: the NetLogo bridge, made reliable on
-the whole Models Library and usable from inside NetLogo; models that follow a track, live or replayed;
-runs as films and 3D models in Blender; songs and scores as constructs; and pages for classrooms and
-museums. Plan: [ROADMAP.md](docs/ROADMAP.md#v11-models-come-alive); the story:
+the whole Models Library and usable from inside NetLogo; runs as films and 3D models in Blender; songs
+and scores as constructs; and pages for classrooms and museums. Plan:
+[ROADMAP.md](docs/ROADMAP.md#v11-models-come-alive); the story:
 [release notes](docs/releases/v1.1.0.md).
 
 - **Construct for NetLogo** ([hosts/netlogo](hosts/netlogo/README.md)): a NetLogo 7 extension,
@@ -18,10 +18,6 @@ museums. Plan: [ROADMAP.md](docs/ROADMAP.md#v11-models-come-alive); the story:
   in the procedures setup and go call, reads models whose code is escaped XML, takes `--setup` and
   `--go` commands (with inputs: `--setup "setup 4"`, which a refusal suggests from the model's own
   buttons), and the recorder's names can no longer clash with a model's (all `construct-`).
-- **Live in NetLogo:** `construct:play` plays the track from the current tick, and `construct:sync`
-  in go waits until the music reaches each tick, so a model moves in time with its track in NetLogo's
-  own view, with the sound (or with the clock, without an audio output); `construct:stop-music`. A
-  model slower than its track follows the music as heard, and says so.
 - **Pulse, and where the order forms:** a new view, `pulse`, for turtles that switch a state on and off
   again and again (fireflies, firing cells): one ring per tick, its area the share in that state, so
   falling into step shows as a thin, ragged column opening into wide plates; `--view auto` picks it
@@ -32,13 +28,8 @@ museums. Plan: [ROADMAP.md](docs/ROADMAP.md#v11-models-come-alive); the story:
 - **Labels wait for their parts:** a construct's labels appear as the build reaches the point each one
   names (the geometry's annotations carry that `phase`), never over an empty frame; the viewer's
   pinned copy moves to `testdata/hologram-1.1.0.js`.
-- **Runs to music:** `construct:music "track.mp3"` makes a tick a moment of a track (30 a second by
-  default), `construct:kick`, `construct:energy`, `construct:high` and `construct:hit` let a model's
-  code follow it, and `construct:run` lasts the track. The construct plays back in time with the
-  music: its page is film mode by itself (the build at the run's clock, which the replay bar plays
-  the track to; the light does not follow the beat), the track's fingerprint is under the data lock, and the
-  track is copied beside the scene. `construct audio` gains `kick`: a pulse on each kick or bass
-  hit, even over a held bass ([NETLOGO.md](docs/NETLOGO.md#5-music-optional)).
+- **Kicks:** `construct audio` gains `kick`: a pulse on each kick or bass hit, even over a held bass
+  ([FILM.md](docs/FILM.md#how-the-music-shows)).
 - **A song as a construct:** `construct song track.mp3 --out scene.json` draws a track as a tower of
   sound, each moment a ring shaped by the loudness of 24 bands of frequencies, rising with time, the
   section changes in the accent; its page builds in time with the track and plays it, under a data
@@ -50,15 +41,16 @@ museums. Plan: [ROADMAP.md](docs/ROADMAP.md#v11-models-come-alive); the story:
   time signature, track names) and stands each note as a line of light around the circle of fifths,
   rising through time, each track a tone, a ring at each bar; `--track` builds it in time with the
   piece's audio.
-- **In Blender, in time with the track:** a construct of a track or of a run to music carries its clock
-  into the glTF (`music`: the track, its length and the build's range); the add-on's **Keyframe to Its
-  Track** keys the build linearly over the track and adds it as a sound strip (Blender 4 and 5).
+- **In Blender, in time with the track:** a construct of a song, or of a score with its audio, carries
+  its clock into the glTF (`music`: the track, its length and the build's range); the add-on's
+  **Keyframe to Its Track** keys the build linearly over the track and adds it as a sound strip
+  (Blender 4 and 5).
 - **A run as a film** (Blender): File > Import > NetLogo Run (.jsonl), `construct netlogo-film run.jsonl
   --out film.mp4` (or `--blend`; it finds Blender), or `(construct:draw … "film" true)` in NetLogo
-  (`film.blend` beside the page), draws a recording itself, every turtle at every tick as glowing light with a trail in
-  its own NetLogo colour, the world's edge as a line of light, bloom and an orbiting camera; a run
-  recorded to music plays with its track at the run's clock, its light following the music. Nothing
-  is sampled, so a long run of many agents loses nothing.
+  (`film.blend` beside the page), draws a recording itself, every turtle at every tick as glowing
+  light with a trail in its own NetLogo colour, the world's edge as a line of light, bloom and an
+  orbiting camera, at 30 ticks a second, silent, in a steady light. Nothing is sampled, so a long run
+  of many agents loses nothing.
 - **NetLogo 3D:** the extension records each turtle's height (last in its row, so 2D readers are
   unchanged) and the world's depth, and skips 3D patches; a NetLogo 3D model opens headless in the
   tests' driver. The film flies the turtles at their heights inside the world's box.
@@ -68,7 +60,7 @@ museums. Plan: [ROADMAP.md](docs/ROADMAP.md#v11-models-come-alive); the story:
 - **A worksheet:** printed, a construct with a reading is a one-page worksheet: its picture as on
   screen, how to read it, the counts at that tick, the citation and three questions with room to answer.
 - **For a spreadsheet or a report:** a run's *How to read it* panel offers its counts as CSV and a
-  citation of the run (model, NetLogo version, seed, ticks, track, Construct's version, data lock);
+  citation of the run (model, NetLogo version, seed, ticks, Construct's version, data lock);
   `construct netlogo … --csv` writes the counts at every record.
 - **Live:** `?live=1` on a film or kiosk page listens to the room after a touch: the light follows the
   microphone's loudness and kicks pulse the glow, analysed in the page and never recorded or sent.
@@ -76,7 +68,7 @@ museums. Plan: [ROADMAP.md](docs/ROADMAP.md#v11-models-come-alive); the story:
   that moves from one to the next, holding while a visitor explores (`--each`, `--live`).
 - **Kiosk pages:** `construct build --kiosk` makes a page for a museum screen or a classroom wall:
   full screen, a label, an attract loop that replays the construct once it has settled, touch to
-  explore, sound for a run with music after the first touch, the screen kept awake
+  explore, a song's track after the first touch, the screen kept awake
   (`viewer/kiosk.js`, embedded only when asked; [USING.md](docs/USING.md#on-a-museum-screen-or-a-classroom-wall)).
 - **A legend on every NetLogo construct,** each part named where it is and shown from the start;
   no projector or drifting motes on a construct of data. An art layer's `"legend": false` drops it

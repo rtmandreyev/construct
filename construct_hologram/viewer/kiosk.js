@@ -5,16 +5,16 @@
  * first sentence of its summary) and a "touch to explore" hint. It loops by itself: once the construct has
  * assembled and settled, it holds for `hold` seconds (default 20) and plays again. A touch or a drag explores
  * it as anywhere else; after `idle` seconds untouched (default 45) the loop takes over again. The first touch
- * asks for full screen and, on a run recorded to music, lets the run play with its track from then on (a
+ * asks for full screen and, on a song or a score with its audio, lets it play with its track from then on (a
  * browser plays sound only after a touch, unless the kiosk browser is started to allow it). The screen is kept
  * awake where the browser allows it, and the cursor hides when it is still.
  *
  * In a show (`construct kiosk`), it tells the show when it is touched, so the show waits while someone explores.
  *
- * In a show, it holds the show until it has played through once (its assembly, or a run's or a song's whole
- * track), and the show, not the page, asks for full screen.
+ * In a show, it holds the show until it has played through once (its assembly, or a song's whole track),
+ * and the show, not the page, asks for full screen.
  *
- * URL parameters: hold, idle (seconds); sound=1 (play a run's music from the start, for a kiosk browser that
+ * URL parameters: hold, idle (seconds); sound=1 (play a song's track from the start, for a kiosk browser that
  * allows sound without a touch, or a show that has been started); kiosk=0 turns it off.
  */
 (function () {
@@ -64,7 +64,7 @@
     const replay = () => {
       cycle = performance.now();
       const play = document.querySelector(".rd-bar button");
-      if (sound && play && (window.HOLOGRAM_GEOMETRY.reading || {}).music) {   // a run with music: replay it with its track
+      if (sound && play && (window.HOLOGRAM_GEOMETRY.reading || {}).music) {   // a song with its track: replay it with its track
         window.dispatchEvent(new KeyboardEvent("keydown", { key: "r" }));
         if (play.textContent !== "❚❚") play.click();
       } else {
