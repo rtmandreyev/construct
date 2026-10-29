@@ -219,6 +219,10 @@ For educators, museums and visual artists: what is known, shown as clearly as wh
 Its truth-first stance is inspired by [Anatomy](https://github.com/wheresryan22/anatomy); its methods
 are its own.
 
+- **People:** human figures as constructs, first, since paintings, scenes and reconstructions need
+  them: bodies from anthropometric proportions (the source marked), posed by their joints, clothing
+  as shells over them, and heads with their features and expressions as parameters. In the house
+  style they are sculptural, not photographic; a real person's likeness needs their consent.
 - **High-provenance mode:** a construct that maximises accuracy: every part with a source or
   visibly marked as a guess, a critic that judges accuracy only, a sources panel (touch a part to
   see where it comes from), a certainty view and a printable evidence sheet for a class or a label.
@@ -256,10 +260,15 @@ are its own.
 - **Break-apart:** named parts and joints as the pieces for destruction and assembly mechanics.
 - **Texture coordinates for every shape,** for texturing in any engine.
 
-## v1.6: film and documentary
+## v1.6: film, documentary and AR
 
 - **Reconstructions for documentaries:** historical places and objects that say on screen what is
   known and what is reconstructed (with the high-provenance mode of 1.3).
+- **Holographic screen graphics:** the hologram as a film asset, rendered with a transparent
+  background and separate passes (lines, glow, depth), for compositing over live action; camera
+  moves imported from a tracked shot.
+- **USD and USDZ export:** Pixar's scene format for film pipelines, and its single-file package for
+  AR: on an iPhone or iPad, one tap opens a construct in the room at its real size, with no app.
 
 ## Parked work
 
@@ -292,15 +301,12 @@ most worth building then.
 
 ### Film and video (to decide)
 
-- **Holographic screen graphics:** the hologram as a film asset, rendered with a transparent
-  background and separate passes, for compositing; camera moves imported from a tracked shot.
 - **Previs:** a scene's sets, vehicles and props described in words, blocked out at their real
   sizes in Blender, with camera paths and a parts list for the art department.
 - **Title sequences and trailers:** constructs assembling to a cut, from an edit's markers.
 
 ### Makers and 3D
 
-- **USD and USDZ export:** one tap opens a construct in AR on an iPhone or iPad.
 - **From a photo:** a reference image traced into a first draft, then built from facts.
 - **An optional surface finish per part** (paint, metal, glass) in the scene itself.
 - **Versions and differences:** what changed between two versions of a construct.
