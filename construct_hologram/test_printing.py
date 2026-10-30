@@ -276,7 +276,9 @@ class Kit(unittest.TestCase):
             self.assertIn('name="1 tray"', model)
             booklet = Path(tmp, "booklet.html").read_text(encoding="utf-8")
             self.assertIn("Step 2", booklet)
-            self.assertTrue(Path(tmp, "img", "step-1.png").read_bytes().startswith(b"\x89PNG"))
+            step = Path(tmp, "img", "step-1.svg").read_text(encoding="utf-8")
+            self.assertIn("<path d=", step)                                       # drawn in the construct's lines
+            self.assertIn(">1</text>", step)                                      # the new piece's callout
             summary = json.loads(Path(tmp, "kit.json").read_text(encoding="utf-8"))
             self.assertEqual(summary["report"]["counts"]["pieces"], 4)
             self.assertIn("kit designer", kit.CRITIC.lower() + " kit designer")
