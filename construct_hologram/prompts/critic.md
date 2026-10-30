@@ -50,7 +50,7 @@ Answer with one JSON object, no prose:
   shape with no contour reads as cardboard: that is a defect.
 - **The medium.** The renderer cannot do three things; do not ask for them: hidden lines show
   faintly through solid parts (the x-ray style), glass cannot be tinted or coloured, and stills
-  show the closed still pose (an opening never shows in a still).
+  show the still pose (when it is closed, an opening shows only in the scene's "open" view).
 - `verdict`: "outstanding" only when every score is 3 and nothing critical or major remains;
   "good" when every score is at least 2 and nothing is critical; otherwise "improve". It is
   recomputed from your scores, so score honestly rather than kindly.

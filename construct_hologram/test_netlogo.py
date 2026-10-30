@@ -133,7 +133,7 @@ class Recordings(unittest.TestCase):
             p = Path(d, "r.jsonl")
             p.write_text(head + "\n" + '{"t":0,"turtles":[[0,"t",Infinity,0,15,false]]}' + "\n", encoding="utf-8")
             with self.assertRaisesRegex(ValueError, "Infinity"):
-                runfilm.read(str(p))
+                runfilm.parse(str(p))   # plain Python: refused before Blender (and NumPy) is needed
 
 
 class Instrument(unittest.TestCase):

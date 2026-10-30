@@ -51,7 +51,8 @@ STATUSES = ("open", "fixed", "regressed", "known-limit")
 MEDIUM = [
     {"id": "L1", "criterion": "depth", "title": "hidden lines show faintly through solid parts (the x-ray style)"},
     {"id": "L2", "criterion": "identity", "title": "glass cannot be tinted or coloured (the house palette)"},
-    {"id": "L3", "criterion": "motion", "title": "stills show the closed still pose: an opening never shows in a still"},
+    {"id": "L3", "criterion": "motion", "title": "stills show the still pose: when it is closed, an opening shows only in "
+                                                 "the scene's \"open\" view, if it has one"},
 ]
 FINISH_CAP = 4  # logged only: would a cap of this many finish rounds stop the run here?
 LIKENESS = ("silhouette", "proportions", "identity")  # finish starts once none has a critical or major item open

@@ -1176,7 +1176,7 @@ def _animation_check(c, an, pr):
 def _face_of(c, shape, face, where):
     """The face a label/artwork/anchor uses; reports an error and returns None when the
     shape has no such face."""
-    t = shape.get("type") if isinstance(shape, dict) else None
+    t = shape.get("type") if isinstance(shape, dict) and isinstance(shape.get("type"), str) else None
     if t not in FACES:
         c.err(where, "only %s parts have faces" % ", ".join(sorted(FACES)))
         return None

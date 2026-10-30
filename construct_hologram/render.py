@@ -342,7 +342,8 @@ def review(html_path, out_dir, width=1440, height=900, scale=1.0, sheets=SHEETS,
         written.append(str(p))
         for vid in views:
             # each of the scene's own views, still, so its framing can be judged
-            b.open(_url(html_path, view=vid, motion="reduced", ui=0, capture=1))
+            # the "open" view is what opening reveals: shown opened, whatever the still pose
+            b.open(_url(html_path, view=vid, motion="reduced", ui=0, capture=1, open=1 if vid == "open" else None))
             p = out / ("view-%s.png" % vid)
             b.shot(p)
             written.append(str(p))
@@ -377,7 +378,7 @@ def stills(html_path, out_dir, views, width=1280, height=800, scale=1.0, browser
     b = open_browser(_url(html_path, ui=0, capture=1, motion="reduced"), width, height, scale, browser)
     try:
         for v in views:
-            b.open(_url(html_path, view=v, motion="reduced", camera="still", ui=0, capture=1))
+            b.open(_url(html_path, view=v, motion="reduced", camera="still", ui=0, capture=1, open=1 if v == "open" else None))
             p = out / ("still-%s.png" % v)
             b.shot(p)
             written.append(str(p))

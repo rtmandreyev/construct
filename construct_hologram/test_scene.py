@@ -123,6 +123,8 @@ class Malformed(unittest.TestCase):
                        lambda s: s.__setitem__("labels", [{"id": "l", "part": "body", "face": "front", "field": {"a": 1}}]),
                        lambda s: s.__setitem__("authoring", {"tier": "standard", "research": "done", "sources": [["req"]]}),
                        lambda s: s["parts"][0].update(certainty="verified", basis=1.5),
+                       lambda s: (s["parts"][0]["shape"].__setitem__("type", {"a": 1}),
+                                  s.__setitem__("anchors", {"front": {"part": "body", "face": "front"}})),
                        lambda s: s["parts"][0].__setitem__("shape", {"type": "loft", "sections": [[-1, 0.5, 0, 1],
                                                                                                    [1, 1e308, 0, 1]]})):
             sc = base()
@@ -2237,6 +2239,29 @@ class Capture(unittest.TestCase):
             text = Path(d, "critique", "packet.md").read_text()
             self.assertIn(pk["scene_sha256"], text)
             self.assertIn("construct-critique", text)
+
+    def test_the_open_view_is_taken_opened_whatever_the_still_pose(self):
+        # reported by a live run: with the still pose closed, critics were shown an "open" view that was closed
+        urls = []
+
+        class Fake:
+            def open(self, url):
+                urls.append(url)
+
+            def shot(self, path):
+                pass
+
+            def close(self):
+                pass
+        real = render.open_browser
+        render.open_browser = lambda *a, **k: Fake()
+        try:
+            with tempfile.TemporaryDirectory() as d:
+                render.stills(str(Path(d, "x.html")), d, ["open", "hero"])
+        finally:
+            render.open_browser = real
+        self.assertIn("open=1", next(u for u in urls if "view=open" in u))
+        self.assertNotIn("open=", next(u for u in urls if "view=hero" in u))
 
     def test_a_reference_keyed_to_the_scenes_own_view_travels_with_the_packet(self):
         # seen in a live run: `ref-front34=photo.jpg` (a view of the scene) was taken whole as a path, so the photo

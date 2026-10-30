@@ -62,13 +62,9 @@ def _no_constant(name):   # this file runs inside Blender too: nothing of Constr
     raise ValueError("%s is not a number a run can hold" % name)
 
 
-def read(path):
-    """The recording as arrays: positions [ticks, agents, 2] in metres, alive [ticks, agents], each agent's
-    colour per tick, the ticks and the world's size."""
-    path = os.path.abspath(path)
-    key = (path, os.path.getmtime(path))
-    if key in _CACHE:
-        return _CACHE[key]
+def parse(path):
+    """(header, frames, end, patch rows) of a recording, in plain Python (no NumPy: it runs outside Blender too, to
+    refuse a bad recording before Blender starts)."""
     header, frames, end, patch_rows = None, [], None, []
     with open(path, encoding="utf-8") as fh:
         for line in fh:
@@ -91,6 +87,17 @@ def read(path):
                 end = row["end"]
     if header is None or not frames:
         raise ValueError("%s is not a Construct recording with turtles (construct:run or construct.nls)" % os.path.basename(path))
+    return header, frames, end, patch_rows
+
+
+def read(path):
+    """The recording as arrays: positions [ticks, agents, 2] in metres, alive [ticks, agents], each agent's
+    colour per tick, the ticks and the world's size."""
+    path = os.path.abspath(path)
+    key = (path, os.path.getmtime(path))
+    if key in _CACHE:
+        return _CACHE[key]
+    header, frames, end, patch_rows = parse(path)
     w = header["world"]
     x0, x1, y0, y1 = w["min-pxcor"] - 0.5, w["max-pxcor"] + 0.5, w["min-pycor"] - 0.5, w["max-pycor"] + 0.5
     scale = WORLD / max(x1 - x0, y1 - y0)

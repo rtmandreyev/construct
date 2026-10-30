@@ -876,7 +876,7 @@ def run(args):
                 sys.stderr.write("netlogo-film: --out film.mp4, --blend film.blend, or both\n")
                 return 1
             try:   # read it here first: a bad recording is refused without starting Blender
-                runfilm.read(args.run)
+                runfilm.parse(args.run)
             except (ValueError, KeyError, TypeError) as exc:
                 sys.stderr.write("netlogo-film: %s\n" % exc)
                 return 1
