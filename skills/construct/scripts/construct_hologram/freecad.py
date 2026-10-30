@@ -2,7 +2,8 @@
 
 Construct writes what it knows as data (every part's closed pieces and surfaces in millimetres,
 Z up, its role, certainty, source and stage, and each articulation's type, axis, pivot and amount),
-then runs FreeCAD's own command line (`freecadcmd`) on it. In FreeCAD:
+then runs FreeCAD on it: its app off screen when it is there, so the document opens with every part
+showing (FreeCAD's command line saves the model but not how it looks), else `freecadcmd`. In FreeCAD:
   - each part is a `Part::Feature` labelled with its id (its label as `Label2`), its closed pieces
     sewn into solids and refined (coplanar facets merged into faces), its open surfaces kept as
     shells; its provenance in the property group "Construct";
@@ -214,6 +215,11 @@ for key, gj in groups.items():
         gj.addObject(line)
 
 doc.recompute()
+if FreeCAD.GuiUp:   # run as the app (off screen): save how it looks, so the model shows when opened
+    for o in doc.Objects:
+        if getattr(o, "ViewObject", None) is not None:
+            o.ViewObject.Visibility = True
+
 result = {"parts": made, "joints": len(groups), "invalid": invalid, "surfaces": surfaces, "files": []}
 if job.get("fcstd"):
     doc.saveAs(job["fcstd"])
@@ -222,7 +228,19 @@ if job.get("step"):
     Import.export([root], job["step"])
     result["files"].append(job["step"])
 json.dump(result, open(job["result"], "w", encoding="utf-8"))
+if FreeCAD.GuiUp:
+    os._exit(0)   # the app has done its job: leave without asking about the open document
 '''
+
+
+def _app(exe):
+    """FreeCAD's own app beside its command line, if there is one: run off screen, it saves how the model looks
+    (the command line saves the model only, and FreeCAD then opens it with every part hidden)."""
+    exe = Path(exe)
+    for cand in (exe.parent.parent.parent / "MacOS" / "FreeCAD", exe.parent / "freecad", exe.parent / "FreeCAD.exe"):
+        if cand.is_file() and cand != exe:
+            return str(cand)
+    return None
 
 
 def make(scene, fcstd=None, step=None, freecad=None, timeout=900):
@@ -247,8 +265,11 @@ def make(scene, fcstd=None, step=None, freecad=None, timeout=900):
                 Path(p).resolve().parent.mkdir(parents=True, exist_ok=True)
         (tmp / "job.json").write_text(json.dumps(job), encoding="utf-8")
         env = dict(os.environ, CONSTRUCT_FREECAD_JOB=str(tmp / "job.json"))
+        app = _app(exe)
+        if app:
+            env["QT_QPA_PLATFORM"] = "offscreen"
         try:
-            r = subprocess.run([exe, str(tmp / "build.py")], cwd=tmp, env=env, capture_output=True, text=True,
+            r = subprocess.run([app or exe, str(tmp / "build.py")], cwd=tmp, env=env, capture_output=True, text=True,
                                timeout=timeout)
         except subprocess.TimeoutExpired:
             raise FreeCADError("FreeCAD did not finish in %d s" % timeout)

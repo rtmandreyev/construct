@@ -60,6 +60,7 @@ doc = FreeCAD.openDocument(os.environ["FC_FILE"])
 feats = [o for o in doc.Objects if o.TypeId == "Part::Feature" and not o.Label.startswith("axis-")]
 out["labels"] = sorted(o.Label for o in feats)
 out["valid"] = all(o.Shape.isValid() for o in feats)
+out["visible"] = all(o.Visibility for o in doc.Objects if hasattr(o, "Visibility"))
 out["groups"] = sorted(o.Label for o in doc.Objects if o.TypeId == "App::Part")
 lid = [o for o in doc.Objects if o.Label == "joint-lid-open"][0]
 part = [o for o in lid.Group if o.Label == "lid"][0]
@@ -83,6 +84,9 @@ class InFreeCAD(unittest.TestCase):
             self.assertEqual(r["invalid"], [])
             self.assertEqual(r["joints"], 2)
             self.assertTrue(fc.is_file() and step.is_file())
+            if freecad._app(os.environ["CONSTRUCT_FREECAD"]):   # built by the app: it opens with every part showing
+                import zipfile
+                self.assertIn("GuiDocument.xml", zipfile.ZipFile(fc).namelist())
             Path(tmp, "check.py").write_text(CHECK, encoding="utf-8")
             env = dict(os.environ, FC_FILE=str(fc), FC_STEP=str(step), FC_OUT=str(Path(tmp, "out.json")))
             subprocess.run([os.environ["CONSTRUCT_FREECAD"], str(Path(tmp, "check.py"))], cwd=tmp, env=env,
@@ -91,6 +95,7 @@ class InFreeCAD(unittest.TestCase):
             self.assertEqual(len(out["labels"]), r["parts"])
             self.assertIn("lid", out["labels"])
             self.assertTrue(out["valid"])
+            self.assertTrue(out["visible"])   # opened in FreeCAD, the model shows
             self.assertIn("joint-lid-open", out["groups"])
             self.assertIn("stage-0", out["groups"])
             self.assertEqual(out["role"], "identity")   # its provenance travels with it
