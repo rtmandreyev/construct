@@ -177,6 +177,16 @@ def _tube(a, b, r):
 
 # ---------------------------------------------------------------------------- reading a compile
 
+# Godot reads these name endings as import instructions (a "-wheel" becomes a VehicleWheel3D, a "-col" a
+# collision body); a part whose id ends so is named with "-part" after it, its id kept in extras
+GODOT_HINTS = ("-noimp", "-col", "-colonly", "-convcol", "-convcolonly", "-occ", "-occonly", "-navmesh", "-rigid",
+               "-vehicle", "-wheel", "-loop", "-cycle")
+
+
+def _node_name(pid):
+    return pid + "-part" if pid.lower().endswith(GODOT_HINTS) else pid
+
+
 def _own_colours(g):
     """Each part's own colour (look.color), from the styles that carry it: {part id: '#rrggbb'}."""
     out = {}
@@ -323,10 +333,16 @@ def _primitive(b, mode, positions, normals, phases, material, uvs=None):
     return prim
 
 
-def to_gltf(g, wire="edges", pose="closed", materials=None, wire_radius=None, merge=False):
+def to_gltf(g, wire="edges", pose="closed", materials=None, wire_radius=None, merge=False, colliders=False,
+            pieces=False):
     """The glTF document (a dict) and its binary chunk, from a solid compile. With `merge`, every part
     that does not move is merged into one mesh per material (a game engine's handful of draw calls);
-    the parts that move keep their own nodes, pivots and animations."""
+    the parts that move keep their own nodes, pivots and animations. With `colliders`, each part's surfaces
+    get a box around them, `<part>-convcolonly` (a collision shape in Godot, moving with its joint); with
+    `pieces`, each part's mesh is `<part>-rigid`, a body of its own that physics can knock apart."""
+    if pieces and merge:
+        raise ExportError("--pieces keeps every part apart; it does not go with --merge")
+    colliders = colliders and not pieces   # a piece's body makes its own shape from its mesh
     if wire not in WIRES:
         raise ExportError("wire: one of %s" % ", ".join(WIRES))
     if pose not in POSES:
@@ -397,6 +413,22 @@ def to_gltf(g, wire="edges", pose="closed", materials=None, wire_radius=None, me
         nodes.append(spec)
         return len(nodes) - 1
 
+    def collider(pid, tris, parent, translation):
+        """A box around a part's surfaces, as a collision shape: Godot reads `-convcolonly` as a convex shape
+        and draws nothing; other engines see a box named for its part."""
+        pts = [q for t in tris for q in t]
+        lo = [min(q[k] for q in pts) for k in range(3)]
+        hi = [max(q[k] for q in pts) for k in range(3)]
+        c = [[(lo, hi)[(v >> k) & 1][k] for k in range(3)] for v in range(8)]
+        quads = ((0, 2, 3, 1), (4, 5, 7, 6), (0, 1, 5, 4), (2, 6, 7, 3), (0, 4, 6, 2), (1, 3, 7, 5))
+        pos = [c[i] for a, b_, c_, d in quads for i in (a, b_, c_, a, c_, d)]
+        mat = material(("collider", None), ("construct:collider", (0.5, 0.9, 0.6), 0.0, 1.0, None, True))
+        meshes.append({"name": pid + "-collider", "primitives": [_primitive(b, 4, pos, None, [0.0] * len(pos), mat)]})
+        n = node({"name": pid + "-convcolonly", "mesh": len(meshes) - 1, "translation": list(translation),
+                  "extras": {"construct": {"part": pid, "collider": "box"}}})
+        nodes[parent].setdefault("children", []).append(n)
+        counts["colliders"] = counts.get("colliders", 0) + 1
+
     root = node({"name": g["id"], "children": []})
     stage_nodes = {}
     for s in g["stages"]:
@@ -427,7 +459,7 @@ def to_gltf(g, wire="edges", pose="closed", materials=None, wire_radius=None, me
         extras["construct"]["instances"] = len(part["instances"])
         pnode = None
         if not (merge and keys and not moving):
-            pnode = node({"name": part["id"], "extras": extras})
+            pnode = node({"name": _node_name(part["id"]), "extras": extras})
             nodes[stage_nodes[part["stage"]]]["children"].append(pnode)
         if not keys:
             continue
@@ -476,8 +508,10 @@ def to_gltf(g, wire="edges", pose="closed", materials=None, wire_radius=None, me
                 continue
             meshes.append({"name": part["id"], "primitives": prims})
             mesh = len(meshes) - 1
-            if jt < 0 and slot < 0 and len(keys) == 1:
+            if jt < 0 and slot < 0 and len(keys) == 1 and not (pieces and gr["tris"]):
                 nodes[pnode]["mesh"] = mesh
+                if colliders and gr["tris"]:
+                    collider(part["id"], gr["tris"], pnode, [0.0, 0.0, 0.0])
                 continue
             # a chain of pivot nodes: the first articulation is outermost, a periodic motion inside them
             parent, origin = pnode, (0.0, 0.0, 0.0)
@@ -505,9 +539,11 @@ def to_gltf(g, wire="edges", pose="closed", materials=None, wire_radius=None, me
                 nodes[parent].setdefault("children", []).append(n)
                 motion_nodes[slot].append((n, base))
                 parent, origin = n, piv
-            n = node({"name": "%s:mesh" % part["id"], "mesh": mesh, "translation": [-x for x in origin],
-                      "extras": {"construct": {"part": part["id"], "role": part["role"]}}})
+            n = node({"name": ("%s-rigid" if pieces and gr["tris"] else "%s:mesh") % part["id"], "mesh": mesh,
+                      "translation": [-x for x in origin], "extras": {"construct": {"part": part["id"], "role": part["role"]}}})
             nodes[parent].setdefault("children", []).append(n)
+            if colliders and gr["tris"]:
+                collider(part["id"], gr["tris"], parent, [-x for x in origin])
 
     if merged:
         prims = [_primitive(b, mode, pos, nor or None, ph, mat, uv or None)
@@ -517,6 +553,12 @@ def to_gltf(g, wire="edges", pose="closed", materials=None, wire_radius=None, me
                   "extras": {"construct": {"merged_parts": merged_parts,
                                            "note": "every part that does not move, one primitive per material"}}})
         nodes[root]["children"].append(n)
+        if colliders:   # the merged parts keep a collision shape each, beside the one mesh
+            index = {p["id"]: i for i, p in enumerate(parts)}
+            for pid in merged_parts:
+                tris = [t for k, gr in groups.items() if k[0] == index[pid] for t in gr["tris"]]
+                if tris:
+                    collider(pid, tris, n, [0.0, 0.0, 0.0])
     animations = _animations(b, arts, motions, art_nodes, motion_nodes)
     for n in nodes:
         if "translation" in n and all(abs(x) < 1e-12 for x in n["translation"]):
@@ -766,7 +808,7 @@ def to_obj(g, name, wire="edges", pose="closed", materials=None, frame="y-up", w
 # ---------------------------------------------------------------------------- one call
 
 def render(scene, fmt="glb", wire="edges", pose="closed", materials=None, frame="y-up", wire_radius=None,
-           name="construct", merge=False):
+           name="construct", merge=False, colliders=False, pieces=False):
     """Compile `scene` solid and export it in memory: {"glb": bytes} or {"obj": text, "mtl": text}, with a
     summary."""
     if fmt not in FORMATS:
@@ -777,7 +819,7 @@ def render(scene, fmt="glb", wire="edges", pose="closed", materials=None, frame=
         raise ExportError("glTF is Y up by definition; --frame z-up is for OBJ")
     g = scene_mod.compile_scene(scene, solid=True)
     if fmt == "glb":
-        doc, binary, summary = to_gltf(g, wire, pose, materials, wire_radius, merge)
+        doc, binary, summary = to_gltf(g, wire, pose, materials, wire_radius, merge, colliders, pieces)
         out = {"glb": pack_glb(doc, binary)}
         summary["bytes"] = len(out["glb"])
     else:
@@ -789,11 +831,12 @@ def render(scene, fmt="glb", wire="edges", pose="closed", materials=None, frame=
 
 
 def export(scene, path, fmt=None, wire="edges", pose="closed", materials=None, frame="y-up", wire_radius=None,
-           merge=False):
+           merge=False, colliders=False, pieces=False):
     """Compile `scene` solid and write it to `path` (.glb, or .obj with its .mtl beside it). Returns a summary."""
     path = Path(path)
     fmt = fmt or path.suffix.lower().lstrip(".")
-    out, summary = render(scene, fmt, wire, pose, materials, frame, wire_radius, name=path.stem, merge=merge)
+    out, summary = render(scene, fmt, wire, pose, materials, frame, wire_radius, name=path.stem, merge=merge,
+                          colliders=colliders, pieces=pieces)
     path.parent.mkdir(parents=True, exist_ok=True)
     if fmt == "glb":
         path.write_bytes(out["glb"])

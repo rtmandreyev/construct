@@ -29,6 +29,37 @@ def glb_of(sc, **kw):
     return export.read_glb(out["glb"])
 
 
+GODOT_CHECK = """extends SceneTree
+
+func _initialize() -> void:
+	var floor := StaticBody3D.new()
+	var shape := CollisionShape3D.new()
+	shape.shape = WorldBoundaryShape3D.new()
+	floor.add_child(shape)
+	root.add_child(floor)
+	var c := (load("res://c.glb") as PackedScene).instantiate()
+	var p := (load("res://p.glb") as PackedScene).instantiate()
+	root.add_child(p)
+	await physics_frame
+	var bodies := p.find_children("*", "RigidBody3D", true, false)
+	var start := {}
+	for b in bodies:
+		start[b] = b.global_position
+	for i in 60:
+		await physics_frame
+	var moved := 0
+	for b in bodies:
+		if (b.global_position - start[b]).length() > 0.001:
+			moved += 1
+	var anims := []
+	for ap in c.find_children("*", "AnimationPlayer", true, false):
+		anims = ap.get_animation_list()
+	print("RESULT " + JSON.stringify({"static": c.find_children("*", "StaticBody3D", true, false).size(),
+		"rigid": bodies.size(), "moved": moved, "animations": anims}))
+	quit()
+"""
+
+
 # ---------------------------------------------------------------------------- a small glTF reader
 
 COMPONENTS = {"SCALAR": 1, "VEC2": 2, "VEC3": 3, "VEC4": 4}
@@ -491,6 +522,47 @@ class Hosts(unittest.TestCase):
                                        "--wire", "tubes"]), 0)
             self.assertTrue(Path(d, "cd.mtl").exists())
             self.assertEqual(cli.main(["export", str(EXAMPLES / "cd.json"), "--out", str(Path(d, "cd.stl"))]), 1)
+
+    def test_for_game_engines_colliders_pieces_and_names_godot_reads_right(self):
+        sc = load("cd")
+        doc = glb_of(sc, colliders=True)[0]
+        names = [n.get("name", "") for n in doc["nodes"]]
+        cols = [n for n in names if n.endswith("-convcolonly")]
+        self.assertTrue(cols)
+        self.assertTrue(all(n[:-len("-convcolonly")] in names for n in cols))   # one per part with surfaces
+        lid = next(n for n in doc["nodes"] if n.get("name") == "lid-convcolonly")
+        hinge = next(n for n in doc["nodes"] if lid in [doc["nodes"][c] for c in n.get("children", [])])
+        self.assertIn("lid:", hinge["name"])                                      # it moves with the lid's joint
+        merged = glb_of(sc, colliders=True, merge=True)[0]
+        self.assertEqual(len([n for n in merged["nodes"] if n.get("name", "").endswith("-convcolonly")]), len(cols))
+        pieces = glb_of(sc, pieces=True)[0]
+        rigid = [n["name"] for n in pieces["nodes"] if n.get("name", "").endswith("-rigid")]
+        self.assertTrue(rigid)
+        self.assertFalse(any(n.get("name", "").endswith("-convcolonly") for n in pieces["nodes"]))  # bodies shape themselves
+        with self.assertRaisesRegex(export.ExportError, "does not go with --merge"):
+            glb_of(sc, pieces=True, merge=True)
+        wheel = studio.starter("machine")
+        wheel["parts"][2]["id"] = "spare-wheel"   # the mast, renamed: nothing else refers to it
+        names = [n.get("name", "") for n in glb_of(wheel)[0]["nodes"]]
+        self.assertIn("spare-wheel-part", names)   # not a VehicleWheel3D in Godot
+
+    @unittest.skipUnless(os.environ.get("CONSTRUCT_GODOT"), "set CONSTRUCT_GODOT to the Godot binary to run")
+    def test_godot_imports_colliders_and_pieces_that_fall(self):
+        with tempfile.TemporaryDirectory() as d:
+            d = Path(d)
+            export.export(load("cd"), d / "c.glb", colliders=True, merge=True)
+            export.export(load("cd"), d / "p.glb", pieces=True)
+            (d / "project.godot").write_text('config_version=5\n[application]\nconfig/name="check"\n', encoding="utf-8")
+            (d / "check.gd").write_text(GODOT_CHECK, encoding="utf-8")
+            g = os.environ["CONSTRUCT_GODOT"]
+            subprocess.run([g, "--headless", "--path", str(d), "--import"], capture_output=True, timeout=300)
+            r = subprocess.run([g, "--headless", "--path", str(d), "-s", "check.gd"], capture_output=True, text=True, timeout=300)
+            line = next(x for x in r.stdout.splitlines() if x.startswith("RESULT "))
+            out = json.loads(line[7:])
+            self.assertGreater(out["static"], 0)
+            self.assertEqual(out["rigid"], out["moved"])
+            self.assertGreater(out["rigid"], 0)
+            self.assertIn("open", out["animations"])
 
     def test_mcp(self):
         msgs = [{"jsonrpc": "2.0", "id": 1, "method": "initialize", "params": {}},

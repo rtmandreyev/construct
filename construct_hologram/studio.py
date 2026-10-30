@@ -7,7 +7,8 @@
   review <scene.json> --out DIR [--asset-root DIR]      build, then capture the review set
   video <scene.json> --out FILE.mp4|.gif [--seconds S] [--fps N] [--start S] [--view V]
   export <scene.json> --out FILE.glb|.obj [--wire edges|tubes|none] [--pose closed|open]
-                      [--materials map.json] [--frame y-up|z-up] [--merge]    a 3D model (docs/EXPORT.md)
+                      [--materials map.json] [--frame y-up|z-up] [--merge] [--colliders] [--pieces]
+                                                        a 3D model (docs/EXPORT.md, docs/GODOT.md)
   print <scene.json> --out FILE.stl|.3mf [--size MM | --scale N] [--detail MM] [--wall MM] [--join MM]
                      [--lines engrave|raised] [--bed WxDxH]   one watertight body to 3D print (docs/PRINTING.md)
   freecad <scene.json> --out FILE.FCStd|.step [--step FILE.step] [--freecad PATH]
@@ -258,6 +259,8 @@ def add_commands(sub):
     p.add_argument("archetype", nargs="?", choices=sorted(params_mod.VARIANTS))
     p.add_argument("--variant")
     p.add_argument("--list", action="store_true")
+    p.add_argument("--seed", type=int, help="a seeded variant: sizes drawn near the standard, the same seed the same "
+                                            "object (marked synthetic)")
     p.add_argument("--output")
     p.add_argument("--force", action="store_true")
     p = sub.add_parser("author", help="draft a construct with any OpenAI-compatible model: check and repair until clean")
@@ -456,6 +459,10 @@ def add_commands(sub):
     p.add_argument("--frame", choices=("y-up", "z-up"), default="y-up", help="OBJ only (glTF is always Y up)")
     p.add_argument("--merge", action="store_true",
                    help="glTF: merge every part that does not move into one mesh per material (for game engines)")
+    p.add_argument("--colliders", action="store_true",
+                   help="glTF: a box collider per part, <part>-convcolonly (a collision shape in Godot), moving with its joint")
+    p.add_argument("--pieces", action="store_true",
+                   help="glTF: every part a body of its own, <part>-rigid (a RigidBody3D in Godot), for break-apart")
     p = sub.add_parser("print", help="one watertight body to 3D print: STL or 3MF, checked (docs/PRINTING.md)")
     p.add_argument("scene")
     p.add_argument("--out", required=True, help="FILE.stl or FILE.3mf")
@@ -593,7 +600,10 @@ def run(args):
             if args.list or not args.archetype:
                 sys.stdout.write(params_mod.describe() + "\n")
                 return 0
-            text = json.dumps(params_mod.template(args.archetype, args.variant), indent=2) + "\n"
+            doc = params_mod.template(args.archetype, args.variant)
+            if args.seed is not None:
+                doc = params_mod.vary(doc, args.seed)
+            text = json.dumps(doc, indent=2) + "\n"
             if args.output:
                 _write(args.output, text, args.force)
             else:
@@ -937,7 +947,7 @@ def run(args):
             from . import export as export_mod
             try:
                 s = export_mod.export(load(args.scene), args.out, args.format, args.wire, args.pose, args.materials,
-                                      args.frame, args.wire_radius, args.merge)
+                                      args.frame, args.wire_radius, args.merge, args.colliders, args.pieces)
             except export_mod.ExportError as exc:
                 sys.stderr.write("export: %s\n" % exc)
                 return 1

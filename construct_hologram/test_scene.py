@@ -1693,6 +1693,22 @@ class Vehicles(unittest.TestCase):
             sc = json.loads((EXAMPLES / (name + ".json")).read_text())
             self.assertNotIn("bare-surface", {d["code"] for d in diagnose.diagnose(sc)["diagnostics"]}, name)
 
+    def test_a_seed_makes_a_new_plausible_variant_the_same_every_time(self):
+        base = params.template("vehicle", "coupe")
+        one, again, other = params.vary(base, 7), params.vary(base, 7), params.vary(base, 8)
+        self.assertEqual(one, again)
+        self.assertNotEqual(one["params"], other["params"])
+        self.assertTrue(one["synthetic"])
+        self.assertEqual(one["title"], "A coupe (seed 7)")
+        std = params.VARIANTS["vehicle"]["coupe"][1]
+        for k, v in one["params"].items():
+            self.assertLess(abs(v / std[k] - 1), 0.13, k)
+        self.assertAlmostEqual(one["params"]["wheelbase"] / one["params"]["length"], std["wheelbase"] / std["length"], delta=0.02)
+        self.assertEqual(scene.validate(params.expand(one)), [])
+        guitar = params.vary(params.template("object", "electric-guitar"), 3)
+        self.assertIn(guitar["params"]["body_style"], params.CHOICES["body_style"])
+        self.assertEqual(scene.validate(params.expand(guitar)), [])
+
     def test_every_variant_is_a_car_not_a_box(self):
         for var in params.VARIANTS["vehicle"]:
             doc = params.template("vehicle", var) | {"facts": [], "synthetic": True}

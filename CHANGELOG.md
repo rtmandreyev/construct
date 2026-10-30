@@ -117,7 +117,16 @@ side, printed as worksheets and cited. Plan:
     a ridge; keyed 3 mm and 4 mm pin holes, the plate's number engraved as dots; pins, spacer sleeves
     and a key card with each plate's tick and counts and the recording's SHA-256. Flat faces are merged
     into strips, so a plate is about 2 MB, not 9.
-
+- **Runs in their own colours:** a NetLogo run is drawn in its NetLogo colours, made to read as light (a part
+  may now carry `look.color`; the geometry's optional `style_colors[]` carries it to the viewer and the 3D
+  model); `--colors house` keeps Construct's tones. Risen turtles of a network end in a bead of light.
+- **For game engines** ([GODOT.md](docs/GODOT.md)): `construct export --colliders` (a box collider per part,
+  moving with its joint) and `--pieces` (every part a rigid body, for break-apart), checked in Godot with
+  its physics; part names Godot would misread (`steering-wheel`) are kept safe. `construct params --seed N`
+  draws a seeded variant of an archetype (a new coupe, a new guitar), the same seed the same object.
+- **Prints keep their line art:** `construct print --lines engrave` cuts the parts drawn only in lines into
+  the surface, like a model kit's panel lines.
+- **FreeCAD documents open framed, every part showing.**
 
 ## 1.0.0 — 2026-10-27
 

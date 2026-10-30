@@ -17,6 +17,7 @@ A size given in `params` is inferred too unless `param_certainty` says otherwise
 ({"height": "user_supplied"}). Unknown facts are left out; nothing is guessed.
 """
 
+import json
 import math
 
 from . import product
@@ -126,6 +127,42 @@ def template(archetype, variant=None):
         "artwork": {},
         "params": {},
     }
+
+
+VARY = (0.06, 0.06)   # a seeded variant: one overall scale within 6%, then each size within 6% more
+
+
+def vary(doc, seed):
+    """A seeded variant of a parameter document: one overall scale and each size near it (VARY), proportions
+    that belong together kept together (a wheelbase stays in step with its length), every choice drawn from its
+    options, all inside each parameter's range. The same seed gives the same variant. It is marked synthetic:
+    a new object, not a real one."""
+    import random
+    rng = random.Random(int(seed))
+    arch, var = doc["archetype"], doc["variant"]
+    defaults = VARIANTS[arch][var][1]
+    out = json.loads(json.dumps(doc))
+    p = {}
+    scale = rng.uniform(1 - VARY[0], 1 + VARY[0])
+    for k, v in defaults.items():
+        if k in CHOICES:
+            p[k] = rng.choice(CHOICES[k])
+        elif k in PARAMS:
+            lo, hi, integer, _ = PARAMS[k]
+            x = v * scale * rng.uniform(1 - VARY[1], 1 + VARY[1])
+            if k == "wheelbase" and "length" in p:   # in step with the length, as the standard has it
+                x = p["length"] * v / defaults["length"] * rng.uniform(0.97, 1.03)
+            x = min(max(x, lo), hi)
+            p[k] = int(round(x)) if integer else round(x, 4)
+    out["params"] = p
+    out["param_certainty"] = {k: "inferred" for k in p}
+    out["synthetic"] = True
+    out["id"] = "%s-seed-%d" % (doc["id"], int(seed))
+    if doc.get("title") == template(arch, var)["title"]:   # still the template's: name the variant
+        out["title"] = "A %s (seed %d)" % (var.replace("-", " "), int(seed))
+    out["summary"] = "A seeded variant (seed %d) of %s: its sizes drawn near the standard, not a real object." % (
+        int(seed), VARIANTS[arch][var][3])
+    return out
 
 
 def describe():

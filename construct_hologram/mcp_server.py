@@ -115,6 +115,8 @@ TOOLS += [
          "pose": {"type": "string", "enum": ["closed", "open"]},
          "frame": {"type": "string", "enum": ["y-up", "z-up"]},
          "merge": {"type": "boolean", "description": "merge the parts that do not move, one mesh per material"},
+         "colliders": {"type": "boolean", "description": "a box collider per part (Godot: -convcolonly)"},
+         "pieces": {"type": "boolean", "description": "every part a rigid body of its own (Godot: -rigid)"},
          "materials": {"type": "object", "description": "a material map: {\"materials\": [{\"parts\": [...], "
                                                         "\"color\": \"#rrggbb\", \"metallic\", \"roughness\"}]}"}},
                      "required": ["document"], "additionalProperties": False},
@@ -257,7 +259,8 @@ V2_TOOLS = {"construct_diagnose": ({"text", "document"}, set()),
             "construct_params_template": ({"archetype", "variant"}, set()),
             "construct_expand_params": ({"params"}, {"params"}),
             "construct_compile": ({"document"}, {"document"}),
-            "construct_export": ({"document", "format", "wire", "pose", "frame", "materials", "merge"}, {"document"}),
+            "construct_export": ({"document", "format", "wire", "pose", "frame", "materials", "merge", "colliders", "pieces"},
+                                 {"document"}),
             "construct_print": ({"document", "format", "size", "scale", "detail", "wall", "join", "lines"}, {"document"}),
             "construct_limits": ({"tier", "request", "overrides"}, set()),
             "construct_netlogo_instrument": ({"model", "title", "turtles", "reporters", "patches", "every", "seed", "ticks",
@@ -318,7 +321,8 @@ def _call_v2(name, args):
         try:
             out, summary = export.render(built, args.get("format", "glb"), args.get("wire", "edges"),
                                          args.get("pose", "closed"), args.get("materials"), args.get("frame", "y-up"),
-                                         merge=bool(args.get("merge", False)))
+                                         merge=bool(args.get("merge", False)), colliders=bool(args.get("colliders", False)),
+                                         pieces=bool(args.get("pieces", False)))
         except (export.ExportError, scene.SceneError) as exc:
             return _tool_result({"error": str(exc)}, is_error=True)
         if "glb" in out:

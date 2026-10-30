@@ -11,6 +11,16 @@ python3 construct_hologram/cli.py params --list                 # every archetyp
 python3 construct_hologram/cli.py params case --variant jewel --output cd.json
 ```
 
+**Seeded variants.** `--seed N` draws a new object of the same kind: one overall scale within 6% of the
+standard and each size within 6% more, proportions that belong together kept together (a car's wheelbase
+stays in step with its length), every choice (a guitar's body style) drawn from its options. The same seed
+always gives the same object. A variant is marked synthetic and named for its seed ("A coupe (seed 7)"):
+a new object, never a real one.
+
+```sh
+python3 construct_hologram/cli.py params vehicle --variant coupe --seed 7 --output coupe-7.json
+```
+
 | archetype / variant | standard | artwork slots | opens |
 |---|---|---|---|
 | `case/jewel` | 142 × 125 × 10.4 mm CD jewel case | cover-front, inlay, disc | lid hinges, booklet lifts out beside the case, disc lifts and turns |
