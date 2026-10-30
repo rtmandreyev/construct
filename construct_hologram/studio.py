@@ -478,6 +478,18 @@ def add_commands(sub):
                    help="the parts drawn only in lines: none (left out, the default), engrave (cut into the surface, "
                         "like a model kit's panel lines) or raised (--lines alone)")
     p.add_argument("--bed", default="250x210x220", help="the printer's build volume in mm (default 250x210x220)")
+    p = sub.add_parser("kit", help="a model kit to print, glue and paint: pieces on plates, numbered, with a booklet "
+                                   "(docs/PRINTING.md)")
+    p.add_argument("scene")
+    p.add_argument("--out", required=True, help="the folder for the plates (3MF), booklet.html and kit.json")
+    size = p.add_mutually_exclusive_group()
+    size.add_argument("--scale", type=float, default=24, help="1:N (default 24, a common car-kit scale)")
+    size.add_argument("--size", type=float, help="the built model's longest side in mm, instead of a scale")
+    p.add_argument("--detail", type=float, default=0.35, help="the voxel size in mm (default 0.35)")
+    p.add_argument("--plan", help="a kit plan (kit-plan.json): parts to merge, small parts to keep, clear parts, a title")
+    p.add_argument("--materials", help="a material map: each piece's paint (default: <scene>.materials.json beside it)")
+    p.add_argument("--bed", default="250x210x220", help="the printer's build volume in mm")
+    p.add_argument("--critic", action="store_true", help="print the kit critic's brief and stop")
     p = sub.add_parser("freecad", help="named solids and joints in FreeCAD (.FCStd), and STEP; runs FreeCAD "
                                        "(docs/FREECAD.md)")
     p.add_argument("scene")
@@ -578,13 +590,18 @@ def add_commands(sub):
                    help="track (default): each track mapped to its own loudness range; fixed: the older -40..-10 dB window")
 
 
+def export_errors():
+    from . import export
+    return export.ExportError
+
+
 def printing_list(ids):
     from . import printing
     return printing._list(ids)
 
 
 COMMANDS = ("new", "params", "expand", "prompts", "author", "trace", "trace-image", "terrain", "globe", "critique", "rounds", "compare", "loft-from-traces", "check", "build", "review",
-            "video", "audio", "export", "print", "freecad", "netlogo-plates", "netlogo", "netlogo-instrument", "netlogo-film", "netlogo-compare")
+            "video", "audio", "export", "print", "kit", "freecad", "netlogo-plates", "netlogo", "netlogo-instrument", "netlogo-film", "netlogo-compare")
 
 
 def run(args):
@@ -977,6 +994,27 @@ def run(args):
             for line in printing.notes(r):
                 sys.stdout.write("  %s\n" % line)
             return 0 if r["watertight"] else 1
+        if args.command == "kit":
+            from . import kit as kit_mod
+            if args.critic:
+                sys.stdout.write(kit_mod.CRITIC + "\n")
+                return 0
+            try:
+                bed = tuple(float(x) for x in args.bed.lower().split("x"))
+                mats = args.materials or (str(Path(args.scene).with_suffix(".materials.json"))
+                                          if Path(args.scene).with_suffix(".materials.json").is_file() else None)
+                k = kit_mod.make(load(args.scene), scale=args.scale, size=args.size, detail=args.detail, plan=args.plan,
+                                 materials=mats, bed=bed)
+                kit_mod.write(k, args.out)
+            except (kit_mod.KitError, export_errors(), ValueError) as exc:
+                sys.stderr.write("kit: %s\n" % exc)
+                return 1
+            c = k["report"]["counts"]
+            sys.stdout.write("wrote %s: %d pieces on %d plates, %d steps, at %s (%s mm)\n" % (
+                args.out, c["pieces"], c["plates"], c["steps"], k["scale"], " x ".join("%g" % x for x in k["size_mm"])))
+            for prob in k["report"]["problems"]:
+                sys.stdout.write("  %s\n" % prob["message"])
+            return 0 if k["report"]["ok"] else 1
         if args.command == "freecad":
             from . import freecad
             out = Path(args.out)

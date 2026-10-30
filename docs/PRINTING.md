@@ -113,6 +113,32 @@ The plates are made in voxels like a print, so each file is one watertight solid
 PrusaSlicer reads a plate and a pin as manifold, one part. Plates are evenly spaced on the pins;
 spacing them by time is a later step.
 
+## A kit, Revell-style
+
+`construct kit` makes a construct into a model kit to print, glue and paint, as a Revell or Tamiya kit is:
+
+```sh
+construct kit examples/toyota-land-cruiser-fj62/scene.json --out fj62-kit/ --materials examples/light-to-metal/maps/fj62.json
+```
+
+- **Pieces.** Each part becomes pieces of its own at the kit's scale (1:24 by default, `--scale`). Where two
+  parts overlap, the later one is trimmed, so they meet flush and fit when glued; mirrored copies (four
+  wheels, two mirrors) are separate pieces; a bit too small to print is merged into the piece it touches.
+  The parts drawn only in lines (seams, grilles) are engraved into the pieces they lie on, as a kit's
+  panel lines. Glass is a clear piece.
+- **Plates.** Each piece lies on its largest flat face, packed onto plates the size of the bed
+  (`plate-N.3mf`, each piece a named object), numbered in the order they are glued.
+- **The booklet** (`booklet.html`): the finished model, the plates with their numbers, the steps (the
+  construct's own build stages, a few pieces at a time, each glued to the piece it touches most; wheels
+  and the like start sub-assemblies of their own), a picture of each step, and a painting guide from the
+  material map.
+- **Checked before printing:** pieces too small to handle, pieces that touch nothing, pieces bigger than the
+  bed, too many pieces. `kit.json` is the kit without its geometry, for a critic to read.
+
+**A critic, as for a construct.** `construct kit --critic` prints a kit designer's brief: a critic (a fresh
+agent or model) reads `kit.json` and the booklet's pictures and answers with a plan, parts to merge into one
+piece, small parts to keep, clear parts, which `--plan kit-plan.json` applies to the next build.
+
 ## How much detail survives
 
 A print keeps the construct's form, not its light. The hologram draws every edge, inside and out; a print

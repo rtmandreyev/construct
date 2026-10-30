@@ -127,6 +127,12 @@ side, printed as worksheets and cited. Plan:
 - **Prints keep their line art:** `construct print --lines engrave` cuts the parts drawn only in lines into
   the surface, like a model kit's panel lines.
 - **FreeCAD documents open framed, every part showing.**
+- **Kits, Revell-style** ([PRINTING.md](docs/PRINTING.md#a-kit-revell-style)): `construct kit` makes a construct a
+  model kit to print, glue and paint: pieces that fit where they meet (overlaps trimmed, clear parts yielding),
+  small bits merged into a piece of their own part or paint (never across clear and opaque), panel lines
+  engraved, pieces laid flat on numbered plates, a booklet of steps with pictures and a painting guide. A
+  critic's brief (`--critic`) and a plan (`--plan`: merges, parts to keep, clear parts, sub-assemblies in
+  order) make it the way constructs are made: drafted, reviewed, revised. The FJ62 at 1:24: 68 pieces.
 
 ## 1.0.0 — 2026-10-27
 

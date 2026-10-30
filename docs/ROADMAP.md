@@ -198,7 +198,8 @@ model alone.
 
 ## v1.2: makers
 
-Constructs into things you make. Printing, FreeCAD and the plates shipped early, in 1.1; what is left:
+Constructs into things you make. Printing, FreeCAD, the plates and a first version of the kits shipped early,
+in 1.1 (`construct kit`); what is left:
 
 - **Kits, Revell-style** (owner's idea, 29 October 2026): a construct as a model kit to print, glue
   and paint: its parts (small ones merged) as pieces that fit where they meet, laid out on print
@@ -206,7 +207,8 @@ Constructs into things you make. Printing, FreeCAD and the plates shipped early,
   guide from its colours, and clear parts for glass. Made with a critic, as constructs are: a draft
   kit reviewed for buildability (pieces too small, steps out of order, joints that cannot be glued)
   and revised. Tested on the Land Cruiser FJ62 and compared with a real Revell kit's published
-  parts count, sprues and steps. Then locating pins and glue tabs where parts meet.
+  parts count, sprues and steps. Then locating pins and glue tabs where parts meet, an interior floor and
+  the underside detail (springs, engine) a construct leaves out, so a kit reaches a real kit's count.
 - **Openings for glass** in a print, and finer prints for resin printers.
 
 - **3D printing:** a construct (or a run) to a printable, watertight model: STL and 3MF export, the

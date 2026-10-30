@@ -44,7 +44,7 @@ TAGS = ["Construct", "Hologram", "3D", "Visualization", "WebGL", "Animation", "D
 RUNTIME_MODULES = ["__init__.py", "__main__.py", "product.py", "hologram.py", "scene.py", "shapes.py",
                    "audit.py", "diagnose.py", "params.py", "prompts.py", "render.py", "runner.py", "studio.py", "png.py",
                    "trace.py", "terrain.py", "tiers.py", "globe.py", "critic.py", "compare.py", "archkit.py", "rounds.py",
-                   "film_audio.py", "export.py", "printing.py", "plates.py", "freecad.py", "netlogo.py", "runfilm.py"]
+                   "film_audio.py", "export.py", "printing.py", "plates.py", "kit.py", "freecad.py", "netlogo.py", "runfilm.py"]
 DATA_FILES = ["construct.nls"]  # the NetLogo recorder, copied beside a model by `netlogo-instrument`
 FILM = ["construct-three.js"]  # film mode's optional three.js loader, shipped as runtime/film/
 VIEWER_FILES = ["hologram.js", "film.js", "reading.js", "template.html"]

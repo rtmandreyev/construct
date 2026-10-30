@@ -2,6 +2,7 @@
 well formed; and, when PrusaSlicer is present, the slicer agrees."""
 
 import io
+import json
 import os
 import struct
 import subprocess
@@ -236,6 +237,49 @@ class Plates(unittest.TestCase):
                                       capture_output=True, text=True, timeout=300).stdout
                 self.assertIn("manifold = yes", info)
                 self.assertRegex(info, r"number_of_parts =\s+1\b")
+
+
+class Kit(unittest.TestCase):
+    def test_a_kit_of_pieces_that_fit_numbered_plated_and_explained(self):
+        from . import kit
+        sc = studio.load(str(HERE / "examples" / "v2" / "cd.json"))
+        k = kit.make(sc, size=120, detail=0.5)
+        names = [p["name"] for p in k["pieces"]]
+        self.assertEqual(names, ["tray", "hinge (1 of 2)", "hinge (2 of 2)", "lid"])   # the base first; mirrored hinges apart
+        self.assertEqual([p["number"] for p in k["pieces"]], [1, 2, 3, 4])
+        self.assertEqual(sorted(n for s in k["steps"] for n in s["pieces"]), [1, 2, 3, 4])
+        self.assertEqual(sorted(n for pl in k["plates"] for n, _, _ in pl["pieces"]), [1, 2, 3, 4])
+        self.assertTrue(all(p["onto"] for p in k["pieces"][1:]))            # each glued to something built
+        self.assertEqual(sum(printing._edges_ok(p["mesh"]["triangles"]) for p in k["pieces"]), 0)   # all watertight
+        self.assertTrue(all(min(v[2] for v in p["mesh"]["vertices"]) == 0 for p in k["pieces"]))      # on the bed
+        cols = [p["cols"] for p in k["pieces"]]
+        self.assertTrue(all(not (a.get(c, 0) & m) for i, a in enumerate(cols) for b in cols[i + 1:] for c, m in b.items()))
+        self.assertTrue(k["report"]["ok"], k["report"]["problems"])
+        one = kit.make(sc, size=120, detail=0.5, plan={"merge": [["tray", "hing*"]], "clear": ["lid"], "title": "A case kit"})
+        self.assertEqual([p["name"] for p in one["pieces"]][:1], ["tray"])        # the hinges moulded with the tray
+        self.assertIn("booklet", [p["name"] for p in one["pieces"]])             # a clear lid yields: the booklet stays whole
+        self.assertEqual(one["pieces"][0]["parts"], ["hinge", "tray"])
+        self.assertTrue(next(p for p in one["pieces"] if p["head"] == "lid")["clear"])
+        self.assertEqual(one["title"], "A case kit")
+        with self.assertRaisesRegex(kit.KitError, "a kit plan is an object"):
+            kit.make(sc, plan={"glue": []})
+
+    def test_the_kit_files(self):
+        from . import kit
+        sc = studio.load(str(HERE / "examples" / "v2" / "cd.json"))
+        k = kit.make(sc, size=120, detail=0.5)
+        with tempfile.TemporaryDirectory() as tmp:
+            kit.write(k, tmp)
+            z = zipfile.ZipFile(Path(tmp, "plate-1.3mf"))
+            model = z.read("3D/3dmodel.model").decode("utf-8")
+            self.assertEqual(model.count("<object "), 4)
+            self.assertIn('name="1 tray"', model)
+            booklet = Path(tmp, "booklet.html").read_text(encoding="utf-8")
+            self.assertIn("Step 2", booklet)
+            self.assertTrue(Path(tmp, "img", "step-1.png").read_bytes().startswith(b"\x89PNG"))
+            summary = json.loads(Path(tmp, "kit.json").read_text(encoding="utf-8"))
+            self.assertEqual(summary["report"]["counts"]["pieces"], 4)
+            self.assertIn("kit designer", kit.CRITIC.lower() + " kit designer")
 
 
 if __name__ == "__main__":
