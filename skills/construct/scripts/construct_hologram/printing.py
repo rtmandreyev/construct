@@ -6,8 +6,8 @@ closed surface. So the print is made in voxels, at the print's own scale:
     voxels whose centres are inside;
   - open surfaces (a shell, a panel), and closed pieces too thin to fill, are thickened to the wall;
   - every part is joined into one solid, and gaps between parts up to `join` wide are closed (floating
-    parts, the construct's annotations, are left out); with `lines`, parts drawn only as lines become
-    raised lines;
+    parts, the construct's annotations, are left out); parts drawn only as lines are left out, cut into
+    the surface as grooves (`lines="engrave"`, like a model kit's panel lines) or raised (`"raised"`);
   - sealed cavities are filled (the print is solid; the slicer makes its own infill);
   - the boundary of the solid is the surface: every edge shared by exactly two triangles, edges
     touching only diagonally filled first; it is then smoothed, never by more than half a voxel, and
@@ -336,6 +336,32 @@ def _runs(m):
     return out
 
 
+def _drop_specks(cols, smallest=32):
+    """Remove the separate solids smaller than `smallest` voxels (slivers left between grooves): too small to
+    print, and each would be a piece of its own."""
+    runs = {c: _runs(m) for c, m in cols.items() if m}
+    seen = set()
+    for c, rs in runs.items():
+        for r in rs:
+            if (c, r) in seen:
+                continue
+            seen.add((c, r))
+            stack, members, size = [(c, r)], [], 0
+            while stack:
+                (i, j), (k0, k1) = item = stack.pop()
+                members.append(item)
+                size += k1 - k0 + 1
+                for n in ((i + 1, j), (i - 1, j), (i, j + 1), (i, j - 1)):
+                    for r2 in runs.get(n, ()):
+                        if r2[0] <= k1 and r2[1] >= k0 and (n, r2) not in seen:
+                            seen.add((n, r2))
+                            stack.append((n, r2))
+            if size < smallest:
+                for col, (k0, k1) in members:
+                    cols[col] &= ~(((1 << (k1 - k0 + 1)) - 1) << k0)
+    return {c: m for c, m in cols.items() if m}
+
+
 def _bodies(cols):
     """The separate solids: a list of (voxel count, lowest layer), largest first; voxels joined by faces."""
     runs = {c: _runs(m) for c, m in cols.items() if m}
@@ -534,7 +560,7 @@ def _closest(p, a, b, c):
     return (a[0] + ab[0] * v + ac[0] * w, a[1] + ab[1] * v + ac[1] * w, a[2] + ab[2] * v + ac[2] * w)
 
 
-def _snap(verts, tris, limit=SNAP_VOXELS):
+def _snap(verts, tris, limit=SNAP_VOXELS, keep=()):
     """Move each vertex onto the construct's own surface (the filled pieces') when it lies within `limit`
     voxels of it, so flat and sloping faces come out flat, not stepped; the bed stays flat."""
     cells = {}
@@ -555,7 +581,10 @@ def _snap(verts, tris, limit=SNAP_VOXELS):
     near = [(di, dj, dk) for di in (-1, 0, 1) for dj in (-1, 0, 1) for dk in (-1, 0, 1)]
     lim2 = limit * limit
     out = []
-    for p in verts:
+    for n, p in enumerate(verts):
+        if n in keep:
+            out.append(p)
+            continue
         ci, cj, ck = int(math.floor(p[0])), int(math.floor(p[1])), int(math.floor(p[2]))
         cand = set()
         for di, dj, dk in near:
@@ -585,16 +614,22 @@ def _edges_ok(faces):
 
 # ---------------------------------------------------------------------------- the print
 
-def make(scene, size=SIZE_MM, scale=None, detail=DETAIL_MM, wall=WALL_MM, join=JOIN_MM, lines=False, bed=BED_MM):
+LINES = ("none", "engrave", "raised")
+
+
+def make(scene, size=SIZE_MM, scale=None, detail=DETAIL_MM, wall=WALL_MM, join=JOIN_MM, lines="none", bed=BED_MM):
     """The print of `scene`: {"vertices": [[x, y, z] mm], "triangles": [[a, b, c]], "report": {...}}.
     `size` is the longest side in mm, or `scale` N prints at 1:N of the construct's real size; gaps up to
     `join` mm wide are closed."""
     if not detail > 0 or not wall > 0 or join < 0:
         raise PrintError("detail and wall: positive numbers of millimetres; join: 0 or more")
     g = scene_mod.compile_scene(scene, solid=True)
-    closed, open_, rods, report = _surfaces(g, lines)
+    lines = {True: "raised", False: "none", None: "none"}.get(lines, lines)
+    if lines not in LINES:
+        raise PrintError("lines: one of %s" % ", ".join(LINES))
+    closed, open_, rods, report = _surfaces(g, lines != "none")
     if not closed and not open_ and not rods:
-        raise PrintError("nothing to print: the construct has no surfaces (try --lines for one drawn in lines)")
+        raise PrintError("nothing to print: the construct has no surfaces (try --lines raised for one drawn in lines)")
     pts = [p for _, piece in closed + open_ for t in piece for p in t] + [p for r in rods for p in r]
     lo = [min(p[a] for p in pts) for a in range(3)]
     hi = [max(p[a] for p in pts) for a in range(3)]
@@ -634,11 +669,24 @@ def make(scene, size=SIZE_MM, scale=None, detail=DETAIL_MM, wall=WALL_MM, join=J
         _mark_surface(grid, piece, shells)
         thickened.add(pid)
     report["thickened"] = sorted(thickened)
-    _mark_rods(grid, rods, shells)
+    grooves = {}
+    _mark_rods(grid, rods, grooves if lines == "engrave" else shells)
     if shells:
         shells = _dilate(shells, r, grid.n)
     cols = _close({c: m for c, m in _union(solid, shells).items() if m}, rj, grid.n)
     voids = _fill_voids(cols, grid.n)
+    if grooves:   # the line art cut into the surface, as a model kit's panel lines: one voxel deep, and only
+        # where there is solid behind it, so a groove never cuts a thin part through
+        grooves = _dilate(grooves, 1, grid.n)
+        backed = _dilate(_erode(cols, 1, grid.n), 1, grid.n)
+        cut = {}
+        for c, m in grooves.items():
+            m &= cols.get(c, 0) & backed.get(c, 0)
+            if m:
+                cut[c] = m
+                cols[c] &= ~m
+        grooves = cut
+        cols = _drop_specks({c: m for c, m in cols.items() if m})
     filled = _manifold(cols)
     # the bed: the lowest layer at z = 0
     low = min((m & -m).bit_length() - 1 for m in cols.values())
@@ -646,8 +694,11 @@ def make(scene, size=SIZE_MM, scale=None, detail=DETAIL_MM, wall=WALL_MM, join=J
         cols = {c: m >> low for c, m in cols.items()}
     bodies = _bodies(cols)
     verts, faces = _surface(cols, grid.n)
+    cut = {(i, j, k - low) for (i, j), m in grooves.items() for k in _bits(m)} if grooves else set()
+    keep = {n for n, (x, y, z) in enumerate(verts)   # a groove's corners stay sharp: not snapped back to the surface
+            if any((x - a, y - b, z - c) in cut for a in (0, 1) for b in (0, 1) for c in (0, 1))} if cut else set()
     verts = _smooth(verts, faces)
-    verts = _snap(verts, [[(q[0], q[1], q[2] - low) for q in map(grid.to_cell, t)] for t in true])
+    verts = _snap(verts, [[(q[0], q[1], q[2] - low) for q in map(grid.to_cell, t)] for t in true], keep=keep)
     i0 = min(c[0] for c in cols)
     j0 = min(c[1] for c in cols)
     verts = [[(p[0] - i0) * detail, (p[1] - j0) * detail, p[2] * detail] for p in verts]
@@ -710,7 +761,8 @@ def notes(report):
     if report["thickened"]:
         out.append("thickened to the %g mm wall: %s" % (report["wall_mm"], _list(report["thickened"])))
     if report["lines_left_out"]:
-        out.append("drawn only in lines, not printed (--lines prints them raised): %s" % _list(report["lines_left_out"]))
+        out.append("drawn only in lines, not printed (--lines engrave cuts them in, --lines raised raises them): %s"
+                   % _list(report["lines_left_out"]))
     if report["floating_left_out"]:
         out.append("annotations, not printed: %s" % _list(report["floating_left_out"]))
     out.append("watertight" if report["watertight"] else "")

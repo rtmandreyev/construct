@@ -130,7 +130,8 @@ TOOLS += [
          "detail": {"type": "number", "description": "the voxel size in mm (default 0.4)"},
          "wall": {"type": "number", "description": "open surfaces thickened to this wall in mm (default 0.8)"},
          "join": {"type": "number", "description": "gaps between parts up to this wide are closed, in mm (default 1.6)"},
-         "lines": {"type": "boolean", "description": "print the parts drawn only in lines as raised lines"}},
+         "lines": {"type": ["boolean", "string"], "enum": [True, False, "none", "engrave", "raised"],
+                   "description": "the parts drawn only in lines: none, engrave (cut in) or raised (true)"}},
                      "required": ["document"], "additionalProperties": False},
      "annotations": _READ_ONLY},
     {"name": "construct_netlogo_instrument",
@@ -330,7 +331,7 @@ def _call_v2(name, args):
             if fmt not in printing.FORMATS:
                 raise printing.PrintError("format: 3mf or stl")
             kw = {k: args[k] for k in ("size", "scale", "detail", "wall", "join") if k in args}
-            p = printing.make(built, lines=bool(args.get("lines", False)), **kw)
+            p = printing.make(built, lines=args.get("lines", "none"), **kw)
         except (printing.PrintError, scene.SceneError, TypeError) as exc:
             return _tool_result({"error": str(exc)}, is_error=True)
         data = printing.to_3mf(p) if fmt == "3mf" else printing.to_stl(p)

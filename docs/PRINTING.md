@@ -30,7 +30,7 @@ construct print scene.json --out fj62.stl --scale 43
 | `--detail MM` | the voxel size (default 0.4, a common nozzle's width); smaller is finer and slower |
 | `--wall MM` | open surfaces, and parts too thin to fill, are thickened to this wall (default 0.8) |
 | `--join MM` | gaps between parts up to this wide are closed, so the print is one piece (default 1.6; 0 leaves them) |
-| `--lines` | print the parts drawn only in lines (seams, engraving, grilles) as raised lines |
+| `--lines engrave` or `raised` | the parts drawn only in lines (seams, tracery, grilles): cut into the surface as grooves, one voxel deep and only where there is solid behind them, like a model kit's engraved panel lines; or raised (`--lines` alone). By default they are left out |
 | `--bed WxDxH` | the printer's build volume in millimetres (default 250x210x220) |
 
 It prints the size, the scale and what to know:
@@ -112,6 +112,16 @@ stack them, the model and the recording's SHA-256, so a classroom set says exact
 The plates are made in voxels like a print, so each file is one watertight solid; the tests check
 PrusaSlicer reads a plate and a pin as manifold, one part. Plates are evenly spaced on the pins;
 spacing them by time is a later step.
+
+## How much detail survives
+
+A print keeps the construct's form, not its light. The hologram draws every edge, inside and out; a print
+shows one outer surface, so what a construct says in lines (tracery, panel seams, engraving) only shows
+when it is cut in or raised (`--lines`). Below that, the limit is the printer: at the default 0.4 mm voxel
+(a common nozzle) a 15 cm Sainte-Chapelle is 1:492, and anything under about 20 cm in the real building
+is lost. A larger print, or a resin printer with `--detail 0.1`, keeps far more. Lines that float just off
+a surface (a window drawn in front of its wall) are not engraved, since there is nothing behind them to
+cut into.
 
 ## What it is not
 

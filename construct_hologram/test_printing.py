@@ -66,6 +66,21 @@ class Print(unittest.TestCase):
         self.assertEqual(with_lines["lines_left_out"], [])
         self.assertGreater(with_lines["voxels"], r["voxels"])
 
+    def test_lines_engraved_cut_grooves_without_cutting_the_print_apart(self):
+        sc = scene_of(box("panel", [0.06, 0.04, 0.02], [0, 0.02, 0]),
+                      {"id": "seam", "role": "detail", "shape": {"type": "curve", "points": [[-0.025, 0.02, 0.0101], [0.025, 0.02, 0.0101]]}},
+                      {"id": "post", "role": "detail", "shape": {"type": "curve", "points": [[0, 0.04, 0], [0, 0.06, 0]]}})
+        plain = printing.make(sc, scale=1, detail=0.5)["report"]
+        cut = printing.make(sc, scale=1, detail=0.5, lines="engrave")["report"]
+        self.assertTrue(cut["watertight"])
+        self.assertEqual(cut["pieces"], 1)
+        self.assertLess(cut["voxels"], plain["voxels"])          # the seam is cut into the face
+        self.assertEqual(cut["lines_left_out"], [])
+        raised = printing.make(sc, scale=1, detail=0.5, lines=True)["report"]   # --lines alone: raised, as before
+        self.assertGreater(raised["voxels"], plain["voxels"])
+        with self.assertRaisesRegex(printing.PrintError, "lines: one of"):
+            printing.make(sc, scale=1, detail=0.5, lines="etch")
+
     def test_a_sealed_cavity_is_filled_and_diagonal_edges_are_joined(self):
         n = (7, 7, 7)
         hollow = {(i, j): (0b11111 if i in (1, 5) or j in (1, 5) else 0b10001) << 1

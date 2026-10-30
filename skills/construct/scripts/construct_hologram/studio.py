@@ -9,7 +9,7 @@
   export <scene.json> --out FILE.glb|.obj [--wire edges|tubes|none] [--pose closed|open]
                       [--materials map.json] [--frame y-up|z-up] [--merge]    a 3D model (docs/EXPORT.md)
   print <scene.json> --out FILE.stl|.3mf [--size MM | --scale N] [--detail MM] [--wall MM] [--join MM]
-                     [--lines] [--bed WxDxH]          one watertight body to 3D print (docs/PRINTING.md)
+                     [--lines engrave|raised] [--bed WxDxH]   one watertight body to 3D print (docs/PRINTING.md)
   freecad <scene.json> --out FILE.FCStd|.step [--step FILE.step] [--freecad PATH]
                                                         named solids and joints in FreeCAD, and STEP (docs/FREECAD.md)
 
@@ -467,7 +467,9 @@ def add_commands(sub):
     p.add_argument("--wall", type=float, default=0.8, help="open surfaces are thickened to this wall in mm (default 0.8)")
     p.add_argument("--join", type=float, default=1.6,
                    help="close gaps between parts up to this wide, in mm, so the print is one piece (default 1.6; 0: off)")
-    p.add_argument("--lines", action="store_true", help="print the parts drawn only in lines as raised lines")
+    p.add_argument("--lines", nargs="?", const="raised", default="none", choices=("none", "engrave", "raised"),
+                   help="the parts drawn only in lines: none (left out, the default), engrave (cut into the surface, "
+                        "like a model kit's panel lines) or raised (--lines alone)")
     p.add_argument("--bed", default="250x210x220", help="the printer's build volume in mm (default 250x210x220)")
     p = sub.add_parser("freecad", help="named solids and joints in FreeCAD (.FCStd), and STEP; runs FreeCAD "
                                        "(docs/FREECAD.md)")
