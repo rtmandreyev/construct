@@ -29,7 +29,7 @@ import math
 import zipfile
 from pathlib import Path
 
-from . import export, png, printing, product, scene as scene_mod
+from . import export, printing, product, scene as scene_mod
 
 SCALE = 24                 # 1:24, a common scale for car kits
 DETAIL_MM = 0.35           # one voxel
@@ -296,17 +296,49 @@ def make(scene, scale=SCALE, size=None, detail=DETAIL_MM, wall=WALL_MM, plan=Non
         p["group_name"] = groups[p["group"]]["name"] if p["group"] < len(groups) else None
 
     _order(pieces, grid.n)
+    _line_art(scene, pieces, grid)
     for p in pieces:
         p["mesh"], p["size_mm"], p["down"] = _piece_mesh(p["cols"], detail)
     plates = _pack(pieces, bed)
     kit = {"title": plan.get("title") or "%s, a kit" % scene["title"], "construct": scene["title"],
            "scale": "1:%s" % printing._ratio(1000.0 / mm_per_m), "detail_mm": detail, "pieces": pieces,
            "plates": plates, "steps": _steps(pieces), "bed_mm": list(bed),
-           "merged": merged_away, "dropped": dropped, "plan": plan, "lines_engraved": sorted(rep["lines_left_out"])
-           if not rods else sorted({info_id for info_id in rep.get("lines_left_out", [])}),
+           "merged": merged_away, "dropped": dropped, "plan": plan,
            "size_mm": [round((hi[a] - lo[a]) * mm_per_m, 1) for a in (0, 1, 2)]}
     kit["report"] = check(kit)
     return kit
+
+
+def _line_art(scene, pieces, grid):
+    """Each piece's lines, as the hologram draws them (metres, the print frame, Z up): its own parts', and those
+    of the parts drawn only in lines that lie on it (a seam on a door is the door's)."""
+    holo = scene_mod.compile_scene(scene)
+    st, ln, parts = holo["styles"], holo["lines"], holo["parts"]
+    art = {}
+    for i in range(0, len(ln), 9):
+        part = parts[int(st[int(ln[i + 6])][6])]
+        if part.get("floating"):
+            continue
+        art.setdefault(part["id"], []).append(((ln[i], -ln[i + 2], ln[i + 1]), (ln[i + 3], -ln[i + 5], ln[i + 4])))
+    owner = {m: p for p in pieces for m in p["parts"]}
+    for pid, segs in art.items():
+        if pid in owner:
+            continue
+        a, b = segs[len(segs) // 2]
+        cell = grid.to_cell([(a[k] + b[k]) / 2 for k in range(3)])
+        i, j, k = (int(math.floor(x)) for x in cell)
+
+        def near(p):
+            return sum(bin(p["cols"].get((i + di, j + dj), 0) >> max(k - 3, 0) & 0x7F).count("1")
+                       for di in range(-3, 4) for dj in range(-3, 4))
+        best = max(pieces, key=near)
+        if near(best):
+            owner[pid] = best
+    for p in pieces:
+        p["art"] = []
+    for pid, segs in art.items():
+        if pid in owner:
+            owner[pid]["art"].extend(segs)
 
 
 def _paint(pid, part, rules):
@@ -482,66 +514,63 @@ VIEWS = {0: ((1, 0), (0, 1)), 90: ((0, -1), (1, 0)), 180: ((-1, 0), (0, -1)), 27
 FRONT = 90   # the construct's front (+Z) is the print frame's -Y: seen from the front three-quarter
 
 
-def _picture(kit, highlight, done, w=640, hgt=420, voxel_step=2):
-    """An isometric picture of the model as built so far: the pieces in `done` grey, `highlight` in the accent,
-    seen from the corner that faces the new pieces. Drawn from the voxels' exposed faces, z-buffered."""
-    shown = [p for p in kit["pieces"] if p["number"] in done or p["number"] in highlight]
+def _drawing(kit, highlight, done, w=900, hgt=600):
+    """A step drawn as the construct draws itself, in lines (SVG): what is built so far faint, the step's new
+    pieces bright, each with its number in a callout, seen from the corner that faces them (the whole model
+    from the front three-quarter)."""
+    shown = [p for p in kit["pieces"] if (p["number"] in done or p["number"] in highlight) and p.get("art")]
     if not shown:
-        return png.encode(w, hgt, lambda x, y: (18, 15, 24))
+        return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 %d %d"></svg>' % (w, hgt)
 
     def centre(ps):
-        tot = [0.0, 0.0, 0]
-        for p in ps:
-            b = _bbox(p["cols"])
-            n = _count(p["cols"])
-            tot[0] += (b[0] + b[1]) / 2 * n
-            tot[1] += (b[2] + b[3]) / 2 * n
-            tot[2] += n
-        return (tot[0] / tot[2], tot[1] / tot[2]) if tot[2] else (0.0, 0.0)
+        pts = [q for p in ps for seg in p["art"] for q in seg]
+        return [sum(q[a] for q in pts) / len(pts) for a in range(3)] if pts else [0.0, 0.0, 0.0]
     new = [p for p in shown if p["number"] in highlight]
-    ca, cn = centre(kit["pieces"]), centre(new) if new else None
+    ca = centre([p for p in kit["pieces"] if p.get("art")])
     view = FRONT
-    if cn and math.hypot(cn[0] - ca[0], cn[1] - ca[1]) > 3:
+    if new:
+        cn = centre(new)
         off = (cn[0] - ca[0], cn[1] - ca[1])
-        view = max(VIEWS, key=lambda v: (VIEWS[v][0][0] + VIEWS[v][1][0]) * off[0] + (VIEWS[v][0][1] + VIEWS[v][1][1]) * off[1]
-                   + (0.01 if v == FRONT else 0))
+        span = max(abs(q[a] - ca[a]) for p in kit["pieces"] for seg in p.get("art", []) for q in seg for a in (0, 1))
+        if math.hypot(*off) > 0.12 * span:
+            view = max(VIEWS, key=lambda v: (VIEWS[v][0][0] + VIEWS[v][1][0]) * off[0]
+                       + (VIEWS[v][0][1] + VIEWS[v][1][1]) * off[1] + (1e-6 if v == FRONT else 0))
     (dui, duj), (dvi, dvj) = VIEWS[view]
-    pts = []
-    for p in shown:
-        accent = p["number"] in highlight
-        cols = p["cols"]
-        thin = len(cols) > 400
-        for (i, j), m in cols.items():
-            if thin and (i + j) % voxel_step:
-                continue
-            for k in printing._bits(m):
-                if thin and k % voxel_step:
-                    continue
-                up = not (m >> (k + 1)) & 1
-                side = not cols.get((i + dui, j + duj), 0) >> k & 1 or not cols.get((i + dvi, j + dvj), 0) >> k & 1
-                if up or side:
-                    u, v = i * dui + j * duj, i * dvi + j * dvj
-                    pts.append((u, v, k, accent, 1.0 if up else 0.72))
-    proj = [((u - v) * 0.866, (u + v) * 0.25 - k * 0.9, u + v + k, a, sh) for u, v, k, a, sh in pts]
-    xs = [q[0] for q in proj]
-    ys = [q[1] for q in proj]
-    span = max(max(xs) - min(xs), (max(ys) - min(ys)) * w / hgt) or 1
-    sc = (w - 40) / span
-    ox, oy = min(xs), min(ys)
-    buf = [(18, 15, 24)] * (w * hgt)
-    depth = [-1e9] * (w * hgt)
-    size = max(1, int(round(sc * voxel_step * 0.9)))
-    for x, y, dz, accent, shade in proj:
-        px, py = int(20 + (x - ox) * sc), int(20 + (y - oy) * sc)
-        col = (int(209 * shade), int(107 * shade), int(208 * shade)) if accent else (
-            int(150 * shade), int(146 * shade), int(158 * shade))
-        for yy in range(max(py, 0), min(py + size, hgt)):
-            for xx in range(max(px, 0), min(px + size, w)):
-                n = yy * w + xx
-                if dz > depth[n]:
-                    depth[n] = dz
-                    buf[n] = col
-    return png.encode(w, hgt, lambda x, y: buf[y * w + x])
+
+    def proj(q):
+        u, v = q[0] * dui + q[1] * duj, q[0] * dvi + q[1] * dvj
+        return ((u - v) * 0.866, (u + v) * 0.35 - q[2] * 0.95)
+    every = [proj(q) for p in shown for seg in p["art"] for q in seg]
+    xs, ys = [q[0] for q in every], [q[1] for q in every]
+    pad = 70
+    sc = min((w - 2 * pad) / ((max(xs) - min(xs)) or 1), (hgt - 2 * pad) / ((max(ys) - min(ys)) or 1))
+    ox = pad + ((w - 2 * pad) - (max(xs) - min(xs)) * sc) / 2 - min(xs) * sc
+    oy = pad + ((hgt - 2 * pad) - (max(ys) - min(ys)) * sc) / 2 - min(ys) * sc
+    xy = lambda q: (ox + proj(q)[0] * sc, oy + proj(q)[1] * sc)
+
+    def path(segs):
+        return "".join("M%.1f %.1fL%.1f %.1f" % (*xy(a), *xy(b)) for a, b in segs)
+    out = ['<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 %d %d">' % (w, hgt),
+           '<rect width="100%%" height="100%%" fill="#0f0c14"/>',
+           '<path d="%s" stroke="#b7a4c8" stroke-opacity="0.32" stroke-width="0.6" fill="none"/>'
+           % path([seg for p in shown if p["number"] not in highlight for seg in p["art"]]),
+           '<path d="%s" stroke="#f0b8ef" stroke-opacity="0.95" stroke-width="1.1" fill="none"/>'
+           % path([seg for p in new for seg in p["art"]])]
+    mid = (w / 2, hgt / 2)
+    for p in new:   # a callout: the piece's number, out from the model, a leader line to the piece
+        c = centre([p])
+        px, py = xy(c)
+        dx, dy = px - mid[0], py - mid[1]
+        d = math.hypot(dx, dy) or 1
+        lx = min(max(px + dx / d * 46, 18), w - 18)
+        ly = min(max(py + dy / d * 46, 18), hgt - 18)
+        out.append('<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="#d16bd0" stroke-width="0.8"/>'
+                   % (px, py, lx, ly))
+        out.append('<circle cx="%.1f" cy="%.1f" r="13" fill="#17121f" stroke="#d16bd0" stroke-width="1.2"/>'
+                   '<text x="%.1f" y="%.1f" fill="#f6eaff" font-size="12" font-family="monospace" '
+                   'text-anchor="middle" dominant-baseline="central">%d</text>' % (lx, ly, lx, ly, p["number"]))
+    out.append("</svg>")
+    return "".join(out)
 
 
 def _plate_map(kit, plate, w=640):
@@ -608,9 +637,9 @@ def write(kit, out):
         (out / "img" / ("plate-%d.svg" % plate["number"])).write_text(_plate_map(kit, plate), encoding="utf-8")
     done = set()
     for s in kit["steps"]:
-        (out / "img" / ("step-%d.png" % s["number"])).write_bytes(_picture(kit, set(s["pieces"]), done))
+        (out / "img" / ("step-%d.svg" % s["number"])).write_text(_drawing(kit, set(s["pieces"]), done), encoding="utf-8")
         done |= set(s["pieces"])
-    (out / "img" / "complete.png").write_bytes(_picture(kit, set(), done))
+    (out / "img" / "complete.svg").write_text(_drawing(kit, set(), done), encoding="utf-8")
     (out / "booklet.html").write_text(booklet(kit), encoding="utf-8")
     (out / "kit.json").write_text(json.dumps(summary(kit), indent=1) + "\n", encoding="utf-8")
     return [str(f) for f in files] + [str(out / "booklet.html"), str(out / "kit.json")]
@@ -639,7 +668,7 @@ def booklet(kit):
                 "%s x %s x %s mm built.</p>" % (
                     e(kit["title"]), e(kit["construct"]), kit["scale"], len(kit["pieces"]), len(kit["plates"]),
                     len(kit["steps"]), *kit["size_mm"]))
-    rows.append("<img class=hero src='img/complete.png' alt='The finished model'>")
+    rows.append("<img class=hero src='img/complete.svg' alt='The finished model'>")
     rep = kit["report"]
     if rep["problems"]:
         rows.append("<div class=warn><b>Before you print:</b><ul>%s</ul></div>"
@@ -658,7 +687,7 @@ def booklet(kit):
             glue.append("<li>%s%s%s</li>" % (what, " to <b>%d</b>" % onto if onto else
                                             (", the base" if num == 1 else ": it starts an assembly of its own"),
                                             " (clear)" if p["clear"] else ""))
-        rows.append("<div class=step><h3>Step %d%s</h3><img src='img/step-%d.png' alt='Step %d'><ul>%s</ul></div>"
+        rows.append("<div class=step><h3>Step %d%s</h3><img src='img/step-%d.svg' alt='Step %d'><ul>%s</ul></div>"
                     % (s["number"], ": " + e(s["name"]) if s.get("name") else "", s["number"], s["number"], "".join(glue)))
     rows.append("<h2>Paints</h2><table><tr><th></th><th>Colour</th><th>Pieces</th></tr>%s</table>" % "".join(
         "<tr><td><span class=chip style='background:%s'></span></td><td>%s <code>%s</code></td><td>%s</td></tr>"

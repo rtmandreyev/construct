@@ -192,6 +192,8 @@ model alone.
   the scene and geometry), the NetLogo examples, two Models Library bugs (374 of 445 draw); printing
   (with engraved line art), FreeCAD and STEP, the plates; for game engines, colliders, pieces, seeded
   variants and the Godot guide.
+- **Also 29 October:** size and shape certainty answered apart (`traced`, size verified, shape
+  verified), the provenance view's colours and its sources legend, and the gallery examples moved to it.
 - Next: the Revell-style kits (v1.2), then freeze; the Models Library check, Linux and Windows CI, the
   README's pictures, the release videos and the repository's organisation; then the release and the
   Extensions Manager listing.
@@ -242,6 +244,7 @@ are its own.
 - **High-provenance mode:** a construct that maximises accuracy: every part with a source or
   visibly marked as a guess, a critic that judges accuracy only, a sources panel (touch a part to
   see where it comes from), a certainty view and a printable evidence sheet for a class or a label.
+  (1.1 brought size and shape certainty answered apart and the provenance view's sources legend.)
 - **Artworks as constructs:** a painting as a relief of its composition (figures, perspective, the
   vanishing point), each element with its source (catalogue, conservation reports, X-ray and
   infrared studies), and what lies under the paint (underdrawings, pentimenti) as marked layers.

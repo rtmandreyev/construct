@@ -55,7 +55,10 @@ approximate | documented`; `subject.synthetic` marks example content.
 ## 2. Parts
 
 `parts[]` (index = the part number in styles):
-`{id, label, role, certainty, basis[], source, stage, floating, shape, motion, joint, instances[]}`.
+`{id, label, role, certainty, certainty_axes?, basis[], source, stage, floating, shape, motion, joint, instances[]}`.
+A part's `certainty` is one of `verified | user_supplied | traced | inferred | decorative`; when its size
+and its shape are known differently, `certainty_axes` says each and `certainty` is the weaker (see
+[Two-axis certainty](#two-axis-certainty-an-addition-within-02)).
 `instances` are the copies after repeat/mirror: `{min, max, motion_slot, joint, open_min?,
 open_max?}` — the rest-pose box, the periodic-motion slot (or −1), the articulation joint (or
 −1), and for articulated copies the box they reach fully open.
@@ -100,8 +103,8 @@ Budgets: ≤ 24,000 lines, ≤ 24,000 triangles, ≤ 6,000 points, ≤ 256 parts
   optional `style_colors[]`, one entry per style row, `#rrggbb` or `null` for the tone; a renderer
   that ignores it draws the tone. The provenance view keeps the certainty colours.
 - Certainty is the material: verified/user-supplied crisp, inferred a step back, decorative
-  dotted and faint. A renderer may restyle within this meaning but keeps the four
-  certainties distinguishable and offers a provenance view.
+  dotted and faint; traced looks like inferred in the light view. A renderer may restyle within this
+  meaning but keeps the certainties distinguishable and offers a provenance view.
 - No shader code, scripts or URLs exist in either document.
 
 ## 5. Artwork slots and masks
@@ -273,6 +276,29 @@ A scene or parameter document may carry `authoring`, which compiles to
 `sources` the ids of the scene's sources research used (required when `research` is `done`);
 `outcome` `good | limit | unreviewed`; `next` up to 8 improvement notes. It says how the
 construct was made so a host can regenerate it at a higher tier; readers may ignore it.
+
+## Two-axis certainty (an addition within 0.2)
+
+A spec sheet verifies a car's length, not its outline; one word per part could not say both, so a
+part may answer for its size and its shape apart:
+
+```json
+{"id": "body", "certainty": {"size": "verified", "shape": "traced"}, "basis": ["length", "width"], "source": "ref-blueprint"}
+```
+
+- The scene's `certainty` is a word (both axes the same) or `{size, shape}`, each `verified |
+  user_supplied | traced | inferred | decorative`. `decorative` is the whole part: both or neither.
+- `traced`: fitted to an orthographic reference (a drawing, a plan, a patent elevation) that a verified
+  size scales. It cites that reference as the part's `source`, of kind `drawing` or `reference_image`; a
+  part read off a perspective photograph is `inferred`.
+- A verified size cites a source or a verified basis fact; the audit's `overclaim` checks the size
+  axis against the basis facts, and `shape-overclaim` the shape axis against shape evidence.
+- The geometry part keeps `certainty` as one word, the weaker axis (traced below user_supplied), so
+  readers of the four words still work; `certainty_axes: {size, shape}` is present only when the axes
+  differ. A v1 sheet reads traced as inferred.
+- The provenance view: verified (both axes) white, size verified cyan, shape verified violet, traced
+  blue, user-supplied green, inferred amber, decorative magenta; its legend counts the parts of each
+  and names the sources behind the verified ones (for a size, its verified facts' sources).
 
 ## Film mode (0.3.0, optional)
 

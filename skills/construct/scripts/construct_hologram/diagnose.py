@@ -22,7 +22,7 @@ AUDIT_HINTS = {
     "floating": "Move the part so its box touches what holds it (a centred box sits half its height above "
                 "its \"at\"; use \"anchor\": \"base\" to stand it on \"at\"), or set \"floating\": true only if it truly hovers.",
     "stage-order": "Give the part a stage equal to or later than the part it rests on.",
-    "overclaim": "Lower the part's certainty to the weakest certainty among its basis facts, or cite a source.",
+    "overclaim": "Lower the part's size certainty to the weakest certainty among its basis facts, or cite a source.",
     "accuracy": "Use subject.accuracy \"generic\" (a typical example) unless key parts rest on evidence.",
     "decorative-identity": "Designed parts of a requested object are \"inferred\", not \"decorative\".",
     "no-mass": "Give the primary volume role \"mass\".",
@@ -38,9 +38,9 @@ AUDIT_HINTS = {
     "detached": "Move the part so its surface meets the part it hangs from or rests on (named in the message): "
                 "align its end with that part's surface, or extend it to reach. Use \"floating\": true only "
                 "for things that really hover.",
-    "shape-overclaim": "Make the part \"inferred\" (designed) — or trace it from a reference image (see construct "
-                       "trace) and say so — and keep the dimension facts verified. Verify a shape only from a drawing, a "
-                       "measurement or a dataset that gives its coordinates.",
+    "shape-overclaim": "Keep the size and lower the shape: {\"size\": \"verified\", \"shape\": \"traced\"} when it was "
+                       "fitted to an orthographic drawing or reference image (see construct trace), \"inferred\" when it was "
+                       "designed. Verify a shape only from a drawing, a measurement or a dataset that gives its coordinates.",
     "thin": "Thicken it to the radius given in the message, or make it role \"detail\" if it is meant to be a fine line.",
     "no-open-view": "Add presentation.views {\"id\": \"open\", \"yaw\": ..., \"pitch\": ...} facing what opening reveals "
                     "(roughly the yaw the opened part's inside or the taken-out part faces; check review/view-open.png "

@@ -82,9 +82,11 @@ if no browser is available, say so and deliver the HTML without captures.
    `verified` (cites a source), `user_supplied`, `inferred` (your reasoning: typical sizes,
    proportions) or `decorative` (chosen for presentation). Do not invent precision; a
    generic reconstruction says so (`subject.accuracy: "generic"`). Each value is
-   documented (`verified`, citing its source), traced (`inferred`, citing the reference
-   image) or invented (`inferred` with a note, or `decorative`). Without a cited source
-   nothing is `verified`. See [provenance](references/provenance.md).
+   documented (`verified`, citing its source), traced (`traced`, citing the orthographic
+   drawing; from a perspective photo `inferred`) or invented (`inferred` with a note, or
+   `decorative`). A part whose size and shape are known differently says each:
+   `{"size": "verified", "shape": "traced"}`, its verified dimension facts in `basis`. Without a
+   cited source nothing is `verified`. See [provenance](references/provenance.md).
 2. **Recognition before geometry.** Name the silhouette, the primary masses and the **two
    or three identity features** that make the thing itself (a lighthouse: tapering banded
    tower, gallery, glazed lantern; a record player: platter with record, S-shaped tonearm).

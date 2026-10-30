@@ -176,9 +176,14 @@ Stages build from what holds things up: legs and feet before the body that rests
 walls before roofs, a base before an arm. Parts that hover (a halo, a beam) are `floating`.
 A part the user named but whose size you chose is `inferred` (cite the user's fact in
 `basis`). To take a shape from a picture, trace it: `trace.md` gives the measuring step and
-`construct trace` fits the outline to a documented dimension. A spec page verifies dimensions (a scale length, a height), never a shape: an outline,
-profile or path is `inferred` — or traced from a reference image (`construct trace`) — unless a
-cited drawing, measurement or dataset gives its coordinates; the parts of a fictional design are `inferred` too (designed from the request).
+`construct trace` fits the outline to a documented dimension. A spec page verifies dimensions (a scale length, a height), never a shape. When a part's size
+and shape are known differently, say so on two axes: `"certainty": {{"size": "verified",
+"shape": "traced"}}` (its length cited in `basis`, its outline fitted to the orthographic
+drawing or reference image cited in `source`). `traced` is for a fit to an orthographic
+reference (a blueprint, a plan, a patent elevation) a verified size scales; a part read off a
+perspective photograph is `inferred`. A shape is `verified` only when a cited drawing,
+measurement or dataset gives its coordinates. The parts of a fictional design are `inferred`
+(designed from the request).
 `decorative` is only for atmosphere. The request source is `"rights": "user_private"`
 (`"synthetic"` only for examples and tests).
 

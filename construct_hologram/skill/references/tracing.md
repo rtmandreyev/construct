@@ -26,8 +26,10 @@ picture instead of inventing it — and never copy the picture.
 4. **Use it.** `body.json` holds an `extrude` profile in metres (front elevation, axis `z`), the
    features in metres (place pickups, the bridge, horns from them), a `source` of kind
    `reference_image` to add to the scene's sources, and a `part` stub: certainty `inferred`,
-   cited to the image, with a note. The dimension facts stay `verified`; the traced shape is
-   `inferred` — measured, not documented (the audit's `shape-overclaim` keeps it honest).
+   cited to the image, with a note. The dimension facts stay `verified`. When the image is
+   orthographic (a blueprint, a plan, an elevation) and `--fit` used a verified dimension, make the
+   part `{"size": "verified", "shape": "traced"}` with that fact in `basis`; from a perspective
+   photograph it stays `inferred` (the audit's `shape-overclaim` keeps it honest).
 5. **Look again.** Review the construct against the reference.
 
 ## Bodies from three views (cars, hulls, fuselages)

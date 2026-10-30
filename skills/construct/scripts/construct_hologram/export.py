@@ -454,8 +454,8 @@ def to_gltf(g, wire="edges", pose="closed", materials=None, wire_radius=None, me
         moving = [k for k in keys if k[1] >= 0 or k[2] >= 0]
         if merge and keys and not moving:
             merged_parts.append(part["id"])
-        extras = {"construct": {k: part[k] for k in ("id", "label", "role", "certainty", "basis", "source", "stage",
-                                                     "shape", "floating") if k in part}}
+        extras = {"construct": {k: part[k] for k in ("id", "label", "role", "certainty", "certainty_axes", "basis",
+                                                     "source", "stage", "shape", "floating") if k in part}}
         extras["construct"]["instances"] = len(part["instances"])
         pnode = None
         if not (merge and keys and not moving):

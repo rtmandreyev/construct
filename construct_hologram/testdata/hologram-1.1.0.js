@@ -30,7 +30,17 @@
   // identity light: a low-chroma tint over the structure tone (the place's own material)
   const IDENTITY = { "warm-wood": [0.88, 0.6, 0.34], stone: [0.8, 0.77, 0.7], steel: [0.62, 0.75, 0.88],
     brass: [0.96, 0.78, 0.4], bio: [0.45, 0.96, 0.72], ember: [1.0, 0.48, 0.26], ice: [0.7, 0.92, 1.0], paper: [0.96, 0.92, 0.82] };
-  const CERT_CODE = { verified: 0, user_supplied: 1, inferred: 2, decorative: 3 };
+  const CERT_CODE = { verified: 0, user_supplied: 1, inferred: 2, decorative: 3, traced: 4, size_verified: 5, shape_verified: 6 };
+  // the provenance view's colours, by CERT_CODE: verified stays white; a part verified on one axis only has its own colour
+  const CERT_RGB = [[0.85, 0.97, 1.0], [0.45, 1.0, 0.62], [1.0, 0.72, 0.3], [0.95, 0.42, 0.95], [0.44, 0.62, 1.0],
+    [0.25, 0.88, 1.0], [0.77, 0.55, 1.0]];
+  // what the provenance view shows for a part: one word, or which axis (size, shape) is verified when they differ
+  function provClass(p) {
+    const a = p.certainty_axes;
+    if (!a) return p.certainty;
+    if (a.size === a.shape) return a.size;
+    return a.size === "verified" ? "size_verified" : a.shape === "verified" ? "shape_verified" : p.certainty;
+  }
   const ROLE_CODE = { mass: 0, structure: 1, detail: 2, identity: 3, data: 4, ornament: 5, ground: 6, artwork: 7 };
   const EVENT_CODE = { scan: 1, sweep: 2, wave: 3, shimmer: 4, glitch: 5, brownout: 6, propagate: 7, tear: 8, burst: 9 };
   const EVENT_SECONDS = { scan: 2.6, sweep: 2.2, wave: 3.2, shimmer: 2.4, glitch: 0.7, brownout: 1.1, propagate: 2.4, tear: 0.9, burst: 2.0 };
@@ -45,7 +55,7 @@ uniform vec2 uViewport;      // device pixels of this viewport
 uniform float uDpr;
 uniform highp sampler2D uStyles;
 uniform vec3 uPalette[8];
-uniform vec3 uCertColor[4];
+uniform vec3 uCertColor[7];
 uniform float uMode;         // 0 light, 1 provenance
 uniform float uBuild;        // build progress 0..1 (beyond 1: complete)
 uniform float uTime;
@@ -495,7 +505,7 @@ void main() {
       const part = s[6] >= 0 ? g.parts[s[6]] : null;
       const own = g.style_colors && g.style_colors[i] ? hex(g.style_colors[i]) : [-1, -1, -1];
       st.set([s[0], s[1], s[2], s[3], s[4], s[5], s[6], s[7], s[8],
-              part ? CERT_CODE[part.certainty] : 2, part ? ROLE_CODE[part.role] : 6,
+              part ? CERT_CODE[provClass(part)] : 2, part ? ROLE_CODE[part.role] : 6,
               (this.moteStyle === i) ? 1 : 0, s.length > 9 ? s[9] : -1, own[0], own[1], own[2]], i * 16);
     });
     this.styleTex = gl.createTexture();
@@ -892,7 +902,7 @@ void main() {
       if (u.uDpr) gl.uniform1f(u.uDpr, dpr);
       if (u.uStyles) { gl.activeTexture(gl.TEXTURE0); gl.bindTexture(gl.TEXTURE_2D, this.styleTex); gl.uniform1i(u.uStyles, 0); }
       if (u.uPalette) gl.uniform3fv(u.uPalette, pal.tones.flat());
-      if (u.uCertColor) gl.uniform3fv(u.uCertColor, [0.85, 0.97, 1.0, 0.45, 1.0, 0.62, 1.0, 0.72, 0.3, 0.95, 0.42, 0.95]);
+      if (u.uCertColor) gl.uniform3fv(u.uCertColor, [].concat(...CERT_RGB));
       if (u.uMode) gl.uniform1f(u.uMode, mode === "provenance" ? 1 : 0);
       if (u.uBuild) gl.uniform1f(u.uBuild, s.build);
       if (u.uTime) gl.uniform1f(u.uTime, this.opt.reduced ? 0 : t);
@@ -934,8 +944,7 @@ void main() {
     // artwork faces (supplied bytes only), then the labels' text
     if (this.art.length) {
       const u = common(this.programs.art);
-      const certLight = { verified: 1.0, user_supplied: 0.95, inferred: 0.78, decorative: 0.6 };
-      const certColor = { verified: [0.85, 0.97, 1.0], user_supplied: [0.45, 1.0, 0.62], inferred: [1.0, 0.72, 0.3], decorative: [0.95, 0.42, 0.95] };
+      const certLight = { verified: 1.0, user_supplied: 0.95, traced: 0.78, inferred: 0.78, decorative: 0.6 };
       // images and text sit a hair in front of their surface (and of a clear lid over them)
       gl.enable(gl.POLYGON_OFFSET_FILL);
       gl.polygonOffset(-2.0, -4.0);
@@ -945,7 +954,7 @@ void main() {
         gl.uniform1f(u.uJointArt, a.joint);
         gl.uniform1f(u.uPhaseArt, a.phase);
         gl.uniform2f(u.uMask, a.mask[0], a.mask[1]);
-        const k = certLight[a.certainty] || 0.8, tint = mode === "provenance" ? certColor[a.certainty] || pal.tones[1] : pal.tones[1];
+        const k = certLight[a.certainty] || 0.8, tint = mode === "provenance" ? CERT_RGB[CERT_CODE[a.certainty]] || pal.tones[1] : pal.tones[1];
         gl.uniform4f(u.uText, tint[0] * k, tint[1] * k, tint[2] * k, a.text ? 1 : 0);
         gl.activeTexture(gl.TEXTURE1); gl.bindTexture(gl.TEXTURE_2D, a.tex); gl.uniform1i(u.uTex, 1);
         gl.depthFunc(gl.LEQUAL);
@@ -1058,9 +1067,31 @@ void main() {
     }
     if (!opt.caption || opt.sheet) caption.style.display = "none";
     overlay.appendChild(caption);
+    // provenance legend: each kind of evidence the construct has, how many parts, and what the verified ones cite
     const legend = el("div", "legend");
-    [["verified", "VERIFIED"], ["user_supplied", "USER-SUPPLIED"], ["inferred", "INFERRED"], ["decorative", "DECORATIVE"]].forEach(([k, label]) => {
-      const row = el("div", "row " + k); row.appendChild(el("span", "swatch")); row.appendChild(el("span", "", label)); legend.appendChild(row);
+    const sourceOf = {}, factOf = {};
+    (geo.provenance.sources || []).forEach((s) => { sourceOf[s.id] = s; });
+    (geo.provenance.facts || []).forEach((f) => { factOf[f.key] = f; });
+    const cited = (p, axis) => {   // the sources behind a verified axis: a size its verified facts' sources, a shape its own
+      const facts = axis === "size" ? (p.basis || []).map((k) => factOf[k]).filter((f) => f && f.certainty === "verified" && f.source) : [];
+      return facts.length ? facts.map((f) => f.source) : p.source ? [p.source] : [];
+    };
+    const kinds = [["verified", "VERIFIED", ["size", "shape"]], ["size_verified", "SIZE VERIFIED", ["size"]],
+      ["shape_verified", "SHAPE VERIFIED", ["shape"]], ["traced", "TRACED", null], ["user_supplied", "USER-SUPPLIED", null],
+      ["inferred", "INFERRED", null], ["decorative", "DECORATIVE", null]];
+    kinds.forEach(([k, label, axes]) => {
+      const parts = geo.parts.filter((p) => provClass(p) === k);
+      if (!parts.length) return;
+      const row = el("div", "row " + k); row.appendChild(el("span", "swatch")); row.appendChild(el("span", "", label + " · " + parts.length));
+      legend.appendChild(row);
+      if (!axes) return;
+      const ids = [...new Set(parts.flatMap((p) => axes.flatMap((ax) => cited(p, ax))))].filter((id) => sourceOf[id]);
+      ids.slice(0, 4).forEach((id) => {
+        const src = el("div", "src", sourceOf[id].title);
+        src.title = sourceOf[id].title;
+        legend.appendChild(src);
+      });
+      if (ids.length > 4) legend.appendChild(el("div", "src more", "+" + (ids.length - 4) + " MORE"));
     });
     overlay.appendChild(legend);
     const help = el("div", "help", "drag orbit · wheel zoom · 1–6 views · R replay · M motion · P provenance · L labels · space pause");
@@ -1071,6 +1102,7 @@ void main() {
     const setUi = () => {
       document.body.classList.toggle("noui", !opt.ui);
       legend.style.display = opt.mode === "provenance" ? "block" : "none";
+      document.body.classList.toggle("provenance", opt.mode === "provenance");
       help.style.display = opt.ui && !opt.capture ? "block" : "none";
     };
     setUi();

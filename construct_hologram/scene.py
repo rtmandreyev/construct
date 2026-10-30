@@ -54,10 +54,38 @@ CATEGORIES = ("architecture", "object", "machine", "vehicle", "organism", "ficti
               "cd", "book", "artwork-carrier", "other")
 ACCURACY = ("generic", "approximate", "documented")
 CERTAINTIES = ("verified", "user_supplied", "inferred", "decorative")
+# a part's certainty: one word for both its size and its shape, or {"size": .., "shape": ..};
+# traced = fitted to an orthographic reference (a drawing, a plan, a patent elevation) that a verified size scales
+PART_CERTAINTIES = ("verified", "user_supplied", "traced", "inferred", "decorative")
+STRENGTH = {"verified": 4, "user_supplied": 3, "traced": 2, "inferred": 1, "decorative": 0}
+TRACE_SOURCES = ("drawing", "reference_image")
 SOURCE_KINDS = ("user_request", "user_supplied", "document", "measurement", "observation",
                 "dataset", "generated", "drawing", "reference_image")
 # sources that can verify a shape itself (coordinates, a measured outline, elevation data), not just its dimensions
 SHAPE_EVIDENCE = ("drawing", "measurement", "dataset")
+
+
+def certainty_axes(part):
+    """(size, shape): how sure the part's dimensions are, and how sure its outline is."""
+    c = part.get("certainty")
+    return (c.get("size"), c.get("shape")) if isinstance(c, dict) else (c, c)
+
+
+def overall_certainty(part):
+    """One word for the part: the weaker of its two axes."""
+    return min(certainty_axes(part), key=lambda v: STRENGTH.get(v, -1))
+
+
+def provenance_class(part):
+    """What the provenance view shows: verified (both axes), size_verified, shape_verified, or the one word."""
+    size, shape = certainty_axes(part)
+    if size == shape:
+        return size
+    if size == "verified":
+        return "size_verified"
+    if shape == "verified":
+        return "shape_verified"
+    return overall_certainty(part)
 SOURCE_RIGHTS = ("synthetic", "user_private", "permitted", "public_domain", "reference_only")
 ASSET_PROVENANCE = ("authentic", "synthetic", "generated-decorative", "user_photo")
 ASSET_RIGHTS = ("synthetic", "user_private", "permitted")
@@ -109,7 +137,8 @@ ROLE_STYLE = {
     "artwork":   ("hairline", 0.9, 1.0, 0.0, "dark", 0),
 }
 # Certainty: alpha factor and the line it implies (subtle style); explicit style dashes inferred
-CERTAINTY_STYLE = {"verified": (1.0, "solid"), "user_supplied": (0.95, "solid"),
+V1_CERTAINTY = {"traced": "inferred"}   # the v1 sheet has no traced
+CERTAINTY_STYLE = {"verified": (1.0, "solid"), "user_supplied": (0.95, "solid"), "traced": (0.82, "solid"),
                    "inferred": (0.82, "solid"), "decorative": (0.6, "dotted")}
 # Edge class: width and alpha factors
 CLASS_STYLE = {shapes.OUTLINE: (1.0, 1.0), shapes.CONTOUR: (0.72, 0.62), shapes.DETAIL: (0.6, 0.46)}
@@ -144,7 +173,8 @@ def _slug(v):
 
 # what to write for a missing key, so a model can repair its draft without reading the docs
 KEY_HELP = {
-    "certainty": 'one of "verified" (cite a source), "user_supplied", "inferred", "decorative"',
+    "certainty": 'one of "verified" (cite a source), "user_supplied", "traced", "inferred", "decorative", '
+                 'or {"size": .., "shape": ..} when they differ',
     "stage": "an integer 0..7, foundation first",
     "role": "one of " + ", ".join(ROLES),
     "shape": '{"type": "box", "size": [w, h, d]} or another shape (see vocabulary)',
@@ -644,7 +674,7 @@ def _validate(scene):
         if "summary" in subject:
             c.text(subject["summary"], "scene.subject.summary", 600)
 
-    source_ids = set()
+    source_ids, source_kind = set(), {}
     c.known["source"] = source_ids
     sources = scene.get("sources")
     if not isinstance(sources, list) or len(sources) > MAX_SOURCES:
@@ -658,6 +688,7 @@ def _validate(scene):
             if s["id"] in source_ids:
                 c.err(w + ".id", "duplicate %r" % s["id"])
             source_ids.add(s["id"])
+            source_kind[s["id"]] = s.get("kind")
         c.choice(s.get("kind"), SOURCE_KINDS, w + ".kind")
         c.text(s.get("title"), w + ".title", 300)
         c.choice(s.get("rights"), SOURCE_RIGHTS, w + ".rights")
@@ -767,7 +798,16 @@ def _validate(scene):
                 c.vec(sc, w + ".scale", 3, 0.001, 1000)
             else:
                 c.num(sc, w + ".scale", 0.001, 1000)
-        c.choice(p.get("certainty"), CERTAINTIES, w + ".certainty")
+        cert = p.get("certainty")
+        if isinstance(cert, dict):
+            if c.keys(cert, {"size", "shape"}, {"size", "shape"}, w + ".certainty") and set(cert) == {"size", "shape"}:
+                c.choice(cert["size"], PART_CERTAINTIES, w + ".certainty.size")
+                c.choice(cert["shape"], PART_CERTAINTIES, w + ".certainty.shape")
+                if (cert["size"] == "decorative") != (cert["shape"] == "decorative"):
+                    c.err(w + ".certainty", "decorative is the whole part: both axes or neither", "certainty",
+                          "Use \"certainty\": \"decorative\", or give both axes their evidence.")
+        else:
+            c.choice(cert, PART_CERTAINTIES, w + ".certainty")
         c.num(p.get("stage"), w + ".stage", 0, 7, True)
         basis = p.get("basis", [])
         if not isinstance(basis, list) or len(basis) > 16:
@@ -778,11 +818,15 @@ def _validate(scene):
                     c.err(w + ".basis", "unknown fact %r" % b)
         if p.get("source") is not None and p.get("source") not in source_ids:
             c.err(w + ".source", "unknown source %r" % p.get("source"))
-        if p.get("certainty") == "verified":
+        size, shape = certainty_axes(p)
+        if "verified" in (size, shape):
             backed = p.get("source") in source_ids or any(fact_cert.get(b) == "verified" for b in basis if isinstance(basis, list))
             if not backed:
                 c.err(w, "a verified part needs a cited source or a verified basis fact", "certainty",
                       "Cite a source id in \"source\", list a verified fact in \"basis\", or use \"inferred\".")
+        if "traced" in (size, shape) and source_kind.get(p.get("source")) not in TRACE_SOURCES:
+            c.err(w, "a traced part needs the drawing or reference image it was traced on as its \"source\"", "certainty",
+                  "Cite the drawing or orthographic reference image in \"source\", or use \"inferred\".")
         look = p.get("look", {})
         if c.keys(look, {"tone", "line", "fill", "glow", "weight", "alpha", "color"}, set(), w + ".look"):
             if "tone" in look:
@@ -859,7 +903,7 @@ def _validate(scene):
             if "offset" in a:
                 c.vec(a["offset"], w + ".offset")
             if "certainty" in a:
-                c.choice(a["certainty"], CERTAINTIES, w + ".certainty")
+                c.choice(a["certainty"], PART_CERTAINTIES, w + ".certainty")
 
     shapes_by_part = {p["id"]: p.get("shape") for p in parts if isinstance(p, dict) and isinstance(p.get("id"), str)}
     _articulation_check(c, scene.get("articulations", []), shapes_by_part)
@@ -1571,8 +1615,8 @@ def compile_scene(scene, solid=False):
         tone, alpha, width, glow, fill, fade = ROLE_STYLE[part["role"]]
         look = part.get("look", {})
         tone = look.get("tone", tone)
-        cert_alpha, cert_line = CERTAINTY_STYLE[part["certainty"]]
-        if explicit and part["certainty"] == "inferred":
+        cert_alpha, cert_line = CERTAINTY_STYLE[overall_certainty(part)]
+        if explicit and overall_certainty(part) == "inferred":
             cert_line = "dashed"
         line_kind = look.get("line", "auto")
         line_kind = cert_line if line_kind == "auto" else line_kind
@@ -1582,10 +1626,12 @@ def compile_scene(scene, solid=False):
         if "glow" in look:
             glow = 3.0 * look["glow"]
         pinfo = {"id": part["id"], "label": part.get("label", part["id"]), "role": part["role"],
-                 "certainty": part["certainty"], "basis": list(part.get("basis", [])),
+                 "certainty": overall_certainty(part), "basis": list(part.get("basis", [])),
                  "source": part.get("source"), "stage": part["stage"], "floating": part.get("floating", False),
                  "shape": part["shape"]["type"], "instances": [], "motion": None,
                  "joint": joint_of.get(part["id"], -1)}
+        if isinstance(part["certainty"], dict):
+            pinfo["certainty_axes"] = {"size": part["certainty"]["size"], "shape": part["certainty"]["shape"]}
         sprite_px = part["shape"].get("size_px", 5 if part["shape"]["type"] == "points" else 9)
         for inst_i, (xf, phase, mirrored, carry) in enumerate(_instances(part)):
             slot = -1
@@ -1721,7 +1767,7 @@ def compile_scene(scene, solid=False):
                             "corners": [[_r(x) for x in c] for c in corners], "uv": [[0, 0], [1, 0], [1, 1], [0, 1]],
                             "mask": art.get("mask", "rect"),
                             "inner_ratio": _r(art.get("inner_radius", 0.0) / half) if half else 0.0,
-                            "certainty": part["certainty"], "motion_slot": slot,
+                            "certainty": overall_certainty(part), "motion_slot": slot,
                             "joint": joint_of.get(part["id"], -1),
                             "phase": phase(part["stage"], min(c[1] for c in corners))})
 
@@ -1749,7 +1795,7 @@ def compile_scene(scene, solid=False):
         off = a.get("offset", [0, 0, 0])
         at = [_r(anchor[k] + off[k]) for k in range(3)]
         anns.append({"id": a["id"], "text": a["text"], "part": a["part"], "anchor": at, "joint": inst["joint"],
-                     "certainty": a.get("certainty", by_id[a["part"]]["certainty"]),
+                     "certainty": a.get("certainty", overall_certainty(by_id[a["part"]])),
                      # when the build reaches the point it names: the label waits for its part
                      "phase": round(phase(stage_of[a["part"]], min(at[1], inst["max"][1])), 6)})
 
@@ -1924,13 +1970,15 @@ def to_v1(geometry, limit=20000):
         st = styles[int(row[6])]
         part = parts[int(st[6])]
         segs.append({"a": row[0:3], "b": row[3:6], "tone": V1_TONE[TONES[int(st[0])]],
-                     "certainty": part["certainty"], "stage": stage_of[part["id"]], "part_id": part["id"]})
+                     "certainty": V1_CERTAINTY.get(part["certainty"], part["certainty"]), "stage": stage_of[part["id"]],
+                     "part_id": part["id"]})
     lo, hi = geometry["bounds"]["min"], geometry["bounds"]["max"]
     return {"format": "tessera-geometry", "version": 1, "id": geometry["id"], "title": geometry["title"],
             "kind": "custom", "source_sheet_sha256": geometry["scene_sha256"],
             "facts": [{"key": f["key"], "value": f["value"], "certainty": f["certainty"],
                        "source": f.get("source")} for f in geometry["provenance"]["facts"]],
-            "part_sources": {p["id"]: {"certainty": p["certainty"], "source": p["source"]} for p in parts},
+            "part_sources": {p["id"]: {"certainty": V1_CERTAINTY.get(p["certainty"], p["certainty"]), "source": p["source"]}
+                             for p in parts},
             "segments": segs, "bounds": {"min": lo, "max": hi}, "assets": [], "artwork_quads": [],
             "motion": {"assembly_ms": int(min(5000, geometry["animation"]["assembly"]["seconds"] * 1000)),
                        "ambient": "scan" if geometry["animation"]["idle"]["life"] != "off" else "off",

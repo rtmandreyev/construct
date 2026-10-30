@@ -671,6 +671,7 @@
       "enum": [
        "verified",
        "user_supplied",
+       "traced",
        "inferred",
        "decorative"
       ]
@@ -744,6 +745,35 @@
         "open_max": {
          "$ref": "#/$defs/vec3"
         }
+       }
+      }
+     },
+     "certainty_axes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+       "size",
+       "shape"
+      ],
+      "description": "present when the part's size and shape are known differently; certainty is then the weaker",
+      "properties": {
+       "size": {
+        "enum": [
+         "verified",
+         "user_supplied",
+         "traced",
+         "inferred",
+         "decorative"
+        ]
+       },
+       "shape": {
+        "enum": [
+         "verified",
+         "user_supplied",
+         "traced",
+         "inferred",
+         "decorative"
+        ]
        }
       }
      }
@@ -1070,6 +1100,7 @@
       "enum": [
        "verified",
        "user_supplied",
+       "traced",
        "inferred",
        "decorative"
       ]
@@ -1220,6 +1251,7 @@
       "enum": [
        "verified",
        "user_supplied",
+       "traced",
        "inferred",
        "decorative"
       ]

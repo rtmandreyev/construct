@@ -8,6 +8,7 @@ The construct's look tells the truth about what is known; the scene records why.
 |---|---|---|---|
 | `verified` | checked against a cited source | a `source` id, or a verified basis fact | crisp light |
 | `user_supplied` | the user said or gave it | ideally a `user_request`/`user_supplied` source | crisp |
+| `traced` | fitted to an orthographic drawing, plan or elevation that a verified size scales | that reference as `source` (`drawing` or `reference_image`) | as inferred; blue in the provenance view |
 | `inferred` | your reasoning: typical sizes, proportions, designed from a description | a `note` saying why helps | a step back |
 | `decorative` | chosen for presentation, not evidence | nothing | dotted, faint |
 
@@ -17,11 +18,18 @@ The construct's look tells the truth about what is known; the scene records why.
   evidence; `documented` only when its key parts are evidence-backed (audit-enforced).
 - `subject.synthetic: true` for examples and demonstrations only; a real request is
   `false` with its request source `user_private`.
-- **Dimensions are not shapes.** A spec page can verify a length or a height; it does not verify
-  an outline. A free-form part (extrude, lathe, tube, curve) is `verified` only when a source of
-  kind `drawing`, `measurement` or `dataset` gives its coordinates; traced from a photo it is
-  `inferred` with the image cited as a `reference_image` source (the audit warns:
-  `shape-overclaim`).
+- **Dimensions are not shapes: say each.** A spec page verifies a length or a height, not an
+  outline, so give a part both answers when they differ:
+  `"certainty": {"size": "verified", "shape": "traced"}` with the length in `basis` and the
+  blueprint as `source`. Link every part whose own dimension is a verified fact to it in `basis`
+  (a body to its length and width, a tower to its height, a tyre to its size code). A count or a
+  description does not verify a size, and neither does a measured thing a part only sits on or is
+  computed from: a crater on a moon of known radius, a fret placed by the scale length.
+- A shape is `verified` only when a source of kind `drawing`, `measurement` or `dataset` gives its
+  coordinates (the audit warns: `shape-overclaim`); `traced` when you fitted it to an orthographic
+  reference (a blueprint, a plan, a patent elevation, a square-on overhead); `inferred` when it was
+  read off a perspective photograph or designed. Looking for orthographic drawings is the fastest
+  way to make a real object's construct more than a guess.
 - **Unknown stays unknown.** A fact you do not know is not written at all (never `null`, a
   placeholder or a plausible guess), and nothing is labelled with it.
 

@@ -42,7 +42,7 @@ errors: the closed vocabulary is the safety boundary.
 | field | values |
 |---|---|
 | `role` | `mass` silhouette/primary volume · `structure` supporting construction · `detail` small/repeated (fades first) · `identity` the recognisable features (identity tint, glow) · `data` emphasised point/light (accent, strong glow) · `ornament` atmosphere (motes, sparkle) · `ground` survey/base lines · `artwork` a face carrying an image |
-| `certainty` | `verified` (needs `source` or a verified basis fact) · `user_supplied` · `inferred` · `decorative`. A feature the user asked for whose size you chose: a `user_supplied` fact ("three blades") as `basis`, the part `inferred` |
+| `certainty` | `verified` (needs `source` or a verified basis fact) · `user_supplied` · `traced` (fitted to an orthographic reference cited as `source`) · `inferred` · `decorative`; or `{"size": .., "shape": ..}` when they differ (a body whose length is verified and whose outline is traced). A feature the user asked for whose size you chose: a `user_supplied` fact ("three blades") as `basis`, the part `inferred` |
 | `stage` | 0–7, assembly order (foundation first) |
 | `basis` | fact keys the part's dimensions come from |
 | `look` | `tone` (`accent, bright, hairline, structure, dust, identity, data, faint`), `line` (`auto, solid, dashed, dotted, none`), `fill` (`auto, none, glass, dark`), `glow` 0–1, `weight` 0.25–3, `alpha` 0.05–1 — use sparingly: role and certainty already set the look |

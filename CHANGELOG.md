@@ -135,6 +135,16 @@ side, printed as worksheets and cited. Plan:
   engraved, pieces laid flat on numbered plates, a booklet of steps with pictures and a painting guide. A
   critic's brief (`--critic`) and a plan (`--plan`: merges, parts to keep, clear parts, sub-assemblies in
   order) make it the way constructs are made: drafted, reviewed, revised. The FJ62 at 1:24: 68 pieces.
+- **Size and shape, known apart** ([CONTRACT.md](CONTRACT.md#two-axis-certainty-an-addition-within-02)): a
+  part's certainty may be `{"size": "verified", "shape": "traced"}`, a car body whose length a spec
+  sheet gives and whose outline was fitted to a blueprint, and a new certainty, `traced`, for a fit to
+  an orthographic drawing a verified size scales. The provenance view keeps fully verified parts white
+  and gives size verified (cyan), shape verified (violet) and traced (blue) their own colours; its
+  legend counts the parts of each kind and names the sources behind the verified ones. One word still
+  means both axes, and geometry readers still get one word (the weaker axis). Fifteen gallery examples
+  now say what they knew: the FJ62 has 142 parts traced on its blueprint and 4 of verified size where
+  it had 214 inferred; the buildings, modelled mostly from photographs, rightly stay mostly inferred.
+  Their light view is unchanged (the compiled geometry is identical but for the certainty fields).
 
 ## 1.0.0 — 2026-10-27
 

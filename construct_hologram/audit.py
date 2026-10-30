@@ -76,32 +76,33 @@ def audit(scene, geometry):
     rank = {"verified": 3, "user_supplied": 2, "inferred": 1, "decorative": 0}
     for p in parts:
         basis = [facts[k] for k in p["basis"]]
-        if basis and p["certainty"] in ("verified", "user_supplied"):
+        sp = scene_parts[p["id"]]
+        size, shape = scene_mod.certainty_axes(sp)   # basis facts are sizes: they back the size axis
+        if basis and size in ("verified", "user_supplied"):
             best = max(rank[f["certainty"]] for f in basis)
-            if best < rank[p["certainty"]] and not p["source"]:
+            if best < rank[size] and not p["source"]:
                 add(errors, "overclaim", p["id"],
                     "is %s but its basis facts are at most %s and it cites no source."
-                    % (p["certainty"], [k for k, v in rank.items() if v == best][0]))
-        sp = scene_parts[p["id"]]
-        if sp["certainty"] == "verified" and _freeform_points(sp["shape"]) >= 6:
+                    % (size, [k for k, v in rank.items() if v == best][0]))
+        if shape == "verified" and _freeform_points(sp["shape"]) >= 6:
             kinds = {source_kind.get(sp.get("source"))} | {source_kind.get(facts_by_key.get(b, {}).get("source"))
                                                            for b in sp.get("basis", [])}
             if not kinds & set(scene_mod.SHAPE_EVIDENCE):
                 add(warnings, "shape-overclaim", p["id"],
-                    "is verified, but no cited source gives its shape (a spec page verifies dimensions, not an "
-                    "outline or profile).")
+                    "has a verified shape, but no cited source gives it (a spec page verifies dimensions, not an "
+                    "outline or profile: make it {\"size\": \"verified\", \"shape\": \"traced\"} or \"inferred\").")
         if p["role"] in ("mass", "identity") and p["certainty"] == "decorative" and scene["subject"]["category"] != "fictional":
             add(warnings, "decorative-identity", p["id"],
                 "a %s part is decorative: say so when delivering, it is not evidence." % p["role"])
     accuracy = scene["subject"]["accuracy"]
     key_parts = [p for p in parts if p["role"] in ("mass", "identity")]
-    backed = [p for p in key_parts if p["certainty"] in ("verified", "user_supplied")]
+    backed = [p for p in key_parts if p["certainty"] in ("verified", "user_supplied", "traced")]
     info["evidence_backed_key_parts"] = "%d of %d" % (len(backed), len(key_parts))
     if accuracy == "documented" and key_parts and len(backed) < len(key_parts) / 2:
         add(errors, "accuracy", None,
             "subject.accuracy is \"documented\" but most mass/identity parts are inferred or decorative: "
             "use \"approximate\" or \"generic\", or cite the evidence.")
-    if accuracy == "generic" and any(p["certainty"] == "verified" for p in parts):
+    if accuracy == "generic" and any("verified" in scene_mod.certainty_axes(scene_parts[p["id"]]) for p in parts):
         add(warnings, "accuracy", None, "verified parts in a generic reconstruction: consider \"approximate\".")
 
     # ---- recognition: hierarchy and identity

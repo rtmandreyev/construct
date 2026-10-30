@@ -1482,6 +1482,54 @@ class ShapeEvidence(unittest.TestCase):
         self.assertNotIn("shape-overclaim", self.codes(self.scene_with("reference_image", "inferred")))
 
 
+class TwoAxes(unittest.TestCase):
+    """A part's size and shape answered apart: a verified length with a traced or designed outline."""
+
+    codes = ShapeEvidence.codes
+
+    def scene_with(self, kind, certainty):
+        s = ShapeEvidence.scene_with(self, kind, certainty)
+        s["parts"][-1]["source"] = "src"   # the drawing, image or page it was made from
+        return s
+
+    def test_a_verified_size_with_a_traced_shape(self):
+        s = self.scene_with("drawing", {"size": "verified", "shape": "traced"})
+        self.assertEqual(scene.validate(s), [])
+        self.assertNotIn("shape-overclaim", self.codes(s))
+        out = next(p for p in scene.compile_scene(s)["parts"] if p["id"] == "outline")
+        self.assertEqual(out["certainty"], "traced")   # the weaker axis, for readers of one word
+        self.assertEqual(out["certainty_axes"], {"size": "verified", "shape": "traced"})
+        self.assertNotIn("certainty_axes", scene.compile_scene(base())["parts"][0])
+
+    def test_a_verified_shape_still_needs_shape_evidence(self):
+        self.assertIn("shape-overclaim", self.codes(self.scene_with("document", {"size": "inferred", "shape": "verified"})))
+        self.assertNotIn("shape-overclaim", self.codes(self.scene_with("document", {"size": "verified", "shape": "inferred"})))
+
+    def test_traced_cites_the_drawing_or_image_it_was_traced_on(self):
+        self.assertEqual(scene.validate(self.scene_with("reference_image", "traced")), [])
+        errs = scene.validate(self.scene_with("document", {"size": "verified", "shape": "traced"}))
+        self.assertTrue(any("traced part needs" in e for e in errs), errs)
+
+    def test_malformed_axes_are_refused(self):
+        for bad in ({"size": "verified"}, {"size": "verified", "shape": "decorative"},
+                    {"size": "verified", "shape": "guessed"}, {"size": "verified", "shape": "inferred", "colour": "x"}):
+            self.assertTrue(scene.validate(self.scene_with("drawing", bad)), bad)
+
+    def test_the_size_axis_cannot_overclaim_its_basis(self):
+        s = self.scene_with("drawing", {"size": "verified", "shape": "inferred"})
+        s["facts"][-1]["certainty"] = "inferred"
+        del s["parts"][-1]["source"]
+        self.assertTrue(scene.validate(s))   # a verified size needs a source or a verified basis fact
+
+    def test_provenance_classes(self):
+        cls = lambda c: scene.provenance_class({"certainty": c})
+        self.assertEqual(cls("verified"), "verified")
+        self.assertEqual(cls({"size": "verified", "shape": "verified"}), "verified")
+        self.assertEqual(cls({"size": "verified", "shape": "traced"}), "size_verified")
+        self.assertEqual(cls({"size": "inferred", "shape": "verified"}), "shape_verified")
+        self.assertEqual(cls({"size": "traced", "shape": "inferred"}), "inferred")
+
+
 def body_trace():
     """A synthetic traced guitar-like outline in pixels (y down): 600 px tall, nut and bridge marked."""
     import math as m

@@ -84,7 +84,7 @@ again.
 | `sheet-views.png` | hero, front, side, back, top, three-quarter: silhouette from every side, proportions, nothing missing or poking through |
 | `sheet-assembly.png` | ghost → collapse → staged build → settle: order makes sense, nothing hovers before its support, the tip of construction reads |
 | `sheet-life.png` | idle events at their peak: visible but not chaotic, suited to the subject |
-| `sheet-provenance.png` | certainty colours (verified ice-white, user-supplied green, inferred amber, decorative magenta): is the honest story visible? |
+| `sheet-provenance.png` | certainty colours (verified ice-white, size verified cyan, shape verified violet, traced blue, user-supplied green, inferred amber, decorative magenta): is the honest story visible, and is anything amber that a cited dimension or drawing could vouch for? |
 | `still-reduced-motion.png` | the still state alone |
 | `sheet-motion.png` | opening and part motion across seconds |
 | `view-<id>.png` | each of your scene's own views, still: is the target framed with context? |
