@@ -275,7 +275,11 @@ A scene or parameter document may carry `authoring`, which compiles to
 `quick | standard | showcase`; `research` `done | not_needed | skipped | unavailable | off`;
 `sources` the ids of the scene's sources research used (required when `research` is `done`);
 `outcome` `good | limit | unreviewed`; `next` up to 8 improvement notes. It says how the
-construct was made so a host can regenerate it at a higher tier; readers may ignore it.
+construct was made so a host can regenerate it at a higher tier; readers may ignore it. An optional
+`provenance_note` (up to 400 characters) says how the construct records its evidence (a construct
+made before 1.1 whose parts do not cite what they were read from, say); the viewer shows it under the
+caption in the provenance view only. Like the rest of `authoring`, it is not part of the hash a critic
+or a comparison records.
 
 ## Two-axis certainty (an addition within 0.2)
 

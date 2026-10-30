@@ -246,6 +246,11 @@
         "maxLength": 300
        }
       },
+      "provenance_note": {
+       "type": "string",
+       "maxLength": 400,
+       "description": "shown in the provenance view: how this construct records its evidence"
+      },
       "identity": {
        "type": "array",
        "maxItems": 16,

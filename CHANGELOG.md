@@ -152,6 +152,9 @@ side, printed as worksheets and cited. Plan:
   scene already cites (geometry `evidence` per part, `provenance.checked`); the legend shows each shade
   with its count and the comparisons that checked them. On the Duomo the measured facade stands out deep
   against 98 pale spires that cite nothing.
+- **A provenance note:** `authoring.provenance_note`, shown under the caption in the provenance view
+  only. Seven gallery constructs made before 1.1 carry one saying where their shades understate their
+  evidence (parts that do not cite what they were read from, traced parts never compared).
 
 ## 1.0.0 — 2026-10-27
 

@@ -216,8 +216,10 @@ def table():
 def check(c, a, source_ids, scene_sources, where="scene.authoring"):
     """Validate an `authoring` block with a scene `_Check`."""
     if not c.keys(a, {"tier", "research", "sources", "review_rounds", "outcome", "next", "identity", "critic", "compare",
-                      "rounds"}, {"tier", "research"}, where):
+                      "rounds", "provenance_note"}, {"tier", "research"}, where):
         return
+    if "provenance_note" in a:   # what the provenance view should say about how this construct records its evidence
+        c.text(a["provenance_note"], where + ".provenance_note", 400)
     if "rounds" in a:  # the round timeline (`construct rounds` writes it)
         r = a["rounds"]
         if not isinstance(r, list) or len(r) > 40:
@@ -385,6 +387,8 @@ def authoring_schema():
             "review_rounds": {"type": "integer", "minimum": 0, "maximum": 1000},
             "outcome": {"enum": list(OUTCOMES)},
             "next": {"type": "array", "maxItems": MAX_NEXT, "items": {"type": "string", "maxLength": 300}},
+            "provenance_note": {"type": "string", "maxLength": 400,
+                                "description": "shown in the provenance view: how this construct records its evidence"},
             "identity": {"type": "array", "maxItems": MAX_IDENTITY, "items": {
                 "type": "object", "additionalProperties": False, "required": ["feature", "parts"],
                 "properties": {"feature": {"type": "string", "maxLength": 200},

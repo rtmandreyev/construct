@@ -1075,6 +1075,9 @@ void main() {
       caption.appendChild(el("div", "meta", [measured ? "MEASURED COASTLINES" : "SKETCHED COASTLINES", scale].filter(Boolean).join(" · ")));
       (geo.provenance.sources || []).filter((s) => s.kind === "dataset").forEach((s) => caption.appendChild(el("div", "meta", "DATA: " + s.title)));
     }
+    // a note on how this construct records its evidence (an older construct, say), in the provenance view only
+    const provNote = ((geo.provenance || {}).authoring || {}).provenance_note;
+    if (provNote) caption.appendChild(el("div", "provnote", provNote));
     if (!opt.caption || opt.sheet) caption.style.display = "none";
     overlay.appendChild(caption);
     // provenance legend: each kind of evidence the construct has, how many parts, and what the verified ones cite

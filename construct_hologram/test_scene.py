@@ -1567,6 +1567,15 @@ class Shades(unittest.TestCase):
         self.assertNotIn("checked", g["provenance"])
 
 
+    def test_a_provenance_note_is_carried_for_the_provenance_view(self):
+        s = self.scene()
+        s["authoring"] = {"tier": "standard", "research": "off", "provenance_note": "Made before 1.1."}
+        self.assertEqual(scene.validate(s), [])
+        self.assertEqual(scene.compile_scene(s)["provenance"]["authoring"]["provenance_note"], "Made before 1.1.")
+        s["authoring"]["provenance_note"] = "x" * 401
+        self.assertTrue(scene.validate(s))
+
+
 def body_trace():
     """A synthetic traced guitar-like outline in pixels (y down): 600 px tall, nut and bridge marked."""
     import math as m

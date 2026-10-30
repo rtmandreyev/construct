@@ -7175,6 +7175,7 @@
       },
       "round": 1,
       "defects": 7
-    }
+    },
+    "provenance_note": "Made before Construct 1.1, when traced parts were not yet compared with their drawing: the 138 parts traced on the blueprint show as not yet checked."
   }
 }

@@ -1621,6 +1621,7 @@
   "next": [
    "trace the rim outline from a plan-view photo",
    "model the lid's two-piece front flap and the CFX plate cut-outs"
-  ]
+  ],
+  "provenance_note": "Made before Construct 1.1, when a part did not yet cite the picture or page it was read from: 25 parts cite nothing and show as designed (pale), though the construct was built with its sources at hand. The shades understate its evidence."
  }
 }
