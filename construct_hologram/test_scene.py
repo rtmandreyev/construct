@@ -164,6 +164,26 @@ class Malformed(unittest.TestCase):
             self.assertEqual(r.returncode, 1)
             self.assertIn("is not a scene, it is a trace", r.stderr)
 
+    def test_a_scene_that_cannot_be_read_says_which_file_and_why(self):
+        run = lambda *a: subprocess.run([sys.executable, "-m", "construct_hologram", *a], cwd=HERE.parent,
+                                        capture_output=True, text=True)
+        with tempfile.TemporaryDirectory() as d:
+            missing = str(Path(d, "nowhere.json"))
+            r = run("print", missing, "--out", str(Path(d, "x.stl")))
+            self.assertEqual(r.returncode, 1)
+            self.assertIn("print: cannot read %s: No such file" % missing, r.stderr)
+            self.assertNotIn("sheet", r.stderr)                                   # the old word, and no file name
+            deep = Path(d, "deep.json")
+            deep.write_text("[" * 100000 + "]" * 100000, encoding="utf-8")
+            r = run("export", str(deep), "--out", str(Path(d, "x.glb")))
+            self.assertIn("nested too deeply", r.stderr)
+            one = Path(d, "one.json")
+            sc = base()
+            sc["parts"][0]["id"] = "Not An Id"
+            one.write_text(json.dumps(sc), encoding="utf-8")
+            r = run("check", str(one))
+            self.assertIn("invalid scene (1 problem)\n", r.stdout)                # one problem, not "1 problems"
+
     def test_brackets_nested_thousands_deep_are_a_diagnosis(self):
         doc, diags = diagnose.parse_text("[" * 100000 + "]" * 100000)
         self.assertIsNone(doc)

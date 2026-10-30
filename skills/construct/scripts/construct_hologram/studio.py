@@ -110,7 +110,11 @@ def load(path):
     try:
         doc = hologram.read_sheet(path)
     except hologram.SheetError as exc:
-        raise scene_mod.SceneError(str(exc))
+        with open(path, "rb"):   # a file that is not there or cannot be opened raises its own error, naming it
+            pass
+        if str(exc).endswith("RecursionError"):
+            raise scene_mod.SceneError("%s is nested too deeply to read (thousands of brackets inside each other)" % path)
+        raise scene_mod.SceneError(str(exc).replace("sheet", "file"))
     if params_mod.is_params(doc):
         return params_mod.expand(doc)
     return doc
@@ -833,7 +837,8 @@ def run(args):
                 if not report["ok"]:
                     sys.stdout.write("\nhow to fix:\n" + report["repair_text"] + "\n")
             else:
-                sys.stdout.write("invalid scene (%d problems)\n%s\n" % (report["errors"], report["repair_text"]))
+                n = report["errors"]
+                sys.stdout.write("invalid scene (%d problem%s)\n%s\n" % (n, "" if n == 1 else "s", report["repair_text"]))
             return 0 if report["ok"] else 1
         if args.command == "build":
             _, report, text = build(args.scene, args.out, args.asset_root, args.v1, frame=args.frame,

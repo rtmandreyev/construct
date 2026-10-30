@@ -184,6 +184,9 @@ side, printed as worksheets and cited. Plan:
   came apart; the kit booklet's pictures keep their dark background when opened on their own (they
   carried a literal `100%%`); `check` says when a file is a trace, not a scene; a critique records the
   run's round.
+- **Plainer answers to files that cannot be read:** a missing or unreadable scene names the file and why
+  (`print: cannot read scene.json: No such file or directory`, not `cannot read sheet: FileNotFoundError`),
+  a scene nested thousands of brackets deep says so in every command, and `check` counts "1 problem".
 - **A provenance note:** `authoring.provenance_note`, shown under the caption in the provenance view
   only. Seven gallery constructs made before 1.1 carry one saying where their shades understate their
   evidence (parts that do not cite what they were read from, traced parts never compared).
