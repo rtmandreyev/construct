@@ -86,7 +86,8 @@ class InFreeCAD(unittest.TestCase):
             self.assertTrue(fc.is_file() and step.is_file())
             if freecad._app(os.environ["CONSTRUCT_FREECAD"]):   # built by the app: it opens with every part showing
                 import zipfile
-                self.assertIn("GuiDocument.xml", zipfile.ZipFile(fc).namelist())
+                gui = zipfile.ZipFile(fc).read("GuiDocument.xml").decode("utf-8")
+                self.assertIn("orientation 0.7447 0.3085 0.5959", gui)   # opens framed, isometric
             Path(tmp, "check.py").write_text(CHECK, encoding="utf-8")
             env = dict(os.environ, FC_FILE=str(fc), FC_STEP=str(step), FC_OUT=str(Path(tmp, "out.json")))
             subprocess.run([os.environ["CONSTRUCT_FREECAD"], str(Path(tmp, "check.py"))], cwd=tmp, env=env,

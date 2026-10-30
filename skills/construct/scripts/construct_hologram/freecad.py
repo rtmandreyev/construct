@@ -221,6 +221,12 @@ if FreeCAD.GuiUp:   # run as the app (off screen): save how it looks, so the mod
             o.ViewObject.Visibility = True
 
 result = {"parts": made, "joints": len(groups), "invalid": invalid, "surfaces": surfaces, "files": []}
+boxes = [o.Shape.BoundBox for o in doc.Objects if o.TypeId == "Part::Feature" and not o.Shape.isNull()]
+if boxes:
+    bb = boxes[0]
+    for b in boxes[1:]:
+        bb.add(b)
+    result["box"] = [bb.XMin, bb.YMin, bb.ZMin, bb.XMax, bb.YMax, bb.ZMax]
 if job.get("fcstd"):
     doc.saveAs(job["fcstd"])
     result["files"].append(job["fcstd"])
@@ -277,5 +283,40 @@ def make(scene, fcstd=None, step=None, freecad=None, timeout=900):
             tail = "\n".join((r.stdout + r.stderr).strip().splitlines()[-8:])
             raise FreeCADError("FreeCAD stopped before writing the model:\n" + tail)
         out = json.loads((tmp / "result.json").read_text(encoding="utf-8"))
+    if fcstd and app and out.get("box"):
+        _frame(Path(fcstd), out["box"])
     out["left_out"] = data["left_out"]
     return out
+
+
+# FreeCAD's isometric view: from the (+x, -y, +z) corner, Z up
+ISO_AXIS, ISO_ANGLE, ISO_DIR = (0.7447, 0.3085, 0.5959), 1.2133, (-0.5774, 0.5774, -0.5774)
+
+
+def _frame(path, box):
+    """Open the document framed: an isometric camera that fits the model, in its display layer (the app off
+    screen cannot fit the view itself)."""
+    import zipfile
+    centre = [(box[k] + box[k + 3]) / 2 for k in range(3)]
+    size = max(1.0, sum((box[k + 3] - box[k]) ** 2 for k in range(3)) ** 0.5)
+    pos = [centre[k] - ISO_DIR[k] * size * 1.5 for k in range(3)]
+    camera = ("OrthographicCamera {\n  viewportMapping ADJUST_CAMERA\n  position %g %g %g\n"
+              "  orientation %g %g %g  %g\n  nearDistance %g\n  farDistance %g\n  aspectRatio 1\n  focalDistance %g\n"
+              "  height %g\n\n}\n" % (*pos, *ISO_AXIS, ISO_ANGLE, size * 0.5, size * 2.5, size * 1.5, size * 0.8))
+    with zipfile.ZipFile(path) as z:
+        items = [(i, z.read(i.filename)) for i in z.infolist()]
+    out = []
+    for info, data in items:
+        if info.filename == "GuiDocument.xml":
+            text = data.decode("utf-8")
+            start = text.find("<Camera settings=")
+            if start >= 0:
+                end = text.index("/>", start) + 2
+                text = text[:start] + '<Camera settings="%s"/>' % camera.replace("\n", "&#10;") + text[end:]
+            data = text.encode("utf-8")
+        out.append((info, data))
+    tmp = path.with_suffix(".tmp")
+    with zipfile.ZipFile(tmp, "w", zipfile.ZIP_DEFLATED) as z:
+        for info, data in out:
+            z.writestr(info, data)
+    tmp.replace(path)
