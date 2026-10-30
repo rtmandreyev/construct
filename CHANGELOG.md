@@ -5,7 +5,7 @@
 Models come alive: the NetLogo bridge, made reliable on the whole Models Library and usable from
 inside NetLogo; runs as films and 3D models in Blender; and runs for the classroom, compared side by
 side, printed as worksheets and cited. Plan:
-[ROADMAP.md](docs/ROADMAP.md#v11-models-come-alive-netlogo); the story:
+[ROADMAP.md](docs/ROADMAP.md#v11-models-come-alive-netlogo-and-things-you-can-make); the story:
 [release notes](docs/releases/v1.1.0.md).
 
 - **Construct for NetLogo** ([hosts/netlogo](hosts/netlogo/README.md)): a NetLogo 7 extension,
