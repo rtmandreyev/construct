@@ -258,11 +258,15 @@ def make(scene, scale=SCALE, size=None, detail=DETAIL_MM, wall=WALL_MM, plan=Non
         pieces.remove(small)
         # into what a kit would mould it with: never across clear and opaque plastic, a piece of its own part or
         # of its own paint first, then the one it touches most
-        def fit(q):
-            touch = _contact(small["cols"], q["cols"])
-            if not touch or q["clear"] != small["clear"]:
+        def fit(q):   # a fragment of a part (or a merge group) goes back to its own piece if it is near
+            if q["clear"] != small["clear"]:
                 return (0, 0, 0)
-            return (q["head"] == small["head"], q["paint"]["name"] == small["paint"]["name"], touch)
+            if q["head"] == small["head"]:
+                near = _near(small["cols"], q["cols"], grid.n, 4)
+                if near:
+                    return (1, 1, near)
+            touch = _contact(small["cols"], q["cols"])
+            return (0, q["paint"]["name"] == small["paint"]["name"], touch) if touch else (0, 0, 0)
         best = max(pieces, key=fit, default=None)
         if best is None or fit(best)[2] == 0:
             dropped.append(small["name"])
@@ -350,7 +354,8 @@ def _order(pieces, n):
             ready = []   # the next sub-assembly in the plan starts before anything of a later one
         p = min(ready, key=rank) if ready else left[0]
         left.remove(p)
-        onto = max(placed, key=lambda q: touch.get((id(p), id(q)), 0), default=None)
+        onto = max(placed, key=lambda q: (q.get("group") == p.get("group") and (id(p), id(q)) in touch,
+                                          touch.get((id(p), id(q)), 0)), default=None)   # its own assembly first
         p["onto"] = onto if onto is not None and (id(p), id(onto)) in touch else None
         p["touches"] = sum(1 for q in pieces if q is not p and (id(p), id(q)) in touch)
         placed.append(p)
@@ -471,29 +476,53 @@ def check(kit):
 
 # ---------------------------------------------------------------------------- pictures
 
+# a view from one of four corners: a turn of the model about the vertical; (du, dv) are the grid directions
+# that point right-and-towards the camera on screen
+VIEWS = {0: ((1, 0), (0, 1)), 90: ((0, -1), (1, 0)), 180: ((-1, 0), (0, -1)), 270: ((0, 1), (-1, 0))}
+FRONT = 90   # the construct's front (+Z) is the print frame's -Y: seen from the front three-quarter
+
+
 def _picture(kit, highlight, done, w=640, hgt=420, voxel_step=2):
-    """An isometric picture of the model as built so far: the pieces in `done` grey, `highlight` in the accent.
-    Drawn from the voxels' exposed faces, z-buffered."""
+    """An isometric picture of the model as built so far: the pieces in `done` grey, `highlight` in the accent,
+    seen from the corner that faces the new pieces. Drawn from the voxels' exposed faces, z-buffered."""
+    shown = [p for p in kit["pieces"] if p["number"] in done or p["number"] in highlight]
+    if not shown:
+        return png.encode(w, hgt, lambda x, y: (18, 15, 24))
+
+    def centre(ps):
+        tot = [0.0, 0.0, 0]
+        for p in ps:
+            b = _bbox(p["cols"])
+            n = _count(p["cols"])
+            tot[0] += (b[0] + b[1]) / 2 * n
+            tot[1] += (b[2] + b[3]) / 2 * n
+            tot[2] += n
+        return (tot[0] / tot[2], tot[1] / tot[2]) if tot[2] else (0.0, 0.0)
+    new = [p for p in shown if p["number"] in highlight]
+    ca, cn = centre(kit["pieces"]), centre(new) if new else None
+    view = FRONT
+    if cn and math.hypot(cn[0] - ca[0], cn[1] - ca[1]) > 3:
+        off = (cn[0] - ca[0], cn[1] - ca[1])
+        view = max(VIEWS, key=lambda v: (VIEWS[v][0][0] + VIEWS[v][1][0]) * off[0] + (VIEWS[v][0][1] + VIEWS[v][1][1]) * off[1]
+                   + (0.01 if v == FRONT else 0))
+    (dui, duj), (dvi, dvj) = VIEWS[view]
     pts = []
-    for p in kit["pieces"]:
-        if p["number"] not in done and p["number"] not in highlight:
-            continue
+    for p in shown:
         accent = p["number"] in highlight
         cols = p["cols"]
+        thin = len(cols) > 400
         for (i, j), m in cols.items():
-            if (i + j) % voxel_step and len(cols) > 400:
+            if thin and (i + j) % voxel_step:
                 continue
             for k in printing._bits(m):
-                if k % voxel_step and len(cols) > 400:
+                if thin and k % voxel_step:
                     continue
                 up = not (m >> (k + 1)) & 1
-                side = not cols.get((i + 1, j), 0) >> k & 1 or not cols.get((i, j - 1), 0) >> k & 1
+                side = not cols.get((i + dui, j + duj), 0) >> k & 1 or not cols.get((i + dvi, j + dvj), 0) >> k & 1
                 if up or side:
-                    pts.append((i, j, k, accent, 1.0 if up else 0.72))
-    if not pts:
-        return png.encode(w, hgt, lambda x, y: (18, 15, 24))
-    cx, sx = 0.866, 0.5
-    proj = [((i - j) * cx, (i + j) * sx * 0.5 - k * 0.9, i + j + k, a, s) for i, j, k, a, s in pts]
+                    u, v = i * dui + j * duj, i * dvi + j * dvj
+                    pts.append((u, v, k, accent, 1.0 if up else 0.72))
+    proj = [((u - v) * 0.866, (u + v) * 0.25 - k * 0.9, u + v + k, a, sh) for u, v, k, a, sh in pts]
     xs = [q[0] for q in proj]
     ys = [q[1] for q in proj]
     span = max(max(xs) - min(xs), (max(ys) - min(ys)) * w / hgt) or 1
@@ -506,10 +535,10 @@ def _picture(kit, highlight, done, w=640, hgt=420, voxel_step=2):
         px, py = int(20 + (x - ox) * sc), int(20 + (y - oy) * sc)
         col = (int(209 * shade), int(107 * shade), int(208 * shade)) if accent else (
             int(150 * shade), int(146 * shade), int(158 * shade))
-        for yy in range(py, min(py + size, hgt)):
-            for xx in range(px, min(px + size, w)):
+        for yy in range(max(py, 0), min(py + size, hgt)):
+            for xx in range(max(px, 0), min(px + size, w)):
                 n = yy * w + xx
-                if 0 <= n < len(buf) and dz > depth[n]:
+                if dz > depth[n]:
                     depth[n] = dz
                     buf[n] = col
     return png.encode(w, hgt, lambda x, y: buf[y * w + x])
@@ -566,6 +595,8 @@ def _3mf(objects, title):
 def write(kit, out):
     """The kit's files in `out`: plate-N.3mf, booklet.html with its pictures, kit.json (what a critic reads)."""
     out = Path(out)
+    for old in (out / "img").glob("*") if (out / "img").is_dir() else ():   # no pictures from an earlier build
+        old.unlink()
     (out / "img").mkdir(parents=True, exist_ok=True)
     by = {p["number"]: p for p in kit["pieces"]}
     files = []
