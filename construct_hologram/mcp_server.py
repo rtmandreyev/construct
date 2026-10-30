@@ -168,6 +168,7 @@ TOOLS += [
          "view": {"type": "string", "enum": ["auto", "space-time", "network-time", "phase", "field", "pulse"]},
          "window": {"type": "string", "description": "space-time and pulse: auto (default), whole, or the tick to end at"},
          "landmarks": {"type": "string", "enum": ["on", "off"], "description": "the moments worth marking, from the counts (on by default)"},
+         "colors": {"type": "string", "enum": ["run", "house"], "description": "run (default): the run's own NetLogo colours; house: Construct's tones"},
          "title": {"type": "string", "maxLength": 120},
          "state": {"type": "string"}, "x": {"type": "string"}, "z": {"type": "string"},
          "change": {"type": "string", "enum": ["first", "last"]}, "time": {"type": "string", "enum": ["linear", "sqrt"]},
@@ -260,7 +261,7 @@ V2_TOOLS = {"construct_diagnose": ({"text", "document"}, set()),
             "construct_limits": ({"tier", "request", "overrides"}, set()),
             "construct_netlogo_instrument": ({"model", "title", "turtles", "reporters", "patches", "every", "seed", "ticks",
                                               "skip_turtles", "setup", "go"}, {"model", "title"}),
-            "construct_netlogo_draw": ({"recording", "view", "title", "state", "x", "z", "change", "time", "max_agents", "window", "landmarks",
+            "construct_netlogo_draw": ({"recording", "view", "title", "state", "x", "z", "change", "time", "max_agents", "window", "landmarks", "colors",
                                         "smooth", "levels", "resolution", "solid", "materials", "art"}, {"recording", "view"})}
 # the 0.2 pre-release names: still answered for one release, no longer listed
 DEPRECATED = {"hologram_diagnose": "construct_diagnose", "hologram_params_template": "construct_params_template",
@@ -356,7 +357,7 @@ def _call_netlogo(name, args):
                                          "construct --threads 1. It writes run.jsonl; draw it with construct_netlogo_draw."})
         run = netlogo.parse_run(args["recording"])
         opts = {k: args[k] for k in ("state", "x", "z", "change", "time", "max_agents", "smooth", "levels", "resolution",
-                                     "window", "landmarks") if k in args}
+                                     "window", "landmarks", "colors") if k in args}
         sc = netlogo.scene_from_run(run, args["view"], args.get("title"), solid=bool(args.get("solid")), **opts)
         if "art" in args:
             sc = netlogo.apply_art(sc, args["art"])

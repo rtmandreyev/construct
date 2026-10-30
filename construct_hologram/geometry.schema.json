@@ -790,6 +790,17 @@
     "joint"
    ]
   },
+  "style_colors": {
+   "type": "array",
+   "description": "optional: a colour per style, '#rrggbb' from the part's look.color, or null for its tone",
+   "items": {
+    "type": [
+     "string",
+     "null"
+    ],
+    "pattern": "^#[0-9a-f]{6}$"
+   }
+  },
   "lines": {
    "type": "array",
    "items": {

@@ -784,9 +784,11 @@ def _validate(scene):
                 c.err(w, "a verified part needs a cited source or a verified basis fact", "certainty",
                       "Cite a source id in \"source\", list a verified fact in \"basis\", or use \"inferred\".")
         look = p.get("look", {})
-        if c.keys(look, {"tone", "line", "fill", "glow", "weight", "alpha"}, set(), w + ".look"):
+        if c.keys(look, {"tone", "line", "fill", "glow", "weight", "alpha", "color"}, set(), w + ".look"):
             if "tone" in look:
                 c.choice(look["tone"], TONES, w + ".look.tone")
+            if "color" in look and not (isinstance(look["color"], str) and re.fullmatch(r"#[0-9a-fA-F]{6}", look["color"])):
+                c.err(w + ".look.color", "expected a colour as #rrggbb")
             if "line" in look:
                 c.choice(look["line"], LINES, w + ".look.line")
             if "fill" in look:
@@ -1559,7 +1561,7 @@ def compile_scene(scene, solid=False):
                 joints.append(chain)
             joint_of[part["id"]] = joints.index(chain)
 
-    styles, style_key = [], {}
+    styles, style_key, style_colors = [], {}, []   # a part's own colour (look.color), beside its tone
     lines, fills, points, motions, artwork = [], [], [], [], []
     part_out = []
     # per stage height range for the build phase (filled in a first pass)
@@ -1692,6 +1694,7 @@ def compile_scene(scene, solid=False):
         if key not in style_key:
             style_key[key] = len(styles)
             styles.append(entry)
+            style_colors.append(scene["parts"][pi].get("look", {}).get("color"))
         return style_key[key]
 
     art_done = set()
@@ -1812,6 +1815,7 @@ def compile_scene(scene, solid=False):
         "parts": part_out, "styles": styles,
         "style_fields": ["tone", "alpha", "width_px", "glow_px", "dash", "fade", "part", "motion_slot", "occluder",
                          "joint"],
+        **({"style_colors": [c.lower() if c else None for c in style_colors]} if any(style_colors) else {}),
         "lines": lines, "line_stride": 9, "line_fields": ["ax", "ay", "az", "bx", "by", "bz", "style", "phase_a", "phase_b"],
         "fills": fills, "fill_stride": 5, "fill_fields": ["x", "y", "z", "style", "phase"],
         "points": points, "point_stride": 7, "point_fields": ["x", "y", "z", "size_px", "style", "sprite", "phase"],

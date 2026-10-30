@@ -95,6 +95,10 @@ Budgets: ≤ 24,000 lines, ≤ 24,000 triangles, ≤ 6,000 points, ≤ 256 parts
   a person chose another through a host option (`build --palette`), whatever the scene said.
   A scene's `style_hint` is ignored with a `style-hint-ignored` warning; a scene-level `style`
   is refused. An app with its own palette ignores the field altogether.
+- **A part's own colour** is the one exception: `look.color` (`#rrggbb`) in the scene, for data that
+  has colours of its own (a NetLogo run's turtles and patches). The geometry then carries the
+  optional `style_colors[]`, one entry per style row, `#rrggbb` or `null` for the tone; a renderer
+  that ignores it draws the tone. The provenance view keeps the certainty colours.
 - Certainty is the material: verified/user-supplied crisp, inferred a step back, decorative
   dotted and faint. A renderer may restyle within this meaning but keeps the four
   certainties distinguishable and offers a provenance view.

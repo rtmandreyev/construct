@@ -150,6 +150,13 @@ first tick half the turtles, then all of them, were on at once. Each is a dashed
 its tick, labelled with its value ("Peak: 78 infected · tick 147"), marked inferred and kept under the
 data lock. `--landmarks off` leaves them out; runs compared side by side have none.
 
+**Colours.** A run is drawn in its own NetLogo colours: each breed's tracks in its turtles' colour, each
+risen turtle of a network in the colour it ended in (with a bead of light at its top), a field in the
+colour its patches changed to, or from when they ended dark (Ants' food, eaten). Each is made to read as
+light on the dark ground: the hue kept, black lifted to grey, white held back, the saturation capped.
+`--colors house` draws Construct's own tones instead. The 3D model (`--glb`, `construct export`) carries
+the same colours. Colour is how a run is drawn, not what it says, so it sits outside the data lock.
+
 **Where the order forms.** Moving turtles are measured by their alignment (how much they head one way:
 0 every way, 1 all one way) and turtles that switch on and off by their synchrony (the order parameter
 r, from each turtle's own events: 0 each on its own rhythm, 1 all in step). In a long run that order

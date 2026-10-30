@@ -537,6 +537,8 @@ def add_commands(sub):
                                    "true/false variable that switches on and off (hidden? too)")
     p.add_argument("--landmarks", choices=("on", "off"), default="on", help="mark the moments worth marking, computed "
                    "from the run's first count (half way and most of the way, a peak, or half and all at once): on (default) or off")
+    p.add_argument("--colors", choices=("run", "house"), default="run",
+                   help="run (default): the run's own NetLogo colours, made to read as light; house: Construct's tones")
     p.add_argument("--window", help="space-time and pulse: auto (default: the window where the order formed, when "
                                     "it forms early), whole (the whole run), or the tick to end at")
     p.add_argument("--x", help="phase: the reporter across the floor (default: the first recorded)")
@@ -903,7 +905,7 @@ def run(args):
                                           z=args.z, change=args.change, max_agents=args.max_agents,
                                           time=args.time, smooth=args.smooth, levels=args.levels,
                                           resolution=args.resolution, solid=args.solid, window=args.window,
-                                          landmarks=args.landmarks)
+                                          landmarks=args.landmarks, colors=args.colors)
                 win = next((f for f in scene["facts"] if f["key"] == "window"), None)
                 if win:
                     sys.stdout.write("window: %s (%s)\n" % (win["value"], win["note"].split(":")[0].lower()))

@@ -13,7 +13,7 @@ import unittest
 import zipfile
 from pathlib import Path
 
-from . import audit, cli, netlogo, scene, studio
+from . import audit, cli, export, netlogo, scene, studio
 
 HERE = Path(__file__).resolve().parent
 NETLOGO = os.environ.get("CONSTRUCT_NETLOGO")
@@ -439,9 +439,27 @@ class Views(unittest.TestCase):
         root = netlogo.scene_from_run(self.run, "network-time", state="infected?", time="sqrt")
         self.assertIn("square root", next(f for f in root["facts"] if f["key"] == "coordinates")["value"])
 
+    def test_a_run_is_drawn_in_its_own_colours_made_to_read_as_light(self):
+        sc = netlogo.scene_from_run(self.run, "space-time")
+        tracks = next(p for p in sc["parts"] if p["id"].startswith("tracks"))
+        self.assertEqual(tracks["look"]["color"], netlogo.light_colour(netlogo.netlogo_rgb(15)))   # the walkers are red
+        g = scene.compile_scene(sc)
+        self.assertIn(tracks["look"]["color"], g["style_colors"])
+        doc, _ = export.read_glb(export.render(sc, "glb", wire="tubes")[0]["glb"])
+        self.assertIn("construct:light:" + tracks["look"]["color"], [m["name"] for m in doc["materials"]])
+        house = netlogo.scene_from_run(self.run, "space-time", colors="house")
+        self.assertFalse(any("color" in p.get("look", {}) for p in house["parts"]))
+        self.assertNotIn("style_colors", scene.compile_scene(house))
+        self.assertEqual(netlogo.lock_problem(sc), None)   # colour is how it is drawn, not what the run says
+        self.assertEqual((netlogo.light_colour("#000000"), netlogo.light_colour("#d73229")), ("#808080", "#d73229"))
+        self.assertEqual([netlogo.netlogo_name(c) for c in (15, 105, 9.9, 0, 52, 47)],
+                         ["red", "blue", "white", "black", "dark green", "light yellow"])
+
     def test_network_time_lifts_each_node_to_its_change(self):
         sc = netlogo.scene_from_run(self.run, "network-time", state="infected?")
-        stems = next(p for p in sc["parts"] if p["id"] == "risen")["shape"]["paths"]
+        paths = [q for p in sc["parts"] if p["id"].startswith("risen") for q in p["shape"]["paths"]]
+        stems = [q for q in paths if len(q) == 2]
+        self.assertEqual(len(paths), 2 * len(stems))   # each stem topped by its bead, a ring of light
         tops = sorted(round(s[1][1], 3) for s in stems)
         want = sorted(round(netlogo.HEIGHT * min(t for t in range(12) if w <= t // 2) / 11, 3) for w in range(6))
         self.assertEqual(tops, want)

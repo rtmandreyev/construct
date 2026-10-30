@@ -645,10 +645,23 @@ def _network_time(run, world, opts):
             climb.append([world.floor(*pos[lo], when[lo]), world.floor(*pos[hi], when[hi])])
     parts = [_part("network", "The network, as NetLogo laid it out", "ground", {"type": "paths", "paths": floor_paths,
                                                                               "detail": True}, tone="faint")]
-    if stems:
-        parts.append(_part("risen", "Each turtle, risen to the tick it appeared" if vi is None else
-                           "Each turtle, risen to the tick %s turned true" % var, "data",
-                           {"type": "paths", "paths": stems}, tone="dust", weight=0.6))
+    if stems:   # one part per colour the turtles ended in, so each can be drawn in it
+        ended = {r[0]: r[4] for r in last}
+        by, called = {}, {}
+        bead = 0.012 * FLOOR
+        for w, stem in zip((w for w in when if w in pos), stems):
+            c = netlogo_rgb(ended.get(w))
+            called[c] = netlogo_name(ended.get(w))
+            top = stem[1]   # a ring of light where the turtle rose to: the bead it ends in
+            ring = [[round(top[0] + bead * math.cos(math.pi * k / 4), 4), top[1],
+                     round(top[2] + bead * math.sin(math.pi * k / 4), 4)] for k in range(9)]
+            by.setdefault(c, []).extend([stem, ring])
+        label = ("Each turtle, risen to the tick it appeared" if vi is None else
+                 "Each turtle, risen to the tick %s turned true" % var)
+        for c, group in sorted(by.items(), key=lambda kv: -len(kv[1])):
+            pid = "risen" if len(by) == 1 else "risen-" + c[1:]
+            parts.append(_part(pid, label if len(by) == 1 else label + " (%s at the end)" % called[c], "data",
+                               {"type": "paths", "paths": group}, tone="dust", weight=0.8))
     if climb:
         parts.append(_part("climb", "Links between risen turtles, from the earlier to the later", "identity",
                            {"type": "paths", "paths": climb}))
@@ -1126,6 +1139,11 @@ def scene_from_run(run, view, title=None, **opts):
                       "camera": {"drift": 4, "breathe": 0.02}},
     }
     sc["reading"] = reading
+    if opts.get("colors", "run") != "house":   # the run's own colours, made to read as light
+        for pid, c in run_colours(run, sc).items():
+            for part in sc["parts"]:
+                if part["id"] == pid:
+                    part.setdefault("look", {})["color"] = light_colour(c)
     if view == "space-time" and any(k == "sampling" and v != "every 1 record" for k, v in extra):
         sc["reading"]["how"].append("A long run of moving agents is dense here: this is its shape; for its motion, "
                                     "every agent at every tick, make its film (construct netlogo-film).")
@@ -1145,6 +1163,24 @@ NL_BASE = [(141, 141, 141), (215, 50, 41), (241, 105, 19), (156, 109, 70), (237,
            (167, 27, 106), (224, 127, 150)]
 
 
+NL_NAMES = ("gray", "red", "orange", "brown", "yellow", "green", "lime", "turquoise", "cyan", "sky", "blue", "violet",
+            "magenta", "pink")
+
+
+def netlogo_name(c):
+    """A NetLogo colour as NetLogo would say it: "red", "light blue", "dark green", "black", "white"."""
+    if not isinstance(c, (int, float)) or isinstance(c, bool):
+        return netlogo_rgb(c)
+    c = float(c) % 140
+    shade = c % 10
+    if shade < 0.5:
+        return "black"
+    if shade >= 9.5:
+        return "white"
+    name = NL_NAMES[int(c // 10)]
+    return ("dark " if shade < 3.5 else "light " if shade > 6.5 else "") + name
+
+
 def netlogo_rgb(c):
     """A NetLogo colour (a number, or an RGB(A) list) as '#rrggbb'."""
     if isinstance(c, list) and len(c) >= 3:
@@ -1160,6 +1196,54 @@ def netlogo_rgb(c):
     else:
         rgb = [200, 200, 200]
     return "#%02x%02x%02x" % tuple(rgb)
+
+
+def _lightness(c):
+    r, g, b = (int(c[k:k + 2], 16) / 255 for k in (1, 3, 5))
+    return (max(r, g, b) + min(r, g, b)) / 2
+
+
+def light_colour(c):
+    """A NetLogo colour made to read as light on the hologram's dark ground: the hue kept, a dark colour lifted, a
+    pale one held back from white, the saturation capped so it glows rather than shouts."""
+    import colorsys
+    r, g, b = (int(c[k:k + 2], 16) / 255 for k in (1, 3, 5))
+    hue, light, sat = colorsys.rgb_to_hls(r, g, b)
+    light = min(max(light, 0.5), 0.82)
+    sat = min(sat, 0.82)
+    return "#%02x%02x%02x" % tuple(int(round(v * 255)) for v in colorsys.hls_to_rgb(hue, light, sat))
+
+
+def run_colours(run, scene):
+    """Each part of a run's construct that has a colour in the run: a node its turtle's last colour, a breed's
+    tracks the breed's most common colour, the field the colour the patches changed to."""
+    from collections import Counter
+    last = run["frames"][-1].get("turtles") or next((f["turtles"] for f in reversed(run["frames"]) if f.get("turtles")), [])
+    colour = {r[0]: netlogo_rgb(r[4]) for r in last}
+    breed = {}
+    for r in last:
+        breed.setdefault(r[1], Counter())[colour[r[0]]] += 1
+    patch = None
+    if run["header"].get("patch-reporter") == "pcolor":
+        samples = [f["patches"] for f in run["frames"] if "patches" in f]
+        if len(samples) >= 2:   # the colour the patches changed to, or from when they ended dark (food eaten)
+            pairs = [(a, b) for a, b in zip(samples[0], samples[-1]) if a != b]
+            to = Counter(netlogo_rgb(b) for _, b in pairs).most_common(1)
+            frm = Counter(netlogo_rgb(a) for a, _ in pairs).most_common(1)
+            if to:
+                patch = to[0][0] if _lightness(to[0][0]) > 0.15 or not frm else frm[0][0]
+    out = {}
+    for part in scene["parts"]:
+        pid = part["id"]
+        if pid.startswith("node-") and pid[5:].isdigit() and int(pid[5:]) in colour:
+            out[pid] = colour[int(pid[5:])]
+        elif pid.startswith("tracks-") and pid[7:] in breed:
+            out[pid] = breed[pid[7:]].most_common(1)[0][0]
+        elif pid in ("surface", "fronts") and patch:
+            out[pid] = patch
+        elif pid.startswith("risen-") and len(pid) == 12:   # the turtles that ended in this colour
+            out[pid] = "#" + pid[6:]
+    return out
 
 
 def materials_from_run(run, scene):

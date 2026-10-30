@@ -177,6 +177,15 @@ def _tube(a, b, r):
 
 # ---------------------------------------------------------------------------- reading a compile
 
+def _own_colours(g):
+    """Each part's own colour (look.color), from the styles that carry it: {part id: '#rrggbb'}."""
+    out = {}
+    for st, c in zip(g["styles"], g.get("style_colors") or []):
+        if c and int(st[6]) >= 0:
+            out[g["parts"][int(st[6])]["id"]] = c
+    return out
+
+
 def _load_materials(materials):
     """A material map: {"materials": [{"parts": ["hull", "tile-*"], "color": "#rrggbb", "finish", "metallic",
     "roughness", "emissive", "name"}]}; the first rule whose pattern matches a part id wins."""
@@ -324,6 +333,7 @@ def to_gltf(g, wire="edges", pose="closed", materials=None, wire_radius=None, me
         raise ExportError("pose: one of %s" % ", ".join(POSES))
     rules = _load_materials(materials)
     parts, arts, motions, joints = g["parts"], g["articulations"], g["motions"], g["joints"]
+    own = _own_colours(g)
     b = _Bin()
     nodes, meshes, mats, mat_index = [], [], [], {}
     used_ext = set()
@@ -370,15 +380,18 @@ def to_gltf(g, wire="edges", pose="closed", materials=None, wire_radius=None, me
             return material(("glass", None), ("construct:glass", _hex("#cfd8de", "glass"), f["metallic"],
                                               f["roughness"], None, False), dict(f, finish="glass"))
         rgb, metallic, rough = ROLE_MATERIAL.get(part["role"], ROLE_MATERIAL["mass"])
+        if part["id"] in own:   # the part's own colour, finished as its role is
+            c = own[part["id"]]
+            return material(("own", c, part["role"]), ("construct:" + c, _hex(c, "color"), metallic, rough, None, False))
         emissive = _hex(rgb, "role") if part["role"] == "data" else None
         return material(("role", part["role"]), ("construct:" + part["role"], _hex(rgb, "role"), metallic, rough,
                                                  emissive, False))
 
-    def light_material(tone):
+    def light_material(tone, colour=None):
         if wire == "seams":   # the design lines of a finished model: dark seams, lit like any surface
             return material(("seam", None), ("construct:seam", _hex("#141416", "seam"), 0.0, 1.0, None, False))
-        rgb = _hex(TONE_COLOR[tone], "tone")
-        return material(("light", tone), ("construct:light:" + tone, rgb, 0.0, 1.0, rgb, True))
+        rgb = _hex(colour or TONE_COLOR[tone], "tone")
+        return material(("light", colour or tone), ("construct:light:" + (colour or tone), rgb, 0.0, 1.0, rgb, True))
 
     def node(spec):
         nodes.append(spec)
@@ -436,9 +449,9 @@ def to_gltf(g, wire="edges", pose="closed", materials=None, wire_radius=None, me
                 if wire == "edges":
                     pos, ph = [p for s in segs for p in s[:2]], [x for s in segs for x in s[2:]]
                     if static:
-                        bucket(1, light_material(tone), pos, None, ph, None)
+                        bucket(1, light_material(tone, own.get(part["id"])), pos, None, ph, None)
                     else:
-                        prims.append(_primitive(b, 1, pos, None, ph, light_material(tone)))
+                        prims.append(_primitive(b, 1, pos, None, ph, light_material(tone, own.get(part["id"]))))
                     counts["edges"] += len(segs)
                 elif wire == "tubes" or (wire == "seams" and not surfaced):
                     pos, nor, ph = [], [], []
@@ -448,16 +461,16 @@ def to_gltf(g, wire="edges", pose="closed", materials=None, wire_radius=None, me
                         nor += norms
                         ph += [pc if e else pa for e in ends]
                     if pos and static:
-                        bucket(4, light_material(tone), pos, nor, ph, None)
+                        bucket(4, light_material(tone, own.get(part["id"])), pos, nor, ph, None)
                         counts["triangles"] += len(pos) // 3
                     elif pos:
-                        prims.append(_primitive(b, 4, pos, nor, ph, light_material(tone)))
+                        prims.append(_primitive(b, 4, pos, nor, ph, light_material(tone, own.get(part["id"]))))
                         counts["triangles"] += len(pos) // 3
             for tone, pts in sorted(gr["pts"].items()):
                 if static:
-                    bucket(0, light_material(tone), [p for p, _ in pts], None, [x for _, x in pts], None)
+                    bucket(0, light_material(tone, own.get(part["id"])), [p for p, _ in pts], None, [x for _, x in pts], None)
                 else:
-                    prims.append(_primitive(b, 0, [p for p, _ in pts], None, [x for _, x in pts], light_material(tone)))
+                    prims.append(_primitive(b, 0, [p for p, _ in pts], None, [x for _, x in pts], light_material(tone, own.get(part["id"]))))
                 counts["points"] += len(pts)
             if not prims:
                 continue
@@ -643,6 +656,7 @@ def to_obj(g, name, wire="edges", pose="closed", materials=None, frame="y-up", w
         raise ExportError("wire: one of %s" % ", ".join(WIRES))
     rules = _load_materials(materials)
     parts, arts, joints = g["parts"], g["articulations"], g["joints"]
+    own = _own_colours(g)
     radius = _wire_radius(g, wire_radius)
 
     def place(p, jt):
@@ -660,6 +674,7 @@ def to_obj(g, name, wire="edges", pose="closed", materials=None, frame="y-up", w
     mtl, used = [], {}
 
     def matname(part):
+        own_c = own.get(part["id"])
         for r in rules:
             if any(fnmatch.fnmatchcase(part["id"], p) for p in r["patterns"]):
                 spec = (r["color"], r["roughness"], r["emissive"], 0.25 if r["finish"] == "glass" else 1.0)
@@ -667,19 +682,19 @@ def to_obj(g, name, wire="edges", pose="closed", materials=None, frame="y-up", w
                 break
         else:
             rgb, _, rough = ROLE_MATERIAL.get(part["role"], ROLE_MATERIAL["mass"])
-            spec, nm = (_hex(rgb, "role"), rough, None, 1.0), "construct-" + part["role"]
+            spec, nm = (_hex(own_c or rgb, "role"), rough, None, 1.0), "construct-" + (own_c[1:] if own_c else part["role"])
         nm = nm.replace(" ", "_")
         if nm not in used:
             used[nm] = spec
         return nm
 
-    def lightname(tone):
+    def lightname(tone, colour=None):
         if wire == "seams":
             used.setdefault("construct-seam", (_hex("#141416", "seam"), 1.0, None, 1.0))
             return "construct-seam"
-        nm = "construct-light-" + tone
+        nm = "construct-light-" + (colour[1:] if colour else tone)
         if nm not in used:
-            rgb = _hex(TONE_COLOR[tone], "tone")
+            rgb = _hex(colour or TONE_COLOR[tone], "tone")
             used[nm] = (rgb, 1.0, rgb, 1.0)
         return nm
 
@@ -716,7 +731,7 @@ def to_obj(g, name, wire="edges", pose="closed", materials=None, frame="y-up", w
         for tone, segs in sorted(gr["segs"].items()):
             if wire == "none" or (wire == "seams" and gr["tris"]):   # seams: only the parts drawn as lines
                 continue
-            out.append("usemtl %s" % lightname(tone))
+            out.append("usemtl %s" % lightname(tone, own.get(part["id"])))
             if wire == "edges":
                 for a, c, _, _ in segs:
                     out.append("v %.6f %.6f %.6f" % place(a, jt))

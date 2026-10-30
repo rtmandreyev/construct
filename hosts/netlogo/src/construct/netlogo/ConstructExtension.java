@@ -333,7 +333,7 @@ public class ConstructExtension extends DefaultClassManager {
   }
 
   static final List<String> OPTIONS = List.of("state", "x", "z", "change", "time", "max-agents", "smooth", "levels", "resolution", "title", "art",
-      "model", "film", "window", "landmarks");
+      "model", "film", "window", "landmarks", "colors");
 
   /** construct:draw "phase"   or   (construct:draw "network-time" "state" "infected?" "time" "sqrt")   or   (construct:draw "phase" "smooth" 25) */
   static class Draw implements Command {

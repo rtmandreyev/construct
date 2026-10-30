@@ -69,7 +69,7 @@ float strike(float t) { return smoothstep(0.0, 0.08, t) * (1.0 - smoothstep(0.7,
 vec4 styleA(float s) { return texelFetch(uStyles, ivec2(0, int(s + 0.5)), 0); }  // tone, alpha, width, glow
 vec4 styleB(float s) { return texelFetch(uStyles, ivec2(1, int(s + 0.5)), 0); }  // dash, fade, part, slot
 vec4 styleC(float s) { return texelFetch(uStyles, ivec2(2, int(s + 0.5)), 0); }  // occluder, certainty, role, drift
-vec4 styleD(float s) { return texelFetch(uStyles, ivec2(3, int(s + 0.5)), 0); }  // joint
+vec4 styleD(float s) { return texelFetch(uStyles, ivec2(3, int(s + 0.5)), 0); }  // joint, colour (r, g, b or -1)
 
 // periodic motion about the rest pose, then the articulation chain carries it
 vec3 moved(vec3 p, float slot, float joint, inout float gain) {
@@ -115,8 +115,9 @@ float eventGain(vec3 p, float id) {
   if (k == 9) return 1.0 + 1.2 * s * sin(3.14159 * t);                                      // burst
   return 1.0;
 }
-vec3 toneColor(float tone, float cert) {
+vec3 toneColor(float tone, float cert, vec4 d) {
   if (uMode > 0.5) return uCertColor[int(cert + 0.5)];
+  if (d.y >= 0.0) return d.yzw;   // the part's own colour (look.color)
   return uPalette[int(tone + 0.5)];
 }
 float fogOf(vec3 p, float fade) {
@@ -168,7 +169,7 @@ void main() {
   float alpha = sa.y * fog * gain * uGlobalAlpha * uHidden;
   vTip = 0.0;
   if (uInk > 0.5) { vColor = vec4(0.0, 0.0, 0.0, min(0.62, alpha * 0.8)); return; }
-  vec3 col = toneColor(sa.x, sc.y) * ev * (1.0 + 0.35 * uStabilise);
+  vec3 col = toneColor(sa.x, sc.y, sd) * ev * (1.0 + 0.35 * uStabilise);
   float a2 = clamp(alpha * min(ev, 1.6), 0.0, 1.0);
   vColor = vec4(col * a2, a2);
 }`;
@@ -208,7 +209,7 @@ void main() {
   vec3 p = displaced(moved(aPos, sb.w, sd.x, gain), float(gl_VertexID / 3));
   vWorld = p; vPhase = aPhase; vOcc = sc.x;
   float ev = eventGain(p, float(gl_VertexID / 3));
-  vTint = vec4(toneColor(sa.x, sc.y) * ev, sa.y * gain * fogOf(p, sb.y) * uGlobalAlpha);
+  vTint = vec4(toneColor(sa.x, sc.y, sd) * ev, sa.y * gain * fogOf(p, sb.y) * uGlobalAlpha);
   gl_Position = uVP * vec4(p, 1.0);
 }`;
   const FILL_FS = `#version 300 es
@@ -256,7 +257,7 @@ void main() {
   gl_Position = c;
   vUv = corner; vShape = aShape; vPhase = aPhase;
   float a = sa.y * gain * life * fogOf(p, sb.y) * uGlobalAlpha * min(ev, 1.8);
-  vColor = vec4(toneColor(sa.x, sc.y) * min(ev, 2.0) * a, a);
+  vColor = vec4(toneColor(sa.x, sc.y, sd) * min(ev, 2.0) * a, a);
 }`;
   const POINT_FS = `#version 300 es
 precision highp float;
@@ -492,9 +493,10 @@ void main() {
     const st = new Float32Array(this.styles.length * 16);
     this.styles.forEach((s, i) => {
       const part = s[6] >= 0 ? g.parts[s[6]] : null;
+      const own = g.style_colors && g.style_colors[i] ? hex(g.style_colors[i]) : [-1, -1, -1];
       st.set([s[0], s[1], s[2], s[3], s[4], s[5], s[6], s[7], s[8],
               part ? CERT_CODE[part.certainty] : 2, part ? ROLE_CODE[part.role] : 6,
-              (this.moteStyle === i) ? 1 : 0, s.length > 9 ? s[9] : -1, 0, 0, 0], i * 16);
+              (this.moteStyle === i) ? 1 : 0, s.length > 9 ? s[9] : -1, own[0], own[1], own[2]], i * 16);
     });
     this.styleTex = gl.createTexture();
     gl.bindTexture(gl.TEXTURE_2D, this.styleTex);
