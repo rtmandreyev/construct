@@ -193,7 +193,9 @@ model alone.
   (with engraved line art), FreeCAD and STEP, the plates; for game engines, colliders, pieces, seeded
   variants and the Godot guide.
 - **Also 29 October:** size and shape certainty answered apart (`traced`, size verified, shape
-  verified), the provenance view's colours and its sources legend, and the gallery examples moved to it.
+  verified), the provenance view's colours and its sources legend, and the gallery examples moved to it;
+  guesses in shades (designed, described, seen, seen and checked). Later: a per-part likeness from the
+  critic, to tell a well-observed window from a rough one in the same photograph.
 - Next: the Revell-style kits (v1.2), then freeze; the Models Library check, Linux and Windows CI, the
   README's pictures, the release videos and the repository's organisation; then the release and the
   Extensions Manager listing.

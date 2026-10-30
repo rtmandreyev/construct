@@ -299,6 +299,15 @@ part may answer for its size and its shape apart:
 - The provenance view: verified (both axes) white, size verified cyan, shape verified violet, traced
   blue, user-supplied green, inferred amber, decorative magenta; its legend counts the parts of each
   and names the sources behind the verified ones (for a size, its verified facts' sources).
+- **Shades:** an inferred or traced geometry part carries `evidence`, how firmly the guess is held to
+  the real thing, and the provenance view deepens its colour with it. Inferred: 1 designed (cites
+  nothing), 2 described (a document, the request or a basis fact), 3 seen (read from a picture,
+  drawing, observation, measurement or dataset of it), 4 seen and checked (also resting on a verified
+  or user-supplied fact, or drawn from a reference a silhouette comparison passed against). Traced: 1,
+  or 2 when such a comparison passed. The compiler computes it from what the scene already records;
+  `provenance.checked[]` (`{reference, view, iou}`) lists the comparisons that passed on this version
+  of the scene (a stale one does not count). A shade measures evidence, not error: nothing measures
+  most guesses against the real thing.
 
 ## Film mode (0.3.0, optional)
 

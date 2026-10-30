@@ -30,10 +30,14 @@
   // identity light: a low-chroma tint over the structure tone (the place's own material)
   const IDENTITY = { "warm-wood": [0.88, 0.6, 0.34], stone: [0.8, 0.77, 0.7], steel: [0.62, 0.75, 0.88],
     brass: [0.96, 0.78, 0.4], bio: [0.45, 0.96, 0.72], ember: [1.0, 0.48, 0.26], ice: [0.7, 0.92, 1.0], paper: [0.96, 0.92, 0.82] };
-  const CERT_CODE = { verified: 0, user_supplied: 1, inferred: 2, decorative: 3, traced: 4, size_verified: 5, shape_verified: 6 };
+  const CERT_CODE = { verified: 0, user_supplied: 1, inferred: 2, decorative: 3, traced: 4, size_verified: 5, shape_verified: 6,
+    "inferred-1": 7, "inferred-2": 8, "inferred-3": 9, "inferred-4": 10, "traced-1": 11, "traced-2": 12 };
   // the provenance view's colours, by CERT_CODE: verified stays white; a part verified on one axis only has its own colour
   const CERT_RGB = [[0.85, 0.97, 1.0], [0.45, 1.0, 0.62], [1.0, 0.72, 0.3], [0.95, 0.42, 0.95], [0.44, 0.62, 1.0],
-    [0.25, 0.88, 1.0], [0.77, 0.55, 1.0]];
+    [0.25, 0.88, 1.0], [0.77, 0.55, 1.0],
+    // shades: deeper the more firmly a guess is held to the real thing (geometry part.evidence)
+    [0.42, 0.39, 0.34], [0.63, 0.53, 0.35], [0.89, 0.71, 0.42], [1.0, 0.52, 0.0], [0.62, 0.71, 1.0], [0.24, 0.42, 1.0]];
+  const SHADES = { inferred: ["DESIGNED", "DESCRIBED", "SEEN", "SEEN AND CHECKED"], traced: ["NOT YET CHECKED", "CHECKED"] };
   // what the provenance view shows for a part: one word, or which axis (size, shape) is verified when they differ
   function provClass(p) {
     const a = p.certainty_axes;
@@ -41,6 +45,12 @@
     if (a.size === a.shape) return a.size;
     return a.size === "verified" ? "size_verified" : a.shape === "verified" ? "shape_verified" : p.certainty;
   }
+  // the colour code: the class, shaded by its evidence where it has one
+  function provCode(p) {
+    const k = provClass(p);
+    return p.evidence && SHADES[k] ? CERT_CODE[k + "-" + p.evidence] : CERT_CODE[k];
+  }
+  const rgbCss = (c) => "rgb(" + c.map((x) => Math.round(x * 255)).join(",") + ")";
   const ROLE_CODE = { mass: 0, structure: 1, detail: 2, identity: 3, data: 4, ornament: 5, ground: 6, artwork: 7 };
   const EVENT_CODE = { scan: 1, sweep: 2, wave: 3, shimmer: 4, glitch: 5, brownout: 6, propagate: 7, tear: 8, burst: 9 };
   const EVENT_SECONDS = { scan: 2.6, sweep: 2.2, wave: 3.2, shimmer: 2.4, glitch: 0.7, brownout: 1.1, propagate: 2.4, tear: 0.9, burst: 2.0 };
@@ -55,7 +65,7 @@ uniform vec2 uViewport;      // device pixels of this viewport
 uniform float uDpr;
 uniform highp sampler2D uStyles;
 uniform vec3 uPalette[8];
-uniform vec3 uCertColor[7];
+uniform vec3 uCertColor[13];
 uniform float uMode;         // 0 light, 1 provenance
 uniform float uBuild;        // build progress 0..1 (beyond 1: complete)
 uniform float uTime;
@@ -505,7 +515,7 @@ void main() {
       const part = s[6] >= 0 ? g.parts[s[6]] : null;
       const own = g.style_colors && g.style_colors[i] ? hex(g.style_colors[i]) : [-1, -1, -1];
       st.set([s[0], s[1], s[2], s[3], s[4], s[5], s[6], s[7], s[8],
-              part ? CERT_CODE[provClass(part)] : 2, part ? ROLE_CODE[part.role] : 6,
+              part ? provCode(part) : 2, part ? ROLE_CODE[part.role] : 6,
               (this.moteStyle === i) ? 1 : 0, s.length > 9 ? s[9] : -1, own[0], own[1], own[2]], i * 16);
     });
     this.styleTex = gl.createTexture();
@@ -1082,16 +1092,43 @@ void main() {
     kinds.forEach(([k, label, axes]) => {
       const parts = geo.parts.filter((p) => provClass(p) === k);
       if (!parts.length) return;
-      const row = el("div", "row " + k); row.appendChild(el("span", "swatch")); row.appendChild(el("span", "", label + " · " + parts.length));
+      const row = el("div", "row " + k), sw = el("span", "swatch"), text = el("span", "", label + " · " + parts.length);
+      row.appendChild(sw); row.appendChild(text);
       legend.appendChild(row);
+      // the shades: deepest first, each with its count; one shade alone is said on the row itself
+      const shades = SHADES[k] ? SHADES[k].map((_, i) => SHADES[k].length - i).filter((l) => parts.some((p) => p.evidence === l)) : [];
+      const shade = (l) => rgbCss(CERT_RGB[CERT_CODE[k + "-" + l]]);
+      const checkedBy = (l) => {   // the comparisons that passed, for the deepest shade
+        if (l !== SHADES[k].length) return;
+        const refs = new Set(parts.filter((p) => p.evidence === l).map((p) => p.source));
+        (geo.provenance.checked || []).filter((c) => refs.has(c.reference) && sourceOf[c.reference]).forEach((c) => {
+          const src = el("div", "src", Math.round(c.iou * 100) + "% · " + sourceOf[c.reference].title);
+          src.title = sourceOf[c.reference].title;
+          legend.appendChild(src);
+        });
+      };
+      if (shades.length === 1) {
+        sw.style.background = shade(shades[0]);
+        text.textContent = label + " · " + SHADES[k][shades[0] - 1] + " · " + parts.length;
+        checkedBy(shades[0]);
+      } else if (shades.length > 1) {
+        sw.style.background = "linear-gradient(90deg," + shades.slice().reverse().map(shade).join(",") + ")";
+        shades.forEach((l) => {
+          const sub = el("div", "row sub"), s2 = el("span", "swatch");
+          s2.style.background = shade(l);
+          sub.appendChild(s2); sub.appendChild(el("span", "", SHADES[k][l - 1] + " · " + parts.filter((p) => p.evidence === l).length));
+          legend.appendChild(sub);
+          checkedBy(l);
+        });
+      }
       if (!axes) return;
       const ids = [...new Set(parts.flatMap((p) => axes.flatMap((ax) => cited(p, ax))))].filter((id) => sourceOf[id]);
-      ids.slice(0, 4).forEach((id) => {
+      ids.slice(0, 3).forEach((id) => {
         const src = el("div", "src", sourceOf[id].title);
         src.title = sourceOf[id].title;
         legend.appendChild(src);
       });
-      if (ids.length > 4) legend.appendChild(el("div", "src more", "+" + (ids.length - 4) + " MORE"));
+      if (ids.length > 3) legend.appendChild(el("div", "src more", "+" + (ids.length - 3) + " MORE"));
     });
     overlay.appendChild(legend);
     const help = el("div", "help", "drag orbit · wheel zoom · 1–6 views · R replay · M motion · P provenance · L labels · space pause");

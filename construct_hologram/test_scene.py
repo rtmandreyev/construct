@@ -1530,6 +1530,43 @@ class TwoAxes(unittest.TestCase):
         self.assertEqual(cls({"size": "traced", "shape": "inferred"}), "inferred")
 
 
+
+class Shades(unittest.TestCase):
+    """How firmly a guess is held to the real thing: what it cites, and a comparison that passed."""
+
+    def scene(self):
+        s = base()
+        s["sources"] += [{"id": "doc", "kind": "document", "title": "a page", "rights": "reference_only"},
+                         {"id": "photo", "kind": "reference_image", "title": "a photo", "rights": "reference_only"},
+                         {"id": "plan", "kind": "drawing", "title": "a plan", "rights": "reference_only"}]
+        s["facts"].append({"key": "len", "value": 2.0, "unit": "m", "certainty": "verified", "source": "doc"})
+        box = {"type": "box", "size": [0.2, 0.2, 0.2], "anchor": "base"}
+        for i, extra in enumerate([{}, {"source": "doc"}, {"source": "photo"}, {"source": "photo", "basis": ["len"]},
+                                   {"source": "plan", "certainty": "traced"}, {"certainty": "verified", "source": "doc"}]):
+            p = {"id": "p%d" % i, "role": "detail", "certainty": "inferred", "stage": 1, "shape": box, "at": [i * 0.3, 1, 0]}
+            p.update(extra)
+            s["parts"].append(p)
+        return s
+
+    def levels(self, s):
+        return {p["id"]: p.get("evidence") for p in scene.compile_scene(s)["parts"] if p["id"].startswith("p")}
+
+    def test_levels_from_what_a_part_cites(self):
+        self.assertEqual(self.levels(self.scene()), {"p0": 1, "p1": 2, "p2": 3, "p3": 4, "p4": 1, "p5": None})
+
+    def test_a_passing_comparison_checks_its_reference_on_this_version_only(self):
+        s = self.scene()
+        record = {"view": "top", "reference": "plan", "iou": 0.9, "edge": 0.01, "pass": True}
+        s["authoring"] = {"tier": "standard", "research": "off", "compare": [dict(record, scene_sha256=tiers.critic_hash(s))]}
+        g = scene.compile_scene(s)
+        self.assertEqual(next(p for p in g["parts"] if p["id"] == "p4")["evidence"], 2)
+        self.assertEqual(g["provenance"]["checked"], [{"reference": "plan", "view": "top", "iou": 0.9}])
+        s["authoring"]["compare"][0]["scene_sha256"] = "0" * 64   # made on another version
+        g = scene.compile_scene(s)
+        self.assertEqual(next(p for p in g["parts"] if p["id"] == "p4")["evidence"], 1)
+        self.assertNotIn("checked", g["provenance"])
+
+
 def body_trace():
     """A synthetic traced guitar-like outline in pixels (y down): 600 px tall, nut and bridge marked."""
     import math as m

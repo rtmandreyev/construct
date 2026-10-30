@@ -452,6 +452,32 @@
        }
       }
      }
+    },
+    "checked": {
+     "type": "array",
+     "description": "the silhouette comparisons that passed on this version of the scene",
+     "items": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+       "reference",
+       "view",
+       "iou"
+      ],
+      "properties": {
+       "reference": {
+        "type": "string"
+       },
+       "view": {
+        "type": "string"
+       },
+       "iou": {
+        "type": "number",
+        "minimum": 0,
+        "maximum": 1
+       }
+      }
+     }
     }
    },
    "required": [
@@ -776,6 +802,12 @@
         ]
        }
       }
+     },
+     "evidence": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 4,
+      "description": "how firmly an inferred (1 designed, 2 described, 3 seen, 4 seen and checked) or traced (1, 2 checked) part is held to the real thing"
      }
     },
     "required": [

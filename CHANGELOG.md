@@ -145,6 +145,13 @@ side, printed as worksheets and cited. Plan:
   now say what they knew: the FJ62 has 142 parts traced on its blueprint and 4 of verified size where
   it had 214 inferred; the buildings, modelled mostly from photographs, rightly stay mostly inferred.
   Their light view is unchanged (the compiled geometry is identical but for the certainty fields).
+- **Guesses in shades:** in the provenance view an inferred part is deeper amber the more firmly it is
+  held to the real thing: designed, described, seen (read from a picture of it), seen and checked (also
+  resting on a verified fact, or drawn from a reference a silhouette comparison passed against); a
+  traced part deepens to a strong blue once its reference's comparison passes. Computed from what the
+  scene already cites (geometry `evidence` per part, `provenance.checked`); the legend shows each shade
+  with its count and the comparisons that checked them. On the Duomo the measured facade stands out deep
+  against 98 pale spires that cite nothing.
 
 ## 1.0.0 — 2026-10-27
 

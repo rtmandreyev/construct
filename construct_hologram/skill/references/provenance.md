@@ -30,6 +30,12 @@ The construct's look tells the truth about what is known; the scene records why.
   reference (a blueprint, a plan, a patent elevation, a square-on overhead); `inferred` when it was
   read off a perspective photograph or designed. Looking for orthographic drawings is the fastest
   way to make a real object's construct more than a guess.
+- **Guesses come in shades.** The provenance view deepens an inferred part from designed (cites
+  nothing) through described (a document, a basis fact) and seen (read from a picture of it, cited as
+  its `source`) to seen and checked (also resting on a verified fact, or passing a silhouette
+  comparison, `construct compare --record`); a traced part deepens once its reference's comparison
+  passes. So cite on every part the picture or page you read it from: a part modelled from a photo
+  that does not cite it shows as designed.
 - **Unknown stays unknown.** A fact you do not know is not written at all (never `null`, a
   placeholder or a plausible guess), and nothing is labelled with it.
 

@@ -76,6 +76,26 @@ def overall_certainty(part):
     return min(certainty_axes(part), key=lambda v: STRENGTH.get(v, -1))
 
 
+# how firmly a guess is held to the real thing (the provenance view's shade): what it was read from, a
+# verified fact it rests on, a passing silhouette comparison with its reference
+PICTURE_SOURCES = ("reference_image", "drawing", "observation", "measurement", "dataset")
+WORD_SOURCES = ("document", "user_request", "user_supplied")
+
+
+def evidence_level(part, source_kind, fact_cert, checked):
+    """Inferred: 1 designed, 2 described, 3 seen (read from a picture of it), 4 seen and checked (and held by a
+    verified fact or a passing comparison). Traced: 1, or 2 when checked. None for anything else."""
+    cls, src = provenance_class(part), part.get("source")
+    held = any(fact_cert.get(b) in ("verified", "user_supplied") for b in part.get("basis", []))
+    if cls == "traced":
+        return 2 if src in checked else 1
+    if cls != "inferred":
+        return None
+    if source_kind.get(src) in PICTURE_SOURCES:
+        return 4 if held or src in checked else 3
+    return 2 if held or source_kind.get(src) in WORD_SOURCES or part.get("basis") else 1
+
+
 def provenance_class(part):
     """What the provenance view shows: verified (both axes), size_verified, shape_verified, or the one word."""
     size, shape = certainty_axes(part)
@@ -1605,6 +1625,13 @@ def compile_scene(scene, solid=False):
                 joints.append(chain)
             joint_of[part["id"]] = joints.index(chain)
 
+    from . import tiers
+    source_kind = {s["id"]: s["kind"] for s in scene["sources"]}
+    fact_cert = {f["key"]: f["certainty"] for f in scene["facts"]}
+    current = tiers.critic_hash(scene)
+    passed = [{"reference": c["reference"], "view": c["view"], "iou": c["iou"]}
+              for c in scene.get("authoring", {}).get("compare", []) if c["pass"] and c["scene_sha256"] == current]
+    checked = {c["reference"] for c in passed}   # references a current silhouette comparison passed against
     styles, style_key, style_colors = [], {}, []   # a part's own colour (look.color), beside its tone
     lines, fills, points, motions, artwork = [], [], [], [], []
     part_out = []
@@ -1632,6 +1659,9 @@ def compile_scene(scene, solid=False):
                  "joint": joint_of.get(part["id"], -1)}
         if isinstance(part["certainty"], dict):
             pinfo["certainty_axes"] = {"size": part["certainty"]["size"], "shape": part["certainty"]["shape"]}
+        level = evidence_level(part, source_kind, fact_cert, checked)
+        if level is not None:
+            pinfo["evidence"] = level
         sprite_px = part["shape"].get("size_px", 5 if part["shape"]["type"] == "points" else 9)
         for inst_i, (xf, phase, mirrored, carry) in enumerate(_instances(part)):
             slot = -1
@@ -1852,7 +1882,8 @@ def compile_scene(scene, solid=False):
         "scene_sha256": canonical_sha256(scene),
         "provenance": {"sources": [dict(s) for s in scene["sources"]], "facts": [dict(f) for f in scene["facts"]],
                        "assets": [dict(a) for a in scene.get("assets", [])],
-                       **({"authoring": json.loads(json.dumps(scene["authoring"]))} if scene.get("authoring") else {})},
+                       **({"authoring": json.loads(json.dumps(scene["authoring"]))} if scene.get("authoring") else {}),
+                       **({"checked": passed} if passed else {})},
         **({"reading": reading} if reading else {}),
         "bounds": {"min": [_r(x) for x in lo], "max": [_r(x) for x in hi], "center": centre, "radius": radius,
                    "open_min": [_r(x) for x in open_lo], "open_max": [_r(x) for x in open_hi]},
