@@ -465,6 +465,21 @@ class Views(unittest.TestCase):
         with self.assertRaises(netlogo.NetLogoError):
             netlogo.read_run(Path(self.tmp.name, "bad.jsonl"))
 
+    def test_a_long_title_and_links_that_are_gone_by_the_end(self):
+        long = recording(Path(self.tmp.name, "long.jsonl"), header={"title": "Wolf Sheep Predation - Micro-Sims Cognitive Model"})
+        sc = netlogo.scene_from_run(netlogo.read_run(long), "auto")
+        self.assertLessEqual(len(sc["id"]), 64)
+        self.assertEqual(scene.validate(sc), [])
+        path = Path(self.tmp.name, "unlinked.jsonl")
+        recording(path)
+        lines = path.read_text(encoding="utf-8").splitlines()
+        row = json.loads(lines[-2])
+        row["links"] = []   # every link removed before the end
+        lines[-2] = json.dumps(row)
+        path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+        view, _, _ = netlogo.choose_view(netlogo.read_run(path))
+        self.assertNotEqual(view, "network-time")
+
     def test_the_examples_are_valid_and_credited(self):
         for slug in ("netlogo-flocking", "netlogo-wolf-sheep", "netlogo-fire", "netlogo-virus-on-a-network",
                      "netlogo-virus-compare", "netlogo-fireflies"):

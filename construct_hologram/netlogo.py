@@ -887,7 +887,7 @@ def choose_view(run, exclude=()):
     turned (network-time), patches that changed (field), two counts that move (phase), else the agents' paths."""
     h, frames = run["header"], run["frames"]
     last = frames[-1]["t"] or 1
-    links = any(f.get("links") for f in frames)
+    links = next((f["links"] for f in reversed(frames) if "links" in f), None)   # the links at the end, as drawn
     if links:
         best = None
         for i, var in enumerate(h.get("turtle-vars", [])):
@@ -1104,7 +1104,8 @@ def scene_from_run(run, view, title=None, **opts):
                                                "near there for the rest of the run. The whole run is in the recording "
                                                "(and in the film); --window whole draws all of it." % (
                                                    window["measure"], window["start"], window["reached"], last)})
-    slug = re.sub(r"[^a-z0-9]+", "-", title.lower()).strip("-")[:48] or "netlogo-run"
+    room = 64 - len("netlogo--") - len(view)   # a scene id is at most 64 characters
+    slug = re.sub(r"[^a-z0-9]+", "-", title.lower()).strip("-")[:room].strip("-") or "netlogo-run"
     sc = {
         "format": product.SCENE_FORMAT, "version": 2, "id": "netlogo-%s-%s" % (slug, view), "title": title,
         "subject": {"category": "other", "accuracy": "documented", "synthetic": False,
