@@ -579,6 +579,13 @@ class Hosts(unittest.TestCase):
         with self.assertRaisesRegex(export.ExportError, "quality"):
             glb_of(load("cd"), quality=True, merge=True)
 
+    def test_what_holds_the_glass_is_not_glass(self):
+        # seen in a live run: a part named windscreen-frame was taken for glass, and its kit piece for clear plastic
+        self.assertTrue(export.is_glass_name("windscreen"))
+        self.assertTrue(export.is_glass_name("side-window-left"))
+        for pid in ("windscreen-frame", "window-crank", "window-seal-left", "visor-hinge"):
+            self.assertFalse(export.is_glass_name(pid), pid)
+
     def test_pieces_copies_apart_interlocked_parts_together(self):
         def part(pid, size, at, **kw):
             return dict({"id": pid, "role": "mass", "certainty": "inferred", "stage": 0,

@@ -446,7 +446,10 @@ def _emit(obj):
         data = json.dumps({
             "jsonrpc": "2.0",
             "id": obj.get("id"),
-            "error": {"code": -32603, "message": "response too large"},
+            "error": {"code": -32603, "message": "response too large: %.1f MB, the limit is %d MB. A print or a model this "
+                      "large: make it smaller (size, scale, a coarser detail) or write it with the command line "
+                      "(construct print / construct export), which has no limit" % (
+                          len(data.encode("utf-8")) / 1048576.0, MAX_RESPONSE_BYTES // 1048576)},
         }, separators=(",", ":"))
     sys.stdout.write(data + "\n")
     sys.stdout.flush()

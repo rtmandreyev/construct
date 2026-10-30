@@ -71,10 +71,11 @@ def to_crs(crs, lat, lon):
     raise TerrainError("unsupported reference system %r (EPSG:2056, EPSG:326xx/327xx or EPSG:4326)" % crs)
 
 
-def guess_crs(x, y):
+def guess_crs(x, y, cell=None):
     if 2.4e6 < x < 2.9e6 and 1.0e6 < y < 1.4e6:
         return "EPSG:2056"
-    if -180 <= x <= 180 and -90 <= y <= 90:
+    if -180 <= x <= 180 and -90 <= y <= 90 and not (cell is not None and cell >= 0.5):
+        # a grid in degrees has cells of arc-seconds; cells of half a degree or more are metres near an origin
         return "EPSG:4326"
     raise TerrainError("cannot tell the grid's reference system: give --crs (EPSG:2056, EPSG:326xx or EPSG:4326)")
 
@@ -118,13 +119,19 @@ def read_asc(path):
         cols, rows, cell = int(head["ncols"]), int(head["nrows"]), head["cellsize"]
     except KeyError:
         raise TerrainError("not an ESRI ASCII grid (ncols, nrows, cellsize missing)")
+    if cols < 2 or rows < 2 or not cell > 0:
+        raise TerrainError("ncols and nrows: at least 2; cellsize: a positive number")
     if len(data) != rows * cols:
         raise TerrainError("the grid holds %d values, expected %d" % (len(data), rows * cols))
     nodata = head.get("nodata_value")
     x0 = head["xllcenter"] if "xllcenter" in head else head.get("xllcorner", 0.0) + cell / 2
     y0 = head["yllcenter"] if "yllcenter" in head else head.get("yllcorner", 0.0) + cell / 2
-    vals = [float(v) for v in data]
-    z = [[None if nodata is not None and v == nodata else v for v in vals[r * cols:(r + 1) * cols]] for r in range(rows)]
+    try:
+        vals = [float(v) for v in data]
+    except ValueError as exc:
+        raise TerrainError("the grid holds a value that is not a number: %s" % exc)
+    z = [[None if (nodata is not None and v == nodata) or not math.isfinite(v) else v
+          for v in vals[r * cols:(r + 1) * cols]] for r in range(rows)]
     return Grid(x0, y0 + (rows - 1) * cell, cell, z, nodata)
 
 
@@ -306,7 +313,12 @@ def build(dem, center=None, extent=None, bbox=None, crs=None, resolution=72, cls
     else:
         grid = None
         fx, fy, _ = first_point(dem)
-    crs = crs or guess_crs(fx, fy)
+    if not crs:
+        try:
+            cell = grid.cell if grid else _cell_of(next(iter(dem_files(dem))))
+        except (TerrainError, StopIteration):
+            cell = None
+        crs = guess_crs(fx, fy, cell)
     if bbox:
         xmin, ymin, xmax, ymax = bbox
     elif center and extent:

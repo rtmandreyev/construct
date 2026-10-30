@@ -470,7 +470,7 @@ def build_book(b, var, p):
     size = b.dim("book.size", "%g x %g x %g" % (W, H, T))
     who = b.creator()
     hard = var == "hardcover"
-    bt = 0.003 if hard else 0.0006
+    bt = min(0.003 if hard else 0.0006, T / 4)   # a thin book keeps half its thickness for the pages
     b.part("back-board", "structure", _box([W, H, bt]), (0, H / 2, -T / 2 + bt / 2), 0, basis=[size],
            artwork=b.slot("cover-back", face="back"))
     inset = 0.004 if hard else 0.001
@@ -738,6 +738,9 @@ def build_vessel(b, var, p):
         fill = p["fill"]
         y0 = h * (0.05 if style != "tulip" else 0.32)
         top = y0 + (h - y0) * fill * 0.93
+    if var == "glass" and top - y0 < 0.002:   # an empty glass: no beer, foam or bubbles
+        pass
+    elif var == "glass":
         inner = [(r * 0.93, y) for r, y in prof if y0 < y < top]
         inner = [(_radius_at(prof, y0) * 0.93, y0)] + inner + [(_radius_at(prof, top) * 0.93, top)]
         b.part("beer", "data", {"type": "lathe", "profile": [[round(r, 5), round(y, 5)] for r, y in inner],

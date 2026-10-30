@@ -26,7 +26,7 @@ GALLERY = ["lighthouse.json", "turntable.json", "lantern-jellyfish.json", "cd.js
 
 def page(name, tmp):
     import json
-    doc = json.loads((EX / name).read_text())
+    doc = json.loads((EX / name).read_text(encoding="utf-8"))
     if params.is_params(doc):
         doc = params.expand(doc)
     html, _ = render.build_html(scene.compile_scene(doc), str(EX))

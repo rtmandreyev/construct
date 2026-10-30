@@ -116,7 +116,9 @@ def record(scene, doc, model=None):
     """Write the critique into the scene's authoring block; returns (scene, verdict)."""
     items = validate_items(doc)
     if items:
-        raise CriticError("not a valid critique:\n" + "\n".join("%s: %s" % (i["where"], i["message"]) for i in items))
+        from . import scene as scene_mod
+        raise CriticError("not a valid critique:\n" + "\n".join("%s: %s" % (scene_mod.named(i["where"], "critique"), i["message"])
+                                                                 for i in items))
     if doc["scene_sha256"] != tiers.critic_hash(scene):
         raise CriticError("the critique is for another version of this scene: build a new packet and critique again")
     v = verdict(doc)
@@ -146,11 +148,13 @@ def record(scene, doc, model=None):
 # ---------------------------------------------------------------------------- the packet
 
 def parse_references(refs):
-    """["side=photo.jpg", "front=https://...", "photo.jpg"] -> [(view or None, ref)]."""
+    """["side=photo.jpg", "ref-front34=photo.jpg", "front=https://...", "photo.jpg"] -> [(view or None, ref)]:
+    a view is one of VIEWS or one of the scene's own views (an id: lower case, digits, . _ -)."""
+    import re
     out = []
     for r in refs or ():
         view, sep, path = r.partition("=")
-        if sep and view in VIEWS and not view.startswith(("http", "/")):
+        if sep and path and re.fullmatch(r"[a-z0-9][a-z0-9._-]{0,63}", view):
             out.append((view, path))
         else:
             out.append((None, r))
@@ -176,6 +180,13 @@ def packet(scene_path, out_dir, references=(), request=None, width=1280, height=
     studio.build(str(scene_path), str(build_dir))
     html = studio.page_in(build_dir)
     refs = parse_references(references)
+    pres = scene.get("presentation") if isinstance(scene.get("presentation"), dict) else {}
+    own = {v.get("id") for v in (pres.get("views") if isinstance(pres.get("views"), list) else [])
+           if isinstance(v, dict) and isinstance(v.get("id"), str)}
+    unknown = sorted({v for v, _ in refs if v and v not in VIEWS and v not in own})
+    if unknown:
+        raise CriticError("reference view %s is not a view of this scene: use one of %s"
+                          % (", ".join(repr(v) for v in unknown), ", ".join(list(VIEWS) + sorted(own))))
     views = sorted({v for v, _ in refs if v and v != "hero"} | {"front", "side", "top"})
     shots = render.review(html, str(renders), width, height, sheets=("views", "assembly"), browser=browser)
     shots += render.stills(html, str(renders), views, width, height, browser=browser)

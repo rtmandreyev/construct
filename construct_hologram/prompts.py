@@ -561,8 +561,8 @@ def params_schema():
 
 def build():
     """Every file of the package, as {name: text}."""
-    golden = json.loads((HERE / "examples" / "v2" / "case-jewel.params.json").read_text())
-    scene_example = json.loads((HERE / "examples" / "v2" / "book.json").read_text())
+    golden = json.loads((HERE / "examples" / "v2" / "case-jewel.params.json").read_text(encoding="utf-8"))
+    scene_example = json.loads((HERE / "examples" / "v2" / "book.json").read_text(encoding="utf-8"))
     # the example shows what an author writes: no host-owned presentation or timing
     scene_example["presentation"] = {"views": scene_example["presentation"]["views"]}
     scene_example.pop("animation", None)

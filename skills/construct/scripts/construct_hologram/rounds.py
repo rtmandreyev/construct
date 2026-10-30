@@ -398,7 +398,9 @@ def record(folder, answer, scene_path=None, model=None, now=None):
     key = _load(rd, "key.json", None)
     items = validate(answer, first=key is None, ids=ids)
     if items:
-        raise RoundsError("not a valid round answer:\n" + "\n".join("%s: %s" % (i["where"], i["message"]) for i in items))
+        from . import scene as scene_mod
+        raise RoundsError("not a valid round answer:\n" + "\n".join("%s: %s" % (scene_mod.named(i["where"], "answer"), i["message"])
+                                                                     for i in items))
     if answer["scene_sha256"] != tiers.critic_hash(doc):
         raise RoundsError("the answer is for another version: make the round's packet again")
     _save(rd, "round.json", answer)

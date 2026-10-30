@@ -110,6 +110,56 @@ class Validation(unittest.TestCase):
         self.assertTrue(scene.validate(s))
 
 
+class Malformed(unittest.TestCase):
+    """Found by fuzzing the gallery's scenes: a malformed scene is answered with errors, never a crash."""
+
+    def test_values_of_the_wrong_type_are_errors(self):
+        for mutate in (lambda s: s["facts"].__setitem__(0, dict(s["facts"][0], key=["a"])),     # a list where a key goes
+                       lambda s: s["facts"].__setitem__(0, dict(s["facts"][0], certainty="verified", source={"a": 1})),
+                       lambda s: s["parts"][0].__setitem__("source", [1, 2]),
+                       lambda s: s.__setitem__("presentation", 1e308),
+                       lambda s: s["parts"][0].__setitem__("id", 5.5),
+                       lambda s: s["parts"][0]["shape"].__setitem__("type", ["box"]),
+                       lambda s: s.__setitem__("labels", [{"id": "l", "part": "body", "face": "front", "field": {"a": 1}}]),
+                       lambda s: s.__setitem__("authoring", {"tier": "standard", "research": "done", "sources": [["req"]]}),
+                       lambda s: s["parts"][0].update(certainty="verified", basis=1.5),
+                       lambda s: s["parts"][0].__setitem__("shape", {"type": "loft", "sections": [[-1, 0.5, 0, 1],
+                                                                                                   [1, 1e308, 0, 1]]})):
+            sc = base()
+            mutate(sc)
+            errs = scene.validate(sc)
+            self.assertTrue(errs)
+            self.assertFalse(any("could not be checked" in e for e in errs), errs)   # answered by the checks themselves
+            diagnose.diagnose(sc)
+
+    def test_brackets_nested_thousands_deep_are_a_diagnosis(self):
+        doc, diags = diagnose.parse_text("[" * 100000 + "]" * 100000)
+        self.assertIsNone(doc)
+        self.assertIn("nested too deeply", diags[0]["message"])
+
+    def test_path_points_and_series_values_are_finite_and_in_range(self):
+        sc = base()
+        sc["parts"].append({"id": "p", "role": "detail", "certainty": "inferred", "stage": 1,
+                            "shape": {"type": "paths", "paths": [[[0, 0, 0], [-1e308, 1, 0]]]}})
+        self.assertTrue(any("paths" in e for e in scene.validate(sc)))
+        sc = base()
+        sc["reading"] = {"clock": {"label": "tick", "from": 0, "to": 10, "top": 1},
+                         "series": [{"name": "n", "values": [[0, float("nan")]]}]}
+        self.assertTrue(any("finite" in e for e in scene.validate(sc)))
+        del sc["reading"]["clock"]["label"]   # a missing key is reported, and nothing below reads it
+        errs = scene.validate(sc)
+        self.assertTrue(any("missing key 'label'" in e for e in errs))
+        self.assertFalse(any("could not be checked" in e for e in errs), errs)
+
+    def test_a_title_that_names_a_template_marker_stays_text(self):
+        sc = json.loads((EXAMPLES / "cd.json").read_text())
+        sc["title"] = "A CD __VIEWER__ __GEOMETRY__ __ASSETS__ </script><b>"
+        html, _ = render.build_html(scene.compile_scene(sc))
+        start = html.index('type="application/json">') + len('type="application/json">')
+        self.assertEqual(json.loads(html[start:html.index("</script>", start)])["title"], sc["title"])
+        self.assertEqual(html.count("Hologram.prototype.upload"), 1)
+
+
 class Compilation(unittest.TestCase):
     def test_deterministic(self):
         sc = studio.load(str(EXAMPLES / "lantern-jellyfish.json"))
@@ -553,6 +603,16 @@ class Diagnostics(unittest.TestCase):
 
 class Parametric(unittest.TestCase):
     """The simple path: a short parameter document becomes a clean, house-style scene."""
+
+    def test_every_value_inside_a_range_builds_a_valid_scene(self):
+        # found by fuzzing: a 3 mm hardcover had no room for its pages, an empty glass bubbles in no space
+        for golden, key, value in (("book-hardcover", "thickness", 0.003), ("vessel-glass", "fill", 0.0),
+                                   ("vessel-glass", "fill", 0.01)):
+            doc = json.loads((EXAMPLES / ("%s.params.json" % golden)).read_text())
+            doc.setdefault("params", {})[key] = value
+            self.assertEqual(params.validate_items(doc), [])
+            sc = params.expand(doc)
+            self.assertEqual(scene.validate(sc), [], (golden, key, value))
 
     def test_every_variant_template_builds_a_clean_scene(self):
         for arch, variants in params.VARIANTS.items():
@@ -1680,6 +1740,19 @@ def synthetic_dem(folder, n=81, cell=40.0):
 
 
 class Terrain(unittest.TestCase):
+
+    def test_a_metric_grid_near_the_origin_is_not_taken_for_degrees(self):
+        # found by feeding it a 10 m grid at (0, 0): it came out 2192 km wide, its metres read as degrees
+        self.assertEqual(terrain.guess_crs(8.5, 46.9, 0.00028), "EPSG:4326")      # an arc-second grid in degrees
+        with self.assertRaisesRegex(terrain.TerrainError, "--crs"):
+            terrain.guess_crs(5.0, 5.0, 10.0)
+        with tempfile.TemporaryDirectory() as d:
+            p = Path(d, "g.asc")
+            p.write_text("ncols 2\nnrows 2\nxllcorner 0\nyllcorner 0\ncellsize 10\n1 nan\n3 4\n", encoding="utf-8")
+            self.assertIsNone(terrain.read_asc(p).z[0][1])                          # not a number: no data
+            p.write_text("ncols -3\nnrows 2\ncellsize 0\n1 2 3\n", encoding="utf-8")
+            with self.assertRaisesRegex(terrain.TerrainError, "at least 2"):
+                terrain.read_asc(p)
     def test_reference_systems(self):
         from . import terrain
         e, n = terrain.wgs84_to_lv95(46 + 2 / 60 + 38.87 / 3600, 8 + 43 / 60 + 49.79 / 3600)  # swisstopo's worked example
@@ -2164,6 +2237,25 @@ class Capture(unittest.TestCase):
             text = Path(d, "critique", "packet.md").read_text()
             self.assertIn(pk["scene_sha256"], text)
             self.assertIn("construct-critique", text)
+
+    def test_a_reference_keyed_to_the_scenes_own_view_travels_with_the_packet(self):
+        # seen in a live run: `ref-front34=photo.jpg` (a view of the scene) was taken whole as a path, so the photo
+        # never reached the packet and its absolute path did
+        self.assertEqual(critic.parse_references(["ref-front34=a.jpg", "side=b.png", "https://x/y?a=b", "c.png"]),
+                         [("ref-front34", "a.jpg"), ("side", "b.png"), (None, "https://x/y?a=b"), (None, "c.png")])
+        scene = json.loads((EXAMPLES / "cd.json").read_text())
+        own = scene["presentation"]["views"][0]["id"]
+        with tempfile.TemporaryDirectory() as d:
+            from . import png as png_mod
+            ref = Path(d, "photo.png")
+            ref.write_bytes(png_mod.encode(8, 8, lambda x, y: (x * 30, y * 30, 90)))
+            path = Path(d, "scene.json")
+            path.write_text(json.dumps(scene))
+            pk = critic.packet(str(path), str(Path(d, "critique")), ["%s=%s" % (own, ref)], "a CD")
+            self.assertEqual(pk["pairs"][0], {"view": own, "reference": str(ref), "render": "renders/still-%s.png" % own})
+            self.assertTrue(Path(d, "critique", "renders", "still-%s.png" % own).exists())
+            with self.assertRaisesRegex(critic.CriticError, "not a view of this scene"):
+                critic.packet(str(path), str(Path(d, "critique2")), ["nowhere=%s" % ref], "a CD")
 
     def test_hero_is_the_fitted_whole_object_even_mid_tour(self):
         # a tour that flies close to a small part right when the hero is taken must not decide it

@@ -150,6 +150,16 @@ def box_uvs(tris):
 
 # a part named for its glazing gets glass when no material map says otherwise
 GLASS_WORDS = ("glass", "glazing", "window", "windscreen", "windshield", "visor", "canopy")
+# what holds or works the glass is not glass: a windscreen frame, a window seal or crank
+NOT_GLASS_WORDS = ("frame", "surround", "seal", "rim", "trim", "bezel", "pillar", "post", "wiper", "rubber", "gasket",
+                   "divider", "rail", "channel", "washer", "crank", "winder", "regulator", "sill", "lever", "hinge",
+                   "catch", "latch", "handle", "bracket", "mount", "stay", "strut", "louvre", "shade", "blind", "sticker")
+
+
+def is_glass_name(pid):
+    """Whether a part's id names glass (a windscreen, a side window), not what holds it (a windscreen frame)."""
+    low = pid.lower()
+    return any(w in low for w in GLASS_WORDS) and not any(w in low for w in NOT_GLASS_WORDS)
 
 
 def _tube(a, b, r):
@@ -627,7 +637,7 @@ def to_gltf(g, wire="edges", pose="closed", materials=None, wire_radius=None, me
             if any(fnmatch.fnmatchcase(part["id"], p) for p in r["patterns"]):
                 return material(("map", r["name"]), (r["name"], r["color"], r["metallic"], r["roughness"],
                                                      r["emissive"], False), r)
-        if any(w in part["id"].lower() for w in GLASS_WORDS):
+        if is_glass_name(part["id"]):
             f = FINISHES["glass"]
             return material(("glass", None), ("construct:glass", _hex("#cfd8de", "glass"), f["metallic"],
                                               f["roughness"], None, False), dict(f, finish="glass"))

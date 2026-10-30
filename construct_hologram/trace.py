@@ -122,7 +122,8 @@ def fit(doc, fit_spec, origin="bottom-center", points=96):
     """
     items = validate_items(doc)
     if items:
-        raise TraceError("\n".join("%s: %s" % (i["where"], i["message"]) for i in items))
+        from . import scene as scene_mod
+        raise TraceError("\n".join("%s: %s" % (scene_mod.named(i["where"], "trace"), i["message"]) for i in items))
     try:
         what, metres = fit_spec.split("=")
         metres = float(metres)
@@ -210,7 +211,9 @@ def stations(side, top, length, front=None, height=None, width=None, count=24, n
         if doc is not None:
             items = validate_items(doc)
             if items:
-                raise TraceError("%s trace: %s" % (name, "; ".join("%s: %s" % (i["where"], i["message"]) for i in items)))
+                from . import scene as scene_mod
+                raise TraceError("%s trace: %s" % (name, "; ".join("%s: %s" % (scene_mod.named(i["where"], "trace"), i["message"])
+                                                                   for i in items)))
     if not 0.2 <= length <= 100:
         raise TraceError("length must be within 0.2..100 m")
     count = max(6, min(int(count), 60))

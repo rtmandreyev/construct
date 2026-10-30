@@ -64,13 +64,32 @@ Every fact and every part in a construct is marked with how it is known:
 | --- | --- |
 | **verified** | taken from a source the scene cites, such as a maker's specification or a published dataset |
 | **user-supplied** | something you told the agent, such as the title of your own book |
-| **inferred** | designed by the model from what it knew or measured from a photo; most parts of most constructs |
+| **traced** | fitted to an orthographic drawing (a blueprint, a plan, an elevation) whose scale a verified size sets |
+| **inferred** | designed by the model from what it knew or read off a photograph; most parts of most constructs |
 | **decorative** | added for presentation and not a claim about the real thing |
 
+A part can answer for its size and its shape apart: a car body whose length a specification gives
+and whose outline was traced on a blueprint is *size verified*, shape traced.
+
 In the normal view the marks are subtle: verified and user-supplied parts are drawn at full
-brightness, inferred parts a little softer, and decorative parts dotted. Press **P** for the provenance view, which colours every part by its mark and shows a
-legend. Saturn is a good one to try: its rings come from published measurements and show as
-verified, while its cloud bands are the model's own design.
+brightness, inferred and traced parts a little softer, and decorative parts dotted. Press **P** for the
+provenance view, which colours every part by its mark and shows a legend:
+
+| Colour | Part |
+| --- | --- |
+| white | verified, size and shape |
+| cyan | size verified (the shape traced or inferred) |
+| violet | shape verified (from a drawing, a measurement or a dataset) |
+| blue | traced; strong blue once a silhouette comparison with its drawing passed |
+| amber, pale to deep | inferred: designed (cites nothing), described (a document or a fact), seen (read from a picture of it), seen and checked (also held by a verified fact or a passing comparison) |
+| green | user-supplied |
+| magenta, dotted | decorative |
+
+The legend counts the parts of each kind and names the sources behind the verified ones and the
+comparisons that checked them; a construct's own note on its evidence, if it has one, appears under
+its caption. Saturn is a good
+one to try: its rings come from published measurements and show as verified, while its cloud bands
+are the model's own design.
 
 ## Detail where it counts
 

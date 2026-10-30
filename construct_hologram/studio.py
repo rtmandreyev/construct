@@ -875,6 +875,11 @@ def run(args):
             if not (args.out or args.blend):
                 sys.stderr.write("netlogo-film: --out film.mp4, --blend film.blend, or both\n")
                 return 1
+            try:   # read it here first: a bad recording is refused without starting Blender
+                runfilm.read(args.run)
+            except (ValueError, KeyError, TypeError) as exc:
+                sys.stderr.write("netlogo-film: %s\n" % exc)
+                return 1
             blender = runfilm.find_blender(args.blender)
             if not blender:
                 sys.stderr.write("netlogo-film: Blender was not found; install it (blender.org) or pass --blender PATH "
@@ -1022,10 +1027,12 @@ def run(args):
                 sys.stderr.write("print: --out FILE.stl or FILE.3mf (or --printers to compare printers)\n")
                 return 1
             try:
-                r = printing.write(load(args.scene), args.out, args.format, size=args.size or printing.SIZE_MM,
-                                   scale=args.scale, fit=args.fit,
-                                   detail=args.detail or (pr["detail"] if args.printer else printing.DETAIL_MM),
-                                   wall=args.wall or (pr["wall"] if args.printer else printing.WALL_MM), join=args.join,
+                r = printing.write(load(args.scene), args.out, args.format,
+                                   size=printing.SIZE_MM if args.size is None else args.size, scale=args.scale, fit=args.fit,
+                                   detail=args.detail if args.detail is not None else
+                                   (pr["detail"] if args.printer else printing.DETAIL_MM),
+                                   wall=args.wall if args.wall is not None else
+                                   (pr["wall"] if args.printer else printing.WALL_MM), join=args.join,
                                    lines=args.lines, bed=bed, coarsen=bool(args.printer or args.fit), exact=args.exact)
             except printing.PrintError as exc:
                 sys.stderr.write("print: %s\n" % exc)

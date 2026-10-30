@@ -89,6 +89,10 @@ def parse_text(text):
             hint = "Remove the trailing comma before the closing bracket."
         diags.append(_diag("error", "json", "$", "not valid JSON at line %d column %d: %s" % (exc.lineno, exc.colno, exc.msg), hint))
         return None, diags
+    except RecursionError:   # brackets nested thousands deep: no scene is shaped like that
+        diags.append(_diag("error", "json", "$", "nested too deeply to read (thousands of brackets inside each other)",
+                           "Send a scene: one object of facts and parts, a few levels deep."))
+        return None, diags
     for k in sorted(set(dupes)):
         diags.append(_diag("error", "duplicate-key", "$", "the key %r appears twice in one object" % k,
                            "Keep one %r per object; merge the two." % k))
@@ -108,7 +112,8 @@ def diagnose(scene, prior=()):
     for item in items:
         diags.append(_diag("error", item["code"], _path(item["where"]), item["message"], item["hint"]))
     geometry = None
-    hint = (scene.get("presentation") or {}).get("style_hint") if isinstance(scene, dict) else None
+    pres = scene.get("presentation") if isinstance(scene, dict) else None
+    hint = pres.get("style_hint") if isinstance(pres, dict) else None
     if hint:
         diags.append(_diag("warning", "style-hint-ignored", "$.presentation.style_hint",
                            "style_hint is ignored: every construct renders in the house palette",

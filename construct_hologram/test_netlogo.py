@@ -106,7 +106,49 @@ def recording(path, frames=12, header=None, **extra):
     return path
 
 
+class Legend(unittest.TestCase):
+    def test_a_run_of_many_colours_keeps_within_the_scenes_annotations(self):
+        # found by the Models Library check: Fish Spotters HubNet's colours made 33 legend labels and its scene refused
+        parts = [{"id": "p%d" % i, "label": "Part %d" % i, "source": "run", "role": "data",
+                  "shape": {"type": "paths", "paths": [[[i, 0, 0], [i, 1, 0]] * (1 + i % 7)]}} for i in range(40)]
+        legend = netlogo._legend(parts)
+        self.assertEqual(len(legend), netlogo.LEGEND_MAX)
+        art = [{"id": "art-%d" % i, "part": "p0", "text": "x"} for i in range(12)]
+        capped = netlogo._capped(legend + art)
+        self.assertEqual(len(capped), 32)
+        self.assertEqual(sum(a["id"].startswith("art-") for a in capped), 12)   # the art layer's labels are kept
+
+
+class Recordings(unittest.TestCase):
+    """Found by fuzzing recordings: a NaN (a reporter divided by zero) or a line that is not an object is refused at
+    the line it is on, before anything is drawn or Blender is started."""
+
+    def test_nan_and_non_objects_are_refused(self):
+        head = '{"construct-netlogo":1,"title":"t","netlogo":"7.0.4","world":{"min-pxcor":-1,"max-pxcor":1,"min-pycor":-1,"max-pycor":1}}'
+        for bad, words in (('{"t":0,"reporters":[NaN,1]}', "NaN"), ("42", "expected an object")):
+            with self.assertRaisesRegex(netlogo.NetLogoError, words):
+                netlogo.parse_run(head + "\n" + bad + "\n")
+        from . import runfilm
+        with tempfile.TemporaryDirectory() as d:
+            p = Path(d, "r.jsonl")
+            p.write_text(head + "\n" + '{"t":0,"turtles":[[0,"t",Infinity,0,15,false]]}' + "\n", encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "Infinity"):
+                runfilm.read(str(p))
+
+
 class Instrument(unittest.TestCase):
+    def test_a_button_that_calls_a_missing_procedure_is_refused(self):
+        # found by feeding it broken models: a setup button over code with no `to setup` was instrumented anyway
+        buttons = ('<button x="5" y="5" height="40" width="80" forever="false" kind="Observer">setup</button>'
+                   '<button x="5" y="50" height="40" width="80" forever="true" kind="Observer">go</button></widgets>')
+        renamed = MODEL.replace("to setup", "to start-up").replace("</widgets>", buttons)
+        with self.assertRaisesRegex(netlogo.NetLogoError, "no `to setup`.*start-up"):
+            netlogo.instrument(renamed, "T", "run.jsonl")
+        empty = MODEL.split("<![CDATA[")[0] + "<![CDATA[]]>" + MODEL.split("]]>")[1].replace("</widgets>", buttons)
+        with self.assertRaisesRegex(netlogo.NetLogoError, "defines no procedures"):
+            netlogo.instrument(empty, "T", "run.jsonl")
+        netlogo.instrument(MODEL.replace("</widgets>", buttons), "T", "run.jsonl")   # the same buttons over real code
+
     def test_adds_the_include_the_recording_and_an_experiment(self):
         model, xml = netlogo.instrument(MODEL, "Contagion", "run.jsonl", ["infected?"], ["count turtles"],
                                         ("pcolor", 5), seed=9, ticks=50)

@@ -242,12 +242,12 @@ def check(c, a, source_ids, scene_sources, where="scene.authoring"):
     if not isinstance(used, list) or len(used) > CEILING["sources"] + CEILING["images"]:
         c.err(where + ".sources", "expected a list of source ids", "type", '["maker-specs", "ref-front"]')
         used = []
-    kinds = {s.get("id"): s.get("kind") for s in scene_sources if isinstance(s, dict)}
+    kinds = {s.get("id"): s.get("kind") for s in scene_sources if isinstance(s, dict) and isinstance(s.get("id"), str)}
     for i, sid in enumerate(used):
         if sid not in source_ids:
             c.err("%s.sources[%d]" % (where, i), "unknown source %r" % (sid,), "reference",
                   "List the ids of the scene's sources that research found.")
-    looked_up = [s for s in used if kinds.get(s) not in (None, "user_request")]
+    looked_up = [s for s in used if isinstance(s, str) and kinds.get(s) not in (None, "user_request")]
     if a.get("research") == "done" and not looked_up:
         c.err(where + ".research", "research is \"done\" but no researched source is listed", "research",
               'List the sources you read or viewed in "sources" (each also in the scene\'s sources), or record '

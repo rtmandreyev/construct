@@ -243,7 +243,7 @@ class _Check:
             m = re.match(r"unknown (part|fact|asset|source|view) '(.*?)'", message)
             if m:
                 code = "reference"
-                known = sorted(self.known.get(m.group(1), ()))
+                known = sorted(self.known.get(m.group(1), ()), key=str)
                 near = _closest(m.group(2), known)
                 hint = ("Use one of the scene's %s ids: %s." % (m.group(1), ", ".join(known[:24]) or "(none yet)")
                         + (" Did you mean %r?" % near if near else ""))
@@ -276,10 +276,11 @@ class _Check:
             self.err(where, "unknown key %r" % k, "unknown-key",
                      "Remove %r%s. Allowed here: %s." % (k, " (did you mean %r?)" % near if near else "",
                                                        ", ".join(sorted(allowed))))
-        for k in sorted(set(required) - set(obj)):
+        missing = sorted(set(required) - set(obj))
+        for k in missing:
             self.err(where, "missing key %r" % k, "missing-key",
                      "Add %r%s." % (k, ": " + KEY_HELP[k] if k in KEY_HELP else ""))
-        return True
+        return not missing   # with a required key missing, nothing below may read it
 
     def num(self, v, where, lo=None, hi=None, integer=False):
         ok = isinstance(v, int if integer else (int, float)) and not isinstance(v, bool)
@@ -340,7 +341,8 @@ class _Check:
 
 
 def _shape_check(c, shape, where):
-    if not c.keys(shape, _SHAPE_KEYS.get(shape.get("type") if isinstance(shape, dict) else None, {"type"}) ,
+    if not c.keys(shape, _SHAPE_KEYS.get(shape.get("type") if isinstance(shape, dict) and isinstance(shape.get("type"), str)
+                                         else None, {"type"}),
                   {"type"}, where):
         return
     t = shape.get("type")
@@ -456,8 +458,10 @@ def _shape_check(c, shape, where):
                 total += len(pts)
                 for j, q in enumerate(pts):
                     if not (isinstance(q, list) and len(q) == 3 and all(isinstance(x, (int, float)) and not
-                                                                        isinstance(x, bool) and math.isfinite(x) for x in q)):
-                        c.err("%s.paths[%d][%d]" % (where, i, j), "expected [x, y, z] numbers")
+                                                                        isinstance(x, bool) and math.isfinite(x) and
+                                                                        -MAX_EXTENT <= x <= MAX_EXTENT for x in q)):
+                        c.err("%s.paths[%d][%d]" % (where, i, j), "expected [x, y, z] numbers of at most %g m"
+                              % MAX_EXTENT)
                         break
             if total > MAX_PATH_POINTS:
                 c.err(where + ".paths", "%d points in all; at most %d" % (total, MAX_PATH_POINTS))
@@ -557,8 +561,10 @@ def _shape_check(c, shape, where):
             for i, sec in enumerate(secs):
                 w = "%s.sections[%d]" % (where, i)
                 if not (isinstance(sec, list) and len(sec) in (4, 5) and all(
-                        isinstance(v, (int, float)) and not isinstance(v, bool) and math.isfinite(v) for v in sec)):
-                    c.err(w, "expected [z, half_width, y_bottom, y_top] or [z, half_width, y_bottom, y_top, half_width_top]")
+                        isinstance(v, (int, float)) and not isinstance(v, bool) and math.isfinite(v)
+                        and -MAX_EXTENT <= v <= MAX_EXTENT for v in sec)):
+                    c.err(w, "expected [z, half_width, y_bottom, y_top] or [z, half_width, y_bottom, y_top, half_width_top], "
+                             "numbers of at most %g m" % MAX_EXTENT)
                     continue
                 if sec[1] <= 0 or (len(sec) == 5 and sec[4] <= 0) or sec[3] <= sec[2]:
                     c.err(w, "half-widths must be positive and y_top above y_bottom", "range")
@@ -671,8 +677,49 @@ def validate_items(scene):
     return _validate(scene).items
 
 
+def named(where, name):
+    """A checker's path (rooted at `scene`) for a person, rooted at what the document is: a trace, an answer."""
+    return name + where[5:] if where == "scene" or where.startswith(("scene.", "scene[")) else where
+
+
+class _Ids(set):
+    """Ids defined so far: asking about a value that cannot be an id (a list, an object) is simply no."""
+
+    def __contains__(self, x):
+        try:
+            return set.__contains__(self, x)
+        except TypeError:
+            return False
+
+
+class _Map(dict):
+    def __contains__(self, x):
+        try:
+            return dict.__contains__(self, x)
+        except TypeError:
+            return False
+
+    def get(self, x, default=None):
+        try:
+            return dict.get(self, x, default)
+        except TypeError:
+            return default
+
+
 def _validate(scene):
+    """The checks, and a net under them: a value of a type nothing expected (a list where an id goes) is reported
+    as an error, never a crash, beside everything found so far."""
     c = _Check()
+    try:
+        _validate_into(c, scene)
+    except (TypeError, ValueError, KeyError, IndexError, AttributeError, ZeroDivisionError, OverflowError) as exc:
+        c.err("scene", "could not be checked further: a value has an unexpected type or shape (%s: %s)"
+              % (type(exc).__name__, str(exc)[:120]), "type",
+              "Fix the errors above first; every id is a string, every size a number.")
+    return c
+
+
+def _validate_into(c, scene):
     if not c.keys(scene, SCENE_KEYS | {"style"}, SCENE_REQUIRED, "scene"):
         return c
     if scene.get("format") not in FORMATS:
@@ -694,7 +741,7 @@ def _validate(scene):
         if "summary" in subject:
             c.text(subject["summary"], "scene.subject.summary", 600)
 
-    source_ids, source_kind = set(), {}
+    source_ids, source_kind = _Ids(), _Map()
     c.known["source"] = source_ids
     sources = scene.get("sources")
     if not isinstance(sources, list) or len(sources) > MAX_SOURCES:
@@ -719,7 +766,7 @@ def _validate(scene):
         from . import tiers
         tiers.check(c, scene["authoring"], source_ids, sources)
 
-    fact_cert = {}
+    fact_cert = _Map()
     c.known["fact"] = fact_cert
     facts = scene.get("facts")
     if not isinstance(facts, list) or len(facts) > MAX_FACTS:
@@ -756,7 +803,7 @@ def _validate(scene):
         elif src is not None and src not in source_ids:
             c.err(w + ".source", "unknown source %r" % src)
 
-    asset_ids = set()
+    asset_ids = _Ids()
     c.known["asset"] = asset_ids
     assets = scene.get("assets", [])
     if not isinstance(assets, list) or len(assets) > MAX_ASSETS:
@@ -788,7 +835,7 @@ def _validate(scene):
               "(a hint a host may ignore) or delete it", "style",
               "Delete \"style\". Describe roles and certainty; the renderer chooses colours.")
 
-    part_ids, instances, motions, slots = set(), 0, 0, set()
+    part_ids, instances, motions, slots = _Ids(), 0, 0, _Ids()
     c.known["part"] = part_ids
     parts = scene.get("parts")
     if not isinstance(parts, list) or not 1 <= len(parts) <= MAX_PARTS:
@@ -840,7 +887,7 @@ def _validate(scene):
             c.err(w + ".source", "unknown source %r" % p.get("source"))
         size, shape = certainty_axes(p)
         if "verified" in (size, shape):
-            backed = p.get("source") in source_ids or any(fact_cert.get(b) == "verified" for b in basis if isinstance(basis, list))
+            backed = p.get("source") in source_ids or any(fact_cert.get(b) == "verified" for b in (basis if isinstance(basis, list) else []))
             if not backed:
                 c.err(w, "a verified part needs a cited source or a verified basis fact", "certainty",
                       "Cite a source id in \"source\", list a verified fact in \"basis\", or use \"inferred\".")
@@ -925,13 +972,15 @@ def _validate(scene):
             if "certainty" in a:
                 c.choice(a["certainty"], PART_CERTAINTIES, w + ".certainty")
 
-    shapes_by_part = {p["id"]: p.get("shape") for p in parts if isinstance(p, dict) and isinstance(p.get("id"), str)}
+    shapes_by_part = _Map({p["id"]: p.get("shape") for p in parts if isinstance(p, dict) and isinstance(p.get("id"), str)})
     _articulation_check(c, scene.get("articulations", []), shapes_by_part)
     _label_check(c, scene.get("labels", []), shapes_by_part, scene.get("facts") if isinstance(scene.get("facts"), list) else [])
     _anchor_check(c, scene.get("anchors", {}), shapes_by_part)
     _presentation_check(c, scene.get("presentation", {}), part_ids)
+    pres = scene.get("presentation", {})
+    views = pres.get("views", []) if isinstance(pres, dict) else []
     c.known["view"] = {"hero", "front", "side", "back", "top", "three-quarter"} | {
-        v.get("id") for v in (scene.get("presentation", {}) or {}).get("views", []) or [] if isinstance(v, dict)}
+        v.get("id") for v in (views if isinstance(views, list) else []) if isinstance(v, dict) and isinstance(v.get("id"), str)}
     _animation_check(c, scene.get("animation", {}), scene.get("presentation", {}))
     if "reading" in scene:
         _reading_check(c, scene["reading"])
@@ -973,8 +1022,8 @@ def _reading_check(c, r):
             vals = s["values"]
             if not isinstance(vals, list) or not 1 <= len(vals) <= 400 or not all(
                     isinstance(v, list) and len(v) == 2 and all(isinstance(x, (int, float)) and not isinstance(x, bool)
-                                                                for x in v) for v in vals):
-                c.err(sw + ".values", "expected 1 to 400 [time, value] pairs of numbers")
+                                                                and math.isfinite(x) for x in v) for v in vals):
+                c.err(sw + ".values", "expected 1 to 400 [time, value] pairs of finite numbers")
 
 
 def _motion_check(c, mo, w):
@@ -1096,8 +1145,9 @@ def _animation_check(c, an, pr):
         if "strength" in idle:
             c.num(idle["strength"], w + ".idle.strength", 0, 1)
     cam = an.get("camera", {})
-    view_ids = {v.get("id") for v in pr.get("views", []) if isinstance(v, dict)} if isinstance(pr, dict) and isinstance(pr.get("views", []), list) else set()
-    view_ids |= {"hero", "front", "side", "back", "top", "three-quarter"}
+    view_ids = {v.get("id") for v in pr.get("views", []) if isinstance(v, dict) and isinstance(v.get("id"), str)} \
+        if isinstance(pr, dict) and isinstance(pr.get("views", []), list) else set()
+    view_ids = _Ids(view_ids | {"hero", "front", "side", "back", "top", "three-quarter"})
     if c.keys(cam, {"drift", "breathe", "tour"}, set(), w + ".camera"):
         if "drift" in cam:
             c.num(cam["drift"], w + ".camera.drift", -90, 90)
@@ -1166,8 +1216,11 @@ def _artwork_check(c, p, asset_ids, slots, w):
         if mask != "circle":
             c.err(w + ".inner_radius", "only a circle mask has an inner radius (the hole of a disc)")
         elif face is not None and c.num(a["inner_radius"], w + ".inner_radius", MIN_SIZE, MAX_EXTENT):
-            half = _face_half_width(p["shape"], face)
-            if a["inner_radius"] >= half:
+            try:
+                half = _face_half_width(p["shape"], face)
+            except (ValueError, KeyError, TypeError, IndexError):
+                half = None   # the shape itself is in error (reported with the shape)
+            if half is not None and a["inner_radius"] >= half:
                 c.err(w + ".inner_radius", "must be smaller than the face's half width (%g m)" % half)
     if "region" in a:
         _region_check(c, a["region"], w + ".region")
@@ -1230,7 +1283,7 @@ def _label_check(c, labels, shapes_by_part, facts):
     if not isinstance(labels, list) or len(labels) > MAX_LABELS:
         c.err(w, "expected at most %d labels" % MAX_LABELS)
         return
-    known = {f.get("key") for f in facts if isinstance(f, dict) and f.get("value") is not None}
+    known = {f.get("key") for f in facts if isinstance(f, dict) and isinstance(f.get("key"), str) and f.get("value") is not None}
     seen = set()
     for i, lb in enumerate(labels):
         lw = "%s[%d]" % (w, i)
@@ -1247,7 +1300,7 @@ def _label_check(c, labels, shapes_by_part, facts):
             _face_of(c, shapes_by_part[lb["part"]], lb.get("face"), lw + ".face")
         if ("field" in lb) == ("text" in lb):
             c.err(lw, "give exactly one of field (a fact key; the host sets its value) or text (decorative words)")
-        elif "field" in lb and lb["field"] not in known:
+        elif "field" in lb and (not isinstance(lb["field"], str) or lb["field"] not in known):
             c.err(lw + ".field", "no fact %r: add the fact with its certainty, or delete the label "
                   "(an unknown fact has no label; never guess)" % lb["field"], "unknown-fact",
                   "Delete this label, or add a fact {\"key\": %s, ...} only if its value is actually known."

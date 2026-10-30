@@ -329,6 +329,28 @@ class Kit(unittest.TestCase):
         k = kit_mod.make(sc, size=40, detail=0.5, plan={"merge": [["seat-*--1"], ["seat-*-1"]]})
         self.assertTrue(k["pieces"])
 
+    def test_a_bad_plan_or_size_is_refused_not_a_crash(self):
+        sc = scene_of(box("block", [0.1, 0.05, 0.04], [0, 0.025, 0]))
+        with tempfile.TemporaryDirectory() as d:
+            bad = Path(d, "plan.json")
+            bad.write_text('{"merge": 5}', encoding="utf-8")
+            for kw in ({"plan": str(Path(d, "missing.json"))}, {"plan": str(bad)}, {"scale": 0}, {"size": -1},
+                       {"bed": (0, 0, 0)}):
+                with self.assertRaises(kit_mod.KitError):
+                    kit_mod.make(sc, detail=0.5, **kw)
+
+    def test_the_command_refuses_a_zero_size_and_a_missing_file(self):
+        with tempfile.TemporaryDirectory() as d:
+            path = Path(d, "s.json")
+            path.write_text(json.dumps(scene_of(box("block", [0.1, 0.05, 0.04], [0, 0.025, 0]))), encoding="utf-8")
+            for args in (["print", str(path), "--out", str(Path(d, "x.stl")), "--size", "0"],
+                         ["print", str(path), "--out", str(Path(d, "x.stl")), "--detail", "0"],
+                         ["compare", str(path), "--trace", str(Path(d, "missing.json"))]):
+                r = subprocess.run([sys.executable, "-m", "construct_hologram"] + args, cwd=HERE.parent,
+                                   capture_output=True, text=True)
+                self.assertEqual(r.returncode, 1, args)
+                self.assertNotIn("Traceback", r.stderr)
+
     def test_the_kit_files(self):
         from . import kit
         sc = studio.load(str(HERE / "examples" / "v2" / "cd.json"))

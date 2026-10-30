@@ -198,6 +198,14 @@ def instrument(text, title, run_file, turtles=(), reporters=(), patches=None, ev
             flag, "forever" if flag == "go" else "setup", flag))
 
     setup, go = choose("setup", setup), choose("go", go)
+    defined = re.findall(r"(?mi)^\s*to(?:-report)?\s+([^\s\[]+)", code)
+    if not defined:
+        raise NetLogoError("the model's code defines no procedures: nothing to set up or run")
+    for flag, cmd in (("setup", setup), ("go", go)):   # a button that calls a procedure the code does not have
+        first = cmd.split()[0].lower() if cmd.split() else ""
+        if first == flag and first not in (d.lower() for d in defined):
+            raise NetLogoError("the model's %s button runs `%s`, but its code has no `to %s` (it has: %s); name the "
+                               "command with --%s" % (flag, cmd, flag, ", ".join(defined[:8]), flag))
 
     def place(cmd, word, lines):
         """`lines` after `word` in the procedures cmd calls; else at the end of the first one (a model
@@ -251,6 +259,10 @@ def read_run(path):
     return run
 
 
+def _no_constant(name):
+    raise ValueError("%s is not a number a run can hold (a reporter divided by zero?)" % name)
+
+
 def parse_run(text):
     """A recording (construct.nls or the extension's JSON Lines) as {header, frames, end}."""
     header, frames, end = None, [], None
@@ -258,9 +270,13 @@ def parse_run(text):
         if not line.strip():
             continue
         try:
-            row = json.loads(line)
+            row = json.loads(line, parse_constant=_no_constant)
         except json.JSONDecodeError as exc:
             raise NetLogoError("line %d: not JSON (%s)" % (n, exc))
+        except ValueError as exc:
+            raise NetLogoError("line %d: %s" % (n, exc))
+        if not isinstance(row, dict):
+            raise NetLogoError("line %d: expected an object, one tick or the header" % n)
         if "construct-netlogo" in row:
             header = row
         elif "t" in row:
@@ -1282,6 +1298,20 @@ def materials_from_run(run, scene):
                           for c, ids in groups.items()]}
 
 
+LEGEND_MAX = 24   # legend labels at most: room left for the art layer's within the scene's 32 annotations
+
+
+def _capped(annotations):
+    """At most the scene's annotations: the legend's labels give way first, the art layer's are kept."""
+    from .scene import MAX_ANNOTATIONS
+    over = len(annotations) - MAX_ANNOTATIONS
+    if over <= 0:
+        return annotations
+    legend = [a for a in annotations if a["id"].startswith("legend-") or "legend-" in a["id"]]
+    drop = {id(a) for a in legend[-over:]}
+    return [a for a in annotations if id(a) not in drop][:MAX_ANNOTATIONS]
+
+
 def _legend(parts, sqrt=False):
     """The automatic legend: each part from the run labelled with what it is (its own label), the label's
     dot on a real point of the part, a different side for each so they don't pile up. L shows them."""
@@ -1291,6 +1321,10 @@ def _legend(parts, sqrt=False):
         if q.get("source") == "run" and q["role"] != "mass" and q["label"] not in named:
             named.add(q["label"])
             shown.append(q)
+    if len(shown) > LEGEND_MAX:   # a run of many colours: the parts that draw the most, in their order
+        size = {id(q): sum(len(path) for path in q["shape"].get("paths", [])) for q in shown}
+        keep = {id(q) for q in sorted(shown, key=lambda q: -size[id(q)])[:LEGEND_MAX]}
+        shown = [q for q in shown if id(q) in keep]
     for i, p in enumerate(shown):
         pts = [v for path in p["shape"].get("paths", []) for v in path]
         if not pts:
@@ -1419,7 +1453,7 @@ def compare(runs, view, labels=None, title=None, **opts):
     where = ("%s on the left, %s on the right" % tuple(labels) if len(runs) == 2 else
              "%s, left to right%s" % (_and_list(labels), " in rows of %d" % per_row if rows > 1 else ""))
     out = dict(a, id=("netlogo-compare-%s" % a["id"].replace("netlogo-", ""))[:64], parts=parts, facts=facts,
-               sources=sources, annotations=notes,
+               sources=sources, annotations=_capped(notes),
                title=title or "%s: %s" % (h["title"], _and_list(labels)),
                subject=dict(a["subject"], summary="%s runs of NetLogo's %s side by side, drawn the same way on one "
                                                   "time scale: %s." % (len(runs) == 2 and "Two" or len(runs),
@@ -1644,7 +1678,7 @@ def apply_art(scene, art):
     if art.get("legend") is False:
         out["annotations"] = [a for a in out.get("annotations", []) if not a["id"].startswith("legend-")]
     if art.get("annotations"):
-        out["annotations"] = out.get("annotations", []) + [dict(a) for a in art["annotations"]]
+        out["annotations"] = _capped(out.get("annotations", []) + [dict(a) for a in art["annotations"]])
     if "presentation" in art:
         out["presentation"] = dict(out["presentation"], **art["presentation"])
     if "animation" in art:

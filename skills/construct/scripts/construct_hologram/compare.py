@@ -265,7 +265,8 @@ def compare(scene, trace_doc, view="side", fit="width", yaw=None, pitch=None):
     from . import scene as scene_mod
     items = trace.validate_items(trace_doc)
     if items:
-        raise CompareError("not a valid trace: " + "; ".join("%s: %s" % (i["where"], i["message"]) for i in items))
+        raise CompareError("not a valid trace: " + "; ".join("%s: %s" % (scene_mod.named(i["where"], "trace"), i["message"])
+                                                             for i in items))
     full = params.expand({k: v for k, v in scene.items() if k != "authoring"}) if params.is_params(scene) else scene
     geometry = scene_mod.compile_scene(full)
     if yaw is None or pitch is None:

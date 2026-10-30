@@ -138,10 +138,21 @@ def load_plan(plan):
     """A kit plan: {"title", "merge": [[part ids or patterns, ...], ...], "keep": [...], "clear": [...], "notes"}."""
     if plan is None:
         return {}
-    doc = json.loads(Path(plan).read_text(encoding="utf-8")) if isinstance(plan, (str, Path)) else plan
+    if isinstance(plan, (str, Path)):
+        try:
+            doc = json.loads(Path(plan).read_text(encoding="utf-8"))
+        except OSError as exc:
+            raise KitError("cannot read the plan %s: %s" % (plan, exc.strerror or exc))
+        except ValueError as exc:
+            raise KitError("the plan %s is not JSON: %s" % (plan, exc))
+    else:
+        doc = plan
     if not isinstance(doc, dict) or not set(doc) <= PLAN_KEYS:
         raise KitError("a kit plan is an object with %s" % ", ".join(sorted(PLAN_KEYS)))
-    if not all(isinstance(g, list) and g for g in doc.get("merge", [])):
+    for key in ("merge", "keep", "clear", "order"):
+        if key in doc and not isinstance(doc[key], list):
+            raise KitError("plan.%s: a list" % key)
+    if not all(isinstance(g, list) and g and all(isinstance(x, str) for x in g) for g in doc.get("merge", [])):
         raise KitError("plan.merge: a list of groups, each a list of part ids or patterns")
     if not all(isinstance(g, dict) and isinstance(g.get("name"), str) and isinstance(g.get("parts"), list)
                for g in doc.get("order", [])):
@@ -160,6 +171,12 @@ def make(scene, scale=SCALE, size=None, detail=DETAIL_MM, wall=WALL_MM, plan=Non
     Each piece: number, name, parts, stage, clear, paint, size_mm, mesh (vertices mm, triangles, lying on
     the bed), cols (voxels where it sits in the model)."""
     plan = load_plan(plan)
+    if size is None and not (isinstance(scale, (int, float)) and scale > 0):
+        raise KitError("scale: a positive N, for 1:N")
+    if size is not None and not size > 0:
+        raise KitError("size: a positive number of millimetres")
+    if not (detail > 0 and wall > 0) or len(bed) != 3 or not all(b > 0 for b in bed):
+        raise KitError("detail, wall and the bed (WxDxH): positive numbers of millimetres")
     rules = export._load_materials(materials)
     g = scene_mod.compile_scene(scene, solid=True)
     closed, open_, rods, rep = printing._surfaces(g, True)
@@ -218,7 +235,8 @@ def make(scene, scale=SCALE, size=None, detail=DETAIL_MM, wall=WALL_MM, plan=Non
     clear = plan.get("clear", [])
     paint = {pid: _paint(pid, info[pid], rules) for pid in vox}
     is_clear = {pid: (paint[pid].get("finish") == "glass" or _matches(pid, clear)
-                      or any(w in pid.lower() for w in GLASS)) for pid in vox}
+                      or (any(w in pid.lower() for w in GLASS)
+                          and not any(w in pid.lower() for w in export.NOT_GLASS_WORDS))) for pid in vox}
 
     # trimmed in build order: an earlier, larger part keeps what two parts share, and clear parts yield to the
     # rest (a roof stays whole where it meets the glass)

@@ -92,9 +92,9 @@ def run_model(netlogo_dir, drive_dir, copy, timeout):
 def check(built, run_file):
     """The data checks: audit, lock, clock, counts."""
     found = {}
-    audit = json.loads((built / "audit.json").read_text())
+    audit = json.loads((built / "audit.json").read_text(encoding="utf-8"))
     found["audit"] = "pass" if not audit.get("errors") else "fail: " + "; ".join(e.get("code", "?") for e in audit["errors"])[:200]
-    scene = json.loads((built / "scene.json").read_text())
+    scene = json.loads((built / "scene.json").read_text(encoding="utf-8"))
     found["view"] = next((f["value"] for f in scene["facts"] if f["key"] == "view"), None)
     found["window"] = next((f["value"] for f in scene["facts"] if f["key"] == "window"), None)
     found["lock"] = "holds" if netlogo.lock_problem(scene) is None else "broken"

@@ -58,6 +58,10 @@ def netlogo_rgb(c):
 
 # ---------------------------------------------------------------------------- the recording
 
+def _no_constant(name):   # this file runs inside Blender too: nothing of Construct's is imported here
+    raise ValueError("%s is not a number a run can hold" % name)
+
+
 def read(path):
     """The recording as arrays: positions [ticks, agents, 2] in metres, alive [ticks, agents], each agent's
     colour per tick, the ticks and the world's size."""
@@ -71,7 +75,12 @@ def read(path):
             line = line.strip()
             if not line:
                 continue
-            row = json.loads(line)
+            try:
+                row = json.loads(line, parse_constant=_no_constant)
+            except ValueError as exc:
+                raise ValueError("%s: not a recording line (%s)" % (path, exc))
+            if not isinstance(row, dict):
+                raise ValueError("%s: a recording line is an object, one tick or the header" % path)
             if header is None and "construct-netlogo" in row:
                 header = row
             elif "t" in row and "turtles" in row:

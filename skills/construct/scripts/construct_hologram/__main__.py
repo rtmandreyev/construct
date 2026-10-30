@@ -67,7 +67,16 @@ def main(argv=None):
 
     args = parser.parse_args(argv)
     if args.command in studio.COMMANDS:
-        return studio.run(args)
+        try:
+            return studio.run(args)
+        except (FileNotFoundError, IsADirectoryError, NotADirectoryError, PermissionError) as exc:
+            # a file named on the command line that is not there or cannot be opened: say which, never a traceback
+            sys.stderr.write("%s: cannot read %s: %s\n" % (args.command, exc.filename or "a file", exc.strerror or exc))
+            return 1
+        except RecursionError:
+            sys.stderr.write("%s: a file is nested too deeply to read (thousands of brackets inside each other)\n"
+                             % args.command)
+            return 1
 
     try:
         if args.command == "template":

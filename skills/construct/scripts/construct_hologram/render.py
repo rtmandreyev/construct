@@ -82,10 +82,11 @@ def build_html(geometry, asset_root=None, film=False):
     viewer = (VIEWER / "hologram.js").read_text(encoding="utf-8")
     assets, notes = embed_assets(geometry, asset_root)
     title = geometry["title"].replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace('"', "&quot;")
-    html = (template.replace("__TITLE__", title)
-            .replace("__GEOMETRY__", _script_json(geometry))
-            .replace("__ASSETS__", _script_json(assets))
-            .replace("__VIEWER__", viewer.replace("</script", "<\\/script")))
+    # one pass over the template: what is put in is never searched again (a title that says "__VIEWER__" stays text)
+    import re
+    fill = {"__TITLE__": title, "__GEOMETRY__": _script_json(geometry), "__ASSETS__": _script_json(assets),
+            "__VIEWER__": viewer.replace("</script", "<\\/script")}
+    html = re.sub("__(?:TITLE|GEOMETRY|ASSETS|VIEWER)__", lambda m: fill[m.group(0)], template)
     if film:  # a script of its own, right after the viewer's, so it runs before the viewer starts
         code = (VIEWER / "film.js").read_text(encoding="utf-8").replace("</script", "<\\/script")
         mark = "\n</script>\n<script>\n  // the improvement rounds"
