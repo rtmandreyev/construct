@@ -32,6 +32,10 @@ construct print scene.json --out fj62.stl --scale 43
 | `--join MM` | gaps between parts up to this wide are closed, so the print is one piece (default 1.6; 0 leaves them) |
 | `--lines engrave` or `raised` | the parts drawn only in lines (seams, tracery, grilles): cut into the surface as grooves, one voxel deep and only where there is solid behind them, like a model kit's engraved panel lines; or raised (`--lines` alone). By default they are left out |
 | `--bed WxDxH` | the printer's build volume in millimetres (default 250x210x220) |
+| `--printer CLASS` | a printer class: its bed, finest voxel and thinnest wall (see [Printers](#printers-the-largest-print-and-every-detail)) |
+| `--fit` | instead of a size or scale, the largest print that stands on the bed (turned a quarter if it fits only that way) |
+| `--printers` | for each printer class, the largest print and how much survives; writes nothing |
+| `--exact` | 3MF: the construct's own solids as they are, joined by the slicer (see below) |
 
 It prints the size, the scale and what to know:
 
@@ -139,6 +143,51 @@ construct kit examples/toyota-land-cruiser-fj62/scene.json --out fj62-kit/ --mat
 agent or model) reads `kit.json` and the booklet's pictures and answers with a plan, parts to merge into one
 piece, small parts to keep, clear parts, which `--plan kit-plan.json` applies to the next build.
 
+## Printers: the largest print and every detail
+
+A construct has real sizes, so it knows how large it can print on a given printer and what is lost at
+that size. `--printers` asks, for five printer classes, without printing:
+
+```
+construct print r34.json --printers
+  small    1:27    81.6 x 172.8 x 51.1 mm, voxel 0.4 mm; real features under ~10.6 mm lost; parts 209 / 26 / 0
+  desktop  1:19    113.3 x 240 x 71 mm, voxel 0.4 mm; real features under ~7.7 mm lost; parts 230 / 5 / 0
+  cube     1:19    116 x 245.8 x 72.7 mm, voxel 0.4 mm; real features under ~7.5 mm lost; parts 230 / 5 / 0
+  large    1:14    158.7 x 336 x 99.3 mm, voxel 0.4 mm; real features under ~5.5 mm lost; parts 233 / 2 / 0
+  resin    1:22    98.8 x 209.3 x 61.9 mm, voxel 0.233 mm (the grid's limit); real features under ~5.1 mm lost; ...
+```
+
+| Class | Like | Bed (mm) | Voxel | Wall |
+| --- | --- | --- | --- | --- |
+| `small` | Bambu Lab A1 mini | 180 x 180 x 180 | 0.4 | 0.8 |
+| `desktop` | Prusa MK4 | 250 x 210 x 220 | 0.4 | 0.8 |
+| `cube` | Bambu Lab X1, P1, A1 | 256 x 256 x 256 | 0.4 | 0.8 |
+| `large` | Prusa XL, Creality K2 Plus | 350 x 350 x 350 | 0.4 | 0.8 |
+| `resin` | a 10-inch resin printer | 218 x 122 x 220 | 0.05 | 0.4 |
+
+These are classes, not models: give your own printer's numbers with `--bed`, `--detail` and `--wall`.
+The parts column (kept / thickened / lost) is an estimate from each part's size: thickened is a part
+thinner than the wall (a panel, a rod), lost one under two voxels long.
+
+`construct print scene.json --out car.3mf --printer large --fit` prints at that largest size. The voxel
+print has a limit of its own, 900 voxels along the longest side (a 36 cm print at 0.4 mm, about three
+minutes and 3 GB of memory to make), so on a resin printer the voxel is wider than the printer could
+print. That is what `--exact` is for.
+
+### Exact: the construct's own solids
+
+```sh
+construct print scene.json --out car.3mf --printer resin --fit --exact
+```
+
+An exact print writes the construct's closed solids as they are, each wound outward, as the parts of
+one object; the slicer fills their union, at the printer's own resolution. Only the open surfaces and
+the parts too thin to fill (a sign, a mirror glass) go through the voxels and are thickened. It is 3MF
+only: PrusaSlicer, and slicers that read its part table, list every solid by its part's name. The
+pieces are judged by their boxes (parts whose boxes meet within the join print as one), and the slicer
+decides the supports. What it keeps is the construct's own faceting (a cylinder of 24 sides prints with
+24), with nothing rounded off by voxels.
+
 ## How much detail survives
 
 A print keeps the construct's form, not its light. The hologram draws every edge, inside and out; a print
@@ -152,6 +201,6 @@ cut into.
 ## What it is not
 
 A print is the construct's form at a scale, solid, in one material. It does not hollow, split a
-large object into pieces, add pegs, or orient the model for the fewest supports; a slicer does the
-last well. Fine detail smaller than the voxel is lost or thickened, and the report says which
+large object into pieces (a kit does), add pegs, or orient the model for the fewest supports (it only
+turns it on the bed to fit); a slicer does the last well. Fine detail smaller than the voxel is lost or thickened, and the report says which
 parts were thickened. Colour and multi-material printing are not made.

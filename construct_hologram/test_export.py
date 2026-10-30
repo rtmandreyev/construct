@@ -48,14 +48,21 @@ func _initialize() -> void:
 	for i in 60:
 		await physics_frame
 	var moved := 0
+	var far := 0.0
+	var span := 0.0
 	for b in bodies:
-		if (b.global_position - start[b]).length() > 0.001:
+		var d: float = (b.global_position - start[b]).length()
+		far = max(far, d)
+		if d > 0.001:
 			moved += 1
+		for o in bodies:
+			span = max(span, (start[o] - start[b]).length())
 	var anims := []
 	for ap in c.find_children("*", "AnimationPlayer", true, false):
 		anims = ap.get_animation_list()
 	print("RESULT " + JSON.stringify({"static": c.find_children("*", "StaticBody3D", true, false).size(),
-		"rigid": bodies.size(), "moved": moved, "animations": anims}))
+		"rigid": bodies.size(), "moved": moved, "far": far, "span": span, "animations": anims,
+		"shapes": p.find_children("*", "CollisionShape3D", true, false).size()}))
 	quit()
 """
 
@@ -536,15 +543,40 @@ class Hosts(unittest.TestCase):
         merged = glb_of(sc, colliders=True, merge=True)[0]
         self.assertEqual(len([n for n in merged["nodes"] if n.get("name", "").endswith("-convcolonly")]), len(cols))
         pieces = glb_of(sc, pieces=True)[0]
-        rigid = [n["name"] for n in pieces["nodes"] if n.get("name", "").endswith("-rigid")]
-        self.assertTrue(rigid)
-        self.assertFalse(any(n.get("name", "").endswith("-convcolonly") for n in pieces["nodes"]))  # bodies shape themselves
+        bodies = [n for n in pieces["nodes"] if "motion" in n.get("extensions", {}).get("OMI_physics_body", {})]
+        self.assertTrue(bodies)
+        shapes = pieces["extensions"]["OMI_physics_shape"]["shapes"]
+        colliders = [n for n in pieces["nodes"] if "collider" in n.get("extensions", {}).get("OMI_physics_body", {})]
+        self.assertEqual(len(colliders), len(shapes))
+        self.assertTrue(all(sh["type"] == "convex" for sh in shapes))
+        self.assertTrue({"OMI_physics_body", "OMI_physics_shape"} <= set(pieces["extensionsUsed"]))
+        self.assertFalse(any(n.get("name", "").endswith(("-rigid", "-convcolonly")) for n in pieces["nodes"]))
         with self.assertRaisesRegex(export.ExportError, "does not go with --merge"):
             glb_of(sc, pieces=True, merge=True)
         wheel = studio.starter("machine")
         wheel["parts"][2]["id"] = "spare-wheel"   # the mast, renamed: nothing else refers to it
         names = [n.get("name", "") for n in glb_of(wheel)[0]["nodes"]]
         self.assertIn("spare-wheel-part", names)   # not a VehicleWheel3D in Godot
+
+    def test_pieces_copies_apart_interlocked_parts_together(self):
+        def part(pid, size, at, **kw):
+            return dict({"id": pid, "role": "mass", "certainty": "inferred", "stage": 0,
+                         "shape": {"type": "box", "size": size}, "at": at}, **kw)
+        sc = studio.starter("object", "Pieces")
+        sc["parts"] = [part("base", [0.4, 0.1, 0.2], [0, 0.05, 0]),
+                       part("tyre", [0.04, 0.1, 0.1], [0.25, 0.05, 0], mirror="x"),    # a pair: two bodies
+                       part("rim", [0.03, 0.05, 0.05], [0.25, 0.05, 0], mirror="x"),   # inside each tyre: with it
+                       part("lid", [0.4, 0.02, 0.2], [0, 0.11, 0])]                     # resting on the base: apart
+        doc = glb_of(sc, pieces=True)[0]
+        pieces = [n["extras"]["construct"]["parts"] for n in doc["nodes"]
+                  if "motion" in n.get("extensions", {}).get("OMI_physics_body", {})]
+        self.assertIn(["base"], pieces)
+        self.assertIn(["lid"], pieces)
+        self.assertEqual(sorted(sorted(p) for p in pieces if "tyre-1" in p or "tyre-2" in p),
+                         [["rim-1", "tyre-1"], ["rim-2", "tyre-2"]])
+        a = [(x, y, z) for x in (0, 1) for y in (0, 1) for z in (0, 1)]
+        self.assertTrue(export._intersect(a, [(p[0] + 0.5, p[1], p[2]) for p in a]))
+        self.assertFalse(export._intersect(a, [(p[0] + 1.5, p[1] + 0.2, p[2]) for p in a]))
 
     @unittest.skipUnless(os.environ.get("CONSTRUCT_GODOT"), "set CONSTRUCT_GODOT to the Godot binary to run")
     def test_godot_imports_colliders_and_pieces_that_fall(self):
@@ -560,8 +592,9 @@ class Hosts(unittest.TestCase):
             line = next(x for x in r.stdout.splitlines() if x.startswith("RESULT "))
             out = json.loads(line[7:])
             self.assertGreater(out["static"], 0)
-            self.assertEqual(out["rigid"], out["moved"])
             self.assertGreater(out["rigid"], 0)
+            self.assertGreaterEqual(out["shapes"], out["rigid"])
+            self.assertLess(out["far"], 1.5 * out["span"] + 0.05)   # the pieces settle; they do not burst
             self.assertIn("open", out["animations"])
 
     def test_mcp(self):

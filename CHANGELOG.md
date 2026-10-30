@@ -152,6 +152,20 @@ side, printed as worksheets and cited. Plan:
   scene already cites (geometry `evidence` per part, `provenance.checked`); the legend shows each shade
   with its count and the comparisons that checked them. On the Duomo the measured facade stands out deep
   against 98 pale spires that cite nothing.
+- **Printers, and every detail:** `construct print --printers` says, for five printer classes (small,
+  desktop, 256 mm, large and resin), the largest print that stands on each, the smallest feature of the
+  real object that survives and how many parts print as themselves; `--printer` takes a class's bed,
+  voxel and wall, and `--fit` prints at that largest size, turned a quarter on the bed if it fits only
+  that way. `--exact` (3MF) writes the construct's own closed solids as the parts of one object the
+  slicer joins, so a print keeps every detail the construct has at the printer's own resolution; only
+  open and too-thin surfaces become voxels. The voxel grid now goes to 900 along the longest side (a
+  36 cm print at 0.4 mm). PrusaSlicer reads an exact FJ62 as one manifold object of named parts and slices it.
+- **Pieces that settle:** `export --pieces` now gives every mirrored or repeated copy a body of its own,
+  shapes that follow the surface (a hollow body shell is a skin of convex patches, not a solid block),
+  interlocked parts as one assembly (a rim in its tyre, an axle through its hubs) and shapes pulled in
+  slightly, written with the glTF physics extensions Godot imports. The FJ62 in Godot went from 249
+  pairs of pieces pressed into each other at rest, and a burst when released, to 17 pairs and a car that
+  falls apart onto the floor.
 - **A provenance note:** `authoring.provenance_note`, shown under the caption in the provenance view
   only. Seven gallery constructs made before 1.1 carry one saying where their shades understate their
   evidence (parts that do not cite what they were read from, traced parts never compared).

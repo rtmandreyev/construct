@@ -196,11 +196,12 @@ def make(scene, scale=SCALE, size=None, detail=DETAIL_MM, wall=WALL_MM, plan=Non
     printing._mark_rods(grid, rods, grooves)
 
     # the plan's merges: those parts are one piece from the start
-    groups = []
-    for group in plan.get("merge", []):
-        members = [pid for pid in vox if _matches(pid, group)]
+    groups, taken = [], set()
+    for group in plan.get("merge", []):   # a part matched by two groups joins the first
+        members = [pid for pid in vox if _matches(pid, group) and pid not in taken]
         if len(members) > 1:
             groups.append(members)
+            taken.update(members)
     owner = {pid: pid for pid in vox}
     own_vox = {pid: dict(v) for pid, v in vox.items()}   # each part's own voxels, to name what a merge falls into
     for members in groups:

@@ -33,7 +33,23 @@ WALL_MM = 0.8              # the thinnest wall printed: two lines of a 0.4 mm no
 JOIN_MM = 1.6              # gaps between parts up to this wide are closed, so the print is one piece
 BED_MM = (250.0, 210.0, 220.0)   # a common desktop printer's build volume (Prusa MK4)
 OVERHANG_DEGREES = 45.0    # steeper than this from the vertical, a downward face needs support
-MAX_CELLS = 600            # voxels along the longest side, at most
+MAX_CELLS = 900            # voxels along the longest side, at most (900: a 36 cm print at 0.4 mm, ~3 min, ~3 GB)
+
+# printer classes: the build volume (mm), the finest voxel worth printing (mm) and the thinnest wall (mm). Classes,
+# not models: a printer's own numbers can go in --bed, --detail and --wall.
+PRINTERS = {
+    "small": {"label": "a small FDM printer (Bambu Lab A1 mini class)", "kind": "FDM",
+              "bed": (180.0, 180.0, 180.0), "detail": 0.4, "wall": 0.8},
+    "desktop": {"label": "a desktop FDM printer (Prusa MK4 class)", "kind": "FDM",
+                "bed": (250.0, 210.0, 220.0), "detail": 0.4, "wall": 0.8},
+    "cube": {"label": "a 256 mm FDM printer (Bambu Lab X1, P1 and A1 class)", "kind": "FDM",
+             "bed": (256.0, 256.0, 256.0), "detail": 0.4, "wall": 0.8},
+    "large": {"label": "a large FDM printer (Prusa XL, Creality K2 Plus class)", "kind": "FDM",
+              "bed": (350.0, 350.0, 350.0), "detail": 0.4, "wall": 0.8},
+    "resin": {"label": "a resin printer (10-inch class)", "kind": "resin",
+              "bed": (218.0, 122.0, 220.0), "detail": 0.05, "wall": 0.4},
+}
+FIT_MARGIN = 0.96          # a fitted print leaves this much of the bed (a brim, a skirt)
 SNAP_VOXELS = 1.0           # a vertex this close to the construct's surface moves onto it
 SMOOTH_STEPS = 16          # Taubin passes: enough to round a cylinder's voxel steps
 EPS = 1.2345e-4            # rays pass just off the voxel centres, never exactly through a vertex
@@ -617,10 +633,63 @@ def _edges_ok(faces):
 LINES = ("none", "engrave", "raised")
 
 
-def make(scene, size=SIZE_MM, scale=None, detail=DETAIL_MM, wall=WALL_MM, join=JOIN_MM, lines="none", bed=BED_MM):
+def _extent(closed, open_, rods):
+    pts = [p for _, piece in closed + open_ for t in piece for p in t] + [p for r in rods for p in r]
+    if not pts:
+        return None, None
+    return [min(p[a] for p in pts) for a in range(3)], [max(p[a] for p in pts) for a in range(3)]
+
+
+def fit_mm_per_m(dims_m, bed, margin=FIT_MARGIN):
+    """The largest scale (mm of print per metre of object) at which an object of `dims_m` (the print frame: width,
+    depth, height) stands on `bed` (width, depth, height mm): turned on the bed as it fits best, never laid down."""
+    foot = sorted(dims_m[:2], reverse=True)
+    plate = sorted(bed[:2], reverse=True)
+    inf = float("inf")
+    return min(plate[0] / foot[0] if foot[0] else inf, plate[1] / foot[1] if foot[1] else inf,
+               bed[2] / dims_m[2] if dims_m[2] else inf) * margin
+
+
+def printers(scene, lines="none", wall=None):
+    """For each printer class: the largest print of `scene` that stands on it, the voxel it allows, the smallest
+    feature of the real object that survives, and how many parts print as themselves (kept), only thicker than they
+    are (thickened, a panel or a rod under the wall) or barely at all (lost, under two voxels)."""
+    g = scene_mod.compile_scene(scene, solid=True)
+    lines = {True: "raised", False: "none", None: "none"}.get(lines, lines)
+    closed, open_, rods, _ = _surfaces(g, lines != "none")
+    lo, hi = _extent(closed, open_, rods)
+    if lo is None:
+        raise PrintError("nothing to print: the construct has no surfaces (try --lines raised for one drawn in lines)")
+    dims = [hi[a] - lo[a] for a in range(3)]
+    longest = max(dims)
+    printed = {pid for pid, _ in closed + open_}
+    boxes = []
+    for p in g["parts"]:
+        if p["id"] in printed and p["instances"]:
+            b = p["instances"][0]
+            boxes.append(sorted(b["max"][a] - b["min"][a] for a in range(3)))
+    out = []
+    for name, pr in PRINTERS.items():
+        mm = fit_mm_per_m(dims, pr["bed"])
+        detail = max(pr["detail"], math.ceil(longest * mm / MAX_CELLS * 1000) / 1000.0)
+        w = wall if wall is not None else pr["wall"]
+        lost = sum(1 for b in boxes if b[2] * mm < 2 * detail)
+        thick = sum(1 for b in boxes if b[2] * mm >= 2 * detail and b[0] * mm < w)
+        out.append({"printer": name, "label": pr["label"], "kind": pr["kind"], "bed_mm": list(pr["bed"]),
+                    "scale": "1:%s" % _ratio(1000.0 / mm), "size_mm": [round(d * mm, 1) for d in dims],
+                    "detail_mm": detail, "limited_by_grid": detail > pr["detail"],
+                    "smallest_real_mm": round(detail * 1000.0 / mm, 1), "parts": len(boxes),
+                    "kept": len(boxes) - lost - thick, "thickened": thick, "lost": lost})
+    return out
+
+
+def make(scene, size=SIZE_MM, scale=None, detail=DETAIL_MM, wall=WALL_MM, join=JOIN_MM, lines="none", bed=BED_MM,
+         fit=False, coarsen=False, exact=False):
     """The print of `scene`: {"vertices": [[x, y, z] mm], "triangles": [[a, b, c]], "report": {...}}.
-    `size` is the longest side in mm, or `scale` N prints at 1:N of the construct's real size; gaps up to
-    `join` mm wide are closed."""
+    `size` is the longest side in mm, or `scale` N prints at 1:N of the construct's real size, or `fit` the largest
+    that stands on `bed`; gaps up to `join` mm wide are closed. `coarsen`: a voxel finer than the grid allows is
+    widened (and the report says so) rather than refused. `exact`: the construct's own closed solids, as they are, as
+    parts of one object the slicer joins (only open and too-thin surfaces go through the voxels); 3MF only."""
     if not detail > 0 or not wall > 0 or join < 0:
         raise PrintError("detail and wall: positive numbers of millimetres; join: 0 or more")
     g = scene_mod.compile_scene(scene, solid=True)
@@ -630,13 +699,13 @@ def make(scene, size=SIZE_MM, scale=None, detail=DETAIL_MM, wall=WALL_MM, join=J
     closed, open_, rods, report = _surfaces(g, lines != "none")
     if not closed and not open_ and not rods:
         raise PrintError("nothing to print: the construct has no surfaces (try --lines raised for one drawn in lines)")
-    pts = [p for _, piece in closed + open_ for t in piece for p in t] + [p for r in rods for p in r]
-    lo = [min(p[a] for p in pts) for a in range(3)]
-    hi = [max(p[a] for p in pts) for a in range(3)]
+    lo, hi = _extent(closed, open_, rods)
     longest = max(hi[a] - lo[a] for a in range(3))
     if not longest > 0:
         raise PrintError("nothing to print: the construct has no extent")
-    if scale is not None:
+    if fit:
+        mm_per_m = fit_mm_per_m([hi[a] - lo[a] for a in range(3)], bed)
+    elif scale is not None:
         if not scale > 0:
             raise PrintError("scale: a positive N, for 1:N")
         mm_per_m = 1000.0 / scale
@@ -645,6 +714,10 @@ def make(scene, size=SIZE_MM, scale=None, detail=DETAIL_MM, wall=WALL_MM, join=J
             raise PrintError("size: a positive number of millimetres")
         mm_per_m = size / longest
     cells = longest * mm_per_m / detail
+    asked = detail
+    if cells > MAX_CELLS and coarsen:
+        detail = math.ceil(longest * mm_per_m / MAX_CELLS * 1000) / 1000.0
+        cells = longest * mm_per_m / detail
     if cells > MAX_CELLS:
         raise PrintError("%.0f voxels along the longest side (at most %d): use a coarser --detail (at least %.2f mm)"
                          " or a smaller print" % (cells, MAX_CELLS, longest * mm_per_m / MAX_CELLS))
@@ -652,12 +725,16 @@ def make(scene, size=SIZE_MM, scale=None, detail=DETAIL_MM, wall=WALL_MM, join=J
     r = max(1, int(math.ceil(wall / detail / 2.0 - 0.25)))
     rj = int(round(join / detail / 2.0))
     grid = _Grid(lo, hi, h, r + rj + 2)
-    solid, shells, thickened, true = {}, {}, set(), []
+    solid, shells, thickened, true, kept = {}, {}, set(), [], []
+    if exact and lines == "engrave":
+        raise PrintError("engraving cuts into the voxel print: an exact print takes lines none or raised")
     for pid, piece in closed:   # filled where the voxel centres are inside; too thin for that, a shell
         inside, surface = {}, {}
         _fill(grid, piece, inside)
         _mark_surface(grid, piece, surface)
-        if _popcount(inside) >= _popcount(surface):
+        if _popcount(inside) >= _popcount(surface) and exact:
+            kept.append((pid, piece))
+        elif _popcount(inside) >= _popcount(surface):
             for c, m in inside.items():
                 solid[c] = solid.get(c, 0) | m
             true.extend(piece)
@@ -671,6 +748,9 @@ def make(scene, size=SIZE_MM, scale=None, detail=DETAIL_MM, wall=WALL_MM, join=J
     report["thickened"] = sorted(thickened)
     grooves = {}
     _mark_rods(grid, rods, grooves if lines == "engrave" else shells)
+    if exact:
+        return _exact(g, kept, shells, grid, lo, mm_per_m, detail, r, rj, bed, report,
+                      {"detail_mm": detail, "detail_asked_mm": asked, "wall_mm": wall, "join_mm": join})
     if shells:
         shells = _dilate(shells, r, grid.n)
     cols = _close({c: m for c, m in _union(solid, shells).items() if m}, rj, grid.n)
@@ -703,11 +783,126 @@ def make(scene, size=SIZE_MM, scale=None, detail=DETAIL_MM, wall=WALL_MM, join=J
     j0 = min(c[1] for c in cols)
     verts = [[(p[0] - i0) * detail, (p[1] - j0) * detail, p[2] * detail] for p in verts]
     extent = [max(p[a] for p in verts) - min(p[a] for p in verts) for a in range(3)]
+    if _turned([verts], extent, bed):
+        extent = [extent[1], extent[0], extent[2]]
+        report["turned"] = True
     report.update(_checks(verts, faces, bodies, extent, bed))
     report.update({"size_mm": [round(x, 1) for x in extent], "scale": "1:%s" % _ratio(1000.0 / mm_per_m),
-                   "detail_mm": detail, "wall_mm": wall, "join_mm": join, "voxels": sum(b[0] for b in bodies),
+                   "detail_mm": detail, "detail_asked_mm": asked, "wall_mm": wall, "join_mm": join,
+                   "smallest_real_mm": round(detail * 1000.0 / mm_per_m, 1), "voxels": sum(b[0] for b in bodies),
                    "filled_for_manifold": filled, "cavities_filled": voids, "triangles": len(faces)})
     return {"vertices": verts, "triangles": faces, "report": report, "title": g["title"]}
+
+
+def _fits(extent, bed):
+    return extent[0] <= bed[0] and extent[1] <= bed[1] and extent[2] <= bed[2]
+
+
+def _turned(meshes, extent, bed):
+    """Turn the print a quarter on the bed (about Z, so windings keep) when it fits only that way; in place.
+    True if turned."""
+    if _fits(extent, bed) or not _fits((extent[1], extent[0], extent[2]), bed):
+        return False
+    for verts in meshes:
+        for p in verts:
+            p[0], p[1] = p[1], extent[0] - p[0]
+    return True
+
+
+def _orient(verts, faces):
+    """Wind a closed surface one way, then outward: neighbours agree across every edge (a walk from triangle to
+    triangle, flipping as it goes), and the enclosed volume comes out positive."""
+    by_edge = {}
+    for n, (a, b, c) in enumerate(faces):
+        for u, w in ((a, b), (b, c), (c, a)):
+            by_edge.setdefault((min(u, w), max(u, w)), []).append(n)
+    faces = [list(t) for t in faces]
+    done = [False] * len(faces)
+    for start in range(len(faces)):
+        if done[start]:
+            continue
+        done[start], todo = True, [start]
+        while todo:
+            n = todo.pop()
+            a, b, c = faces[n]
+            for u, w in ((a, b), (b, c), (c, a)):
+                for m in by_edge[(min(u, w), max(u, w))]:
+                    if m == n or done[m]:
+                        continue
+                    x, y, z = faces[m]
+                    if (u, w) in ((x, y), (y, z), (z, x)):   # the same direction twice: flip the neighbour
+                        faces[m] = [x, z, y]
+                    done[m] = True
+                    todo.append(m)
+    vol = 0.0
+    for a, b, c in faces:
+        p, q, r = verts[a], verts[b], verts[c]
+        vol += (p[0] * (q[1] * r[2] - q[2] * r[1]) - p[1] * (q[0] * r[2] - q[2] * r[0]) + p[2] * (q[0] * r[1] - q[1] * r[0]))
+    return [[a, c, b] for a, b, c in faces] if vol < 0 else faces
+
+
+def _exact(g, kept, shells, grid, lo, mm_per_m, detail, r, rj, bed, report, extra):
+    """The exact print: each closed piece as it is, one mesh each, and the thickened surfaces as one more; in
+    millimetres, on the bed at z = 0."""
+    objects = []
+    for pid, piece in kept:
+        index, verts, faces = {}, [], []
+        for t in piece:
+            tri = []
+            for p in t:
+                k = _key(p)
+                if k not in index:
+                    index[k] = len(verts)
+                    verts.append([(p[a] - lo[a]) * mm_per_m for a in range(3)])
+                tri.append(index[k])
+            if len(set(tri)) == 3:
+                faces.append(tri)
+        objects.append({"name": pid, "vertices": verts, "triangles": _orient(verts, faces)})
+    if shells:
+        cols = _close({c: m for c, m in _dilate(shells, r, grid.n).items() if m}, rj, grid.n)
+        _fill_voids(cols, grid.n)
+        _manifold(cols)
+        verts, faces = _surface(cols, grid.n)
+        verts = _smooth(verts, faces)
+        off = [(grid.origin[a] - lo[a]) * mm_per_m for a in range(3)]
+        objects.append({"name": "thickened surfaces", "vertices": [[off[a] + p[a] * detail for a in range(3)] for p in verts],
+                        "triangles": faces})
+    if not objects:
+        raise PrintError("nothing to print")
+    low = [min(p[a] for o in objects for p in o["vertices"]) for a in range(3)]
+    for o in objects:
+        o["vertices"] = [[p[a] - low[a] for a in range(3)] for p in o["vertices"]]
+    span = [max(p[a] for o in objects for p in o["vertices"]) for a in range(3)]
+    if _turned([o["vertices"] for o in objects], span, bed):
+        report["turned"] = True
+    boxes = [[[min(p[a] for p in o["vertices"]) for a in range(3)], [max(p[a] for p in o["vertices"]) for a in range(3)]]
+             for o in objects]
+    # pieces, by their boxes: objects whose boxes meet (within the join) print as one
+    near = extra["join_mm"] + detail
+    group = list(range(len(boxes)))
+
+    def root(i):
+        while group[i] != i:
+            group[i] = group[group[i]]
+            i = group[i]
+        return i
+    for i in range(len(boxes)):
+        for j in range(i + 1, len(boxes)):
+            if all(boxes[i][0][a] - near <= boxes[j][1][a] and boxes[j][0][a] - near <= boxes[i][1][a] for a in range(3)):
+                group[root(i)] = root(j)
+    roots = {root(i) for i in range(len(boxes))}
+    grounded = {root(i) for i, b in enumerate(boxes) if b[0][2] <= near}
+    extent = [max(b[1][a] for b in boxes) for a in range(3)]
+    bad = sum(_edges_ok(o["triangles"]) for o in objects)
+    fits = all(e <= b for e, b in zip(sorted(extent[:2], reverse=True) + [extent[2]], sorted(bed[:2], reverse=True) + [bed[2]]))
+    report.update(extra)
+    report.update({"exact": True, "objects": len(objects), "exact_parts": sorted({pid for pid, _ in kept}),
+                   "watertight": bad == 0, "bad_edges": bad, "pieces": len(roots), "pieces_in_air": len(roots - grounded),
+                   "fits_bed": fits, "bed_mm": list(bed), "needs_supports": None,
+                   "size_mm": [round(x, 1) for x in extent], "scale": "1:%s" % _ratio(1000.0 / mm_per_m),
+                   "smallest_real_mm": round(detail * 1000.0 / mm_per_m, 1),
+                   "triangles": sum(len(o["triangles"]) for o in objects)})
+    return {"objects": objects, "report": report, "title": g["title"]}
 
 
 def _ratio(n):
@@ -745,6 +940,26 @@ def _checks(verts, faces, bodies, extent, bed):
 
 def notes(report):
     """The report in plain sentences, problems first."""
+    if report.get("exact"):
+        out = ["turned a quarter on the bed, the way it fits"] if report.get("turned") else []
+        if not report["watertight"]:
+            out.append("NOT watertight: %d open edges" % report["bad_edges"])
+        out.append("exact: %d of the construct's solids as they are%s, parts of one object the slicer joins"
+                   % (len(report["exact_parts"]), " and its thickened surfaces" if report["objects"] > len(report["exact_parts"])
+                      else ""))
+        if report["pieces_in_air"]:
+            out.append("%d of %d pieces (by their boxes) would start in the air: print with supports"
+                       % (report["pieces_in_air"], report["pieces"]))
+        elif report["pieces"] > 1:
+            out.append("%d separate pieces (by their boxes), all on the bed" % report["pieces"])
+        if not report["fits_bed"]:
+            out.append("does not fit a %s mm bed: --fit, a larger printer (--printers) or cut it"
+                       % "x".join("%g" % b for b in report["bed_mm"]))
+        if report["thickened"]:
+            out.append("thickened to %g mm in voxels of %g mm (open or too thin): %s"
+                       % (report["wall_mm"], report["detail_mm"], _list(report["thickened"])))
+        out.append("the slicer decides supports and the finest detail: the solids keep the construct's own")
+        return out
     out = []
     if not report["watertight"]:
         out.append("NOT watertight: %d edges are open or shared by more than two triangles" % report["bad_edges"])
@@ -754,7 +969,14 @@ def notes(report):
     elif report["pieces"] > 1:
         out.append("%d separate pieces, all on the bed" % report["pieces"])
     if not report["fits_bed"]:
-        out.append("does not fit a %s mm bed: print smaller (--size) or cut it" % "x".join("%g" % b for b in report["bed_mm"]))
+        out.append("does not fit a %s mm bed: print smaller (--size), fit it (--fit), a larger printer "
+                   "(--printers) or cut it" % "x".join("%g" % b for b in report["bed_mm"]))
+    if report.get("detail_asked_mm") and report["detail_mm"] > report["detail_asked_mm"]:
+        out.append("voxel %g mm, not %g: the finest this size allows (%d along the longest side)"
+                   % (report["detail_mm"], report["detail_asked_mm"], MAX_CELLS))
+    out.append("features under about %g mm on the real object are lost or thickened" % report["smallest_real_mm"])
+    if report.get("turned"):
+        out.append("turned a quarter on the bed, the way it fits")
     if report["needs_supports"]:
         out.append("overhangs need supports (%.0f mm2 face down steeper than %g degrees)"
                    % (report["overhang_mm2"], OVERHANG_DEGREES))
@@ -794,10 +1016,34 @@ def _xml(s):
     return s.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace('"', "&quot;")
 
 
+def _mesh_xml(oid, name, verts, faces):
+    return "\n".join(['  <object id="%d" type="model" name="%s">' % (oid, _xml(name)), '   <mesh>', '    <vertices>',
+                      "\n".join("<vertex x=\"%.4f\" y=\"%.4f\" z=\"%.4f\"/>" % tuple(q) for q in verts),
+                      '    </vertices>', '    <triangles>',
+                      "\n".join("<triangle v1=\"%d\" v2=\"%d\" v3=\"%d\"/>" % tuple(f) for f in faces),
+                      '    </triangles>', '   </mesh>', '  </object>'])
+
+
 def to_3mf(p):
-    """A 3MF package (millimetres): one object, the construct's title and scale as metadata."""
-    v = ["<vertex x=\"%.4f\" y=\"%.4f\" z=\"%.4f\"/>" % tuple(q) for q in p["vertices"]]
-    t = ["<triangle v1=\"%d\" v2=\"%d\" v3=\"%d\"/>" % f for f in p["triangles"]]
+    """A 3MF package (millimetres): one object, the construct's title and scale as metadata. An exact print is one
+    mesh holding every solid (closed, wound outward, overlapping: a slicer fills their union), with PrusaSlicer's
+    volume table naming each solid as a part of that object."""
+    config = None
+    if "objects" in p:
+        verts, faces, volumes = [], [], []
+        for o in p["objects"]:
+            base, first = len(verts), len(faces)
+            verts.extend(o["vertices"])
+            faces.extend([a + base, b + base, c + base] for a, b, c in o["triangles"])
+            volumes.append((first, len(faces) - 1, o["name"]))
+        resources, item = _mesh_xml(1, p["title"], verts, faces), 1
+        config = "\n".join(['<?xml version="1.0" encoding="UTF-8"?>', '<config>', ' <object id="1" instances_count="1">',
+                            '  <metadata type="object" key="name" value="%s"/>' % _xml(p["title"])] +
+                           ['  <volume firstid="%d" lastid="%d">\n   <metadata type="volume" key="name" value="%s"/>\n'
+                            '   <metadata type="volume" key="volume_type" value="ModelPart"/>\n  </volume>' % (a, b, _xml(n))
+                            for a, b, n in volumes] + [' </object>', '</config>', ""])
+    else:
+        resources, item = _mesh_xml(1, p["title"], p["vertices"], p["triangles"]), 1
     model = "\n".join([
         '<?xml version="1.0" encoding="UTF-8"?>',
         '<model unit="millimeter" xml:lang="en-US" xmlns="http://schemas.microsoft.com/3dmanufacturing/core/2015/02">',
@@ -805,9 +1051,8 @@ def to_3mf(p):
         ' <metadata name="Application">%s %s</metadata>' % (product.TITLE, product.VERSION),
         ' <metadata name="Description">%s</metadata>' % _xml("Printed at %s; %s" % (
             p["report"]["scale"], "watertight" if p["report"]["watertight"] else "not watertight")),
-        ' <resources>', '  <object id="1" type="model" name="%s">' % _xml(p["title"]), '   <mesh>',
-        '    <vertices>', "\n".join(v), '    </vertices>', '    <triangles>', "\n".join(t), '    </triangles>',
-        '   </mesh>', '  </object>', ' </resources>', ' <build>', '  <item objectid="1"/>', ' </build>', '</model>', ""])
+        ' <resources>', resources, ' </resources>', ' <build>', '  <item objectid="%d"/>' % item, ' </build>',
+        '</model>', ""])
     types = ('<?xml version="1.0" encoding="UTF-8"?>\n'
              '<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">'
              '<Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>'
@@ -823,6 +1068,8 @@ def to_3mf(p):
         z.writestr("[Content_Types].xml", types)
         z.writestr("_rels/.rels", rels)
         z.writestr("3D/3dmodel.model", model)
+        if config:
+            z.writestr("Metadata/Slic3r_PE_model.config", config)
     return buf.getvalue()
 
 
@@ -832,6 +1079,8 @@ def write(scene, path, fmt=None, **kw):
     fmt = fmt or path.suffix.lower().lstrip(".")
     if fmt not in FORMATS:
         raise PrintError("format: stl or 3mf (from --format or the file's extension), not %r" % fmt)
+    if kw.get("exact") and fmt != "3mf":
+        raise PrintError("an exact print is 3MF (its solids are parts of one object); STL has no parts")
     p = make(scene, **kw)
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_bytes(to_stl(p) if fmt == "stl" else to_3mf(p))

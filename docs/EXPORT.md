@@ -27,7 +27,7 @@ construct export scene.json --out model.glb
 | `--wire edges` (default), `tubes`, `seams`, `none` | the line art: as edges (Blender keeps them); as thin tubes (game engines drop plain lines); as dark tubes for the design lines only, the parts drawn as lines (door seams, creases, outlines), for a finished model; or left out |
 | `--merge` | glTF: every part that does not move merged into one mesh per material, for game engines; moving parts keep their own nodes and animations |
 | `--colliders` | glTF: a box collider per part, named for Godot (`<part>-convcolonly`), moving with its joint ([GODOT.md](GODOT.md)) |
-| `--pieces` | glTF: every part with surfaces a body of its own (`<part>-rigid`), for break-apart and assembly ([GODOT.md](GODOT.md)) |
+| `--pieces` | glTF: the pieces the object would break into, each a rigid body with convex shapes (`OMI_physics_body`), for break-apart and assembly ([GODOT.md](GODOT.md)) |
 | `--wire-radius M` | the tubes' radius in metres (default: from the object's size) |
 | `--pose closed` (default) or `open` | the pose the model rests in; a glTF carries the opening animation either way |
 | `--materials map.json` | colours and finishes for parts, by id or pattern (below) |

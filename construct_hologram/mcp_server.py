@@ -116,7 +116,8 @@ TOOLS += [
          "frame": {"type": "string", "enum": ["y-up", "z-up"]},
          "merge": {"type": "boolean", "description": "merge the parts that do not move, one mesh per material"},
          "colliders": {"type": "boolean", "description": "a box collider per part (Godot: -convcolonly)"},
-         "pieces": {"type": "boolean", "description": "every part a rigid body of its own (Godot: -rigid)"},
+         "pieces": {"type": "boolean", "description": "the pieces it would break into, each a rigid body with convex "
+                                                      "shapes (OMI_physics_body), interlocked parts together"},
          "materials": {"type": "object", "description": "a material map: {\"materials\": [{\"parts\": [...], "
                                                         "\"color\": \"#rrggbb\", \"metallic\", \"roughness\"}]}"}},
                      "required": ["document"], "additionalProperties": False},
@@ -133,7 +134,15 @@ TOOLS += [
          "wall": {"type": "number", "description": "open surfaces thickened to this wall in mm (default 0.8)"},
          "join": {"type": "number", "description": "gaps between parts up to this wide are closed, in mm (default 1.6)"},
          "lines": {"type": ["boolean", "string"], "enum": [True, False, "none", "engrave", "raised"],
-                   "description": "the parts drawn only in lines: none, engrave (cut in) or raised (true)"}},
+                   "description": "the parts drawn only in lines: none, engrave (cut in) or raised (true)"},
+         "printer": {"type": "string", "enum": ["small", "desktop", "cube", "large", "resin"],
+                     "description": "a printer class: its bed, finest voxel and thinnest wall"},
+         "fit": {"type": "boolean", "description": "the largest print that stands on the printer's bed"},
+         "exact": {"type": "boolean", "description": "3MF: the construct's own solids, parts of one object the slicer "
+                                                     "joins; only open and too-thin surfaces become voxels"},
+         "compare_printers": {"type": "boolean",
+                              "description": "instead of a print: for each printer class, the largest print and how "
+                                             "much detail survives"}},
                      "required": ["document"], "additionalProperties": False},
      "annotations": _READ_ONLY},
     {"name": "construct_netlogo_instrument",
@@ -261,7 +270,8 @@ V2_TOOLS = {"construct_diagnose": ({"text", "document"}, set()),
             "construct_compile": ({"document"}, {"document"}),
             "construct_export": ({"document", "format", "wire", "pose", "frame", "materials", "merge", "colliders", "pieces"},
                                  {"document"}),
-            "construct_print": ({"document", "format", "size", "scale", "detail", "wall", "join", "lines"}, {"document"}),
+            "construct_print": ({"document", "format", "size", "scale", "detail", "wall", "join", "lines", "printer", "fit",
+                                 "compare_printers", "exact"}, {"document"}),
             "construct_limits": ({"tier", "request", "overrides"}, set()),
             "construct_netlogo_instrument": ({"model", "title", "turtles", "reporters", "patches", "every", "seed", "ticks",
                                               "skip_turtles", "setup", "go"}, {"model", "title"}),
@@ -334,7 +344,16 @@ def _call_v2(name, args):
         try:
             if fmt not in printing.FORMATS:
                 raise printing.PrintError("format: 3mf or stl")
-            kw = {k: args[k] for k in ("size", "scale", "detail", "wall", "join") if k in args}
+            if args.get("compare_printers"):
+                return _tool_result({"printers": printing.printers(built, lines=args.get("lines", "none"))})
+            kw = {k: args[k] for k in ("size", "scale", "detail", "wall", "join", "fit", "exact") if k in args}
+            if kw.get("exact") and fmt != "3mf":
+                raise printing.PrintError("an exact print is 3MF (its solids are parts of one object)")
+            if args.get("printer"):
+                pr = printing.PRINTERS.get(args["printer"])
+                if pr is None:
+                    raise printing.PrintError("printer: one of " + ", ".join(printing.PRINTERS))
+                kw = dict({"detail": pr["detail"], "wall": pr["wall"]}, bed=pr["bed"], coarsen=True, **kw)
             p = printing.make(built, lines=args.get("lines", "none"), **kw)
         except (printing.PrintError, scene.SceneError, TypeError) as exc:
             return _tool_result({"error": str(exc)}, is_error=True)

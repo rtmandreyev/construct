@@ -270,6 +270,205 @@ def _wire_radius(g, wire_radius):
     return max(g["bounds"]["radius"] * 0.0009, 1e-4)
 
 
+# ---------------------------------------------------------------------------- pieces: bodies physics can knock apart
+
+PIECE_CELLS = 10        # a large piece is cut into surface patches about 1/10 of the object across
+PIECE_THICK = 0.15      # each patch is given this share of a cell as thickness, inward
+PIECE_INSET = 0.003     # every shape is pulled in by this share of the object, so touching parts start apart
+PIECE_DENSITY = 300.0   # kg per cubic metre of a shape's box: masses in proportion, not real
+
+
+def _components(tris):
+    """The connected pieces of a triangle list, as lists of triangle indices."""
+    parent = {}
+
+    def find(a):
+        while parent.setdefault(a, a) != a:
+            parent[a] = parent[parent[a]]
+            a = parent[a]
+        return a
+    keys = [[tuple(round(x, 6) for x in p) for p in t] for t in tris]
+    for ks in keys:
+        for k in ks[1:]:
+            ra, rb = find(ks[0]), find(k)
+            if ra != rb:
+                parent[ra] = rb
+    out = {}
+    for i, ks in enumerate(keys):
+        out.setdefault(find(ks[0]), []).append(i)
+    return list(out.values())
+
+
+def _mean(pts):
+    return [sum(p[a] for p in pts) / len(pts) for a in range(3)]
+
+
+def _piece_shapes(tris, comp, cell, inset):
+    """Convex point sets for one connected piece: the piece itself if it is small, else one patch per cell of a
+    grid over it (so a hollow shell is a skin of patches, not a solid block); each patch given thickness toward
+    the piece's middle (a flat open surface, on both sides of its plane), and pulled in by `inset`."""
+    pts = [p for i in comp for p in tris[i]]
+    lo, hi = _bounds(pts)
+    middle = _mean(pts)
+    clusters = {}
+    if math.dist(lo, hi) > 2 * cell:
+        for i in comp:
+            c = _mean(tris[i])
+            clusters.setdefault(tuple(int((c[a] - lo[a]) / cell) for a in range(3)), []).append(i)
+    else:
+        clusters[0] = comp
+    out = []
+    for idx in clusters.values():
+        cpts = list({tuple(p) for i in idx for p in tris[i]})
+        size = math.dist(*_bounds(cpts))
+        t = min(cell * PIECE_THICK, max(size, 1e-4) * 0.5)
+        hull = list(cpts)
+        for p in cpts:   # inward, toward the middle, never past it
+            v = _sub(middle, p)
+            ln = math.sqrt(_dot(v, v))
+            if ln > 1e-9:
+                k = min(t, ln * 0.5) / ln
+                hull.append(tuple(p[a] + v[a] * k for a in range(3)))
+        lo_, hi_ = _bounds(hull)
+        if min(hi_[a] - lo_[a] for a in range(3)) < t * 0.2:   # flat (an open panel): thickness both ways
+            a, b_, c = tris[idx[0]]
+            n = _cross(_sub(b_, a), _sub(c, a))
+            ln = math.sqrt(_dot(n, n))
+            if ln > 0:
+                n = [x / ln * t * 0.5 for x in n]
+                hull += [tuple(p[k] + s_ * n[k] for k in range(3)) for p in cpts for s_ in (1, -1)]
+        hc = _mean(hull)
+        d = min(inset, size * 0.2)
+        shrunk = []
+        for p in hull:
+            v = _sub(p, hc)
+            ln = math.sqrt(_dot(v, v))
+            shrunk.append(tuple(hc[a] + v[a] * max(0.0, 1 - d / ln) if ln > 0 else hc[a] for a in range(3)))
+        out.append(shrunk)
+    return out
+
+
+def _dot(a, b):
+    return a[0] * b[0] + a[1] * b[1] + a[2] * b[2]
+
+
+def _cross(a, b):
+    return (a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0])
+
+
+def _neg(a):
+    return (-a[0], -a[1], -a[2])
+
+
+def _intersect(A, B, steps=64):
+    """Whether the convex hulls of point sets A and B intersect (GJK on their Minkowski difference)."""
+    def support(d):
+        p = max(A, key=lambda q: _dot(q, d))
+        q = min(B, key=lambda r: _dot(r, d))
+        return _sub(p, q)
+    d = _sub(_mean(A), _mean(B))
+    if not any(d):
+        d = (1.0, 0.0, 0.0)
+    simplex = [support(d)]
+    d = _neg(simplex[0])
+    for _ in range(steps):
+        if not any(abs(x) > 1e-15 for x in d):
+            return True
+        p = support(d)
+        if _dot(p, d) < 0:
+            return False
+        simplex.append(p)
+        a = simplex[-1]
+        ao = _neg(a)
+        if len(simplex) == 2:
+            b_ = simplex[0]
+            ab = _sub(b_, a)
+            d = _cross(_cross(ab, ao), ab) if _dot(ab, ao) > 0 else ao
+            if _dot(ab, ao) <= 0:
+                simplex = [a]
+        elif len(simplex) == 3:
+            c, b_ = simplex[0], simplex[1]
+            ab, ac = _sub(b_, a), _sub(c, a)
+            abc = _cross(ab, ac)
+            if _dot(_cross(abc, ac), ao) > 0:
+                if _dot(ac, ao) > 0:
+                    simplex, d = [c, a], _cross(_cross(ac, ao), ac)
+                else:
+                    simplex, d = [b_, a], (_cross(_cross(ab, ao), ab) if _dot(ab, ao) > 0 else ao)
+            elif _dot(_cross(ab, abc), ao) > 0:
+                simplex, d = [b_, a], (_cross(_cross(ab, ao), ab) if _dot(ab, ao) > 0 else ao)
+            elif _dot(abc, ao) > 0:
+                d = abc
+            else:
+                simplex, d = [b_, c, a], _neg(abc)
+        else:
+            d_, c, b_ = simplex[0], simplex[1], simplex[2]
+            ab, ac, ad = _sub(b_, a), _sub(c, a), _sub(d_, a)
+            abc, acd, adb = _cross(ab, ac), _cross(ac, ad), _cross(ad, ab)
+            if _dot(abc, ad) > 0:
+                abc = _neg(abc)
+            if _dot(acd, ab) > 0:
+                acd = _neg(acd)
+            if _dot(adb, ac) > 0:
+                adb = _neg(adb)
+            if _dot(abc, ao) > 0:
+                simplex, d = [c, b_, a], abc
+            elif _dot(acd, ao) > 0:
+                simplex, d = [d_, c, a], acd
+            elif _dot(adb, ao) > 0:
+                simplex, d = [b_, d_, a], adb
+            else:
+                return True
+    return True
+
+
+def _shrunk(pts, f):
+    c = _mean(pts)
+    return [tuple(c[a] + (p[a] - c[a]) * f for a in range(3)) for p in pts]
+
+
+def _assemblies(copies, deep=0.7):
+    """Which pieces belong together: two whose shapes still meet with the smaller shrunk to `deep` of its size
+    are interlocked (a rim in its tyre, an axle through its hubs) and become one body. Pieces that move (a door)
+    stay apart. Returns a group index per copy."""
+    group = list(range(len(copies)))
+
+    def root(i):
+        while group[i] != i:
+            group[i] = group[group[i]]
+            i = group[i]
+        return i
+    boxes = []
+    for c in copies:
+        pts = [p for h in c["hulls"] for p in h]
+        boxes.append(([min(p[a] for p in pts) for a in range(3)], [max(p[a] for p in pts) for a in range(3)]))
+    for i in range(len(copies)):
+        if copies[i]["moving"]:
+            continue
+        for j in range(i + 1, len(copies)):
+            if copies[j]["moving"] or root(i) == root(j):
+                continue
+            (lo1, hi1), (lo2, hi2) = boxes[i], boxes[j]
+            if any(lo1[a] > hi2[a] or lo2[a] > hi1[a] for a in range(3)):
+                continue
+            hit = False
+            for h1 in copies[i]["hulls"]:
+                for h2 in copies[j]["hulls"]:
+                    small, big = (h1, h2) if math.dist(*_bounds(h1)) < math.dist(*_bounds(h2)) else (h2, h1)
+                    if _intersect(_shrunk(small, deep), big):
+                        hit = True
+                        break
+                if hit:
+                    break
+            if hit:
+                group[root(i)] = root(j)
+    return [root(i) for i in range(len(copies))]
+
+
+def _bounds(pts):
+    return [min(p[a] for p in pts) for a in range(3)], [max(p[a] for p in pts) for a in range(3)]
+
+
 # ---------------------------------------------------------------------------- glTF
 
 class _Bin:
@@ -429,6 +628,89 @@ def to_gltf(g, wire="edges", pose="closed", materials=None, wire_radius=None, me
         nodes[parent].setdefault("children", []).append(n)
         counts["colliders"] = counts.get("colliders", 0) + 1
 
+    shapes, copies, pnode_of = [], [], {}   # OMI_physics_shape's shapes; the pieces, gathered, then made bodies
+
+    def bodies(part, gr, parent, origin):
+        """`pieces`: each copy of a part (a mirrored tyre, a repeated window) a rigid body of its own
+        (OMI_physics_body, which Godot imports as a RigidBody3D), its mesh and several convex shapes inside."""
+        tris = gr["tris"]
+        boxes = [(b_["min"], b_["max"]) for b_ in part["instances"]] or [(None, None)]
+
+        def which(p):
+            best, at = None, 0
+            for i, (lo, hi) in enumerate(boxes):
+                if lo is None:
+                    return 0
+                c = [(lo[a] + hi[a]) / 2 for a in range(3)]
+                inside = all(lo[a] - 1e-6 <= p[a] <= hi[a] + 1e-6 for a in range(3))
+                key = (0 if inside else 1, math.dist(p, c))
+                if best is None or key < best:
+                    best, at = key, i
+            return at
+        by_copy = {}
+        for comp in _components(tris):
+            by_copy.setdefault(which(_mean([p for i in comp for p in tris[i]])), []).append(comp)
+        segs_of = {}
+        for tone, segs in gr["segs"].items():
+            for sg in segs:
+                segs_of.setdefault(which(_mean([sg[0], sg[1]])), {}).setdefault(tone, []).append(sg)
+        cell = 2 * g["bounds"]["radius"] / PIECE_CELLS
+        inset = 2 * g["bounds"]["radius"] * PIECE_INSET
+        for n_copy, (ci, comps) in enumerate(sorted(by_copy.items())):
+            copies.append({"part": part, "gr": gr, "comps": comps, "segs": segs_of.get(ci, {}), "parent": parent,
+                           "origin": origin, "moving": origin != (0.0, 0.0, 0.0) or parent != pnode_of[part["id"]],
+                           "name": part["id"] if len(by_copy) == 1 else "%s-%d" % (part["id"], n_copy + 1),
+                           "copy": n_copy + 1,
+                           "hulls": [h for comp in comps for h in _piece_shapes(tris, comp, cell, inset)]})
+
+    def emit_bodies():
+        """The pieces, as bodies: interlocked pieces together (an assembly), each with its parts' meshes."""
+        groups_of = {}
+        for i, gi in enumerate(_assemblies(copies)):
+            groups_of.setdefault(gi, []).append(copies[i])
+        for members in groups_of.values():
+            members.sort(key=lambda c: -sum(len(h) for h in c["hulls"]))
+            head = members[0]
+            pts = [p for c in members for comp in c["comps"] for i in comp for p in c["gr"]["tris"][i]]
+            centre = _mean(pts)
+            kids, mass = [], 0.0
+            for c in members:
+                tris, gr, part = c["gr"]["tris"], c["gr"], c["part"]
+                idx = [i for comp in c["comps"] for i in comp]
+                local = [tuple(_sub(p, centre) for p in tris[i]) for i in idx]
+                prims = [_primitive(b, 4, [p for t in local for p in t], smooth_normals(local),
+                                    [x for i in idx for x in gr["tri_phase"][i]], solid_material(part), box_uvs(local))]
+                counts["triangles"] += len(local)
+                for tone, segs in sorted(c["segs"].items()):
+                    if wire == "edges":
+                        prims.append(_primitive(b, 1, [_sub(p, centre) for sg in segs for p in sg[:2]], None,
+                                                [x for sg in segs for x in sg[2:]], light_material(tone, own.get(part["id"]))))
+                        counts["edges"] += len(segs)
+                meshes.append({"name": c["name"], "primitives": prims})
+                kids.append(node({"name": c["name"] + ":mesh", "mesh": len(meshes) - 1,
+                                  "extras": {"construct": {"part": part["id"], "role": part["role"], "copy": c["copy"]}}}))
+                for hull in c["hulls"]:
+                    pts_ = [_sub(p, centre) for p in hull]
+                    lo, hi = _bounds(pts_)
+                    mass += max((hi[0] - lo[0]) * (hi[1] - lo[1]) * (hi[2] - lo[2]), 1e-7) * PIECE_DENSITY
+                    # the points as a fan of triangles: an importer takes the convex hull of a shape's vertices
+                    fan = [i for k in range(1, len(pts_) - 1) for i in (0, k, k + 1)]
+                    acc = b.add("fff", pts_, "VEC3", 5126, 34962, minmax=True)
+                    meshes.append({"name": "%s-shape-%d" % (c["name"], len(shapes)), "primitives": [
+                        {"attributes": {"POSITION": acc}, "mode": 4, "indices": b.add("I", fan, "SCALAR", 5125, 34963)}]})
+                    shapes.append({"type": "convex", "convex": {"mesh": len(meshes) - 1}})
+                    kids.append(node({"name": "%s-shape-%d" % (c["name"], len(shapes) - 1),
+                                      "extensions": {"OMI_physics_body": {"collider": {"shape": len(shapes) - 1}}}}))
+            name = head["name"] if len(members) == 1 else head["name"] + "-assembly"
+            body = node({"name": _node_name(name), "translation": _sub(centre, head["origin"]), "children": kids,
+                         "extensions": {"OMI_physics_body": {"motion": {"type": "dynamic",
+                                                                        "mass": round(min(max(mass, 0.05), 2000.0), 3)}}},
+                         "extras": {"construct": {"piece": name, "parts": [c["name"] for c in members]}}})
+            nodes[head["parent"]].setdefault("children", []).append(body)
+            counts["pieces"] = counts.get("pieces", 0) + 1
+        used_ext.update(("OMI_physics_body", "OMI_physics_shape"))
+
+
     root = node({"name": g["id"], "children": []})
     stage_nodes = {}
     for s in g["stages"]:
@@ -461,6 +743,7 @@ def to_gltf(g, wire="edges", pose="closed", materials=None, wire_radius=None, me
         if not (merge and keys and not moving):
             pnode = node({"name": _node_name(part["id"]), "extras": extras})
             nodes[stage_nodes[part["stage"]]]["children"].append(pnode)
+            pnode_of[part["id"]] = pnode
         if not keys:
             continue
         surfaced = any(groups[k]["tris"] for k in keys)   # its lines are construction lines, not seams
@@ -539,12 +822,17 @@ def to_gltf(g, wire="edges", pose="closed", materials=None, wire_radius=None, me
                 nodes[parent].setdefault("children", []).append(n)
                 motion_nodes[slot].append((n, base))
                 parent, origin = n, piv
-            n = node({"name": ("%s-rigid" if pieces and gr["tris"] else "%s:mesh") % part["id"], "mesh": mesh,
+            if pieces and gr["tris"]:
+                bodies(part, gr, parent, origin)
+                continue
+            n = node({"name": "%s:mesh" % part["id"], "mesh": mesh,
                       "translation": [-x for x in origin], "extras": {"construct": {"part": part["id"], "role": part["role"]}}})
             nodes[parent].setdefault("children", []).append(n)
             if colliders and gr["tris"]:
                 collider(part["id"], gr["tris"], parent, [-x for x in origin])
 
+    if copies:
+        emit_bodies()
     if merged:
         prims = [_primitive(b, mode, pos, nor or None, ph, mat, uv or None)
                  for (mode, mat), (pos, nor, ph, uv) in sorted(merged.items())]
@@ -575,6 +863,8 @@ def to_gltf(g, wire="edges", pose="closed", materials=None, wire_radius=None, me
         doc["animations"] = animations
     if used_ext:
         doc["extensionsUsed"] = sorted(used_ext)
+    if shapes:
+        doc.setdefault("extensions", {})["OMI_physics_shape"] = {"shapes": shapes}
     nodes[root]["extras"] = {"construct": {
         "format": g["format"], "contract": g["contract"], "id": g["id"], "title": g["title"],
         "subject": g["subject"], "scene_sha256": g["scene_sha256"], "frame": g["frame"],

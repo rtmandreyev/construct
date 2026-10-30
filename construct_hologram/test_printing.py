@@ -12,7 +12,7 @@ import unittest
 import zipfile
 from pathlib import Path
 
-from . import printing, studio
+from . import kit as kit_mod, printing, studio
 
 HERE = Path(__file__).resolve().parent
 
@@ -170,6 +170,65 @@ class Print(unittest.TestCase):
             self.assertIn("estimated printing time", Path(tmp, "fj62.gcode").read_text(encoding="utf-8", errors="replace"))
 
 
+
+class Printers(unittest.TestCase):
+    """Printer classes: the largest print that stands on each, and the construct's own solids kept exact."""
+
+    def test_fit_takes_the_bed_and_turns_the_print_when_it_must(self):
+        sc = scene_of(box("hull", [0.4, 0.1, 1.0], [0, 0.05, 0]))   # 1 m deep, 0.4 m wide, 0.1 m tall
+        r = printing.make(sc, fit=True, bed=(250.0, 210.0, 220.0), detail=1.0)["report"]
+        self.assertTrue(r["fits_bed"])
+        self.assertTrue(r.get("turned"))                             # the long side along the bed's 250 mm
+        self.assertAlmostEqual(r["size_mm"][0], 250 * printing.FIT_MARGIN, delta=1.0)
+        rows = {x["printer"]: x for x in printing.printers(sc)}
+        self.assertEqual(set(rows), set(printing.PRINTERS))
+        self.assertGreater(rows["large"]["size_mm"][2], rows["small"]["size_mm"][2])
+        self.assertLess(rows["large"]["smallest_real_mm"], rows["small"]["smallest_real_mm"])
+
+    def test_a_voxel_finer_than_the_grid_is_widened_when_asked(self):
+        sc = scene_of(box("block", [0.1, 0.05, 0.04], [0, 0.025, 0]))
+        with self.assertRaises(printing.PrintError):
+            printing.make(sc, size=200, detail=0.05)
+        r = printing.make(sc, size=200, detail=0.05, coarsen=True)["report"]
+        self.assertGreater(r["detail_mm"], 0.05)
+        self.assertEqual(r["detail_asked_mm"], 0.05)
+
+    def test_an_exact_print_keeps_the_solids_as_they_are(self):
+        sc = scene_of(box("base", [0.06, 0.02, 0.06], [0, 0.01, 0]),
+                      {"id": "dome", "shape": {"type": "sphere", "radius": 0.02}, "at": [0, 0.03, 0]},
+                      {"id": "sign", "shape": {"type": "plane", "size": [0.04, 0.02]}, "at": [0, 0.03, 0.031]})
+        p = printing.make(sc, size=60, detail=0.5, exact=True)
+        r = p["report"]
+        self.assertTrue(r["exact"] and r["watertight"])
+        self.assertEqual(r["exact_parts"], ["base", "dome"])
+        self.assertIn("sign", r["thickened"])                        # an open surface still goes through the voxels
+        self.assertEqual((r["pieces"], r["pieces_in_air"]), (1, 0))
+        base = next(o for o in p["objects"] if o["name"] == "base")
+        self.assertEqual(len(base["triangles"]), 12)                # the box as it is: twelve triangles, not voxels
+        data = printing.to_3mf(p)
+        with zipfile.ZipFile(io.BytesIO(data)) as z:
+            self.assertEqual(z.read("3D/3dmodel.model").count(b"<object "), 1)
+            self.assertIn(b'value="dome"', z.read("Metadata/Slic3r_PE_model.config"))
+        with self.assertRaises(printing.PrintError):
+            printing.write(sc, Path(tempfile.gettempdir(), "x.stl"), exact=True)
+
+    @unittest.skipUnless(os.environ.get("CONSTRUCT_PRUSASLICER"), "set CONSTRUCT_PRUSASLICER to the PrusaSlicer binary")
+    def test_prusaslicer_reads_an_exact_print_as_one_object_of_parts(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            sc = studio.load(str(HERE.parent / "examples" / "toyota-land-cruiser-fj62" / "scene.json"))
+            path = Path(tmp, "fj62.3mf")
+            printing.write(sc, path, size=80, detail=0.5, exact=True)
+            info = subprocess.run([os.environ["CONSTRUCT_PRUSASLICER"], "--info", str(path)],
+                                  capture_output=True, text=True, timeout=300).stdout
+            self.assertIn("manifold = yes", info)
+            self.assertEqual(info.count("[fj62.3mf]"), 1)
+            sliced = subprocess.run([os.environ["CONSTRUCT_PRUSASLICER"], "--export-gcode", "--center", "100,100",
+                                     "--output", str(Path(tmp, "fj62.gcode")), str(path)],
+                                    capture_output=True, text=True, timeout=600)
+            self.assertEqual(sliced.returncode, 0, sliced.stderr[-2000:])
+            self.assertNotIn("conflict", sliced.stdout + sliced.stderr)
+
+
 def a_run(ticks=10, n=12):
     """A small spread: n turtles on a ring with links between neighbours, one more infected each tick."""
     import math
@@ -263,6 +322,12 @@ class Kit(unittest.TestCase):
         self.assertEqual(one["title"], "A case kit")
         with self.assertRaisesRegex(kit.KitError, "a kit plan is an object"):
             kit.make(sc, plan={"glue": []})
+
+    def test_a_part_two_merges_match_joins_the_first(self):
+        sc = scene_of(box("seat-back-1", [0.02, 0.02, 0.02], [0, 0.01, 0]), box("seat-base-1", [0.02, 0.01, 0.02], [0, 0.005, 0.02]),
+                      box("seat-back--1", [0.02, 0.02, 0.02], [0.05, 0.01, 0]))
+        k = kit_mod.make(sc, size=40, detail=0.5, plan={"merge": [["seat-*--1"], ["seat-*-1"]]})
+        self.assertTrue(k["pieces"])
 
     def test_the_kit_files(self):
         from . import kit

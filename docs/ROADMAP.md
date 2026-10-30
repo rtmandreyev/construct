@@ -194,7 +194,8 @@ model alone.
   variants and the Godot guide.
 - **Also 29 October:** size and shape certainty answered apart (`traced`, size verified, shape
   verified), the provenance view's colours and its sources legend, and the gallery examples moved to it;
-  guesses in shades (designed, described, seen, seen and checked). Later: a per-part likeness from the
+  guesses in shades (designed, described, seen, seen and checked); printer classes, the largest print that
+  fits, and exact prints of the construct's own solids. Later: a per-part likeness from the
   critic, to tell a well-observed window from a rough one in the same photograph.
 - Next: the Revell-style kits (v1.2), then freeze; the Models Library check, Linux and Windows CI, the
   README's pictures, the release videos and the repository's organisation; then the release and the
@@ -280,8 +281,8 @@ are its own.
   and holographic interfaces, with build and open as game events.
 - **Variants without end:** seeded variants shipped in 1.1 (`params --seed`); next, generators in the
   editor or at runtime, and buildings.
-- **Break-apart:** shipped in 1.1 (`export --pieces`); next, pieces that start apart (so they settle
-  rather than burst) and joints as physics joints.
+- **Break-apart:** shipped in 1.1 (`export --pieces`, pieces that settle rather than burst); next,
+  joints as physics joints.
 - **Texture coordinates for every shape,** for texturing in any engine (box-projected today).
 
 ## v1.6: film, documentary and AR

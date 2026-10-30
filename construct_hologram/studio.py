@@ -462,22 +462,31 @@ def add_commands(sub):
     p.add_argument("--colliders", action="store_true",
                    help="glTF: a box collider per part, <part>-convcolonly (a collision shape in Godot), moving with its joint")
     p.add_argument("--pieces", action="store_true",
-                   help="glTF: every part a body of its own, <part>-rigid (a RigidBody3D in Godot), for break-apart")
+                   help="glTF: the pieces it would break into, each a rigid body with convex shapes (OMI_physics_body; "
+                        "a RigidBody3D in Godot), interlocked parts together, made to settle rather than burst")
     p = sub.add_parser("print", help="one watertight body to 3D print: STL or 3MF, checked (docs/PRINTING.md)")
     p.add_argument("scene")
-    p.add_argument("--out", required=True, help="FILE.stl or FILE.3mf")
+    p.add_argument("--out", help="FILE.stl or FILE.3mf")
     p.add_argument("--format", choices=("stl", "3mf"), help="default: from the file's extension")
     size = p.add_mutually_exclusive_group()
     size.add_argument("--size", type=float, help="the longest side in mm (default %g)" % 100.0)
     size.add_argument("--scale", type=float, help="print at 1:N of the object's real size, e.g. 43")
-    p.add_argument("--detail", type=float, default=0.4, help="the voxel size in mm (default 0.4, a nozzle's width)")
-    p.add_argument("--wall", type=float, default=0.8, help="open surfaces are thickened to this wall in mm (default 0.8)")
+    size.add_argument("--fit", action="store_true", help="the largest print that stands on the printer's bed")
+    p.add_argument("--printer", choices=("small", "desktop", "cube", "large", "resin"),
+                   help="a printer class: its bed, its finest voxel and its thinnest wall (--printers compares them)")
+    p.add_argument("--exact", action="store_true",
+                   help="3MF: the construct's own solids as they are, parts of one object the slicer joins (only open "
+                        "and too-thin surfaces become voxels): every detail the construct has, at the printer's resolution")
+    p.add_argument("--printers", action="store_true",
+                   help="for each printer class, the largest print and how much detail survives; writes nothing")
+    p.add_argument("--detail", type=float, help="the voxel size in mm (default 0.4, a nozzle's width, or the printer's)")
+    p.add_argument("--wall", type=float, help="open surfaces are thickened to this wall in mm (default 0.8, or the printer's)")
     p.add_argument("--join", type=float, default=1.6,
                    help="close gaps between parts up to this wide, in mm, so the print is one piece (default 1.6; 0: off)")
     p.add_argument("--lines", nargs="?", const="raised", default="none", choices=("none", "engrave", "raised"),
                    help="the parts drawn only in lines: none (left out, the default), engrave (cut into the surface, "
                         "like a model kit's panel lines) or raised (--lines alone)")
-    p.add_argument("--bed", default="250x210x220", help="the printer's build volume in mm (default 250x210x220)")
+    p.add_argument("--bed", help="the printer's build volume in mm (default 250x210x220, or the printer's)")
     p = sub.add_parser("kit", help="a model kit to print, glue and paint: pieces on plates, numbered, with a booklet "
                                    "(docs/PRINTING.md)")
     p.add_argument("scene")
@@ -486,9 +495,11 @@ def add_commands(sub):
     size.add_argument("--scale", type=float, default=24, help="1:N (default 24, a common car-kit scale)")
     size.add_argument("--size", type=float, help="the built model's longest side in mm, instead of a scale")
     p.add_argument("--detail", type=float, default=0.35, help="the voxel size in mm (default 0.35)")
+    p.add_argument("--printer", choices=("small", "desktop", "cube", "large", "resin"),
+                   help="a printer class: its bed for the plates (a large kit wants a large bed)")
     p.add_argument("--plan", help="a kit plan (kit-plan.json): parts to merge, small parts to keep, clear parts, a title")
     p.add_argument("--materials", help="a material map: each piece's paint (default: <scene>.materials.json beside it)")
-    p.add_argument("--bed", default="250x210x220", help="the printer's build volume in mm")
+    p.add_argument("--bed", help="the printer's build volume in mm (default 250x210x220, or the printer's)")
     p.add_argument("--critic", action="store_true", help="print the kit critic's brief and stop")
     p = sub.add_parser("freecad", help="named solids and joints in FreeCAD (.FCStd), and STEP; runs FreeCAD "
                                        "(docs/FREECAD.md)")
@@ -973,17 +984,37 @@ def run(args):
             return 0
         if args.command == "print":
             from . import printing
+            pr = printing.PRINTERS.get(args.printer or "desktop")
             try:
-                bed = tuple(float(x) for x in args.bed.lower().split("x"))
+                bed = tuple(float(x) for x in args.bed.lower().split("x")) if args.bed else pr["bed"]
                 if len(bed) != 3:
                     raise ValueError
             except ValueError:
                 sys.stderr.write("print: --bed WxDxH in mm, e.g. 250x210x220\n")
                 return 1
+            if args.printers:
+                try:
+                    rows = printing.printers(load(args.scene), lines=args.lines, wall=args.wall)
+                except printing.PrintError as exc:
+                    sys.stderr.write("print: %s\n" % exc)
+                    return 1
+                sys.stdout.write("the largest print on each printer class (parts: kept / thickened / lost, an estimate "
+                                 "from each part's size)\n")
+                for r in rows:
+                    sys.stdout.write("  %-8s %-7s %s mm, voxel %g mm%s; real features under ~%g mm lost; parts %d / %d / %d"
+                                     "  (%s)\n" % (r["printer"], r["scale"], " x ".join("%g" % x for x in r["size_mm"]),
+                                                   r["detail_mm"], " (the grid's limit)" if r["limited_by_grid"] else "",
+                                                   r["smallest_real_mm"], r["kept"], r["thickened"], r["lost"], r["label"]))
+                return 0
+            if not args.out:
+                sys.stderr.write("print: --out FILE.stl or FILE.3mf (or --printers to compare printers)\n")
+                return 1
             try:
                 r = printing.write(load(args.scene), args.out, args.format, size=args.size or printing.SIZE_MM,
-                                   scale=args.scale, detail=args.detail, wall=args.wall, join=args.join,
-                                   lines=args.lines, bed=bed)
+                                   scale=args.scale, fit=args.fit,
+                                   detail=args.detail or (pr["detail"] if args.printer else printing.DETAIL_MM),
+                                   wall=args.wall or (pr["wall"] if args.printer else printing.WALL_MM), join=args.join,
+                                   lines=args.lines, bed=bed, coarsen=bool(args.printer or args.fit), exact=args.exact)
             except printing.PrintError as exc:
                 sys.stderr.write("print: %s\n" % exc)
                 return 1
@@ -998,7 +1029,8 @@ def run(args):
                 sys.stdout.write(kit_mod.CRITIC + "\n")
                 return 0
             try:
-                bed = tuple(float(x) for x in args.bed.lower().split("x"))
+                bed = tuple(float(x) for x in args.bed.lower().split("x")) if args.bed else \
+                    __import__("construct_hologram.printing", fromlist=["PRINTERS"]).PRINTERS[args.printer or "desktop"]["bed"]
                 mats = args.materials or (str(Path(args.scene).with_suffix(".materials.json"))
                                           if Path(args.scene).with_suffix(".materials.json").is_file() else None)
                 k = kit_mod.make(load(args.scene), scale=args.scale, size=args.size, detail=args.detail, plan=args.plan,
