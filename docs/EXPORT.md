@@ -32,6 +32,7 @@ construct export scene.json --out model.glb
 | `--pose closed` (default) or `open` | the pose the model rests in; a glTF carries the opening animation either way |
 | `--materials map.json` | colours and finishes for parts, by id or pattern (below) |
 | `--frame z-up` | OBJ only, for Z-up tools; glTF is Y up by definition |
+| `--quality` | glTF: each triangle coloured by its smallest angle, to find the slivers |
 
 Agents use the same export through the skill, and MCP clients through the `construct_export` tool
 (the `.glb` comes back as base64).
@@ -52,7 +53,13 @@ Agents use the same export through the skill, and MCP clients through the `const
 Units are metres; the front faces +Z. In Blender the importer turns that into Z up, front −Y.
 
 An OBJ has the same surfaces and edges, one object per part, in one pose, without animation or
-build phase.
+build phase. Its positions are shared between faces and its strips are quads again (a loft, a lathe, a
+tube or an extrusion's side is a grid of four-sided faces), so it subdivides cleanly in Blender or Houdini;
+normals and texture coordinates stay per corner, so a hard edge stays hard.
+
+Every export reports how well shaped its triangles are: the share whose smallest angle is under 10
+degrees (thin slivers, which subdivide and shade badly) and under 20. `--quality` writes a glTF with each
+triangle coloured by that angle (green good, amber under 20 degrees, red under 10), to see where they are.
 
 ## Opening it
 

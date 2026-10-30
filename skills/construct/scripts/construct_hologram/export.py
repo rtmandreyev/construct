@@ -348,6 +348,41 @@ def _piece_shapes(tris, comp, cell, inset):
     return out
 
 
+QUALITY = (("good", 20.0, "#3fbf6a"), ("fair", 10.0, "#e0a43a"), ("thin", 0.0, "#e04848"))
+
+
+def smallest_angle(t):
+    """A triangle's smallest angle, in degrees (0 for a degenerate one)."""
+    out = 180.0
+    for i in range(3):
+        p, q, r = t[i], t[(i + 1) % 3], t[(i + 2) % 3]
+        u, w = _sub(q, p), _sub(r, p)
+        nu, nw = math.sqrt(_dot(u, u)), math.sqrt(_dot(w, w))
+        if not nu or not nw:
+            return 0.0
+        out = min(out, math.degrees(math.acos(max(-1.0, min(1.0, _dot(u, w) / (nu * nw))))))
+    return out
+
+
+def quality_class(t):
+    a = smallest_angle(t)
+    return next(name for name, lo, _ in QUALITY if a >= lo)
+
+
+def triangle_quality(g):
+    """How well shaped the surfaces' triangles are: the share whose smallest angle is under 10 degrees (thin
+    slivers, which subdivide and shade badly) and under 20 (fair)."""
+    n = thin = fair = 0
+    f = g["fills"]
+    for i in range(0, len(f), 15):
+        a = smallest_angle([(f[i + 5 * j], f[i + 5 * j + 1], f[i + 5 * j + 2]) for j in range(3)])
+        n += 1
+        thin += a < 10.0
+        fair += 10.0 <= a < 20.0
+    return {"triangles": n, "thin": thin, "fair": fair,
+            "thin_share": round(thin / n, 3) if n else 0.0, "fair_share": round(fair / n, 3) if n else 0.0}
+
+
 def _dot(a, b):
     return a[0] * b[0] + a[1] * b[1] + a[2] * b[2]
 
@@ -533,7 +568,7 @@ def _primitive(b, mode, positions, normals, phases, material, uvs=None):
 
 
 def to_gltf(g, wire="edges", pose="closed", materials=None, wire_radius=None, merge=False, colliders=False,
-            pieces=False):
+            pieces=False, quality=False):
     """The glTF document (a dict) and its binary chunk, from a solid compile. With `merge`, every part
     that does not move is merged into one mesh per material (a game engine's handful of draw calls);
     the parts that move keep their own nodes, pivots and animations. With `colliders`, each part's surfaces
@@ -541,6 +576,8 @@ def to_gltf(g, wire="edges", pose="closed", materials=None, wire_radius=None, me
     `pieces`, each part's mesh is `<part>-rigid`, a body of its own that physics can knock apart."""
     if pieces and merge:
         raise ExportError("--pieces keeps every part apart; it does not go with --merge")
+    if quality and (merge or pieces):
+        raise ExportError("--quality colours each part's own triangles; it does not go with --merge or --pieces")
     colliders = colliders and not pieces   # a piece's body makes its own shape from its mesh
     if wire not in WIRES:
         raise ExportError("wire: one of %s" % ", ".join(WIRES))
@@ -757,6 +794,16 @@ def to_gltf(g, wire="edges", pose="closed", materials=None, wire_radius=None, me
                 nor, ph, uv = smooth_normals(gr["tris"]), [x for t in gr["tri_phase"] for x in t], box_uvs(gr["tris"])
                 if static:
                     bucket(4, solid_material(part), pos, nor, ph, uv)
+                elif quality:   # each triangle coloured by its smallest angle: green good, amber fair, red thin
+                    for qname, _, qcol in QUALITY:
+                        idx = [i for i, t in enumerate(gr["tris"]) if quality_class(t) == qname]
+                        if idx:
+                            prims.append(_primitive(b, 4, [pos[3 * i + j] for i in idx for j in range(3)],
+                                                    [nor[3 * i + j] for i in idx for j in range(3)],
+                                                    [ph[3 * i + j] for i in idx for j in range(3)],
+                                                    material(("quality", qname), ("construct:quality:" + qname,
+                                                                                  _hex(qcol, "quality"), 0.0, 0.8, None, False)),
+                                                    [uv[3 * i + j] for i in idx for j in range(3)]))
                 else:
                     prims.append(_primitive(b, 4, pos, nor, ph, solid_material(part), uv))
                 counts["triangles"] += len(gr["tris"])
@@ -1045,19 +1092,43 @@ def to_obj(g, name, wire="edges", pose="closed", materials=None, frame="y-up", w
         out.append("o %s" % (part["id"] if k == 0 else "%s.%d" % (part["id"], k)))
         if gr["tris"]:
             out.append("usemtl %s" % matname(part))
-            normals = smooth_normals(gr["tris"])
-            for t in gr["tris"]:
+            tris = gr["tris"]
+            normals = smooth_normals(tris)
+            # positions shared between faces (a subdivision surface needs them welded); normals and
+            # texture coordinates per corner, so a hard edge stays hard
+            index, pos = {}, []
+            corner = []
+            for t in tris:
+                ids = []
                 for p in t:
-                    out.append("v %.6f %.6f %.6f" % place(p, jt))
-            for uv in box_uvs(gr["tris"]):
+                    key = tuple(round(x, 7) for x in p)
+                    if key not in index:
+                        index[key] = len(pos)
+                        pos.append(p)
+                    ids.append(index[key])
+                corner.append(ids)
+            for p in pos:
+                out.append("v %.6f %.6f %.6f" % place(p, jt))
+            for uv in box_uvs(tris):
                 out.append("vt %.5f %.5f" % uv)
             for n in normals:
                 out.append("vn %.5f %.5f %.5f" % placen(n, jt))
-            for k in range(len(gr["tris"])):
-                a, t0, n0 = nv + 3 * k + 1, nt + 3 * k + 1, nn + 3 * k + 1
-                out.append("f %d/%d/%d %d/%d/%d %d/%d/%d" % (a, t0, n0, a + 1, t0 + 1, n0 + 1, a + 2, t0 + 2, n0 + 2))
-            nv += 3 * len(gr["tris"])
-            nt += 3 * len(gr["tris"])
+            k = 0
+            while k < len(tris):   # a quad the construct drew as (a, b, c) and (a, c, d) is one face again
+                a, b, c = corner[k]
+                if k + 1 < len(tris):
+                    a2, c2, d = corner[k + 1]
+                    if a2 == a and c2 == c and len({a, b, c, d}) == 4:
+                        out.append("f " + " ".join("%d/%d/%d" % (nv + v + 1, nt + 3 * kk + j + 1, nn + 3 * kk + j + 1)
+                                                   for v, kk, j in ((a, k, 0), (b, k, 1), (c, k, 2), (d, k + 1, 2))))
+                        counts["quads"] = counts.get("quads", 0) + 1
+                        k += 2
+                        continue
+                out.append("f " + " ".join("%d/%d/%d" % (nv + v + 1, nt + 3 * k + j + 1, nn + 3 * k + j + 1)
+                                           for j, v in enumerate((a, b, c))))
+                k += 1
+            nv += len(pos)
+            nt += 3 * len(tris)
             nn += 3 * len(gr["tris"])
             counts["triangles"] += len(gr["tris"])
         for tone, segs in sorted(gr["segs"].items()):
@@ -1098,7 +1169,7 @@ def to_obj(g, name, wire="edges", pose="closed", materials=None, frame="y-up", w
 # ---------------------------------------------------------------------------- one call
 
 def render(scene, fmt="glb", wire="edges", pose="closed", materials=None, frame="y-up", wire_radius=None,
-           name="construct", merge=False, colliders=False, pieces=False):
+           name="construct", merge=False, colliders=False, pieces=False, quality=False):
     """Compile `scene` solid and export it in memory: {"glb": bytes} or {"obj": text, "mtl": text}, with a
     summary."""
     if fmt not in FORMATS:
@@ -1109,24 +1180,26 @@ def render(scene, fmt="glb", wire="edges", pose="closed", materials=None, frame=
         raise ExportError("glTF is Y up by definition; --frame z-up is for OBJ")
     g = scene_mod.compile_scene(scene, solid=True)
     if fmt == "glb":
-        doc, binary, summary = to_gltf(g, wire, pose, materials, wire_radius, merge, colliders, pieces)
+        doc, binary, summary = to_gltf(g, wire, pose, materials, wire_radius, merge, colliders, pieces, quality)
         out = {"glb": pack_glb(doc, binary)}
         summary["bytes"] = len(out["glb"])
     else:
         text, mtl, counts = to_obj(g, name, wire, pose, materials, frame, wire_radius)
         out = {"obj": text, "mtl": mtl}
         summary = {"parts": len(g["parts"]), **counts}
-    summary.update({"format": fmt, "pose": pose, "wire": wire})
+    if quality and fmt != "glb":
+        raise ExportError("--quality is a glTF view (each triangle coloured); give a .glb")
+    summary.update({"format": fmt, "pose": pose, "wire": wire, "quality": triangle_quality(g)})
     return out, summary
 
 
 def export(scene, path, fmt=None, wire="edges", pose="closed", materials=None, frame="y-up", wire_radius=None,
-           merge=False, colliders=False, pieces=False):
+           merge=False, colliders=False, pieces=False, quality=False):
     """Compile `scene` solid and write it to `path` (.glb, or .obj with its .mtl beside it). Returns a summary."""
     path = Path(path)
     fmt = fmt or path.suffix.lower().lstrip(".")
     out, summary = render(scene, fmt, wire, pose, materials, frame, wire_radius, name=path.stem, merge=merge,
-                          colliders=colliders, pieces=pieces)
+                          colliders=colliders, pieces=pieces, quality=quality)
     path.parent.mkdir(parents=True, exist_ok=True)
     if fmt == "glb":
         path.write_bytes(out["glb"])

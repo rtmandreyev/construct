@@ -24,15 +24,37 @@ construct freecad scene.json --out model.step
 
 ```
 wrote piano.FCStd, piano.step: 26 named parts, 2 joints
-  surfaces, not solids (open in the construct): lyre-post, prop
+  true shapes (exact solids, splines, NURBS): 26 of 26 parts
   drawn only in lines, left out: case-rim, plate, strings-treble, strings-bass, bridge
 ```
+
+## True shapes
+
+A construct's parts are made from parameters (a box's size, a lathe's profile, a loft's sections), so
+FreeCAD builds most of them as real CAD shapes, not facets:
+
+| Shape | In FreeCAD |
+| --- | --- |
+| box, cylinder, cone, sphere, torus | the exact solid (a cylinder is a cylindrical surface; an ellipsoid a NURBS sphere stretched) |
+| lathe | its profile as a spline, revolved: a smooth bottle, dome or bezel |
+| extrude | its profile as splines between the sharp corners, extruded |
+| loft (car bodies, hulls) | a smooth NURBS surface through its sections, each section a closed spline |
+| tube | a circle swept along a spline (or the polyline, rounded at its turns) |
+
+Each copy (a repeat, a mirror) is placed by the same transform the construct uses: a rotation keeps the
+surfaces exact; a mirror or a stretch makes them NURBS. Every shape is then checked against the
+construct's own surfaces: if its box differs by more than 4% of the part, it is tried again straight
+(polygon profiles, a loft ruled between its sections), and if that fails too, the part is faceted as the
+construct draws it, and the command lists it. Curves, paths, points, terrain, the architecture kit and
+tapered tubes are always faceted. `--facets` facets every part, as before. Measured on the gallery: every
+part of the CFX (26 of 26), the DB5 (38), the FJ62 (89 of 93; the rest are kinds that stay faceted), the
+F40 and all but two of the Leica's are true shapes.
 
 ## What is in the document
 
 | In the construct | In FreeCAD |
 | --- | --- |
-| a part | a `Part::Feature` labelled with its id (its label as `Label2`): its closed pieces sewn into solids and refined, so coplanar facets become one face; its open surfaces as shells |
+| a part | a `Part::Feature` labelled with its id (its label as `Label2`): a true shape (below) where it can be, else its closed pieces sewn into solids and refined, so coplanar facets become one face; its open surfaces as shells |
 | its role, certainty, source, basis, stage | properties in the group "Construct" |
 | assembly stages | a group per stage, `stage-0`, `stage-1`, … for the parts that do not move |
 | an articulation (hinge, turn, slide, lift) | a group `joint-<id>` holding its parts, nested as the joints ride on one another, with its type, axis, pivot and amount, and an `Open` placement: set the group's Placement to it and the joint opens; its axis drawn as a line |
@@ -43,9 +65,10 @@ are left out, and the command lists them.
 
 ## What it is not
 
-The solids are the construct's own shapes, faceted as the construct draws them: exact for boxes and
-prisms, a polygon where the construct draws a cylinder or a curve. They are good for layout,
-clearance, packaging and a start to model over, not for machining a curved face. Joints are
+The shapes are the construct's own: true shapes where its parameters allow, smooth where the construct
+draws a polygon (a loft's NURBS surface follows its sections more smoothly than the construct's straight
+strips between them, by design). They are good for layout, clearance, packaging, rendering and a start to
+model over; a construct's dimensions are as certain as it says, so they are not for machining. Joints are
 groups with their axis and range, not FreeCAD Assembly joints; dimensions come from the construct,
 so a part's size is as certain as the construct says.
 

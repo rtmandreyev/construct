@@ -166,13 +166,13 @@ model alone.
 
 - NetLogo tools in the MCP server (instrument, draw, art direction), and the skills' steps to match.
 
-### Phase F: runs as films (done; links and patches next)
+### Phase F: runs as films (done)
 
 - The run as a film in Blender, drawn from the recording itself (nothing sampled): every turtle as
   moving light with a trail, at 30 ticks a second, silent; NetLogo 3D runs in their box; hidden
   turtles unlit.
-- To do: **links and patches in the film** (the same film for every model: a network's links as
-  light between its agents, the patches as a floor that changes tick by tick).
+- Links and patches in the film (done 29 October): a network's links as light between its agents, the
+  patches as a floor that changes tick by tick.
 
 ### Phase G: where the order forms (done)
 
@@ -281,6 +281,12 @@ are its own.
   and holographic interfaces, with build and open as game events.
 - **Variants without end:** seeded variants shipped in 1.1 (`params --seed`); next, generators in the
   editor or at runtime, and buildings.
+- **Mutations** (owner's idea, 29 October 2026; designed, not built): any construct mutated in ways that
+  make sense and look good, up to absolutely crazy, on a wildness dial. Operators that know what the parts
+  are (proportion and structure along the support graph, style and era, decay, crossbreeds of two
+  constructs, function swaps), every mutant audited, judged by the critic and marked as fiction. In three
+  phases: deterministic operators (no model), then style and crossbreeds, then the crazy end through the
+  authoring rounds. Moved here so 1.1 can finish first.
 - **Break-apart:** shipped in 1.1 (`export --pieces`, pieces that settle rather than burst); next,
   joints as physics joints.
 - **Texture coordinates for every shape,** for texturing in any engine (box-projected today).

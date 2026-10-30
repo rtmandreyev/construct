@@ -36,6 +36,27 @@ class Payload(unittest.TestCase):
         self.assertGreater(max(zs), 50.0)   # millimetres, Z up: the camera stands about 77 mm tall
         self.assertLess(max(zs), 120.0)
 
+    def test_each_copy_is_placed_where_the_construct_draws_it(self):
+        import math
+        data = freecad.payload(example("leica-m3"))
+        for pid in ("film-reminder-rim", "focus-ring"):   # turned a quarter, as the camera's dials are
+            p = next(x for x in data["parts"] if x["id"] == pid)
+            spec = p["exact"]
+            self.assertTrue(spec and spec["matrices"])
+            if spec["type"] == "cylinder":
+                r, h = spec["r0"], spec["height"]
+                loc = [(r * math.cos(a), y, r * math.sin(a)) for a in [i * math.pi / 24 for i in range(48)] for y in (0, h)]
+            else:
+                loc = [(rr * math.cos(a), y, rr * math.sin(a)) for rr, y in spec["profile"]
+                       for a in [i * math.pi / 24 for i in range(48)]]
+            m = spec["matrices"][0]
+            placed = [[sum(m[i][j] * q[j] for j in range(3)) + m[i][3] for i in range(3)] for q in loc]
+            mesh = [v for s in p["solids"] + p["shells"] for t in s for v in t]
+            for k in range(3):
+                self.assertAlmostEqual(min(q[k] for q in placed), min(v[k] for v in mesh), delta=0.5)
+                self.assertAlmostEqual(max(q[k] for q in placed), max(v[k] for v in mesh), delta=0.5)
+        self.assertIsNone(freecad.payload(example("leica-m3"), exact=False)["parts"][0]["exact"])
+
     def test_without_freecad_it_says_how_to_get_it(self):
         self.assertIsNone(freecad.find_freecad("/no/such/freecadcmd"))
         real = freecad.find_freecad
@@ -82,6 +103,9 @@ class InFreeCAD(unittest.TestCase):
             fc, step = Path(tmp, "piano.FCStd"), Path(tmp, "piano.step")
             r = freecad.make(example("yamaha-cfx"), fcstd=fc, step=step)
             self.assertEqual(r["invalid"], [])
+            self.assertEqual(r["faceted"], [])                 # every part a true shape
+            self.assertEqual(len(r["exact"]), r["parts"])
+            self.assertIn("CYLINDRICAL_SURFACE", step.read_text(errors="replace"))   # legs and casters, not polygons
             self.assertEqual(r["joints"], 2)
             self.assertTrue(fc.is_file() and step.is_file())
             if freecad._app(os.environ["CONSTRUCT_FREECAD"]):   # built by the app: it opens with every part showing

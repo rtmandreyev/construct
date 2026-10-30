@@ -464,6 +464,9 @@ def add_commands(sub):
     p.add_argument("--pieces", action="store_true",
                    help="glTF: the pieces it would break into, each a rigid body with convex shapes (OMI_physics_body; "
                         "a RigidBody3D in Godot), interlocked parts together, made to settle rather than burst")
+    p.add_argument("--quality", action="store_true",
+                   help="glTF: each triangle coloured by its smallest angle (green good, amber under 20 degrees, red "
+                        "under 10: slivers that subdivide and shade badly)")
     p = sub.add_parser("print", help="one watertight body to 3D print: STL or 3MF, checked (docs/PRINTING.md)")
     p.add_argument("scene")
     p.add_argument("--out", help="FILE.stl or FILE.3mf")
@@ -508,6 +511,9 @@ def add_commands(sub):
     p.add_argument("--step", help="also write STEP here")
     p.add_argument("--freecad", help="the FreeCAD command line to run (default: $CONSTRUCT_FREECAD, `freecadcmd`, "
                                      "or the usual installs)")
+    p.add_argument("--facets", action="store_true",
+                   help="every part faceted as the construct draws it, instead of true shapes (exact solids, splines, "
+                        "NURBS lofts) where the part's shape allows")
     p = sub.add_parser("netlogo-compare", help="NetLogo runs side by side (2 to 8), drawn the same way on one time "
                                                "scale (a slider moved step by step, other seeds)")
     p.add_argument("runs", nargs="+", help="the recordings (.jsonl), left to right")
@@ -973,7 +979,7 @@ def run(args):
             from . import export as export_mod
             try:
                 s = export_mod.export(load(args.scene), args.out, args.format, args.wire, args.pose, args.materials,
-                                      args.frame, args.wire_radius, args.merge, args.colliders, args.pieces)
+                                      args.frame, args.wire_radius, args.merge, args.colliders, args.pieces, args.quality)
             except export_mod.ExportError as exc:
                 sys.stderr.write("export: %s\n" % exc)
                 return 1
@@ -981,6 +987,12 @@ def run(args):
             sys.stdout.write("wrote %s: %d parts, %d triangles, %d edges%s\n"
                              % (", ".join(s["files"]), s["parts"], s["triangles"], s["edges"],
                                 "; animations: " + anims if s["format"] == "glb" else ""))
+            q = s["quality"]
+            if q["triangles"]:
+                sys.stdout.write("  triangles: %.0f%% thin (an angle under 10 degrees), %.0f%% fair (under 20)%s\n" % (
+                    100 * q["thin_share"], 100 * q["fair_share"], "" if args.quality else "; --quality shows where"))
+            if s.get("quads"):
+                sys.stdout.write("  %d quads, positions shared: ready to subdivide\n" % s["quads"])
             return 0
         if args.command == "print":
             from . import printing
@@ -1054,12 +1066,16 @@ def run(args):
                 return 1
             try:
                 r = freecad.make(load(args.scene), fcstd=None if is_step else out, step=out if is_step else args.step,
-                                 freecad=args.freecad)
+                                 freecad=args.freecad, exact=not args.facets)
             except freecad.FreeCADError as exc:
                 sys.stderr.write("freecad: %s\n" % exc)
                 return 1
             sys.stdout.write("wrote %s: %d named parts, %d joint%s\n" % (", ".join(r["files"]), r["parts"], r["joints"],
                                                                          "" if r["joints"] == 1 else "s"))
+            if r.get("exact"):
+                sys.stdout.write("  true shapes (exact solids, splines, NURBS): %d of %d parts\n" % (len(r["exact"]), r["parts"]))
+            if r.get("faceted"):
+                sys.stdout.write("  faceted, the true shape did not match the construct: %s\n" % printing_list(r["faceted"]))
             if r["surfaces"]:
                 sys.stdout.write("  surfaces, not solids (open in the construct): %s\n" % printing_list(r["surfaces"]))
             if r["left_out"]:

@@ -160,6 +160,16 @@ side, printed as worksheets and cited. Plan:
   slicer joins, so a print keeps every detail the construct has at the printer's own resolution; only
   open and too-thin surfaces become voxels. The voxel grid now goes to 900 along the longest side (a
   36 cm print at 0.4 mm). PrusaSlicer reads an exact FJ62 as one manifold object of named parts and slices it.
+- **True CAD shapes:** `construct freecad` builds parts from their own parameters as real CAD shapes:
+  exact boxes, cylinders, cones, spheres and tori, lathes revolved from a spline, extrusions, lofts as
+  smooth NURBS surfaces through their sections, tubes swept along a spline. Each is checked against the
+  construct's own surfaces and falls back to straight, then to facets, when it does not match. Every part
+  of the CFX and the DB5, 89 of the FJ62's 93, are true shapes; STEP files carry cylinders as cylinders.
+  `--facets` keeps the old faceted solids.
+- **OBJ ready to subdivide, and triangle quality:** an OBJ's positions are shared between faces and its
+  strips are quads again, so it subdivides cleanly (it was a soup of separate triangles, which a
+  subdivision pulls apart). Every export reports the share of thin triangles (an angle under 10 degrees),
+  and `export --quality` colours each triangle by its smallest angle.
 - **Pieces that settle:** `export --pieces` now gives every mirrored or repeated copy a body of its own,
   shapes that follow the surface (a hollow body shell is a skin of convex patches, not a solid block),
   interlocked parts as one assembly (a rim in its tyre, an axle through its hubs) and shapes pulled in

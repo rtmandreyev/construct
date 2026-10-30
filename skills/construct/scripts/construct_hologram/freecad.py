@@ -15,8 +15,13 @@ showing (FreeCAD's command line saves the model but not how it looks), else `fre
 
 Parts drawn only in lines and the construct's annotations are left out, as in a print.
 
-The solids are faceted, as the construct draws them: exact for boxes and prisms, a polygon for a
-cylinder. Python standard library only on this side; FreeCAD 1.0 or newer on the other.
+With `exact` (the default), parts are rebuilt from their own parameters as true CAD shapes: boxes,
+cylinders, cones, spheres and tori as exact solids, lathes revolved from a spline through their profile,
+extrusions from their profile, lofts as smooth NURBS surfaces through their sections, tubes swept along a
+spline; profiles keep their sharp corners and are smooth between them. Each is checked against the
+construct's own surfaces (the same box, within a tolerance); a shape that fails, and every other kind
+(curves, paths, terrain, the architecture kit), is faceted as the construct draws it. Python standard
+library only on this side; FreeCAD 1.0 or newer on the other.
 """
 
 import glob
@@ -56,7 +61,58 @@ def _dir(v):
     return [v[0], -v[2], v[1]]
 
 
-def payload(scene):
+EXACT_TYPES = ("box", "cylinder", "cone", "sphere", "torus", "lathe", "extrude", "loft", "tube")
+# metres, Y up -> millimetres, Z up
+FRAME = ((1000.0, 0.0, 0.0), (0.0, 0.0, -1000.0), (0.0, 1000.0, 0.0))
+
+
+def _exact_spec(part):
+    """What FreeCAD needs to build a part from its parameters: the shape in its own frame (metres, Y up) and,
+    for each copy, the 4x4 matrix that places it in FreeCAD's frame. None for a shape it cannot build."""
+    sh = part["shape"]
+    t = sh["type"]
+    if t not in EXACT_TYPES:
+        return None
+    spec = {"type": t}
+    if t == "box":
+        spec.update(size=list(sh["size"]), base=sh.get("anchor") == "base")
+    elif t in ("cylinder", "cone"):
+        spec.update(r0=sh.get("radius", sh.get("radius_bottom")), r1=sh.get("radius", sh.get("radius_top")),
+                    height=sh["height"], caps=sh.get("caps", True))
+    elif t == "sphere":
+        radii = sh.get("radii") or [sh["radius"]] * 3
+        spec.update(radii=list(radii), base=sh.get("anchor") == "base")
+    elif t == "torus":
+        spec.update(major=sh["major"], minor=sh["minor"])
+    elif t == "lathe":
+        spec.update(profile=[list(p) for p in sh["profile"]])
+    elif t == "extrude":
+        spec.update(profile=[list(p) for p in sh["profile"]], height=sh["height"], axis=sh.get("axis", "y"))
+    elif t == "loft":
+        from . import shapes
+        spec.update(rings=[[[x, y, sec[0]] for x, y in shapes.loft_ring(sec[1], sec[2], sec[3],
+                                                                          sec[4] if len(sec) > 4 else None,
+                                                                          sh.get("round", 0.35))]
+                           for sec in sh["sections"]])
+    elif t == "tube":
+        r = sh["radius"]
+        if isinstance(r, list) and max(r) - min(r) > 1e-9:
+            return None   # a tapered tube: faceted, as drawn
+        spec.update(path=[list(p) for p in sh["path"]], radius=max(r) if isinstance(r, list) else r,
+                    smooth=sh.get("smooth", True))
+    mats = []
+    for xf, _, _, _ in scene_mod._instances(part):
+        o = xf((0.0, 0.0, 0.0))
+        cols = [[xf(e)[k] - o[k] for k in range(3)] for e in ((1.0, 0.0, 0.0), (0.0, 1.0, 0.0), (0.0, 0.0, 1.0))]
+        lin = [[cols[c][r] for c in range(3)] for r in range(3)]   # rows of the copy's linear map
+        m = [[sum(FRAME[i][k] * lin[k][j] for k in range(3)) for j in range(3)] +
+             [sum(FRAME[i][k] * o[k] for k in range(3))] for i in range(3)]
+        mats.append(m + [[0.0, 0.0, 0.0, 1.0]])
+    spec["matrices"] = mats
+    return spec
+
+
+def payload(scene, exact=True):
     """The data FreeCAD builds from: {"title", "id", "parts": [...], "articulations": [...], "left_out"}."""
     g = scene_mod.compile_scene(scene, solid=True)
     styles, parts = g["styles"], g["parts"]
@@ -79,7 +135,8 @@ def payload(scene):
                           "certainty": part["certainty"], "source": part.get("source") or "",
                           "basis": list(part.get("basis") or []), "stage": part["stage"],
                           "chain": list(g["joints"][part["joint"]]) if part.get("joint", -1) >= 0 else [],
-                          "solids": solids, "shells": shells})
+                          "solids": solids, "shells": shells,
+                          "exact": _exact_spec(scene["parts"][pi]) if exact else None})
     arts = []
     for a in g["articulations"]:
         rot = a["type"] in ("hinge", "turn")
@@ -132,6 +189,184 @@ def shape_of(tris, solid):
     return s, False
 
 
+def _smooth_wire(pts, closed, smooth=True):
+    """A wire through points: splines between the sharp corners (a turn of more than 35 degrees), straight
+    where a run is two points; with `smooth` off, the polygon itself."""
+    import math
+    P = [V(*p) for p in pts]
+    if closed and (P[0] - P[-1]).Length < 1e-12:
+        P = P[:-1]
+    if not smooth:
+        return Part.Wire(Part.makePolygon(P + ([P[0]] if closed else [])))
+    n = len(P)
+
+    def turn(i):
+        a, b, c = P[i - 1], P[i], P[(i + 1) % n]
+        u, w = b - a, c - b
+        if u.Length < 1e-12 or w.Length < 1e-12:
+            return 0.0
+        return math.degrees(u.getAngle(w))
+    idx = range(n) if closed else range(1, n - 1)
+    corners = [i for i in idx if turn(i) > 35.0]
+    if closed and not corners:
+        if n < 3:
+            return None
+        bs = Part.BSplineCurve()
+        bs.interpolate(P, PeriodicFlag=True)
+        return Part.Wire(bs.toShape())
+    if not closed:
+        corners = [0] + corners + [n - 1]
+    edges = []
+    m = len(corners)
+    for k in range(m if closed else m - 1):
+        a, b = corners[k], corners[(k + 1) % m]
+        run = [P[(a + j) % n] for j in range(((b - a) % n if closed else b - a) + 1)] if b != a else [P[a]] + P[a + 1:] + P[:a + 1]
+        if len(run) == 2:
+            edges.append(Part.LineSegment(run[0], run[1]).toShape())
+        elif len(run) > 2:
+            bs = Part.BSplineCurve()
+            bs.interpolate(run)
+            edges.append(bs.toShape())
+    return Part.Wire(Part.__sortEdges__(edges)) if edges else None
+
+
+def _ring_wire(pts, smooth):
+    P = []
+    for p in pts:   # a point on top of the last is dropped (a tiny corner rounding)
+        q = V(*p)
+        if not P or (q - P[-1]).Length > 1e-7:
+            P.append(q)
+    if (P[0] - P[-1]).Length < 1e-7:
+        P = P[:-1]
+    if not smooth:
+        return Part.Wire(Part.makePolygon(P + [P[0]]))
+    bs = Part.BSplineCurve()
+    bs.interpolate(P, PeriodicFlag=True)
+    return Part.Wire(bs.toShape())
+
+
+def exact_shape(spec, smooth=True):
+    """One copy's local shape (metres, Y up), and whether it is closed: smooth (splines through profiles and
+    sections) or, the second try, straight between the construct's own points."""
+    t = spec["type"]
+    Y = V(0, 1, 0)
+    if t == "box":
+        w, h, d = spec["size"]
+        return Part.makeBox(w, h, d, V(-w / 2, 0 if spec["base"] else -h / 2, -d / 2)), True
+    if t in ("cylinder", "cone"):
+        r0, r1, h = spec["r0"], spec["r1"], spec["height"]
+        s = Part.makeCylinder(r0, h, V(0, 0, 0), Y) if abs(r0 - r1) < 1e-12 else Part.makeCone(r0, r1, h, V(0, 0, 0), Y)
+        if not spec["caps"]:
+            side = [f for f in s.Faces if f.Surface.__class__.__name__ not in ("Plane",)]
+            return Part.Shell(side), False
+        return s, True
+    if t == "sphere":
+        rx, ry, rz = spec["radii"]
+        s = Part.makeSphere(1.0)
+        m = FreeCAD.Matrix()
+        m.scale(rx, ry, rz)
+        if spec["base"]:
+            m.move(V(0, ry, 0))
+        return s.transformGeometry(m), True
+    if t == "torus":
+        return Part.makeTorus(spec["major"], spec["minor"], V(0, 0, 0), Y), True
+    if t == "lathe":
+        prof = spec["profile"]
+        w = _smooth_wire([[r, y, 0.0] for r, y in prof], False, smooth)
+        s = w.revolve(V(0, 0, 0), Y, 360)
+        closed = prof[0][0] <= 1e-9 and prof[-1][0] <= 1e-9
+        if closed:
+            try:
+                sol = Part.Solid(Part.Shell(s.Faces))
+                if sol.isValid():
+                    return sol, True
+            except Exception:
+                pass
+        return s, False
+    if t == "extrude":
+        ax = spec["axis"]
+        place = {"y": lambda u, v, w: (u, w, v), "z": lambda u, v, w: (u, v, w), "x": lambda u, v, w: (w, v, u)}[ax]
+        wire = _smooth_wire([place(u, v, 0.0) for u, v in spec["profile"]], True, smooth)
+        d = V(*place(0.0, 0.0, spec["height"]))
+        return Part.Face(wire).extrude(d), True
+    if t == "loft":
+        # every section one closed spline through its points (their rounding is in the points), so the sections
+        # match edge for edge; smooth along the length too, kept low in degree; else ruled, polygons, as drawn
+        wires = [_ring_wire(r, smooth) for r in spec["rings"]]
+        return (Part.makeLoft(wires, True, False, False, 3) if smooth else Part.makeLoft(wires, True, True)), True
+    if t == "tube":
+        path = [V(*p) for p in spec["path"]]
+        if spec["smooth"] and smooth and len(path) > 2:
+            bs = Part.BSplineCurve()
+            bs.interpolate(path)
+            spine = Part.Wire(bs.toShape())
+        else:
+            spine = Part.Wire(Part.makePolygon(path))
+        e0 = spine.Edges[0]
+        circle = Part.Wire(Part.makeCircle(spec["radius"], e0.valueAt(e0.FirstParameter), e0.tangentAt(e0.FirstParameter)))
+        return spine.makePipeShell([circle], True, True, 2), True   # rounded where a polyline path turns
+    return None, False
+
+
+why = {}
+
+
+def exact_part(p):
+    """The part as true shapes, every copy placed; None when it does not match the construct's own surfaces."""
+    spec = p.get("exact")
+    if not spec:
+        return None
+    pts = [q for piece in p["solids"] + p["shells"] for t in piece for q in t]
+    if not pts:
+        return None
+    lo = [min(q[k] for q in pts) for k in range(3)]
+    hi = [max(q[k] for q in pts) for k in range(3)]
+    size = max(hi[k] - lo[k] for k in range(3)) or 1.0
+    for smooth in (True, False):
+        got = _placed(p, spec, smooth, lo, hi, size)
+        if got:
+            return got
+    return None
+
+
+def _placed(p, spec, smooth, lo, hi, size):
+    try:
+        local, closed = exact_shape(spec, smooth)
+        if local is None or local.isNull():
+            why[p["id"]] = "no shape"
+            return None
+        copies = []
+        for rows in spec["matrices"]:
+            m = FreeCAD.Matrix(*[x for r in rows for x in r])
+            lin = [[rows[i][j] for j in range(3)] for i in range(3)]
+            det = (lin[0][0] * (lin[1][1] * lin[2][2] - lin[1][2] * lin[2][1]) -
+                   lin[0][1] * (lin[1][0] * lin[2][2] - lin[1][2] * lin[2][0]) +
+                   lin[0][2] * (lin[1][0] * lin[2][1] - lin[1][1] * lin[2][0]))
+            cols = [sum(lin[i][j] ** 2 for i in range(3)) ** 0.5 for j in range(3)]
+            rigid = det > 0 and max(cols) - min(cols) < 1e-6 * max(cols)
+            if rigid:   # a rotation, a uniform scale and a move: the surfaces stay exact (a cylinder a cylinder)
+                c = local.copy()
+                c.transformShape(m, False, True)
+            else:       # a mirror or a stretch: as NURBS
+                c = local.transformGeometry(m)
+            copies.append(c)
+        shape = copies[0] if len(copies) == 1 else Part.makeCompound(copies)
+        if not shape.isValid():
+            why[p["id"]] = "not a valid shape"
+            return None
+        bb = shape.optimalBoundingBox(True, False)   # the tight box (a NURBS box is its control points')
+        got = [bb.XMin, bb.YMin, bb.ZMin, bb.XMax, bb.YMax, bb.ZMax]
+        want = lo + hi
+        off = max(abs(a - b) for a, b in zip(got, want))
+        if off > 0.04 * size + 0.05:
+            why[p["id"]] = "%.2f mm from the construct's surfaces (%s)" % (off, ", ".join("%.1f" % (a - b) for a, b in zip(got, want)))
+            return None
+        return shape, closed
+    except Exception as exc:
+        why[p["id"]] = "%s: %s" % (type(exc).__name__, exc)
+        return None
+
+
 root = group(data["id"])
 root.addProperty("App::PropertyString", "Title", "Construct").Title = data["title"]
 root.addProperty("App::PropertyString", "Contract", "Construct").Contract = data["contract"]
@@ -167,16 +402,23 @@ def joint_group(chain):
     return parent
 
 
-made, invalid, surfaces = 0, [], []
+made, invalid, surfaces, exact, faceted = 0, [], [], [], []
 for p in data["parts"]:
     shapes, all_solid = [], True
-    for tris in p["solids"]:
-        s, ok = shape_of(tris, True)
-        shapes.append(s)
-        all_solid &= ok
-    for tris in p["shells"]:
-        shapes.append(shape_of(tris, False)[0])
-        all_solid = False
+    got = exact_part(p)
+    if got:
+        shapes, all_solid = [got[0]], got[1]
+        exact.append(p["id"])
+    else:
+        if p.get("exact"):
+            faceted.append(p["id"])
+        for tris in p["solids"]:
+            s, ok = shape_of(tris, True)
+            shapes.append(s)
+            all_solid &= ok
+        for tris in p["shells"]:
+            shapes.append(shape_of(tris, False)[0])
+            all_solid = False
     if not shapes:
         continue
     o = doc.addObject("Part::Feature", name("p_", p["id"]))
@@ -220,7 +462,8 @@ if FreeCAD.GuiUp:   # run as the app (off screen): save how it looks, so the mod
         if getattr(o, "ViewObject", None) is not None:
             o.ViewObject.Visibility = True
 
-result = {"parts": made, "joints": len(groups), "invalid": invalid, "surfaces": surfaces, "files": []}
+result = {"parts": made, "joints": len(groups), "invalid": invalid, "surfaces": surfaces, "files": [],
+          "exact": exact, "faceted": faceted, "why": why}
 boxes = [o.Shape.BoundBox for o in doc.Objects if o.TypeId == "Part::Feature" and not o.Shape.isNull()]
 if boxes:
     bb = boxes[0]
@@ -249,16 +492,17 @@ def _app(exe):
     return None
 
 
-def make(scene, fcstd=None, step=None, freecad=None, timeout=900):
+def make(scene, fcstd=None, step=None, freecad=None, timeout=900, exact=True):
     """Build the construct in FreeCAD and write the .FCStd and/or STEP. Returns a summary:
-    {"parts", "joints", "invalid", "surfaces", "left_out", "files"}."""
+    {"parts", "joints", "invalid", "surfaces", "left_out", "files", "exact", "faceted"}: `exact` the parts made
+    as true shapes, `faceted` those that could have been but did not match and were faceted."""
     if not fcstd and not step:
         raise FreeCADError("nothing to write: give an .FCStd or a STEP path")
     exe = find_freecad(freecad)
     if not exe:
         raise FreeCADError("FreeCAD not found: install FreeCAD 1.0 or newer, or set CONSTRUCT_FREECAD to its "
                            "freecadcmd")
-    data = payload(scene)
+    data = payload(scene, exact)
     with tempfile.TemporaryDirectory() as tmp:
         tmp = Path(tmp)
         (tmp / "payload.json").write_text(json.dumps(data), encoding="utf-8")

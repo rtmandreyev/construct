@@ -558,6 +558,27 @@ class Hosts(unittest.TestCase):
         names = [n.get("name", "") for n in glb_of(wheel)[0]["nodes"]]
         self.assertIn("spare-wheel-part", names)   # not a VehicleWheel3D in Godot
 
+    def test_obj_shares_positions_and_keeps_quads_and_quality_is_reported(self):
+        out, summary = export.render(load("cd"), "obj")
+        lines = out["obj"].splitlines()
+        v = sum(1 for x in lines if x.startswith("v "))
+        faces = [x.split()[1:] for x in lines if x.startswith("f ")]
+        self.assertTrue(any(len(f) == 4 for f in faces))                       # strips are quads again
+        refs = [int(c.split("/")[0]) for f in faces for c in f]
+        self.assertTrue(all(1 <= r <= v for r in refs))
+        self.assertLess(v, sum(len(f) for f in faces))                          # positions are shared
+        q = summary["quality"]
+        self.assertEqual(q["triangles"], summary["triangles"])
+        self.assertTrue(0.0 <= q["thin_share"] <= 1.0)
+        self.assertAlmostEqual(export.smallest_angle([(0, 0, 0), (1, 0, 0), (0, 1, 0)]), 45.0, places=6)
+        self.assertEqual(export.smallest_angle([(0, 0, 0), (0, 0, 0), (0, 1, 0)]), 0.0)
+        doc = glb_of(load("cd"), quality=True)[0]
+        self.assertTrue(any(m["name"].startswith("construct:quality:") for m in doc["materials"]))
+        with self.assertRaisesRegex(export.ExportError, "quality"):
+            export.render(load("cd"), "obj", quality=True)
+        with self.assertRaisesRegex(export.ExportError, "quality"):
+            glb_of(load("cd"), quality=True, merge=True)
+
     def test_pieces_copies_apart_interlocked_parts_together(self):
         def part(pid, size, at, **kw):
             return dict({"id": pid, "role": "mass", "certainty": "inferred", "stage": 0,
