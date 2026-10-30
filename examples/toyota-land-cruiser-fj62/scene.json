@@ -142,7 +142,7 @@
         "rings": 4,
         "caps": true
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 0,
       "source": "ref-blueprint",
       "at": [
@@ -173,7 +173,7 @@
         "sides": 6,
         "rings": 2
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 0,
       "source": "ref-blueprint",
       "at": [
@@ -227,7 +227,7 @@
         "segments": 36,
         "meridians": 12
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 1,
       "source": "ref-blueprint",
       "at": [
@@ -257,7 +257,7 @@
         "sides": 5,
         "rings": 1
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 1,
       "source": "ref-blueprint",
       "at": [
@@ -285,7 +285,7 @@
         "height": 0.055,
         "segments": 18
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 1,
       "source": "ref-blueprint",
       "at": [
@@ -312,7 +312,7 @@
         "height": 0.025,
         "segments": 6
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 1,
       "source": "ref-blueprint",
       "at": [
@@ -352,7 +352,7 @@
         "height": 0.012,
         "segments": 10
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 1,
       "source": "ref-blueprint",
       "at": [
@@ -403,13 +403,19 @@
         "radius": 0.045,
         "sides": 8
       },
-      "certainty": "inferred",
+      "certainty": {
+        "size": "verified",
+        "shape": "traced"
+      },
       "stage": 0,
       "source": "ref-blueprint",
       "look": {
         "weight": 0.6,
         "alpha": 0.5
-      }
+      },
+      "basis": [
+        "wheelbase"
+      ]
     },
     {
       "id": "diff-front",
@@ -424,7 +430,7 @@
         "lat": 6,
         "lon": 12
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 0,
       "source": "ref-blueprint",
       "at": [
@@ -472,7 +478,7 @@
         ],
         "smooth": true
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 1,
       "source": "ref-blueprint",
       "mirror": "x",
@@ -493,7 +499,7 @@
         "rings": 4,
         "caps": true
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 0,
       "source": "ref-blueprint",
       "at": [
@@ -524,7 +530,7 @@
         "sides": 6,
         "rings": 2
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 0,
       "source": "ref-blueprint",
       "at": [
@@ -578,7 +584,7 @@
         "segments": 36,
         "meridians": 12
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 1,
       "source": "ref-blueprint",
       "at": [
@@ -608,7 +614,7 @@
         "sides": 5,
         "rings": 1
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 1,
       "source": "ref-blueprint",
       "at": [
@@ -636,7 +642,7 @@
         "height": 0.055,
         "segments": 18
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 1,
       "source": "ref-blueprint",
       "at": [
@@ -663,7 +669,7 @@
         "height": 0.025,
         "segments": 6
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 1,
       "source": "ref-blueprint",
       "at": [
@@ -703,7 +709,7 @@
         "height": 0.012,
         "segments": 10
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 1,
       "source": "ref-blueprint",
       "at": [
@@ -754,13 +760,19 @@
         "radius": 0.045,
         "sides": 8
       },
-      "certainty": "inferred",
+      "certainty": {
+        "size": "verified",
+        "shape": "traced"
+      },
       "stage": 0,
       "source": "ref-blueprint",
       "look": {
         "weight": 0.6,
         "alpha": 0.5
-      }
+      },
+      "basis": [
+        "wheelbase"
+      ]
     },
     {
       "id": "diff-rear",
@@ -775,7 +787,7 @@
         "lat": 6,
         "lon": 12
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 0,
       "source": "ref-blueprint",
       "at": [
@@ -823,7 +835,7 @@
         ],
         "smooth": true
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 1,
       "source": "ref-blueprint",
       "mirror": "x",
@@ -843,7 +855,7 @@
           4.2
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 0,
       "source": "ref-blueprint",
       "at": [
@@ -869,7 +881,7 @@
           0.07
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 0,
       "source": "ref-blueprint",
       "at": [
@@ -903,7 +915,7 @@
           0.6
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 0,
       "source": "ref-blueprint",
       "at": [
@@ -928,7 +940,7 @@
         "sides": 6,
         "rings": 2
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 0,
       "source": "ref-blueprint",
       "at": [
@@ -972,7 +984,7 @@
         "radius": 0.03,
         "sides": 6
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 0,
       "source": "ref-blueprint",
       "look": {
@@ -1164,14 +1176,21 @@
         ],
         "round": 0.12
       },
-      "certainty": "inferred",
+      "certainty": {
+        "size": "verified",
+        "shape": "traced"
+      },
       "stage": 1,
       "source": "ref-blueprint",
       "look": {
         "fill": "dark",
         "weight": 0.45,
         "alpha": 0.55
-      }
+      },
+      "basis": [
+        "length",
+        "width"
+      ]
     },
     {
       "id": "front-wing",
@@ -1273,7 +1292,7 @@
         ],
         "round": 0.45
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 1,
       "source": "ref-blueprint",
       "at": [
@@ -1353,7 +1372,7 @@
         ],
         "round": 0.35
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 2,
       "source": "ref-blueprint",
       "look": {
@@ -1373,7 +1392,7 @@
           0.06
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 1,
       "source": "ref-blueprint",
       "at": [
@@ -1514,7 +1533,7 @@
         ],
         "round": 0.1
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 2,
       "source": "ref-blueprint",
       "look": {
@@ -1574,14 +1593,20 @@
         ],
         "round": 0.6
       },
-      "certainty": "inferred",
+      "certainty": {
+        "size": "verified",
+        "shape": "traced"
+      },
       "stage": 3,
       "source": "ref-blueprint",
       "look": {
         "fill": "dark",
         "weight": 0.45,
         "alpha": 0.5
-      }
+      },
+      "basis": [
+        "height"
+      ]
     },
     {
       "id": "drip-rail",
@@ -1622,7 +1647,7 @@
         ],
         "smooth": true
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 3,
       "source": "ref-blueprint",
       "mirror": "x",
@@ -1654,7 +1679,7 @@
         ],
         "smooth": true
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 4,
       "source": "ref-blueprint",
       "look": {
@@ -1686,7 +1711,7 @@
         ],
         "smooth": true
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 4,
       "source": "ref-blueprint",
       "look": {
@@ -1718,7 +1743,7 @@
         ],
         "smooth": true
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 4,
       "source": "ref-blueprint",
       "look": {
@@ -1750,7 +1775,7 @@
         ],
         "smooth": true
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 4,
       "source": "ref-blueprint",
       "look": {
@@ -1787,7 +1812,7 @@
         ],
         "closed": true
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 3,
       "source": "ref-blueprint",
       "mirror": "x",
@@ -1825,7 +1850,7 @@
         ],
         "closed": true
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 3,
       "source": "ref-blueprint",
       "mirror": "x",
@@ -1868,7 +1893,7 @@
         ],
         "closed": true
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 3,
       "source": "ref-blueprint",
       "mirror": "x",
@@ -1895,7 +1920,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 3,
       "source": "ref-blueprint",
       "mirror": "x",
@@ -1921,7 +1946,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 3,
       "source": "ref-blueprint",
       "mirror": "x",
@@ -1947,7 +1972,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 3,
       "source": "ref-blueprint",
       "mirror": "x",
@@ -1984,7 +2009,7 @@
         ],
         "closed": true
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 3,
       "source": "ref-blueprint",
       "look": {
@@ -2010,7 +2035,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 3,
       "source": "ref-blueprint",
       "mirror": "x",
@@ -2047,7 +2072,7 @@
         ],
         "closed": true
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 3,
       "source": "ref-blueprint",
       "look": {
@@ -2066,7 +2091,7 @@
           0.03
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 3,
       "source": "ref-blueprint",
       "at": [
@@ -2091,7 +2116,7 @@
           0.012
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 3,
       "source": "ref-blueprint",
       "at": [
@@ -2123,7 +2148,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 5,
       "source": "ref-blueprint",
       "look": {
@@ -2149,7 +2174,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 5,
       "source": "ref-blueprint",
       "look": {
@@ -2175,7 +2200,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 5,
       "source": "ref-blueprint",
       "look": {
@@ -2201,7 +2226,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 5,
       "source": "ref-blueprint",
       "look": {
@@ -2227,7 +2252,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 5,
       "source": "ref-blueprint",
       "look": {
@@ -2253,7 +2278,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 5,
       "source": "ref-blueprint",
       "look": {
@@ -2279,7 +2304,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 5,
       "source": "ref-blueprint",
       "look": {
@@ -2305,7 +2330,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 5,
       "source": "ref-blueprint",
       "look": {
@@ -2331,7 +2356,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 5,
       "source": "ref-blueprint",
       "look": {
@@ -2357,7 +2382,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 5,
       "source": "ref-blueprint",
       "look": {
@@ -2383,7 +2408,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 5,
       "source": "ref-blueprint",
       "look": {
@@ -2409,7 +2434,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 5,
       "source": "ref-blueprint",
       "look": {
@@ -2435,7 +2460,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 5,
       "source": "ref-blueprint",
       "look": {
@@ -2461,7 +2486,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 5,
       "source": "ref-blueprint",
       "look": {
@@ -2487,7 +2512,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 5,
       "source": "ref-blueprint",
       "look": {
@@ -2506,7 +2531,7 @@
           0.032
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 4,
       "source": "ref-blueprint",
       "at": [
@@ -2530,7 +2555,7 @@
           0.032
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 4,
       "source": "ref-blueprint",
       "at": [
@@ -2554,7 +2579,7 @@
           0.032
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 4,
       "source": "ref-blueprint",
       "at": [
@@ -2579,7 +2604,7 @@
           0.032
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 4,
       "source": "ref-blueprint",
       "at": [
@@ -2603,7 +2628,7 @@
           0.032
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 4,
       "source": "ref-blueprint",
       "at": [
@@ -2627,7 +2652,7 @@
           0.01
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 4,
       "source": "ref-blueprint",
       "at": [
@@ -2650,7 +2675,7 @@
           0.06
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 4,
       "source": "ref-blueprint",
       "at": [
@@ -2674,7 +2699,7 @@
           0.012
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 4,
       "source": "ref-blueprint",
       "at": [
@@ -2706,7 +2731,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 5,
       "source": "ref-blueprint",
       "look": {
@@ -2732,7 +2757,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 5,
       "source": "ref-blueprint",
       "look": {
@@ -2758,7 +2783,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 5,
       "source": "ref-blueprint",
       "look": {
@@ -2784,7 +2809,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 5,
       "source": "ref-blueprint",
       "look": {
@@ -2810,7 +2835,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 5,
       "source": "ref-blueprint",
       "look": {
@@ -2836,7 +2861,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 5,
       "source": "ref-blueprint",
       "look": {
@@ -2873,7 +2898,7 @@
         ],
         "closed": true
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 5,
       "source": "ref-blueprint",
       "look": {
@@ -2911,7 +2936,7 @@
         ],
         "closed": true
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 4,
       "source": "ref-blueprint",
       "look": {
@@ -2930,7 +2955,7 @@
           0.012
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 4,
       "source": "ref-blueprint",
       "at": [
@@ -2962,7 +2987,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 5,
       "source": "ref-blueprint",
       "look": {
@@ -2988,7 +3013,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 5,
       "source": "ref-blueprint",
       "look": {
@@ -3014,7 +3039,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 5,
       "source": "ref-blueprint",
       "look": {
@@ -3040,7 +3065,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 5,
       "source": "ref-blueprint",
       "look": {
@@ -3066,7 +3091,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 5,
       "source": "ref-blueprint",
       "look": {
@@ -3092,7 +3117,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 5,
       "source": "ref-blueprint",
       "look": {
@@ -3129,7 +3154,7 @@
         ],
         "closed": true
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 5,
       "source": "ref-blueprint",
       "look": {
@@ -3167,7 +3192,7 @@
         ],
         "closed": true
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 4,
       "source": "ref-blueprint",
       "look": {
@@ -3193,7 +3218,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 4,
       "source": "ref-blueprint",
       "look": {
@@ -3219,7 +3244,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 4,
       "source": "ref-blueprint",
       "look": {
@@ -3245,7 +3270,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 4,
       "source": "ref-blueprint",
       "look": {
@@ -3264,7 +3289,7 @@
           0.012
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 4,
       "source": "ref-blueprint",
       "at": [
@@ -3289,7 +3314,7 @@
           0.02
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 4,
       "source": "ref-blueprint",
       "at": [
@@ -3314,7 +3339,7 @@
           0.09
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 4,
       "source": "ref-blueprint",
       "at": [
@@ -3339,7 +3364,7 @@
           0.012
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 4,
       "source": "ref-blueprint",
       "at": [
@@ -3371,7 +3396,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 5,
       "source": "ref-blueprint",
       "look": {
@@ -3397,7 +3422,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 5,
       "source": "ref-blueprint",
       "look": {
@@ -3423,7 +3448,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 5,
       "source": "ref-blueprint",
       "look": {
@@ -3449,7 +3474,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 5,
       "source": "ref-blueprint",
       "look": {
@@ -3475,7 +3500,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 5,
       "source": "ref-blueprint",
       "look": {
@@ -3501,7 +3526,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 5,
       "source": "ref-blueprint",
       "look": {
@@ -3538,7 +3563,7 @@
         ],
         "closed": true
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 5,
       "source": "ref-blueprint",
       "look": {
@@ -3576,7 +3601,7 @@
         ],
         "closed": true
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 4,
       "source": "ref-blueprint",
       "look": {
@@ -3595,7 +3620,7 @@
           0.012
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 4,
       "source": "ref-blueprint",
       "at": [
@@ -3627,7 +3652,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 5,
       "source": "ref-blueprint",
       "look": {
@@ -3653,7 +3678,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 5,
       "source": "ref-blueprint",
       "look": {
@@ -3679,7 +3704,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 5,
       "source": "ref-blueprint",
       "look": {
@@ -3705,7 +3730,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 5,
       "source": "ref-blueprint",
       "look": {
@@ -3731,7 +3756,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 5,
       "source": "ref-blueprint",
       "look": {
@@ -3757,7 +3782,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 5,
       "source": "ref-blueprint",
       "look": {
@@ -3794,7 +3819,7 @@
         ],
         "closed": true
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 5,
       "source": "ref-blueprint",
       "look": {
@@ -3832,7 +3857,7 @@
         ],
         "closed": true
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 4,
       "source": "ref-blueprint",
       "look": {
@@ -3858,7 +3883,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 4,
       "source": "ref-blueprint",
       "look": {
@@ -3884,7 +3909,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 4,
       "source": "ref-blueprint",
       "look": {
@@ -3910,7 +3935,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 4,
       "source": "ref-blueprint",
       "look": {
@@ -3929,7 +3954,7 @@
           0.012
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 4,
       "source": "ref-blueprint",
       "at": [
@@ -3954,7 +3979,7 @@
           0.02
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 4,
       "source": "ref-blueprint",
       "at": [
@@ -3979,7 +4004,7 @@
           0.09
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 4,
       "source": "ref-blueprint",
       "at": [
@@ -4004,7 +4029,7 @@
           0.03
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 3,
       "source": "ref-blueprint",
       "at": [
@@ -4036,7 +4061,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 3,
       "source": "ref-blueprint",
       "look": {
@@ -4061,7 +4086,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 3,
       "source": "ref-blueprint",
       "look": {
@@ -4609,7 +4634,7 @@
         "axis": "x",
         "height": 0.03
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 2,
       "source": "ref-blueprint",
       "at": [
@@ -4682,7 +4707,7 @@
         "axis": "x",
         "height": 0.03
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 2,
       "source": "ref-blueprint",
       "at": [
@@ -4741,7 +4766,7 @@
         ],
         "smooth": true
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 3,
       "source": "ref-blueprint",
       "mirror": "x",
@@ -4779,7 +4804,7 @@
         ],
         "smooth": true
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 3,
       "source": "ref-blueprint",
       "mirror": "x",
@@ -4826,7 +4851,7 @@
         ],
         "smooth": true
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 3,
       "source": "ref-blueprint",
       "mirror": "x",
@@ -4864,7 +4889,7 @@
         ],
         "smooth": true
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 3,
       "source": "ref-blueprint",
       "mirror": "x",
@@ -4890,7 +4915,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 3,
       "source": "ref-blueprint",
       "mirror": "x",
@@ -4916,7 +4941,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 3,
       "source": "ref-blueprint",
       "mirror": "x",
@@ -4936,7 +4961,7 @@
           1.435
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 2,
       "source": "ref-blueprint",
       "at": [
@@ -4969,7 +4994,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 4,
       "source": "ref-blueprint",
       "mirror": "x",
@@ -4996,7 +5021,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 4,
       "source": "ref-blueprint",
       "mirror": "x",
@@ -5137,7 +5162,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 4,
       "source": "ref-blueprint",
       "mirror": "x",
@@ -5189,7 +5214,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 4,
       "source": "ref-blueprint",
       "mirror": "x",
@@ -5216,7 +5241,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 4,
       "source": "ref-blueprint",
       "mirror": "x",
@@ -5236,7 +5261,7 @@
           0.13
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 4,
       "source": "ref-blueprint",
       "at": [
@@ -5260,7 +5285,7 @@
           0.13
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 4,
       "source": "ref-blueprint",
       "at": [
@@ -5771,7 +5796,7 @@
           0.15
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 4,
       "source": "ref-blueprint",
       "at": [
@@ -6661,7 +6686,7 @@
           ]
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 4,
       "source": "ref-blueprint",
       "look": {
@@ -6680,7 +6705,7 @@
         "sides": 4,
         "rings": 1
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 4,
       "source": "ref-blueprint",
       "at": [
@@ -6709,7 +6734,7 @@
           0.14
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 4,
       "source": "ref-blueprint",
       "at": [
@@ -6739,7 +6764,7 @@
           0.14
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 4,
       "source": "ref-blueprint",
       "at": [
@@ -6768,7 +6793,7 @@
           0.3
         ]
       },
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 4,
       "source": "ref-blueprint",
       "at": [

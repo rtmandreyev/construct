@@ -1800,7 +1800,10 @@
       "label": "Telescoping Inner Barrel",
       "role": "identity",
       "stage": 5,
-      "certainty": "inferred",
+      "certainty": {
+        "size": "verified",
+        "shape": "inferred"
+      },
       "shape": {
         "type": "lathe",
         "profile": [

@@ -211,7 +211,7 @@
     {
       "id": "plinth",
       "role": "structure",
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 0,
       "shape": {
         "type": "extrude",
@@ -276,7 +276,7 @@
     {
       "id": "porch-plinth",
       "role": "structure",
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 0,
       "shape": {
         "type": "box",
@@ -302,7 +302,10 @@
     {
       "id": "lower-chapel",
       "role": "mass",
-      "certainty": "inferred",
+      "certainty": {
+        "size": "verified",
+        "shape": "traced"
+      },
       "stage": 1,
       "shape": {
         "type": "extrude",
@@ -372,7 +375,10 @@
     {
       "id": "upper-chapel",
       "role": "mass",
-      "certainty": "inferred",
+      "certainty": {
+        "size": "verified",
+        "shape": "traced"
+      },
       "stage": 2,
       "shape": {
         "type": "extrude",
@@ -467,7 +473,7 @@
     {
       "id": "porch-side-back-pier",
       "role": "mass",
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 1,
       "shape": {
         "type": "box",
@@ -614,7 +620,7 @@
     {
       "id": "nave-buttress",
       "role": "structure",
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 2,
       "shape": {
         "type": "extrude",
@@ -690,7 +696,7 @@
     {
       "id": "apse-buttress",
       "role": "structure",
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 2,
       "shape": {
         "type": "extrude",
@@ -772,7 +778,7 @@
     {
       "id": "nave-buttress-foot",
       "role": "structure",
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 1,
       "shape": {
         "type": "extrude",
@@ -828,7 +834,7 @@
     {
       "id": "apse-buttress-foot",
       "role": "structure",
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 1,
       "shape": {
         "type": "extrude",
@@ -889,7 +895,7 @@
     {
       "id": "floor-larmier",
       "role": "structure",
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 2,
       "shape": {
         "type": "tube",
@@ -965,7 +971,7 @@
     {
       "id": "sill-course",
       "role": "structure",
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 2,
       "shape": {
         "type": "tube",
@@ -1042,7 +1048,7 @@
     {
       "id": "wall-head",
       "role": "structure",
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 2,
       "shape": {
         "type": "tube",
@@ -1198,7 +1204,7 @@
     {
       "id": "porch-side-spandrel-low",
       "role": "structure",
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 2,
       "shape": {
         "type": "extrude",
@@ -1299,7 +1305,7 @@
     {
       "id": "porch-side-arch-low",
       "role": "identity",
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 4,
       "shape": {
         "type": "curve",
@@ -1419,7 +1425,7 @@
     {
       "id": "porch-side-spandrel-up",
       "role": "structure",
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 3,
       "shape": {
         "type": "extrude",
@@ -1520,7 +1526,7 @@
     {
       "id": "porch-side-arch-up",
       "role": "identity",
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 4,
       "shape": {
         "type": "curve",
@@ -2071,7 +2077,7 @@
     {
       "id": "apse-roof",
       "role": "mass",
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 3,
       "shape": {
         "type": "lathe",
@@ -15006,7 +15012,10 @@
     {
       "id": "nave-window-frame",
       "role": "identity",
-      "certainty": "inferred",
+      "certainty": {
+        "size": "verified",
+        "shape": "inferred"
+      },
       "stage": 4,
       "shape": {
         "type": "curve",
@@ -17819,7 +17828,10 @@
     {
       "id": "apse-window-frame",
       "role": "identity",
-      "certainty": "inferred",
+      "certainty": {
+        "size": "verified",
+        "shape": "inferred"
+      },
       "stage": 4,
       "shape": {
         "type": "curve",
@@ -21531,7 +21543,7 @@
     {
       "id": "plinth-course",
       "role": "structure",
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 2,
       "shape": {
         "type": "tube",
@@ -21608,7 +21620,7 @@
     {
       "id": "lower-sill-string",
       "role": "structure",
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 2,
       "shape": {
         "type": "tube",
@@ -21684,7 +21696,10 @@
     {
       "id": "west-rose-moulding",
       "role": "identity",
-      "certainty": "inferred",
+      "certainty": {
+        "size": "verified",
+        "shape": "inferred"
+      },
       "stage": 4,
       "shape": {
         "type": "curve",
@@ -30636,7 +30651,10 @@
     {
       "id": "fleche-spire",
       "role": "identity",
-      "certainty": "inferred",
+      "certainty": {
+        "size": "verified",
+        "shape": "inferred"
+      },
       "stage": 6,
       "shape": {
         "type": "tower",
@@ -34084,7 +34102,7 @@
       }
     ],
     "critic": {
-      "scene_sha256": "5d3f49776a04ad82438bfd7288245a20fbb59f279a356184e7041f158b1532cc",
+      "scene_sha256": "73c84e43e162b5ca9fc19d1e1d6ccb101772d0ac9c732a96891a94eabaa61580",
       "verdict": "good",
       "scores": {
         "silhouette": 2,
@@ -34285,7 +34303,7 @@
         "iou": 0.824,
         "edge": 0.0161,
         "pass": true,
-        "scene_sha256": "5d3f49776a04ad82438bfd7288245a20fbb59f279a356184e7041f158b1532cc"
+        "scene_sha256": "73c84e43e162b5ca9fc19d1e1d6ccb101772d0ac9c732a96891a94eabaa61580"
       }
     ]
   }

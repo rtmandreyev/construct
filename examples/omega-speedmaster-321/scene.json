@@ -385,7 +385,10 @@
     {
       "id": "case-band",
       "role": "mass",
-      "certainty": "inferred",
+      "certainty": {
+        "size": "verified",
+        "shape": "inferred"
+      },
       "stage": 0,
       "shape": {
         "type": "lathe",
@@ -436,7 +439,10 @@
     {
       "id": "lugs",
       "role": "structure",
-      "certainty": "inferred",
+      "certainty": {
+        "size": "verified",
+        "shape": "inferred"
+      },
       "stage": 0,
       "shape": {
         "type": "extrude",
@@ -644,7 +650,10 @@
     {
       "id": "movement-ring",
       "role": "structure",
-      "certainty": "inferred",
+      "certainty": {
+        "size": "verified",
+        "shape": "inferred"
+      },
       "stage": 0,
       "shape": {
         "type": "lathe",
@@ -683,7 +692,10 @@
     {
       "id": "mov-plate",
       "role": "structure",
-      "certainty": "inferred",
+      "certainty": {
+        "size": "verified",
+        "shape": "inferred"
+      },
       "stage": 1,
       "shape": {
         "type": "cylinder",

@@ -124,7 +124,10 @@
    "id": "body",
    "label": "Body (Superleggera shell)",
    "role": "mass",
-   "certainty": "inferred",
+   "certainty": {
+    "size": "verified",
+    "shape": "traced"
+   },
    "stage": 2,
    "shape": {
     "type": "loft",
@@ -414,7 +417,7 @@
    "id": "glasshouse",
    "label": "Fastback glasshouse",
    "role": "mass",
-   "certainty": "inferred",
+   "certainty": "traced",
    "stage": 3,
    "shape": {
     "type": "loft",
@@ -7183,7 +7186,10 @@
    "id": "tyres",
    "label": "Tyres 6.70-15",
    "role": "structure",
-   "certainty": "inferred",
+   "certainty": {
+    "size": "verified",
+    "shape": "inferred"
+   },
    "stage": 0,
    "shape": {
     "type": "torus",

@@ -268,7 +268,10 @@
    "id": "case-body",
    "label": "Rim",
    "role": "mass",
-   "certainty": "inferred",
+   "certainty": {
+    "size": "verified",
+    "shape": "inferred"
+   },
    "stage": 1,
    "basis": [
     "length",
@@ -903,7 +906,10 @@
    "id": "lid",
    "label": "Lid",
    "role": "identity",
-   "certainty": "inferred",
+   "certainty": {
+    "size": "verified",
+    "shape": "inferred"
+   },
    "stage": 3,
    "basis": [
     "length",

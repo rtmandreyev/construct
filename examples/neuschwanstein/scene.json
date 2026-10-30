@@ -2583,7 +2583,7 @@
   {
    "id": "upper-court-terrace",
    "role": "mass",
-   "certainty": "inferred",
+   "certainty": "traced",
    "stage": 1,
    "shape": {
     "type": "box",
@@ -2611,7 +2611,7 @@
   {
    "id": "upper-court-retaining-arcade",
    "role": "identity",
-   "certainty": "inferred",
+   "certainty": "traced",
    "stage": 5,
    "shape": {
     "type": "facade",
@@ -2645,7 +2645,7 @@
   {
    "id": "upper-court-retaining-merlons",
    "role": "identity",
-   "certainty": "inferred",
+   "certainty": "traced",
    "stage": 4,
    "shape": {
     "type": "battlements",
@@ -2688,7 +2688,7 @@
   {
    "id": "court-stair-1",
    "role": "detail",
-   "certainty": "inferred",
+   "certainty": "traced",
    "stage": 2,
    "shape": {
     "type": "box",
@@ -2715,7 +2715,7 @@
   {
    "id": "court-stair-2",
    "role": "detail",
-   "certainty": "inferred",
+   "certainty": "traced",
    "stage": 2,
    "shape": {
     "type": "box",
@@ -2742,7 +2742,7 @@
   {
    "id": "court-stair-3",
    "role": "detail",
-   "certainty": "inferred",
+   "certainty": "traced",
    "stage": 2,
    "shape": {
     "type": "box",
@@ -2769,7 +2769,7 @@
   {
    "id": "court-stair-4",
    "role": "detail",
-   "certainty": "inferred",
+   "certainty": "traced",
    "stage": 2,
    "shape": {
     "type": "box",
@@ -2796,7 +2796,7 @@
   {
    "id": "court-stair-5",
    "role": "detail",
-   "certainty": "inferred",
+   "certainty": "traced",
    "stage": 2,
    "shape": {
     "type": "box",
@@ -2823,7 +2823,7 @@
   {
    "id": "court-stair-6",
    "role": "detail",
-   "certainty": "inferred",
+   "certainty": "traced",
    "stage": 2,
    "shape": {
     "type": "box",
@@ -2850,7 +2850,7 @@
   {
    "id": "court-stair-7",
    "role": "detail",
-   "certainty": "inferred",
+   "certainty": "traced",
    "stage": 2,
    "shape": {
     "type": "box",
@@ -2877,7 +2877,7 @@
   {
    "id": "court-stair-8",
    "role": "detail",
-   "certainty": "inferred",
+   "certainty": "traced",
    "stage": 2,
    "shape": {
     "type": "box",
@@ -2904,7 +2904,7 @@
   {
    "id": "lower-court-terrace",
    "role": "mass",
-   "certainty": "inferred",
+   "certainty": "traced",
    "stage": 1,
    "shape": {
     "type": "box",
@@ -2932,7 +2932,7 @@
   {
    "id": "upper-court",
    "role": "detail",
-   "certainty": "inferred",
+   "certainty": "traced",
    "stage": 2,
    "shape": {
     "type": "grid",
@@ -2958,7 +2958,7 @@
   {
    "id": "lower-court",
    "role": "detail",
-   "certainty": "inferred",
+   "certainty": "traced",
    "stage": 2,
    "shape": {
     "type": "grid",
@@ -2984,7 +2984,7 @@
   {
    "id": "palas",
    "role": "mass",
-   "certainty": "inferred",
+   "certainty": "traced",
    "stage": 1,
    "shape": {
     "type": "box",
@@ -6296,7 +6296,7 @@
   {
    "id": "chair-tower",
    "role": "mass",
-   "certainty": "inferred",
+   "certainty": "traced",
    "stage": 2,
    "shape": {
     "type": "box",
@@ -6683,7 +6683,7 @@
   {
    "id": "court-range",
    "role": "mass",
-   "certainty": "inferred",
+   "certainty": "traced",
    "stage": 1,
    "shape": {
     "type": "box",
@@ -6783,7 +6783,7 @@
   {
    "id": "knights-house",
    "role": "mass",
-   "certainty": "inferred",
+   "certainty": "traced",
    "stage": 1,
    "shape": {
     "type": "box",
@@ -7096,7 +7096,7 @@
   {
    "id": "gallery",
    "role": "mass",
-   "certainty": "inferred",
+   "certainty": "traced",
    "stage": 1,
    "shape": {
     "type": "box",
@@ -7681,7 +7681,7 @@
   {
    "id": "connecting-range",
    "role": "mass",
-   "certainty": "inferred",
+   "certainty": "traced",
    "stage": 1,
    "shape": {
     "type": "box",
@@ -7768,7 +7768,7 @@
   {
    "id": "gatehouse",
    "role": "mass",
-   "certainty": "inferred",
+   "certainty": "traced",
    "stage": 1,
    "shape": {
     "type": "box",
@@ -7826,7 +7826,7 @@
   {
    "id": "gatehouse-east-windows",
    "role": "detail",
-   "certainty": "inferred",
+   "certainty": "traced",
    "stage": 5,
    "shape": {
     "type": "facade",
@@ -7896,7 +7896,7 @@
   {
    "id": "gatehouse-gate",
    "role": "identity",
-   "certainty": "inferred",
+   "certainty": "traced",
    "stage": 4,
    "shape": {
     "type": "facade",
@@ -9071,7 +9071,7 @@
   {
    "id": "court-wall-0",
    "role": "structure",
-   "certainty": "inferred",
+   "certainty": "traced",
    "stage": 2,
    "shape": {
     "type": "box",
@@ -9103,7 +9103,7 @@
   {
    "id": "court-wall-1",
    "role": "structure",
-   "certainty": "inferred",
+   "certainty": "traced",
    "stage": 2,
    "shape": {
     "type": "box",
@@ -9135,7 +9135,7 @@
   {
    "id": "court-wall-2",
    "role": "structure",
-   "certainty": "inferred",
+   "certainty": "traced",
    "stage": 2,
    "shape": {
     "type": "box",
@@ -9366,11 +9366,11 @@
     "iou": 0.8443,
     "edge": 0.0144,
     "pass": true,
-    "scene_sha256": "87c9aa66d014611ff1aaa9d93127fa01a963883f5772d7af41e174ed03344b62"
+    "scene_sha256": "9ca24f14127eb966528e3471cc13a5ac01313995911ff8337cad2ba553de7648"
    }
   ],
   "critic": {
-   "scene_sha256": "87c9aa66d014611ff1aaa9d93127fa01a963883f5772d7af41e174ed03344b62",
+   "scene_sha256": "9ca24f14127eb966528e3471cc13a5ac01313995911ff8337cad2ba553de7648",
    "verdict": "improve",
    "scores": {
     "silhouette": 2,

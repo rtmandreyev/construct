@@ -6195,7 +6195,10 @@
    "id": "ring-10kpc",
    "label": "10 kpc star-forming ring",
    "role": "identity",
-   "certainty": "inferred",
+   "certainty": {
+    "size": "verified",
+    "shape": "inferred"
+   },
    "stage": 3,
    "shape": {
     "type": "curve",
@@ -7374,7 +7377,10 @@
    "id": "bulge-stars",
    "label": "Bulge star cloud",
    "role": "mass",
-   "certainty": "inferred",
+   "certainty": {
+    "size": "verified",
+    "shape": "inferred"
+   },
    "stage": 4,
    "shape": {
     "type": "points",

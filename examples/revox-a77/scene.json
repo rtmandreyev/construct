@@ -2,7 +2,7 @@
   "format": "construct-scene",
   "version": 2,
   "id": "o3-revox-a77",
-  "title": "ReVox A77 \u2014 reel-to-reel tape recorder",
+  "title": "ReVox A77 — reel-to-reel tape recorder",
   "subject": {
     "category": "machine",
     "accuracy": "approximate",
@@ -131,7 +131,7 @@
     },
     {
       "key": "model.text",
-      "value": "A 77  \u00b7  STEREO  \u00b7  TAPERECORDER",
+      "value": "A 77  ·  STEREO  ·  TAPERECORDER",
       "certainty": "verified",
       "source": "photo-front",
       "note": "Lettering under the REVOX name on the MK III/IV trim band."
@@ -289,7 +289,10 @@
     {
       "id": "base-plate",
       "role": "structure",
-      "certainty": "inferred",
+      "certainty": {
+        "size": "verified",
+        "shape": "inferred"
+      },
       "stage": 1,
       "shape": {
         "type": "box",
@@ -1904,7 +1907,10 @@
     {
       "id": "tape-1",
       "role": "identity",
-      "certainty": "inferred",
+      "certainty": {
+        "size": "verified",
+        "shape": "inferred"
+      },
       "stage": 6,
       "shape": {
         "type": "box",
@@ -1967,7 +1973,10 @@
     {
       "id": "tape-2",
       "role": "identity",
-      "certainty": "inferred",
+      "certainty": {
+        "size": "verified",
+        "shape": "inferred"
+      },
       "stage": 6,
       "shape": {
         "type": "box",
@@ -2030,7 +2039,10 @@
     {
       "id": "tape-3",
       "role": "identity",
-      "certainty": "inferred",
+      "certainty": {
+        "size": "verified",
+        "shape": "inferred"
+      },
       "stage": 6,
       "shape": {
         "type": "box",
@@ -2093,7 +2105,10 @@
     {
       "id": "tape-4",
       "role": "identity",
-      "certainty": "inferred",
+      "certainty": {
+        "size": "verified",
+        "shape": "inferred"
+      },
       "stage": 6,
       "shape": {
         "type": "box",

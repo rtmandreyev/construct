@@ -450,7 +450,10 @@
       "id": "midcase",
       "label": "40 mm monobloc white-gold midcase",
       "role": "mass",
-      "certainty": "inferred",
+      "certainty": {
+        "size": "verified",
+        "shape": "inferred"
+      },
       "stage": 0,
       "shape": {
         "type": "lathe",
@@ -570,7 +573,10 @@
       "id": "movement-seat",
       "label": "Calendar module seat, nominal 32 mm diameter",
       "role": "structure",
-      "certainty": "inferred",
+      "certainty": {
+        "size": "verified",
+        "shape": "inferred"
+      },
       "stage": 1,
       "shape": {
         "type": "lathe",
@@ -624,7 +630,10 @@
       "id": "upper-lug-tier-1",
       "label": "Three-tier upper lug, step 1",
       "role": "identity",
-      "certainty": "inferred",
+      "certainty": {
+        "size": "verified",
+        "shape": "inferred"
+      },
       "stage": 1,
       "shape": {
         "type": "extrude",
@@ -675,7 +684,10 @@
       "id": "upper-lug-tier-2",
       "label": "Three-tier upper lug, step 2",
       "role": "identity",
-      "certainty": "inferred",
+      "certainty": {
+        "size": "verified",
+        "shape": "inferred"
+      },
       "stage": 1,
       "shape": {
         "type": "extrude",
@@ -726,7 +738,10 @@
       "id": "upper-lug-tier-3",
       "label": "Three-tier upper lug, step 3",
       "role": "identity",
-      "certainty": "inferred",
+      "certainty": {
+        "size": "verified",
+        "shape": "inferred"
+      },
       "stage": 1,
       "shape": {
         "type": "extrude",
@@ -1071,7 +1086,10 @@
       "id": "lower-lug-tier-1",
       "label": "Three-tier lower lug, step 1",
       "role": "identity",
-      "certainty": "inferred",
+      "certainty": {
+        "size": "verified",
+        "shape": "inferred"
+      },
       "stage": 1,
       "shape": {
         "type": "extrude",
@@ -1122,7 +1140,10 @@
       "id": "lower-lug-tier-2",
       "label": "Three-tier lower lug, step 2",
       "role": "identity",
-      "certainty": "inferred",
+      "certainty": {
+        "size": "verified",
+        "shape": "inferred"
+      },
       "stage": 1,
       "shape": {
         "type": "extrude",
@@ -1173,7 +1194,10 @@
       "id": "lower-lug-tier-3",
       "label": "Three-tier lower lug, step 3",
       "role": "identity",
-      "certainty": "inferred",
+      "certainty": {
+        "size": "verified",
+        "shape": "inferred"
+      },
       "stage": 1,
       "shape": {
         "type": "extrude",
