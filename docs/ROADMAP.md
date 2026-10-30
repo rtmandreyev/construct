@@ -124,11 +124,13 @@ the scene and geometry contract keeps its id (`construct/0.2`), because nothing 
   add-on is GPL-3.0-or-later, for Blender's extensions platform.
 - Left: the release videos and posts, and the add-on's listing on extensions.blender.org.
 
-## v1.1: models come alive (NetLogo)
+## v1.1: models come alive (NetLogo), and things you can make
 
-1.1 is NetLogo only: a simulation's whole run as a hologram a student wants to explore (why does it
+1.1 is NetLogo first: a simulation's whole run as a hologram a student wants to explore (why does it
 take this shape? how do I read it?), accurate to the run, and exportable to Blender as a real 3D
-model or a film. The core stays free, fast and reliable; the heavy work (art direction, critic
+model or a film. The makers' work planned for 1.2 (printing, FreeCAD, a run you can hold) and the
+easy half of the games work planned for 1.5 (colliders, break-apart pieces, seeded variants, a Godot
+guide) were brought into 1.1 on 29 October 2026 (owner's decision). The core stays free, fast and reliable; the heavy work (art direction, critic
 rounds, 3D models) is opt-in. Runs to music were built and removed (28 October 2026): a run is its
 model alone.
 
@@ -186,12 +188,26 @@ model alone.
   run's own colours, readable time axes, milestones with contrast), gated by the machine checks.
 - **NetLogo examples showing every 1.1 feature, Blender included:** a run in one command, reading
   and replay, two runs compared, the worksheet, a 3D model, a film, a pulse and a window.
-- The Models Library check, Linux and Windows CI, the README's pictures, the 1.1 video; then the
-  release and the Extensions Manager listing.
+- **Done 29 October:** landmarks, the run's own colours made to read as light (a part's own colour in
+  the scene and geometry), the NetLogo examples, two Models Library bugs (374 of 445 draw); printing
+  (with engraved line art), FreeCAD and STEP, the plates; for game engines, colliders, pieces, seeded
+  variants and the Godot guide.
+- Next: the Revell-style kits (v1.2), then freeze; the Models Library check, Linux and Windows CI, the
+  README's pictures, the release videos and the repository's organisation; then the release and the
+  Extensions Manager listing.
 
 ## v1.2: makers
 
-Constructs into things you make.
+Constructs into things you make. Printing, FreeCAD and the plates shipped early, in 1.1; what is left:
+
+- **Kits, Revell-style** (owner's idea, 29 October 2026): a construct as a model kit to print, glue
+  and paint: its parts (small ones merged) as pieces that fit where they meet, laid out on print
+  plates and numbered, an instruction booklet from the construct's own build stages, a painting
+  guide from its colours, and clear parts for glass. Made with a critic, as constructs are: a draft
+  kit reviewed for buildability (pieces too small, steps out of order, joints that cannot be glued)
+  and revised. Tested on the Land Cruiser FJ62 and compared with a real Revell kit's published
+  parts count, sprues and steps. Then locating pins and glue tabs where parts meet.
+- **Openings for glass** in a print, and finer prints for resin printers.
 
 - **3D printing:** a construct (or a run) to a printable, watertight model: STL and 3MF export, the
   checks a slicer would make (closed, manifold, wall thickness), and a hand-off to a slicer. Tested
@@ -221,10 +237,6 @@ For educators, museums and visual artists: what is known, shown as clearly as wh
 Its truth-first stance is inspired by [Anatomy](https://github.com/wheresryan22/anatomy); its methods
 are its own.
 
-- **People:** human figures as constructs, first, since paintings, scenes and reconstructions need
-  them: bodies from anthropometric proportions (the source marked), posed by their joints, clothing
-  as shells over them, and heads with their features and expressions as parameters. In the house
-  style they are sculptural, not photographic; a real person's likeness needs their consent.
 - **High-provenance mode:** a construct that maximises accuracy: every part with a source or
   visibly marked as a guess, a critic that judges accuracy only, a sources panel (touch a part to
   see where it comes from), a certainty view and a printable evidence sheet for a class or a label.
@@ -253,14 +265,17 @@ are its own.
 
 ## v1.5: games
 
-- **Blockout kits:** props and buildings at real sizes, with colliders and levels of detail.
-- **Engine packages:** importers or templates for Godot, Unity and Unreal; short guides for each.
+- **Blockout kits:** props and buildings at real sizes. Colliders shipped in 1.1; levels of detail are
+  left to the engines, which make them on import.
+- **Engine packages:** importers or templates for Godot, Unity and Unreal that turn the collider boxes
+  and joints into each engine's own. The Godot guide shipped in 1.1.
 - **The hologram in game:** the Measured Light look as a runtime shader, for scanners, blueprints
   and holographic interfaces, with build and open as game events.
-- **Variants without end:** the parametric archetypes as generators: a seed in, a new vehicle or
-  building out, in the editor or at runtime.
-- **Break-apart:** named parts and joints as the pieces for destruction and assembly mechanics.
-- **Texture coordinates for every shape,** for texturing in any engine.
+- **Variants without end:** seeded variants shipped in 1.1 (`params --seed`); next, generators in the
+  editor or at runtime, and buildings.
+- **Break-apart:** shipped in 1.1 (`export --pieces`); next, pieces that start apart (so they settle
+  rather than burst) and joints as physics joints.
+- **Texture coordinates for every shape,** for texturing in any engine (box-projected today).
 
 ## v1.6: film, documentary and AR
 
@@ -307,7 +322,20 @@ most worth building then.
   sizes in Blender, with camera paths and a parts list for the art department.
 - **Title sequences and trailers:** constructs assembling to a cut, from an edit's markers.
 
+### People (later)
+
+- **People:** human figures as constructs: bodies from anthropometric proportions (the source
+  marked), posed by their joints, clothing as shells over them, heads with their features and
+  expressions as parameters; sculptural, not photographic; a real person's likeness needs their
+  consent. Started on the branch `v1.3-people` (standing, walking and seated figures from cited
+  proportions); moved to a later release on 29 October 2026.
+
 ### Makers and 3D
+
+- **Detail from AI mesh generators** (from a Reddit comment, 29 October 2026): a part's fine detail
+  (a car seat's creases, a sculpture's surface) generated by a mesh model such as Tripo or Rodin and
+  fitted inside the part's envelope in the scene, which stays the source of truth for its place, size
+  and joints; the checker confirms it stays inside, and the mesh is marked generated, never evidence.
 
 - **From a photo:** a reference image traced into a first draft, then built from facts.
 - **An optional surface finish per part** (paint, metal, glass) in the scene itself.
