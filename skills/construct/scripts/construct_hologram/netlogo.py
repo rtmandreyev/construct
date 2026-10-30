@@ -1214,6 +1214,26 @@ def light_colour(c):
     return "#%02x%02x%02x" % tuple(int(round(v * 255)) for v in colorsys.hls_to_rgb(hue, light, sat))
 
 
+def _patch_colour(run):
+    """The colour a run's patches changed to (a fire's dark red, made light later), or, when they changed to
+    no colour at all (black, grey: food eaten, ground cleared), the colour they changed from."""
+    import colorsys
+    from collections import Counter
+    if run["header"].get("patch-reporter") != "pcolor":
+        return None
+    samples = [f["patches"] for f in run["frames"] if "patches" in f]
+    if len(samples) < 2:
+        return None
+    pairs = [(a, b) for a, b in zip(samples[0], samples[-1]) if a != b]
+    if not pairs:
+        return None
+    to = Counter(netlogo_rgb(b) for _, b in pairs).most_common(1)[0][0]
+    r, g, b = (int(to[k:k + 2], 16) / 255 for k in (1, 3, 5))
+    if colorsys.rgb_to_hls(r, g, b)[2] > 0.2 and max(r, g, b) > 0.08:   # a colour, however dark
+        return to
+    return Counter(netlogo_rgb(a) for a, _ in pairs).most_common(1)[0][0]
+
+
 def run_colours(run, scene):
     """Each part of a run's construct that has a colour in the run: a node its turtle's last colour, a breed's
     tracks the breed's most common colour, the field the colour the patches changed to."""
@@ -1223,15 +1243,7 @@ def run_colours(run, scene):
     breed = {}
     for r in last:
         breed.setdefault(r[1], Counter())[colour[r[0]]] += 1
-    patch = None
-    if run["header"].get("patch-reporter") == "pcolor":
-        samples = [f["patches"] for f in run["frames"] if "patches" in f]
-        if len(samples) >= 2:   # the colour the patches changed to, or from when they ended dark (food eaten)
-            pairs = [(a, b) for a, b in zip(samples[0], samples[-1]) if a != b]
-            to = Counter(netlogo_rgb(b) for _, b in pairs).most_common(1)
-            frm = Counter(netlogo_rgb(a) for a, _ in pairs).most_common(1)
-            if to:
-                patch = to[0][0] if _lightness(to[0][0]) > 0.15 or not frm else frm[0][0]
+    patch = _patch_colour(run)
     out = {}
     for part in scene["parts"]:
         pid = part["id"]
@@ -1247,37 +1259,20 @@ def run_colours(run, scene):
 
 
 def materials_from_run(run, scene):
-    """A material map (export --materials) in the run's own colours: each turtle's last colour, each breed's
-    most common one, the colour patches changed to; the frame dark, the time axis grey."""
-    from collections import Counter
-    last = run["frames"][-1].get("turtles") or next((f["turtles"] for f in reversed(run["frames"]) if f.get("turtles")), [])
-    colour = {r[0]: netlogo_rgb(r[4]) for r in last}
-    breed = {}
-    for r in last:
-        breed.setdefault(r[1], Counter())[colour[r[0]]] += 1
+    """A material map (export --materials) in the run's own colours (run_colours: the same as the page, at full
+    strength for a solid model); the frame dark, the time axis grey, the rest of the run in the accent."""
+    own = run_colours(run, scene)
     groups = {}
-    accent = "#d16bd0"
-    patch = None
-    h = run["header"]
-    if h.get("patch-reporter") == "pcolor":
-        samples = [f["patches"] for f in run["frames"] if "patches" in f]
-        if len(samples) >= 2:
-            changed = Counter(netlogo_rgb(b) for a, b in zip(samples[0], samples[-1]) if a != b)
-            patch = changed.most_common(1)[0][0] if changed else None
     for part in scene["parts"]:
         pid = part["id"]
         if part["role"] == "mass":                 # the world's floor plate
             c = "#1a1a1e"
         elif part["role"] == "ground":             # axes, the time axis, what is drawn on the floor
             c = "#8d8d8d"
-        elif pid.startswith("node-") and pid[5:].isdigit():
-            c = colour.get(int(pid[5:]), accent)
-        elif pid.startswith("tracks-") and pid[7:] in breed:
-            c = breed[pid[7:]].most_common(1)[0][0]
-        elif pid in ("surface", "fronts"):
-            c = patch or accent
+        elif pid in own:
+            c = light_colour(own[pid])
         elif part.get("source") == "run":
-            c = accent
+            c = "#d16bd0"
         else:
             continue
         groups.setdefault(c, []).append(pid)

@@ -152,10 +152,12 @@ data lock. `--landmarks off` leaves them out; runs compared side by side have no
 
 **Colours.** A run is drawn in its own NetLogo colours: each breed's tracks in its turtles' colour, each
 risen turtle of a network in the colour it ended in (with a bead of light at its top), a field in the
-colour its patches changed to, or from when they ended dark (Ants' food, eaten). Each is made to read as
+colour its patches changed to (Fire's embers, lifted to red), or from when they changed to no colour at all
+(Ants' food, eaten to black). Each is made to read as
 light on the dark ground: the hue kept, black lifted to grey, white held back, the saturation capped.
-`--colors house` draws Construct's own tones instead. The 3D model (`--glb`, `construct export`) carries
-the same colours. Colour is how a run is drawn, not what it says, so it sits outside the data lock.
+`--colors house` draws Construct's own tones instead. The 3D model carries the same colours: `--glb`
+writes it with the lines as glowing tubes, the floor dark and the time axis grey (the look of the Blender
+import), and `construct export` uses each part's colour. Colour is how a run is drawn, not what it says, so it sits outside the data lock.
 
 **Where the order forms.** Moving turtles are measured by their alignment (how much they head one way:
 0 every way, 1 all one way) and turtles that switch on and off by their synchrony (the order parameter
