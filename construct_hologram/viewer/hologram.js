@@ -1238,7 +1238,7 @@ void main() {
 
     // interaction
     let drag = null, lastInput = -1e9;
-    canvas.addEventListener("pointerdown", (e) => { drag = { x: e.clientX, y: e.clientY }; canvas.setPointerCapture(e.pointerId);
+    canvas.addEventListener("pointerdown", (e) => { drag = { x: e.clientX, y: e.clientY }; try { canvas.setPointerCapture(e.pointerId); } catch (err) { /* a pen or touch already gone: drag without capture */ }
       if (!holo.userCamera) holo.userCamera = holo.cameraAt(now(), holo.cameraFor(opt.view)); });
     canvas.addEventListener("pointermove", (e) => {
       if (!drag) return;

@@ -41,7 +41,8 @@ GAP_MM = 4.0               # between pieces on a plate
 STEP_MOST = 6              # pieces in one step, at most
 MANY_PIECES = 160
 GLASS = ("glass", "glazing", "window", "windscreen", "windshield", "visor", "canopy", "lens")
-PLAN_KEYS = {"title", "merge", "keep", "clear", "order", "notes"}
+SLIVER_MM = 1.5          # thinner than this, a small piece is a chip and a long one breaks
+PLAN_KEYS = {"title", "merge", "keep", "clear", "opaque", "order", "notes"}
 
 
 CRITIC = """You are an experienced designer of plastic model kits (Revell, Tamiya), reviewing a kit that Construct
@@ -149,7 +150,7 @@ def load_plan(plan):
         doc = plan
     if not isinstance(doc, dict) or not set(doc) <= PLAN_KEYS:
         raise KitError("a kit plan is an object with %s" % ", ".join(sorted(PLAN_KEYS)))
-    for key in ("merge", "keep", "clear", "order"):
+    for key in ("merge", "keep", "clear", "opaque", "order"):
         if key in doc and not isinstance(doc[key], list):
             raise KitError("plan.%s: a list" % key)
     if not all(isinstance(g, list) and g and all(isinstance(x, str) for x in g) for g in doc.get("merge", [])):
@@ -232,11 +233,12 @@ def make(scene, scale=SCALE, size=None, detail=DETAIL_MM, wall=WALL_MM, plan=Non
         members_of.setdefault(head, []).append(pid)
 
     # each part's paint, and whether it is clear plastic
-    clear = plan.get("clear", [])
+    clear, opaque = plan.get("clear", []), plan.get("opaque", [])
     paint = {pid: _paint(pid, info[pid], rules) for pid in vox}
     is_clear = {pid: (paint[pid].get("finish") == "glass" or _matches(pid, clear)
                       or (any(w in pid.lower() for w in GLASS)
-                          and not any(w in pid.lower() for w in export.NOT_GLASS_WORDS))) for pid in vox}
+                          and not any(w in pid.lower() for w in export.NOT_GLASS_WORDS)))
+                and not _matches(pid, opaque) for pid in vox}   # the plan's `opaque` overrides a glassy name
 
     # trimmed in build order: an earlier, larger part keeps what two parts share, and clear parts yield to the
     # rest (a roof stays whole where it meets the glass)
@@ -256,7 +258,7 @@ def make(scene, scale=SCALE, size=None, detail=DETAIL_MM, wall=WALL_MM, plan=Non
             nth = names[:k + 1].count(names[k])
             pieces.append({"name": names[k] if same == 1 else "%s (%d of %d)" % (names[k], nth, same),
                            "parts": sorted(members_of[pid]), "head": pid, "paint": paint[pid], "clear": is_clear[pid],
-                           "stage": min(info[m]["stage"] for m in members_of[pid]), "cols": comp})
+                           "stage": info[pid]["stage"], "cols": comp})   # the head's: its largest member
 
     # bits too small to print, merged into the piece they touch most
     keep = plan.get("keep", [])
@@ -507,6 +509,14 @@ def check(kit):
             problems.append({"code": "tiny", "piece": p["number"],
                              "message": "%d (%s) is %.1f mm across: too small to handle; merge it (plan.merge)"
                                         % (p["number"], p["name"], s[-1])})
+        if s[0] < SLIVER_MM and MIN_PIECE_MM <= s[-1] < 6.0:
+            problems.append({"code": "sliver", "piece": p["number"],
+                             "message": "%d (%s) is a %.1f mm sliver: merge it into what it belongs to (plan.merge)"
+                                        % (p["number"], p["name"], s[0])})
+        elif s[0] < SLIVER_MM and s[-1] >= 60.0:
+            problems.append({"code": "fragile", "piece": p["number"],
+                             "message": "%d (%s) is %.1f mm thick and %.0f mm long: it will break; merge it into a "
+                                        "thicker piece" % (p["number"], p["name"], s[0], s[-1])})
         if p.get("too_big"):
             problems.append({"code": "too-big", "piece": p["number"],
                              "message": "%d (%s) is %s mm: bigger than the bed" % (
@@ -515,6 +525,14 @@ def check(kit):
             problems.append({"code": "floats", "piece": p["number"],
                              "message": "%d (%s) touches no other piece: it has nothing to be glued to; merge it "
                                         "into what it belongs to (plan.merge)" % (p["number"], p["name"])})
+    split = {}
+    for p in kit["pieces"]:   # "body (1 of 3)": a merge whose parts do not touch came out in pieces
+        if " of " in p["name"] and p["name"].endswith(")") and len(p["parts"]) > 1:   # a merge, not a part's copies
+            split.setdefault(p["name"].rsplit(" (", 1)[0], []).append(p["number"])
+    for name, nums in sorted(split.items()):
+        problems.append({"code": "split", "piece": nums[0],
+                         "message": "%s came out in %d pieces (%s): its parts do not touch; split the merge or bridge "
+                                    "it" % (name, len(nums), ", ".join(str(n) for n in nums))})
     if len(kit["pieces"]) > MANY_PIECES:
         problems.append({"code": "many-pieces", "piece": None,
                          "message": "%d pieces: more than a kit this size usually has (%d); merge the small "
@@ -570,7 +588,7 @@ def _drawing(kit, highlight, done, w=900, hgt=600):
     def path(segs):
         return "".join("M%.1f %.1fL%.1f %.1f" % (*xy(a), *xy(b)) for a, b in segs)
     out = ['<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 %d %d">' % (w, hgt),
-           '<rect width="100%%" height="100%%" fill="#0f0c14"/>',
+           '<rect width="100%" height="100%" fill="#0f0c14"/>',
            '<path d="%s" stroke="#b7a4c8" stroke-opacity="0.32" stroke-width="0.6" fill="none"/>'
            % path([seg for p in shown if p["number"] not in highlight for seg in p["art"]]),
            '<path d="%s" stroke="#f0b8ef" stroke-opacity="0.95" stroke-width="1.1" fill="none"/>'
@@ -598,7 +616,7 @@ def _plate_map(kit, plate, w=640):
     sc = w / bw
     by = {p["number"]: p for p in kit["pieces"]}
     out = ['<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 %d %d" width="%d">' % (w, int(bd * sc), w),
-           '<rect width="100%%" height="100%%" fill="#17121f" stroke="#2b2338"/>']
+           '<rect width="100%" height="100%" fill="#17121f" stroke="#2b2338"/>']
     for num, x, y in plate["pieces"]:
         p = by[num]
         fw, fd = p["size_mm"][0] * sc, p["size_mm"][1] * sc

@@ -81,8 +81,10 @@ def project(geometry, yaw, pitch):
     for i in range(0, len(ln), ls):
         pi = int(styles[int(ln[i + 6])][6])
         p = parts[pi]
-        tyre = p["shape"] == "torus" and any(w in p["id"].lower() for w in ("wheel", "tyre", "tire"))
-        well = p["shape"] == "curve" and "arch" in p["id"].lower()  # the wheel well under an arch is dark, solid
+        low = p["id"].lower()
+        tyre = (p["shape"] in ("torus", "lathe", "cylinder") and any(w in low for w in ("wheel", "tyre", "tire"))
+                and "steering" not in low)
+        well = p["shape"] in ("curve", "tube", "paths") and "arch" in low  # the wheel well under an arch is dark, solid
         if not (tyre or well):
             continue
         for a in ((ln[i], ln[i + 1], ln[i + 2]), (ln[i + 3], ln[i + 4], ln[i + 5])):

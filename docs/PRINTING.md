@@ -136,12 +136,15 @@ construct kit examples/toyota-land-cruiser-fj62/scene.json --out fj62-kit/ --mat
   construct's own build stages, a few pieces at a time, each glued to the piece it touches most; wheels
   and the like start sub-assemblies of their own), a picture of each step, and a painting guide from the
   material map.
-- **Checked before printing:** pieces too small to handle, pieces that touch nothing, pieces bigger than the
-  bed, too many pieces. `kit.json` is the kit without its geometry, for a critic to read.
+- **Checked before printing:** pieces too small to handle, slivers (thinner than 1.5 mm and short) and fragile
+  blades (as thin and long), pieces that touch nothing, merges that came out in several pieces, pieces
+  bigger than the bed, too many pieces. `kit.json` is the kit without its geometry, for a critic to read.
 
 **A critic, as for a construct.** `construct kit --critic` prints a kit designer's brief: a critic (a fresh
 agent or model) reads `kit.json` and the booklet's pictures and answers with a plan, parts to merge into one
-piece, small parts to keep, clear parts, which `--plan kit-plan.json` applies to the next build.
+piece, small parts to keep, clear parts, parts that are not clear though their names say glass (`opaque`: a
+chrome mirror glass), which `--plan kit-plan.json` applies to the next build. A merged piece is built at its
+largest part's stage. What holds the glass (a windscreen frame, a window seal) is never taken for glass.
 
 ## Printers: the largest print and every detail
 

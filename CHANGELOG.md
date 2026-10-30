@@ -176,6 +176,14 @@ side, printed as worksheets and cited. Plan:
   slightly, written with the glTF physics extensions Godot imports. The FJ62 in Godot went from 249
   pairs of pieces pressed into each other at rest, and a burst when released, to 17 pairs and a car that
   falls apart onto the floor.
+- **Found by two overnight masterpiece runs (an R34 and a VW T1, on Opus):** `compare` fills a tyre drawn as
+  a lathe or cylinder and a wheel well under an arch drawn as a tube (it only knew a torus and a curve); a
+  scene's `open` view is shown opened in review even when its still pose is closed; a critique reference
+  keyed to the scene's own view reaches the packet; a kit plan's `opaque` overrides a glassy name; a merged
+  piece is built at its largest part's stage; the kit's check flags slivers, fragile blades and merges that
+  came apart; the kit booklet's pictures keep their dark background when opened on their own (they
+  carried a literal `100%%`); `check` says when a file is a trace, not a scene; a critique records the
+  run's round.
 - **A provenance note:** `authoring.provenance_note`, shown under the caption in the provenance view
   only. Seven gallery constructs made before 1.1 carry one saying where their shades understate their
   evidence (parts that do not cite what they were read from, traced parts never compared).

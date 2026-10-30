@@ -351,6 +351,18 @@ class Kit(unittest.TestCase):
                 self.assertEqual(r.returncode, 1, args)
                 self.assertNotIn("Traceback", r.stderr)
 
+    def test_a_plan_can_make_glass_opaque_and_a_merge_keeps_its_heads_stage(self):
+        # found by a live run's kit critic: a chrome mirror glass printed clear; a shell built before its interior
+        sc = scene_of(box("shell", [0.2, 0.05, 0.1], [0, 0.025, 0]),
+                      dict(box("strut-tower", [0.02, 0.03, 0.02], [0.05, 0.04, 0]), stage=0),
+                      dict(box("mirror-glass", [0.02, 0.02, 0.004], [0.11, 0.04, 0]), stage=2))
+        sc["parts"][0]["stage"] = 1
+        k = kit_mod.make(sc, size=100, detail=0.5, plan={"merge": [["shell", "strut-tower"]], "opaque": ["mirror-*"]})
+        mirror = next(p for p in k["pieces"] if "mirror-glass" in p["parts"])
+        self.assertFalse(mirror["clear"])
+        shell = next(p for p in k["pieces"] if "shell" in p["parts"])
+        self.assertEqual(shell["stage"], 1)   # the shell's, not the small tower's earlier stage
+
     def test_the_kit_files(self):
         from . import kit
         sc = studio.load(str(HERE / "examples" / "v2" / "cd.json"))
@@ -366,6 +378,9 @@ class Kit(unittest.TestCase):
             step = Path(tmp, "img", "step-1.svg").read_text(encoding="utf-8")
             self.assertIn("<path d=", step)                                       # drawn in the construct's lines
             self.assertIn(">1</text>", step)                                      # the new piece's callout
+            for name in os.listdir(Path(tmp, "img")):                             # a valid size, not "100%%"
+                self.assertNotIn("%%", Path(tmp, "img", name).read_text(encoding="utf-8"), name)
+            self.assertNotIn("%%", booklet)
             summary = json.loads(Path(tmp, "kit.json").read_text(encoding="utf-8"))
             self.assertEqual(summary["report"]["counts"]["pieces"], 4)
             self.assertIn("kit designer", kit.CRITIC.lower() + " kit designer")

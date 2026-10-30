@@ -531,7 +531,7 @@ def record(folder, answer, scene_path=None, model=None, now=None):
     # the working scene is now the judged version (kept) or the best one (reverted), with the critic's
     # record bound to it and the round history (the timeline in construct.html and review)
     if won:
-        sc, _ = critic.record(json.loads((rd / "scene.json").read_text(encoding="utf-8")), crit, model)
+        sc, _ = critic.record(json.loads((rd / "scene.json").read_text(encoding="utf-8")), crit, model, round=n)
         (rd / "scene.json").write_text(json.dumps(sc, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     else:
         sc = json.loads((_round_dir(folder, restored) / "scene.json").read_text(encoding="utf-8"))

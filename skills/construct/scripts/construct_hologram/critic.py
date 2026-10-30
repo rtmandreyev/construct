@@ -112,8 +112,9 @@ def defects_text(doc, top=5):
     return "\n".join(lines)
 
 
-def record(scene, doc, model=None):
-    """Write the critique into the scene's authoring block; returns (scene, verdict)."""
+def record(scene, doc, model=None, round=None):
+    """Write the critique into the scene's authoring block; returns (scene, verdict). `round`: the improvement run's
+    round (else the count of critiques this scene has had)."""
     items = validate_items(doc)
     if items:
         from . import scene as scene_mod
@@ -133,7 +134,7 @@ def record(scene, doc, model=None):
     a = dict(scene.get("authoring") or {"tier": tiers.DEFAULT, "research": "unavailable"})
     prev = (a.get("critic") or {}).get("round", 0)
     a["critic"] = {"scene_sha256": doc["scene_sha256"], "verdict": v, "scores": dict(doc["scores"]),
-                   "round": prev + 1, "defects": len(doc.get("defects", []))}
+                   "round": round if round is not None else prev + 1, "defects": len(doc.get("defects", []))}
     if model:
         a["critic"]["model"] = str(model)[:120]
     if v in ("outstanding", "good"):

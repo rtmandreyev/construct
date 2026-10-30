@@ -814,6 +814,14 @@ def run(args):
             return 0
         if args.command == "check":
             text = sys.stdin.read() if args.scene == "-" else Path(args.scene).read_text(encoding="utf-8")
+            peek, _ = diagnose_mod.parse_text(text)
+            other = {"construct-trace": "a trace: use it with construct trace, compare or loft-from-traces",
+                     "construct-critique": "a critique: record it with construct critique",
+                     "construct-rounds": "a rounds state: see it with construct rounds status"}.get(
+                         (peek or {}).get("format") if isinstance(peek, dict) else None)
+            if other:
+                sys.stderr.write("check: %s is not a scene, it is %s\n" % (args.scene, other))
+                return 1
             report = diagnose_mod.diagnose_text(text)
             if args.json:
                 sys.stdout.write(json.dumps(report, indent=2, ensure_ascii=False) + "\n")

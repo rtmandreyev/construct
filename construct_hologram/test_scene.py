@@ -134,6 +134,36 @@ class Malformed(unittest.TestCase):
             self.assertFalse(any("could not be checked" in e for e in errs), errs)   # answered by the checks themselves
             diagnose.diagnose(sc)
 
+    def test_a_tyre_of_any_round_shape_and_a_tube_arch_count_as_solid(self):
+        # found by a live run: a lathe tyre was not filled, and an arch lip drawn as a tube stopped filling its well
+        from . import compare as compare_mod
+        def tris(shape_type):
+            sc = base()
+            prof = [[0.2, -0.1], [0.3, -0.1], [0.3, 0.1], [0.2, 0.1]]
+            shape = {"type": "lathe", "profile": prof} if shape_type == "lathe" else {"type": "cylinder", "radius": 0.3, "height": 0.2}
+            sc["parts"].append({"id": "tyre-front", "role": "detail", "certainty": "inferred", "stage": 1, "shape": shape,
+                                "at": [0, 0.5, 0], "rotate": [0, 0, 90]})
+            g = scene.compile_scene(sc)
+            return len(compare_mod.project(g, 90, 0)[0])
+        sc = base()
+        g = scene.compile_scene(sc)
+        plain = len(compare_mod.project(g, 90, 0)[0])
+        self.assertGreater(tris("lathe"), plain)   # its outline filled: more triangles than its surfaces alone
+
+    def test_a_critique_records_the_runs_round(self):
+        sc = base()
+        out, _ = critic.record(sc, _critique(sc, low=2), round=6)
+        self.assertEqual(out["authoring"]["critic"]["round"], 6)
+
+    def test_check_says_what_a_file_is_when_it_is_not_a_scene(self):
+        with tempfile.TemporaryDirectory() as d:
+            p = Path(d, "t.json")
+            p.write_text(json.dumps({"format": "construct-trace", "version": 1}), encoding="utf-8")
+            r = subprocess.run([sys.executable, "-m", "construct_hologram", "check", str(p)], cwd=HERE.parent,
+                               capture_output=True, text=True)
+            self.assertEqual(r.returncode, 1)
+            self.assertIn("is not a scene, it is a trace", r.stderr)
+
     def test_brackets_nested_thousands_deep_are_a_diagnosis(self):
         doc, diags = diagnose.parse_text("[" * 100000 + "]" * 100000)
         self.assertIsNone(doc)
