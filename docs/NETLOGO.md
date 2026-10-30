@@ -207,6 +207,11 @@ both recordings. For a lesson: the same model with a slider moved, or with anoth
 a Network with seed 7, a spread chance of 2.5% dies out by tick 10 and 6% runs to tick 972: side
 by side, one network stays on the floor and the other rises.
 
+**More than two.** Give it up to eight recordings, and they stand left to right (in rows of four beyond
+four), each labelled, on the longest run's time scale, under one lock: a slider stepped through its range
+(`construct netlogo-compare r25.jsonl r4.jsonl r6.jsonl r8.jsonl --labels "2.5%,4%,6%,8%"`), or a handful
+of seeds to see what varies and what holds. The replay shares its six counts between the runs.
+
 ## 3. Art direction (optional)
 
 The bridge's construct is exact but plain: no names on the axes, no milestones, one view. An

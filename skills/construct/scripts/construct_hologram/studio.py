@@ -497,12 +497,11 @@ def add_commands(sub):
     p.add_argument("--step", help="also write STEP here")
     p.add_argument("--freecad", help="the FreeCAD command line to run (default: $CONSTRUCT_FREECAD, `freecadcmd`, "
                                      "or the usual installs)")
-    p = sub.add_parser("netlogo-compare", help="two NetLogo runs side by side, drawn the same way on one time scale "
-                                               "(a slider moved, another seed)")
-    p.add_argument("run_a")
-    p.add_argument("run_b")
+    p = sub.add_parser("netlogo-compare", help="NetLogo runs side by side (2 to 8), drawn the same way on one time "
+                                               "scale (a slider moved step by step, other seeds)")
+    p.add_argument("runs", nargs="+", help="the recordings (.jsonl), left to right")
     p.add_argument("--view", default="auto", help="space-time, network-time, phase, field or auto (default)")
-    p.add_argument("--labels", default="A,B", help="the two runs' names, as 'vision 3,vision 6' (default A,B)")
+    p.add_argument("--labels", help="the runs' names, left to right, as 'vision 3,vision 6' (default A,B,C...)")
     p.add_argument("--state", help="network-time: the variable that turns")
     p.add_argument("--title")
     p.add_argument("--out", required=True)
@@ -826,15 +825,14 @@ def run(args):
             return 0 if report["ok"] else 1
         if args.command == "netlogo-compare":
             from . import netlogo as nl
-            labels = tuple(x.strip() for x in args.labels.split(",", 1)) if "," in args.labels else ("A", "B")
+            labels = [x.strip() for x in args.labels.split(",")] if args.labels else None
             try:
-                sc = nl.compare_runs(nl.read_run(args.run_a), nl.read_run(args.run_b), args.view, labels, args.title,
-                                     state=args.state)
+                sc = nl.compare([nl.read_run(r) for r in args.runs], args.view, labels, args.title, state=args.state)
             except nl.NetLogoError as exc:
                 sys.stderr.write("netlogo-compare: %s\n" % exc)
                 return 1
             _write(args.out, json.dumps(sc, separators=(",", ":"), ensure_ascii=False) + "\n", args.force)
-            sys.stdout.write("wrote %s: %s and %s side by side; build it as any scene\n" % (args.out, *labels))
+            sys.stdout.write("wrote %s: %d runs side by side; build it as any scene\n" % (args.out, len(args.runs)))
             return 0
         if args.command == "netlogo-plates":
             from . import netlogo as netlogo_mod, plates

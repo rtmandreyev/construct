@@ -342,6 +342,27 @@ class Views(unittest.TestCase):
         art["sources"].append({"id": "runway-photo", "kind": "photo", "title": "Art", "rights": "permitted"})
         self.assertIsNone(netlogo.lock_problem(art))                        # another source is not the runs' data
 
+    def test_more_runs_than_two_in_a_row_or_rows(self):
+        d = Path(self.tmp.name)
+        runs = [netlogo.read_run(recording(d / ("r%d.jsonl" % k), frames=6 + 2 * k)) for k in range(5)]
+        sc = netlogo.compare(runs, "space-time", ["2%", "4%", "6%", "8%", "10%"])
+        self.assertEqual(scene.validate(sc), [])
+        self.assertEqual(audit.audit(sc, scene.compile_scene(sc))["errors"], [])
+        worlds = {p["id"][0]: p["at"] for p in sc["parts"] if p["id"].endswith("-world")}
+        self.assertEqual(sorted(worlds), list("abcde"))
+        self.assertLess(worlds["a"][0], worlds["b"][0])                     # left to right
+        self.assertNotEqual(worlds["e"][2], worlds["a"][2])                 # the fifth starts a second row
+        self.assertEqual(sc["reading"]["clock"]["to"], 13)                  # the longest run's time scale
+        self.assertIsNone(netlogo.lock_problem(sc))
+        moved = json.loads(json.dumps(sc))
+        next(p for p in moved["parts"] if p["id"] == "e-tracks-walkers")["shape"]["paths"][0][0][0] += 1
+        self.assertIsNotNone(netlogo.lock_problem(moved))                    # the lock covers the fifth run too
+        self.assertIn("2%, 4%, 6%, 8% and 10%", sc["title"])
+        with self.assertRaisesRegex(netlogo.NetLogoError, "compare 2 to 8"):
+            netlogo.compare(runs[:1], "space-time")
+        with self.assertRaisesRegex(netlogo.NetLogoError, "3 labels for 5 runs"):
+            netlogo.compare(runs, "space-time", ["a", "b", "c"])
+
     def test_hidden_is_a_look_not_a_spread(self):
         run = netlogo.read_run(recording(Path(self.tmp.name, "hid.jsonl"), header={"turtle-vars": ["hidden?"]}))
         view, opts, _ = netlogo.choose_view(run)   # the ring's links and a variable that turns: but it is hidden?

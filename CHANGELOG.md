@@ -127,6 +127,8 @@ side, printed as worksheets and cited. Plan:
 - **Prints keep their line art:** `construct print --lines engrave` cuts the parts drawn only in lines into
   the surface, like a model kit's panel lines.
 - **FreeCAD documents open framed, every part showing.**
+- **More than two runs compared:** `construct netlogo-compare` takes 2 to 8 recordings, left to right (in rows of
+  four beyond four), on the longest run's time scale, under one data lock over every recording.
 - **Kits, Revell-style** ([PRINTING.md](docs/PRINTING.md#a-kit-revell-style)): `construct kit` makes a construct a
   model kit to print, glue and paint: pieces that fit where they meet (overlaps trimmed, clear parts yielding),
   small bits merged into a piece of their own part or paint (never across clear and opaque), panel lines

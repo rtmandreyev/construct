@@ -1333,8 +1333,9 @@ def data_lock(scene, source=None):
     note)."""
     src = source or _locked_source(scene)
     ids = [s.get("id") for s in scene.get("sources", [])]
-    # a lock covers its own source; two runs compared (run-a and run-b) are locked together
-    srcs = ({"run-a", "run-b"} & set(ids) if src in ("run-a", "run-b") else {src}) or {src}
+    # a lock covers its own source; runs compared (run-a, run-b, ...) are locked together
+    compared = {i for i in ids if isinstance(i, str) and re.fullmatch(r"run-[a-h]", i)}
+    srcs = (compared if src in compared else {src}) or {src}
     facts = sorted(({k: v for k, v in f.items() if k != "note"} for f in scene.get("facts", [])
                     if f.get("key") != LOCK and (f.get("source") in srcs or f.get("key") in LOCKED_FACTS)),
                    key=lambda f: f["key"])
@@ -1348,34 +1349,57 @@ def data_lock(scene, source=None):
     return "sha256:" + hashlib.sha256(text.encode("utf-8")).hexdigest()
 
 
+MAX_COMPARED = 8
+LETTERS = "abcdefgh"
+
+
 def compare_runs(run_a, run_b, view, labels=("A", "B"), title=None, **opts):
-    """Two runs side by side, drawn the same way on one time scale (the longer run's): A on the left, B on the
-    right, every part, fact, label and count marked with its run, one data lock over both recordings. For a
-    lesson: the same model with a slider moved, or another seed."""
+    """Two runs side by side (compare, for two)."""
+    return compare([run_a, run_b], view, labels, title, **opts)
+
+
+def _and_list(xs):
+    return xs[0] if len(xs) == 1 else "%s and %s" % (", ".join(xs[:-1]), xs[-1])
+
+
+def compare(runs, view, labels=None, title=None, **opts):
+    """Runs side by side (2 to MAX_COMPARED), drawn the same way on one time scale (the longest run's): left to
+    right in a row (in rows of four beyond four), every part, fact, label and count marked with its run, one
+    data lock over every recording. For a lesson: the same model with a slider moved step by step, or seeds."""
+    if not 2 <= len(runs) <= MAX_COMPARED:
+        raise NetLogoError("compare 2 to %d runs, not %d" % (MAX_COMPARED, len(runs)))
+    labels = list(labels or [c.upper() for c in LETTERS[:len(runs)]])
+    if len(labels) != len(runs):
+        raise NetLogoError("%d labels for %d runs" % (len(labels), len(runs)))
     if view == "auto":
-        view, auto, _ = choose_view(run_a)
+        view, auto, _ = choose_view(runs[0])
         opts = dict(auto, **{k: v for k, v in opts.items() if v not in (None, False)})
     end = lambda r: r["end"] if r["end"] is not None else r["frames"][-1]["t"]
-    span = max(end(run_a), end(run_b))
-    scenes = [scene_from_run(r, view, title, span=span, **dict(opts, landmarks="off")) for r in (run_a, run_b)]
-    gap = FLOOR * 1.35
+    span = max(end(r) for r in runs)
+    scenes = [scene_from_run(r, view, title, span=span, **dict(opts, landmarks="off")) for r in runs]
+    gap, per_row = FLOOR * 1.35, 4
+    cols = min(len(runs), per_row)
+    rows = (len(runs) + per_row - 1) // per_row
     parts, facts, sources, notes, series = [], [], [], [], []
     for k, (sc, tag) in enumerate(zip(scenes, labels)):
-        sid, px, dx = "run-" + "ab"[k], "ab"[k] + "-", (-gap / 2, gap / 2)[k]
+        letter = LETTERS[k]
+        sid, px = "run-" + letter, letter + "-"
+        dx = ((k % per_row) - (cols - 1) / 2) * gap
+        dz = ((k // per_row) - (rows - 1) / 2) * gap
         for p in sc["parts"]:
             q = json.loads(json.dumps(p))
             q["id"], q["label"] = px + p["id"], ("%s: %s" % (tag, p["label"]))[:80]
             if q.get("source") == "run":
                 q["source"] = sid
             at = q.get("at") or [0, 0, 0]
-            q["at"] = [round(at[0] + dx, 3), at[1], at[2]]
+            q["at"] = [round(at[0] + dx, 3), at[1], round(at[2] + dz, 3)]
             parts.append(q)
         for f in sc["facts"]:
             if f["key"] == LOCK or (k and f["key"] in LOCKED_FACTS):
                 continue
             g = dict(f)
             if f["key"] not in LOCKED_FACTS:
-                g["key"] = "%s_%s" % ("ab"[k], f["key"])
+                g["key"] = "%s_%s" % (letter, f["key"])
                 if f.get("source") == "run":
                     g["source"] = sid
             facts.append(g)
@@ -1385,25 +1409,30 @@ def compare_runs(run_a, run_b, view, labels=("A", "B"), title=None, **opts):
             elif k == 0:
                 sources.append(dict(s))
         roles = {p["id"]: p["role"] for p in sc["parts"]}
-        for a in sc.get("annotations", []):   # the full legend on the left; on the right, its main part's alone
+        for a in sc.get("annotations", []):   # the full legend on the first; on the others, its main part's alone
             if k == 0 or roles.get(a["part"]) == "identity":
                 notes.append(dict(a, id=px + a["id"], part=px + a["part"], text=("%s: %s" % (tag, a["text"]))[:80]))
-        for s in (sc["reading"].get("series") or [])[:3]:
+        for s in (sc["reading"].get("series") or [])[:max(1, 6 // len(runs))]:   # the replay holds six: shared
             series.append(dict(s, name=("%s: %s" % (tag, s["name"]))[:40]))
-    a, h = scenes[0], run_a["header"]
+    series = series[:6]
+    a, h = scenes[0], runs[0]["header"]
+    where = ("%s on the left, %s on the right" % tuple(labels) if len(runs) == 2 else
+             "%s, left to right%s" % (_and_list(labels), " in rows of %d" % per_row if rows > 1 else ""))
     out = dict(a, id=("netlogo-compare-%s" % a["id"].replace("netlogo-", ""))[:64], parts=parts, facts=facts,
                sources=sources, annotations=notes,
-               title=title or "%s: %s and %s" % (h["title"], labels[0], labels[1]),
-               subject=dict(a["subject"], summary="Two runs of NetLogo's %s side by side, drawn the same way on one "
-                                                  "time scale: %s on the left, %s on the right." % (h["title"], *labels)))
-    out["presentation"] = dict(a["presentation"], framing={"yaw": 0, "pitch": 26})
-    out["reading"] = {"how": (["Two runs side by side, drawn the same way: %s on the left, %s on the right, on one "
-                               "time scale (the longer run's)." % labels] + a["reading"]["how"])[:8],
+               title=title or "%s: %s" % (h["title"], _and_list(labels)),
+               subject=dict(a["subject"], summary="%s runs of NetLogo's %s side by side, drawn the same way on one "
+                                                  "time scale: %s." % (len(runs) == 2 and "Two" or len(runs),
+                                                                       h["title"], where)))
+    out["presentation"] = dict(a["presentation"], framing={"yaw": 0, "pitch": 26 if rows == 1 else 38})
+    out["reading"] = {"how": (["%s runs side by side, drawn the same way: %s, on one time scale (the longest "
+                               "run's)." % (len(runs) == 2 and "Two" or len(runs), where)] + a["reading"]["how"])[:8],
                       "clock": dict(a["reading"]["clock"])}
     if series:
         out["reading"]["series"] = series
+    ids = ", ".join("run-" + LETTERS[k] for k in range(len(runs)))
     out["facts"].append({"key": LOCK, "value": data_lock(out, "run-a"), "certainty": "verified", "source": "run-a",
-                         "note": "Both runs' data as the bridge drew them, under one lock (sources run-a and run-b)."})
+                         "note": "Every run's data as the bridge drew them, under one lock (sources %s)." % ids})
     return out
 
 
