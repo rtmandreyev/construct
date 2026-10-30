@@ -248,6 +248,49 @@ void main() {
   o = vec4(mix(uBase, vTint.rgb, 0.55) * a, a);
 }`;
 
+  // the solid view (S): the construct's surfaces as a modelling program shows them, lit by a studio light that
+  // moves with the eye; colour: the part's own (look.color), its provenance (P) or clay
+  const SOLID_VS = COMMON + `
+layout(location=0) in vec3 aPosN;
+layout(location=1) in vec3 aNrm;
+layout(location=2) in float aStyle;
+layout(location=3) in float aPhase;
+uniform vec3 uLo; uniform vec3 uSpan;
+out vec3 vWorld; out vec3 vNrm; out vec3 vBase; out float vPhase;
+void main() {
+  vec4 sb = styleB(aStyle), sc = styleC(aStyle), sd = styleD(aStyle);
+  float gain = 1.0, g2 = 1.0;
+  vec3 p0 = uLo + aPosN * uSpan;
+  vec3 p = moved(p0, sb.w, sd.x, gain);
+  vec3 q = moved(p0 + aNrm * 0.01 * uBounds.w, sb.w, sd.x, g2);   // the normal turns with its part
+  vWorld = p; vNrm = q - p; vPhase = aPhase;
+  vBase = uMode > 0.5 ? uCertColor[int(sc.y + 0.5)] : (sd.y >= 0.0 ? sd.yzw : vec3(0.72, 0.71, 0.73));
+  gl_Position = uVP * vec4(p, 1.0);
+}`;
+  const SOLID_FS = `#version 300 es
+precision highp float;
+in vec3 vWorld; in vec3 vNrm; in vec3 vBase; in float vPhase;
+uniform vec3 uEye; uniform float uBuild; uniform float uClear;
+out vec4 o;
+void main() {
+  if (vPhase > uBuild + 0.0005) discard;
+  float reveal = smoothstep(vPhase, vPhase + 0.04, uBuild);
+  vec3 v = normalize(uEye - vWorld);
+  vec3 n = normalize(vNrm);
+  if (dot(n, v) < 0.0) n = -n;                      // open surfaces are seen from both sides
+  vec3 up = vec3(0.0, 1.0, 0.0);
+  vec3 side = normalize(cross(up, v) + vec3(1e-4, 0.0, 0.0));
+  vec3 key = normalize(v * 0.55 + up * 0.75 - side * 0.45), fill = normalize(v * 0.6 - up * 0.1 + side * 0.8);
+  float d = 0.62 * max(dot(n, key), 0.0) + 0.22 * max(dot(n, fill), 0.0);
+  float sky = 0.5 + 0.5 * n.y;                      // a soft sky above, a darker floor below
+  vec3 amb = mix(vec3(0.16, 0.15, 0.17), vec3(0.34, 0.34, 0.37), sky);
+  float spec = pow(max(dot(n, normalize(key + v)), 0.0), 48.0) * 0.28;
+  float rim = pow(1.0 - max(dot(n, v), 0.0), 3.0) * 0.18;
+  vec3 c = vBase * (amb + d) + vec3(spec + rim);
+  if (uClear > 0.5) { float a = (0.22 + 0.5 * pow(1.0 - max(dot(n, v), 0.0), 2.0)) * reveal; o = vec4(mix(c, vec3(0.75, 0.85, 0.9), 0.5) * a, a); return; }
+  o = vec4(c * reveal, reveal);
+}`;
+
   const POINT_VS = COMMON + `
 layout(location=0) in vec2 corner;
 layout(location=1) in vec3 aPos;
@@ -449,6 +492,7 @@ void main() {
     this.programs = {
       line: program(gl, LINE_VS, LINE_FS), fill: program(gl, FILL_VS, FILL_FS), point: program(gl, POINT_VS, POINT_FS),
       haze: program(gl, QUAD_VS, HAZE_FS), dress: program(gl, QUAD_VS, DRESS_FS), art: program(gl, ART_VS, ART_FS),
+      solid: program(gl, SOLID_VS, SOLID_FS),
     };
     this.R = Math.max(geo.bounds.radius, 1e-3);
     this.C = geo.bounds.center;
@@ -549,6 +593,28 @@ void main() {
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(g.fills), gl.STATIC_DRAW);
     [[0, 3, 0], [1, 1, 12], [2, 1, 16]].forEach(([loc, n, off]) => { gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, n, gl.FLOAT, false, 20, off); });
     this.fillCount = g.fills.length / 5;
+
+    // the solid view's surfaces, when the page carries them (construct build): positions over the solids' box,
+    // normals, the part's style and its build phase, indexed; glass after the rest
+    const sd = window.HOLOGRAM_SOLID;
+    this.solid = null;
+    if (sd && sd.vertices) {
+      const bytes = (b64) => { const t = atob(b64), u = new Uint8Array(t.length); for (let i = 0; i < t.length; i++) u[i] = t.charCodeAt(i); return u; };
+      const vao = gl.createVertexArray();
+      gl.bindVertexArray(vao);
+      [["pos", 0, 3, gl.UNSIGNED_SHORT, true], ["nrm", 1, 3, gl.BYTE, true], ["sty", 2, 1, gl.UNSIGNED_SHORT, false],
+       ["pha", 3, 1, gl.UNSIGNED_SHORT, true]].forEach(([k, loc, n, type, norm]) => {
+        const b = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, b);
+        gl.bufferData(gl.ARRAY_BUFFER, bytes(sd[k]), gl.STATIC_DRAW);
+        gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, n, type, norm, k === "nrm" ? 4 : 0, 0);
+      });
+      const ib = gl.createBuffer();
+      gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, ib);
+      gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, bytes(sd.idx), gl.STATIC_DRAW);
+      this.solid = { vao, opaque: sd.opaque, clear: sd.clear, type: sd.wide ? gl.UNSIGNED_INT : gl.UNSIGNED_SHORT,
+                     size: sd.wide ? 4 : 2, lo: sd.lo, span: [0, 1, 2].map((a) => Math.max(sd.hi[a] - sd.lo[a], 1e-9)) };
+    }
 
     this.pointVao = gl.createVertexArray();
     gl.bindVertexArray(this.pointVao);
@@ -938,8 +1004,20 @@ void main() {
     gl.enable(gl.DEPTH_TEST);
     const xray = pr.occlusion === "xray";
 
+    const solidView = !!(this.opt.solid && this.solid);
+    if (solidView) {
+      const u = common(this.programs.solid), so = this.solid;
+      gl.uniform3fv(u.uLo, so.lo); gl.uniform3fv(u.uSpan, so.span);
+      gl.bindVertexArray(so.vao);
+      gl.depthFunc(gl.LEQUAL); gl.depthMask(true);
+      gl.uniform1f(u.uClear, 0);
+      if (so.opaque) gl.drawElements(gl.TRIANGLES, so.opaque, so.type, 0);
+      if (so.clear) { gl.depthMask(false); gl.uniform1f(u.uClear, 1); gl.drawElements(gl.TRIANGLES, so.clear, so.type, so.opaque * so.size); }
+      gl.depthMask(false);
+    }
+
     // fills: glass (and dark occluders) write depth, pushed back so edges on them stay in front
-    if (this.fillCount) {
+    if (this.fillCount && !solidView) {
       common(this.programs.fill);
       gl.depthMask(xray);
       gl.depthFunc(gl.LEQUAL);
@@ -978,7 +1056,7 @@ void main() {
     const lu = common(this.programs.line);
     gl.bindVertexArray(this.lineVao);
     const total = this.allLines.length / 9;
-    const passes = xray ? [[gl.LEQUAL, 1.0], [gl.GREATER, 0.24]] : [[gl.ALWAYS, 1.0]];
+    const passes = solidView ? [] : xray ? [[gl.LEQUAL, 1.0], [gl.GREATER, 0.24]] : [[gl.ALWAYS, 1.0]];
     for (const [fn, hidden] of passes) {
       gl.depthFunc(fn);
       gl.uniform1f(lu.uHidden, hidden);
@@ -989,7 +1067,7 @@ void main() {
     }
 
     // sprites
-    if (this.pointCount && pr.atmosphere.motes > 0) {
+    if (this.pointCount && pr.atmosphere.motes > 0 && !solidView) {
       common(this.programs.point);
       gl.depthFunc(xray ? gl.LEQUAL : gl.ALWAYS);
       gl.bindVertexArray(this.pointVao);
@@ -1004,7 +1082,7 @@ void main() {
       gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
       gl.uniform2f(dr.u.uSize, w, h);
       gl.uniform1f(dr.u.uDpr, dpr);
-      gl.uniform1f(dr.u.uScanlines, pr.atmosphere.scanlines ? 1 : 0);
+      gl.uniform1f(dr.u.uScanlines, pr.atmosphere.scanlines && !solidView ? 1 : 0);
       gl.uniform1f(dr.u.uVignette, pr.atmosphere.vignette ? 1 : 0);
       gl.uniform1f(dr.u.uVeil, 0);
       gl.bindVertexArray(this.quadVao);
@@ -1028,6 +1106,7 @@ void main() {
       view: q.get("view") || "hero",
       reduced: q.get("motion") === "reduced" || (prefersReduced && q.get("motion") !== "full"),
       mode: q.get("mode") === "provenance" ? "provenance" : "light",
+      solid: q.get("mode") === "solid" || q.get("solid") === "1",
       ui: q.get("ui") !== "0", labels: q.get("labels") === "1", caption: q.get("caption") !== "0",
       sheet: q.get("sheet"), fps: q.has("fps") ? parseInt(q.get("fps"), 10) : 30, capture: q.get("capture") === "1",
       open: q.has("open") ? Math.max(0, Math.min(1, parseFloat(q.get("open")) || 0)) : null,
@@ -1134,7 +1213,8 @@ void main() {
       if (ids.length > 3) legend.appendChild(el("div", "src more", "+" + (ids.length - 3) + " MORE"));
     });
     overlay.appendChild(legend);
-    const help = el("div", "help", "drag orbit · wheel zoom · 1–6 views · R replay · M motion · P provenance · L labels · space pause");
+    const help = el("div", "help", "drag orbit · wheel zoom · 1–6 views · R replay · M motion · P provenance" +
+      (holo.solid ? " · S solid" : "") + " · L labels · space pause");
     overlay.appendChild(help);
     const labels = el("div", "labels"); overlay.appendChild(labels);
     const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg"); svg.setAttribute("class", "leaders"); overlay.appendChild(svg);
@@ -1143,6 +1223,7 @@ void main() {
       document.body.classList.toggle("noui", !opt.ui);
       legend.style.display = opt.mode === "provenance" ? "block" : "none";
       document.body.classList.toggle("provenance", opt.mode === "provenance");
+      document.body.classList.toggle("solid", !!(opt.solid && holo.solid));
       help.style.display = opt.ui && !opt.capture ? "block" : "none";
     };
     setUi();
@@ -1258,6 +1339,7 @@ void main() {
       else if (e.key === "r" || e.key === "R") { clock0 = performance.now(); frozen = null; paused = false; holo.userCamera = null; }
       else if (e.key === "m" || e.key === "M") { opt.reduced = !opt.reduced; holo.opt.reduced = opt.reduced; holo.schedule = holo.buildSchedule(); }
       else if (e.key === "p" || e.key === "P") { opt.mode = opt.mode === "provenance" ? "light" : "provenance"; holo.opt.mode = opt.mode; setUi(); }
+      else if ((e.key === "s" || e.key === "S") && holo.solid) { opt.solid = !opt.solid; holo.opt.solid = opt.solid; setUi(); }
       else if (e.key === "l" || e.key === "L") { opt.labels = !opt.labels; }
       else if (e.key === " ") { if (paused) { clock0 += performance.now() - pausedStamp; paused = false; } else { pausedAt = now(); pausedStamp = performance.now(); paused = true; } e.preventDefault(); }
       else return;
@@ -1287,6 +1369,7 @@ void main() {
         if (o.reduced !== undefined) { opt.reduced = o.reduced; holo.opt.reduced = o.reduced; holo.schedule = holo.buildSchedule(); }
         if (o.sheet !== undefined) opt.sheet = o.sheet;
         if (o.open !== undefined) { opt.open = o.open; holo.opt.open = o.open; }
+        if (o.solid !== undefined) { opt.solid = !!o.solid; holo.opt.solid = opt.solid; setUi(); }
         frame(); return true; },
       camera() { const c = holo.lastCamera; return c ? { target: c.target, yaw: c.yaw, pitch: c.pitch, dist: c.dist } : null; },
       fitted(view) { const c = holo.cameraFor(view || "hero"); return { target: c.target, yaw: c.yaw, pitch: c.pitch, dist: c.dist }; },

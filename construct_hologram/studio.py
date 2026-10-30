@@ -131,7 +131,7 @@ def build(scene_path, out_dir, asset_root=None, v1=False, force=True, frame="y-u
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)
     root = asset_root or str(Path(scene_path).resolve().parent)
-    html, notes = render.build_html(geometry, root, film=film)
+    html, notes = render.build_html(geometry, root, film=film, solid=render.solid_payload(scene, geometry))
     _write(out / "geometry.json", json.dumps(geometry, separators=(",", ":")) + "\n", force)
     _write(out / "construct.html", html, force)
     _write(out / "audit.json", json.dumps(report, indent=2) + "\n", force)

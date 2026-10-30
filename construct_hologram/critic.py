@@ -264,7 +264,7 @@ def run(pk, out_dir, base_url, model, key=None, log=None):
         content.append(runner.image_part(p["reference"]))
         content.append({"type": "text", "text": "Render, %s view:" % p["view"]})
         content.append(runner.image_part(str(out / p["render"])))
-    for r in ("renders/hero.png", "renders/sheet-views.png", "renders/sheet-assembly.png"):
+    for r in ("renders/hero.png", "renders/sheet-views.png", "renders/sheet-assembly.png", "renders/solid.png"):
         if (out / r).exists():
             content.append({"type": "text", "text": r + ":"})
             content.append(runner.image_part(str(out / r)))

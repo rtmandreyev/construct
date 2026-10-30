@@ -31,7 +31,7 @@ Score each criterion 0–3 from the captures, against the references:
 | composition | strong hero framing with margin; nothing cut off; the best side | `hero.png`, each view |
 | assembly | the build order tells the object's story: foundations first, the reveal last | `sheet-assembly.png` |
 | motion | articulations and idle life bring it alive without noise, about real pivots | `sheet-motion.png`, `sheet-life.png` |
-| density | one clear object at hero scale; up close every region has something true (a bare face or empty corner is unfinished); never clutter: no hairlines, nothing hovering or poking through | every sheet |
+| density | one clear object at hero scale; up close every region has something true (a bare face or empty corner is unfinished); never clutter: no hairlines, nothing hovering or poking through | every sheet, `solid.png` |
 | honesty | labels only from facts; inferred and decorative parts look it; the caption says GENERIC or APPROXIMATE when it is | `sheet-provenance.png`, `hero.png` |
 
 It is **good** when every criterion scores 2 or more and you would show it as it is.
@@ -86,6 +86,7 @@ again.
 | `sheet-life.png` | idle events at their peak: visible but not chaotic, suited to the subject |
 | `sheet-provenance.png` | certainty colours (verified ice-white, size verified cyan, shape verified violet, traced blue, user-supplied green, inferred amber, decorative magenta): is the honest story visible, and is anything amber that a cited dimension or drawing could vouch for? Pale amber (designed) on a part you read from a reference means it does not cite it. |
 | `still-reduced-motion.png` | the still state alone |
+| `solid.png` | the surfaces as a solid, as a print or a modelling program shows them (S in the page): panels that meet, glass inside its frames, nothing crumpled, faceted or poking through. The light forgives these; a print does not. |
 | `sheet-motion.png` | opening and part motion across seconds |
 | `view-<id>.png` | each of your scene's own views, still: is the target framed with context? |
 

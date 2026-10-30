@@ -184,8 +184,12 @@ construct print scene.json --out car.3mf --printer resin --fit --exact
 ```
 
 An exact print writes the construct's closed solids as they are, each wound outward, as the parts of
-one object; the slicer fills their union, at the printer's own resolution. Only the open surfaces and
-the parts too thin to fill (a sign, a mirror glass) go through the voxels and are thickened. It is 3MF
+one object; the slicer fills their union, at the printer's own resolution. Open surfaces (a window, a
+body panel, a curved nose) become true shells the wall thick, half to each side and closed along their
+open edges, and parts too thin to fill (a sign, a mirror glass, a spring) grow just enough to reach the
+wall, both in their own shape. Each corner moves along the least-squares offset of the faces around it, so
+a box's corner stays square. Only a surface that branches (an edge shared by three faces) or folds back on
+itself still goes through the voxels; the notes name those. It is 3MF
 only: PrusaSlicer, and slicers that read its part table, list every solid by its part's name. The
 pieces are judged by their boxes (parts whose boxes meet within the join print as one), and the slicer
 decides the supports. What it keeps is the construct's own faceting (a cylinder of 24 sides prints with

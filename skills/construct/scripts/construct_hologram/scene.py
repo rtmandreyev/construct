@@ -33,6 +33,7 @@ MAX_REPEAT = 64
 MAX_LINES = 24000
 MAX_TRIS = 24000
 MAX_SOLID_TRIS = 200000  # a solid compile, for the 3D export only
+MAX_SOLID_LINES = 120000  # its finer lofts and tubes carry their lines along the smoothed surface
 MAX_POINTS = 6000
 MAX_MOTIONS = 32
 MAX_FACTS = 160
@@ -1437,7 +1438,9 @@ def _instances(part):
     return out
 
 
-def _local_mesh(shape, seed):
+def _local_mesh(shape, seed, fine=False):
+    """A shape's mesh in its own frame. `fine` (a solid compile) smooths lofts between their
+    sections and doubles the sides of round tubes; the hologram's lines are the same either way."""
     t = shape["type"]
     if t == "box":
         m = shapes.box(shape["size"], shape.get("ribs", 0))
@@ -1466,7 +1469,8 @@ def _local_mesh(shape, seed):
         return shapes.extrude([tuple(p) for p in shape["profile"]], shape["height"], shape.get("axis", "y"),
                               shape.get("ribs", 0))
     if t == "tube":
-        return shapes.tube([tuple(p) for p in shape["path"]], shape["radius"], shape.get("sides", 8),
+        sides = shape.get("sides", 8)
+        return shapes.tube([tuple(p) for p in shape["path"]], shape["radius"], sides * 2 if fine and sides >= 8 else sides,
                            shape.get("smooth", True), shape.get("samples", 8), shape.get("ring_every", 2),
                            shape.get("longitudinal", 4), shape.get("caps", False))
     if t == "curve":
@@ -1500,7 +1504,7 @@ def _local_mesh(shape, seed):
                                  shape.get("ribs", 12), shape.get("rows", 8))
         return archkit.buttress(shape["width"], shape["depth"], shape["height"], shape.get("steps", 2))
     if t == "loft":
-        return shapes.loft([list(x) for x in shape["sections"]], shape.get("round", 0.35))
+        return shapes.loft([list(x) for x in shape["sections"]], shape.get("round", 0.35), fine)
     if t == "globe":
         return shapes.globe(shape["radius"], shape["paths"], shape.get("graticule", 30), shape.get("faces", True))
     if t == "terrain":
@@ -1691,7 +1695,7 @@ def compile_scene(scene, solid=False):
     # per stage height range for the build phase (filled in a first pass)
     built = []
     for pi, part in enumerate(scene["parts"]):
-        mesh = _local_mesh(part["shape"], _hash_part(seed, part["id"]))
+        mesh = _local_mesh(part["shape"], _hash_part(seed, part["id"]), solid)
         tone, alpha, width, glow, fill, fade = ROLE_STYLE[part["role"]]
         look = part.get("look", {})
         tone = look.get("tone", tone)
@@ -1856,9 +1860,10 @@ def compile_scene(scene, solid=False):
 
     n_lines, n_tris, n_points = len(lines) // 9, len(fills) // 15, len(points) // 7
     max_tris = MAX_SOLID_TRIS if solid else MAX_TRIS
-    if n_lines > MAX_LINES or n_tris > max_tris or n_points > MAX_POINTS:
+    max_lines = MAX_SOLID_LINES if solid else MAX_LINES
+    if n_lines > max_lines or n_tris > max_tris or n_points > MAX_POINTS:
         raise SceneError("geometry budget exceeded: %d lines (max %d), %d triangles (max %d), %d points (max %d)"
-                         % (n_lines, MAX_LINES, n_tris, max_tris, n_points, MAX_POINTS))
+                         % (n_lines, max_lines, n_tris, max_tris, n_points, MAX_POINTS))
 
     lo, hi = [math.inf] * 3, [-math.inf] * 3
     for pinfo in part_out:

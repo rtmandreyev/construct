@@ -127,7 +127,8 @@ flowchart LR
 ```
 
 - **You can see how each part is known.** Press **P** in any construct and every part is coloured
-  by whether it is verified, supplied by you, inferred or decorative.
+  by whether it is verified, supplied by you, inferred or decorative. Press **S** to see it as a solid,
+  the way a modelling program or a print shows it.
 - **The check runs to zero.** Floating parts, claims without evidence and details too fine to see
   are reported, with fixes, before anything is built.
 - **The critic is independent.** It is a fresh model that compares each new version with the best

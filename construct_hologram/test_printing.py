@@ -201,7 +201,12 @@ class Printers(unittest.TestCase):
         r = p["report"]
         self.assertTrue(r["exact"] and r["watertight"])
         self.assertEqual(r["exact_parts"], ["base", "dome"])
-        self.assertIn("sign", r["thickened"])                        # an open surface still goes through the voxels
+        self.assertIn("sign", r["thickened"])
+        self.assertEqual((r["shelled"], r["thickened_in_voxels"]), (["sign"], []))   # a true shell, not voxels
+        sign = next(o for o in p["objects"] if o["name"] == "sign")
+        self.assertEqual(len(sign["triangles"]), 12)                # the plane as a thin slab: two faces, four edges
+        span = [max(v[a] for v in sign["vertices"]) - min(v[a] for v in sign["vertices"]) for a in range(3)]
+        self.assertAlmostEqual(min(span), 0.8, places=3)            # the wall, measured through the slab
         self.assertEqual((r["pieces"], r["pieces_in_air"]), (1, 0))
         base = next(o for o in p["objects"] if o["name"] == "base")
         self.assertEqual(len(base["triangles"]), 12)                # the box as it is: twelve triangles, not voxels
@@ -211,6 +216,19 @@ class Printers(unittest.TestCase):
             self.assertIn(b'value="dome"', z.read("Metadata/Slic3r_PE_model.config"))
         with self.assertRaises(printing.PrintError):
             printing.write(sc, Path(tempfile.gettempdir(), "x.stl"), exact=True)
+
+    def test_a_too_thin_solid_grows_to_the_wall_in_its_own_shape(self):
+        sc = scene_of(box("base", [0.06, 0.02, 0.06], [0, 0.01, 0]),
+                      box("pane", [0.04, 0.03, 0.0005], [0, 0.035, 0.0]))      # 0.5 mm of glass: 0.5 mm printed at 1:1
+        p = printing.make(sc, scale=1, detail=0.4, exact=True)
+        r = p["report"]
+        self.assertEqual((r["shelled"], r["thickened_in_voxels"]), (["pane"], []))
+        pane = next(o for o in p["objects"] if o["name"] == "pane")
+        self.assertEqual(len(pane["triangles"]), 12)                           # still a box
+        span = sorted(max(v[a] for v in pane["vertices"]) - min(v[a] for v in pane["vertices"]) for a in range(3))
+        self.assertTrue(0.8 <= span[0] < 0.85, span)                           # at least the wall, barely more
+        self.assertAlmostEqual(span[1] - 30.0, span[0] - 0.5, places=6)        # grown by as much on every side
+        self.assertTrue(r["watertight"])
 
     @unittest.skipUnless(os.environ.get("CONSTRUCT_PRUSASLICER"), "set CONSTRUCT_PRUSASLICER to the PrusaSlicer binary")
     def test_prusaslicer_reads_an_exact_print_as_one_object_of_parts(self):

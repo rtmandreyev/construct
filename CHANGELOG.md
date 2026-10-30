@@ -184,6 +184,16 @@ side, printed as worksheets and cited. Plan:
   came apart; the kit booklet's pictures keep their dark background when opened on their own (they
   carried a literal `100%%`); `check` says when a file is a trace, not a scene; a critique records the
   run's round.
+- **S for solid:** every built page carries the construct's surfaces (packed: quantised positions, normals,
+  each part's style and build phase); **S** or `?mode=solid` shows them lit like a modelling program, opening
+  and building with the lines, coloured by provenance with **P**. Review writes `solid.png` and the critic
+  sees it.
+- **Smoother solids:** a solid compile (export, prints, kits, the solid view) passes lofts smoothly
+  between their sections (monotone cubics: nothing swells past its neighbours) with rounder corners, and
+  gives round tubes twice the sides; the hologram's lines are unchanged.
+- **Exact prints without voxels:** `print --exact` gives open surfaces a true shell the wall thick and
+  grows too-thin solids to the wall, in their own shape; only a surface that branches or folds still goes
+  through the voxels. The R34 at 1:16 prints with no voxel parts (97 thousand triangles, not a million).
 - **Plainer answers to files that cannot be read:** a missing or unreadable scene names the file and why
   (`print: cannot read scene.json: No such file or directory`, not `cannot read sheet: FileNotFoundError`),
   a scene nested thousands of brackets deep says so in every command, and `check` counts "1 problem".

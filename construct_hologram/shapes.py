@@ -317,17 +317,54 @@ def loft_ring(w, y0, y1, wt=None, rnd=0.35, arc=3):
     return pts[:1 + arc * 2] + [pts[-1]] + pts[1 + arc * 2:-1]
 
 
-def loft(sections, rnd=0.35):
+def _monotone_slopes(xs, ys):
+    """Fritsch-Carlson slopes: a cubic through the points that never overshoots them."""
+    d = [(ys[i + 1] - ys[i]) / (xs[i + 1] - xs[i]) for i in range(len(xs) - 1)]
+    m = [d[0]] + [0.0] * (len(xs) - 2) + [d[-1]]
+    for i in range(1, len(xs) - 1):
+        if d[i - 1] * d[i] > 0:
+            h0, h1 = xs[i] - xs[i - 1], xs[i + 1] - xs[i]
+            w1, w2 = 2 * h1 + h0, h1 + 2 * h0
+            m[i] = (w1 + w2) / (w1 / d[i - 1] + w2 / d[i])
+    return m
+
+
+def smooth_sections(sections, sub):
+    """Loft sections with `sub` steps per span, each value a monotone cubic along z: the sections
+    themselves are kept exactly, and nothing between them swells past its neighbours."""
+    full = [list(s[:4]) + [s[4] if len(s) > 4 else s[1]] for s in sections]
+    zs = [s[0] for s in full]
+    curves = [(vals, _monotone_slopes(zs, vals)) for vals in ([s[k] for s in full] for k in range(1, 5))]
+    out = []
+    for i in range(len(full) - 1):
+        h = zs[i + 1] - zs[i]
+        for j in range(sub if i < len(full) - 2 else sub + 1):
+            t = j / sub
+            h00, h10, h01, h11 = 2 * t ** 3 - 3 * t * t + 1, t ** 3 - 2 * t * t + t, -2 * t ** 3 + 3 * t * t, t ** 3 - t * t
+            vals = [h00 * v[i] + h10 * h * s[i] + h01 * v[i + 1] + h11 * h * s[i + 1] for v, s in curves]
+            out.append([zs[i] + t * h] + vals)
+    return out
+
+
+def loft(sections, rnd=0.35, fine=False):
     """A body lofted along +Z through sections [z, half_width, y_bottom, y_top(, half_width_top)]:
     each section a rounded trapezoid, so the plan (half-widths along the length) and the side
-    profile (bottoms and tops) shape it together. Hulls, car bodies, fuselages, glasshouses."""
+    profile (bottoms and tops) shape it together. Hulls, car bodies, fuselages, glasshouses.
+    `fine` (the solid export) passes smoothly between the sections, with rounder corners; its
+    lines are still drawn at the given sections only."""
     m = Mesh()
-    rings = [[(x, y, sec[0]) for x, y in loft_ring(sec[1], sec[2], sec[3], sec[4] if len(sec) > 4 else None, rnd)]
-             for sec in sections]
+    sub = 4 if fine and len(sections) > 2 else 1
+    secs = smooth_sections(sections, sub) if sub > 1 else sections
+    rings = [[(x, y, sec[0]) for x, y in loft_ring(sec[1], sec[2], sec[3], sec[4] if len(sec) > 4 else None, rnd,
+                                                    6 if fine else 3)]
+             for sec in secs]
     n = len(rings[0])
     for i, ring in enumerate(rings):
-        m.loop(ring, OUTLINE if i in (0, len(rings) - 1) else CONTOUR)
-    key = {0, 2, 5, n // 2, n - 5, n - 2}  # the keel, the four corners and the crown carry the silhouette
+        if i % sub == 0:
+            m.loop(ring, OUTLINE if i in (0, len(rings) - 1) else CONTOUR)
+    arc = (n - 2) // 4   # points per rounded corner
+    # the keel, the middle of each of the four corners and the crown carry the silhouette
+    key = {0, 1 + arc // 2, 1 + arc + arc // 2, n // 2, n // 2 + 1 + arc // 2, n // 2 + 1 + arc + arc // 2}
     for k in range(n):
         m.loop([ring[k] for ring in rings], OUTLINE if k in key else DETAIL, closed=False)
     for ra, rb in zip(rings, rings[1:]):

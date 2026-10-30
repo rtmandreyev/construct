@@ -91,6 +91,11 @@ its caption. Saturn is a good
 one to try: its rings come from published measurements and show as verified, while its cloud bands
 are the model's own design.
 
+Press **S** for the solid view: the same construct as surfaces, clay grey (or a part's own colour, or
+its provenance colour with **P**), lit by a studio light that follows the eye, glass see-through. It is
+what a print or a modelling program shows, so it shows what the light forgives: panels that do not
+meet, glass outside its frame, a crumpled corner.
+
 ## Detail where it counts
 
 ![The dial of a Patek Philippe 5320G close up, with notes on the detail that names the watch and the faint lines of the movement behind the dial](media/style-closeup.jpg)

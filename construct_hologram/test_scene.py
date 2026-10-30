@@ -316,6 +316,40 @@ class Audit(unittest.TestCase):
 
 
 class Build(unittest.TestCase):
+    def test_a_built_page_carries_its_solids_packed_and_consistent(self):
+        import base64, re, struct
+        with tempfile.TemporaryDirectory() as d:
+            g, _, _ = studio.build(str(EXAMPLES / "cd.json"), d)
+            html = Path(d, "construct.html").read_text(encoding="utf-8")
+            m = re.search(r'<script id="hologram-solid" type="application/json">(.*?)</script>', html, re.S)
+            sd = json.loads(m.group(1))
+            n, count = sd["vertices"], sd["opaque"] + sd["clear"]
+            self.assertGreater(n, 0)
+            self.assertEqual(count % 3, 0)
+            idx = struct.unpack("<%d%s" % (count, "I" if sd["wide"] else "H"), base64.b64decode(sd["idx"]))
+            self.assertLess(max(idx), n)
+            sty = struct.unpack("<%dH" % n, base64.b64decode(sd["sty"]))
+            self.assertLess(max(sty), len(g["styles"]))                       # each vertex wears a style of the page
+            self.assertEqual(len(base64.b64decode(sd["pos"])), 6 * n)
+            self.assertIn("S solid", html)
+        bare = render.build_html(scene.compile_scene(base()))[0]                # no solids given: none, and no S
+        self.assertIn('<script id="hologram-solid" type="application/json">null</script>', bare)
+
+    def test_a_smooth_loft_keeps_its_sections_and_never_swells(self):
+        secs = [[0, 0.5, 0.0, 0.4], [1, 0.9, 0.1, 1.0], [2, 0.9, 0.1, 1.0], [3, 0.3, 0.3, 0.6, 0.2]]
+        fine = shapes_mod.smooth_sections(secs, 4)
+        self.assertEqual(len(fine), 13)
+        for k, s in enumerate(secs):                                          # the given sections, exactly
+            self.assertEqual([round(v, 9) for v in fine[4 * k][:4]], [float(v) for v in s[:4]])
+        for i in range(len(secs) - 1):
+            for f in fine[4 * i:4 * i + 5]:
+                for a in range(1, 4):                                         # between its neighbours, never past
+                    lo, hi = sorted((secs[i][a], secs[i + 1][a]))
+                    self.assertTrue(lo - 1e-9 <= f[a] <= hi + 1e-9, (i, a, f))
+        plain = shapes_mod.loft(secs, 0.4)
+        self.assertEqual(len(plain.lines), len(shapes_mod.loft(secs, 0.4, False).lines))
+        self.assertGreater(len(shapes_mod.loft(secs, 0.4, True).tris), len(plain.tris))
+
     def test_html_embeds_only_matching_permitted_artwork(self):
         with tempfile.TemporaryDirectory() as d:
             data = png.book_cover(32, 48)
@@ -339,7 +373,7 @@ class Build(unittest.TestCase):
     def test_html_cannot_be_closed_by_scene_text(self):
         s = base(title="</script><script>alert(1)</script>")
         html, _ = render.build_html(scene.compile_scene(s))
-        self.assertEqual(html.count("<script"), 4)  # geometry, assets, viewer, the rounds' timeline
+        self.assertEqual(html.count("<script"), 5)  # geometry, solids, assets, viewer, the rounds' timeline
 
     def test_cli_new_check_build_from_any_directory(self):
         cli = str(HERE / "cli.py")
@@ -2273,6 +2307,7 @@ class Capture(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d:
             studio.build(str(EXAMPLES / "cd.json"), d)
             paths = render.review(str(Path(d, "construct.html")), str(Path(d, "review")), 640, 400, sheets=("views",))
+            self.assertIn("solid.png", {Path(p).name for p in paths})            # the solid view, for the critic
             for p in paths:
                 data = Path(p).read_bytes()
                 self.assertTrue(data.startswith(b"\x89PNG"), p)

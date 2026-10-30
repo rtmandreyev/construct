@@ -75,9 +75,63 @@ def embed_assets(geometry, asset_root):
     return out, notes
 
 
-def build_html(geometry, asset_root=None, film=False):
+def solid_payload(scene, geometry):
+    """The construct's surfaces for the page's solid view (S): what a modelling program shows, from the same
+    solid compile as the 3D export, packed small. Each vertex carries its part's style in `geometry` (so the
+    opening, the stages and provenance colours move it as they move the lines), its build phase and a smooth
+    normal; glass comes last, drawn see-through. None when the scene has no surfaces."""
+    from . import export as export_mod, scene as scene_mod
+    solid = scene_mod.compile_scene(scene, solid=True)
+    styles, parts = geometry["styles"], geometry["parts"]
+    style_of = {}
+    for i, st in enumerate(styles):   # a part's first style in the page: the one its lines are drawn with
+        style_of.setdefault(int(st[6]), i)
+    by_part = {}
+    f = solid["fills"]
+    for i in range(0, len(f), 15):
+        pi = int(solid["styles"][int(f[i + 3])][6])
+        if pi in style_of:
+            by_part.setdefault(pi, []).append(tuple((f[i + 5 * j], f[i + 5 * j + 1], f[i + 5 * j + 2], f[i + 5 * j + 4])
+                                                     for j in range(3)))
+    if not by_part:
+        return None
+    looks = {p["id"]: p.get("look", {}) for p in scene["parts"]}
+    glassy = {pi for pi in by_part
+              if export_mod.is_glass_name(parts[pi]["id"]) or looks.get(parts[pi]["id"], {}).get("fill") == "glass"}
+    corners = [c for tris in by_part.values() for t in tris for c in t]
+    lo = [min(c[a] for c in corners) for a in range(3)]
+    hi = [max(c[a] for c in corners) for a in range(3)]
+    span = [max(hi[a] - lo[a], 1e-9) for a in range(3)]
+    index, verts, opaque, clear = {}, [], [], []
+    for pi in sorted(by_part, key=lambda p: p in glassy):
+        tris = by_part[pi]
+        normals = export_mod.smooth_normals([tuple(c[:3] for c in t) for t in tris])
+        out = clear if pi in glassy else opaque
+        for ti, t in enumerate(tris):
+            for j, c in enumerate(t):
+                n = normals[3 * ti + j]
+                key = (tuple(int(round((c[a] - lo[a]) / span[a] * 65535)) for a in range(3)),
+                       tuple(max(-127, min(127, int(round(n[a] * 127)))) for a in range(3)),
+                       style_of[pi], int(round(max(0.0, min(1.0, c[3])) * 65535)))
+                if key not in index:
+                    index[key] = len(verts)
+                    verts.append(key)
+                out.append(index[key])
+    pos = struct.pack("<%dH" % (3 * len(verts)), *(q for v in verts for q in v[0]))
+    nrm = struct.pack("<%db" % (4 * len(verts)), *(q for v in verts for q in v[1] + (0,)))
+    sty = struct.pack("<%dH" % len(verts), *(v[2] for v in verts))
+    pha = struct.pack("<%dH" % len(verts), *(v[3] for v in verts))
+    wide = len(verts) > 65535
+    idx = struct.pack("<%d%s" % (len(opaque) + len(clear), "I" if wide else "H"), *(opaque + clear))
+    b64 = lambda b: base64.b64encode(b).decode("ascii")
+    return {"lo": [round(x, 6) for x in lo], "hi": [round(x, 6) for x in hi], "vertices": len(verts),
+            "opaque": len(opaque), "clear": len(clear), "wide": wide,
+            "pos": b64(pos), "nrm": b64(nrm), "sty": b64(sty), "pha": b64(pha), "idx": b64(idx)}
+
+
+def build_html(geometry, asset_root=None, film=False, solid=None):
     """The construct page. `film` also embeds film mode (viewer/film.js) after the viewer; without it the page
-    is the stock viewer, unchanged."""
+    is the stock viewer, unchanged. `solid` (solid_payload) gives the page its solid view (S)."""
     template = (VIEWER / "template.html").read_text(encoding="utf-8")
     viewer = (VIEWER / "hologram.js").read_text(encoding="utf-8")
     assets, notes = embed_assets(geometry, asset_root)
@@ -85,8 +139,8 @@ def build_html(geometry, asset_root=None, film=False):
     # one pass over the template: what is put in is never searched again (a title that says "__VIEWER__" stays text)
     import re
     fill = {"__TITLE__": title, "__GEOMETRY__": _script_json(geometry), "__ASSETS__": _script_json(assets),
-            "__VIEWER__": viewer.replace("</script", "<\\/script")}
-    html = re.sub("__(?:TITLE|GEOMETRY|ASSETS|VIEWER)__", lambda m: fill[m.group(0)], template)
+            "__SOLID__": _script_json(solid), "__VIEWER__": viewer.replace("</script", "<\\/script")}
+    html = re.sub("__(?:TITLE|GEOMETRY|ASSETS|SOLID|VIEWER)__", lambda m: fill[m.group(0)], template)
     if film:  # a script of its own, right after the viewer's, so it runs before the viewer starts
         code = (VIEWER / "film.js").read_text(encoding="utf-8").replace("</script", "<\\/script")
         mark = "\n</script>\n<script>\n  // the improvement rounds"
@@ -320,8 +374,8 @@ SHEETS = ("assembly", "views", "life", "motion", "provenance")
 
 def review(html_path, out_dir, width=1440, height=900, scale=1.0, sheets=SHEETS, browser=None):
     """Capture the review set: contact sheets (assembly, views, life, motion, provenance),
-    a still of the reduced-motion state, a still of each of the scene's own views and a
-    labelled hero once assembled and opened. Returns the written paths."""
+    a still of the reduced-motion state, a still of each of the scene's own views, the solid
+    view and a labelled hero once assembled and opened. Returns the written paths."""
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)
     written = []
@@ -345,6 +399,13 @@ def review(html_path, out_dir, width=1440, height=900, scale=1.0, sheets=SHEETS,
             # the "open" view is what opening reveals: shown opened, whatever the still pose
             b.open(_url(html_path, view=vid, motion="reduced", ui=0, capture=1, open=1 if vid == "open" else None))
             p = out / ("view-%s.png" % vid)
+            b.shot(p)
+            written.append(str(p))
+        if b.evaluate("window.HOLOGRAM_SOLID ? 1 : 0"):
+            # the surfaces as a solid, as a print or a modelling program shows them: what the light forgives
+            # (panels that do not meet, glass outside its frame, a crumpled corner) shows here
+            b.open(_url(html_path, view="hero", motion="reduced", camera="still", ui=0, capture=1, solid=1))
+            p = out / "solid.png"
             b.shot(p)
             written.append(str(p))
         if b.evaluate("JSON.stringify(((HOLOGRAM_GEOMETRY.provenance || {}).authoring || {}).rounds || [])") != "[]":

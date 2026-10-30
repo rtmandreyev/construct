@@ -728,6 +728,7 @@ def make(scene, size=SIZE_MM, scale=None, detail=DETAIL_MM, wall=WALL_MM, join=J
     solid, shells, thickened, true, kept = {}, {}, set(), [], []
     if exact and lines == "engrave":
         raise PrintError("engraving cuts into the voxel print: an exact print takes lines none or raised")
+    wall_m, voxeled = wall / mm_per_m, set()
     for pid, piece in closed:   # filled where the voxel centres are inside; too thin for that, a shell
         inside, surface = {}, {}
         _fill(grid, piece, inside)
@@ -739,13 +740,25 @@ def make(scene, size=SIZE_MM, scale=None, detail=DETAIL_MM, wall=WALL_MM, join=J
                 solid[c] = solid.get(c, 0) | m
             true.extend(piece)
         else:
-            for c, m in surface.items():
-                shells[c] = shells.get(c, 0) | m
+            grown = _inflate(piece, wall_m) if exact else None   # exact: its own shape, grown to the wall
+            if grown:
+                kept.append((pid, grown))
+            else:
+                for c, m in surface.items():
+                    shells[c] = shells.get(c, 0) | m
+                voxeled.add(pid)
             thickened.add(pid)
     for pid, piece in open_:
-        _mark_surface(grid, piece, shells)
+        shell = _solidify(piece, wall_m) if exact else None    # exact: a true shell, the wall thick
+        if shell:
+            kept.append((pid, shell))
+        else:
+            _mark_surface(grid, piece, shells)
+            voxeled.add(pid)
         thickened.add(pid)
     report["thickened"] = sorted(thickened)
+    if exact:
+        report["thickened_in_voxels"] = sorted(voxeled)
     grooves = {}
     _mark_rods(grid, rods, grooves if lines == "engrave" else shells)
     if exact:
@@ -841,6 +854,158 @@ def _orient(verts, faces):
     return [[a, c, b] for a, b, c in faces] if vol < 0 else faces
 
 
+def _weld(tris):
+    """(points, faces) of a triangle list, corners that meet welded; degenerate triangles dropped."""
+    index, pts, faces = {}, [], []
+    for t in tris:
+        f = []
+        for p in t:
+            k = _key(p)
+            if k not in index:
+                index[k] = len(pts)
+                pts.append(tuple(p))
+            f.append(index[k])
+        if len(set(f)) == 3:
+            faces.append(f)
+    return pts, faces
+
+
+def _offsets(pts, faces):
+    """Per point, the move that carries each face around it out by one unit along its normal (least squares
+    over the faces, weighted by area; directions no face constrains are left alone): flat ground moves along
+    its normal, an edge along both faces, a box's corner along its diagonal, so walls keep their thickness at
+    edges and corners. None where the faces disagree too much (a crease folded back)."""
+    acc = [[0.0] * 9 + [0.0] * 3 for _ in pts]
+    for a, b, c in faces:
+        p, q, r = pts[a], pts[b], pts[c]
+        u = [q[i] - p[i] for i in range(3)]
+        v = [r[i] - p[i] for i in range(3)]
+        n = [u[1] * v[2] - u[2] * v[1], u[2] * v[0] - u[0] * v[2], u[0] * v[1] - u[1] * v[0]]
+        area = math.sqrt(sum(x * x for x in n))
+        if not area > 0:
+            continue
+        n = [x / area for x in n]
+        for i in (a, b, c):
+            m = acc[i]
+            for j in range(3):
+                for k in range(3):
+                    m[3 * j + k] += area * n[j] * n[k]
+                m[9 + j] += area * n[j]
+    out = []
+    for m in acc:
+        w = m[0] + m[4] + m[8]
+        if not w > 0:
+            out.append(None)
+            continue
+        vals, vecs = _eigen3([[m[3 * j + k] for k in range(3)] for j in range(3)])
+        bvec = m[9:12]
+        top = max(vals)
+        sol = [0.0, 0.0, 0.0]
+        for lam, u in zip(vals, vecs):   # the least-squares move, leaving out only directions no face constrains
+            if lam > 1e-6 * top:
+                k = sum(u[j] * bvec[j] for j in range(3)) / lam
+                sol = [sol[j] + k * u[j] for j in range(3)]
+        if not 0 < sum(x * x for x in sol) <= 9.0:
+            sol = _damped(m, w)   # a tight curve (a spring's coil): rounding drives the exact move astray
+        out.append(sol if sol and sum(x * x for x in sol) <= 9.0 else None)   # more than 3x the wall: a fold
+    return out
+
+
+def _damped(m, w):
+    """The least-squares move with a little damping, scaled back so the faces move one unit on average: steady
+    where the faces around a point barely differ, a little short at a thin part's edges."""
+    A = [[m[3 * j + k] + (1e-3 * w if j == k else 0.0) for k in range(3)] for j in range(3)]
+    bvec = m[9:12]
+    det3 = lambda M: (M[0][0] * (M[1][1] * M[2][2] - M[1][2] * M[2][1]) - M[0][1] * (M[1][0] * M[2][2] - M[1][2] * M[2][0])
+                      + M[0][2] * (M[1][0] * M[2][1] - M[1][1] * M[2][0]))
+    det = det3(A)
+    if abs(det) < 1e-12 * w ** 3:
+        return None
+    sol = [det3([[bvec[j] if k == col else A[j][k] for k in range(3)] for j in range(3)]) / det for col in range(3)]
+    mv = [sum(m[3 * j + k] * sol[k] for k in range(3)) for j in range(3)]
+    vmv = sum(sol[j] * mv[j] for j in range(3))
+    return [x * sum(sol[j] * bvec[j] for j in range(3)) / vmv for x in sol] if vmv > 0 else None
+
+
+def _eigen3(a):
+    """Eigenvalues and unit eigenvectors of a symmetric 3x3 matrix (Jacobi rotations)."""
+    a = [row[:] for row in a]
+    v = [[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]]
+    for _ in range(32):
+        p, q = max(((0, 1), (0, 2), (1, 2)), key=lambda ij: abs(a[ij[0]][ij[1]]))
+        if abs(a[p][q]) < 1e-15 * (abs(a[0][0]) + abs(a[1][1]) + abs(a[2][2]) + 1e-300):
+            break
+        theta = (a[q][q] - a[p][p]) / (2.0 * a[p][q])
+        t = (1.0 if theta >= 0 else -1.0) / (abs(theta) + math.sqrt(theta * theta + 1.0))
+        c = 1.0 / math.sqrt(t * t + 1.0)
+        s = t * c
+        for k in range(3):   # A = A J, then A = J^T A
+            akp, akq = a[k][p], a[k][q]
+            a[k][p], a[k][q] = c * akp - s * akq, s * akp + c * akq
+        for k in range(3):
+            apk, aqk = a[p][k], a[q][k]
+            a[p][k], a[q][k] = c * apk - s * aqk, s * apk + c * aqk
+        for k in range(3):
+            vkp, vkq = v[k][p], v[k][q]
+            v[k][p], v[k][q] = c * vkp - s * vkq, s * vkp + c * vkq
+    return [a[i][i] for i in range(3)], [[v[k][i] for k in range(3)] for i in range(3)]
+
+
+def _edge_uses(faces):
+    uses = {}
+    for a, b, c in faces:
+        for u, w in ((a, b), (b, c), (c, a)):
+            uses.setdefault((min(u, w), max(u, w)), []).append((u, w))
+    return uses
+
+
+def _solidify(tris, wall):
+    """An open surface as a closed shell `wall` thick (metres), half to each side, closed along its open edges:
+    what a slicer can print, and what the surface looks like. None when it is not a simple surface (an edge
+    shared by three faces, a fold) and must go through the voxels instead."""
+    pts, faces = _weld(tris)
+    if not faces:
+        return None
+    uses = _edge_uses(faces)
+    if any(len(u) > 2 for u in uses.values()):
+        return None
+    faces = _orient(pts, faces)
+    offs = _offsets(pts, faces)
+    if any(o is None for o in offs):
+        return None
+    h = wall / 2.0
+    outer = [tuple(p[i] + o[i] * h for i in range(3)) for p, o in zip(pts, offs)]
+    inner = [tuple(p[i] - o[i] * h for i in range(3)) for p, o in zip(pts, offs)]
+    out = [(outer[a], outer[b], outer[c]) for a, b, c in faces] + [(inner[a], inner[c], inner[b]) for a, b, c in faces]
+    for (a, b), (u, w) in ((k, v[0]) for k, v in _edge_uses(faces).items() if len(v) == 1):
+        out += [(outer[w], outer[u], inner[u]), (outer[w], inner[u], inner[w])]   # the wall along an open edge
+    return out
+
+
+def _inflate(tris, wall):
+    """A closed solid too thin to print, grown so that its thinnest wall is at least `wall` (metres), barely
+    more (its thickness is estimated from its volume and area, which never overstates it): its own shape, a
+    little fuller. None when its surface folds."""
+    pts, faces = _weld(tris)
+    if not faces or any(len(u) != 2 for u in _edge_uses(faces).values()):
+        return None
+    faces = _orient(pts, faces)
+    area = vol = 0.0
+    for a, b, c in faces:
+        p, q, r = pts[a], pts[b], pts[c]
+        u = [q[i] - p[i] for i in range(3)]
+        v = [r[i] - p[i] for i in range(3)]
+        area += 0.5 * math.sqrt((u[1] * v[2] - u[2] * v[1]) ** 2 + (u[2] * v[0] - u[0] * v[2]) ** 2 + (u[0] * v[1] - u[1] * v[0]) ** 2)
+        vol += (p[0] * (q[1] * r[2] - q[2] * r[1]) - p[1] * (q[0] * r[2] - q[2] * r[0]) + p[2] * (q[0] * r[1] - q[1] * r[0])) / 6.0
+    thick = 2.0 * vol / area if area > 0 else 0.0   # a slab's thickness, a rod's half-diameter: thin either way
+    grow = max(0.0, (wall - thick) / 2.0)
+    offs = _offsets(pts, faces)
+    if any(o is None for o in offs):
+        return None
+    moved = [tuple(p[i] + o[i] * grow for i in range(3)) for p, o in zip(pts, offs)]
+    return [(moved[a], moved[b], moved[c]) for a, b, c in faces]
+
+
 def _exact(g, kept, shells, grid, lo, mm_per_m, detail, r, rj, bed, report, extra):
     """The exact print: each closed piece as it is, one mesh each, and the thickened surfaces as one more; in
     millimetres, on the bed at z = 0."""
@@ -896,7 +1061,9 @@ def _exact(g, kept, shells, grid, lo, mm_per_m, detail, r, rj, bed, report, extr
     bad = sum(_edges_ok(o["triangles"]) for o in objects)
     fits = all(e <= b for e, b in zip(sorted(extent[:2], reverse=True) + [extent[2]], sorted(bed[:2], reverse=True) + [bed[2]]))
     report.update(extra)
-    report.update({"exact": True, "objects": len(objects), "exact_parts": sorted({pid for pid, _ in kept}),
+    thick = set(report.get("thickened", ()))
+    report.update({"exact": True, "objects": len(objects), "exact_parts": sorted({pid for pid, _ in kept} - thick),
+                   "shelled": sorted(thick - set(report.get("thickened_in_voxels", ()))),
                    "watertight": bad == 0, "bad_edges": bad, "pieces": len(roots), "pieces_in_air": len(roots - grounded),
                    "fits_bed": fits, "bed_mm": list(bed), "needs_supports": None,
                    "size_mm": [round(x, 1) for x in extent], "scale": "1:%s" % _ratio(1000.0 / mm_per_m),
@@ -945,8 +1112,7 @@ def notes(report):
         if not report["watertight"]:
             out.append("NOT watertight: %d open edges" % report["bad_edges"])
         out.append("exact: %d of the construct's solids as they are%s, parts of one object the slicer joins"
-                   % (len(report["exact_parts"]), " and its thickened surfaces" if report["objects"] > len(report["exact_parts"])
-                      else ""))
+                   % (len(report["exact_parts"]), " and its thickened surfaces" if report.get("thickened") else ""))
         if report["pieces_in_air"]:
             out.append("%d of %d pieces (by their boxes) would start in the air: print with supports"
                        % (report["pieces_in_air"], report["pieces"]))
@@ -955,9 +1121,12 @@ def notes(report):
         if not report["fits_bed"]:
             out.append("does not fit a %s mm bed: --fit, a larger printer (--printers) or cut it"
                        % "x".join("%g" % b for b in report["bed_mm"]))
-        if report["thickened"]:
-            out.append("thickened to %g mm in voxels of %g mm (open or too thin): %s"
-                       % (report["wall_mm"], report["detail_mm"], _list(report["thickened"])))
+        if report.get("shelled"):
+            out.append("thickened to %g mm as true shells, their own shape (open or too thin): %s"
+                       % (report["wall_mm"], _list(report["shelled"])))
+        if report.get("thickened_in_voxels"):
+            out.append("thickened to %g mm in voxels of %g mm (a surface that folds or branches): %s"
+                       % (report["wall_mm"], report["detail_mm"], _list(report["thickened_in_voxels"])))
         out.append("the slicer decides supports and the finest detail: the solids keep the construct's own")
         return out
     out = []
