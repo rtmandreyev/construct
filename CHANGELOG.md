@@ -1,5 +1,31 @@
 # Changelog
 
+## 1.2.0 — unreleased
+
+Makers: constructs into things you make. Plan: [ROADMAP.md](docs/ROADMAP.md#v12-makers).
+
+- **3D printing** ([PRINTING.md](docs/PRINTING.md)): `construct print scene.json --out model.3mf`
+  (or `.stl`) makes a construct one watertight solid to print, at a size (`--size`, 100 mm on its
+  longest side by default) or a scale (`--scale 43` for 1:43). It is made in voxels at the print's
+  own scale: closed parts filled, open surfaces and too-thin parts thickened to the wall, gaps
+  between parts up to `--join` closed so it is one piece, sealed cavities filled, the surface
+  smoothed and moved onto the construct's own surfaces so flat faces come out flat. The report says
+  whether it is watertight, how many pieces it is and whether any would start in the air, whether it
+  fits the bed, where it needs supports, and which parts were thickened or left out (annotations,
+  and parts drawn only in lines unless `--lines`). Also the MCP tool `construct_print` and the
+  skill. Checked against PrusaSlicer when it is installed: manifold, one part, and it slices.
+- **FreeCAD** ([FREECAD.md](docs/FREECAD.md)): `construct freecad scene.json --out model.FCStd --step
+  model.step` builds a construct in FreeCAD (1.0 or newer, run through its own `freecadcmd`) as named
+  solids, each part's closed pieces sewn and refined, its role, certainty, source and stage as
+  properties, in a group per stage; each articulation a nested group with its type, axis, pivot,
+  amount and an `Open` placement that opens it; then STEP with the same tree and names.
+- **A run you can hold** ([PRINTING.md](docs/PRINTING.md#a-run-you-can-hold)): `construct netlogo-plates
+  run.jsonl --out plates/` prints a NetLogo run as plates, one per moment (`--plates N` or `--at
+  ticks`): every turtle a dot, tall where its true/false state is on (`--state`, `--tall`), every link
+  a ridge; keyed 3 mm and 4 mm pin holes, the plate's number engraved as dots; pins, spacer sleeves
+  and a key card with each plate's tick and counts and the recording's SHA-256. Flat faces are merged
+  into strips, so a plate is about 2 MB, not 9.
+
 ## 1.1.0 — unreleased
 
 Models come alive: the NetLogo bridge, made reliable on the whole Models Library and usable from

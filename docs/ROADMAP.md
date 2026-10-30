@@ -196,9 +196,9 @@ Constructs into things you make.
 - **3D printing:** a construct (or a run) to a printable, watertight model: STL and 3MF export, the
   checks a slicer would make (closed, manifold, wall thickness), and a hand-off to a slicer. Tested
   without a printer by validating the mesh and slicing it with a slicer's command line; a real print
-  before a claim of fit (pins, tolerances).
+  before a claim of fit (pins, tolerances). Started: `construct print` ([PRINTING.md](PRINTING.md)).
 - **FreeCAD:** constructs in FreeCAD as parts with their names, sizes and joints, for engineering
-  work and CAD formats (STEP).
+  work and CAD formats (STEP). Started: `construct freecad` ([FREECAD.md](FREECAD.md)).
 - **A simulation you can hold** (owner's idea, 28 October 2026): a printed miniature of a run that
   shows its process in the physical world and assembles like a building set, for any model a
   construct can draw. A construct of a run already has time as its height, so the general form is
@@ -212,6 +212,8 @@ Constructs into things you make.
   To work out: every line thickened to printable ribs (about 1 mm and up), plates that fit a common
   bed, pin tolerances, the run's own colours by filament changes, and a printed key (what each plate
   is, the model and its data lock), so a classroom set is honest about what it shows.
+  Started: `construct netlogo-plates` (one plate per moment, dots and links, keyed pins, a key card;
+  [PRINTING.md](PRINTING.md#a-run-you-can-hold)).
 
 ## v1.3: artworks, exhibits and provenance
 

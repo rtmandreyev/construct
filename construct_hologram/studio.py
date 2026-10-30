@@ -8,6 +8,10 @@
   video <scene.json> --out FILE.mp4|.gif [--seconds S] [--fps N] [--start S] [--view V]
   export <scene.json> --out FILE.glb|.obj [--wire edges|tubes|none] [--pose closed|open]
                       [--materials map.json] [--frame y-up|z-up] [--merge]    a 3D model (docs/EXPORT.md)
+  print <scene.json> --out FILE.stl|.3mf [--size MM | --scale N] [--detail MM] [--wall MM] [--join MM]
+                     [--lines] [--bed WxDxH]          one watertight body to 3D print (docs/PRINTING.md)
+  freecad <scene.json> --out FILE.FCStd|.step [--step FILE.step] [--freecad PATH]
+                                                        named solids and joints in FreeCAD, and STEP (docs/FREECAD.md)
 
 Exit status: 0 success, 1 the scene or audit has errors, 2 capture unavailable.
 """
@@ -452,6 +456,26 @@ def add_commands(sub):
     p.add_argument("--frame", choices=("y-up", "z-up"), default="y-up", help="OBJ only (glTF is always Y up)")
     p.add_argument("--merge", action="store_true",
                    help="glTF: merge every part that does not move into one mesh per material (for game engines)")
+    p = sub.add_parser("print", help="one watertight body to 3D print: STL or 3MF, checked (docs/PRINTING.md)")
+    p.add_argument("scene")
+    p.add_argument("--out", required=True, help="FILE.stl or FILE.3mf")
+    p.add_argument("--format", choices=("stl", "3mf"), help="default: from the file's extension")
+    size = p.add_mutually_exclusive_group()
+    size.add_argument("--size", type=float, help="the longest side in mm (default %g)" % 100.0)
+    size.add_argument("--scale", type=float, help="print at 1:N of the object's real size, e.g. 43")
+    p.add_argument("--detail", type=float, default=0.4, help="the voxel size in mm (default 0.4, a nozzle's width)")
+    p.add_argument("--wall", type=float, default=0.8, help="open surfaces are thickened to this wall in mm (default 0.8)")
+    p.add_argument("--join", type=float, default=1.6,
+                   help="close gaps between parts up to this wide, in mm, so the print is one piece (default 1.6; 0: off)")
+    p.add_argument("--lines", action="store_true", help="print the parts drawn only in lines as raised lines")
+    p.add_argument("--bed", default="250x210x220", help="the printer's build volume in mm (default 250x210x220)")
+    p = sub.add_parser("freecad", help="named solids and joints in FreeCAD (.FCStd), and STEP; runs FreeCAD "
+                                       "(docs/FREECAD.md)")
+    p.add_argument("scene")
+    p.add_argument("--out", required=True, help="FILE.FCStd, or FILE.step for STEP alone")
+    p.add_argument("--step", help="also write STEP here")
+    p.add_argument("--freecad", help="the FreeCAD command line to run (default: $CONSTRUCT_FREECAD, `freecadcmd`, "
+                                     "or the usual installs)")
     p = sub.add_parser("netlogo-compare", help="two NetLogo runs side by side, drawn the same way on one time scale "
                                                "(a slider moved, another seed)")
     p.add_argument("run_a")
@@ -473,6 +497,19 @@ def add_commands(sub):
     p.add_argument("--samples", type=int, default=16, help="EEVEE samples per frame")
     p.add_argument("--trail", type=float, default=0.35, help="seconds of light trail behind each turtle")
     p.add_argument("--blender", help="the Blender to run (default: $CONSTRUCT_BLENDER, `blender`, or the usual installs)")
+    p = sub.add_parser("netlogo-plates", help="a NetLogo run as printed plates, one per moment, that stack in order "
+                                              "on pins: a simulation you can hold (docs/PRINTING.md)")
+    p.add_argument("run", help="the recording (.jsonl)")
+    p.add_argument("--out", required=True, help="the folder for the plates, pins, sleeves and KEY.md")
+    when = p.add_mutually_exclusive_group()
+    when.add_argument("--plates", type=int, default=6, help="how many plates, evenly over the run (default 6)")
+    when.add_argument("--at", help="the ticks to print, e.g. 0,20,68,300")
+    p.add_argument("--size", type=float, default=100.0, help="the world's longer side in mm (default 100)")
+    p.add_argument("--format", choices=("3mf", "stl"), default="3mf")
+    p.add_argument("--title", help="the title on the key card (default: the model's)")
+    p.add_argument("--state", help="the true/false turtle variable shown by a dot's height (default: the first)")
+    p.add_argument("--tall", choices=("true", "false"), default="true",
+                   help="which value stands tall (Fireflies: --state hidden? --tall false, the flashing ones)")
     p = sub.add_parser("netlogo-instrument", help="a copy of a NetLogo model that records its run for Construct, "
                                                   "and a headless experiment (docs/NETLOGO.md)")
     p.add_argument("model", help="the model (.nlogox)")
@@ -530,8 +567,13 @@ def add_commands(sub):
                    help="track (default): each track mapped to its own loudness range; fixed: the older -40..-10 dB window")
 
 
+def printing_list(ids):
+    from . import printing
+    return printing._list(ids)
+
+
 COMMANDS = ("new", "params", "expand", "prompts", "author", "trace", "trace-image", "terrain", "globe", "critique", "rounds", "compare", "loft-from-traces", "check", "build", "review",
-            "video", "audio", "export", "netlogo", "netlogo-instrument", "netlogo-film", "netlogo-compare")
+            "video", "audio", "export", "print", "freecad", "netlogo-plates", "netlogo", "netlogo-instrument", "netlogo-film", "netlogo-compare")
 
 
 def run(args):
@@ -763,6 +805,25 @@ def run(args):
             _write(args.out, json.dumps(sc, separators=(",", ":"), ensure_ascii=False) + "\n", args.force)
             sys.stdout.write("wrote %s: %s and %s side by side; build it as any scene\n" % (args.out, *labels))
             return 0
+        if args.command == "netlogo-plates":
+            from . import netlogo as netlogo_mod, plates
+            try:
+                at = [int(x) for x in args.at.split(",")] if args.at else None
+            except ValueError:
+                sys.stderr.write("netlogo-plates: --at takes ticks, e.g. 0,20,68,300\n")
+                return 1
+            try:
+                run = netlogo_mod.read_run(args.run)
+                r = plates.write(run, args.out, args.format, recording=args.run, count=args.plates, at=at,
+                                 size=args.size, title=args.title, state=args.state, tall=args.tall == "true")
+            except (plates.PlatesError, netlogo_mod.NetLogoError, OSError) as exc:
+                sys.stderr.write("netlogo-plates: %s\n" % exc)
+                return 1
+            sys.stdout.write("wrote %d plates (ticks %s), 2 pins, sleeves and KEY.md to %s: %s x %s mm plates, a "
+                             "stack %s mm tall%s\n" % (len(r["plates"]), ", ".join(str(p["tick"]) for p in r["plates"]),
+                                                       args.out, r["size_mm"][0], r["size_mm"][1], r["stack_mm"],
+                                                       "; tall dots: %s %s" % (r["state"], args.tall) if r["state"] else ""))
+            return 0 if r["watertight"] else 1
         if args.command == "netlogo-film":
             from . import runfilm
             if not (args.out or args.blend):
@@ -881,6 +942,49 @@ def run(args):
                              % (", ".join(s["files"]), s["parts"], s["triangles"], s["edges"],
                                 "; animations: " + anims if s["format"] == "glb" else ""))
             return 0
+        if args.command == "print":
+            from . import printing
+            try:
+                bed = tuple(float(x) for x in args.bed.lower().split("x"))
+                if len(bed) != 3:
+                    raise ValueError
+            except ValueError:
+                sys.stderr.write("print: --bed WxDxH in mm, e.g. 250x210x220\n")
+                return 1
+            try:
+                r = printing.write(load(args.scene), args.out, args.format, size=args.size or printing.SIZE_MM,
+                                   scale=args.scale, detail=args.detail, wall=args.wall, join=args.join,
+                                   lines=args.lines, bed=bed)
+            except printing.PrintError as exc:
+                sys.stderr.write("print: %s\n" % exc)
+                return 1
+            sys.stdout.write("wrote %s: %s mm at %s, %d triangles\n" % (
+                r["files"][0], " x ".join("%g" % x for x in r["size_mm"]), r["scale"], r["triangles"]))
+            for line in printing.notes(r):
+                sys.stdout.write("  %s\n" % line)
+            return 0 if r["watertight"] else 1
+        if args.command == "freecad":
+            from . import freecad
+            out = Path(args.out)
+            is_step = out.suffix.lower() in (".step", ".stp")
+            if not is_step and out.suffix.lower() != ".fcstd":
+                sys.stderr.write("freecad: --out FILE.FCStd or FILE.step\n")
+                return 1
+            try:
+                r = freecad.make(load(args.scene), fcstd=None if is_step else out, step=out if is_step else args.step,
+                                 freecad=args.freecad)
+            except freecad.FreeCADError as exc:
+                sys.stderr.write("freecad: %s\n" % exc)
+                return 1
+            sys.stdout.write("wrote %s: %d named parts, %d joint%s\n" % (", ".join(r["files"]), r["parts"], r["joints"],
+                                                                         "" if r["joints"] == 1 else "s"))
+            if r["surfaces"]:
+                sys.stdout.write("  surfaces, not solids (open in the construct): %s\n" % printing_list(r["surfaces"]))
+            if r["left_out"]:
+                sys.stdout.write("  drawn only in lines, left out: %s\n" % printing_list(r["left_out"]))
+            if r["invalid"]:
+                sys.stdout.write("  FreeCAD found these shapes invalid: %s\n" % printing_list(r["invalid"]))
+            return 0 if not r["invalid"] else 1
         if args.command == "audio":
             from . import film_audio
             try:
