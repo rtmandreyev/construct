@@ -196,6 +196,12 @@ side, printed as worksheets and cited. Plan:
   times; a 3D guide with the instructions big at the top and lines to the pieces, the controls at the bottom,
   what is built barely dimmed; a booklet with a cover, the paints, plates drawn with each piece's real outline,
   and a card per step with pictures of the parts it needs.
+- **Kits a careful builder can finish (from a kit critic's review):** at the bench the 3D guide shows only the
+  sub-assembly being built, close up, until it is fitted; slivers and long thin pieces that would chip or break
+  (hinge leaves, a 1 mm base plate) are moulded with the piece they touch, as a kit does; a lens's ring, cell
+  or button is no longer taken for clear plastic. The Leica M3's lens now has its fixed mount sleeve and a cell
+  that seats each glass element, so nothing in it floats; the Sainte-Chapelle's turret lanterns are closed at
+  the top, so their spires stand on them.
 - **Three more kit rules from the car runs' critics:** glass goes into the last opaque part that frames it (a
   windscreen into the roof, not the nose before the roof is on); fragile pieces under 2 mm (chrome, trim, plates)
   go on in a last Details step; a moving part hangs by its largest piece (a lid, not its handle).

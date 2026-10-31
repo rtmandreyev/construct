@@ -268,20 +268,23 @@ def make(scene, scale=SCALE, size=None, detail=DETAIL_MM, wall=WALL_MM, plan=Non
                            "clear": is_clear[pid],
                            "stage": info[pid]["stage"], "cols": comp})   # the head's: its largest member
 
-    # bits too small to print, merged into the piece they touch most
+    # bits too small or too thin to print, merged into the piece they touch most
     keep = plan.get("keep", [])
     vol_min = MIN_VOLUME_MM3 / detail ** 3
-    side_min = MIN_PIECE_MM / detail
-    merged_away, dropped = [], []
+    merged_away, dropped, alone = [], [], set()
     while True:
-        small = None
+        small = thin = None
         for p in pieces:
-            if _matches(p["head"], keep):
+            if _matches(p["head"], keep) or id(p) in alone:
                 continue
             b = _bbox(p["cols"])
-            if max(b[1] - b[0], b[3] - b[2], b[5] - b[4]) + 1 < side_min or _count(p["cols"]) < vol_min:
+            d = sorted((b[2 * a + 1] - b[2 * a] + 1) * detail for a in range(3))   # mm, thinnest first
+            if d[-1] < MIN_PIECE_MM or _count(p["cols"]) < vol_min:
                 small = p
                 break
+            if d[0] + detail <= SLIVER_MM and (d[-1] < 6.0 or d[-1] >= 60.0):   # a chip, or a long thin one that
+                small = thin = p   # would break, moulded with what it is glued to (thin by a whole voxel: the voxels
+                break              # can read a panel a little thinner than it is)
         if small is None:
             break
         pieces.remove(small)
@@ -298,7 +301,10 @@ def make(scene, scale=SCALE, size=None, detail=DETAIL_MM, wall=WALL_MM, plan=Non
             return (0, q["paint"]["name"] == small["paint"]["name"], touch) if touch else (0, 0, 0)
         best = max(pieces, key=fit, default=None)
         if best is None or fit(best)[2] == 0:
-            dropped.append(small["name"])
+            if thin:   # nothing of its own plastic to go with: it stays a piece (and the check names it)
+                pieces.append(small); alone.add(id(small))
+            else:
+                dropped.append(small["name"])
             continue
         _or_into(best["cols"], small["cols"])
         best.setdefault("borrowed", set()).update(set(small["parts"]) - set(best["parts"]))   # a bit of another part
@@ -352,7 +358,7 @@ def make(scene, scale=SCALE, size=None, detail=DETAIL_MM, wall=WALL_MM, plan=Non
     kit = {"title": plan.get("title") or "%s, a kit" % scene["title"], "construct": scene["title"],
            "scale": "1:%s" % printing._ratio(1000.0 / mm_per_m), "detail_mm": detail, "pieces": pieces,
            "plates": plates, "steps": _flatten(_combine(_steps(pieces, raw), pieces), pieces), "bed_mm": list(bed), "scene": scene,
-           "merged": merged_away, "dropped": dropped, "plan": plan,
+           "merged": merged_away, "dropped": dropped, "plan": plan, "grid": grid,
            "size_mm": [round((hi[a] - lo[a]) * mm_per_m, 1) for a in (0, 1, 2)]}
     kit["report"] = check(kit)
     return kit
@@ -1392,7 +1398,7 @@ ASSEMBLY_JS = r"""
     }).join("");
     top.innerHTML = "<div class=n>" + esc(K.title) + " &middot; step " + (k + 1) + " of " + K.steps.length + "</div>" +
       "<h2>" + esc(s.name || "Step " + (k + 1)) + (s.times > 1 ? "<span class=x>&times; " + s.times + "</span>" : "") + "</h2>" +
-      (s.kind === "bench" ? "<div class=bench>At the bench: build this on its own first (shown here in place)</div>" :
+      (s.kind === "bench" ? "<div class=bench>At the bench: build this on its own first</div>" :
        s.bench ? "<div class=bench>Still at the bench: onto the sub-assembly, not the model yet</div>" : "") +
       "<ul>" + list + "</ul>";
     ctl.querySelector(".pg").textContent = (k + 1) + " / " + K.steps.length;
@@ -1414,15 +1420,20 @@ ASSEMBLY_JS = r"""
   }
   var T = 0, from = 0, to = 0, startAt = 0, DUR = 1300, lastLines = "";
   var focus = null, camFrom = null, camAt = 0;
-  function aim(k) {   // the camera on the step's pieces: their middle, closer in for small ones; you can still turn it
-    var H = HOLO.hologram, cs = K.steps[k].glue.map(function (g) { return K.pieces[g[0]].centre; }).filter(Boolean);
+  function aim(k) {   // the camera on the step's pieces (at the bench, the whole sub-assembly): their middle, closer in
+    var H = HOLO.hologram, st = K.steps[k], cs = [];   // for small ones; you can still turn it
+    K.steps.slice(0, k + 1).forEach(function (t, j) {
+      if (j === k || (st.from && t.window[0] >= st.from - 1e-6))
+        t.glue.forEach(function (g) { var c = K.pieces[g[0]].centre; if (c) cs.push(c); });
+    });
     if (!cs.length) return;
     var m = [0, 1, 2].map(function (a) { return cs.reduce(function (s, c) { return s + c[a]; }, 0) / cs.length; });
     var spread = Math.max.apply(null, cs.map(function (c) { return Math.hypot(c[0] - m[0], c[1] - m[1], c[2] - m[2]); }));
     var fit = HOLO.fitted("hero"), now = H.userCamera || HOLO.camera() || fit;
     var low = m[1] < H.C[1];   // under the model (legs, the chassis): look from a little below, as a sheet
     focus = { target: m, yaw: now.yaw, pitch: low ? -14 : Math.max(18, now.pitch), fov: now.fov || 34,   // turns it over
-              dist: fit.dist * Math.max(0.55, Math.min(1, (spread + 0.12 * H.R) * 2.4 / H.R)) };
+              dist: fit.dist * (st.from ? Math.max(0.3, Math.min(1, (spread + 0.05 * H.R) * 1.6 / H.R))   // alone: closer
+                                        : Math.max(0.55, Math.min(1, (spread + 0.12 * H.R) * 2.4 / H.R))) };
     camFrom = { target: (now.target || fit.target).slice(), yaw: now.yaw, pitch: now.pitch, dist: now.dist, fov: now.fov || 34 };
     camFrom.pitch0 = now.pitch;
     camAt = performance.now();
@@ -1439,7 +1450,7 @@ ASSEMBLY_JS = r"""
     else if (a === "done") { playing = false; at = K.steps.length - 1; show(at); from = to = 0.9999; startAt = 0;
       focus = null; HOLO.hologram.userCamera = null;
       tags.forEach(function (t) { t.el.remove(); }); tags = []; svg.textContent = "";
-      HOLO.renderAt(T, { solid: true, open: 0, build: 0.9999, highlight: [0, 0], fly: 0, reveal: K.reveal }); }
+      HOLO.renderAt(T, { solid: true, open: 0, build: 0.9999, highlight: [0, 0], fly: 0, reveal: K.reveal, from: 0 }); }
   }
   window.addEventListener("hashchange", function () {
     var m = /#step-(\d+)/.exec(location.hash); if (m && parseInt(m[1], 10) - 1 !== at) go(parseInt(m[1], 10) - 1); });
@@ -1454,13 +1465,14 @@ ASSEMBLY_JS = r"""
                          dist: camFrom.dist + (focus.dist - camFrom.dist) * e, fov: 34 };
         if (u >= 1) camFrom = { target: focus.target.slice(), yaw: H.userCamera.yaw, pitch: H.userCamera.pitch, dist: focus.dist,
                                 fov: 34 };
-        if (!startAt) HOLO.renderAt(T, { solid: true, open: 0, build: to, highlight: K.steps[at].window, fly: 0, reveal: K.reveal });
+        if (!startAt) HOLO.renderAt(T, { solid: true, open: 0, build: to, highlight: K.steps[at].window, fly: 0, reveal: K.reveal,
+                                         from: K.steps[at].from });
       }
     }
     if (startAt) {
       var u = Math.min(1, (now - startAt) / DUR), s = K.steps[at];
       HOLO.renderAt(T, { solid: true, open: 0, build: from + (to - from) * u, highlight: s.window, fly: u < 1 ? 0.35 : 0,
-                         reveal: K.reveal });
+                         reveal: K.reveal, from: s.from });
       if (u >= 1) { startAt = 0; if (playing) setTimeout(function () { if (playing) go(at + 1 < K.steps.length ? at + 1 : 0); }, 1100); }
     }
     var lines = "", spots = [];
@@ -1491,6 +1503,22 @@ ASSEMBLY_JS = r"""
 """
 
 
+def _phase_where(ps, piece_phase, grid):
+    """The build phase at a point of a part made into the pieces `ps`: the phase of the piece whose voxels are
+    there (or nearest to it), so each piece of the part appears at its own step."""
+    def at(pt):
+        c = [int((v - grid.origin[a]) // grid.h) for a, v in enumerate((pt[0], -pt[2], pt[1]))]   # the grid is Z up
+        for r in (0, 1, 2):
+            for p in ps:
+                for i in range(c[0] - r, c[0] + r + 1):
+                    for j in range(c[1] - r, c[1] + r + 1):
+                        if (p["cols"].get((i, j), 0) >> max(0, c[2] - r)) & ((1 << (2 * r + 1)) - 1):
+                            return piece_phase[p["number"]]
+        near = min(ps, key=lambda p: sum((p["centre"][a] - pt[a]) ** 2 for a in range(3)))
+        return piece_phase[near["number"]]
+    return at
+
+
 def assembly(kit):
     """The steps in 3D (HTML): the construct's solid view painted with the kit's paints, each step's pieces dropping
     into place in gluing order and the rest stepping back, a panel saying what goes onto what, numbers on the
@@ -1500,14 +1528,19 @@ def assembly(kit):
     by = {p["number"]: p for p in kit["pieces"]}
     scene = dict(scene, presentation=dict(scene.get("presentation") or {}, background="transparent"))   # the page's backdrop
     g = scene_mod.compile_scene(scene)
-    phase_of, colour_of = {}, {}
+    phase_of, colour_of, piece_phase, homes = {}, {}, {}, {}
     for k, s in enumerate(steps):
         new = s.get("new", [])
         for j, num in enumerate(new):   # one after another within the step, each whole at once
+            piece_phase.setdefault(num, round((k + 0.82 * j / max(1, len(new))) / n, 5))
             for pid in by[num]["parts"]:   # a part shows with the piece that is mostly it, not one that took a bit of it
                 if pid not in by[num].get("borrowed", ()):
-                    phase_of.setdefault(pid, round((k + 0.82 * j / max(1, len(new))) / n, 5))
+                    phase_of.setdefault(pid, piece_phase[num])
                     colour_of.setdefault(pid, by[num]["paint"]["color"])
+                    homes.setdefault(pid, []).append(by[num])
+    for pid, ps in homes.items():   # a part made into several pieces (two mirrored lanterns): each at its own step
+        if len(ps) > 1 and kit.get("grid"):
+            phase_of[pid] = _phase_where(ps, piece_phase, kit["grid"])
     for k, s in enumerate(steps):
         for j, num in enumerate(s.get("new", [])):
             for pid in by[num].get("borrowed", ()):   # a part that is only bits of others: with the first of them
@@ -1537,6 +1570,8 @@ def assembly(kit):
             spans.append((t["number"], end))
     for k, s in enumerate(steps):
         data["steps"][k]["bench"] = s.get("kind") == "glue" and any(a < s["number"] < b for a, b in spans)
+        inner = [a for a, b in spans if a <= s["number"] < max(b, a + 1)]   # at the bench: the sub-assembly on its own
+        data["steps"][k]["from"] = round((max(inner) - 1) / n, 5) if inner else 0
     js = ASSEMBLY_JS.replace("__KIT__", json.dumps(data)).replace("__COLOURS__", json.dumps(list(STEP_COLOURS)))
     html, _ = render.build_html(g, None, solid=render.solid_payload(scene, g, phase_of), extra=js)
     return html

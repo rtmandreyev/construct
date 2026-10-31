@@ -127,7 +127,8 @@ construct kit examples/toyota-land-cruiser-fj62/scene.json --out fj62-kit/ --mat
 
 - **Pieces.** Each part becomes pieces of its own at the kit's scale (1:24 by default, `--scale`). Where two
   parts overlap, the later one is trimmed, so they meet flush and fit when glued; mirrored copies (four
-  wheels, two mirrors) are separate pieces; a bit too small to print is merged into the piece it touches.
+  wheels, two mirrors) are separate pieces; a bit too small to print, or so thin it would chip or break (a
+  hinge leaf, a long base plate), is moulded with the piece it touches, as a kit does.
   Each piece's surface is snapped back onto its parts' own surfaces, so a round part prints round and a flat
   face flat; a piece that is one solid the trimming never touched is printed exactly as it is.
   The parts drawn only in lines (seams, grilles) are engraved into the pieces they lie on, as a kit's
@@ -159,7 +160,8 @@ construct kit examples/toyota-land-cruiser-fj62/scene.json --out fj62-kit/ --mat
 - **In 3D** (`assembly.html`): the same steps on the construct's solid view in the kit's paints, on a light
   backdrop. The step's instructions are big at the top, with a line from each numbered piece to the piece
   itself; each step's pieces drop into place with their edges lit, their paint unchanged, while what is built
-  stays as it is; the camera goes to them; Previous, Play, Next and Finished at the bottom.
+  stays as it is; the camera goes to them. At the bench only the sub-assembly being built is shown, close up,
+  until it is fitted. Previous, Play, Next and Finished at the bottom.
   Drag to turn it, rewatch any step, or open `#step-N`.
 - **Checked before printing:** pieces too small to handle, slivers (thinner than 1.5 mm and short) and fragile
   blades (as thin and long), pieces that touch nothing, merges that came out in several pieces, pieces
@@ -169,7 +171,7 @@ construct kit examples/toyota-land-cruiser-fj62/scene.json --out fj62-kit/ --mat
 agent or model) reads `kit.json` and the booklet's pictures and answers with a plan, parts to merge into one
 piece, small parts to keep, clear parts, parts that are not clear though their names say glass (`opaque`: a
 chrome mirror glass), which `--plan kit-plan.json` applies to the next build. A merged piece is built at its
-largest part's stage. What holds the glass (a windscreen frame, a window seal) is never taken for glass.
+largest part's stage. What holds the glass (a windscreen frame, a window seal, a lens's ring or button) is never taken for glass.
 
 ## Printers: the largest print and every detail
 

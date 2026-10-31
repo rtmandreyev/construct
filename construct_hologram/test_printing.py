@@ -515,8 +515,35 @@ class Kit(unittest.TestCase):
             page = Path(tmp, "assembly.html").read_text(encoding="utf-8")
             self.assertIn("K.steps.length", page)                                   # the step-by-step script
             self.assertIn('"kind": "bench"', page)                                  # with its bench steps
+            data = json.loads(page.split("var K = ", 1)[1].split(", COLS = ", 1)[0])
+            for s in data["steps"]:   # at the bench the sub-assembly is shown on its own, from its first step on
+                if s["kind"] == "bench":
+                    self.assertEqual(s["from"], s["window"][0])
+            self.assertTrue(any(s["kind"] == "fit" and s["from"] == 0 for s in data["steps"]))   # fitted: the model
             self.assertIn("hologram-solid", page)
             self.assertIn("assembly.html#step-", Path(tmp, "booklet.html").read_text(encoding="utf-8"))
+
+    def test_each_piece_of_a_part_appears_at_its_own_step(self):
+        grid = printing._Grid((0, 0, 0), (1, 1, 1), 0.1, 0)   # the kit's grid is Z up: scene (x, y, z) is (x, -z, y)
+        left = {"number": 3, "cols": {(1, 1): 1 << 1}, "centre": [0.15, 0.15, -0.15]}
+        right = {"number": 9, "cols": {(8, 8): 1 << 8}, "centre": [0.85, 0.85, -0.85]}
+        at = kit_mod._phase_where([left, right], {3: 0.1, 9: 0.6}, grid)
+        self.assertEqual(at((0.15, 0.15, -0.15)), 0.1)                        # in the left copy's voxels
+        self.assertEqual(at((0.85, 0.85, -0.85)), 0.6)
+        self.assertEqual(at((0.9, 0.5, -0.9)), 0.6)                           # nearer the right one
+
+    def test_slivers_and_long_thin_pieces_are_moulded_with_what_they_touch(self):
+        from . import export
+        sc = scene_of(dict(box("chassis", [0.30, 0.02, 0.14], [0, 0.01, 0]), stage=0),
+                      dict(box("badge", [0.008, 0.001, 0.006], [0.05, 0.0205, 0]), stage=1),          # a 0.5 mm chip
+                      dict(box("trim-strip", [0.20, 0.001, 0.01], [0, 0.0205, 0.05]), stage=1),       # 100 mm, 0.5 thick
+                      dict(box("visor-glass", [0.20, 0.001, 0.01], [0, 0.0205, -0.05]), stage=1))
+        k = kit_mod.make(sc, size=150)   # at the kit's own detail, as thin as a wall comes out
+        self.assertEqual([p["name"] for p in k["pieces"]], ["chassis", "visor-glass"])
+        self.assertEqual(k["pieces"][0]["parts"], ["badge", "chassis", "trim-strip"])
+        self.assertIn("fragile", {p["code"] for p in k["report"]["problems"]})   # no clear plastic to go with: named
+        self.assertFalse(export.is_glass_name("lens-release-button"))           # a lens's button is not clear plastic
+        self.assertTrue(export.is_glass_name("rear-ocular-glass"))
 
     def test_the_kit_files(self):
         from . import kit

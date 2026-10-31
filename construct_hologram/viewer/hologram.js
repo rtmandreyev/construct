@@ -271,10 +271,10 @@ void main() {
   const SOLID_FS = `#version 300 es
 precision highp float;
 in vec3 vWorld; in vec3 vNrm; in vec3 vBase; in float vPhase;
-uniform vec3 uEye; uniform float uBuild; uniform float uClear; uniform vec2 uHi; uniform float uReveal;
+uniform vec3 uEye; uniform float uBuild; uniform float uClear; uniform vec2 uHi; uniform float uReveal; uniform float uFrom;
 out vec4 o;
 void main() {
-  if (vPhase > uBuild + 0.0005) discard;
+  if (vPhase > uBuild + 0.0005 || vPhase < uFrom - 1e-4) discard;   // uFrom: a sub-assembly at the bench, on its own
   float hi = (vPhase >= uHi.x && vPhase < uHi.y) ? 1.0 : 0.0;   // the pieces of the step being shown
   float reveal = smoothstep(vPhase, vPhase + uReveal, uBuild);
   vec3 v = normalize(uEye - vWorld);
@@ -1014,7 +1014,7 @@ void main() {
       const u = common(this.programs.solid), so = this.solid;
       gl.uniform3fv(u.uLo, so.lo); gl.uniform3fv(u.uSpan, so.span);
       gl.uniform1f(u.uFly, this.opt.fly || 0); gl.uniform2fv(u.uHi, this.opt.highlight || [0, 0]);
-      gl.uniform1f(u.uReveal, this.opt.reveal || 0.04);
+      gl.uniform1f(u.uReveal, this.opt.reveal || 0.04); gl.uniform1f(u.uFrom, this.opt.from || 0);
       gl.bindVertexArray(so.vao);
       gl.depthFunc(gl.LEQUAL); gl.depthMask(true);
       gl.uniform1f(u.uClear, 0);
@@ -1036,8 +1036,8 @@ void main() {
       gl.depthMask(false);
     }
 
-    // artwork faces (supplied bytes only), then the labels' text
-    if (this.art.length) {
+    // artwork faces (supplied bytes only), then the labels' text; not while a kit's sub-assembly is shown alone
+    if (this.art.length && !(solidView && this.opt.from)) {
       const u = common(this.programs.art);
       const certLight = { verified: 1.0, user_supplied: 0.95, traced: 0.78, inferred: 0.78, decorative: 0.6 };
       // images and text sit a hair in front of their surface (and of a clear lid over them)
@@ -1377,7 +1377,7 @@ void main() {
         if (o.sheet !== undefined) opt.sheet = o.sheet;
         if (o.open !== undefined) { opt.open = o.open; holo.opt.open = o.open; }
         if (o.solid !== undefined) { opt.solid = !!o.solid; holo.opt.solid = opt.solid; setUi(); }
-        ["build", "highlight", "fly", "reveal"].forEach((k) => { if (o[k] !== undefined) holo.opt[k === "build" ? "buildTo" : k] = o[k]; });
+        ["build", "highlight", "fly", "reveal", "from"].forEach((k) => { if (o[k] !== undefined) holo.opt[k === "build" ? "buildTo" : k] = o[k]; });
         frame(); return true; },
       camera() { const c = holo.lastCamera; return c ? { target: c.target, yaw: c.yaw, pitch: c.pitch, dist: c.dist } : null; },
       project(p) { const c = holo.lastVP && project(holo.lastVP, p); const r = canvas.getBoundingClientRect();
