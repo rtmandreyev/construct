@@ -80,8 +80,8 @@ def solid_payload(scene, geometry, phase_of=None):
     solid compile as the 3D export, packed small. Each vertex carries its part's style in `geometry` (so the
     opening, the stages and provenance colours move it as they move the lines), its build phase and a smooth
     normal; glass comes last, drawn see-through. None when the scene has no surfaces. `phase_of` (part id ->
-    phase) builds the parts in another order (a kit's steps: each piece whole, at once); a part it leaves out
-    is never built."""
+    phase, or a function of a triangle's middle: a part made into several pieces) builds the parts in another
+    order (a kit's steps: each piece whole, at once); a part it leaves out is never built."""
     from . import export as export_mod, scene as scene_mod
     solid = scene_mod.compile_scene(scene, solid=True)
     styles, parts = geometry["styles"], geometry["parts"]
@@ -108,13 +108,14 @@ def solid_payload(scene, geometry, phase_of=None):
         tris = by_part[pi]
         normals = export_mod.smooth_normals([tuple(c[:3] for c in t) for t in tris])
         out = clear if pi in glassy else opaque
+        own = phase_of.get(parts[pi]["id"], 1.0) if phase_of is not None else None
         for ti, t in enumerate(tris):
+            ph = own(tuple(sum(c[a] for c in t) / 3 for a in range(3))) if callable(own) else own
             for j, c in enumerate(t):
                 n = normals[3 * ti + j]
                 key = (tuple(int(round((c[a] - lo[a]) / span[a] * 65535)) for a in range(3)),
                        tuple(max(-127, min(127, int(round(n[a] * 127)))) for a in range(3)),
-                       style_of[pi], int(round(max(0.0, min(1.0, c[3] if phase_of is None
-                                                            else phase_of.get(parts[pi]["id"], 1.0))) * 65535)))
+                       style_of[pi], int(round(max(0.0, min(1.0, c[3] if ph is None else ph)) * 65535)))
                 if key not in index:
                     index[key] = len(verts)
                     verts.append(key)

@@ -153,7 +153,8 @@ GLASS_WORDS = ("glass", "glazing", "window", "windscreen", "windshield", "visor"
 # what holds or works the glass is not glass: a windscreen frame, a window seal or crank
 NOT_GLASS_WORDS = ("frame", "surround", "seal", "rim", "trim", "bezel", "pillar", "post", "wiper", "rubber", "gasket",
                    "divider", "rail", "channel", "washer", "crank", "winder", "regulator", "sill", "lever", "hinge",
-                   "catch", "latch", "handle", "bracket", "mount", "stay", "strut", "louvre", "shade", "blind", "sticker")
+                   "catch", "latch", "handle", "bracket", "mount", "stay", "strut", "louvre", "shade", "blind", "sticker",
+                   "button", "release", "annulus", "ring", "cell", "barrel")
 
 
 def is_glass_name(pid):
