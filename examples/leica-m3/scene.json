@@ -1739,6 +1739,56 @@
       ]
     },
     {
+      "id": "lens-mount-sleeve",
+      "label": "Lens Mount Sleeve",
+      "role": "structure",
+      "stage": 4,
+      "certainty": "inferred",
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.0215,
+            0.0
+          ],
+          [
+            0.0215,
+            0.01025
+          ],
+          [
+            0.016,
+            0.01025
+          ],
+          [
+            0.016,
+            0.0
+          ],
+          [
+            0.0215,
+            0.0
+          ]
+        ],
+        "segments": 48,
+        "meridians": 8
+      },
+      "at": [
+        0.0053,
+        0.031,
+        0.01675
+      ],
+      "source": "a6",
+      "basis": [
+        "lens-profile",
+        "lens-collapsed-length"
+      ],
+      "note": "The fixed outer tube of the collapsible lens, seated in the bayonet, in which the inner barrel slides; inferred from the collapsible design, mostly hidden behind the focus ring.",
+      "rotate": [
+        90,
+        0,
+        0
+      ]
+    },
+    {
       "id": "focus-ring",
       "label": "Focus Ring",
       "role": "structure",
@@ -2005,6 +2055,89 @@
       }
     },
     {
+      "id": "lens-cell",
+      "label": "Lens Cell",
+      "role": "detail",
+      "stage": 6,
+      "certainty": "inferred",
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.0151,
+            0.0
+          ],
+          [
+            0.0151,
+            0.0117
+          ],
+          [
+            0.0127,
+            0.0117
+          ],
+          [
+            0.0127,
+            0.0096
+          ],
+          [
+            0.0123,
+            0.0096
+          ],
+          [
+            0.0123,
+            0.0074
+          ],
+          [
+            0.0108,
+            0.0074
+          ],
+          [
+            0.0108,
+            0.0056
+          ],
+          [
+            0.0104,
+            0.0056
+          ],
+          [
+            0.0104,
+            0.0024
+          ],
+          [
+            0.012,
+            0.0024
+          ],
+          [
+            0.012,
+            0.0
+          ],
+          [
+            0.0151,
+            0.0
+          ]
+        ],
+        "segments": 48,
+        "meridians": 4
+      },
+      "at": [
+        0.0053,
+        0.031,
+        0.028
+      ],
+      "source": "section",
+      "basis": [
+        "optical-elements",
+        "optical-groups",
+        "optical-profile"
+      ],
+      "note": "The stepped cell inside the barrel that seats each glass element at its rim, with the iris slot between the groups; inferred from the section diagram.",
+      "rotate": [
+        90,
+        0,
+        0
+      ]
+    },
+    {
       "id": "optical-element-1",
       "label": "Optical Element 1",
       "role": "identity",
@@ -2162,7 +2295,7 @@
       "at": [
         0.0053,
         0.031,
-        0.0385
+        0.0388
       ],
       "source": "section",
       "basis": [
@@ -4343,6 +4476,7 @@
         "aperture-ring",
         "front-optical-head",
         "lens-name-annulus",
+        "lens-cell",
         "optical-element-1",
         "optical-element-2",
         "optical-element-3",
@@ -4377,6 +4511,7 @@
         "aperture-ring",
         "front-optical-head",
         "lens-name-annulus",
+        "lens-cell",
         "optical-element-1",
         "optical-element-2",
         "optical-element-3",
