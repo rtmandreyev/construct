@@ -9,7 +9,7 @@ extends RefCounted
 
 static func connect_joints(root: Node3D) -> int:
 	var bodies := {}
-	for b in root.find_children("*", "RigidBody3D", true, false):
+	for b in root.find_children("*", "PhysicsBody3D", true, false):   # a building's fixed body is static
 		var c = b.get_meta("extras", {}).get("construct", {})
 		if c.has("piece"):
 			bodies[c["piece"]] = b

@@ -97,9 +97,8 @@ def solid_payload(scene, geometry, phase_of=None):
                                                      for j in range(3)))
     if not by_part:
         return None
-    looks = {p["id"]: p.get("look", {}) for p in scene["parts"]}
-    glassy = {pi for pi in by_part
-              if export_mod.is_glass_name(parts[pi]["id"]) or looks.get(parts[pi]["id"], {}).get("fill") == "glass"}
+    # glass by its name (a window, a windscreen): `look.fill` "glass" is how the light draws a part, not its material
+    glassy = {pi for pi in by_part if export_mod.is_glass_name(parts[pi]["id"])}
     corners = [c for tris in by_part.values() for t in tris for c in t]
     lo = [min(c[a] for c in corners) for a in range(3)]
     hi = [max(c[a] for c in corners) for a in range(3)]

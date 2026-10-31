@@ -124,5 +124,16 @@ again.
 | too dark/faint | role `mass`/`identity` instead of `structure`; `look.glow`; fewer competing parts |
 | wrong rotation axis in motion | axis and pivot are world values for the first copy |
 | labels collide | fewer annotations, `offset` them apart |
+| a part pokes through another in `solid.png` (a fender edge up through a bonnet, a pillar over the roof) | `check --fit` names it and where: trim it to end at the other's face |
+| a part buried in another (`check --fit`) | usually the other is far too thick (a fender that swallows the strut tower): thin it; or the buried part is not needed |
 
 Fix, `check`, `review` again, within the tier's review rounds.
+
+## Refining the solid
+
+The light forgives what a solid, a print or a kit does not. When a construct will be printed, made a kit or
+exported for an engine, refine its solid: open the page and press **S**, run `construct check scene.json --fit`
+(the parts that poke through others where it shows, and the parts buried in others, the most visible first;
+some are meant, a part set through another by design), fix the scene so parts meet at faces, and `review`
+again: `solid.png` shows the result, and the critic sees it too. Proportions are checked as before, against the
+references with `compare`.

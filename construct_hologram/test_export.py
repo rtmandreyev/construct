@@ -660,6 +660,14 @@ class Hosts(unittest.TestCase):
         self.assertEqual((j["type"], j["to"], j["amount"], j["axis"]), ("hinge", "toyota-land-cruiser-fj62-body", 85, [-1.0, 0.0, 0.0]))
         self.assertNotIn("joint", bodies["toyota-land-cruiser-fj62-body"])
 
+    def test_a_glued_building_stands_still_and_its_doors_still_hang(self):
+        doc = glb_of(load_example("tea-house"), pieces="glued")[0]
+        motions = {n["extras"]["construct"]["piece"]: n["extensions"]["OMI_physics_body"]["motion"]["type"]
+                   for n in doc["nodes"] if "motion" in n.get("extensions", {}).get("OMI_physics_body", {})}
+        fixed = [k for k, v in motions.items() if v == "static"]
+        self.assertEqual(len(fixed), 1)                                  # the house itself: it does not topple
+        self.assertTrue(all(v == "dynamic" for k, v in motions.items() if k not in fixed))   # the shoji slides
+
     @unittest.skipUnless(os.environ.get("CONSTRUCT_GODOT"), "set CONSTRUCT_GODOT to the Godot binary to run")
     def test_godot_holds_glued_pieces_together_and_opens_the_tailgate_on_its_hinge(self):
         with tempfile.TemporaryDirectory() as d:

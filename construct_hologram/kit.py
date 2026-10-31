@@ -322,7 +322,7 @@ def make(scene, scale=SCALE, size=None, detail=DETAIL_MM, wall=WALL_MM, plan=Non
             moves.setdefault(pid, set()).add(a["id"])
     for p in pieces:
         p["moves"] = tuple(sorted(moves.get(p["head"], ())))
-    raw = _order(pieces, grid.n)
+    raw = _order(pieces, grid.n, scene.get("subject", {}).get("category") == "architecture")
     _line_art(scene, pieces, grid)
     for p in pieces:
         p["mesh"], p["size_mm"], p["down"] = _piece_mesh(p["cols"], detail)
@@ -407,7 +407,7 @@ def _touches(pieces, n):
     return touch
 
 
-def _order(pieces, n):
+def _order(pieces, n, ground_up=False):
     """Which piece each is glued to, and the order a builder glues them in.
 
     The pieces form a tree grown from the base (the largest piece of the first stage) along the strongest joins:
@@ -434,7 +434,9 @@ def _order(pieces, n):
     # how foundational a piece is: its sub-assembly in the plan, its stage, then how much holds onto it
     # (what opens comes after what stays put, and within a door the largest piece holds the rest; the construct's
     # stages say how its light is built, not what holds what, so they only break ties)
-    found = lambda p: (p.get("group", 0), len(p.get("moves") or ()),
+    # (a building goes up from the ground: what starts lower holds what starts higher)
+    low = {id(p): _bbox(p["cols"])[4] // 3 if ground_up else 0 for p in pieces}
+    found = lambda p: (p.get("group", 0), len(p.get("moves") or ()), low[id(p)],
                        -_count(p["cols"]) if p.get("moves") else -held[id(p)], p["stage"], -_count(p["cols"]))
     parent = {}
     for p in pieces:   # each onto the most firmly joined piece that is more foundational than it

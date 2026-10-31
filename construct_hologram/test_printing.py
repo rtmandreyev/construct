@@ -381,6 +381,20 @@ class Kit(unittest.TestCase):
         shell = next(p for p in k["pieces"] if "shell" in p["parts"])
         self.assertEqual(shell["stage"], 1)   # the shell's, not the small tower's earlier stage
 
+    def test_the_fit_names_what_pokes_through_and_what_is_buried_not_what_is_set_in(self):
+        from . import fit
+        sc = scene_of(box("body", [0.2, 0.1, 0.1], [0, 0.05, 0]),
+                      box("aerial", [0.01, 0.16, 0.01], [0.05, 0.07, 0.0]),            # in the body, its tip out the top
+                      box("badge", [0.04, 0.02, 0.01], [0, 0.05, 0.052]),             # set into the front face
+                      box("block", [0.02, 0.02, 0.02], [-0.05, 0.05, 0]))             # wholly inside
+        sc["parts"][1]["shape"]["size"] = [0.01, 0.16, 0.01]
+        sc["parts"][1]["at"] = [0.05, 0.09, 0.0]                                      # from y 0.01 to 0.17: out of the top
+        r = fit.check(sc, cells=80)
+        codes = {(i["code"], i["parts"][0]) for i in r["issues"]}
+        self.assertIn(("buried", "block"), codes)
+        self.assertNotIn("badge", {i["parts"][0] for i in r["issues"]})               # set in, not poking through
+        self.assertIn("fit:", fit.report(r))
+
     def test_a_kit_glues_like_a_kit_designer(self):
         # found by two live runs' kit critics: glass went into a closed body, a pillar was glued to a door, a seat to
         # the dash, steps ran in piece-number order, clear and opaque pieces shared a plate

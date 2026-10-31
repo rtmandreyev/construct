@@ -774,9 +774,11 @@ def to_gltf(g, wire="edges", pose="closed", materials=None, wire_radius=None, me
             if key in joint_of:
                 extra["joint"] = dict(joint_of[key], to=names[joint_of[key]["to"]] if joint_of[key]["to"] in names
                                       else names.get(-1))
+            # glued, a building's fixed body stays where it stands (static): a castle on its rock does not topple
+            fixed = glued and key == -1 and g.get("subject", {}).get("category") == "architecture"
             body = node({"name": _node_name(name), "translation": _sub(centre, head["origin"]), "children": kids,
-                         "extensions": {"OMI_physics_body": {"motion": {"type": "dynamic",
-                                                                        "mass": round(min(max(mass, 0.05), 2000.0), 3)}}},
+                         "extensions": {"OMI_physics_body": {"motion": {"type": "static"} if fixed else {
+                             "type": "dynamic", "mass": round(min(max(mass, 0.05), 2000.0), 3)}}},
                          "extras": {"construct": extra}})
             nodes[head["parent"]].setdefault("children", []).append(body)
             counts["pieces"] = counts.get("pieces", 0) + 1

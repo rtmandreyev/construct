@@ -59,9 +59,12 @@ func _ready():
     ConstructJoints.connect_joints($Car)   # a HingeJoint3D or SliderJoint3D per joint, with its limits
 ```
 
-A hinge opens in the construct's direction up to its angle; a slide or lift travels its distance. Measured
+A building's fixed body is static (a castle on its rock stays where it stands; its doors still hang on
+it). A hinge opens in the construct's direction up to its angle; a slide or lift travels its distance. Measured
 in Godot 4.7: the glued FJ62 is two bodies that settle within 2 cm, and its tailgate, released, falls open
-on its hinge and stops at 86 degrees (its 85, on a soft limit). The tests run this in Godot.
+on its hinge and stops at 86 degrees (its 85, on a soft limit). All 28 gallery constructs export glued and get
+every joint they ask for; what tips over (a guitar stood on its end, a tape deck on its feet) is physics, not
+glue. The tests run this in Godot.
 
 ## Names Godot would misread
 

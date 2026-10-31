@@ -137,6 +137,8 @@ construct kit examples/toyota-land-cruiser-fj62/scene.json --out fj62-kit/ --mat
   foundational than it (the plan's earlier sub-assembly, an earlier stage, or the piece more holds onto), with
   more weight where it rests on the piece below and less into glass. A part that stays put is never glued to
   one that opens (a pillar is not glued to a door), and what opens takes its own glass and handles.
+- **Buildings go up from the ground:** in a building, what starts lower holds what starts higher, so the
+  plinth is the base and the spire goes on last.
 - **The order a builder works in.** A piece's own attachments go on at the bench before it is fitted: the
   glass into its shell before the shell meets the chassis, a tyre onto its rim before the wheel goes on. A
   shell goes on after the interior it closes over, and what opens (doors, bonnet, tailgate) is hung last.

@@ -184,6 +184,13 @@ side, printed as worksheets and cited. Plan:
   came apart; the kit booklet's pictures keep their dark background when opened on their own (they
   carried a literal `100%%`); `check` says when a file is a trace, not a scene; a critique records the
   run's round.
+- **`check --fit`:** the parts that poke through others where it shows (a bit of a part out on the far side
+  of another, seen from outside) and the parts buried in others, each with where it is, the most visible first,
+  so an agent or a person can refine a solid part by part. A part merely set into another is not reported.
+- **Glued buildings stand still:** a glued building's fixed body is static in Godot (a castle on its rock does
+  not topple; its doors still hang on it, `construct_joints.gd` joins to static bodies too). All 28 gallery
+  constructs export glued with every joint made.
+- **Kits of buildings go up from the ground:** in a building what starts lower holds what starts higher.
 - **Kits glued and ordered as a kit designer would:** each piece onto the most firmly joined, more
   foundational piece (never a fixed part onto one that opens; a door's glass into the door); sub-assemblies
   built at the bench before they are fitted (glass into a shell before it meets the chassis, a wheel before
