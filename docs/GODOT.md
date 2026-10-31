@@ -6,6 +6,7 @@ you ask, a collider per part or every part a body of its own. Tested with Godot 
 ```sh
 construct export scene.json --out car.glb --merge --wire seams --colliders   # a prop: few draw calls, collisions
 construct export scene.json --out car.glb --pieces                           # a prop that breaks apart
+construct export scene.json --out car.glb --pieces glued                     # a prop that holds together, doors on hinges
 ```
 
 Drop the `.glb` into the project (`res://`) and Godot imports it; drag it into a scene.
@@ -19,6 +20,7 @@ Drop the `.glb` into the project (`res://`) and Godot imports it; drag it into a
 | periodic motion (a spinning reel) | the `idle` animation |
 | `--colliders` | a StaticBody3D with a box CollisionShape3D around each part's surfaces (`<part>-convcolonly`); a moving part's box moves with its joint (static boxes may overlap; they never push each other) |
 | `--pieces` | the object as the pieces it would break into, each a RigidBody3D with several convex shapes: give the scene a floor and it falls apart |
+| `--pieces glued` | one RigidBody3D for everything that stays put, and one for each hinged or sliding part (a door, a tailgate, a crystal), its joint in its metadata; `construct_joints.gd` hangs it on its hinge |
 | sizes | metres, Y up, as Godot expects |
 
 `--pieces` is for break-apart and assembly mechanics. The pieces are made to settle, not burst:
@@ -38,6 +40,28 @@ part had 249), and released on a floor, none travels more than 1.5 m in two seco
 shapes are written with the glTF physics extensions `OMI_physics_body` and `OMI_physics_shape`, which
 Godot imports; an engine that does not read them gets the pieces as named nodes and meshes. Masses are in
 proportion to each piece's size, not real. The tests run this in Godot.
+
+## Glued: a car that stays a car
+
+Loose pieces have nothing holding them to each other, so a car released on a floor slumps like an
+unglued kit: the body shell tips, the spare rolls away. `--pieces glued` keeps what does not move as one
+body (a compound of every part's convex shapes) and makes each articulation chain a body of its own, its
+joint in the node's extras: the body it hangs on, the pivot and axis in the construct's frame, and the
+travel (`{"construct": {"joint": {"type": "hinge", "to": "...-body", "pivot": [...], "axis": [...], "amount": 85}}}`).
+Godot imports extras as metadata but not joints (Godot 4.7 reads no glTF joint extension), so copy
+[`hosts/godot/construct_joints.gd`](../hosts/godot/construct_joints.gd) into the project and call it once
+the construct is in the scene:
+
+```gdscript
+const ConstructJoints = preload("res://construct_joints.gd")
+
+func _ready():
+    ConstructJoints.connect_joints($Car)   # a HingeJoint3D or SliderJoint3D per joint, with its limits
+```
+
+A hinge opens in the construct's direction up to its angle; a slide or lift travels its distance. Measured
+in Godot 4.7: the glued FJ62 is two bodies that settle within 2 cm, and its tailgate, released, falls open
+on its hinge and stops at 86 degrees (its 85, on a soft limit). The tests run this in Godot.
 
 ## Names Godot would misread
 

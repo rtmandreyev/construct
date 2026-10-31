@@ -184,6 +184,10 @@ side, printed as worksheets and cited. Plan:
   came apart; the kit booklet's pictures keep their dark background when opened on their own (they
   carried a literal `100%%`); `check` says when a file is a trace, not a scene; a critique records the
   run's round.
+- **Glued pieces:** `export --pieces glued` keeps what does not move as one body and gives each articulation
+  chain a body of its own with its joint in its extras (pivot, axis, travel, the body it hangs on);
+  `hosts/godot/construct_joints.gd` turns them into Godot hinges and sliders. A loose car slumped apart on a
+  floor; the glued FJ62 settles within 2 cm and its tailgate falls open on its hinge to its limit.
 - **S for solid:** every built page carries the construct's surfaces (packed: quantised positions, normals,
   each part's style and build phase); **S** or `?mode=solid` shows them lit like a modelling program, opening
   and building with the lines, coloured by provenance with **P**. Review writes `solid.png` and the critic

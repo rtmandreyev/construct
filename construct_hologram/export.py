@@ -583,7 +583,11 @@ def to_gltf(g, wire="edges", pose="closed", materials=None, wire_radius=None, me
     that does not move is merged into one mesh per material (a game engine's handful of draw calls);
     the parts that move keep their own nodes, pivots and animations. With `colliders`, each part's surfaces
     get a box around them, `<part>-convcolonly` (a collision shape in Godot, moving with its joint); with
-    `pieces`, each part's mesh is `<part>-rigid`, a body of its own that physics can knock apart."""
+    `pieces`, each part's mesh is `<part>-rigid`, a body of its own that physics can knock apart; `pieces="glued"`,
+    everything that does not move is one body and each hinged or sliding part one more, its joint in its extras
+    (`construct.joint`: the body it hangs on, pivot, axis, travel) for an engine to connect (docs/GODOT.md)."""
+    glued = pieces == "glued"
+    pieces = bool(pieces)
     if pieces and merge:
         raise ExportError("--pieces keeps every part apart; it does not go with --merge")
     if quality and (merge or pieces):
@@ -677,7 +681,7 @@ def to_gltf(g, wire="edges", pose="closed", materials=None, wire_radius=None, me
 
     shapes, copies, pnode_of = [], [], {}   # OMI_physics_shape's shapes; the pieces, gathered, then made bodies
 
-    def bodies(part, gr, parent, origin):
+    def bodies(part, gr, parent, origin, chain=-1):
         """`pieces`: each copy of a part (a mirrored tyre, a repeated window) a rigid body of its own
         (OMI_physics_body, which Godot imports as a RigidBody3D), its mesh and several convex shapes inside."""
         tris = gr["tris"]
@@ -706,17 +710,34 @@ def to_gltf(g, wire="edges", pose="closed", materials=None, wire_radius=None, me
         for n_copy, (ci, comps) in enumerate(sorted(by_copy.items())):
             copies.append({"part": part, "gr": gr, "comps": comps, "segs": segs_of.get(ci, {}), "parent": parent,
                            "origin": origin, "moving": origin != (0.0, 0.0, 0.0) or parent != pnode_of[part["id"]],
+                           "chain": chain,
                            "name": part["id"] if len(by_copy) == 1 else "%s-%d" % (part["id"], n_copy + 1),
                            "copy": n_copy + 1,
                            "hulls": [h for comp in comps for h in _piece_shapes(tris, comp, cell, inset)]})
 
     def emit_bodies():
         """The pieces, as bodies: interlocked pieces together (an assembly), each with its parts' meshes."""
-        groups_of = {}
-        for i, gi in enumerate(_assemblies(copies)):
-            groups_of.setdefault(gi, []).append(copies[i])
-        for members in groups_of.values():
-            members.sort(key=lambda c: -sum(len(h) for h in c["hulls"]))
+        groups_of, joint_of = {}, {}
+        if glued:   # one body for what stays put; one for each articulation chain, its joint in its extras
+            for c in copies:
+                groups_of.setdefault(c["chain"], []).append(c)
+            for chain in groups_of:
+                if chain >= 0:
+                    a = arts[joints[chain][-1]]
+                    outer = next((k for k in groups_of if k >= 0 and list(joints[k]) == list(joints[chain][:-1])), -1)
+                    joint_of[chain] = {"type": a["type"], "articulation": a["id"], "to": outer,
+                                       "pivot": [round(x, 6) for x in a.get("pivot") or (0.0, 0.0, 0.0)],
+                                       "axis": [round(x, 6) for x in a["axis"]], "amount": a["amount"],
+                                       "unit": a.get("unit", "deg" if a["type"] in ("hinge", "turn") else "m")}
+        else:
+            for i, gi in enumerate(_assemblies(copies)):
+                groups_of.setdefault(gi, []).append(copies[i])
+        names = {}
+        for key, members in groups_of.items():
+            members.sort(key=lambda c: (c["moving"] and key == -1 and glued, -sum(len(h) for h in c["hulls"])))
+            if glued:
+                names[key] = "%s-body" % g["id"] if key == -1 else "%s-%s" % (g["id"], joint_of[key]["articulation"])
+        for key, members in groups_of.items():
             head = members[0]
             pts = [p for c in members for comp in c["comps"] for i in comp for p in c["gr"]["tris"][i]]
             centre = _mean(pts)
@@ -748,11 +769,15 @@ def to_gltf(g, wire="edges", pose="closed", materials=None, wire_radius=None, me
                     shapes.append({"type": "convex", "convex": {"mesh": len(meshes) - 1}})
                     kids.append(node({"name": "%s-shape-%d" % (c["name"], len(shapes) - 1),
                                       "extensions": {"OMI_physics_body": {"collider": {"shape": len(shapes) - 1}}}}))
-            name = head["name"] if len(members) == 1 else head["name"] + "-assembly"
+            name = names.get(key) or (head["name"] if len(members) == 1 else head["name"] + "-assembly")
+            extra = {"piece": name, "parts": [c["name"] for c in members]}
+            if key in joint_of:
+                extra["joint"] = dict(joint_of[key], to=names[joint_of[key]["to"]] if joint_of[key]["to"] in names
+                                      else names.get(-1))
             body = node({"name": _node_name(name), "translation": _sub(centre, head["origin"]), "children": kids,
                          "extensions": {"OMI_physics_body": {"motion": {"type": "dynamic",
                                                                         "mass": round(min(max(mass, 0.05), 2000.0), 3)}}},
-                         "extras": {"construct": {"piece": name, "parts": [c["name"] for c in members]}}})
+                         "extras": {"construct": extra}})
             nodes[head["parent"]].setdefault("children", []).append(body)
             counts["pieces"] = counts.get("pieces", 0) + 1
         used_ext.update(("OMI_physics_body", "OMI_physics_shape"))
@@ -880,7 +905,7 @@ def to_gltf(g, wire="edges", pose="closed", materials=None, wire_radius=None, me
                 motion_nodes[slot].append((n, base))
                 parent, origin = n, piv
             if pieces and gr["tris"]:
-                bodies(part, gr, parent, origin)
+                bodies(part, gr, parent, origin, jt)
                 continue
             n = node({"name": "%s:mesh" % part["id"], "mesh": mesh,
                       "translation": [-x for x in origin], "extras": {"construct": {"part": part["id"], "role": part["role"]}}})

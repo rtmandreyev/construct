@@ -7,7 +7,7 @@
   review <scene.json> --out DIR [--asset-root DIR]      build, then capture the review set
   video <scene.json> --out FILE.mp4|.gif [--seconds S] [--fps N] [--start S] [--view V]
   export <scene.json> --out FILE.glb|.obj [--wire edges|tubes|none] [--pose closed|open]
-                      [--materials map.json] [--frame y-up|z-up] [--merge] [--colliders] [--pieces]
+                      [--materials map.json] [--frame y-up|z-up] [--merge] [--colliders] [--pieces [glued]]
                                                         a 3D model (docs/EXPORT.md, docs/GODOT.md)
   print <scene.json> --out FILE.stl|.3mf [--size MM | --scale N] [--detail MM] [--wall MM] [--join MM]
                      [--lines engrave|raised] [--bed WxDxH]   one watertight body to 3D print (docs/PRINTING.md)
@@ -465,9 +465,11 @@ def add_commands(sub):
                    help="glTF: merge every part that does not move into one mesh per material (for game engines)")
     p.add_argument("--colliders", action="store_true",
                    help="glTF: a box collider per part, <part>-convcolonly (a collision shape in Godot), moving with its joint")
-    p.add_argument("--pieces", action="store_true",
+    p.add_argument("--pieces", nargs="?", const="loose", choices=("loose", "glued"),
                    help="glTF: the pieces it would break into, each a rigid body with convex shapes (OMI_physics_body; "
-                        "a RigidBody3D in Godot), interlocked parts together, made to settle rather than burst")
+                        "a RigidBody3D in Godot), interlocked parts together, made to settle rather than burst; "
+                        "glued: what stays put is one body and each hinged or sliding part one more, its joint in its "
+                        "extras (docs/GODOT.md connects them)")
     p.add_argument("--quality", action="store_true",
                    help="glTF: each triangle coloured by its smallest angle (green good, amber under 20 degrees, red "
                         "under 10: slivers that subdivide and shade badly)")
@@ -997,7 +999,8 @@ def run(args):
             from . import export as export_mod
             try:
                 s = export_mod.export(load(args.scene), args.out, args.format, args.wire, args.pose, args.materials,
-                                      args.frame, args.wire_radius, args.merge, args.colliders, args.pieces, args.quality)
+                                      args.frame, args.wire_radius, args.merge, args.colliders,
+                                      {None: False, "loose": True}.get(args.pieces, args.pieces), args.quality)
             except export_mod.ExportError as exc:
                 sys.stderr.write("export: %s\n" % exc)
                 return 1

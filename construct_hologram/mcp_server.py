@@ -118,6 +118,8 @@ TOOLS += [
          "colliders": {"type": "boolean", "description": "a box collider per part (Godot: -convcolonly)"},
          "pieces": {"type": "boolean", "description": "the pieces it would break into, each a rigid body with convex "
                                                       "shapes (OMI_physics_body), interlocked parts together"},
+         "glued": {"type": "boolean", "description": "with pieces: what stays put is one body, each hinged or sliding "
+                                                     "part one more, its joint in its extras (Godot: docs/GODOT.md)"},
          "materials": {"type": "object", "description": "a material map: {\"materials\": [{\"parts\": [...], "
                                                         "\"color\": \"#rrggbb\", \"metallic\", \"roughness\"}]}"}},
                      "required": ["document"], "additionalProperties": False},
@@ -268,7 +270,8 @@ V2_TOOLS = {"construct_diagnose": ({"text", "document"}, set()),
             "construct_params_template": ({"archetype", "variant"}, set()),
             "construct_expand_params": ({"params"}, {"params"}),
             "construct_compile": ({"document"}, {"document"}),
-            "construct_export": ({"document", "format", "wire", "pose", "frame", "materials", "merge", "colliders", "pieces"},
+            "construct_export": ({"document", "format", "wire", "pose", "frame", "materials", "merge", "colliders", "pieces",
+                                  "glued"},
                                  {"document"}),
             "construct_print": ({"document", "format", "size", "scale", "detail", "wall", "join", "lines", "printer", "fit",
                                  "compare_printers", "exact"}, {"document"}),
@@ -332,7 +335,8 @@ def _call_v2(name, args):
             out, summary = export.render(built, args.get("format", "glb"), args.get("wire", "edges"),
                                          args.get("pose", "closed"), args.get("materials"), args.get("frame", "y-up"),
                                          merge=bool(args.get("merge", False)), colliders=bool(args.get("colliders", False)),
-                                         pieces=bool(args.get("pieces", False)))
+                                         pieces="glued" if args.get("pieces") and args.get("glued") else
+                                         bool(args.get("pieces", False)))
         except (export.ExportError, scene.SceneError) as exc:
             return _tool_result({"error": str(exc)}, is_error=True)
         if "glb" in out:

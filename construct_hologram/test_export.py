@@ -24,10 +24,55 @@ def load(name):
     return studio.load(str(EXAMPLES / (name + ".json")))
 
 
+def load_example(name):
+    return studio.load(str(ROOT / "examples" / name / "scene.json"))
+
+
 def glb_of(sc, **kw):
     out, _ = export.render(sc, "glb", **kw)
     return export.read_glb(out["glb"])
 
+
+GODOT_GLUE = """extends SceneTree
+const ConstructJoints = preload("res://construct_joints.gd")
+var bodies = []
+var start = {}
+var gate
+var gate_basis
+var frame = 0
+var made = 0
+func _initialize():
+	var root3d = Node3D.new()
+	get_root().add_child(root3d)
+	var floor = StaticBody3D.new()
+	var fs = CollisionShape3D.new()
+	fs.shape = WorldBoundaryShape3D.new()
+	floor.add_child(fs)
+	root3d.add_child(floor)
+	var inst = load(OS.get_cmdline_user_args()[0]).instantiate()
+	root3d.add_child(inst)
+	for b in inst.find_children("*", "RigidBody3D", true, false):
+		bodies.append(b)
+func _physics_process(_d):
+	frame += 1
+	if frame == 1:
+		made = ConstructJoints.connect_joints(get_root().get_child(0).get_child(1))
+		for b in bodies:
+			start[b] = b.global_transform
+			if b.get_meta("extras", {}).get("construct", {}).has("joint"):
+				gate = b
+	if frame == 240:
+		var far = 0.0
+		for b in bodies:
+			if b != gate:
+				far = max(far, b.global_position.distance_to(start[b].origin))
+		var rel_now = gate.global_transform.basis
+		var rel0 = start[gate].basis
+		var turn = rad_to_deg((rel0.inverse() * rel_now).get_rotation_quaternion().get_angle())
+		print("RESULT ", JSON.stringify({"bodies": bodies.size(), "joints": made, "far": far, "gate_turn": turn}))
+		quit()
+	return false
+"""
 
 GODOT_CHECK = """extends SceneTree
 
@@ -605,6 +650,32 @@ class Hosts(unittest.TestCase):
         a = [(x, y, z) for x in (0, 1) for y in (0, 1) for z in (0, 1)]
         self.assertTrue(export._intersect(a, [(p[0] + 0.5, p[1], p[2]) for p in a]))
         self.assertFalse(export._intersect(a, [(p[0] + 1.5, p[1] + 0.2, p[2]) for p in a]))
+
+    def test_glued_pieces_are_one_body_and_one_per_joint_with_the_joint_in_its_extras(self):
+        doc = glb_of(load_example("toyota-land-cruiser-fj62"), pieces="glued")[0]
+        bodies = {n["extras"]["construct"]["piece"]: n["extras"]["construct"] for n in doc["nodes"]
+                  if "motion" in n.get("extensions", {}).get("OMI_physics_body", {})}
+        self.assertEqual(sorted(bodies), ["toyota-land-cruiser-fj62-body", "toyota-land-cruiser-fj62-tailgate-down"])
+        j = bodies["toyota-land-cruiser-fj62-tailgate-down"]["joint"]
+        self.assertEqual((j["type"], j["to"], j["amount"], j["axis"]), ("hinge", "toyota-land-cruiser-fj62-body", 85, [-1.0, 0.0, 0.0]))
+        self.assertNotIn("joint", bodies["toyota-land-cruiser-fj62-body"])
+
+    @unittest.skipUnless(os.environ.get("CONSTRUCT_GODOT"), "set CONSTRUCT_GODOT to the Godot binary to run")
+    def test_godot_holds_glued_pieces_together_and_opens_the_tailgate_on_its_hinge(self):
+        with tempfile.TemporaryDirectory() as d:
+            d = Path(d)
+            export.export(load_example("toyota-land-cruiser-fj62"), d / "car.glb", pieces="glued")
+            (d / "project.godot").write_text('config_version=5\n[application]\nconfig/name="glue"\n', encoding="utf-8")
+            (d / "construct_joints.gd").write_text((ROOT / "hosts" / "godot" / "construct_joints.gd").read_text(), encoding="utf-8")
+            (d / "glue.gd").write_text(GODOT_GLUE, encoding="utf-8")
+            g = os.environ["CONSTRUCT_GODOT"]
+            subprocess.run([g, "--headless", "--path", str(d), "--import"], capture_output=True, timeout=300)
+            r = subprocess.run([g, "--headless", "--path", str(d), "-s", "glue.gd", "--", "res://car.glb"],
+                               capture_output=True, text=True, timeout=300)
+            out = json.loads(next(x for x in r.stdout.splitlines() if x.startswith("RESULT "))[7:])
+            self.assertEqual((out["bodies"], out["joints"]), (2, 1))
+            self.assertLess(out["far"], 0.05)                       # the car stays a car: it settles, it does not slump
+            self.assertTrue(80 <= out["gate_turn"] <= 90, out)     # the tailgate falls open on its hinge to its 85 degrees
 
     @unittest.skipUnless(os.environ.get("CONSTRUCT_GODOT"), "set CONSTRUCT_GODOT to the Godot binary to run")
     def test_godot_imports_colliders_and_pieces_that_fall(self):
