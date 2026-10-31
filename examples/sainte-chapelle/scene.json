@@ -8276,7 +8276,7 @@
         "radius": 2.05,
         "height": 4.800000000000004,
         "sides": 8,
-        "roof": "none"
+        "roof": "flat"
       },
       "at": [
         6.33,
