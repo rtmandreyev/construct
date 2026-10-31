@@ -457,6 +457,19 @@ class Kit(unittest.TestCase):
         self.assertEqual([s.get("times", 1) for s in out], [1, 2, 2])
         self.assertEqual(out[1]["name"], "At the bench: build 2 × the white keys")
 
+    def test_a_small_sub_assembly_inside_another_is_glued_in_place(self):
+        piece = lambda n, name: {"number": n, "name": name, "size_mm": [10, 10, 10]}
+        pieces = [piece(1, "body"), piece(2, "focus-ring"), piece(3, "lock-arm"), piece(4, "lock-button")]
+        st = lambda kind, new, glue, **k: dict({"kind": kind, "stage": 0, "new": new, "pieces": new or [k.get("assembly")],
+                                               "glue": glue}, **k)
+        steps = [st("base", [1], [(1, None)]), st("bench", [2], [(2, None)], assembly=2),
+                 st("bench", [3, 4], [(3, None), (4, 3)], assembly=3), st("fit", [], [(3, 2)], assembly=3, onto=2),
+                 st("fit", [], [(2, 1)], assembly=2, onto=1)]
+        out = kit_mod._flatten(steps, pieces)
+        self.assertEqual([s["kind"] for s in out], ["base", "bench", "fit"])   # the arm and button go on at the bench
+        self.assertEqual(out[1]["glue"], [(2, None), (3, 2), (4, 3)])
+        self.assertEqual(out[1]["name"], "At the bench: build the focus ring, with the lock arm and the lock button")
+
     def test_a_kit_glues_like_a_kit_designer(self):
         # found by two live runs' kit critics: glass went into a closed body, a pillar was glued to a door, a seat to
         # the dash, steps ran in piece-number order, clear and opaque pieces shared a plate

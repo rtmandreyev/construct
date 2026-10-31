@@ -144,15 +144,22 @@ construct kit examples/toyota-land-cruiser-fj62/scene.json --out fj62-kit/ --mat
 - **The order a builder works in.** A piece's own attachments go on at the bench before it is fitted: the
   glass into its shell before the shell meets the chassis, a tyre onto its rim before the wheel goes on. A
   shell goes on after the interior it closes over, and what opens (doors, bonnet, tailgate) is hung last.
-- **Repeated work is one step.** Sub-assemblies built the same way (four wheels, two doors, six groups of
-  keys) are one step, done that many times; fragile pieces go on together at the end.
+- **Repeated work is one step.** Sub-assemblies built the same way (four wheels, two doors, eleven key
+  sections, some with two black keys and some with three) are one step, done that many times; many pieces of
+  one kind go on in one step however many there are; fragile pieces go on at the end, grouped by kind. Each
+  step says what to do: "Glue 2 × leg front onto the keybed", "Fit the 11 white keys assemblies onto the keybed".
+- **No piece is lost.** Every piece is glued onto something, or, when nothing can hold it, built on its own
+  with a note from the check.
 - **The booklet** (`booklet.html`, on paper, to print): a cover with the finished model, what you need and the
   paints, the plates with each piece's real outline and relief in its paint, then a card per step: pictures of
-  the parts you need, what goes onto what in the drawing's colours (each new piece in a colour of its own, the
-  piece it goes onto darker), bench and fit steps marked, a sub-assembly drawn on its own while it is built.
-- **In 3D** (`assembly.html`): the same steps on the construct's solid view in the kit's paints. The step's
-  instructions are big at the top, with a line from each numbered piece to the piece itself; each step's
-  pieces drop into place while what is built stays as it is; Previous, Play, Next and Finished at the bottom.
+  the parts you need, numbered, then the drawing, exploded as a kit sheet draws it (each new piece in a colour
+  of its own, held a little away from its place with an arrow to it, its place dashed, the piece it goes onto
+  darker), then what goes onto what. Bench and fit steps are marked; a sub-assembly is drawn on its own while
+  it is built.
+- **In 3D** (`assembly.html`): the same steps on the construct's solid view in the kit's paints, on a light
+  backdrop. The step's instructions are big at the top, with a line from each numbered piece to the piece
+  itself; each step's pieces drop into place with their edges lit, their paint unchanged, while what is built
+  stays as it is; the camera goes to them; Previous, Play, Next and Finished at the bottom.
   Drag to turn it, rewatch any step, or open `#step-N`.
 - **Checked before printing:** pieces too small to handle, slivers (thinner than 1.5 mm and short) and fragile
   blades (as thin and long), pieces that touch nothing, merges that came out in several pieces, pieces

@@ -38,7 +38,8 @@ MIN_PIECE_MM = 2.0         # a piece smaller than this on every side is merged i
 MIN_VOLUME_MM3 = 4.0
 BED_MM = (250.0, 210.0, 220.0)
 GAP_MM = 4.0               # between pieces on a plate
-STEP_MOST = 6              # pieces in one step, at most
+STEP_MOST = 24             # pieces in one step, at most (any number of one kind)
+STEP_KINDS = 4             # kinds of piece in one step, at most
 MANY_PIECES = 160
 GLASS = ("glass", "glazing", "window", "windscreen", "windshield", "visor", "canopy", "lens")
 SLIVER_MM = 1.5          # thinner than this, a small piece is a chip and a long one breaks
@@ -346,7 +347,7 @@ def make(scene, scale=SCALE, size=None, detail=DETAIL_MM, wall=WALL_MM, plan=Non
     plates = _pack(pieces, bed)
     kit = {"title": plan.get("title") or "%s, a kit" % scene["title"], "construct": scene["title"],
            "scale": "1:%s" % printing._ratio(1000.0 / mm_per_m), "detail_mm": detail, "pieces": pieces,
-           "plates": plates, "steps": _combine(_steps(pieces, raw), pieces), "bed_mm": list(bed), "scene": scene,
+           "plates": plates, "steps": _flatten(_combine(_steps(pieces, raw), pieces), pieces), "bed_mm": list(bed), "scene": scene,
            "merged": merged_away, "dropped": dropped, "plan": plan,
            "size_mm": [round((hi[a] - lo[a]) * mm_per_m, 1) for a in (0, 1, 2)]}
     kit["report"] = check(kit)
@@ -516,8 +517,9 @@ def _order(pieces, n, ground_up=False, detail=DETAIL_MM):
     roots.sort(key=lambda p: (p is not base, rank(p)))
     out, steps, hung, details = [], [], [], []
 
-    def roomy(step, c):   # a step takes up to STEP_MOST pieces, or any number of one kind (all the keys at once)
-        return len(step["pieces"]) < STEP_MOST or all(_kind_of(q["name"]) == _kind_of(c["name"]) for q in step["pieces"])
+    def roomy(step, c):   # a step takes a few kinds of piece, however many of each (all the sill courses at once)
+        kinds = {_kind_of(q["name"]) for q in step["pieces"]} | {_kind_of(c["name"])}
+        return (len(kinds) <= STEP_KINDS and len(step["pieces"]) < STEP_MOST) or len(kinds) == 1
 
     def thin(c):
         b = _bbox(c["cols"])
@@ -626,6 +628,59 @@ def _kind_of(name):
     return "-".join(words) or base
 
 
+SMALL_NEST = 4   # pieces: a sub-assembly built inside another this small is glued in place, not built apart
+
+
+def _flatten(steps, pieces):
+    """At the bench, a small sub-assembly inside another (a button on its lever, the lever on its ring) is glued
+    on in one step, not built apart and fitted; then steps on the same few pieces run together, as a kit sheet
+    says it: "the focus ring onto the distance ring, the lever onto the focus ring, the button onto the lever"."""
+    by = {p["number"]: p for p in pieces}
+
+    def spans():
+        out = []
+        for i, st in enumerate(steps):
+            if st.get("kind") == "bench":
+                j = next((k for k in range(i + 1, len(steps)) if steps[k].get("kind") == "fit"
+                          and steps[k].get("assembly") == st["assembly"]), None)
+                if j is not None:
+                    out.append((i, j))
+        return out
+    changed = True
+    while changed:
+        changed = False
+        sp = spans()
+        for i, j in sp:
+            inner = any(a < i and j < b for a, b in sp)                 # inside another sub-assembly
+            leaf = not any(i < a and b < j for a, b in sp)               # with none of its own
+            new = [n for t in steps[i:j + 1] for n in t.get("new", [])]
+            if inner and leaf and len(new) <= SMALL_NEST and not steps[j].get("hang") and steps[i].get("times", 1) == 1:
+                root, host = steps[i]["assembly"], steps[j]["onto"]
+                glue = [(root, host)] + [g for t in steps[i:j] for g in t["glue"] if g != (root, None)]
+                steps[i:j + 1] = [{"stage": steps[i]["stage"], "group": None, "kind": "glue", "hang": False, "details": False,
+                                   "pieces": list(new), "new": list(new), "assembly": None, "onto": host, "glue": glue}]
+                changed = True
+                break
+    out = []
+    for st in steps:   # what goes onto the pieces just glued, at once: one step
+        last = out[-1] if out else None
+        if last and st.get("kind") == "glue" and last.get("kind") in ("glue", "bench") and not (
+                st.get("details") or st.get("hang") or last.get("details") or last.get("hang")
+                or st.get("times", 1) > 1 or last.get("times", 1) > 1):
+            here = set(last.get("new", [])) | {h for _, h in last["glue"] if h is not None}
+            kinds = {_kind_of(by[n]["name"]) for n in last.get("new", []) + st.get("new", [])}
+            if all(h in here or h in st["new"] for _, h in st["glue"]) and len(kinds) <= STEP_KINDS \
+                    and len(last["new"]) + len(st["new"]) <= STEP_MOST:
+                for key in ("pieces", "new", "glue"):
+                    last[key] = last.get(key, []) + st.get(key, [])
+                continue
+        out.append(st)
+    for k, st in enumerate(out, 1):
+        st["number"] = k
+        st["name"] = _title(st, by)
+    return out
+
+
 def _combine(steps, pieces):
     """Sub-assemblies built the same way more than once (four wheels, two doors, fourteen key sections) become one
     step each, done that many times: the same kinds of pieces, of about the same size, glued in the same order (how
@@ -728,7 +783,7 @@ def _title(st, by):
     for _, h in st.get("glue", []):
         if h is not None and _label(by[h]["name"]) not in hosts:
             hosts.append(_label(by[h]["name"]))
-    onto = " and the ".join(hosts[:2]) if len(hosts) <= 2 else "their places"
+    onto = "the " + " and the ".join(hosts[:2]) if len(hosts) <= 2 else "their places"
     if kind == "base":
         return "Start with %s" % _counted(st["new"], by)
     if kind == "loose":
@@ -741,12 +796,16 @@ def _title(st, by):
         return "At the bench: build %s" % what + (", with %s" % _counted(rest, by) if rest and times == 1 else "")
     if kind == "fit":
         what = "the %d %s assemblies" % (times, root) if times > 1 else "the %s assembly" % root
-        return "%s %s %s the %s" % ("Hang" if st.get("hang") else "Fit", what, "on" if st.get("hang") else "onto", onto)
+        return "%s %s %s %s" % ("Hang" if st.get("hang") else "Fit", what, "on" if st.get("hang") else "onto", onto)
     if st.get("details"):
         return "Details, last: %s" % _counted(st["new"], by)
     if st.get("hang"):
-        return "Hang %s on the %s" % (_counted(st["new"], by), onto)
-    return "Glue %s onto the %s" % (_counted(st["new"], by), onto)
+        return "Hang %s on %s" % (_counted(st["new"], by), onto)
+    pairs = [(n, h) for n, h in st.get("glue", []) if h is not None]
+    if 1 < len(pairs) <= 4 and all(h == pairs[k][0] for k, (_, h) in enumerate(pairs[1:])):   # a chain, each onto the last
+        return "Glue " + ", then ".join("the %s onto the %s" % (_label(by[n]["name"]), _label(by[h]["name"]))
+                                        for n, h in pairs)
+    return "Glue %s onto %s" % (_counted(st["new"], by), onto)
 
 
 # a rotation that lays a piece on the face pointing `down` (its outward direction) onto the bed
