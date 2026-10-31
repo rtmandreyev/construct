@@ -274,7 +274,8 @@ in vec3 vWorld; in vec3 vNrm; in vec3 vBase; in float vPhase;
 uniform vec3 uEye; uniform float uBuild; uniform float uClear; uniform vec2 uHi; uniform float uReveal; uniform float uFrom;
 out vec4 o;
 void main() {
-  if (vPhase > uBuild + 0.0005 || vPhase < uFrom - 1e-4) discard;   // uFrom: a sub-assembly at the bench, on its own
+  bool ghost = uClear > 1.5;   // what was built before a sub-assembly at the bench (uFrom): a faint ghost around it
+  if (vPhase > uBuild + 0.0005 || (ghost ? vPhase >= uFrom - 1e-4 : vPhase < uFrom - 1e-4)) discard;
   float hi = (vPhase >= uHi.x && vPhase < uHi.y) ? 1.0 : 0.0;   // the pieces of the step being shown
   float reveal = smoothstep(vPhase, vPhase + uReveal, uBuild);
   vec3 v = normalize(uEye - vWorld);
@@ -289,6 +290,7 @@ void main() {
   float spec = pow(max(dot(n, normalize(key + v)), 0.0), 48.0) * 0.28;
   float rim = pow(1.0 - max(dot(n, v), 0.0), 3.0) * 0.18;
   vec3 c = vBase * (amb + d) + vec3(spec + rim);
+  if (ghost) { float a = 0.05 + 0.2 * pow(1.0 - max(dot(n, v), 0.0), 2.0); o = vec4(mix(c, vec3(0.6), 0.5) * a, a); return; }
   c = mix(c, c * 0.85, step(uHi.x, uHi.y - 1e-6) * (1.0 - hi))   // the rest steps back, a little;
       + hi * pow(1.0 - max(dot(n, v), 0.0), 4.0) * vec3(0.6, 0.4, 0.1);   // the new pieces' outlines glow warm, their paint unchanged
   if (uClear > 0.5) { float a = (0.22 + 0.5 * pow(1.0 - max(dot(n, v), 0.0), 2.0)) * reveal; o = vec4(mix(c, vec3(0.75, 0.85, 0.9), 0.5) * a, a); return; }
@@ -1021,6 +1023,7 @@ void main() {
       if (so.opaque) gl.drawElements(gl.TRIANGLES, so.opaque, so.type, 0);
       if (so.clear) { gl.depthMask(false); gl.uniform1f(u.uClear, 1); gl.drawElements(gl.TRIANGLES, so.clear, so.type, so.opaque * so.size); }
       gl.depthMask(false);
+      if (this.opt.from && so.opaque) { gl.uniform1f(u.uClear, 2); gl.drawElements(gl.TRIANGLES, so.opaque, so.type, 0); }
     }
 
     // fills: glass (and dark occluders) write depth, pushed back so edges on them stay in front
@@ -1037,7 +1040,7 @@ void main() {
     }
 
     // artwork faces (supplied bytes only), then the labels' text; not while a kit's sub-assembly is shown alone
-    if (this.art.length && !(solidView && this.opt.from)) {
+    if (this.art.length && this.opt.text !== false && !(solidView && this.opt.from)) {
       const u = common(this.programs.art);
       const certLight = { verified: 1.0, user_supplied: 0.95, traced: 0.78, inferred: 0.78, decorative: 0.6 };
       // images and text sit a hair in front of their surface (and of a clear lid over them)
@@ -1114,7 +1117,7 @@ void main() {
       reduced: q.get("motion") === "reduced" || (prefersReduced && q.get("motion") !== "full"),
       mode: q.get("mode") === "provenance" ? "provenance" : "light",
       solid: q.get("mode") === "solid" || q.get("solid") === "1",
-      ui: q.get("ui") !== "0", labels: q.get("labels") === "1", caption: q.get("caption") !== "0",
+      ui: q.get("ui") !== "0", labels: q.get("labels") === "1", caption: q.get("caption") !== "0", text: q.get("text") !== "0",
       sheet: q.get("sheet"), fps: q.has("fps") ? parseInt(q.get("fps"), 10) : 30, capture: q.get("capture") === "1",
       open: q.has("open") ? Math.max(0, Math.min(1, parseFloat(q.get("open")) || 0)) : null,
       shift: q.has("shift") ? q.get("shift").split(",").map((x) => Math.max(-0.9, Math.min(0.9, parseFloat(x) || 0))).concat([0]).slice(0, 2) : null,
@@ -1221,7 +1224,7 @@ void main() {
     });
     overlay.appendChild(legend);
     const help = el("div", "help", "drag orbit · wheel zoom · 1–6 views · R replay · M motion · P provenance" +
-      (holo.solid ? " · S solid" : "") + " · L labels · space pause");
+      (holo.solid ? " · S solid" : "") + " · L labels" + (holo.art.length ? " · T text" : "") + " · space pause");
     overlay.appendChild(help);
     const labels = el("div", "labels"); overlay.appendChild(labels);
     const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg"); svg.setAttribute("class", "leaders"); overlay.appendChild(svg);
@@ -1348,6 +1351,7 @@ void main() {
       else if (e.key === "p" || e.key === "P") { opt.mode = opt.mode === "provenance" ? "light" : "provenance"; holo.opt.mode = opt.mode; setUi(); }
       else if ((e.key === "s" || e.key === "S") && holo.solid) { opt.solid = !opt.solid; holo.opt.solid = opt.solid; setUi(); }
       else if (e.key === "l" || e.key === "L") { opt.labels = !opt.labels; }
+      else if (e.key === "t" || e.key === "T") { opt.text = !opt.text; }
       else if (e.key === " ") { if (paused) { clock0 += performance.now() - pausedStamp; paused = false; } else { pausedAt = now(); pausedStamp = performance.now(); paused = true; } e.preventDefault(); }
       else return;
       kick();
@@ -1377,6 +1381,7 @@ void main() {
         if (o.sheet !== undefined) opt.sheet = o.sheet;
         if (o.open !== undefined) { opt.open = o.open; holo.opt.open = o.open; }
         if (o.solid !== undefined) { opt.solid = !!o.solid; holo.opt.solid = opt.solid; setUi(); }
+        if (o.text !== undefined) opt.text = !!o.text;
         ["build", "highlight", "fly", "reveal", "from"].forEach((k) => { if (o[k] !== undefined) holo.opt[k === "build" ? "buildTo" : k] = o[k]; });
         frame(); return true; },
       camera() { const c = holo.lastCamera; return c ? { target: c.target, yaw: c.yaw, pitch: c.pitch, dist: c.dist } : null; },
