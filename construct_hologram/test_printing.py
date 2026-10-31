@@ -395,6 +395,18 @@ class Kit(unittest.TestCase):
         self.assertNotIn("badge", {i["parts"][0] for i in r["issues"]})               # set in, not poking through
         self.assertIn("fit:", fit.report(r))
 
+    def test_a_part_already_in_pieces_by_itself_is_not_said_to_poke(self):
+        from . import fit
+        from unittest import mock
+        # a skin whose surface voxels fall apart by themselves: a big piece and a crumb (x 4..13 and x 15), one layer
+        # thick, lying on a block (x 0..6). What is left of the skin off the block is the same two pieces, not a poke
+        grid = printing._Grid([0, 0, 0], [16, 4, 8], 1.0, 0)
+        skin = {(x, y): 1 << 4 for x in list(range(4, 14)) + [15] for y in range(4)}
+        block = {(x, y): (1 << 5) - 1 for x in range(0, 7) for y in range(4)}
+        with mock.patch.object(fit, "_volumes", return_value=(grid, {"skin": skin, "block": block}, {})), \
+                mock.patch.object(fit.scene_mod, "compile_scene", return_value=None):
+            self.assertEqual(fit.check(scene_of(box("x", [1, 1, 1], [0, 0, 0])))["issues"], [])
+
     def test_the_same_sub_assembly_built_twice_is_one_step_done_twice(self):
         self.assertEqual({kit_mod._kind_of(n) for n in ("tyre-front (1 of 2)", "tyre-rear--1", "tyre-left", "tyre-r")}, {"tyre"})
         piece = lambda n, name, size: {"number": n, "name": name, "size_mm": size}
