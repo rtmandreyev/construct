@@ -458,11 +458,12 @@ def _order(pieces, n, ground_up=False, detail=DETAIL_MM):
     found = lambda p: (p.get("group", 0), len(p.get("moves") or ()), low[id(p)],
                        -cnt[id(p)] if p.get("moves") else -held[id(p)], p["stage"], -cnt[id(p)])
     parent = {}
-    chain_head = {}   # each moving group's largest piece: the one that hangs on the fixed body
-    for p in pieces:
+    chain_head = {}   # each moving group's largest piece by its outline (the door panel, not the thicker card inside
+    span = lambda p: (lambda b: (b[1] - b[0] + 1) * (b[3] - b[2] + 1) * (b[5] - b[4] + 1))(_bbox(p["cols"]))   # it):
+    for p in pieces:   # the one that hangs on the fixed body
         if p.get("moves"):
             k = p["moves"]
-            if k not in chain_head or cnt[id(p)] > cnt[id(chain_head[k])]:
+            if k not in chain_head or (span(p), cnt[id(p)]) > (span(chain_head[k]), cnt[id(chain_head[k])]):
                 chain_head[k] = p
     for p in pieces:   # each onto the most firmly joined piece that is more foundational than it
         hosts = [q for q in pieces if q is not p and found(q) < found(p) and weight(p, q)]
