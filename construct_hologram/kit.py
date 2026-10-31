@@ -261,8 +261,11 @@ def make(scene, scale=SCALE, size=None, detail=DETAIL_MM, wall=WALL_MM, plan=Non
         for k, comp in enumerate(comps):
             same = names.count(names[k])
             nth = names[:k + 1].count(names[k])
+            mem = members_of[pid]   # the parts this bit is made of (a merge that falls apart: not all of them in each)
+            mine_parts = [m for m in mem if len(mem) == 1 or any(mm & own_vox[m].get(c, 0) for c, mm in comp.items())]
             pieces.append({"name": names[k] if same == 1 else "%s (%d of %d)" % (names[k], nth, same),
-                           "parts": sorted(members_of[pid]), "head": pid, "paint": paint[pid], "clear": is_clear[pid],
+                           "parts": sorted(mine_parts or mem), "merge": len(mem) > 1, "head": pid, "paint": paint[pid],
+                           "clear": is_clear[pid],
                            "stage": info[pid]["stage"], "cols": comp})   # the head's: its largest member
 
     # bits too small to print, merged into the piece they touch most
@@ -298,6 +301,7 @@ def make(scene, scale=SCALE, size=None, detail=DETAIL_MM, wall=WALL_MM, plan=Non
             dropped.append(small["name"])
             continue
         _or_into(best["cols"], small["cols"])
+        best.setdefault("borrowed", set()).update(set(small["parts"]) - set(best["parts"]))   # a bit of another part
         best["parts"] = sorted(set(best["parts"]) | set(small["parts"]))
         merged_away.append((small["name"], best["name"]))
 
@@ -933,7 +937,7 @@ def check(kit):
                                         "into what it belongs to (plan.merge)" % (p["number"], p["name"])})
     split = {}
     for p in kit["pieces"]:   # "body (1 of 3)": a merge whose parts do not touch came out in pieces
-        if " of " in p["name"] and p["name"].endswith(")") and len(p["parts"]) > 1:   # a merge, not a part's copies
+        if " of " in p["name"] and p["name"].endswith(")") and p.get("merge", len(p["parts"]) > 1):   # a merge, not copies
             split.setdefault(p["name"].rsplit(" (", 1)[0], []).append(p["number"])
     for name, nums in sorted(split.items()):
         problems.append({"code": "split", "piece": nums[0],
@@ -1500,8 +1504,14 @@ def assembly(kit):
     for k, s in enumerate(steps):
         new = s.get("new", [])
         for j, num in enumerate(new):   # one after another within the step, each whole at once
-            for pid in by[num]["parts"]:
-                phase_of.setdefault(pid, round((k + 0.82 * j / max(1, len(new))) / n, 5))
+            for pid in by[num]["parts"]:   # a part shows with the piece that is mostly it, not one that took a bit of it
+                if pid not in by[num].get("borrowed", ()):
+                    phase_of.setdefault(pid, round((k + 0.82 * j / max(1, len(new))) / n, 5))
+                    colour_of.setdefault(pid, by[num]["paint"]["color"])
+    for k, s in enumerate(steps):
+        for j, num in enumerate(s.get("new", [])):
+            for pid in by[num].get("borrowed", ()):   # a part that is only bits of others: with the first of them
+                phase_of.setdefault(pid, round((k + 0.82 * j / max(1, len(s.get("new", [])))) / n, 5))
                 colour_of.setdefault(pid, by[num]["paint"]["color"])
     g["style_colors"] = [colour_of.get(g["parts"][int(st[6])]["id"]) for st in g["styles"]]
     boxes = {}

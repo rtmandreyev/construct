@@ -341,6 +341,16 @@ class Kit(unittest.TestCase):
         with self.assertRaisesRegex(kit.KitError, "a kit plan is an object"):
             kit.make(sc, plan={"glue": []})
 
+    def test_a_merge_that_falls_apart_names_in_each_piece_only_its_own_parts(self):
+        from . import kit
+        # the R34's body merge fell apart and every bit claimed every panel: the 3D guide showed the roof with the nose
+        sc = scene_of(box("floor", [0.2, 0.01, 0.1], [0, 0.005, 0]),
+                      box("nose", [0.03, 0.03, 0.08], [-0.08, 0.025, 0]), box("tail", [0.03, 0.03, 0.08], [0.08, 0.025, 0]))
+        k = kit.make(sc, size=120, detail=1.0, plan={"merge": [["nose", "tail"]]})
+        bits = {p["name"]: p["parts"] for p in k["pieces"] if p["head"] != "floor"}
+        self.assertEqual(sorted(bits.values()), [["nose"], ["tail"]])
+        self.assertEqual(sorted(bits), ["nose", "tail"])                     # each bit named for what it is
+
     def test_glass_and_its_frame_holding_each_other_are_not_lost(self):
         from . import kit
         # the pane goes into its frame (the last opaque part framing it); the frame's strongest join is the pane, so
