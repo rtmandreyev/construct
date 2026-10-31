@@ -10,9 +10,10 @@ and its parts, so a print comes out at a true scale and a kit comes apart where 
 
 - **Print it.** One checked, watertight print at the largest size your printer takes (`--printers` compares five
   printer classes), or `--exact`: the construct's own solids, with thin parts given true walls, for the finest detail.
-- **Make it a kit.** Pieces on numbered plates (clear plastic on its own plates), glued in the order a kit designer
-  would: sub-assemblies built at the bench, the shell after the interior, doors hung last. A booklet on paper and the
-  same steps in 3D, each step's pieces dropping into place in their paint.
+- **Make it a kit.** Pieces true to the construct's shapes on numbered plates (clear plastic on its own plates),
+  glued in the order a kit designer would: sub-assemblies built at the bench, repeated ones in one step (four
+  wheels at once), the shell after the interior, doors hung last, fragile details at the end. A booklet on paper
+  with pictures of the parts each step needs, and the same steps in 3D: turn it, rewatch any step.
 - **Open it in CAD.** True CAD shapes in FreeCAD with its joints, and STEP for any CAD program.
 - **Refine before you print.** `construct check --fit` names the parts that poke through others or hide inside them,
   so you, or your agent, can fix them part by part. Press **S** to see the result.

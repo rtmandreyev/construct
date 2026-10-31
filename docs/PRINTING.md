@@ -128,6 +128,8 @@ construct kit examples/toyota-land-cruiser-fj62/scene.json --out fj62-kit/ --mat
 - **Pieces.** Each part becomes pieces of its own at the kit's scale (1:24 by default, `--scale`). Where two
   parts overlap, the later one is trimmed, so they meet flush and fit when glued; mirrored copies (four
   wheels, two mirrors) are separate pieces; a bit too small to print is merged into the piece it touches.
+  Each piece's surface is snapped back onto its parts' own surfaces, so a round part prints round and a flat
+  face flat; a piece that is one solid the trimming never touched is printed exactly as it is.
   The parts drawn only in lines (seams, grilles) are engraved into the pieces they lie on, as a kit's
   panel lines. Glass is a clear piece.
 - **Plates.** Each piece lies on its largest flat face, packed onto plates the size of the bed
@@ -142,12 +144,16 @@ construct kit examples/toyota-land-cruiser-fj62/scene.json --out fj62-kit/ --mat
 - **The order a builder works in.** A piece's own attachments go on at the bench before it is fitted: the
   glass into its shell before the shell meets the chassis, a tyre onto its rim before the wheel goes on. A
   shell goes on after the interior it closes over, and what opens (doors, bonnet, tailgate) is hung last.
-- **The booklet** (`booklet.html`, on paper, to print): the finished model, the plates, the steps (at the bench
-  or on the model, each new piece in a colour of its own with a numbered callout and a chip of its paint, the
-  piece it goes onto drawn darker, a sub-assembly drawn on its own while it is built) and a painting guide.
-- **In 3D** (`assembly.html`): the same steps on the construct's solid view in the kit's paints: each step's
-  pieces drop into place in gluing order while the rest steps back, numbered, with a panel saying what goes
-  onto what; drag to turn it, the arrow keys or play to step through, `#step-N` to open at a step.
+- **Repeated work is one step.** Sub-assemblies built the same way (four wheels, two doors, six groups of
+  keys) are one step, done that many times; fragile pieces go on together at the end.
+- **The booklet** (`booklet.html`, on paper, to print): a cover with the finished model, what you need and the
+  paints, the plates with each piece's real outline and relief in its paint, then a card per step: pictures of
+  the parts you need, what goes onto what in the drawing's colours (each new piece in a colour of its own, the
+  piece it goes onto darker), bench and fit steps marked, a sub-assembly drawn on its own while it is built.
+- **In 3D** (`assembly.html`): the same steps on the construct's solid view in the kit's paints. The step's
+  instructions are big at the top, with a line from each numbered piece to the piece itself; each step's
+  pieces drop into place while what is built stays as it is; Previous, Play, Next and Finished at the bottom.
+  Drag to turn it, rewatch any step, or open `#step-N`.
 - **Checked before printing:** pieces too small to handle, slivers (thinner than 1.5 mm and short) and fragile
   blades (as thin and long), pieces that touch nothing, merges that came out in several pieces, pieces
   bigger than the bed, too many pieces. `kit.json` is the kit without its geometry, for a critic to read.

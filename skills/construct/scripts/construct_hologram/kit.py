@@ -1167,17 +1167,32 @@ ASSEMBLY_JS = r"""
     });
     history.replaceState(null, "", "#step-" + (k + 1));
   }
-  var T = 0, from = 0, to = 0, startAt = 0, DUR = 1300;
+  var T = 0, from = 0, to = 0, startAt = 0, DUR = 1300, lastLines = "";
+  var focus = null, camFrom = null, camAt = 0;
+  function aim(k) {   // the camera on the step's pieces: their middle, closer in for small ones; you can still turn it
+    var H = HOLO.hologram, cs = K.steps[k].glue.map(function (g) { return K.pieces[g[0]].centre; }).filter(Boolean);
+    if (!cs.length) return;
+    var m = [0, 1, 2].map(function (a) { return cs.reduce(function (s, c) { return s + c[a]; }, 0) / cs.length; });
+    var spread = Math.max.apply(null, cs.map(function (c) { return Math.hypot(c[0] - m[0], c[1] - m[1], c[2] - m[2]); }));
+    var fit = HOLO.fitted("hero"), now = H.userCamera || HOLO.camera() || fit;
+    var low = m[1] < H.C[1];   // under the model (legs, the chassis): look from a little below, as a sheet
+    focus = { target: m, yaw: now.yaw, pitch: low ? -14 : Math.max(18, now.pitch), fov: now.fov || 34,   // turns it over
+              dist: fit.dist * Math.max(0.55, Math.min(1, (spread + 0.12 * H.R) * 2.4 / H.R)) };
+    camFrom = { target: (now.target || fit.target).slice(), yaw: now.yaw, pitch: now.pitch, dist: now.dist, fov: now.fov || 34 };
+    camFrom.pitch0 = now.pitch;
+    camAt = performance.now();
+  }
   function go(k) {
     k = Math.max(0, Math.min(K.steps.length - 1, k));
     from = at >= 0 && k > at ? K.steps[at].build : (k > 0 ? K.steps[k - 1].build : 0); to = K.steps[k].build;
-    at = k; startAt = performance.now(); show(k);
+    at = k; startAt = performance.now(); show(k); aim(k);
   }
   function act(a) {
     if (a === "prev") { playing = false; go(at - 1); }
     else if (a === "next") { playing = false; go(at + 1); }
     else if (a === "play") { playing = !playing; if (playing && !startAt) go(at + 1 < K.steps.length ? at + 1 : 0); else show(at); }
     else if (a === "done") { playing = false; at = K.steps.length - 1; show(at); from = to = 0.9999; startAt = 0;
+      focus = null; HOLO.hologram.userCamera = null;
       tags.forEach(function (t) { t.el.remove(); }); tags = []; svg.textContent = "";
       HOLO.renderAt(T, { solid: true, open: 0, build: 0.9999, highlight: [0, 0], fly: 0, reveal: K.reveal }); }
   }
@@ -1186,6 +1201,17 @@ ASSEMBLY_JS = r"""
   window.addEventListener("keydown", function (e) {
     if (e.key === "ArrowRight") act("next"); else if (e.key === "ArrowLeft") act("prev"); });
   function tick(now) {
+    if (focus) {   // glide to the step's pieces; after that the camera is yours (and comes back here if it wanders off)
+      var H = HOLO.hologram, u = Math.min(1, (now - camAt) / 900), e = u * u * (3 - 2 * u);
+      if (u < 1 || !H.userCamera) {
+        H.userCamera = { target: [0, 1, 2].map(function (a) { return camFrom.target[a] + (focus.target[a] - camFrom.target[a]) * e; }),
+                         yaw: camFrom.yaw, pitch: camFrom.pitch + (focus.pitch - camFrom.pitch) * e,
+                         dist: camFrom.dist + (focus.dist - camFrom.dist) * e, fov: 34 };
+        if (u >= 1) camFrom = { target: focus.target.slice(), yaw: H.userCamera.yaw, pitch: H.userCamera.pitch, dist: focus.dist,
+                                fov: 34 };
+        if (!startAt) HOLO.renderAt(T, { solid: true, open: 0, build: to, highlight: K.steps[at].window, fly: 0, reveal: K.reveal });
+      }
+    }
     if (startAt) {
       var u = Math.min(1, (now - startAt) / DUR), s = K.steps[at];
       HOLO.renderAt(T, { solid: true, open: 0, build: from + (to - from) * u, highlight: s.window, fly: u < 1 ? 0.35 : 0,
@@ -1203,7 +1229,7 @@ ASSEMBLY_JS = r"""
       if (b && b.width) lines += "<line x1='" + (b.left + b.width / 2) + "' y1='" + Math.min(b.bottom, tb.bottom) + "' x2='" + q[0] +
         "' y2='" + q[1] + "' stroke='" + t.c + "' stroke-width='2' stroke-opacity='.8'/>";
     });
-    svg.innerHTML = lines;
+    if (lines !== lastLines) { svg.innerHTML = lines; lastLines = lines; }   // only when something moved
     requestAnimationFrame(tick);
   }
   function start() {

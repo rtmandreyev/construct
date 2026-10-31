@@ -191,6 +191,11 @@ side, printed as worksheets and cited. Plan:
   not topple; its doors still hang on it, `construct_joints.gd` joins to static bodies too). All 28 gallery
   constructs export glued with every joint made.
 - **Kits of buildings go up from the ground:** in a building what starts lower holds what starts higher.
+- **Kits closer to a real model kit (from the owner's review):** pieces true to the construct's shapes (each
+  surface snapped back onto its parts', untrimmed solids exact); repeated sub-assemblies one step done that many
+  times; a 3D guide with the instructions big at the top and lines to the pieces, the controls at the bottom,
+  what is built barely dimmed; a booklet with a cover, the paints, plates drawn with each piece's real outline,
+  and a card per step with pictures of the parts it needs.
 - **Three more kit rules from the car runs' critics:** glass goes into the last opaque part that frames it (a
   windscreen into the roof, not the nose before the roof is on); fragile pieces under 2 mm (chrome, trim, plates)
   go on in a last Details step; a moving part hangs by its largest piece (a lid, not its handle).
