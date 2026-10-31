@@ -184,6 +184,14 @@ side, printed as worksheets and cited. Plan:
   came apart; the kit booklet's pictures keep their dark background when opened on their own (they
   carried a literal `100%%`); `check` says when a file is a trace, not a scene; a critique records the
   run's round.
+- **Kits glued and ordered as a kit designer would:** each piece onto the most firmly joined, more
+  foundational piece (never a fixed part onto one that opens; a door's glass into the door); sub-assemblies
+  built at the bench before they are fitted (glass into a shell before it meets the chassis, a wheel before
+  it goes on), shells after the interior, doors hung last; clear pieces on plates of their own; a merge that
+  came out in pieces highlights each piece's own lines. Found by two live runs' kit critics.
+- **Kit booklets in colour and in 3D:** step pictures on paper, each new piece in its own colour with its
+  number and paint chip, the target darker, bench work drawn alone; plates in each piece's paint; and
+  `assembly.html`, the steps on the solid view in the kit's paints, pieces dropping into place, numbered.
 - **Glued pieces:** `export --pieces glued` keeps what does not move as one body and gives each articulation
   chain a body of its own with its joint in its extras (pivot, axis, travel, the body it hangs on);
   `hosts/godot/construct_joints.gd` turns them into Godot hinges and sliders. A loose car slumped apart on a

@@ -131,11 +131,21 @@ construct kit examples/toyota-land-cruiser-fj62/scene.json --out fj62-kit/ --mat
   The parts drawn only in lines (seams, grilles) are engraved into the pieces they lie on, as a kit's
   panel lines. Glass is a clear piece.
 - **Plates.** Each piece lies on its largest flat face, packed onto plates the size of the bed
-  (`plate-N.3mf`, each piece a named object), numbered in the order they are glued.
-- **The booklet** (`booklet.html`): the finished model, the plates with their numbers, the steps (the
-  construct's own build stages, a few pieces at a time, each glued to the piece it touches most; wheels
-  and the like start sub-assemblies of their own), a picture of each step, and a painting guide from the
-  material map.
+  (`plate-N.3mf`, each piece a named object), numbered in the order they are glued. Clear pieces have plates
+  of their own, to print in clear filament or resin; the plate maps show each piece in its paint.
+- **What goes onto what.** Each piece is glued onto the piece it is most firmly joined to among those more
+  foundational than it (the plan's earlier sub-assembly, an earlier stage, or the piece more holds onto), with
+  more weight where it rests on the piece below and less into glass. A part that stays put is never glued to
+  one that opens (a pillar is not glued to a door), and what opens takes its own glass and handles.
+- **The order a builder works in.** A piece's own attachments go on at the bench before it is fitted: the
+  glass into its shell before the shell meets the chassis, a tyre onto its rim before the wheel goes on. A
+  shell goes on after the interior it closes over, and what opens (doors, bonnet, tailgate) is hung last.
+- **The booklet** (`booklet.html`, on paper, to print): the finished model, the plates, the steps (at the bench
+  or on the model, each new piece in a colour of its own with a numbered callout and a chip of its paint, the
+  piece it goes onto drawn darker, a sub-assembly drawn on its own while it is built) and a painting guide.
+- **In 3D** (`assembly.html`): the same steps on the construct's solid view in the kit's paints: each step's
+  pieces drop into place in gluing order while the rest steps back, numbered, with a panel saying what goes
+  onto what; drag to turn it, the arrow keys or play to step through, `#step-N` to open at a step.
 - **Checked before printing:** pieces too small to handle, slivers (thinner than 1.5 mm and short) and fragile
   blades (as thin and long), pieces that touch nothing, merges that came out in several pieces, pieces
   bigger than the bed, too many pieces. `kit.json` is the kit without its geometry, for a critic to read.

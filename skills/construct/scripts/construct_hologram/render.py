@@ -75,11 +75,13 @@ def embed_assets(geometry, asset_root):
     return out, notes
 
 
-def solid_payload(scene, geometry):
+def solid_payload(scene, geometry, phase_of=None):
     """The construct's surfaces for the page's solid view (S): what a modelling program shows, from the same
     solid compile as the 3D export, packed small. Each vertex carries its part's style in `geometry` (so the
     opening, the stages and provenance colours move it as they move the lines), its build phase and a smooth
-    normal; glass comes last, drawn see-through. None when the scene has no surfaces."""
+    normal; glass comes last, drawn see-through. None when the scene has no surfaces. `phase_of` (part id ->
+    phase) builds the parts in another order (a kit's steps: each piece whole, at once); a part it leaves out
+    is never built."""
     from . import export as export_mod, scene as scene_mod
     solid = scene_mod.compile_scene(scene, solid=True)
     styles, parts = geometry["styles"], geometry["parts"]
@@ -112,7 +114,8 @@ def solid_payload(scene, geometry):
                 n = normals[3 * ti + j]
                 key = (tuple(int(round((c[a] - lo[a]) / span[a] * 65535)) for a in range(3)),
                        tuple(max(-127, min(127, int(round(n[a] * 127)))) for a in range(3)),
-                       style_of[pi], int(round(max(0.0, min(1.0, c[3])) * 65535)))
+                       style_of[pi], int(round(max(0.0, min(1.0, c[3] if phase_of is None
+                                                            else phase_of.get(parts[pi]["id"], 1.0))) * 65535)))
                 if key not in index:
                     index[key] = len(verts)
                     verts.append(key)
@@ -129,7 +132,7 @@ def solid_payload(scene, geometry):
             "pos": b64(pos), "nrm": b64(nrm), "sty": b64(sty), "pha": b64(pha), "idx": b64(idx)}
 
 
-def build_html(geometry, asset_root=None, film=False, solid=None):
+def build_html(geometry, asset_root=None, film=False, solid=None, extra=None):
     """The construct page. `film` also embeds film mode (viewer/film.js) after the viewer; without it the page
     is the stock viewer, unchanged. `solid` (solid_payload) gives the page its solid view (S)."""
     template = (VIEWER / "template.html").read_text(encoding="utf-8")
@@ -146,6 +149,11 @@ def build_html(geometry, asset_root=None, film=False, solid=None):
         mark = "\n</script>\n<script>\n  // the improvement rounds"
         assert html.count(mark) == 1
         html = html.replace(mark, "\n</script>\n<script>\n" + code + "\n</script>\n<script>\n  // the improvement rounds")
+    if extra:   # a page of its own made from the viewer (a kit's step-by-step build): its script, after the viewer's
+        mark = "\n</script>\n<script>\n  // the improvement rounds"
+        assert html.count(mark) == 1
+        html = html.replace(mark, "\n</script>\n<script>\n" + extra.replace("</script", "<\\/script")
+                            + "\n</script>\n<script>\n  // the improvement rounds")
     if geometry.get("reading") or geometry.get("presentation", {}).get("labels"):
         # how to read it, the run's replay and labels as their parts are drawn (viewer/reading.js): only for a scene
         # that asks; every other page is the stock viewer, unchanged

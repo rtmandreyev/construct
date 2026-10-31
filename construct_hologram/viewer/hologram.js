@@ -255,13 +255,14 @@ layout(location=0) in vec3 aPosN;
 layout(location=1) in vec3 aNrm;
 layout(location=2) in float aStyle;
 layout(location=3) in float aPhase;
-uniform vec3 uLo; uniform vec3 uSpan;
+uniform vec3 uLo; uniform vec3 uSpan; uniform float uFly; uniform float uReveal;
 out vec3 vWorld; out vec3 vNrm; out vec3 vBase; out float vPhase;
 void main() {
   vec4 sb = styleB(aStyle), sc = styleC(aStyle), sd = styleD(aStyle);
   float gain = 1.0, g2 = 1.0;
   vec3 p0 = uLo + aPosN * uSpan;
   vec3 p = moved(p0, sb.w, sd.x, gain);
+  p.y += (1.0 - smoothstep(aPhase, aPhase + uReveal * 1.25, uBuild)) * uFly * uBounds.w;   // a piece drops into place
   vec3 q = moved(p0 + aNrm * 0.01 * uBounds.w, sb.w, sd.x, g2);   // the normal turns with its part
   vWorld = p; vNrm = q - p; vPhase = aPhase;
   vBase = uMode > 0.5 ? uCertColor[int(sc.y + 0.5)] : (sd.y >= 0.0 ? sd.yzw : vec3(0.72, 0.71, 0.73));
@@ -270,11 +271,12 @@ void main() {
   const SOLID_FS = `#version 300 es
 precision highp float;
 in vec3 vWorld; in vec3 vNrm; in vec3 vBase; in float vPhase;
-uniform vec3 uEye; uniform float uBuild; uniform float uClear;
+uniform vec3 uEye; uniform float uBuild; uniform float uClear; uniform vec2 uHi; uniform float uReveal;
 out vec4 o;
 void main() {
   if (vPhase > uBuild + 0.0005) discard;
-  float reveal = smoothstep(vPhase, vPhase + 0.04, uBuild);
+  float hi = (vPhase >= uHi.x && vPhase < uHi.y) ? 1.0 : 0.0;   // the pieces of the step being shown
+  float reveal = smoothstep(vPhase, vPhase + uReveal, uBuild);
   vec3 v = normalize(uEye - vWorld);
   vec3 n = normalize(vNrm);
   if (dot(n, v) < 0.0) n = -n;                      // open surfaces are seen from both sides
@@ -287,6 +289,7 @@ void main() {
   float spec = pow(max(dot(n, normalize(key + v)), 0.0), 48.0) * 0.28;
   float rim = pow(1.0 - max(dot(n, v), 0.0), 3.0) * 0.18;
   vec3 c = vBase * (amb + d) + vec3(spec + rim);
+  c = mix(c, c * 0.45, step(uHi.x, uHi.y - 1e-6) * (1.0 - hi)) + hi * vec3(0.10, 0.06, 0.0);   // the rest steps back
   if (uClear > 0.5) { float a = (0.22 + 0.5 * pow(1.0 - max(dot(n, v), 0.0), 2.0)) * reveal; o = vec4(mix(c, vec3(0.75, 0.85, 0.9), 0.5) * a, a); return; }
   o = vec4(c * reveal, reveal);
 }`;
@@ -945,6 +948,7 @@ void main() {
     const { vp, eye } = this.matrices(cam, w / h);
     this.lastVP = vp; this.lastRect = rect;
     const s = this.state(t);
+    if (typeof this.opt.buildTo === "number") s.build = this.opt.buildTo;   // a step-by-step page sets the build itself
     const mot = this.motionUniforms(t);
     const joints = this.jointUniforms(opts.open !== undefined ? opts.open : this.openAt(t));
     this.lastJoints = joints;
@@ -1008,6 +1012,8 @@ void main() {
     if (solidView) {
       const u = common(this.programs.solid), so = this.solid;
       gl.uniform3fv(u.uLo, so.lo); gl.uniform3fv(u.uSpan, so.span);
+      gl.uniform1f(u.uFly, this.opt.fly || 0); gl.uniform2fv(u.uHi, this.opt.highlight || [0, 0]);
+      gl.uniform1f(u.uReveal, this.opt.reveal || 0.04);
       gl.bindVertexArray(so.vao);
       gl.depthFunc(gl.LEQUAL); gl.depthMask(true);
       gl.uniform1f(u.uClear, 0);
@@ -1370,8 +1376,11 @@ void main() {
         if (o.sheet !== undefined) opt.sheet = o.sheet;
         if (o.open !== undefined) { opt.open = o.open; holo.opt.open = o.open; }
         if (o.solid !== undefined) { opt.solid = !!o.solid; holo.opt.solid = opt.solid; setUi(); }
+        ["build", "highlight", "fly", "reveal"].forEach((k) => { if (o[k] !== undefined) holo.opt[k === "build" ? "buildTo" : k] = o[k]; });
         frame(); return true; },
       camera() { const c = holo.lastCamera; return c ? { target: c.target, yaw: c.yaw, pitch: c.pitch, dist: c.dist } : null; },
+      project(p) { const c = holo.lastVP && project(holo.lastVP, p); const r = canvas.getBoundingClientRect();
+        return c ? [(c[0] * 0.5 + 0.5) * r.width, (0.5 - c[1] * 0.5) * r.height] : null; },
       fitted(view) { const c = holo.cameraFor(view || "hero"); return { target: c.target, yaw: c.yaw, pitch: c.pitch, dist: c.dist }; },
       timeline() { const op = holo.openTimes(); return { assembly: holo.assemblyTimes(), open: op, settled: Math.max(holo.assemblyTimes().end, op.end), events: holo.schedule.slice(0, 24) }; },
     };

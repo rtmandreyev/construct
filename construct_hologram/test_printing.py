@@ -381,6 +381,44 @@ class Kit(unittest.TestCase):
         shell = next(p for p in k["pieces"] if "shell" in p["parts"])
         self.assertEqual(shell["stage"], 1)   # the shell's, not the small tower's earlier stage
 
+    def test_a_kit_glues_like_a_kit_designer(self):
+        # found by two live runs' kit critics: glass went into a closed body, a pillar was glued to a door, a seat to
+        # the dash, steps ran in piece-number order, clear and opaque pieces shared a plate
+        sc = scene_of(dict(box("chassis", [0.30, 0.02, 0.14], [0, 0.01, 0]), stage=0),
+                      dict(box("seat", [0.05, 0.05, 0.05], [0.05, 0.045, 0]), stage=1),
+                      dict(box("dash", [0.02, 0.04, 0.12], [-0.06, 0.04, 0]), stage=1),
+                      dict(box("shell-roof", [0.30, 0.01, 0.14], [0, 0.125, 0]), stage=1),   # a hollow body: roof
+                      dict(box("shell-right", [0.30, 0.10, 0.004], [0, 0.07, 0.068]), stage=1),   # and two sides
+                      dict(box("shell-left", [0.30, 0.10, 0.004], [0, 0.07, -0.068]), stage=1),
+                      dict(box("side-window", [0.10, 0.04, 0.004], [0.0, 0.10, 0.072]), stage=2),
+                      dict(box("door", [0.10, 0.06, 0.006], [0.0, 0.05, -0.073]), stage=2),
+                      dict(box("door-glass", [0.08, 0.03, 0.003], [0.0, 0.095, -0.0775]), stage=2),
+                      dict(box("pillar", [0.01, 0.06, 0.006], [0.06, 0.05, -0.079]), stage=2))
+        sc["articulations"] = [{"id": "door-open", "type": "hinge", "parts": ["door", "door-glass"], "axis": [0, 1, 0],
+                                "pivot": [-0.05, 0.05, -0.073], "amount": 60, "order": 0}]
+        k = kit_mod.make(sc, size=150, detail=0.5, plan={"merge": [["shell-*"]]})
+        by = {p["head"]: p for p in k["pieces"]}
+        by["shell"] = next(p for p in k["pieces"] if "shell-roof" in p["parts"])
+        steps = k["steps"]
+        self.assertIn(k["pieces"][0]["head"], ("chassis", "shell-roof"))              # a chassis or a body is the base
+        self.assertEqual(by["door-glass"]["onto"]["head"], "door")                     # glass into its door
+        self.assertNotEqual((by["pillar"]["onto"] or {}).get("head"), "door")          # never onto what opens
+        step_of = {n: s["number"] for s in steps for n in s.get("new", s["pieces"])}
+        join = min(s["number"] for s in steps if s["kind"] == "fit"
+                   and {s["assembly"], s["glue"][0][1]} == {by["shell"]["number"], by["chassis"]["number"]})
+        self.assertLess(step_of[by["seat"]["number"]], join)                           # the interior before the body closes
+        self.assertLess(step_of[by["side-window"]["number"]], join)                    # glazed before, not after
+        self.assertGreater(step_of[by["door"]["number"]], join)                        # the door is hung last
+        plates = {n: pl.get("clear", False) for pl in k["plates"] for n, _, _ in pl["pieces"]}
+        self.assertTrue(all(plates[p["number"]] == p["clear"] for p in k["pieces"]))   # clear plastic on its own plates
+        with tempfile.TemporaryDirectory() as tmp:
+            kit_mod.write(k, tmp)
+            page = Path(tmp, "assembly.html").read_text(encoding="utf-8")
+            self.assertIn("K.steps.length", page)                                   # the step-by-step script
+            self.assertIn('"kind": "bench"', page)                                  # with its bench steps
+            self.assertIn("hologram-solid", page)
+            self.assertIn("assembly.html#step-", Path(tmp, "booklet.html").read_text(encoding="utf-8"))
+
     def test_the_kit_files(self):
         from . import kit
         sc = studio.load(str(HERE / "examples" / "v2" / "cd.json"))
