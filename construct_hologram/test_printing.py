@@ -341,6 +341,20 @@ class Kit(unittest.TestCase):
         with self.assertRaisesRegex(kit.KitError, "a kit plan is an object"):
             kit.make(sc, plan={"glue": []})
 
+    def test_glass_and_its_frame_holding_each_other_are_not_lost(self):
+        from . import kit
+        # the pane goes into its frame (the last opaque part framing it); the frame's strongest join is the pane, so
+        # each was the other's host: a ring the walk from the base never reached, and both vanished
+        sc = scene_of(box("body", [0.12, 0.04, 0.12], [0, 0.02, 0]),
+                      box("frame", [0.1, 0.1, 0.01], [0, 0.09, 0.0]),               # a plate standing on its edge
+                      box("window-glass", [0.1, 0.1, 0.01], [0, 0.09, 0.01]))       # flat against the frame's face
+        k = kit.make(sc, size=120, detail=1.0, plan={"order": [{"name": "body", "parts": ["body"]},
+                                                              {"name": "glass", "parts": ["window-glass"]},
+                                                              {"name": "frame", "parts": ["frame"]}]})
+        self.assertEqual(sorted(p["head"] for p in k["pieces"]), ["body", "frame", "window-glass"])
+        self.assertEqual(sorted(n for s in k["steps"] for n in s["new"]), [1, 2, 3])            # each glued once
+        self.assertTrue(all(p["onto"] for p in k["pieces"][1:]))
+
     def test_a_part_two_merges_match_joins_the_first(self):
         sc = scene_of(box("seat-back-1", [0.02, 0.02, 0.02], [0, 0.01, 0]), box("seat-base-1", [0.02, 0.01, 0.02], [0, 0.005, 0.02]),
                       box("seat-back--1", [0.02, 0.02, 0.02], [0.05, 0.01, 0]))
@@ -428,6 +442,20 @@ class Kit(unittest.TestCase):
         self.assertEqual(sorted(out[1]["new"]), [2, 3, 4, 5])
         self.assertIn("2 ×", out[1]["name"])
         self.assertFalse(any(s.get("times", 1) > 1 for s in out[3:]))      # two lamps of different sizes stay apart
+        self.assertEqual(out[2]["name"], "Fit the 2 wheel assemblies onto the chassis")
+        # copies of one part (key sections of different widths, with different numbers of black keys) are built alike
+        keys = [dict(piece(1, "keybed", [100, 20, 10]), parts=["keybed"]),
+                dict(piece(2, "white-keys (1 of 2)", [10, 12, 2]), parts=["white-keys"]), piece(3, "black-keys-1", [2, 9, 2]),
+                piece(4, "black-keys-2", [2, 9, 2]), dict(piece(5, "white-keys (2 of 2)", [4, 12, 2]), parts=["white-keys"]),
+                piece(6, "black-keys-3", [2, 9, 2])]
+        steps = [{"kind": "base", "new": [1], "pieces": [1], "glue": [(1, None)]},
+                 {"kind": "bench", "assembly": 2, "new": [2, 3, 4], "pieces": [2, 3, 4], "glue": [(2, None), (3, 2), (4, 2)]},
+                 {"kind": "fit", "assembly": 2, "new": [], "pieces": [2], "glue": [(2, 1)]},
+                 {"kind": "bench", "assembly": 5, "new": [5, 6], "pieces": [5, 6], "glue": [(5, None), (6, 5)]},
+                 {"kind": "fit", "assembly": 5, "new": [], "pieces": [5], "glue": [(5, 1)]}]
+        out = kit_mod._combine(steps, keys)
+        self.assertEqual([s.get("times", 1) for s in out], [1, 2, 2])
+        self.assertEqual(out[1]["name"], "At the bench: build 2 × the white keys")
 
     def test_a_kit_glues_like_a_kit_designer(self):
         # found by two live runs' kit critics: glass went into a closed body, a pillar was glued to a door, a seat to
