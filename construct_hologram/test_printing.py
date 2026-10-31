@@ -455,7 +455,7 @@ class Kit(unittest.TestCase):
                  {"kind": "fit", "assembly": 5, "new": [], "pieces": [5], "glue": [(5, 1)]}]
         out = kit_mod._combine(steps, keys)
         self.assertEqual([s.get("times", 1) for s in out], [1, 2, 2])
-        self.assertEqual(out[1]["name"], "At the bench: build 2 × the white keys")
+        self.assertEqual(out[1]["name"], "At the bench: build the 2 white keys assemblies")   # alike, not the same
 
     def test_a_small_sub_assembly_inside_another_is_glued_in_place(self):
         piece = lambda n, name: {"number": n, "name": name, "size_mm": [10, 10, 10]}

@@ -529,9 +529,11 @@ def _order(pieces, n, ground_up=False, detail=DETAIL_MM):
     for p in pieces:
         kind_thin.setdefault(_kind_of(p["name"]), []).append(thin(p))
 
-    def frail(c):   # copies of one part are alike: judged by their kind's usual thickness, not each one's voxels
-        t = sorted(kind_thin[_kind_of(c["name"])])
-        return t[len(t) // 2] < FRAGILE_MM
+    holds = {_kind_of(p["name"]) for p in pieces if kids.get(id(p))}
+
+    def frail(c):   # copies of one part are alike: judged by their kind's usual thickness, not each one's voxels, and
+        t = sorted(kind_thin[_kind_of(c["name"])])   # one that holds something (the left skin, with its button) is not
+        return t[len(t) // 2] < FRAGILE_MM and _kind_of(c["name"]) not in holds   # a detail: nor is its mirror
 
     def built_on(c):   # what goes onto c at the bench: its attachments that neither open nor wait for the details
         return [d for d in kids.get(id(c), []) if set(d.get("moves") or ()) == set(c.get("moves") or ())
@@ -573,7 +575,8 @@ def _order(pieces, n, ground_up=False, detail=DETAIL_MM):
     first = {}
     for c, _ in details:
         first.setdefault(_kind_of(c["name"]), len(first))
-    details.sort(key=lambda cp: first[_kind_of(cp[0]["name"])])   # alike details together (a sort keeps their order)
+    at = {id(c): k for k, c in enumerate(out)}
+    details.sort(key=lambda cp: (at.get(id(cp[1]), 0) // 6, first[_kind_of(cp[0]["name"])]))   # by where they go, alike together
     for c, p in details:   # the details: fragile pieces, onto their hosts, now that nothing will knock them off
         out.append(c)
         last = steps[-1] if steps else None
@@ -669,7 +672,8 @@ def _flatten(steps, pieces):
                 or st.get("times", 1) > 1 or last.get("times", 1) > 1):
             here = set(last.get("new", [])) | {h for _, h in last["glue"] if h is not None}
             kinds = {_kind_of(by[n]["name"]) for n in last.get("new", []) + st.get("new", [])}
-            if all(h in here or h in st["new"] for _, h in st["glue"]) and len(kinds) <= STEP_KINDS \
+            alone = last.get("kind") == "bench" and len(last["new"]) == 1   # a bench step of its root alone
+            if all(h in here or h in st["new"] for _, h in st["glue"]) and len(kinds) <= STEP_KINDS + alone \
                     and len(last["new"]) + len(st["new"]) <= STEP_MOST:
                 for key in ("pieces", "new", "glue"):
                     last[key] = last.get(key, []) + st.get(key, [])
@@ -718,8 +722,11 @@ def _combine(steps, pieces):
             if k in gone or k <= j:
                 continue   # only a later sub-assembly, not one inside this one
             copies = set(by[steps[i]["assembly"]].get("parts", ())) & set(by[steps[k]["assembly"]].get("parts", ()))
-            if not ((sig2 == sig and alike(sizes(i, j), sizes(k, l))) or (copies and form2 == form)):
+            same = sig2 == sig and alike(sizes(i, j), sizes(k, l))
+            if not (same or (copies and form2 == form)):
                 continue   # built the same way, of the same pieces; or copies of one part (key sections) built alike
+            if not same:
+                steps[i]["alike"] = False   # done alike, of pieces that differ: not "N x the same"
             for d in range(j - i + 1):
                 for key in ("pieces", "new", "glue"):
                     steps[i + d][key] = steps[i + d].get(key, []) + steps[k + d].get(key, [])
@@ -728,6 +735,7 @@ def _combine(steps, pieces):
         if times > 1:
             for d in range(j - i + 1):
                 steps[i + d]["times"] = times
+                steps[i + d]["alike"] = steps[i].get("alike", True)
                 steps[i + d]["name"] = _title(steps[i + d], by)
     out = [st for n, st in enumerate(steps) if n not in gone]
     for k, st in enumerate(out, 1):
@@ -781,9 +789,9 @@ def _title(st, by):
     times, kind = st.get("times", 1), st.get("kind")
     hosts = []
     for _, h in st.get("glue", []):
-        if h is not None and _label(by[h]["name"]) not in hosts:
+        if h is not None and h not in st.get("new", []) and _label(by[h]["name"]) not in hosts:
             hosts.append(_label(by[h]["name"]))
-    onto = "the " + " and the ".join(hosts[:2]) if len(hosts) <= 2 else "their places"
+    onto = "the " + " and the ".join(hosts[:2]) if 1 <= len(hosts) <= 2 else "their places"
     if kind == "base":
         return "Start with %s" % _counted(st["new"], by)
     if kind == "loose":
@@ -792,7 +800,7 @@ def _title(st, by):
         _kind_of(by[st["assembly"]]["name"]).replace("-", " ")   # done more than once: the wheel, whichever side
     if kind == "bench":
         rest = [n for n in st["new"] if _label(by[n]["name"]) != root]
-        what = "%d × the %s" % (times, root) if times > 1 else "the %s" % root
+        what = ("%d × the %s" if st.get("alike", True) else "the %d %s assemblies") % (times, root) if times > 1 else "the %s" % root
         return "At the bench: build %s" % what + (", with %s" % _counted(rest, by) if rest and times == 1 else "")
     if kind == "fit":
         what = "the %d %s assemblies" % (times, root) if times > 1 else "the %s assembly" % root
@@ -1169,16 +1177,31 @@ def _plate_map(kit, plate, w=640):
     out = ['<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 %d %d" width="100%%">' % (w, h),
            '<rect width="100%" height="100%" fill="#f6f3ee" stroke="#ddd8cf"/>',
            '<image href="data:image/png;base64,%s" x="0" y="0" width="%d" height="%d"/>' % (base64.b64encode(img).decode(), w, h)]
-    for num, x, y in plate["pieces"]:   # each piece as it lies, in its paint, its number on it
+    placed, small = [], []   # every piece numbered, as on a sprue: on it when it is large enough, beside it with a
+    for num, x, y in plate["pieces"]:   # short line when it is not, where no other number is
         p = by[num]
         fw, fd = p["size_mm"][0] * sc, p["size_mm"][1] * sc
-        if min(fw, fd) < 9:   # too small to label on the plate: the booklet lists it under the plate
+        cx, cy = x * sc + fw / 2, y * sc + fd / 2
+        if min(fw, fd) < 9:
+            small.append((num, cx, cy, fw, fd))
             continue
         r = max(7, min(11, int(min(fw, fd) * 0.45)))
+        placed.append((cx, cy, r))
         out.append('<circle cx="%.1f" cy="%.1f" r="%d" fill="#ffffff" fill-opacity="0.85" stroke="#1d1a22" stroke-width="0.8"/>'
                    '<text x="%.1f" y="%.1f" fill="#1d1a22" font-size="%d" font-weight="700" font-family="monospace" '
-                   'text-anchor="middle" dominant-baseline="central">%d</text>'
-                   % (x * sc + fw / 2, y * sc + fd / 2, r, x * sc + fw / 2, y * sc + fd / 2, max(8, r + 1), num))
+                   'text-anchor="middle" dominant-baseline="central">%d</text>' % (cx, cy, r, cx, cy, max(8, r + 1), num))
+    for num, cx, cy, fw, fd in small:
+        r = 6.5
+        spots = [(cx, cy - fd / 2 - 9 - k * 14) for k in range(3)] + [(cx, cy + fd / 2 + 9 + k * 14) for k in range(3)] + \
+                [(cx + fw / 2 + 9 + k * 14, cy) for k in range(3)] + [(cx - fw / 2 - 9 - k * 14, cy) for k in range(3)]
+        spots = [(sx, sy) for sx, sy in spots if r <= sx <= w - r and r <= sy <= h - r] or [(cx, cy)]
+        sx, sy = next(((sx, sy) for sx, sy in spots if all(math.hypot(sx - px, sy - py) > r + pr + 1 for px, py, pr in placed)),
+                      spots[0])
+        placed.append((sx, sy, r))
+        out.append('<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="#1d1a22" stroke-width="0.6"/>'
+                   '<circle cx="%.1f" cy="%.1f" r="%.1f" fill="#ffffff" stroke="#1d1a22" stroke-width="0.7"/>'
+                   '<text x="%.1f" y="%.1f" fill="#1d1a22" font-size="7.5" font-weight="700" font-family="monospace" '
+                   'text-anchor="middle" dominant-baseline="central">%d</text>' % (cx, cy, sx, sy, sx, sy, r, sx, sy, num))
     out.append("</svg>")
     return "".join(out)
 
@@ -1339,13 +1362,14 @@ ASSEMBLY_JS = r"""
       if (s.kind === "fit") return "<li>" + nums + " the " + esc(lab(r.p.name)) + " assembl" + (r.nums.length > 1 ? "ies" : "y") +
         " " + onto(r.ontoN) + "</li>";
       return "<li>" + nums + esc(lab(r.p.name)) +
-        "<span class=chip style='background:" + r.p.color + "' title='" + esc(r.p.paint) + "'></span>" +
+        "<span class=chip style='background:" + r.p.color + "'></span><span class=onto>" + esc(r.p.paint) + "</span>" +
         (r.onto ? onto(r.ontoN) : s.kind === "bench" ? "<span class=onto>start of this assembly</span>" : "") +
         (r.p.clear ? " <i>clear</i>" : "") + "</li>";
     }).join("");
     top.innerHTML = "<div class=n>" + esc(K.title) + " &middot; step " + (k + 1) + " of " + K.steps.length + "</div>" +
       "<h2>" + esc(s.name || "Step " + (k + 1)) + (s.times > 1 ? "<span class=x>&times; " + s.times + "</span>" : "") + "</h2>" +
-      (s.kind === "bench" || s.bench ? "<div class=bench>At the bench: build this on its own first (shown here in place)</div>" : "") +
+      (s.kind === "bench" ? "<div class=bench>At the bench: build this on its own first (shown here in place)</div>" :
+       s.bench ? "<div class=bench>Still at the bench: onto the sub-assembly, not the model yet</div>" : "") +
       "<ul>" + list + "</ul>";
     ctl.querySelector(".pg").textContent = (k + 1) + " / " + K.steps.length;
     ctl.querySelector("[data-a=play]").innerHTML = playing ? "&#10073;&#10073; Pause" : "&#9654; Play";
@@ -1415,12 +1439,15 @@ ASSEMBLY_JS = r"""
                          reveal: K.reveal });
       if (u >= 1) { startAt = 0; if (playing) setTimeout(function () { if (playing) go(at + 1 < K.steps.length ? at + 1 : 0); }, 1100); }
     }
-    var lines = "";
+    var lines = "", spots = [];
     tags.forEach(function (t) {   // each number on its piece, and a line from its badge in the instructions
       var qs = t.ns.map(function (n) { var c = K.pieces[n].centre; return c && HOLO.project(c); }).filter(Boolean);
       t.el.style.display = qs.length ? "block" : "none";
       if (!qs.length) return;
       var q = [qs.reduce(function (s, v) { return s + v[0]; }, 0) / qs.length, qs.reduce(function (s, v) { return s + v[1]; }, 0) / qs.length];
+      for (var k = 0; k < 12 && spots.some(function (o) { return Math.hypot(o[0] - q[0], o[1] - q[1]) < 30; }); k++)
+        q = [q[0] + (k % 2 ? -1 : 1) * 16, q[1] + 15];   // numbers that would sit on each other step aside
+      spots.push(q);
       t.el.style.left = q[0] + "px"; t.el.style.top = q[1] + "px";
       var b = t.badge && t.badge.getBoundingClientRect(), tb = top.getBoundingClientRect();
       if (b && b.width) lines += "<line x1='" + (b.left + b.width / 2) + "' y1='" + Math.min(b.bottom, tb.bottom) + "' x2='" + q[0] +
@@ -1512,11 +1539,8 @@ def booklet(kit):
                     % (len(rep["problems"]), "".join("<li>%s</li>" % e(p["message"]) for p in rep["problems"])))
     rows.append("</section><section><h2>Plates</h2>")
     for plate in kit["plates"]:
-        sc = 640 / kit["bed_mm"][0]
-        small = [n for n, _, _ in plate["pieces"] if min(by[n]["size_mm"][0], by[n]["size_mm"][1]) * sc < 9]
-        rows.append("<figure class=plate><img src='img/plate-%d.svg' alt='Plate %d'><figcaption>Plate %d%s%s</figcaption></figure>"
-                    % (plate["number"], plate["number"], plate["number"], " &middot; clear" if plate.get("clear") else "",
-                       " &middot; small pieces, left to right in rows: %s" % ", ".join(str(n) for n in small) if small else ""))
+        rows.append("<figure class=plate><img src='img/plate-%d.svg' alt='Plate %d'><figcaption>Plate %d%s</figcaption></figure>"
+                    % (plate["number"], plate["number"], plate["number"], " &middot; clear" if plate.get("clear") else ""))
     rows.append("</section><section><h2>Building it</h2>")
     for s in kit["steps"]:
         kind = s.get("kind")
@@ -1542,14 +1566,15 @@ def booklet(kit):
             onto = " onto %s <b>%s</b>" % (", ".join(str(o) for o in g["onto"]), e(_label(by[g["onto"][0]]["name"]))) \
                 if g["onto"] else (" &mdash; the base" if g["nums"][0] == 1 else " &mdash; start of this assembly"
                                    if kind == "bench" else "")
-            items.append("<li>%s %s <span class=chip title='%s' style='background:%s'></span>%s%s</li>" % (
-                badges, e(_label(p["name"])), e(p["paint"]["name"]), p["paint"]["color"], onto,
+            items.append("<li>%s %s <span class=chip style='background:%s'></span><span class=paint>%s</span>%s%s</li>" % (
+                badges, e(_label(p["name"])), p["paint"]["color"], e(p["paint"]["name"]), onto,
                 " <i>clear</i>" if p["clear"] else ""))
             need.append("<figure><img src='img/part-%d.png' alt='%s'><figcaption><span class=num style='background:%s'>%s</span>%s"
-                        "</figcaption></figure>" % (
+                        "<br><span class=chip style='background:%s'></span> %s</figcaption></figure>" % (
                             g["nums"][0], e(_label(p["name"])), g["col"],
                             ", ".join(str(n) for n in g["nums"][:3]) + ("&hellip;" if len(g["nums"]) > 3 else ""),
-                            " <b>&times;%d</b>" % len(g["nums"]) if len(g["nums"]) > 1 else ""))
+                            " <b>&times;%d</b>" % len(g["nums"]) if len(g["nums"]) > 1 else "", p["paint"]["color"],
+                            e(p["paint"]["name"])))
         times = s.get("times", 1)
         tag = {"bench": "<div class=tagb>Build this on its own first</div>", "fit": "<div class=tagf>Fit it</div>"}.get(kind, "")
         if s.get("details"):
@@ -1570,7 +1595,7 @@ def booklet(kit):
            ".sub{color:#5f5869;margin:0 0 14px}img{max-width:100%}.hero{width:100%;border-radius:12px;border:1px solid #ddd8cf}"
            ".b3d{font-weight:600}.b3d a,a.b3d{color:#1f6fd1}.need{display:grid;grid-template-columns:1fr 1fr;gap:24px}"
            "h3{margin:0 0 6px}table{border-collapse:collapse}td{padding:3px 8px;border-bottom:1px solid #e4dfd6}"
-           ".nums{color:#6b6475;font-size:13px}.chip{display:inline-block;width:14px;height:14px;border-radius:3px;"
+           ".nums{color:#6b6475;font-size:13px}.paint{color:#6b6475;font-size:13px;margin:0 6px 0 4px}.chip{display:inline-block;width:14px;height:14px;border-radius:3px;"
            "border:1px solid #777;vertical-align:-2px}.warn{margin:14px 0;border:1px solid #d23a3a;border-radius:8px;padding:8px 14px}"
            ".warn summary{cursor:pointer;font-weight:600}.plate{margin:12px 0}.plate img{border:1px solid #ddd8cf;border-radius:8px}"
            "figcaption{font-size:13px;color:#5f5869}.step{border:1px solid #e4dfd6;border-radius:14px;padding:16px 18px;"

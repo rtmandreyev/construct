@@ -38,7 +38,8 @@ MIN_PIECE_MM = 2.0         # a piece smaller than this on every side is merged i
 MIN_VOLUME_MM3 = 4.0
 BED_MM = (250.0, 210.0, 220.0)
 GAP_MM = 4.0               # between pieces on a plate
-STEP_MOST = 6              # pieces in one step, at most
+STEP_MOST = 24             # pieces in one step, at most (any number of one kind)
+STEP_KINDS = 4             # kinds of piece in one step, at most
 MANY_PIECES = 160
 GLASS = ("glass", "glazing", "window", "windscreen", "windshield", "visor", "canopy", "lens")
 SLIVER_MM = 1.5          # thinner than this, a small piece is a chip and a long one breaks
@@ -329,6 +330,10 @@ def make(scene, scale=SCALE, size=None, detail=DETAIL_MM, wall=WALL_MM, plan=Non
     for p in pieces:
         p["moves"] = tuple(sorted(moves.get(p["head"], ())))
     raw = _order(pieces, grid.n, scene.get("subject", {}).get("category") == "architecture", detail)
+    for p in pieces:   # its own middle in the scene's frame (metres, Y up): two copies of one part are two places
+        b = _bbox(p["cols"])
+        q = [grid.origin[a] + (b[2 * a] + b[2 * a + 1] + 1) / 2.0 * grid.h for a in range(3)]
+        p["centre"] = [round(q[0], 5), round(q[2], 5), round(-q[1], 5)]
     _line_art(scene, pieces, grid)
     for p in pieces:
         # a piece that is one closed solid, untouched by the trimming, is printed as it is: exact, every facet
@@ -342,7 +347,7 @@ def make(scene, scale=SCALE, size=None, detail=DETAIL_MM, wall=WALL_MM, plan=Non
     plates = _pack(pieces, bed)
     kit = {"title": plan.get("title") or "%s, a kit" % scene["title"], "construct": scene["title"],
            "scale": "1:%s" % printing._ratio(1000.0 / mm_per_m), "detail_mm": detail, "pieces": pieces,
-           "plates": plates, "steps": _combine(_steps(pieces, raw), pieces), "bed_mm": list(bed), "scene": scene,
+           "plates": plates, "steps": _flatten(_combine(_steps(pieces, raw), pieces), pieces), "bed_mm": list(bed), "scene": scene,
            "merged": merged_away, "dropped": dropped, "plan": plan,
            "size_mm": [round((hi[a] - lo[a]) * mm_per_m, 1) for a in (0, 1, 2)]}
     kit["report"] = check(kit)
@@ -464,6 +469,8 @@ def _order(pieces, n, ground_up=False, detail=DETAIL_MM):
         own = [q for q in hosts if p.get("moves") and q.get("moves") == p.get("moves")]
         if p.get("moves") and chain_head.get(p["moves"]) is not p:   # a lid is not hung from its handle
             own = own or [chain_head[p["moves"]]]
+        elif p.get("moves"):   # the lid itself hangs on what it opens from, not on its own handle
+            own, hosts = [], [q for q in hosts if q.get("moves") != p["moves"]]
         if p["clear"] and not own:   # glass goes into the last opaque part that frames it (the roof, not the nose)
             frames = [q for q in pieces if q is not p and not q["clear"] and weight(p, q)]
             best = max((weight(p, q) for q in frames), default=0)
@@ -476,11 +483,16 @@ def _order(pieces, n, ground_up=False, detail=DETAIL_MM):
     base = min(pieces, key=found)
 
     def above(q, p):   # whether p is q or under it, following the hosts down to the base
-        while q is not None:
+        seen = set()
+        while q is not None and id(q) not in seen:
             if q is p:
                 return True
+            seen.add(id(q))
             q = parent[id(q)]
         return False
+    for p in sorted(pieces, key=found):   # a ring of hosts (glass into its frame, the frame onto that glass) reaches no
+        if parent[id(p)] is not None and above(parent[id(p)], p):   # base: its most foundational piece finds another
+            parent[id(p)] = None
     for p in sorted(pieces, key=found):   # staged before what holds it (wheels before their axles): its best join
         if p is not base and parent[id(p)] is None:
             hosts = [q for q in pieces if q is not p and weight(p, q) and not above(q, p)
@@ -505,20 +517,34 @@ def _order(pieces, n, ground_up=False, detail=DETAIL_MM):
     roots.sort(key=lambda p: (p is not base, rank(p)))
     out, steps, hung, details = [], [], [], []
 
+    def roomy(step, c):   # a step takes a few kinds of piece, however many of each (all the sill courses at once)
+        kinds = {_kind_of(q["name"]) for q in step["pieces"]} | {_kind_of(c["name"])}
+        return (len(kinds) <= STEP_KINDS and len(step["pieces"]) < STEP_MOST) or len(kinds) == 1
+
     def thin(c):
         b = _bbox(c["cols"])
         return (min(b[1] - b[0], b[3] - b[2], b[5] - b[4]) + 1) * detail
 
+    kind_thin = {}
+    for p in pieces:
+        kind_thin.setdefault(_kind_of(p["name"]), []).append(thin(p))
+
+    holds = {_kind_of(p["name"]) for p in pieces if kids.get(id(p))}
+
+    def frail(c):   # copies of one part are alike: judged by their kind's usual thickness, not each one's voxels, and
+        t = sorted(kind_thin[_kind_of(c["name"])])   # one that holds something (the left skin, with its button) is not
+        return t[len(t) // 2] < FRAGILE_MM and _kind_of(c["name"]) not in holds   # a detail: nor is its mirror
+
     def built_on(c):   # what goes onto c at the bench: its attachments that neither open nor wait for the details
         return [d for d in kids.get(id(c), []) if set(d.get("moves") or ()) == set(c.get("moves") or ())
-                and (kids.get(id(d)) or thin(d) >= FRAGILE_MM or d["clear"])]
+                and (kids.get(id(d)) or not frail(d) or d["clear"])]
 
     def build(p, bench):
         """Glue p's subtree onto p: leaves directly, sub-assemblies built at the bench first, then fitted."""
         opens = lambda c: set(c.get("moves") or ()) != set(p.get("moves") or ())   # it rides a hinge its host does not
         mine = [c for c in kids.get(id(p), []) if not opens(c)]
         hung.extend((c, p) for c in kids.get(id(p), []) if opens(c))
-        fragile = [c for c in mine if not kids.get(id(c)) and thin(c) < FRAGILE_MM and not c["clear"]]
+        fragile = [c for c in mine if not kids.get(id(c)) and frail(c) and not c["clear"]]
         details.extend((c, p) for c in fragile)   # fragile chrome and trim go on once the structure is built
         mine = [c for c in mine if c not in fragile]
         # a sub-assembly needs something to build at the bench: one whose only attachments open or are fragile (they
@@ -534,7 +560,7 @@ def _order(pieces, n, ground_up=False, detail=DETAIL_MM):
             else:
                 out.append(c)
                 last = steps[-1] if steps else None
-                if last and len(last["pieces"]) < STEP_MOST and (
+                if last and roomy(last, c) and (
                         (last["kind"] == "glue" and last["onto"] is p)
                         or (last["kind"] == "bench" and last["root"] is p)):   # the bench step takes its first pieces
                     last["pieces"].append(c)
@@ -546,10 +572,15 @@ def _order(pieces, n, ground_up=False, detail=DETAIL_MM):
         out.append(r)
         steps.append({"kind": "base" if r is base else "loose", "root": r, "pieces": [r], "onto": None})
         build(r, r is not base)
+    first = {}
+    for c, _ in details:
+        first.setdefault(_kind_of(c["name"]), len(first))
+    at = {id(c): k for k, c in enumerate(out)}
+    details.sort(key=lambda cp: (at.get(id(cp[1]), 0) // 6, first[_kind_of(cp[0]["name"])]))   # by where they go, alike together
     for c, p in details:   # the details: fragile pieces, onto their hosts, now that nothing will knock them off
         out.append(c)
         last = steps[-1] if steps else None
-        if last and last["kind"] == "glue" and last.get("details") and len(last["pieces"]) < STEP_MOST:
+        if last and last["kind"] == "glue" and last.get("details") and roomy(last, c):
             last["pieces"].append(c)
         else:
             steps.append({"kind": "glue", "root": None, "pieces": [c], "onto": p, "details": True})
@@ -561,6 +592,13 @@ def _order(pieces, n, ground_up=False, detail=DETAIL_MM):
         if kids.get(id(c)):
             build(c, True)
             steps.append({"kind": "fit", "root": c, "pieces": [], "onto": p, "assembly": c, "hang": True})
+    reached = {id(c) for c in out}
+    for p in pieces:   # never lose a piece: one the walk did not reach is built on its own, and the check says so
+        if id(p) not in reached:
+            parent[id(p)] = None
+            out.append(p)
+            steps.append({"kind": "loose", "root": p, "pieces": [p], "onto": None})
+    assert len(out) == len(pieces), "a piece was walked twice"
     pieces[:] = out
     for k, p in enumerate(pieces, 1):
         p["number"] = k
@@ -593,34 +631,102 @@ def _kind_of(name):
     return "-".join(words) or base
 
 
-def _combine(steps, pieces):
-    """Sub-assemblies built the same way more than once (four wheels, two doors) become one step each, done that
-    many times: the same kinds of pieces, of about the same size, glued in the same order."""
+SMALL_NEST = 4   # pieces: a sub-assembly built inside another this small is glued in place, not built apart
+
+
+def _flatten(steps, pieces):
+    """At the bench, a small sub-assembly inside another (a button on its lever, the lever on its ring) is glued
+    on in one step, not built apart and fitted; then steps on the same few pieces run together, as a kit sheet
+    says it: "the focus ring onto the distance ring, the lever onto the focus ring, the button onto the lever"."""
     by = {p["number"]: p for p in pieces}
 
-    def sizes(i, j):   # each step's new pieces, by kind, with their sizes
-        return [sorted((_kind_of(by[n]["name"]), sorted(by[n]["size_mm"])) for n in t.get("new", [])) for t in steps[i:j + 1]]
+    def spans():
+        out = []
+        for i, st in enumerate(steps):
+            if st.get("kind") == "bench":
+                j = next((k for k in range(i + 1, len(steps)) if steps[k].get("kind") == "fit"
+                          and steps[k].get("assembly") == st["assembly"]), None)
+                if j is not None:
+                    out.append((i, j))
+        return out
+    changed = True
+    while changed:
+        changed = False
+        sp = spans()
+        for i, j in sp:
+            inner = any(a < i and j < b for a, b in sp)                 # inside another sub-assembly
+            leaf = not any(i < a and b < j for a, b in sp)               # with none of its own
+            new = [n for t in steps[i:j + 1] for n in t.get("new", [])]
+            if inner and leaf and len(new) <= SMALL_NEST and not steps[j].get("hang") and steps[i].get("times", 1) == 1:
+                root, host = steps[i]["assembly"], steps[j]["onto"]
+                glue = [(root, host)] + [g for t in steps[i:j] for g in t["glue"] if g != (root, None)]
+                steps[i:j + 1] = [{"stage": steps[i]["stage"], "group": None, "kind": "glue", "hang": False, "details": False,
+                                   "pieces": list(new), "new": list(new), "assembly": None, "onto": host, "glue": glue}]
+                changed = True
+                break
+    out = []
+    for st in steps:   # what goes onto the pieces just glued, at once: one step
+        last = out[-1] if out else None
+        if last and st.get("kind") == "glue" and last.get("kind") in ("glue", "bench") and not (
+                st.get("details") or st.get("hang") or last.get("details") or last.get("hang")
+                or st.get("times", 1) > 1 or last.get("times", 1) > 1):
+            here = set(last.get("new", [])) | {h for _, h in last["glue"] if h is not None}
+            kinds = {_kind_of(by[n]["name"]) for n in last.get("new", []) + st.get("new", [])}
+            alone = last.get("kind") == "bench" and len(last["new"]) == 1   # a bench step of its root alone
+            if all(h in here or h in st["new"] for _, h in st["glue"]) and len(kinds) <= STEP_KINDS + alone \
+                    and len(last["new"]) + len(st["new"]) <= STEP_MOST:
+                for key in ("pieces", "new", "glue"):
+                    last[key] = last.get(key, []) + st.get(key, [])
+                continue
+        out.append(st)
+    for k, st in enumerate(out, 1):
+        st["number"] = k
+        st["name"] = _title(st, by)
+    return out
 
-    def alike(a, b):   # the same pieces, each within a quarter of the other's size
-        return all(len(x) == len(y) and all(k1 == k2 and all(abs(p - q) <= 0.25 * max(p, q, 0.5) for p, q in zip(s1, s2))
-                                            for (k1, s1), (k2, s2) in zip(x, y)) for x, y in zip(a, b))
+
+def _combine(steps, pieces):
+    """Sub-assemblies built the same way more than once (four wheels, two doors, fourteen key sections) become one
+    step each, done that many times: the same kinds of pieces, of about the same size, glued in the same order (how
+    many of a kind each takes may differ: one key section has three black keys, the next two)."""
+    by = {p["number"]: p for p in pieces}
+
+    def sizes(i, j):   # each step's new pieces: each kind's largest size
+        out = []
+        for t in steps[i:j + 1]:
+            k = {}
+            for n in t.get("new", []):
+                d = sorted(by[n]["size_mm"])
+                k[_kind_of(by[n]["name"])] = max(k.get(_kind_of(by[n]["name"]), d), d)
+            out.append(k)
+        return out
+
+    def alike(a, b):   # the same kinds, each within a quarter of the other's size
+        return all(set(x) == set(y) and all(abs(p - q) <= 0.25 * max(p, q, 0.5) for k in x for p, q in zip(x[k], y[k]))
+                   for x, y in zip(a, b))
     spans = []
     for i, st in enumerate(steps):
         if st.get("kind") == "bench":
             j = next((k for k in range(i + 1, len(steps)) if steps[k].get("kind") == "fit"
                       and steps[k].get("assembly") == st["assembly"]), None)
             if j is not None:
-                sig = tuple((t.get("kind"), tuple(sorted(_kind_of(by[n]["name"]) for n in t.get("new", []))))
+                sig = tuple((t.get("kind"), tuple(sorted({_kind_of(by[n]["name"]) for n in t.get("new", [])})))
                             for t in steps[i:j + 1])
-                spans.append((i, j, sig))
+                spans.append((i, j, sig, tuple(t.get("kind") for t in steps[i:j + 1])))
     gone = set()
-    for a, (i, j, sig) in enumerate(spans):
+    for a, (i, j, sig, form) in enumerate(spans):
         if i in gone:
             continue
         times = 1
-        for (k, l, sig2) in spans[a + 1:]:
-            if k in gone or sig2 != sig or k <= j or not alike(sizes(i, j), sizes(k, l)):
-                continue   # only a later sub-assembly built the same way, of the same pieces, not inside this one
+        for (k, l, sig2, form2) in spans[a + 1:]:
+            if k in gone or k <= j:
+                continue   # only a later sub-assembly, not one inside this one
+            copies = set(by[steps[i]["assembly"]].get("parts", ())) & set(by[steps[k]["assembly"]].get("parts", ()))
+            same = sig2 == sig and alike(sizes(i, j), sizes(k, l))
+            if not (same or (copies and form2 == form)):
+                continue   # built the same way, of the same pieces; or copies of one part (key sections) built alike
+            if not same:
+                steps[i]["alike"] = False   # done alike, of pieces that differ: not "N x the same"
             for d in range(j - i + 1):
                 for key in ("pieces", "new", "glue"):
                     steps[i + d][key] = steps[i + d].get(key, []) + steps[k + d].get(key, [])
@@ -629,9 +735,8 @@ def _combine(steps, pieces):
         if times > 1:
             for d in range(j - i + 1):
                 steps[i + d]["times"] = times
-            root = _kind_of(by[steps[i]["assembly"]]["name"])
-            steps[i]["name"] = "At the bench: build %d × the %s assembly" % (times, root)
-            steps[j]["name"] = "%s the %d %s assemblies" % ("Hang" if steps[j].get("hang") else "Fit", times, root)
+                steps[i + d]["alike"] = steps[i].get("alike", True)
+                steps[i + d]["name"] = _title(steps[i + d], by)
     out = [st for n, st in enumerate(steps) if n not in gone]
     for k, st in enumerate(out, 1):
         st["number"] = k
@@ -645,23 +750,8 @@ def _steps(pieces, raw=None):
         raw = [{"kind": "glue", "pieces": [p], "onto": p["onto"]} for p in pieces]
     steps = []
     for st in raw:
-        name = None
-        if st["kind"] == "base":
-            name = "The base: %s" % st["root"]["name"]
-        elif st["kind"] == "loose":
-            name = "%s, on its own: nothing it can be glued to holds it (see the notes)" % st["root"]["name"]
-        elif st["kind"] == "bench":
-            name = "At the bench: the %s assembly" % st["root"]["name"]
-        elif st["kind"] == "fit":
-            name = "%s the %s assembly to %d" % ("Hang" if st.get("hang") else "Fit", st["root"]["name"], st["onto"]["number"])
-        elif st.get("hang"):
-            name = "Hang %d" % st["pieces"][0]["number"]
-        elif st.get("details"):
-            name = "Details: the fragile pieces, last"
-        elif st["pieces"] and st.get("onto") is not None:
-            name = "Onto %d %s" % (st["onto"]["number"], st["onto"]["name"])
         steps.append({"stage": st["pieces"][0]["stage"] if st["pieces"] else st["root"]["stage"],
-                      "group": None, "name": name, "kind": st["kind"],
+                      "group": None, "kind": st["kind"], "hang": bool(st.get("hang")), "details": bool(st.get("details")),
                       "pieces": [p["number"] for p in st["pieces"]] or [st["root"]["number"]],
                       "new": [p["number"] for p in st["pieces"]],
                       "assembly": st["root"]["number"] if st.get("root") is not None else None,
@@ -669,9 +759,61 @@ def _steps(pieces, raw=None):
                       "glue": [(p["number"], p["onto"]["number"] if p["onto"] and not (st["kind"] == "bench" and p is st["root"])
                                 else None) for p in st["pieces"]]
                       if st["kind"] != "fit" else [(st["root"]["number"], st["onto"]["number"])]})
+    by = {p["number"]: p for p in pieces}
     for k, st in enumerate(steps, 1):
         st["number"] = k
+        st["name"] = _title(st, by)
     return steps
+
+
+def _label(name):
+    """A piece's name as a builder says it: "leg-front (1 of 2)" is the leg front, "black-keys-3" the black keys."""
+    words = [w for w in name.split(" (")[0].replace("_", "-").split("-") if w]
+    while len(words) > 1 and words[-1].isdigit():
+        words.pop()
+    return " ".join(words)
+
+
+def _counted(nums, by):
+    """Pieces by what they are: "the lid hinge", "4 black keys" (said once however many)."""
+    seen = {}
+    for n in nums:
+        k = _label(by[n]["name"])
+        seen[k] = seen.get(k, 0) + 1
+    words = ["the %s" % k if c == 1 else "%d × %s" % (c, k) for k, c in seen.items()]
+    return words[0] if len(words) == 1 else ", ".join(words[:-1]) + " and " + words[-1]
+
+
+def _title(st, by):
+    """A step's title, said as an instruction: what to do, with what, onto what."""
+    times, kind = st.get("times", 1), st.get("kind")
+    hosts = []
+    for _, h in st.get("glue", []):
+        if h is not None and h not in st.get("new", []) and _label(by[h]["name"]) not in hosts:
+            hosts.append(_label(by[h]["name"]))
+    onto = "the " + " and the ".join(hosts[:2]) if 1 <= len(hosts) <= 2 else "their places"
+    if kind == "base":
+        return "Start with %s" % _counted(st["new"], by)
+    if kind == "loose":
+        return "%s, on its own: nothing it can be glued to holds it (see the notes)" % by[st["assembly"]]["name"]
+    root = "" if st.get("assembly") is None else _label(by[st["assembly"]]["name"]) if times == 1 else \
+        _kind_of(by[st["assembly"]]["name"]).replace("-", " ")   # done more than once: the wheel, whichever side
+    if kind == "bench":
+        rest = [n for n in st["new"] if _label(by[n]["name"]) != root]
+        what = ("%d × the %s" if st.get("alike", True) else "the %d %s assemblies") % (times, root) if times > 1 else "the %s" % root
+        return "At the bench: build %s" % what + (", with %s" % _counted(rest, by) if rest and times == 1 else "")
+    if kind == "fit":
+        what = "the %d %s assemblies" % (times, root) if times > 1 else "the %s assembly" % root
+        return "%s %s %s %s" % ("Hang" if st.get("hang") else "Fit", what, "on" if st.get("hang") else "onto", onto)
+    if st.get("details"):
+        return "Details, last: %s" % _counted(st["new"], by)
+    if st.get("hang"):
+        return "Hang %s on %s" % (_counted(st["new"], by), onto)
+    pairs = [(n, h) for n, h in st.get("glue", []) if h is not None]
+    if 1 < len(pairs) <= 4 and all(h == pairs[k][0] for k, (_, h) in enumerate(pairs[1:])):   # a chain, each onto the last
+        return "Glue " + ", then ".join("the %s onto the %s" % (_label(by[n]["name"]), _label(by[h]["name"]))
+                                        for n, h in pairs)
+    return "Glue %s onto %s" % (_counted(st["new"], by), onto)
 
 
 # a rotation that lays a piece on the face pointing `down` (its outward direction) onto the bed
@@ -840,11 +982,43 @@ def _drawing(kit, highlight, done, onto=None, w=900, hgt=600):
             view = max(VIEWS, key=lambda v: (VIEWS[v][0][0] + VIEWS[v][1][0]) * off[0]
                        + (VIEWS[v][0][1] + VIEWS[v][1][1]) * off[1] + (1e-6 if v == FRONT else 0))
     (dui, duj), (dvi, dvj) = VIEWS[view]
+    # exploded, as a kit's sheet draws it: each new piece (a fitted sub-assembly as one) a little away from where it
+    # goes, along the line from what it goes onto, an arrow to its place
+    pts = [q for p in shown for seg in p["art"] for q in seg]
+    size = max(max(q[a] for q in pts) - min(q[a] for q in pts) for a in range(3)) or 1.0
+    away = {}
+    drawn = {p["number"] for p in shown}
+    for p in new:
+        top = p
+        while top.get("onto") is not None and top["onto"]["number"] in highlight:
+            top = top["onto"]
+        host = top.get("onto")
+        if host is None or host["number"] not in drawn or not host.get("art"):
+            continue
+        a, b = centre([top]), centre([host])
+        hb = [(min(q[k] for seg in host["art"] for q in seg), max(q[k] for seg in host["art"] for q in seg)) for k in range(3)]
+        out_of = [a[k] - hb[k][1] if a[k] > hb[k][1] else a[k] - hb[k][0] if a[k] < hb[k][0] else 0.0 for k in range(3)]
+        k = max(range(3), key=lambda k: abs(out_of[k]) / ((hb[k][1] - hb[k][0]) or size))
+        if out_of[k]:   # off one side of its host (a leg under the case): straight out that way
+            d = [0.0, 0.0, 0.0]
+            d[k] = math.copysign(1.0, out_of[k])
+        else:   # within its host's bounds: away from its middle
+            d = [a[k] - b[k] for k in range(3)]
+        n = math.sqrt(sum(x * x for x in d))
+        if n < 1e-3 * size:   # in its host's middle (a dial in its face): straight out, up
+            d, n = [0.0, 0.0, 1.0], 1.0
+        reach = 0.16 * size
+        away[p["number"]] = [d[k] / n * reach for k in range(3)]
 
     def proj(q):
         u, v = q[0] * dui + q[1] * duj, q[0] * dvi + q[1] * dvj
         return ((u - v) * 0.866, (u + v) * 0.35 - q[2] * 0.95)
+
+    def moved(p, seg):
+        o = away.get(p["number"])
+        return [[q[k] + o[k] for k in range(3)] for q in seg] if o else seg
     every = [proj(q) for p in shown for seg in p["art"] for q in seg]
+    every += [proj(q) for p in new if p["number"] in away for seg in p["art"] for q in moved(p, seg)]
     xs, ys = [q[0] for q in every], [q[1] for q in every]
     pad = 70
     sc = min((w - 2 * pad) / ((max(xs) - min(xs)) or 1), (hgt - 2 * pad) / ((max(ys) - min(ys)) or 1))
@@ -863,11 +1037,25 @@ def _drawing(kit, highlight, done, onto=None, w=900, hgt=600):
         out.append('<path d="%s" stroke="#3a3542" stroke-opacity="0.85" stroke-width="0.9" fill="none"/>'
                    % path([seg for p in target for seg in p["art"]]))
     colour = {p["number"]: STEP_COLOURS[k % len(STEP_COLOURS)] for k, p in enumerate(new)}
+    out.append('<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" '
+               'orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#3a3542"/></marker></defs>')
     for p in new:
-        out.append('<path d="%s" stroke="%s" stroke-width="1.4" fill="none"/>' % (path(p["art"]), colour[p["number"]]))
+        if p["number"] in away:   # where it goes, faint; the piece itself out where it is held up to it
+            out.append('<path d="%s" stroke="%s" stroke-opacity="0.35" stroke-width="0.8" stroke-dasharray="3 3" fill="none"/>'
+                       % (path(p["art"]), colour[p["number"]]))
+        out.append('<path d="%s" stroke="%s" stroke-width="1.4" fill="none"/>'
+                   % (path([moved(p, seg) for seg in p["art"]]), colour[p["number"]]))
+    for p in new:   # the arrows: from the held piece to its place
+        if p["number"] in away and (p.get("onto") is None or p["onto"]["number"] not in highlight):
+            c = centre([p])
+            a, b = xy([c[k] + away[p["number"]][k] * 0.78 for k in range(3)]), xy([c[k] + away[p["number"]][k] * 0.22 for k in range(3)])
+            out.append('<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="#3a3542" stroke-width="1.3" marker-end="url(#ah)"/>'
+                       % (a[0], a[1], b[0], b[1]))
     mid = (w / 2, hgt / 2)
     for p in new:   # a callout: the piece's number, out from the model, a leader line to the piece, its paint
         c = centre([p])
+        if p["number"] in away:
+            c = [c[k] + away[p["number"]][k] for k in range(3)]
         px, py = xy(c)
         dx, dy = px - mid[0], py - mid[1]
         d = math.hypot(dx, dy) or 1
@@ -947,6 +1135,8 @@ def _thumb(mesh, colour, size=132):
     sc = size * 0.84 / span
     ox, oy = size / 2 - (max(xs) + min(xs)) / 2 * sc, size / 2 + (max(ys) + min(ys)) / 2 * sc
     col = _hex_rgb(colour)
+    if max(col) < 90:   # a black piece drawn black has no shape: lift it to a dark grey its shading shows on
+        col = tuple(int(c * 0.5 + 72) for c in col)
     items = []
     for f in fs:
         a, b, c = (P[i] for i in f)
@@ -987,16 +1177,31 @@ def _plate_map(kit, plate, w=640):
     out = ['<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 %d %d" width="100%%">' % (w, h),
            '<rect width="100%" height="100%" fill="#f6f3ee" stroke="#ddd8cf"/>',
            '<image href="data:image/png;base64,%s" x="0" y="0" width="%d" height="%d"/>' % (base64.b64encode(img).decode(), w, h)]
-    for num, x, y in plate["pieces"]:   # each piece as it lies, in its paint, its number on it
+    placed, small = [], []   # every piece numbered, as on a sprue: on it when it is large enough, beside it with a
+    for num, x, y in plate["pieces"]:   # short line when it is not, where no other number is
         p = by[num]
         fw, fd = p["size_mm"][0] * sc, p["size_mm"][1] * sc
-        if min(fw, fd) < 9:   # too small to label on the plate: the booklet lists it under the plate
+        cx, cy = x * sc + fw / 2, y * sc + fd / 2
+        if min(fw, fd) < 9:
+            small.append((num, cx, cy, fw, fd))
             continue
         r = max(7, min(11, int(min(fw, fd) * 0.45)))
+        placed.append((cx, cy, r))
         out.append('<circle cx="%.1f" cy="%.1f" r="%d" fill="#ffffff" fill-opacity="0.85" stroke="#1d1a22" stroke-width="0.8"/>'
                    '<text x="%.1f" y="%.1f" fill="#1d1a22" font-size="%d" font-weight="700" font-family="monospace" '
-                   'text-anchor="middle" dominant-baseline="central">%d</text>'
-                   % (x * sc + fw / 2, y * sc + fd / 2, r, x * sc + fw / 2, y * sc + fd / 2, max(8, r + 1), num))
+                   'text-anchor="middle" dominant-baseline="central">%d</text>' % (cx, cy, r, cx, cy, max(8, r + 1), num))
+    for num, cx, cy, fw, fd in small:
+        r = 6.5
+        spots = [(cx, cy - fd / 2 - 9 - k * 14) for k in range(3)] + [(cx, cy + fd / 2 + 9 + k * 14) for k in range(3)] + \
+                [(cx + fw / 2 + 9 + k * 14, cy) for k in range(3)] + [(cx - fw / 2 - 9 - k * 14, cy) for k in range(3)]
+        spots = [(sx, sy) for sx, sy in spots if r <= sx <= w - r and r <= sy <= h - r] or [(cx, cy)]
+        sx, sy = next(((sx, sy) for sx, sy in spots if all(math.hypot(sx - px, sy - py) > r + pr + 1 for px, py, pr in placed)),
+                      spots[0])
+        placed.append((sx, sy, r))
+        out.append('<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="#1d1a22" stroke-width="0.6"/>'
+                   '<circle cx="%.1f" cy="%.1f" r="%.1f" fill="#ffffff" stroke="#1d1a22" stroke-width="0.7"/>'
+                   '<text x="%.1f" y="%.1f" fill="#1d1a22" font-size="7.5" font-weight="700" font-family="monospace" '
+                   'text-anchor="middle" dominant-baseline="central">%d</text>' % (cx, cy, sx, sy, sx, sy, r, sx, sy, num))
     out.append("</svg>")
     return "".join(out)
 
@@ -1092,6 +1297,10 @@ ASSEMBLY_JS = r"""
   var css = document.createElement("style");
   css.textContent =
     ".help,.rounds{display:none!important}" +
+    // a light studio backdrop, as a kit's box shows its model: dark paints read on it as well as light ones
+    "html,body{background:radial-gradient(ellipse at 50% 38%,#f1efeb 0%,#d6d2cc 55%,#aaa59e 100%)!important}" +
+    ".caption .title{color:#2a2530!important}.caption .meta,.caption div{color:#4d4656!important}" +
+    ".caption,.caption *{text-shadow:none!important}.kt .more{color:#6b6475;font:700 14px -apple-system,sans-serif}" +
     ".kt{position:fixed;left:50%;top:14px;transform:translateX(-50%);width:min(980px,calc(100% - 24px));z-index:5;" +
     "background:rgba(250,248,244,.94);color:#1d1a22;border-radius:14px;box-shadow:0 6px 30px rgba(0,0,0,.35);" +
     "padding:14px 20px 12px;font:15px/1.4 -apple-system,'Segoe UI',sans-serif;max-height:38vh;overflow:auto}" +
@@ -1125,6 +1334,15 @@ ASSEMBLY_JS = r"""
   ctl.querySelectorAll("button").forEach(function (b) { b.onclick = function () { act(b.getAttribute("data-a")); }; });
   var tags = [];
   function esc(x) { var d = document.createElement("div"); d.textContent = x; return d.innerHTML; }
+  function lab(name) {   // as a builder says it: "leg-front (1 of 2)" is the leg front, "black-keys-3" the black keys
+    var w = name.replace(/ \(\d+ of \d+\)$/, "").split(/[-_]+/).filter(Boolean);
+    while (w.length > 1 && /^\d+$/.test(w[w.length - 1])) w.pop();
+    return w.join(" ");
+  }
+  function onto(ns) {
+    var u = ns.filter(function (v, i, a) { return a.indexOf(v) === i; });
+    return "<span class=onto>onto the " + esc(lab(K.pieces[u[0]].name)) + " (" + u.join(", ") + ")</span>";
+  }
   function rows(s) {   // one row per kind of piece: a repeated step shows each kind once, with all its numbers
     var seen = {}, out = [];
     s.glue.forEach(function (g, i) {
@@ -1136,19 +1354,22 @@ ASSEMBLY_JS = r"""
   }
   function show(k) {
     var s = K.steps[k], rs = rows(s);
-    var list = rs.map(function (r) {
-      var nums = r.nums.map(function (n) { return "<span class=num data-n=" + n + " style='background:" + r.c + "'>" + n + "</span>"; }).join("");
-      if (s.kind === "fit") return "<li>" + nums + " the " + esc(r.p.kind) + " assembl" + (r.nums.length > 1 ? "ies" : "y") +
-        " <span class=onto>onto " + r.ontoN.filter(function (v, i, a) { return a.indexOf(v) === i; }).join(", ") + "</span></li>";
-      return "<li>" + nums + esc(r.p.name.replace(/ \(\d+ of \d+\)$/, "")) +
-        "<span class=chip style='background:" + r.p.color + "' title='" + esc(r.p.paint) + "'></span>" +
-        (r.onto ? "<span class=onto>onto " + r.ontoN.filter(function (v, i, a) { return a.indexOf(v) === i; }).join(", ") + " " +
-          esc(r.onto.name.replace(/ \(\d+ of \d+\)$/, "")) + "</span>" : s.kind === "bench" ? "<span class=onto>start of this assembly</span>" : "") +
+    var list = rs.map(function (r) {   // a long run of one kind: its first numbers, its last, and how many
+      var shown = r.nums.length > 6 ? r.nums.slice(0, 2).concat([null], r.nums.slice(-1)) : r.nums;
+      var nums = shown.map(function (n) { return n === null ? "<span class=more>&hellip;</span>" :
+        "<span class=num data-n=" + n + " style='background:" + r.c + "'>" + n + "</span>"; }).join("") +
+        (r.nums.length > 6 ? "<span class=more>&times;" + r.nums.length + "</span>" : "");
+      if (s.kind === "fit") return "<li>" + nums + " the " + esc(lab(r.p.name)) + " assembl" + (r.nums.length > 1 ? "ies" : "y") +
+        " " + onto(r.ontoN) + "</li>";
+      return "<li>" + nums + esc(lab(r.p.name)) +
+        "<span class=chip style='background:" + r.p.color + "'></span><span class=onto>" + esc(r.p.paint) + "</span>" +
+        (r.onto ? onto(r.ontoN) : s.kind === "bench" ? "<span class=onto>start of this assembly</span>" : "") +
         (r.p.clear ? " <i>clear</i>" : "") + "</li>";
     }).join("");
     top.innerHTML = "<div class=n>" + esc(K.title) + " &middot; step " + (k + 1) + " of " + K.steps.length + "</div>" +
       "<h2>" + esc(s.name || "Step " + (k + 1)) + (s.times > 1 ? "<span class=x>&times; " + s.times + "</span>" : "") + "</h2>" +
-      (s.kind === "bench" || s.bench ? "<div class=bench>At the bench: build this on its own first (shown here in place)</div>" : "") +
+      (s.kind === "bench" ? "<div class=bench>At the bench: build this on its own first (shown here in place)</div>" :
+       s.bench ? "<div class=bench>Still at the bench: onto the sub-assembly, not the model yet</div>" : "") +
       "<ul>" + list + "</ul>";
     ctl.querySelector(".pg").textContent = (k + 1) + " / " + K.steps.length;
     ctl.querySelector("[data-a=play]").innerHTML = playing ? "&#10073;&#10073; Pause" : "&#9654; Play";
@@ -1218,12 +1439,15 @@ ASSEMBLY_JS = r"""
                          reveal: K.reveal });
       if (u >= 1) { startAt = 0; if (playing) setTimeout(function () { if (playing) go(at + 1 < K.steps.length ? at + 1 : 0); }, 1100); }
     }
-    var lines = "";
+    var lines = "", spots = [];
     tags.forEach(function (t) {   // each number on its piece, and a line from its badge in the instructions
       var qs = t.ns.map(function (n) { var c = K.pieces[n].centre; return c && HOLO.project(c); }).filter(Boolean);
       t.el.style.display = qs.length ? "block" : "none";
       if (!qs.length) return;
       var q = [qs.reduce(function (s, v) { return s + v[0]; }, 0) / qs.length, qs.reduce(function (s, v) { return s + v[1]; }, 0) / qs.length];
+      for (var k = 0; k < 12 && spots.some(function (o) { return Math.hypot(o[0] - q[0], o[1] - q[1]) < 30; }); k++)
+        q = [q[0] + (k % 2 ? -1 : 1) * 16, q[1] + 15];   // numbers that would sit on each other step aside
+      spots.push(q);
       t.el.style.left = q[0] + "px"; t.el.style.top = q[1] + "px";
       var b = t.badge && t.badge.getBoundingClientRect(), tb = top.getBoundingClientRect();
       if (b && b.width) lines += "<line x1='" + (b.left + b.width / 2) + "' y1='" + Math.min(b.bottom, tb.bottom) + "' x2='" + q[0] +
@@ -1250,6 +1474,7 @@ def assembly(kit):
     from . import render
     scene, steps, n = kit["scene"], kit["steps"], max(1, len(kit["steps"]))
     by = {p["number"]: p for p in kit["pieces"]}
+    scene = dict(scene, presentation=dict(scene.get("presentation") or {}, background="transparent"))   # the page's backdrop
     g = scene_mod.compile_scene(scene)
     phase_of, colour_of = {}, {}
     for k, s in enumerate(steps):
@@ -1265,7 +1490,7 @@ def assembly(kit):
             boxes.setdefault(part["id"], []).append([(ins["min"][a] + ins["max"][a]) / 2 for a in range(3)])
     pieces = {}
     for p in kit["pieces"]:
-        cs = [c for pid in p["parts"] for c in boxes.get(pid, [])]
+        cs = [p["centre"]] if p.get("centre") else [c for pid in p["parts"] for c in boxes.get(pid, [])]
         pieces[p["number"]] = {"name": p["name"], "kind": _kind_of(p["name"]), "paint": p["paint"]["name"],
                                "color": p["paint"]["color"],
                                "clear": p["clear"], "centre": [round(sum(c[a] for c in cs) / len(cs), 5) for a in range(3)]
@@ -1314,11 +1539,8 @@ def booklet(kit):
                     % (len(rep["problems"]), "".join("<li>%s</li>" % e(p["message"]) for p in rep["problems"])))
     rows.append("</section><section><h2>Plates</h2>")
     for plate in kit["plates"]:
-        sc = 640 / kit["bed_mm"][0]
-        small = [n for n, _, _ in plate["pieces"] if min(by[n]["size_mm"][0], by[n]["size_mm"][1]) * sc < 9]
-        rows.append("<figure class=plate><img src='img/plate-%d.svg' alt='Plate %d'><figcaption>Plate %d%s%s</figcaption></figure>"
-                    % (plate["number"], plate["number"], plate["number"], " &middot; clear" if plate.get("clear") else "",
-                       " &middot; small pieces, left to right in rows: %s" % ", ".join(str(n) for n in small) if small else ""))
+        rows.append("<figure class=plate><img src='img/plate-%d.svg' alt='Plate %d'><figcaption>Plate %d%s</figcaption></figure>"
+                    % (plate["number"], plate["number"], plate["number"], " &middot; clear" if plate.get("clear") else ""))
     rows.append("</section><section><h2>Building it</h2>")
     for s in kit["steps"]:
         kind = s.get("kind")
@@ -1334,31 +1556,37 @@ def booklet(kit):
         items, need = [], []
         for g in groups:
             p = by[g["nums"][0]]
-            badges = "".join("<span class=num style='background:%s'>%d</span>" % (g["col"], n) for n in g["nums"])
+            run = g["nums"] if len(g["nums"]) <= 6 else g["nums"][:2] + [None] + g["nums"][-1:]   # a long run, shortened
+            badges = "".join("&hellip; " if n is None else "<span class=num style='background:%s'>%d</span>" % (g["col"], n)
+                             for n in run) + (" <b>&times;%d</b> " % len(g["nums"]) if len(g["nums"]) > 6 else "")
             if kind == "fit":
-                items.append("<li>%s the %s assembl%s onto %s</li>" % (badges, e(_kind_of(p["name"])), "ies" if len(g["nums"]) > 1
+                items.append("<li>%s the %s assembl%s onto %s</li>" % (badges, e(_label(p["name"])), "ies" if len(g["nums"]) > 1
                                                                        else "y", ", ".join(str(o) for o in g["onto"])))
                 continue
-            onto = " onto %s <b>%s</b>" % (", ".join(str(o) for o in g["onto"]), e(by[g["onto"][0]]["name"].split(" (")[0])) \
+            onto = " onto %s <b>%s</b>" % (", ".join(str(o) for o in g["onto"]), e(_label(by[g["onto"][0]]["name"]))) \
                 if g["onto"] else (" &mdash; the base" if g["nums"][0] == 1 else " &mdash; start of this assembly"
                                    if kind == "bench" else "")
-            items.append("<li>%s %s <span class=chip title='%s' style='background:%s'></span>%s%s</li>" % (
-                badges, e(p["name"].split(" (")[0]), e(p["paint"]["name"]), p["paint"]["color"], onto,
+            items.append("<li>%s %s <span class=chip style='background:%s'></span><span class=paint>%s</span>%s%s</li>" % (
+                badges, e(_label(p["name"])), p["paint"]["color"], e(p["paint"]["name"]), onto,
                 " <i>clear</i>" if p["clear"] else ""))
-            need.append("<figure><img src='img/part-%d.png' alt=''><figcaption>%s%s</figcaption></figure>" % (
-                g["nums"][0], ", ".join(str(n) for n in g["nums"][:4]) + ("&hellip;" if len(g["nums"]) > 4 else ""),
-                " &times;%d" % len(g["nums"]) if len(g["nums"]) > 1 else ""))
+            need.append("<figure><img src='img/part-%d.png' alt='%s'><figcaption><span class=num style='background:%s'>%s</span>%s"
+                        "<br><span class=chip style='background:%s'></span> %s</figcaption></figure>" % (
+                            g["nums"][0], e(_label(p["name"])), g["col"],
+                            ", ".join(str(n) for n in g["nums"][:3]) + ("&hellip;" if len(g["nums"]) > 3 else ""),
+                            " <b>&times;%d</b>" % len(g["nums"]) if len(g["nums"]) > 1 else "", p["paint"]["color"],
+                            e(p["paint"]["name"])))
         times = s.get("times", 1)
         tag = {"bench": "<div class=tagb>Build this on its own first</div>", "fit": "<div class=tagf>Fit it</div>"}.get(kind, "")
         if s.get("details"):
             tag = "<div class=tagd>Fragile: fit these last</div>"
         link = " <a class=b3d href='assembly.html#step-%d'>3D</a>" % s["number"] if has3d else ""
-        rows.append("<article class='step %s'><div class=text><div class=head><span class=sn>%d</span><h3>%s%s</h3>%s</div>"
-                    "%s%s<ul>%s</ul></div><img class=pic src='img/step-%d.svg' alt='Step %d'></article>" % (
+        # as a kit's sheet reads: the step and what to do, the parts it takes, the drawing large, what goes where
+        rows.append("<article class='step %s'><div class=head><span class=sn>%d</span><div><h3>%s%s</h3>%s</div>%s</div>"
+                    "%s<img class=pic src='img/step-%d.svg' alt='Step %d'><ul class=legend>%s</ul></article>" % (
                         kind or "", s["number"], e(s.get("name") or "Step %d" % s["number"]),
-                        " <span class=x>&times;%d</span>" % times if times > 1 else "", link, tag,
-                        "<div class=need-row>%s</div>" % "".join(need) if need else "", "".join(items),
-                        s["number"], s["number"]))
+                        " <span class=x>&times;%d</span>" % times if times > 1 else "", tag, link,
+                        "<div class=need-row>%s</div>" % "".join(need) if need else "",
+                        s["number"], s["number"], "".join(items)))
     rows.append("</section>")
     css = ("body{margin:0;background:#fbfaf7;color:#1d1a22;font:16px/1.5 -apple-system,'Segoe UI',sans-serif}"
            "main{max-width:1040px;margin:0 auto;padding:28px 18px 60px}h1{font:700 40px/1.1 -apple-system,sans-serif;margin:6px 0}"
@@ -1367,24 +1595,25 @@ def booklet(kit):
            ".sub{color:#5f5869;margin:0 0 14px}img{max-width:100%}.hero{width:100%;border-radius:12px;border:1px solid #ddd8cf}"
            ".b3d{font-weight:600}.b3d a,a.b3d{color:#1f6fd1}.need{display:grid;grid-template-columns:1fr 1fr;gap:24px}"
            "h3{margin:0 0 6px}table{border-collapse:collapse}td{padding:3px 8px;border-bottom:1px solid #e4dfd6}"
-           ".nums{color:#6b6475;font-size:13px}.chip{display:inline-block;width:14px;height:14px;border-radius:3px;"
+           ".nums{color:#6b6475;font-size:13px}.paint{color:#6b6475;font-size:13px;margin:0 6px 0 4px}.chip{display:inline-block;width:14px;height:14px;border-radius:3px;"
            "border:1px solid #777;vertical-align:-2px}.warn{margin:14px 0;border:1px solid #d23a3a;border-radius:8px;padding:8px 14px}"
            ".warn summary{cursor:pointer;font-weight:600}.plate{margin:12px 0}.plate img{border:1px solid #ddd8cf;border-radius:8px}"
-           "figcaption{font-size:13px;color:#5f5869}.step{display:grid;grid-template-columns:5fr 6fr;gap:20px;align-items:start;"
-           "border:1px solid #e4dfd6;border-radius:14px;padding:16px;margin:14px 0;background:#fff;break-inside:avoid}"
+           "figcaption{font-size:13px;color:#5f5869}.step{border:1px solid #e4dfd6;border-radius:14px;padding:16px 18px;"
+           "margin:18px 0;background:#fff;break-inside:avoid}"
            ".step.bench{border-color:#9cc0ea;background:#f6f9fd}.step.fit{border-color:#c8b6e0;background:#faf7fd}"
-           ".head{display:flex;align-items:center;gap:12px;margin-bottom:8px}.sn{min-width:46px;height:46px;border-radius:23px;"
-           "background:#1d1a22;color:#fff;font:700 22px/46px -apple-system,sans-serif;text-align:center}"
-           ".head h3{font:700 19px/1.25 -apple-system,sans-serif;margin:0}.x{display:inline-block;padding:1px 9px;"
+           ".head{display:flex;align-items:center;gap:14px;margin-bottom:10px}.head>div{flex:1}.sn{min-width:56px;height:56px;"
+           "border-radius:28px;background:#1d1a22;color:#fff;font:800 28px/56px -apple-system,sans-serif;text-align:center}"
+           ".head h3{font:700 22px/1.25 -apple-system,sans-serif;margin:0 0 4px}.x{display:inline-block;padding:1px 9px;"
            "border-radius:11px;background:#1d1a22;color:#fff;font-size:15px}.tagb,.tagf,.tagd{display:inline-block;"
            "font-size:13px;padding:2px 10px;border-radius:8px;margin-bottom:8px}.tagb{background:#e1ecfa;color:#1f4f8f}"
            ".tagf{background:#ece3f7;color:#5b3d8a}.tagd{background:#fbe7d4;color:#8a4b12}.need-row{display:flex;flex-wrap:wrap;"
-           "gap:8px;margin:4px 0 10px}.need-row figure{margin:0;text-align:center}.need-row img{width:76px;height:76px;"
-           "border:1px solid #e4dfd6;border-radius:8px;background:#fff}.step ul{list-style:none;padding:0;margin:0}"
-           ".step li{margin:7px 0;font-size:16px}.num{display:inline-block;min-width:26px;padding:0 6px;margin-right:3px;"
+           "gap:10px;margin:0 0 12px;padding:10px;background:#f6f3ee;border-radius:10px}.need-row figure{margin:0;"
+           "text-align:center}.need-row img{width:96px;height:96px;border:1px solid #e4dfd6;border-radius:8px;background:#fff;"
+           "display:block}.need-row figcaption{margin-top:4px;color:#1d1a22}.step ul{list-style:none;padding:0;margin:10px 0 0}"
+           ".legend{display:flex;flex-wrap:wrap;gap:4px 22px}.step li{margin:4px 0;font-size:16px}.num{display:inline-block;min-width:26px;padding:0 6px;margin-right:3px;"
            "border-radius:13px;color:#fff;font:700 13px/26px ui-monospace,monospace;text-align:center}"
            ".pic{width:100%;border:1px solid #e4dfd6;border-radius:10px;background:#f6f3ee}"
-           "@media(max-width:720px){.step,.need{grid-template-columns:1fr}h1{font-size:30px}}"
+           "@media(max-width:720px){.need{grid-template-columns:1fr}h1{font-size:30px}.need-row img{width:72px;height:72px}}"
            "@media print{body{background:#fff}.b3d{display:none}.step{box-shadow:none}h2{break-after:avoid}}")
     return ("<!doctype html><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'>"
             "<title>%s</title><style>%s</style><main>%s</main>" % (e(kit["title"]), css, "".join(rows)))

@@ -290,7 +290,7 @@ void main() {
   float rim = pow(1.0 - max(dot(n, v), 0.0), 3.0) * 0.18;
   vec3 c = vBase * (amb + d) + vec3(spec + rim);
   c = mix(c, c * 0.85, step(uHi.x, uHi.y - 1e-6) * (1.0 - hi))   // the rest steps back, a little;
-      + hi * (vec3(0.04, 0.025, 0.0) + pow(1.0 - max(dot(n, v), 0.0), 2.0) * vec3(0.55, 0.38, 0.12));   // the new pieces' edges glow warm, their paint unchanged
+      + hi * pow(1.0 - max(dot(n, v), 0.0), 4.0) * vec3(0.6, 0.4, 0.1);   // the new pieces' outlines glow warm, their paint unchanged
   if (uClear > 0.5) { float a = (0.22 + 0.5 * pow(1.0 - max(dot(n, v), 0.0), 2.0)) * reveal; o = vec4(mix(c, vec3(0.75, 0.85, 0.9), 0.5) * a, a); return; }
   o = vec4(c * reveal, reveal);
 }`;

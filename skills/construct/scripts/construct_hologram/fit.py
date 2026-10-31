@@ -114,6 +114,12 @@ def check(scene, cells=CELLS):
         zs = [i for m in v.values() for i in (m.bit_length() - 1, (m & -m).bit_length() - 1)]
         box[pid] = (min(xs), max(xs), min(ys), max(ys), min(zs), max(zs))
     ids = sorted(vox, key=lambda p: -size[p])
+    split = {}
+
+    def pieces_of(pid):
+        if pid not in split:
+            split[pid] = len(_components(vox[pid]))
+        return split[pid]
     # the outside: what is not inside the whole object once its enclosed hollows are filled (a tip that pokes into a
     # closed cabin or an engine bay is hidden; one that pokes out into the air shows)
     solid = {}
@@ -149,9 +155,10 @@ def check(scene, cells=CELLS):
                 for small, big in ((b, a), (a, b)):
                     out = {c: m & ~vox[big].get(c, 0) for c, m in vox[small].items()}
                     comps = sorted(_components({c: m for c, m in out.items() if m}), key=lambda c: -_count(c))
-                    if len(comps) < 2:
+                    alone = pieces_of(small)   # a thin skin may already be in pieces by itself: only new pieces count
+                    if len(comps) <= alone:
                         continue
-                    stray = [c for c in comps[1:] if _count(c) >= POKE * size[small] and _count(c) >= 2 and shows(c) >= 2]
+                    stray = [c for c in comps[alone:] if _count(c) >= POKE * size[small] and _count(c) >= 2 and shows(c) >= 2]
                     if not stray or _count(comps[0]) < 0.5 * size[small] \
                             or sum(_count(c) for c in stray) > TIP * size[small]:
                         continue   # nothing out, or a part that passes through by design (an axle, a spoke)

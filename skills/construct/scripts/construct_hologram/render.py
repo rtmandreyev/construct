@@ -293,7 +293,9 @@ class Browser:
         port = int(port_file.read_text().split()[0])
         targets = json.loads(urllib.request.urlopen("http://127.0.0.1:%d/json/list" % port, timeout=10).read())
         page = next(t for t in targets if t.get("type") == "page")
-        self.ws = _WebSocket(page["webSocketDebuggerUrl"])
+        # software WebGL draws a large construct's contact sheet in minutes, not seconds: wait for it
+        self.patience = 60 if gpu else 900
+        self.ws = _WebSocket(page["webSocketDebuggerUrl"], timeout=self.patience)
         self.next_id = 0
         self.call("Page.enable")
         self.call("Runtime.enable")
@@ -311,7 +313,8 @@ class Browser:
                     raise CaptureError("%s: %s" % (method, msg["error"].get("message")))
                 return msg.get("result", {})
 
-    def evaluate(self, expression, timeout=60):
+    def evaluate(self, expression, timeout=None):
+        timeout = timeout or getattr(self, "patience", 60)
         res = self.call("Runtime.evaluate", expression=expression, awaitPromise=True, returnByValue=True,
                         timeout=int(timeout * 1000))
         if res.get("exceptionDetails"):

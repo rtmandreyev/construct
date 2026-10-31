@@ -411,6 +411,8 @@ def add_commands(sub):
     p.add_argument("--fit", action="store_true",
                    help="also how its solids fit: parts that poke through others where it shows, and parts buried in "
                         "others (what a solid, a print or a kit shows and the light forgives)")
+    p.add_argument("--cells", type=int, default=160,
+                   help="--fit: voxels along the longest side (default 160; more finds thinner parts, slower)")
     p = sub.add_parser("build", help="geometry, the HTML preview and the audit")
     p.add_argument("scene")
     p.add_argument("--out", required=True)
@@ -835,7 +837,8 @@ def run(args):
             if getattr(args, "fit", False) and report.get("stats") is not None:
                 from . import fit as fit_mod
                 fitted = fit_mod.check(diagnose_mod.parse_text(text)[0] if not params_mod.is_params(
-                    diagnose_mod.parse_text(text)[0]) else params_mod.expand(diagnose_mod.parse_text(text)[0]))
+                    diagnose_mod.parse_text(text)[0]) else params_mod.expand(diagnose_mod.parse_text(text)[0]),
+                    cells=max(40, min(600, args.cells)))
                 report["fit"] = fitted
             if args.json:
                 sys.stdout.write(json.dumps(report, indent=2, ensure_ascii=False) + "\n")
