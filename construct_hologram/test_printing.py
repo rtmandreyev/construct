@@ -395,6 +395,28 @@ class Kit(unittest.TestCase):
         self.assertNotIn("badge", {i["parts"][0] for i in r["issues"]})               # set in, not poking through
         self.assertIn("fit:", fit.report(r))
 
+    def test_the_same_sub_assembly_built_twice_is_one_step_done_twice(self):
+        self.assertEqual({kit_mod._kind_of(n) for n in ("tyre-front (1 of 2)", "tyre-rear--1", "tyre-left", "tyre-r")}, {"tyre"})
+        piece = lambda n, name, size: {"number": n, "name": name, "size_mm": size}
+        pieces = [piece(1, "chassis", [100, 50, 10]), piece(2, "wheel-front-left", [20, 20, 8]), piece(3, "hub-front-left", [6, 6, 4]),
+                  piece(4, "wheel-rear-right", [21, 20, 8]), piece(5, "hub-rear-right", [6, 6, 4]),
+                  piece(6, "lamp-left", [9, 5, 3]), piece(7, "lamp-right", [30, 5, 3])]
+        steps = [{"kind": "base", "new": [1], "pieces": [1], "glue": [(1, None)]},
+                 {"kind": "bench", "assembly": 2, "new": [2, 3], "pieces": [2, 3], "glue": [(2, None), (3, 2)]},
+                 {"kind": "fit", "assembly": 2, "new": [], "pieces": [2], "glue": [(2, 1)]},
+                 {"kind": "bench", "assembly": 4, "new": [4, 5], "pieces": [4, 5], "glue": [(4, None), (5, 4)]},
+                 {"kind": "fit", "assembly": 4, "new": [], "pieces": [4], "glue": [(4, 1)]},
+                 {"kind": "bench", "assembly": 6, "new": [6], "pieces": [6], "glue": [(6, None)]},
+                 {"kind": "fit", "assembly": 6, "new": [], "pieces": [6], "glue": [(6, 1)]},
+                 {"kind": "bench", "assembly": 7, "new": [7], "pieces": [7], "glue": [(7, None)]},
+                 {"kind": "fit", "assembly": 7, "new": [], "pieces": [7], "glue": [(7, 1)]}]
+        out = kit_mod._combine(steps, pieces)
+        self.assertEqual(len(out), 7)                                        # the two wheels are one step, done twice
+        self.assertEqual(out[1]["times"], 2)
+        self.assertEqual(sorted(out[1]["new"]), [2, 3, 4, 5])
+        self.assertIn("2 ×", out[1]["name"])
+        self.assertFalse(any(s.get("times", 1) > 1 for s in out[3:]))      # two lamps of different sizes stay apart
+
     def test_a_kit_glues_like_a_kit_designer(self):
         # found by two live runs' kit critics: glass went into a closed body, a pillar was glued to a door, a seat to
         # the dash, steps ran in piece-number order, clear and opaque pieces shared a plate
@@ -449,7 +471,9 @@ class Kit(unittest.TestCase):
             self.assertIn("<path d=", step)                                       # drawn in the construct's lines
             self.assertIn(">1</text>", step)                                      # the new piece's callout
             for name in os.listdir(Path(tmp, "img")):                             # a valid size, not "100%%"
-                self.assertNotIn("%%", Path(tmp, "img", name).read_text(encoding="utf-8"), name)
+                if name.endswith(".svg"):
+                    self.assertNotIn("%%", Path(tmp, "img", name).read_text(encoding="utf-8"), name)
+            self.assertTrue(Path(tmp, "img", "part-1.png").read_bytes().startswith(b"\x89PNG"))   # the part pictures
             self.assertNotIn("%%", booklet)
             summary = json.loads(Path(tmp, "kit.json").read_text(encoding="utf-8"))
             self.assertEqual(summary["report"]["counts"]["pieces"], 4)

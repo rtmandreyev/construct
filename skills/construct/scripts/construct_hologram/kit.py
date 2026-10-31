@@ -197,14 +197,17 @@ def make(scene, scale=SCALE, size=None, detail=DETAIL_MM, wall=WALL_MM, plan=Non
     grid = printing._Grid(lo, hi, h, r + 3)
     info = {p["id"]: p for p in scene["parts"]}
 
-    # each part's voxels
-    vox = {}
+    # each part's voxels, and the true surfaces of its filled solids (the pieces' surfaces snap back onto them, so a
+    # round part prints round and a flat face flat, not stepped)
+    vox, true, whole = {}, {}, {}   # whole: each part's closed solids, as they are
     for pid, piece in closed:
         inside, surface = {}, {}
         printing._fill(grid, piece, inside)
         printing._mark_surface(grid, piece, surface)
         if _count(inside) >= _count(surface):
             _or_into(vox.setdefault(pid, {}), inside)
+            true.setdefault(pid, []).extend([tuple(grid.to_cell(q)) for q in t] for t in piece)
+            whole.setdefault(pid, []).append([[tuple(grid.to_cell(q)) for q in t] for t in piece])
         else:
             _or_into(vox.setdefault(pid, {}), printing._dilate(surface, r, grid.n))
     for pid, piece in open_:
@@ -301,6 +304,8 @@ def make(scene, scale=SCALE, size=None, detail=DETAIL_MM, wall=WALL_MM, plan=Non
     if grooves:
         grooves = printing._dilate(grooves, 1, grid.n)
         for p in pieces:
+            if not any(m & grooves.get(c, 0) for c, m in p["cols"].items()):
+                continue   # no panel line crosses it
             backed = printing._dilate(printing._erode(p["cols"], 1, grid.n), 1, grid.n)
             for c, m in list(p["cols"].items()):
                 cut = m & grooves.get(c, 0) & backed.get(c, 0)
@@ -326,11 +331,18 @@ def make(scene, scale=SCALE, size=None, detail=DETAIL_MM, wall=WALL_MM, plan=Non
     raw = _order(pieces, grid.n, scene.get("subject", {}).get("category") == "architecture", detail)
     _line_art(scene, pieces, grid)
     for p in pieces:
-        p["mesh"], p["size_mm"], p["down"] = _piece_mesh(p["cols"], detail)
+        # a piece that is one closed solid, untouched by the trimming, is printed as it is: exact, every facet
+        exact = None
+        if len(p["parts"]) == 1 and len(whole.get(p["head"], ())) == 1 and _count(p["cols"]) == _count(vox[p["head"]]) \
+                and _count(own_vox[p["head"]]) == _count(p["cols"]):
+            exact = whole[p["head"]][0]
+        p["exact"] = exact is not None
+        p["mesh"], p["size_mm"], p["down"] = _piece_mesh(p["cols"], detail, [t for m in p["parts"] for t in true.get(m, ())],
+                                                         exact)
     plates = _pack(pieces, bed)
     kit = {"title": plan.get("title") or "%s, a kit" % scene["title"], "construct": scene["title"],
            "scale": "1:%s" % printing._ratio(1000.0 / mm_per_m), "detail_mm": detail, "pieces": pieces,
-           "plates": plates, "steps": _steps(pieces, raw), "bed_mm": list(bed), "scene": scene,
+           "plates": plates, "steps": _combine(_steps(pieces, raw), pieces), "bed_mm": list(bed), "scene": scene,
            "merged": merged_away, "dropped": dropped, "plan": plan,
            "size_mm": [round((hi[a] - lo[a]) * mm_per_m, 1) for a in (0, 1, 2)]}
     kit["report"] = check(kit)
@@ -418,7 +430,8 @@ def _order(pieces, n, ground_up=False, detail=DETAIL_MM):
     a tyre onto its rim before the wheel goes on), earlier stages first, and what opens (a door, a bonnet) is
     hung last."""
     touch = _touches(pieces, n)
-    rank = lambda p: (p.get("group", 0), p["stage"], -_count(p["cols"]))
+    cnt = {id(p): _count(p["cols"]) for p in pieces}   # each piece's size, counted once
+    rank = lambda p: (p.get("group", 0), p["stage"], -cnt[id(p)])
     zc = {id(p): (lambda b: (b[4] + b[5]) / 2.0)(_bbox(p["cols"])) for p in pieces}
 
     def weight(p, q):   # the join of p onto q (q nearer the base)
@@ -438,13 +451,13 @@ def _order(pieces, n, ground_up=False, detail=DETAIL_MM):
     # (a building goes up from the ground: what starts lower holds what starts higher)
     low = {id(p): _bbox(p["cols"])[4] // 3 if ground_up else 0 for p in pieces}
     found = lambda p: (p.get("group", 0), len(p.get("moves") or ()), low[id(p)],
-                       -_count(p["cols"]) if p.get("moves") else -held[id(p)], p["stage"], -_count(p["cols"]))
+                       -cnt[id(p)] if p.get("moves") else -held[id(p)], p["stage"], -cnt[id(p)])
     parent = {}
     chain_head = {}   # each moving group's largest piece: the one that hangs on the fixed body
     for p in pieces:
         if p.get("moves"):
             k = p["moves"]
-            if k not in chain_head or _count(p["cols"]) > _count(chain_head[k]["cols"]):
+            if k not in chain_head or cnt[id(p)] > cnt[id(chain_head[k])]:
                 chain_head[k] = p
     for p in pieces:   # each onto the most firmly joined piece that is more foundational than it
         hosts = [q for q in pieces if q is not p and found(q) < found(p) and weight(p, q)]
@@ -492,17 +505,26 @@ def _order(pieces, n, ground_up=False, detail=DETAIL_MM):
     roots.sort(key=lambda p: (p is not base, rank(p)))
     out, steps, hung, details = [], [], [], []
 
+    def thin(c):
+        b = _bbox(c["cols"])
+        return (min(b[1] - b[0], b[3] - b[2], b[5] - b[4]) + 1) * detail
+
+    def built_on(c):   # what goes onto c at the bench: its attachments that neither open nor wait for the details
+        return [d for d in kids.get(id(c), []) if set(d.get("moves") or ()) == set(c.get("moves") or ())
+                and (kids.get(id(d)) or thin(d) >= FRAGILE_MM or d["clear"])]
+
     def build(p, bench):
         """Glue p's subtree onto p: leaves directly, sub-assemblies built at the bench first, then fitted."""
         opens = lambda c: set(c.get("moves") or ()) != set(p.get("moves") or ())   # it rides a hinge its host does not
         mine = [c for c in kids.get(id(p), []) if not opens(c)]
         hung.extend((c, p) for c in kids.get(id(p), []) if opens(c))
-        thin = lambda c: (lambda b: min(b[1] - b[0], b[3] - b[2], b[5] - b[4]) + 1)(_bbox(c["cols"])) * detail
         fragile = [c for c in mine if not kids.get(id(c)) and thin(c) < FRAGILE_MM and not c["clear"]]
         details.extend((c, p) for c in fragile)   # fragile chrome and trim go on once the structure is built
         mine = [c for c in mine if c not in fragile]
-        leaves = [c for c in mine if not kids.get(id(c))]
-        subs = [c for c in mine if kids.get(id(c))]
+        # a sub-assembly needs something to build at the bench: one whose only attachments open or are fragile (they
+        # come later anyway) is glued on as a single piece
+        subs = [c for c in mine if built_on(c)]
+        leaves = [c for c in mine if c not in subs]
         for c in mine:   # in the kids' order: earlier first, and a shell after what it closes over
             if c in subs:
                 out.append(c)
@@ -518,6 +540,8 @@ def _order(pieces, n, ground_up=False, detail=DETAIL_MM):
                     last["pieces"].append(c)
                 else:
                     steps.append({"kind": "glue", "root": None, "pieces": [c], "onto": p, "bench": bench})
+                if kids.get(id(c)):   # its fragile or opening attachments, for later
+                    build(c, bench)
     for r in roots:
         out.append(r)
         steps.append({"kind": "base" if r is base else "loose", "root": r, "pieces": [r], "onto": None})
@@ -556,6 +580,61 @@ def _subtree(p, pieces):
             if q["onto"] is not None and q["onto"]["number"] in out and q["number"] not in out:
                 out.add(q["number"])
                 grew = True
+    return out
+
+
+SIDE_WORDS = {"left", "right", "l", "r", "front", "rear", "fl", "fr", "rl", "rr", "inner", "outer", "upper", "lower"}
+
+
+def _kind_of(name):
+    """What a piece is, whichever side or copy it is: "tyre-front (1 of 2)" and "tyre-rear-1" are both "tyre"."""
+    base = name.split(" (")[0].lower()
+    words = [w for w in base.replace("_", "-").split("-") if w and not w.isdigit() and w not in SIDE_WORDS]
+    return "-".join(words) or base
+
+
+def _combine(steps, pieces):
+    """Sub-assemblies built the same way more than once (four wheels, two doors) become one step each, done that
+    many times: the same kinds of pieces, of about the same size, glued in the same order."""
+    by = {p["number"]: p for p in pieces}
+
+    def sizes(i, j):   # each step's new pieces, by kind, with their sizes
+        return [sorted((_kind_of(by[n]["name"]), sorted(by[n]["size_mm"])) for n in t.get("new", [])) for t in steps[i:j + 1]]
+
+    def alike(a, b):   # the same pieces, each within a quarter of the other's size
+        return all(len(x) == len(y) and all(k1 == k2 and all(abs(p - q) <= 0.25 * max(p, q, 0.5) for p, q in zip(s1, s2))
+                                            for (k1, s1), (k2, s2) in zip(x, y)) for x, y in zip(a, b))
+    spans = []
+    for i, st in enumerate(steps):
+        if st.get("kind") == "bench":
+            j = next((k for k in range(i + 1, len(steps)) if steps[k].get("kind") == "fit"
+                      and steps[k].get("assembly") == st["assembly"]), None)
+            if j is not None:
+                sig = tuple((t.get("kind"), tuple(sorted(_kind_of(by[n]["name"]) for n in t.get("new", []))))
+                            for t in steps[i:j + 1])
+                spans.append((i, j, sig))
+    gone = set()
+    for a, (i, j, sig) in enumerate(spans):
+        if i in gone:
+            continue
+        times = 1
+        for (k, l, sig2) in spans[a + 1:]:
+            if k in gone or sig2 != sig or k <= j or not alike(sizes(i, j), sizes(k, l)):
+                continue   # only a later sub-assembly built the same way, of the same pieces, not inside this one
+            for d in range(j - i + 1):
+                for key in ("pieces", "new", "glue"):
+                    steps[i + d][key] = steps[i + d].get(key, []) + steps[k + d].get(key, [])
+            gone.update(range(k, l + 1))
+            times += 1
+        if times > 1:
+            for d in range(j - i + 1):
+                steps[i + d]["times"] = times
+            root = _kind_of(by[steps[i]["assembly"]]["name"])
+            steps[i]["name"] = "At the bench: build %d × the %s assembly" % (times, root)
+            steps[j]["name"] = "%s the %d %s assemblies" % ("Hang" if steps[j].get("hang") else "Fit", times, root)
+    out = [st for n, st in enumerate(steps) if n not in gone]
+    for k, st in enumerate(out, 1):
+        st["number"] = k
     return out
 
 
@@ -601,8 +680,10 @@ LAY = {(0, 0, -1): lambda x, y, z: (x, y, z), (0, 0, 1): lambda x, y, z: (x, -y,
        (0, -1, 0): lambda x, y, z: (x, -z, y), (0, 1, 0): lambda x, y, z: (x, z, -y)}
 
 
-def _piece_mesh(cols, detail):
-    """A piece's surface, lying on its largest flat face, in mm, its lowest corner at the origin."""
+def _piece_mesh(cols, detail, true=(), exact=None):
+    """A piece's surface, lying on its largest flat face, in mm, its lowest corner at the origin: smoothed, and
+    snapped onto `true` (its parts' own surfaces, in grid cells) where it lies within a voxel of them, so it keeps
+    their roundness and their flat faces."""
     i0, i1, j0, j1, k0, k1 = _bbox(cols)
     area = {(0, 0, -1): sum(1 for m in cols.values() if m >> k0 & 1),
             (0, 0, 1): sum(1 for m in cols.values() if m >> k1 & 1),
@@ -611,10 +692,17 @@ def _piece_mesh(cols, detail):
             (0, -1, 0): sum(bin(m).count("1") for (i, j), m in cols.items() if j == j0),
             (0, 1, 0): sum(bin(m).count("1") for (i, j), m in cols.items() if j == j1)}
     down = max(area, key=lambda d: (area[d], d == (0, 0, -1)))
-    work = dict(cols)
-    printing._manifold(work)
-    verts, faces = printing._surface(work, None)
-    verts = printing._smooth(verts, faces, steps=6)
+    if exact:   # the part's own solid, wound outward
+        verts, faces = printing._weld(exact)
+        faces = [tuple(f) for f in printing._orient(verts, faces)]
+        verts = [list(v) for v in verts]
+    else:
+        work = dict(cols)
+        printing._manifold(work)
+        verts, faces = printing._surface(work, None)
+        verts = printing._smooth(verts, faces, steps=6)   # fewer passes than a print's: the snap does the rest
+        if true:
+            verts = printing._snap(verts, list(true))
     lay = LAY[down]
     verts = [lay(*(x * detail for x in p)) for p in verts]
     lo = [min(v[a] for v in verts) for a in range(3)]
@@ -796,22 +884,119 @@ def _drawing(kit, highlight, done, onto=None, w=900, hgt=600):
     return "".join(out)
 
 
+def _hex_rgb(c):
+    c = (c or "#c8c4cc").lstrip("#")
+    return tuple(int(c[i:i + 2], 16) for i in (0, 2, 4)) if len(c) == 6 else (200, 196, 204)
+
+
+def _raster(items, w, h, bg=(246, 243, 238)):
+    """A small z-buffered rasteriser (standard library only): `items` are (triangle in screen pixels with depth
+    toward the viewer, (r, g, b)); returns PNG bytes."""
+    from . import png
+    zb = [-1e30] * (w * h)
+    px = bytearray(bytes(bg) * (w * h))
+    for (a, b, c), col in items:
+        lx, hx = min(a[0], b[0], c[0]), max(a[0], b[0], c[0])
+        ly, hy = min(a[1], b[1], c[1]), max(a[1], b[1], c[1])
+        if hx - lx < 1.0 and hy - ly < 1.0:   # smaller than a pixel (a dense mesh): its middle is enough
+            x, y = int((lx + hx) / 2), int((ly + hy) / 2)
+            if 0 <= x < w and 0 <= y < h:
+                z, i = (a[2] + b[2] + c[2]) / 3, y * w + x
+                if z > zb[i]:
+                    zb[i] = z
+                    px[3 * i:3 * i + 3] = bytes(col)
+            continue
+        x0, x1 = max(0, int(lx)), min(w - 1, int(hx) + 1)
+        y0, y1 = max(0, int(ly)), min(h - 1, int(hy) + 1)
+        den = (b[1] - c[1]) * (a[0] - c[0]) + (c[0] - b[0]) * (a[1] - c[1])
+        if x0 > x1 or y0 > y1 or abs(den) < 1e-12:
+            continue
+        for y in range(y0, y1 + 1):
+            for x in range(x0, x1 + 1):
+                l1 = ((b[1] - c[1]) * (x + 0.5 - c[0]) + (c[0] - b[0]) * (y + 0.5 - c[1])) / den
+                l2 = ((c[1] - a[1]) * (x + 0.5 - c[0]) + (a[0] - c[0]) * (y + 0.5 - c[1])) / den
+                l3 = 1 - l1 - l2
+                if l1 < -1e-4 or l2 < -1e-4 or l3 < -1e-4:
+                    continue
+                z = l1 * a[2] + l2 * b[2] + l3 * c[2]
+                i = y * w + x
+                if z > zb[i]:
+                    zb[i] = z
+                    px[3 * i:3 * i + 3] = bytes(col)
+    return png.encode_rows(w, h, px)
+
+
+def _shade(n, col, light=(0.45, 0.7, 0.55)):
+    ln = math.sqrt(n[0] * n[0] + n[1] * n[1] + n[2] * n[2]) or 1.0
+    ll = math.sqrt(light[0] * light[0] + light[1] * light[1] + light[2] * light[2])
+    k = 0.42 + 0.58 * abs(n[0] * light[0] + n[1] * light[1] + n[2] * light[2]) / ln / ll
+    return (int(min(255, col[0] * k)), int(min(255, col[1] * k)), int(min(255, col[2] * k)))
+
+
+def _thumb(mesh, colour, size=132):
+    """A piece as it comes off the plate, seen from above at an angle, in its paint (PNG bytes)."""
+    vs, fs = mesh["vertices"], mesh["triangles"]
+    cy, sy, cp, sp = math.cos(math.radians(35)), math.sin(math.radians(35)), math.cos(math.radians(32)), math.sin(math.radians(32))
+
+    def tf(v):
+        x1, y1 = v[0] * cy - v[1] * sy, v[0] * sy + v[1] * cy
+        return (x1, y1 * sp + v[2] * cp, -y1 * cp + v[2] * sp)
+    P = [tf(v) for v in vs]
+    xs, ys = [p[0] for p in P], [p[1] for p in P]
+    span = max(max(xs) - min(xs), max(ys) - min(ys)) or 1.0
+    sc = size * 0.84 / span
+    ox, oy = size / 2 - (max(xs) + min(xs)) / 2 * sc, size / 2 + (max(ys) + min(ys)) / 2 * sc
+    col = _hex_rgb(colour)
+    items = []
+    for f in fs:
+        a, b, c = (P[i] for i in f)
+        u = [b[k] - a[k] for k in range(3)]
+        w_ = [c[k] - a[k] for k in range(3)]
+        n = (u[1] * w_[2] - u[2] * w_[1], u[2] * w_[0] - u[0] * w_[2], u[0] * w_[1] - u[1] * w_[0])
+        items.append(([(ox + q[0] * sc, oy - q[1] * sc, q[2]) for q in (a, b, c)], _shade(n, col)))
+    return _raster(items, size, size, bg=(255, 255, 255))
+
+
+def _plate_png(kit, plate, w=640):
+    """The plate seen from above: each piece's real outline and relief, in its paint (PNG bytes, and its height)."""
+    bw, bd = kit["bed_mm"][0], kit["bed_mm"][1]
+    sc = w / bw
+    h = int(bd * sc)
+    by = {p["number"]: p for p in kit["pieces"]}
+    items = []
+    for num, x0, y0 in plate["pieces"]:
+        p = by[num]
+        col = (159, 211, 240) if p["clear"] else _hex_rgb(p["paint"]["color"])
+        vs = p["mesh"]["vertices"]
+        for f in p["mesh"]["triangles"]:
+            a, b, c = (vs[i] for i in f)
+            u = [b[k] - a[k] for k in range(3)]
+            w_ = [c[k] - a[k] for k in range(3)]
+            n = (u[1] * w_[2] - u[2] * w_[1], u[2] * w_[0] - u[0] * w_[2], u[0] * w_[1] - u[1] * w_[0])
+            items.append(([((x0 + q[0]) * sc, (y0 + q[1]) * sc, q[2]) for q in (a, b, c)], _shade(n, col, (0.3, -0.4, 0.86))))
+    return _raster(items, w, h), h
+
+
 def _plate_map(kit, plate, w=640):
     """The plate seen from above: each piece's footprint and its number (SVG)."""
     bw, bd = kit["bed_mm"][0], kit["bed_mm"][1]
     sc = w / bw
     by = {p["number"]: p for p in kit["pieces"]}
-    out = ['<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 %d %d" width="%d">' % (w, int(bd * sc), w),
-           '<rect width="100%" height="100%" fill="#f6f3ee" stroke="#ddd8cf"/>']
-    for num, x, y in plate["pieces"]:   # each piece in its paint, so the plate is a painting guide too
+    import base64
+    img, h = _plate_png(kit, plate, w)
+    out = ['<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 %d %d" width="100%%">' % (w, h),
+           '<rect width="100%" height="100%" fill="#f6f3ee" stroke="#ddd8cf"/>',
+           '<image href="data:image/png;base64,%s" x="0" y="0" width="%d" height="%d"/>' % (base64.b64encode(img).decode(), w, h)]
+    for num, x, y in plate["pieces"]:   # each piece as it lies, in its paint, its number on it
         p = by[num]
         fw, fd = p["size_mm"][0] * sc, p["size_mm"][1] * sc
-        fill = "#9fd3f0" if p["clear"] else p["paint"]["color"]
-        out.append('<rect x="%.1f" y="%.1f" width="%.1f" height="%.1f" fill="%s" fill-opacity="0.55" stroke="#3a3542" '
-                   'stroke-width="0.8"/>' % (x * sc, y * sc, fw, fd, fill))
-        out.append('<text x="%.1f" y="%.1f" fill="#1d1a22" font-size="%d" font-weight="700" font-family="monospace" '
-                   'text-anchor="middle" dominant-baseline="middle">%d</text>'
-                   % (x * sc + fw / 2, y * sc + fd / 2, max(9, min(16, int(min(fw, fd) * 0.6))), num))
+        if min(fw, fd) < 9:   # too small to label on the plate: the booklet lists it under the plate
+            continue
+        r = max(7, min(11, int(min(fw, fd) * 0.45)))
+        out.append('<circle cx="%.1f" cy="%.1f" r="%d" fill="#ffffff" fill-opacity="0.85" stroke="#1d1a22" stroke-width="0.8"/>'
+                   '<text x="%.1f" y="%.1f" fill="#1d1a22" font-size="%d" font-weight="700" font-family="monospace" '
+                   'text-anchor="middle" dominant-baseline="central">%d</text>'
+                   % (x * sc + fw / 2, y * sc + fd / 2, r, x * sc + fw / 2, y * sc + fd / 2, max(8, r + 1), num))
     out.append("</svg>")
     return "".join(out)
 
@@ -875,6 +1060,8 @@ def write(kit, out):
         (out / "img" / ("step-%d.svg" % s["number"])).write_text(pic, encoding="utf-8")
         done |= new
     (out / "img" / "complete.svg").write_text(_drawing(kit, set(), done), encoding="utf-8")
+    for p in kit["pieces"]:   # each part as it comes off the plate, for the booklet's "you need" pictures
+        (out / "img" / ("part-%d.png" % p["number"])).write_bytes(_thumb(p["mesh"], "#9fd3f0" if p["clear"] else p["paint"]["color"]))
     (out / "booklet.html").write_text(booklet(kit), encoding="utf-8")
     if kit.get("scene"):
         (out / "assembly.html").write_text(assembly(kit), encoding="utf-8")
@@ -897,45 +1084,86 @@ def summary(kit):
 
 
 ASSEMBLY_JS = r"""
-// the kit's steps in 3D: each step's pieces drop into place, painted; the rest of the model steps back
+// the kit's steps in 3D: each step's pieces drop into place in their paint, what is built stays as it is, the step's
+// instructions big at the top with a line to each piece, the controls at the bottom
 (function () {
   var K = __KIT__, COLS = __COLOURS__;
-  var at = 0, playing = false, t0 = null;
+  var at = -1, playing = false;
   var css = document.createElement("style");
-  css.textContent = ".kit{position:fixed;left:16px;top:44px;width:min(360px,calc(100% - 32px));max-height:calc(100% - 120px);" +
-    "overflow:auto;background:rgba(14,10,18,.86);border:1px solid #3a2f48;border-radius:10px;padding:12px 14px;color:#f1e9f7;" +
-    "font:13px/1.45 -apple-system,sans-serif;z-index:5}.kit h2{font:600 15px/1.3 -apple-system,sans-serif;margin:0 0 4px}" +
-    ".kit .n{color:#a597b3;font-size:12px}.kit ul{list-style:none;padding:0;margin:8px 0}.kit li{margin:4px 0}" +
-    ".kit .num{display:inline-block;min-width:20px;padding:0 5px;border-radius:10px;color:#fff;font:700 11px/20px monospace;" +
-    "text-align:center;margin-right:6px}.kit .chip{display:inline-block;width:10px;height:10px;border-radius:2px;border:1px solid #777;" +
-    "margin:0 4px}.kit button{background:#2a2135;color:#f1e9f7;border:1px solid #4a3d5a;border-radius:6px;padding:4px 10px;" +
-    "margin-right:6px;cursor:pointer}.kit .bench{color:#9fd0ff}.tag{position:fixed;transform:translate(-50%,-50%);" +
-    "pointer-events:none;border-radius:11px;color:#fff;font:700 11px/22px monospace;min-width:22px;padding:0 5px;text-align:center;" +
-    "box-shadow:0 0 0 2px rgba(0,0,0,.4);z-index:4}@media(max-width:640px){.kit{top:auto;bottom:12px;max-height:40%}}" +
-    ".rounds{display:none!important}";   // the construct's improvement rounds belong to its own page, not the kit's
+  css.textContent =
+    ".help,.rounds{display:none!important}" +
+    ".kt{position:fixed;left:50%;top:14px;transform:translateX(-50%);width:min(980px,calc(100% - 24px));z-index:5;" +
+    "background:rgba(250,248,244,.94);color:#1d1a22;border-radius:14px;box-shadow:0 6px 30px rgba(0,0,0,.35);" +
+    "padding:14px 20px 12px;font:15px/1.4 -apple-system,'Segoe UI',sans-serif;max-height:38vh;overflow:auto}" +
+    ".kt .n{font:600 12px/1 -apple-system,sans-serif;letter-spacing:.08em;text-transform:uppercase;color:#6b6475}" +
+    ".kt h2{font:700 24px/1.2 -apple-system,sans-serif;margin:4px 0 6px}.kt .x{display:inline-block;margin-left:8px;" +
+    "padding:2px 10px;border-radius:12px;background:#1d1a22;color:#fff;font:700 16px/1.3 -apple-system,sans-serif}" +
+    ".kt .bench{display:inline-block;margin:0 0 8px;padding:3px 10px;border-radius:8px;background:#e6eef9;color:#1f4f8f;" +
+    "font-size:13px}.kt ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px 18px}" +
+    ".kt li{display:flex;align-items:center;gap:8px;font-size:16px}.kt .num{min-width:30px;height:30px;border-radius:15px;" +
+    "color:#fff;font:700 14px/30px ui-monospace,monospace;text-align:center;padding:0 6px}.kt .chip{width:14px;height:14px;" +
+    "border-radius:3px;border:1px solid #777}.kt .onto{color:#6b6475}" +
+    ".kc{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:5;display:flex;align-items:center;gap:10px;" +
+    "background:rgba(20,16,26,.88);border:1px solid #3a2f48;border-radius:28px;padding:8px 12px;color:#f1e9f7;" +
+    "font:14px -apple-system,sans-serif}.kc button{background:#2f2540;color:#fff;border:0;border-radius:20px;" +
+    "padding:9px 18px;font:600 15px -apple-system,sans-serif;cursor:pointer}.kc button:hover{background:#4a3a63}" +
+    ".kc .pg{min-width:72px;text-align:center;color:#cbbcd8}.kbar{position:fixed;left:0;bottom:0;height:4px;" +
+    "background:#d16bd0;z-index:5;transition:width .3s}" +
+    "svg.kl{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:4}" +
+    ".tag{position:fixed;transform:translate(-50%,-50%);pointer-events:none;border-radius:13px;color:#fff;" +
+    "font:700 12px/26px ui-monospace,monospace;min-width:26px;padding:0 6px;text-align:center;z-index:4;" +
+    "box-shadow:0 0 0 2px rgba(255,255,255,.85)}" +
+    "@media(max-width:640px){.kt{top:8px;padding:10px 12px}.kt h2{font-size:18px}.kt li{font-size:14px}" +
+    ".kc{bottom:10px;gap:6px}.kc button{padding:8px 12px}}";
   document.head.appendChild(css);
-  var box = document.createElement("div"); box.className = "kit"; document.body.appendChild(box);
+  var top = document.createElement("div"); top.className = "kt"; document.body.appendChild(top);
+  var ctl = document.createElement("div"); ctl.className = "kc"; document.body.appendChild(ctl);
+  var bar = document.createElement("div"); bar.className = "kbar"; document.body.appendChild(bar);
+  var svg = document.createElementNS("http://www.w3.org/2000/svg", "svg"); svg.setAttribute("class", "kl"); document.body.appendChild(svg);
+  ctl.innerHTML = "<button data-a=prev>&#9664; Previous</button><button data-a=play>&#9654; Play</button>" +
+    "<span class=pg></span><button data-a=next>Next &#9654;</button><button data-a=done>Finished</button>";
+  ctl.querySelectorAll("button").forEach(function (b) { b.onclick = function () { act(b.getAttribute("data-a")); }; });
   var tags = [];
   function esc(x) { var d = document.createElement("div"); d.textContent = x; return d.innerHTML; }
+  function rows(s) {   // one row per kind of piece: a repeated step shows each kind once, with all its numbers
+    var seen = {}, out = [];
+    s.glue.forEach(function (g, i) {
+      var p = K.pieces[g[0]], key = s.kind === "fit" ? "fit" : p.kind + "|" + (g[1] ? K.pieces[g[1]].kind : "");
+      if (!seen[key]) { seen[key] = { nums: [], p: p, onto: g[1] ? K.pieces[g[1]] : null, ontoN: [], c: COLS[out.length % COLS.length] }; out.push(seen[key]); }
+      seen[key].nums.push(g[0]); if (g[1]) seen[key].ontoN.push(g[1]);
+    });
+    return out;
+  }
   function show(k) {
-    var s = K.steps[k], list = s.glue.map(function (g, i) {
-      var p = K.pieces[g[0]], onto = g[1] ? K.pieces[g[1]] : null;
-      if (s.kind === "fit") return "<li>the <b>" + g[0] + "</b> " + esc(p.name) + " assembly onto <b>" + g[1] + "</b> " + esc(onto.name) + "</li>";
-      return "<li><span class=num style='background:" + COLS[i % COLS.length] + "'>" + g[0] + "</span>" + esc(p.name) +
-        "<span class=chip style='background:" + p.color + "' title='" + esc(p.paint) + "'></span>" +
-        (onto ? " onto <b>" + g[1] + "</b> " + esc(onto.name) : s.kind === "bench" && i === 0 ? " (start this assembly)" : "") +
-        (p.clear ? " <i>clear</i>" : "") + "</li>";
+    var s = K.steps[k], rs = rows(s);
+    var list = rs.map(function (r) {
+      var nums = r.nums.map(function (n) { return "<span class=num data-n=" + n + " style='background:" + r.c + "'>" + n + "</span>"; }).join("");
+      if (s.kind === "fit") return "<li>" + nums + " the " + esc(r.p.kind) + " assembl" + (r.nums.length > 1 ? "ies" : "y") +
+        " <span class=onto>onto " + r.ontoN.filter(function (v, i, a) { return a.indexOf(v) === i; }).join(", ") + "</span></li>";
+      return "<li>" + nums + esc(r.p.name.replace(/ \(\d+ of \d+\)$/, "")) +
+        "<span class=chip style='background:" + r.p.color + "' title='" + esc(r.p.paint) + "'></span>" +
+        (r.onto ? "<span class=onto>onto " + r.ontoN.filter(function (v, i, a) { return a.indexOf(v) === i; }).join(", ") + " " +
+          esc(r.onto.name.replace(/ \(\d+ of \d+\)$/, "")) + "</span>" : s.kind === "bench" ? "<span class=onto>start of this assembly</span>" : "") +
+        (r.p.clear ? " <i>clear</i>" : "") + "</li>";
     }).join("");
-    box.innerHTML = "<div class=n>" + esc(K.title) + " &middot; step " + (k + 1) + " of " + K.steps.length + "</div>" +
-      "<h2>" + esc(s.name || "Step " + (k + 1)) + "</h2>" + (s.kind === "bench" || s.bench ? "<div class=bench>At the bench: " +
-      "build this part on its own first (here it is shown in place)</div>" : "") + "<ul>" + list + "</ul>" +
-      "<button data-a=prev>&#9664;</button><button data-a=next>&#9654;</button><button data-a=play>" + (playing ? "pause" : "play") +
-      "</button><button data-a=done>finished</button>";
-    box.querySelectorAll("button").forEach(function (b) { b.onclick = function () { act(b.getAttribute("data-a")); }; });
-    tags.forEach(function (t) { t.remove(); });
-    tags = (s.kind === "fit" ? [] : s.glue).map(function (g, i) {
-      var t = document.createElement("div"); t.className = "tag"; t.textContent = g[0];
-      t.style.background = COLS[i % COLS.length]; t.dataset.n = g[0]; document.body.appendChild(t); return t;
+    top.innerHTML = "<div class=n>" + esc(K.title) + " &middot; step " + (k + 1) + " of " + K.steps.length + "</div>" +
+      "<h2>" + esc(s.name || "Step " + (k + 1)) + (s.times > 1 ? "<span class=x>&times; " + s.times + "</span>" : "") + "</h2>" +
+      (s.kind === "bench" || s.bench ? "<div class=bench>At the bench: build this on its own first (shown here in place)</div>" : "") +
+      "<ul>" + list + "</ul>";
+    ctl.querySelector(".pg").textContent = (k + 1) + " / " + K.steps.length;
+    ctl.querySelector("[data-a=play]").innerHTML = playing ? "&#10073;&#10073; Pause" : "&#9654; Play";
+    bar.style.width = ((k + 1) / K.steps.length * 100) + "%";
+    tags.forEach(function (t) { t.el.remove(); });
+    tags = [];
+    rs.forEach(function (r, ri) {   // a tag on each piece and a line from its badge; many alike: one tag at their middle
+      var li = top.querySelectorAll("ul li")[ri];
+      var group = r.nums.length > 4 ? [r.nums] : r.nums.map(function (n) { return [n]; });
+      group.forEach(function (ns) {
+        var el = document.createElement("div"); el.className = "tag"; el.style.background = r.c;
+        el.textContent = ns.length > 1 ? "\u00d7" + ns.length : ns[0];
+        document.body.appendChild(el);
+        tags.push({ el: el, ns: ns, c: r.c, badge: li && li.querySelector(".num[data-n='" + ns[0] + "']") });
+      });
     });
     history.replaceState(null, "", "#step-" + (k + 1));
   }
@@ -946,33 +1174,43 @@ ASSEMBLY_JS = r"""
     at = k; startAt = performance.now(); show(k);
   }
   function act(a) {
-    if (a === "prev") go(at - 1); else if (a === "next") go(at + 1);
-    else if (a === "play") { playing = !playing; show(at); }
-    else if (a === "done") { playing = false; at = K.steps.length - 1; from = to = 0.9999; startAt = 0; show(at);
+    if (a === "prev") { playing = false; go(at - 1); }
+    else if (a === "next") { playing = false; go(at + 1); }
+    else if (a === "play") { playing = !playing; if (playing && !startAt) go(at + 1 < K.steps.length ? at + 1 : 0); else show(at); }
+    else if (a === "done") { playing = false; at = K.steps.length - 1; show(at); from = to = 0.9999; startAt = 0;
+      tags.forEach(function (t) { t.el.remove(); }); tags = []; svg.textContent = "";
       HOLO.renderAt(T, { solid: true, open: 0, build: 0.9999, highlight: [0, 0], fly: 0, reveal: K.reveal }); }
   }
   window.addEventListener("hashchange", function () {
     var m = /#step-(\d+)/.exec(location.hash); if (m && parseInt(m[1], 10) - 1 !== at) go(parseInt(m[1], 10) - 1); });
   window.addEventListener("keydown", function (e) {
-    if (e.key === "ArrowRight") go(at + 1); else if (e.key === "ArrowLeft") go(at - 1); });
+    if (e.key === "ArrowRight") act("next"); else if (e.key === "ArrowLeft") act("prev"); });
   function tick(now) {
     if (startAt) {
       var u = Math.min(1, (now - startAt) / DUR), s = K.steps[at];
       HOLO.renderAt(T, { solid: true, open: 0, build: from + (to - from) * u, highlight: s.window, fly: u < 1 ? 0.35 : 0,
                          reveal: K.reveal });
-      if (u >= 1) { startAt = 0; if (playing) setTimeout(function () { if (playing) go(at + 1 < K.steps.length ? at + 1 : 0); }, 900); }
+      if (u >= 1) { startAt = 0; if (playing) setTimeout(function () { if (playing) go(at + 1 < K.steps.length ? at + 1 : 0); }, 1100); }
     }
-    tags.forEach(function (t) {
-      var c = K.pieces[t.dataset.n].centre, q = c && HOLO.project(c);
-      t.style.display = q ? "block" : "none"; if (q) { t.style.left = q[0] + "px"; t.style.top = q[1] + "px"; }
+    var lines = "";
+    tags.forEach(function (t) {   // each number on its piece, and a line from its badge in the instructions
+      var qs = t.ns.map(function (n) { var c = K.pieces[n].centre; return c && HOLO.project(c); }).filter(Boolean);
+      t.el.style.display = qs.length ? "block" : "none";
+      if (!qs.length) return;
+      var q = [qs.reduce(function (s, v) { return s + v[0]; }, 0) / qs.length, qs.reduce(function (s, v) { return s + v[1]; }, 0) / qs.length];
+      t.el.style.left = q[0] + "px"; t.el.style.top = q[1] + "px";
+      var b = t.badge && t.badge.getBoundingClientRect(), tb = top.getBoundingClientRect();
+      if (b && b.width) lines += "<line x1='" + (b.left + b.width / 2) + "' y1='" + Math.min(b.bottom, tb.bottom) + "' x2='" + q[0] +
+        "' y2='" + q[1] + "' stroke='" + t.c + "' stroke-width='2' stroke-opacity='.8'/>";
     });
+    svg.innerHTML = lines;
     requestAnimationFrame(tick);
   }
   function start() {
     if (!window.HOLO || !HOLO.timeline) return setTimeout(start, 60);
     T = HOLO.timeline().settled + 1;
     var m = /#step-(\d+)/.exec(location.hash), k = m ? parseInt(m[1], 10) - 1 : 0;
-    at = -1; go(k); requestAnimationFrame(tick);
+    go(k); requestAnimationFrame(tick);
   }
   start();
 })();
@@ -1002,11 +1240,12 @@ def assembly(kit):
     pieces = {}
     for p in kit["pieces"]:
         cs = [c for pid in p["parts"] for c in boxes.get(pid, [])]
-        pieces[p["number"]] = {"name": p["name"], "paint": p["paint"]["name"], "color": p["paint"]["color"],
+        pieces[p["number"]] = {"name": p["name"], "kind": _kind_of(p["name"]), "paint": p["paint"]["name"],
+                               "color": p["paint"]["color"],
                                "clear": p["clear"], "centre": [round(sum(c[a] for c in cs) / len(cs), 5) for a in range(3)]
                                if cs else None}
     data = {"title": kit["title"], "pieces": pieces, "reveal": round(0.08 / n, 5),
-            "steps": [{"name": s.get("name"), "kind": s.get("kind"), "glue": s["glue"],
+            "steps": [{"name": s.get("name"), "kind": s.get("kind"), "glue": s["glue"], "times": s.get("times", 1),
                        "window": [round(k / n, 5), round((k + 1) / n, 5)], "build": round((k + 0.9) / n, 5)}
                       for k, s in enumerate(steps)]}
     spans = []   # each sub-assembly's steps at the bench: from its bench step to the step that fits it
@@ -1023,62 +1262,103 @@ def assembly(kit):
 
 
 def booklet(kit):
-    """The instruction booklet (HTML): the parts, the plates, the steps, the paints."""
+    """The instruction booklet (HTML, on paper): a cover, what you need, the plates, then a card per step: the parts
+    you need as pictures, what goes onto what in the colours of the drawing, and the drawing."""
     by = {p["number"]: p for p in kit["pieces"]}
     e = html.escape
+    has3d = bool(kit.get("scene"))
     paints = {}
     for p in kit["pieces"]:
         paints.setdefault((p["paint"]["name"], p["paint"]["color"]), []).append(p["number"])
-    rows = []
-    rows.append("<h1>%s</h1><p class=sub>A kit of the construct <b>%s</b> at %s: %d pieces on %d plates, %d steps. "
-                "%s x %s x %s mm built.</p>" % (
-                    e(kit["title"]), e(kit["construct"]), kit["scale"], len(kit["pieces"]), len(kit["plates"]),
-                    len(kit["steps"]), *kit["size_mm"]))
-    rows.append("<img class=hero src='img/complete.svg' alt='The finished model'>")
-    if kit.get("scene"):
-        rows.append("<p><a class=b3d href='assembly.html'>See it built in 3D, step by step</a> (painted, each step's "
-                    "pieces dropping into place; drag to turn it).</p>")
+    rows = ['<header class=cover><div class=brand>Construct kit</div><h1>%s</h1><p class=sub>%s scale &middot; %d pieces on '
+            '%d plates &middot; %d steps &middot; %s &times; %s &times; %s mm built</p>'
+            '<img class=hero src="img/complete.svg" alt="The finished model">%s</header>' % (
+                e(kit["title"]), kit["scale"], len(kit["pieces"]), len(kit["plates"]), len(kit["steps"]), *kit["size_mm"],
+                '<p class=b3d><a href="assembly.html">Watch it built in 3D, step by step &rarr;</a> Turn it, replay any step.</p>'
+                if has3d else "")]
+    rows.append("<section class=start><h2>Before you start</h2><div class=need><div><h3>You need</h3><ul><li>The plates, "
+                "printed (clear plates in clear filament or resin)</li><li>Plastic cement or super glue</li><li>A sharp "
+                "knife and fine sanding paper</li><li>The paints below</li></ul></div><div><h3>Paints</h3><table>%s</table>"
+                "</div></div>" % "".join(
+                    "<tr><td><span class=chip style='background:%s'></span></td><td>%s</td><td class=nums>%s</td></tr>"
+                    % (c, e(n), ", ".join(str(x) for x in nums)) for (n, c), nums in sorted(paints.items())))
     rep = kit["report"]
     if rep["problems"]:
-        rows.append("<div class=warn><b>Before you print:</b><ul>%s</ul></div>"
-                    % "".join("<li>%s</li>" % e(p["message"]) for p in rep["problems"]))
-    rows.append("<h2>Plates</h2><p>Print each plate as it is. The numbers are the order you glue the pieces in. "
-                "Clear pieces have plates of their own: print those in a clear filament or resin.</p>")
+        rows.append("<details class=warn><summary>Notes from the check (%d)</summary><ul>%s</ul></details>"
+                    % (len(rep["problems"]), "".join("<li>%s</li>" % e(p["message"]) for p in rep["problems"])))
+    rows.append("</section><section><h2>Plates</h2>")
     for plate in kit["plates"]:
-        rows.append("<h3>Plate %d%s</h3><img class=plate src='img/plate-%d.svg' alt='Plate %d'>"
-                    % (plate["number"], " (clear)" if plate.get("clear") else "", plate["number"], plate["number"]))
-    rows.append("<h2>Steps</h2>")
+        sc = 640 / kit["bed_mm"][0]
+        small = [n for n, _, _ in plate["pieces"] if min(by[n]["size_mm"][0], by[n]["size_mm"][1]) * sc < 9]
+        rows.append("<figure class=plate><img src='img/plate-%d.svg' alt='Plate %d'><figcaption>Plate %d%s%s</figcaption></figure>"
+                    % (plate["number"], plate["number"], plate["number"], " &middot; clear" if plate.get("clear") else "",
+                       " &middot; small pieces, left to right in rows: %s" % ", ".join(str(n) for n in small) if small else ""))
+    rows.append("</section><section><h2>Building it</h2>")
     for s in kit["steps"]:
-        glue = []
+        kind = s.get("kind")
+        seen, groups = {}, []
         for k, (num, onto) in enumerate(s["glue"]):
-            p = by[num]
-            col = STEP_COLOURS[k % len(STEP_COLOURS)]
-            chip = "<span class=chip style='background:%s' title='%s'></span>" % (p["paint"]["color"], e(p["paint"]["name"]))
-            if s.get("kind") == "fit":
-                glue.append("<li>the <b>%d</b> %s assembly onto <b>%d</b> %s</li>" % (num, e(p["name"]), onto, e(by[onto]["name"])))
+            key = "fit" if kind == "fit" else (_kind_of(by[num]["name"]), _kind_of(by[onto]["name"]) if onto else "")
+            if key not in seen:
+                seen[key] = {"nums": [], "onto": [], "col": STEP_COLOURS[len(groups) % len(STEP_COLOURS)]}
+                groups.append(seen[key])
+            seen[key]["nums"].append(num)
+            if onto and onto not in seen[key]["onto"]:
+                seen[key]["onto"].append(onto)
+        items, need = [], []
+        for g in groups:
+            p = by[g["nums"][0]]
+            badges = "".join("<span class=num style='background:%s'>%d</span>" % (g["col"], n) for n in g["nums"])
+            if kind == "fit":
+                items.append("<li>%s the %s assembl%s onto %s</li>" % (badges, e(_kind_of(p["name"])), "ies" if len(g["nums"]) > 1
+                                                                       else "y", ", ".join(str(o) for o in g["onto"])))
                 continue
-            glue.append("<li><span class=num style='background:%s'>%d</span> %s %s%s%s</li>" % (
-                col, num, e(p["name"]), chip, " onto <b>%d</b> %s" % (onto, e(by[onto]["name"])) if onto else
-                (" (the base)" if num == 1 else " (start this assembly)" if s.get("kind") == "bench"
-                 else " (touches no other piece)"), " <i>clear</i>" if p["clear"] else ""))
-        kind = {"bench": " class='step bench'", "fit": " class='step fit'"}.get(s.get("kind"), " class=step")
-        link = " <a class=b3d href='assembly.html#step-%d'>3D</a>" % s["number"] if kit.get("scene") else ""
-        rows.append("<div%s><div><h3>Step %d%s%s</h3><ul>%s</ul></div><img src='img/step-%d.svg' alt='Step %d'></div>"
-                    % (kind, s["number"], ": " + e(s["name"]) if s.get("name") else "", link, "".join(glue),
-                       s["number"], s["number"]))
-    rows.append("<h2>Paints</h2><table><tr><th></th><th>Colour</th><th>Pieces</th></tr>%s</table>" % "".join(
-        "<tr><td><span class=chip style='background:%s'></span></td><td>%s <code>%s</code></td><td>%s</td></tr>"
-        % (c, e(n), c, ", ".join(str(x) for x in nums)) for (n, c), nums in sorted(paints.items())))
-    css = ("body{margin:0;background:#fbfaf7;color:#25212b;font:15px/1.5 -apple-system,sans-serif}main{max-width:960px;"
-           "margin:0 auto;padding:32px 16px}h1{font-weight:600}.sub{color:#6b6475}img{max-width:100%;border:1px solid "
-           "#ddd8cf;border-radius:8px;background:#f6f3ee}.step{display:grid;grid-template-columns:2fr 3fr;gap:16px;"
-           "align-items:center;border-top:1px solid #e4dfd6;padding:14px 0}.step h3{margin:0 0 6px}.step ul{padding-left:"
-           "0;list-style:none;margin:0}.step li{margin:5px 0}.bench{background:#f2f6fb;border-radius:10px;padding:14px}"
-           ".fit{background:#f7f2fb;border-radius:10px;padding:14px}@media(max-width:640px){.step{grid-template-columns:1fr}}"
-           "table{border-collapse:collapse}td,th{border-bottom:1px solid #e4dfd6;padding:4px 8px;text-align:left}.chip{"
-           "display:inline-block;width:12px;height:12px;border-radius:3px;border:1px solid #888;vertical-align:-1px}"
-           ".num{display:inline-block;min-width:22px;padding:0 6px;border-radius:11px;color:#fff;font:700 12px/22px "
-           "monospace;text-align:center}code{color:#1f6fd1}.warn{border:1px solid #d23a3a;border-radius:8px;padding:8px "
-           "14px;margin:12px 0}a.b3d{color:#1f6fd1;font-size:13px;font-weight:600}")
+            onto = " onto %s <b>%s</b>" % (", ".join(str(o) for o in g["onto"]), e(by[g["onto"][0]]["name"].split(" (")[0])) \
+                if g["onto"] else (" &mdash; the base" if g["nums"][0] == 1 else " &mdash; start of this assembly"
+                                   if kind == "bench" else "")
+            items.append("<li>%s %s <span class=chip title='%s' style='background:%s'></span>%s%s</li>" % (
+                badges, e(p["name"].split(" (")[0]), e(p["paint"]["name"]), p["paint"]["color"], onto,
+                " <i>clear</i>" if p["clear"] else ""))
+            need.append("<figure><img src='img/part-%d.png' alt=''><figcaption>%s%s</figcaption></figure>" % (
+                g["nums"][0], ", ".join(str(n) for n in g["nums"][:4]) + ("&hellip;" if len(g["nums"]) > 4 else ""),
+                " &times;%d" % len(g["nums"]) if len(g["nums"]) > 1 else ""))
+        times = s.get("times", 1)
+        tag = {"bench": "<div class=tagb>Build this on its own first</div>", "fit": "<div class=tagf>Fit it</div>"}.get(kind, "")
+        if s.get("details"):
+            tag = "<div class=tagd>Fragile: fit these last</div>"
+        link = " <a class=b3d href='assembly.html#step-%d'>3D</a>" % s["number"] if has3d else ""
+        rows.append("<article class='step %s'><div class=text><div class=head><span class=sn>%d</span><h3>%s%s</h3>%s</div>"
+                    "%s%s<ul>%s</ul></div><img class=pic src='img/step-%d.svg' alt='Step %d'></article>" % (
+                        kind or "", s["number"], e(s.get("name") or "Step %d" % s["number"]),
+                        " <span class=x>&times;%d</span>" % times if times > 1 else "", link, tag,
+                        "<div class=need-row>%s</div>" % "".join(need) if need else "", "".join(items),
+                        s["number"], s["number"]))
+    rows.append("</section>")
+    css = ("body{margin:0;background:#fbfaf7;color:#1d1a22;font:16px/1.5 -apple-system,'Segoe UI',sans-serif}"
+           "main{max-width:1040px;margin:0 auto;padding:28px 18px 60px}h1{font:700 40px/1.1 -apple-system,sans-serif;margin:6px 0}"
+           "h2{font:700 26px/1.2 -apple-system,sans-serif;margin:34px 0 12px;border-bottom:3px solid #1d1a22;padding-bottom:6px}"
+           ".brand{font:700 12px/1 -apple-system,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#c2309a}"
+           ".sub{color:#5f5869;margin:0 0 14px}img{max-width:100%}.hero{width:100%;border-radius:12px;border:1px solid #ddd8cf}"
+           ".b3d{font-weight:600}.b3d a,a.b3d{color:#1f6fd1}.need{display:grid;grid-template-columns:1fr 1fr;gap:24px}"
+           "h3{margin:0 0 6px}table{border-collapse:collapse}td{padding:3px 8px;border-bottom:1px solid #e4dfd6}"
+           ".nums{color:#6b6475;font-size:13px}.chip{display:inline-block;width:14px;height:14px;border-radius:3px;"
+           "border:1px solid #777;vertical-align:-2px}.warn{margin:14px 0;border:1px solid #d23a3a;border-radius:8px;padding:8px 14px}"
+           ".warn summary{cursor:pointer;font-weight:600}.plate{margin:12px 0}.plate img{border:1px solid #ddd8cf;border-radius:8px}"
+           "figcaption{font-size:13px;color:#5f5869}.step{display:grid;grid-template-columns:5fr 6fr;gap:20px;align-items:start;"
+           "border:1px solid #e4dfd6;border-radius:14px;padding:16px;margin:14px 0;background:#fff;break-inside:avoid}"
+           ".step.bench{border-color:#9cc0ea;background:#f6f9fd}.step.fit{border-color:#c8b6e0;background:#faf7fd}"
+           ".head{display:flex;align-items:center;gap:12px;margin-bottom:8px}.sn{min-width:46px;height:46px;border-radius:23px;"
+           "background:#1d1a22;color:#fff;font:700 22px/46px -apple-system,sans-serif;text-align:center}"
+           ".head h3{font:700 19px/1.25 -apple-system,sans-serif;margin:0}.x{display:inline-block;padding:1px 9px;"
+           "border-radius:11px;background:#1d1a22;color:#fff;font-size:15px}.tagb,.tagf,.tagd{display:inline-block;"
+           "font-size:13px;padding:2px 10px;border-radius:8px;margin-bottom:8px}.tagb{background:#e1ecfa;color:#1f4f8f}"
+           ".tagf{background:#ece3f7;color:#5b3d8a}.tagd{background:#fbe7d4;color:#8a4b12}.need-row{display:flex;flex-wrap:wrap;"
+           "gap:8px;margin:4px 0 10px}.need-row figure{margin:0;text-align:center}.need-row img{width:76px;height:76px;"
+           "border:1px solid #e4dfd6;border-radius:8px;background:#fff}.step ul{list-style:none;padding:0;margin:0}"
+           ".step li{margin:7px 0;font-size:16px}.num{display:inline-block;min-width:26px;padding:0 6px;margin-right:3px;"
+           "border-radius:13px;color:#fff;font:700 13px/26px ui-monospace,monospace;text-align:center}"
+           ".pic{width:100%;border:1px solid #e4dfd6;border-radius:10px;background:#f6f3ee}"
+           "@media(max-width:720px){.step,.need{grid-template-columns:1fr}h1{font-size:30px}}"
+           "@media print{body{background:#fff}.b3d{display:none}.step{box-shadow:none}h2{break-after:avoid}}")
     return ("<!doctype html><meta charset=utf-8><meta name=viewport content='width=device-width,initial-scale=1'>"
             "<title>%s</title><style>%s</style><main>%s</main>" % (e(kit["title"]), css, "".join(rows)))

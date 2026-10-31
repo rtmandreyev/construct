@@ -25,6 +25,21 @@ def encode(width, height, pixel):
             + chunk(b"IDAT", zlib.compress(bytes(rows), 9)) + chunk(b"IEND", b""))
 
 
+def encode_rows(width, height, rgb):
+    """PNG bytes for an RGB image given as one bytes object, row after row (fast: no call per pixel)."""
+    rows = bytearray()
+    stride = 3 * width
+    for y in range(height):
+        rows.append(0)
+        rows += rgb[y * stride:(y + 1) * stride]
+
+    def chunk(kind, data):
+        return struct.pack(">I", len(data)) + kind + data + struct.pack(">I", zlib.crc32(kind + data) & 0xFFFFFFFF)
+
+    return (b"\x89PNG\r\n\x1a\n" + chunk(b"IHDR", struct.pack(">IIBBBBB", width, height, 8, 2, 0, 0, 0))
+            + chunk(b"IDAT", zlib.compress(bytes(rows), 6)) + chunk(b"IEND", b""))
+
+
 def disc_cover(size=384):
     """Synthetic decorative 'album' art: concentric interference rings over a gradient."""
     c = size / 2

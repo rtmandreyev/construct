@@ -289,7 +289,7 @@ void main() {
   float spec = pow(max(dot(n, normalize(key + v)), 0.0), 48.0) * 0.28;
   float rim = pow(1.0 - max(dot(n, v), 0.0), 3.0) * 0.18;
   vec3 c = vBase * (amb + d) + vec3(spec + rim);
-  c = mix(c, c * 0.45, step(uHi.x, uHi.y - 1e-6) * (1.0 - hi)) + hi * vec3(0.10, 0.06, 0.0);   // the rest steps back
+  c = mix(c, c * 0.85, step(uHi.x, uHi.y - 1e-6) * (1.0 - hi)) + hi * vec3(0.05, 0.03, 0.0);   // the rest steps back, a little
   if (uClear > 0.5) { float a = (0.22 + 0.5 * pow(1.0 - max(dot(n, v), 0.0), 2.0)) * reveal; o = vec4(mix(c, vec3(0.75, 0.85, 0.9), 0.5) * a, a); return; }
   o = vec4(c * reveal, reveal);
 }`;
