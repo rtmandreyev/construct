@@ -959,7 +959,22 @@ FRONT = 90   # the construct's front (+Z) is the print frame's -Y: seen from the
 STEP_COLOURS = ("#1f6fd1", "#e3731b", "#1f9e5a", "#c2309a", "#0f9aa8", "#d23a3a", "#7a52d6", "#9a7a12")
 
 
-def _drawing(kit, highlight, done, onto=None, w=900, hgt=600):
+def _groups(s, by):
+    """A step's pieces by kind and what they go onto, each kind in a colour of its own: the same in the drawing, the
+    parts it takes and the list."""
+    seen, groups = {}, []
+    for num, onto in s["glue"]:
+        key = "fit" if s.get("kind") == "fit" else (_kind_of(by[num]["name"]), _kind_of(by[onto]["name"]) if onto else "")
+        if key not in seen:
+            seen[key] = {"nums": [], "onto": [], "col": STEP_COLOURS[len(groups) % len(STEP_COLOURS)]}
+            groups.append(seen[key])
+        seen[key]["nums"].append(num)
+        if onto and onto not in seen[key]["onto"]:
+            seen[key]["onto"].append(onto)
+    return groups
+
+
+def _drawing(kit, highlight, done, onto=None, w=900, hgt=600, colours=None):
     """A step drawn as the construct draws itself, in lines on paper (SVG): what is built so far in grey, the
     piece it all goes onto darker, and each new piece in a colour of its own with its number in a callout of
     that colour and a chip of its paint, seen from the corner that faces them (the whole model from the front
@@ -986,11 +1001,12 @@ def _drawing(kit, highlight, done, onto=None, w=900, hgt=600):
     # goes, along the line from what it goes onto, an arrow to its place
     pts = [q for p in shown for seg in p["art"] for q in seg]
     size = max(max(q[a] for q in pts) - min(q[a] for q in pts) for a in range(3)) or 1.0
-    away = {}
+    away, lead = {}, set()   # lead: the pieces that move of themselves (an arrow each), not with what holds them
     drawn = {p["number"] for p in shown}
-    for p in new:
+    moving = lambda q: q["number"] in highlight and q.get("onto") is not None and q["onto"]["number"] in drawn
+    for p in new:   # a fitted sub-assembly moves as one; at the bench its root stays put and the rest come to it
         top = p
-        while top.get("onto") is not None and top["onto"]["number"] in highlight:
+        while top.get("onto") is not None and top["onto"]["number"] in highlight and moving(top["onto"]):
             top = top["onto"]
         host = top.get("onto")
         if host is None or host["number"] not in drawn or not host.get("art"):
@@ -1009,6 +1025,8 @@ def _drawing(kit, highlight, done, onto=None, w=900, hgt=600):
             d, n = [0.0, 0.0, 1.0], 1.0
         reach = 0.16 * size
         away[p["number"]] = [d[k] / n * reach for k in range(3)]
+        if top is p:
+            lead.add(p["number"])
 
     def proj(q):
         u, v = q[0] * dui + q[1] * duj, q[0] * dvi + q[1] * dvj
@@ -1036,7 +1054,7 @@ def _drawing(kit, highlight, done, onto=None, w=900, hgt=600):
     if target:
         out.append('<path d="%s" stroke="#3a3542" stroke-opacity="0.85" stroke-width="0.9" fill="none"/>'
                    % path([seg for p in target for seg in p["art"]]))
-    colour = {p["number"]: STEP_COLOURS[k % len(STEP_COLOURS)] for k, p in enumerate(new)}
+    colour = {p["number"]: (colours or {}).get(p["number"], STEP_COLOURS[k % len(STEP_COLOURS)]) for k, p in enumerate(new)}
     out.append('<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" '
                'orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#3a3542"/></marker></defs>')
     for p in new:
@@ -1046,7 +1064,7 @@ def _drawing(kit, highlight, done, onto=None, w=900, hgt=600):
         out.append('<path d="%s" stroke="%s" stroke-width="1.4" fill="none"/>'
                    % (path([moved(p, seg) for seg in p["art"]]), colour[p["number"]]))
     for p in new:   # the arrows: from the held piece to its place
-        if p["number"] in away and (p.get("onto") is None or p["onto"]["number"] not in highlight):
+        if p["number"] in lead:
             c = centre([p])
             a, b = xy([c[k] + away[p["number"]][k] * 0.78 for k in range(3)]), xy([c[k] + away[p["number"]][k] * 0.22 for k in range(3)])
             out.append('<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="#3a3542" stroke-width="1.3" marker-end="url(#ah)"/>'
@@ -1258,10 +1276,11 @@ def write(kit, out):
             if bench and bench[-1] == s["assembly"]:
                 bench.pop()
             ctx = done if not bench else done & _subtree(by[bench[-1]], kit["pieces"])
-            pic = _drawing(kit, asm, ctx - asm, s.get("onto"))
+            col = _groups(s, by)[0]["col"]
+            pic = _drawing(kit, asm, ctx - asm, s.get("onto"), colours={n: col for n in asm})
         else:   # at the bench only the sub-assembly is drawn; on the model, everything built so far
             ctx = done if not bench else done & _subtree(by[bench[-1]], kit["pieces"])
-            pic = _drawing(kit, new, ctx, s.get("onto"))
+            pic = _drawing(kit, new, ctx, s.get("onto"), colours={n: g["col"] for g in _groups(s, by) for n in g["nums"]})
         (out / "img" / ("step-%d.svg" % s["number"])).write_text(pic, encoding="utf-8")
         done |= new
     (out / "img" / "complete.svg").write_text(_drawing(kit, set(), done), encoding="utf-8")
@@ -1544,15 +1563,7 @@ def booklet(kit):
     rows.append("</section><section><h2>Building it</h2>")
     for s in kit["steps"]:
         kind = s.get("kind")
-        seen, groups = {}, []
-        for k, (num, onto) in enumerate(s["glue"]):
-            key = "fit" if kind == "fit" else (_kind_of(by[num]["name"]), _kind_of(by[onto]["name"]) if onto else "")
-            if key not in seen:
-                seen[key] = {"nums": [], "onto": [], "col": STEP_COLOURS[len(groups) % len(STEP_COLOURS)]}
-                groups.append(seen[key])
-            seen[key]["nums"].append(num)
-            if onto and onto not in seen[key]["onto"]:
-                seen[key]["onto"].append(onto)
+        groups = _groups(s, by)
         items, need = [], []
         for g in groups:
             p = by[g["nums"][0]]
