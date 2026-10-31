@@ -1,9 +1,9 @@
 # Construct
 
-**Describe a thing. Get a hologram, a 3D model and its parts.** You ask any AI agent for a thing
-in plain words, and it builds an animated holographic model of it in the **Measured Light** style,
-as one web page you can open anywhere, honest about what is known. The same construct exports
-as a 3D model with named parts and working joints, for Blender, game engines and the web.
+**Describe a thing. Get a hologram, a 3D model, a print and a kit.** You ask any AI agent for a thing
+in plain words, and it builds an animated model of it in lines of light, the **Measured Light** style,
+as one web page you can open anywhere, honest about what is known. The same construct becomes a 3D
+model with named parts and working joints, a print, a model kit, a CAD file or a film.
 
 <p align="center">
   <a href="https://rtmandreyev.github.io/construct/examples/sainte-chapelle/"><img src="docs/media/assembly-sainte-chapelle.gif" width="32%" alt="The Sainte-Chapelle construct assembling itself"></a>
@@ -12,100 +12,39 @@ as a 3D model with named parts and working joints, for Blender, game engines and
 </p>
 <p align="center"><sub><b>Constructs.</b> Sainte-Chapelle · Toyota Land Cruiser FJ62 · Duomo di Milano, each built by Claude Opus 5.5 in masterpiece mode. <a href="https://rtmandreyev.github.io/construct/">Open the gallery</a> to orbit them, replay the assembly and read the labels.</sub></p>
 
-<p align="center">
-  <a href="https://rtmandreyev.github.io/construct/films/james-webb-space-telescope/"><img src="docs/media/film-james-webb-space-telescope.gif" width="32%" alt="The James Webb Space Telescope construct assembling across a piece of music"></a>
-  <a href="https://rtmandreyev.github.io/construct/films/voyager-1/"><img src="docs/media/film-voyager-1.gif" width="32%" alt="The Voyager 1 construct assembling across a piece of music"></a>
-  <a href="https://rtmandreyev.github.io/construct/films/arecibo-observatory/"><img src="docs/media/film-arecibo-observatory.gif" width="32%" alt="The Arecibo Observatory construct assembling across a piece of music"></a>
-</p>
-<p align="center"><sub><b><a href="docs/FILM.md">Film mode.</a></b> <a href="https://rtmandreyev.github.io/construct/films/james-webb-space-telescope/">James Webb Space Telescope</a> · <a href="https://rtmandreyev.github.io/construct/films/voyager-1/">Voyager 1</a> · <a href="https://rtmandreyev.github.io/construct/films/arecibo-observatory/">Arecibo Observatory</a>, each assembling across a piece of music: the build pauses, surges and flares with it, and you get a video with the music in it.</sub></p>
-
-<p align="center">
-  <a href="https://rtmandreyev.github.io/construct/examples/light-to-metal/"><img src="docs/media/pipeline-fj62.gif" width="32%" alt="The Toyota Land Cruiser FJ62 in Blender: it assembles in lines of light, turns into a plain model of named parts, then into the finished model in paint, chrome and glass"></a>
-  <a href="https://rtmandreyev.github.io/construct/examples/light-to-metal/"><img src="docs/media/pipeline-revox.gif" width="32%" alt="The Revox A77 tape recorder in Blender: from lines of light to a plain model, then finished in brushed metal with its reels"></a>
-  <a href="https://rtmandreyev.github.io/construct/examples/light-to-metal/"><img src="docs/media/pipeline-minifreak.gif" width="32%" alt="The Arturia MiniFreak synthesizer in Blender: from lines of light to a plain model, then finished with its black and white keys"></a>
-</p>
-<p align="center"><sub><b><a href="docs/EXPORT.md">From light to a finished 3D model.</a></b> Toyota Land Cruiser FJ62 · Revox A77 · Arturia MiniFreak, exported unedited as glTF and revealed in Blender by the <a href="hosts/blender/README.md">add-on</a>: the hologram, the plain model of named parts, then the model finished from a material map. <a href="https://rtmandreyev.github.io/construct/examples/light-to-metal/">See the four models in 3D</a> (with the James Webb Space Telescope): slide each from hologram to finished, open it, take it apart, download it.</sub></p>
-
-<p align="center">
-  <a href="https://rtmandreyev.github.io/construct/examples/netlogo-flocking/"><img src="docs/media/netlogo-flocking.gif" width="32%" alt="Flocking: each bird's track rising with time, random near the floor and in parallel streams higher up"></a>
-  <a href="https://rtmandreyev.github.io/construct/examples/netlogo-wolf-sheep/"><img src="docs/media/netlogo-wolf-sheep.gif" width="32%" alt="Wolf Sheep Predation: the predator-prey cycle rising in time, sheep across the floor and wolves front to back"></a>
-  <a href="https://rtmandreyev.github.io/construct/examples/netlogo-fire/"><img src="docs/media/netlogo-fire.gif" width="32%" alt="Fire: the fire's front, every few ticks, rising as it crosses the forest"></a>
-</p>
-<p align="center"><sub><b><a href="docs/NETLOGO.md">Models come alive: recorded runs.</a></b> Flocking · Wolf Sheep Predation · Fire. Each is one NetLogo run, recorded by the bridge and drawn with time as height, so its assembly replays the run; no simulation runs on the page. The data comes from the run; labels and milestones are an art-direction pass on top.</sub></p>
-
-<p align="center"><a href="https://rtmandreyev.github.io/construct/examples/netlogo-viral-marketing/"><img src="docs/media/netlogo-viral-marketing.gif" width="100%" alt="The Simple Viral Marketing model running: adoptions spread through the social network on the floor and rise as lines of light, the gold ring marking now, while the counters climb to 500 of 500"></a></p>
-<p align="center"><sub><b>Models come alive: a live simulation.</b> Unlike the recorded runs above, here the model itself runs on the page: Simple Viral Marketing, rebuilt rule for rule to run in the browser. Five hundred people, one product, word of mouth and a little advertising. The floor is the social network, and each person rises to the moment they adopted, so you can watch an idea spread and see who it reaches last, and why. <a href="https://rtmandreyev.github.io/construct/examples/netlogo-viral-marketing/">Run the simulation</a> to build new networks, run them tick by tick and compare a hundred runs with NetLogo's own. The NetLogo models are © Uri Wilensky; these examples are under CC BY-NC-SA 3.0 (see <a href="#license">License</a>).</sub></p>
-
 - **Any agent, any model.** Claude Code, Hermes, any MCP client or any OpenAI-compatible endpoint, or by hand.
-- **Honest about what is known.** Every fact and part says whether it is verified, supplied by you, inferred or decorative.
+- **Honest about what is known.** Every part says how it is known, its size and its shape apart, every guess in a shade of how firmly it is held.
 - **One house style.** Models never choose the colours, so every construct looks like it belongs with the rest.
 - **It repairs itself.** Every problem comes back with where it is and how to fix it.
 - **Nothing to install.** Python's standard library and a browser; no API keys or network service inside Construct.
 
-## Who it is for
+## New in 1.1
 
-| You are… | Construct gives you | Start with |
+- **Models come alive.** A NetLogo model's run becomes a construct with one command in NetLogo:
+  time as height, a replay bar and a *How to read it* panel. [For educators and researchers →](docs/for/educators-and-researchers.md)
+- **Size and shape, apart.** A part can be size-verified from a spec sheet and only traced in shape; every guess
+  is shaded by how firmly it is held. Press **P**. [For museums and archives →](docs/for/museums-and-archives.md)
+- **See it as a solid.** Press **S** in any construct to see it as a modelling program shows it; `check --fit`
+  names what pokes through. [For 3D artists →](docs/for/3d-artists.md)
+- **Things you can hold.** Exact prints with true walls, model kits glued as a kit designer would with a booklet on
+  paper and the same steps in 3D, true CAD shapes. [For makers →](docs/for/makers.md)
+- **Ready for game engines.** Pieces that hold together on their hinges, or break apart. [For game developers →](docs/for/game-developers.md)
+
+<p align="center"><img src="docs/media/solid-fj62.jpg" alt="The Toyota Land Cruiser FJ62 construct in lines of light on the left, and the same construct as a solid, pressed S, on the right"></p>
+<p align="center"><sub>One construct, two views: the FJ62 in light, and as a solid (<b>S</b>).</sub></p>
+
+## Find your path
+
+| You are… | Construct gives you | Start here |
 | --- | --- | --- |
-| **A game developer** | Props and blockouts with named parts, working joints and real dimensions, as glTF for Godot, Unity or Unreal; colliders, pieces that break apart, seeded variants; the line-light look for scanners, holograms and UI | [3D export](docs/EXPORT.md), [Godot](docs/GODOT.md) |
-| **A maker** | A construct printed at the largest size your printer takes, as one checked solid or its own exact shapes; a model kit with plates and a booklet; real CAD shapes in FreeCAD and STEP | [3D printing](docs/PRINTING.md), [FreeCAD](docs/FREECAD.md) |
-| **A 3D artist** | A construct imported into Blender with its build, joints and finish on sliders, ready to light, render or model over | [Blender add-on](hosts/blender/README.md) |
-| **In film and motion** | A construct that assembles across a track of music, rendered to video | [Film mode](docs/FILM.md) |
-| **An educator or researcher** | An agent-based model's run drawn as a construct, computed from the recording, with the data locked; from inside NetLogo with the extension; two runs compared, a printable worksheet | [In a classroom and a museum](docs/CLASSROOM.md), [NetLogo bridge](docs/NETLOGO.md), [extension](hosts/netlogo/README.md) |
-| **A museum or archive** | Reconstructions that say how each part is known (verified, supplied, traced, inferred or decorative; a part's size and shape apart; every guess in a shade of how firmly it is held), so a visitor can tell evidence from design | [The Measured Light style](docs/STYLE.md) |
-
-## What it does
-
-In the common case:
-
-1. **You ask for something in plain words**, in your agent: *"make a construct of a Leica M3"*,
-   or *"a masterpiece of the Sydney Opera House"*. Before any work, the skill tells you which
-   mode it will use, fast or masterpiece, why, and roughly how long it will take.
-2. **The agent looks it up.** For a specific, named subject it finds real facts and reference
-   photos. The photos are only for comparison; they are never copied into the construct or
-   published, because they belong to someone else.
-3. **The agent writes a scene.** A scene is a short text file that says what the thing is: the
-   facts, each marked with how well it is known, and the parts, built from simple shapes, with
-   how they assemble and open. The agent never draws pixels or writes graphics code.
-4. **Construct checks it.** Something floating, a claim stronger than its evidence, a part too
-   small to see: every problem comes back with where it is and how to fix it, and the agent
-   repairs the scene until the check is clean.
-5. **Construct builds the page.** One `construct.html` that opens in any browser, works offline
-   and shows the construct building itself, part by part.
-6. **The agent reviews it.** It looks at stills from every view and improves the weakest point.
-   In **masterpiece** mode an independent critic takes over the judging, round by round, and you
-   get a short report after each one.
-
-## See it in practice
-
-The examples are real runs: each one was made by an AI agent with Construct, in fast or
-masterpiece mode, by Claude Opus 5.5, GPT-6.1 Sol or DeepSeek V4.1 Flash. Open any of them to
-watch it assemble, turn it around and read its labels.
-
-<p align="center"><a href="https://rtmandreyev.github.io/construct/"><img src="docs/media/examples.jpg" alt="Example constructs made by AI agents: cars, cathedrals, watches, instruments, a planet and a galaxy"></a></p>
-
-**[See all 21 constructs in the gallery →](https://rtmandreyev.github.io/construct/)** · each scene and its hero image are in
-[examples/](examples/).
-
-## Agent-based models: runs that come alive
-
-Construct turns a NetLogo model's run into something to explore, replay and film.
-
-- **One command in NetLogo.** Add `extensions [construct]` and type `construct:run`: it runs the
-  model as its buttons do, records what is worth recording and opens the run as a construct, with
-  time as height, a legend, a *How to read it* panel and a replay bar. 388 of the 445 stock
-  two-dimensional models record unattended.
-- **Where the order forms.** The `pulse` view draws turtles that switch on and off, one ring per
-  tick, so fireflies falling into step show as a thin column opening into wide plates. When a flock
-  or a pulse falls into order early in a long run, the construct is drawn over the window where it
-  formed, and says so.
-- **Runs as films.** `(construct:draw "auto" "film" true)`, or `construct netlogo-film run.jsonl
-  --out film.mp4`, renders the recording itself in Blender: every agent as moving light with a
-  trail, in its own colours. NetLogo 3D flocks fly in their box.
-- **Runs as 3D models.** `"model" true` exports the run to glTF, its build replaying the run in
-  Blender or a game engine.
-
-Everything drawn comes from the recording, under a data lock. See [the NetLogo bridge](docs/NETLOGO.md)
-and [the extension](hosts/netlogo/README.md).
+| **Anyone with an AI agent** | A thing you describe, as a construct you can turn, replay and share | [Make a construct](docs/for/anyone.md) |
+| **A maker** | A print at your printer's largest size, a model kit with plates and a booklet, true CAD shapes | [Print, kit, CAD](docs/for/makers.md) |
+| **A game developer** | Props with named parts, real sizes and working joints, for Godot, Unity or Unreal | [Into a game engine](docs/for/game-developers.md) |
+| **A 3D artist** | A construct in Blender with its build, joints and finish on sliders, ready to render or model over | [Into Blender](docs/for/3d-artists.md) |
+| **In film and motion** | A construct that assembles across a piece of music, as a video | [Film mode](docs/for/film-and-motion.md) |
+| **An educator or researcher** | An agent-based model's run drawn as a construct, compared, printed, filmed | [Models come alive](docs/for/educators-and-researchers.md) |
+| **A museum or archive** | Reconstructions that say how each part is known, so a visitor can tell evidence from design | [Honest reconstructions](docs/for/museums-and-archives.md) |
+| **A developer** | A scene contract, a command line, an MCP server and skills to build on | [Build on it](docs/for/developers.md) |
 
 ## How it works
 
@@ -136,9 +75,6 @@ flowchart LR
 - **Masterpiece stops when it stops improving:** after two rounds without a better version, after
   12 rounds, or after two hours. In the author's own blind comparisons, on two subjects, there was
   no visible improvement after about round 12, so more rounds mostly cost time.
-
-<p align="center"><img src="docs/media/style-provenance.jpg" width="80%" alt="Saturn in the provenance view: the rings, taken from published data, drawn in white; the globe's cloud bands, designed by the model, drawn in amber"></p>
-<p align="center"><sub>Honest about what is known: Saturn in the provenance view (<b>P</b>). The rings come from published data and are drawn in white; the cloud bands were designed by the model and are drawn in amber.</sub></p>
 
 <p align="center"><img src="docs/media/rounds-sainte-chapelle.jpg" alt="The Sainte-Chapelle at round 1, round 8 and round 15 of a masterpiece run: the flèche gains its tiers, and the window tracery, buttresses and pinnacles fill in"></p>
 <p align="center"><sub>The critic at work: the Sainte-Chapelle at rounds 1, 8 and 15 of a masterpiece run by Claude Opus 5.5. The flèche gains its tiers, and the window tracery, buttresses and pinnacles fill in.</sub></p>
@@ -185,7 +121,7 @@ python3 $C review book.json --out out  # out/review/*.png: stills to judge it by
 ```
 
 Once a construct is open, drag to orbit and scroll to zoom. **R** replays the assembly, **L** shows
-the labels, **P** shows how each part is known, and **1**–**6** move between views.
+the labels, **P** shows how each part is known, **S** shows it as a solid, and **1**–**6** move between views.
 
 ## Modes
 
@@ -228,25 +164,27 @@ Construct is deliberately small. You need:
 
 ## Documentation
 
-Start with the first two if you are new; the full index is in [docs/README.md](docs/README.md).
+| If you want to… | read |
+| --- | --- |
+| see how a construct is made, step by step | [How a construct is made](docs/HOW-IT-IS-MADE.md) |
+| know what you are looking at, and the keys | [The Measured Light style](docs/STYLE.md) |
+| run it every way, from a first construct by hand to Claude Code and Hermes | [Using Construct](docs/USING.md) |
+| fix something that went wrong | [Troubleshooting](docs/TROUBLESHOOTING.md) |
+| start from a ready-made template (a book, a CD, a guitar, a car) | [Archetypes](docs/ARCHETYPES.md) |
+| make mountains, routes and planets from real elevation data | [Terrain](docs/TERRAIN.md) |
+| turn a construct into a film with music | [Film mode](docs/FILM.md) |
+| export a 3D model, plain or finished | [3D export](docs/EXPORT.md) and the [Blender add-on](hosts/blender/README.md) |
+| print it, or make it a model kit | [3D printing and kits](docs/PRINTING.md) |
+| open it in CAD | [FreeCAD and STEP](docs/FREECAD.md) |
+| put it in a game engine | [Godot](docs/GODOT.md) |
+| draw a NetLogo model's run | [The NetLogo bridge](docs/NETLOGO.md) and [the extension](hosts/netlogo/README.md) |
+| teach with it, or show it in a museum | [In a classroom and a museum](docs/CLASSROOM.md) |
+| compare models, or score your own | [Evaluation](docs/EVALUATION.md) |
+| build on it or test the code | [Development](docs/DEVELOPMENT.md) and [the scene contract](CONTRACT.md) |
+| know where the method comes from | [About](docs/ABOUT.md) |
+| see what changed | [CHANGELOG.md](CHANGELOG.md) and the [1.1.0](docs/releases/v1.1.0.md) and [1.0.0](docs/releases/v1.0.0.md) release notes |
 
-- [How a construct is made](docs/HOW-IT-IS-MADE.md): the process, step by step, with a construct improving over rounds
-- [The Measured Light style](docs/STYLE.md): what you see in a construct, the labels, the provenance marks and the controls
-- [Using Construct](docs/USING.md): every way to run it, from a first construct by hand to Claude Code and Hermes
-- [Troubleshooting](docs/TROUBLESHOOTING.md): common problems in plain language
-- [Archetypes](docs/ARCHETYPES.md): ready-made templates for books, CDs, guitars, bottles, cars and more
-- [Terrain](docs/TERRAIN.md): mountains, routes and planets from real elevation data
-- [Film mode](docs/FILM.md): a construct that assembles across a track of music, for videos and films
-- [3D export](docs/EXPORT.md) and the [Blender add-on](hosts/blender/README.md): a construct as a 3D model, plain or finished, for Blender, game engines and the web
-- [3D printing](docs/PRINTING.md): a construct as one watertight solid to print, STL or 3MF, checked, at the largest size a printer takes, or as its own exact solids; model kits
-- [FreeCAD](docs/FREECAD.md): a construct as true CAD shapes with its joints in FreeCAD, and STEP
-- [Godot](docs/GODOT.md): a construct in a game engine, with colliders and pieces that break apart
-- [The NetLogo bridge](docs/NETLOGO.md) and the [NetLogo extension](hosts/netlogo/README.md): an agent-based model's run drawn as a construct, with optional art direction
-- [In a classroom and a museum](docs/CLASSROOM.md): a lesson with two runs compared and a worksheet, and a run in a museum
-- [About](docs/ABOUT.md): where Construct's method comes from
-- [Evaluation](docs/EVALUATION.md): how models compare, and how to score your own
-- [Development](docs/DEVELOPMENT.md): for contributors and for building Construct into your own tools
-- [CONTRACT.md](CONTRACT.md), [CHANGELOG.md](CHANGELOG.md), the [v1.1.0](docs/releases/v1.1.0.md), [v1.0.0](docs/releases/v1.0.0.md), [v0.3.0](docs/releases/v0.3.0.md) and [v0.2.1](docs/releases/v0.2.1.md) release notes and [PUBLISHING.md](PUBLISHING.md)
+The full index is in [docs/README.md](docs/README.md).
 
 ## Contributing
 

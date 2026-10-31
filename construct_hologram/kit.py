@@ -42,6 +42,7 @@ STEP_MOST = 6              # pieces in one step, at most
 MANY_PIECES = 160
 GLASS = ("glass", "glazing", "window", "windscreen", "windshield", "visor", "canopy", "lens")
 SLIVER_MM = 1.5          # thinner than this, a small piece is a chip and a long one breaks
+FRAGILE_MM = 2.0         # thinner than this, a piece (chrome, trim) goes on with the details, last
 PLAN_KEYS = {"title", "merge", "keep", "clear", "opaque", "order", "notes"}
 
 
@@ -322,7 +323,7 @@ def make(scene, scale=SCALE, size=None, detail=DETAIL_MM, wall=WALL_MM, plan=Non
             moves.setdefault(pid, set()).add(a["id"])
     for p in pieces:
         p["moves"] = tuple(sorted(moves.get(p["head"], ())))
-    raw = _order(pieces, grid.n, scene.get("subject", {}).get("category") == "architecture")
+    raw = _order(pieces, grid.n, scene.get("subject", {}).get("category") == "architecture", detail)
     _line_art(scene, pieces, grid)
     for p in pieces:
         p["mesh"], p["size_mm"], p["down"] = _piece_mesh(p["cols"], detail)
@@ -407,7 +408,7 @@ def _touches(pieces, n):
     return touch
 
 
-def _order(pieces, n, ground_up=False):
+def _order(pieces, n, ground_up=False, detail=DETAIL_MM):
     """Which piece each is glued to, and the order a builder glues them in.
 
     The pieces form a tree grown from the base (the largest piece of the first stage) along the strongest joins:
@@ -439,9 +440,24 @@ def _order(pieces, n, ground_up=False):
     found = lambda p: (p.get("group", 0), len(p.get("moves") or ()), low[id(p)],
                        -_count(p["cols"]) if p.get("moves") else -held[id(p)], p["stage"], -_count(p["cols"]))
     parent = {}
+    chain_head = {}   # each moving group's largest piece: the one that hangs on the fixed body
+    for p in pieces:
+        if p.get("moves"):
+            k = p["moves"]
+            if k not in chain_head or _count(p["cols"]) > _count(chain_head[k]["cols"]):
+                chain_head[k] = p
     for p in pieces:   # each onto the most firmly joined piece that is more foundational than it
         hosts = [q for q in pieces if q is not p and found(q) < found(p) and weight(p, q)]
         own = [q for q in hosts if p.get("moves") and q.get("moves") == p.get("moves")]
+        if p.get("moves") and chain_head.get(p["moves"]) is not p:   # a lid is not hung from its handle
+            own = own or [chain_head[p["moves"]]]
+        if p["clear"] and not own:   # glass goes into the last opaque part that frames it (the roof, not the nose)
+            frames = [q for q in pieces if q is not p and not q["clear"] and weight(p, q)]
+            best = max((weight(p, q) for q in frames), default=0)
+            frames = [q for q in frames if weight(p, q) >= 0.3 * best]
+            if frames:
+                parent[id(p)] = max(frames, key=found)
+                continue
         q = max(own or hosts, key=lambda q: weight(p, q), default=None)   # a door's glass goes into the door
         parent[id(p)] = q
     base = min(pieces, key=found)
@@ -474,13 +490,17 @@ def _order(pieces, n, ground_up=False):
         k.sort(key=lambda c: (rank(c)[0], encloses(c, sib) > 0, bool(kids.get(id(c))), rank(c)))
     roots = [p for p in pieces if parent[id(p)] is None]
     roots.sort(key=lambda p: (p is not base, rank(p)))
-    out, steps, hung = [], [], []
+    out, steps, hung, details = [], [], [], []
 
     def build(p, bench):
         """Glue p's subtree onto p: leaves directly, sub-assemblies built at the bench first, then fitted."""
         opens = lambda c: set(c.get("moves") or ()) != set(p.get("moves") or ())   # it rides a hinge its host does not
         mine = [c for c in kids.get(id(p), []) if not opens(c)]
         hung.extend((c, p) for c in kids.get(id(p), []) if opens(c))
+        thin = lambda c: (lambda b: min(b[1] - b[0], b[3] - b[2], b[5] - b[4]) + 1)(_bbox(c["cols"])) * detail
+        fragile = [c for c in mine if not kids.get(id(c)) and thin(c) < FRAGILE_MM and not c["clear"]]
+        details.extend((c, p) for c in fragile)   # fragile chrome and trim go on once the structure is built
+        mine = [c for c in mine if c not in fragile]
         leaves = [c for c in mine if not kids.get(id(c))]
         subs = [c for c in mine if kids.get(id(c))]
         for c in mine:   # in the kids' order: earlier first, and a shell after what it closes over
@@ -502,6 +522,13 @@ def _order(pieces, n, ground_up=False):
         out.append(r)
         steps.append({"kind": "base" if r is base else "loose", "root": r, "pieces": [r], "onto": None})
         build(r, r is not base)
+    for c, p in details:   # the details: fragile pieces, onto their hosts, now that nothing will knock them off
+        out.append(c)
+        last = steps[-1] if steps else None
+        if last and last["kind"] == "glue" and last.get("details") and len(last["pieces"]) < STEP_MOST:
+            last["pieces"].append(c)
+        else:
+            steps.append({"kind": "glue", "root": None, "pieces": [c], "onto": p, "details": True})
     while hung:   # what opens goes on last: built at the bench, then hung on its hinge
         c, p = hung.pop(0)
         out.append(c)
@@ -550,6 +577,8 @@ def _steps(pieces, raw=None):
             name = "%s the %s assembly to %d" % ("Hang" if st.get("hang") else "Fit", st["root"]["name"], st["onto"]["number"])
         elif st.get("hang"):
             name = "Hang %d" % st["pieces"][0]["number"]
+        elif st.get("details"):
+            name = "Details: the fragile pieces, last"
         elif st["pieces"] and st.get("onto") is not None:
             name = "Onto %d %s" % (st["onto"]["number"], st["onto"]["name"])
         steps.append({"stage": st["pieces"][0]["stage"] if st["pieces"] else st["root"]["stage"],

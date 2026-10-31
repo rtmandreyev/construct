@@ -191,6 +191,9 @@ side, printed as worksheets and cited. Plan:
   not topple; its doors still hang on it, `construct_joints.gd` joins to static bodies too). All 28 gallery
   constructs export glued with every joint made.
 - **Kits of buildings go up from the ground:** in a building what starts lower holds what starts higher.
+- **Three more kit rules from the car runs' critics:** glass goes into the last opaque part that frames it (a
+  windscreen into the roof, not the nose before the roof is on); fragile pieces under 2 mm (chrome, trim, plates)
+  go on in a last Details step; a moving part hangs by its largest piece (a lid, not its handle).
 - **Kits glued and ordered as a kit designer would:** each piece onto the most firmly joined, more
   foundational piece (never a fixed part onto one that opens; a door's glass into the door); sub-assemblies
   built at the bench before they are fitted (glass into a shell before it meets the chassis, a wheel before

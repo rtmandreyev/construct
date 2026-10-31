@@ -2,6 +2,11 @@
 
 Start with the first two pages if you are new to Construct; the rest are there when you need them.
 
+**By who you are:** [anyone with an AI agent](for/anyone.md) · [makers](for/makers.md) ·
+[game developers](for/game-developers.md) · [3D artists](for/3d-artists.md) · [film and motion](for/film-and-motion.md) ·
+[educators and researchers](for/educators-and-researchers.md) · [museums and archives](for/museums-and-archives.md) ·
+[developers](for/developers.md)
+
 | If you want to… | read |
 | --- | --- |
 | see how a construct is made, step by step | [HOW-IT-IS-MADE.md](HOW-IT-IS-MADE.md) |
@@ -14,9 +19,9 @@ Start with the first two pages if you are new to Construct; the rest are there w
 | draw a NetLogo model's run as a construct | [NETLOGO.md](NETLOGO.md) |
 | teach with it, or show it in a museum | [CLASSROOM.md](CLASSROOM.md) |
 | take a construct into Blender, a game engine or the web as a 3D model | [EXPORT.md](EXPORT.md), and the [Blender add-on](../hosts/blender/README.md) |
-| 3D print a construct (STL or 3MF) | [PRINTING.md](PRINTING.md) |
+| 3D print a construct (STL or 3MF), or make it a model kit | [PRINTING.md](PRINTING.md) |
 | take a construct into FreeCAD or a CAD tool (STEP) | [FREECAD.md](FREECAD.md) |
-| use a construct in Godot: named parts, joints, colliders, break-apart | [GODOT.md](GODOT.md) |
+| use a construct in Godot: named parts, joints, colliders, pieces glued or breaking apart | [GODOT.md](GODOT.md) |
 | know where Construct's method comes from | [ABOUT.md](ABOUT.md) |
 | compare models, or score your own | [EVALUATION.md](EVALUATION.md) |
 | contribute, or build Construct into your own tools | [DEVELOPMENT.md](DEVELOPMENT.md) |
