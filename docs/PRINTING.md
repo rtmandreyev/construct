@@ -119,7 +119,12 @@ spacing them by time is a later step.
 
 ## A kit, Revell-style
 
-`construct kit` makes a construct into a model kit to print, glue and paint, as a Revell or Tamiya kit is:
+`construct kit` makes a construct into a model kit to print, glue and paint, as a Revell or Tamiya kit is.
+
+> **Not yet built by anyone.** The kits are made and checked by software and by AI critics; none has yet been printed
+> and glued by a person. Print one piece first (`pieces/`), and if you build one, tell us how it went:
+> [issues](https://github.com/rtmandreyev/construct/issues).
+
 
 ```sh
 construct kit examples/toyota-land-cruiser-fj62/scene.json --out fj62-kit/ --materials examples/light-to-metal/maps/fj62.json
@@ -127,14 +132,17 @@ construct kit examples/toyota-land-cruiser-fj62/scene.json --out fj62-kit/ --mat
 
 - **Pieces.** Each part becomes pieces of its own at the kit's scale (1:24 by default, `--scale`). Where two
   parts overlap, the later one is trimmed, so they meet flush and fit when glued; mirrored copies (four
-  wheels, two mirrors) are separate pieces; a bit too small to print, or so thin it would chip or break (a
+  wheels, two mirrors) are separate pieces, and copies set closer than the kit can print apart (52 white keys
+  1 mm apart, at 1:12) are one piece; a bit too small to print, or so thin it would chip or break (a
   hinge leaf, a long base plate), is moulded with the piece it touches, as a kit does.
   Each piece's surface is snapped back onto its parts' own surfaces, so a round part prints round and a flat
   face flat; a piece that is one solid the trimming never touched is printed exactly as it is.
   The parts drawn only in lines (seams, grilles) are engraved into the pieces they lie on, as a kit's
   panel lines. Glass is a clear piece.
 - **Plates.** Each piece lies on its largest flat face, packed onto plates the size of the bed
-  (`plate-N.3mf`, each piece a named object), numbered in the order they are glued. Clear pieces have plates
+  (`plate-N.3mf`, each piece a named object), numbered in the order they are glued. Each piece is also on its own
+  (`pieces/NN-name.stl`), to print one first or again; `--only 12,14` (numbers, ranges or part names such as
+  `'door-glass*'`) writes `only.3mf` with just those pieces on a plate. Clear pieces have plates
   of their own, to print in clear filament or resin; the plate maps show each piece in its paint.
 - **What goes onto what.** Each piece is glued onto the piece it is most firmly joined to among those more
   foundational than it (the plan's earlier sub-assembly, an earlier stage, or the piece more holds onto), with
@@ -153,18 +161,23 @@ construct kit examples/toyota-land-cruiser-fj62/scene.json --out fj62-kit/ --mat
   with a note from the check.
 - **The booklet** (`booklet.html`, on paper, to print): a cover with the finished model, what you need and the
   paints, the plates with each piece's real outline and relief in its paint, then a card per step: pictures of
-  the parts you need, numbered, then the drawing, exploded as a kit sheet draws it (each new piece in a colour
-  of its own, held a little away from its place with an arrow to it, its place dashed, the piece it goes onto
-  darker), then what goes onto what. Bench and fit steps are marked; a sub-assembly is drawn on its own while
+  the parts you need, numbered, then the drawing, as a kit sheet draws it: the pieces shaded, with their
+  outlines and creases and no hidden lines, each new piece in a colour of its own held a little away from its
+  place with an arrow to it (out of its host the shortest way, so a lens's elements fan out along its axis; many
+  of one kind lift together with one callout, "×36"), the piece it goes onto darker, and small pieces on a big
+  model drawn close, as an inset; then what goes onto what. Bench and fit steps are marked; a sub-assembly is drawn on its own while
   it is built.
 - **In 3D** (`assembly.html`): the same steps on the construct's solid view in the kit's paints, on a light
   backdrop. The step's instructions are big at the top, with a line from each numbered piece to the piece
   itself; each step's pieces drop into place with their edges lit, their paint unchanged, while what is built
-  stays as it is; the camera goes to them. At the bench only the sub-assembly being built is shown, close up,
-  until it is fitted. Previous, Play, Next and Finished at the bottom.
+  stays as it is; the camera goes to them, and a fitted sub-assembly is framed with what it goes onto. At the
+  bench the sub-assembly being built is shown close up, the model so far a faint ghost around it, until it is
+  fitted. The text printed on the construct's surfaces is off (**T** shows it). Previous, Play, Next and
+  Finished at the bottom.
   Drag to turn it, rewatch any step, or open `#step-N`.
 - **Checked before printing:** pieces too small to handle, slivers (thinner than 1.5 mm and short) and fragile
-  blades (as thin and long), pieces that touch nothing, merges that came out in several pieces, pieces
+  blades (as thin and long), pieces that touch nothing, pieces held a hair away from what they are glued to (a
+  gap under a millimetre: a pane in too big a frame) or touching it only at an edge, merges that came out in several pieces, pieces
   bigger than the bed, too many pieces. `kit.json` is the kit without its geometry, for a critic to read.
 
 **A critic, as for a construct.** `construct kit --critic` prints a kit designer's brief: a critic (a fresh

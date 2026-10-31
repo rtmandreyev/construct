@@ -121,7 +121,8 @@ python3 $C review book.json --out out  # out/review/*.png: stills to judge it by
 ```
 
 Once a construct is open, drag to orbit and scroll to zoom. **R** replays the assembly, **L** shows
-the labels, **P** shows how each part is known, **S** shows it as a solid, and **1**–**6** move between views.
+the labels, **T** hides the text on its surfaces, **P** shows how each part is known, **S** shows it as a solid,
+and **1**–**6** move between views.
 
 ## Modes
 

@@ -27,12 +27,36 @@ and its parts, so a print comes out at a true scale and a kit comes apart where 
 construct print scene.json --printers                                   # how large on each printer, what survives
 construct print scene.json --out model.3mf --printer desktop --fit --exact
 construct kit scene.json --scale 16 --printer large --out kit/          # kit/booklet.html, kit/assembly.html, plates
+construct kit scene.json --scale 16 --printer large --out kit/ --only 12  # one piece again: kit/only.3mf
 construct freecad scene.json --out model.FCStd --step model.step
 ```
 
 Open the 3MF in PrusaSlicer (or any slicer that reads its part table), and the booklet in a browser.
 
+## Your first kit, step by step
+
+Say you want to build the Eiffel Tower on a basic home printer.
+
+1. **Ask your agent for the construct:** *"make a construct of the Eiffel Tower"* (masterpiece mode if you want it
+   detailed). You get `scene.json` and a page to look at it.
+2. **Check that it holds together:** `construct check scene.json --fit`. Ask your agent to fix every part it names that
+   pokes through another or floats; a kit cannot glue what does not touch.
+3. **Make the kit at a size your printer takes:** `construct kit scene.json --size 200 --printer desktop --out kit/`.
+   The check at the end names pieces that are too thin or too many; fix them in the construct (step 2) or with a plan.
+4. **Read `kit/booklet.html` first,** then open `kit/assembly.html` to see the steps in 3D.
+5. **Print one piece before the rest:** each piece is on its own in `kit/pieces/`. Open it in your slicer (PrusaSlicer,
+   Cura, Bambu Studio) and print it. If it fits where it goes, print the plates (`plate-N.3mf`).
+6. **If a piece comes out wrong,** print it again on its own: `construct kit ... --only 12` (or `--only 'door-glass*'`)
+   writes `only.3mf` with just those pieces. A piece a little too tight or loose is a slicer setting (XY size
+   compensation, or scale that one object); a piece the wrong shape is fixed in the construct, then the kit is made
+   again with the same command.
+7. **Clean, glue and paint** step by step, following the booklet.
+
 ## Honest about kits
+
+**No kit has yet been printed and built by a person.** They are made and checked by software and by AI critics. If you
+build one, please tell us how it went, what fitted and what did not:
+[issues](https://github.com/rtmandreyev/construct/issues).
 
 A kit is made from the construct's own geometry, so it is only as buildable as the construct: parts that do not quite
 meet come out as slivers or loose pieces, and the check names them. Pieces are glued, without pins or hinge pins. A

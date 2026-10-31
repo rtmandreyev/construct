@@ -113,6 +113,8 @@ views, like this dial. Press **1** to **6** to move between views.
 | Scroll | Zoom in and out |
 | **R** | Replay the assembly |
 | **L** | Show or hide the labels |
+| **T** | Show or hide the text printed on the construct's surfaces (a lens's name, a cover's title); `?text=0` starts with it hidden |
+| **S** | The solid view |
 | **P** | The provenance view |
 | **M** | Turn the motion down or back up |
 | **1** to **6** | Move between views |

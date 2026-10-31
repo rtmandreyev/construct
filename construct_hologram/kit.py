@@ -21,6 +21,7 @@ critic decided: parts to merge into one piece, small parts to keep apart, parts 
 Python standard library only.
 """
 
+import base64
 import html
 import fnmatch
 import io
@@ -84,6 +85,17 @@ def _bbox(cols):
     ks = [(m & -m).bit_length() - 1 for m in cols.values()] + [m.bit_length() - 1 for m in cols.values()]
     return (min(c[0] for c in cols), max(c[0] for c in cols), min(c[1] for c in cols), max(c[1] for c in cols),
             min(ks), max(ks))
+
+
+def _bridge(cols, n):
+    """`cols` with its gaps under two voxels closed (grow by one, shrink back), worked within its own box."""
+    b = _bbox(cols)
+    full = (1 << n[2]) - 1
+    grown = printing._dilate(cols, 1, n)
+    out = {(i, j): full & ~grown.get((i, j), 0) for i in range(max(0, b[0] - 2), min(n[0], b[1] + 3))
+           for j in range(max(0, b[2] - 2), min(n[1], b[3] + 3))}
+    back = printing._dilate(out, 1, n)
+    return {c: m for c, m in ((c, m & ~back.get(c, 0)) for c, m in grown.items()) if m}
 
 
 def _and_not(a, b):
@@ -217,6 +229,11 @@ def make(scene, scale=SCALE, size=None, detail=DETAIL_MM, wall=WALL_MM, plan=Non
         _or_into(vox.setdefault(pid, {}), printing._dilate(shell, r, grid.n))
     grooves = {}
     printing._mark_rods(grid, rods, grooves)
+    for pid in vox:   # copies of a part set closer than the kit can print apart (52 white keys 1 mm apart, at 1:12)
+        if len(_components(vox[pid])) > 1:   # are one piece, not blocks of whatever widths the voxels happen to join
+            bridged = _bridge(vox[pid], grid.n)
+            if len(_components(bridged)) < len(_components(vox[pid])):
+                vox[pid] = bridged
 
     # the plan's merges: those parts are one piece from the start
     groups, taken = [], set()
@@ -345,6 +362,7 @@ def make(scene, scale=SCALE, size=None, detail=DETAIL_MM, wall=WALL_MM, plan=Non
         q = [grid.origin[a] + (b[2 * a] + b[2 * a + 1] + 1) / 2.0 * grid.h for a in range(3)]
         p["centre"] = [round(q[0], 5), round(q[2], 5), round(-q[1], 5)]
     _line_art(scene, pieces, grid)
+    _solid_tris(scene, pieces, grid)
     for p in pieces:
         # a piece that is one closed solid, untouched by the trimming, is printed as it is: exact, every facet
         exact = None
@@ -357,7 +375,8 @@ def make(scene, scale=SCALE, size=None, detail=DETAIL_MM, wall=WALL_MM, plan=Non
     plates = _pack(pieces, bed)
     kit = {"title": plan.get("title") or "%s, a kit" % scene["title"], "construct": scene["title"],
            "scale": "1:%s" % printing._ratio(1000.0 / mm_per_m), "detail_mm": detail, "pieces": pieces,
-           "plates": plates, "steps": _flatten(_combine(_steps(pieces, raw), pieces), pieces), "bed_mm": list(bed), "scene": scene,
+           "plates": plates, "steps": _fold(_flatten(_combine(_steps(pieces, raw), pieces), pieces), pieces), "bed_mm": list(bed),
+           "scene": scene,
            "merged": merged_away, "dropped": dropped, "plan": plan, "grid": grid,
            "size_mm": [round((hi[a] - lo[a]) * mm_per_m, 1) for a in (0, 1, 2)]}
     kit["report"] = check(kit)
@@ -397,6 +416,32 @@ def _line_art(scene, pieces, grid):
             best = max(pieces, key=near)
             if near(best):
                 best["art"].extend(segs)
+
+
+def _solid_tris(scene, pieces, grid):
+    """Each piece's triangles from the construct's own solid (metres, the print frame, Z up), for the booklet's
+    drawings: a part in one piece is all that piece's; a part made into several gives each triangle to the piece
+    whose voxels it lies in (or the nearest)."""
+    solid = scene_mod.compile_scene(scene, solid=True)
+    parts, styles, f = solid["parts"], solid["styles"], solid["fills"]
+    home = {}
+    for p in pieces:
+        p["tris"] = []
+        for m in p["parts"]:
+            home.setdefault(m, []).append(p)
+    mids = {id(p): [(b[2 * a] + b[2 * a + 1] + 1) / 2.0 for a in range(3)] for p in pieces for b in [_bbox(p["cols"])]}
+    for i in range(0, len(f), 15):
+        ps = home.get(parts[int(styles[int(f[i + 3])][6])]["id"])
+        if not ps:
+            continue
+        t = tuple((f[i + 5 * j], -f[i + 5 * j + 2], f[i + 5 * j + 1]) for j in range(3))
+        best = ps[0]
+        if len(ps) > 1:
+            c = [int(x) for x in grid.to_cell([sum(q[a] for q in t) / 3 for a in range(3)])]
+            near = [q for q in ps if any((q["cols"].get((c[0] + di, c[1] + dj), 0) >> max(0, c[2] - 1)) & 7
+                                         for di in (-1, 0, 1) for dj in (-1, 0, 1))]
+            best = near[0] if near else min(ps, key=lambda q: sum((mids[id(q)][a] - c[a]) ** 2 for a in range(3)))
+        best["tris"].append(t)
 
 
 def _paint(pid, part, rules):
@@ -449,11 +494,15 @@ def _order(pieces, n, ground_up=False, detail=DETAIL_MM):
     rank = lambda p: (p.get("group", 0), p["stage"], -cnt[id(p)])
     zc = {id(p): (lambda b: (b[4] + b[5]) / 2.0)(_bbox(p["cols"])) for p in pieces}
 
+    flush = {}
+
     def weight(p, q):   # the join of p onto q (q nearer the base)
         t = touch.get((id(p), id(q)), 0)
         if not t or not set(q.get("moves") or ()) <= set(p.get("moves") or ()):
             return 0.0   # what stays put never hangs on what moves (a pillar is not glued to a door)
-        w = float(t) * (1.5 if zc[id(q)] < zc[id(p)] else 1.0)
+        if (id(p), id(q)) not in flush:   # what truly touches counts most: a lever glued to the skin it sits on, not
+            flush[(id(p), id(q))] = _near(p["cols"], q["cols"], n, 1)   # to the body a hair under the skin
+        w = float(t + 3 * flush[(id(p), id(q))]) * (1.5 if zc[id(q)] < zc[id(p)] else 1.0)
         if p.get("moves") and p.get("moves") == q.get("moves"):
             w *= 2.0   # a door's glass and handle go into the door
         if p["clear"] != q["clear"]:
@@ -529,8 +578,9 @@ def _order(pieces, n, ground_up=False, detail=DETAIL_MM):
     out, steps, hung, details = [], [], [], []
 
     def roomy(step, c):   # a step takes a few kinds of piece, however many of each (all the sill courses at once)
-        kinds = {_kind_of(q["name"]) for q in step["pieces"]} | {_kind_of(c["name"])}
-        return (len(kinds) <= STEP_KINDS and len(step["pieces"]) < STEP_MOST) or len(kinds) == 1
+        have = {_kind_of(q["name"]) for q in step["pieces"]}
+        kinds = have | {_kind_of(c["name"])}   # one more of a kind already there (the 36th black key) always fits
+        return len(kinds) <= STEP_KINDS and (len(step["pieces"]) < STEP_MOST or _kind_of(c["name"]) in have)
 
     def thin(c):
         b = _bbox(c["cols"])
@@ -542,9 +592,15 @@ def _order(pieces, n, ground_up=False, detail=DETAIL_MM):
 
     holds = {_kind_of(p["name"]) for p in pieces if kids.get(id(p))}
 
+    boxes = [_bbox(p["cols"]) for p in pieces]
+    longest = max(max(b[1] for b in boxes) - min(b[0] for b in boxes), max(b[3] for b in boxes) - min(b[2] for b in boxes),
+                  max(b[5] for b in boxes) - min(b[4] for b in boxes)) + 1
+
     def frail(c):   # copies of one part are alike: judged by their kind's usual thickness, not each one's voxels, and
         t = sorted(kind_thin[_kind_of(c["name"])])   # one that holds something (the left skin, with its button) is not
-        return t[len(t) // 2] < FRAGILE_MM and _kind_of(c["name"]) not in holds   # a detail: nor is its mirror
+        b = _bbox(c["cols"])                         # a detail: nor is its mirror, nor a big thin piece (a gable)
+        return t[len(t) // 2] < FRAGILE_MM and _kind_of(c["name"]) not in holds \
+            and max(b[1] - b[0], b[3] - b[2], b[5] - b[4]) + 1 < 0.12 * longest
 
     def built_on(c):   # what goes onto c at the bench: its attachments that neither open nor wait for the details
         return [d for d in kids.get(id(c), []) if set(d.get("moves") or ()) == set(c.get("moves") or ())
@@ -616,6 +672,8 @@ def _order(pieces, n, ground_up=False, detail=DETAIL_MM):
         q = parent[id(p)]
         p["onto"] = q
         p["touches"] = sum(1 for o in pieces if o is not p and (id(p), id(o)) in touch)
+        if q is not None:   # how well it sits where it is glued: what lies within a glue gap, and what truly touches
+            p["joint"] = (_near(p["cols"], q["cols"], n, 1), touch.get((id(p), id(q)), 0))
     return steps
 
 
@@ -638,10 +696,14 @@ SIDE_WORDS = {"left", "right", "l", "r", "front", "rear", "fl", "fr", "rl", "rr"
 def _kind_of(name):
     """What a piece is, whichever side or copy it is: "tyre-front (1 of 2)" and "tyre-rear-1" are both "tyre"."""
     base = name.split(" (")[0].lower()
-    words = [w for w in base.replace("_", "-").split("-") if w and not w.isdigit() and w not in SIDE_WORDS]
+    words = [w for w in base.replace("_", "-").split("-") if w and not w.isdigit() and w not in SIDE_WORDS
+             and not (len(w) <= 3 and w[0].isalpha() and w[1:].isdigit())]   # a copy's code: "a0", "r2"
+    words = [w[:-1] if len(w) > 3 and w.endswith("s") and w[-2:] not in ("ss", "us", "is", "ns", "as", "os") else w
+             for w in words]   # one key or many: "black-keys" and "black-key-a0" are one kind
     return "-".join(words) or base
 
 
+MANY = 4         # pieces of one kind in a drawing: more than this lift together, one arrow and one callout
 SMALL_NEST = 4   # pieces: a sub-assembly built inside another this small is glued in place, not built apart
 
 
@@ -724,6 +786,10 @@ def _combine(steps, pieces):
                 sig = tuple((t.get("kind"), tuple(sorted({_kind_of(by[n]["name"]) for n in t.get("new", [])})))
                             for t in steps[i:j + 1])
                 spans.append((i, j, sig, tuple(t.get("kind") for t in steps[i:j + 1])))
+    first = {}   # the step each piece is first built in
+    for n, t in enumerate(steps):
+        for num in t.get("new", []):
+            first.setdefault(num, n)
     gone = set()
     for a, (i, j, sig, form) in enumerate(spans):
         if i in gone:
@@ -732,6 +798,8 @@ def _combine(steps, pieces):
         for (k, l, sig2, form2) in spans[a + 1:]:
             if k in gone or k <= j:
                 continue   # only a later sub-assembly, not one inside this one
+            if any(h is not None and first.get(h, -1) >= j for _, h in steps[l].get("glue", [])):
+                continue   # what it is fitted onto is not built yet by then (the rear discs before the rear upright)
             copies = set(by[steps[i]["assembly"]].get("parts", ())) & set(by[steps[k]["assembly"]].get("parts", ()))
             same = sig2 == sig and alike(sizes(i, j), sizes(k, l))
             if not (same or (copies and form2 == form)):
@@ -749,6 +817,27 @@ def _combine(steps, pieces):
                 steps[i + d]["alike"] = steps[i].get("alike", True)
                 steps[i + d]["name"] = _title(steps[i + d], by)
     out = [st for n, st in enumerate(steps) if n not in gone]
+    for k, st in enumerate(out, 1):
+        st["number"] = k
+    return out
+
+
+def _fold(steps, pieces):
+    """A bench step that builds nothing onto its piece (all it held went on elsewhere), straight before the step that
+    fits it, is one plain step: glue the piece on."""
+    by = {p["number"]: p for p in pieces}
+    out, skip = [], set()
+    for i, st in enumerate(steps):
+        if i in skip:
+            continue
+        nxt = steps[i + 1] if i + 1 < len(steps) else None
+        roots = [g[0] for g in st.get("glue", []) if g[1] is None]
+        if st.get("kind") == "bench" and nxt is not None and nxt.get("kind") == "fit" \
+                and nxt.get("assembly") == st.get("assembly") and len(roots) == len(st.get("new", [])):
+            st = dict(nxt, kind="glue", new=list(st["new"]), pieces=list(st["new"]), assembly=None)
+            st["name"] = _title(st, by)
+            skip.add(i + 1)
+        out.append(st)
     for k, st in enumerate(out, 1):
         st["number"] = k
     return out
@@ -787,10 +876,13 @@ def _label(name):
 
 def _counted(nums, by):
     """Pieces by what they are: "the lid hinge", "4 black keys" (said once however many)."""
+    kinds = {}   # one kind, whatever each copy is called: by its name when nearly all share it ("36 x black keys"
+    for n in nums:   # with one "black key a0"), else by what they all are ("2 x strap eye", a left one and a right)
+        kinds.setdefault(_kind_of(by[n]["name"]), []).append(_label(by[n]["name"]))
     seen = {}
-    for n in nums:
-        k = _label(by[n]["name"])
-        seen[k] = seen.get(k, 0) + 1
+    for kind, ls in kinds.items():
+        top = max(ls, key=ls.count)
+        seen[top if ls.count(top) >= 0.75 * len(ls) else kind.replace("-", " ")] = len(ls)
     words = ["the %s" % k if c == 1 else "%d × %s" % (c, k) for k, c in seen.items()]
     return words[0] if len(words) == 1 else ", ".join(words[:-1]) + " and " + words[-1]
 
@@ -937,6 +1029,18 @@ def check(kit):
                              "message": "%d (%s) touches only pieces of later sub-assemblies: nothing earlier holds it; "
                                         "give it a face on the piece it belongs to, or move it in the plan's order"
                                         % (p["number"], p["name"])})
+        touching, within = p.get("joint") or (1, 1)   # flush faces score about half: within one voxel of two
+        if within >= 12 and touching == 0:   # held a hair away: a button short of its skin, a pane in too big a frame
+            problems.append({"code": "gap", "piece": p["number"],
+                             "message": "%d (%s) does not touch %d (%s): a gap of under a millimetre where it is glued; "
+                                        "make it meet its host's face in the construct (check --fit)"
+                                        % (p["number"], p["name"], p["onto"]["number"], p["onto"]["name"])})
+        elif within >= 12 and touching < 0.12 * within:   # touching at a corner or an edge: a joint out of line
+            problems.append({"code": "loose-fit", "piece": p["number"],
+                             "message": "%d (%s) touches %d (%s) only at an edge or a corner (%d%% of where they meet): "
+                                        "a joint out of line; make it sit on its host's face in the construct"
+                                        % (p["number"], p["name"], p["onto"]["number"], p["onto"]["name"],
+                                           round(100.0 * touching / within))})
         if not p.get("touches") and len(kit["pieces"]) > 1:
             problems.append({"code": "floats", "piece": p["number"],
                              "message": "%d (%s) touches no other piece: it has nothing to be glued to; merge it "
@@ -985,34 +1089,51 @@ def _groups(s, by):
     return groups
 
 
-def _drawing(kit, highlight, done, onto=None, w=900, hgt=600, colours=None):
-    """A step drawn as the construct draws itself, in lines on paper (SVG): what is built so far in grey, the
-    piece it all goes onto darker, and each new piece in a colour of its own with its number in a callout of
-    that colour and a chip of its paint, seen from the corner that faces them (the whole model from the front
-    three-quarter)."""
-    shown = [p for p in kit["pieces"] if (p["number"] in done or p["number"] in highlight) and p.get("art")]
+def _drawing(kit, highlight, done, onto=None, w=900, hgt=600, colours=None, calls=None):
+    """A step drawn as a kit's sheet draws it (SVG): the pieces shaded, with their outlines and creases and no
+    hidden lines, what is built so far in pale grey, the piece it all goes onto a little darker, each new piece
+    in a colour of its own held a little away from its place with an arrow to it, and a numbered callout with its
+    paint for each new piece (or for each of `calls`: a fitted sub-assembly's own piece), seen from the corner
+    that faces them (the whole model from the front three-quarter)."""
+    shown = [p for p in kit["pieces"] if (p["number"] in done or p["number"] in highlight) and (p.get("tris") or p.get("art"))]
     if not shown:
         return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 %d %d"></svg>' % (w, hgt)
 
+    def pts_of(p):
+        return [q for t in p["tris"] for q in t] if p.get("tris") else [q for seg in p.get("art", ()) for q in seg]
+
     def centre(ps):
-        pts = [q for p in ps for seg in p["art"] for q in seg]
+        pts = [q for p in ps for q in pts_of(p)]
         return [sum(q[a] for q in pts) / len(pts) for a in range(3)] if pts else [0.0, 0.0, 0.0]
+
+    def box(p):
+        pts = pts_of(p)
+        return [(min(q[k] for q in pts), max(q[k] for q in pts)) for k in range(3)]
     new = [p for p in shown if p["number"] in highlight]
-    ca = centre([p for p in kit["pieces"] if p.get("art")])
+    colour = {p["number"]: (colours or {}).get(p["number"], STEP_COLOURS[k % len(STEP_COLOURS)]) for k, p in enumerate(new)}
+    colour_of = lambda p: colour[p["number"]]
+    allp = [p for p in kit["pieces"] if p.get("tris") or p.get("art")]
+    ca = centre(allp)
     view = FRONT
     if new:
         cn = centre(new)
         off = (cn[0] - ca[0], cn[1] - ca[1])
-        span = max(abs(q[a] - ca[a]) for p in kit["pieces"] for seg in p.get("art", []) for q in seg for a in (0, 1))
+        span = max(abs(q[a] - ca[a]) for p in allp for q in pts_of(p) for a in (0, 1))
         if math.hypot(*off) > 0.12 * span:
             view = max(VIEWS, key=lambda v: (VIEWS[v][0][0] + VIEWS[v][1][0]) * off[0]
                        + (VIEWS[v][0][1] + VIEWS[v][1][1]) * off[1] + (1e-6 if v == FRONT else 0))
     (dui, duj), (dvi, dvj) = VIEWS[view]
     # exploded, as a kit's sheet draws it: each new piece (a fitted sub-assembly as one) a little away from where it
-    # goes, along the line from what it goes onto, an arrow to its place
-    pts = [q for p in shown for seg in p["art"] for q in seg]
+    # goes, out of its host the shortest way (a leg down from the case, a lens element along the lens's axis), those
+    # going out the same way staggered so they do not cover each other; an arrow to its place
+    pts = [q for p in shown for q in pts_of(p)]
     size = max(max(q[a] for q in pts) - min(q[a] for q in pts) for a in range(3)) or 1.0
-    away, lead = {}, set()   # lead: the pieces that move of themselves (an arrow each), not with what holds them
+    near = [q for p in new for q in pts_of(p)]   # small new pieces on a big model: drawn close, as a sheet's inset
+    small = max(max(q[a] for q in near) - min(q[a] for q in near) for a in range(3)) if near else size
+    zoom = bool(near) and small < 0.3 * size
+    if zoom:
+        size = max(small * 1.3, 0.06 * size)   # and held away by their own size, not the model's
+    away, lead, ways = {}, set(), {}   # lead: the pieces that move of themselves (an arrow each)
     drawn = {p["number"] for p in shown}
     moving = lambda q: q["number"] in highlight and q.get("onto") is not None and q["onto"]["number"] in drawn
     for p in new:   # a fitted sub-assembly moves as one; at the bench its root stays put and the rest come to it
@@ -1020,85 +1141,185 @@ def _drawing(kit, highlight, done, onto=None, w=900, hgt=600, colours=None):
         while top.get("onto") is not None and top["onto"]["number"] in highlight and moving(top["onto"]):
             top = top["onto"]
         host = top.get("onto")
-        if host is None or host["number"] not in drawn or not host.get("art"):
+        if host is None or host["number"] not in drawn or not pts_of(host):
             continue
-        a, b = centre([top]), centre([host])
-        hb = [(min(q[k] for seg in host["art"] for q in seg), max(q[k] for seg in host["art"] for q in seg)) for k in range(3)]
+        a = centre([top])
+        hb = box(host)
         out_of = [a[k] - hb[k][1] if a[k] > hb[k][1] else a[k] - hb[k][0] if a[k] < hb[k][0] else 0.0 for k in range(3)]
         k = max(range(3), key=lambda k: abs(out_of[k]) / ((hb[k][1] - hb[k][0]) or size))
+        d = [0.0, 0.0, 0.0]
         if out_of[k]:   # off one side of its host (a leg under the case): straight out that way
-            d = [0.0, 0.0, 0.0]
-            d[k] = math.copysign(1.0, out_of[k])
-        else:   # within its host's bounds: away from its middle
-            d = [a[k] - b[k] for k in range(3)]
-        n = math.sqrt(sum(x * x for x in d))
-        if n < 1e-3 * size:   # in its host's middle (a dial in its face): straight out, up
-            d, n = [0.0, 0.0, 1.0], 1.0
-        reach = 0.16 * size
-        away[p["number"]] = [d[k] / n * reach for k in range(3)]
-        if top is p:
+            d[k], gap = math.copysign(1.0, out_of[k]), 0.0
+        else:   # within its host's bounds: out the nearest side (a dial up out of its face, a lens element along the axis)
+            exits = [(hb[k][1] - a[k], k, 1.0) for k in range(3)] + [(a[k] - hb[k][0], k, -1.0) for k in range(3)]
+            exits = [e for e in exits if not (e[1] == 2 and e[2] < 0)] or exits   # never down through the bench
+            gap, k, sign = min(exits)
+            d[k] = sign
+        if top is p:   # the rest of a sub-assembly moves with it (below)
+            ways.setdefault((host["number"], tuple(d)), []).append((gap, p["number"]))
+            away[p["number"]] = d
             lead.add(p["number"])
+    for (_, d), items in ways.items():   # the outermost goes furthest, so a stack opens up in order; a row of many
+        items.sort()                     # (23 black keys) lifts together
+        for rank, (_, num) in enumerate(items):
+            reach = 0.16 * size * (1 + (0.55 * (len(items) - 1 - rank) if len(items) <= MANY else 0))
+            away[num] = [d[k] * reach for k in range(3)]
+    kin = {}   # many of one kind in one colour: one arrow and one callout for them all ("x23")
+    for p in new:
+        kin.setdefault((colour_of(p), _kind_of(p["name"])), []).append(p)
+    crowd = {p["number"]: g for g in kin.values() if len(g) > MANY for p in g}
+    for p in new:   # a sub-assembly's other pieces move with the piece that leads it
+        q = p
+        while q["number"] not in lead and q.get("onto") is not None and q["onto"]["number"] in highlight:
+            q = q["onto"]
+        if q is not p and q["number"] in lead:
+            away[p["number"]] = away[q["number"]]
 
     def proj(q):
         u, v = q[0] * dui + q[1] * duj, q[0] * dvi + q[1] * dvj
-        return ((u - v) * 0.866, (u + v) * 0.35 - q[2] * 0.95)
+        return ((u - v) * 0.866, (u + v) * 0.35 - q[2] * 0.95, (u + v) * 0.95 + q[2] * 0.35)
 
-    def moved(p, seg):
+    def moved(p, q):
         o = away.get(p["number"])
-        return [[q[k] + o[k] for k in range(3)] for q in seg] if o else seg
-    every = [proj(q) for p in shown for seg in p["art"] for q in seg]
-    every += [proj(q) for p in new if p["number"] in away for seg in p["art"] for q in moved(p, seg)]
+        return [q[k] + o[k] for k in range(3)] if o else q
+    every = [proj(moved(p, q)) for p in shown for q in pts_of(p)]
     xs, ys = [q[0] for q in every], [q[1] for q in every]
+    if zoom:
+        fr = [proj(r) for p in new for q in pts_of(p) for r in (q, moved(p, q))]
+        fx, fy = [q[0] for q in fr], [q[1] for q in fr]
+        whole = max(max(xs) - min(xs), max(ys) - min(ys))
+        half = max(max(fx) - min(fx), max(fy) - min(fy), 0.2 * whole) * 0.65
+        mx, my = (max(fx) + min(fx)) / 2, (max(fy) + min(fy)) / 2
+        xs, ys = [mx - half * 1.5, mx + half * 1.5], [my - half, my + half]
     pad = 70
     sc = min((w - 2 * pad) / ((max(xs) - min(xs)) or 1), (hgt - 2 * pad) / ((max(ys) - min(ys)) or 1))
     ox = pad + ((w - 2 * pad) - (max(xs) - min(xs)) * sc) / 2 - min(xs) * sc
     oy = pad + ((hgt - 2 * pad) - (max(ys) - min(ys)) * sc) / 2 - min(ys) * sc
     xy = lambda q: (ox + proj(q)[0] * sc, oy + proj(q)[1] * sc)
-
-    def path(segs):
-        return "".join("M%.1f %.1fL%.1f %.1f" % (*xy(a), *xy(b)) for a, b in segs)
-    out = ['<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 %d %d">' % (w, hgt),
-           '<rect width="100%" height="100%" fill="#f6f3ee"/>',
-           '<path d="%s" stroke="#8d8794" stroke-opacity="0.45" stroke-width="0.6" fill="none"/>'
-           % path([seg for p in shown if p["number"] not in highlight and p["number"] != onto for seg in p["art"]])]
-    target = [p for p in shown if p["number"] == onto and p["number"] not in highlight]
-    if target:
-        out.append('<path d="%s" stroke="#3a3542" stroke-opacity="0.85" stroke-width="0.9" fill="none"/>'
-                   % path([seg for p in target for seg in p["art"]]))
-    colour = {p["number"]: (colours or {}).get(p["number"], STEP_COLOURS[k % len(STEP_COLOURS)]) for k, p in enumerate(new)}
+    items = []
+    for p in shown:
+        if p["number"] in highlight:
+            base = _hex_rgb(colour[p["number"]])
+            fill = tuple(int(c + (255 - c) * 0.45) for c in base)
+            edge = tuple(int(c * 0.55) for c in base)
+        elif p["number"] == onto:
+            fill, edge = (206, 202, 198), (70, 66, 76)
+        else:
+            fill, edge = (234, 231, 226), (128, 123, 134)
+        for t in p.get("tris", ()):
+            tt = [moved(p, q) for q in t]
+            e1 = [tt[1][k] - tt[0][k] for k in range(3)]
+            e2 = [tt[2][k] - tt[0][k] for k in range(3)]
+            n = (e1[1] * e2[2] - e1[2] * e2[1], e1[2] * e2[0] - e1[0] * e2[2], e1[0] * e2[1] - e1[1] * e2[0])
+            sp = [(ox + c[0] * sc, oy + c[1] * sc, c[2]) for c in map(proj, tt)]
+            items.append((sp, p["number"], _shade(n, fill, light=(0.35, -0.55, 0.75)), edge, n))
+    img = _illustrate(items, w, hgt)
+    out = ['<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 %d %d">' % (w, hgt),
+           '<image width="%d" height="%d" href="data:image/png;base64,%s"/>' % (w, hgt, base64.b64encode(img).decode("ascii"))]
+    lines = [p for p in shown if not p.get("tris")]   # a piece the solid has no surface for: its lines
+    if lines:
+        out.append('<path d="%s" stroke="#8d8794" stroke-width="0.8" fill="none"/>' % "".join(
+            "M%.1f %.1fL%.1f %.1f" % (*xy(moved(p, a)), *xy(moved(p, b))) for p in lines for a, b in p.get("art", ())))
     out.append('<defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" '
                'orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="#3a3542"/></marker></defs>')
-    for p in new:
-        if p["number"] in away:   # where it goes, faint; the piece itself out where it is held up to it
-            out.append('<path d="%s" stroke="%s" stroke-opacity="0.35" stroke-width="0.8" stroke-dasharray="3 3" fill="none"/>'
-                       % (path(p["art"]), colour[p["number"]]))
-        out.append('<path d="%s" stroke="%s" stroke-width="1.4" fill="none"/>'
-                   % (path([moved(p, seg) for seg in p["art"]]), colour[p["number"]]))
     for p in new:   # the arrows: from the held piece to its place
+        g = crowd.get(p["number"])
+        if g and p is not g[len(g) // 2]:
+            continue
         if p["number"] in lead:
             c = centre([p])
-            a, b = xy([c[k] + away[p["number"]][k] * 0.78 for k in range(3)]), xy([c[k] + away[p["number"]][k] * 0.22 for k in range(3)])
-            out.append('<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="#3a3542" stroke-width="1.3" marker-end="url(#ah)"/>'
-                       % (a[0], a[1], b[0], b[1]))
-    mid = (w / 2, hgt / 2)
+            a, b = xy([c[k] + away[p["number"]][k] * 0.8 for k in range(3)]), xy([c[k] + away[p["number"]][k] * 0.15 for k in range(3)])
+            if math.hypot(a[0] - b[0], a[1] - b[1]) > 8:
+                out.append('<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="#3a3542" stroke-width="1.4" marker-end="url(#ah)"/>'
+                           % (a[0], a[1], b[0], b[1]))
+    mid, spots = (w / 2, hgt / 2), []
     for p in new:   # a callout: the piece's number, out from the model, a leader line to the piece, its paint
-        c = centre([p])
-        if p["number"] in away:
-            c = [c[k] + away[p["number"]][k] for k in range(3)]
-        px, py = xy(c)
+        if calls is not None and p["number"] not in calls:
+            continue
+        g = crowd.get(p["number"])
+        if g and p is not g[0]:
+            continue
+        px, py = xy(moved(p, centre(g or [p])))
         dx, dy = px - mid[0], py - mid[1]
         d = math.hypot(dx, dy) or 1
-        lx = min(max(px + dx / d * 46, 18), w - 34)
-        ly = min(max(py + dy / d * 46, 18), hgt - 18)
+        lx = min(max(px + dx / d * 50, 18), w - 34)
+        ly = min(max(py + dy / d * 50, 18), hgt - 18)
+        for _ in range(16):   # callouts that would sit on each other step aside
+            if not any(math.hypot(lx - a, ly - b) < 30 for a, b in spots):
+                break
+            lx, ly = min(max(lx + dy / d * 30, 18), w - 34), min(max(ly - dx / d * 30, 18), hgt - 18)
+        spots.append((lx, ly))
         col = colour[p["number"]]
-        out.append('<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="%s" stroke-width="1"/>' % (px, py, lx, ly, col))
+        out.append('<line x1="%.1f" y1="%.1f" x2="%.1f" y2="%.1f" stroke="%s" stroke-width="1.2"/>' % (px, py, lx, ly, col))
+        out.append('<circle cx="%.1f" cy="%.1f" r="2.5" fill="%s"/>' % (px, py, col))
         out.append('<circle cx="%.1f" cy="%.1f" r="13" fill="%s"/>'
                    '<text x="%.1f" y="%.1f" fill="#ffffff" font-size="12" font-weight="700" font-family="monospace" '
-                   'text-anchor="middle" dominant-baseline="central">%d</text>' % (lx, ly, col, lx, ly, p["number"]))
+                   'text-anchor="middle" dominant-baseline="central">%s</text>' % (lx, ly, col, lx, ly,
+                                                                                   "\u00d7%d" % len(g) if g else p["number"]))
         out.append('<rect x="%.1f" y="%.1f" width="9" height="9" rx="2" fill="%s" stroke="#3a3542" stroke-width="0.6"/>'
                    % (lx + 15, ly - 4.5, p["paint"]["color"]))
     out.append("</svg>")
     return "".join(out)
+
+
+def _illustrate(items, w, h, bg=(246, 243, 238)):
+    """A kit sheet's picture (PNG, standard library only): `items` are (triangle in screen pixels with depth toward
+    the viewer, piece, fill colour, edge colour, normal), z-buffered, then outlined where one piece meets another
+    or the background, where a piece turns a corner (a crease) and where it passes in front of itself."""
+    from . import png
+    zb = [-1e30] * (w * h)
+    ib = [-1] * (w * h)
+    nb = [None] * (w * h)
+    px = bytearray(bytes(bg) * (w * h))
+    edge_of = {}
+    for (a, b, c), key, col, edge, n in items:
+        edge_of[key] = edge
+        ln = math.sqrt(n[0] * n[0] + n[1] * n[1] + n[2] * n[2]) or 1.0
+        n = (n[0] / ln, n[1] / ln, n[2] / ln)
+        lx, hx = min(a[0], b[0], c[0]), max(a[0], b[0], c[0])
+        ly, hy = min(a[1], b[1], c[1]), max(a[1], b[1], c[1])
+        x0, x1 = max(0, int(lx)), min(w - 1, int(hx) + 1)
+        y0, y1 = max(0, int(ly)), min(h - 1, int(hy) + 1)
+        den = (b[1] - c[1]) * (a[0] - c[0]) + (c[0] - b[0]) * (a[1] - c[1])
+        if x0 > x1 or y0 > y1:
+            continue
+        if abs(den) < 1e-9:
+            continue
+        cb = bytes(col)
+        for y in range(y0, y1 + 1):
+            yc = y + 0.5
+            for x in range(x0, x1 + 1):
+                xc = x + 0.5
+                l1 = ((b[1] - c[1]) * (xc - c[0]) + (c[0] - b[0]) * (yc - c[1])) / den
+                if l1 < -1e-4:
+                    continue
+                l2 = ((c[1] - a[1]) * (xc - c[0]) + (a[0] - c[0]) * (yc - c[1])) / den
+                l3 = 1 - l1 - l2
+                if l2 < -1e-4 or l3 < -1e-4:
+                    continue
+                z = l1 * a[2] + l2 * b[2] + l3 * c[2]
+                i = y * w + x
+                if z > zb[i]:
+                    zb[i] = z
+                    ib[i] = key
+                    nb[i] = n
+                    px[3 * i:3 * i + 3] = cb
+    finite = [z for z in zb if z > -1e29]
+    step = (max(finite) - min(finite)) * 0.015 if finite else 1.0
+    ink = bytearray(px)
+    for y in range(h - 1):
+        for x in range(w - 1):
+            i = y * w + x
+            k = ib[i]
+            for j in (i + 1, i + w):
+                kj = ib[j]
+                if k == kj and (k == -1 or (abs(zb[i] - zb[j]) < step
+                                            and nb[i][0] * nb[j][0] + nb[i][1] * nb[j][1] + nb[i][2] * nb[j][2] > 0.82)):
+                    continue
+                front = i if zb[i] >= zb[j] else j   # the line belongs to the nearer side
+                e = edge_of.get(ib[front], (60, 56, 66))
+                ink[3 * front:3 * front + 3] = bytes(e)
+    return png.encode_rows(w, h, ink)
 
 
 def _hex_rgb(c):
@@ -1263,14 +1484,47 @@ def _3mf(objects, title):
     return buf.getvalue()
 
 
-def write(kit, out):
-    """The kit's files in `out`: plate-N.3mf, booklet.html with its pictures, kit.json (what a critic reads)."""
+def pick(kit, only):
+    """The pieces `only` names: numbers ("12", "3-5") or part names and patterns ("door-glass*"), comma separated."""
+    nums = set()
+    for w in (x.strip() for x in only.split(",") if x.strip()):
+        if w.replace("-", "").isdigit() and w[0].isdigit():
+            a, _, b = w.partition("-")
+            nums.update(range(int(a), int(b or a) + 1))
+        else:
+            nums.update(p["number"] for p in kit["pieces"] if _matches(p["name"].split(" (")[0], [w])
+                        or any(_matches(m, [w]) for m in p["parts"]))
+    found = [p for p in kit["pieces"] if p["number"] in nums]
+    if not found:
+        raise KitError("--only %s: no such piece (numbers as on the plates, or part names)" % only)
+    return found
+
+
+def write(kit, out, only=None):
+    """The kit's files in `out`: plate-N.3mf, each piece on its own (pieces/NN-name.stl, to print one again),
+    booklet.html with its pictures, kit.json (what a critic reads); with `only` (see `pick`), only.3mf: just those
+    pieces, on a plate of their own."""
     out = Path(out)
     for old in (out / "img").glob("*") if (out / "img").is_dir() else ():   # no pictures from an earlier build
         old.unlink()
+    for old in (out / "pieces").glob("*.stl") if (out / "pieces").is_dir() else ():
+        old.unlink()
     (out / "img").mkdir(parents=True, exist_ok=True)
+    (out / "pieces").mkdir(parents=True, exist_ok=True)
     by = {p["number"]: p for p in kit["pieces"]}
     files = []
+    for p in kit["pieces"]:
+        name = "".join(c if c.isalnum() or c in "-_" else "-" for c in p["name"]).strip("-")
+        (out / "pieces" / ("%02d-%s.stl" % (p["number"], name))).write_bytes(
+            printing.to_stl(dict(p["mesh"], title="%d %s" % (p["number"], p["name"]))))
+    if only:
+        chosen = {p["number"]: dict(p, mesh=dict(p["mesh"]), size_mm=list(p["size_mm"])) for p in pick(kit, only)}
+        plates = _shelves(list(chosen.values()), kit["bed_mm"], 0)   # on copies: the kit's own plates stay as they are
+        for pl in plates:
+            objs = [("%d %s" % (num, by[num]["name"]), chosen[num]["mesh"], x, y) for num, x, y in pl["pieces"]]
+            path = out / ("only.3mf" if len(plates) == 1 else "only-%d.3mf" % pl["number"])
+            path.write_bytes(_3mf(objs, "%s, pieces %s" % (kit["title"], only)))
+            files.append(path)
     for plate in kit["plates"]:
         objs = [("%d %s" % (num, by[num]["name"]), by[num]["mesh"], x, y) for num, x, y in plate["pieces"]]
         path = out / ("plate-%d.3mf" % plate["number"])
@@ -1288,7 +1542,8 @@ def write(kit, out):
                 bench.pop()
             ctx = done if not bench else done & _subtree(by[bench[-1]], kit["pieces"])
             col = _groups(s, by)[0]["col"]
-            pic = _drawing(kit, asm, ctx - asm, s.get("onto"), colours={n: col for n in asm})
+            pic = _drawing(kit, asm, ctx - asm, s.get("onto"), colours={n: col for n in asm},
+                           calls={g[0] for g in s["glue"]})
         else:   # at the bench only the sub-assembly is drawn; on the model, everything built so far
             ctx = done if not bench else done & _subtree(by[bench[-1]], kit["pieces"])
             pic = _drawing(kit, new, ctx, s.get("onto"), colours={n: g["col"] for g in _groups(s, by) for n in g["nums"]})
@@ -1398,8 +1653,9 @@ ASSEMBLY_JS = r"""
     }).join("");
     top.innerHTML = "<div class=n>" + esc(K.title) + " &middot; step " + (k + 1) + " of " + K.steps.length + "</div>" +
       "<h2>" + esc(s.name || "Step " + (k + 1)) + (s.times > 1 ? "<span class=x>&times; " + s.times + "</span>" : "") + "</h2>" +
-      (s.kind === "bench" ? "<div class=bench>At the bench: build this on its own first</div>" :
-       s.bench ? "<div class=bench>Still at the bench: onto the sub-assembly, not the model yet</div>" : "") +
+      (s.kind === "bench" ? "<div class=bench>At the bench: build this on its own first (the model so far is ghosted)</div>" :
+       s.bench ? "<div class=bench>Still at the bench: onto the sub-assembly, not the model yet</div>" :
+       s.hang ? "<div class=bench>It moves: glue it shut, or leave it unglued to show it open</div>" : "") +
       "<ul>" + list + "</ul>";
     ctl.querySelector(".pg").textContent = (k + 1) + " / " + K.steps.length;
     ctl.querySelector("[data-a=play]").innerHTML = playing ? "&#10073;&#10073; Pause" : "&#9654; Play";
@@ -1421,18 +1677,22 @@ ASSEMBLY_JS = r"""
   var T = 0, from = 0, to = 0, startAt = 0, DUR = 1300, lastLines = "";
   var focus = null, camFrom = null, camAt = 0;
   function aim(k) {   // the camera on the step's pieces (at the bench, the whole sub-assembly): their middle, closer in
-    var H = HOLO.hologram, st = K.steps[k], cs = [];   // for small ones; you can still turn it
+    var H = HOLO.hologram, st = K.steps[k], cs = [], rs = [];   // for small ones; you can still turn it
     K.steps.slice(0, k + 1).forEach(function (t, j) {
       if (j === k || (st.from && t.window[0] >= st.from - 1e-6))
-        t.glue.forEach(function (g) { var c = K.pieces[g[0]].centre; if (c) cs.push(c); });
+        t.glue.forEach(function (g) {
+          [g[0]].concat(j === k && st.kind === "fit" && g[1] ? [g[1]] : []).forEach(function (n) {   // a fit: and where
+            var c = K.pieces[n].centre; if (c) { cs.push(c); rs.push(K.pieces[n].r || 0); } });      // it goes
+        });
     });
     if (!cs.length) return;
     var m = [0, 1, 2].map(function (a) { return cs.reduce(function (s, c) { return s + c[a]; }, 0) / cs.length; });
-    var spread = Math.max.apply(null, cs.map(function (c) { return Math.hypot(c[0] - m[0], c[1] - m[1], c[2] - m[2]); }));
+    var spread = Math.max.apply(null, cs.map(function (c, i) {   // as far as its pieces reach, not only their middles
+      return Math.hypot(c[0] - m[0], c[1] - m[1], c[2] - m[2]) + 0.7 * rs[i]; }));
     var fit = HOLO.fitted("hero"), now = H.userCamera || HOLO.camera() || fit;
     var low = m[1] < H.C[1];   // under the model (legs, the chassis): look from a little below, as a sheet
     focus = { target: m, yaw: now.yaw, pitch: low ? -14 : Math.max(18, now.pitch), fov: now.fov || 34,   // turns it over
-              dist: fit.dist * (st.from ? Math.max(0.3, Math.min(1, (spread + 0.05 * H.R) * 1.6 / H.R))   // alone: closer
+              dist: fit.dist * (st.from ? Math.max(0.42, Math.min(1, (spread + 0.08 * H.R) * 1.7 / H.R))   // alone: closer
                                         : Math.max(0.55, Math.min(1, (spread + 0.12 * H.R) * 2.4 / H.R))) };
     camFrom = { target: (now.target || fit.target).slice(), yaw: now.yaw, pitch: now.pitch, dist: now.dist, fov: now.fov || 34 };
     camFrom.pitch0 = now.pitch;
@@ -1495,6 +1755,7 @@ ASSEMBLY_JS = r"""
   function start() {
     if (!window.HOLO || !HOLO.timeline) return setTimeout(start, 60);
     T = HOLO.timeline().settled + 1;
+    HOLO.renderAt(T, { solid: true, text: false });   // a kit has no printed lettering: the labels' text is off (T)
     var m = /#step-(\d+)/.exec(location.hash), k = m ? parseInt(m[1], 10) - 1 : 0;
     go(k); requestAnimationFrame(tick);
   }
@@ -1554,12 +1815,15 @@ def assembly(kit):
     pieces = {}
     for p in kit["pieces"]:
         cs = [p["centre"]] if p.get("centre") else [c for pid in p["parts"] for c in boxes.get(pid, [])]
+        b, h = _bbox(p["cols"]), kit["grid"].h if kit.get("grid") else 0.0
         pieces[p["number"]] = {"name": p["name"], "kind": _kind_of(p["name"]), "paint": p["paint"]["name"],
+                               "r": round(0.5 * h * math.sqrt(sum((b[2 * a + 1] - b[2 * a] + 1) ** 2 for a in range(3))), 5),
                                "color": p["paint"]["color"],
                                "clear": p["clear"], "centre": [round(sum(c[a] for c in cs) / len(cs), 5) for a in range(3)]
                                if cs else None}
     data = {"title": kit["title"], "pieces": pieces, "reveal": round(0.08 / n, 5),
             "steps": [{"name": s.get("name"), "kind": s.get("kind"), "glue": s["glue"], "times": s.get("times", 1),
+                       "hang": bool(s.get("hang")),
                        "window": [round(k / n, 5), round((k + 1) / n, 5)], "build": round((k + 0.9) / n, 5)}
                       for k, s in enumerate(steps)]}
     spans = []   # each sub-assembly's steps at the bench: from its bench step to the step that fits it
@@ -1598,9 +1862,13 @@ def booklet(kit):
                 "</div></div>" % "".join(
                     "<tr><td><span class=chip style='background:%s'></span></td><td>%s</td><td class=nums>%s</td></tr>"
                     % (c, e(n), ", ".join(str(x) for x in nums)) for (n, c), nums in sorted(paints.items())))
+    rows.append("<p class=untested><b>Not yet built by anyone.</b> This kit was made and checked by software and by "
+                "AI critics, not test-printed and glued by a person. Print one piece first (each is in <code>pieces/</code>), "
+                "check how it fits, and tell us how it went: "
+                "<a href='https://github.com/rtmandreyev/construct/issues'>github.com/rtmandreyev/construct/issues</a>.</p>")
     rep = kit["report"]
     if rep["problems"]:
-        rows.append("<details class=warn><summary>Notes from the check (%d)</summary><ul>%s</ul></details>"
+        rows.append("<details class=warn><summary>For whoever made this kit: what its check found (%d)</summary><ul>%s</ul></details>"
                     % (len(rep["problems"]), "".join("<li>%s</li>" % e(p["message"]) for p in rep["problems"])))
     rows.append("</section><section><h2>Plates</h2>")
     for plate in kit["plates"]:
@@ -1617,8 +1885,9 @@ def booklet(kit):
             badges = "".join("&hellip; " if n is None else "<span class=num style='background:%s'>%d</span>" % (g["col"], n)
                              for n in run) + (" <b>&times;%d</b> " % len(g["nums"]) if len(g["nums"]) > 6 else "")
             if kind == "fit":
-                items.append("<li>%s the %s assembl%s onto %s</li>" % (badges, e(_label(p["name"])), "ies" if len(g["nums"]) > 1
-                                                                       else "y", ", ".join(str(o) for o in g["onto"])))
+                items.append("<li>%s the %s assembl%s onto %s <b>%s</b></li>" % (
+                    badges, e(_label(p["name"])), "ies" if len(g["nums"]) > 1 else "y",
+                    ", ".join(str(o) for o in g["onto"]), e(_label(by[g["onto"][0]]["name"])) if g["onto"] else ""))
                 continue
             onto = " onto %s <b>%s</b>" % (", ".join(str(o) for o in g["onto"]), e(_label(by[g["onto"][0]]["name"]))) \
                 if g["onto"] else (" &mdash; the base" if g["nums"][0] == 1 else " &mdash; start of this assembly"
@@ -1636,6 +1905,8 @@ def booklet(kit):
         tag = {"bench": "<div class=tagb>Build this on its own first</div>", "fit": "<div class=tagf>Fit it</div>"}.get(kind, "")
         if s.get("details"):
             tag = "<div class=tagd>Fragile: fit these last</div>"
+        if s.get("hang") and kind != "bench":   # no hinge pins: the builder chooses
+            tag = "<div class=tagd>It moves: glue it shut, or leave it unglued to show it open</div>"
         link = " <a class=b3d href='assembly.html#step-%d'>3D</a>" % s["number"] if has3d else ""
         # as a kit's sheet reads: the step and what to do, the parts it takes, the drawing large, what goes where
         rows.append("<article class='step %s'><div class=head><span class=sn>%d</span><div><h3>%s%s</h3>%s</div>%s</div>"
@@ -1654,6 +1925,7 @@ def booklet(kit):
            "h3{margin:0 0 6px}table{border-collapse:collapse}td{padding:3px 8px;border-bottom:1px solid #e4dfd6}"
            ".nums{color:#6b6475;font-size:13px}.paint{color:#6b6475;font-size:13px;margin:0 6px 0 4px}.chip{display:inline-block;width:14px;height:14px;border-radius:3px;"
            "border:1px solid #777;vertical-align:-2px}.warn{margin:14px 0;border:1px solid #d23a3a;border-radius:8px;padding:8px 14px}"
+           ".untested{margin:14px 0;padding:10px 14px;border-radius:8px;background:#fff6dc;border:1px solid #e0c060}"
            ".warn summary{cursor:pointer;font-weight:600}.plate{margin:12px 0}.plate img{border:1px solid #ddd8cf;border-radius:8px}"
            "figcaption{font-size:13px;color:#5f5869}.step{border:1px solid #e4dfd6;border-radius:14px;padding:16px 18px;"
            "margin:18px 0;background:#fff;break-inside:avoid}"

@@ -465,7 +465,7 @@ class Kit(unittest.TestCase):
                  {"kind": "fit", "assembly": 5, "new": [], "pieces": [5], "glue": [(5, 1)]}]
         out = kit_mod._combine(steps, keys)
         self.assertEqual([s.get("times", 1) for s in out], [1, 2, 2])
-        self.assertEqual(out[1]["name"], "At the bench: build the 2 white keys assemblies")   # alike, not the same
+        self.assertEqual(out[1]["name"], "At the bench: build the 2 white key assemblies")    # alike, not the same
 
     def test_a_small_sub_assembly_inside_another_is_glued_in_place(self):
         piece = lambda n, name: {"number": n, "name": name, "size_mm": [10, 10, 10]}
@@ -532,6 +532,18 @@ class Kit(unittest.TestCase):
         self.assertEqual(at((0.85, 0.85, -0.85)), 0.6)
         self.assertEqual(at((0.9, 0.5, -0.9)), 0.6)                           # nearer the right one
 
+    def test_a_piece_held_a_hair_away_from_its_host_is_named(self):
+        sc = scene_of(dict(box("chassis", [0.30, 0.02, 0.14], [0, 0.01, 0]), stage=0),
+                      dict(box("badge", [0.03, 0.01, 0.03], [0.05, 0.0262, 0]), stage=1),   # 1.2 mm above it, 0.6 in the kit
+                      dict(box("seat", [0.03, 0.01, 0.03], [-0.05, 0.025, 0]), stage=1))    # sits on it
+        k = kit_mod.make(sc, size=150, detail=0.5)
+        self.assertEqual([(p["code"], p["piece"]) for p in k["report"]["problems"]], [("gap", 2)])
+        with tempfile.TemporaryDirectory() as tmp:   # its step drawn as a kit sheet: shaded pieces, no hidden lines
+            kit_mod.write(k, tmp)
+            step = Path(tmp, "img", "step-2.svg").read_text(encoding="utf-8")
+            self.assertIn("data:image/png;base64,", step)
+            self.assertIn(">2</text>", step)
+
     def test_slivers_and_long_thin_pieces_are_moulded_with_what_they_touch(self):
         from . import export
         sc = scene_of(dict(box("chassis", [0.30, 0.02, 0.14], [0, 0.01, 0]), stage=0),
@@ -550,7 +562,14 @@ class Kit(unittest.TestCase):
         sc = studio.load(str(HERE / "examples" / "v2" / "cd.json"))
         k = kit.make(sc, size=120, detail=0.5)
         with tempfile.TemporaryDirectory() as tmp:
-            kit.write(k, tmp)
+            kit.write(k, tmp, only="lid,2")
+            self.assertEqual(len(list(Path(tmp, "pieces").glob("*.stl"))), 4)        # each piece on its own, to reprint
+            self.assertTrue(Path(tmp, "pieces", "04-lid.stl").is_file())
+            again = zipfile.ZipFile(Path(tmp, "only.3mf")).read("3D/3dmodel.model").decode("utf-8")
+            self.assertEqual(again.count("<object "), 2)                          # just the two asked for
+            self.assertIn('name="4 lid"', again)
+            with self.assertRaisesRegex(kit.KitError, "no such piece"):
+                kit.pick(k, "spoiler")
             z = zipfile.ZipFile(Path(tmp, "plate-1.3mf"))
             model = z.read("3D/3dmodel.model").decode("utf-8")
             self.assertEqual(model.count("<object "), 4)
@@ -558,7 +577,7 @@ class Kit(unittest.TestCase):
             booklet = Path(tmp, "booklet.html").read_text(encoding="utf-8")
             self.assertIn("Step 2", booklet)
             step = Path(tmp, "img", "step-1.svg").read_text(encoding="utf-8")
-            self.assertIn("<path d=", step)                                       # drawn in the construct's lines
+            self.assertIn("data:image/png;base64,", step)                         # drawn shaded, as a kit sheet
             self.assertIn(">1</text>", step)                                      # the new piece's callout
             for name in os.listdir(Path(tmp, "img")):                             # a valid size, not "100%%"
                 if name.endswith(".svg"):

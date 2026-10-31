@@ -196,6 +196,13 @@ side, printed as worksheets and cited. Plan:
   times; a 3D guide with the instructions big at the top and lines to the pieces, the controls at the bottom,
   what is built barely dimmed; a booklet with a cover, the paints, plates drawn with each piece's real outline,
   and a card per step with pictures of the parts it needs.
+- **Kits polished (from the owner's review):** booklet drawings as a kit sheet draws them: shaded pieces with
+  their outlines and no hidden lines, a lens's elements fanned out along its axis, many of one kind lifted
+  together with one callout, small pieces on a big model drawn close; at the bench the 3D guide ghosts the model
+  so far around the sub-assembly; copies closer than the kit can print apart are one piece (a whole keyboard, not
+  blocks of random widths); every piece also on its own (`pieces/`) and `--only` to print a few again; a check for
+  pieces held a hair away from what they are glued to; a big thin piece is no fragile detail; each booklet and
+  the docs say that no kit has yet been built by a person. Any page: **T** hides the text printed on surfaces.
 - **Kits a careful builder can finish (from a kit critic's review):** at the bench the 3D guide shows only the
   sub-assembly being built, close up, until it is fitted; slivers and long thin pieces that would chip or break
   (hinge leaves, a 1 mm base plate) are moulded with the piece they touch, as a kit does; a lens's ring, cell

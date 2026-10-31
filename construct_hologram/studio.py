@@ -515,6 +515,8 @@ def add_commands(sub):
     p.add_argument("--materials", help="a material map: each piece's paint (default: <scene>.materials.json beside it)")
     p.add_argument("--bed", help="the printer's build volume in mm (default 250x210x220, or the printer's)")
     p.add_argument("--critic", action="store_true", help="print the kit critic's brief and stop")
+    p.add_argument("--only", help="also only.3mf: just these pieces on a plate, to print again (numbers as on the "
+                                  "plates, ranges, or part names: '12,14', '3-5', 'door-glass*')")
     p = sub.add_parser("freecad", help="named solids and joints in FreeCAD (.FCStd), and STEP; runs FreeCAD "
                                        "(docs/FREECAD.md)")
     p.add_argument("scene")
@@ -1083,7 +1085,7 @@ def run(args):
                                           if Path(args.scene).with_suffix(".materials.json").is_file() else None)
                 k = kit_mod.make(load(args.scene), scale=args.scale, size=args.size, detail=args.detail, plan=args.plan,
                                  materials=mats, bed=bed)
-                kit_mod.write(k, args.out)
+                kit_mod.write(k, args.out, only=args.only)
             except (kit_mod.KitError, export_errors(), ValueError) as exc:
                 sys.stderr.write("kit: %s\n" % exc)
                 return 1
