@@ -3,8 +3,8 @@
 Anything you can describe can be printed, made into a model kit, or opened in CAD. The construct knows its real sizes
 and its parts, so a print comes out at a true scale and a kit comes apart where a kit designer would cut it.
 
-<p align="center"><img src="../media/kit-cfx.jpg" alt="The Yamaha CFX as a 1:12 kit: step 10 in 3D, the pedal lyre built at the bench, and the same step in the paper booklet, each new piece in its own colour"></p>
-<p align="center"><sub>The Yamaha CFX as a 1:12 kit: step 10 in 3D (left) and in the paper booklet (right). The pedal lyre is built at the bench, each new piece in its own colour, before it goes on the piano.</sub></p>
+<p align="center"><img src="../media/kit-cfx.jpg" alt="The Yamaha CFX as a 1:12 kit: step 3 in 3D, the keybed built on its own at the bench with numbered lines to each piece, and the same step in the paper booklet as an exploded drawing"></p>
+<p align="center"><sub>The Yamaha CFX as a 1:12 kit: step 3 in 3D (left) and in the paper booklet (right). The keybed is built at the bench, on its own, before it goes on the piano: each new piece numbered, in its own colour and its paint.</sub></p>
 
 ## What you can do
 
