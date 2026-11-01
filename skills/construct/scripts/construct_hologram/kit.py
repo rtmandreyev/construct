@@ -87,6 +87,15 @@ def _bbox(cols):
             min(ks), max(ks))
 
 
+def _common(ids):
+    """The name parts share from the start ("side-west-stile-0", "side-west-bar-3": "side-west"), or ""."""
+    words = [i.split("-") for i in ids]
+    k = 0
+    while all(len(w) > k + 1 and w[k] == words[0][k] for w in words):
+        k += 1
+    return "-".join(words[0][:k]) if len(ids) > 1 else ""
+
+
 def _bridge(cols, n):
     """`cols` with its gaps under two voxels closed (grow by one, shrink back), worked within its own box."""
     b = _bbox(cols)
@@ -203,8 +212,10 @@ def make(scene, scale=SCALE, size=None, detail=DETAIL_MM, wall=WALL_MM, plan=Non
     longest = max(hi[a] - lo[a] for a in range(3))
     mm_per_m = (size / longest) if size else 1000.0 / scale
     if longest * mm_per_m / detail > printing.MAX_CELLS:
-        raise KitError("too fine: %.0f voxels along the longest side (at most %d); use a coarser detail or a "
-                       "smaller kit" % (longest * mm_per_m / detail, printing.MAX_CELLS))
+        raise KitError("too fine: %.0f voxels along the longest side (at most %d): at --detail %g a kit is at most "
+                       "%.0f mm long; use --size %.0f or less (or a smaller scale, or a coarser --detail)"
+                       % (longest * mm_per_m / detail, printing.MAX_CELLS, detail, printing.MAX_CELLS * detail,
+                          printing.MAX_CELLS * detail))
     h = detail / mm_per_m
     r = max(1, int(math.ceil(wall / detail / 2.0 - 0.25)))
     grid = printing._Grid(lo, hi, h, r + 3)
@@ -261,6 +272,9 @@ def make(scene, scale=SCALE, size=None, detail=DETAIL_MM, wall=WALL_MM, plan=Non
                       or (any(w in pid.lower() for w in GLASS)
                           and not any(w in pid.lower() for w in export.NOT_GLASS_WORDS)))
                 and not _matches(pid, opaque) for pid in vox}   # the plan's `opaque` overrides a glassy name
+    for pid in vox:   # clear plastic is clear, whatever a colour map's catch-all gave it ("*": currant red)
+        if is_clear[pid] and paint[pid].get("finish") != "glass":
+            paint[pid] = {"name": "clear", "color": "#cfe3ea", "finish": "glass"}
 
     # trimmed in build order: an earlier, larger part keeps what two parts share, and clear parts yield to the
     # rest (a roof stays whole where it meets the glass)
@@ -271,10 +285,11 @@ def make(scene, scale=SCALE, size=None, detail=DETAIL_MM, wall=WALL_MM, plan=Non
         _or_into(taken, mine)
         comps = _components(mine)
         names = []
-        for comp in comps:   # a merge that falls apart: each bit named for the part it mostly is
-            mem = members_of[pid]
-            names.append(pid if len(mem) == 1 else max(mem, key=lambda m: sum(
-                bin(mm & own_vox[m].get(c, 0)).count("1") for c, mm in comp.items())))
+        for comp in comps:   # a merge that falls apart: each bit named for the part it mostly is; one that holds
+            mem = members_of[pid]   # together, for what its parts are together ("side-west-*": the side west)
+            inside = [m for m in mem if any(mm & own_vox[m].get(c, 0) for c, mm in comp.items())]
+            names.append(pid if len(mem) == 1 else _common(inside) if len(comps) == 1 and _common(inside) else
+                         max(mem, key=lambda m: sum(bin(mm & own_vox[m].get(c, 0)).count("1") for c, mm in comp.items())))
         for k, comp in enumerate(comps):
             same = names.count(names[k])
             nth = names[:k + 1].count(names[k])
@@ -1690,10 +1705,14 @@ ASSEMBLY_JS = r"""
     var spread = Math.max.apply(null, cs.map(function (c, i) {   // as far as its pieces reach, not only their middles
       return Math.hypot(c[0] - m[0], c[1] - m[1], c[2] - m[2]) + 0.7 * rs[i]; }));
     var fit = HOLO.fitted("hero"), now = H.userCamera || HOLO.camera() || fit;
-    var low = m[1] < H.C[1];   // under the model (legs, the chassis): look from a little below, as a sheet
+    var own = st.glue.map(function (g) { return K.pieces[g[0]].centre; }).filter(Boolean);   // the step's own pieces
+    var oy = own.length ? own.reduce(function (s, c) { return s + c[1]; }, 0) / own.length : m[1];
+    var low = oy < H.C[1] - 0.2 * H.R;   // clearly under the model (legs, the chassis): look from a little below
+    m = [m[0], m[1] + 0.22 * H.R, m[2]];   // aimed a little high, so the pieces sit below the instructions at the top
     focus = { target: m, yaw: now.yaw, pitch: low ? -14 : Math.max(18, now.pitch), fov: now.fov || 34,   // turns it over
               dist: fit.dist * (st.from ? Math.max(0.42, Math.min(1, (spread + 0.08 * H.R) * 1.7 / H.R))   // alone: closer
-                                        : Math.max(0.55, Math.min(1, (spread + 0.12 * H.R) * 2.4 / H.R))) };
+                                        : Math.max(0.55, Math.min(1.2, (spread + 0.12 * H.R) * 2.4 / H.R))) };   // the
+    // whole model a little further back than the hero view, so it clears the instructions at the top
     camFrom = { target: (now.target || fit.target).slice(), yaw: now.yaw, pitch: now.pitch, dist: now.dist, fov: now.fov || 34 };
     camFrom.pitch0 = now.pitch;
     camAt = performance.now();
