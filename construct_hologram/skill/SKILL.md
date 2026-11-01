@@ -1,6 +1,6 @@
 ---
 name: {{NAME}}
-description: Build a construct — an animated, audited holographic model — of a real or fictional object, building, machine, creature or product (CD, book, guitar, lamp, lighthouse, jellyfish...) from a request and its evidence. Produces an audited declarative scene, a self-contained animated WebGL page (staged construction, opening, idle life, reduced-motion still) and reviewed captures; on request, a film of the construct assembling across a track of music, or a 3D model of it (glTF or OBJ, with named parts and working joints) for Blender, game engines and the web, or a watertight 3D print (STL or 3MF); or a NetLogo model's recorded run drawn in time. Use when someone wants a construct or a hologram: a holographic model, wireframe light model or animated 3-D presentation of a thing, a quick parts-and-joints 3D model of one, or a NetLogo run visualised; not for photorealistic rendering, rigged characters, CAD, or retrieving cover art.
+description: Build a construct — an animated, audited holographic model — of a real or fictional object, building, machine, creature or product (CD, book, guitar, lamp, lighthouse, jellyfish...) from a request and its evidence. Produces an audited declarative scene, a self-contained animated WebGL page (staged construction, opening, idle life, reduced-motion still) and reviewed captures; on request, a film of the construct assembling across a track of music, or a 3D model of it (glTF or OBJ, with named parts and working joints) for Blender, game engines and the web, a watertight 3D print (STL, 3MF), a model kit to print and glue, or FreeCAD and STEP; or a NetLogo model's recorded run drawn in time. Use when someone wants a construct or a hologram: a holographic model, wireframe light model or animated 3-D presentation of a thing, a quick parts-and-joints 3D model of one, a print or a kit of one, or a NetLogo run visualised; not for photorealistic rendering, rigged characters, or retrieving cover art.
 ---
 
 # {{TITLE}}
@@ -227,6 +227,9 @@ OBJ of the construct. Author and review the construct first, as above; then:
   finishes: paint, brushed, chrome, wood, rubber, plastic, glass, light), when the user wants a
   finished model. Keep the map beside the scene as `<scene>.materials.json`: colours are the
   user's choice, never facts in the scene.
+- For physics: `--pieces glued` makes what stays put one body and each door, lid or tailgate one more on its
+  own hinge (`hosts/godot/construct_joints.gd` makes them Godot joints); `--pieces` alone, pieces that break
+  apart and settle; `--colliders`, a collision box per part.
 - A `no-surface` audit warning names a main or structural part drawn only as lines: it would be
   missing from the model, so give it a solid shape (a tube, a box) when the export matters.
 - Say what the model is: correctly sized named parts with working joints, built from simple
@@ -238,7 +241,9 @@ OBJ of the construct. Author and review the construct first, as above; then:
 Only when the user asks to 3D print it, or for an STL or 3MF. Author and review the construct
 first; then `python3 TOOLS print scene.json --out model.3mf` (or `.stl`) writes one watertight
 solid, Z up, on the bed, 100 mm on its longest side (`--size MM`, or `--scale 43` for 1:43 of the
-real size). Report what it prints: the size and scale, and its notes (overhangs that need supports,
+real size). `--printers` says how large it prints on five printer classes and what is lost at that size;
+`--printer desktop --fit` prints at the largest size that fits; `--exact` keeps the construct's own solids
+(finer detail than voxels). Refine the solid first (`check --fit`, references/review.md). Report what it prints: the size and scale, and its notes (overhangs that need supports,
 parts thickened to the wall, parts drawn only in lines and not printed: `--lines` prints them
 raised). Exit status 1 means it is not watertight: say so, never hand it over as printable. The user
 does not need a printer to check it: a slicer (PrusaSlicer, Bambu Studio, Cura) opens and slices it.
@@ -248,8 +253,31 @@ Details: `docs/PRINTING.md` in the Construct repository.
 
 Only when the user asks for FreeCAD, CAD or STEP, and FreeCAD is installed: `python3 TOOLS freecad
 scene.json --out model.FCStd --step model.step` builds named solids with the joints as groups (each
-with an `Open` placement). Say what it is: the construct's faceted shapes at their sizes, for layout
-and a start to model over, not machining-grade surfaces. Details: `docs/FREECAD.md`.
+with an `Open` placement), true CAD shapes where a part's parameters allow (boxes, cylinders, lathes,
+extrusions from splines, lofts as NURBS), faceted otherwise; it reports how many are true shapes. Say what
+it is: the construct's shapes at their sizes, for layout and a start to model over, not machining-grade
+engineering. Details: `docs/FREECAD.md`.
+
+## A model kit of a construct
+
+Only when the user asks for a model kit (pieces to print, glue and paint). Author, review and refine the
+solid first (`check --fit`: a kit cannot glue what does not touch). Then `python3 TOOLS kit scene.json
+--size 200 --printer desktop --materials map.json --out kit/` (`--size`: the built model's longest side in mm;
+`--scale 24` suits cars, not buildings) writes numbered plates (3MF), `booklet.html`, the steps in 3D
+(`assembly.html`), each piece on its own (`kit/pieces/`) and `kit.json`; `--only 12,14` reprints a few.
+Without `--materials` the paints are named by role; a map (as for export) gives real paint names. Exit
+status 1 means the kit is written but its check has notes (pieces too thin, gaps where a piece is glued,
+pieces that touch nothing): read them and fix the construct or a kit-ready copy.
+A construct is drawn to look right as light, not to be moulded, so make a kit-ready copy when it needs one
+(keep the construct as it is):
+- **Glazing:** a window of many panes becomes one clear sheet just behind its frame, touching it, about
+  1.5 mm thick at the kit's scale (a door's sheet in the door's articulation).
+- **Castings:** what a factory makes in one piece (a window frame's stiles, rails, mullions and bars)
+  goes into one piece with a kit plan: `--plan kit-plan.json` with `{"merge": [["side-west-*"]]}`.
+- **Seats:** every part sits on its host's face; nothing thinner than the printer makes.
+`kit --critic` prints a kit designer's brief for a critic, who answers with a plan. Say what the kit is: a
+first version made and checked by software, not yet built by a person; print one piece first. Details:
+`docs/PRINTING.md`.
 
 ## Rules that keep it honest and safe
 

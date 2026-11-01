@@ -121,16 +121,10 @@ section.part { margin: 8px 0 56px; }
 section.part .eyebrow, header.site .eyebrow { letter-spacing: .22em; font-size: 12px; color: var(--accent); text-transform: uppercase; }
 header.site h1 em { font-style: normal; color: var(--accent); }
 .part-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 18px; }
-.shelf-nav { display: flex; gap: 8px; flex: 0 0 auto; margin-bottom: 16px; }
-.shelf-nav button { width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--line); background: var(--panel);
-                    color: var(--ink); font-size: 18px; cursor: pointer; }
-.shelf-nav button:hover { border-color: var(--accent); box-shadow: 0 0 18px var(--glow); }
-.shelf { max-height: min(78vh, 760px); overflow-y: auto; scroll-snap-type: y proximity; padding: 4px 6px 8px 2px;
-         border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); scrollbar-width: thin;
-         -webkit-mask-image: linear-gradient(#000 92%, transparent); mask-image: linear-gradient(#000 92%, transparent); }
+/* the constructs in the page's own flow: no scroller inside the page, so the wheel always scrolls the page */
+.shelf { padding: 4px 0 8px; border-top: 1px solid var(--line); }
 .shelf .grid { padding-top: 14px; }
-@media (min-width: 1100px) { .shelf .grid { grid-template-columns: repeat(3, 1fr); } }   /* 21 constructs: 7 full rows */
-.shelf .card { scroll-snap-align: start; }
+@media (min-width: 1100px) { .shelf .grid { grid-template-columns: repeat(3, 1fr); } }
 .shelf-count { color: var(--dim); font-size: 13px; margin: 10px 0 0; }
 .part p.section kbd { border: 1px solid var(--line); border-radius: 4px; padding: 0 5px; font-size: 12px; color: var(--ink); }
 .feature { display: grid; grid-template-columns: 1fr; gap: 22px; align-items: center; background: var(--panel);
@@ -147,7 +141,7 @@ header.site h1 em { font-style: normal; color: var(--accent); }
 .feature .kind { letter-spacing: .18em; font-size: 11px; color: var(--accent); text-transform: uppercase; margin-bottom: 6px; }
 .feature h3 { margin: 0 0 10px; font-size: 22px; }
 h3.sub { margin: 6px 0 4px; font-size: 18px; }
-@media (max-width: 600px) { .part-head { align-items: flex-start; } .shelf { max-height: 72vh; } }
+@media (max-width: 600px) { .part-head { align-items: flex-start; } }
 """
 
 
@@ -197,12 +191,6 @@ def _beyond_buttons(b):
                    for i, (label, href) in enumerate(buttons))
 
 
-SHELF_JS = ("<script>(function(){var s=document.getElementById('shelf');if(!s)return;"
-            "document.querySelectorAll('[data-shelf]').forEach(function(b){b.addEventListener('click',function(){"
-            "var c=s.querySelector('.card');var h=c?c.getBoundingClientRect().height+18:300;"
-            "s.scrollBy({top:h*Number(b.getAttribute('data-shelf')),behavior:'smooth'});});});})();</script>")
-
-
 def index_page(examples, films=(), beyond=()):
     """The landing page, in four parts: the full pipeline (from a hologram to a finished 3D model), the
     constructs (a compact scroller), film mode, and models come alive (a live simulation, then recorded runs)."""
@@ -222,11 +210,9 @@ def index_page(examples, films=(), beyond=()):
     shelf = ("<section class=\"part\" id=\"constructs\"><div class=\"part-head\"><div><div class=\"eyebrow\">2 · Constructs"
              "</div><h2 class=\"section\">Anything you can describe</h2><p class=\"section\">Each made by an AI agent from "
              "a description, in fast or masterpiece mode. Open one to watch it build itself; drag to turn it, "
-             "<kbd>R</kbd> replays the assembly, <kbd>P</kbd> shows how each part is known.</p></div>"
-             "<div class=\"shelf-nav\" aria-hidden=\"true\"><button type=\"button\" data-shelf=\"-1\" title=\"Back\">"
-             "&#8593;</button><button type=\"button\" data-shelf=\"1\" title=\"More\">&#8595;</button></div></div>"
-             "<div class=\"shelf\" id=\"shelf\" tabindex=\"0\"><div class=\"grid\">\n%s\n</div></div>"
-             "<p class=\"shelf-count\">%d constructs · scroll, or use the arrows</p></section>"
+             "<kbd>R</kbd> replays the assembly, <kbd>P</kbd> shows how each part is known.</p></div></div>"
+             "<div class=\"shelf\" id=\"shelf\"><div class=\"grid\">\n%s\n</div></div>"
+             "<p class=\"shelf-count\">%d constructs</p></section>"
              % ("\n".join(cards), len(examples)))
     film_part = ("<section class=\"part films\" id=\"films\"><div class=\"eyebrow\">3 · Film mode</div>"
                  "<h2 class=\"section\">Constructs that assemble to music</h2><p class=\"section\">A construct can "
@@ -300,10 +286,10 @@ def index_page(examples, films=(), beyond=()):
             "<footer class=\"site\">Construct is Apache-2.0 licensed; its Blender add-on is GPL-3.0-or-later. Product and "
             "place names belong to their owners; each construct is an independent reconstruction from public "
             "references, not an official model. %s"
-            "<a href=\"%s\">Source and documentation</a>.</footer>%s"
+            "<a href=\"%s\">Source and documentation</a>.</footer>"
             % (REPO_URL, REPO_URL, pipeline, shelf, film_part, alive,
                "The pages under Models come alive keep their own licences, given on each. " if models else "",
-               REPO_URL, SHELF_JS))
+               REPO_URL))
     return _page("Construct · examples", body, 0, "Holographic constructs built by AI agents, the 3D models they "
                                                "export, and agent-based models drawn in time.")
 
@@ -316,7 +302,7 @@ def example_page(ex):
             "<a class=\"button\" href=\"%s/tree/main/examples/%s\">Source</a></nav></div>"
             "<div class=\"stage\"><iframe src=\"construct.html?ui=0&amp;rounds=0\" title=\"%s, live construct\" "
             "allowfullscreen></iframe></div>"
-            "<p class=\"hint\">Drag to orbit, scroll to zoom. Click the construct first, then <kbd>R</kbd> replays the "
+            "<p class=\"hint\">Drag to orbit; click the construct, then scroll to zoom and <kbd>R</kbd> replays the "
             "assembly, <kbd>L</kbd> shows labels, <kbd>P</kbd> shows how each part is known, <kbd>1</kbd>–<kbd>6</kbd> "
             "change the view and <kbd>space</kbd> pauses.</p></div>"
             % (html.escape(ex["title"]), html.escape(provenance(ex)), REPO_URL, ex["slug"], html.escape(ex["title"])))
@@ -362,7 +348,7 @@ def data_page(item):
             "<a class=\"button\" href=\"%s/tree/main/examples/%s\">Source and licence</a></nav></div>"
             "<div class=\"with-legend\"><div class=\"stage\"><iframe src=\"construct.html?ui=0&amp;%s\" title=\"%s, live "
             "construct\" allowfullscreen></iframe></div>%s</div>"
-            "<p class=\"hint\">%s Drag to orbit, scroll to zoom; <kbd>R</kbd> replays the assembly, which rises with the "
+            "<p class=\"hint\">%s Drag to orbit; click it, then scroll to zoom; <kbd>R</kbd> replays the assembly, which rises with the "
             "run's ticks%s.</p></div>"
             % (html.escape(item["title"]), html.escape(item["label"]), html.escape(item["credit"]),
                html.escape(" · art direction: %s" % art) if art else "", q, REPO_URL, item["slug"], q,
@@ -385,7 +371,7 @@ def film_page(film):
             "aria-label=\"%s, a film\"></video></div>"
             "<div class=\"pane live\"><div class=\"stage\"><iframe src=\"construct.html?ui=0&amp;rounds=0\" "
             "title=\"%s, live construct\" allowfullscreen></iframe></div>"
-            "<p class=\"hint\">Drag to orbit, scroll to zoom. Click the construct first, then <kbd>R</kbd> replays the "
+            "<p class=\"hint\">Drag to orbit; click the construct, then scroll to zoom and <kbd>R</kbd> replays the "
             "assembly, <kbd>L</kbd> shows labels and <kbd>P</kbd> shows how each part is known.</p></div>"
             "</div></div><p class=\"why\">%s</p></div></div>"
             "<script>(function () { var v = document.querySelector('video'), live = document.getElementById('live'),"

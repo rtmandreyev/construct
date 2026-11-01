@@ -1338,7 +1338,15 @@ void main() {
       drag = { x: e.clientX, y: e.clientY }; lastInput = performance.now(); kick();
     });
     canvas.addEventListener("pointerup", () => { drag = null; });
+    // set in a page (an iframe), the wheel scrolls the page until the construct is clicked, then zooms it until the
+    // pointer leaves: a page never stops scrolling under a construct it passes over
+    let embedded = false;
+    try { embedded = window.self !== window.top; } catch (err) { embedded = true; }
+    let engaged = !embedded;
+    canvas.addEventListener("pointerdown", () => { engaged = true; });
+    canvas.addEventListener("pointerleave", () => { if (embedded) engaged = false; });
     canvas.addEventListener("wheel", (e) => {
+      if (!engaged) return;
       e.preventDefault();
       if (!holo.userCamera) holo.userCamera = holo.cameraAt(now(), holo.cameraFor(opt.view));
       holo.userCamera.dist *= Math.exp(e.deltaY * 0.0012); lastInput = performance.now(); kick();
