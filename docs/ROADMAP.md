@@ -197,9 +197,13 @@ model alone.
   guesses in shades (designed, described, seen, seen and checked); printer classes, the largest print that
   fits, and exact prints of the construct's own solids. Later: a per-part likeness from the
   critic, to tell a well-observed window from a rough one in the same photograph.
-- Next: the Revell-style kits (v1.2), then freeze; the Models Library check, Linux and Windows CI, the
-  README's pictures, the release videos and the repository's organisation; then the release and the
-  Extensions Manager listing.
+- **Kits, 31 October (owner's decision):** kits ship in 1.1 as a first version, said plainly to be untested
+  by a person: shaded kit-sheet booklets, the 3D guide with the model ghosted at the bench, every piece on its
+  own to reprint, and checks for gaps and slivers. An independent kit critic judged the Leica M3 "mostly"
+  buildable and the CFX buildable but thin; the cars and the Sainte-Chapelle not yet. The Revell-level work
+  moves to 1.2 (below).
+- Then freeze (31 October): the Models Library check, Linux and Windows CI (on the push), the release
+  videos; then the release and the Extensions Manager listing.
 
 ## v1.2: makers
 
@@ -214,6 +218,15 @@ in 1.1 (`construct kit`); what is left:
   and revised. Tested on the Land Cruiser FJ62 and compared with a real Revell kit's published
   parts count, sprues and steps. Then locating pins and glue tabs where parts meet, an interior floor and
   the underside detail (springs, engine) a construct leaves out, so a kit reaches a real kit's count.
+- **Kit-ready constructs** (31 October 2026, after the 1.1 kits): what keeps a kit from Revell's level is
+  mostly the construct, which is drawn to look right as light, not engineered to be moulded and glued. A
+  kit-ready pass by an agent, judged by the kit's own checks and a kit critic: every part seated on its
+  host's face (no gaps, no edge-only joints), panes that match their openings, the hidden detail a kit has
+  (frames, springs, an engine), parts split where a builder can glue them and no thinner than a printer
+  makes. In the kit tool: locating pins and sockets where parts meet, mirrored copies always built the same
+  way, names for merged groups ("body shell", not "roof"). Taken all the way on two reference kits compared
+  with the real ones, part by part, sprue by sprue: the Leica M3 and one car. And one printed and built,
+  even one sub-assembly, before any claim of fit.
 - **Openings for glass** in a print, and finer prints for resin printers.
 
 - **3D printing:** a construct (or a run) to a printable, watertight model: STL and 3MF export, the
