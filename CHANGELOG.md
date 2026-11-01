@@ -214,7 +214,8 @@ side, printed as worksheets and cited. Plan:
 - **Timeboxed mode:** masterpiece in two hours in all. The same rounds and stop rules, but the
   2-hour ceiling counts the critic's time with the author's (masterpiece counts only the author's,
   as before), so a slow critic means fewer rounds rather than a three-hour wait. `--mode timeboxed`
-  or `mode: timeboxed`; the skill uses it only when asked.
+  or `mode: timeboxed`; the skill uses it only when asked. The published geometry schema knows it, and a test keeps the
+  schema's tiers equal to the compiler's.
 - **The gallery:** the Nissan Skyline GT-R R34 and the Volkswagen T1 Samba join it; its constructs are in the
   page's own flow (a scroller inside the page caught the wheel), and a construct set in a page takes the wheel
   only once it is clicked, so the page never stops scrolling under it.

@@ -194,7 +194,7 @@ TOOLS += [
                      "required": ["recording", "view"], "additionalProperties": False},
      "annotations": _READ_ONLY},
     {"name": "construct_limits",
-     "description": "The limits of a mode (fast, masterpiece, unbounded) or tier (wall clock, check and review "
+     "description": "The limits of a mode (fast, masterpiece, timeboxed, unbounded) or tier (wall clock, check and review "
                     "rounds, research counts) with any overrides applied, for the host to enforce: aim for genuinely "
                     "good, stop at the first limit. Overrides can raise a limit, never remove it. Also reads "
                     "'mode:'/'tier:'/'research:' from a request.",

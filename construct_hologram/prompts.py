@@ -70,7 +70,7 @@ You write data, never code.
 - The user overrides either way ("research: on" / "research: off"); "off" is recorded as
   `"off"`.
 
-## Effort: three modes, aim for genuinely good within the mode's limits
+## Effort: four modes, aim for genuinely good within the mode's limits
 
 - **fast** (the default for most requests): one pass with self-review, no rounds loop: the
   standard tier, or showcase for a richer subject. Generic subjects, simple objects, quick asks.

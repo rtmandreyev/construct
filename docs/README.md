@@ -43,7 +43,8 @@ open. Construct turns a scene into a construct.
 the facts you know, and Construct draws the rest.
 
 **Mode.** How much effort goes into a construct: **fast** (one careful pass), **masterpiece**
-(rounds judged by a critic) or **unbounded** (masterpiece without the round and time limits).
+(rounds judged by a critic), **timeboxed** (masterpiece in two hours in all, the critic's time
+included) or **unbounded** (masterpiece without the round and time limits).
 
 **Critic.** A second, independent model that never saw the authoring. In masterpiece mode it
 looks at each new version, compares it with the best one so far without knowing which is which,

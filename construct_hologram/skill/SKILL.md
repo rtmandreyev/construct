@@ -37,7 +37,7 @@ if no browser is available, say so and deliver the HTML without captures.
 
 ## The loop
 
-0. **Choose the mode, announce it, and decide on research.** Three modes
+0. **Choose the mode, announce it, and decide on research.** Four modes
    ([effort](references/effort.md)); the user can just say one:
    - **fast:** one pass with self-review, no rounds loop: ≤10 minutes and 2 reviews (≤30 and
      4 for a richer subject). Generic subjects, simple objects, quick asks. Cents with a

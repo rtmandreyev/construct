@@ -605,6 +605,23 @@ class GeometrySchema(unittest.TestCase):
                 self.assertEqual(schema_errors(json.loads(json.dumps(scene.reframe(g, frame))), root, root), [],
                                  "%s %s" % (path and path.name, frame))
 
+    def test_the_schema_knows_every_tier_the_compiler_takes(self):
+        # a construct made in a newer mode must not fail an app that checks it against the published schema
+        from . import tiers
+        root = json.loads((HERE / "geometry.schema.json").read_text())
+        def enums(node):   # every enum given for a property named "tier", wherever it is
+            if isinstance(node, dict):
+                if "enum" in node.get("properties", {}).get("tier", {}):
+                    yield node["properties"]["tier"]["enum"]
+                for v in node.values():
+                    yield from enums(v)
+            elif isinstance(node, list):
+                for v in node:
+                    yield from enums(v)
+        found = list(enums(root))
+        self.assertTrue(found)
+        self.assertTrue(all(e == list(tiers.TIERS) for e in found), found)
+
     def test_the_schema_catches_a_broken_file(self):
         root = json.loads((HERE / "geometry.schema.json").read_text())
         g = json.loads(json.dumps(scene.compile_scene(lid_scene())))
