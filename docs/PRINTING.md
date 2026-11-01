@@ -180,6 +180,12 @@ construct kit examples/toyota-land-cruiser-fj62/scene.json --out fj62-kit/ --mat
   gap under a millimetre: a pane in too big a frame) or touching it only at an edge, merges that came out in several pieces, pieces
   bigger than the bed, too many pieces. `kit.json` is the kit without its geometry, for a critic to read.
 
+**A kit-ready copy.** A construct is drawn to look right as light, not to be moulded, so a kit often wants a
+copy made for it (the construct stays as it is): a window of many panes as one clear sheet just behind its
+frame, touching it, about 1.5 mm thick at the kit's scale; what a factory casts in one piece (a window frame's
+stiles, rails, mullions and bars) merged with a plan (`{"merge": [["side-west-*"]]}`); every part seated on
+its host's face. [The K6 telephone box, end to end](WORKFLOW-K6.md) shows one, step by step.
+
 **A critic, as for a construct.** `construct kit --critic` prints a kit designer's brief: a critic (a fresh
 agent or model) reads `kit.json` and the booklet's pictures and answers with a plan, parts to merge into one
 piece, small parts to keep, clear parts, parts that are not clear though their names say glass (`opaque`: a

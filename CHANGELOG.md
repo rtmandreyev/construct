@@ -196,6 +196,14 @@ side, printed as worksheets and cited. Plan:
   times; a 3D guide with the instructions big at the top and lines to the pieces, the controls at the bottom,
   what is built barely dimmed; a booklet with a cover, the paints, plates drawn with each piece's real outline,
   and a card per step with pictures of the parts it needs.
+- **One construct, end to end:** [the K6 telephone box](docs/WORKFLOW-K6.md), built by DeepSeek V4.1 Flash and taken
+  through provenance, the solid, 3D, Godot, a film, CAD, a print and a kit; it joins the gallery with its kit-ready
+  copy and kit plan. What it found, fixed: a merged kit piece is named for what its parts are together ("the
+  door"); a clear piece stays clear whatever a colour map's catch-all says; the 3D guide frames the whole model
+  below its instructions; the construct skill teaches kits, kit-ready copies, true CAD shapes and glued pieces.
+- **The gallery:** the Nissan Skyline GT-R R34 and the Volkswagen T1 Samba join it; its constructs are in the
+  page's own flow (a scroller inside the page caught the wheel), and a construct set in a page takes the wheel
+  only once it is clicked, so the page never stops scrolling under it.
 - **Kits polished (from the owner's review):** booklet drawings as a kit sheet draws them: shaded pieces with
   their outlines and no hidden lines, a lens's elements fanned out along its axis, many of one kind lifted
   together with one callout, small pieces on a big model drawn close; at the bench the 3D guide ghosts the model

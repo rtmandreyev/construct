@@ -7,10 +7,14 @@ model with named parts and working joints, a print, a model kit, a CAD file or a
 
 <p align="center">
   <a href="https://rtmandreyev.github.io/construct/examples/sainte-chapelle/"><img src="docs/media/assembly-sainte-chapelle.gif" width="32%" alt="The Sainte-Chapelle construct assembling itself"></a>
-  <a href="https://rtmandreyev.github.io/construct/examples/toyota-land-cruiser-fj62/"><img src="docs/media/assembly-toyota-land-cruiser-fj62.gif" width="32%" alt="The Toyota Land Cruiser FJ62 construct assembling itself"></a>
   <a href="https://rtmandreyev.github.io/construct/examples/duomo-di-milano/"><img src="docs/media/assembly-duomo-di-milano.gif" width="32%" alt="The Duomo di Milano construct assembling itself"></a>
+  <a href="https://rtmandreyev.github.io/construct/examples/toyota-land-cruiser-fj62/"><img src="docs/media/assembly-toyota-land-cruiser-fj62.gif" width="32%" alt="The Toyota Land Cruiser FJ62 construct assembling itself"></a>
 </p>
-<p align="center"><sub><b>Constructs.</b> Sainte-Chapelle · Toyota Land Cruiser FJ62 · Duomo di Milano, each built by Claude Opus 5.5 in masterpiece mode. <a href="https://rtmandreyev.github.io/construct/">Open the gallery</a> to orbit them, replay the assembly and read the labels.</sub></p>
+<p align="center">
+  <a href="https://rtmandreyev.github.io/construct/examples/nissan-skyline-gt-r-r34/"><img src="docs/media/assembly-nissan-skyline-gt-r-r34.gif" width="32%" alt="The Nissan Skyline GT-R R34 construct assembling itself, its doors and bonnet opening"></a>
+  <a href="https://rtmandreyev.github.io/construct/examples/volkswagen-t1-samba/"><img src="docs/media/assembly-volkswagen-t1-samba.gif" width="32%" alt="The Volkswagen T1 Samba construct assembling itself"></a>
+</p>
+<p align="center"><sub><b>Constructs.</b> Sainte-Chapelle · Duomo di Milano · Toyota Land Cruiser FJ62 · Nissan Skyline GT-R R34 · Volkswagen T1 Samba, each built by Claude Opus 5.5 in masterpiece mode. <a href="https://rtmandreyev.github.io/construct/">Open the gallery</a> to orbit them, replay the assembly and read the labels.</sub></p>
 
 - **Any agent, any model.** Claude Code, Hermes, any MCP client or any OpenAI-compatible endpoint, or by hand.
 - **Honest about what is known.** Every part says how it is known, its size and its shape apart, every guess in a shade of how firmly it is held.
@@ -20,18 +24,79 @@ model with named parts and working joints, a print, a model kit, a CAD file or a
 
 ## New in 1.1
 
-- **Models come alive.** A NetLogo model's run becomes a construct with one command in NetLogo:
-  time as height, a replay bar and a *How to read it* panel. [For educators and researchers →](docs/for/educators-and-researchers.md)
-- **Size and shape, apart.** A part can be size-verified from a spec sheet and only traced in shape; every guess
-  is shaded by how firmly it is held. Press **P**. [For museums and archives →](docs/for/museums-and-archives.md)
-- **See it as a solid.** Press **S** in any construct to see it as a modelling program shows it; `check --fit`
-  names what pokes through. [For 3D artists →](docs/for/3d-artists.md)
-- **Things you can hold.** Exact prints with true walls, model kits glued as a kit designer would with a booklet on
-  paper and the same steps in 3D, true CAD shapes. [For makers →](docs/for/makers.md)
-- **Ready for game engines.** Pieces that hold together on their hinges, or break apart. [For game developers →](docs/for/game-developers.md)
+Every feature with pictures and the commands to try it: **[What's new in 1.1, a walkthrough](docs/NEW-IN-1.1.md)**.
+And one construct taken through all of it, step by step: **[The K6 telephone box, end to end](docs/WORKFLOW-K6.md)**.
 
-<p align="center"><img src="docs/media/solid-fj62.jpg" alt="The Toyota Land Cruiser FJ62 construct in lines of light on the left, and the same construct as a solid, pressed S, on the right"></p>
-<p align="center"><sub>One construct, two views: the FJ62 in light, and as a solid (<b>S</b>).</sub></p>
+- **Honest in finer shades.** A part's size and its shape known apart, every guess in a shade of how firmly it is
+  held. Press **P**.
+- **See it as a solid.** Press **S** in any construct; `check --fit` names what pokes through or floats.
+- **Cleaner 3D.** Smoother solids, OBJ that subdivides cleanly, triangle quality reports, for Blender and any
+  3D program.
+- **Ready for game engines.** Glued pieces with working hinges for Godot, pieces that break apart and settle,
+  colliders, seeded variants.
+- **CAD.** True CAD shapes in FreeCAD, with their joints, and STEP for any CAD program.
+- **Prints.** One checked print at the largest size your printer takes, voxel or exact, with engraved line art.
+- **Model kits.** A construct as a kit to print, glue and paint: numbered plates, a booklet drawn as a kit sheet,
+  the same steps in 3D, every piece printable on its own. A first version, not yet built by a person.
+- **Models come alive.** A NetLogo extension: one command in NetLogo turns a run into a construct, with a replay
+  bar, a legend and a *How to read it* panel, in views chosen for the data. Runs side by side for a lesson, a
+  printable worksheet, CSV and *Cite this run*; a run as a film or a 3D model in Blender, or as plates you can
+  stack. 388 of the Models Library's 445 models record with no edits.
+
+## Examples
+
+**Provenance and solids.** The Duomo di Milano in provenance shades (**P**): verified sizes in cyan, traced shapes in blue,
+every guess a deeper amber the more firmly it is held; and the FJ62 in light and as a solid (**S**). [Museums and archives →](docs/for/museums-and-archives.md)
+
+<p align="center">
+  <img src="docs/media/provenance-shades-duomo.jpg" width="49%" alt="The Duomo di Milano in the provenance view: verified sizes in cyan, traced parts in blue, inferred parts in shades of amber, with the legend counting each">
+  <img src="docs/media/solid-fj62.jpg" width="49%" alt="The FJ62 construct in lines of light and as a solid">
+</p>
+
+**Film mode.** A construct assembling across a piece of music. [Film and motion →](docs/for/film-and-motion.md)
+
+<p align="center">
+  <a href="https://rtmandreyev.github.io/construct/films/james-webb-space-telescope/"><img src="docs/media/film-james-webb-space-telescope.gif" width="32%" alt="The James Webb Space Telescope assembling across a piece of music"></a>
+  <a href="https://rtmandreyev.github.io/construct/films/voyager-1/"><img src="docs/media/film-voyager-1.gif" width="32%" alt="Voyager 1 assembling across a piece of music"></a>
+  <a href="https://rtmandreyev.github.io/construct/films/arecibo-observatory/"><img src="docs/media/film-arecibo-observatory.gif" width="32%" alt="The Arecibo Observatory assembling across a piece of music"></a>
+</p>
+
+**Game engines and Blender.** The FJ62 in Godot, knocked apart into its pieces; and from light to a finished model. [Game developers →](docs/for/game-developers.md) · [3D artists →](docs/for/3d-artists.md)
+
+<p align="center">
+  <img src="docs/media/godot-fj62-pieces.gif" width="49%" alt="The Toyota Land Cruiser FJ62 in Godot, falling apart into its pieces and settling">
+  <a href="https://rtmandreyev.github.io/construct/examples/light-to-metal/"><img src="docs/media/pipeline-fj62.gif" width="49%" alt="The FJ62 from lines of light to a plain model of named parts, then the finished model in paint, chrome and glass"></a>
+</p>
+
+**Prints and CAD.** An exact print of the FJ62 beside its voxel print; the Yamaha CFX and the Leica M3 in FreeCAD. [Makers →](docs/for/makers.md)
+
+<p align="center">
+  <img src="docs/media/print-exact-fj62.jpg" width="49%" alt="The FJ62 printed as voxels and as an exact print">
+  <img src="docs/media/freecad-piano-leica.jpg" width="49%" alt="The Yamaha CFX and the Leica M3 in FreeCAD as true CAD shapes">
+</p>
+
+**Model kits.** The Yamaha CFX as a 1:12 kit: the steps in 3D, and one step in the paper booklet. [Makers →](docs/for/makers.md)
+
+<p align="center">
+  <img src="docs/media/kit-cfx-guide.gif" width="49%" alt="The CFX kit's 3D guide stepping through its nine steps: the instructions at the top with lines to each numbered piece, the keyboard built at the bench with the piano ghosted around it">
+  <img src="docs/media/kit-cfx.jpg" width="49%" alt="Step 3 of the CFX kit in 3D and in the paper booklet, the keybed built at the bench">
+</p>
+
+**NetLogo runs.** A simulation's whole run as a construct, time as its height. [Educators and researchers →](docs/for/educators-and-researchers.md)
+
+<p align="center">
+  <a href="https://rtmandreyev.github.io/construct/examples/netlogo-flocking/"><img src="docs/media/netlogo-flocking.gif" width="32%" alt="Flocking: each bird's track rising with time, random near the floor and in parallel streams higher up"></a>
+  <a href="https://rtmandreyev.github.io/construct/examples/netlogo-wolf-sheep/"><img src="docs/media/netlogo-wolf-sheep.gif" width="32%" alt="Wolf Sheep Predation: the predator-prey cycle rising in time"></a>
+  <a href="https://rtmandreyev.github.io/construct/examples/netlogo-fire/"><img src="docs/media/netlogo-fire.gif" width="32%" alt="Fire: the fire's front rising as it crosses the forest"></a>
+</p>
+
+**Beyond objects.** The same visual language works for ideas and data. Here a classic NetLogo agent-based model, Uri
+Wilensky's *Simple Viral Marketing*, was rebuilt to run live in the browser and drawn as a construct: five hundred
+people, one product, word of mouth and a little advertising. The floor is the social network, and each person rises
+to the moment they adopted, so you can watch an idea spread and see who it reaches last, and why.
+
+<p align="center"><a href="https://rtmandreyev.github.io/construct/examples/netlogo-viral-marketing/"><img src="docs/media/netlogo-viral-marketing.gif" width="100%" alt="The Simple Viral Marketing model running: adoptions spread through the social network on the floor and rise as lines of light, the gold ring marking now, while the counters climb to 500 of 500"></a></p>
+<p align="center"><sub><a href="https://rtmandreyev.github.io/construct/examples/netlogo-viral-marketing/">Open the live model</a> to build new networks, run them tick by tick and compare a hundred runs with NetLogo's own. The model is © 2012 Uri Wilensky; this example is under CC BY-NC-SA 3.0 (see <a href="#license">License</a>).</sub></p>
 
 ## Find your path
 
@@ -167,6 +232,7 @@ Construct is deliberately small. You need:
 
 | If you want to… | read |
 | --- | --- |
+| see everything new in 1.1, with examples | [What's new in 1.1](docs/NEW-IN-1.1.md) |
 | see how a construct is made, step by step | [How a construct is made](docs/HOW-IT-IS-MADE.md) |
 | know what you are looking at, and the keys | [The Measured Light style](docs/STYLE.md) |
 | run it every way, from a first construct by hand to Claude Code and Hermes | [Using Construct](docs/USING.md) |
