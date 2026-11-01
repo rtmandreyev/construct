@@ -342,6 +342,7 @@ class Kit(unittest.TestCase):
         cols = [p["cols"] for p in k["pieces"]]
         self.assertTrue(all(not (a.get(c, 0) & m) for i, a in enumerate(cols) for b in cols[i + 1:] for c, m in b.items()))
         self.assertTrue(k["report"]["ok"], k["report"]["problems"])
+        self.assertEqual((kit.counted(1, "plate"), kit.counted(4, "piece")), ("1 plate", "4 pieces"))
         one = kit.make(sc, size=120, detail=0.5, plan={"merge": [["tray", "hing*"]], "clear": ["lid"], "title": "A case kit"})
         self.assertEqual([p["name"] for p in one["pieces"]][:1], ["tray"])        # the hinges moulded with the tray
         self.assertIn("booklet", [p["name"] for p in one["pieces"]])             # a clear lid yields: the booklet stays whole

@@ -207,7 +207,9 @@ side, printed as worksheets and cited. Plan:
   surface that would touch itself (half-ribs meeting at a vault's pointed apex) goes through the voxels and stays
   watertight; a thin part merged into a kit piece no longer moves that piece first in the build; a kit merge that
   came out in pieces counts the bits too small to keep; a kit says how far it has got (a building's kit takes many
-  minutes); the headless browser that draws pictures and films waits for its answer on a busy machine; a view is centred
+  minutes) and says "1 plate", not "1 plates"; FreeCAD stopping early (a crash on a busy machine) says how it
+  ended rather than its launcher's copy of the environment; the headless browser that draws pictures and films waits to start and to answer on a busy machine, and
+  says which it was; a view is centred
   on the object as it stands, pulled back so that an opened door still fits (it was centred on the door's swing).
 - **Timeboxed mode:** masterpiece in two hours in all. The same rounds and stop rules, but the
   2-hour ceiling counts the critic's time with the author's (masterpiece counts only the author's,

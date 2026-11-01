@@ -285,11 +285,15 @@ class Browser:
             args[-2:-2] = ["--enable-unsafe-swiftshader", "--use-angle=swiftshader"]
         self.proc = subprocess.Popen(args, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         port_file = Path(self.profile) / "DevToolsActivePort"
-        deadline = time.time() + 30
+        deadline = time.time() + 60   # a busy machine (a render beside it) can take half a minute to start one
         while not port_file.exists() or not port_file.read_text().strip():
-            if time.time() > deadline or self.proc.poll() is not None:
+            if self.proc.poll() is not None:
+                code = self.proc.returncode
                 self.close()
-                raise CaptureError("the browser did not start its DevTools endpoint")
+                raise CaptureError("the browser quit as it started (exit code %d)" % code)
+            if time.time() > deadline:
+                self.close()
+                raise CaptureError("the browser did not start its DevTools endpoint in 60 s")
             time.sleep(0.05)
         port = int(port_file.read_text().split()[0])
         page = None

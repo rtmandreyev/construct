@@ -1094,8 +1094,9 @@ def run(args):
                 sys.stderr.write("kit: %s\n" % exc)
                 return 1
             c = k["report"]["counts"]
-            sys.stdout.write("wrote %s: %d pieces on %d plates, %d steps, at %s (%s mm)\n" % (
-                args.out, c["pieces"], c["plates"], c["steps"], k["scale"], " x ".join("%g" % x for x in k["size_mm"])))
+            sys.stdout.write("wrote %s: %s on %s, %s, at %s (%s mm)\n" % (
+                args.out, kit_mod.counted(c["pieces"], "piece"), kit_mod.counted(c["plates"], "plate"),
+                kit_mod.counted(c["steps"], "step"), k["scale"], " x ".join("%g" % x for x in k["size_mm"])))
             for prob in k["report"]["problems"]:
                 sys.stdout.write("  %s\n" % prob["message"])
             return 0 if k["report"]["ok"] else 1

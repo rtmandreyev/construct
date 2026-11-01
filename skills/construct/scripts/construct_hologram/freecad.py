@@ -27,6 +27,7 @@ library only on this side; FreeCAD 1.0 or newer on the other.
 import glob
 import json
 import os
+import re
 import shutil
 import subprocess
 import tempfile
@@ -492,6 +493,21 @@ def _app(exe):
     return None
 
 
+# what FreeCAD's app says off screen whether or not anything is wrong
+_QT_NOISE = ("does not support grabbing", "does not support propagateSizeHints", "QOpenGLWidget is not supported",
+             "imageFromFramebuffer failed", "Running: ")
+
+
+def _stopped(r):
+    """Why FreeCAD stopped before writing the model: how it ended and the last lines it said, without its
+    launcher's copy of the environment or the Qt notices it always prints off screen."""
+    how = "it was killed (signal %d)" % -r.returncode if r.returncode < 0 else "exit code %d" % r.returncode
+    said = [s for s in (r.stdout + "\n" + r.stderr).splitlines() if s.strip()
+            and not re.match(r"[A-Za-z_][A-Za-z0-9_]*=", s) and not any(n in s for n in _QT_NOISE)]
+    hint = "" if said else "; it said nothing: if the machine was busy, try again"
+    return "FreeCAD stopped before writing the model (%s%s)" % (how, hint) + "".join("\n" + s for s in said[-8:])
+
+
 def make(scene, fcstd=None, step=None, freecad=None, timeout=900, exact=True):
     """Build the construct in FreeCAD and write the .FCStd and/or STEP. Returns a summary:
     {"parts", "joints", "invalid", "surfaces", "left_out", "files", "exact", "faceted"}: `exact` the parts made
@@ -524,8 +540,7 @@ def make(scene, fcstd=None, step=None, freecad=None, timeout=900, exact=True):
         except subprocess.TimeoutExpired:
             raise FreeCADError("FreeCAD did not finish in %d s" % timeout)
         if not (tmp / "result.json").is_file():
-            tail = "\n".join((r.stdout + r.stderr).strip().splitlines()[-8:])
-            raise FreeCADError("FreeCAD stopped before writing the model:\n" + tail)
+            raise FreeCADError(_stopped(r))
         out = json.loads((tmp / "result.json").read_text(encoding="utf-8"))
     if fcstd and app and out.get("box"):
         _frame(Path(fcstd), out["box"])

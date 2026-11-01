@@ -73,6 +73,22 @@ class Payload(unittest.TestCase):
         self.assertEqual(r.returncode, 1)
         self.assertIn("--out FILE.FCStd or FILE.step", r.stderr)
 
+    def test_a_crash_says_how_it_ended_not_the_environment(self):
+        # off screen, FreeCAD's launcher prints the environment and Qt its notices whether or not anything is wrong
+        noise = "HOME=/Users/someone\nSSH_AUTH_SOCK=/var/run/x\nRunning: /x/freecad\n"
+        qt = "This plugin does not support grabbing the keyboard\n" * 8
+        crashed = subprocess.CompletedProcess([], -11, noise, qt)
+        said = freecad._stopped(crashed)
+        self.assertIn("killed (signal 11)", said)
+        self.assertIn("try again", said)
+        self.assertNotIn("HOME=", said)
+        self.assertNotIn("grabbing", said)
+        failed = subprocess.CompletedProcess([], 1, noise, qt + "Traceback (most recent call last):\nValueError: bad\n")
+        said = freecad._stopped(failed)
+        self.assertIn("exit code 1", said)
+        self.assertTrue(said.endswith("Traceback (most recent call last):\nValueError: bad"))
+        self.assertNotIn("try again", said)
+
 
 CHECK = r'''
 import FreeCAD, Import, json, os

@@ -77,6 +77,11 @@ class KitError(ValueError):
 
 # ---------------------------------------------------------------------------- voxel sets (column bitsets)
 
+def counted(n, word):
+    """'1 plate', '2 plates'."""
+    return "%d %s%s" % (n, word, "" if n == 1 else "s")
+
+
 def _count(cols):
     return sum(bin(m).count("1") for m in cols.values())
 
@@ -1879,10 +1884,11 @@ def booklet(kit):
     paints = {}
     for p in kit["pieces"]:
         paints.setdefault((p["paint"]["name"], p["paint"]["color"]), []).append(p["number"])
-    rows = ['<header class=cover><div class=brand>Construct kit</div><h1>%s</h1><p class=sub>%s scale &middot; %d pieces on '
-            '%d plates &middot; %d steps &middot; %s &times; %s &times; %s mm built</p>'
+    rows = ['<header class=cover><div class=brand>Construct kit</div><h1>%s</h1><p class=sub>%s scale &middot; %s on '
+            '%s &middot; %s &middot; %s &times; %s &times; %s mm built</p>'
             '<img class=hero src="img/complete.svg" alt="The finished model">%s</header>' % (
-                e(kit["title"]), kit["scale"], len(kit["pieces"]), len(kit["plates"]), len(kit["steps"]), *kit["size_mm"],
+                e(kit["title"]), kit["scale"], counted(len(kit["pieces"]), "piece"), counted(len(kit["plates"]), "plate"),
+                counted(len(kit["steps"]), "step"), *kit["size_mm"],
                 '<p class=b3d><a href="assembly.html">Watch it built in 3D, step by step &rarr;</a> Turn it, replay any step.</p>'
                 if has3d else "")]
     rows.append("<section class=start><h2>Before you start</h2><div class=need><div><h3>You need</h3><ul><li>The plates, "
