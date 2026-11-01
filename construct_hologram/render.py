@@ -292,8 +292,18 @@ class Browser:
                 raise CaptureError("the browser did not start its DevTools endpoint")
             time.sleep(0.05)
         port = int(port_file.read_text().split()[0])
-        targets = json.loads(urllib.request.urlopen("http://127.0.0.1:%d/json/list" % port, timeout=10).read())
-        page = next(t for t in targets if t.get("type") == "page")
+        page = None
+        while page is None:   # a busy machine (a render beside it) can take a while to answer: wait, within the deadline
+            try:
+                targets = json.loads(urllib.request.urlopen("http://127.0.0.1:%d/json/list" % port, timeout=10).read())
+                page = next((t for t in targets if t.get("type") == "page"), None)
+            except (OSError, ValueError):
+                pass
+            if page is None:
+                if time.time() > deadline + 60 or self.proc.poll() is not None:
+                    self.close()
+                    raise CaptureError("the browser started but did not answer on its DevTools endpoint")
+                time.sleep(0.5)
         # software WebGL draws a large construct's contact sheet in minutes, not seconds: wait for it
         self.patience = 60 if gpu else 900
         self.ws = _WebSocket(page["webSocketDebuggerUrl"], timeout=self.patience)

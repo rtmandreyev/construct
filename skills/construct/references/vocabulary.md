@@ -45,7 +45,7 @@ errors: the closed vocabulary is the safety boundary.
 | `certainty` | `verified` (needs `source` or a verified basis fact) · `user_supplied` · `traced` (fitted to an orthographic reference cited as `source`) · `inferred` · `decorative`; or `{"size": .., "shape": ..}` when they differ (a body whose length is verified and whose outline is traced). A feature the user asked for whose size you chose: a `user_supplied` fact ("three blades") as `basis`, the part `inferred` |
 | `stage` | 0–7, assembly order (foundation first) |
 | `basis` | fact keys the part's dimensions come from |
-| `look` | `tone` (`accent, bright, hairline, structure, dust, identity, data, faint`), `line` (`auto, solid, dashed, dotted, none`), `fill` (`auto, none, glass, dark`), `glow` 0–1, `weight` 0.25–3, `alpha` 0.05–1 — use sparingly: role and certainty already set the look |
+| `look` | `tone` (`accent, bright, hairline, structure, dust, identity, data, faint`), `line` (`auto, solid, dashed, dotted, none`), `fill` (`auto, none, glass, dark`), `glow` 0–1, `weight` 0.25–3, `alpha` 0.05–1 — use sparingly: role and certainty already set the look. `fill: glass` is only how the light draws a part: real glass (a pane, a window, a crystal) also says glass, glazing or window in its id (`hood-door-glass`), which the solid view, exports, prints and kits go by |
 | `floating` | `true` for things that truly hover (a beam of light, a halo, a creature's bell, motes); everything else must rest on something |
 | `anchor` (box, sphere) | `center` (default) or `base` (sits on `at`) |
 | `artwork` | `{"slot": "cover-front", "asset": "cover", "face": "front", "mask": "rect"}` — see Artwork |

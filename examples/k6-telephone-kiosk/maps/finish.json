@@ -1,7 +1,0 @@
-{"about": "A finish for the K6 kiosk: currant red (BS 381C 539), clear glass, white illuminated signs, black fittings.",
- "materials": [
-  {"parts": ["glass-*"], "name": "glass", "color": "#cfe3ea", "finish": "glass"},
-  {"parts": ["sign-*"], "name": "sign white", "color": "#f4f1e6", "finish": "light"},
-  {"parts": ["*phone*", "*handset*", "*keypad*", "*coin*", "*cord*"], "name": "black", "color": "#1c1b1d", "finish": "plastic"},
-  {"parts": ["foundation", "floor*"], "name": "concrete", "color": "#8a8780", "finish": "paint", "roughness": 0.9},
-  {"parts": ["*"], "name": "currant red", "color": "#a6192e", "finish": "paint"}]}

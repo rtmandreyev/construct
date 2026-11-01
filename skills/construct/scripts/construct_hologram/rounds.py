@@ -520,6 +520,9 @@ def record(folder, answer, scene_path=None, model=None, now=None):
         stop = "%d rounds in a row did not beat round %d" % (NO_GAIN, st["best_round"])
     elif st.get("max_rounds") and n >= st["max_rounds"]:
         stop = "the %d-round cap (best: round %d)" % (st["max_rounds"], st["best_round"])
+    elif st.get("limit_seconds") and st["tier"] in tiers.IN_ALL and \
+            st["active_seconds"] + st.get("critic_seconds", 0.0) >= st["limit_seconds"]:
+        stop = "the %d-minute ceiling on working time, the critic's included" % (st["limit_seconds"] // 60)
     elif st.get("limit_seconds") and st["active_seconds"] >= st["limit_seconds"]:
         stop = "the %d-minute ceiling on active time" % (st["limit_seconds"] // 60)
     st.update({"round": n + 1, "changes": [], "round_started_active": st["active_seconds"]})
@@ -601,11 +604,16 @@ def status(folder, now=None):
            "checkpointed": "the round is checked in: `rounds packet` again to write its critic packet",
            "packet": "give the packet to ONE fresh critic (or run it as a direct call), then `rounds record answer.json`",
            "recorded": "the next round: edit, tag, `rounds packet`"}
+    lim, critic_s = st.get("limit_seconds"), st.get("critic_seconds", 0.0)
+    if not lim:
+        ceiling = " (no time ceiling)"
+    elif st["tier"] in tiers.IN_ALL:  # timeboxed: the critic's time counts too
+        ceiling = "; %.1f of %d minutes in all" % ((st["active_seconds"] + critic_s) / 60, lim // 60)
+    else:
+        ceiling = " of %d active" % (lim // 60)
     lines = ["Run: %s, tier %s, %s%s." % (st["scene"], st["tier"], st["status"], " (%s)" % st["stop"] if st.get("stop") else ""),
-             "Round %d, step %s; best round %s; %.1f active minutes%s; critic %.1f minutes." % (
-                 st["round"], st["step"], st["best_round"], st["active_seconds"] / 60,
-                 " of %d" % (st["limit_seconds"] // 60) if st.get("limit_seconds") else " (no time ceiling)",
-                 st.get("critic_seconds", 0.0) / 60),
+             "Round %d, step %s; best round %s; %.1f active minutes, critic %.1f minutes%s." % (
+                 st["round"], st["step"], st["best_round"], st["active_seconds"] / 60, critic_s / 60, ceiling),
              "Ledger: %s." % ", ".join("%d %s" % (sum(1 for i in led["items"] if i["status"] == s), s) for s in STATUSES)]
     if st["status"] == "running":
         lines.append("Next: " + nxt.get(st["step"], "continue"))

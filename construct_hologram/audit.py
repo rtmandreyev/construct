@@ -9,7 +9,7 @@ reports a part as floating when it really touches something.
 
 import math
 
-from . import scene as scene_mod
+from . import export as export_mod, scene as scene_mod
 
 
 def _touch(a, b, tol):
@@ -179,6 +179,15 @@ def audit(scene, geometry):
         if diag < 0.015 * 2 * radius and p["shape"] not in ("marker", "points"):
             add(warnings, "tiny", p["id"],
                 "is %.1f%% of the object's size: it may vanish at the hero framing." % (100.0 * diag / (2 * radius)))
+        # glass named in the label but not in the id: everything past the light (the solid view, exports, prints,
+        # kits) knows glass by its id, so it would come out as an opaque panel hiding what is behind it
+        sp = scene_parts.get(p["id"], {})
+        label = str(sp.get("label", "")).lower().replace("glazed", "glazing")
+        if (sp.get("look") or {}).get("fill") == "glass" and not export_mod.is_glass_name(p["id"]) and \
+                any(w in label for w in export_mod.GLASS_WORDS) and not any(w in label for w in export_mod.NOT_GLASS_WORDS):
+            add(warnings, "glass-name", p["id"],
+                "is glass by its label, but its id does not say so: the solid view, exports, prints and kits know glass by "
+                "its id and make it an opaque panel. Put glass, glazing or window in it (\"hood-door-glass\").")
         carriers = {x["part"] for x in geometry.get("labels", []) + geometry.get("artwork", [])}
         carriers |= {a["part"] for a in geometry.get("anchors", {}).values() if isinstance(a, dict) and a.get("part")}
         if p["id"] not in carriers and not any(int(styles[s][6]) == parts.index(p) for s in range(len(styles))):

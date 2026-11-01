@@ -12,9 +12,10 @@ model with named parts and working joints, a print, a model kit, a CAD file or a
 </p>
 <p align="center">
   <a href="https://rtmandreyev.github.io/construct/examples/nissan-skyline-gt-r-r34/"><img src="docs/media/assembly-nissan-skyline-gt-r-r34.gif" width="32%" alt="The Nissan Skyline GT-R R34 construct assembling itself, its doors and bonnet opening"></a>
+  <a href="https://rtmandreyev.github.io/construct/examples/tompion-year-going-clock/"><img src="docs/media/assembly-tompion-year-going-clock.gif" width="32%" alt="Tompion's year-going longcase clock construct assembling itself, its hood and trunk doors opening"></a>
   <a href="https://rtmandreyev.github.io/construct/examples/volkswagen-t1-samba/"><img src="docs/media/assembly-volkswagen-t1-samba.gif" width="32%" alt="The Volkswagen T1 Samba construct assembling itself"></a>
 </p>
-<p align="center"><sub><b>Constructs.</b> Sainte-Chapelle · Duomo di Milano · Toyota Land Cruiser FJ62 · Nissan Skyline GT-R R34 · Volkswagen T1 Samba, each built by Claude Opus 5.5 in masterpiece mode. <a href="https://rtmandreyev.github.io/construct/">Open the gallery</a> to orbit them, replay the assembly and read the labels.</sub></p>
+<p align="center"><sub><b>Constructs.</b> Sainte-Chapelle · Duomo di Milano · Toyota Land Cruiser FJ62 · Nissan Skyline GT-R R34 · Tompion's year-going clock · Volkswagen T1 Samba, each built in masterpiece mode, by Claude Opus 5.5 and the clock by DeepSeek V4.1 Flash. <a href="https://rtmandreyev.github.io/construct/">Open the gallery</a> to orbit them, replay the assembly and read the labels.</sub></p>
 
 - **Any agent, any model.** Claude Code, Hermes, any MCP client or any OpenAI-compatible endpoint, or by hand.
 - **Honest about what is known.** Every part says how it is known, its size and its shape apart, every guess in a shade of how firmly it is held.
@@ -25,7 +26,7 @@ model with named parts and working joints, a print, a model kit, a CAD file or a
 ## New in 1.1
 
 Every feature with pictures and the commands to try it: **[What's new in 1.1, a walkthrough](docs/NEW-IN-1.1.md)**.
-And one construct taken through all of it, step by step: **[The K6 telephone box, end to end](docs/WORKFLOW-K6.md)**.
+And one construct taken through all of it, step by step: **[A longcase clock, end to end](docs/END-TO-END.md)**.
 
 - **Honest in finer shades.** A part's size and its shape known apart, every guess in a shade of how firmly it is
   held. Press **P**.
@@ -198,9 +199,12 @@ the skill picks one and tells you why before it starts.
 | --- | --- | --- | --- | --- |
 | **fast** | One pass with self-review | About 10 minutes (30 for a richer subject) | Cents with DeepSeek V4.1 Flash | Generic subjects, simple objects, quick requests |
 | **masterpiece** | Rounds judged by an independent critic, each version compared with the best so far | Two rounds without a win, 12 rounds, or 2 hours of active work | Up to 2 hours of frontier-model tokens | A named car, landmark or building whose likeness matters |
+| **timeboxed** | Masterpiece in 2 hours in all: the critic's time counts too | Two rounds without a win, 12 rounds, or 2 hours in all | Up to 2 hours, fewer rounds when the critic is slow | When you want masterpiece done within two hours |
 | **unbounded** | The same rounds, with no cap and no time limit | Only after two rounds without a win | Many rounds and hours, a high token cost | Only when you ask for it by name |
 
-The skill never picks unbounded on its own: the critic finds an improvement almost every round,
+Masterpiece's two hours count only the agent's own work; the critic's turns come on top, so a
+run with a slow critic can take three hours or more. **timeboxed** stops at two hours in all. The
+skill never picks timeboxed or unbounded on its own: the critic finds an improvement almost every round,
 so it can run for hours. Every round is reported, so you can stop it whenever you like.
 
 ## Models

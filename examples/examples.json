@@ -15,16 +15,16 @@
    "model": "Claude Opus 5.5"
   },
   {
+   "slug": "tompion-year-going-clock",
+   "title": "Tompion year-going longcase clock",
+   "mode": "masterpiece",
+   "model": "DeepSeek V4.1 Flash"
+  },
+  {
    "slug": "volkswagen-t1-samba",
    "title": "Volkswagen T1 Samba",
    "mode": "masterpiece",
    "model": "Claude Opus 5.5"
-  },
-  {
-   "slug": "k6-telephone-kiosk",
-   "title": "K6 telephone kiosk",
-   "mode": "fast",
-   "model": "DeepSeek V4.1 Flash"
   },
   {
    "slug": "revox-a77",

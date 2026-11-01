@@ -106,6 +106,7 @@ At the first of:
   minutes; a silence of over 45 minutes between writes (a usage limit) is an interruption; and
   `rounds pause` marks one explicitly. The critic's time, from `packet` to `record`, is measured
   the same way, the packet's folder included, and logged separately;
+- **timeboxed only:** the same 2 hours, counting the author's and the critic's time together;
 - the user says so.
 
 **Unbounded** keeps only the first two: no round cap and no time ceiling. The critic finds a
@@ -121,3 +122,8 @@ timeline, and `review` writes it as `rounds.png`.
 
 Before stepping away, `python3 TOOLS rounds pause`. After any interruption, `python3 TOOLS rounds
 status` says where the run is and what the next step is. Redo only the step it names, never a finished round.
+
+Only the loop's own stop rules end a run: the critic's all-3, two rounds in a row that do not beat the best,
+the round cap, the active-time ceiling, or the user. When your session ends first (a one-shot run's budget,
+a usage limit), `rounds pause` and say the run can be resumed; do not record the outcome as `limit`, which
+means a stop rule ended it. `rounds status` still says `running` until one has.

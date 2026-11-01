@@ -27,7 +27,7 @@ Research, when it applies, comes **before** any part is written:
 Record it in the scene: `"authoring": {"tier": "standard", "research": "done", "sources":
 ["maker-specs", "ref-front"]}`, every id also in the scene's `sources`.
 
-## Modes: fast, masterpiece, unbounded
+## Modes: fast, masterpiece, timeboxed, unbounded
 
 The user picks a mode by saying its name, or says nothing and you pick one (below).
 
@@ -35,6 +35,7 @@ The user picks a mode by saying its name, or says nothing and you pick one (belo
 |---|---|---|---|---|
 | **fast** | one pass with self-review, no rounds loop (the standard tier; showcase for a richer subject) | the tier's limits: 10 min and 2 reviews, or 30 min and 4 | 10 minutes (30 for a richer subject); cents with a DeepSeek-class model (tested: DeepSeek V4.1 Flash) | generic subjects ("a watch", "a car"), simple mechanical objects, quick asks; DeepSeek-class models do these well |
 | **masterpiece** | the rounds loop: a defect ledger and one independent critic a round, each version judged pairwise against the best so far ([rounds](rounds.md)) | 2 rounds in a row without a pairwise win, every criterion 3, **12 rounds**, or **2 hours of active work** | up to 12 rounds and 2 hours of active work, plus the critic's time; the most tokens of a normal run, so use a frontier model (tested: GPT-6.1 Sol, Claude Opus 5.5) | a specific named subject whose likeness matters: a car model, a landmark, a named building |
+| **timeboxed** | masterpiece in 2 hours in all: the same loop and stop rules, the critic's time counted with yours | the same as masterpiece, with **2 hours of working time, the critic's included** | up to 12 rounds and 2 hours in all, the critic's time included; fewer rounds than masterpiece when the critic is slow, so use a frontier model (tested: GPT-6.1 Sol, Claude Opus 5.5) | a user who wants masterpiece done within two hours; only when asked |
 | **unbounded** | the same loop with **only** its stop rules: no round cap, no time ceiling | 2 rounds in a row without a pairwise win (or every criterion 3), or the user | no cap: many rounds and hours, at a high token cost; stop it at any round | only when the user asks for it by name |
 
 **Unbounded, plainly:** the critic finds a win almost every round, so an unbounded run can go
@@ -57,7 +58,7 @@ why, the rough time and cost, and how to switch. For example:
 - **fast:** a generic subject, a simple mechanical object, a quick request.
 - **masterpiece:** a specific named subject whose likeness matters (a car model, a landmark, a
   named building).
-- **unbounded:** never chosen automatically.
+- **timeboxed** and **unbounded:** never chosen automatically.
 
 **Say which model fits.** If you are a smaller or cheaper model and the subject is a hard named
 one, say so in the announcement and recommend GPT-6.1 Sol or Claude Opus 5.5 (or a model of that class) for masterpiece (the
@@ -72,6 +73,7 @@ offer fast mode as the alternative on the current model.
 | fast | standard | fast mode: one entry, a generic subject or a simple object | 10 min | 2 | 6 | ≤5 searches, ≤3 sources read, ≤3 reference images |
 | fast | showcase | fast mode for a richer subject: more references, more review rounds | 30 min | 4 | 10 | ≤10 searches, ≤6 sources read, ≤6 reference images |
 | masterpiece | masterpiece | a named subject whose likeness matters: rounds judged pairwise against the best, until two rounds without a win, every criterion 3, 12 rounds or the 2-hour ceiling | 120 min active | 12 (default cap) | 8 per round | ≤20 searches, ≤12 sources read, ≤12 reference images |
+| timeboxed | timeboxed | only on request: masterpiece in 2 hours in all, the critic's time counted with the author's | 120 min in all | 12 (default cap) | 8 per round | ≤20 searches, ≤12 sources read, ≤12 reference images |
 | unbounded | unbounded | only on explicit request: the same rounds with only the stop rules (two rounds without a win, or every criterion 3); no round cap, no time ceiling; many rounds and hours at a high token cost | none | until the stop rules | 8 per round | ≤20 searches, ≤12 sources read, ≤12 reference images |
 
 Effort goes where it is visible: silhouette, then proportions, then the two or three identity
@@ -97,7 +99,8 @@ roughly placed) rather than from a perfect plan; size and detail come in the rou
 For a subject that must be recognisable exactly (a named car, a landmark building).
 Masterpiece runs judged rounds ([rounds](rounds.md)) and stops at the first of: two rounds in a
 row that do not beat the best, every criterion at 3, 12 rounds, 2 hours of active time (an
-interruption does not count), or the user. Unbounded drops the round cap and the time ceiling.
+interruption does not count), or the user. Timeboxed counts the critic's time in the 2 hours too (the two are
+logged apart and added). Unbounded drops the round cap and the time ceiling.
 Every round:
 
 1. Work on at most 4 ledger items, regressions first, and tag each edit with its ledger id.

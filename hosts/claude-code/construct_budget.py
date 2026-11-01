@@ -30,7 +30,7 @@ from pathlib import Path
 # the tiers' wall clock (seconds) and review rounds; kept equal to construct_hologram/tiers.py
 # (the rounds modes count rounds in `construct rounds`, not review commands: no review cap here)
 TIERS = {"quick": (120, 0), "standard": (600, 2), "showcase": (1800, 4), "masterpiece": (7200, None),
-         "unbounded": (None, None)}
+         "timeboxed": (7200, None), "unbounded": (None, None)}
 ALIASES = {"fast": "standard"}
 WRAP_UP = 0.8
 REVIEW = re.compile(r"(\bconstruct|cli\.py)\s+review\b")

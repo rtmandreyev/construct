@@ -838,19 +838,23 @@ void main() {
     for (const b of p.instances) for (let k = 0; k < 3; k++) { lo[k] = Math.min(lo[k], b.min[k]); hi[k] = Math.max(hi[k], b.max[k]); }
     return { c: [(lo[0] + hi[0]) / 2, (lo[1] + hi[1]) / 2, (lo[2] + hi[2]) / 2], r: 0.5 * Math.hypot(hi[0] - lo[0], hi[1] - lo[1], hi[2] - lo[2]) };
   };
-  Hologram.prototype.framingBoxes = function (partId) {
-    // what a view must contain: every part's boxes, except decorative clouds of points
+  Hologram.prototype.framingBoxes = function (partId, closed) {
+    // what a view must contain: every part's boxes, open too, except decorative clouds of points; `closed`:
+    // the boxes as it stands, which the view is centred on (an opened door still fits, but does not pull it aside)
     if (!this._boxes) {
-      this._boxes = {};
-      const all = [];
+      this._boxes = {}; this._shut = {};
+      const all = [], shut = [];
       for (const p of this.geo.parts) {
-        const boxes = p.instances.map((b) => [b.min, b.max]).concat(p.instances.filter((b) => b.open_min).map((b) => [b.open_min, b.open_max]));
-        this._boxes[p.id] = boxes;
-        if (!(p.shape === "points" && (p.role === "ornament" || p.certainty === "decorative"))) all.push(...boxes);
+        const own = p.instances.map((b) => [b.min, b.max]);
+        const boxes = own.concat(p.instances.filter((b) => b.open_min).map((b) => [b.open_min, b.open_max]));
+        this._boxes[p.id] = boxes; this._shut[p.id] = own;
+        if (!(p.shape === "points" && (p.role === "ornament" || p.certainty === "decorative"))) { all.push(...boxes); shut.push(...own); }
       }
       this._boxes["*"] = all.length ? all : [[this.geo.bounds.min, this.geo.bounds.max]];
+      this._shut["*"] = shut.length ? shut : this._boxes["*"];
     }
-    return this._boxes[partId || "*"] || this._boxes["*"];
+    const from = closed ? this._shut : this._boxes;
+    return from[partId || "*"] || from["*"];
   };
   Hologram.prototype.cameraFor = function (id) {
     // fit the silhouette as seen from this direction: project every box corner onto the camera's
@@ -859,7 +863,7 @@ void main() {
     const tid = v.target || (id === "hero" ? fr.target : null);
     const boxes = this.framingBoxes(tid);
     const lo = [Infinity, Infinity, Infinity], hi = [-Infinity, -Infinity, -Infinity];
-    for (const [a, b] of boxes) for (let k = 0; k < 3; k++) { lo[k] = Math.min(lo[k], a[k]); hi[k] = Math.max(hi[k], b[k]); }
+    for (const [a, b] of this.framingBoxes(tid, true)) for (let k = 0; k < 3; k++) { lo[k] = Math.min(lo[k], a[k]); hi[k] = Math.max(hi[k], b[k]); }
     const target = [(lo[0] + hi[0]) / 2, (lo[1] + hi[1]) / 2, (lo[2] + hi[2]) / 2];
     const y = v.yaw * Math.PI / 180, p = v.pitch * Math.PI / 180;
     const back = [Math.sin(y) * Math.cos(p), Math.sin(p), Math.cos(y) * Math.cos(p)];

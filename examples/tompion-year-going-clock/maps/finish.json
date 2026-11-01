@@ -1,0 +1,86 @@
+{
+ "materials": [
+  {
+   "parts": [
+    "hood-door-glass",
+    "lenticle-glass",
+    "*-glazing*"
+   ],
+   "name": "glass",
+   "color": "#dfe9ec",
+   "finish": "glass",
+   "roughness": 0.0
+  },
+  {
+   "parts": [
+    "hand-*"
+   ],
+   "name": "blued steel",
+   "color": "#1d2a4a",
+   "finish": "chrome",
+   "roughness": 0.25
+  },
+  {
+   "parts": [
+    "chapter-ring",
+    "dial-hours",
+    "dial-half-hours",
+    "dial-minute-ticks",
+    "dial-minutes",
+    "dial-band-*",
+    "dial-eq-*"
+   ],
+   "name": "silvered brass",
+   "color": "#d7d8d4",
+   "finish": "brushed"
+  },
+  {
+   "parts": [
+    "spandrel-*",
+    "caddy-*",
+    "finial-*",
+    "dial-*",
+    "trunk-door-escutcheon",
+    "trunk-door-mount-*",
+    "trunk-door-brackets",
+    "trunk-hinge-*",
+    "hood-door-frame-*",
+    "hood-door-bar-*",
+    "hood-door-glazing-bead",
+    "plinth-brackets",
+    "hood-arch-fret-*",
+    "hood-side-fret-*",
+    "pediment-return-*",
+    "lenticle-bead",
+    "trunk-door-lenticle-*",
+    "pendulum-bob*",
+    "movement-*",
+    "going-*",
+    "anchor",
+    "crutch",
+    "maintaining-power",
+    "motion-wheel-*",
+    "weight-*",
+    "seatboard-*"
+   ],
+   "name": "gilt brass",
+   "color": "#c9a24b",
+   "finish": "brushed"
+  },
+  {
+   "parts": [
+    "pendulum-*",
+    "weight-line"
+   ],
+   "name": "steel",
+   "color": "#8a8f96",
+   "finish": "brushed"
+  },
+  {
+   "parts": "*",
+   "name": "burr walnut",
+   "color": "#3a2314",
+   "finish": "wood"
+  }
+ ]
+}

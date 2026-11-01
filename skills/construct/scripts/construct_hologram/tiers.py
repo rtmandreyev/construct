@@ -1,13 +1,16 @@
 """Modes, effort tiers and the research policy: how long an author may work, and when it looks
 things up.
 
-A user chooses one of three modes, or says nothing and the skill chooses (never unbounded):
+A user chooses one of four modes, or says nothing and the skill chooses (never timeboxed or unbounded):
 
 - fast: one pass with self-review, no rounds loop: the standard tier (10 min) for most things,
   the showcase tier (30 min) for a richer subject. Quick, standard and showcase are its tiers.
 - masterpiece: the rounds loop (`construct rounds`), judged pairwise against the best, stopping
   after 2 rounds in a row without a win, at every criterion 3, at a default cap of 12 rounds or
   at a 2-hour ceiling on active time.
+- timeboxed: masterpiece in 2 hours in all: the same loop and stop rules, but the 2-hour ceiling
+  counts the critic's time with the author's. Only on request, for a user who wants the result
+  within the afternoon rather than the best the loop can reach.
 - unbounded: the same loop with only the stop rules (2 rounds without a win, or every criterion
   3): no round cap and no time ceiling. Only on explicit request: the critic finds a win almost
   every round, so it can run for many rounds and hours at a high token cost; the per-round
@@ -34,16 +37,20 @@ TIERS = {
     # ends it; check rounds per round
     "masterpiece": {"wall_clock_s": 7200, "review_rounds": 12, "check_rounds": 8, "searches": 20, "sources": 12,
                     "images": 12},
+    # masterpiece in 2 hours in all: the ceiling counts the critic's time too (request only)
+    "timeboxed": {"wall_clock_s": 7200, "review_rounds": 12, "check_rounds": 8, "searches": 20, "sources": 12,
+                  "images": 12},
     # the same loop with only its stop rules: no round cap, no time ceiling (explicit request only)
     "unbounded": {"wall_clock_s": None, "review_rounds": None, "check_rounds": 8, "searches": 20, "sources": 12,
                   "images": 12},
 }
-ROUNDS = ("masterpiece", "unbounded")  # the tiers that run the rounds loop
+ROUNDS = ("masterpiece", "timeboxed", "unbounded")  # the tiers that run the rounds loop
+IN_ALL = ("timeboxed",)  # the rounds tiers whose time ceiling counts the critic's time with the author's
 UNCAPPED = "unbounded"
-# the three modes a user chooses from; the old tier names stay as aliases
-MODES = ("fast", "masterpiece", "unbounded")
+# the four modes a user chooses from; the old tier names stay as aliases
+MODES = ("fast", "masterpiece", "timeboxed", "unbounded")
 MODE_OF = {"quick": "fast", "standard": "fast", "showcase": "fast", "fast": "fast", "masterpiece": "masterpiece",
-           "unbounded": "unbounded"}
+           "timeboxed": "timeboxed", "unbounded": "unbounded"}
 FAST_TIER = "standard"  # "fast" on its own: the standard tier (showcase for a richer subject)
 CRITERIA = ("silhouette", "proportions", "identity", "depth", "composition", "assembly", "motion", "density", "honesty")
 DEFAULT = "standard"
@@ -57,12 +64,15 @@ USE = {"quick": "fast mode: bulk imports and simple archetypes (the parameter pa
        "showcase": "fast mode for a richer subject: more references, more review rounds",
        "masterpiece": "a named subject whose likeness matters: rounds judged pairwise against the best, until two "
                       "rounds without a win, every criterion 3, 12 rounds or the 2-hour ceiling",
+       "timeboxed": "only on request: masterpiece in 2 hours in all, the critic's time counted with the author's",
        "unbounded": "only on explicit request: the same rounds with only the stop rules (two rounds without a win, "
                     "or every criterion 3); no round cap, no time ceiling; many rounds and hours at a high token cost"}
 # what each mode costs, for the announcement and the docs (from the evaluation runs)
 COST = {"fast": "10 minutes (30 for a richer subject); cents with a DeepSeek-class model (tested: DeepSeek V4.1 Flash)",
         "masterpiece": "up to 12 rounds and 2 hours of active work, plus the critic's time; the most tokens of a "
                        "normal run, so use a frontier model (tested: GPT-6.1 Sol, Claude Opus 5.5)",
+        "timeboxed": "up to 12 rounds and 2 hours in all, the critic's time included; fewer rounds than masterpiece "
+                     "when the critic is slow, so use a frontier model (tested: GPT-6.1 Sol, Claude Opus 5.5)",
         "unbounded": "no cap: many rounds and hours, at a high token cost; stop it at any round"}
 # overrides may raise a limit, never remove it
 CEILING = {"wall_clock_s": 7200, "review_rounds": 12, "check_rounds": 30, "searches": 40, "sources": 20, "images": 20}
@@ -151,8 +161,8 @@ def choose(request="", named=False, category=None):
     judges the subject (the request alone cannot say whether "Countach" is a car): `named` is a
     specific real subject named by brand and model or proper name, `category` its scene category.
     Masterpiece for a named vehicle or building, whose likeness matters; fast for the rest (generic
-    subjects, simple objects, named objects a single pass draws well). Never unbounded: that is only
-    ever the user's word. A mode or tier written in the request wins."""
+    subjects, simple objects, named objects a single pass draws well). Never timeboxed or unbounded:
+    those are only ever the user's word. A mode or tier written in the request wins."""
     asked = from_request(request)
     if "tier" in asked:
         m = MODE_OF[asked["tier"]]
@@ -187,8 +197,9 @@ def clock_rule(lim=None):
         return ("Rounds, not a schedule: save a complete scene that passes `check` after the first round and a "
                 "checkpoint every round after that (`construct rounds`), so the best version is always on disk; %s." % (
                     "there is no time ceiling and no round cap: report every round, so the user can stop it"
-                    if lim["wall_clock_s"] is None else "the %d-minute limit is a ceiling on active time" % (
-                        lim["wall_clock_s"] // 60)))
+                    if lim["wall_clock_s"] is None else "the %d-minute limit is a ceiling on %s" % (
+                        lim["wall_clock_s"] // 60, "working time, the critic's included" if lim.get("tier") in IN_ALL
+                        else "active time")))
     if lim:
         w = lim["wall_clock_s"]
         t += " (This run: research by %d s, a saved draft by %d s, wrap up at %d s.)" % (
@@ -205,7 +216,7 @@ def table():
                     "≤%d searches, ≤%d sources read, ≤%d reference images" % (t["searches"], t["sources"], t["images"]))
         rows.append("| %s | %s | %s | %s | %s | %s | %s |" % (
             MODE_OF[name], name, USE[name], "none" if t["wall_clock_s"] is None else "%d min%s" % (
-                t["wall_clock_s"] // 60, " active" if name in ROUNDS else ""),
+                t["wall_clock_s"] // 60, " in all" if name in IN_ALL else " active" if name in ROUNDS else ""),
             "until the stop rules" if t["review_rounds"] is None else
             "0 (audit only)" if not t["review_rounds"] else "%d%s" % (t["review_rounds"], " (default cap)"
                                                                       if name in ROUNDS else ""),

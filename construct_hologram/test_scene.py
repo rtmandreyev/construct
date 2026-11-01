@@ -294,6 +294,18 @@ class Audit(unittest.TestCase):
         s["parts"][1]["floating"] = True
         self.assertTrue(audit.audit(s, scene.compile_scene(s))["ok"])
 
+    def test_glass_named_only_in_the_label_is_a_warning(self):
+        s = base()
+        s["parts"].append({"id": "hood-door", "label": "Glazed hood door", "role": "detail", "certainty": "inferred",
+                           "stage": 1, "shape": {"type": "box", "size": [0.3, 0.3, 0.005]}, "at": [0, 1, 0.5],
+                           "look": {"fill": "glass"}})
+        codes = lambda: [w["part"] for w in audit.audit(s, scene.compile_scene(s))["warnings"] if w["code"] == "glass-name"]
+        self.assertEqual(codes(), ["hood-door"])
+        s["parts"][-1]["id"] = "hood-door-glass"  # the id says glass: the solid view and the exports agree
+        self.assertEqual(codes(), [])
+        s["parts"][-1].update(id="spoke", label="Spoke")  # glass fill alone is how the light draws it: no warning
+        self.assertEqual(codes(), [])
+
     def test_parts_hanging_from_a_floating_part_are_held(self):
         s = base(parts=[
             {"id": "bell", "role": "mass", "certainty": "inferred", "stage": 0, "floating": True,
@@ -1001,11 +1013,13 @@ class Tiers(unittest.TestCase):
         self.assertIn(tiers.clock_rule(), prompts.build()["system.md"])
         self.assertIn("40%", (HERE / "skill" / "SKILL.md").read_text(encoding="utf-8"))
 
-    def test_three_modes_and_the_old_tier_names_as_aliases(self):
-        self.assertEqual(tiers.MODES, ("fast", "masterpiece", "unbounded"))
-        self.assertEqual({t: tiers.mode(t) for t in ("quick", "standard", "showcase", "masterpiece", "unbounded")},
+    def test_four_modes_and_the_old_tier_names_as_aliases(self):
+        self.assertEqual(tiers.MODES, ("fast", "masterpiece", "timeboxed", "unbounded"))
+        self.assertEqual({t: tiers.mode(t) for t in ("quick", "standard", "showcase", "masterpiece", "timeboxed",
+                                                       "unbounded")},
                          {"quick": "fast", "standard": "fast", "showcase": "fast", "masterpiece": "masterpiece",
-                          "unbounded": "unbounded"})
+                          "timeboxed": "timeboxed", "unbounded": "unbounded"})
+        self.assertEqual(tiers.from_request("a clock, mode: timeboxed")["tier"], "timeboxed")
         lim = tiers.limits("fast")
         self.assertEqual((lim["tier"], lim["mode"], lim["wall_clock_s"], lim["review_rounds"]), ("standard", "fast", 600, 2))
         self.assertEqual(tiers.from_request("a Countach, mode: masterpiece"), {"mode": "masterpiece", "tier": "masterpiece"})
@@ -1025,11 +1039,12 @@ class Tiers(unittest.TestCase):
             self.assertEqual(tiers.choose(request, named=False, category="vehicle")["mode"], "fast")
         said = tiers.choose("a watch, mode: unbounded")
         self.assertEqual((said["mode"], said["chosen"]), ("unbounded", False))  # only ever the user's word
+        self.assertEqual(tiers.choose("a Countach, mode: timeboxed", named=True, category="vehicle")["mode"], "timeboxed")
         self.assertIsNone(tiers.model_note("gpt-6.1-sol", "masterpiece"))
         self.assertIsNone(tiers.model_note("deepseek-chat", "fast"))
         self.assertIn("Claude Opus", tiers.model_note("deepseek-chat", "masterpiece"))
         text = (HERE / "skill" / "SKILL.md").read_text(encoding="utf-8")
-        for words in ("announce it before any work", "never\n   unbounded", "recommend GPT-6.1 Sol or Claude Opus"):
+        for words in ("announce it before any work", "never\n   timeboxed or unbounded", "recommend GPT-6.1 Sol or Claude Opus"):
             self.assertIn(words.replace("\\n", "\n"), text)
 
     def test_the_request_can_choose_research_and_tier(self):
@@ -1296,6 +1311,26 @@ class Rounds(unittest.TestCase):
         r.pause(self.d, now=t0 + 3700)
         r.status(self.d, now=t0 + 3700 + 9 * 60)  # time after a pause is an interruption
         self.assertLess(r.state(self.d)["active_seconds"], st["active_seconds"] + 120)
+
+    def test_timeboxed_counts_the_critics_time_and_masterpiece_does_not(self):
+        r = self.r
+        _check_in(self.d, self.doc)
+        st = r.state(self.d)
+        st["active_seconds"], st["critic_seconds"] = 3000.0, 4500.0  # 50 minutes of authoring, 75 of the critic
+        r._save(self.d, "state.json", st)
+        self.assertIsNone(r.record(self.d, _round_answer(self.d, 1), self.scene)["stop"])  # masterpiece: as before
+        with tempfile.TemporaryDirectory() as d:
+            sc = Path(d, "s.json")
+            sc.write_text(json.dumps(self.doc))
+            st = r.start(str(sc), "timeboxed", d)
+            self.assertEqual((st["max_rounds"], st["limit_seconds"]), (12, 7200))
+            _check_in(d, self.doc)
+            st = r.state(d)
+            st["active_seconds"], st["critic_seconds"] = 3000.0, 4500.0
+            r._save(d, "state.json", st)
+            e = r.record(d, _round_answer(d, 1), sc)
+            self.assertEqual(e["stop"], "the 120-minute ceiling on working time, the critic's included")
+            self.assertIn("of 120 minutes in all", r.status(d))
 
     def test_each_round_logs_whether_a_finish_cap_would_stop_it(self):
         r = self.r

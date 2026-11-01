@@ -83,6 +83,8 @@ from what the model knows and says so.
 - **masterpiece:** up to two hours of the agent's own working time, plus the critic's time each
   round, so often well over an hour in all. It uses a frontier model throughout, so it is the
   expensive mode; on a subscription plan it uses your plan's allowance.
+- **timeboxed:** masterpiece in two hours in all, the critic's time included: fewer rounds when
+  the critic is slow, but done within two hours.
 - **unbounded:** no limit on rounds or time. Expect many rounds and hours, and a high token
   cost. You can stop it after any round, and the best version so far is always saved.
 

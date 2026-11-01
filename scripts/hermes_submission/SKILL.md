@@ -102,13 +102,17 @@ Work in a folder of your own. `out/construct.html` opens in any browser.
 
 ## Procedure
 
-1. **Mode and research.** Three modes (`references/effort.md`); the user can just say one:
+1. **Mode and research.** Four modes (`references/effort.md`); the user can just say one:
    - **fast:** one pass with self-review, no rounds loop: at most 10 minutes, 2 review rounds,
      5 searches, 3 sources, 3 reference images (30 minutes and 4 reviews for a richer
      subject). Generic subjects, simple objects, quick asks; DeepSeek V4.1 Flash is fine here.
    - **masterpiece:** judged rounds (below), stopping after 2 rounds without a win, at every
      criterion 3, at 12 rounds or at 2 hours of active work. A named subject whose likeness
      matters. Frontier-model token cost.
+   - **timeboxed:** masterpiece in 2 hours in all: the same rounds and stop rules, but the
+     2-hour ceiling counts the critic's time with yours, so a slow critic means fewer rounds,
+     not a longer wait. **Only when the user asks for it** (by name, or for masterpiece
+     within two hours).
    - **unbounded:** the same rounds with only the stop rules, no round cap and no time
      ceiling: many rounds and hours at a high token cost, stoppable after any round. Only
      when the user asks for it by name.
@@ -246,6 +250,10 @@ Work in a folder of your own. `out/construct.html` opens in any browser.
   and the critic is a fresh helper each round. Tell the user to raise it in `config.yaml`
   (14 covers a masterpiece run; `0` means no limit), to run interactively, or use a second model
   as the critic (`rounds run --base-url ... --model ... --key-env ...`).
+- **Ending the rounds before the loop does.** A one-shot session can run out before the masterpiece loop's
+  stop rules (the critic's all-3, two rounds in a row without a win, 12 rounds, 2 active hours). Then `rounds
+  pause` and tell the user the run can be resumed (`rounds status`); do not record the outcome as `limit`,
+  which means a stop rule ended it.
 - **Messages that are too large.** A message larger than about 8 MB stops the run. Do not attach
   several full-size review stills at once: ask for smaller ones (`review --size 1280x800`) and
   only the sheets you need (`--sheets assembly,views`). The saved scene survives the stop.

@@ -88,7 +88,7 @@ if the host stops the run.
 
 | Option | Effect |
 | --- | --- |
-| `--mode fast\|masterpiece\|unbounded` (or `--tier quick\|standard\|showcase\|masterpiece`) | the limits below (default fast; also `mode: ...` or `tier: ...` in the request) |
+| `--mode fast\|masterpiece\|timeboxed\|unbounded` (or `--tier quick\|standard\|showcase\|masterpiece`) | the limits below (default fast; also `mode: ...` or `tier: ...` in the request) |
 | `--research auto\|on\|off` | the research policy, or the user's override |
 | `--rounds`, `--review-rounds`, `--max-seconds`, `--max-images` | raise or lower one limit |
 | `--critic` (or `--critic-model`, `--critic-base-url`, `--critic-key-env`) | an independent critic, a fresh model call, judges each review against the references |
@@ -100,6 +100,7 @@ if the host stops the run.
 | fast | standard | 10 min | 2 | 6 | 3 |
 | fast | showcase | 30 min | 4 | 10 | 6 |
 | masterpiece | masterpiece | 2 hours | 12 | 8 per round | 12 |
+| timeboxed | timeboxed | 2 hours in all (the critic's time too) | 12 | 8 per round | 12 |
 | unbounded | unbounded | none | no cap | 8 per round | 12 |
 
 In masterpiece and unbounded mode the critic compares renders with your references every round
@@ -109,7 +110,7 @@ research is the reference images you attach.
 
 ### `rounds`: the masterpiece loop in an agent
 
-`rounds start scene.json --mode masterpiece` (or `unbounded`) starts a run in the scene's folder.
+`rounds start scene.json --mode masterpiece` (or `timeboxed`, `unbounded`) starts a run in the scene's folder.
 Each round the author works on at most four items from the defect list (`rounds change <id> "what changed"`), writes the critic's packet
 (`rounds packet --reference ...`) and records the critic's answer (`rounds record answer.json`).
 The packet asks the critic for its own judgement first, then for a blind pick between this

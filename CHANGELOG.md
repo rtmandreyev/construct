@@ -196,11 +196,23 @@ side, printed as worksheets and cited. Plan:
   times; a 3D guide with the instructions big at the top and lines to the pieces, the controls at the bottom,
   what is built barely dimmed; a booklet with a cover, the paints, plates drawn with each piece's real outline,
   and a card per step with pictures of the parts it needs.
-- **One construct, end to end:** [the K6 telephone box](docs/WORKFLOW-K6.md), built by DeepSeek V4.1 Flash and taken
-  through provenance, the solid, 3D, Godot, a film, CAD, a print and a kit; it joins the gallery with its kit-ready
-  copy and kit plan. What it found, fixed: a merged kit piece is named for what its parts are together ("the
+- **One construct, end to end:** [a longcase clock](docs/END-TO-END.md), built by DeepSeek V4.1 Flash in masterpiece
+  mode through Hermes, taken through provenance, the solid, Blender, Godot, a film, FreeCAD, a print and a kit.
+  What a first end-to-end run found, fixed: a merged kit piece is named for what its parts are together ("the
   door"); a clear piece stays clear whatever a colour map's catch-all says; the 3D guide frames the whole model
-  below its instructions; the construct skill teaches kits, kit-ready copies, true CAD shapes and glued pieces.
+  below its instructions; both construct skills teach kits, kit-ready copies, true CAD shapes and glued pieces.
+- **Found by the clock's walkthrough and a sweep of the whole gallery** (every example through check, fit, build,
+  every export, FreeCAD, print, PrusaSlicer and kit): glass named only in a label (`"Glazed hood door"`) is a
+  `check` warning, since the solid view, exports, prints and kits know glass by its id; an exact print's thickened
+  surface that would touch itself (half-ribs meeting at a vault's pointed apex) goes through the voxels and stays
+  watertight; a thin part merged into a kit piece no longer moves that piece first in the build; a kit merge that
+  came out in pieces counts the bits too small to keep; a kit says how far it has got (a building's kit takes many
+  minutes); the headless browser that draws pictures and films waits for its answer on a busy machine; a view is centred
+  on the object as it stands, pulled back so that an opened door still fits (it was centred on the door's swing).
+- **Timeboxed mode:** masterpiece in two hours in all. The same rounds and stop rules, but the
+  2-hour ceiling counts the critic's time with the author's (masterpiece counts only the author's,
+  as before), so a slow critic means fewer rounds rather than a three-hour wait. `--mode timeboxed`
+  or `mode: timeboxed`; the skill uses it only when asked.
 - **The gallery:** the Nissan Skyline GT-R R34 and the Volkswagen T1 Samba join it; its constructs are in the
   page's own flow (a scroller inside the page caught the wheel), and a construct set in a page takes the wheel
   only once it is clicked, so the page never stops scrolling under it.

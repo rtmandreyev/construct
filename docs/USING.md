@@ -133,8 +133,10 @@ photos (`--reference side=side.jpg`) for a named subject. Every option is in
 You can name a mode in your request, or say nothing and let the skill choose and explain.
 **fast** is one careful pass, about ten minutes, and suits most things. **masterpiece** runs
 rounds judged by an independent critic, for a named car, landmark or building whose likeness
-matters. **unbounded** is masterpiece without the 12-round cap and the two-hour limit, and the
-skill only uses it when you ask. The README's [Modes](../README.md#modes) table has the details,
+matters. Its two hours count the agent's own work; the critic's turns come on top. **timeboxed**
+is masterpiece in two hours in all, the critic's time included, for when you need it done by a
+certain time. **unbounded** is masterpiece without the 12-round cap and the two-hour limit. The
+skill uses timeboxed and unbounded only when you ask. The README's [Modes](../README.md#modes) table has the details,
 and [How a construct is made](HOW-IT-IS-MADE.md) explains the rounds.
 
 ## Following a masterpiece run

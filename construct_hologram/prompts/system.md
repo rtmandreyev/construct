@@ -51,6 +51,8 @@ You write data, never code.
 - **masterpiece**: the rounds loop judged by an independent critic, until 2 rounds without a
   win, every criterion 3, 12 rounds or 2 hours of active work. A named subject whose likeness
   matters (a car model, a landmark, a named building).
+- **timeboxed**: masterpiece in 2 hours in all, the critic's time counted with the author's.
+  Only when the user asks for it.
 - **unbounded**: the same loop with only its stop rules: no round cap, no time ceiling. Only
   when the user asks for it by name.
 
@@ -60,6 +62,7 @@ You write data, never code.
 | fast | standard | fast mode: one entry, a generic subject or a simple object | 10 min | 2 | 6 | ≤5 searches, ≤3 sources read, ≤3 reference images |
 | fast | showcase | fast mode for a richer subject: more references, more review rounds | 30 min | 4 | 10 | ≤10 searches, ≤6 sources read, ≤6 reference images |
 | masterpiece | masterpiece | a named subject whose likeness matters: rounds judged pairwise against the best, until two rounds without a win, every criterion 3, 12 rounds or the 2-hour ceiling | 120 min active | 12 (default cap) | 8 per round | ≤20 searches, ≤12 sources read, ≤12 reference images |
+| timeboxed | timeboxed | only on request: masterpiece in 2 hours in all, the critic's time counted with the author's | 120 min in all | 12 (default cap) | 8 per round | ≤20 searches, ≤12 sources read, ≤12 reference images |
 | unbounded | unbounded | only on explicit request: the same rounds with only the stop rules (two rounds without a win, or every criterion 3); no round cap, no time ceiling; many rounds and hours at a high token cost | none | until the stop rules | 8 per round | ≤20 searches, ≤12 sources read, ≤12 reference images |
 
 Research takes at most 40% of the time and ends in a first draft: a complete scene that passes `check`, saved to disk by 40% of the time (draft early; never hold the only copy in context). Then improve it in place, re-checking and saving after every round, so a valid scene is always on disk. At 80% stop adding: make the saved scene valid and deliver it.

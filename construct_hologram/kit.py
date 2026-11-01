@@ -190,7 +190,7 @@ def _matches(pid, patterns):
 
 # ---------------------------------------------------------------------------- making the kit
 
-def make(scene, scale=SCALE, size=None, detail=DETAIL_MM, wall=WALL_MM, plan=None, materials=None, bed=BED_MM):
+def make(scene, scale=SCALE, size=None, detail=DETAIL_MM, wall=WALL_MM, plan=None, materials=None, bed=BED_MM, log=None):
     """The kit of `scene`: {"title", "scale", "pieces": [...], "steps": [...], "plates": [...], "report"}.
     Each piece: number, name, parts, stage, clear, paint, size_mm, mesh (vertices mm, triangles, lying on
     the bed), cols (voxels where it sits in the model)."""
@@ -360,9 +360,11 @@ def make(scene, scale=SCALE, size=None, detail=DETAIL_MM, wall=WALL_MM, plan=Non
     if len(pieces) == 0:
         raise KitError("nothing left to print")
     groups = plan.get("order", [])
-    for p in pieces:   # the plan's sub-assemblies, in order; what none names comes after
-        p["group"] = next((i for i, g in enumerate(groups) if any(_matches(m, g["parts"]) for m in p["parts"])),
-                          len(groups))
+    for p in pieces:   # the plan's sub-assemblies, in order; what none names comes after. The piece's own part
+        # decides first: a thin part merged into it (a back board into the hood) does not move it to that part's group
+        p["group"] = next((i for i, g in enumerate(groups) if _matches(p["head"], g["parts"])),
+                          next((i for i, g in enumerate(groups) if any(_matches(m, g["parts"]) for m in p["parts"])),
+                               len(groups)))
         p["group_name"] = groups[p["group"]]["name"] if p["group"] < len(groups) else None
 
     moves = {}
@@ -378,7 +380,7 @@ def make(scene, scale=SCALE, size=None, detail=DETAIL_MM, wall=WALL_MM, plan=Non
         p["centre"] = [round(q[0], 5), round(q[2], 5), round(-q[1], 5)]
     _line_art(scene, pieces, grid)
     _solid_tris(scene, pieces, grid)
-    for p in pieces:
+    for i, p in enumerate(pieces, 1):
         # a piece that is one closed solid, untouched by the trimming, is printed as it is: exact, every facet
         exact = None
         if len(p["parts"]) == 1 and len(whole.get(p["head"], ())) == 1 and _count(p["cols"]) == _count(vox[p["head"]]) \
@@ -387,6 +389,8 @@ def make(scene, scale=SCALE, size=None, detail=DETAIL_MM, wall=WALL_MM, plan=Non
         p["exact"] = exact is not None
         p["mesh"], p["size_mm"], p["down"] = _piece_mesh(p["cols"], detail, [t for m in p["parts"] for t in true.get(m, ())],
                                                          exact)
+        if log and (i % 20 == 0 or i == len(pieces)):   # a large kit takes minutes: say where it is
+            log("kit: %d of %d pieces made" % (i, len(pieces)))
     plates = _pack(pieces, bed)
     kit = {"title": plan.get("title") or "%s, a kit" % scene["title"], "construct": scene["title"],
            "scale": "1:%s" % printing._ratio(1000.0 / mm_per_m), "detail_mm": detail, "pieces": pieces,
@@ -1060,14 +1064,18 @@ def check(kit):
             problems.append({"code": "floats", "piece": p["number"],
                              "message": "%d (%s) touches no other piece: it has nothing to be glued to; merge it "
                                         "into what it belongs to (plan.merge)" % (p["number"], p["name"])})
-    split = {}
+    split, made = {}, {}
     for p in kit["pieces"]:   # "body (1 of 3)": a merge whose parts do not touch came out in pieces
         if " of " in p["name"] and p["name"].endswith(")") and p.get("merge", len(p["parts"]) > 1):   # a merge, not copies
-            split.setdefault(p["name"].rsplit(" (", 1)[0], []).append(p["number"])
+            name, count = p["name"].rsplit(" (", 1)
+            split.setdefault(name, []).append(p["number"])
+            total = count.rsplit(" of ", 1)[1].rstrip(")")
+            made[name] = max(int(total) if total.isdigit() else 0, len(split[name]))
     for name, nums in sorted(split.items()):
         problems.append({"code": "split", "piece": nums[0],
-                         "message": "%s came out in %d pieces (%s): its parts do not touch; split the merge or bridge "
-                                    "it" % (name, len(nums), ", ".join(str(n) for n in nums))})
+                         "message": "%s came out in %d pieces (%s%s): its parts do not touch; split the merge or bridge "
+                                    "it" % (name, made[name], ", ".join(str(n) for n in nums),
+                                            "; the rest too small to keep" if made[name] > len(nums) else "")})
     if len(kit["pieces"]) > MANY_PIECES:
         problems.append({"code": "many-pieces", "piece": None,
                          "message": "%d pieces: more than a kit this size usually has (%d); merge the small "
@@ -1515,7 +1523,7 @@ def pick(kit, only):
     return found
 
 
-def write(kit, out, only=None):
+def write(kit, out, only=None, log=None):
     """The kit's files in `out`: plate-N.3mf, each piece on its own (pieces/NN-name.stl, to print one again),
     booklet.html with its pictures, kit.json (what a critic reads); with `only` (see `pick`), only.3mf: just those
     pieces, on a plate of their own."""
@@ -1548,6 +1556,8 @@ def write(kit, out, only=None):
         (out / "img" / ("plate-%d.svg" % plate["number"])).write_text(_plate_map(kit, plate), encoding="utf-8")
     done, bench = set(), []   # bench: the sub-assemblies being built off the model, innermost last
     for s in kit["steps"]:
+        if log:
+            log("kit: drawing step %d of %d" % (s["number"], len(kit["steps"])))
         new = set(s.get("new", s["pieces"]))
         if s.get("kind") == "bench":
             bench.append(s["assembly"])

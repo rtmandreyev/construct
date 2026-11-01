@@ -51,7 +51,8 @@ That is expected: masterpiece mode can run for up to two hours of the agent's ow
 plus the critic's time each round. It stops on its own when it stops improving (two rounds in a row
 without a better version), after 12 rounds, or at the two-hour limit. You can stop it at any point
 and keep the best version so far, which is always saved. If you wanted something quicker, ask for
-**fast** mode instead: one careful pass in about ten minutes.
+**timeboxed** (masterpiece in two hours in all, the critic's time included) or **fast** mode: one
+careful pass in about ten minutes.
 
 If a run was interrupted, by a usage limit for example, `rounds status` in the run's folder says
 where it stopped, and the agent can pick up from there.

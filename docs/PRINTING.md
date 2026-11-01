@@ -130,6 +130,9 @@ spacing them by time is a later step.
 construct kit examples/toyota-land-cruiser-fj62/scene.json --out fj62-kit/ --materials examples/light-to-metal/maps/fj62.json
 ```
 
+A car's kit takes a few minutes; a large building's (hundreds of pieces) can take half an hour. It says how far
+it has got as it goes.
+
 - **Pieces.** Each part becomes pieces of its own at the kit's scale (1:24 by default, `--scale`). Where two
   parts overlap, the later one is trimmed, so they meet flush and fit when glued; mirrored copies (four
   wheels, two mirrors) are separate pieces, and copies set closer than the kit can print apart (52 white keys
@@ -184,7 +187,7 @@ construct kit examples/toyota-land-cruiser-fj62/scene.json --out fj62-kit/ --mat
 copy made for it (the construct stays as it is): a window of many panes as one clear sheet just behind its
 frame, touching it, about 1.5 mm thick at the kit's scale; what a factory casts in one piece (a window frame's
 stiles, rails, mullions and bars) merged with a plan (`{"merge": [["side-west-*"]]}`); every part seated on
-its host's face. [The K6 telephone box, end to end](WORKFLOW-K6.md) shows one, step by step.
+its host's face. [A longcase clock, end to end](END-TO-END.md) shows one, step by step.
 
 **A critic, as for a construct.** `construct kit --critic` prints a kit designer's brief: a critic (a fresh
 agent or model) reads `kit.json` and the booklet's pictures and answers with a plan, parts to merge into one

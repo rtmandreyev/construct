@@ -3,7 +3,7 @@
 1.1 is two releases in one. **Models come alive:** a NetLogo simulation's whole run becomes a construct a student
 can read, compare, print, film and hold. And **things you can make:** any construct becomes a print, a model
 kit, a CAD file or a game-ready prop. This page goes through each new feature with an example and the commands
-to try it; [the K6 telephone box, end to end](WORKFLOW-K6.md) takes one construct through all of them. The full list is in the [changelog](../CHANGELOG.md), and the story in the
+to try it; [a longcase clock, end to end](END-TO-END.md) takes one construct through all of them. The full list is in the [changelog](../CHANGELOG.md), and the story in the
 [release notes](releases/v1.1.0.md).
 
 - [Honest in finer shades](#honest-in-finer-shades)
@@ -218,6 +218,8 @@ and films. [Developers →](for/developers.md)
 
 ## Smaller things
 
+- **Timeboxed mode:** masterpiece in two hours in all, the critic's time included, for when you
+  need it done by a certain time (`mode: timeboxed`). Masterpiece is unchanged.
 - **T** hides the text printed on a construct's surfaces (a lens's name, a cover's title); `?text=0` starts
   without it.
 - Every malformed scene, recording or command is answered with an error that says where, not a crash.

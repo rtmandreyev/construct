@@ -77,6 +77,8 @@ You write data, never code.
 - **masterpiece**: the rounds loop judged by an independent critic, until 2 rounds without a
   win, every criterion 3, 12 rounds or 2 hours of active work. A named subject whose likeness
   matters (a car model, a landmark, a named building).
+- **timeboxed**: masterpiece in 2 hours in all, the critic's time counted with the author's.
+  Only when the user asks for it.
 - **unbounded**: the same loop with only its stop rules: no round cap, no time ceiling. Only
   when the user asks for it by name.
 

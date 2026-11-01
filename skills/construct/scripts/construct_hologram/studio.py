@@ -192,8 +192,9 @@ def _rounds(args):
                 raise rounds.RoundsError("usage: construct rounds start scene.json [--tier masterpiece] [--dir run]")
             st = rounds.start(a[0], args.tier, folder if args.dir != "." else Path(a[0]).resolve().parent)
             sys.stdout.write("started: round 1, %s mode, %s; the medium's limits are seeded as known limits (L1-L3)\n" % (
-                st["tier"], "stops after 2 rounds without a win, at %d rounds or %d minutes of active time" % (
-                    st["max_rounds"], st["limit_seconds"] // 60) if st.get("limit_seconds") else
+                st["tier"], "stops after 2 rounds without a win, at %d rounds or %d minutes of %s" % (
+                    st["max_rounds"], st["limit_seconds"] // 60, "working time, the critic's included"
+                    if st["tier"] == "timeboxed" else "active time") if st.get("limit_seconds") else
                 "stops only after 2 rounds without a win (or every criterion 3): no round cap, no time ceiling, so "
                 "report every round and let the user stop it"))
         elif args.action == "change":
@@ -229,7 +230,7 @@ def _rounds(args):
                                     log=lambda m: sys.stdout.write(m + "\n"))
             e = rounds.record(folder, answer, rounds.scene_of(folder), model)
             st = rounds.state(folder)
-            if st["tier"] in ("masterpiece", "unbounded") or e["stop"]:
+            if st["tier"] in ("masterpiece", "timeboxed", "unbounded") or e["stop"]:
                 sys.stdout.write(rounds.summary(e) + "\n")
             else:
                 sys.stdout.write("round %d recorded (%s); details in rounds.md\n" % (e["round"], "kept" if e["kept"] else "reverted"))
@@ -277,10 +278,11 @@ def add_commands(sub):
     p.add_argument("--reference", action="append",
                    help="a reference image (a local photo or an https URL), optionally view=image (side=photo.jpg) so "
                         "the critic compares it with the render from that view; repeatable")
-    p.add_argument("--tier", "--mode", dest="tier", choices=("fast", "masterpiece", "unbounded", "quick", "standard",
-                                                            "showcase"),
+    p.add_argument("--tier", "--mode", dest="tier", choices=("fast", "masterpiece", "timeboxed", "unbounded", "quick",
+                                                            "standard", "showcase"),
                    help="the mode and its limits: fast (the default: one pass, 10 min; quick, standard and showcase "
-                        "are its tiers), masterpiece (the critic every round: 12 rounds, 2 hours), unbounded (only on "
+                        "are its tiers), masterpiece (the critic every round: 12 rounds, 2 hours), timeboxed (masterpiece in 2 "
+                        "hours in all, the critic's time included), unbounded (only on "
                         "explicit request: no round cap, no time ceiling); also 'mode: ...' in the request")
     p.add_argument("--research", choices=("auto", "on", "off"),
                    help="auto follows the research policy; on/off overrides it (also 'research: ...' in the request)")
@@ -354,8 +356,9 @@ def add_commands(sub):
     p.add_argument("action", choices=("start", "change", "packet", "record", "run", "pause", "status", "report"))
     p.add_argument("args", nargs="*", help="start: scene.json; change: ID \"what changed\"; record: answer.json")
     p.add_argument("--dir", default=".", help="the run's folder (state.json, ledger.json, rounds.md, checkpoints/)")
-    p.add_argument("--tier", "--mode", dest="tier", default="masterpiece", choices=("masterpiece", "unbounded"),
-                   help="masterpiece (12 rounds, 2 hours active) or unbounded (only the stop rules; explicit request)")
+    p.add_argument("--tier", "--mode", dest="tier", default="masterpiece", choices=("masterpiece", "timeboxed", "unbounded"),
+                   help="masterpiece (12 rounds, 2 hours active), timeboxed (the same, 2 hours in all: the critic's "
+                        "time counted too) or unbounded (only the stop rules; explicit request)")
     p.add_argument("--reference", action="append", default=[], help="view=image, as for critique; repeatable")
     p.add_argument("--request", help="the request in plain words")
     p.add_argument("--out", help="the packet folder (default: a neutral folder in the temp directory)")
@@ -1083,9 +1086,10 @@ def run(args):
                     __import__("construct_hologram.printing", fromlist=["PRINTERS"]).PRINTERS[args.printer or "desktop"]["bed"]
                 mats = args.materials or (str(Path(args.scene).with_suffix(".materials.json"))
                                           if Path(args.scene).with_suffix(".materials.json").is_file() else None)
+                progress = lambda m: sys.stderr.write(m + "\n")   # a building's kit takes many minutes: say where it is
                 k = kit_mod.make(load(args.scene), scale=args.scale, size=args.size, detail=args.detail, plan=args.plan,
-                                 materials=mats, bed=bed)
-                kit_mod.write(k, args.out, only=args.only)
+                                 materials=mats, bed=bed, log=progress)
+                kit_mod.write(k, args.out, only=args.only, log=progress)
             except (kit_mod.KitError, export_errors(), ValueError) as exc:
                 sys.stderr.write("kit: %s\n" % exc)
                 return 1

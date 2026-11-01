@@ -217,6 +217,16 @@ class Printers(unittest.TestCase):
         with self.assertRaises(printing.PrintError):
             printing.write(sc, Path(tempfile.gettempdir(), "x.stl"), exact=True)
 
+    def test_a_shell_that_touches_itself_goes_through_the_voxels(self):
+        # two half-ribs meeting at a pointed apex (a gothic vault's rib): their shell would touch itself there
+        rib = {"id": "rib", "shape": {"type": "tube", "path": [[-0.03, 0.02, 0], [-0.015, 0.042, 0], [0, 0.05, 0]],
+                                      "radius": 0.003, "sides": 6, "samples": 1, "smooth": False},
+               "at": [0, 0, 0], "mirror": "x"}
+        r = printing.make(scene_of(box("base", [0.07, 0.02, 0.02], [0, 0.01, 0]), rib), size=80, detail=0.4,
+                          exact=True)["report"]
+        self.assertTrue(r["watertight"], r["bad_edges"])
+        self.assertEqual(r["thickened_in_voxels"], ["rib"])
+
     def test_a_too_thin_solid_grows_to_the_wall_in_its_own_shape(self):
         sc = scene_of(box("base", [0.06, 0.02, 0.06], [0, 0.01, 0]),
                       box("pane", [0.04, 0.03, 0.0005], [0, 0.035, 0.0]))      # 0.5 mm of glass: 0.5 mm printed at 1:1

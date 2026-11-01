@@ -46,6 +46,10 @@ if no browser is available, say so and deliver the HTML without captures.
      4 items a round, one critic who compares each version with the best so far; it stops
      after 2 rounds without a win, at every criterion 3, at 12 rounds or at 2 hours of active
      work. A named subject whose likeness matters. Frontier-model token cost.
+   - **timeboxed:** masterpiece in 2 hours in all: the same rounds and stop rules, but the
+     2-hour ceiling counts the critic's time with yours, so a slow critic means fewer rounds,
+     not a longer wait. **Only when the user asks for it** (by name, or for masterpiece
+     within two hours).
    - **unbounded:** the same rounds with only the stop rules: no round cap, no time ceiling.
      The critic finds a win almost every round, so it can run many rounds and hours at a high
      token cost; the per-round report lets the user stop it at any time. **Only when the user
@@ -56,7 +60,7 @@ if no browser is available, say so and deliver the HTML without captures.
    cost, and how to switch ("say fast for a single 10-minute pass"). Fast for a generic
    subject, a simple mechanical object or a quick ask; masterpiece for a specific named
    subject whose likeness matters (a car model, a landmark, a named building); never
-   unbounded. If you are a smaller or cheaper model and the subject is a hard named one, say
+   timeboxed or unbounded. If you are a smaller or cheaper model and the subject is a hard named one, say
    so and recommend GPT-6.1 Sol or Claude Opus 5.5 (or a model of that class) for masterpiece, with fast as the option on
    this model. The limits are ceilings, not targets. A
    generic subject ("a desk lamp") needs no research; a concrete, named one (a brand and
@@ -132,7 +136,7 @@ if no browser is available, say so and deliver the HTML without captures.
    `critique`, see [review](references/review.md)) can record "good"
    or "outstanding". Use it for a richer fast run, in the rounds modes, and whenever the
    subject is named. In masterpiece or unbounded mode run the rounds with `python3 TOOLS
-   rounds start scene.json --mode masterpiece` (or `unbounded`) ([rounds](references/rounds.md)):
+   rounds start scene.json --mode masterpiece` (or `timeboxed`, `unbounded`) ([rounds](references/rounds.md)):
    tag each edit with its ledger id, one critic per round, keep a version only when it beats
    the best, and after every round report in chat the critic's top requests, what changed
    (ledger ids), won or lost, and the minutes.

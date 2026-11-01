@@ -1,0 +1,137 @@
+{
+ "title": "Tompion's year-going longcase clock, a 1:12 kit",
+ "merge": [
+  [
+   "movement-*",
+   "going-*",
+   "anchor",
+   "crutch",
+   "maintaining-power",
+   "motion-wheel-*",
+   "seatboard-*",
+   "dial-plate",
+   "dial-centre",
+   "dial-arch-plate",
+   "dial-foot-*",
+   "dial-winding-hole",
+   "dial-circle-*",
+   "chapter-ring",
+   "dial-hours",
+   "dial-half-hours",
+   "dial-minute-ticks",
+   "dial-minutes",
+   "dial-band-*",
+   "dial-eq-*"
+  ],
+  [
+   "weight-*"
+  ],
+  [
+   "hood-door-frame-*",
+   "hood-door-bar-*",
+   "hood-door-glazing-bead"
+  ],
+  [
+   "trunk-door",
+   "trunk-door-field-*",
+   "trunk-door-frame-*",
+   "trunk-door-bead",
+   "trunk-door-brackets",
+   "trunk-door-escutcheon",
+   "trunk-door-lenticle-*",
+   "lenticle-bead",
+   "trunk-hinge-*",
+   "trunk-door-mount-*"
+  ],
+  [
+   "hood-side--1",
+   "hood-side-1",
+   "hood-back",
+   "hood-cornice",
+   "hood-side-frame-*",
+   "hood-side-fret-*",
+   "hood-base-*"
+  ],
+  [
+   "caddy-*"
+  ],
+  [
+   "finial-*"
+  ],
+  [
+   "plinth-*"
+  ],
+  [
+   "pendulum-rod-*",
+   "pendulum-suspension",
+   "pendulum-nut",
+   "pendulum-nib",
+   "pendulum-bob"
+  ],
+  [
+   "trunk-side-*",
+   "trunk-stile-*",
+   "trunk-cheek-*",
+   "trunk-back",
+   "trunk-rail-*"
+  ]
+ ],
+ "order": [
+  {
+   "name": "plinth and trunk",
+   "parts": [
+    "plinth-*",
+    "trunk-side-*",
+    "trunk-back",
+    "trunk-rail-*",
+    "trunk-stile-*",
+    "trunk-cheek-*"
+   ]
+  },
+  {
+   "name": "trunk door",
+   "parts": [
+    "trunk-door*",
+    "lenticle-*",
+    "trunk-hinge-*"
+   ]
+  },
+  {
+   "name": "movement and dial",
+   "parts": [
+    "movement-*",
+    "going-*",
+    "anchor",
+    "crutch",
+    "maintaining-power",
+    "motion-wheel-*",
+    "seatboard-*",
+    "dial-*",
+    "chapter-ring",
+    "spandrel-*",
+    "hand-*"
+   ]
+  },
+  {
+   "name": "pendulum and weight",
+   "parts": [
+    "pendulum-*",
+    "weight-*"
+   ]
+  },
+  {
+   "name": "hood",
+   "parts": [
+    "hood-*",
+    "pediment-*"
+   ]
+  },
+  {
+   "name": "caddy and finial",
+   "parts": [
+    "caddy-*",
+    "finial-*"
+   ]
+  }
+ ]
+}

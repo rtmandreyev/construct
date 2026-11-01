@@ -19,7 +19,8 @@ Without it an agent can overrun (seen in a live run: seven review rounds against
 3. Pick the mode in the environment that starts Claude Code: `CONSTRUCT_TIER=fast` (the
    default: the standard tier's 10 minutes and 2 review rounds; `showcase` for a richer subject,
    `quick` for bulk), `masterpiece` (a 2-hour stop, which this hook counts as session time;
-   `construct rounds` counts active time and the 12-round cap itself) or `unbounded` (no wall
+   `construct rounds` counts active time and the 12-round cap itself), `timeboxed` (the same 2-hour
+   stop; `construct rounds` counts the critic's time in it too) or `unbounded` (no wall
    clock and no review cap: only on explicit request). Or set single limits:
    `CONSTRUCT_MAX_SECONDS=900`, `CONSTRUCT_MAX_REVIEWS=3`.
 

@@ -979,7 +979,13 @@ def _solidify(tris, wall):
     out = [(outer[a], outer[b], outer[c]) for a, b, c in faces] + [(inner[a], inner[c], inner[b]) for a, b, c in faces]
     for (a, b), (u, w) in ((k, v[0]) for k, v in _edge_uses(faces).items() if len(v) == 1):
         out += [(outer[w], outer[u], inner[u]), (outer[w], inner[u], inner[w])]   # the wall along an open edge
-    return out
+    return out if _watertight(out) else None   # a shell that touches itself (a sharp apex): the voxels instead
+
+
+def _watertight(tris):
+    """Whether triangles weld into one closed, consistently wound surface (what an exact print must be)."""
+    pts, faces = _weld(tris)
+    return bool(faces) and all(len(u) == 2 for u in _edge_uses(faces).values()) and not _edges_ok(_orient(pts, faces))
 
 
 def _inflate(tris, wall):
@@ -1003,7 +1009,8 @@ def _inflate(tris, wall):
     if any(o is None for o in offs):
         return None
     moved = [tuple(p[i] + o[i] * grow for i in range(3)) for p, o in zip(pts, offs)]
-    return [(moved[a], moved[b], moved[c]) for a, b, c in faces]
+    out = [(moved[a], moved[b], moved[c]) for a, b, c in faces]
+    return out if _watertight(out) else None
 
 
 def _exact(g, kept, shells, grid, lo, mm_per_m, detail, r, rj, bed, report, extra):
@@ -1125,7 +1132,7 @@ def notes(report):
             out.append("thickened to %g mm as true shells, their own shape (open or too thin): %s"
                        % (report["wall_mm"], _list(report["shelled"])))
         if report.get("thickened_in_voxels"):
-            out.append("thickened to %g mm in voxels of %g mm (a surface that folds or branches): %s"
+            out.append("thickened to %g mm in voxels of %g mm (a surface that folds, branches or touches itself): %s"
                        % (report["wall_mm"], report["detail_mm"], _list(report["thickened_in_voxels"])))
         out.append("the slicer decides supports and the finest detail: the solids keep the construct's own")
         return out
