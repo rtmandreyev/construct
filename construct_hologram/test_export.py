@@ -2,6 +2,7 @@
 OBJ is well formed, and the hologram's own compile is unchanged."""
 
 import base64
+import csv
 import json
 import math
 import os
@@ -574,6 +575,21 @@ class Hosts(unittest.TestCase):
                                        "--wire", "tubes"]), 0)
             self.assertTrue(Path(d, "cd.mtl").exists())
             self.assertEqual(cli.main(["export", str(EXAMPLES / "cd.json"), "--out", str(Path(d, "cd.stl"))]), 1)
+
+    def test_the_adapter_template_runs_as_docs_adapters_says(self):
+        # the template a third-party adapter starts from: a parts sheet and one STL per part, Z up, millimetres
+        with tempfile.TemporaryDirectory() as d:
+            r = subprocess.run([sys.executable, str(ROOT / "hosts" / "adapter-template" / "construct_parts.py"),
+                                str(EXAMPLES / "cd.json"), d], cwd=ROOT, capture_output=True, text=True,
+                               env=dict(os.environ, PYTHONPATH=str(ROOT)))
+            self.assertEqual(r.returncode, 0, r.stderr)
+            rows = list(csv.DictReader(open(Path(d, "parts.csv"), encoding="utf-8")))
+            self.assertEqual([row["id"] for row in rows], [p["id"] for p in load("cd")["parts"]])
+            tray = next(row for row in rows if row["id"] == "tray")
+            self.assertTrue(tray["stl"] and Path(d, tray["stl"]).read_text().startswith("solid tray"))
+            box = next(p for p in scene.compile_scene(load("cd"), solid=True)["parts"] if p["id"] == "tray")["instances"][0]
+            self.assertAlmostEqual(float(tray["height_mm"]), (box["max"][1] - box["min"][1]) * 1000, delta=0.1)   # Y up is Z up
+            self.assertAlmostEqual(float(tray["depth_mm"]), (box["max"][2] - box["min"][2]) * 1000, delta=0.1)
 
     def test_for_game_engines_colliders_pieces_and_names_godot_reads_right(self):
         sc = load("cd")

@@ -35,3 +35,4 @@ As an MCP server:
 - [Development](../DEVELOPMENT.md): the code, the tests, and building Construct into your own tools
 - [Evaluation](../EVALUATION.md): how models compare, and how to score your own
 - [The scene contract](../../CONTRACT.md)
+- [Adapters](../ADAPTERS.md): write your own, from a template
