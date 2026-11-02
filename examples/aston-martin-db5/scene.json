@@ -124,7 +124,10 @@
    "id": "body",
    "label": "Body (Superleggera shell)",
    "role": "mass",
-   "certainty": "inferred",
+   "certainty": {
+    "size": "verified",
+    "shape": "traced"
+   },
    "stage": 2,
    "shape": {
     "type": "loft",
@@ -414,7 +417,7 @@
    "id": "glasshouse",
    "label": "Fastback glasshouse",
    "role": "mass",
-   "certainty": "inferred",
+   "certainty": "traced",
    "stage": 3,
    "shape": {
     "type": "loft",
@@ -3903,17 +3906,17 @@
     "type": "tube",
     "path": [
      [
-      0.8207,
+      0.6107,
       0.8,
       -0.48
      ],
      [
-      0.8196,
+      0.6096,
       0.805,
       -0.4
      ],
      [
-      0.8185,
+      0.6085,
       0.8,
       -0.32
      ]
@@ -4017,7 +4020,7 @@
     "axis": "x"
    },
    "at": [
-    0.8188,
+    0.665,
     0,
     0
    ],
@@ -4038,12 +4041,12 @@
     "type": "curve",
     "points": [
      [
-      0.8328,
+      0.679,
       0.661,
       0.74
      ],
      [
-      0.8328,
+      0.679,
       0.661,
       1.0
      ]
@@ -4071,12 +4074,12 @@
     "type": "curve",
     "points": [
      [
-      0.8328,
+      0.679,
       0.68,
       0.74
      ],
      [
-      0.8328,
+      0.679,
       0.68,
       1.0
      ]
@@ -4104,12 +4107,12 @@
     "type": "curve",
     "points": [
      [
-      0.8328,
+      0.679,
       0.699,
       0.74
      ],
      [
-      0.8328,
+      0.679,
       0.699,
       1.0
      ]
@@ -7183,7 +7186,10 @@
    "id": "tyres",
    "label": "Tyres 6.70-15",
    "role": "structure",
-   "certainty": "inferred",
+   "certainty": {
+    "size": "verified",
+    "shape": "inferred"
+   },
    "stage": 0,
    "shape": {
     "type": "torus",
@@ -9238,6 +9244,7 @@
   ],
   "next": [
    "independent critic round pending"
-  ]
+  ],
+  "provenance_note": "Made before Construct 1.1: 98 parts cite nothing and show as designed (pale), though the construct was built with its sources at hand, and the part traced on the side-elevation drawing was never compared with it, so it shows as not yet checked. The shades understate its evidence."
  }
 }

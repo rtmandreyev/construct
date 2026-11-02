@@ -2912,7 +2912,10 @@
       "id": "nut",
       "label": "Nut",
       "role": "identity",
-      "certainty": "inferred",
+      "certainty": {
+        "size": "verified",
+        "shape": "inferred"
+      },
       "stage": 3,
       "source": "front",
       "basis": [
@@ -4646,7 +4649,10 @@
       "id": "string-1",
       "label": "String 1",
       "role": "identity",
-      "certainty": "inferred",
+      "certainty": {
+        "size": "verified",
+        "shape": "inferred"
+      },
       "stage": 5,
       "source": "front",
       "basis": [
@@ -4694,7 +4700,10 @@
       "id": "string-2",
       "label": "String 2",
       "role": "identity",
-      "certainty": "inferred",
+      "certainty": {
+        "size": "verified",
+        "shape": "inferred"
+      },
       "stage": 5,
       "source": "front",
       "basis": [
@@ -4742,7 +4751,10 @@
       "id": "string-3",
       "label": "String 3",
       "role": "identity",
-      "certainty": "inferred",
+      "certainty": {
+        "size": "verified",
+        "shape": "inferred"
+      },
       "stage": 5,
       "source": "front",
       "basis": [
@@ -4790,7 +4802,10 @@
       "id": "string-4",
       "label": "String 4",
       "role": "identity",
-      "certainty": "inferred",
+      "certainty": {
+        "size": "verified",
+        "shape": "inferred"
+      },
       "stage": 5,
       "source": "front",
       "basis": [
@@ -4838,7 +4853,10 @@
       "id": "string-5",
       "label": "String 5",
       "role": "identity",
-      "certainty": "inferred",
+      "certainty": {
+        "size": "verified",
+        "shape": "inferred"
+      },
       "stage": 5,
       "source": "front",
       "basis": [
@@ -4886,7 +4904,10 @@
       "id": "string-6",
       "label": "String 6",
       "role": "identity",
-      "certainty": "inferred",
+      "certainty": {
+        "size": "verified",
+        "shape": "inferred"
+      },
       "stage": 5,
       "source": "front",
       "basis": [
@@ -4934,7 +4955,10 @@
       "id": "string-7",
       "label": "String 7",
       "role": "identity",
-      "certainty": "inferred",
+      "certainty": {
+        "size": "verified",
+        "shape": "inferred"
+      },
       "stage": 5,
       "source": "front",
       "basis": [

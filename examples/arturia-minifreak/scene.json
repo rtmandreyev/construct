@@ -2,7 +2,7 @@
  "format": "tessera-hologram",
  "version": 2,
  "id": "arturia-minifreak",
- "title": "Arturia MiniFreak \u2014 polyphonic hybrid synthesizer",
+ "title": "Arturia MiniFreak — polyphonic hybrid synthesizer",
  "subject": {
   "category": "machine",
   "summary": "Arturia's 6-voice hybrid synth: 37 slim keys with aftertouch, two digital engines into a polyphonic analog filter, a 7 x 13 modulation matrix, OLED display, 16 step buttons and two touch strips beside the keybed. Overall size, layout and features are documented by Arturia; panel proportions, key widths and control spacings are estimated from them.",
@@ -291,7 +291,10 @@
    ]
   },
   {
-   "certainty": "inferred",
+   "certainty": {
+    "size": "verified",
+    "shape": "inferred"
+   },
    "id": "panel-deck",
    "label": "Control panel",
    "role": "structure",

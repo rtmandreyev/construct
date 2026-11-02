@@ -372,14 +372,21 @@
       ],
       "role": "mass",
       "stage": 0,
-      "certainty": "inferred",
+      "certainty": {
+        "size": "verified",
+        "shape": "traced"
+      },
       "source": "ref-plan",
       "look": {
         "fill": "dark",
         "alpha": 0.42,
         "glow": 0.08,
         "weight": 0.65
-      }
+      },
+      "basis": [
+        "length",
+        "transept-width"
+      ]
     },
     {
       "id": "nave-aisles",
@@ -400,14 +407,21 @@
       ],
       "role": "mass",
       "stage": 1,
-      "certainty": "inferred",
+      "certainty": {
+        "size": "verified",
+        "shape": "traced"
+      },
       "source": "ref-plan",
       "look": {
         "fill": "dark",
         "alpha": 0.42,
         "glow": 0.08,
         "weight": 0.65
-      }
+      },
+      "basis": [
+        "nave-width",
+        "length"
+      ]
     },
     {
       "id": "central-nave",
@@ -428,14 +442,21 @@
       ],
       "role": "mass",
       "stage": 1,
-      "certainty": "inferred",
+      "certainty": {
+        "size": "verified",
+        "shape": "traced"
+      },
       "source": "ref-plan",
       "look": {
         "fill": "dark",
         "alpha": 0.42,
         "glow": 0.08,
         "weight": 0.65
-      }
+      },
+      "basis": [
+        "nave-width",
+        "length"
+      ]
     },
     {
       "id": "transept",
@@ -456,14 +477,20 @@
       ],
       "role": "mass",
       "stage": 1,
-      "certainty": "inferred",
+      "certainty": {
+        "size": "verified",
+        "shape": "traced"
+      },
       "source": "ref-plan",
       "look": {
         "fill": "dark",
         "alpha": 0.42,
         "glow": 0.08,
         "weight": 0.65
-      }
+      },
+      "basis": [
+        "transept-width"
+      ]
     },
     {
       "id": "apse",
@@ -522,7 +549,7 @@
       ],
       "role": "mass",
       "stage": 1,
-      "certainty": "inferred",
+      "certainty": "traced",
       "source": "ref-plan",
       "look": {
         "fill": "dark",
@@ -1758,7 +1785,7 @@
       ],
       "role": "structure",
       "stage": 1,
-      "certainty": "inferred",
+      "certainty": "traced",
       "source": "ref-plan",
       "rotate": [
         0,
@@ -1838,7 +1865,7 @@
       ],
       "role": "structure",
       "stage": 1,
-      "certainty": "inferred",
+      "certainty": "traced",
       "source": "ref-plan",
       "rotate": [
         0,
@@ -1918,7 +1945,7 @@
       ],
       "role": "structure",
       "stage": 1,
-      "certainty": "inferred",
+      "certainty": "traced",
       "source": "ref-plan",
       "rotate": [
         0,
@@ -1998,7 +2025,7 @@
       ],
       "role": "structure",
       "stage": 1,
-      "certainty": "inferred",
+      "certainty": "traced",
       "source": "ref-plan",
       "rotate": [
         0,
@@ -2078,7 +2105,7 @@
       ],
       "role": "structure",
       "stage": 1,
-      "certainty": "inferred",
+      "certainty": "traced",
       "source": "ref-plan",
       "rotate": [
         0,
@@ -2158,7 +2185,7 @@
       ],
       "role": "structure",
       "stage": 1,
-      "certainty": "inferred",
+      "certainty": "traced",
       "source": "ref-plan",
       "rotate": [
         0,
@@ -2238,7 +2265,7 @@
       ],
       "role": "structure",
       "stage": 1,
-      "certainty": "inferred",
+      "certainty": "traced",
       "source": "ref-plan",
       "rotate": [
         0,
@@ -4675,7 +4702,7 @@
       ],
       "role": "mass",
       "stage": 1,
-      "certainty": "inferred",
+      "certainty": "traced",
       "source": "ref-plan",
       "look": {
         "fill": "dark",
@@ -4737,7 +4764,7 @@
       ],
       "role": "mass",
       "stage": 2,
-      "certainty": "inferred",
+      "certainty": "traced",
       "source": "ref-plan",
       "look": {
         "fill": "dark",
@@ -4770,7 +4797,10 @@
       ],
       "role": "identity",
       "stage": 4,
-      "certainty": "inferred",
+      "certainty": {
+        "size": "verified",
+        "shape": "inferred"
+      },
       "source": "official",
       "basis": [
         "christ-height"
@@ -4930,7 +4960,10 @@
       ],
       "role": "identity",
       "stage": 4,
-      "certainty": "inferred",
+      "certainty": {
+        "size": "verified",
+        "shape": "inferred"
+      },
       "source": "official",
       "basis": [
         "mary-height"
@@ -4990,7 +5023,10 @@
       ],
       "role": "identity",
       "stage": 4,
-      "certainty": "inferred",
+      "certainty": {
+        "size": "verified",
+        "shape": "inferred"
+      },
       "source": "official",
       "basis": [
         "evangelist-height"
@@ -5171,7 +5207,10 @@
       ],
       "role": "identity",
       "stage": 4,
-      "certainty": "inferred",
+      "certainty": {
+        "size": "verified",
+        "shape": "inferred"
+      },
       "source": "official",
       "basis": [
         "evangelist-height"
@@ -5352,7 +5391,10 @@
       ],
       "role": "identity",
       "stage": 4,
-      "certainty": "inferred",
+      "certainty": {
+        "size": "verified",
+        "shape": "inferred"
+      },
       "source": "official",
       "basis": [
         "evangelist-height"
@@ -5533,7 +5575,10 @@
       ],
       "role": "identity",
       "stage": 4,
-      "certainty": "inferred",
+      "certainty": {
+        "size": "verified",
+        "shape": "inferred"
+      },
       "source": "official",
       "basis": [
         "evangelist-height"
@@ -5739,7 +5784,10 @@
       ],
       "role": "mass",
       "stage": 3,
-      "certainty": "inferred",
+      "certainty": {
+        "size": "verified",
+        "shape": "inferred"
+      },
       "source": "official",
       "basis": [
         "sacristy-height"
@@ -5800,7 +5848,10 @@
       ],
       "role": "mass",
       "stage": 3,
-      "certainty": "inferred",
+      "certainty": {
+        "size": "verified",
+        "shape": "inferred"
+      },
       "source": "official",
       "basis": [
         "sacristy-height"
@@ -11217,6 +11268,7 @@
         ],
         "source": "ref-three-quarter"
       }
-    ]
+    ],
+    "provenance_note": "Made before Construct 1.1, when traced parts were not yet compared with their drawing: the 10 parts traced on the tower-location plan show as not yet checked."
   }
 }

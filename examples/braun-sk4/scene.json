@@ -1,0 +1,6294 @@
+{
+  "format": "construct-scene",
+  "version": 2,
+  "id": "braun-sk4",
+  "title": "Braun Phonosuper SK 4 · Rams and Gugelot, 1956",
+  "subject": {
+    "category": "object",
+    "summary": "The 1956 Braun Phonosuper SK 4 radio-phonograph: a white-lacquered steel box with elm side panels, its controls moved to the top deck under a raked clear acrylic hood, and the Wagenfeld PC 3 turntable inside. Modelled at 580 x 244 x 290 mm from published dimensions and three photographs.",
+    "accuracy": "approximate",
+    "synthetic": false
+  },
+  "units": "m",
+  "seed": 1956,
+  "sources": [
+    {
+      "id": "request",
+      "kind": "user_request",
+      "title": "The owner's request",
+      "ref": "Masterpiece construct of a Braun SK 4 radio-phonograph (Dieter Rams and Hans Gugelot, 1956) plus a printable replacement for one missing large control knob.",
+      "rights": "user_private"
+    },
+    {
+      "id": "wiki-de",
+      "kind": "document",
+      "title": "Braun SK 4 (deutsche Wikipedia)",
+      "ref": "https://de.wikipedia.org/wiki/Braun_SK_4 : lacquered sheet-metal casing with punched speaker/vent slots, elm (Rueste) side walls, light-grey controls all on the top, acrylic hood with a rear cutout for long-playing records, PC 3 turntable, five valves, 295 DM.",
+      "rights": "reference_only"
+    },
+    {
+      "id": "museum-dns",
+      "kind": "document",
+      "title": "Die Neue Sammlung: Stereo-Phonosuper SK4-1",
+      "ref": "https://die-neue-sammlung.de/en/objekt/radio-phono-combination-stereo-phonosuper-sk4-1 : size H 29 cm, L 58 cm, D 24.4 cm; metal painted white, elm wood, PMMA clear/white/grey; controls on the top under a Perspex hood that folds back.",
+      "rights": "reference_only"
+    },
+    {
+      "id": "vam",
+      "kind": "document",
+      "title": "V&A: Phonosuper radiogram SK55",
+      "ref": "https://collections.vam.ac.uk/item/O168285/ : Height 24 cm, Width 58 cm, Depth 29 cm (measured for Cold War Modern, 2008); metal, wood and acrylic plastic.",
+      "rights": "reference_only"
+    },
+    {
+      "id": "dasprogramm",
+      "kind": "document",
+      "title": "das programm: SK 4 phonosuper, 1956",
+      "ref": "https://dasprogramm.co.uk/shop/braun/view/368 : dimensions 580 x 244 x 290 mm; Gugelot enclosure, Wagenfeld PC 3 phono module, Lindinger controls, Aicher tuning scale, Rams acrylic hood.",
+      "rights": "reference_only"
+    },
+    {
+      "id": "hifiblueprint",
+      "kind": "document",
+      "title": "hifi blueprint: Braun SK 4 (1956)",
+      "ref": "https://hifiblueprint.com/classics/braun-sk-4 : reports Radiomuseum's 580 x 240 x 290 mm and 11 kg; valves ECC85, 2x EF89, EABC80, EL84, 3 W; PC 3 three speeds, no changer, no counterweight; Isophon 170 x 250 mm elliptical speaker.",
+      "rights": "reference_only"
+    },
+    {
+      "id": "photo-1",
+      "kind": "observation",
+      "title": "Front view, lid closed (Alf van Beem, CC0)",
+      "ref": "refs/photo-1.jpg : '1956 Braun Phonosuper SK4 Schneewittchensarg.JPG', Alf van Beem, CC0, Wikimedia Commons. Scale: 3.02 px per mm on the front face.",
+      "rights": "public_domain"
+    },
+    {
+      "id": "photo-2",
+      "kind": "observation",
+      "title": "Lid open, control panel (With Associates, CC BY-SA 2.0)",
+      "ref": "refs/photo-2.jpg : 'Braun SK 4.1.jpg', With Associates, CC BY-SA 2.0, Wikimedia Commons.",
+      "rights": "permitted"
+    },
+    {
+      "id": "photo-3",
+      "kind": "observation",
+      "title": "Three-quarter view from the left (Andy Armstrong, CC BY-SA 2.0)",
+      "ref": "refs/photo-3.jpg : 'Pinakothek der Moderne. Record Player (6786756466).jpg', Andy Armstrong, CC BY-SA 2.0, Wikimedia Commons.",
+      "rights": "permitted"
+    }
+  ],
+  "facts": [
+    {
+      "key": "model",
+      "value": "Phonosuper SK 4",
+      "certainty": "verified",
+      "source": "museum-dns"
+    },
+    {
+      "key": "year",
+      "value": 1956,
+      "certainty": "verified",
+      "source": "wiki-de",
+      "note": "Presented autumn 1956 at 295 DM; the SK 4/1 revision followed in 1957."
+    },
+    {
+      "key": "designers",
+      "value": "Hans Gugelot and Dieter Rams, with Wilhelm Wagenfeld's PC 3 turntable",
+      "certainty": "verified",
+      "source": "museum-dns",
+      "note": "Gugelot: the white sheet-metal enclosure. Rams: the acrylic hood. Wagenfeld: the record player. Lindinger the controls, Aicher the scale (das programm)."
+    },
+    {
+      "key": "width",
+      "value": 0.58,
+      "unit": "m",
+      "certainty": "verified",
+      "source": "museum-dns",
+      "note": "58 cm in Die Neue Sammlung, V&A and das programm alike."
+    },
+    {
+      "key": "depth",
+      "value": 0.244,
+      "unit": "m",
+      "certainty": "verified",
+      "source": "museum-dns",
+      "note": "24.4 cm. V&A lists 29 cm depth for the later SK55; photo-1's front elevation (width 580 mm) puts the height at ~290 mm, which agrees with 24.4 cm depth and not with 29 cm."
+    },
+    {
+      "key": "height",
+      "value": 0.29,
+      "unit": "m",
+      "certainty": "verified",
+      "source": "museum-dns",
+      "note": "29 cm over the closed hood. Traced check from photo-1: object height / width = 890/1754 px = 0.507 -> 294 mm."
+    },
+    {
+      "key": "weight",
+      "value": 11,
+      "unit": "kg",
+      "certainty": "inferred",
+      "source": "hifiblueprint",
+      "note": "Reported from Radiomuseum's data sheet; not weighed by the author."
+    },
+    {
+      "key": "front-height",
+      "value": 0.155,
+      "unit": "m",
+      "certainty": "verified",
+      "source": "photo-1",
+      "note": "White front panel from its bottom edge (y=0.021) to its top edge: 434 px at 3.02 px/mm = 144 mm."
+    },
+    {
+      "key": "hood-rake",
+      "value": 29.0,
+      "unit": "deg",
+      "certainty": "verified",
+      "source": "photo-1",
+      "note": "The hood's back edge sits at the full 290 mm; its front edge meets the body's top at 144 mm over 244 mm of depth."
+    },
+    {
+      "key": "body-material",
+      "value": "White-lacquered sheet steel with punched speaker and vent slots",
+      "certainty": "verified",
+      "source": "wiki-de"
+    },
+    {
+      "key": "side-material",
+      "value": "Elm-veneered wooden side panels (reddish Rueste/elm)",
+      "certainty": "verified",
+      "source": "wiki-de"
+    },
+    {
+      "key": "hood-material",
+      "value": "Clear acrylic (Plexiglas) hood",
+      "certainty": "verified",
+      "source": "wiki-de"
+    },
+    {
+      "key": "hood-cutout",
+      "value": "Rectangular cutout at the back of the hood for long-playing records overhanging the rear",
+      "certainty": "verified",
+      "source": "wiki-de"
+    },
+    {
+      "key": "controls",
+      "value": "All controls on the top deck, light grey: four small knobs in a column, a row of five push-buttons, one large tuning knob, one long dial scale",
+      "certainty": "verified",
+      "source": "photo-1"
+    },
+    {
+      "key": "buttons",
+      "value": "Five push-buttons labelled ein aus, Phono, LW, MW, UKW",
+      "certainty": "verified",
+      "source": "photo-1"
+    },
+    {
+      "key": "turntable",
+      "value": "Braun PC 3: idler drive, three speeds 33, 45 and 78 rpm, no changer, no counterweight",
+      "certainty": "verified",
+      "source": "wiki-de"
+    },
+    {
+      "key": "platter-nubs",
+      "value": "Three-arm platter support (star) around the spindle",
+      "certainty": "verified",
+      "source": "photo-3",
+      "note": "Wikipedia records that the three-nub support warped records left in the sun and that the SK 4/1 moved to five rubber pads."
+    },
+    {
+      "key": "speaker",
+      "value": "Isophon 170 x 250 mm elliptical speaker behind the front slots",
+      "certainty": "inferred",
+      "source": "hifiblueprint"
+    },
+    {
+      "key": "valves",
+      "value": "ECC85, 2x EF89, EABC80, EL84; 3 W output",
+      "certainty": "verified",
+      "source": "wiki-de"
+    },
+    {
+      "key": "price",
+      "value": 295,
+      "unit": "DM",
+      "certainty": "verified",
+      "source": "wiki-de"
+    },
+    {
+      "key": "brand",
+      "value": "BRAUN",
+      "certainty": "verified",
+      "source": "photo-2",
+      "note": "Printed on the deck ahead of the dial."
+    },
+    {
+      "key": "grille-slots",
+      "value": 15,
+      "unit": "slots",
+      "certainty": "verified",
+      "source": "photo-1",
+      "note": "Two blocks of unequal length on the front (and the same on the back), pitch 6.4 mm, slot 2.8 mm high."
+    }
+  ],
+  "assets": [],
+  "parts": [
+    {
+      "id": "foot-fl",
+      "label": "Felt pad",
+      "role": "detail",
+      "stage": 0,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.03,
+          0.004,
+          0.03
+        ]
+      },
+      "at": [
+        -0.27799999999999997,
+        0.002,
+        0.096
+      ],
+      "basis": [
+        "width"
+      ],
+      "source": "photo-3",
+      "note": "A thin felt pad recessed under each cheek end: the case sits on its wood, not on blocks.",
+      "look": {
+        "weight": 0.5,
+        "alpha": 0.35
+      }
+    },
+    {
+      "id": "foot-fr",
+      "label": "Felt pad",
+      "role": "detail",
+      "stage": 0,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.03,
+          0.004,
+          0.03
+        ]
+      },
+      "at": [
+        0.27799999999999997,
+        0.002,
+        0.096
+      ],
+      "basis": [
+        "width"
+      ],
+      "source": "photo-3",
+      "note": "A thin felt pad recessed under each cheek end: the case sits on its wood, not on blocks.",
+      "look": {
+        "weight": 0.5,
+        "alpha": 0.35
+      }
+    },
+    {
+      "id": "foot-rl",
+      "label": "Felt pad",
+      "role": "detail",
+      "stage": 0,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.03,
+          0.004,
+          0.03
+        ]
+      },
+      "at": [
+        -0.27799999999999997,
+        0.002,
+        -0.096
+      ],
+      "basis": [
+        "width"
+      ],
+      "source": "photo-3",
+      "note": "A thin felt pad recessed under each cheek end: the case sits on its wood, not on blocks.",
+      "look": {
+        "weight": 0.5,
+        "alpha": 0.35
+      }
+    },
+    {
+      "id": "foot-rr",
+      "label": "Felt pad",
+      "role": "detail",
+      "stage": 0,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.03,
+          0.004,
+          0.03
+        ]
+      },
+      "at": [
+        0.27799999999999997,
+        0.002,
+        -0.096
+      ],
+      "basis": [
+        "width"
+      ],
+      "source": "photo-3",
+      "note": "A thin felt pad recessed under each cheek end: the case sits on its wood, not on blocks.",
+      "look": {
+        "weight": 0.5,
+        "alpha": 0.35
+      }
+    },
+    {
+      "id": "cheek-left",
+      "label": "Left elm side panel",
+      "role": "mass",
+      "stage": 1,
+      "certainty": {
+        "size": "verified",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "extrude",
+        "profile": [
+          [
+            -0.122,
+            0.0
+          ],
+          [
+            0.122,
+            0.0
+          ],
+          [
+            0.122,
+            0.155
+          ],
+          [
+            -0.122,
+            0.272
+          ]
+        ],
+        "height": 0.018,
+        "axis": "x"
+      },
+      "at": [
+        -0.29,
+        0,
+        0
+      ],
+      "basis": [
+        "depth",
+        "height"
+      ],
+      "source": "photo-1",
+      "note": "Full-depth elm cheek; its top edge rakes from 144 mm at the front to 272 mm at the back and carries the hood.",
+      "look": {
+        "fill": "dark",
+        "alpha": 0.8,
+        "weight": 1.1
+      }
+    },
+    {
+      "id": "cheek-right",
+      "label": "Right elm side panel",
+      "role": "mass",
+      "stage": 1,
+      "certainty": {
+        "size": "verified",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "extrude",
+        "profile": [
+          [
+            -0.122,
+            0.0
+          ],
+          [
+            0.122,
+            0.0
+          ],
+          [
+            0.122,
+            0.155
+          ],
+          [
+            -0.122,
+            0.272
+          ]
+        ],
+        "height": 0.018,
+        "axis": "x"
+      },
+      "at": [
+        0.27199999999999996,
+        0,
+        0
+      ],
+      "basis": [
+        "depth",
+        "height"
+      ],
+      "source": "photo-1",
+      "note": "Full-depth elm cheek; its top edge rakes from 144 mm at the front to 272 mm at the back and carries the hood.",
+      "look": {
+        "fill": "dark",
+        "alpha": 0.8,
+        "weight": 1.1
+      }
+    },
+    {
+      "id": "body-front-top",
+      "label": "Front panel above the grilles",
+      "role": "mass",
+      "stage": 1,
+      "certainty": {
+        "size": "verified",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.5439999999999999,
+          0.031,
+          0.004
+        ]
+      },
+      "at": [
+        0,
+        0.1395,
+        0.117
+      ],
+      "basis": [
+        "width",
+        "front-height"
+      ],
+      "source": "photo-1",
+      "note": "4 mm steel sheet between the elm cheeks; the cheeks stand 3 mm proud of it.",
+      "look": {
+        "fill": "dark",
+        "alpha": 0.85,
+        "weight": 1.15
+      }
+    },
+    {
+      "id": "body-front-bottom",
+      "label": "Front panel below the grilles",
+      "role": "mass",
+      "stage": 1,
+      "certainty": {
+        "size": "verified",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.5439999999999999,
+          0.022000000000000006,
+          0.004
+        ]
+      },
+      "at": [
+        0,
+        0.024,
+        0.117
+      ],
+      "basis": [
+        "width",
+        "front-height"
+      ],
+      "source": "photo-1",
+      "look": {
+        "fill": "dark",
+        "alpha": 0.85,
+        "weight": 1.15
+      }
+    },
+    {
+      "id": "body-front-left-margin",
+      "label": "Front panel, left margin",
+      "role": "mass",
+      "stage": 1,
+      "certainty": {
+        "size": "verified",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.05000000000000002,
+          0.089,
+          0.004
+        ]
+      },
+      "at": [
+        -0.247,
+        0.0795,
+        0.117
+      ],
+      "basis": [
+        "width",
+        "front-height"
+      ],
+      "source": "photo-1",
+      "look": {
+        "fill": "dark",
+        "alpha": 0.85,
+        "weight": 0.7
+      }
+    },
+    {
+      "id": "body-front-between-margin",
+      "label": "Front panel, between the grilles",
+      "role": "mass",
+      "stage": 1,
+      "certainty": {
+        "size": "verified",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.123,
+          0.089,
+          0.004
+        ]
+      },
+      "at": [
+        0.0595,
+        0.0795,
+        0.117
+      ],
+      "basis": [
+        "width",
+        "front-height"
+      ],
+      "source": "photo-1",
+      "look": {
+        "fill": "dark",
+        "alpha": 0.85,
+        "weight": 0.7
+      }
+    },
+    {
+      "id": "body-front-right-margin",
+      "label": "Front panel, right margin",
+      "role": "mass",
+      "stage": 1,
+      "certainty": {
+        "size": "verified",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.038000000000000006,
+          0.089,
+          0.004
+        ]
+      },
+      "at": [
+        0.253,
+        0.0795,
+        0.117
+      ],
+      "basis": [
+        "width",
+        "front-height"
+      ],
+      "source": "photo-1",
+      "look": {
+        "fill": "dark",
+        "alpha": 0.85,
+        "weight": 0.7
+      }
+    },
+    {
+      "id": "front-rib-speaker-1",
+      "label": "Steel web between grille slots",
+      "role": "structure",
+      "stage": 1,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.23,
+          0.00413,
+          0.004
+        ]
+      },
+      "at": [
+        -0.112,
+        0.03887,
+        0.117
+      ],
+      "basis": [
+        "grille-slots"
+      ],
+      "source": "photo-1",
+      "note": "The front is a punched sheet: 15 slots per block, 2.6 mm high at 6.4 mm pitch, with the metal webs drawn as ribs.",
+      "look": {
+        "weight": 1.05,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "front-rib-vent-1",
+      "label": "Steel web between grille slots",
+      "role": "structure",
+      "stage": 1,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.12299999999999998,
+          0.00413,
+          0.004
+        ]
+      },
+      "at": [
+        0.1775,
+        0.03887,
+        0.117
+      ],
+      "basis": [
+        "grille-slots"
+      ],
+      "source": "photo-1",
+      "note": "The front is a punched sheet: 15 slots per block, 2.6 mm high at 6.4 mm pitch, with the metal webs drawn as ribs.",
+      "look": {
+        "weight": 1.05,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "front-rib-speaker-2",
+      "label": "Steel web between grille slots",
+      "role": "structure",
+      "stage": 1,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.23,
+          0.00413,
+          0.004
+        ]
+      },
+      "at": [
+        -0.112,
+        0.0448,
+        0.117
+      ],
+      "basis": [
+        "grille-slots"
+      ],
+      "source": "photo-1",
+      "note": "The front is a punched sheet: 15 slots per block, 2.6 mm high at 6.4 mm pitch, with the metal webs drawn as ribs.",
+      "look": {
+        "weight": 1.05,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "front-rib-vent-2",
+      "label": "Steel web between grille slots",
+      "role": "structure",
+      "stage": 1,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.12299999999999998,
+          0.00413,
+          0.004
+        ]
+      },
+      "at": [
+        0.1775,
+        0.0448,
+        0.117
+      ],
+      "basis": [
+        "grille-slots"
+      ],
+      "source": "photo-1",
+      "note": "The front is a punched sheet: 15 slots per block, 2.6 mm high at 6.4 mm pitch, with the metal webs drawn as ribs.",
+      "look": {
+        "weight": 1.05,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "front-rib-speaker-3",
+      "label": "Steel web between grille slots",
+      "role": "structure",
+      "stage": 1,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.23,
+          0.00413,
+          0.004
+        ]
+      },
+      "at": [
+        -0.112,
+        0.05073,
+        0.117
+      ],
+      "basis": [
+        "grille-slots"
+      ],
+      "source": "photo-1",
+      "note": "The front is a punched sheet: 15 slots per block, 2.6 mm high at 6.4 mm pitch, with the metal webs drawn as ribs.",
+      "look": {
+        "weight": 1.05,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "front-rib-vent-3",
+      "label": "Steel web between grille slots",
+      "role": "structure",
+      "stage": 1,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.12299999999999998,
+          0.00413,
+          0.004
+        ]
+      },
+      "at": [
+        0.1775,
+        0.05073,
+        0.117
+      ],
+      "basis": [
+        "grille-slots"
+      ],
+      "source": "photo-1",
+      "note": "The front is a punched sheet: 15 slots per block, 2.6 mm high at 6.4 mm pitch, with the metal webs drawn as ribs.",
+      "look": {
+        "weight": 1.05,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "front-rib-speaker-4",
+      "label": "Steel web between grille slots",
+      "role": "structure",
+      "stage": 1,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.23,
+          0.00413,
+          0.004
+        ]
+      },
+      "at": [
+        -0.112,
+        0.05667,
+        0.117
+      ],
+      "basis": [
+        "grille-slots"
+      ],
+      "source": "photo-1",
+      "note": "The front is a punched sheet: 15 slots per block, 2.6 mm high at 6.4 mm pitch, with the metal webs drawn as ribs.",
+      "look": {
+        "weight": 1.05,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "front-rib-vent-4",
+      "label": "Steel web between grille slots",
+      "role": "structure",
+      "stage": 1,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.12299999999999998,
+          0.00413,
+          0.004
+        ]
+      },
+      "at": [
+        0.1775,
+        0.05667,
+        0.117
+      ],
+      "basis": [
+        "grille-slots"
+      ],
+      "source": "photo-1",
+      "note": "The front is a punched sheet: 15 slots per block, 2.6 mm high at 6.4 mm pitch, with the metal webs drawn as ribs.",
+      "look": {
+        "weight": 1.05,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "front-rib-speaker-5",
+      "label": "Steel web between grille slots",
+      "role": "structure",
+      "stage": 1,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.23,
+          0.00413,
+          0.004
+        ]
+      },
+      "at": [
+        -0.112,
+        0.0626,
+        0.117
+      ],
+      "basis": [
+        "grille-slots"
+      ],
+      "source": "photo-1",
+      "note": "The front is a punched sheet: 15 slots per block, 2.6 mm high at 6.4 mm pitch, with the metal webs drawn as ribs.",
+      "look": {
+        "weight": 1.05,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "front-rib-vent-5",
+      "label": "Steel web between grille slots",
+      "role": "structure",
+      "stage": 1,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.12299999999999998,
+          0.00413,
+          0.004
+        ]
+      },
+      "at": [
+        0.1775,
+        0.0626,
+        0.117
+      ],
+      "basis": [
+        "grille-slots"
+      ],
+      "source": "photo-1",
+      "note": "The front is a punched sheet: 15 slots per block, 2.6 mm high at 6.4 mm pitch, with the metal webs drawn as ribs.",
+      "look": {
+        "weight": 1.05,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "front-rib-speaker-6",
+      "label": "Steel web between grille slots",
+      "role": "structure",
+      "stage": 1,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.23,
+          0.00413,
+          0.004
+        ]
+      },
+      "at": [
+        -0.112,
+        0.06853,
+        0.117
+      ],
+      "basis": [
+        "grille-slots"
+      ],
+      "source": "photo-1",
+      "note": "The front is a punched sheet: 15 slots per block, 2.6 mm high at 6.4 mm pitch, with the metal webs drawn as ribs.",
+      "look": {
+        "weight": 1.05,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "front-rib-vent-6",
+      "label": "Steel web between grille slots",
+      "role": "structure",
+      "stage": 1,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.12299999999999998,
+          0.00413,
+          0.004
+        ]
+      },
+      "at": [
+        0.1775,
+        0.06853,
+        0.117
+      ],
+      "basis": [
+        "grille-slots"
+      ],
+      "source": "photo-1",
+      "note": "The front is a punched sheet: 15 slots per block, 2.6 mm high at 6.4 mm pitch, with the metal webs drawn as ribs.",
+      "look": {
+        "weight": 1.05,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "front-rib-speaker-7",
+      "label": "Steel web between grille slots",
+      "role": "structure",
+      "stage": 1,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.23,
+          0.00413,
+          0.004
+        ]
+      },
+      "at": [
+        -0.112,
+        0.07447,
+        0.117
+      ],
+      "basis": [
+        "grille-slots"
+      ],
+      "source": "photo-1",
+      "note": "The front is a punched sheet: 15 slots per block, 2.6 mm high at 6.4 mm pitch, with the metal webs drawn as ribs.",
+      "look": {
+        "weight": 1.05,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "front-rib-vent-7",
+      "label": "Steel web between grille slots",
+      "role": "structure",
+      "stage": 1,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.12299999999999998,
+          0.00413,
+          0.004
+        ]
+      },
+      "at": [
+        0.1775,
+        0.07447,
+        0.117
+      ],
+      "basis": [
+        "grille-slots"
+      ],
+      "source": "photo-1",
+      "note": "The front is a punched sheet: 15 slots per block, 2.6 mm high at 6.4 mm pitch, with the metal webs drawn as ribs.",
+      "look": {
+        "weight": 1.05,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "front-rib-speaker-8",
+      "label": "Steel web between grille slots",
+      "role": "structure",
+      "stage": 1,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.23,
+          0.00413,
+          0.004
+        ]
+      },
+      "at": [
+        -0.112,
+        0.0804,
+        0.117
+      ],
+      "basis": [
+        "grille-slots"
+      ],
+      "source": "photo-1",
+      "note": "The front is a punched sheet: 15 slots per block, 2.6 mm high at 6.4 mm pitch, with the metal webs drawn as ribs.",
+      "look": {
+        "weight": 1.05,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "front-rib-vent-8",
+      "label": "Steel web between grille slots",
+      "role": "structure",
+      "stage": 1,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.12299999999999998,
+          0.00413,
+          0.004
+        ]
+      },
+      "at": [
+        0.1775,
+        0.0804,
+        0.117
+      ],
+      "basis": [
+        "grille-slots"
+      ],
+      "source": "photo-1",
+      "note": "The front is a punched sheet: 15 slots per block, 2.6 mm high at 6.4 mm pitch, with the metal webs drawn as ribs.",
+      "look": {
+        "weight": 1.05,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "front-rib-speaker-9",
+      "label": "Steel web between grille slots",
+      "role": "structure",
+      "stage": 1,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.23,
+          0.00413,
+          0.004
+        ]
+      },
+      "at": [
+        -0.112,
+        0.08633,
+        0.117
+      ],
+      "basis": [
+        "grille-slots"
+      ],
+      "source": "photo-1",
+      "note": "The front is a punched sheet: 15 slots per block, 2.6 mm high at 6.4 mm pitch, with the metal webs drawn as ribs.",
+      "look": {
+        "weight": 1.05,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "front-rib-vent-9",
+      "label": "Steel web between grille slots",
+      "role": "structure",
+      "stage": 1,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.12299999999999998,
+          0.00413,
+          0.004
+        ]
+      },
+      "at": [
+        0.1775,
+        0.08633,
+        0.117
+      ],
+      "basis": [
+        "grille-slots"
+      ],
+      "source": "photo-1",
+      "note": "The front is a punched sheet: 15 slots per block, 2.6 mm high at 6.4 mm pitch, with the metal webs drawn as ribs.",
+      "look": {
+        "weight": 1.05,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "front-rib-speaker-10",
+      "label": "Steel web between grille slots",
+      "role": "structure",
+      "stage": 1,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.23,
+          0.00413,
+          0.004
+        ]
+      },
+      "at": [
+        -0.112,
+        0.09227,
+        0.117
+      ],
+      "basis": [
+        "grille-slots"
+      ],
+      "source": "photo-1",
+      "note": "The front is a punched sheet: 15 slots per block, 2.6 mm high at 6.4 mm pitch, with the metal webs drawn as ribs.",
+      "look": {
+        "weight": 1.05,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "front-rib-vent-10",
+      "label": "Steel web between grille slots",
+      "role": "structure",
+      "stage": 1,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.12299999999999998,
+          0.00413,
+          0.004
+        ]
+      },
+      "at": [
+        0.1775,
+        0.09227,
+        0.117
+      ],
+      "basis": [
+        "grille-slots"
+      ],
+      "source": "photo-1",
+      "note": "The front is a punched sheet: 15 slots per block, 2.6 mm high at 6.4 mm pitch, with the metal webs drawn as ribs.",
+      "look": {
+        "weight": 1.05,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "front-rib-speaker-11",
+      "label": "Steel web between grille slots",
+      "role": "structure",
+      "stage": 1,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.23,
+          0.00413,
+          0.004
+        ]
+      },
+      "at": [
+        -0.112,
+        0.0982,
+        0.117
+      ],
+      "basis": [
+        "grille-slots"
+      ],
+      "source": "photo-1",
+      "note": "The front is a punched sheet: 15 slots per block, 2.6 mm high at 6.4 mm pitch, with the metal webs drawn as ribs.",
+      "look": {
+        "weight": 1.05,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "front-rib-vent-11",
+      "label": "Steel web between grille slots",
+      "role": "structure",
+      "stage": 1,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.12299999999999998,
+          0.00413,
+          0.004
+        ]
+      },
+      "at": [
+        0.1775,
+        0.0982,
+        0.117
+      ],
+      "basis": [
+        "grille-slots"
+      ],
+      "source": "photo-1",
+      "note": "The front is a punched sheet: 15 slots per block, 2.6 mm high at 6.4 mm pitch, with the metal webs drawn as ribs.",
+      "look": {
+        "weight": 1.05,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "front-rib-speaker-12",
+      "label": "Steel web between grille slots",
+      "role": "structure",
+      "stage": 1,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.23,
+          0.00413,
+          0.004
+        ]
+      },
+      "at": [
+        -0.112,
+        0.10413,
+        0.117
+      ],
+      "basis": [
+        "grille-slots"
+      ],
+      "source": "photo-1",
+      "note": "The front is a punched sheet: 15 slots per block, 2.6 mm high at 6.4 mm pitch, with the metal webs drawn as ribs.",
+      "look": {
+        "weight": 1.05,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "front-rib-vent-12",
+      "label": "Steel web between grille slots",
+      "role": "structure",
+      "stage": 1,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.12299999999999998,
+          0.00413,
+          0.004
+        ]
+      },
+      "at": [
+        0.1775,
+        0.10413,
+        0.117
+      ],
+      "basis": [
+        "grille-slots"
+      ],
+      "source": "photo-1",
+      "note": "The front is a punched sheet: 15 slots per block, 2.6 mm high at 6.4 mm pitch, with the metal webs drawn as ribs.",
+      "look": {
+        "weight": 1.05,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "front-rib-speaker-13",
+      "label": "Steel web between grille slots",
+      "role": "structure",
+      "stage": 1,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.23,
+          0.00413,
+          0.004
+        ]
+      },
+      "at": [
+        -0.112,
+        0.11007,
+        0.117
+      ],
+      "basis": [
+        "grille-slots"
+      ],
+      "source": "photo-1",
+      "note": "The front is a punched sheet: 15 slots per block, 2.6 mm high at 6.4 mm pitch, with the metal webs drawn as ribs.",
+      "look": {
+        "weight": 1.05,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "front-rib-vent-13",
+      "label": "Steel web between grille slots",
+      "role": "structure",
+      "stage": 1,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.12299999999999998,
+          0.00413,
+          0.004
+        ]
+      },
+      "at": [
+        0.1775,
+        0.11007,
+        0.117
+      ],
+      "basis": [
+        "grille-slots"
+      ],
+      "source": "photo-1",
+      "note": "The front is a punched sheet: 15 slots per block, 2.6 mm high at 6.4 mm pitch, with the metal webs drawn as ribs.",
+      "look": {
+        "weight": 1.05,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "front-rib-speaker-14",
+      "label": "Steel web between grille slots",
+      "role": "structure",
+      "stage": 1,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.23,
+          0.00413,
+          0.004
+        ]
+      },
+      "at": [
+        -0.112,
+        0.116,
+        0.117
+      ],
+      "basis": [
+        "grille-slots"
+      ],
+      "source": "photo-1",
+      "note": "The front is a punched sheet: 15 slots per block, 2.6 mm high at 6.4 mm pitch, with the metal webs drawn as ribs.",
+      "look": {
+        "weight": 1.05,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "front-rib-vent-14",
+      "label": "Steel web between grille slots",
+      "role": "structure",
+      "stage": 1,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.12299999999999998,
+          0.00413,
+          0.004
+        ]
+      },
+      "at": [
+        0.1775,
+        0.116,
+        0.117
+      ],
+      "basis": [
+        "grille-slots"
+      ],
+      "source": "photo-1",
+      "note": "The front is a punched sheet: 15 slots per block, 2.6 mm high at 6.4 mm pitch, with the metal webs drawn as ribs.",
+      "look": {
+        "weight": 1.05,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "front-rib-speaker-15",
+      "label": "Steel web between grille slots",
+      "role": "structure",
+      "stage": 1,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.23,
+          0.00413,
+          0.004
+        ]
+      },
+      "at": [
+        -0.112,
+        0.12193,
+        0.117
+      ],
+      "basis": [
+        "grille-slots"
+      ],
+      "source": "photo-1",
+      "note": "The front is a punched sheet: 15 slots per block, 2.6 mm high at 6.4 mm pitch, with the metal webs drawn as ribs.",
+      "look": {
+        "weight": 1.05,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "front-rib-vent-15",
+      "label": "Steel web between grille slots",
+      "role": "structure",
+      "stage": 1,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.12299999999999998,
+          0.00413,
+          0.004
+        ]
+      },
+      "at": [
+        0.1775,
+        0.12193,
+        0.117
+      ],
+      "basis": [
+        "grille-slots"
+      ],
+      "source": "photo-1",
+      "note": "The front is a punched sheet: 15 slots per block, 2.6 mm high at 6.4 mm pitch, with the metal webs drawn as ribs.",
+      "look": {
+        "weight": 1.05,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "body-back",
+      "label": "White steel back panel",
+      "role": "mass",
+      "stage": 1,
+      "certainty": {
+        "size": "verified",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.5439999999999999,
+          0.142,
+          0.004
+        ]
+      },
+      "at": [
+        0,
+        0.084,
+        -0.117
+      ],
+      "basis": [
+        "width",
+        "front-height"
+      ],
+      "look": {
+        "fill": "dark",
+        "alpha": 0.85,
+        "weight": 1.0
+      }
+    },
+    {
+      "id": "body-side-left",
+      "label": "Left steel side wall",
+      "role": "structure",
+      "stage": 1,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.004,
+          0.142,
+          0.23
+        ]
+      },
+      "at": [
+        -0.26999999999999996,
+        0.084,
+        0
+      ],
+      "basis": [
+        "front-height"
+      ],
+      "look": {
+        "weight": 0.6,
+        "alpha": 0.45
+      }
+    },
+    {
+      "id": "body-side-right",
+      "label": "Right steel side wall",
+      "role": "structure",
+      "stage": 1,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.004,
+          0.142,
+          0.23
+        ]
+      },
+      "at": [
+        0.26999999999999996,
+        0.084,
+        0
+      ],
+      "basis": [
+        "front-height"
+      ],
+      "look": {
+        "weight": 0.6,
+        "alpha": 0.45
+      }
+    },
+    {
+      "id": "body-bottom",
+      "label": "Steel bottom tray",
+      "role": "structure",
+      "stage": 1,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.5359999999999999,
+          0.004,
+          0.23
+        ]
+      },
+      "at": [
+        0,
+        0.015,
+        0
+      ],
+      "basis": [
+        "width"
+      ],
+      "look": {
+        "weight": 0.55,
+        "alpha": 0.35
+      }
+    },
+    {
+      "id": "deck-plate",
+      "label": "White deck plate",
+      "role": "mass",
+      "stage": 2,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.5359999999999999,
+          0.004,
+          0.23
+        ]
+      },
+      "at": [
+        0,
+        0.149,
+        0
+      ],
+      "basis": [
+        "width",
+        "depth"
+      ],
+      "note": "The deck sits 4 mm below the body rim; the rim reads as the thin white edge in photo-1.",
+      "look": {
+        "fill": "dark",
+        "alpha": 0.8,
+        "weight": 1.0
+      }
+    },
+    {
+      "id": "rear-wall-left",
+      "label": "Rear wall, left of the record cutout",
+      "role": "mass",
+      "stage": 2,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.208,
+          0.11700000000000002,
+          0.004
+        ]
+      },
+      "at": [
+        -0.164,
+        0.21350000000000002,
+        -0.117
+      ],
+      "basis": [
+        "height",
+        "hood-cutout"
+      ],
+      "note": "No photograph shows the back. A cabinet 'closed on all sides' (1956 brochure) needs a wall up to the hood's back edge, and the record cutout belongs in it.",
+      "look": {
+        "fill": "dark",
+        "alpha": 0.8,
+        "weight": 0.95
+      }
+    },
+    {
+      "id": "rear-wall-right",
+      "label": "Rear wall, right of the record cutout",
+      "role": "mass",
+      "stage": 2,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.208,
+          0.11700000000000002,
+          0.004
+        ]
+      },
+      "at": [
+        0.164,
+        0.21350000000000002,
+        -0.117
+      ],
+      "basis": [
+        "height",
+        "hood-cutout"
+      ],
+      "look": {
+        "fill": "dark",
+        "alpha": 0.8,
+        "weight": 0.95
+      }
+    },
+    {
+      "id": "rear-wall-cutout-sill",
+      "label": "Sill under the record cutout",
+      "role": "structure",
+      "stage": 2,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.12,
+          0.01,
+          0.004
+        ]
+      },
+      "at": [
+        0,
+        0.156,
+        -0.117
+      ],
+      "basis": [
+        "hood-cutout"
+      ],
+      "look": {
+        "weight": 0.5,
+        "alpha": 0.4
+      }
+    },
+    {
+      "id": "rear-wall-above-cutout",
+      "label": "Rear wall above the record cutout",
+      "role": "mass",
+      "stage": 2,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.12,
+          0.08500000000000002,
+          0.004
+        ]
+      },
+      "at": [
+        0,
+        0.2295,
+        -0.117
+      ],
+      "basis": [
+        "height",
+        "hood-cutout"
+      ],
+      "look": {
+        "fill": "dark",
+        "alpha": 0.8,
+        "weight": 0.95
+      }
+    },
+    {
+      "id": "turntable-chassis",
+      "label": "Grey turntable chassis plate",
+      "role": "mass",
+      "stage": 2,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "extrude",
+        "profile": [
+          [
+            0.16,
+            0.0935
+          ],
+          [
+            0.15973,
+            0.09623
+          ],
+          [
+            0.15893,
+            0.09886
+          ],
+          [
+            0.15764,
+            0.10128
+          ],
+          [
+            0.1559,
+            0.1034
+          ],
+          [
+            0.15378,
+            0.10514
+          ],
+          [
+            0.15136,
+            0.10643
+          ],
+          [
+            0.14873,
+            0.10723
+          ],
+          [
+            0.146,
+            0.1075
+          ],
+          [
+            -0.146,
+            0.1075
+          ],
+          [
+            -0.14873,
+            0.10723
+          ],
+          [
+            -0.15136,
+            0.10643
+          ],
+          [
+            -0.15378,
+            0.10514
+          ],
+          [
+            -0.1559,
+            0.1034
+          ],
+          [
+            -0.15764,
+            0.10128
+          ],
+          [
+            -0.15893,
+            0.09886
+          ],
+          [
+            -0.15973,
+            0.09623
+          ],
+          [
+            -0.16,
+            0.0935
+          ],
+          [
+            -0.16,
+            -0.0935
+          ],
+          [
+            -0.15973,
+            -0.09623
+          ],
+          [
+            -0.15893,
+            -0.09886
+          ],
+          [
+            -0.15764,
+            -0.10128
+          ],
+          [
+            -0.1559,
+            -0.1034
+          ],
+          [
+            -0.15378,
+            -0.10514
+          ],
+          [
+            -0.15136,
+            -0.10643
+          ],
+          [
+            -0.14873,
+            -0.10723
+          ],
+          [
+            -0.146,
+            -0.1075
+          ],
+          [
+            0.146,
+            -0.1075
+          ],
+          [
+            0.14873,
+            -0.10723
+          ],
+          [
+            0.15136,
+            -0.10643
+          ],
+          [
+            0.15378,
+            -0.10514
+          ],
+          [
+            0.1559,
+            -0.1034
+          ],
+          [
+            0.15764,
+            -0.10128
+          ],
+          [
+            0.15893,
+            -0.09886
+          ],
+          [
+            0.15973,
+            -0.09623
+          ],
+          [
+            0.16,
+            -0.0935
+          ]
+        ],
+        "height": 0.005,
+        "axis": "y"
+      },
+      "at": [
+        -0.075,
+        0.151,
+        0.005
+      ],
+      "basis": [
+        "depth"
+      ],
+      "source": "photo-3",
+      "note": "Light-grey cast plate with rounded corners, inset in the white deck; proportions read from photo-3.",
+      "look": {
+        "fill": "dark",
+        "alpha": 0.8,
+        "weight": 1.1
+      }
+    },
+    {
+      "id": "platter",
+      "label": "Turntable platter",
+      "role": "identity",
+      "stage": 3,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.1025,
+        "height": 0.011,
+        "segments": 64
+      },
+      "at": [
+        -0.095,
+        0.156,
+        0.005
+      ],
+      "basis": [
+        "turntable"
+      ],
+      "source": "photo-2",
+      "note": "205 mm white platter in a shallow well; a 10-inch record lies some 25 mm proud of it all round in photo-1.",
+      "look": {
+        "fill": "dark",
+        "alpha": 0.18,
+        "weight": 1.45,
+        "glow": 0.4
+      },
+      "motion": {
+        "type": "spin",
+        "axis": [
+          0,
+          1,
+          0
+        ],
+        "rpm": 33.33,
+        "pivot": [
+          -0.095,
+          0.16699999999999998,
+          0.005
+        ]
+      }
+    },
+    {
+      "id": "platter-rim",
+      "label": "Platter rim ring",
+      "role": "detail",
+      "stage": 3,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "torus",
+        "major": 0.1012,
+        "minor": 0.0016,
+        "segments": 96,
+        "sides": 4
+      },
+      "at": [
+        -0.095,
+        0.16849999999999998,
+        0.005
+      ],
+      "basis": [
+        "turntable"
+      ],
+      "look": {
+        "weight": 0.6,
+        "alpha": 0.5
+      },
+      "motion": {
+        "type": "spin",
+        "axis": [
+          0,
+          1,
+          0
+        ],
+        "rpm": 33.33,
+        "pivot": [
+          -0.095,
+          0.16699999999999998,
+          0.005
+        ]
+      }
+    },
+    {
+      "id": "well-groove",
+      "label": "Platter well groove",
+      "role": "detail",
+      "stage": 3,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "torus",
+        "major": 0.1085,
+        "minor": 0.0026,
+        "segments": 56,
+        "sides": 8
+      },
+      "at": [
+        -0.095,
+        0.1576,
+        0.005
+      ],
+      "basis": [
+        "turntable"
+      ],
+      "look": {
+        "weight": 0.45,
+        "alpha": 0.35
+      }
+    },
+    {
+      "id": "platter-notch",
+      "label": "Platter lifting mark",
+      "role": "detail",
+      "stage": 3,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.016,
+          0.002,
+          0.0045
+        ]
+      },
+      "at": [
+        -0.007000000000000006,
+        0.1678,
+        0.005
+      ],
+      "basis": [
+        "platter-nubs"
+      ],
+      "source": "photo-2",
+      "note": "Six dark marks at 60 degrees, as counted in photo-2.",
+      "look": {
+        "weight": 0.9,
+        "alpha": 0.8,
+        "fill": "dark"
+      },
+      "repeat": {
+        "count": 6,
+        "radial": {
+          "axis": "y",
+          "center": [
+            -0.095,
+            0.1678,
+            0.005
+          ],
+          "span": 360
+        }
+      },
+      "motion": {
+        "type": "spin",
+        "axis": [
+          0,
+          1,
+          0
+        ],
+        "rpm": 33.33,
+        "pivot": [
+          -0.095,
+          0.16699999999999998,
+          0.005
+        ]
+      }
+    },
+    {
+      "id": "spider-hub",
+      "label": "Platter support hub",
+      "role": "identity",
+      "stage": 3,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.013,
+        "height": 0.008,
+        "segments": 24
+      },
+      "at": [
+        -0.095,
+        0.16699999999999998,
+        0.005
+      ],
+      "basis": [
+        "platter-nubs"
+      ],
+      "source": "photo-3",
+      "look": {
+        "weight": 1.1,
+        "glow": 0.3
+      },
+      "motion": {
+        "type": "spin",
+        "axis": [
+          0,
+          1,
+          0
+        ],
+        "rpm": 33.33,
+        "pivot": [
+          -0.095,
+          0.16699999999999998,
+          0.005
+        ]
+      }
+    },
+    {
+      "id": "spider-arm",
+      "label": "Platter support arm",
+      "role": "identity",
+      "stage": 3,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "tube",
+        "path": [
+          [
+            -0.084,
+            0.1706,
+            0.005
+          ],
+          [
+            -0.078,
+            0.1703,
+            0.005
+          ],
+          [
+            -0.07200000000000001,
+            0.16999999999999998,
+            0.005
+          ]
+        ],
+        "radius": [
+          0.0036,
+          0.0028,
+          0.0018
+        ],
+        "sides": 6,
+        "ring_every": 0,
+        "longitudinal": 2,
+        "caps": true
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "basis": [
+        "platter-nubs"
+      ],
+      "source": "photo-3",
+      "note": "The characteristic three-armed star that carries the record above the platter.",
+      "look": {
+        "weight": 1.2,
+        "glow": 0.35
+      },
+      "repeat": {
+        "count": 3,
+        "radial": {
+          "axis": "y",
+          "center": [
+            -0.095,
+            0.17099999999999999,
+            0.005
+          ],
+          "span": 360
+        }
+      },
+      "motion": {
+        "type": "spin",
+        "axis": [
+          0,
+          1,
+          0
+        ],
+        "rpm": 33.33,
+        "pivot": [
+          -0.095,
+          0.16699999999999998,
+          0.005
+        ]
+      }
+    },
+    {
+      "id": "spindle",
+      "label": "Spindle",
+      "role": "identity",
+      "stage": 3,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.0026,
+        "height": 0.016,
+        "segments": 16
+      },
+      "at": [
+        -0.095,
+        0.175,
+        0.005
+      ],
+      "basis": [
+        "turntable"
+      ],
+      "source": "photo-3",
+      "look": {
+        "weight": 1.2,
+        "glow": 0.45
+      },
+      "motion": {
+        "type": "spin",
+        "axis": [
+          0,
+          1,
+          0
+        ],
+        "rpm": 33.33,
+        "pivot": [
+          -0.095,
+          0.16699999999999998,
+          0.005
+        ]
+      }
+    },
+    {
+      "id": "tonearm-pivot-boss",
+      "label": "Tonearm bearing collar",
+      "role": "structure",
+      "stage": 4,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.0095,
+        "height": 0.02,
+        "segments": 24,
+        "rings": 2
+      },
+      "at": [
+        0.04,
+        0.156,
+        -0.086
+      ],
+      "basis": [
+        "turntable"
+      ],
+      "source": "photo-2",
+      "look": {
+        "weight": 0.8
+      }
+    },
+    {
+      "id": "tonearm",
+      "label": "Tonearm",
+      "role": "identity",
+      "stage": 4,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "tube",
+        "path": [
+          [
+            0.04,
+            0.182,
+            -0.086
+          ],
+          [
+            0.05,
+            0.17,
+            -0.058
+          ],
+          [
+            0.053,
+            0.17,
+            -0.02
+          ],
+          [
+            0.05,
+            0.169,
+            0.018
+          ],
+          [
+            0.038,
+            0.167,
+            0.052
+          ],
+          [
+            0.026,
+            0.165,
+            0.074
+          ]
+        ],
+        "radius": [
+          0.0032,
+          0.003,
+          0.0028,
+          0.0026,
+          0.0024,
+          0.0022
+        ],
+        "sides": 8,
+        "samples": 14,
+        "ring_every": 0,
+        "longitudinal": 2,
+        "caps": true
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "basis": [
+        "turntable"
+      ],
+      "source": "photo-2",
+      "note": "Ivory tapered arm with no counterweight, sweeping from a rear bearing to a headshell at the front right of the platter.",
+      "look": {
+        "weight": 1.4,
+        "glow": 0.4
+      }
+    },
+    {
+      "id": "tonearm-headshell",
+      "label": "Headshell shoe",
+      "role": "identity",
+      "stage": 4,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "extrude",
+        "axis": "z",
+        "height": 0.026,
+        "profile": [
+          [
+            -0.01,
+            0.0
+          ],
+          [
+            0.01,
+            0.0
+          ],
+          [
+            0.01,
+            0.005
+          ],
+          [
+            0.005,
+            0.0095
+          ],
+          [
+            -0.005,
+            0.0095
+          ],
+          [
+            -0.01,
+            0.005
+          ]
+        ]
+      },
+      "at": [
+        0.028,
+        0.161,
+        0.068
+      ],
+      "basis": [
+        "turntable"
+      ],
+      "source": "photo-2",
+      "look": {
+        "weight": 1.1,
+        "glow": 0.3
+      }
+    },
+    {
+      "id": "tonearm-stylus",
+      "label": "Stylus",
+      "role": "detail",
+      "stage": 4,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.0012,
+        "height": 0.004,
+        "segments": 10
+      },
+      "at": [
+        0.028,
+        0.157,
+        0.09
+      ],
+      "look": {
+        "weight": 0.5,
+        "alpha": 0.7
+      }
+    },
+    {
+      "id": "tonearm-grip",
+      "label": "Arm lift finger",
+      "role": "detail",
+      "stage": 4,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.0045,
+          0.0045,
+          0.014
+        ]
+      },
+      "at": [
+        0.03,
+        0.1727,
+        0.086
+      ],
+      "source": "photo-2",
+      "look": {
+        "weight": 0.6,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "arm-rest-post",
+      "label": "Tonearm rest post",
+      "role": "structure",
+      "stage": 4,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.0042,
+        "height": 0.0145,
+        "segments": 16
+      },
+      "at": [
+        0.056,
+        0.156,
+        0.006
+      ],
+      "source": "photo-2",
+      "look": {
+        "weight": 0.7
+      }
+    },
+    {
+      "id": "arm-rest-cup",
+      "label": "Tonearm rest cup",
+      "role": "identity",
+      "stage": 4,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.011,
+        "height": 0.0079,
+        "segments": 20,
+        "rings": 2
+      },
+      "at": [
+        0.056,
+        0.17049999999999998,
+        0.006
+      ],
+      "basis": [
+        "turntable"
+      ],
+      "source": "photo-2",
+      "note": "The chunky white scoop the arm lies in, standing beside the headshell.",
+      "look": {
+        "weight": 1.2,
+        "glow": 0.3
+      }
+    },
+    {
+      "id": "knob-1-skirt",
+      "label": "Small knob 1 skirt",
+      "role": "structure",
+      "stage": 5,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.0122,
+        "height": 0.0025,
+        "segments": 24
+      },
+      "at": [
+        0.112,
+        0.151,
+        -0.072
+      ],
+      "basis": [
+        "controls"
+      ],
+      "source": "photo-2",
+      "look": {
+        "weight": 0.7,
+        "alpha": 0.8
+      }
+    },
+    {
+      "id": "knob-1",
+      "label": "Small control knob 1",
+      "role": "identity",
+      "stage": 5,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "cone",
+        "radius_bottom": 0.0112,
+        "radius_top": 0.0094,
+        "height": 0.017,
+        "segments": 24,
+        "rings": 2
+      },
+      "at": [
+        0.112,
+        0.1535,
+        -0.072
+      ],
+      "basis": [
+        "controls"
+      ],
+      "source": "photo-2",
+      "note": "Four light-grey knobs in a column: volume and the tone controls. Sizes read from photo-2 against the 205 mm platter.",
+      "look": {
+        "weight": 1.3,
+        "glow": 0.35
+      }
+    },
+    {
+      "id": "knob-1-pointer",
+      "label": "Knob 1 indicator line",
+      "role": "detail",
+      "stage": 5,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.0024,
+          0.0018,
+          0.0118
+        ]
+      },
+      "at": [
+        0.112,
+        0.1714,
+        -0.074
+      ],
+      "source": "photo-2",
+      "look": {
+        "weight": 0.5,
+        "alpha": 0.75
+      }
+    },
+    {
+      "id": "knob-2-skirt",
+      "label": "Small knob 2 skirt",
+      "role": "structure",
+      "stage": 5,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.0122,
+        "height": 0.0025,
+        "segments": 24
+      },
+      "at": [
+        0.112,
+        0.151,
+        -0.042
+      ],
+      "basis": [
+        "controls"
+      ],
+      "source": "photo-2",
+      "look": {
+        "weight": 0.7,
+        "alpha": 0.8
+      }
+    },
+    {
+      "id": "knob-2",
+      "label": "Small control knob 2",
+      "role": "identity",
+      "stage": 5,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "cone",
+        "radius_bottom": 0.0104,
+        "radius_top": 0.0087,
+        "height": 0.0165,
+        "segments": 24,
+        "rings": 2
+      },
+      "at": [
+        0.112,
+        0.1535,
+        -0.042
+      ],
+      "basis": [
+        "controls"
+      ],
+      "source": "photo-2",
+      "note": "Four light-grey knobs in a column: volume and the tone controls. Sizes read from photo-2 against the 205 mm platter.",
+      "look": {
+        "weight": 1.3,
+        "glow": 0.35
+      }
+    },
+    {
+      "id": "knob-2-pointer",
+      "label": "Knob 2 indicator line",
+      "role": "detail",
+      "stage": 5,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.0024,
+          0.0018,
+          0.0118
+        ]
+      },
+      "at": [
+        0.112,
+        0.1709,
+        -0.044000000000000004
+      ],
+      "source": "photo-2",
+      "look": {
+        "weight": 0.5,
+        "alpha": 0.75
+      }
+    },
+    {
+      "id": "knob-3-skirt",
+      "label": "Small knob 3 skirt",
+      "role": "structure",
+      "stage": 5,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.0122,
+        "height": 0.0025,
+        "segments": 24
+      },
+      "at": [
+        0.112,
+        0.151,
+        -0.012
+      ],
+      "basis": [
+        "controls"
+      ],
+      "source": "photo-2",
+      "look": {
+        "weight": 0.7,
+        "alpha": 0.8
+      }
+    },
+    {
+      "id": "knob-3",
+      "label": "Small control knob 3",
+      "role": "identity",
+      "stage": 5,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "cone",
+        "radius_bottom": 0.0096,
+        "radius_top": 0.008,
+        "height": 0.016,
+        "segments": 24,
+        "rings": 2
+      },
+      "at": [
+        0.112,
+        0.1535,
+        -0.012
+      ],
+      "basis": [
+        "controls"
+      ],
+      "source": "photo-2",
+      "note": "Four light-grey knobs in a column: volume and the tone controls. Sizes read from photo-2 against the 205 mm platter.",
+      "look": {
+        "weight": 1.3,
+        "glow": 0.35
+      }
+    },
+    {
+      "id": "knob-3-pointer",
+      "label": "Knob 3 indicator line",
+      "role": "detail",
+      "stage": 5,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.0024,
+          0.0018,
+          0.0118
+        ]
+      },
+      "at": [
+        0.112,
+        0.1704,
+        -0.014
+      ],
+      "source": "photo-2",
+      "look": {
+        "weight": 0.5,
+        "alpha": 0.75
+      }
+    },
+    {
+      "id": "knob-4-skirt",
+      "label": "Small knob 4 skirt",
+      "role": "structure",
+      "stage": 5,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.0122,
+        "height": 0.0025,
+        "segments": 24
+      },
+      "at": [
+        0.112,
+        0.151,
+        0.018
+      ],
+      "basis": [
+        "controls"
+      ],
+      "source": "photo-2",
+      "look": {
+        "weight": 0.7,
+        "alpha": 0.8
+      }
+    },
+    {
+      "id": "knob-4",
+      "label": "Small control knob 4",
+      "role": "identity",
+      "stage": 5,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "cone",
+        "radius_bottom": 0.0088,
+        "radius_top": 0.0073,
+        "height": 0.0155,
+        "segments": 24,
+        "rings": 2
+      },
+      "at": [
+        0.112,
+        0.1535,
+        0.018
+      ],
+      "basis": [
+        "controls"
+      ],
+      "source": "photo-2",
+      "note": "Four light-grey knobs in a column: volume and the tone controls. Sizes read from photo-2 against the 205 mm platter.",
+      "look": {
+        "weight": 1.3,
+        "glow": 0.35
+      }
+    },
+    {
+      "id": "knob-4-pointer",
+      "label": "Knob 4 indicator line",
+      "role": "detail",
+      "stage": 5,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.0024,
+          0.0018,
+          0.0118
+        ]
+      },
+      "at": [
+        0.112,
+        0.1699,
+        0.016
+      ],
+      "source": "photo-2",
+      "look": {
+        "weight": 0.5,
+        "alpha": 0.75
+      }
+    },
+    {
+      "id": "button-well",
+      "label": "Push-button well",
+      "role": "structure",
+      "stage": 5,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.1,
+          0.004,
+          0.016
+        ]
+      },
+      "at": [
+        0.147,
+        0.153,
+        0.092
+      ],
+      "source": "photo-1",
+      "look": {
+        "fill": "dark",
+        "weight": 0.5,
+        "alpha": 0.5
+      }
+    },
+    {
+      "id": "button-1",
+      "label": "Push-button ein aus",
+      "role": "identity",
+      "stage": 5,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.0175,
+          0.013,
+          0.012
+        ]
+      },
+      "at": [
+        0.108,
+        0.1615,
+        0.092
+      ],
+      "basis": [
+        "buttons"
+      ],
+      "source": "photo-1",
+      "look": {
+        "weight": 1.15,
+        "glow": 0.3
+      }
+    },
+    {
+      "id": "button-2",
+      "label": "Push-button Phono",
+      "role": "identity",
+      "stage": 5,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.0175,
+          0.013,
+          0.012
+        ]
+      },
+      "at": [
+        0.1275,
+        0.1615,
+        0.092
+      ],
+      "basis": [
+        "buttons"
+      ],
+      "source": "photo-1",
+      "look": {
+        "weight": 1.15,
+        "glow": 0.3
+      }
+    },
+    {
+      "id": "button-3",
+      "label": "Push-button LW",
+      "role": "identity",
+      "stage": 5,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.0175,
+          0.013,
+          0.012
+        ]
+      },
+      "at": [
+        0.147,
+        0.1615,
+        0.092
+      ],
+      "basis": [
+        "buttons"
+      ],
+      "source": "photo-1",
+      "look": {
+        "weight": 1.15,
+        "glow": 0.3
+      }
+    },
+    {
+      "id": "button-4",
+      "label": "Push-button MW",
+      "role": "identity",
+      "stage": 5,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.0175,
+          0.013,
+          0.012
+        ]
+      },
+      "at": [
+        0.16649999999999998,
+        0.1615,
+        0.092
+      ],
+      "basis": [
+        "buttons"
+      ],
+      "source": "photo-1",
+      "look": {
+        "weight": 1.15,
+        "glow": 0.3
+      }
+    },
+    {
+      "id": "button-5",
+      "label": "Push-button UKW",
+      "role": "identity",
+      "stage": 5,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.0175,
+          0.013,
+          0.012
+        ]
+      },
+      "at": [
+        0.186,
+        0.1615,
+        0.092
+      ],
+      "basis": [
+        "buttons"
+      ],
+      "source": "photo-1",
+      "look": {
+        "weight": 1.15,
+        "glow": 0.3
+      }
+    },
+    {
+      "id": "tuning-knob",
+      "label": "Large tuning knob (Sender)",
+      "role": "identity",
+      "stage": 5,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "cone",
+        "radius_bottom": 0.0175,
+        "radius_top": 0.015,
+        "height": 0.022,
+        "segments": 32,
+        "rings": 2
+      },
+      "at": [
+        0.24,
+        0.151,
+        0.082
+      ],
+      "basis": [
+        "controls"
+      ],
+      "source": "photo-1",
+      "note": "26-33 mm across and about twice a small knob's height: the one large control, and the one this owner is missing.",
+      "look": {
+        "weight": 1.5,
+        "glow": 0.5
+      }
+    },
+    {
+      "id": "tuning-knob-pointer",
+      "label": "Tuning knob indicator line",
+      "role": "detail",
+      "stage": 5,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.0024,
+          0.0011,
+          0.0135
+        ]
+      },
+      "at": [
+        0.24,
+        0.1735,
+        0.0785
+      ],
+      "source": "photo-2",
+      "look": {
+        "weight": 0.55,
+        "alpha": 0.8
+      }
+    },
+    {
+      "id": "dial-card",
+      "label": "Dial scale card",
+      "role": "identity",
+      "stage": 5,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.036,
+          0.0018,
+          0.11
+        ]
+      },
+      "at": [
+        0.206,
+        0.1519,
+        -0.012
+      ],
+      "basis": [
+        "controls"
+      ],
+      "source": "photo-2",
+      "note": "Printed paper scale (Otl Aicher's typography) glued to the chassis: a narrow window running front to back beside the right cheek.",
+      "look": {
+        "fill": "dark",
+        "weight": 0.9,
+        "glow": 0.2
+      }
+    },
+    {
+      "id": "dial-bezel-left",
+      "label": "Dial bezel, left",
+      "role": "structure",
+      "stage": 5,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.004,
+          0.005,
+          0.118
+        ]
+      },
+      "at": [
+        0.186,
+        0.1535,
+        -0.012
+      ],
+      "source": "photo-2",
+      "look": {
+        "weight": 0.8
+      }
+    },
+    {
+      "id": "dial-bezel-right",
+      "label": "Dial bezel, right",
+      "role": "structure",
+      "stage": 5,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.004,
+          0.005,
+          0.118
+        ]
+      },
+      "at": [
+        0.22599999999999998,
+        0.1535,
+        -0.012
+      ],
+      "source": "photo-2",
+      "look": {
+        "weight": 0.8
+      }
+    },
+    {
+      "id": "dial-bezel-front",
+      "label": "Dial bezel, front",
+      "role": "structure",
+      "stage": 5,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.044,
+          0.005,
+          0.004
+        ]
+      },
+      "at": [
+        0.206,
+        0.1535,
+        -0.069
+      ],
+      "source": "photo-2",
+      "look": {
+        "weight": 0.8
+      }
+    },
+    {
+      "id": "dial-bezel-back",
+      "label": "Dial bezel, back",
+      "role": "structure",
+      "stage": 5,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.044,
+          0.005,
+          0.004
+        ]
+      },
+      "at": [
+        0.206,
+        0.1535,
+        0.045
+      ],
+      "source": "photo-2",
+      "look": {
+        "weight": 0.8
+      }
+    },
+    {
+      "id": "dial-tick",
+      "label": "Dial scale graduation",
+      "role": "detail",
+      "stage": 5,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.014499999999999999,
+            0.15309999999999999,
+            0
+          ],
+          [
+            0.014499999999999999,
+            0.15309999999999999,
+            0
+          ]
+        ]
+      },
+      "at": [
+        0.206,
+        0,
+        -0.062000000000000006
+      ],
+      "basis": [
+        "controls"
+      ],
+      "source": "photo-2",
+      "note": "Fourteen graduation lines across the scale card, as printed on the paper scale.",
+      "look": {
+        "weight": 0.9,
+        "alpha": 0.85,
+        "line": "solid"
+      },
+      "repeat": {
+        "count": 14,
+        "step": {
+          "at": [
+            0,
+            0,
+            0.0074
+          ]
+        }
+      }
+    },
+    {
+      "id": "dial-hub",
+      "label": "Dial cursor hub",
+      "role": "data",
+      "stage": 5,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.0045,
+        "height": 0.006,
+        "segments": 16
+      },
+      "at": [
+        0.206,
+        0.1528,
+        0.036
+      ],
+      "basis": [
+        "controls"
+      ],
+      "source": "photo-2",
+      "note": "The knurled cursor knob at the front end of the scale.",
+      "look": {
+        "weight": 1.1,
+        "glow": 0.5
+      }
+    },
+    {
+      "id": "dial-pointer",
+      "label": "Dial pointer",
+      "role": "data",
+      "stage": 5,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.016,
+            0.1534,
+            0
+          ],
+          [
+            0.016,
+            0.1534,
+            0
+          ]
+        ]
+      },
+      "at": [
+        0.206,
+        0,
+        -0.05
+      ],
+      "basis": [
+        "controls"
+      ],
+      "source": "photo-2",
+      "note": "The slide cursor across the scale.",
+      "look": {
+        "weight": 1.6,
+        "glow": 0.75,
+        "line": "solid"
+      }
+    },
+    {
+      "id": "brand-field",
+      "label": "Maker's wordmark field",
+      "role": "identity",
+      "stage": 5,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.044,
+          0.0018,
+          0.01
+        ]
+      },
+      "at": [
+        0.112,
+        0.1519,
+        -0.1
+      ],
+      "basis": [
+        "brand"
+      ],
+      "source": "photo-2",
+      "look": {
+        "weight": 0.7,
+        "glow": 0.2
+      }
+    },
+    {
+      "id": "grille-slot-back-speaker",
+      "label": "Vent slots, back (long block)",
+      "role": "detail",
+      "stage": 6,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.215,
+            0.045,
+            -0.1193
+          ],
+          [
+            -0.005,
+            0.045,
+            -0.1193
+          ]
+        ]
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "basis": [
+        "grille-slots"
+      ],
+      "source": "wiki-de",
+      "note": "The back carries the same punched pattern as the front, for the speaker and for cooling.",
+      "look": {
+        "weight": 0.75,
+        "alpha": 0.55,
+        "line": "solid"
+      },
+      "repeat": {
+        "count": 15,
+        "step": {
+          "at": [
+            0,
+            0.0064,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": "grille-slot-back-vent",
+      "label": "Vent slots, back (short block)",
+      "role": "detail",
+      "stage": 6,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.118,
+            0.045,
+            -0.1193
+          ],
+          [
+            0.218,
+            0.045,
+            -0.1193
+          ]
+        ]
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "basis": [
+        "grille-slots"
+      ],
+      "source": "wiki-de",
+      "note": "Mirrors the front's short block.",
+      "look": {
+        "weight": 0.75,
+        "alpha": 0.55,
+        "line": "solid"
+      },
+      "repeat": {
+        "count": 15,
+        "step": {
+          "at": [
+            0,
+            0.0064,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": "rear-vent",
+      "label": "Rear vent slot",
+      "role": "detail",
+      "stage": 7,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.09,
+            0,
+            -0.1222
+          ],
+          [
+            0.01,
+            0,
+            -0.1222
+          ]
+        ]
+      },
+      "at": [
+        0,
+        0.17,
+        0
+      ],
+      "basis": [
+        "grille-slots"
+      ],
+      "source": "wiki-de",
+      "note": "The same punched vent pattern on the back, above the record cutout (Wikipedia: slots on front and rear).",
+      "look": {
+        "weight": 1.2,
+        "alpha": 0.9,
+        "line": "solid"
+      },
+      "repeat": {
+        "count": 15,
+        "step": {
+          "at": [
+            0,
+            0.0055,
+            0
+          ]
+        }
+      }
+    },
+    {
+      "id": "type-plate",
+      "label": "Type plate",
+      "role": "identity",
+      "stage": 7,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.058,
+          0.024,
+          0.0012
+        ]
+      },
+      "at": [
+        0.185,
+        0.196,
+        -0.1228
+      ],
+      "basis": [
+        "model"
+      ],
+      "source": "photo-2",
+      "note": "Maker's type plate on the back, as every Braun carried.",
+      "look": {
+        "fill": "dark",
+        "weight": 0.7,
+        "glow": 0.2
+      }
+    },
+    {
+      "id": "mains-inlet",
+      "label": "Mains inlet",
+      "role": "structure",
+      "stage": 7,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.036,
+          0.024,
+          0.003
+        ]
+      },
+      "at": [
+        0.185,
+        0.166,
+        -0.1225
+      ],
+      "basis": [
+        "model"
+      ],
+      "look": {
+        "fill": "dark",
+        "weight": 0.7
+      }
+    },
+    {
+      "id": "lid-glass-hood",
+      "label": "Clear acrylic hood",
+      "role": "identity",
+      "stage": 7,
+      "certainty": {
+        "size": "verified",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.548,
+          0.004,
+          0.2706011825546962
+        ]
+      },
+      "at": [
+        0,
+        0.21530339197113954,
+        0.0008647412320628052
+      ],
+      "rotate": [
+        25.618,
+        0,
+        0
+      ],
+      "basis": [
+        "width",
+        "hood-rake"
+      ],
+      "source": "photo-2",
+      "note": "One raked sheet of acrylic between the cheeks and over the deck: 548 x 281 mm, 4 mm thick, resting on the cheeks' raked tops.",
+      "look": {
+        "fill": "glass",
+        "weight": 1.5,
+        "alpha": 0.32,
+        "glow": 0.45
+      }
+    },
+    {
+      "id": "lid-rail-left",
+      "label": "Left hood rail (elm)",
+      "role": "identity",
+      "stage": 7,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.02,
+          0.02,
+          0.26460118255469617
+        ]
+      },
+      "at": [
+        -0.263,
+        0.22071356788455812,
+        0.003458964928251221
+      ],
+      "rotate": [
+        25.618,
+        0,
+        0
+      ],
+      "basis": [
+        "hood-rake"
+      ],
+      "source": "photo-1",
+      "note": "Thin elm rail on the hood's side edge, clamped to the acrylic and riding on the cheek.",
+      "look": {
+        "fill": "dark",
+        "alpha": 0.6,
+        "weight": 1.3,
+        "glow": 0.2
+      }
+    },
+    {
+      "id": "lid-rail-right",
+      "label": "Right hood rail (elm)",
+      "role": "identity",
+      "stage": 7,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.02,
+          0.02,
+          0.26460118255469617
+        ]
+      },
+      "at": [
+        0.263,
+        0.22071356788455812,
+        0.003458964928251221
+      ],
+      "rotate": [
+        25.618,
+        0,
+        0
+      ],
+      "basis": [
+        "hood-rake"
+      ],
+      "source": "photo-1",
+      "note": "Thin elm rail on the hood's side edge, clamped to the acrylic and riding on the cheek.",
+      "look": {
+        "fill": "dark",
+        "alpha": 0.6,
+        "weight": 1.3,
+        "glow": 0.2
+      }
+    },
+    {
+      "id": "lid-front-lip",
+      "label": "Hood front lip",
+      "role": "identity",
+      "stage": 7,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.548,
+          0.008,
+          0.004
+        ]
+      },
+      "at": [
+        0,
+        0.151,
+        0.1215
+      ],
+      "basis": [
+        "hood-rake"
+      ],
+      "source": "photo-1",
+      "note": "The hood's front edge is bent down 16 mm over the fascia, which is what makes it read as a lid rather than a pane.",
+      "look": {
+        "weight": 1.2,
+        "glow": 0.35
+      }
+    },
+    {
+      "id": "hinge-bracket-left",
+      "label": "Hood hinge bracket, left",
+      "role": "structure",
+      "stage": 7,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.032,
+          0.02,
+          0.01
+        ]
+      },
+      "at": [
+        -0.2,
+        0.262,
+        -0.1125
+      ],
+      "basis": [
+        "hood-rake"
+      ],
+      "source": "photo-2",
+      "note": "Two small steel brackets carry the hood at the cheeks' back edge.",
+      "look": {
+        "weight": 1.0,
+        "glow": 0.3
+      }
+    },
+    {
+      "id": "hinge-bracket-right",
+      "label": "Hood hinge bracket, right",
+      "role": "structure",
+      "stage": 7,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "box",
+        "size": [
+          0.032,
+          0.02,
+          0.01
+        ]
+      },
+      "at": [
+        0.2,
+        0.262,
+        -0.1125
+      ],
+      "basis": [
+        "hood-rake"
+      ],
+      "source": "photo-2",
+      "note": "Two small steel brackets carry the hood at the cheeks' back edge.",
+      "look": {
+        "weight": 1.0,
+        "glow": 0.3
+      }
+    },
+    {
+      "id": "seam-front-top",
+      "label": "Front panel top edge",
+      "role": "identity",
+      "stage": 2,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.272,
+            0.155,
+            0.1192
+          ],
+          [
+            0.272,
+            0.155,
+            0.1192
+          ]
+        ]
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "source": "photo-1",
+      "look": {
+        "weight": 1.4,
+        "alpha": 1.0,
+        "glow": 0.35,
+        "line": "solid"
+      }
+    },
+    {
+      "id": "seam-front-bottom",
+      "label": "Front panel bottom edge",
+      "role": "detail",
+      "stage": 2,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.272,
+            0.013999999999999999,
+            0.1192
+          ],
+          [
+            0.272,
+            0.013999999999999999,
+            0.1192
+          ]
+        ]
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "source": "photo-1",
+      "look": {
+        "weight": 0.9,
+        "alpha": 0.65,
+        "glow": 0.0,
+        "line": "solid"
+      }
+    },
+    {
+      "id": "seam-front-left",
+      "label": "Front panel, left return",
+      "role": "detail",
+      "stage": 2,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.2685,
+            0.013,
+            0.1192
+          ],
+          [
+            -0.2685,
+            0.155,
+            0.1192
+          ]
+        ]
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "source": "photo-1",
+      "look": {
+        "weight": 0.6,
+        "alpha": 0.6,
+        "glow": 0.0,
+        "line": "solid"
+      }
+    },
+    {
+      "id": "seam-front-right",
+      "label": "Front panel, right return",
+      "role": "detail",
+      "stage": 2,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.2685,
+            0.013,
+            0.1192
+          ],
+          [
+            0.2685,
+            0.155,
+            0.1192
+          ]
+        ]
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "source": "photo-1",
+      "look": {
+        "weight": 0.6,
+        "alpha": 0.6,
+        "glow": 0.0,
+        "line": "solid"
+      }
+    },
+    {
+      "id": "seam-back-top",
+      "label": "Back panel top edge",
+      "role": "detail",
+      "stage": 2,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.272,
+            0.155,
+            -0.1192
+          ],
+          [
+            0.272,
+            0.155,
+            -0.1192
+          ]
+        ]
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "source": "photo-1",
+      "look": {
+        "weight": 0.9,
+        "alpha": 0.65,
+        "glow": 0.0,
+        "line": "solid"
+      }
+    },
+    {
+      "id": "seam-deck-front",
+      "label": "Deck front seam",
+      "role": "detail",
+      "stage": 3,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.268,
+            0.1512,
+            0.1148
+          ],
+          [
+            0.268,
+            0.1512,
+            0.1148
+          ]
+        ]
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "source": "photo-1",
+      "look": {
+        "weight": 0.7,
+        "alpha": 0.7,
+        "glow": 0.0,
+        "line": "solid"
+      }
+    },
+    {
+      "id": "seam-chassis-edge",
+      "label": "Turntable chassis edge",
+      "role": "detail",
+      "stage": 4,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.235,
+            0.156,
+            0.005
+          ],
+          [
+            -0.235,
+            0.156,
+            0.1
+          ]
+        ]
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "source": "photo-3",
+      "look": {
+        "weight": 0.7,
+        "alpha": 0.6,
+        "glow": 0.0,
+        "line": "solid"
+      }
+    },
+    {
+      "id": "contour-cheek-left",
+      "label": "Cheek inset contour, left",
+      "role": "detail",
+      "stage": 2,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.29019999999999996,
+            0.012,
+            0.112
+          ],
+          [
+            -0.29019999999999996,
+            0.012,
+            -0.112
+          ],
+          [
+            -0.29019999999999996,
+            0.27799999999999997,
+            -0.112
+          ]
+        ]
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "source": "photo-3",
+      "look": {
+        "weight": 0.45,
+        "alpha": 0.3,
+        "glow": 0.0,
+        "line": "solid"
+      }
+    },
+    {
+      "id": "contour-cheek-right",
+      "label": "Cheek inset contour, right",
+      "role": "detail",
+      "stage": 2,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.29019999999999996,
+            0.012,
+            0.112
+          ],
+          [
+            0.29019999999999996,
+            0.012,
+            -0.112
+          ],
+          [
+            0.29019999999999996,
+            0.27799999999999997,
+            -0.112
+          ]
+        ]
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "source": "photo-3",
+      "look": {
+        "weight": 0.45,
+        "alpha": 0.3,
+        "glow": 0.0,
+        "line": "solid"
+      }
+    },
+    {
+      "id": "cheek-arris-left",
+      "label": "Elm arris, left cheek",
+      "role": "identity",
+      "stage": 2,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.29,
+            0.286,
+            -0.122
+          ],
+          [
+            -0.29,
+            0.151,
+            0.122
+          ]
+        ]
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "source": "photo-3",
+      "note": "A 4 mm rounded arris along the raked top edge, drawn as a second line under the cheek's own edge.",
+      "look": {
+        "weight": 1.1,
+        "alpha": 0.8,
+        "line": "solid"
+      }
+    },
+    {
+      "id": "cheek-arris-right",
+      "label": "Elm arris, right cheek",
+      "role": "identity",
+      "stage": 2,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.29,
+            0.286,
+            -0.122
+          ],
+          [
+            0.29,
+            0.151,
+            0.122
+          ]
+        ]
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "source": "photo-3",
+      "note": "A 4 mm rounded arris along the raked top edge, drawn as a second line under the cheek's own edge.",
+      "look": {
+        "weight": 1.1,
+        "alpha": 0.8,
+        "line": "solid"
+      }
+    },
+    {
+      "id": "platter-mat-seam",
+      "label": "Platter mat seam",
+      "role": "detail",
+      "stage": 3,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "basis": [
+        "turntable"
+      ],
+      "source": "photo-2",
+      "note": "The rubber mat's edge, 94 mm out: the SK 4 carried rubber pads on the platter.",
+      "shape": {
+        "type": "torus",
+        "major": 0.094,
+        "minor": 0.0012,
+        "segments": 56,
+        "sides": 6
+      },
+      "at": [
+        -0.095,
+        0.1688,
+        0.005
+      ],
+      "look": {
+        "weight": 0.55,
+        "alpha": 0.45
+      },
+      "motion": {
+        "type": "spin",
+        "axis": [
+          0,
+          1,
+          0
+        ],
+        "rpm": 33.33,
+        "pivot": [
+          -0.095,
+          0.16699999999999998,
+          0.005
+        ]
+      }
+    },
+    {
+      "id": "platter-label-ring",
+      "label": "Platter label ring",
+      "role": "detail",
+      "stage": 3,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "basis": [
+        "turntable"
+      ],
+      "source": "photo-2",
+      "note": "The centre label disc's edge, 44 mm out.",
+      "shape": {
+        "type": "torus",
+        "major": 0.044,
+        "minor": 0.0012,
+        "segments": 56,
+        "sides": 6
+      },
+      "at": [
+        -0.095,
+        0.1688,
+        0.005
+      ],
+      "look": {
+        "weight": 0.55,
+        "alpha": 0.45
+      },
+      "motion": {
+        "type": "spin",
+        "axis": [
+          0,
+          1,
+          0
+        ],
+        "rpm": 33.33,
+        "pivot": [
+          -0.095,
+          0.16699999999999998,
+          0.005
+        ]
+      }
+    },
+    {
+      "id": "cheek-contour-left-1",
+      "label": "Elm surface contour, left cheek 1",
+      "role": "detail",
+      "stage": 2,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "source": "photo-3",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.2902,
+            0.0555,
+            0.122
+          ],
+          [
+            -0.2902,
+            0.1888,
+            -0.122
+          ]
+        ]
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.45,
+        "alpha": 0.3,
+        "line": "solid"
+      }
+    },
+    {
+      "id": "cheek-contour-left-2",
+      "label": "Elm surface contour, left cheek 2",
+      "role": "detail",
+      "stage": 2,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "source": "photo-3",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.2902,
+            0.091,
+            0.122
+          ],
+          [
+            -0.2902,
+            0.2225,
+            -0.122
+          ]
+        ]
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.45,
+        "alpha": 0.3,
+        "line": "solid"
+      }
+    },
+    {
+      "id": "cheek-contour-left-3",
+      "label": "Elm surface contour, left cheek 3",
+      "role": "detail",
+      "stage": 2,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "source": "photo-3",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.2902,
+            0.1265,
+            0.122
+          ],
+          [
+            -0.2902,
+            0.2562,
+            -0.122
+          ]
+        ]
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.45,
+        "alpha": 0.3,
+        "line": "solid"
+      }
+    },
+    {
+      "id": "cheek-contour-right-1",
+      "label": "Elm surface contour, right cheek 1",
+      "role": "detail",
+      "stage": 2,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "source": "photo-3",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.2902,
+            0.0555,
+            0.122
+          ],
+          [
+            0.2902,
+            0.1888,
+            -0.122
+          ]
+        ]
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.45,
+        "alpha": 0.3,
+        "line": "solid"
+      }
+    },
+    {
+      "id": "cheek-contour-right-2",
+      "label": "Elm surface contour, right cheek 2",
+      "role": "detail",
+      "stage": 2,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "source": "photo-3",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.2902,
+            0.091,
+            0.122
+          ],
+          [
+            0.2902,
+            0.2225,
+            -0.122
+          ]
+        ]
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.45,
+        "alpha": 0.3,
+        "line": "solid"
+      }
+    },
+    {
+      "id": "cheek-contour-right-3",
+      "label": "Elm surface contour, right cheek 3",
+      "role": "detail",
+      "stage": 2,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "source": "photo-3",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.2902,
+            0.1265,
+            0.122
+          ],
+          [
+            0.2902,
+            0.2562,
+            -0.122
+          ]
+        ]
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.45,
+        "alpha": 0.3,
+        "line": "solid"
+      }
+    },
+    {
+      "id": "tonearm-finger-lift",
+      "label": "Finger lift",
+      "role": "detail",
+      "stage": 4,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "basis": [
+        "turntable"
+      ],
+      "source": "photo-2",
+      "note": "The small tab beside the headshell a hand lifts the arm by.",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.0035,
+          0.0035,
+          0.014
+        ]
+      },
+      "at": [
+        0.0405,
+        0.1655,
+        0.0785
+      ],
+      "look": {
+        "weight": 0.8,
+        "alpha": 0.85
+      }
+    },
+    {
+      "id": "rear-vent-short",
+      "label": "Rear vent slots, short block",
+      "role": "detail",
+      "stage": 7,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "basis": [
+        "grille-slots"
+      ],
+      "source": "wiki-de",
+      "note": "The shorter of the two punched fields, mirrored from the front as the SK 4 has them on both faces.",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.13,
+            0,
+            -0.1221
+          ],
+          [
+            0.236,
+            0,
+            -0.1221
+          ]
+        ]
+      },
+      "at": [
+        0,
+        0.17,
+        0
+      ],
+      "repeat": {
+        "count": 15,
+        "step": {
+          "at": [
+            0,
+            0.0055,
+            0
+          ]
+        }
+      },
+      "look": {
+        "weight": 1.2,
+        "alpha": 0.9,
+        "line": "solid"
+      }
+    },
+    {
+      "id": "chassis-floor",
+      "label": "Receiver chassis floor",
+      "role": "structure",
+      "stage": 2,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "basis": [
+        "width"
+      ],
+      "source": "wiki-de",
+      "note": "The steel shelf the receiver, turntable motor and mains transformer sit on, 60 mm above the base.",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.536,
+          0.004,
+          0.23
+        ]
+      },
+      "at": [
+        0,
+        0.062,
+        0
+      ],
+      "look": {
+        "fill": "dark",
+        "alpha": 0.55,
+        "weight": 0.8
+      }
+    },
+    {
+      "id": "speaker-driver-left",
+      "label": "Speaker driver, left",
+      "role": "structure",
+      "stage": 2,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "basis": [
+        "speaker"
+      ],
+      "source": "hifiblueprint",
+      "note": "An elliptical Isophon driver behind each punched field: 170 x 250 mm on the speaker side.",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.21,
+          0.033,
+          0.034
+        ]
+      },
+      "at": [
+        -0.11,
+        0.0805,
+        0.098
+      ],
+      "look": {
+        "fill": "dark",
+        "alpha": 0.5,
+        "weight": 0.6
+      }
+    },
+    {
+      "id": "speaker-driver-right",
+      "label": "Speaker driver, right",
+      "role": "structure",
+      "stage": 2,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "basis": [
+        "speaker"
+      ],
+      "source": "hifiblueprint",
+      "note": "An elliptical Isophon driver behind each punched field: 170 x 250 mm on the speaker side.",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.1,
+          0.033,
+          0.034
+        ]
+      },
+      "at": [
+        0.177,
+        0.0805,
+        0.098
+      ],
+      "look": {
+        "fill": "dark",
+        "alpha": 0.5,
+        "weight": 0.6
+      }
+    },
+    {
+      "id": "tuner-block",
+      "label": "Tuner and valve block",
+      "role": "structure",
+      "stage": 2,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "basis": [
+        "valves"
+      ],
+      "source": "wiki-de",
+      "note": "The valve receiver: ECC85, two EF89, EABC80 and EL84 on one chassis, under the dial end of the deck.",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.15,
+          0.055,
+          0.12
+        ]
+      },
+      "at": [
+        0.18,
+        0.064,
+        -0.02
+      ],
+      "look": {
+        "fill": "dark",
+        "alpha": 0.5,
+        "weight": 0.6
+      }
+    },
+    {
+      "id": "mains-transformer",
+      "label": "Mains transformer",
+      "role": "structure",
+      "stage": 2,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "basis": [
+        "weight"
+      ],
+      "source": "wiki-de",
+      "note": "The heavy block that gives the set its 11 kg; drawn small on the chassis floor.",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.085,
+          0.07,
+          0.07
+        ]
+      },
+      "at": [
+        -0.215,
+        0.064,
+        -0.06
+      ],
+      "look": {
+        "fill": "dark",
+        "alpha": 0.55,
+        "weight": 0.7
+      }
+    },
+    {
+      "id": "cheek-grain-left-1",
+      "label": "Elm grain, left cheek 1",
+      "role": "detail",
+      "stage": 2,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "source": "photo-3",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.2902,
+            0.014,
+            -0.112
+          ],
+          [
+            -0.2902,
+            0.1392,
+            -0.108
+          ],
+          [
+            -0.2902,
+            0.2785,
+            -0.111
+          ]
+        ]
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.45,
+        "alpha": 0.5,
+        "line": "solid"
+      }
+    },
+    {
+      "id": "cheek-grain-left-2",
+      "label": "Elm grain, left cheek 2",
+      "role": "detail",
+      "stage": 2,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "source": "photo-3",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.2902,
+            0.014,
+            -0.084
+          ],
+          [
+            -0.2902,
+            0.1315,
+            -0.08
+          ],
+          [
+            -0.2902,
+            0.263,
+            -0.083
+          ]
+        ]
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.45,
+        "alpha": 0.5,
+        "line": "solid"
+      }
+    },
+    {
+      "id": "cheek-grain-left-3",
+      "label": "Elm grain, left cheek 3",
+      "role": "detail",
+      "stage": 2,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "source": "photo-3",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.2902,
+            0.014,
+            -0.056
+          ],
+          [
+            -0.2902,
+            0.1237,
+            -0.052
+          ],
+          [
+            -0.2902,
+            0.2475,
+            -0.055
+          ]
+        ]
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.45,
+        "alpha": 0.5,
+        "line": "solid"
+      }
+    },
+    {
+      "id": "cheek-grain-left-4",
+      "label": "Elm grain, left cheek 4",
+      "role": "detail",
+      "stage": 2,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "source": "photo-3",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.2902,
+            0.014,
+            -0.028
+          ],
+          [
+            -0.2902,
+            0.116,
+            -0.024
+          ],
+          [
+            -0.2902,
+            0.232,
+            -0.027
+          ]
+        ]
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.45,
+        "alpha": 0.5,
+        "line": "solid"
+      }
+    },
+    {
+      "id": "cheek-grain-left-5",
+      "label": "Elm grain, left cheek 5",
+      "role": "detail",
+      "stage": 2,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "source": "photo-3",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.2902,
+            0.014,
+            0.0
+          ],
+          [
+            -0.2902,
+            0.1082,
+            0.004
+          ],
+          [
+            -0.2902,
+            0.2165,
+            0.001
+          ]
+        ]
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.45,
+        "alpha": 0.5,
+        "line": "solid"
+      }
+    },
+    {
+      "id": "cheek-grain-left-6",
+      "label": "Elm grain, left cheek 6",
+      "role": "detail",
+      "stage": 2,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "source": "photo-3",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.2902,
+            0.014,
+            0.028
+          ],
+          [
+            -0.2902,
+            0.1005,
+            0.032
+          ],
+          [
+            -0.2902,
+            0.201,
+            0.029
+          ]
+        ]
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.45,
+        "alpha": 0.5,
+        "line": "solid"
+      }
+    },
+    {
+      "id": "cheek-grain-left-7",
+      "label": "Elm grain, left cheek 7",
+      "role": "detail",
+      "stage": 2,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "source": "photo-3",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.2902,
+            0.014,
+            0.056
+          ],
+          [
+            -0.2902,
+            0.0928,
+            0.06
+          ],
+          [
+            -0.2902,
+            0.1855,
+            0.057
+          ]
+        ]
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.45,
+        "alpha": 0.5,
+        "line": "solid"
+      }
+    },
+    {
+      "id": "cheek-grain-left-8",
+      "label": "Elm grain, left cheek 8",
+      "role": "detail",
+      "stage": 2,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "source": "photo-3",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.2902,
+            0.014,
+            0.084
+          ],
+          [
+            -0.2902,
+            0.085,
+            0.088
+          ],
+          [
+            -0.2902,
+            0.17,
+            0.085
+          ]
+        ]
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.45,
+        "alpha": 0.5,
+        "line": "solid"
+      }
+    },
+    {
+      "id": "cheek-grain-left-9",
+      "label": "Elm grain, left cheek 9",
+      "role": "detail",
+      "stage": 2,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "source": "photo-3",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.2902,
+            0.014,
+            0.112
+          ],
+          [
+            -0.2902,
+            0.0773,
+            0.116
+          ],
+          [
+            -0.2902,
+            0.1545,
+            0.113
+          ]
+        ]
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.45,
+        "alpha": 0.5,
+        "line": "solid"
+      }
+    },
+    {
+      "id": "cheek-grain-right-1",
+      "label": "Elm grain, right cheek 1",
+      "role": "detail",
+      "stage": 2,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "source": "photo-3",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.2902,
+            0.014,
+            -0.112
+          ],
+          [
+            0.2902,
+            0.1392,
+            -0.108
+          ],
+          [
+            0.2902,
+            0.2785,
+            -0.111
+          ]
+        ]
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.45,
+        "alpha": 0.5,
+        "line": "solid"
+      }
+    },
+    {
+      "id": "cheek-grain-right-2",
+      "label": "Elm grain, right cheek 2",
+      "role": "detail",
+      "stage": 2,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "source": "photo-3",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.2902,
+            0.014,
+            -0.084
+          ],
+          [
+            0.2902,
+            0.1315,
+            -0.08
+          ],
+          [
+            0.2902,
+            0.263,
+            -0.083
+          ]
+        ]
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.45,
+        "alpha": 0.5,
+        "line": "solid"
+      }
+    },
+    {
+      "id": "cheek-grain-right-3",
+      "label": "Elm grain, right cheek 3",
+      "role": "detail",
+      "stage": 2,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "source": "photo-3",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.2902,
+            0.014,
+            -0.056
+          ],
+          [
+            0.2902,
+            0.1237,
+            -0.052
+          ],
+          [
+            0.2902,
+            0.2475,
+            -0.055
+          ]
+        ]
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.45,
+        "alpha": 0.5,
+        "line": "solid"
+      }
+    },
+    {
+      "id": "cheek-grain-right-4",
+      "label": "Elm grain, right cheek 4",
+      "role": "detail",
+      "stage": 2,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "source": "photo-3",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.2902,
+            0.014,
+            -0.028
+          ],
+          [
+            0.2902,
+            0.116,
+            -0.024
+          ],
+          [
+            0.2902,
+            0.232,
+            -0.027
+          ]
+        ]
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.45,
+        "alpha": 0.5,
+        "line": "solid"
+      }
+    },
+    {
+      "id": "cheek-grain-right-5",
+      "label": "Elm grain, right cheek 5",
+      "role": "detail",
+      "stage": 2,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "source": "photo-3",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.2902,
+            0.014,
+            0.0
+          ],
+          [
+            0.2902,
+            0.1082,
+            0.004
+          ],
+          [
+            0.2902,
+            0.2165,
+            0.001
+          ]
+        ]
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.45,
+        "alpha": 0.5,
+        "line": "solid"
+      }
+    },
+    {
+      "id": "cheek-grain-right-6",
+      "label": "Elm grain, right cheek 6",
+      "role": "detail",
+      "stage": 2,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "source": "photo-3",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.2902,
+            0.014,
+            0.028
+          ],
+          [
+            0.2902,
+            0.1005,
+            0.032
+          ],
+          [
+            0.2902,
+            0.201,
+            0.029
+          ]
+        ]
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.45,
+        "alpha": 0.5,
+        "line": "solid"
+      }
+    },
+    {
+      "id": "cheek-grain-right-7",
+      "label": "Elm grain, right cheek 7",
+      "role": "detail",
+      "stage": 2,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "source": "photo-3",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.2902,
+            0.014,
+            0.056
+          ],
+          [
+            0.2902,
+            0.0928,
+            0.06
+          ],
+          [
+            0.2902,
+            0.1855,
+            0.057
+          ]
+        ]
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.45,
+        "alpha": 0.5,
+        "line": "solid"
+      }
+    },
+    {
+      "id": "cheek-grain-right-8",
+      "label": "Elm grain, right cheek 8",
+      "role": "detail",
+      "stage": 2,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "source": "photo-3",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.2902,
+            0.014,
+            0.084
+          ],
+          [
+            0.2902,
+            0.085,
+            0.088
+          ],
+          [
+            0.2902,
+            0.17,
+            0.085
+          ]
+        ]
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.45,
+        "alpha": 0.5,
+        "line": "solid"
+      }
+    },
+    {
+      "id": "cheek-grain-right-9",
+      "label": "Elm grain, right cheek 9",
+      "role": "detail",
+      "stage": 2,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "source": "photo-3",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.2902,
+            0.014,
+            0.112
+          ],
+          [
+            0.2902,
+            0.0773,
+            0.116
+          ],
+          [
+            0.2902,
+            0.1545,
+            0.113
+          ]
+        ]
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.45,
+        "alpha": 0.5,
+        "line": "solid"
+      }
+    },
+    {
+      "id": "hood-contour-1",
+      "label": "Hood surface contour 1",
+      "role": "detail",
+      "stage": 7,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "basis": [
+        "hood-rake"
+      ],
+      "source": "photo-1",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.13,
+            0.155,
+            0.1215
+          ],
+          [
+            -0.13,
+            0.268,
+            -0.1215
+          ]
+        ]
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.35,
+        "alpha": 0.4,
+        "line": "solid"
+      }
+    },
+    {
+      "id": "hood-contour-2",
+      "label": "Hood surface contour 2",
+      "role": "detail",
+      "stage": 7,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "basis": [
+        "hood-rake"
+      ],
+      "source": "photo-1",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            -0.045,
+            0.155,
+            0.1215
+          ],
+          [
+            -0.045,
+            0.268,
+            -0.1215
+          ]
+        ]
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.35,
+        "alpha": 0.4,
+        "line": "solid"
+      }
+    },
+    {
+      "id": "hood-contour-3",
+      "label": "Hood surface contour 3",
+      "role": "detail",
+      "stage": 7,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "basis": [
+        "hood-rake"
+      ],
+      "source": "photo-1",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.045,
+            0.155,
+            0.1215
+          ],
+          [
+            0.045,
+            0.268,
+            -0.1215
+          ]
+        ]
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.35,
+        "alpha": 0.4,
+        "line": "solid"
+      }
+    },
+    {
+      "id": "hood-contour-4",
+      "label": "Hood surface contour 4",
+      "role": "detail",
+      "stage": 7,
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "basis": [
+        "hood-rake"
+      ],
+      "source": "photo-1",
+      "shape": {
+        "type": "curve",
+        "points": [
+          [
+            0.13,
+            0.155,
+            0.1215
+          ],
+          [
+            0.13,
+            0.268,
+            -0.1215
+          ]
+        ]
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "weight": 0.35,
+        "alpha": 0.4,
+        "line": "solid"
+      }
+    }
+  ],
+  "articulations": [
+    {
+      "id": "hood-open",
+      "type": "hinge",
+      "parts": [
+        "lid-glass-hood",
+        "lid-rail-left",
+        "lid-rail-right",
+        "lid-front-lip"
+      ],
+      "axis": [
+        -1,
+        0,
+        0
+      ],
+      "pivot": [
+        0,
+        0.272,
+        -0.122
+      ],
+      "amount": 106,
+      "order": 0,
+      "note": "the hood swings back on the barrel at the cheeks' back edge"
+    }
+  ],
+  "labels": [
+    {
+      "id": "maker-mark",
+      "part": "brand-field",
+      "field": "brand",
+      "face": "top",
+      "region": [
+        0.04,
+        0.12,
+        0.96,
+        0.88
+      ],
+      "role": "title",
+      "align": "center"
+    },
+    {
+      "id": "key-labels",
+      "part": "button-well",
+      "field": "buttons",
+      "face": "top",
+      "region": [
+        0.02,
+        0.72,
+        0.98,
+        0.99
+      ],
+      "role": "meta",
+      "align": "center"
+    }
+  ],
+  "annotations": [
+    {
+      "id": "a-hood",
+      "text": "Clear acrylic hood (hinged)",
+      "part": "lid-glass-hood",
+      "offset": [
+        0.09,
+        0.06,
+        0
+      ]
+    },
+    {
+      "id": "a-cheek",
+      "text": "Elm side panel",
+      "part": "cheek-left",
+      "offset": [
+        -0.06,
+        0.05,
+        0
+      ]
+    },
+    {
+      "id": "a-body",
+      "text": "White-lacquered steel body",
+      "part": "body-front-top",
+      "offset": [
+        -0.1,
+        -0.03,
+        0.02
+      ]
+    },
+    {
+      "id": "a-deck",
+      "text": "PC 3 turntable and controls",
+      "part": "platter",
+      "offset": [
+        0.02,
+        0.05,
+        0.02
+      ]
+    }
+  ],
+  "anchors": {
+    "front": {
+      "part": "body-front-top",
+      "face": "front"
+    },
+    "base": {
+      "point": [
+        0,
+        0,
+        0
+      ],
+      "up": [
+        0,
+        1,
+        0
+      ]
+    }
+  },
+  "presentation": {
+    "framing": {
+      "yaw": 26,
+      "pitch": 17,
+      "fit": 0.94
+    },
+    "views": [
+      {
+        "id": "open",
+        "label": "Hood open, deck in view",
+        "yaw": 22,
+        "pitch": 34,
+        "distance": 1.05
+      },
+      {
+        "id": "controls",
+        "label": "Control panel",
+        "yaw": 14,
+        "pitch": 52,
+        "distance": 3.4,
+        "target": "button-well"
+      },
+      {
+        "id": "platter",
+        "label": "PC 3 platter and tonearm",
+        "yaw": -16,
+        "pitch": 46,
+        "distance": 2.6,
+        "target": "platter"
+      },
+      {
+        "id": "grille",
+        "label": "Speaker and vent slots",
+        "yaw": 6,
+        "pitch": 3,
+        "distance": 2.6,
+        "target": "front-rib-speaker-8"
+      },
+      {
+        "id": "rear",
+        "label": "Back and record cutout",
+        "yaw": 200,
+        "pitch": 18,
+        "distance": 1.1
+      },
+      {
+        "id": "profile",
+        "label": "Side profile, hood rake",
+        "yaw": 90,
+        "pitch": 6,
+        "distance": 1.05
+      }
+    ],
+    "still_pose": "closed",
+    "atmosphere": {
+      "haze": 0.18,
+      "scanlines": false,
+      "vignette": true,
+      "grid": true,
+      "projector": false,
+      "motes": 0.0
+    },
+    "occlusion": "xray",
+    "certainty_style": "subtle",
+    "float": 0
+  },
+  "animation": {
+    "assembly": {
+      "style": "ceremony",
+      "seconds": 10,
+      "interference": false
+    },
+    "idle": {
+      "life": "calm",
+      "events": [
+        "scan",
+        "shimmer",
+        "sweep"
+      ],
+      "cadence": [
+        11,
+        19
+      ],
+      "strength": 0.28
+    },
+    "camera": {
+      "drift": 3,
+      "breathe": 0.015,
+      "tour": [
+        {
+          "view": "controls",
+          "at": 15,
+          "fly": 3.5
+        },
+        {
+          "view": "platter",
+          "at": 23,
+          "fly": 3.5
+        },
+        {
+          "view": "open",
+          "at": 31,
+          "fly": 4
+        },
+        {
+          "view": "hero",
+          "at": 40,
+          "fly": 4.5
+        }
+      ]
+    },
+    "reduced_motion": "still"
+  },
+  "authoring": {
+    "tier": "masterpiece",
+    "research": "done",
+    "critic": {
+      "scene_sha256": "9785277bca0ad5a42731d8ac8187e074478e87cc772b9e18dd4d30e133fb0cb0",
+      "verdict": "good",
+      "scores": {
+        "silhouette": 3,
+        "proportions": 3,
+        "identity": 2,
+        "depth": 2,
+        "composition": 2,
+        "assembly": 2,
+        "motion": 3,
+        "density": 3,
+        "honesty": 2
+      },
+      "round": 14,
+      "defects": 10
+    },
+    "rounds": [
+      {
+        "round": 1,
+        "result": "baseline",
+        "minutes": 0.4,
+        "changes": [
+          "draft"
+        ],
+        "summary": "The hood outweighs the body in the outline. In still-side and view-profile the lid rises ~160 mm above the deck (0.28 of the 580 mm width) a"
+      },
+      {
+        "round": 2,
+        "result": "kept",
+        "minutes": 3.5,
+        "changes": [
+          "D1",
+          "D2",
+          "D3",
+          "D4"
+        ],
+        "summary": "The tonearm is a dense cross-hatched tube that swings through a half-circle from the rear pivot to the front-left and ends in a fan of slive"
+      },
+      {
+        "round": 3,
+        "result": "reverted",
+        "minutes": 3.6,
+        "changes": [
+          "D13",
+          "D14",
+          "D2",
+          "D3"
+        ],
+        "summary": "In photo-2 the raised lid is a clear box FRAMED IN ELM on both side edges (and along its top edge), and those two wood stiles are what makes"
+      },
+      {
+        "round": 4,
+        "result": "kept",
+        "minutes": 3.9,
+        "changes": [
+          "D2",
+          "D6",
+          "D7",
+          "D8"
+        ],
+        "summary": "The largest surface of the machine is not drawn as a surface at all. In still-front the front face between and around the grille blocks is p"
+      },
+      {
+        "round": 5,
+        "result": "kept",
+        "minutes": 1.5,
+        "changes": [
+          "D15",
+          "D17",
+          "D2",
+          "D3"
+        ],
+        "summary": "The closed hood is a single plane raked from the deck at the front (155 mm) up to 290 mm at the back: 135 mm of rise over the 244 mm depth, "
+      },
+      {
+        "round": 6,
+        "result": "kept",
+        "minutes": 1.3,
+        "changes": [
+          "D13",
+          "D18",
+          "D4",
+          "D6"
+        ],
+        "summary": "The slot blocks fill too much of the front face. Measured on still-front: face 407-538 px, blocks 423-517 px, i.e. 72% of the face, top marg"
+      },
+      {
+        "round": 7,
+        "result": "reverted",
+        "minutes": 1.1,
+        "changes": [
+          "D17",
+          "D3",
+          "D4",
+          "D6"
+        ],
+        "summary": "The fascia is three bordered plates - grille plate, blank middle plate, grille plate - each with a double-line frame and a plate step (clear"
+      },
+      {
+        "round": 8,
+        "result": "kept",
+        "minutes": 1.5,
+        "changes": [
+          "D14",
+          "D26",
+          "D6"
+        ],
+        "summary": "The hood's front lip is 16 mm deep and eats half of the 31 mm white margin left above the slot band: in still-front the white between the tr"
+      },
+      {
+        "round": 9,
+        "result": "kept",
+        "minutes": 0.6,
+        "changes": [
+          "D13",
+          "D16",
+          "D17",
+          "D18"
+        ],
+        "summary": "The deck carries four knobs; the PC 3 deck has three (Ein, Tone, Lautsprecher) in one column in front of the scale. Each knob is also drawn "
+      },
+      {
+        "round": 10,
+        "result": "kept",
+        "minutes": 0.7,
+        "changes": [
+          "D10",
+          "D13",
+          "D14",
+          "D3"
+        ],
+        "summary": "The tuning window is rotated 90 degrees. In the top view it measures about 45 mm across the deck and 130 mm front-to-back, with its scale ti"
+      },
+      {
+        "round": 11,
+        "result": "kept",
+        "minutes": 1.2,
+        "changes": [
+          "D6",
+          "D9"
+        ],
+        "summary": "The elm is drawn as five dead-level rules at 45 mm pitch covering only y 0.030-0.214 of a 0.290 m panel, and the 0.244 x 0.290 m face above "
+      },
+      {
+        "round": 12,
+        "result": "kept",
+        "minutes": 0.6,
+        "changes": [
+          "D10",
+          "D17",
+          "D6",
+          "D9"
+        ],
+        "summary": "The object spans 530 of 1280 px, 41 percent of the frame width, with the upper 40 percent of the canvas empty black; the annotated plate squ"
+      }
+    ],
+    "sources": [
+      "museum-dns",
+      "wiki-de",
+      "vam",
+      "dasprogramm",
+      "hifiblueprint",
+      "photo-1",
+      "photo-2",
+      "photo-3"
+    ],
+    "review_rounds": 12,
+    "outcome": "good",
+    "provenance_note": "Envelope 580x244x290 mm from Die Neue Sammlung, V&A and das programm; split, rake, grille bands, cheeks and layout measured on the three photographs. The back is inferred: no photo shows it. Lettering is a viewer overlay. The hood is one raked acrylic sheet with elm rails (photo-2's hinge corner). Round 12 of 12: critic 3,3,2,2,2,2,2,3,3, 8 items open; the round cap ended the run.",
+    "identity": [
+      {
+        "feature": "White-lacquered steel box with two unequal punched slot fields",
+        "parts": [
+          "body-front-top",
+          "front-rib-speaker-1",
+          "front-rib-vent-1",
+          "body-front-bottom"
+        ],
+        "source": "photo-1"
+      },
+      {
+        "feature": "Elm-cheeked sides raking up to carry the hood",
+        "parts": [
+          "cheek-left",
+          "cheek-right",
+          "cheek-grain-left-1"
+        ],
+        "source": "photo-3"
+      },
+      {
+        "feature": "One raked clear acrylic hood, elm rails, down-turned front lip, rear hinge",
+        "parts": [
+          "lid-glass-hood",
+          "lid-rail-left",
+          "lid-front-lip",
+          "hinge-bracket-left"
+        ],
+        "source": "photo-2"
+      },
+      {
+        "feature": "PC 3 platter with mat seam, label ring, three-arm clamp and spindle",
+        "parts": [
+          "platter",
+          "spider-hub",
+          "spider-arm",
+          "spindle"
+        ],
+        "source": "photo-3"
+      },
+      {
+        "feature": "Controls on the deck: four knobs, five keys, long scale, large Sender knob",
+        "parts": [
+          "knob-1",
+          "button-1",
+          "dial-card",
+          "tuning-knob"
+        ],
+        "source": "photo-1"
+      }
+    ],
+    "next": [
+      "The tonearm head is still a chamfered shoe rather than the PC 3's cast tapered pickup: a loft along the arm's last 40 mm would finish it.",
+      "The hero still holds the object at 41 per cent of the frame width; framing.fit 1.4-1.5 would fill it.",
+      "The back is inferred throughout; a photograph of an SK 4's rear would let the vent fields, type plate and inlet be drawn as evidence rather than placeholder.",
+      "The platter bay could drop 10 mm below the chassis plate, which needs the deck plate rebuilt as a frame rather than a slab.",
+      "A 10-inch record on the platter would match photo-1 and fill the turntable, but it is not on the owner's part list."
+    ]
+  }
+}

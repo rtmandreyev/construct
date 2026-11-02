@@ -171,7 +171,10 @@
       "id": "body",
       "label": "Body",
       "role": "mass",
-      "certainty": "inferred",
+      "certainty": {
+        "size": "verified",
+        "shape": "traced"
+      },
       "stage": 1,
       "shape": {
         "type": "loft",
@@ -371,7 +374,10 @@
       "id": "cockpit",
       "label": "Cockpit",
       "role": "mass",
-      "certainty": "inferred",
+      "certainty": {
+        "size": "verified",
+        "shape": "traced"
+      },
       "stage": 2,
       "shape": {
         "type": "loft",
@@ -461,13 +467,16 @@
         "alpha": 0.22,
         "glow": 0.2
       },
-      "note": "Upper traced silhouette fitted to roof and windshield landmarks; narrowed using the front trace and overhead photograph."
+      "note": "Upper traced silhouette fitted to roof and windshield landmarks; narrowed using the front trace and overhead photograph.",
+      "basis": [
+        "height"
+      ]
     },
     {
       "id": "side-window",
       "label": "Side Window",
       "role": "identity",
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 3,
       "shape": {
         "type": "extrude",
@@ -943,7 +952,10 @@
       "id": "tyre-front",
       "label": "Tyre Front",
       "role": "structure",
-      "certainty": "inferred",
+      "certainty": {
+        "size": "verified",
+        "shape": "inferred"
+      },
       "stage": 0,
       "shape": {
         "type": "extrude",
@@ -1435,7 +1447,10 @@
       "id": "front-rim-lip",
       "label": "Front Rim Lip",
       "role": "identity",
-      "certainty": "inferred",
+      "certainty": {
+        "size": "verified",
+        "shape": "inferred"
+      },
       "stage": 2,
       "shape": {
         "type": "curve",
@@ -1694,7 +1709,10 @@
         "weight": 1.3,
         "glow": 0.32
       },
-      "mirror": "x"
+      "mirror": "x",
+      "basis": [
+        "front_tyres"
+      ]
     },
     {
       "id": "front-rim-inner",
@@ -2443,7 +2461,10 @@
       "id": "tyre-rear",
       "label": "Tyre Rear",
       "role": "structure",
-      "certainty": "inferred",
+      "certainty": {
+        "size": "verified",
+        "shape": "inferred"
+      },
       "stage": 0,
       "shape": {
         "type": "extrude",
@@ -2935,7 +2956,10 @@
       "id": "rear-rim-lip",
       "label": "Rear Rim Lip",
       "role": "identity",
-      "certainty": "inferred",
+      "certainty": {
+        "size": "verified",
+        "shape": "inferred"
+      },
       "stage": 2,
       "shape": {
         "type": "curve",
@@ -3194,7 +3218,10 @@
         "weight": 1.3,
         "glow": 0.32
       },
-      "mirror": "x"
+      "mirror": "x",
+      "basis": [
+        "rear_tyres"
+      ]
     },
     {
       "id": "rear-rim-inner",
@@ -4370,7 +4397,7 @@
       "id": "engine-cover",
       "label": "Engine Cover",
       "role": "identity",
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 3,
       "shape": {
         "type": "curve",
@@ -4490,7 +4517,7 @@
       "id": "engine-louvre-1",
       "label": "Engine Louvre 1",
       "role": "identity",
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 4,
       "shape": {
         "type": "curve",
@@ -4536,7 +4563,7 @@
       "id": "engine-louvre-2",
       "label": "Engine Louvre 2",
       "role": "identity",
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 4,
       "shape": {
         "type": "curve",
@@ -4582,7 +4609,7 @@
       "id": "engine-louvre-3",
       "label": "Engine Louvre 3",
       "role": "identity",
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 4,
       "shape": {
         "type": "curve",
@@ -4628,7 +4655,7 @@
       "id": "engine-louvre-4",
       "label": "Engine Louvre 4",
       "role": "identity",
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 4,
       "shape": {
         "type": "curve",
@@ -4674,7 +4701,7 @@
       "id": "engine-louvre-5",
       "label": "Engine Louvre 5",
       "role": "identity",
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 4,
       "shape": {
         "type": "curve",
@@ -4720,7 +4747,7 @@
       "id": "engine-louvre-6",
       "label": "Engine Louvre 6",
       "role": "identity",
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 4,
       "shape": {
         "type": "curve",
@@ -4766,7 +4793,7 @@
       "id": "engine-louvre-7",
       "label": "Engine Louvre 7",
       "role": "identity",
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 4,
       "shape": {
         "type": "curve",
@@ -4904,7 +4931,7 @@
       "id": "wing-endplates",
       "label": "Wing Endplates",
       "role": "identity",
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 3,
       "shape": {
         "type": "extrude",
@@ -4958,7 +4985,7 @@
       "id": "rear-wing",
       "label": "Rear Wing",
       "role": "identity",
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 3,
       "shape": {
         "type": "loft",
@@ -5003,7 +5030,7 @@
       "id": "rear-deck-naca",
       "label": "Rear Deck Naca",
       "role": "identity",
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 4,
       "shape": {
         "type": "curve",
@@ -5047,7 +5074,7 @@
       "id": "fuel-cap",
       "label": "Fuel Cap",
       "role": "detail",
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 4,
       "shape": {
         "type": "cylinder",
@@ -5469,7 +5496,7 @@
       "id": "body-shoulder",
       "label": "Body Shoulder",
       "role": "identity",
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 1,
       "shape": {
         "type": "curve",
@@ -5615,7 +5642,7 @@
       "id": "body-lower",
       "label": "Body Lower",
       "role": "identity",
-      "certainty": "inferred",
+      "certainty": "traced",
       "stage": 1,
       "shape": {
         "type": "curve",
@@ -8733,7 +8760,7 @@
         "iou": 0.8915,
         "edge": 0.0084,
         "pass": true,
-        "scene_sha256": "52d57b2da3c99f99c3b3e29d857dbab3b4ec0a40aab19d36d3cd3ac7efe8f5ff"
+        "scene_sha256": "e9f8a9d4b087f7e81f638018d58e168a9186212ee322202eebabe5277bee4c77"
       },
       {
         "view": "top",
@@ -8741,7 +8768,7 @@
         "iou": 0.9357,
         "edge": 0.0085,
         "pass": true,
-        "scene_sha256": "52d57b2da3c99f99c3b3e29d857dbab3b4ec0a40aab19d36d3cd3ac7efe8f5ff"
+        "scene_sha256": "e9f8a9d4b087f7e81f638018d58e168a9186212ee322202eebabe5277bee4c77"
       }
     ]
   }

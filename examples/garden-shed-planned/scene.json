@@ -1,0 +1,5397 @@
+{
+ "format": "construct-scene",
+ "version": 2,
+ "id": "garden-shed-planned",
+ "title": "Garden shed with the planned log store and deck (inferred from one photograph)",
+ "subject": {
+  "category": "architecture",
+  "accuracy": "approximate",
+  "synthetic": false,
+  "summary": "The same black-shiplap potting shed, with the owner's plan built onto it: a lean-to log store against the right end wall, its felt roof leaning off the shed, and a small timber deck with a low step in front of the door."
+ },
+ "units": "m",
+ "seed": 11,
+ "sources": [
+  {
+   "id": "request",
+   "kind": "user_request",
+   "title": "The owner's request: a construct of the shed in refs/photo-1.jpg, then a second version with a lean-to log store and a deck",
+   "rights": "user_private"
+  },
+  {
+   "id": "photo",
+   "kind": "reference_image",
+   "rights": "permitted",
+   "title": "Garden shed at Harlow Museum & Walled Gardens, Essex 01.jpg, by Acabashi, CC BY-SA 4.0",
+   "ref": "refs/photo-1.jpg, sha256 1802d1cd2c0e763427cd1468e10c02616363847b98462c258e7e770ad3d144d7, https://commons.wikimedia.org/wiki/File:Garden_shed_at_Harlow_Museum_%26_Walled_Gardens,_Essex_01.jpg (openly licensed stand-in for the owner's own photo)"
+  }
+ ],
+ "facts": [
+  {
+   "key": "scale",
+   "value": 313,
+   "unit": "px/m",
+   "certainty": "inferred",
+   "source": "photo",
+   "note": "The photo's scale: 45 px between board shadow lines for a 145 mm shiplap board, cross-checked on the 55 px plant pots (~0.18 m) and the 140 px chair back (~0.45 m). Every size below is this scale read off the pixels; the boards' shadow lines, read row by row, are 53.5 px apart."
+  },
+  {
+   "key": "overall-length",
+   "value": 5.85,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "photo",
+   "note": "4.80 m of the long elevation from the frame's left edge to the right corner (1500 px at 313 px/m), plus a 1.05 m door bay beyond the cut edge where the photo ends."
+  },
+  {
+   "key": "overall-depth",
+   "value": 2.4,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "photo",
+   "note": "Not measurable in a single frontal photo: a 2.40 m span, the usual depth of a shed with a 1.96 m eave and a felt roof this shallow."
+  },
+  {
+   "key": "eave-height",
+   "value": 2.006,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "photo",
+   "note": "588 px from the grass line at the wall foot to the fascia's underside, at 297 px/m: 1.98 m, made 2.00 m by 11 whole 175 mm board rows above the floor."
+  },
+  {
+   "key": "cladding-board-pitch",
+   "value": 0.175,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "photo",
+   "note": "53.5 px between the boards' shadow lines, measured row by row down a clean stretch of wall at x 1000-1200, y 250-500; the boards are the 175 mm shiplap a shed of this age is clad in."
+  },
+  {
+   "key": "roof-fall",
+   "value": 0.175,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "photo",
+   "note": "One more board row at the back wall (2.105 m) gives a 3.5 deg fall to the front, which matches the shallow felt slope the photo shows."
+  },
+  {
+   "key": "window-width",
+   "value": 0.7575,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "photo",
+   "note": "215 px between the outer beads of the right-hand light, 0.72 m."
+  },
+  {
+   "key": "window-height",
+   "value": 0.875,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "photo",
+   "note": "294 px from head bead to sill bead, 0.99 m; set to five whole board rows (0.60 to 1.475 m) so the cut board ends land on the cladding joints and two rows stay above the head."
+  },
+  {
+   "key": "sill-height",
+   "value": 0.5999999999999999,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "photo",
+   "note": "174 px from the wall foot up to the sill bead: 0.59 m, set on the third board row at 0.60 m."
+  },
+  {
+   "key": "door-width",
+   "value": 0.8100000000000003,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "photo",
+   "note": "The clear opening between the linings; a shed door is 0.76-0.84 m wide and the photo cuts the wall before this one."
+  },
+  {
+   "key": "door-height",
+   "value": 1.82,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "photo",
+   "note": "The lower end of the 1.8-1.9 m a shed door is usually given, set so the head lining lands under the wall plate."
+  },
+  {
+   "key": "stud-depth",
+   "value": 0.09,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "photo",
+   "note": "A 4x2 stud frame, the section a boarded shed of this age is framed in."
+  },
+  {
+   "key": "cladding-thickness",
+   "value": 0.019,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "photo",
+   "note": "19 mm finished shiplap, read from the board edge at the right corner."
+  },
+  {
+   "key": "roof-thickness",
+   "value": 0.026,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "photo",
+   "note": "22 mm boards plus 4 mm felt, the build-up a shed roof has."
+  },
+  {
+   "key": "felt-edge",
+   "value": 0.04,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "photo",
+   "note": "the felted edge the photo shows over the fascia, 40 mm rolled and a 200 mm deep fascia behind it."
+  },
+  {
+   "key": "planned-logstore-size",
+   "value": 1.2,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "request",
+   "note": "Designed, not built. The log store is 1.20 m deep inside the 2.40 m shed's depth and 1.80 m long, with 0.30 m clear of each corner: deep enough for a 2.4 m log laid across it, and sized to the shed's depth rather than to a measurement of the garden."
+  },
+  {
+   "key": "planned-logstore-rise",
+   "value": 0.28,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "request",
+   "note": "Designed, not built. Its roof leans from the shed's end wall at 1.98 m down to a beam at 1.70 m, a 13 deg fall, so it sheds away from the shed and stays under the shed's own eaves line."
+  },
+  {
+   "key": "planned-deck-size",
+   "value": 2.0,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "request",
+   "note": "Designed, not built. The deck is 2.00 x 1.40 m, centred on the 0.91 m doorway with 0.55 m either side, and its top is level with the shed's floor at 0.075 m so the threshold stays flush."
+  },
+  {
+   "key": "planned-step-height",
+   "value": 0.05,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "request",
+   "note": "Designed, not built. One 50 mm step from a 0.35 m tread to the garden: the deck can only be as high as the shed's floor allows, so the step is shallow. Raise the shed's threshold if you want a taller deck."
+  }
+ ],
+ "assets": [],
+ "parts": [
+  {
+   "id": "site-ground",
+   "label": "Ground",
+   "role": "ground",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 0,
+   "shape": {
+    "type": "grid",
+    "size": [
+     6.5,
+     3.2
+    ],
+    "divisions": 8
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "note": "Size: the shed plus 1.8 m of garden around it, chosen for the framing. Shape: a flat survey grid.",
+   "source": "request",
+   "look": {
+    "tone": "faint",
+    "alpha": 0.5
+   }
+  },
+  {
+   "id": "base-bearer",
+   "label": "Base bearer",
+   "role": "structure",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     5.8,
+     0.05,
+     0.075
+    ]
+   },
+   "at": [
+    0,
+    0.025,
+    0.95
+   ],
+   "note": "Size: 75 x 50 mm tanalised bearer, the section a shed this size is carried on; three of them at 1.9 m centres, hidden under the floor in the photo. Shape: a sawn timber bearer.",
+   "source": "request",
+   "repeat": {
+    "count": 2,
+    "step": {
+     "at": [
+      0,
+      0,
+      -0.95
+     ]
+    }
+   },
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.3
+   }
+  },
+  {
+   "id": "floor-deck",
+   "label": "Floor deck",
+   "role": "structure",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     5.85,
+     0.025,
+     2.4
+    ],
+    "ribs": 9
+   },
+   "at": [
+    0,
+    0.0625,
+    0
+   ],
+   "note": "Size: 5.85 x 2.40 m of 25 mm boards, the shed's full footprint. Shape: a T&G boarded deck; the joints are the only thing a 19 mm board shows.",
+   "source": "request",
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.3
+   }
+  },
+  {
+   "id": "sole-plate-front",
+   "label": "Sole plate, front",
+   "role": "structure",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     4.76,
+     0.05,
+     0.09
+    ]
+   },
+   "at": [
+    0.455,
+    0.1,
+    1.136
+   ],
+   "note": "Size: a 50 x 90 mm sole plate on the floor deck, between the doorway and the corner post. Shape: a flat plate.",
+   "source": "request",
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.3
+   }
+  },
+  {
+   "id": "top-plate-front",
+   "label": "Top plate, front",
+   "role": "structure",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     4.76,
+     0.075,
+     0.09
+    ]
+   },
+   "at": [
+    0.455,
+    1.9685,
+    1.136
+   ],
+   "note": "Size: a 75 x 90 mm plate at the wall head, from the doorway to the corner post. Shape: a flat plate.",
+   "source": "request",
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.3
+   }
+  },
+  {
+   "id": "sole-plate-back",
+   "label": "Sole plate, back",
+   "role": "structure",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     5.67,
+     0.05,
+     0.09
+    ]
+   },
+   "at": [
+    0,
+    0.1,
+    -1.136
+   ],
+   "note": "Size: a 50 x 90 mm sole plate on the floor deck, between the corner posts. Shape: a flat plate.",
+   "source": "request",
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.3
+   }
+  },
+  {
+   "id": "top-plate-back",
+   "label": "Top plate, back",
+   "role": "structure",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     5.67,
+     0.075,
+     0.09
+    ]
+   },
+   "at": [
+    0,
+    2.1435,
+    -1.136
+   ],
+   "note": "Size: a 75 x 90 mm plate at the wall head, its top at the roof's underside. Shape: a flat plate.",
+   "source": "request",
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.3
+   }
+  },
+  {
+   "id": "sole-plate-left-end",
+   "label": "Sole plate, left end",
+   "role": "structure",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.09,
+     0.05,
+     2.22
+    ]
+   },
+   "at": [
+    -2.861,
+    0.1,
+    0
+   ],
+   "note": "Size: 5.85 m wall to wall; 50 x 90 mm. Shape: a flat plate.",
+   "source": "request",
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.3
+   }
+  },
+  {
+   "id": "top-plate-left-end",
+   "label": "Top plate, left end",
+   "role": "structure",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.09,
+     0.05,
+     2.22
+    ]
+   },
+   "at": [
+    -2.861,
+    1.931,
+    0
+   ],
+   "note": "Size: a 50 x 90 mm head plate at 1.88 m, kept clear of the roof's fall. Shape: a flat plate.",
+   "source": "request",
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.3
+   }
+  },
+  {
+   "id": "sole-plate-right-end",
+   "label": "Sole plate, right end",
+   "role": "structure",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.09,
+     0.05,
+     2.22
+    ]
+   },
+   "at": [
+    2.861,
+    0.1,
+    0
+   ],
+   "note": "Size: 5.85 m wall to wall; 50 x 90 mm. Shape: a flat plate.",
+   "source": "request",
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.3
+   }
+  },
+  {
+   "id": "top-plate-right-end",
+   "label": "Top plate, right end",
+   "role": "structure",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.09,
+     0.05,
+     2.22
+    ]
+   },
+   "at": [
+    2.861,
+    1.931,
+    0
+   ],
+   "note": "Size: a 50 x 90 mm head plate at 1.88 m, kept clear of the roof's fall. Shape: a flat plate.",
+   "source": "request",
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.3
+   }
+  },
+  {
+   "id": "stud-front-left",
+   "label": "Stud, front left pier",
+   "role": "structure",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.045,
+     1.806,
+     0.09
+    ]
+   },
+   "at": [
+    -1.4,
+    1.028,
+    1.136
+   ],
+   "note": "Size: a 45 x 90 mm stud at the middle of the left pier. Shape: a stud.",
+   "source": "request",
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.3
+   }
+  },
+  {
+   "id": "stud-front-right",
+   "label": "Studs, front right pier",
+   "role": "structure",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.045,
+     1.806,
+     0.09
+    ]
+   },
+   "at": [
+    1.375,
+    1.028,
+    1.136
+   ],
+   "note": "Size: 45 x 90 mm studs at 0.6 m centres in the long right pier. Shape: a stud.",
+   "source": "request",
+   "repeat": {
+    "count": 3,
+    "step": {
+     "at": [
+      0.6,
+      0,
+      0
+     ]
+    }
+   },
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.3
+   }
+  },
+  {
+   "id": "stud-back",
+   "label": "Studs, back",
+   "role": "structure",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.045,
+     1.806,
+     0.09
+    ]
+   },
+   "at": [
+    -2.7,
+    1.028,
+    -1.136
+   ],
+   "note": "Size: 45 x 90 mm studs at 0.66 m centres along the back wall, which the photo cannot show. Shape: a stud.",
+   "source": "request",
+   "repeat": {
+    "count": 9,
+    "step": {
+     "at": [
+      0.675,
+      0,
+      0
+     ]
+    }
+   },
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.3
+   }
+  },
+  {
+   "id": "stud-left-end",
+   "label": "Studs, left end",
+   "role": "structure",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.09,
+     1.806,
+     0.045
+    ]
+   },
+   "at": [
+    -2.861,
+    1.028,
+    -0.85
+   ],
+   "note": "Size: three 45 x 90 mm studs in the end wall. Shape: a stud.",
+   "source": "request",
+   "repeat": {
+    "count": 3,
+    "step": {
+     "at": [
+      0,
+      0,
+      0.85
+     ]
+    }
+   },
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.3
+   }
+  },
+  {
+   "id": "stud-right-end",
+   "label": "Studs, right end",
+   "role": "structure",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.09,
+     1.806,
+     0.045
+    ]
+   },
+   "at": [
+    2.861,
+    1.028,
+    -0.85
+   ],
+   "note": "Size: three 45 x 90 mm studs in the end wall. Shape: a stud.",
+   "source": "request",
+   "repeat": {
+    "count": 3,
+    "step": {
+     "at": [
+      0,
+      0,
+      0.85
+     ]
+    }
+   },
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.3
+   }
+  },
+  {
+   "id": "window-1-jack",
+   "label": "Trimmer studs, light 1",
+   "role": "structure",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.045,
+     1.35,
+     0.09
+    ]
+   },
+   "at": [
+    -0.895,
+    0.8,
+    1.136
+   ],
+   "note": "Size: the jack studs that carry the opening's trimmer, to the head row. Shape: a stud.",
+   "source": "request",
+   "repeat": {
+    "count": 2,
+    "step": {
+     "at": [
+      0.8524999999999999,
+      0,
+      0
+     ]
+    }
+   },
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.3
+   }
+  },
+  {
+   "id": "window-1-lintel",
+   "label": "Lintel, light 1",
+   "role": "structure",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.9575,
+     0.09,
+     0.09
+    ]
+   },
+   "at": [
+    -0.4662,
+    1.52,
+    1.136
+   ],
+   "note": "Size: a 90 x 90 mm lintel over the opening, 100 mm bearing each side. Shape: a beam.",
+   "source": "request",
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.3
+   }
+  },
+  {
+   "id": "window-2-jack",
+   "label": "Trimmer studs, light 2",
+   "role": "structure",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.045,
+     1.35,
+     0.09
+    ]
+   },
+   "at": [
+    -0.0325,
+    0.8,
+    1.136
+   ],
+   "note": "Size: the jack studs that carry the opening's trimmer, to the head row. Shape: a stud.",
+   "source": "request",
+   "repeat": {
+    "count": 2,
+    "step": {
+     "at": [
+      0.8524999999999999,
+      0,
+      0
+     ]
+    }
+   },
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.3
+   }
+  },
+  {
+   "id": "window-2-lintel",
+   "label": "Lintel, light 2",
+   "role": "structure",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.9575,
+     0.09,
+     0.09
+    ]
+   },
+   "at": [
+    0.3963,
+    1.52,
+    1.136
+   ],
+   "note": "Size: a 90 x 90 mm lintel over the opening, 100 mm bearing each side. Shape: a beam.",
+   "source": "request",
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.3
+   }
+  },
+  {
+   "id": "cladding-front-low",
+   "label": "Cladding, front (below the lights)",
+   "role": "mass",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     4.76,
+     0.181,
+     0.019
+    ]
+   },
+   "at": [
+    0.455,
+    0.1625,
+    1.1905
+   ],
+   "note": "Size: 3 rows of 175 mm shiplap, 19 mm thick; the board shadow lines are 53.5 px apart in the photo at 297 px/m. Shape: a plain square-edged board, lapped, as the shadow lines show.",
+   "source": "photo",
+   "look": {
+    "fill": "dark",
+    "weight": 0.95,
+    "alpha": 0.5
+   },
+   "repeat": {
+    "count": 3,
+    "step": {
+     "at": [
+      0,
+      0.175,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "cladding-front-high",
+   "label": "Cladding, front (above the lights)",
+   "role": "mass",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     4.76,
+     0.181,
+     0.019
+    ]
+   },
+   "at": [
+    0.455,
+    1.5625,
+    1.1905
+   ],
+   "note": "Size: 3 rows of 175 mm shiplap, 19 mm thick; the board shadow lines are 53.5 px apart in the photo at 297 px/m. Shape: a plain square-edged board, lapped, as the shadow lines show.",
+   "source": "photo",
+   "look": {
+    "fill": "dark",
+    "weight": 0.95,
+    "alpha": 0.5
+   },
+   "repeat": {
+    "count": 3,
+    "step": {
+     "at": [
+      0,
+      0.175,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "cladding-front-pier-left",
+   "label": "Cladding, pier left of the lights",
+   "role": "mass",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.08,
+     0.181,
+     0.019
+    ]
+   },
+   "at": [
+    -1.385,
+    0.6875,
+    1.1905
+   ],
+   "note": "Size: 5 rows of 175 mm shiplap, 19 mm thick; the board shadow lines are 53.5 px apart in the photo at 297 px/m. Shape: a plain square-edged board, lapped, as the shadow lines show.",
+   "source": "photo",
+   "look": {
+    "fill": "dark",
+    "weight": 0.95,
+    "alpha": 0.5
+   },
+   "repeat": {
+    "count": 5,
+    "step": {
+     "at": [
+      0,
+      0.175,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "cladding-front-pier-right",
+   "label": "Cladding, pier right of the lights",
+   "role": "mass",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.06,
+     0.181,
+     0.019
+    ]
+   },
+   "at": [
+    1.805,
+    0.6875,
+    1.1905
+   ],
+   "note": "Size: 5 rows of 175 mm shiplap, 19 mm thick; the board shadow lines are 53.5 px apart in the photo at 297 px/m. Shape: a plain square-edged board, lapped, as the shadow lines show.",
+   "source": "photo",
+   "look": {
+    "fill": "dark",
+    "weight": 0.95,
+    "alpha": 0.5
+   },
+   "repeat": {
+    "count": 5,
+    "step": {
+     "at": [
+      0,
+      0.175,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "cladding-back",
+   "label": "Cladding, back",
+   "role": "mass",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     5.67,
+     0.181,
+     0.019
+    ]
+   },
+   "at": [
+    0.0,
+    0.1625,
+    -1.1905
+   ],
+   "note": "Size: 12 rows of 175 mm shiplap, 19 mm thick; the board shadow lines are 53.5 px apart in the photo at 297 px/m. Shape: a plain square-edged board, lapped, as the shadow lines show.",
+   "source": "request",
+   "look": {
+    "fill": "dark",
+    "weight": 0.95,
+    "alpha": 0.5
+   },
+   "repeat": {
+    "count": 12,
+    "step": {
+     "at": [
+      0,
+      0.175,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "cladding-left-end-low",
+   "label": "Cladding, left end",
+   "role": "mass",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.019,
+     0.181,
+     2.22
+    ]
+   },
+   "at": [
+    -2.9155,
+    0.1625,
+    0
+   ],
+   "note": "Size: 11 rows of 175 mm shiplap, 19 mm thick; the board shadow lines are 53.5 px apart in the photo at 297 px/m. Shape: a plain square-edged board, lapped, as the shadow lines show. Only the right end is visible in the photo, in shadow.",
+   "source": "photo",
+   "look": {
+    "fill": "dark",
+    "weight": 0.95,
+    "alpha": 0.5
+   },
+   "repeat": {
+    "count": 11,
+    "step": {
+     "at": [
+      0,
+      0.175,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "cladding-left-end-rake",
+   "label": "Cladding, left end rake",
+   "role": "mass",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 3,
+   "shape": {
+    "type": "loft",
+    "sections": [
+     [
+      -1.2,
+      0.0095,
+      2.006,
+      2.1809999999999996
+     ],
+     [
+      1.2,
+      0.0095,
+      2.006,
+      2.0079999999999996
+     ]
+    ],
+    "round": 0
+   },
+   "at": [
+    -2.9155,
+    0,
+    0
+   ],
+   "note": "Size: the triangle of end wall above the 13th row, from 1.96 m at the front to 2.105 m at the back. Shape: a raking cut following the roof's fall.",
+   "source": "request",
+   "look": {
+    "fill": "dark",
+    "weight": 0.95,
+    "alpha": 0.5
+   }
+  },
+  {
+   "id": "cladding-right-end-low",
+   "label": "Cladding, right end",
+   "role": "mass",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.019,
+     0.181,
+     2.22
+    ]
+   },
+   "at": [
+    2.9155,
+    0.1625,
+    0
+   ],
+   "note": "Size: 11 rows of 175 mm shiplap, 19 mm thick; the board shadow lines are 53.5 px apart in the photo at 297 px/m. Shape: a plain square-edged board, lapped, as the shadow lines show. Only the right end is visible in the photo, in shadow.",
+   "source": "photo",
+   "look": {
+    "fill": "dark",
+    "weight": 0.95,
+    "alpha": 0.5
+   },
+   "repeat": {
+    "count": 11,
+    "step": {
+     "at": [
+      0,
+      0.175,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "cladding-right-end-rake",
+   "label": "Cladding, right end rake",
+   "role": "mass",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 3,
+   "shape": {
+    "type": "loft",
+    "sections": [
+     [
+      -1.2,
+      0.0095,
+      2.006,
+      2.1809999999999996
+     ],
+     [
+      1.2,
+      0.0095,
+      2.006,
+      2.0079999999999996
+     ]
+    ],
+    "round": 0
+   },
+   "at": [
+    2.9155,
+    0,
+    0
+   ],
+   "note": "Size: the triangle of end wall above the 13th row, from 1.96 m at the front to 2.105 m at the back. Shape: a raking cut following the roof's fall.",
+   "source": "request",
+   "look": {
+    "fill": "dark",
+    "weight": 0.95,
+    "alpha": 0.5
+   }
+  },
+  {
+   "id": "corner-post-front",
+   "label": "Corner post, front",
+   "role": "structure",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.09,
+     1.931,
+     0.09
+    ]
+   },
+   "at": [
+    -2.88,
+    1.0405,
+    1.155
+   ],
+   "note": "Size: 90 x 90 mm, floor to the eave, covering the board ends at the corner. Shape: a square post; the photo shows its dark face at the right corner.",
+   "source": "photo",
+   "look": {
+    "fill": "dark",
+    "weight": 0.9,
+    "alpha": 0.8
+   },
+   "repeat": {
+    "count": 2,
+    "step": {
+     "at": [
+      5.76,
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "corner-post-back",
+   "label": "Corner post, back",
+   "role": "structure",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.09,
+     2.106,
+     0.09
+    ]
+   },
+   "at": [
+    -2.88,
+    1.128,
+    -1.155
+   ],
+   "note": "Size: 90 x 90 mm, floor to the eave, covering the board ends at the corner. Shape: a square post; the photo shows its dark face at the right corner.",
+   "source": "photo",
+   "look": {
+    "fill": "dark",
+    "weight": 0.9,
+    "alpha": 0.8
+   },
+   "repeat": {
+    "count": 2,
+    "step": {
+     "at": [
+      5.76,
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "post-mid",
+   "label": "Post between the lights",
+   "role": "identity",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 6,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.105,
+     1.931,
+     0.045
+    ]
+   },
+   "at": [
+    -0.035,
+    1.0405,
+    1.187
+   ],
+   "note": "Size: the 105 mm gap between the two lights, 34 px in the photo. Shape: a 45 mm post standing 26 mm proud of the cladding, as the shadow band between the lights shows.",
+   "source": "photo",
+   "look": {
+    "weight": 1.2,
+    "glow": 0.2
+   }
+  },
+  {
+   "id": "cladding-lap-shadow",
+   "label": "Lap shadow on every course",
+   "role": "identity",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 3,
+   "shape": {
+    "type": "paths",
+    "paths": [
+     [
+      [
+       -1.9249999999999998,
+       0.079,
+       1.2007999999999999
+      ],
+      [
+       -0.845,
+       0.079,
+       1.2007999999999999
+      ]
+     ],
+     [
+      [
+       0.775,
+       0.079,
+       1.2007999999999999
+      ],
+      [
+       2.835,
+       0.079,
+       1.2007999999999999
+      ]
+     ],
+     [
+      [
+       -0.08750000000000002,
+       0.079,
+       1.2007999999999999
+      ],
+      [
+       0.01750000000000007,
+       0.079,
+       1.2007999999999999
+      ]
+     ],
+     [
+      [
+       -1.9249999999999998,
+       0.254,
+       1.2007999999999999
+      ],
+      [
+       -0.845,
+       0.254,
+       1.2007999999999999
+      ]
+     ],
+     [
+      [
+       0.775,
+       0.254,
+       1.2007999999999999
+      ],
+      [
+       2.835,
+       0.254,
+       1.2007999999999999
+      ]
+     ],
+     [
+      [
+       -0.08750000000000002,
+       0.254,
+       1.2007999999999999
+      ],
+      [
+       0.01750000000000007,
+       0.254,
+       1.2007999999999999
+      ]
+     ],
+     [
+      [
+       -1.9249999999999998,
+       0.429,
+       1.2007999999999999
+      ],
+      [
+       -0.845,
+       0.429,
+       1.2007999999999999
+      ]
+     ],
+     [
+      [
+       0.775,
+       0.429,
+       1.2007999999999999
+      ],
+      [
+       2.835,
+       0.429,
+       1.2007999999999999
+      ]
+     ],
+     [
+      [
+       -0.08750000000000002,
+       0.429,
+       1.2007999999999999
+      ],
+      [
+       0.01750000000000007,
+       0.429,
+       1.2007999999999999
+      ]
+     ],
+     [
+      [
+       -0.08750000000000002,
+       0.604,
+       1.2007999999999999
+      ],
+      [
+       0.01750000000000007,
+       0.604,
+       1.2007999999999999
+      ]
+     ],
+     [
+      [
+       -0.08750000000000002,
+       0.779,
+       1.2007999999999999
+      ],
+      [
+       0.01750000000000007,
+       0.779,
+       1.2007999999999999
+      ]
+     ],
+     [
+      [
+       -0.08750000000000002,
+       0.954,
+       1.2007999999999999
+      ],
+      [
+       0.01750000000000007,
+       0.954,
+       1.2007999999999999
+      ]
+     ],
+     [
+      [
+       -0.08750000000000002,
+       1.129,
+       1.2007999999999999
+      ],
+      [
+       0.01750000000000007,
+       1.129,
+       1.2007999999999999
+      ]
+     ],
+     [
+      [
+       -0.08750000000000002,
+       1.304,
+       1.2007999999999999
+      ],
+      [
+       0.01750000000000007,
+       1.304,
+       1.2007999999999999
+      ]
+     ],
+     [
+      [
+       -1.9249999999999998,
+       1.479,
+       1.2007999999999999
+      ],
+      [
+       -0.845,
+       1.479,
+       1.2007999999999999
+      ]
+     ],
+     [
+      [
+       0.775,
+       1.479,
+       1.2007999999999999
+      ],
+      [
+       2.835,
+       1.479,
+       1.2007999999999999
+      ]
+     ],
+     [
+      [
+       -0.08750000000000002,
+       1.479,
+       1.2007999999999999
+      ],
+      [
+       0.01750000000000007,
+       1.479,
+       1.2007999999999999
+      ]
+     ],
+     [
+      [
+       -1.9249999999999998,
+       1.654,
+       1.2007999999999999
+      ],
+      [
+       -0.845,
+       1.654,
+       1.2007999999999999
+      ]
+     ],
+     [
+      [
+       0.775,
+       1.654,
+       1.2007999999999999
+      ],
+      [
+       2.835,
+       1.654,
+       1.2007999999999999
+      ]
+     ],
+     [
+      [
+       -0.08750000000000002,
+       1.654,
+       1.2007999999999999
+      ],
+      [
+       0.01750000000000007,
+       1.654,
+       1.2007999999999999
+      ]
+     ],
+     [
+      [
+       -1.9249999999999998,
+       1.829,
+       1.2007999999999999
+      ],
+      [
+       -0.845,
+       1.829,
+       1.2007999999999999
+      ]
+     ],
+     [
+      [
+       0.775,
+       1.829,
+       1.2007999999999999
+      ],
+      [
+       2.835,
+       1.829,
+       1.2007999999999999
+      ]
+     ],
+     [
+      [
+       -0.08750000000000002,
+       1.829,
+       1.2007999999999999
+      ],
+      [
+       0.01750000000000007,
+       1.829,
+       1.2007999999999999
+      ]
+     ]
+    ]
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "note": "Size: a shadow line under all eleven courses of the front elevation. Shape: the lap line of a lapped board, where the board above stands proud of the one below; the photo shows it as a hard dark band under every board.",
+   "source": "photo",
+   "look": {
+    "weight": 1.0,
+    "alpha": 0.8
+   }
+  },
+  {
+   "id": "felt-surface",
+   "label": "Mineral surfacing",
+   "role": "detail",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 4,
+   "shape": {
+    "type": "paths",
+    "paths": [
+     [
+      [
+       -2.8850000000000002,
+       2.1934166666666663,
+       -1.012
+      ],
+      [
+       -2.85,
+       2.1944166666666662,
+       -1.0
+      ],
+      [
+       -2.815,
+       2.1934166666666663,
+       -0.988
+      ]
+     ],
+     [
+      [
+       0.6296388901060004,
+       2.1299902149241663,
+       -0.1421515189600001
+      ],
+      [
+       0.6727937355900004,
+       2.130990214924166,
+       -0.1301515189600001
+      ],
+      [
+       0.7159485810740005,
+       2.1299902149241663,
+       -0.1181515189600001
+      ]
+     ],
+     [
+      [
+       -1.5557222197879996,
+       2.0665637631816662,
+       0.7276969620799998
+      ],
+      [
+       -1.5044125288199997,
+       2.067563763181666,
+       0.7396969620799998
+      ],
+      [
+       -1.4531028378519997,
+       2.0665637631816662,
+       0.7516969620799998
+      ]
+     ],
+     [
+      [
+       1.9589166703180005,
+       2.1562623114391664,
+       -0.5024545568800002
+      ],
+      [
+       2.0183812067700004,
+       2.1572623114391662,
+       -0.49045455688000017
+      ],
+      [
+       2.0778457432220003,
+       2.1562623114391664,
+       -0.47845455688000016
+      ]
+     ],
+     [
+      [
+       -0.19644443957599922,
+       2.0928358596966663,
+       0.36739392415999994
+      ],
+      [
+       -0.1588250576399992,
+       2.093835859696666,
+       0.37939392415999995
+      ],
+      [
+       -0.1212056757039992,
+       2.0928358596966663,
+       0.39139392415999996
+      ]
+     ],
+     [
+      [
+       -2.3818055494699983,
+       2.182534407954166,
+       -0.8627575948000002
+      ],
+      [
+       -2.3360313220499984,
+       2.183534407954166,
+       -0.8507575948000002
+      ],
+      [
+       -2.2902570946299985,
+       2.182534407954166,
+       -0.8387575948000002
+      ]
+     ],
+     [
+      [
+       1.1328333406359998,
+       2.1191079562116664,
+       0.00709088623999966
+      ],
+      [
+       1.18676241354,
+       2.1201079562116663,
+       0.01909088623999966
+      ],
+      [
+       1.240691486444,
+       2.1191079562116664,
+       0.03109088623999966
+      ]
+     ],
+     [
+      [
+       -1.0525277692579966,
+       2.0556815044691663,
+       0.8769393672799997
+      ],
+      [
+       -0.9904438508699966,
+       2.056681504469166,
+       0.8889393672799997
+      ],
+      [
+       -0.9283599324819967,
+       2.0556815044691663,
+       0.9009393672799997
+      ]
+     ],
+     [
+      [
+       2.492111120848002,
+       2.145380052726666,
+       -0.35321215167999986
+      ],
+      [
+       2.5323498847200017,
+       2.146380052726666,
+       -0.34121215167999985
+      ],
+      [
+       2.5725886485920015,
+       2.145380052726666,
+       -0.32921215167999984
+      ]
+     ],
+     [
+      [
+       0.3067500109539998,
+       2.081953600984166,
+       0.51663632936
+      ],
+      [
+       0.3551436203099998,
+       2.082953600984166,
+       0.52863632936
+      ],
+      [
+       0.4035372296659998,
+       2.081953600984166,
+       0.5406363293600001
+      ]
+     ],
+     [
+      [
+       -1.8786110989399967,
+       2.171652149241666,
+       -0.7135151896000005
+      ],
+      [
+       -1.8220626440999967,
+       2.172652149241666,
+       -0.7015151896000005
+      ],
+      [
+       -1.7655141892599968,
+       2.171652149241666,
+       -0.6895151896000005
+      ]
+     ],
+     [
+      [
+       1.636027791166002,
+       2.108225697499166,
+       0.1563332914400004
+      ],
+      [
+       1.700731091490002,
+       2.109225697499166,
+       0.16833329144000042
+      ],
+      [
+       1.765434391814002,
+       2.108225697499166,
+       0.18033329144000043
+      ]
+     ],
+     [
+      [
+       -0.5193333187279998,
+       2.0447992457566664,
+       1.0261817724799993
+      ],
+      [
+       -0.47647517291999986,
+       2.0457992457566663,
+       1.0381817724799993
+      ],
+      [
+       -0.43361702711199984,
+       2.0447992457566664,
+       1.0501817724799993
+      ]
+     ],
+     [
+      [
+       -2.704694428621997,
+       2.134497794014166,
+       -0.20396974647999921
+      ],
+      [
+       -2.653681437329997,
+       2.135497794014166,
+       -0.1919697464799992
+      ],
+      [
+       -2.6026684460379967,
+       2.134497794014166,
+       -0.1799697464799992
+      ]
+     ],
+     [
+      [
+       0.8099444614840068,
+       2.071071342271666,
+       0.6658787345599999
+      ],
+      [
+       0.8691122982600068,
+       2.072071342271666,
+       0.6778787345599999
+      ],
+      [
+       0.9282801350360068,
+       2.071071342271666,
+       0.6898787345599999
+      ]
+     ],
+     [
+      [
+       -1.34541664841,
+       2.160769890529166,
+       -0.5642727843999988
+      ],
+      [
+       -1.3080939661500002,
+       2.161769890529166,
+       -0.5522727843999988
+      ],
+      [
+       -1.2707712838900003,
+       2.160769890529166,
+       -0.5402727843999988
+      ]
+     ],
+     [
+      [
+       2.169222241696003,
+       2.097343438786666,
+       0.3055756966400003
+      ],
+      [
+       2.2146997694400032,
+       2.098343438786666,
+       0.3175756966400003
+      ],
+      [
+       2.2601772971840033,
+       2.097343438786666,
+       0.3295756966400003
+      ]
+     ],
+     [
+      [
+       -0.016138868197993303,
+       2.187041987044166,
+       -0.9245758223200004
+      ],
+      [
+       0.0374935050300067,
+       2.188041987044166,
+       -0.9125758223200003
+      ],
+      [
+       0.0911258782580067,
+       2.187041987044166,
+       -0.9005758223200003
+      ]
+     ],
+     [
+      [
+       -2.201499978092,
+       2.123615535301666,
+       -0.05472734127999944
+      ],
+      [
+       -2.13971275938,
+       2.124615535301666,
+       -0.04272734127999944
+      ],
+      [
+       -2.077925540668,
+       2.123615535301666,
+       -0.030727341279999442
+      ]
+     ],
+     [
+      [
+       1.3431389120140036,
+       2.060189083559166,
+       0.8151211397599996
+      ],
+      [
+       1.3830809762100036,
+       2.061189083559166,
+       0.8271211397599996
+      ],
+      [
+       1.4230230404060036,
+       2.060189083559166,
+       0.8391211397599996
+      ]
+     ],
+     [
+      [
+       -0.8422221978799934,
+       2.149887631816666,
+       -0.41503037920000097
+      ],
+      [
+       -0.7941252881999934,
+       2.150887631816666,
+       -0.40303037920000095
+      ],
+      [
+       -0.7460283785199934,
+       2.149887631816666,
+       -0.39103037920000094
+      ]
+     ],
+     [
+      [
+       2.672416692226,
+       2.086461180074166,
+       0.45481810183999993
+      ],
+      [
+       2.72866844739,
+       2.087461180074166,
+       0.46681810183999994
+      ],
+      [
+       2.784920202554,
+       2.086461180074166,
+       0.47881810183999995
+      ]
+     ],
+     [
+      [
+       0.4870555823320035,
+       2.1761597283316663,
+       -0.7753334171199988
+      ],
+      [
+       0.5514621829800035,
+       2.177159728331666,
+       -0.7633334171199988
+      ],
+      [
+       0.6158687836280035,
+       2.1761597283316663,
+       -0.7513334171199988
+      ]
+     ],
+     [
+      [
+       -1.6683055275619934,
+       2.1127332765891658,
+       0.0945150639200021
+      ],
+      [
+       -1.6257440814299933,
+       2.1137332765891657,
+       0.1065150639200021
+      ],
+      [
+       -1.5831826352979932,
+       2.1127332765891658,
+       0.11851506392000209
+      ]
+     ],
+     [
+      [
+       1.8463333625440004,
+       2.049306824846666,
+       0.9643635449599994
+      ],
+      [
+       1.8970496541600004,
+       2.050306824846666,
+       0.9763635449599994
+      ],
+      [
+       1.9477659457760004,
+       2.049306824846666,
+       0.9883635449599995
+      ]
+     ],
+     [
+      [
+       -0.33902774734999663,
+       2.1390053731041663,
+       -0.2657879739999993
+      ],
+      [
+       -0.2801566102499966,
+       2.140005373104166,
+       -0.2537879739999993
+      ],
+      [
+       -0.2212854731499966,
+       2.1390053731041663,
+       -0.2417879739999993
+      ]
+     ],
+     [
+      [
+       -2.4943888572439934,
+       2.075578921361666,
+       0.6040605070400016
+      ],
+      [
+       -2.4573628746599936,
+       2.076578921361666,
+       0.6160605070400016
+      ],
+      [
+       -2.420336892075994,
+       2.075578921361666,
+       0.6280605070400016
+      ]
+     ],
+     [
+      [
+       1.020250032862,
+       2.1652774696191663,
+       -0.6260910119200009
+      ],
+      [
+       1.0654308609299998,
+       2.1662774696191662,
+       -0.6140910119200009
+      ],
+      [
+       1.1106116889979998,
+       2.1652774696191663,
+       -0.6020910119200009
+      ]
+     ],
+     [
+      [
+       -1.1651110770319868,
+       2.1018510178766663,
+       0.24375746911999996
+      ],
+      [
+       -1.1117754034799867,
+       2.102851017876666,
+       0.25575746911999997
+      ],
+      [
+       -1.0584397299279866,
+       2.1018510178766663,
+       0.26775746912
+      ]
+     ],
+     [
+      [
+       2.349527813074007,
+       2.191549566134166,
+       -0.9863940498399987
+      ],
+      [
+       2.411018332110007,
+       2.192549566134166,
+       -0.9743940498399987
+      ],
+      [
+       2.472508851146007,
+       2.191549566134166,
+       -0.9623940498399987
+      ]
+     ],
+     [
+      [
+       0.19416670317999976,
+       2.128123114391666,
+       -0.11654556879999776
+      ],
+      [
+       0.23381206769999974,
+       2.129123114391666,
+       -0.10454556879999777
+      ],
+      [
+       0.27345743221999974,
+       2.128123114391666,
+       -0.09254556879999777
+      ]
+     ],
+     [
+      [
+       -1.9911944067139866,
+       2.0646966626491663,
+       0.7533029122399995
+      ],
+      [
+       -1.9433941967099866,
+       2.065696662649166,
+       0.7653029122399995
+      ],
+      [
+       -1.8955939867059866,
+       2.0646966626491663,
+       0.7773029122399995
+      ]
+     ],
+     [
+      [
+       1.5234444833920064,
+       2.154395210906666,
+       -0.4768486067199993
+      ],
+      [
+       1.5793995388800064,
+       2.155395210906666,
+       -0.4648486067199993
+      ],
+      [
+       1.6353545943680063,
+       2.154395210906666,
+       -0.45284860671999927
+      ]
+     ],
+     [
+      [
+       -0.6619166265019999,
+       2.090968759164166,
+       0.3929998743200016
+      ],
+      [
+       -0.5978067255299999,
+       2.091968759164166,
+       0.4049998743200016
+      ],
+      [
+       -0.5336968245579999,
+       2.090968759164166,
+       0.41699987432000163
+      ]
+     ],
+     [
+      [
+       -2.8172777363959867,
+       2.180667307421666,
+       -0.8371516446400008
+      ],
+      [
+       -2.7750129899399867,
+       2.181667307421666,
+       -0.8251516446400008
+      ],
+      [
+       -2.7327482434839867,
+       2.180667307421666,
+       -0.8131516446400008
+      ]
+     ],
+     [
+      [
+       0.6973611537100067,
+       2.117240855679166,
+       0.03269683640000022
+      ],
+      [
+       0.7477807456500067,
+       2.118240855679166,
+       0.04469683640000022
+      ],
+      [
+       0.7982003375900067,
+       2.117240855679166,
+       0.056696836400000214
+      ]
+     ],
+     [
+      [
+       -1.4879999561840003,
+       2.053814403936666,
+       0.9025453174400011
+      ],
+      [
+       -1.4294255187600002,
+       2.054814403936666,
+       0.9145453174400011
+      ],
+      [
+       -1.3708510813360002,
+       2.053814403936666,
+       0.9265453174400011
+      ]
+     ],
+     [
+      [
+       2.056638933922014,
+       2.143512952194166,
+       -0.32760620151999764
+      ],
+      [
+       2.093368216830014,
+       2.144512952194166,
+       -0.31560620151999763
+      ],
+      [
+       2.1300974997380138,
+       2.143512952194166,
+       -0.3036062015199976
+      ]
+     ],
+     [
+      [
+       -0.1287221759719933,
+       2.080086500451666,
+       0.5422422795199995
+      ],
+      [
+       -0.08383804757999336,
+       2.081086500451666,
+       0.5542422795199995
+      ],
+      [
+       -0.03895391918799339,
+       2.080086500451666,
+       0.5662422795199995
+      ]
+     ],
+     [
+      [
+       -2.314083285866,
+       2.1697850487091657,
+       -0.6879092394399955
+      ],
+      [
+       -2.26104431199,
+       2.1707850487091656,
+       -0.6759092394399955
+      ],
+      [
+       -2.2080053381140003,
+       2.1697850487091657,
+       -0.6639092394399955
+      ]
+     ],
+     [
+      [
+       1.2005556042400134,
+       2.1063585969666665,
+       0.18193924159999808
+      ],
+      [
+       1.2617494236000133,
+       2.1073585969666664,
+       0.1939392415999981
+      ],
+      [
+       1.3229432429600132,
+       2.1063585969666665,
+       0.2059392415999981
+      ]
+     ],
+     [
+      [
+       -0.9548055056539935,
+       2.042932145224166,
+       1.051787722639999
+      ],
+      [
+       -0.9154568408099935,
+       2.043932145224166,
+       1.063787722639999
+      ],
+      [
+       -0.8761081759659934,
+       2.042932145224166,
+       1.075787722639999
+      ]
+     ],
+     [
+      [
+       2.559833384452,
+       2.132630693481666,
+       -0.17836379631999977
+      ],
+      [
+       2.60733689478,
+       2.133630693481666,
+       -0.16636379631999976
+      ],
+      [
+       2.654840405108,
+       2.132630693481666,
+       -0.15436379631999975
+      ]
+     ],
+     [
+      [
+       0.3744722745580132,
+       2.069204241739166,
+       0.6914846847200011
+      ],
+      [
+       0.4301306303700132,
+       2.070204241739166,
+       0.7034846847200011
+      ],
+      [
+       0.4857889861820132,
+       2.069204241739166,
+       0.7154846847200012
+      ]
+     ],
+     [
+      [
+       -1.8108888353359933,
+       2.158902789996666,
+       -0.5386668342399975
+      ],
+      [
+       -1.7470756340399933,
+       2.159902789996666,
+       -0.5266668342399975
+      ],
+      [
+       -1.6832624327439933,
+       2.158902789996666,
+       -0.5146668342399975
+      ]
+     ],
+     [
+      [
+       1.7337500547700004,
+       2.0954763382541657,
+       0.3311816468000035
+      ],
+      [
+       1.7757181015500003,
+       2.0964763382541656,
+       0.3431816468000035
+      ],
+      [
+       1.8176861483300002,
+       2.0954763382541657,
+       0.3551816468000035
+      ]
+     ],
+     [
+      [
+       -0.4516110551239864,
+       2.185174886511666,
+       -0.8989698721599954
+      ],
+      [
+       -0.40148816285998645,
+       2.1861748865116657,
+       -0.8869698721599953
+      ],
+      [
+       -0.3513652705959865,
+       2.185174886511666,
+       -0.8749698721599953
+      ]
+     ],
+     [
+      [
+       -2.6369721650179936,
+       2.121748434769166,
+       -0.029121391120001772
+      ],
+      [
+       -2.5786944272699936,
+       2.122748434769166,
+       -0.017121391120001772
+      ],
+      [
+       -2.5204166895219937,
+       2.121748434769166,
+       -0.005121391120001772
+      ]
+     ],
+     [
+      [
+       0.9076667250879998,
+       2.058321983026666,
+       0.840727089919999
+      ],
+      [
+       0.9440993083199998,
+       2.059321983026666,
+       0.852727089919999
+      ],
+      [
+       0.9805318915519997,
+       2.058321983026666,
+       0.864727089919999
+      ]
+     ],
+     [
+      [
+       -1.2776943848059867,
+       2.1480205312841663,
+       -0.38942442903999963
+      ],
+      [
+       -1.2331069560899868,
+       2.149020531284166,
+       -0.3774244290399996
+      ],
+      [
+       -1.1885195273739868,
+       2.1480205312841663,
+       -0.3654244290399996
+      ]
+     ],
+     [
+      [
+       2.236944505300007,
+       2.084594079541666,
+       0.4804240520000014
+      ],
+      [
+       2.289686779500007,
+       2.085594079541666,
+       0.4924240520000014
+      ],
+      [
+       2.3424290537000068,
+       2.084594079541666,
+       0.5044240520000014
+      ]
+     ],
+     [
+      [
+       0.05158339540602011,
+       2.174292627799166,
+       -0.7497274669599974
+      ],
+      [
+       0.1124805150900201,
+       2.1752926277991658,
+       -0.7377274669599974
+      ],
+      [
+       0.1733776347740201,
+       2.174292627799166,
+       -0.7257274669599973
+      ]
+     ],
+     [
+      [
+       -2.1037777144879866,
+       2.110866176056666,
+       0.12012101408000354
+      ],
+      [
+       -2.0647257493199866,
+       2.1118661760566657,
+       0.13212101408000354
+      ],
+      [
+       -2.0256737841519867,
+       2.110866176056666,
+       0.14412101408000355
+      ]
+     ],
+     [
+      [
+       1.4108611756180063,
+       2.0474397243141658,
+       0.9899694951200044
+      ],
+      [
+       1.4580679862700063,
+       2.0484397243141657,
+       1.0019694951200044
+      ],
+      [
+       1.5052747969220064,
+       2.0474397243141658,
+       1.0139694951200044
+      ]
+     ],
+     [
+      [
+       -0.774499934276,
+       2.1371382725716663,
+       -0.24018202384000176
+      ],
+      [
+       -0.71913827814,
+       2.138138272571666,
+       -0.22818202384000175
+      ],
+      [
+       -0.663776622004,
+       2.1371382725716663,
+       -0.21618202384000174
+      ]
+     ],
+     [
+      [
+       2.740138955829993,
+       2.0737118208291663,
+       0.6296664571999993
+      ],
+      [
+       2.803655457449993,
+       2.074711820829166,
+       0.6416664571999993
+      ],
+      [
+       2.867171959069993,
+       2.0737118208291663,
+       0.6536664571999993
+      ]
+     ],
+     [
+      [
+       0.5847778459360267,
+       2.163410369086666,
+       -0.6004850617599995
+      ],
+      [
+       0.6264491930400267,
+       2.164410369086666,
+       -0.5884850617599995
+      ],
+      [
+       0.6681205401440267,
+       2.163410369086666,
+       -0.5764850617599995
+      ]
+     ],
+     [
+      [
+       -1.6005832639579798,
+       2.099983917344166,
+       0.2693634192800014
+      ],
+      [
+       -1.5507570713699799,
+       2.100983917344166,
+       0.2813634192800014
+      ],
+      [
+       -1.50093087878198,
+       2.099983917344166,
+       0.2933634192800014
+      ]
+     ],
+     [
+      [
+       1.9140556261480137,
+       2.189682465601666,
+       -0.9607880996799973
+      ],
+      [
+       1.9720366642200138,
+       2.190682465601666,
+       -0.9487880996799973
+      ],
+      [
+       2.030017702292014,
+       2.189682465601666,
+       -0.9367880996799973
+      ]
+     ],
+     [
+      [
+       -0.24130548374599337,
+       2.126256013859166,
+       -0.09093961863999632
+      ],
+      [
+       -0.20516960018999342,
+       2.127256013859166,
+       -0.07893961863999632
+      ],
+      [
+       -0.16903371663399347,
+       2.126256013859166,
+       -0.06693961863999633
+      ]
+     ],
+     [
+      [
+       -2.4266665936400003,
+       2.062829562116666,
+       0.7789088624000045
+      ],
+      [
+       -2.3823758646,
+       2.063829562116666,
+       0.7909088624000045
+      ],
+      [
+       -2.33808513556,
+       2.062829562116666,
+       0.8029088624000045
+      ]
+     ],
+     [
+      [
+       1.0879722964659932,
+       2.1525281103741665,
+       -0.4512426565600016
+      ],
+      [
+       1.1404178709899933,
+       2.1535281103741664,
+       -0.4392426565600016
+      ],
+      [
+       1.1928634455139933,
+       2.1525281103741665,
+       -0.4272426565600016
+      ]
+     ],
+     [
+      [
+       -1.0973888134279732,
+       2.0891016586316664,
+       0.4186058244799993
+      ],
+      [
+       -1.0367883934199733,
+       2.0901016586316663,
+       0.4306058244799993
+      ],
+      [
+       -0.9761879734119734,
+       2.0891016586316664,
+       0.4426058244799993
+      ]
+     ],
+     [
+      [
+       2.4472500766780203,
+       2.178800206889166,
+       -0.8115456944799995
+      ],
+      [
+       2.4860053421700203,
+       2.179800206889166,
+       -0.7995456944799995
+      ],
+      [
+       2.5247606076620204,
+       2.178800206889166,
+       -0.7875456944799994
+      ]
+     ]
+    ]
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "note": "Size: 64 short flecks across the felt, about 0.10 m long. Shape: lines on the felt's face, standing for the mineral granule finish the photograph shows as the shed's grey-green top.",
+   "source": "photo",
+   "look": {
+    "alpha": 0.38,
+    "weight": 0.5
+   }
+  },
+  {
+   "id": "grain-front",
+   "label": "Grain and knots, front pier",
+   "role": "detail",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 3,
+   "shape": {
+    "type": "paths",
+    "paths": [
+     [
+      [
+       -1.47,
+       0.28,
+       1.2015
+      ],
+      [
+       -1.3,
+       0.286,
+       1.2015
+      ],
+      [
+       -1.15,
+       0.282,
+       1.2015
+      ]
+     ],
+     [
+      [
+       -0.87,
+       0.854,
+       1.2015
+      ],
+      [
+       -0.7,
+       0.86,
+       1.2015
+      ],
+      [
+       -0.55,
+       0.856,
+       1.2015
+      ]
+     ],
+     [
+      [
+       -0.27,
+       1.427,
+       1.2015
+      ],
+      [
+       -0.1,
+       1.433,
+       1.2015
+      ],
+      [
+       0.05,
+       1.429,
+       1.2015
+      ]
+     ],
+     [
+      [
+       0.33,
+       0.45,
+       1.2015
+      ],
+      [
+       0.5,
+       0.456,
+       1.2015
+      ],
+      [
+       0.65,
+       0.452,
+       1.2015
+      ]
+     ],
+     [
+      [
+       0.93,
+       1.024,
+       1.2015
+      ],
+      [
+       1.1,
+       1.03,
+       1.2015
+      ],
+      [
+       1.25,
+       1.026,
+       1.2015
+      ]
+     ],
+     [
+      [
+       1.53,
+       1.598,
+       1.2015
+      ],
+      [
+       1.7,
+       1.604,
+       1.2015
+      ],
+      [
+       1.85,
+       1.6,
+       1.2015
+      ]
+     ],
+     [
+      [
+       2.13,
+       0.621,
+       1.2015
+      ],
+      [
+       2.3,
+       0.627,
+       1.2015
+      ],
+      [
+       2.45,
+       0.623,
+       1.2015
+      ]
+     ]
+    ]
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "note": "Size: seven short grain strokes across the long right pier, 0.3 m long. Shape: lines on the boards' face, the grain the photo's stained boards show.",
+   "source": "photo",
+   "look": {
+    "alpha": 0.22,
+    "weight": 0.45
+   }
+  },
+  {
+   "id": "grain-back",
+   "label": "Grain, back wall",
+   "role": "detail",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 3,
+   "shape": {
+    "type": "paths",
+    "paths": [
+     [
+      [
+       -2.003,
+       1.055,
+       -1.2015
+      ],
+      [
+       -1.833,
+       1.061,
+       -1.2015
+      ],
+      [
+       -1.683,
+       1.057,
+       -1.2015
+      ]
+     ],
+     [
+      [
+       -1.27,
+       1.629,
+       -1.2015
+      ],
+      [
+       -1.1,
+       1.635,
+       -1.2015
+      ],
+      [
+       -0.95,
+       1.631,
+       -1.2015
+      ]
+     ],
+     [
+      [
+       -0.537,
+       0.652,
+       -1.2015
+      ],
+      [
+       -0.367,
+       0.658,
+       -1.2015
+      ],
+      [
+       -0.217,
+       0.654,
+       -1.2015
+      ]
+     ],
+     [
+      [
+       0.197,
+       1.225,
+       -1.2015
+      ],
+      [
+       0.367,
+       1.231,
+       -1.2015
+      ],
+      [
+       0.517,
+       1.227,
+       -1.2015
+      ]
+     ],
+     [
+      [
+       0.93,
+       1.799,
+       -1.2015
+      ],
+      [
+       1.1,
+       1.805,
+       -1.2015
+      ],
+      [
+       1.25,
+       1.801,
+       -1.2015
+      ]
+     ],
+     [
+      [
+       1.663,
+       0.823,
+       -1.2015
+      ],
+      [
+       1.833,
+       0.829,
+       -1.2015
+      ],
+      [
+       1.983,
+       0.825,
+       -1.2015
+      ]
+     ]
+    ]
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "note": "Size: six grain strokes on the back wall. Shape: lines on the boards' face.",
+   "source": "request",
+   "look": {
+    "alpha": 0.18,
+    "weight": 0.4
+   }
+  },
+  {
+   "id": "roof-board-joint",
+   "label": "Roof board joint",
+   "role": "detail",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 4,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -2.88,
+      2.0116458333333327,
+      1.15
+     ],
+     [
+      -2.88,
+      2.130041666666666,
+      0.02
+     ],
+     [
+      -2.88,
+      2.2477083333333328,
+      -1.1
+     ]
+    ]
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "note": "Size: the joints between the roof boards, at 0.72 m centres, seen from inside. Shape: lines on the underside of the deck.",
+   "source": "request",
+   "look": {
+    "alpha": 0.3,
+    "weight": 0.45
+   },
+   "repeat": {
+    "count": 8,
+    "step": {
+     "at": [
+      0.72,
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "roof-rafter",
+   "label": "Roof rafter",
+   "role": "structure",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.045,
+     0.075,
+     2.4568
+    ]
+   },
+   "at": [
+    -2.55,
+    2.0502,
+    0.025
+   ],
+   "note": "Size: 45 x 75 mm rafters spanning front to back at 1.3 m centres, under the boards. Shape: a rafter on the roof's fall.",
+   "source": "request",
+   "repeat": {
+    "count": 5,
+    "step": {
+     "at": [
+      1.275,
+      0,
+      0
+     ]
+    }
+   },
+   "rotate": [
+    4.17,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.3
+   }
+  },
+  {
+   "id": "roof-boards",
+   "label": "Roof boards",
+   "role": "structure",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     6.03,
+     0.022,
+     2.5568
+    ]
+   },
+   "at": [
+    0,
+    2.1027,
+    0.025
+   ],
+   "note": "Size: 6.03 x 2.55 m of 22 mm boards over the rafters, overhanging 100 mm at the eave. Shape: a single-pitch boarded deck, 3.5 deg to the front, as the felt's fall shows.",
+   "source": "photo",
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.55
+   },
+   "rotate": [
+    4.17,
+    0,
+    0
+   ]
+  },
+  {
+   "id": "roof-felt",
+   "label": "Roofing felt",
+   "role": "identity",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     6.03,
+     0.004,
+     2.5568
+    ]
+   },
+   "at": [
+    0,
+    2.1157,
+    0.03
+   ],
+   "note": "Size: a mineral-surfaced felt covering, 20 mm proud of the boards all round. Shape: a sheet on the roof's fall; the photo's grey-green granular surface is the one colour the renderer sets.",
+   "source": "photo",
+   "look": {
+    "fill": "dark",
+    "weight": 1.7,
+    "alpha": 1.0,
+    "glow": 0.35
+   },
+   "rotate": [
+    4.17,
+    0,
+    0
+   ]
+  },
+  {
+   "id": "felt-crease",
+   "label": "Felt crease",
+   "role": "detail",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 4,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -2.2,
+      2.046583333333333,
+      1.0
+     ],
+     [
+      -2.14,
+      2.120677083333333,
+      0.025000000000000022
+     ],
+     [
+      -2.24,
+      2.2033541666666663,
+      -1.15
+     ]
+    ]
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "note": "Size: three creases running down the fall, the length of the roof. Shape: a line on the felt's plane, as a laid felt sheet wrinkles.",
+   "source": "photo",
+   "look": {
+    "alpha": 0.25,
+    "weight": 0.5
+   },
+   "repeat": {
+    "count": 3,
+    "step": {
+     "at": [
+      1.85,
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "felt-upstand-back",
+   "label": "Felt upstand, back",
+   "role": "identity",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     6.03,
+     0.06,
+     0.012
+    ]
+   },
+   "at": [
+    0,
+    2.2386,
+    -1.246
+   ],
+   "note": "Size: a 60 mm upstand where the felt turns up at the high edge. Shape: a strip along the back edge.",
+   "source": "request",
+   "look": {
+    "weight": 1.0,
+    "alpha": 0.75
+   }
+  },
+  {
+   "id": "felt-fold-left",
+   "label": "Felt fold, left corner",
+   "role": "detail",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 4,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -2.9149999999999996,
+      2.024708333333333,
+      1.3
+     ],
+     [
+      -2.9699999999999998,
+      2.029260416666666,
+      1.2650000000000001
+     ],
+     [
+      -3.0029999999999997,
+      1.9947083333333329,
+      1.306
+     ]
+    ]
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "note": "Size: the diagonal fold where the felt is dressed round the front corner. Shape: a line.",
+   "source": "photo",
+   "look": {
+    "alpha": 0.5,
+    "weight": 0.9
+   }
+  },
+  {
+   "id": "felt-fold-right",
+   "label": "Felt fold, right corner",
+   "role": "detail",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 4,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      2.9149999999999996,
+      2.024708333333333,
+      1.3
+     ],
+     [
+      2.9699999999999998,
+      2.029260416666666,
+      1.2650000000000001
+     ],
+     [
+      3.0029999999999997,
+      1.9947083333333329,
+      1.306
+     ]
+    ]
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "note": "Size: the diagonal fold where the felt is dressed round the front corner. Shape: a line.",
+   "source": "photo",
+   "look": {
+    "alpha": 0.5,
+    "weight": 0.9
+   }
+  },
+  {
+   "id": "felt-lap",
+   "label": "Felt lap",
+   "role": "detail",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     6.01,
+     0.008,
+     0.05
+    ]
+   },
+   "at": [
+    0,
+    2.0907,
+    0.45
+   ],
+   "note": "Size: a 50 mm lap ridge, courses 0.55 m apart across the 2.55 m deck, the last inside the back edge. Shape: the turned edge of a felt course, standing 8 mm proud.",
+   "source": "photo",
+   "look": {
+    "weight": 1.4,
+    "alpha": 0.85
+   },
+   "repeat": {
+    "count": 4,
+    "step": {
+     "at": [
+      0,
+      0.04010416666666667,
+      -0.55
+     ]
+    }
+   },
+   "rotate": [
+    4.17,
+    0,
+    0
+   ]
+  },
+  {
+   "id": "felt-roll-front",
+   "label": "Felt edge, front",
+   "role": "identity",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 4,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.03,
+    "height": 5.9799999999999995
+   },
+   "at": [
+    2.99,
+    2.0007,
+    1.317
+   ],
+   "note": "Size: a 40 mm roll, the felt dressed over the eave and turned under it. Shape: a rolled edge along the front.",
+   "source": "photo",
+   "look": {
+    "weight": 1.6,
+    "glow": 0.35
+   },
+   "rotate": [
+    0,
+    0,
+    90
+   ]
+  },
+  {
+   "id": "felt-roll-left",
+   "label": "Felt edge, left",
+   "role": "identity",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 4,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.014,
+    "height": 2.516769984552042
+   },
+   "at": [
+    -3.007,
+    2.1077,
+    -1.2334
+   ],
+   "note": "Size: 22 mm diameter along the side edge. Shape: the same dressed roll, over the side edge; the photo shows it turning the right corner.",
+   "source": "photo",
+   "look": {
+    "weight": 1.2
+   },
+   "rotate": [
+    94.17,
+    0,
+    0
+   ]
+  },
+  {
+   "id": "felt-roll-right",
+   "label": "Felt edge, right",
+   "role": "identity",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 4,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.014,
+    "height": 2.516769984552042
+   },
+   "at": [
+    3.007,
+    2.1077,
+    -1.2334
+   ],
+   "note": "Size: 22 mm diameter along the side edge. Shape: the same dressed roll, over the side edge; the photo shows it turning the right corner.",
+   "source": "photo",
+   "look": {
+    "weight": 1.2
+   },
+   "rotate": [
+    94.17,
+    0,
+    0
+   ]
+  },
+  {
+   "id": "fascia-front",
+   "label": "Fascia, front",
+   "role": "identity",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     6.03,
+     0.1,
+     0.02
+    ]
+   },
+   "at": [
+    0,
+    1.9494,
+    1.29
+   ],
+   "note": "Size: 100 mm deep, 20 mm thick, its top on the deck's underside: with the roll it makes the 130 mm band the photo measures, and it leaves the top board course of the wall showing under it. Shape: a flat board along the eave.",
+   "source": "photo",
+   "look": {
+    "weight": 1.2
+   }
+  },
+  {
+   "id": "fascia-return",
+   "label": "Fascia return, right",
+   "role": "structure",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.02,
+     0.1,
+     2.42
+    ]
+   },
+   "at": [
+    3.005,
+    2.075,
+    0.02
+   ],
+   "note": "Size: a 100 mm return closing the roof's right end, from the front eave to the back. Shape: a flat board on the end wall's line.",
+   "source": "request",
+   "rotate": [
+    4.17,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.3
+   }
+  },
+  {
+   "id": "fascia-back",
+   "label": "Fascia, back",
+   "role": "structure",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     5.96,
+     0.1,
+     0.02
+    ]
+   },
+   "at": [
+    0,
+    2.1339,
+    -1.24
+   ],
+   "note": "Size: 100 mm deep at the high edge, where the photo cannot see. Shape: a flat board.",
+   "source": "request",
+   "look": {
+    "weight": 0.5,
+    "alpha": 0.3
+   }
+  },
+  {
+   "id": "door-jamb-left",
+   "label": "Door lining, left jamb",
+   "role": "identity",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 5,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.05,
+     1.931,
+     0.097
+    ]
+   },
+   "at": [
+    -2.81,
+    1.0405,
+    1.1735
+   ],
+   "note": "Size: a 50 mm jamb lining standing 22 mm proud of the cladding, the door's casing in one with the frame. Shape: a jamb.",
+   "source": "request"
+  },
+  {
+   "id": "door-jamb-right",
+   "label": "Door lining, right jamb",
+   "role": "identity",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 5,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.05,
+     1.931,
+     0.097
+    ]
+   },
+   "at": [
+    -1.95,
+    1.0405,
+    1.1735
+   ],
+   "note": "Size: the same jamb on the latch side. Shape: a jamb.",
+   "source": "request"
+  },
+  {
+   "id": "door-head-lining",
+   "label": "Door lining, head",
+   "role": "identity",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 5,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.91,
+     0.111,
+     0.097
+    ]
+   },
+   "at": [
+    -2.38,
+    1.9505,
+    1.1735
+   ],
+   "note": "Size: 105 mm head, the door's 1.82 m leaf plus this puts the head at the wall plate. Shape: a head lining, standing proud like the jambs.",
+   "source": "request"
+  },
+  {
+   "id": "door-leaf",
+   "label": "Door leaf",
+   "role": "identity",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 5,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.802,
+     1.812,
+     0.045
+    ],
+    "ribs": 4
+   },
+   "at": [
+    -2.376,
+    0.981,
+    1.1745
+   ],
+   "note": "Size: 810 mm wide, 1820 mm high, 45 mm thick - the clear opening between the linings, and the lower end of the 1.8-1.9 m a shed door is usually given. Shape: a boarded door, four boards as the ribs show; the photo does not reach it, so its style is designed.",
+   "source": "request",
+   "look": {
+    "weight": 1.9,
+    "glow": 0.45
+   }
+  },
+  {
+   "id": "door-ledge-1",
+   "label": "Door ledge 1",
+   "role": "identity",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 6,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.71,
+     0.09,
+     0.027
+    ]
+   },
+   "at": [
+    -2.38,
+    0.35,
+    1.2105
+   ],
+   "note": "Size: 90 x 27 mm ledge across the door's outer face. Shape: a flat rail, as a ledged and braced door shows it.",
+   "source": "request",
+   "look": {
+    "weight": 1.3,
+    "glow": 0.2
+   }
+  },
+  {
+   "id": "door-ledge-2",
+   "label": "Door ledge 2",
+   "role": "identity",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 6,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.71,
+     0.09,
+     0.027
+    ]
+   },
+   "at": [
+    -2.38,
+    0.95,
+    1.2105
+   ],
+   "note": "Size: 90 x 27 mm ledge across the door's outer face. Shape: a flat rail, as a ledged and braced door shows it.",
+   "source": "request",
+   "look": {
+    "weight": 1.3,
+    "glow": 0.2
+   }
+  },
+  {
+   "id": "door-ledge-3",
+   "label": "Door ledge 3",
+   "role": "identity",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 6,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.71,
+     0.09,
+     0.027
+    ]
+   },
+   "at": [
+    -2.38,
+    1.6,
+    1.2105
+   ],
+   "note": "Size: 90 x 27 mm ledge across the door's outer face. Shape: a flat rail, as a ledged and braced door shows it.",
+   "source": "request",
+   "look": {
+    "weight": 1.3,
+    "glow": 0.2
+   }
+  },
+  {
+   "id": "door-board-joint",
+   "label": "Door board joint",
+   "role": "identity",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 6,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -2.615,
+      0.079,
+      1.198
+     ],
+     [
+      -2.615,
+      1.075,
+      1.198
+     ],
+     [
+      -2.615,
+      1.891,
+      1.198
+     ]
+    ]
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "note": "Size: three joint lines between the door's four boards. Shape: lines on the leaf's face, the joint of a boarded door.",
+   "source": "request",
+   "look": {
+    "weight": 0.9,
+    "alpha": 0.7
+   },
+   "repeat": {
+    "count": 3,
+    "step": {
+     "at": [
+      0.2,
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "door-brace",
+   "label": "Door brace",
+   "role": "identity",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 6,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.62,
+     0.09,
+     0.022
+    ]
+   },
+   "at": [
+    -2.38,
+    0.98,
+    1.233
+   ],
+   "note": "Size: a 90 mm brace running from the bottom hinge stile to the top latch stile, over the ledges. Shape: a rail on the diagonal.",
+   "source": "request",
+   "look": {
+    "weight": 1.35,
+    "glow": 0.22
+   },
+   "rotate": [
+    0,
+    0,
+    61
+   ]
+  },
+  {
+   "id": "door-hinge-knuckle",
+   "label": "Hinge knuckle",
+   "role": "detail",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 6,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.011,
+    "height": 0.075
+   },
+   "at": [
+    -2.785,
+    0.16,
+    1.19
+   ],
+   "note": "Size: 22 mm barrel, 75 mm long, at the leaf's left edge. Shape: a barrel on the axis.",
+   "source": "request",
+   "repeat": {
+    "count": 3,
+    "step": {
+     "at": [
+      0,
+      0.78,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "door-hinge-strap",
+   "label": "Hinge strap",
+   "role": "detail",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 6,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.34,
+     0.05,
+     0.033
+    ]
+   },
+   "at": [
+    -2.615,
+    0.16,
+    1.2135
+   ],
+   "note": "Size: a 340 x 50 mm tee hinge strap on the door's face, at the two outer hinges. Shape: a flat strap.",
+   "source": "request",
+   "repeat": {
+    "count": 2,
+    "step": {
+     "at": [
+      0,
+      1.62,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "door-latch-bar",
+   "label": "Latch bar",
+   "role": "detail",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 6,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.16,
+     0.024,
+     0.012
+    ]
+   },
+   "at": [
+    -2.1,
+    1.22,
+    1.203
+   ],
+   "note": "Size: a 200 mm thumb latch on the latch side, above the middle ledge. Shape: a small bar on the door's face.",
+   "source": "request"
+  },
+  {
+   "id": "door-latch-keep",
+   "label": "Latch keep",
+   "role": "detail",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 6,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.03,
+     0.09,
+     0.012
+    ]
+   },
+   "at": [
+    -1.95,
+    1.22,
+    1.228
+   ],
+   "note": "Size: a 30 mm keep screwed to the jamb. Shape: a small plate.",
+   "source": "request"
+  },
+  {
+   "id": "door-threshold",
+   "label": "Door threshold",
+   "role": "detail",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 6,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.91,
+     0.03,
+     0.12
+    ]
+   },
+   "at": [
+    -2.38,
+    0.07,
+    1.22
+   ],
+   "note": "Size: a 30 mm oak threshold across the opening, 120 mm deep. Shape: a flat plate, proud of the wall face.",
+   "source": "request"
+  },
+  {
+   "id": "window-1-frame-head",
+   "label": "Window 1 frame, head",
+   "role": "identity",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 6,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.7575,
+     0.05,
+     0.06
+    ]
+   },
+   "at": [
+    -0.4662,
+    1.45,
+    1.18
+   ],
+   "note": "Size: 72 cm light, 50 mm head member. Shape: a frame member in the opening.",
+   "source": "photo",
+   "look": {
+    "weight": 1.2
+   }
+  },
+  {
+   "id": "window-1-frame-sill",
+   "label": "Window 1 frame, bottom",
+   "role": "identity",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 6,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.7575,
+     0.05,
+     0.06
+    ]
+   },
+   "at": [
+    -0.4662,
+    0.625,
+    1.18
+   ],
+   "note": "Size: 50 mm bottom member. Shape: a frame member.",
+   "source": "photo",
+   "look": {
+    "weight": 1.2
+   }
+  },
+  {
+   "id": "window-1-frame-jamb",
+   "label": "Window 1 frame, jambs",
+   "role": "identity",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 6,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.05,
+     0.875,
+     0.06
+    ]
+   },
+   "at": [
+    -0.82,
+    1.0375,
+    1.18
+   ],
+   "note": "Size: 50 x 50 mm jambs, 875 mm long, standing 12 mm proud of the boarding. Shape: a frame member, dark like the cladding.",
+   "source": "photo",
+   "look": {
+    "weight": 1.2
+   },
+   "repeat": {
+    "count": 2,
+    "step": {
+     "at": [
+      0.7074999999999999,
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "window-1-glass",
+   "label": "Window 1 glazing",
+   "role": "identity",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 6,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.6575,
+     0.775,
+     0.006
+    ]
+   },
+   "at": [
+    -0.4662,
+    1.0375,
+    1.198
+   ],
+   "note": "Size: a 620 x 770 mm single light in each opening, as the photo shows one uninterrupted reflection per window. Shape: a flat pane in the frame's rebate.",
+   "source": "photo",
+   "look": {
+    "fill": "glass",
+    "weight": 1.1,
+    "glow": 0.5
+   }
+  },
+  {
+   "id": "window-1-bead-line",
+   "label": "Window 1 bead line",
+   "role": "detail",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 6,
+   "shape": {
+    "type": "curve",
+    "closed": true,
+    "points": [
+     [
+      -0.7889999999999999,
+      0.6559999999999999,
+      1.2109999999999999
+     ],
+     [
+      -0.46625,
+      0.6559999999999999,
+      1.2109999999999999
+     ],
+     [
+      -0.14350000000000002,
+      0.6559999999999999,
+      1.2109999999999999
+     ],
+     [
+      -0.14350000000000002,
+      1.0374999999999999,
+      1.2109999999999999
+     ],
+     [
+      -0.14350000000000002,
+      1.4189999999999998,
+      1.2109999999999999
+     ],
+     [
+      -0.46625,
+      1.4189999999999998,
+      1.2109999999999999
+     ],
+     [
+      -0.7889999999999999,
+      1.4189999999999998,
+      1.2109999999999999
+     ],
+     [
+      -0.7889999999999999,
+      1.0374999999999999,
+      1.2109999999999999
+     ]
+    ]
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "note": "Size: the glazing bead's line round the pane, 6 mm inside the frame's bevel. Shape: a closed bead line standing on the frame's face, which is what makes the opening read as a hole in a wall.",
+   "source": "request",
+   "look": {
+    "weight": 0.8,
+    "alpha": 0.6
+   }
+  },
+  {
+   "id": "window-1-clip",
+   "label": "Window 1 glazing clip",
+   "role": "detail",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 6,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.075,
+     0.035,
+     0.014
+    ]
+   },
+   "at": [
+    -0.715,
+    1.445,
+    1.23
+   ],
+   "note": "Size: the little iron plates the photo shows under each head, 75 mm long. Shape: a stay plate over the bead.",
+   "source": "photo",
+   "repeat": {
+    "count": 2,
+    "step": {
+     "at": [
+      0.49749999999999994,
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "window-1-sill",
+   "label": "Window 1 external sill",
+   "role": "identity",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 6,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.8375,
+     0.05,
+     0.1
+    ]
+   },
+   "at": [
+    -0.4662,
+    0.575,
+    1.25
+   ],
+   "note": "Size: an 800 mm board projecting 55 mm with a drip under its nose, the shadow the photo shows. Shape: a sill board, its back let into the reveal.",
+   "source": "photo",
+   "look": {
+    "weight": 1.3
+   }
+  },
+  {
+   "id": "window-1-bead",
+   "label": "Window 1 glazing bead",
+   "role": "identity",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 6,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.6375,
+     0.755,
+     0.016
+    ]
+   },
+   "at": [
+    -0.4662,
+    1.0375,
+    1.216
+   ],
+   "note": "Size: a 20 mm bead around the pane, standing in the frame's rebate. Shape: a bead line inside the frame.",
+   "source": "request",
+   "look": {
+    "weight": 1.0,
+    "alpha": 0.7
+   }
+  },
+  {
+   "id": "window-2-frame-head",
+   "label": "Window 2 frame, head",
+   "role": "identity",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 6,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.7575,
+     0.05,
+     0.06
+    ]
+   },
+   "at": [
+    0.3963,
+    1.45,
+    1.18
+   ],
+   "note": "Size: 72 cm light, 50 mm head member. Shape: a frame member in the opening.",
+   "source": "photo",
+   "look": {
+    "weight": 1.2
+   }
+  },
+  {
+   "id": "window-2-frame-sill",
+   "label": "Window 2 frame, bottom",
+   "role": "identity",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 6,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.7575,
+     0.05,
+     0.06
+    ]
+   },
+   "at": [
+    0.3963,
+    0.625,
+    1.18
+   ],
+   "note": "Size: 50 mm bottom member. Shape: a frame member.",
+   "source": "photo",
+   "look": {
+    "weight": 1.2
+   }
+  },
+  {
+   "id": "window-2-frame-jamb",
+   "label": "Window 2 frame, jambs",
+   "role": "identity",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 6,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.05,
+     0.875,
+     0.06
+    ]
+   },
+   "at": [
+    0.0425,
+    1.0375,
+    1.18
+   ],
+   "note": "Size: 50 x 50 mm jambs, 875 mm long, standing 12 mm proud of the boarding. Shape: a frame member, dark like the cladding.",
+   "source": "photo",
+   "look": {
+    "weight": 1.2
+   },
+   "repeat": {
+    "count": 2,
+    "step": {
+     "at": [
+      0.7074999999999999,
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "window-2-glass",
+   "label": "Window 2 glazing",
+   "role": "identity",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 6,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.6575,
+     0.775,
+     0.006
+    ]
+   },
+   "at": [
+    0.3963,
+    1.0375,
+    1.198
+   ],
+   "note": "Size: a 620 x 770 mm single light in each opening, as the photo shows one uninterrupted reflection per window. Shape: a flat pane in the frame's rebate.",
+   "source": "photo",
+   "look": {
+    "fill": "glass",
+    "weight": 1.1,
+    "glow": 0.5
+   }
+  },
+  {
+   "id": "window-2-bead-line",
+   "label": "Window 2 bead line",
+   "role": "detail",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 6,
+   "shape": {
+    "type": "curve",
+    "closed": true,
+    "points": [
+     [
+      0.07350000000000008,
+      0.6559999999999999,
+      1.2109999999999999
+     ],
+     [
+      0.39625000000000005,
+      0.6559999999999999,
+      1.2109999999999999
+     ],
+     [
+      0.719,
+      0.6559999999999999,
+      1.2109999999999999
+     ],
+     [
+      0.719,
+      1.0374999999999999,
+      1.2109999999999999
+     ],
+     [
+      0.719,
+      1.4189999999999998,
+      1.2109999999999999
+     ],
+     [
+      0.39625000000000005,
+      1.4189999999999998,
+      1.2109999999999999
+     ],
+     [
+      0.07350000000000008,
+      1.4189999999999998,
+      1.2109999999999999
+     ],
+     [
+      0.07350000000000008,
+      1.0374999999999999,
+      1.2109999999999999
+     ]
+    ]
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "note": "Size: the glazing bead's line round the pane, 6 mm inside the frame's bevel. Shape: a closed bead line standing on the frame's face, which is what makes the opening read as a hole in a wall.",
+   "source": "request",
+   "look": {
+    "weight": 0.8,
+    "alpha": 0.6
+   }
+  },
+  {
+   "id": "window-2-clip",
+   "label": "Window 2 glazing clip",
+   "role": "detail",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 6,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.075,
+     0.035,
+     0.014
+    ]
+   },
+   "at": [
+    0.1475,
+    1.445,
+    1.23
+   ],
+   "note": "Size: the little iron plates the photo shows under each head, 75 mm long. Shape: a stay plate over the bead.",
+   "source": "photo",
+   "repeat": {
+    "count": 2,
+    "step": {
+     "at": [
+      0.49749999999999994,
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "window-2-sill",
+   "label": "Window 2 external sill",
+   "role": "identity",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 6,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.8375,
+     0.05,
+     0.1
+    ]
+   },
+   "at": [
+    0.3963,
+    0.575,
+    1.25
+   ],
+   "note": "Size: an 800 mm board projecting 55 mm with a drip under its nose, the shadow the photo shows. Shape: a sill board, its back let into the reveal.",
+   "source": "photo",
+   "look": {
+    "weight": 1.3
+   }
+  },
+  {
+   "id": "window-2-bead",
+   "label": "Window 2 glazing bead",
+   "role": "identity",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 6,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.6375,
+     0.755,
+     0.016
+    ]
+   },
+   "at": [
+    0.3963,
+    1.0375,
+    1.216
+   ],
+   "note": "Size: a 20 mm bead around the pane, standing in the frame's rebate. Shape: a bead line inside the frame.",
+   "source": "request",
+   "look": {
+    "weight": 1.0,
+    "alpha": 0.7
+   }
+  },
+  {
+   "id": "planned-logstore-floor",
+   "label": "Planned: logstore floor",
+   "role": "mass",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 7,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.2,
+     0.025,
+     1.8
+    ]
+   },
+   "at": [
+    3.525,
+    0.1075,
+    0
+   ],
+   "note": "Designed, not built. Size: 1.20 x 1.80 m of 25 mm boards at 0.12 m, a raised floor that keeps the logs off the ground. Shape: a boarded deck butted to the shed's end wall, which is where it gets its support at the wall side.",
+   "source": "request",
+   "look": {
+    "fill": "dark",
+    "weight": 0.85,
+    "alpha": 0.6
+   }
+  },
+  {
+   "id": "planned-logstore-bearer",
+   "label": "Planned: logstore bearer",
+   "role": "structure",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 7,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.15,
+     0.095,
+     0.075
+    ]
+   },
+   "at": [
+    3.55,
+    0.0475,
+    -0.7
+   ],
+   "note": "Designed, not built. Size: 75 x 95 mm bearers on the ground under the floor, two of them at 1.4 m centres. Shape: a sawn bearer.",
+   "source": "request",
+   "repeat": {
+    "count": 2,
+    "step": {
+     "at": [
+      0,
+      0,
+      1.4
+     ]
+    }
+   }
+  },
+  {
+   "id": "planned-logstore-post",
+   "label": "Planned: logstore post",
+   "role": "structure",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 7,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.09,
+     1.5,
+     0.09
+    ]
+   },
+   "at": [
+    4.08,
+    0.87,
+    0.855
+   ],
+   "note": "Designed, not built. Size: 90 x 90 mm posts at the two outer corners, 1.50 m high on the floor. Shape: a squared post.",
+   "source": "request",
+   "repeat": {
+    "count": 2,
+    "step": {
+     "at": [
+      0,
+      0,
+      -1.71
+     ]
+    }
+   }
+  },
+  {
+   "id": "planned-logstore-beam",
+   "label": "Planned: logstore beam",
+   "role": "structure",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 7,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.09,
+     0.09,
+     1.8
+    ]
+   },
+   "at": [
+    4.08,
+    1.665,
+    0
+   ],
+   "note": "Designed, not built. Size: a 90 x 90 mm head beam along the open side, on the posts. Shape: a beam carrying the low edge of the roof.",
+   "source": "request"
+  },
+  {
+   "id": "planned-logstore-rafter",
+   "label": "Planned: logstore rafter",
+   "role": "structure",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 7,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.21,
+     0.075,
+     0.045
+    ]
+   },
+   "at": [
+    3.62,
+    1.89,
+    -0.72
+   ],
+   "note": "Designed, not built. Size: 45 x 75 mm rafters at 0.72 m centres, on the shed's end wall at 1.98 m and the beam at 1.70 m: a 13 deg fall off the shed. Shape: a rafter.",
+   "source": "request",
+   "repeat": {
+    "count": 3,
+    "step": {
+     "at": [
+      0,
+      0,
+      0.72
+     ]
+    }
+   },
+   "rotate": [
+    0,
+    0,
+    -13.13
+   ]
+  },
+  {
+   "id": "planned-logstore-roof",
+   "label": "Planned: logstore roof",
+   "role": "mass",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 7,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.24,
+     0.022,
+     1.9
+    ]
+   },
+   "at": [
+    3.62,
+    1.927,
+    0
+   ],
+   "note": "Designed, not built. Size: 1.24 x 1.90 m of 22 mm boards, its high edge tucked 0.09 m under the shed's own roof overhang. Shape: the lean-to deck on the rafters.",
+   "source": "request",
+   "rotate": [
+    0,
+    0,
+    -13.13
+   ]
+  },
+  {
+   "id": "planned-logstore-felt",
+   "label": "Planned: logstore felt",
+   "role": "identity",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 7,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.24,
+     0.004,
+     1.9
+    ]
+   },
+   "at": [
+    3.62,
+    1.94,
+    0
+   ],
+   "note": "Designed, not built. Size: a felt covering on the lean-to boards, as the shed's own roof is felted. Shape: a sheet on the fall.",
+   "source": "request",
+   "rotate": [
+    0,
+    0,
+    -13.13
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.2,
+    "alpha": 0.9,
+    "glow": 0.2
+   }
+  },
+  {
+   "id": "planned-logstore-rail",
+   "label": "Planned: logstore rail",
+   "role": "detail",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 7,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.15,
+     0.075,
+     0.045
+    ]
+   },
+   "at": [
+    3.525,
+    1.5,
+    0.8775
+   ],
+   "note": "Designed, not built. Size: a 75 mm side rail at the top of each open side, so logs cannot roll out. Shape: a rail.",
+   "source": "request",
+   "repeat": {
+    "count": 2,
+    "step": {
+     "at": [
+      0,
+      0,
+      -1.7550000000000001
+     ]
+    }
+   }
+  },
+  {
+   "id": "planned-logstore-logs",
+   "label": "Planned: logstore logs",
+   "role": "detail",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 7,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.085,
+    "height": 1.6,
+    "segments": 12,
+    "rings": 1
+   },
+   "at": [
+    3.255,
+    0.208,
+    -0.8
+   ],
+   "note": "Designed, not built. Size: split logs 170 mm across, 1.60 m long, three across the floor. Shape: rounds lying on the floor, their ends facing the garden; a second course sits on the hollow between them.",
+   "source": "request",
+   "repeat": {
+    "count": 3,
+    "step": {
+     "at": [
+      0.175,
+      0,
+      0
+     ]
+    }
+   },
+   "rotate": [
+    90,
+    0,
+    0
+   ],
+   "look": {
+    "alpha": 0.5,
+    "weight": 0.6
+   }
+  },
+  {
+   "id": "planned-logstore-logs-top",
+   "label": "Planned: logstore logs top",
+   "role": "detail",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 7,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.085,
+    "height": 1.6,
+    "segments": 12,
+    "rings": 1
+   },
+   "at": [
+    3.345,
+    0.36,
+    -0.8
+   ],
+   "note": "Designed, not built. Size: two more logs in the hollow of the first course. Shape: rounds.",
+   "source": "request",
+   "repeat": {
+    "count": 2,
+    "step": {
+     "at": [
+      0.175,
+      0,
+      0
+     ]
+    }
+   },
+   "rotate": [
+    90,
+    0,
+    0
+   ],
+   "look": {
+    "alpha": 0.5,
+    "weight": 0.6
+   }
+  },
+  {
+   "id": "planned-deck-joist",
+   "label": "Planned: deck joist",
+   "role": "structure",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 7,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.0,
+     0.05,
+     0.075
+    ]
+   },
+   "at": [
+    -1.95,
+    0.025,
+    1.45
+   ],
+   "note": "Designed, not built. Size: 75 x 50 mm joists on the ground at 0.55 m centres under the boards. Shape: a joist.",
+   "source": "request",
+   "repeat": {
+    "count": 3,
+    "step": {
+     "at": [
+      0,
+      0,
+      0.55
+     ]
+    }
+   }
+  },
+  {
+   "id": "planned-deck-boards",
+   "label": "Planned: deck boards",
+   "role": "mass",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 7,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.0,
+     0.025,
+     1.4
+    ],
+    "ribs": 7
+   },
+   "at": [
+    -1.95,
+    0.0625,
+    1.9
+   ],
+   "note": "Designed, not built. Size: 2.00 x 1.40 m of 25 mm decking, its top level with the shed's floor so the door's threshold is not a step. Shape: a boarded platform against the front wall, seven boards.",
+   "source": "request",
+   "look": {
+    "fill": "dark",
+    "weight": 0.85,
+    "alpha": 0.6
+   }
+  },
+  {
+   "id": "planned-deck-riser",
+   "label": "Planned: deck riser",
+   "role": "detail",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 7,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.0,
+     0.075,
+     0.025
+    ]
+   },
+   "at": [
+    -1.95,
+    0.0375,
+    2.5875
+   ],
+   "note": "Designed, not built. Size: a 75 mm riser board at the deck's outer edge, closing the joist ends. Shape: a flat board.",
+   "source": "request"
+  },
+  {
+   "id": "planned-deck-step",
+   "label": "Planned: deck step",
+   "role": "mass",
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "stage": 7,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.0,
+     0.025,
+     0.35
+    ]
+   },
+   "at": [
+    -1.95,
+    0.0125,
+    2.775
+   ],
+   "note": "Designed, not built. Size: a 2.00 x 0.35 m tread 50 mm below the deck: one low step to the garden, because the shed's floor stands only 75 mm above it. A raised deck would need the shed's threshold raised with it. Shape: a tread on two bearers.",
+   "source": "request",
+   "look": {
+    "fill": "dark",
+    "weight": 0.85,
+    "alpha": 0.6
+   }
+  }
+ ],
+ "articulations": [
+  {
+   "id": "door-open",
+   "type": "hinge",
+   "parts": [
+    "door-leaf",
+    "door-ledge-1",
+    "door-ledge-2",
+    "door-ledge-3",
+    "door-brace",
+    "door-hinge-strap",
+    "door-latch-bar"
+   ],
+   "axis": [
+    0,
+    -1,
+    0
+   ],
+   "pivot": [
+    -2.785,
+    0.075,
+    1.19
+   ],
+   "amount": 95,
+   "order": 0
+  }
+ ],
+ "annotations": [
+  {
+   "id": "a-roof",
+   "text": "Mineral felt over boarding, rolled over the eave (inferred)",
+   "part": "roof-felt",
+   "offset": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "id": "a-lights",
+   "text": "Two single lights, dark frames",
+   "part": "window-1-frame-head",
+   "offset": [
+    0.0,
+    0.0,
+    0
+   ]
+  },
+  {
+   "id": "a-frame",
+   "text": "Frame and bearers (designed)",
+   "part": "top-plate-front",
+   "offset": [
+    -1.9,
+    0,
+    0
+   ]
+  },
+  {
+   "id": "a-door",
+   "text": "Ledged and braced door (designed)",
+   "part": "door-leaf",
+   "offset": [
+    2.0,
+    0,
+    0
+   ]
+  },
+  {
+   "id": "a-store",
+   "text": "Planned: lean-to log store (designed, not built)",
+   "part": "planned-logstore-felt",
+   "offset": [
+    0,
+    0.1,
+    0
+   ]
+  },
+  {
+   "id": "a-deck",
+   "text": "Planned: deck and step (designed, not built)",
+   "part": "planned-deck-boards",
+   "offset": [
+    0.2,
+    0.0,
+    0
+   ]
+  }
+ ],
+ "presentation": {
+  "framing": {
+   "yaw": -50,
+   "pitch": 14,
+   "fit": 1.0
+  },
+  "views": [
+   {
+    "id": "front",
+    "label": "The photographed elevation",
+    "yaw": 0,
+    "pitch": 5
+   },
+   {
+    "id": "end",
+    "label": "End wall",
+    "yaw": 90,
+    "pitch": 8
+   },
+   {
+    "id": "windows",
+    "label": "The two lights",
+    "yaw": 10,
+    "pitch": 3,
+    "distance": 1.15,
+    "target": "post-mid"
+   },
+   {
+    "id": "door",
+    "label": "Door and hinges",
+    "yaw": 40,
+    "pitch": 4,
+    "distance": 1.3,
+    "target": "door-leaf"
+   },
+   {
+    "id": "roof",
+    "label": "Felt roof and eave",
+    "yaw": 40,
+    "pitch": 30,
+    "distance": 1.25,
+    "target": "felt-roll-front"
+   },
+   {
+    "id": "open",
+    "label": "Door open",
+    "yaw": 42,
+    "pitch": 12
+   },
+   {
+    "id": "store",
+    "label": "The planned log store",
+    "yaw": -62,
+    "pitch": 16,
+    "distance": 3.4,
+    "target": "planned-logstore-logs"
+   },
+   {
+    "id": "deck",
+    "label": "The planned deck",
+    "yaw": 18,
+    "pitch": 30,
+    "distance": 2.0,
+    "target": "planned-deck-boards"
+   }
+  ],
+  "atmosphere": {
+   "haze": 0.62,
+   "scanlines": true,
+   "vignette": true,
+   "grid": true,
+   "projector": false,
+   "motes": 0.15
+  },
+  "occlusion": "xray",
+  "certainty_style": "subtle",
+  "background": "deep",
+  "float": 0,
+  "still_pose": "closed"
+ },
+ "animation": {
+  "assembly": {
+   "style": "build",
+   "seconds": 11,
+   "interference": true
+  },
+  "idle": {
+   "life": "calm",
+   "events": [
+    "scan",
+    "sweep"
+   ],
+   "cadence": [
+    9,
+    15
+   ],
+   "strength": 0.2
+  },
+  "camera": {
+   "drift": 5,
+   "breathe": 0.025,
+   "tour": [
+    {
+     "view": "windows",
+     "at": 14,
+     "fly": 3
+    },
+    {
+     "view": "door",
+     "at": 22,
+     "fly": 3
+    },
+    {
+     "view": "roof",
+     "at": 30,
+     "fly": 3
+    }
+   ]
+  },
+  "reduced_motion": "still"
+ },
+ "authoring": {
+  "tier": "masterpiece",
+  "research": "done",
+  "sources": [
+   "photo"
+  ],
+  "review_rounds": 12,
+  "identity": [
+   {
+    "feature": "shallow mineral felt roof, its edge rolled over the fascia",
+    "source": "photo",
+    "parts": [
+     "roof-felt",
+     "felt-roll-front",
+     "felt-roll-right",
+     "fascia-front"
+    ]
+   },
+   {
+    "feature": "two dark single lights with a full-height post between them",
+    "source": "photo",
+    "parts": [
+     "window-1-frame-head",
+     "window-1-glass",
+     "window-2-glass",
+     "post-mid"
+    ]
+   },
+   {
+    "feature": "black horizontal shiplap between corner posts, with a ledged door",
+    "source": "photo",
+    "parts": [
+     "cladding-front-low",
+     "cladding-front-pier-right",
+     "corner-post-front",
+     "door-leaf"
+    ]
+   }
+  ],
+  "provenance_note": "One photograph, no measurements: every shed size is inferred at 297 px/m from the board pitch, and the door, the back wall, the frame and the roof's fall are designed. The log store and the deck are the owner's plan: each of their parts is labelled Planned:, inferred, and marked designed, not built.",
+  "outcome": "self-reviewed",
+  "next": [
+   "measure the real shed and the garden before building the log store",
+   "check the ground falls away in front of the door, which decides the deck's height and step"
+  ],
+  "rounds": [
+   {
+    "round": 1,
+    "result": "baseline",
+    "minutes": 0.3,
+    "changes": [],
+    "summary": "The two lights are the facade's whole character and they are drawn as near-square, low-set holes. Measured: light aspect 0.85 width/height (photo 0.62); glass h"
+   },
+   {
+    "round": 2,
+    "result": "kept",
+    "minutes": 0.6,
+    "changes": [
+     "D1",
+     "D3",
+     "D2",
+     "D6"
+    ],
+    "summary": "The felt roof is the largest surface in every view and the pale band that identifies the building in photo-1, and it is effectively undrawn: still-top's deck re"
+   },
+   {
+    "round": 3,
+    "result": "reverted",
+    "minutes": 4.6,
+    "changes": [
+     "D2",
+     "D5",
+     "D6",
+     "D7"
+    ],
+    "summary": "The roof deck is the largest surface in still-top, view-roof and every three-quarter, and it is nearly blank. Two lap ridges cross it (still-top, y 294/303 and "
+   },
+   {
+    "round": 4,
+    "result": "kept",
+    "minutes": 3.3,
+    "changes": [
+     "D2",
+     "D5",
+     "D6",
+     "D12"
+    ],
+    "summary": "The wall is too short under the lights. In the photo the sill is 8 board courses above the foot (y 662 to ~1080 at a 52 px pitch) with the foot still not reache"
+   },
+   {
+    "round": 5,
+    "result": "kept",
+    "minutes": 2.5,
+    "changes": [
+     "D18",
+     "D13",
+     "D14",
+     "D12"
+    ],
+    "summary": "The wall is about 45% too low for its length. still-front draws a 930 x 310 px elevation (3.0:1) for 5.85 m over a 2.00 m eave; photo-1's visible elevation is 1"
+   },
+   {
+    "round": 6,
+    "result": "kept",
+    "minutes": 1.0,
+    "changes": [
+     "D20",
+     "D8",
+     "D9",
+     "D21"
+    ],
+    "summary": "The eave is the photo's strongest form and it is drawn as four hairlines from y=246 to y=311 with no bead section, no felt face and no under-shadow; the roll su"
+   },
+   {
+    "round": 7,
+    "result": "reverted",
+    "minutes": 1.3,
+    "changes": [
+     "D2",
+     "D15"
+    ],
+    "summary": "The largest surface in every view is empty: still-top is a 1040 x 450 px rectangle with two long lines across it and nothing else - no felt laps, no sheet joint"
+   },
+   {
+    "round": 8,
+    "result": "kept",
+    "minutes": 1.0,
+    "changes": [
+     "D17",
+     "D23",
+     "D2"
+    ],
+    "summary": "The roof deck, the biggest single surface in every view, is undrawn: still-top is an empty 1036 px rectangle whose only bright row is one rafter at y 440; view-"
+   },
+   {
+    "round": 9,
+    "result": "kept",
+    "minutes": 0.8,
+    "changes": [
+     "D6",
+     "D12",
+     "D14",
+     "D25"
+    ],
+    "summary": "still-front rows 246-266 at x 740-800 are eight separate one-pixel wires with black between them and a single 9 px (0.055 m) filled roll at 274-282. photo-1's e"
+   },
+   {
+    "round": 10,
+    "result": "kept",
+    "minutes": 0.7,
+    "changes": [
+     "D17",
+     "D22"
+    ],
+    "summary": "The roof plane is empty. In still-top the 2.4 x 5.85 m surface between rows 200-320, x 400-1000 averages 19/255: no boarding joints, no felt laps, no battens, n"
+   },
+   {
+    "round": 11,
+    "result": "kept",
+    "minutes": 0.6,
+    "changes": [
+     "D11",
+     "D28",
+     "D20"
+    ],
+    "summary": "The open view is an empty shell: no floor slab, no bench, no shelving, nothing on the sill. A 5.85 x 2.40 potting shed with nothing to pot on reads as a box, wh"
+   },
+   {
+    "round": 12,
+    "result": "reverted",
+    "minutes": 1.0,
+    "changes": [
+     "D31",
+     "D32",
+     "D15"
+    ],
+    "summary": "The roof is the largest surface in the construct and is empty in every line render: one outline parallelogram with two stray crossing lines. The felt laps visib"
+   }
+  ]
+ }
+}

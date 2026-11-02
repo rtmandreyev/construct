@@ -7,7 +7,7 @@
   "category": "architecture",
   "accuracy": "approximate",
   "synthetic": false,
-  "summary": "Milan Cathedral: the white-marble Gothic cathedral with its stepped five-bay fa\u00e7ade, the forest of 135 spires on buttresses and piers, walkable roof terraces, and the octagonal tiburio carrying the main spire and the gilded Madonnina at 108.5 m. Plan traced from a published plan; fa\u00e7ade proportions measured from a near-frontal photograph."
+  "summary": "Milan Cathedral: the white-marble Gothic cathedral with its stepped five-bay façade, the forest of 135 spires on buttresses and piers, walkable roof terraces, and the octagonal tiburio carrying the main spire and the gilded Madonnina at 108.5 m. Plan traced from a published plan; façade proportions measured from a near-frontal photograph."
  },
  "units": "m",
  "seed": 1386,
@@ -28,14 +28,14 @@
   {
    "id": "wiki-it",
    "kind": "document",
-   "title": "Wikipedia (it): Duomo di Milano (tiburio 68 m, octagonal; six fa\u00e7ade buttresses; five portals; polygonal apse; marble roof terraces)",
+   "title": "Wikipedia (it): Duomo di Milano (tiburio 68 m, octagonal; six façade buttresses; five portals; polygonal apse; marble roof terraces)",
    "rights": "reference_only",
    "ref": "https://it.wikipedia.org/wiki/Duomo_di_Milano"
   },
   {
    "id": "structurae",
    "kind": "document",
-   "title": "Structurae: Milan Cathedral (west fa\u00e7ade 61.5 m wide, 56 m high; nave 16.75 m wide)",
+   "title": "Structurae: Milan Cathedral (west façade 61.5 m wide, 56 m high; nave 16.75 m wide)",
    "rights": "reference_only",
    "ref": "https://structurae.net/en/structures/milan-cathedral"
   },
@@ -226,7 +226,7 @@
   {
    "id": "front-steps",
    "role": "structure",
-   "certainty": "inferred",
+   "certainty": "traced",
    "stage": 0,
    "shape": {
     "type": "extrude",
@@ -354,7 +354,10 @@
   {
    "id": "nave",
    "role": "mass",
-   "certainty": "inferred",
+   "certainty": {
+    "size": "verified",
+    "shape": "inferred"
+   },
    "stage": 2,
    "shape": {
     "type": "box",
@@ -384,7 +387,10 @@
   {
    "id": "transept",
    "role": "mass",
-   "certainty": "inferred",
+   "certainty": {
+    "size": "verified",
+    "shape": "traced"
+   },
    "stage": 1,
    "shape": {
     "type": "extrude",
@@ -484,7 +490,7 @@
   {
    "id": "choir-ambulatory",
    "role": "mass",
-   "certainty": "inferred",
+   "certainty": "traced",
    "stage": 1,
    "shape": {
     "type": "extrude",
@@ -528,7 +534,7 @@
   {
    "id": "sacristies",
    "role": "structure",
-   "certainty": "inferred",
+   "certainty": "traced",
    "stage": 1,
    "shape": {
     "type": "box",
@@ -1083,7 +1089,7 @@
   {
    "id": "flank-buttresses",
    "role": "structure",
-   "certainty": "inferred",
+   "certainty": "traced",
    "stage": 2,
    "shape": {
     "type": "box",
@@ -1900,7 +1906,7 @@
   {
    "id": "transept-turrets",
    "role": "structure",
-   "certainty": "inferred",
+   "certainty": "traced",
    "stage": 2,
    "shape": {
     "type": "box",
@@ -2851,7 +2857,7 @@
   {
    "id": "transept-window-0",
    "role": "identity",
-   "certainty": "inferred",
+   "certainty": "traced",
    "stage": 4,
    "shape": {
     "type": "curve",
@@ -2943,7 +2949,7 @@
   {
    "id": "transept-window-1",
    "role": "identity",
-   "certainty": "inferred",
+   "certainty": "traced",
    "stage": 4,
    "shape": {
     "type": "curve",
@@ -3035,7 +3041,7 @@
   {
    "id": "transept-window-2",
    "role": "identity",
-   "certainty": "inferred",
+   "certainty": "traced",
    "stage": 4,
    "shape": {
     "type": "curve",
@@ -4104,7 +4110,10 @@
   {
    "id": "facade-wall",
    "role": "mass",
-   "certainty": "inferred",
+   "certainty": {
+    "size": "verified",
+    "shape": "inferred"
+   },
    "stage": 2,
    "shape": {
     "type": "extrude",
@@ -8466,7 +8475,10 @@
   {
    "id": "tiburio",
    "role": "identity",
-   "certainty": "inferred",
+   "certainty": {
+    "size": "verified",
+    "shape": "inferred"
+   },
    "stage": 6,
    "shape": {
     "type": "lathe",
@@ -8953,7 +8965,10 @@
   {
    "id": "madonnina",
    "role": "data",
-   "certainty": "inferred",
+   "certainty": {
+    "size": "verified",
+    "shape": "inferred"
+   },
    "stage": 7,
    "shape": {
     "type": "lathe",
@@ -9187,7 +9202,7 @@
   },
   {
    "id": "a-facade",
-   "text": "Fa\u00e7ade, 56 m",
+   "text": "Façade, 56 m",
    "part": "crest-central-2",
    "offset": [
     0,
@@ -9216,7 +9231,7 @@
   "views": [
    {
     "id": "facade",
-    "label": "West fa\u00e7ade",
+    "label": "West façade",
     "yaw": 0,
     "pitch": 4,
     "distance": 1.9,
@@ -9329,7 +9344,7 @@
   "next": [],
   "identity": [
    {
-    "feature": "Stepped five-bay west fa\u00e7ade, 61.5 m between the outer aisle walls (about 70 m across the corner buttresses, from the plan) and 56 m to the central crest, each step crowned by an openwork crest",
+    "feature": "Stepped five-bay west façade, 61.5 m between the outer aisle walls (about 70 m across the corner buttresses, from the plan) and 56 m to the central crest, each step crowned by an openwork crest",
     "parts": [
      "facade-wall",
      "crest-central-2",
@@ -9339,7 +9354,7 @@
     "source": "structurae"
    },
    {
-    "feature": "Six fa\u00e7ade buttresses with spires: paired at the ends and around the central portal",
+    "feature": "Six façade buttresses with spires: paired at the ends and around the central portal",
     "parts": [
      "facade-buttress-corner",
      "facade-corner-plinths",
@@ -9352,7 +9367,7 @@
     "source": "wiki-it"
    },
    {
-    "feature": "Five portals and the baroque and neo-Gothic fa\u00e7ade windows",
+    "feature": "Five portals and the baroque and neo-Gothic façade windows",
     "parts": [
      "portal-central-door",
      "portal-inner-door",
@@ -9407,6 +9422,7 @@
     ],
     "source": "wiki-it"
    }
-  ]
+  ],
+  "provenance_note": "Made before Construct 1.1: 98 parts cite nothing and show as designed (pale), though the construct was built with its sources at hand, and the 8 parts traced on the plan were never compared with it, so they show as not yet checked. The shades understate its evidence."
  }
 }
