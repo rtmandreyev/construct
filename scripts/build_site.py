@@ -37,6 +37,7 @@ OWNER = "rtmandreyev"
 REPO = "construct"
 SITE_URL = "https://%s.github.io/%s/" % (OWNER, REPO)
 REPO_URL = "https://github.com/%s/%s" % (OWNER, REPO)
+KIT_ZIP = REPO_URL + "/releases/latest/download/construct-kit-%s.zip"   # scripts/build_kit_zips.py, on each release
 
 ROOT = Path(__file__).resolve().parent.parent
 EXAMPLES = ROOT / "examples"
@@ -210,15 +211,16 @@ def index_page(examples, films=(), beyond=(), kits=()):
         "alt=\"%s as a model kit, its 3D guide\" loading=\"lazy\" width=\"1200\" height=\"750\"></a><div class=\"body\">"
         "<h2><a href=\"examples/%s/kit/assembly.html\">%s</a></h2><p class=\"prov\">kit · %s · %d pieces · %d steps</p>"
         "<div class=\"choose\"><a class=\"button primary\" href=\"examples/%s/kit/assembly.html\">The kit in 3D</a>"
-        "<a class=\"button\" href=\"examples/%s/kit/booklet.html\">The booklet</a></div></div></div>"
+        "<a class=\"button\" href=\"examples/%s/kit/booklet.html\">The booklet</a>"
+        "<a class=\"button\" href=\"%s\">Plates to print (.zip)</a></div></div></div>"
         % (k["slug"], k["slug"], html.escape(k["title"]), k["slug"], html.escape(k["title"]), html.escape(k["scale"]),
-           k["pieces"], k["steps"], k["slug"], k["slug"])
+           k["pieces"], k["steps"], k["slug"], k["slug"], KIT_ZIP % k["slug"])
         for k in kits]
     number = iter(range(3, 6))
     kit_part = ("<section class=\"part films\" id=\"kits\"><div class=\"eyebrow\">%d · Model kits</div>"
                 "<h2 class=\"section\">A construct as a kit to print, glue and paint</h2><p class=\"section\">Each "
-                "kit's steps in 3D, each piece dropping into place in its paint, and its booklet, to print, as a kit "
-                "sheet draws it. Made and checked by software and AI critics; none has yet been built by a person. "
+                "kit's steps in 3D, each piece dropping into place in its paint, its booklet, to print, as a kit "
+                "sheet draws it, and its plates for your slicer. Made and checked by software and AI critics; none has yet been built by a person. "
                 "<a href=\"%s/blob/main/docs/PRINTING.md#a-kit-revell-style\">Model kits</a>.</p>"
                 "<div class=\"grid\">\n%s\n</div></section>" % (next(number), REPO_URL, "\n".join(kit_cards))) if kits else ""
     film_cards = [
@@ -325,7 +327,8 @@ def index_page(examples, films=(), beyond=(), kits=()):
 
 def example_page(ex, kit=None):
     kit_buttons = ("<a class=\"button\" href=\"kit/assembly.html\">The kit in 3D</a>"
-                   "<a class=\"button\" href=\"kit/booklet.html\">The kit's booklet</a>") if kit else ""
+                   "<a class=\"button\" href=\"kit/booklet.html\">The kit's booklet</a>"
+                   "<a class=\"button\" href=\"%s\">The kit's plates (.zip)</a>" % (KIT_ZIP % ex["slug"])) if kit else ""
     body = ("<div class=\"viewer\"><div class=\"bar\"><h1>%s</h1><p class=\"prov\">%s</p><nav>"
             "<a class=\"button\" href=\"../../\">All examples</a>"
             "<a class=\"button\" href=\"construct.html?rounds=0\">Full screen</a>%s"
@@ -451,10 +454,10 @@ def _public_scene(path, tmp):
     return scene
 
 
-def _kit(spec, out):
-    """Make one model kit with this checkout's `construct kit` and publish its 3D guide and booklet beside its
-    example: {"slug", "scale", "pieces", "steps"}."""
-    src, work = EXAMPLES / spec["slug"], out / ".build" / ("kit-" + spec["slug"])
+def make_kit(spec, work):
+    """Make one model kit (an entry of examples/kits.json) into `work` with this checkout's `construct kit`:
+    its plates, booklet.html, assembly.html, img/ and kit.json. Returns kit.json, read."""
+    src = EXAMPLES / spec["slug"]
     cmd = [sys.executable, "-m", "construct_hologram", "kit", str(src / spec.get("scene", "scene.json")),
            "--scale", str(spec["scale"]), "--printer", spec["printer"], "--out", str(work)]
     for flag in ("plan", "materials"):
@@ -462,16 +465,23 @@ def _kit(spec, out):
             cmd += ["--" + flag, str(src / spec[flag])]
     done = subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True)
     said = "\n".join(line for line in (done.stdout + done.stderr).splitlines() if not line.startswith("kit: "))
-    if not all((work / name).exists() for name in ("assembly.html", "booklet.html", "kit.json")):
+    if not all((Path(work) / name).exists() for name in ("assembly.html", "booklet.html", "kit.json")):
         raise SystemExit("kit %s failed:\n%s" % (spec["slug"], said[-2000:]))
     if done.returncode:   # made, with the check's notes (a gap under a millimetre, a merge in two pieces)
         print("kit %s:\n%s" % (spec["slug"], said))
+    return json.loads((Path(work) / "kit.json").read_text(encoding="utf-8"))
+
+
+def _kit(spec, out):
+    """Make one model kit and publish its 3D guide and booklet beside its example: {"slug", "scale", "pieces",
+    "steps"}."""
+    work = out / ".build" / ("kit-" + spec["slug"])
+    kit = make_kit(spec, work)
     dst = out / "examples" / spec["slug"] / "kit"
     dst.mkdir(parents=True)
     for name in ("assembly.html", "booklet.html"):
         shutil.copyfile(work / name, dst / name)
     shutil.copytree(work / "img", dst / "img")
-    kit = json.loads((work / "kit.json").read_text(encoding="utf-8"))
     return {"slug": spec["slug"], "scale": kit["scale"], "pieces": len(kit["pieces"]), "steps": len(kit["steps"])}
 
 

@@ -43,6 +43,9 @@ cowls, and a few specks too small to print, left off.
 browser), and a `.3mf` file per plate for your printer's software (PrusaSlicer, Bambu Studio, Cura), plus every
 piece on its own to reprint one.
 
+**Open this one yourself:** [the Vespa kit in 3D](https://rtmandreyev.github.io/construct/examples/vespa-gs150/kit/assembly.html), [its booklet](https://rtmandreyev.github.io/construct/examples/vespa-gs150/kit/booklet.html), and
+[its plates to print](https://github.com/rtmandreyev/construct/releases/latest/download/construct-kit-vespa-gs150.zip) (a zip: the three plates, the booklet and the 3D guide).
+
 ## More kits
 
 <p align="center">
@@ -51,6 +54,15 @@ piece on its own to reprint one.
   <a href="https://rtmandreyev.github.io/construct/examples/volkswagen-t1-samba/kit/assembly.html"><img src="../media/kit-vw-guide.gif" width="32%" alt="The Volkswagen T1 Samba as a 1:16 kit, step by step in 3D"></a>
 </p>
 <p align="center"><sub>A piano and a clock at 1:12 (the clock <a href="../END-TO-END.md#11-a-model-kit">made step by step</a>), a VW bus at 1:16.</sub></p>
+
+Every kit here, to open in your browser or print:
+
+| Kit | Pieces | Steps in 3D | Booklet | Plates to print |
+| --- | --- | --- | --- | --- |
+| Yamaha CFX piano, 1:12 | 54 | [open](https://rtmandreyev.github.io/construct/examples/yamaha-cfx/kit/assembly.html) | [open](https://rtmandreyev.github.io/construct/examples/yamaha-cfx/kit/booklet.html) | [.zip](https://github.com/rtmandreyev/construct/releases/latest/download/construct-kit-yamaha-cfx.zip) |
+| Tompion's year-going clock, 1:12 | 34 | [open](https://rtmandreyev.github.io/construct/examples/tompion-year-going-clock/kit/assembly.html) | [open](https://rtmandreyev.github.io/construct/examples/tompion-year-going-clock/kit/booklet.html) | [.zip](https://github.com/rtmandreyev/construct/releases/latest/download/construct-kit-tompion-year-going-clock.zip) |
+| VW T1 Samba bus, 1:16 | 98 | [open](https://rtmandreyev.github.io/construct/examples/volkswagen-t1-samba/kit/assembly.html) | [open](https://rtmandreyev.github.io/construct/examples/volkswagen-t1-samba/kit/booklet.html) | [.zip](https://github.com/rtmandreyev/construct/releases/latest/download/construct-kit-volkswagen-t1-samba.zip) |
+| Vespa GS 150, an owner's scooter, 1:12 | 32 | [open](https://rtmandreyev.github.io/construct/examples/vespa-gs150/kit/assembly.html) | [open](https://rtmandreyev.github.io/construct/examples/vespa-gs150/kit/booklet.html) | [.zip](https://github.com/rtmandreyev/construct/releases/latest/download/construct-kit-vespa-gs150.zip) |
 
 ## Do it with your own thing
 

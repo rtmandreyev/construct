@@ -6,7 +6,7 @@
 
 [Open the live construct](https://rtmandreyev.github.io/construct/examples/vespa-gs150/): drag to orbit, R replays the assembly, L shows labels, P shows how each part is
 known, S shows it as a solid. The scene it was built from: [scene.json](scene.json); its finish for Blender and
-the kit: [maps/finish.json](maps/finish.json); its kit plan: [kit-plan.json](kit-plan.json). The 1:12 kit: [in 3D](https://rtmandreyev.github.io/construct/examples/vespa-gs150/kit/assembly.html) and [its booklet](https://rtmandreyev.github.io/construct/examples/vespa-gs150/kit/booklet.html).
+the kit: [maps/finish.json](maps/finish.json); its kit plan: [kit-plan.json](kit-plan.json). The 1:12 kit: [in 3D](https://rtmandreyev.github.io/construct/examples/vespa-gs150/kit/assembly.html), [its booklet](https://rtmandreyev.github.io/construct/examples/vespa-gs150/kit/booklet.html) and [its plates to print](https://github.com/rtmandreyev/construct/releases/latest/download/construct-kit-vespa-gs150.zip).
 
 A 1960 Piaggio Vespa GS 150 from two photographs of one scooter and its published specifications, in twelve
 masterpiece rounds through Hermes (GPT-6.1 Sol, high reasoning), each judged by an independent critic; the run

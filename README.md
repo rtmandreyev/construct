@@ -39,10 +39,10 @@ model with named parts and working joints, a print, a model kit, a CAD file or a
 | are planning a change to your **home or garden** | Your shed, room or garden as a model to try the change on first: a deck, shelves, an extension, a new layout. A planning model, not a survey | [Try it on a copy](docs/for/home-and-garden.md) |
 | want to customise or restore a **vehicle** | Your car, bike or scooter from its published sizes and your photos, your parts told apart from the factory's: try wheels or a new colour, plan a restoration, make a model of it | [Your vehicle](docs/for/your-vehicle.md) |
 | need a part that is **missing or broken** | A knob, bracket or cover drawn to the thing it fits, as a print or a CAD file someone can make | [Make the part](docs/for/replace-a-part.md) |
-| want a **model kit of your own thing** | Your scooter, house or guitar as a kit to print, glue and paint, with a booklet | [A kit of your own](docs/for/a-kit-of-your-own.md) |
+| want a **model kit of your own thing** | Your scooter, house or guitar as a kit to print, glue and paint, with a booklet ([one to open](https://rtmandreyev.github.io/construct/examples/vespa-gs150/kit/assembly.html)) | [A kit of your own](docs/for/a-kit-of-your-own.md) |
 | want to **show someone what you mean** | A model a builder, a fabricator or a friend can turn and measure, and a file for their own tools | [Show what you mean](docs/for/show-what-you-mean.md) |
 | ***Professionals and creators*** | | |
-| are a **maker** | A print at your printer's largest size, a model kit with plates and a booklet, true CAD shapes | [Print, kit, CAD](docs/for/makers.md) |
+| are a **maker** | A print at your printer's largest size, a model kit with plates and a booklet ([four to try](https://rtmandreyev.github.io/construct/#kits)), true CAD shapes | [Print, kit, CAD](docs/for/makers.md) |
 | are a **game developer** | Props with named parts, real sizes and working joints, for Godot, Unity or Unreal | [Into a game engine](docs/for/game-developers.md) |
 | are a **3D artist** | A construct in Blender with its build, joints and finish on sliders, ready to render or model over | [Into Blender](docs/for/3d-artists.md) |
 | work in **film and motion** | A construct that assembles across a piece of music, as a video | [Film mode](docs/for/film-and-motion.md) |
@@ -108,7 +108,7 @@ every guess a deeper amber the more firmly it is held; and the same Duomo as a s
   <img src="docs/media/freecad-piano-leica.jpg" width="49%" alt="The Yamaha CFX and the Leica M3 in FreeCAD as true CAD shapes">
 </p>
 
-**Model kits.** Four constructs as kits to print, glue and paint: the Yamaha CFX piano (1:12, 54 pieces), Tompion's year-going clock (1:12, 34 pieces), the VW T1 Samba (1:16, 98 pieces) and an owner's Vespa GS 150 (1:12, 32 pieces), each with its steps in 3D and a booklet to print. Open them in your browser: [the kits in the gallery](https://rtmandreyev.github.io/construct/#kits). [Makers →](docs/for/makers.md)
+**Model kits.** Four constructs as kits to print, glue and paint: the Yamaha CFX piano (1:12, 54 pieces), Tompion's year-going clock (1:12, 34 pieces), the VW T1 Samba (1:16, 98 pieces) and an owner's Vespa GS 150 (1:12, 32 pieces), each with its steps in 3D and a booklet to print. Open them in your browser, or download their plates: [the kits in the gallery](https://rtmandreyev.github.io/construct/#kits). [Makers →](docs/for/makers.md)
 
 <p align="center">
   <a href="https://rtmandreyev.github.io/construct/examples/yamaha-cfx/kit/assembly.html"><img src="docs/media/kit-cfx-guide.gif" width="32%" alt="The Yamaha CFX piano kit's 3D guide at 1:12: the keyboard built at the bench, the piano ghosted around it"></a>

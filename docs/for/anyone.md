@@ -13,8 +13,8 @@ graphics.
   grandmother's house. For a named subject the agent looks up the real facts first.
 - **See how it is known:** press **P** and every part is coloured by how it is known, from measured to guessed.
 - **See it as a solid:** press **S** and the same construct is shown as a modelling program shows it.
-- **Take it further:** the same construct exports as a 3D model, prints on a 3D printer, becomes a model kit,
-  plays in a game engine or assembles across a piece of music in a film.
+- **Take it further:** the same construct exports as a 3D model, prints on a 3D printer, becomes a model kit
+  ([four to open](https://rtmandreyev.github.io/construct/#kits)), plays in a game engine or assembles across a piece of music in a film.
 
 ## Try it
 

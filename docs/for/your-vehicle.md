@@ -54,7 +54,8 @@ rack and bars, as it left the factory"*, *"with the spare wheel on the front."*
 
 Other things to ask for:
 
-- *"Make it a model kit at 1:12"* ([a kit of your own](a-kit-of-your-own.md)).
+- *"Make it a model kit at 1:12"* ([a kit of your own](a-kit-of-your-own.md)). This Vespa's kit: [in 3D](https://rtmandreyev.github.io/construct/examples/vespa-gs150/kit/assembly.html),
+  [the booklet](https://rtmandreyev.github.io/construct/examples/vespa-gs150/kit/booklet.html), [the plates to print](https://github.com/rtmandreyev/construct/releases/latest/download/construct-kit-vespa-gs150.zip).
 - *"Give me a STEP file of the legshield"*, for a panel beater or a fabricator, measured first.
 - *"List my parts that are not the factory's"*, for a restoration back to stock.
 

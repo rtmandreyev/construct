@@ -67,7 +67,11 @@ that they assemble and that the README's animations link to them.
 Optionally, publish a release: **Releases → Draft a new release**, tag `v1.1.0`, and
 [docs/releases/v1.1.0.md](docs/releases/v1.1.0.md) as the notes. Attach the two zips from `dist/`:
 `construct-blender-1.1.0.zip` (`python3 scripts/build_blender_extension.py`) and `construct-1.1.0.zip`,
-the NetLogo extension (`python3 scripts/build_netlogo_extension.py --netlogo "<NetLogo 7 folder>"`).
+the NetLogo extension (`python3 scripts/build_netlogo_extension.py --netlogo "<NetLogo 7 folder>"`, with a
+JDK 17 or newer: `--javac` names it). Attach the kits too, `construct-kit-<slug>.zip`, one per kit in
+`examples/kits.json` (`python3 scripts/build_kit_zips.py`, about ten minutes): the gallery, the README and the docs
+link to them as `releases/latest/download/construct-kit-<slug>.zip`, so every release carries them, under
+those names.
 
 ## 5. Update the gallery later
 

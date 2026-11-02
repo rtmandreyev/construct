@@ -48,7 +48,7 @@ solid.
 Then just ask, in the same chat, in plain words:
 
 - *"Make it a file I can 3D print, 20 cm tall."*
-- *"Make it a model kit at 1:12, with a booklet."*
+- *"Make it a model kit at 1:12, with a booklet."* (Like [this scooter's](https://rtmandreyev.github.io/construct/examples/vespa-gs150/kit/assembly.html): [its booklet](https://rtmandreyev.github.io/construct/examples/vespa-gs150/kit/booklet.html).)
 - *"Give me a STEP file for CAD"* or *"a file for Blender."*
 - *"Change the seat to green leather"*, *"make the shed 2 m wider"*.
 

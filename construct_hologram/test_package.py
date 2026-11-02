@@ -240,6 +240,7 @@ class ExamplesGallery(unittest.TestCase):
                 page = site.example_page(examples[k["slug"]], {"slug": k["slug"]})
                 self.assertIn('href="kit/assembly.html"', page)
                 self.assertIn('href="kit/booklet.html"', page)
+                self.assertIn('href="%s"' % (site.KIT_ZIP % k["slug"]), page)   # the plates, from the latest release
         made = [{"slug": "vespa-gs150", "title": "Vespa", "scale": "1:12", "pieces": 32, "steps": 21}]
         index = site.index_page([], (), (), made)
         self.assertIn('id="kits"', index)

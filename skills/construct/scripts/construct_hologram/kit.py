@@ -1898,8 +1898,9 @@ def booklet(kit):
                     "<tr><td><span class=chip style='background:%s'></span></td><td>%s</td><td class=nums>%s</td></tr>"
                     % (c, e(n), ", ".join(str(x) for x in nums)) for (n, c), nums in sorted(paints.items())))
     rows.append("<p class=untested><b>Not yet built by anyone.</b> This kit was made and checked by software and by "
-                "AI critics, not test-printed and glued by a person. Print one piece first (each is in <code>pieces/</code>), "
-                "check how it fits, and tell us how it went: "
+                "AI critics, not test-printed and glued by a person. Print one piece first (each is a named object on "
+                "its plate, and on its own in <code>pieces/</code> where the kit was made), check how it fits, and tell "
+                "us how it went: "
                 "<a href='https://github.com/rtmandreyev/construct/issues'>github.com/rtmandreyev/construct/issues</a>.</p>")
     rep = kit["report"]
     if rep["problems"]:
