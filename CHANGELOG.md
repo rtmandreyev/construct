@@ -194,6 +194,10 @@ side, printed as worksheets and cited. The story: [release notes](docs/releases/
   times; a 3D guide with the instructions big at the top and lines to the pieces, the controls at the bottom,
   what is built barely dimmed; a booklet with a cover, the paints, plates drawn with each piece's real outline,
   and a card per step with pictures of the parts it needs.
+- **Kits in the gallery:** four kits open in the browser, their steps in 3D and their booklets: the Yamaha CFX,
+  Tompion's clock, the VW T1 Samba and an owner's Vespa GS 150 (`examples/kits.json`; `scripts/build_site.py`
+  makes them with `construct kit`, `--no-kits` leaves them out). The 3D guide no longer shows the construct's
+  caption under its controls or its reading panel over the step card.
 - **One construct, end to end:** [a longcase clock](docs/END-TO-END.md), built by DeepSeek V4.1 Flash in masterpiece
   mode through Hermes, taken through provenance, the solid, Blender, Godot, a film, FreeCAD, a print and a kit.
   What a first end-to-end run found, fixed: a merged kit piece is named for what its parts are together ("the

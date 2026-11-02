@@ -1611,11 +1611,11 @@ ASSEMBLY_JS = r"""
   var at = -1, playing = false;
   var css = document.createElement("style");
   css.textContent =
-    ".help,.rounds{display:none!important}" +
+    // the step card names the kit: no caption under the controls, no reading panel over the card
+    ".help,.rounds,.caption,.rd-how{display:none!important}" +
     // a light studio backdrop, as a kit's box shows its model: dark paints read on it as well as light ones
     "html,body{background:radial-gradient(ellipse at 50% 38%,#f1efeb 0%,#d6d2cc 55%,#aaa59e 100%)!important}" +
-    ".caption .title{color:#2a2530!important}.caption .meta,.caption div{color:#4d4656!important}" +
-    ".caption,.caption *{text-shadow:none!important}.kt .more{color:#6b6475;font:700 14px -apple-system,sans-serif}" +
+    ".kt .more{color:#6b6475;font:700 14px -apple-system,sans-serif}" +
     ".kt{position:fixed;left:50%;top:14px;transform:translateX(-50%);width:min(980px,calc(100% - 24px));z-index:5;" +
     "background:rgba(250,248,244,.94);color:#1d1a22;border-radius:14px;box-shadow:0 6px 30px rgba(0,0,0,.35);" +
     "padding:14px 20px 12px;font:15px/1.4 -apple-system,'Segoe UI',sans-serif;max-height:38vh;overflow:auto}" +

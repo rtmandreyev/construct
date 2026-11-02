@@ -1,0 +1,12 @@
+{"about": "A finish for the Yamaha CFX kit: polished ebony, ivory-white and black keys, a gold cast plate, brass fittings, felt hammers.",
+ "materials": [
+  {"parts": ["white-keys"], "name": "key white", "color": "#f2efe6", "finish": "paint"},
+  {"parts": ["black-keys-*", "black-key-*"], "name": "key black", "color": "#151417", "finish": "paint"},
+  {"parts": ["pedals", "caster-*", "lid-hinge", "nameplate"], "name": "brass", "color": "#c9a24c", "finish": "brushed"},
+  {"parts": ["plate"], "name": "plate gold", "color": "#b8933f", "finish": "paint"},
+  {"parts": ["strings-treble"], "name": "steel string", "color": "#c4c7cc", "finish": "chrome"},
+  {"parts": ["strings-bass"], "name": "copper string", "color": "#b5703c", "finish": "chrome"},
+  {"parts": ["soundboard", "bridge"], "name": "spruce", "color": "#d9b77a", "finish": "wood"},
+  {"parts": ["hammers"], "name": "hammer felt", "color": "#ece6d6", "finish": "paint", "roughness": 0.8},
+  {"parts": ["dampers"], "name": "damper felt", "color": "#2a2a2c", "finish": "paint", "roughness": 0.8},
+  {"parts": ["*"], "name": "polished ebony", "color": "#1b1a1e", "finish": "paint"}]}

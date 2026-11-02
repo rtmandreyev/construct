@@ -1,0 +1,12 @@
+{
+ "format": "construct-kits",
+ "version": 1,
+ "kits": [
+  {"slug": "yamaha-cfx", "scale": 12, "printer": "large", "materials": "maps/finish.json"},
+  {"slug": "tompion-year-going-clock", "scale": 12, "printer": "desktop", "plan": "kit-plan.json",
+   "materials": "maps/finish.json"},
+  {"slug": "volkswagen-t1-samba", "scene": "kit-scene.json", "scale": 16, "printer": "large", "plan": "kit-plan.json",
+   "materials": "maps/finish.json"},
+  {"slug": "vespa-gs150", "scale": 12, "printer": "desktop", "plan": "kit-plan.json", "materials": "maps/finish.json"}
+ ]
+}

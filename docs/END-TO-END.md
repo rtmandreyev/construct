@@ -206,7 +206,9 @@ construct kit scene.json --scale 12 --printer desktop --plan kit-plan.json --mat
 # 34 pieces on 2 plates, 15 steps, at 1:12 (38 x 22 x 186 mm)
 ```
 
-<p align="center"><img src="media/tompion-kit-card.jpg" width="48%" alt="Step 3 of the kit's booklet: the dial plate built at the bench, each piece numbered and painted gilt brass"> <img src="media/tompion-kit-guide.gif" width="48%" alt="The kit's 3D guide stepping through its fifteen steps, the model so far as a ghost"></p>
+<p align="center"><a href="https://rtmandreyev.github.io/construct/examples/tompion-year-going-clock/kit/booklet.html"><img src="media/tompion-kit-card.jpg" width="48%" alt="Step 3 of the kit's booklet: the dial plate built at the bench, each piece numbered and painted gilt brass"></a> <a href="https://rtmandreyev.github.io/construct/examples/tompion-year-going-clock/kit/assembly.html"><img src="media/tompion-kit-guide.gif" width="48%" alt="The kit's 3D guide stepping through its fifteen steps, the model so far as a ghost"></a></p>
+
+<p align="center"><sub>Open this kit yourself: <a href="https://rtmandreyev.github.io/construct/examples/tompion-year-going-clock/kit/booklet.html">its booklet</a> and <a href="https://rtmandreyev.github.io/construct/examples/tompion-year-going-clock/kit/assembly.html">its steps in 3D</a>.</sub></p>
 
 <p align="center"><img src="media/tompion-kit-plate.jpg" width="70%" alt="The kit's first plate: its pieces laid out and numbered"></p>
 

@@ -2,6 +2,7 @@
 
     python3 scripts/build_site.py --out site --films DIR      # build the site into ./site
     python3 scripts/build_site.py --out site --no-films      # the same, without the film section
+    python3 scripts/build_site.py --out site --films DIR --no-kits   # without the model kits (they take minutes)
     python3 scripts/build_site.py --set-url OWNER/REPO       # move every link to another repository
 
 Every example in examples/ (listed in examples/examples.json) is compiled with this checkout's
@@ -12,8 +13,10 @@ holding the files films.json names, and go only into the built site. The picture
 hero.jpg and thumb.jpg, each film's poster.jpg) are framed close to the construct by
 scripts/gallery_images.py. "Beyond objects" (examples/beyond.json) lists pages made with Construct
 that are more than one construct: each folder is published as it is, beside the construct built from
-its scene, and keeps its own licence. The site uses relative links only and needs no server code;
-the constructs load nothing from other hosts (a "beyond" page may, as its README says).
+its scene, and keeps its own licence. The model kits (examples/kits.json) are made from their examples'
+scenes, plans and paints with `construct kit`; each publishes its 3D guide and its booklet. The site uses
+relative links only and needs no server code; the constructs load nothing from other hosts (a "beyond"
+page may, as its README says).
 
 The public addresses come from OWNER and REPO below and nowhere else: `--set-url` rewrites them
 here and in the documents that link to the site.
@@ -25,7 +28,9 @@ import importlib
 import json
 import re
 import shutil
+import subprocess
 import sys
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
 OWNER = "rtmandreyev"
@@ -159,6 +164,11 @@ def _load_beyond():
     return json.loads(path.read_text(encoding="utf-8"))["beyond"] if path.exists() else []
 
 
+def _load_kits():
+    path = EXAMPLES / "kits.json"
+    return json.loads(path.read_text(encoding="utf-8"))["kits"] if path.exists() else []
+
+
 def film_label(film):
     """A film's line: the object, the mode and the model."""
     return "%s · %s · %s" % (film["title"], film["mode"], film["model"])
@@ -191,9 +201,26 @@ def _beyond_buttons(b):
                    for i, (label, href) in enumerate(buttons))
 
 
-def index_page(examples, films=(), beyond=()):
-    """The landing page, in four parts: the full pipeline (from a hologram to a finished 3D model), the
-    constructs (a compact scroller), film mode, and models come alive (a live simulation, then recorded runs)."""
+def index_page(examples, films=(), beyond=(), kits=()):
+    """The landing page, in five parts: the full pipeline (from a hologram to a finished 3D model), the
+    constructs (a compact scroller), model kits, film mode, and models come alive (a live simulation, then
+    recorded runs). A part with nothing in it is left out."""
+    kit_cards = [
+        "<div class=\"card film\"><a href=\"examples/%s/kit/assembly.html\"><img src=\"examples/%s/kit-thumb.jpg\" "
+        "alt=\"%s as a model kit, its 3D guide\" loading=\"lazy\" width=\"1200\" height=\"750\"></a><div class=\"body\">"
+        "<h2><a href=\"examples/%s/kit/assembly.html\">%s</a></h2><p class=\"prov\">kit · %s · %d pieces · %d steps</p>"
+        "<div class=\"choose\"><a class=\"button primary\" href=\"examples/%s/kit/assembly.html\">The kit in 3D</a>"
+        "<a class=\"button\" href=\"examples/%s/kit/booklet.html\">The booklet</a></div></div></div>"
+        % (k["slug"], k["slug"], html.escape(k["title"]), k["slug"], html.escape(k["title"]), html.escape(k["scale"]),
+           k["pieces"], k["steps"], k["slug"], k["slug"])
+        for k in kits]
+    number = iter(range(3, 6))
+    kit_part = ("<section class=\"part films\" id=\"kits\"><div class=\"eyebrow\">%d · Model kits</div>"
+                "<h2 class=\"section\">A construct as a kit to print, glue and paint</h2><p class=\"section\">Each "
+                "kit's steps in 3D, each piece dropping into place in its paint, and its booklet, to print, as a kit "
+                "sheet draws it. Made and checked by software and AI critics; none has yet been built by a person. "
+                "<a href=\"%s/blob/main/docs/PRINTING.md#a-kit-revell-style\">Model kits</a>.</p>"
+                "<div class=\"grid\">\n%s\n</div></section>" % (next(number), REPO_URL, "\n".join(kit_cards))) if kits else ""
     film_cards = [
         "<div class=\"card film\"><a href=\"films/%s/\"><img src=\"films/%s/poster.jpg\" alt=\"%s, the finished construct "
         "of its film\" loading=\"lazy\" width=\"1200\" height=\"750\"></a><div class=\"body\"><h2><a href=\"films/%s/\">%s</a>"
@@ -215,12 +242,12 @@ def index_page(examples, films=(), beyond=()):
              "<div class=\"shelf\" id=\"shelf\"><div class=\"grid\">\n%s\n</div></div>"
              "<p class=\"shelf-count\">%d constructs</p></section>"
              % ("\n".join(cards), len(examples)))
-    film_part = ("<section class=\"part films\" id=\"films\"><div class=\"eyebrow\">3 · Film mode</div>"
+    film_part = ("<section class=\"part films\" id=\"films\"><div class=\"eyebrow\">%d · Film mode</div>"
                  "<h2 class=\"section\">Constructs that assemble to music</h2><p class=\"section\">A construct can "
                  "assemble across a whole piece of music: the build pauses, surges and flares with it, and you get a "
                  "video with the music in it. Each opens on its live construct; the film is one click away. "
                  "<a href=\"%s/blob/main/docs/FILM.md\">Film mode</a>.</p>"
-                 "<div class=\"grid\">\n%s\n</div></section>" % (REPO_URL, "\n".join(film_cards))) if films else ""
+                 "<div class=\"grid\">\n%s\n</div></section>" % (next(number), REPO_URL, "\n".join(film_cards))) if films else ""
     pipe = [b for b in beyond if b.get("section") == "pipeline"]
     models = [b for b in beyond if b.get("section") != "pipeline"]
     live = [b for b in models if b.get("kind") == "simulation"]
@@ -263,7 +290,7 @@ def index_page(examples, films=(), beyond=()):
         % (b["slug"], b["slug"], html.escape(b["title"]), b["slug"], html.escape(b["title"]), html.escape(b["line"]),
            html.escape(b["credit"] + (" · art direction: %s" % b["art"] if b.get("art") else "")), _beyond_buttons(b))
         for b in recorded)
-    alive = ("<section class=\"part\" id=\"models\"><div class=\"eyebrow\">4 · Models come alive</div>"
+    alive = ("<section class=\"part\" id=\"models\"><div class=\"eyebrow\">%d · Models come alive</div>"
              "<h2 class=\"section\">Agent-based models, two ways</h2><p class=\"section\">A NetLogo model can come "
              "into Construct as a live simulation you run on the page, or as one recorded run, drawn with time as "
              "height.</p>%s"
@@ -272,7 +299,7 @@ def index_page(examples, films=(), beyond=()):
              "recording, so its assembly replays the run; the data comes from the run, never from an AI. An AI "
              "art-direction pass adds the labels and milestones on top, and a data lock keeps it off the data. "
              "<a href=\"%s/blob/main/docs/NETLOGO.md\">The NetLogo bridge</a>.</p>"
-             "<div class=\"grid models\">\n%s\n</div></section>" % (live_features, REPO_URL, model_cards)) if models else ""
+             "<div class=\"grid models\">\n%s\n</div></section>" % (next(number), live_features, REPO_URL, model_cards)) if models else ""
     body = ("<header class=\"site\"><div class=\"eyebrow\">Construct · examples</div>"
             "<h1>Describe a thing. Get a hologram, <em>a 3D model and its parts</em>.</h1>"
             "<p>Construct lets any AI agent build an animated holographic model of a thing from a description, and "
@@ -280,25 +307,28 @@ def index_page(examples, films=(), beyond=()):
             "simulation, a model's whole run drawn in time.</p>"
             "<div class=\"links\"><a class=\"button\" href=\"%s\">Construct on GitHub</a>"
             "<a class=\"button\" href=\"#pipeline\">The full pipeline</a><a class=\"button\" href=\"#constructs\">"
-            "Constructs</a><a class=\"button\" href=\"#films\">Film mode</a><a class=\"button\" href=\"#models\">"
+            "Constructs</a>%s<a class=\"button\" href=\"#films\">Film mode</a><a class=\"button\" href=\"#models\">"
             "Models come alive</a>"
             "<a class=\"button\" href=\"%s/blob/main/docs/HOW-IT-IS-MADE.md\">How they are made</a></div></header>"
-            "<main>%s%s%s%s</main>"
+            "<main>%s%s%s%s%s</main>"
             "<footer class=\"site\">Construct is Apache-2.0 licensed; its Blender add-on is GPL-3.0-or-later. Product and "
             "place names belong to their owners; each construct is an independent reconstruction from public "
             "references, not an official model. %s"
             "<a href=\"%s\">Source and documentation</a>.</footer>"
-            % (REPO_URL, REPO_URL, pipeline, shelf, film_part, alive,
+            % (REPO_URL, "<a class=\"button\" href=\"#kits\">Model kits</a>" if kits else "", REPO_URL, pipeline, shelf,
+               kit_part, film_part, alive,
                "The pages under Models come alive keep their own licences, given on each. " if models else "",
                REPO_URL))
     return _page("Construct · examples", body, 0, "Holographic constructs built by AI agents, the 3D models they "
                                                "export, and agent-based models drawn in time.")
 
 
-def example_page(ex):
+def example_page(ex, kit=None):
+    kit_buttons = ("<a class=\"button\" href=\"kit/assembly.html\">The kit in 3D</a>"
+                   "<a class=\"button\" href=\"kit/booklet.html\">The kit's booklet</a>") if kit else ""
     body = ("<div class=\"viewer\"><div class=\"bar\"><h1>%s</h1><p class=\"prov\">%s</p><nav>"
             "<a class=\"button\" href=\"../../\">All examples</a>"
-            "<a class=\"button\" href=\"construct.html?rounds=0\">Full screen</a>"
+            "<a class=\"button\" href=\"construct.html?rounds=0\">Full screen</a>%s"
             "<a class=\"button\" href=\"scene.json\">Scene</a>"
             "<a class=\"button\" href=\"%s/tree/main/examples/%s\">Source</a></nav></div>"
             "<div class=\"stage\"><iframe src=\"construct.html?ui=0&amp;rounds=0\" title=\"%s, live construct\" "
@@ -307,7 +337,8 @@ def example_page(ex):
             "assembly, <kbd>L</kbd> shows labels, <kbd>P</kbd> shows how each part is known, <kbd>S</kbd> shows it as a "
             "solid, <kbd>T</kbd> hides the text on its surfaces, <kbd>1</kbd>–<kbd>6</kbd> change the view and "
             "<kbd>space</kbd> pauses.</p></div>"
-            % (html.escape(ex["title"]), html.escape(provenance(ex)), REPO_URL, ex["slug"], html.escape(ex["title"])))
+            % (html.escape(ex["title"]), html.escape(provenance(ex)), kit_buttons, REPO_URL, ex["slug"],
+               html.escape(ex["title"])))
     return _page("%s · Construct" % ex["title"], body, 2, "%s: a holographic construct. %s" % (ex["title"], provenance(ex)))
 
 
@@ -420,8 +451,33 @@ def _public_scene(path, tmp):
     return scene
 
 
-def build(out, films_dir=None):
-    """The site in `out`; with `films_dir` (the folder holding the videos films.json names) also the films."""
+def _kit(spec, out):
+    """Make one model kit with this checkout's `construct kit` and publish its 3D guide and booklet beside its
+    example: {"slug", "scale", "pieces", "steps"}."""
+    src, work = EXAMPLES / spec["slug"], out / ".build" / ("kit-" + spec["slug"])
+    cmd = [sys.executable, "-m", "construct_hologram", "kit", str(src / spec.get("scene", "scene.json")),
+           "--scale", str(spec["scale"]), "--printer", spec["printer"], "--out", str(work)]
+    for flag in ("plan", "materials"):
+        if spec.get(flag):
+            cmd += ["--" + flag, str(src / spec[flag])]
+    done = subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True)
+    said = "\n".join(line for line in (done.stdout + done.stderr).splitlines() if not line.startswith("kit: "))
+    if not all((work / name).exists() for name in ("assembly.html", "booklet.html", "kit.json")):
+        raise SystemExit("kit %s failed:\n%s" % (spec["slug"], said[-2000:]))
+    if done.returncode:   # made, with the check's notes (a gap under a millimetre, a merge in two pieces)
+        print("kit %s:\n%s" % (spec["slug"], said))
+    dst = out / "examples" / spec["slug"] / "kit"
+    dst.mkdir(parents=True)
+    for name in ("assembly.html", "booklet.html"):
+        shutil.copyfile(work / name, dst / name)
+    shutil.copytree(work / "img", dst / "img")
+    kit = json.loads((work / "kit.json").read_text(encoding="utf-8"))
+    return {"slug": spec["slug"], "scale": kit["scale"], "pieces": len(kit["pieces"]), "steps": len(kit["steps"])}
+
+
+def build(out, films_dir=None, kits=False):
+    """The site in `out`; with `films_dir` (the folder holding the videos films.json names) also the films, and
+    with `kits` the model kits (examples/kits.json: a few minutes each, made side by side)."""
     sys.path.insert(0, str(ROOT))
     studio = importlib.import_module("construct_hologram.studio")
     out = Path(out)
@@ -431,9 +487,13 @@ def build(out, films_dir=None):
     (out / "assets" / "site.css").write_text(CSS.lstrip(), encoding="utf-8")
     (out / ".nojekyll").write_text("", encoding="utf-8")  # serve every file as it is
     examples = _load_examples()
+    made = {}
+    if kits:
+        with ThreadPoolExecutor(max_workers=4) as pool:
+            made = {k["slug"]: k for k in pool.map(lambda spec: _kit(spec, out), _load_kits())}
     for ex in examples:
         src, dst = EXAMPLES / ex["slug"], out / "examples" / ex["slug"]
-        dst.mkdir(parents=True)
+        dst.mkdir(parents=True, exist_ok=True)   # a kit may be there already
         if (src / "construct.html").exists():  # an original render kept (see its README)
             shutil.copyfile(src / "construct.html", dst / "construct.html")
         else:
@@ -442,7 +502,9 @@ def build(out, films_dir=None):
             shutil.copyfile(studio.page_in(tmp), dst / "construct.html")
         for name in ("scene.json", "hero.jpg", "thumb.jpg"):
             shutil.copyfile(src / name, dst / name)
-        (dst / "index.html").write_text(example_page(ex), encoding="utf-8")
+        (dst / "index.html").write_text(example_page(ex, made.get(ex["slug"])), encoding="utf-8")
+        if ex["slug"] in made and (src / "kit-thumb.jpg").exists():
+            shutil.copyfile(src / "kit-thumb.jpg", dst / "kit-thumb.jpg")
     films = _load_films() if films_dir else []
     for film in films:
         _film(film, films_dir, out, studio)
@@ -466,7 +528,9 @@ def build(out, films_dir=None):
         if "index.html" not in item["files"]:
             (dst / "index.html").write_text(data_page(item), encoding="utf-8")
     shutil.rmtree(out / ".build", ignore_errors=True)
-    (out / "index.html").write_text(index_page(examples, films, beyond), encoding="utf-8")
+    kit_list = [dict(made[k["slug"]], title=next(e["title"] for e in examples if e["slug"] == k["slug"]))
+                for k in _load_kits() if k["slug"] in made]
+    (out / "index.html").write_text(index_page(examples, films, beyond, kit_list), encoding="utf-8")
     (out / "404.html").write_text(_page("Not found · Construct", "<header class=\"site\"><h1>Not here</h1><p>That page "
                                         "does not exist.</p><a class=\"button\" href=\"%s\">All examples</a></header>"
                                         % SITE_URL, 0, "Page not found."), encoding="utf-8")
@@ -499,6 +563,7 @@ def main(argv=None):
     ap.add_argument("--out", default="site", help="the folder to build into (it is replaced)")
     ap.add_argument("--films", metavar="DIR", help="the folder holding the film videos (kept outside the repository)")
     ap.add_argument("--no-films", action="store_true", help="build without the film section")
+    ap.add_argument("--no-kits", action="store_true", help="build without the model kits")
     ap.add_argument("--set-url", metavar="OWNER/REPO", help="move every public link to another repository")
     args = ap.parse_args(argv)
     if args.set_url:
@@ -506,7 +571,7 @@ def main(argv=None):
         return 0
     if _load_films() and not (args.films or args.no_films):
         ap.error("examples/films.json lists films: give --films DIR (the videos), or --no-films")
-    out = build(args.out, None if args.no_films else args.films)
+    out = build(args.out, None if args.no_films else args.films, kits=not args.no_kits)
     size = sum(f.stat().st_size for f in out.rglob("*") if f.is_file())
     print("site: %s (%d examples, %d films, %.1f MB)" % (out, len(_load_examples()), 0 if args.no_films else len(_load_films()),
                                                           size / 1e6))

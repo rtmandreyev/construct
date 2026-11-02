@@ -219,6 +219,33 @@ class ExamplesGallery(unittest.TestCase):
         self.assertIn("No simulation runs on", index)
         self.assertLess(index.index('id="pipeline"'), index.index('id="constructs"'))   # the pipeline first
 
+    def test_every_kit_is_made_from_its_example(self):
+        from . import diagnose
+        spec = importlib.util.spec_from_file_location("build_site", HERE.parent / "scripts" / "build_site.py")
+        site = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(site)
+        examples = {e["slug"]: e for e in site._load_examples()}
+        kits = site._load_kits()
+        self.assertGreaterEqual(len(kits), 4)
+        for k in kits:
+            with self.subTest(k["slug"]):
+                self.assertIn(k["slug"], examples)   # a kit sits beside its gallery construct
+                self.assertLessEqual(set(k), {"slug", "scene", "scale", "printer", "plan", "materials"})
+                d = HERE.parent / "examples" / k["slug"]
+                for name in (k.get("scene", "scene.json"), k.get("plan"), k.get("materials"), "kit-thumb.jpg"):
+                    self.assertTrue(name is None or (d / name).is_file(), name)
+                text = (d / k.get("scene", "scene.json")).read_text(encoding="utf-8")
+                self.assertIsNone(re.search(r"/Users/|/private/|/var/folders|references/", text))
+                self.assertTrue(diagnose.diagnose_text(text)["ok"])
+                page = site.example_page(examples[k["slug"]], {"slug": k["slug"]})
+                self.assertIn('href="kit/assembly.html"', page)
+                self.assertIn('href="kit/booklet.html"', page)
+        made = [{"slug": "vespa-gs150", "title": "Vespa", "scale": "1:12", "pieces": 32, "steps": 21}]
+        index = site.index_page([], (), (), made)
+        self.assertIn('id="kits"', index)
+        self.assertIn('href="examples/vespa-gs150/kit/booklet.html"', index)
+        self.assertNotIn('id="kits"', site.index_page([], (), ()))   # no kits built, no section
+
     def test_every_film_is_complete_and_checks_clean(self):
         from . import diagnose
         root = HERE.parent / "examples"

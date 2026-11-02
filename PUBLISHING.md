@@ -73,7 +73,7 @@ the NetLogo extension (`python3 scripts/build_netlogo_extension.py --netlogo "<N
 
 ```sh
 cd ~/construct-public
-python3 scripts/build_site.py --out site --films DIR  # compiles every example with this checkout
+python3 scripts/build_site.py --out site --films DIR  # compiles every example and makes the kits (about ten minutes)
 python3 -m http.server 8000 --directory site          # preview at http://localhost:8000/
 git worktree add ../construct-pages gh-pages
 rsync -a --delete --exclude .git site/ ../construct-pages/
@@ -87,6 +87,10 @@ To add an example: put its `scene.json` in `examples/<slug>/`, add an entry to
 `examples/examples.json`, write its `README.md` like the others, draw its pictures with
 `python3 scripts/gallery_images.py <slug>` (`hero.jpg`, 1440 × 900, and `thumb.jpg`, 1200 × 750,
 framed close to the construct), and rebuild.
+
+The model kits (`examples/kits.json`) are made with `construct kit` from each example's scene (or a
+kit-ready copy, `"scene"`), its plan and its paints, side by side; the gallery publishes each kit's 3D
+guide and booklet, not its plates. `--no-kits` builds the gallery without them, in a minute or two.
 
 The films are the exception to "everything is in the repository": their videos are published
 with the gallery only, never in `main`. `--films DIR` names the folder that holds them (the file

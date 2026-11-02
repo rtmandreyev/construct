@@ -3,8 +3,8 @@
 Anything you can describe can be printed, made into a model kit, or opened in CAD. The construct knows its real sizes
 and its parts, so a print comes out at a true scale and a kit comes apart where a kit designer would cut it.
 
-<p align="center"><img src="../media/kit-cfx.jpg" alt="The Yamaha CFX as a 1:12 kit: step 3 in 3D, the keybed built on its own at the bench with numbered lines to each piece, and the same step in the paper booklet as an exploded drawing"></p>
-<p align="center"><sub>The Yamaha CFX as a 1:12 kit: step 3 in 3D (left) and in the paper booklet (right). The keybed is built at the bench, on its own, before it goes on the piano: each new piece numbered, in its own colour and its paint.</sub></p>
+<p align="center"><a href="https://rtmandreyev.github.io/construct/examples/yamaha-cfx/kit/assembly.html"><img src="../media/kit-cfx.jpg" alt="The Yamaha CFX as a 1:12 kit: step 3 in 3D, the keybed built on its own at the bench with numbered lines to each piece, and the same step in the paper booklet as an exploded drawing"></a></p>
+<p align="center"><sub>The Yamaha CFX as a 1:12 kit: step 3 in 3D (left) and in the paper booklet (right). The keybed is built at the bench, on its own, before it goes on the piano: each new piece numbered, in its own colour and its paint. Open it: <a href="https://rtmandreyev.github.io/construct/examples/yamaha-cfx/kit/assembly.html">the kit in 3D</a>, <a href="https://rtmandreyev.github.io/construct/examples/yamaha-cfx/kit/booklet.html">its booklet</a>; more in <a href="https://rtmandreyev.github.io/construct/#kits">the gallery's kits</a>.</sub></p>
 
 ## What you can do
 

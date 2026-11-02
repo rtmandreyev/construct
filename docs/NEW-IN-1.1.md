@@ -168,11 +168,15 @@ on numbered plates (clear parts on plates of their own), glued in the order a ki
 drawn as a kit sheet and the same steps in 3D.
 
 <p align="center">
-  <img src="media/kit-cfx-guide.gif" width="32%" alt="The Yamaha CFX piano kit's 3D guide at 1:12: the keyboard built at the bench, the piano ghosted around it">
-  <img src="media/tompion-kit-guide.gif" width="32%" alt="Tompion's year-going clock as a 1:12 kit: its fifteen steps in 3D, the dial plate built at the bench">
-  <img src="media/kit-vw-guide.gif" width="32%" alt="The Volkswagen T1 Samba as a 1:16 kit: from the floor pan, through the cab and body at the bench, to the finished bus">
+  <a href="https://rtmandreyev.github.io/construct/examples/yamaha-cfx/kit/assembly.html"><img src="media/kit-cfx-guide.gif" width="32%" alt="The Yamaha CFX piano kit's 3D guide at 1:12: the keyboard built at the bench, the piano ghosted around it"></a>
+  <a href="https://rtmandreyev.github.io/construct/examples/tompion-year-going-clock/kit/assembly.html"><img src="media/tompion-kit-guide.gif" width="32%" alt="Tompion's year-going clock as a 1:12 kit: its fifteen steps in 3D, the dial plate built at the bench"></a>
+  <a href="https://rtmandreyev.github.io/construct/examples/volkswagen-t1-samba/kit/assembly.html"><img src="media/kit-vw-guide.gif" width="32%" alt="The Volkswagen T1 Samba as a 1:16 kit: from the floor pan, through the cab and body at the bench, to the finished bus"></a>
 </p>
-<p align="center"><sub>The Yamaha CFX at 1:12 (54 pieces, 9 steps), Tompion's year-going clock at 1:12 (34 pieces, 15 steps, <a href="END-TO-END.md#11-a-model-kit">made step by step</a>) and the VW T1 Samba at 1:16 (98 pieces, 48 steps).</sub></p>
+<p align="center"><sub>The Yamaha CFX at 1:12 (54 pieces, 9 steps), Tompion's year-going clock at 1:12 (34 pieces, 15 steps, <a href="END-TO-END.md#11-a-model-kit">made step by step</a>) and the VW T1 Samba at 1:16 (98 pieces, 48 steps). Click one to open its steps in 3D.</sub></p>
+
+Open them in your browser: the Yamaha CFX ([in 3D](https://rtmandreyev.github.io/construct/examples/yamaha-cfx/kit/assembly.html), [booklet](https://rtmandreyev.github.io/construct/examples/yamaha-cfx/kit/booklet.html)), Tompion's clock ([in 3D](https://rtmandreyev.github.io/construct/examples/tompion-year-going-clock/kit/assembly.html),
+[booklet](https://rtmandreyev.github.io/construct/examples/tompion-year-going-clock/kit/booklet.html)), the VW T1 Samba ([in 3D](https://rtmandreyev.github.io/construct/examples/volkswagen-t1-samba/kit/assembly.html), [booklet](https://rtmandreyev.github.io/construct/examples/volkswagen-t1-samba/kit/booklet.html)) and an owner's Vespa GS 150 at 1:12 ([in 3D](https://rtmandreyev.github.io/construct/examples/vespa-gs150/kit/assembly.html),
+[booklet](https://rtmandreyev.github.io/construct/examples/vespa-gs150/kit/booklet.html)).
 
 - **The booklet:** a cover, the paints, the plates with every piece numbered, then a card per step with the
   parts it takes and a shaded, exploded drawing (no hidden lines), many of one kind under one callout.

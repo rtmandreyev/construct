@@ -5,11 +5,11 @@ paint, with numbered plates, a booklet drawn like a kit sheet and the same steps
 or the ChatGPT app does the work ([how to set it up](in-the-apps.md)).
 
 <p align="center">
-  <img src="../media/kit-vespa-guide.gif" width="49%" alt="The Vespa kit's 3D guide stepping through its build: the body first, the seat and rack at the bench, then the wheels, fork and cowls">
-  <img src="../media/kit-vespa-booklet.jpg" width="49%" alt="Step 3 of the Vespa kit's booklet: the dual seat built at the bench with the owner's rack slat, each piece numbered and painted">
+  <a href="https://rtmandreyev.github.io/construct/examples/vespa-gs150/kit/assembly.html"><img src="../media/kit-vespa-guide.gif" width="49%" alt="The Vespa kit's 3D guide stepping through its build: the body first, the seat and rack at the bench, then the wheels, fork and cowls"></a>
+  <a href="https://rtmandreyev.github.io/construct/examples/vespa-gs150/kit/booklet.html"><img src="../media/kit-vespa-booklet.jpg" width="49%" alt="Step 3 of the Vespa kit's booklet: the dual seat built at the bench with the owner's rack slat, each piece numbered and painted"></a>
 </p>
 <p align="center"><sub>The <a href="https://rtmandreyev.github.io/construct/examples/vespa-gs150/">Vespa from <i>your vehicle</i></a> as a 1:12 kit: 32 pieces on 3 plates, 21 steps, 157 mm long.
-The 3D guide (left) and a page of the booklet (right).</sub></p>
+The 3D guide (left) and a page of the booklet (right). Open them yourself: <a href="https://rtmandreyev.github.io/construct/examples/vespa-gs150/kit/assembly.html">the kit in 3D</a> and <a href="https://rtmandreyev.github.io/construct/examples/vespa-gs150/kit/booklet.html">its booklet</a>.</sub></p>
 
 ## Our example, start to finish
 
@@ -46,9 +46,9 @@ piece on its own to reprint one.
 ## More kits
 
 <p align="center">
-  <img src="../media/kit-cfx-guide.gif" width="32%" alt="The Yamaha CFX piano kit's 3D guide">
-  <img src="../media/tompion-kit-guide.gif" width="32%" alt="Tompion's year-going clock as a 1:12 kit, step by step in 3D">
-  <img src="../media/kit-vw-guide.gif" width="32%" alt="The Volkswagen T1 Samba as a 1:16 kit, step by step in 3D">
+  <a href="https://rtmandreyev.github.io/construct/examples/yamaha-cfx/kit/assembly.html"><img src="../media/kit-cfx-guide.gif" width="32%" alt="The Yamaha CFX piano kit's 3D guide"></a>
+  <a href="https://rtmandreyev.github.io/construct/examples/tompion-year-going-clock/kit/assembly.html"><img src="../media/tompion-kit-guide.gif" width="32%" alt="Tompion's year-going clock as a 1:12 kit, step by step in 3D"></a>
+  <a href="https://rtmandreyev.github.io/construct/examples/volkswagen-t1-samba/kit/assembly.html"><img src="../media/kit-vw-guide.gif" width="32%" alt="The Volkswagen T1 Samba as a 1:16 kit, step by step in 3D"></a>
 </p>
 <p align="center"><sub>A piano and a clock at 1:12 (the clock <a href="../END-TO-END.md#11-a-model-kit">made step by step</a>), a VW bus at 1:16.</sub></p>
 

@@ -108,15 +108,15 @@ every guess a deeper amber the more firmly it is held; and the same Duomo as a s
   <img src="docs/media/freecad-piano-leica.jpg" width="49%" alt="The Yamaha CFX and the Leica M3 in FreeCAD as true CAD shapes">
 </p>
 
-**Model kits.** Three constructs as kits to print, glue and paint: the Yamaha CFX piano (1:12, 54 pieces), Tompion's year-going clock (1:12, 34 pieces) and the VW T1 Samba (1:16, 98 pieces), each with its steps in 3D and a paper booklet. [Makers →](docs/for/makers.md)
+**Model kits.** Four constructs as kits to print, glue and paint: the Yamaha CFX piano (1:12, 54 pieces), Tompion's year-going clock (1:12, 34 pieces), the VW T1 Samba (1:16, 98 pieces) and an owner's Vespa GS 150 (1:12, 32 pieces), each with its steps in 3D and a booklet to print. Open them in your browser: [the kits in the gallery](https://rtmandreyev.github.io/construct/#kits). [Makers →](docs/for/makers.md)
 
 <p align="center">
-  <img src="docs/media/kit-cfx-guide.gif" width="32%" alt="The Yamaha CFX piano kit's 3D guide at 1:12: the keyboard built at the bench, the piano ghosted around it">
-  <img src="docs/media/tompion-kit-guide.gif" width="32%" alt="Tompion's year-going clock as a 1:12 kit: its fifteen steps in 3D, the dial plate built at the bench">
-  <img src="docs/media/kit-vw-guide.gif" width="32%" alt="The Volkswagen T1 Samba as a 1:16 kit: from the floor pan, through the cab and body at the bench, to the finished bus">
+  <a href="https://rtmandreyev.github.io/construct/examples/yamaha-cfx/kit/assembly.html"><img src="docs/media/kit-cfx-guide.gif" width="32%" alt="The Yamaha CFX piano kit's 3D guide at 1:12: the keyboard built at the bench, the piano ghosted around it"></a>
+  <a href="https://rtmandreyev.github.io/construct/examples/tompion-year-going-clock/kit/assembly.html"><img src="docs/media/tompion-kit-guide.gif" width="32%" alt="Tompion's year-going clock as a 1:12 kit: its fifteen steps in 3D, the dial plate built at the bench"></a>
+  <a href="https://rtmandreyev.github.io/construct/examples/volkswagen-t1-samba/kit/assembly.html"><img src="docs/media/kit-vw-guide.gif" width="32%" alt="The Volkswagen T1 Samba as a 1:16 kit: from the floor pan, through the cab and body at the bench, to the finished bus"></a>
 </p>
 <p align="center">
-  <img src="docs/media/kit-cfx-booklet.jpg" width="49%" alt="Step 3 of the CFX kit in the paper booklet: the keybed built at the bench, each piece numbered and painted polished ebony, drawn exploded">
+  <a href="https://rtmandreyev.github.io/construct/examples/yamaha-cfx/kit/booklet.html"><img src="docs/media/kit-cfx-booklet.jpg" width="49%" alt="Step 3 of the CFX kit in the paper booklet: the keybed built at the bench, each piece numbered and painted polished ebony, drawn exploded"></a>
 </p>
 
 **NetLogo runs.** A simulation's whole run as a construct, time as its height. [Educators and researchers →](docs/for/educators-and-researchers.md)
