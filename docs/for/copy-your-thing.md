@@ -17,7 +17,9 @@ terminal: the Claude app or the ChatGPT app does the work ([how to set it up](in
 </p>
 <p align="center"><sub>Casey Marshall, CC BY 2.0 · sailko, CC BY 2.5</sub></p>
 
-**The message,** sent in the Claude app's **Cowork**, in a folder holding the photos and the Construct skill:
+**The message,** sent in the Claude app's **Cowork**. In this test the skill came as a zip file in the folder;
+with the [setup on these pages](in-the-apps.md) the message starts *"Read skills/construct/SKILL.md..."*
+instead, as in the one to copy below.
 
 > Unzip construct-skill.zip in this folder, read construct/SKILL.md and use it to make a masterpiece construct of my
 > Eames Lounge Chair and Ottoman (Herman Miller, the 670 chair and 671 ottoman) from the two photos in
@@ -26,7 +28,7 @@ terminal: the Claude app or the ChatGPT app does the work ([how to set it up](in
 **What came back.** The app looked up the maker's published sizes, read the shells, cushions, arms and swivel
 base from the photos, and built 52 named parts. Then it improved them in rounds, each judged by a second,
 independent model that compared the new version with the best so far: 5 rounds, 13 minutes of its own work and 18
-of the critic's, until two rounds in a row could not beat the third. Press **P** and the construct says how each part
+of the critic's, until two rounds in a row could not beat round 3. Press **P** and the construct says how each part
 is known. Here every part is honestly a reading, in shades of how firmly it is held: 22 seen in the photos and
 checked against the maker's published sizes, 20 seen in the photos, 10 described in the sources.
 
@@ -49,7 +51,8 @@ It writes a small finish map ([the one used here](../../examples/eames-lounge-ch
 Other things to ask for:
 
 - *"Make it a file I can 3D print, 15 cm tall"* (a miniature for a shelf or a dolls' house).
-- *"Give me a STEP file"*, for anyone who works in CAD.
+- *"Give me a STEP file"*: the format CAD programs (FreeCAD, Fusion, SolidWorks) open, for anyone who designs
+  or makes parts.
 - *"Show it in green leather"*, *"make the ottoman 10 cm lower"*: the copy changes, the original stays.
 
 ## Do it with your own thing
@@ -67,7 +70,8 @@ Other things to ask for:
 > **[what it is: maker, model, year]** from the photos in **my-chair/**. **[What you measured, e.g. "it is 84 cm
 > tall"]**. Research its published dimensions. Masterpiece mode. Save it as **my-chair/my-chair.html**.
 
-In the ChatGPT app, start it with *"Using the construct skill, make..."* instead. Expect half an hour to an hour.
+In the ChatGPT app, start it with *"Using the construct skill, make..."* instead. Expect half an hour to an hour
+for something like a chair.
 
 ## Good to know
 

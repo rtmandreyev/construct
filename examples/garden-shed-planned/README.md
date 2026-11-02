@@ -2,7 +2,7 @@
 
 [![A garden shed with a planned log store and deck, a holographic construct](hero.jpg)](https://rtmandreyev.github.io/construct/examples/garden-shed-planned/)
 
-**masterpiece · DeepSeek V4.1 Flash**
+**fast · DeepSeek V4.1 Flash**, made after the [masterpiece shed](../garden-shed/) and reviewed once
 
 [Open the live construct](https://rtmandreyev.github.io/construct/examples/garden-shed-planned/): drag to orbit, P shows how each part is known (the planned
 parts as designed, not built), S shows it as a solid. The scene: [scene.json](scene.json).

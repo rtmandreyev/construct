@@ -18,7 +18,8 @@ of work, the ChatGPT app in about an hour.
 
 ## In the Claude app: Cowork
 
-1. Open the Claude app and choose **Cowork** (beside **Chat**, next to the send button).
+1. Open the Claude app, start a new conversation and switch it from **Chat** to **Cowork** (the two buttons sit
+   together just under the message box).
 2. When it asks which folder to work in, choose the `construct-main` folder.
 3. Paste your message (each [use case](../../README.md#find-your-path) has one to copy), starting with:
    *"Read skills/construct/SKILL.md in this folder and use the Construct skill to make..."*
@@ -30,10 +31,11 @@ Cowork keeps its working files in the app's own space, so the message asks it to
 
 ## In the ChatGPT app: Codex
 
-1. Open the ChatGPT app and go to **Codex**. Start a task in the `construct-main` folder.
+1. Open the ChatGPT app and go to **Codex**. Start a new task and, when it asks where to work, choose the
+   `construct-main` folder (or pick it in the folder menu above the message box).
 2. The first time only, send:
    *"Install the skill in skills/construct for yourself: copy it to ~/.codex/skills/construct. Tell me when it is
-   done."*
+   done."* If it asks permission to copy outside the folder, allow it.
 3. Start a **new** task in the same folder (so it picks up the skill) and paste your message, starting with
    *"Using the construct skill, make..."*
 
@@ -53,8 +55,9 @@ Then just ask, in the same chat, in plain words:
 ## Good to know
 
 - **Ask for masterpiece mode,** as every message on these pages does: the construct is improved in rounds, each
-  judged by a second, independent model, and only a better version is kept. It takes 30 to 60 minutes, and every
-  example on these pages was made that way.
+  judged by a second, independent model, and only a better version is kept. Every example on these pages was made
+  that way. It usually takes 30 minutes to an hour for something simple, like a chair, and two hours or more for
+  something complex, like a car or a building.
 - **Give each thing its own file name.** Two runs in one folder that both save `construct.html` overwrite each other.
 - **It is a model, not a survey.** What you measured and what the maker publishes are marked as such; everything
   read from photos or designed is marked too (press **P**). Check the measurements that matter before you cut,

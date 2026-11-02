@@ -47,7 +47,7 @@
   {
    "slug": "braun-sk4-knob",
    "title": "Braun SK 4: a replacement knob",
-   "mode": "masterpiece",
+   "mode": "fast",
    "model": "DeepSeek V4.1 Flash"
   },
   {
@@ -59,7 +59,7 @@
   {
    "slug": "garden-shed-planned",
    "title": "A garden shed, with a planned change",
-   "mode": "masterpiece",
+   "mode": "fast",
    "model": "DeepSeek V4.1 Flash"
   },
   {

@@ -6,6 +6,8 @@ kit, a CAD file or a game-ready prop. This page goes through each new feature wi
 to try it; [a longcase clock, end to end](END-TO-END.md) takes one construct through all of them. The full list is in the [changelog](../CHANGELOG.md), and the story in the
 [release notes](releases/v1.1.0.md).
 
+In the commands below, `construct` is short for `python3 construct_hologram/cli.py` in a checkout of Construct.
+
 - [Your own formats](#your-own-formats)
 - [Honest in finer shades](#honest-in-finer-shades)
 - [See it as a solid](#see-it-as-a-solid)

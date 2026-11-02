@@ -37,7 +37,7 @@ model with named parts and working joints, a print, a model kit, a CAD file or a
 | want a model of **anything you can describe** | A thing you describe, as a construct you can turn, replay and share | [Make a construct](docs/for/anyone.md) |
 | want a **digital copy of something you own** | Your chair, guitar, camera or heirloom in 3D from your photos and whatever its maker publishes, showing what was measured and what was guessed | [Copy your thing](docs/for/copy-your-thing.md) |
 | are planning a change to your **home or garden** | Your shed, room or garden as a model to try the change on first: a deck, shelves, an extension, a new layout. A planning model, not a survey | [Try it on a copy](docs/for/home-and-garden.md) |
-| want to customise or restore a **vehicle** | Your car, bike or scooter from its published sizes and your photos, your parts told apart from the factory's: try wheels, a livery or a wrap at true size, plan a restoration | [Your vehicle](docs/for/your-vehicle.md) |
+| want to customise or restore a **vehicle** | Your car, bike or scooter from its published sizes and your photos, your parts told apart from the factory's: try wheels or a new colour, plan a restoration, make a model of it | [Your vehicle](docs/for/your-vehicle.md) |
 | need a part that is **missing or broken** | A knob, bracket or cover drawn to the thing it fits, as a print or a CAD file someone can make | [Make the part](docs/for/replace-a-part.md) |
 | want a **model kit of your own thing** | Your scooter, house or guitar as a kit to print, glue and paint, with a booklet | [A kit of your own](docs/for/a-kit-of-your-own.md) |
 | want to **show someone what you mean** | A model a builder, a fabricator or a friend can turn and measure, and a file for their own tools | [Show what you mean](docs/for/show-what-you-mean.md) |
@@ -165,8 +165,8 @@ flowchart LR
   12 rounds, or after two hours. In the author's own blind comparisons, on two subjects, there was
   no visible improvement after about round 12, so more rounds mostly cost time.
 
-<p align="center"><img src="docs/media/rounds-sainte-chapelle.jpg" alt="The Sainte-Chapelle at round 1, round 8 and round 15 of a masterpiece run: the flèche gains its tiers, and the window tracery, buttresses and pinnacles fill in"></p>
-<p align="center"><sub>The critic at work: the Sainte-Chapelle at rounds 1, 8 and 15 of a masterpiece run by Claude Opus 5.5. The flèche gains its tiers, and the window tracery, buttresses and pinnacles fill in.</sub></p>
+<p align="center"><img src="docs/media/rounds-sainte-chapelle.jpg" alt="The Sainte-Chapelle at round 1, round 8 and round 15 of a long run: the flèche gains its tiers, and the window tracery, buttresses and pinnacles fill in"></p>
+<p align="center"><sub>The critic at work: the Sainte-Chapelle at rounds 1, 8 and 15 of a run by Claude Opus 5.5, made before masterpiece had its 12-round cap. The flèche gains its tiers, and the window tracery, buttresses and pinnacles fill in.</sub></p>
 
 The whole process, with a construct improving round by round, is in
 **[How a construct is made](docs/HOW-IT-IS-MADE.md)**. What you see in a construct, and why
@@ -295,9 +295,10 @@ See [CONTRIBUTING.md](CONTRIBUTING.md). Run the tests with
 
 ## License
 
-[Apache-2.0](LICENSE) — Copyright (c) 2026 Artyom Andreyev (see [NOTICE](NOTICE)); versions up to 0.3.0 were MIT. The four NetLogo example folders
-([viral marketing](examples/netlogo-viral-marketing/), [flocking](examples/netlogo-flocking/),
-[wolf sheep](examples/netlogo-wolf-sheep/) and [fire](examples/netlogo-fire/)) derive from Uri
+[Apache-2.0](LICENSE) — Copyright (c) 2026 Artyom Andreyev (see [NOTICE](NOTICE)); versions up to 0.3.0 were MIT. The NetLogo example folders
+(`examples/netlogo-*`: [viral marketing](examples/netlogo-viral-marketing/), [flocking](examples/netlogo-flocking/),
+[wolf sheep](examples/netlogo-wolf-sheep/), [fire](examples/netlogo-fire/), [fireflies](examples/netlogo-fireflies/),
+[virus on a network](examples/netlogo-virus-on-a-network/) and [virus compare](examples/netlogo-virus-compare/)) derive from Uri
 Wilensky's NetLogo models and are under CC BY-NC-SA 3.0 instead (see each LICENSE). The [Blender
 add-on](hosts/blender/) is under GPL-3.0-or-later, as Blender's extensions platform requires; what
 you make with it is yours.

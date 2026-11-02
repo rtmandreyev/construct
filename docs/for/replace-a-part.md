@@ -41,18 +41,20 @@ and the bore for the shaft with its flat, the bore marked as designed to fit.
 
 ## The print file
 
-Ask, in the same chat: *"Give me a print file of the knob at real size."* It writes a `.3mf` that any slicer opens.
-Here it is in PrusaSlicer: one solid part, about 34 minutes and 7.4 cm³ of filament (about 9 g of PLA), with no
-supports needed.
+Ask, in the same chat: *"Give me a print file of the knob at real size."* It writes a `.3mf` file, which your 3D
+printer's own software (a *slicer*, such as PrusaSlicer, Bambu Studio or Cura) opens and turns into instructions for
+the printer. Here it is in PrusaSlicer: one solid part, about 34 minutes and 7.4 cm³ of filament, about 9 g of
+plastic (PLA).
 
 <p align="center"><img src="../media/everyday-knob-prusaslicer.jpg" width="90%" alt="The knob sliced in PrusaSlicer's G-code viewer: one part, 34 minutes, the legend of print times"></p>
 
-**Check before printing.** Open the file in your slicer and look at the bore from below. In this example the first
-print file had the bore closed, because the skirt under the knob was drawn as a solid disc; it was fixed before
-printing. If yours is closed, send:
+**Check before printing.** Open the file in your slicer and look at the hole for the shaft from below. In this
+example the first print file had it closed, for two reasons: the skirt under the knob was drawn as a solid disc, and
+the outline of the knob's body stopped at the top of the hole instead of running back down its wall, so the body was
+not one closed solid. Both were fixed before printing. If yours is closed, send:
 
-> The bore has to be open from the bottom, through the skirt: make the skirt a ring and the knob's body a closed
-> solid with the bore cut into it, then give me the print file again.
+> The hole for the shaft has to be open from the bottom, through the skirt: make the skirt a ring, and make the
+> body's outline run down the hole's wall so the body is one closed solid. Then give me the print file again.
 
 Other things to ask for:
 

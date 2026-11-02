@@ -53,10 +53,10 @@ you ask  →  the agent looks it up  →  it writes a scene  →  Construct chec
 
 ## A construct improving over rounds
 
-![The Sainte-Chapelle at round 1, round 8 and round 15 of a masterpiece run: the flèche gains its tiers, and the window tracery, buttresses and pinnacles fill in](media/rounds-sainte-chapelle.jpg)
+![The Sainte-Chapelle at round 1, round 8 and round 15 of a long run: the flèche gains its tiers, and the window tracery, buttresses and pinnacles fill in](media/rounds-sainte-chapelle.jpg)
 
-The same Sainte-Chapelle, made by Claude Opus 5.5 in masterpiece mode, at round 1, round 8 and
-round 15. Round 1 is already recognisable. By round 8 the flèche has gained its tiers; by round
+The same Sainte-Chapelle, made by Claude Opus 5.5 in a run made before masterpiece had its 12-round
+cap, at round 1, round 8 and round 15. Round 1 is already recognisable. By round 8 the flèche has gained its tiers; by round
 15 the window tracery, the buttresses and the pinnacles have filled in and the whole building
 reads as more solid. Every step was kept only because the critic, comparing the two
 versions blind, preferred it. You can open the final version

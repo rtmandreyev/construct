@@ -63,7 +63,7 @@ side, printed as worksheets and cited. The story: [release notes](docs/releases/
   that moves in fractions (`tick-advance`: GasLab, Connected Chemistry, system dynamics) records
   each step; the recorder and the extension record each moment once. Most of the 57 left wait for
   a player or a classroom ([NETLOGO.md](docs/NETLOGO.md#how-it-was-checked)).
-- **Reading a construct** (Phase C): a scene may carry a `reading`, how to read it and, for a run,
+- **Reading a construct**: a scene may carry a `reading`, how to read it and, for a run,
   its clock and counts. Its page then has a **How to read it** panel (**H**) and a replay bar that
   draws the run up to any tick, with the tick and the counts beside it; labels stay inside the
   window, on a phone too. The bridge writes a reading for every view; an art layer may reword it;
@@ -81,19 +81,19 @@ side, printed as worksheets and cited. The story: [release notes](docs/releases/
   373 of 445 models draw, every data lock holds, and no label leaves the window or covers another;
   the run fixed a breed born mid-run (now declared floating), fields whose patches all change at
   once (the next view is chosen) and a field over the scene's point budget.
-- **Critic rounds for a run** (Phase C, opt-in): the rounds' critic, given a NetLogo construct, checks
+- **Critic rounds for a run** (opt-in): the rounds' critic, given a NetLogo construct, checks
   every label and milestone against the recording's facts and counts and judges how a student
   would read it (`critic-run.md`); with GPT-6.1 Sol it ranked a planted false milestone first. The
   network view's reading line no longer claims the change passed along a link.
-- **A run as a 3D model** (Phase D, opt-in): `construct netlogo … --solid --glb run.glb` adds solids
+- **A run as a 3D model** (opt-in): `construct netlogo … --solid --glb run.glb` adds solids
   (each turtle a sphere where it rose, a cycle as a tube, a spread as a surface) and exports the
   run in its own NetLogo colours, its build replaying the run in Blender; `--materials-out` writes
   the colour map, and `construct:draw … "model" true` does it from NetLogo.
-- **NetLogo for every agent** (Phase E): the MCP server gains `construct_netlogo_instrument` (a model's
+- **NetLogo for every agent**: the MCP server gains `construct_netlogo_instrument` (a model's
   text in, the recording copy, its experiment and the recorder out) and `construct_netlogo_draw` (a
   recording in, the locked construct out, with an art layer, solids and the run's colours on
   request); the skill's NetLogo steps cover the extension, the reading and 3D models.
-- **Things you can make** (from the 1.2 plan, brought into 1.1):
+- **Things you can make**:
   - **3D printing** ([PRINTING.md](docs/PRINTING.md)): `construct print scene.json --out model.3mf`
     (or `.stl`) makes a construct one watertight solid to print, at a size (`--size`, 100 mm on its
     longest side by default) or a scale (`--scale 43` for 1:43). It is made in voxels at the print's
@@ -187,9 +187,9 @@ side, printed as worksheets and cited. The story: [release notes](docs/releases/
   so an agent or a person can refine a solid part by part. A part merely set into another is not reported.
 - **Glued buildings stand still:** a glued building's fixed body is static in Godot (a castle on its rock does
   not topple; its doors still hang on it, `construct_joints.gd` joins to static bodies too). All 28 gallery
-  constructs export glued with every joint made.
+  constructs of the time export glued with every joint made.
 - **Kits of buildings go up from the ground:** in a building what starts lower holds what starts higher.
-- **Kits closer to a real model kit (from the owner's review):** pieces true to the construct's shapes (each
+- **Kits closer to a real model kit:** pieces true to the construct's shapes (each
   surface snapped back onto its parts', untrimmed solids exact); repeated sub-assemblies one step done that many
   times; a 3D guide with the instructions big at the top and lines to the pieces, the controls at the bottom,
   what is built barely dimmed; a booklet with a cover, the paints, plates drawn with each piece's real outline,
@@ -223,9 +223,10 @@ side, printed as worksheets and cited. The story: [release notes](docs/releases/
   across a gap. `check` now follows support through the solids themselves: a part whose surface meets nothing
   held up is an `unsupported` error, a part carried only by something far thinner than itself a `thin-support`
   warning, each naming the part to rest it on and the gap; both in every mode, needing no vision. It found three
-  such gaps in the gallery, now closed: the Aston Martin DB5 gains its passenger door skin and the bodyside
-  between door and front wheel (its side vents and a door handle stood off the body), and the brass orrery's
-  drive bearing reaches the drum (the mechanism above it hung in the gear deck's hole).
+  such gaps in the gallery, now closed: the Aston Martin DB5's side vents and passenger door handle, which stood
+  10 to 21 cm off its body, sit on it; the brass orrery's drive bearing reaches the drum (the mechanism above it
+  hung in the gear deck's hole); and the James Webb film's sunshield hub reaches the bus (it stopped 22 cm above
+  it).
 - **Adapters:** [docs/ADAPTERS.md](docs/ADAPTERS.md) says what a construct holds, where an adapter reads it (the
   glTF, the compiled geometry, the scene) and the rules that keep one honest, with a tested template that writes
   a parts sheet and an STL per part ([hosts/adapter-template](hosts/adapter-template/construct_parts.py)).
@@ -237,7 +238,7 @@ side, printed as worksheets and cited. The story: [release notes](docs/releases/
 - **The gallery:** the Nissan Skyline GT-R R34 and the Volkswagen T1 Samba join it; its constructs are in the
   page's own flow (a scroller inside the page caught the wheel), and a construct set in a page takes the wheel
   only once it is clicked, so the page never stops scrolling under it.
-- **Kits polished (from the owner's review):** booklet drawings as a kit sheet draws them: shaded pieces with
+- **Kits polished:** booklet drawings as a kit sheet draws them: shaded pieces with
   their outlines and no hidden lines, a lens's elements fanned out along its axis, many of one kind lifted
   together with one callout, small pieces on a big model drawn close; at the bench the 3D guide ghosts the model
   so far around the sub-assembly; copies closer than the kit can print apart are one piece (a whole keyboard, not

@@ -7,7 +7,8 @@ print in PrusaSlicer and a model kit. Each step shows the command, what came out
 **Who did what.** DeepSeek V4.1 Flash built the construct through Hermes, in masterpiece mode: twelve rounds,
 each judged by an independent critic. Claude Opus 5.5 then ran every other step with the 1.1 commands below,
 and made two changes by hand, shown where they happen: one renamed part, and a kit plan. Everything needed to
-repeat it is in [examples/tompion-year-going-clock](../examples/tompion-year-going-clock/).
+repeat it is in [examples/tompion-year-going-clock](../examples/tompion-year-going-clock/). Below, `construct` is
+short for `python3 construct_hologram/cli.py` in a checkout of Construct.
 
 **Open it as you read:** [the live construct](https://rtmandreyev.github.io/construct/examples/tompion-year-going-clock/) · [its scene](../examples/tompion-year-going-clock/scene.json) ·
 [the finish map](../examples/tompion-year-going-clock/maps/finish.json) · [the kit plan](../examples/tompion-year-going-clock/kit-plan.json)
@@ -60,7 +61,7 @@ and wrote the scene: 207 named parts and 23 facts, each with its source. Among t
 | --- | --- | --- |
 | height, width, depth | 2.23 × 0.455 × 0.236 m | verified · Royal Collection |
 | case | burr walnut veneer | verified · Royal Collection |
-| dial | 24-hour chapter ring in Roman numerals, minute circle marked "Apparant Time" | verified · Royal Collection |
+| dial | 24-hour chapter ring in Roman numerals, minute circle marked "Apparant Time" *[sic]* | verified · Royal Collection |
 | hands | blued steel | verified · Royal Collection |
 | duration | one year on a single winding | verified · Royal Collection |
 | dial plate | 12 in (0.305 m) square | inferred · Christie's essay on a sister clock |
@@ -83,13 +84,17 @@ construct rounds status          # round 13, stopped: the 12-round cap (best: ro
 ## 3. Check it, and check the fit
 
 ```sh
-construct check scene.json          # audit: PASS, 0 errors; 16 small parts may vanish at the hero framing
-construct check scene.json --fit    # fit: nothing pokes through or hides (131 parts as solids)
+construct check scene.json                     # audit: PASS, 0 errors; 16 small parts may vanish at the hero framing
+construct check scene.json --fit --cells 600   # fit: nothing pokes through or hides (131 parts as solids)
 ```
+
+The fit is checked on a grid of 600 voxels along the clock's height, 3.7 mm each: the default 160 (14 mm) is
+coarser than the clock's 8 mm door frames and 3 mm dial layers, and reports them as poking through.
 
 `check` also reads the names. The solid view, the exports, the prints and the kits know glass by its id, and the
 hood door's glass was named `hood-door` ("Glazed hood door" only in its label), so `check` asked for its id to say
 glass. One rename, `hood-door` to `hood-door-glass`, and everything after the light shows the dial through it.
+(Because the scene changed after the rounds, `check` now also notes that the critic judged the version before.)
 
 ## 4. Provenance
 
@@ -206,6 +211,7 @@ construct kit scene.json --scale 12 --printer desktop --plan kit-plan.json --mat
 <p align="center"><img src="media/tompion-kit-plate.jpg" width="70%" alt="The kit's first plate: its pieces laid out and numbered"></p>
 
 The kit's checks leave two notes for the builder: the dial plate sits a hair off the trunk (a drop of glue fills
-it), and the rating nut under the pendulum's bob is too fine to print at 1:12, so the kit leaves it off. **Not yet
+it), and the pendulum's upper rod comes out in two pieces, the smaller too fine to print at 1:12, so the kit leaves
+it off. **Not yet
 built by anyone:** like every kit, it is made and checked by software and by AI critics, and a first version.
 [Kits →](PRINTING.md#a-kit-revell-style) · [Your first kit, step by step →](for/makers.md#your-first-kit-step-by-step)

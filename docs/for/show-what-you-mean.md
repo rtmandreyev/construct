@@ -21,10 +21,10 @@ built, so nobody takes the idea for what is there. <a href="https://rtmandreyev.
 | --- | --- | --- |
 | a browser (anyone) | *"the page"* (the `.html`) | any browser: turn it, press **P** to see what is planned |
 | CAD (builders, engineers, fabricators) | *"a STEP file of the planned version"* | FreeCAD, Fusion, SolidWorks, Onshape, any CAD |
-| 3D (designers, renderers) | *"a file for Blender"* (a `.glb`) | Blender, SketchUp, most 3D programs |
+| 3D (designers, renderers) | *"a file for Blender"* (a `.glb`) | Blender and most 3D programs |
 | a 3D printer | *"a print file, 20 cm long"* (a `.3mf`) | any slicer |
 
-The STEP file of the shed above, in FreeCAD: every part named and grouped in the order it is built, the planned
+The plan in FreeCAD: every part named and grouped in the order it is built, the planned
 log store and deck among them.
 
 <p align="center"><img src="../media/everyday-shed-freecad.jpg" width="90%" alt="The planned shed in FreeCAD: the model tree of named parts by stage, and the shed with its log store and deck as CAD solids"></p>
