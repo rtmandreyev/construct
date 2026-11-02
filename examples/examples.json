@@ -63,6 +63,12 @@
    "model": "DeepSeek V4.1 Flash"
   },
   {
+   "slug": "vespa-gs150",
+   "title": "Vespa GS 150, an owner's scooter",
+   "mode": "masterpiece",
+   "model": "GPT-6.1 Sol"
+  },
+  {
    "slug": "revox-a77",
    "title": "Revox A77",
    "mode": "fast",

@@ -217,7 +217,8 @@ side, printed as worksheets and cited. The story: [release notes](docs/releases/
   showing someone what you mean), each with a page, an example and a message to copy, and [one
   page](docs/for/in-the-apps.md) on using Construct in the Claude app (Cowork) or the ChatGPT app (Codex), both
   tested. New examples from photos: an Eames Lounge Chair made in the Claude app, a Braun SK 4 with a
-  replacement knob to print, and a garden shed with a planned change.
+  replacement knob to print, a garden shed with a planned change, and a 1960 Vespa GS 150 (GPT-6.1 Sol) with its
+  owner's parts told from the factory's.
 - **Contact measured on the surfaces** (from a desk fan two models built, reported from use): a part held up
   only because its box reaches its support passed the audit, as did a heavy part carried by a wire-thin strut
   across a gap. `check` now follows support through the solids themselves: a part whose surface meets nothing

@@ -1,0 +1,22 @@
+{
+ "title": "Vespa GS 150, an owner's scooter, a 1:12 kit",
+ "merge": [
+  ["monocoque", "floorboard-*", "runner-*", "legshield", "shield-edge-*", "horn-cover", "horn-slat-*", "factory-piaggio-badge", "cowl-*-receiver", "cowl-lower-return-*", "seat-pan", "engine-pivot-*"],
+  ["cowl-engine", "cowl-seam-engine", "engine-louvre-*", "cowl-access-trim-engine-*", "cowl-latch-engine", "cowl-script-engine", "cowl-engine-*-locating-tab"],
+  ["cowl-spare-wheel", "cowl-seam-spare-wheel", "cowl-access-trim-spare-wheel-*", "cowl-latch-spare-wheel", "cowl-script-spare-wheel", "cowl-spare-wheel-*-locating-tab"],
+  ["tyre-front", "wheel-front", "whitewall-front-*", "hubcap-front-*", "wheel-fasteners-hubcap-front-*"],
+  ["tyre-rear", "wheel-rear", "whitewall-rear-*", "hubcap-rear-*", "wheel-fasteners-hubcap-rear-*"],
+  ["owner-spare-*"],
+  ["fork-*", "front-swing-link", "front-damper", "front-coil-spring*", "front-mudguard", "mudguard-crest", "owner-front-mudguard-hoop-*"],
+  ["handlebar-casting*", "grip-*", "lever-*", "headlamp-bowl", "headlamp-rim", "headlamp-refractor", "speedometer*"],
+  ["engine-crankcase", "engine-fan-housing", "engine-cylinder", "engine-service-cover", "exhaust-*", "rear-suspension"],
+  ["centre-stand*", "stand-shoe-*"],
+  ["dual-seat", "seat-piping*", "seat-front-piping", "seat-cushion-seam-*", "seat-lower-valance-*", "seat-grab-loop-*"],
+  ["owner-cowl-bar-left*", "owner-floor-bar-left*", "owner-shield-bar-left*", "owner-guard-*-left"],
+  ["owner-cowl-bar-right*", "owner-floor-bar-right*", "owner-shield-bar-right*", "owner-guard-*-right"],
+  ["owner-rear-rack*", "owner-rack-*"],
+  ["owner-badge-*", "owner-legshield-badge-*", "owner-upper-ornament", "owner-clover"],
+  ["rear-light-housing"]
+ ],
+ "clear": ["headlamp-glass", "rear-light-lens"]
+}
