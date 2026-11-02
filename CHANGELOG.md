@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.1.0 — unreleased
+## 1.1.0 — 2026-11-02
 
 Models come alive: the NetLogo bridge, made reliable on the whole Models Library and usable from
 inside NetLogo; runs as films and 3D models in Blender; and runs for the classroom, compared side by
