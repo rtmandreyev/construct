@@ -6460,7 +6460,7 @@
    ]
   },
   {
-   "id": "conservatory",
+   "id": "conservatory-glass",
    "role": "mass",
    "certainty": "inferred",
    "stage": 3,
@@ -9467,7 +9467,7 @@
     "parts": [
      "chair-tower",
      "chair-tower-roof",
-     "conservatory"
+     "conservatory-glass"
     ]
    },
    {
