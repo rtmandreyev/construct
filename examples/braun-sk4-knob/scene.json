@@ -2,7 +2,7 @@
  "format": "construct-scene",
  "version": 2,
  "id": "sk4-sender-knob",
- "title": "Braun SK 4 \u00b7 Sender knob, replacement for printing",
+ "title": "Braun SK 4 · Sender knob, replacement for printing",
  "subject": {
   "category": "object",
   "summary": "The large tuning knob of a Braun SK 4, modelled at its real 33 mm across and 19.6 mm high as a printable replacement: a skirted cone with twenty-four flutes, a raised indicator bar, and a 6.4 mm bore 14 mm deep with a flat for the shaft key.",
@@ -109,11 +109,31 @@
    "source": "photo-1",
    "note": "A 35 mm collar, 2.5 mm high, that stands on the panel and hides the nut; its diameter is read from photo-1, where the knob is about 1.5 times the 22 mm small knobs.",
    "shape": {
-    "type": "cylinder",
-    "radius": 0.0175,
-    "height": 0.0025,
+    "type": "lathe",
     "segments": 64,
-    "rings": 0
+    "meridians": 8,
+    "profile": [
+     [
+      0.0032,
+      0.0
+     ],
+     [
+      0.0175,
+      0.0
+     ],
+     [
+      0.0175,
+      0.0025
+     ],
+     [
+      0.0032,
+      0.0025
+     ],
+     [
+      0.0032,
+      0.0
+     ]
+    ]
    },
    "at": [
     0,
@@ -172,6 +192,10 @@
      [
       0.0032,
       0.014
+     ],
+     [
+      0.0032,
+      0.0
      ]
     ],
     "segments": 64,
@@ -302,7 +326,7 @@
  "annotations": [
   {
    "id": "a-skirt",
-   "text": "Skirt, \u00d8 35 mm (photo-1)",
+   "text": "Skirt, Ø 35 mm (photo-1)",
    "part": "knob-skirt",
    "offset": [
     -0.02,
@@ -332,7 +356,7 @@
   },
   {
    "id": "a-bore",
-   "text": "Bore \u00d8 6.4 mm, flat 0.8 mm (designed)",
+   "text": "Bore Ø 6.4 mm, flat 0.8 mm (designed)",
    "part": "knob-bore-flat",
    "offset": [
     -0.03,

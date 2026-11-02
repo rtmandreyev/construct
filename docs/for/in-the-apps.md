@@ -52,8 +52,9 @@ Then just ask, in the same chat, in plain words:
 
 ## Good to know
 
-- **Masterpiece or fast.** Masterpiece (rounds judged by a second, independent model) takes 30 to 60 minutes and
-  is worth it for anything you care about; fast takes about 10 minutes.
+- **Ask for masterpiece mode,** as every message on these pages does: the construct is improved in rounds, each
+  judged by a second, independent model, and only a better version is kept. It takes 30 to 60 minutes, and every
+  example on these pages was made that way.
 - **Give each thing its own file name.** Two runs in one folder that both save `construct.html` overwrite each other.
 - **It is a model, not a survey.** What you measured and what the maker publishes are marked as such; everything
   read from photos or designed is marked too (press **P**). Check the measurements that matter before you cut,

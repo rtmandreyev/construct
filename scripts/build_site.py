@@ -210,7 +210,8 @@ def index_page(examples, films=(), beyond=()):
     shelf = ("<section class=\"part\" id=\"constructs\"><div class=\"part-head\"><div><div class=\"eyebrow\">2 · Constructs"
              "</div><h2 class=\"section\">Anything you can describe</h2><p class=\"section\">Each made by an AI agent from "
              "a description, in fast or masterpiece mode. Open one to watch it build itself; drag to turn it, "
-             "<kbd>R</kbd> replays the assembly, <kbd>P</kbd> shows how each part is known.</p></div></div>"
+             "<kbd>R</kbd> replays the assembly, <kbd>P</kbd> shows how each part is known, <kbd>S</kbd> shows it as a "
+             "solid.</p></div></div>"
              "<div class=\"shelf\" id=\"shelf\"><div class=\"grid\">\n%s\n</div></div>"
              "<p class=\"shelf-count\">%d constructs</p></section>"
              % ("\n".join(cards), len(examples)))
@@ -303,8 +304,9 @@ def example_page(ex):
             "<div class=\"stage\"><iframe src=\"construct.html?ui=0&amp;rounds=0\" title=\"%s, live construct\" "
             "allowfullscreen></iframe></div>"
             "<p class=\"hint\">Drag to orbit; click the construct, then scroll to zoom and <kbd>R</kbd> replays the "
-            "assembly, <kbd>L</kbd> shows labels, <kbd>P</kbd> shows how each part is known, <kbd>1</kbd>–<kbd>6</kbd> "
-            "change the view and <kbd>space</kbd> pauses.</p></div>"
+            "assembly, <kbd>L</kbd> shows labels, <kbd>P</kbd> shows how each part is known, <kbd>S</kbd> shows it as a "
+            "solid, <kbd>T</kbd> hides the text on its surfaces, <kbd>1</kbd>–<kbd>6</kbd> change the view and "
+            "<kbd>space</kbd> pauses.</p></div>"
             % (html.escape(ex["title"]), html.escape(provenance(ex)), REPO_URL, ex["slug"], html.escape(ex["title"])))
     return _page("%s · Construct" % ex["title"], body, 2, "%s: a holographic construct. %s" % (ex["title"], provenance(ex)))
 
@@ -372,7 +374,8 @@ def film_page(film):
             "<div class=\"pane live\"><div class=\"stage\"><iframe src=\"construct.html?ui=0&amp;rounds=0\" "
             "title=\"%s, live construct\" allowfullscreen></iframe></div>"
             "<p class=\"hint\">Drag to orbit; click the construct, then scroll to zoom and <kbd>R</kbd> replays the "
-            "assembly, <kbd>L</kbd> shows labels and <kbd>P</kbd> shows how each part is known.</p></div>"
+            "assembly, <kbd>L</kbd> shows labels, <kbd>P</kbd> shows how each part is known and <kbd>S</kbd> shows it "
+            "as a solid.</p></div>"
             "</div></div><p class=\"why\">%s</p></div></div>"
             "<script>(function () { var v = document.querySelector('video'), live = document.getElementById('live'),"
             " watch = document.getElementById('watch');"

@@ -5,11 +5,11 @@
 **masterpiece · DeepSeek V4.1 Flash**
 
 [Open the live construct](https://rtmandreyev.github.io/construct/examples/garden-shed/): drag to orbit, R replays the assembly, L shows labels, P shows how each part
-is known, S shows it as a solid. The scene it was built from: [scene.json](scene.json) and the planned change: [scene-planned.json](scene-planned.json).
+is known, S shows it as a solid. The scene it was built from: [scene.json](scene.json) and the planned change: [garden-shed-planned](../garden-shed-planned/).
 
 A black shiplap garden shed from one photograph and no measurements: every size estimated from what the photo
 shows (the door, the window, the boards) and marked as inferred, in twelve masterpiece rounds through Hermes, each
-judged by an independent critic. Beside it, [scene-planned.json](scene-planned.json): the same shed with what its
+judged by an independent critic. Beside it, [the planned version](../garden-shed-planned/): the same shed with what its
 owner plans to add, a lean-to log store and a small deck with a step, every new part labelled "Planned" and marked
 as designed, not built. [Try it on a copy →](../../docs/for/home-and-garden.md)
 
@@ -21,5 +21,5 @@ Build it yourself from a checkout of Construct:
 
 ```sh
 python3 construct_hologram/cli.py build examples/garden-shed/scene.json --out out/garden-shed
-python3 construct_hologram/cli.py build examples/garden-shed/scene-planned.json --out out/garden-shed-planned
+python3 construct_hologram/cli.py build examples/garden-shed-planned/scene.json --out out/garden-shed-planned
 ```

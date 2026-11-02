@@ -196,8 +196,14 @@ Then add the skill to your agent, or use Construct directly:
 
 ## Quick start
 
-In your agent, just ask in plain words: *"make a construct of a 1970s desk fan"*, or *"a
-masterpiece of the Sydney Opera House"*. The agent does the rest and tells you what it is doing.
+**In the Claude or ChatGPT app, no terminal.** Download Construct, give the app its folder and your photos, and ask:
+the Claude app's Cowork and the ChatGPT app's Codex both read the skill and build the construct for you.
+[Construct in the Claude or ChatGPT app →](docs/for/in-the-apps.md)
+
+**In your agent,** just ask in plain words: *"a masterpiece of the Sydney Opera House"*, or *"a masterpiece
+construct of my guitar from these photos"*. The agent does the rest and tells you what it is doing. The
+constructs at the top of this page were all made in masterpiece mode, rounds judged by a second, independent model:
+ask for it for anything you care about.
 
 To try Construct without a model, fill in a ready-made template by hand:
 

@@ -33,14 +33,32 @@
    "model": "Claude Opus 5.5"
   },
   {
+   "slug": "eames-lounge-chair-chatgpt",
+   "title": "Eames Lounge Chair, from the ChatGPT app",
+   "mode": "masterpiece",
+   "model": "GPT-6.1 Sol"
+  },
+  {
    "slug": "braun-sk4",
    "title": "Braun SK 4",
    "mode": "masterpiece",
    "model": "DeepSeek V4.1 Flash"
   },
   {
+   "slug": "braun-sk4-knob",
+   "title": "Braun SK 4: a replacement knob",
+   "mode": "masterpiece",
+   "model": "DeepSeek V4.1 Flash"
+  },
+  {
    "slug": "garden-shed",
    "title": "A garden shed",
+   "mode": "masterpiece",
+   "model": "DeepSeek V4.1 Flash"
+  },
+  {
+   "slug": "garden-shed-planned",
+   "title": "A garden shed, with a planned change",
    "mode": "masterpiece",
    "model": "DeepSeek V4.1 Flash"
   },

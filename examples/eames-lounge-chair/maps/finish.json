@@ -1,0 +1,8 @@
+{
+ "materials": [
+  {"parts": ["*-cushion", "*-button-*", "*-pleat-*", "*-welt-*", "arm-pad"], "name": "black leather", "color": "#151313", "finish": "plastic", "roughness": 0.6},
+  {"parts": ["*-shell-*", "*-ply-edge*", "ottoman-shell"], "name": "walnut veneer", "color": "#5a3620", "finish": "wood"},
+  {"parts": ["arm-support", "back-brace", "chair-column", "chair-hub", "chair-leg", "ottoman-column", "ottoman-hub", "ottoman-leg", "seat-mount"], "name": "polished aluminium", "color": "#c9ccd0", "finish": "brushed"},
+  {"parts": ["brace-mount-*", "*-glide"], "name": "black rubber", "color": "#1a1a1a", "finish": "rubber"}
+ ]
+}
