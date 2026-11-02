@@ -62,7 +62,7 @@
     },
     {
       "id":"drive-bearing","role":"structure","certainty":"inferred","stage":1,"basis":["design.gears"],
-      "shape":{"type":"cylinder","radius":0.105,"height":0.08,"segments":24,"ribs":6},"at":[0,0.465,0]
+      "shape":{"type":"cylinder","radius":0.105,"height":0.145,"segments":24,"ribs":6},"at":[0,0.4,0]
     },
     {
       "id":"main-drive-wheel","label":"24-tooth drive wheel","role":"identity","certainty":"inferred","stage":2,"basis":["base","design.gears"],

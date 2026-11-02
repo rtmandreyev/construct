@@ -199,7 +199,7 @@ def audit(scene, geometry):
                 "is a %s with no surface (shape %s): it will be missing from a 3D export. Use a tube, a box or "
                 "another solid shape." % (p["role"], p["shape"]))
 
-    _contact_and_thickness(scene, geometry, add, warnings)
+    _contact_and_thickness(scene, geometry, add, warnings, errors)
 
     # ---- a construct drawn from recorded data (the NetLogo bridge) keeps that data as it was drawn
     if "data_lock" in facts_by_key:
@@ -238,6 +238,8 @@ def format_report(report):
 
 THIN = 0.006      # a structural part thinner than this share of the object's largest size is a hairline
 GAP = 0.01        # parts further apart than this share of the object's largest size do not touch
+THIN_HOLD = 0.05  # a holder this thin, as a share of what it holds, is a strut, not a support
+THIN_SET = 3      # unless there are this many copies of it (legs, spokes, cables share the load)
 
 
 def _sub(a, b):
@@ -305,7 +307,7 @@ def _part_geometry(scene):
     return out
 
 
-def _contact_and_thickness(scene, geometry, add, warnings):
+def _contact_and_thickness(scene, geometry, add, warnings, errors=None):
     lo, hi = geometry["bounds"]["min"], geometry["bounds"]["max"]
     size = max(hi[k] - lo[k] for k in range(3)) or 1e-6
     gap = max(0.0015, GAP * size)
@@ -372,6 +374,106 @@ def _contact_and_thickness(scene, geometry, add, warnings):
             "touches no other part: its nearest is %r, %.3g m away (the object is %.3g m). Move it onto %r, "
             "or set \"floating\": true if it truly hovers." % (near, dist, size, near))
 
+    # ---- support through real contact. The box check (floating) lets a gap pass when something thin bridges it (a
+    # strut, a ring) or a round part's box is bigger than the part; here support travels only where surfaces meet
+    if errors is None or len(geo) < 2:
+        return
+    from . import fit as fit_mod
+    vox, h = fit_mod.solids(scene)   # each part's solid as voxels: whether two parts meet, measured on the solids
+    within = max(1, int(math.ceil(gap / h))) if h else 1   # as near as the contact check above calls touching
+    boxes = {p["id"]: p["instances"] for p in geometry["parts"]}
+
+    whole = {pid: {"min": [min(c["min"][k] for c in cs) for k in range(3)],
+                   "max": [max(c["max"][k] for c in cs) for k in range(3)]} for pid, cs in boxes.items() if cs}
+
+    def boxes_touch(a, b):
+        if a not in whole or b not in whole or not _touch(whole[a], whole[b], gap):
+            return False
+        return any(_touch(x, y, gap) for x in boxes[a] for y in boxes[b])
+
+    def inside(a, b):   # a set inside b, as a movement in its case or a lens in its barrel: b holds it
+        return all(whole[b]["min"][k] - gap <= whole[a]["min"][k] and whole[a]["max"][k] <= whole[b]["max"][k] + gap
+                   for k in range(3))
+    low = min(((m & -m).bit_length() - 1 for v in vox.values() for m in v.values()), default=0)
+    anchors = {pid for pid in geo if parts[pid].get("floating") or
+               any(sp[1] <= ground + gap for sp in geo[pid][0]) or
+               any((m & -m).bit_length() - 1 <= low + 1 for m in vox.get(pid, {}).values())}
+    contacts = {pid: set() for pid in geo}
+    ids = list(geo)
+    for i, a in enumerate(ids):
+        for b in ids[i + 1:]:
+            if not boxes_touch(a, b):
+                continue
+            if a in vox and b in vox and (fit_mod.touch(vox[a], vox[b], within) or inside(a, b) or inside(b, a)):
+                contacts[a].add(b)
+                contacts[b].add(a)
+
+    def reach(blocked=()):
+        seen = set(anchors) - set(blocked)
+        todo = list(seen)
+        while todo:
+            for q in contacts[todo.pop()]:
+                if q not in seen and q not in blocked:
+                    seen.add(q)
+                    todo.append(q)
+        return seen
+    held = reach()
+    # a part drawn only in lines has no solid; it is asked about only for a solid nothing else holds up (a motor on a
+    # bracket drawn in lines): then its lines touch or not, and it carries what it touches
+    lined = [q for q in geo if q not in vox]
+    for pid in [q for q in vox if q in geo and q not in held]:
+        for qid in lined:
+            if qid != pid and boxes_touch(pid, qid) and \
+                    (_near(geo[pid][0], qid, geo, grid, cell, gap2) or _near(geo[qid][0], pid, geo, grid, cell, gap2)):
+                contacts[pid].add(qid)
+                contacts[qid].add(pid)
+                for rid in geo:
+                    if rid in held and rid != qid and boxes_touch(qid, rid) and \
+                            (_near(geo[qid][0], rid, geo, grid, cell, gap2) or _near(geo[rid][0], qid, geo, grid, cell, gap2)):
+                        contacts[qid].add(rid)
+                        contacts[rid].add(qid)
+    held = reach()
+    # a group that hangs in the air together is one fault: name the part nearest to what is held up, the one to move
+    loose = {q for q in geo if q not in held and contacts[q]}   # touching nothing at all is "detached", above
+    while loose:
+        group, todo = set(), [loose.pop()]
+        while todo:
+            q = todo.pop()
+            group.add(q)
+            for r in contacts[q]:
+                if r in loose:
+                    loose.discard(r)
+                    todo.append(r)
+        if all(parts[q]["role"] in ("ornament", "ground") for q in group):
+            continue
+        dist, pid, near = min((d, q, n) for q in sorted(group) for n, d in [_nearest(q, geo, among=held, most=60)])
+        rest = sorted(group - {pid})
+        add(errors, "unsupported", pid,
+            "rests on nothing that reaches the ground%s: its box touches its neighbours', but no surface meets one "
+            "that is held up. The nearest is %r, %.3g m away: move it onto %r, or set \"floating\": true if it "
+            "truly hovers." % (" (and so do %s, resting on it)" % ", ".join(repr(q) for q in rest[:3]) if rest else "",
+                               near, dist, near))
+    # held up only through something far thinner than itself: a motor on a wire strut, a lamp on a hairline
+    for pid in geo:
+        p = parts[pid]
+        if pid in anchors or pid not in held or p["role"] not in ("mass", "structure", "identity"):
+            continue
+        bulk = min(max(c["max"][k] for c in boxes[pid]) - min(c["min"][k] for c in boxes[pid]) for k in range(3))
+        own = _thickness(p)
+        if own is not None and own < 0.5 * bulk:
+            continue   # itself a rod or a cable
+        thin = {q for q in geo if q != pid and q not in anchors and len(boxes.get(q, ())) < THIN_SET and
+                _thickness(parts[q]) is not None and _thickness(parts[q]) <= THIN_HOLD * bulk}
+        if not thin or pid in reach(thin):
+            continue
+        by = sorted(q for q in contacts[pid] if q in thin) or sorted(thin & held)[:1]
+        sturdy = reach(thin | {pid})
+        near, dist = _nearest(pid, geo, among=sturdy, most=150)
+        add(warnings, "thin-support", pid,
+            "is held up only by %s, %.3g m across under a part %.3g m across. Is that really what carries it? If it "
+            "rests on something, its surfaces should meet: the nearest sturdy part is %r, %.3g m away." % (
+                " and ".join(repr(q) for q in by[:2]), _thickness(parts[by[0]]), bulk, near, dist))
+
 
 def _near(samples, target, geo, grid, cell, gap2):
     for sp in samples:
@@ -384,16 +486,34 @@ def _near(samples, target, geo, grid, cell, gap2):
     return False
 
 
-def _nearest(pid, geo):
-    mine = geo[pid][0][::max(1, len(geo[pid][0]) // 400)]
-    best, best_d = None, math.inf
+def _nearest(pid, geo, among=None, most=400):
+    mine = geo[pid][0][::max(1, len(geo[pid][0]) // most)]
+    if not mine:
+        return None, math.inf
+
+    def box(pts):
+        return [min(p[k] for p in pts) for k in range(3)], [max(p[k] for p in pts) for k in range(3)]
+    lo, hi = box(mine)
+    order = []   # the others by how near their boxes are: no part can be nearer than its box
     for qid, (samples, _) in geo.items():
-        if qid == pid:
+        if qid == pid or not samples or (among is not None and qid not in among):
             continue
-        theirs = samples[::max(1, len(samples) // 400)]
+        qlo, qhi = box(samples)
+        gap = sum(max(0.0, qlo[k] - hi[k], lo[k] - qhi[k]) ** 2 for k in range(3))
+        order.append((gap, qid, samples))
+    best, best_d = None, math.inf
+    for gap, qid, samples in sorted(order, key=lambda o: o[0]):
+        if gap >= best_d:
+            break
+        theirs = samples[::max(1, len(samples) // most)]
         d = min((_dot(_sub(a, b), _sub(a, b)) for a in mine for b in theirs), default=math.inf)
         if d < best_d:
             best, best_d = qid, d
+    if best is not None:   # the distance said, measured to the other's faces rather than between sample points
+        for pts, prims in ((mine, geo[best][1]), (geo[best][0][::max(1, len(geo[best][0]) // most)], geo[pid][1])):
+            for sp in pts:
+                for pr in prims:
+                    best_d = min(best_d, _seg_dist2(sp, *pr) if len(pr) == 2 else _tri_dist2(sp, *pr))
     return best, math.sqrt(best_d)
 
 

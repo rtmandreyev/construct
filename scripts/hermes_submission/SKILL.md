@@ -153,8 +153,8 @@ Work in a folder of your own. `out/construct.html` opens in any browser.
    elevation data the user supplies: `scripts/cli.py terrain`, and Earth from coastline data
    (GeoJSON): `scripts/cli.py globe` (`references/terrain.md`).
 4. **Check until clean.** Run `check --json`. While `needs_repair` is true, fix every
-   diagnostic at its JSON path using its hint, and check again. Fix every `detached` and
-   `thin` warning: they are what a viewer notices first.
+   diagnostic at its JSON path using its hint, and check again. Fix every `detached`,
+   `thin-support` and `thin` warning: they are what a viewer notices first.
 5. **Review as an art director.** Run `review`, then open `out/review/hero.png`,
    `sheet-views.png`, `sheet-assembly.png` and (if it opens) `view-open.png` with
    `vision_analyze`. Score them with the rubric in `references/review.md` (silhouette,
@@ -237,7 +237,10 @@ Work in a folder of your own. `out/construct.html` opens in any browser.
 - **Choosing colours or materials.** There are no colour fields; the renderer owns the look.
   Words like "glowing" become facts or roles (a light is role `data`).
 - **Parts that only seem to touch.** A shade at the end of a diagonal arm, a handle above a
-  lantern: the `detached` check names the nearest part; move the part onto it.
+  lantern: the `detached` check names the nearest part; move the part onto it. A pole that
+  stops short of the motor it carries is `unsupported` (an error) when only the boxes meet,
+  `thin-support` when a strut bridges the gap. Work out both heights and make them meet: a
+  cylinder's base is at its `at`; on its side, its underside is `at.y - radius`.
 - **Hairline structure.** A thin arm or leg barely renders: `thin` gives the minimum radius.
 - **Real artwork.** Show a cover only from bytes the user supplied, declared with its SHA-256
   and rights. Never download covers or recreate one from memory.

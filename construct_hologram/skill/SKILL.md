@@ -123,8 +123,11 @@ if no browser is available, say so and deliver the HTML without captures.
    platter spins, a tentacle sways, a beam turns); idle events that suit the subject; and a
    camera tour to the identity feature. See [animation](references/animation.md).
 5. **Check until the audit is clean.** `check` must report `audit: PASS`. Fix every
-   error (floating parts, overclaimed certainty, accuracy that is not backed); read every
-   warning and either fix it or be ready to explain it.
+   error (floating or unsupported parts, overclaimed certainty, accuracy that is not backed);
+   read every warning and either fix it or be ready to explain it. Where one part rests on
+   another, work out both heights and make them meet: a cylinder's base is at its `at` (on
+   its side, its underside is `at.y - radius`), a centred box's underside half its height
+   below.
 6. **Review as an art director, and iterate.** Run `review`, then open and actually inspect
    `review/hero.png`, `sheet-views.png`, `sheet-assembly.png`, `sheet-motion.png`,
    `sheet-life.png`, `sheet-provenance.png` and each `view-<id>.png`. Score them against the
@@ -146,7 +149,7 @@ if no browser is available, say so and deliver the HTML without captures.
    the tier's review rounds or time run out. A host may add a fresh-eyes critic (an
    independent reviewer over the contact sheets). Geometric validity (the audit) and art
    direction (your eyes) are separate gates. If you cannot see images, still fix every
-   `detached` and `thin` warning, and record `"outcome": "unreviewed"`.
+   `detached`, `thin-support` and `thin` warning, and record `"outcome": "unreviewed"`.
 7. **Deliver.** Record how it was made in the scene's `authoring` block (`tier`,
    `research`, the `sources` used, `review_rounds`, `outcome`: good, limit or unreviewed,
    and `next`: the most valuable improvements still open). Hand over `scene.json`,

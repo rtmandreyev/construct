@@ -38,6 +38,11 @@ AUDIT_HINTS = {
     "detached": "Move the part so its surface meets the part it hangs from or rests on (named in the message): "
                 "align its end with that part's surface, or extend it to reach. Use \"floating\": true only "
                 "for things that really hover.",
+    "unsupported": "Seat the part on what holds it (named in the message): its surface must meet that part's surface, "
+                   "not only its box. Work out both heights: a cylinder's base is at its \"at\" (turned on its side, its "
+                   "underside is at at.y - radius); a centred box's underside is half its height below \"at\".",
+    "thin-support": "If the part rests on something, move it until its surface meets that part (named in the message): "
+                    "a strut or a wire alone does not carry it. Leave it only if the thin part truly carries it.",
     "shape-overclaim": "Keep the size and lower the shape: {\"size\": \"verified\", \"shape\": \"traced\"} when it was "
                        "fitted to an orthographic drawing or reference image (see construct trace), \"inferred\" when it was "
                        "designed. Verify a shape only from a drawing, a measurement or a dataset that gives its coordinates.",
@@ -172,7 +177,7 @@ def diagnose_text(text):
 
 
 # warnings a viewer would see at once: the repair loop goes on until they are gone
-VISIBLE_DEFECTS = ("detached", "thin", "shape-overclaim")
+VISIBLE_DEFECTS = ("detached", "thin-support", "thin", "shape-overclaim")
 
 
 def needs_repair(report):

@@ -52,6 +52,28 @@ def _volumes(g, n_cells):
     return grid, vox, tris
 
 
+def solids(scene, cells=CELLS):
+    """(per part id: its solid as voxels, a dict of bit columns; the voxel's size in metres), for asking which
+    parts really meet."""
+    grid, vox, _ = _volumes(scene_mod.compile_scene(scene, solid=True), cells)
+    return vox, (grid.h if grid else 0.0)
+
+
+def touch(a, b, reach=1):
+    """Whether two parts' voxels meet or lie within `reach` voxels of each other."""
+    if not a or not b:
+        return False
+    for (x, y), m in a.items():
+        grow = m
+        for i in range(1, reach + 1):
+            grow |= m << i | m >> i
+        for dx in range(-reach, reach + 1):
+            for dy in range(-reach, reach + 1):
+                if grow & b.get((x + dx, y + dy), 0):
+                    return True
+    return False
+
+
 def _components(cols):
     from . import kit
     return kit._components(cols)

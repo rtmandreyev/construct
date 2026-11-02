@@ -4,9 +4,7 @@
 
 Models come alive: the NetLogo bridge, made reliable on the whole Models Library and usable from
 inside NetLogo; runs as films and 3D models in Blender; and runs for the classroom, compared side by
-side, printed as worksheets and cited. Plan:
-[ROADMAP.md](docs/ROADMAP.md#v11-models-come-alive-netlogo-and-things-you-can-make); the story:
-[release notes](docs/releases/v1.1.0.md).
+side, printed as worksheets and cited. The story: [release notes](docs/releases/v1.1.0.md).
 
 - **Construct for NetLogo** ([hosts/netlogo](hosts/netlogo/README.md)): a NetLogo 7 extension,
   built by `scripts/build_netlogo_extension.py`. `extensions [construct]`, a few `construct:` lines
@@ -201,16 +199,30 @@ side, printed as worksheets and cited. Plan:
   What a first end-to-end run found, fixed: a merged kit piece is named for what its parts are together ("the
   door"); a clear piece stays clear whatever a colour map's catch-all says; the 3D guide frames the whole model
   below its instructions; both construct skills teach kits, kit-ready copies, true CAD shapes and glued pieces.
-- **Found by the clock's walkthrough and a sweep of the whole gallery** (every example through check, fit, build,
-  every export, FreeCAD, print, PrusaSlicer and kit): glass named only in a label (`"Glazed hood door"`) is a
-  `check` warning, since the solid view, exports, prints and kits know glass by its id; an exact print's thickened
-  surface that would touch itself (half-ribs meeting at a vault's pointed apex) goes through the voxels and stays
-  watertight; a thin part merged into a kit piece no longer moves that piece first in the build; a kit merge that
-  came out in pieces counts the bits too small to keep; a kit says how far it has got (a building's kit takes many
-  minutes) and says "1 plate", not "1 plates"; FreeCAD stopping early (a crash on a busy machine) says how it
-  ended rather than its launcher's copy of the environment; the headless browser that draws pictures and films waits to start and to answer on a busy machine, and
-  says which it was; a view is centred
-  on the object as it stands, pulled back so that an opened door still fits (it was centred on the door's swing).
+- **Found by the clock's walkthrough and a sweep of the whole gallery** (every example through check, fit,
+  build, every export, FreeCAD, print, PrusaSlicer and kit): glass named only in a label (`"Glazed hood door"`)
+  is a `check` warning, since the solid view, exports, prints and kits know glass by its id; an exact print's
+  thickened surface that would touch itself (half-ribs meeting at a vault's pointed apex) goes through the
+  voxels and stays watertight; a thin part merged into a kit piece no longer moves that piece first in the
+  build; a kit merge that came out in pieces counts the bits too small to keep; a kit says how far it has got (a
+  building's kit takes many minutes) and says "1 plate", not "1 plates"; FreeCAD stopping early (a crash on a
+  busy machine) says how it ended rather than its launcher's copy of the environment; the headless browser that
+  draws pictures and films waits to start and to answer on a busy machine, and says which it was; a view is
+  centred on the object as it stands, pulled back so that an opened door still fits (it was centred on the
+  door's swing). Two gallery parts that were glass only by their label are named so (Neuschwanstein's
+  `conservatory-glass`, the Last Light's `lantern-room-glass`); Neuschwanstein's critic record now says, truly,
+  that it judged the version before.
+- **Contact measured on the surfaces** (from a desk fan two models built, reported from use): a part held up
+  only because its box reaches its support passed the audit, as did a heavy part carried by a wire-thin strut
+  across a gap. `check` now follows support through the solids themselves: a part whose surface meets nothing
+  held up is an `unsupported` error, a part carried only by something far thinner than itself a `thin-support`
+  warning, each naming the part to rest it on and the gap; both in every mode, needing no vision. It found three
+  such gaps in the gallery, now closed: the Aston Martin DB5 gains its passenger door skin and the bodyside
+  between door and front wheel (its side vents and a door handle stood off the body), and the brass orrery's
+  drive bearing reaches the drum (the mechanism above it hung in the gear deck's hole).
+- **Adapters:** [docs/ADAPTERS.md](docs/ADAPTERS.md) says what a construct holds, where an adapter reads it (the
+  glTF, the compiled geometry, the scene) and the rules that keep one honest, with a tested template that writes
+  a parts sheet and an STL per part ([hosts/adapter-template](hosts/adapter-template/construct_parts.py)).
 - **Timeboxed mode:** masterpiece in two hours in all. The same rounds and stop rules, but the
   2-hour ceiling counts the critic's time with the author's (masterpiece counts only the author's,
   as before), so a slow critic means fewer rounds rather than a three-hour wait. `--mode timeboxed`

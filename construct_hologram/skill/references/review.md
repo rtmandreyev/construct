@@ -3,7 +3,8 @@
 Two gates, both required:
 
 1. **Geometric validity** — `check` reports `audit: PASS`. It proves the object stands up
-   (every part rests on the ground, on another part or on a declared floating part),
+   (every part rests on the ground, on another part or on a declared floating part, its
+   surface meeting that part's surface: a box that only overlaps is not enough),
    that nothing claims more certainty than its evidence, and that accuracy claims are
    backed. It cannot judge beauty or likeness.
 2. **Art direction** — your eyes on the captures. Read the images; do not infer them from
@@ -102,7 +103,10 @@ again.
 - **Proportions** against the facts; no part obviously too thick, thin, high or low.
 - **Contact**: legs on the ground, roofs on walls, arms on pivots, a shade on its arm. The
   audit's `detached` warning compares real surfaces and names the nearest part; fix it, do
-  not explain it away. `thin` flags a structural part too fine to render.
+  not explain it away. `unsupported` (an error) is a part whose box reaches its support but
+  whose surface does not; `thin-support` is a part held up only by a strut or a wire far
+  thinner than itself, with the sturdy part it should rest on named. `thin` flags a
+  structural part too fine to render.
 - **Honesty**: inferred and decorative parts look it; generated art is labelled; the caption
   says GENERIC or APPROXIMATE when it is.
 - **Motion**: ambient, never frantic; parts move about their real pivots.

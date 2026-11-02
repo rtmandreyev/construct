@@ -294,6 +294,43 @@ class Audit(unittest.TestCase):
         s["parts"][1]["floating"] = True
         self.assertTrue(audit.audit(s, scene.compile_scene(s))["ok"])
 
+    def test_a_gap_the_boxes_hide_is_found_on_the_surfaces(self):
+        # a desk fan as two models built it (reported from use): the stem stops short of a dished base whose box
+        # reaches past it, and a motor sits on a pole it does not reach, joined only by a wire-thin strut. Both passed
+        # the box check; the surfaces say otherwise
+        def fan(*parts):
+            s = studio.starter("machine")
+            part = lambda **k: dict({"role": "structure", "certainty": "inferred", "stage": 0, "basis": ["height"]}, **k)
+            s["parts"] = [part(**p) for p in parts]
+            return s
+        motor = dict(id="motor", role="mass", shape={"type": "cylinder", "radius": 0.06, "height": 0.14},
+                     at=[0, 0.39, -0.07], rotate=[90, 0, 0], stage=2)        # its underside at 0.33 m
+        dish = fan(dict(id="dish", role="mass", shape={"type": "lathe", "profile": [[0, 0], [0.13, 0], [0.13, 0.07],
+                                                                                    [0.02, 0.02], [0, 0.02]]}),
+                   dict(id="stem", shape={"type": "cylinder", "radius": 0.015, "height": 0.25}, at=[0, 0.04, 0],
+                        stage=1),                                            # 2 cm above the dish's centre
+                   dict(motor, at=[0, 0.35, -0.07]))
+        rep = audit.audit(dish, scene.compile_scene(dish))
+        self.assertFalse(rep["ok"])
+        self.assertEqual([(e["code"], e["part"]) for e in rep["errors"]], [("unsupported", "stem")])
+        self.assertIn("'motor', resting on it", rep["errors"][0]["message"])   # one fault, named where to fix it
+        self.assertRegex(rep["errors"][0]["message"], r"'dish', 0\.020?\d* m away")
+        strut = dict(id="strut", shape={"type": "tube", "path": [[0, 0.28, 0], [0, 0.31, 0.03], [0, 0.34, 0.05]],
+                                        "radius": 0.002}, stage=2)
+        bridged = fan(dict(id="base", role="mass", shape={"type": "box", "size": [0.3, 0.05, 0.22], "anchor": "base"}),
+                      dict(id="pole", shape={"type": "cylinder", "radius": 0.012, "height": 0.25}, at=[0, 0.05, 0],
+                           stage=1), motor, strut)                           # the pole's top at 0.30 m: 3 cm short
+        rep = audit.audit(bridged, scene.compile_scene(bridged))
+        self.assertTrue(rep["ok"])   # it is held, by the strut: a warning, not an error
+        thin = [w for w in rep["warnings"] if w["code"] == "thin-support"]
+        self.assertEqual([w["part"] for w in thin], ["motor"])
+        self.assertIn("'strut'", thin[0]["message"])
+        self.assertIn("'pole', 0.03 m away", thin[0]["message"])
+        bridged["parts"][2]["at"] = [0, 0.36, -0.07]                          # seated on the pole: nothing to say
+        rep = audit.audit(bridged, scene.compile_scene(bridged))
+        self.assertEqual([w for w in rep["warnings"] if w["code"] in ("thin-support", "unsupported")], [])
+        self.assertTrue(rep["ok"])
+
     def test_glass_named_only_in_the_label_is_a_warning(self):
         s = base()
         s["parts"].append({"id": "hood-door", "label": "Glazed hood door", "role": "detail", "certainty": "inferred",
