@@ -6,20 +6,35 @@ kit, a CAD file or a game-ready prop. This page goes through each new feature wi
 to try it; [a longcase clock, end to end](END-TO-END.md) takes one construct through all of them. The full list is in the [changelog](../CHANGELOG.md), and the story in the
 [release notes](releases/v1.1.0.md).
 
+- [Your own formats](#your-own-formats)
 - [Honest in finer shades](#honest-in-finer-shades)
 - [See it as a solid](#see-it-as-a-solid)
+- [Contact you can trust](#contact-you-can-trust)
 - [Cleaner 3D](#cleaner-3d)
 - [Game engines](#game-engines)
 - [CAD](#cad)
 - [Prints](#prints)
 - [Model kits](#model-kits)
-- [Your own formats](#your-own-formats)
 - [A run in one command](#a-run-in-one-command)
 - [Reading a run](#reading-a-run)
 - [For the classroom](#for-the-classroom)
 - [Runs as films and 3D models](#runs-as-films-and-3d-models)
 - [For agents](#for-agents)
 - [Smaller things](#smaller-things)
+
+## Your own formats
+
+Everything Construct writes (the page, glTF, FreeCAD, prints, kits) reads the same construct: named parts at their
+real sizes, how each is known, how they assemble, open and move. An adapter of your own reads it too, from the
+glTF in any language or from the compiled geometry in Python, and writes whatever your tool, machine or craft
+takes. A template writes a parts sheet (sizes in millimetres, how each size and shape is known, the source) and an
+STL per part.
+
+```sh
+PYTHONPATH=/path/to/construct python3 hosts/adapter-template/construct_parts.py scene.json out/
+```
+
+[Adapters →](ADAPTERS.md)
 
 ## Honest in finer shades
 
@@ -51,6 +66,35 @@ inside them, the most visible first, for an agent or a person to fix one by one.
 construct check scene.json --fit
 ```
 
+## Contact you can trust
+
+A construct is checked for whether every part rests on something, and that check used to look at the parts'
+boxes. A desk fan two models built passed it with its stem standing short of the base and its motor short of the
+pole: the base's rim made its box reach past the stem's foot, and a wire bridged the gap under the motor. Now
+`check` follows support through the solids themselves. A part whose surface meets nothing held up is an error; a
+part carried only by something far thinner than itself is a warning; both name the gap and the part to rest it
+on. It runs in every mode and needs no picture, so a model that cannot see its renders gets it too.
+
+<p align="center"><img src="media/contact-fan.jpg" width="80%" alt="A desk fan as solids, before and after: before, the motor hangs above the stem on a thin wire and the stem stands above the base; after, both rest on what holds them"></p>
+<p align="center"><sub>Before: the audit said PASS. After: both joints seated, and the audit says PASS for real.</sub></p>
+
+```
+$ construct check fan.json
+audit: FAIL (1 errors, 0 warnings)
+  ERROR [unsupported] stem rests on nothing that reaches the ground (and so do 'bracket', 'motor', 'nose',
+  resting on it): its box touches its neighbours', but no surface meets one that is held up. The nearest is
+  'base', 0.02 m away: move it onto 'base', or set "floating": true if it truly hovers.
+
+# with the stem seated
+  warn [thin-support] motor is held up only by 'bracket', 0.004 m across under a part 0.12 m across. Is that
+  really what carries it? If it rests on something, its surfaces should meet: the nearest sturdy part is
+  'stem', 0.03 m away.
+```
+
+It found three such gaps in the gallery too, now closed: a door handle and the side vents standing off the Aston
+Martin DB5's body, the brass orrery's mechanism hanging in its gear deck, and the James Webb Space Telescope's
+sunshield short of its bus.
+
 ## Cleaner 3D
 
 For Blender and any 3D program: solids pass smoothly between a loft's sections and round tubes have twice the
@@ -81,8 +125,6 @@ construct export scene.json --out car.glb --pieces glued --colliders
 construct export scene.json --out car.glb --pieces            # pieces that break apart
 construct params vehicle --seed 3 --output coupe-3.json        # a seeded variant
 ```
-
-<p align="center"><img src="media/variants-coupe.jpg" width="70%" alt="Four seeded variants of a coupé"></p>
 
 [Godot guide →](GODOT.md) · [Game developers →](for/game-developers.md)
 
@@ -123,7 +165,12 @@ A construct as a kit to print, glue and paint, as a Revell or Tamiya kit is: pie
 on numbered plates (clear parts on plates of their own), glued in the order a kit designer would, with a booklet
 drawn as a kit sheet and the same steps in 3D.
 
-<p align="center"><img src="media/kit-cfx-guide.gif" width="80%" alt="The Yamaha CFX kit's 3D guide stepping through its nine steps"></p>
+<p align="center">
+  <img src="media/kit-cfx-guide.gif" width="32%" alt="The Yamaha CFX piano kit's 3D guide at 1:12: the keyboard built at the bench, the piano ghosted around it">
+  <img src="media/tompion-kit-guide.gif" width="32%" alt="Tompion's year-going clock as a 1:12 kit: its fifteen steps in 3D, the dial plate built at the bench">
+  <img src="media/kit-vw-guide.gif" width="32%" alt="The Volkswagen T1 Samba as a 1:16 kit: from the floor pan, through the cab and body at the bench, to the finished bus">
+</p>
+<p align="center"><sub>The Yamaha CFX at 1:12 (54 pieces, 9 steps), Tompion's year-going clock at 1:12 (34 pieces, 15 steps, <a href="END-TO-END.md#11-a-model-kit">made step by step</a>) and the VW T1 Samba at 1:16 (98 pieces, 48 steps).</sub></p>
 
 - **The booklet:** a cover, the paints, the plates with every piece numbered, then a card per step with the
   parts it takes and a shaded, exploded drawing (no hidden lines), many of one kind under one callout.
@@ -142,20 +189,6 @@ construct kit scene.json --scale 12 --printer large --out kit/ --only 12,14
 **Not yet built by anyone.** The kits are made and checked by software and by AI critics; none has been printed
 and glued by a person, and they are a first version. If you build one, please
 [tell us how it went](https://github.com/rtmandreyev/construct/issues). [Your first kit, step by step →](for/makers.md#your-first-kit-step-by-step)
-
-## Your own formats
-
-Everything Construct writes (the page, glTF, FreeCAD, prints, kits) reads the same construct: named parts at their
-real sizes, how each is known, how they assemble, open and move. An adapter of your own reads it too, from the
-glTF in any language or from the compiled geometry in Python, and writes whatever your tool, machine or craft
-takes. A template writes a parts sheet (sizes in millimetres, how each size and shape is known, the source) and an
-STL per part.
-
-```sh
-PYTHONPATH=/path/to/construct python3 hosts/adapter-template/construct_parts.py scene.json out/
-```
-
-[Adapters →](ADAPTERS.md)
 
 ## A run in one command
 

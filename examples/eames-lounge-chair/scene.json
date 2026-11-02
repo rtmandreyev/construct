@@ -1,0 +1,4589 @@
+{
+ "format": "construct-scene",
+ "version": 2,
+ "id": "eames-lounge-670-671",
+ "title": "Eames Lounge Chair 670 and Ottoman 671",
+ "subject": {
+  "category": "object",
+  "accuracy": "approximate",
+  "synthetic": false,
+  "summary": "The owner's Herman Miller Eames Lounge Chair (670) and Ottoman (671): three moulded plywood shells with leather cushions, the arms bridging seat and back, a five-star swivel base, and the ottoman on a four-star base. Sizes from Herman Miller's published Classic dimensions; profiles traced from the owner's two photos."
+ },
+ "units": "m",
+ "seed": 1956,
+ "sources": [
+  {
+   "id": "request",
+   "kind": "user_request",
+   "title": "The owner's request",
+   "ref": "A masterpiece construct of my Eames Lounge Chair and Ottoman (Herman Miller, the 670 chair and 671 ottoman) from two photos; research its published dimensions.",
+   "rights": "user_private"
+  },
+  {
+   "id": "hm-chair-dims",
+   "kind": "document",
+   "title": "Herman Miller product models: Eames Lounge Chair, Classic",
+   "ref": "https://www.hermanmiller.com/en_au/resources/3d-models-and-planning-tools/product-models/individual/eames-lounge-chair-classic/ (H 800, W 851, D 889, seat height 406 mm)",
+   "rights": "reference_only"
+  },
+  {
+   "id": "hm-ottoman-dims",
+   "kind": "document",
+   "title": "Herman Miller product models: Eames Ottoman",
+   "ref": "https://www.hermanmiller.com/resources/3d-models-and-planning-tools/product-models/individual/eames-ottoman/ (H 438, W 660, D 527 mm)",
+   "rights": "reference_only"
+  },
+  {
+   "id": "hm-details",
+   "kind": "document",
+   "title": "Herman Miller: Eames Lounge Chair and Ottoman product details",
+   "ref": "https://www.hermanmiller.com/products/seating/lounge-seating/eames-lounge-chair-and-ottoman/product-details/",
+   "rights": "reference_only"
+  },
+  {
+   "id": "photo-side",
+   "kind": "reference_image",
+   "title": "Eames Lounge Chair - side (Casey Marshall, CC BY 2.0), the owner's photo-1",
+   "ref": "photo-1.jpg; https://commons.wikimedia.org/wiki/File:Eames_Lounge_Chair_-_side.jpg",
+   "rights": "reference_only"
+  },
+  {
+   "id": "photo-34",
+   "kind": "reference_image",
+   "title": "Lounge chair 670, 1956, NGV (sailko, CC BY 2.5), the owner's photo-2",
+   "ref": "photo-2.jpg; https://commons.wikimedia.org/wiki/File:Ngv_design,_charles_eames_and_herman_miller,_lounge_chair_670,_1956.JPG",
+   "rights": "reference_only"
+  }
+ ],
+ "facts": [
+  {
+   "key": "maker",
+   "value": "Herman Miller",
+   "certainty": "user_supplied",
+   "source": "request"
+  },
+  {
+   "key": "chair-model",
+   "value": "670 Lounge Chair",
+   "certainty": "user_supplied",
+   "source": "request"
+  },
+  {
+   "key": "ottoman-model",
+   "value": "671 Ottoman",
+   "certainty": "user_supplied",
+   "source": "request"
+  },
+  {
+   "key": "designers",
+   "value": "Charles and Ray Eames",
+   "certainty": "verified",
+   "source": "hm-details"
+  },
+  {
+   "key": "chair-height",
+   "value": 0.8,
+   "unit": "m",
+   "certainty": "verified",
+   "source": "hm-chair-dims",
+   "note": "Classic size"
+  },
+  {
+   "key": "chair-width",
+   "value": 0.851,
+   "unit": "m",
+   "certainty": "verified",
+   "source": "hm-chair-dims",
+   "note": "Classic size, across the arms"
+  },
+  {
+   "key": "chair-depth",
+   "value": 0.889,
+   "unit": "m",
+   "certainty": "verified",
+   "source": "hm-chair-dims",
+   "note": "Classic size"
+  },
+  {
+   "key": "seat-height",
+   "value": 0.406,
+   "unit": "m",
+   "certainty": "verified",
+   "source": "hm-chair-dims"
+  },
+  {
+   "key": "ottoman-height",
+   "value": 0.438,
+   "unit": "m",
+   "certainty": "verified",
+   "source": "hm-ottoman-dims"
+  },
+  {
+   "key": "ottoman-width",
+   "value": 0.66,
+   "unit": "m",
+   "certainty": "verified",
+   "source": "hm-ottoman-dims"
+  },
+  {
+   "key": "ottoman-depth",
+   "value": 0.527,
+   "unit": "m",
+   "certainty": "verified",
+   "source": "hm-ottoman-dims"
+  },
+  {
+   "key": "shell-plies",
+   "value": "7-ply veneer shells",
+   "certainty": "verified",
+   "source": "hm-details"
+  },
+  {
+   "key": "aluminium-parts",
+   "value": "die-cast aluminium back braces and bases",
+   "certainty": "verified",
+   "source": "hm-details"
+  },
+  {
+   "key": "swivel",
+   "value": "built-in swivel in the chair base",
+   "certainty": "verified",
+   "source": "hm-details"
+  },
+  {
+   "key": "shock-mounts",
+   "value": "resilient natural rubber shock mounts",
+   "certainty": "verified",
+   "source": "hm-details"
+  },
+  {
+   "key": "glides",
+   "value": "adjustable stainless steel glides",
+   "certainty": "verified",
+   "source": "hm-details"
+  },
+  {
+   "key": "tufting",
+   "value": "buttoned leather cushions with pleats",
+   "certainty": "inferred",
+   "source": "photo-34",
+   "note": "buttons and pleats seen in the 3/4 photo; their count and spacing are estimates"
+  },
+  {
+   "key": "chair-base-legs",
+   "value": 5,
+   "certainty": "inferred",
+   "source": "photo-34",
+   "note": "legs counted in the 3/4 photo"
+  },
+  {
+   "key": "ottoman-base-legs",
+   "value": 4,
+   "certainty": "inferred",
+   "source": "photo-34",
+   "note": "legs counted in the 3/4 photo"
+  }
+ ],
+ "assets": [],
+ "parts": [
+  {
+   "id": "seat-shell-pan",
+   "label": "Seat shell (moulded plywood)",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "loft",
+    "sections": [
+     [
+      -0.08521,
+      0.22409,
+      0.13944,
+      0.15161
+     ],
+     [
+      -0.08073,
+      0.23856,
+      0.13026,
+      0.16538
+     ],
+     [
+      -0.06745,
+      0.27967,
+      0.13135,
+      0.19329
+     ],
+     [
+      -0.04582,
+      0.3334,
+      0.13409,
+      0.22251
+     ],
+     [
+      -0.01658,
+      0.362,
+      0.14008,
+      0.24782
+     ],
+     [
+      0.01928,
+      0.362,
+      0.14778,
+      0.2709
+     ],
+     [
+      0.06054,
+      0.362,
+      0.15715,
+      0.29121
+     ],
+     [
+      0.10578,
+      0.362,
+      0.16874,
+      0.30569
+     ],
+     [
+      0.15348,
+      0.362,
+      0.18176,
+      0.316
+     ],
+     [
+      0.20201,
+      0.362,
+      0.19551,
+      0.32318
+     ],
+     [
+      0.24971,
+      0.362,
+      0.20919,
+      0.32709
+     ],
+     [
+      0.29495,
+      0.362,
+      0.22203,
+      0.32578
+     ],
+     [
+      0.33621,
+      0.362,
+      0.23345,
+      0.32302
+     ],
+     [
+      0.37207,
+      0.362,
+      0.24485,
+      0.31886
+     ],
+     [
+      0.40131,
+      0.34913,
+      0.25585,
+      0.31048
+     ],
+     [
+      0.42294,
+      0.32495,
+      0.2664,
+      0.30426
+     ],
+     [
+      0.43622,
+      0.30645,
+      0.27744,
+      0.29897
+     ],
+     [
+      0.4407,
+      0.29994,
+      0.2857,
+      0.29572
+     ]
+    ],
+    "round": 0.6
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "source": "photo-side",
+   "basis": [
+    "chair-height",
+    "chair-depth",
+    "shell-plies"
+   ],
+   "note": "Side profile traced from the side photo and scaled to the published depth and height; width from the published overall width less the arms.",
+   "look": {
+    "fill": "dark",
+    "weight": 0.45,
+    "alpha": 0.55
+   }
+  },
+  {
+   "id": "seat-shell-wall",
+   "label": "Seat shell side and arm ear",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "extrude",
+    "axis": "x",
+    "height": 0.013,
+    "profile": [
+     [
+      0.44282,
+      0.28961
+     ],
+     [
+      0.4389,
+      0.30853
+     ],
+     [
+      0.4305,
+      0.32401
+     ],
+     [
+      0.41931,
+      0.33606
+     ],
+     [
+      0.39971,
+      0.34581
+     ],
+     [
+      0.37172,
+      0.35556
+     ],
+     [
+      0.33813,
+      0.36072
+     ],
+     [
+      0.29895,
+      0.36186
+     ],
+     [
+      0.26536,
+      0.3653
+     ],
+     [
+      0.24296,
+      0.37161
+     ],
+     [
+      0.22617,
+      0.38251
+     ],
+     [
+      0.21217,
+      0.39799
+     ],
+     [
+      0.19818,
+      0.4129
+     ],
+     [
+      0.18418,
+      0.42208
+     ],
+     [
+      0.16459,
+      0.42609
+     ],
+     [
+      0.10861,
+      0.42667
+     ],
+     [
+      0.06382,
+      0.42495
+     ],
+     [
+      0.0515,
+      0.41978
+     ],
+     [
+      0.04367,
+      0.40717
+     ],
+     [
+      0.03975,
+      0.38595
+     ],
+     [
+      0.03807,
+      0.35154
+     ],
+     [
+      0.03583,
+      0.32287
+     ],
+     [
+      0.01623,
+      0.3028
+     ],
+     [
+      -0.00448,
+      0.28158
+     ],
+     [
+      -0.02575,
+      0.25864
+     ],
+     [
+      -0.04814,
+      0.23111
+     ],
+     [
+      -0.06774,
+      0.20244
+     ],
+     [
+      -0.08341,
+      0.17491
+     ],
+     [
+      -0.09293,
+      0.15197
+     ],
+     [
+      -0.09181,
+      0.13763
+     ],
+     [
+      -0.08173,
+      0.13018
+     ],
+     [
+      -0.05374,
+      0.13247
+     ],
+     [
+      0.00224,
+      0.14394
+     ],
+     [
+      0.05822,
+      0.15656
+     ],
+     [
+      0.1142,
+      0.1709
+     ],
+     [
+      0.17019,
+      0.18638
+     ],
+     [
+      0.22617,
+      0.20244
+     ],
+     [
+      0.28215,
+      0.21849
+     ],
+     [
+      0.33813,
+      0.23398
+     ],
+     [
+      0.38292,
+      0.24832
+     ],
+     [
+      0.41651,
+      0.26208
+     ],
+     [
+      0.43442,
+      0.27412
+     ]
+    ]
+   },
+   "at": [
+    0.3615,
+    0,
+    0
+   ],
+   "mirror": "x",
+   "source": "photo-side",
+   "basis": [
+    "chair-height",
+    "chair-depth"
+   ],
+   "note": "The wall rises into the ear that carries the arm; traced from the side photo.",
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.6
+   }
+  },
+  {
+   "id": "back-shell-skin",
+   "label": "Back shell (moulded plywood)",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "loft",
+    "sections": [
+     [
+      -0.31979,
+      0.27998,
+      0.45056,
+      0.46449
+     ],
+     [
+      -0.31582,
+      0.28856,
+      0.43351,
+      0.46875
+     ],
+     [
+      -0.30408,
+      0.31235,
+      0.46043,
+      0.47144
+     ],
+     [
+      -0.28509,
+      0.33957,
+      0.37565,
+      0.40798
+     ],
+     [
+      -0.25967,
+      0.346,
+      0.33298,
+      0.36391
+     ],
+     [
+      -0.22894,
+      0.346,
+      0.28576,
+      0.31508
+     ],
+     [
+      -0.19424,
+      0.346,
+      0.23746,
+      0.26396
+     ],
+     [
+      -0.15709,
+      0.346,
+      0.20017,
+      0.22035
+     ],
+     [
+      -0.11911,
+      0.346,
+      0.19877,
+      0.21677
+     ],
+     [
+      -0.08195,
+      0.346,
+      0.21884,
+      0.23737
+     ],
+     [
+      -0.04725,
+      0.346,
+      0.2389,
+      0.25696
+     ],
+     [
+      -0.01652,
+      0.346,
+      0.25511,
+      0.27311
+     ],
+     [
+      0.00889,
+      0.33957,
+      0.27452,
+      0.29592
+     ],
+     [
+      0.02788,
+      0.31235,
+      0.37739,
+      0.38513
+     ],
+     [
+      0.03962,
+      0.28856,
+      0.32163,
+      0.38763
+     ],
+     [
+      0.04359,
+      0.27998,
+      0.34151,
+      0.38011
+     ]
+    ],
+    "round": 0.5
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "source": "photo-side",
+   "basis": [
+    "chair-height",
+    "chair-depth",
+    "shell-plies"
+   ],
+   "note": "The shell's outer surface down the back and under the lumbar, traced from the side photo.",
+   "look": {
+    "fill": "dark",
+    "weight": 0.45,
+    "alpha": 0.55
+   }
+  },
+  {
+   "id": "back-shell-wall",
+   "label": "Back shell side",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "x",
+    "height": 0.013,
+    "profile": [
+     [
+      0.02631,
+      0.3848
+     ],
+     [
+      -0.01568,
+      0.38251
+     ],
+     [
+      -0.08173,
+      0.37792
+     ],
+     [
+      -0.14331,
+      0.37333
+     ],
+     [
+      -0.17131,
+      0.38882
+     ],
+     [
+      -0.1937,
+      0.4043
+     ],
+     [
+      -0.22169,
+      0.42323
+     ],
+     [
+      -0.24968,
+      0.44043
+     ],
+     [
+      -0.27767,
+      0.45477
+     ],
+     [
+      -0.29895,
+      0.46394
+     ],
+     [
+      -0.30566,
+      0.45935
+     ],
+     [
+      -0.30342,
+      0.44444
+     ],
+     [
+      -0.28887,
+      0.41462
+     ],
+     [
+      -0.26928,
+      0.38022
+     ],
+     [
+      -0.24968,
+      0.34695
+     ],
+     [
+      -0.22729,
+      0.31254
+     ],
+     [
+      -0.2049,
+      0.27814
+     ],
+     [
+      -0.1825,
+      0.24832
+     ],
+     [
+      -0.16179,
+      0.22423
+     ],
+     [
+      -0.14443,
+      0.20989
+     ],
+     [
+      -0.131,
+      0.21047
+     ],
+     [
+      -0.09853,
+      0.22767
+     ],
+     [
+      -0.05934,
+      0.25061
+     ],
+     [
+      -0.01568,
+      0.27355
+     ],
+     [
+      0.00952,
+      0.29649
+     ],
+     [
+      0.02351,
+      0.32172
+     ],
+     [
+      0.02911,
+      0.35039
+     ],
+     [
+      0.02911,
+      0.37161
+     ]
+    ]
+   },
+   "at": [
+    0.3455,
+    0,
+    0
+   ],
+   "mirror": "x",
+   "source": "photo-side",
+   "basis": [
+    "chair-height",
+    "chair-depth"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.6
+   }
+  },
+  {
+   "id": "headrest-shell-skin",
+   "label": "Headrest shell (moulded plywood)",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "loft",
+    "sections": [
+     [
+      -0.44289,
+      0.24614,
+      0.771,
+      0.78458
+     ],
+     [
+      -0.44137,
+      0.24907,
+      0.76463,
+      0.78723
+     ],
+     [
+      -0.43688,
+      0.25763,
+      0.74611,
+      0.79029
+     ],
+     [
+      -0.42965,
+      0.27082,
+      0.72203,
+      0.79306
+     ],
+     [
+      -0.42005,
+      0.28622,
+      0.77901,
+      0.79353
+     ],
+     [
+      -0.40854,
+      0.29968,
+      0.66645,
+      0.70908
+     ],
+     [
+      -0.39572,
+      0.30634,
+      0.63929,
+      0.67674
+     ],
+     [
+      -0.38221,
+      0.3065,
+      0.6116,
+      0.64816
+     ],
+     [
+      -0.36871,
+      0.30634,
+      0.58393,
+      0.62041
+     ],
+     [
+      -0.35589,
+      0.29968,
+      0.55766,
+      0.59413
+     ],
+     [
+      -0.34438,
+      0.28622,
+      0.53414,
+      0.57056
+     ],
+     [
+      -0.33477,
+      0.27082,
+      0.51545,
+      0.55088
+     ],
+     [
+      -0.32755,
+      0.25763,
+      0.51159,
+      0.53614
+     ],
+     [
+      -0.32306,
+      0.24907,
+      0.51904,
+      0.52704
+     ],
+     [
+      -0.32154,
+      0.24614,
+      0.52229,
+      0.52629
+     ]
+    ],
+    "round": 0.5
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "source": "photo-side",
+   "basis": [
+    "chair-height",
+    "chair-depth",
+    "shell-plies"
+   ],
+   "note": "Traced from the side photo; the headrest top is the chair's published height.",
+   "look": {
+    "fill": "dark",
+    "weight": 0.45,
+    "alpha": 0.55
+   }
+  },
+  {
+   "id": "headrest-shell-wall",
+   "label": "Headrest shell side",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "x",
+    "height": 0.013,
+    "profile": [
+     [
+      -0.41763,
+      0.79312
+     ],
+     [
+      -0.38964,
+      0.7828
+     ],
+     [
+      -0.36221,
+      0.76158
+     ],
+     [
+      -0.33869,
+      0.7329
+     ],
+     [
+      -0.31966,
+      0.69849
+     ],
+     [
+      -0.30566,
+      0.66122
+     ],
+     [
+      -0.29727,
+      0.62108
+     ],
+     [
+      -0.29503,
+      0.58093
+     ],
+     [
+      -0.29951,
+      0.54652
+     ],
+     [
+      -0.31014,
+      0.52358
+     ],
+     [
+      -0.32526,
+      0.51097
+     ],
+     [
+      -0.33365,
+      0.51326
+     ],
+     [
+      -0.34485,
+      0.53505
+     ],
+     [
+      -0.36165,
+      0.56946
+     ],
+     [
+      -0.37844,
+      0.60387
+     ],
+     [
+      -0.39524,
+      0.63828
+     ],
+     [
+      -0.41203,
+      0.67384
+     ],
+     [
+      -0.42603,
+      0.70996
+     ],
+     [
+      -0.43722,
+      0.74724
+     ],
+     [
+      -0.44338,
+      0.77305
+     ],
+     [
+      -0.44282,
+      0.78624
+     ],
+     [
+      -0.43442,
+      0.79197
+     ],
+     [
+      -0.42435,
+      0.79427
+     ]
+    ]
+   },
+   "at": [
+    0.306,
+    0,
+    0
+   ],
+   "mirror": "x",
+   "source": "photo-side",
+   "basis": [
+    "chair-height",
+    "chair-depth"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.6
+   }
+  },
+  {
+   "id": "seat-ply-edge-l",
+   "label": "Seat shell ply edge",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      0.3745,
+      0.28961,
+      0.44282
+     ],
+     [
+      0.3745,
+      0.30853,
+      0.4389
+     ],
+     [
+      0.3745,
+      0.32401,
+      0.4305
+     ],
+     [
+      0.3745,
+      0.33606,
+      0.41931
+     ],
+     [
+      0.3745,
+      0.34581,
+      0.39971
+     ],
+     [
+      0.3745,
+      0.35556,
+      0.37172
+     ],
+     [
+      0.3745,
+      0.36072,
+      0.33813
+     ],
+     [
+      0.3745,
+      0.36186,
+      0.29895
+     ],
+     [
+      0.3745,
+      0.3653,
+      0.26536
+     ],
+     [
+      0.3745,
+      0.37161,
+      0.24296
+     ],
+     [
+      0.3745,
+      0.38251,
+      0.22617
+     ],
+     [
+      0.3745,
+      0.39799,
+      0.21217
+     ],
+     [
+      0.3745,
+      0.4129,
+      0.19818
+     ],
+     [
+      0.3745,
+      0.42208,
+      0.18418
+     ],
+     [
+      0.3745,
+      0.42609,
+      0.16459
+     ],
+     [
+      0.3745,
+      0.42667,
+      0.10861
+     ],
+     [
+      0.3745,
+      0.42495,
+      0.06382
+     ],
+     [
+      0.3745,
+      0.41978,
+      0.0515
+     ],
+     [
+      0.3745,
+      0.40717,
+      0.04367
+     ],
+     [
+      0.3745,
+      0.38595,
+      0.03975
+     ],
+     [
+      0.3745,
+      0.35154,
+      0.03807
+     ],
+     [
+      0.3745,
+      0.32287,
+      0.03583
+     ],
+     [
+      0.3745,
+      0.3028,
+      0.01623
+     ],
+     [
+      0.3745,
+      0.28158,
+      -0.00448
+     ],
+     [
+      0.3745,
+      0.25864,
+      -0.02575
+     ],
+     [
+      0.3745,
+      0.23111,
+      -0.04814
+     ],
+     [
+      0.3745,
+      0.20244,
+      -0.06774
+     ],
+     [
+      0.3745,
+      0.17491,
+      -0.08341
+     ],
+     [
+      0.3745,
+      0.15197,
+      -0.09293
+     ],
+     [
+      0.3745,
+      0.13763,
+      -0.09181
+     ]
+    ],
+    "smooth": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 1.5,
+    "glow": 0.55
+   },
+   "source": "photo-side",
+   "basis": [
+    "shell-plies"
+   ]
+  },
+  {
+   "id": "back-ply-edge-l",
+   "label": "Back shell ply edge",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      0.3585,
+      0.37333,
+      -0.14331
+     ],
+     [
+      0.3585,
+      0.38882,
+      -0.17131
+     ],
+     [
+      0.3585,
+      0.4043,
+      -0.1937
+     ],
+     [
+      0.3585,
+      0.42323,
+      -0.22169
+     ],
+     [
+      0.3585,
+      0.44043,
+      -0.24968
+     ],
+     [
+      0.3585,
+      0.45477,
+      -0.27767
+     ],
+     [
+      0.3585,
+      0.46394,
+      -0.29895
+     ],
+     [
+      0.3585,
+      0.45935,
+      -0.30566
+     ]
+    ],
+    "smooth": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 1.5,
+    "glow": 0.55
+   },
+   "source": "photo-side",
+   "basis": [
+    "shell-plies"
+   ]
+  },
+  {
+   "id": "headrest-ply-edge-l",
+   "label": "Headrest shell ply edge",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      0.319,
+      0.79312,
+      -0.41763
+     ],
+     [
+      0.319,
+      0.7828,
+      -0.38964
+     ],
+     [
+      0.319,
+      0.76158,
+      -0.36221
+     ],
+     [
+      0.319,
+      0.7329,
+      -0.33869
+     ],
+     [
+      0.319,
+      0.69849,
+      -0.31966
+     ],
+     [
+      0.319,
+      0.66122,
+      -0.30566
+     ],
+     [
+      0.319,
+      0.62108,
+      -0.29727
+     ],
+     [
+      0.319,
+      0.58093,
+      -0.29503
+     ],
+     [
+      0.319,
+      0.54652,
+      -0.29951
+     ],
+     [
+      0.319,
+      0.52358,
+      -0.31014
+     ],
+     [
+      0.319,
+      0.51097,
+      -0.32526
+     ]
+    ],
+    "smooth": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 1.5,
+    "glow": 0.55
+   },
+   "source": "photo-side",
+   "basis": [
+    "shell-plies"
+   ]
+  },
+  {
+   "id": "seat-ply-edge-r",
+   "label": "Seat shell ply edge",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -0.3745,
+      0.28961,
+      0.44282
+     ],
+     [
+      -0.3745,
+      0.30853,
+      0.4389
+     ],
+     [
+      -0.3745,
+      0.32401,
+      0.4305
+     ],
+     [
+      -0.3745,
+      0.33606,
+      0.41931
+     ],
+     [
+      -0.3745,
+      0.34581,
+      0.39971
+     ],
+     [
+      -0.3745,
+      0.35556,
+      0.37172
+     ],
+     [
+      -0.3745,
+      0.36072,
+      0.33813
+     ],
+     [
+      -0.3745,
+      0.36186,
+      0.29895
+     ],
+     [
+      -0.3745,
+      0.3653,
+      0.26536
+     ],
+     [
+      -0.3745,
+      0.37161,
+      0.24296
+     ],
+     [
+      -0.3745,
+      0.38251,
+      0.22617
+     ],
+     [
+      -0.3745,
+      0.39799,
+      0.21217
+     ],
+     [
+      -0.3745,
+      0.4129,
+      0.19818
+     ],
+     [
+      -0.3745,
+      0.42208,
+      0.18418
+     ],
+     [
+      -0.3745,
+      0.42609,
+      0.16459
+     ],
+     [
+      -0.3745,
+      0.42667,
+      0.10861
+     ],
+     [
+      -0.3745,
+      0.42495,
+      0.06382
+     ],
+     [
+      -0.3745,
+      0.41978,
+      0.0515
+     ],
+     [
+      -0.3745,
+      0.40717,
+      0.04367
+     ],
+     [
+      -0.3745,
+      0.38595,
+      0.03975
+     ],
+     [
+      -0.3745,
+      0.35154,
+      0.03807
+     ],
+     [
+      -0.3745,
+      0.32287,
+      0.03583
+     ],
+     [
+      -0.3745,
+      0.3028,
+      0.01623
+     ],
+     [
+      -0.3745,
+      0.28158,
+      -0.00448
+     ],
+     [
+      -0.3745,
+      0.25864,
+      -0.02575
+     ],
+     [
+      -0.3745,
+      0.23111,
+      -0.04814
+     ],
+     [
+      -0.3745,
+      0.20244,
+      -0.06774
+     ],
+     [
+      -0.3745,
+      0.17491,
+      -0.08341
+     ],
+     [
+      -0.3745,
+      0.15197,
+      -0.09293
+     ],
+     [
+      -0.3745,
+      0.13763,
+      -0.09181
+     ]
+    ],
+    "smooth": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 1.5,
+    "glow": 0.55
+   },
+   "source": "photo-side",
+   "basis": [
+    "shell-plies"
+   ]
+  },
+  {
+   "id": "back-ply-edge-r",
+   "label": "Back shell ply edge",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -0.3585,
+      0.37333,
+      -0.14331
+     ],
+     [
+      -0.3585,
+      0.38882,
+      -0.17131
+     ],
+     [
+      -0.3585,
+      0.4043,
+      -0.1937
+     ],
+     [
+      -0.3585,
+      0.42323,
+      -0.22169
+     ],
+     [
+      -0.3585,
+      0.44043,
+      -0.24968
+     ],
+     [
+      -0.3585,
+      0.45477,
+      -0.27767
+     ],
+     [
+      -0.3585,
+      0.46394,
+      -0.29895
+     ],
+     [
+      -0.3585,
+      0.45935,
+      -0.30566
+     ]
+    ],
+    "smooth": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 1.5,
+    "glow": 0.55
+   },
+   "source": "photo-side",
+   "basis": [
+    "shell-plies"
+   ]
+  },
+  {
+   "id": "headrest-ply-edge-r",
+   "label": "Headrest shell ply edge",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -0.319,
+      0.79312,
+      -0.41763
+     ],
+     [
+      -0.319,
+      0.7828,
+      -0.38964
+     ],
+     [
+      -0.319,
+      0.76158,
+      -0.36221
+     ],
+     [
+      -0.319,
+      0.7329,
+      -0.33869
+     ],
+     [
+      -0.319,
+      0.69849,
+      -0.31966
+     ],
+     [
+      -0.319,
+      0.66122,
+      -0.30566
+     ],
+     [
+      -0.319,
+      0.62108,
+      -0.29727
+     ],
+     [
+      -0.319,
+      0.58093,
+      -0.29503
+     ],
+     [
+      -0.319,
+      0.54652,
+      -0.29951
+     ],
+     [
+      -0.319,
+      0.52358,
+      -0.31014
+     ],
+     [
+      -0.319,
+      0.51097,
+      -0.32526
+     ]
+    ],
+    "smooth": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 1.5,
+    "glow": 0.55
+   },
+   "source": "photo-side",
+   "basis": [
+    "shell-plies"
+   ]
+  },
+  {
+   "id": "seat-cushion",
+   "label": "Seat cushion",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "loft",
+    "sections": [
+     [
+      -0.08518,
+      0.20581,
+      0.15138,
+      0.15538,
+      0.18523
+     ],
+     [
+      -0.08154,
+      0.21897,
+      0.16288,
+      0.1719,
+      0.19707
+     ],
+     [
+      -0.07074,
+      0.25694,
+      0.18807,
+      0.22199,
+      0.23124
+     ],
+     [
+      -0.05305,
+      0.31068,
+      0.2157,
+      0.28364,
+      0.27961
+     ],
+     [
+      -0.02897,
+      0.3545,
+      0.23839,
+      0.31441,
+      0.31905
+     ],
+     [
+      0.00085,
+      0.36,
+      0.25996,
+      0.33782,
+      0.324
+     ],
+     [
+      0.03559,
+      0.36,
+      0.28045,
+      0.35796,
+      0.324
+     ],
+     [
+      0.07431,
+      0.36,
+      0.29651,
+      0.3735,
+      0.324
+     ],
+     [
+      0.11595,
+      0.36,
+      0.30809,
+      0.38371,
+      0.324
+     ],
+     [
+      0.15937,
+      0.36,
+      0.31691,
+      0.39076,
+      0.324
+     ],
+     [
+      0.2034,
+      0.36,
+      0.3233,
+      0.3955,
+      0.324
+     ],
+     [
+      0.24682,
+      0.36,
+      0.32686,
+      0.39861,
+      0.324
+     ],
+     [
+      0.28846,
+      0.36,
+      0.32605,
+      0.39958,
+      0.324
+     ],
+     [
+      0.32718,
+      0.36,
+      0.32376,
+      0.39641,
+      0.324
+     ],
+     [
+      0.36192,
+      0.36,
+      0.32091,
+      0.38977,
+      0.324
+     ],
+     [
+      0.39174,
+      0.35634,
+      0.31322,
+      0.38071,
+      0.3207
+     ],
+     [
+      0.41582,
+      0.32712,
+      0.30632,
+      0.36874,
+      0.29441
+     ],
+     [
+      0.43351,
+      0.29129,
+      0.30093,
+      0.3532,
+      0.26216
+     ],
+     [
+      0.44431,
+      0.26598,
+      0.29772,
+      0.33487,
+      0.23938
+     ],
+     [
+      0.44795,
+      0.25721,
+      0.30632,
+      0.32314,
+      0.23149
+     ]
+    ],
+    "round": 1.0
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "source": "photo-side",
+   "basis": [
+    "seat-height"
+   ],
+   "note": "Crown traced from the side photo; its height is the published 406 mm seat height.",
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.6
+   }
+  },
+  {
+   "id": "back-cushion",
+   "label": "Back cushion",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "loft",
+    "sections": [
+     [
+      -0.31979,
+      0.21045,
+      0.45056,
+      0.46449,
+      0.1894
+     ],
+     [
+      -0.3167,
+      0.22149,
+      0.43531,
+      0.46781,
+      0.19934
+     ],
+     [
+      -0.30752,
+      0.25334,
+      0.41642,
+      0.47705,
+      0.228
+     ],
+     [
+      -0.29258,
+      0.29853,
+      0.47956,
+      0.49601,
+      0.26868
+     ],
+     [
+      -0.27237,
+      0.33625,
+      0.47404,
+      0.4995,
+      0.30262
+     ],
+     [
+      -0.24759,
+      0.342,
+      0.46726,
+      0.49924,
+      0.3078
+     ],
+     [
+      -0.21909,
+      0.342,
+      0.45947,
+      0.49542,
+      0.3078
+     ],
+     [
+      -0.18782,
+      0.342,
+      0.45136,
+      0.48713,
+      0.3078
+     ],
+     [
+      -0.15486,
+      0.342,
+      0.44429,
+      0.4756,
+      0.3078
+     ],
+     [
+      -0.12133,
+      0.342,
+      0.4371,
+      0.46377,
+      0.3078
+     ],
+     [
+      -0.08838,
+      0.342,
+      0.43003,
+      0.45153,
+      0.3078
+     ],
+     [
+      -0.05711,
+      0.342,
+      0.42332,
+      0.43945,
+      0.3078
+     ],
+     [
+      -0.02861,
+      0.342,
+      0.4172,
+      0.42835,
+      0.3078
+     ],
+     [
+      -0.00383,
+      0.33625,
+      0.41189,
+      0.4178,
+      0.30262
+     ],
+     [
+      0.01638,
+      0.29853,
+      0.40632,
+      0.41032,
+      0.26868
+     ],
+     [
+      0.03132,
+      0.25334,
+      0.30327,
+      0.39103,
+      0.228
+     ],
+     [
+      0.0405,
+      0.22149,
+      0.32602,
+      0.38852,
+      0.19934
+     ],
+     [
+      0.04359,
+      0.21045,
+      0.34151,
+      0.38011,
+      0.1894
+     ]
+    ],
+    "round": 1.0
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "source": "photo-side",
+   "basis": [
+    "chair-height",
+    "chair-depth"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.6
+   }
+  },
+  {
+   "id": "headrest-cushion",
+   "label": "Headrest cushion",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "loft",
+    "sections": [
+     [
+      -0.41686,
+      0.18393,
+      0.79218,
+      0.79618
+     ],
+     [
+      -0.41524,
+      0.18907,
+      0.79198,
+      0.79598
+     ],
+     [
+      -0.41043,
+      0.20417,
+      0.79132,
+      0.79545
+     ],
+     [
+      -0.4026,
+      0.2279,
+      0.78811,
+      0.79673
+     ],
+     [
+      -0.392,
+      0.25672,
+      0.78377,
+      0.79846
+     ],
+     [
+      -0.37902,
+      0.28403,
+      0.77458,
+      0.7995
+     ],
+     [
+      -0.36407,
+      0.30078,
+      0.76302,
+      0.80042
+     ],
+     [
+      -0.34768,
+      0.3025,
+      0.74387,
+      0.79962
+     ],
+     [
+      -0.33041,
+      0.3025,
+      0.71792,
+      0.79844
+     ],
+     [
+      -0.31283,
+      0.3025,
+      0.68031,
+      0.79376
+     ],
+     [
+      -0.29556,
+      0.3025,
+      0.59035,
+      0.78783
+     ],
+     [
+      -0.27917,
+      0.30078,
+      0.50617,
+      0.78179
+     ],
+     [
+      -0.26422,
+      0.28403,
+      0.51165,
+      0.77045
+     ],
+     [
+      -0.25124,
+      0.25672,
+      0.52088,
+      0.755
+     ],
+     [
+      -0.24064,
+      0.2279,
+      0.53519,
+      0.73548
+     ],
+     [
+      -0.23281,
+      0.20417,
+      0.55164,
+      0.70536
+     ],
+     [
+      -0.228,
+      0.18907,
+      0.57217,
+      0.66275
+     ],
+     [
+      -0.22638,
+      0.18393,
+      0.59388,
+      0.63058
+     ]
+    ],
+    "round": 1.0
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "source": "photo-side",
+   "basis": [
+    "chair-height",
+    "chair-depth"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.6
+   }
+  },
+  {
+   "id": "seat-button-1",
+   "label": "Seat cushion button",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "sphere",
+    "radius": 0.011,
+    "lat": 6,
+    "lon": 10
+   },
+   "at": [
+    0,
+    0.3886,
+    0.34933
+   ],
+   "source": "photo-34",
+   "basis": [
+    "tufting"
+   ],
+   "look": {
+    "weight": 0.8
+   }
+  },
+  {
+   "id": "seat-pleat-1",
+   "label": "Seat cushion pleat",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -0.338,
+      0.3626,
+      0.34933
+     ],
+     [
+      -0.169,
+      0.3886,
+      0.34933
+     ],
+     [
+      0,
+      0.3846,
+      0.34933
+     ],
+     [
+      0.169,
+      0.3886,
+      0.34933
+     ],
+     [
+      0.338,
+      0.3626,
+      0.34933
+     ]
+    ],
+    "smooth": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.9,
+    "alpha": 0.8
+   },
+   "source": "photo-34",
+   "basis": [
+    "tufting"
+   ]
+  },
+  {
+   "id": "seat-button-2",
+   "label": "Seat cushion button",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "sphere",
+    "radius": 0.011,
+    "lat": 6,
+    "lon": 10
+   },
+   "at": [
+    0,
+    0.39049,
+    0.19258
+   ],
+   "source": "photo-34",
+   "basis": [
+    "tufting"
+   ],
+   "look": {
+    "weight": 0.8
+   }
+  },
+  {
+   "id": "seat-pleat-2",
+   "label": "Seat cushion pleat",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -0.338,
+      0.36449,
+      0.19258
+     ],
+     [
+      -0.169,
+      0.39049,
+      0.19258
+     ],
+     [
+      0,
+      0.38649,
+      0.19258
+     ],
+     [
+      0.169,
+      0.39049,
+      0.19258
+     ],
+     [
+      0.338,
+      0.36449,
+      0.19258
+     ]
+    ],
+    "smooth": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.9,
+    "alpha": 0.8
+   },
+   "source": "photo-34",
+   "basis": [
+    "tufting"
+   ]
+  },
+  {
+   "id": "back-button-1",
+   "label": "Back cushion button",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "sphere",
+    "radius": 0.011,
+    "lat": 6,
+    "lon": 10
+   },
+   "at": [
+    0,
+    0.47148,
+    -0.15451
+   ],
+   "source": "photo-34",
+   "basis": [
+    "tufting"
+   ],
+   "look": {
+    "weight": 0.8
+   }
+  },
+  {
+   "id": "back-pleat-1",
+   "label": "Back cushion pleat",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -0.317,
+      0.44548,
+      -0.15451
+     ],
+     [
+      -0.1585,
+      0.47148,
+      -0.15451
+     ],
+     [
+      0,
+      0.46748,
+      -0.15451
+     ],
+     [
+      0.1585,
+      0.47148,
+      -0.15451
+     ],
+     [
+      0.317,
+      0.44548,
+      -0.15451
+     ]
+    ],
+    "smooth": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.9,
+    "alpha": 0.8
+   },
+   "source": "photo-34",
+   "basis": [
+    "tufting"
+   ]
+  },
+  {
+   "id": "back-button-2",
+   "label": "Back cushion button",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "sphere",
+    "radius": 0.011,
+    "lat": 6,
+    "lon": 10
+   },
+   "at": [
+    0,
+    0.4955,
+    -0.24968
+   ],
+   "source": "photo-34",
+   "basis": [
+    "tufting"
+   ],
+   "look": {
+    "weight": 0.8
+   }
+  },
+  {
+   "id": "back-pleat-2",
+   "label": "Back cushion pleat",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -0.317,
+      0.4695,
+      -0.24968
+     ],
+     [
+      -0.1585,
+      0.4955,
+      -0.24968
+     ],
+     [
+      0,
+      0.4915,
+      -0.24968
+     ],
+     [
+      0.1585,
+      0.4955,
+      -0.24968
+     ],
+     [
+      0.317,
+      0.4695,
+      -0.24968
+     ]
+    ],
+    "smooth": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.9,
+    "alpha": 0.8
+   },
+   "source": "photo-34",
+   "basis": [
+    "tufting"
+   ]
+  },
+  {
+   "id": "headrest-button-1",
+   "label": "Headrest cushion button",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "sphere",
+    "radius": 0.011,
+    "lat": 6,
+    "lon": 10
+   },
+   "at": [
+    0,
+    0.70423,
+    -0.23129
+   ],
+   "source": "photo-34",
+   "basis": [
+    "tufting"
+   ],
+   "look": {
+    "weight": 0.8
+   }
+  },
+  {
+   "id": "headrest-pleat-1",
+   "label": "Headrest cushion pleat",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -0.2775,
+      0.70423,
+      -0.25729
+     ],
+     [
+      -0.13875,
+      0.70423,
+      -0.23129
+     ],
+     [
+      0,
+      0.70423,
+      -0.23529
+     ],
+     [
+      0.13875,
+      0.70423,
+      -0.23129
+     ],
+     [
+      0.2775,
+      0.70423,
+      -0.25729
+     ]
+    ],
+    "smooth": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.9,
+    "alpha": 0.8
+   },
+   "source": "photo-34",
+   "basis": [
+    "tufting"
+   ]
+  },
+  {
+   "id": "headrest-button-2",
+   "label": "Headrest cushion button",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "sphere",
+    "radius": 0.011,
+    "lat": 6,
+    "lon": 10
+   },
+   "at": [
+    0,
+    0.5924,
+    -0.22961
+   ],
+   "source": "photo-34",
+   "basis": [
+    "tufting"
+   ],
+   "look": {
+    "weight": 0.8
+   }
+  },
+  {
+   "id": "headrest-pleat-2",
+   "label": "Headrest cushion pleat",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -0.2775,
+      0.5924,
+      -0.25561
+     ],
+     [
+      -0.13875,
+      0.5924,
+      -0.22961
+     ],
+     [
+      0,
+      0.5924,
+      -0.23361
+     ],
+     [
+      0.13875,
+      0.5924,
+      -0.22961
+     ],
+     [
+      0.2775,
+      0.5924,
+      -0.25561
+     ]
+    ],
+    "smooth": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.9,
+    "alpha": 0.8
+   },
+   "source": "photo-34",
+   "basis": [
+    "tufting"
+   ]
+  },
+  {
+   "id": "seat-welt-l",
+   "label": "Seat cushion piping",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      0.348,
+      0.33646,
+      0.4361
+     ],
+     [
+      0.348,
+      0.35742,
+      0.41091
+     ],
+     [
+      0.348,
+      0.36861,
+      0.38572
+     ],
+     [
+      0.348,
+      0.37608,
+      0.36053
+     ],
+     [
+      0.348,
+      0.38145,
+      0.33533
+     ],
+     [
+      0.348,
+      0.3844,
+      0.31014
+     ],
+     [
+      0.348,
+      0.38553,
+      0.28495
+     ],
+     [
+      0.348,
+      0.38521,
+      0.25976
+     ],
+     [
+      0.348,
+      0.38373,
+      0.23457
+     ],
+     [
+      0.348,
+      0.38193,
+      0.20937
+     ],
+     [
+      0.348,
+      0.37955,
+      0.18418
+     ],
+     [
+      0.348,
+      0.37671,
+      0.15899
+     ],
+     [
+      0.348,
+      0.37318,
+      0.1338
+     ],
+     [
+      0.348,
+      0.36828,
+      0.10861
+     ],
+     [
+      0.348,
+      0.36288,
+      0.08341
+     ],
+     [
+      0.348,
+      0.35353,
+      0.05822
+     ],
+     [
+      0.348,
+      0.3425,
+      0.03303
+     ],
+     [
+      0.348,
+      0.32812,
+      0.00784
+     ],
+     [
+      0.348,
+      0.30954,
+      -0.01735
+     ]
+    ],
+    "radius": 0.0045,
+    "sides": 6
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.75,
+    "alpha": 0.8
+   },
+   "source": "photo-side",
+   "basis": [
+    "tufting"
+   ]
+  },
+  {
+   "id": "back-welt-l",
+   "label": "Back cushion piping",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      0.327,
+      0.40842,
+      -0.01456
+     ],
+     [
+      0.327,
+      0.41869,
+      -0.03975
+     ],
+     [
+      0.327,
+      0.42849,
+      -0.06494
+     ],
+     [
+      0.327,
+      0.43819,
+      -0.09013
+     ],
+     [
+      0.327,
+      0.44765,
+      -0.11532
+     ],
+     [
+      0.327,
+      0.45654,
+      -0.14052
+     ],
+     [
+      0.327,
+      0.46543,
+      -0.16571
+     ],
+     [
+      0.327,
+      0.4742,
+      -0.1909
+     ],
+     [
+      0.327,
+      0.48068,
+      -0.21609
+     ],
+     [
+      0.327,
+      0.48447,
+      -0.24128
+     ],
+     [
+      0.327,
+      0.4855,
+      -0.26648
+     ],
+     [
+      0.327,
+      0.48222,
+      -0.29167
+     ]
+    ],
+    "radius": 0.0045,
+    "sides": 6
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.75,
+    "alpha": 0.8
+   },
+   "source": "photo-side",
+   "basis": [
+    "tufting"
+   ]
+  },
+  {
+   "id": "seat-welt-r",
+   "label": "Seat cushion piping",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      -0.348,
+      0.33646,
+      0.4361
+     ],
+     [
+      -0.348,
+      0.35742,
+      0.41091
+     ],
+     [
+      -0.348,
+      0.36861,
+      0.38572
+     ],
+     [
+      -0.348,
+      0.37608,
+      0.36053
+     ],
+     [
+      -0.348,
+      0.38145,
+      0.33533
+     ],
+     [
+      -0.348,
+      0.3844,
+      0.31014
+     ],
+     [
+      -0.348,
+      0.38553,
+      0.28495
+     ],
+     [
+      -0.348,
+      0.38521,
+      0.25976
+     ],
+     [
+      -0.348,
+      0.38373,
+      0.23457
+     ],
+     [
+      -0.348,
+      0.38193,
+      0.20937
+     ],
+     [
+      -0.348,
+      0.37955,
+      0.18418
+     ],
+     [
+      -0.348,
+      0.37671,
+      0.15899
+     ],
+     [
+      -0.348,
+      0.37318,
+      0.1338
+     ],
+     [
+      -0.348,
+      0.36828,
+      0.10861
+     ],
+     [
+      -0.348,
+      0.36288,
+      0.08341
+     ],
+     [
+      -0.348,
+      0.35353,
+      0.05822
+     ],
+     [
+      -0.348,
+      0.3425,
+      0.03303
+     ],
+     [
+      -0.348,
+      0.32812,
+      0.00784
+     ],
+     [
+      -0.348,
+      0.30954,
+      -0.01735
+     ]
+    ],
+    "radius": 0.0045,
+    "sides": 6
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.75,
+    "alpha": 0.8
+   },
+   "source": "photo-side",
+   "basis": [
+    "tufting"
+   ]
+  },
+  {
+   "id": "back-welt-r",
+   "label": "Back cushion piping",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      -0.327,
+      0.40842,
+      -0.01456
+     ],
+     [
+      -0.327,
+      0.41869,
+      -0.03975
+     ],
+     [
+      -0.327,
+      0.42849,
+      -0.06494
+     ],
+     [
+      -0.327,
+      0.43819,
+      -0.09013
+     ],
+     [
+      -0.327,
+      0.44765,
+      -0.11532
+     ],
+     [
+      -0.327,
+      0.45654,
+      -0.14052
+     ],
+     [
+      -0.327,
+      0.46543,
+      -0.16571
+     ],
+     [
+      -0.327,
+      0.4742,
+      -0.1909
+     ],
+     [
+      -0.327,
+      0.48068,
+      -0.21609
+     ],
+     [
+      -0.327,
+      0.48447,
+      -0.24128
+     ],
+     [
+      -0.327,
+      0.4855,
+      -0.26648
+     ],
+     [
+      -0.327,
+      0.48222,
+      -0.29167
+     ]
+    ],
+    "radius": 0.0045,
+    "sides": 6
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.75,
+    "alpha": 0.8
+   },
+   "source": "photo-side",
+   "basis": [
+    "tufting"
+   ]
+  },
+  {
+   "id": "arm-pad",
+   "label": "Arm pad",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "loft",
+    "sections": [
+     [
+      -0.16867,
+      0.03709,
+      0.40672,
+      0.42362,
+      0.03338
+     ],
+     [
+      -0.16609,
+      0.03922,
+      0.39775,
+      0.43077,
+      0.0353
+     ],
+     [
+      -0.15844,
+      0.04534,
+      0.38919,
+      0.44004,
+      0.04081
+     ],
+     [
+      -0.14591,
+      0.05372,
+      0.38616,
+      0.44409,
+      0.04835
+     ],
+     [
+      -0.12885,
+      0.05951,
+      0.38884,
+      0.44856,
+      0.05355
+     ],
+     [
+      -0.10773,
+      0.0597,
+      0.39217,
+      0.45288,
+      0.05373
+     ],
+     [
+      -0.08312,
+      0.0597,
+      0.39605,
+      0.45793,
+      0.05373
+     ],
+     [
+      -0.0557,
+      0.0597,
+      0.40014,
+      0.46354,
+      0.05373
+     ],
+     [
+      -0.0262,
+      0.0597,
+      0.40452,
+      0.46959,
+      0.05373
+     ],
+     [
+      0.00456,
+      0.0597,
+      0.40909,
+      0.47558,
+      0.05373
+     ],
+     [
+      0.03574,
+      0.0597,
+      0.41358,
+      0.48165,
+      0.05373
+     ],
+     [
+      0.0665,
+      0.0597,
+      0.41736,
+      0.48763,
+      0.05373
+     ],
+     [
+      0.096,
+      0.0597,
+      0.42099,
+      0.49284,
+      0.05373
+     ],
+     [
+      0.12342,
+      0.0597,
+      0.42436,
+      0.4967,
+      0.05373
+     ],
+     [
+      0.14803,
+      0.0597,
+      0.428,
+      0.50015,
+      0.05373
+     ],
+     [
+      0.16915,
+      0.05951,
+      0.43284,
+      0.50312,
+      0.05355
+     ],
+     [
+      0.18621,
+      0.05372,
+      0.43674,
+      0.50466,
+      0.04835
+     ],
+     [
+      0.19874,
+      0.04534,
+      0.44572,
+      0.50112,
+      0.04081
+     ],
+     [
+      0.20639,
+      0.03922,
+      0.455,
+      0.49216,
+      0.0353
+     ],
+     [
+      0.20897,
+      0.03709,
+      0.46134,
+      0.48404,
+      0.03338
+     ]
+    ],
+    "round": 0.75
+   },
+   "at": [
+    0.368,
+    0,
+    0
+   ],
+   "mirror": "x",
+   "source": "photo-34",
+   "basis": [
+    "chair-width"
+   ],
+   "note": "Outer edge at the published overall width; length and slope from the side photo.",
+   "look": {
+    "fill": "dark",
+    "weight": 1.0,
+    "glow": 0.3
+   }
+  },
+  {
+   "id": "arm-support",
+   "label": "Arm bracket (die-cast aluminium)",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "loft",
+    "sections": [
+     [
+      -0.15731,
+      0.022,
+      0.36933,
+      0.39093
+     ],
+     [
+      -0.14331,
+      0.022,
+      0.36933,
+      0.38957
+     ],
+     [
+      -0.12932,
+      0.022,
+      0.37038,
+      0.39177
+     ],
+     [
+      -0.11532,
+      0.022,
+      0.37142,
+      0.39398
+     ],
+     [
+      -0.10133,
+      0.022,
+      0.37246,
+      0.39618
+     ],
+     [
+      -0.08733,
+      0.022,
+      0.3735,
+      0.39839
+     ]
+    ],
+    "round": 0.4
+   },
+   "at": [
+    0.352,
+    0,
+    0
+   ],
+   "mirror": "x",
+   "source": "hm-details",
+   "basis": [
+    "aluminium-parts"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "back-brace",
+   "label": "Back brace (die-cast aluminium)",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "extrude",
+    "axis": "x",
+    "height": 0.05,
+    "profile": [
+     [
+      -0.39599,
+      0.65407
+     ],
+     [
+      -0.4003,
+      0.63176
+     ],
+     [
+      -0.40076,
+      0.61073
+     ],
+     [
+      -0.39388,
+      0.58948
+     ],
+     [
+      -0.3829,
+      0.56703
+     ],
+     [
+      -0.37165,
+      0.5442
+     ],
+     [
+      -0.35963,
+      0.52141
+     ],
+     [
+      -0.34694,
+      0.49831
+     ],
+     [
+      -0.336,
+      0.47489
+     ],
+     [
+      -0.32728,
+      0.45181
+     ],
+     [
+      -0.31784,
+      0.42925
+     ],
+     [
+      -0.30653,
+      0.40711
+     ],
+     [
+      -0.29057,
+      0.38528
+     ],
+     [
+      -0.26614,
+      0.36302
+     ],
+     [
+      -0.23687,
+      0.34026
+     ],
+     [
+      -0.24607,
+      0.32842
+     ],
+     [
+      -0.27579,
+      0.35154
+     ],
+     [
+      -0.30164,
+      0.37516
+     ],
+     [
+      -0.31927,
+      0.39919
+     ],
+     [
+      -0.33144,
+      0.42293
+     ],
+     [
+      -0.34122,
+      0.44625
+     ],
+     [
+      -0.34982,
+      0.46905
+     ],
+     [
+      -0.36031,
+      0.49151
+     ],
+     [
+      -0.37283,
+      0.51429
+     ],
+     [
+      -0.38501,
+      0.53738
+     ],
+     [
+      -0.39637,
+      0.56043
+     ],
+     [
+      -0.40779,
+      0.58386
+     ],
+     [
+      -0.4156,
+      0.60849
+     ],
+     [
+      -0.41522,
+      0.63333
+     ],
+     [
+      -0.41073,
+      0.65689
+     ]
+    ]
+   },
+   "at": [
+    0.09,
+    0,
+    0
+   ],
+   "mirror": "x",
+   "source": "photo-side",
+   "basis": [
+    "aluminium-parts"
+   ],
+   "note": "Line traced from the side photo, stood off the shells; x from the 3/4 photo.",
+   "look": {
+    "fill": "dark",
+    "weight": 1.0
+   }
+  },
+  {
+   "id": "brace-mount-headrest",
+   "label": "Rubber shock mount (headrest)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.016,
+    "height": 0.022,
+    "segments": 12
+   },
+   "at": [
+    0.115,
+    0.65548,
+    -0.40736
+   ],
+   "rotate": [
+    90,
+    0,
+    0
+   ],
+   "mirror": "x",
+   "source": "hm-details",
+   "basis": [
+    "shock-mounts"
+   ],
+   "look": {
+    "weight": 0.7
+   }
+  },
+  {
+   "id": "brace-mount-back",
+   "label": "Rubber shock mount (back)",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.016,
+    "height": 0.022,
+    "segments": 12
+   },
+   "at": [
+    0.115,
+    0.33434,
+    -0.24547
+   ],
+   "rotate": [
+    90,
+    0,
+    0
+   ],
+   "mirror": "x",
+   "source": "hm-details",
+   "basis": [
+    "shock-mounts"
+   ],
+   "look": {
+    "weight": 0.7
+   }
+  },
+  {
+   "id": "chair-column",
+   "label": "Swivel column",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.032,
+    "height": 0.05429,
+    "segments": 24,
+    "rings": 2
+   },
+   "at": [
+    0,
+    0.112,
+    0.08061
+   ],
+   "source": "hm-details",
+   "basis": [
+    "swivel"
+   ],
+   "look": {
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "chair-hub",
+   "label": "Base hub",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.05,
+    "height": 0.042,
+    "segments": 28,
+    "rings": 1
+   },
+   "at": [
+    0,
+    0.07,
+    0.08061
+   ],
+   "source": "hm-details",
+   "basis": [
+    "aluminium-parts"
+   ],
+   "look": {
+    "weight": 0.9
+   }
+  },
+  {
+   "id": "chair-leg",
+   "label": "Base leg (five-star)",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "loft",
+    "sections": [
+     [
+      0.035,
+      0.03,
+      0.074,
+      0.112,
+      0.022
+     ],
+     [
+      0.09,
+      0.026,
+      0.066,
+      0.104,
+      0.019
+     ],
+     [
+      0.18,
+      0.021,
+      0.051,
+      0.085,
+      0.015
+     ],
+     [
+      0.27,
+      0.017,
+      0.037,
+      0.062,
+      0.012
+     ],
+     [
+      0.325,
+      0.014,
+      0.028,
+      0.048,
+      0.011
+     ]
+    ],
+    "round": 0.6
+   },
+   "at": [
+    0,
+    0,
+    0.08061
+   ],
+   "repeat": {
+    "count": 5,
+    "radial": {
+     "axis": "y",
+     "center": [
+      0,
+      0,
+      0.08061
+     ],
+     "span": 360
+    }
+   },
+   "rotate": [
+    0,
+    180,
+    0
+   ],
+   "source": "photo-34",
+   "basis": [
+    "chair-base-legs",
+    "aluminium-parts"
+   ],
+   "note": "Five legs counted in the 3/4 photo; one points back under the headrest.",
+   "look": {
+    "fill": "dark",
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "chair-glide",
+   "label": "Glide",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.02,
+    "height": 0.03,
+    "segments": 16,
+    "rings": 1
+   },
+   "at": [
+    0,
+    0,
+    -0.23439
+   ],
+   "repeat": {
+    "count": 5,
+    "radial": {
+     "axis": "y",
+     "center": [
+      0,
+      0,
+      0.08061
+     ],
+     "span": 360
+    }
+   },
+   "source": "hm-details",
+   "basis": [
+    "glides"
+   ],
+   "look": {
+    "weight": 0.65
+   }
+  },
+  {
+   "id": "seat-mount",
+   "label": "Seat mount (rubber shock mounts)",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.2,
+     0.012,
+     0.16
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0,
+    0.15829,
+    0.08061
+   ],
+   "source": "hm-details",
+   "basis": [
+    "shock-mounts"
+   ],
+   "look": {
+    "weight": 0.7
+   }
+  },
+  {
+   "id": "ottoman-shell",
+   "label": "Ottoman shell (moulded plywood)",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "loft",
+    "sections": [
+     [
+      0.576,
+      0.27,
+      0.36,
+      0.388,
+      0.318
+     ],
+     [
+      0.583,
+      0.28,
+      0.325,
+      0.388,
+      0.326
+     ],
+     [
+      0.598,
+      0.29,
+      0.302,
+      0.388,
+      0.33
+     ],
+     [
+      0.623,
+      0.295,
+      0.288,
+      0.388,
+      0.33
+     ],
+     [
+      0.838,
+      0.297,
+      0.288,
+      0.388,
+      0.33
+     ],
+     [
+      1.053,
+      0.295,
+      0.288,
+      0.388,
+      0.33
+     ],
+     [
+      1.078,
+      0.29,
+      0.302,
+      0.388,
+      0.33
+     ],
+     [
+      1.093,
+      0.28,
+      0.325,
+      0.388,
+      0.326
+     ],
+     [
+      1.1,
+      0.27,
+      0.36,
+      0.388,
+      0.318
+     ]
+    ],
+    "round": 0.65
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "source": "photo-34",
+   "basis": [
+    "ottoman-width",
+    "ottoman-depth",
+    "ottoman-height",
+    "shell-plies"
+   ],
+   "note": "A shallow tray flaring to the rim, read from the 3/4 photo; outer size from the published ottoman dimensions.",
+   "look": {
+    "fill": "dark",
+    "weight": 0.45,
+    "alpha": 0.55
+   }
+  },
+  {
+   "id": "ottoman-cushion",
+   "label": "Ottoman cushion",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "loft",
+    "sections": [
+     [
+      0.58,
+      0.25,
+      0.39,
+      0.405,
+      0.24
+     ],
+     [
+      0.588,
+      0.31,
+      0.37,
+      0.422,
+      0.29
+     ],
+     [
+      0.608,
+      0.318,
+      0.33,
+      0.432,
+      0.3
+     ],
+     [
+      0.648,
+      0.318,
+      0.31,
+      0.437,
+      0.3
+     ],
+     [
+      0.738,
+      0.318,
+      0.31,
+      0.438,
+      0.3
+     ],
+     [
+      0.838,
+      0.318,
+      0.31,
+      0.438,
+      0.3
+     ],
+     [
+      0.938,
+      0.318,
+      0.31,
+      0.438,
+      0.3
+     ],
+     [
+      1.028,
+      0.318,
+      0.31,
+      0.437,
+      0.3
+     ],
+     [
+      1.068,
+      0.318,
+      0.33,
+      0.432,
+      0.3
+     ],
+     [
+      1.088,
+      0.31,
+      0.37,
+      0.422,
+      0.29
+     ],
+     [
+      1.096,
+      0.25,
+      0.39,
+      0.405,
+      0.24
+     ]
+    ],
+    "round": 1.0
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "source": "photo-34",
+   "basis": [
+    "ottoman-height",
+    "ottoman-width",
+    "ottoman-depth"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.6
+   }
+  },
+  {
+   "id": "ottoman-button-1",
+   "label": "Ottoman cushion button",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "sphere",
+    "radius": 0.011,
+    "lat": 6,
+    "lon": 10
+   },
+   "at": [
+    0,
+    0.434,
+    0.738
+   ],
+   "source": "photo-34",
+   "basis": [
+    "tufting"
+   ],
+   "look": {
+    "weight": 0.8
+   }
+  },
+  {
+   "id": "ottoman-pleat-1",
+   "label": "Ottoman cushion pleat",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -0.3,
+      0.408,
+      0.738
+     ],
+     [
+      -0.15,
+      0.434,
+      0.738
+     ],
+     [
+      0,
+      0.43,
+      0.738
+     ],
+     [
+      0.15,
+      0.434,
+      0.738
+     ],
+     [
+      0.3,
+      0.408,
+      0.738
+     ]
+    ],
+    "smooth": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.7,
+    "alpha": 0.6
+   },
+   "source": "photo-34",
+   "basis": [
+    "tufting"
+   ]
+  },
+  {
+   "id": "ottoman-button-2",
+   "label": "Ottoman cushion button",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "sphere",
+    "radius": 0.011,
+    "lat": 6,
+    "lon": 10
+   },
+   "at": [
+    0,
+    0.434,
+    0.938
+   ],
+   "source": "photo-34",
+   "basis": [
+    "tufting"
+   ],
+   "look": {
+    "weight": 0.8
+   }
+  },
+  {
+   "id": "ottoman-pleat-2",
+   "label": "Ottoman cushion pleat",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -0.3,
+      0.408,
+      0.938
+     ],
+     [
+      -0.15,
+      0.434,
+      0.938
+     ],
+     [
+      0,
+      0.43,
+      0.938
+     ],
+     [
+      0.15,
+      0.434,
+      0.938
+     ],
+     [
+      0.3,
+      0.408,
+      0.938
+     ]
+    ],
+    "smooth": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 0.7,
+    "alpha": 0.6
+   },
+   "source": "photo-34",
+   "basis": [
+    "tufting"
+   ]
+  },
+  {
+   "id": "ottoman-ply-edge",
+   "label": "Ottoman shell ply edge",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      0.331,
+      0.388,
+      0.838
+     ],
+     [
+      0.32924,
+      0.388,
+      1.04358
+     ],
+     [
+      0.32407,
+      0.388,
+      1.05837
+     ],
+     [
+      0.31573,
+      0.388,
+      1.07164
+     ],
+     [
+      0.30464,
+      0.388,
+      1.08273
+     ],
+     [
+      0.29137,
+      0.388,
+      1.09107
+     ],
+     [
+      0.27658,
+      0.388,
+      1.09624
+     ],
+     [
+      0.0,
+      0.388,
+      1.098
+     ],
+     [
+      -0.27658,
+      0.388,
+      1.09624
+     ],
+     [
+      -0.29137,
+      0.388,
+      1.09107
+     ],
+     [
+      -0.30464,
+      0.388,
+      1.08273
+     ],
+     [
+      -0.31573,
+      0.388,
+      1.07164
+     ],
+     [
+      -0.32407,
+      0.388,
+      1.05837
+     ],
+     [
+      -0.32924,
+      0.388,
+      1.04358
+     ],
+     [
+      -0.331,
+      0.388,
+      0.838
+     ],
+     [
+      -0.32924,
+      0.388,
+      0.63242
+     ],
+     [
+      -0.32407,
+      0.388,
+      0.61763
+     ],
+     [
+      -0.31573,
+      0.388,
+      0.60436
+     ],
+     [
+      -0.30464,
+      0.388,
+      0.59327
+     ],
+     [
+      -0.29137,
+      0.388,
+      0.58493
+     ],
+     [
+      -0.27658,
+      0.388,
+      0.57976
+     ],
+     [
+      -0.0,
+      0.388,
+      0.578
+     ],
+     [
+      0.27658,
+      0.388,
+      0.57976
+     ],
+     [
+      0.29137,
+      0.388,
+      0.58493
+     ],
+     [
+      0.30464,
+      0.388,
+      0.59327
+     ],
+     [
+      0.31573,
+      0.388,
+      0.60436
+     ],
+     [
+      0.32407,
+      0.388,
+      0.61763
+     ],
+     [
+      0.32924,
+      0.388,
+      0.63242
+     ],
+     [
+      0.331,
+      0.388,
+      0.838
+     ]
+    ],
+    "smooth": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "weight": 1.5,
+    "glow": 0.55
+   },
+   "source": "photo-34",
+   "basis": [
+    "shell-plies"
+   ]
+  },
+  {
+   "id": "ottoman-column",
+   "label": "Ottoman column",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.028,
+    "height": 0.182,
+    "segments": 24,
+    "rings": 1
+   },
+   "at": [
+    0,
+    0.11,
+    0.838
+   ],
+   "source": "hm-details",
+   "basis": [
+    "aluminium-parts"
+   ],
+   "look": {
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "ottoman-hub",
+   "label": "Ottoman base hub",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.045,
+    "height": 0.04,
+    "segments": 28,
+    "rings": 1
+   },
+   "at": [
+    0,
+    0.07,
+    0.838
+   ],
+   "source": "hm-details",
+   "basis": [
+    "aluminium-parts"
+   ],
+   "look": {
+    "weight": 0.9
+   }
+  },
+  {
+   "id": "ottoman-leg",
+   "label": "Ottoman base leg (four-star)",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "loft",
+    "sections": [
+     [
+      0.03,
+      0.028,
+      0.072,
+      0.11,
+      0.02
+     ],
+     [
+      0.09,
+      0.024,
+      0.062,
+      0.1,
+      0.017
+     ],
+     [
+      0.18,
+      0.019,
+      0.046,
+      0.078,
+      0.014
+     ],
+     [
+      0.26,
+      0.015,
+      0.032,
+      0.054,
+      0.011
+     ],
+     [
+      0.295,
+      0.013,
+      0.028,
+      0.046,
+      0.01
+     ]
+    ],
+    "round": 0.6
+   },
+   "at": [
+    0,
+    0,
+    0.838
+   ],
+   "rotate": [
+    0,
+    45,
+    0
+   ],
+   "repeat": {
+    "count": 4,
+    "radial": {
+     "axis": "y",
+     "center": [
+      0,
+      0,
+      0.8380000000000001
+     ],
+     "span": 360
+    }
+   },
+   "source": "photo-34",
+   "basis": [
+    "ottoman-base-legs",
+    "aluminium-parts"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.85
+   }
+  },
+  {
+   "id": "ottoman-glide",
+   "label": "Ottoman glide",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.019,
+    "height": 0.028,
+    "segments": 16,
+    "rings": 1
+   },
+   "at": [
+    0.20153,
+    0,
+    1.03953
+   ],
+   "repeat": {
+    "count": 4,
+    "radial": {
+     "axis": "y",
+     "center": [
+      0,
+      0,
+      0.8380000000000001
+     ],
+     "span": 360
+    }
+   },
+   "source": "hm-details",
+   "basis": [
+    "glides"
+   ],
+   "look": {
+    "weight": 0.65
+   }
+  }
+ ],
+ "articulations": [],
+ "annotations": [],
+ "anchors": {
+  "base": {
+   "point": [
+    0,
+    0,
+    0
+   ],
+   "up": [
+    0,
+    1,
+    0
+   ]
+  }
+ },
+ "presentation": {
+  "framing": {
+   "yaw": 48,
+   "pitch": 18,
+   "fit": 1.0
+  },
+  "views": [
+   {
+    "id": "profile",
+    "label": "The profile",
+    "yaw": 90,
+    "pitch": 4,
+    "distance": 1.0
+   },
+   {
+    "id": "shells",
+    "label": "Three plywood shells",
+    "yaw": 140,
+    "pitch": 18,
+    "distance": 1.0
+   },
+   {
+    "id": "ottoman",
+    "label": "671 ottoman",
+    "yaw": 30,
+    "pitch": 30,
+    "distance": 1.9,
+    "target": "ottoman-cushion"
+   }
+  ],
+  "atmosphere": {
+   "haze": 0.25,
+   "scanlines": false,
+   "vignette": true,
+   "grid": true,
+   "projector": false,
+   "motes": 0.1
+  },
+  "occlusion": "xray",
+  "certainty_style": "subtle",
+  "float": 0
+ },
+ "animation": {
+  "assembly": {
+   "style": "ceremony",
+   "seconds": 9,
+   "interference": false
+  },
+  "idle": {
+   "life": "calm",
+   "events": [
+    "scan",
+    "shimmer"
+   ],
+   "cadence": [
+    12,
+    21
+   ],
+   "strength": 0.25
+  },
+  "camera": {
+   "drift": 2,
+   "breathe": 0.01,
+   "tour": [
+    {
+     "view": "profile",
+     "at": 14,
+     "fly": 4
+    },
+    {
+     "view": "shells",
+     "at": 24,
+     "fly": 4
+    },
+    {
+     "view": "hero",
+     "at": 34,
+     "fly": 4
+    }
+   ]
+  },
+  "reduced_motion": "still"
+ },
+ "authoring": {
+  "tier": "masterpiece",
+  "research": "done",
+  "sources": [
+   "hm-chair-dims",
+   "hm-ottoman-dims",
+   "hm-details",
+   "photo-side",
+   "photo-34"
+  ],
+  "review_rounds": 5,
+  "identity": [
+   {
+    "feature": "three moulded plywood shells (seat, back, headrest) with the light ply edge",
+    "parts": [
+     "seat-shell-wall",
+     "back-shell-wall",
+     "headrest-shell-wall",
+     "seat-ply-edge-l",
+     "back-ply-edge-l",
+     "headrest-ply-edge-l"
+    ]
+   },
+   {
+    "feature": "the reclined stepped profile: seat, lumbar back and a more upright headrest, joined by back braces",
+    "parts": [
+     "back-brace",
+     "headrest-shell-skin",
+     "back-shell-skin"
+    ]
+   },
+   {
+    "feature": "arm pads bridging the seat ear and the back shell",
+    "parts": [
+     "arm-pad",
+     "arm-support"
+    ]
+   },
+   {
+    "feature": "tufted leather cushions",
+    "parts": [
+     "seat-cushion",
+     "back-cushion",
+     "headrest-cushion",
+     "ottoman-cushion"
+    ]
+   },
+   {
+    "feature": "five-star swivel base; ottoman on a four-star base",
+    "parts": [
+     "chair-leg",
+     "ottoman-leg"
+    ]
+   }
+  ],
+  "critic": {
+   "scene_sha256": "e468a68a38e64945fb5204eb82eaf665157c9d8bd983efb271b2213266ec6002",
+   "verdict": "good",
+   "scores": {
+    "silhouette": 2,
+    "proportions": 2,
+    "identity": 2,
+    "depth": 2,
+    "composition": 2,
+    "assembly": 2,
+    "motion": 3,
+    "density": 2,
+    "honesty": 3
+   },
+   "round": 3,
+   "defects": 13
+  },
+  "outcome": "good",
+  "rounds": [
+   {
+    "round": 1,
+    "result": "baseline",
+    "minutes": 1.4,
+    "changes": [
+     "draft"
+    ],
+    "summary": "The arm pads are thin boards, not padded pillows. In still-side, thickness/length is ~0.11 against ~0.20 in ref-side. The pads are also too "
+   },
+   {
+    "round": 2,
+    "result": "kept",
+    "minutes": 3.9,
+    "changes": [
+     "D1",
+     "D2",
+     "D3",
+     "D5"
+    ],
+    "summary": "The ottoman reads as a box on a tray. In still-side the cushion takes ~85 px of the ~135 px top-to-bottom height above a thin shell whose pl"
+   },
+   {
+    "round": 3,
+    "result": "kept",
+    "minutes": 3.4,
+    "changes": [
+     "D10",
+     "D11",
+     "D15",
+     "D4"
+    ],
+    "summary": "In still-front the arm pads span x 430-500 and 780-850, wholly outboard of the shell side walls at ~500/780, and float on thin posts. In ref"
+   },
+   {
+    "round": 4,
+    "result": "reverted",
+    "minutes": 2.1,
+    "changes": [
+     "D10",
+     "D11",
+     "D2",
+     "D3"
+    ],
+    "summary": "The ottoman reads as one stuffed pouf. In still-side and view-ottoman the part below the ply line (y 425-490) is a soft, gridded, rounded bl"
+   },
+   {
+    "round": 5,
+    "result": "reverted",
+    "minutes": 2.6,
+    "changes": [
+     "D13",
+     "D17",
+     "D7",
+     "D9"
+    ],
+    "summary": "The bases stand too tall and spidery. In still-side the ottoman measures top 365, shell underside 500, glides 685 px: the base is ~185 of ~3"
+   }
+  ],
+  "next": [
+   "Hero camera lower and to the chair's side (yaw ~64, pitch ~13): the critic preferred it in round 5, which lost on its base change",
+   "Deepen the headrest and back shell walls forward so the cushions nest in the wood (judged against a perspective side render)",
+   "Ottoman as a rounded dish whose rim is no wider than the cushion, cushion crowned 4-5 cm above the rim",
+   "Softer cushions: creases radiating from the buttons and a quieter centre contour",
+   "Back braces read as a separate layer in profile; a braces-and-arms beat in the assembly between shells and cushions",
+   "Cast star legs with a top ridge and flattened foot pads, kept low (the steep ottoman legs of round 5 lost)",
+   "Check renders in a Chromium-based capture: this run's critic saw a software line renderer of the compiled geometry"
+  ]
+ }
+}

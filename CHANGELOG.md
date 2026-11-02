@@ -212,6 +212,12 @@ side, printed as worksheets and cited. The story: [release notes](docs/releases/
   door's swing). Two gallery parts that were glass only by their label are named so (Neuschwanstein's
   `conservatory-glass`, the Last Light's `lantern-room-glass`); Neuschwanstein's critic record now says, truly,
   that it judged the version before.
+- **For everyday use, with no terminal:** Find your path gains an everyday group (a digital copy of something
+  you own, a change to your home or garden, your vehicle, a part that is missing, a model kit of your own thing,
+  showing someone what you mean), each with a page, an example and a message to copy, and [one
+  page](docs/for/in-the-apps.md) on using Construct in the Claude app (Cowork) or the ChatGPT app (Codex), both
+  tested. New examples from photos: an Eames Lounge Chair made in the Claude app, a Braun SK 4 with a
+  replacement knob to print, and a garden shed with a planned change.
 - **Contact measured on the surfaces** (from a desk fan two models built, reported from use): a part held up
   only because its box reaches its support passed the audit, as did a heavy part carried by a wire-thin strut
   across a gap. `check` now follows support through the solids themselves: a part whose surface meets nothing

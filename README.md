@@ -29,14 +29,40 @@ model with named parts and working joints, a print, a model kit, a CAD file or a
 - **It repairs itself.** Every problem comes back with where it is and how to fix it.
 - **Nothing to install.** Python's standard library and a browser; no API keys or network service inside Construct.
 
+## Find your path
+
+| You… | Construct gives you | Start here |
+| --- | --- | --- |
+| ***Everyday*** | | |
+| want a model of **anything you can describe** | A thing you describe, as a construct you can turn, replay and share | [Make a construct](docs/for/anyone.md) |
+| want a **digital copy of something you own** | Your chair, guitar, camera or heirloom in 3D from your photos and whatever its maker publishes, showing what was measured and what was guessed | [Copy your thing](docs/for/copy-your-thing.md) |
+| are planning a change to your **home or garden** | Your shed, room or garden as a model to try the change on first: a deck, shelves, an extension, a new layout. A planning model, not a survey | [Try it on a copy](docs/for/home-and-garden.md) |
+| want to customise or restore a **vehicle** | Your car, bike or scooter from its published sizes and your photos, your parts told apart from the factory's: try wheels, a livery or a wrap at true size, plan a restoration | [Your vehicle](docs/for/your-vehicle.md) |
+| need a part that is **missing or broken** | A knob, bracket or cover drawn to the thing it fits, as a print or a CAD file someone can make | [Make the part](docs/for/replace-a-part.md) |
+| want a **model kit of your own thing** | Your scooter, house or guitar as a kit to print, glue and paint, with a booklet | [A kit of your own](docs/for/a-kit-of-your-own.md) |
+| want to **show someone what you mean** | A model a builder, a fabricator or a friend can turn and measure, and a file for their own tools | [Show what you mean](docs/for/show-what-you-mean.md) |
+| ***Professionals and creators*** | | |
+| are a **maker** | A print at your printer's largest size, a model kit with plates and a booklet, true CAD shapes | [Print, kit, CAD](docs/for/makers.md) |
+| are a **game developer** | Props with named parts, real sizes and working joints, for Godot, Unity or Unreal | [Into a game engine](docs/for/game-developers.md) |
+| are a **3D artist** | A construct in Blender with its build, joints and finish on sliders, ready to render or model over | [Into Blender](docs/for/3d-artists.md) |
+| work in **film and motion** | A construct that assembles across a piece of music, as a video | [Film mode](docs/for/film-and-motion.md) |
+| are an **educator or researcher** | An agent-based model's run drawn as a construct, compared, printed, filmed | [Models come alive](docs/for/educators-and-researchers.md) |
+| work in a **museum or archive** | Reconstructions that say how each part is known, so a visitor can tell evidence from design | [Honest reconstructions](docs/for/museums-and-archives.md) |
+| are a **developer** | A scene contract, a command line, an MCP server and skills to build on | [Build on it](docs/for/developers.md) |
+
 ## New in 1.1
 
 Every feature with pictures and the commands to try it: **[What's new in 1.1, a walkthrough](docs/NEW-IN-1.1.md)**.
 And one construct taken through all of it, step by step: **[A longcase clock, end to end](docs/END-TO-END.md)**.
 
+- **Your own formats.** Adapters: what a construct holds, where to read it and the rules that keep an adapter
+  honest, with a template that writes a parts sheet and an STL per part. [Write your own →](docs/ADAPTERS.md)
 - **Honest in finer shades.** A part's size and its shape known apart, every guess in a shade of how firmly it is
   held. Press **P**.
 - **See it as a solid.** Press **S** in any construct; `check --fit` names what pokes through or floats.
+- **Contact you can trust.** `check` follows support through the solids, not their boxes: a part that only seems
+  to rest on another, or hangs on a wire-thin strut, is named with the gap and the part to rest it on. Found from a
+  desk fan two models built; it closed three gaps in the gallery.
 - **Cleaner 3D.** Smoother solids, OBJ that subdivides cleanly, triangle quality reports, for Blender and any
   3D program.
 - **Ready for game engines.** Glued pieces with working hinges for Godot, pieces that break apart and settle,
@@ -49,8 +75,6 @@ And one construct taken through all of it, step by step: **[A longcase clock, en
   bar, a legend and a *How to read it* panel, in views chosen for the data. Runs side by side for a lesson, a
   printable worksheet, CSV and *Cite this run*; a run as a film or a 3D model in Blender, or as plates you can
   stack. 388 of the Models Library's 445 models record with no edits.
-- **Your own formats.** Adapters: what a construct holds, where to read it and the rules that keep an adapter
-  honest, with a template that writes a parts sheet and an STL per part. [Write your own →](docs/ADAPTERS.md)
 
 ## Examples
 
@@ -84,10 +108,14 @@ every guess a deeper amber the more firmly it is held; and the same Duomo as a s
   <img src="docs/media/freecad-piano-leica.jpg" width="49%" alt="The Yamaha CFX and the Leica M3 in FreeCAD as true CAD shapes">
 </p>
 
-**Model kits.** The Yamaha CFX as a 1:12 kit: the steps in 3D, and one step in the paper booklet. [Makers →](docs/for/makers.md)
+**Model kits.** Three constructs as kits to print, glue and paint: the Yamaha CFX piano (1:12, 54 pieces), Tompion's year-going clock (1:12, 34 pieces) and the VW T1 Samba (1:16, 98 pieces), each with its steps in 3D and a paper booklet. [Makers →](docs/for/makers.md)
 
 <p align="center">
-  <img src="docs/media/kit-cfx-guide.gif" width="49%" alt="The CFX kit's 3D guide stepping through its nine steps: the instructions at the top with lines to each numbered piece, the keyboard built at the bench with the piano ghosted around it">
+  <img src="docs/media/kit-cfx-guide.gif" width="32%" alt="The Yamaha CFX piano kit's 3D guide at 1:12: the keyboard built at the bench, the piano ghosted around it">
+  <img src="docs/media/tompion-kit-guide.gif" width="32%" alt="Tompion's year-going clock as a 1:12 kit: its fifteen steps in 3D, the dial plate built at the bench">
+  <img src="docs/media/kit-vw-guide.gif" width="32%" alt="The Volkswagen T1 Samba as a 1:16 kit: from the floor pan, through the cab and body at the bench, to the finished bus">
+</p>
+<p align="center">
   <img src="docs/media/kit-cfx-booklet.jpg" width="49%" alt="Step 3 of the CFX kit in the paper booklet: the keybed built at the bench, each piece numbered and painted polished ebony, drawn exploded">
 </p>
 
@@ -106,19 +134,6 @@ to the moment they adopted, so you can watch an idea spread and see who it reach
 
 <p align="center"><a href="https://rtmandreyev.github.io/construct/examples/netlogo-viral-marketing/"><img src="docs/media/netlogo-viral-marketing.gif" width="100%" alt="The Simple Viral Marketing model running: adoptions spread through the social network on the floor and rise as lines of light, the gold ring marking now, while the counters climb to 500 of 500"></a></p>
 <p align="center"><sub><a href="https://rtmandreyev.github.io/construct/examples/netlogo-viral-marketing/">Open the live model</a> to build new networks, run them tick by tick and compare a hundred runs with NetLogo's own. The model is © 2012 Uri Wilensky; this example is under CC BY-NC-SA 3.0 (see <a href="#license">License</a>).</sub></p>
-
-## Find your path
-
-| You are… | Construct gives you | Start here |
-| --- | --- | --- |
-| **Anyone with an AI agent** | A thing you describe, as a construct you can turn, replay and share | [Make a construct](docs/for/anyone.md) |
-| **A maker** | A print at your printer's largest size, a model kit with plates and a booklet, true CAD shapes | [Print, kit, CAD](docs/for/makers.md) |
-| **A game developer** | Props with named parts, real sizes and working joints, for Godot, Unity or Unreal | [Into a game engine](docs/for/game-developers.md) |
-| **A 3D artist** | A construct in Blender with its build, joints and finish on sliders, ready to render or model over | [Into Blender](docs/for/3d-artists.md) |
-| **In film and motion** | A construct that assembles across a piece of music, as a video | [Film mode](docs/for/film-and-motion.md) |
-| **An educator or researcher** | An agent-based model's run drawn as a construct, compared, printed, filmed | [Models come alive](docs/for/educators-and-researchers.md) |
-| **A museum or archive** | Reconstructions that say how each part is known, so a visitor can tell evidence from design | [Honest reconstructions](docs/for/museums-and-archives.md) |
-| **A developer** | A scene contract, a command line, an MCP server and skills to build on | [Build on it](docs/for/developers.md) |
 
 ## How it works
 

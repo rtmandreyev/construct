@@ -18,7 +18,8 @@ graphics.
 
 ## Try it
 
-1. Install it for your agent (two minutes, nothing system-wide; see [Install](../../README.md#install)).
+1. Install it for your agent (two minutes, nothing system-wide; see [Install](../../README.md#install)), or, with no
+   terminal at all, use the [Claude or ChatGPT app](in-the-apps.md).
 2. Ask: *"make a construct of a 1970s desk fan"*, or *"a masterpiece of the Sydney Opera House"*.
 3. Open the `construct.html` it gives you. Drag to orbit, scroll to zoom, **R** replays the build.
 

@@ -27,6 +27,24 @@
    "model": "Claude Opus 5.5"
   },
   {
+   "slug": "eames-lounge-chair",
+   "title": "Eames Lounge Chair and Ottoman",
+   "mode": "masterpiece",
+   "model": "Claude Opus 5.5"
+  },
+  {
+   "slug": "braun-sk4",
+   "title": "Braun SK 4",
+   "mode": "masterpiece",
+   "model": "DeepSeek V4.1 Flash"
+  },
+  {
+   "slug": "garden-shed",
+   "title": "A garden shed",
+   "mode": "masterpiece",
+   "model": "DeepSeek V4.1 Flash"
+  },
+  {
    "slug": "revox-a77",
    "title": "Revox A77",
    "mode": "fast",

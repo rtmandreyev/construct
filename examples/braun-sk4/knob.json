@@ -1,0 +1,489 @@
+{
+ "format": "construct-scene",
+ "version": 2,
+ "id": "sk4-sender-knob",
+ "title": "Braun SK 4 \u00b7 Sender knob, replacement for printing",
+ "subject": {
+  "category": "object",
+  "summary": "The large tuning knob of a Braun SK 4, modelled at its real 33 mm across and 19.6 mm high as a printable replacement: a skirted cone with twenty-four flutes, a raised indicator bar, and a 6.4 mm bore 14 mm deep with a flat for the shaft key.",
+  "accuracy": "approximate",
+  "synthetic": false
+ },
+ "units": "m",
+ "seed": 1966,
+ "sources": [
+  {
+   "id": "request",
+   "kind": "user_request",
+   "title": "The owner's request",
+   "ref": "A printable replacement for the one missing large control knob of the owner's Braun SK 4; at real size, with body, grip, indicator line and a bored, flat-keyed shaft hole.",
+   "rights": "user_private"
+  },
+  {
+   "id": "photo-1",
+   "kind": "observation",
+   "title": "Front view, lid closed (Alf van Beem, CC0)",
+   "ref": "refs/photo-1.jpg : the large tuning knob at the right of the deck, 3.02 px per mm on the front face.",
+   "rights": "public_domain"
+  },
+  {
+   "id": "photo-2",
+   "kind": "observation",
+   "title": "Deck close-up, lid open (With Associates, CC BY-SA 2.0)",
+   "ref": "refs/photo-2.jpg : the knob's taper, fluted side, top face and indicator bar.",
+   "rights": "permitted"
+  },
+  {
+   "id": "sk4",
+   "kind": "document",
+   "title": "Braun SK 4 record",
+   "ref": "https://die-neue-sammlung.de/en/objekt/radio-phono-combination-stereo-phonosuper-sk4-1 : a 1956 set whose controls are light grey; the knob is one of them.",
+   "rights": "reference_only"
+  }
+ ],
+ "facts": [
+  {
+   "key": "model",
+   "value": "Sender knob for the Braun Phonosuper SK 4",
+   "certainty": "verified",
+   "source": "sk4"
+  },
+  {
+   "key": "year",
+   "value": 1956,
+   "certainty": "verified",
+   "source": "sk4"
+  },
+  {
+   "key": "knob-diameter",
+   "value": 0.033,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "photo-1",
+   "note": "33 mm across the skirt, read off photo-1 against the 580 mm body: the large knob is about 1.5 times the 22 mm small knobs and clearly the largest control."
+  },
+  {
+   "key": "knob-height",
+   "value": 0.0221,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "photo-2",
+   "note": "19.6 mm over the skirt: the knob stands about twice as tall as a small knob's 17 mm."
+  },
+  {
+   "key": "indicator",
+   "value": "A raised bar across the top face, running to the rim",
+   "certainty": "inferred",
+   "source": "photo-2",
+   "note": "Both large and small knobs in the photographs carry a pointer."
+  },
+  {
+   "key": "bore",
+   "value": "6.4 mm bore, 14 mm deep, with a 0.8 mm flat",
+   "certainty": "inferred",
+   "source": "request",
+   "note": "DESIGNED, not measured: the owner will measure the shaft before printing. 6.4 mm suits a 6.0 mm shaft with running clearance; the flat 0.8 mm deep and 4.2 mm across suits a shaft with one flat."
+  },
+  {
+   "key": "material",
+   "value": "Printed, not moulded",
+   "certainty": "inferred",
+   "source": "request",
+   "note": "The original is a moulded grey knob; this is a replacement, so it is designed to print (no overhangs, flat bottom, flutes coarse enough for a 0.4 mm nozzle)."
+  }
+ ],
+ "assets": [],
+ "parts": [
+  {
+   "id": "knob-skirt",
+   "label": "Skirt",
+   "role": "structure",
+   "stage": 0,
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "basis": [
+    "knob-diameter"
+   ],
+   "source": "photo-1",
+   "note": "A 35 mm collar, 2.5 mm high, that stands on the panel and hides the nut; its diameter is read from photo-1, where the knob is about 1.5 times the 22 mm small knobs.",
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0175,
+    "height": 0.0025,
+    "segments": 64,
+    "rings": 0
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "alpha": 0.35,
+    "weight": 1.2,
+    "glow": 0.2
+   }
+  },
+  {
+   "id": "knob-body",
+   "label": "Knob body",
+   "role": "mass",
+   "stage": 1,
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "basis": [
+    "knob-diameter",
+    "knob-height"
+   ],
+   "source": "photo-2",
+   "note": "A 33 mm cone tapering to 29.2 mm over 19.9 mm, with a 6.4 mm bore 14 mm deep: one revolved solid, closed at the bottom, so it prints without supports. Diameter, height and taper are traced off the photographs; the bore is designed to fit.",
+   "shape": {
+    "type": "lathe",
+    "profile": [
+     [
+      0.0032,
+      0.0
+     ],
+     [
+      0.016700000000000003,
+      0.0
+     ],
+     [
+      0.0156,
+      0.0175
+     ],
+     [
+      0.0146,
+      0.0187
+     ],
+     [
+      0.0,
+      0.0187
+     ],
+     [
+      0.0,
+      0.014
+     ],
+     [
+      0.0032,
+      0.014
+     ]
+    ],
+    "segments": 64,
+    "meridians": 8
+   },
+   "at": [
+    0,
+    0.0025,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "alpha": 0.35,
+    "weight": 1.4,
+    "glow": 0.25
+   }
+  },
+  {
+   "id": "knob-bore-flat",
+   "label": "Bore flat",
+   "role": "identity",
+   "stage": 2,
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "basis": [
+    "bore"
+   ],
+   "source": "request",
+   "note": "A 0.8 mm flat, 4.2 mm across, on the bore's wall: the SK 4's knobs are keyed on a shaft with one flat. DESIGNED to fit - measure the shaft across the flat before printing and change BORE_R and this depth to match.",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.005833202097703345,
+     0.014,
+     0.0008000000000000004
+    ]
+   },
+   "at": [
+    0,
+    0.0095,
+    0.0028
+   ],
+   "look": {
+    "weight": 1.3,
+    "glow": 0.35
+   }
+  },
+  {
+   "id": "knob-flute",
+   "label": "Grip flute",
+   "role": "identity",
+   "stage": 3,
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "basis": [
+    "knob-diameter"
+   ],
+   "source": "photo-2",
+   "note": "Twenty-four shallow flutes, 0.5 mm proud, in a band 12.5 mm tall: the fine knurl visible on the knob's side in photo-2, coarse enough to print on a 0.4 mm nozzle.",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0018,
+     0.012,
+     0.0019
+    ]
+   },
+   "at": [
+    0.0159,
+    0.012,
+    0
+   ],
+   "look": {
+    "weight": 0.7,
+    "alpha": 0.8
+   },
+   "repeat": {
+    "count": 24,
+    "radial": {
+     "axis": "y",
+     "center": [
+      0,
+      0.006,
+      0
+     ],
+     "span": 360
+    }
+   }
+  },
+  {
+   "id": "knob-indicator",
+   "label": "Indicator line",
+   "role": "identity",
+   "stage": 4,
+   "certainty": {
+    "size": "inferred",
+    "shape": "inferred"
+   },
+   "basis": [
+    "indicator"
+   ],
+   "source": "photo-2",
+   "note": "A 2.2 x 10.5 mm bar raised 0.9 mm across the top face, running out to the rim: the pointer the photographs show on the large knob.",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.0022,
+     0.0009,
+     0.0105
+    ]
+   },
+   "at": [
+    0,
+    0.02165,
+    -0.003
+   ],
+   "look": {
+    "weight": 1.5,
+    "glow": 0.6
+   }
+  }
+ ],
+ "labels": [],
+ "annotations": [
+  {
+   "id": "a-skirt",
+   "text": "Skirt, \u00d8 35 mm (photo-1)",
+   "part": "knob-skirt",
+   "offset": [
+    -0.02,
+    0.004,
+    0
+   ]
+  },
+  {
+   "id": "a-flute",
+   "text": "24 flutes, 0.5 mm proud",
+   "part": "knob-flute",
+   "offset": [
+    0.012,
+    0.012,
+    0
+   ]
+  },
+  {
+   "id": "a-ind",
+   "text": "Indicator bar 2.2 x 10.5 mm",
+   "part": "knob-indicator",
+   "offset": [
+    0.0,
+    0.014,
+    0
+   ]
+  },
+  {
+   "id": "a-bore",
+   "text": "Bore \u00d8 6.4 mm, flat 0.8 mm (designed)",
+   "part": "knob-bore-flat",
+   "offset": [
+    -0.03,
+    0.03,
+    0
+   ]
+  }
+ ],
+ "anchors": {
+  "base": {
+   "point": [
+    0,
+    0,
+    0
+   ],
+   "up": [
+    0,
+    1,
+    0
+   ]
+  }
+ },
+ "presentation": {
+  "framing": {
+   "yaw": 32,
+   "pitch": 26,
+   "fit": 1.0
+  },
+  "views": [
+   {
+    "id": "bore",
+    "label": "Bore and flat from below",
+    "yaw": 24,
+    "pitch": -34,
+    "distance": 1.5
+   },
+   {
+    "id": "top",
+    "label": "Indicator line",
+    "yaw": 20,
+    "pitch": 62,
+    "distance": 1.4
+   },
+   {
+    "id": "side",
+    "label": "Profile and flutes",
+    "yaw": 90,
+    "pitch": 4,
+    "distance": 1.3
+   }
+  ],
+  "still_pose": "closed",
+  "atmosphere": {
+   "haze": 0.12,
+   "scanlines": false,
+   "vignette": true,
+   "grid": true,
+   "projector": true,
+   "motes": 0.15
+  },
+  "occlusion": "xray",
+  "certainty_style": "subtle",
+  "float": 0
+ },
+ "animation": {
+  "assembly": {
+   "style": "ceremony",
+   "seconds": 6,
+   "interference": false
+  },
+  "idle": {
+   "life": "calm",
+   "events": [
+    "shimmer",
+    "scan"
+   ],
+   "cadence": [
+    12,
+    20
+   ],
+   "strength": 0.22
+  },
+  "camera": {
+   "drift": 4,
+   "breathe": 0.02,
+   "tour": [
+    {
+     "view": "bore",
+     "at": 12,
+     "fly": 3
+    },
+    {
+     "view": "top",
+     "at": 20,
+     "fly": 3
+    },
+    {
+     "view": "hero",
+     "at": 28,
+     "fly": 3.5
+    }
+   ]
+  },
+  "reduced_motion": "still"
+ },
+ "authoring": {
+  "tier": "masterpiece",
+  "research": "done",
+  "sources": [
+   "photo-1",
+   "photo-2",
+   "sk4"
+  ],
+  "review_rounds": 1,
+  "outcome": "self-reviewed",
+  "provenance_note": "Sizes are of two kinds and each part says which: the skirt, body and indicator are traced off the photographs, the bore and its flat are designed to fit a shaft the owner will measure. Nothing here is a moulded original's measurement.",
+  "identity": [
+   {
+    "feature": "A 33 mm skirted cone, 19.6 mm high, the deck's largest control",
+    "parts": [
+     "knob-skirt",
+     "knob-body"
+    ],
+    "source": "photo-1"
+   },
+   {
+    "feature": "Twenty-four shallow flutes round the grip",
+    "parts": [
+     "knob-flute"
+    ],
+    "source": "photo-2"
+   },
+   {
+    "feature": "A raised indicator bar running to the rim",
+    "parts": [
+     "knob-indicator"
+    ],
+    "source": "photo-2"
+   },
+   {
+    "feature": "A bored, flat-keyed shaft hole (designed, not measured)",
+    "parts": [
+     "knob-bore-flat"
+    ],
+    "source": "request"
+   }
+  ],
+  "next": [
+   "Measure the shaft across its flat and re-cut knob-bore-flat if the shaft is not a 6 mm D.",
+   "The original knob is light grey; print in a matching filament or paint it.",
+   "A 0.4 mm nozzle prints the 0.5 mm flutes cleanly; at 0.6 mm they will blur."
+  ]
+ }
+}
