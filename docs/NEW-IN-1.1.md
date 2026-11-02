@@ -13,6 +13,7 @@ to try it; [a longcase clock, end to end](END-TO-END.md) takes one construct thr
 - [CAD](#cad)
 - [Prints](#prints)
 - [Model kits](#model-kits)
+- [Your own formats](#your-own-formats)
 - [A run in one command](#a-run-in-one-command)
 - [Reading a run](#reading-a-run)
 - [For the classroom](#for-the-classroom)
@@ -141,6 +142,20 @@ construct kit scene.json --scale 12 --printer large --out kit/ --only 12,14
 **Not yet built by anyone.** The kits are made and checked by software and by AI critics; none has been printed
 and glued by a person, and they are a first version. If you build one, please
 [tell us how it went](https://github.com/rtmandreyev/construct/issues). [Your first kit, step by step →](for/makers.md#your-first-kit-step-by-step)
+
+## Your own formats
+
+Everything Construct writes (the page, glTF, FreeCAD, prints, kits) reads the same construct: named parts at their
+real sizes, how each is known, how they assemble, open and move. An adapter of your own reads it too, from the
+glTF in any language or from the compiled geometry in Python, and writes whatever your tool, machine or craft
+takes. A template writes a parts sheet (sizes in millimetres, how each size and shape is known, the source) and an
+STL per part.
+
+```sh
+PYTHONPATH=/path/to/construct python3 hosts/adapter-template/construct_parts.py scene.json out/
+```
+
+[Adapters →](ADAPTERS.md)
 
 ## A run in one command
 

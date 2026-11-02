@@ -6,8 +6,11 @@ print in PrusaSlicer and a model kit. Each step shows the command, what came out
 
 **Who did what.** DeepSeek V4.1 Flash built the construct through Hermes, in masterpiece mode: twelve rounds,
 each judged by an independent critic. Claude Opus 5.5 then ran every other step with the 1.1 commands below,
-and made two changes by hand that are said where they happen: one renamed part, and a kit plan. Everything
-needed to repeat it is in [examples/tompion-year-going-clock](../examples/tompion-year-going-clock/).
+and made two changes by hand, shown where they happen: one renamed part, and a kit plan. Everything needed to
+repeat it is in [examples/tompion-year-going-clock](../examples/tompion-year-going-clock/).
+
+**Open it as you read:** [the live construct](https://rtmandreyev.github.io/construct/examples/tompion-year-going-clock/) · [its scene](../examples/tompion-year-going-clock/scene.json) ·
+[the finish map](../examples/tompion-year-going-clock/maps/finish.json) · [the kit plan](../examples/tompion-year-going-clock/kit-plan.json)
 
 - [1. Ask](#1-ask)
 - [2. The agent researches, builds and runs the rounds](#2-the-agent-researches-builds-and-runs-the-rounds)
@@ -20,7 +23,6 @@ needed to repeat it is in [examples/tompion-year-going-clock](../examples/tompio
 - [9. CAD](#9-cad)
 - [10. A print](#10-a-print)
 - [11. A model kit](#11-a-model-kit)
-- [What we learned](#what-we-learned)
 
 <p align="center"><a href="https://rtmandreyev.github.io/construct/examples/tompion-year-going-clock/"><img src="../examples/tompion-year-going-clock/hero.jpg" width="80%" alt="Tompion's year-going longcase clock as a construct in lines of light, labelled: the arched pediment, the glazed hood door, the blued steel hands, the chapter ring, the trunk door and the pendulum bob"></a></p>
 
@@ -45,6 +47,8 @@ The whole request, given to Hermes with the construct skill:
 ```sh
 hermes -z "$(cat REQUEST.md)" --in clock/          # or ask any agent with the construct skill
 ```
+
+[Using Construct in Hermes, Claude Code or any agent →](USING.md)
 
 ## 2. The agent researches, builds and runs the rounds
 
@@ -74,6 +78,8 @@ read as one.
 construct rounds status          # round 13, stopped: the 12-round cap (best: round 12)
 ```
 
+[The scene it wrote →](../examples/tompion-year-going-clock/scene.json) · [How the rounds work →](HOW-IT-IS-MADE.md)
+
 ## 3. Check it, and check the fit
 
 ```sh
@@ -81,11 +87,9 @@ construct check scene.json          # audit: PASS, 0 errors; 16 small parts may 
 construct check scene.json --fit    # fit: nothing pokes through or hides (131 parts as solids)
 ```
 
-**Found here:** `check` now warns when a part's label says glass but its id does not. The hood door's glass
-was `hood-door`, labelled "Glazed hood door": everything after the light (the solid view, exports, prints and
-kits) knows glass by its id, so the dial would have been hidden behind a grey panel. One rename by hand,
-`hood-door` to `hood-door-glass`, fixed it everywhere. Because the scene changed after the rounds, `check` also
-says the critic judged another version, which is true.
+`check` also reads the names. The solid view, the exports, the prints and the kits know glass by its id, and the
+hood door's glass was named `hood-door` ("Glazed hood door" only in its label), so `check` asked for its id to say
+glass. One rename, `hood-door` to `hood-door-glass`, and everything after the light shows the dial through it.
 
 ## 4. Provenance
 
@@ -94,7 +98,8 @@ here 3 parts of verified size (the plinth and the hood's cornice, which set the 
 Collection's dimensions) and 204 inferred, in
 shades from designed to seen in a photograph and checked against a fact.
 
-<p align="center"><img src="media/tompion-provenance.jpg" width="60%" alt="The clock in the provenance view: the case's outline in cyan, size verified; the rest in shades of amber; the legend counts 3 size verified and 204 inferred, and the caption names what is known and from where"></p>
+<p align="center"><a href="https://rtmandreyev.github.io/construct/examples/tompion-year-going-clock/construct.html?mode=provenance"><img src="media/tompion-provenance.jpg" width="60%" alt="The clock in the provenance view: the case's outline in cyan, size verified; the rest in shades of amber; the legend counts 3 size verified and 204 inferred, and the caption names what is known and from where"></a></p>
+<p align="center"><sub><a href="https://rtmandreyev.github.io/construct/examples/tompion-year-going-clock/construct.html?mode=provenance">Open it in the provenance view</a></sub></p>
 
 It is an honest picture of what two photographs and a museum record can give: the overall size and the
 materials are documented; the shape of each moulding was read from a photograph; what hides behind the dial
@@ -104,7 +109,8 @@ materials are documented; the shape of each moulding was read from a photograph;
 
 Press **S**: the same construct as a modelling program shows it, the glass clear.
 
-<p align="center"><img src="media/tompion-solid.jpg" width="70%" alt="The clock in lines of light and as a grey solid side by side"></p>
+<p align="center"><a href="https://rtmandreyev.github.io/construct/examples/tompion-year-going-clock/construct.html?mode=solid"><img src="media/tompion-solid.jpg" width="70%" alt="The clock in lines of light and as a grey solid side by side"></a></p>
+<p align="center"><sub><a href="https://rtmandreyev.github.io/construct/examples/tompion-year-going-clock/construct.html?mode=solid">Open it as a solid</a> · <a href="https://rtmandreyev.github.io/construct/examples/tompion-year-going-clock/construct.html?open=1">with its doors open</a></sub></p>
 
 ## 6. In Blender
 
@@ -119,7 +125,7 @@ construct export scene.json --out quality.glb --quality                 # each t
 ```
 
 In Blender, the add-on imports the scene itself, with its build, metal, finish and open as sliders on the
-clock, and makes the reveal: the construct builds itself in light, turns to a plain model, takes its finish,
+clock, and makes the reveal ([the add-on](../hosts/blender/README.md), [3D export](EXPORT.md)): the construct builds itself in light, turns to a plain model, takes its finish,
 and opens both doors.
 
 <p align="center"><img src="media/tompion-blender.jpg" width="90%" alt="The clock in Blender: in light, finished in walnut and gilt, and with its hood door open on the dial"></p>
@@ -130,9 +136,9 @@ and opens both doors.
 construct export scene.json --out clock-glued.glb --materials finish.json --pieces glued --colliders
 ```
 
-What stays put is one body; each door is one more, on its own hinge (`hosts/godot/construct_joints.gd` makes them
-Godot joints), with a collision box per part. Below, the finished model in Godot 4.7, loaded at run time: the
-glTF's own animations open the doors, and its idle animation swings the pendulum.
+What stays put is one body; each door is one more, on its own hinge
+([`construct_joints.gd`](../hosts/godot/construct_joints.gd) makes them Godot joints), with a collision box per part. Below, the finished model in Godot 4.7, loaded at run time: the
+glTF's own animations open the doors, and its idle animation swings the pendulum. [The Godot guide →](GODOT.md)
 
 <p align="center"><img src="media/tompion-godot.gif" width="36%" alt="The clock in Godot: the hood door opens on the dial, the trunk door opens, the pendulum swings"></p>
 
@@ -147,7 +153,7 @@ construct video scene.json --out clock-film.mp4 --assembly 20 --seconds 24 --siz
 
 <p align="center"><img src="media/tompion-film.gif" width="36%" alt="Frames of the clock's film: the plinth, the trunk, the hood and the dial rising in turn"></p>
 
-The film's music (a Pixabay track) stays with the video; the GIF is silent.
+The film's music (a Pixabay track) stays with the video; the GIF is silent. [Film mode →](FILM.md)
 
 ## 9. CAD
 
@@ -158,6 +164,7 @@ construct freecad scene.json --out clock.FCStd --step clock.step
 
 In FreeCAD, the model tree holds the clock's stages and its named parts, with the two doors as joints. What a
 construct draws only in lines (a moulding's edge, the hour numerals) is left out of the CAD file, and said.
+[FreeCAD and STEP →](FREECAD.md)
 
 <p align="center"><img src="media/tompion-freecad.jpg" width="90%" alt="The clock in FreeCAD's window: the model tree of stages and named parts, and the clock as CAD solids"></p>
 
@@ -173,6 +180,7 @@ construct print scene.json --out clock.3mf --printer desktop --fit --exact
 
 One watertight print, 21 cm tall. PrusaSlicer reads it as manifold and slices it: about 10½ hours and 80 cm³ of
 filament (about 100 g of PLA), with supports over the face where the hood overhangs the trunk.
+[Printing →](PRINTING.md)
 
 <p align="center"><img src="media/tompion-prusaslicer.jpg" width="90%" alt="PrusaSlicer's G-code viewer: the clock sliced, supports in green over its face, about 10.5 hours"></p>
 
@@ -197,18 +205,7 @@ construct kit scene.json --scale 12 --printer desktop --plan kit-plan.json --mat
 
 <p align="center"><img src="media/tompion-kit-plate.jpg" width="70%" alt="The kit's first plate: its pieces laid out and numbered"></p>
 
-Two problems are left, both the construct's own: the dial plate sits a hair off the trunk, and the rating nut
-under the pendulum's bob is too fine to print at 1:12 (the kit leaves it off and says so). **Not yet built by
-anyone:** like every kit, it is made and checked by software and by AI critics, and a first version.
-
-## What we learned
-
-The walkthrough found five things, each fixed in 1.1 and tested:
-
-- **Glass named only in a label** became a `check` warning, and the skill says how to name glass.
-- **The kit's order:** a thin part merged into another piece (a back board into the hood) could move that whole
-  piece first in the build. A piece's own part now decides.
-- **A kit merge in pieces** was reported as "1 pieces"; it now counts the bits too small to keep.
-- **The headless browser** that draws pictures and films now waits on a busy machine instead of failing.
-- **Masterpiece's two hours** count only the agent's own work; the critic took 217 minutes more here. The new
-  `timeboxed` mode is masterpiece in two hours in all, for when that matters more than the last rounds.
+The kit's checks leave two notes for the builder: the dial plate sits a hair off the trunk (a drop of glue fills
+it), and the rating nut under the pendulum's bob is too fine to print at 1:12, so the kit leaves it off. **Not yet
+built by anyone:** like every kit, it is made and checked by software and by AI critics, and a first version.
+[Kits →](PRINTING.md#a-kit-revell-style) · [Your first kit, step by step →](for/makers.md#your-first-kit-step-by-step)

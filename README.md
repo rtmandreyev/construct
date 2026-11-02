@@ -1,5 +1,11 @@
 # Construct
 
+**Construct is a tool for AI agents that turns everything that can be found out about a thing into one exact,
+checked description of it: its named parts at their real sizes, how they fit together, open and move, and how
+each one is known, measured or guessed.** An agent does the research and writes the description; Construct
+checks it and builds from it, the same description always into the same result. Everything else comes from that
+one description.
+
 **Describe a thing. Get a hologram, a 3D model, a print and a kit.** You ask any AI agent for a thing
 in plain words, and it builds an animated model of it in lines of light, the **Measured Light** style,
 as one web page you can open anywhere, honest about what is known. The same construct becomes a 3D
@@ -43,15 +49,17 @@ And one construct taken through all of it, step by step: **[A longcase clock, en
   bar, a legend and a *How to read it* panel, in views chosen for the data. Runs side by side for a lesson, a
   printable worksheet, CSV and *Cite this run*; a run as a film or a 3D model in Blender, or as plates you can
   stack. 388 of the Models Library's 445 models record with no edits.
+- **Your own formats.** Adapters: what a construct holds, where to read it and the rules that keep an adapter
+  honest, with a template that writes a parts sheet and an STL per part. [Write your own →](docs/ADAPTERS.md)
 
 ## Examples
 
 **Provenance and solids.** The Duomo di Milano in provenance shades (**P**): verified sizes in cyan, traced shapes in blue,
-every guess a deeper amber the more firmly it is held; and the FJ62 in light and as a solid (**S**). [Museums and archives →](docs/for/museums-and-archives.md)
+every guess a deeper amber the more firmly it is held; and the same Duomo as a solid (**S**), as a modelling program shows it. [Museums and archives →](docs/for/museums-and-archives.md)
 
 <p align="center">
   <img src="docs/media/provenance-shades-duomo.jpg" width="49%" alt="The Duomo di Milano in the provenance view: verified sizes in cyan, traced parts in blue, inferred parts in shades of amber, with the legend counting each">
-  <img src="docs/media/solid-fj62.jpg" width="49%" alt="The FJ62 construct in lines of light and as a solid">
+  <img src="docs/media/solid-duomo.jpg" width="49%" alt="The Duomo di Milano as a solid, from the same view">
 </p>
 
 **Film mode.** A construct assembling across a piece of music. [Film and motion →](docs/for/film-and-motion.md)
@@ -80,7 +88,7 @@ every guess a deeper amber the more firmly it is held; and the FJ62 in light and
 
 <p align="center">
   <img src="docs/media/kit-cfx-guide.gif" width="49%" alt="The CFX kit's 3D guide stepping through its nine steps: the instructions at the top with lines to each numbered piece, the keyboard built at the bench with the piano ghosted around it">
-  <img src="docs/media/kit-cfx.jpg" width="49%" alt="Step 3 of the CFX kit in 3D and in the paper booklet, the keybed built at the bench">
+  <img src="docs/media/kit-cfx-booklet.jpg" width="49%" alt="Step 3 of the CFX kit in the paper booklet: the keybed built at the bench, each piece numbered and painted polished ebony, drawn exploded">
 </p>
 
 **NetLogo runs.** A simulation's whole run as a construct, time as its height. [Educators and researchers →](docs/for/educators-and-researchers.md)
@@ -252,6 +260,7 @@ Construct is deliberately small. You need:
 | teach with it, or show it in a museum | [In a classroom and a museum](docs/CLASSROOM.md) |
 | compare models, or score your own | [Evaluation](docs/EVALUATION.md) |
 | build on it or test the code | [Development](docs/DEVELOPMENT.md) and [the scene contract](CONTRACT.md) |
+| write your own adapter (a format, an engine, a machine) | [Adapters](docs/ADAPTERS.md) |
 | know where the method comes from | [About](docs/ABOUT.md) |
 | see what changed | [CHANGELOG.md](CHANGELOG.md) and the [1.1.0](docs/releases/v1.1.0.md) and [1.0.0](docs/releases/v1.0.0.md) release notes |
 

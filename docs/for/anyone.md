@@ -34,4 +34,4 @@ Before it starts, the agent tells you which mode it will use and why:
 - [How a construct is made](../HOW-IT-IS-MADE.md): the process, step by step
 - [The Measured Light style](../STYLE.md): what you are looking at, and the keys
 - [Using Construct](../USING.md): every way to run it
-- [The gallery](https://rtmandreyev.github.io/construct/): 21 constructs to open and explore
+- [The gallery](https://rtmandreyev.github.io/construct/): every example, to open and explore

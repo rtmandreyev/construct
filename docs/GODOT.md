@@ -82,4 +82,4 @@ default), so Construct does not write its own.
 
 The same file opens in Unity (glTFast) and Unreal. They keep the named parts and the `open` animation;
 the collider boxes arrive as ordinary meshes named `<part>-convcolonly`, which you can turn into colliders
-by hand. Engine packages that do this for you are on the [roadmap](ROADMAP.md).
+by hand.
