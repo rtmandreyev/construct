@@ -209,7 +209,7 @@ class Stock(unittest.TestCase):
     1.1: a label waits for its part to be built)."""
 
     def test_the_viewer_is_the_pinned_viewer(self):
-        self.assertEqual((HERE / "viewer" / "hologram.js").read_bytes(), (HERE / "testdata" / "hologram-1.1.0.js").read_bytes())
+        self.assertEqual((HERE / "viewer" / "hologram.js").read_bytes(), (HERE / "testdata" / "hologram-1.1.1.js").read_bytes())
 
     def test_a_page_carries_film_mode_only_when_asked(self):
         geometry = scene.compile_scene(studio.load(str(EXAMPLES / "cd.json")))
@@ -279,6 +279,19 @@ class Viewer(unittest.TestCase):
             return json.loads(b.evaluate(expression))
         finally:
             b.close()
+
+    def test_the_provenance_legend_shows_where_p_does(self):
+        # found on the gallery: its pages embed the construct with ui=0, and P coloured the parts with no legend
+        legend = ("HOLO.ready.then(() => { const l = document.querySelector('.legend'); "
+                  "return JSON.stringify([getComputedStyle(l).display, l.querySelectorAll('.row').length]); })")
+        for query, shown in (({"ui": 0}, True), ({}, True), ({"ui": 0, "capture": 1}, False)):
+            b = render.open_browser(render._url(str(Path(self.d, "stock.html")), mode="provenance", **query), 640, 400, 1.0)
+            try:
+                display, rows = json.loads(b.evaluate(legend))
+            finally:
+                b.close()
+            self.assertEqual(display != "none", shown, query)
+            self.assertGreater(rows, 0)   # a row per kind of evidence, with its count
 
     def test_without_film_options_film_mode_changes_nothing(self):
         # reactivity alone is not a film option: it only shapes what ?audio= brings

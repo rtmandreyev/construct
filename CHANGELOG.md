@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.1.1 — unreleased
+
+- **The provenance legend on embedded pages:** a page embedded with `ui=0` (every gallery example) coloured
+  its parts on **P** but hid the legend that says what each colour means and how many parts are each; it now
+  shows wherever **P** does, and stays out of stills (`capture=1`). The viewer's pinned copy moves to
+  `testdata/hologram-1.1.1.js`.
+- **No copy of Chrome left behind:** on macOS, Chrome copies itself on every launch to check its signature and
+  removes the copy when asked to quit, but not when it is terminated. Construct's headless browser (every
+  capture, still, kit picture and many tests) was terminated, so each launch left a full copy of Chrome in the
+  user's temporary folder (thousands over a week of work). It now asks Chrome to quit first.
+
 ## 1.1.0 — 2026-11-02
 
 Models come alive: the NetLogo bridge, made reliable on the whole Models Library and usable from

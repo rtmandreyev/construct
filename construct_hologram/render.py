@@ -358,6 +358,13 @@ class Browser:
         Path(path).write_bytes(base64.b64decode(data))
 
     def close(self):
+        # asked to quit, Chrome removes the copy of itself it makes on macOS to check its signature
+        # (…/X/com.google.Chrome.code_sign_clone); terminated, it leaves one behind, a full app each time
+        try:
+            self.call("Browser.close")
+            self.proc.wait(timeout=10)
+        except Exception:
+            pass
         try:
             self.ws.close()
         except Exception:

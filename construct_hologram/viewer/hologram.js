@@ -1235,7 +1235,8 @@ void main() {
     const sheetCaps = el("div", "sheetcaps"); overlay.appendChild(sheetCaps);
     const setUi = () => {
       document.body.classList.toggle("noui", !opt.ui);
-      legend.style.display = opt.mode === "provenance" ? "block" : "none";
+      // the legend says what the colours mean, so it shows wherever P does (an embedded page too); not in a still
+      legend.style.display = opt.mode === "provenance" && (opt.ui || !opt.capture) ? "block" : "none";
       document.body.classList.toggle("provenance", opt.mode === "provenance");
       document.body.classList.toggle("solid", !!(opt.solid && holo.solid));
       help.style.display = opt.ui && !opt.capture ? "block" : "none";
