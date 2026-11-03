@@ -150,12 +150,12 @@ def payload(scene, exact=True):
             "articulations": arts, "left_out": left_out}
 
 
-# Runs inside FreeCAD: reads the job named by $CONSTRUCT_FREECAD_JOB, writes its result beside it.
+# Runs inside FreeCAD: reads its job (JOB, put before this when the script is written), writes its result beside it.
 SCRIPT = r'''
 import json, os, re
 import FreeCAD, Part, Mesh, Import
 
-job = json.load(open(os.environ["CONSTRUCT_FREECAD_JOB"], encoding="utf-8"))
+job = json.load(open(JOB, encoding="utf-8"))
 data = json.load(open(job["payload"], encoding="utf-8"))
 doc = FreeCAD.newDocument(re.sub(r"[^A-Za-z0-9_]", "_", data["id"]) or "construct")
 V = FreeCAD.Vector
@@ -493,6 +493,23 @@ def _app(exe):
     return None
 
 
+# what FreeCAD is given of this process's environment: what a program needs to start, find its libraries and keep its
+# files on Windows, macOS and Linux, and FreeCAD's own settings; never the rest (API keys among it)
+_FREECAD_ENV = ("PATH", "HOME", "USER", "LOGNAME", "SHELL", "TMPDIR", "TEMP", "TMP", "LANG", "LC_ALL", "LC_CTYPE",
+                "LD_LIBRARY_PATH", "XDG_CONFIG_HOME", "XDG_DATA_HOME", "XDG_CACHE_HOME", "XDG_RUNTIME_DIR",
+                "SYSTEMROOT", "SYSTEMDRIVE", "WINDIR", "COMSPEC", "PATHEXT", "APPDATA", "LOCALAPPDATA", "PROGRAMDATA",
+                "PROGRAMFILES", "USERPROFILE", "USERNAME", "HOMEDRIVE", "HOMEPATH", "NUMBER_OF_PROCESSORS",
+                "PROCESSOR_ARCHITECTURE", "FREECAD_USER_HOME", "FREECAD_USER_DATA", "FREECAD_USER_TEMP")
+
+
+def _freecad_env(app):
+    """The environment FreeCAD runs in: the names above as they are here, and off screen for its app."""
+    env = {k: os.environ.get(k) for k in _FREECAD_ENV if os.environ.get(k) is not None}
+    if app:
+        env["QT_QPA_PLATFORM"] = "offscreen"
+    return env
+
+
 # what FreeCAD's app says off screen whether or not anything is wrong
 _QT_NOISE = ("does not support grabbing", "does not support propagateSizeHints", "QOpenGLWidget is not supported",
              "imageFromFramebuffer failed", "Running: ")
@@ -522,7 +539,7 @@ def make(scene, fcstd=None, step=None, freecad=None, timeout=900, exact=True):
     with tempfile.TemporaryDirectory() as tmp:
         tmp = Path(tmp)
         (tmp / "payload.json").write_text(json.dumps(data), encoding="utf-8")
-        (tmp / "build.py").write_text(SCRIPT, encoding="utf-8")
+        (tmp / "build.py").write_text("JOB = %s\n" % json.dumps(str(tmp / "job.json")) + SCRIPT, encoding="utf-8")
         job = {"payload": str(tmp / "payload.json"), "result": str(tmp / "result.json"),
                "fcstd": str(Path(fcstd).resolve()) if fcstd else None,
                "step": str(Path(step).resolve()) if step else None}
@@ -530,13 +547,10 @@ def make(scene, fcstd=None, step=None, freecad=None, timeout=900, exact=True):
             if p:
                 Path(p).resolve().parent.mkdir(parents=True, exist_ok=True)
         (tmp / "job.json").write_text(json.dumps(job), encoding="utf-8")
-        env = dict(os.environ, CONSTRUCT_FREECAD_JOB=str(tmp / "job.json"))
         app = _app(exe)
-        if app:
-            env["QT_QPA_PLATFORM"] = "offscreen"
         try:
-            r = subprocess.run([app or exe, str(tmp / "build.py")], cwd=tmp, env=env, capture_output=True, text=True,
-                               timeout=timeout)
+            r = subprocess.run([app or exe, str(tmp / "build.py")], cwd=tmp, env=_freecad_env(app), capture_output=True,
+                               text=True, timeout=timeout)
         except subprocess.TimeoutExpired:
             raise FreeCADError("FreeCAD did not finish in %d s" % timeout)
         if not (tmp / "result.json").is_file():

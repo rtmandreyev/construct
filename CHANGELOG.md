@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.1.2 — unreleased
+
+- **FreeCAD gets only what it needs:** `construct freecad` ran FreeCAD with a copy of the whole environment, API keys
+  included. It now passes only what a program needs to start and keep its files on Windows, macOS and Linux, and
+  FreeCAD's own settings (`FREECAD_USER_*`); the job travels in the script. Hermes's skill scan read the copy as a
+  possible leak and refused to install the skill from GitHub without `--force`; it now installs as is
+  (`hermes skills install rtmandreyev/construct/skills/construct`).
+
 ## 1.1.1 — 2026-11-03
 
 - **New things from real ones** ([docs/for/invent-from-what-exists.md](docs/for/invent-from-what-exists.md)): a use

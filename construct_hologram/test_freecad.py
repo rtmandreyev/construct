@@ -89,6 +89,17 @@ class Payload(unittest.TestCase):
         self.assertTrue(said.endswith("Traceback (most recent call last):\nValueError: bad"))
         self.assertNotIn("try again", said)
 
+    def test_freecad_is_given_only_what_it_needs(self):
+        os.environ["CONSTRUCT_TEST_SECRET"] = "sk-not-for-freecad"
+        try:
+            env = freecad._freecad_env("/x/FreeCAD")
+        finally:
+            del os.environ["CONSTRUCT_TEST_SECRET"]
+        self.assertNotIn("CONSTRUCT_TEST_SECRET", env)
+        self.assertEqual((env["PATH"], env["QT_QPA_PLATFORM"]), (os.environ["PATH"], "offscreen"))
+        self.assertNotIn("QT_QPA_PLATFORM", freecad._freecad_env(None))   # its command line has no window to hide
+        self.assertNotIn("environ", freecad.SCRIPT)                       # the job is in the script
+
 
 CHECK = r'''
 import FreeCAD, Import, json, os
