@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.1.1 — unreleased
+## 1.1.1 — 2026-11-03
 
 - **New things from real ones** ([docs/for/invent-from-what-exists.md](docs/for/invent-from-what-exists.md)): a use
   case for game developers, filmmakers, Blender artists and worldbuilders: how to write a brief that grounds an
