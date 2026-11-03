@@ -51,7 +51,7 @@
   .sheetcaps .sheethead { position: absolute; left: 0; right: 0; bottom: 0; padding: 4px 10px; font-size: 10px; letter-spacing: .12em;
     color: #cbbcd8; background: rgba(0,0,0,.55); }
   pre.error { position: absolute; left: 20px; top: 20px; right: 20px; white-space: pre-wrap; color: #ffb1b1; font-size: 11px; }
-  body.noui .help, body.noui .legend { display: none !important; }
+  body.noui .help { display: none !important; }
   .rounds { position: absolute; right: 20px; top: 18px; max-width: 46%; font-size: 10px; letter-spacing: .06em;
     color: var(--dim); text-shadow: 0 0 4px #000; }
   .rounds .head { letter-spacing: .14em; color: #cbbcd8; margin-bottom: 4px; }
@@ -1309,7 +1309,8 @@ void main() {
     const sheetCaps = el("div", "sheetcaps"); overlay.appendChild(sheetCaps);
     const setUi = () => {
       document.body.classList.toggle("noui", !opt.ui);
-      legend.style.display = opt.mode === "provenance" ? "block" : "none";
+      // the legend says what the colours mean, so it shows wherever P does (an embedded page too); not in a still
+      legend.style.display = opt.mode === "provenance" && (opt.ui || !opt.capture) ? "block" : "none";
       document.body.classList.toggle("provenance", opt.mode === "provenance");
       document.body.classList.toggle("solid", !!(opt.solid && holo.solid));
       help.style.display = opt.ui && !opt.capture ? "block" : "none";
