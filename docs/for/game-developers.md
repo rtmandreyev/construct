@@ -35,6 +35,7 @@ func _ready():
 
 ## Go deeper
 
+- [New things from real ones](invent-from-what-exists.md): design a ship, a vehicle, a creature or an artefact from real ones, with a brief to copy
 - [Godot](../GODOT.md): glued and loose pieces, colliders, names Godot would misread
 - [3D export](../EXPORT.md): glTF and OBJ, materials, quality, levels of detail
 - [Archetypes](../ARCHETYPES.md): templates and seeded variants

@@ -2,7 +2,8 @@
 
 For every example (examples/examples.json), and every "beyond" item drawn from its construct
 (`"pictures": "construct"` in examples/beyond.json), it writes hero.jpg (1440 x 900) and thumb.jpg
-(1200 x 750), and for every film (examples/films.json) poster.jpg (1200 x 750). Each construct is drawn by Construct's
+(1200 x 750), and for every film (examples/films.json) poster.jpg (1200 x 750). An invented thing published to view
+only (examples/worlds.json) has no scene in the repository: its own construct.html is drawn as it is. Each construct is drawn by Construct's
 own viewer, built as the gallery builds it, in its hero view, assembled and at rest (reduced motion).
 
 The picture is framed on what the construct draws, not on its labels: a render without labels finds
@@ -117,16 +118,22 @@ def main(argv):
     wanted = set(argv)
     with tempfile.TemporaryDirectory() as tmp:
         beyond = [b["slug"] for b in site._load_beyond() if b.get("pictures") == "construct"]
+        worlds = [w["slug"] for w in site._load_worlds()]
         for kind, slugs, src_of in (("example", examples, lambda s: site.EXAMPLES / s),
                                     ("film", films, lambda s: site.EXAMPLES / "films" / s),
-                                    ("beyond", beyond, lambda s: site.EXAMPLES / s)):
+                                    ("beyond", beyond, lambda s: site.EXAMPLES / s),
+                                    ("world", worlds, lambda s: site.EXAMPLES / s)):
             for slug in slugs:
                 if wanted and slug not in wanted:
                     continue
                 src, built = src_of(slug), Path(tmp, kind + "-" + slug)
-                studio.build(str(site._public_scene(src / "scene.json", Path(tmp, "scenes"))), str(built), asset_root=str(src))
+                if kind == "world":
+                    page = src / "construct.html"
+                else:
+                    studio.build(str(site._public_scene(src / "scene.json", Path(tmp, "scenes"))), str(built), asset_root=str(src))
+                    page = studio.page_in(built)
                 png = Path(tmp, kind + "-" + slug + ".png")
-                window, zoom = shoot(studio.page_in(built), png)
+                window, zoom = shoot(page, png)
                 outs = [("poster.jpg", (1200, 750))] if kind == "film" else [("hero.jpg", (1440, 900)), ("thumb.jpg", (1200, 750))]
                 for name, size in outs:
                     cut(png, window, src / name, size)

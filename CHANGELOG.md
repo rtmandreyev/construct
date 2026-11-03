@@ -2,6 +2,11 @@
 
 ## 1.1.1 — unreleased
 
+- **New things from real ones** ([docs/for/invent-from-what-exists.md](docs/for/invent-from-what-exists.md)): a use
+  case for game developers, filmmakers, Blender artists and worldbuilders: how to write a brief that grounds an
+  invented ship, vehicle, creature or artefact in real designs, with an invented brief to follow. Three examples made
+  for the author's album film (ARGUS, Lander 2, Object 001) join the gallery as their own group, published to view
+  only: all rights reserved, without their scenes or briefs (`examples/worlds.json`; see NOTICE).
 - **The provenance legend on embedded pages:** a page embedded with `ui=0` (every gallery example) coloured
   its parts on **P** but hid the legend that says what each colour means and how many parts are each; it now
   shows wherever **P** does, and stays out of stills (`capture=1`). The viewer's pinned copy moves to

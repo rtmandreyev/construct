@@ -43,6 +43,7 @@ model with named parts and working joints, a print, a model kit, a CAD file or a
 | want to **show someone what you mean** | A model a builder, a fabricator or a friend can turn and measure, and a file for their own tools | [Show what you mean](docs/for/show-what-you-mean.md) |
 | ***Professionals and creators*** | | |
 | are a **maker** | A print at your printer's largest size, a model kit with plates and a booklet ([four to try](https://rtmandreyev.github.io/construct/#kits)), true CAD shapes | [Print, kit, CAD](docs/for/makers.md) |
+| create **new ships, creatures or worlds** for a game, film or story | New things designed from real ones: a construct, a 3D model with working parts, a film ([see three](https://rtmandreyev.github.io/construct/#worlds)) | [New things from real ones](docs/for/invent-from-what-exists.md) |
 | are a **game developer** | Props with named parts, real sizes and working joints, for Godot, Unity or Unreal | [Into a game engine](docs/for/game-developers.md) |
 | are a **3D artist** | A construct in Blender with its build, joints and finish on sliders, ready to render or model over | [Into Blender](docs/for/3d-artists.md) |
 | work in **film and motion** | A construct that assembles across a piece of music, as a video | [Film mode](docs/for/film-and-motion.md) |
@@ -299,7 +300,9 @@ See [CONTRIBUTING.md](CONTRIBUTING.md). Run the tests with
 (`examples/netlogo-*`: [viral marketing](examples/netlogo-viral-marketing/), [flocking](examples/netlogo-flocking/),
 [wolf sheep](examples/netlogo-wolf-sheep/), [fire](examples/netlogo-fire/), [fireflies](examples/netlogo-fireflies/),
 [virus on a network](examples/netlogo-virus-on-a-network/) and [virus compare](examples/netlogo-virus-compare/)) derive from Uri
-Wilensky's NetLogo models and are under CC BY-NC-SA 3.0 instead (see each LICENSE). The [Blender
+Wilensky's NetLogo models and are under CC BY-NC-SA 3.0 instead (see each LICENSE). Three are not licensed at all:
+[ARGUS](examples/argus/), [Lander 2](examples/lander-2/) and [Object 001](examples/object-001/), made for the author's
+album film, are all rights reserved, published to view only (see each LICENSE). The [Blender
 add-on](hosts/blender/) is under GPL-3.0-or-later, as Blender's extensions platform requires; what
 you make with it is yours.
 

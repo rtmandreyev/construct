@@ -47,6 +47,11 @@ General Public License v3.0 or later (see hosts/blender/LICENSE), as Blender's e
 requires of add-ons. Its zip bundles part of Construct (the scene compiler and the 3D export),
 which remains Apache-2.0, with Construct's LICENSE and this NOTICE beside it.
 
+Three folders are not licensed at all: examples/argus/, examples/lander-2/ and examples/object-001/, constructs
+of invented things made for the author's visual album film. Copyright 2026 Artyom Andreyev, all rights reserved:
+they are published to be viewed only, not under Apache-2.0 or any other licence (see each folder's LICENSE).
+Their scenes and briefs are not in this repository.
+
 History: extracted from the hologram-skill branch of the Tessera project, where the same
 author wrote it (first under Apache-2.0); relicensed under MIT by its author for 0.2.1 to 0.3.0,
 and under Apache-2.0 again from 1.0.0.

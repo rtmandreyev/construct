@@ -27,5 +27,6 @@ construct video scene.json --out film.mp4 --assembly 245 --audio track-audio.jso
 
 ## Go deeper
 
+- [New things from real ones](invent-from-what-exists.md): design a ship, a vehicle, a creature or an artefact from real ones, with a brief to copy
 - [Film mode](../FILM.md)
 - [Runs as films](../NETLOGO.md) and [the Blender add-on](../../hosts/blender/README.md)

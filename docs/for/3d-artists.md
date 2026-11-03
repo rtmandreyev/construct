@@ -30,5 +30,6 @@ In Blender: **Edit > Preferences > Get Extensions > Install from Disk**, then Fi
 
 ## Go deeper
 
+- [New things from real ones](invent-from-what-exists.md): design a ship, a vehicle, a creature or an artefact from real ones, with a brief to copy
 - [The Blender add-on](../../hosts/blender/README.md)
 - [3D export](../EXPORT.md): materials, quality, OBJ for artists

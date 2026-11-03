@@ -5,7 +5,7 @@ Start with the first two pages if you are new to Construct; the rest are there w
 **Everyday:** [no terminal: the Claude or ChatGPT app](for/in-the-apps.md) · [copy your thing](for/copy-your-thing.md) · [your home or garden](for/home-and-garden.md) · [your vehicle](for/your-vehicle.md) · [make a part](for/replace-a-part.md) · [a kit of your own](for/a-kit-of-your-own.md) · [show what you mean](for/show-what-you-mean.md)
 
 **By who you are:** [anyone with an AI agent](for/anyone.md) · [makers](for/makers.md) ·
-[game developers](for/game-developers.md) · [3D artists](for/3d-artists.md) · [film and motion](for/film-and-motion.md) ·
+[new things from real ones](for/invent-from-what-exists.md) · [game developers](for/game-developers.md) · [3D artists](for/3d-artists.md) · [film and motion](for/film-and-motion.md) ·
 [educators and researchers](for/educators-and-researchers.md) · [museums and archives](for/museums-and-archives.md) ·
 [developers](for/developers.md)
 
