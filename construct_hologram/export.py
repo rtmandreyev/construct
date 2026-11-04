@@ -719,25 +719,37 @@ def to_gltf(g, wire="edges", pose="closed", materials=None, wire_radius=None, me
     def emit_bodies():
         """The pieces, as bodies: interlocked pieces together (an assembly), each with its parts' meshes."""
         groups_of, joint_of = {}, {}
+        fixed_key = () if glued else -1
+
+        def spec(a):
+            return {"type": a["type"], "articulation": a["id"],
+                    "pivot": [round(x, 6) for x in a.get("pivot") or (0.0, 0.0, 0.0)],
+                    "axis": [round(x, 6) for x in a["axis"]], "amount": a["amount"],
+                    "unit": a.get("unit", "deg" if a["type"] in ("hinge", "turn") else "m")}
         if glued:   # one body for what stays put; one for each articulation chain, its joint in its extras
-            for c in copies:
-                groups_of.setdefault(c["chain"], []).append(c)
-            for chain in groups_of:
-                if chain >= 0:
-                    a = arts[joints[chain][-1]]
-                    outer = next((k for k in groups_of if k >= 0 and list(joints[k]) == list(joints[chain][:-1])), -1)
-                    joint_of[chain] = {"type": a["type"], "articulation": a["id"], "to": outer,
-                                       "pivot": [round(x, 6) for x in a.get("pivot") or (0.0, 0.0, 0.0)],
-                                       "axis": [round(x, 6) for x in a["axis"]], "amount": a["amount"],
-                                       "unit": a.get("unit", "deg" if a["type"] in ("hinge", "turn") else "m")}
+            for c in copies:   # keyed by the chain's articulations, outermost first
+                groups_of.setdefault(tuple(joints[c["chain"]]) if c["chain"] >= 0 else (), []).append(c)
+            for path in groups_of:
+                if path:
+                    # it hangs on the nearest body its chain passes through; the joints between them (a sunroof
+                    # panel that slides back and lifts) go in its joint's "chain", for one joint with all their freedoms
+                    to = next(path[:n] for n in range(len(path) - 1, -1, -1) if path[:n] in groups_of or not n)
+                    joint_of[path] = dict(spec(arts[path[-1]]), to=to)
+                    if len(path) - len(to) > 1:
+                        joint_of[path]["chain"] = [spec(arts[i]) for i in path[len(to):]]
         else:
             for i, gi in enumerate(_assemblies(copies)):
                 groups_of.setdefault(gi, []).append(copies[i])
         names = {}
+        ends = {}
+        for path in groups_of:
+            if glued and path:
+                ends[path[-1]] = ends.get(path[-1], 0) + 1
         for key, members in groups_of.items():
-            members.sort(key=lambda c: (c["moving"] and key == -1 and glued, -sum(len(h) for h in c["hulls"])))
-            if glued:
-                names[key] = "%s-body" % g["id"] if key == -1 else "%s-%s" % (g["id"], joint_of[key]["articulation"])
+            members.sort(key=lambda c: (c["moving"] and key == fixed_key and glued, -sum(len(h) for h in c["hulls"])))
+            if glued:   # named for its joint, or for its whole chain where other chains end in the same joint
+                names[key] = "%s-body" % g["id"] if not key else "%s-%s" % (
+                    g["id"], arts[key[-1]]["id"] if ends[key[-1]] == 1 else "-".join(arts[i]["id"] for i in key))
         for key, members in groups_of.items():
             head = members[0]
             pts = [p for c in members for comp in c["comps"] for i in comp for p in c["gr"]["tris"][i]]
@@ -773,10 +785,14 @@ def to_gltf(g, wire="edges", pose="closed", materials=None, wire_radius=None, me
             name = names.get(key) or (head["name"] if len(members) == 1 else head["name"] + "-assembly")
             extra = {"piece": name, "parts": [c["name"] for c in members]}
             if key in joint_of:
-                extra["joint"] = dict(joint_of[key], to=names[joint_of[key]["to"]] if joint_of[key]["to"] in names
-                                      else names.get(-1))
+                extra["joint"] = dict(joint_of[key], to=names.get(joint_of[key]["to"], "%s-body" % g["id"]))
+                for j in [extra["joint"]] + extra["joint"].get("chain", []):
+                    if j["type"] in ("slide", "lift"):
+                        # a slide has no pivot of its own: its joint sits on the piece it moves, not at the scene's
+                        # origin metres away, where an engine's solver swings it about
+                        j["pivot"] = [round(x, 6) for x in centre]
             # glued, a building's fixed body stays where it stands (static): a castle on its rock does not topple
-            fixed = glued and key == -1 and g.get("subject", {}).get("category") == "architecture"
+            fixed = glued and key == fixed_key and g.get("subject", {}).get("category") == "architecture"
             body = node({"name": _node_name(name), "translation": _sub(centre, head["origin"]), "children": kids,
                          "extensions": {"OMI_physics_body": {"motion": {"type": "static"} if fixed else {
                              "type": "dynamic", "mass": round(min(max(mass, 0.05), 2000.0), 3)}}},

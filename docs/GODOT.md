@@ -60,11 +60,16 @@ func _ready():
 ```
 
 A building's fixed body is static (a castle on its rock stays where it stands; its doors still hang on
-it). A hinge opens in the construct's direction up to its angle; a slide or lift travels its distance. Measured
-in Godot 4.7: the glued FJ62 is two bodies that settle within 2 cm, and its tailgate, released, falls open
-on its hinge and stops at 86 degrees (its 85, on a soft limit). All 28 gallery constructs export glued and get
-every joint they ask for; what tips over (a guitar stood on its end, a tape deck on its feet) is physics, not
-glue. The tests run this in Godot.
+it). A hinge opens in the construct's direction up to its angle; a slide or lift travels its distance, its
+joint on the piece it moves. A part moved by joints inside joints (the T1's sunroof panels slide back and then
+lift; the Vespa's cowls lift off and then turn) is one body with the whole chain in its joint's `"chain"`, and the
+script makes it one Generic6DOFJoint3D with all their freedoms. A construct's pieces do not collide with one
+another: their shapes are close-fitting hulls that meet at every seam, and the joints keep them in place.
+Measured in Godot 4.7: the glued FJ62 is two bodies that settle within 2 cm, and its tailgate, released, falls
+open on its hinge and stops at 86 degrees (its 85, on a soft limit); the T1 is ten bodies with all nine of its
+joints, and nothing moves past its own travel. Every gallery construct exports glued and gets every joint it
+asks for; what tips over (a guitar stood on its end, a scooter off its stand) is physics, not glue. The tests
+run this in Godot.
 
 ## Names Godot would misread
 

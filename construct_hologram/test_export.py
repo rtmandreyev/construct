@@ -676,6 +676,22 @@ class Hosts(unittest.TestCase):
         self.assertEqual((j["type"], j["to"], j["amount"], j["axis"]), ("hinge", "toyota-land-cruiser-fj62-body", 85, [-1.0, 0.0, 0.0]))
         self.assertNotIn("joint", bodies["toyota-land-cruiser-fj62-body"])
 
+    def test_joints_inside_joints_glue_as_one_body_with_the_whole_chain(self):
+        doc = glb_of(load_example("volkswagen-t1-samba"), pieces="glued")[0]
+        bodies = [n["extras"]["construct"] for n in doc["nodes"]
+                  if "motion" in n.get("extensions", {}).get("OMI_physics_body", {})]
+        names = [b["piece"] for b in bodies]
+        self.assertEqual(len(names), len(set(names)))                   # each body its own name: none hangs on nothing
+        self.assertEqual(sorted({a["articulation"] for b in bodies if "joint" in b
+                                 for a in b["joint"].get("chain", [b["joint"]])}),
+                         sorted(a["id"] for a in json.loads((ROOT / "examples" / "volkswagen-t1-samba" / "scene.json").read_text())
+                                ["articulations"]))   # all nine
+        panel = next(b for b in bodies if b["piece"].endswith("sunroof-fold-0-sunroof-stack-lift"))
+        j = panel["joint"]
+        self.assertEqual(([e["articulation"] for e in j["chain"]], j["to"]),
+                         (["sunroof-fold-0", "sunroof-stack-lift"], "vw-type-2-t1-samba-1963-body"))
+        self.assertGreater(j["chain"][0]["pivot"][1], 1.5)              # a slide's joint on its panel, not at the origin
+
     def test_a_glued_building_stands_still_and_its_doors_still_hang(self):
         doc = glb_of(load_example("tea-house"), pieces="glued")[0]
         motions = {n["extras"]["construct"]["piece"]: n["extensions"]["OMI_physics_body"]["motion"]["type"]
@@ -700,6 +716,13 @@ class Hosts(unittest.TestCase):
             self.assertEqual((out["bodies"], out["joints"]), (2, 1))
             self.assertLess(out["far"], 0.05)                       # the car stays a car: it settles, it does not slump
             self.assertTrue(80 <= out["gate_turn"] <= 90, out)     # the tailgate falls open on its hinge to its 85 degrees
+            export.export(load_example("volkswagen-t1-samba"), d / "bus.glb", pieces="glued")   # joints inside joints
+            subprocess.run([g, "--headless", "--path", str(d), "--import"], capture_output=True, timeout=300)
+            r = subprocess.run([g, "--headless", "--path", str(d), "-s", "glue.gd", "--", "res://bus.glb"],
+                               capture_output=True, text=True, timeout=300)
+            out = json.loads(next(x for x in r.stdout.splitlines() if x.startswith("RESULT "))[7:])
+            self.assertEqual((out["bodies"], out["joints"]), (10, 9))
+            self.assertLess(out["far"], 1.2)                        # nothing flies off: each moves within its own travel
 
     @unittest.skipUnless(os.environ.get("CONSTRUCT_GODOT"), "set CONSTRUCT_GODOT to the Godot binary to run")
     def test_godot_imports_colliders_and_pieces_that_fall(self):

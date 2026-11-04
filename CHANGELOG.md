@@ -2,6 +2,12 @@
 
 ## 1.1.2 — unreleased
 
+- **Glued joints inside joints:** `--pieces glued` named every body after its last joint, so the T1's four sunroof
+  panels shared one name, three of its nine joints were lost and in Godot the bus flew apart. Each body now has its own
+  name, a part moved by joints inside joints carries the whole chain (one Generic6DOFJoint3D in
+  `construct_joints.gd`), a slide's joint sits on the piece it moves rather than at the scene's origin, and a
+  construct's pieces no longer collide with one another. Measured in Godot 4.7: the T1 keeps all nine joints and
+  nothing moves past its own travel.
 - **FreeCAD gets only what it needs:** `construct freecad` ran FreeCAD with a copy of the whole environment, API keys
   included. It now passes only what a program needs to start and keep its files on Windows, macOS and Linux, and
   FreeCAD's own settings (`FREECAD_USER_*`); the job travels in the script. Hermes's skill scan read the copy as a
