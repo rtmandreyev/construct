@@ -576,13 +576,14 @@ class Kit(unittest.TestCase):
             kit.write(k, tmp, only="lid,2")
             self.assertEqual(len(list(Path(tmp, "pieces").glob("*.stl"))), 4)        # each piece on its own, to reprint
             self.assertTrue(Path(tmp, "pieces", "04-lid.stl").is_file())
-            again = zipfile.ZipFile(Path(tmp, "only.3mf")).read("3D/3dmodel.model").decode("utf-8")
+            with zipfile.ZipFile(Path(tmp, "only.3mf")) as z:
+                again = z.read("3D/3dmodel.model").decode("utf-8")
             self.assertEqual(again.count("<object "), 2)                          # just the two asked for
             self.assertIn('name="4 lid"', again)
             with self.assertRaisesRegex(kit.KitError, "no such piece"):
                 kit.pick(k, "spoiler")
-            z = zipfile.ZipFile(Path(tmp, "plate-1.3mf"))
-            model = z.read("3D/3dmodel.model").decode("utf-8")
+            with zipfile.ZipFile(Path(tmp, "plate-1.3mf")) as z:   # closed, or Windows cannot remove the folder
+                model = z.read("3D/3dmodel.model").decode("utf-8")
             self.assertEqual(model.count("<object "), 4)
             self.assertIn('name="1 tray"', model)
             booklet = Path(tmp, "booklet.html").read_text(encoding="utf-8")

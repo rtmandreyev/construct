@@ -110,6 +110,19 @@ class Validation(unittest.TestCase):
         self.assertTrue(scene.validate(s))
 
 
+
+def _json_reads_any_depth():
+    try:
+        json.loads("[" * 100000 + "]" * 100000)
+        return True
+    except RecursionError:
+        return False
+
+
+# what brackets nested thousands deep are told: too deep to read, or (where json reads any depth, Python 3.15 on) not
+# the one object a scene is
+DEEP = "one JSON object" if _json_reads_any_depth() else "nested too deeply"
+
 class Malformed(unittest.TestCase):
     """Found by fuzzing the gallery's scenes: a malformed scene is answered with errors, never a crash."""
 
@@ -176,7 +189,8 @@ class Malformed(unittest.TestCase):
             deep = Path(d, "deep.json")
             deep.write_text("[" * 100000 + "]" * 100000, encoding="utf-8")
             r = run("export", str(deep), "--out", str(Path(d, "x.glb")))
-            self.assertIn("nested too deeply", r.stderr)
+            self.assertIn(DEEP if DEEP != "one JSON object" else "expected an object", r.stderr)
+            self.assertNotIn("Traceback", r.stderr)
             one = Path(d, "one.json")
             sc = base()
             sc["parts"][0]["id"] = "Not An Id"
@@ -187,7 +201,7 @@ class Malformed(unittest.TestCase):
     def test_brackets_nested_thousands_deep_are_a_diagnosis(self):
         doc, diags = diagnose.parse_text("[" * 100000 + "]" * 100000)
         self.assertIsNone(doc)
-        self.assertIn("nested too deeply", diags[0]["message"])
+        self.assertIn(DEEP, diags[0]["message"])
 
     def test_path_points_and_series_values_are_finite_and_in_range(self):
         sc = base()

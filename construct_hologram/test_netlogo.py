@@ -884,13 +884,13 @@ class Extension(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d:
             subprocess.run([sys.executable, str(root / "scripts" / "build_netlogo_extension.py"), "--netlogo", NETLOGO,
                             "--javac", JAVAC, "--out", d], check=True, capture_output=True)
-            z = zipfile.ZipFile(next(Path(d).glob("construct-*.zip")))
-            self.assertIn("construct.jar", z.namelist())
-            self.assertIn("construct_hologram/netlogo.py", z.namelist())
-            manifest = zipfile.ZipFile(io.BytesIO(z.read("construct.jar"))).read("META-INF/MANIFEST.MF").decode()
-            self.assertIn("Class-Manager: construct.netlogo.ConstructExtension", manifest)
-            self.assertIn("NetLogo-Extension-API-Version: 7.0", manifest)
-            z.extractall(Path(d, "construct"))
+            with zipfile.ZipFile(next(Path(d).glob("construct-*.zip"))) as z:   # closed, or Windows cannot remove d
+                self.assertIn("construct.jar", z.namelist())
+                self.assertIn("construct_hologram/netlogo.py", z.namelist())
+                manifest = zipfile.ZipFile(io.BytesIO(z.read("construct.jar"))).read("META-INF/MANIFEST.MF").decode()
+                self.assertIn("Class-Manager: construct.netlogo.ConstructExtension", manifest)
+                self.assertIn("NetLogo-Extension-API-Version: 7.0", manifest)
+                z.extractall(Path(d, "construct"))
             subprocess.run([JAVAC, "--release", "17", "-cp", str(jar), "-d", d, str(root / "hosts/netlogo/test/Drive.java")],
                            check=True)
             Path(d, "m.nlogox").write_text(MODEL.replace("turtles-own", "extensions [construct]\nturtles-own"),
