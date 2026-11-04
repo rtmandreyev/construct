@@ -27,7 +27,7 @@ GEOMETRY_VERSION = 2
 GENERATOR = "%s %s" % (product.NAME, product.VERSION)
 
 # ---------------------------------------------------------------------------- budgets
-MAX_PARTS = 256
+MAX_PARTS = 1024   # as many as the copies allowed: what costs is copies and lines, and they have budgets of their own
 MAX_INSTANCES = 1024
 MAX_REPEAT = 64
 MAX_LINES = 24000

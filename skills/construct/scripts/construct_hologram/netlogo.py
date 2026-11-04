@@ -40,7 +40,7 @@ from . import product
 
 FLOOR = 10.0         # metres: the world's longer side on the floor
 HEIGHT = 6.0         # metres: tick 0 to the last tick (a space-time cube is as tall as it is wide)
-SOLID_NODES = 200    # --solid: at most this many turtles as spheres (a scene holds 256 parts)
+SOLID_NODES = 200    # --solid: at most this many turtles as spheres (each a part; 200 keeps the page light)
 SOLID_TUBES = 12     # --solid: the phase cycle as at most this many tubes of MAX_TUBE points
 MAX_TUBE = 64        # points in one tube (the scene's limit)
 MAX_SEGMENTS = 18000  # of the line budget (24,000), for the data; the scene stays under 1 MB

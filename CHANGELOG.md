@@ -2,6 +2,9 @@
 
 ## 1.1.2 — unreleased
 
+- **Up to 1,024 parts:** a scene could hold 256 parts, and the best constructs were at the cap (the T1 255,
+  Sagrada Família 256), so "make it more detailed, keep every part" had nowhere to go. A scene may now hold as many
+  parts as copies (1,024); what costs is copies and lines, and their budgets are unchanged.
 - **Glued joints inside joints:** `--pieces glued` named every body after its last joint, so the T1's four sunroof
   panels shared one name, three of its nine joints were lost and in Godot the bus flew apart. Each body now has its own
   name, a part moved by joints inside joints carries the whole chain (one Generic6DOFJoint3D in
