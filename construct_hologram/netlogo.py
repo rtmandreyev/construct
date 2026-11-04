@@ -43,7 +43,7 @@ HEIGHT = 6.0         # metres: tick 0 to the last tick (a space-time cube is as 
 SOLID_NODES = 200    # --solid: at most this many turtles as spheres (each a part; 200 keeps the page light)
 SOLID_TUBES = 12     # --solid: the phase cycle as at most this many tubes of MAX_TUBE points
 MAX_TUBE = 64        # points in one tube (the scene's limit)
-MAX_SEGMENTS = 18000  # of the line budget (24,000), for the data; the scene stays under 1 MB
+MAX_SEGMENTS = 18000  # for the data, well inside the line budget; the scene stays under 1 MB
 VIEWS = ("space-time", "network-time", "phase", "field", "pulse")
 NLS = Path(__file__).resolve().parent / "construct.nls"   # the recorder, copied beside a model
 TONES = ("identity", "data", "accent", "bright", "dust", "structure")
@@ -870,7 +870,7 @@ def _field(run, world, opts):
                    for r, c in line]
             fronts.extend(_chunks([[p[0], round(y, 3), p[2]] for p in pts]))
     fronts.sort(key=len, reverse=True)
-    kept, budget = [], 20000   # within one part's 4000 polylines and 30000 points, and the scene's 24000 lines
+    kept, budget = [], 20000   # within one part's 4000 polylines and 30000 points, and well inside the scene's line budget
     for f in fronts[:4000]:
         if len(f) > budget:
             break

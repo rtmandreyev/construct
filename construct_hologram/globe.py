@@ -22,7 +22,7 @@ OBLIQUITY_SOURCE = "IAU 2006 precession (Capitaine, Wallace and Chapront 2003): 
 MEAN_RADIUS_M = 6371008.8  # IUGG mean radius R1 of the GRS 80 ellipsoid
 RADIUS_SOURCE = "IUGG: mean Earth radius R1 = 6371.0088 km (Moritz, Geodetic Reference System 1980)"
 STAGE_RADIUS = 0.5
-MAX_SEGMENTS = 14000  # coastline segments: the rest of the 24,000-line budget is graticule and axis
+MAX_SEGMENTS = 14000  # coastline segments: with the graticule and axis, a page that stays light
 
 
 class GlobeError(Exception):

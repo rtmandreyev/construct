@@ -230,7 +230,7 @@ ranked defects, most severe first, in a refine pass.
   "region": [u0, v0, u1, v1]}}]`.
 - Images: on a part, `"artwork": {{"slot": "cover-front", "asset": "id", "mask": "rect"}}`.
 - Shelving: `"anchors": {{"front": {{"part", "face"}}, "spine": {{"part", "face"}}}}`.
-- Budgets: 1,024 parts and copies, 24,000 lines, 24,000 triangles, 32 moving copies.
+- Budgets: 1,024 parts and copies, 48,000 lines, 48,000 triangles, 32 moving copies.
 
 Vehicles are never a box, and never an outline of thin tubes (they render as wire, not a
 body): trace the side silhouette and the plan outline first (from references for a named

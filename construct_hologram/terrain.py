@@ -25,7 +25,7 @@ LADDER = [("spot", 100.0, 1.0), ("site", 1000.0, 2.0), ("valley", 8000.0, 4.0), 
 VIEW_YAW = {"S": 0, "SE": 45, "E": 90, "NE": 135, "N": 180, "NW": 225, "W": 270, "SW": 315}
 
 
-# the densest grid that stays inside the 24,000-triangle budget with its skirt (2(n-1)^2 + 8(n-1))
+# the densest grid that stays near 24,000 triangles (a light page) with its skirt (2(n-1)^2 + 8(n-1))
 MAX_RESOLUTION = 100
 
 

@@ -83,7 +83,7 @@ Packed, renderer-ready arrays (numbers rounded to 10 µm), all in the rest (clos
 - `points` stride 7: `x y z size_px style sprite phase`; sprite `0 disc, 1 ring, 2 square, 3 soft`.
 - `bounds {min, max, center, radius, open_min, open_max}`; `counts`.
 
-Budgets: ≤ 24,000 lines, ≤ 24,000 triangles, ≤ 6,000 points, ≤ 1,024 parts, ≤ 1,024 instances,
+Budgets: ≤ 48,000 lines, ≤ 48,000 triangles, ≤ 6,000 points, ≤ 1,024 parts, ≤ 1,024 instances,
 ≤ 32 moving instances, ≤ 16 articulations, ≤ 16 joints, ≤ 48 labels.
 
 ## 4. Material roles (the renderer owns colour)

@@ -1,7 +1,7 @@
 
 """A NetLogo run as a film in Blender: every recorded turtle, tick by tick, as light that moves.
 
-A construct of a run holds the run's shape (at most 24,000 line segments); this draws the recording
+A construct of a run holds the run's shape (sampled to about 18,000 line segments); this draws the recording
 itself, every turtle at every tick, so a long run with many agents loses nothing. Each turtle is a
 small glowing arrowhead in its own NetLogo colour, pointing where it goes, with a trail that fades
 behind it; a link is a thin line of light between its two agents while the recording has it; the

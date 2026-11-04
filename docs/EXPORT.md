@@ -143,7 +143,7 @@ person who exports, kept beside the scene, never in it: `examples/light-to-metal
   `inferred` was designed; the extras say which.
 - **Every part has a surface only if its shape has one.** A main or structural part drawn as a
   line (a `curve`) has none; the audit warns `no-surface` so an author can give it a solid shape.
-- A solid compile may hold up to 200,000 triangles (the hologram's budget is 24,000).
+- A solid compile may hold up to 200,000 triangles (the hologram's budget is 48,000).
 
 ## How it is checked
 

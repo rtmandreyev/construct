@@ -2,6 +2,9 @@
 
 ## 1.1.2 — unreleased
 
+- **Twice the lines and triangles:** a construct's page may hold 48,000 lines and 48,000 triangles (was 24,000 each),
+  so a large, detailed construct fits; the 3D export's own budgets are unchanged, and terrain, globes and NetLogo runs
+  keep drawing as lightly as before.
 - **Up to 1,024 parts:** a scene could hold 256 parts, and the best constructs were at the cap (the T1 255,
   Sagrada Família 256), so "make it more detailed, keep every part" had nowhere to go. A scene may now hold as many
   parts as copies (1,024); what costs is copies and lines, and their budgets are unchanged.

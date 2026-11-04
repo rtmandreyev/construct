@@ -209,6 +209,6 @@ with `shasum -a 256 file` (or Python's `hashlib`).
 
 ## Budgets
 
-1,024 parts, 1,024 copies, 32 moving copies, 16 articulations, 48 labels, 24,000 lines,
-24,000 triangles, 6,000 points, coordinates within ±500 m. Over budget: lower `segments`, `meridians`, `ribs`, `lat/lon`,
+1,024 parts, 1,024 copies, 32 moving copies, 16 articulations, 48 labels, 48,000 lines,
+48,000 triangles, 6,000 points, coordinates within ±500 m. Over budget: lower `segments`, `meridians`, `ribs`, `lat/lon`,
 repeat counts, or drop fills (`"fill": "none"`) on thin parts.

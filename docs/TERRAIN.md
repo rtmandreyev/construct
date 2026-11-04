@@ -28,7 +28,7 @@ requested area is kept, thinned to the sampling resolution while reading, so a m
 twenty 2 m swissALTI3D tiles (5 million points, 119 MB of text) builds in about 5 seconds and
 35 MB of memory. The elevation facts report the data's own lowest and highest points inside
 the area — the summit, not the highest sample. The relief is resampled onto at most 100 cells
-per side, which keeps it inside the 24,000-triangle budget.
+per side, about 20,000 triangles: a page that stays light.
 
 Tested against swissALTI3D 2024 (© swisstopo) around the Matterhorn: summit 4477.2 m as in the
 data; the Hörnli hut marker sits on the NE ridge. The tiles are never committed; to run that
@@ -102,7 +102,7 @@ python3 construct_hologram/cli.py globe --coastlines ne_110m_coastline.geojson -
 - **Data:** GeoJSON lines or polygons in longitude/latitude degrees (Natural Earth's
   `ne_110m_coastline.geojson` or `ne_50m_coastline.geojson`, public domain). A shapefile is
   converted first (`ogr2ogr -f GeoJSON coast.geojson coast.shp`). Nothing is downloaded.
-- **Budget:** the lines are simplified only as far as the 24,000-line budget needs
+- **Budget:** the lines are simplified only as far as a light page needs (about 14,000 coastline segments)
   (Douglas–Peucker in degrees); the note on the `coastline.points` fact states the tolerance.
 - **The construct:** a sphere of the mean radius with a graticule (`--graticule 30`, 0 for
   none), the coastlines as the identity (verified, cited to the dataset: **MEASURED

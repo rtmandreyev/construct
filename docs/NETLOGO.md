@@ -174,7 +174,7 @@ turtles, chosen evenly by who.
 cascade happens in its first tenth). Each construct records what was drawn as facts: the model, the
 seed, the ticks, which agents, how the data was sampled.
 
-A construct holds at most 24,000 line segments, so a long run with many moving agents is sampled
+A run is drawn in at most about 18,000 line segments (a page that stays light), so a long run with many moving agents is sampled
 (the `sampling` fact says how much); the construct is the run's shape, and the replay its timing.
 
 Every construct carries its legend: each part named where it is ("Each turtle, risen to the tick
@@ -342,6 +342,6 @@ EEVEE's quality, `--trail` the trails' length. Rendering a long film at full siz
   supports neither include files nor extensions. NetLogo 3D runs are recorded with each turtle's
   height (the extension; `construct.nls` records two dimensions), but the four views draw the floor
   only: the height is for the film (below).
-- A construct holds 24,000 lines, so a long run of many agents is sampled; the facts say how.
+- A run is drawn in about 18,000 lines at most, so a long run of many agents is sampled; the facts say how.
 - Construct does not colour by data (the renderer owns colour): a view shows a quantity by position,
   not by hue.
