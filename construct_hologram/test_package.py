@@ -166,7 +166,7 @@ class ExamplesGallery(unittest.TestCase):
             pages = [p for p in out.rglob("*.html") if p.name != "construct.html"]
             beyond = {b["slug"] for b in site._load_beyond()}
             self.assertEqual(len([p for p in pages if p.name == "index.html"]),
-                             len(site._load_examples()) + len(beyond) + len(site._load_worlds()) + 1)
+                             len(site._load_examples()) + len(beyond) + 1)
             for page in pages:
                 own = page.parent.name in beyond  # a "beyond" page, published as it is: its fonts, licence link
                 for ref in re.findall(r'(?:href|src)="([^"]+)"', page.read_text(encoding="utf-8")):
@@ -247,30 +247,6 @@ class ExamplesGallery(unittest.TestCase):
         self.assertIn('id="kits"', index)
         self.assertIn('href="examples/vespa-gs150/kit/booklet.html"', index)
         self.assertNotIn('id="kits"', site.index_page([], (), ()))   # no kits built, no section
-
-    def test_invented_things_are_published_to_view_only(self):
-        # made for the author's album film: the page and its pictures, all rights reserved; never the scene or the brief
-        spec = importlib.util.spec_from_file_location("build_site", HERE.parent / "scripts" / "build_site.py")
-        site = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(site)
-        root = HERE.parent / "examples"
-        worlds = site._load_worlds()
-        self.assertEqual([w["slug"] for w in worlds], ["argus", "lander-2", "object-001"])
-        notice = (HERE.parent / "NOTICE").read_text(encoding="utf-8")
-        for w in worlds:
-            with self.subTest(w["slug"]):
-                d = root / w["slug"]
-                have = {p.name for p in d.iterdir()}
-                self.assertEqual(have - set(site.WORLD_FILES), {"LICENSE", "README.md"})   # no scene.json, no brief
-                self.assertIn("All rights reserved", (d / "LICENSE").read_text(encoding="utf-8"))
-                self.assertIn("examples/%s/" % w["slug"], notice)
-                self.assertEqual("blender.jpg" in have, bool(w.get("blender")))
-                page = (d / "construct.html").read_text(encoding="utf-8")
-                self.assertIsNone(re.search(r"Unseen|Sonastra|opus queue|brief\.txt|/Volumes/|/Users/", page))
-                self.assertIn("The artist's brief (private, not published)", page)
-                built = site.world_page(w)
-                self.assertIn("All rights reserved", built)
-                self.assertNotIn("scene.json", built)
 
     def test_every_film_is_complete_and_checks_clean(self):
         from . import diagnose

@@ -17,11 +17,11 @@ model with named parts and working joints, a print, a model kit, a CAD file or a
   <a href="https://rtmandreyev.github.io/construct/examples/toyota-land-cruiser-fj62/"><img src="docs/media/assembly-toyota-land-cruiser-fj62.gif" width="32%" alt="The Toyota Land Cruiser FJ62 construct assembling itself"></a>
 </p>
 <p align="center">
-  <a href="https://rtmandreyev.github.io/construct/examples/nissan-skyline-gt-r-r34/"><img src="docs/media/assembly-nissan-skyline-gt-r-r34.gif" width="32%" alt="The Nissan Skyline GT-R R34 construct assembling itself, its doors and bonnet opening"></a>
+  <a href="https://rtmandreyev.github.io/construct/examples/kestrel/"><img src="docs/media/assembly-kestrel.gif" width="32%" alt="KESTREL, an invented ice tug, assembling itself, its cradle arms opening and radiator wings folding"></a>
   <a href="https://rtmandreyev.github.io/construct/examples/tompion-year-going-clock/"><img src="docs/media/assembly-tompion-year-going-clock.gif" width="32%" alt="Tompion's year-going longcase clock construct assembling itself, its hood and trunk doors opening"></a>
   <a href="https://rtmandreyev.github.io/construct/examples/volkswagen-t1-samba/"><img src="docs/media/assembly-volkswagen-t1-samba.gif" width="32%" alt="The Volkswagen T1 Samba construct assembling itself"></a>
 </p>
-<p align="center"><sub><b>Constructs.</b> Sainte-Chapelle · Duomo di Milano · Toyota Land Cruiser FJ62 · Nissan Skyline GT-R R34 · Tompion's year-going clock · Volkswagen T1 Samba, each built in masterpiece mode, by Claude Opus 5.5 and the clock by DeepSeek V4.1 Flash. <a href="https://rtmandreyev.github.io/construct/">Open the gallery</a> to orbit them, replay the assembly and read the labels.</sub></p>
+<p align="center"><sub><b>Constructs.</b> Sainte-Chapelle · Duomo di Milano · Toyota Land Cruiser FJ62 · KESTREL, an invented ice tug · Tompion's year-going clock · Volkswagen T1 Samba, each built in masterpiece mode, by Claude Opus 5.5, KESTREL by GPT-6.1 Sol and the clock by DeepSeek V4.1 Flash. <a href="https://rtmandreyev.github.io/construct/">Open the gallery</a> to orbit them, replay the assembly and read the labels; <a href="docs/for/invent-from-what-exists.md">how KESTREL was made</a>, step by step.</sub></p>
 
 - **Any agent, any model.** Claude Code, Hermes, any MCP client or any OpenAI-compatible endpoint, or by hand.
 - **Honest about what is known.** Every part says how it is known, its size and its shape apart, every guess in a shade of how firmly it is held.
@@ -43,7 +43,7 @@ model with named parts and working joints, a print, a model kit, a CAD file or a
 | want to **show someone what you mean** | A model a builder, a fabricator or a friend can turn and measure, and a file for their own tools | [Show what you mean](docs/for/show-what-you-mean.md) |
 | ***Professionals and creators*** | | |
 | are a **maker** | A print at your printer's largest size, a model kit with plates and a booklet ([four to try](https://rtmandreyev.github.io/construct/#kits)), true CAD shapes | [Print, kit, CAD](docs/for/makers.md) |
-| create **new ships, creatures or worlds** for a game, film or story | New things designed from real ones: a construct, a 3D model with working parts, a film ([see three](https://rtmandreyev.github.io/construct/#worlds)) | [New things from real ones](docs/for/invent-from-what-exists.md) |
+| create **new ships, creatures or worlds** for a game, film or story | New things designed from real ones: a construct, a 3D model with working parts, a film ([see KESTREL](https://rtmandreyev.github.io/construct/examples/kestrel/), an invented ice tug) | [New things from real ones](docs/for/invent-from-what-exists.md) |
 | are a **game developer** | Props with named parts, real sizes and working joints, for Godot, Unity or Unreal | [Into a game engine](docs/for/game-developers.md) |
 | are a **3D artist** | A construct in Blender with its build, joints and finish on sliders, ready to render or model over | [Into Blender](docs/for/3d-artists.md) |
 | work in **film and motion** | A construct that assembles across a piece of music, as a video | [Film mode](docs/for/film-and-motion.md) |
@@ -300,9 +300,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md). Run the tests with
 (`examples/netlogo-*`: [viral marketing](examples/netlogo-viral-marketing/), [flocking](examples/netlogo-flocking/),
 [wolf sheep](examples/netlogo-wolf-sheep/), [fire](examples/netlogo-fire/), [fireflies](examples/netlogo-fireflies/),
 [virus on a network](examples/netlogo-virus-on-a-network/) and [virus compare](examples/netlogo-virus-compare/)) derive from Uri
-Wilensky's NetLogo models and are under CC BY-NC-SA 3.0 instead (see each LICENSE). Three are not licensed at all:
-[ARGUS](examples/argus/), [Lander 2](examples/lander-2/) and [Object 001](examples/object-001/), made for the author's
-album film, are all rights reserved, published to view only (see each LICENSE). The [Blender
+Wilensky's NetLogo models and are under CC BY-NC-SA 3.0 instead (see each LICENSE). The [Blender
 add-on](hosts/blender/) is under GPL-3.0-or-later, as Blender's extensions platform requires; what
 you make with it is yours.
 

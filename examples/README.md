@@ -7,6 +7,8 @@ made with earlier versions of Construct; all of them build with this release.
 | | example | mode | model |
 |---|---|---|---|
 | [![Toyota Land Cruiser FJ62](toyota-land-cruiser-fj62/thumb.jpg)](toyota-land-cruiser-fj62/) | [Toyota Land Cruiser FJ62](toyota-land-cruiser-fj62/) | masterpiece | Claude Opus 5.5 |
+| [![KESTREL, an invented ice tug](kestrel/thumb.jpg)](kestrel/) | [KESTREL, an invented ice tug](kestrel/) | masterpiece | GPT-6.1 Sol |
+| [![KESTREL, more detailed](kestrel-v2/thumb.jpg)](kestrel-v2/) | [KESTREL, more detailed](kestrel-v2/) | masterpiece | GPT-6.1 Sol |
 | [![Revox A77](revox-a77/thumb.jpg)](revox-a77/) | [Revox A77](revox-a77/) | fast | DeepSeek V4.1 Flash |
 | [![Sainte-Chapelle](sainte-chapelle/thumb.jpg)](sainte-chapelle/) | [Sainte-Chapelle](sainte-chapelle/) | masterpiece | Claude Opus 5.5 |
 | [![Yamaha CFX](yamaha-cfx/thumb.jpg)](yamaha-cfx/) | [Yamaha CFX](yamaha-cfx/) | fast | DeepSeek V4.1 Flash |
@@ -32,8 +34,8 @@ made with earlier versions of Construct; all of them build with this release.
 music ([film mode](../docs/FILM.md)), listed in [films.json](films.json). Their videos are in the
 [gallery's film section](https://rtmandreyev.github.io/construct/#films) only.
 
-Product and place names belong to their owners. Each construct is an independent reconstruction
-from public references, not an official model; the scenes cite their sources, and no reference
+Product and place names belong to their owners. Each construct of a real thing is an independent
+reconstruction from public references, not an official model (KESTREL is invented); the scenes cite their sources, and no reference
 photograph is included here.
 
 Build the gallery yourself: `python3 scripts/build_site.py --out site`, then serve `site/` with
