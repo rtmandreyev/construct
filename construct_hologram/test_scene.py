@@ -425,6 +425,27 @@ class Audit(unittest.TestCase):
         self.assertEqual(said("A tower of 60-62 m.", "A 3 m wide stair."), [])         # a range; width is too plain
         self.assertEqual(said("Width 0.5 m."), ["0.5 m"])                              # a plain key, right by it
 
+    def test_a_small_gap_is_detached_on_a_large_object(self):
+        # found on the R34: touching was 1% of the object's size (4.6 cm on a car), so a fin 2 cm under the floor
+        # passed while an arch nearby kept its box in touch
+        def car(gap):
+            s = studio.starter("machine")
+            part = lambda **k: dict({"role": "structure", "certainty": "inferred", "stage": 0}, **k)
+            s["parts"] = [part(id="leg", shape={"type": "box", "size": [0.1, 0.5, 0.1], "anchor": "base"},
+                               at=[0.8, 0, 2], mirror="x"),
+                          part(id="leg-rear", shape={"type": "box", "size": [0.1, 0.5, 0.1], "anchor": "base"},
+                               at=[0.8, 0, -2], mirror="x"),
+                          part(id="body", role="mass", shape={"type": "box", "size": [1.8, 0.5, 4.6], "anchor": "base"},
+                               at=[0, 0.5, 0], stage=1),
+                          part(id="arch", shape={"type": "tube", "path": [[0.1, 0.5, -0.5], [0.1, 0.1, 0], [0.1, 0.5, 0.5]],
+                                                 "radius": 0.02}, stage=2),
+                          part(id="fin", shape={"type": "box", "size": [0.012, 0.04, 0.4], "anchor": "base"},
+                               at=[0.1, 0.46 - gap, 0], stage=2)]
+            rep = audit.audit(s, scene.compile_scene(s))
+            return [w["part"] for w in rep["warnings"] + rep["errors"] if w["code"] in ("detached", "floating")]
+        self.assertEqual(car(0.02), ["fin"])
+        self.assertEqual(car(0.0), [])
+
     def test_duplicates_are_a_part_overlapping_itself(self):
         # found on a Braun knob: its skirt and body meet along a ring that both draw, and each lathe, its profile
         # closed by repeating its first point, drew that ring twice: 18% "duplicates" on a clean knob
@@ -439,6 +460,21 @@ class Audit(unittest.TestCase):
                 "at": [0, 0.0025, 0]}
         self.assertEqual(dups(skirt, body), [])
         self.assertTrue(dups(dict(skirt, mirror="x"), body))   # a copy mirrored onto itself: every line twice
+
+    def test_a_part_set_through_a_face_touches_it(self):
+        # found on a grand piano: its pedals pass through the front of the lyre box, and none of their corners,
+        # edge midpoints or face centres lies near one of the box's faces
+        def detached(z):
+            s = studio.starter("object")
+            part = lambda **k: dict({"role": "structure", "certainty": "inferred", "stage": 0}, **k)
+            s["parts"] = [part(id="post", shape={"type": "box", "size": [0.1, 2.75, 0.1], "anchor": "base"}),
+                          part(id="lyre-box", shape={"type": "box", "size": [0.3, 0.09, 0.15]}, at=[0, 1.0, 0.125]),
+                          part(id="pedal", role="detail", shape={"type": "box", "size": [0.032, 0.012, 0.12]},
+                               at=[0, 0.98, z], stage=1)]
+            rep = audit.audit(s, scene.compile_scene(s))
+            return [w["part"] for w in rep["warnings"] + rep["errors"] if w["code"] == "detached"]
+        self.assertEqual(detached(0.23), [])           # 0.17 to 0.29, through the box's face at 0.2
+        self.assertEqual(detached(0.27), ["pedal"])    # 0.21 to 0.33: a centimetre in front of it
 
     def test_glass_named_only_in_the_label_is_a_warning(self):
         s = base()
