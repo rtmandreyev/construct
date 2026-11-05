@@ -1,0 +1,2509 @@
+{
+  "status": "designed kinematic intent; native Construct animates representative controls within its 16-joint limit",
+  "actuators": [
+    {
+      "part": "key-36-c2",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        -0.33825,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-37-black",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        -0.3265,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-38-d2",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        -0.31475,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-39-black",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        -0.303,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-40-e2",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        -0.29125,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-41-f2",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        -0.26775,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-42-black",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        -0.256,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-43-g2",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        -0.24425,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-44-black",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        -0.23249999999999998,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-45-a2",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        -0.22075,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-46-black",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        -0.209,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-47-b2",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        -0.19724999999999998,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-48-c3",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        -0.17375,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-49-black",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        -0.162,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-50-d3",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        -0.15025,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-51-black",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        -0.13849999999999998,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-52-e3",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        -0.12675,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-53-f3",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        -0.10325000000000001,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-54-black",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        -0.0915,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-55-g3",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        -0.07974999999999999,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-56-black",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        -0.068,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-57-a3",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        -0.05624999999999997,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-58-black",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        -0.044499999999999984,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-59-b3",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        -0.03275,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-60-c4",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        -0.00924999999999998,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-61-black",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        0.0025000000000000022,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-62-d4",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        0.014249999999999985,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-63-black",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        0.026000000000000023,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-64-e4",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        0.037750000000000006,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-65-f4",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        0.06125000000000003,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-66-black",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        0.07300000000000001,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-67-g4",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        0.08474999999999999,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-68-black",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        0.09650000000000003,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-69-a4",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        0.10825000000000001,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-70-black",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        0.12,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-71-b4",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        0.13174999999999998,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-72-c5",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        0.15525,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-73-black",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        0.16699999999999998,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-74-d5",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        0.17875000000000002,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-75-black",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        0.19050000000000006,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-76-e5",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        0.20224999999999999,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-77-f5",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        0.22575000000000006,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-78-black",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        0.2375,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-79-g5",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        0.24925000000000003,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-80-black",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        0.26099999999999995,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-81-a5",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        0.27275,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-82-black",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        0.28450000000000003,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-83-b5",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        0.29624999999999996,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-84-c6",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        0.31975000000000003,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-85-black",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        0.33149999999999996,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-86-d6",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        0.34325,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-87-black",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        0.35500000000000004,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-88-e6",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        0.36674999999999996,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-89-f6",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        0.39025000000000004,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-90-black",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        0.40199999999999997,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-91-g6",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        0.41375,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-92-black",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        0.42550000000000004,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-93-a6",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        0.43724999999999997,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-94-black",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        0.449,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-95-b6",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        0.46075000000000005,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "key-96-c7",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        0.48425,
+        0.06,
+        0.08
+      ],
+      "degrees": 3.3,
+      "note": "designed key pivot; action mechanism is a packaging abstraction"
+    },
+    {
+      "part": "osc-a-pitch",
+      "type": "rotary",
+      "axis": [
+        0,
+        0.9902680687415704,
+        0.13917310096006544
+      ],
+      "pivot": [
+        -0.476,
+        0.1321648892802985,
+        -0.188
+      ],
+      "travel": "endless encoder",
+      "scan": "quadrature; push and touch where specified"
+    },
+    {
+      "part": "osc-a-position",
+      "type": "rotary",
+      "axis": [
+        0,
+        0.9902680687415704,
+        0.13917310096006544
+      ],
+      "pivot": [
+        -0.44,
+        0.1321648892802985,
+        -0.188
+      ],
+      "travel": "endless encoder",
+      "scan": "quadrature; push and touch where specified"
+    },
+    {
+      "part": "osc-a-warp1",
+      "type": "rotary",
+      "axis": [
+        0,
+        0.9902680687415704,
+        0.13917310096006544
+      ],
+      "pivot": [
+        -0.40399999999999997,
+        0.1321648892802985,
+        -0.188
+      ],
+      "travel": "endless encoder",
+      "scan": "quadrature; push and touch where specified"
+    },
+    {
+      "part": "osc-a-warp2",
+      "type": "rotary",
+      "axis": [
+        0,
+        0.9902680687415704,
+        0.13917310096006544
+      ],
+      "pivot": [
+        -0.368,
+        0.1321648892802985,
+        -0.188
+      ],
+      "travel": "endless encoder",
+      "scan": "quadrature; push and touch where specified"
+    },
+    {
+      "part": "osc-a-unison",
+      "type": "rotary",
+      "axis": [
+        0,
+        0.9902680687415704,
+        0.13917310096006544
+      ],
+      "pivot": [
+        -0.476,
+        0.12401352086755978,
+        -0.13
+      ],
+      "travel": "endless encoder",
+      "scan": "quadrature; push and touch where specified"
+    },
+    {
+      "part": "osc-a-detune",
+      "type": "rotary",
+      "axis": [
+        0,
+        0.9902680687415704,
+        0.13917310096006544
+      ],
+      "pivot": [
+        -0.44,
+        0.12401352086755978,
+        -0.13
+      ],
+      "travel": "endless encoder",
+      "scan": "quadrature; push and touch where specified"
+    },
+    {
+      "part": "osc-a-pan",
+      "type": "rotary",
+      "axis": [
+        0,
+        0.9902680687415704,
+        0.13917310096006544
+      ],
+      "pivot": [
+        -0.40399999999999997,
+        0.12401352086755978,
+        -0.13
+      ],
+      "travel": "endless encoder",
+      "scan": "quadrature; push and touch where specified"
+    },
+    {
+      "part": "osc-a-level",
+      "type": "rotary",
+      "axis": [
+        0,
+        0.9902680687415704,
+        0.13917310096006544
+      ],
+      "pivot": [
+        -0.368,
+        0.12401352086755978,
+        -0.13
+      ],
+      "travel": "endless encoder",
+      "scan": "quadrature; push and touch where specified"
+    },
+    {
+      "part": "osc-a-on",
+      "type": "press",
+      "axis": [
+        0,
+        -0.9902680687415704,
+        -0.13917310096006544
+      ],
+      "travel_m": 0.0012
+    },
+    {
+      "part": "osc-a-type",
+      "type": "press",
+      "axis": [
+        0,
+        -0.9902680687415704,
+        -0.13917310096006544
+      ],
+      "travel_m": 0.0012
+    },
+    {
+      "part": "osc-a-edit",
+      "type": "press",
+      "axis": [
+        0,
+        -0.9902680687415704,
+        -0.13917310096006544
+      ],
+      "travel_m": 0.0012
+    },
+    {
+      "part": "osc-a-route",
+      "type": "press",
+      "axis": [
+        0,
+        -0.9902680687415704,
+        -0.13917310096006544
+      ],
+      "travel_m": 0.0012
+    },
+    {
+      "part": "osc-b-pitch",
+      "type": "rotary",
+      "axis": [
+        0,
+        0.9902680687415704,
+        0.13917310096006544
+      ],
+      "pivot": [
+        -0.316,
+        0.1321648892802985,
+        -0.188
+      ],
+      "travel": "endless encoder",
+      "scan": "quadrature; push and touch where specified"
+    },
+    {
+      "part": "osc-b-position",
+      "type": "rotary",
+      "axis": [
+        0,
+        0.9902680687415704,
+        0.13917310096006544
+      ],
+      "pivot": [
+        -0.28,
+        0.1321648892802985,
+        -0.188
+      ],
+      "travel": "endless encoder",
+      "scan": "quadrature; push and touch where specified"
+    },
+    {
+      "part": "osc-b-warp1",
+      "type": "rotary",
+      "axis": [
+        0,
+        0.9902680687415704,
+        0.13917310096006544
+      ],
+      "pivot": [
+        -0.244,
+        0.1321648892802985,
+        -0.188
+      ],
+      "travel": "endless encoder",
+      "scan": "quadrature; push and touch where specified"
+    },
+    {
+      "part": "osc-b-warp2",
+      "type": "rotary",
+      "axis": [
+        0,
+        0.9902680687415704,
+        0.13917310096006544
+      ],
+      "pivot": [
+        -0.20800000000000002,
+        0.1321648892802985,
+        -0.188
+      ],
+      "travel": "endless encoder",
+      "scan": "quadrature; push and touch where specified"
+    },
+    {
+      "part": "osc-b-unison",
+      "type": "rotary",
+      "axis": [
+        0,
+        0.9902680687415704,
+        0.13917310096006544
+      ],
+      "pivot": [
+        -0.316,
+        0.12401352086755978,
+        -0.13
+      ],
+      "travel": "endless encoder",
+      "scan": "quadrature; push and touch where specified"
+    },
+    {
+      "part": "osc-b-detune",
+      "type": "rotary",
+      "axis": [
+        0,
+        0.9902680687415704,
+        0.13917310096006544
+      ],
+      "pivot": [
+        -0.28,
+        0.12401352086755978,
+        -0.13
+      ],
+      "travel": "endless encoder",
+      "scan": "quadrature; push and touch where specified"
+    },
+    {
+      "part": "osc-b-pan",
+      "type": "rotary",
+      "axis": [
+        0,
+        0.9902680687415704,
+        0.13917310096006544
+      ],
+      "pivot": [
+        -0.244,
+        0.12401352086755978,
+        -0.13
+      ],
+      "travel": "endless encoder",
+      "scan": "quadrature; push and touch where specified"
+    },
+    {
+      "part": "osc-b-level",
+      "type": "rotary",
+      "axis": [
+        0,
+        0.9902680687415704,
+        0.13917310096006544
+      ],
+      "pivot": [
+        -0.20800000000000002,
+        0.12401352086755978,
+        -0.13
+      ],
+      "travel": "endless encoder",
+      "scan": "quadrature; push and touch where specified"
+    },
+    {
+      "part": "osc-b-on",
+      "type": "press",
+      "axis": [
+        0,
+        -0.9902680687415704,
+        -0.13917310096006544
+      ],
+      "travel_m": 0.0012
+    },
+    {
+      "part": "osc-b-type",
+      "type": "press",
+      "axis": [
+        0,
+        -0.9902680687415704,
+        -0.13917310096006544
+      ],
+      "travel_m": 0.0012
+    },
+    {
+      "part": "osc-b-edit",
+      "type": "press",
+      "axis": [
+        0,
+        -0.9902680687415704,
+        -0.13917310096006544
+      ],
+      "travel_m": 0.0012
+    },
+    {
+      "part": "osc-b-route",
+      "type": "press",
+      "axis": [
+        0,
+        -0.9902680687415704,
+        -0.13917310096006544
+      ],
+      "travel_m": 0.0012
+    },
+    {
+      "part": "osc-c-pitch",
+      "type": "rotary",
+      "axis": [
+        0,
+        0.9902680687415704,
+        0.13917310096006544
+      ],
+      "pivot": [
+        -0.156,
+        0.1321648892802985,
+        -0.188
+      ],
+      "travel": "endless encoder",
+      "scan": "quadrature; push and touch where specified"
+    },
+    {
+      "part": "osc-c-position",
+      "type": "rotary",
+      "axis": [
+        0,
+        0.9902680687415704,
+        0.13917310096006544
+      ],
+      "pivot": [
+        -0.12,
+        0.1321648892802985,
+        -0.188
+      ],
+      "travel": "endless encoder",
+      "scan": "quadrature; push and touch where specified"
+    },
+    {
+      "part": "osc-c-warp1",
+      "type": "rotary",
+      "axis": [
+        0,
+        0.9902680687415704,
+        0.13917310096006544
+      ],
+      "pivot": [
+        -0.084,
+        0.1321648892802985,
+        -0.188
+      ],
+      "travel": "endless encoder",
+      "scan": "quadrature; push and touch where specified"
+    },
+    {
+      "part": "osc-c-warp2",
+      "type": "rotary",
+      "axis": [
+        0,
+        0.9902680687415704,
+        0.13917310096006544
+      ],
+      "pivot": [
+        -0.048000000000000015,
+        0.1321648892802985,
+        -0.188
+      ],
+      "travel": "endless encoder",
+      "scan": "quadrature; push and touch where specified"
+    },
+    {
+      "part": "osc-c-unison",
+      "type": "rotary",
+      "axis": [
+        0,
+        0.9902680687415704,
+        0.13917310096006544
+      ],
+      "pivot": [
+        -0.156,
+        0.12401352086755978,
+        -0.13
+      ],
+      "travel": "endless encoder",
+      "scan": "quadrature; push and touch where specified"
+    },
+    {
+      "part": "osc-c-detune",
+      "type": "rotary",
+      "axis": [
+        0,
+        0.9902680687415704,
+        0.13917310096006544
+      ],
+      "pivot": [
+        -0.12,
+        0.12401352086755978,
+        -0.13
+      ],
+      "travel": "endless encoder",
+      "scan": "quadrature; push and touch where specified"
+    },
+    {
+      "part": "osc-c-pan",
+      "type": "rotary",
+      "axis": [
+        0,
+        0.9902680687415704,
+        0.13917310096006544
+      ],
+      "pivot": [
+        -0.084,
+        0.12401352086755978,
+        -0.13
+      ],
+      "travel": "endless encoder",
+      "scan": "quadrature; push and touch where specified"
+    },
+    {
+      "part": "osc-c-level",
+      "type": "rotary",
+      "axis": [
+        0,
+        0.9902680687415704,
+        0.13917310096006544
+      ],
+      "pivot": [
+        -0.048000000000000015,
+        0.12401352086755978,
+        -0.13
+      ],
+      "travel": "endless encoder",
+      "scan": "quadrature; push and touch where specified"
+    },
+    {
+      "part": "osc-c-on",
+      "type": "press",
+      "axis": [
+        0,
+        -0.9902680687415704,
+        -0.13917310096006544
+      ],
+      "travel_m": 0.0012
+    },
+    {
+      "part": "osc-c-type",
+      "type": "press",
+      "axis": [
+        0,
+        -0.9902680687415704,
+        -0.13917310096006544
+      ],
+      "travel_m": 0.0012
+    },
+    {
+      "part": "osc-c-edit",
+      "type": "press",
+      "axis": [
+        0,
+        -0.9902680687415704,
+        -0.13917310096006544
+      ],
+      "travel_m": 0.0012
+    },
+    {
+      "part": "osc-c-route",
+      "type": "press",
+      "axis": [
+        0,
+        -0.9902680687415704,
+        -0.13917310096006544
+      ],
+      "travel_m": 0.0012
+    },
+    {
+      "part": "filter-1-cutoff",
+      "type": "rotary",
+      "axis": [
+        0,
+        0.9902680687415704,
+        0.13917310096006544
+      ],
+      "pivot": [
+        0.292,
+        0.13427300180083435,
+        -0.203
+      ],
+      "travel": "endless encoder",
+      "scan": "quadrature; push and touch where specified"
+    },
+    {
+      "part": "filter-1-resonance",
+      "type": "rotary",
+      "axis": [
+        0,
+        0.9902680687415704,
+        0.13917310096006544
+      ],
+      "pivot": [
+        0.348,
+        0.13427300180083435,
+        -0.203
+      ],
+      "travel": "endless encoder",
+      "scan": "quadrature; push and touch where specified"
+    },
+    {
+      "part": "filter-1-drive",
+      "type": "rotary",
+      "axis": [
+        0,
+        0.9902680687415704,
+        0.13917310096006544
+      ],
+      "pivot": [
+        0.292,
+        0.12766758256982197,
+        -0.156
+      ],
+      "travel": "endless encoder",
+      "scan": "quadrature; push and touch where specified"
+    },
+    {
+      "part": "filter-1-var",
+      "type": "rotary",
+      "axis": [
+        0,
+        0.9902680687415704,
+        0.13917310096006544
+      ],
+      "pivot": [
+        0.348,
+        0.12766758256982197,
+        -0.156
+      ],
+      "travel": "endless encoder",
+      "scan": "quadrature; push and touch where specified"
+    },
+    {
+      "part": "filter-1-pan",
+      "type": "rotary",
+      "axis": [
+        0,
+        0.9902680687415704,
+        0.13917310096006544
+      ],
+      "pivot": [
+        0.292,
+        0.12120270417351195,
+        -0.11
+      ],
+      "travel": "endless encoder",
+      "scan": "quadrature; push and touch where specified"
+    },
+    {
+      "part": "filter-1-mix",
+      "type": "rotary",
+      "axis": [
+        0,
+        0.9902680687415704,
+        0.13917310096006544
+      ],
+      "pivot": [
+        0.348,
+        0.12120270417351195,
+        -0.11
+      ],
+      "travel": "endless encoder",
+      "scan": "quadrature; push and touch where specified"
+    },
+    {
+      "part": "filter-1-on",
+      "type": "press",
+      "axis": [
+        0,
+        -0.9902680687415704,
+        -0.13917310096006544
+      ],
+      "travel_m": 0.0012
+    },
+    {
+      "part": "filter-1-route",
+      "type": "press",
+      "axis": [
+        0,
+        -0.9902680687415704,
+        -0.13917310096006544
+      ],
+      "travel_m": 0.0012
+    },
+    {
+      "part": "filter-2-cutoff",
+      "type": "rotary",
+      "axis": [
+        0,
+        0.9902680687415704,
+        0.13917310096006544
+      ],
+      "pivot": [
+        0.431,
+        0.13427300180083435,
+        -0.203
+      ],
+      "travel": "endless encoder",
+      "scan": "quadrature; push and touch where specified"
+    },
+    {
+      "part": "filter-2-resonance",
+      "type": "rotary",
+      "axis": [
+        0,
+        0.9902680687415704,
+        0.13917310096006544
+      ],
+      "pivot": [
+        0.487,
+        0.13427300180083435,
+        -0.203
+      ],
+      "travel": "endless encoder",
+      "scan": "quadrature; push and touch where specified"
+    },
+    {
+      "part": "filter-2-drive",
+      "type": "rotary",
+      "axis": [
+        0,
+        0.9902680687415704,
+        0.13917310096006544
+      ],
+      "pivot": [
+        0.431,
+        0.12766758256982197,
+        -0.156
+      ],
+      "travel": "endless encoder",
+      "scan": "quadrature; push and touch where specified"
+    },
+    {
+      "part": "filter-2-var",
+      "type": "rotary",
+      "axis": [
+        0,
+        0.9902680687415704,
+        0.13917310096006544
+      ],
+      "pivot": [
+        0.487,
+        0.12766758256982197,
+        -0.156
+      ],
+      "travel": "endless encoder",
+      "scan": "quadrature; push and touch where specified"
+    },
+    {
+      "part": "filter-2-pan",
+      "type": "rotary",
+      "axis": [
+        0,
+        0.9902680687415704,
+        0.13917310096006544
+      ],
+      "pivot": [
+        0.431,
+        0.12120270417351195,
+        -0.11
+      ],
+      "travel": "endless encoder",
+      "scan": "quadrature; push and touch where specified"
+    },
+    {
+      "part": "filter-2-mix",
+      "type": "rotary",
+      "axis": [
+        0,
+        0.9902680687415704,
+        0.13917310096006544
+      ],
+      "pivot": [
+        0.487,
+        0.12120270417351195,
+        -0.11
+      ],
+      "travel": "endless encoder",
+      "scan": "quadrature; push and touch where specified"
+    },
+    {
+      "part": "filter-2-on",
+      "type": "press",
+      "axis": [
+        0,
+        -0.9902680687415704,
+        -0.13917310096006544
+      ],
+      "travel_m": 0.0012
+    },
+    {
+      "part": "filter-2-route",
+      "type": "press",
+      "axis": [
+        0,
+        -0.9902680687415704,
+        -0.13917310096006544
+      ],
+      "travel_m": 0.0012
+    },
+    {
+      "part": "editor-softkey-1",
+      "type": "press",
+      "axis": [
+        0,
+        -0.9902680687415704,
+        -0.13917310096006544
+      ],
+      "travel_m": 0.0012
+    },
+    {
+      "part": "editor-e1",
+      "type": "rotary",
+      "axis": [
+        0,
+        0.9902680687415704,
+        0.13917310096006544
+      ],
+      "pivot": [
+        0.06541666666666666,
+        0.11923513248767847,
+        -0.096
+      ],
+      "travel": "endless encoder",
+      "scan": "quadrature; push and touch where specified"
+    },
+    {
+      "part": "editor-softkey-2",
+      "type": "press",
+      "axis": [
+        0,
+        -0.9902680687415704,
+        -0.13917310096006544
+      ],
+      "travel_m": 0.0012
+    },
+    {
+      "part": "editor-e2",
+      "type": "rotary",
+      "axis": [
+        0,
+        0.9902680687415704,
+        0.13917310096006544
+      ],
+      "pivot": [
+        0.09125,
+        0.11923513248767847,
+        -0.096
+      ],
+      "travel": "endless encoder",
+      "scan": "quadrature; push and touch where specified"
+    },
+    {
+      "part": "editor-softkey-3",
+      "type": "press",
+      "axis": [
+        0,
+        -0.9902680687415704,
+        -0.13917310096006544
+      ],
+      "travel_m": 0.0012
+    },
+    {
+      "part": "editor-e3",
+      "type": "rotary",
+      "axis": [
+        0,
+        0.9902680687415704,
+        0.13917310096006544
+      ],
+      "pivot": [
+        0.11708333333333334,
+        0.11923513248767847,
+        -0.096
+      ],
+      "travel": "endless encoder",
+      "scan": "quadrature; push and touch where specified"
+    },
+    {
+      "part": "editor-softkey-4",
+      "type": "press",
+      "axis": [
+        0,
+        -0.9902680687415704,
+        -0.13917310096006544
+      ],
+      "travel_m": 0.0012
+    },
+    {
+      "part": "editor-e4",
+      "type": "rotary",
+      "axis": [
+        0,
+        0.9902680687415704,
+        0.13917310096006544
+      ],
+      "pivot": [
+        0.14291666666666666,
+        0.11923513248767847,
+        -0.096
+      ],
+      "travel": "endless encoder",
+      "scan": "quadrature; push and touch where specified"
+    },
+    {
+      "part": "editor-softkey-5",
+      "type": "press",
+      "axis": [
+        0,
+        -0.9902680687415704,
+        -0.13917310096006544
+      ],
+      "travel_m": 0.0012
+    },
+    {
+      "part": "editor-e5",
+      "type": "rotary",
+      "axis": [
+        0,
+        0.9902680687415704,
+        0.13917310096006544
+      ],
+      "pivot": [
+        0.16875,
+        0.11923513248767847,
+        -0.096
+      ],
+      "travel": "endless encoder",
+      "scan": "quadrature; push and touch where specified"
+    },
+    {
+      "part": "editor-softkey-6",
+      "type": "press",
+      "axis": [
+        0,
+        -0.9902680687415704,
+        -0.13917310096006544
+      ],
+      "travel_m": 0.0012
+    },
+    {
+      "part": "editor-e6",
+      "type": "rotary",
+      "axis": [
+        0,
+        0.9902680687415704,
+        0.13917310096006544
+      ],
+      "pivot": [
+        0.19458333333333333,
+        0.11923513248767847,
+        -0.096
+      ],
+      "travel": "endless encoder",
+      "scan": "quadrature; push and touch where specified"
+    },
+    {
+      "part": "page-source",
+      "type": "press",
+      "axis": [
+        0,
+        -0.9902680687415704,
+        -0.13917310096006544
+      ],
+      "travel_m": 0.0012
+    },
+    {
+      "part": "page-edit",
+      "type": "press",
+      "axis": [
+        0,
+        -0.9902680687415704,
+        -0.13917310096006544
+      ],
+      "travel_m": 0.0012
+    },
+    {
+      "part": "page-mix",
+      "type": "press",
+      "axis": [
+        0,
+        -0.9902680687415704,
+        -0.13917310096006544
+      ],
+      "travel_m": 0.0012
+    },
+    {
+      "part": "page-fx",
+      "type": "press",
+      "axis": [
+        0,
+        -0.9902680687415704,
+        -0.13917310096006544
+      ],
+      "travel_m": 0.0012
+    },
+    {
+      "part": "page-matrix",
+      "type": "press",
+      "axis": [
+        0,
+        -0.9902680687415704,
+        -0.13917310096006544
+      ],
+      "travel_m": 0.0012
+    },
+    {
+      "part": "page-clip",
+      "type": "press",
+      "axis": [
+        0,
+        -0.9902680687415704,
+        -0.13917310096006544
+      ],
+      "travel_m": 0.0012
+    },
+    {
+      "part": "page-arp",
+      "type": "press",
+      "axis": [
+        0,
+        -0.9902680687415704,
+        -0.13917310096006544
+      ],
+      "travel_m": 0.0012
+    },
+    {
+      "part": "page-system-voice",
+      "type": "press",
+      "axis": [
+        0,
+        -0.9902680687415704,
+        -0.13917310096006544
+      ],
+      "travel_m": 0.0012
+    },
+    {
+      "part": "browse-data-navigator",
+      "type": "rotary",
+      "axis": [
+        0,
+        0.9902680687415704,
+        0.13917310096006544
+      ],
+      "pivot": [
+        0.133,
+        0.11178646824845173,
+        -0.043
+      ],
+      "travel": "endless encoder",
+      "scan": "quadrature; push and touch where specified"
+    },
+    {
+      "part": "nav-save",
+      "type": "press",
+      "axis": [
+        0,
+        -0.9902680687415704,
+        -0.13917310096006544
+      ],
+      "travel_m": 0.0012
+    },
+    {
+      "part": "nav-undo",
+      "type": "press",
+      "axis": [
+        0,
+        -0.9902680687415704,
+        -0.13917310096006544
+      ],
+      "travel_m": 0.0012
+    },
+    {
+      "part": "nav-redo",
+      "type": "press",
+      "axis": [
+        0,
+        -0.9902680687415704,
+        -0.13917310096006544
+      ],
+      "travel_m": 0.0012
+    },
+    {
+      "part": "nav-back-fine",
+      "type": "press",
+      "axis": [
+        0,
+        -0.9902680687415704,
+        -0.13917310096006544
+      ],
+      "travel_m": 0.0012
+    },
+    {
+      "part": "nav-play",
+      "type": "press",
+      "axis": [
+        0,
+        -0.9902680687415704,
+        -0.13917310096006544
+      ],
+      "travel_m": 0.0012
+    },
+    {
+      "part": "nav-stop",
+      "type": "press",
+      "axis": [
+        0,
+        -0.9902680687415704,
+        -0.13917310096006544
+      ],
+      "travel_m": 0.0012
+    },
+    {
+      "part": "nav-record",
+      "type": "press",
+      "axis": [
+        0,
+        -0.9902680687415704,
+        -0.13917310096006544
+      ],
+      "travel_m": 0.0012
+    },
+    {
+      "part": "main-output-volume",
+      "type": "rotary",
+      "axis": [
+        0,
+        0.9902680687415704,
+        0.13917310096006544
+      ],
+      "pivot": [
+        0.038,
+        0.11333241743017804,
+        -0.054
+      ],
+      "travel": "endless encoder",
+      "scan": "quadrature; push and touch where specified"
+    },
+    {
+      "part": "source-family-env",
+      "type": "press",
+      "axis": [
+        0,
+        -0.9902680687415704,
+        -0.13917310096006544
+      ],
+      "travel_m": 0.0012
+    },
+    {
+      "part": "source-family-lfo",
+      "type": "press",
+      "axis": [
+        0,
+        -0.9902680687415704,
+        -0.13917310096006544
+      ],
+      "travel_m": 0.0012
+    },
+    {
+      "part": "source-family-macro",
+      "type": "press",
+      "axis": [
+        0,
+        -0.9902680687415704,
+        -0.13917310096006544
+      ],
+      "travel_m": 0.0012
+    },
+    {
+      "part": "source-family-other",
+      "type": "press",
+      "axis": [
+        0,
+        -0.9902680687415704,
+        -0.13917310096006544
+      ],
+      "travel_m": 0.0012
+    },
+    {
+      "part": "source-or-slot-1",
+      "type": "press",
+      "axis": [
+        0,
+        -0.9902680687415704,
+        -0.13917310096006544
+      ],
+      "travel_m": 0.0012
+    },
+    {
+      "part": "source-or-slot-2",
+      "type": "press",
+      "axis": [
+        0,
+        -0.9902680687415704,
+        -0.13917310096006544
+      ],
+      "travel_m": 0.0012
+    },
+    {
+      "part": "source-or-slot-3",
+      "type": "press",
+      "axis": [
+        0,
+        -0.9902680687415704,
+        -0.13917310096006544
+      ],
+      "travel_m": 0.0012
+    },
+    {
+      "part": "source-or-slot-4",
+      "type": "press",
+      "axis": [
+        0,
+        -0.9902680687415704,
+        -0.13917310096006544
+      ],
+      "travel_m": 0.0012
+    },
+    {
+      "part": "source-or-slot-5",
+      "type": "press",
+      "axis": [
+        0,
+        -0.9902680687415704,
+        -0.13917310096006544
+      ],
+      "travel_m": 0.0012
+    },
+    {
+      "part": "source-or-slot-6",
+      "type": "press",
+      "axis": [
+        0,
+        -0.9902680687415704,
+        -0.13917310096006544
+      ],
+      "travel_m": 0.0012
+    },
+    {
+      "part": "source-or-slot-7",
+      "type": "press",
+      "axis": [
+        0,
+        -0.9902680687415704,
+        -0.13917310096006544
+      ],
+      "travel_m": 0.0012
+    },
+    {
+      "part": "source-or-slot-8",
+      "type": "press",
+      "axis": [
+        0,
+        -0.9902680687415704,
+        -0.13917310096006544
+      ],
+      "travel_m": 0.0012
+    },
+    {
+      "part": "source-or-slot-9",
+      "type": "press",
+      "axis": [
+        0,
+        -0.9902680687415704,
+        -0.13917310096006544
+      ],
+      "travel_m": 0.0012
+    },
+    {
+      "part": "source-or-slot-10",
+      "type": "press",
+      "axis": [
+        0,
+        -0.9902680687415704,
+        -0.13917310096006544
+      ],
+      "travel_m": 0.0012
+    },
+    {
+      "part": "source-or-slot-11",
+      "type": "press",
+      "axis": [
+        0,
+        -0.9902680687415704,
+        -0.13917310096006544
+      ],
+      "travel_m": 0.0012
+    },
+    {
+      "part": "source-or-slot-12",
+      "type": "press",
+      "axis": [
+        0,
+        -0.9902680687415704,
+        -0.13917310096006544
+      ],
+      "travel_m": 0.0012
+    },
+    {
+      "part": "modulation-signed-amount",
+      "type": "rotary",
+      "axis": [
+        0,
+        0.9902680687415704,
+        0.13917310096006544
+      ],
+      "pivot": [
+        -0.104,
+        0.10518104901743933,
+        0.004
+      ],
+      "travel": "endless encoder",
+      "scan": "quadrature; push and touch where specified"
+    },
+    {
+      "part": "mod-assign",
+      "type": "press",
+      "axis": [
+        0,
+        -0.9902680687415704,
+        -0.13917310096006544
+      ],
+      "travel_m": 0.0012
+    },
+    {
+      "part": "mod-inspect",
+      "type": "press",
+      "axis": [
+        0,
+        -0.9902680687415704,
+        -0.13917310096006544
+      ],
+      "travel_m": 0.0012
+    },
+    {
+      "part": "mod-polar",
+      "type": "press",
+      "axis": [
+        0,
+        -0.9902680687415704,
+        -0.13917310096006544
+      ],
+      "travel_m": 0.0012
+    },
+    {
+      "part": "mod-curve",
+      "type": "press",
+      "axis": [
+        0,
+        -0.9902680687415704,
+        -0.13917310096006544
+      ],
+      "travel_m": 0.0012
+    },
+    {
+      "part": "macro-1",
+      "type": "rotary",
+      "axis": [
+        0,
+        0.9902680687415704,
+        0.13917310096006544
+      ],
+      "pivot": [
+        0.034,
+        0.10138644648047476,
+        0.031
+      ],
+      "travel": "endless encoder",
+      "scan": "quadrature; push and touch where specified"
+    },
+    {
+      "part": "macro-2",
+      "type": "rotary",
+      "axis": [
+        0,
+        0.9902680687415704,
+        0.13917310096006544
+      ],
+      "pivot": [
+        0.062,
+        0.10138644648047476,
+        0.031
+      ],
+      "travel": "endless encoder",
+      "scan": "quadrature; push and touch where specified"
+    },
+    {
+      "part": "macro-3",
+      "type": "rotary",
+      "axis": [
+        0,
+        0.9902680687415704,
+        0.13917310096006544
+      ],
+      "pivot": [
+        0.09,
+        0.10138644648047476,
+        0.031
+      ],
+      "travel": "endless encoder",
+      "scan": "quadrature; push and touch where specified"
+    },
+    {
+      "part": "macro-4",
+      "type": "rotary",
+      "axis": [
+        0,
+        0.9902680687415704,
+        0.13917310096006544
+      ],
+      "pivot": [
+        0.11800000000000001,
+        0.10138644648047476,
+        0.031
+      ],
+      "travel": "endless encoder",
+      "scan": "quadrature; push and touch where specified"
+    },
+    {
+      "part": "macro-5",
+      "type": "rotary",
+      "axis": [
+        0,
+        0.9902680687415704,
+        0.13917310096006544
+      ],
+      "pivot": [
+        0.14600000000000002,
+        0.10138644648047476,
+        0.031
+      ],
+      "travel": "endless encoder",
+      "scan": "quadrature; push and touch where specified"
+    },
+    {
+      "part": "macro-6",
+      "type": "rotary",
+      "axis": [
+        0,
+        0.9902680687415704,
+        0.13917310096006544
+      ],
+      "pivot": [
+        0.17400000000000002,
+        0.10138644648047476,
+        0.031
+      ],
+      "travel": "endless encoder",
+      "scan": "quadrature; push and touch where specified"
+    },
+    {
+      "part": "macro-7",
+      "type": "rotary",
+      "axis": [
+        0,
+        0.9902680687415704,
+        0.13917310096006544
+      ],
+      "pivot": [
+        0.202,
+        0.10138644648047476,
+        0.031
+      ],
+      "travel": "endless encoder",
+      "scan": "quadrature; push and touch where specified"
+    },
+    {
+      "part": "macro-8",
+      "type": "rotary",
+      "axis": [
+        0,
+        0.9902680687415704,
+        0.13917310096006544
+      ],
+      "pivot": [
+        0.23,
+        0.10138644648047476,
+        0.031
+      ],
+      "travel": "endless encoder",
+      "scan": "quadrature; push and touch where specified"
+    },
+    {
+      "part": "env-attack-fader",
+      "type": "slide",
+      "axis": [
+        0,
+        -0.13917310096006544,
+        0.9902680687415704
+      ],
+      "travel_m": 0.065,
+      "pickup": true
+    },
+    {
+      "part": "env-hold-fader",
+      "type": "slide",
+      "axis": [
+        0,
+        -0.13917310096006544,
+        0.9902680687415704
+      ],
+      "travel_m": 0.065,
+      "pickup": true
+    },
+    {
+      "part": "env-decay-fader",
+      "type": "slide",
+      "axis": [
+        0,
+        -0.13917310096006544,
+        0.9902680687415704
+      ],
+      "travel_m": 0.065,
+      "pickup": true
+    },
+    {
+      "part": "env-sustain-fader",
+      "type": "slide",
+      "axis": [
+        0,
+        -0.13917310096006544,
+        0.9902680687415704
+      ],
+      "travel_m": 0.065,
+      "pickup": true
+    },
+    {
+      "part": "env-release-fader",
+      "type": "slide",
+      "axis": [
+        0,
+        -0.13917310096006544,
+        0.9902680687415704
+      ],
+      "travel_m": 0.065,
+      "pickup": true
+    },
+    {
+      "part": "performance-pitch-wheel",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        -0.487,
+        0.071,
+        0.17
+      ],
+      "degrees": 35,
+      "spring_return": true
+    },
+    {
+      "part": "performance-mod-wheel",
+      "type": "hinge",
+      "axis": [
+        1,
+        0,
+        0
+      ],
+      "pivot": [
+        -0.448,
+        0.071,
+        0.17
+      ],
+      "degrees": 35,
+      "spring_return": false
+    },
+    {
+      "part": "headphone-level",
+      "type": "rotary_potentiometer",
+      "axis": [
+        0,
+        1,
+        0
+      ],
+      "pivot": [
+        -0.492,
+        0.0705,
+        0.221
+      ],
+      "travel": "bounded analog potentiometer",
+      "scan": "analog headphone level",
+      "travel_degrees": 270
+    },
+    {
+      "part": "hard-power-rocker",
+      "type": "switch",
+      "travel_degrees": 12,
+      "note": "mechanical intent; not animated by native Construct"
+    }
+  ]
+}
