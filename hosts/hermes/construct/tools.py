@@ -1,15 +1,17 @@
 """The tool handlers. Each takes the model's arguments and returns a JSON string; none raises."""
 
+import base64
 import functools
 import html
 import json
 import logging
+import os
 import re
 import shutil
 import time
 from pathlib import Path
 
-from . import jobs, runtime, schemas
+from . import jobs, readback, runtime, schemas
 from .runtime import ConstructError
 
 log = logging.getLogger(__name__)
@@ -36,7 +38,7 @@ def _desktop_or_local():
 
 def tool(name):
     """Wrap a handler: known arguments only, a JSON string always, an error as {"error": ...}."""
-    allowed = set(next(t for t in schemas.TOOLS if t["name"] == name)["parameters"]["properties"])
+    allowed = set(schemas.by_name(name)["parameters"]["properties"])
 
     def wrap(fn):
         @functools.wraps(fn)
@@ -122,9 +124,11 @@ def start(args):
         raise ConstructError("give one source: %s" % " or ".join(sources))
     if not sources:
         code, out, err = runtime.run_child("cli", "params", "--list", timeout=60)
-        return {"archetypes": out.strip() if code == 0 else err.strip(), "categories": schemas.CATEGORIES,
-                "examples": sorted(runtime.examples()), "programs": runtime.programs(),
-                "next": "call construct_start with one of archetype (+ variant), category, example or from_path"}
+        rows = [{k: e.get(k) for k in ("name", "title", "parts", "line", "use")} for e in runtime.catalog()]
+        return {"examples": rows, "archetypes": out.strip() if code == 0 else err.strip(),
+                "categories": schemas.CATEGORIES, "programs": runtime.programs(),
+                "next": "call construct_start with one of example (a finished construct to start from or show), archetype "
+                        "(+ variant), category or from_path"}
     title = args.get("title")
     if title is not None and (not isinstance(title, str) or len(title) > 120):
         raise ConstructError("title must be a string of at most 120 characters")
@@ -164,12 +168,18 @@ def start(args):
             if code:
                 raise ConstructError("new: %s" % (err.strip() or out.strip()))
         else:
-            src = runtime.examples()[args["example"]] if source == "example" else Path(origin)
+            if source == "example":
+                files = runtime.examples()[args["example"]]
+                src, maps = files["scene"], files["materials"]
+                if files.get("kit_plan"):   # its model kit plan, for construct_command kit --plan kit-plan.json
+                    shutil.copyfile(files["kit_plan"], folder / "kit-plan.json")
+            else:
+                src = Path(origin)
+                maps = src.with_name(re.sub(r"(\.params)?\.json$", "", src.name) + ".materials.json")
             if src.name.endswith(".params.json"):
                 name = "scene.params.json"
             _copy_scene(src, folder / name)
-            maps = src.with_name(re.sub(r"(\.params)?\.json$", "", src.name) + ".materials.json")
-            if maps.is_file():   # the example's paints travel with it, beside the scene where export finds them
+            if maps and maps.is_file():   # the paints travel with it, beside the scene where export finds them
                 shutil.copyfile(maps, folder / (re.sub(r"(\.params)?\.json$", "", name) + ".materials.json"))
             if title:
                 _retitle(folder / name, title)
@@ -293,6 +303,75 @@ def inspect(args):
     return rec
 
 
+# ---------------------------------------------------------------------------- edit
+
+@tool("construct_edit")
+def edit(args):
+    from . import scene_edit
+    slug, folder, scene = runtime.resolve(args)
+    if not runtime.inside(scene, runtime.allowed_roots()):
+        raise ConstructError("the scene %s is outside the projects: construct_edit changes only scenes inside a project. "
+                             "Copy it in first (construct_start from_path), then edit the copy" % scene)
+    try:
+        ops = scene_edit.check_ops(args.get("operations"))
+    except scene_edit.EditError as exc:
+        raise ConstructError(str(exc))
+    dry = _bool(args, "dry_run")
+    work = folder / "edits"
+    work.mkdir(parents=True, exist_ok=True)
+    edit_id = runtime.new_id()
+    spec_path, candidate = work / (".%s.spec.json" % edit_id), work / (".%s.candidate.json" % edit_id)
+    runtime.write_json(spec_path, {"scene": str(scene), "ops": ops, "candidate": str(candidate)})
+    try:
+        code, out, err = runtime.run_child("edit", str(spec_path), timeout=360, cwd=folder)
+        try:
+            res = json.loads(out.strip().splitlines()[-1]) if out.strip() else None
+        except ValueError:
+            res = None
+        if code or not isinstance(res, dict):
+            raise ConstructError("the edit could not run: %s" % (err.strip()[-2000:] or out.strip()[-2000:] or "no answer"))
+        result = {"project": slug, "scene": str(scene), "applied": res.get("applied", []), "dry_run": dry}
+        if res.get("error"):
+            result.update(written=False, error=res["error"],
+                          next="nothing was written; fix that operation (the ones before it are shown) and send the list again")
+            return result
+        report = _compact_check(res.get("report") or {}, scene)
+        report.pop("scene", None)
+        result["check"] = report
+        if res.get("introduced"):
+            result.update(written=False, introduced=res["introduced"],
+                          next="nothing was written: these edits add the errors listed under introduced (the step that "
+                               "added each is under applied[].new_problems); change the operations and send them again")
+            return result
+        if dry:
+            result.update(written=False, next="a dry run: send the same operations without dry_run to write them")
+            return result
+        before = work / ("%s-before.json" % edit_id)
+        shutil.copyfile(scene, before)   # the scene as it was, to go back to
+        os.replace(candidate, scene)
+        with open(work / "log.jsonl", "a", encoding="utf-8") as log_file:
+            log_file.write(json.dumps({"id": edit_id, "at": runtime.stamp_iso(), "ops": ops,
+                                       "before": before.name}, ensure_ascii=False) + "\n")
+        _keep_newest(work, "*-before.json", 20)
+        result.update(written=True, undo=str(before),
+                      next="written; construct_check if the summary shows problems, then construct_build to see it")
+        return result
+    finally:
+        for p in (spec_path, candidate):
+            try:
+                p.unlink()
+            except OSError:
+                pass
+
+
+def _keep_newest(folder, pattern, keep):
+    for old in sorted(folder.glob(pattern))[:-keep]:
+        try:
+            old.unlink()
+        except OSError:
+            pass
+
+
 # ---------------------------------------------------------------------------- build
 
 @tool("construct_build")
@@ -318,30 +397,37 @@ def _title_of(page):
 
 def _finish_build(rec, done, tail):
     f = rec["finish"]
-    out = Path(f["out"])
-    page = out / "construct.html"
+    return publish(f["slug"], f["build"], Path(f["out"]), f["scene"], tail)
+
+
+def publish(slug, build_id, out, scene, tail="", kind="construct", extra_card=None):
+    """A finished build (`out` holds construct.html and audit.json) put where chat and the Constructs page show it;
+    the tool result with its MEDIA line. Other tools that make a construct page (a NetLogo run) end here too."""
+    page = Path(out) / "construct.html"
     if not page.is_file():
         raise ConstructError("the build failed:\n%s" % tail)
     try:
-        audit = json.loads((out / "audit.json").read_text(encoding="utf-8"))
+        audit = json.loads((Path(out) / "audit.json").read_text(encoding="utf-8"))
     except (OSError, ValueError):
         audit = {}
     info = audit.get("info", {})
-    title = _title_of(page) or f["slug"]
-    card = {"project": f["slug"], "build": f["build"], "title": title, "parts": info.get("parts"),
+    title = _title_of(page) or slug
+    card = {"project": slug, "build": build_id, "title": title, "parts": info.get("parts"), "kind": kind,
             "counts": info.get("counts", {}), "size_m": info.get("dimensions_m"), "audit_ok": audit.get("ok"),
-            "created": runtime.stamp_iso(), "page": str(page), "scene": f["scene"]}
-    shown = runtime.show(f["slug"], f["build"], page, card, thumb=out / "thumb.png")
-    runtime.prune(out.parent)
+            "created": runtime.stamp_iso(), "page": str(page), "scene": str(scene)}
+    card.update(runtime.scene_stamp(scene))
+    card.update(extra_card or {})
+    shown = runtime.show(slug, build_id, page, card, thumb=Path(out) / "thumb.png")
+    runtime.prune(Path(out).parent)
     loader = shown / "loader.html"
     full = shown / "construct.html"
     first = loader if _desktop_or_local() else full
     audit_text = ""
     try:
-        audit_text = (out / "audit.txt").read_text(encoding="utf-8").strip()
+        audit_text = (Path(out) / "audit.txt").read_text(encoding="utf-8").strip()
     except OSError:
         pass
-    result = {"success": True, "project": f["slug"], "build": f["build"],
+    result = {"success": True, "project": slug, "build": build_id,
               "title": title, "parts": info.get("parts"), "counts": info.get("counts"), "size_m": info.get("dimensions_m"),
               "audit": {"ok": audit.get("ok"), "errors": [e.get("message", e) if isinstance(e, dict) else e
                                                            for e in audit.get("errors", [])][:20],
@@ -489,15 +575,69 @@ def _finish_export(rec, done, tail):
     files = [str(target)] + [x for x in f.get("extra", []) if Path(x).is_file()]
     if f["format"] == "obj" and target.with_suffix(".mtl").is_file():
         files.append(str(target.with_suffix(".mtl")))
+    verified = verify_export(target, f["format"], tail)
     out = {"success": True, "project": f["slug"], "format": f["format"], "file_path": str(target), "files": files,
-           "bytes": target.stat().st_size, "report": tail.strip()[-3000:], "media": media(str(target)),
-           "media_tag": "MEDIA:%s" % target}
+           "bytes": target.stat().st_size, "verified": verified, "summary": verified.get("summary", ""),
+           "report": tail.strip()[-3000:], "media": media(str(target)), "media_tag": "MEDIA:%s" % target,
+           "next": "the verified block is Construct's own read-back of the written file: report it as it is (size, "
+                   "parts, animations, bounds); there is no need to open the file in another program to check it. "
+                   "Put the MEDIA line in your reply"}
+    for extra in files[1:]:
+        if Path(extra).suffix.lower() in (".step", ".stp"):
+            out["verified_step"] = verify_export(Path(extra), "step", tail)
     if f["format"] in ("stl", "3mf") and done.get("code") == 1:
         out["printable"] = False
         out["warning"] = "not watertight: do not hand it over as printable; read the report"
     elif f["format"] in ("stl", "3mf"):
         out["printable"] = True
+    item = runtime.record_item(f["slug"], "export", target, title="%s export" % f["format"].upper(), summary=verified)
+    if item:
+        out["item"] = item["id"]   # the Desktop half reads a model too large for the chat's own reader by this id
+    for extra in files[1:]:
+        if Path(extra).suffix.lower() in (".step", ".stp"):
+            runtime.record_item(f["slug"], "export", extra, title="STEP export", summary=out.get("verified_step"))
     return out
+
+
+def verify_export(target, fmt, tail=""):
+    """What the written file holds, read back from it (readback.py), with Construct's own counts and one line to say."""
+    got = readback.read(target)
+    made = readback.construct_report(tail)
+    got["construct"] = made
+    b = got.get("bounds")
+    dims = ""
+    if b:
+        dims = "%s m (%s mm)" % (" x ".join("%g" % v for v in b["m"]), " x ".join("%g" % v for v in b["mm"]))
+    bits = ["%s %s" % (got["size"], fmt.upper())]
+    if fmt == "glb" and "nodes" in got:
+        bits.append("%d named parts in %d nodes and %d meshes, %d triangles" % (
+            got["named_parts"], got["nodes"], got["meshes"], got["triangles"]))
+        if got.get("animations"):
+            bits.append("animations: " + ", ".join("%s (%gs, %d channels)" % (a["name"] or "unnamed", a["seconds"], a["channels"])
+                                                   for a in got["animations"]))
+        else:
+            bits.append("no animations")
+    elif fmt == "obj" and "objects" in got:
+        bits.append("%d named objects, %d faces" % (got["objects"], got["faces"]))
+    elif fmt in ("stl", "3mf") and "triangles" in got:
+        bits.append("%d triangles%s" % (got["triangles"], ", %d objects" % got["objects"] if fmt == "3mf" else ""))
+    elif fmt == "step" and "solids" in got:
+        bits.append("%d products, %d solids, %d faces (%d curved: %s)" % (
+            got["products"], got["solids"], got["faces"], got["curved_faces"],
+            ", ".join("%s %d" % kv for kv in sorted(got["surfaces"].items())) or "none"))
+    elif fmt == "fcstd" and "solids" in got:
+        bits.append("%d named solids in %d objects" % (got["solids"], got["objects"]))
+    if fmt in ("step", "fcstd") and "exact" in made:
+        bits.append("%d exact CAD shapes, %d faceted" % (made["exact"], made["faceted"]))
+    if made.get("joints") is not None:
+        bits.append("%d joints" % made["joints"])
+    if dims:
+        bits.append(dims)
+    if got.get("error"):
+        bits.append("READ-BACK FAILED: " + got["error"])
+    got["summary"] = "; ".join(bits)
+    got["verified_by"] = "the plugin read the written file back (not the scene)"
+    return got
 
 
 # ---------------------------------------------------------------------------- film
@@ -550,6 +690,7 @@ def _finish_film(rec, done, tail):
             except ValueError:
                 pass
             break
+    runtime.record_item(f["slug"], "film", target, title="film", summary=about)
     return {"success": True, "project": f["slug"], "file_path": str(target), "film": about,
             "bytes": target.stat().st_size, "media": media(str(target)), "media_tag": "MEDIA:%s" % target,
             "next": "sample frames to check it moves with the music and ends whole, then put the MEDIA line in your reply"}
@@ -567,6 +708,16 @@ def job(args):
         time.sleep(0.3)
         out = jobs.status(job_id)
         out["cancelled"] = stopped
+        return out
+    wait = _number(args, "wait_seconds", 1, schemas.WAIT_MAX, integer=True)
+    if wait:
+        jobs.folder(job_id)   # a bad id is refused before waiting
+        started = time.time()
+        jobs.wait(job_id, wait)
+        out = jobs.status(job_id)
+        out["waited_s"] = round(time.time() - started, 1)
+        if out.get("state") == "running":
+            out["next"] = "still running after %d s; call construct_job again with wait_seconds" % wait
         return out
     return jobs.status(job_id)
 
@@ -645,9 +796,85 @@ def _finish_command(rec, done, tail):
         except OSError:
             continue
     shown = [p for p in written if Path(p).suffix.lower() in (".png", ".jpg", ".mp4", ".gif", ".glb", ".3mf", ".stl")][:8]
-    return {"state": "done" if done.get("code") == 0 else "failed", "exit": done.get("code"), "argv": f["argv"],
-            "output": tail.strip()[-6000:], "files": written[:LIST_CAP], "media": media(*shown),
-            "note": "exit 1 is Construct's own 'has problems' (read the output); 2 means a capture was not possible"}
+    out = {"state": "done" if done.get("code") == 0 else "failed", "exit": done.get("code"), "argv": f["argv"],
+           "output": tail.strip()[-6000:], "files": written[:LIST_CAP],
+           "note": "exit 1 is Construct's own 'has problems' (read the output); 2 means a capture was not possible"}
+    slug, sub = rec.get("project"), f["argv"][0]
+    if slug and done.get("code") in (0, 1):
+        kit_dir = _out_arg(f["argv"], folder) if sub == "kit" else None
+        if kit_dir is not None and (kit_dir / "booklet.html").is_file():
+            kit = publish_kit(slug, kit_dir)
+            out["kit"] = kit
+            shown = [kit["file_path"]] + [p for p in shown if not p.startswith(str(kit_dir))][:4]
+            out["next"] = ("put the kit's MEDIA line in your reply: Hermes Desktop shows its steps in 3D and its booklet; "
+                           "the plates are the .3mf files")
+        for p in written:
+            suffix = Path(p).suffix.lower()
+            if kit_dir is not None and p.startswith(str(kit_dir)):
+                continue
+            if suffix == ".mp4":
+                runtime.record_item(slug, "film", p, title="film (%s)" % sub)
+            elif suffix in (".glb", ".obj", ".stl", ".3mf", ".step", ".fcstd"):
+                kind = "plates" if sub == "netlogo-plates" else "export"
+                runtime.record_item(slug, kind, p, title="%s (%s)" % (suffix[1:].upper(), sub),
+                                    summary=verify_export(Path(p), suffix[1:], tail) if kind == "export" else None)
+    out["media"] = media(*shown)
+    return out
+
+
+def _out_arg(argv, folder):
+    """The folder an argv's --out names (relative to the working folder)."""
+    for i, a in enumerate(argv):
+        flag, eq, val = a.partition("=")
+        if flag == "--out":
+            value = val if eq else (argv[i + 1] if i + 1 < len(argv) else None)
+            if value:
+                p = Path(value).expanduser()
+                return (p if p.is_absolute() else folder / p).resolve()
+    return None
+
+
+IMG = re.compile(r"""(src=)(["'])(img/[A-Za-z0-9._-]{1,80}\.(svg|png))\2""")
+
+
+def publish_kit(slug, kit_dir):
+    """A model kit's pages put where chat and the Constructs page show them: shown/<slug>/kits/<id>/ holds its steps
+    in 3D (assembly.html, a construct page), its booklet with the pictures inlined (one file a frame can show), a
+    loader and a card. Returns the kit's card with its MEDIA line."""
+    kit_id = runtime.new_id()
+    folder = runtime.shown_root() / slug / "kits" / kit_id
+    folder.mkdir(parents=True, exist_ok=True)
+    budget = [24 * 1024 * 1024]
+
+    def inline(m):
+        f = (kit_dir / m.group(3)).resolve()
+        if not runtime.inside(f, [kit_dir.resolve()]) or not f.is_file() or f.stat().st_size > budget[0]:
+            return m.group(0)
+        budget[0] -= f.stat().st_size
+        mime = "image/svg+xml" if m.group(4) == "svg" else "image/png"
+        return '%s%s%s%s' % (m.group(1), m.group(2), "data:%s;base64,%s" % (mime, base64.b64encode(f.read_bytes()).decode("ascii")),
+                             m.group(2))
+    booklet = (kit_dir / "booklet.html").read_text(encoding="utf-8")
+    (folder / "booklet.html").write_text(IMG.sub(inline, booklet), encoding="utf-8")
+    has3d = (kit_dir / "assembly.html").is_file()
+    if has3d:
+        runtime.link_or_copy(kit_dir / "assembly.html", folder / "assembly.html")
+    try:
+        info = json.loads((kit_dir / "kit.json").read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        info = {}
+    title = str(info.get("title") or slug)
+    card = {"kind": "kit", "project": slug, "kit": kit_id, "title": title, "pieces": len(info.get("pieces") or []),
+            "plates": len(sorted(kit_dir.glob("plate-*.3mf"))), "steps": len(info.get("steps") or []), "has_3d": has3d,
+            "size_mm": info.get("size_mm"), "scale": info.get("scale"), "created": runtime.stamp_iso(),
+            "folder": str(kit_dir), "booklet": str(kit_dir / "booklet.html")}
+    runtime.write_loader(folder / "loader.html", title + ", a kit", "assembly.html" if has3d else "booklet.html")
+    runtime.write_json(folder / "card.json", card)
+    runtime.prune(folder.parent)
+    runtime.record_item(slug, "kit", kit_dir / "kit.json", title="model kit: %d pieces, %d plates" % (card["pieces"], card["plates"]),
+                        summary={"kit": kit_id, "pieces": card["pieces"], "plates": card["plates"], "steps": card["steps"]})
+    loader = folder / "loader.html"
+    return dict(card, file_path=str(loader), media_tag="MEDIA:%s" % loader, media=media(str(loader)))
 
 
 jobs.register_finisher("check", _finish_check)
@@ -657,6 +884,6 @@ jobs.register_finisher("export", _finish_export)
 jobs.register_finisher("film", _finish_film)
 jobs.register_finisher("command", _finish_command)
 
-HANDLERS = {"construct_start": start, "construct_check": check, "construct_inspect": inspect, "construct_build": build,
+HANDLERS = {"construct_start": start, "construct_edit": edit, "construct_check": check, "construct_inspect": inspect, "construct_build": build,
             "construct_review": review, "construct_export": export, "construct_film": film, "construct_job": job,
             "construct_command": command}

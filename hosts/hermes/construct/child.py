@@ -9,6 +9,8 @@ from the user's site or the current folder is imported. Ops:
     cli <argv...>             Construct's own command line
     build <spec.json>         `build`, then a small still for the gallery when a browser is there
     inspect <scene>           what the scene's own record says is known (JSON)
+    edit <spec.json>          apply construct_edit's operations, validating each; the result beside, as a candidate
+    netlogo-run|netlogo-draw <spec.json>   NetLogo runs and recordings drawn (netlogo_child.py)
     film <spec.json>          a film: build, frames, encode (the frames are counted for progress)
     job <dir> <op> [args...]  run an op as a background job: exit.json records how it ended
 """
@@ -75,6 +77,80 @@ def _capped(items, n):
 ROLE_ORDER = ("identity", "mass", "structure", "artwork", "data", "detail", "ornament", "ground")
 GROUPS = ("verified", "size_verified", "shape_verified", "supplied", "traced", "inferred", "designed", "decorative")
 LEVELS = {2: "described", 3: "seen", 4: "seen and checked"}
+
+
+AXES = (("width", "x"), ("height", "y"), ("length", "z"))
+
+
+def _union(boxes):
+    lo = [min(b[0][a] for b in boxes) for a in range(3)]
+    hi = [max(b[1][a] for b in boxes) for a in range(3)]
+    return lo, hi
+
+
+def _dims(lo, hi, unit):
+    k = 1000.0 if unit == "mm" else 1.0
+    return {name: round((hi[a] - lo[a]) * k, 1 if unit == "mm" else 3) for a, (name, _) in enumerate(AXES)}
+
+
+def envelope(doc):
+    """The construct's size two ways: over everything (the overall bounds), and over its main mass alone (the body,
+    without what sticks out of it: mirrors, handles, aerials, a chimney), with the parts that stand out beyond the
+    body and by how much. The body is the parts the scene calls `mass`; without enough of them, the largest parts."""
+    from construct_hologram import scene as scene_mod
+    g = scene_mod.compile_scene(doc)
+    boxes = []   # (min, max, part id, role, volume)
+    for part in g["parts"]:
+        if part.get("role") == "ground":
+            continue
+        for ins in part.get("instances", []):
+            lo, hi = ins["min"], ins["max"]
+            vol = max(0.0, (hi[0] - lo[0])) * max(0.0, (hi[1] - lo[1])) * max(0.0, (hi[2] - lo[2]))
+            boxes.append((lo, hi, part["id"], part.get("role"), vol))
+    if not boxes:
+        return None
+    lo, hi = _union(boxes)
+    span = [hi[a] - lo[a] for a in range(3)]
+    longest = max(span) or 1.0
+    unit = "mm" if longest < 1.0 else "m"
+    body = [b for b in boxes if b[3] == "mass"]
+    how = "the parts whose role is mass"
+    if body:
+        blo, bhi = _union(body)
+        if max(bhi[a] - blo[a] for a in range(3)) < 0.5 * longest:   # the mass parts are a small piece of it
+            body = []
+    if not body:   # the largest parts: each at least a twentieth of the biggest one's volume
+        big = max(b[4] for b in boxes)
+        body = [b for b in boxes if big and b[4] >= 0.05 * big]
+        how = "the largest parts (each at least a twentieth of the biggest one's volume)"
+    blo, bhi = _union(body)
+    k = 1000.0 if unit == "mm" else 1.0
+    beyond = {name: {} for name, _ in AXES}   # axis -> part -> (how far, which side)
+    for b in boxes:
+        for a, (name, axis) in enumerate(AXES):
+            for side, out in (("-" + axis, blo[a] - b[0][a]), ("+" + axis, b[1][a] - bhi[a])):
+                if out > max(0.01 * span[a], 0.001 * longest) and out > beyond[name].get(b[2], (0, None))[0]:
+                    beyond[name][b[2]] = (out, side)
+    stands_out = {}
+    for name, rows in beyond.items():
+        if rows:
+            stands_out[name] = [{"part": pid, "side": side, "by": round(out * k, 1 if unit == "mm" else 3)}
+                                for pid, (out, side) in sorted(rows.items(), key=lambda kv: -kv[1][0])[:4]]
+    overall, main = _dims(lo, hi, unit), _dims(blo, bhi, unit)
+    n = len({b[2] for b in body})
+    out = {"unit": unit, "axes": "width x (left-right), height y (up), length z (the front faces +z)",
+           "overall": overall, "body": main, "body_is": "%s: %d part%s" % (how, n, "" if n == 1 else "s"),
+           "stands_out": stands_out}
+    words = {"width": "wide", "height": "tall", "length": "long"}
+    say = ["%s %g %s %s (%g %s overall, with %s)" % ("the body is" if not i else "", main[name], unit, words[name],
+                                                    overall[name], unit, ", ".join(r["part"] for r in stands_out[name][:2]))
+           for i, name in enumerate(n for n, _ in AXES if n in stands_out)]
+    if say:
+        out["say"] = "; ".join(x.strip() for x in say) + ". Quote the body for its size, the overall for what it needs room for."
+    open_lo, open_hi = g["bounds"].get("open_min"), g["bounds"].get("open_max")
+    if open_lo and open_hi and (open_lo != g["bounds"]["min"] or open_hi != g["bounds"]["max"]):
+        out["overall_open"] = _dims(open_lo, open_hi, unit)
+    return out
 
 
 def inspect(path):
@@ -160,6 +236,12 @@ def inspect(path):
                                  **({"ref": _short(s["ref"], 200)} if s.get("ref") else {})) for s in sources], CAP["sources"]),
         "articulations": _capped(joints, CAP["articulations"]),
     }
+    try:
+        env = envelope(doc)
+    except Exception as exc:   # a scene that does not compile yet: the record without its sizes
+        env = {"error": "no sizes until it compiles: %s" % _short(exc, 200)}
+    if env:
+        out["size"] = env
     assets = doc.get("assets", [])
     if assets:
         out["artwork"] = [{"id": a.get("id"), "provenance": a.get("provenance"), "rights": a.get("rights")} for a in assets]
@@ -235,6 +317,62 @@ def film(spec):
     return 0
 
 
+def _beside(name):
+    """A module that lives beside this file (the plugin's own, not Construct's), loaded by path."""
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("construct_plugin_" + name, Path(__file__).resolve().parent / (name + ".py"))
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    return mod
+
+
+def edit(spec):
+    """Apply a list of edits to a scene, validating after each; write the result to spec["candidate"] (never to the
+    scene itself: the plugin decides whether it replaces it). Prints what happened as JSON."""
+    from construct_hologram import diagnose, params, scene as scene_mod
+    se = _beside("scene_edit")
+    text = Path(spec["scene"]).read_text(encoding="utf-8")
+    doc = json.loads(text)
+    is_params = params.is_params(doc)
+
+    def problems(d):
+        if is_params or not isinstance(d, dict):
+            return set()
+        return {"%s: %s" % (i.get("where"), i.get("message")) for i in scene_mod.validate_items(d)}
+
+    def errors(report):
+        return {"%s|%s|%s" % (d.get("path"), d.get("code"), d.get("message")) for d in report.get("diagnostics") or []
+                if d.get("severity") == "error"}
+
+    before = diagnose.diagnose_text(text)
+    seen = problems(doc)
+    steps = []
+    for i, op in enumerate(spec["ops"], 1):
+        try:
+            changes = se.apply(doc, op)
+        except se.EditError as exc:
+            print(json.dumps({"ok": False, "failed_at": i, "error": "operation %d (%s): %s" % (i, op.get("op"), exc),
+                              "applied": steps}, ensure_ascii=False))
+            return 0
+        now = problems(doc)
+        step = {"n": i, "op": op.get("op"), "changes": changes[:40]}
+        if len(changes) > 40:
+            step["more_changes"] = len(changes) - 40
+        if now - seen:
+            step["new_problems"] = sorted(now - seen)[:10]
+        if seen - now:
+            step["fixed"] = sorted(seen - now)[:10]
+        seen = now
+        steps.append(step)
+    new_text = json.dumps(doc, indent=2, ensure_ascii=False) + "\n"
+    after = diagnose.diagnose_text(new_text)
+    introduced = sorted(errors(after) - errors(before))
+    Path(spec["candidate"]).write_text(new_text, encoding="utf-8")
+    print(json.dumps({"ok": not introduced, "applied": steps, "introduced": introduced[:20],
+                      "errors_before": before.get("errors"), "report": after}, ensure_ascii=False))
+    return 0
+
+
 def run(op, args):
     if op == "programs":
         print(json.dumps(programs()))
@@ -244,6 +382,10 @@ def run(op, args):
     if op == "inspect":
         print(json.dumps(inspect(args[0]), ensure_ascii=False))
         return 0
+    if op == "edit":
+        return edit(json.loads(Path(args[0]).read_text(encoding="utf-8")))
+    if op.startswith("netlogo-"):   # the NetLogo ops live beside this file (netlogo_child.py)
+        return _beside("netlogo_child").run(op, args)
     if op in ("build", "film"):
         spec = json.loads(Path(args[0]).read_text(encoding="utf-8"))
         return build(spec) if op == "build" else film(spec)

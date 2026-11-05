@@ -153,7 +153,10 @@ def progress(job_id):
     except (OSError, ValueError):
         return {}
     frames = path / "work" / "frames"
-    done = sum(1 for _ in frames.glob("frame-*.png")) if frames.is_dir() else 0
+    if isinstance(spec.get("done"), (int, float)):   # a job that counts for itself (a NetLogo run's ticks)
+        done = int(spec["done"])
+    else:
+        done = sum(1 for _ in frames.glob("frame-*.png")) if frames.is_dir() else 0
     total = int(spec.get("total") or 0)
     if not total:
         return {}

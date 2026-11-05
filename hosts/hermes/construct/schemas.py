@@ -1,5 +1,8 @@
 """The tools' JSON schemas, as the model sees them."""
 
+from .netlogo_schemas import TOOLS as NETLOGO_TOOLS
+
+WAIT_MAX = 380   # seconds a call may wait: Hermes stops a tool call at 420 s
 ARCHETYPES = ["book", "case", "object", "vehicle", "vessel"]
 CATEGORIES = ["architecture", "book", "cd", "machine", "object", "organism"]
 PALETTES = ["violet", "cyan", "amber", "green", "ice", "rose"]
@@ -28,11 +31,14 @@ def _tool(name, description, properties, required=()):
 
 START = _tool(
     "construct_start",
-    "Start a construct project: a new folder holding scene.json, from ONE of: an archetype's parameter document "
-    "(the simple path for a CD case, book, guitar, bass, synth, car, bottle, can or glass), a category starter scene "
-    "(the full loop for anything else), a bundled example scene, or an existing scene the user named (copied with its "
-    "artwork). Then edit the scene file with your file tools and run construct_check. Called with no source, it "
-    "lists the archetypes and their variants, the categories and the bundled examples, and which outside programs "
+    "Start a construct project: a new folder holding scene.json, from ONE of: a finished construct the plugin ships "
+    "(example: a car, a bus, a scooter, a chair, a radio and its knob, a tape recorder, a piano, a clock, a shed before "
+    "and after a planned change, a chapel, a cathedral, a castle, an invented spaceship; to show what Construct makes, "
+    "or to start from the nearest one), an archetype's parameter document (the simple path for a CD case, book, guitar, "
+    "bass, synth, car, bottle, can or glass), a category starter scene (the full loop for anything else), or an "
+    "existing scene the user named (copied with its artwork). Then change the scene with construct_edit (or your file "
+    "tools for a large rewrite) and run construct_check. Called with no source, it lists the shipped constructs (name, "
+    "title, parts, one line each), the archetypes and their variants, the categories, and which outside programs "
     "(browser, ffmpeg, FreeCAD, Blender) are available.",
     {
         "title": {"type": "string", "maxLength": 120, "description": "The construct's title; also names the project."},
@@ -44,11 +50,37 @@ START = _tool(
         "seed": {"type": "integer", "description": "With an archetype: a seeded variant with sizes drawn near the standard."},
         "category": {"type": "string", "enum": CATEGORIES, "description": "A valid starter scene of this category to "
                                                                           "rewrite with the real thing."},
-        "example": {"type": "string", "description": "A bundled example scene by name (call with no source to list them), "
-                                                     "e.g. lighthouse, leica-m3, castle."},
+        "example": {"type": "string", "description": "A finished construct the plugin ships, by name (call with no source "
+                                                     "to list them with their titles), e.g. volkswagen-t1-samba, "
+                                                     "braun-sk4-knob, garden-shed, sainte-chapelle, kestrel."},
         "from_path": {"type": "string", "description": "An existing scene or parameter document (absolute path) the user "
                                                        "gave you; it is copied into the new project."},
     })
+
+EDIT = _tool(
+    "construct_edit",
+    "Change a scene safely, by part id, without writing scripts: a list of operations applied in order, each validated "
+    "with Construct's own scene validation; the scene is replaced only when the edits add no new error (otherwise "
+    "nothing is written and the result names the operation that broke it). Returns the diff (each change: part, field, "
+    "before, after), the problems each step introduced or fixed, and a check summary (as construct_check). Use it for "
+    "every scene change you can express this way instead of editing JSON in the terminal. Operations (op + fields): "
+    "move {part, by|to: [x,y,z] m}; rotate {part, by|to: [rx,ry,rz] degrees}; resize {part, size: [w,h,d] | factor: "
+    "k or [kx,ky,kz] | shape: {radius: ..}}; set {part, field: \"look.weight\", value} or {path: \"subject.accuracy\", "
+    "value}; unset {part, field} or {path}; certainty {part, certainty: word or {size, shape}, basis?: [fact keys], "
+    "source?}; add_part {part: {...}, after?}; remove_part {part} (also leaves its joints and identity features); "
+    "add_fact {fact: {key, value, unit, certainty, source}}; set_fact {key, value?, unit?, certainty?, source?, note?}; "
+    "remove_fact {key}; add_source {source: {id, kind, title, ref}}. part may be a pattern (door-*) or parts a list. "
+    "Paths that leave the project, URLs and scripts are refused.",
+    dict(_TARGET,
+         operations={"type": "array", "minItems": 1, "maxItems": 100,
+                     "items": {"type": "object", "properties": {"op": {"type": "string", "enum": [
+                         "move", "rotate", "resize", "set", "unset", "certainty", "add_part", "remove_part", "add_fact",
+                         "set_fact", "remove_fact", "add_source"]}}, "required": ["op"]},
+                     "description": "The edits, in order, e.g. [{\"op\": \"move\", \"part\": \"lid\", \"by\": [0, 0.004, 0]}, "
+                                    "{\"op\": \"certainty\", \"parts\": [\"wheel-*\"], \"certainty\": \"verified\", "
+                                    "\"basis\": [\"wheel-diameter\"]}]."},
+         dry_run={"type": "boolean", "description": "Validate and show the diff without writing (default false)."}),
+    required=("operations",))
 
 CHECK = _tool(
     "construct_check",
@@ -155,10 +187,14 @@ FILM = _tool(
 
 JOB = _tool(
     "construct_job",
-    "Status of a background Construct job (a film, or a build, review, export or command that outlasted its call): "
-    "running with progress, or finished with its result and MEDIA: lines (put them in your reply), or failed with "
-    "Construct's own message. cancel=true stops it. Without job_id: the recent jobs.",
+    "Status of a background Construct job (a film, a NetLogo run, or a build, review, export or command that outlasted "
+    "its call): running with progress, or finished with its result and MEDIA: lines (put them in your reply), or failed "
+    "with Construct's own message. wait_seconds waits for it here (returning as soon as it ends): use it instead of "
+    "sleeping in a terminal. cancel=true stops it. Without job_id: the recent jobs.",
     {"job_id": {"type": "string", "description": "The job_id a construct tool returned."},
+     "wait_seconds": {"type": "integer", "minimum": 1, "maximum": WAIT_MAX,
+                      "description": "Wait up to this long for the job to end (at most %d s, under Hermes's tool "
+                                     "deadline); it answers at once when the job ends sooner." % WAIT_MAX},
      "cancel": {"type": "boolean", "description": "Stop the job."}})
 
 COMMAND = _tool(
@@ -177,5 +213,9 @@ COMMAND = _tool(
                       "description": "How long to wait before handing over a job_id (default 300)."}},
     required=("argv",))
 
-TOOLS = [START, CHECK, INSPECT, BUILD, REVIEW, EXPORT, FILM, JOB, COMMAND]
+TOOLS = [START, EDIT, CHECK, INSPECT, BUILD, REVIEW, EXPORT, FILM, JOB, COMMAND] + NETLOGO_TOOLS
 NAMES = [t["name"] for t in TOOLS]
+
+
+def by_name(name):
+    return next(t for t in TOOLS if t["name"] == name)

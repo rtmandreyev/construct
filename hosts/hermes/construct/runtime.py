@@ -117,17 +117,32 @@ def vendor_root():
     raise ConstructError("the Construct runtime is missing from the plugin (_vendor/construct_hologram)")
 
 
-def examples_dir():
-    for cand in (HERE / "examples", vendor_root() / "construct_hologram" / "examples" / "v2"):
-        if cand.is_dir() and any(cand.glob("*.json")):
-            return cand
-    raise ConstructError("no example scenes are bundled with the plugin")
-
-
 def examples():
-    """Bundled example scenes by name (the file name without .json, or .params.json for a parameter document)."""
-    return {re.sub(r"(\.params)?\.json$", "", p.name): p for p in sorted(examples_dir().glob("*.json"))
-            if not p.name.endswith(".materials.json")}
+    """The stock constructs by name: {"scene", "materials", "thumb", "kit_plan"} paths (see stock.py)."""
+    from . import stock
+    pkg = HERE / "examples"
+    if (pkg / "catalog.json").is_file():
+        return {p.name: stock.package_files(p) for p in sorted(pkg.iterdir())
+                if p.is_dir() and stock.NAME.match(p.name) and (p / "scene.json").is_file()}
+    root = HERE.parents[2] if len(HERE.parents) > 2 else HERE
+    found = {n: stock.source_files(root, n) for n in stock.STOCK}
+    found = {n: f for n, f in found.items() if f["scene"].is_file()}
+    if not found:
+        raise ConstructError("no example constructs are bundled with the plugin")
+    return found
+
+
+def catalog():
+    """The stock constructs described: title, parts, one line, how each was made."""
+    from . import stock
+    index = HERE / "examples" / "catalog.json"
+    if index.is_file():
+        try:
+            return json.loads(index.read_text(encoding="utf-8"))
+        except ValueError:
+            pass
+    root = HERE.parents[2] if len(HERE.parents) > 2 else HERE
+    return [stock.describe(n, f["scene"], stock.source_files(root, n)["readme"]) for n, f in examples().items()]
 
 
 # ---------------------------------------------------------------------------- projects
@@ -226,6 +241,15 @@ def resolve(args):
     return slug, folder, path
 
 
+def scene_stamp(scene):
+    """What a build records of its scene, so the Constructs page can say the scene changed since."""
+    try:
+        st = Path(scene).stat()
+        return {"scene_mtime_ns": st.st_mtime_ns, "scene_bytes": st.st_size}
+    except OSError:
+        return {}
+
+
 def stamp_iso():
     return time.strftime("%Y-%m-%dT%H:%M:%S%z")
 
@@ -269,11 +293,39 @@ def programs(fresh=False):
 
 # ---------------------------------------------------------------------------- shown pages
 
-def write_loader(target, title):
-    """The small page chat shows first: it asks the host for the construct and replaces itself with it."""
+def write_loader(target, title, page="construct.html"):
+    """The small page chat shows first: it asks the host for the construct (or a kit's page) and replaces itself
+    with it; opened from disk, it goes to `page` beside it."""
     text = LOADER.read_text(encoding="utf-8")
     safe = re.sub(r"[^A-Za-z0-9 .,:;'()&+/-]", "", str(title or "Construct"))[:80] or "Construct"
-    Path(target).write_text(text.replace("__TITLE__", safe), encoding="utf-8")
+    page = page if page in ("construct.html", "assembly.html", "booklet.html") else "construct.html"
+    Path(target).write_text(text.replace("__TITLE__", safe).replace("__PAGE__", page), encoding="utf-8")
+
+
+ITEM_KINDS = ("export", "film", "kit", "run", "compare", "plates", "file")
+ITEMS_MAX = 200
+
+
+def record_item(slug, kind, path, title="", summary=None):
+    """List a file a project made (an export, a film, a kit, a run's recording...) on the Constructs page: an entry in
+    shown/<slug>/items.json, newest last. The page reads files only through these entries, by id."""
+    if kind not in ITEM_KINDS or not SLUG.match(str(slug or "")):
+        return None
+    path = Path(path)
+    folder = shown_root() / slug
+    folder.mkdir(parents=True, exist_ok=True)
+    index = folder / "items.json"
+    try:
+        items = json.loads(index.read_text(encoding="utf-8"))
+        items = items if isinstance(items, list) else []
+    except (OSError, ValueError):
+        items = []
+    item = {"id": new_id(), "kind": kind, "path": str(path), "name": path.name, "title": str(title or "")[:120],
+            "created": stamp_iso(), "bytes": path.stat().st_size if path.is_file() else None,
+            "summary": summary if isinstance(summary, dict) else {}}
+    items = [i for i in items if i.get("path") != str(path)] + [item]
+    write_json(index, items[-ITEMS_MAX:])
+    return item
 
 
 def link_or_copy(src, dst):

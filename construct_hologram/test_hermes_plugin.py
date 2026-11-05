@@ -18,6 +18,7 @@ from . import params, render, scene as scene_mod, studio
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
+V2 = HERE / "examples" / "v2"
 CAPTURE = bool(render.find_browser()) and os.environ.get("HOLOGRAM_SKIP_CAPTURE") != "1"
 FFMPEG = shutil.which("ffmpeg") is not None
 BINARY_MAGIC = (b"\x7fELF", b"\xcf\xfa\xed\xfe", b"\xce\xfa\xed\xfe", b"\xca\xfe\xba\xbe", b"MZ", b"\0asm")
@@ -52,7 +53,7 @@ class FakeContext:
     """The parts of Hermes's PluginContext the plugin uses, recording what it registers."""
 
     def __init__(self, config=None):
-        self.tools, self.hooks, self.skills, self.unload = {}, {}, {}, []
+        self.tools, self.hooks, self.skills, self.unload, self.commands = {}, {}, {}, [], {}
         self.config = dict(config or {})
         self.cron = None
         self.posted = []
@@ -64,6 +65,10 @@ class FakeContext:
 
     def register_hook(self, hook_name, callback, *, hold_stream=False):
         self.hooks[hook_name] = callback
+
+    def register_command(self, name, handler, description="", args_hint="", argument_mode=None):
+        assert name not in self.commands
+        self.commands[name] = {"handler": handler, "description": description, "args_hint": args_hint}
 
     def register_skill(self, name, path, description="", frontmatter=None):
         assert Path(path).is_file(), path
@@ -142,7 +147,10 @@ class Plugin(unittest.TestCase):
                     "templates/loader.html", "desktop/plugin.js", "dashboard/manifest.json", "dashboard/plugin_api.py",
                     "skills/construct/SKILL.md", "skills/construct/references/craft.md",
                     "skills/construct/references/trace-prompt.md", "README.md", "LICENSE", "NOTICE",
-                    "examples/cd.json", "examples/volkswagen-t1-samba.json", "examples/assets/disc-cover.png",
+                    "examples/catalog.json", "examples/braun-sk4-knob/scene.json", "examples/kestrel-v2/scene.json",
+                    "examples/volkswagen-t1-samba/scene.materials.json", "examples/vespa-gs150/kit-plan.json",
+                    "examples/sainte-chapelle/thumb.jpg", "skills/construct/tutorials/01-copy-your-thing.md",
+                    "scene_edit.py", "readback.py", "stock.py", "commands.py",
                     "_vendor/construct_hologram/viewer/hologram.js", "_vendor/construct_hologram/construct.nls"):
             self.assertTrue((self.pkg / rel).is_file(), rel)
         sub = _load(ROOT / "scripts" / "hermes_submission.py", "hermes_submission_for_test")
@@ -188,10 +196,12 @@ class Plugin(unittest.TestCase):
         self.assertEqual(m["requires_hermes"], ">=0.22")
         self.assertEqual(m["homepage"], "https://github.com/rtmandreyev/construct")
         self.assertEqual(set(m["provides_tools"]), set(self.ctx.tools))
-        self.assertEqual(len(m["provides_tools"]), 9)
+        self.assertEqual(len(m["provides_tools"]), 12)
         self.assertEqual(set(m["provides_hooks"]), set(self.ctx.hooks))
         self.assertTrue(all(t["toolset"] == "construct" and t["schema"]["name"] == n for n, t in self.ctx.tools.items()))
-        self.assertTrue(all(t["check_fn"]() for t in self.ctx.tools.values()))
+        # every tool shows while the runtime is there; the NetLogo run only where NetLogo and Java are found
+        self.assertTrue(all(t["check_fn"]() for n, t in self.ctx.tools.items() if n != "construct_netlogo_run"))
+        self.assertIsInstance(self.ctx.tools["construct_netlogo_run"]["check_fn"](), bool)
         skill = self.ctx.skills["construct"]
         self.assertTrue(skill["description"])
         self.assertEqual(skill["frontmatter"]["metadata"]["hermes"]["requires_tools"], ["construct_start", "construct_build"])
@@ -212,7 +222,7 @@ class Plugin(unittest.TestCase):
             self.assertEqual(t["parameters"]["type"], "object")
             for name, prop in t["parameters"]["properties"].items():
                 self.assertIn("type", prop, "%s.%s" % (t["name"], name))
-        mentioned = re.findall(r"`(construct_[a-z]+)`", (self.pkg / "skills" / "construct" / "SKILL.md").read_text())
+        mentioned = re.findall(r"`(construct_[a-z_]+)`", (self.pkg / "skills" / "construct" / "SKILL.md").read_text())
         self.assertTrue(set(mentioned) <= set(s.NAMES))
         self.assertEqual(set(mentioned), set(s.NAMES))
 
@@ -228,21 +238,24 @@ class Plugin(unittest.TestCase):
         self.assertEqual(set(specs), {"@hermes/plugin-sdk", "react", "react/jsx-runtime"})
         self.assertIn("id: ID", js)
         self.assertIn("const ID = 'construct'", js)
-        for area in ("TOOL_MEDIA_RENDERER_AREA", "ROUTES_AREA", "SIDEBAR_NAV_AREA"):
+        for area in ("TOOL_MEDIA_RENDERER_AREA", "ROUTES_AREA", "SIDEBAR_NAV_AREA", "PALETTE_AREA"):
             self.assertIn("typeof sdk.%s === 'string'" % area, js)   # feature-detected, never a named import
 
     # ------------------------------------------------------------------ the tools, end to end
 
     def test_start_menu_lists_sources(self):
         menu = self.call("construct_start")
-        self.assertIn("cd", menu["examples"])
-        self.assertIn("volkswagen-t1-samba", menu["examples"])
-        self.assertNotIn("volkswagen-t1-samba.materials", menu["examples"])
+        names = [e["name"] for e in menu["examples"]]
+        self.assertEqual(set(names), set(self.mod.stock.STOCK))
+        self.assertEqual(len(names), 16)
+        for e in menu["examples"]:
+            self.assertTrue(e["title"] and e["line"] and e["parts"] > 0, e)
+        self.assertEqual(next(e for e in menu["examples"] if e["name"] == "kestrel-v2")["parts"], 498)
         self.assertIn("case / jewel", menu["archetypes"])
         self.assertIn("browser", menu["programs"])
 
     def test_cd_end_to_end(self):
-        r = self.call("construct_start", {"example": "cd", "title": "Test CD"})
+        r = self.call("construct_start", {"from_path": str(V2 / "cd.json"), "title": "Test CD"})
         self.assertNotIn("error", r)
         project, scene = r["project"], Path(r["scene"])
         self.assertTrue(scene.is_file())
@@ -270,7 +283,7 @@ class Plugin(unittest.TestCase):
         text = loader.read_text(encoding="utf-8")
         self.assertLess(len(text.encode("utf-8")), 200 * 1024)
         template = (self.pkg / "templates" / "loader.html").read_text(encoding="utf-8")
-        self.assertEqual(text, template.replace("__TITLE__", "Test CD"))   # nothing of the construct in it
+        self.assertEqual(text, template.replace("__TITLE__", "Test CD").replace("__PAGE__", "construct.html"))   # nothing of the construct in it
         geometry = (Path(b["page"]).parent / "geometry.json").read_text(encoding="utf-8")
         self.assertNotIn(geometry[200:400], text)
 
@@ -314,7 +327,7 @@ class Plugin(unittest.TestCase):
     def test_scene_by_path_writes_into_a_project(self):
         src = Path(self.tmp.name) / "elsewhere" / "lamp.json"
         src.parent.mkdir()
-        shutil.copyfile(HERE / "examples" / "v2" / "lighthouse.json", src)
+        shutil.copyfile(V2 / "lighthouse.json", src)
         r = self.call("construct_check", {"scene": str(src)})
         self.assertTrue(r.get("ok"), r)
         b = self.call("construct_build", {"scene": str(src), "thumbnail": False})
@@ -349,7 +362,7 @@ class Plugin(unittest.TestCase):
 
     @unittest.skipUnless(CAPTURE and FFMPEG, "a film needs a Chromium-family browser and ffmpeg")
     def test_film_runs_as_a_job(self):
-        r = self.call("construct_start", {"example": "cd"})
+        r = self.call("construct_start", {"from_path": str(V2 / "cd.json")})
         f = self.call("construct_film", {"project": r["project"], "seconds": 1, "fps": 12, "size": "320x200"})
         self.assertIn(f.get("state"), ("running", "done"), f)   # a one-second film may end while the call waits
         done = self.until_done(self.call("construct_job", {"job_id": f["job_id"]}), 240)
@@ -361,7 +374,7 @@ class Plugin(unittest.TestCase):
 
     @unittest.skipUnless(CAPTURE and FFMPEG, "a film needs a Chromium-family browser and ffmpeg")
     def test_jobs_stop_on_cancel_and_unload(self):
-        r = self.call("construct_start", {"example": "lighthouse"})
+        r = self.call("construct_start", {"from_path": str(V2 / "lighthouse.json")})
         a = self.call("construct_film", {"project": r["project"], "seconds": 120, "size": "320x200"})
         b = self.call("construct_film", {"project": r["project"], "seconds": 120, "size": "320x200"})
         c = self.call("construct_job", {"job_id": a["job_id"], "cancel": True})
@@ -369,6 +382,240 @@ class Plugin(unittest.TestCase):
         self.assertEqual(self.until_done(c, 30)["state"], "failed")
         self.mod.jobs.stop_all()   # what ctx.on_unload runs
         self.assertEqual(self.until_done(self.call("construct_job", {"job_id": b["job_id"]}), 30)["state"], "failed")
+
+    # ------------------------------------------------------------------ edit, inspect sizes, verified exports, jobs
+
+    def test_edit_by_part_id(self):
+        r = self.call("construct_start", {"example": "braun-sk4-knob"})
+        project, scene = r["project"], Path(r["scene"])
+        before = json.loads(scene.read_text(encoding="utf-8"))
+        body = next(p for p in before["parts"] if p["id"] == "knob-body")
+        ops = [{"op": "move", "part": "knob-body", "by": [0, 0.001, 0]},
+               {"op": "set", "part": "knob-*", "field": "look.weight", "value": 1.3},
+               {"op": "add_fact", "fact": {"key": "test-depth", "value": 0.02, "unit": "m", "certainty": "user_supplied",
+                                           "source": before["sources"][0]["id"]}},
+               {"op": "certainty", "part": "knob-body", "certainty": "inferred", "basis": ["test-depth"]}]
+        dry = self.call("construct_edit", {"project": project, "operations": ops, "dry_run": True})
+        self.assertFalse(dry["written"], dry)
+        self.assertEqual(json.loads(scene.read_text(encoding="utf-8")), before)
+        e = self.call("construct_edit", {"project": project, "operations": ops})
+        self.assertTrue(e["written"], e)
+        self.assertTrue(e["check"]["ok"], e["check"])
+        self.assertEqual(e["applied"][0]["changes"][0]["before"], body["at"])
+        self.assertAlmostEqual(e["applied"][0]["changes"][0]["after"][1], body["at"][1] + 0.001)
+        self.assertGreater(len(e["applied"][1]["changes"]), 1)   # the pattern matched every knob part
+        after = json.loads(scene.read_text(encoding="utf-8"))
+        self.assertEqual(next(p for p in after["parts"] if p["id"] == "knob-body")["basis"], ["test-depth"])
+        self.assertEqual(json.loads(Path(e["undo"]).read_text(encoding="utf-8")), before)
+        # an edit that breaks the scene is not written, and names its step
+        bad = self.call("construct_edit", {"project": project, "operations": [
+            {"op": "move", "part": "knob-body", "by": [0, 0.001, 0]}, {"op": "set", "part": "knob-body", "field": "role", "value": "nope"}]})
+        self.assertFalse(bad["written"])
+        self.assertTrue(bad["introduced"])
+        self.assertIn("new_problems", bad["applied"][1])
+        self.assertEqual(json.loads(scene.read_text(encoding="utf-8")), after)
+        for refused in ([{"op": "set", "path": "assets.0.path", "value": "/etc/passwd"}],
+                        [{"op": "set", "path": "notes", "value": {"path": "../../outside.png"}}],
+                        [{"op": "move", "part": "no-such-part", "by": [0, 0, 0]}],
+                        [{"op": "set", "part": "knob-body", "field": "id", "value": "x"}], [{"op": "launch"}], []):
+            out = self.call("construct_edit", {"project": project, "operations": refused})
+            self.assertFalse(out.get("written"), refused)
+            self.assertIn("error", out, refused)
+        self.assertEqual(json.loads(scene.read_text(encoding="utf-8")), after)
+        outside = Path(self.tmp.name) / "outside-edit" / "knob.json"
+        outside.parent.mkdir()
+        shutil.copyfile(scene, outside)
+        self.assertIn("outside the projects", self.call("construct_edit", {"scene": str(outside), "operations": ops[:1]})["error"])
+
+    def test_inspect_gives_the_body_apart_from_what_stands_out(self):
+        r = self.call("construct_start", {"example": "volkswagen-t1-samba"})
+        size = self.call("construct_inspect", {"project": r["project"]})["size"]
+        self.assertEqual(size["unit"], "m")
+        self.assertLess(size["body"]["width"], size["overall"]["width"])
+        self.assertAlmostEqual(size["body"]["width"], 1.77, delta=0.03)   # the bus is 1.72-1.75 m wide, not its mirrors
+        self.assertIn("mirror-head", [x["part"] for x in size["stands_out"]["width"]])
+        self.assertIn("wide", size["say"])
+        knob = self.call("construct_start", {"example": "braun-sk4-knob"})
+        self.assertEqual(self.call("construct_inspect", {"project": knob["project"]})["size"]["unit"], "mm")
+
+    def test_export_is_read_back(self):
+        r = self.call("construct_start", {"example": "volkswagen-t1-samba"})
+        glb = self.until_done(self.call("construct_export", {"project": r["project"], "format": "glb"}))
+        v = glb["verified"]
+        self.assertGreater(v["named_parts"], 200)
+        self.assertIn("open", [a["name"] for a in v["animations"]])
+        self.assertAlmostEqual(v["bounds"]["m"][2], 4.24, delta=0.05)
+        self.assertIn("MB GLB", glb["summary"])
+        self.assertIn("4240", glb["summary"])
+        self.assertTrue(glb["item"])
+        self.assertIn("no need to open the file", glb["next"])
+        stl = self.until_done(self.call("construct_export", {"project": r["project"], "format": "stl", "size_mm": 80}))
+        self.assertAlmostEqual(max(stl["verified"]["bounds"]["mm"]), 80, delta=2)
+        self.assertGreater(stl["verified"]["triangles"], 1000)
+        tmf = self.until_done(self.call("construct_export", {"project": r["project"], "format": "3mf", "size_mm": 80}))
+        self.assertEqual(tmf["verified"]["triangles"], stl["verified"]["triangles"])
+        obj = self.until_done(self.call("construct_export", {"project": r["project"], "format": "obj"}))
+        self.assertGreater(obj["verified"]["objects"], 200)
+        # the Constructs page lists them, and serves the model by id
+        row = self.api.project(self.data, r["project"])
+        exports = [i for i in row["items"] if i["kind"] == "export"]
+        self.assertEqual(len(exports), 4)
+        got = self.api.item(self.data, r["project"], glb["item"])
+        self.assertTrue(got["data_url"].startswith("data:model/gltf-binary;base64,"))
+        self.assertEqual(got["summary"]["named_parts"], v["named_parts"])
+
+    def test_readback_step_and_fcstd(self):
+        rb = self.mod.readback
+        step = Path(self.tmp.name) / "box.step"
+        step.write_text("ISO-10303-21;\nHEADER;FILE_SCHEMA(('AUTOMOTIVE_DESIGN'));ENDSEC;DATA;\n"
+                        "#1=PRODUCT('lid','lid','',(#9));\n#2=PRODUCT('base','base','',(#9));\n"
+                        "#3=MANIFOLD_SOLID_BREP('',#4);\n#5=ADVANCED_FACE('',(#6),#7,.T.);\n#7=PLANE('',#8);\n"
+                        "#10=CARTESIAN_POINT('',(0.,0.,0.));\n#11=CARTESIAN_POINT('',(120.,40.,25.5));\n"
+                        "#12=VERTEX_POINT('',#10);\n#13=VERTEX_POINT('',#11);\n"
+                        "#14=(LENGTH_UNIT()NAMED_UNIT(*)SI_UNIT(.MILLI.,.METRE.));\nENDSEC;END-ISO-10303-21;\n")
+        got = rb.read(step)
+        self.assertEqual((got["products"], got["solids"], got["faces"]), (2, 1, 1))
+        self.assertEqual(got["part_names"], ["lid", "base"])
+        self.assertEqual(got["bounds"]["mm"], [120.0, 40.0, 25.5])
+        self.assertEqual(got["bounds"]["m"], [0.12, 0.04, 0.0255])
+        made = rb.construct_report("wrote x.step: 12 named parts, 2 joints\n  true shapes (exact solids, splines, NURBS): 9 of 12 parts\n")
+        self.assertEqual((made["parts"], made["joints"], made["exact"], made["faceted"]), (12, 2, 9, 3))
+        bad = Path(self.tmp.name) / "bad.glb"
+        bad.write_bytes(b"not a model")
+        self.assertIn("error", rb.read(bad))
+
+    def test_step_export_counts_exact_shapes(self):
+        if not self.mod.runtime.programs().get("freecad"):
+            self.skipTest("STEP export needs FreeCAD")
+        r = self.call("construct_start", {"example": "braun-sk4-knob"})
+        st = self.until_done(self.call("construct_export", {"project": r["project"], "format": "step"}), 400)
+        self.assertTrue(st.get("success"), st)
+        v = st["verified"]
+        self.assertGreater(v["solids"], 0)
+        self.assertIn("exact", v["construct"])
+        self.assertIn("exact CAD shapes", st["summary"])
+
+    def test_job_waits_instead_of_sleeping(self):
+        r = self.call("construct_start", {"example": "braun-sk4-knob"})
+        b = self.call("construct_command", {"argv": ["check", "scene.json", "--json"], "project": r["project"],
+                                            "wait_seconds": 1})
+        if b.get("state") == "running":
+            done = self.call("construct_job", {"job_id": b["job_id"], "wait_seconds": 120})
+            self.assertEqual(done["state"], "done")
+            self.assertLess(done["waited_s"], 120)
+        self.assertIn("error", self.call("construct_job", {"job_id": "0" * 12, "wait_seconds": 5}))
+        self.assertIn("error", self.call("construct_job", {"job_id": "abc", "wait_seconds": 999}))
+
+    def test_every_shipped_construct_compiles(self):
+        for name, files in self.mod.runtime.examples().items():
+            code, out, err = self.mod.runtime.run_child("cli", "check", str(files["scene"]), "--json", timeout=300)
+            report = json.loads(out)
+            self.assertEqual(report["errors"], 0, (name, report.get("repair_text")))
+            self.assertIsNotNone(report["stats"], name)
+        catalog = json.loads((self.pkg / "examples" / "catalog.json").read_text(encoding="utf-8"))
+        self.assertEqual([c["name"] for c in catalog], list(self.mod.stock.STOCK))
+        self.assertTrue(all(c["has_thumb"] for c in catalog))
+        self.assertTrue(self.api.example_thumb("garden-shed", self.pkg)["data_url"].startswith("data:image/jpeg;base64,"))
+        with self.assertRaises(self.api.NotFound):
+            self.api.example_thumb("../secret", self.pkg)
+
+    # ------------------------------------------------------------------ kits, the Constructs page, /construct, tutorials
+
+    def test_kit_opens_with_its_steps_and_booklet(self):
+        r = self.call("construct_start", {"example": "braun-sk4-knob"})
+        k = self.until_done(self.call("construct_command", {"argv": ["kit", "scene.json", "--size", "60", "--out", "kit"],
+                                                            "project": r["project"]}), 400)
+        self.assertIn(k.get("exit"), (0, 1), k)
+        kit = k["kit"]
+        (loader,) = [p for p in media_paths(k) if p.name == "loader.html"]
+        self.assertEqual(loader.parent.parent.name, "kits")
+        self.assertIn('data-page="assembly.html"', loader.read_text(encoding="utf-8"))
+        page = self.api.kit(self.data, r["project"], kit["kit"], "assembly")
+        self.assertIn('id="hologram-geometry"', page["html"])
+        booklet = self.api.kit(self.data, r["project"], kit["kit"], "booklet")["html"]
+        self.assertNotRegex(booklet, r"src=['\"]img/")   # its pictures are inside it now
+        self.assertIn("data:image/", booklet)
+        self.assertNotRegex(booklet, r"(?i)<script")
+        self.assertGreater(kit["pieces"], 0)
+        row = self.api.project(self.data, r["project"])
+        self.assertEqual(row["kits"][0]["kit"], kit["kit"])
+        for bad in (("x", "assembly"), (kit["kit"], "../../x"), ("../" + kit["kit"], "booklet")):
+            with self.assertRaises(self.api.NotFound):
+                self.api.kit(self.data, r["project"], *bad)
+
+    def test_constructs_page_groups_projects(self):
+        a = self.call("construct_start", {"example": "garden-shed"})
+        b = self.call("construct_start", {"example": "garden-shed"})
+        self.assertNotEqual(a["project"], b["project"])
+        for r in (a, b):
+            self.assertTrue(self.call("construct_build", {"project": r["project"], "thumbnail": False}).get("success"))
+        rows = {x["project"]: x for x in self.api.projects(self.data)}
+        self.assertEqual(rows[a["project"]]["title"], rows[b["project"]]["title"])
+        self.assertFalse(rows[a["project"]]["changed_since"])
+        self.call("construct_edit", {"project": a["project"], "operations": [{"op": "set", "path": "subject.accuracy",
+                                                                               "value": "approximate"}]})
+        time.sleep(0.01)
+        self.assertTrue(self.api.project(self.data, a["project"])["changed_since"])
+        self.assertFalse(self.api.project(self.data, b["project"])["changed_since"])
+        # a file is served only through the index, from inside its own project
+        index = self.data / "shown" / a["project"] / "items.json"
+        secret = Path(self.tmp.name) / "secret.glb"
+        secret.write_bytes(b"glTF")
+        self.mod.runtime.write_json(index, [{"id": "20260101-000000-abcd", "kind": "export", "path": str(secret),
+                                             "name": "secret.glb"}])
+        with self.assertRaises(self.api.NotFound):
+            self.api.item(self.data, a["project"], "20260101-000000-abcd")
+        with self.assertRaises(self.api.NotFound):
+            self.api.item(self.data, a["project"], "../x")
+
+    def test_slash_command(self):
+        handle = self.mod.commands.handle
+        r = self.call("construct_start", {"example": "braun-sk4-knob"})
+        self.call("construct_build", {"project": r["project"], "thumbnail": False})
+        self.assertIn(r["project"], handle(""))
+        events = []
+        opened = handle("open " + r["project"], event=lambda n, p: events.append((n, p)))
+        self.assertIn("newest build", opened)
+        self.assertEqual(events, [("open", {"project": r["project"]})])
+        self.assertIn("No project", handle("open nothing-like-it"))
+        self.assertIn("kestrel-v2", handle("examples"))
+        self.assertIn("skill_view", handle("learn 1"))
+        self.assertIn("Simulations", handle("learn"))
+        self.assertTrue(handle("jobs"))
+        self.assertIn("/construct", handle("what"))
+        self.assertIn("construct", self.ctx.commands)
+
+    def test_tutorials_are_data_the_skill_and_page_share(self):
+        rows = self.api.tutorials(self.pkg)
+        files = sorted((self.pkg / "skills" / "construct" / "tutorials").glob("*.md"))
+        self.assertEqual(len(rows), len(files))
+        self.assertGreaterEqual(len(rows), 16)
+        self.assertEqual([t["order"] for t in rows], sorted(t["order"] for t in rows))
+        examples = set(self.mod.stock.STOCK)
+        for t in rows:
+            self.assertIn(t["file"], t["prompt"], t["id"])   # the message names the file the skill reads
+            self.assertLessEqual(len(t["prompt"]), 500, t["id"])
+            self.assertIn(t["group"], ("Everyday", "Makers and creators", "Simulations"), t["id"])
+            self.assertIn(t["status"], ("ready", "placeholder"))
+            if t["example"]:
+                self.assertIn(t["example"], examples, t["id"])
+            self.assertIn("## Steps", (self.pkg / "skills" / "construct" / t["file"]).read_text(encoding="utf-8"))
+        self.assertIn("tutorials/", (self.pkg / "skills" / "construct" / "SKILL.md").read_text(encoding="utf-8"))
+
+    def test_three_is_bundled_with_its_licence(self):
+        js = (self.pkg / "desktop" / "plugin.js").read_text(encoding="utf-8")
+        self.assertNotIn(generator.THREE_MARK, js)
+        self.assertIn("var THREE_BUNDLE=", js)
+        self.assertIn("three.js r180 (npm three@0.180.0)", js)
+        self.assertIn("Permission is hereby granted, free of charge", js)
+        self.assertLess(len(js.encode("utf-8")), 1024 * 1024)
+        if shutil.which("node"):
+            import subprocess
+            with tempfile.TemporaryDirectory() as t:
+                copy = Path(t) / "plugin.mjs"
+                copy.write_text(js, encoding="utf-8")
+                r = subprocess.run(["node", "--check", str(copy)], capture_output=True, text=True)
+                self.assertEqual(r.returncode, 0, r.stderr)
 
     # ------------------------------------------------------------------ refusals
 
@@ -382,7 +629,7 @@ class Plugin(unittest.TestCase):
                     self.assertIn("error", out, (name, bad))
 
     def test_command_is_guarded(self):
-        r = self.call("construct_start", {"example": "cd"})
+        r = self.call("construct_start", {"from_path": str(V2 / "cd.json")})
         project = r["project"]
         refused = [["author", "a lamp", "--base-url", "http://x", "--model", "m", "--out", "o"],
                    ["trace-image", "a.png"], ["critique", "scene.json", "--base-url", "http://x"],
@@ -400,7 +647,7 @@ class Plugin(unittest.TestCase):
         self.assertIn("error", self.call("construct_command", {"argv": ["expand", "scene.json"], "project": "nope"}))
 
     def test_backend_refuses_traversal(self):
-        r = self.call("construct_start", {"example": "book"})
+        r = self.call("construct_start", {"from_path": str(V2 / "book.json")})
         self.call("construct_build", {"project": r["project"], "thumbnail": False})
         outside = Path(self.tmp.name) / "secret"
         (outside / "20260101-000000-abcd").mkdir(parents=True)
