@@ -95,6 +95,10 @@
     "max-width:min(300px,44%)!important;max-height:calc(100% - 150px)!important}" +
     "body.provenance .caption{max-width:calc(100% - 40px)!important}" +
     ".rd-how{left:14px!important;right:auto!important;top:12px!important;width:min(330px,calc(54% - 28px))!important}" +
+    // a run's replay bar spans the card's foot; its caption, which the card's header already names, steps aside so the
+    // bar and the page's callouts keep the room they were laid out in
+    ".rd-bar{left:14px!important;right:14px!important;width:auto!important;bottom:12px!important}" +
+    "body:has(.rd-bar) .caption{display:none!important}" +
     "</style>";
 
   var done = false;
