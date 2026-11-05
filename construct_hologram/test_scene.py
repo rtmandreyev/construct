@@ -2401,6 +2401,14 @@ class Capture(unittest.TestCase):
             self.assertTrue(Path(d, "checkpoints", "round-02", "key.json").exists())
             self.assertTrue(Path(d, "checkpoints", "round-02", "hero.png").exists())
             rounds.record(d, _round_answer(d, 2), scene_path)
+            self.assertTrue(Path(pk).exists())   # a packet written where it was asked for stays
+            doc["parts"][0]["shape"]["size"][1] *= 1.1
+            scene_path.write_text(json.dumps(dict(json.loads(scene_path.read_text()), parts=doc["parts"])))
+            pk, key = rounds.packet(d, scene_path, ["front=%s" % ref], seed=4)   # in the temporary folder
+            self.assertTrue(Path(pk, "packet.md").exists())
+            rounds.record(d, _round_answer(d, 3), scene_path)
+            self.assertFalse(Path(pk).exists())   # spent: its renders are kept with the checkpoint
+            self.assertTrue(Path(d, "checkpoints", "round-03", "hero.png").exists())
             studio.build(str(scene_path), str(Path(d, "out")))
             paths = render.review(str(Path(d, "out", "construct.html")), str(Path(d, "out", "review")), 640, 400, sheets=())
             self.assertIn("rounds.png", {Path(p_).name for p_ in paths})

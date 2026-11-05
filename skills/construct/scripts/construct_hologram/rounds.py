@@ -279,6 +279,7 @@ def packet(folder, scene_path, references=(), request=None, out=None, browser=No
                                               len(shown)), encoding="utf-8")
     st = state(folder)
     st["packet"] = str(pk_dir)
+    st["packet_temp"] = out is None   # in the temporary folder: removed once its answer is recorded
     step(folder, st, "packet", now)
     st["packet_at"] = st["last_step_at"]
     _save(folder, STATE, st)
@@ -412,6 +413,8 @@ def record(folder, answer, scene_path=None, model=None, now=None):
     st.pop("paused", None)
     extra = [Path(st["packet"])] if st.get("packet") else []
     critic_s = _worked(since, now, _activity([folder] + extra, since, now))
+    if st.pop("packet_temp", False):   # its renders are kept with the checkpoint: the packet itself is spent
+        shutil.rmtree(st.pop("packet"), ignore_errors=True)
     st["critic_seconds"] = round(st.get("critic_seconds", 0.0) + critic_s, 1)
     st["last_step_at"] = now
     crit = answer["critique"]

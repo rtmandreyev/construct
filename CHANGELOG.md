@@ -2,6 +2,9 @@
 
 ## 1.1.2 — unreleased
 
+- **No critic packets left behind:** masterpiece rounds wrote each round's critic packet (renders, references,
+  pairs) to the temporary folder and never removed it, so gigabytes built up over many runs. Once a round's answer is recorded the
+  packet is removed; its renders were already kept with the round's checkpoint. A packet written with `--out` stays.
 - **Twice the lines and triangles:** a construct's page may hold 48,000 lines and 48,000 triangles (was 24,000 each),
   so a large, detailed construct fits; the 3D export's own budgets are unchanged, and terrain, globes and NetLogo runs
   keep drawing as lightly as before.
