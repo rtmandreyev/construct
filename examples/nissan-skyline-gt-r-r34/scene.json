@@ -7982,13 +7982,6 @@
         "type": "loft",
         "sections": [
           [
-            0.0,
-            0.008,
-            0.0,
-            0.2098,
-            0.008
-          ],
-          [
             0.1168,
             0.0265,
             -0.0407,
@@ -8035,7 +8028,7 @@
         33.8378
       ],
       "mirror": "x",
-      "note": "Traced; turned about its front end so its rear end meets the tail panel's side, and its lower lip fades out at the rear."
+      "note": "Traced; turned about its front end so its rear end meets the tail panel's side, and ending where the tail panel begins (12 cm short of the tracing)."
     },
     {
       "id": "quarter-upper-2",

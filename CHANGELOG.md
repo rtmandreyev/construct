@@ -27,6 +27,11 @@
   C-pillar) left corners a rounding apart and an extrusion closed by repeating its first point left an edge of no
   length: both now make one closed surface, and the poles of spheres and lathes no longer leave slivers. The
   light is unchanged; tests in `test_solids.py`.
+- **The R34's windows fit their frames:** a second pass judged in the solid and in Blender: its A-pillars, sashes,
+  B-pillar and C-pillars hold their glass (every pane meets its frame or panel along at least 95% of its edge,
+  within 4 mm; the A-pillars stood up to 9 cm proud), its rear quarter panels end on the tail panel instead of in caps
+  standing out of it, its tail lamps sit on the tail panel's face and its bumper flanks end where the bumper's bands
+  begin ([its page](examples/nissan-skyline-gt-r-r34/README.md)).
 - **The R34, refined for the solid** ([its page](examples/nissan-skyline-gt-r-r34/README.md)): its C-pillar
   closes between the rear glass and the shoulder instead of standing as a fin through the quarter window, its
   bumper flanks are closed, its rear bumper and tail no longer pillow, its sills run straight and flush, its
