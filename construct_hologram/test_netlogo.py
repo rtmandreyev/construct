@@ -276,6 +276,19 @@ class Views(unittest.TestCase):
         plain["presentation"]["labels"] = "yes"
         self.assertTrue(any("labels" in e for e in scene.validate(plain)))
 
+    def test_a_run_is_captioned_as_a_run(self):
+        # a run's construct was captioned DOCUMENTED RECONSTRUCTION: nothing is reconstructed, every mark is the data
+        sc = netlogo.scene_from_run(self.run, "space-time")
+        self.assertEqual(sc["subject"]["accuracy"], "recorded")
+        self.assertEqual(scene.compile_scene(sc)["subject"]["accuracy"], "recorded")
+        js = (Path(netlogo.__file__).parent / "viewer" / "hologram.js").read_text(encoding="utf-8")
+        self.assertIn('recorded: "RECORDED RUN"', js)
+        for d in sorted((Path(netlogo.__file__).parent.parent / "examples").glob("netlogo-*")):
+            sc = json.loads((d / "scene.json").read_text(encoding="utf-8"))
+            run = any(s["kind"] == "dataset" for s in sc["sources"])
+            if run and sc["subject"]["summary"].startswith(("One run", "Two runs")):
+                self.assertEqual(sc["subject"]["accuracy"], "recorded", d.name)
+
     def test_a_run_by_steps_says_steps(self):
         run = netlogo.read_run(recording(Path(self.tmp.name, "steps.jsonl"), header={"clock": "steps"}))
         sc = netlogo.scene_from_run(run, "space-time")
@@ -668,6 +681,26 @@ class Order(unittest.TestCase):
         plain = netlogo.scene_from_run(ordered("flock"), "auto", landmarks="off")
         self.assertFalse([p for p in plain["parts"] if p["id"].startswith("landmark-")])
         self.assertEqual(scene.validate(sc), [])
+
+    def test_a_flash_between_samples_still_counts(self):
+        # found on a Fireflies run: its landmark said "Most at once: 83%" while the run reached 100% (1500 of 1500)
+        # from tick 638. The reading kept every 7th record of the 2000, and a flash lasts a record, so the samples
+        # caught the flashes only part way; the landmark was read from them
+        skipped = {t for _, t in netlogo._sampled([(i, i) for i in range(2000)])}
+        h = {"construct-netlogo": 1, "title": "Flashes", "netlogo": "7.0.4", "seed": 1,
+             "world": {"min-pxcor": -20, "max-pxcor": 20, "min-pycor": -20, "max-pycor": 20},
+             "turtle-vars": ["lit?"], "reporters": [], "patch-reporter": "", "patch-every": 0}
+        lines = [json.dumps(h)]
+        for t in range(2000):   # ten out of step, six of them in step from tick 800, all ten from 1000 on records
+            lit = lambda w: (t % 10 == (3 if w < 6 and t >= 800 else w) if t < 1000   # the even samples skip
+                             else t % 10 == 3 and t not in skipped)
+            lines.append(json.dumps({"t": t, "turtles": [[w, "turtles", w - 5, 0, 45, lit(w)] for w in range(10)]}))
+        lines.append(json.dumps({"end": 1999}))
+        sc = netlogo.scene_from_run(netlogo.parse_run("\n".join(lines) + "\n"), "pulse", window="whole")
+        self.assertEqual(max(v for _, v in sc["reading"]["series"][0]["values"]), 1.0)
+        marks = [p["label"] for p in sc["parts"] if p["id"].startswith("landmark-")]
+        self.assertTrue(marks and marks[-1].startswith("All at once: 100% of the turtles"), marks)
+        self.assertIn("at most 100% of the turtles", next(f["value"] for f in sc["facts"] if f["key"] == "together"))
 
     def test_a_label_waits_for_its_part(self):
         g = scene.compile_scene(netlogo.scene_from_run(ordered("flock"), "auto"))

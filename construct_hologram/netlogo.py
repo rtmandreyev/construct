@@ -627,7 +627,9 @@ def _pulse(run, world, opts):
                  round(100 * peak), round(100 * sum(early) / len(early)), round(100 * sum(late) / len(late))))]
     if group > 1:
         facts.append(("sampling", "each ring the most at once in a group of %d records" % group))
-    opts["_series"] = {"name": "at once", "values": [[t, round(v, 3)] for t, v in _sampled(share)]}
+    # a flash lasts a tick or two: every 7th record of a long run can miss every one of them, so each sample is the
+    # most at once in its group, as each ring is (its landmarks, "all at once", are read from it)
+    opts["_series"] = {"name": "at once", "values": [[t, round(v, 3)] for t, v in _peaks(share)]}
     return parts, summary, facts
 
 
@@ -1137,7 +1139,7 @@ def scene_from_run(run, view, title=None, **opts):
     slug = re.sub(r"[^a-z0-9]+", "-", title.lower()).strip("-")[:room].strip("-") or "netlogo-run"
     sc = {
         "format": product.SCENE_FORMAT, "version": 2, "id": "netlogo-%s-%s" % (slug, view), "title": title,
-        "subject": {"category": "other", "accuracy": "documented", "synthetic": False,
+        "subject": {"category": "other", "accuracy": "recorded", "synthetic": False,
                     "summary": "One run of NetLogo's %s. %s" % (h["title"], summary)},
         "units": "m", "seed": 7,
         "sources": [{"id": "request", "kind": "user_request", "title": "A construct of a NetLogo run",
@@ -1492,6 +1494,16 @@ def _sampled(frames, n=300):
     if len(frames) <= n:
         return frames
     return [frames[round(i * (len(frames) - 1) / (n - 1))] for i in range(n)]
+
+
+def _peaks(frames, n=300):
+    """At most n (t, value) frames: each the highest in its group of consecutive records (the first, at a tie), the
+    first and last records kept, so a peak a record long is never skipped."""
+    if len(frames) <= n:
+        return frames
+    group = math.ceil((len(frames) - 2) / (n - 2))
+    middle = [max(frames[i:i + group], key=lambda tv: tv[1]) for i in range(1, len(frames) - 1, group)]
+    return [frames[0]] + middle + [frames[-1]]
 
 
 def _reading(run, view, world, opts, time):
