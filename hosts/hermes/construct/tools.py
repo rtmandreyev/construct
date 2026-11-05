@@ -240,12 +240,18 @@ def _compact_check(report, scene):
         issues = fit.get("issues") or []
         rows = []
         for i in issues[:30]:
-            small, big = (i.get("parts") or [None, None])[:2]
+            small, big = (list(i.get("parts") or []) + [None, None])[:2]   # an open shell names one part
             row = {"code": i.get("code"), "parts": i.get("parts"), "at_m": i.get("at"), "share": i.get("share"),
                    "message": i.get("message")}
             if i.get("code") == "pokes":
                 row["fix"] = ("Trim or move %s so it ends at %s's face near %s (or shorten it there); leave it only if it "
                               "is meant to pass through." % (small, big, i.get("at")))
+            elif i.get("code") == "crosses-glass":
+                row["fix"] = ("%s runs through the pane %s: move or trim it to stop at the glass, or fit the pane to its "
+                              "frame if it is the glass that is out of place." % (small, big))
+            elif i.get("code") == "open":
+                row["fix"] = ("%s is an open shell (a hole shows in the solid): close it (cap the ends, give the skin a "
+                              "back) or, if it is meant to be open and hidden, leave it." % small)
             elif i.get("code") == "buried":
                 row["fix"] = ("%s is hidden inside %s: if it should show, move it out to sit on %s's surface (or make %s "
                               "thinner); if it is a hidden part by design, leave it or remove it." % (small, big, big, big))

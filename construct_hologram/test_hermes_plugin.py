@@ -353,9 +353,11 @@ class Plugin(unittest.TestCase):
     def test_check_fit_t1_names_parts_and_fixes(self):
         r = self.call("construct_start", {"example": "volkswagen-t1-samba"})
         c = self.until_done(self.call("construct_check", {"project": r["project"], "fit": True}))
+        self.assertIn("fit", c, json.dumps(c)[:1500])
         issues = c["fit"]["issues"]
         self.assertTrue(issues)
-        self.assertTrue(all(len(i["parts"]) == 2 and i["fix"] and i["code"] in ("pokes", "buried") for i in issues))
+        self.assertTrue(all(i["fix"] and (len(i["parts"]) == 2 and i["code"] in ("pokes", "buried", "crosses-glass") or
+                                          len(i["parts"]) == 1 and i["code"] == "open") for i in issues), issues)
         mirror = [i for i in issues if set(i["parts"]) == {"mirror-arm", "mirror-head"}]
         self.assertTrue(mirror, [i["parts"] for i in issues])
         self.assertIn("mirror-head", mirror[0]["fix"])
