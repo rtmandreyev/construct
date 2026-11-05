@@ -8,6 +8,13 @@
   warning names the part, what it stands on, where, and how far its weight lies off it, with the fix (a second hold on
   the side it leans to). A part fixed into the side of another or hung from it is left alone, and so is a rod's end
   joined across its section. Over the gallery's 38 scenes and the bundled examples it finds nothing.
+- **The critic stands apart:** an audit of a run found an author's rationale in a critic's packet, and a critic that
+  had written to the author mid-review changing its blind score. A rounds packet now holds only the renders, the
+  reference pictures and the user's request (`--reference` refuses a document; the scene's own summary no longer
+  stands in for the request). Once written it is sealed: read-only, its hash in the run's state; `rounds record`
+  refuses an answer when the packet changed or is gone, and answers a packet once: a recorded blind verdict is not
+  rewritten (its `round.json` is read-only, its hash in the history, and `rounds report` names a round edited
+  afterwards). A new answer needs a new packet.
 - **Numbers that went stale:** a chair's How to read it still gave an 11.8 deg lean after the fact became 15.2. The
   audit warns `stale-number` when a number with a unit in How to read it or an annotation contradicts the one fact it
   clearly names (every telling word of the key in the same clause, and no fact at all with that value). Over the

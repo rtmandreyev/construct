@@ -1347,6 +1347,46 @@ class Rounds(unittest.TestCase):
         self.assertIn("[D1] lowered the body", log)
         self.assertIn("Worse than the best: lost the seam", log)
 
+    def test_the_critic_judges_a_sealed_packet_once(self):
+        # found by an audit of a run: the author's rationale went into a critic packet, and a critic that had messaged
+        # the author mid-review edited its blind score
+        r = self.r
+        note = self.d / "why-the-bonnet-is-low.md"
+        note.write_text("my reasons")
+        with self.assertRaisesRegex(r.RoundsError, "a reference is a picture"):
+            r.packet(self.d, self.scene, ["side=%s" % note])
+        self.assertFalse((self.d / "checkpoints" / "round-01").exists())         # refused before anything is written
+
+        def sealed_packet():   # what `rounds packet` leaves, without rendering
+            _check_in(self.d, self.doc)
+            pk = self.d / ("pk-%d" % r.state(self.d)["round"])
+            (pk / "step-1").mkdir(parents=True)
+            (pk / "step-1" / "packet.md").write_text("part 1")
+            st = r.state(self.d)
+            st.update(packet=str(pk), packet_sha256=r._seal(pk))
+            r._save(self.d, "state.json", st)
+            return pk
+        pk = sealed_packet()
+        self.assertFalse((pk / "step-1" / "packet.md").stat().st_mode & 0o200)        # read-only
+        os.chmod(pk / "step-1" / "packet.md", 0o644)
+        (pk / "step-1" / "packet.md").write_text("part 1, and the author's reasons")
+        with self.assertRaisesRegex(r.RoundsError, "the packet changed"):
+            r.record(self.d, _round_answer(self.d, 1), self.scene)
+        r._remove(pk)
+        pk = sealed_packet()
+        answer = _round_answer(self.d, 1)
+        r.record(self.d, answer, self.scene)
+        st = r.state(self.d)                                                      # wound back to answer it again
+        r._save(self.d, "state.json", dict(st, round=1, step="packet", packet=str(pk), packet_sha256=st["packet_sha256"]))
+        with self.assertRaisesRegex(r.RoundsError, "a blind verdict is not rewritten"):
+            r.record(self.d, answer, self.scene)
+        r._save(self.d, "state.json", st)
+        kept = self.d / "checkpoints" / "round-01" / "round.json"
+        self.assertFalse(kept.stat().st_mode & 0o200)
+        os.chmod(kept, 0o644)
+        kept.write_text(json.dumps(dict(answer, critique=dict(answer["critique"], verdict="outstanding"))))
+        self.assertIn("Edited after recording (the run kept the answer as recorded): round 1", r.report(self.d))
+
     def test_a_round_that_loses_is_reverted_and_two_in_a_row_stop_the_run(self):
         r = self.r
         _check_in(self.d, self.doc)
@@ -2462,6 +2502,8 @@ class Capture(unittest.TestCase):
             md = Path(pk, "step-1", "packet.md").read_text()
             self.assertIn("references/front-photo.png", md)
             self.assertNotIn(str(Path(d).resolve()), md)
+            self.assertIn("The request: (not given)", md)              # the user's words only, never the author's summary
+            self.assertFalse(Path(pk, "packet.md").stat().st_mode & 0o200)   # sealed
             rounds.record(d, _round_answer(d, 1), scene_path)
             doc["parts"][0]["shape"]["size"][1] *= 1.1
             scene_path.write_text(json.dumps(dict(json.loads(scene_path.read_text()), parts=doc["parts"])))

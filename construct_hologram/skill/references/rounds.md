@@ -48,11 +48,23 @@ step:
    - **part 3:** the ledger.
 
    The critic writes part 1 before it opens part 2. Its blind judgement never sees the history.
+
+   The packet holds only what the critic judges by: the renders, the reference pictures and the
+   user's request (`--request`, in the user's words; without it, none). `--reference` takes
+   pictures only (png, jpg, webp, gif) or links: your notes, reasons and rationale never go in,
+   and a document is refused. Once written, the packet is sealed: its files are read-only and its
+   hash is in `state.json`.
 3. **The critic.** Give a fresh critic the packet folder and nothing else: a subagent, one
    delegated task (in Hermes, one child a round fits its two-child budget), or direct model
    calls: `python3 TOOLS rounds run --base-url URL --model M --key-env VAR` (one conversation,
    part 1 answered before parts 2 and 3 are shown). Save its answer outside the packet folder.
-4. **`python3 TOOLS rounds record answer.json`.** It un-blinds the pair and decides:
+   The critic and the author do not talk until the answer is recorded: no questions, no
+   explanations, no second thoughts after a word from the author.
+4. **`python3 TOOLS rounds record answer.json`.** It refuses an answer when the packet changed
+   after it was written (or is gone), and a packet is answered once: a recorded blind verdict is
+   not rewritten (the checkpoint's `round.json` is read-only, its hash is in the round's history,
+   and `rounds report` names a round whose answer was edited afterwards). A new answer needs a
+   new packet and a fresh critic. Then it un-blinds the pair and decides:
    - **Won overall: keep it.** Its regressions go to the top of the ledger. Repair, don't
      revert.
    - **Lost overall: revert.** The working scene becomes the best round again. Next round, try

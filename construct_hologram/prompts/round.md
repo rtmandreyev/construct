@@ -2,7 +2,9 @@
 
 You are the round's one independent critic. Work through the parts in order and write each
 part's answer before you open the next: part 1 is your blind judgement, and it must not be
-shaped by the history in parts 2 and 3.
+shaped by the history in parts 2 and 3. Judge from this folder alone: do not write to the
+author or answer the author's messages until your answer is handed in, and do not change a file
+of the packet (it is sealed; a changed packet is refused).
 
 **Part 1, this version alone.** Open `step-1/packet.md` and judge as it asks: scores, the
 identity checklist and the ranked defects (a construct-critique). Every score below 3 cites a
