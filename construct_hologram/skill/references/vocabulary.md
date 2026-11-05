@@ -124,6 +124,9 @@ needs, such as a NetLogo run's legend); otherwise they wait for **L**.
 in a panel (**H**); for a construct whose height is time, `clock` (`label`, `from`, `to`, `top` in
 metres, `scale` linear or sqrt) and `series` (up to 6, each a `name` and up to 400 `[time, value]`
 pairs) add a replay bar that draws it up to a moment, with the counts at that moment.
+A number with a unit in `how` or an annotation that clearly names a fact (every telling word of its
+key in the same clause) must agree with it: when the scene changes, the audit's `stale-number`
+names a line still giving the old value. Better: say each number once, from the fact.
 
 ## Labels (text the renderer sets from facts)
 

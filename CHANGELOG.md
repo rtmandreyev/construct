@@ -8,6 +8,10 @@
   warning names the part, what it stands on, where, and how far its weight lies off it, with the fix (a second hold on
   the side it leans to). A part fixed into the side of another or hung from it is left alone, and so is a rod's end
   joined across its section. Over the gallery's 38 scenes and the bundled examples it finds nothing.
+- **Numbers that went stale:** a chair's How to read it still gave an 11.8 deg lean after the fact became 15.2. The
+  audit warns `stale-number` when a number with a unit in How to read it or an annotation contradicts the one fact it
+  clearly names (every telling word of the key in the same clause, and no fact at all with that value). Over the
+  gallery and the bundled examples it finds nothing.
 - **Kits: boards lie flat, rails keep their ends:** a Red-Blue chair at 1:6 laid its 2 mm back board, set at a slant,
   on its edge, and each rail's ends standing proud of the leg it passes through came out as 2.5 mm chips of their
   own. A thin board set at a slant now lies on its broad face; a bit the trimming cuts off a part, under 6 mm every

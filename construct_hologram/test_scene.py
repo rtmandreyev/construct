@@ -403,6 +403,28 @@ class Audit(unittest.TestCase):
                                dict(id="sign", shape={"type": "box", "size": [0.3, 0.2, 0.012], "anchor": "base"},
                                     at=[0.3, 0.76, 0], stage=2)), [])              # hung from an arm
 
+    def test_a_number_in_the_reading_that_contradicts_its_fact_is_named(self):
+        # found in real use: How to read it still gave the back board an 11.8 deg lean after the fact became 15.2
+        flawed = red_blue_chair(round_06=True)
+        stale = [w for w in audit.audit(flawed, scene.compile_scene(flawed))["warnings"] if w["code"] == "stale-number"]
+        self.assertEqual(len(stale), 1)
+        self.assertIn("How to read it (line 5) says '11.8 deg', but the fact back_lean is 15.2", stale[0]["message"])
+        self.assertIn("stale-number", diagnose.AUDIT_HINTS)
+        self.assertEqual(audit.stale_numbers(red_blue_chair()), [])               # 21.8 deg, as the fact says
+        s = base(facts=[{"key": "tower.height", "value": 65, "unit": "m", "certainty": "inferred"},
+                        {"key": "spire.height", "value": 75.75, "unit": "m", "certainty": "inferred"},
+                        {"key": "spire.base", "value": 40, "unit": "m", "certainty": "inferred"},
+                        {"key": "width", "value": 0.4, "unit": "m", "certainty": "inferred"}])
+        said = lambda *lines: [x[3] for x in audit.stale_numbers(dict(s, reading={"how": list(lines)}))]
+        self.assertEqual(said("The tower rises 62 m."), ["62 m"])
+        self.assertEqual(said("The tower rises 65 m; the spire 75.75 m."), [])        # as the facts say
+        self.assertEqual(said("The tower rises 6500 cm."), [])                         # in another unit
+        self.assertEqual(said("The spire stands 70 m high."), [])                      # height or base: not clear
+        self.assertEqual(said("The tower is 75.75 m."), [])                           # some fact's value: not stale
+        self.assertEqual(said("The tower rises about 62 m."), [])                      # about: near enough
+        self.assertEqual(said("A tower of 60-62 m.", "A 3 m wide stair."), [])         # a range; width is too plain
+        self.assertEqual(said("Width 0.5 m."), ["0.5 m"])                              # a plain key, right by it
+
     def test_glass_named_only_in_the_label_is_a_warning(self):
         s = base()
         s["parts"].append({"id": "hood-door", "label": "Glazed hood door", "role": "detail", "certainty": "inferred",

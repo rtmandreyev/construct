@@ -8,6 +8,7 @@ reports a part as floating when it really touches something.
 """
 
 import math
+import re
 
 from . import export as export_mod, scene as scene_mod
 
@@ -200,6 +201,10 @@ def audit(scene, geometry):
                 "another solid shape." % (p["role"], p["shape"]))
 
     _contact_and_thickness(scene, geometry, add, warnings, errors)
+    for where, text, fact, said in stale_numbers(scene):
+        add(warnings, "stale-number", None,
+            "%s says %r, but the fact %s is %s%s: say the fact's value, or correct the fact."
+            % (where, said, fact["key"], fact["value"], " " + fact["unit"] if fact.get("unit") else ""))
 
     # ---- a construct drawn from recorded data (the NetLogo bridge) keeps that data as it was drawn
     if "data_lock" in facts_by_key:
@@ -549,3 +554,69 @@ def _freeform_points(shape):
 
 def _thickness(p):
     return scene_mod.cross_section(p)
+
+
+# ---------------------------------------------------------------------------- numbers in the words
+#
+# How to read it and the annotations are written once and drift when the scene changes (a reading that still gave an
+# 11.8 deg lean after the fact became 15.2). A number with a unit there is checked against a fact only when it clearly
+# names it: every telling word of the fact's key stands in the same clause, and no fact at all has that value.
+
+UNITS = {"mm": ("length", 0.001), "cm": ("length", 0.01), "m": ("length", 1.0), "km": ("length", 1000.0),
+         "metres": ("length", 1.0), "meters": ("length", 1.0), "°": ("angle", 1.0), "deg": ("angle", 1.0),
+         "degree": ("angle", 1.0), "degrees": ("angle", 1.0), "g": ("mass", 0.001), "kg": ("mass", 1.0)}
+# words too common in fact keys to tell one from another: a key made only of them must stand right by its number
+PLAIN = {"length", "width", "height", "depth", "size", "diameter", "radius", "thickness", "overall", "total", "count",
+         "the", "of", "a"}
+_NUMBER = re.compile(r"(?<![\w.\-–/])(\d+(?:\.\d+)?)\s?(mm|cm|km|metres|meters|m|°|deg|degrees|degree|kg|g)(?![\w²³/])")
+
+
+def _words(text):
+    return [w[:-2] if w.endswith("'s") else w[:-1] if w.endswith("s") and len(w) > 3 else w
+            for w in re.findall(r"[a-z]+(?:'s)?", text.lower())]
+
+
+def stale_numbers(scene):
+    """[(where, text, fact, what it says)]: numbers with a unit in the reading and the annotations that contradict
+    the one fact they clearly name."""
+    facts = [f for f in scene.get("facts", []) if isinstance(f.get("value"), (int, float))
+             and not isinstance(f.get("value"), bool) and UNITS.get(str(f.get("unit", "")).strip())]
+    if not facts:
+        return []
+    texts = [("How to read it (line %d)" % (i + 1), t) for i, t in enumerate((scene.get("reading") or {}).get("how", []))
+             if isinstance(t, str)]
+    texts += [("The annotation %r" % a.get("id"), a.get("text")) for a in scene.get("annotations", [])
+              if isinstance(a, dict) and isinstance(a.get("text"), str)]
+    known = {}   # every fact's value, by kind, in base units
+    for f in facts:
+        kind, k = UNITS[f["unit"].strip()]
+        known.setdefault(kind, []).append(f["value"] * k)
+    out = []
+    for where, text in texts:
+        head = re.split(r"[,:·(]", text)[0]   # an annotation's subject: "Tiburio, 68 m"
+        for clause in re.split(r"[,;:()]|\.\s|\band\b", text):
+            for m in _NUMBER.finditer(clause):
+                if re.search(r"(-|–|\bto\s)$", clause[:m.start()].rstrip()) or re.match(r"\s?(-|–|to\b)", clause[m.end():]):
+                    continue   # a range
+                kind, k = UNITS[m.group(2)]
+                said = float(m.group(1)) * k
+                decimals = len(m.group(1).split(".")[1]) if "." in m.group(1) else 0
+                loose = re.search(r"(about|around|roughly|nearly|almost|over|under|some|~|c\.?)\s*$",
+                                  clause[:m.start()].lower())
+                tol = lambda v: max(abs(v) * (0.15 if loose else 0.01), 0.5 * 10 ** -decimals * k)
+                if any(abs(v - said) <= tol(v) for v in known[kind]) if kind in known else True:
+                    continue   # some fact has that value (or no fact is of its kind)
+                near = set(_words(clause)) | (set(_words(head)) if where.startswith("The annotation") else set())
+                beside = set(_words(clause[max(0, m.start() - 24):m.end() + 24]))
+                named, touched = [], 0   # the facts it names outright, and how many it might mean at all
+                for f in facts:
+                    if UNITS[f["unit"].strip()][0] != kind:
+                        continue
+                    key = set(_words(re.sub(r"[_.\-]", " ", f["key"])))
+                    telling = key - PLAIN
+                    touched += bool(telling & near) if telling else bool(key and key <= beside)
+                    if (telling and telling <= near) or (not telling and key and key <= beside):
+                        named.append(f)
+                if len(named) == 1 and touched == 1:
+                    out.append((where, text, named[0], m.group(0)))
+    return out
