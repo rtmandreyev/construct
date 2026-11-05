@@ -1743,7 +1743,9 @@ def compile_scene(scene, solid=False):
                                 "amount": mo.get("amount", 0.0),
                                 "phase": (mo.get("phase", 0.0) + phase) % 1.0, "part": part["id"]})
             inst_lines = [(xf(a), xf(b), cls) for a, b, cls in mesh.lines]
-            inst_tris = [(xf(a), xf(b), xf(c)) for a, b, c in mesh.tris] if solid or fill in ("glass", "dark") else []
+            # a mirror turns a surface inside out: its copy's triangles are wound back the other way round
+            inst_tris = ([(xf(a), xf(c), xf(b)) if mirrored else (xf(a), xf(b), xf(c)) for a, b, c in mesh.tris]
+                         if solid or fill in ("glass", "dark") else [])
             inst_pts = [(xf(p), s) for p, s in mesh.points]
             lo, hi = [math.inf] * 3, [-math.inf] * 3
             for seq in ([p for a, b, _ in inst_lines for p in (a, b)], [p for t in inst_tris for p in t],

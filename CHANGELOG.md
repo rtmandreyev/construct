@@ -18,6 +18,19 @@
 - **The film constructs leave:** the three view-only constructs made for a film, never under a licence, are no
   longer in the repository or the gallery, and the gallery's "New things from real ones" group is gone with them
   (`examples/worlds.json`); KESTREL, which anyone may reuse, shows the use case instead.
+- **Solids wound outward, and closed:** in Blender's face orientation the R34's whole left side, every tyre, lamp
+  and wheel showed inside out. A mirrored copy kept its original's winding (a mirror turns a surface inside out),
+  and cylinders, cones, lathes, tori and spheres were wound inward; an extrusion of a clockwise profile and a
+  tube's start cap were wound against the rest of their own surface. Every primitive is now wound outward and a
+  mirrored copy is wound back, so a 3D export's normals, a modelling program's face orientation and its booleans,
+  solidify and recalculated normals agree. A fully rounded loft section (`round` 1 on a narrow section, the R34's
+  C-pillar) left corners a rounding apart and an extrusion closed by repeating its first point left an edge of no
+  length: both now make one closed surface, and the poles of spheres and lathes no longer leave slivers. The
+  light is unchanged; tests in `test_solids.py`.
+- **The R34, refined for the solid** ([its page](examples/nissan-skyline-gt-r-r34/README.md)): its C-pillar
+  closes between the rear glass and the shoulder instead of standing as a fin through the quarter window, its
+  bumper flanks are closed, its rear bumper and tail no longer pillow, its sills run straight and flush, its
+  diffuser follows the bumper and its tubes are capped. Every part keeps its name; the parts no longer traced say so.
 - **No critic packets left behind:** masterpiece rounds wrote each round's critic packet (renders, references,
   pairs) to the temporary folder and never removed it, so gigabytes built up over many runs. Once a round's answer is recorded the
   packet is removed; its renders were already kept with the round's checkpoint. A packet written with `--out` stays.

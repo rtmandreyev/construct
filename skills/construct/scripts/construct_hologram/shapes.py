@@ -90,6 +90,46 @@ def _norm(a):
     return (a[0] / length, a[1] / length, a[2] / length) if length > 1e-12 else (0.0, 0.0, 0.0)
 
 
+def _key(p):
+    return (round(p[0], 9), round(p[1], 9), round(p[2], 9))
+
+
+def _outward(m):
+    """Wind a solid primitive's surface outward, in place, and return it: drop the triangles with two corners at
+    one point (a pole, the touching corners of a fully rounded section), then turn every triangle over when the
+    surface, each open rim closed by a fan about its middle, encloses a negative volume. The winding is what a
+    modelling program shows as a face's outside, what a 3D export's normals and a print's inside follow."""
+    m.tris = [t for t in m.tris if t[0] != t[1] and t[1] != t[2] and t[0] != t[2]]
+    edges = {}
+    for t in m.tris:
+        for a, b in ((t[0], t[1]), (t[1], t[2]), (t[2], t[0])):
+            edges[(_key(a), _key(b))] = (a, b)
+    rims = [e for k, e in edges.items() if (k[1], k[0]) not in edges]
+    parent = {}
+
+    def find(x):
+        while parent.setdefault(x, x) != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+        return x
+    for a, b in rims:
+        parent[find(_key(a))] = find(_key(b))
+    middle = {}
+    for a, b in rims:
+        for q in (a, b):
+            acc = middle.setdefault(find(_key(q)), {})
+            acc[_key(q)] = q
+    middle = {r: tuple(sum(q[k] for q in pts.values()) / len(pts) for k in range(3)) for r, pts in middle.items()}
+
+    def vol(a, b, c):
+        return (a[0] * (b[1] * c[2] - b[2] * c[1]) - a[1] * (b[0] * c[2] - b[2] * c[0])
+                + a[2] * (b[0] * c[1] - b[1] * c[0]))
+    v = sum(vol(*t) for t in m.tris) + sum(vol(middle[find(_key(a))], b, a) for a, b in rims)
+    if v < 0:
+        m.tris = [(a, c, b) for a, b, c in m.tris]
+    return m
+
+
 def _polygon_area2(poly):
     return sum(poly[i][0] * poly[(i + 1) % len(poly)][1] - poly[(i + 1) % len(poly)][0] * poly[i][1]
                for i in range(len(poly)))
@@ -182,7 +222,7 @@ def frustum(r0, r1, height, segments=32, ribs=6, caps=True, rings=0):
                 m.tris.append(((0.0, 0.0, 0.0), bottom[j], bottom[i]))
             if r1 > 0:
                 m.tris.append(((0.0, height, 0.0), top[i], top[j]))
-    return m
+    return _outward(m)
 
 
 def ellipsoid(radii, lat=8, lon=12, segments=32):
@@ -206,11 +246,13 @@ def ellipsoid(radii, lat=8, lon=12, segments=32):
               ry * math.sin(math.pi * i / grid_rows - math.pi / 2),
               rz * math.cos(math.pi * i / grid_rows - math.pi / 2) * math.sin(2 * math.pi * j / grid_cols))
              for j in range(grid_cols)] for i in range(grid_rows + 1)]
+    grid[0] = [(0.0, -ry, 0.0)] * grid_cols   # each pole one point (a cosine of a right angle is not quite 0)
+    grid[-1] = [(0.0, ry, 0.0)] * grid_cols
     for i in range(grid_rows):
         for j in range(grid_cols):
             k = (j + 1) % grid_cols
             m.quad(grid[i][j], grid[i][k], grid[i + 1][k], grid[i + 1][j])
-    return m
+    return _outward(m)
 
 
 def torus(major, minor, segments=32, sides=10, rings=8):
@@ -232,7 +274,7 @@ def torus(major, minor, segments=32, sides=10, rings=8):
             u0, u1 = 2 * math.pi * i / segments, 2 * math.pi * (i + 1) / segments
             v0, v1 = 2 * math.pi * k / sides, 2 * math.pi * (k + 1) / sides
             m.quad(at(u0, v0), at(u1, v0), at(u1, v1), at(u0, v1))
-    return m
+    return _outward(m)
 
 
 def lathe(profile, segments=32, meridians=8, every_ring=True):
@@ -253,7 +295,7 @@ def lathe(profile, segments=32, meridians=8, every_ring=True):
         for i in range(segments):
             j = (i + 1) % segments
             m.quad(rings[k][i], rings[k][j], rings[k + 1][j], rings[k + 1][i])
-    return m
+    return _outward(m)
 
 
 def extrude(profile, height, axis="y", ribs=0, caps=True):
@@ -270,6 +312,9 @@ def extrude(profile, height, axis="y", ribs=0, caps=True):
             return (u, v, w)
         return (w, v, u)
 
+    # a profile closed by repeating its first point (or with a point twice over) has an edge of no length: a side
+    # that is not there and a cap that does not close; it is the same outline without the repeat
+    profile = [tuple(q) for i, q in enumerate(profile) if tuple(q) != tuple(profile[i - 1])] or [tuple(profile[0])]
     m = Mesh()
     low = [place(u, v, 0.0) for u, v in profile]
     high = [place(u, v, height) for u, v in profile]
@@ -278,9 +323,13 @@ def extrude(profile, height, axis="y", ribs=0, caps=True):
     for a, b in zip(low, high):
         m.line(a, b)
     n = len(profile)
+    ccw = _polygon_area2(profile) > 0   # the caps are triangulated counter-clockwise: the sides turn with them
     for i in range(n):
         j = (i + 1) % n
-        m.quad(low[i], low[j], high[j], high[i])
+        if ccw:
+            m.quad(low[i], low[j], high[j], high[i])
+        else:
+            m.quad(low[i], high[i], high[j], low[j])
         for r in range(1, ribs + 1):
             f = r / (ribs + 1)
             pa = tuple(low[i][k] + (low[j][k] - low[i][k]) * f for k in range(3))
@@ -290,7 +339,7 @@ def extrude(profile, height, axis="y", ribs=0, caps=True):
         for a, b, c in triangulate(profile):
             m.tris.append((low[a], low[c], low[b]))
             m.tris.append((high[a], high[b], high[c]))
-    return m
+    return _outward(m)
 
 
 def loft_ring(w, y0, y1, wt=None, rnd=0.35, arc=3):
@@ -314,7 +363,15 @@ def loft_ring(w, y0, y1, wt=None, rnd=0.35, arc=3):
                         (1 - t) ** 2 * a[1] + 2 * (1 - t) * t * c[1] + t * t * b[1]))
     pts.append((0.0, y1))
     # order: bottom centre, bottom-right, top-right, top centre, top-left, bottom-left
-    return pts[:1 + arc * 2] + [pts[-1]] + pts[1 + arc * 2:-1]
+    ring = pts[:1 + arc * 2] + [pts[-1]] + pts[1 + arc * 2:-1]
+    # fully rounded (the radius the whole of an edge), two corners meet: one point, not two a rounding apart, so the
+    # surface between them closes up instead of leaving a sliver (`_outward` drops what collapses)
+    tol = 1e-9 * max(abs(w), abs(wt), abs(y1 - y0), 1e-9)
+    for i in range(1, len(ring) + 1):
+        a, b = ring[i - 1], ring[i % len(ring)]
+        if b is not a and abs(a[0] - b[0]) <= tol and abs(a[1] - b[1]) <= tol:
+            ring[i % len(ring)] = a
+    return ring
 
 
 def _monotone_slopes(xs, ys):
@@ -378,7 +435,7 @@ def loft(sections, rnd=0.35, fine=False):
         for k in range(n):
             a, b = ring[k], ring[(k + 1) % n]
             m.tris.append((c, b, a) if flip else (c, a, b))
-    return m
+    return _outward(m)
 
 
 def _frames(path):
@@ -432,12 +489,12 @@ def tube(path, radii, sides=8, smooth=True, samples=8, ring_every=2, longitudina
         for s in range(sides):
             q = (s + 1) % sides
             m.quad(circles[i][s], circles[i][q], circles[i + 1][q], circles[i + 1][s])
-    if caps:
-        for end in (0, n - 1):
-            centre = pts[end]
-            for s in range(sides):
-                m.tris.append((centre, circles[end][s], circles[end][(s + 1) % sides]))
-    return m
+    if caps:   # each cap turns the other way round its circle from the side it closes
+        for s in range(sides):
+            q = (s + 1) % sides
+            m.tris.append((pts[0], circles[0][q], circles[0][s]))
+            m.tris.append((pts[-1], circles[-1][s], circles[-1][q]))
+    return _outward(m)
 
 
 def curve(points, smooth=False, closed=False, samples=8, cls=OUTLINE):
