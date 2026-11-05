@@ -31,7 +31,8 @@ what may be invented. It researched, built 254 named parts with six joints, and 
 judged by independent critics. Then a fourth brief asked for close-up detail on a strict rule: keep every part's
 name, place and size, add detail as new parts. All 256 parts stayed; 242 were added.
 
-<p align="center"><img src="media/assembly-kestrel.gif" width="80%" alt="KESTREL assembling itself: the cradle and spine, the cab, tanks and engines, the radiator wings, then the four cradle arms opening and the wings folding"></p>
+<p align="center"><img src="media/assembly-kestrel.gif" width="49%" alt="KESTREL assembling itself: the cradle and spine, the cab, tanks and engines, the radiator wings, then the four cradle arms opening and the wings folding"> <img src="media/kestrel-blender.jpg" width="49%" alt="KESTREL's second version finished in Blender: an off-white cab and cradle face, a bare aluminium truss, gold-foil water tanks, dark radiator panels and copper engine bells"></p>
+<p align="center"><sub>The construct, and the same ship exported with its finish map and rendered in Blender.</sub></p>
 
 Both versions are in the gallery under Apache-2.0, with the four briefs as sent and the record of every round:
 [examples/kestrel](../examples/kestrel/), [examples/kestrel-v2](../examples/kestrel-v2/). The walkthrough
