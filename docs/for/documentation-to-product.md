@@ -85,9 +85,14 @@ each and what it did deliberately otherwise.
   <a href="https://commons.wikimedia.org/wiki/File:Andromeda_a6.JPG"><img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/0/08/Andromeda_a6.JPG/500px-Andromeda_a6.JPG" height="220" alt="An Alesis Andromeda A6, a 61-key synthesizer with a silver and blue panel, on a desk"></a>
   <a href="https://commons.wikimedia.org/wiki/File:Modal_002_(white)_by_Modal_Electronics_-_2017_NAMM_Show_(2017-01_by_Pete_Brown_@_Flickr_31661095613).jpg"><img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9c/Modal_002_%28white%29_by_Modal_Electronics_-_2017_NAMM_Show_%282017-01_by_Pete_Brown_%40_Flickr_31661095613%29.jpg/500px-Modal_002_%28white%29_by_Modal_Electronics_-_2017_NAMM_Show_%282017-01_by_Pete_Brown_%40_Flickr_31661095613%29.jpg" height="220" alt="A white Modal 002 synthesizer at a trade show, its panel of encoders around a small colour display"></a>
 </p>
-<p align="center"><sub>Two of the four references: the Alesis Andromeda A6 (photo: Thomas Henk, public domain) and the Modal
-002 (photo: Pete Brown, CC BY 2.0), both from Wikimedia Commons. No freely licensed photograph of the Frap Tools
-Magnolia or the UDO Super 6 was found; their makers' pages show them.</sub></p>
+<p align="center">
+  <a href="https://frap.tools/magnolia/"><img src="https://frap.tools/wp-content/uploads/2025/11/Frap_Tools_Magnolia_Front_2-scaled.webp" height="220" alt="A Frap Tools Magnolia, a wide desktop synthesizer with a cream panel and an orange central control"></a>
+  <a href="https://www.udo-audio.com/super-6"><img src="https://cdn.prod.website-files.com/641dd1a703957e750da6b5e3/68d517ee4504cb6c336a66f1_3_Super_6_Blue_Angle.webp" height="220" alt="A UDO Super 6 keyboard in blue, its panel of switches and faders seen from the left"></a>
+</p>
+<p align="center"><sub>The four references the brief named. The Alesis Andromeda A6 (photo: Thomas Henk, public domain) and the
+Modal 002 (photo: Pete Brown, CC BY 2.0), from Wikimedia Commons; the Frap Tools Magnolia (photo © Frap Tools) and the
+UDO Super 6 (photo © UDO Audio Ltd), shown from their makers' own pages for comparison and not part of this
+repository or its licence.</sub></p>
 
 | Reference | What the run took from it | What it did otherwise |
 | --- | --- | --- |
