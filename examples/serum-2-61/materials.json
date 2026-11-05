@@ -1,0 +1,80 @@
+{
+  "materials": [
+    {
+      "parts": [
+        "native-compute-carrier",
+        "native-cpu-module",
+        "ram-*",
+        "nvme-*",
+        "audio-dma-interface-controller",
+        "clock-dac-adc-analog-board",
+        "key-scanner-pressure-controller",
+        "midi-usb-pedal-io-board",
+        "headphone-amp-and-level-board",
+        "panel-scan-display-electronics"
+      ],
+      "name": "electronic packaging volumes",
+      "color": "#235047",
+      "finish": "plastic"
+    },
+    {
+      "parts": [
+        "key-*-black"
+      ],
+      "name": "matte black key polymer",
+      "color": "#101317",
+      "finish": "plastic"
+    },
+    {
+      "parts": [
+        "key-*-c*",
+        "key-*-d*",
+        "key-*-e*",
+        "key-*-f*",
+        "key-*-g*",
+        "key-*-a*",
+        "key-*-b*"
+      ],
+      "name": "ivory polymer keys",
+      "color": "#E4E6E3",
+      "finish": "plastic"
+    },
+    {
+      "parts": [
+        "*glass"
+      ],
+      "name": "display cover glass",
+      "color": "#12262E",
+      "finish": "glass"
+    },
+    {
+      "parts": [
+        "*feet",
+        "*ribbon",
+        "performance-*-wheel"
+      ],
+      "name": "elastomer controls",
+      "color": "#181C20",
+      "finish": "rubber"
+    },
+    {
+      "parts": [
+        "selected-route-*",
+        "display-native-*"
+      ],
+      "name": "functional low luminance status",
+      "color": "#63B4BD",
+      "finish": "light",
+      "emissive": "#163B40"
+    },
+    {
+      "parts": [
+        "*"
+      ],
+      "name": "neutral dark anodized aluminum proposal",
+      "color": "#222A31",
+      "finish": "brushed",
+      "roughness": 0.42
+    }
+  ]
+}
