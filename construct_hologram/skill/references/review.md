@@ -105,8 +105,10 @@ again.
   audit's `detached` warning compares real surfaces and names the nearest part; fix it, do
   not explain it away. `unsupported` (an error) is a part whose box reaches its support but
   whose surface does not; `thin-support` is a part held up only by a strut or a wire far
-  thinner than itself, with the sturdy part it should rest on named. `thin` flags a
-  structural part too fine to render.
+  thinner than itself, with the sturdy part it should rest on named. `tips` is a part that
+  stands on something with its weight off it, on one edge or a point (a back board standing on
+  a rail and leaning back with nothing behind it): give it a second hold on the side it leans to.
+  `thin` flags a structural part too fine to render.
 - **Honesty**: inferred and decorative parts look it; generated art is labelled; the caption
   says GENERIC or APPROXIMATE when it is.
 - **Motion**: ambient, never frantic; parts move about their real pivots.

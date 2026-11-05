@@ -31,6 +31,22 @@ def base(**over):
     return s
 
 
+def red_blue_chair(round_06=False):
+    """A Red-Blue chair from real use (testdata/red-blue-chair.json, its authoring record left out). With `round_06`,
+    the version that passed check --fit: its back board stood on the rear low rail and leaned back with nothing behind
+    it, and its reading still gave an older lean."""
+    s = json.loads((HERE / "testdata" / "red-blue-chair.json").read_text())
+    if round_06:
+        s["parts"] = [p for p in s["parts"] if p["id"] != "cross-low-back"]
+        back = next(p for p in s["parts"] if p["id"] == "back")
+        back.update(at=[0.0, 0.1, -0.3], rotate=[-15.17, 0, 0])
+        back["shape"]["size"] = [0.4, 0.7947, 0.012]
+        facts = {f["key"]: f for f in s["facts"]}
+        facts["back_lean"]["value"], facts["back_board_length"]["value"] = 15.2, 0.795
+        s["reading"]["how"][4] = "Fitted: the back board's 11.8 deg lean, from the two published figures."
+    return s
+
+
 class Examples(unittest.TestCase):
     def test_every_example_compiles_and_passes_the_audit(self):
         names = sorted(p.stem for p in EXAMPLES.glob("*.json"))
@@ -344,6 +360,48 @@ class Audit(unittest.TestCase):
         rep = audit.audit(bridged, scene.compile_scene(bridged))
         self.assertEqual([w for w in rep["warnings"] if w["code"] in ("thin-support", "unsupported")], [])
         self.assertTrue(rep["ok"])
+
+    def test_a_part_standing_on_an_edge_with_its_weight_off_it_tips(self):
+        # found in real use: a Red-Blue chair's back board stood on the rear low rail along its bottom edge and leaned
+        # back with nothing behind it (the upper rail ran on the sitter's side), and check --fit passed it
+        fixed = red_blue_chair()
+        rep = audit.audit(fixed, scene.compile_scene(fixed))   # its foot on a rail, its back on the upper rail
+        self.assertEqual([w for w in rep["warnings"] if w["code"] == "tips"], [])
+        flawed = red_blue_chair(round_06=True)
+        rep = audit.audit(flawed, scene.compile_scene(flawed))
+        tips = [w for w in rep["warnings"] if w["code"] == "tips"]
+        self.assertEqual([w["part"] for w in tips], ["back"])
+        self.assertIn("'cross-low-rear' only along one edge", tips[0]["message"])
+        self.assertRegex(tips[0]["message"], r"weight 0\.\d+ m to the back of it: it would tip over")
+        self.assertIn("tips", diagnose.VISIBLE_DEFECTS)
+        self.assertIn("tips", diagnose.AUDIT_HINTS)
+
+        def stand(*parts):
+            s = studio.starter("object")
+            s["parts"] = [dict({"role": "structure", "certainty": "inferred", "stage": 0}, **p) for p in parts]
+            rep = audit.audit(s, scene.compile_scene(s))
+            return [w["part"] for w in rep["warnings"] if w["code"] == "tips"]
+        frame = [dict(id="post", shape={"type": "box", "size": [0.04, 0.5, 0.04], "anchor": "base"}, at=[-0.3, 0, 0],
+                      mirror="x"),
+                 dict(id="rail", shape={"type": "box", "size": [0.64, 0.04, 0.04], "anchor": "base"}, at=[0, 0.1, 0],
+                      stage=1)]
+        board = lambda deg: dict(id="board", role="mass", shape={"type": "box", "size": [0.4, 0.8, 0.012],
+                                                                  "anchor": "base"}, at=[0, 0.14, 0], rotate=[-deg, 0, 0], stage=2)
+        self.assertEqual(stand(*frame, board(15)), ["board"])                       # leans back off its rail
+        self.assertEqual(stand(*frame, board(0)), [])                                # upright: its weight over the rail
+        self.assertEqual(stand(*frame, board(15),                                    # leans back onto a second rail
+                               dict(id="stop", shape={"type": "box", "size": [0.64, 0.04, 0.04], "anchor": "base"},
+                                    at=[0, 0.45, -0.115], stage=1),
+                               dict(id="post-rear", shape={"type": "box", "size": [0.04, 0.5, 0.04], "anchor": "base"},
+                                    at=[-0.3, 0, -0.115], mirror="x")), [])
+        wall = dict(id="wall", role="mass", shape={"type": "box", "size": [1, 1, 0.1], "anchor": "base"})
+        self.assertEqual(stand(wall, dict(id="shelf", shape={"type": "box", "size": [0.6, 0.012, 0.3], "anchor": "base"},
+                                          at=[0, 0.5, 0.2], stage=1)), [])          # fixed into the side of a wall
+        self.assertEqual(stand(dict(wall, id="gallows", shape={"type": "box", "size": [0.04, 1, 0.04], "anchor": "base"}),
+                               dict(id="arm", shape={"type": "box", "size": [0.5, 0.04, 0.04], "anchor": "base"},
+                                    at=[0.27, 0.96, 0], stage=1),
+                               dict(id="sign", shape={"type": "box", "size": [0.3, 0.2, 0.012], "anchor": "base"},
+                                    at=[0.3, 0.76, 0], stage=2)), [])              # hung from an arm
 
     def test_glass_named_only_in_the_label_is_a_warning(self):
         s = base()

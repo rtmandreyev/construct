@@ -2,6 +2,12 @@
 
 ## 1.1.2 — unreleased
 
+- **Is it held?** A Red-Blue chair's back board stood on the rear low rail along its bottom edge and leaned back with
+  nothing behind it (the upper rail ran on the sitter's side), and `check --fit` passed it. The audit now asks of each
+  structural part that stands on something whether its weight is over where it touches, seen from above; a `tips`
+  warning names the part, what it stands on, where, and how far its weight lies off it, with the fix (a second hold on
+  the side it leans to). A part fixed into the side of another or hung from it is left alone, and so is a rod's end
+  joined across its section. Over the gallery's 38 scenes and the bundled examples it finds nothing.
 - **No critic packets left behind:** masterpiece rounds wrote each round's critic packet (renders, references,
   pairs) to the temporary folder and never removed it, so gigabytes built up over many runs. Once a round's answer is recorded the
   packet is removed; its renders were already kept with the round's checkpoint. A packet written with `--out` stays.

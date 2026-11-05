@@ -154,7 +154,7 @@ Work in a folder of your own. `out/construct.html` opens in any browser.
    (GeoJSON): `scripts/cli.py globe` (`references/terrain.md`).
 4. **Check until clean.** Run `check --json`. While `needs_repair` is true, fix every
    diagnostic at its JSON path using its hint, and check again. Fix every `detached`,
-   `thin-support` and `thin` warning: they are what a viewer notices first.
+   `thin-support`, `tips` and `thin` warning: they are what a viewer notices first.
 5. **Review as an art director.** Run `review`, then open `out/review/hero.png`,
    `sheet-views.png`, `sheet-assembly.png` and (if it opens) `view-open.png` with
    `vision_analyze`. Score them with the rubric in `references/review.md` (silhouette,
@@ -241,6 +241,8 @@ Work in a folder of your own. `out/construct.html` opens in any browser.
   stops short of the motor it carries is `unsupported` (an error) when only the boxes meet,
   `thin-support` when a strut bridges the gap. Work out both heights and make them meet: a
   cylinder's base is at its `at`; on its side, its underside is `at.y - radius`.
+- **Parts that would fall over.** A board standing on one rail along its bottom edge and
+  leaning back with nothing behind it is `tips`: give it a second hold on the side it leans to.
 - **Hairline structure.** A thin arm or leg barely renders: `thin` gives the minimum radius.
 - **Real artwork.** Show a cover only from bytes the user supplied, declared with its SHA-256
   and rights. Never download covers or recreate one from memory.

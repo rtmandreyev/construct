@@ -43,6 +43,9 @@ AUDIT_HINTS = {
                    "underside is at at.y - radius); a centred box's underside is half its height below \"at\".",
     "thin-support": "If the part rests on something, move it until its surface meets that part (named in the message): "
                     "a strut or a wire alone does not carry it. Leave it only if the thin part truly carries it.",
+    "tips": "Hold the part on the side its weight leans to: a rail, a stop or a second support it rests against "
+            "(its surface meeting that part's), or move it until its weight is over what it stands on. A board standing "
+            "on one edge needs a second contact above.",
     "shape-overclaim": "Keep the size and lower the shape: {\"size\": \"verified\", \"shape\": \"traced\"} when it was "
                        "fitted to an orthographic drawing or reference image (see construct trace), \"inferred\" when it was "
                        "designed. Verify a shape only from a drawing, a measurement or a dataset that gives its coordinates.",
@@ -177,7 +180,7 @@ def diagnose_text(text):
 
 
 # warnings a viewer would see at once: the repair loop goes on until they are gone
-VISIBLE_DEFECTS = ("detached", "thin-support", "thin", "shape-overclaim")
+VISIBLE_DEFECTS = ("detached", "thin-support", "tips", "thin", "shape-overclaim")
 
 
 def needs_repair(report):

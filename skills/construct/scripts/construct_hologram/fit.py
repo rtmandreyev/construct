@@ -12,6 +12,9 @@ the scene's frame), so an agent or a person can fix them one by one and check ag
 Only what shows from outside is reported as poking: a shaft through a floor inside the car is hidden.
 
 Glass is left out of "cuts" and "buried": a pane sits in its frame by design.
+
+tipping(...) asks the audit's question "is it held?" on the same voxels: a part standing with its weight off what it
+stands on (the audit's `tips` warning).
 """
 
 import math
@@ -52,11 +55,13 @@ def _volumes(g, n_cells):
     return grid, vox, tris
 
 
-def solids(scene, cells=CELLS):
+def solids(scene, cells=CELLS, grid=False):
     """(per part id: its solid as voxels, a dict of bit columns; the voxel's size in metres), for asking which
-    parts really meet."""
-    grid, vox, _ = _volumes(scene_mod.compile_scene(scene, solid=True), cells)
-    return vox, (grid.h if grid else 0.0)
+    parts really meet; with `grid`, the voxel lattice itself in place of its size (None when nothing is solid)."""
+    lattice, vox, _ = _volumes(scene_mod.compile_scene(scene, solid=True), cells)
+    if grid:
+        return vox, lattice
+    return vox, (lattice.h if lattice else 0.0)
 
 
 def touch(a, b, reach=1):
@@ -195,3 +200,166 @@ def check(scene, cells=CELLS):
     order = {"pokes": 0, "buried": 1}
     issues.sort(key=lambda x: (order[x["code"]], -x.get("shows", 0), -x["share"]))   # what shows most first
     return {"issues": issues, "parts": len(vox)}
+
+
+# ---------------------------------------------------------------------------- is it held?
+#
+# A part standing on something stays up while its weight is over what it stands on: over the outline, seen from above,
+# of everywhere it touches. A back board standing on a rail along its bottom edge and leaning back, with nothing behind
+# it, has its weight off that line and falls over. A part fixed into the side of another or hung from it does not
+# stand: most of where it touches is not on top of what holds it, and a joint holds what a resting edge does not.
+
+LINE = 3.0    # a contact this many voxels wide or less is a line (an edge standing on something), or a point
+SLACK = 1.5   # voxels the weight may sit off the contact before it counts: the voxels' own rounding
+
+
+def _centre(cols):
+    """The middle of a voxel set (voxel units, the print frame: bit k is the height)."""
+    n = sx = sy = sz = 0.0
+    for (x, y), m in cols.items():
+        for a, b in printing._runs(m):
+            k = b - a + 1
+            n += k
+            sx, sy, sz = sx + (x + 0.5) * k, sy + (y + 0.5) * k, sz + (a + b + 1) / 2.0 * k
+    return [sx / n, sy / n, sz / n]
+
+
+def _grow(cols, reach):
+    """A voxel set grown by `reach` voxels each way (a cube around every voxel)."""
+    out = cols
+    for axis in (0, 1):
+        grown = {}
+        for (x, y), m in out.items():
+            for d in range(-reach, reach + 1):
+                c = (x + d, y) if axis == 0 else (x, y + d)
+                grown[c] = grown.get(c, 0) | m
+        out = grown
+    for c, m in out.items():
+        g = m
+        for i in range(1, reach + 1):
+            g |= m << i | m >> i
+        out[c] = g
+    return out
+
+
+def _hull(pts):
+    """The convex hull of points in the plane, counter-clockwise."""
+    pts = sorted(set(pts))
+    if len(pts) < 3:
+        return pts
+
+    def turn(o, a, b):
+        return (a[0] - o[0]) * (b[1] - o[1]) - (a[1] - o[1]) * (b[0] - o[0])
+    lower, upper = [], []
+    for p in pts:
+        while len(lower) >= 2 and turn(lower[-2], lower[-1], p) <= 0:
+            lower.pop()
+        lower.append(p)
+    for p in reversed(pts):
+        while len(upper) >= 2 and turn(upper[-2], upper[-1], p) <= 0:
+            upper.pop()
+        upper.append(p)
+    return lower[:-1] + upper[:-1]
+
+
+def _area(hull):
+    return abs(sum(a[0] * b[1] - b[0] * a[1] for a, b in zip(hull, hull[1:] + hull[:1]))) / 2
+
+
+def _outside(p, hull):
+    """How far point p lies outside a convex polygon (0 inside), and the polygon's nearest point."""
+    if len(hull) >= 3 and all((b[0] - a[0]) * (p[1] - a[1]) - (b[1] - a[1]) * (p[0] - a[0]) >= 0
+                              for a, b in zip(hull, hull[1:] + hull[:1])):
+        return 0.0, p
+    best = (math.inf, p)
+    for a, b in zip(hull, hull[1:] + hull[:1]) if len(hull) > 1 else [(hull[0], hull[0])]:
+        ab = (b[0] - a[0], b[1] - a[1])
+        d = ab[0] * ab[0] + ab[1] * ab[1]
+        t = 0.0 if d == 0 else max(0.0, min(1.0, ((p[0] - a[0]) * ab[0] + (p[1] - a[1]) * ab[1]) / d))
+        q = (a[0] + ab[0] * t, a[1] + ab[1] * t)
+        best = min(best, (math.dist(p, q), q))
+    return best
+
+
+def _bodies(cols, reach):
+    """A part's solid as the bodies it makes: its separate pieces, those that meet (within `reach`) taken as one
+    (a thin tube voxelised in pieces is one tube; its copies are each their own)."""
+    pieces = _components(cols)
+    if len(pieces) < 2:
+        return pieces
+    joined = _components(_grow(cols, max(1, (reach + 1) // 2)))
+    owner = {}
+    for k, comp in enumerate(joined):
+        for c, m in comp.items():
+            owner.setdefault(c, []).append((k, m))
+    out = {}
+    for piece in pieces:
+        c, m = next(iter(piece.items()))
+        k = next(k for k, mm in owner[c] if mm & m)
+        body = out.setdefault(k, {})
+        for c, m in piece.items():
+            body[c] = body.get(c, 0) | m
+    return [out[k] for k in sorted(out)]
+
+
+def tipping(vox, grid, holders, reach=1, ground=0, sections=None):
+    """The parts in `holders` ({part id: the ids of the parts it touches}) that stand with their weight off what they
+    stand on, each body on its own (copies apart): [{"part", "by" (what it touches), "kind" (line, point or area: what
+    it stands on, seen from above), "span" (that contact's length, metres), "lever" (metres from its weight to the
+    contact), "toward" (front, back, left or right: where its weight lies), "at" (the contact's middle, the scene's
+    frame)}]. `reach` is how near counts as touching, in voxels; `ground` the lowest layer, which a body's voxels at most
+    a layer above stand on; `sections` a rod's thickness by part id, in metres."""
+    out, grown = [], {}
+    floor = (1 << (ground + 2)) - 1
+    for pid in sorted(holders):
+        if pid not in vox:
+            continue
+        bodies = _bodies(vox[pid], reach)
+        mates = [q for q in sorted(holders[pid]) if q in vox and q != pid]
+        for q in mates:
+            if q not in grown:
+                grown[q] = _grow(vox[q], reach)
+        for body in bodies:
+            if _count(body) < 8:
+                continue
+            contact, under, by = {}, {}, []
+            for q in mates:
+                hit = False
+                for c, m in body.items():
+                    m &= grown[q].get(c, 0)
+                    if m:
+                        hit = True
+                        contact[c] = contact.get(c, 0) | m
+                        # what it stands on lies under it: its own voxels or the few layers above them
+                        lift = 0
+                        for i in range(1, reach + 2):
+                            lift |= vox[q].get(c, 0) << i
+                        if m & lift:
+                            under[c] = under.get(c, 0) | (m & lift)
+                if hit:
+                    by.append(q)
+            low = {c: m & floor for c, m in body.items() if m & floor}
+            if low:
+                by.append("the ground")
+                for c, m in low.items():
+                    contact[c] = contact.get(c, 0) | m
+                    under[c] = under.get(c, 0) | m
+            if not contact:
+                continue   # touching nothing is another check's
+            if _count(under) < 0.5 * _count(contact):
+                continue   # fixed into the side of something or hung from it: a fixing, not something it stands on
+            weight = _centre(body)[:2]
+            hull = _hull([(x + i, y + j) for (x, y) in contact for i in (0, 1) for j in (0, 1)])
+            off, foot = _outside(weight, hull)
+            if off <= SLACK:
+                continue   # its weight is over what it stands on
+            span = max(math.dist(a, b) for a in hull for b in hull)
+            if (sections or {}).get(pid) is not None and span * grid.h <= sections[pid] + SLACK * grid.h:
+                continue   # a rod's end, joined across its whole section (a bar welded on, a strut)
+            at = [grid.origin[k] + v * grid.h for k, v in enumerate(_centre(contact))]
+            r = (weight[0] - foot[0], weight[1] - foot[1])
+            toward = max((("right", r[0]), ("left", -r[0]), ("back", r[1]), ("front", -r[1])), key=lambda e: e[1])[0]
+            kind = "point" if span <= LINE else "line" if _area(hull) / span <= LINE else "area"
+            out.append({"part": pid, "by": by, "kind": kind, "lever": round(off * grid.h, 4), "toward": toward,
+                        "span": round(span * grid.h, 4), "at": [round(at[0], 3), round(at[2], 3), round(-at[1], 3)]})
+    return out

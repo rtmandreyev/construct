@@ -379,7 +379,8 @@ def _contact_and_thickness(scene, geometry, add, warnings, errors=None):
     if errors is None or len(geo) < 2:
         return
     from . import fit as fit_mod
-    vox, h = fit_mod.solids(scene)   # each part's solid as voxels: whether two parts meet, measured on the solids
+    vox, lattice = fit_mod.solids(scene, grid=True)   # each part's solid as voxels: whether two parts meet, measured on the solids
+    h = lattice.h if lattice else 0.0
     within = max(1, int(math.ceil(gap / h))) if h else 1   # as near as the contact check above calls touching
     boxes = {p["id"]: p["instances"] for p in geometry["parts"]}
 
@@ -453,6 +454,21 @@ def _contact_and_thickness(scene, geometry, add, warnings, errors=None):
             "that is held up. The nearest is %r, %.3g m away: move it onto %r, or set \"floating\": true if it "
             "truly hovers." % (" (and so do %s, resting on it)" % ", ".join(repr(q) for q in rest[:3]) if rest else "",
                                near, dist, near))
+    # is it held? A part that stands on an edge or a point with its weight off it tips over: a back board leaning back
+    # from the rail its foot stands on, with nothing behind it (a part fixed into the side of another, or hung, is left
+    # to the eye; a part drawn only in lines, or set inside another, has no contact to measure)
+    standing = {pid: contacts[pid] for pid in vox if pid in held and pid in parts and not parts[pid].get("floating")
+                and parts[pid]["role"] in ("mass", "structure", "identity") and not export_mod.is_glass_name(pid)
+                and all(q in vox for q in contacts[pid]) and not any(inside(pid, q) for q in contacts[pid])}
+    for t in fit_mod.tipping(vox, lattice, standing, within, low, {q: _thickness(parts[q]) for q in standing}) \
+            if lattice else ():
+        on = " and ".join(q if q == "the ground" else repr(q) for q in t["by"][:3])
+        how = {"line": "along one edge (a line %.3g m long)" % t["span"], "point": "at one point",
+               "area": "on a patch %.3g m across" % t["span"]}[t["kind"]]
+        add(warnings, "tips", t["part"],
+            "stands on %s only %s, around %s m, with its weight %.3g m to the %s of it: it would tip over. Give it a "
+            "second hold on that side (a rail or a stop it leans against), or move it until its weight is over what it "
+            "stands on." % (on, how, t["at"], t["lever"], t["toward"]))
     # held up only through something far thinner than itself: a motor on a wire strut, a lamp on a hairline
     for pid in geo:
         p = parts[pid]
