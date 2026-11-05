@@ -6,8 +6,9 @@
 
 [Open the live construct](https://rtmandreyev.github.io/construct/examples/kestrel/): drag to orbit, R replays the assembly (the
 cradle arms open and the radiator wings fold after it), P shows how each part is known, S shows it as a solid. The
-scene it was built from: [scene.json](scene.json). The same ship with more detail and every part kept:
-[KESTREL, more detailed](../kestrel-v2/).
+scene it was built from: [scene.json](scene.json); its finish for Blender: [maps/finish.json](maps/finish.json)
+([in Blender](../../docs/for/invent-from-what-exists.md#take-it-further-a-finish-in-blender)). The same ship with more
+detail and every part kept: [KESTREL, more detailed](../kestrel-v2/).
 
 A crewed tug, about 120 m long, that pushes blocks of water ice from a planet's rings to a refinery, designed for a
 game from one brief. It does not exist: every part is designed, none measured, and **P** shows them all so. What
@@ -79,6 +80,7 @@ From a checkout of Construct:
 python3 construct_hologram/cli.py build examples/kestrel/scene.json --out out/kestrel
 python3 construct_hologram/cli.py export examples/kestrel/scene.json --out kestrel.glb   # named parts, six joints, for Godot or Blender
 python3 construct_hologram/cli.py export examples/kestrel/scene.json --out kestrel-glued.glb --pieces glued   # for Godot: glued pieces, hinged arms and wings
+python3 construct_hologram/cli.py export examples/kestrel/scene.json --out kestrel-finished.glb --materials examples/kestrel/maps/finish.json   # finished, for Blender
 ```
 
 Apache-2.0, like the rest of Construct. KESTREL is a design for a game, not an engineering study: no thrust, mass,

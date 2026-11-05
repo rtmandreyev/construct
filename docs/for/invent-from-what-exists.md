@@ -177,6 +177,34 @@ Godot project, a 16-second silent review film (assembly, the arms releasing, the
 of every part) and the review stills the critics judged. The scenes are in this repository; build the rest from
 them with the commands in the [README](../../examples/kestrel/README.md#build-it).
 
+## Take it further: a finish in Blender
+
+The construct shows KESTREL in light, and Godot shows it as a grey solid. For a finished ship, ask in the same
+chat: *"Give me a file for Blender: a working ship, not a showpiece. Off-white thermal panels on the cab and the
+platen, dark radiator panels, a bare aluminium truss, gold foil on the water tanks, copper coils on the engines,
+tinted glass in the window band, and the floodlights lit."* It writes a finish map
+([the one used here](../../examples/kestrel/maps/finish.json)) and a `.glb` that Blender and most 3D programs open.
+With the [Construct add-on for Blender](../../hosts/blender/README.md) it builds itself in light, turns plain, then
+takes its finish:
+
+<p align="center"><img src="../media/kestrel-blender.gif" width="80%" alt="KESTREL in Blender: built in light, turned to a plain model, then finished: a white cab and platen, gold-foil water tanks, dark radiator wings on an aluminium truss, dark engine bells and a lit floodlight on an arm"></p>
+
+The map works by part name, and the first rule that matches a part wins: `water-tank-*` is gold
+foil, `radiator-panel-*` radiator black, `spine-*` and the arms' chords bare aluminium, `engine-nozzle-*` burnt
+metal, `floodlight-lens-*` light, and whatever no rule names is thermal white. Sixteen rules cover both versions:
+the second version's `v2-…` parts are in it too (the bells' cooling lines in copper, the valve handwheels and the
+dock's hatch wheel in safety red, the window seals as rubber).
+
+<p align="center"><img src="../media/kestrel-blender.jpg" alt="The second version of KESTREL finished in Blender, the whole ship from above and ahead: the cradle's four arms and the white platen, the cab with its window band and roof dock, the truss with its dark radiator wings, the gold tanks and the four engines"></p>
+<p align="center"><img src="../media/kestrel-blender-detail.jpg" alt="Two close-ups of the second version in Blender: the cab, its tinted window band and the roof dock; and the four engines from behind, dark bells ringed in copper on grey gimbal mounts, beside a gold-foil tank"></p>
+<p align="center"><sub>The second version, with the same map: the whole ship, the cab and its dock, the engines.
+Rendered in Cycles with a key light, a fill and a rim; the map is all the colour there is.</sub></p>
+
+The same from a checkout, with no chat: `construct export scene.json --out kestrel.glb --materials
+maps/finish.json`, or, in Blender, **File → Import → Construct** with the map as the material map. Then change the
+copy, never the design: *"show it in the refinery's livery, orange and grey"*, *"with the cradle open and the wings
+folded"*.
+
 ## How to write the brief
 
 KESTREL's brief follows a pattern that works for anything invented:
