@@ -48,6 +48,7 @@ From a checkout of Construct:
 ```sh
 python3 construct_hologram/cli.py build examples/kestrel-v2/scene.json --out out/kestrel-v2
 python3 construct_hologram/cli.py export examples/kestrel-v2/scene.json --out kestrel-v2.glb   # 498 named parts, six joints
+python3 construct_hologram/cli.py export examples/kestrel-v2/scene.json --out kestrel-v2-finished.glb --materials examples/kestrel/maps/finish.json   # finished, for Blender (one map for both versions)
 ```
 
 Apache-2.0, like the rest of Construct.
