@@ -8,6 +8,12 @@
   warning names the part, what it stands on, where, and how far its weight lies off it, with the fix (a second hold on
   the side it leans to). A part fixed into the side of another or hung from it is left alone, and so is a rod's end
   joined across its section. Over the gallery's 38 scenes and the bundled examples it finds nothing.
+- **Kits: boards lie flat, rails keep their ends:** a Red-Blue chair at 1:6 laid its 2 mm back board, set at a slant,
+  on its edge, and each rail's ends standing proud of the leg it passes through came out as 2.5 mm chips of their
+  own. A thin board set at a slant now lies on its broad face; a bit the trimming cuts off a part, under 6 mm every
+  way, is moulded with the piece that cut it off, and what is left of the part is counted again ("cross-low-rear",
+  not "1 of 3"). Plates fill each row before starting a new one (the chair: 30 pieces on 2 plates became 20 on one),
+  and a piece every neighbour of which hangs from it no longer starts a second tree the base never reaches.
 - **No critic packets left behind:** masterpiece rounds wrote each round's critic packet (renders, references,
   pairs) to the temporary folder and never removed it, so gigabytes built up over many runs. Once a round's answer is recorded the
   packet is removed; its renders were already kept with the round's checkpoint. A packet written with `--out` stays.
