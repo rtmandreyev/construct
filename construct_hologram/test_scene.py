@@ -425,6 +425,27 @@ class Audit(unittest.TestCase):
         self.assertEqual(said("A tower of 60-62 m.", "A 3 m wide stair."), [])         # a range; width is too plain
         self.assertEqual(said("Width 0.5 m."), ["0.5 m"])                              # a plain key, right by it
 
+    def test_a_small_gap_is_detached_on_a_large_object(self):
+        # found on the R34: touching was 1% of the object's size (4.6 cm on a car), so a fin 2 cm under the floor
+        # passed while an arch nearby kept its box in touch
+        def car(gap):
+            s = studio.starter("machine")
+            part = lambda **k: dict({"role": "structure", "certainty": "inferred", "stage": 0}, **k)
+            s["parts"] = [part(id="leg", shape={"type": "box", "size": [0.1, 0.5, 0.1], "anchor": "base"},
+                               at=[0.8, 0, 2], mirror="x"),
+                          part(id="leg-rear", shape={"type": "box", "size": [0.1, 0.5, 0.1], "anchor": "base"},
+                               at=[0.8, 0, -2], mirror="x"),
+                          part(id="body", role="mass", shape={"type": "box", "size": [1.8, 0.5, 4.6], "anchor": "base"},
+                               at=[0, 0.5, 0], stage=1),
+                          part(id="arch", shape={"type": "tube", "path": [[0.1, 0.5, -0.5], [0.1, 0.1, 0], [0.1, 0.5, 0.5]],
+                                                 "radius": 0.02}, stage=2),
+                          part(id="fin", shape={"type": "box", "size": [0.012, 0.04, 0.4], "anchor": "base"},
+                               at=[0.1, 0.46 - gap, 0], stage=2)]
+            rep = audit.audit(s, scene.compile_scene(s))
+            return [w["part"] for w in rep["warnings"] + rep["errors"] if w["code"] in ("detached", "floating")]
+        self.assertEqual(car(0.02), ["fin"])
+        self.assertEqual(car(0.0), [])
+
     def test_glass_named_only_in_the_label_is_a_warning(self):
         s = base()
         s["parts"].append({"id": "hood-door", "label": "Glazed hood door", "role": "detail", "certainty": "inferred",

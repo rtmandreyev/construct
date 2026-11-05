@@ -260,6 +260,8 @@ def format_report(report):
 
 THIN = 0.006      # a structural part thinner than this share of the object's largest size is a hairline
 GAP = 0.01        # parts further apart than this share of the object's largest size do not touch
+NEAR = 0.005      # nor, for `detached`, parts further apart than this (metres; 1% of a car is 4.6 cm), or than
+NEAR_SHARE = 0.003  # this share of the object's largest size, whichever is larger (a cathedral's stones are not set to 5 mm)
 THIN_HOLD = 0.05  # a holder this thin, as a share of what it holds, is a strut, not a support
 THIN_SET = 3      # unless there are this many copies of it (legs, spokes, cables share the load)
 
@@ -366,6 +368,7 @@ def _contact_and_thickness(scene, geometry, add, warnings, errors=None):
                     for z in range(lo_c[2], hi_c[2] + 1):
                         grid.setdefault((x, y, z), []).append((pid, idx))
     gap2 = gap * gap
+    near2 = min(gap, max(NEAR, NEAR_SHARE * size)) ** 2   # touching, for `detached`: a fin 2 cm under a car is not
     ground = lo[1]
 
     def touches(pid):
@@ -378,14 +381,14 @@ def _contact_and_thickness(scene, geometry, add, warnings, errors=None):
                     continue
                 pr = geo[qid][1][idx]
                 d = _seg_dist2(sp, *pr) if len(pr) == 2 else _tri_dist2(sp, *pr)
-                if d <= gap2:
+                if d <= near2:
                     return True
         return False
 
     connected = {pid for pid in geo if touches(pid)}
     # touching is mutual: a part another part touches is connected too
     for pid in list(geo):
-        if pid not in connected and any(_near(geo[q][0], pid, geo, grid, cell, gap2) for q in connected if q != pid):
+        if pid not in connected and any(_near(geo[q][0], pid, geo, grid, cell, near2) for q in connected if q != pid):
             connected.add(pid)
     for pid in geo:
         p = parts[pid]
