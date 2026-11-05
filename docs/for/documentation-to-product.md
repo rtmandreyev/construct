@@ -14,6 +14,11 @@ says plainly what it showed and what it did not.
 <p align="center"><sub>The concept: native Serum 2 as a standalone 61-key instrument. GPT-6.1 Sol in Codex, masterpiece mode,
 one session of 64 minutes. The original autonomous run, shown as it came out.</sub></p>
 
+The pictures down to [The result](#the-result) are the original autonomous run, as it came out. An independent audit
+then read the run; what it found worth correcting is corrected in an audited revision of the same instrument,
+[live in the gallery](https://rtmandreyev.github.io/construct/examples/serum-2-61/) and described under
+[The audited revision](#the-audited-revision).
+
 ## The question
 
 Can an agent with Construct take the documentation of a complex software product and design a plausible
@@ -42,6 +47,64 @@ the desktop, with the Construct skill already installed. It asked for:
 The specification was Xfer's current public manual: 354 pages, Serum 2.0.18, manual 1.0.3, dated 27 April 2025.
 The agent downloaded it itself.
 
+### The exact prompt
+
+The brief, verbatim, is [PROMPT.md](../../examples/serum-2-61/PROMPT.md) (13,120 characters). It opens:
+
+```text
+Using the Construct skill, design and build a **masterpiece construct of Serum 2 as a real, standalone, flagship 61-key hardware synthesizer**.
+
+The premise is:
+
+**Imagine Xfer Records and Steve Duda decided to manufacture and sell Serum 2 as hardware. Design the physical instrument they could actually ship.**
+
+This is NOT:
+
+- a MIDI controller for Serum 2
+- a computer that merely hosts the existing Serum 2 plugin
+- a generic synthesizer inspired by Serum
+- an emulation of Serum
+- a decorative concept model
+- a toy
+- a software UI placed on a large touchscreen
+```
+
+The premise is imagined: neither Xfer Records nor Steve Duda had any part in the run. The
+rest of the brief sets the order of work (documentation, requirements, interaction, hardware, layout, industrial
+design, then the construct), the four references, the visual identity, the physical format, the modulation problem,
+the displays, the insides, what "fully functional" means, ergonomics, provenance and the deliverables.
+
+## The reference instruments
+
+The brief named four instruments to study for lessons in industrial design and interaction, and forbade copying
+them: "Borrow reasoning, not appearance." The agent read their makers' pages and manuals (kept out of this
+repository) and wrote down, in the design notes' table *Reference lessons and original identity*, what it took from
+each and what it did deliberately otherwise.
+
+<p align="center">
+  <a href="https://commons.wikimedia.org/wiki/File:Andromeda_a6.JPG"><img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/0/08/Andromeda_a6.JPG/500px-Andromeda_a6.JPG" height="220" alt="An Alesis Andromeda A6, a 61-key synthesizer with a silver and blue panel, on a desk"></a>
+  <a href="https://commons.wikimedia.org/wiki/File:Modal_002_(white)_by_Modal_Electronics_-_2017_NAMM_Show_(2017-01_by_Pete_Brown_@_Flickr_31661095613).jpg"><img src="https://thumb.wikimedia.org/wikipedia/commons/thumb/9/9c/Modal_002_%28white%29_by_Modal_Electronics_-_2017_NAMM_Show_%282017-01_by_Pete_Brown_%40_Flickr_31661095613%29.jpg/500px-Modal_002_%28white%29_by_Modal_Electronics_-_2017_NAMM_Show_%282017-01_by_Pete_Brown_%40_Flickr_31661095613%29.jpg" height="220" alt="A white Modal 002 synthesizer at a trade show, its panel of encoders around a small colour display"></a>
+</p>
+<p align="center"><sub>Two of the four references: the Alesis Andromeda A6 (photo: Thomas Henk, public domain) and the Modal
+002 (photo: Pete Brown, CC BY 2.0), both from Wikimedia Commons. No freely licensed photograph of the Frap Tools
+Magnolia or the UDO Super 6 was found; their makers' pages show them.</sub></p>
+
+| Reference | What the run took from it | What it did otherwise |
+| --- | --- | --- |
+| [Frap Tools Magnolia](https://frap.tools/magnolia/) | generous room for hands, and source and destination state made explicit, can make complex synthesis playable | three engine strips with their own displays and a dedicated signed-depth control; not its macro centrepiece, panel colour or arrangement |
+| [UDO Super 6](https://www.udo-audio.com/super-6) | performance controls deserve their own reachable region; consistent families of controls matter more than screen size | a persistent eight-macro area and source pads; not its colours, its switches and faders, or its doing without a screen |
+| [Modal Electronics 002](https://modalelectronics.com/wp-content/uploads/2025/08/MODAL002_MANUAL_v1-03.pdf) | a physical control and a contextual display can expose the same parameter; exact entry is valuable | six graph encoders and one universal node editor; no numeric keypad, white body or copied sequencer bank |
+| [Alesis Andromeda A6](https://www.alesis.com/rscdn/1571/documents/a6_manual.pdf) | a deep flagship needs both immediate modules and a second place for editing | a triad of engine strips and faders for whichever envelope is selected; not its blue panel, its outline or where it puts oscillators, filters and envelopes |
+
+Whether the result is original is a judgement, not a check. The audit found the layout a familiar archetype
+(oscillator strips, a screen, filters, macros in front): coherent, with its own identity carried mostly by the
+faceted end structures and the naming.
+
+Serum 2's own interface is Xfer's and is not reproduced here; it can be seen on
+[Xfer's Serum 2 page](https://xferrecords.com/products/serum-2) and in its
+[manual](https://xferrecords.com/web-manual/serum-2). The design notes rule out putting a shrunken copy of it on the
+instrument's display.
+
 ## Requirements first
 
 Seven minutes into the session the agent saved `SERUM_REQUIREMENTS.md`: the manual reduced to **44 capability
@@ -54,6 +117,23 @@ Each row is a paraphrase of its pages, not a quotation. Spot-checked against the
 and 49 sources, ten LFOs, twelve clip slots, four envelopes, up to 16 unison voices); one detail in one row was not
 in the pages it cites. The grouping itself is the agent's: nobody has yet compared it with the manual parameter by
 parameter.
+
+### The run's documents
+
+The run's documents are published beside the revision, as the run wrote them (one local path removed):
+
+- [SERUM_REQUIREMENTS.md](../../examples/serum-2-61/run/SERUM_REQUIREMENTS.md): the 44 groups, R01 to R44, each
+  with its page range and required behaviour; the edition, and what could not be checked.
+- [FUNCTION_MAP.md](../../examples/serum-2-61/run/FUNCTION_MAP.md): for each group, where it is on the instrument,
+  how it is reached, its class, its feedback and its compromise.
+- [HARDWARE_ARCHITECTURE.md](../../examples/serum-2-61/run/HARDWARE_ARCHITECTURE.md): the compute contract,
+  memory and storage, the audio path and its routings, control scanning, I/O, power and cooling, each figure tagged
+  documented, user-supplied, reference-derived or designed.
+- [DESIGN_NOTES.md](../../examples/serum-2-61/run/DESIGN_NOTES.md): the parameter principle, the modulation
+  sequence, displays, ergonomics, how the reference instruments were used, and what remains uncertain.
+- [assembly_manifest.json](../../examples/serum-2-61/run/assembly_manifest.json) and
+  [control_rig.json](../../examples/serum-2-61/run/control_rig.json): the service assemblies, and the intended motion
+  of every key and control.
 
 The documents sort every statement into four kinds: **documented** (what the manual says the software does),
 **user-supplied** (the premise: native, 61 keys, flagship, complete), **reference-derived** (what published
@@ -155,12 +235,22 @@ parts are designed (inferred), the 44 requirement groups are facts cited to the 
 the user's, and three reference figures (an instrument's size, a display's size, a DAC's channel count) are cited
 to their makers.
 
-The model does not yet *show* which designed part answers which requirement. No part cites the requirement it
-realizes (the WARP knobs do not point to R04, the ASSIGN section does not point to R25), so pressing **P** shows
-the whole instrument in one shade of designed, and the trace from requirement to control lives only in the
-function map. A part can already cite facts while staying designed; linking requirements to the parts that
-answer them is the improvement this run points to, for every point on the continuum below. The viewer's
-subtitle also reads APPROXIMATE RECONSTRUCTION, because Construct has no class yet for an original design.
+In the original run the model did not *show* which designed part answers which requirement. No part cited the
+requirement it realizes (the WARP knobs did not point to R04, the ASSIGN section did not point to R25), so pressing
+**P** showed the whole instrument in one shade, and the trace from requirement to control lived only in the
+function map. The viewer's subtitle read APPROXIMATE RECONSTRUCTION, because Construct 1.1 had no class for an
+original design.
+
+Construct 1.2 adds both. A fact can be a *requirement*, citing the request or the document it comes from, and a
+designed part names the requirements it realizes in its basis while staying designed; a new design is captioned
+ORIGINAL DESIGN. The audited revision uses them: the 44 groups and the brief's two premises are requirements, and
+the provenance legend counts 222 parts designed to a requirement and 35 designed freely, naming the manual and the
+brief as their sources.
+
+<!-- renders pending: recapture from the final scene if the part counts change -->
+<p align="center"><img src="../media/docs-to-product-provenance.jpg" width="90%" alt="Two provenance views. Above, the original run's caption: APPROXIMATE RECONSTRUCTION, and one legend row, INFERRED, DESCRIBED, 256. Below, the audited revision in amber lines, captioned ORIGINAL DESIGN, its legend: INFERRED 258, DESCRIBED 1, DESIGNED TO A REQUIREMENT 222 (the official Serum 2 User Guide; the standalone 61-key brief), DESIGNED 35"></p>
+<p align="center"><sub>P, the provenance view: the original run's caption and legend (above), and the audited revision
+(below).</sub></p>
 
 ## Checks and critics
 
@@ -168,7 +258,9 @@ They establish different things, and neither is engineering validation.
 
 - **Construct's check** passed with no errors and four warnings, reproduced independently with the current
   toolkit: nothing floats and nothing claims more than its evidence. The fit
-  check (what pokes through what) was run on the first draft, not on the final scene.
+  check (what pokes through what) was run on the first draft, not on the final scene; run later on the final scene
+  with Construct 1.2, it found knobs left open at the top, controls passing through their printed overlays, rear
+  connectors through the rear panel and parts buried in others. The revision fixes them.
 - **A product check** the agent wrote for itself confirms that parts and lists exist and agree with each other;
   a few of its checks measure (the keys in order, the clearance between knob caps, the boards not overlapping).
 - **The critic loop**: five rounds, each new version preferred to the last; the five-round critic loop reached its
@@ -182,9 +274,56 @@ They establish different things, and neither is engineering validation.
 
 From one prompt to packaged deliverables: a 61-key instrument in 256 named parts with 15 joints (the service deck,
 representative keys, knobs, a fader, a button and the wheels); the modulation, effects and clip display states; rear I/O; the
-electronics bay; a glTF with named parts and its joints' animations (not yet tested in Blender); a 32-second review
+electronics bay; a glTF with named parts and its joints' animations (not tested in Blender by the run); a 32-second review
 film; and the four documents, the function map giving a route for each of the 44 groups. The scene stopped at the
 256-part cap of Construct 1.1.0, which limited the bay's detail.
+
+## The audited revision
+
+The audit's findings that were cheap and clear to correct are corrected in a revision of the scene, published in
+the gallery as [SERUM 2 / 61](../../examples/serum-2-61/) beside the run's brief and documents. It is a correction
+pass on the same instrument, not a redesign, and it says so in its caption, its provenance note and its
+[README](../../examples/serum-2-61/README.md), which lists every change and why.
+
+- **Requirement-linked provenance:** as above, 222 designed parts name the requirements they realize.
+- **ORIGINAL DESIGN,** not APPROXIMATE RECONSTRUCTION.
+- **One detail removed** from R35 that the pages it cites do not give, and R36 in the manual's own terms.
+- **FILES and SHIFT keys** (hold SHIFT for help) beside the BROWSE encoder: the function map sent work to them, and
+  the original panel had none.
+- **The black keys** stand about 12 mm above the white keys, not 19 mm.
+- **The fit:** knob tops closed, controls seated on their overlays, connectors flush with the rear panel, boards and
+  harnesses clear of each other. `check --fit` now finds nothing poking through or hidden at 480 and 600 voxels;
+  at its default coarser grid it still reports the two converter chips, the line drivers and the fan hubs as
+  buried, all thinner than its 6.75 mm cells.
+- **The critic record removed:** it judged the original scene, not this one.
+
+<!-- renders pending: hero.jpg is regenerated by scripts/gallery_images.py from the final scene -->
+<p align="center"><a href="https://rtmandreyev.github.io/construct/examples/serum-2-61/"><img src="../../examples/serum-2-61/hero.jpg" width="90%" alt="The audited revision as a construct: the same 61-key instrument in lines of light, deck closed"></a></p>
+<p align="center"><sub>The audited revision: <a href="https://rtmandreyev.github.io/construct/examples/serum-2-61/">open it live</a>,
+drag to orbit, R replays the assembly and the service deck's opening, P shows how each part is known, S shows it as
+a solid.</sub></p>
+
+### In Blender
+
+<!-- renders pending: the GIF and both stills are of the revision before its case gaps and colours are fixed; render again from the final scene (and recheck the import figures below) -->
+
+The revision exported with `construct export` and the run's own finish proposal as a
+[material map](../../examples/serum-2-61/materials.json) (dark anodized aluminium, polymer keys, cover glass,
+elastomer wheels), then rendered headless in Blender 5.2 through Construct's add-on, unedited apart from a camera,
+lights and a floor:
+
+<p align="center"><img src="../media/docs-to-product-blender.gif" width="80%" alt="The instrument in Blender: built in light, turned to a plain model, then finished in dark anodized metal with black and ivory keys"></p>
+<p align="center"><img src="../media/docs-to-product-blender-hero.jpg" width="90%" alt="The finished model in Blender: dark brushed metal deck, black knobs, ivory and black keys, a small graph display"></p>
+<p align="center"><img src="../media/docs-to-product-blender-service.jpg" width="90%" alt="The finished model with its control deck raised on its stay: the compute fin stack, boards in green, harnesses and the rear connectors in the bay"></p>
+<p align="center"><sub>Built in light, plain, finished; the finished model; the service deck open on its stay over the bay.
+The finish is the run's proposal, not a manufacturer's.</sub></p>
+
+This is also the Blender import test the audit asked for. Blender's own glTF importer read the exported file
+without error: one root, 258 named parts with their provenance (role, certainty, basis, source) as custom
+properties, the 1.08 × 0.52 × 0.155 m size, the map's finishes as materials, and 17 actions (the opening, one for each
+of the 15 joints, and the idle motion). The add-on's import of the scene gave the parts, their line art and 153
+drivers on its Build, Open, Light ↔ Metal and Plain ↔ Finished controls, which made the pictures above. No CAD
+(STEP) check was made: FreeCAD was not available.
 
 ## Time
 
@@ -262,8 +401,8 @@ documentation and photos, its functions fixed and its controls and layout redesi
 a working board or mechanism fixed as evidence and a new enclosure and control surface designed around it. Designing
 around an existing board does not establish electrical compatibility with it.
 
-The run's scene and documents will be published with an audited revision of the scene, corrected where the audit
-found problems, beside this original autonomous run.
+The run's brief and documents are published with [the audited revision](../../examples/serum-2-61/), corrected
+where the audit found problems, beside this original autonomous run.
 
 ## The design-freedom continuum
 
@@ -285,7 +424,7 @@ fixed by evidence                                    fixed by requirements
 | **Replace a part** | the product around it and the interface it fits | the new part | [Braun SK 4 replacement knob](../../examples/braun-sk4-knob/) ([make the part](replace-a-part.md)) | demonstrated |
 | **Redesign** around the existing function | what the product does | how it is used and laid out | none yet | a possibility, untested |
 | **Re-house** a functional core | a board, module or mechanism | the enclosure and controls around it | none yet | a possibility, untested |
-| **Documentation → product** | the documented behaviour | the whole physical product | this page's synthesizer concept | demonstrated once |
+| **Documentation → product** | the documented behaviour | the whole physical product | [SERUM 2 / 61](../../examples/serum-2-61/) (this page) | demonstrated once |
 | **Invent** from requirements | the stated requirements | everything else | [KESTREL](../../examples/kestrel/) ([new things from real ones](invent-from-what-exists.md)) | demonstrated |
 
 At one end the request is *tell me what exists, invent nothing*; at the other, *here are the requirements, design
