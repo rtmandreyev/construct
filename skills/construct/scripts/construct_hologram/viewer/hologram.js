@@ -1145,7 +1145,8 @@ void main() {
 
     // caption: what this is and how much of it is evidence (never implies exact accuracy)
     const subj = geo.subject;
-    const accuracy = { generic: "GENERIC RECONSTRUCTION", approximate: "APPROXIMATE RECONSTRUCTION", documented: "DOCUMENTED RECONSTRUCTION" }[subj.accuracy];
+    const accuracy = { generic: "GENERIC RECONSTRUCTION", approximate: "APPROXIMATE RECONSTRUCTION", documented: "DOCUMENTED RECONSTRUCTION",
+      original: "ORIGINAL DESIGN" }[subj.accuracy];
     const caption = el("div", "caption");
     caption.appendChild(el("div", "title", geo.title));
     caption.appendChild(el("div", "meta", [accuracy, subj.synthetic ? "SYNTHETIC EXAMPLE" : null, geo.counts.lines + " LINES"].filter(Boolean).join(" · ")));
@@ -1203,16 +1204,42 @@ void main() {
           legend.appendChild(src);
         });
       };
+      // designed parts made to a requirement (the user's, or the documentation's) apart from those designed freely,
+      // with the sources of those requirements
+      const wanted = (p) => (p.basis || []).filter((b) => factOf[b] && factOf[b].requirement);
+      const toReq = k === "inferred" ? parts.filter((p) => p.evidence === 1 && wanted(p).length) : [];
+      const designed = (l) => {
+        if (l !== 1 || !toReq.length) return;
+        [["DESIGNED · TO A REQUIREMENT", toReq.length], ["DESIGNED", parts.filter((p) => p.evidence === 1).length - toReq.length]]
+          .forEach(([name, n]) => {
+            if (!n) return;
+            const sub = el("div", "row sub"), s2 = el("span", "swatch");
+            s2.style.background = shade(1);
+            sub.appendChild(s2); sub.appendChild(el("span", "", name + " · " + n));
+            legend.appendChild(sub);
+            if (name !== "DESIGNED") {
+              const ids = [...new Set(toReq.flatMap((p) => wanted(p).map((b) => factOf[b].source)))].filter((id) => sourceOf[id]);
+              ids.slice(0, 3).forEach((id) => {
+                const src = el("div", "src", sourceOf[id].title);
+                src.title = sourceOf[id].title;
+                legend.appendChild(src);
+              });
+              if (ids.length > 3) legend.appendChild(el("div", "src more", "+" + (ids.length - 3) + " MORE"));
+            }
+          });
+      };
       if (shades.length === 1) {
         sw.style.background = shade(shades[0]);
         text.textContent = label + " · " + SHADES[k][shades[0] - 1] + " · " + parts.length;
         checkedBy(shades[0]);
+        designed(shades[0]);
       } else if (shades.length > 1) {
         sw.style.background = "linear-gradient(90deg," + shades.slice().reverse().map(shade).join(",") + ")";
         shades.forEach((l) => {
           const sub = el("div", "row sub"), s2 = el("span", "swatch");
           s2.style.background = shade(l);
           sub.appendChild(s2); sub.appendChild(el("span", "", SHADES[k][l - 1] + " · " + parts.filter((p) => p.evidence === l).length));
+          if (l === 1 && toReq.length) return designed(l);   // said as its two kinds instead
           legend.appendChild(sub);
           checkedBy(l);
         });

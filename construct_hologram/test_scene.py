@@ -1923,6 +1923,39 @@ class Shades(unittest.TestCase):
     def test_levels_from_what_a_part_cites(self):
         self.assertEqual(self.levels(self.scene()), {"p0": 1, "p1": 2, "p2": 3, "p3": 4, "p4": 1, "p5": None})
 
+    def test_a_designed_part_names_the_requirement_it_realises_and_stays_designed(self):
+        # a new design's parts are designed, but some are what the user asked for ("two seats") or what a document
+        # says it does ("a 64-slot modulation matrix"): they cite it, and stay designed
+        s = base(subject={"category": "machine", "accuracy": "original", "synthetic": True})
+        s["sources"].append({"id": "manual", "kind": "document", "title": "the synth's manual", "rights": "reference_only"})
+        s["facts"] += [{"key": "seats", "value": 2, "certainty": "user_supplied", "source": "req", "requirement": True},
+                       {"key": "mod.slots", "value": 64, "certainty": "verified", "source": "manual", "requirement": True},
+                       {"key": "width", "value": 0.4, "unit": "m", "certainty": "inferred"}]
+        box = {"type": "box", "size": [0.2, 0.2, 0.2], "anchor": "base"}
+        for i, basis in enumerate([["seats"], ["mod.slots"], [], ["seats", "width"]]):
+            s["parts"].append({"id": "p%d" % i, "role": "detail", "certainty": "inferred", "stage": 1, "shape": box,
+                               "at": [i * 0.3 - 0.45, 1, 0], "basis": basis})
+        self.assertEqual(scene.validate(s), [])
+        g = scene.compile_scene(s)
+        self.assertEqual(self.levels(s), {"p0": 1, "p1": 1, "p2": 1, "p3": 2})   # a requirement describes no shape
+        self.assertEqual(g["subject"]["accuracy"], "original")
+        self.assertTrue(next(f for f in g["provenance"]["facts"] if f["key"] == "seats")["requirement"])
+        rep = audit.audit(s, g)
+        self.assertEqual(rep["info"]["designed_parts"], {"to_a_requirement": 2, "free": 2})   # body and p2 are free
+        self.assertEqual(rep["info"]["requirements_met"], ["mod.slots", "seats"])
+        self.assertIn("designed parts: 2 to a requirement (mod.slots, seats), 2 designed freely", audit.format_report(rep))
+        self.assertEqual([w for w in rep["warnings"] if w["code"] == "requirement-unmet"], [])
+        s["parts"] = s["parts"][:1]                                            # the body alone
+        rep = audit.audit(s, scene.compile_scene(s))
+        self.assertIn("mod.slots, seats", next(w for w in rep["warnings"] if w["code"] == "requirement-unmet")["message"])
+        for bad, says in ((dict(s["facts"][1], requirement="yes"), "true or false"),
+                          ({k: v for k, v in s["facts"][1].items() if k != "source"}, "requirement cites where")):
+            t = dict(s, facts=[s["facts"][0], bad])
+            self.assertTrue(any(says in e for e in scene.validate(t)), (bad, scene.validate(t)))
+        js = (HERE / "viewer" / "hologram.js").read_text()
+        self.assertIn('original: "ORIGINAL DESIGN"', js)                   # not "APPROXIMATE RECONSTRUCTION"
+        self.assertIn('"DESIGNED · TO A REQUIREMENT"', js)
+
     def test_a_passing_comparison_checks_its_reference_on_this_version_only(self):
         s = self.scene()
         record = {"view": "top", "reference": "plan", "iou": 0.9, "edge": 0.01, "pass": True}

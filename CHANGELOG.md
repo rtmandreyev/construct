@@ -8,6 +8,13 @@
   warning names the part, what it stands on, where, and how far its weight lies off it, with the fix (a second hold on
   the side it leans to). A part fixed into the side of another or hung from it is left alone, and so is a rod's end
   joined across its section. Over the gallery's 38 scenes and the bundled examples it finds nothing.
+- **Designed to a requirement:** a designed part could cite nothing it was designed to, so a part the user asked for
+  ("two seats") or a documented function ("a 64-slot modulation matrix") looked like free invention. A fact may now
+  be a `requirement` (from the user's request or a document, citing it), and a part names it in its `basis` while it
+  stays `inferred`, shaded designed. The provenance legend splits DESIGNED into "designed · to a requirement" and
+  "designed" and names the requirements' sources; `check` counts them ("designed parts: 2 to a requirement") and warns
+  `requirement-unmet` when no part names one. A new design is `subject.accuracy: "original"`, captioned ORIGINAL
+  DESIGN instead of APPROXIMATE RECONSTRUCTION. The viewer's pinned copy moves to `testdata/hologram-1.2.0.js`.
 - **The critic stands apart:** an audit of a run found an author's rationale in a critic's packet, and a critic that
   had written to the author mid-review changing its blind score. A rounds packet now holds only the renders, the
   reference pictures and the user's request (`--reference` refuses a document; the scene's own summary no longer

@@ -133,7 +133,8 @@
      "enum": [
       "generic",
       "approximate",
-      "documented"
+      "documented",
+      "original"
      ]
     },
     "synthetic": {
@@ -183,6 +184,9 @@
          "inferred",
          "decorative"
         ]
+       },
+       "requirement": {
+        "type": "boolean"
        }
       }
      }

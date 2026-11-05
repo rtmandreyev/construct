@@ -46,6 +46,8 @@ AUDIT_HINTS = {
     "tips": "Hold the part on the side its weight leans to: a rail, a stop or a second support it rests against "
             "(its surface meeting that part's), or move it until its weight is over what it stands on. A board standing "
             "on one edge needs a second contact above.",
+    "requirement-unmet": "Name the requirement's key in the basis of each part that realises it (the part stays "
+                         "\"inferred\"), or drop \"requirement\" from a fact no part has to meet.",
     "stale-number": "Rewrite the line (reading.how or the annotation named) with the fact's value, or correct the fact "
                     "if the line is right: a reading written once drifts when the scene changes.",
     "shape-overclaim": "Keep the size and lower the shape: {\"size\": \"verified\", \"shape\": \"traced\"} when it was "

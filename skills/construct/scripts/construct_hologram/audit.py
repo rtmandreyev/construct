@@ -99,6 +99,18 @@ def audit(scene, geometry):
     key_parts = [p for p in parts if p["role"] in ("mass", "identity")]
     backed = [p for p in key_parts if p["certainty"] in ("verified", "user_supplied", "traced")]
     info["evidence_backed_key_parts"] = "%d of %d" % (len(backed), len(key_parts))
+    # designed parts (inferred, citing nothing they were read from): those made to a requirement (what the user asked
+    # for, or what the documentation says it does) and those that are free design
+    wants = {f["key"] for f in scene["facts"] if f.get("requirement")}
+    designed = [p for p in parts if p.get("evidence") == 1 and p["certainty"] == "inferred"]
+    to_req = [p for p in designed if scene_mod.requirements(p, wants)]
+    info["designed_parts"] = {"to_a_requirement": len(to_req), "free": len(designed) - len(to_req)}
+    info["requirements_met"] = sorted({k for p in to_req for k in scene_mod.requirements(p, wants)})
+    unmet = sorted(wants - {b for p in parts for b in p.get("basis", [])})
+    if unmet:
+        add(warnings, "requirement-unmet", None,
+            "no part names the requirement%s %s in its basis: say which parts realise %s." % (
+                "" if len(unmet) == 1 else "s", ", ".join(unmet), "it" if len(unmet) == 1 else "them"))
     if accuracy == "documented" and key_parts and len(backed) < len(key_parts) / 2:
         add(errors, "accuracy", None,
             "subject.accuracy is \"documented\" but most mass/identity parts are inferred or decorative: "
@@ -231,6 +243,11 @@ def format_report(report):
     out.append("  size %(width)g x %(height)g x %(depth)g m" % i["dimensions_m"])
     out.append("  %(lines)d lines, %(triangles)d triangles, %(points)d points, %(motions)d moving copies" % i["counts"])
     out.append("  evidence-backed key parts: %s" % i["evidence_backed_key_parts"])
+    d = i.get("designed_parts") or {}
+    if d.get("to_a_requirement"):
+        out.append("  designed parts: %d to a requirement (%s), %d designed freely" % (
+            d["to_a_requirement"], ", ".join(i["requirements_met"][:6]) + (", ..." if len(i["requirements_met"]) > 6 else ""),
+            d["free"]))
     return "\n".join(out)
 
 

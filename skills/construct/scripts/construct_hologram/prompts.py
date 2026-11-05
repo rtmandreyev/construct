@@ -65,6 +65,9 @@ You write data, never code.
   the sources you used.
 - Confident without looking: record `"skipped"`. Nothing can be `verified` without a cited
   source, so facts are `inferred` and accuracy is `approximate` at most.
+- A new design (the user's own product, an invented machine): `subject.accuracy` "original". What
+  it must have or do, from the user or from documentation, are facts with `"requirement": true`
+  and their source; the parts that realise them cite them in `basis` and stay `inferred`.
 - No web tool in the host: record `"unavailable"`, mark accuracy honestly, and list in
   `next` what research would improve.
 - The user overrides either way ("research: on" / "research: off"); "off" is recorded as
@@ -170,7 +173,10 @@ Skeleton:
 
 `subject.category`: {categories}. `subject.accuracy`: `generic` (a typical example;
 the usual choice), `approximate` (this particular thing, imprecisely) or `documented`
-(its key parts cite evidence). A fictional subject is category `fictional`.
+(its key parts cite evidence); `original` for a new design (nothing real to reconstruct). A
+fictional subject is category `fictional`. A fact the design must satisfy (what the user asked
+for, or what a document says it does) carries `"requirement": true` and its `source`; the
+designed parts that realise it name it in `basis` and stay `inferred`.
 
 Parts: `{{"id", "role", "certainty", "stage" (0..7), "shape", "at" [x,y,z],
 "rotate" [deg x,y,z], "basis" [fact keys], "repeat", "mirror", "floating", "artwork"}}`.

@@ -24,9 +24,14 @@ errors: the closed vocabulary is the safety boundary.
 ```
 
 - `subject.category`: `architecture, object, machine, vehicle, organism, fictional, cd, book, artwork-carrier, other`.
-- `subject.accuracy`: `generic` (a typical example), `approximate` (based on this particular thing, imprecise), `documented` (its key parts cite evidence; the audit enforces it). `check` prints "evidence-backed key parts: n of m": how many key parts (mass and identity) are themselves verified or user-supplied; 0 is normal for a generic reconstruction.
+- `subject.accuracy`: `generic` (a typical example), `approximate` (based on this particular thing, imprecise), `documented` (its key parts cite evidence; the audit enforces it), `original` (a new design: nothing real to reconstruct; the caption says ORIGINAL DESIGN). `check` prints "evidence-backed key parts: n of m": how many key parts (mass and identity) are themselves verified or user-supplied; 0 is normal for a generic reconstruction.
 - `subject.synthetic`: `true` only for examples and demonstrations; a real request is `false`, its `request` source `user_private`.
 - Facts hold known values only. **An unknown fact is absent**: never `null`, never a guess.
+- `"requirement": true` marks a fact as something the thing must have or do: the user's ("two seats",
+  citing the request) or its documentation's ("a 64-slot modulation matrix", citing the manual). It
+  needs a `source`. A designed part that realises it names it in `basis` and stays `inferred`: the
+  provenance view counts it as designed to a requirement, apart from free design, and lists the
+  requirements' sources; `check` warns `requirement-unmet` when no part names one.
 - Colour is the renderer's: every construct renders in one house palette. Never write `presentation.style_hint` (it is ignored, with a warning). If the person explicitly asks for a colour, the host applies it: `build --palette amber` (palettes `violet, cyan, amber, green, ice, rose`; `--identity` tints `none, warm-wood, stone, steel, brass, bio, ember, ice, paper`).
 
 ## Parts
