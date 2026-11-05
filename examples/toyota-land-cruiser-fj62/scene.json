@@ -6550,17 +6550,17 @@
           [
             0.0,
             1.31,
-            -2.573
+            -2.549
           ],
           [
             0.18,
             1.36,
-            -2.568
+            -2.543
           ],
           [
             0.42,
             1.42,
-            -2.553
+            -2.536
           ]
         ],
         "radius": 0.007,
@@ -6572,7 +6572,8 @@
       "look": {
         "weight": 0.6,
         "alpha": 0.5
-      }
+      },
+      "note": "laid on the liftgate glass (it stood 2-3 cm behind it)"
     },
     {
       "id": "quarter-script-carrier",

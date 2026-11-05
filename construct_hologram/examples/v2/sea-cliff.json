@@ -1843,6 +1843,10 @@
         "meridians": 8,
         "profile": [
           [
+            2.45,
+            0
+          ],
+          [
             2.9,
             0
           ],
@@ -1872,7 +1876,8 @@
         20,
         83.85,
         2
-      ]
+      ],
+      "note": "its eave closes onto the lantern's top (the cap stood 0.43 m clear of it)"
     },
     {
       "id": "optic",

@@ -2742,9 +2742,9 @@
         "closed": true
       },
       "at": [
+        -0.0071,
         0,
-        0,
-        0
+        -0.0149
       ],
       "basis": [
         "length",
@@ -2755,7 +2755,8 @@
       "look": {
         "weight": 1.1
       },
-      "mirror": "x"
+      "mirror": "x",
+      "note": "set 1.65 cm in, onto the bumper's face (it stood about 2 cm out of it all round)"
     },
     {
       "id": "front-low-intake-rim",
