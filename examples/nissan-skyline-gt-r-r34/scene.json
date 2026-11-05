@@ -165,7 +165,7 @@
       "role": "mass",
       "certainty": {
         "size": "verified",
-        "shape": "traced"
+        "shape": "inferred"
       },
       "stage": 2,
       "shape": {
@@ -173,62 +173,62 @@
         "sections": [
           [
             -0.915,
-            0.0536,
-            0.1202,
+            0.0651,
+            0.14,
             0.3059,
-            0.0724
+            0.0771
           ],
           [
             -0.64,
-            0.023,
-            0.1639,
+            0.0341,
+            0.148,
             0.3059,
-            0.0418
+            0.0461
           ],
           [
             -0.365,
-            0.012,
-            0.1748,
+            0.0211,
+            0.15,
             0.3059,
-            0.0308
+            0.0331
           ],
           [
             -0.09,
-            0.0217,
-            0.1693,
+            0.0291,
+            0.15,
             0.3059,
-            0.0405
+            0.0411
           ],
           [
             0.185,
-            0.0217,
-            0.1529,
+            0.0291,
+            0.15,
             0.3059,
-            0.0405
+            0.0411
           ],
           [
             0.46,
-            0.0217,
-            0.169,
+            0.0291,
+            0.15,
             0.3059,
-            0.0405
+            0.0411
           ],
           [
             0.735,
-            0.0217,
-            0.1475,
+            0.0261,
+            0.148,
             0.3059,
-            0.0405
+            0.0381
           ],
           [
             1.01,
-            0.0288,
-            0.142,
+            0.0371,
+            0.14,
             0.3059,
-            0.0476
+            0.0491
           ]
         ],
-        "round": 0.8
+        "round": 0.35
       },
       "at": [
         0.8019,
@@ -247,7 +247,8 @@
         "weight": 0.4,
         "alpha": 0.38
       },
-      "mirror": "x"
+      "mirror": "x",
+      "note": "Length and top line traced; its lower edge and depth smoothed and seated against the door and panels above it (the traced sections varied by up to 2.5 cm)."
     },
     {
       "id": "door-l",
@@ -3799,67 +3800,109 @@
       "role": "mass",
       "certainty": {
         "size": "verified",
-        "shape": "traced"
+        "shape": "inferred"
       },
       "stage": 2,
       "shape": {
         "type": "loft",
         "sections": [
           [
-            -1.6136,
-            0.025,
-            0.0285,
-            0.078,
-            0.0531
+            -1.59,
+            0.0862,
+            -0.0533,
+            0.0183,
+            0.008
           ],
           [
-            -1.4886,
-            0.0301,
-            0.0257,
-            0.1055,
-            0.0451
+            -1.5,
+            0.0897,
+            -0.0589,
+            0.0594,
+            0.0142
           ],
           [
-            -1.3635,
-            0.0308,
-            0.0135,
-            0.1685,
-            0.0503
+            -1.4,
+            0.0902,
+            -0.0659,
+            0.105,
+            0.0211
           ],
           [
-            -1.2385,
-            0.0374,
-            0.0012,
-            0.2226,
-            0.0548
+            -1.3,
+            0.0939,
+            -0.0784,
+            0.1514,
+            0.0271
           ],
           [
-            -1.1135,
-            0.0453,
-            -0.011,
-            0.2765,
-            0.0564
+            -1.2,
+            0.1012,
+            -0.0932,
+            0.1984,
+            0.0324
           ],
           [
-            -0.9885,
-            0.0532,
-            -0.0233,
-            0.3373,
-            0.0499
+            -1.1,
+            0.1028,
+            -0.107,
+            0.2468,
+            0.0359
           ],
           [
-            -0.8635,
-            0.0525,
-            -0.0347,
-            0.4048,
-            0.038
+            -1.0,
+            0.1064,
+            -0.1212,
+            0.3011,
+            0.0317
+          ],
+          [
+            -0.9,
+            0.1059,
+            -0.131,
+            0.3555,
+            0.0275
+          ],
+          [
+            -0.88,
+            0.0951,
+            -0.0356,
+            0.2895,
+            0.1119
+          ],
+          [
+            -0.84,
+            0.1006,
+            0.0265,
+            0.3046,
+            0.11
+          ],
+          [
+            -0.8,
+            0.1061,
+            0.0887,
+            0.3197,
+            0.1081
+          ],
+          [
+            -0.76,
+            0.1115,
+            0.1508,
+            0.3336,
+            0.1062
+          ],
+          [
+            -0.735,
+            0.115,
+            0.1897,
+            0.3374,
+            0.1056
           ]
         ],
-        "round": 1.0
+        "round": 0.3
       },
       "at": [
-        0.6917,
-        0.9848,
+        0.6101,
+        0.9923,
         0
       ],
       "label": "C-pillar / sail panel (traced)",
@@ -3877,9 +3920,10 @@
       "rotate": [
         0,
         0,
-        36
+        38.0
       ],
-      "mirror": "x"
+      "mirror": "x",
+      "note": "Designed to close the C-pillar between the traced rear glass, quarter panels, quarter window and roof; its outline in the side view follows the tracing."
     },
     {
       "id": "glazing-rear-window",
@@ -5133,7 +5177,7 @@
             0.7243
           ]
         ],
-        "round": 0.9
+        "round": 0.35
       },
       "at": [
         0,
@@ -5242,7 +5286,7 @@
             0.8485
           ]
         ],
-        "round": 0.9
+        "round": 0.3
       },
       "at": [
         0,
@@ -5964,7 +6008,7 @@
       "role": "identity",
       "certainty": {
         "size": "verified",
-        "shape": "traced"
+        "shape": "inferred"
       },
       "stage": 3,
       "shape": {
@@ -5972,10 +6016,10 @@
         "sections": [
           [
             -2.2424,
-            0.62,
+            0.488,
             0.2546,
             0.2766,
-            0.62
+            0.488
           ],
           [
             -2.1459,
@@ -6031,14 +6075,15 @@
         "fill": "dark",
         "weight": 0.9,
         "alpha": 0.7
-      }
+      },
+      "note": "Traced in the side view; its plan follows the rear bumper, 2 cm inside it."
     },
     {
       "id": "diffuser-strake-0",
       "role": "structure",
       "certainty": {
         "size": "verified",
-        "shape": "traced"
+        "shape": "inferred"
       },
       "stage": 3,
       "shape": {
@@ -6050,15 +6095,15 @@
           ],
           [
             -1.8,
-            0.165
+            0.162
           ],
           [
             -1.8,
-            0.17
+            0.176
           ],
           [
             -2.21,
-            0.222
+            0.245
           ]
         ],
         "height": 0.012,
@@ -6078,14 +6123,15 @@
       "look": {
         "weight": 0.8
       },
-      "mirror": "x"
+      "mirror": "x",
+      "note": "Designed: a fin under the diffuser, reaching up into it."
     },
     {
       "id": "diffuser-strake-1",
       "role": "structure",
       "certainty": {
         "size": "verified",
-        "shape": "traced"
+        "shape": "inferred"
       },
       "stage": 3,
       "shape": {
@@ -6097,15 +6143,15 @@
           ],
           [
             -1.8,
-            0.165
+            0.162
           ],
           [
             -1.8,
-            0.17
+            0.176
           ],
           [
             -2.21,
-            0.222
+            0.245
           ]
         ],
         "height": 0.012,
@@ -6125,7 +6171,8 @@
       "look": {
         "weight": 0.8
       },
-      "mirror": "x"
+      "mirror": "x",
+      "note": "Designed: a fin under the diffuser, reaching up into it."
     },
     {
       "id": "wing-blade",
@@ -7235,14 +7282,14 @@
             0.0,
             0.0113,
             -0.0103,
-            0.2358,
+            0.2589,
             0.0184
           ],
           [
             0.0947,
             0.0112,
             -0.011,
-            0.2458,
+            0.2604,
             0.0139
           ],
           [
@@ -7298,7 +7345,8 @@
         2.174,
         18.997
       ],
-      "mirror": "x"
+      "mirror": "x",
+      "note": "Traced; its rear end raised 1.4-2.2 cm to meet the bonnet at the cowl."
     },
     {
       "id": "fender-front-upper-2",
@@ -7536,39 +7584,39 @@
         "sections": [
           [
             0.0,
-            0.011,
+            0.031,
             0.0241,
             0.443,
-            0.0125
+            0.0325
           ],
           [
             0.074,
-            0.0117,
+            0.0317,
             0.0057,
             0.4429,
-            0.0114
+            0.0314
           ],
           [
             0.1482,
-            0.011,
+            0.031,
             -0.0126,
             0.4429,
-            0.0114
+            0.0314
           ],
           [
             0.1592,
-            0.0125,
+            0.0325,
             -0.0154,
             0.4429,
-            0.0123
+            0.0323
           ]
         ],
         "round": 0.5
       },
       "at": [
-        0.8391,
-        0.1367,
-        1.7448
+        0.8205,
+        0.1374,
+        1.7374
       ],
       "basis": [
         "length",
@@ -7586,7 +7634,8 @@
         -21.594,
         -2.069
       ],
-      "mirror": "x"
+      "mirror": "x",
+      "note": "Outer face traced; its depth (6 cm, closing the flank behind it) is designed."
     },
     {
       "id": "front-bumper-side-2",
@@ -7601,32 +7650,32 @@
         "sections": [
           [
             0.0,
-            0.0119,
+            0.0319,
             0.0005,
             0.4588,
-            0.0122
+            0.0322
           ],
           [
             0.0604,
-            0.0166,
+            0.0366,
             -0.0001,
             0.459,
-            0.0169
+            0.0369
           ],
           [
             0.136,
-            0.0127,
+            0.0327,
             -0.0002,
             0.4588,
-            0.011
+            0.031
           ]
         ],
         "round": 0.5
       },
       "at": [
-        0.7805,
-        0.1208,
-        1.8929
+        0.7619,
+        0.1214,
+        1.8856
       ],
       "basis": [
         "length",
@@ -7644,7 +7693,8 @@
         -21.333,
         -1.997
       ],
-      "mirror": "x"
+      "mirror": "x",
+      "note": "Outer face traced; its depth (6 cm, closing the flank behind it) is designed."
     },
     {
       "id": "quarter-lower",
@@ -9625,7 +9675,8 @@
         "sides": 4,
         "samples": 3,
         "longitudinal": 3,
-        "ring_every": 10
+        "ring_every": 10,
+        "caps": true
       },
       "at": [
         -0.587,
@@ -9679,7 +9730,8 @@
         "sides": 4,
         "samples": 3,
         "longitudinal": 3,
-        "ring_every": 10
+        "ring_every": 10,
+        "caps": true
       },
       "at": [
         -0.183,
@@ -9733,7 +9785,8 @@
         "sides": 4,
         "samples": 3,
         "longitudinal": 3,
-        "ring_every": 10
+        "ring_every": 10,
+        "caps": true
       },
       "at": [
         0.183,
@@ -9787,7 +9840,8 @@
         "sides": 4,
         "samples": 3,
         "longitudinal": 3,
-        "ring_every": 10
+        "ring_every": 10,
+        "caps": true
       },
       "at": [
         0.587,
@@ -10073,7 +10127,8 @@
         "sides": 6,
         "samples": 2,
         "longitudinal": 4,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -10137,7 +10192,8 @@
         "sides": 6,
         "samples": 2,
         "longitudinal": 4,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -10208,7 +10264,8 @@
         "sides": 6,
         "samples": 2,
         "longitudinal": 4,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -10247,7 +10304,8 @@
         "sides": 6,
         "samples": 2,
         "longitudinal": 4,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -10286,7 +10344,8 @@
         "sides": 6,
         "samples": 2,
         "longitudinal": 4,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -10540,7 +10599,8 @@
         "sides": 8,
         "samples": 3,
         "longitudinal": 4,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0.326,
@@ -10592,7 +10652,8 @@
         "sides": 6,
         "samples": 2,
         "longitudinal": 4,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -10644,7 +10705,8 @@
         "sides": 6,
         "samples": 2,
         "longitudinal": 4,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -10696,7 +10758,8 @@
         "sides": 6,
         "samples": 2,
         "longitudinal": 4,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -10748,7 +10811,8 @@
         "sides": 6,
         "samples": 2,
         "longitudinal": 4,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -10800,7 +10864,8 @@
         "sides": 6,
         "samples": 2,
         "longitudinal": 4,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -10852,7 +10917,8 @@
         "sides": 6,
         "samples": 2,
         "longitudinal": 4,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -10934,7 +11000,8 @@
         "sides": 6,
         "samples": 2,
         "longitudinal": 4,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -11016,7 +11083,8 @@
         "sides": 6,
         "samples": 2,
         "longitudinal": 4,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -11093,7 +11161,8 @@
         "sides": 6,
         "samples": 2,
         "longitudinal": 4,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -11253,7 +11322,8 @@
         "sides": 6,
         "samples": 2,
         "longitudinal": 4,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -11292,7 +11362,8 @@
         "sides": 6,
         "samples": 2,
         "longitudinal": 4,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -11360,7 +11431,8 @@
         "sides": 6,
         "samples": 2,
         "longitudinal": 4,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -11713,7 +11785,8 @@
         "sides": 6,
         "samples": 2,
         "longitudinal": 4,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -11761,7 +11834,8 @@
         "sides": 6,
         "samples": 2,
         "longitudinal": 4,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -11809,7 +11883,8 @@
         "sides": 6,
         "samples": 2,
         "longitudinal": 4,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -12028,7 +12103,8 @@
         "sides": 3,
         "samples": 1,
         "longitudinal": 4,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -12457,7 +12533,8 @@
         "sides": 3,
         "samples": 1,
         "longitudinal": 4,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -12813,7 +12890,8 @@
         "sides": 6,
         "samples": 2,
         "longitudinal": 4,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -12861,7 +12939,8 @@
         "sides": 6,
         "samples": 2,
         "longitudinal": 4,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -12909,7 +12988,8 @@
         "sides": 6,
         "samples": 2,
         "longitudinal": 4,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -13128,7 +13208,8 @@
         "sides": 3,
         "samples": 1,
         "longitudinal": 4,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -13557,7 +13638,8 @@
         "sides": 3,
         "samples": 1,
         "longitudinal": 4,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -13609,7 +13691,8 @@
         "sides": 6,
         "samples": 2,
         "longitudinal": 4,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -13757,7 +13840,8 @@
         "sides": 6,
         "samples": 3,
         "longitudinal": 4,
-        "ring_every": 16
+        "ring_every": 16,
+        "caps": true
       },
       "at": [
         0,
@@ -13805,7 +13889,8 @@
         "sides": 6,
         "samples": 3,
         "longitudinal": 4,
-        "ring_every": 16
+        "ring_every": 16,
+        "caps": true
       },
       "at": [
         0,
@@ -14351,7 +14436,8 @@
         "sides": 8,
         "samples": 3,
         "longitudinal": 4,
-        "ring_every": 16
+        "ring_every": 16,
+        "caps": true
       },
       "at": [
         0,
@@ -14398,7 +14484,8 @@
         "sides": 6,
         "samples": 3,
         "longitudinal": 4,
-        "ring_every": 16
+        "ring_every": 16,
+        "caps": true
       },
       "at": [
         0,
@@ -14446,7 +14533,8 @@
         "sides": 6,
         "samples": 3,
         "longitudinal": 4,
-        "ring_every": 16
+        "ring_every": 16,
+        "caps": true
       },
       "at": [
         0,
@@ -14707,7 +14795,8 @@
         "sides": 6,
         "samples": 2,
         "longitudinal": 3,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -14759,7 +14848,8 @@
         "sides": 6,
         "samples": 2,
         "longitudinal": 3,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
