@@ -425,6 +425,21 @@ class Audit(unittest.TestCase):
         self.assertEqual(said("A tower of 60-62 m.", "A 3 m wide stair."), [])         # a range; width is too plain
         self.assertEqual(said("Width 0.5 m."), ["0.5 m"])                              # a plain key, right by it
 
+    def test_duplicates_are_a_part_overlapping_itself(self):
+        # found on a Braun knob: its skirt and body meet along a ring that both draw, and each lathe, its profile
+        # closed by repeating its first point, drew that ring twice: 18% "duplicates" on a clean knob
+        def dups(*parts):
+            s = studio.starter("object")
+            s["parts"] = [dict({"role": "structure", "certainty": "inferred", "stage": 0}, **q) for q in parts]
+            return [w for w in audit.audit(s, scene.compile_scene(s))["warnings"] if w["code"] == "duplicates"]
+        ring = [[0.003, 0.0], [0.0175, 0.0], [0.0175, 0.0025], [0.003, 0.0025], [0.003, 0.0]]
+        skirt = {"id": "skirt", "shape": {"type": "lathe", "profile": ring, "segments": 64}}
+        body = {"id": "body", "shape": {"type": "lathe", "profile": [[0.003, 0.0], [0.0167, 0.0], [0.0146, 0.018],
+                                                                     [0.003, 0.018], [0.003, 0.0]], "segments": 64},
+                "at": [0, 0.0025, 0]}
+        self.assertEqual(dups(skirt, body), [])
+        self.assertTrue(dups(dict(skirt, mirror="x"), body))   # a copy mirrored onto itself: every line twice
+
     def test_glass_named_only_in_the_label_is_a_warning(self):
         s = base()
         s["parts"].append({"id": "hood-door", "label": "Glazed hood door", "role": "detail", "certainty": "inferred",
@@ -2187,6 +2202,12 @@ class Vehicles(unittest.TestCase):
                                  "shape": {"type": "tube", "radius": 0.012,
                                            "path": [[0.8 - 0.3 * k, 0.4, -2.0], [0.8 - 0.3 * k, 1.0, 0.0], [0.8 - 0.3 * k, 0.6, 2.0]]}})
         self.assertIn("tube-outline", {d["code"] for d in diagnose.diagnose(car)["diagnostics"]})
+        # a body built of surfaces (the T1's 47 panels) keeps its real rails and rods: its drip rail, its bumpers
+        for k in range(6):
+            car["parts"].append({"id": "panel-%d" % k, "role": "mass", "certainty": "inferred", "stage": 1,
+                                 "shape": {"type": "box", "size": [0.4, 0.4, 0.02], "anchor": "base"},
+                                 "at": [0.8 - 0.3 * k, 0.6, 2.0]})
+        self.assertNotIn("tube-outline", {d["code"] for d in diagnose.diagnose(car)["diagnostics"]})
 
     def test_a_main_surface_without_lines_is_warned(self):
         def codes(look, role="mass", size=(2, 1, 1)):

@@ -143,7 +143,9 @@ def audit(scene, geometry):
             wires.append(sp["id"])
     surfaces = [sp for sp in scene["parts"] if sp["role"] == "mass" and sp["shape"]["type"] in
                 ("box", "loft", "extrude", "lathe", "sphere", "cylinder", "cone")]
-    if (scene["subject"]["category"] == "vehicle" and len(wires) >= 6) or (len(wires) >= 8 and len(surfaces) <= 1):
+    # a vehicle whose body is built of surfaces keeps its real rods and rails (a T1's drip rail, bumpers, tie-rods)
+    if (scene["subject"]["category"] == "vehicle" and len(wires) >= 6 and len(wires) > len(surfaces)) or \
+            (len(wires) >= 8 and len(surfaces) <= 1):
         add(warnings, "tube-outline", None, "%d long thin tubes (%s) trace the outline: they render as glowing wires, "
             "not a body. Build the body as a loft through its sections (or filled slices with section curves), and keep "
             "tubes for real rods, pipes and frames." % (len(wires), ", ".join(wires[:5]) + (", ..." if len(wires) > 5 else "")))
@@ -175,11 +177,11 @@ def audit(scene, geometry):
         add(warnings, "clutter", None,
             "%.0f%% of lines are detail or ornament: the primary structure may drown. Reduce rings/ribs or repeats."
             % (100.0 * quiet / n))
-    seen, dup = set(), 0
+    seen, dup = set(), 0   # within a part: two parts that meet along an edge (a knob on its skirt) both draw it
     for i in range(n):
         a = tuple(lines[i * stride:i * stride + 3])
         b = tuple(lines[i * stride + 3:i * stride + 6])
-        key = (a, b) if a <= b else (b, a)
+        key = (int(styles[int(lines[i * stride + 6])][6]),) + ((a, b) if a <= b else (b, a))
         if key in seen:
             dup += 1
         seen.add(key)
