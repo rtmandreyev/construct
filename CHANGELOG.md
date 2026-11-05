@@ -37,11 +37,6 @@
   warning names the part, what it stands on, where, and how far its weight lies off it, with the fix (a second hold on
   the side it leans to). A part fixed into the side of another or hung from it is left alone, and so is a rod's end
   joined across its section. Over the gallery's 38 scenes and the bundled examples it finds nothing.
-- **Small gaps are detached:** touching meant within 1% of the object's size, 4.6 cm on a car, so a fin 2 cm under a
-  floor passed when something near it kept its box in touch. For `detached` a part must come within 5 mm, or 0.3% of
-  the object's size on a large one (1.4 cm on a car, half a metre on a cathedral, whose stones are not set to 5 mm).
-  Over the gallery this names 57 parts in 12 scenes, mostly lamp lenses, lines and trim 1.5 to 4.5 cm off a car's body
-  and a piano's strings and bridge clear of its plate, and the Opera House's foyer mullions short of their terraces.
 - **The fit, more exact:** `check --fit` left glass out altogether, so a pillar standing through a quarter window
   passed; it now names a solid part that crosses a pane (`crosses-glass`), not what holds the pane's edge. A poke is
   confirmed on its two parts alone at voxels four times finer: on the R34 a 2 cm diffuser was said to poke through
