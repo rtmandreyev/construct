@@ -8,6 +8,7 @@ reports a part as floating when it really touches something.
 """
 
 import math
+import re
 
 from . import export as export_mod, scene as scene_mod
 
@@ -98,6 +99,18 @@ def audit(scene, geometry):
     key_parts = [p for p in parts if p["role"] in ("mass", "identity")]
     backed = [p for p in key_parts if p["certainty"] in ("verified", "user_supplied", "traced")]
     info["evidence_backed_key_parts"] = "%d of %d" % (len(backed), len(key_parts))
+    # designed parts (inferred, citing nothing they were read from): those made to a requirement (what the user asked
+    # for, or what the documentation says it does) and those that are free design
+    wants = {f["key"] for f in scene["facts"] if f.get("requirement")}
+    designed = [p for p in parts if p.get("evidence") == 1 and p["certainty"] == "inferred"]
+    to_req = [p for p in designed if scene_mod.requirements(p, wants)]
+    info["designed_parts"] = {"to_a_requirement": len(to_req), "free": len(designed) - len(to_req)}
+    info["requirements_met"] = sorted({k for p in to_req for k in scene_mod.requirements(p, wants)})
+    unmet = sorted(wants - {b for p in parts for b in p.get("basis", [])})
+    if unmet:
+        add(warnings, "requirement-unmet", None,
+            "no part names the requirement%s %s in its basis: say which parts realise %s." % (
+                "" if len(unmet) == 1 else "s", ", ".join(unmet), "it" if len(unmet) == 1 else "them"))
     if accuracy == "documented" and key_parts and len(backed) < len(key_parts) / 2:
         add(errors, "accuracy", None,
             "subject.accuracy is \"documented\" but most mass/identity parts are inferred or decorative: "
@@ -200,6 +213,10 @@ def audit(scene, geometry):
                 "another solid shape." % (p["role"], p["shape"]))
 
     _contact_and_thickness(scene, geometry, add, warnings, errors)
+    for where, text, fact, said in stale_numbers(scene):
+        add(warnings, "stale-number", None,
+            "%s says %r, but the fact %s is %s%s: say the fact's value, or correct the fact."
+            % (where, said, fact["key"], fact["value"], " " + fact["unit"] if fact.get("unit") else ""))
 
     # ---- a construct drawn from recorded data (the NetLogo bridge) keeps that data as it was drawn
     if "data_lock" in facts_by_key:
@@ -226,6 +243,11 @@ def format_report(report):
     out.append("  size %(width)g x %(height)g x %(depth)g m" % i["dimensions_m"])
     out.append("  %(lines)d lines, %(triangles)d triangles, %(points)d points, %(motions)d moving copies" % i["counts"])
     out.append("  evidence-backed key parts: %s" % i["evidence_backed_key_parts"])
+    d = i.get("designed_parts") or {}
+    if d.get("to_a_requirement"):
+        out.append("  designed parts: %d to a requirement (%s), %d designed freely" % (
+            d["to_a_requirement"], ", ".join(i["requirements_met"][:6]) + (", ..." if len(i["requirements_met"]) > 6 else ""),
+            d["free"]))
     return "\n".join(out)
 
 
@@ -238,6 +260,8 @@ def format_report(report):
 
 THIN = 0.006      # a structural part thinner than this share of the object's largest size is a hairline
 GAP = 0.01        # parts further apart than this share of the object's largest size do not touch
+NEAR = 0.005      # nor, for `detached`, parts further apart than this (metres; 1% of a car is 4.6 cm), or than
+NEAR_SHARE = 0.003  # this share of the object's largest size, whichever is larger (a cathedral's stones are not set to 5 mm)
 THIN_HOLD = 0.05  # a holder this thin, as a share of what it holds, is a strut, not a support
 THIN_SET = 3      # unless there are this many copies of it (legs, spokes, cables share the load)
 
@@ -344,6 +368,7 @@ def _contact_and_thickness(scene, geometry, add, warnings, errors=None):
                     for z in range(lo_c[2], hi_c[2] + 1):
                         grid.setdefault((x, y, z), []).append((pid, idx))
     gap2 = gap * gap
+    near2 = min(gap, max(NEAR, NEAR_SHARE * size)) ** 2   # touching, for `detached`: a fin 2 cm under a car is not
     ground = lo[1]
 
     def touches(pid):
@@ -356,14 +381,14 @@ def _contact_and_thickness(scene, geometry, add, warnings, errors=None):
                     continue
                 pr = geo[qid][1][idx]
                 d = _seg_dist2(sp, *pr) if len(pr) == 2 else _tri_dist2(sp, *pr)
-                if d <= gap2:
+                if d <= near2:
                     return True
         return False
 
     connected = {pid for pid in geo if touches(pid)}
     # touching is mutual: a part another part touches is connected too
     for pid in list(geo):
-        if pid not in connected and any(_near(geo[q][0], pid, geo, grid, cell, gap2) for q in connected if q != pid):
+        if pid not in connected and any(_near(geo[q][0], pid, geo, grid, cell, near2) for q in connected if q != pid):
             connected.add(pid)
     for pid in geo:
         p = parts[pid]
@@ -379,7 +404,8 @@ def _contact_and_thickness(scene, geometry, add, warnings, errors=None):
     if errors is None or len(geo) < 2:
         return
     from . import fit as fit_mod
-    vox, h = fit_mod.solids(scene)   # each part's solid as voxels: whether two parts meet, measured on the solids
+    vox, lattice = fit_mod.solids(scene, grid=True)   # each part's solid as voxels: whether two parts meet, measured on the solids
+    h = lattice.h if lattice else 0.0
     within = max(1, int(math.ceil(gap / h))) if h else 1   # as near as the contact check above calls touching
     boxes = {p["id"]: p["instances"] for p in geometry["parts"]}
 
@@ -453,6 +479,21 @@ def _contact_and_thickness(scene, geometry, add, warnings, errors=None):
             "that is held up. The nearest is %r, %.3g m away: move it onto %r, or set \"floating\": true if it "
             "truly hovers." % (" (and so do %s, resting on it)" % ", ".join(repr(q) for q in rest[:3]) if rest else "",
                                near, dist, near))
+    # is it held? A part that stands on an edge or a point with its weight off it tips over: a back board leaning back
+    # from the rail its foot stands on, with nothing behind it (a part fixed into the side of another, or hung, is left
+    # to the eye; a part drawn only in lines, or set inside another, has no contact to measure)
+    standing = {pid: contacts[pid] for pid in vox if pid in held and pid in parts and not parts[pid].get("floating")
+                and parts[pid]["role"] in ("mass", "structure", "identity") and not export_mod.is_glass_name(pid)
+                and all(q in vox for q in contacts[pid]) and not any(inside(pid, q) for q in contacts[pid])}
+    for t in fit_mod.tipping(vox, lattice, standing, within, low, {q: _thickness(parts[q]) for q in standing}) \
+            if lattice else ():
+        on = " and ".join(q if q == "the ground" else repr(q) for q in t["by"][:3])
+        how = {"line": "along one edge (a line %.3g m long)" % t["span"], "point": "at one point",
+               "area": "on a patch %.3g m across" % t["span"]}[t["kind"]]
+        add(warnings, "tips", t["part"],
+            "stands on %s only %s, around %s m, with its weight %.3g m to the %s of it: it would tip over. Give it a "
+            "second hold on that side (a rail or a stop it leans against), or move it until its weight is over what it "
+            "stands on." % (on, how, t["at"], t["lever"], t["toward"]))
     # held up only through something far thinner than itself: a motor on a wire strut, a lamp on a hairline
     for pid in geo:
         p = parts[pid]
@@ -533,3 +574,69 @@ def _freeform_points(shape):
 
 def _thickness(p):
     return scene_mod.cross_section(p)
+
+
+# ---------------------------------------------------------------------------- numbers in the words
+#
+# How to read it and the annotations are written once and drift when the scene changes (a reading that still gave an
+# 11.8 deg lean after the fact became 15.2). A number with a unit there is checked against a fact only when it clearly
+# names it: every telling word of the fact's key stands in the same clause, and no fact at all has that value.
+
+UNITS = {"mm": ("length", 0.001), "cm": ("length", 0.01), "m": ("length", 1.0), "km": ("length", 1000.0),
+         "metres": ("length", 1.0), "meters": ("length", 1.0), "°": ("angle", 1.0), "deg": ("angle", 1.0),
+         "degree": ("angle", 1.0), "degrees": ("angle", 1.0), "g": ("mass", 0.001), "kg": ("mass", 1.0)}
+# words too common in fact keys to tell one from another: a key made only of them must stand right by its number
+PLAIN = {"length", "width", "height", "depth", "size", "diameter", "radius", "thickness", "overall", "total", "count",
+         "the", "of", "a"}
+_NUMBER = re.compile(r"(?<![\w.\-–/])(\d+(?:\.\d+)?)\s?(mm|cm|km|metres|meters|m|°|deg|degrees|degree|kg|g)(?![\w²³/])")
+
+
+def _words(text):
+    return [w[:-2] if w.endswith("'s") else w[:-1] if w.endswith("s") and len(w) > 3 else w
+            for w in re.findall(r"[a-z]+(?:'s)?", text.lower())]
+
+
+def stale_numbers(scene):
+    """[(where, text, fact, what it says)]: numbers with a unit in the reading and the annotations that contradict
+    the one fact they clearly name."""
+    facts = [f for f in scene.get("facts", []) if isinstance(f.get("value"), (int, float))
+             and not isinstance(f.get("value"), bool) and UNITS.get(str(f.get("unit", "")).strip())]
+    if not facts:
+        return []
+    texts = [("How to read it (line %d)" % (i + 1), t) for i, t in enumerate((scene.get("reading") or {}).get("how", []))
+             if isinstance(t, str)]
+    texts += [("The annotation %r" % a.get("id"), a.get("text")) for a in scene.get("annotations", [])
+              if isinstance(a, dict) and isinstance(a.get("text"), str)]
+    known = {}   # every fact's value, by kind, in base units
+    for f in facts:
+        kind, k = UNITS[f["unit"].strip()]
+        known.setdefault(kind, []).append(f["value"] * k)
+    out = []
+    for where, text in texts:
+        head = re.split(r"[,:·(]", text)[0]   # an annotation's subject: "Tiburio, 68 m"
+        for clause in re.split(r"[,;:()]|\.\s|\band\b", text):
+            for m in _NUMBER.finditer(clause):
+                if re.search(r"(-|–|\bto\s)$", clause[:m.start()].rstrip()) or re.match(r"\s?(-|–|to\b)", clause[m.end():]):
+                    continue   # a range
+                kind, k = UNITS[m.group(2)]
+                said = float(m.group(1)) * k
+                decimals = len(m.group(1).split(".")[1]) if "." in m.group(1) else 0
+                loose = re.search(r"(about|around|roughly|nearly|almost|over|under|some|~|c\.?)\s*$",
+                                  clause[:m.start()].lower())
+                tol = lambda v: max(abs(v) * (0.15 if loose else 0.01), 0.5 * 10 ** -decimals * k)
+                if any(abs(v - said) <= tol(v) for v in known[kind]) if kind in known else True:
+                    continue   # some fact has that value (or no fact is of its kind)
+                near = set(_words(clause)) | (set(_words(head)) if where.startswith("The annotation") else set())
+                beside = set(_words(clause[max(0, m.start() - 24):m.end() + 24]))
+                named, touched = [], 0   # the facts it names outright, and how many it might mean at all
+                for f in facts:
+                    if UNITS[f["unit"].strip()][0] != kind:
+                        continue
+                    key = set(_words(re.sub(r"[_.\-]", " ", f["key"])))
+                    telling = key - PLAIN
+                    touched += bool(telling & near) if telling else bool(key and key <= beside)
+                    if (telling and telling <= near) or (not telling and key and key <= beside):
+                        named.append(f)
+                if len(named) == 1 and touched == 1:
+                    out.append((where, text, named[0], m.group(0)))
+    return out

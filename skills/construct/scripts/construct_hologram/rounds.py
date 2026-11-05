@@ -21,14 +21,23 @@ renderer cannot do (the medium) is seeded as known limits; an ask the critic its
 one of them never enters the ledger. Each round's log also says whether a 4-round finish cap
 would stop there (log only: it stops nothing).
 
+The critic is kept apart from the author: a packet holds only the scene's renders, the reference pictures and the
+user's request (never the author's notes or rationale); once written it is sealed (read-only, and its hash in the
+state), `record` refuses an answer when the packet changed, and a packet is answered once: its blind verdict cannot
+be rewritten (a new answer needs a new packet).
+
 Files (the run's memory; every command saves them, so a usage limit loses at most one step):
 `state.json`, `ledger.json`, `rounds.md`, `checkpoints/round-NN/` (the scene, its renders, the
 critic's answer and the A/B key, which the critic never sees).
 """
 
+import hashlib
 import json
+import os
 import random
 import shutil
+import stat
+import sys
 import tempfile
 import time
 import zlib
@@ -208,12 +217,47 @@ def _round_dir(folder, n):
     return Path(folder, "checkpoints", "round-%02d" % n)
 
 
+PICTURES = (".png", ".jpg", ".jpeg", ".webp", ".gif")
+
+
+def _digest(folder):
+    """The hash of a folder's files: their paths and their bytes."""
+    h = hashlib.sha256()
+    for f in sorted(q for q in Path(folder).rglob("*") if q.is_file()):
+        h.update(f.relative_to(folder).as_posix().encode() + b"\0")
+        h.update(hashlib.sha256(f.read_bytes()).digest())
+    return h.hexdigest()
+
+
+def _seal(folder):
+    """Make a written packet read-only; returns its hash."""
+    for f in Path(folder).rglob("*"):
+        if f.is_file():
+            os.chmod(f, stat.S_IREAD | stat.S_IRGRP | stat.S_IROTH)
+    return _digest(folder)
+
+
+def _remove(folder):
+    """Remove a folder, its read-only files too (Windows will not delete them as they are)."""
+    def again(fn, path, _):
+        os.chmod(path, stat.S_IWRITE | stat.S_IREAD)
+        fn(path)
+    if Path(folder).exists():
+        shutil.rmtree(folder, **({"onexc": again} if sys.version_info >= (3, 12) else {"onerror": again}))
+
+
 def packet(folder, scene_path, references=(), request=None, out=None, browser=None, seed=None, now=None):
     """Check the scene in and write the round's one-critic packet. Returns (packet folder, key)."""
     from . import critic, diagnose
     st = state(folder)
     if st["status"] != "running":
         raise RoundsError("the run has stopped (%s)" % st.get("stop", st["status"]))
+    # the references travel with the packet: a critic opens only its own folder. Only pictures: the author's notes
+    # and rationale stay out of what the critic sees
+    for view, ref in critic.parse_references(references):
+        if not ref.startswith(("http://", "https://")) and Path(ref).suffix.lower() not in PICTURES:
+            raise RoundsError("a reference is a picture of the subject (%s): %s is not one. The author's notes and "
+                              "rationale stay out of the critic's packet" % (", ".join(PICTURES), ref))
     n = st["round"]
     rd = _round_dir(folder, n)
     rd.mkdir(parents=True, exist_ok=True)
@@ -225,10 +269,8 @@ def packet(folder, scene_path, references=(), request=None, out=None, browser=No
     step(folder, st, "checkpointed", now)
     digest = tiers.critic_hash(doc)
     pk_dir = Path(out) if out else Path(tempfile.gettempdir()) / ("round-" + digest[:12])  # a name that says nothing
-    if pk_dir.exists():
-        shutil.rmtree(pk_dir)
     rng = random.Random(seed if seed is not None else digest)
-    # the references travel with the packet: a critic opens only its own folder
+    _remove(pk_dir)
     refs = []
     for view, ref in critic.parse_references(references):
         if not ref.startswith(("http://", "https://")) and Path(ref).exists():
@@ -237,7 +279,8 @@ def packet(folder, scene_path, references=(), request=None, out=None, browser=No
             shutil.copyfile(ref, dst)
             ref = str(dst)
         refs.append("%s=%s" % (view, ref) if view else ref)
-    one = critic.packet(str(rd / "scene.json"), str(pk_dir / "step-1"), refs, request, browser=browser)
+    one = critic.packet(str(rd / "scene.json"), str(pk_dir / "step-1"), refs, request, browser=browser,
+                        summary=False)
     _localise(pk_dir / "step-1")
     for png in Path(pk_dir, "step-1", "renders").glob("*.png"):  # this version's renders, kept with its checkpoint
         shutil.copyfile(png, rd / png.name)
@@ -251,7 +294,7 @@ def packet(folder, scene_path, references=(), request=None, out=None, browser=No
         tmp = Path(tempfile.mkdtemp(prefix="construct-pair-"))
         try:
             other = critic.packet(str(_round_dir(folder, best) / "scene.json"), str(tmp), refs, request,
-                                  browser=browser)
+                                  browser=browser, summary=False)
             two = Path(pk_dir, "step-2")
             two.mkdir(parents=True, exist_ok=True)
             views = sorted({Path(r).name for r in one["renders"]} & {Path(r).name for r in other["renders"]})
@@ -279,6 +322,7 @@ def packet(folder, scene_path, references=(), request=None, out=None, browser=No
                                               len(shown)), encoding="utf-8")
     st = state(folder)
     st["packet"] = str(pk_dir)
+    st["packet_sha256"] = _seal(pk_dir)   # sealed: `record` refuses an answer if it changed
     st["packet_temp"] = out is None   # in the temporary folder: removed once its answer is recorded
     step(folder, st, "packet", now)
     st["packet_at"] = st["last_step_at"]
@@ -394,6 +438,13 @@ def record(folder, answer, scene_path=None, model=None, now=None):
     rd = _round_dir(folder, n)
     if not (rd / "scene.json").exists():
         raise RoundsError("round %d is not checked in: `construct rounds packet` first" % n)
+    sealed = st.get("packet_sha256")
+    if sealed and "%d:%s" % (n, sealed) in st.get("answered", []):
+        raise RoundsError("this packet's answer is recorded: a blind verdict is not rewritten. A new answer needs a "
+                          "new packet (`construct rounds packet`)")
+    if sealed and (not Path(st.get("packet", "")).is_dir() or _digest(st["packet"]) != sealed):
+        raise RoundsError("the packet changed (or is gone) after it was written: the critic must judge what the "
+                          "packet held. Make the round's packet again and give it to a fresh critic")
     doc = json.loads((rd / "scene.json").read_text(encoding="utf-8"))
     led = ledger(folder)
     ids = [i["id"] for i in led["items"] if i["status"] != "known-limit"]
@@ -405,7 +456,13 @@ def record(folder, answer, scene_path=None, model=None, now=None):
                                                                      for i in items))
     if answer["scene_sha256"] != tiers.critic_hash(doc):
         raise RoundsError("the answer is for another version: make the round's packet again")
+    if sealed:
+        st.setdefault("answered", []).append("%d:%s" % (n, sealed))
+    if (rd / "round.json").exists():
+        os.chmod(rd / "round.json", stat.S_IWRITE | stat.S_IREAD)
     _save(rd, "round.json", answer)
+    os.chmod(rd / "round.json", stat.S_IREAD | stat.S_IRGRP | stat.S_IROTH)
+    answered = hashlib.sha256((rd / "round.json").read_bytes()).hexdigest()
     # the critic's wait is not the author's time: packet to record, measured from the activity in
     # the run and the packet folders, without idle stretches
     now = time.time() if now is None else now
@@ -414,7 +471,7 @@ def record(folder, answer, scene_path=None, model=None, now=None):
     extra = [Path(st["packet"])] if st.get("packet") else []
     critic_s = _worked(since, now, _activity([folder] + extra, since, now))
     if st.pop("packet_temp", False):   # its renders are kept with the checkpoint: the packet itself is spent
-        shutil.rmtree(st.pop("packet"), ignore_errors=True)
+        _remove(st.pop("packet"))
     st["critic_seconds"] = round(st.get("critic_seconds", 0.0) + critic_s, 1)
     st["last_step_at"] = now
     crit = answer["critique"]
@@ -514,7 +571,7 @@ def record(folder, answer, scene_path=None, model=None, now=None):
              "against": None if key is None else key["best_round"], "changes": st["changes"], "requests": top,
              "improvements": [d["evidence"][:160] for d in improvements][:4],
              "regressions": [d["evidence"][:160] for d in regressions][:4], "ledger": line, "added": added,
-             "moved": moved}
+             "moved": moved, "answer_sha256": answered}
     st["history"].append(entry)
     stop = None
     if won and all(v == 3 for v in scores.values()):
@@ -636,6 +693,11 @@ def report(folder):
         lines.append("| %d | %s | %.1f | %d | %d |" % (h["round"], "baseline" if h["baseline"] else "kept" if h["kept"]
                                                     else "reverted", h["minutes"], min(h["scores"].values()),
                                                     sum(h["scores"].values())))
+    edited = [h["round"] for h in st["history"] if h.get("answer_sha256") and hashlib.sha256(
+        (_round_dir(folder, h["round"]) / "round.json").read_bytes()).hexdigest() != h["answer_sha256"]]
+    if edited:   # a recorded verdict is not rewritten; the decision stands on what was recorded
+        lines += ["", "Edited after recording (the run kept the answer as recorded): round %s"
+                  % ", ".join(str(n) for n in edited)]
     open_ = [i for i in led["items"] if i["status"] in ("open", "regressed")]
     limits = [i for i in led["items"] if i["status"] == "known-limit" and not i.get("medium")]
     lines += ["", "Open: " + ("; ".join("%s %s" % (i["id"], i["title"][:100]) for i in open_) or "none"), "",

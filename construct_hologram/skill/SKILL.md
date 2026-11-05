@@ -149,7 +149,7 @@ if no browser is available, say so and deliver the HTML without captures.
    the tier's review rounds or time run out. A host may add a fresh-eyes critic (an
    independent reviewer over the contact sheets). Geometric validity (the audit) and art
    direction (your eyes) are separate gates. If you cannot see images, still fix every
-   `detached`, `thin-support` and `thin` warning, and record `"outcome": "unreviewed"`.
+   `detached`, `thin-support`, `tips` and `thin` warning, and record `"outcome": "unreviewed"`.
 7. **Deliver.** Record how it was made in the scene's `authoring` block (`tier`,
    `research`, the `sources` used, `review_rounds`, `outcome`: good, limit or unreviewed,
    and `next`: the most valuable improvements still open). Hand over `scene.json`,

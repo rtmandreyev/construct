@@ -53,7 +53,7 @@ MIN_SIZE = 1e-4             # 0.1 mm
 # ---------------------------------------------------------------------------- vocabularies
 CATEGORIES = ("architecture", "object", "machine", "vehicle", "organism", "fictional",
               "cd", "book", "artwork-carrier", "other")
-ACCURACY = ("generic", "approximate", "documented")
+ACCURACY = ("generic", "approximate", "documented", "original")   # original: a new design, nothing to reconstruct
 CERTAINTIES = ("verified", "user_supplied", "inferred", "decorative")
 # a part's certainty: one word for both its size and its shape, or {"size": .., "shape": ..};
 # traced = fitted to an orthographic reference (a drawing, a plan, a patent elevation) that a verified size scales
@@ -83,18 +83,26 @@ PICTURE_SOURCES = ("reference_image", "drawing", "observation", "measurement", "
 WORD_SOURCES = ("document", "user_request", "user_supplied")
 
 
-def evidence_level(part, source_kind, fact_cert, checked):
+def evidence_level(part, source_kind, fact_cert, checked, wants=()):
     """Inferred: 1 designed, 2 described, 3 seen (read from a picture of it), 4 seen and checked (and held by a
-    verified fact or a passing comparison). Traced: 1, or 2 when checked. None for anything else."""
+    verified fact or a passing comparison). Traced: 1, or 2 when checked. None for anything else. A requirement
+    (`wants`: the keys of facts that say what the thing must have or do) describes no shape: a part designed to one
+    stays designed."""
     cls, src = provenance_class(part), part.get("source")
-    held = any(fact_cert.get(b) in ("verified", "user_supplied") for b in part.get("basis", []))
+    basis = [b for b in part.get("basis", []) if b not in wants]
+    held = any(fact_cert.get(b) in ("verified", "user_supplied") for b in basis)
     if cls == "traced":
         return 2 if src in checked else 1
     if cls != "inferred":
         return None
     if source_kind.get(src) in PICTURE_SOURCES:
         return 4 if held or src in checked else 3
-    return 2 if held or source_kind.get(src) in WORD_SOURCES or part.get("basis") else 1
+    return 2 if held or source_kind.get(src) in WORD_SOURCES or basis else 1
+
+
+def requirements(part, wants):
+    """The requirement facts a part is designed to (its basis), in order."""
+    return [b for b in part.get("basis", []) if b in wants]
 
 
 def provenance_class(part):
@@ -775,7 +783,7 @@ def _validate_into(c, scene):
         facts = []
     for i, f in enumerate(facts):
         w = "scene.facts[%d]" % i
-        if not c.keys(f, {"key", "value", "unit", "certainty", "source", "note"}, {"key", "value", "certainty"}, w):
+        if not c.keys(f, {"key", "value", "unit", "certainty", "source", "note", "requirement"}, {"key", "value", "certainty"}, w):
             continue
         key = f.get("key")
         if c.text(key, w + ".key", 120):
@@ -803,6 +811,13 @@ def _validate_into(c, scene):
                   "\"user_supplied\" (the user said it) or \"inferred\" (your estimate).")
         elif src is not None and src not in source_ids:
             c.err(w + ".source", "unknown source %r" % src)
+        if "requirement" in f:   # what the thing must have or do: from the user, or from its documentation
+            if not isinstance(f["requirement"], bool):
+                c.err(w + ".requirement", "expected true or false")
+            elif f["requirement"] and src not in source_ids:
+                c.err(w + ".source", "a requirement cites where it comes from: the user's request or a document", "certainty",
+                      "Add \"source\": \"<source id>\": the user_request (or user_supplied) source for what the user asked "
+                      "for, or the document that specifies it.")
 
     asset_ids = _Ids()
     c.known["asset"] = asset_ids
@@ -1685,6 +1700,7 @@ def compile_scene(scene, solid=False):
     from . import tiers
     source_kind = {s["id"]: s["kind"] for s in scene["sources"]}
     fact_cert = {f["key"]: f["certainty"] for f in scene["facts"]}
+    wants = {f["key"] for f in scene["facts"] if f.get("requirement")}
     current = tiers.critic_hash(scene)
     passed = [{"reference": c["reference"], "view": c["view"], "iou": c["iou"]}
               for c in scene.get("authoring", {}).get("compare", []) if c["pass"] and c["scene_sha256"] == current]
@@ -1716,7 +1732,7 @@ def compile_scene(scene, solid=False):
                  "joint": joint_of.get(part["id"], -1)}
         if isinstance(part["certainty"], dict):
             pinfo["certainty_axes"] = {"size": part["certainty"]["size"], "shape": part["certainty"]["shape"]}
-        level = evidence_level(part, source_kind, fact_cert, checked)
+        level = evidence_level(part, source_kind, fact_cert, checked, wants)
         if level is not None:
             pinfo["evidence"] = level
         sprite_px = part["shape"].get("size_px", 5 if part["shape"]["type"] == "points" else 9)

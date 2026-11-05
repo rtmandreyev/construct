@@ -1,0 +1,869 @@
+{
+ "format": "construct-scene",
+ "version": 2,
+ "id": "rietveld-red-blue-chair",
+ "title": "Rietveld Red-Blue Chair",
+ "subject": {
+  "category": "object",
+  "summary": "Gerrit Rietveld's Red-Blue Chair (designed 1918, painted c.1923): thirteen-ish 30 mm beech battens carrying two 12 mm plywood planes and two board armrests. Sized to the MoMA example (867 x 660 x 838 mm, seat 330); the member layout and the back board's lean come from a dimensioned drawing.",
+  "accuracy": "documented",
+  "synthetic": false
+ },
+ "units": "m",
+ "seed": 7,
+ "sources": [
+  {
+   "id": "request",
+   "kind": "user_request",
+   "title": "The user's request and five photographs of the chair",
+   "rights": "user_private"
+  },
+  {
+   "id": "moma",
+   "kind": "measurement",
+   "title": "MoMA, Gerrit Rietveld, Red Blue Chair, 1918-1923: 86.7 x 66 x 83.8 cm, seat h. 33 cm",
+   "rights": "reference_only",
+   "ref": "https://www.moma.org/collection/works/4044"
+  },
+  {
+   "id": "plan",
+   "kind": "drawing",
+   "title": "Dimensioned drawing set, Silla Roja y Azul 1918 (RT-1/RT-2, mm), after the Rietveld construction plans",
+   "rights": "reference_only",
+   "ref": "https://drive.google.com/file/d/1CTSoXK7Kv47eFyGTV49gVQQFE9eR5Ibg/view"
+  },
+  {
+   "id": "parts",
+   "kind": "document",
+   "title": "Cutting list, Rietveld stoel rood & blauw (A 450x90x30, B-F 30x30, G 880x330x12, H 450x360x12)",
+   "rights": "reference_only",
+   "ref": "https://cadsite.be/cursus/Oefeningen/Rietveld_Red-blue.pdf"
+  },
+  {
+   "id": "photos",
+   "kind": "reference_image",
+   "title": "The five photographs of the chair supplied by the user",
+   "rights": "user_private"
+  }
+ ],
+ "facts": [
+  {
+   "key": "height",
+   "value": 0.867,
+   "unit": "m",
+   "certainty": "verified",
+   "source": "moma",
+   "note": "34 1/8 in overall"
+  },
+  {
+   "key": "width",
+   "value": 0.66,
+   "unit": "m",
+   "certainty": "verified",
+   "source": "moma",
+   "note": "26 in overall, across the cross-rail ends"
+  },
+  {
+   "key": "depth",
+   "value": 0.838,
+   "unit": "m",
+   "certainty": "verified",
+   "source": "moma",
+   "note": "33 in, front foot to the top corner of the leaning back board"
+  },
+  {
+   "key": "seat_height",
+   "value": 0.33,
+   "unit": "m",
+   "certainty": "verified",
+   "source": "moma",
+   "note": "seat h. 13 in"
+  },
+  {
+   "key": "arm_height",
+   "value": 0.5,
+   "unit": "m",
+   "certainty": "verified",
+   "source": "plan",
+   "note": "front elevation: 500 mm to the top of the armrest"
+  },
+  {
+   "key": "armrest_length",
+   "value": 0.45,
+   "unit": "m",
+   "certainty": "verified",
+   "source": "parts",
+   "note": "part A, 450 x 90 x 30"
+  },
+  {
+   "key": "armrest_width",
+   "value": 0.09,
+   "unit": "m",
+   "certainty": "verified",
+   "source": "parts",
+   "note": "part A"
+  },
+  {
+   "key": "armrest_thickness",
+   "value": 0.03,
+   "unit": "m",
+   "certainty": "verified",
+   "source": "parts",
+   "note": "part A"
+  },
+  {
+   "key": "batten_section",
+   "value": 0.03,
+   "unit": "m",
+   "certainty": "verified",
+   "source": "parts",
+   "note": "parts B-F are 30 x 30 mm square beech battens"
+  },
+  {
+   "key": "cross_rail_length",
+   "value": 0.66,
+   "unit": "m",
+   "certainty": "verified",
+   "source": "parts",
+   "note": "part D, 660 x 30 x 30, the full-width cross rails"
+  },
+  {
+   "key": "seat_panel_depth",
+   "value": 0.36,
+   "unit": "m",
+   "certainty": "verified",
+   "source": "parts",
+   "note": "part H, 450 x 360 plywood; the 360 side runs front to back in this construct"
+  },
+  {
+   "key": "seat_panel_width",
+   "value": 0.45,
+   "unit": "m",
+   "certainty": "verified",
+   "source": "parts",
+   "note": "part H, 450 x 360 plywood; the 450 side runs across the chair: in your photos its edges sit far inside the arm posts, not near them"
+  },
+  {
+   "key": "panel_thickness",
+   "value": 0.012,
+   "unit": "m",
+   "certainty": "verified",
+   "source": "parts",
+   "note": "parts G and H are 12 mm plywood"
+  },
+  {
+   "key": "back_lean",
+   "value": 21.8,
+   "unit": "°",
+   "certainty": "inferred",
+   "source": "plan",
+   "note": "fitted to the photos' rake: the board's foot on the rear low rail, its back face on the upper rear rail at 455 mm. At this rake the chair is 0.77 m deep; MoMA's 838 mm would need a 27 deg rake the photos do not show."
+  },
+  {
+   "key": "back_board_length",
+   "value": 0.826,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "moma",
+   "note": "fitted: foot on the low rear rail at 100 mm, back face on the upper rear rail, top at the published 867 mm height"
+  },
+  {
+   "key": "back_panel_cutlist",
+   "value": 0.88,
+   "unit": "m",
+   "certainty": "verified",
+   "source": "parts",
+   "note": "part G of the cutting list, 880 x 330 x 12 - a board length the published height and depth do not allow here"
+  },
+  {
+   "key": "back_panel_width",
+   "value": 0.4,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "photos",
+   "note": "measured off your front photo against the chair's 660 mm: the board spans about 0.40 m, not the cutting list's 330 mm"
+  }
+ ],
+ "parts": [
+  {
+   "id": "runner",
+   "label": "Floor runner",
+   "role": "structure",
+   "certainty": "traced",
+   "stage": 1,
+   "basis": [
+    "cross_rail_length"
+   ],
+   "source": "plan",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.03,
+     0.03,
+     0.628
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0.3,
+    0.07,
+    0.0
+   ],
+   "mirror": "x",
+   "note": "600 mm side rail between the legs, 70-100 mm above the floor; the legs run past it to the ground",
+   "look": {
+    "weight": 1.15,
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "cross-low-front",
+   "label": "Front low cross rail",
+   "role": "structure",
+   "certainty": "traced",
+   "stage": 1,
+   "basis": [
+    "cross_rail_length"
+   ],
+   "source": "plan",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.66,
+     0.03,
+     0.032
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0.0,
+    0.07,
+    0.314
+   ],
+   "note": "rail ends stand 14 mm proud of the frames, painted yellow on the chair",
+   "look": {
+    "weight": 1.15,
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "cross-low-rear",
+   "label": "Rear low cross rail",
+   "role": "structure",
+   "certainty": "traced",
+   "stage": 1,
+   "basis": [
+    "cross_rail_length"
+   ],
+   "source": "plan",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.66,
+     0.03,
+     0.032
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0.0,
+    0.07,
+    -0.314
+   ],
+   "note": "the back board passes behind this rail and stands on the floor",
+   "look": {
+    "weight": 1.15,
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "leg-front",
+   "label": "Front leg",
+   "role": "structure",
+   "certainty": "traced",
+   "stage": 0,
+   "basis": [
+    "batten_section"
+   ],
+   "source": "plan",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.03,
+     0.33,
+     0.03
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0.3,
+    0.0,
+    0.314
+   ],
+   "mirror": "x",
+   "note": "stops at the seat rail, its end grain 12 mm proud above it",
+   "look": {
+    "weight": 1.15,
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "leg-rear",
+   "label": "Rear leg",
+   "role": "structure",
+   "certainty": "traced",
+   "stage": 0,
+   "basis": [
+    "batten_section"
+   ],
+   "source": "plan",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.03,
+     0.47,
+     0.03
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0.3,
+    0.0,
+    -0.314
+   ],
+   "mirror": "x",
+   "note": "rises to the armrest's rear end at 470 mm",
+   "look": {
+    "weight": 1.15,
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "rail-seat",
+   "label": "Seat side rail",
+   "role": "structure",
+   "certainty": "traced",
+   "stage": 2,
+   "basis": [
+    "batten_section"
+   ],
+   "source": "plan",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.03,
+     0.03,
+     0.628
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0.3,
+    0.288,
+    0.0
+   ],
+   "mirror": "x",
+   "note": "top at 318 mm, the underside of the seat board",
+   "look": {
+    "weight": 1.15,
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "cross-seat-front",
+   "label": "Front seat cross rail",
+   "role": "structure",
+   "certainty": "traced",
+   "stage": 2,
+   "basis": [
+    "cross_rail_length"
+   ],
+   "source": "plan",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.66,
+     0.03,
+     0.032
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0.0,
+    0.288,
+    0.16
+   ],
+   "look": {
+    "weight": 1.15,
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "cross-seat-rear",
+   "label": "Rear seat cross rail",
+   "role": "structure",
+   "certainty": "traced",
+   "stage": 2,
+   "basis": [
+    "cross_rail_length"
+   ],
+   "source": "plan",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.66,
+     0.03,
+     0.032
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0.0,
+    0.288,
+    -0.145
+   ],
+   "look": {
+    "weight": 1.15,
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "seat",
+   "label": "Seat board",
+   "role": "identity",
+   "certainty": "verified",
+   "stage": 2,
+   "basis": [
+    "seat_panel_depth",
+    "seat_panel_width",
+    "panel_thickness"
+   ],
+   "source": "parts",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.45,
+     0.012,
+     0.36
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0.0,
+    0.318,
+    0.005
+   ],
+   "note": "blue on the chair; 450 across and 360 deep, resting on the two seat cross rails, its rear edge within 210 mm of the leaning back board",
+   "look": {
+    "weight": 2.0,
+    "tone": "identity",
+    "glow": 0.22
+   }
+  },
+  {
+   "id": "post-arm",
+   "label": "Armrest post",
+   "role": "structure",
+   "certainty": "traced",
+   "stage": 3,
+   "basis": [
+    "batten_section"
+   ],
+   "source": "plan",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.032,
+     0.157,
+     0.032
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0.3,
+    0.318,
+    -0.06
+   ],
+   "mirror": "x",
+   "look": {
+    "weight": 1.15,
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "cross-arm-rear",
+   "label": "Rear arm cross rail",
+   "role": "structure",
+   "certainty": "traced",
+   "stage": 3,
+   "basis": [
+    "cross_rail_length"
+   ],
+   "source": "plan",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.66,
+     0.03,
+     0.032
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0.0,
+    0.44,
+    -0.314
+   ],
+   "note": "at 440-470 mm, passes in front of the leaning back board",
+   "look": {
+    "weight": 1.15,
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "arm",
+   "label": "Armrest",
+   "role": "identity",
+   "certainty": "verified",
+   "stage": 3,
+   "basis": [
+    "armrest_length",
+    "armrest_width",
+    "armrest_thickness",
+    "arm_height"
+   ],
+   "source": "parts",
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      0.124,
+      0.47
+     ],
+     [
+      0.15,
+      0.48
+     ],
+     [
+      0.144,
+      0.5
+     ],
+     [
+      -0.3,
+      0.5
+     ],
+     [
+      -0.3,
+      0.47
+     ],
+     [
+      -0.077,
+      0.47
+     ],
+     [
+      -0.077,
+      0.475
+     ],
+     [
+      -0.043,
+      0.475
+     ],
+     [
+      -0.043,
+      0.47
+     ]
+    ],
+    "height": 0.09,
+    "axis": "x"
+   },
+   "mirror": "x",
+   "note": "one post under its middle and the rear leg at its back end; the front 210 mm cantilevers, its cut end chamfered to a face of its own. The end grain is yellow on the chair",
+   "at": [
+    0.24,
+    0.0,
+    0.0
+   ],
+   "look": {
+    "weight": 1.15,
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "back",
+   "label": "Back board",
+   "role": "mass",
+   "certainty": "verified",
+   "stage": 4,
+   "basis": [
+    "back_board_length",
+    "back_panel_width",
+    "panel_thickness"
+   ],
+   "source": "parts",
+   "at": [
+    0.0,
+    0.1,
+    -0.15
+   ],
+   "rotate": [
+    -21.8,
+    0,
+    0
+   ],
+   "note": "12 mm ply board standing on a low rear rail and leaning back against the upper rear rail, which holds it from behind; nothing crosses the sitter's back. Red on the chair",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.4,
+     0.8261,
+     0.012
+    ],
+    "anchor": "base"
+   },
+   "look": {
+    "weight": 2.0,
+    "tone": "identity",
+    "glow": 0.22
+   }
+  },
+  {
+   "id": "back-face-0",
+   "label": "Back board contour",
+   "role": "detail",
+   "certainty": "decorative",
+   "stage": 4,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -0.188,
+      0.1143,
+      -0.1466
+     ],
+     [
+      0.188,
+      0.1143,
+      -0.1466
+     ],
+     [
+      0.188,
+      0.859,
+      -0.4444
+     ],
+     [
+      -0.188,
+      0.859,
+      -0.4444
+     ],
+     [
+      -0.188,
+      0.1143,
+      -0.1466
+     ]
+    ],
+    "closed": false
+   },
+   "look": {
+    "weight": 1.6,
+    "tone": "structure"
+   },
+   "note": "inset edge and cross contours that give the board's face a reading at close range"
+  },
+  {
+   "id": "back-face-1",
+   "label": "Back board contour",
+   "role": "detail",
+   "certainty": "decorative",
+   "stage": 4,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -0.188,
+      0.3333,
+      -0.2341
+     ],
+     [
+      0.188,
+      0.3333,
+      -0.2341
+     ]
+    ],
+    "closed": false
+   },
+   "look": {
+    "weight": 1.6,
+    "tone": "structure"
+   },
+   "note": "inset edge and cross contours that give the board's face a reading at close range"
+  },
+  {
+   "id": "back-face-2",
+   "label": "Back board contour",
+   "role": "detail",
+   "certainty": "decorative",
+   "stage": 4,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -0.188,
+      0.6554,
+      -0.363
+     ],
+     [
+      0.188,
+      0.6554,
+      -0.363
+     ]
+    ],
+    "closed": false
+   },
+   "look": {
+    "weight": 1.6,
+    "tone": "structure"
+   },
+   "note": "inset edge and cross contours that give the board's face a reading at close range"
+  },
+  {
+   "id": "cross-low-back",
+   "label": "Rear low cross rail",
+   "role": "structure",
+   "certainty": "traced",
+   "stage": 1,
+   "basis": [
+    "cross_rail_length"
+   ],
+   "source": "plan",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.66,
+     0.03,
+     0.032
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0.0,
+    0.07,
+    -0.15
+   ],
+   "note": "carries the back board's foot, 150 mm in from the rear, so the board can lean on the upper rail behind it"
+  }
+ ],
+ "annotations": [
+  {
+   "id": "a-back",
+   "text": "Back: 12 mm ply board, 400 wide (read from your photos)",
+   "part": "back",
+   "offset": [
+    0.12,
+    0.02,
+    0.0
+   ]
+  },
+  {
+   "id": "a-seat",
+   "text": "Seat: 450 x 360 x 12 board (cutting list)",
+   "part": "seat",
+   "offset": [
+    -0.1,
+    -0.14,
+    0.1
+   ]
+  },
+  {
+   "id": "a-arm",
+   "text": "Arm: 450 x 90 x 30 (cutting list)",
+   "part": "arm",
+   "offset": [
+    0.14,
+    -0.02,
+    0.12
+   ]
+  }
+ ],
+ "reading": {
+  "how": [
+   "Every number in this chair is one of three kinds: published, drawn, or fitted.",
+   "Published (MoMA): 867 high, 660 wide, 838 deep, seat 330. Built: 869 x 660 x 792.",
+   "Drawn (cutting list): 30 x 30 battens, 660 cross rails, 450 x 90 x 30 arms.",
+   "Drawn: a 450 x 360 x 12 seat board; the back board is 400 wide, read from your photos.",
+   "Fitted: the board's 21.8 deg lean, so its foot sits on the low rail and its back on the upper rail.",
+   "Read from your photos: the rail under the board's foot, the rail behind its shoulder.",
+   "The renderer draws one house palette, not the red, blue and yellow."
+  ]
+ },
+ "presentation": {
+  "framing": {
+   "yaw": 32,
+   "pitch": 13,
+   "fit": 0.94
+  },
+  "views": [
+   {
+    "id": "arms",
+    "label": "Armrest",
+    "yaw": 62,
+    "pitch": 20,
+    "distance": 1.3,
+    "target": "arm"
+   },
+   {
+    "id": "backboard",
+    "label": "Back board",
+    "yaw": 168,
+    "pitch": 12,
+    "distance": 1.4,
+    "target": "back"
+   }
+  ],
+  "atmosphere": {
+   "haze": 0.55,
+   "scanlines": true,
+   "vignette": true,
+   "grid": true,
+   "motes": 0.25
+  },
+  "occlusion": "xray",
+  "background": "deep"
+ },
+ "animation": {
+  "assembly": {
+   "style": "ceremony",
+   "seconds": 7.0,
+   "interference": true
+  },
+  "idle": {
+   "life": "alive",
+   "events": [
+    "scan",
+    "sweep",
+    "shimmer"
+   ],
+   "cadence": [
+    6,
+    12
+   ],
+   "strength": 0.55
+  },
+  "camera": {
+   "drift": 5,
+   "breathe": 0.03,
+   "tour": [
+    {
+     "view": "arms",
+     "at": 13,
+     "fly": 3.0
+    },
+    {
+     "view": "hero",
+     "at": 21,
+     "fly": 3.5
+    }
+   ]
+  },
+  "reduced_motion": "still"
+ }
+}

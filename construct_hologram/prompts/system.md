@@ -39,6 +39,9 @@ You write data, never code.
   the sources you used.
 - Confident without looking: record `"skipped"`. Nothing can be `verified` without a cited
   source, so facts are `inferred` and accuracy is `approximate` at most.
+- A new design (the user's own product, an invented machine): `subject.accuracy` "original". What
+  it must have or do, from the user or from documentation, are facts with `"requirement": true`
+  and their source; the parts that realise them cite them in `basis` and stay `inferred`.
 - No web tool in the host: record `"unavailable"`, mark accuracy honestly, and list in
   `next` what research would improve.
 - The user overrides either way ("research: on" / "research: off"); "off" is recorded as

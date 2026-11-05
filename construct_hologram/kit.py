@@ -27,6 +27,7 @@ import fnmatch
 import io
 import json
 import math
+import re
 import zipfile
 from pathlib import Path
 
@@ -44,6 +45,8 @@ STEP_KINDS = 4             # kinds of piece in one step, at most
 MANY_PIECES = 160
 GLASS = ("glass", "glazing", "window", "windscreen", "windshield", "visor", "canopy", "lens")
 SLIVER_MM = 1.5          # thinner than this, a small piece is a chip and a long one breaks
+CHIP_MM = 6.0            # a bit the trimming cuts off a part (a rail's end standing proud of the leg it passes
+                         # through), under this on every side, is moulded with the piece that cut it off
 FRAGILE_MM = 2.0         # thinner than this, a piece (chrome, trim) goes on with the details, last
 PLAN_KEYS = {"title", "merge", "keep", "clear", "opaque", "order", "notes"}
 
@@ -289,6 +292,7 @@ def make(scene, scale=SCALE, size=None, detail=DETAIL_MM, wall=WALL_MM, plan=Non
         mine = _and_not(vox[pid], taken)
         _or_into(taken, mine)
         comps = _components(mine)
+        before = len(_components(vox[pid])) if len(comps) > 1 else 1   # more pieces now: the trimming cut bits off
         names = []
         for comp in comps:   # a merge that falls apart: each bit named for the part it mostly is; one that holds
             mem = members_of[pid]   # together, for what its parts are together ("side-west-*": the side west)
@@ -303,7 +307,8 @@ def make(scene, scale=SCALE, size=None, detail=DETAIL_MM, wall=WALL_MM, plan=Non
             pieces.append({"name": names[k] if same == 1 else "%s (%d of %d)" % (names[k], nth, same),
                            "parts": sorted(mine_parts or mem), "merge": len(mem) > 1, "head": pid, "paint": paint[pid],
                            "clear": is_clear[pid],
-                           "stage": info[pid]["stage"], "cols": comp})   # the head's: its largest member
+                           "stage": info[pid]["stage"], "cols": comp,   # the head's: its largest member
+                           "cut": k >= before})
 
     # bits too small or too thin to print, merged into the piece they touch most
     keep = plan.get("keep", [])
@@ -319,6 +324,9 @@ def make(scene, scale=SCALE, size=None, detail=DETAIL_MM, wall=WALL_MM, plan=Non
             if d[-1] < MIN_PIECE_MM or _count(p["cols"]) < vol_min:
                 small = p
                 break
+            if p["cut"] and d[-1] < CHIP_MM and _count(p["cols"]) < 0.1 * _count(vox[p["head"]]):
+                small = thin = p   # a rail's proud end, cut off where it passes through a leg: a chip of its own would
+                break              # be lost; it goes on with the leg, as a kit moulds a joint (or stays, never dropped)
             if d[0] + detail <= SLIVER_MM and (d[-1] < 6.0 or d[-1] >= 60.0):   # a chip, or a long thin one that
                 small = thin = p   # would break, moulded with what it is glued to (thin by a whole voxel: the voxels
                 break              # can read a panel a little thinner than it is)
@@ -347,6 +355,15 @@ def make(scene, scale=SCALE, size=None, detail=DETAIL_MM, wall=WALL_MM, plan=Non
         best.setdefault("borrowed", set()).update(set(small["parts"]) - set(best["parts"]))   # a bit of another part
         best["parts"] = sorted(set(best["parts"]) | set(small["parts"]))
         merged_away.append((small["name"], best["name"]))
+
+    copies = {}   # what is left of a part counted again: a rail whose two proud ends went with the legs is one piece
+    for p in pieces:
+        m = re.match(r"(.*) \(\d+ of \d+\)$", p["name"])
+        if m:
+            copies.setdefault(m.group(1), []).append(p)
+    for name, ps in copies.items():
+        for k, p in enumerate(ps, 1):
+            p["name"] = name if len(ps) == 1 else "%s (%d of %d)" % (name, k, len(ps))
 
     # panel lines: engraved where solid lies behind them
     if grooves:
@@ -582,6 +599,21 @@ def _order(pieces, n, ground_up=False, detail=DETAIL_MM):
             hosts = [q for q in pieces if q is not p and weight(p, q) and not above(q, p)
                      and found(q)[0] <= found(p)[0]]   # never onto a later sub-assembly of the plan (a floor onto a door)
             parent[id(p)] = max(hosts, key=lambda q: weight(p, q), default=None)
+    for p in sorted(pieces, key=found):   # every piece it touches hangs from it (a rail the legs were glued to): its
+        if p is base or parent[id(p)] is not None:   # tree is turned round to hang from the base's, where one of its
+            continue                                 # pieces touches a piece already held
+        mine = [q for q in pieces if above(q, p)]
+        held_up = [q for q in pieces if above(q, base)]
+        joins = [(weight(r, q), r, q) for r in mine for q in held_up if touch.get((id(r), id(q)))]
+        joins = [j for j in joins if j[0]]
+        if not joins:
+            continue
+        _, r, q = max(joins, key=lambda j: (j[0], -found(j[1])[3]))
+        prev = q
+        while r is not None:   # the chain from r up to p now runs the other way
+            up = parent[id(r)]
+            parent[id(r)] = prev
+            prev, r = r, up
     kids = {}
     for p in pieces:
         if parent[id(p)] is not None:
@@ -949,10 +981,76 @@ LAY = {(0, 0, -1): lambda x, y, z: (x, y, z), (0, 0, 1): lambda x, y, z: (x, -y,
        (0, -1, 0): lambda x, y, z: (x, -z, y), (0, 1, 0): lambda x, y, z: (x, z, -y)}
 
 
+def _flat(verts, faces, normal, tol=1.0):
+    """The area of a piece's flat face facing `normal` (a unit vector) on its outermost plane that way: the face it
+    would lie on, in square cells."""
+    top = max(v[0] * normal[0] + v[1] * normal[1] + v[2] * normal[2] for v in verts)
+    area = 0.0
+    for f in faces:
+        a, b, c = (verts[i] for i in f)
+        if min(v[0] * normal[0] + v[1] * normal[1] + v[2] * normal[2] for v in (a, b, c)) < top - tol:
+            continue
+        u = [b[k] - a[k] for k in range(3)]
+        w = [c[k] - a[k] for k in range(3)]
+        x = [u[1] * w[2] - u[2] * w[1], u[2] * w[0] - u[0] * w[2], u[0] * w[1] - u[1] * w[0]]
+        size = math.sqrt(x[0] ** 2 + x[1] ** 2 + x[2] ** 2)
+        if size and abs(x[0] * normal[0] + x[1] * normal[1] + x[2] * normal[2]) >= 0.995 * size:
+            area += size / 2
+    return area
+
+
+def _tilted_face(verts, faces):
+    """A piece's largest flat face that no axis faces (a board set at a slant in the construct): (area, its outward
+    unit normal), or (0, None). Candidates are the directions most of its surface faces, either way."""
+    by = {}
+    for f in faces:
+        a, b, c = (verts[i] for i in f)
+        u = [b[k] - a[k] for k in range(3)]
+        w = [c[k] - a[k] for k in range(3)]
+        x = [u[1] * w[2] - u[2] * w[1], u[2] * w[0] - u[0] * w[2], u[0] * w[1] - u[1] * w[0]]
+        size = math.sqrt(x[0] ** 2 + x[1] ** 2 + x[2] ** 2)
+        if not size:
+            continue
+        n = [v / size for v in x]
+        if max(abs(v) for v in n) > 0.995:
+            continue   # an axis's: the voxel faces already measure those
+        if n[0] < 0 or (n[0] == 0 and (n[1] < 0 or (n[1] == 0 and n[2] < 0))):
+            n = [-v for v in n]   # a direction, either way
+        key = tuple(round(v * 20) for v in n)
+        acc = by.setdefault(key, [0.0, [0.0, 0.0, 0.0]])
+        acc[0] += size / 2
+        acc[1] = [acc[1][k] + n[k] * size / 2 for k in range(3)]
+    best = (0.0, None)
+    for area, total in sorted(by.values(), key=lambda e: -e[0])[:6]:
+        length = math.sqrt(sum(v * v for v in total))
+        for sign in (1, -1):
+            n = [sign * v / length for v in total]
+            best = max(best, (_flat(verts, faces, n), n), key=lambda e: e[0])
+    return best
+
+
+def _lay_on(normal):
+    """A rotation that turns the outward `normal` straight down (onto the bed)."""
+    n = normal
+    axis = [n[1] * -1 - 0, 0 - n[0] * -1, 0.0]   # n x (0, 0, -1)
+    s = math.sqrt(axis[0] ** 2 + axis[1] ** 2)
+    c = -n[2]
+    if s < 1e-9:
+        return (lambda x, y, z: (x, y, z)) if c > 0 else (lambda x, y, z: (x, -y, -z))
+    k = [axis[0] / s, axis[1] / s, 0.0]
+
+    def turn(x, y, z):   # Rodrigues: v cos + (k x v) sin + k (k.v)(1 - cos)
+        kv = k[0] * x + k[1] * y
+        cx = [k[1] * z, -k[0] * z, k[0] * y - k[1] * x]
+        return (x * c + cx[0] * s + k[0] * kv * (1 - c), y * c + cx[1] * s + k[1] * kv * (1 - c), z * c + cx[2] * s)
+    return turn
+
+
 def _piece_mesh(cols, detail, true=(), exact=None):
     """A piece's surface, lying on its largest flat face, in mm, its lowest corner at the origin: smoothed, and
     snapped onto `true` (its parts' own surfaces, in grid cells) where it lies within a voxel of them, so it keeps
-    their roundness and their flat faces."""
+    their roundness and their flat faces. A board set at a slant (thin across its broad face) lies on that face, not
+    on an edge."""
     i0, i1, j0, j1, k0, k1 = _bbox(cols)
     area = {(0, 0, -1): sum(1 for m in cols.values() if m >> k0 & 1),
             (0, 0, 1): sum(1 for m in cols.values() if m >> k1 & 1),
@@ -973,7 +1071,23 @@ def _piece_mesh(cols, detail, true=(), exact=None):
         if true:
             verts = printing._snap(verts, list(true))
     lay = LAY[down]
-    verts = [lay(*(x * detail for x in p)) for p in verts]
+    flat, normal = _tilted_face(verts, faces)
+    thick = (max(sum(v[k] * normal[k] for k in range(3)) for v in verts) -
+             min(sum(v[k] * normal[k] for k in range(3)) for v in verts)) if normal else 0
+    if normal and flat > 1.5 * _flat(verts, faces, down) and thick <= 0.2 * math.sqrt(flat):   # a board, thin across
+        lay, down = _lay_on(normal), tuple(round(v, 3) for v in normal)
+        verts = [lay(*(x * detail for x in p)) for p in verts]
+        # turned about the vertical so its length runs along the plate: its footprint's long axis on X
+        cx = sum(v[0] for v in verts) / len(verts)
+        cy = sum(v[1] for v in verts) / len(verts)
+        sxx = sum((v[0] - cx) ** 2 for v in verts)
+        syy = sum((v[1] - cy) ** 2 for v in verts)
+        sxy = sum((v[0] - cx) * (v[1] - cy) for v in verts)
+        t = -0.5 * math.atan2(2 * sxy, sxx - syy)
+        co, si = math.cos(t), math.sin(t)
+        verts = [(x * co - y * si, x * si + y * co, z) for x, y, z in verts]
+    else:
+        verts = [lay(*(x * detail for x in p)) for p in verts]
     lo = [min(v[a] for v in verts) for a in range(3)]
     verts = [[v[a] - lo[a] for a in range(3)] for v in verts]
     size = [round(max(v[a] for v in verts), 2) for a in range(3)]
@@ -991,8 +1105,10 @@ def _pack(pieces, bed):
 
 
 def _shelves(pieces, bed, before):
+    """Rows (shelves) of pieces, the deepest first; each piece goes into the first row on any plate with room left
+    in it, so a short piece fills the end of a row rather than starting a plate of its own."""
     w, d = bed[0] - 2 * GAP_MM, bed[1] - 2 * GAP_MM
-    plates, current = [], None
+    plates, rows = [], []   # a row: [plate, y, depth, x]
     for p in sorted(pieces, key=lambda p: (-p["size_mm"][1], -p["size_mm"][0])):
         pw, pd = p["size_mm"][0], p["size_mm"][1]
         if pw > w and pd <= w and pw <= d:   # turn it a quarter to fit
@@ -1003,24 +1119,22 @@ def _shelves(pieces, bed, before):
             p["too_big"] = True
             plates.append({"number": before + len(plates) + 1, "pieces": [(p["number"], GAP_MM, GAP_MM)]})
             continue
-        placed = False
-        for plate in ([current] if current else []):
-            x, y, row = plate["cursor"]
-            if x + pw <= w:
-                plate["pieces"].append((p["number"], GAP_MM + x, GAP_MM + y))
-                plate["cursor"] = (x + pw + GAP_MM, y, max(row, pd))
-                placed = True
-            elif y + row + GAP_MM + pd <= d:
-                y += row + GAP_MM
-                plate["pieces"].append((p["number"], GAP_MM, GAP_MM + y))
-                plate["cursor"] = (pw + GAP_MM, y, pd)
-                placed = True
-        if not placed:
-            current = {"number": before + len(plates) + 1, "pieces": [(p["number"], GAP_MM, GAP_MM)],
-                       "cursor": (pw + GAP_MM, 0.0, pd)}
-            plates.append(current)
+        row = next((r for r in rows if r[3] + pw <= w and pd <= r[2]), None)
+        if row is None:
+            for plate in plates:
+                if plate.get("used") is not None and plate["used"] + pd <= d:
+                    row = [plate, plate["used"], pd, 0.0]
+                    break
+            else:
+                plate = {"number": before + len(plates) + 1, "pieces": [], "used": 0.0}
+                plates.append(plate)
+                row = [plate, 0.0, pd, 0.0]
+            row[0]["used"] = row[1] + pd + GAP_MM
+            rows.append(row)
+        row[0]["pieces"].append((p["number"], GAP_MM + row[3], GAP_MM + row[1]))
+        row[3] += pw + GAP_MM
     for plate in plates:
-        plate.pop("cursor", None)
+        plate.pop("used", None)
     return plates
 
 

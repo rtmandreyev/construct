@@ -352,6 +352,25 @@ class Kit(unittest.TestCase):
         with self.assertRaisesRegex(kit.KitError, "a kit plan is an object"):
             kit.make(sc, plan={"glue": []})
 
+    def test_a_slanted_board_lies_flat_and_a_rails_proud_ends_stay_with_its_legs(self):
+        # found in real use, a Red-Blue chair at 1:6: the 2 mm back board, set at a slant, was laid on its edge and
+        # took a plate of its own, and each rail's ends standing proud of the legs it passes through were chips of
+        # their own, 2.5 mm long; a short rail then started a second plate
+        sc = json.loads((HERE / "testdata" / "red-blue-chair.json").read_text())
+        k = kit_mod.make(sc, scale=6, bed=printing.PRINTERS["desktop"]["bed"])
+        back = next(p for p in k["pieces"] if p["name"] == "back")
+        self.assertAlmostEqual(back["size_mm"][2], 2.0, delta=0.3)                # on its broad face
+        self.assertAlmostEqual(max(back["size_mm"][:2]), 826.1 / 6, delta=1.5)
+        self.assertEqual(min(v[2] for v in back["mesh"]["vertices"]), 0)
+        self.assertEqual(printing._edges_ok(back["mesh"]["triangles"]), 0)
+        self.assertFalse([p["name"] for p in k["pieces"] if max(p["size_mm"]) < kit_mod.CHIP_MM])   # no chips
+        names = [p["name"] for p in k["pieces"]]
+        self.assertIn("cross-low-rear", names)                                    # one rail, not "1 of 3"
+        self.assertIn("cross-low-rear", next(p for p in k["pieces"] if p["name"] == "leg-rear (1 of 2)")["parts"])
+        self.assertEqual(len(k["plates"]), 1)
+        self.assertTrue(k["report"]["ok"], k["report"]["problems"])
+        self.assertTrue(all(p["onto"] for p in k["pieces"][1:]))                  # each glued to something built
+
     def test_a_merge_that_falls_apart_names_in_each_piece_only_its_own_parts(self):
         from . import kit
         # the R34's body merge fell apart and every bit claimed every panel: the 3D guide showed the roof with the nose
@@ -430,6 +449,34 @@ class Kit(unittest.TestCase):
         self.assertNotIn("badge", {i["parts"][0] for i in r["issues"]})               # set in, not poking through
         self.assertIn("fit:", fit.report(r))
 
+    def test_a_thin_part_that_only_touches_does_not_poke_and_a_part_through_glass_does(self):
+        from . import fit
+        # found on the R34: its 2 cm diffuser was said to poke through the strakes under it, at 3 cm voxels; the two
+        # parts alone at finer voxels only touch (testdata/diffuser-on-strakes.json: the R34's own diffuser and strakes)
+        sc = json.loads((HERE / "testdata" / "diffuser-on-strakes.json").read_text())
+        self.assertEqual([i for i in fit.check(sc)["issues"] if i["code"] == "pokes"], [])
+        # and glass was left out of the fit altogether: a pillar through a quarter window passed
+        car = scene_of(box("body", [1.8, 0.5, 4.6], [0, 0.75, 0]),
+                       box("glazing-quarter", [0.006, 0.3, 0.6], [0.9, 1.15, 0]),
+                       box("pillar", [0.3, 0.2, 0.1], [0.9, 1.15, 0]))
+        crossed = [i for i in fit.check(car)["issues"] if i["code"] == "crosses-glass"]
+        self.assertEqual([i["parts"] for i in crossed], [["pillar", "glazing-quarter"]])
+        self.assertIn("passes through the glass glazing-quarter", fit.report(fit.check(car)))
+        car["parts"][2].update(box("pillar", [0.1, 0.36, 0.1], [0.9, 1.15, 0.33]))   # a post at the pane's edge
+        self.assertEqual([i for i in fit.check(car)["issues"] if i["code"] == "crosses-glass"], [])
+
+    def test_an_open_shell_that_shows_is_named(self):
+        from . import fit
+        # an uncapped tube shows its hollow at its ends; capped, or ending in what it meets, it does not
+        def pipe(caps):
+            return (box("base", [0.6, 0.1, 0.3], [0, 0.05, 0]),
+                    {"id": "exhaust", "role": "structure", "certainty": "inferred", "stage": 1,
+                     "shape": {"type": "tube", "path": [[-0.2, 0.2, 0], [0.4, 0.2, 0]], "radius": 0.04, "caps": caps}})
+        open_ = [i for i in fit.check(scene_of(*pipe(False)))["issues"] if i["code"] == "open"]
+        self.assertEqual([i["parts"] for i in open_], [["exhaust"]])
+        self.assertIn('"caps": true', open_[0]["message"])
+        self.assertEqual([i for i in fit.check(scene_of(*pipe(True)))["issues"] if i["code"] == "open"], [])
+
     def test_a_part_already_in_pieces_by_itself_is_not_said_to_poke(self):
         from . import fit
         from unittest import mock
@@ -439,7 +486,8 @@ class Kit(unittest.TestCase):
         skin = {(x, y): 1 << 4 for x in list(range(4, 14)) + [15] for y in range(4)}
         block = {(x, y): (1 << 5) - 1 for x in range(0, 7) for y in range(4)}
         with mock.patch.object(fit, "_volumes", return_value=(grid, {"skin": skin, "block": block}, {})), \
-                mock.patch.object(fit.scene_mod, "compile_scene", return_value=None):
+                mock.patch.object(fit.scene_mod, "compile_scene", return_value=None), \
+                mock.patch.object(fit.printing, "_surfaces", return_value=([], [], [], {})):
             self.assertEqual(fit.check(scene_of(box("x", [1, 1, 1], [0, 0, 0])))["issues"], [])
 
     def test_the_same_sub_assembly_built_twice_is_one_step_done_twice(self):

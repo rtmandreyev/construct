@@ -16,7 +16,10 @@ Skeleton:
 
 `subject.category`: architecture, object, machine, vehicle, organism, fictional, cd, book, artwork-carrier, other. `subject.accuracy`: `generic` (a typical example;
 the usual choice), `approximate` (this particular thing, imprecisely) or `documented`
-(its key parts cite evidence). A fictional subject is category `fictional`.
+(its key parts cite evidence); `original` for a new design (nothing real to reconstruct). A
+fictional subject is category `fictional`. A fact the design must satisfy (what the user asked
+for, or what a document says it does) carries `"requirement": true` and its `source`; the
+designed parts that realise it name it in `basis` and stay `inferred`.
 
 Parts: `{"id", "role", "certainty", "stage" (0..7), "shape", "at" [x,y,z],
 "rotate" [deg x,y,z], "basis" [fact keys], "repeat", "mirror", "floating", "artwork"}`.

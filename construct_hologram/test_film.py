@@ -209,7 +209,7 @@ class Stock(unittest.TestCase):
     1.1: a label waits for its part to be built)."""
 
     def test_the_viewer_is_the_pinned_viewer(self):
-        self.assertEqual((HERE / "viewer" / "hologram.js").read_bytes(), (HERE / "testdata" / "hologram-1.1.1.js").read_bytes())
+        self.assertEqual((HERE / "viewer" / "hologram.js").read_bytes(), (HERE / "testdata" / "hologram-1.2.0.js").read_bytes())
 
     def test_a_page_carries_film_mode_only_when_asked(self):
         geometry = scene.compile_scene(studio.load(str(EXAMPLES / "cd.json")))
@@ -292,6 +292,27 @@ class Viewer(unittest.TestCase):
                 b.close()
             self.assertEqual(display != "none", shown, query)
             self.assertGreater(rows, 0)   # a row per kind of evidence, with its count
+
+    def test_the_legend_tells_designed_to_a_requirement_from_designed(self):
+        doc = studio.load(str(EXAMPLES / "cd.json"))
+        doc["subject"]["accuracy"] = "original"
+        doc["sources"].append({"id": "spec", "kind": "document", "title": "The spec sheet", "rights": "reference_only"})
+        doc["facts"].append({"key": "slots", "value": 64, "certainty": "verified", "source": "spec", "requirement": True})
+        designed = [p for p in doc["parts"] if p["certainty"] == "inferred" and not p.get("basis") and not p.get("source")]
+        designed[0]["basis"] = ["slots"]
+        html, _ = render.build_html(scene.compile_scene(doc), str(EXAMPLES))
+        Path(self.d, "wants.html").write_text(html, encoding="utf-8")
+        text = ("HOLO.ready.then(() => JSON.stringify([document.querySelector('.legend').innerText, "
+                "document.querySelector('.caption').innerText]))")
+        b = render.open_browser(render._url(str(Path(self.d, "wants.html")), mode="provenance"), 640, 400, 1.0)
+        try:
+            legend, caption = json.loads(b.evaluate(text))
+        finally:
+            b.close()
+        self.assertIn("DESIGNED · TO A REQUIREMENT · 1", legend)
+        self.assertIn("The spec sheet", legend)
+        self.assertIn("ORIGINAL DESIGN", caption)
+        self.assertNotIn("RECONSTRUCTION", caption)
 
     def test_without_film_options_film_mode_changes_nothing(self):
         # reactivity alone is not a film option: it only shapes what ?audio= brings

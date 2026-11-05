@@ -31,6 +31,47 @@
   closes between the rear glass and the shoulder instead of standing as a fin through the quarter window, its
   bumper flanks are closed, its rear bumper and tail no longer pillow, its sills run straight and flush, its
   diffuser follows the bumper and its tubes are capped. Every part keeps its name; the parts no longer traced say so.
+- **Is it held?** A Red-Blue chair's back board stood on the rear low rail along its bottom edge and leaned back with
+  nothing behind it (the upper rail ran on the sitter's side), and `check --fit` passed it. The audit now asks of each
+  structural part that stands on something whether its weight is over where it touches, seen from above; a `tips`
+  warning names the part, what it stands on, where, and how far its weight lies off it, with the fix (a second hold on
+  the side it leans to). A part fixed into the side of another or hung from it is left alone, and so is a rod's end
+  joined across its section. Over the gallery's 38 scenes and the bundled examples it finds nothing.
+- **Small gaps are detached:** touching meant within 1% of the object's size, 4.6 cm on a car, so a fin 2 cm under a
+  floor passed when something near it kept its box in touch. For `detached` a part must come within 5 mm, or 0.3% of
+  the object's size on a large one (1.4 cm on a car, half a metre on a cathedral, whose stones are not set to 5 mm).
+  Over the gallery this names 57 parts in 12 scenes, mostly lamp lenses, lines and trim 1.5 to 4.5 cm off a car's body
+  and a piano's strings and bridge clear of its plate, and the Opera House's foyer mullions short of their terraces.
+- **The fit, more exact:** `check --fit` left glass out altogether, so a pillar standing through a quarter window
+  passed; it now names a solid part that crosses a pane (`crosses-glass`), not what holds the pane's edge. A poke is
+  confirmed on its two parts alone at voxels four times finer: on the R34 a 2 cm diffuser was said to poke through
+  the strakes it only touches (at 3 cm voxels), and over the gallery about 90 such false pokes go. A solid shape left
+  open where it shows, an uncapped tube end or a lathe that stops short of its axis, is named (`open`), with how to
+  close it; holes on the ground or inside another part are not.
+- **Designed to a requirement:** a designed part could cite nothing it was designed to, so a part the user asked for
+  ("two seats") or a documented function ("a 64-slot modulation matrix") looked like free invention. A fact may now
+  be a `requirement` (from the user's request or a document, citing it), and a part names it in its `basis` while it
+  stays `inferred`, shaded designed. The provenance legend splits DESIGNED into "designed · to a requirement" and
+  "designed" and names the requirements' sources; `check` counts them ("designed parts: 2 to a requirement") and warns
+  `requirement-unmet` when no part names one. A new design is `subject.accuracy: "original"`, captioned ORIGINAL
+  DESIGN instead of APPROXIMATE RECONSTRUCTION. The viewer's pinned copy moves to `testdata/hologram-1.2.0.js`.
+- **The critic stands apart:** an audit of a run found an author's rationale in a critic's packet, and a critic that
+  had written to the author mid-review changing its blind score. A rounds packet now holds only the renders, the
+  reference pictures and the user's request (`--reference` refuses a document; the scene's own summary no longer
+  stands in for the request). Once written it is sealed: read-only, its hash in the run's state; `rounds record`
+  refuses an answer when the packet changed or is gone, and answers a packet once: a recorded blind verdict is not
+  rewritten (its `round.json` is read-only, its hash in the history, and `rounds report` names a round edited
+  afterwards). A new answer needs a new packet.
+- **Numbers that went stale:** a chair's How to read it still gave an 11.8 deg lean after the fact became 15.2. The
+  audit warns `stale-number` when a number with a unit in How to read it or an annotation contradicts the one fact it
+  clearly names (every telling word of the key in the same clause, and no fact at all with that value). Over the
+  gallery and the bundled examples it finds nothing.
+- **Kits: boards lie flat, rails keep their ends:** a Red-Blue chair at 1:6 laid its 2 mm back board, set at a slant,
+  on its edge, and each rail's ends standing proud of the leg it passes through came out as 2.5 mm chips of their
+  own. A thin board set at a slant now lies on its broad face; a bit the trimming cuts off a part, under 6 mm every
+  way, is moulded with the piece that cut it off, and what is left of the part is counted again ("cross-low-rear",
+  not "1 of 3"). Plates fill each row before starting a new one (the chair: 30 pieces on 2 plates became 20 on one),
+  and a piece every neighbour of which hangs from it no longer starts a second tree the base never reaches.
 - **No critic packets left behind:** masterpiece rounds wrote each round's critic packet (renders, references,
   pairs) to the temporary folder and never removed it, so gigabytes built up over many runs. Once a round's answer is recorded the
   packet is removed; its renders were already kept with the round's checkpoint. A packet written with `--out` stays.

@@ -162,10 +162,11 @@ def parse_references(refs):
     return out
 
 
-def packet(scene_path, out_dir, references=(), request=None, width=1280, height=800, browser=None):
+def packet(scene_path, out_dir, references=(), request=None, width=1280, height=800, browser=None, summary=True):
     """Render what the critic looks at and write packet.md / packet.json; returns the packet dict.
 
-    Renders: the hero, the views and assembly sheets, and a still from each reference's view."""
+    Renders: the hero, the views and assembly sheets, and a still from each reference's view. Without a request, the
+    scene's own summary stands for it, unless `summary` is false (a rounds critic sees only the user's words)."""
     from . import diagnose, params, render, studio
     out = Path(out_dir)
     renders = out / "renders"
@@ -197,7 +198,8 @@ def packet(scene_path, out_dir, references=(), request=None, width=1280, height=
              for v, r in refs]
     a = scene.get("authoring") or {}
     pk = {"format": "construct-critique-packet", "version": 1, "scene_sha256": tiers.critic_hash(scene),
-          "title": scene.get("title"), "request": request or (scene.get("subject") or {}).get("summary", ""),
+          "title": scene.get("title"),
+          "request": request or ((scene.get("subject") or {}).get("summary", "") if summary else ""),
           "identity": [{"feature": i["feature"], "parts": i["parts"]} for i in a.get("identity", [])],
           "pairs": pairs, "renders": sorted("renders/" + n for n in names if n.endswith(".png"))}
     if any(f.get("key") == "data_lock" for f in scene.get("facts", [])):   # a NetLogo run: judged for reading and truth

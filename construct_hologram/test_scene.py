@@ -31,6 +31,22 @@ def base(**over):
     return s
 
 
+def red_blue_chair(round_06=False):
+    """A Red-Blue chair from real use (testdata/red-blue-chair.json, its authoring record left out). With `round_06`,
+    the version that passed check --fit: its back board stood on the rear low rail and leaned back with nothing behind
+    it, and its reading still gave an older lean."""
+    s = json.loads((HERE / "testdata" / "red-blue-chair.json").read_text())
+    if round_06:
+        s["parts"] = [p for p in s["parts"] if p["id"] != "cross-low-back"]
+        back = next(p for p in s["parts"] if p["id"] == "back")
+        back.update(at=[0.0, 0.1, -0.3], rotate=[-15.17, 0, 0])
+        back["shape"]["size"] = [0.4, 0.7947, 0.012]
+        facts = {f["key"]: f for f in s["facts"]}
+        facts["back_lean"]["value"], facts["back_board_length"]["value"] = 15.2, 0.795
+        s["reading"]["how"][4] = "Fitted: the back board's 11.8 deg lean, from the two published figures."
+    return s
+
+
 class Examples(unittest.TestCase):
     def test_every_example_compiles_and_passes_the_audit(self):
         names = sorted(p.stem for p in EXAMPLES.glob("*.json"))
@@ -344,6 +360,91 @@ class Audit(unittest.TestCase):
         rep = audit.audit(bridged, scene.compile_scene(bridged))
         self.assertEqual([w for w in rep["warnings"] if w["code"] in ("thin-support", "unsupported")], [])
         self.assertTrue(rep["ok"])
+
+    def test_a_part_standing_on_an_edge_with_its_weight_off_it_tips(self):
+        # found in real use: a Red-Blue chair's back board stood on the rear low rail along its bottom edge and leaned
+        # back with nothing behind it (the upper rail ran on the sitter's side), and check --fit passed it
+        fixed = red_blue_chair()
+        rep = audit.audit(fixed, scene.compile_scene(fixed))   # its foot on a rail, its back on the upper rail
+        self.assertEqual([w for w in rep["warnings"] if w["code"] == "tips"], [])
+        flawed = red_blue_chair(round_06=True)
+        rep = audit.audit(flawed, scene.compile_scene(flawed))
+        tips = [w for w in rep["warnings"] if w["code"] == "tips"]
+        self.assertEqual([w["part"] for w in tips], ["back"])
+        self.assertIn("'cross-low-rear' only along one edge", tips[0]["message"])
+        self.assertRegex(tips[0]["message"], r"weight 0\.\d+ m to the back of it: it would tip over")
+        self.assertIn("tips", diagnose.VISIBLE_DEFECTS)
+        self.assertIn("tips", diagnose.AUDIT_HINTS)
+
+        def stand(*parts):
+            s = studio.starter("object")
+            s["parts"] = [dict({"role": "structure", "certainty": "inferred", "stage": 0}, **p) for p in parts]
+            rep = audit.audit(s, scene.compile_scene(s))
+            return [w["part"] for w in rep["warnings"] if w["code"] == "tips"]
+        frame = [dict(id="post", shape={"type": "box", "size": [0.04, 0.5, 0.04], "anchor": "base"}, at=[-0.3, 0, 0],
+                      mirror="x"),
+                 dict(id="rail", shape={"type": "box", "size": [0.64, 0.04, 0.04], "anchor": "base"}, at=[0, 0.1, 0],
+                      stage=1)]
+        board = lambda deg: dict(id="board", role="mass", shape={"type": "box", "size": [0.4, 0.8, 0.012],
+                                                                  "anchor": "base"}, at=[0, 0.14, 0], rotate=[-deg, 0, 0], stage=2)
+        self.assertEqual(stand(*frame, board(15)), ["board"])                       # leans back off its rail
+        self.assertEqual(stand(*frame, board(0)), [])                                # upright: its weight over the rail
+        self.assertEqual(stand(*frame, board(15),                                    # leans back onto a second rail
+                               dict(id="stop", shape={"type": "box", "size": [0.64, 0.04, 0.04], "anchor": "base"},
+                                    at=[0, 0.45, -0.115], stage=1),
+                               dict(id="post-rear", shape={"type": "box", "size": [0.04, 0.5, 0.04], "anchor": "base"},
+                                    at=[-0.3, 0, -0.115], mirror="x")), [])
+        wall = dict(id="wall", role="mass", shape={"type": "box", "size": [1, 1, 0.1], "anchor": "base"})
+        self.assertEqual(stand(wall, dict(id="shelf", shape={"type": "box", "size": [0.6, 0.012, 0.3], "anchor": "base"},
+                                          at=[0, 0.5, 0.2], stage=1)), [])          # fixed into the side of a wall
+        self.assertEqual(stand(dict(wall, id="gallows", shape={"type": "box", "size": [0.04, 1, 0.04], "anchor": "base"}),
+                               dict(id="arm", shape={"type": "box", "size": [0.5, 0.04, 0.04], "anchor": "base"},
+                                    at=[0.27, 0.96, 0], stage=1),
+                               dict(id="sign", shape={"type": "box", "size": [0.3, 0.2, 0.012], "anchor": "base"},
+                                    at=[0.3, 0.76, 0], stage=2)), [])              # hung from an arm
+
+    def test_a_number_in_the_reading_that_contradicts_its_fact_is_named(self):
+        # found in real use: How to read it still gave the back board an 11.8 deg lean after the fact became 15.2
+        flawed = red_blue_chair(round_06=True)
+        stale = [w for w in audit.audit(flawed, scene.compile_scene(flawed))["warnings"] if w["code"] == "stale-number"]
+        self.assertEqual(len(stale), 1)
+        self.assertIn("How to read it (line 5) says '11.8 deg', but the fact back_lean is 15.2", stale[0]["message"])
+        self.assertIn("stale-number", diagnose.AUDIT_HINTS)
+        self.assertEqual(audit.stale_numbers(red_blue_chair()), [])               # 21.8 deg, as the fact says
+        s = base(facts=[{"key": "tower.height", "value": 65, "unit": "m", "certainty": "inferred"},
+                        {"key": "spire.height", "value": 75.75, "unit": "m", "certainty": "inferred"},
+                        {"key": "spire.base", "value": 40, "unit": "m", "certainty": "inferred"},
+                        {"key": "width", "value": 0.4, "unit": "m", "certainty": "inferred"}])
+        said = lambda *lines: [x[3] for x in audit.stale_numbers(dict(s, reading={"how": list(lines)}))]
+        self.assertEqual(said("The tower rises 62 m."), ["62 m"])
+        self.assertEqual(said("The tower rises 65 m; the spire 75.75 m."), [])        # as the facts say
+        self.assertEqual(said("The tower rises 6500 cm."), [])                         # in another unit
+        self.assertEqual(said("The spire stands 70 m high."), [])                      # height or base: not clear
+        self.assertEqual(said("The tower is 75.75 m."), [])                           # some fact's value: not stale
+        self.assertEqual(said("The tower rises about 62 m."), [])                      # about: near enough
+        self.assertEqual(said("A tower of 60-62 m.", "A 3 m wide stair."), [])         # a range; width is too plain
+        self.assertEqual(said("Width 0.5 m."), ["0.5 m"])                              # a plain key, right by it
+
+    def test_a_small_gap_is_detached_on_a_large_object(self):
+        # found on the R34: touching was 1% of the object's size (4.6 cm on a car), so a fin 2 cm under the floor
+        # passed while an arch nearby kept its box in touch
+        def car(gap):
+            s = studio.starter("machine")
+            part = lambda **k: dict({"role": "structure", "certainty": "inferred", "stage": 0}, **k)
+            s["parts"] = [part(id="leg", shape={"type": "box", "size": [0.1, 0.5, 0.1], "anchor": "base"},
+                               at=[0.8, 0, 2], mirror="x"),
+                          part(id="leg-rear", shape={"type": "box", "size": [0.1, 0.5, 0.1], "anchor": "base"},
+                               at=[0.8, 0, -2], mirror="x"),
+                          part(id="body", role="mass", shape={"type": "box", "size": [1.8, 0.5, 4.6], "anchor": "base"},
+                               at=[0, 0.5, 0], stage=1),
+                          part(id="arch", shape={"type": "tube", "path": [[0.1, 0.5, -0.5], [0.1, 0.1, 0], [0.1, 0.5, 0.5]],
+                                                 "radius": 0.02}, stage=2),
+                          part(id="fin", shape={"type": "box", "size": [0.012, 0.04, 0.4], "anchor": "base"},
+                               at=[0.1, 0.46 - gap, 0], stage=2)]
+            rep = audit.audit(s, scene.compile_scene(s))
+            return [w["part"] for w in rep["warnings"] + rep["errors"] if w["code"] in ("detached", "floating")]
+        self.assertEqual(car(0.02), ["fin"])
+        self.assertEqual(car(0.0), [])
 
     def test_glass_named_only_in_the_label_is_a_warning(self):
         s = base()
@@ -1267,6 +1368,46 @@ class Rounds(unittest.TestCase):
         self.assertIn("[D1] lowered the body", log)
         self.assertIn("Worse than the best: lost the seam", log)
 
+    def test_the_critic_judges_a_sealed_packet_once(self):
+        # found by an audit of a run: the author's rationale went into a critic packet, and a critic that had messaged
+        # the author mid-review edited its blind score
+        r = self.r
+        note = self.d / "why-the-bonnet-is-low.md"
+        note.write_text("my reasons")
+        with self.assertRaisesRegex(r.RoundsError, "a reference is a picture"):
+            r.packet(self.d, self.scene, ["side=%s" % note])
+        self.assertFalse((self.d / "checkpoints" / "round-01").exists())         # refused before anything is written
+
+        def sealed_packet():   # what `rounds packet` leaves, without rendering
+            _check_in(self.d, self.doc)
+            pk = self.d / ("pk-%d" % r.state(self.d)["round"])
+            (pk / "step-1").mkdir(parents=True)
+            (pk / "step-1" / "packet.md").write_text("part 1")
+            st = r.state(self.d)
+            st.update(packet=str(pk), packet_sha256=r._seal(pk))
+            r._save(self.d, "state.json", st)
+            return pk
+        pk = sealed_packet()
+        self.assertFalse((pk / "step-1" / "packet.md").stat().st_mode & 0o200)        # read-only
+        os.chmod(pk / "step-1" / "packet.md", 0o644)
+        (pk / "step-1" / "packet.md").write_text("part 1, and the author's reasons")
+        with self.assertRaisesRegex(r.RoundsError, "the packet changed"):
+            r.record(self.d, _round_answer(self.d, 1), self.scene)
+        r._remove(pk)
+        pk = sealed_packet()
+        answer = _round_answer(self.d, 1)
+        r.record(self.d, answer, self.scene)
+        st = r.state(self.d)                                                      # wound back to answer it again
+        r._save(self.d, "state.json", dict(st, round=1, step="packet", packet=str(pk), packet_sha256=st["packet_sha256"]))
+        with self.assertRaisesRegex(r.RoundsError, "a blind verdict is not rewritten"):
+            r.record(self.d, answer, self.scene)
+        r._save(self.d, "state.json", st)
+        kept = self.d / "checkpoints" / "round-01" / "round.json"
+        self.assertFalse(kept.stat().st_mode & 0o200)
+        os.chmod(kept, 0o644)
+        kept.write_text(json.dumps(dict(answer, critique=dict(answer["critique"], verdict="outstanding"))))
+        self.assertIn("Edited after recording (the run kept the answer as recorded): round 1", r.report(self.d))
+
     def test_a_round_that_loses_is_reverted_and_two_in_a_row_stop_the_run(self):
         r = self.r
         _check_in(self.d, self.doc)
@@ -1802,6 +1943,39 @@ class Shades(unittest.TestCase):
 
     def test_levels_from_what_a_part_cites(self):
         self.assertEqual(self.levels(self.scene()), {"p0": 1, "p1": 2, "p2": 3, "p3": 4, "p4": 1, "p5": None})
+
+    def test_a_designed_part_names_the_requirement_it_realises_and_stays_designed(self):
+        # a new design's parts are designed, but some are what the user asked for ("two seats") or what a document
+        # says it does ("a 64-slot modulation matrix"): they cite it, and stay designed
+        s = base(subject={"category": "machine", "accuracy": "original", "synthetic": True})
+        s["sources"].append({"id": "manual", "kind": "document", "title": "the synth's manual", "rights": "reference_only"})
+        s["facts"] += [{"key": "seats", "value": 2, "certainty": "user_supplied", "source": "req", "requirement": True},
+                       {"key": "mod.slots", "value": 64, "certainty": "verified", "source": "manual", "requirement": True},
+                       {"key": "width", "value": 0.4, "unit": "m", "certainty": "inferred"}]
+        box = {"type": "box", "size": [0.2, 0.2, 0.2], "anchor": "base"}
+        for i, basis in enumerate([["seats"], ["mod.slots"], [], ["seats", "width"]]):
+            s["parts"].append({"id": "p%d" % i, "role": "detail", "certainty": "inferred", "stage": 1, "shape": box,
+                               "at": [i * 0.3 - 0.45, 1, 0], "basis": basis})
+        self.assertEqual(scene.validate(s), [])
+        g = scene.compile_scene(s)
+        self.assertEqual(self.levels(s), {"p0": 1, "p1": 1, "p2": 1, "p3": 2})   # a requirement describes no shape
+        self.assertEqual(g["subject"]["accuracy"], "original")
+        self.assertTrue(next(f for f in g["provenance"]["facts"] if f["key"] == "seats")["requirement"])
+        rep = audit.audit(s, g)
+        self.assertEqual(rep["info"]["designed_parts"], {"to_a_requirement": 2, "free": 2})   # body and p2 are free
+        self.assertEqual(rep["info"]["requirements_met"], ["mod.slots", "seats"])
+        self.assertIn("designed parts: 2 to a requirement (mod.slots, seats), 2 designed freely", audit.format_report(rep))
+        self.assertEqual([w for w in rep["warnings"] if w["code"] == "requirement-unmet"], [])
+        s["parts"] = s["parts"][:1]                                            # the body alone
+        rep = audit.audit(s, scene.compile_scene(s))
+        self.assertIn("mod.slots, seats", next(w for w in rep["warnings"] if w["code"] == "requirement-unmet")["message"])
+        for bad, says in ((dict(s["facts"][1], requirement="yes"), "true or false"),
+                          ({k: v for k, v in s["facts"][1].items() if k != "source"}, "requirement cites where")):
+            t = dict(s, facts=[s["facts"][0], bad])
+            self.assertTrue(any(says in e for e in scene.validate(t)), (bad, scene.validate(t)))
+        js = (HERE / "viewer" / "hologram.js").read_text()
+        self.assertIn('original: "ORIGINAL DESIGN"', js)                   # not "APPROXIMATE RECONSTRUCTION"
+        self.assertIn('"DESIGNED · TO A REQUIREMENT"', js)
 
     def test_a_passing_comparison_checks_its_reference_on_this_version_only(self):
         s = self.scene()
@@ -2382,6 +2556,8 @@ class Capture(unittest.TestCase):
             md = Path(pk, "step-1", "packet.md").read_text()
             self.assertIn("references/front-photo.png", md)
             self.assertNotIn(str(Path(d).resolve()), md)
+            self.assertIn("The request: (not given)", md)              # the user's words only, never the author's summary
+            self.assertFalse(Path(pk, "packet.md").stat().st_mode & 0o200)   # sealed
             rounds.record(d, _round_answer(d, 1), scene_path)
             doc["parts"][0]["shape"]["size"][1] *= 1.1
             scene_path.write_text(json.dumps(dict(json.loads(scene_path.read_text()), parts=doc["parts"])))

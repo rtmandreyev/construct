@@ -36,6 +36,13 @@ The construct's look tells the truth about what is known; the scene records why.
   comparison, `construct compare --record`); a traced part deepens once its reference's comparison
   passes. So cite on every part the picture or page you read it from: a part modelled from a photo
   that does not cite it shows as designed.
+- **Designed to a requirement.** A new design (`subject.accuracy: "original"`) or a designed part
+  of a real thing still answers to something: what the user asked for ("two seats") or what a
+  document says it does ("a 64-slot modulation matrix"). Write that as a fact with
+  `"requirement": true` and its source (the request, the manual), and put its key in the `basis`
+  of each part that realises it. The part stays `inferred`, shaded designed (a requirement says
+  what it must do, not what it looks like); the legend splits DESIGNED into "designed · to a
+  requirement" and "designed", and names the requirements' sources.
 - **Unknown stays unknown.** A fact you do not know is not written at all (never `null`, a
   placeholder or a plausible guess), and nothing is labelled with it.
 

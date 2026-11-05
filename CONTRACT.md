@@ -50,7 +50,14 @@ permitted | public_domain | reference_only`. `ref` is citation text, never fetch
 **`verified | user_supplied | inferred | decorative`**. `verified` must cite a source id.
 **An unknown fact is absent**: `value` is a string, number or boolean, never null; the compiler
 refuses null, and an author deletes the fact instead of guessing. (An app's "unknown" facts simply do not reach the construct.) `subject.accuracy` is `generic |
-approximate | documented`; `subject.synthetic` marks example content.
+approximate | documented | original` (`original`, a minor addition: a new design, which a host captions
+ORIGINAL DESIGN rather than a reconstruction); `subject.synthetic` marks example content.
+
+**Requirements** (a minor addition): a fact may carry `requirement: true`, something the thing must have
+or do, from the user (a `user_request` or `user_supplied` source) or from its documentation (a
+`document`); it cites its source. A part that realises it names it in `basis`. A requirement describes
+no shape: it does not raise a part's evidence shade, so a designed part made to one stays designed
+(see Shades).
 
 ## 2. Parts
 
@@ -312,6 +319,9 @@ part may answer for its size and its shape apart:
   `provenance.checked[]` (`{reference, view, iou}`) lists the comparisons that passed on this version
   of the scene (a stale one does not count). A shade measures evidence, not error: nothing measures
   most guesses against the real thing.
+- **Designed to a requirement:** a designed part (inferred, shade 1) whose `basis` names a requirement
+  fact is designed to that requirement; the legend counts these apart from free design ("designed · to a
+  requirement" and "designed") and names the requirements' sources, as it names the verified ones'.
 
 ## Film mode (0.3.0, optional)
 

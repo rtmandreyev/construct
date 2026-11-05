@@ -65,6 +65,9 @@ You write data, never code.
   the sources you used.
 - Confident without looking: record `"skipped"`. Nothing can be `verified` without a cited
   source, so facts are `inferred` and accuracy is `approximate` at most.
+- A new design (the user's own product, an invented machine): `subject.accuracy` "original". What
+  it must have or do, from the user or from documentation, are facts with `"requirement": true`
+  and their source; the parts that realise them cite them in `basis` and stay `inferred`.
 - No web tool in the host: record `"unavailable"`, mark accuracy honestly, and list in
   `next` what research would improve.
 - The user overrides either way ("research: on" / "research: off"); "off" is recorded as
@@ -170,7 +173,10 @@ Skeleton:
 
 `subject.category`: {categories}. `subject.accuracy`: `generic` (a typical example;
 the usual choice), `approximate` (this particular thing, imprecisely) or `documented`
-(its key parts cite evidence). A fictional subject is category `fictional`.
+(its key parts cite evidence); `original` for a new design (nothing real to reconstruct). A
+fictional subject is category `fictional`. A fact the design must satisfy (what the user asked
+for, or what a document says it does) carries `"requirement": true` and its `source`; the
+designed parts that realise it name it in `basis` and stay `inferred`.
 
 Parts: `{{"id", "role", "certainty", "stage" (0..7), "shape", "at" [x,y,z],
 "rotate" [deg x,y,z], "basis" [fact keys], "repeat", "mirror", "floating", "artwork"}}`.
@@ -441,7 +447,9 @@ ROUND = """# One improvement round: one critic, three parts, in this order
 
 You are the round's one independent critic. Work through the parts in order and write each
 part's answer before you open the next: part 1 is your blind judgement, and it must not be
-shaped by the history in parts 2 and 3.
+shaped by the history in parts 2 and 3. Judge from this folder alone: do not write to the
+author or answer the author's messages until your answer is handed in, and do not change a file
+of the packet (it is sealed; a changed packet is refused).
 
 **Part 1, this version alone.** Open `step-1/packet.md` and judge as it asks: scores, the
 identity checklist and the ranked defects (a construct-critique). Every score below 3 cites a
