@@ -1,15 +1,18 @@
 ---
 name: construct
-description: Build a construct, an animated and audited holographic model of a real or fictional thing, with the construct_* tools.
+description: Research a thing and write one exact, checked description of it (named parts at real sizes, how they fit, open and move, how each is known); Construct builds from it a live hologram, a 3D model, a print, a kit, CAD and films, with the construct_* tools.
 ---
 
 # Construct
 
-A **construct** is an animated holographic model of a real or fictional object, building, machine or creature,
-built from facts: every part says how it is known (verified from a cited source, supplied by the user, traced,
-inferred, designed or decorative). You author a **scene** (declarative JSON: facts with their certainty and
-sources, parts built from a closed set of shapes); the `construct_*` tools validate, audit, compile and render
-it. You never write graphics code and never choose colours.
+Construct turns everything that can be found out about a thing into one exact, checked description of it: its
+named parts at their real sizes, how they fit together, open and move, and how each one is known, measured or
+guessed. You do the research and write that description, the **scene** (declarative JSON: facts with their
+certainty and sources, parts built from a closed set of shapes); the `construct_*` tools check it and build from
+it, the same scene always into the same result: an animated holographic **construct** shown live in the chat, a 3D
+model with named parts and working joints, a print, a model kit, a CAD file or a film. Every part says how it is
+known (verified from a cited source, supplied by the user, traced, inferred, designed or decorative). You never
+write graphics code and never choose colours.
 
 Work the loop below until the construct is *genuinely good*, accurate and beautiful, honest about what is known,
 alive without being noisy, or until the mode's limits are reached. Then deliver the best version so far.
@@ -18,18 +21,26 @@ alive without being noisy, or until the mode's limits are reached. Then deliver 
 
 | need | tool |
 |---|---|
-| start a project: archetype, category starter, bundled example, or a scene the user gave you; no arguments lists them all | `construct_start` |
+| start a project: a shipped construct (`example`), an archetype, a category starter, or a scene the user gave you; no arguments lists them all | `construct_start` |
+| change the scene by part id: move, rotate, resize, set or unset fields, add or remove parts, facts and sources, certainty and basis; validated, with a diff | `construct_edit` |
 | validate, compile and audit; every problem with its JSON path, code and fix hint; `fit=true` for solids that poke through or hide | `construct_check` |
-| what the scene's own record says is known (parts by certainty, facts, sources, joints, authoring) | `construct_inspect` |
+| what the scene's own record says is known (parts by certainty, facts, sources, joints, authoring) and its size (body and overall) | `construct_inspect` |
 | build the page and show it live in the chat | `construct_build` |
 | review images: hero, contact sheets, the scene's views, the solid | `construct_review` |
 | glTF/OBJ, STL/3MF print, FreeCAD/STEP | `construct_export` |
 | a film, optionally across a music track (background job) | `construct_film` |
-| a background job's progress and result | `construct_job` |
-| every other subcommand (critique, rounds, trace, loft-from-traces, compare, terrain, globe, kit, audio, netlogo...) | `construct_command` |
+| a background job's progress and result; `wait_seconds` waits for it | `construct_job` |
+| run a NetLogo model headless (the user's own, or their installed Models Library) and draw the run; N seeded runs compared | `construct_netlogo_run` |
+| draw recorded NetLogo runs (`run.jsonl`) or another view of a run's project; compare runs; no NetLogo needed | `construct_netlogo_draw` |
+| every other subcommand (critique, rounds, trace, loft-from-traces, compare, terrain, globe, kit, audio, netlogo-plates, netlogo-film...) | `construct_command` |
 
-Edit the scene file itself with your file tools (read, patch, write); the project folder is in
-`construct_start`'s result. The references are this skill's files: read one with
+**Change the scene with `construct_edit`**, never with scripts in a terminal: a list of operations by part id
+(`{"op": "move", "part": "lid", "by": [0, 0.004, 0]}`, `{"op": "set", "part": "door-*", "field": "look.weight",
+"value": 1.4}`, `{"op": "certainty", "parts": ["wheel-*"], "certainty": "verified", "basis": ["wheel-diameter"]}`,
+`{"op": "add_fact", "fact": {...}}`, `{"op": "add_part", "part": {...}}`, `{"op": "remove_part", "part": "..."}`).
+Each step is validated; the scene is written only when the edits add no error, and the result gives the diff,
+what each step broke or fixed, and a check summary (an `undo` copy is kept). Use your file tools only to write a
+new scene or rewrite most of one; the project folder is in `construct_start`'s result. The references are this skill's files: read one with
 `skill_view("construct:construct", file_path="references/craft.md")`. They write commands as
 `construct <subcommand> ...`: call the matching tool, or `construct_command` with the same words as `argv`
 (`construct rounds start scene.json` is `construct_command(argv=["rounds", "start", "scene.json"], project=...)`).
@@ -39,8 +50,20 @@ a line of its own: that is how the construct appears live in Hermes Desktop (wit
 replay, export, more detail, review), and how images, models and films reach the user on every other surface.
 Never invent a MEDIA path; use the ones the tools return.
 
-**Long work runs as a job.** A film always does; a build, review, export or command that outlasts its call
-returns a `job_id`. Tell the user what is running, then call `construct_job(job_id)` until it is done.
+**Long work runs as a job.** A film and a NetLogo run always do; a build, review, export or command that outlasts
+its call returns a `job_id`. Tell the user what is running, then call `construct_job(job_id, wait_seconds=300)`: it
+waits here and answers as soon as the job ends. Never `sleep` in a terminal to wait for Construct.
+
+**Start from what ships.** `construct_start` with no arguments lists finished constructs to start from or show (a
+Land Cruiser, a VW T1 Samba, a Vespa, an Eames chair, a Braun SK 4 and its knob, a Revox A77, a Yamaha piano, a
+Tompion clock, a garden shed before and after a planned change, the Sainte-Chapelle, the Duomo di Milano,
+Neuschwanstein, the invented KESTREL ship in two versions). When the user wants to see what Construct makes, or the
+thing is close to one of them, start from it.
+
+**Teach when asked.** "Teach me", "show me how", "a tutorial", or a message naming a tutorial file: the tutorials
+are this skill's files `tutorials/NN-name.md` (read one with `skill_view("construct:construct",
+file_path="tutorials/01-copy-your-thing.md")`; `/construct learn` lists them). Follow its steps one at a time,
+show what each step makes, and wait for the user between steps.
 
 ## The loop
 
@@ -59,8 +82,9 @@ returns a `job_id`. Tell the user what is running, then call `construct_job(job_
    masterpiece for a specific named subject (a car model, a landmark, a named building). A generic subject needs
    no research; a named one is researched (the maker's or official pages, specs, plans, reference photos,
    looked at with vision and measured) whenever you are unsure of its identity-defining shape or specs.
-   "research: on/off" in the request overrides this. On a smaller model with a hard named subject, say so and
-   recommend a frontier model for masterpiece, with fast as the option here.
+   "research: on/off" in the request overrides this. **A frontier model is recommended for masterpiece runs on hard
+   named subjects** (a specific car, a cathedral, a machine whose likeness matters): on a smaller model, say so
+   before starting and offer fast here, or masterpiece with a frontier model.
 
    **Draft early.** Research takes at most 40% of the time; by then a complete scene that passes
    `construct_check` is saved. Improve that file in place and check it after every change; a valid scene is
@@ -86,7 +110,7 @@ returns a `job_id`. Tell the user what is running, then call `construct_job(job_
 3. **Animate with intent** ([animation](references/animation.md)): an assembly style, `articulations` for what
    opens, part motion only where the thing keeps moving, idle events that suit it, a camera tour to the identity.
 4. **Check until clean.** `construct_check`: while `needs_repair` is true, fix every diagnostic at its JSON path
-   using its hint, and check again. Fix every `detached`, `thin-support` and `thin` warning; read the rest. Where
+   using its hint (with `construct_edit`: its check summary tells you at once what is left), and check again. Fix every `detached`, `thin-support` and `thin` warning; read the rest. Where
    one part rests on another, work out both heights and make them meet.
 5. **Build and show it.** `construct_build`, then put its MEDIA line in your reply.
 6. **Review as an art director, and iterate.** `construct_review`, then look at the images it returns (vision):
@@ -120,12 +144,20 @@ returns a `job_id`. Tell the user what is running, then call `construct_job(job_
 
 Call `construct_inspect` and answer from its record, never from memory: the parts by certainty (with the key
 part names in each group), the verified and inferred dimensions with their sources, the articulations and their
-travel, the critic's verdict and rounds. Name what is designed or decorative as such. If the user then asks to
+travel, the critic's verdict and rounds. Its `size` gives the construct two ways: the **body** (its main mass) and
+the **overall** bounds with what stands out beyond the body (mirrors, wheels, a spire), each with the parts and how
+far. Quote the body for how big the thing is ("1.77 m wide, 1.82 m over the mirrors"), the overall for the room it
+needs, and never judge a proportion from overall bounds a protrusion widened. Name what is designed or decorative as such. If the user then asks to
 fix something, change the scene, `construct_check`, `construct_build`, and show it.
 
 ## Exports (only when asked)
 
-Author and review the construct first, then `construct_export`:
+Author and review the construct first, then `construct_export`. Its result carries **`verified`**: Construct's own
+read-back of the written file (its size; the glTF's named parts, nodes, meshes and animations with their lengths;
+OBJ objects; STL/3MF triangles; STEP products, solids, faces by surface kind and exact/faceted CAD shapes; the
+bounds in m and mm) and one `summary` line. That is the verification: report it as it is, and do not open the file
+in Blender, FreeCAD or a script to check it again. In Hermes Desktop a glTF opens as a turnable model in the chat
+(part names on hover, its animations to play) and a STEP or FreeCAD file shows its read-back.
 - **glb / obj**: a 3D model for Blender, game engines and the web: every part a named object, joints as the
   `open` animation, periodic motion as `idle`. A game prop: `merge` + `wire: "seams"`; physics: `pieces: "glued"`
   (each door or lid its own body on its hinge) or `"loose"`, `colliders`; `pose: "open"`. `materials` colours and
@@ -140,7 +172,9 @@ Author and review the construct first, then `construct_export`:
   installed (`construct_start` reports the programs it finds). For layout and a start to model over, not
   machining-grade engineering.
 - **A model kit**: `construct_command(argv=["kit", "scene.json", "--size", "200", "--printer", "desktop", "--out",
-  "kit"])` after refining the fit; exit 1 means written with notes to read.
+  "kit"])` after refining the fit (a shipped example's `kit-plan.json` goes in with `--plan kit-plan.json`); exit 1
+  means written with notes to read. Put the kit's MEDIA line in your reply: Hermes Desktop steps through it in 3D and
+  shows its booklet.
 
 ## A film (only when asked)
 
@@ -150,11 +184,30 @@ background at about 1-2 frames a second (about an hour for four minutes of music
 follow it with `construct_job`. When it is done, look at a few frames if you can (the build should visibly move on
 with the music and end whole), report its length, camera and reactivity, and put its MEDIA line in your reply.
 
-## A NetLogo model (only when asked)
+## NetLogo (only when asked)
 
-No authoring: `construct_command` runs `netlogo-instrument Model.nlogox --title "Model" --out run` (the user runs
-the copy in NetLogo), then `netlogo run/run.jsonl --view auto --out scene.json`, then `construct_build`. Credit
-the model as its Info tab asks; never edit the data (an art layer goes in `art.json`, redrawn with `--art`).
+- To run or see a NetLogo model (the user's .nlogox, or a library model by name): `construct_netlogo_run`. Find
+  library models with `{"search": "virus"}`. Leave recording to Construct unless the user names what matters; set
+  sliders with `constants`; `runs: N` repeats it with seeds, compared, with a summary of every count's final value.
+  A long run answers with a growing preview and a `job_id`: put the MEDIA line in your reply (in Hermes Desktop the
+  card grows as the run goes), then collect the final construct with `construct_job(job_id, wait_seconds=300)`.
+- Already recorded runs (`run.jsonl`), or another view of a run's project (space-time, network-time, phase, field,
+  pulse): `construct_netlogo_draw`. Up to 8 recordings are drawn side by side.
+- A run's project is an ordinary project: `construct_inspect`, `construct_check`, `construct_review`,
+  `construct_export` all work on it. Printed plates and Blender films go through `construct_command`
+  (`netlogo-plates`, `netlogo-film`).
+- No authoring of the data: credit the model as its Info tab asks; never edit the data (an art layer goes in
+  `art.json`, redrawn with `--art`).
+- Licence: Models Library models are CC BY-NC-SA. When you show a construct of one, give its credit line and say
+  it is for non-commercial use, shared alike. Never copy a library model, or anything made from one, into the
+  plugin or any public folder.
+
+## Learn as you go
+
+Hermes can keep what it learns as its own skills. When you repair a scene and find something that will help next
+time (a diagnostic and the fix that worked, a shape that suits a kind of part, how a subject's proportions are
+checked), offer to save it as a skill of your own, in your words, and use it on later constructs. Keep it to what
+you found out yourself; Construct's own rules stay in this skill.
 
 ## Rules that keep it honest and safe
 
