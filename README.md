@@ -44,6 +44,7 @@ model with named parts and working joints, a print, a model kit, a CAD file or a
 | ***Professionals and creators*** | | |
 | are a **maker** | A print at your printer's largest size, a model kit with plates and a booklet ([four to try](https://rtmandreyev.github.io/construct/#kits)), true CAD shapes | [Print, kit, CAD](docs/for/makers.md) |
 | create **new ships, creatures or worlds** for a game, film or story | New things designed from real ones: a construct, a 3D model with working parts, a film ([see KESTREL](https://rtmandreyev.github.io/construct/examples/kestrel/), an invented ice tug) | [New things from real ones](docs/for/invent-from-what-exists.md) |
+| have **software or a documented system** you wish were a physical product | Its documented functions mapped to controls, displays and the parts inside, what the documents fix kept apart from what is designed (one worked example: a software synthesizer as a 61-key instrument) | [Documentation → product](docs/for/documentation-to-product.md) |
 | are a **game developer** | Props with named parts, real sizes and working joints, for Godot, Unity or Unreal | [Into a game engine](docs/for/game-developers.md) |
 | are a **3D artist** | A construct in Blender with its build, joints and finish on sliders, ready to render or model over | [Into Blender](docs/for/3d-artists.md) |
 | work in **film and motion** | A construct that assembles across a piece of music, as a video | [Film mode](docs/for/film-and-motion.md) |
@@ -283,6 +284,8 @@ Construct is deliberately small. You need:
 | compare models, or score your own | [Evaluation](docs/EVALUATION.md) |
 | build on it or test the code | [Development](docs/DEVELOPMENT.md) and [the scene contract](CONTRACT.md) |
 | write your own adapter (a format, an engine, a machine) | [Adapters](docs/ADAPTERS.md) |
+| design a physical product from a system's documentation | [Documentation → product](docs/for/documentation-to-product.md) |
+| see how reconstructing, modifying and inventing are one pipeline | [The design-freedom continuum](docs/for/documentation-to-product.md#the-design-freedom-continuum) |
 | know where the method comes from | [About](docs/ABOUT.md) |
 | see what changed | [CHANGELOG.md](CHANGELOG.md) and the [1.1.0](docs/releases/v1.1.0.md) and [1.0.0](docs/releases/v1.0.0.md) release notes |
 

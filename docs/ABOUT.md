@@ -23,6 +23,26 @@ thing into an honest, animated construct any agent can build.**
    contact sheets, video, and compiled geometry (`construct-geometry`, see
    [CONTRACT.md](../CONTRACT.md)) that apps such as Tessera render natively.
 
+## From what exists to what does not
+
+The same pipeline (research, facts and requirements, a scene, provenance, the check, the build) serves very
+different requests, because what changes between them is only how much of the result is fixed by evidence and how
+much Construct may design:
+
+- **Reconstruct:** a chair from its photos and published sizes; nothing is designed
+  ([Eames Lounge Chair](../examples/eames-lounge-chair/)).
+- **Modify** or **replace a part:** the existing thing stays evidence, the change or the new part is designed
+  ([a shed with a planned deck](../examples/garden-shed-planned/), [a replacement knob](../examples/braun-sk4-knob/)).
+- **Documentation → product:** documented behaviour is fixed and the whole physical product is designed (one
+  worked example, a software synthesizer as an instrument).
+- **Invent from requirements:** the requirements are the facts and the rest is designed
+  ([KESTREL](../examples/kestrel/)).
+
+Redesigning a product around what it does, or re-housing an existing board or mechanism, sit between these; they
+are possibilities, not yet tested. Provenance keeps every part on its side of the line: Construct does not relabel
+design as evidence. The whole continuum, with what each point has shown:
+[the design-freedom continuum](for/documentation-to-product.md#the-design-freedom-continuum).
+
 ## Where the method comes from
 
 ### Anatomy's truth-first construction method

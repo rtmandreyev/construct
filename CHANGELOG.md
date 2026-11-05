@@ -9,6 +9,12 @@
   Godot and what it handed back. Both versions join the gallery under Apache-2.0
   ([examples/kestrel](examples/kestrel/), [examples/kestrel-v2](examples/kestrel-v2/)), with their briefs and the
   record of how they were made, and KESTREL takes a place among the constructs at the top of the README.
+- **Documentation → product** ([docs/for/documentation-to-product.md](docs/for/documentation-to-product.md)): a new
+  use case and a "Find your path" route. A well-documented system as the specification for a physical product,
+  followed through one run, a software synthesizer's 354-page manual made into a 61-key instrument concept in a
+  64-minute session, with what it showed, what it did not and why it worked. The same page sets out the
+  design-freedom continuum, from reconstructing what exists to inventing from requirements, with the gallery's
+  examples placed on it and the untested points marked as such; [About](docs/ABOUT.md) gives it in brief.
 - **The film constructs leave:** the three view-only constructs made for a film, never under a licence, are no
   longer in the repository or the gallery, and the gallery's "New things from real ones" group is gone with them
   (`examples/worlds.json`); KESTREL, which anyone may reuse, shows the use case instead.
