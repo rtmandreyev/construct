@@ -131,6 +131,8 @@ again.
 | wrong rotation axis in motion | axis and pivot are world values for the first copy |
 | labels collide | fewer annotations, `offset` them apart |
 | a part pokes through another in `solid.png` (a fender edge up through a bonnet, a pillar over the roof) | `check --fit` names it and where: trim it to end at the other's face |
+| a part through a pane (`check --fit`: crosses-glass) | stop it at the glass, or split the pane around it |
+| an open shell (`check --fit`: open): a tube end or a lathe's top you can see into | `"caps": true`, or start and end the lathe's profile on its axis |
 | a part buried in another (`check --fit`) | usually the other is far too thick (a fender that swallows the strut tower): thin it; or the buried part is not needed |
 
 Fix, `check`, `review` again, within the tier's review rounds.

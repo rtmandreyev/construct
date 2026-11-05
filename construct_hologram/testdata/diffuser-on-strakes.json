@@ -1,0 +1,166 @@
+{
+ "format": "construct-scene",
+ "version": 2,
+ "id": "r",
+ "title": "R",
+ "units": "m",
+ "seed": 1,
+ "subject": {
+  "category": "vehicle",
+  "accuracy": "generic",
+  "synthetic": true
+ },
+ "sources": [],
+ "facts": [],
+ "parts": [
+  {
+   "id": "body",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.78,
+     0.9,
+     4.0
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0,
+    0.33,
+    0.25
+   ]
+  },
+  {
+   "id": "rear-diffuser",
+   "shape": {
+    "type": "loft",
+    "sections": [
+     [
+      -2.2424,
+      0.488,
+      0.2546,
+      0.2766,
+      0.488
+     ],
+     [
+      -2.1459,
+      0.62,
+      0.1999,
+      0.2219,
+      0.62
+     ],
+     [
+      -2.0494,
+      0.62,
+      0.1782,
+      0.2002,
+      0.62
+     ],
+     [
+      -1.9529,
+      0.62,
+      0.166,
+      0.188,
+      0.62
+     ],
+     [
+      -1.8565,
+      0.62,
+      0.166,
+      0.188,
+      0.62
+     ],
+     [
+      -1.76,
+      0.62,
+      0.166,
+      0.188,
+      0.62
+     ]
+    ],
+    "round": 0.3
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 1
+  },
+  {
+   "id": "diffuser-strake-0",
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      -2.21,
+      0.2
+     ],
+     [
+      -1.8,
+      0.162
+     ],
+     [
+      -1.8,
+      0.176
+     ],
+     [
+      -2.21,
+      0.245
+     ]
+    ],
+    "height": 0.012,
+    "axis": "x"
+   },
+   "at": [
+    0.25,
+    0,
+    0
+   ],
+   "mirror": "x",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 1
+  },
+  {
+   "id": "diffuser-strake-1",
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      -2.21,
+      0.2
+     ],
+     [
+      -1.8,
+      0.162
+     ],
+     [
+      -1.8,
+      0.176
+     ],
+     [
+      -2.21,
+      0.245
+     ]
+    ],
+    "height": 0.012,
+    "axis": "x"
+   },
+   "at": [
+    0.52,
+    0,
+    0
+   ],
+   "mirror": "x",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 1
+  }
+ ]
+}

@@ -9,9 +9,12 @@ the scene's frame), so an agent or a person can fix them one by one and check ag
   one piece.
 - "buried": a part almost wholly inside another, so a solid never shows it (it may be meant: a hidden stiffener;
   or it may say the other is far too thick, a fender that swallows the strut tower behind it).
-Only what shows from outside is reported as poking: a shaft through a floor inside the car is hidden.
-
-Glass is left out of "cuts" and "buried": a pane sits in its frame by design.
+Only what shows from outside is reported as poking: a shaft through a floor inside the car is hidden. A poke is
+confirmed on its two parts alone at finer voxels: a thin part that only touches another is cut in two by coarse ones.
+- "crosses-glass": a solid part passing through a pane (a pillar through a quarter window). What holds the pane's
+  edge (a frame, a rail, the wall it is set in) is not reported; otherwise glass is left out of "pokes" and "buried".
+- "open": a solid shape left open where it shows (an uncapped tube end, a lathe whose profile stops short of its
+  axis): a solid, an export or a print shows into it.
 
 tipping(...) asks the audit's question "is it held?" on the same voxels: a part standing with its weight off what it
 stands on (the audit's `tips` warning).
@@ -25,17 +28,21 @@ CELLS = 160          # voxels along the longest side: fine enough for a part a h
 POKE = 0.002        # the bit sticking out, as a share of the part: below this it is a voxel's rounding
 TIP = 0.25          # above this it is not a tip sticking out but a part passing through (an axle through hubs)
 BURIED = 0.95
+FINE = 4             # a poke is confirmed on its two parts alone, at voxels this many times finer
+FINE_CELLS = 400     # (but at most this many along the two parts' longest side)
+OPEN = 0.25          # an open shell whose edge shows over this share of it has a hole you can see
 
 
-def _volumes(g, n_cells):
-    """Per part index: its solid's voxels (a dict of bit columns, printing's grid) and its surface triangles."""
-    closed, open_, _, _ = printing._surfaces(g, False)
+def _volumes(g, n_cells, surfaces=None, h=None):
+    """Per part index: its solid's voxels (a dict of bit columns, printing's grid) and its surface triangles. With
+    `surfaces` ((closed, open) pieces, a few parts' own) and `h`, those alone, at that voxel size."""
+    closed, open_ = surfaces or printing._surfaces(g, False)[:2]
     pts = [p for _, piece in closed + open_ for t in piece for p in t]
     if not pts:
         return None, {}, {}
     lo = [min(p[a] for p in pts) for a in range(3)]
     hi = [max(p[a] for p in pts) for a in range(3)]
-    h = max(hi[a] - lo[a] for a in range(3)) / n_cells or 1e-6
+    h = h or max(hi[a] - lo[a] for a in range(3)) / n_cells or 1e-6
     grid = printing._Grid(lo, hi, h, 2)
     vox, tris = {}, {}
     for pid, piece in closed:
@@ -125,10 +132,54 @@ def report(result, most=20):
     return "\n".join(lines)
 
 
+_RIMS = {}
+
+
+def _rim(cols):
+    """A thin set's edge: its voxels with clearly fewer neighbours in the set than its most surrounded ones."""
+    key = id(cols)
+    if key not in _RIMS:
+        count = {}
+        for (x, y), m in cols.items():
+            for z in range(m.bit_length()):
+                if m >> z & 1:
+                    count[(x, y, z)] = sum(cols.get((x + dx, y + dy), 0) >> (z + dz) & 1 if z + dz >= 0 else 0
+                                           for dx in (-1, 0, 1) for dy in (-1, 0, 1) for dz in (-1, 0, 1)) - 1
+        most = max(count.values(), default=0)
+        rim = {}
+        for (x, y, z), n in count.items():
+            if n < 0.75 * most:
+                rim[(x, y)] = rim.get((x, y), 0) | 1 << z
+        _RIMS.clear()
+        _RIMS[key] = (cols, rim)
+    return _RIMS[key][1]
+
+
+def _stray(small, big, alone, shows=None, through=False):
+    """What of `small` stands out on the far side of `big` once `big` is taken out of it: (stray pieces, their
+    voxels) or None. `alone` is how many pieces `small` is in by itself (a thin skin may be); `shows` counts what of
+    a piece is seen from outside (None: all of it). A part that passes through by design (an axle through hubs)
+    leaves most of itself on both sides: that is a poke only when `through` (nothing passes through glass)."""
+    n_small = _count(small)
+    out = {c: m & ~big.get(c, 0) for c, m in small.items()}
+    comps = sorted(_components({c: m for c, m in out.items() if m}), key=lambda c: -_count(c))
+    if len(comps) <= alone:
+        return None
+    seen = shows or _count
+    stray = [c for c in comps[alone:] if _count(c) >= POKE * n_small and _count(c) >= 2 and seen(c) >= 2]
+    if not stray:
+        return None
+    k = sum(_count(c) for c in stray)
+    if not through and (_count(comps[0]) < 0.5 * n_small or k > TIP * n_small):
+        return None   # a part that passes through by design (an axle, a spoke)
+    return stray, k
+
+
 def check(scene, cells=CELLS):
     """The fit of the construct's solids: {"issues": [...], "parts": n}, the worst first."""
     g = scene_mod.compile_scene(scene, solid=True)
-    grid, vox, tris = _volumes(g, cells)
+    closed, open_ = printing._surfaces(g, False)[:2]
+    grid, vox, tris = _volumes(g, cells, (closed, open_))
     issues = []
     if grid is None:
         return {"issues": issues, "parts": 0}
@@ -162,15 +213,45 @@ def check(scene, cells=CELLS):
                       & solid.get((x, y - 1), 0) & (solid.get((x, y), 0) << 1) & (solid.get((x, y), 0) >> 1))
             n += bin(m & ~around).count("1")
         return n
+
+    def confirmed(small, big, through):
+        """The same question on the two parts alone, with voxels FINE times finer: a thin part that only touches
+        another (a 2 cm diffuser on a strake, at 3 cm voxels) cuts it in two at the coarse size, not at the fine.
+        A part whose finer voxels fall apart by themselves (an open surface, marked voxel by voxel) cannot say: the
+        coarse answer stands."""
+        pair = ([q for q in closed if q[0] in (small, big)], [q for q in open_ if q[0] in (small, big)])
+        pts = [x for _, piece in pair[0] + pair[1] for t in piece for x in t]
+        extent = max(max(x[a] for x in pts) - min(x[a] for x in pts) for a in range(3))
+        _, fv, _ = _volumes(None, 0, pair, max(grid.h / FINE, extent / FINE_CELLS))
+        if small not in fv or big not in fv:
+            return True
+        alone = len(_components(fv[small]))
+        if alone > pieces_of(small):
+            return True
+        return _stray(fv[small], fv[big], alone, through=through) is not None
     for i, a in enumerate(ids):
         for b in ids[i + 1:]:
-            if a in glassy or b in glassy or not size[b]:
+            if (a in glassy and b in glassy) or not size[b]:
                 continue
             A, B = box[a], box[b]
             if A[0] > B[1] or B[0] > A[1] or A[2] > B[3] or B[2] > A[3] or A[4] > B[5] or B[4] > A[5]:
                 continue
             n, cells_ = _overlap(vox[b], vox[a])   # b is the smaller
             if not n:
+                continue
+            if a in glassy or b in glassy:   # a solid part through a pane: the glass shows it standing through
+                pane, part = (a, b) if a in glassy else (b, a)
+                if any(m & _rim(vox[pane]).get(c, 0) for c, m in vox[part].items()):
+                    continue   # it holds the pane's edge (a frame, a rail, a wall the window is set in)
+                got = _stray(vox[part], vox[pane], pieces_of(part), through=True)
+                if got and confirmed(part, pane, True):
+                    stray, k = got
+                    at = _where(grid, [(cc, m, bin(m).count("1")) for c in stray for cc, m in c.items()])
+                    issues.append({"code": "crosses-glass", "parts": [part, pane], "share": round(k / size[part], 4),
+                                   "at": at, "shows": k,
+                                   "message": "%s passes through the glass %s around %s m: a solid shows it standing "
+                                              "through the pane. Stop it at the glass, or split the pane around it (a "
+                                              "pillar between two panes)" % (part, pane, at)})
                 continue
             share = n / size[b]
             where = _where(grid, cells_)
@@ -180,16 +261,10 @@ def check(scene, cells=CELLS):
                                           "hidden)" % (b, round(share * 100), a)})
             else:   # does b come out the far side of a? then what is left of b outside a falls into pieces
                 for small, big in ((b, a), (a, b)):
-                    out = {c: m & ~vox[big].get(c, 0) for c, m in vox[small].items()}
-                    comps = sorted(_components({c: m for c, m in out.items() if m}), key=lambda c: -_count(c))
-                    alone = pieces_of(small)   # a thin skin may already be in pieces by itself: only new pieces count
-                    if len(comps) <= alone:
+                    got = _stray(vox[small], vox[big], pieces_of(small), shows)
+                    if not got or not confirmed(small, big, False):
                         continue
-                    stray = [c for c in comps[alone:] if _count(c) >= POKE * size[small] and _count(c) >= 2 and shows(c) >= 2]
-                    if not stray or _count(comps[0]) < 0.5 * size[small] \
-                            or sum(_count(c) for c in stray) > TIP * size[small]:
-                        continue   # nothing out, or a part that passes through by design (an axle, a spoke)
-                    k = sum(_count(c) for c in stray)
+                    stray, k = got
                     at = _where(grid, [(cc, m, bin(m).count("1")) for c in stray for cc, m in c.items()])
                     issues.append({"code": "pokes", "parts": [small, big], "share": round(k / size[small], 4), "at": at,
                                    "shows": sum(shows(c) for c in stray),
@@ -197,9 +272,62 @@ def check(scene, cells=CELLS):
                                               "Trim it to end at %s's face" % (small, big, max(1, round(k / size[small] * 100)),
                                                                              small, at, big)})
                     break
-    order = {"pokes": 0, "buried": 1}
+    issues += _open_shells(scene, grid, vox, open_)
+    order = {"crosses-glass": 0, "pokes": 0, "open": 1, "buried": 2}
     issues.sort(key=lambda x: (order[x["code"]], -x.get("shows", 0), -x["share"]))   # what shows most first
     return {"issues": issues, "parts": len(vox)}
+
+
+OPEN_SHAPES = ("tube", "cylinder", "cone", "lathe", "extrude", "loft", "sphere", "torus")
+
+
+def _open_shells(scene, grid, vox, open_):
+    """Solid shapes left open where it shows: an uncapped tube end, a lathe whose profile stops short of its axis.
+    The light forgives the hole; a solid, an export or a print shows into it (or makes a skin of it)."""
+    info = {p["id"]: p for p in scene["parts"]}
+    edges_of = {}
+    for pid, piece in open_:
+        p = info.get(pid)
+        if not p or p["role"] not in ("mass", "structure", "identity") or export.is_glass_name(pid) \
+                or p["shape"]["type"] not in OPEN_SHAPES:
+            continue
+        edges = {}
+        for t in piece:
+            ks = [printing._key(x) for x in t]
+            for i, j in ((0, 1), (1, 2), (2, 0)):
+                e = (ks[i], ks[j]) if ks[i] < ks[j] else (ks[j], ks[i])
+                edges[e] = edges.get(e, 0) + 1
+        edges_of.setdefault(pid, []).extend(e for e, n in edges.items() if n == 1)
+    owners = {}
+    floor = min(((m & -m).bit_length() - 1 for v in vox.values() for m in v.values()), default=0) + 1
+    if edges_of:
+        for q, v in vox.items():
+            for c, m in v.items():
+                owners.setdefault(c, []).append((q, m))
+    out = []
+    for pid, rim in sorted(edges_of.items()):
+        total = shown = 0.0
+        at = [0.0, 0.0, 0.0]
+        for a, b in rim:
+            length = math.dist(a, b)
+            total += length
+            c = grid.to_cell([(a[k] + b[k]) / 2 for k in range(3)])
+            x, y, z = int(c[0]), int(c[1]), int(c[2])
+            covered = z <= floor or any(q != pid and (m >> max(0, z - 1)) & 0b111   # on the ground: its underside
+                          for dx in (-1, 0, 1) for dy in (-1, 0, 1) for q, m in owners.get((x + dx, y + dy), ()))
+            if not covered:   # nothing of another part where its edge is: the hole shows
+                shown += length
+                at = [at[k] + (a[k] + b[k]) / 2 * length for k in range(3)]
+        if not total or shown < OPEN * total or shown < 3 * grid.h:
+            continue
+        at = [round(at[0] / shown, 3), round(at[2] / shown, 3), round(-at[1] / shown, 3)]
+        how = {"tube": "set \"caps\": true", "cylinder": "set \"caps\": true", "cone": "set \"caps\": true",
+               "lathe": "start and end its profile on its axis (x 0)", "extrude": "keep its caps (\"caps\": true)"}.get(
+                   info[pid]["shape"]["type"], "close its surface")
+        out.append({"code": "open", "parts": [pid], "share": round(shown / total, 3), "at": at, "shows": 0,
+                    "message": "%s is an open shell: %.3g m of its edge shows a hole, around %s m. A solid, an export or "
+                               "a print shows into it: %s, or end it inside the part it meets" % (pid, shown, at, how)})
+    return out
 
 
 # ---------------------------------------------------------------------------- is it held?

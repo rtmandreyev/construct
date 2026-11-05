@@ -8,6 +8,12 @@
   warning names the part, what it stands on, where, and how far its weight lies off it, with the fix (a second hold on
   the side it leans to). A part fixed into the side of another or hung from it is left alone, and so is a rod's end
   joined across its section. Over the gallery's 38 scenes and the bundled examples it finds nothing.
+- **The fit, more exact:** `check --fit` left glass out altogether, so a pillar standing through a quarter window
+  passed; it now names a solid part that crosses a pane (`crosses-glass`), not what holds the pane's edge. A poke is
+  confirmed on its two parts alone at voxels four times finer: on the R34 a 2 cm diffuser was said to poke through
+  the strakes it only touches (at 3 cm voxels), and over the gallery about 90 such false pokes go. A solid shape left
+  open where it shows, an uncapped tube end or a lathe that stops short of its axis, is named (`open`), with how to
+  close it; holes on the ground or inside another part are not.
 - **Designed to a requirement:** a designed part could cite nothing it was designed to, so a part the user asked for
   ("two seats") or a documented function ("a 64-slot modulation matrix") looked like free invention. A fact may now
   be a `requirement` (from the user's request or a document, citing it), and a part names it in its `basis` while it
