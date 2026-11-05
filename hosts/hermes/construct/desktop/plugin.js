@@ -510,6 +510,9 @@ function partName(id, records) {
 function ModelViewer({ load, height, onInfo }) {
   const boxRef = useRef(null)
   const canvasRef = useRef(null)
+  // a canvas whose WebGL context was given up (off screen, or dropped by the browser) never gets it back: the
+  // next time the view opens it gets a new canvas
+  const [canvasKey, setCanvasKey] = useState(0)
   const api = useRef({})
   const [state, setState] = useState({ phase: 'waiting', error: '' })
   const [hover, setHover] = useState('')
@@ -537,6 +540,15 @@ function ModelViewer({ load, height, onInfo }) {
     }
     const T = THREE_BUNDLE
     const canvas = canvasRef.current
+    if (canvas && canvas.dataset.spent) {
+      setCanvasKey(k => k + 1)
+      return undefined
+    }
+    const dropped = () => {
+      canvas.dataset.spent = '1'
+      if (!disposed) setCanvasKey(k => k + 1)
+    }
+    canvas.addEventListener('webglcontextlost', dropped)
     let disposed = false
     let renderer = null
     let frame = 0
@@ -711,15 +723,17 @@ function ModelViewer({ load, height, onInfo }) {
           if (o.material) (Array.isArray(o.material) ? o.material : [o.material]).forEach(m => m.dispose())
         })
       }
+      canvas.removeEventListener('webglcontextlost', dropped)
       if (renderer) {
         renderer.dispose()
         if (typeof renderer.forceContextLoss === 'function') renderer.forceContextLoss()
+        canvas.dataset.spent = '1'
       }
       api.current = {}
       setClips([])
       setPlaying('')
     }
-  }, [visible, load])
+  }, [visible, load, canvasKey])
 
   const ready = state.phase === 'ready'
   return jsxs('div', {
@@ -729,7 +743,7 @@ function ModelViewer({ load, height, onInfo }) {
         ref: boxRef,
         style: Object.assign({}, S.frameBox, { height: height || 420 }),
         children: [
-          jsx('canvas', { ref: canvasRef, style: { display: 'block', width: '100%', height: '100%', cursor: hover ? 'pointer' : 'grab', touchAction: 'none' } }),
+          jsx('canvas', { key: canvasKey, ref: canvasRef, style: { display: 'block', width: '100%', height: '100%', cursor: hover ? 'pointer' : 'grab', touchAction: 'none' } }),
           hover || picked ? jsx('div', { style: S.tip, children: hover || picked }) : null,
           !ready ? jsx('div', { style: S.wait, children: state.error || (state.phase === 'paused' ? 'Scroll here again to turn it (a few other 3D views are open).' : 'Opening the model…') }) : null
         ]
