@@ -27,6 +27,18 @@
    "model": "Claude Opus 5.5"
   },
   {
+   "slug": "kestrel",
+   "title": "KESTREL, an invented ice tug",
+   "mode": "masterpiece",
+   "model": "GPT-6.1 Sol"
+  },
+  {
+   "slug": "kestrel-v2",
+   "title": "KESTREL, more detailed",
+   "mode": "masterpiece",
+   "model": "GPT-6.1 Sol"
+  },
+  {
    "slug": "eames-lounge-chair",
    "title": "Eames Lounge Chair and Ottoman",
    "mode": "masterpiece",

@@ -88,8 +88,6 @@ footer.site { max-width: 1680px; margin: 0 auto; padding: 24px 24px 48px; color:
 .stage { position: relative; flex: 1 1 auto; min-height: 62vh; background: #000; }
 .stage iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 .hint { padding: 10px 20px 18px; color: var(--dim); font-size: 13px; }
-.world-blender { margin: 6px 20px 0; } .world-blender img { width: 100%; max-width: 1100px; height: auto; display: block; border: 1px solid var(--line); border-radius: 12px; }
-.world-blender figcaption { color: var(--dim); font-size: 13px; margin-top: 6px; }
 .viewer > .credit { padding: 12px 20px 22px; color: var(--dim); font-size: 12.5px; margin: 0; }
 .with-legend { display: flex; flex-direction: column; flex: 1 1 auto; }
 .legend { display: grid; gap: 11px; align-content: start; padding: 16px 20px; border-top: 1px solid var(--line);
@@ -168,16 +166,6 @@ def _load_beyond():
     return json.loads(path.read_text(encoding="utf-8"))["beyond"] if path.exists() else []
 
 
-def _load_worlds():
-    path = EXAMPLES / "worlds.json"
-    return json.loads(path.read_text(encoding="utf-8"))["worlds"] if path.exists() else []
-
-
-WORLD_FILES = ("construct.html", "hero.jpg", "thumb.jpg", "blender.jpg")   # published; never a scene
-WORLD_RIGHTS = ("© 2026 Artyom Andreyev. All rights reserved: to view here, not to copy, adapt or reuse. "
-                "Not under Construct's Apache-2.0 licence.")
-
-
 def _load_kits():
     path = EXAMPLES / "kits.json"
     return json.loads(path.read_text(encoding="utf-8"))["kits"] if path.exists() else []
@@ -215,10 +203,10 @@ def _beyond_buttons(b):
                    for i, (label, href) in enumerate(buttons))
 
 
-def index_page(examples, films=(), beyond=(), kits=(), worlds=()):
-    """The landing page, in six parts: the full pipeline (from a hologram to a finished 3D model), the
-    constructs (a compact scroller), model kits, new things from real ones, film mode, and models come alive
-    (a live simulation, then recorded runs). A part with nothing in it is left out."""
+def index_page(examples, films=(), beyond=(), kits=()):
+    """The landing page, in five parts: the full pipeline (from a hologram to a finished 3D model), the
+    constructs (a compact scroller), model kits, film mode, and models come alive (a live simulation, then
+    recorded runs). A part with nothing in it is left out."""
     kit_cards = [
         "<div class=\"card film\"><a href=\"examples/%s/kit/assembly.html\"><img src=\"examples/%s/kit-thumb.jpg\" "
         "alt=\"%s as a model kit, its 3D guide\" loading=\"lazy\" width=\"1200\" height=\"750\"></a><div class=\"body\">"
@@ -229,29 +217,13 @@ def index_page(examples, films=(), beyond=(), kits=(), worlds=()):
         % (k["slug"], k["slug"], html.escape(k["title"]), k["slug"], html.escape(k["title"]), html.escape(k["scale"]),
            k["pieces"], k["steps"], k["slug"], k["slug"], KIT_ZIP % k["slug"])
         for k in kits]
-    number = iter(range(3, 7))
+    number = iter(range(3, 6))
     kit_part = ("<section class=\"part films\" id=\"kits\"><div class=\"eyebrow\">%d · Model kits</div>"
                 "<h2 class=\"section\">A construct as a kit to print, glue and paint</h2><p class=\"section\">Each "
                 "kit's steps in 3D, each piece dropping into place in its paint, its booklet, to print, as a kit "
                 "sheet draws it, and its plates for your slicer. Made and checked by software and AI critics; none has yet been built by a person. "
                 "<a href=\"%s/blob/main/docs/PRINTING.md#a-kit-revell-style\">Model kits</a>.</p>"
                 "<div class=\"grid\">\n%s\n</div></section>" % (next(number), REPO_URL, "\n".join(kit_cards))) if kits else ""
-    world_cards = [
-        "<div class=\"card film\"><a href=\"examples/%s/\"><img src=\"examples/%s/thumb.jpg\" alt=\"%s, a construct of "
-        "an invented thing\" loading=\"lazy\" width=\"1200\" height=\"750\"></a><div class=\"body\"><h2><a "
-        "href=\"examples/%s/\">%s</a></h2><p class=\"prov\">%s · %s</p><p class=\"credit\">%s</p><div class=\"choose\">"
-        "<a class=\"button primary\" href=\"examples/%s/\">Open the construct</a>%s</div></div></div>"
-        % (w["slug"], w["slug"], html.escape(w["title"]), w["slug"], html.escape(w["title"]), html.escape(w["mode"]),
-           html.escape(w["models"]), html.escape(w["line"]), w["slug"],
-           "<a class=\"button\" href=\"examples/%s/blender.jpg\">In Blender</a>" % w["slug"] if w.get("blender") else "")
-        for w in worlds]
-    world_part = ("<section class=\"part films\" id=\"worlds\"><div class=\"eyebrow\">%d · New things from real ones</div>"
-                  "<h2 class=\"section\">A ship, its lander and an alien object, for a film</h2><p class=\"section\">"
-                  "Invented things designed from real ones: a ship laid out like real spacecraft studies, a lander "
-                  "built to fit it, an alien object grown from structures that exist. Each is a construct and a 3D "
-                  "model, made for the author's visual album film. <b>Published to view only: all rights reserved.</b> "
-                  "<a href=\"%s/blob/main/docs/for/invent-from-what-exists.md\">How to make your own</a>.</p>"
-                  "<div class=\"grid\">\n%s\n</div></section>" % (next(number), REPO_URL, "\n".join(world_cards))) if worlds else ""
     film_cards = [
         "<div class=\"card film\"><a href=\"films/%s/\"><img src=\"films/%s/poster.jpg\" alt=\"%s, the finished construct "
         "of its film\" loading=\"lazy\" width=\"1200\" height=\"750\"></a><div class=\"body\"><h2><a href=\"films/%s/\">%s</a>"
@@ -338,17 +310,16 @@ def index_page(examples, films=(), beyond=(), kits=(), worlds=()):
             "simulation, a model's whole run drawn in time.</p>"
             "<div class=\"links\"><a class=\"button\" href=\"%s\">Construct on GitHub</a>"
             "<a class=\"button\" href=\"#pipeline\">The full pipeline</a><a class=\"button\" href=\"#constructs\">"
-            "Constructs</a>%s%s<a class=\"button\" href=\"#films\">Film mode</a><a class=\"button\" href=\"#models\">"
+            "Constructs</a>%s<a class=\"button\" href=\"#films\">Film mode</a><a class=\"button\" href=\"#models\">"
             "Models come alive</a>"
             "<a class=\"button\" href=\"%s/blob/main/docs/HOW-IT-IS-MADE.md\">How they are made</a></div></header>"
-            "<main>%s%s%s%s%s%s</main>"
+            "<main>%s%s%s%s%s</main>"
             "<footer class=\"site\">Construct is Apache-2.0 licensed; its Blender add-on is GPL-3.0-or-later. Product and "
-            "place names belong to their owners; each construct is an independent reconstruction from public "
-            "references, not an official model. %s"
+            "place names belong to their owners; each construct of a real thing is an independent reconstruction "
+            "from public references, not an official model. %s"
             "<a href=\"%s\">Source and documentation</a>.</footer>"
             % (REPO_URL, "<a class=\"button\" href=\"#kits\">Model kits</a>" if kits else "",
-               "<a class=\"button\" href=\"#worlds\">New from real</a>" if worlds else "", REPO_URL, pipeline, shelf,
-               kit_part, world_part, film_part, alive,
+               REPO_URL, pipeline, shelf, kit_part, film_part, alive,
                "The pages under Models come alive keep their own licences, given on each. " if models else "",
                REPO_URL))
     return _page("Construct · examples", body, 0, "Holographic constructs built by AI agents, the 3D models they "
@@ -421,25 +392,6 @@ def data_page(item):
                html.escape(item["title"]), _legend(item["legend"]) if item.get("legend") else "", html.escape(item["line"]),
                "; click it, then <kbd>L</kbd> hides the art direction's labels" if art else ""))
     return _page("%s · Construct" % item["title"], body, 2, "%s: %s" % (item["title"], item["line"]))
-
-
-def world_page(w):
-    """An invented thing, published to view only: the live construct, its Blender model if it has one, its rights."""
-    blender = ("<figure class=\"world-blender\"><img src=\"blender.jpg\" alt=\"%s as a Blender model\" width=\"1440\" "
-               "height=\"900\" loading=\"lazy\"><figcaption>%s.</figcaption></figure>"
-               % (html.escape(w["title"]), html.escape(w["blender"]))) if w.get("blender") else ""
-    body = ("<div class=\"viewer\"><div class=\"bar\"><h1>%s</h1><p class=\"prov\">%s · %s</p><nav>"
-            "<a class=\"button\" href=\"../../\">All examples</a>"
-            "<a class=\"button\" href=\"construct.html?rounds=0\">Full screen</a>"
-            "<a class=\"button\" href=\"%s/tree/main/examples/%s\">Rights</a></nav></div>"
-            "<div class=\"stage\"><iframe src=\"construct.html?ui=0&amp;rounds=0\" title=\"%s, live construct\" "
-            "allowfullscreen></iframe></div>"
-            "<p class=\"hint\">%s Drag to orbit; click it, then scroll to zoom; <kbd>R</kbd> replays the assembly, "
-            "<kbd>P</kbd> shows every part as designed, not measured, <kbd>S</kbd> shows it as a solid.</p>%s"
-            "<p class=\"credit\">%s</p></div>"
-            % (html.escape(w["title"]), html.escape(w["mode"]), html.escape(w["models"]), REPO_URL, w["slug"],
-               html.escape(w["title"]), html.escape(w["line"]), blender, html.escape(WORLD_RIGHTS)))
-    return _page("%s · Construct" % w["title"], body, 2, "%s: %s" % (w["title"], w["line"]))
 
 
 def film_page(film):
@@ -567,14 +519,6 @@ def build(out, films_dir=None, kits=False):
     films = _load_films() if films_dir else []
     for film in films:
         _film(film, films_dir, out, studio)
-    worlds = _load_worlds()
-    for w in worlds:  # published to view only: the page and its pictures, never the scene
-        src, dst = EXAMPLES / w["slug"], out / "examples" / w["slug"]
-        dst.mkdir(parents=True)
-        for name in WORLD_FILES:
-            if (src / name).exists():
-                shutil.copyfile(src / name, dst / name)
-        (dst / "index.html").write_text(world_page(w), encoding="utf-8")
     beyond = _load_beyond()
     for item in beyond:  # published as it is (its own licence), beside the construct built from its scene
         src, dst = EXAMPLES / item["slug"], out / "examples" / item["slug"]
@@ -597,7 +541,7 @@ def build(out, films_dir=None, kits=False):
     shutil.rmtree(out / ".build", ignore_errors=True)
     kit_list = [dict(made[k["slug"]], title=next(e["title"] for e in examples if e["slug"] == k["slug"]))
                 for k in _load_kits() if k["slug"] in made]
-    (out / "index.html").write_text(index_page(examples, films, beyond, kit_list, worlds), encoding="utf-8")
+    (out / "index.html").write_text(index_page(examples, films, beyond, kit_list), encoding="utf-8")
     (out / "404.html").write_text(_page("Not found · Construct", "<header class=\"site\"><h1>Not here</h1><p>That page "
                                         "does not exist.</p><a class=\"button\" href=\"%s\">All examples</a></header>"
                                         % SITE_URL, 0, "Page not found."), encoding="utf-8")
