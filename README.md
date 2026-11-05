@@ -52,6 +52,26 @@ model with named parts and working joints, a print, a model kit, a CAD file or a
 | work in a **museum or archive** | Reconstructions that say how each part is known, so a visitor can tell evidence from design | [Honest reconstructions](docs/for/museums-and-archives.md) |
 | are a **developer** | A scene contract, a command line, an MCP server and skills to build on | [Build on it](docs/for/developers.md) |
 
+## New in 1.2
+
+Every change with pictures and the commands to try it: **[What's new in 1.2, a walkthrough](docs/NEW-IN-1.2.md)**.
+
+- **New things from real ones.** [KESTREL](docs/for/invent-from-what-exists.md), an invented 120 m ice tug, from
+  its brief to its joints in Godot: the studies it reasoned from, thirteen masterpiece rounds, then a more detailed
+  version that kept all 256 parts and added 242. Both in the gallery, Apache-2.0, with every brief.
+- **Documentation → product.** A software synthesizer's 354-page manual made into a 61-key instrument concept in one
+  64-minute session, with the prompt and the documents it wrote, and plainly what it showed and what it did not.
+  [The walkthrough →](docs/for/documentation-to-product.md)
+- **Designed to a requirement.** A designed part names the requirement it realises (what you asked for, or what a
+  document says it does) and stays honestly designed; a new design is captioned ORIGINAL DESIGN.
+- **Checked harder.** A part that would tip over (`tips`), a pillar through a window (`crosses-glass`), a solid
+  left open (`open`), a number in the text that no longer matches its fact (`stale-number`), and pokes confirmed
+  four times finer.
+- **A critic that stands apart.** Sealed critic packets with only the renders, the references and your request; a
+  blind verdict cannot be rewritten.
+- **Cleaner 3D, bigger constructs.** Solids wound outward, so Blender's normals and booleans agree; up to 1,024
+  parts and 48,000 lines; glued joints inside joints for Godot; kit boards that lie flat.
+
 ## New in 1.1
 
 Every feature with pictures and the commands to try it: **[What's new in 1.1, a walkthrough](docs/NEW-IN-1.1.md)**.
@@ -261,12 +281,15 @@ Construct is deliberately small. You need:
 - For video, ffmpeg.
 - For the Blender add-on, Blender 4.2 or newer (the film of a run: checked in Blender 5.2); for the
   NetLogo bridge, NetLogo 6 or 7 (the extension: NetLogo 7, and NetLogo 3D 7).
+- For CAD, FreeCAD 1.0 or newer (STEP needs nothing more); for game engines, any glTF 2.0 importer
+  (glued joints: tested in Godot 4.7).
 - Tested on macOS; review capture on Linux and Windows is untested.
 
 ## Documentation
 
 | If you want to… | read |
 | --- | --- |
+| see everything new in 1.2, with examples | [What's new in 1.2](docs/NEW-IN-1.2.md) |
 | see everything new in 1.1, with examples | [What's new in 1.1](docs/NEW-IN-1.1.md) |
 | see how a construct is made, step by step | [How a construct is made](docs/HOW-IT-IS-MADE.md) |
 | know what you are looking at, and the keys | [The Measured Light style](docs/STYLE.md) |
@@ -284,6 +307,7 @@ Construct is deliberately small. You need:
 | compare models, or score your own | [Evaluation](docs/EVALUATION.md) |
 | build on it or test the code | [Development](docs/DEVELOPMENT.md) and [the scene contract](CONTRACT.md) |
 | write your own adapter (a format, an engine, a machine) | [Adapters](docs/ADAPTERS.md) |
+| design something new from real things (a ship, a creature, a vehicle) | [New things from real ones](docs/for/invent-from-what-exists.md) |
 | design a physical product from a system's documentation | [Documentation → product](docs/for/documentation-to-product.md) |
 | see how reconstructing, modifying and inventing are one pipeline | [The design-freedom continuum](docs/for/documentation-to-product.md#the-design-freedom-continuum) |
 | know where the method comes from | [About](docs/ABOUT.md) |

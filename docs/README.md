@@ -11,6 +11,8 @@ Start with the first two pages if you are new to Construct; the rest are there w
 
 | If you want to… | read |
 | --- | --- |
+| see what is new in 1.2, with pictures and commands | [NEW-IN-1.2.md](NEW-IN-1.2.md) |
+| see what was new in 1.1, with pictures and commands | [NEW-IN-1.1.md](NEW-IN-1.1.md) |
 | see how a construct is made, step by step | [HOW-IT-IS-MADE.md](HOW-IT-IS-MADE.md) |
 | understand what you see in a construct | [STYLE.md](STYLE.md) |
 | run Construct in Claude Code, Hermes, another agent or by hand | [USING.md](USING.md) |
