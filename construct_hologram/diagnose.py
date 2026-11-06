@@ -23,7 +23,8 @@ AUDIT_HINTS = {
                 "its \"at\"; use \"anchor\": \"base\" to stand it on \"at\"), or set \"floating\": true only if it truly hovers.",
     "stage-order": "Give the part a stage equal to or later than the part it rests on.",
     "overclaim": "Lower the part's size certainty to the weakest certainty among its basis facts, or cite a source.",
-    "accuracy": "Use subject.accuracy \"generic\" (a typical example) unless key parts rest on evidence.",
+    "accuracy": "Use subject.accuracy \"generic\" (a typical example) unless key parts rest on evidence, or "
+                "\"original\" for a new design with nothing real to reconstruct.",
     "decorative-identity": "Designed parts of a requested object are \"inferred\", not \"decorative\".",
     "no-mass": "Give the primary volume role \"mass\".",
     "no-identity": "Give the two or three recognisable features role \"identity\".",

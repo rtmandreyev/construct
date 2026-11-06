@@ -1216,11 +1216,6 @@ def netlogo_rgb(c):
     return "#%02x%02x%02x" % tuple(rgb)
 
 
-def _lightness(c):
-    r, g, b = (int(c[k:k + 2], 16) / 255 for k in (1, 3, 5))
-    return (max(r, g, b) + min(r, g, b)) / 2
-
-
 def light_colour(c):
     """A NetLogo colour made to read as light on the hologram's dark ground: the hue kept, a dark colour lifted, a
     pale one held back from white, the saturation capped so it glows rather than shouts."""

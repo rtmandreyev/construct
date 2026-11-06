@@ -410,10 +410,12 @@ def add_commands(sub):
     p = sub.add_parser("check", help="validate, compile and audit a scene ('-' reads stdin); --json for "
                                      "machine-readable diagnostics with JSON paths and fix hints")
     p.add_argument("scene")
-    p.add_argument("--json", action="store_true")
+    p.add_argument("--json", action="store_true", help="the diagnostics as JSON: each with a code, a JSON path, a "
+                                                         "message and a fix hint (and --fit's findings)")
     p.add_argument("--fit", action="store_true",
-                   help="also how its solids fit: parts that poke through others where it shows, and parts buried in "
-                        "others (what a solid, a print or a kit shows and the light forgives)")
+                   help="also how its solids fit: parts that poke through others or through glass where it shows, solid "
+                        "shapes left open, and parts buried in others (what a solid, a print or a kit shows and the light "
+                        "forgives)")
     p.add_argument("--cells", type=int, default=160,
                    help="--fit: voxels along the longest side (default 160; more finds thinner parts, slower)")
     p = sub.add_parser("build", help="geometry, the HTML preview and the audit")
