@@ -191,7 +191,8 @@ class Plugin(unittest.TestCase):
     def test_manifest_matches_what_register_registers(self):
         m = manifest(self.pkg / "plugin.yaml")
         self.assertEqual(m["name"], "construct")
-        self.assertEqual(m["version"], "0.1.0")
+        from . import product
+        self.assertEqual(m["version"], product.VERSION)   # the plugin keeps Construct's version
         self.assertEqual(m["license"], "Apache-2.0")
         self.assertEqual(m["requires_hermes"], ">=0.22")
         self.assertEqual(m["homepage"], "https://github.com/rtmandreyev/construct")
