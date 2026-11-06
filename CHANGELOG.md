@@ -130,6 +130,11 @@
 - **The published schema takes 1.2's constructs:** `geometry.schema.json` still allowed 256 parts and 24,000 lines
   and triangles, so an app that re-validated a compiled file against it rejected KESTREL v2 (498 parts) and the R34
   (24,924 triangles). It now allows what the compiler allows; a test ties the two and validates both.
+- **A hint for every problem:** fifteen audit codes came back with no fix hint (`tier-*`, `critic-*`, `research`,
+  `authoring`, `likeness`, `self-graded`, `identity-unbuilt`, `no-checklist`, `compare-stale`, `data-lock`,
+  `glass-name`, `no-surface`, `tube-outline`), though `check` and the MCP tool promise one. Each now has one, and so
+  does each `check --fit` finding in `--json` (`pokes`, `crosses-glass`, `open`, `buried`); a test keeps every new
+  code from arriving without one.
 
 ## 1.1.1 — 2026-11-03
 

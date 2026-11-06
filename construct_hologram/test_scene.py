@@ -846,6 +846,22 @@ class GeometrySchema(unittest.TestCase):
 class Diagnostics(unittest.TestCase):
     """What a weak model gets back: JSON paths, codes and fix hints."""
 
+    def test_every_audit_and_fit_code_has_a_hint(self):
+        # the MCP tool promises a fix hint for every problem: a new code must bring one
+        import re
+        emitted = set()
+        for name in ("audit.py", "tiers.py"):
+            emitted |= set(re.findall(r'add\(\s*(?:warnings|errors)\s*,\s*"([a-z-]+)"', (HERE / name).read_text()))
+        self.assertGreater(len(emitted), 30)
+        self.assertEqual(sorted(emitted - set(diagnose.AUDIT_HINTS)), [])
+        fit_codes = set(re.findall(r'"code": "([a-z-]+)"', (HERE / "fit.py").read_text()))
+        self.assertEqual(fit_codes, {"pokes", "buried", "crosses-glass", "open"})
+        self.assertEqual(sorted(fit_codes - set(diagnose.FIT_HINTS)), [])
+        s = base()
+        s["authoring"] = {"tier": "quick", "research": "not_needed", "review_rounds": 5}
+        rows = [d for d in diagnose.diagnose(s)["diagnostics"] if d["code"] == "tier-rounds"]
+        self.assertTrue(rows and rows[0]["hint"], rows)
+
     def test_placeholders_are_unknown_facts_but_none_is_a_value(self):
         s = base()
         for v in ("unknown", "N/A", " ? ", "tbd", "-", ""):

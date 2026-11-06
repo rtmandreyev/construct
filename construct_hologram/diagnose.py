@@ -57,6 +57,42 @@ AUDIT_HINTS = {
     "no-open-view": "Add presentation.views {\"id\": \"open\", \"yaw\": ..., \"pitch\": ...} facing what opening reveals "
                     "(roughly the yaw the opened part's inside or the taken-out part faces; check review/view-open.png "
                     "if you can see images). A joint that only poses a part (an elbow) needs none: ignore this.",
+    "glass-name": "Rename the part with glass, glazing or window in its id (\"hood-door-glass\"), and every reference "
+                  "to it (basis, motions, articulations, identity, stages).",
+    "no-surface": "Give it a solid shape (a tube for a rod or a rail, a box or a loft for a panel), or make it role "
+                  "\"detail\" if it is only a drawn line.",
+    "tube-outline": "Build the body as a loft through its sections (or filled slices with section curves) and keep "
+                    "tubes for real rods, pipes and frames.",
+    "data-lock": "Restore the data parts, facts and sources from `construct netlogo`; change only a data part's "
+                 "label, look and note, and add art direction as parts and facts of its own (construct netlogo --art).",
+    "tier-rounds": "Stop reviewing and deliver the saved scene with its next notes, or record the higher tier the "
+                   "user asked for.",
+    "tier-budget": "Keep in authoring.sources the few sources that carry the identity, or record the higher tier the "
+                   "user asked for.",
+    "research": "Record authoring.research \"done\" when you looked things up, or drop the looked-up sources from "
+                "authoring.sources.",
+    "authoring": "Add authoring.next: what the next improvement would be, in a line or two.",
+    "identity-unbuilt": "Build the feature and list its parts in authoring.identity (their ids exactly), or say in "
+                        "authoring.next why it is missing.",
+    "no-checklist": "Write authoring.identity: each feature that makes the subject itself, with the ids of the parts "
+                    "that build it.",
+    "critic-stale": "Run the critic again on this version (construct critique, then --record its answer), or record "
+                    "the outcome \"self-reviewed\".",
+    "critic-claim": "Record the verdict the scores support (outstanding: every score 3; good: every score 2 or more), "
+                    "or run the critic again.",
+    "compare-stale": "Compare again on this version (construct compare --record), or drop the old comparison.",
+    "likeness": "Trace a side or front reference (construct trace) and record a passing comparison (construct compare "
+                "--record), or record a lower outcome than outstanding.",
+    "self-graded": "Record \"self-reviewed\", or run an independent critic (construct critique) and record its answer.",
+}
+# check --fit's codes: the message says where; the hint says what to write
+FIT_HINTS = {
+    "pokes": "Trim the part (or move it) so it ends at the other part's face; if it is meant to pass through, "
+             "leave it.",
+    "crosses-glass": "Stop the part at the glass, or split the pane around it (a pillar between two panes).",
+    "open": "Close the shape where it shows: \"caps\": true on a tube, cylinder, cone or extrusion, a lathe's profile "
+            "started and ended on its axis (x 0), or end it inside the part it meets.",
+    "buried": "Leave it if it is meant to be hidden; otherwise move it out to where it shows, or delete it.",
 }
 BUDGET_HINT = ("Simplify: lower segments, meridians, ribs, rings, lat/lon and repeat counts, or set "
                "look.fill \"none\" on thin parts.")

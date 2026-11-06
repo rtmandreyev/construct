@@ -844,6 +844,8 @@ def run(args):
                 fitted = fit_mod.check(diagnose_mod.parse_text(text)[0] if not params_mod.is_params(
                     diagnose_mod.parse_text(text)[0]) else params_mod.expand(diagnose_mod.parse_text(text)[0]),
                     cells=max(40, min(600, args.cells)))
+                for issue in fitted["issues"]:   # as every diagnostic: a code, a message and a hint
+                    issue["hint"] = diagnose_mod.FIT_HINTS.get(issue["code"])
                 report["fit"] = fitted
             if args.json:
                 sys.stdout.write(json.dumps(report, indent=2, ensure_ascii=False) + "\n")
