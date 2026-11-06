@@ -56,7 +56,9 @@ product.
 
 > **Unaffiliated concept. Not endorsed by Xfer Records.**
 
-<p align="center"><img src="media/docs-to-product-hero.jpg" width="80%" alt="A 61-key hardware synthesizer concept in lines of light: three oscillator strips with their own displays, a central graph display with six encoders, two filter strips, source pads and eight macro encoders"></p>
+<p align="center"><img src="media/docs-to-product-hero.jpg" width="49%" alt="A 61-key hardware synthesizer concept in lines of light: three oscillator strips with their own displays, a central graph display with six encoders, two filter strips, source pads and eight macro encoders"> <img src="media/docs-to-product-blender-hero.jpg" width="49%" alt="The audited revision finished in Blender: a blue-grey deck with charcoal knobs, lime oscillator displays and cyan-ringed macro encoders over 61 keys"></p>
+<p align="center"><sub>The original autonomous run as a construct, and the audited revision in the gallery, its case closed and finished
+in Serum 2's interface colours, in Blender.</sub></p>
 
 The same page sets out the **design-freedom continuum**: reconstructing what exists, modifying it, replacing a part,
 redesigning around its function, re-housing a functional core, turning a documented system into a product,
@@ -89,7 +91,7 @@ Press **P**: the legend splits DESIGNED into *designed · to a requirement* and 
 requirements' sources. `check` counts them and warns when a requirement has no part:
 
 ```
-  designed parts: 222 to a requirement (request.keys, request.standalone, serum.R01, serum.R02, serum.R03, serum.R04, ...), 35 designed freely
+  designed parts: 257 to a requirement (request.keys, request.standalone, serum.R01, serum.R02, serum.R03, serum.R04, ...), 35 designed freely
 ```
 
 and, on a copy with every link to one requirement taken out:
@@ -97,6 +99,8 @@ and, on a copy with every link to one requirement taken out:
 ```
   warn [requirement-unmet] no part names the requirement serum.R31 in its basis: say which parts realise it.
 ```
+
+<p align="center"><img src="media/docs-to-product-provenance.jpg" width="90%" alt="Two provenance views of the Serum instrument: the original run captioned APPROXIMATE RECONSTRUCTION with one legend row; the revision captioned ORIGINAL DESIGN, its legend splitting 257 parts designed to a requirement from 35 designed freely, naming the manual and the brief"></p>
 
 A new design is `subject.accuracy: "original"`, captioned **ORIGINAL DESIGN** instead of APPROXIMATE
 RECONSTRUCTION. ([The scene contract](../CONTRACT.md), *Requirements*.)
