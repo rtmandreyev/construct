@@ -127,6 +127,9 @@
   FreeCAD's own settings (`FREECAD_USER_*`); the job travels in the script. Hermes's skill scan read the copy as a
   possible leak and refused to install the skill from GitHub without `--force`; it now installs as is
   (`hermes skills install rtmandreyev/construct/skills/construct`).
+- **The published schema takes 1.2's constructs:** `geometry.schema.json` still allowed 256 parts and 24,000 lines
+  and triangles, so an app that re-validated a compiled file against it rejected KESTREL v2 (498 parts) and the R34
+  (24,924 triangles). It now allows what the compiler allows; a test ties the two and validates both.
 
 ## 1.1.1 — 2026-11-03
 

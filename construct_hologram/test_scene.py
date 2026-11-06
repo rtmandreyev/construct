@@ -787,6 +787,33 @@ class GeometrySchema(unittest.TestCase):
                 self.assertEqual(schema_errors(json.loads(json.dumps(scene.reframe(g, frame))), root, root), [],
                                  "%s %s" % (path and path.name, frame))
 
+    def test_the_schema_allows_the_compilers_budgets(self):
+        # the small bundled examples fit any budget: the schema must take what the compiler allows
+        root = json.loads((HERE / "geometry.schema.json").read_text())
+        props, counts = root["properties"], root["properties"]["counts"]["properties"]
+        self.assertEqual(props["parts"]["maxItems"], scene.MAX_PARTS)
+        self.assertEqual(props["artwork"]["maxItems"], scene.MAX_PARTS)
+        self.assertEqual(props["lines"]["maxItems"], scene.MAX_LINES * props["line_stride"]["const"])
+        self.assertEqual(props["fills"]["maxItems"], scene.MAX_TRIS * 3 * props["fill_stride"]["const"])
+        self.assertEqual(props["points"]["maxItems"], scene.MAX_POINTS * props["point_stride"]["const"])
+        self.assertEqual(counts["lines"]["maximum"], scene.MAX_LINES)
+        self.assertEqual(counts["triangles"]["maximum"], scene.MAX_TRIS)
+        self.assertEqual(counts["points"]["maximum"], scene.MAX_POINTS)
+        self.assertEqual(counts["instances"]["maximum"], scene.MAX_INSTANCES)
+
+    def test_large_gallery_constructs_match_the_published_schema(self):
+        # KESTREL v2 has 498 parts and the R34 nearly 25,000 triangles: over the 1.1 budgets
+        root = json.loads((HERE / "geometry.schema.json").read_text())
+        over = {"kestrel-v2": lambda g: len(g["parts"]) > 256,
+                "nissan-skyline-gt-r-r34": lambda g: g["counts"]["triangles"] > 24000}
+        for slug, beyond_old_budget in over.items():
+            path = HERE.parent / "examples" / slug / "scene.json"
+            if not path.exists():
+                self.skipTest("the gallery is not beside the package")
+            g = json.loads(json.dumps(scene.compile_scene(json.loads(path.read_text()))))
+            self.assertTrue(beyond_old_budget(g), slug)
+            self.assertEqual(schema_errors(g, root, root), [], slug)
+
     def test_the_schema_knows_every_tier_the_compiler_takes(self):
         # a construct made in a newer mode must not fail an app that checks it against the published schema
         from . import tiers

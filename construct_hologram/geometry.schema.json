@@ -682,7 +682,7 @@
   "parts": {
    "type": "array",
    "minItems": 1,
-   "maxItems": 256,
+   "maxItems": 1024,
    "items": {
     "type": "object",
     "properties": {
@@ -879,7 +879,7 @@
    "items": {
     "type": "number"
    },
-   "maxItems": 216000
+   "maxItems": 432000
   },
   "line_stride": {
    "const": 9
@@ -902,7 +902,7 @@
    "items": {
     "type": "number"
    },
-   "maxItems": 360000
+   "maxItems": 720000
   },
   "fill_stride": {
    "const": 5
@@ -1092,7 +1092,7 @@
   },
   "artwork": {
    "type": "array",
-   "maxItems": 256,
+   "maxItems": 1024,
    "items": {
     "type": "object",
     "properties": {
@@ -1380,11 +1380,11 @@
    "properties": {
     "lines": {
      "type": "integer",
-     "maximum": 24000
+     "maximum": 48000
     },
     "triangles": {
      "type": "integer",
-     "maximum": 24000
+     "maximum": 48000
     },
     "points": {
      "type": "integer",
