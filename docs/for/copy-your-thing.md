@@ -34,7 +34,7 @@ checked against the maker's published sizes, 20 seen in the photos, 10 described
 
 <p align="center"><img src="../media/everyday-chair-provenance.jpg" width="80%" alt="The chair in the provenance view, every part in a shade of amber: 22 seen and checked against the published sizes, 20 seen, 10 described, counted in the legend"></p>
 
-The same message in the ChatGPT app (Codex, GPT-6.1 Sol) made its own chair, in 12 rounds and about an hour:
+The same message in the ChatGPT app (Codex, GPT-6.1 Sol) made its own chair, in 11 rounds and about an hour:
 
 <p align="center"><a href="https://rtmandreyev.github.io/construct/examples/eames-lounge-chair-chatgpt/"><img src="../media/everyday-chair-apps.jpg" width="80%" alt="The chair from the Claude app and from the ChatGPT app, as solids"></a></p>
 <p align="center"><sub>The Claude app's chair (left) and the ChatGPT app's (right, <a href="https://rtmandreyev.github.io/construct/examples/eames-lounge-chair-chatgpt/">open it</a>), from the same photos and message.</sub></p>

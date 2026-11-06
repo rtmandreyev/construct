@@ -2,7 +2,9 @@
 
 [![A garden shed with a planned log store and deck, a holographic construct](hero.jpg)](https://rtmandreyev.github.io/construct/examples/garden-shed-planned/)
 
-**fast · DeepSeek V4.1 Flash**, made after the [masterpiece shed](../garden-shed/) and reviewed once
+**fast · DeepSeek V4.1 Flash**, made after the [masterpiece shed](../garden-shed/) and reviewed once. The plan was
+added to the masterpiece shed's scene, so its record still carries that shed's tier and its twelve rounds; the
+planned change itself had one review, the agent's own (self-reviewed)
 
 [Open the live construct](https://rtmandreyev.github.io/construct/examples/garden-shed-planned/): drag to orbit, P shows how each part is known (the planned
 parts as designed, not built), S shows it as a solid. The scene: [scene.json](scene.json).
