@@ -98,8 +98,10 @@ class FakeContext:
 def media_paths(result):
     paths = []
     for line in result.get("media", []):
-        assert line.startswith("MEDIA:/"), line
-        paths.append(Path(line[len("MEDIA:"):]))
+        assert line.startswith("MEDIA:"), line
+        path = Path(line[len("MEDIA:"):])
+        assert path.is_absolute(), line   # MEDIA:/... or, on Windows, MEDIA:C:\... (Hermes reads both)
+        paths.append(path)
     return paths
 
 
@@ -110,6 +112,8 @@ class Plugin(unittest.TestCase):
     def setUpClass(cls):
         cls.tmp = tempfile.TemporaryDirectory()
         cls.pkg = generator.build(Path(cls.tmp.name) / "dist")
+        # a second build that is never imported: importing the first writes __pycache__ into it
+        cls.clean = generator.build(Path(cls.tmp.name) / "clean")
         spec = importlib.util.spec_from_file_location("construct_plugin_under_test", cls.pkg / "__init__.py",
                                                       submodule_search_locations=[str(cls.pkg)])
         cls.mod = importlib.util.module_from_spec(spec)
@@ -161,8 +165,8 @@ class Plugin(unittest.TestCase):
         self.assertNotIn("python3 TOOLS", (self.pkg / "skills" / "construct" / "references" / "rounds.md").read_text())
 
     def test_package_has_no_bytecode_binaries_or_environ_misuse(self):
-        for p in self.pkg.rglob("*"):
-            rel = p.relative_to(self.pkg)
+        for p in self.clean.rglob("*"):
+            rel = p.relative_to(self.clean)
             self.assertNotIn("__pycache__", rel.parts, rel)
             self.assertFalse(p.is_symlink(), rel)
             if not p.is_file():
@@ -177,7 +181,7 @@ class Plugin(unittest.TestCase):
                     self.assertNotIn("os.system(", line, "%s:%d" % (rel, n))
                     self.assertNotIn("shell=True", line, "%s:%d" % (rel, n))
             self.assertLess(p.stat().st_size, 1024 * 1024, rel)
-        self.assertNotRegex((self.pkg / "README.md").read_text(encoding="utf-8"), r"/Users/[A-Za-z]|/home/[a-z]")
+        self.assertNotRegex((self.clean / "README.md").read_text(encoding="utf-8"), r"/Users/[A-Za-z]|/home/[a-z]")
 
     def test_package_is_deterministic(self):
         def digest(root):
@@ -186,7 +190,7 @@ class Plugin(unittest.TestCase):
                 h.update(str(p.relative_to(root)).encode() + b"\0" + p.read_bytes())
             return h.hexdigest()
         with tempfile.TemporaryDirectory() as other:
-            self.assertEqual(digest(self.pkg), digest(generator.build(Path(other))))
+            self.assertEqual(digest(self.clean), digest(generator.build(Path(other))))
 
     def test_manifest_matches_what_register_registers(self):
         m = manifest(self.pkg / "plugin.yaml")
