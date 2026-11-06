@@ -8,7 +8,7 @@ or the ChatGPT app does the work ([how to set it up](in-the-apps.md)).
   <a href="https://rtmandreyev.github.io/construct/examples/vespa-gs150/kit/assembly.html"><img src="../media/kit-vespa-guide.gif" width="49%" alt="The Vespa kit's 3D guide stepping through its build: the body first, the seat and rack at the bench, then the wheels, fork and cowls"></a>
   <a href="https://rtmandreyev.github.io/construct/examples/vespa-gs150/kit/booklet.html"><img src="../media/kit-vespa-booklet.jpg" width="49%" alt="Step 3 of the Vespa kit's booklet: the dual seat built at the bench with the owner's rack slat, each piece numbered and painted"></a>
 </p>
-<p align="center"><sub>The <a href="https://rtmandreyev.github.io/construct/examples/vespa-gs150/">Vespa from <i>your vehicle</i></a> as a 1:12 kit: 32 pieces on 3 plates, 21 steps, 157 mm long.
+<p align="center"><sub>The <a href="https://rtmandreyev.github.io/construct/examples/vespa-gs150/">Vespa from <i>your vehicle</i></a> as a 1:12 kit: 32 pieces on 2 plates, 22 steps, 157 mm long.
 The 3D guide (left) and a page of the booklet (right). Open them yourself: <a href="https://rtmandreyev.github.io/construct/examples/vespa-gs150/kit/assembly.html">the kit in 3D</a> and <a href="https://rtmandreyev.github.io/construct/examples/vespa-gs150/kit/booklet.html">its booklet</a>.</sub></p>
 
 ## Our example, start to finish
@@ -32,7 +32,7 @@ drawn to look right, not to be moulded, so a kit wants a plan: what a factory wo
 > exhaust; each side's guard bars; the rack; the badges. The headlamp glass and the rear light lens are clear parts.
 > Make the kit again.
 
-**What came back:** 32 pieces on 3 plates in 21 steps, painted from the scooter's own finish (silver paint, chrome
+**What came back:** 32 pieces on 2 plates in 22 steps, painted from the scooter's own finish (silver paint, chrome
 bars, whitewall tyres, a white seat with blue piping), built as a model maker would: the body first, the seat and
 rack and the wheels at the bench, the cowls hung last. The plan it wrote is
 [kit-plan.json](../../examples/vespa-gs150/kit-plan.json). Its checks leave a few notes for the builder, said in the
@@ -44,7 +44,7 @@ browser), and a `.3mf` file per plate for your printer's software (PrusaSlicer, 
 piece on its own to reprint one.
 
 **Open this one yourself:** [the Vespa kit in 3D](https://rtmandreyev.github.io/construct/examples/vespa-gs150/kit/assembly.html), [its booklet](https://rtmandreyev.github.io/construct/examples/vespa-gs150/kit/booklet.html), and
-[its plates to print](https://github.com/rtmandreyev/construct/releases/latest/download/construct-kit-vespa-gs150.zip) (a zip: the three plates, the booklet and the 3D guide).
+[its plates to print](https://github.com/rtmandreyev/construct/releases/latest/download/construct-kit-vespa-gs150.zip) (a zip: the two plates, the booklet and the 3D guide).
 
 ## More kits
 
