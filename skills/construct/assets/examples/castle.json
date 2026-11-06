@@ -335,9 +335,10 @@
    },
    "at": [
     0,
-    20,
+    19.63,
     14
-   ]
+   ],
+   "note": "set 0.37 m down, so its slopes bear on the gatehouse's wall tops and its eaves hang below them (it stood clear of them)"
   },
   {
    "id": "buttresses",

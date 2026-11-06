@@ -143,7 +143,9 @@ def audit(scene, geometry):
             wires.append(sp["id"])
     surfaces = [sp for sp in scene["parts"] if sp["role"] == "mass" and sp["shape"]["type"] in
                 ("box", "loft", "extrude", "lathe", "sphere", "cylinder", "cone")]
-    if (scene["subject"]["category"] == "vehicle" and len(wires) >= 6) or (len(wires) >= 8 and len(surfaces) <= 1):
+    # a vehicle whose body is built of surfaces keeps its real rods and rails (a T1's drip rail, bumpers, tie-rods)
+    if (scene["subject"]["category"] == "vehicle" and len(wires) >= 6 and len(wires) > len(surfaces)) or \
+            (len(wires) >= 8 and len(surfaces) <= 1):
         add(warnings, "tube-outline", None, "%d long thin tubes (%s) trace the outline: they render as glowing wires, "
             "not a body. Build the body as a loft through its sections (or filled slices with section curves), and keep "
             "tubes for real rods, pipes and frames." % (len(wires), ", ".join(wires[:5]) + (", ..." if len(wires) > 5 else "")))
@@ -175,11 +177,11 @@ def audit(scene, geometry):
         add(warnings, "clutter", None,
             "%.0f%% of lines are detail or ornament: the primary structure may drown. Reduce rings/ribs or repeats."
             % (100.0 * quiet / n))
-    seen, dup = set(), 0
+    seen, dup = set(), 0   # within a part: two parts that meet along an edge (a knob on its skirt) both draw it
     for i in range(n):
         a = tuple(lines[i * stride:i * stride + 3])
         b = tuple(lines[i * stride + 3:i * stride + 6])
-        key = (a, b) if a <= b else (b, a)
+        key = (int(styles[int(lines[i * stride + 6])][6]),) + ((a, b) if a <= b else (b, a))
         if key in seen:
             dup += 1
         seen.add(key)
@@ -260,6 +262,8 @@ def format_report(report):
 
 THIN = 0.006      # a structural part thinner than this share of the object's largest size is a hairline
 GAP = 0.01        # parts further apart than this share of the object's largest size do not touch
+NEAR = 0.005      # nor, for `detached`, parts further apart than this (metres; 1% of a car is 4.6 cm), or than
+NEAR_SHARE = 0.003  # this share of the object's largest size, whichever is larger (a cathedral's stones are not set to 5 mm)
 THIN_HOLD = 0.05  # a holder this thin, as a share of what it holds, is a strut, not a support
 THIN_SET = 3      # unless there are this many copies of it (legs, spokes, cables share the load)
 
@@ -366,6 +370,7 @@ def _contact_and_thickness(scene, geometry, add, warnings, errors=None):
                     for z in range(lo_c[2], hi_c[2] + 1):
                         grid.setdefault((x, y, z), []).append((pid, idx))
     gap2 = gap * gap
+    near2 = min(gap, max(NEAR, NEAR_SHARE * size)) ** 2   # touching, for `detached`: a fin 2 cm under a car is not
     ground = lo[1]
 
     def touches(pid):
@@ -378,14 +383,31 @@ def _contact_and_thickness(scene, geometry, add, warnings, errors=None):
                     continue
                 pr = geo[qid][1][idx]
                 d = _seg_dist2(sp, *pr) if len(pr) == 2 else _tri_dist2(sp, *pr)
-                if d <= gap2:
+                if d <= near2:
                     return True
+        return crosses(pid)
+
+    def crosses(pid):   # an edge of one through a face of the other: a pedal set into its box, a post into a beam,
+        # whose samples (corners, midpoints) all lie further from the other's faces than touching
+        for pr in geo[pid][1]:
+            for a, b in ((pr[0], pr[1]),) if len(pr) == 2 else ((pr[0], pr[1]), (pr[1], pr[2]), (pr[2], pr[0])):
+                lo_c = [int(math.floor(min(a[k], b[k]) / cell)) for k in range(3)]
+                hi_c = [int(math.floor(max(a[k], b[k]) / cell)) for k in range(3)]
+                if (hi_c[0] - lo_c[0] + 1) * (hi_c[1] - lo_c[1] + 1) * (hi_c[2] - lo_c[2] + 1) > 64:
+                    continue
+                for x in range(lo_c[0], hi_c[0] + 1):
+                    for y in range(lo_c[1], hi_c[1] + 1):
+                        for z in range(lo_c[2], hi_c[2] + 1):
+                            for qid, idx in grid.get((x, y, z), ()):
+                                q = geo[qid][1][idx]
+                                if qid != pid and len(q) == 3 and _seg_crosses_tri(a, b, *q):
+                                    return True
         return False
 
     connected = {pid for pid in geo if touches(pid)}
     # touching is mutual: a part another part touches is connected too
     for pid in list(geo):
-        if pid not in connected and any(_near(geo[q][0], pid, geo, grid, cell, gap2) for q in connected if q != pid):
+        if pid not in connected and any(_near(geo[q][0], pid, geo, grid, cell, near2) for q in connected if q != pid):
             connected.add(pid)
     for pid in geo:
         p = parts[pid]
@@ -511,6 +533,24 @@ def _contact_and_thickness(scene, geometry, add, warnings, errors=None):
             "is held up only by %s, %.3g m across under a part %.3g m across. Is that really what carries it? If it "
             "rests on something, its surfaces should meet: the nearest sturdy part is %r, %.3g m away." % (
                 " and ".join(repr(q) for q in by[:2]), _thickness(parts[by[0]]), bulk, near, dist))
+
+
+def _seg_crosses_tri(a, b, p, q, r):
+    """Whether segment ab passes through triangle pqr (Moller-Trumbore)."""
+    e1, e2, d = _sub(q, p), _sub(r, p), _sub(b, a)
+    h = (d[1] * e2[2] - d[2] * e2[1], d[2] * e2[0] - d[0] * e2[2], d[0] * e2[1] - d[1] * e2[0])
+    det = _dot(e1, h)
+    if abs(det) < 1e-14:
+        return False
+    s = _sub(a, p)
+    u = _dot(s, h) / det
+    if u < 0 or u > 1:
+        return False
+    c = (s[1] * e1[2] - s[2] * e1[1], s[2] * e1[0] - s[0] * e1[2], s[0] * e1[1] - s[1] * e1[0])
+    v = _dot(d, c) / det
+    if v < 0 or u + v > 1:
+        return False
+    return 0 <= _dot(e2, c) / det <= 1
 
 
 def _near(samples, target, geo, grid, cell, gap2):
