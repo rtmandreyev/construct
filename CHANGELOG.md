@@ -135,6 +135,9 @@
   `glass-name`, `no-surface`, `tube-outline`), though `check` and the MCP tool promise one. Each now has one, and so
   does each `check --fit` finding in `--json` (`pokes`, `crosses-glass`, `open`, `buried`); a test keeps every new
   code from arriving without one.
+- **Packaging:** a pip install lacked `construct.nls`, so `netlogo-instrument` failed there; the wheel now carries
+  it and film mode's loader, and no longer the tests' fixtures (`testdata/`). The NetLogo extension's zip is made from
+  what git holds, not the working tree, and leaves out the tests, their fixtures and the unrendered skill.
 
 ## 1.1.1 — 2026-11-03
 

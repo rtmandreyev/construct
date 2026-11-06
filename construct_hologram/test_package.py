@@ -333,6 +333,36 @@ class EveryImportShips(unittest.TestCase):
         self.assertEqual(sorted(reached - set(hs.RUNTIME)), [])
 
 
+class Distributions(unittest.TestCase):
+    """What a pip install and the NetLogo extension carry: the data the runtime reads, not the tests."""
+
+    def test_the_wheel_carries_the_runtimes_data_and_not_the_test_data(self):
+        import fnmatch
+        try:
+            import tomllib
+        except ImportError:   # Python 3.10
+            self.skipTest("tomllib needs Python 3.11")
+        project = tomllib.loads((HERE.parent / "pyproject.toml").read_text(encoding="utf-8"))["tool"]["setuptools"]
+        patterns = project["package-data"]["*"]
+        for name in package.DATA_FILES + ["film/" + f for f in package.FILM] + ["viewer/" + f for f in package.VIEWER_FILES]:
+            self.assertTrue(any(fnmatch.fnmatch(name, p) for p in patterns), name)
+        self.assertIn("construct_hologram.testdata*", project["packages"]["find"]["exclude"])
+
+    def test_the_netlogo_zip_carries_the_committed_runtime_without_tests(self):
+        if not (HERE.parent / ".git").exists():
+            self.skipTest("not a git checkout")
+        spec = importlib.util.spec_from_file_location("bne", HERE.parent / "scripts" / "build_netlogo_extension.py")
+        bne = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(bne)
+        names = {p.as_posix() for p in bne.runtime_files()}
+        want = {"construct_hologram/" + m for m in package.RUNTIME_MODULES + package.DATA_FILES}
+        want |= {"construct_hologram/film/" + f for f in package.FILM}
+        want |= {"construct_hologram/viewer/" + f for f in package.VIEWER_FILES}
+        self.assertEqual(sorted(want - names), [])
+        self.assertEqual([n for n in names if Path(n).name.startswith("test_") or "/testdata/" in n
+                          or "/skill/" in n or "/examples/" in n], [])
+
+
 class HermesHub(unittest.TestCase):
     """skills/construct/: the Hermes skill as `hermes skills install rtmandreyev/construct/skills/construct` fetches it."""
 
