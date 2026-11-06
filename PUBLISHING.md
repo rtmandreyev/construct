@@ -39,7 +39,7 @@ Making it public later: **Settings → General → Danger Zone → Change visibi
 ## 2. Push `main` and the tag
 
 ```sh
-cd ~/construct-public
+cd construct    # your checkout
 git remote add origin https://github.com/rtmandreyev/construct.git
 git push -u origin main
 git push origin v1.1.1
@@ -76,7 +76,7 @@ those names.
 ## 5. Update the gallery later
 
 ```sh
-cd ~/construct-public
+cd construct    # your checkout
 python3 scripts/build_site.py --out site --films DIR  # compiles every example and makes the kits (about ten minutes)
 python3 -m http.server 8000 --directory site          # preview at http://localhost:8000/
 git worktree add ../construct-pages gh-pages
