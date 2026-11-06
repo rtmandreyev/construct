@@ -243,6 +243,15 @@ class Plugin(unittest.TestCase):
 
     # ------------------------------------------------------------------ the tools, end to end
 
+    def test_a_card_shown_before_an_update_gets_the_current_loader(self):
+        old = '<!doctype html>\n<html lang="en" data-page="assembly.html">\n<head><title>Villa Savoye kit</title></head>OLD'
+        new = self.api._current_loader(old)
+        self.assertNotIn("OLD", new)
+        self.assertIn("<title>Villa Savoye kit</title>", new)
+        self.assertIn('data-page="assembly.html"', new)
+        self.assertIn(".kc{display:none", new)
+        self.assertEqual(self.api._current_loader("not a loader"), "not a loader")
+
     def test_a_command_that_wrote_its_output_with_problems_has_not_failed(self):
         # `construct kit` exits 1 when it lists problems to fix, after writing the kit: that is not a failure
         jobs = sys.modules["construct_plugin_under_test.jobs"]

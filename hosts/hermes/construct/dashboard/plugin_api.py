@@ -165,7 +165,20 @@ def _page(path, loader):
         raise NotFound("the page is not there")
     if path.stat().st_size > PAGE_MAX:
         raise NotFound("the page is larger than %d MB" % (PAGE_MAX // 1048576))
-    return path.read_text(encoding="utf-8"), loader.read_text(encoding="utf-8")
+    return path.read_text(encoding="utf-8"), _current_loader(loader.read_text(encoding="utf-8"))
+
+
+def _current_loader(stored):
+    """The loader as this version of the plugin writes it, with the stored one's title and page: a card shown before
+    an update gets the update's fixes (the loader holds the card's CSS and its relay to the host)."""
+    template = HERE / "templates" / "loader.html"
+    if not template.is_file():
+        return stored
+    title = re.search(r"<title>([^<]*)</title>", stored)
+    page = re.search(r'data-page="([a-z.]+)"', stored)
+    if not title or not page or page.group(1) not in ("construct.html", "assembly.html", "booklet.html"):
+        return stored
+    return template.read_text(encoding="utf-8").replace("__TITLE__", title.group(1)).replace("__PAGE__", page.group(1))
 
 
 def view(root, project, build=None):
