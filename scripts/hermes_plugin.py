@@ -1,8 +1,10 @@
 """Assemble the Hermes plugin of Construct as a standalone, publishable package (nothing is installed or sent).
 
-    python3 scripts/hermes_plugin.py [--out .local/construct-hermes]
+    python3 scripts/hermes_plugin.py [--out hermes]
 
-Writes <out>/construct/ (the folder name is the plugin's id):
+Writes <out>/construct/ (the folder name is the plugin's id). The default, hermes/construct/, is the committed
+plugin that `hermes plugins install rtmandreyev/construct#hermes/construct` and the Hermes catalog install; a test
+keeps it equal to a fresh build. It holds:
     the plugin's source from hosts/hermes/construct/ (tools, Desktop half, backend, skill, README)
     _vendor/construct_hologram/   the runtime as Python source (the same modules as the Hermes skill's) and its data
     skills/construct/references/  the skill's references, their commands named as `construct <subcommand>`
@@ -114,7 +116,7 @@ def build(out):
 
 def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    ap.add_argument("--out", default=str(ROOT / ".local" / "construct-hermes"))
+    ap.add_argument("--out", default=str(ROOT / "hermes"))
     args = ap.parse_args(argv)
     pkg = build(Path(args.out))
     files = [p for p in pkg.rglob("*") if p.is_file()]

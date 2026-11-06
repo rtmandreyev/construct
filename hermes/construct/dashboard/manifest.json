@@ -1,0 +1,9 @@
+{
+  "name": "construct",
+  "label": "Constructs",
+  "description": "The constructs built with the Construct tools: a gallery, and each one live.",
+  "icon": "Box",
+  "version": "0.1.0",
+  "tab": { "path": "/construct", "hidden": true },
+  "api": "plugin_api.py"
+}

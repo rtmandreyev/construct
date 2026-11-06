@@ -390,6 +390,24 @@ class Versions(unittest.TestCase):
                                 - {(product.VERSION, ""), ("", product.VERSION)}), [])
 
 
+class HermesPlugin(unittest.TestCase):
+    """hermes/construct/: the plugin as `hermes plugins install rtmandreyev/construct#hermes/construct` fetches it."""
+
+    def test_it_matches_a_fresh_build(self):
+        spec = __import__("importlib.util").util.spec_from_file_location("hp", HERE.parent / "scripts" / "hermes_plugin.py")
+        hp = __import__("importlib.util").util.module_from_spec(spec)
+        spec.loader.exec_module(hp)
+        built = HERE.parent / "hermes" / "construct"
+        with tempfile.TemporaryDirectory() as d:
+            fresh = hp.build(Path(d))
+            want = {str(p.relative_to(fresh)): p.read_bytes() for p in fresh.rglob("*") if p.is_file()}
+            have = {str(p.relative_to(built)): p.read_bytes() for p in built.rglob("*") if p.is_file()
+                    and "__pycache__" not in p.parts and p.name != ".DS_Store"}
+            self.assertEqual(sorted(have), sorted(want), "run: python3 scripts/hermes_plugin.py")
+            stale = [k for k in want if have[k] != want[k]]
+            self.assertEqual(stale, [], "run: python3 scripts/hermes_plugin.py")
+
+
 class HermesHub(unittest.TestCase):
     """skills/construct/: the Hermes skill as `hermes skills install rtmandreyev/construct/skills/construct` fetches it."""
 

@@ -118,7 +118,10 @@ so a release that misses one fails its tests. For version X.Y.Z:
 5. This file: the latest tag at the top, `git push origin vX.Y.Z` (step 2), the release's tag and the two zips'
    names (step 4).
 6. `python3 scripts/hermes_submission.py --hub`, which regenerates `skills/construct/` (the Hermes skill, its
-   frontmatter and its copy of `product.py`).
+   frontmatter and its copy of `product.py`), and `python3 scripts/hermes_plugin.py`, which regenerates
+   `hermes/construct/` (the Hermes plugin as Hermes installs it). After the release is pushed, the Hermes catalog
+   entry (`plugin-catalog/construct.yaml` in NousResearch/hermes-agent, `subdir: hermes/construct`) gets the tagged
+   commit's `sha` and the new `version` in a PR there.
 7. `CHANGELOG.md`: the top heading becomes `## X.Y.Z — <date>`. A minor release (X.Y.0) also gets its notes,
    `docs/releases/vX.Y.Z.md`, listed in `README.md` and `docs/README.md`; a fix release uses its CHANGELOG entry.
 8. Run the tests, commit, tag `vX.Y.Z`, then build the release's zips (step 4) and the gallery (step 5).

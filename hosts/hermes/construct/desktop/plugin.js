@@ -249,6 +249,8 @@ function PageFrame({ route, kind, loaderUrl, height, onCard, onState, control, o
   const htmlRef = useRef(null)
   const readyRef = useRef(false)
   const [src, setSrc] = useState(loaderUrl || null)
+  const srcRef = useRef(src)
+  srcRef.current = src
   const [failed, setFailed] = useState('')
   const [shown, setShown] = useState(false)
 
@@ -280,13 +282,17 @@ function PageFrame({ route, kind, loaderUrl, height, onCard, onState, control, o
         }
         htmlRef.current = html
         if (view.card && onCard) onCard(view.card)
-        if (!loaderUrl) {
-          const loader = view.loader
-          if (typeof loader !== 'string' || loader.length > LOADER_MAX) {
-            setFailed('The page could not be read.')
-            return
+        // the plugin's current loader, also for a card shown before an update (its message keeps the old one)
+        const loader = view.loader
+        if (typeof loader === 'string' && loader.length <= LOADER_MAX) {
+          const next = 'data:text/html;charset=utf-8,' + encodeURIComponent(loader)
+          if (next !== srcRef.current) {   // the same loader: the frame stays, and its ready message still counts
+            readyRef.current = false
+            setSrc(next)
           }
-          setSrc('data:text/html;charset=utf-8,' + encodeURIComponent(loader))
+        } else if (!loaderUrl) {
+          setFailed('The page could not be read.')
+          return
         }
         deliver()
       },
@@ -303,7 +309,7 @@ function PageFrame({ route, kind, loaderUrl, height, onCard, onState, control, o
   }, [route, loaderUrl, deliver, post, onCard])
 
   useEffect(() => {
-    if (loaderUrl) setSrc(loaderUrl)
+    if (loaderUrl && !htmlRef.current) setSrc(loaderUrl)
   }, [loaderUrl])
 
   useEffect(() => {

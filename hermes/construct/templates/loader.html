@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en" data-page="__PAGE__">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>__TITLE__</title>
+<style>
+  html, body { margin: 0; height: 100%; background: #050205; color: #a597b3;
+    font: 11px/1.4 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; letter-spacing: .14em; }
+  #wait { display: flex; height: 100%; align-items: center; justify-content: center; text-align: center; padding: 0 24px; }
+</style>
+</head>
+<body>
+<div id="wait">OPENING THE CONSTRUCT</div>
+<script>
+/* A construct's page is too large to put in a frame's address (several megabytes of geometry), so this small page
+   stands in for it. Opened from disk, it goes to the page beside it. Shown by the Construct plugin in Hermes Desktop,
+   it asks the host for the page, checks what arrives and replaces itself with it, adding a small relay that turns
+   the host's toolbar into the viewer's own keys. The same loader shows a model kit's pages: its steps in 3D
+   (assembly.html, a construct page) and its booklet (static HTML, its pictures inlined, no scripts of its own). */
+(function () {
+  "use strict";
+  var MAX = 64 * 1024 * 1024;
+  var wait = document.getElementById("wait");
+  if (location.protocol === "file:") {
+    location.replace(document.documentElement.getAttribute("data-page") || "construct.html");
+    return;
+  }
+  if (window.parent === window) { wait.textContent = "OPEN THE PAGE BESIDE THIS FILE"; return; }
+
+  // Runs inside a construct page (or a kit's 3D steps) once it has replaced this one. Only keys the viewer knows pass.
+  var RELAY = "<script>(" + String(function () {
+    var KEYS = { p: 1, s: 1, r: 1, m: 1, l: 1, t: 1, h: 1, " ": 1, "1": 1, "2": 1, "3": 1, "4": 1, "5": 1, "6": 1,
+                 ArrowLeft: 1, ArrowRight: 1 };
+    var step = 0;
+    function state() {
+      var h = window.HOLO && window.HOLO.hologram;
+      var o = (h && h.opt) || {};
+      return { type: "construct:state", ready: !!h, mode: o.mode === "provenance" ? "provenance" : "light",
+               solid: !!o.solid, hasSolid: !!(h && h.solid), reduced: !!o.reduced, step: step };
+    }
+    function tell() { try { parent.postMessage(state(), "*"); } catch (e) { /* the host went away */ } }
+    function stepOf(url) { var m = /#step-(\d+)/.exec(String(url || "")); if (m) { step = parseInt(m[1], 10); tell(); } }
+    // a kit's steps say where they are in the address; in this frame the address may not change, so it is only heard
+    var replace = history.replaceState;
+    history.replaceState = function (s, t, url) {
+      stepOf(url);
+      try { return replace.apply(history, arguments); } catch (e) { return undefined; }
+    };
+    window.addEventListener("hashchange", function () { stepOf(location.hash); });
+    window.addEventListener("message", function (e) {
+      if (e.source !== parent) return;
+      var d = e.data;
+      if (!d || typeof d !== "object") return;
+      if (d.type === "construct:key" && typeof d.key === "string" && KEYS.hasOwnProperty(d.key)) {
+        window.dispatchEvent(new KeyboardEvent("keydown", { key: d.key, bubbles: true }));
+        setTimeout(tell, 60);
+      } else if (d.type === "construct:step" && typeof d.step === "number" && d.step >= 1 && d.step <= 999) {
+        try { location.hash = "#step-" + Math.floor(d.step); } catch (err) { /* the address is fixed here */ }
+        window.dispatchEvent(new HashChangeEvent("hashchange"));
+      } else if (d.type === "construct:ask") {
+        tell();
+      }
+    });
+    // in a card the "How to read it" panel starts folded (H, or its heading, opens it)
+    function fold(tries) {
+      var box = document.querySelector(".rd-how");
+      if (box) { if (!box.classList.contains("closed")) { var b = box.querySelector("button"); if (b) b.click(); } return; }
+      if (tries > 0) setTimeout(function () { fold(tries - 1); }, 150);
+    }
+    // the viewer starts on DOMContentLoaded (its listener came first); report once it is ready
+    function hook() {
+      fold(20);
+      if (window.HOLO && window.HOLO.ready) window.HOLO.ready.then(tell, tell); else tell();
+    }
+    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", function () { setTimeout(hook, 0); });
+    else setTimeout(hook, 0);
+  }) + ")();<\/script>";
+
+  // Runs inside a kit's booklet: its links to the 3D steps go to the card's 3D tab instead of leaving the frame.
+  var BOOKLET = "<script>(" + String(function () {
+    document.addEventListener("click", function (e) {
+      var a = e.target && e.target.closest ? e.target.closest("a[href]") : null;
+      if (!a) return;
+      e.preventDefault();
+      var m = /^assembly\.html(?:#step-(\d+))?$/.exec(a.getAttribute("href") || "");
+      if (m) { try { parent.postMessage({ type: "construct:open-steps", step: m[1] ? parseInt(m[1], 10) : 1 }, "*"); } catch (err) { /* no host */ } }
+    }, true);
+  }) + ")();<\/script>";
+
+  // in the chat's narrow card: the card's toolbar names the keys, so the help line and round history step aside; the
+  // provenance legend goes up to the right, clear of the caption, and the reading panel to the left
+  var CARD_CSS = "<style>.help,.rounds{display:none!important}" +
+    ".kc{display:none!important}" +   // a kit guide's own step bar: the card's bar steps it
+    "body.provenance .legend{top:12px!important;bottom:auto!important;right:14px!important;left:auto!important;" +
+    "max-width:min(300px,44%)!important;max-height:calc(100% - 150px)!important}" +
+    "body.provenance .caption{max-width:calc(100% - 40px)!important}" +
+    ".rd-how{left:14px!important;right:auto!important;top:12px!important;width:min(330px,calc(54% - 28px))!important}" +
+    // a run's replay bar spans the card's foot; its caption, which the card's header already names, steps aside so the
+    // bar and the page's callouts keep the room they were laid out in
+    ".rd-bar{left:14px!important;right:14px!important;width:auto!important;bottom:12px!important}" +
+    "body:has(.rd-bar) .caption{display:none!important}" +
+    "</style>";
+
+  var done = false;
+  window.addEventListener("message", function (e) {
+    if (done || e.source !== parent) return;
+    var d = e.data;
+    if (!d || typeof d !== "object" || d.type !== "construct:page") return;
+    var html = d.html, kind = d.kind || "construct";
+    if (typeof html !== "string" || html.length < 64 || html.length > MAX) return;
+    if (!/^\s*<!doctype html>/i.test(html.slice(0, 64))) return;
+    var add;
+    if (kind === "construct" || kind === "assembly") {
+      if (html.indexOf('id="hologram-geometry"') < 0) return;
+      add = CARD_CSS + RELAY;
+    } else if (kind === "booklet") {
+      if (/<script/i.test(html)) return;   // a booklet is static: anything with a script is not one
+      add = BOOKLET;
+    } else {
+      return;
+    }
+    done = true;
+    // first in the head, so it hears the page from its first line (a kit's steps report themselves early)
+    var head = html.search(/<head(\s[^>]*)?>/i);
+    var at = head < 0 ? html.indexOf(">", html.search(/<!doctype html>/i)) + 1 : html.indexOf(">", head) + 1;
+    html = html.slice(0, at) + add + html.slice(at);
+    document.open();
+    document.write(html);
+    document.close();
+  });
+  window.addEventListener("message", function (e) {
+    if (!done && e.source === parent && e.data && e.data.type === "construct:failed" && typeof e.data.reason === "string") {
+      wait.textContent = e.data.reason.slice(0, 200).toUpperCase();
+    }
+  });
+  try { parent.postMessage({ type: "construct:loader-ready" }, "*"); } catch (e) { /* no host */ }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+name: construct
+version: "1.2.0"
+description: Hermes researches a thing and writes one exact, checked description of it (its named parts at real sizes, how they fit, open and move, and how each is known, measured or guessed); Construct checks it and builds from it a live hologram in the chat, a 3D model with working joints, a print, a model kit, CAD and STEP, and films. NetLogo runs too.
+author: Artyom Andreyev
+manifest_version: 2
+license: Apache-2.0
+homepage: https://github.com/rtmandreyev/construct
+requires_hermes: ">=0.22"
+provides_tools: [construct_start, construct_edit, construct_check, construct_inspect, construct_build, construct_review, construct_export, construct_film, construct_job, construct_command, construct_netlogo_run, construct_netlogo_draw]
+provides_hooks: [pre_tool_call]
+tags: [creative, 3d, hologram, webgl, gltf, 3d-printing, cad, step, provenance, netlogo, simulation]
+config_schema:
+  projects_folder:
+    type: str
+    default: ""
+    label: Projects folder
+    description: Where construct projects (scenes, builds, reviews, exports, films) are kept. Blank keeps them in the plugin's own data folder.
+  confirm_runs:
+    type: bool
+    default: false
+    label: Ask before running programs
+    description: Ask before Construct runs a headless browser, ffmpeg, FreeCAD, Blender or NetLogo on this machine. Scheduled runs are refused while this is on.
+  netlogo_folder:
+    type: str
+    default: ""
+    label: NetLogo folder
+    description: NetLogo's folder (the one holding app/ and models/) when it is not in a usual place. Blank looks at CONSTRUCT_NETLOGO and the usual install places.

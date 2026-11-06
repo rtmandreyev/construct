@@ -1,0 +1,155 @@
+{
+ "materials": [
+  {
+   "name": "clear glazing",
+   "parts": [
+    "windscreen-*",
+    "side-glass-*",
+    "door-*-glass",
+    "door-*-vent-glass",
+    "cargo-*-glass",
+    "rear-window",
+    "corner-glass",
+    "skylight-?",
+    "headlamp-lens"
+   ],
+   "color": "#dfeef2",
+   "finish": "glass"
+  },
+  {
+   "name": "clear red (tail lamps)",
+   "parts": [
+    "tail-lamp"
+   ],
+   "color": "#b0201c",
+   "finish": "glass"
+  },
+  {
+   "name": "chrome",
+   "parts": [
+    "bumper-*",
+    "hubcap-*",
+    "headlamp-rim",
+    "roundel",
+    "roundel-disc",
+    "*-handle",
+    "lid-handle",
+    "mirror-*",
+    "plate-light",
+    "indicator",
+    "sunroof-rail",
+    "bumper-iron-*",
+    "emblem-*",
+    "grab-rail",
+    "cab-hinge",
+    "cargo-hinge-*"
+   ],
+   "color": "#d9dde0",
+   "finish": "chrome"
+  },
+  {
+   "name": "tyre black",
+   "parts": [
+    "tyre-*",
+    "spare-tyre"
+   ],
+   "color": "#1c1c1c",
+   "finish": "rubber"
+  },
+  {
+   "name": "sunroof canvas (black)",
+   "parts": [
+    "sunroof-panel-*"
+   ],
+   "color": "#26262a",
+   "finish": "plastic"
+  },
+  {
+   "name": "L289 blue-white (upper body, wheels)",
+   "parts": [
+    "roof-*",
+    "rear-header",
+    "rear-corner-header",
+    "rear-corner-belt",
+    "rear-belt-strip",
+    "rear-window-post-*",
+    "pillar-*",
+    "belt-strip-*",
+    "roof-rail-*",
+    "b-post-right",
+    "door-*-belt",
+    "door-*-top",
+    "door-*-post",
+    "door-*-rear-post",
+    "door-*-vent-post",
+    "door-*-front-post",
+    "cargo-*-belt",
+    "cargo-*-top",
+    "cargo-*-post-*",
+    "a-pillar",
+    "windscreen-post",
+    "windscreen-header",
+    "windscreen-sill",
+    "rim-*",
+    "dashboard",
+    "a-pillar-*",
+    "screen-post",
+    "screen-header",
+    "roof-front-*",
+    "roof-rear-*",
+    "spare-rim"
+   ],
+   "color": "#e8e8dc",
+   "finish": "paint"
+  },
+  {
+   "name": "L380 turquoise (lower body; mask the V on the nose in blue-white)",
+   "parts": [
+    "nose-panel",
+    "side-lower-*",
+    "b-pillar-right",
+    "door-*-panel",
+    "cargo-*-panel",
+    "rear-apron",
+    "rear-quarter-low",
+    "rear-panel-upper",
+    "engine-lid",
+    "fuel-flap"
+   ],
+   "color": "#2f7d86",
+   "finish": "paint"
+  },
+  {
+   "name": "seat grey",
+   "parts": [
+    "*-seat-*",
+    "*-bench-*",
+    "cab-bench-*"
+   ],
+   "color": "#8a8e8c",
+   "finish": "plastic"
+  },
+  {
+   "name": "alloy (engine block, transaxle; brush the barrels black)",
+   "parts": [
+    "crankcase",
+    "cylinder-head",
+    "cylinder-barrel",
+    "cylinder-barrel-rear",
+    "pulley",
+    "transaxle",
+    "differential"
+   ],
+   "color": "#a7a9a8",
+   "finish": "brushed"
+  },
+  {
+   "name": "chassis black",
+   "parts": [
+    "*"
+   ],
+   "color": "#222222",
+   "finish": "paint"
+  }
+ ]
+}

@@ -1,0 +1,175 @@
+;; construct.nls: record a NetLogo run for Construct (https://github.com/rtmandreyev/construct). Apache-2.0.
+;;
+;; Add it to a model with   __includes ["construct.nls"]   and, at the end of setup (after clear-all and
+;; reset-ticks, so nothing clears it):
+;;
+;;   construct-start "Flocking" "flocking-run.jsonl"      ; a title and the file to write
+;;   construct-seed 42                                    ; optional: the seed your run used (random-seed 42)
+;;   construct-track-turtles ["heading"]                  ; optional: turtle variables or reporters to record
+;;   construct-track-reporters ["count sheep" "count wolves"]   ; optional: observer reporters, each record
+;;   construct-track-patches "pcolor" 5                   ; optional: a patch reporter, every 5 ticks
+;;   construct-skip-turtles                               ; optional: no turtles (reporters or patches only)
+;;   construct-record                                     ; the first record, at tick 0
+;;
+;; then  construct-record  at the end of go (each tick), and  construct-finish  when the run ends (or as
+;; a BehaviorSpace post-run command). A model that never starts the tick counter is recorded by steps:
+;; its records are numbered 0, 1, 2 ... instead. The file is JSON Lines: one header, then one line per record.
+;; Every turtle is recorded with its who, breed, xcor, ycor and color; links when their number changes.
+;; Then:   construct netlogo flocking-run.jsonl --view space-time --out scene.json
+;;
+;; With BehaviorSpace, give each run its own file (for example with behaviorspace-run-number in the
+;; name), since parallel runs would otherwise write to one file.
+
+globals [
+  construct-file construct-title construct-seed-value construct-turtle-vars construct-reporters
+  construct-patch-reporter construct-patch-every construct-every construct-header? construct-link-count
+  construct-turtles? construct-reporter-tasks construct-patch-task construct-turtle-tasks
+  construct-steps construct-last construct-patch-last
+]
+
+to construct-start [ construct-run-title construct-path ]
+  set construct-title construct-run-title
+  set construct-file construct-path
+  set construct-seed-value "null"
+  set construct-turtle-vars []
+  set construct-turtle-tasks []
+  set construct-reporters []
+  set construct-reporter-tasks []
+  set construct-patch-reporter ""
+  set construct-patch-every 0
+  set construct-every 1
+  set construct-header? false
+  set construct-link-count -1
+  set construct-turtles? true
+  set construct-steps 0
+  set construct-last -1
+  set construct-patch-last -1
+  file-close-all
+  if file-exists? construct-file [ file-delete construct-file ]
+end
+
+to construct-seed [ construct-n ]
+  set construct-seed-value construct-n
+end
+
+;; each source compiled once into an anonymous reporter, not once per agent and tick
+to-report construct-task [ construct-source ]
+  report runresult (word "[ [] -> " construct-source " ]")
+end
+
+to construct-track-turtles [ construct-names ]
+  set construct-turtle-vars construct-names
+  set construct-turtle-tasks map [ construct-v -> construct-task construct-v ] construct-names
+end
+
+to construct-track-reporters [ construct-sources ]
+  set construct-reporters construct-sources
+  set construct-reporter-tasks map [ construct-v -> construct-task construct-v ] construct-sources
+end
+
+to construct-track-patches [ construct-source construct-n ]
+  set construct-patch-reporter construct-source
+  set construct-patch-task construct-task construct-source
+  set construct-patch-every max list 1 construct-n
+end
+
+to construct-skip-turtles
+  set construct-turtles? false
+end
+
+to construct-record-every [ construct-n ]
+  set construct-every max list 1 construct-n
+end
+
+;; the run's clock: ticks, or the records so far in a model that never starts the tick counter
+to-report construct-ticking?
+  let construct-ok? true
+  carefully [ if ticks < 0 [ ] ] [ set construct-ok? false ]
+  report construct-ok?
+end
+
+to construct-record
+  let construct-ticks? construct-ticking?
+  let construct-t ifelse-value construct-ticks? [ ticks ] [ construct-steps ]
+  if not construct-ticks? [ set construct-steps construct-steps + 1 ]
+  ;; once each time the clock moves (with `every`: each time it enters a new block of ticks), so a tick is
+  ;; recorded once even when go stops and records again; a clock that moves in fractions (tick-advance) counts
+  if construct-t = construct-last or (construct-every > 1 and
+    floor (construct-t / construct-every) = floor (construct-last / construct-every)) [ stop ]
+  set construct-last construct-t
+  file-open construct-file
+  if not construct-header? [
+    file-print (word "{\"construct-netlogo\":1,\"title\":" construct-json construct-title
+      ",\"netlogo\":" construct-json netlogo-version ",\"seed\":" construct-seed-value
+      ifelse-value construct-ticks? [ "" ] [ ",\"clock\":\"steps\"" ]
+      ",\"world\":{\"min-pxcor\":" min-pxcor ",\"max-pxcor\":" max-pxcor ",\"min-pycor\":" min-pycor
+      ",\"max-pycor\":" max-pycor "}"
+      ",\"turtle-vars\":" construct-json construct-turtle-vars ",\"reporters\":" construct-json construct-reporters
+      ",\"patch-reporter\":" construct-json construct-patch-reporter ",\"patch-every\":" construct-patch-every "}")
+    set construct-header? true
+  ]
+  ;; streamed piece by piece: a long record is never built up as one string
+  file-type (word "{\"t\":" construct-t)
+  if construct-turtles? [
+    file-type ",\"turtles\":"
+    construct-write map [ construct-a -> construct-turtle construct-a ] sort turtles
+  ]
+  if not empty? construct-reporters [
+    file-type ",\"reporters\":"
+    construct-write map [ construct-r -> runresult construct-r ] construct-reporter-tasks
+  ]
+  if construct-turtles? and count links != construct-link-count [
+    set construct-link-count count links
+    file-type ",\"links\":"
+    construct-write map [ construct-l -> [ (list [who] of end1 [who] of end2 (word breed)) ] of construct-l ] sort links
+  ]
+  if construct-patch-reporter != "" and floor (construct-t / construct-patch-every) != floor (construct-patch-last / construct-patch-every) [
+    set construct-patch-last construct-t
+    file-type ",\"patches\":"
+    construct-write map [ construct-q -> [ runresult construct-patch-task ] of construct-q ] sort patches
+  ]
+  file-print "}"
+  file-close
+end
+
+;; a list, written to the open file as a JSON array
+to construct-write [ construct-xs ]
+  file-type "["
+  if not empty? construct-xs [
+    file-type construct-json first construct-xs
+    foreach but-first construct-xs [ construct-x -> file-type "," file-type construct-json construct-x ]
+  ]
+  file-type "]"
+end
+
+to construct-finish
+  file-open construct-file
+  file-print (word "{\"end\":" ifelse-value construct-ticking? [ ticks ] [ max list 0 construct-last ] "}")
+  file-close
+end
+
+to-report construct-turtle [ construct-a ]
+  report [ (sentence who (word breed) precision xcor 4 precision ycor 4 color map [ construct-v -> runresult construct-v ] construct-turtle-tasks) ] of construct-a
+end
+
+;; a NetLogo value as JSON: numbers, booleans, strings, lists, agents (a turtle as its who) and nobody
+to-report construct-json [ construct-v ]
+  if is-number? construct-v [ report (word construct-v) ]
+  if is-boolean? construct-v [ report ifelse-value construct-v [ "true" ] [ "false" ] ]
+  if is-string? construct-v [ report (word "\"" construct-escape construct-v "\"") ]
+  if is-list? construct-v [
+    if empty? construct-v [ report "[]" ]
+    report (word "[" reduce [ [ construct-a construct-b ] -> (word construct-a "," construct-b) ] map [ construct-x -> construct-json construct-x ] construct-v "]")
+  ]
+  if is-turtle? construct-v [ report (word [who] of construct-v) ]
+  if is-patch? construct-v [ report construct-json [ (list pxcor pycor) ] of construct-v ]
+  report "null"
+end
+
+to-report construct-escape [ construct-s ]
+  let construct-out ""
+  foreach n-values length construct-s [ construct-i -> item construct-i construct-s ] [ construct-c ->
+    set construct-out (word construct-out ifelse-value (construct-c = "\"" or construct-c = "\\") [ (word "\\" construct-c) ] [ construct-c ])
+  ]
+  report construct-out
+end

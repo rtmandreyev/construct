@@ -3,7 +3,7 @@
 ## 1.2.0 — 2026-11-06
 
 - **Construct for Hermes, a native plugin** ([hosts/hermes/construct](hosts/hermes/construct/README.md); install with
-  `hermes plugins install rtmandreyev/construct-hermes`, built by `scripts/hermes_plugin.py`). Twelve tools, a
+  `hermes plugins install rtmandreyev/construct#hermes/construct`, built into `hermes/construct/` by `scripts/hermes_plugin.py`). Twelve tools, a
   `/construct` command and the `construct:construct` skill with sixteen tutorials. In Hermes Desktop the construct
   is live in the chat with its own controls (provenance, solid, replay, how to read it); a glTF turns in a 3D viewer
   with its joints; a STEP or FreeCAD file shows its exact shapes; a kit steps through in 3D beside its booklet; a

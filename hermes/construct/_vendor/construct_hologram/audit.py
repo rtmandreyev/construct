@@ -1,0 +1,679 @@
+"""The geometric and provenance audit of a compiled construct.
+
+Validation proves a scene is well-formed; the audit asks whether the object stands up
+and tells the truth. Errors must be zero before visual review. Warnings are judgment
+calls the author resolves or explains. Bounding boxes keep it conservative: contact
+between two boxes is necessary for contact between their parts, so the audit never
+reports a part as floating when it really touches something.
+"""
+
+import math
+import re
+
+from . import export as export_mod, scene as scene_mod
+
+
+def _touch(a, b, tol):
+    return all(a["min"][k] <= b["max"][k] + tol and b["min"][k] <= a["max"][k] + tol for k in range(3))
+
+
+def audit(scene, geometry):
+    errors, warnings, info = [], [], {}
+
+    def add(target, code, part, message):
+        target.append({"code": code, "part": part, "message": message})
+
+    parts = geometry["parts"]
+    radius = max(geometry["bounds"]["radius"], 1e-6)
+    tol = max(0.001, 0.004 * radius)
+    by_id = {p["id"]: p for p in parts}
+    scene_parts = {p["id"]: p for p in scene["parts"]}
+    source_kind = {s["id"]: s["kind"] for s in scene.get("sources", [])}
+    facts_by_key = {f["key"]: f for f in scene.get("facts", [])}
+
+    # ---- support: every part rests on the ground or on something that does
+    # the ground and every declared-floating part are anchors: what touches them, transitively,
+    # is held up (a creature's tentacles hang from its floating bell)
+    inst = [(p["id"], i, b) for p in parts for i, b in enumerate(p["instances"])]
+    solid = [x for x in inst if not by_id[x[0]]["floating"]]
+    ground = min((b["min"][1] for _, _, b in solid), default=0.0)
+    supported = {(pid, i) for pid, i, b in solid if b["min"][1] <= ground + tol}
+    supported |= {(pid, i) for pid, i, b in inst if by_id[pid]["floating"]}
+    solid = inst
+    frontier = list(supported)
+    while frontier:
+        pid, i = frontier.pop()
+        box = by_id[pid]["instances"][i]
+        for qid, j, other in solid:
+            if (qid, j) not in supported and _touch(box, other, tol):
+                supported.add((qid, j))
+                frontier.append((qid, j))
+    for p in parts:
+        if p["floating"]:
+            continue
+        loose = [i for i in range(len(p["instances"])) if (p["id"], i) not in supported]
+        if loose:
+            add(errors, "floating", p["id"],
+                "%d of %d copies touch nothing that reaches the ground. Move them onto their support, "
+                "or declare \"floating\": true if they truly hover (a halo, a beam, particles)."
+                % (len(loose), len(p["instances"])))
+
+    # ---- assembly order: nothing should appear before what holds it up
+    for p in parts:
+        if p["floating"]:
+            continue
+        for i, b in enumerate(p["instances"]):
+            if b["min"][1] <= ground + tol:
+                continue
+            holders = [by_id[q] for q, j, o in solid if q != p["id"] and _touch(b, o, tol)]
+            if holders and all(h["stage"] > p["stage"] for h in holders):
+                add(warnings, "stage-order", p["id"],
+                    "appears (stage %d) before everything it rests on (stages %s): it will float during assembly."
+                    % (p["stage"], ", ".join(sorted({str(h["stage"]) for h in holders}))))
+                break
+
+    # ---- provenance: a part never claims more than its evidence
+    facts = {f["key"]: f for f in scene["facts"]}
+    rank = {"verified": 3, "user_supplied": 2, "inferred": 1, "decorative": 0}
+    for p in parts:
+        basis = [facts[k] for k in p["basis"]]
+        sp = scene_parts[p["id"]]
+        size, shape = scene_mod.certainty_axes(sp)   # basis facts are sizes: they back the size axis
+        if basis and size in ("verified", "user_supplied"):
+            best = max(rank[f["certainty"]] for f in basis)
+            if best < rank[size] and not p["source"]:
+                add(errors, "overclaim", p["id"],
+                    "is %s but its basis facts are at most %s and it cites no source."
+                    % (size, [k for k, v in rank.items() if v == best][0]))
+        if shape == "verified" and _freeform_points(sp["shape"]) >= 6:
+            kinds = {source_kind.get(sp.get("source"))} | {source_kind.get(facts_by_key.get(b, {}).get("source"))
+                                                           for b in sp.get("basis", [])}
+            if not kinds & set(scene_mod.SHAPE_EVIDENCE):
+                add(warnings, "shape-overclaim", p["id"],
+                    "has a verified shape, but no cited source gives it (a spec page verifies dimensions, not an "
+                    "outline or profile: make it {\"size\": \"verified\", \"shape\": \"traced\"} or \"inferred\").")
+        if p["role"] in ("mass", "identity") and p["certainty"] == "decorative" and scene["subject"]["category"] != "fictional":
+            add(warnings, "decorative-identity", p["id"],
+                "a %s part is decorative: say so when delivering, it is not evidence." % p["role"])
+    accuracy = scene["subject"]["accuracy"]
+    key_parts = [p for p in parts if p["role"] in ("mass", "identity")]
+    backed = [p for p in key_parts if p["certainty"] in ("verified", "user_supplied", "traced")]
+    info["evidence_backed_key_parts"] = "%d of %d" % (len(backed), len(key_parts))
+    # designed parts (inferred, citing nothing they were read from): those made to a requirement (what the user asked
+    # for, or what the documentation says it does) and those that are free design
+    wants = {f["key"] for f in scene["facts"] if f.get("requirement")}
+    designed = [p for p in parts if p.get("evidence") == 1 and p["certainty"] == "inferred"]
+    to_req = [p for p in designed if scene_mod.requirements(p, wants)]
+    info["designed_parts"] = {"to_a_requirement": len(to_req), "free": len(designed) - len(to_req)}
+    info["requirements_met"] = sorted({k for p in to_req for k in scene_mod.requirements(p, wants)})
+    unmet = sorted(wants - {b for p in parts for b in p.get("basis", [])})
+    if unmet:
+        add(warnings, "requirement-unmet", None,
+            "no part names the requirement%s %s in its basis: say which parts realise %s." % (
+                "" if len(unmet) == 1 else "s", ", ".join(unmet), "it" if len(unmet) == 1 else "them"))
+    if accuracy == "documented" and key_parts and len(backed) < len(key_parts) / 2:
+        add(errors, "accuracy", None,
+            "subject.accuracy is \"documented\" but most mass/identity parts are inferred or decorative: "
+            "use \"approximate\" or \"generic\", or cite the evidence.")
+    if accuracy == "generic" and any("verified" in scene_mod.certainty_axes(scene_parts[p["id"]]) for p in parts):
+        add(warnings, "accuracy", None, "verified parts in a generic reconstruction: consider \"approximate\".")
+
+    # ---- recognition: hierarchy and identity
+    roles = {p["role"] for p in parts}
+    if "mass" not in roles:
+        add(warnings, "no-mass", None, "no part has role \"mass\": the silhouette has no primary volume.")
+    if "identity" not in roles and scene["subject"]["category"] not in ("cd", "book", "artwork-carrier"):
+        add(warnings, "no-identity", None,
+            "no part has role \"identity\": which two or three features make this recognisably itself?")
+    if geometry.get("articulations") and not any(v.get("id") == "open" for v in geometry["presentation"]["views"]):
+        add(warnings, "no-open-view", None,
+            "it opens but has no view named \"open\": from the hero the opened pose may look closed.")
+    from . import tiers
+    tiers.audit(scene, add, warnings)
+    # a body drawn with thin tubes reads as glowing wire, not a surface (seen in live car runs)
+    size = max(radius * 2, 1e-6)
+    wires = []
+    for sp in scene["parts"]:
+        sh = sp["shape"]
+        if sh["type"] != "tube" or sp.get("floating"):
+            continue
+        r = max(sh["radius"]) if isinstance(sh["radius"], list) else sh["radius"]
+        length = sum(math.dist(a_, b_) for a_, b_ in zip(sh["path"], sh["path"][1:]))
+        if r <= 0.02 * size and length >= 0.25 * size:
+            wires.append(sp["id"])
+    surfaces = [sp for sp in scene["parts"] if sp["role"] == "mass" and sp["shape"]["type"] in
+                ("box", "loft", "extrude", "lathe", "sphere", "cylinder", "cone")]
+    # a vehicle whose body is built of surfaces keeps its real rods and rails (a T1's drip rail, bumpers, tie-rods)
+    if (scene["subject"]["category"] == "vehicle" and len(wires) >= 6 and len(wires) > len(surfaces)) or \
+            (len(wires) >= 8 and len(surfaces) <= 1):
+        add(warnings, "tube-outline", None, "%d long thin tubes (%s) trace the outline: they render as glowing wires, "
+            "not a body. Build the body as a loft through its sections (or filled slices with section curves), and keep "
+            "tubes for real rods, pipes and frames." % (len(wires), ", ".join(wires[:5]) + (", ..." if len(wires) > 5 else "")))
+    # a main surface drawn as a flat dark shape with no contour reads as cardboard (seen in live car
+    # runs): line "none" is for occluders and backings, never for a visible main surface
+    for sp in scene["parts"]:
+        look = sp.get("look") or {}
+        if look.get("line") != "none" or look.get("fill") == "none":
+            continue
+        b = by_id[sp["id"]]["instances"][0]
+        diag = math.sqrt(sum((b["max"][k] - b["min"][k]) ** 2 for k in range(3)))
+        if sp["role"] == "mass" or (sp["shape"]["type"] in ("loft", "extrude") and diag >= 0.25 * size):
+            add(warnings, "bare-surface", sp["id"],
+                "a main surface drawn with line \"none\": with no contour it reads as a flat cardboard shape. Keep a "
+                "faint contour wire over its dark fill (look weight about 0.4-0.5, alpha about 0.5-0.6); line \"none\" "
+                "is for occluders and backings only.")
+    asm_s = ((scene.get("animation") or {}).get("assembly") or {}).get("seconds", 0)
+    if isinstance(asm_s, (int, float)) and asm_s > scene_mod.ASSEMBLY_S:
+        add(warnings, "long-assembly", None,
+            "the assembly lasts %g s: long assemblies are for film mode (a construct assembles in at most %d s). "
+            "For a film, keep the scene's assembly short and set the length when you render: `video --assembly`."
+            % (asm_s, scene_mod.ASSEMBLY_S))
+    styles = geometry["styles"]
+    stride = geometry["line_stride"]
+    lines = geometry["lines"]
+    n = len(lines) // stride
+    quiet = sum(1 for i in range(n) if parts[int(styles[int(lines[i * stride + 6])][6])]["role"] in ("detail", "ornament"))
+    if n and quiet / n > 0.55:
+        add(warnings, "clutter", None,
+            "%.0f%% of lines are detail or ornament: the primary structure may drown. Reduce rings/ribs or repeats."
+            % (100.0 * quiet / n))
+    seen, dup = set(), 0   # within a part: two parts that meet along an edge (a knob on its skirt) both draw it
+    for i in range(n):
+        a = tuple(lines[i * stride:i * stride + 3])
+        b = tuple(lines[i * stride + 3:i * stride + 6])
+        key = (int(styles[int(lines[i * stride + 6])][6]),) + ((a, b) if a <= b else (b, a))
+        if key in seen:
+            dup += 1
+        seen.add(key)
+    if n and dup / n > 0.02:
+        add(warnings, "duplicates", None,
+            "%d duplicate segments (%.1f%%): repeats or mirrors overlap themselves." % (dup, 100.0 * dup / n))
+    for p in parts:
+        b = p["instances"][0]
+        diag = math.sqrt(sum((b["max"][k] - b["min"][k]) ** 2 for k in range(3)))
+        if diag < 0.015 * 2 * radius and p["shape"] not in ("marker", "points"):
+            add(warnings, "tiny", p["id"],
+                "is %.1f%% of the object's size: it may vanish at the hero framing." % (100.0 * diag / (2 * radius)))
+        # glass named in the label but not in the id: everything past the light (the solid view, exports, prints,
+        # kits) knows glass by its id, so it would come out as an opaque panel hiding what is behind it
+        sp = scene_parts.get(p["id"], {})
+        label = str(sp.get("label", "")).lower().replace("glazed", "glazing")
+        if (sp.get("look") or {}).get("fill") == "glass" and not export_mod.is_glass_name(p["id"]) and \
+                any(w in label for w in export_mod.GLASS_WORDS) and not any(w in label for w in export_mod.NOT_GLASS_WORDS):
+            add(warnings, "glass-name", p["id"],
+                "is glass by its label, but its id does not say so: the solid view, exports, prints and kits know glass by "
+                "its id and make it an opaque panel. Put glass, glazing or window in it (\"hood-door-glass\").")
+        carriers = {x["part"] for x in geometry.get("labels", []) + geometry.get("artwork", [])}
+        carriers |= {a["part"] for a in geometry.get("anchors", {}).values() if isinstance(a, dict) and a.get("part")}
+        if p["id"] not in carriers and not any(int(styles[s][6]) == parts.index(p) for s in range(len(styles))):
+            add(warnings, "invisible", p["id"], "produces nothing to draw (line \"none\" and no fill).")
+        # the 3D export keeps every surface: a load-bearing part drawn only as lines has none
+        if p["role"] in ("mass", "structure") and p["id"] in scene_parts and \
+                not scene_mod._local_mesh(scene_parts[p["id"]]["shape"], 0).tris:
+            add(warnings, "no-surface", p["id"],
+                "is a %s with no surface (shape %s): it will be missing from a 3D export. Use a tube, a box or "
+                "another solid shape." % (p["role"], p["shape"]))
+
+    _contact_and_thickness(scene, geometry, add, warnings, errors)
+    for where, text, fact, said in stale_numbers(scene):
+        add(warnings, "stale-number", None,
+            "%s says %r, but the fact %s is %s%s: say the fact's value, or correct the fact."
+            % (where, said, fact["key"], fact["value"], " " + fact["unit"] if fact.get("unit") else ""))
+
+    # ---- a construct drawn from recorded data (the NetLogo bridge) keeps that data as it was drawn
+    if "data_lock" in facts_by_key:
+        from . import netlogo
+        problem = netlogo.lock_problem(scene)
+        if problem:
+            add(errors, "data-lock", None, problem)
+
+    lo, hi = geometry["bounds"]["min"], geometry["bounds"]["max"]
+    dims = [round(hi[k] - lo[k], 4) for k in range(3)]
+    info.update({"dimensions_m": {"width": dims[0], "height": dims[1], "depth": dims[2]},
+                 "counts": geometry["counts"], "parts": len(parts),
+                 "stages": [s["stage"] for s in geometry["stages"]]})
+    return {"ok": not errors, "errors": errors, "warnings": warnings, "info": info}
+
+
+def format_report(report):
+    out = ["audit: %s (%d errors, %d warnings)" % ("PASS" if report["ok"] else "FAIL",
+                                                  len(report["errors"]), len(report["warnings"]))]
+    for label, items in (("ERROR", report["errors"]), ("warn", report["warnings"])):
+        for it in items:
+            out.append("  %s [%s]%s %s" % (label, it["code"], " " + it["part"] if it["part"] else "", it["message"]))
+    i = report["info"]
+    out.append("  size %(width)g x %(height)g x %(depth)g m" % i["dimensions_m"])
+    out.append("  %(lines)d lines, %(triangles)d triangles, %(points)d points, %(motions)d moving copies" % i["counts"])
+    out.append("  evidence-backed key parts: %s" % i["evidence_backed_key_parts"])
+    d = i.get("designed_parts") or {}
+    if d.get("to_a_requirement"):
+        out.append("  designed parts: %d to a requirement (%s), %d designed freely" % (
+            d["to_a_requirement"], ", ".join(i["requirements_met"][:6]) + (", ..." if len(i["requirements_met"]) > 6 else ""),
+            d["free"]))
+    return "\n".join(out)
+
+
+# ---------------------------------------------------------------------------- real contact and thickness
+#
+# The support check above works on bounding boxes, which is safe but blind to a part that only
+# appears to touch: the box of a diagonal arm covers the whole lamp, so a shade floating off its
+# end still "touches" it. These two checks look at the actual surfaces and segments, rebuilt
+# from the scene in rest pose.
+
+THIN = 0.006      # a structural part thinner than this share of the object's largest size is a hairline
+GAP = 0.01        # parts further apart than this share of the object's largest size do not touch
+NEAR = 0.005      # nor, for `detached`, parts further apart than this (metres; 1% of a car is 4.6 cm), or than
+NEAR_SHARE = 0.003  # this share of the object's largest size, whichever is larger (a cathedral's stones are not set to 5 mm)
+THIN_HOLD = 0.05  # a holder this thin, as a share of what it holds, is a strut, not a support
+THIN_SET = 3      # unless there are this many copies of it (legs, spokes, cables share the load)
+
+
+def _sub(a, b):
+    return (a[0] - b[0], a[1] - b[1], a[2] - b[2])
+
+
+def _dot(a, b):
+    return a[0] * b[0] + a[1] * b[1] + a[2] * b[2]
+
+
+def _seg_dist2(p, a, b):
+    ab, ap = _sub(b, a), _sub(p, a)
+    d = _dot(ab, ab)
+    t = 0.0 if d <= 1e-18 else max(0.0, min(1.0, _dot(ap, ab) / d))
+    q = (a[0] + ab[0] * t - p[0], a[1] + ab[1] * t - p[1], a[2] + ab[2] * t - p[2])
+    return _dot(q, q)
+
+
+def _tri_dist2(p, a, b, c):
+    """Squared distance from p to triangle abc (closest point by region)."""
+    ab, ac, ap = _sub(b, a), _sub(c, a), _sub(p, a)
+    d1, d2 = _dot(ab, ap), _dot(ac, ap)
+    if d1 <= 0 and d2 <= 0:
+        return _dot(ap, ap)
+    bp = _sub(p, b)
+    d3, d4 = _dot(ab, bp), _dot(ac, bp)
+    if d3 >= 0 and d4 <= d3:
+        return _dot(bp, bp)
+    cp = _sub(p, c)
+    d5, d6 = _dot(ab, cp), _dot(ac, cp)
+    if d6 >= 0 and d5 <= d6:
+        return _dot(cp, cp)
+    vc, vb, va = d1 * d4 - d3 * d2, d5 * d2 - d1 * d6, d3 * d6 - d5 * d4
+    if vc <= 0 and d1 >= 0 and d3 <= 0:
+        return _seg_dist2(p, a, b)
+    if vb <= 0 and d2 >= 0 and d6 <= 0:
+        return _seg_dist2(p, a, c)
+    if va <= 0 and (d4 - d3) >= 0 and (d5 - d6) >= 0:
+        return _seg_dist2(p, b, c)
+    den = 1.0 / (va + vb + vc)
+    v, w = vb * den, vc * den
+    q = (a[0] + ab[0] * v + ac[0] * w - p[0], a[1] + ab[1] * v + ac[1] * w - p[1], a[2] + ab[2] * v + ac[2] * w - p[2])
+    return _dot(q, q)
+
+
+def _part_geometry(scene):
+    """Per part id: (samples, primitives) in world space, rest pose; primitives are segments
+    (2 points) and triangles (3 points). Sprites (points, markers) are left out."""
+    out = {}
+    for part in scene["parts"]:
+        if part["shape"]["type"] in ("points", "marker"):
+            continue
+        mesh = scene_mod._local_mesh(part["shape"], scene_mod._hash_part(scene["seed"], part["id"]))
+        samples, prims = [], []
+        for xf, _, _, _ in scene_mod._instances(part):
+            for a, b, _ in mesh.lines:
+                a, b = xf(a), xf(b)
+                prims.append((a, b))
+                samples += [a, b, tuple((a[k] + b[k]) / 2 for k in range(3))]
+            for a, b, c in mesh.tris:
+                a, b, c = xf(a), xf(b), xf(c)
+                prims.append((a, b, c))
+                samples += [a, b, c, tuple((a[k] + b[k] + c[k]) / 3 for k in range(3))]
+        out[part["id"]] = (samples, prims)
+    return out
+
+
+def _contact_and_thickness(scene, geometry, add, warnings, errors=None):
+    lo, hi = geometry["bounds"]["min"], geometry["bounds"]["max"]
+    size = max(hi[k] - lo[k] for k in range(3)) or 1e-6
+    gap = max(0.0015, GAP * size)
+    parts = {p["id"]: p for p in scene["parts"]}
+
+    # ---- thickness: a mass or structure part that is a hairline barely renders
+    for p in scene["parts"]:
+        if p["role"] not in ("mass", "structure") or p.get("floating"):
+            continue
+        thin = _thickness(p)
+        if thin is None or thin >= THIN * size:
+            continue
+        need = THIN * size
+        what = {"tube": "radius %.4g m" % (need / 2), "cylinder": "radius %.4g m" % (need / 2),
+                "cone": "radii of %.4g m" % (need / 2), "torus": "minor radius %.4g m" % (need / 2),
+                "box": "%.4g m on its two thin sides" % need,
+                "curve": "a tube of radius %.4g m (a curve has no thickness)" % (need / 2)}.get(p["shape"]["type"], "%.4g m across" % need)
+        add(warnings, "thin", p["id"],
+            "is %s thick, a hairline next to the object's %.3g m: it will barely render. Use at least %s, "
+            "or give it role \"detail\" if it is meant to be fine." % ("%.4g m" % thin if thin else "zero", size, what))
+
+    # ---- contact: a part whose real geometry comes near no other part's (and not the ground)
+    geo = _part_geometry(scene)
+    cell = max(gap * 4, size / 48)
+    grid = {}
+    for pid, (_, prims) in geo.items():
+        for idx, pr in enumerate(prims):
+            lo_c = [int(math.floor((min(v[k] for v in pr) - gap) / cell)) for k in range(3)]
+            hi_c = [int(math.floor((max(v[k] for v in pr) + gap) / cell)) for k in range(3)]
+            if (hi_c[0] - lo_c[0] + 1) * (hi_c[1] - lo_c[1] + 1) * (hi_c[2] - lo_c[2] + 1) > 4096:
+                continue  # an enormous triangle: its vertices are samples of their own
+            for x in range(lo_c[0], hi_c[0] + 1):
+                for y in range(lo_c[1], hi_c[1] + 1):
+                    for z in range(lo_c[2], hi_c[2] + 1):
+                        grid.setdefault((x, y, z), []).append((pid, idx))
+    gap2 = gap * gap
+    near2 = min(gap, max(NEAR, NEAR_SHARE * size)) ** 2   # touching, for `detached`: a fin 2 cm under a car is not
+    ground = lo[1]
+
+    def touches(pid):
+        samples, _ = geo[pid]
+        for sp in samples:
+            if sp[1] <= ground + gap:
+                return True
+            for qid, idx in grid.get(tuple(int(math.floor(sp[k] / cell)) for k in range(3)), ()):
+                if qid == pid:
+                    continue
+                pr = geo[qid][1][idx]
+                d = _seg_dist2(sp, *pr) if len(pr) == 2 else _tri_dist2(sp, *pr)
+                if d <= near2:
+                    return True
+        return crosses(pid)
+
+    def crosses(pid):   # an edge of one through a face of the other: a pedal set into its box, a post into a beam,
+        # whose samples (corners, midpoints) all lie further from the other's faces than touching
+        for pr in geo[pid][1]:
+            for a, b in ((pr[0], pr[1]),) if len(pr) == 2 else ((pr[0], pr[1]), (pr[1], pr[2]), (pr[2], pr[0])):
+                lo_c = [int(math.floor(min(a[k], b[k]) / cell)) for k in range(3)]
+                hi_c = [int(math.floor(max(a[k], b[k]) / cell)) for k in range(3)]
+                if (hi_c[0] - lo_c[0] + 1) * (hi_c[1] - lo_c[1] + 1) * (hi_c[2] - lo_c[2] + 1) > 64:
+                    continue
+                for x in range(lo_c[0], hi_c[0] + 1):
+                    for y in range(lo_c[1], hi_c[1] + 1):
+                        for z in range(lo_c[2], hi_c[2] + 1):
+                            for qid, idx in grid.get((x, y, z), ()):
+                                q = geo[qid][1][idx]
+                                if qid != pid and len(q) == 3 and _seg_crosses_tri(a, b, *q):
+                                    return True
+        return False
+
+    connected = {pid for pid in geo if touches(pid)}
+    # touching is mutual: a part another part touches is connected too
+    for pid in list(geo):
+        if pid not in connected and any(_near(geo[q][0], pid, geo, grid, cell, near2) for q in connected if q != pid):
+            connected.add(pid)
+    for pid in geo:
+        p = parts[pid]
+        if pid in connected or p.get("floating") or p["role"] in ("ornament", "ground") or len(geo) < 2:
+            continue
+        near, dist = _nearest(pid, geo)
+        add(warnings, "detached", pid,
+            "touches no other part: its nearest is %r, %.3g m away (the object is %.3g m). Move it onto %r, "
+            "or set \"floating\": true if it truly hovers." % (near, dist, size, near))
+
+    # ---- support through real contact. The box check (floating) lets a gap pass when something thin bridges it (a
+    # strut, a ring) or a round part's box is bigger than the part; here support travels only where surfaces meet
+    if errors is None or len(geo) < 2:
+        return
+    from . import fit as fit_mod
+    vox, lattice = fit_mod.solids(scene, grid=True)   # each part's solid as voxels: whether two parts meet, measured on the solids
+    h = lattice.h if lattice else 0.0
+    within = max(1, int(math.ceil(gap / h))) if h else 1   # as near as the contact check above calls touching
+    boxes = {p["id"]: p["instances"] for p in geometry["parts"]}
+
+    whole = {pid: {"min": [min(c["min"][k] for c in cs) for k in range(3)],
+                   "max": [max(c["max"][k] for c in cs) for k in range(3)]} for pid, cs in boxes.items() if cs}
+
+    def boxes_touch(a, b):
+        if a not in whole or b not in whole or not _touch(whole[a], whole[b], gap):
+            return False
+        return any(_touch(x, y, gap) for x in boxes[a] for y in boxes[b])
+
+    def inside(a, b):   # a set inside b, as a movement in its case or a lens in its barrel: b holds it
+        return all(whole[b]["min"][k] - gap <= whole[a]["min"][k] and whole[a]["max"][k] <= whole[b]["max"][k] + gap
+                   for k in range(3))
+    low = min(((m & -m).bit_length() - 1 for v in vox.values() for m in v.values()), default=0)
+    anchors = {pid for pid in geo if parts[pid].get("floating") or
+               any(sp[1] <= ground + gap for sp in geo[pid][0]) or
+               any((m & -m).bit_length() - 1 <= low + 1 for m in vox.get(pid, {}).values())}
+    contacts = {pid: set() for pid in geo}
+    ids = list(geo)
+    for i, a in enumerate(ids):
+        for b in ids[i + 1:]:
+            if not boxes_touch(a, b):
+                continue
+            if a in vox and b in vox and (fit_mod.touch(vox[a], vox[b], within) or inside(a, b) or inside(b, a)):
+                contacts[a].add(b)
+                contacts[b].add(a)
+
+    def reach(blocked=()):
+        seen = set(anchors) - set(blocked)
+        todo = list(seen)
+        while todo:
+            for q in contacts[todo.pop()]:
+                if q not in seen and q not in blocked:
+                    seen.add(q)
+                    todo.append(q)
+        return seen
+    held = reach()
+    # a part drawn only in lines has no solid; it is asked about only for a solid nothing else holds up (a motor on a
+    # bracket drawn in lines): then its lines touch or not, and it carries what it touches
+    lined = [q for q in geo if q not in vox]
+    for pid in [q for q in vox if q in geo and q not in held]:
+        for qid in lined:
+            if qid != pid and boxes_touch(pid, qid) and \
+                    (_near(geo[pid][0], qid, geo, grid, cell, gap2) or _near(geo[qid][0], pid, geo, grid, cell, gap2)):
+                contacts[pid].add(qid)
+                contacts[qid].add(pid)
+                for rid in geo:
+                    if rid in held and rid != qid and boxes_touch(qid, rid) and \
+                            (_near(geo[qid][0], rid, geo, grid, cell, gap2) or _near(geo[rid][0], qid, geo, grid, cell, gap2)):
+                        contacts[qid].add(rid)
+                        contacts[rid].add(qid)
+    held = reach()
+    # a group that hangs in the air together is one fault: name the part nearest to what is held up, the one to move
+    loose = {q for q in geo if q not in held and contacts[q]}   # touching nothing at all is "detached", above
+    while loose:
+        group, todo = set(), [loose.pop()]
+        while todo:
+            q = todo.pop()
+            group.add(q)
+            for r in contacts[q]:
+                if r in loose:
+                    loose.discard(r)
+                    todo.append(r)
+        if all(parts[q]["role"] in ("ornament", "ground") for q in group):
+            continue
+        dist, pid, near = min((d, q, n) for q in sorted(group) for n, d in [_nearest(q, geo, among=held, most=60)])
+        rest = sorted(group - {pid})
+        add(errors, "unsupported", pid,
+            "rests on nothing that reaches the ground%s: its box touches its neighbours', but no surface meets one "
+            "that is held up. The nearest is %r, %.3g m away: move it onto %r, or set \"floating\": true if it "
+            "truly hovers." % (" (and so do %s, resting on it)" % ", ".join(repr(q) for q in rest[:3]) if rest else "",
+                               near, dist, near))
+    # is it held? A part that stands on an edge or a point with its weight off it tips over: a back board leaning back
+    # from the rail its foot stands on, with nothing behind it (a part fixed into the side of another, or hung, is left
+    # to the eye; a part drawn only in lines, or set inside another, has no contact to measure)
+    standing = {pid: contacts[pid] for pid in vox if pid in held and pid in parts and not parts[pid].get("floating")
+                and parts[pid]["role"] in ("mass", "structure", "identity") and not export_mod.is_glass_name(pid)
+                and all(q in vox for q in contacts[pid]) and not any(inside(pid, q) for q in contacts[pid])}
+    for t in fit_mod.tipping(vox, lattice, standing, within, low, {q: _thickness(parts[q]) for q in standing}) \
+            if lattice else ():
+        on = " and ".join(q if q == "the ground" else repr(q) for q in t["by"][:3])
+        how = {"line": "along one edge (a line %.3g m long)" % t["span"], "point": "at one point",
+               "area": "on a patch %.3g m across" % t["span"]}[t["kind"]]
+        add(warnings, "tips", t["part"],
+            "stands on %s only %s, around %s m, with its weight %.3g m to the %s of it: it would tip over. Give it a "
+            "second hold on that side (a rail or a stop it leans against), or move it until its weight is over what it "
+            "stands on." % (on, how, t["at"], t["lever"], t["toward"]))
+    # held up only through something far thinner than itself: a motor on a wire strut, a lamp on a hairline
+    for pid in geo:
+        p = parts[pid]
+        if pid in anchors or pid not in held or p["role"] not in ("mass", "structure", "identity"):
+            continue
+        bulk = min(max(c["max"][k] for c in boxes[pid]) - min(c["min"][k] for c in boxes[pid]) for k in range(3))
+        own = _thickness(p)
+        if own is not None and own < 0.5 * bulk:
+            continue   # itself a rod or a cable
+        thin = {q for q in geo if q != pid and q not in anchors and len(boxes.get(q, ())) < THIN_SET and
+                _thickness(parts[q]) is not None and _thickness(parts[q]) <= THIN_HOLD * bulk}
+        if not thin or pid in reach(thin):
+            continue
+        by = sorted(q for q in contacts[pid] if q in thin) or sorted(thin & held)[:1]
+        sturdy = reach(thin | {pid})
+        near, dist = _nearest(pid, geo, among=sturdy, most=150)
+        add(warnings, "thin-support", pid,
+            "is held up only by %s, %.3g m across under a part %.3g m across. Is that really what carries it? If it "
+            "rests on something, its surfaces should meet: the nearest sturdy part is %r, %.3g m away." % (
+                " and ".join(repr(q) for q in by[:2]), _thickness(parts[by[0]]), bulk, near, dist))
+
+
+def _seg_crosses_tri(a, b, p, q, r):
+    """Whether segment ab passes through triangle pqr (Moller-Trumbore)."""
+    e1, e2, d = _sub(q, p), _sub(r, p), _sub(b, a)
+    h = (d[1] * e2[2] - d[2] * e2[1], d[2] * e2[0] - d[0] * e2[2], d[0] * e2[1] - d[1] * e2[0])
+    det = _dot(e1, h)
+    if abs(det) < 1e-14:
+        return False
+    s = _sub(a, p)
+    u = _dot(s, h) / det
+    if u < 0 or u > 1:
+        return False
+    c = (s[1] * e1[2] - s[2] * e1[1], s[2] * e1[0] - s[0] * e1[2], s[0] * e1[1] - s[1] * e1[0])
+    v = _dot(d, c) / det
+    if v < 0 or u + v > 1:
+        return False
+    return 0 <= _dot(e2, c) / det <= 1
+
+
+def _near(samples, target, geo, grid, cell, gap2):
+    for sp in samples:
+        for qid, idx in grid.get(tuple(int(math.floor(sp[k] / cell)) for k in range(3)), ()):
+            if qid != target:
+                continue
+            pr = geo[qid][1][idx]
+            if (_seg_dist2(sp, *pr) if len(pr) == 2 else _tri_dist2(sp, *pr)) <= gap2:
+                return True
+    return False
+
+
+def _nearest(pid, geo, among=None, most=400):
+    mine = geo[pid][0][::max(1, len(geo[pid][0]) // most)]
+    if not mine:
+        return None, math.inf
+
+    def box(pts):
+        return [min(p[k] for p in pts) for k in range(3)], [max(p[k] for p in pts) for k in range(3)]
+    lo, hi = box(mine)
+    order = []   # the others by how near their boxes are: no part can be nearer than its box
+    for qid, (samples, _) in geo.items():
+        if qid == pid or not samples or (among is not None and qid not in among):
+            continue
+        qlo, qhi = box(samples)
+        gap = sum(max(0.0, qlo[k] - hi[k], lo[k] - qhi[k]) ** 2 for k in range(3))
+        order.append((gap, qid, samples))
+    best, best_d = None, math.inf
+    for gap, qid, samples in sorted(order, key=lambda o: o[0]):
+        if gap >= best_d:
+            break
+        theirs = samples[::max(1, len(samples) // most)]
+        d = min((_dot(_sub(a, b), _sub(a, b)) for a in mine for b in theirs), default=math.inf)
+        if d < best_d:
+            best, best_d = qid, d
+    if best is not None:   # the distance said, measured to the other's faces rather than between sample points
+        for pts, prims in ((mine, geo[best][1]), (geo[best][0][::max(1, len(geo[best][0]) // most)], geo[pid][1])):
+            for sp in pts:
+                for pr in prims:
+                    best_d = min(best_d, _seg_dist2(sp, *pr) if len(pr) == 2 else _tri_dist2(sp, *pr))
+    return best, math.sqrt(best_d)
+
+
+def _freeform_points(shape):
+    """How many authored points shape a free-form part (0 for primitives)."""
+    for k in ("profile", "path", "points"):
+        if isinstance(shape.get(k), list):
+            return len(shape[k])
+    if shape.get("type") == "terrain":
+        return sum(len(r) for r in shape.get("heights", []))  # relief is a shape: verified only from data
+    if shape.get("type") == "loft":
+        return len(shape.get("sections", [])) * 4  # a loft's sections are a traced or designed shape
+    if shape.get("type") == "globe":
+        return sum(len(q) for q in shape.get("paths", []))  # coastlines too
+    return 0
+
+
+def _thickness(p):
+    return scene_mod.cross_section(p)
+
+
+# ---------------------------------------------------------------------------- numbers in the words
+#
+# How to read it and the annotations are written once and drift when the scene changes (a reading that still gave an
+# 11.8 deg lean after the fact became 15.2). A number with a unit there is checked against a fact only when it clearly
+# names it: every telling word of the fact's key stands in the same clause, and no fact at all has that value.
+
+UNITS = {"mm": ("length", 0.001), "cm": ("length", 0.01), "m": ("length", 1.0), "km": ("length", 1000.0),
+         "metres": ("length", 1.0), "meters": ("length", 1.0), "°": ("angle", 1.0), "deg": ("angle", 1.0),
+         "degree": ("angle", 1.0), "degrees": ("angle", 1.0), "g": ("mass", 0.001), "kg": ("mass", 1.0)}
+# words too common in fact keys to tell one from another: a key made only of them must stand right by its number
+PLAIN = {"length", "width", "height", "depth", "size", "diameter", "radius", "thickness", "overall", "total", "count",
+         "the", "of", "a"}
+_NUMBER = re.compile(r"(?<![\w.\-–/])(\d+(?:\.\d+)?)\s?(mm|cm|km|metres|meters|m|°|deg|degrees|degree|kg|g)(?![\w²³/])")
+
+
+def _words(text):
+    return [w[:-2] if w.endswith("'s") else w[:-1] if w.endswith("s") and len(w) > 3 else w
+            for w in re.findall(r"[a-z]+(?:'s)?", text.lower())]
+
+
+def stale_numbers(scene):
+    """[(where, text, fact, what it says)]: numbers with a unit in the reading and the annotations that contradict
+    the one fact they clearly name."""
+    facts = [f for f in scene.get("facts", []) if isinstance(f.get("value"), (int, float))
+             and not isinstance(f.get("value"), bool) and UNITS.get(str(f.get("unit", "")).strip())]
+    if not facts:
+        return []
+    texts = [("How to read it (line %d)" % (i + 1), t) for i, t in enumerate((scene.get("reading") or {}).get("how", []))
+             if isinstance(t, str)]
+    texts += [("The annotation %r" % a.get("id"), a.get("text")) for a in scene.get("annotations", [])
+              if isinstance(a, dict) and isinstance(a.get("text"), str)]
+    known = {}   # every fact's value, by kind, in base units
+    for f in facts:
+        kind, k = UNITS[f["unit"].strip()]
+        known.setdefault(kind, []).append(f["value"] * k)
+    out = []
+    for where, text in texts:
+        head = re.split(r"[,:·(]", text)[0]   # an annotation's subject: "Tiburio, 68 m"
+        for clause in re.split(r"[,;:()]|\.\s|\band\b", text):
+            for m in _NUMBER.finditer(clause):
+                if re.search(r"(-|–|\bto\s)$", clause[:m.start()].rstrip()) or re.match(r"\s?(-|–|to\b)", clause[m.end():]):
+                    continue   # a range
+                kind, k = UNITS[m.group(2)]
+                said = float(m.group(1)) * k
+                decimals = len(m.group(1).split(".")[1]) if "." in m.group(1) else 0
+                loose = re.search(r"(about|around|roughly|nearly|almost|over|under|some|~|c\.?)\s*$",
+                                  clause[:m.start()].lower())
+                tol = lambda v: max(abs(v) * (0.15 if loose else 0.01), 0.5 * 10 ** -decimals * k)
+                if any(abs(v - said) <= tol(v) for v in known[kind]) if kind in known else True:
+                    continue   # some fact has that value (or no fact is of its kind)
+                near = set(_words(clause)) | (set(_words(head)) if where.startswith("The annotation") else set())
+                beside = set(_words(clause[max(0, m.start() - 24):m.end() + 24]))
+                named, touched = [], 0   # the facts it names outright, and how many it might mean at all
+                for f in facts:
+                    if UNITS[f["unit"].strip()][0] != kind:
+                        continue
+                    key = set(_words(re.sub(r"[_.\-]", " ", f["key"])))
+                    telling = key - PLAIN
+                    touched += bool(telling & near) if telling else bool(key and key <= beside)
+                    if (telling and telling <= near) or (not telling and key and key <= beside):
+                        named.append(f)
+                if len(named) == 1 and touched == 1:
+                    out.append((where, text, named[0], m.group(0)))
+    return out

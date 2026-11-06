@@ -1,13 +1,13 @@
 # What's new in 1.2, a walkthrough
 
-1.2 is about the far end of what Construct can make. Until now a construct reconstructed something that exists. 1.2
+Construct is now a native Hermes plugin, tested end to end on a building: the construct live in the chat, and
+everything it becomes beside it. And 1.2 is about the far end of what Construct can make. Until now a construct reconstructed something that exists. 1.2
 follows two runs that design what does not: **KESTREL**, an invented ship built from real spacecraft studies, and a
 **hardware instrument designed from a software manual**. They showed what a design needs that a reconstruction did not:
 a designed part should say what it was designed *to*, a new design should not be captioned a reconstruction, a
 critic must stand apart from the author, and the checks must catch what an agent misses (a chair back that would
 fall over, a pillar through a window, a number left stale). This page goes through each change with an example and
-the commands to try it. And Construct is now a native Hermes plugin, tested end to end on a building. The full list is in
-the [changelog](../CHANGELOG.md).
+the commands to try it. The full list is in the [changelog](../CHANGELOG.md).
 
 In the commands below, `construct` is short for `python3 construct_hologram/cli.py` in a checkout of Construct.
 
@@ -33,7 +33,7 @@ its own controls, and everything it becomes stays there too: the 3D model turnin
 shapes of a STEP file, a kit stepping through in 3D, a film, a NetLogo run with its replay bar.
 
 ```sh
-hermes plugins install rtmandreyev/construct-hermes
+hermes plugins install rtmandreyev/construct#hermes/construct
 ```
 
 <p align="center"><img src="media/new-1.2-hermes.jpg" width="95%" alt="Hermes Desktop with the plugin: Villa Savoye's glTF turning in the chat's 3D viewer, and its desktop kit (30 pieces on 5 plates, 13 steps) stepping through in 3D"></p>

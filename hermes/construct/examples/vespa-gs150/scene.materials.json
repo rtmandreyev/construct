@@ -1,0 +1,131 @@
+{
+ "materials": [
+  {
+   "parts": [
+    "headlamp-glass"
+   ],
+   "name": "headlamp glass",
+   "color": "#e8eef0",
+   "finish": "glass",
+   "roughness": 0.0
+  },
+  {
+   "parts": [
+    "rear-light-lens"
+   ],
+   "name": "rear light",
+   "color": "#b3121b",
+   "finish": "glass"
+  },
+  {
+   "parts": [
+    "*whitewall*"
+   ],
+   "name": "white rubber",
+   "color": "#e9e6df",
+   "finish": "rubber"
+  },
+  {
+   "parts": [
+    "tyre-*",
+    "owner-spare-tyre",
+    "grip-*",
+    "stand-shoe-*"
+   ],
+   "name": "black rubber",
+   "color": "#161616",
+   "finish": "rubber"
+  },
+  {
+   "parts": [
+    "seat-piping*",
+    "seat-front-piping",
+    "seat-cushion-seam-*"
+   ],
+   "name": "blue piping",
+   "color": "#1f4fa3",
+   "finish": "plastic"
+  },
+  {
+   "parts": [
+    "dual-seat",
+    "seat-lower-valance-*",
+    "seat-grab-loop-*"
+   ],
+   "name": "white vinyl",
+   "color": "#eceae4",
+   "finish": "plastic",
+   "roughness": 0.5
+  },
+  {
+   "parts": [
+    "owner-spare-wheel",
+    "owner-spare-hub",
+    "owner-spare-rim-webs",
+    "wheel-front",
+    "wheel-rear"
+   ],
+   "name": "silver wheels",
+   "color": "#b9bdc2",
+   "finish": "paint"
+  },
+  {
+   "parts": [
+    "owner-*",
+    "hubcap-*",
+    "wheel-fasteners-*",
+    "headlamp-rim",
+    "speedometer-bezel",
+    "mudguard-crest",
+    "factory-piaggio-badge",
+    "horn-slat-*",
+    "shield-edge-*",
+    "runner-*",
+    "cowl-access-trim-*",
+    "cowl-script-*",
+    "cowl-latch-*",
+    "lever-*"
+   ],
+   "name": "chrome",
+   "color": "#dfe3e7",
+   "finish": "brushed",
+   "roughness": 0.18
+  },
+  {
+   "parts": [
+    "engine-*",
+    "exhaust-*",
+    "rear-suspension",
+    "front-damper",
+    "front-coil-spring*",
+    "fork-*",
+    "front-swing-link",
+    "centre-stand*",
+    "seat-pan"
+   ],
+   "name": "dark metal",
+   "color": "#3a3c3f",
+   "finish": "brushed"
+  },
+  {
+   "parts": [
+    "headlamp-refractor",
+    "speedometer-scale",
+    "speedometer-needle"
+   ],
+   "name": "instrument",
+   "color": "#f2efe6",
+   "finish": "plastic"
+  },
+  {
+   "parts": [
+    "*"
+   ],
+   "name": "silver grey paint",
+   "color": "#8d959d",
+   "finish": "paint",
+   "metallic": 0.55,
+   "roughness": 0.32
+  }
+ ]
+}

@@ -23,6 +23,7 @@ model with named parts and working joints, a print, a model kit, a CAD file or a
 </p>
 <p align="center"><sub><b>Constructs.</b> Sainte-Chapelle · Duomo di Milano · Toyota Land Cruiser FJ62 · KESTREL, an invented ice tug · Tompion's year-going clock · Volkswagen T1 Samba, each built in masterpiece mode, by Claude Opus 5.5, KESTREL by GPT-6.1 Sol and the clock by DeepSeek V4.1 Flash. <a href="https://rtmandreyev.github.io/construct/">Open the gallery</a> to orbit them, replay the assembly and read the labels; <a href="docs/for/invent-from-what-exists.md">how KESTREL was made</a>, step by step.</sub></p>
 
+- **Construct for Hermes.** A native Hermes plugin: ask for a thing in plain words and the construct appears live in the chat, with its 3D model, kit and NetLogo runs beside it. `hermes plugins install rtmandreyev/construct#hermes/construct` ([what it does](hosts/hermes/construct/README.md)).
 - **Any agent, any model.** Claude Code, Hermes, any MCP client or any OpenAI-compatible endpoint, or by hand.
 - **Honest about what is known.** Every part says how it is known, its size and its shape apart, every guess in a shade of how firmly it is held.
 - **One house style.** Models never choose the colours, so every construct looks like it belongs with the rest.
@@ -58,7 +59,7 @@ Every change with pictures and the commands to try it: **[What's new in 1.2, a w
 
 - **Construct for Hermes.** A native Hermes plugin: ask for a thing in plain words, and the construct appears live in
   the chat; the 3D model turns in it, a kit steps through in 3D, exports are read back and summarised, long work runs
-  in the background. `hermes plugins install rtmandreyev/construct-hermes` ([what it does](hosts/hermes/construct/README.md)).
+  in the background. `hermes plugins install rtmandreyev/construct#hermes/construct` ([what it does](hosts/hermes/construct/README.md)).
 - **New things from real ones.** [KESTREL](docs/for/invent-from-what-exists.md), an invented 120 m ice tug, from
   its brief to its joints in Godot: the studies it reasoned from, thirteen masterpiece rounds, then a more detailed
   version that kept all 256 parts and added 242. Both in the gallery, Apache-2.0, with every brief.
@@ -213,7 +214,7 @@ Then add the skill to your agent, or use Construct directly:
 | Host | How to add it |
 | --- | --- |
 | Claude Code | `claude --plugin-dir dist/claude-code/construct` for one session, or copy `dist/claude-code/construct/skills/construct` into `.claude/skills/` |
-| Hermes, the plugin | `hermes plugins install rtmandreyev/construct-hermes`: twelve tools, the construct live in the chat, 3D models, kits and NetLogo runs in Hermes Desktop ([Construct for Hermes](hosts/hermes/construct/README.md)) |
+| Hermes, the plugin | `hermes plugins install rtmandreyev/construct#hermes/construct`: twelve tools, the construct live in the chat, 3D models, kits and NetLogo runs in Hermes Desktop ([Construct for Hermes](hosts/hermes/construct/README.md)) |
 | Hermes, the skill alone | `hermes skills install rtmandreyev/construct/skills/construct`, or copy `dist/hermes/construct` into `~/.hermes/skills/` |
 | Any MCP client | Add `{"mcpServers": {"construct": {"command": "python3", "args": ["/path/to/construct/construct_hologram/server.py"]}}}` |
 | Any OpenAI-compatible model | `python3 construct_hologram/cli.py author "..." --base-url ... --model ... --key-env ... --out scene.json` |
