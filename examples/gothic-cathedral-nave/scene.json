@@ -5322,7 +5322,7 @@
       },
       "at": [
         6.49,
-        23.87,
+        24.12,
         -20
       ],
       "repeat": {
@@ -5335,7 +5335,8 @@
           ]
         }
       },
-      "mirror": "x"
+      "mirror": "x",
+      "note": "raised 0.25 m into the window's pointed head, against its arch (it hung clear of the arch and the lancets)"
     },
     {
       "id": "clerestory-glazing-transoms",
@@ -6146,7 +6147,7 @@
       "at": [
         0,
         20,
-        -24.17
+        -23.929
       ],
       "rotate": [
         0,
@@ -6160,7 +6161,7 @@
           "center": [
             0,
             20,
-            -24.17
+            -23.929
           ],
           "span": 360
         }
@@ -6170,7 +6171,7 @@
         "alpha": 0.23,
         "weight": 0.5
       },
-      "note": "Original abstract geometry only; no historical stained-glass artwork is claimed."
+      "note": "Original abstract geometry only; no historical stained-glass artwork is claimed; set 0.24 m forward, into the plane of the tracery (it stood behind it)."
     },
     {
       "id": "altar-supports",

@@ -2257,7 +2257,7 @@
       "shape": {
         "type": "cylinder",
         "radius": 0.0045,
-        "height": 0.014,
+        "height": 0.011,
         "segments": 16
       },
       "at": [
@@ -2273,7 +2273,8 @@
       "look": {
         "weight": 1.1,
         "glow": 0.2
-      }
+      },
+      "note": "ends at its cap's top (it stood 3 mm through it)"
     },
     {
       "id": "cover-post-cap-l",
@@ -2309,7 +2310,7 @@
       "shape": {
         "type": "cylinder",
         "radius": 0.0045,
-        "height": 0.014,
+        "height": 0.011,
         "segments": 16
       },
       "at": [
@@ -2325,7 +2326,8 @@
       "look": {
         "weight": 1.1,
         "glow": 0.2
-      }
+      },
+      "note": "ends at its cap's top (it stood 3 mm through it)"
     },
     {
       "id": "cover-post-cap-r",

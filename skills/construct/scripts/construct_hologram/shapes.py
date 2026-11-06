@@ -283,9 +283,9 @@ def lathe(profile, segments=32, meridians=8, every_ring=True):
     following the profile."""
     m = Mesh()
     rings = [_ring(r, r, y, segments) for r, y in profile]
-    for k, (r, _) in enumerate(profile):
-        if r <= 1e-9:
-            continue
+    for k, (r, y) in enumerate(profile):
+        if r <= 1e-9 or any((r, y) == tuple(q) for q in profile[:k]):   # a profile closed by repeating its first
+            continue                                                       # point: that ring is drawn once
         edge = k in (0, len(profile) - 1)
         if edge or every_ring:
             m.loop(rings[k], OUTLINE if edge else CONTOUR)

@@ -42,6 +42,41 @@
   warning names the part, what it stands on, where, and how far its weight lies off it, with the fix (a second hold on
   the side it leans to). A part fixed into the side of another or hung from it is left alone, and so is a rod's end
   joined across its section. Over the gallery's 38 scenes and the bundled examples it finds nothing.
+- **Small gaps are detached:** touching meant within 1% of the object's size, 4.6 cm on a car, so a fin 2 cm under a
+  floor passed when something near it kept its box in touch. For `detached` a part must come within 5 mm, or 0.3% of
+  the object's size on a large one (1.4 cm on a car, half a metre on a cathedral, whose stones are not set to 5 mm).
+  It named 57 parts in 12 scenes. Nine were set through another part's face (a piano's pedals and lyre posts through
+  its lyre box, a DB5's cross-members through its rails, an F40's rear slats through its wing's end plates, a foyer
+  mullion through the Opera House's podium) with no corner, edge midpoint or face centre near a face: an edge through
+  a face now touches. The other 48 were real gaps, and the scenes were mended before the check changed (below); over
+  the gallery and the bundled examples it now names none.
+- **Seated, not floating** (each moved part says so in its `note`; ids, certainty and the light look are kept): the
+  Porsche 911's lamp slats now follow their lamp's face, which slants back outboard, and its door handle (9 cm out
+  from the body), brake discs (now against their hubs), rocker line, rear arch, front lower edge, roof rails, wipers
+  and top demister wire meet the body or glass they lie on; the F40's nose wrap, sill line, door handle, brake
+  intakes and a louvre return meet its body; the R34's front duct rims sit on the bumper's face (2 cm proud), the
+  FJ62's rear wiper on its liftgate glass, the T1's speedometer pod in its dashboard's face (it floated 10 cm behind
+  it). The CFX's bridge stands on its soundboard, its plate just under the treble strings, its bass strings just over
+  them and its folded prop against the lid (its turn to the open lid grows from 69 to 71.1 degrees). The Opera House's
+  14 foyer mullions stand on the terrace's edge (they began 1.8-2.3 m beyond it, in the air); the nave's clerestory
+  oculi rise into their window heads and its rose glazing into the tracery's plane; the castle's gate roof bears on
+  the gatehouse's walls, and the sea-cliff lighthouse's (and The Last Light's) lantern cap closes onto the lantern.
+- **The stock examples check clean:** the T1's side trims assemble with the body they rest on, its wheel-arch lips
+  and wipers are fine trim (`detail`, drawn as before), and the CFX's outcome is "self-reviewed", since no critic
+  judged it. Two warnings were the checker's: `duplicates` counted the ring where two parts meet (a knob on its skirt)
+  and a lathe closed by repeating its first point drew that ring twice (the Braun knob read 18%), so a lathe now
+  draws it once and `duplicates` counts a part overlapping itself; `tube-outline` warned a vehicle with six thin tubes
+  however its body was built (the T1's 47 panels, its drip rail and bumpers), and now does when the tubes outnumber
+  its body's surfaces. What remains is advice (`tiny`, `clutter`) or the record (`critic-stale` and `compare-stale`
+  where a scene changed after its critic and comparisons, `tier-rounds` where the rounds ran past the tier).
+- **A flash between samples:** a Fireflies run's landmark said "Most at once: 83%" while 1500 of 1500 flashed
+  together from tick 638. A run's reading kept evenly spaced records (every 7th of 2000), and a flash lasts a record,
+  so the samples caught the flashes part way and the landmarks were read from them. The pulse's reading now keeps the
+  most at once in each group of records, as its rings do; on a 1000-tick run with NetLogo 7.0.4, "All at once" moves
+  from tick 957 to 547, the first tick all 1500 flashed.
+- **A run is a recorded run:** a NetLogo run's construct was captioned DOCUMENTED RECONSTRUCTION, though nothing in
+  it is reconstructed. `subject.accuracy` takes `recorded` (a minor addition to the contract), which `construct
+  netlogo` sets and the viewer captions RECORDED RUN; the gallery's six recorded runs say so.
 - **The fit, more exact:** `check --fit` left glass out altogether, so a pillar standing through a quarter window
   passed; it now names a solid part that crosses a pane (`crosses-glass`), not what holds the pane's edge. A poke is
   confirmed on its two parts alone at voxels four times finer: on the R34 a 2 cm diffuser was said to poke through

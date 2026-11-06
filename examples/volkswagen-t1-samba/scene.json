@@ -2258,7 +2258,7 @@
       "at": [
         0.42,
         1.26,
-        1.72
+        1.832
       ],
       "rotate": [
         -70,
@@ -2268,7 +2268,8 @@
       "look": {
         "fill": "dark",
         "weight": 0.8
-      }
+      },
+      "note": "set into the dashboard's face (it floated 10 cm behind it)"
     },
     {
       "id": "steering-column",
@@ -3124,7 +3125,7 @@
         "ribs": 4
       },
       "certainty": "inferred",
-      "stage": 2,
+      "stage": 3,
       "source": "ref-interior",
       "basis": [
         "length",
@@ -3170,7 +3171,7 @@
         "ribs": 2
       },
       "certainty": "inferred",
-      "stage": 2,
+      "stage": 3,
       "source": "ref-interior",
       "basis": [
         "length",
@@ -11138,7 +11139,7 @@
     },
     {
       "id": "arch-lip-front-left",
-      "role": "structure",
+      "role": "detail",
       "shape": {
         "type": "tube",
         "path": [
@@ -11204,13 +11205,14 @@
       ],
       "look": {
         "fill": "dark",
-        "weight": 0.9,
-        "glow": 0.2
+        "weight": 1.125,
+        "glow": 0.2,
+        "alpha": 0.78
       }
     },
     {
       "id": "arch-lip-front-right",
-      "role": "structure",
+      "role": "detail",
       "shape": {
         "type": "tube",
         "path": [
@@ -11276,13 +11278,14 @@
       ],
       "look": {
         "fill": "dark",
-        "weight": 0.9,
-        "glow": 0.2
+        "weight": 1.125,
+        "glow": 0.2,
+        "alpha": 0.78
       }
     },
     {
       "id": "arch-lip-rear",
-      "role": "structure",
+      "role": "detail",
       "shape": {
         "type": "tube",
         "path": [
@@ -11343,8 +11346,9 @@
       ],
       "look": {
         "fill": "dark",
-        "weight": 0.9,
-        "glow": 0.2
+        "weight": 1.125,
+        "glow": 0.2,
+        "alpha": 0.78
       },
       "mirror": "x"
     },
@@ -14381,7 +14385,7 @@
     },
     {
       "id": "wiper-left",
-      "role": "structure",
+      "role": "detail",
       "shape": {
         "type": "tube",
         "path": [
@@ -14411,13 +14415,14 @@
       "source": "ref-blueprint",
       "look": {
         "fill": "dark",
-        "weight": 1.0,
-        "glow": 0.2
+        "weight": 1.25,
+        "glow": 0.2,
+        "alpha": 0.78
       }
     },
     {
       "id": "wiper-right",
-      "role": "structure",
+      "role": "detail",
       "shape": {
         "type": "tube",
         "path": [
@@ -14447,8 +14452,9 @@
       "source": "ref-blueprint",
       "look": {
         "fill": "dark",
-        "weight": 1.0,
-        "glow": 0.2
+        "weight": 1.25,
+        "glow": 0.2,
+        "alpha": 0.78
       }
     },
     {

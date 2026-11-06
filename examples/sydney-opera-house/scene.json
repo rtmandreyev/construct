@@ -7288,9 +7288,9 @@
         "type": "curve",
         "points": [
           [
-            -65.95496954423928,
-            18.3,
-            -2.6436173573040342
+            -65.439,
+            18.2,
+            -0.965
           ],
           [
             -64.39277638507168,
@@ -7307,7 +7307,8 @@
       "look": {
         "weight": 0.65,
         "alpha": 0.6
-      }
+      },
+      "note": "foot set on the terrace's edge: it stood 1.8-2.3 m beyond it, in the air"
     },
     {
       "id": "concert-foyer-mullion-1",
@@ -7320,9 +7321,9 @@
         "type": "curve",
         "points": [
           [
-            -75.83163880525277,
-            18.3,
-            2.0888810865247684
+            -74.507,
+            18.2,
+            3.498
           ],
           [
             -72.05099378130367,
@@ -7339,7 +7340,8 @@
       "look": {
         "weight": 0.65,
         "alpha": 0.6
-      }
+      },
+      "note": "foot set on the terrace's edge: it stood 1.8-2.3 m beyond it, in the air"
     },
     {
       "id": "concert-foyer-mullion-2",
@@ -7352,9 +7354,9 @@
         "type": "curve",
         "points": [
           [
-            -82.59684946064381,
-            18.3,
-            10.132388382460563
+            -80.617,
+            18.2,
+            10.96
           ],
           [
             -77.29663404332996,
@@ -7371,7 +7373,8 @@
       "look": {
         "weight": 0.65,
         "alpha": 0.6
-      }
+      },
+      "note": "foot set on the terrace's edge: it stood 1.8-2.3 m beyond it, in the air"
     },
     {
       "id": "concert-foyer-mullion-3",
@@ -7384,8 +7387,8 @@
         "type": "curve",
         "points": [
           [
-            -85.0,
-            18.3,
+            -82.76,
+            18.2,
             20.0
           ],
           [
@@ -7403,7 +7406,8 @@
       "look": {
         "weight": 0.65,
         "alpha": 0.6
-      }
+      },
+      "note": "foot set on the terrace's edge: it stood 1.8-2.3 m beyond it, in the air"
     },
     {
       "id": "concert-foyer-mullion-4",
@@ -7416,9 +7420,9 @@
         "type": "curve",
         "points": [
           [
-            -82.59684946064381,
-            18.3,
-            29.86761161753944
+            -80.617,
+            18.2,
+            29.04
           ],
           [
             -77.29663404332996,
@@ -7435,7 +7439,8 @@
       "look": {
         "weight": 0.65,
         "alpha": 0.6
-      }
+      },
+      "note": "foot set on the terrace's edge: it stood 1.8-2.3 m beyond it, in the air"
     },
     {
       "id": "concert-foyer-mullion-5",
@@ -7448,9 +7453,9 @@
         "type": "curve",
         "points": [
           [
-            -75.83163880525277,
-            18.3,
-            37.911118913475235
+            -74.507,
+            18.2,
+            36.502
           ],
           [
             -72.05099378130369,
@@ -7467,7 +7472,8 @@
       "look": {
         "weight": 0.65,
         "alpha": 0.6
-      }
+      },
+      "note": "foot set on the terrace's edge: it stood 1.8-2.3 m beyond it, in the air"
     },
     {
       "id": "concert-foyer-mullion-6",
@@ -7480,9 +7486,9 @@
         "type": "curve",
         "points": [
           [
-            -65.95496954423928,
-            18.3,
-            42.64361735730404
+            -65.439,
+            18.2,
+            40.965
           ],
           [
             -64.39277638507168,
@@ -7499,7 +7505,8 @@
       "look": {
         "weight": 0.65,
         "alpha": 0.6
-      }
+      },
+      "note": "foot set on the terrace's edge: it stood 1.8-2.3 m beyond it, in the air"
     },
     {
       "id": "opera-shell-1",
@@ -14528,9 +14535,9 @@
         "type": "curve",
         "points": [
           [
-            -70.88497422974092,
-            18.3,
-            -40.82582643021807
+            -70.266,
+            18.2,
+            -38.952
           ],
           [
             -69.49398032089307,
@@ -14547,7 +14554,8 @@
       "look": {
         "weight": 0.65,
         "alpha": 0.6
-      }
+      },
+      "note": "foot set on the terrace's edge: it stood 1.8-2.3 m beyond it, in the air"
     },
     {
       "id": "opera-foyer-mullion-1",
@@ -14560,9 +14568,9 @@
         "type": "curve",
         "points": [
           [
-            -79.24215591213695,
-            18.3,
-            -37.10024254890604
+            -77.753,
+            18.2,
+            -35.626
           ],
           [
             -75.8758281510864,
@@ -14579,7 +14587,8 @@
       "look": {
         "weight": 0.65,
         "alpha": 0.6
-      }
+      },
+      "note": "foot set on the terrace's edge: it stood 1.8-2.3 m beyond it, in the air"
     },
     {
       "id": "opera-foyer-mullion-2",
@@ -14592,9 +14601,9 @@
         "type": "curve",
         "points": [
           [
-            -84.96656492823706,
-            18.3,
-            -30.768119784020406
+            -82.892,
+            18.2,
+            -29.961
           ],
           [
             -80.24719503610831,
@@ -14611,7 +14620,8 @@
       "look": {
         "weight": 0.65,
         "alpha": 0.6
-      }
+      },
+      "note": "foot set on the terrace's edge: it stood 1.8-2.3 m beyond it, in the air"
     },
     {
       "id": "opera-foyer-mullion-3",
@@ -14624,8 +14634,8 @@
         "type": "curve",
         "points": [
           [
-            -87.0,
-            18.3,
+            -84.721,
+            18.2,
             -23.0
           ],
           [
@@ -14643,7 +14653,8 @@
       "look": {
         "weight": 0.65,
         "alpha": 0.6
-      }
+      },
+      "note": "foot set on the terrace's edge: it stood 1.8-2.3 m beyond it, in the air"
     },
     {
       "id": "opera-foyer-mullion-4",
@@ -14656,9 +14667,9 @@
         "type": "curve",
         "points": [
           [
-            -84.96656492823706,
-            18.3,
-            -15.231880215979594
+            -82.892,
+            18.2,
+            -16.039
           ],
           [
             -80.24719503610831,
@@ -14675,7 +14686,8 @@
       "look": {
         "weight": 0.65,
         "alpha": 0.6
-      }
+      },
+      "note": "foot set on the terrace's edge: it stood 1.8-2.3 m beyond it, in the air"
     },
     {
       "id": "opera-foyer-mullion-5",
@@ -14688,9 +14700,9 @@
         "type": "curve",
         "points": [
           [
-            -79.24215591213695,
-            18.3,
-            -8.899757451093969
+            -77.753,
+            18.2,
+            -10.374
           ],
           [
             -75.87582815108641,
@@ -14707,7 +14719,8 @@
       "look": {
         "weight": 0.65,
         "alpha": 0.6
-      }
+      },
+      "note": "foot set on the terrace's edge: it stood 1.8-2.3 m beyond it, in the air"
     },
     {
       "id": "opera-foyer-mullion-6",
@@ -14720,9 +14733,9 @@
         "type": "curve",
         "points": [
           [
-            -70.88497422974092,
-            18.3,
-            -5.1741735697819315
+            -70.266,
+            18.2,
+            -7.048
           ],
           [
             -69.49398032089307,
@@ -14739,7 +14752,8 @@
       "look": {
         "weight": 0.65,
         "alpha": 0.6
-      }
+      },
+      "note": "foot set on the terrace's edge: it stood 1.8-2.3 m beyond it, in the air"
     },
     {
       "id": "restaurant-shell-1",

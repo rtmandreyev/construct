@@ -53,7 +53,8 @@ MIN_SIZE = 1e-4             # 0.1 mm
 # ---------------------------------------------------------------------------- vocabularies
 CATEGORIES = ("architecture", "object", "machine", "vehicle", "organism", "fictional",
               "cd", "book", "artwork-carrier", "other")
-ACCURACY = ("generic", "approximate", "documented", "original")   # original: a new design, nothing to reconstruct
+ACCURACY = ("generic", "approximate", "documented", "original", "recorded")   # original: a new design, nothing to
+# reconstruct; recorded: a run of a model drawn from its recording, every mark the data
 CERTAINTIES = ("verified", "user_supplied", "inferred", "decorative")
 # a part's certainty: one word for both its size and its shape, or {"size": .., "shape": ..};
 # traced = fitted to an orthographic reference (a drawing, a plan, a patent elevation) that a verified size scales
