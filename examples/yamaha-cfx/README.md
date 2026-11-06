@@ -10,6 +10,9 @@ labels. The scene it was built from: [scene.json](scene.json).
 As a 1:12 model kit (54 pieces, 9 steps): [in 3D](https://rtmandreyev.github.io/construct/examples/yamaha-cfx/kit/assembly.html), [its booklet](https://rtmandreyev.github.io/construct/examples/yamaha-cfx/kit/booklet.html) and [its plates to print](https://github.com/rtmandreyev/construct/releases/latest/download/construct-kit-yamaha-cfx.zip), painted with
 [maps/finish.json](maps/finish.json).
 
+A known limit: as a solid (**S**, a 3D export or the kit) the case is a closed block, so the soundboard, the action
+and the dampers are buried in it and a printed kit is a closed piano; opening the case is still to do.
+
 Build it yourself from a checkout of Construct:
 
 ```sh
