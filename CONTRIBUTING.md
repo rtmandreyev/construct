@@ -28,8 +28,8 @@ renderer.
 ## Principles
 
 - **Truth first.** Facts carry their certainty and sources; nothing unknown is guessed. Every
-  example says how well it is known (generic, approximate or documented, and synthetic where it
-  is), and a named subject cites the public references it was made from. No private data, real artwork or reference photographs in the repository.
+  example says how well it is known (generic, approximate, documented or original, and synthetic where
+  it is), and a named subject cites the public references it was made from. No private data, real artwork or reference photographs in the repository.
 - **One style.** A scene describes what a thing is; the compiler and viewer decide how it looks.
   Changes to the look go into the viewer and the compiler's style rows, never into scenes.
 - **Determinism.** The same scene compiles to the same bytes. Keep randomness seeded.

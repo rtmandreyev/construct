@@ -17,8 +17,8 @@ shape are judged apart, and every guess is shown in a shade of how firmly it is 
 | amber, pale to deep | inferred: designed, described in a document, seen in a picture, or seen and checked |
 | magenta, dotted | decorative |
 
-Labels come only from facts; the caption says APPROXIMATE or GENERIC when it is. A construct can carry a note on its
-evidence, shown in the provenance view.
+Labels come only from facts; the caption says APPROXIMATE or GENERIC when it is, and ORIGINAL DESIGN for a new
+design. A construct can carry a note on its evidence, shown in the provenance view.
 
 ## Try it
 
