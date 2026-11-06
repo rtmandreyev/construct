@@ -41,6 +41,11 @@ Make the final KESTREL (KESTREL-final/) more detailed for close-ups. Keep every 
 
 The earlier briefs, and the record of the first build and its continuation, are in [KESTREL's README](../kestrel/).
 
+**A post-run correction, made for Construct 1.2:** the scene's `subject.accuracy` is now `"original"`, so its
+subtitle reads ORIGINAL DESIGN. The run predated that class: it recorded `"generic"`, captioned GENERIC
+RECONSTRUCTION, and added a line to *How to read it* explaining the caption, which is removed. Nothing else in the
+scene changed; because the scene did, `check` says its critic judged another version (`critic-stale`).
+
 ## Build it
 
 From a checkout of Construct:

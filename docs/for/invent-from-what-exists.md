@@ -125,8 +125,9 @@ The record keeps two things a reader should know. Before round 8 the agent reset
 counters, with its reason written down: the recorder counted every attempt that left a defect open, the skill
 counts attempts that made no progress, and the critic had described progress. In round 12 the first critic opened
 the defect ledger before its comparison; that judgement was set aside, and a fresh critic judged the same version.
-One defect stayed open as a limit of Construct, not of the ship: the viewer's subtitle says GENERIC
-RECONSTRUCTION, though KESTREL is an original design.
+One defect stayed open as a limit of Construct at the time, not of the ship: the viewer's subtitle said GENERIC
+RECONSTRUCTION, though KESTREL is an original design. Construct 1.2 adds `subject.accuracy: "original"`, and both
+versions of the scene now say so, captioned ORIGINAL DESIGN (a correction made after the run).
 
 ### 5. The result
 

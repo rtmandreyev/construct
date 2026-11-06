@@ -6,7 +6,7 @@
   "subject": {
     "category": "fictional",
     "summary": "Original crewed ring-ice pusher. Long compression spine, raised two-deck bow cab, articulated four-jaw empty cradle and thrust-parallel folding radiators. An engineering-informed game design, not a flight-qualified spacecraft.",
-    "accuracy": "generic",
+    "accuracy": "original",
     "synthetic": false
   },
   "units": "m",
@@ -12218,8 +12218,7 @@
     "how": [
       "Original fictional spacecraft designed for the supplied game brief.",
       "NASA modular-tug, ISS truss and thermal-control reasoning informs the architecture; no vehicle is copied.",
-      "Every vessel dimension and hardware shape is designed/inferred. No flight-performance claim is made.",
-      "The stock viewer uses GENERIC RECONSTRUCTION for all generic scenes; here it means an original concept, not a reconstruction of an existing ship."
+      "Every vessel dimension and hardware shape is designed/inferred. No flight-performance claim is made."
     ]
   }
 }
