@@ -10,6 +10,9 @@ builds an animated model of it in lines of light, shown live in the chat and hon
 construct becomes a 3D model with named parts and working joints, a print, a model kit, a CAD file or a film. A
 NetLogo model's run becomes one too.
 
+See it used, from the request to a printable kit:
+[Villa Savoye in Hermes, step by step](https://github.com/rtmandreyev/construct/blob/main/docs/for/hermes-walkthrough.md).
+
 This is the Hermes plugin of [Construct](https://github.com/rtmandreyev/construct) (Apache-2.0). It runs
 Construct's own engine, bundled as Python source; nothing is downloaded.
 

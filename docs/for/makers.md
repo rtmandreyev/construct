@@ -35,7 +35,7 @@ Open the 3MF in PrusaSlicer (or any slicer that reads its part table), and the b
 
 ## The kits to try
 
-Four kits, each with its steps in 3D, its booklet and its plates for your slicer (a zip with the plates, the
+Five kits, each with its steps in 3D, its booklet and its plates for your slicer (a zip with the plates, the
 booklet and the 3D guide):
 
 | Kit | Pieces | Steps in 3D | Booklet | Plates to print |
@@ -44,6 +44,7 @@ booklet and the 3D guide):
 | Tompion's year-going clock, 1:12 | 34 | [open](https://rtmandreyev.github.io/construct/examples/tompion-year-going-clock/kit/assembly.html) | [open](https://rtmandreyev.github.io/construct/examples/tompion-year-going-clock/kit/booklet.html) | [.zip](https://github.com/rtmandreyev/construct/releases/latest/download/construct-kit-tompion-year-going-clock.zip) |
 | VW T1 Samba bus, 1:16 | 98 | [open](https://rtmandreyev.github.io/construct/examples/volkswagen-t1-samba/kit/assembly.html) | [open](https://rtmandreyev.github.io/construct/examples/volkswagen-t1-samba/kit/booklet.html) | [.zip](https://github.com/rtmandreyev/construct/releases/latest/download/construct-kit-volkswagen-t1-samba.zip) |
 | Vespa GS 150, an owner's scooter, 1:12 | 32 | [open](https://rtmandreyev.github.io/construct/examples/vespa-gs150/kit/assembly.html) | [open](https://rtmandreyev.github.io/construct/examples/vespa-gs150/kit/booklet.html) | [.zip](https://github.com/rtmandreyev/construct/releases/latest/download/construct-kit-vespa-gs150.zip) |
+| Villa Savoye, made in Hermes, 1:115 | 30 | [open](https://rtmandreyev.github.io/construct/examples/villa-savoye/kit/assembly.html) | [open](https://rtmandreyev.github.io/construct/examples/villa-savoye/kit/booklet.html) | [.zip](https://github.com/rtmandreyev/construct/releases/latest/download/construct-kit-villa-savoye.zip) |
 
 ## Your first kit, step by step
 

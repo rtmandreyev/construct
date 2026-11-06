@@ -40,11 +40,13 @@ hermes plugins install rtmandreyev/construct#hermes/construct
 <p align="center"><sub>Villa Savoye, built by GPT-6.1 Sol in Hermes in masterpiece mode: its glTF in the chat, and the 30-piece kit
 it planned for a desktop printer.</sub></p>
 
-The final test of 1.2 was one conversation with GPT-6.1 Sol in Hermes Desktop: Le Corbusier's Villa Savoye in
+The final test of 1.2 was GPT-6.1 Sol in Hermes Desktop, asked in five plain requests: Le Corbusier's Villa Savoye in
 masterpiece mode (twelve critic rounds), then "what do we actually know, and what did you design?" (the plans it
 used, and a table of every choice it made), "check it as a solid and fix what doesn't fit" (23 findings down to 4,
 the rest disclosed), exports for Blender and CAD, and a kit and a film. Twelve tools and a skill with sixteen
-tutorials; long work runs in the background with its progress in the chat. [Construct for Hermes →](../hosts/hermes/construct/README.md)
+tutorials; long work runs in the background with its progress in the chat. Every request, step and screen of that
+test, with the references, the record and the Blender render: [Villa Savoye in Hermes, step by step →](for/hermes-walkthrough.md)
+· [Construct for Hermes](../hosts/hermes/construct/README.md)
 
 ## New things from real ones: KESTREL
 

@@ -23,7 +23,7 @@ model with named parts and working joints, a print, a model kit, a CAD file or a
 </p>
 <p align="center"><sub><b>Constructs.</b> Sainte-Chapelle · Duomo di Milano · Toyota Land Cruiser FJ62 · KESTREL, an invented ice tug · Tompion's year-going clock · Volkswagen T1 Samba, each built in masterpiece mode, by Claude Opus 5.5, KESTREL by GPT-6.1 Sol and the clock by DeepSeek V4.1 Flash. <a href="https://rtmandreyev.github.io/construct/">Open the gallery</a> to orbit them, replay the assembly and read the labels; <a href="docs/for/invent-from-what-exists.md">how KESTREL was made</a>, step by step.</sub></p>
 
-- **Construct for Hermes.** A native Hermes plugin: ask for a thing in plain words and the construct appears live in the chat, with its 3D model, kit and NetLogo runs beside it. `hermes plugins install rtmandreyev/construct#hermes/construct` ([what it does](hosts/hermes/construct/README.md)).
+- **Construct for Hermes.** A native Hermes plugin: ask for a thing in plain words and the construct appears live in the chat, with its 3D model, kit and NetLogo runs beside it. `hermes plugins install rtmandreyev/construct#hermes/construct` ([what it does](hosts/hermes/construct/README.md), [Villa Savoye in Hermes, step by step](docs/for/hermes-walkthrough.md)).
 - **Any agent, any model.** Claude Code, Hermes, any MCP client or any OpenAI-compatible endpoint, or by hand.
 - **Honest about what is known.** Every part says how it is known, its size and its shape apart, every guess in a shade of how firmly it is held.
 - **One house style.** Models never choose the colours, so every construct looks like it belongs with the rest.
@@ -43,7 +43,7 @@ model with named parts and working joints, a print, a model kit, a CAD file or a
 | want a **model kit of your own thing** | Your scooter, house or guitar as a kit to print, glue and paint, with a booklet ([one to open](https://rtmandreyev.github.io/construct/examples/vespa-gs150/kit/assembly.html)) | [A kit of your own](docs/for/a-kit-of-your-own.md) |
 | want to **show someone what you mean** | A model a builder, a fabricator or a friend can turn and measure, and a file for their own tools | [Show what you mean](docs/for/show-what-you-mean.md) |
 | ***Professionals and creators*** | | |
-| are a **maker** | A print at your printer's largest size, a model kit with plates and a booklet ([four to try](https://rtmandreyev.github.io/construct/#kits)), true CAD shapes | [Print, kit, CAD](docs/for/makers.md) |
+| are a **maker** | A print at your printer's largest size, a model kit with plates and a booklet ([five to try](https://rtmandreyev.github.io/construct/#kits)), true CAD shapes | [Print, kit, CAD](docs/for/makers.md) |
 | create **new ships, creatures or worlds** for a game, film or story | New things designed from real ones: a construct, a 3D model with working parts, a film ([see KESTREL](https://rtmandreyev.github.io/construct/examples/kestrel/), an invented ice tug) | [New things from real ones](docs/for/invent-from-what-exists.md) |
 | have **software or a documented system** you wish were a physical product | Its documented functions mapped to controls, displays and the parts inside, what the documents fix kept apart from what is designed (one worked example: a software synthesizer as a 61-key instrument) | [Documentation → product](docs/for/documentation-to-product.md) |
 | are a **game developer** | Props with named parts, real sizes and working joints, for Godot, Unity or Unreal | [Into a game engine](docs/for/game-developers.md) |
@@ -60,6 +60,7 @@ Every change with pictures and the commands to try it: **[What's new in 1.2, a w
 - **Construct for Hermes.** A native Hermes plugin: ask for a thing in plain words, and the construct appears live in
   the chat; the 3D model turns in it, a kit steps through in 3D, exports are read back and summarised, long work runs
   in the background. `hermes plugins install rtmandreyev/construct#hermes/construct` ([what it does](hosts/hermes/construct/README.md)).
+  Tested on Villa Savoye, from the request to a printable kit: [step by step →](docs/for/hermes-walkthrough.md)
 - **New things from real ones.** [KESTREL](docs/for/invent-from-what-exists.md), an invented 120 m ice tug, from
   its brief to its joints in Godot: the studies it reasoned from, thirteen masterpiece rounds, then a more detailed
   version that kept all 256 parts and added 242. Both in the gallery, Apache-2.0, with every brief.
@@ -312,6 +313,7 @@ Construct is deliberately small. You need:
 | compare models, or score your own | [Evaluation](docs/EVALUATION.md) |
 | build on it or test the code | [Development](docs/DEVELOPMENT.md) and [the scene contract](CONTRACT.md) |
 | write your own adapter (a format, an engine, a machine) | [Adapters](docs/ADAPTERS.md) |
+| use it in Hermes, from the request to a printable kit | [Villa Savoye in Hermes, step by step](docs/for/hermes-walkthrough.md) and [Construct for Hermes](hosts/hermes/construct/README.md) |
 | design something new from real things (a ship, a creature, a vehicle) | [New things from real ones](docs/for/invent-from-what-exists.md) |
 | design a physical product from a system's documentation | [Documentation → product](docs/for/documentation-to-product.md) |
 | see how reconstructing, modifying and inventing are one pipeline | [The design-freedom continuum](docs/for/documentation-to-product.md#the-design-freedom-continuum) |

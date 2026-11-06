@@ -9,7 +9,7 @@ need them.
 **By who you are:** [anyone with an AI agent](for/anyone.md) · [makers](for/makers.md) ·
 [new things from real ones](for/invent-from-what-exists.md) · [documentation → product](for/documentation-to-product.md) · [game developers](for/game-developers.md) · [3D artists](for/3d-artists.md) · [film and motion](for/film-and-motion.md) ·
 [educators and researchers](for/educators-and-researchers.md) · [museums and archives](for/museums-and-archives.md) ·
-[developers](for/developers.md)
+[developers](for/developers.md) · [Villa Savoye in Hermes, step by step](for/hermes-walkthrough.md)
 
 | If you want to… | read |
 | --- | --- |

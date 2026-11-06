@@ -7,6 +7,8 @@
    "materials": "maps/finish.json"},
   {"slug": "volkswagen-t1-samba", "scene": "kit-scene.json", "scale": 16, "printer": "large", "plan": "kit-plan.json",
    "materials": "maps/finish.json"},
-  {"slug": "vespa-gs150", "scale": 12, "printer": "desktop", "plan": "kit-plan.json", "materials": "maps/finish.json"}
+  {"slug": "vespa-gs150", "scale": 12, "printer": "desktop", "plan": "kit-plan.json", "materials": "maps/finish.json"},
+  {"slug": "villa-savoye", "scene": "kit-scene.json", "scale": 115, "printer": "desktop", "plan": "kit-plan.json",
+   "materials": "maps/finish.json"}
  ]
 }

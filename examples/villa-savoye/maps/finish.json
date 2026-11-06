@@ -1,0 +1,14 @@
+{
+ "materials": [
+  {"parts": ["*-glass*", "*-glass-*", "curved-entry-glass-*", "roof-skylight-glass-*", "*ribbon-window-*", "front-group-glass-*", "salon-terrace-glass-*"], "name": "window glass", "color": "#22303a", "finish": "glass", "roughness": 0.03},
+  {"parts": ["*mullion*", "*-sash-*", "*transom*", "*-stile*", "*ribbon-rail*", "front-frame-group-*", "salon-sliding-*", "salon-recessed-*", "entry-door-center-stile", "entry-pull-*", "rail-standoff-*", "inner-rail-post-*", "*handrail*", "*-rail-*"], "name": "steel frames", "color": "#2c2f31", "finish": "paint", "metallic": 0.3, "roughness": 0.4},
+  {"parts": ["garage*", "service*", "entry-service-partition-*", "curved-entry-head", "curved-entry-sill", "guest-divider", "service-divider", "service-rear-wall"], "name": "ground floor green", "color": "#28402f", "finish": "paint", "roughness": 0.6},
+  {"parts": ["solarium-long-curved-screen"], "name": "solarium rose", "color": "#d9b3a6", "finish": "paint", "roughness": 0.7},
+  {"parts": ["solarium-return-curved-screen"], "name": "solarium blue", "color": "#a9bccb", "finish": "paint", "roughness": 0.7},
+  {"parts": ["*planter*", "terrace-north-plant-*", "terrace-*-plant-*", "roof-planter-*"], "name": "planting", "color": "#4d6a3c", "finish": "plastic", "roughness": 0.9},
+  {"parts": ["*paving*", "*tile-joints*", "open-court-floor-boundary", "solarium-paving-*"], "name": "terrace paving", "color": "#b9b5ac", "finish": "plastic", "roughness": 0.85},
+  {"parts": ["drive-through-ground"], "name": "gravel", "color": "#8d8a83", "finish": "plastic", "roughness": 0.95},
+  {"parts": ["bath-*", "kitchen-counter-*", "kitchen-sink-inset", "kitchen-hob-ring"], "name": "fittings", "color": "#e9ecec", "finish": "plastic", "roughness": 0.3},
+  {"parts": ["*"], "name": "white render", "color": "#ecebe6", "finish": "paint", "roughness": 0.75}
+ ]
+}

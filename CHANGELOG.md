@@ -12,6 +12,10 @@
   in the chat; a Constructs page keeps every project, build, kit and file. Tested end to end with GPT-6.1 Sol: a
   masterpiece Villa Savoye, its provenance, a solid-fit repair, glTF, STEP and FreeCAD, a 30-piece desktop kit and a
   film, all from the chat. The plugin keeps Construct's version.
+- **Villa Savoye, made in Hermes** ([examples/villa-savoye](examples/villa-savoye/README.md);
+  [docs/for/hermes-walkthrough.md](docs/for/hermes-walkthrough.md)): the final test's construct joins the gallery
+  with its five requests, its research notes, every round, the fit repair, a Blender finish and its 30-piece desktop
+  kit (the gallery's fifth). The walkthrough shows each step as it looked in Hermes.
 - **KESTREL, an invented ship, start to finish** ([docs/for/invent-from-what-exists.md](docs/for/invent-from-what-exists.md)):
   the invented brief that page used to give as an illustration, run by GPT-6.1 Sol in Codex. The page now follows it
   step by step: the brief, the NASA and ISS studies it reasoned from, the first build, thirteen masterpiece rounds
@@ -25,9 +29,6 @@
   64-minute session, with what it showed, what it did not and why it worked. The same page sets out the
   design-freedom continuum, from reconstructing what exists to inventing from requirements, with the gallery's
   examples placed on it and the untested points marked as such; [About](docs/ABOUT.md) gives it in brief.
-- **The film constructs leave:** the three view-only constructs made for a film, never under a licence, are no
-  longer in the repository or the gallery, and the gallery's "New things from real ones" group is gone with them
-  (`examples/worlds.json`); KESTREL, which anyone may reuse, shows the use case instead.
 - **Solids wound outward, and closed:** in Blender's face orientation the R34's whole left side, every tyre, lamp
   and wheel showed inside out. A mirrored copy kept its original's winding (a mirror turns a surface inside out),
   and cylinders, cones, lathes, tori and spheres were wound inward; an extrusion of a clockwise profile and a
@@ -37,15 +38,6 @@
   C-pillar) left corners a rounding apart and an extrusion closed by repeating its first point left an edge of no
   length: both now make one closed surface, and the poles of spheres and lathes no longer leave slivers. The
   light is unchanged; tests in `test_solids.py`.
-- **The R34's windows fit their frames:** a second pass judged in the solid and in Blender: its A-pillars, sashes,
-  B-pillar and C-pillars hold their glass (every pane meets its frame or panel along at least 95% of its edge,
-  within 4 mm; the A-pillars stood up to 9 cm proud), its rear quarter panels end on the tail panel instead of in caps
-  standing out of it, its tail lamps sit on the tail panel's face and its bumper flanks end where the bumper's bands
-  begin ([its page](examples/nissan-skyline-gt-r-r34/README.md)).
-- **The R34, refined for the solid** ([its page](examples/nissan-skyline-gt-r-r34/README.md)): its C-pillar
-  closes between the rear glass and the shoulder instead of standing as a fin through the quarter window, its
-  bumper flanks are closed, its rear bumper and tail no longer pillow, its sills run straight and flush, its
-  diffuser follows the bumper and its tubes are capped. Every part keeps its name; the parts no longer traced say so.
 - **Is it held?** A Red-Blue chair's back board stood on the rear low rail along its bottom edge and leaned back with
   nothing behind it (the upper rail ran on the sitter's side), and `check --fit` passed it. The audit now asks of each
   structural part that stands on something whether its weight is over where it touches, seen from above; a `tips`
@@ -153,6 +145,18 @@
   pages note. The Eames chair's back cushion no longer comes down through its shell, nor its welts through the
   cushion and the arm pads (`check --fit`); each moved part says so in its `note`. Five older gallery scenes move
   from the `tessera-hologram` format id to `construct-scene`.
+- **The film constructs leave:** the three view-only constructs made for a film, never under a licence, are no
+  longer in the repository or the gallery, and the gallery's "New things from real ones" group is gone with them
+  (`examples/worlds.json`); KESTREL, which anyone may reuse, shows the use case instead.
+- **The R34's windows fit their frames:** a second pass judged in the solid and in Blender: its A-pillars, sashes,
+  B-pillar and C-pillars hold their glass (every pane meets its frame or panel along at least 95% of its edge,
+  within 4 mm; the A-pillars stood up to 9 cm proud), its rear quarter panels end on the tail panel instead of in caps
+  standing out of it, its tail lamps sit on the tail panel's face and its bumper flanks end where the bumper's bands
+  begin ([its page](examples/nissan-skyline-gt-r-r34/README.md)).
+- **The R34, refined for the solid** ([its page](examples/nissan-skyline-gt-r-r34/README.md)): its C-pillar
+  closes between the rear glass and the shoulder instead of standing as a fin through the quarter window, its
+  bumper flanks are closed, its rear bumper and tail no longer pillow, its sills run straight and flush, its
+  diffuser follows the bumper and its tubes are capped. Every part keeps its name; the parts no longer traced say so.
 
 ## 1.1.1 — 2026-11-03
 
