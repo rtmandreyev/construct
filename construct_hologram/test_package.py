@@ -363,6 +363,32 @@ class Distributions(unittest.TestCase):
                           or "/skill/" in n or "/examples/" in n], [])
 
 
+class Versions(unittest.TestCase):
+    """The places PUBLISHING.md's release checklist names say the version product.py does."""
+
+    def test_every_hand_kept_version_is_the_products(self):
+        from . import product
+        root = HERE.parent
+        if not (root / "PUBLISHING.md").exists():
+            self.skipTest("not a checkout")
+        v = re.escape(product.VERSION)
+
+        def found(path, *patterns):
+            text = (root / path).read_text(encoding="utf-8")
+            for pattern in patterns:
+                self.assertRegex(text, pattern % v, "%s: release checklist in PUBLISHING.md" % path)
+
+        found("pyproject.toml", r'(?m)^version = "%s"$')
+        found("scripts/hermes_submission/SKILL.md", r"(?m)^version: %s$", r"(?m)^    upstream: \S+ \(v%s\)$")
+        found("scripts/hermes_submission/PR.md", r"\(Apache-2\.0, v%s\)")
+        found("PUBLISHING.md", r"the latest is `v%s`", r"git push origin v%s\n", r"tag `v%s`",
+              r"`construct-blender-%s\.zip`", r"`construct-%s\.zip`")
+        # and nothing names another version where the release's own belongs
+        text = (root / "PUBLISHING.md").read_text(encoding="utf-8")
+        self.assertEqual(sorted(set(re.findall(r"git push origin v([\d.]+)|construct(?:-blender)?-(\d[\d.]*\d)\.zip", text))
+                                - {(product.VERSION, ""), ("", product.VERSION)}), [])
+
+
 class HermesHub(unittest.TestCase):
     """skills/construct/: the Hermes skill as `hermes skills install rtmandreyev/construct/skills/construct` fetches it."""
 

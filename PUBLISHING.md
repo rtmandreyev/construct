@@ -104,6 +104,24 @@ mode, model and video file), keep the video at about 20 MB or less (re-encode it
 needed), draw its poster with `python3 scripts/gallery_images.py <slug>`, and rebuild with
 `--films`.
 
+## 6. A new release: the version, everywhere
+
+The version lives in a few places kept by hand; `test_package.py` checks them against `construct_hologram/product.py`,
+so a release that misses one fails its tests. For version X.Y.Z:
+
+1. `construct_hologram/product.py`: `VERSION = "X.Y.Z"`. The packages, the MCP server, the 3D exports' generator
+   strings, the Blender and NetLogo manifests and the zips' names follow it.
+2. `pyproject.toml`: `version = "X.Y.Z"`.
+3. `scripts/hermes_submission/SKILL.md`: `version: X.Y.Z` and the `upstream:` line's `(vX.Y.Z)`.
+4. `scripts/hermes_submission/PR.md`: the `Upstream:` line's `(Apache-2.0, vX.Y.Z)`.
+5. This file: the latest tag at the top, `git push origin vX.Y.Z` (step 2), the release's tag and the two zips'
+   names (step 4).
+6. `python3 scripts/hermes_submission.py --hub`, which regenerates `skills/construct/` (the Hermes skill, its
+   frontmatter and its copy of `product.py`).
+7. `CHANGELOG.md`: the top heading becomes `## X.Y.Z — <date>`. A minor release (X.Y.0) also gets its notes,
+   `docs/releases/vX.Y.Z.md`, listed in `README.md` and `docs/README.md`; a fix release uses its CHANGELOG entry.
+8. Run the tests, commit, tag `vX.Y.Z`, then build the release's zips (step 4) and the gallery (step 5).
+
 ## What the gallery needs
 
 Nothing but static files: every link is relative, each construct is one self-contained
