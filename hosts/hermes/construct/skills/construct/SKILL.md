@@ -34,7 +34,7 @@ alive without being noisy, or until the mode's limits are reached. Then deliver 
 | draw recorded NetLogo runs (`run.jsonl`) or another view of a run's project; compare runs; no NetLogo needed | `construct_netlogo_draw` |
 | every other subcommand (critique, rounds, trace, loft-from-traces, compare, terrain, globe, kit, audio, netlogo-plates, netlogo-film...) | `construct_command` |
 
-**Change the scene with `construct_edit`**, never with scripts in a terminal: a list of operations by part id
+**Change the scene with `construct_edit`**, never with scripts in a terminal, and never import Construct's own Python from the plugin's folder: `construct_check` (`fit`, and `cells` up to 600 for a finer look) and `construct_inspect` answer fit and measurement questions, so no verification script is needed. `construct_edit` takes a list of operations by part id
 (`{"op": "move", "part": "lid", "by": [0, 0.004, 0]}`, `{"op": "set", "part": "door-*", "field": "look.weight",
 "value": 1.4}`, `{"op": "certainty", "parts": ["wheel-*"], "certainty": "verified", "basis": ["wheel-diameter"]}`,
 `{"op": "add_fact", "fact": {...}}`, `{"op": "add_part", "part": {...}}`, `{"op": "remove_part", "part": "..."}`).
