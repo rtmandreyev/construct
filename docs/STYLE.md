@@ -23,8 +23,9 @@ style, not a rendering mistake.
 
 **The caption tells you how well it is known** (4). It reads *documented* when the important
 parts rest on sources, *approximate* when the construct follows the real thing closely but not
-from measured plans, and *generic* when it is a typical example rather than a specific one.
-It also counts the lines.
+from measured plans, and *generic* when it is a typical example rather than a specific one; a new
+design, with nothing real to reconstruct, reads *original design*, and a recorded NetLogo run
+*recorded run*. It also counts the lines.
 
 ## One house palette
 
@@ -85,6 +86,8 @@ provenance view, which colours every part by its mark and shows a legend:
 | green | user-supplied |
 | magenta, dotted | decorative |
 
+Designed parts made to a requirement (something the user asked for, or a document says the thing must
+do) are counted apart in the legend, as *designed · to a requirement*, with the requirements' sources.
 The legend counts the parts of each kind and names the sources behind the verified ones and the
 comparisons that checked them; a construct's own note on its evidence, if it has one, appears under
 its caption. Saturn is a good

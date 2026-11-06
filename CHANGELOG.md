@@ -41,7 +41,7 @@
   structural part that stands on something whether its weight is over where it touches, seen from above; a `tips`
   warning names the part, what it stands on, where, and how far its weight lies off it, with the fix (a second hold on
   the side it leans to). A part fixed into the side of another or hung from it is left alone, and so is a rod's end
-  joined across its section. Over the gallery's 38 scenes and the bundled examples it finds nothing.
+  joined across its section. Over the gallery's scenes and the bundled examples it finds nothing.
 - **Small gaps are detached:** touching meant within 1% of the object's size, 4.6 cm on a car, so a fin 2 cm under a
   floor passed when something near it kept its box in touch. For `detached` a part must come within 5 mm, or 0.3% of
   the object's size on a large one (1.4 cm on a car, half a metre on a cathedral, whose stones are not set to 5 mm).
@@ -127,6 +127,22 @@
   FreeCAD's own settings (`FREECAD_USER_*`); the job travels in the script. Hermes's skill scan read the copy as a
   possible leak and refused to install the skill from GitHub without `--force`; it now installs as is
   (`hermes skills install rtmandreyev/construct/skills/construct`).
+- **The published schema takes 1.2's constructs:** `geometry.schema.json` still allowed 256 parts and 24,000 lines
+  and triangles, so an app that re-validated a compiled file against it rejected KESTREL v2 (498 parts) and the R34
+  (24,924 triangles). It now allows what the compiler allows; a test ties the two and validates both.
+- **A hint for every problem:** fifteen audit codes came back with no fix hint (`tier-*`, `critic-*`, `research`,
+  `authoring`, `likeness`, `self-graded`, `identity-unbuilt`, `no-checklist`, `compare-stale`, `data-lock`,
+  `glass-name`, `no-surface`, `tube-outline`), though `check` and the MCP tool promise one. Each now has one, and so
+  does each `check --fit` finding in `--json` (`pokes`, `crosses-glass`, `open`, `buried`); a test keeps every new
+  code from arriving without one.
+- **Packaging:** a pip install lacked `construct.nls`, so `netlogo-instrument` failed there; the wheel now carries
+  it and film mode's loader, and no longer the tests' fixtures (`testdata/`). The NetLogo extension's zip is made from
+  what git holds, not the working tree, and leaves out the tests, their fixtures and the unrendered skill.
+- **KESTREL is an original design:** both versions said `subject.accuracy: "generic"`, captioned GENERIC
+  RECONSTRUCTION, because the run predated `original`; they now read ORIGINAL DESIGN, a post-run correction their
+  pages note. The Eames chair's back cushion no longer comes down through its shell, nor its welts through the
+  cushion and the arm pads (`check --fit`); each moved part says so in its `note`. Five older gallery scenes move
+  from the `tessera-hologram` format id to `construct-scene`.
 
 ## 1.1.1 — 2026-11-03
 

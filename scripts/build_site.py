@@ -44,6 +44,11 @@ EXAMPLES = ROOT / "examples"
 LINKED = ["README.md", "PUBLISHING.md", "examples/README.md"]  # documents that link to the site, and docs/**/*.md
 FILM_MAX_MB = 25  # a film larger than this is refused: re-encode it (see docs/FILM.md)
 
+# a wireframe cube in the site's accent, on its ground
+FAVICON = ('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><rect width="32" height="32" rx="6" '
+           'fill="#050205"/><g fill="none" stroke="#d16bd0" stroke-width="1.6" stroke-linejoin="round">'
+           '<path d="M16 5 26 10.5v11L16 27 6 21.5v-11z"/><path d="M6 10.5 16 16l10-5.5M16 16v11" opacity=".7"/></g></svg>\n')
+
 CSS = """
 :root { color-scheme: dark; --bg: #050205; --panel: #0e0810; --line: #2a1d30; --ink: #f1e9f7; --dim: #a597b3;
         --accent: #d16bd0; --glow: rgba(209, 107, 208, .35); }
@@ -171,11 +176,6 @@ def _load_kits():
     return json.loads(path.read_text(encoding="utf-8"))["kits"] if path.exists() else []
 
 
-def film_label(film):
-    """A film's line: the object, the mode and the model."""
-    return "%s · %s · %s" % (film["title"], film["mode"], film["model"])
-
-
 WHY_FILM = ("Why a film? The film carries the music and plays the long, music-shaped assembly exactly as it was "
             "rendered. The live construct is the construct itself, to orbit, replay and read; but a page doesn't play "
             "the track, so to see the music driving the build, watch the film.")
@@ -191,8 +191,9 @@ def _page(title, body, depth, description):
     return ("<!doctype html>\n<html lang=\"en\">\n<head>\n<meta charset=\"utf-8\">\n"
             "<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n"
             "<title>%s</title>\n<meta name=\"description\" content=\"%s\">\n"
+            "<link rel=\"icon\" href=\"%sassets/favicon.svg\" type=\"image/svg+xml\">\n"
             "<link rel=\"stylesheet\" href=\"%sassets/site.css\">\n</head>\n<body>\n%s\n</body>\n</html>\n"
-            % (html.escape(title), html.escape(description), up, body))
+            % (html.escape(title), html.escape(description), up, up, body))
 
 
 def _beyond_buttons(b):
@@ -310,8 +311,7 @@ def index_page(examples, films=(), beyond=(), kits=()):
             "simulation, a model's whole run drawn in time.</p>"
             "<div class=\"links\"><a class=\"button\" href=\"%s\">Construct on GitHub</a>"
             "<a class=\"button\" href=\"#pipeline\">The full pipeline</a><a class=\"button\" href=\"#constructs\">"
-            "Constructs</a>%s<a class=\"button\" href=\"#films\">Film mode</a><a class=\"button\" href=\"#models\">"
-            "Models come alive</a>"
+            "Constructs</a>%s%s<a class=\"button\" href=\"#models\">Models come alive</a>"
             "<a class=\"button\" href=\"%s/blob/main/docs/HOW-IT-IS-MADE.md\">How they are made</a></div></header>"
             "<main>%s%s%s%s%s</main>"
             "<footer class=\"site\">Construct is Apache-2.0 licensed; its Blender add-on is GPL-3.0-or-later. Product and "
@@ -319,6 +319,7 @@ def index_page(examples, films=(), beyond=(), kits=()):
             "from public references, not an official model. %s"
             "<a href=\"%s\">Source and documentation</a>.</footer>"
             % (REPO_URL, "<a class=\"button\" href=\"#kits\">Model kits</a>" if kits else "",
+               "<a class=\"button\" href=\"#films\">Film mode</a>" if film_part else "",
                REPO_URL, pipeline, shelf, kit_part, film_part, alive,
                "The pages under Models come alive keep their own licences, given on each. " if models else "",
                REPO_URL))
@@ -496,6 +497,7 @@ def build(out, films_dir=None, kits=False):
         shutil.rmtree(out)
     (out / "assets").mkdir(parents=True)
     (out / "assets" / "site.css").write_text(CSS.lstrip(), encoding="utf-8")
+    (out / "assets" / "favicon.svg").write_text(FAVICON, encoding="utf-8")
     (out / ".nojekyll").write_text("", encoding="utf-8")  # serve every file as it is
     examples = _load_examples()
     made = {}

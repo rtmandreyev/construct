@@ -2,7 +2,8 @@
 
 [![A replacement control knob for the Braun SK 4, a holographic construct](hero.jpg)](https://rtmandreyev.github.io/construct/examples/braun-sk4-knob/)
 
-**fast · DeepSeek V4.1 Flash**, made after the [masterpiece SK 4](../braun-sk4/) and reviewed once
+**fast · DeepSeek V4.1 Flash**, made after the [masterpiece SK 4](../braun-sk4/) and reviewed once. Its scene's
+record names the masterpiece tier, but holds one review round, the agent's own (self-reviewed), and no judged rounds
 
 [Open the live construct](https://rtmandreyev.github.io/construct/examples/braun-sk4-knob/): drag to orbit, P shows how each part is known, S shows it as a
 solid. The scene: [scene.json](scene.json).

@@ -17,9 +17,10 @@ labelled as generated decoration. No authentic artwork, private data, credential
 weights are included.
 
 Example constructs (examples/): scenes written by AI models (Claude Opus 5.5, GPT-6.1 Sol, DeepSeek V4.1 Flash)
-with Construct, with hero images and animations rendered by Construct's own viewer. They are
-independent reconstructions from public references; the scenes cite those references by URL and
-include no reference photograph. Product, vehicle and place names belong to their owners, and
+with Construct, with hero images and animations rendered by Construct's own viewer. Those of real
+things are independent reconstructions from public references (KESTREL is an invented design, and
+SERUM 2 / 61 an unaffiliated concept designed from a public manual); the scenes cite their references
+by URL and include no reference photograph. Product, vehicle and place names belong to their owners, and
 no endorsement is implied.
 
 One folder is licensed differently: examples/netlogo-viral-marketing/ derives from NetLogo's

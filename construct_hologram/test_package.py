@@ -333,6 +333,62 @@ class EveryImportShips(unittest.TestCase):
         self.assertEqual(sorted(reached - set(hs.RUNTIME)), [])
 
 
+class Distributions(unittest.TestCase):
+    """What a pip install and the NetLogo extension carry: the data the runtime reads, not the tests."""
+
+    def test_the_wheel_carries_the_runtimes_data_and_not_the_test_data(self):
+        import fnmatch
+        try:
+            import tomllib
+        except ImportError:   # Python 3.10
+            self.skipTest("tomllib needs Python 3.11")
+        project = tomllib.loads((HERE.parent / "pyproject.toml").read_text(encoding="utf-8"))["tool"]["setuptools"]
+        patterns = project["package-data"]["*"]
+        for name in package.DATA_FILES + ["film/" + f for f in package.FILM] + ["viewer/" + f for f in package.VIEWER_FILES]:
+            self.assertTrue(any(fnmatch.fnmatch(name, p) for p in patterns), name)
+        self.assertIn("construct_hologram.testdata*", project["packages"]["find"]["exclude"])
+
+    def test_the_netlogo_zip_carries_the_committed_runtime_without_tests(self):
+        if not (HERE.parent / ".git").exists():
+            self.skipTest("not a git checkout")
+        spec = importlib.util.spec_from_file_location("bne", HERE.parent / "scripts" / "build_netlogo_extension.py")
+        bne = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(bne)
+        names = {p.as_posix() for p in bne.runtime_files()}
+        want = {"construct_hologram/" + m for m in package.RUNTIME_MODULES + package.DATA_FILES}
+        want |= {"construct_hologram/film/" + f for f in package.FILM}
+        want |= {"construct_hologram/viewer/" + f for f in package.VIEWER_FILES}
+        self.assertEqual(sorted(want - names), [])
+        self.assertEqual([n for n in names if Path(n).name.startswith("test_") or "/testdata/" in n
+                          or "/skill/" in n or "/examples/" in n], [])
+
+
+class Versions(unittest.TestCase):
+    """The places PUBLISHING.md's release checklist names say the version product.py does."""
+
+    def test_every_hand_kept_version_is_the_products(self):
+        from . import product
+        root = HERE.parent
+        if not (root / "PUBLISHING.md").exists():
+            self.skipTest("not a checkout")
+        v = re.escape(product.VERSION)
+
+        def found(path, *patterns):
+            text = (root / path).read_text(encoding="utf-8")
+            for pattern in patterns:
+                self.assertRegex(text, pattern % v, "%s: release checklist in PUBLISHING.md" % path)
+
+        found("pyproject.toml", r'(?m)^version = "%s"$')
+        found("scripts/hermes_submission/SKILL.md", r"(?m)^version: %s$", r"(?m)^    upstream: \S+ \(v%s\)$")
+        found("scripts/hermes_submission/PR.md", r"\(Apache-2\.0, v%s\)")
+        found("PUBLISHING.md", r"the latest is `v%s`", r"git push origin v%s\n", r"tag `v%s`",
+              r"`construct-blender-%s\.zip`", r"`construct-%s\.zip`")
+        # and nothing names another version where the release's own belongs
+        text = (root / "PUBLISHING.md").read_text(encoding="utf-8")
+        self.assertEqual(sorted(set(re.findall(r"git push origin v([\d.]+)|construct(?:-blender)?-(\d[\d.]*\d)\.zip", text))
+                                - {(product.VERSION, ""), ("", product.VERSION)}), [])
+
+
 class HermesHub(unittest.TestCase):
     """skills/construct/: the Hermes skill as `hermes skills install rtmandreyev/construct/skills/construct` fetches it."""
 

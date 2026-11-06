@@ -19,7 +19,8 @@ construct-mcp = "construct_hologram.mcp_server:main"
 
 [tool.setuptools.packages.find]
 include = ["construct_hologram*"]
+exclude = ["construct_hologram.testdata*"]   # the tests' fixtures: not for an install
 
 [tool.setuptools.package-data]
-"*" = ["*.json", "*.md", "*.html", "*.js", "*.png", "prompts/*", "examples/**/*", "skill/**/*", "viewer/*",
-       "evaluation/*"]
+"*" = ["*.json", "*.md", "*.html", "*.js", "*.png", "*.nls", "prompts/*", "examples/**/*", "skill/**/*", "viewer/*",
+       "film/*", "evaluation/*"]

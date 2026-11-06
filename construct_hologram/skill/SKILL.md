@@ -85,7 +85,10 @@ if no browser is available, say so and deliver the HTML without captures.
    words, supplied measurements, documents they gave you, the sources you read. Every fact gets a certainty:
    `verified` (cites a source), `user_supplied`, `inferred` (your reasoning: typical sizes,
    proportions) or `decorative` (chosen for presentation). Do not invent precision; a
-   generic reconstruction says so (`subject.accuracy: "generic"`). Each value is
+   generic reconstruction says so (`subject.accuracy: "generic"`), and a new design, with
+   nothing real to reconstruct, is `"original"`. What the user asked for, or a document says
+   the thing must do, is a fact with `"requirement": true` and its source; name its key in the
+   `basis` of each part that realises it (the part stays `inferred`). Each value is
    documented (`verified`, citing its source), traced (`traced`, citing the orthographic
    drawing; from a perspective photo `inferred`) or invented (`inferred` with a note, or
    `decorative`). A part whose size and shape are known differently says each:
@@ -140,7 +143,9 @@ if no browser is available, say so and deliver the HTML without captures.
    or "outstanding". Use it for a richer fast run, in the rounds modes, and whenever the
    subject is named. In masterpiece or unbounded mode run the rounds with `python3 TOOLS
    rounds start scene.json --mode masterpiece` (or `timeboxed`, `unbounded`) ([rounds](references/rounds.md)):
-   tag each edit with its ledger id, one critic per round, keep a version only when it beats
+   tag each edit with its ledger id, give each round's packet the request in the user's words
+   (`rounds packet --request "..." --reference ...`; without it the critic gets none), one
+   critic per round, keep a version only when it beats
    the best, and after every round report in chat the critic's top requests, what changed
    (ledger ids), won or lost, and the minutes.
    **Count the rounds in the scene:** before each review, add one to
@@ -293,5 +298,6 @@ first version made and checked by software, not yet built by a person; print one
 - Artwork only from bytes the user supplied or permitted, declared with its SHA-256 and
   rights; otherwise leave the artwork slot empty or generate clearly labelled decoration.
 - Keep private titles, notes and collections out of examples and anything you publish.
-- Stay inside the budgets (24k lines, 24k triangles, 6k points, 32 moving copies); simplify
+- Stay inside the budgets (48k lines, 48k triangles, 6k points, 1,024 parts and copies,
+  32 moving copies); simplify
   before you add.

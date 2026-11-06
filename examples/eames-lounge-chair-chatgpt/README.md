@@ -8,8 +8,10 @@
 a solid. The scene it was built from: [scene.json](scene.json).
 
 The same two photographs and the same request as [the Claude app's chair](../eames-lounge-chair/), made in the
-ChatGPT app's Codex, which installed the Construct skill itself from its zip. Twelve masterpiece rounds, each judged
-by an independent critic, about an hour in all; the run stopped at the 12-round cap with round 11 the best.
+ChatGPT app's Codex, which installed the Construct skill itself from its zip. Eleven masterpiece rounds, each judged
+by an independent critic, about an hour in all, with round 11 the best (its critic: good). The scene's record holds
+the history of the first ten rounds and round 11's verdict; the run ended before the twelfth, finishing round its
+notes still ask for.
 [Copy your thing →](../../docs/for/copy-your-thing.md)
 
 The photographs, from Wikimedia Commons, stood in for an owner's own (they are not in this repository):

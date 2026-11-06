@@ -33,7 +33,7 @@ Score each criterion 0–3 from the captures, against the references:
 | assembly | the build order tells the object's story: foundations first, the reveal last | `sheet-assembly.png` |
 | motion | articulations and idle life bring it alive without noise, about real pivots | `sheet-motion.png`, `sheet-life.png` |
 | density | one clear object at hero scale; up close every region has something true (a bare face or empty corner is unfinished); never clutter: no hairlines, nothing hovering or poking through | every sheet, `solid.png` |
-| honesty | labels only from facts; inferred and decorative parts look it; the caption says GENERIC or APPROXIMATE when it is | `sheet-provenance.png`, `hero.png` |
+| honesty | labels only from facts; inferred and decorative parts look it; the caption says GENERIC or APPROXIMATE when it is, ORIGINAL DESIGN for a new design | `sheet-provenance.png`, `hero.png` |
 
 It is **good** when every criterion scores 2 or more and you would show it as it is.
 Otherwise **iterate**: improve the weakest criterion first, `check`, `review`, score again.
@@ -110,7 +110,7 @@ again.
   a rail and leaning back with nothing behind it): give it a second hold on the side it leans to.
   `thin` flags a structural part too fine to render.
 - **Honesty**: inferred and decorative parts look it; generated art is labelled; the caption
-  says GENERIC or APPROXIMATE when it is.
+  says GENERIC or APPROXIMATE when it is, ORIGINAL DESIGN for a new design.
 - **Motion**: ambient, never frantic; parts move about their real pivots.
 - **Opening**: lids and boards swing about their real hinge and nothing passes through
   anything; the open pose shows what opening is for (the disc, the title page). Choose the

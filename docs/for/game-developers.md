@@ -12,8 +12,8 @@ you want it to. The line-light look is there too, for scanners, holograms and UI
 - **A prop:** `--merge` gives few draw calls (the FJ62: about 21,000 triangles in 27), `--wire seams` the design lines
   as thin tubes, `--materials` a finish from a small colour map, `--colliders` a box per part.
 - **A physics prop that holds together:** `--pieces glued` makes what stays put one body and each door, lid or
-  tailgate one more on its own hinge. A building's body is static. All 28 gallery constructs export this way, with
-  every joint made in Godot.
+  tailgate one more on its own hinge. A building's body is static. Every gallery construct exports this way, with
+  every joint made in Godot (since 1.2, joints inside joints too).
 - **A prop that breaks apart:** `--pieces` makes every piece a rigid body with convex shapes that settle rather than
   burst.
 - **Variants:** `params --seed` gives seeded variants of an archetype (a guitar, a bottle, a car).

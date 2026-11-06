@@ -27,9 +27,9 @@ In the commands below, `construct` is short for `python3 construct_hologram/cli.
 
 A crewed ice tug about 120 m long, for a game: GPT-6.1 Sol in Codex was given a brief that named what to learn
 from (NASA's space tug study, the ISS truss and its turning radiators), the size and frame, what must be there and
-what may be invented. It researched, built 254 named parts with six joints, and ran thirteen masterpiece rounds
-judged by independent critics. Then a fourth brief asked for close-up detail on a strict rule: keep every part's
-name, place and size, add detail as new parts. All 256 parts stayed; 242 were added.
+what may be invented. It researched and built 254 named parts with six joints, 256 after thirteen masterpiece
+rounds judged by independent critics. Then a fourth brief asked for close-up detail on a strict rule: keep every
+part's name, place and size, add detail as new parts. All 256 parts stayed; 242 were added.
 
 <p align="center"><img src="media/assembly-kestrel.gif" width="49%" alt="KESTREL assembling itself: the cradle and spine, the cab, tanks and engines, the radiator wings, then the four cradle arms opening and the wings folding"> <img src="media/kestrel-blender.jpg" width="49%" alt="KESTREL's second version finished in Blender: an off-white cab and cradle face, a bare aluminium truss, gold-foil water tanks, dark radiator panels and copper engine bells"></p>
 <p align="center"><sub>The construct, and the same ship exported with its finish map and rendered in Blender.</sub></p>
@@ -143,8 +143,8 @@ construct check scene.json --fit
 ## Numbers that went stale
 
 A chair's *How to read it* still gave an 11.8° lean after the fact became 15.2°. The audit now compares each number
-with a unit in *How to read it* and the annotations with the one fact it clearly names. The Red-Blue chair below,
-with one line of its text set back to an old value:
+with a unit in *How to read it* and the annotations with the one fact it clearly names. The Red-Blue chair below
+(a later version, its lean now 21.8°), with one line of its text set back to the 15.2° it once had:
 
 ```
 warn [stale-number] How to read it (line 5) says '15.2 deg', but the fact back_lean is 21.8 °: say the fact's

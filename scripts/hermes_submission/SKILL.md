@@ -135,7 +135,11 @@ Work in a folder of your own. `out/construct.html` opens in any browser.
    gets a certainty: `verified` (cites a source), `user_supplied`, `inferred` (your estimate
    or a traced measurement, with a short note) or `decorative`. Without a cited source
    nothing is `verified`. Leave unknown facts out entirely — never `null`, "unknown" or a
-   guess. Read `references/provenance.md` if artwork or sources are involved.
+   guess. A generic reconstruction is `subject.accuracy: "generic"`; a new design, with nothing
+   real to reconstruct, is `"original"`. What the user asked for, or a document says the thing
+   must do, is a fact with `"requirement": true` and its source; name its key in the `basis` of
+   each part that realises it (the part stays `inferred`). Read `references/provenance.md` if
+   artwork or sources are involved.
 3. **Pick the path.** If an archetype fits (`params --list`), fill its parameter document:
    copy the facts, leave `params` empty unless the user gave sizes. Otherwise start from
    `new <category>` or an example and read `references/composition.md` and
@@ -169,7 +173,8 @@ Work in a folder of your own. `out/construct.html` opens in any browser.
    is good, or when the tier's review rounds or time run out, whichever comes first.
    **Masterpiece and unbounded run judged rounds** (`references/rounds.md`): `scripts/cli.py
    rounds start scene.json --mode masterpiece` (or `unbounded`). Each round, work on at most 4 ledger items and tag each edit (`rounds change
-   D3 "..."`). Then `rounds packet --reference ...`, with ONE delegated critic a round (or
+   D3 "..."`). Then `rounds packet --request "the user's words" --reference ...` (without
+   `--request` the critic gets no request), with ONE delegated critic a round (or
    `rounds run --base-url ...`), and `rounds record answer.json`. A version is kept only when
    it beats the best so far, and its regressions lead the next round. After every round,
    report its summary in chat. Stop when `record` says STOP: two rounds without a win, every

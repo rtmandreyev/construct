@@ -4,8 +4,8 @@
     python3 scripts/build_netlogo_extension.py --netlogo "/Applications/NetLogo 7.0.4" [--javac PATH] [--out dist/]
 
 Compiles hosts/netlogo/ (Java 17) against the NetLogo you point to, and zips construct.jar with the
-part of Construct that construct:draw runs (the construct_hologram package, standard library only),
-its LICENSE and NOTICE. Unzipped into NetLogo's extensions folder as construct/, a model can say
+part of Construct that construct:draw runs (the construct_hologram package as committed, standard library
+only, without its tests, test data, examples or skill), its LICENSE and NOTICE. Unzipped into NetLogo's extensions folder as construct/, a model can say
 `extensions [construct]`. The draw needs Python 3.10 or newer on the computer; recording does not.
 """
 
@@ -23,7 +23,7 @@ sys.path.insert(0, str(ROOT))
 from construct_hologram import product  # noqa: E402
 
 SRC = ROOT / "hosts" / "netlogo" / "src"
-SKIP = {"__pycache__", "examples", "evaluation", ".DS_Store"}
+SKIP = {"__pycache__", "examples", "evaluation", "testdata", "skill", ".DS_Store"}   # folders the draw never reads
 MANIFEST = """Manifest-Version: 1.0
 Extension-Name: construct
 Class-Manager: construct.netlogo.ConstructExtension
@@ -69,6 +69,20 @@ def fixed(name):
     return info
 
 
+def runtime_files():
+    """The construct_hologram files the zip carries, from git (what is committed, never a stray file in the
+    working tree): not the folders in SKIP, nor the tests."""
+    listed = subprocess.run(["git", "-C", str(ROOT), "ls-files", "-z", "construct_hologram"], check=True,
+                            capture_output=True).stdout.decode("utf-8").split("\0")
+    out = []
+    for name in sorted(n for n in listed if n):
+        rel = Path(name)
+        if SKIP.intersection(rel.parts) or rel.name.startswith("test_") or rel.name == "package.py":   # it packs skill/
+            continue
+        out.append(rel)
+    return out
+
+
 def build(netlogo, javac, out_dir):
     """The extension zip: construct.jar, construct_hologram/, LICENSE and NOTICE at its root. Returns its path."""
     out_dir = Path(out_dir)
@@ -78,10 +92,8 @@ def build(netlogo, javac, out_dir):
         jar = compile_jar(netlogo, javac, Path(tmp))
         with zipfile.ZipFile(path, "w", zipfile.ZIP_DEFLATED) as z:
             z.writestr(fixed("construct.jar"), jar.read_bytes())
-            for f in sorted((ROOT / "construct_hologram").rglob("*")):
-                rel = f.relative_to(ROOT)
-                if f.is_file() and not SKIP.intersection(rel.parts):
-                    z.writestr(fixed(str(rel)), f.read_bytes())
+            for rel in runtime_files():
+                z.writestr(fixed(rel.as_posix()), (ROOT / rel).read_bytes())
             for name in ("LICENSE", "NOTICE"):
                 z.writestr(fixed(name), (ROOT / name).read_bytes())
             z.writestr(fixed("README.md"), (ROOT / "hosts" / "netlogo" / "README.md").read_bytes())

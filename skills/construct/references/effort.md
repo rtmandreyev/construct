@@ -164,6 +164,6 @@ deliver, and put what you would still improve in `next`.
 - **Hermes**: `hermes chat --run-budget 600 --max-turns 120` (per run; the owner's
   `config.yaml` stays as it is) gives the 80% wrap-up notice and a hard ceiling.
 - **Hosts add hard limits on top**: a Hermes run budget (its turn and time limits), an agent
-  harness's timeout and cost ceiling (for example tessera-agent's), a provider's spend cap.
+  harness's timeout and cost ceiling, a provider's spend cap.
   Whichever limit is tightest wins. Only the unbounded mode, on the user's explicit request,
   runs without Construct's own round cap and time ceiling.

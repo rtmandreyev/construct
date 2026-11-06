@@ -14,8 +14,8 @@ here unchanged, in their order, with 242 new ones (their names start with `v2-`)
 with the repeats and mirrors counted. The ship's size, its origin, its docking port and its six joints are the
 same, so whatever names a part of KESTREL (an animation, a Godot scene, a game's script) still finds it; the new
 hardware on the arms and wings rides the same hinges. Six masterpiece rounds, the best round 6, stopped with every
-criterion at 3; round 3 lost to round 2 and was reverted. It needs a Construct newer than 1.1.1, which allowed
-256 parts a scene; this one allows 1,024. [New things from real ones →](../../docs/for/invent-from-what-exists.md#6-more-detail-every-part-kept)
+criterion at 3; round 3 lost to round 2 and was reverted. It needs Construct 1.2 or newer, which allows 1,024
+parts a scene (1.1 allowed 256). [New things from real ones →](../../docs/for/invent-from-what-exists.md#6-more-detail-every-part-kept)
 
 What was added: pressure seals on the glazing, hinges and catches on the hatches, a recessed handwheel, stud heads on
 the docking flange; serpentine coolant circuits on all twelve radiator panels and fasteners, collars and service
@@ -40,6 +40,11 @@ Make the final KESTREL (KESTREL-final/) more detailed for close-ups. Keep every 
 ```
 
 The earlier briefs, and the record of the first build and its continuation, are in [KESTREL's README](../kestrel/).
+
+**A post-run correction, made for Construct 1.2:** the scene's `subject.accuracy` is now `"original"`, so its
+subtitle reads ORIGINAL DESIGN. The run predated that class: it recorded `"generic"`, captioned GENERIC
+RECONSTRUCTION, and added a line to *How to read it* explaining the caption, which is removed. Nothing else in the
+scene changed; because the scene did, `check` says its critic judged another version (`critic-stale`).
 
 ## Build it
 

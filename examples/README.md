@@ -7,8 +7,19 @@ made with earlier versions of Construct; all of them build with this release.
 | | example | mode | model |
 |---|---|---|---|
 | [![Toyota Land Cruiser FJ62](toyota-land-cruiser-fj62/thumb.jpg)](toyota-land-cruiser-fj62/) | [Toyota Land Cruiser FJ62](toyota-land-cruiser-fj62/) | masterpiece | Claude Opus 5.5 |
+| [![Nissan Skyline GT-R R34](nissan-skyline-gt-r-r34/thumb.jpg)](nissan-skyline-gt-r-r34/) | [Nissan Skyline GT-R R34](nissan-skyline-gt-r-r34/) | masterpiece | Claude Opus 5.5 |
+| [![Tompion year-going longcase clock](tompion-year-going-clock/thumb.jpg)](tompion-year-going-clock/) | [Tompion year-going longcase clock](tompion-year-going-clock/) | masterpiece | DeepSeek V4.1 Flash |
+| [![Volkswagen T1 Samba](volkswagen-t1-samba/thumb.jpg)](volkswagen-t1-samba/) | [Volkswagen T1 Samba](volkswagen-t1-samba/) | masterpiece | Claude Opus 5.5 |
 | [![KESTREL, an invented ice tug](kestrel/thumb.jpg)](kestrel/) | [KESTREL, an invented ice tug](kestrel/) | masterpiece | GPT-6.1 Sol |
 | [![KESTREL, more detailed](kestrel-v2/thumb.jpg)](kestrel-v2/) | [KESTREL, more detailed](kestrel-v2/) | masterpiece | GPT-6.1 Sol |
+| [![SERUM 2 / 61, an unaffiliated concept from a manual](serum-2-61/thumb.jpg)](serum-2-61/) | [SERUM 2 / 61, an unaffiliated concept from a manual](serum-2-61/) | masterpiece | GPT-6.1 Sol |
+| [![Eames Lounge Chair and Ottoman](eames-lounge-chair/thumb.jpg)](eames-lounge-chair/) | [Eames Lounge Chair and Ottoman](eames-lounge-chair/) | masterpiece | Claude Opus 5.5 |
+| [![Eames Lounge Chair, from the ChatGPT app](eames-lounge-chair-chatgpt/thumb.jpg)](eames-lounge-chair-chatgpt/) | [Eames Lounge Chair, from the ChatGPT app](eames-lounge-chair-chatgpt/) | masterpiece | GPT-6.1 Sol |
+| [![Braun SK 4](braun-sk4/thumb.jpg)](braun-sk4/) | [Braun SK 4](braun-sk4/) | masterpiece | DeepSeek V4.1 Flash |
+| [![Braun SK 4: a replacement knob](braun-sk4-knob/thumb.jpg)](braun-sk4-knob/) | [Braun SK 4: a replacement knob](braun-sk4-knob/) | fast | DeepSeek V4.1 Flash |
+| [![A garden shed](garden-shed/thumb.jpg)](garden-shed/) | [A garden shed](garden-shed/) | masterpiece | DeepSeek V4.1 Flash |
+| [![A garden shed, with a planned change](garden-shed-planned/thumb.jpg)](garden-shed-planned/) | [A garden shed, with a planned change](garden-shed-planned/) | fast | DeepSeek V4.1 Flash |
+| [![Vespa GS 150, an owner's scooter](vespa-gs150/thumb.jpg)](vespa-gs150/) | [Vespa GS 150, an owner's scooter](vespa-gs150/) | masterpiece | GPT-6.1 Sol |
 | [![Revox A77](revox-a77/thumb.jpg)](revox-a77/) | [Revox A77](revox-a77/) | fast | DeepSeek V4.1 Flash |
 | [![Sainte-Chapelle](sainte-chapelle/thumb.jpg)](sainte-chapelle/) | [Sainte-Chapelle](sainte-chapelle/) | masterpiece | Claude Opus 5.5 |
 | [![Yamaha CFX](yamaha-cfx/thumb.jpg)](yamaha-cfx/) | [Yamaha CFX](yamaha-cfx/) | fast | DeepSeek V4.1 Flash |
@@ -34,9 +45,23 @@ made with earlier versions of Construct; all of them build with this release.
 music ([film mode](../docs/FILM.md)), listed in [films.json](films.json). Their videos are in the
 [gallery's film section](https://rtmandreyev.github.io/construct/#films) only.
 
-Product and place names belong to their owners. Each construct of a real thing is an independent
-reconstruction from public references, not an official model (KESTREL is invented); the scenes cite their sources, and no reference
-photograph is included here.
+**Model kits.** Four of the constructs are also kits to print and paint, listed in [kits.json](kits.json): the
+Yamaha CFX, Tompion's clock and the Vespa at 1:12, the T1 Samba at 1:16 (from its `kit-scene.json`). Each kit's plan
+and finish map are in its folder; the booklets and the steps in 3D are in the
+[gallery's kit section](https://rtmandreyev.github.io/construct/#kits), and the plates to print are attached to the
+latest release ([a kit of your own](../docs/for/a-kit-of-your-own.md), [printing](../docs/PRINTING.md)).
 
-Build the gallery yourself: `python3 scripts/build_site.py --out site`, then serve `site/` with
+**Beyond objects.** [beyond.json](beyond.json) lists the gallery's other pages:
+[from light to a finished model](light-to-metal/) (four constructs exported as glTF and lit live, three from the
+gallery and the James Webb Space Telescope from film mode) and seven NetLogo models drawn as constructs
+(the `netlogo-*` folders, [NetLogo](../docs/NETLOGO.md)). The NetLogo models are under CC BY-NC-SA 3.0, as each
+folder's LICENSE says.
+
+Product and place names belong to their owners. Each construct of a real thing is an independent
+reconstruction from public references, not an official model (KESTREL is invented, and SERUM 2 / 61 an
+unaffiliated concept designed from a public manual, not endorsed by Xfer Records); the scenes cite their sources,
+and no reference photograph is included here.
+
+Build the gallery yourself: `python3 scripts/build_site.py --out site --no-films` (or `--films DIR` with the
+films' videos), then serve `site/` with
 any static server (see [PUBLISHING.md](../PUBLISHING.md)).
