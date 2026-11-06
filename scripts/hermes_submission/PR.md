@@ -12,7 +12,7 @@ fills an archetype's parameters (CD cases, books, guitars, a synth, bottles, can
 The bundled stdlib-only scripts validate it, audit it (every problem comes back with a JSON
 path, a code and a fix hint), compile it deterministically and render one self-contained HTML
 construct, plus review stills and video when a browser and ffmpeg are present. Film mode
-(new in 0.3.0) renders a construct assembling across a piece of music, its pace, light and
+renders a construct assembling across a piece of music, its pace, light and
 sections following the track.
 
 It is inspired by the truth-first method of the existing `anatomy` optional skill (true
@@ -44,7 +44,7 @@ them it still checks and builds the construct's HTML page.
 ## Checklist (For New Skills)
 
 - [ ] Broadly useful to most users — **no**: submitted to `optional-skills`, not `skills/`.
-- [x] SKILL.md follows the standard format: frontmatter (`name` = directory, 58-character
+- [x] SKILL.md follows the standard format: frontmatter (`name` = directory, 50-character
       description ending in a period, version, author, license, platforms, tags,
       `related_skills: [anatomy]`), trigger conditions, steps, pitfalls, verification.
 - [x] No external dependencies beyond what is available: Python standard library; an already
@@ -67,7 +67,7 @@ verdict **safe**. Its notices, all informational:
 - `python_environ_get_secret` ×1: the optional critic reads the name of an API-key variable the
   user chooses (`--key-env`), for a second-model critic; nothing is read unless asked.
 - `string_reversal` ×1: reversing a traced polygon's winding (`poly[::-1]`).
-- `too_many_files`: 56 files against a guideline of 50: the stdlib runtime (28 modules and the
+- `too_many_files`: 67 files against a guideline of 50: the stdlib runtime (31 modules and the
   viewer), the references and eleven example scenes the references cite. Happy to trim the
   examples if reviewers prefer.
 

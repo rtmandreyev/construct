@@ -13,7 +13,7 @@ Build it yourself from a checkout of Construct:
 python3 construct_hologram/cli.py build examples/nissan-skyline-gt-r-r34/scene.json --out out/nissan-skyline-gt-r-r34
 ```
 
-## Refined for the solid (1.1.2)
+## Refined for the solid (1.2)
 
 The light forgives what a solid does not. Seen as a solid (**S** on the page) and exported to Blender, the first
 version showed defects the checks had let through; this version answers them, and every part keeps its name:

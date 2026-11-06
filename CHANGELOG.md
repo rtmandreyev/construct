@@ -41,7 +41,7 @@
   structural part that stands on something whether its weight is over where it touches, seen from above; a `tips`
   warning names the part, what it stands on, where, and how far its weight lies off it, with the fix (a second hold on
   the side it leans to). A part fixed into the side of another or hung from it is left alone, and so is a rod's end
-  joined across its section. Over the gallery's 38 scenes and the bundled examples it finds nothing.
+  joined across its section. Over the gallery's scenes and the bundled examples it finds nothing.
 - **Small gaps are detached:** touching meant within 1% of the object's size, 4.6 cm on a car, so a fin 2 cm under a
   floor passed when something near it kept its box in touch. For `detached` a part must come within 5 mm, or 0.3% of
   the object's size on a large one (1.4 cm on a car, half a metre on a cathedral, whose stones are not set to 5 mm).

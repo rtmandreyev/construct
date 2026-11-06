@@ -147,8 +147,8 @@ should keep working. So the fourth brief asked for detail on a strict rule:
 their order, 242 added (`v2-…`), 498 in all. The size, origin, docking port and joints are the same; the new
 hardware on the arms and wings rides their hinges. Six rounds: the critic asked for the plain aft face of the cab,
 the bare wing roots and the blank engine mounts; round 3 lost (one close-up cropped to a fragment, the floodlight's open frames almost black) and was
-reverted; round 6 stopped with every criterion at 3. The session took about 50 minutes. A scene this size needs a Construct newer than
-1.1.1, which allowed 256 parts; this one allows 1,024.
+reverted; round 6 stopped with every criterion at 3. The session took about 50 minutes. A scene this size needs Construct 1.2 or
+newer, which allows 1,024 parts (1.1 allowed 256).
 
 <p align="center"><img src="../media/kestrel-v2-detail.jpg" alt="Close-ups of the second version: the roof docking ring with its stud heads and capture locks, and a floodlight as a solid, its bezel held by four screws"></p>
 <p align="center"><sub>Two of the second version's close-up views: the roof dock, and a floodlight seen as a solid (<b>S</b>).</sub></p>
