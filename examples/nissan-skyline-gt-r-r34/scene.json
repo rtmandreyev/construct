@@ -165,7 +165,7 @@
       "role": "mass",
       "certainty": {
         "size": "verified",
-        "shape": "traced"
+        "shape": "inferred"
       },
       "stage": 2,
       "shape": {
@@ -173,62 +173,62 @@
         "sections": [
           [
             -0.915,
-            0.0536,
-            0.1202,
+            0.0651,
+            0.14,
             0.3059,
-            0.0724
+            0.0771
           ],
           [
             -0.64,
-            0.023,
-            0.1639,
+            0.0341,
+            0.148,
             0.3059,
-            0.0418
+            0.0461
           ],
           [
             -0.365,
-            0.012,
-            0.1748,
+            0.0211,
+            0.15,
             0.3059,
-            0.0308
+            0.0331
           ],
           [
             -0.09,
-            0.0217,
-            0.1693,
+            0.0291,
+            0.15,
             0.3059,
-            0.0405
+            0.0411
           ],
           [
             0.185,
-            0.0217,
-            0.1529,
+            0.0291,
+            0.15,
             0.3059,
-            0.0405
+            0.0411
           ],
           [
             0.46,
-            0.0217,
-            0.169,
+            0.0291,
+            0.15,
             0.3059,
-            0.0405
+            0.0411
           ],
           [
             0.735,
-            0.0217,
-            0.1475,
+            0.0261,
+            0.148,
             0.3059,
-            0.0405
+            0.0381
           ],
           [
             1.01,
-            0.0288,
-            0.142,
+            0.0371,
+            0.14,
             0.3059,
-            0.0476
+            0.0491
           ]
         ],
-        "round": 0.8
+        "round": 0.35
       },
       "at": [
         0.8019,
@@ -247,7 +247,8 @@
         "weight": 0.4,
         "alpha": 0.38
       },
-      "mirror": "x"
+      "mirror": "x",
+      "note": "Length and top line traced; its lower edge and depth smoothed and seated against the door and panels above it (the traced sections varied by up to 2.5 cm)."
     },
     {
       "id": "door-l",
@@ -2741,9 +2742,9 @@
         "closed": true
       },
       "at": [
+        -0.0071,
         0,
-        0,
-        0
+        -0.0149
       ],
       "basis": [
         "length",
@@ -2754,7 +2755,8 @@
       "look": {
         "weight": 1.1
       },
-      "mirror": "x"
+      "mirror": "x",
+      "note": "set 1.65 cm in, onto the bumper's face (it stood about 2 cm out of it all round)"
     },
     {
       "id": "front-low-intake-rim",
@@ -3545,47 +3547,68 @@
       "role": "mass",
       "certainty": {
         "size": "verified",
-        "shape": "traced"
+        "shape": "inferred"
       },
       "stage": 2,
       "shape": {
         "type": "loft",
         "sections": [
           [
-            0.0,
-            0.05,
-            1.1294,
-            1.2144,
-            0.0385
+            -0.0578,
+            0.0425,
+            -0.0096,
+            0.0104,
+            0.0425
           ],
           [
-            0.1638,
-            0.05,
-            1.0426,
-            1.1276,
-            0.0385
+            0.0097,
+            0.0425,
+            -0.0104,
+            0.0096,
+            0.0425
           ],
           [
-            0.3276,
-            0.05,
-            0.9568,
-            1.0418,
-            0.0385
+            0.0772,
+            0.0425,
+            -0.0111,
+            0.0089,
+            0.0425
           ],
           [
-            0.4913,
-            0.05,
-            0.8678,
-            0.9528,
-            0.0385
+            0.1443,
+            0.0425,
+            -0.0126,
+            0.0074,
+            0.0425
+          ],
+          [
+            0.2114,
+            0.0425,
+            -0.0142,
+            0.0058,
+            0.0425
+          ],
+          [
+            0.2781,
+            0.0425,
+            -0.0167,
+            0.0033,
+            0.0425
+          ],
+          [
+            0.3446,
+            0.0425,
+            -0.0194,
+            0.0006,
+            0.0425
           ]
         ],
-        "round": 0.6
+        "round": 0.4
       },
       "at": [
-        0.5776,
-        0,
-        0.4444
+        0.6221,
+        1.1157,
+        0.5844
       ],
       "label": "A-pillar (traced)",
       "basis": [
@@ -3600,58 +3623,66 @@
         "alpha": 0.42
       },
       "rotate": [
-        0,
-        17.6397,
-        0
+        13.6713,
+        30.7386,
+        -32.0302
       ],
-      "mirror": "x"
+      "mirror": "x",
+      "note": "Designed to lie between the traced windscreen and door frame: a strip 8.5 cm wide over the glass's edge, 4-6 mm proud of it."
     },
     {
       "id": "a-pillar-upper",
       "role": "mass",
       "certainty": {
         "size": "verified",
-        "shape": "traced"
+        "shape": "inferred"
       },
       "stage": 2,
       "shape": {
         "type": "loft",
         "sections": [
           [
-            0.0,
-            0.05,
-            1.2174,
-            1.3024,
-            0.0385
+            -0.3509,
+            0.0425,
+            -0.0217,
+            -0.0017,
+            0.0425
           ],
           [
-            0.0704,
-            0.05,
-            1.1791,
-            1.2641,
-            0.0385
+            -0.2704,
+            0.0425,
+            -0.0161,
+            0.0039,
+            0.0425
           ],
           [
-            0.1408,
-            0.05,
-            1.1464,
-            1.2314,
-            0.0385
+            -0.1903,
+            0.0425,
+            -0.0113,
+            0.0087,
+            0.0425
           ],
           [
-            0.2112,
-            0.05,
-            1.1125,
-            1.1975,
-            0.0385
+            -0.112,
+            0.0425,
+            -0.0103,
+            0.0097,
+            0.0425
+          ],
+          [
+            -0.0339,
+            0.0425,
+            -0.0099,
+            0.0101,
+            0.0425
           ]
         ],
-        "round": 0.6
+        "round": 0.4
       },
       "at": [
-        0.4954,
-        0,
-        0.2823
+        0.6221,
+        1.1157,
+        0.5844
       ],
       "basis": [
         "length",
@@ -3665,11 +3696,12 @@
         "alpha": 0.42
       },
       "rotate": [
-        0,
-        26.4594,
-        0
+        13.6713,
+        30.7386,
+        -32.0302
       ],
-      "mirror": "x"
+      "mirror": "x",
+      "note": "Designed with a-pillar, as one strip up to the roof."
     },
     {
       "id": "roof",
@@ -3799,67 +3831,109 @@
       "role": "mass",
       "certainty": {
         "size": "verified",
-        "shape": "traced"
+        "shape": "inferred"
       },
       "stage": 2,
       "shape": {
         "type": "loft",
         "sections": [
           [
-            -1.6136,
-            0.025,
-            0.0285,
-            0.078,
-            0.0531
+            -1.59,
+            0.0577,
+            -0.0533,
+            0.0126,
+            0.008
           ],
           [
-            -1.4886,
-            0.0301,
-            0.0257,
-            0.1055,
-            0.0451
+            -1.5,
+            0.0612,
+            -0.0588,
+            0.0537,
+            0.0142
           ],
           [
-            -1.3635,
-            0.0308,
-            0.0135,
-            0.1685,
-            0.0503
+            -1.4,
+            0.0617,
+            -0.0658,
+            0.0993,
+            0.0211
           ],
           [
-            -1.2385,
-            0.0374,
-            0.0012,
-            0.2226,
-            0.0548
+            -1.3,
+            0.0654,
+            -0.0783,
+            0.1457,
+            0.0271
           ],
           [
-            -1.1135,
-            0.0453,
-            -0.011,
-            0.2765,
-            0.0564
+            -1.2,
+            0.0727,
+            -0.0931,
+            0.1927,
+            0.0324
           ],
           [
-            -0.9885,
-            0.0532,
-            -0.0233,
-            0.3373,
-            0.0499
+            -1.1,
+            0.0743,
+            -0.107,
+            0.2411,
+            0.0359
           ],
           [
-            -0.8635,
-            0.0525,
-            -0.0347,
-            0.4048,
-            0.038
+            -1.0,
+            0.0779,
+            -0.1211,
+            0.2954,
+            0.0317
+          ],
+          [
+            -0.9,
+            0.0774,
+            -0.1309,
+            0.3498,
+            0.0275
+          ],
+          [
+            -0.88,
+            0.0666,
+            -0.0355,
+            0.2896,
+            0.0834
+          ],
+          [
+            -0.84,
+            0.0721,
+            0.0266,
+            0.3047,
+            0.0815
+          ],
+          [
+            -0.8,
+            0.0776,
+            0.0888,
+            0.3198,
+            0.0796
+          ],
+          [
+            -0.76,
+            0.083,
+            0.1509,
+            0.3337,
+            0.0777
+          ],
+          [
+            -0.735,
+            0.0864,
+            0.1898,
+            0.3374,
+            0.0771
           ]
         ],
-        "round": 1.0
+        "round": 0.3
       },
       "at": [
-        0.6917,
-        0.9848,
+        0.6326,
+        1.0098,
         0
       ],
       "label": "C-pillar / sail panel (traced)",
@@ -3877,9 +3951,10 @@
       "rotate": [
         0,
         0,
-        36
+        38.0
       ],
-      "mirror": "x"
+      "mirror": "x",
+      "note": "Designed to close the C-pillar between the traced rear glass, quarter panels, quarter window and roof, running over the glass's edge; its outline in the side view follows the tracing."
     },
     {
       "id": "glazing-rear-window",
@@ -3894,31 +3969,31 @@
         "sections": [
           [
             -1.5915,
-            0.6175,
+            0.6275,
             1.009,
             1.021,
-            0.6175
+            0.6275
           ],
           [
             -1.3555,
-            0.564,
+            0.574,
             1.104,
             1.116,
-            0.564
+            0.574
           ],
           [
             -1.1195,
-            0.5056,
+            0.5156,
             1.199,
             1.211,
-            0.5056
+            0.5156
           ],
           [
             -0.8835,
-            0.4189,
+            0.4289,
             1.294,
             1.306,
-            0.4189
+            0.4289
           ]
         ],
         "round": 0.3
@@ -3938,7 +4013,8 @@
       "look": {
         "fill": "glass",
         "weight": 0.6
-      }
+      },
+      "note": "Traced; 1 cm wider each side, under the C-pillars' edges."
     },
     {
       "id": "glazing-door-l",
@@ -3953,75 +4029,75 @@
         "profile": [
           [
             0.714,
-            0.0
+            -0.03
           ],
           [
             0.6478,
-            0.0
+            -0.03
           ],
           [
             0.5816,
-            0.0
+            -0.03
           ],
           [
             0.5154,
-            0.0
+            -0.03
           ],
           [
             0.4492,
-            0.0
+            -0.03
           ],
           [
             0.3831,
-            0.0
+            -0.03
           ],
           [
             0.3169,
-            0.0
+            -0.03
           ],
           [
             0.2507,
-            0.0
+            -0.03
           ],
           [
             0.1845,
-            0.0
+            -0.03
           ],
           [
             0.1183,
-            0.0
+            -0.03
           ],
           [
             0.0521,
-            0.0
+            -0.03
           ],
           [
             -0.0141,
-            0.0
+            -0.03
           ],
           [
             -0.0802,
-            0.0
+            -0.03
           ],
           [
             -0.1464,
-            0.0
+            -0.03
           ],
           [
             -0.2126,
-            0.0
+            -0.03
           ],
           [
             -0.2788,
-            0.0
+            -0.03
           ],
           [
             -0.345,
-            0.0
+            -0.03
           ],
           [
             -0.4112,
-            0.0
+            -0.03
           ],
           [
             -0.4553,
@@ -4045,7 +4121,7 @@
           ],
           [
             0.714,
-            0.0
+            -0.03
           ]
         ],
         "height": 0.006,
@@ -4071,7 +4147,8 @@
         0,
         0,
         32.96940390346213
-      ]
+      ],
+      "note": "Traced above the belt; runs 3 cm below it, into the door or the quarter panel."
     },
     {
       "id": "glazing-door-r",
@@ -4086,75 +4163,75 @@
         "profile": [
           [
             0.714,
-            0.0
+            -0.03
           ],
           [
             0.6478,
-            0.0
+            -0.03
           ],
           [
             0.5816,
-            0.0
+            -0.03
           ],
           [
             0.5154,
-            0.0
+            -0.03
           ],
           [
             0.4492,
-            0.0
+            -0.03
           ],
           [
             0.3831,
-            0.0
+            -0.03
           ],
           [
             0.3169,
-            0.0
+            -0.03
           ],
           [
             0.2507,
-            0.0
+            -0.03
           ],
           [
             0.1845,
-            0.0
+            -0.03
           ],
           [
             0.1183,
-            0.0
+            -0.03
           ],
           [
             0.0521,
-            0.0
+            -0.03
           ],
           [
             -0.0141,
-            0.0
+            -0.03
           ],
           [
             -0.0802,
-            0.0
+            -0.03
           ],
           [
             -0.1464,
-            0.0
+            -0.03
           ],
           [
             -0.2126,
-            0.0
+            -0.03
           ],
           [
             -0.2788,
-            0.0
+            -0.03
           ],
           [
             -0.345,
-            0.0
+            -0.03
           ],
           [
             -0.4112,
-            0.0
+            -0.03
           ],
           [
             -0.4553,
@@ -4178,7 +4255,7 @@
           ],
           [
             0.714,
-            0.0
+            -0.03
           ]
         ],
         "height": 0.006,
@@ -4204,7 +4281,8 @@
         0,
         0,
         -32.96940390346213
-      ]
+      ],
+      "note": "Traced above the belt; runs 3 cm below it, into the door or the quarter panel."
     },
     {
       "id": "glazing-quarter",
@@ -4219,31 +4297,31 @@
         "profile": [
           [
             -0.5105,
-            0.0
+            -0.03
           ],
           [
             -0.5767,
-            0.0
+            -0.03
           ],
           [
             -0.6428,
-            0.0
+            -0.03
           ],
           [
             -0.709,
-            0.0
+            -0.03
           ],
           [
             -0.7752,
-            0.0
+            -0.03
           ],
           [
             -0.8414,
-            0.0
+            -0.03
           ],
           [
-            -0.8966,
-            0.0558
+            -0.9174,
+            0.0237
           ],
           [
             -0.7201,
@@ -4278,7 +4356,8 @@
         0,
         32.96940390346213
       ],
-      "mirror": "x"
+      "mirror": "x",
+      "note": "Traced above the belt; runs 3 cm below it, into the door or the quarter panel."
     },
     {
       "id": "door-frame-l",
@@ -4663,7 +4742,7 @@
       "role": "identity",
       "certainty": {
         "size": "verified",
-        "shape": "traced"
+        "shape": "inferred"
       },
       "stage": 4,
       "shape": {
@@ -4690,7 +4769,7 @@
             0.3655
           ],
           [
-            0.5684,
+            0.6172,
             0.182
           ],
           [
@@ -4726,7 +4805,7 @@
             -0.02
           ]
         ],
-        "height": 0.026,
+        "height": 0.022,
         "axis": "x"
       },
       "at": [
@@ -4750,14 +4829,15 @@
         0,
         0,
         32.96940390346213
-      ]
+      ],
+      "note": "Traced; 2.2 cm deep (was 2.6), its front edge carried under the A-pillar near the belt."
     },
     {
       "id": "door-sash-r",
       "role": "identity",
       "certainty": {
         "size": "verified",
-        "shape": "traced"
+        "shape": "inferred"
       },
       "stage": 4,
       "shape": {
@@ -4784,7 +4864,7 @@
             0.3655
           ],
           [
-            0.5684,
+            0.6172,
             0.182
           ],
           [
@@ -4820,7 +4900,7 @@
             -0.02
           ]
         ],
-        "height": 0.026,
+        "height": 0.022,
         "axis": "x"
       },
       "at": [
@@ -4843,7 +4923,8 @@
         0,
         0,
         -32.96940390346213
-      ]
+      ],
+      "note": "Traced; 2.2 cm deep (was 2.6), its front edge carried under the A-pillar near the belt."
     },
     {
       "id": "quarter-sash",
@@ -4897,7 +4978,7 @@
             -0.02
           ]
         ],
-        "height": 0.026,
+        "height": 0.022,
         "axis": "x"
       },
       "at": [
@@ -4921,42 +5002,43 @@
         0,
         32.96940390346213
       ],
-      "mirror": "x"
+      "mirror": "x",
+      "note": "Traced; 2.2 cm deep (was 2.6), its face 4 mm proud of the glass."
     },
     {
       "id": "b-pillar",
       "role": "mass",
       "certainty": {
         "size": "verified",
-        "shape": "traced"
+        "shape": "inferred"
       },
       "stage": 4,
       "shape": {
         "type": "extrude",
         "profile": [
           [
-            -0.4805,
+            -0.441,
             -0.02
           ],
           [
-            -0.4853,
+            -0.4887,
+            0.4028
+          ],
+          [
+            -0.5205,
+            0.4028
+          ],
+          [
+            -0.5205,
             -0.02
-          ],
-          [
-            -0.4853,
-            0.3884
-          ],
-          [
-            -0.4805,
-            0.3884
           ]
         ],
-        "height": 0.009,
+        "height": 0.022,
         "axis": "x"
       },
       "at": [
-        0.7766,
-        0.9294,
+        0.7599,
+        0.9185,
         0
       ],
       "basis": [
@@ -4975,7 +5057,8 @@
         0,
         32.96940390346213
       ],
-      "mirror": "x"
+      "mirror": "x",
+      "note": "Designed to fill between the traced door sash and quarter sash, flush with them."
     },
     {
       "id": "boot-lid",
@@ -5133,7 +5216,7 @@
             0.7243
           ]
         ],
-        "round": 0.9
+        "round": 0.35
       },
       "at": [
         0,
@@ -5242,7 +5325,7 @@
             0.8485
           ]
         ],
-        "round": 0.9
+        "round": 0.3
       },
       "at": [
         0,
@@ -5281,7 +5364,7 @@
       "at": [
         0.6231,
         0.842,
-        -2.2209
+        -2.2199
       ],
       "label": "Round tail lamp (traced)",
       "basis": [
@@ -5296,11 +5379,12 @@
         "glow": 0.5
       },
       "rotate": [
-        90,
+        101.2229,
         -11.593051629707132,
         0
       ],
-      "mirror": "x"
+      "mirror": "x",
+      "note": "Traced outline; tilted 11 degrees to the tail panel's face and set on it."
     },
     {
       "id": "tail-lens-outer",
@@ -5318,9 +5402,9 @@
         "caps": true
       },
       "at": [
-        0.6231,
-        0.842,
-        -2.2269
+        0.6243,
+        0.8432,
+        -2.2257
       ],
       "label": "Tail lens (clear)",
       "basis": [
@@ -5334,11 +5418,12 @@
         "weight": 0.6
       },
       "rotate": [
-        90,
+        101.2229,
         -11.593051629707132,
         0
       ],
-      "mirror": "x"
+      "mirror": "x",
+      "note": "Traced outline; tilted 11 degrees to the tail panel's face and set on it."
     },
     {
       "id": "tail-ring-outer",
@@ -5353,103 +5438,103 @@
         "points": [
           [
             0.6705,
-            0.842,
-            -2.2181
+            0.8433,
+            -2.217
           ],
           [
-            0.6682,
-            0.857,
-            -2.2186
+            0.6676,
+            0.858,
+            -2.2146
           ],
           [
-            0.6615,
-            0.8704,
-            -2.22
+            0.6604,
+            0.8712,
+            -2.2135
           ],
           [
-            0.651,
-            0.8812,
-            -2.2222
+            0.6494,
+            0.8818,
+            -2.2136
           ],
           [
-            0.6378,
-            0.888,
-            -2.2249
+            0.636,
+            0.8885,
+            -2.215
           ],
           [
-            0.6231,
-            0.8904,
-            -2.2279
+            0.6212,
+            0.8908,
+            -2.2176
           ],
           [
-            0.6085,
-            0.888,
-            -2.2309
+            0.6067,
+            0.8885,
+            -2.221
           ],
           [
-            0.5952,
-            0.8812,
-            -2.2336
+            0.5936,
+            0.8818,
+            -2.225
           ],
           [
-            0.5847,
-            0.8704,
-            -2.2357
+            0.5836,
+            0.8712,
+            -2.2292
           ],
           [
-            0.578,
-            0.857,
-            -2.2371
+            0.5774,
+            0.858,
+            -2.2331
           ],
           [
             0.5757,
-            0.842,
-            -2.2376
+            0.8433,
+            -2.2365
           ],
           [
-            0.578,
-            0.827,
-            -2.2371
+            0.5786,
+            0.8286,
+            -2.2388
           ],
           [
-            0.5847,
-            0.8136,
-            -2.2357
+            0.5858,
+            0.8155,
+            -2.24
           ],
           [
-            0.5952,
-            0.8028,
-            -2.2336
+            0.5967,
+            0.8049,
+            -2.24
           ],
           [
-            0.6085,
-            0.796,
-            -2.2309
+            0.6103,
+            0.7982,
+            -2.2386
           ],
           [
-            0.6231,
-            0.7936,
-            -2.2279
+            0.625,
+            0.7959,
+            -2.236
           ],
           [
-            0.6378,
-            0.796,
-            -2.2249
+            0.6396,
+            0.7982,
+            -2.2326
           ],
           [
-            0.651,
-            0.8028,
-            -2.2222
+            0.6525,
+            0.8049,
+            -2.2286
           ],
           [
-            0.6615,
-            0.8136,
-            -2.22
+            0.6626,
+            0.8155,
+            -2.2243
           ],
           [
-            0.6682,
-            0.827,
-            -2.2186
+            0.6688,
+            0.8286,
+            -2.2203
           ]
         ],
         "smooth": true,
@@ -5470,7 +5555,8 @@
         "weight": 0.6,
         "alpha": 0.6
       },
-      "mirror": "x"
+      "mirror": "x",
+      "note": "Traced outline; tilted 11 degrees to the tail panel's face and set on it."
     },
     {
       "id": "tail-bowl-inner",
@@ -5491,7 +5577,7 @@
       "at": [
         0.4405,
         0.826,
-        -2.2257
+        -2.2232
       ],
       "label": "Round tail lamp (traced)",
       "basis": [
@@ -5506,11 +5592,12 @@
         "glow": 0.5
       },
       "rotate": [
-        90,
+        101.2229,
         -0.0,
         0
       ],
-      "mirror": "x"
+      "mirror": "x",
+      "note": "Traced outline; tilted 11 degrees to the tail panel's face and set on it."
     },
     {
       "id": "tail-lens-inner",
@@ -5529,8 +5616,8 @@
       },
       "at": [
         0.4405,
-        0.826,
-        -2.2317
+        0.8272,
+        -2.2291
       ],
       "label": "Tail lens (clear)",
       "basis": [
@@ -5544,11 +5631,12 @@
         "weight": 0.6
       },
       "rotate": [
-        90,
+        101.2229,
         -0.0,
         0
       ],
-      "mirror": "x"
+      "mirror": "x",
+      "note": "Traced outline; tilted 11 degrees to the tail panel's face and set on it."
     },
     {
       "id": "tail-ring-inner",
@@ -5563,103 +5651,103 @@
         "points": [
           [
             0.4774,
-            0.826,
-            -2.2327
+            0.8274,
+            -2.2301
           ],
           [
             0.4756,
-            0.8374,
-            -2.2327
+            0.8385,
+            -2.2279
           ],
           [
             0.4703,
-            0.8477,
-            -2.2327
+            0.8486,
+            -2.2258
           ],
           [
             0.4622,
-            0.8558,
-            -2.2327
+            0.8566,
+            -2.2243
           ],
           [
             0.4519,
-            0.861,
-            -2.2327
+            0.8617,
+            -2.2233
           ],
           [
             0.4405,
-            0.8629,
-            -2.2327
+            0.8636,
+            -2.2229
           ],
           [
             0.4291,
-            0.861,
-            -2.2327
+            0.8617,
+            -2.2233
           ],
           [
             0.4189,
-            0.8558,
-            -2.2327
+            0.8566,
+            -2.2243
           ],
           [
             0.4107,
-            0.8477,
-            -2.2327
+            0.8486,
+            -2.2258
           ],
           [
             0.4055,
-            0.8374,
-            -2.2327
+            0.8385,
+            -2.2279
           ],
           [
             0.4037,
-            0.826,
-            -2.2327
+            0.8274,
+            -2.2301
           ],
           [
             0.4055,
-            0.8146,
-            -2.2327
+            0.8162,
+            -2.2323
           ],
           [
             0.4107,
-            0.8043,
-            -2.2327
+            0.8061,
+            -2.2343
           ],
           [
             0.4189,
-            0.7962,
-            -2.2327
+            0.7981,
+            -2.2359
           ],
           [
             0.4291,
-            0.791,
-            -2.2327
+            0.793,
+            -2.2369
           ],
           [
             0.4405,
-            0.7891,
-            -2.2327
+            0.7912,
+            -2.2373
           ],
           [
             0.4519,
-            0.791,
-            -2.2327
+            0.793,
+            -2.2369
           ],
           [
             0.4622,
-            0.7962,
-            -2.2327
+            0.7981,
+            -2.2359
           ],
           [
             0.4703,
-            0.8043,
-            -2.2327
+            0.8061,
+            -2.2343
           ],
           [
             0.4756,
-            0.8146,
-            -2.2327
+            0.8162,
+            -2.2323
           ]
         ],
         "smooth": true,
@@ -5680,7 +5768,8 @@
         "weight": 0.6,
         "alpha": 0.6
       },
-      "mirror": "x"
+      "mirror": "x",
+      "note": "Traced outline; tilted 11 degrees to the tail panel's face and set on it."
     },
     {
       "id": "boot-garnish",
@@ -5964,7 +6053,7 @@
       "role": "identity",
       "certainty": {
         "size": "verified",
-        "shape": "traced"
+        "shape": "inferred"
       },
       "stage": 3,
       "shape": {
@@ -5972,10 +6061,10 @@
         "sections": [
           [
             -2.2424,
-            0.62,
+            0.488,
             0.2546,
             0.2766,
-            0.62
+            0.488
           ],
           [
             -2.1459,
@@ -6031,14 +6120,15 @@
         "fill": "dark",
         "weight": 0.9,
         "alpha": 0.7
-      }
+      },
+      "note": "Traced in the side view; its plan follows the rear bumper, 2 cm inside it."
     },
     {
       "id": "diffuser-strake-0",
       "role": "structure",
       "certainty": {
         "size": "verified",
-        "shape": "traced"
+        "shape": "inferred"
       },
       "stage": 3,
       "shape": {
@@ -6050,15 +6140,15 @@
           ],
           [
             -1.8,
-            0.165
+            0.162
           ],
           [
             -1.8,
-            0.17
+            0.176
           ],
           [
             -2.21,
-            0.222
+            0.245
           ]
         ],
         "height": 0.012,
@@ -6078,14 +6168,15 @@
       "look": {
         "weight": 0.8
       },
-      "mirror": "x"
+      "mirror": "x",
+      "note": "Designed: a fin under the diffuser, reaching up into it."
     },
     {
       "id": "diffuser-strake-1",
       "role": "structure",
       "certainty": {
         "size": "verified",
-        "shape": "traced"
+        "shape": "inferred"
       },
       "stage": 3,
       "shape": {
@@ -6097,15 +6188,15 @@
           ],
           [
             -1.8,
-            0.165
+            0.162
           ],
           [
             -1.8,
-            0.17
+            0.176
           ],
           [
             -2.21,
-            0.222
+            0.245
           ]
         ],
         "height": 0.012,
@@ -6125,7 +6216,8 @@
       "look": {
         "weight": 0.8
       },
-      "mirror": "x"
+      "mirror": "x",
+      "note": "Designed: a fin under the diffuser, reaching up into it."
     },
     {
       "id": "wing-blade",
@@ -7235,14 +7327,14 @@
             0.0,
             0.0113,
             -0.0103,
-            0.2358,
+            0.2589,
             0.0184
           ],
           [
             0.0947,
             0.0112,
             -0.011,
-            0.2458,
+            0.2604,
             0.0139
           ],
           [
@@ -7298,7 +7390,8 @@
         2.174,
         18.997
       ],
-      "mirror": "x"
+      "mirror": "x",
+      "note": "Traced; its rear end raised 1.4-2.2 cm to meet the bonnet at the cowl."
     },
     {
       "id": "fender-front-upper-2",
@@ -7536,39 +7629,39 @@
         "sections": [
           [
             0.0,
-            0.011,
+            0.031,
             0.0241,
             0.443,
-            0.0125
+            0.0325
           ],
           [
             0.074,
-            0.0117,
+            0.0317,
             0.0057,
             0.4429,
-            0.0114
+            0.0314
           ],
           [
             0.1482,
-            0.011,
+            0.031,
             -0.0126,
             0.4429,
-            0.0114
+            0.0314
           ],
           [
             0.1592,
-            0.0125,
+            0.0325,
             -0.0154,
             0.4429,
-            0.0123
+            0.0323
           ]
         ],
         "round": 0.5
       },
       "at": [
-        0.8391,
-        0.1367,
-        1.7448
+        0.8205,
+        0.1374,
+        1.7374
       ],
       "basis": [
         "length",
@@ -7586,14 +7679,15 @@
         -21.594,
         -2.069
       ],
-      "mirror": "x"
+      "mirror": "x",
+      "note": "Outer face traced; its depth (6 cm, closing the flank behind it) is designed."
     },
     {
       "id": "front-bumper-side-2",
       "role": "mass",
       "certainty": {
         "size": "verified",
-        "shape": "traced"
+        "shape": "inferred"
       },
       "stage": 3,
       "shape": {
@@ -7601,32 +7695,32 @@
         "sections": [
           [
             0.0,
-            0.0119,
+            0.0319,
             0.0005,
             0.4588,
-            0.0122
+            0.0322
           ],
           [
             0.0604,
-            0.0166,
+            0.0366,
             -0.0001,
             0.459,
-            0.0169
+            0.0369
           ],
           [
-            0.136,
-            0.0127,
+            0.1067,
+            0.0342,
             -0.0002,
-            0.4588,
-            0.011
+            0.4589,
+            0.0333
           ]
         ],
         "round": 0.5
       },
       "at": [
-        0.7805,
-        0.1208,
-        1.8929
+        0.7619,
+        0.1214,
+        1.8856
       ],
       "basis": [
         "length",
@@ -7644,14 +7738,15 @@
         -21.333,
         -1.997
       ],
-      "mirror": "x"
+      "mirror": "x",
+      "note": "Outer face traced; its depth (6 cm) is designed, and it ends where the bumper's bands begin (4.5 cm short of the tracing)."
     },
     {
       "id": "quarter-lower",
       "role": "mass",
       "certainty": {
         "size": "verified",
-        "shape": "traced"
+        "shape": "inferred"
       },
       "stage": 2,
       "shape": {
@@ -7682,9 +7777,9 @@
         "round": 0.5
       },
       "at": [
-        0.7796,
+        0.742,
         0.6682,
-        -2.0691
+        -2.059
       ],
       "label": "Rear quarter, arch (traced)",
       "basis": [
@@ -7699,11 +7794,12 @@
         "alpha": 0.38
       },
       "rotate": [
-        -0.363,
-        9.994,
-        -2.093
+        -0.7471,
+        19.924,
+        -2.1925
       ],
-      "mirror": "x"
+      "mirror": "x",
+      "note": "Traced; turned about its front end so its rear end meets the tail panel's side."
     },
     {
       "id": "quarter-lower-2",
@@ -7880,19 +7976,12 @@
       "role": "mass",
       "certainty": {
         "size": "verified",
-        "shape": "traced"
+        "shape": "inferred"
       },
       "stage": 2,
       "shape": {
         "type": "loft",
         "sections": [
-          [
-            0.0,
-            0.0191,
-            -0.0305,
-            0.2098,
-            0.011
-          ],
           [
             0.1168,
             0.0265,
@@ -7918,9 +8007,9 @@
         "round": 0.35
       },
       "at": [
-        0.7333,
+        0.7126,
         0.8014,
-        -2.1499
+        -2.145
       ],
       "label": "Rear shoulder (traced)",
       "basis": [
@@ -7935,11 +8024,12 @@
         "alpha": 0.38
       },
       "rotate": [
-        6.233,
-        9.538,
-        33.388
+        8.5392,
+        12.9418,
+        33.8378
       ],
-      "mirror": "x"
+      "mirror": "x",
+      "note": "Traced; turned about its front end so its rear end meets the tail panel's side, and ending where the tail panel begins (12 cm short of the tracing)."
     },
     {
       "id": "quarter-upper-2",
@@ -9625,7 +9715,8 @@
         "sides": 4,
         "samples": 3,
         "longitudinal": 3,
-        "ring_every": 10
+        "ring_every": 10,
+        "caps": true
       },
       "at": [
         -0.587,
@@ -9679,7 +9770,8 @@
         "sides": 4,
         "samples": 3,
         "longitudinal": 3,
-        "ring_every": 10
+        "ring_every": 10,
+        "caps": true
       },
       "at": [
         -0.183,
@@ -9733,7 +9825,8 @@
         "sides": 4,
         "samples": 3,
         "longitudinal": 3,
-        "ring_every": 10
+        "ring_every": 10,
+        "caps": true
       },
       "at": [
         0.183,
@@ -9787,7 +9880,8 @@
         "sides": 4,
         "samples": 3,
         "longitudinal": 3,
-        "ring_every": 10
+        "ring_every": 10,
+        "caps": true
       },
       "at": [
         0.587,
@@ -10073,7 +10167,8 @@
         "sides": 6,
         "samples": 2,
         "longitudinal": 4,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -10137,7 +10232,8 @@
         "sides": 6,
         "samples": 2,
         "longitudinal": 4,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -10208,7 +10304,8 @@
         "sides": 6,
         "samples": 2,
         "longitudinal": 4,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -10247,7 +10344,8 @@
         "sides": 6,
         "samples": 2,
         "longitudinal": 4,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -10286,7 +10384,8 @@
         "sides": 6,
         "samples": 2,
         "longitudinal": 4,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -10540,7 +10639,8 @@
         "sides": 8,
         "samples": 3,
         "longitudinal": 4,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0.326,
@@ -10592,7 +10692,8 @@
         "sides": 6,
         "samples": 2,
         "longitudinal": 4,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -10644,7 +10745,8 @@
         "sides": 6,
         "samples": 2,
         "longitudinal": 4,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -10696,7 +10798,8 @@
         "sides": 6,
         "samples": 2,
         "longitudinal": 4,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -10748,7 +10851,8 @@
         "sides": 6,
         "samples": 2,
         "longitudinal": 4,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -10800,7 +10904,8 @@
         "sides": 6,
         "samples": 2,
         "longitudinal": 4,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -10852,7 +10957,8 @@
         "sides": 6,
         "samples": 2,
         "longitudinal": 4,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -10934,7 +11040,8 @@
         "sides": 6,
         "samples": 2,
         "longitudinal": 4,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -11016,7 +11123,8 @@
         "sides": 6,
         "samples": 2,
         "longitudinal": 4,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -11093,7 +11201,8 @@
         "sides": 6,
         "samples": 2,
         "longitudinal": 4,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -11253,7 +11362,8 @@
         "sides": 6,
         "samples": 2,
         "longitudinal": 4,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -11292,7 +11402,8 @@
         "sides": 6,
         "samples": 2,
         "longitudinal": 4,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -11360,7 +11471,8 @@
         "sides": 6,
         "samples": 2,
         "longitudinal": 4,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -11713,7 +11825,8 @@
         "sides": 6,
         "samples": 2,
         "longitudinal": 4,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -11761,7 +11874,8 @@
         "sides": 6,
         "samples": 2,
         "longitudinal": 4,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -11809,7 +11923,8 @@
         "sides": 6,
         "samples": 2,
         "longitudinal": 4,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -12028,7 +12143,8 @@
         "sides": 3,
         "samples": 1,
         "longitudinal": 4,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -12457,7 +12573,8 @@
         "sides": 3,
         "samples": 1,
         "longitudinal": 4,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -12813,7 +12930,8 @@
         "sides": 6,
         "samples": 2,
         "longitudinal": 4,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -12861,7 +12979,8 @@
         "sides": 6,
         "samples": 2,
         "longitudinal": 4,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -12909,7 +13028,8 @@
         "sides": 6,
         "samples": 2,
         "longitudinal": 4,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -13128,7 +13248,8 @@
         "sides": 3,
         "samples": 1,
         "longitudinal": 4,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -13557,7 +13678,8 @@
         "sides": 3,
         "samples": 1,
         "longitudinal": 4,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -13609,7 +13731,8 @@
         "sides": 6,
         "samples": 2,
         "longitudinal": 4,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -13757,7 +13880,8 @@
         "sides": 6,
         "samples": 3,
         "longitudinal": 4,
-        "ring_every": 16
+        "ring_every": 16,
+        "caps": true
       },
       "at": [
         0,
@@ -13805,7 +13929,8 @@
         "sides": 6,
         "samples": 3,
         "longitudinal": 4,
-        "ring_every": 16
+        "ring_every": 16,
+        "caps": true
       },
       "at": [
         0,
@@ -14351,7 +14476,8 @@
         "sides": 8,
         "samples": 3,
         "longitudinal": 4,
-        "ring_every": 16
+        "ring_every": 16,
+        "caps": true
       },
       "at": [
         0,
@@ -14398,7 +14524,8 @@
         "sides": 6,
         "samples": 3,
         "longitudinal": 4,
-        "ring_every": 16
+        "ring_every": 16,
+        "caps": true
       },
       "at": [
         0,
@@ -14446,7 +14573,8 @@
         "sides": 6,
         "samples": 3,
         "longitudinal": 4,
-        "ring_every": 16
+        "ring_every": 16,
+        "caps": true
       },
       "at": [
         0,
@@ -14707,7 +14835,8 @@
         "sides": 6,
         "samples": 2,
         "longitudinal": 3,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -14759,7 +14888,8 @@
         "sides": 6,
         "samples": 2,
         "longitudinal": 3,
-        "ring_every": 12
+        "ring_every": 12,
+        "caps": true
       },
       "at": [
         0,
@@ -15866,7 +15996,7 @@
       "bp-r34-1999",
       "evo-r34"
     ],
-    "review_rounds": 0,
+    "review_rounds": 6,
     "outcome": "unreviewed",
     "next": [
       "Independent judged rounds (Opus run)"

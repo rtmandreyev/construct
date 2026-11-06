@@ -1,5 +1,5 @@
 {
-  "format": "tessera-hologram",
+  "format": "construct-scene",
   "version": 2,
   "id": "s1-cliff",
   "title": "The Last Light — sea cliff at dusk",
@@ -256,7 +256,8 @@
     {
       "id": "lantern-roof", "label": "Peaked lantern cap", "role": "mass", "certainty": "inferred", "stage": 5,
       "basis": ["tower.design"],
-      "shape": {"type": "lathe", "segments": 32, "meridians": 8, "profile": [[2.9,0],[2.85,0.3],[2.1,1.1],[1.15,2.0],[0.32,2.6],[0.2,3.0]]}, "at": [20,83.85,2]
+      "shape": {"type": "lathe", "segments": 32, "meridians": 8, "profile": [[2.45,0],[2.9,0],[2.85,0.3],[2.1,1.1],[1.15,2.0],[0.32,2.6],[0.2,3.0]]}, "at": [20,83.85,2],
+      "note": "its eave closes onto the lantern's top (the cap stood 0.43 m clear of it)"
     },
     {
       "id": "optic", "label": "Rotating faceted optic", "role": "data", "certainty": "inferred", "stage": 5,

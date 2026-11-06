@@ -41,8 +41,6 @@ footer.site { max-width: 1680px; margin: 0 auto; padding: 24px 24px 48px; color:
 .stage { position: relative; flex: 1 1 auto; min-height: 62vh; background: #000; }
 .stage iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 .hint { padding: 10px 20px 18px; color: var(--dim); font-size: 13px; }
-.world-blender { margin: 6px 20px 0; } .world-blender img { width: 100%; max-width: 1100px; height: auto; display: block; border: 1px solid var(--line); border-radius: 12px; }
-.world-blender figcaption { color: var(--dim); font-size: 13px; margin-top: 6px; }
 .viewer > .credit { padding: 12px 20px 22px; color: var(--dim); font-size: 12.5px; margin: 0; }
 .with-legend { display: flex; flex-direction: column; flex: 1 1 auto; }
 .legend { display: grid; gap: 11px; align-content: start; padding: 16px 20px; border-top: 1px solid var(--line);

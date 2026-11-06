@@ -1964,23 +1964,9 @@
      [
       0.03132,
       0.25334,
-      0.30327,
+      0.386,
       0.39103,
       0.228
-     ],
-     [
-      0.0405,
-      0.22149,
-      0.32602,
-      0.38852,
-      0.19934
-     ],
-     [
-      0.04359,
-      0.21045,
-      0.34151,
-      0.38011,
-      0.1894
      ]
     ],
     "round": 1.0
@@ -1999,7 +1985,8 @@
     "fill": "dark",
     "weight": 0.5,
     "alpha": 0.6
-   }
+   },
+   "note": "front edge ended on the shell's lip (it ran 1.2 cm further and came 8 cm down through the shell's underside)"
   },
   {
    "id": "headrest-cushion",
@@ -2726,11 +2713,6 @@
     "path": [
      [
       0.327,
-      0.40842,
-      -0.01456
-     ],
-     [
-      0.327,
       0.41869,
       -0.03975
      ],
@@ -2800,7 +2782,8 @@
    "source": "photo-side",
    "basis": [
     "tufting"
-   ]
+   ],
+   "note": "starts 2.5 cm further back, where the cushion is thick enough to hold it (its first point stood out through the cushion's thin front edge and into the arm pad)"
   },
   {
    "id": "seat-welt-r",
@@ -2935,11 +2918,6 @@
     "path": [
      [
       -0.327,
-      0.40842,
-      -0.01456
-     ],
-     [
-      -0.327,
       0.41869,
       -0.03975
      ],
@@ -3009,7 +2987,8 @@
    "source": "photo-side",
    "basis": [
     "tufting"
-   ]
+   ],
+   "note": "starts 2.5 cm further back, where the cushion is thick enough to hold it (its first point stood out through the cushion's thin front edge and into the arm pad)"
   },
   {
    "id": "arm-pad",
