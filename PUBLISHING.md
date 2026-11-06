@@ -2,7 +2,7 @@
 
 This repository has two branches to publish:
 
-- `main`: the source, tagged at each release (the latest is `v1.1.1`);
+- `main`: the source, tagged at each release (the latest is `v1.2.0`);
 - `gh-pages`: the examples gallery, a static site served from the branch's root.
 
 The public addresses below come from one place: `OWNER` and `REPO` at the top of
@@ -42,7 +42,7 @@ Making it public later: **Settings → General → Danger Zone → Change visibi
 cd construct    # your checkout
 git remote add origin https://github.com/rtmandreyev/construct.git
 git push -u origin main
-git push origin v1.1.1
+git push origin v1.2.0
 ```
 
 ## 3. Push the gallery
@@ -64,9 +64,9 @@ After a minute or two the gallery is at https://rtmandreyev.github.io/construct/
 Pages shows the address once it is live). Open it, open two or three examples, and check
 that they assemble and that the README's animations link to them.
 
-Optionally, publish a release: **Releases → Draft a new release**, tag `v1.1.1`, and
+Optionally, publish a release: **Releases → Draft a new release**, tag `v1.2.0`, and
 its notes: [docs/releases/v1.1.0.md](docs/releases/v1.1.0.md) for 1.1, its CHANGELOG entry for a fix release. Attach the two zips from `dist/`:
-`construct-blender-1.1.1.zip` (`python3 scripts/build_blender_extension.py`) and `construct-1.1.1.zip`,
+`construct-blender-1.2.0.zip` (`python3 scripts/build_blender_extension.py`) and `construct-1.2.0.zip`,
 the NetLogo extension (`python3 scripts/build_netlogo_extension.py --netlogo "<NetLogo 7 folder>"`, with a
 JDK 17 or newer: `--javac` names it). Attach the kits too, `construct-kit-<slug>.zip`, one per kit in
 `examples/kits.json` (`python3 scripts/build_kit_zips.py`, about ten minutes): the gallery, the README and the docs
@@ -113,7 +113,8 @@ so a release that misses one fails its tests. For version X.Y.Z:
    strings, the Blender and NetLogo manifests and the zips' names follow it.
 2. `pyproject.toml`: `version = "X.Y.Z"`.
 3. `scripts/hermes_submission/SKILL.md`: `version: X.Y.Z` and the `upstream:` line's `(vX.Y.Z)`.
-4. `scripts/hermes_submission/PR.md`: the `Upstream:` line's `(Apache-2.0, vX.Y.Z)`.
+4. `scripts/hermes_submission/PR.md`: the `Upstream:` line's `(Apache-2.0, vX.Y.Z)`; and `hosts/hermes/construct/plugin.yaml`:
+   `version: "X.Y.Z"` (the Hermes plugin keeps Construct's version).
 5. This file: the latest tag at the top, `git push origin vX.Y.Z` (step 2), the release's tag and the two zips'
    names (step 4).
 6. `python3 scripts/hermes_submission.py --hub`, which regenerates `skills/construct/` (the Hermes skill, its

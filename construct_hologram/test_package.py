@@ -381,6 +381,7 @@ class Versions(unittest.TestCase):
         found("pyproject.toml", r'(?m)^version = "%s"$')
         found("scripts/hermes_submission/SKILL.md", r"(?m)^version: %s$", r"(?m)^    upstream: \S+ \(v%s\)$")
         found("scripts/hermes_submission/PR.md", r"\(Apache-2\.0, v%s\)")
+        found("hosts/hermes/construct/plugin.yaml", r'(?m)^version: "%s"$')
         found("PUBLISHING.md", r"the latest is `v%s`", r"git push origin v%s\n", r"tag `v%s`",
               r"`construct-blender-%s\.zip`", r"`construct-%s\.zip`")
         # and nothing names another version where the release's own belongs

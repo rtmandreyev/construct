@@ -6,10 +6,12 @@ follows two runs that design what does not: **KESTREL**, an invented ship built 
 a designed part should say what it was designed *to*, a new design should not be captioned a reconstruction, a
 critic must stand apart from the author, and the checks must catch what an agent misses (a chair back that would
 fall over, a pillar through a window, a number left stale). This page goes through each change with an example and
-the commands to try it. The full list is in the [changelog](../CHANGELOG.md).
+the commands to try it. And Construct is now a native Hermes plugin, tested end to end on a building. The full list is in
+the [changelog](../CHANGELOG.md).
 
 In the commands below, `construct` is short for `python3 construct_hologram/cli.py` in a checkout of Construct.
 
+- [Construct for Hermes](#construct-for-hermes)
 - [New things from real ones: KESTREL](#new-things-from-real-ones-kestrel)
 - [Documentation → product](#documentation--product)
 - [Designed to a requirement](#designed-to-a-requirement)
@@ -22,6 +24,27 @@ In the commands below, `construct` is short for `python3 construct_hologram/cli.
 - [Glued joints inside joints](#glued-joints-inside-joints)
 - [Kits: boards lie flat](#kits-boards-lie-flat)
 - [Smaller things](#smaller-things)
+
+## Construct for Hermes
+
+Construct is now a native [Hermes](https://github.com/NousResearch/hermes-agent) plugin. Ask for a thing in plain
+words and Hermes researches it, writes the description and builds it; the construct appears live in the chat with
+its own controls, and everything it becomes stays there too: the 3D model turning with its joints, the exact CAD
+shapes of a STEP file, a kit stepping through in 3D, a film, a NetLogo run with its replay bar.
+
+```sh
+hermes plugins install rtmandreyev/construct-hermes
+```
+
+<p align="center"><img src="media/new-1.2-hermes.jpg" width="95%" alt="Hermes Desktop with the plugin: Villa Savoye's glTF turning in the chat's 3D viewer, and its desktop kit (30 pieces on 5 plates, 13 steps) stepping through in 3D"></p>
+<p align="center"><sub>Villa Savoye, built by GPT-6.1 Sol in Hermes in masterpiece mode: its glTF in the chat, and the 30-piece kit
+it planned for a desktop printer.</sub></p>
+
+The final test of 1.2 was one conversation with GPT-6.1 Sol in Hermes Desktop: Le Corbusier's Villa Savoye in
+masterpiece mode (twelve critic rounds), then "what do we actually know, and what did you design?" (the plans it
+used, and a table of every choice it made), "check it as a solid and fix what doesn't fit" (23 findings down to 4,
+the rest disclosed), exports for Blender and CAD, and a kit and a film. Twelve tools and a skill with sixteen
+tutorials; long work runs in the background with its progress in the chat. [Construct for Hermes →](../hosts/hermes/construct/README.md)
 
 ## New things from real ones: KESTREL
 

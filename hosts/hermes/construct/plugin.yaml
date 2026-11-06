@@ -1,5 +1,5 @@
 name: construct
-version: "0.1.0"
+version: "1.2.0"
 description: Hermes researches a thing and writes one exact, checked description of it (its named parts at real sizes, how they fit, open and move, and how each is known, measured or guessed); Construct checks it and builds from it a live hologram in the chat, a 3D model with working joints, a print, a model kit, CAD and STEP, and films. NetLogo runs too.
 author: Artyom Andreyev
 manifest_version: 2

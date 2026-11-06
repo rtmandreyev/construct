@@ -35,7 +35,7 @@ need them.
 | contribute, or build Construct into your own tools | [DEVELOPMENT.md](DEVELOPMENT.md) |
 | read the scene and geometry format, for apps | [CONTRACT.md](../CONTRACT.md) |
 | write your own adapter: a construct into another format, tool or craft | [ADAPTERS.md](ADAPTERS.md) |
-| read what changed in each version | [CHANGELOG.md](../CHANGELOG.md) and the release notes for [v1.1.0](releases/v1.1.0.md), [v1.0.0](releases/v1.0.0.md), [v0.3.0](releases/v0.3.0.md) and [v0.2.1](releases/v0.2.1.md) |
+| read what changed in each version | [CHANGELOG.md](../CHANGELOG.md) and the release notes for [v1.2.0](releases/v1.2.0.md), [v1.1.0](releases/v1.1.0.md), [v1.0.0](releases/v1.0.0.md), [v0.3.0](releases/v0.3.0.md) and [v0.2.1](releases/v0.2.1.md) |
 | publish the examples gallery yourself | [PUBLISHING.md](../PUBLISHING.md) |
 
 ## Glossary

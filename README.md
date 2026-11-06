@@ -56,6 +56,9 @@ model with named parts and working joints, a print, a model kit, a CAD file or a
 
 Every change with pictures and the commands to try it: **[What's new in 1.2, a walkthrough](docs/NEW-IN-1.2.md)**.
 
+- **Construct for Hermes.** A native Hermes plugin: ask for a thing in plain words, and the construct appears live in
+  the chat; the 3D model turns in it, a kit steps through in 3D, exports are read back and summarised, long work runs
+  in the background. `hermes plugins install rtmandreyev/construct-hermes` ([what it does](hosts/hermes/construct/README.md)).
 - **New things from real ones.** [KESTREL](docs/for/invent-from-what-exists.md), an invented 120 m ice tug, from
   its brief to its joints in Godot: the studies it reasoned from, thirteen masterpiece rounds, then a more detailed
   version that kept all 256 parts and added 242. Both in the gallery, Apache-2.0, with every brief.
@@ -210,7 +213,8 @@ Then add the skill to your agent, or use Construct directly:
 | Host | How to add it |
 | --- | --- |
 | Claude Code | `claude --plugin-dir dist/claude-code/construct` for one session, or copy `dist/claude-code/construct/skills/construct` into `.claude/skills/` |
-| Hermes | `hermes skills install rtmandreyev/construct/skills/construct`, or copy `dist/hermes/construct` into `~/.hermes/skills/` |
+| Hermes, the plugin | `hermes plugins install rtmandreyev/construct-hermes`: twelve tools, the construct live in the chat, 3D models, kits and NetLogo runs in Hermes Desktop ([Construct for Hermes](hosts/hermes/construct/README.md)) |
+| Hermes, the skill alone | `hermes skills install rtmandreyev/construct/skills/construct`, or copy `dist/hermes/construct` into `~/.hermes/skills/` |
 | Any MCP client | Add `{"mcpServers": {"construct": {"command": "python3", "args": ["/path/to/construct/construct_hologram/server.py"]}}}` |
 | Any OpenAI-compatible model | `python3 construct_hologram/cli.py author "..." --base-url ... --model ... --key-env ... --out scene.json` |
 | By hand | The command line below; no model needed |
@@ -311,7 +315,7 @@ Construct is deliberately small. You need:
 | design a physical product from a system's documentation | [Documentation → product](docs/for/documentation-to-product.md) |
 | see how reconstructing, modifying and inventing are one pipeline | [The design-freedom continuum](docs/for/documentation-to-product.md#the-design-freedom-continuum) |
 | know where the method comes from | [About](docs/ABOUT.md) |
-| see what changed | [CHANGELOG.md](CHANGELOG.md) and the [1.1.0](docs/releases/v1.1.0.md) and [1.0.0](docs/releases/v1.0.0.md) release notes |
+| see what changed | [CHANGELOG.md](CHANGELOG.md) and the [1.2.0](docs/releases/v1.2.0.md), [1.1.0](docs/releases/v1.1.0.md) and [1.0.0](docs/releases/v1.0.0.md) release notes |
 
 The full index is in [docs/README.md](docs/README.md).
 

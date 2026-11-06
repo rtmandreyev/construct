@@ -1,7 +1,17 @@
 # Changelog
 
-## 1.1.2 — unreleased
+## 1.2.0 — 2026-11-06
 
+- **Construct for Hermes, a native plugin** ([hosts/hermes/construct](hosts/hermes/construct/README.md); install with
+  `hermes plugins install rtmandreyev/construct-hermes`, built by `scripts/hermes_plugin.py`). Twelve tools, a
+  `/construct` command and the `construct:construct` skill with sixteen tutorials. In Hermes Desktop the construct
+  is live in the chat with its own controls (provenance, solid, replay, how to read it); a glTF turns in a 3D viewer
+  with its joints; a STEP or FreeCAD file shows its exact shapes; a kit steps through in 3D beside its booklet; a
+  NetLogo run plays with its replay bar. Every export is read back from the written file and summarised; work longer
+  than Hermes's tool deadline (films, NetLogo runs, large builds and kits) runs as a background job with its progress
+  in the chat; a Constructs page keeps every project, build, kit and file. Tested end to end with GPT-6.1 Sol: a
+  masterpiece Villa Savoye, its provenance, a solid-fit repair, glTF, STEP and FreeCAD, a 30-piece desktop kit and a
+  film, all from the chat. The plugin keeps Construct's version.
 - **KESTREL, an invented ship, start to finish** ([docs/for/invent-from-what-exists.md](docs/for/invent-from-what-exists.md)):
   the invented brief that page used to give as an illustration, run by GPT-6.1 Sol in Codex. The page now follows it
   step by step: the brief, the NASA and ISS studies it reasoned from, the first build, thirteen masterpiece rounds
