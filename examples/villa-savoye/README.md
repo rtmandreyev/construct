@@ -31,7 +31,7 @@ exports, a 30-piece desktop kit and a film. The whole conversation, step by step
 | Agent | Hermes Agent 0.22.7, in Hermes Desktop, with the Construct plugin (1.2.0 before its release) |
 | Model | GPT-6.1 Sol, reasoning effort high (author and every critic; each critic a separate Hermes subagent given only the sealed round packet) |
 | Mode | masterpiece, 12 rounds, every round kept over the one before; stopped at the 12-round cap with the critic's verdict *good* (not outstanding) |
-| Time | the build 2 h 25 min (22:54 to 01:19): 59.8 active authoring minutes and 76.2 critic minutes. Then the questions, the fit repair, the exports, the kit and the film in about an hour more |
+| Time | the build 2 h 25 min (22:54 to 01:19): 59.8 active authoring minutes and 76.2 critic minutes. Then a question, the fit repair, the exports, the kit and the film in about an hour more |
 | Frame | metres, +Y up, the origin at the centre of the presentation ground (21 × 23 m); the house's footprint is the published 19 × 21.5 m |
 
 The requests, in order, as typed. The first three were one conversation; the exports, kit and film a second, after
