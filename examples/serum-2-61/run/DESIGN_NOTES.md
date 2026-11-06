@@ -1,0 +1,65 @@
+# Serum 2 / 61 - design rationale
+
+This is an original standalone hardware product proposal for the native Serum 2 engine under the user's firmware premise. It is not an announced Xfer product. The Construct is an articulated physical design study; it does not generate audio. Documented software behavior ends at the requirements inventory. All new physical design begins as inference.
+
+## From architecture to instrument
+
+The stable object is the **parameter**, not a screen pixel. Every engine parameter retains its identity, units, value, modulation eligibility, undo history and serialization. Dedicated encoders are shortcuts to that same model. Contextual controls are additional views of it, not a simplified second engine. The software must enumerate the full parameter/operation registry so uncommon features cannot disappear merely because no knob was assigned to them. An init patch starts with OSC A, its filter path and ENV1 visible; enabling B/C or changing engine type does not rearrange the physical strips.
+
+The rear two-thirds of the deck carries sound structure: A/B/C on the left, a modest central visual editor, two filters on the right. The front deck carries interaction and performance: source pads and assignment controls, macros, and the selected envelope's five faders. This communicates three generators and two filters, but the route page remains authoritative: Serum is not forced into one left-to-right serial chain. Sub and Noise are explicit SOURCE-page modules with direct contextual access, never omitted.
+
+Eight page keys enter SOURCE, EDIT, MIX, FX, MATRIX, CLIP, ARP and SYSTEM. Hold SYSTEM for VOICE. Six soft keys and six push encoders are permanently aligned with the display's parameter tiles. BROWSE, SAVE, UNDO, REDO and BACK/FINE remain reachable around the editor. No double-use is implicit: the page, source index, parameter name, units and bank number stay visible. The user's manual is byte-identical to the official source; the exact edition and newer-release gate are in `SERUM_REQUIREMENTS.md`.
+
+## Modulation as physical connection
+
+1. Press ENV/LFO/MACRO/OTHER and a source pad, or press a macro encoder. ENV exposes four; LFO exposes all ten; OTHER lists every engine source, including audio-rate sources.
+2. Press ASSIGN to latch a conspicuous assignment mode. Press a destination encoder without altering its value. A fader destination is selected by touching/moving it only while ASSIGN is explicitly armed, with the base value frozen; a display-only field is selected using the navigator/soft key. Cancel with BACK.
+3. Turn the separate, center-detented signed AMOUNT encoder. Depth starts at zero so audition is deliberate. POLAR changes unipolar/bipolar behavior independently of the amount sign. Ring arc and numeric depth communicate range; a small origin mark distinguishes positive/negative direction without depending on hue.
+4. Press ASSIGN again to leave the mode. Repeating with another destination creates another normal Serum matrix row. Existing source/destination pairs open for editing instead of accidental duplication; an explicit Duplicate Row operation preserves the engine's ability to use multiple rows deliberately.
+5. Hold INSPECT and press a destination. The editor lists **all** influencing rows, not just the selected source. Navigator cycles rows; selected source and arc follow. The small modulation window remains readable when the central editor shows another task.
+6. CURVE opens main/aux remapping and rise/fall slew. AUX and output scaling live in the matrix row page. Source/destination reassignment, bypass and deletion have explicit actions and undo. Filtering/sorting/locking covers all 64 slots.
+
+At rest, a thin perimeter arc is the base value; a second selected-route arc is modulation extent; a small live marker is current output. A badge shows the number of assignments. The full multi-source list is numeric/textual on inspection rather than twelve unreadable arcs around one knob. State lighting is sparse and dimmable. No decorative light paths or RGB animation are part of the proposed instrument. The Construct's house hologram palette is a visualization convention, separate from the proposed neutral anodized hardware finish.
+
+## Displays, editing and text
+
+The approximately 7-inch central panel is a graph instrument: waveform/FFT, sample bounds, spectral mask, LFO path, effect tree, piano roll and routing. It never displays a shrunken Serum plugin GUI. Engine-specific pages are designed for six physical parameters at a time. The three oscillator strip displays keep engines/assets and edits visible while the editor is elsewhere. Two filter readouts identify model-dependent VAR behavior. A shared macro strip labels all eight macros and a separate assignment readout holds source/destination/depth.
+
+The universal node editor uses point index, X, Y, curve, grid and zoom on E1-E6, with explicit add/remove/select/snap/draw operations and range selection. This reaches envelope curves, velocity/note graphs, LFO points and their buses, warp remaps, spectral masks and dual waveshapers. Dedicated graph pages specialize units and legal operations. Harmonic editing pages all 512 amplitude/phase bins. The keybed step-enters clip notes; event properties and all piano-roll operations remain available through named tools.
+
+Touch is optional for drawing, selection and an onscreen keyboard. Every essential action also has an encoder/soft-key route. Formula syntax, SFZ/sidecar/prefs text files, asset naming and preset metadata have an onboard token/text editor. A USB keyboard may accelerate these rare operations, but cannot be required for completion. Full formula authoring on six encoders is intentionally slower than a computer; this is an explicit interaction compromise, not a missing feature.
+
+## Performance and ergonomics
+
+Designed dimensions: 1080 x 520 mm plan; ~160 mm maximum height. A 36-white/25-black 61-key C2-C7 action uses a designed 23.5 mm white-key pitch. The larger-than-Magnolia depth buys separate source selection, macros and envelope travel without shrinking knobs. Main shafts are ~18-20 mm diameter with 34-40 mm centers; cutoff and AMOUNT are larger. Pads are ~28 x 16 mm with 40 mm horizontal spacing. The 65 mm envelope throw is deliberately larger than mini sliders. Labels target 2.5-3.5 mm physical capitals; production print/display checks are required at 600-800 mm viewing distance. The Construct's reduced small text is not a print proof.
+
+Left-hand wheels, a two-axis pressure-sensitive ribbon, octave/hold controls and front headphone jack avoid rear reaching. The ribbon's ordinary performance role is assigned macros; EDIT/XY can bind documented granular/spectral axes. The keybed supports poly pressure but does not invent per-key X/Y sensing; external MPE is supported. All eight macro encoders occupy the front center, within a short reach while playing. Nonmotorized envelope faders use pickup arrows after selecting another envelope. Performance lock can prevent structural edits while retaining macros/transport; that is a designed stage convenience.
+
+From init: set A wavetable/position/warp and envelope without entering a menu; enable B/C, set levels, and route with each strip's ROUTE button; assign LFO with source/ASSIGN/destination/AMOUNT. Browse a preset with one dedicated encoder and audition with the preview soft key. Store with SAVE. Deep patches use searchable matrix and rack trees with breadcrumbs, not hidden parameter lists. CLIP/ARP modes visibly repurpose the 12 pads; source selection and slot launching are not simultaneous on those pads. Keyboard trigger-octave mappings preserve a parallel launch route.
+
+Proposed ergonomic evaluation: validate single-hand source assignment, patch creation from init, two modulators on one cutoff, matrix aux curves, a multi-engine split, nested FX and an edited clip on a full-scale mockup. Record task times, missed presses, accidental jumps, display reading distance, seated/standing reach and dim-stage brightness. These are planned user tests; a geometrically plausible spacing calculation is not evidence they passed.
+
+## Reference lessons and original identity
+
+| Reference | Evidence read/viewed | Principle taken | Deliberate new solution |
+|---|---|---|---|
+| [Frap Tools Magnolia](https://frap.tools/magnolia/) and [manual](https://frap.tools/docs/Magnolia%20Manual.pdf) | Official photograph, specifications (~990 x 380 x 110 mm), modulation description and serviceability statements | Generous hand space and explicit source/destination state can make complex synthesis playable | Three engine strips, local displays and dedicated signed-depth control; no orange macro centerpiece, cream panel or copied arrangement |
+| [UDO Super 6](https://www.udo-audio.com/super-6), official manual linked from [support](https://www.udo-audio.com/super-6-support) | Front-panel drawing, hands-on organization and modulation workflow | Performance controls deserve a distinct reachable region; consistent control families matter more than screen size | Persistent eight-macro area and source pads; no UDO colors, switch/fader topology or screenless constraint |
+| [Modal 002 official manual](https://modalelectronics.com/wp-content/uploads/2025/08/MODAL002_MANUAL_v1-03.pdf), printed pp.6-11 | Five-octave action, metal/turned encoders, 4.3-inch screen, touch/context selection and exact entry | Physical controls and contextual display can expose the same parameter; exact entry is valuable | Six graph controls and universal node editor; no numeric keypad, white silhouette or copied sequencing bank |
+| [Andromeda A6 official manual](https://www.alesis.com/rscdn/1571/documents/a6_manual.pdf), pp.30-35 | Group hierarchy, dedicated common controls plus display soft controls; page lock | A deep flagship needs both immediate modules and a second editing location | Engine-oriented strip triad and selected-envelope faders; no A6 blue panel, perimeter outline or its oscillator/filter/envelope placement |
+
+The designed identity is a low faceted metal chassis, three equal generator windows, a recessed central graph lens and a quiet front performance band. The rear case narrows through chamfered end structures; visible panel seams follow replaceable subassemblies. Neutral dark anodized aluminum, bead-blasted edges, durable polymer keycaps and optically bonded glass are proposed finishes. State lighting carries assignment/activity/selection only. The glTF finish map documents these material proposals; the Construct retains its house drawing style.
+
+## Assembly, motion and service representation
+
+Stages: base/feet -> keybed supports and internal electronics -> shell/rails -> removable control deck -> controls/displays -> state graphics. Every key and major shaft/button has a semantic identifier. `assembly_manifest.json` supplies a service hierarchy because Construct's scene vocabulary is flat. Control rigs in the manifest specify real travel and pivots for all controls. The native Construct demonstrates representative keys, shafts, one fader, button and wheels plus the service deck within its 16-joint budget; it is not a complete keyboard animation rig. `control_rig.json` preserves every actuator's intended degree of freedom for future rigging.
+
+The service deck hinges at the rear and opens away from the keybed; a retention stay/harness loop is required in engineering. Internal view exposes compute, memory/storage, converters/output circuitry, I/O controller, scanner, power and cooling. The components are packaging volumes with meaningful functions; board traces, connector pinouts and electrical circuits are not invented as tested facts. Underside hatch/feet, rear ports and intake/exhaust have actual physical geometry.
+
+## Remaining uncertainty
+
+Native CPU performance, exact action sourcing, mechanical tolerances, acoustic cooling, optical specifications, audio quality, MTS/DAW bridge interoperability and authenticated newer software changes require engineering evidence. The concept covers the supplied/public manual; it does not establish a shipped current-version electronic product. The final review report must distinguish Construct audit results, independent visual critique, functional design coverage and untested product performance.
+
+## Final physical detailing notes
+
+The six shared editor encoders use compact 16 mm caps at approximately 25.8 mm centers, aligned with six display columns; common synthesis controls retain 36 mm centers and macros 28 mm centers. These are measured model dimensions, not a passed hand-ergonomics test. The three oscillator overlays are 0.4 mm sheet/print carriers over the 3 mm structural deck so fixed legends remain visible. A solved two-link folding service stay supports the opened deck; native animation interpolates the solved closed/open poses and is not a mechanical load or swept-volume solver. The front headphone level stays with the fixed chassis and represents a bounded analog potentiometer.

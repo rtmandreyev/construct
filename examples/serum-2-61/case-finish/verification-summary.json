@@ -1,0 +1,150 @@
+{
+  "status": "pass",
+  "toolkit_cli": "construct_hologram/cli.py (this checkout)",
+  "scene_sha256_canonical": "029548edaaf240daa9f686e0c4bae4f30202c1e139b29220b63c55493fa2d941",
+  "existing_part_ids_retained": 258,
+  "existing_parts_adjusted": [
+    "display-native-waveform-and-modulation-traces",
+    "end-structure-left",
+    "end-structure-right",
+    "envelope-fader-module",
+    "filter-2-module",
+    "hinge-service-loop",
+    "performance-control-plinth",
+    "rear-io-carrier"
+  ],
+  "new_parts": 35,
+  "requirements_preserved": 44,
+  "keys_unchanged": 61,
+  "original_articulations_preserved": 15,
+  "audit_errors": 0,
+  "audit_warnings": 3,
+  "fit_findings": [
+    [
+      "buried",
+      [
+        "balanced-line-driver-bank",
+        "clock-dac-adc-analog-board"
+      ]
+    ],
+    [
+      "buried",
+      [
+        "eight-channel-dac",
+        "clock-dac-adc-analog-board"
+      ]
+    ],
+    [
+      "buried",
+      [
+        "fan-hubs",
+        "dual-60mm-fan-housings"
+      ]
+    ],
+    [
+      "buried",
+      [
+        "stereo-adc",
+        "clock-dac-adc-analog-board"
+      ]
+    ]
+  ],
+  "new_fit_findings": 0,
+  "glb_bytes": 2958880,
+  "glb_animations": 18,
+  "blender_engine": "CYCLES",
+  "blender_samples": 32,
+  "reviewed_views": [
+    "hero",
+    "front-junction",
+    "end-right",
+    "end-left",
+    "rear",
+    "front-low",
+    "service",
+    "editor"
+  ],
+  "scope": "Nominal product-design geometry, self-reviewed. No original critic-score claim; no engineering or tolerance certification. Original run and archived run documents were not written; no commit/push performed.",
+  "files": [
+    {
+      "path": "scene.json",
+      "sha256": "fa0b34d9d1d4386d88947204d4a2a7074df23ca4b80ed8a9a3ccc39128552de7",
+      "bytes": 453252
+    },
+    {
+      "path": "materials.json",
+      "sha256": "c9eee1a2a146a494c30c9c92b6567cba43599f7b4a158a15cf1bf72d8c084caf",
+      "bytes": 9101
+    },
+    {
+      "path": "README.md",
+      "sha256": "a11743259241caa7201f02a8624bb16f9c7014a47c1fbcffe1996040e980cc9c",
+      "bytes": 10585
+    },
+    {
+      "path": "case-finish-revision/serum.glb",
+      "sha256": "1604ccf50497264197fe2e9f4785cb446d34f62ff5fe53cd60ae1a15fc73393e",
+      "bytes": 2958880
+    },
+    {
+      "path": "case-finish-revision/build/construct.html",
+      "sha256": "7cdf7a9a145f53553e96426b3bbb22456478c21764668a23aaeb48e3ec16e762",
+      "bytes": 5363401
+    },
+    {
+      "path": "case-finish-revision/check-fit.json",
+      "sha256": "921e16b169415bbc14c7a554cf63b96da0341a0739ef99f42f68984ab2c6ca00",
+      "bytes": 3488
+    },
+    {
+      "path": "case-finish-revision/hinge-clearance.json",
+      "sha256": "2bc0e61727dcf47d78301d201e17ec2852e95efb6c0c378ecede7aa53d06506f",
+      "bytes": 2866
+    },
+    {
+      "path": "case-finish-revision/REVIEW_NOTES.md",
+      "sha256": "50105530395c4f3c0be22fc4eeb7b9be890f55d4824e9d7cd0f8b3e954f39b20",
+      "bytes": 4262
+    },
+    {
+      "path": "case-finish-revision/renders/final/hero.png",
+      "sha256": "4104014ea99d1e1ca714b3ec0a4391d34d6b64dfef9a93469799ddaaf17f4249",
+      "bytes": 1916020
+    },
+    {
+      "path": "case-finish-revision/renders/final/front-junction.png",
+      "sha256": "d0c835dd0267871d3a954b7f1a7746303933a6d8dc5b009e0c6cb1220435ef08",
+      "bytes": 1370496
+    },
+    {
+      "path": "case-finish-revision/renders/final/end-right.png",
+      "sha256": "225a9b5d47d0c471b7c7ba64cc697872b4e76799e9d7034a6d17958080d546ff",
+      "bytes": 1506701
+    },
+    {
+      "path": "case-finish-revision/renders/final/end-left.png",
+      "sha256": "4f346764584a6f006f0fce26f41fcccc2c5e26071908f3d929e3f4a0a4af8cbf",
+      "bytes": 1496761
+    },
+    {
+      "path": "case-finish-revision/renders/final/rear.png",
+      "sha256": "78137370f96a4dd95639f73f14fdb1e242ed7ef29d9dc0df9460016d46890054",
+      "bytes": 1038906
+    },
+    {
+      "path": "case-finish-revision/renders/final/front-low.png",
+      "sha256": "49b249341bceb52f916a0c199e75742fd7d19a3dd0e3d909b1b0d635aa2fc334",
+      "bytes": 1057489
+    },
+    {
+      "path": "case-finish-revision/renders/final/service.png",
+      "sha256": "f7e55dc84cac9c60ce7d2748fdbe31fd7d625237e775569eb51febbe2642680e",
+      "bytes": 1796091
+    },
+    {
+      "path": "case-finish-revision/renders/final/editor.png",
+      "sha256": "22dc8c830ecb9374f6374a71731b6f9ef20b7f76446e9bed8410362a9d3850d2",
+      "bytes": 932647
+    }
+  ]
+}

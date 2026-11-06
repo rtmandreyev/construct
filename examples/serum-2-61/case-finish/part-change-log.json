@@ -1,0 +1,73 @@
+{
+  "added": [
+    "keybed-back-edge-slip",
+    "keybed-rear-dust-baffle",
+    "performance-rear-closure",
+    "performance-key-slip-step-return",
+    "keybed-cheek-right",
+    "keybed-cheek-left",
+    "keybed-cheek-right-lower-return",
+    "performance-plinth-outer-return",
+    "performance-plinth-keyside-return",
+    "key-slip-end-mounts",
+    "osc-a-context-cover-glass",
+    "osc-b-context-cover-glass",
+    "osc-c-context-cover-glass",
+    "filter-1-context-cover-glass",
+    "filter-2-context-cover-glass",
+    "central-7inch-editor-cover-glass",
+    "modulation-status-cover-glass",
+    "eight-macro-label-cover-glass",
+    "osc-a-waveform-pixels",
+    "osc-b-waveform-pixels",
+    "osc-c-waveform-pixels",
+    "central-modulation-graph-pixels",
+    "osc-a-position-modulation-lightguide",
+    "filter-1-cutoff-modulation-lightguide",
+    "modulation-depth-lightguide",
+    "macro-1-value-lightguide",
+    "macro-2-value-lightguide",
+    "macro-3-value-lightguide",
+    "macro-4-value-lightguide",
+    "macro-5-value-lightguide",
+    "macro-6-value-lightguide",
+    "macro-7-value-lightguide",
+    "macro-8-value-lightguide",
+    "selected-source-bank-lightguide",
+    "selected-source-pad-lightguide"
+  ],
+  "changed": {
+    "rear-io-carrier": [
+      "shape",
+      "at"
+    ],
+    "end-structure-left": [
+      "shape",
+      "at"
+    ],
+    "end-structure-right": [
+      "shape",
+      "at"
+    ],
+    "performance-control-plinth": [
+      "shape"
+    ],
+    "filter-2-module": [
+      "shape"
+    ],
+    "envelope-fader-module": [
+      "shape"
+    ],
+    "display-native-waveform-and-modulation-traces": [
+      "shape"
+    ],
+    "hinge-service-loop": [
+      "shape"
+    ]
+  },
+  "removed": [],
+  "new_count": 293,
+  "rear_top_m": 0.13622347549955685,
+  "key_slip_rear_z_m": 0.04772464013452958,
+  "closed_deck_reveal_m": 0.0015
+}

@@ -1,0 +1,356 @@
+{
+  "materials": [
+    {
+      "parts": [
+        "native-compute-carrier",
+        "native-cpu-module",
+        "ram-*",
+        "nvme-*",
+        "audio-dma-interface-controller",
+        "clock-dac-adc-analog-board",
+        "key-scanner-pressure-controller",
+        "midi-usb-pedal-io-board",
+        "headphone-amp-and-level-board",
+        "panel-scan-display-electronics"
+      ],
+      "name": "Designed electronics packaging / soldermask",
+      "color": "#23433D",
+      "finish": "plastic",
+      "roughness": 0.65
+    },
+    {
+      "parts": [
+        "key-*-black"
+      ],
+      "name": "Near-black satin key polymer / UI key shadows pp16,37",
+      "color": "#151719",
+      "finish": "plastic",
+      "roughness": 0.4
+    },
+    {
+      "parts": [
+        "key-*-c*",
+        "key-*-d*",
+        "key-*-e*",
+        "key-*-f*",
+        "key-*-g*",
+        "key-*-a*",
+        "key-*-b*"
+      ],
+      "name": "Cool ivory molded key polymer / adapted from UI keys pp16,37",
+      "color": "#D9E1E6",
+      "finish": "plastic",
+      "roughness": 0.32
+    },
+    {
+      "parts": [
+        "*-waveform-pixels"
+      ],
+      "name": "Lime wavetable pixels / p37 waveform",
+      "color": "#80CB4A",
+      "finish": "light",
+      "emissive": "#406E1E"
+    },
+    {
+      "parts": [
+        "*graph-pixels",
+        "*lightguide"
+      ],
+      "name": "Cyan modulation and selection lightguides / p188 LFO",
+      "color": "#0FADF6",
+      "finish": "light",
+      "emissive": "#064E7A"
+    },
+    {
+      "parts": [
+        "osc-*-on"
+      ],
+      "name": "Enabled oscillator backlit polymer / p37 green enable LED",
+      "color": "#30402D",
+      "finish": "plastic",
+      "roughness": 0.65,
+      "emissive": "#315F18"
+    },
+    {
+      "parts": [
+        "source-family-lfo",
+        "source-or-slot-2",
+        "mod-assign"
+      ],
+      "name": "Selected modulation controls / p188 cyan",
+      "color": "#23343F",
+      "finish": "plastic",
+      "roughness": 0.65,
+      "emissive": "#082A3D"
+    },
+    {
+      "parts": [
+        "*-cover-glass"
+      ],
+      "name": "Clear low-reflection cover glass / designed optical finish",
+      "color": "#DDE5EA",
+      "finish": "glass",
+      "roughness": 0.13
+    },
+    {
+      "parts": [
+        "*glass",
+        "central-editor-frame"
+      ],
+      "name": "Opaque black bonded display optical face / pp16,37,188 graph background",
+      "color": "#181D20",
+      "finish": "plastic",
+      "metallic": 0.0,
+      "roughness": 0.72
+    },
+    {
+      "parts": [
+        "*feet",
+        "*ribbon",
+        "performance-*-wheel"
+      ],
+      "name": "Soft-touch charcoal elastomer / UI dark control surrounds pp16,37",
+      "color": "#1B1E23",
+      "finish": "rubber",
+      "roughness": 0.82
+    },
+    {
+      "parts": [
+        "osc-*-pitch",
+        "osc-*-position",
+        "osc-*-warp?",
+        "osc-*-unison",
+        "osc-*-detune",
+        "osc-*-pan",
+        "osc-*-level",
+        "filter-*-cutoff",
+        "filter-*-resonance",
+        "filter-*-drive",
+        "filter-*-var",
+        "filter-*-pan",
+        "filter-*-mix",
+        "editor-e?",
+        "macro-?",
+        "browse-data-navigator",
+        "modulation-signed-amount",
+        "main-output-volume",
+        "headphone-level"
+      ],
+      "name": "Graphite soft-touch encoder caps / p37 knob faces",
+      "color": "#404952",
+      "finish": "rubber",
+      "roughness": 0.62
+    },
+    {
+      "parts": [
+        "editor-softkey-*",
+        "page-*",
+        "nav-*",
+        "source-family-*",
+        "source-or-slot-*",
+        "mod-*",
+        "osc-*-type",
+        "osc-*-edit",
+        "osc-*-route",
+        "filter-*-on",
+        "filter-*-route",
+        "performance-octave-*",
+        "performance-hold",
+        "env-*-fader",
+        "hard-power-rocker"
+      ],
+      "name": "Charcoal molded control keys / pp16,37 dark tiles",
+      "color": "#1B1E23",
+      "finish": "plastic",
+      "roughness": 0.65
+    },
+    {
+      "parts": [
+        "osc-*-module",
+        "filter-*-module",
+        "envelope-fader-module"
+      ],
+      "name": "Blue-grey matte anodized synthesis panels / pp16,37",
+      "color": "#8093A2",
+      "finish": "brushed",
+      "metallic": 0.7,
+      "roughness": 0.6
+    },
+    {
+      "parts": [
+        "end-structure-*",
+        "keybed-back-edge-slip",
+        "performance-rear-closure",
+        "performance-key-slip-step-return",
+        "keybed-cheek-*",
+        "keybed-rear-dust-baffle"
+      ],
+      "name": "Bead-blasted charcoal anodized perimeter / pp16,37 frame",
+      "color": "#1B1E23",
+      "finish": "brushed",
+      "metallic": 0.72,
+      "roughness": 0.63
+    },
+    {
+      "parts": [
+        "service-control-deck"
+      ],
+      "name": "Blue-grey anodized main deck / p37 panel controls",
+      "color": "#6A7A87",
+      "finish": "brushed",
+      "metallic": 0.68,
+      "roughness": 0.57
+    },
+    {
+      "parts": [
+        "envelope-fader-slots"
+      ],
+      "name": "Black fader track recesses / UI dark wells",
+      "color": "#13171A",
+      "finish": "plastic",
+      "roughness": 0.9
+    },
+    {
+      "parts": [
+        "io-*-jacks",
+        "midi-*-din",
+        "pedal-*-jack",
+        "pedal-expression*",
+        "headphone-output-socket",
+        "usb-*",
+        "rear-service-hinge-barrel",
+        "hinge-bracket-pair"
+      ],
+      "name": "Satin nickel connector and hinge hardware / designed finish",
+      "color": "#8D989F",
+      "finish": "chrome",
+      "roughness": 0.3
+    },
+    {
+      "parts": [
+        "*"
+      ],
+      "name": "Charcoal anodized chassis / pp16,37 upper surround",
+      "color": "#1B1E23",
+      "finish": "brushed",
+      "metallic": 0.7,
+      "roughness": 0.58
+    }
+  ],
+  "palette_provenance": {
+    "source": "Official Serum 2 User Guide, manual 1.0.3, public PDF byte-identical to the supplied copy",
+    "source_ref": "https://xferrecords.com/manual/serum-2/docs",
+    "sampling": "RGB from extracted embedded screenshot images, not rendered-page whitespace or manual annotations. Screenshots are not calibrated material measurements. Pages are printed/PDF page numbers. Hardware assignment, finish and brightness are designed.",
+    "samples": [
+      {
+        "sample": "#1B1E23",
+        "page": 37,
+        "image": "first embedded UI screenshot, 1190x740",
+        "crop_xyxy": [
+          180,
+          4,
+          220,
+          15
+        ],
+        "feature": "upper dark tile, modal RGB; used for chassis and perimeter"
+      },
+      {
+        "sample": "#181D20",
+        "page": 37,
+        "crop_xyxy": [
+          405,
+          437,
+          475,
+          540
+        ],
+        "feature": "envelope graph background, modal RGB; opaque LCD wells"
+      },
+      {
+        "sample": "#8093A2",
+        "page": 37,
+        "crop_xyxy": [
+          220,
+          270,
+          252,
+          325
+        ],
+        "feature": "blue-grey control-panel gradient; one of the two dominant samples"
+      },
+      {
+        "sample": "#6A7A87",
+        "pages": [
+          16,
+          37
+        ],
+        "feature": "dominant darker blue-grey control panel RGB in embedded screenshots; main deck"
+      },
+      {
+        "sample": "#95ACBC",
+        "page": 37,
+        "crop_xyxy": [
+          137,
+          72,
+          306,
+          90
+        ],
+        "feature": "pale blue-grey oscillator header reference; recorded reference, not a large painted accent"
+      },
+      {
+        "sample": "#404952",
+        "page": 37,
+        "crop_xyxy": [
+          96,
+          284,
+          106,
+          296
+        ],
+        "feature": "knob face, modal RGB; soft-touch cap tone"
+      },
+      {
+        "sample": "#80CB4A",
+        "page": 37,
+        "crop_xyxy": [
+          76,
+          140,
+          335,
+          240
+        ],
+        "feature": "actual lime waveform stroke, bright pixel cluster; not the red explanatory border"
+      },
+      {
+        "sample": "#5DDC33",
+        "page": 37,
+        "crop_xyxy": [
+          82,
+          78,
+          91,
+          87
+        ],
+        "feature": "oscillator enable indicator reference; adapted/dimmed for backlit ON switches"
+      },
+      {
+        "sample": "#0FADF6",
+        "pages": [
+          37,
+          188
+        ],
+        "crop_xyxy": [
+          630,
+          426,
+          986,
+          562
+        ],
+        "feature": "cyan LFO stroke, bright pixel cluster; modulation/selection guides"
+      },
+      {
+        "sample": "#D9E1E6 / #151719",
+        "pages": [
+          16,
+          37
+        ],
+        "feature": "designed physical cool-ivory/near-black key pair, adapted from UI keyboard light/shadow; not a literal calibrated sample"
+      }
+    ],
+    "physical_finishes": "Matte anodized blue-grey deck, bead-blasted charcoal perimeter, soft-touch graphite controls, molded polymer keys, thin clear cover glass over opaque black display modules, emissive functional pixels/lightguides. Construct retains its own palette; no colours were added to scene.json."
+  }
+}

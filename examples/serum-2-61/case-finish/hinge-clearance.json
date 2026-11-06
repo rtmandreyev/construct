@@ -1,0 +1,87 @@
+{
+  "scope": "Designed geometry, not tolerance/deflection or hinge-load validation. Whole new slip cross sections tested, not vertices alone. Cross-section distance is conservative when X extents do not overlap.",
+  "hinge_amount_degrees": 80,
+  "closed_deck_to_slip_reveal_mm": 1.5,
+  "sweeps": [
+    {
+      "moving": "service-control-deck",
+      "fixed": "keybed-back-edge-slip",
+      "minimum_sampled_mm": 1.51474,
+      "at_degrees": 0.0,
+      "step_degrees": 0.02,
+      "conservative_between_sample_bound_mm": 1.46206,
+      "intersects": false
+    },
+    {
+      "moving": "service-control-deck",
+      "fixed": "performance-rear-closure",
+      "minimum_sampled_mm": 1.51474,
+      "at_degrees": 0.0,
+      "step_degrees": 0.02,
+      "conservative_between_sample_bound_mm": 1.46206,
+      "intersects": false
+    },
+    {
+      "moving": "service-control-deck",
+      "fixed": "keybed-rear-dust-baffle",
+      "minimum_sampled_mm": 29.47554,
+      "at_degrees": 0.02,
+      "step_degrees": 0.02,
+      "conservative_between_sample_bound_mm": 29.42286,
+      "intersects": false
+    },
+    {
+      "moving": "service-control-deck",
+      "fixed": "performance-key-slip-step-return",
+      "minimum_sampled_mm": 22.40678,
+      "at_degrees": 0.02,
+      "step_degrees": 0.02,
+      "conservative_between_sample_bound_mm": 22.3541,
+      "intersects": false
+    },
+    {
+      "moving": "envelope-fader-module",
+      "fixed": "keybed-back-edge-slip",
+      "minimum_sampled_mm": 2.17195,
+      "at_degrees": 0.0,
+      "step_degrees": 0.02,
+      "conservative_between_sample_bound_mm": 2.11938,
+      "intersects": false
+    },
+    {
+      "moving": "envelope-fader-module",
+      "fixed": "keybed-rear-dust-baffle",
+      "minimum_sampled_mm": 30.27754,
+      "at_degrees": 0.0,
+      "step_degrees": 0.02,
+      "conservative_between_sample_bound_mm": 30.22497,
+      "intersects": false
+    },
+    {
+      "moving": "envelope-fader-module",
+      "fixed": "performance-key-slip-step-return",
+      "minimum_sampled_mm": 23.25277,
+      "at_degrees": 0.0,
+      "step_degrees": 0.02,
+      "conservative_between_sample_bound_mm": 23.2002,
+      "intersects": false
+    }
+  ],
+  "deck_to_end_lateral_clearance_mm": 1.0,
+  "deck_moving_min_max_x_m": [
+    -0.519,
+    0.519
+  ],
+  "key_slip_front_lip_bottom_mm": 82.5,
+  "black_key_rest_top_mm": 81,
+  "black_key_to_slip_vertical_clearance_mm": 1.5,
+  "key_to_cheek_lateral_clearance_mm": 1.5,
+  "rear_wall_to_deck_underside_reveal_mm": [
+    0.9375,
+    1.4997
+  ],
+  "scanner_harness_to_baffle_vertical_envelope_gap_mm": 1.92,
+  "first_white_key_to_step_return_lateral_gap_mm": 1.45,
+  "black_key_tail_to_baffle_mm": 1.5,
+  "retained": "All 258 original IDs and their requirement bases; all 61 keys including 12 mm black-key rise; FILES/SHIFT unchanged; all requirement facts and original accuracy."
+}
