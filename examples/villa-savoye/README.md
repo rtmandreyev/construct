@@ -18,11 +18,33 @@ treads, furniture) is inferred, and **P** shows it so.
 
 This is the construct of the final test of Construct 1.2: five plain requests in Hermes, from the request to the
 research, twelve masterpiece rounds, a question about what is known, a solid fit repair, glTF, STEP and FreeCAD
-exports, a 30-piece desktop kit and a film. The whole conversation, step by step:
+exports, a 30-piece desktop kit and a film. The whole run, step by step:
 [Villa Savoye in Hermes, step by step →](../../docs/for/hermes-walkthrough.md)
 
 <p align="center"><img src="blender.jpg" width="95%" alt="Villa Savoye finished in Blender: white render, dark steel window frames, the solarium screens in rose and pale blue, on a gravel ground"></p>
-<p align="center"><sub>The same scene finished in Blender with Construct's add-on and the material map in <code>maps/</code>.</sub></p>
+<p align="center"><sub>The same scene finished in Blender with Construct's add-on and the material map in <code>maps/</code>; more stills, inside
+and out, <a href="#in-blender">below</a>.</sub></p>
+
+## In Blender
+
+The same scene, finished with Construct's Blender add-on and the material map in [maps/finish.json](maps/finish.json), and
+rendered in Cycles. Every surface below is a named part of the construct: the salon's glazing, the stair's winders
+and rails, the solarium's framed opening, the sashes in their reveals.
+
+<p align="center">
+  <img src="blender-salon.jpg" width="49%" alt="Inside the salon in Blender: its floor-to-ceiling glass wall, and through it the open terrace, its planters and the ramp beyond">
+  <img src="blender-terrace.jpg" width="49%" alt="On the open terrace in Blender: the long table, the planters, the salon's glazing and the ramp, the solarium screens above">
+</p>
+<p align="center">
+  <img src="blender-stair.jpg" width="49%" alt="The U-shaped stair from the entrance hall in Blender: its curved parapet, winders and the tubular rail standing off it, the curved glass wall behind">
+  <img src="blender-solarium.jpg" width="49%" alt="The roof garden in Blender: the framed landscape opening between the pale blue and rose solarium screens, the paving grid and a planter">
+</p>
+<p align="center">
+  <img src="blender-pilotis.jpg" width="49%" alt="Under the pilotis in Blender: the main floor lifted on its columns, the ribbon window above and the curved glass of the entrance behind">
+  <img src="blender-ribbon-window.jpg" width="49%" alt="A corner of the ribbon window in Blender: the sashes and transoms set back in their reveals, the end piers and the pilotis below">
+</p>
+<p align="center"><img src="blender-roof.jpg" width="98%" alt="Villa Savoye from above in Blender: the roof garden with its rose and blue curved screens, the ramp rising through the house, the courtyard with its planters"></p>
+<p align="center"><sub>Inside the salon, looking out to the terrace and the ramp · on the terrace · the stair from the entrance hall · the roof garden's framed opening · under the pilotis · a corner of the ribbon window · from above.</sub></p>
 
 ## How it was made
 
@@ -82,7 +104,7 @@ construct kit kit-scene.json --plan kit-plan.json --scale 115 --printer desktop 
 
 It has not been printed or assembled by anyone. The material map for Blender (white render, dark steel frames, the
 ground floor in dark green, the solarium screens in rose and pale blue) was written for this page, not by the run;
-for the still above, the façade heads were set 6 mm deeper than the roof slab so that Cycles does not draw the face
+for the stills on this page, the façade heads were set 6 mm deeper than the roof slab so that Cycles does not draw the face
 they share in black.
 
 ## Limits

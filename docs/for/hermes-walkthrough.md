@@ -31,7 +31,7 @@ images), ffmpeg (films), FreeCAD (CAD) and Blender are used when they are on the
 
 | | |
 | --- | --- |
-| Hermes | 0.22.7, Hermes Desktop on macOS, the Construct plugin of 1.2.0 before its last fixes ([below](#what-the-test-found)) |
+| Hermes | 0.22.7, Hermes Desktop on macOS, with the Construct plugin |
 | Model | GPT-6.1 Sol, reasoning effort high, for the author and for every critic |
 | The build | masterpiece mode, 12 rounds in 2 h 25 min: 59.8 minutes of authoring, 76.2 of critics |
 | After it | a question, a fit repair, three exports, a kit and a film, in about an hour more |
@@ -154,21 +154,25 @@ and said plainly that nobody has printed it. The film runs 15 seconds. [Open the
 The glTF opens in Blender as it is; with Construct's Blender add-on the construct comes in with its build, joints
 and finish on sliders. A material map gives each group of parts its material: here white render, dark steel frames,
 the ground floor's dark green and the solarium's rose and pale blue ([maps/finish.json](../../examples/villa-savoye/maps/finish.json),
-written for this page). [Into Blender](3d-artists.md)
+written for this page). Every surface in these stills is a named part of the construct, inside as well as out.
+[Into Blender](3d-artists.md)
+
+<p align="center">
+  <img src="../../examples/villa-savoye/blender-salon.jpg" width="49%" alt="Inside the salon in Blender: its floor-to-ceiling glass wall, and through it the open terrace, its planters and the ramp beyond">
+  <img src="../../examples/villa-savoye/blender-terrace.jpg" width="49%" alt="On the open terrace in Blender: the long table, the planters, the salon's glazing and the ramp, the solarium screens above">
+</p>
+<p align="center">
+  <img src="../../examples/villa-savoye/blender-stair.jpg" width="49%" alt="The U-shaped stair from the entrance hall in Blender: its curved parapet, winders and the tubular rail standing off it, the curved glass wall behind">
+  <img src="../../examples/villa-savoye/blender-solarium.jpg" width="49%" alt="The roof garden in Blender: the framed landscape opening between the pale blue and rose solarium screens, the paving grid and a planter">
+</p>
+<p align="center">
+  <img src="../../examples/villa-savoye/blender-pilotis.jpg" width="49%" alt="Under the pilotis in Blender: the main floor lifted on its columns, the ribbon window above and the curved glass of the entrance behind">
+  <img src="../../examples/villa-savoye/blender-ribbon-window.jpg" width="49%" alt="A corner of the ribbon window in Blender: the sashes and transoms set back in their reveals, the end piers and the pilotis below">
+</p>
+<p align="center"><sub>Inside the salon, looking out to the terrace and the ramp · on the terrace · the stair from the entrance hall · the roof garden's framed opening · under the pilotis · a corner of the ribbon window.</sub></p>
 
 <p align="center"><img src="../../examples/villa-savoye/blender-roof.jpg" width="95%" alt="Villa Savoye from above in Blender: the roof garden with its rose and blue curved screens, the ramp rising through the house, the courtyard with its planters and the terrace paving"></p>
 <p align="center"><sub>From above: the ramp rising through the house, the courtyard and the roof garden.</sub></p>
-
-## What the test found
-
-The test was of the plugin as much as of the house, and it found four things to fix before 1.2.0 shipped, all fixed:
-
-- A kit written with problems to look at was reported as "construct kit failed"; it is now *finished, with problems
-  to fix*, with the problems listed.
-- The 3D viewer's header counted CAD shapes (371) instead of named parts (396).
-- A kit's 3D steps showed two step bars, the kit's own and the card's.
-- Once, Sol imported Construct's own Python from the plugin's folder to measure the scene instead of asking the
-  tools; the skill now says which tools answer fit and measurement questions.
 
 ## Good to know
 
