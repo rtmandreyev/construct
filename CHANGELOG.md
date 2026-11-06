@@ -138,6 +138,11 @@
 - **Packaging:** a pip install lacked `construct.nls`, so `netlogo-instrument` failed there; the wheel now carries
   it and film mode's loader, and no longer the tests' fixtures (`testdata/`). The NetLogo extension's zip is made from
   what git holds, not the working tree, and leaves out the tests, their fixtures and the unrendered skill.
+- **KESTREL is an original design:** both versions said `subject.accuracy: "generic"`, captioned GENERIC
+  RECONSTRUCTION, because the run predated `original`; they now read ORIGINAL DESIGN, a post-run correction their
+  pages note. The Eames chair's back cushion no longer comes down through its shell, nor its welts through the
+  cushion and the arm pads (`check --fit`); each moved part says so in its `note`. Five older gallery scenes move
+  from the `tessera-hologram` format id to `construct-scene`.
 
 ## 1.1.1 — 2026-11-03
 
