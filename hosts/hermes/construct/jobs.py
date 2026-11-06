@@ -136,6 +136,16 @@ def wait(job_id, seconds):
     return ended(job_id)
 
 
+
+def outcome(done, tail):
+    """A finished job's state: "done"; "warned" when the command wrote its output and listed problems to fix
+    (the construct CLI then exits 1, as `check` does on warnings); "failed" otherwise."""
+    if done.get("code") == 0:
+        return "done"
+    if done.get("code") == 1 and any(line.startswith("wrote ") for line in (tail or "").splitlines()):
+        return "warned"
+    return "failed"
+
 def log_tail(job_id, lines=40, chars=6000):
     try:
         text = (folder(job_id) / "log.txt").read_text(encoding="utf-8", errors="replace")
@@ -191,11 +201,11 @@ def finish(job_id, rec, done):
                 pass
         fn = _finishers.get(rec["kind"])
         try:
-            result = fn(rec, done, log_tail(job_id)) if fn else {"state": "done" if done.get("code") == 0 else "failed",
+            result = fn(rec, done, log_tail(job_id, 400, 60000)) if fn else {"state": outcome(done, log_tail(job_id, 400, 60000)),
                                                               "exit": done.get("code"), "log": log_tail(job_id)}
         except runtime.ConstructError as exc:
             result = {"state": "failed", "error": str(exc), "log": log_tail(job_id)}
-        result.setdefault("state", "done" if done.get("code") == 0 else "failed")
+        result.setdefault("state", outcome(done, log_tail(job_id, 400, 60000)))
         runtime.write_json(keep, result)
         return result
 
@@ -249,7 +259,7 @@ def recent(limit=12):
         except (OSError, ValueError, runtime.ConstructError):
             continue
         rows.append({"job_id": path.name, "kind": rec["kind"], "label": rec.get("label", ""), "project": rec.get("project"),
-                     "state": "running" if done is None else ("done" if done.get("code") == 0 else "failed")})
+                     "state": "running" if done is None else outcome(done, log_tail(path.name, 400, 60000))})
     return rows
 
 
@@ -273,7 +283,7 @@ def watch(job_id, label, every=2.0, post_every=15.0):
                 prog = progress(job_id)
             except runtime.ConstructError:
                 return
-            state = "running" if done is None else ("done" if done.get("code") == 0 else "failed")
+            state = "running" if done is None else outcome(done, log_tail(job_id, 400, 60000))
             payload = {"job_id": job_id, "label": label, "state": state, "percent": prog.get("percent"),
                        "done": prog.get("done"), "total": prog.get("total"), "stage": prog.get("stage")}
             if event is not None:
@@ -291,7 +301,7 @@ def watch(job_id, label, every=2.0, post_every=15.0):
                         job_id)
                 else:
                     text = "Construct: %s %s (job %s). Ask for the result, or the agent reads it with construct_job." % (
-                        label, "finished" if state == "done" else "failed", job_id)
+                        label, {"done": "finished", "warned": "finished, with problems to fix"}.get(state, "failed"), job_id)
                 try:
                     handle.edit(text)
                 except Exception:

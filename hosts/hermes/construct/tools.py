@@ -802,7 +802,7 @@ def _finish_command(rec, done, tail):
         except OSError:
             continue
     shown = [p for p in written if Path(p).suffix.lower() in (".png", ".jpg", ".mp4", ".gif", ".glb", ".3mf", ".stl")][:8]
-    out = {"state": "done" if done.get("code") == 0 else "failed", "exit": done.get("code"), "argv": f["argv"],
+    out = {"state": jobs.outcome(done, tail), "exit": done.get("code"), "argv": f["argv"],
            "output": tail.strip()[-6000:], "files": written[:LIST_CAP],
            "note": "exit 1 is Construct's own 'has problems' (read the output); 2 means a capture was not possible"}
     slug, sub = rec.get("project"), f["argv"][0]

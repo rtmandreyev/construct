@@ -243,6 +243,14 @@ class Plugin(unittest.TestCase):
 
     # ------------------------------------------------------------------ the tools, end to end
 
+    def test_a_command_that_wrote_its_output_with_problems_has_not_failed(self):
+        # `construct kit` exits 1 when it lists problems to fix, after writing the kit: that is not a failure
+        jobs = sys.modules["construct_plugin_under_test.jobs"]
+        self.assertEqual(jobs.outcome({"code": 0}, ""), "done")
+        self.assertEqual(jobs.outcome({"code": 1}, "kit: drawing step 3 of 3\nwrote kit: 20 pieces on 1 plate\n  37 (wall) is 1.3 mm thick"), "warned")
+        self.assertEqual(jobs.outcome({"code": 1}, "error: no scene"), "failed")
+        self.assertEqual(jobs.outcome({"code": 2}, "wrote x\ncapture not possible"), "failed")
+
     def test_start_menu_lists_sources(self):
         menu = self.call("construct_start")
         names = [e["name"] for e in menu["examples"]]

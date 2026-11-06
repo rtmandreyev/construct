@@ -617,7 +617,7 @@ function ModelViewer({ load, height, onInfo }) {
         })
         api.current.records = records
         const parts = meshesOf
-        if (onInfo) onInfo({ parts: parts.size, size: [size.x, size.y, size.z], animations: names })
+        if (onInfo) onInfo({ parts: records.size || parts.size, size: [size.x, size.y, size.z], animations: names })   // named parts, as the facts below count them (some are lines only)
         api.current.play = name => {
           const clip = gltf.animations.find(a => a.name === name)
           if (!clip || !mixer) return
