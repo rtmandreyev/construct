@@ -192,7 +192,8 @@ its host's face. [A longcase clock, end to end](END-TO-END.md) shows one, step b
 **A critic, as for a construct.** `construct kit --critic` prints a kit designer's brief: a critic (a fresh
 agent or model) reads `kit.json` and the booklet's pictures and answers with a plan, parts to merge into one
 piece, small parts to keep, clear parts, parts that are not clear though their names say glass (`opaque`: a
-chrome mirror glass), which `--plan kit-plan.json` applies to the next build. A merged piece is built at its
+chrome mirror glass) and, where a merged piece's parts share only a word, its name (`names`:
+`{"owner-rear-rack": "owner-rear-rack"}`), which `--plan kit-plan.json` applies to the next build. A merged piece is built at its
 largest part's stage. What holds the glass (a windscreen frame, a window seal, a lens's ring or button) is never taken for glass.
 
 ## Printers: the largest print and every detail

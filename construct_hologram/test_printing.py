@@ -435,6 +435,19 @@ class Kit(unittest.TestCase):
         shell = next(p for p in k["pieces"] if "shell" in p["parts"])
         self.assertEqual(shell["stage"], 1)   # the shell's, not the small tower's earlier stage
 
+    def test_a_plan_names_a_merged_piece_whose_parts_share_only_a_word(self):
+        # found on the Vespa's kit: the owner's rack and stays merged, and the piece was named "owner"
+        sc = scene_of(box("body", [0.2, 0.05, 0.1], [0, 0.025, 0]),
+                      box("owner-rear-rack", [0.1, 0.01, 0.04], [0, 0.055, 0]),
+                      box("owner-rack-slat-0", [0.1, 0.01, 0.01], [0, 0.065, 0]))
+        plan = {"merge": [["owner-rear-rack", "owner-rack-*"]]}
+        rack = lambda k: next(p for p in k["pieces"] if "owner-rear-rack" in p["parts"])
+        self.assertEqual(rack(kit_mod.make(sc, size=100, detail=0.5, plan=plan))["name"], "owner")
+        named = dict(plan, names={"owner-rear-rack": "owner-rear-rack"})
+        self.assertEqual(rack(kit_mod.make(sc, size=100, detail=0.5, plan=named))["name"], "owner-rear-rack")
+        with self.assertRaises(kit_mod.KitError):
+            kit_mod.make(sc, size=100, detail=0.5, plan=dict(plan, names={"owner-rear-rack": "The Rack"}))
+
     def test_the_fit_names_what_pokes_through_and_what_is_buried_not_what_is_set_in(self):
         from . import fit
         sc = scene_of(box("body", [0.2, 0.1, 0.1], [0, 0.05, 0]),

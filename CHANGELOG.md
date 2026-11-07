@@ -3,7 +3,7 @@
 ## 1.2.1 — 2026-11-07
 
 Examples polish: every gallery example checked again, by measurement and in the solid view, for slips the light
-forgives. No library code changed.
+forgives. One small kit-plan addition; nothing else in the library changed.
 
 - **Measured, not eyeballed:** every example's compiled surfaces were checked for parts that float clear of
   everything (none at rest), articulations that nest the wrong way round, glass that the solid view, exports and
@@ -13,7 +13,11 @@ forgives. No library code changed.
   they moved about their closed-deck pivots. They now move after the deck. The display covers' dark fill hid the
   display text from above; the covers are drawn as outlines in the light and stay glass in the solid view.
 - **Vespa GS 150:** the owner's chrome bars, rack, mudguard hoop and badge carrier rebuilt as continuous tubes that
-  meet the body and clear the factory parts.
+  meet the body and clear the factory parts. Its kit follows: the badge carrier, held only by the two legshield bars,
+  is moulded with them, each cowl with the lower return it lifts with; 28 pieces on 2 plates in 22 steps.
+- **Kit plans name pieces** (`names` in `kit-plan.json`, `{"owner-rear-rack": "owner-rear-rack"}`): a merged piece is
+  named for what its parts' ids share, and the Vespa's owner parts share only "owner" (its booklet read "build the
+  dual seat, with the owner"); a plan can now name such a piece by any part in it.
 - **Leica M3:** the lens's name ring capped the front element and its inscription was cut by the lens's lip; it is a
   ring on the recessed step now, inscribed *Summicron* and *5 cm 1:2*. The ASA/DIN reminder read upside down; the
   vulcanite ran past the flat front into the air.
