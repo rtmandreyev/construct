@@ -135,7 +135,7 @@ every guess a deeper amber the more firmly it is held; and the same Duomo as a s
   <img src="docs/media/freecad-piano-leica.jpg" width="49%" alt="The Yamaha CFX and the Leica M3 in FreeCAD as true CAD shapes">
 </p>
 
-**Model kits.** Four constructs as kits to print, glue and paint: the Yamaha CFX piano (1:12, 54 pieces), Tompion's year-going clock (1:12, 34 pieces), the VW T1 Samba (1:16, 98 pieces) and an owner's Vespa GS 150 (1:12, 32 pieces), each with its steps in 3D and a booklet to print. Open them in your browser, or download their plates: [the kits in the gallery](https://rtmandreyev.github.io/construct/#kits). [Makers →](docs/for/makers.md)
+**Model kits.** Four constructs as kits to print, glue and paint: the Yamaha CFX piano (1:12, 54 pieces), Tompion's year-going clock (1:12, 34 pieces), the VW T1 Samba (1:16, 98 pieces) and an owner's Vespa GS 150 (1:12, 30 pieces), each with its steps in 3D and a booklet to print. Open them in your browser, or download their plates: [the kits in the gallery](https://rtmandreyev.github.io/construct/#kits). [Makers →](docs/for/makers.md)
 
 <p align="center">
   <a href="https://rtmandreyev.github.io/construct/examples/yamaha-cfx/kit/assembly.html"><img src="docs/media/kit-cfx-guide.gif" width="32%" alt="The Yamaha CFX piano kit's 3D guide at 1:12: the keyboard built at the bench, the piano ghosted around it"></a>

@@ -8,7 +8,7 @@ or the ChatGPT app does the work ([how to set it up](in-the-apps.md)).
   <a href="https://rtmandreyev.github.io/construct/examples/vespa-gs150/kit/assembly.html"><img src="../media/kit-vespa-guide.gif" width="49%" alt="The Vespa kit's 3D guide stepping through its build: the body first, the seat and rack at the bench, then the wheels, fork and cowls"></a>
   <a href="https://rtmandreyev.github.io/construct/examples/vespa-gs150/kit/booklet.html"><img src="../media/kit-vespa-booklet.jpg" width="49%" alt="Step 3 of the Vespa kit's booklet: the dual seat built at the bench with the owner's rack slat, each piece numbered and painted"></a>
 </p>
-<p align="center"><sub>The <a href="https://rtmandreyev.github.io/construct/examples/vespa-gs150/">Vespa from <i>your vehicle</i></a> as a 1:12 kit: 32 pieces on 2 plates, 22 steps, 157 mm long.
+<p align="center"><sub>The <a href="https://rtmandreyev.github.io/construct/examples/vespa-gs150/">Vespa from <i>your vehicle</i></a> as a 1:12 kit: 30 pieces on 3 plates, 21 steps, 157 mm long.
 The 3D guide (left) and a page of the booklet (right). Open them yourself: <a href="https://rtmandreyev.github.io/construct/examples/vespa-gs150/kit/assembly.html">the kit in 3D</a> and <a href="https://rtmandreyev.github.io/construct/examples/vespa-gs150/kit/booklet.html">its booklet</a>.</sub></p>
 
 ## Our example, start to finish
@@ -37,7 +37,9 @@ bars, whitewall tyres, a white seat with blue piping), built as a model maker wo
 rack and the wheels at the bench, the cowls hung last. The plan it wrote is
 [kit-plan.json](../../examples/vespa-gs150/kit-plan.json). Its checks leave a few notes for the builder, said in the
 booklet: some joints with a gap under a millimetre (a drop of glue fills them), two small cowl tabs to fit after the
-cowls, and a few specks too small to print, left off.
+cowls, and a few specks too small to print, left off. (Since the owner's bars were rebuilt as continuous tubes in
+1.2.1, the same plan makes 30 pieces on 3 plates in 21 steps; the badge carrier, now held only by the legshield bars
+that lift with the cowls, and the spare-wheel cowl's lower return come as loose pieces to glue in place.)
 
 **What you get:** `booklet.html` (open it and print it), `assembly.html` (the steps in 3D, turn them in your
 browser), and a `.3mf` file per plate for your printer's software (PrusaSlicer, Bambu Studio, Cura), plus every
@@ -62,7 +64,7 @@ Every kit here, to open in your browser or print:
 | Yamaha CFX piano, 1:12 | 54 | [open](https://rtmandreyev.github.io/construct/examples/yamaha-cfx/kit/assembly.html) | [open](https://rtmandreyev.github.io/construct/examples/yamaha-cfx/kit/booklet.html) | [.zip](https://github.com/rtmandreyev/construct/releases/latest/download/construct-kit-yamaha-cfx.zip) |
 | Tompion's year-going clock, 1:12 | 34 | [open](https://rtmandreyev.github.io/construct/examples/tompion-year-going-clock/kit/assembly.html) | [open](https://rtmandreyev.github.io/construct/examples/tompion-year-going-clock/kit/booklet.html) | [.zip](https://github.com/rtmandreyev/construct/releases/latest/download/construct-kit-tompion-year-going-clock.zip) |
 | VW T1 Samba bus, 1:16 | 98 | [open](https://rtmandreyev.github.io/construct/examples/volkswagen-t1-samba/kit/assembly.html) | [open](https://rtmandreyev.github.io/construct/examples/volkswagen-t1-samba/kit/booklet.html) | [.zip](https://github.com/rtmandreyev/construct/releases/latest/download/construct-kit-volkswagen-t1-samba.zip) |
-| Vespa GS 150, an owner's scooter, 1:12 | 32 | [open](https://rtmandreyev.github.io/construct/examples/vespa-gs150/kit/assembly.html) | [open](https://rtmandreyev.github.io/construct/examples/vespa-gs150/kit/booklet.html) | [.zip](https://github.com/rtmandreyev/construct/releases/latest/download/construct-kit-vespa-gs150.zip) |
+| Vespa GS 150, an owner's scooter, 1:12 | 30 | [open](https://rtmandreyev.github.io/construct/examples/vespa-gs150/kit/assembly.html) | [open](https://rtmandreyev.github.io/construct/examples/vespa-gs150/kit/booklet.html) | [.zip](https://github.com/rtmandreyev/construct/releases/latest/download/construct-kit-vespa-gs150.zip) |
 
 ## Do it with your own thing
 

@@ -52,6 +52,14 @@ local path, and its brief is [PROMPT.md](PROMPT.md).
 The fixed slip has a **1.5 mm closing reveal**. A 0.02° cross-section sweep through the original **0–80° hinge travel** finds 1.515 mm minimum deck/slip distance; the bound between samples gives **at least 1.46 mm**. Side reveals are 1 mm; the rear-wall reveal is 0.94–1.50 mm. The baffle clears the black-key tails by 1.5 mm and the scanner harness by at least 1.9 mm. [Calculation](case-finish/hinge-clearance.json). These are nominal geometric clearances; production tolerances and load testing remain engineering work.
 [Visual review](case-finish/REVIEW_NOTES.md) · [Verification record](case-finish/verification-summary.json).
 
+### Revised after the run: the open deck and the displays (Construct 1.2.1, 7 November 2026)
+
+| What changed | Why |
+| --- | --- |
+| The filter cutoff and modulation depth knobs, the attack fader and the ASSIGN key now turn, slide and press after the control deck has opened (their articulations' order 3, after the deck's 2) | Construct nests articulations by order, the earliest outermost. Ordered before the deck, these four moved about their closed-deck pivots after the deck had lifted, so with the deck open they hung in the air above the keybed. No part moved |
+| The eight display cover glasses drawn as outlines in the light; they stay glass in the solid view and the GLB | Their dark fill covered the display text, so from above the oscillator, filter, modulation and macro displays read as blank rectangles |
+| A fresh independent critic judged this revision; its answer is recorded in the scene, and the outcome stays `self-reviewed` | The earlier critic record was removed because it judged the original scene (above); this one judged the scene as it now is |
+
 The scene's `revision` fact and its provenance note say the same in brief.
 
 ## Checks

@@ -12,6 +12,7 @@ made with earlier versions of Construct; all of them build with this release.
 | [![Volkswagen T1 Samba](volkswagen-t1-samba/thumb.jpg)](volkswagen-t1-samba/) | [Volkswagen T1 Samba](volkswagen-t1-samba/) | masterpiece | Claude Opus 5.5 |
 | [![KESTREL, an invented ice tug](kestrel/thumb.jpg)](kestrel/) | [KESTREL, an invented ice tug](kestrel/) | masterpiece | GPT-6.1 Sol |
 | [![KESTREL, more detailed](kestrel-v2/thumb.jpg)](kestrel-v2/) | [KESTREL, more detailed](kestrel-v2/) | masterpiece | GPT-6.1 Sol |
+| [![State Bench, an invented instrument](state-bench/thumb.jpg)](state-bench/) | [State Bench, an invented instrument](state-bench/) | masterpiece | GPT-6.1 Sol |
 | [![SERUM 2 / 61, an unaffiliated concept from a manual](serum-2-61/thumb.jpg)](serum-2-61/) | [SERUM 2 / 61, an unaffiliated concept from a manual](serum-2-61/) | masterpiece | GPT-6.1 Sol |
 | [![Villa Savoye, made in Hermes](villa-savoye/thumb.jpg)](villa-savoye/) | [Villa Savoye, made in Hermes](villa-savoye/) | masterpiece | GPT-6.1 Sol |
 | [![Eames Lounge Chair and Ottoman](eames-lounge-chair/thumb.jpg)](eames-lounge-chair/) | [Eames Lounge Chair and Ottoman](eames-lounge-chair/) | masterpiece | Claude Opus 5.5 |

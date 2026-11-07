@@ -18,6 +18,13 @@ The photographs, from Wikimedia Commons, stood in for an owner's own (they are n
 (CC BY 2.0) and [lounge chair 670, 1956](https://commons.wikimedia.org/wiki/File:Ngv_design,_charles_eames_and_herman_miller,_lounge_chair_670,_1956.JPG)
 by sailko (CC BY 2.5).
 
+**Revised after the run.** In the solid view the leather did not meet the wood. The headrest cushion stood 5 to 7 cm
+in front of its shell, and the back cushion floated over a hollow up to 22 cm deep in its shell. The headrest cushion
+now sits on its shell (moved 4.7 cm back with its buttons and pleats, its underside following the shell's face) and
+the back cushion's underside follows its shell down; the seating surfaces stay where they were. The back keeps the
+run's proportions: a deep shell under a nearly level cushion, flatter than a real 670's reclined back, which a new
+round would have to redraw. An independent critic judged the revised scene; its answer is recorded in the scene.
+
 Build it yourself from a checkout of Construct:
 
 ```sh

@@ -36,9 +36,11 @@ straight: its whitewalls, chrome bars, rear rack, spare wheel and badges are sep
 not the factory's. The cowls lift off, the handlebar steers, the stand folds. Twelve rounds, each judged by an
 independent critic, about an hour and a half in all. Press **P**: every part is a reading, in shades of how firmly
 it is held (67 seen in the photos and checked against the published sizes, 104 seen, 3 described), and the
-construct's own note says that the published dimensions set the scale, not the outlines.
+construct's own note says that the published dimensions set the scale, not the outlines. (Revised since: the owner's
+bars, rack, mudguard hoop and badge carrier were rebuilt as continuous tubes that meet the body, so the scene now has
+159 parts, 52 of them seen and checked.)
 
-<p align="center"><img src="../media/everyday-vespa-provenance.jpg" width="80%" alt="The Vespa in the provenance view: every part in a shade of amber, the legend counting 67 seen and checked, 104 seen, 3 described"></p>
+<p align="center"><img src="../media/everyday-vespa-provenance.jpg" width="80%" alt="The Vespa in the provenance view: every part in a shade of amber, the legend counting 52 seen and checked, 104 seen, 3 described"></p>
 
 ## Take it further: try a finish in Blender
 

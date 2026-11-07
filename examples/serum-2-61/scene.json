@@ -21074,7 +21074,7 @@
     "serum.R01"
    ],
    "look": {
-    "fill": "dark",
+    "fill": "none",
     "weight": 0.55,
     "alpha": 0.78
    },
@@ -21108,7 +21108,7 @@
     "serum.R01"
    ],
    "look": {
-    "fill": "dark",
+    "fill": "none",
     "weight": 0.55,
     "alpha": 0.78
    },
@@ -21142,7 +21142,7 @@
     "serum.R01"
    ],
    "look": {
-    "fill": "dark",
+    "fill": "none",
     "weight": 0.55,
     "alpha": 0.78
    },
@@ -21177,7 +21177,7 @@
     "serum.R13"
    ],
    "look": {
-    "fill": "dark",
+    "fill": "none",
     "weight": 0.55,
     "alpha": 0.78
    },
@@ -21212,7 +21212,7 @@
     "serum.R13"
    ],
    "look": {
-    "fill": "dark",
+    "fill": "none",
     "weight": 0.55,
     "alpha": 0.78
    },
@@ -21253,7 +21253,7 @@
     "serum.R37"
    ],
    "look": {
-    "fill": "dark",
+    "fill": "none",
     "weight": 0.55,
     "alpha": 0.78
    },
@@ -21287,7 +21287,7 @@
     "serum.R25"
    ],
    "look": {
-    "fill": "dark",
+    "fill": "none",
     "weight": 0.55,
     "alpha": 0.78
    },
@@ -21321,7 +21321,7 @@
     "serum.R24"
    ],
    "look": {
-    "fill": "dark",
+    "fill": "none",
     "weight": 0.55,
     "alpha": 0.78
    },
@@ -25367,7 +25367,7 @@
     0.13917310096006544
    ],
    "amount": 80,
-   "order": 0,
+   "order": 3,
    "pivot": [
     0.292,
     0.135758,
@@ -25386,7 +25386,7 @@
     0.13917310096006544
    ],
    "amount": 80,
-   "order": 0,
+   "order": 3,
    "pivot": [
     -0.104,
     0.10518104901743933,
@@ -25405,7 +25405,7 @@
     0.9902680687415704
    ],
    "amount": 0.03,
-   "order": 0
+   "order": 3
   },
   {
    "id": "assign-press",
@@ -25419,7 +25419,7 @@
     -0.13917310096006544
    ],
    "amount": 0.0012,
-   "order": 0
+   "order": 3
   },
   {
    "id": "pitch-wheel-travel",
@@ -26706,6 +26706,23 @@
     ],
     "summary": "Independent critic: every criterion at 3; no remaining defects."
    }
-  ]
+  ],
+  "critic": {
+   "scene_sha256": "97eb21a1ff26bbb70ece96586ac77aea59328818bba22814d3c1cc271d1a56eb",
+   "verdict": "improve",
+   "scores": {
+    "silhouette": 3,
+    "proportions": 2,
+    "identity": 2,
+    "depth": 2,
+    "composition": 2,
+    "assembly": 3,
+    "motion": 2,
+    "density": 2,
+    "honesty": 3
+   },
+   "round": 1,
+   "defects": 6
+  }
  }
 }

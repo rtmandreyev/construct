@@ -195,6 +195,20 @@
       "source": "auction"
     },
     {
+      "key": "lens-name",
+      "value": "Summicron",
+      "certainty": "verified",
+      "source": "auction",
+      "note": "The lens fact's name, set on the front name ring."
+    },
+    {
+      "key": "lens-focal",
+      "value": "5 cm 1:2",
+      "certainty": "verified",
+      "source": "auction",
+      "note": "The lens fact's focal length and aperture, set on the front name ring."
+    },
+    {
       "key": "lens-focal-length",
       "value": 50,
       "certainty": "verified",
@@ -799,13 +813,13 @@
       "shape": {
         "type": "box",
         "size": [
-          0.048,
+          0.03325,
           0.047,
           0.0009
         ]
       },
       "at": [
-        -0.043,
+        -0.035625,
         0.0275,
         0.0167
       ],
@@ -824,13 +838,13 @@
       "shape": {
         "type": "box",
         "size": [
-          0.036,
+          0.02125,
           0.047,
           0.0009
         ]
       },
       "at": [
-        0.049,
+        0.041625,
         0.0275,
         0.0167
       ],
@@ -947,7 +961,7 @@
       "rotate": [
         -90,
         0,
-        0
+        180
       ]
     },
     {
@@ -2028,17 +2042,36 @@
       "stage": 6,
       "certainty": "inferred",
       "shape": {
-        "type": "cylinder",
-        "radius": 0.0205,
-        "height": 0.0006,
-        "segments": 40,
-        "ribs": 0,
-        "rings": 0
+        "type": "lathe",
+        "profile": [
+          [
+            0.017,
+            0.0
+          ],
+          [
+            0.0195,
+            0.0
+          ],
+          [
+            0.0195,
+            0.0006
+          ],
+          [
+            0.017,
+            0.0006
+          ],
+          [
+            0.017,
+            0.0
+          ]
+        ],
+        "segments": 48,
+        "meridians": 8
       },
       "at": [
         0.0053,
         0.031,
-        0.0443
+        0.044
       ],
       "source": "a2",
       "basis": [
@@ -4443,13 +4476,26 @@
     {
       "id": "lens-inscription",
       "part": "lens-name-annulus",
-      "field": "lens",
+      "field": "lens-name",
       "face": "top",
       "region": [
-        0.18,
-        0.02,
-        0.82,
-        0.15
+        0.3874,
+        0.0128,
+        0.6126,
+        0.059
+      ],
+      "role": "meta"
+    },
+    {
+      "id": "lens-focal-inscription",
+      "part": "lens-name-annulus",
+      "field": "lens-focal",
+      "face": "top",
+      "region": [
+        0.3874,
+        0.941,
+        0.6126,
+        0.9872
       ],
       "role": "meta"
     },
@@ -4459,10 +4505,10 @@
       "field": "film-reminder",
       "face": "top",
       "region": [
-        0.2,
-        0.76,
-        0.8,
-        0.94
+        0.25,
+        0.1,
+        0.75,
+        0.26
       ],
       "role": "meta"
     }
@@ -4602,6 +4648,27 @@
         1,
         0
       ]
+    }
+  },
+  "authoring": {
+    "tier": "standard",
+    "research": "unavailable",
+    "critic": {
+      "scene_sha256": "7399b551d4e40219882197d08879fe8ee21cdca9a220c3aa190899bfc901d66c",
+      "verdict": "improve",
+      "scores": {
+        "silhouette": 1,
+        "proportions": 2,
+        "identity": 2,
+        "depth": 2,
+        "composition": 2,
+        "assembly": 2,
+        "motion": 2,
+        "density": 2,
+        "honesty": 3
+      },
+      "round": 1,
+      "defects": 8
     }
   }
 }

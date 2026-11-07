@@ -13,6 +13,11 @@ what they are glued to, as the kit critic asked (the sills reach the sides, the 
 mirror on its vent post, the speedometer pod on the dash), with [kit-plan.json](kit-plan.json) and the paints in
 [maps/finish.json](maps/finish.json).
 
+**Revised after the run.** The roof skylights' ids did not say glass, and the solid view and the 3D export know glass
+by its id, so they came out as opaque panels; they are now `skylight-glass-0` to `-3`, see-through. The kit keeps its
+own copy of the scene, [kit-scene.json](kit-scene.json), unchanged. An independent critic judged the revised scene;
+its answer is recorded in the scene.
+
 Build it yourself from a checkout of Construct:
 
 ```sh

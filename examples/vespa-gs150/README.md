@@ -16,6 +16,12 @@ the owner's, not the factory's, so a restorer can tell the two apart. The side c
 steers and the stand folds. [Your vehicle →](../../docs/for/your-vehicle.md) ·
 [A kit of your own →](../../docs/for/a-kit-of-your-own.md)
 
+**Revised after the run.** The owner's chrome bars, rear rack, mudguard hoop and badge carrier were rebuilt as
+continuous bent tubes that meet the body where they mount: they clear the floorboard, the seat and the cowls'
+tails, and the badge carrier stands clear of the steering column on two arms. An independent critic then judged the
+revised scene again (every score 2 of 3; the cowls' teardrop, the legshield's taper and the headlamp remain its
+largest defects).
+
 The photographs, from Wikimedia Commons, stood in for an owner's own (they are not in this repository):
 [front left](https://commons.wikimedia.org/wiki/File:Vespa_GS_3_150ccm_8PS_1960_1.jpg) and
 [rear right](https://commons.wikimedia.org/wiki/File:Piaggio_Vespa_150_GS_1960b.JPG), both public domain.

@@ -9592,7 +9592,7 @@
       "mirror": "x"
     },
     {
-      "id": "skylight-0",
+      "id": "skylight-glass-0",
       "role": "identity",
       "shape": {
         "type": "box",
@@ -9629,7 +9629,7 @@
       "mirror": "x"
     },
     {
-      "id": "skylight-1",
+      "id": "skylight-glass-1",
       "role": "identity",
       "shape": {
         "type": "box",
@@ -9666,7 +9666,7 @@
       "mirror": "x"
     },
     {
-      "id": "skylight-2",
+      "id": "skylight-glass-2",
       "role": "identity",
       "shape": {
         "type": "box",
@@ -9703,7 +9703,7 @@
       "mirror": "x"
     },
     {
-      "id": "skylight-3",
+      "id": "skylight-glass-3",
       "role": "identity",
       "shape": {
         "type": "box",
@@ -22211,7 +22211,7 @@
       {
         "feature": "23 windows: eight skylights along the roof edges, the side windows, the curved rear corner windows",
         "parts": [
-          "skylight-0",
+          "skylight-glass-0",
           "glazing-seals",
           "side-glass-left-0",
           "corner-glass",
@@ -22247,7 +22247,7 @@
       "the plan view: the blueprint's plan is ~3% longer than its side; trace a second plan to settle the width (1.72 m documented)"
     ],
     "critic": {
-      "scene_sha256": "64edae409f51257c79f5748ad79c5e08001305b682109537f3eff85b998ca80c",
+      "scene_sha256": "005fdcae5ff09504c20e968cc9e93819ad4cc053e077b3bea0d0c8ad8d85e09c",
       "verdict": "good",
       "scores": {
         "silhouette": 2,
@@ -22260,8 +22260,8 @@
         "density": 2,
         "honesty": 3
       },
-      "round": 3,
-      "defects": 13
+      "round": 4,
+      "defects": 8
     },
     "rounds": [
       {

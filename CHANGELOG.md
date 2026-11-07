@@ -1,5 +1,39 @@
 # Changelog
 
+## 1.2.1 — 2026-11-07
+
+Examples polish: every gallery example checked again, by measurement and in the solid view, for slips the light
+forgives. No library code changed.
+
+- **Measured, not eyeballed:** every example's compiled surfaces were checked for parts that float clear of
+  everything (none at rest), articulations that nest the wrong way round, glass that the solid view, exports and
+  kits would make opaque, and printed text that is upside down, off its part or hidden under a cover.
+- **SERUM 2 / 61:** with the control deck open, two knobs, a fader and the ASSIGN key hung in the air above the
+  keybed: their own turns were ordered before the deck's opening, and Construct nests articulations by order, so
+  they moved about their closed-deck pivots. They now move after the deck. The display covers' dark fill hid the
+  display text from above; the covers are drawn as outlines in the light and stay glass in the solid view.
+- **Vespa GS 150:** the owner's chrome bars, rack, mudguard hoop and badge carrier rebuilt as continuous tubes that
+  meet the body and clear the factory parts.
+- **Leica M3:** the lens's name ring capped the front element and its inscription was cut by the lens's lip; it is a
+  ring on the recessed step now, inscribed *Summicron* and *5 cm 1:2*. The ASA/DIN reminder read upside down; the
+  vulcanite ran past the flat front into the air.
+- **Eames Lounge Chair (Claude Opus 5.5):** the headrest cushion stood 5 to 7 cm off its shell and the back cushion
+  floated over a hollow up to 22 cm deep; both now rest on their shells.
+- **Omega Speedmaster 321, Patek Philippe 5320G, Volkswagen T1 Samba:** crystals, sapphires and skylights whose ids
+  did not say glass were opaque in the solid view; renamed, the dials show. The 5320G's dial text also shows in the
+  light now (its sapphire's faint fill hid it).
+- **Duomo di Milano:** the Madonnina was drawn as data, in the palette's pink, so the great spire ended in a pink tip;
+  she is drawn in the building's light now.
+- **New example: State Bench, an invented instrument** (GPT-6.1 Sol, masterpiece): an original bench for repeatable
+  numerical experiments on dynamical systems, at object scale what KESTREL is at ship scale; its plots are computed
+  RK4 runs of a Duffing oscillator.
+- Every changed example was judged again by a fresh independent critic, recorded in its scene; each README says what
+  changed under **Revised after the run**. Left as they are, and why: the Skyline's door
+  frames run 1 to 2 cm outboard of its roof (a refit of the roof, not a polish); the Andromeda galaxy's arms are
+  dust lanes, so its solid view is ribbons (a galaxy has no surfaces); the Braun SK 4's legends under its glass lid
+  are hidden in the light's x-ray, because the viewer lets glass hide the text under it (a viewer change, for a later
+  release).
+
 ## 1.2.0 — 2026-11-06
 
 - **Construct for Hermes, a native plugin** ([hosts/hermes/construct](hosts/hermes/construct/README.md); install with
