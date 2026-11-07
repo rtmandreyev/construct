@@ -48,7 +48,7 @@ SLIVER_MM = 1.5          # thinner than this, a small piece is a chip and a long
 CHIP_MM = 6.0            # a bit the trimming cuts off a part (a rail's end standing proud of the leg it passes
                          # through), under this on every side, is moulded with the piece that cut it off
 FRAGILE_MM = 2.0         # thinner than this, a piece (chrome, trim) goes on with the details, last
-PLAN_KEYS = {"title", "merge", "keep", "clear", "opaque", "order", "notes"}
+PLAN_KEYS = {"title", "merge", "keep", "clear", "opaque", "order", "names", "notes"}
 
 
 CRITIC = """You are an experienced designer of plastic model kits (Revell, Tamiya), reviewing a kit that Construct
@@ -189,11 +189,19 @@ def load_plan(plan):
     if not all(isinstance(g, dict) and isinstance(g.get("name"), str) and isinstance(g.get("parts"), list)
                for g in doc.get("order", [])):
         raise KitError('plan.order: a list of sub-assemblies, each {"name": "...", "parts": [ids or patterns]}')
+    names = doc.get("names", {})
+    if not isinstance(names, dict) or not all(isinstance(k, str) and isinstance(v, str)
+                                              and re.fullmatch(r"[a-z0-9][a-z0-9-]*", v) for k, v in names.items()):
+        raise KitError('plan.names: {"part id or pattern": "piece-name"}, each name in lowercase words joined by "-"')
     return doc
 
 
 def _matches(pid, patterns):
     return any(fnmatch.fnmatchcase(pid, p) for p in patterns)
+
+
+def _matches_any(pids, pattern):
+    return any(fnmatch.fnmatchcase(pid, pattern) for pid in pids)
 
 
 # ---------------------------------------------------------------------------- making the kit
@@ -297,8 +305,11 @@ def make(scene, scale=SCALE, size=None, detail=DETAIL_MM, wall=WALL_MM, plan=Non
         for comp in comps:   # a merge that falls apart: each bit named for the part it mostly is; one that holds
             mem = members_of[pid]   # together, for what its parts are together ("side-west-*": the side west)
             inside = [m for m in mem if any(mm & own_vox[m].get(c, 0) for c, mm in comp.items())]
-            names.append(pid if len(mem) == 1 else _common(inside) if len(comps) == 1 and _common(inside) else
-                         max(mem, key=lambda m: sum(bin(mm & own_vox[m].get(c, 0)).count("1") for c, mm in comp.items())))
+            # the plan's own name for a piece holding one of its parts ("owner-rear-rack": what the ids share is
+            # only "owner"), else the parts' own
+            named = next((nm for pat, nm in plan.get("names", {}).items() if _matches_any(inside or mem, pat)), None)
+            names.append(named or (pid if len(mem) == 1 else _common(inside) if len(comps) == 1 and _common(inside) else
+                         max(mem, key=lambda m: sum(bin(mm & own_vox[m].get(c, 0)).count("1") for c, mm in comp.items()))))
         for k, comp in enumerate(comps):
             same = names.count(names[k])
             nth = names[:k + 1].count(names[k])
