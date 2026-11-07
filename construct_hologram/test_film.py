@@ -209,7 +209,7 @@ class Stock(unittest.TestCase):
     1.1: a label waits for its part to be built)."""
 
     def test_the_viewer_is_the_pinned_viewer(self):
-        self.assertEqual((HERE / "viewer" / "hologram.js").read_bytes(), (HERE / "testdata" / "hologram-1.2.0.js").read_bytes())
+        self.assertEqual((HERE / "viewer" / "hologram.js").read_bytes(), (HERE / "testdata" / "hologram-1.3.0.js").read_bytes())
 
     def test_a_page_carries_film_mode_only_when_asked(self):
         geometry = scene.compile_scene(studio.load(str(EXAMPLES / "cd.json")))

@@ -104,6 +104,9 @@ def build(out):
                 _copy(files[key], dst / as_name)
         rows.append(dict(stock.describe(name, files["scene"], files["readme"]), has_thumb=bool(files["thumb"])))
     (pkg / "examples" / "catalog.json").write_text(json.dumps(rows, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
+    # the gallery's constructs by name (construct_world and the Constructs page fetch one on demand, from this release)
+    (pkg / "examples" / "gallery.json").write_text(json.dumps(stock.gallery_index(ROOT), indent=1, ensure_ascii=False)
+                                                  + "\n", encoding="utf-8")
     js = pkg / "desktop" / "plugin.js"
     text = js.read_text(encoding="utf-8")
     if THREE_MARK not in text:

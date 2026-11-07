@@ -105,6 +105,16 @@ def _write(path, text, force):
     os.replace(tmp, path)
 
 
+def _is_world_file(path):
+    try:
+        with open(path, "rb") as f:
+            head = f.read(4096).decode("utf-8", "replace")
+    except OSError:
+        return False
+    import re
+    return re.search(r'"format"\s*:\s*"construct-world"', head) is not None
+
+
 def load(path):
     """A scene, or the scene a parameter document builds."""
     try:
@@ -121,7 +131,13 @@ def load(path):
 
 
 def build(scene_path, out_dir, asset_root=None, v1=False, force=True, frame="y-up", palette=None, identity=None,
-          film=False):
+          film=False, resolver=None):
+    if _is_world_file(scene_path):   # a world: constructs placed together, each kept whole (world.py)
+        from . import world as world_mod
+        try:
+            return world_mod.build(scene_path, out_dir, resolver=resolver, force=force)
+        except world_mod.WorldError as exc:
+            raise scene_mod.SceneError(str(exc))
     scene = load(scene_path)
     geometry = scene_mod.compile_scene(scene)
     if palette or identity:  # the person's choice, never the model's
@@ -1016,6 +1032,20 @@ def run(args):
             g = scene_mod.compile_scene(scene)
             sys.stdout.write("wrote %s: %s, %d parts, %d lines, %d triangles\n"
                              % (args.out, args.view, len(scene["parts"]), g["counts"]["lines"], g["counts"]["triangles"]))
+            return 0
+        if args.command == "export" and _is_world_file(args.scene):
+            from . import world as world_mod, export as export_mod
+            try:
+                s = world_mod.export(args.scene, args.out, args.format, args.wire, args.pose, args.materials,
+                                     args.merge, args.colliders, {None: False, "loose": True}.get(args.pieces, args.pieces))
+            except (world_mod.WorldError, export_mod.ExportError, scene_mod.SceneError) as exc:
+                sys.stderr.write("export: %s\n" % exc)
+                return 1
+            anims = ", ".join(s.get("animations", [])[:8]) or "none"
+            sys.stdout.write("wrote %s: a world of %d constructs, %d parts, %d triangles, %d edges%s\n"
+                             % (", ".join(s["files"]), s["placements"], s["parts"], s["triangles"], s["edges"],
+                                "; animations: " + anims + (" …" if len(s.get("animations", [])) > 8 else "")
+                                if s["format"] == "glb" else ""))
             return 0
         if args.command == "export":
             from . import export as export_mod

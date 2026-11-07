@@ -32,6 +32,7 @@ alive without being noisy, or until the mode's limits are reached. Then deliver 
 | a background job's progress and result; `wait_seconds` waits for it | `construct_job` |
 | run a NetLogo model headless (the user's own, or their installed Models Library) and draw the run; N seeded runs compared | `construct_netlogo_run` |
 | draw recorded NetLogo runs (`run.jsonl`) or another view of a run's project; compare runs; no NetLogo needed | `construct_netlogo_draw` |
+| place whole constructs together in one world (a chair in a house, cars under it, a castle on a hill, a planet in the sky; worlds inside worlds), live in the chat; export it whole | `construct_world` |
 | every other subcommand (critique, rounds, trace, loft-from-traces, compare, terrain, globe, kit, audio, netlogo-plates, netlogo-film...) | `construct_command` |
 
 **Change the scene with `construct_edit`**, never with scripts in a terminal, and never import Construct's own Python from the plugin's folder: `construct_check` (`fit`, and `cells` up to 600 for a finer look) and `construct_inspect` answer fit and measurement questions, so no verification script is needed. `construct_edit` takes a list of operations by part id

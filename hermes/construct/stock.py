@@ -8,6 +8,7 @@ they are read where the repository keeps them. scripts/hermes_plugin.py writes t
 
 import json
 import re
+import shutil
 from pathlib import Path
 
 # name -> the folder (from the repository's root) holding scene.json, and maps/finish.json, thumb.jpg, kit-plan.json
@@ -28,6 +29,13 @@ STOCK = {
     "neuschwanstein": "examples/neuschwanstein",
     "kestrel": "hosts/hermes/examples/kestrel",
     "kestrel-v2": "hosts/hermes/examples/kestrel-v2",
+    "villa-savoye": "examples/villa-savoye",
+    "serum-2-61": "examples/serum-2-61",
+    "leica-m3": "examples/leica-m3",
+    "jackson-juggernaut-et7": "examples/jackson-juggernaut-et7",
+    "omega-speedmaster-321": "examples/omega-speedmaster-321",
+    "state-bench": "examples/state-bench",
+    "saturn": "examples/saturn",
 }
 # what each one is good to start from (shown with it; the tutorials name them too)
 USE = {
@@ -47,6 +55,13 @@ USE = {
     "neuschwanstein": "a castle on its rock",
     "kestrel": "an original design invented from real hardware (a game brief)",
     "kestrel-v2": "the same ship, refined with 242 more parts",
+    "villa-savoye": "a house to furnish: a world's host (made in Hermes, with a desktop kit plan)",
+    "serum-2-61": "a product designed from a software manual (unaffiliated concept)",
+    "leica-m3": "a camera, small and exact",
+    "jackson-juggernaut-et7": "an electric guitar",
+    "omega-speedmaster-321": "a watch, its movement inside",
+    "state-bench": "an invented instrument with a sliding service drawer",
+    "saturn": "a planet: in a world's sky at its real angular size",
 }
 NAME = re.compile(r"^[a-z0-9][a-z0-9-]{0,62}$")
 
@@ -88,7 +103,8 @@ def source_files(root, name):
     def have(rel):
         p = folder / rel
         return p if p.is_file() else None
-    return {"scene": folder / "scene.json", "materials": have("maps/finish.json"), "thumb": have("thumb.jpg"),
+    return {"scene": folder / "scene.json", "materials": have("maps/finish.json") or have("materials.json"),
+            "thumb": have("thumb.jpg"),
             "kit_plan": have("kit-plan.json"), "readme": have("README.md")}
 
 
@@ -101,3 +117,83 @@ def package_files(folder):
         return p if p.is_file() else None
     return {"scene": folder / "scene.json", "materials": have("scene.materials.json"), "thumb": have("thumb.jpg"),
             "kit_plan": have("kit-plan.json"), "readme": None}
+
+
+# ---------------------------------------------------------------------------- the gallery, on demand
+
+GALLERY_RAW = "https://raw.githubusercontent.com/rtmandreyev/construct/%s/%s"
+
+
+def gallery_index(root):
+    """The repository's gallery constructs (examples/examples.json and films.json): name, title, where its files are.
+    Written into the package as examples/gallery.json; a construct not shipped is fetched by name when wanted."""
+    root = Path(root)
+    rows = []
+    for index, base in (("examples/examples.json", "examples"), ("examples/films.json", "examples/films")):
+        try:
+            doc = json.loads((root / index).read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            continue
+        for e in doc.get("examples", doc.get("films", [])):
+            slug = e.get("slug")
+            folder = root / base / str(slug)
+            if not slug or not NAME.match(slug) or not (folder / "scene.json").is_file():
+                continue
+            files = {"scene": "%s/%s/scene.json" % (base, slug)}
+            for rel in ("maps/finish.json", "materials.json"):
+                if (folder / rel).is_file():
+                    files["materials"] = "%s/%s/%s" % (base, slug, rel)
+                    break
+            rows.append({"name": slug, "title": e.get("title", slug), "model": e.get("model"), "files": files})
+    return {"format": "construct-gallery", "version": 1, "constructs": rows}
+
+
+def _tls():
+    """Certificate checks on: the system's store, or certifi's when this Python has none (python.org's macOS build)."""
+    import ssl
+    try:
+        import certifi
+        return ssl.create_default_context(cafile=certifi.where())
+    except ImportError:
+        return ssl.create_default_context()
+
+
+def fetch_gallery(name, dest, version, index):
+    """Fetch one gallery construct's scene (and its material map) into `dest`, from the release tag of this
+    version, else from main. Returns {"scene", "materials"} paths. Raises OSError/ValueError."""
+    import urllib.request
+    row = next((r for r in index.get("constructs", []) if r["name"] == name), None)
+    if row is None:
+        raise ValueError("no gallery construct %r" % name)
+    dest = Path(dest)
+    dest.mkdir(parents=True, exist_ok=True)
+    out = {}
+    for key, as_name in (("scene", "scene.json"), ("materials", "scene.materials.json")):
+        rel = row["files"].get(key)
+        if not rel:
+            continue
+        data, last = None, None
+        for ref in ("v" + version, "main"):
+            try:
+                req = urllib.request.Request(GALLERY_RAW % (ref, rel), headers={"User-Agent": "construct-hermes-plugin"})
+                with urllib.request.urlopen(req, timeout=30, context=_tls()) as r:
+                    data = r.read(8 * 1024 * 1024 + 1)
+                break
+            except OSError as exc:
+                last = exc
+                if "CERTIFICATE" in str(exc) and shutil.which("curl"):   # a Python without CA certificates: curl has them
+                    import subprocess
+                    r = subprocess.run(["curl", "-fsSL", "--max-time", "30", GALLERY_RAW % (ref, rel)], capture_output=True)
+                    if r.returncode == 0:
+                        data = r.stdout
+                        break
+        if data is None:
+            if key == "scene":
+                raise OSError("could not fetch %s from GitHub: %s" % (rel, last))
+            continue
+        if len(data) > 8 * 1024 * 1024:
+            raise ValueError("%s is larger than 8 MiB" % rel)
+        doc = json.loads(data.decode("utf-8"))   # it must be JSON; it is checked again when it is built
+        (dest / as_name).write_text(json.dumps(doc, ensure_ascii=False) + "\n", encoding="utf-8")
+        out[key] = dest / as_name
+    return out

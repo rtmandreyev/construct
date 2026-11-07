@@ -69,6 +69,12 @@ def _glb_of(path, materials=None):
         return path, None
     with open(path, encoding="utf-8-sig") as fh:
         doc = json.load(fh)
+    if isinstance(doc, dict) and doc.get("format") == "construct-world":   # a world: its constructs, placed, one file
+        from .construct_hologram import world as c_world
+        fd, tmp = tempfile.mkstemp(suffix=".glb", prefix="construct-world-")
+        os.close(fd)
+        c_world.export(path, tmp, "glb", materials_path=materials)
+        return tmp, tmp
     if c_params.is_params(doc):
         doc = c_params.expand(doc)
     out, _ = c_export.render(doc, "glb", wire="edges", materials=materials)

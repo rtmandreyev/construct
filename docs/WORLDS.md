@@ -1,0 +1,96 @@
+# Worlds: constructs placed together
+
+A world places whole constructs in one scene: your chair, clock and piano in your house, your cars under it, a ship
+overhead, a planet in the sky. It's a room, a street, a city, or a game map. Each placed construct stays whole: its
+parts, its sources, how each part is known, its critic's verdict and its joints are its own, under its placement's
+id (`eames/seat-shell`, `vespa/photo-front`). A world is not a bigger construct. A construct keeps a construct's
+budgets and checks, and a world has its own, for many constructs at once.
+
+```json
+{"format": "construct-world", "version": 1, "id": "my-villa", "title": "My Villa Savoye",
+ "placements": [
+   {"id": "villa", "construct": "villa-savoye"},
+   {"id": "eames", "construct": "eames-lounge-chair", "on": "villa/living-floor-east", "at": [3.2, 0, -1.5], "yaw": 30},
+   {"id": "fj62", "construct": "toyota-land-cruiser-fj62", "on": "villa", "at": [4, 0, 6], "yaw": 90},
+   {"id": "saturn", "construct": "saturn", "sky": {"diameter_m": 1.165e8, "distance_m": 3.844e8,
+                                                   "azimuth": 120, "elevation": 25}}]}
+```
+
+Build and export it as you would a construct:
+
+```sh
+python3 construct_hologram/cli.py build my-villa.json --out out/my-villa        # the page, live, every placement whole
+python3 construct_hologram/cli.py export my-villa.json --out my-villa.glb --pieces glued   # one file for Godot or Blender
+```
+
+## Placements
+
+| Key | What it does |
+|---|---|
+| `construct` | A scene's path (relative to the world's file), another world's path (a district in a city), or a name a resolver knows: the gallery's constructs, or the Hermes plugin's projects and stock constructs |
+| `at` | metres. With `on`, x and z are on the host and y is a lift above its top |
+| `yaw`, `rotate` | degrees: about up, then about x, y, z |
+| `on` | an earlier placement (it stands on that placement's ground) or `placement/part-id` (on that part's top: a floor, a deck, a table) |
+| `scale` | 1 is real size. Anything else is disclosed by the world's audit and wherever it is shown |
+| `floating` | it's meant to hover: a ship, a hanging lamp |
+| `sky` | `{diameter_m, distance_m, azimuth, elevation}`: far away, at its real angular size (a planet, a moon). Never what a view fits |
+| `note` | why it is there |
+
+The same construct placed many times is compiled once. A world can place worlds, up to eight levels deep: a city
+holds districts, a district holds buildings, a building holds rooms. Ids join with `/` at each level. Coordinates
+reach 1,000 km from the origin, and an optional `origin: {lat, lon}` ties the world to a place on Earth.
+
+## What reads a world
+
+- **The page** draws it like a construct.
+  - The caption says how many constructs it holds.
+  - Provenance (P) shows every part's evidence across the world, and the solid view (S) works too.
+  - A view frames each placement.
+  - Every joint opens: the viewer keeps joint and motion poses in a texture, so a world's dozens of doors, lids
+    and hinges are not limited to a construct's sixteen.
+- **The world's audit** says when placements overlap or stand on nothing, and when one isn't at real size. Each
+  placed construct's own audit stays its own.
+- **Exports:**
+  - **glTF:** one file. Each placement is a group named after it. Each construct's own material map is merged in
+    under its id. Every joint is in the `open` animation.
+  - **Godot:** with `--pieces glued`, the world is a game map. Its fixed body stays put; doors, lids and wheels
+    swing on their joints through `construct_joints.gd`.
+  - **Blender:** the add-on imports a world (`.json`) with the usual build, open, metal and finish sliders.
+
+## In Hermes
+
+`construct_world` places, moves and removes constructs in a world from the chat, and shows each change live:
+
+- `op: new` with a title and the construct that holds the rest;
+- `op: place` with `construct`, plus `on`, `at`, `yaw`, `scale`, `floating`, `sky` or `note`;
+- `op: move` and `op: remove` by placement id;
+- `op: list`, with an id to list the surfaces things can stand on.
+
+What a world places comes from three sources:
+- the user's own projects;
+- the constructs the plugin ships;
+- the whole gallery, fetched by name from this release on GitHub.
+
+Each placed construct is copied into the world's folder, so a world travels whole and can be shared.
+`construct_export` exports a world as it exports a construct.
+
+## Limits
+
+| Budget | A construct | A world |
+|---|---|---|
+| Lines (page) | 48,000 | 400,000 |
+| Triangles (page) | 48,000 | 400,000 |
+| Triangles (solid, exports) | 200,000 | 2,000,000 |
+| Joints | 16 | none (the viewer's texture holds them) |
+| Placements | — | 4,096 |
+| Extent | 500 m | 1,000 km |
+
+A world's page grows with what it holds. The fifteen constructs of the Villa Savoye example come to about
+140,000 lines and 150,000 triangles. Larger worlds (a city) will need what a construct page never needed:
+- drawing each repeated construct once, instanced;
+- leaving out what is off screen;
+- far placements as outlines;
+- loading in chunks.
+
+The format already carries what these need: repeated placements of one construct, and placements that are
+themselves worlds.

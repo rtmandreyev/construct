@@ -75,7 +75,7 @@ def embed_assets(geometry, asset_root):
     return out, notes
 
 
-def solid_payload(scene, geometry, phase_of=None):
+def solid_payload(scene, geometry, phase_of=None, solid=None):
     """The construct's surfaces for the page's solid view (S): what a modelling program shows, from the same
     solid compile as the 3D export, packed small. Each vertex carries its part's style in `geometry` (so the
     opening, the stages and provenance colours move it as they move the lines), its build phase and a smooth
@@ -83,7 +83,7 @@ def solid_payload(scene, geometry, phase_of=None):
     phase, or a function of a triangle's middle: a part made into several pieces) builds the parts in another
     order (a kit's steps: each piece whole, at once); a part it leaves out is never built."""
     from . import export as export_mod, scene as scene_mod
-    solid = scene_mod.compile_scene(scene, solid=True)
+    solid = solid if solid is not None else scene_mod.compile_scene(scene, solid=True)   # a world gives its own
     styles, parts = geometry["styles"], geometry["parts"]
     style_of = {}
     for i, st in enumerate(styles):   # a part's first style in the page: the one its lines are drawn with
@@ -132,12 +132,15 @@ def solid_payload(scene, geometry, phase_of=None):
             "pos": b64(pos), "nrm": b64(nrm), "sty": b64(sty), "pha": b64(pha), "idx": b64(idx)}
 
 
-def build_html(geometry, asset_root=None, film=False, solid=None, extra=None):
+def build_html(geometry, asset_root=None, film=False, solid=None, extra=None, assets=None):
     """The construct page. `film` also embeds film mode (viewer/film.js) after the viewer; without it the page
     is the stock viewer, unchanged. `solid` (solid_payload) gives the page its solid view (S)."""
     template = (VIEWER / "template.html").read_text(encoding="utf-8")
     viewer = (VIEWER / "hologram.js").read_text(encoding="utf-8")
-    assets, notes = embed_assets(geometry, asset_root)
+    if assets is None:
+        assets, notes = embed_assets(geometry, asset_root)
+    else:   # a world: each placed construct's artwork, embedded from its own folder
+        notes = []
     title = geometry["title"].replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace('"', "&quot;")
     # one pass over the template: what is put in is never searched again (a title that says "__VIEWER__" stays text)
     import re

@@ -1,0 +1,38 @@
+{
+ "title": "Villa Savoye — desktop FDM architectural kit",
+ "merge": [
+  ["drive-through-ground", "pilotis-*", "service-*", "garage-*", "entry-service-*", "curved-entry-*", "entry-double-door-glass", "entry-door-center-stile", "entry-pull-*", "entry-stair-threshold", "entry-tile-*"] ,
+  ["front-*"], ["back-*"], ["left-*"], ["right-*"],
+  ["entrance-ramp-first-flight*", "interior-ramp-turning-landing"],
+  ["entrance-ramp-return-flight*", "ramp-first-floor-front-landing"],
+  ["terrace-to-solarium-ramp*", "upper-ramp-half-landing"],
+  ["upper-ramp-return*", "roof-ramp-solarium-connection"],
+  ["return-stair-lower-*", "stair-fine-lower-*", "return-stair-first-floor-landing", "rail-standoff-lower-*", "inner-rail-post-lower-*"],
+  ["return-stair-upper-*", "stair-fine-upper-*", "return-stair-roof-landing", "rail-standoff-upper-*", "inner-rail-post-upper-*"],
+  ["living-floor-west", "living-floor-ramp-back-landing", "bath-shower-divider", "bath-tub-*", "bath-built-in-reclining-chaise", "bath-basin-*", "bath-wc-pedestal", "bath-wc-bowl"],
+  ["living-floor-east", "terrace-planter-*", "terrace-north-plant-*", "terrace-south-low-planting", "kitchen-counter-*", "kitchen-sink-inset", "kitchen-hob-ring", "open-court-floor-boundary", "terrace-paving-*"],
+  ["terrace-built-in-table-top", "terrace-table-leg"],
+  ["salon-west", "salon-north"],
+  ["bedroom-partition-west", "bedroom-door-*"],
+  ["bath-core-east", "ramp-west-wall", "master-bed-south", "master-door-*"],
+  ["kitchen-east", "kitchen-south", "kitchen-access-*"],
+  ["salon-terrace-*", "salon-recessed-*", "salon-sliding-*"],
+  ["roof-west-wing", "roof-skylight-*", "roof-stair-head-west"],
+  ["roof-back-wing", "roof-kitchen"],
+  ["roof-front-salon", "roof-planter-front-*", "solarium-paving-*"],
+  ["solarium-return-curved-screen", "solarium-frame-*"]
+ ],
+ "keep": ["drive-through-ground", "living-floor-*", "roof-west-wing", "roof-back-wing", "roof-front-salon"],
+ "clear": [], "opaque": ["*"],
+ "order": [
+  {"name":"Foundation chassis", "parts":["drive-through-ground","pilotis-*","service-*","garage-*","curved-entry-*","entry-*"]},
+  {"name":"Lower promenade and stair", "parts":["entrance-ramp-first-flight*","entrance-ramp-return-flight*","interior-ramp-turning-landing","ramp-first-floor-front-landing","return-stair-lower-*","return-stair-first-floor-landing","stair-fine-lower-*"]},
+  {"name":"First-floor plates", "parts":["living-floor-*","terrace-planter-*","terrace-north-plant-*","terrace-south-low-planting","kitchen-counter-*","bath-tub-*","bath-basin-*"]},
+  {"name":"Interior partitions before enclosure", "parts":["bedroom-*","guest-divider","bath-*","master-*","ramp-west-wall","kitchen-access-*","kitchen-east","kitchen-south","salon-west","salon-north"]},
+  {"name":"Facade panels", "parts":["front-*","back-*","left-*","right-*","salon-terrace-*","salon-recessed-*","salon-sliding-*"]},
+  {"name":"Upper promenade and terrace details", "parts":["terrace-to-solarium-ramp*","upper-ramp-*","roof-ramp-solarium-connection","return-stair-upper-*","return-stair-roof-landing","stair-fine-upper-*","terrace-built-in-table-top","terrace-table-leg"]},
+  {"name":"Roof plates, only after interior completion", "parts":["roof-*"]},
+  {"name":"Solarium screens", "parts":["solarium-*"]}
+ ],
+ "notes": "Designed FDM adaptation of the researched reconstruction. The ground chassis combines base, pilotis and ground enclosure for stable printing. Glazing is deliberately opaque and can be painted; no optical-clear FDM promise. Separate floors, facades, circulation, roof and solarium preserve an assembly kit. Glue-fit, not snap-fit. Review supports and seams in a slicer; no physical print/fit test has been performed."
+}

@@ -10,7 +10,7 @@ the Constructs page and the Learn page; its backend is dashboard/plugin_api.py.
 
 from pathlib import Path
 
-from . import commands, jobs, netlogo_tools, runtime, schemas, stock, tools
+from . import commands, jobs, netlogo_tools, runtime, schemas, stock, tools, world_tools
 
 HERE = Path(__file__).resolve().parent
 SKILL = HERE / "skills" / "construct" / "SKILL.md"
@@ -30,6 +30,8 @@ def programs_for(tool_name, args):
     args = args if isinstance(args, dict) else {}
     if tool_name == "construct_build":
         return [BROWSER] if args.get("thumbnail", True) is not False else []
+    if tool_name == "construct_world" and args.get("op") != "list":
+        return [BROWSER]
     if tool_name == "construct_review":
         return [BROWSER]
     if tool_name == "construct_film":
@@ -80,7 +82,7 @@ def register(ctx):
     runtime.configure(config=ctx.get_config)
     jobs.set_reporters(post=ctx.post_message, event=_event)
     tools.set_surface(ctx.session_surface)
-    handlers = dict(tools.HANDLERS, **netlogo_tools.HANDLERS)
+    handlers = dict(tools.HANDLERS, **netlogo_tools.HANDLERS, **world_tools.HANDLERS)
     checks = dict(netlogo_tools.CHECKS)
     for schema in schemas.TOOLS:
         ctx.register_tool(name=schema["name"], toolset="construct", schema=schema, handler=handlers[schema["name"]],

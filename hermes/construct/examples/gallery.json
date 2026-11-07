@@ -1,0 +1,326 @@
+{
+ "format": "construct-gallery",
+ "version": 1,
+ "constructs": [
+  {
+   "name": "toyota-land-cruiser-fj62",
+   "title": "Toyota Land Cruiser FJ62",
+   "model": "Claude Opus 5.5",
+   "files": {
+    "scene": "examples/toyota-land-cruiser-fj62/scene.json"
+   }
+  },
+  {
+   "name": "nissan-skyline-gt-r-r34",
+   "title": "Nissan Skyline GT-R R34",
+   "model": "Claude Opus 5.5",
+   "files": {
+    "scene": "examples/nissan-skyline-gt-r-r34/scene.json"
+   }
+  },
+  {
+   "name": "tompion-year-going-clock",
+   "title": "Tompion year-going longcase clock",
+   "model": "DeepSeek V4.1 Flash",
+   "files": {
+    "scene": "examples/tompion-year-going-clock/scene.json",
+    "materials": "examples/tompion-year-going-clock/maps/finish.json"
+   }
+  },
+  {
+   "name": "volkswagen-t1-samba",
+   "title": "Volkswagen T1 Samba",
+   "model": "Claude Opus 5.5",
+   "files": {
+    "scene": "examples/volkswagen-t1-samba/scene.json",
+    "materials": "examples/volkswagen-t1-samba/maps/finish.json"
+   }
+  },
+  {
+   "name": "kestrel",
+   "title": "KESTREL, an invented ice tug",
+   "model": "GPT-6.1 Sol",
+   "files": {
+    "scene": "examples/kestrel/scene.json",
+    "materials": "examples/kestrel/maps/finish.json"
+   }
+  },
+  {
+   "name": "kestrel-v2",
+   "title": "KESTREL, more detailed",
+   "model": "GPT-6.1 Sol",
+   "files": {
+    "scene": "examples/kestrel-v2/scene.json"
+   }
+  },
+  {
+   "name": "state-bench",
+   "title": "State Bench, an invented instrument",
+   "model": "GPT-6.1 Sol",
+   "files": {
+    "scene": "examples/state-bench/scene.json"
+   }
+  },
+  {
+   "name": "serum-2-61",
+   "title": "SERUM 2 / 61, an unaffiliated concept from a manual",
+   "model": "GPT-6.1 Sol",
+   "files": {
+    "scene": "examples/serum-2-61/scene.json",
+    "materials": "examples/serum-2-61/materials.json"
+   }
+  },
+  {
+   "name": "villa-savoye",
+   "title": "Villa Savoye, made in Hermes",
+   "model": "GPT-6.1 Sol",
+   "files": {
+    "scene": "examples/villa-savoye/scene.json",
+    "materials": "examples/villa-savoye/maps/finish.json"
+   }
+  },
+  {
+   "name": "eames-lounge-chair",
+   "title": "Eames Lounge Chair and Ottoman",
+   "model": "Claude Opus 5.5",
+   "files": {
+    "scene": "examples/eames-lounge-chair/scene.json",
+    "materials": "examples/eames-lounge-chair/maps/finish.json"
+   }
+  },
+  {
+   "name": "eames-lounge-chair-chatgpt",
+   "title": "Eames Lounge Chair, from the ChatGPT app",
+   "model": "GPT-6.1 Sol",
+   "files": {
+    "scene": "examples/eames-lounge-chair-chatgpt/scene.json"
+   }
+  },
+  {
+   "name": "braun-sk4",
+   "title": "Braun SK 4",
+   "model": "DeepSeek V4.1 Flash",
+   "files": {
+    "scene": "examples/braun-sk4/scene.json"
+   }
+  },
+  {
+   "name": "braun-sk4-knob",
+   "title": "Braun SK 4: a replacement knob",
+   "model": "DeepSeek V4.1 Flash",
+   "files": {
+    "scene": "examples/braun-sk4-knob/scene.json"
+   }
+  },
+  {
+   "name": "garden-shed",
+   "title": "A garden shed",
+   "model": "DeepSeek V4.1 Flash",
+   "files": {
+    "scene": "examples/garden-shed/scene.json"
+   }
+  },
+  {
+   "name": "garden-shed-planned",
+   "title": "A garden shed, with a planned change",
+   "model": "DeepSeek V4.1 Flash",
+   "files": {
+    "scene": "examples/garden-shed-planned/scene.json"
+   }
+  },
+  {
+   "name": "vespa-gs150",
+   "title": "Vespa GS 150, an owner's scooter",
+   "model": "GPT-6.1 Sol",
+   "files": {
+    "scene": "examples/vespa-gs150/scene.json",
+    "materials": "examples/vespa-gs150/maps/finish.json"
+   }
+  },
+  {
+   "name": "revox-a77",
+   "title": "Revox A77",
+   "model": "DeepSeek V4.1 Flash",
+   "files": {
+    "scene": "examples/revox-a77/scene.json"
+   }
+  },
+  {
+   "name": "sainte-chapelle",
+   "title": "Sainte-Chapelle",
+   "model": "Claude Opus 5.5",
+   "files": {
+    "scene": "examples/sainte-chapelle/scene.json"
+   }
+  },
+  {
+   "name": "yamaha-cfx",
+   "title": "Yamaha CFX",
+   "model": "DeepSeek V4.1 Flash",
+   "files": {
+    "scene": "examples/yamaha-cfx/scene.json",
+    "materials": "examples/yamaha-cfx/maps/finish.json"
+   }
+  },
+  {
+   "name": "neuschwanstein",
+   "title": "Neuschwanstein",
+   "model": "Claude Opus 5.5",
+   "files": {
+    "scene": "examples/neuschwanstein/scene.json"
+   }
+  },
+  {
+   "name": "aston-martin-db5",
+   "title": "Aston Martin DB5",
+   "model": "Claude Opus 5.5",
+   "files": {
+    "scene": "examples/aston-martin-db5/scene.json"
+   }
+  },
+  {
+   "name": "leica-m3",
+   "title": "Leica M3",
+   "model": "GPT-6.1 Sol",
+   "files": {
+    "scene": "examples/leica-m3/scene.json"
+   }
+  },
+  {
+   "name": "sagrada-familia",
+   "title": "Sagrada Família",
+   "model": "GPT-6.1 Sol",
+   "files": {
+    "scene": "examples/sagrada-familia/scene.json"
+   }
+  },
+  {
+   "name": "duomo-di-milano",
+   "title": "Duomo di Milano",
+   "model": "Claude Opus 5.5",
+   "files": {
+    "scene": "examples/duomo-di-milano/scene.json"
+   }
+  },
+  {
+   "name": "ferrari-f40",
+   "title": "Ferrari F40",
+   "model": "GPT-6.1 Sol",
+   "files": {
+    "scene": "examples/ferrari-f40/scene.json"
+   }
+  },
+  {
+   "name": "sydney-opera-house",
+   "title": "Sydney Opera House",
+   "model": "GPT-6.1 Sol",
+   "files": {
+    "scene": "examples/sydney-opera-house/scene.json"
+   }
+  },
+  {
+   "name": "saturn",
+   "title": "Saturn",
+   "model": "DeepSeek V4.1 Flash",
+   "files": {
+    "scene": "examples/saturn/scene.json"
+   }
+  },
+  {
+   "name": "andromeda-galaxy",
+   "title": "Andromeda Galaxy (M31)",
+   "model": "DeepSeek V4.1 Flash",
+   "files": {
+    "scene": "examples/andromeda-galaxy/scene.json"
+   }
+  },
+  {
+   "name": "patek-philippe-5320g",
+   "title": "Patek Philippe 5320G",
+   "model": "GPT-6.1 Sol",
+   "files": {
+    "scene": "examples/patek-philippe-5320g/scene.json"
+   }
+  },
+  {
+   "name": "jackson-juggernaut-et7",
+   "title": "Jackson Juggernaut ET7",
+   "model": "GPT-6.1 Sol",
+   "files": {
+    "scene": "examples/jackson-juggernaut-et7/scene.json"
+   }
+  },
+  {
+   "name": "omega-speedmaster-321",
+   "title": "Omega Speedmaster, calibre 321",
+   "model": "DeepSeek V4.1 Flash",
+   "files": {
+    "scene": "examples/omega-speedmaster-321/scene.json"
+   }
+  },
+  {
+   "name": "the-last-light",
+   "title": "The Last Light: sea cliff at dusk",
+   "model": "GPT-6.1 Sol",
+   "files": {
+    "scene": "examples/the-last-light/scene.json"
+   }
+  },
+  {
+   "name": "brass-orrery",
+   "title": "Brass orrery",
+   "model": "GPT-6.1 Sol",
+   "files": {
+    "scene": "examples/brass-orrery/scene.json"
+   }
+  },
+  {
+   "name": "gothic-cathedral-nave",
+   "title": "Gothic cathedral nave",
+   "model": "GPT-6.1 Sol",
+   "files": {
+    "scene": "examples/gothic-cathedral-nave/scene.json"
+   }
+  },
+  {
+   "name": "tea-house",
+   "title": "Tea house",
+   "model": "GPT-6.1 Sol",
+   "files": {
+    "scene": "examples/tea-house/scene.json"
+   }
+  },
+  {
+   "name": "arturia-minifreak",
+   "title": "Arturia MiniFreak",
+   "model": "DeepSeek V4.1 Flash",
+   "files": {
+    "scene": "examples/arturia-minifreak/scene.json"
+   }
+  },
+  {
+   "name": "james-webb-space-telescope",
+   "title": "James Webb Space Telescope",
+   "model": "DeepSeek V4.1 Flash",
+   "files": {
+    "scene": "examples/films/james-webb-space-telescope/scene.json"
+   }
+  },
+  {
+   "name": "voyager-1",
+   "title": "Voyager 1",
+   "model": "DeepSeek V4.1 Flash",
+   "files": {
+    "scene": "examples/films/voyager-1/scene.json"
+   }
+  },
+  {
+   "name": "arecibo-observatory",
+   "title": "Arecibo Observatory",
+   "model": "DeepSeek V4.1 Flash",
+   "files": {
+    "scene": "examples/films/arecibo-observatory/scene.json"
+   }
+  }
+ ]
+}

@@ -132,6 +132,42 @@ def examples():
     return found
 
 
+def gallery():
+    """The gallery's constructs by name (the package's examples/gallery.json; in a source checkout, the repository's
+    own examples): {name: row}."""
+    from . import stock
+    pkg = HERE / "examples" / "gallery.json"
+    if pkg.is_file():
+        doc = json.loads(pkg.read_text(encoding="utf-8"))
+    else:
+        root = HERE.parents[2] if len(HERE.parents) > 2 else HERE
+        doc = stock.gallery_index(root)
+    return {r["name"]: r for r in doc.get("constructs", [])}
+
+
+def gallery_files(name):
+    """A gallery construct's scene and material map: read from the repository in a source checkout, else fetched
+    once from GitHub (this release's tag) into the plugin's data folder."""
+    from . import stock
+    rows = gallery()
+    if name not in rows:
+        raise ConstructError("no gallery construct %r" % name)
+    root = HERE.parents[2] if len(HERE.parents) > 2 else HERE
+    local = root / rows[name]["files"]["scene"]
+    if not (HERE / "examples" / "gallery.json").is_file() and local.is_file():
+        m = rows[name]["files"].get("materials")
+        return {"scene": local, "materials": root / m if m else None}
+    dest = data_dir() / "gallery" / name
+    if not (dest / "scene.json").is_file():
+        from construct_hologram import product
+        try:
+            stock.fetch_gallery(name, dest, product.VERSION, {"constructs": list(rows.values())})
+        except (OSError, ValueError) as exc:
+            raise ConstructError("could not fetch %s from the gallery: %s" % (name, exc))
+    m = dest / "scene.materials.json"
+    return {"scene": dest / "scene.json", "materials": m if m.is_file() else None}
+
+
 def catalog():
     """The stock constructs described: title, parts, one line, how each was made."""
     from . import stock

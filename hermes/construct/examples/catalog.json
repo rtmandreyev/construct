@@ -190,5 +190,89 @@
   "made": "masterpiece",
   "use": "the same ship, refined with 242 more parts",
   "has_thumb": true
+ },
+ {
+  "name": "villa-savoye",
+  "title": "Villa Savoye · Les Heures Claires",
+  "parts": 396,
+  "with_copies": 553,
+  "line": "Le Corbusier and Pierre Jeanneret, Poissy, 1928–1931.",
+  "category": "architecture",
+  "accuracy": "approximate",
+  "made": "masterpiece · GPT-6.1 Sol, in Hermes Desktop with the Construct plugin",
+  "use": "a house to furnish: a world's host (made in Hermes, with a desktop kit plan)",
+  "has_thumb": true
+ },
+ {
+  "name": "serum-2-61",
+  "title": "SERUM 2 / 61 - original hardware concept, audited revision",
+  "parts": 293,
+  "with_copies": 345,
+  "line": "Unaffiliated concept, not endorsed by Xfer Records.",
+  "category": "machine",
+  "accuracy": "original",
+  "made": "masterpiece · GPT-6.1 Sol, in Codex",
+  "use": "a product designed from a software manual (unaffiliated concept)",
+  "has_thumb": true
+ },
+ {
+  "name": "leica-m3",
+  "title": "Leica M3 · 1954 / Summicron 5 cm 1:2",
+  "parts": 88,
+  "with_copies": 88,
+  "line": "Approximate measured reconstruction of an early double-stroke Leica M3 with the original collapsible 50 mm Summicron.",
+  "category": "object",
+  "accuracy": "approximate",
+  "made": "fast · GPT-6.1 Sol",
+  "use": "a camera, small and exact",
+  "has_thumb": true
+ },
+ {
+  "name": "jackson-juggernaut-et7",
+  "title": "Jackson Juggernaut ET7 | Seven strings, one equilibrium",
+  "parts": 130,
+  "with_copies": 170,
+  "line": "Exact-model reconstruction of Jackson Pro Plus Signature Misha Mansoor Juggernaut ET7, model 2914017554.",
+  "category": "object",
+  "accuracy": "approximate",
+  "made": "fast · GPT-6.1 Sol",
+  "use": "an electric guitar",
+  "has_thumb": true
+ },
+ {
+  "name": "omega-speedmaster-321",
+  "title": "Omega Speedmaster Professional Moonwatch - calibre 321, exploded",
+  "parts": 64,
+  "with_copies": 229,
+  "line": "An exploded 42 mm Omega Speedmaster Professional 'Moonwatch': steel case with twisted lugs and tachymeter bezel, triple-register dial with its chronograph hands, and the…",
+  "category": "machine",
+  "accuracy": "approximate",
+  "made": "fast · DeepSeek V4.1 Flash",
+  "use": "a watch, its movement inside",
+  "has_thumb": true
+ },
+ {
+  "name": "state-bench",
+  "title": "State Bench",
+  "parts": 263,
+  "with_copies": 275,
+  "line": "Original fictional numerical dynamics instrument: two bimanual parameter cross-slides, coordinated phase/time observation and protected persistent state comparison.",
+  "category": "machine",
+  "accuracy": "original",
+  "made": "masterpiece · GPT-6.1 Sol",
+  "use": "an invented instrument with a sliding service drawer",
+  "has_thumb": true
+ },
+ {
+  "name": "saturn",
+  "title": "Saturn",
+  "parts": 127,
+  "with_copies": 127,
+  "line": "Saturn at one metre to a thousand kilometres: the oblate banded globe with its north polar hexagon and vortex, the ring system from the D ring to the G ring with the Max…",
+  "category": "object",
+  "accuracy": "documented",
+  "made": "masterpiece · DeepSeek V4.1 Flash",
+  "use": "a planet: in a world's sky at its real angular size",
+  "has_thumb": true
  }
 ]

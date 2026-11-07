@@ -73,9 +73,8 @@ uniform vec4 uEvent;         // kind, progress 0..1, strength, seed
 uniform vec4 uEventP;        // kind-specific: origin/axis data
 uniform vec4 uBounds;        // centre xyz, radius
 uniform vec2 uYRange;        // ground y, top y
-uniform mat4 uMotion[32];
-uniform float uMotionGain[32];
-uniform mat4 uJoint[16];     // articulation chains, posed by the opening
+uniform highp sampler2D uPose; // one row per motion slot, then one per articulation chain: 4 texels of matrix, 1 of gain
+uniform float uJointBase;    // the first chain's row (rows before it are the motion slots)
 uniform float uGhost;        // pre-build ghost image 0..1
 uniform float uStabilise;    // glow surplus after the build
 uniform float uGlobalAlpha;
@@ -91,10 +90,14 @@ vec4 styleB(float s) { return texelFetch(uStyles, ivec2(1, int(s + 0.5)), 0); } 
 vec4 styleC(float s) { return texelFetch(uStyles, ivec2(2, int(s + 0.5)), 0); }  // occluder, certainty, role, drift
 vec4 styleD(float s) { return texelFetch(uStyles, ivec2(3, int(s + 0.5)), 0); }  // joint, colour (r, g, b or -1)
 
+mat4 poseAt(int r) {
+  return mat4(texelFetch(uPose, ivec2(0, r), 0), texelFetch(uPose, ivec2(1, r), 0),
+              texelFetch(uPose, ivec2(2, r), 0), texelFetch(uPose, ivec2(3, r), 0));
+}
 // periodic motion about the rest pose, then the articulation chain carries it
 vec3 moved(vec3 p, float slot, float joint, inout float gain) {
-  if (slot >= -0.5) { int i = int(slot + 0.5); p = (uMotion[i] * vec4(p, 1.0)).xyz; gain *= uMotionGain[i]; }
-  if (joint >= -0.5) p = (uJoint[int(joint + 0.5)] * vec4(p, 1.0)).xyz;
+  if (slot >= -0.5) { int i = int(slot + 0.5); p = (poseAt(i) * vec4(p, 1.0)).xyz; gain *= texelFetch(uPose, ivec2(4, i), 0).x; }
+  if (joint >= -0.5) p = (poseAt(int(uJointBase + 0.5) + int(joint + 0.5)) * vec4(p, 1.0)).xyz;
   return p;
 }
 // what an event does to where a point is drawn
@@ -782,8 +785,8 @@ void main() {
   Hologram.prototype.jointUniforms = function (u) {
     const arts = this.geo.articulations || [], joints = this.geo.joints || [];
     const I = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
-    const mats = new Float32Array(16 * 16);
-    for (let i = 0; i < 16; i++) mats.set(I, i * 16);
+    const nj = Math.max(1, joints.length), mats = new Float32Array(nj * 16);
+    for (let i = 0; i < nj; i++) mats.set(I, i * 16);
     const orders = [...new Set(arts.map((a) => a.order))].sort((a, b) => a - b), G = orders.length;
     const A = arts.map((a) => {
       const v = ease(Math.max(0, Math.min(1, (u * G - orders.indexOf(a.order)) / 0.85)));
@@ -792,7 +795,7 @@ void main() {
       return [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, a.axis[0] * d, a.axis[1] * d, a.axis[2] * d, 1];
     });
     // a later articulation rides on the earlier ones: the first in the chain is outermost
-    joints.forEach((chain, j) => { if (j < 16) mats.set(chain.reduce((M, i) => mat4mul(M, A[i]), I), j * 16); });
+    joints.forEach((chain, j) => { mats.set(chain.reduce((M, i) => mat4mul(M, A[i]), I), j * 16); });
     return mats;
   };
 
@@ -804,12 +807,36 @@ void main() {
     return this._idc;
   };
 
+  // motions and articulation chains as one float texture (no fixed count: a world carries many constructs'):
+  // row r = 4 texels of a column-major matrix and a fifth holding the motion's gain
+  Hologram.prototype.uploadPose = function (mot, joints) {
+    const gl = this.gl, nm = mot.gains.length, nj = joints.length / 16, rows = nm + nj;
+    const data = this._poseData && this._poseData.length === rows * 20 ? this._poseData : (this._poseData = new Float32Array(rows * 20));
+    for (let r = 0; r < rows; r++) {
+      const src = r < nm ? mot.mats.subarray(r * 16, r * 16 + 16) : joints.subarray((r - nm) * 16, (r - nm) * 16 + 16);
+      data.set(src, r * 20); data[r * 20 + 16] = r < nm ? mot.gains[r] : 1; data[r * 20 + 17] = 0; data[r * 20 + 18] = 0; data[r * 20 + 19] = 0;
+    }
+    if (!this.poseTex || this._poseRows !== rows) {
+      if (this.poseTex) gl.deleteTexture(this.poseTex);
+      this.poseTex = gl.createTexture(); this._poseRows = rows;
+      gl.bindTexture(gl.TEXTURE_2D, this.poseTex);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA32F, 5, rows, 0, gl.RGBA, gl.FLOAT, data);
+    } else {
+      gl.bindTexture(gl.TEXTURE_2D, this.poseTex);
+      gl.texSubImage2D(gl.TEXTURE_2D, 0, 0, 0, 5, rows, gl.RGBA, gl.FLOAT, data);
+    }
+    this.poseJointBase = nm;
+  };
+
   Hologram.prototype.motionUniforms = function (t) {
-    const mats = new Float32Array(32 * 16), gains = new Float32Array(32).fill(1);
-    for (let i = 0; i < 32; i++) mats.set([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1], i * 16);
+    const nm = Math.max(1, (this.geo.motions || []).length);
+    const mats = new Float32Array(nm * 16), gains = new Float32Array(nm).fill(1);
+    for (let i = 0; i < nm; i++) mats.set([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1], i * 16);
     const still = this.opt.reduced;
     (this.geo.motions || []).forEach((m, i) => {
-      if (i >= 32 || still) return;
+      if (still) return;
       const ph = 2 * Math.PI * (t / m.period + m.phase);
       let ang = 0, off = [0, 0, 0];
       if (m.type === "spin") ang = m.rpm * 2 * Math.PI / 60 * t + 2 * Math.PI * m.phase;
@@ -832,10 +859,12 @@ void main() {
   };
   Hologram.prototype.targetOf = function (partId) {
     if (!partId) return this.C.slice();
-    const p = this.geo.parts.find((q) => q.id === partId);
-    if (!p) return this.C.slice();
+    // a part, or in a world a whole placement (every part under `placement/`)
+    let ps = this.geo.parts.filter((q) => q.id === partId);
+    if (!ps.length) ps = this.geo.parts.filter((q) => q.id.startsWith(partId + "/"));
+    if (!ps.length) return this.C.slice();
     const lo = [Infinity, Infinity, Infinity], hi = [-Infinity, -Infinity, -Infinity];
-    for (const b of p.instances) for (let k = 0; k < 3; k++) { lo[k] = Math.min(lo[k], b.min[k]); hi[k] = Math.max(hi[k], b.max[k]); }
+    for (const p of ps) for (const b of p.instances) for (let k = 0; k < 3; k++) { lo[k] = Math.min(lo[k], b.min[k]); hi[k] = Math.max(hi[k], b.max[k]); }
     return { c: [(lo[0] + hi[0]) / 2, (lo[1] + hi[1]) / 2, (lo[2] + hi[2]) / 2], r: 0.5 * Math.hypot(hi[0] - lo[0], hi[1] - lo[1], hi[2] - lo[2]) };
   };
   Hologram.prototype.framingBoxes = function (partId, closed) {
@@ -848,6 +877,11 @@ void main() {
         const own = p.instances.map((b) => [b.min, b.max]);
         const boxes = own.concat(p.instances.filter((b) => b.open_min).map((b) => [b.open_min, b.open_max]));
         this._boxes[p.id] = boxes; this._shut[p.id] = own;
+        if (p.placement) {   // a world: each placement's boxes under its id, so a view can frame a whole construct
+          (this._boxes[p.placement] = this._boxes[p.placement] || []).push(...boxes);
+          (this._shut[p.placement] = this._shut[p.placement] || []).push(...own);
+        }
+        if (p.sky) continue;   // a world's sky (a planet far away) is never what a view fits
         if (!(p.shape === "points" && (p.role === "ornament" || p.certainty === "decorative"))) { all.push(...boxes); shut.push(...own); }
       }
       this._boxes["*"] = all.length ? all : [[this.geo.bounds.min, this.geo.bounds.max]];
@@ -911,7 +945,8 @@ void main() {
     const y = cam.yaw * Math.PI / 180, p = cam.pitch * Math.PI / 180;
     const eye = V.add(cam.target, [cam.dist * Math.sin(y) * Math.cos(p), cam.dist * Math.sin(p), cam.dist * Math.cos(y) * Math.cos(p)]);
     const view = lookAt(eye, cam.target, Math.abs(cam.pitch) > 88 ? [0, 0, -1] : [0, 1, 0]);
-    const near = Math.max(cam.dist * 0.01, 0.001), far = cam.dist + this.R * 10;
+    // a world's sky placements (a planet at its real angular size) lie far past the rest: the camera sees them too
+    const near = Math.max(cam.dist * 0.01, 0.001), far = cam.dist + Math.max(this.R * 10, this.geo.bounds.sky_far || 0);
     // an optional screen-space offset: the object framed off-centre (room for type, a layout)
     const sh = this.opt.shift || [0, 0];
     const post = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, sh[0], sh[1], 0, 1];
@@ -959,6 +994,7 @@ void main() {
     const mot = this.motionUniforms(t);
     const joints = this.jointUniforms(opts.open !== undefined ? opts.open : this.openAt(t));
     this.lastJoints = joints;
+    this.uploadPose(mot, joints);
 
     // atmosphere
     if (!transparent && pr.atmosphere.haze > 0) {
@@ -997,9 +1033,8 @@ void main() {
       if (u.uEventP) gl.uniform4fv(u.uEventP, s.eventP);
       if (u.uBounds) gl.uniform4f(u.uBounds, this.C[0], this.C[1], this.C[2], this.R);
       if (u.uYRange) gl.uniform2f(u.uYRange, this.ground, this.top);
-      if (u.uMotion) gl.uniformMatrix4fv(u.uMotion, false, mot.mats);
-      if (u.uMotionGain) gl.uniform1fv(u.uMotionGain, mot.gains);
-      if (u.uJoint) gl.uniformMatrix4fv(u.uJoint, false, joints);
+      if (u.uPose) { gl.activeTexture(gl.TEXTURE2); gl.bindTexture(gl.TEXTURE_2D, this.poseTex); gl.uniform1i(u.uPose, 2); }
+      if (u.uJointBase) gl.uniform1f(u.uJointBase, this.poseJointBase);
       if (u.uGhost) gl.uniform1f(u.uGhost, s.ghost);
       if (u.uStabilise) gl.uniform1f(u.uStabilise, s.stabilise);
       if (u.uGlobalAlpha) gl.uniform1f(u.uGlobalAlpha, s.globalAlpha);
@@ -1147,9 +1182,10 @@ void main() {
     const subj = geo.subject;
     const accuracy = { generic: "GENERIC RECONSTRUCTION", approximate: "APPROXIMATE RECONSTRUCTION", documented: "DOCUMENTED RECONSTRUCTION",
       original: "ORIGINAL DESIGN", recorded: "RECORDED RUN" }[subj.accuracy];
+    const worldNote = geo.world ? geo.world.placements.length + " CONSTRUCTS, EACH ITS OWN" : null;
     const caption = el("div", "caption");
     caption.appendChild(el("div", "title", geo.title));
-    caption.appendChild(el("div", "meta", [accuracy, subj.synthetic ? "SYNTHETIC EXAMPLE" : null, geo.counts.lines + " LINES"].filter(Boolean).join(" · ")));
+    caption.appendChild(el("div", "meta", [geo.world ? worldNote : accuracy, subj.synthetic ? "SYNTHETIC EXAMPLE" : null, geo.counts.lines + " LINES"].filter(Boolean).join(" · ")));
     if ((geo.provenance.assets || []).some((a) => a.provenance === "generated-decorative")) caption.appendChild(el("div", "meta warn", "ARTWORK: GENERATED DECORATION, NOT AUTHENTIC"));
     // terrain says how its relief is known, at what scale, and whose data it is
     const relief = geo.parts.find((p) => p.shape === "terrain");

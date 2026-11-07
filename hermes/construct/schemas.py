@@ -213,7 +213,43 @@ COMMAND = _tool(
                       "description": "How long to wait before handing over a job_id (default 300)."}},
     required=("argv",))
 
-TOOLS = [START, EDIT, CHECK, INSPECT, BUILD, REVIEW, EXPORT, FILM, JOB, COMMAND] + NETLOGO_TOOLS
+WORLD = _tool(
+    "construct_world",
+    "Place whole constructs together in one world and see it live in the chat: a chair, a clock and a piano in the "
+    "user's house, their cars under it, a castle on a hill, a ship overhead, a planet in the sky; at city scale, "
+    "worlds inside worlds. Each placed construct stays whole (its own parts, sources, provenance and joints, under "
+    "its placement's id: eames/seat-shell), at its real size unless scaled. Ops: new {title, construct (what holds "
+    "the rest: the user's project, a construct the plugin ships, a gallery construct, or a scene path)}; place "
+    "{world, construct, id?, on?, at?, yaw?, rotate?, scale?, floating?, sky?, note?}; move {world, id, ...the same "
+    "fields}; remove {world, id}; list {world, id?} (with id: the surfaces on that placement things can stand on). "
+    "on: an earlier placement (it stands on that placement's ground) or placement/part-id (on that part's top: a "
+    "floor, a deck, a table); at: metres (with on: x and z, and a lift above the top); yaw: degrees about up. sky: "
+    "{diameter_m, distance_m, azimuth, elevation}: far away at its real angular size (a planet, the moon). Every "
+    "change is checked, rebuilt and shown (a MEDIA line, as construct_build), with the placements' sizes, what each "
+    "stands on and warnings (overlaps, things standing on nothing). construct_export exports a world whole (one "
+    "glTF for Blender or a game engine, joints working).",
+    {"op": {"type": "string", "enum": ["new", "place", "move", "remove", "list"]},
+     "world": {"type": "string", "description": "The world's project id (from op new)."},
+     "title": {"type": "string", "description": "new: the world's name."},
+     "summary": {"type": "string", "description": "new: what the world is, in a sentence."},
+     "construct": {"type": "string", "description": "What to place: the user's project id (a construct or another "
+                                                    "world), a construct the plugin ships (construct_start lists them), "
+                                                    "a gallery construct by name, or a scene's absolute path."},
+     "id": {"type": "string", "description": "The placement's id (default: from the construct's name)."},
+     "on": {"type": "string", "description": "An earlier placement's id, or placement/part-id to stand on that part."},
+     "at": {"type": "array", "items": {"type": "number"}, "description": "[x, y, z] metres."},
+     "yaw": {"type": "number", "description": "Degrees about up (+Y)."},
+     "rotate": {"type": "array", "items": {"type": "number"}, "description": "[x, y, z] degrees, after yaw."},
+     "scale": {"type": "number", "description": "1 is real size (the default); anything else is shown as such."},
+     "floating": {"type": "boolean", "description": "It is meant to hover (a ship, a hanging lamp)."},
+     "sky": {"type": "object", "description": "{diameter_m, distance_m, azimuth?, elevation?}: a planet or moon far "
+                                              "away, drawn at its real angular size."},
+     "note": {"type": "string", "description": "Why it is there (kept with the placement)."},
+     "label": {"type": "string", "description": "A display name for the placement."},
+     "wait_seconds": {"type": "integer", "minimum": 1, "maximum": 380}},
+    required=("op",))
+
+TOOLS = [START, EDIT, CHECK, INSPECT, BUILD, REVIEW, EXPORT, FILM, JOB, COMMAND, WORLD] + NETLOGO_TOOLS
 NAMES = [t["name"] for t in TOOLS]
 
 

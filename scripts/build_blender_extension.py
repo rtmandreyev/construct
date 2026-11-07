@@ -22,7 +22,8 @@ sys.path.insert(0, str(ROOT))
 from construct_hologram import product  # noqa: E402
 
 ADDON = ROOT / "hosts" / "blender" / "construct"
-RUNTIME = ["product.py", "shapes.py", "scene.py", "archkit.py", "params.py", "tiers.py", "export.py", "runfilm.py"]
+RUNTIME = ["product.py", "shapes.py", "scene.py", "archkit.py", "params.py", "tiers.py", "export.py", "runfilm.py",
+           "world.py"]
 MANIFEST = """schema_version = "1.0.0"
 
 id = "construct"

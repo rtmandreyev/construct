@@ -201,7 +201,7 @@ class Plugin(unittest.TestCase):
         self.assertEqual(m["requires_hermes"], ">=0.22")
         self.assertEqual(m["homepage"], "https://github.com/rtmandreyev/construct")
         self.assertEqual(set(m["provides_tools"]), set(self.ctx.tools))
-        self.assertEqual(len(m["provides_tools"]), 12)
+        self.assertEqual(len(m["provides_tools"]), 13)
         self.assertEqual(set(m["provides_hooks"]), set(self.ctx.hooks))
         self.assertTrue(all(t["toolset"] == "construct" and t["schema"]["name"] == n for n, t in self.ctx.tools.items()))
         # every tool shows while the runtime is there; the NetLogo run only where NetLogo and Java are found
@@ -461,6 +461,30 @@ class Plugin(unittest.TestCase):
         self.assertIn("wide", size["say"])
         knob = self.call("construct_start", {"example": "braun-sk4-knob"})
         self.assertEqual(self.call("construct_inspect", {"project": knob["project"]})["size"]["unit"], "mm")
+
+    def test_world_places_constructs_and_shows_them(self):
+        r = self.until_done(self.call("construct_world", {"op": "new", "title": "A house", "construct": "garden-shed"}))
+        self.assertTrue(r.get("success"), r)
+        w = r["project"]
+        self.assertTrue(media_paths(r)[0].is_file())
+        self.assertTrue(r["surfaces"])
+        r = self.until_done(self.call("construct_world", {"op": "place", "world": w, "construct": "braun-sk4-knob",
+                                                          "on": r["surfaces"][0]["on"], "at": [0.2, 0, 0.1]}))
+        self.assertTrue(r.get("success"), r)
+        ids = [p["id"] for p in r["world"]["placements"]]
+        self.assertEqual(ids, ["garden-shed", "braun-sk4-knob"])
+        world = json.loads((self.data / "projects" / w / "world.json").read_text())
+        self.assertTrue((self.data / "projects" / w / world["placements"][1]["construct"]).is_file())   # copied in
+        r = self.until_done(self.call("construct_world", {"op": "move", "world": w, "id": "braun-sk4-knob", "yaw": 45}))
+        self.assertEqual(r["world"]["placements"][1]["yaw"], 45)
+        lst = self.call("construct_world", {"op": "list", "world": w})
+        self.assertEqual(len(lst["placements"]), 2)
+        bad = self.call("construct_world", {"op": "remove", "world": w, "id": "garden-shed"})
+        self.assertIn("error", bad)   # what holds the others goes last
+        r = self.until_done(self.call("construct_world", {"op": "remove", "world": w, "id": "braun-sk4-knob"}))
+        self.assertEqual([p["id"] for p in r["world"]["placements"]], ["garden-shed"])
+        e = self.until_done(self.call("construct_export", {"project": w, "format": "glb"}))
+        self.assertTrue(e.get("success"), e)
 
     def test_export_is_read_back(self):
         r = self.call("construct_start", {"example": "volkswagen-t1-samba"})
