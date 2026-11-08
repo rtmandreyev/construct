@@ -159,11 +159,47 @@ def _rebuild(slug, folder, path, wait=None):
     return tools._waited(job_id, "build", wait or tools.WAIT["build"], "build of world %s" % slug)
 
 
+def _from_example(args):
+    """A world that ships with the plugin, as the user's own project: its gallery constructs brought in by name (the
+    plugin's own, or fetched from the gallery once), the constructs designed for it copied along."""
+    shipped = runtime.example_worlds()
+    name = args.get("example")
+    if name not in shipped:
+        raise ConstructError("no example world %r; examples: %s" % (name, ", ".join(sorted(shipped)) or "none"))
+    src = shipped[name]["folder"]
+    doc = json.loads((src / "world.json").read_text(encoding="utf-8"))
+    title = args.get("title") if isinstance(args.get("title"), str) and args["title"].strip() else doc["title"]
+    slug, folder = runtime.new_project(title)
+    try:
+        if (src / "constructs").is_dir():
+            shutil.copytree(src / "constructs", folder / "constructs", dirs_exist_ok=True)
+        for p in doc["placements"]:
+            if not p["construct"].endswith(".json"):
+                p["construct"] = _bring(folder, p["construct"])
+        doc["id"], doc["title"] = slug.replace("_", "-")[:64], title.strip()
+        path = folder / "world.json"
+        checked = _save_checked(path, doc, folder, surfaces_of=doc["placements"][0]["id"])
+        runtime.write_json(folder / "project.json", {"slug": slug, "title": title.strip(), "scene": "world.json",
+                                                     "origin": "world", "from": "example:%s" % name,
+                                                     "created": runtime.stamp_iso()})
+    except Exception:
+        shutil.rmtree(folder, ignore_errors=True)
+        raise
+    res = _rebuild(slug, folder, path, args.get("wait_seconds"))
+    if isinstance(res, dict):
+        res["world"] = _summary(checked)
+        res["surfaces"] = checked.get("surfaces", [])
+        res["next"] = "it is the user's own now: place, move or remove with the other ops; put the MEDIA line in your reply"
+    return res
+
+
 @tools.tool("construct_world")
 def world(args):
     op = tools._choice(args, "op", OPS)
     if op is None:
         raise ConstructError("op is one of %s" % ", ".join(OPS))
+    if op == "new" and args.get("example") is not None:
+        return _from_example(args)
     if op == "new":
         title = args.get("title")
         if not isinstance(title, str) or not title.strip() or len(title) > 120:

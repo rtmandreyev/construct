@@ -107,6 +107,19 @@ def build(out):
                 _copy(files[key], dst / as_name)
         rows.append(dict(stock.describe(name, files["scene"], files["readme"]), has_thumb=bool(files["thumb"])))
     (pkg / "examples" / "catalog.json").write_text(json.dumps(rows, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
+    # the example worlds: each world.json and the constructs designed for it (its gallery constructs come by name)
+    worlds = []
+    for wdir in sorted((ROOT / "examples" / "worlds").iterdir()):
+        if not (wdir / "world.json").is_file():
+            continue
+        for f in sorted(wdir.rglob("*")):
+            if f.is_file() and f.suffix in (".json", ".md") and "builds" not in f.parts:
+                _copy(f, pkg / "examples" / "worlds" / wdir.name / f.relative_to(wdir))
+        doc = json.loads((wdir / "world.json").read_text(encoding="utf-8"))
+        worlds.append({"name": wdir.name, "title": doc["title"], "summary": doc.get("summary", ""),
+                       "constructs": sorted({q["construct"] for q in doc["placements"] if not q["construct"].endswith(".json")}),
+                       "placements": len(doc["placements"])})
+    (pkg / "examples" / "worlds.json").write_text(json.dumps(worlds, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
     # the gallery's constructs by name (construct_world and the Constructs page fetch one on demand, from this release)
     (pkg / "examples" / "gallery.json").write_text(json.dumps(stock.gallery_index(ROOT), indent=1, ensure_ascii=False)
                                                   + "\n", encoding="utf-8")

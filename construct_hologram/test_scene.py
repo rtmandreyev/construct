@@ -239,7 +239,7 @@ class Malformed(unittest.TestCase):
         html, _ = render.build_html(scene.compile_scene(sc))
         start = html.index('type="application/json">') + len('type="application/json">')
         self.assertEqual(json.loads(html[start:html.index("</script>", start)])["title"], sc["title"])
-        self.assertEqual(html.count("Hologram.prototype.upload"), 1)
+        self.assertEqual(html.count("Hologram.prototype.upload = "), 1)
 
 
 class Compilation(unittest.TestCase):

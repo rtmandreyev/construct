@@ -187,7 +187,8 @@ with the music and end whole), report its length, camera and reactivity, and put
 
 ## Worlds (only when asked)
 
-A world places whole constructs together with `construct_world`; it never merges them into one scene.
+A world places whole constructs together with `construct_world`; it never merges them into one scene. Worlds ship
+too (`construct_start` lists them under `worlds`): `op: new` with `example` makes one the user's own, to change.
 1. **Start from what holds the rest** (`op: new`, `construct`: the house, the street, the plinth). Its result lists
    `surfaces`: the parts things can stand on, with their tops' heights and sizes.
 2. **Place everything at once** (`op: place` with `placements: [...]`), each on the part it rests on

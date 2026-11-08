@@ -7,6 +7,7 @@ they are read where the repository keeps them. scripts/hermes_plugin.py writes t
 """
 
 import json
+import os
 import re
 import shutil
 from pathlib import Path
@@ -158,6 +159,11 @@ def _tls():
         return ssl.create_default_context()
 
 
+# what curl is given of the environment: what it needs to start, find its certificates and use a proxy
+CURL_ENV = ("PATH", "HOME", "TMPDIR", "TEMP", "TMP", "SYSTEMROOT", "SSL_CERT_FILE", "SSL_CERT_DIR", "CURL_CA_BUNDLE",
+            "HTTPS_PROXY", "https_proxy", "NO_PROXY", "no_proxy")
+
+
 def fetch_gallery(name, dest, version, index):
     """Fetch one gallery construct's scene (and its material map) into `dest`, from the release tag of this
     version, else from main. Returns {"scene", "materials"} paths. Raises OSError/ValueError."""
@@ -183,7 +189,9 @@ def fetch_gallery(name, dest, version, index):
                 last = exc
                 if "CERTIFICATE" in str(exc) and shutil.which("curl"):   # a Python without CA certificates: curl has them
                     import subprocess
-                    r = subprocess.run(["curl", "-fsSL", "--max-time", "30", GALLERY_RAW % (ref, rel)], capture_output=True)
+                    env = {k: os.environ.get(k) for k in CURL_ENV if os.environ.get(k) is not None}   # never keys
+                    r = subprocess.run(["curl", "-fsSL", "--max-time", "30", GALLERY_RAW % (ref, rel)], capture_output=True,
+                                       env=env)
                     if r.returncode == 0:
                         data = r.stdout
                         break

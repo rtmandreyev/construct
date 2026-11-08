@@ -132,6 +132,24 @@ def examples():
     return found
 
 
+def example_worlds():
+    """The worlds that ship with the plugin, by name: {name: {"folder", "title", "summary", "constructs"}}."""
+    index = HERE / "examples" / "worlds.json"
+    if index.is_file():
+        rows = json.loads(index.read_text(encoding="utf-8"))
+        base = HERE / "examples" / "worlds"
+    else:   # a source checkout: the repository's own
+        base = (HERE.parents[2] if len(HERE.parents) > 2 else HERE) / "examples" / "worlds"
+        rows = []
+        for d in sorted(base.iterdir()) if base.is_dir() else []:
+            if (d / "world.json").is_file():
+                doc = json.loads((d / "world.json").read_text(encoding="utf-8"))
+                rows.append({"name": d.name, "title": doc["title"], "summary": doc.get("summary", ""),
+                             "constructs": sorted({q["construct"] for q in doc["placements"]
+                                                   if not q["construct"].endswith(".json")})})
+    return {r["name"]: dict(r, folder=base / r["name"]) for r in rows}
+
+
 def gallery():
     """The gallery's constructs by name (the package's examples/gallery.json; in a source checkout, the repository's
     own examples): {name: row}."""

@@ -125,7 +125,8 @@ def start(args):
     if not sources:
         code, out, err = runtime.run_child("cli", "params", "--list", timeout=60)
         rows = [{k: e.get(k) for k in ("name", "title", "parts", "line", "use")} for e in runtime.catalog()]
-        return {"examples": rows, "archetypes": out.strip() if code == 0 else err.strip(),
+        worlds = [{k: w[k] for k in ("name", "title", "summary")} for w in runtime.example_worlds().values()]
+        return {"examples": rows, "worlds": worlds, "archetypes": out.strip() if code == 0 else err.strip(),
                 "categories": schemas.CATEGORIES, "programs": runtime.programs(),
                 "next": "call construct_start with one of example (a finished construct to start from or show), archetype "
                         "(+ variant), category or from_path"}

@@ -25,6 +25,17 @@ python3 construct_hologram/cli.py build my-villa.json --out out/my-villa        
 python3 construct_hologram/cli.py export my-villa.json --out my-villa.glb --pieces glued   # one file for Godot or Blender
 ```
 
+## Examples
+
+Three worlds ship in [examples/worlds](../examples/worlds/), made of the gallery's constructs. In Hermes,
+`construct_world` with `op: new` and `example` makes one the user's own.
+
+| World | What it holds |
+|---|---|
+| [The shed, the Samba and the Vespa](../examples/worlds/the-shed/world.json) | The garden shed, a VW T1 Samba along its end wall, a Vespa GS 150 by its door |
+| [The Villa Savoye, lived in](../examples/worlds/villa-savoye-lived-in/world.json) | Fifteen constructs: a salon with an Eames chair, a Yamaha CFX, a Tompion clock and two tables (designed for this world) carrying a Braun SK 4, a Revox A77, a Leica M3, a Speedmaster and a Serum 2/61; a Jackson by the piano; a Land Cruiser, a Samba and a Vespa under the pilotis; Saturn at the Moon's distance |
+| [A street of landmarks](../examples/worlds/a-street-of-landmarks/world.json) | The Duomo di Milano, the Sainte-Chapelle and the Sagrada Família on one street at their real sizes, the tea house across it, KESTREL holding station above |
+
 ## Placements
 
 | Key | What it does |

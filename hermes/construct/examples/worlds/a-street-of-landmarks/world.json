@@ -1,0 +1,87 @@
+{
+ "format": "construct-world",
+ "version": 1,
+ "id": "a-street-of-landmarks",
+ "title": "A street of landmarks",
+ "summary": "Four buildings from the gallery on one street, each at its real size and facing it: the Duomo di Milano, the Sainte-Chapelle and the Sagrada Família on the north side, the tea house across from them, and KESTREL, an invented ship, holding station above. Their real sites are far apart; this street is a what-if.",
+ "placements": [
+  {
+   "id": "sainte-chapelle",
+   "construct": "sainte-chapelle",
+   "at": [
+    0,
+    0,
+    -29
+   ],
+   "note": "Its west portal on the street."
+  },
+  {
+   "id": "duomo",
+   "construct": "duomo-di-milano",
+   "at": [
+    -72,
+    0,
+    -96
+   ],
+   "note": "Its steps come down to the kerb."
+  },
+  {
+   "id": "sagrada",
+   "construct": "sagrada-familia",
+   "at": [
+    82,
+    0,
+    -45
+   ],
+   "note": "The Nativity facade on the street."
+  },
+  {
+   "id": "tea-house",
+   "construct": "tea-house",
+   "at": [
+    0,
+    0,
+    16
+   ],
+   "yaw": 180,
+   "note": "Across the street, facing the chapel."
+  },
+  {
+   "id": "kestrel",
+   "construct": "kestrel-v2",
+   "at": [
+    10,
+    150,
+    0
+   ],
+   "yaw": 90,
+   "floating": true,
+   "note": "An invented ship, holding station over the street."
+  }
+ ],
+ "presentation": {
+  "framing": {
+   "yaw": 20,
+   "pitch": 14,
+   "fit": 1.0
+  },
+  "views": [
+   {
+    "id": "street",
+    "label": "Down the street",
+    "target": "sainte-chapelle",
+    "yaw": 62,
+    "pitch": 3,
+    "distance": 2.6
+   },
+   {
+    "id": "overhead",
+    "label": "Under KESTREL",
+    "target": "kestrel",
+    "yaw": 160,
+    "pitch": -12,
+    "distance": 1.6
+   }
+  ]
+ }
+}

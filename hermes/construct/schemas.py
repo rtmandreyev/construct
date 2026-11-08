@@ -234,6 +234,8 @@ WORLD = _tool(
     {"op": {"type": "string", "enum": ["new", "place", "move", "remove", "list", "view"]},
      "world": {"type": "string", "description": "The world's project id (from op new)."},
      "title": {"type": "string", "description": "new: the world's name."},
+     "example": {"type": "string", "description": "new: start from a world that ships with the plugin "
+                                                  "(construct_start lists them under worlds)."},
      "summary": {"type": "string", "description": "new: what the world is, in a sentence."},
      "construct": {"type": "string", "description": "What to place: the user's project id (a construct or another "
                                                     "world), a construct the plugin ships (construct_start lists them), "

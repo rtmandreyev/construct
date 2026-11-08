@@ -432,6 +432,8 @@ def _append(out, g, pid, xf, start, span, sky=False):
             row[7] += mo
         if len(row) > 9 and row[9] >= 0:
             row[9] += jo
+        if sky:   # far by design: the viewer's depth haze never fades it (a fade of -1)
+            row[5] = -1
         out.styles.append(row)
     cols = g.get("style_colors") or [None] * len(g["styles"])
     out.style_colors.extend(cols)
@@ -616,15 +618,21 @@ def audit(doc, g):
     warnings, notes = [], []
     add = lambda code, pid, msg: warnings.append({"code": code, "part": pid, "message": msg})
     recs = {r["id"]: r for r in g["world"]["placements"]}
+    # what takes up room: not the sky, and not a decorative cloud of points (motes, dust, a nebula's glow)
+    solid = lambda p: not p.get("sky") and not (p.get("shape") == "points" and p.get("certainty") == "decorative")
     boxes = {}
     for p in g["parts"]:
-        if p.get("sky"):
+        if not solid(p):
             continue
         for b in p["instances"]:
             lo, hi = boxes.setdefault(p["placement"], [list(b["min"]), list(b["max"])])
             for k in range(3):
                 lo[k], hi[k] = min(lo[k], b["min"][k]), max(hi[k], b["max"][k])
-    ground = min((b[0][1] for b in boxes.values()), default=0.0)
+    parts_of = {}
+    for p in g["parts"]:
+        if solid(p):
+            parts_of.setdefault(p["placement"], []).extend((p["id"], b["min"], b["max"]) for b in p["instances"])
+    ground = 0.0   # the world's ground plane (a construct's own foundations may go below it)
     hosts = {r["on"].split("/")[0] for r in recs.values() if r.get("on")}
     ids = [r["id"] for r in g["world"]["placements"]]
     for i, a in enumerate(ids):
@@ -635,18 +643,16 @@ def audit(doc, g):
                     b in hosts and recs[a].get("on", "").split("/")[0] == b:
                 continue   # a thing and what it stands on (a chair in its house) share space by design
             A, B = boxes[a], boxes[b]
-            ov = [min(A[1][k], B[1][k]) - max(A[0][k], B[0][k]) for k in range(3)]
-            if all(o > 0.01 for o in ov):
-                vol = ov[0] * ov[1] * ov[2]
-                small = min(_vol(A), _vol(B)) or 1e-9
-                if vol / small > 0.05:
-                    add("overlap", a, "%s and %s overlap (%.0f%% of the smaller)" % (a, b, 100 * vol / small))
+            if not _meets(A, B):
+                continue
+            # their boxes cross; do their parts? (a scooter beside a shed shares the box of the shed's yard, not a wall)
+            pa = [(lo, hi) for _, lo, hi in parts_of.get(a, []) if _meets((lo, hi), B)]
+            pb = [(lo, hi) for _, lo, hi in parts_of.get(b, []) if _meets((lo, hi), A)]
+            hits = sum(1 for x in pa if any(_meets(x, y) for y in pb))
+            if hits:
+                add("overlap", a, "%s and %s overlap (%d of %s's parts run into %s's)" % (a, b, hits, a, b))
     # a thing shares space with what it stands on (a chair in its house), but not with every part of it: a car
     # parked under a house must clear its columns. Each part's boxes against the host's, all but its support.
-    parts_of = {}
-    for p in g["parts"]:
-        if not p.get("sky"):
-            parts_of.setdefault(p["placement"], []).extend((p["id"], b["min"], b["max"]) for b in p["instances"])
     for pid, r in recs.items():
         on = r.get("on")
         if not on or pid not in boxes:

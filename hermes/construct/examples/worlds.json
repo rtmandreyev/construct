@@ -1,0 +1,48 @@
+[
+ {
+  "name": "a-street-of-landmarks",
+  "title": "A street of landmarks",
+  "summary": "Four buildings from the gallery on one street, each at its real size and facing it: the Duomo di Milano, the Sainte-Chapelle and the Sagrada Família on the north side, the tea house across from them, and KESTREL, an invented ship, holding station above. Their real sites are far apart; this street is a what-if.",
+  "constructs": [
+   "duomo-di-milano",
+   "kestrel-v2",
+   "sagrada-familia",
+   "sainte-chapelle",
+   "tea-house"
+  ],
+  "placements": 5
+ },
+ {
+  "name": "the-shed",
+  "title": "The shed, the Samba and the Vespa",
+  "summary": "A garden shed with a 1960s VW T1 Samba parked in front and a Vespa GS 150 beside its door; three constructs from the gallery, each whole and at real size.",
+  "constructs": [
+   "garden-shed",
+   "vespa-gs150",
+   "volkswagen-t1-samba"
+  ],
+  "placements": 3
+ },
+ {
+  "name": "villa-savoye-lived-in",
+  "title": "The Villa Savoye, lived in",
+  "summary": "The Villa Savoye (Poissy, 1931) with a life moved in: an Eames lounge chair, a Yamaha CFX, a Tompion year-going clock and two tables in the salon, a Braun SK 4, a Revox A77, a Leica M3, a Speedmaster and a Serum 2/61 on them, a Jackson by the piano, a Land Cruiser, a Samba and a Vespa under the pilotis, and Saturn as close as the Moon. Fifteen constructs from the gallery, each whole and at real size; the tables are designed for this world.",
+  "constructs": [
+   "braun-sk4",
+   "eames-lounge-chair",
+   "jackson-juggernaut-et7",
+   "leica-m3",
+   "omega-speedmaster-321",
+   "revox-a77",
+   "saturn",
+   "serum-2-61",
+   "tompion-year-going-clock",
+   "toyota-land-cruiser-fj62",
+   "vespa-gs150",
+   "villa-savoye",
+   "volkswagen-t1-samba",
+   "yamaha-cfx"
+  ],
+  "placements": 16
+ }
+]
