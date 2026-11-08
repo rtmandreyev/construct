@@ -618,9 +618,11 @@ def audit(doc, g):
     warnings, notes = [], []
     add = lambda code, pid, msg: warnings.append({"code": code, "part": pid, "message": msg})
     recs = {r["id"]: r for r in g["world"]["placements"]}
+    # what takes up room: not the sky, and not a decorative cloud of points (motes, dust, a nebula's glow)
+    solid = lambda p: not p.get("sky") and not (p.get("shape") == "points" and p.get("certainty") == "decorative")
     boxes = {}
     for p in g["parts"]:
-        if p.get("sky"):
+        if not solid(p):
             continue
         for b in p["instances"]:
             lo, hi = boxes.setdefault(p["placement"], [list(b["min"]), list(b["max"])])
@@ -628,9 +630,9 @@ def audit(doc, g):
                 lo[k], hi[k] = min(lo[k], b["min"][k]), max(hi[k], b["max"][k])
     parts_of = {}
     for p in g["parts"]:
-        if not p.get("sky"):
+        if solid(p):
             parts_of.setdefault(p["placement"], []).extend((p["id"], b["min"], b["max"]) for b in p["instances"])
-    ground = min((b[0][1] for b in boxes.values()), default=0.0)
+    ground = 0.0   # the world's ground plane (a construct's own foundations may go below it)
     hosts = {r["on"].split("/")[0] for r in recs.values() if r.get("on")}
     ids = [r["id"] for r in g["world"]["placements"]]
     for i, a in enumerate(ids):

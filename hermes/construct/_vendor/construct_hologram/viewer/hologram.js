@@ -144,6 +144,7 @@ vec3 toneColor(float tone, float cert, vec4 d) {
   return uPalette[int(tone + 0.5)];
 }
 float fogOf(vec3 p, float fade) {
+  if (fade < -0.5) return 1.0;   // a world's sky: far by design, at its real angular size, never hazed away
   float beyond = max(distance(p, uEye) - (distance(uBounds.xyz, uEye) - 0.3 * uBounds.w), 0.0) / uBounds.w;
   return exp(-uFogDensity * beyond * (1.0 + 0.7 * fade));
 }
