@@ -734,8 +734,33 @@ COMMANDS = {"new", "params", "expand", "check", "build", "review", "export", "pr
             "terrain", "globe", "critique", "rounds", "compare", "loft-from-traces", "audio", "video", "netlogo",
             "netlogo-instrument", "netlogo-compare", "netlogo-plates", "netlogo-film", "prompts"}
 NETWORK = {"author": "it drafts with a model over the network", "trace-image": "it sends images to a model over the network"}
-WRITES = {"--out", "--output", "--overlay", "--into", "--glb", "--csv", "--materials-out", "--blend", "--dir", "--step"}
-NETWORK_FLAGS = {"--base-url", "--critic-base-url", "--key-env", "--critic-key-env", "--critic-model"}
+# what Construct's parser makes of a command line (whole option names only), by the argument it sets
+WRITES = {"out": "--out", "output": "--output", "overlay": "--overlay", "into": "--into", "glb": "--glb", "csv": "--csv",
+          "materials_out": "--materials-out", "blend": "--blend", "dir": "--dir", "step": "--step"}
+NETWORK_ARGS = {"base_url": "--base-url", "critic_base_url": "--critic-base-url", "key_env": "--key-env",
+                "critic_key_env": "--critic-key-env", "critic_model": "--critic-model"}
+PROGRAM_ARGS = {"freecad": "--freecad", "blender": "--blender"}
+
+
+def parsed(argv):
+    """argv as Construct's own parser reads it, in a child (nothing runs): {name: value}, or a refusal."""
+    spec = runtime.data_dir() / "work" / (".argv-%s.json" % runtime.new_id())
+    spec.parent.mkdir(parents=True, exist_ok=True)
+    try:
+        runtime.write_json(spec, argv)
+        code, out, err = runtime.run_child("parse", str(spec), timeout=60)
+    finally:
+        spec.unlink(missing_ok=True)
+    try:
+        got = json.loads(out) if code == 0 else None
+    except ValueError:
+        got = None
+    if not isinstance(got, dict):
+        raise ConstructError("Construct could not read that command line: %s" % (err.strip()[-400:] or "no answer"))
+    if got.get("error"):
+        hint = " (options are written in full: --out, not --ou)" if "unrecognized" in got["error"] else ""
+        raise ConstructError("construct %s: %s%s" % (argv[0], got["error"], hint))
+    return got.get("values")   # None: a help request, which runs nothing else
 
 
 @tool("construct_command")
@@ -750,11 +775,17 @@ def command(args):
                              (sub, NETWORK[sub]))
     if sub not in COMMANDS:
         raise ConstructError("unknown or unavailable subcommand %r; available: %s" % (sub, ", ".join(sorted(COMMANDS))))
-    for a in argv[1:]:
-        if a.split("=", 1)[0] in NETWORK_FLAGS:
+    # every check below reads what Construct's parser will act on, never the spelling of a flag
+    values = parsed(argv) or {}
+    for name, flag in NETWORK_ARGS.items():
+        if values.get(name) not in (None, False):
             raise ConstructError("%s calls a model over the network; the plugin does not. Delegate the critic to a fresh "
-                                 "subagent and record its answer instead." % a)
-    if sub == "rounds" and len(argv) > 1 and argv[1] == "run":
+                                 "subagent and record its answer instead." % flag)
+    for name, flag in PROGRAM_ARGS.items():
+        if values.get(name) not in (None, ""):
+            raise ConstructError("%s names a program to run; the plugin runs only the %s it finds itself (the plugin's "
+                                 "settings, CONSTRUCT_%s, or PATH). Drop %s." % (flag, name.title(), name.upper(), flag))
+    if sub == "rounds" and values.get("action") == "run":
         raise ConstructError("rounds run calls a model over the network; use rounds packet, a delegated critic and "
                              "rounds record")
     project = args.get("project")
@@ -765,20 +796,19 @@ def command(args):
     def where(value):
         p = Path(value).expanduser()
         return (p if p.is_absolute() else folder / p).resolve()
-    for i, a in enumerate(argv[1:], 1):
-        flag, eq, val = a.partition("=")
-        if flag in WRITES:
-            value = val if eq else (argv[i + 1] if i + 1 < len(argv) else None)
-            if value is not None and not runtime.inside(where(value), roots):
+    for name, flag in WRITES.items():
+        value = values.get(name)
+        for v in (value if isinstance(value, list) else [value]):
+            if isinstance(v, str) and v and not runtime.inside(where(v), roots):
                 raise ConstructError("%s %s is outside the project and the plugin's data folder; write inside the project "
-                                     "(a relative path)" % (flag, value))
+                                     "(a relative path)" % (flag, v))
     # commands that write beside (or into) the scene they are given: that scene must be inside a project
     scene_arg = None
-    if sub == "critique" or (sub == "compare" and "--record" in argv):
-        scene_arg = next((a for a in argv[1:] if not a.startswith("-")), None)
-    elif sub == "rounds" and len(argv) > 2 and argv[1] == "start":
-        scene_arg = argv[2]
-    if scene_arg and not runtime.inside(where(scene_arg), roots):
+    if sub == "critique" or (sub == "compare" and values.get("record")):
+        scene_arg = values.get("scene")
+    elif sub == "rounds" and values.get("action") == "start" and values.get("args"):
+        scene_arg = values["args"][0]
+    if isinstance(scene_arg, str) and not runtime.inside(where(scene_arg), roots):
         raise ConstructError("%s writes beside the scene; copy %s into a project first (construct_start from_path)" %
                              (sub, scene_arg))
     wait = _number(args, "wait_seconds", 1, 380, integer=True) or 300

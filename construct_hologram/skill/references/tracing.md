@@ -77,8 +77,9 @@ Tracing works with any model that can see images: Claude, GPT, Gemini and DeepSe
   question. DeepSeek V4.1 Flash and GPT-6.1 Sol both describe and trace images this way.
 - **Claude Code:** the agent reads image files directly; put the user's photo in the working
   folder.
-- **Any OpenAI-compatible vision model:** `construct trace-image photo.jpg --what "the guitar
+<!--network-->- **Any OpenAI-compatible vision model:** `construct trace-image photo.jpg --what "the guitar
   body outline, front view" --features nut,bridge --fit nut:bridge=0.648 --base-url ...
   --model ... --key-env ... --out body.json` (local photos are sent as data; https images by URL,
   viewed and not kept). `construct author --reference photo.jpg ...` attaches references to a
   whole draft.
+<!--/network-->

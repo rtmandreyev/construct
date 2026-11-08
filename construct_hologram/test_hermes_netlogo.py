@@ -152,6 +152,18 @@ class Tools(Base):
             self.nt._found["at"] = 0.0
             self.nt.find_netlogo(fresh=True)
 
+    def test_a_model_from_outside_the_library_is_approved_first(self):
+        if not self.found or not self.found.get("models"):
+            self.skipTest("NetLogo and its Models Library are not installed")
+        gate = self.ctx.hooks["pre_tool_call"]
+        library = sorted(Path(self.found["models"]).rglob("*.nlogox"))[0]
+        self.assertIsNone(gate(tool_name="construct_netlogo_run", args={"model": str(library)}))
+        outside = Path(self.tmp.name) / "mine.nlogox"
+        outside.write_text(library.read_text(encoding="utf-8"), encoding="utf-8")
+        ask = gate(tool_name="construct_netlogo_run", args={"model": str(outside)})
+        self.assertEqual(ask["action"], "approve")
+        self.assertIn("outside the installed Models Library", ask["message"])
+
     def test_refusals_never_raise(self):
         bad = [("construct_netlogo_run", {}), ("construct_netlogo_run", {"nonsense": 1}),
                ("construct_netlogo_run", {"search": 5}),

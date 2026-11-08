@@ -62,9 +62,7 @@ checklist, the scene's hash) and renders from the views of your references besid
 - **Claude Code**: start a subagent with only this: "Read critique/packet.md and every image
   it lists; answer with the critique JSON it asks for; save it as critique/critique.json".
   Do not give it your conversation.
-- **Hermes**: delegate the same task (the delegation toolset), or run the critic as a
-  second model call: add `--base-url`, `--model` and `--key-env` to the command above.
-- **`construct author --critic`** (or `--tier masterpiece`) runs it for you every round.
+- **Hermes**: delegate the same task (the delegation toolset).
 - **Masterpiece rounds** (`rounds packet` / `rounds record`, [rounds](rounds.md)) use one critic
   per round in three parts: this version blind, then against the best so far (A/B), then the
   defect ledger. The pairwise pick decides; scores are recorded, and every score below 3 must

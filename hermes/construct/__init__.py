@@ -8,6 +8,8 @@ stops its background jobs when the plugin unloads. It also registers the /constr
 the Constructs page and the Learn page; its backend is dashboard/plugin_api.py.
 """
 
+import hashlib
+import json
 from pathlib import Path
 
 from . import commands, jobs, netlogo_tools, runtime, schemas, stock, tools
@@ -49,20 +51,34 @@ def programs_for(tool_name, args):
 def make_gate(ctx):
     """A pre_tool_call hook: with `confirm_runs` on, a call that runs an outside program asks the user first.
     In an unattended run (cron) nobody can answer, so the call is refused with a reason instead."""
+    def unattended():
+        try:
+            return ctx.current_cron_execution() is not None
+        except Exception:
+            return False
+
     def gate(tool_name=None, args=None, **kwargs):
         if not str(tool_name or "").startswith("construct_"):
             return None
+        if tool_name == "construct_netlogo_run":   # code the agent wrote, or a model from outside the library: always asked
+            why = netlogo_tools.custom_run(args)
+            if why:
+                if unattended():
+                    return {"action": "block",
+                            "message": "Construct asks before running NetLogo with %s, and nobody can answer in a "
+                                       "scheduled run." % "; ".join(why)}
+                key = hashlib.sha256(json.dumps([args.get("model"), args.get("setup"), args.get("go")],
+                                                sort_keys=True).encode("utf-8")).hexdigest()[:16]
+                return {"action": "approve", "rule_key": "construct:netlogo-code:" + key,
+                        "message": "Construct wants to run NetLogo (Java, on this machine, no network) with %s. "
+                                   "NetLogo code runs with your rights: check it first." % "; ".join(why)}
         if not runtime.setting("confirm_runs", False):
             return None
         progs = programs_for(tool_name, args)
         if not progs:
             return None
         what = " and ".join(progs)
-        try:
-            unattended = ctx.current_cron_execution() is not None
-        except Exception:
-            unattended = False
-        if unattended:
+        if unattended():
             return {"action": "block",
                     "message": "Construct asks before running %s (the plugin's 'Ask before running programs' setting), and "
                                "nobody can answer in a scheduled run. Turn that setting off to allow it." % what}

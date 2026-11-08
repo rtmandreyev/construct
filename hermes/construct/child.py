@@ -7,6 +7,7 @@ from the user's site or the current folder is imported. Ops:
 
     programs                  which outside programs Construct finds (JSON)
     cli <argv...>             Construct's own command line
+    parse <argv.json>         how Construct's own parser reads a command line, without running it (JSON)
     build <spec.json>         `build`, then a small still for the gallery when a browser is there
     inspect <scene>           what the scene's own record says is known (JSON)
     edit <spec.json>          apply construct_edit's operations, validating each; the result beside, as a candidate
@@ -373,12 +374,47 @@ def edit(spec):
     return 0
 
 
+def parse(argv):
+    """What Construct's parser (whole option names only) makes of `argv`: the subcommand and every argument's value,
+    or the parser's error. Nothing runs."""
+    import argparse
+    from construct_hologram.__main__ import build_parser
+    parser = build_parser()
+    err = []
+
+    def refuse(message):
+        err.append(message)
+        raise SystemExit(2)
+    parser.error = refuse
+    for action in parser._actions:   # each subcommand's parser reports through the same door
+        if isinstance(action, argparse._SubParsersAction):
+            for sub in action.choices.values():
+                sub.error = refuse
+    import contextlib
+    import io
+    try:
+        with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
+            ns = parser.parse_args(argv)
+    except SystemExit as exc:
+        if exc.code in (0, None) and not err:
+            return {"help": True}
+        return {"error": err[0] if err else "the command line could not be read"}
+
+    def plain(v):
+        return v if isinstance(v, (str, int, float, bool)) or v is None else \
+            [plain(x) for x in v] if isinstance(v, (list, tuple)) else str(v)
+    return {"values": {k: plain(v) for k, v in vars(ns).items()}}
+
+
 def run(op, args):
     if op == "programs":
         print(json.dumps(programs()))
         return 0
     if op == "cli":
         return _cli(args)
+    if op == "parse":
+        print(json.dumps(parse(json.loads(Path(args[0]).read_text(encoding="utf-8"))), ensure_ascii=False))
+        return 0
     if op == "inspect":
         print(json.dumps(inspect(args[0]), ensure_ascii=False))
         return 0

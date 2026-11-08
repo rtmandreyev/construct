@@ -1,6 +1,24 @@
 # Changelog
 
-## 1.2.1 — 2026-11-07
+## 1.2.1 — 2026-11-08
+
+The Hermes plugin's security review (the catalog's, at 1.2.0), and an examples polish.
+
+- **Options only by their whole names.** Construct's command line, and every subcommand's, refuses a prefix of an
+  option (`--ou` for `--out`); before, argparse took prefixes, so a check of flags by name could be walked around.
+  The plugin's `construct_command` now reads a command line as Construct's own parser does, in a child, without
+  running it, and decides on what the parser understood: options that call a model over the network (`--base-url`,
+  `--key-env`, the `--critic-*` options), `rounds ... run` wherever its options stand, and writes outside the project
+  are refused.
+- **No program paths from a tool call.** `--freecad` and `--blender` are refused in the plugin; the programs it runs
+  come from its settings, a `CONSTRUCT_*` variable or the PATH.
+- **Minimal environments.** Chrome, ffmpeg, Blender, FreeCAD, Java (NetLogo) and the plugin's own Construct child
+  get what a program needs to start and keep its files, and Construct's `CONSTRUCT_*` settings for the child; never
+  the rest of the environment, where provider keys live (`construct_hologram/procenv.py`).
+- **NetLogo code is approved first.** A run of a model from outside the installed Models Library, or with `setup`/
+  `go` code the agent wrote, always goes through Hermes's approval prompt, showing the code, whatever *Ask before
+  running programs* is set to; an approval covers that code only.
+- The plugin's README says so, and its skill references no longer show the direct model calls the plugin refuses.
 
 Examples polish: every gallery example checked again, by measurement and in the solid view, for slips the light
 forgives. One small kit-plan addition; nothing else in the library changed.

@@ -28,7 +28,7 @@ ROOT = Path(__file__).resolve().parent.parent
 PKG = ROOT / "construct_hologram"
 HERE = ROOT / "scripts" / "hermes_submission"
 RUNTIME = ["__init__.py", "__main__.py", "product.py", "hologram.py", "scene.py", "shapes.py", "audit.py", "prompts.py",
-           "diagnose.py", "params.py", "render.py", "studio.py", "png.py", "trace.py", "terrain.py", "tiers.py", "globe.py", "critic.py", "compare.py", "archkit.py", "rounds.py", "runner.py", "film_audio.py", "export.py", "printing.py", "plates.py", "kit.py", "freecad.py", "fit.py",
+           "diagnose.py", "params.py", "render.py", "studio.py", "png.py", "trace.py", "terrain.py", "tiers.py", "globe.py", "critic.py", "compare.py", "archkit.py", "rounds.py", "runner.py", "film_audio.py", "procenv.py", "export.py", "printing.py", "plates.py", "kit.py", "freecad.py", "fit.py",
            "netlogo.py", "runfilm.py", "construct.nls"]
 # the examples the skill's references cite, and the one its test needs (case-jewel); a skill over ~50
 # files draws a scanner notice, so only these ship
@@ -56,6 +56,7 @@ def build(out):
     shutil.copyfile(HERE / "SKILL.md", skill / "SKILL.md")
     for ref in sorted((PKG / "skill" / "references").glob("*.md")):
         text = ref.read_text(encoding="utf-8").replace("`examples/", "`assets/examples/")
+        text = text.replace("<!--network-->", "").replace("<!--/network-->", "")   # the skill runs them itself
         text = text.replace("`prompts/trace.md`", "`references/trace-prompt.md`").replace("python3 TOOLS", "python3 ${HERMES_SKILL_DIR}/scripts/cli.py")
         (skill / "references" / ref.name).write_text(text, encoding="utf-8")
     shutil.copyfile(PKG / "prompts" / "trace.md", skill / "references" / "trace-prompt.md")

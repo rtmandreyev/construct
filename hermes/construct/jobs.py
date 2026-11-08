@@ -70,7 +70,7 @@ def start(kind, op, args=(), *, project=None, label="", finish=None, cwd=None, s
     try:
         kw = {"start_new_session": True} if os.name == "posix" else {"creationflags": getattr(subprocess, "CREATE_NEW_PROCESS_GROUP", 0)}
         proc = subprocess.Popen(runtime.child_argv("job", path, op, *args), stdin=subprocess.DEVNULL, stdout=log,
-                                stderr=subprocess.STDOUT, cwd=str(cwd) if cwd else None, **kw)
+                                stderr=subprocess.STDOUT, cwd=str(cwd) if cwd else None, env=runtime.child_env(), **kw)
     finally:
         log.close()
     rec["pid"] = proc.pid
