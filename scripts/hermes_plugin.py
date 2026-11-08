@@ -113,7 +113,7 @@ def build(out):
         if not (wdir / "world.json").is_file():
             continue
         for f in sorted(wdir.rglob("*")):
-            if f.is_file() and f.suffix in (".json", ".md") and "builds" not in f.parts:
+            if f.is_file() and (f.suffix in (".json", ".md") or f.name == "thumb.jpg") and "builds" not in f.parts:
                 _copy(f, pkg / "examples" / "worlds" / wdir.name / f.relative_to(wdir))
         doc = json.loads((wdir / "world.json").read_text(encoding="utf-8"))
         worlds.append({"name": wdir.name, "title": doc["title"], "summary": doc.get("summary", ""),

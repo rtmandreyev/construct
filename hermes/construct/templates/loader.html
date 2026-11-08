@@ -37,7 +37,8 @@
       var h = window.HOLO && window.HOLO.hologram;
       var o = (h && h.opt) || {};
       return { type: "construct:state", ready: !!h, mode: o.mode === "provenance" ? "provenance" : "light",
-               solid: !!o.solid, hasSolid: !!(h && h.solid), reduced: !!o.reduced, step: step };
+               solid: !!o.solid, hasSolid: !!(h && h.solid), reduced: !!o.reduced, step: step,
+               world: !!(h && h.geo && h.geo.world), arranging: !!(h && h.arranging && h.arranging()) };
     }
     function tell() { try { parent.postMessage(state(), "*"); } catch (e) { /* the host went away */ } }
     function stepOf(url) { var m = /#step-(\d+)/.exec(String(url || "")); if (m) { step = parseInt(m[1], 10); tell(); } }
@@ -60,6 +61,11 @@
         window.dispatchEvent(new HashChangeEvent("hashchange"));
       } else if (d.type === "construct:ask") {
         tell();
+      } else if (d.type === "construct:arrange" && window.HOLO && window.HOLO.arrange) {
+        // a world arranged by hand: the card's Arrange, Put back; what changes goes back to the card to be saved
+        if (d.action === "on" || d.action === "off") window.HOLO.arrange.set(d.action === "on");
+        else if (d.action === "reset") window.HOLO.arrange.reset();
+        setTimeout(tell, 30);
       }
     });
     // in a card the "How to read it" panel starts folded (H, or its heading, opens it)
@@ -71,6 +77,12 @@
     // the viewer starts on DOMContentLoaded (its listener came first); report once it is ready
     function hook() {
       fold(20);
+      if (window.HOLO && window.HOLO.arrange) {
+        window.HOLO.onArrange = function (st) {
+          try { parent.postMessage({ type: "construct:arranged", on: !!st.on, selected: st.selected || null, changes: st.changes || [] }, "*"); }
+          catch (e) { /* the host went away */ }
+        };
+      }
       if (window.HOLO && window.HOLO.ready) window.HOLO.ready.then(tell, tell); else tell();
     }
     if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", function () { setTimeout(hook, 0); });

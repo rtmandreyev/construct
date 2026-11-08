@@ -58,8 +58,8 @@ model with named parts and working joints, a print, a model kit, a CAD file or a
 - **Worlds.** Whole constructs placed together in one scene: your chair, clock and piano in your house, your cars under
   it, a planet in the sky; a street, a city, a game map. Each construct stays whole, with its own record and joints.
   The world's audit says what overlaps, what runs into the house it stands in, and what stands where a door opens. A
-  world exports as one glTF or a Godot game map, and in Hermes `construct_world` builds one from the chat, live.
-  Three ship to start from. [Worlds](docs/WORLDS.md) · [release notes](docs/releases/v1.3.0.md)
+  world exports as one glTF or a Godot game map, and in Hermes `construct_world` builds one from the chat, live; or
+  arrange it yourself, dragging and turning each construct on its card. Three ship to start from. [Worlds](docs/WORLDS.md) · [release notes](docs/releases/v1.3.0.md)
 
 ## New in 1.2
 

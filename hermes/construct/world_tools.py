@@ -9,6 +9,7 @@ import json
 import re
 import shutil
 import tempfile
+import threading
 from pathlib import Path
 
 from . import runtime, tools
@@ -119,12 +120,16 @@ def _placement_fields(args, p):
     return p
 
 
-def check(doc, folder, surfaces_of=None):
+def check(doc, folder, surfaces_of=None, arrange=None):
     """The world checked by Construct (construct_hologram/world.py, in a child like every engine call): its
-    placements as they stand, its audit and, for `surfaces_of`, where things can stand on that placement."""
+    placements as they stand, its audit and, for `surfaces_of`, where things can stand on that placement. With
+    `arrange` (moves and turns made by hand on the page), the world after them: its document comes back as `doc`."""
     spec = Path(tempfile.mkstemp(prefix=".world-check-", suffix=".json", dir=str(folder))[1])
     try:
-        runtime.write_json(spec, {"doc": doc, "folder": str(folder), "surfaces_of": surfaces_of})
+        body = {"doc": doc, "folder": str(folder), "surfaces_of": surfaces_of}
+        if arrange is not None:
+            body["arrange"] = arrange
+        runtime.write_json(spec, body)
         code, out, err = runtime.run_child("world", str(spec), timeout=180, cwd=folder)
     finally:
         spec.unlink(missing_ok=True)
@@ -296,17 +301,85 @@ def world(args):
             _placement_fields(args, doc["placements"][idx])
     before = json.loads(path.read_text(encoding="utf-8"))
     checked = _save_checked(path, doc, folder)
-    (folder / "edits").mkdir(exist_ok=True)
-    stamp = runtime.new_id()
-    runtime.write_json(folder / "edits" / ("%s-before.json" % stamp), before)
-    with open(folder / "edits" / "log.jsonl", "a", encoding="utf-8") as fh:
-        fh.write(json.dumps({"id": stamp, "op": op, "placement": pid, "args": {k: v for k, v in args.items()
-                                                                             if k not in ("world", "op")}}) + "\n")
+    stamp = _log(folder, before, {"op": op, "by": "agent", "placement": pid,
+                                  "args": {k: v for k, v in args.items() if k not in ("world", "op")}})
     res = _rebuild(slug, folder, path, args.get("wait_seconds"))
     if isinstance(res, dict):
         res["world"] = _summary(checked)
         res["undo"] = "edits/%s-before.json" % stamp
     return res
+
+
+def _log(folder, before, entry):
+    """Keep the world as it was (edits/<id>-before.json) and say what changed (edits/log.jsonl): every change undoes."""
+    (folder / "edits").mkdir(exist_ok=True)
+    stamp = runtime.new_id()
+    runtime.write_json(folder / "edits" / ("%s-before.json" % stamp), before)
+    with open(folder / "edits" / "log.jsonl", "a", encoding="utf-8") as fh:
+        fh.write(json.dumps(dict({"id": stamp}, **entry)) + "\n")
+    return stamp
+
+
+def _rebuild_later(slug, folder, path):
+    """Rebuild without waiting: the page that asked follows the project's newest build. A thread finishes the job
+    (its build is published to the Constructs page) when it ends."""
+    build_id = runtime.new_id()
+    out = folder / "builds" / build_id
+    spec = {"scene": str(path), "out": str(out), "thumb": True, "asset_root": str(folder)}
+    from . import jobs
+    job_id = jobs.start("build", "build", project=slug, label="build of world %s" % slug, cwd=folder, spec=spec,
+                        finish={"slug": slug, "build": build_id, "out": str(out), "scene": str(path)})
+
+    def finish():
+        try:
+            if jobs.wait(job_id, 1800) is not None:
+                jobs.status(job_id)
+        except Exception:   # the job's own record says what happened
+            pass
+    threading.Thread(target=finish, name="construct-world-%s" % job_id, daemon=True).start()
+    return build_id, job_id
+
+
+def arrange_by_hand(slug, changes):
+    """The user's own moves and turns, made on the world's page (its arrange mode) and sent by the Desktop half
+    through /construct arrange: checked like any change, written, logged as the user's, and rebuilt."""
+    if not isinstance(slug, str) or not NAME.match(slug):
+        raise ConstructError("which world? /construct arrange <world> <changes>")
+    folder = runtime.project_dir(slug)
+    path, doc = _load(folder)
+    res = check(doc, folder, arrange=changes)
+    if res.get("errors"):
+        raise ConstructError("the world would not be valid:\n" + "\n".join(res["errors"]))
+    new, moved = res.pop("doc"), res.pop("moved")
+    before = json.loads(path.read_text(encoding="utf-8"))
+    runtime.write_json(path, new)
+    stamp = _log(folder, before, {"op": "arrange", "by": "user", "placement": ", ".join(moved), "changes": changes})
+    build, job_id = _rebuild_later(slug, folder, path)
+    return dict(_summary(res), world=slug, moved=moved, build=build, job_id=job_id, undo="edits/%s-before.json" % stamp)
+
+
+def undo(slug):
+    """The world as it was before its last change (by the agent or by hand), rebuilt."""
+    if not isinstance(slug, str) or not NAME.match(slug):
+        raise ConstructError("which world? /construct undo <world>")
+    folder = runtime.project_dir(slug)
+    path, doc = _load(folder)
+    log = folder / "edits" / "log.jsonl"
+    rows = [json.loads(x) for x in log.read_text(encoding="utf-8").splitlines() if x.strip()] if log.is_file() else []
+    undone = {r.get("undoes") for r in rows if r.get("op") == "undo"}
+    last = next((r for r in reversed(rows) if r.get("op") != "undo" and r["id"] not in undone
+                 and (folder / "edits" / ("%s-before.json" % r["id"])).is_file()), None)
+    if last is None:
+        raise ConstructError("nothing to undo in %s" % slug)
+    prior = json.loads((folder / "edits" / ("%s-before.json" % last["id"])).read_text(encoding="utf-8"))
+    res = check(prior, folder)
+    if res.get("errors"):
+        raise ConstructError("the earlier world no longer checks:\n" + "\n".join(res["errors"]))
+    runtime.write_json(path, prior)
+    _log(folder, doc, {"op": "undo", "by": "user", "undoes": last["id"], "placement": last.get("placement", "")})
+    build, job_id = _rebuild_later(slug, folder, path)
+    return dict(_summary(res), world=slug, undid=last.get("op"), placement=last.get("placement", ""), build=build,
+                job_id=job_id)
 
 
 HANDLERS = {"construct_world": world}

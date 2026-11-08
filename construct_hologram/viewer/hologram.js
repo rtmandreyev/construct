@@ -75,6 +75,7 @@ uniform vec4 uBounds;        // centre xyz, radius
 uniform vec2 uYRange;        // ground y, top y
 uniform highp sampler2D uPose; // one row per motion slot, then one per articulation chain: 4 texels of matrix, 1 of gain
 uniform float uJointBase;    // the first chain's row (rows before it are the motion slots)
+uniform float uPlaceBase;    // a world being arranged: the first placement's row (after the chains), else -1
 uniform float uGhost;        // pre-build ghost image 0..1
 uniform float uStabilise;    // glow surplus after the build
 uniform float uGlobalAlpha;
@@ -89,6 +90,7 @@ vec4 styleA(float s) { return texelFetch(uStyles, ivec2(0, int(s + 0.5)), 0); } 
 vec4 styleB(float s) { return texelFetch(uStyles, ivec2(1, int(s + 0.5)), 0); }  // dash, fade, part, slot
 vec4 styleC(float s) { return texelFetch(uStyles, ivec2(2, int(s + 0.5)), 0); }  // occluder, certainty, role, drift
 vec4 styleD(float s) { return texelFetch(uStyles, ivec2(3, int(s + 0.5)), 0); }  // joint, colour (r, g, b or -1)
+vec4 styleE(float s) { return texelFetch(uStyles, ivec2(4, int(s + 0.5)), 0); }  // a world's placement (or -1)
 
 mat4 poseAt(int r) {
   return mat4(texelFetch(uPose, ivec2(0, r), 0), texelFetch(uPose, ivec2(1, r), 0),
@@ -100,6 +102,10 @@ vec3 moved(vec3 p, float slot, float joint, inout float gain) {
   if (joint >= -0.5) p = (poseAt(int(uJointBase + 0.5) + int(joint + 0.5)) * vec4(p, 1.0)).xyz;
   return p;
 }
+// a world being arranged by hand: each placement's row holds where it has been moved to and how bright it is drawn
+float placeRow(float k) { return (uPlaceBase < -0.5 || k < -0.5) ? -1.0 : uPlaceBase + k; }
+vec3 placed(vec3 p, float row) { return row < -0.5 ? p : (poseAt(int(row + 0.5)) * vec4(p, 1.0)).xyz; }
+float placeGain(float row) { return row < -0.5 ? 1.0 : texelFetch(uPose, ivec2(4, int(row + 0.5)), 0).x; }
 // what an event does to where a point is drawn
 vec3 displaced(vec3 p, float id) {
   int k = int(uEvent.x + 0.5);
@@ -163,7 +169,9 @@ void main() {
   vec4 sa = styleA(aStyle), sb = styleB(aStyle), sc = styleC(aStyle), sd = styleD(aStyle);
   float gain = 1.0;
   float id = float(gl_InstanceID);
-  vec3 a = displaced(moved(aA, sb.w, sd.x, gain), id), b = displaced(moved(aB, sb.w, sd.x, gain), id + 0.5);
+  float pr = placeRow(styleE(aStyle).x);
+  vec3 a = displaced(placed(moved(aA, sb.w, sd.x, gain), pr), id), b = displaced(placed(moved(aB, sb.w, sd.x, gain), pr), id + 0.5);
+  gain *= placeGain(pr);
   vec4 ca = uVP * vec4(a, 1.0), cb = uVP * vec4(b, 1.0);
   float near = 0.02;
   if (ca.w < near && cb.w < near) { gl_Position = vec4(2.0, 2.0, 2.0, 1.0); vColor = vec4(0.0); return; }
@@ -230,7 +238,9 @@ out vec3 vWorld; out vec4 vTint; out float vPhase; out float vOcc;
 void main() {
   vec4 sa = styleA(aStyle), sb = styleB(aStyle), sc = styleC(aStyle), sd = styleD(aStyle);
   float gain = 1.0;
-  vec3 p = displaced(moved(aPos, sb.w, sd.x, gain), float(gl_VertexID / 3));
+  float pr = placeRow(styleE(aStyle).x);
+  vec3 p = displaced(placed(moved(aPos, sb.w, sd.x, gain), pr), float(gl_VertexID / 3));
+  gain *= placeGain(pr);
   vWorld = p; vPhase = aPhase; vOcc = sc.x;
   float ev = eventGain(p, float(gl_VertexID / 3));
   vTint = vec4(toneColor(sa.x, sc.y, sd) * ev, sa.y * gain * fogOf(p, sb.y) * uGlobalAlpha);
@@ -265,9 +275,10 @@ void main() {
   vec4 sb = styleB(aStyle), sc = styleC(aStyle), sd = styleD(aStyle);
   float gain = 1.0, g2 = 1.0;
   vec3 p0 = uLo + aPosN * uSpan;
-  vec3 p = moved(p0, sb.w, sd.x, gain);
+  float pr = placeRow(styleE(aStyle).x);
+  vec3 p = placed(moved(p0, sb.w, sd.x, gain), pr);
   p.y += (1.0 - smoothstep(aPhase, aPhase + uReveal * 1.25, uBuild)) * uFly * uBounds.w;   // a piece drops into place
-  vec3 q = moved(p0 + aNrm * 0.01 * uBounds.w, sb.w, sd.x, g2);   // the normal turns with its part
+  vec3 q = placed(moved(p0 + aNrm * 0.01 * uBounds.w, sb.w, sd.x, g2), pr);   // the normal turns with its part
   vWorld = p; vNrm = q - p; vPhase = aPhase;
   vBase = uMode > 0.5 ? uCertColor[int(sc.y + 0.5)] : (sd.y >= 0.0 ? sd.yzw : vec3(0.72, 0.71, 0.73));
   gl_Position = uVP * vec4(p, 1.0);
@@ -312,7 +323,9 @@ out vec4 vColor; out vec2 vUv; out float vShape; out float vPhase;
 void main() {
   vec4 sa = styleA(aStyle), sb = styleB(aStyle), sc = styleC(aStyle), sd = styleD(aStyle);
   float gain = 1.0; float id = float(gl_InstanceID);
-  vec3 p = moved(aPos, sb.w, sd.x, gain);
+  float pr = placeRow(styleE(aStyle).x);
+  vec3 p = placed(moved(aPos, sb.w, sd.x, gain), pr);
+  gain *= placeGain(pr);
   float drift = sc.w;
   float life = 1.0;
   if (drift > 0.5) { // rising motes (the projector's): wrap within a column, fade at both ends
@@ -391,11 +404,11 @@ void main() {
   const ART_VS = COMMON + `
 layout(location=0) in vec3 aPos;
 layout(location=1) in vec2 aUv;
-uniform float uSlot; uniform float uJointArt; uniform float uPhaseArt;
+uniform float uSlot; uniform float uJointArt; uniform float uPhaseArt; uniform float uPlaceArt;
 out vec2 vUv; out float vA;
 void main() {
   float gain = 1.0;
-  vec3 p = moved(aPos, uSlot, uJointArt, gain);
+  vec3 p = placed(moved(aPos, uSlot, uJointArt, gain), placeRow(uPlaceArt));
   vUv = aUv; vA = uGlobalAlpha * smoothstep(uPhaseArt, uPhaseArt + 0.1, uBuild);
   gl_Position = uVP * vec4(p, 1.0);
 }`;
@@ -464,6 +477,29 @@ void main() {
   function perspective(fovDeg, aspect, near, far) {
     const f = 1 / Math.tan(fovDeg * Math.PI / 360), nf = 1 / (near - far);
     return [f / aspect, 0, 0, 0, 0, f, 0, 0, 0, 0, (far + near) * nf, -1, 0, 0, 2 * far * near * nf, 0];
+  }
+  function mat4inv(m) {   // a general 4x4 inverse (column-major), or null
+    const a = m, o = new Array(16);
+    o[0] = a[5] * a[10] * a[15] - a[5] * a[11] * a[14] - a[9] * a[6] * a[15] + a[9] * a[7] * a[14] + a[13] * a[6] * a[11] - a[13] * a[7] * a[10];
+    o[4] = -a[4] * a[10] * a[15] + a[4] * a[11] * a[14] + a[8] * a[6] * a[15] - a[8] * a[7] * a[14] - a[12] * a[6] * a[11] + a[12] * a[7] * a[10];
+    o[8] = a[4] * a[9] * a[15] - a[4] * a[11] * a[13] - a[8] * a[5] * a[15] + a[8] * a[7] * a[13] + a[12] * a[5] * a[11] - a[12] * a[7] * a[9];
+    o[12] = -a[4] * a[9] * a[14] + a[4] * a[10] * a[13] + a[8] * a[5] * a[14] - a[8] * a[6] * a[13] - a[12] * a[5] * a[10] + a[12] * a[6] * a[9];
+    o[1] = -a[1] * a[10] * a[15] + a[1] * a[11] * a[14] + a[9] * a[2] * a[15] - a[9] * a[3] * a[14] - a[13] * a[2] * a[11] + a[13] * a[3] * a[10];
+    o[5] = a[0] * a[10] * a[15] - a[0] * a[11] * a[14] - a[8] * a[2] * a[15] + a[8] * a[3] * a[14] + a[12] * a[2] * a[11] - a[12] * a[3] * a[10];
+    o[9] = -a[0] * a[9] * a[15] + a[0] * a[11] * a[13] + a[8] * a[1] * a[15] - a[8] * a[3] * a[13] - a[12] * a[1] * a[11] + a[12] * a[3] * a[9];
+    o[13] = a[0] * a[9] * a[14] - a[0] * a[10] * a[13] - a[8] * a[1] * a[14] + a[8] * a[2] * a[13] + a[12] * a[1] * a[10] - a[12] * a[2] * a[9];
+    o[2] = a[1] * a[6] * a[15] - a[1] * a[7] * a[14] - a[5] * a[2] * a[15] + a[5] * a[3] * a[14] + a[13] * a[2] * a[7] - a[13] * a[3] * a[6];
+    o[6] = -a[0] * a[6] * a[15] + a[0] * a[7] * a[14] + a[4] * a[2] * a[15] - a[4] * a[3] * a[14] - a[12] * a[2] * a[7] + a[12] * a[3] * a[6];
+    o[10] = a[0] * a[5] * a[15] - a[0] * a[7] * a[13] - a[4] * a[1] * a[15] + a[4] * a[3] * a[13] + a[12] * a[1] * a[7] - a[12] * a[3] * a[5];
+    o[14] = -a[0] * a[5] * a[14] + a[0] * a[6] * a[13] + a[4] * a[1] * a[14] - a[4] * a[2] * a[13] - a[12] * a[1] * a[6] + a[12] * a[2] * a[5];
+    o[3] = -a[1] * a[6] * a[11] + a[1] * a[7] * a[10] + a[5] * a[2] * a[11] - a[5] * a[3] * a[10] - a[9] * a[2] * a[7] + a[9] * a[3] * a[6];
+    o[7] = a[0] * a[6] * a[11] - a[0] * a[7] * a[10] - a[4] * a[2] * a[11] + a[4] * a[3] * a[10] + a[8] * a[2] * a[7] - a[8] * a[3] * a[6];
+    o[11] = -a[0] * a[5] * a[11] + a[0] * a[7] * a[9] + a[4] * a[1] * a[11] - a[4] * a[3] * a[9] - a[8] * a[1] * a[7] + a[8] * a[3] * a[5];
+    o[15] = a[0] * a[5] * a[10] - a[0] * a[6] * a[9] - a[4] * a[1] * a[10] + a[4] * a[2] * a[9] + a[8] * a[1] * a[6] - a[8] * a[2] * a[5];
+    const det = a[0] * o[0] + a[1] * o[4] + a[2] * o[8] + a[3] * o[12];
+    if (!det) return null;
+    for (let i = 0; i < 16; i++) o[i] /= det;
+    return o;
   }
   function mat4mul(a, b) {
     const o = new Array(16);
@@ -563,20 +599,22 @@ void main() {
 
   Hologram.prototype.upload = function () {
     const gl = this.gl, g = this.geo;
-    // styles texture: 4 texels per style
-    const st = new Float32Array(this.styles.length * 16);
+    // styles texture: 5 texels per style (the fifth: in a world, the placement the style's part belongs to)
+    const st = new Float32Array(this.styles.length * 20);
+    const placeIx = this.placeIndex();
     this.styles.forEach((s, i) => {
       const part = s[6] >= 0 ? g.parts[s[6]] : null;
       const own = g.style_colors && g.style_colors[i] ? hex(g.style_colors[i]) : [-1, -1, -1];
+      const pl = part && part.placement !== undefined && placeIx[part.placement] !== undefined ? placeIx[part.placement] : -1;
       st.set([s[0], s[1], s[2], s[3], s[4], s[5], s[6], s[7], s[8],
               part ? provCode(part) : 2, part ? ROLE_CODE[part.role] : 6,
-              (this.moteStyle === i) ? 1 : 0, s.length > 9 ? s[9] : -1, own[0], own[1], own[2]], i * 16);
+              (this.moteStyle === i) ? 1 : 0, s.length > 9 ? s[9] : -1, own[0], own[1], own[2], pl, 0, 0, 0], i * 20);
     });
     this.styleTex = gl.createTexture();
     gl.bindTexture(gl.TEXTURE_2D, this.styleTex);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
-    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA32F, 4, this.styles.length, 0, gl.RGBA, gl.FLOAT, st);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA32F, 5, this.styles.length, 0, gl.RGBA, gl.FLOAT, st);
 
     const corner = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, corner);
@@ -811,12 +849,15 @@ void main() {
   // motions and articulation chains as one float texture (no fixed count: a world carries many constructs'):
   // row r = 4 texels of a column-major matrix and a fifth holding the motion's gain
   Hologram.prototype.uploadPose = function (mot, joints) {
-    const gl = this.gl, nm = mot.gains.length, nj = joints.length / 16, rows = nm + nj;
+    const gl = this.gl, nm = mot.gains.length, nj = joints.length / 16;
+    const pl = this.arranging() ? this.placeMats() : null, np = pl ? pl.gains.length : 0, rows = nm + nj + np;
     const data = this._poseData && this._poseData.length === rows * 20 ? this._poseData : (this._poseData = new Float32Array(rows * 20));
     for (let r = 0; r < rows; r++) {
-      const src = r < nm ? mot.mats.subarray(r * 16, r * 16 + 16) : joints.subarray((r - nm) * 16, (r - nm) * 16 + 16);
-      data.set(src, r * 20); data[r * 20 + 16] = r < nm ? mot.gains[r] : 1; data[r * 20 + 17] = 0; data[r * 20 + 18] = 0; data[r * 20 + 19] = 0;
+      const q = r - nm - nj;
+      const src = r < nm ? mot.mats.subarray(r * 16, r * 16 + 16) : q < 0 ? joints.subarray((r - nm) * 16, (r - nm) * 16 + 16) : pl.mats.subarray(q * 16, q * 16 + 16);
+      data.set(src, r * 20); data[r * 20 + 16] = r < nm ? mot.gains[r] : q < 0 ? 1 : pl.gains[q]; data[r * 20 + 17] = 0; data[r * 20 + 18] = 0; data[r * 20 + 19] = 0;
     }
+    this.placeBase = pl ? nm + nj : -1;
     if (!this.poseTex || this._poseRows !== rows) {
       if (this.poseTex) gl.deleteTexture(this.poseTex);
       this.poseTex = gl.createTexture(); this._poseRows = rows;
@@ -829,6 +870,112 @@ void main() {
       gl.texSubImage2D(gl.TEXTURE_2D, 0, 0, 0, 5, rows, gl.RGBA, gl.FLOAT, data);
     }
     this.poseJointBase = nm;
+  };
+
+  // ------------------------------------------------------------------------- arranging a world by hand
+  // A world's placements can be moved and turned on the page (A): each is a rigid motion in the pose texture, applied
+  // after its own joints, and what stands on it goes with it. The page only shows the change; whoever shows the page
+  // (the Hermes plugin) saves it, and the world is checked and rebuilt from its own file.
+  Hologram.prototype.placeIndex = function () {
+    if (this._placeIx) return this._placeIx;
+    const ix = {};
+    ((this.geo.world && this.geo.world.placements) || []).forEach((r, i) => { ix[r.id] = i; });
+    return (this._placeIx = ix);
+  };
+  Hologram.prototype.arranging = function () { return !!(this.arr && this.arr.on && this.geo.world); };
+  Hologram.prototype.arrangeable = function (id) {
+    const r = ((this.geo.world && this.geo.world.placements) || []).find((q) => q.id === id);
+    return !!(r && !r.sky);
+  };
+  // a placement's motion as [R (3x3, row-major), t, turn]: its host's, then its own (about its pivot)
+  Hologram.prototype.placeMotion = function (id, memo) {
+    memo = memo || {};
+    if (memo[id]) return memo[id];
+    const r = this.geo.world.placements.find((q) => q.id === id);
+    const host = r && r.on ? String(r.on).split("/")[0] : null;
+    const base = host && host !== id ? this.placeMotion(host, memo) : { R: [[1, 0, 0], [0, 1, 0], [0, 0, 1]], t: [0, 0, 0], turn: 0 };
+    const e = this.arr.edits[id];
+    let out = base;
+    if (e) {
+      const a = e.turn * Math.PI / 180, c = Math.cos(a), s = Math.sin(a);
+      const E = [[c, 0, s], [0, 1, 0], [-s, 0, c]], pv = [e.pivot[0], 0, e.pivot[1]];
+      const Ep = [E[0][0] * pv[0] + E[0][2] * pv[2], pv[1], E[2][0] * pv[0] + E[2][2] * pv[2]];
+      const et = [pv[0] + e.move[0] - Ep[0], e.move[1], pv[2] + e.move[2] - Ep[2]];
+      const R = base.R, R2 = [0, 1, 2].map((i) => [0, 1, 2].map((j) => R[i][0] * E[0][j] + R[i][1] * E[1][j] + R[i][2] * E[2][j]));
+      const Rt = [0, 1, 2].map((i) => R[i][0] * et[0] + R[i][1] * et[1] + R[i][2] * et[2]);
+      out = { R: R2, t: [Rt[0] + base.t[0], Rt[1] + base.t[1], Rt[2] + base.t[2]], turn: base.turn + e.turn };
+    }
+    return (memo[id] = out);
+  };
+  Hologram.prototype.carriedBy = function (id, by) {   // whether `id` stands (perhaps through others) on `by`
+    const recs = this.geo.world.placements;
+    for (let k = 0, cur = id; k < 16 && cur; k++) {
+      const r = recs.find((q) => q.id === cur);
+      cur = r && r.on ? String(r.on).split("/")[0] : null;
+      if (cur === by) return true;
+    }
+    return false;
+  };
+  Hologram.prototype.placeMats = function () {
+    const recs = this.geo.world.placements, n = recs.length, mats = new Float32Array(n * 16), gains = new Float32Array(n);
+    const memo = {}, sel = this.arr.sel;
+    recs.forEach((r, i) => {
+      const m = this.placeMotion(r.id, memo), R = m.R, t = m.t;
+      mats.set([R[0][0], R[1][0], R[2][0], 0, R[0][1], R[1][1], R[2][1], 0, R[0][2], R[1][2], R[2][2], 0, t[0], t[1], t[2], 1], i * 16);
+      gains[i] = !sel ? 1 : r.id === sel ? 1.7 : this.carriedBy(r.id, sel) ? 1.3 : r.sky ? 1 : 0.42;
+    });
+    return { mats, gains };
+  };
+  Hologram.prototype.pivotOf = function (id) {   // where it turns: the middle of its footprint, as it was compiled
+    const bs = this.framingBoxes(id, true);
+    let lo0 = Infinity, hi0 = -Infinity, lo2 = Infinity, hi2 = -Infinity;
+    for (const [a, b] of bs) { lo0 = Math.min(lo0, a[0]); hi0 = Math.max(hi0, b[0]); lo2 = Math.min(lo2, a[2]); hi2 = Math.max(hi2, b[2]); }
+    return [(lo0 + hi0) / 2, (lo2 + hi2) / 2];
+  };
+  // the placements under a point of the canvas (CSS pixels), nearest first: [{id, dist, point}]
+  Hologram.prototype.pickPlacements = function (px, py, cw, ch) {
+    if (!this.lastVP || !this.geo.world) return [];
+    const inv = mat4inv(this.lastVP);
+    if (!inv) return [];
+    const nx = px / cw * 2 - 1, ny = 1 - py / ch * 2;
+    const un = (z) => { const v = [nx, ny, z, 1], o = [0, 0, 0, 0];
+      for (let i = 0; i < 4; i++) o[i] = inv[i] * v[0] + inv[4 + i] * v[1] + inv[8 + i] * v[2] + inv[12 + i] * v[3];
+      return [o[0] / o[3], o[1] / o[3], o[2] / o[3]]; };
+    const o = un(-1), far = un(1), d = V.norm(V.sub(far, o));
+    const memo = {}, best = {};
+    for (const p of this.geo.parts) {
+      if (!p.placement || p.sky || !this.arrangeable(p.placement)) continue;
+      if (p.shape === "points" && (p.role === "ornament" || p.certainty === "decorative")) continue;
+      // the ray in the placement's frame as it was compiled (its motion undone)
+      const m = this.arranging() ? this.placeMotion(p.placement, memo) : null;
+      let ro = o, rd = d;
+      if (m) {
+        const q = V.sub(o, m.t), R = m.R;
+        ro = [R[0][0] * q[0] + R[1][0] * q[1] + R[2][0] * q[2], R[0][1] * q[0] + R[1][1] * q[1] + R[2][1] * q[2], R[0][2] * q[0] + R[1][2] * q[1] + R[2][2] * q[2]];
+        rd = [R[0][0] * d[0] + R[1][0] * d[1] + R[2][0] * d[2], R[0][1] * d[0] + R[1][1] * d[1] + R[2][1] * d[2], R[0][2] * d[0] + R[1][2] * d[1] + R[2][2] * d[2]];
+      }
+      for (const b of p.instances) {
+        let t0 = 0, t1 = Infinity;
+        for (let k = 0; k < 3 && t0 <= t1; k++) {
+          if (Math.abs(rd[k]) < 1e-12) { if (ro[k] < b.min[k] || ro[k] > b.max[k]) t0 = Infinity; continue; }
+          let a = (b.min[k] - ro[k]) / rd[k], c = (b.max[k] - ro[k]) / rd[k];
+          if (a > c) { const x = a; a = c; c = x; }
+          t0 = Math.max(t0, a); t1 = Math.min(t1, c);
+        }
+        if (t0 <= t1 && t0 < Infinity && (!best[p.placement] || t0 < best[p.placement].dist))
+          best[p.placement] = { id: p.placement, dist: t0, point: V.add(o, V.mul(d, t0)) };
+      }
+    }
+    return Object.values(best).sort((a, b) => a.dist - b.dist);
+  };
+  // the changes as the world's file takes them: [{id, move, turn, pivot}], rounded, none that does nothing
+  Hologram.prototype.arrangeChanges = function () {
+    const out = [], r3 = (x) => Math.round(x * 1000) / 1000;
+    for (const [id, e] of Object.entries((this.arr && this.arr.edits) || {})) {
+      if (Math.hypot(e.move[0], e.move[1], e.move[2]) < 5e-4 && Math.abs(e.turn) < 0.05) continue;
+      out.push({ id, move: e.move.map(r3), turn: Math.round(e.turn * 10) / 10, pivot: e.pivot.map(r3) });
+    }
+    return out;
   };
 
   Hologram.prototype.motionUniforms = function (t) {
@@ -1036,6 +1183,7 @@ void main() {
       if (u.uYRange) gl.uniform2f(u.uYRange, this.ground, this.top);
       if (u.uPose) { gl.activeTexture(gl.TEXTURE2); gl.bindTexture(gl.TEXTURE_2D, this.poseTex); gl.uniform1i(u.uPose, 2); }
       if (u.uJointBase) gl.uniform1f(u.uJointBase, this.poseJointBase);
+      if (u.uPlaceBase) gl.uniform1f(u.uPlaceBase, this.placeBase === undefined ? -1 : this.placeBase);
       if (u.uGhost) gl.uniform1f(u.uGhost, s.ghost);
       if (u.uStabilise) gl.uniform1f(u.uStabilise, s.stabilise);
       if (u.uGlobalAlpha) gl.uniform1f(u.uGlobalAlpha, s.globalAlpha);
@@ -1090,6 +1238,7 @@ void main() {
         if (!a.ready) continue;
         gl.uniform1f(u.uSlot, a.slot);
         gl.uniform1f(u.uJointArt, a.joint);
+        if (u.uPlaceArt) { const k = this.placeIndex()[String(a.part || "").split("/")[0]]; gl.uniform1f(u.uPlaceArt, k === undefined ? -1 : k); }
         gl.uniform1f(u.uPhaseArt, a.phase);
         gl.uniform2f(u.uMask, a.mask[0], a.mask[1]);
         const k = certLight[a.certainty] || 0.8, tint = mode === "provenance" ? CERT_RGB[CERT_CODE[a.certainty]] || pal.tones[1] : pal.tones[1];
@@ -1415,12 +1564,85 @@ void main() {
       placeLabels(out.vp, out.rect, t);
     }
 
+    // a world arranged by hand (A): click a construct to choose it (again on the same spot: the one behind it), drag
+    // to move it over the ground, Shift-drag or Q/E to turn it, arrows to nudge, PgUp/PgDn to lift, Esc to let go
+    const arrangeBox = el("div", "arrange");
+    const arrangeOn = () => holo.arranging();
+    holo.arr = { on: false, sel: null, edits: {} };
+    let lastPick = null;
+    const arrangeTell = () => {
+      const ch = holo.arrangeChanges(), sel = holo.arr.sel, e = sel && holo.arr.edits[sel];
+      const r = sel && geo.world.placements.find((q) => q.id === sel);
+      arrangeBox.textContent = "";
+      arrangeBox.appendChild(el("div", "head", "ARRANGING" + (ch.length ? " · " + ch.length + " CHANGED" : "")));
+      arrangeBox.appendChild(el("div", "sel", r ? String(r.label || r.title || sel).toUpperCase() +
+        (e ? " · MOVED " + Math.hypot(e.move[0], e.move[2]).toFixed(2) + " M" + (Math.abs(e.move[1]) > 5e-4 ? " · LIFTED " + e.move[1].toFixed(2) + " M" : "") +
+             " · TURNED " + Math.round(e.turn) + "°" : "") : "CLICK A CONSTRUCT TO CHOOSE IT"));
+      arrangeBox.appendChild(el("div", "keys", "DRAG MOVE · SHIFT-DRAG OR Q E TURN · ARROWS NUDGE · PGUP PGDN LIFT · ⌫ PUT BACK · ESC LET GO · A DONE"));
+      arrangeBox.style.display = arrangeOn() && opt.ui ? "block" : "none";
+      if (typeof window.HOLO === "object" && window.HOLO && typeof window.HOLO.onArrange === "function") {
+        try { window.HOLO.onArrange({ on: arrangeOn(), selected: sel || null, changes: ch }); } catch (err) { /* the listener's own problem */ }
+      }
+    };
+    const setArrange = (on) => {
+      if (!geo.world) return;
+      holo.arr.on = !!on;
+      if (!on) holo.arr.sel = null;
+      if (on && !holo.userCamera) holo.userCamera = holo.cameraAt(now(), holo.cameraFor(opt.view));
+      document.body.classList.toggle("arranging", !!on);
+      arrangeTell(); kick();
+    };
+    const editOf = (id) => holo.arr.edits[id] || (holo.arr.edits[id] = { move: [0, 0, 0], turn: 0, pivot: holo.pivotOf(id) });
+    // a world-space step turned into the frame the placement stood in (its host may have been turned)
+    const local = (id, w) => {
+      const r = geo.world.placements.find((q) => q.id === id), host = r && r.on ? String(r.on).split("/")[0] : null;
+      if (!host) return w;
+      const R = holo.placeMotion(host).R;
+      return [R[0][0] * w[0] + R[1][0] * w[1] + R[2][0] * w[2], R[0][1] * w[0] + R[1][1] * w[1] + R[2][1] * w[2], R[0][2] * w[0] + R[1][2] * w[1] + R[2][2] * w[2]];
+    };
+    const groundAt = (px, py, y) => {   // where the pointer meets the level y
+      const r = canvas.getBoundingClientRect(), inv = holo.lastVP && mat4inv(holo.lastVP);
+      if (!inv) return null;
+      const nx = px / r.width * 2 - 1, ny = 1 - py / r.height * 2;
+      const un = (z) => { const o = [0, 0, 0, 0]; for (let i = 0; i < 4; i++) o[i] = inv[i] * nx + inv[4 + i] * ny + inv[8 + i] * z + inv[12 + i]; return [o[0] / o[3], o[1] / o[3], o[2] / o[3]]; };
+      const a = un(-1), b = un(1), dy = b[1] - a[1];
+      if (Math.abs(dy) < 1e-9) return null;
+      const t = (y - a[1]) / dy;
+      return t > 0 ? [a[0] + (b[0] - a[0]) * t, y, a[2] + (b[2] - a[2]) * t] : null;
+    };
+
     // interaction
     let drag = null, lastInput = -1e9;
-    canvas.addEventListener("pointerdown", (e) => { drag = { x: e.clientX, y: e.clientY }; try { canvas.setPointerCapture(e.pointerId); } catch (err) { /* a pen or touch already gone: drag without capture */ }
-      if (!holo.userCamera) holo.userCamera = holo.cameraAt(now(), holo.cameraFor(opt.view)); });
+    canvas.addEventListener("pointerdown", (e) => {
+      drag = { x: e.clientX, y: e.clientY, x0: e.clientX, y0: e.clientY }; try { canvas.setPointerCapture(e.pointerId); } catch (err) { /* a pen or touch already gone: drag without capture */ }
+      if (!holo.userCamera) holo.userCamera = holo.cameraAt(now(), holo.cameraFor(opt.view));
+      if (!arrangeOn()) return;
+      const r = canvas.getBoundingClientRect(), px = e.clientX - r.left, py = e.clientY - r.top;
+      const hits = holo.pickPlacements(px, py, r.width, r.height);
+      if (!hits.length) return;   // empty space: the camera turns as ever
+      let pick = hits[0];
+      if (lastPick && Math.hypot(px - lastPick.x, py - lastPick.y) < 5 && hits.length > 1) {   // the same spot again: the one behind
+        const i = hits.findIndex((h) => h.id === holo.arr.sel);
+        if (i >= 0) pick = hits[(i + 1) % hits.length];
+      }
+      lastPick = { x: px, y: py };
+      holo.arr.sel = pick.id;
+      const ed = editOf(pick.id);
+      drag.place = { id: pick.id, y: pick.point[1], start: groundAt(px, py, pick.point[1]), move0: ed.move.slice(), turn0: ed.turn, turning: e.shiftKey };
+      arrangeTell(); kick();
+    });
     canvas.addEventListener("pointermove", (e) => {
       if (!drag) return;
+      if (drag.place) {
+        const pl = drag.place, ed = editOf(pl.id);
+        if (pl.turning) ed.turn = pl.turn0 + (e.clientX - drag.x0) * 0.5;
+        else if (pl.start) {
+          const r = canvas.getBoundingClientRect(), g = groundAt(e.clientX - r.left, e.clientY - r.top, pl.y);
+          if (g) { const d = local(pl.id, [g[0] - pl.start[0], 0, g[2] - pl.start[2]]); ed.move = [pl.move0[0] + d[0], pl.move0[1], pl.move0[2] + d[2]]; }
+        }
+        lastInput = performance.now(); arrangeTell(); kick();
+        return;
+      }
       const c = holo.userCamera;
       c.yaw -= (e.clientX - drag.x) * 0.35; c.pitch = Math.max(-80, Math.min(85, c.pitch + (e.clientY - drag.y) * 0.3));
       drag = { x: e.clientX, y: e.clientY }; lastInput = performance.now(); kick();
@@ -1440,6 +1662,27 @@ void main() {
       holo.userCamera.dist *= Math.exp(e.deltaY * 0.0012); lastInput = performance.now(); kick();
     }, { passive: false });
     window.addEventListener("keydown", (e) => {
+      if (geo.world && (e.key === "a" || e.key === "A") && !e.metaKey && !e.ctrlKey) { setArrange(!arrangeOn()); return; }
+      if (arrangeOn()) {
+        const sel = holo.arr.sel;
+        if (e.key === "Escape") { holo.arr.sel = null; arrangeTell(); kick(); return; }
+        if (sel) {
+          const ed = editOf(sel), step = e.shiftKey ? 1 : e.altKey ? 0.01 : 0.1, c = holo.userCamera || holo.lastCamera;
+          const yaw = (c ? c.yaw : 0) * Math.PI / 180;
+          const fwd = [-Math.sin(yaw), 0, -Math.cos(yaw)], right = [Math.cos(yaw), 0, -Math.sin(yaw)];
+          let w = null;
+          if (e.key === "ArrowUp") w = V.mul(fwd, step); else if (e.key === "ArrowDown") w = V.mul(fwd, -step);
+          else if (e.key === "ArrowRight") w = V.mul(right, step); else if (e.key === "ArrowLeft") w = V.mul(right, -step);
+          if (w) { const d = local(sel, w); ed.move = [ed.move[0] + d[0], ed.move[1], ed.move[2] + d[2]]; }
+          else if (e.key === "q" || e.key === "Q") ed.turn += e.shiftKey ? 1 : 15;
+          else if (e.key === "e" || e.key === "E") ed.turn -= e.shiftKey ? 1 : 15;
+          else if (e.key === "PageUp") ed.move[1] += e.shiftKey ? 0.5 : 0.05;
+          else if (e.key === "PageDown") ed.move[1] -= e.shiftKey ? 0.5 : 0.05;
+          else if (e.key === "Backspace" || e.key === "Delete") delete holo.arr.edits[sel];
+          else w = false;
+          if (w !== false) { e.preventDefault(); lastInput = performance.now(); arrangeTell(); kick(); return; }
+        }
+      }
       const views = ["hero", "front", "side", "back", "top", "three-quarter"];
       if (e.key >= "1" && e.key <= "6") { opt.view = views[+e.key - 1]; holo.userCamera = null; }
       else if (e.key === "r" || e.key === "R") { clock0 = performance.now(); frozen = null; paused = false; holo.userCamera = null; }
@@ -1453,8 +1696,8 @@ void main() {
       kick();
     });
     let pausedStamp = 0;
-    // after a while untouched the presentation returns to its own camera
-    setInterval(() => { if (holo.userCamera && performance.now() - lastInput > 25000) { holo.userCamera = null; kick(); } }, 2000);
+    // after a while untouched the presentation returns to its own camera (not while a world is being arranged)
+    setInterval(() => { if (holo.userCamera && !arrangeOn() && performance.now() - lastInput > 25000) { holo.userCamera = null; kick(); } }, 2000);
 
     let raf = 0, lastFrame = 0, running = false;
     function loop(ts) {
@@ -1485,7 +1728,19 @@ void main() {
         return c ? [(c[0] * 0.5 + 0.5) * r.width, (0.5 - c[1] * 0.5) * r.height] : null; },
       fitted(view) { const c = holo.cameraFor(view || "hero"); return { target: c.target, yaw: c.yaw, pitch: c.pitch, dist: c.dist }; },
       timeline() { const op = holo.openTimes(); return { assembly: holo.assemblyTimes(), open: op, settled: Math.max(holo.assemblyTimes().end, op.end), events: holo.schedule.slice(0, 24) }; },
+      // a world arranged by hand: on/off, the changes so far, put everything back; onArrange hears every change
+      arrange: {
+        set(on) { setArrange(on); return arrangeOn(); },
+        changes() { return holo.arrangeChanges(); },
+        reset() { holo.arr.edits = {}; holo.arr.sel = null; arrangeTell(); kick(); return true; },
+        select(id) { if (!holo.arrangeable(id)) return false; holo.arr.sel = id; editOf(id); arrangeTell(); kick(); return true; },
+        edit(id, change) { if (!holo.arrangeable(id) || !change) return false; const ed = editOf(id);
+          if (Array.isArray(change.move) && change.move.length === 3) ed.move = change.move.map(Number);
+          if (typeof change.turn === "number") ed.turn = change.turn; arrangeTell(); kick(); return true; },
+      },
+      onArrange: null,
     };
+    if (geo.world) { overlay.appendChild(arrangeBox); arrangeTell(); }
   }
 
   window.HologramViewer = { Hologram, boot, PALETTES };

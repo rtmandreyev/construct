@@ -109,7 +109,7 @@ def register(ctx):
                        frontmatter={"metadata": {"hermes": {"requires_tools": ["construct_start", "construct_build"]}}})
     ctx.register_command("construct", _slash, description="Your constructs, the examples to start from, the tutorials, "
                          "background jobs; open one on the Constructs page",
-                         args_hint="[open <project> | examples | learn [n] | jobs]")
+                         args_hint="[open <project> | examples | learn [n] | jobs | worlds | undo <world>]")
     ctx.on_unload(jobs.stop_all)
 
 

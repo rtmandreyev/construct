@@ -6,14 +6,20 @@
     /construct examples           the constructs the plugin ships, to start from
     /construct learn [n]          the tutorials; with a number or name, the message that starts one
     /construct jobs               background work: films, NetLogo runs, long exports
+    /construct worlds             your worlds and the worlds the plugin ships
+    /construct arrange <world> <changes>   moves and turns made by hand on a world's page (the Desktop half sends
+                                  these: a JSON list of {id, move, turn, pivot}); checked, saved and rebuilt
+    /construct undo <world>       the world as it was before its last change
 """
 
 from pathlib import Path
 
-from . import jobs, runtime
+import json
+
+from . import jobs, runtime, world_tools
 
 HELP = ("/construct: your constructs · /construct open <project> · /construct examples · /construct learn [n] · "
-        "/construct jobs")
+        "/construct jobs · /construct worlds · /construct undo <world>")
 
 
 def _plugin_api():
@@ -103,6 +109,33 @@ def handle(raw_args="", event=None, **kwargs):
                 lines.append("  %2d  %s: %s%s" % (t["order"], t["title"], t["summary"],
                                                   " (placeholder)" if t["status"] == "placeholder" else ""))
             return "\n".join(lines)
+        if verb == "worlds":
+            mine = [r for r in api.projects(root) if r.get("world")]
+            lines = ["Your worlds (%d):" % len(mine) if mine else "No worlds yet: ask for one, or start from an example."]
+            for r in mine[:20]:
+                n = r.get("newest") or {}
+                lines.append("  %s \"%s\"%s" % (r["project"], r["title"], " · %d constructs" % n["placements"] if n.get("placements") else ""))
+            lines.append("Worlds to start from (ask \"start the world <name>\"):")
+            for name, w in sorted(runtime.example_worlds().items()):
+                lines.append("  %s · %s" % (name, w["title"]))
+            return "\n".join(lines)
+        if verb == "arrange":
+            parts = str(raw_args or "").strip().split(None, 2)
+            if len(parts) < 3:
+                return "Usage: /construct arrange <world> <changes: a JSON list of {id, move, turn, pivot}>"
+            try:
+                changes = json.loads(parts[2])
+            except ValueError:
+                return "Construct could not read those changes (a JSON list of {id, move, turn, pivot})."
+            r = world_tools.arrange_by_hand(parts[1].lower(), changes)
+            warn = r.get("warnings") or []
+            return ("Arranged %s by hand: %s. Rebuilding (build %s)%s" % (r["world"], ", ".join(r["moved"]), r["build"],
+                    (". The check says: " + "; ".join(warn[:4])) if warn else "; the check found nothing in the way."))
+        if verb == "undo":
+            if len(words) < 2:
+                return "Which world? /construct undo <world>"
+            r = world_tools.undo(words[1].lower())
+            return "Undid the last change to %s (%s %s). Rebuilding (build %s)." % (r["world"], r["undid"], r["placement"], r["build"])
         if verb == "jobs":
             rows = jobs.recent()
             if not rows:

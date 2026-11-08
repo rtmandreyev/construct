@@ -34,7 +34,14 @@ from the chat. [docs/WORLDS.md](docs/WORLDS.md)
   each change live in the chat. Its constructs come from the user's projects, the constructs the plugin ships, or the
   gallery, fetched by name from this release's tag. Three worlds ship: the shed with the Samba and the Vespa; the
   Villa Savoye lived in (fifteen constructs and Saturn at the Moon's distance); a street of landmarks.
-  `construct_inspect` reads a shipped construct by name. Tested in Hermes Desktop with GPT-6.1 Sol and DeepSeek V4
+  `construct_inspect` reads a shipped construct by name.
+- **Arranged by hand.** On a world's page, A (and Arrange on its card in Hermes Desktop) lets you move and turn the
+  constructs yourself: click one, drag it over the ground, Shift-drag or Q/E to turn, arrows to nudge, Page Up/Down
+  to lift; what stands on it goes with it. In Hermes Desktop, Save runs `/construct arrange` in the gateway (no
+  model turn): the world is checked with the moves, saved, logged as the user's and rebuilt; `/construct undo`
+  steps back one saved change. A **Worlds** tab lists your worlds and the shipped ones, and a construct's card can
+  place it in a world.
+- Tested in Hermes Desktop with GPT-6.1 Sol and DeepSeek V4
   Pro; what each had to work around became the tool's: placing many at once, named views, host collisions, door
   swings, and sky sizing by a part.
 

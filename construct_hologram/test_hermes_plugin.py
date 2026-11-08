@@ -261,6 +261,18 @@ class Plugin(unittest.TestCase):
         for area in ("TOOL_MEDIA_RENDERER_AREA", "ROUTES_AREA", "SIDEBAR_NAV_AREA", "PALETTE_AREA"):
             self.assertIn("typeof sdk.%s === 'string'" % area, js)   # feature-detected, never a named import
 
+    def test_worlds_are_arranged_on_their_card(self):
+        js = (self.pkg / "desktop" / "plugin.js").read_text(encoding="utf-8")
+        loader = (self.pkg / "templates" / "loader.html").read_text(encoding="utf-8")
+        self.assertRegex(js, r"MEDIA_TOOLS = \[[^\]]*'construct_world'")
+        self.assertIn("['worlds', 'Worlds', 'globe']", js)   # the Worlds tab
+        # a saved arrangement is the plugin's own command, run in the gateway: never a model turn, never a REST write
+        self.assertIn("host.request('slash.exec', { session_id: sid, command })", js)
+        self.assertIn("'construct arrange ' + project + ' ' + JSON.stringify(arr.changes)", js)
+        self.assertIn('d.type === "construct:arrange"', loader)
+        self.assertIn('type: "construct:arranged"', loader)
+        self.assertNotIn("@router.post", (self.pkg / "dashboard" / "plugin_api.py").read_text(encoding="utf-8"))
+
     # ------------------------------------------------------------------ the tools, end to end
 
     def test_a_card_shown_before_an_update_gets_the_current_loader(self):
@@ -522,6 +534,35 @@ class Plugin(unittest.TestCase):
         self.assertFalse(ex["world"]["warnings"])
         self.assertTrue((self.data / "projects" / ex["project"] / "constructs" / "vespa-gs150" / "scene.json").is_file())
         self.assertIn("error", self.call("construct_world", {"op": "new", "example": "nowhere"}))
+        # arranged by hand on the page: what the Desktop half sends through /construct arrange, then undone
+        sw, handle = ex["project"], self.mod.commands.handle
+        first = json.loads((self.data / "projects" / sw / "world.json").read_text())
+        out = handle("arrange %s %s" % (sw, json.dumps([{"id": "vespa", "move": [0.5, 0, 0.2], "turn": 15, "pivot": [-0.6, 2.7]}])))
+        self.assertIn("Arranged %s by hand: vespa" % sw, out)
+        build = re.search(r"\(build (\d{8}-\d{6}-[0-9a-f]{4})\)", out).group(1)
+        moved = json.loads((self.data / "projects" / sw / "world.json").read_text())
+        v0, v1 = (next(p for p in d["placements"] if p["id"] == "vespa") for d in (first, moved))
+        self.assertNotEqual(v0["at"], v1["at"])
+        self.assertEqual(v1["yaw"], v0.get("yaw", 0) + 15)
+        log = (self.data / "projects" / sw / "edits" / "log.jsonl").read_text().splitlines()
+        self.assertEqual((json.loads(log[-1])["op"], json.loads(log[-1])["by"]), ("arrange", "user"))
+        for _ in range(240):   # the rebuild finishes on its own; the card follows the new build
+            try:
+                card = self.api.card(self.data, sw, build)
+                break
+            except self.api.NotFound:
+                time.sleep(1)
+        self.assertEqual(card["kind"], "world")
+        self.assertTrue(self.api.project(self.data, sw)["world"])
+        self.assertIn("could not", handle("arrange %s %s" % (sw, json.dumps([{"id": "nobody", "move": [1, 0, 0], "turn": 0, "pivot": [0, 0]}]))))
+        self.assertIn("could not", handle("arrange %s [not json" % sw))
+        self.assertIn("Undid the last change to %s (arrange vespa)" % sw, handle("undo %s" % sw))
+        self.assertEqual(json.loads((self.data / "projects" / sw / "world.json").read_text()), first)
+        self.assertIn(sw, handle("worlds"))
+        shipped = {w["name"]: w for w in self.api.example_worlds(self.pkg)}
+        self.assertEqual(set(shipped), {"the-shed", "villa-savoye-lived-in", "a-street-of-landmarks"})
+        self.assertTrue(all(w["has_thumb"] for w in shipped.values()))
+        self.assertTrue(self.api.example_world_thumb("the-shed", self.pkg)["data_url"].startswith("data:image/jpeg;base64,"))
         shed = self.call("construct_inspect", {"project": "garden-shed"})   # a shipped construct, measured in place
         self.assertNotIn("error", shed)
         self.assertEqual(shed["project"], "garden-shed")
@@ -683,13 +724,13 @@ class Plugin(unittest.TestCase):
         rows = self.api.tutorials(self.pkg)
         files = sorted((self.pkg / "skills" / "construct" / "tutorials").glob("*.md"))
         self.assertEqual(len(rows), len(files))
-        self.assertGreaterEqual(len(rows), 16)
+        self.assertGreaterEqual(len(rows), 17)
         self.assertEqual([t["order"] for t in rows], sorted(t["order"] for t in rows))
-        examples = set(self.mod.stock.STOCK)
+        examples = set(self.mod.stock.STOCK) | set(self.mod.runtime.example_worlds())
         for t in rows:
             self.assertIn(t["file"], t["prompt"], t["id"])   # the message names the file the skill reads
             self.assertLessEqual(len(t["prompt"]), 500, t["id"])
-            self.assertIn(t["group"], ("Everyday", "Makers and creators", "Simulations"), t["id"])
+            self.assertIn(t["group"], ("Everyday", "Makers and creators", "Worlds", "Simulations"), t["id"])
             self.assertIn(t["status"], ("ready", "placeholder"))
             if t["example"]:
                 self.assertIn(t["example"], examples, t["id"])

@@ -59,6 +59,14 @@
   .viewsbar button:focus-visible { outline: 1px solid var(--accent); outline-offset: 1px; }
   body.noui .viewsbar { display: none !important; }
   @media (max-width: 640px) { .viewsbar { max-width: none; right: 16px; left: 16px; } }
+  .arrange { display: none; position: absolute; right: 20px; bottom: 20px; max-width: min(440px, 60%); padding: 8px 11px;
+    background: rgba(10,4,12,.74); border: 1px solid var(--accent); border-radius: 5px; font-size: 10px; letter-spacing: .1em; }
+  .arrange .head { color: var(--accent); margin-bottom: 3px; }
+  .arrange .sel { color: var(--ink); font-size: 11px; margin-bottom: 4px; }
+  .arrange .keys { color: var(--dim); line-height: 1.5; }
+  body.arranging canvas { cursor: crosshair; }
+  body.arranging .rounds, body.arranging .help { display: none !important; }
+  body.noui .arrange { display: none !important; }
   .rounds { position: absolute; right: 20px; top: 18px; max-width: 46%; font-size: 10px; letter-spacing: .06em;
     color: var(--dim); text-shadow: 0 0 4px #000; }
   .rounds .head { letter-spacing: .14em; color: #cbbcd8; margin-bottom: 4px; }

@@ -411,6 +411,12 @@ def _title_of(page):
 
 def _finish_build(rec, done, tail):
     f = rec["finish"]
+    if Path(f["scene"]).name == "world.json":   # a world: the Worlds page lists it, and its card can be arranged
+        try:
+            n = len(json.loads(Path(f["scene"]).read_text(encoding="utf-8")).get("placements", []))
+        except (OSError, ValueError):
+            n = None
+        return publish(f["slug"], f["build"], Path(f["out"]), f["scene"], tail, kind="world", extra_card={"placements": n})
     return publish(f["slug"], f["build"], Path(f["out"]), f["scene"], tail)
 
 

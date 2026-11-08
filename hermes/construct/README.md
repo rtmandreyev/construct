@@ -20,7 +20,7 @@ Construct's own engine, bundled as Python source; nothing is downloaded.
 
 Thirteen tools (toolset `construct`), a `/construct` command, and the `construct:construct` skill that teaches Hermes
 the craft: the fast and masterpiece modes, research and provenance rules, review as an art director, an
-independent critic run as a fresh subagent through Hermes's delegation, and sixteen tutorials.
+independent critic run as a fresh subagent through Hermes's delegation, and seventeen tutorials.
 
 | tool | what it does |
 |---|---|
@@ -49,7 +49,13 @@ message in the chat follows its progress.
 
 - **Live in the chat.** A built construct plays in the conversation, with a toolbar: Provenance (how each part is
   known), Solid, Replay, How to read it, Open in browser, and actions that ask Hermes for the next step in that
-  chat: Export a glTF, More detail, Review it. A NetLogo run's construct grows in the card while the run goes.
+  chat: Export a glTF, More detail, Review it, Place in a world. A NetLogo run's construct grows in the card while
+  the run goes.
+- **A world, arranged by hand.** A world's card adds **Arrange**: click a construct and drag it over the ground;
+  Shift-drag or Q and E turn it, the arrows nudge it, Page Up and Page Down lift it, and what stands on it goes with
+  it. **Save** sends the changes to the plugin's own `/construct arrange` command, run in the gateway with no model
+  turn: the world is checked with them (overlaps, collisions, doors that cannot open), saved, logged as yours and
+  rebuilt, and the card shows the new build. **Undo last change** steps back one saved change, yours or the agent's.
 - **Its own viewers.** A glTF export opens as a model to turn, with each part's name, certainty and role on hover
   and its joints' animations to play; a STEP or FreeCAD file shows what was read back from it (parts, solids, exact
   and faceted shapes, surfaces, size); a model kit opens with its steps in 3D (back, next, step n of m) and its
@@ -57,7 +63,8 @@ message in the chat follows its progress.
 - **The Constructs page** (sidebar, and the palette: *Construct: Open the Constructs page*, *Start from an
   example*, *Learn*): your projects, told apart by name, id and date, each with its builds, kits, exports, films and
   runs, and a note when the scene changed after its last build; **Start from**, the shipped constructs, each opening
-  a new chat; and **Learn**, the tutorials, each a guided chat.
+  a new chat; **Worlds**, your worlds (each live, to open and arrange) and the three that ship, with *Make a world*
+  and *A world from a picture*; and **Learn**, the tutorials, each a guided chat.
 - **Job progress** in the status bar while a film renders or a run goes.
 
 A construct page is several megabytes, more than a frame's address can carry, so the chat shows a small loader

@@ -91,6 +91,14 @@ reach 1,000 km from the origin, and an optional `origin: {lat, lon}` ties the wo
 - `op: list`, with an id to list the surfaces things can stand on;
 - `op: view` with an id, a label and a target: a named view, a button on the page (`remove: true` drops it).
 
+In Hermes Desktop a world's card has **Arrange**: click a construct, drag it over the ground, Shift-drag or Q/E to
+turn it, the arrows to nudge, Page Up/Down to lift, Backspace to put it back. What stands on it (on it, or on one of
+its parts) goes with it, as a table carries what is on it. **Save** runs `/construct arrange <world> <changes>`
+in the gateway, with no model turn: the world is checked with the moves, written back as each placement was
+placed (absolute, or on its host), logged as the user's in `edits/log.jsonl` and rebuilt. `/construct undo <world>`
+steps back one saved change, the agent's or the user's. Any world page does the same with A; outside Hermes,
+`HOLO.arrange.changes()` gives the moves.
+
 What a world places comes from three sources:
 - the user's own projects;
 - the constructs the plugin ships;

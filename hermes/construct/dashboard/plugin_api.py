@@ -6,7 +6,10 @@ Routes (mounted at /api/plugins/construct/):
     GET /thumb?project=&build=           its small still, as a data URL
     GET /kit?project=&kit=&page=         a model kit's page (assembly: its steps in 3D; booklet), its loader and card
     GET /item?project=&item=             a file a project made (an export, a film), as a data URL, with its summary
+    GET /card?project=&build=            one build's card (light): whether a build the page waits for is there yet
     GET /examples                        the constructs the plugin ships to start from
+    GET /example-worlds                  the worlds the plugin ships to start from
+    GET /example-world-thumb?name=       one's still, as a data URL
     GET /example-thumb?name=             one's still, as a data URL
     GET /tutorials                       the Learn page's tutorials (skills/construct/tutorials/*.md)
 
@@ -31,7 +34,7 @@ ITEM_TYPES = {".glb": "model/gltf-binary", ".obj": "text/plain", ".stl": "model/
               ".step": "model/step", ".stp": "model/step", ".fcstd": "application/zip", ".mp4": "video/mp4",
               ".jsonl": "application/json", ".json": "application/json", ".csv": "text/csv"}
 CARD_KEYS = ("title", "parts", "counts", "size_m", "audit_ok", "created", "page", "has_thumb", "kind", "preview", "job_id",
-             "ticks", "source")
+             "ticks", "source", "placements")
 
 
 class NotFound(Exception):
@@ -141,6 +144,7 @@ def project(root, name):
     return {"project": name, "title": (newest or {}).get("title") or (kits[0]["title"] if kits else name),
             "created": min(stamps) if stamps else None, "updated": max(stamps) if stamps else None,
             "newest": newest, "builds": builds, "kits": kits, "items": items,
+            "world": bool(newest and newest.get("kind") == "world"),
             "changed_since": bool(newest and newest.get("changed_since"))}
 
 
@@ -243,6 +247,30 @@ def example_thumb(name, base=HERE):
     return {"data_url": "data:image/jpeg;base64," + base64.b64encode(shot.read_bytes()).decode("ascii")}
 
 
+def card(root, project, build):
+    return _card(build_dir(root, project, build))
+
+
+def example_worlds(base=HERE):
+    rows = _read_json(Path(base) / "examples" / "worlds.json", [])
+    out = []
+    for r in rows:
+        if isinstance(r, dict) and SLUG.match(str(r.get("name", ""))):
+            row = {k: r.get(k) for k in ("name", "title", "summary", "constructs", "placements")}
+            row["has_thumb"] = (Path(base) / "examples" / "worlds" / r["name"] / "thumb.jpg").is_file()
+            out.append(row)
+    return out
+
+
+def example_world_thumb(name, base=HERE):
+    if not isinstance(name, str) or not SLUG.match(name):
+        raise NotFound("no such world")
+    shot = Path(base) / "examples" / "worlds" / name / "thumb.jpg"
+    if not shot.is_file() or shot.stat().st_size > THUMB_MAX:
+        raise NotFound("no still")
+    return {"data_url": "data:image/jpeg;base64," + base64.b64encode(shot.read_bytes()).decode("ascii")}
+
+
 TUTORIAL_FILE = re.compile(r"^(\d{2})-([a-z0-9-]{1,60})\.md$")
 
 
@@ -320,6 +348,21 @@ if APIRouter is not None:
     @router.get("/item")
     def get_item(project: str, item: str):
         return _answer(globals()["item"], project, item)
+
+    @router.get("/card")
+    def get_card(project: str, build: str):
+        return _answer(card, project, build)
+
+    @router.get("/example-worlds")
+    def get_example_worlds():
+        return {"worlds": example_worlds()}
+
+    @router.get("/example-world-thumb")
+    def get_example_world_thumb(name: str):
+        try:
+            return example_world_thumb(name)
+        except NotFound as exc:
+            raise HTTPException(status_code=404, detail=str(exc))
 
     @router.get("/examples")
     def get_examples():

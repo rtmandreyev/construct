@@ -705,6 +705,85 @@ def audit(doc, g):
                                       "depth": _r(b["max"][2] - b["min"][2])}}}
 
 
+# ---------------------------------------------------------------------------- arranging by hand
+
+MAX_ARRANGE = 256
+ARRANGE_KEYS = {"id", "move", "turn", "pivot"}
+
+
+def _ry(deg):
+    a = math.radians(deg)
+    return [[math.cos(a), 0.0, math.sin(a)], [0.0, 1.0, 0.0], [-math.sin(a), 0.0, math.cos(a)]]
+
+
+def arrange(doc, g, changes):
+    """The world after placements were moved and turned by hand (the page's arrange mode): a new document.
+
+    Each change is {id, move: [dx, dy, dz] metres, turn: degrees about +Y, pivot: [x, z]} in the frame the
+    placement stood in before; what stands on a placement (on it, or on one of its parts) is carried along, as a
+    table carries what is on it. Each placement's `at` and `yaw` are written back the way it was placed (absolute,
+    or on its host), so the world reads the same afterwards. Sky placements stay where the sky puts them.
+    Raises WorldError for a change that names nothing or carries no numbers."""
+    if not isinstance(changes, list) or not 0 < len(changes) <= MAX_ARRANGE:
+        raise WorldError("arrange: 1..%d changes" % MAX_ARRANGE)
+    recs = {r["id"]: r for r in g["world"]["placements"]}
+    edits = {}
+    for c in changes:
+        if not isinstance(c, dict) or set(c) - ARRANGE_KEYS or c.get("id") not in recs:
+            raise WorldError("arrange: each change is {id, move, turn, pivot} for a placement of this world")
+        if "sky" in recs[c["id"]]:
+            raise WorldError("arrange: %s is in the sky; place it with its sky angles" % c["id"])
+        move = c.get("move", [0, 0, 0])
+        if not _vec(move, 10000.0) or not _num(c.get("turn", 0), -3600, 3600) or \
+                not (isinstance(c.get("pivot"), list) and len(c["pivot"]) == 2 and all(_num(v, -WORLD_EXTENT, WORLD_EXTENT) for v in c["pivot"])):
+            raise WorldError("arrange: %s needs move [dx, dy, dz] (metres), turn (degrees) and pivot [x, z]" % c["id"])
+        edits[c["id"]] = ([float(v) for v in move], float(c.get("turn", 0)), [float(v) for v in c["pivot"]])
+    out = json.loads(json.dumps(doc))
+    # rigid motions: x -> R x + t, composed host first (a placement's host is always placed before it)
+    motion, moved = {}, []
+    for p in out["placements"]:
+        host = p.get("on", "").split("/")[0] if p.get("on") else None
+        R, t, turn = (motion[host] if host in motion else (_ry(0), [0.0, 0.0, 0.0], 0.0))
+        if p["id"] in edits:
+            d, a, (cx, cz) = edits[p["id"]]
+            E = _ry(a)
+            c = [cx, 0.0, cz]
+            Ec = scene_mod._mul(E, c)
+            et = [c[k] + d[k] - Ec[k] for k in range(3)]
+            # M = M_host * E
+            R2 = [[sum(R[i][k] * E[k][j] for k in range(3)) for j in range(3)] for i in range(3)]
+            Rt = scene_mod._mul(R, et)
+            t = [Rt[k] + t[k] for k in range(3)]
+            R, turn = R2, turn + a
+        if host not in motion and p["id"] not in edits:
+            continue
+        motion[p["id"]] = (R, t, turn)
+        if "sky" in p:
+            continue
+        r = recs[p["id"]]
+        old = r["at"]
+        Ro = scene_mod._mul(R, old)
+        new = [Ro[k] + t[k] for k in range(3)]
+        own_dy = edits[p["id"]][0][1] if p["id"] in edits else 0.0
+        if p.get("on"):
+            lift = (p.get("at") or [0.0, 0.0, 0.0])[1] + own_dy
+            if "/" in p["on"]:
+                at = [new[0], lift, new[2]]
+            else:
+                ho = recs[host]["at"]
+                hm = motion.get(host)
+                hn = [scene_mod._mul(hm[0], ho)[k] + hm[1][k] for k in range(3)] if hm else ho
+                at = [new[0] - hn[0], lift, new[2] - hn[2]]
+        else:
+            at = new
+        p["at"] = [_r(v) for v in at]
+        if abs(turn) > 1e-9:
+            y = (p.get("yaw", 0.0) + turn + 180.0) % 360.0 - 180.0
+            p["yaw"] = _r(y)
+        moved.append(p["id"])
+    return out, moved
+
+
 def _meets(a, b, tol=0.01):
     """Two boxes ((min, max)) that interpenetrate by more than `tol` metres on every axis (touching is not meeting)."""
     return all(min(a[1][k], b[1][k]) - max(a[0][k], b[0][k]) > tol for k in range(3))

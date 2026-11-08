@@ -208,6 +208,9 @@ too (`construct_start` lists them under `worlds`): `op: new` with `example` make
 6. **Name the views the user will want** (`op: view`: a room is its floor part as `target`, a group is its main
    placement). They are buttons on the page. Never patch the built page.
 7. Show the last result's MEDIA line.
+8. **The user can arrange it too.** In Hermes Desktop a world's card has Arrange: they drag and turn constructs and
+   save, without you. Before changing a world again, read it (`op: list`): their moves are in it, and
+   `edits/log.jsonl` marks them `"by": "user"`. Keep them unless asked otherwise.
 
 **A world from a description or pictures.**
 1. List what exists: the user's projects, `construct_start`'s list, and the gallery (`construct_world` places a

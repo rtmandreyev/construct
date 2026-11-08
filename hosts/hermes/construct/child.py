@@ -411,6 +411,13 @@ def world(spec):
         return {"errors": errors[:12]}
     try:
         g = w.compile_world(doc, folder, None)
+        moved = None
+        if spec.get("arrange") is not None:   # moved and turned by hand on the page: the world as it is now
+            doc, moved = w.arrange(doc, g, spec["arrange"])
+            errors = w.validate(doc)
+            if errors:
+                return {"errors": errors[:12]}
+            g = w.compile_world(doc, folder, None)
     except w.WorldError as exc:
         return {"errors": [str(exc)]}
     report = w.audit(doc, g)
@@ -429,6 +436,8 @@ def world(spec):
            "warnings": [x["message"] for x in report["warnings"]][:20], "notes": report["info"]["notes"][:10]}
     if spec.get("surfaces_of"):
         out["surfaces"] = _surfaces(g, spec["surfaces_of"])
+    if moved is not None:
+        out["doc"], out["moved"] = doc, moved
     return out
 
 

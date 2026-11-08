@@ -250,6 +250,45 @@ class Audit(unittest.TestCase):
         self.assertFalse([w for w in rep["warnings"] if w["code"] == "unsupported"])
 
 
+class Arrange(unittest.TestCase):
+    """Moved and turned by hand on the page: the world written back so that it compiles to what the page showed."""
+
+    def centre(self, g, pid):
+        bs = [b for p in g["parts"] if p.get("placement") == pid for b in p["instances"]]
+        return [(min(b["min"][k] for b in bs) + max(b["max"][k] for b in bs)) / 2 for k in range(3)]
+
+    def test_moves_turns_and_carries_what_stands_on_it(self):
+        doc = place({"id": "deck", "construct": lit("book.json")},
+                    {"id": "cd", "construct": lit("cd.json"), "on": "deck", "at": [0.02, 0, 0.01]},
+                    {"id": "far", "construct": lit("cd.json"), "at": [2, 0, 0]})
+        g = world.compile_world(doc, ".")
+        c = self.centre(g, "deck")
+        new, moved = world.arrange(doc, g, [{"id": "deck", "move": [0.5, 0.1, -0.25], "turn": 90, "pivot": [c[0], c[2]]}])
+        self.assertEqual(moved, ["deck", "cd"])          # what stands on it goes with it; the rest stays
+        g2 = world.compile_world(new, ".")
+        a = math.radians(90)
+        for pid in ("deck", "cd"):
+            o, n = self.centre(g, pid), self.centre(g2, pid)
+            x, z = o[0] - c[0], o[2] - c[2]
+            want = [math.cos(a) * x + math.sin(a) * z + c[0] + 0.5, o[1] + 0.1, -math.sin(a) * x + math.cos(a) * z + c[2] - 0.25]
+            for k in range(3):
+                self.assertAlmostEqual(n[k], want[k], places=2)
+        self.assertEqual(self.centre(g, "far"), self.centre(g2, "far"))
+        self.assertEqual([p.get("yaw") for p in new["placements"]][:2], [90.0, 90.0])
+        self.assertNotIn("yaw", doc["placements"][0])   # the document given is never changed
+
+    def test_what_it_cannot_do_is_refused(self):
+        doc = place({"id": "a", "construct": lit("cd.json")},
+                    {"id": "moon", "construct": lit("cd.json"), "sky": {"diameter_m": 3.4e6, "distance_m": 3.8e8}})
+        g = world.compile_world(doc, ".")
+        for bad in ([], [{"id": "nope", "move": [0, 0, 0], "turn": 0, "pivot": [0, 0]}],
+                    [{"id": "moon", "move": [1, 0, 0], "turn": 0, "pivot": [0, 0]}],
+                    [{"id": "a", "move": [float("nan"), 0, 0], "turn": 0, "pivot": [0, 0]}],
+                    [{"id": "a", "move": [1, 0, 0], "turn": 0}], [{"id": "a", "move": [1, 0, 0], "turn": 0, "pivot": [0, 0], "x": 1}]):
+            with self.assertRaises(world.WorldError):
+                world.arrange(doc, g, bad)
+
+
 class Build(unittest.TestCase):
     """`construct build` and `construct export` take a world as they take a scene."""
 
@@ -337,6 +376,45 @@ class Viewer(unittest.TestCase):
         self.assertEqual(labels[:2], ["WHOLE", "DESK"])
         self.assertEqual(len(labels), 4)   # the whole, the world's own, one for each placement
         self.assertEqual(pressed[:2], ["false", "true"])
+        self.assertIsNone(errs)
+
+    @unittest.skipUnless(render.find_browser(), "no browser")
+    def test_a_world_is_arranged_by_hand(self):
+        doc = place({"id": "a", "construct": lit("book.json")}, {"id": "b", "construct": lit("cd.json"), "at": [1, 0, 0]})
+        with tempfile.TemporaryDirectory() as d:
+            w = Path(d, "w.json")
+            w.write_text(json.dumps(doc))
+            studio.build(str(w), Path(d, "out"))
+            b = render.open_browser(render._url(Path(d, "out", "construct.html"), ui=1, t=30), 480, 300, 1.0)
+            try:
+                got = b.evaluate("""(() => {
+                  const A = HOLO.arrange, h = HOLO.hologram, heard = [];
+                  HOLO.onArrange = (s) => heard.push(s.changes.length);
+                  const off = A.changes().length;
+                  A.set(true);
+                  const at = HOLO.project(h.targetOf("b").c), r = document.querySelector("canvas").getBoundingClientRect();
+                  const hit = h.pickPlacements(at[0], at[1], r.width, r.height).map((x) => x.id);
+                  A.select("b"); A.edit("b", { move: [0.5, 0, 0], turn: 30 });
+                  HOLO.renderAt(30);
+                  const rows = [h.placeBase, h._poseRows];
+                  const box = document.querySelector(".arrange").textContent;
+                  const ch = A.changes();
+                  A.reset(); A.set(false);
+                  return { off, hit, rows, box, ch, heard, after: A.changes().length, base: (HOLO.renderAt(30), h.placeBase) };
+                })()""")
+                errs = b.evaluate("document.body.getAttribute('data-error')")
+            finally:
+                b.close()
+        self.assertEqual(got["off"], 0)
+        self.assertEqual(got["hit"][0], "b")
+        self.assertGreaterEqual(got["rows"][0], 0)
+        self.assertEqual(got["rows"][1] - got["rows"][0], 2)   # one row for each placement, after the chains
+        self.assertIn("MOVED 0.50 M", got["box"])
+        self.assertEqual(got["ch"][0]["id"], "b")
+        self.assertEqual(got["ch"][0]["move"], [0.5, 0, 0])
+        self.assertEqual(got["ch"][0]["turn"], 30)
+        self.assertIn(1, got["heard"])
+        self.assertEqual((got["after"], got["base"]), (0, -1))
         self.assertIsNone(errs)
 
 
