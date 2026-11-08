@@ -846,6 +846,21 @@ def run(args):
             else:
                 sys.stdout.write(text)
             return 0
+        if args.command == "check" and args.scene != "-" and _is_world_file(args.scene):
+            from . import world as world_mod
+            report = world_mod.check(args.scene)
+            if args.json:
+                sys.stdout.write(json.dumps(report, indent=2, ensure_ascii=False) + "\n")
+            else:
+                st = report["stats"]
+                if st:
+                    sys.stdout.write("world: %d placements, %d parts, %d lines, %d triangles; %g x %g x %g m\n" % (
+                        st["placements"], st["parts"], st["lines"], st["triangles"], *st["size_m"]))
+                for d in report["diagnostics"]:
+                    sys.stdout.write("%s %s: %s\n" % (d["severity"], d["path"], d["message"]))
+                if st and not report["diagnostics"]:
+                    sys.stdout.write("nothing overlaps, runs into what it stands in, or stands on nothing\n")
+            return 0 if report["ok"] else 1
         if args.command == "check":
             text = sys.stdin.read() if args.scene == "-" else Path(args.scene).read_text(encoding="utf-8")
             peek, _ = diagnose_mod.parse_text(text)

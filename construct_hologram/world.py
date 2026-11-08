@@ -47,7 +47,9 @@ WORLD_MAX_SOLID_TRIS = 2000000
 SKY_RENDER = 6.0              # a sky placement is drawn this many world radii away, at its real angular size
 TOP = {"format", "version", "id", "title", "summary", "origin", "placements", "presentation", "animation", "authoring"}
 PLACEMENT = {"id", "construct", "label", "at", "yaw", "rotate", "scale", "on", "floating", "sky", "note"}
-SKY = {"diameter_m", "distance_m", "azimuth", "elevation", "spin"}
+SKY = {"diameter_m", "distance_m", "azimuth", "elevation", "spin", "of"}
+VIEW = {"id", "label", "target", "yaw", "pitch", "distance"}
+MAX_VIEWS = 48
 
 
 class WorldError(ValueError):
@@ -133,7 +135,7 @@ def validate(doc):
         sky = p.get("sky")
         if sky is not None:
             if not isinstance(sky, dict) or set(sky) - SKY:
-                err(w + ".sky", "expected {diameter_m, distance_m, azimuth?, elevation?, spin?}")
+                err(w + ".sky", "expected {diameter_m, distance_m, of?, azimuth?, elevation?, spin?}")
             else:
                 if not _num(sky.get("diameter_m"), 0, 1e22, open_lo=True):
                     err(w + ".sky.diameter_m", "expected the real diameter in metres")
@@ -141,6 +143,8 @@ def validate(doc):
                     err(w + ".sky.distance_m", "expected the distance in metres")
                 elif _num(sky.get("diameter_m"), 0, 1e22, open_lo=True) and sky["distance_m"] <= sky["diameter_m"]:
                     err(w + ".sky.distance_m", "expected a distance larger than the diameter")
+                if "of" in sky and not (isinstance(sky["of"], str) and sky["of"].strip()):
+                    err(w + ".sky.of", "expected the id of the part whose real diameter diameter_m is (a planet's globe)")
                 for k, lo, hi in (("azimuth", -360, 360), ("elevation", -90, 90), ("spin", -3600, 3600)):
                     if k in sky and not _num(sky[k], lo, hi):
                         err(w + ".sky." + k, "expected degrees in %g..%g" % (lo, hi))
@@ -161,11 +165,27 @@ def validate(doc):
         if not isinstance(pr, dict) or set(pr) - {"framing", "views"}:
             err("world.presentation", "expected {framing?, views?}")
         else:
-            for v in pr.get("views", []):
-                if not isinstance(v, dict) or not isinstance(v.get("id"), str):
-                    err("world.presentation.views", "each view needs an id")
-                elif v.get("target") is not None and not isinstance(v["target"], str):
-                    err("world.presentation.views", "a view's target is a placement id or `placement/part-id`")
+            views = pr.get("views", [])
+            if not isinstance(views, list) or len(views) > MAX_VIEWS:
+                err("world.presentation.views", "expected at most %d views" % MAX_VIEWS)
+                views = []
+            vids = set()
+            for i, v in enumerate(views):
+                vw = "world.presentation.views[%d]" % i
+                if not isinstance(v, dict) or set(v) - VIEW or not _ident(v.get("id")):
+                    err(vw, "expected {id, label?, target?, yaw?, pitch?, distance?} with a lowercase id")
+                    continue
+                if v["id"] in vids:
+                    err(vw + ".id", "%r is named twice" % v["id"])
+                vids.add(v["id"])
+                if "label" in v and not (isinstance(v["label"], str) and 0 < len(v["label"]) <= 48):
+                    err(vw + ".label", "expected a short name (at most 48 characters)")
+                t = v.get("target")
+                if t is not None and not (isinstance(t, str) and t.split("/", 1)[0] in seen):
+                    err(vw + ".target", "expected a placement id or `placement/part-id`")
+                for k, lo, hi in (("yaw", -3600, 3600), ("pitch", -89, 89), ("distance", 0.01, 100)):
+                    if k in v and not _num(v[k], lo, hi):
+                        err(vw + "." + k, "expected %g..%g" % (lo, hi))
     return errs
 
 
@@ -348,6 +368,11 @@ def _placement_xf(p, g, out):
         d = [math.cos(el) * math.sin(az), math.sin(el), math.cos(el) * math.cos(az)]
         b = g["bounds"]
         model_d = max(b["max"][k] - b["min"][k] for k in range(3)) or 1.0
+        if sky.get("of"):   # diameter_m is this part's (a planet's globe; its rings and moons come at the same scale)
+            ob = [x for q in g["parts"] if q["id"] == sky["of"] for x in q["instances"]]
+            if not ob:
+                raise WorldError("placement %r: sky.of names no part %r of %s" % (p["id"], sky["of"], p["construct"]))
+            model_d = max(max(x["max"][k] for x in ob) - min(x["min"][k] for x in ob) for k in range(3)) or 1.0
         ang = 2 * math.atan(sky["diameter_m"] / (2 * sky["distance_m"]))   # its real angular diameter
         scale = 2 * dist * math.tan(ang / 2) / model_d
         mid = [(b["min"][k] + b["max"][k]) / 2 for k in range(3)]
@@ -616,6 +641,28 @@ def audit(doc, g):
                 small = min(_vol(A), _vol(B)) or 1e-9
                 if vol / small > 0.05:
                     add("overlap", a, "%s and %s overlap (%.0f%% of the smaller)" % (a, b, 100 * vol / small))
+    # a thing shares space with what it stands on (a chair in its house), but not with every part of it: a car
+    # parked under a house must clear its columns. Each part's boxes against the host's, all but its support.
+    parts_of = {}
+    for p in g["parts"]:
+        if not p.get("sky"):
+            parts_of.setdefault(p["placement"], []).extend((p["id"], b["min"], b["max"]) for b in p["instances"])
+    for pid, r in recs.items():
+        on = r.get("on")
+        if not on or pid not in boxes:
+            continue
+        host, _, support = on.partition("/")
+        A, hits = boxes[pid], []
+        for hid, lo, hi in parts_of.get(host, []):
+            if support and hid == on or not _meets((lo, hi), A):
+                continue
+            if any(_meets((lo, hi), (alo, ahi)) for _, alo, ahi in parts_of[pid]):
+                hits.append(hid)
+        if hits:
+            shown = sorted(set(hits))
+            add("collides", pid, "%s runs into %s (%s%s): move it, or stand it on the part it rests on" % (
+                pid, host, ", ".join(x.split("/", 1)[1] for x in shown[:3]),
+                " and %d more" % (len(shown) - 3) if len(shown) > 3 else ""))
     for pid, r in recs.items():
         if "sky" in r:
             notes.append("%s: in the sky at its real angular size (%.4g°)" % (pid, r.get("angular_deg", 0)))
@@ -634,8 +681,54 @@ def audit(doc, g):
                                       "depth": _r(b["max"][2] - b["min"][2])}}}
 
 
+def _meets(a, b, tol=0.01):
+    """Two boxes ((min, max)) that interpenetrate by more than `tol` metres on every axis (touching is not meeting)."""
+    return all(min(a[1][k], b[1][k]) - max(a[0][k], b[0][k]) > tol for k in range(3))
+
+
 def _vol(b):
     return max(0.0, b[1][0] - b[0][0]) * max(0.0, b[1][1] - b[0][1]) * max(0.0, b[1][2] - b[0][2])
+
+
+def check(world_path, resolver=None):
+    """`construct check` for a world: the shape of a scene's report (ok, errors, warnings, diagnostics with a code,
+    a path, a message and a hint, stats), from the world's validation, compilation and audit."""
+    diags = []
+    try:
+        doc = load(world_path)
+    except (OSError, ValueError, WorldError) as exc:
+        doc, diags = None, [{"severity": "error", "code": "unreadable", "path": "world", "message": str(exc),
+                             "hint": "a world is JSON with format construct-world (docs/WORLDS.md)"}]
+    g = None
+    if doc is not None:
+        for e in validate(doc):
+            where, _, msg = e.partition(": ")
+            diags.append({"severity": "error", "code": "world", "path": where, "message": msg,
+                          "hint": "see docs/WORLDS.md for each key"})
+    if doc is not None and not diags:
+        try:
+            g = compile_world(doc, str(Path(world_path).parent), resolver)
+        except WorldError as exc:
+            diags.append({"severity": "error", "code": "placement", "path": "world.placements", "message": str(exc),
+                          "hint": "name a construct that exists and a part that is there to stand on"})
+    stats = None
+    if g is not None:
+        report = audit(doc, g)
+        for x in report["warnings"]:
+            diags.append({"severity": "warning", "code": x["code"], "path": "world.placements.%s" % x["part"],
+                          "message": x["message"], "hint": {
+                              "overlap": "move one of them (op move), or remove one",
+                              "collides": "move it clear, or stand it on the part it rests on (on: host/part-id)",
+                              "unsupported": "give it `on`, or `floating: true` if it hovers",
+                              "scaled": "scale 1 is real size; leave it if the size is meant"}.get(x["code"])})
+        b = g["bounds"]
+        stats = dict(report["counts"], parts=len(g["parts"]),
+                     size_m=[_r(b["max"][k] - b["min"][k]) for k in range(3)], notes=report["info"]["notes"])
+    errors = sum(d["severity"] == "error" for d in diags)
+    return {"ok": errors == 0, "needs_repair": errors > 0, "errors": errors,
+            "warnings": sum(d["severity"] == "warning" for d in diags), "diagnostics": diags, "stats": stats,
+            "world": True, "repair_text": "\n".join("%s: %s (%s)" % (d["path"], d["message"], d["hint"])
+                                                    for d in diags if d["severity"] == "error")}
 
 
 # ---------------------------------------------------------------------------- build and export

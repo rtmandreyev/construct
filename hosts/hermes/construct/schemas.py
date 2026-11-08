@@ -226,9 +226,12 @@ WORLD = _tool(
     "floor, a deck, a table); at: metres (with on: x and z, and a lift above the top); yaw: degrees about up. sky: "
     "{diameter_m, distance_m, azimuth, elevation}: far away at its real angular size (a planet, the moon). Every "
     "change is checked, rebuilt and shown (a MEDIA line, as construct_build), with the placements' sizes, what each "
-    "stands on and warnings (overlaps, things standing on nothing). construct_export exports a world whole (one "
-    "glTF for Blender or a game engine, joints working).",
-    {"op": {"type": "string", "enum": ["new", "place", "move", "remove", "list"]},
+    "stands on and warnings (overlaps, a thing running into the house it is in, things standing on nothing). place "
+    "several at once with placements: [{construct, id?, on?, at?, yaw?, ...}, ...] (one check, one rebuild). view {world, "
+    "id, label?, target?, yaw?, pitch?, distance?, remove?}: a named view of the world (a room: target a floor part; "
+    "one placement: its id), shown as a button on the page beside one for each placement. construct_check checks a "
+    "world; construct_export exports it whole (one glTF for Blender or a game engine, joints working).",
+    {"op": {"type": "string", "enum": ["new", "place", "move", "remove", "list", "view"]},
      "world": {"type": "string", "description": "The world's project id (from op new)."},
      "title": {"type": "string", "description": "new: the world's name."},
      "summary": {"type": "string", "description": "new: what the world is, in a sentence."},
@@ -242,10 +245,19 @@ WORLD = _tool(
      "rotate": {"type": "array", "items": {"type": "number"}, "description": "[x, y, z] degrees, after yaw."},
      "scale": {"type": "number", "description": "1 is real size (the default); anything else is shown as such."},
      "floating": {"type": "boolean", "description": "It is meant to hover (a ship, a hanging lamp)."},
-     "sky": {"type": "object", "description": "{diameter_m, distance_m, azimuth?, elevation?}: a planet or moon far "
-                                              "away, drawn at its real angular size."},
+     "sky": {"type": "object", "description": "{diameter_m, distance_m, of?, azimuth?, elevation?}: a planet or moon "
+                                              "far away, drawn at its real angular size. of: the part diameter_m is "
+                                              "the real diameter of (a planet's globe), else the whole construct's "
+                                              "size; its rings and moons come at the same scale."},
+     "placements": {"type": "array", "items": {"type": "object"},
+                    "description": "place: several placements at once, each {construct, id?, on?, at?, yaw?, rotate?, "
+                                   "scale?, floating?, sky?, note?, label?}."},
+     "label": {"type": "string", "description": "A display name for the placement, or view: the view's button."},
+     "target": {"type": "string", "description": "view: what it frames, a placement id or placement/part-id."},
+     "pitch": {"type": "number", "description": "view: degrees above the horizon."},
+     "distance": {"type": "number", "description": "view: 1 frames the target; less is closer."},
+     "remove": {"type": "boolean", "description": "view: remove the named view."},
      "note": {"type": "string", "description": "Why it is there (kept with the placement)."},
-     "label": {"type": "string", "description": "A display name for the placement."},
      "wait_seconds": {"type": "integer", "minimum": 1, "maximum": 380}},
     required=("op",))
 

@@ -14,7 +14,9 @@ from pathlib import Path
 from . import runtime, tools
 from .runtime import ConstructError
 
-OPS = ("new", "place", "move", "remove", "list")
+OPS = ("new", "place", "move", "remove", "list", "view")
+MAX_BATCH = 64
+VIEW_KEYS = ("label", "target", "yaw", "pitch", "distance")
 NAME = re.compile(r"^[a-z0-9][a-z0-9_.-]{0,63}$")
 
 
@@ -208,13 +210,41 @@ def world(args):
         return res
     pid = args.get("id")
     if op == "place":
-        name = args.get("construct")
-        rel = _bring(folder, name)
-        pid = pid or runtime.slugify(_source(name)[0])[:40]
-        base, n = pid, 2
-        while any(p["id"] == pid for p in doc["placements"]):
-            pid, n = "%s-%d" % (base, n), n + 1
-        doc["placements"].append(_placement_fields(args, {"id": pid, "construct": rel}))
+        many = args.get("placements")
+        if many is not None:   # several at once, checked together, one rebuild
+            if not isinstance(many, list) or not 0 < len(many) <= MAX_BATCH or not all(isinstance(x, dict) for x in many):
+                raise ConstructError("placements is a list of 1..%d placements, each {construct, id?, on?, at?, ...}"
+                                     % MAX_BATCH)
+        else:
+            many = [args]
+        added = []
+        for one in many:
+            name = one.get("construct")
+            rel = _bring(folder, name)
+            pid = one.get("id") or runtime.slugify(_source(name)[0])[:40]
+            base, n = pid, 2
+            while any(p["id"] == pid for p in doc["placements"]):
+                pid, n = "%s-%d" % (base, n), n + 1
+            doc["placements"].append(_placement_fields(one, {"id": pid, "construct": rel}))
+            added.append(pid)
+        pid = ", ".join(added)
+    elif op == "view":   # a named view of the world: a room, a group, one placement; shown as a button on the page
+        vid = args.get("id")
+        if not isinstance(vid, str) or not NAME.match(vid):
+            raise ConstructError("a view needs an id (lowercase letters, digits, - _ .)")
+        pr = doc.setdefault("presentation", {})
+        views = [v for v in pr.get("views", []) if v.get("id") != vid]
+        if not tools._bool(args, "remove"):
+            v = {"id": vid}
+            for k in VIEW_KEYS:
+                if args.get(k) is not None:
+                    v[k] = args[k]
+            views.append(v)
+        pr["views"] = views
+        if not views:
+            pr.pop("views")
+        if not pr:
+            doc.pop("presentation")
     elif op in ("move", "remove"):
         idx = next((i for i, p in enumerate(doc["placements"]) if p["id"] == pid), None)
         if idx is None:
