@@ -1,5 +1,43 @@
 # Changelog
 
+## 1.3.0 — 2026-11-08
+
+**Worlds:** whole constructs placed together in one scene. A room, a street, a city or a game map, made in Hermes
+from the chat. [docs/WORLDS.md](docs/WORLDS.md)
+
+- **A world is not a bigger construct.** Each placed construct stays whole under its placement's id
+  (`vespa/legshield`): its parts, sources, provenance, critic's verdicts and joints are its own. A construct keeps a
+  construct's budgets and checks; a world has its own (400,000 lines and triangles for its page, 2,000,000 solid
+  triangles for exports, 4,096 placements, 1,000 km). Worlds place worlds, eight levels deep (a city, its
+  districts, their buildings), and the same construct placed many times is compiled once.
+- **Placements:**
+  - `on` stands a construct on a part of another (a floor, a table, the ground under the pilotis), at real size;
+  - `floating` is for what hovers;
+  - `sky` puts a planet or the Moon far away at its real angular size, with `of` naming the part whose diameter is
+    given (Saturn's globe);
+  - a world names its own views.
+- **The world's audit, and `construct check` for a world:**
+  - placements that overlap;
+  - a placement that runs into the construct it stands in (each part against the host's, all but its support: a
+    car must clear the columns);
+  - a placement in the way of another's door, lid or cowl when it opens (each joint's open pose);
+  - what stands on nothing, and what isn't at real size.
+- **The page:**
+  - every joint in a world opens: the viewer keeps joint and motion poses in a texture, so a world's dozens of doors
+    and lids are not held to a construct's sixteen;
+  - a world's views are buttons (the whole, each placement, the world's own);
+  - the sky is never lost to depth haze.
+- **Exports:** one glTF for Blender or a game engine (each placement a group, material maps merged, every joint in
+  the `open` animation); with `--pieces glued`, a Godot game map whose fixed body stays put while doors and lids
+  swing. The Blender add-on imports a world.
+- **In Hermes,** `construct_world` makes, places (several at once), moves, removes, lists and names views, and shows
+  each change live in the chat. Its constructs come from the user's projects, the constructs the plugin ships, or the
+  gallery, fetched by name from this release's tag. Three worlds ship: the shed with the Samba and the Vespa; the
+  Villa Savoye lived in (fifteen constructs and Saturn at the Moon's distance); a street of landmarks.
+  `construct_inspect` reads a shipped construct by name. Tested in Hermes Desktop with GPT-6.1 Sol and DeepSeek V4
+  Pro; what each had to work around became the tool's: placing many at once, named views, host collisions, door
+  swings, and sky sizing by a part.
+
 ## 1.2.1 — 2026-11-08
 
 The Hermes plugin's security review (the catalog's, at 1.2.0), and an examples polish.

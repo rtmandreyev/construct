@@ -23,7 +23,7 @@ model with named parts and working joints, a print, a model kit, a CAD file or a
 </p>
 <p align="center"><sub><b>Constructs.</b> Sainte-Chapelle · Duomo di Milano · Toyota Land Cruiser FJ62 · KESTREL, an invented ice tug · Tompion's year-going clock · Volkswagen T1 Samba, each built in masterpiece mode, by Claude Opus 5.5, KESTREL by GPT-6.1 Sol and the clock by DeepSeek V4.1 Flash. <a href="https://rtmandreyev.github.io/construct/">Open the gallery</a> to orbit them, replay the assembly and read the labels; <a href="docs/for/invent-from-what-exists.md">how KESTREL was made</a>, step by step.</sub></p>
 
-- **Construct for Hermes.** A native Hermes plugin: ask for a thing in plain words and the construct appears live in the chat, with its 3D model, kit and NetLogo runs beside it. `hermes plugins install rtmandreyev/construct#hermes/construct` ([what it does](hosts/hermes/construct/README.md), [Villa Savoye in Hermes, step by step](docs/for/hermes-walkthrough.md)).
+- **Construct for Hermes.** A native Hermes plugin: ask for a thing in plain words and the construct appears live in the chat, with its 3D model, kit and NetLogo runs beside it, and place your constructs together into worlds. `hermes plugins install rtmandreyev/construct#hermes/construct` ([what it does](hosts/hermes/construct/README.md), [Villa Savoye in Hermes, step by step](docs/for/hermes-walkthrough.md)).
 - **Any agent, any model.** Claude Code, Hermes, any MCP client or any OpenAI-compatible endpoint, or by hand.
 - **Honest about what is known.** Every part says how it is known, its size and its shape apart, every guess in a shade of how firmly it is held.
 - **One house style.** Models never choose the colours, so every construct looks like it belongs with the rest.
@@ -52,6 +52,14 @@ model with named parts and working joints, a print, a model kit, a CAD file or a
 | are an **educator or researcher** | An agent-based model's run drawn as a construct, compared, printed, filmed | [Models come alive](docs/for/educators-and-researchers.md) |
 | work in a **museum or archive** | Reconstructions that say how each part is known, so a visitor can tell evidence from design | [Honest reconstructions](docs/for/museums-and-archives.md) |
 | are a **developer** | A scene contract, a command line, an MCP server and skills to build on | [Build on it](docs/for/developers.md) |
+
+## New in 1.3
+
+- **Worlds.** Whole constructs placed together in one scene: your chair, clock and piano in your house, your cars under
+  it, a planet in the sky; a street, a city, a game map. Each construct stays whole, with its own record and joints.
+  The world's audit says what overlaps, what runs into the house it stands in, and what stands where a door opens. A
+  world exports as one glTF or a Godot game map, and in Hermes `construct_world` builds one from the chat, live.
+  Three ship to start from. [Worlds](docs/WORLDS.md) · [release notes](docs/releases/v1.3.0.md)
 
 ## New in 1.2
 
@@ -215,7 +223,7 @@ Then add the skill to your agent, or use Construct directly:
 | Host | How to add it |
 | --- | --- |
 | Claude Code | `claude --plugin-dir dist/claude-code/construct` for one session, or copy `dist/claude-code/construct/skills/construct` into `.claude/skills/` |
-| Hermes, the plugin | `hermes plugins install rtmandreyev/construct#hermes/construct`: twelve tools, the construct live in the chat, 3D models, kits and NetLogo runs in Hermes Desktop ([Construct for Hermes](hosts/hermes/construct/README.md)) |
+| Hermes, the plugin | `hermes plugins install rtmandreyev/construct#hermes/construct`: thirteen tools, the construct live in the chat, worlds, 3D models, kits and NetLogo runs in Hermes Desktop ([Construct for Hermes](hosts/hermes/construct/README.md)) |
 | Hermes, the skill alone | `hermes skills install rtmandreyev/construct/skills/construct`, or copy `dist/hermes/construct` into `~/.hermes/skills/` |
 | Any MCP client | Add `{"mcpServers": {"construct": {"command": "python3", "args": ["/path/to/construct/construct_hologram/server.py"]}}}` |
 | Any OpenAI-compatible model | `python3 construct_hologram/cli.py author "..." --base-url ... --model ... --key-env ... --out scene.json` |
@@ -318,7 +326,7 @@ Construct is deliberately small. You need:
 | design a physical product from a system's documentation | [Documentation → product](docs/for/documentation-to-product.md) |
 | see how reconstructing, modifying and inventing are one pipeline | [The design-freedom continuum](docs/for/documentation-to-product.md#the-design-freedom-continuum) |
 | know where the method comes from | [About](docs/ABOUT.md) |
-| see what changed | [CHANGELOG.md](CHANGELOG.md) and the [1.2.0](docs/releases/v1.2.0.md), [1.1.0](docs/releases/v1.1.0.md) and [1.0.0](docs/releases/v1.0.0.md) release notes |
+| see what changed | [CHANGELOG.md](CHANGELOG.md) and the [1.3.0](docs/releases/v1.3.0.md), [1.2.0](docs/releases/v1.2.0.md), [1.1.0](docs/releases/v1.1.0.md) and [1.0.0](docs/releases/v1.0.0.md) release notes |
 
 The full index is in [docs/README.md](docs/README.md).
 
