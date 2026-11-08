@@ -607,6 +607,14 @@ class Plugin(unittest.TestCase):
         self.assertIn('now "My shed"', handle("rename %s My shed" % sw))
         row = {r["project"]: r for r in self.api.projects(self.data)}[sw]
         self.assertTrue(row["favourite"])
+        # a piece made for a world is kept with it; scratch work is archived by the world's tidy op
+        piece = self.call("construct_start", {"example": "braun-sk4-knob", "for_world": "My shed"})["project"]
+        self.until_done(self.call("construct_build", {"project": piece}))
+        rows = {r["project"]: r for r in self.api.projects(self.data)}
+        self.assertEqual(rows[piece]["in_world"], "My shed")
+        tidy = self.call("construct_world", {"op": "tidy", "world": sw, "projects": [piece, "no-such-project"]})
+        self.assertEqual(tidy["archived"], [piece])
+        self.assertTrue({r["project"]: r for r in self.api.projects(self.data)}[piece]["archived"])
         if render.find_browser() and not os.environ.get("HOLOGRAM_SKIP_CAPTURE"):
             self.assertRegex(handle('still %s %s {"target": [0, 1, 0], "yaw": 20, "pitch": 15, "dist": 9}' % (sw, build)), r"\(file .+\.png\)")
         # a shipped construct opened as the user's own from the Start from page, with no model turn

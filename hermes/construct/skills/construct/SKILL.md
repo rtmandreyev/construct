@@ -228,9 +228,13 @@ the user says **fast** (then one pass each, and the world says so).
    the critic's last verdict and what it could not settle. Orchestrator children need Hermes's
    `delegation.max_spawn_depth: 2`; if a builder cannot delegate its critic, it returns its packet folder after
    each round and you run that critic yourself.
-3. **Text and signs say something real.** Lettering on signs, screens and plates is real, legible words that fit
+3. **One project per construct, and the world's name on it.** Each builder calls `construct_start` with `for_world`
+   (the world's name) and keeps every round, repair and check in that one project: never a copy to mark it accepted,
+   released or repaired (the rounds keep checkpoints). Trial projects made on the way are archived at the end with
+   `construct_world` op `tidy` (`projects: [...]`); nothing is deleted.
+4. **Text and signs say something real.** Lettering on signs, screens and plates is real, legible words that fit
    the place (a shop name, a street, a price), never letter-shaped noise copied from a generated picture.
-4. Place them as above, then judge the whole world once with a fresh critic against the picture or brief
+5. Place them as above, then judge the whole world once with a fresh critic against the picture or brief
    (composition, scale, what is missing), fix what it finds, and name the views. Say which placements were made
    (with each critic's verdict), which came from the gallery, and what was left out.
 

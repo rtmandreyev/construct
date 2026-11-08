@@ -42,6 +42,8 @@ START = _tool(
     "(browser, ffmpeg, FreeCAD, Blender) are available.",
     {
         "title": {"type": "string", "maxLength": 120, "description": "The construct's title; also names the project."},
+        "for_world": {"type": "string", "maxLength": 120, "description": "Building a piece of a world: the world's name or "
+                                                                          "id, so the piece is kept with that world."},
         "archetype": {"type": "string", "enum": ARCHETYPES,
                       "description": "Parameter document for an archetype (with variant): case (jewel, slim, digipak, box), "
                                      "book (hardcover, paperback), object (electric-guitar, acoustic-guitar, bass-guitar, "
@@ -229,9 +231,13 @@ WORLD = _tool(
     "stands on and warnings (overlaps, a thing running into the house it is in, things standing on nothing). place "
     "several at once with placements: [{construct, id?, on?, at?, yaw?, ...}, ...] (one check, one rebuild). view {world, "
     "id, label?, target?, yaw?, pitch?, distance?, remove?}: a named view of the world (a room: target a floor part; "
-    "one placement: its id), shown as a button on the page beside one for each placement. construct_check checks a "
+    "one placement: its id), shown as a button on the page beside one for each placement. tidy {world, projects}: archive the "
+    "scratch projects made on the way (nothing is deleted). construct_check checks a "
     "world; construct_export exports it whole (one glTF for Blender or a game engine, joints working).",
-    {"op": {"type": "string", "enum": ["new", "place", "move", "remove", "list", "view"]},
+    {"op": {"type": "string", "enum": ["new", "place", "move", "remove", "list", "view", "tidy"]},
+     "projects": {"type": "array", "items": {"type": "string"},
+                  "description": "tidy: project ids of scratch work for this world (trial copies, superseded builds) to "
+                                 "archive: kept, out of the Constructs page's way."},
      "world": {"type": "string", "description": "The world's project id (from op new)."},
      "title": {"type": "string", "description": "new: the world's name."},
      "example": {"type": "string", "description": "new: start from a world that ships with the plugin "

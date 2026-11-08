@@ -188,8 +188,11 @@ def start(args):
         shutil.rmtree(folder, ignore_errors=True)   # no half-made project left behind
         raise
     doc = json.loads((folder / name).read_text(encoding="utf-8"))
-    runtime.write_json(folder / "project.json", {"slug": slug, "title": doc.get("title") or title or slug, "scene": name,
-                                                 "origin": source, "from": args.get(source), "created": runtime.stamp_iso()})
+    info = {"slug": slug, "title": doc.get("title") or title or slug, "scene": name, "origin": source,
+            "from": args.get(source), "created": runtime.stamp_iso()}
+    if isinstance(args.get("for_world"), str) and args["for_world"].strip():
+        info["for_world"] = args["for_world"].strip()[:120]
+    runtime.write_json(folder / "project.json", info)
     return {"project": slug, "project_dir": str(folder), "scene": str(folder / name), "title": doc.get("title"),
             "kind": "parameter document" if name.endswith(".params.json") else "scene", "programs": runtime.programs(),
             "next": "edit the scene file with your file tools (facts with certainty and sources first), then "

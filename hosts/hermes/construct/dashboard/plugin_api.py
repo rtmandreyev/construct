@@ -225,13 +225,19 @@ def projects(root):
             continue
     rows.sort(key=lambda r: r.get("updated") or "", reverse=True)
     rows = rows[:LIST_MAX]
+    infos = {}
+    for r in rows:
+        info = infos[r["project"]] = _project_info(r.get("newest") or {})   # the user's own: a title, a favourite, the archive
+        if isinstance(info.get("title"), str) and info["title"].strip():
+            r["title"] = info["title"].strip()[:120]
     parts = _parts_of_worlds(rows)
     for r in rows:
         r["group"] = _group_of(r.get("newest") or {})
-        info = _project_info(r.get("newest") or {})   # the user's own: a title, a favourite, the archive
-        if isinstance(info.get("title"), str) and info["title"].strip():
-            r["title"] = info["title"].strip()[:120]
+        info = infos[r["project"]]
         r["favourite"], r["archived"] = info.get("favourite") is True, info.get("archived") is True
+        if not r.get("in_world") and not r.get("world") and isinstance(info.get("for_world"), str):
+            fw = info["for_world"]   # made for a world (its id or name): kept with it
+            r["in_world"] = next((w["title"] for w in rows if w.get("world") and fw in (w["project"], w["title"])), fw)
         if r["project"] in parts and not r.get("world"):
             r["in_world"] = parts[r["project"]]
     return rows

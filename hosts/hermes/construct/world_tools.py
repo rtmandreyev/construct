@@ -14,7 +14,7 @@ from pathlib import Path
 from . import runtime, tools
 from .runtime import ConstructError
 
-OPS = ("new", "place", "move", "remove", "list", "view")
+OPS = ("new", "place", "move", "remove", "list", "view", "tidy")
 MAX_BATCH = 64
 VIEW_KEYS = ("label", "target", "yaw", "pitch", "distance")
 NAME = re.compile(r"^[a-z0-9][a-z0-9_.-]{0,63}$")
@@ -254,6 +254,20 @@ def world(args):
             res["surfaces"] = got.get("surfaces", [])
         return res
     pid = args.get("id")
+    if op == "tidy":   # the scratch work of a world archived: kept, off the Constructs page
+        names = args.get("projects")
+        if not isinstance(names, list) or not names or len(names) > 200 or not all(isinstance(n, str) and NAME.match(n) for n in names):
+            raise ConstructError("projects is a list of project ids to archive")
+        done = []
+        for n in names:
+            pf = runtime.projects_root() / n
+            if n == slug or not (pf / "project.json").is_file():
+                continue
+            info = json.loads((pf / "project.json").read_text(encoding="utf-8"))
+            info["archived"], info["for_world"] = True, info.get("for_world") or doc["title"]
+            runtime.write_json(pf / "project.json", info)
+            done.append(n)
+        return {"world": slug, "archived": done, "next": "the Constructs page keeps them under Archived"}
     if op == "place":
         many = args.get("placements")
         if many is not None:   # several at once, checked together, one rebuild
