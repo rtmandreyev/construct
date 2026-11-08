@@ -16,6 +16,10 @@
     /construct undo <world>       the world as it was before its last change
     /construct open-example <name>         a shipped construct as your own, built (the Start from page's Open)
     /construct thumbs [n]         stills for tiles that have none
+    /construct export <project> glb|godot  an export without a model turn (the card's Export)
+    /construct still <project> <build> <camera>   a picture from where the camera is (the card's Picture)
+    /construct save-view <world> <name> <camera>  the camera where it is, a named view (the card's Save view)
+    /construct favourite|archive|rename <project> [title]   tidying the Constructs page
     /construct job <id>           one background job's state (an ended build is published here)
 """
 
@@ -155,6 +159,44 @@ def handle(raw_args="", event=None, **kwargs):
                 return "Removed %s from %s. Rebuilding (build %s, job %s)." % (r["removed"], r["world"], r["build"], r["job_id"])
             r = world_tools.duplicate_by_hand(words[1].lower(), words[2])
             return "Placed %s in %s. Rebuilding (build %s, job %s); drag it where it belongs." % (r["placed"], r["world"], r["build"], r["job_id"])
+        if verb == "export":   # the card's Export: glb (Blender, three.js, any engine) or godot (a game map), no model turn
+            if len(words) < 3 or words[2] not in ("glb", "godot"):
+                return "Usage: /construct export <project> glb|godot"
+            from . import tools
+            args = {"project": words[1].lower(), "format": "glb"}
+            if words[2] == "godot":
+                args.update(pieces="glued", colliders=True)
+            r = tools._export(args, 0)
+            if r.get("job_id") and r.get("state") == "running":
+                return "Exporting %s for %s (job %s)." % (words[1].lower(), "Godot" if words[2] == "godot" else "glTF", r["job_id"])
+            return "Exported %s (file %s)." % (words[1].lower(), r.get("file_path"))
+        if verb == "still":   # the card's Picture: the page from where the camera is, a PNG in the project
+            parts = str(raw_args or "").strip().split(None, 3)
+            if len(parts) < 4:
+                return "Usage: /construct still <project> <build> <camera json>"
+            r = world_tools.still(parts[1].lower(), parts[2], json.loads(parts[3]))
+            return "Saved a picture of %s (file %s)." % (parts[1].lower(), r)
+        if verb == "save-view":   # the card's Save view: the camera where it is, a named view of the world
+            parts = str(raw_args or "").strip().split(None, 3)
+            if len(parts) < 4:
+                return "Usage: /construct save-view <world> <name> <camera json>"
+            r = world_tools.save_view(parts[1].lower(), parts[2], json.loads(parts[3]))
+            return "Saved the view %s in %s. Rebuilding (build %s, job %s)." % (r["view"], r["world"], r["build"], r["job_id"])
+        if verb in ("favourite", "unfavourite", "archive", "unarchive", "rename"):   # tidying the Constructs page
+            if len(words) < 2:
+                return "Usage: /construct %s <project>%s" % (verb, " <title>" if verb == "rename" else "")
+            folder = runtime.project_dir(words[1].lower())
+            info = json.loads((folder / "project.json").read_text(encoding="utf-8")) if (folder / "project.json").is_file() else {}
+            if verb == "rename":
+                title = str(raw_args or "").strip().split(None, 2)
+                if len(title) < 3 or not title[2].strip() or len(title[2]) > 120:
+                    return "Usage: /construct rename <project> <title, at most 120 characters>"
+                info["title"] = title[2].strip()
+            else:
+                info["favourite" if "favourite" in verb else "archived"] = not verb.startswith("un")
+            runtime.write_json(folder / "project.json", info)
+            return "%s: %s." % (words[1].lower(), {"favourite": "a favourite", "unfavourite": "no longer a favourite", "archive": "archived",
+                                                  "unarchive": "back from the archive", "rename": "now \"%s\"" % info.get("title")}[verb])
         if verb == "open-world":   # the Worlds page's Open: a shipped world as the user's own, with no model turn
             if len(words) < 2:
                 return "Which world? /construct open-world <example> (/construct worlds lists them)"
@@ -200,7 +242,9 @@ def handle(raw_args="", event=None, **kwargs):
                 prog = st.get("progress") or {}
                 return "Job %s is running%s." % (jid, " (%s%%)" % prog["percent"] if prog.get("percent") is not None else "")
             return "Job %s %s%s." % (jid, {"done": "finished", "warned": "finished, with problems to fix"}.get(st.get("state"), "failed"),
-                                     " (build %s)" % st["build"] if st.get("build") else (": " + str(st.get("error"))[:300] if st.get("error") else ""))
+                                     " (build %s)" % st["build"] if st.get("build") else
+                                     " (file %s)" % st["file_path"] if st.get("file_path") else
+                                     (": " + str(st.get("error"))[:300] if st.get("error") else ""))
         if verb == "jobs":
             rows = jobs.recent()
             if not rows:

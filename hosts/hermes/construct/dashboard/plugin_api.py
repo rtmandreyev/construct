@@ -202,6 +202,15 @@ def _parts_of_worlds(rows):
     return out
 
 
+def _project_info(card):
+    """project.json beside the build's scene (read only): the user's title, favourite and archive marks."""
+    scene = card.get("scene")
+    if not isinstance(scene, str):
+        return {}
+    info = Path(scene).parent / "project.json"
+    return _read_json(info, {}) if info.is_file() and info.stat().st_size < 65536 else {}
+
+
 def projects(root):
     rows = []
     shown = Path(root) / "shown"
@@ -219,6 +228,10 @@ def projects(root):
     parts = _parts_of_worlds(rows)
     for r in rows:
         r["group"] = _group_of(r.get("newest") or {})
+        info = _project_info(r.get("newest") or {})   # the user's own: a title, a favourite, the archive
+        if isinstance(info.get("title"), str) and info["title"].strip():
+            r["title"] = info["title"].strip()[:120]
+        r["favourite"], r["archived"] = info.get("favourite") is True, info.get("archived") is True
         if r["project"] in parts and not r.get("world"):
             r["in_world"] = parts[r["project"]]
     return rows

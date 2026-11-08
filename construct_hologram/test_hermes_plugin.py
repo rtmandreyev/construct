@@ -588,6 +588,27 @@ class Plugin(unittest.TestCase):
         self.assertIn("could not", handle("open-world nowhere"))
         self.assertIn("eames-lounge-chair", [g["name"] for g in self.api.gallery(self.pkg)])
         self.assertIn("html_gz", self.api.view(self.data, sw, build))   # a world's page travels gzipped
+        # the card's own work, with no chat: an export, a saved view, tidying the page (a picture needs a browser)
+        out = handle("export %s godot" % sw)
+        self.assertRegex(out, r"^(Exporting %s for Godot \(job [0-9a-f]{12}\)|Exported %s \(file .+\.glb\))\." % (sw, sw))
+        job = re.search(r"job ([0-9a-f]{12})", out)
+        for _ in range(240):
+            if not job or "(file " in out:
+                break
+            out = handle("job %s" % job.group(1))
+            time.sleep(1)
+        self.assertRegex(out, r"\(file .+\.glb\)")
+        self.assertIn("Usage", handle("export %s stl" % sw))
+        out = handle('save-view %s by-the-door {"target": [0, 1, 2], "yaw": 30, "pitch": 12, "dist": 6}' % sw)
+        self.assertRegex(out, r"^Saved the view by-the-door in %s\." % sw)
+        views = json.loads((self.data / "projects" / sw / "world.json").read_text())["presentation"]["views"]
+        self.assertEqual([v for v in views if v["id"] == "by-the-door"][0]["distance_m"], 6.0)
+        self.assertIn("a favourite", handle("favourite %s" % sw))
+        self.assertIn('now "My shed"', handle("rename %s My shed" % sw))
+        row = {r["project"]: r for r in self.api.projects(self.data)}[sw]
+        self.assertTrue(row["favourite"])
+        if render.find_browser() and not os.environ.get("HOLOGRAM_SKIP_CAPTURE"):
+            self.assertRegex(handle('still %s %s {"target": [0, 1, 0], "yaw": 20, "pitch": 15, "dist": 9}' % (sw, build)), r"\(file .+\.png\)")
         # a shipped construct opened as the user's own from the Start from page, with no model turn
         out = handle("open-example braun-sk4-knob")
         self.assertRegex(out, r"^Opened braun-sk4-knob as \S+\. Building \(build \S+, job [0-9a-f]{12}\)\.")

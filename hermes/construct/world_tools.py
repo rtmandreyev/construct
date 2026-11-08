@@ -446,6 +446,55 @@ def duplicate_by_hand(slug, pid):
     return dict(_summary(checked), world=slug, placed=new_id, build=build, job_id=job_id, undo="edits/%s-before.json" % stamp)
 
 
+def still(slug, build, camera):
+    """A picture of a project's build from the given camera: <project>/stills/<id>.png, listed with its files."""
+    if not re.match(r"^\d{8}-\d{6}-[0-9a-f]{4}$", str(build)):
+        raise ConstructError("which build? (its id)")
+    folder = runtime.project_dir(slug)
+    page = runtime.shown_root() / slug / build / "construct.html"
+    if not page.is_file():
+        raise ConstructError("no build %s of %s" % (build, slug))
+    cam = {k: camera.get(k) for k in ("target", "yaw", "pitch", "dist", "focus") if isinstance(camera, dict) and k in camera}
+    if cam and not (isinstance(cam.get("target"), list) and len(cam["target"]) == 3 and all(isinstance(v, (int, float)) for v in cam["target"])):
+        raise ConstructError("the camera is {target: [x, y, z], yaw, pitch, dist}")
+    out = folder / "stills" / ("%s.png" % runtime.new_id())
+    out.parent.mkdir(parents=True, exist_ok=True)
+    spec = Path(tempfile.mkstemp(prefix=".still-", suffix=".json", dir=str(folder))[1])
+    try:
+        runtime.write_json(spec, {"page": str(page), "camera": cam, "out": str(out),
+                                  "mode": camera.get("mode") if isinstance(camera, dict) else None,
+                                  "solid": bool(camera.get("solid")) if isinstance(camera, dict) else False})
+        code, _, err = runtime.run_child("still", str(spec), timeout=180, cwd=folder)
+    finally:
+        spec.unlink(missing_ok=True)
+    if code != 0 or not out.is_file():
+        raise ConstructError("the picture could not be made: %s" % ((err or "").strip().splitlines() or ["no browser"])[-1])
+    runtime.record_item(slug, "file", out, title="Picture")
+    return str(out)
+
+
+def save_view(slug, name, camera):
+    """The camera where someone left it, kept as a named view of the world (a button for the next visit, a shot)."""
+    label = str(name).replace("-", " ").replace("_", " ").strip()[:48] or "View"
+    vid = runtime.slugify(label)[:40] or "view"
+    if not isinstance(camera, dict) or not (isinstance(camera.get("target"), list) and len(camera["target"]) == 3):
+        raise ConstructError("the camera is {target: [x, y, z], yaw, pitch, dist}")
+    args = {"op": "view", "world": slug, "id": vid, "label": label.capitalize()}
+    folder = runtime.project_dir(slug)
+    path, doc = _load(folder)
+    pr = doc.setdefault("presentation", {})
+    views = [v for v in pr.get("views", []) if v.get("id") != vid]
+    views.append({"id": vid, "label": label.capitalize(), "target": [round(float(x), 3) for x in camera["target"]],
+                  "yaw": round(float(camera.get("yaw", 0)) % 360, 2), "pitch": max(-89, min(89, round(float(camera.get("pitch", 15)), 2))),
+                  "distance_m": max(0.05, round(float(camera.get("dist", 10)), 3))})
+    pr["views"] = views
+    before = json.loads(path.read_text(encoding="utf-8"))
+    _save_checked(path, doc, folder)
+    _log(folder, before, {"op": "view", "by": "user", "placement": vid, "args": {"camera": True}})
+    build, job_id = _rebuild_later(slug, folder, path)
+    return {"world": slug, "view": vid, "build": build, "job_id": job_id}
+
+
 def undo(slug):
     """The world as it was before its last change (by the agent or by hand), rebuilt."""
     if not isinstance(slug, str) or not NAME.match(slug):

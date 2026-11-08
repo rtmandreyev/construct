@@ -924,7 +924,8 @@ void main() {
     recs.forEach((r, i) => {
       const m = this.placeMotion(r.id, memo), R = m.R, t = m.t;
       mats.set([R[0][0], R[1][0], R[2][0], 0, R[0][1], R[1][1], R[2][1], 0, R[0][2], R[1][2], R[2][2], 0, t[0], t[1], t[2], 1], i * 16);
-      gains[i] = !sel ? 1 : r.id === sel ? 1.7 : this.carriedBy(r.id, sel) ? 1.3 : r.sky ? 1 : 0.42;
+      const many = this.arr.multi && this.arr.multi.size > 1 && this.arr.multi.has(r.id);
+      gains[i] = !sel ? 1 : r.id === sel || many ? 1.7 : this.carriedBy(r.id, sel) ? 1.3 : r.sky ? 1 : 0.42;
     });
     return { mats, gains };
   };
@@ -1054,6 +1055,44 @@ void main() {
     }
     return best;
   };
+  // the boxes of a placement's parts where it stands now (moved and turned while arranging), world space
+  Hologram.prototype.placedBoxes = function (id, memo) {
+    const m = this.arranging() ? this.placeMotion(id, memo) : null, out = [];
+    for (const p of this.geo.parts) {
+      if (p.placement !== id || p.sky || p.shape === "points") continue;
+      for (const b of p.instances) {
+        if (!m) { out.push([b.min, b.max, p.id]); continue; }
+        const lo = [Infinity, Infinity, Infinity], hi = [-Infinity, -Infinity, -Infinity];
+        for (let c = 0; c < 8; c++) {
+          const v = [c & 1 ? b.max[0] : b.min[0], c & 2 ? b.max[1] : b.min[1], c & 4 ? b.max[2] : b.min[2]];
+          for (let k = 0; k < 3; k++) {
+            const w = m.R[k][0] * v[0] + m.R[k][1] * v[1] + m.R[k][2] * v[2] + m.t[k];
+            lo[k] = Math.min(lo[k], w); hi[k] = Math.max(hi[k], w);
+          }
+        }
+        out.push([lo, hi, p.id]);
+      }
+    }
+    return out;
+  };
+  // what the chosen placement runs into where it is now: other placements' parts it interpenetrates by more than 2 cm
+  // (not what it stands on, not what it carries, not the others moved with it): the names, a few at most
+  Hologram.prototype.runsInto = function (id, skip) {
+    const memo = {}, mine = this.placedBoxes(id, memo);
+    if (!mine.length) return [];
+    const lo = [0, 1, 2].map((k) => Math.min(...mine.map((b) => b[0][k]))), hi = [0, 1, 2].map((k) => Math.max(...mine.map((b) => b[1][k])));
+    const bottom = lo[1], hits = new Map(), meet = (a, b) => [0, 1, 2].every((k) => Math.min(a[1][k], b[1][k]) - Math.max(a[0][k], b[0][k]) >
+      Math.min(0.02, 0.3 * Math.min(a[1][k] - a[0][k], b[1][k] - b[0][k]) + 1e-4));   // thin parts meet by less
+    for (const q of this.geo.world.placements) {
+      if (q.id === id || q.sky || skip.has(q.id)) continue;
+      for (const b of this.placedBoxes(q.id, memo)) {
+        if (!meet([lo, hi], b) || Math.abs(b[1][1] - bottom) < 0.04) continue;   // its support is not in its way
+        if (mine.some((m) => meet(m, b))) { hits.set(q.id, (hits.get(q.id) || 0) + 1); break; }
+      }
+      if (hits.size >= 4) break;
+    }
+    return [...hits.keys()].map((pid) => { const r = this.geo.world.placements.find((x) => x.id === pid); return String((r && (r.label || r.title)) || pid); });
+  };
   // the changes as the world's file takes them: [{id, move, turn, pivot}], rounded, none that does nothing
   Hologram.prototype.arrangeChanges = function () {
     const out = [], r3 = (x) => Math.round(x * 1000) / 1000;
@@ -1128,6 +1167,9 @@ void main() {
     // fit the silhouette as seen from this direction: project every box corner onto the camera's
     // axes and solve the distance that keeps all of them inside both fields of view, with margin
     const v = this.viewSpec(id), fr = this.geo.presentation.framing, fov = 34;
+    if (Array.isArray(v.target) && v.distance_m) {   // a camera saved where someone left it
+      return { target: v.target.slice(), yaw: v.yaw || 0, pitch: v.pitch || 0, dist: v.distance_m, fov, focus: v.distance_m * 0.5 };
+    }
     const tid = v.target || (id === "hero" ? fr.target : null);
     const boxes = this.framingBoxes(tid);
     const lo = [Infinity, Infinity, Infinity], hi = [-Infinity, -Infinity, -Infinity];
@@ -1681,26 +1723,46 @@ void main() {
     // to move it over the ground, Shift-drag or Q/E to turn it, arrows to nudge, PgUp/PgDn to lift, Esc to let go
     const arrangeBox = el("div", "arrange");
     const arrangeOn = () => holo.arranging();
-    holo.arr = { on: false, sel: null, edits: {} };
+    holo.arr = { on: false, sel: null, edits: {}, multi: new Set(), snap: false, past: [], future: [], hits: [] };
+    // every change while arranging can be stepped back (⌘Z) and forward (⇧⌘Z) until it is saved
+    const remember = () => { holo.arr.past.push(JSON.stringify(holo.arr.edits)); if (holo.arr.past.length > 200) holo.arr.past.shift(); holo.arr.future = []; };
+    const stepBack = (back) => {
+      const from = back ? holo.arr.past : holo.arr.future, to = back ? holo.arr.future : holo.arr.past;
+      if (!from.length) return false;
+      to.push(JSON.stringify(holo.arr.edits)); holo.arr.edits = JSON.parse(from.pop());
+      arrangeTell(); kick(); return true;
+    };
+    let hitsAt = 0;
+    const checkHits = (force) => {   // the collision preview, at most every 120 ms while dragging
+      const sel = holo.arr.sel;
+      if (!sel) { holo.arr.hits = []; return; }
+      if (!force && performance.now() - hitsAt < 120) return;
+      hitsAt = performance.now();
+      const skip = new Set([...holo.arr.multi].concat(geo.world.placements.filter((q) => holo.carriedBy(q.id, sel)).map((q) => q.id)));
+      holo.arr.hits = holo.runsInto(sel, skip);
+    };
     let lastPick = null;
     const arrangeTell = () => {
       const ch = holo.arrangeChanges(), sel = holo.arr.sel, e = sel && holo.arr.edits[sel];
       const r = sel && geo.world.placements.find((q) => q.id === sel);
       arrangeBox.textContent = "";
-      arrangeBox.appendChild(el("div", "head", "ARRANGING" + (ch.length ? " · " + ch.length + " CHANGED" : "")));
+      arrangeBox.appendChild(el("div", "head", "ARRANGING" + (ch.length ? " · " + ch.length + " CHANGED" : "") +
+        (holo.arr.multi.size > 1 ? " · " + holo.arr.multi.size + " CHOSEN" : "") + (holo.arr.snap ? " · SNAP" : "")));
       arrangeBox.appendChild(el("div", "sel", r ? String(r.label || r.title || sel).toUpperCase() +
         (e ? " · MOVED " + Math.hypot(e.move[0], e.move[2]).toFixed(2) + " M" + (Math.abs(e.move[1]) > 5e-4 ? " · LIFTED " + e.move[1].toFixed(2) + " M" : "") +
              " · TURNED " + Math.round(e.turn) + "°" : "") : "CLICK A CONSTRUCT TO CHOOSE IT"));
-      arrangeBox.appendChild(el("div", "keys", "DRAG: IT RIDES ON WHAT IS UNDER THE POINTER (ALT KEEPS ITS LEVEL) · SHIFT-DRAG OR Q E TURN · ARROWS NUDGE · PGUP PGDN LIFT · ⌫ PUT BACK · ESC LET GO · A DONE"));
+      if (holo.arr.hits.length) arrangeBox.appendChild(el("div", "warn", "RUNS INTO " + holo.arr.hits.join(", ").toUpperCase()));
+      arrangeBox.appendChild(el("div", "keys", "DRAG: IT RIDES ON WHAT IS UNDER THE POINTER (ALT KEEPS ITS LEVEL) · ⌘-CLICK CHOOSES MORE · SHIFT-DRAG OR Q E TURN · ARROWS NUDGE · PGUP PGDN LIFT · N SNAP · ⌘Z UNDO · ⌫ PUT BACK · ESC LET GO · A DONE"));
       arrangeBox.style.display = arrangeOn() && opt.ui ? "block" : "none";
       if (typeof window.HOLO === "object" && window.HOLO && typeof window.HOLO.onArrange === "function") {
-        try { window.HOLO.onArrange({ on: arrangeOn(), selected: sel || null, changes: ch }); } catch (err) { /* the listener's own problem */ }
+        try { window.HOLO.onArrange({ on: arrangeOn(), selected: sel || null, changes: ch, hits: holo.arr.hits.slice(), several: holo.arr.multi.size,
+                                       snap: holo.arr.snap, canUndo: holo.arr.past.length > 0, canRedo: holo.arr.future.length > 0 }); } catch (err) { /* the listener's own problem */ }
       }
     };
     const setArrange = (on) => {
       if (!geo.world) return;
       holo.arr.on = !!on;
-      if (!on) holo.arr.sel = null;
+      if (!on) { holo.arr.sel = null; holo.arr.multi.clear(); holo.arr.hits = []; }
       if (on && !holo.userCamera) holo.userCamera = holo.cameraAt(now(), holo.cameraFor(opt.view));
       document.body.classList.toggle("arranging", !!on);
       arrangeTell(); kick();
@@ -1740,15 +1802,23 @@ void main() {
         if (i >= 0) pick = hits[(i + 1) % hits.length];
       }
       lastPick = { x: px, y: py };
+      if (e.metaKey || e.ctrlKey) {   // one more chosen (or one less), to move together
+        if (holo.arr.multi.has(pick.id) && holo.arr.multi.size > 1) { holo.arr.multi.delete(pick.id); if (holo.arr.sel === pick.id) holo.arr.sel = [...holo.arr.multi][0]; }
+        else { if (holo.arr.sel) holo.arr.multi.add(holo.arr.sel); holo.arr.multi.add(pick.id); holo.arr.sel = pick.id; }
+        drag = null; checkHits(true); arrangeTell(); kick(); return;
+      }
+      if (!holo.arr.multi.has(pick.id)) holo.arr.multi = new Set([pick.id]);
       holo.arr.sel = pick.id;
+      remember();
       const ed = editOf(pick.id);
-      const skip = new Set(geo.world.placements.filter((q) => q.id === pick.id || holo.carriedBy(q.id, pick.id)).map((q) => q.id));
+      const skip = new Set(geo.world.placements.filter((q) => holo.arr.multi.has(q.id) || q.id === pick.id || [...holo.arr.multi].some((m) => holo.carriedBy(q.id, m))).map((q) => q.id));
       const mo = holo.placeMotion(pick.id), P3 = [ed.pivot[0], holo.bottomOf(pick.id), ed.pivot[1]];
       const now3 = V.add([0, 1, 2].map((i) => mo.R[i][0] * P3[0] + mo.R[i][1] * P3[1] + mo.R[i][2] * P3[2]), mo.t);
       // where the pointer took hold, at the level it stands on: its middle keeps that small offset from the pointer
       const g0 = groundAt(px, py, now3[1]);
       drag.place = { id: pick.id, y: pick.point[1], start: groundAt(px, py, pick.point[1]), move0: ed.move.slice(), turn0: ed.turn, turning: e.shiftKey,
-                     skip, P3, offset: g0 ? [now3[0] - g0[0], now3[2] - g0[2]] : [0, 0] };
+                     skip, P3, offset: g0 ? [now3[0] - g0[0], now3[2] - g0[2]] : [0, 0], last: now3,
+                     others: [...holo.arr.multi].filter((m) => m !== pick.id).map((m) => [m, editOf(m).move.slice(), editOf(m).turn]) };
       hover.style.display = "none";
       arrangeTell(); kick();
     });
@@ -1767,14 +1837,17 @@ void main() {
         const pl = drag.place, ed = editOf(pl.id);
         const rr = canvas.getBoundingClientRect();
         const surf = !pl.turning && !e.altKey ? holo.surfaceAt(e.clientX - rr.left, e.clientY - rr.top, rr.width, rr.height, pl.skip) : null;
-        if (pl.turning) ed.turn = pl.turn0 + (e.clientX - drag.x0) * 0.5;
-        else if (surf) {   // it rides on what is under the pointer: its bottom on that top, its middle where the pointer is
+        if (pl.turning) {
+          ed.turn = pl.turn0 + (e.clientX - drag.x0) * 0.5;
+          if (holo.arr.snap) ed.turn = Math.round(ed.turn / 15) * 15;
+        } else if (surf) {   // it rides on what is under the pointer: its bottom on that top, its middle where the pointer is
           let W = [surf.point[0] + pl.offset[0], surf.point[1], surf.point[2] + pl.offset[1]];
           if (surf.side) {   // the pointer is on a wall: it keeps its level, just this side of the wall
             const level = pl.P3[1] + ed.move[1], r2 = holo.rayAt(e.clientX - rr.left, e.clientY - rr.top, rr.width, rr.height);
             const back = r2 ? [r2.d[0], r2.d[2]] : [0, 0], n = Math.hypot(back[0], back[1]) || 1;
             W = [surf.point[0] - back[0] / n * 0.25 + pl.offset[0], level, surf.point[2] - back[1] / n * 0.25 + pl.offset[1]];
           }
+          if (holo.arr.snap) W = [Math.round(W[0] * 4) / 4, W[1], Math.round(W[2] * 4) / 4];   // a quarter-metre grid
           const r0 = geo.world.placements.find((q) => q.id === pl.id), host = r0 && r0.on ? String(r0.on).split("/")[0] : null;
           const hm = host ? holo.placeMotion(host) : { R: [[1, 0, 0], [0, 1, 0], [0, 0, 1]], t: [0, 0, 0] };
           const q = V.sub(W, hm.t), loc = [0, 1, 2].map((j) => hm.R[0][j] * q[0] + hm.R[1][j] * q[1] + hm.R[2][j] * q[2]);
@@ -1784,14 +1857,22 @@ void main() {
           const r = canvas.getBoundingClientRect(), g = groundAt(e.clientX - r.left, e.clientY - r.top, pl.y);
           if (g) { const d = local(pl.id, [g[0] - pl.start[0], 0, g[2] - pl.start[2]]); ed.move = [pl.move0[0] + d[0], pl.move0[1], pl.move0[2] + d[2]]; }
         }
-        lastInput = performance.now(); arrangeTell(); kick();
+        if (pl.others.length) {   // the others chosen move as the one held, and turn as it turns, each about itself
+          const mo = holo.placeMotion(pl.id), cur = V.add([0, 1, 2].map((i) => mo.R[i][0] * pl.P3[0] + mo.R[i][1] * pl.P3[1] + mo.R[i][2] * pl.P3[2]), mo.t);
+          const dw = V.sub(cur, pl.last), dt = ed.turn - pl.turn0;
+          for (const [m, move0, turn0] of pl.others) {
+            const d = local(m, dw), em = editOf(m);
+            em.move = [move0[0] + d[0], move0[1] + d[1], move0[2] + d[2]]; em.turn = turn0 + dt;
+          }
+        }
+        checkHits(); lastInput = performance.now(); arrangeTell(); kick();
         return;
       }
       const c = holo.userCamera;
       c.yaw -= (e.clientX - drag.x) * 0.35; c.pitch = Math.max(-80, Math.min(85, c.pitch + (e.clientY - drag.y) * 0.3));
       drag = { x: e.clientX, y: e.clientY }; lastInput = performance.now(); kick();
     });
-    canvas.addEventListener("pointerup", () => { drag = null; });
+    canvas.addEventListener("pointerup", () => { if (drag && drag.place) { checkHits(true); arrangeTell(); } drag = null; });
     canvas.addEventListener("pointerleave", () => { hover.style.display = "none"; });
     // the keyboard follows the pointer into the picture (inside an app's frame, keys only reach a focused page)
     canvas.tabIndex = 0;
@@ -1849,7 +1930,9 @@ void main() {
     window.addEventListener("keyup", (e) => { held.delete(flyKey(e)); if (e.key === "Alt") held.delete("Alt"); });
     window.addEventListener("blur", () => held.clear());
     window.addEventListener("keydown", (e) => {
+      if ((e.metaKey || e.ctrlKey) && (e.key === "z" || e.key === "Z") && arrangeOn()) { stepBack(!e.shiftKey); e.preventDefault(); return; }
       if (e.metaKey || e.ctrlKey) return;
+      if (arrangeOn() && (e.key === "n" || e.key === "N")) { holo.arr.snap = !holo.arr.snap; arrangeTell(); return; }
       const fk = flyKey(e);
       if (e.key === "?") { toggleKeys(); return; }
       // with a construct chosen while arranging, the arrows and Shift belong to it
@@ -1862,7 +1945,7 @@ void main() {
       if (geo.world && (e.key === "a" || e.key === "A" || e.key === "g" || e.key === "G")) { setArrange(!arrangeOn()); return; }
       if (arrangeOn()) {
         const sel = holo.arr.sel;
-        if (e.key === "Escape") { holo.arr.sel = null; arrangeTell(); kick(); return; }
+        if (e.key === "Escape") { holo.arr.sel = null; holo.arr.multi.clear(); holo.arr.hits = []; arrangeTell(); kick(); return; }
         if (sel) {
           const ed = editOf(sel), step = e.shiftKey ? 1 : e.altKey ? 0.01 : 0.1, c = holo.userCamera || holo.lastCamera;
           const yaw = (c ? c.yaw : 0) * Math.PI / 180;
@@ -1870,14 +1953,16 @@ void main() {
           let w = null;
           if (e.key === "ArrowUp") w = V.mul(fwd, step); else if (e.key === "ArrowDown") w = V.mul(fwd, -step);
           else if (e.key === "ArrowRight") w = V.mul(right, step); else if (e.key === "ArrowLeft") w = V.mul(right, -step);
-          if (w) { const d = local(sel, w); ed.move = [ed.move[0] + d[0], ed.move[1], ed.move[2] + d[2]]; }
-          else if (e.key === "q" || e.key === "Q") ed.turn += e.shiftKey ? 1 : 15;
-          else if (e.key === "e" || e.key === "E") ed.turn -= e.shiftKey ? 1 : 15;
-          else if (e.key === "PageUp") ed.move[1] += e.shiftKey ? 0.5 : 0.05;
-          else if (e.key === "PageDown") ed.move[1] -= e.shiftKey ? 0.5 : 0.05;
-          else if (e.key === "Backspace" || e.key === "Delete") delete holo.arr.edits[sel];
+          const all = holo.arr.multi.size > 1 ? [...holo.arr.multi] : [sel];
+          if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "q", "Q", "e", "E", "PageUp", "PageDown", "Backspace", "Delete"].includes(e.key)) remember();
+          if (w) { for (const id of all) { const d = local(id, w), em = editOf(id); em.move = [em.move[0] + d[0], em.move[1], em.move[2] + d[2]]; } }
+          else if (e.key === "q" || e.key === "Q") all.forEach((id) => { editOf(id).turn += e.shiftKey ? 1 : 15; });
+          else if (e.key === "e" || e.key === "E") all.forEach((id) => { editOf(id).turn -= e.shiftKey ? 1 : 15; });
+          else if (e.key === "PageUp") all.forEach((id) => { editOf(id).move[1] += e.shiftKey ? 0.5 : 0.05; });
+          else if (e.key === "PageDown") all.forEach((id) => { editOf(id).move[1] -= e.shiftKey ? 0.5 : 0.05; });
+          else if (e.key === "Backspace" || e.key === "Delete") all.forEach((id) => { delete holo.arr.edits[id]; });
           else w = false;
-          if (w !== false) { e.preventDefault(); lastInput = performance.now(); arrangeTell(); kick(); return; }
+          if (w !== false) { e.preventDefault(); checkHits(true); lastInput = performance.now(); arrangeTell(); kick(); return; }
         }
       }
       const views = ["hero", "front", "side", "back", "top", "three-quarter"];
@@ -1932,7 +2017,7 @@ void main() {
         if (o.text !== undefined) opt.text = !!o.text;
         ["build", "highlight", "fly", "reveal", "from"].forEach((k) => { if (o[k] !== undefined) holo.opt[k === "build" ? "buildTo" : k] = o[k]; });
         frame(); return true; },
-      camera() { const c = holo.lastCamera; return c ? { target: c.target, yaw: c.yaw, pitch: c.pitch, dist: c.dist } : null; },
+      camera() { const c = holo.lastCamera; return c ? { target: c.target, yaw: c.yaw, pitch: c.pitch, dist: c.dist, focus: c.focus, mode: opt.mode, solid: !!opt.solid } : null; },
       project(p) { const c = holo.lastVP && project(holo.lastVP, p); const r = canvas.getBoundingClientRect();
         return c ? [(c[0] * 0.5 + 0.5) * r.width, (0.5 - c[1] * 0.5) * r.height] : null; },
       fitted(view) { const c = holo.cameraFor(view || "hero"); return { target: c.target, yaw: c.yaw, pitch: c.pitch, dist: c.dist }; },
@@ -1959,11 +2044,17 @@ void main() {
       arrange: {
         set(on) { setArrange(on); return arrangeOn(); },
         changes() { return holo.arrangeChanges(); },
-        reset() { holo.arr.edits = {}; holo.arr.sel = null; arrangeTell(); kick(); return true; },
+        reset() { remember(); holo.arr.edits = {}; holo.arr.sel = null; holo.arr.multi.clear(); holo.arr.hits = []; arrangeTell(); kick(); return true; },
         select(id) { if (!holo.arrangeable(id)) return false; holo.arr.sel = id; editOf(id); arrangeTell(); kick(); return true; },
-        turn(deg) { const id = holo.arr.sel; if (!id || typeof deg !== "number") return false; editOf(id).turn += deg; arrangeTell(); kick(); return true; },
-        lift(m) { const id = holo.arr.sel; if (!id || typeof m !== "number") return false; editOf(id).move[1] += m; arrangeTell(); kick(); return true; },
-        putBack() { const id = holo.arr.sel; if (!id) return false; delete holo.arr.edits[id]; arrangeTell(); kick(); return true; },
+        turn(deg) { const id = holo.arr.sel; if (!id || typeof deg !== "number") return false; remember();
+          (holo.arr.multi.size > 1 ? [...holo.arr.multi] : [id]).forEach((x) => { editOf(x).turn += deg; }); checkHits(true); arrangeTell(); kick(); return true; },
+        lift(m) { const id = holo.arr.sel; if (!id || typeof m !== "number") return false; remember();
+          (holo.arr.multi.size > 1 ? [...holo.arr.multi] : [id]).forEach((x) => { editOf(x).move[1] += m; }); checkHits(true); arrangeTell(); kick(); return true; },
+        putBack() { const id = holo.arr.sel; if (!id) return false; remember();
+          (holo.arr.multi.size > 1 ? [...holo.arr.multi] : [id]).forEach((x) => { delete holo.arr.edits[x]; }); checkHits(true); arrangeTell(); kick(); return true; },
+        undo() { return stepBack(true); },
+        redo() { return stepBack(false); },
+        snap(on) { holo.arr.snap = on === undefined ? !holo.arr.snap : !!on; arrangeTell(); return holo.arr.snap; },
         edit(id, change) { if (!holo.arrangeable(id) || !change) return false; const ed = editOf(id);
           if (Array.isArray(change.move) && change.move.length === 3) ed.move = change.move.map(Number);
           if (typeof change.turn === "number") ed.turn = change.turn; arrangeTell(); kick(); return true; },

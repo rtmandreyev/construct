@@ -81,6 +81,30 @@ def thumb(spec):
     return 0
 
 
+def still(spec):
+    """A picture of a built page from where someone left the camera (the card's Picture): a PNG, 2560 px wide."""
+    from construct_hologram import render
+    page = Path(spec["page"])
+    if not page.is_file() or not render.find_browser():
+        return 1
+    cam = spec.get("camera") or {}
+    w, h = int(spec.get("width", 2560)), int(spec.get("height", 1440))
+    b = render.Browser(w, h, 1.0, None)
+    try:
+        b.open(render._url(page, capture=1, ui=0, caption=0))
+        b.evaluate("HOLO.ready")
+        end = b.evaluate("HOLO.hologram.assemblyTimes().end + 0.6")
+        mode = "provenance" if spec.get("mode") == "provenance" else "light"
+        b.evaluate("(() => { HOLO.renderAt(%f, {mode: %s, solid: %s}); const c = %s; if (c && c.target) { HOLO.hologram.userCamera = "
+                   "{target: c.target, yaw: c.yaw, pitch: c.pitch, dist: c.dist, fov: 34, focus: c.focus || c.dist}; } "
+                   "HOLO.renderAt(%f); return true; })()" % (end, json.dumps(mode), "true" if spec.get("solid") else "false",
+                                                           json.dumps(cam), end))
+        b.shot(spec["out"])
+    finally:
+        b.close()
+    return 0 if Path(spec["out"]).is_file() else 1
+
+
 def _short(text, n=160):
     text = " ".join(str(text).split())
     return text if len(text) <= n else text[:n - 1] + "…"
@@ -524,6 +548,8 @@ def run(op, args):
         return 0
     if op == "thumb":
         return thumb({"page": args[0]})
+    if op == "still":
+        return still(json.loads(Path(args[0]).read_text(encoding="utf-8")))
     if op == "edit":
         return edit(json.loads(Path(args[0]).read_text(encoding="utf-8")))
     if op.startswith("netlogo-"):   # the NetLogo ops live beside this file (netlogo_child.py)

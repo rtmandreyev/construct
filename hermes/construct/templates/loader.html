@@ -69,6 +69,9 @@
         if (window.HOLO && window.HOLO.action) window.HOLO.action(d.name);
         else if (LEGACY[d.name]) window.dispatchEvent(new KeyboardEvent("keydown", { key: LEGACY[d.name], bubbles: true }));
         setTimeout(tell, 60);
+      } else if (d.type === "construct:camera" && window.HOLO && window.HOLO.camera) {
+        // where the camera is now: for a picture or a saved view
+        try { parent.postMessage({ type: "construct:camera", camera: window.HOLO.camera() }, "*"); } catch (e2) { /* the host went away */ }
       } else if (d.type === "construct:view" && typeof d.id === "string" && window.HOLO && window.HOLO.view) {
         window.HOLO.view(d.id);
         setTimeout(tell, 60);
@@ -79,6 +82,9 @@
         else if (d.action === "turn" && typeof d.value === "number" && Math.abs(d.value) <= 360) window.HOLO.arrange.turn(d.value);
         else if (d.action === "lift" && typeof d.value === "number" && Math.abs(d.value) <= 10) window.HOLO.arrange.lift(d.value);
         else if (d.action === "put-back") window.HOLO.arrange.putBack();
+        else if (d.action === "undo" && window.HOLO.arrange.undo) window.HOLO.arrange.undo();
+        else if (d.action === "redo" && window.HOLO.arrange.redo) window.HOLO.arrange.redo();
+        else if (d.action === "snap" && window.HOLO.arrange.snap) window.HOLO.arrange.snap();
         else if (d.action === "select" && typeof d.id === "string" && /^[a-z0-9][a-z0-9_.-]{0,63}$/.test(d.id)) {
           window.HOLO.arrange.set(true); window.HOLO.arrange.select(d.id);
         }
@@ -98,7 +104,8 @@
       if (window.HOLO && window.HOLO.views) document.body.classList.add("in-card");
       if (window.HOLO && window.HOLO.arrange) {
         window.HOLO.onArrange = function (st) {
-          try { parent.postMessage({ type: "construct:arranged", on: !!st.on, selected: st.selected || null, changes: st.changes || [] }, "*"); }
+          try { parent.postMessage({ type: "construct:arranged", on: !!st.on, selected: st.selected || null, changes: st.changes || [],
+                                     hits: st.hits || [], several: st.several || 0, snap: !!st.snap, canUndo: !!st.canUndo, canRedo: !!st.canRedo }, "*"); }
           catch (e) { /* the host went away */ }
         };
       }

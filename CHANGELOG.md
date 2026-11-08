@@ -58,6 +58,11 @@ from the chat. [docs/WORLDS.md](docs/WORLDS.md)
   gallery by kind, with previews; a construct's card drops it into one of your worlds; shipped constructs and worlds
   open without a chat. The Constructs page holds constructs only (worlds have their tab), sorted by kind, with what
   was made for a world folded under it and the shipped ones to start from below; missing previews are filled in. Large pages travel gzipped (the Villa world: 37 MB to 5).
+- **More by hand, no chat:** ⌘Z and ⇧⌘Z step through unsaved moves; N snaps to a quarter-metre grid and 15° turns;
+  ⌘-click chooses several to move and turn together; what the dragged construct runs into is named while you drag. A
+  card makes a picture from where its camera is (2560 × 1440), saves that camera as a named view of a world, and
+  exports a glTF or a Godot game map. The Constructs page stars favourites first, renames, and archives (nothing is
+  deleted).
 - Tested in Hermes Desktop with GPT-6.1 Sol and DeepSeek V4
   Pro; what each had to work around became the tool's: placing many at once, named views, host collisions, door
   swings, and sky sizing by a part.

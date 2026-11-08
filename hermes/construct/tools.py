@@ -508,6 +508,11 @@ EXT = {"glb": ".glb", "obj": ".obj", "stl": ".stl", "3mf": ".3mf", "fcstd": ".FC
 
 @tool("construct_export")
 def export(args):
+    return _export(args, WAIT["export"])
+
+
+def _export(args, wait):
+    """An export started (and waited for `wait` seconds): the tool's, and the Desktop card's (which does not wait)."""
     slug, folder, scene = runtime.resolve(args)
     fmt = _choice(args, "format", list(EXT))
     if fmt is None:
@@ -566,7 +571,7 @@ def export(args):
     label = "%s export of %s" % (fmt, slug)
     job_id = jobs.start("export", "cli", argv, project=slug, label=label, cwd=folder,
                         finish={"slug": slug, "file": str(target), "format": fmt, "extra": extra_files})
-    return _waited(job_id, "export", WAIT["export"], label)
+    return _waited(job_id, "export", wait, label)
 
 
 def _materials(args, scene, exports):

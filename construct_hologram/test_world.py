@@ -447,6 +447,33 @@ class Viewer(unittest.TestCase):
         self.assertEqual((got["after"], got["base"]), (0, -1))
         self.assertIsNone(errs)
 
+    @unittest.skipUnless(render.find_browser(), "no browser")
+    def test_arranging_undoes_snaps_chooses_several_and_warns(self):
+        doc = place({"id": "a", "construct": lit("book.json")}, {"id": "b", "construct": lit("cd.json"), "at": [1, 0, 0]},
+                    {"id": "c", "construct": lit("cd.json"), "at": [2, 0, 0]})
+        with tempfile.TemporaryDirectory() as d:
+            w = Path(d, "w.json")
+            w.write_text(json.dumps(doc))
+            studio.build(str(w), Path(d, "out"))
+            b = render.open_browser(render._url(Path(d, "out", "construct.html"), ui=1, t=30), 480, 300, 1.0)
+            try:
+                got = b.evaluate("""(() => {
+                  const A = HOLO.arrange, h = HOLO.hologram;
+                  A.set(true); A.select("b"); A.turn(90); A.turn(90);
+                  const turned = A.changes()[0].turn;
+                  A.undo(); const back = A.changes()[0].turn; A.redo(); const again = A.changes()[0].turn;
+                  const snap = A.snap();
+                  A.edit("b", { move: [1, 0, 0] });   // onto c: it runs into it
+                  const hits = h.runsInto("b", new Set());
+                  return { turned, back, again, snap, hits, keys: !!document.querySelector(".keys") };
+                })()""")
+            finally:
+                b.close()
+        self.assertEqual((got["turned"], got["back"], got["again"]), (180, 90, 180))
+        self.assertTrue(got["snap"])
+        self.assertEqual(len(got["hits"]), 1)
+        self.assertTrue(got["keys"])
+
 
 if __name__ == "__main__":
     unittest.main()

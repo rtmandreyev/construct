@@ -48,7 +48,7 @@ SKY_RENDER = 6.0              # a sky placement is drawn this many world radii a
 TOP = {"format", "version", "id", "title", "summary", "origin", "placements", "presentation", "animation", "authoring"}
 PLACEMENT = {"id", "construct", "label", "at", "yaw", "rotate", "scale", "on", "floating", "sky", "note"}
 SKY = {"diameter_m", "distance_m", "azimuth", "elevation", "spin", "of"}
-VIEW = {"id", "label", "target", "yaw", "pitch", "distance"}
+VIEW = {"id", "label", "target", "yaw", "pitch", "distance", "distance_m"}
 MAX_VIEWS = 48
 
 
@@ -181,8 +181,11 @@ def validate(doc):
                 if "label" in v and not (isinstance(v["label"], str) and 0 < len(v["label"]) <= 48):
                     err(vw + ".label", "expected a short name (at most 48 characters)")
                 t = v.get("target")
-                if t is not None and not (isinstance(t, str) and t.split("/", 1)[0] in seen):
-                    err(vw + ".target", "expected a placement id or `placement/part-id`")
+                if isinstance(t, list):   # a camera saved where someone left it: the point it looked at, its distance
+                    if not _vec(t, WORLD_EXTENT) or not _num(v.get("distance_m"), 0.01, 2 * WORLD_EXTENT):
+                        err(vw + ".target", "a saved camera is a point [x, y, z] with distance_m")
+                elif t is not None and not (isinstance(t, str) and t.split("/", 1)[0] in seen):
+                    err(vw + ".target", "expected a placement id, `placement/part-id` or a point [x, y, z]")
                 for k, lo, hi in (("yaw", -3600, 3600), ("pitch", -89, 89), ("distance", 0.01, 100)):
                     if k in v and not _num(v[k], lo, hi):
                         err(vw + "." + k, "expected %g..%g" % (lo, hi))

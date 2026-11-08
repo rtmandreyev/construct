@@ -4229,6 +4229,7 @@ function PageFrame({ route, kind, loaderUrl, height, onCard, onState, control, o
   srcRef.current = src
   const [failed, setFailed] = useState('')
   const [shown, setShown] = useState(false)
+  const cameraWait = useRef(null)
 
   const post = useCallback(message => {
     const frame = frameRef.current
@@ -4315,7 +4316,14 @@ function PageFrame({ route, kind, loaderUrl, height, onCard, onState, control, o
             .map(v => ({ id: v.id, label: String(v.label || v.id).slice(0, 80) })) : null })
       } else if (d.type === 'construct:arranged' && onArrange) {
         onArrange({ on: d.on === true, selected: typeof d.selected === 'string' ? d.selected.slice(0, 64) : null,
-          changes: arrangeChanges(d.changes) })
+          changes: arrangeChanges(d.changes), hits: Array.isArray(d.hits) ? d.hits.slice(0, 4).map(h => String(h).slice(0, 80)) : [],
+          several: typeof d.several === 'number' ? d.several : 0, snap: d.snap === true, canUndo: d.canUndo === true, canRedo: d.canRedo === true })
+      } else if (d.type === 'construct:camera' && cameraWait.current) {
+        const c = d.camera
+        const ok = c && Array.isArray(c.target) && c.target.length === 3 && c.target.every(v => typeof v === 'number' && isFinite(v))
+        cameraWait.current(ok ? { target: c.target, yaw: +c.yaw || 0, pitch: +c.pitch || 0, dist: +c.dist || 10, focus: +c.focus || undefined,
+          mode: c.mode === 'provenance' ? 'provenance' : 'light', solid: c.solid === true } : null)
+        cameraWait.current = null
       } else if (d.type === 'construct:open-steps' && onOpenSteps) {
         onOpenSteps(typeof d.step === 'number' && d.step >= 1 && d.step < 1000 ? Math.floor(d.step) : 1)
       }
@@ -4327,7 +4335,12 @@ function PageFrame({ route, kind, loaderUrl, height, onCard, onState, control, o
       control.current = {
         key: key => typeof key === 'string' && KEYS.has(key) && post({ type: 'construct:key', key }),
         step: n => typeof n === 'number' && n >= 1 && n < 1000 && post({ type: 'construct:step', step: Math.floor(n) }),
-        arrange: (action, value) => ['on', 'off', 'reset', 'turn', 'lift', 'put-back'].includes(action) && post({ type: 'construct:arrange', action, value }),
+        arrange: (action, value) => ['on', 'off', 'reset', 'turn', 'lift', 'put-back', 'undo', 'redo', 'snap'].includes(action) && post({ type: 'construct:arrange', action, value }),
+        camera: () => new Promise(resolve => {
+          cameraWait.current = resolve
+          post({ type: 'construct:camera' })
+          setTimeout(() => { if (cameraWait.current === resolve) { cameraWait.current = null; resolve(null) } }, 3000)
+        }),
         select: id => PLACE_ID.test(String(id)) && post({ type: 'construct:arrange', action: 'select', id }),
         action: name => ['solid', 'provenance', 'replay', 'skip', 'home', 'keys'].includes(name) && post({ type: 'construct:action', name }),
         view: id => typeof id === 'string' && id.length < 80 && post({ type: 'construct:view', id })
@@ -4369,7 +4382,10 @@ function ConstructCard({ project, build, loaderUrl, title, parts, sessionId, hei
   const [view, setView] = useState({ ready: false, mode: 'light', solid: false, hasSolid: false })
   const busy = useBusy(sessionId)
   const run = useRunPreview(project, jobId)
-  const [arr, setArr] = useState({ on: false, selected: null, changes: [] })
+  const [arr, setArr] = useState({ on: false, selected: null, changes: [], hits: [], several: 0, snap: false, canUndo: false, canRedo: false })
+  const [naming, setNaming] = useState(false)          // saving the camera as a named view: the name being typed
+  const [viewName, setViewName] = useState('')
+  const [made, setMade] = useState(null)               // a file the card just made (an export, a picture): {path, label}
   // a build being made from a saved arrangement or a drop-in: {build, job, ready}
   const [follow, setFollow] = useState(drop && drop.job ? { build: null, job: drop.job, ready: false } : null)
   const [note, setNote] = useState('')
@@ -4459,6 +4475,46 @@ function ConstructCard({ project, build, loaderUrl, title, parts, sessionId, hei
 
   const press = key => control.current && control.current.key(key)
   const act = name => control.current && control.current.action(name)
+  // the card's own work, with no chat: an export, a picture, a saved view (each a /construct command in the gateway)
+  const follow2 = async (out, label) => {
+    const file = /\(file ([^)]+)\)/.exec(out)
+    if (file) { setMade({ path: file[1], label }); setNote(label + ' ready.'); return }
+    const job = /job ([0-9a-f]{12})/.exec(out)
+    if (!job) { setNote(out.slice(0, 300)); return }
+    setNote(label + ': working…')
+    for (let i = 0; i < 200; i++) {
+      await sleep(2500)
+      let st = ''
+      try { st = await runCommand(sessionId, 'construct job ' + job[1]) } catch { continue }
+      const f = /\(file ([^)]+)\)/.exec(st)
+      if (f) { setMade({ path: f[1], label }); setNote(label + ' ready.'); return }
+      if (/ failed/.test(st)) { setNote(st.slice(0, 300)); return }
+    }
+  }
+  const exportAs = async kind => {
+    setNote(kind === 'godot' ? 'Exporting a Godot game map…' : 'Exporting a glTF…')
+    try {
+      const out = await runCommand(sessionId, 'construct export ' + project + ' ' + kind)
+      await follow2(out, kind === 'godot' ? 'The Godot game map' : 'The glTF')
+    } catch (err) { setNote(errorText(err)) }
+  }
+  const picture = async () => {
+    const cam = control.current && control.current.camera ? await control.current.camera() : null
+    setNote('Making a picture from this camera…')
+    try {
+      const out = await runCommand(sessionId, 'construct still ' + project + ' ' + shownBuild + ' ' + JSON.stringify(cam || {}))
+      await follow2(out, 'The picture')
+    } catch (err) { setNote(errorText(err)) }
+  }
+  const saveView = async () => {
+    const name = viewName.trim().replace(/\s+/g, '-').slice(0, 40)
+    if (!name) return
+    setNaming(false)
+    setViewName('')
+    const cam = control.current && control.current.camera ? await control.current.camera() : null
+    if (!cam) { setNote('The camera could not be read.'); return }
+    command('construct save-view ' + project + ' ' + name + ' ' + JSON.stringify(cam), 'Saving the view…')
+  }
   const dropInto = async world => {   // a construct put into one of the user's worlds, then that world opened
     setChoosing(false)
     setNote('Placing it in the world…')
@@ -4523,6 +4579,11 @@ function ConstructCard({ project, build, loaderUrl, title, parts, sessionId, hei
             title: 'Check the world with the moves, save it and rebuild it', onClick: save }) : null,
           arr.changes.length ? jsx(Button, { label: 'Put back', icon: 'discard', disabled: saving,
             onClick: () => control.current && control.current.arrange('reset') }) : null,
+          arr.on ? jsx(Button, { label: 'Undo', icon: 'debug-step-back', disabled: !arr.canUndo, title: 'The last move, unsaved (⌘Z)',
+            onClick: () => control.current.arrange('undo') }) : null,
+          arr.on ? jsx(Button, { label: 'Redo', icon: 'debug-step-over', disabled: !arr.canRedo, title: '⇧⌘Z', onClick: () => control.current.arrange('redo') }) : null,
+          arr.on ? jsx(Button, { label: 'Snap', icon: 'symbol-ruler', active: arr.snap, title: 'Quarter-metre grid, 15° turns (N)',
+            onClick: () => control.current.arrange('snap') }) : null,
           jsx(Button, { label: 'Undo last change', icon: 'debug-step-back', disabled: saving || arr.changes.length > 0,
             title: 'The world as it was before its last saved change (yours or the agent\'s)',
             onClick: () => command('construct undo ' + project, 'Undoing the last change…') }),
@@ -4532,7 +4593,9 @@ function ConstructCard({ project, build, loaderUrl, title, parts, sessionId, hei
       isWorld && arr.on && arr.selected ? jsxs('div', {
         style: S.bar,
         children: [
-          jsx('div', { style: Object.assign({}, S.title, { fontSize: 12, maxWidth: 220 }), children: arr.selected }),
+          jsx('div', { style: Object.assign({}, S.title, { fontSize: 12, maxWidth: 220 }), children: arr.several > 1 ? arr.several + ' chosen' : arr.selected }),
+          arr.hits.length ? jsx('span', { style: { color: 'var(--ui-text-warning, #e0a040)', fontSize: 12 }, title: 'Its parts meet theirs: move it clear before saving',
+            children: 'runs into ' + arr.hits.join(', ') }) : null,
           jsx(Button, { label: 'Turn 90°', icon: 'refresh', title: 'Q / E turn 15° (Shift: 1°)', onClick: () => control.current.arrange('turn', 90) }),
           jsx(Button, { label: 'Lift', icon: 'arrow-up', title: 'PgUp (Shift: 0.5 m); it lands on what is under it when you save',
             onClick: () => control.current.arrange('lift', 0.25) }),
@@ -4547,7 +4610,16 @@ function ConstructCard({ project, build, loaderUrl, title, parts, sessionId, hei
       }) : null,
       isWorld && picking ? jsx(Picker, { onPick: place, exclude: project }) : null,
       !isWorld && choosing ? jsx(WorldChooser, { onPick: dropInto }) : null,
-      !isWorld && note ? jsx('div', { style: Object.assign({}, S.meta, { padding: '4px 10px' }), children: note }) : null,
+      naming ? jsxs('div', { style: S.bar, children: [
+        jsx('input', { value: viewName, autoFocus: true, placeholder: 'Name this view: the salon, the hero car…', onChange: e => setViewName(e.target.value),
+          onKeyDown: e => { if (e.key === 'Enter') saveView(); if (e.key === 'Escape') setNaming(false) },
+          style: { font: 'inherit', fontSize: 12, padding: '4px 8px', borderRadius: 6, border: '1px solid var(--ui-stroke-secondary)',
+            background: 'transparent', color: 'var(--ui-text-primary)', width: 260 } }),
+        jsx(Button, { label: 'Save', icon: 'check', disabled: !viewName.trim(), onClick: saveView })] }) : null,
+      (!isWorld && note) || made ? jsxs('div', { style: Object.assign({}, S.bar, { gap: 8 }), children: [
+        !isWorld && note ? jsx('div', { style: S.meta, children: note }) : null,
+        made ? jsx(Button, { label: 'Open ' + made.label.replace(/^The /, ''), icon: 'link-external', onClick: () => openPath(made.path) }) : null,
+        made ? jsx('div', { style: Object.assign({}, S.meta, { whiteSpace: 'normal' }), children: made.path }) : null] }) : null,
       jsxs('div', {
         style: S.bar,
         children: [
@@ -4569,6 +4641,14 @@ function ConstructCard({ project, build, loaderUrl, title, parts, sessionId, hei
           jsx(Button, { label: 'How to read it', icon: 'info', disabled: !view.ready, title: 'The reading panel, where the construct has one (H)',
             onClick: () => press('h') }),
           view.canAct ? jsx(Button, { label: 'Keys', icon: 'keyboard', disabled: !view.ready, title: 'Every key (?)', onClick: () => act('keys') }) : null,
+          jsx('div', { style: S.sep }),
+          jsx(Button, { label: 'Picture', icon: 'device-camera', disabled: !view.ready, title: 'A 2560 × 1440 picture from where the camera is now',
+            onClick: picture }),
+          isWorld && view.canAct ? jsx(Button, { label: 'Save view', icon: 'bookmark', active: naming, disabled: !view.ready,
+            title: 'Keep this camera as a named view of the world', onClick: () => setNaming(!naming) }) : null,
+          jsx(Button, { label: 'glTF', icon: 'package', disabled: !view.ready, title: 'Export for Blender, three.js or any engine', onClick: () => exportAs('glb') }),
+          jsx(Button, { label: 'Godot map', icon: 'game', disabled: !view.ready, title: 'One file for Godot: fixed body, working joints, colliders',
+            onClick: () => exportAs('godot') }),
           canAsk ? jsx('div', { style: S.sep }) : null,
           canAsk ? jsx(Button, { label: 'Export a glTF', icon: 'package', disabled: busy,
             onClick: () => ask('Export the construct ' + subject + ' as a glTF (.glb) with construct_export and show me the file.') }) : null,
@@ -5216,6 +5296,15 @@ function Projects({ focus }) {
   const [error, setError] = useState('')
   const [open, setOpen] = useState(focus || null)
   const thumbsAsked = useRef(false)
+  const [renaming, setRenaming] = useState(null)
+  const tidy = async (project, verb, title) => {
+    setRenaming(null)
+    try {
+      const out = await runCommand(null, 'construct ' + verb + ' ' + project + (verb === 'rename' ? ' ' + String(title || '').trim().slice(0, 120) : ''))
+      notify('info', out.slice(0, 160))
+    } catch (err) { notify('info', errorText(err)) }
+    load()
+  }
   const load = useCallback(() => {
     rest('/projects').then(
       r => {
@@ -5269,23 +5358,35 @@ function Projects({ focus }) {
       r.kits.length ? plural(r.kits.length, 'kit') : null,
       r.items.length ? plural(r.items.length, 'file') : null].filter(Boolean).join(' · ')
     return jsx(Tile, {
-      title: r.title, badge: titles[r.title] > 1 ? r.project : r.world ? 'world' : null, onOpen: () => setOpen(r.project),
+      title: (r.favourite ? '★ ' : '') + r.title, badge: titles[r.title] > 1 ? r.project : r.world ? 'world' : null, onOpen: () => setOpen(r.project),
+      actions: renaming === r.project ? [jsx('input', { key: 'n', autoFocus: true, defaultValue: r.title,
+          onKeyDown: e => { if (e.key === 'Enter') tidy(r.project, 'rename', e.target.value); if (e.key === 'Escape') setRenaming(null) },
+          style: { font: 'inherit', fontSize: 12, padding: '3px 6px', borderRadius: 6, border: '1px solid var(--ui-stroke-secondary)', background: 'transparent',
+            color: 'var(--ui-text-primary)', width: '100%' } })]
+        : [jsx(Button, { label: r.favourite ? 'Unstar' : 'Star', icon: r.favourite ? 'star-full' : 'star-empty', title: 'Favourites come first',
+            onClick: () => tidy(r.project, r.favourite ? 'unfavourite' : 'favourite') }, 'f'),
+          jsx(Button, { label: 'Rename', icon: 'edit', onClick: () => setRenaming(r.project) }, 'r'),
+          jsx(Button, { label: r.archived ? 'Restore' : 'Archive', icon: r.archived ? 'reply' : 'archive', title: r.archived ? 'Back on the page' : 'Out of the way (nothing is deleted)',
+            onClick: () => tidy(r.project, r.archived ? 'unarchive' : 'archive') }, 'a')],
       image: jsx(Img, { load: n && n.has_thumb ? () => rest('/thumb?' + query({ project: r.project, build: n.build })) : null, deps: [r.project, n && n.build, n && n.has_thumb] }),
       lines: [counts, 'last ' + when(r.updated) + (titles[r.title] > 1 ? '' : ' · ' + r.project), r.changed_since ? 'scene changed since the last build' : null]
     }, r.project)
   }
   // sorted by kind: worlds, then vehicles, buildings…; what was made for a world sits under that world, folded
   const ORDER = ['Worlds', 'Vehicles', 'Buildings', 'Machines and instruments', 'Designed', 'Objects', 'Living things', 'Simulations']
-  const own = rows.filter(r => !r.in_world && !r.world)
-  const groups = ORDER.map(g => [g, own.filter(r => (r.group || 'Objects') === g)]).filter(([, list]) => list.length)
+  const own = rows.filter(r => !r.in_world && !r.world && !r.archived)
+  const favs = own.filter(r => r.favourite)
+  const groups = [['Favourites', favs]].concat(ORDER.map(g => [g, own.filter(r => !r.favourite && (r.group || 'Objects') === g)])).filter(([, list]) => list.length)
+  const archived = rows.filter(r => r.archived && !r.world)
   const parts = {}
-  rows.filter(r => r.in_world).forEach(r => (parts[r.in_world] = parts[r.in_world] || []).push(r))
+  rows.filter(r => r.in_world && !r.archived).forEach(r => (parts[r.in_world] = parts[r.in_world] || []).push(r))
   const head = (text, extra) => jsxs('div', { style: { display: 'flex', alignItems: 'center', gap: 8, margin: '18px 0 8px' }, children: [
     jsx('div', { style: Object.assign({}, S.meta, { textTransform: 'uppercase', letterSpacing: '.08em' }), children: text }), extra || null] })
   return jsxs('div', {
     children: [
       ...groups.map(([g, list]) => jsxs('div', { children: [head(g + ' (' + list.length + ')'), jsx('div', { style: GRID, children: list.map(tile) })] }, g)),
       ...Object.keys(parts).sort().map(w => jsx(Folded, { title: 'Made for ' + w + ' (' + parts[w].length + ')', children: jsx('div', { style: GRID, children: parts[w].map(tile) }) }, 'w' + w)),
+      archived.length ? jsx(Folded, { title: 'Archived (' + archived.length + ')', children: jsx('div', { style: GRID, children: archived.map(tile) }) }, 'archived') : null,
       head('Shipped constructs to start from'),
       jsx(Examples, { onOpen: project => { load(); setOpen(project) } })
     ]
