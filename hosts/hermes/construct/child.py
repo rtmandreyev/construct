@@ -68,6 +68,19 @@ def build(spec):
     return code
 
 
+def thumb(spec):
+    """A still for a page built without one (the Constructs page's tiles): thumb.png beside it."""
+    from construct_hologram import render
+    page = Path(spec["page"])
+    if not page.is_file() or not render.find_browser():
+        return 1
+    shot = render.stills(str(page), str(page.parent), ["hero"], 480, 300)
+    if not shot:
+        return 1
+    os.replace(shot[0], page.parent / "thumb.png")
+    return 0
+
+
 def _short(text, n=160):
     text = " ".join(str(text).split())
     return text if len(text) <= n else text[:n - 1] + "…"
@@ -502,6 +515,8 @@ def run(op, args):
     if op == "version":
         print(version())
         return 0
+    if op == "thumb":
+        return thumb({"page": args[0]})
     if op == "edit":
         return edit(json.loads(Path(args[0]).read_text(encoding="utf-8")))
     if op.startswith("netlogo-"):   # the NetLogo ops live beside this file (netlogo_child.py)

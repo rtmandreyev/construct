@@ -331,7 +331,7 @@ def _rebuild_later(slug, folder, path):
     out = folder / "builds" / build_id
     spec = {"scene": str(path), "out": str(out), "thumb": True, "asset_root": str(folder)}
     from . import jobs
-    job_id = jobs.start("build", "build", project=slug, label="build of world %s" % slug, cwd=folder, spec=spec,
+    job_id = jobs.start("build", "build", project=slug, label="build of %s" % slug, cwd=folder, spec=spec,
                         finish={"slug": slug, "build": build_id, "out": str(out), "scene": str(path)})
     return build_id, job_id
 

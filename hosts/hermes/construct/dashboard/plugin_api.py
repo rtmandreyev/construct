@@ -36,7 +36,7 @@ ITEM_TYPES = {".glb": "model/gltf-binary", ".obj": "text/plain", ".stl": "model/
               ".step": "model/step", ".stp": "model/step", ".fcstd": "application/zip", ".mp4": "video/mp4",
               ".jsonl": "application/json", ".json": "application/json", ".csv": "text/csv"}
 CARD_KEYS = ("title", "parts", "counts", "size_m", "audit_ok", "created", "page", "has_thumb", "kind", "preview", "job_id",
-             "ticks", "source", "placements")
+             "ticks", "source", "placements", "scene")
 
 
 class NotFound(Exception):
@@ -152,6 +152,46 @@ def project(root, name):
             "changed_since": bool(newest and newest.get("changed_since"))}
 
 
+GROUPS = {"architecture": "Buildings", "vehicle": "Vehicles", "machine": "Machines and instruments",
+          "fictional": "Designed", "organism": "Living things"}
+_subject_cache = {}
+
+
+def _group_of(card):
+    """A construct's group on the Constructs page, from its scene's subject (cached by the scene's mtime)."""
+    if card.get("kind") == "world":
+        return "Worlds"
+    if card.get("kind") == "run":
+        return "Simulations"
+    scene = card.get("scene")
+    try:
+        st = Path(scene).stat()
+        key = (scene, st.st_mtime_ns)
+        if key not in _subject_cache:
+            with open(scene, "r", encoding="utf-8") as fh:
+                head = fh.read(4096)
+            m = re.search(r'"category"\s*:\s*"([a-z-]+)"', head)
+            _subject_cache[key] = m.group(1) if m else ""
+        cat = _subject_cache[key]
+    except (OSError, TypeError):
+        cat = ""
+    return GROUPS.get(cat, "Objects")
+
+
+def _parts_of_worlds(rows):
+    """Which constructs were made for, or placed in, a world: {project: world title}."""
+    out = {}
+    for r in rows:
+        if not r.get("world"):
+            continue
+        scene = (r.get("newest") or {}).get("scene")
+        folder = Path(scene).parent / "constructs" if isinstance(scene, str) else None
+        if folder and folder.is_dir():
+            for d in folder.iterdir():
+                out.setdefault(d.name, r["title"])
+    return out
+
+
 def projects(root):
     rows = []
     shown = Path(root) / "shown"
@@ -165,7 +205,13 @@ def projects(root):
         except NotFound:
             continue
     rows.sort(key=lambda r: r.get("updated") or "", reverse=True)
-    return rows[:LIST_MAX]
+    rows = rows[:LIST_MAX]
+    parts = _parts_of_worlds(rows)
+    for r in rows:
+        r["group"] = _group_of(r.get("newest") or {})
+        if r["project"] in parts and not r.get("world"):
+            r["in_world"] = parts[r["project"]]
+    return rows
 
 
 GZ_FROM = 1024 * 1024          # a page larger than this travels gzipped (a world's is tens of megabytes of JSON)

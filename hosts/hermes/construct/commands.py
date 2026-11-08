@@ -12,6 +12,8 @@
     /construct place <world> <construct>   put a construct into a world (the card's Add a construct)
     /construct open-world <example>        a shipped world as your own (the Worlds page's Open)
     /construct undo <world>       the world as it was before its last change
+    /construct open-example <name>         a shipped construct as your own, built (the Start from page's Open)
+    /construct thumbs [n]         stills for tiles that have none
     /construct job <id>           one background job's state (an ended build is published here)
 """
 
@@ -148,6 +150,32 @@ def handle(raw_args="", event=None, **kwargs):
                 return "Which world? /construct open-world <example> (/construct worlds lists them)"
             r = world_tools.open_example(words[1].lower())
             return "Opened %s as %s. Building (build %s, job %s)." % (words[1].lower(), r["project"], r["build"], r["job_id"])
+        if verb == "thumbs":   # stills for the Constructs page's tiles built without one (a few each call)
+            n = 0
+            for r in api.projects(root):
+                b = r.get("newest") or {}
+                if b.get("has_thumb") or not b.get("build"):
+                    continue
+                folder = root / "shown" / r["project"] / b["build"]
+                code, _, _ = runtime.run_child("thumb", str(folder / "construct.html"), timeout=90)
+                if code == 0 and (folder / "thumb.png").is_file():
+                    card = json.loads((folder / "card.json").read_text(encoding="utf-8"))
+                    card["has_thumb"] = True
+                    runtime.write_json(folder / "card.json", card)
+                    n += 1
+                if n >= (int(words[1]) if len(words) > 1 and words[1].isdigit() else 4):
+                    break
+            return "Made %d thumbnail%s." % (n, "" if n == 1 else "s")
+        if verb == "open-example":   # the Start from page's Open: a shipped construct as the user's own, no model turn
+            if len(words) < 2:
+                return "Which construct? /construct open-example <name> (/construct examples lists them)"
+            from . import tools
+            r = json.loads(tools.start({"example": words[1].lower()}))
+            if r.get("error"):
+                return "Construct could not open it: %s" % r["error"]
+            folder = runtime.project_dir(r["project"])
+            build, job_id = world_tools._rebuild_later(r["project"], folder, Path(r["scene"]))
+            return "Opened %s as %s. Building (build %s, job %s)." % (words[1].lower(), r["project"], build, job_id)
         if verb == "undo":
             if len(words) < 2:
                 return "Which world? /construct undo <world>"

@@ -583,6 +583,14 @@ class Plugin(unittest.TestCase):
         self.assertIn("could not", handle("open-world nowhere"))
         self.assertIn("eames-lounge-chair", [g["name"] for g in self.api.gallery(self.pkg)])
         self.assertIn("html_gz", self.api.view(self.data, sw, build))   # a world's page travels gzipped
+        # a shipped construct opened as the user's own from the Start from page, with no model turn
+        out = handle("open-example braun-sk4-knob")
+        self.assertRegex(out, r"^Opened braun-sk4-knob as \S+\. Building \(build \S+, job [0-9a-f]{12}\)\.")
+        self.assertIn("could not", handle("open-example nowhere"))
+        rows = {r["project"]: r for r in self.api.projects(self.data)}
+        self.assertEqual(rows[sw]["group"], "Worlds")
+        self.assertEqual(rows["garden-shed"]["in_world"] if "garden-shed" in rows else "x", "x")
+        self.assertRegex(handle("thumbs 1"), r"^Made [01] thumbnails?\.")
         shipped = {w["name"]: w for w in self.api.example_worlds(self.pkg)}
         self.assertEqual(set(shipped), {"the-shed", "villa-savoye-lived-in", "a-street-of-landmarks"})
         self.assertTrue(all(w["has_thumb"] for w in shipped.values()))

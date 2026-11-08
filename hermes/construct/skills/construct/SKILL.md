@@ -212,12 +212,27 @@ too (`construct_start` lists them under `worlds`): `op: new` with `example` make
    save, without you. Before changing a world again, read it (`op: list`): their moves are in it, and
    `edits/log.jsonl` marks them `"by": "user"`. Keep them unless asked otherwise.
 
-**A world from a description or pictures.**
-1. List what exists: the user's projects, `construct_start`'s list, and the gallery (`construct_world` places a
-   gallery construct by name).
-2. Make each missing construct with the normal loop. Several can be made at once by delegated subagents, one
-   construct each, with the evidence that concerns it.
-3. Place them as above. Say which placements are made, which came from the gallery, and what was left out.
+**A world from a description or pictures: masterpiece by default.** A world is made to be used as it is (a game
+level, a set, a background for a film), so every construct made for it is made to a masterpiece's standard unless
+the user says **fast** (then one pass each, and the world says so).
+1. **Plan.** List what the picture or brief holds and what exists already: the user's projects, `construct_start`'s
+   list and the gallery (`construct_world` places a gallery construct by name; reuse a finished construct as it is).
+   Decide the few constructs worth making: each distinct object once (a sign used three times is one construct,
+   placed three times), and only what the user asked for. Say the plan and its cost before starting (how many
+   constructs, masterpiece rounds each, roughly how long) and offer fast.
+2. **Build each missing construct in its own subagent, in masterpiece mode.** `delegate_task(role="orchestrator")`,
+   one construct each, several at once. Give each: what it is, its real size, how it stands in the world (on the
+   ground, hung from a wall, on a table), the evidence that concerns it (the picture's region, references), and the
+   instruction to run the masterpiece loop in full: `rounds start --mode masterpiece`, a defect ledger, ONE fresh
+   leaf critic a round (`delegate_task` from inside the builder), until the stop rules. Its result: the project id,
+   the critic's last verdict and what it could not settle. Orchestrator children need Hermes's
+   `delegation.max_spawn_depth: 2`; if a builder cannot delegate its critic, it returns its packet folder after
+   each round and you run that critic yourself.
+3. **Text and signs say something real.** Lettering on signs, screens and plates is real, legible words that fit
+   the place (a shop name, a street, a price), never letter-shaped noise copied from a generated picture.
+4. Place them as above, then judge the whole world once with a fresh critic against the picture or brief
+   (composition, scale, what is missing), fix what it finds, and name the views. Say which placements were made
+   (with each critic's verdict), which came from the gallery, and what was left out.
 
 ## NetLogo (only when asked)
 
