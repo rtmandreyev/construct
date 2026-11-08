@@ -269,6 +269,12 @@ class Plugin(unittest.TestCase):
         for area in ("TOOL_MEDIA_RENDERER_AREA", "ROUTES_AREA", "SIDEBAR_NAV_AREA", "PALETTE_AREA"):
             self.assertIn("typeof sdk.%s === 'string'" % area, js)   # feature-detected, never a named import
 
+    def test_project_ids_keep_their_letters(self):
+        slug = self.mod.runtime.slugify
+        self.assertEqual(slug("BÖRSHUSET / Nobel Prize Museum"), "borshuset-nobel-prize-museum")
+        self.assertEqual(slug("Kraków Market Square"), "krakow-market-square")
+        self.assertEqual((slug("Łódź"), slug("Straße"), slug("!!!")), ("lodz", "strasse", "construct"))
+
     def test_worlds_are_arranged_on_their_card(self):
         js = (self.pkg / "desktop" / "plugin.js").read_text(encoding="utf-8")
         loader = (self.pkg / "templates" / "loader.html").read_text(encoding="utf-8")

@@ -15,6 +15,7 @@ projects folder the user chose in the plugin's settings:
 import json
 import os
 import re
+import unicodedata
 import secrets
 import shutil
 import subprocess
@@ -203,8 +204,14 @@ def catalog():
 
 # ---------------------------------------------------------------------------- projects
 
+_FOLD = str.maketrans({"ß": "ss", "æ": "ae", "ø": "o", "œ": "oe", "đ": "d", "ł": "l", "þ": "th", "ð": "d"})
+
+
 def slugify(text):
-    out = re.sub(r"[^a-z0-9]+", "-", str(text or "").lower()).strip("-")[:48].strip("-")
+    """A project id from a title: accents folded (Börshuset, Kraków, Łódź keep their letters), the rest dashes."""
+    t = unicodedata.normalize("NFKD", str(text or "").lower().translate(_FOLD))
+    t = "".join(ch for ch in t if not unicodedata.combining(ch))
+    out = re.sub(r"[^a-z0-9]+", "-", t).strip("-")[:48].strip("-")
     return out or "construct"
 
 
