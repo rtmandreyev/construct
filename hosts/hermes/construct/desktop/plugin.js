@@ -255,6 +255,41 @@ function arrangeChanges(list) {
     .map(c => ({ id: c.id, move: c.move.slice(), turn: c.turn, pivot: c.pivot.slice() }))
 }
 
+// what a world can place: your constructs, the shipped ones, the gallery's (fetched once, by name)
+function Picker({ onPick, exclude }) {
+  const [rows, setRows] = useState(null)
+  const [q, setQ] = useState('')
+  useEffect(() => {
+    let live = true
+    Promise.all([rest('/projects').catch(() => ({})), rest('/examples').catch(() => ({})), rest('/gallery').catch(() => ({}))]).then(([p, e, g]) => {
+      if (!live) return
+      const mine = (Array.isArray(p.projects) ? p.projects : []).filter(r => !r.world && r.newest && r.project !== exclude)
+        .map(r => ({ name: r.project, title: r.title, group: 'Yours' }))
+      const shipped = (Array.isArray(e.examples) ? e.examples : []).map(r => ({ name: r.name, title: r.title, group: 'Shipped' }))
+      const seen = new Set(shipped.map(r => r.name))
+      const more = (Array.isArray(g.constructs) ? g.constructs : []).filter(r => !seen.has(r.name)).map(r => ({ name: r.name, title: r.title, group: 'Gallery' }))
+      setRows([...mine, ...shipped, ...more].filter(r => SLUG.test(String(r.name))))
+    })
+    return () => {
+      live = false
+    }
+  }, [exclude])
+  const needle = q.trim().toLowerCase()
+  const shown = (rows || []).filter(r => !needle || (r.title + ' ' + r.name).toLowerCase().includes(needle))
+  return jsxs('div', {
+    style: Object.assign({}, S.bar, { flexDirection: 'column', alignItems: 'stretch', gap: 6 }),
+    children: [
+      jsx('input', { value: q, placeholder: 'Find a construct: Eames, Samba, clock…', onChange: e => setQ(e.target.value), autoFocus: true,
+        style: { font: 'inherit', fontSize: 12, padding: '5px 8px', borderRadius: 6, border: '1px solid var(--ui-stroke-secondary)',
+          background: 'transparent', color: 'var(--ui-text-primary)' } }),
+      !rows ? jsx('div', { style: S.meta, children: 'Loading…' }) : jsx('div', {
+        style: { display: 'flex', flexWrap: 'wrap', gap: 6, maxHeight: 150, overflow: 'auto' },
+        children: shown.slice(0, 80).map(r => jsx(Button, { label: str(r.title, 40), title: r.group + ': ' + r.name, onClick: () => onPick(r.name) }, r.group + r.name))
+      })
+    ]
+  })
+}
+
 // runs one of the plugin's own /construct commands in the gateway (no model turn): the chat's session, else the one in front
 async function runCommand(sessionId, command) {
   const host = sdk.host
@@ -269,6 +304,16 @@ async function runCommand(sessionId, command) {
   if (!sid || !host || typeof host.request !== 'function') throw new Error('open a chat first: the change is saved through it')
   const res = await host.request('slash.exec', { session_id: sid, command })
   return String((res && res.output) || '')
+}
+
+async function gunzipText(b64) {
+  const bin = atob(b64)
+  const bytes = new Uint8Array(bin.length)
+  for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i)
+  const stream = new Blob([bytes]).stream().pipeThrough(new DecompressionStream('gzip'))
+  const text = await new Response(stream).text()
+  if (text.length > PAGE_MAX) throw new Error('too large')
+  return text
 }
 
 function PageFrame({ route, kind, loaderUrl, height, onCard, onState, control, onOpenSteps, onArrange }) {
@@ -299,9 +344,18 @@ function PageFrame({ route, kind, loaderUrl, height, onCard, onState, control, o
     setFailed('')
     setShown(false)
     if (!loaderUrl) setSrc(null)
-    rest(route, { timeoutMs: 120000 }).then(
-      view => {
+    rest(route, { timeoutMs: 120000 }).then(async view => {
         if (!live) return
+        // a large page (a world) travels gzipped; the browser unpacks it
+        if (view && typeof view.html_gz === 'string' && view.html_gz.length < PAGE_MAX) {
+          try {
+            view = Object.assign({}, view, { html: await gunzipText(view.html_gz) })
+          } catch {
+            setFailed('The page could not be unpacked.')
+            return
+          }
+          if (!live) return
+        }
         const html = view && view.html
         if (typeof html !== 'string' || html.length > PAGE_MAX || !/^\s*<!doctype html>/i.test(html.slice(0, 64))) {
           setFailed('The page could not be read.')
@@ -367,7 +421,8 @@ function PageFrame({ route, kind, loaderUrl, height, onCard, onState, control, o
       control.current = {
         key: key => typeof key === 'string' && KEYS.has(key) && post({ type: 'construct:key', key }),
         step: n => typeof n === 'number' && n >= 1 && n < 1000 && post({ type: 'construct:step', step: Math.floor(n) }),
-        arrange: action => ['on', 'off', 'reset'].includes(action) && post({ type: 'construct:arrange', action })
+        arrange: action => ['on', 'off', 'reset'].includes(action) && post({ type: 'construct:arrange', action }),
+        select: id => PLACE_ID.test(String(id)) && post({ type: 'construct:arrange', action: 'select', id })
       }
     }
   }, [control, post])
@@ -410,6 +465,8 @@ function ConstructCard({ project, build, loaderUrl, title, parts, sessionId, hei
   const [follow, setFollow] = useState(null)   // a build being made from a saved arrangement: {build, job, ready}
   const [note, setNote] = useState('')
   const [saving, setSaving] = useState(false)
+  const [picking, setPicking] = useState(false)
+  const [selectNext, setSelectNext] = useState(null)   // a construct just placed: chosen once its build is shown
   const shownBuild = follow && follow.ready ? follow.build : run ? run.build : build
   useEffect(() => {
     if (!follow || follow.ready) return undefined
@@ -455,11 +512,23 @@ function ConstructCard({ project, build, loaderUrl, title, parts, sessionId, hei
       const m = /\(build (\d{8}-\d{6}-[0-9a-f]{4}), job ([0-9a-f]{12})\)/.exec(out)
       setNote(out.replace(/\s*\(build [^)]*\)/, '').slice(0, 400))
       if (m) setFollow({ build: m[1], job: m[2], ready: false })
+      const placed = /^Placed (\S+) in /.exec(out)
+      if (placed) setSelectNext(placed[1])
     } catch (err) {
       setNote(errorText(err))
     } finally {
       setSaving(false)
     }
+  }
+  useEffect(() => {   // the construct just placed is chosen, ready to drag, once its new build is on the page
+    if (selectNext && follow && follow.ready && view.ready && view.canArrange && control.current) {
+      control.current.select(selectNext)
+      setSelectNext(null)
+    }
+  }, [selectNext, follow, view])
+  const place = name => {
+    setPicking(false)
+    command('construct place ' + project + ' ' + name, 'Placing ' + name + ': checking the world and rebuilding it…')
   }
   const save = () => arr.changes.length &&
     command('construct arrange ' + project + ' ' + JSON.stringify(arr.changes), 'Saving: checking the world and rebuilding it…')
@@ -507,6 +576,9 @@ function ConstructCard({ project, build, loaderUrl, title, parts, sessionId, hei
             : jsx(Button, { label: arr.on ? 'Arranging' : 'Arrange', icon: 'move', active: arr.on, disabled: !view.ready || saving,
               title: 'Move and turn the constructs yourself: click one, drag it; Shift-drag or Q/E turns it (A)',
               onClick: () => control.current && control.current.arrange(arr.on ? 'off' : 'on') }),
+          jsx(Button, { label: 'Add a construct', icon: 'add', active: picking, disabled: saving || arr.changes.length > 0,
+            title: 'Put one of your constructs, a shipped one or one from the gallery into this world, then drag it into place',
+            onClick: () => setPicking(!picking) }),
           arr.changes.length ? jsx(Button, { label: 'Save ' + plural(arr.changes.length, 'change'), icon: 'save', disabled: saving,
             title: 'Check the world with the moves, save it and rebuild it', onClick: save }) : null,
           arr.changes.length ? jsx(Button, { label: 'Put back', icon: 'discard', disabled: saving,
@@ -517,6 +589,7 @@ function ConstructCard({ project, build, loaderUrl, title, parts, sessionId, hei
           note ? jsx('div', { style: Object.assign({}, S.meta, { flex: '1 1 260px', whiteSpace: 'normal' }), children: note }) : null
         ]
       }) : null,
+      isWorld && picking ? jsx(Picker, { onPick: place, exclude: project }) : null,
       jsxs('div', {
         style: S.bar,
         children: [
@@ -1251,6 +1324,7 @@ function Worlds() {
   const [shipped, setShipped] = useState(null)
   const [error, setError] = useState('')
   const [open, setOpen] = useState(null)
+  const [opening, setOpening] = useState(null)   // a shipped world being made yours: {name, project, build, job, note}
   const load = useCallback(() => {
     rest('/projects').then(r => setMine((Array.isArray(r && r.projects) ? r.projects : []).filter(p => p.world && SLUG.test(String(p.project)))),
       err => setError(errorText(err)))
@@ -1262,6 +1336,48 @@ function Worlds() {
     const off = CTX.onEvent('plugin.construct.job.progress', ev => ev && ev.payload && ev.payload.state === 'done' && load())
     return () => typeof off === 'function' && off()
   }, [load])
+  useEffect(() => {   // a world opened with no model turn: follow its first build, then show it
+    if (!opening || !opening.job) return undefined
+    let live = true
+    const go = async () => {
+      for (let i = 0; i < 240 && live; i++) {
+        try {
+          const c = await rest('/card?' + query({ project: opening.project, build: opening.build }))
+          if (c && live) {
+            setOpening(null)
+            rest('/projects').then(r => {
+              if (!live) return
+              setMine((Array.isArray(r && r.projects) ? r.projects : []).filter(p => p.world && SLUG.test(String(p.project))))
+              setOpen(opening.project)
+            })
+            return
+          }
+        } catch {
+          try {
+            await runCommand(null, 'construct job ' + opening.job)
+          } catch {
+            /* asked again next turn */
+          }
+        }
+        await sleep(2000)
+      }
+    }
+    go()
+    return () => {
+      live = false
+    }
+  }, [opening])
+  const openShipped = async w => {
+    setOpening({ name: w.name, note: 'Making "' + w.title + '" yours and building it…' })
+    try {
+      const out = await runCommand(null, 'construct open-world ' + w.name)
+      const m = /^Opened \S+ as (\S+)\. Building \(build (\d{8}-\d{6}-[0-9a-f]{4}), job ([0-9a-f]{12})\)/.exec(out)
+      if (!m) throw new Error(out.slice(0, 200) || 'it could not be opened')
+      setOpening({ name: w.name, project: m[1], build: m[2], job: m[3], note: 'Building "' + w.title + '" (half a minute or so)…' })
+    } catch (err) {
+      setOpening({ name: w.name, note: errorText(err) })
+    }
+  }
   if (error) return jsx('div', { style: S.text, children: error })
   if (!mine || !shipped) return jsx('div', { style: S.meta, children: 'Loading…' })
   const row = open && mine.find(r => r.project === open)
@@ -1290,11 +1406,12 @@ function Worlds() {
       jsx('div', { style: { height: 18 } }),
       head('Worlds to start from'),
       jsx('div', { style: GRID, children: shipped.map(w => jsx(Tile, {
-        title: w.title, onOpen: () => start(w, 'show'),
+        title: w.title, onOpen: () => openShipped(w),
         image: jsx(Img, { load: w.has_thumb ? () => rest('/example-world-thumb?' + query({ name: w.name })) : null, deps: [w.name] }),
-        lines: [plural(w.placements || 0, 'construct'), str(w.summary, 170)],
-        actions: [jsx(Button, { label: 'Show', icon: 'eye', onClick: () => start(w, 'show') }, 's'),
-          jsx(Button, { label: 'Start from', icon: 'add', onClick: () => start(w, 'start') }, 'f')]
+        lines: [plural(w.placements || 0, 'construct'), opening && opening.name === w.name ? opening.note : str(w.summary, 170)],
+        actions: [jsx(Button, { label: 'Open', icon: 'eye', disabled: !!(opening && opening.job), title: 'Make it yours and show it here (no chat, no model)',
+          onClick: () => openShipped(w) }, 'o'),
+          jsx(Button, { label: 'Explain in a chat', icon: 'comment', onClick: () => start(w, 'show') }, 's')]
       }, w.name)) })
     ]
   })

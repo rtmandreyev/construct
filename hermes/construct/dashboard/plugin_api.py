@@ -10,6 +10,7 @@ Routes (mounted at /api/plugins/construct/):
     GET /examples                        the constructs the plugin ships to start from
     GET /example-worlds                  the worlds the plugin ships to start from
     GET /example-world-thumb?name=       one's still, as a data URL
+    GET /gallery                         the gallery's constructs by name (what a world can place, fetched on demand)
     GET /example-thumb?name=             one's still, as a data URL
     GET /tutorials                       the Learn page's tutorials (skills/construct/tutorials/*.md)
 
@@ -19,6 +20,7 @@ that project's folder and is of a kind the page shows; a path is never taken fro
 """
 
 import base64
+import gzip
 import json
 import re
 from pathlib import Path
@@ -166,12 +168,29 @@ def projects(root):
     return rows[:LIST_MAX]
 
 
+GZ_FROM = 1024 * 1024          # a page larger than this travels gzipped (a world's is tens of megabytes of JSON)
+_gz_cache = {}                 # (path, mtime, size) -> base64 of the gzipped page; the last few, in memory only
+
+
 def _page(path, loader):
+    """A page and its loader: {"html"} as text, or {"html_gz"} (gzip, base64) when it is large, which the Desktop
+    half unpacks; a world's page is mostly numbers and shrinks about seven times."""
     if not path.is_file() or not loader.is_file():
         raise NotFound("the page is not there")
-    if path.stat().st_size > PAGE_MAX:
+    st = path.stat()
+    if st.st_size > PAGE_MAX:
         raise NotFound("the page is larger than %d MB" % (PAGE_MAX // 1048576))
-    return path.read_text(encoding="utf-8"), _current_loader(loader.read_text(encoding="utf-8"))
+    out = {"loader": _current_loader(loader.read_text(encoding="utf-8"))}
+    if st.st_size <= GZ_FROM:
+        out["html"] = path.read_text(encoding="utf-8")
+        return out
+    key = (str(path), st.st_mtime_ns, st.st_size)
+    if key not in _gz_cache:
+        while len(_gz_cache) >= 4:
+            _gz_cache.pop(next(iter(_gz_cache)))
+        _gz_cache[key] = base64.b64encode(gzip.compress(path.read_bytes(), compresslevel=5, mtime=0)).decode("ascii")
+    out["html_gz"] = _gz_cache[key]
+    return out
 
 
 def _current_loader(stored):
@@ -189,8 +208,7 @@ def _current_loader(stored):
 
 def view(root, project, build=None):
     folder = build_dir(root, project, build)
-    html, loader = _page(folder / "construct.html", folder / "loader.html")
-    return {"html": html, "loader": loader, "card": _card(folder), "kind": "construct"}
+    return dict(_page(folder / "construct.html", folder / "loader.html"), card=_card(folder), kind="construct")
 
 
 def kit(root, project, kit_id, page="assembly"):
@@ -200,8 +218,7 @@ def kit(root, project, kit_id, page="assembly"):
     if not folder.is_dir():
         raise NotFound("no kit")
     target = _child(folder, kit_id)
-    html, loader = _page(target / (page + ".html"), target / "loader.html")
-    return {"html": html, "loader": loader, "card": _kit_card(target), "kind": page}
+    return dict(_page(target / (page + ".html"), target / "loader.html"), card=_kit_card(target), kind=page)
 
 
 def thumb(root, project, build=None):
@@ -262,6 +279,14 @@ def example_worlds(base=HERE):
             row["has_thumb"] = (Path(base) / "examples" / "worlds" / r["name"] / "thumb.jpg").is_file()
             out.append(row)
     return out
+
+
+def gallery(base=HERE):
+    """The gallery's constructs by name and title (fetched from this release when placed)."""
+    g = _read_json(Path(base) / "examples" / "gallery.json", {})
+    rows = g.get("constructs", []) if isinstance(g, dict) else []
+    return [{"name": r["name"], "title": str(r.get("title", r["name"]))[:120]} for r in rows
+            if isinstance(r, dict) and SLUG.match(str(r.get("name", "")))]
 
 
 def example_world_thumb(name, base=HERE):
@@ -358,6 +383,10 @@ if APIRouter is not None:
     @router.get("/example-worlds")
     def get_example_worlds():
         return {"worlds": example_worlds()}
+
+    @router.get("/gallery")
+    def get_gallery():
+        return {"constructs": gallery()}
 
     @router.get("/example-world-thumb")
     def get_example_world_thumb(name: str):

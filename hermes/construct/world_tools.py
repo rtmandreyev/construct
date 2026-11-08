@@ -119,7 +119,7 @@ def _placement_fields(args, p):
     return p
 
 
-def check(doc, folder, surfaces_of=None, arrange=None):
+def check(doc, folder, surfaces_of=None, arrange=None, settle=None):
     """The world checked by Construct (construct_hologram/world.py, in a child like every engine call): its
     placements as they stand, its audit and, for `surfaces_of`, where things can stand on that placement. With
     `arrange` (moves and turns made by hand on the page), the world after them: its document comes back as `doc`."""
@@ -128,6 +128,8 @@ def check(doc, folder, surfaces_of=None, arrange=None):
         body = {"doc": doc, "folder": str(folder), "surfaces_of": surfaces_of}
         if arrange is not None:
             body["arrange"] = arrange
+        if settle:
+            body["settle"] = list(settle)
         runtime.write_json(spec, body)
         code, out, err = runtime.run_child("world", str(spec), timeout=180, cwd=folder)
     finally:
@@ -163,7 +165,7 @@ def _rebuild(slug, folder, path, wait=None):
     return tools._waited(job_id, "build", wait or tools.WAIT["build"], "build of world %s" % slug)
 
 
-def _from_example(args):
+def _from_example(args, later=False):
     """A world that ships with the plugin, as the user's own project: its gallery constructs brought in by name (the
     plugin's own, or fetched from the gallery once), the constructs designed for it copied along."""
     shipped = runtime.example_worlds()
@@ -189,6 +191,9 @@ def _from_example(args):
     except Exception:
         shutil.rmtree(folder, ignore_errors=True)
         raise
+    if later:   # opened from the Worlds page: the page follows the build itself
+        build, job_id = _rebuild_later(slug, folder, path)
+        return {"project": slug, "title": title.strip(), "build": build, "job_id": job_id}
     res = _rebuild(slug, folder, path, args.get("wait_seconds"))
     if isinstance(res, dict):
         res["world"] = _summary(checked)
@@ -347,6 +352,43 @@ def arrange_by_hand(slug, changes):
     stamp = _log(folder, before, {"op": "arrange", "by": "user", "placement": ", ".join(moved), "changes": changes})
     build, job_id = _rebuild_later(slug, folder, path)
     return dict(_summary(res), world=slug, moved=moved, build=build, job_id=job_id, undo="edits/%s-before.json" % stamp)
+
+
+def open_example(name):
+    """A shipped world as the user's own project, opened from the Worlds page with no model turn; rebuilt later."""
+    if not isinstance(name, str) or not NAME.match(name):
+        raise ConstructError("which world? /construct open-world <example>")
+    return _from_example({"example": name}, later=True)
+
+
+def place_by_hand(slug, name):
+    """A construct put into a world by the user (the card's Add a construct): it stands on the world's first
+    placement, in its middle, to be dragged where it belongs; checked, saved, logged as the user's and rebuilt."""
+    if not isinstance(slug, str) or not NAME.match(slug):
+        raise ConstructError("which world? /construct place <world> <construct>")
+    if not isinstance(name, str) or not name or len(name) > 200:
+        raise ConstructError("which construct? your project, a shipped construct or a gallery name")
+    folder = runtime.project_dir(slug)
+    path, doc = _load(folder)
+    rel = _bring(folder, name)
+    base = runtime.slugify(_source(name)[0])[:40] or "construct"
+    pid, n = base, 2
+    while any(p["id"] == pid for p in doc["placements"]):
+        pid, n = "%s-%d" % (base, n), n + 1
+    one = {"id": pid, "construct": rel}
+    if doc["placements"]:
+        one["on"] = doc["placements"][0]["id"]
+    doc["placements"].append(one)
+    before = json.loads(path.read_text(encoding="utf-8"))
+    checked = check(doc, folder, settle=[pid])   # it lands on what is under it: a floor, the paving
+    if checked.get("errors"):
+        raise ConstructError("the world would not be valid:\n" + "\n".join(checked["errors"]))
+    doc = checked.pop("doc", doc)
+    checked.pop("moved", None)
+    runtime.write_json(path, doc)
+    stamp = _log(folder, before, {"op": "place", "by": "user", "placement": pid, "args": {"construct": name}})
+    build, job_id = _rebuild_later(slug, folder, path)
+    return dict(_summary(checked), world=slug, placed=pid, build=build, job_id=job_id, undo="edits/%s-before.json" % stamp)
 
 
 def undo(slug):

@@ -105,6 +105,14 @@ def media_paths(result):
     return paths
 
 
+def html_of(view):
+    """A page as the Desktop half reads it: text, or (a large page) gzip in base64."""
+    if "html" in view:
+        return view["html"]
+    import base64, gzip
+    return gzip.decompress(base64.b64decode(view["html_gz"])).decode("utf-8")
+
+
 class Plugin(unittest.TestCase):
     """The generated package, loaded as Hermes loads it, with its data folder in a temporary directory."""
 
@@ -340,7 +348,7 @@ class Plugin(unittest.TestCase):
         listed = self.api.projects(self.data)
         self.assertIn(project, [p["project"] for p in listed])
         view = self.api.view(self.data, project, b["build"])
-        self.assertEqual(view["html"], page.read_text(encoding="utf-8"))
+        self.assertEqual(html_of(view), page.read_text(encoding="utf-8"))
         self.assertEqual(view["loader"], text)
         self.assertEqual(view["card"]["parts"], 6)
         if CAPTURE:
@@ -561,6 +569,20 @@ class Plugin(unittest.TestCase):
         self.assertIn("Which job?", handle("job ../x"))
         self.assertEqual(json.loads((self.data / "projects" / sw / "world.json").read_text()), first)
         self.assertIn(sw, handle("worlds"))
+        # put into the world by hand (the card's Add a construct): it stands on the first placement, to be dragged
+        out = handle("place %s braun-sk4-knob" % sw)
+        self.assertRegex(out, r"^Placed braun-sk4-knob in %s\. Rebuilding \(build \S+, job [0-9a-f]{12}\)" % sw)
+        placed = json.loads((self.data / "projects" / sw / "world.json").read_text())["placements"][-1]
+        self.assertEqual(placed["id"], "braun-sk4-knob")
+        self.assertTrue(placed["on"].startswith("shed/"), placed)   # it landed on the shed's floor, not in it
+        self.assertIn("could not", handle("place %s no-such-thing" % sw))
+        self.assertIn("Undid the last change to %s (place braun-sk4-knob)" % sw, handle("undo %s" % sw))
+        # a shipped world opened as the user's own from the Worlds page, with no model turn
+        out = handle("open-world the-shed")
+        self.assertRegex(out, r"^Opened the-shed as \S+\. Building \(build \S+, job [0-9a-f]{12}\)\.")
+        self.assertIn("could not", handle("open-world nowhere"))
+        self.assertIn("eames-lounge-chair", [g["name"] for g in self.api.gallery(self.pkg)])
+        self.assertIn("html_gz", self.api.view(self.data, sw, build))   # a world's page travels gzipped
         shipped = {w["name"]: w for w in self.api.example_worlds(self.pkg)}
         self.assertEqual(set(shipped), {"the-shed", "villa-savoye-lived-in", "a-street-of-landmarks"})
         self.assertTrue(all(w["has_thumb"] for w in shipped.values()))
@@ -668,8 +690,8 @@ class Plugin(unittest.TestCase):
         self.assertEqual(loader.parent.parent.name, "kits")
         self.assertIn('data-page="assembly.html"', loader.read_text(encoding="utf-8"))
         page = self.api.kit(self.data, r["project"], kit["kit"], "assembly")
-        self.assertIn('id="hologram-geometry"', page["html"])
-        booklet = self.api.kit(self.data, r["project"], kit["kit"], "booklet")["html"]
+        self.assertIn('id="hologram-geometry"', html_of(page))
+        booklet = html_of(self.api.kit(self.data, r["project"], kit["kit"], "booklet"))
         self.assertNotRegex(booklet, r"src=['\"]img/")   # its pictures are inside it now
         self.assertIn("data:image/", booklet)
         self.assertNotRegex(booklet, r"(?i)<script")

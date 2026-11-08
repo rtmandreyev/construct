@@ -277,6 +277,20 @@ class Arrange(unittest.TestCase):
         self.assertEqual([p.get("yaw") for p in new["placements"]][:2], [90.0, 90.0])
         self.assertNotIn("yaw", doc["placements"][0])   # the document given is never changed
 
+    def test_set_down_by_hand_it_lands_on_what_is_under_it(self):
+        doc = place({"id": "deck", "construct": lit("cd.json"), "rotate": [-90, 0, 0]}, {"id": "cd", "construct": lit("book.json"), "on": "deck"})
+        g = world.compile_world(doc, ".")
+        deck_top = max(b["max"][1] for p in g["parts"] if p.get("placement") == "deck" for b in p["instances"])
+        new, landed = world.settle(doc, g, {"cd"})
+        self.assertEqual(landed, ["cd"])
+        self.assertTrue(new["placements"][1]["on"].startswith("deck/"))
+        g2 = world.compile_world(new, ".")
+        bottom = min(b["min"][1] for p in g2["parts"] if p.get("placement") == "cd" for b in p["instances"])
+        self.assertLess(abs(bottom - deck_top), 0.01)
+        self.assertEqual(world.settle(new, g2, {"cd"})[1], [])   # already there: nothing changes
+        high = place({"id": "deck", "construct": lit("cd.json"), "rotate": [-90, 0, 0]}, {"id": "cd", "construct": lit("book.json"), "on": "deck"})
+        self.assertEqual(world.settle(high, g, {"cd"}, step=0.0)[1], [])   # out of reach: it stays
+
     def test_what_it_cannot_do_is_refused(self):
         doc = place({"id": "a", "construct": lit("cd.json")},
                     {"id": "moon", "construct": lit("cd.json"), "sky": {"diameter_m": 3.4e6, "distance_m": 3.8e8}})
@@ -377,6 +391,22 @@ class Viewer(unittest.TestCase):
         self.assertEqual(len(labels), 4)   # the whole, the world's own, one for each placement
         self.assertEqual(pressed[:2], ["false", "true"])
         self.assertIsNone(errs)
+
+    @unittest.skipUnless(render.find_browser(), "no browser")
+    def test_many_placements_fold_their_views(self):
+        rows = [{"id": "cd-%d" % i, "construct": lit("cd.json"), "at": [i * 0.3, 0, 0]} for i in range(6)]
+        with tempfile.TemporaryDirectory() as d:
+            w = Path(d, "w.json")
+            w.write_text(json.dumps(place(*rows)))
+            studio.build(str(w), Path(d, "out"))
+            b = render.open_browser(render._url(Path(d, "out", "construct.html"), ui=1), 480, 300, 1.0)
+            try:
+                got = b.evaluate("(() => { const bs = [...document.querySelectorAll('.viewsbar button')];"
+                                 " const shown = () => bs.filter((x) => !x.hidden).length; const before = shown();"
+                                 " document.querySelector('.viewsbar .fold').click(); return [bs.length, before, shown()]; })()")
+            finally:
+                b.close()
+        self.assertEqual(got, [8, 2, 8])   # the whole and the fold; then the six placements too
 
     @unittest.skipUnless(render.find_browser(), "no browser")
     def test_a_world_is_arranged_by_hand(self):

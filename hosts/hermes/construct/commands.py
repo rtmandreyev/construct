@@ -9,6 +9,8 @@
     /construct worlds             your worlds and the worlds the plugin ships
     /construct arrange <world> <changes>   moves and turns made by hand on a world's page (the Desktop half sends
                                   these: a JSON list of {id, move, turn, pivot}); checked, saved and rebuilt
+    /construct place <world> <construct>   put a construct into a world (the card's Add a construct)
+    /construct open-world <example>        a shipped world as your own (the Worlds page's Open)
     /construct undo <world>       the world as it was before its last change
     /construct job <id>           one background job's state (an ended build is published here)
 """
@@ -133,6 +135,19 @@ def handle(raw_args="", event=None, **kwargs):
             warn = r.get("warnings") or []
             return ("Arranged %s by hand: %s. Rebuilding (build %s, job %s)%s" % (r["world"], ", ".join(r["moved"]), r["build"], r["job_id"],
                     (". The check says: " + "; ".join(warn[:4])) if warn else "; the check found nothing in the way."))
+        if verb == "place":   # the card's Add a construct: it stands in the middle of the world, to be dragged
+            parts = str(raw_args or "").strip().split(None, 2)
+            if len(parts) < 3:
+                return "Usage: /construct place <world> <construct: your project, a shipped construct or a gallery name>"
+            r = world_tools.place_by_hand(parts[1].lower(), parts[2].strip())
+            warn = r.get("warnings") or []
+            return ("Placed %s in %s. Rebuilding (build %s, job %s); drag it where it belongs%s" % (
+                r["placed"], r["world"], r["build"], r["job_id"], (". The check says: " + "; ".join(warn[:3])) if warn else "."))
+        if verb == "open-world":   # the Worlds page's Open: a shipped world as the user's own, with no model turn
+            if len(words) < 2:
+                return "Which world? /construct open-world <example> (/construct worlds lists them)"
+            r = world_tools.open_example(words[1].lower())
+            return "Opened %s as %s. Building (build %s, job %s)." % (words[1].lower(), r["project"], r["build"], r["job_id"])
         if verb == "undo":
             if len(words) < 2:
                 return "Which world? /construct undo <world>"

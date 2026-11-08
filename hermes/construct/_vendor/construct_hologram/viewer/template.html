@@ -58,6 +58,8 @@
   .viewsbar button:hover, .viewsbar button[aria-pressed="true"] { color: var(--ink); border-color: var(--accent); }
   .viewsbar button:focus-visible { outline: 1px solid var(--accent); outline-offset: 1px; }
   body.noui .viewsbar { display: none !important; }
+  .viewsbar button[hidden] { display: none; }
+  .viewsbar .fold { color: var(--accent); }
   @media (max-width: 640px) { .viewsbar { max-width: none; right: 16px; left: 16px; } }
   .arrange { display: none; position: absolute; right: 16px; top: 16px; max-width: min(380px, 52%); padding: 7px 10px;
     background: rgba(10,4,12,.74); border: 1px solid var(--accent); border-radius: 5px; font-size: 10px; letter-spacing: .1em; }

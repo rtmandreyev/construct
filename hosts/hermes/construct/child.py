@@ -418,6 +418,12 @@ def world(spec):
             if errors:
                 return {"errors": errors[:12]}
             g = w.compile_world(doc, folder, None)
+        landing = list(spec.get("settle") or []) + [c.get("id") for c in (spec.get("arrange") or []) if isinstance(c, dict)]
+        if landing:   # set down by hand: each lands on what is under it
+            doc, landed = w.settle(doc, g, set(landing))
+            if landed:
+                g = w.compile_world(doc, folder, None)
+                moved = (moved or []) + [i for i in landed if i not in (moved or [])]
     except w.WorldError as exc:
         return {"errors": [str(exc)]}
     report = w.audit(doc, g)
@@ -436,8 +442,8 @@ def world(spec):
            "warnings": [x["message"] for x in report["warnings"]][:20], "notes": report["info"]["notes"][:10]}
     if spec.get("surfaces_of"):
         out["surfaces"] = _surfaces(g, spec["surfaces_of"])
-    if moved is not None:
-        out["doc"], out["moved"] = doc, moved
+    if moved is not None or spec.get("settle"):
+        out["doc"], out["moved"] = doc, moved or []
     return out
 
 

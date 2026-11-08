@@ -66,6 +66,9 @@
         // a world arranged by hand: the card's Arrange, Put back; what changes goes back to the card to be saved
         if (d.action === "on" || d.action === "off") window.HOLO.arrange.set(d.action === "on");
         else if (d.action === "reset") window.HOLO.arrange.reset();
+        else if (d.action === "select" && typeof d.id === "string" && /^[a-z0-9][a-z0-9_.-]{0,63}$/.test(d.id)) {
+          window.HOLO.arrange.set(true); window.HOLO.arrange.select(d.id);
+        }
         setTimeout(tell, 30);
       }
     });

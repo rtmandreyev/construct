@@ -1450,15 +1450,31 @@ void main() {
       viewsBar.setAttribute("aria-label", "Views of " + geo.title);
       const pick = (id, b) => {
         opt.view = id; holo.userCamera = null;
-        [...viewsBar.children].forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+        [...viewsBar.children].forEach((x) => { if (!x.classList.contains("fold")) x.setAttribute("aria-pressed", String(x === b)); });
         kick();
       };
-      [{ id: "hero", label: "Whole" }].concat(geo.presentation.views).forEach((v) => {
-        const b = el("button", "", String(v.label || v.id).toUpperCase());
+      // the world's own views first; one per placement after them, folded behind one button when there are many
+      const placed = new Set(geo.world.placements.map((r) => r.id));
+      const own = geo.presentation.views.filter((v) => !placed.has(v.id)), each = geo.presentation.views.filter((v) => placed.has(v.id));
+      const add = (v, cls) => {
+        const b = el("button", cls || "", String(v.label || v.id).toUpperCase());
         b.type = "button"; b.setAttribute("aria-pressed", String(v.id === opt.view));
         b.addEventListener("click", () => pick(v.id, b));
         viewsBar.appendChild(b);
-      });
+        return b;
+      };
+      [{ id: "hero", label: "Whole" }].concat(own).forEach((v) => add(v));
+      if (each.length > 4) {
+        const t = el("button", "fold", "CONSTRUCTS (" + each.length + ") ▾");
+        t.type = "button"; t.setAttribute("aria-expanded", "false");
+        const items = each.map((v) => { const b = add(v, "each"); b.hidden = true; return b; });
+        t.addEventListener("click", () => {
+          const open = t.getAttribute("aria-expanded") !== "true";
+          t.setAttribute("aria-expanded", String(open)); t.textContent = "CONSTRUCTS (" + each.length + ") " + (open ? "▴" : "▾");
+          items.forEach((b) => { b.hidden = !open; });
+        });
+        viewsBar.insertBefore(t, items[0]);
+      } else each.forEach((v) => add(v));
       overlay.appendChild(viewsBar);
     }
     const labels = el("div", "labels"); overlay.appendChild(labels);

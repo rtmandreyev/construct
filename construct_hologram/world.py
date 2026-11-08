@@ -784,6 +784,50 @@ def arrange(doc, g, changes):
     return out, moved
 
 
+STEP_M = 0.6   # what a placement settles onto: the highest flat top under it within this height above its bottom
+
+
+def settle(doc, g, ids, step=STEP_M):
+    """Placements set down by hand land on what is under them: each of `ids` that stands on its host (on the host,
+    or on one of its parts) is stood on the highest flat top of the host under the middle of its footprint, no
+    higher than `step` above where it stands now (a floor deck, paving, a table it was lifted to). A new document
+    and the ids that changed."""
+    recs = {r["id"]: r for r in g["world"]["placements"]}
+    out = json.loads(json.dumps(doc))
+    changed = []
+    for p in out["placements"]:
+        if p["id"] not in ids or not p.get("on") or "sky" in p or p.get("floating"):
+            continue
+        host = p["on"].split("/")[0]
+        own = [b for q in g["parts"] if q.get("placement") == p["id"] and not q.get("sky") for b in q["instances"]]
+        if not own:
+            continue
+        cx = (min(b["min"][0] for b in own) + max(b["max"][0] for b in own)) / 2
+        cz = (min(b["min"][2] for b in own) + max(b["max"][2] for b in own)) / 2
+        bottom = min(b["min"][1] for b in own)
+        best = None
+        for q in g["parts"]:
+            if q.get("placement") != host or q.get("sky") or q.get("shape") == "points":
+                continue
+            for b in q["instances"]:
+                dx, dy, dz = (b["max"][k] - b["min"][k] for k in range(3))
+                flat = dy < 0.6 * min(dx, dz) and dx * dz > 0.002
+                over = b["min"][0] <= cx <= b["max"][0] and b["min"][2] <= cz <= b["max"][2]
+                top = b["max"][1]
+                if flat and over and top <= bottom + step and (best is None or top > best[0]):
+                    best = (top, q["id"])
+        if best is None:
+            continue
+        part = best[1][len(host) + 1:] if best[1].startswith(host + "/") else best[1]
+        target = "%s/%s" % (host, part)
+        t = recs[p["id"]]["at"]
+        if p["on"] == target and abs(best[0] - bottom) < 0.005:
+            continue
+        p["on"], p["at"] = target, [_r(t[0]), 0.0, _r(t[2])]
+        changed.append(p["id"])
+    return out, changed
+
+
 def _meets(a, b, tol=0.01):
     """Two boxes ((min, max)) that interpenetrate by more than `tol` metres on every axis (touching is not meeting)."""
     return all(min(a[1][k], b[1][k]) - max(a[0][k], b[0][k]) > tol for k in range(3))
