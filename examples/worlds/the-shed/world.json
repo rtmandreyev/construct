@@ -25,9 +25,9 @@
    "id": "vespa",
    "construct": "vespa-gs150",
    "at": [
-    -0.7,
+    -0.6,
     0,
-    2.3
+    2.75
    ],
    "yaw": 60,
    "note": "On its stand beside the door."

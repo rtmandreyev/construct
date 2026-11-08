@@ -669,6 +669,24 @@ def audit(doc, g):
             add("collides", pid, "%s runs into %s (%s%s): move it, or stand it on the part it rests on" % (
                 pid, host, ", ".join(x.split("/", 1)[1] for x in shown[:3]),
                 " and %d more" % (len(shown) - 3) if len(shown) > 3 else ""))
+    # what opens (a door, a lid, a cowl) needs room: each part's open pose against the other placements' parts
+    opens = {}
+    for p in g["parts"]:
+        if solid(p):
+            for b in p["instances"]:
+                if "open_min" in b:
+                    opens.setdefault(p["placement"], []).append((p["id"], b["open_min"], b["open_max"]))
+    for a, moving in opens.items():
+        for b in ids:
+            if b == a or b not in parts_of or b not in boxes:
+                continue
+            skip = {recs[b].get("on"), recs[a].get("on")}   # what one of them stands on is shared by design
+            hit = sorted({mid for mid, lo, hi in moving if mid not in skip and _meets((lo, hi), boxes[b])
+                          and any(_meets((lo, hi), (blo, bhi)) for bid, blo, bhi in parts_of[b] if bid not in skip)})
+            if hit:
+                add("blocks", b, "%s is in the way of %s's %s when %s open%s: move it clear, unless that is never "
+                    "opened" % (b, a, ", ".join(x.split("/", 1)[1] for x in hit[:3]),
+                                "it" if len(hit) == 1 else "they", "s" if len(hit) == 1 else ""))
     for pid, r in recs.items():
         if "sky" in r:
             notes.append("%s: in the sky at its real angular size (%.4g°)" % (pid, r.get("angular_deg", 0)))
@@ -725,6 +743,7 @@ def check(world_path, resolver=None):
                           "message": x["message"], "hint": {
                               "overlap": "move one of them (op move), or remove one",
                               "collides": "move it clear, or stand it on the part it rests on (on: host/part-id)",
+                              "blocks": "move it out of the way of the door or lid, unless that is never opened",
                               "unsupported": "give it `on`, or `floating: true` if it hovers",
                               "scaled": "scale 1 is real size; leave it if the size is meant"}.get(x["code"])})
         b = g["bounds"]

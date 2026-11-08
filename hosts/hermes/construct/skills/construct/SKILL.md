@@ -197,6 +197,7 @@ too (`construct_start` lists them under `worlds`): `op: new` with `example` make
    - `overlap`: two placements share space;
    - `collides`: a placement runs into the construct it stands in (a car into a column); the check is per part, so
      clear ones pass;
+   - `blocks`: it stands where another's door, lid or cowl opens;
    - `unsupported`: it stands on nothing.
 
    `construct_check` gives the same report. No verification script is needed.

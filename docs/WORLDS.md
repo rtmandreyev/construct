@@ -69,6 +69,7 @@ reach 1,000 km from the origin, and an optional `origin: {lat, lon}` ties the wo
   - when placements overlap;
   - when one runs into the construct it stands in: each of its parts is checked against the host's, all but the
     part it stands on, so a car parked under a house must clear the columns;
+  - when a placement stands where another's door, lid or cowl opens (each joint's open pose is checked too);
   - when one stands on nothing, and when one isn't at real size.
 
   Each placed construct's own audit stays its own.

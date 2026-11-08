@@ -216,6 +216,21 @@ class Audit(unittest.TestCase):
         hits = [w for w in world.audit(inside, world.compile_world(inside))["warnings"] if w["code"] == "collides"]
         self.assertEqual([w["part"] for w in hits], ["c"])
 
+    def test_what_opens_needs_room(self):
+        """A CD's lid opens up and back: a book standing where it opens is in its way, though nothing touches shut."""
+        cd = world.compile_world(place({"id": "cd", "construct": lit("cd.json")}))
+        lid = next(b for p in cd["parts"] if p["id"] == "cd/lid" for b in p["instances"])
+        shut, opened = (lid["min"], lid["max"]), (lid["open_min"], lid["open_max"])
+        # the book just past the shut case, where the open lid reaches
+        k = max(range(3), key=lambda i: (opened[1][i] - shut[1][i]) + (shut[0][i] - opened[0][i]) if i != 1 else -1)
+        gap = opened[1][k] - shut[1][k] >= shut[0][k] - opened[0][k]
+        at = [0, 0, 0]
+        at[k] = (shut[1][k] + 0.08) if gap else (shut[0][k] - 0.08)
+        doc = place({"id": "cd", "construct": lit("cd.json")}, {"id": "book", "construct": lit("book.json"), "at": at})
+        codes = [(w["code"], w["part"]) for w in world.audit(doc, world.compile_world(doc))["warnings"]]
+        self.assertIn(("blocks", "book"), codes)
+        self.assertNotIn("collides", [c for c, _ in codes])
+
     def test_check_reads_a_world(self):
         with tempfile.TemporaryDirectory() as d:
             w = Path(d, "w.json")
