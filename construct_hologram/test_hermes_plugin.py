@@ -594,7 +594,8 @@ class Plugin(unittest.TestCase):
         self.assertIn("could not", handle("open-example nowhere"))
         rows = {r["project"]: r for r in self.api.projects(self.data)}
         self.assertEqual(rows[sw]["group"], "Worlds")
-        self.assertEqual(rows["garden-shed"]["in_world"] if "garden-shed" in rows else "x", "x")
+        worlds = {r["title"] for r in rows.values() if r.get("world")}
+        self.assertTrue(all(r["in_world"] in worlds for r in rows.values() if r.get("in_world")))   # folded under a real world
         self.assertRegex(handle("thumbs 1"), r"^Made [01] thumbnails?\.")
         shipped = {w["name"]: w for w in self.api.example_worlds(self.pkg)}
         self.assertEqual(set(shipped), {"the-shed", "villa-savoye-lived-in", "a-street-of-landmarks"})
