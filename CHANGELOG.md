@@ -35,12 +35,25 @@ from the chat. [docs/WORLDS.md](docs/WORLDS.md)
   gallery, fetched by name from this release's tag. Three worlds ship: the shed with the Samba and the Vespa; the
   Villa Savoye lived in (fifteen constructs and Saturn at the Moon's distance); a street of landmarks.
   `construct_inspect` reads a shipped construct by name.
-- **Arranged by hand.** On a world's page, A (and Arrange on its card in Hermes Desktop) lets you move and turn the
+- **Arranged by hand.** On a world's page, G (and Arrange on its card in Hermes Desktop) lets you move and turn the
   constructs yourself: click one, drag it over the ground, Shift-drag or Q/E to turn, arrows to nudge, Page Up/Down
   to lift; what stands on it goes with it. In Hermes Desktop, Save runs `/construct arrange` in the gateway (no
   model turn): the world is checked with the moves, saved, logged as the user's and rebuilt; `/construct undo`
   steps back one saved change. A **Worlds** tab lists your worlds and the shipped ones, and a construct's card can
   place it in a world.
+- **Worlds made to a masterpiece's standard by default.** A world from a picture or a brief builds each missing
+  construct in its own subagent in masterpiece rounds, with a fresh critic each round (an orchestrator subagent
+  per construct; Hermes's `delegation.max_spawn_depth: 2`), then judges the whole world against the picture. Say
+  "fast" for one pass each. Signs and plates say real words.
+- **Looking around:** W A S D fly, Space and Shift go up and down, double-click focuses on a part, the wheel walks
+  on through a room when it is as close as it goes, F skips the assembly. In an app (Hermes) the camera stays where
+  you leave it: no tour, no drift. The solid view (now O; G arranges) cuts away what stands between you and the
+  room a view looks into.
+- **In Hermes Desktop:** a world's card is full-screen on request, names its views in a menu instead of covering the
+  picture with buttons, and has Skip. Its library (Add a construct) shows your constructs, the shipped ones and the
+  gallery by kind, with previews; a construct's card drops it into one of your worlds; shipped constructs and worlds
+  open without a chat. The Constructs page sorts by kind (worlds, vehicles, buildings…), folds what was made for a
+  world under it, and fills in missing previews. Large pages travel gzipped (the Villa world: 37 MB to 5).
 - Tested in Hermes Desktop with GPT-6.1 Sol and DeepSeek V4
   Pro; what each had to work around became the tool's: placing many at once, named views, host collisions, door
   swings, and sky sizing by a part.

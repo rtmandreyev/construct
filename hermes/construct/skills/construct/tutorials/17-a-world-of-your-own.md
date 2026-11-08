@@ -25,7 +25,7 @@ Teach me to make a world with Construct, step by step, one step at a time and wa
    ground; Shift-drag or Q and E turn it; the arrows nudge it; what stands on it goes with it. **Save**: the world is
    checked with the moves, saved and rebuilt, with no model turn. Wait while they try it, then
    `construct_world(op="list")` and say what moved (the world's `edits/log.jsonl` marks the user's moves as theirs).
-   Outside Desktop the page does the same with A, and `/construct undo <world>` steps back.
+   Outside Desktop the page does the same with G, and `/construct undo <world>` steps back.
 4. **Name the views.** Ask which views they want ("by the door", "from the yard"): `op="view"` with a target (a
    placement, or a floor part). They become buttons.
 5. **Take it elsewhere.** `construct_export(project=..., format="glb")` for Blender or a game engine, each placement a

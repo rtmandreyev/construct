@@ -525,7 +525,7 @@ class Build(unittest.TestCase):
             sty = struct.unpack("<%dH" % n, base64.b64decode(sd["sty"]))
             self.assertLess(max(sty), len(g["styles"]))                       # each vertex wears a style of the page
             self.assertEqual(len(base64.b64decode(sd["pos"])), 6 * n)
-            self.assertIn("S solid", html)
+            self.assertIn("O solid", html)
         bare = render.build_html(scene.compile_scene(base()))[0]                # no solids given: none, and no S
         self.assertIn('<script id="hologram-solid" type="application/json">null</script>', bare)
 

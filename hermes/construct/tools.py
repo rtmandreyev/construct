@@ -434,6 +434,7 @@ def publish(slug, build_id, out, scene, tail="", kind="construct", extra_card=No
     title = _title_of(page) or slug
     card = {"project": slug, "build": build_id, "title": title, "parts": info.get("parts"), "kind": kind,
             "counts": info.get("counts", {}), "size_m": info.get("dimensions_m"), "audit_ok": audit.get("ok"),
+            "warnings": [str(x.get("message", x) if isinstance(x, dict) else x)[:200] for x in (audit.get("warnings") or [])][:12],
             "created": runtime.stamp_iso(), "page": str(page), "scene": str(scene)}
     card.update(runtime.scene_stamp(scene))
     card.update(extra_card or {})

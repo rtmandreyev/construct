@@ -287,8 +287,10 @@ void main() {
 precision highp float;
 in vec3 vWorld; in vec3 vNrm; in vec3 vBase; in float vPhase;
 uniform vec3 uEye; uniform float uBuild; uniform float uClear; uniform vec2 uHi; uniform float uReveal; uniform float uFrom;
+uniform float uCut;   // a cutaway: surfaces nearer the eye than this are not drawn (a wall between you and the room)
 out vec4 o;
 void main() {
+  if (uCut > 0.0 && distance(vWorld, uEye) < uCut) discard;
   bool ghost = uClear > 1.5;   // what was built before a sub-assembly at the bench (uFrom): a faint ghost around it
   if (vPhase > uBuild + 0.0005 || (ghost ? vPhase >= uFrom - 1e-4 : vPhase < uFrom - 1e-4)) discard;
   float hi = (vPhase >= uHi.x && vPhase < uHi.y) ? 1.0 : 0.0;   // the pieces of the step being shown
@@ -932,6 +934,45 @@ void main() {
     for (const [a, b] of bs) { lo0 = Math.min(lo0, a[0]); hi0 = Math.max(hi0, b[0]); lo2 = Math.min(lo2, a[2]); hi2 = Math.max(hi2, b[2]); }
     return [(lo0 + hi0) / 2, (lo2 + hi2) / 2];
   };
+  Hologram.prototype.rayAt = function (px, py, cw, ch) {
+    const inv = this.lastVP && mat4inv(this.lastVP);
+    if (!inv) return null;
+    const nx = px / cw * 2 - 1, ny = 1 - py / ch * 2;
+    const un = (z) => { const o = [0, 0, 0, 0];
+      for (let i = 0; i < 4; i++) o[i] = inv[i] * nx + inv[4 + i] * ny + inv[8 + i] * z + inv[12 + i];
+      return [o[0] / o[3], o[1] / o[3], o[2] / o[3]]; };
+    const o = un(-1);
+    return { o, d: V.norm(V.sub(un(1), o)) };
+  };
+  // the nearest part under a point of the canvas: {id, point, radius} (double-click focuses the camera on it)
+  Hologram.prototype.pickPart = function (px, py, cw, ch) {
+    const ray = this.rayAt(px, py, cw, ch);
+    if (!ray) return null;
+    const memo = {};
+    let best = null;
+    for (const p of this.geo.parts) {
+      if (p.sky || (p.shape === "points" && (p.role === "ornament" || p.certainty === "decorative"))) continue;
+      const m = p.placement && this.arranging() ? this.placeMotion(p.placement, memo) : null;
+      let ro = ray.o, rd = ray.d;
+      if (m) {
+        const q = V.sub(ray.o, m.t), R = m.R;
+        ro = [0, 1, 2].map((j) => R[0][j] * q[0] + R[1][j] * q[1] + R[2][j] * q[2]);
+        rd = [0, 1, 2].map((j) => R[0][j] * ray.d[0] + R[1][j] * ray.d[1] + R[2][j] * ray.d[2]);
+      }
+      for (const b of p.instances) {
+        let t0 = 0, t1 = Infinity;
+        for (let k = 0; k < 3 && t0 <= t1; k++) {
+          if (Math.abs(rd[k]) < 1e-12) { if (ro[k] < b.min[k] || ro[k] > b.max[k]) t0 = Infinity; continue; }
+          let a = (b.min[k] - ro[k]) / rd[k], c = (b.max[k] - ro[k]) / rd[k];
+          if (a > c) { const x = a; a = c; c = x; }
+          t0 = Math.max(t0, a); t1 = Math.min(t1, c);
+        }
+        if (t0 <= t1 && t0 < Infinity && (!best || t0 < best.dist))
+          best = { id: p.id, dist: t0, point: V.add(ray.o, V.mul(ray.d, t0)), radius: 0.5 * Math.hypot(b.max[0] - b.min[0], b.max[1] - b.min[1], b.max[2] - b.min[2]) };
+      }
+    }
+    return best;
+  };
   // the placements under a point of the canvas (CSS pixels), nearest first: [{id, dist, point}]
   Hologram.prototype.pickPlacements = function (px, py, cw, ch) {
     if (!this.lastVP || !this.geo.world) return [];
@@ -1058,7 +1099,7 @@ void main() {
       dist = Math.max(dist, z + x / (tanH * margin), z + yy / (tanV * margin));
     }
     dist *= (fr.fit || 1) * (v.distance || 1) * (this.opt.zoom || 1);
-    return { target, yaw: v.yaw, pitch: v.pitch, dist, fov };
+    return { target, yaw: v.yaw, pitch: v.pitch, dist, fov, focus: 0.5 * Math.hypot(hi[0] - lo[0], hi[1] - lo[1], hi[2] - lo[2]) };
   };
   Hologram.prototype.cameraAt = function (t, base) {
     // the base camera, then the scene's tour (flights between views), then drift and breathing
@@ -1070,7 +1111,7 @@ void main() {
       const op = this.openTimes();
       tour = [{ view: "open", at: op.start, fly: Math.max(1.5, op.end - op.start) }];
     }
-    if (!reduced && !this.opt.freezeCamera) {
+    if (!reduced && !this.opt.freezeCamera && this.opt.tour !== false) {
       for (let i = 0; i < tour.length; i++) {
         const s = tour[i];
         if (t < s.at) break;
@@ -1205,6 +1246,8 @@ void main() {
       gl.uniform3fv(u.uLo, so.lo); gl.uniform3fv(u.uSpan, so.span);
       gl.uniform1f(u.uFly, this.opt.fly || 0); gl.uniform2fv(u.uHi, this.opt.highlight || [0, 0]);
       gl.uniform1f(u.uReveal, this.opt.reveal || 0.04); gl.uniform1f(u.uFrom, this.opt.from || 0);
+      // looking at a part inside (a room, a car in a garage): the surfaces in front of it are cut away
+      if (u.uCut) gl.uniform1f(u.uCut, cam.focus && cam.focus < this.R * 0.45 ? Math.max(0, cam.dist - cam.focus * 1.15) : 0);
       gl.bindVertexArray(so.vao);
       gl.depthFunc(gl.LEQUAL); gl.depthMask(true);
       gl.uniform1f(u.uClear, 0);
@@ -1314,6 +1357,9 @@ void main() {
       palette: q.get("palette"), identity: q.get("identity"),
       // camera=still: the view's own fitted framing, no tour, drift or breathing (the review's hero)
       freezeCamera: q.get("camera") === "still",
+      // a page shown inside an app (Hermes) keeps the camera where the person leaves it: no tour, no drift
+      tour: q.get("tour") === "1" ? true : q.get("tour") === "0" ? false : (() => { try { return window.self === window.top; } catch (e) { return false; } })(),
+      idleReturn: q.get("return") === "1",
     };
     const stage = document.getElementById("stage");
     const canvas = document.getElementById("holo");
@@ -1328,6 +1374,12 @@ void main() {
     };
     resize();
 
+    // the datasets a caption names: a world gathers many (each construct's), so two at most and a count of the rest
+    const dataLines = (list) => {
+      const cap = geo.world ? 2 : 6;
+      list.slice(0, cap).forEach((s) => caption.appendChild(el("div", "meta", "DATA: " + s.title)));
+      if (list.length > cap) caption.appendChild(el("div", "meta", "+" + (list.length - cap) + " MORE DATASETS (P SHOWS EACH PART'S)"));
+    };
     // caption: what this is and how much of it is evidence (never implies exact accuracy)
     const subj = geo.subject;
     const accuracy = { generic: "GENERIC RECONSTRUCTION", approximate: "APPROXIMATE RECONSTRUCTION", documented: "DOCUMENTED RECONSTRUCTION",
@@ -1345,7 +1397,7 @@ void main() {
       const ex = fact("terrain.vertical_exaggeration");
       caption.appendChild(el("div", "meta", [measured ? "MEASURED TERRAIN" : "SKETCHED TERRAIN", fact("terrain.scale"),
         ex && ex !== 1 ? "HEIGHTS ×" + ex : null].filter(Boolean).join(" · ")));
-      (geo.provenance.sources || []).filter((s) => s.kind === "dataset").forEach((s) => caption.appendChild(el("div", "meta", "DATA: " + s.title)));
+      dataLines((geo.provenance.sources || []).filter((s) => s.kind === "dataset"));
     }
     // a globe says the same of its coastlines
     const coast = !relief && geo.parts.find((p) => p.shape === "globe" && p.role === "identity");
@@ -1353,7 +1405,7 @@ void main() {
       const measured = coast.certainty === "verified" || coast.certainty === "user_supplied";
       const scale = ((geo.provenance.facts || []).find((f) => f.key === "globe.scale") || {}).value;
       caption.appendChild(el("div", "meta", [measured ? "MEASURED COASTLINES" : "SKETCHED COASTLINES", scale].filter(Boolean).join(" · ")));
-      (geo.provenance.sources || []).filter((s) => s.kind === "dataset").forEach((s) => caption.appendChild(el("div", "meta", "DATA: " + s.title)));
+      dataLines((geo.provenance.sources || []).filter((s) => s.kind === "dataset"));
     }
     // a note on how this construct records its evidence (an older construct, say), in the provenance view only
     const provNote = ((geo.provenance || {}).authoring || {}).provenance_note;
@@ -1440,8 +1492,8 @@ void main() {
       if (ids.length > 3) legend.appendChild(el("div", "src more", "+" + (ids.length - 3) + " MORE"));
     });
     overlay.appendChild(legend);
-    const help = el("div", "help", "drag orbit · wheel zoom · 1–6 views · R replay · M motion · P provenance" +
-      (holo.solid ? " · S solid" : "") + " · L labels" + (holo.art.length ? " · T text" : "") + " · space pause");
+    const help = el("div", "help", "drag orbit · wheel zoom · WASD fly · space/shift up/down · double-click focus · F skip · 1–6 views · R replay · P provenance" +
+      (holo.solid ? " · O solid" : "") + (geo.world ? " · G arrange" : "") + " · L labels" + (holo.art.length ? " · T text" : "") + " · . pause");
     overlay.appendChild(help);
     // a world: its views by name (the whole, each placement, the world's own), each a click away
     const viewsBar = el("div", "viewsbar");
@@ -1594,7 +1646,7 @@ void main() {
       arrangeBox.appendChild(el("div", "sel", r ? String(r.label || r.title || sel).toUpperCase() +
         (e ? " · MOVED " + Math.hypot(e.move[0], e.move[2]).toFixed(2) + " M" + (Math.abs(e.move[1]) > 5e-4 ? " · LIFTED " + e.move[1].toFixed(2) + " M" : "") +
              " · TURNED " + Math.round(e.turn) + "°" : "") : "CLICK A CONSTRUCT TO CHOOSE IT"));
-      arrangeBox.appendChild(el("div", "keys", "DRAG MOVE · SHIFT-DRAG OR Q E TURN · ARROWS NUDGE · PGUP PGDN LIFT · ⌫ PUT BACK · ESC LET GO · A DONE"));
+      arrangeBox.appendChild(el("div", "keys", "DRAG MOVE · SHIFT-DRAG OR Q E TURN · ARROWS NUDGE · PGUP PGDN LIFT · ⌫ PUT BACK · ESC LET GO · G DONE"));
       arrangeBox.style.display = arrangeOn() && opt.ui ? "block" : "none";
       if (typeof window.HOLO === "object" && window.HOLO && typeof window.HOLO.onArrange === "function") {
         try { window.HOLO.onArrange({ on: arrangeOn(), selected: sel || null, changes: ch }); } catch (err) { /* the listener's own problem */ }
@@ -1675,10 +1727,54 @@ void main() {
       if (!engaged) return;
       e.preventDefault();
       if (!holo.userCamera) holo.userCamera = holo.cameraAt(now(), holo.cameraFor(opt.view));
-      holo.userCamera.dist *= Math.exp(e.deltaY * 0.0012); lastInput = performance.now(); kick();
+      const c = holo.userCamera, nd = c.dist * Math.exp(e.deltaY * 0.0012), floor = Math.max(0.04, Math.min(holo.R, c.focus || holo.R) * 0.03);
+      if (e.deltaY < 0 && nd < floor) {   // as close as it goes: the camera walks on, through, into what is ahead
+        const y = c.yaw * Math.PI / 180, pt = c.pitch * Math.PI / 180;
+        const ahead = [-Math.sin(y) * Math.cos(pt), -Math.sin(pt), -Math.cos(y) * Math.cos(pt)];
+        c.target = V.add(c.target, V.mul(ahead, Math.max(c.dist - nd, floor * 0.25)));
+      } else c.dist = Math.max(floor, nd);
+      lastInput = performance.now(); kick();
     }, { passive: false });
+    // double-click: the camera turns about what was clicked, close enough to see it
+    canvas.addEventListener("dblclick", (e) => {
+      const r = canvas.getBoundingClientRect(), hit = holo.pickPart(e.clientX - r.left, e.clientY - r.top, r.width, r.height);
+      if (!hit) return;
+      if (!holo.userCamera) holo.userCamera = holo.cameraAt(now(), holo.cameraFor(opt.view));
+      const c = holo.userCamera;
+      c.target = hit.point; c.focus = Math.max(0.05, hit.radius); c.dist = Math.max(0.15, Math.min(c.dist, hit.radius * 3.2));
+      lastInput = performance.now(); kick();
+    });
+    // flying: W A S D across the ground, Space up, Shift or C down (held); Alt goes faster
+    const held = new Set();
+    const flyKey = (e) => (e.key === " " ? " " : e.key === "Shift" ? "shift" : e.key.length === 1 ? e.key.toLowerCase() : e.key);
+    const FLY = new Set(["w", "a", "s", "d", " ", "shift", "c"]);
+    let flyAt = 0;
+    const fly = (t) => {
+      if (!held.size || !holo.userCamera) { flyAt = 0; return; }
+      const dt = flyAt ? Math.min(0.1, (t - flyAt) / 1000) : 0; flyAt = t;
+      const c = holo.userCamera, y = c.yaw * Math.PI / 180;
+      const fwd = [-Math.sin(y), 0, -Math.cos(y)], right = [Math.cos(y), 0, -Math.sin(y)];
+      let m = [0, 0, 0];
+      if (held.has("w")) m = V.add(m, fwd); if (held.has("s")) m = V.sub(m, fwd);
+      if (held.has("d")) m = V.add(m, right); if (held.has("a")) m = V.sub(m, right);
+      if (held.has(" ")) m[1] += 1; if (held.has("shift") || held.has("c")) m[1] -= 1;
+      const speed = Math.max(0.5, Math.min(60, c.dist * 0.9)) * (held.has("Alt") ? 3 : 1);
+      c.target = V.add(c.target, V.mul(m, speed * dt));
+      lastInput = performance.now();
+    };
+    window.addEventListener("keyup", (e) => { held.delete(flyKey(e)); if (e.key === "Alt") held.delete("Alt"); });
+    window.addEventListener("blur", () => held.clear());
     window.addEventListener("keydown", (e) => {
-      if (geo.world && (e.key === "a" || e.key === "A") && !e.metaKey && !e.ctrlKey) { setArrange(!arrangeOn()); return; }
+      if (e.metaKey || e.ctrlKey) return;
+      const fk = flyKey(e);
+      // Shift is "down" unless it changes something else (a turn of one degree, a lift of half a metre)
+      const shiftFree = !(arrangeOn() && holo.arr.sel) && !drag;
+      if (FLY.has(fk) && (fk !== "shift" || shiftFree) && !(fk === "c" && arrangeOn() && holo.arr.sel)) {
+        if (!holo.userCamera) holo.userCamera = holo.cameraAt(now(), holo.cameraFor(opt.view));
+        held.add(fk); if (e.altKey) held.add("Alt");
+        e.preventDefault(); kick(); return;
+      }
+      if (geo.world && (e.key === "g" || e.key === "G")) { setArrange(!arrangeOn()); return; }
       if (arrangeOn()) {
         const sel = holo.arr.sel;
         if (e.key === "Escape") { holo.arr.sel = null; arrangeTell(); kick(); return; }
@@ -1704,23 +1800,27 @@ void main() {
       else if (e.key === "r" || e.key === "R") { clock0 = performance.now(); frozen = null; paused = false; holo.userCamera = null; }
       else if (e.key === "m" || e.key === "M") { opt.reduced = !opt.reduced; holo.opt.reduced = opt.reduced; holo.schedule = holo.buildSchedule(); }
       else if (e.key === "p" || e.key === "P") { opt.mode = opt.mode === "provenance" ? "light" : "provenance"; holo.opt.mode = opt.mode; setUi(); }
-      else if ((e.key === "s" || e.key === "S") && holo.solid) { opt.solid = !opt.solid; holo.opt.solid = opt.solid; setUi(); }
+      else if ((e.key === "o" || e.key === "O") && holo.solid) { opt.solid = !opt.solid; holo.opt.solid = opt.solid; setUi(); }
+      else if (e.key === "f" || e.key === "F") skip();
       else if (e.key === "l" || e.key === "L") { opt.labels = !opt.labels; }
       else if (e.key === "t" || e.key === "T") { opt.text = !opt.text; }
-      else if (e.key === " ") { if (paused) { clock0 += performance.now() - pausedStamp; paused = false; } else { pausedAt = now(); pausedStamp = performance.now(); paused = true; } e.preventDefault(); }
+      else if (e.key === ".") { if (paused) { clock0 += performance.now() - pausedStamp; paused = false; } else { pausedAt = now(); pausedStamp = performance.now(); paused = true; } e.preventDefault(); }
       else return;
       kick();
     });
     let pausedStamp = 0;
-    // after a while untouched the presentation returns to its own camera (not while a world is being arranged)
-    setInterval(() => { if (holo.userCamera && !arrangeOn() && performance.now() - lastInput > 25000) { holo.userCamera = null; kick(); } }, 2000);
+    // F: the assembly done at once, everything in place and open to look at
+    function skip() { const end = Math.max(holo.assemblyTimes().end, 0) + 0.05; frozen = null; paused = false; clock0 = performance.now() - end * 1000; kick(); }
+    // a kiosk (?return=1): after a while untouched the presentation returns to its own camera
+    if (opt.idleReturn) setInterval(() => { if (holo.userCamera && !arrangeOn() && performance.now() - lastInput > 25000) { holo.userCamera = null; kick(); } }, 2000);
 
     let raf = 0, lastFrame = 0, running = false;
     function loop(ts) {
       raf = 0;
       const interval = opt.fps > 0 ? 1000 / opt.fps : 0;
+      fly(ts);
       if (ts - lastFrame >= interval - 1) { lastFrame = ts; frame(); }
-      const still = frozen !== null || paused || (opt.reduced && !holo.userCamera);
+      const still = (frozen !== null || paused || (opt.reduced && !holo.userCamera)) && !held.size;
       if (!still && !document.hidden) raf = requestAnimationFrame(loop); else running = false;
     }
     function kick() { if (!raf) { running = true; raf = requestAnimationFrame(loop); } }
@@ -1744,6 +1844,23 @@ void main() {
         return c ? [(c[0] * 0.5 + 0.5) * r.width, (0.5 - c[1] * 0.5) * r.height] : null; },
       fitted(view) { const c = holo.cameraFor(view || "hero"); return { target: c.target, yaw: c.yaw, pitch: c.pitch, dist: c.dist }; },
       timeline() { const op = holo.openTimes(); return { assembly: holo.assemblyTimes(), open: op, settled: Math.max(holo.assemblyTimes().end, op.end), events: holo.schedule.slice(0, 24) }; },
+      // the page's actions by name, so a host's buttons never depend on which key does what
+      action(name) {
+        if (name === "solid") { if (!holo.solid) return false; opt.solid = !opt.solid; holo.opt.solid = opt.solid; setUi(); }
+        else if (name === "provenance") { opt.mode = opt.mode === "provenance" ? "light" : "provenance"; holo.opt.mode = opt.mode; setUi(); }
+        else if (name === "replay") { clock0 = performance.now(); frozen = null; paused = false; }
+        else if (name === "skip") skip();
+        else if (name === "home") { opt.view = "hero"; holo.userCamera = null; }
+        else return false;
+        kick(); return true;
+      },
+      views() {
+        const own = (geo.presentation.views || []).map((v) => ({ id: v.id, label: String(v.label || v.id) }));
+        const builtin = [["hero", "Whole"], ["front", "Front"], ["side", "Side"], ["back", "Back"], ["top", "Top"]].map(([id, label]) => ({ id, label }));
+        return geo.world ? [builtin[0]].concat(own) : builtin.concat(own.filter((v) => !builtin.some((b) => b.id === v.id)));
+      },
+      view(id) { if (!(id === "hero" || ["front", "side", "back", "top", "three-quarter"].includes(id) || (geo.presentation.views || []).some((v) => v.id === id))) return false;
+        opt.view = id; holo.userCamera = null; kick(); return true; },
       // a world arranged by hand: on/off, the changes so far, put everything back; onArrange hears every change
       arrange: {
         set(on) { setArrange(on); return arrangeOn(); },

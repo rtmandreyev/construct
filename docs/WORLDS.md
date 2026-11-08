@@ -61,7 +61,7 @@ reach 1,000 km from the origin, and an optional `origin: {lat, lon}` ties the wo
 
 - **The page** draws it like a construct.
   - The caption says how many constructs it holds.
-  - Provenance (P) shows every part's evidence across the world, and the solid view (S) works too.
+  - Provenance (P) shows every part's evidence across the world, and the solid view (O) works too, and cuts away what stands between you and the room a view looks into.
   - A view frames each placement.
   - Every joint opens: the viewer keeps joint and motion poses in a texture, so a world's dozens of doors, lids
     and hinges are not limited to a construct's sixteen.
@@ -96,8 +96,13 @@ turn it, the arrows to nudge, Page Up/Down to lift, Backspace to put it back. Wh
 its parts) goes with it, as a table carries what is on it. **Save** runs `/construct arrange <world> <changes>`
 in the gateway, with no model turn: the world is checked with the moves, written back as each placement was
 placed (absolute, or on its host), logged as the user's in `edits/log.jsonl` and rebuilt. `/construct undo <world>`
-steps back one saved change, the agent's or the user's. Any world page does the same with A; outside Hermes,
+steps back one saved change, the agent's or the user's. Any world page does the same with G; outside Hermes,
 `HOLO.arrange.changes()` gives the moves.
+
+**Quality.** A world asked for from a picture or a description is made to a masterpiece's standard: each missing
+construct in its own subagent, in masterpiece rounds with a fresh critic each round, and the whole world judged
+against the picture at the end. In Hermes this takes an orchestrator subagent per construct, so it needs
+`delegation.max_spawn_depth: 2` in Hermes's config. Say "fast" for one pass each, much quicker and cheaper.
 
 What a world places comes from three sources:
 - the user's own projects;

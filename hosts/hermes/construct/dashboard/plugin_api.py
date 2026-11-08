@@ -36,7 +36,7 @@ ITEM_TYPES = {".glb": "model/gltf-binary", ".obj": "text/plain", ".stl": "model/
               ".step": "model/step", ".stp": "model/step", ".fcstd": "application/zip", ".mp4": "video/mp4",
               ".jsonl": "application/json", ".json": "application/json", ".csv": "text/csv"}
 CARD_KEYS = ("title", "parts", "counts", "size_m", "audit_ok", "created", "page", "has_thumb", "kind", "preview", "job_id",
-             "ticks", "source", "placements", "scene")
+             "ticks", "source", "placements", "scene", "warnings")
 
 
 class NotFound(Exception):
@@ -161,7 +161,7 @@ def _group_of(card):
     """A construct's group on the Constructs page, from its scene's subject (cached by the scene's mtime)."""
     if card.get("kind") == "world":
         return "Worlds"
-    if card.get("kind") == "run":
+    if card.get("kind") == "run" or card.get("ticks") is not None or card.get("source") == "netlogo":
         return "Simulations"
     scene = card.get("scene")
     try:
@@ -175,7 +175,17 @@ def _group_of(card):
         cat = _subject_cache[key]
     except (OSError, TypeError):
         cat = ""
-    return GROUPS.get(cat, "Objects")
+    if cat in GROUPS:
+        return GROUPS[cat]
+    # no scene to ask (an older build): the title is a fair guess
+    title = str(card.get("title") or "").lower()
+    if re.search(r"\b(car|taxi|van|bus|truck|lorry|scooter|motorbike|bike|bicycle|samba|vespa|skyline|cruiser|tram|train|ship|boat|"
+                 r"aircraft|plane|rocket|tug|spacecraft)\b", title):
+        return "Vehicles"
+    if re.search(r"\b(house|townhouse|tower|tenement|villa|basilica|cathedral|church|chapel|duomo|castle|palace|mansion|shed|"
+                 r"building|hall|temple|bridge|lighthouse|street)\b", title):
+        return "Buildings"
+    return "Objects"
 
 
 def _parts_of_worlds(rows):
