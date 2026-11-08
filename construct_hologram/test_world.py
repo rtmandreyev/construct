@@ -474,6 +474,33 @@ class Viewer(unittest.TestCase):
         self.assertEqual(len(got["hits"]), 1)
         self.assertTrue(got["keys"])
 
+    @unittest.skipUnless(render.find_browser(), "no browser")
+    def test_a_van_roof_is_somewhere_to_stand(self):
+        # the Samba's drawn body lines have a box as big as the van: they must not stop the pointer as a wall
+        samba = str(Path(__file__).resolve().parent.parent / "examples" / "volkswagen-t1-samba" / "scene.json")
+        doc = place({"id": "van", "construct": samba}, {"id": "cd", "construct": lit("cd.json"), "at": [4, 0, 0]})
+        with tempfile.TemporaryDirectory() as d:
+            w = Path(d, "w.json")
+            w.write_text(json.dumps(doc))
+            studio.build(str(w), Path(d, "out"))
+            b = render.open_browser(render._url(Path(d, "out", "construct.html"), ui=1, t=60), 480, 300, 1.0)
+            try:
+                got = b.evaluate("""(() => {
+                  const h = HOLO.hologram, r = document.querySelector("canvas").getBoundingClientRect(), t = h.targetOf("van");
+                  HOLO.renderAt(60, { view: "van" });
+                  let top = -Infinity;
+                  for (const p of h.geo.parts) if (p.placement === "van" && p.shape !== "paths" && p.shape !== "points")
+                    for (const x of p.instances) top = Math.max(top, x.max[1]);
+                  HOLO.arrange.set(true);
+                  const at = HOLO.project([t.c[0], top, t.c[2]]);
+                  const s = h.surfaceAt(at[0], at[1], r.width, r.height, new Set(["cd"]));
+                  return { side: s.side, y: s.point[1], top };
+                })()""")
+            finally:
+                b.close()
+        self.assertFalse(got["side"])
+        self.assertGreater(got["y"], got["top"] - 0.3)   # on the roof, not the ground beside the van
+
 
 if __name__ == "__main__":
     unittest.main()

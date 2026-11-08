@@ -1044,8 +1044,9 @@ void main() {
         if (!(t0 <= t1) || t0 <= 0 || (best && t0 >= best.t)) continue;
         const dy = b.max[1] - b.min[1], flat = dy < 0.6 * Math.min(b.max[0] - b.min[0], b.max[2] - b.min[2]);
         const top = axis === 1 && rd[1] < 0 && flat;
-        // a thin board seen edge-on is not a wall; anything with height is
-        if (!top && dy < 0.05) continue;
+        // a thin board seen edge-on is not a wall; anything with height is. Drawn lines (paths) have no surface: a
+        // flat set of them may be stood on, but their box never stops the pointer as a wall (a van's body lines)
+        if (!top && (dy < 0.05 || p.shape === "paths")) continue;
         best = { t: t0, point: V.add(ray.o, V.mul(ray.d, t0)), side: !top };
       }
     }
