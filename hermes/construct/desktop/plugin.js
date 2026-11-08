@@ -3946,6 +3946,18 @@ function errorText(err) {
   return text.slice(0, 240)
 }
 
+function listError(err) {
+  // a page's list: a 404 means this profile's gateway has no Construct backend, not an expired build
+  const text = String((err && (err.message || err.detail)) || err || '')
+  if (/404|not found|unavailable|refused|enabled/i.test(text)) {
+    let profile = ''
+    try { profile = (sdk.host && sdk.host.state && sdk.host.state.profile && sdk.host.state.profile.get()) || '' } catch { profile = '' }
+    return 'Construct is not enabled' + (profile ? ' in the profile "' + profile + '"' : ' here') +
+      ': switch to a profile that has it, or enable the plugin there and restart the gateway.'
+  }
+  return errorText(err)
+}
+
 function plural(n, one) {
   return n === 1 ? '1 ' + one : String(n) + ' ' + one + 's'
 }
@@ -4205,9 +4217,35 @@ async function runCommand(sessionId, command) {
       sid = null
     }
   }
-  if (!sid || !host || typeof host.request !== 'function') throw new Error('open a chat first: the change is saved through it')
-  const res = await host.request('slash.exec', { session_id: sid, command })
-  return String((res && res.output) || '')
+  if (!host || typeof host.request !== 'function') throw new Error('the Hermes host is not available')
+  if (sid) {
+    const res = await host.request('slash.exec', { session_id: sid, command })
+    return String((res && res.output) || '')
+  }
+  // No chat open (the Constructs page on its own): a plugin command needs a live session but no model turn,
+  // so the page keeps one quiet session of its own per profile and reuses it.
+  for (let attempt = 0; attempt < 2; attempt++) {
+    const id = await pageSession(host, attempt > 0)
+    try {
+      const res = await host.request('slash.exec', { session_id: id, command })
+      return String((res && res.output) || '')
+    } catch (err) {
+      if (attempt > 0 || !/session not found|4001/i.test(String((err && err.message) || err))) throw err
+    }
+  }
+  return ''
+}
+
+const PAGE_SESSIONS = {}
+async function pageSession(host, fresh) {
+  let profile = ''
+  try { profile = (host.state && host.state.profile && host.state.profile.get()) || '' } catch { profile = '' }
+  if (!fresh && PAGE_SESSIONS[profile]) return PAGE_SESSIONS[profile]
+  const made = await host.request('session.create', profile ? { profile, title: 'Construct page' } : { title: 'Construct page' })
+  const id = made && made.session_id
+  if (!id) throw new Error('could not open a session for the change')
+  PAGE_SESSIONS[profile] = id
+  return id
 }
 
 async function gunzipText(b64) {
@@ -5326,7 +5364,7 @@ function Projects({ focus }) {
           more()
         }
       },
-      err => setError(errorText(err))
+      err => setError(listError(err))
     )
   }, [])
   useEffect(() => {
@@ -5405,7 +5443,7 @@ function Examples({ onOpen }) {
   const [rows, setRows] = useState(null)
   const [error, setError] = useState('')
   useEffect(() => {
-    rest('/examples').then(r => setRows(Array.isArray(r && r.examples) ? r.examples : []), err => setError(errorText(err)))
+    rest('/examples').then(r => setRows(Array.isArray(r && r.examples) ? r.examples : []), err => setError(listError(err)))
   }, [])
   if (error) return jsx('div', { style: S.text, children: error })
   if (!rows) return jsx('div', { style: S.meta, children: 'Loading…' })
@@ -5457,11 +5495,20 @@ function Worlds({ focus, drop }) {
   const [error, setError] = useState('')
   const [open, setOpen] = useState(focus || null)
   const [opening, setOpening] = useState(null)   // a shipped world being made yours: {name, project, build, job, note}
+  const [renaming, setRenaming] = useState(null)
   const load = useCallback(() => {
     rest('/projects').then(r => setMine((Array.isArray(r && r.projects) ? r.projects : []).filter(p => p.world && SLUG.test(String(p.project)))),
-      err => setError(errorText(err)))
-    rest('/example-worlds').then(r => setShipped(Array.isArray(r && r.worlds) ? r.worlds : []), err => setError(errorText(err)))
+      err => setError(listError(err)))
+    rest('/example-worlds').then(r => setShipped(Array.isArray(r && r.worlds) ? r.worlds : []), err => setError(listError(err)))
   }, [])
+  const tidy = async (project, verb, title) => {   // the same marks as the Constructs page: a favourite, a name, the archive
+    setRenaming(null)
+    try {
+      const out = await runCommand(null, 'construct ' + verb + ' ' + project + (verb === 'rename' ? ' ' + String(title || '').trim().slice(0, 120) : ''))
+      notify('info', out.slice(0, 160))
+    } catch (err) { notify('info', errorText(err)) }
+    load()
+  }
   useEffect(() => {
     load()
     if (!CTX) return undefined
@@ -5518,6 +5565,27 @@ function Worlds({ focus, drop }) {
     ? 'Show me the example world "' + w.title + '": make it with construct_world (op new, example ' + w.name + '), put it in your reply, then tell me in a few lines what it holds and how each construct is known.'
     : 'Start a world of my own from the example world ' + w.name + ' ("' + w.title + '") with construct_world (op new, example ' + w.name + '), show it, then ask me what to place, move or remove.')
   const head = (text) => jsx('div', { style: Object.assign({}, S.meta, { textTransform: 'uppercase', letterSpacing: '.08em', margin: '4px 0 8px' }), children: text })
+  // favourites first; archived worlds (scratch work, old tries) folded away, nothing deleted
+  const kept = mine.filter(r => !r.archived).sort((a, b) => (b.favourite ? 1 : 0) - (a.favourite ? 1 : 0))
+  const put = mine.filter(r => r.archived)
+  const worldTile = r => {
+    const n = r.newest
+    return jsx(Tile, {
+      title: (r.favourite ? '★ ' : '') + r.title, onOpen: () => setOpen(r.project),
+      image: jsx(Img, { load: n && n.has_thumb ? () => rest('/thumb?' + query({ project: r.project, build: n.build })) : null, deps: [r.project, n && n.build] }),
+      lines: [[n && n.placements ? plural(n.placements, 'construct') : null, n && n.parts ? plural(n.parts, 'part') : null].filter(Boolean).join(' · '),
+        'last ' + when(r.updated) + ' · ' + r.project],
+      actions: renaming === r.project ? [jsx('input', { key: 'n', autoFocus: true, defaultValue: r.title,
+          onKeyDown: e => { if (e.key === 'Enter') tidy(r.project, 'rename', e.target.value); if (e.key === 'Escape') setRenaming(null) },
+          style: { font: 'inherit', fontSize: 12, padding: '3px 6px', borderRadius: 6, border: '1px solid var(--ui-stroke-secondary)', background: 'transparent',
+            color: 'var(--ui-text-primary)', width: '100%' } })]
+        : [jsx(Button, { label: r.favourite ? 'Unstar' : 'Star', icon: r.favourite ? 'star-full' : 'star-empty', title: 'Favourites come first',
+            onClick: () => tidy(r.project, r.favourite ? 'unfavourite' : 'favourite') }, 'f'),
+          jsx(Button, { label: 'Rename', icon: 'edit', onClick: () => setRenaming(r.project) }, 'r'),
+          jsx(Button, { label: r.archived ? 'Restore' : 'Archive', icon: r.archived ? 'reply' : 'archive', title: r.archived ? 'Back on the page' : 'Out of the way (nothing is deleted)',
+            onClick: () => tidy(r.project, r.archived ? 'unarchive' : 'archive') }, 'a')]
+    }, r.project)
+  }
   return jsxs('div', {
     children: [
       jsx('div', { style: Object.assign({}, S.text, { marginBottom: 12 }), children: 'A world places whole constructs together: your things in your house, a street of buildings, a game map. Ask Hermes to place them, or open a world and arrange it yourself: Arrange, then drag.' }),
@@ -5525,16 +5593,9 @@ function Worlds({ focus, drop }) {
         jsx(Button, { label: 'Make a world', icon: 'add', onClick: () => startChat('I want to make a world with Construct. Ask me what it should hold (my own constructs, the ones the plugin ships, the gallery) and where; then make it with construct_world, check it and show it.') }),
         jsx(Button, { label: 'A world from a picture', icon: 'file-media', onClick: () => startChat('I will attach a picture of a place. Make a Construct world from it: say what is in the picture, use the constructs that exist (mine, the shipped ones, the gallery), make the ones that are missing, place them at real sizes with construct_world and show the world.') })] }),
       head('Your worlds'),
-      mine.length ? jsx('div', { style: GRID, children: mine.map(r => {
-        const n = r.newest
-        return jsx(Tile, {
-          title: r.title, onOpen: () => setOpen(r.project),
-          image: jsx(Img, { load: n && n.has_thumb ? () => rest('/thumb?' + query({ project: r.project, build: n.build })) : null, deps: [r.project, n && n.build] }),
-          lines: [[n && n.placements ? plural(n.placements, 'construct') : null, n && n.parts ? plural(n.parts, 'part') : null].filter(Boolean).join(' · '),
-            'last ' + when(r.updated) + ' · ' + r.project],
-          actions: [jsx(Button, { label: 'Open', icon: 'eye', onClick: () => setOpen(r.project) }, 'o')]
-        }, r.project)
-      }) }) : jsx('div', { style: Object.assign({}, S.meta, { marginBottom: 8 }), children: 'None yet: start from one below, or make one.' }),
+      kept.length ? jsx('div', { style: GRID, children: kept.map(worldTile) })
+        : jsx('div', { style: Object.assign({}, S.meta, { marginBottom: 8 }), children: 'None yet: start from one below, or make one.' }),
+      put.length ? jsx(Folded, { title: 'Archived (' + put.length + ')', children: jsx('div', { style: GRID, children: put.map(worldTile) }) }, 'archived') : null,
       jsx('div', { style: { height: 18 } }),
       head('Worlds to start from'),
       jsx('div', { style: GRID, children: shipped.map(w => jsx(Tile, {
@@ -5553,7 +5614,7 @@ function Learn() {
   const [rows, setRows] = useState(null)
   const [error, setError] = useState('')
   useEffect(() => {
-    rest('/tutorials').then(r => setRows(Array.isArray(r && r.tutorials) ? r.tutorials : []), err => setError(errorText(err)))
+    rest('/tutorials').then(r => setRows(Array.isArray(r && r.tutorials) ? r.tutorials : []), err => setError(listError(err)))
   }, [])
   if (error) return jsx('div', { style: S.text, children: error })
   if (!rows) return jsx('div', { style: S.meta, children: 'Loading…' })

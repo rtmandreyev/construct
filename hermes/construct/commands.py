@@ -185,7 +185,11 @@ def handle(raw_args="", event=None, **kwargs):
         if verb in ("favourite", "unfavourite", "archive", "unarchive", "rename"):   # tidying the Constructs page
             if len(words) < 2:
                 return "Usage: /construct %s <project>%s" % (verb, " <title>" if verb == "rename" else "")
-            folder = runtime.project_dir(words[1].lower())
+            slug = words[1].lower()
+            folder = runtime.projects_root() / slug
+            if runtime.SLUG.match(slug) and not folder.is_dir() and (runtime.shown_root() / slug).is_dir():
+                folder.mkdir(parents=True)   # a build still shown whose project was removed: its marks need a home
+            folder = runtime.project_dir(slug)
             info = json.loads((folder / "project.json").read_text(encoding="utf-8")) if (folder / "project.json").is_file() else {}
             if verb == "rename":
                 title = str(raw_args or "").strip().split(None, 2)

@@ -276,6 +276,11 @@ class Plugin(unittest.TestCase):
         self.assertIn("['worlds', 'Worlds', 'globe']", js)   # the Worlds tab
         # a saved arrangement is the plugin's own command, run in the gateway: never a model turn, never a REST write
         self.assertIn("host.request('slash.exec', { session_id: sid, command })", js)
+        # with no chat open the page keeps one quiet session of its own (no model turn) rather than refusing
+        self.assertIn("host.request('session.create', profile ? { profile, title: 'Construct page' }", js)
+        self.assertNotIn("open a chat first", js)
+        # the Worlds page tidies like the Constructs page: favourites first, scratch worlds archived (folded, kept)
+        self.assertIn("const put = mine.filter(r => r.archived)", js)
         self.assertIn("'construct arrange ' + project + ' ' + JSON.stringify(arr.changes)", js)
         self.assertIn('d.type === "construct:arrange"', loader)
         self.assertIn('type: "construct:arranged"', loader)
@@ -633,6 +638,10 @@ class Plugin(unittest.TestCase):
         shutil.copy(self.data / "projects" / opened / "scene.json", copy / "scene.json")
         rows = {r["project"]: r for r in self.api.projects(self.data)}
         self.assertEqual(rows[opened]["in_world"], "My shed")
+        # a build still shown after its project was removed can still be starred (its marks get a folder of their own)
+        shutil.rmtree(self.data / "projects" / opened)
+        self.assertIn("a favourite", handle("favourite %s" % opened))
+        self.assertTrue({r["project"]: r for r in self.api.projects(self.data)}[opened]["favourite"])
         self.assertEqual(rows[sw]["group"], "Worlds")
         worlds = {r["title"] for r in rows.values() if r.get("world")}
         self.assertTrue(all(r["in_world"] in worlds for r in rows.values() if r.get("in_world")))   # folded under a real world
