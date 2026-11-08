@@ -18,13 +18,13 @@ Construct's own engine, bundled as Python source; nothing is downloaded.
 
 ## What it does
 
-Twelve tools (toolset `construct`), a `/construct` command, and the `construct:construct` skill that teaches Hermes
+Thirteen tools (toolset `construct`), a `/construct` command, and the `construct:construct` skill that teaches Hermes
 the craft: the fast and masterpiece modes, research and provenance rules, review as an art director, an
 independent critic run as a fresh subagent through Hermes's delegation, and sixteen tutorials.
 
 | tool | what it does |
 |---|---|
-| `construct_start` | a project from a finished construct the plugin ships (sixteen, from a Land Cruiser to the Sainte-Chapelle), an archetype, a category starter or a scene you name; with no arguments, the menu |
+| `construct_start` | a project from a finished construct the plugin ships (twenty-three, from a Land Cruiser to the Sainte-Chapelle), an archetype, a category starter or a scene you name; with no arguments, the menu |
 | `construct_edit` | change a scene by part id (move, rotate, resize, set fields, add or remove parts, facts and sources, certainty): each step validated, written only when nothing breaks, with the diff |
 | `construct_check` | validate, compile and audit: every problem with its JSON path and a fix hint; `fit` finds solids that poke through or hide |
 | `construct_inspect` | what the construct's own record says is known: parts by certainty, dimensions, facts and sources, joints, the critic's verdict, and its size as a body and overall (with what stands out) |
@@ -35,6 +35,7 @@ independent critic run as a fresh subagent through Hermes's delegation, and sixt
 | `construct_job` | progress and results of background work; `wait_seconds` waits for it |
 | `construct_netlogo_run` | a NetLogo model run headless (yours, or one from your installed Models Library), drawn as a construct; N seeded runs compared |
 | `construct_netlogo_draw` | recorded NetLogo runs drawn or compared, with no NetLogo needed |
+| `construct_world` | whole constructs placed together in one world (a house, its furniture, cars under it, a planet in the sky; a street, a city), checked for overlaps, collisions and doors that cannot open, and shown live; three worlds ship to start from ([Worlds](https://github.com/rtmandreyev/construct/blob/main/docs/WORLDS.md)) |
 | `construct_command` | the rest of Construct's command line (critique, rounds, tracing, lofting, likeness, terrain, globe, model kits, NetLogo plates and films), guarded |
 
 Long work never runs into Hermes's tool deadline: a film, a NetLogo run, or a build, review or export that takes
@@ -98,7 +99,11 @@ Hermes's approval prompt (scheduled runs are then refused rather than left waiti
   Construct child and every program it starts get a minimal environment: what a program needs to start and keep its
   files (PATH, HOME, the temporary folder, the locale; on Windows its system folders), Construct's own `CONSTRUCT_*`
   settings for the child, and nothing else, so provider keys and tokens never reach them.
-- **No network.** Nothing is fetched or sent; the subcommands and options that call a model over the network
+- **Network: one read-only fetch, and nothing sent.** When a world places a gallery construct the plugin does not
+  ship (`construct_world` with a gallery name), its scene and material map, JSON data of at most 8 MiB each, are
+  fetched once from this release's tag on GitHub (`raw.githubusercontent.com/rtmandreyev/construct/v<version>/...`)
+  into the plugin's data folder, and checked like any scene before use. Nothing else is fetched, and nothing is
+  ever sent. The subcommands and options that call a model over the network
   (`author`, `trace-image`, `rounds run`, `--base-url`, `--key-env` and the `--critic-*` options) are refused, and the
   critic runs as a Hermes subagent instead. `construct_command` reads a command line as Construct's own parser does
   (an option only by its whole name, never a prefix) before deciding, and writes only inside the project and the

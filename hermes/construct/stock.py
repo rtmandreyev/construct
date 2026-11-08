@@ -165,8 +165,8 @@ CURL_ENV = ("PATH", "HOME", "TMPDIR", "TEMP", "TMP", "SYSTEMROOT", "SSL_CERT_FIL
 
 
 def fetch_gallery(name, dest, version, index):
-    """Fetch one gallery construct's scene (and its material map) into `dest`, from the release tag of this
-    version, else from main. Returns {"scene", "materials"} paths. Raises OSError/ValueError."""
+    """Fetch one gallery construct's scene (and its material map) into `dest`, from this version's release tag (JSON
+    data only, at most 8 MiB a file). Returns {"scene", "materials"} paths. Raises OSError/ValueError."""
     import urllib.request
     row = next((r for r in index.get("constructs", []) if r["name"] == name), None)
     if row is None:
@@ -179,7 +179,7 @@ def fetch_gallery(name, dest, version, index):
         if not rel:
             continue
         data, last = None, None
-        for ref in ("v" + version, "main"):
+        for ref in ("v" + version,):   # this release's tag only: what was reviewed, never a moving branch
             try:
                 req = urllib.request.Request(GALLERY_RAW % (ref, rel), headers={"User-Agent": "construct-hermes-plugin"})
                 with urllib.request.urlopen(req, timeout=30, context=_tls()) as r:
