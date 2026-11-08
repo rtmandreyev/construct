@@ -498,6 +498,25 @@ class Plugin(unittest.TestCase):
         self.assertIn("error", bad)   # what holds the others goes last
         r = self.until_done(self.call("construct_world", {"op": "remove", "world": w, "id": "braun-sk4-knob"}))
         self.assertEqual([p["id"] for p in r["world"]["placements"]], ["garden-shed"])
+        # several at once: one check, one rebuild
+        top = lst["placements"][0]["id"]
+        r = self.until_done(self.call("construct_world", {"op": "place", "world": w, "placements": [
+            {"construct": "braun-sk4-knob", "id": "knob-a", "on": top, "at": [-1, 0, 0]},
+            {"construct": "braun-sk4-knob", "id": "knob-b", "on": top, "at": [1, 0, 0]}]}))
+        self.assertTrue(r.get("success"), r)
+        self.assertEqual([p["id"] for p in r["world"]["placements"]], ["garden-shed", "knob-a", "knob-b"])
+        self.assertIn("error", self.call("construct_world", {"op": "place", "world": w, "placements": []}))
+        # a named view, a button on the page
+        r = self.until_done(self.call("construct_world", {"op": "view", "world": w, "id": "knobs", "label": "Knobs",
+                                                          "target": "knob-a", "yaw": 30, "distance": 0.8}))
+        self.assertTrue(r.get("success"), r)
+        world = json.loads((self.data / "projects" / w / "world.json").read_text())
+        self.assertEqual(world["presentation"]["views"][0]["id"], "knobs")
+        self.assertIn("error", self.call("construct_world", {"op": "view", "world": w, "id": "x", "target": "nowhere"}))
+        # construct_check reads a world as a world
+        c = self.until_done(self.call("construct_check", {"project": w}))
+        self.assertTrue(c.get("ok"), c)
+        self.assertEqual(c["stats"]["placements"], 3)
         e = self.until_done(self.call("construct_export", {"project": w, "format": "glb"}))
         self.assertTrue(e.get("success"), e)
 

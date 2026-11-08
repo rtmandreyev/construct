@@ -1293,6 +1293,24 @@ void main() {
     const help = el("div", "help", "drag orbit · wheel zoom · 1–6 views · R replay · M motion · P provenance" +
       (holo.solid ? " · S solid" : "") + " · L labels" + (holo.art.length ? " · T text" : "") + " · space pause");
     overlay.appendChild(help);
+    // a world: its views by name (the whole, each placement, the world's own), each a click away
+    const viewsBar = el("div", "viewsbar");
+    if (geo.world && (geo.presentation.views || []).length) {
+      viewsBar.setAttribute("role", "toolbar");
+      viewsBar.setAttribute("aria-label", "Views of " + geo.title);
+      const pick = (id, b) => {
+        opt.view = id; holo.userCamera = null;
+        [...viewsBar.children].forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+        kick();
+      };
+      [{ id: "hero", label: "Whole" }].concat(geo.presentation.views).forEach((v) => {
+        const b = el("button", "", String(v.label || v.id).toUpperCase());
+        b.type = "button"; b.setAttribute("aria-pressed", String(v.id === opt.view));
+        b.addEventListener("click", () => pick(v.id, b));
+        viewsBar.appendChild(b);
+      });
+      overlay.appendChild(viewsBar);
+    }
     const labels = el("div", "labels"); overlay.appendChild(labels);
     const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg"); svg.setAttribute("class", "leaders"); overlay.appendChild(svg);
     const sheetCaps = el("div", "sheetcaps"); overlay.appendChild(sheetCaps);
@@ -1303,6 +1321,7 @@ void main() {
       document.body.classList.toggle("provenance", opt.mode === "provenance");
       document.body.classList.toggle("solid", !!(opt.solid && holo.solid));
       help.style.display = opt.ui && !opt.capture ? "block" : "none";
+      viewsBar.style.display = opt.ui && !opt.capture ? "flex" : "none";
     };
     setUi();
 

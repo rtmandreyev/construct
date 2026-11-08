@@ -154,6 +154,32 @@ class Compile(unittest.TestCase):
         self.assertLess(abs(math.degrees(2 * math.atan(max(top[k] - lo[k] for k in range(3)) / 2 / dist))
                             - rec["angular_deg"]) / rec["angular_deg"], 0.6)
 
+    def test_sky_of_sizes_it_by_one_part(self):
+        """diameter_m is the disc's (a planet's globe), so the whole is larger by what surrounds it (rings, moons)."""
+        sky = {"diameter_m": 3.4748e6, "distance_m": 3.844e8, "elevation": 30}
+        whole = world.compile_world(place({"id": "here", "construct": lit("book.json")},
+                                          {"id": "moon", "construct": lit("cd.json"), "sky": dict(sky)}))
+        by_disc = world.compile_world(place({"id": "here", "construct": lit("book.json")},
+                                            {"id": "moon", "construct": lit("cd.json"), "sky": dict(sky, of="disc")}))
+        size = lambda g, pid: max(max(b["max"][k] for b in p["instances"]) - min(b["min"][k] for b in p["instances"])
+                                  for p in g["parts"] if p["id"] == pid for k in range(3))
+        self.assertAlmostEqual(size(by_disc, "moon/disc") / size(whole, "moon/disc"),
+                               size(whole, "moon/tray") / size(whole, "moon/disc"), delta=0.35)
+        self.assertGreater(size(by_disc, "moon/disc"), size(whole, "moon/disc"))
+        with self.assertRaises(world.WorldError):
+            world.compile_world(place({"id": "here", "construct": lit("book.json")},
+                                      {"id": "moon", "construct": lit("cd.json"), "sky": dict(sky, of="nothing")}))
+
+    def test_views_are_checked_and_shown(self):
+        good = place({"id": "a", "construct": lit("book.json")}, {"id": "b", "construct": lit("cd.json"), "at": [1, 0, 0]},
+                     presentation={"views": [{"id": "desk", "label": "Desk", "target": "a", "yaw": 20, "distance": 0.8}]})
+        self.assertEqual(world.validate(good), [])
+        views = world.compile_world(good)["presentation"]["views"]
+        self.assertEqual([v["id"] for v in views], ["desk", "a", "b"])   # the world's own, then each placement's
+        for bad in ({"id": "x", "target": "nowhere"}, {"id": "Bad Id"}, {"id": "x", "pitch": 120}, {"id": "x", "zoom": 2}):
+            doc = place({"id": "a", "construct": lit("book.json")}, presentation={"views": [bad]})
+            self.assertTrue(world.validate(doc), bad)
+
     def test_worlds_inside_worlds(self):
         with tempfile.TemporaryDirectory() as d:
             inner = place({"id": "disc", "construct": lit("cd.json")}, id="inner", title="Inner")
@@ -180,6 +206,27 @@ class Audit(unittest.TestCase):
         self.assertIn(("overlap", "a"), codes)
         self.assertIn(("unsupported", "c"), codes)
         self.assertIn(("scaled", "d"), codes)
+
+    def test_a_thing_must_clear_the_parts_of_what_it_stands_in(self):
+        """On a whole placement it shares that placement's space by design, but not its parts' (a car and a column)."""
+        top = Compile._top_part(self)
+        clear = place({"id": "a", "construct": lit("book.json")}, {"id": "c", "construct": lit("cd.json"), "on": "a/" + top})
+        self.assertFalse([w for w in world.audit(clear, world.compile_world(clear))["warnings"] if w["code"] == "collides"])
+        inside = place({"id": "a", "construct": lit("book.json")}, {"id": "c", "construct": lit("book.json"), "on": "a"})
+        hits = [w for w in world.audit(inside, world.compile_world(inside))["warnings"] if w["code"] == "collides"]
+        self.assertEqual([w["part"] for w in hits], ["c"])
+
+    def test_check_reads_a_world(self):
+        with tempfile.TemporaryDirectory() as d:
+            w = Path(d, "w.json")
+            w.write_text(json.dumps(place({"id": "a", "construct": lit("book.json")},
+                                          {"id": "c", "construct": lit("book.json"), "on": "a"})))
+            rep = world.check(str(w))
+            self.assertTrue(rep["ok"] and rep["world"])
+            self.assertEqual([d["code"] for d in rep["diagnostics"]], ["collides"])
+            self.assertEqual(rep["stats"]["placements"], 2)
+            w.write_text(json.dumps(place({"id": "a", "construct": "no-such-construct.json"})))
+            self.assertFalse(world.check(str(w))["ok"])
 
     def test_floating_and_on_are_not_unsupported(self):
         doc = place({"id": "a", "construct": lit("book.json")},
@@ -254,3 +301,29 @@ class Viewer(unittest.TestCase):
                 b.close()
             self.assertGreater(ok[0], 16)
             self.assertEqual(ok[2], ok[0])
+
+    @unittest.skipUnless(render.find_browser(), "no browser")
+    def test_a_worlds_views_are_buttons(self):
+        doc = place({"id": "a", "construct": lit("book.json")}, {"id": "b", "construct": lit("cd.json"), "at": [1, 0, 0]},
+                    presentation={"views": [{"id": "desk", "label": "Desk", "target": "a"}]})
+        with tempfile.TemporaryDirectory() as d:
+            w = Path(d, "w.json")
+            w.write_text(json.dumps(doc))
+            studio.build(str(w), Path(d, "out"))
+            b = render.open_browser(render._url(Path(d, "out", "construct.html"), ui=1), 480, 300, 1.0)
+            try:
+                labels = b.evaluate("[...document.querySelectorAll('.viewsbar button')].map((x) => x.textContent)")
+                pressed = b.evaluate("(() => { const x = [...document.querySelectorAll('.viewsbar button')][1]; x.click();"
+                                     " return [...document.querySelectorAll('.viewsbar button')]"
+                                     ".map((y) => y.getAttribute('aria-pressed')); })()")
+                errs = b.evaluate("document.body.getAttribute('data-error')")
+            finally:
+                b.close()
+        self.assertEqual(labels[:2], ["WHOLE", "DESK"])
+        self.assertEqual(len(labels), 4)   # the whole, the world's own, one for each placement
+        self.assertEqual(pressed[:2], ["false", "true"])
+        self.assertIsNone(errs)
+
+
+if __name__ == "__main__":
+    unittest.main()

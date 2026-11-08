@@ -185,6 +185,35 @@ background at about 1-2 frames a second (about an hour for four minutes of music
 follow it with `construct_job`. When it is done, look at a few frames if you can (the build should visibly move on
 with the music and end whole), report its length, camera and reactivity, and put its MEDIA line in your reply.
 
+## Worlds (only when asked)
+
+A world places whole constructs together with `construct_world`; it never merges them into one scene.
+1. **Start from what holds the rest** (`op: new`, `construct`: the house, the street, the plinth). Its result lists
+   `surfaces`: the parts things can stand on, with their tops' heights and sizes.
+2. **Place everything at once** (`op: place` with `placements: [...]`), each on the part it rests on
+   (`on: "villa/living-floor-east"`), at real size. `at` gives x and z on that part; `yaw` turns it.
+3. **Read the result's warnings and fix each with `op: move`:**
+   - `overlap`: two placements share space;
+   - `collides`: a placement runs into the construct it stands in (a car into a column); the check is per part, so
+     clear ones pass;
+   - `unsupported`: it stands on nothing.
+
+   `construct_check` gives the same report. No verification script is needed.
+4. **Something has nothing to stand on?** If a table or a stand is missing, make it a small construct of its own
+   (`construct_start`, `construct_edit`), place it, then place things on it. Never edit the house to add one.
+5. **A planet or the Moon** goes in the sky: `sky: {diameter_m, distance_m, of: "globe"}`. `of` names the planet's
+   own part, so its rings and moons follow at the same scale.
+6. **Name the views the user will want** (`op: view`: a room is its floor part as `target`, a group is its main
+   placement). They are buttons on the page. Never patch the built page.
+7. Show the last result's MEDIA line.
+
+**A world from a description or pictures.**
+1. List what exists: the user's projects, `construct_start`'s list, and the gallery (`construct_world` places a
+   gallery construct by name).
+2. Make each missing construct with the normal loop. Several can be made at once by delegated subagents, one
+   construct each, with the evidence that concerns it.
+3. Place them as above. Say which placements are made, which came from the gallery, and what was left out.
+
 ## NetLogo (only when asked)
 
 - To run or see a NetLogo model (the user's .nlogox, or a library model by name): `construct_netlogo_run`. Find

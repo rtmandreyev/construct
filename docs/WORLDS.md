@@ -12,13 +12,15 @@ budgets and checks, and a world has its own, for many constructs at once.
    {"id": "villa", "construct": "villa-savoye"},
    {"id": "eames", "construct": "eames-lounge-chair", "on": "villa/living-floor-east", "at": [3.2, 0, -1.5], "yaw": 30},
    {"id": "fj62", "construct": "toyota-land-cruiser-fj62", "on": "villa", "at": [4, 0, 6], "yaw": 90},
-   {"id": "saturn", "construct": "saturn", "sky": {"diameter_m": 1.165e8, "distance_m": 3.844e8,
-                                                   "azimuth": 120, "elevation": 25}}]}
+   {"id": "saturn", "construct": "saturn", "sky": {"diameter_m": 1.20536e8, "of": "globe", "distance_m": 3.844e8,
+                                                   "azimuth": 120, "elevation": 25}}],
+ "presentation": {"views": [{"id": "salon", "label": "Salon", "target": "villa/living-floor-east", "pitch": 30}]}}
 ```
 
 Build and export it as you would a construct:
 
 ```sh
+python3 construct_hologram/cli.py check my-villa.json                           # what overlaps, collides or floats
 python3 construct_hologram/cli.py build my-villa.json --out out/my-villa        # the page, live, every placement whole
 python3 construct_hologram/cli.py export my-villa.json --out my-villa.glb --pieces glued   # one file for Godot or Blender
 ```
@@ -33,8 +35,12 @@ python3 construct_hologram/cli.py export my-villa.json --out my-villa.glb --piec
 | `on` | an earlier placement (it stands on that placement's ground) or `placement/part-id` (on that part's top: a floor, a deck, a table) |
 | `scale` | 1 is real size. Anything else is disclosed by the world's audit and wherever it is shown |
 | `floating` | it's meant to hover: a ship, a hanging lamp |
-| `sky` | `{diameter_m, distance_m, azimuth, elevation}`: far away, at its real angular size (a planet, a moon). Never what a view fits |
+| `sky` | `{diameter_m, distance_m, of, azimuth, elevation}`: far away, at its real angular size (a planet, a moon). `of` names the part `diameter_m` belongs to (Saturn's `globe`), so its rings and moons come at the same scale; without it, `diameter_m` is the whole construct's size. Never what a view fits |
 | `note` | why it is there |
+
+A world's `presentation.views` name its own views (`{id, label, target, yaw, pitch, distance}`; `target` is a
+placement or `placement/part-id`, such as a room's floor). The page shows them as buttons, after one for the whole
+world and before one for each placement.
 
 The same construct placed many times is compiled once. A world can place worlds, up to eight levels deep: a city
 holds districts, a district holds buildings, a building holds rooms. Ids join with `/` at each level. Coordinates
@@ -48,8 +54,13 @@ reach 1,000 km from the origin, and an optional `origin: {lat, lon}` ties the wo
   - A view frames each placement.
   - Every joint opens: the viewer keeps joint and motion poses in a texture, so a world's dozens of doors, lids
     and hinges are not limited to a construct's sixteen.
-- **The world's audit** says when placements overlap or stand on nothing, and when one isn't at real size. Each
-  placed construct's own audit stays its own.
+- **The world's audit** (and `construct check`) says:
+  - when placements overlap;
+  - when one runs into the construct it stands in: each of its parts is checked against the host's, all but the
+    part it stands on, so a car parked under a house must clear the columns;
+  - when one stands on nothing, and when one isn't at real size.
+
+  Each placed construct's own audit stays its own.
 - **Exports:**
   - **glTF:** one file. Each placement is a group named after it. Each construct's own material map is merged in
     under its id. Every joint is in the `open` animation.
@@ -62,9 +73,11 @@ reach 1,000 km from the origin, and an optional `origin: {lat, lon}` ties the wo
 `construct_world` places, moves and removes constructs in a world from the chat, and shows each change live:
 
 - `op: new` with a title and the construct that holds the rest;
-- `op: place` with `construct`, plus `on`, `at`, `yaw`, `scale`, `floating`, `sky` or `note`;
+- `op: place` with `construct`, plus `on`, `at`, `yaw`, `scale`, `floating`, `sky` or `note`; or `placements`, a
+  list of these, placed together with one check and one rebuild;
 - `op: move` and `op: remove` by placement id;
-- `op: list`, with an id to list the surfaces things can stand on.
+- `op: list`, with an id to list the surfaces things can stand on;
+- `op: view` with an id, a label and a target: a named view, a button on the page (`remove: true` drops it).
 
 What a world places comes from three sources:
 - the user's own projects;
@@ -72,7 +85,7 @@ What a world places comes from three sources:
 - the whole gallery, fetched by name from this release on GitHub.
 
 Each placed construct is copied into the world's folder, so a world travels whole and can be shared.
-`construct_export` exports a world as it exports a construct.
+`construct_check` checks a world, and `construct_export` exports it, as they do a construct.
 
 ## Limits
 
