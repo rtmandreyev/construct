@@ -146,6 +146,21 @@ class Plugin(unittest.TestCase):
 
     # ------------------------------------------------------------------ the package
 
+    def test_hermes_never_imports_the_engine(self):
+        """Hermes imports the plugin; Construct runs only in a child on the vendored copy, so a module Hermes loads
+        that imports construct_hologram works in this test (the repository is on the path) and fails in Hermes."""
+        import ast
+        children = {"child.py", "netlogo_child.py"}
+        for path in sorted(self.clean.rglob("*.py")):
+            rel = path.relative_to(self.clean)
+            if rel.parts[0] == "_vendor" or rel.name in children:
+                continue
+            for node in ast.walk(ast.parse(path.read_text(encoding="utf-8"))):
+                names = [a.name for a in node.names] if isinstance(node, ast.Import) else \
+                    [node.module or ""] if isinstance(node, ast.ImportFrom) else []
+                if any(n.split(".")[0] == "construct_hologram" for n in names):
+                    self.fail("%s:%d imports the engine in Hermes's process" % (rel, node.lineno))
+
     def test_package_is_complete(self):
         for rel in ("plugin.yaml", "__init__.py", "schemas.py", "tools.py", "jobs.py", "runtime.py", "child.py",
                     "templates/loader.html", "desktop/plugin.js", "dashboard/manifest.json", "dashboard/plugin_api.py",
@@ -269,7 +284,7 @@ class Plugin(unittest.TestCase):
         menu = self.call("construct_start")
         names = [e["name"] for e in menu["examples"]]
         self.assertEqual(set(names), set(self.mod.stock.STOCK))
-        self.assertEqual(len(names), 16)
+        self.assertEqual(len(names), 23)
         for e in menu["examples"]:
             self.assertTrue(e["title"] and e["line"] and e["parts"] > 0, e)
         self.assertEqual(next(e for e in menu["examples"] if e["name"] == "kestrel-v2")["parts"], 498)

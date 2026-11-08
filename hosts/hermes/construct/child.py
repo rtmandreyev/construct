@@ -10,6 +10,8 @@ from the user's site or the current folder is imported. Ops:
     build <spec.json>         `build`, then a small still for the gallery when a browser is there
     inspect <scene>           what the scene's own record says is known (JSON)
     edit <spec.json>          apply construct_edit's operations, validating each; the result beside, as a candidate
+    world <spec.json>         check a world: its errors, or its placements, audit and surfaces (JSON)
+    version                   Construct's version
     netlogo-run|netlogo-draw <spec.json>   NetLogo runs and recordings drawn (netlogo_child.py)
     film <spec.json>          a film: build, frames, encode (the frames are counted for progress)
     job <dir> <op> [args...]  run an op as a background job: exit.json records how it ended
@@ -373,6 +375,67 @@ def edit(spec):
     return 0
 
 
+def _wbox(g, pid):
+    lo, hi = None, None
+    for p in g["parts"]:
+        if p.get("placement") != pid:
+            continue
+        for b in p["instances"]:
+            lo = list(b["min"]) if lo is None else [min(lo[k], b["min"][k]) for k in range(3)]
+            hi = list(b["max"]) if hi is None else [max(hi[k], b["max"][k]) for k in range(3)]
+    return (lo, hi) if lo else None
+
+
+def _surfaces(g, pid, n=24):
+    """Where things can stand on a placement: its parts with the widest flat tops (floors, decks, tables)."""
+    out = []
+    for p in g["parts"]:
+        if p.get("placement") != pid:
+            continue
+        for b in p["instances"][:1]:
+            dx, dy, dz = (b["max"][k] - b["min"][k] for k in range(3))
+            if dy < 0.6 * min(dx, dz) and dx * dz > 0.05:
+                out.append((dx * dz, p["id"], round(b["max"][1], 3), [round(dx, 2), round(dz, 2)]))
+    out.sort(reverse=True)
+    return [{"on": i, "top_y": y, "size_xz_m": s} for _, i, y, s in out[:n]]
+
+
+def world(spec):
+    """Check a world (construct_hologram/world.py): {"errors"} when it is not valid or cannot be built, else its
+    placements as they stand, the world's audit and, for `surfaces_of`, where things can stand on that placement."""
+    from construct_hologram import world as w
+    doc, folder = spec["doc"], spec["folder"]
+    errors = w.validate(doc)
+    if errors:
+        return {"errors": errors[:12]}
+    try:
+        g = w.compile_world(doc, folder, None)
+    except w.WorldError as exc:
+        return {"errors": [str(exc)]}
+    report = w.audit(doc, g)
+    rows = []
+    for r in g["world"]["placements"]:
+        row = {"id": r["id"], "title": r["title"], "at": r["at"], "yaw": r["yaw"]}
+        for k in ("on", "scale", "floating", "note", "angular_deg"):
+            if k in r and not (k == "scale" and abs(r["scale"] - 1) < 1e-9):
+                row[k] = r[k]
+        box = _wbox(g, r["id"])
+        if box:
+            row["size_m"] = [round(box[1][k] - box[0][k], 3) for k in range(3)]
+            row["bottom_y"] = round(box[0][1], 3)
+        rows.append(row)
+    out = {"placements": rows, "counts": dict(report["counts"]),
+           "warnings": [x["message"] for x in report["warnings"]][:20], "notes": report["info"]["notes"][:10]}
+    if spec.get("surfaces_of"):
+        out["surfaces"] = _surfaces(g, spec["surfaces_of"])
+    return out
+
+
+def version():
+    from construct_hologram import product
+    return product.VERSION
+
+
 def run(op, args):
     if op == "programs":
         print(json.dumps(programs()))
@@ -381,6 +444,12 @@ def run(op, args):
         return _cli(args)
     if op == "inspect":
         print(json.dumps(inspect(args[0]), ensure_ascii=False))
+        return 0
+    if op == "world":
+        print(json.dumps(world(json.loads(Path(args[0]).read_text(encoding="utf-8"))), ensure_ascii=False))
+        return 0
+    if op == "version":
+        print(version())
         return 0
     if op == "edit":
         return edit(json.loads(Path(args[0]).read_text(encoding="utf-8")))

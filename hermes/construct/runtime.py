@@ -159,9 +159,11 @@ def gallery_files(name):
         return {"scene": local, "materials": root / m if m else None}
     dest = data_dir() / "gallery" / name
     if not (dest / "scene.json").is_file():
-        from construct_hologram import product
+        code, out, _ = run_child("version", timeout=30)
+        if code != 0 or not out.strip():
+            raise ConstructError("could not read Construct's version to fetch %s from the gallery" % name)
         try:
-            stock.fetch_gallery(name, dest, product.VERSION, {"constructs": list(rows.values())})
+            stock.fetch_gallery(name, dest, out.strip(), {"constructs": list(rows.values())})
         except (OSError, ValueError) as exc:
             raise ConstructError("could not fetch %s from the gallery: %s" % (name, exc))
     m = dest / "scene.materials.json"

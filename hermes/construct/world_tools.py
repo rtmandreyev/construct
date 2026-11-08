@@ -8,6 +8,7 @@ checked (construct_hologram/world.py), rebuilt and shown live in the chat, like 
 import json
 import re
 import shutil
+import tempfile
 from pathlib import Path
 
 from . import runtime, tools
@@ -15,11 +16,6 @@ from .runtime import ConstructError
 
 OPS = ("new", "place", "move", "remove", "list")
 NAME = re.compile(r"^[a-z0-9][a-z0-9_.-]{0,63}$")
-
-
-def _world_mod():
-    from construct_hologram import world
-    return world
 
 
 def _load(folder):
@@ -121,66 +117,34 @@ def _placement_fields(args, p):
     return p
 
 
-def _save_checked(path, doc, folder):
-    """Validate, compile (to catch a placement that cannot stand where it was put) and write."""
-    w = _world_mod()
-    errs = w.validate(doc)
-    if errs:
-        raise ConstructError("the world would not be valid:\n" + "\n".join(errs[:12]))
+def check(doc, folder, surfaces_of=None):
+    """The world checked by Construct (construct_hologram/world.py, in a child like every engine call): its
+    placements as they stand, its audit and, for `surfaces_of`, where things can stand on that placement."""
+    spec = Path(tempfile.mkstemp(prefix=".world-check-", suffix=".json", dir=str(folder))[1])
     try:
-        w.compile_world(doc, folder, None)
-    except w.WorldError as exc:
-        raise ConstructError(str(exc))
+        runtime.write_json(spec, {"doc": doc, "folder": str(folder), "surfaces_of": surfaces_of})
+        code, out, err = runtime.run_child("world", str(spec), timeout=180, cwd=folder)
+    finally:
+        spec.unlink(missing_ok=True)
+    if code != 0:
+        raise ConstructError("Construct could not check the world: %s" % (err.strip().splitlines() or ["no answer"])[-1])
+    try:
+        return json.loads(out)
+    except ValueError:
+        raise ConstructError("Construct's check of the world was not readable")
+
+
+def _save_checked(path, doc, folder, surfaces_of=None):
+    """Check (a placement that cannot stand where it was put is refused) and write; the check's summary."""
+    res = check(doc, folder, surfaces_of)
+    if res.get("errors"):
+        raise ConstructError("the world would not be valid:\n" + "\n".join(res["errors"]))
     runtime.write_json(path, doc)
+    return res
 
 
-def _summary(doc, folder):
-    w = _world_mod()
-    try:
-        g = w.compile_world(doc, folder, None)
-    except w.WorldError as exc:
-        return {"error": str(exc)}
-    report = w.audit(doc, g)
-    rows = []
-    for r in g["world"]["placements"]:
-        row = {"id": r["id"], "title": r["title"], "at": r["at"], "yaw": r["yaw"]}
-        for k in ("on", "scale", "floating", "note", "angular_deg"):
-            if k in r and not (k == "scale" and abs(r["scale"] - 1) < 1e-9):
-                row[k] = r[k]
-        box = _box(g, r["id"])
-        if box:
-            row["size_m"] = [round(box[1][k] - box[0][k], 3) for k in range(3)]
-            row["bottom_y"] = round(box[0][1], 3)
-        rows.append(row)
-    return {"placements": rows, "counts": dict(report["counts"]),
-            "warnings": [x["message"] for x in report["warnings"]][:20], "notes": report["info"]["notes"][:10]}
-
-
-def _box(g, pid):
-    lo, hi = None, None
-    for p in g["parts"]:
-        if p.get("placement") != pid:
-            continue
-        for b in p["instances"]:
-            lo = list(b["min"]) if lo is None else [min(lo[k], b["min"][k]) for k in range(3)]
-            hi = list(b["max"]) if hi is None else [max(hi[k], b["max"][k]) for k in range(3)]
-    return (lo, hi) if lo else None
-
-
-def surfaces(doc, folder, pid, n=24):
-    """Where things can stand on a placement: its parts with the widest flat tops (floors, decks, tables)."""
-    w = _world_mod()
-    g = w.compile_world(doc, folder, None)
-    out = []
-    for p in g["parts"]:
-        if p.get("placement") != pid:
-            continue
-        for b in p["instances"][:1]:
-            dx, dy, dz = (b["max"][k] - b["min"][k] for k in range(3))
-            if dy < 0.6 * min(dx, dz) and dx * dz > 0.05:
-                out.append((dx * dz, p["id"], round(b["max"][1], 3), [round(dx, 2), round(dz, 2)]))
-    out.sort(reverse=True)
-    return [{"on": i, "top_y": y, "size_xz_m": s} for _, i, y, s in out[:n]]
+def _summary(res):
+    return {k: res[k] for k in ("placements", "counts", "warnings", "notes") if k in res}
 
 
 def _rebuild(slug, folder, path, wait=None):
@@ -216,7 +180,7 @@ def world(args):
             p = _placement_fields(args, {"id": pid, "construct": _bring(folder, host)})
             doc["placements"].append(p)
             path = folder / "world.json"
-            _save_checked(path, doc, folder)
+            checked = _save_checked(path, doc, folder, surfaces_of=pid)
             runtime.write_json(folder / "project.json", {"slug": slug, "title": title.strip(), "scene": "world.json",
                                                          "origin": "world", "created": runtime.stamp_iso()})
         except Exception:
@@ -224,8 +188,8 @@ def world(args):
             raise
         res = _rebuild(slug, folder, path, args.get("wait_seconds"))
         if isinstance(res, dict):
-            res["world"] = _summary(doc, folder)
-            res["surfaces"] = surfaces(doc, folder, pid)
+            res["world"] = _summary(checked)
+            res["surfaces"] = checked.get("surfaces", [])
             res["next"] = ("place constructs with op place (on one of `surfaces` to stand on it); put the MEDIA line in "
                            "your reply")
         return res
@@ -235,9 +199,12 @@ def world(args):
     folder = runtime.project_dir(slug)
     path, doc = _load(folder)
     if op == "list":
-        res = {"world": slug, "title": doc["title"], **_summary(doc, folder)}
+        got = check(doc, folder, args.get("id"))
+        if got.get("errors"):
+            return {"world": slug, "title": doc["title"], "errors": got["errors"]}
+        res = {"world": slug, "title": doc["title"], **_summary(got)}
         if args.get("id"):
-            res["surfaces"] = surfaces(doc, folder, args["id"])
+            res["surfaces"] = got.get("surfaces", [])
         return res
     pid = args.get("id")
     if op == "place":
@@ -262,7 +229,7 @@ def world(args):
         else:
             _placement_fields(args, doc["placements"][idx])
     before = json.loads(path.read_text(encoding="utf-8"))
-    _save_checked(path, doc, folder)
+    checked = _save_checked(path, doc, folder)
     (folder / "edits").mkdir(exist_ok=True)
     stamp = runtime.new_id()
     runtime.write_json(folder / "edits" / ("%s-before.json" % stamp), before)
@@ -271,7 +238,7 @@ def world(args):
                                                                              if k not in ("world", "op")}}) + "\n")
     res = _rebuild(slug, folder, path, args.get("wait_seconds"))
     if isinstance(res, dict):
-        res["world"] = _summary(doc, folder)
+        res["world"] = _summary(checked)
         res["undo"] = "edits/%s-before.json" % stamp
     return res
 
