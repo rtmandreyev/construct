@@ -55,9 +55,7 @@ step:
    and a document is refused. Once written, the packet is sealed: its files are read-only and its
    hash is in `state.json`.
 3. **The critic.** Give a fresh critic the packet folder and nothing else: a subagent, one
-   delegated task (in Hermes, one child a round fits its two-child budget), or direct model
-   calls: `construct rounds run --base-url URL --model M --key-env VAR` (one conversation,
-   part 1 answered before parts 2 and 3 are shown). Save its answer outside the packet folder.
+   delegated task (in Hermes, one child a round fits its two-child budget). Save its answer outside the packet folder.
    The critic and the author do not talk until the answer is recorded: no questions, no
    explanations, no second thoughts after a word from the author.
 4. **`construct rounds record answer.json`.** It refuses an answer when the packet changed

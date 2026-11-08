@@ -792,7 +792,8 @@ def to_gltf(g, wire="edges", pose="closed", materials=None, wire_radius=None, me
                         # origin metres away, where an engine's solver swings it about
                         j["pivot"] = [round(x, 6) for x in centre]
             # glued, a building's fixed body stays where it stands (static): a castle on its rock does not topple
-            fixed = glued and key == fixed_key and g.get("subject", {}).get("category") == "architecture"
+            # (and a world's: a game map's ground and buildings stay put; its doors, lids and wheels move)
+            fixed = glued and key == fixed_key and g.get("subject", {}).get("category") in ("architecture", "world")
             body = node({"name": _node_name(name), "translation": _sub(centre, head["origin"]), "children": kids,
                          "extensions": {"OMI_physics_body": {"motion": {"type": "static"} if fixed else {
                              "type": "dynamic", "mass": round(min(max(mass, 0.05), 2000.0), 3)}}},

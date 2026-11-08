@@ -32,7 +32,7 @@ from . import audit as audit_mod
 from . import diagnose as diagnose_mod
 from . import params as params_mod
 from . import product as product_mod
-from . import hologram, render, scene as scene_mod
+from . import hologram, procenv, render, scene as scene_mod
 
 STARTER = {
     "object": ("A starter object", "object", [
@@ -105,6 +105,16 @@ def _write(path, text, force):
     os.replace(tmp, path)
 
 
+def _is_world_file(path):
+    try:
+        with open(path, "rb") as f:
+            head = f.read(4096).decode("utf-8", "replace")
+    except OSError:
+        return False
+    import re
+    return re.search(r'"format"\s*:\s*"construct-world"', head) is not None
+
+
 def load(path):
     """A scene, or the scene a parameter document builds."""
     try:
@@ -121,7 +131,13 @@ def load(path):
 
 
 def build(scene_path, out_dir, asset_root=None, v1=False, force=True, frame="y-up", palette=None, identity=None,
-          film=False):
+          film=False, resolver=None):
+    if _is_world_file(scene_path):   # a world: constructs placed together, each kept whole (world.py)
+        from . import world as world_mod
+        try:
+            return world_mod.build(scene_path, out_dir, resolver=resolver, force=force)
+        except world_mod.WorldError as exc:
+            raise scene_mod.SceneError(str(exc))
     scene = load(scene_path)
     geometry = scene_mod.compile_scene(scene)
     if palette or identity:  # the person's choice, never the model's
@@ -830,6 +846,21 @@ def run(args):
             else:
                 sys.stdout.write(text)
             return 0
+        if args.command == "check" and args.scene != "-" and _is_world_file(args.scene):
+            from . import world as world_mod
+            report = world_mod.check(args.scene)
+            if args.json:
+                sys.stdout.write(json.dumps(report, indent=2, ensure_ascii=False) + "\n")
+            else:
+                st = report["stats"]
+                if st:
+                    sys.stdout.write("world: %d placements, %d parts, %d lines, %d triangles; %g x %g x %g m\n" % (
+                        st["placements"], st["parts"], st["lines"], st["triangles"], *st["size_m"]))
+                for d in report["diagnostics"]:
+                    sys.stdout.write("%s %s: %s\n" % (d["severity"], d["path"], d["message"]))
+                if st and not report["diagnostics"]:
+                    sys.stdout.write("nothing overlaps, runs into what it stands in, or stands on nothing\n")
+            return 0 if report["ok"] else 1
         if args.command == "check":
             text = sys.stdin.read() if args.scene == "-" else Path(args.scene).read_text(encoding="utf-8")
             peek, _ = diagnose_mod.parse_text(text)
@@ -930,7 +961,8 @@ def run(args):
                     "from construct_hologram import runfilm\n"
                     "f = runfilm.render(**a); print('CONSTRUCT-FILM %d %d' % f)\n")
             r = subprocess.run([blender, "-b", "--factory-startup", "--python-exit-code", "1", "--python-expr", code, "--",
-                                json.dumps(job)], capture_output=True, text=True, encoding="utf-8", errors="replace")
+                                json.dumps(job)], capture_output=True, text=True, encoding="utf-8", errors="replace",
+                               env=procenv.minimal())
             done = next((ln for ln in r.stdout.splitlines() if ln.startswith("CONSTRUCT-FILM ")), None)
             if r.returncode or not done:
                 tail = (r.stderr or r.stdout).strip().splitlines()[-6:]
@@ -1016,6 +1048,20 @@ def run(args):
             g = scene_mod.compile_scene(scene)
             sys.stdout.write("wrote %s: %s, %d parts, %d lines, %d triangles\n"
                              % (args.out, args.view, len(scene["parts"]), g["counts"]["lines"], g["counts"]["triangles"]))
+            return 0
+        if args.command == "export" and _is_world_file(args.scene):
+            from . import world as world_mod, export as export_mod
+            try:
+                s = world_mod.export(args.scene, args.out, args.format, args.wire, args.pose, args.materials,
+                                     args.merge, args.colliders, {None: False, "loose": True}.get(args.pieces, args.pieces))
+            except (world_mod.WorldError, export_mod.ExportError, scene_mod.SceneError) as exc:
+                sys.stderr.write("export: %s\n" % exc)
+                return 1
+            anims = ", ".join(s.get("animations", [])[:8]) or "none"
+            sys.stdout.write("wrote %s: a world of %d constructs, %d parts, %d triangles, %d edges%s\n"
+                             % (", ".join(s["files"]), s["placements"], s["parts"], s["triangles"], s["edges"],
+                                "; animations: " + anims + (" …" if len(s.get("animations", [])) > 8 else "")
+                                if s["format"] == "glb" else ""))
             return 0
         if args.command == "export":
             from . import export as export_mod

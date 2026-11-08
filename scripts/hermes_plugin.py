@@ -18,6 +18,7 @@ The output is deterministic: the same checkout writes the same bytes.
 import argparse
 import importlib.util
 import json
+import re
 import shutil
 import sys
 from pathlib import Path
@@ -68,7 +69,9 @@ def _source_files():
 
 
 def reference_text(text):
-    """A skill reference as the plugin's skill reads it: commands named as Construct's own, examples by name."""
+    """A skill reference as the plugin's skill reads it: commands named as Construct's own, examples by name, and
+    without what the plugin refuses (marked <!--network-->...<!--/network-->: direct model calls over the network)."""
+    text = re.sub(r"<!--network-->.*?<!--/network-->", "", text, flags=re.S)
     text = text.replace("python3 TOOLS ", "construct ").replace("python3 TOOLS", "construct")
     text = text.replace("`prompts/trace.md`", "`references/trace-prompt.md`")
     return text

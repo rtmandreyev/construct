@@ -32,7 +32,7 @@ from . import audit as audit_mod
 from . import diagnose as diagnose_mod
 from . import params as params_mod
 from . import product as product_mod
-from . import hologram, render, scene as scene_mod
+from . import hologram, procenv, render, scene as scene_mod
 
 STARTER = {
     "object": ("A starter object", "object", [
@@ -961,7 +961,8 @@ def run(args):
                     "from construct_hologram import runfilm\n"
                     "f = runfilm.render(**a); print('CONSTRUCT-FILM %d %d' % f)\n")
             r = subprocess.run([blender, "-b", "--factory-startup", "--python-exit-code", "1", "--python-expr", code, "--",
-                                json.dumps(job)], capture_output=True, text=True, encoding="utf-8", errors="replace")
+                                json.dumps(job)], capture_output=True, text=True, encoding="utf-8", errors="replace",
+                               env=procenv.minimal())
             done = next((ln for ln in r.stdout.splitlines() if ln.startswith("CONSTRUCT-FILM ")), None)
             if r.returncode or not done:
                 tail = (r.stderr or r.stdout).strip().splitlines()[-6:]

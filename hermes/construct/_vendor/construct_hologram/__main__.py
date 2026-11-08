@@ -43,8 +43,18 @@ def _write_output(path, obj, force):
             os.unlink(tmp)
 
 
-def main(argv=None):
-    parser = argparse.ArgumentParser(prog=product.NAME)
+class Parser(argparse.ArgumentParser):
+    """Construct's parser: an option is only ever its whole name. Prefixes (`--ou` for `--out`) are refused, here and
+    in every subcommand's parser (they are made from this class), so a check that reads flags by name holds."""
+
+    def __init__(self, *args, **kwargs):
+        kwargs["allow_abbrev"] = False
+        super().__init__(*args, **kwargs)
+
+
+def build_parser():
+    """The whole command line, every subcommand, without running anything."""
+    parser = Parser(prog=product.NAME)
     sub = parser.add_subparsers(dest="command", required=True)
 
     p_tpl = sub.add_parser("template")
@@ -64,8 +74,11 @@ def main(argv=None):
     p_cmp.add_argument("--force", action="store_true")
 
     studio.add_commands(sub)
+    return parser
 
-    args = parser.parse_args(argv)
+
+def main(argv=None):
+    args = build_parser().parse_args(argv)
     if args.command in studio.COMMANDS:
         try:
             return studio.run(args)

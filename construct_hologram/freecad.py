@@ -493,21 +493,10 @@ def _app(exe):
     return None
 
 
-# what FreeCAD is given of this process's environment: what a program needs to start, find its libraries and keep its
-# files on Windows, macOS and Linux, and FreeCAD's own settings; never the rest (API keys among it)
-_FREECAD_ENV = ("PATH", "HOME", "USER", "LOGNAME", "SHELL", "TMPDIR", "TEMP", "TMP", "LANG", "LC_ALL", "LC_CTYPE",
-                "LD_LIBRARY_PATH", "XDG_CONFIG_HOME", "XDG_DATA_HOME", "XDG_CACHE_HOME", "XDG_RUNTIME_DIR",
-                "SYSTEMROOT", "SYSTEMDRIVE", "WINDIR", "COMSPEC", "PATHEXT", "APPDATA", "LOCALAPPDATA", "PROGRAMDATA",
-                "PROGRAMFILES", "USERPROFILE", "USERNAME", "HOMEDRIVE", "HOMEPATH", "NUMBER_OF_PROCESSORS",
-                "PROCESSOR_ARCHITECTURE", "FREECAD_USER_HOME", "FREECAD_USER_DATA", "FREECAD_USER_TEMP")
-
-
 def _freecad_env(app):
-    """The environment FreeCAD runs in: the names above as they are here, and off screen for its app."""
-    env = {k: os.environ.get(k) for k in _FREECAD_ENV if os.environ.get(k) is not None}
-    if app:
-        env["QT_QPA_PLATFORM"] = "offscreen"
-    return env
+    """The environment FreeCAD runs in (procenv: never API keys), and off screen for its app."""
+    from . import procenv
+    return procenv.minimal(procenv.FREECAD, **({"QT_QPA_PLATFORM": "offscreen"} if app else {}))
 
 
 # what FreeCAD's app says off screen whether or not anything is wrong

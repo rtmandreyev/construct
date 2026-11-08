@@ -91,14 +91,25 @@ Hermes's approval prompt (scheduled runs are then refused rather than left waiti
 - **Local programs:** it runs Construct in a child Python process (Hermes's own interpreter), and, when present,
   a headless Chrome/Chromium (captures only: a private temporary profile, driven over a local debugging port),
   ffmpeg, FreeCAD and Blender. Nothing already on the machine is changed. No approval prompt unless *Ask before
-  running programs* is on.
-- **No network.** Nothing is fetched or sent; the subcommands that call a model over the network (`author`,
-  `trace-image`, `--base-url`, `rounds run`) are refused, and the critic runs as a Hermes subagent instead.
+  running programs* is on, except for NetLogo code the agent wrote or a model from outside the installed Models
+  Library, which Hermes always asks you to approve (see NetLogo below).
+- **Which programs, and what they are given:** a program's path comes only from the plugin's settings, a
+  `CONSTRUCT_*` variable or the PATH, never from a tool's arguments (`--freecad` and `--blender` are refused). The
+  Construct child and every program it starts get a minimal environment: what a program needs to start and keep its
+  files (PATH, HOME, the temporary folder, the locale; on Windows its system folders), Construct's own `CONSTRUCT_*`
+  settings for the child, and nothing else, so provider keys and tokens never reach them.
+- **No network.** Nothing is fetched or sent; the subcommands and options that call a model over the network
+  (`author`, `trace-image`, `rounds run`, `--base-url`, `--key-env` and the `--critic-*` options) are refused, and the
+  critic runs as a Hermes subagent instead. `construct_command` reads a command line as Construct's own parser does
+  (an option only by its whole name, never a prefix) before deciding, and writes only inside the project and the
+  plugin's data folder.
 - **Files:** it writes only inside its data folder (`<HERMES_HOME>/plugin-data/construct/`) or the projects
   folder you set, plus short-lived temporary files (the browser's profile) in the system's temporary folder,
   removed when each run ends. It reads scenes, images and music files you name.
 - **NetLogo (optional).** `construct_netlogo_run` runs NetLogo models headless on this machine with NetLogo's own
-  Java (or `JAVA_HOME`, a Homebrew OpenJDK, or `java` on the PATH), as a background job. It reads models from your
+  Java (or `JAVA_HOME`, a Homebrew OpenJDK, or `java` on the PATH), as a background job. A run of a model from
+  outside the installed Models Library, or with `setup`/`go` code the agent wrote, always asks for your approval
+  first, showing the code, whatever *Ask before running programs* is set to (a scheduled run is refused). It reads models from your
   NetLogo install or a path you give, and writes only into the plugin's data or projects folder (an instrumented
   copy of the model, the recordings, the constructs). The plugin bundles no NetLogo model, run or construct of one.
   Models Library models are © their authors under CC BY-NC-SA 3.0: a construct made from one carries the model's

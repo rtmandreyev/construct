@@ -2,7 +2,7 @@
 
 Construct runs as a child of the interpreter Hermes runs on (`sys.executable -I -B`), importing the
 vendored package from `_vendor/` (or, in a source checkout, the repository's own package two folders
-up). The child inherits the environment as it is; nothing here reads or changes it.
+up). The child is given only what a program needs of Hermes's environment, and Construct's own settings (child_env).
 
 Everything the plugin writes sits under its data folder (`plugin_data_dir("construct")`), or under the
 projects folder the user chose in the plugin's settings:
@@ -298,6 +298,28 @@ def new_id():
 
 # ---------------------------------------------------------------------------- the child
 
+# what the child is given of Hermes's environment, where provider keys live: what a program needs to start and keep
+# its files (the same names as construct_hologram/procenv.py, which the plugin cannot import), and Construct's own
+# settings (CONSTRUCT_ENV); never the rest, where provider keys live
+CHILD_ENV = ("PATH", "HOME", "USER", "LOGNAME", "SHELL", "TMPDIR", "TEMP", "TMP", "LANG", "LANGUAGE", "LC_ALL",
+             "LC_CTYPE", "LD_LIBRARY_PATH", "DYLD_FALLBACK_LIBRARY_PATH", "XDG_CONFIG_HOME", "XDG_DATA_HOME",
+             "XDG_CACHE_HOME", "XDG_RUNTIME_DIR", "DISPLAY", "WAYLAND_DISPLAY", "FONTCONFIG_FILE", "FONTCONFIG_PATH",
+             "SYSTEMROOT", "SYSTEMDRIVE", "WINDIR", "COMSPEC", "PATHEXT", "APPDATA", "LOCALAPPDATA", "PROGRAMDATA",
+             "PROGRAMFILES", "PROGRAMFILES(X86)", "USERPROFILE", "USERNAME", "HOMEDRIVE", "HOMEPATH",
+             "NUMBER_OF_PROCESSORS", "PROCESSOR_ARCHITECTURE", "JAVA_HOME", "FREECAD_USER_HOME", "FREECAD_USER_DATA",
+             "FREECAD_USER_TEMP")
+
+
+# Construct's own settings: where it finds its programs, and its test switches (never the critic's endpoint or key)
+CONSTRUCT_ENV = ("CONSTRUCT_BLENDER", "CONSTRUCT_FREECAD", "CONSTRUCT_NETLOGO", "CONSTRUCT_GODOT",
+                 "CONSTRUCT_PRUSASLICER", "CONSTRUCT_FFMPEG", "CONSTRUCT_JAVAC", "HOLOGRAM_CHROME",
+                 "HOLOGRAM_SKIP_CAPTURE")
+
+
+def child_env():
+    return {k: os.environ.get(k) for k in CHILD_ENV + CONSTRUCT_ENV if os.environ.get(k) is not None}
+
+
 def child_argv(op, *args):
     """The argv that runs `child.py <op> ...` on Hermes's interpreter, isolated and without bytecode."""
     return [sys.executable, "-I", "-B", str(CHILD), str(vendor_root()), op] + [str(a) for a in args]
@@ -307,7 +329,7 @@ def run_child(op, *args, timeout=120, cwd=None):
     """Run a short child to its end: (exit code, stdout, stderr). A child that outlives `timeout` is stopped."""
     try:
         r = subprocess.run(child_argv(op, *args), capture_output=True, text=True, encoding="utf-8", errors="replace",
-                           timeout=timeout, cwd=str(cwd) if cwd else None)
+                           timeout=timeout, cwd=str(cwd) if cwd else None, env=child_env())
     except subprocess.TimeoutExpired:
         raise ConstructError("Construct did not answer within %d s" % timeout)
     return r.returncode, r.stdout, r.stderr

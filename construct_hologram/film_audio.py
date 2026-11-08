@@ -25,6 +25,8 @@ import math
 import struct
 import subprocess
 
+from . import procenv
+
 RATE = 16000
 SILENT_DB = -60.0  # quieter than this, a frame counts as silence: energy and high are 0 there
 MIN_SPAN_DB = 12.0  # a track's range is at least this wide, so a steady tone does not flicker between 0 and 1
@@ -52,7 +54,7 @@ def find_ffmpeg():
 def _decode(path, sr=RATE):
     """The audio as 16-bit mono samples at sr, decoded by ffmpeg."""
     raw = subprocess.run([find_ffmpeg(), "-v", "error", "-i", str(path), "-ac", "1", "-ar", str(sr), "-f", "s16le", "-"],
-                         capture_output=True, check=True).stdout
+                         capture_output=True, check=True, env=procenv.minimal()).stdout
     n = len(raw) // 2
     return struct.unpack("<%dh" % n, raw[:n * 2])
 

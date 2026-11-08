@@ -716,9 +716,25 @@ class Plugin(unittest.TestCase):
         refused = [["author", "a lamp", "--base-url", "http://x", "--model", "m", "--out", "o"],
                    ["trace-image", "a.png"], ["critique", "scene.json", "--base-url", "http://x"],
                    ["rounds", "run"], ["build", "scene.json", "--out", "/tmp/elsewhere"],
-                   ["export", "scene.json", "--out=../../../outside.glb"], ["ls", "-la"], ["template", "cd"]]
+                   ["export", "scene.json", "--out=../../../outside.glb"], ["ls", "-la"], ["template", "cd"],
+                   # options are read as Construct's parser reads them, by their whole names: no prefix gets through
+                   ["critique", "scene.json", "--base", "http://x", "--key", "OPENAI_API_KEY"],
+                   ["critique", "scene.json", "--base-u=http://x"], ["rounds", "start", "scene.json", "--key", "HOME"],
+                   ["export", "scene.json", "--ou", "/tmp/elsewhere.glb"], ["build", "scene.json", "--ou", "/tmp/x"],
+                   ["rounds", "--tier", "masterpiece", "run"], ["rounds", "--mode=timeboxed", "run"],
+                   ["rounds", "--dir", "r", "run", "--model", "m"],
+                   # a program to run comes from settings, CONSTRUCT_* or the PATH, never from the call
+                   ["freecad", "scene.json", "--out", "s.FCStd", "--freecad", "/bin/sh"],
+                   ["freecad", "scene.json", "--out", "s.FCStd", "--freecad=/bin/sh"],
+                   ["freecad", "scene.json", "--out", "s.FCStd", "--free", "/bin/sh"],
+                   ["netlogo-film", "r.jsonl", "--blender", "/bin/sh"], ["netlogo-film", "r.jsonl", "--blende", "/bin/sh"]]
         for argv in refused:
             self.assertIn("error", self.call("construct_command", {"argv": argv, "project": project}), argv)
+        said = lambda argv: self.call("construct_command", {"argv": argv, "project": project})["error"]
+        self.assertIn("--base", said(["critique", "scene.json", "--base", "http://x"]))   # the parser's own refusal
+        self.assertIn("network", said(["rounds", "--tier", "masterpiece", "run"]))
+        self.assertIn("program to run", said(["freecad", "scene.json", "--out", "s.FCStd", "--freecad", "/bin/sh"]))
+        self.assertIn("outside the project", said(["export", "scene.json", "--out", "/tmp/elsewhere.glb"]))
         ok = self.call("construct_command", {"argv": ["params", "--list"], "project": project})
         self.assertEqual(ok["exit"], 0, ok)
         self.assertIn("case / jewel", ok["output"])
@@ -752,6 +768,67 @@ class Plugin(unittest.TestCase):
             self.assertEqual(client.get("/view", params={"project": "../secret"}).status_code, 404)
             self.assertEqual(client.get("/view", params={"project": r["project"]}).status_code, 200)
             self.assertEqual(client.get("/projects").status_code, 200)
+
+    def test_every_option_is_its_whole_name(self):
+        """Construct's parser and each subcommand's refuse prefixes, so the plugin's checks read what will run."""
+        import argparse
+        from .__main__ import build_parser
+        parser = build_parser()
+        subs = [a for a in parser._actions if isinstance(a, argparse._SubParsersAction)][0].choices
+        self.assertGreaterEqual(len(subs), 30)
+        self.assertFalse(parser.allow_abbrev)
+        for name, sub in subs.items():
+            self.assertFalse(sub.allow_abbrev, name)
+        with self.assertRaises(SystemExit):
+            build_parser().parse_args(["check", "x.json", "--js"])
+
+    def test_programs_get_a_minimal_environment(self):
+        from . import procenv
+        rt = self.mod.runtime
+        os.environ.update(CONSTRUCT_TEST_SECRET_KEY="sk-not-for-programs", OPENAI_API_KEY_FOR_TEST="sk-x",
+                          CONSTRUCT_CRITIC_KEY_ENV="OPENAI_API_KEY_FOR_TEST", CONSTRUCT_BLENDER="/opt/blender")
+        try:
+            env, child = procenv.minimal(procenv.JAVA), rt.child_env()
+        finally:
+            for k in ("CONSTRUCT_TEST_SECRET_KEY", "OPENAI_API_KEY_FOR_TEST", "CONSTRUCT_CRITIC_KEY_ENV",
+                      "CONSTRUCT_BLENDER"):
+                del os.environ[k]
+        self.assertEqual(env["PATH"], os.environ["PATH"])
+        self.assertFalse({"CONSTRUCT_TEST_SECRET_KEY", "OPENAI_API_KEY_FOR_TEST", "CONSTRUCT_BLENDER"} & set(env))
+        self.assertEqual(child["CONSTRUCT_BLENDER"], "/opt/blender")   # where Construct finds its programs
+        self.assertFalse({"OPENAI_API_KEY_FOR_TEST", "CONSTRUCT_CRITIC_KEY_ENV"} & set(child))
+        self.assertTrue(set(procenv.BASE + procenv.JAVA + procenv.FREECAD) <= set(rt.CHILD_ENV))   # the same names
+        read = set()   # every setting of Construct's own that the shipped engine reads reaches its child
+        for m in generator._submission().RUNTIME:
+            if m.endswith(".py"):
+                read |= set(re.findall(r"environ(?:\.get)?[\[(]\"((?:CONSTRUCT|HOLOGRAM)_[A-Z_]+)\"",
+                                       (HERE / m).read_text(encoding="utf-8")))
+        self.assertEqual({n for n in read if "CRITIC" not in n and "TEST" not in n} - set(rt.CONSTRUCT_ENV), set())
+        # every program the shipped code starts is given an environment of its own choosing
+        import ast
+        shipped = [HERE / m for m in generator._submission().RUNTIME if m.endswith(".py")] + \
+            sorted(p for p in self.clean.glob("*.py"))
+        for path in shipped:
+            for node in ast.walk(ast.parse(path.read_text(encoding="utf-8"))):
+                if isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute) and \
+                        node.func.attr in ("run", "Popen", "call", "check_call", "check_output") and \
+                        isinstance(node.func.value, ast.Name) and node.func.value.id == "subprocess":
+                    self.assertIn("env", [k.arg for k in node.keywords], "%s:%d" % (path.name, node.lineno))
+
+    def test_netlogo_code_is_always_approved(self):
+        gate = self.ctx.hooks["pre_tool_call"]
+        self.assertIsNone(gate(tool_name="construct_netlogo_run", args={"search": "fire"}))
+        ask = gate(tool_name="construct_netlogo_run", args={"model": "Fireflies", "setup": "ca crt 10"})
+        self.assertEqual(ask["action"], "approve")   # confirm_runs is off
+        self.assertIn("ca crt 10", ask["message"])
+        other = gate(tool_name="construct_netlogo_run", args={"model": "Fireflies", "go": "ask turtles [ die ]"})
+        self.assertNotEqual(ask["rule_key"], other["rule_key"])   # an approval covers that code only
+        self.ctx.cron = object()
+        try:
+            self.assertEqual(gate(tool_name="construct_netlogo_run", args={"model": "Fireflies", "go": "x"})["action"],
+                             "block")
+        finally:
+            self.ctx.cron = None
 
     def test_approval_gate(self):
         gate = self.ctx.hooks["pre_tool_call"]

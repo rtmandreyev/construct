@@ -340,8 +340,9 @@ def run_model(spec):
     _say("netlogo: %s" % " ".join(argv[-12:]))
     started = time.time()
     try:
+        from construct_hologram import procenv
         proc = subprocess.Popen(argv, stdin=subprocess.DEVNULL, stdout=log, stderr=subprocess.STDOUT,
-                                cwd=spec["netlogo"]["folder"])
+                                cwd=spec["netlogo"]["folder"], env=procenv.minimal(procenv.JAVA))
     except OSError as exc:
         log.close()
         return _fail("NetLogo could not start: %s" % exc)

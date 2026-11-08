@@ -313,6 +313,27 @@ def _settings_brief(settings):
     return rows
 
 
+def custom_run(args):
+    """What makes a construct_netlogo_run call one the user approves whatever the settings: setup/go code the agent
+    wrote, or a model outside the installed Models Library (NetLogo code runs with the user's rights). An empty list:
+    a library model run as it is."""
+    if not isinstance(args, dict) or args.get("model") is None:
+        return []
+    why = []
+    for key in ("setup", "go"):
+        if isinstance(args.get(key), str) and args[key].strip():
+            why.append("its own %s code: %s" % (key, " ".join(args[key].split())[:300]))
+    found = find_netlogo()
+    try:
+        path = resolve_model(args["model"], found) if found else None
+    except ConstructError:
+        path = None   # the call fails before anything runs, and says why
+    library = (found or {}).get("models")
+    if path is not None and not (library and runtime.inside(path, [Path(library).resolve()])):
+        why.append("a model outside the installed Models Library: %s" % path)
+    return why
+
+
 # ---------------------------------------------------------------------------- the run tool
 
 @tools.tool("construct_netlogo_run")

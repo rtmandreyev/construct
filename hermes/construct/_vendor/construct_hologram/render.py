@@ -286,7 +286,8 @@ class Browser:
                 "--window-size=%d,%d" % (width, height), "about:blank"]
         if not gpu:  # software WebGL: slower, but works without a GPU (CI, servers)
             args[-2:-2] = ["--enable-unsafe-swiftshader", "--use-angle=swiftshader"]
-        self.proc = subprocess.Popen(args, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        from . import procenv
+        self.proc = subprocess.Popen(args, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, env=procenv.minimal())
         port_file = Path(self.profile) / "DevToolsActivePort"
         deadline = time.time() + 60   # a busy machine (a render beside it) can take half a minute to start one
         while not port_file.exists() or not port_file.read_text().strip():
@@ -533,5 +534,6 @@ def encode_video(frame_dir, out_path, fps=24, sound=None, sound_start=0.0):
             cmd += ["-ss", "%.3f" % sound_start, "-i", str(sound), "-map", "0:v", "-map", "1:a", "-af", "apad", "-c:a", "aac",
                     "-b:a", "192k", "-shortest"]
         cmd += ["-c:v", "libx264", "-pix_fmt", "yuv420p", "-crf", "18", "-movflags", "+faststart", out_path]
-    subprocess.run(cmd, check=True)
+    from . import procenv
+    subprocess.run(cmd, check=True, env=procenv.minimal())
     return out_path

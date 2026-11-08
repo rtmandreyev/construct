@@ -52,6 +52,13 @@
     color: #cbbcd8; background: rgba(0,0,0,.55); }
   pre.error { position: absolute; left: 20px; top: 20px; right: 20px; white-space: pre-wrap; color: #ffb1b1; font-size: 11px; }
   body.noui .help { display: none !important; }
+  .viewsbar { position: absolute; left: 22px; top: 38px; max-width: 70%; display: flex; flex-wrap: wrap; gap: 4px; pointer-events: auto; }
+  .viewsbar button { font: inherit; font-size: 10px; letter-spacing: .1em; color: var(--dim); background: rgba(10,4,12,.62);
+    border: 1px solid rgba(255,255,255,.14); border-radius: 4px; padding: 3px 7px; cursor: pointer; }
+  .viewsbar button:hover, .viewsbar button[aria-pressed="true"] { color: var(--ink); border-color: var(--accent); }
+  .viewsbar button:focus-visible { outline: 1px solid var(--accent); outline-offset: 1px; }
+  body.noui .viewsbar { display: none !important; }
+  @media (max-width: 640px) { .viewsbar { max-width: none; right: 16px; left: 16px; } }
   .rounds { position: absolute; right: 20px; top: 18px; max-width: 46%; font-size: 10px; letter-spacing: .06em;
     color: var(--dim); text-shadow: 0 0 4px #000; }
   .rounds .head { letter-spacing: .14em; color: #cbbcd8; margin-bottom: 4px; }
