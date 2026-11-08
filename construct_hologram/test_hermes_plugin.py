@@ -522,6 +522,9 @@ class Plugin(unittest.TestCase):
         self.assertFalse(ex["world"]["warnings"])
         self.assertTrue((self.data / "projects" / ex["project"] / "constructs" / "vespa-gs150" / "scene.json").is_file())
         self.assertIn("error", self.call("construct_world", {"op": "new", "example": "nowhere"}))
+        shed = self.call("construct_inspect", {"project": "garden-shed"})   # a shipped construct, measured in place
+        self.assertNotIn("error", shed)
+        self.assertEqual(shed["project"], "garden-shed")
         # construct_check reads a world as a world
         c = self.until_done(self.call("construct_check", {"project": w}))
         self.assertTrue(c.get("ok"), c)

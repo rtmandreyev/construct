@@ -298,7 +298,14 @@ def _finish_check(rec, done, tail):
 
 @tool("construct_inspect")
 def inspect(args):
-    slug, folder, scene = runtime.resolve(args)
+    name = args.get("project")
+    shipped = runtime.examples() if isinstance(name, str) and not args.get("scene") else {}
+    if name in shipped and not (runtime.SLUG.match(name) and (runtime.projects_root() / name).is_dir()):
+        # a construct the plugin ships, read where it is (nothing is written): what a world will place, measured
+        slug, scene = name, Path(shipped[name]["scene"])
+        folder = scene.parent
+    else:
+        slug, folder, scene = runtime.resolve(args)
     code, out, err = runtime.run_child("inspect", str(scene), timeout=120, cwd=folder)
     if code:
         raise ConstructError("could not read the scene: %s" % (err.strip()[-2000:] or "unknown error"))
