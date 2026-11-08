@@ -621,7 +621,18 @@ class Plugin(unittest.TestCase):
         out = handle("open-example braun-sk4-knob")
         self.assertRegex(out, r"^Opened braun-sk4-knob as \S+\. Building \(build \S+, job [0-9a-f]{12}\)\.")
         self.assertIn("could not", handle("open-example nowhere"))
+        # a construct placed in a world under another folder name is still kept with that world (its scene's id)
+        opened = re.search(r"^Opened braun-sk4-knob as (\S+)\.", out).group(1)
+        job = re.search(r"job ([0-9a-f]{12})", out).group(1)
+        for _ in range(240):
+            if "(build " in handle("job %s" % job) and opened in {r["project"] for r in self.api.projects(self.data)}:
+                break
+            time.sleep(1)
+        copy = self.data / "projects" / sw / "constructs" / "knob-accepted-release"
+        copy.mkdir(parents=True)
+        shutil.copy(self.data / "projects" / opened / "scene.json", copy / "scene.json")
         rows = {r["project"]: r for r in self.api.projects(self.data)}
+        self.assertEqual(rows[opened]["in_world"], "My shed")
         self.assertEqual(rows[sw]["group"], "Worlds")
         worlds = {r["title"] for r in rows.values() if r.get("world")}
         self.assertTrue(all(r["in_world"] in worlds for r in rows.values() if r.get("in_world")))   # folded under a real world

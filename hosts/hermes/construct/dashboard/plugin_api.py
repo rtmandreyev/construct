@@ -188,9 +188,23 @@ def _group_of(card):
     return "Objects"
 
 
+_SCENE_ID = re.compile(rb'"id"\s*:\s*"([^"]{1,200})"')
+
+
+def _scene_id(path):
+    """A scene's own id from the head of its file (a scene starts with format, version, id): no full parse."""
+    try:
+        with open(path, "rb") as f:
+            m = _SCENE_ID.search(f.read(2048))
+    except OSError:
+        return None
+    return m.group(1).decode("utf-8", "replace") if m else None
+
+
 def _parts_of_worlds(rows):
-    """Which constructs were made for, or placed in, a world: {project: world title}."""
-    out = {}
+    """Which constructs were made for, or placed in, a world: {project: world title}. A placed copy is matched by its
+    folder's name or by its scene's id (a copy may be renamed, the scene it came from keeps its id)."""
+    out, ids = {}, {}
     for r in rows:
         if not r.get("world"):
             continue
@@ -199,6 +213,16 @@ def _parts_of_worlds(rows):
         if folder and folder.is_dir():
             for d in folder.iterdir():
                 out.setdefault(d.name, r["title"])
+                sid = _scene_id(d / "scene.json")
+                if sid:
+                    ids.setdefault(sid, r["title"])
+    if ids:
+        for r in rows:
+            scene = (r.get("newest") or {}).get("scene")
+            if not r.get("world") and r["project"] not in out and isinstance(scene, str):
+                sid = _scene_id(scene)
+                if sid in ids:
+                    out[r["project"]] = ids[sid]
     return out
 
 
