@@ -1,0 +1,182 @@
+{
+ "format": "construct-scene",
+ "version": 2,
+ "id": "tube-table",
+ "title": "A tubular steel table",
+ "subject": {
+  "category": "object",
+  "accuracy": "generic",
+  "synthetic": true,
+  "summary": "A plain table designed for this world: a top on a tubular steel frame, in the spirit of the 1920s tube furniture of Le Corbusier's interiors. Its size is designed, not measured, and it is no particular piece."
+ },
+ "units": "m",
+ "seed": 1931,
+ "sources": [
+  {
+   "id": "world-request",
+   "kind": "user_request",
+   "rights": "user_private",
+   "title": "A surface for the camera, the watch and the radiogram in the Villa Savoye world"
+  }
+ ],
+ "facts": [
+  {
+   "key": "table.size",
+   "value": "1.6 x 0.7 x 0.72 m",
+   "certainty": "inferred",
+   "source": "world-request",
+   "note": "a dining-table height and a plain proportion, chosen for this world"
+  }
+ ],
+ "parts": [
+  {
+   "id": "top",
+   "label": "Top",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 1,
+   "source": "world-request",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.6,
+     0.025,
+     0.7
+    ]
+   },
+   "at": [
+    0,
+    0.7075,
+    0
+   ]
+  },
+  {
+   "id": "leg-0",
+   "label": "Leg",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 0,
+   "source": "world-request",
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0125,
+    "height": 0.695
+   },
+   "at": [
+    -0.74,
+    0.3475,
+    -0.29
+   ]
+  },
+  {
+   "id": "leg-1",
+   "label": "Leg",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 0,
+   "source": "world-request",
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0125,
+    "height": 0.695
+   },
+   "at": [
+    0.74,
+    0.3475,
+    -0.29
+   ]
+  },
+  {
+   "id": "leg-2",
+   "label": "Leg",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 0,
+   "source": "world-request",
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0125,
+    "height": 0.695
+   },
+   "at": [
+    0.74,
+    0.3475,
+    0.29
+   ]
+  },
+  {
+   "id": "leg-3",
+   "label": "Leg",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 0,
+   "source": "world-request",
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.0125,
+    "height": 0.695
+   },
+   "at": [
+    -0.74,
+    0.3475,
+    0.29
+   ]
+  },
+  {
+   "id": "rail-l",
+   "label": "Rail",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 0,
+   "source": "world-request",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.02,
+     0.02,
+     0.58
+    ]
+   },
+   "at": [
+    -0.74,
+    0.6849999999999999,
+    0
+   ]
+  },
+  {
+   "id": "rail-r",
+   "label": "Rail",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 0,
+   "source": "world-request",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.02,
+     0.02,
+     0.58
+    ]
+   },
+   "at": [
+    0.74,
+    0.6849999999999999,
+    0
+   ]
+  }
+ ],
+ "presentation": {
+  "framing": {
+   "yaw": 30,
+   "pitch": 18,
+   "fit": 1.0
+  }
+ },
+ "animation": {
+  "assembly": {
+   "style": "ceremony",
+   "seconds": 3,
+   "interference": false
+  }
+ }
+}

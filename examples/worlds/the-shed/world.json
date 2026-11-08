@@ -1,0 +1,61 @@
+{
+ "format": "construct-world",
+ "version": 1,
+ "id": "the-shed",
+ "title": "The shed, the Samba and the Vespa",
+ "summary": "A garden shed with a 1960s VW T1 Samba parked in front and a Vespa GS 150 beside its door; three constructs from the gallery, each whole and at real size.",
+ "placements": [
+  {
+   "id": "shed",
+   "construct": "garden-shed",
+   "note": "What holds the rest: its site ground is the yard's."
+  },
+  {
+   "id": "samba",
+   "construct": "volkswagen-t1-samba",
+   "at": [
+    4.75,
+    0,
+    0.6
+   ],
+   "yaw": 0,
+   "note": "Parked along the shed's east end, clear of its eaves."
+  },
+  {
+   "id": "vespa",
+   "construct": "vespa-gs150",
+   "at": [
+    -0.7,
+    0,
+    2.3
+   ],
+   "yaw": 60,
+   "note": "On its stand beside the door."
+  }
+ ],
+ "presentation": {
+  "framing": {
+   "yaw": -28,
+   "pitch": 13,
+   "fit": 1.0
+  },
+  "views": [
+   {
+    "id": "door",
+    "label": "By the door",
+    "target": "vespa",
+    "yaw": -20,
+    "pitch": 10,
+    "distance": 1.5
+   },
+   {
+    "id": "yard",
+    "label": "The yard",
+    "target": "samba",
+    "yaw": 50,
+    "pitch": 18,
+    "distance": 1.3
+   }
+  ]
+ }
+}
