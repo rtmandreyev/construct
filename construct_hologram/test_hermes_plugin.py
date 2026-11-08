@@ -576,6 +576,11 @@ class Plugin(unittest.TestCase):
         self.assertEqual(placed["id"], "braun-sk4-knob")
         self.assertTrue(placed["on"].startswith("shed/"), placed)   # it landed on the shed's floor, not in it
         self.assertIn("could not", handle("place %s no-such-thing" % sw))
+        self.assertRegex(handle("duplicate %s braun-sk4-knob" % sw), r"^Placed braun-sk4-knob-2 in ")
+        self.assertRegex(handle("remove %s braun-sk4-knob-2" % sw), r"^Removed braun-sk4-knob-2 from ")
+        self.assertIn("could not", handle("remove %s shed" % sw))   # what holds the rest stays
+        self.assertIn("Undid the last change to %s (remove braun-sk4-knob-2)" % sw, handle("undo %s" % sw))
+        self.assertIn("Undid the last change to %s (duplicate braun-sk4-knob-2)" % sw, handle("undo %s" % sw))
         self.assertIn("Undid the last change to %s (place braun-sk4-knob)" % sw, handle("undo %s" % sw))
         # a shipped world opened as the user's own from the Worlds page, with no model turn
         out = handle("open-world the-shed")

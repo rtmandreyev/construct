@@ -432,6 +432,13 @@ def world(spec):
                 return {"errors": errors[:12]}
             g = w.compile_world(doc, folder, None)
         landing = list(spec.get("settle") or []) + [c.get("id") for c in (spec.get("arrange") or []) if isinstance(c, dict)]
+        fresh = [q["id"] for q in doc["placements"] if q["id"] in set(spec.get("settle") or []) and "at" not in q
+                 and q.get("on") == doc["placements"][0]["id"]]
+        for pid in fresh:   # just put in by hand: where it fits (a floor), else on clear ground in front
+            doc = w.drop_spot(doc, g, pid)
+        if fresh:
+            g = w.compile_world(doc, folder, None)
+            moved = (moved or []) + fresh
         if landing:   # set down by hand: each lands on what is under it
             doc, landed = w.settle(doc, g, set(landing))
             if landed:

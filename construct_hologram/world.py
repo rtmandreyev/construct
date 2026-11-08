@@ -787,45 +787,121 @@ def arrange(doc, g, changes):
 STEP_M = 0.6   # what a placement settles onto: the highest flat top under it within this height above its bottom
 
 
+def _carried(doc, by):
+    """The placements that stand, perhaps through others, on placement `by`."""
+    on = {p["id"]: p.get("on", "").split("/")[0] for p in doc["placements"] if p.get("on")}
+    out = set()
+    for pid in on:
+        cur, seen = pid, 0
+        while cur in on and seen < 16:
+            cur, seen = on[cur], seen + 1
+            if cur == by:
+                out.add(pid)
+                break
+    return out
+
+
+def _flat(b):
+    dx, dy, dz = (b["max"][k] - b["min"][k] for k in range(3))
+    return dy < 0.6 * min(dx, dz) and dx * dz > 0.002
+
+
 def settle(doc, g, ids, step=STEP_M):
-    """Placements set down by hand land on what is under them: each of `ids` that stands on its host (on the host,
-    or on one of its parts) is stood on the highest flat top of the host under the middle of its footprint, no
-    higher than `step` above where it stands now (a floor deck, paving, a table it was lifted to). A new document
+    """Placements set down by hand land on what is under them: each of `ids` (not in the sky, not floating) stands on
+    the highest flat top of any other placement (not one it carries) under the middle of its footprint, no higher
+    than `step` above where it stands now: a floor, a deck, paving, a table, a roof it was lifted to. A new document
     and the ids that changed."""
     recs = {r["id"]: r for r in g["world"]["placements"]}
     out = json.loads(json.dumps(doc))
     changed = []
     for p in out["placements"]:
-        if p["id"] not in ids or not p.get("on") or "sky" in p or p.get("floating"):
+        if p["id"] not in ids or "sky" in p or p.get("floating") or p is out["placements"][0]:
             continue
-        host = p["on"].split("/")[0]
         own = [b for q in g["parts"] if q.get("placement") == p["id"] and not q.get("sky") for b in q["instances"]]
         if not own:
             continue
         cx = (min(b["min"][0] for b in own) + max(b["max"][0] for b in own)) / 2
         cz = (min(b["min"][2] for b in own) + max(b["max"][2] for b in own)) / 2
         bottom = min(b["min"][1] for b in own)
+        skip = {p["id"]} | _carried(out, p["id"])
         best = None
         for q in g["parts"]:
-            if q.get("placement") != host or q.get("sky") or q.get("shape") == "points":
+            pl = q.get("placement")
+            if not pl or pl in skip or q.get("sky") or q.get("shape") == "points":
                 continue
             for b in q["instances"]:
-                dx, dy, dz = (b["max"][k] - b["min"][k] for k in range(3))
-                flat = dy < 0.6 * min(dx, dz) and dx * dz > 0.002
-                over = b["min"][0] <= cx <= b["max"][0] and b["min"][2] <= cz <= b["max"][2]
+                if not _flat(b) or not (b["min"][0] <= cx <= b["max"][0] and b["min"][2] <= cz <= b["max"][2]):
+                    continue
                 top = b["max"][1]
-                if flat and over and top <= bottom + step and (best is None or top > best[0]):
-                    best = (top, q["id"])
+                if top <= bottom + step and (best is None or top > best[0]):
+                    best = (top, q["id"], pl)
         if best is None:
             continue
-        part = best[1][len(host) + 1:] if best[1].startswith(host + "/") else best[1]
-        target = "%s/%s" % (host, part)
-        t = recs[p["id"]]["at"]
-        if p["on"] == target and abs(best[0] - bottom) < 0.005:
+        top, part_id, owner = best
+        target = "%s/%s" % (owner, part_id[len(owner) + 1:] if part_id.startswith(owner + "/") else part_id)
+        if p.get("on") == target and abs(top - bottom) < 0.005:
             continue
+        t = recs[p["id"]]["at"]
         p["on"], p["at"] = target, [_r(t[0]), 0.0, _r(t[2])]
         changed.append(p["id"])
     return out, changed
+
+
+def drop_spot(doc, g, pid, margin=0.12):
+    """Where a construct put into a world by hand first stands (it is then dragged where it belongs): on the widest
+    floor of the world's first placement it fits on, at ground level or near it (a chair in a room, a car in a
+    garage); else on clear ground in front of it (a car beside a shed). A new document."""
+    recs = {r["id"]: r for r in g["world"]["placements"]}
+    out = json.loads(json.dumps(doc))
+    p = next(q for q in out["placements"] if q["id"] == pid)
+    host = out["placements"][0]["id"]
+    own = [b for q in g["parts"] if q.get("placement") == pid and not q.get("sky") for b in q["instances"]]
+    hb = [b for q in g["parts"] if q.get("placement") == host and not q.get("sky") for b in q["instances"]]
+    if not own or not hb or pid == host:
+        return out
+    lo = [min(b["min"][k] for b in own) for k in range(3)]
+    hi = [max(b["max"][k] for b in own) for k in range(3)]
+    w, d = hi[0] - lo[0], hi[2] - lo[2]
+    centre = [(lo[0] + hi[0]) / 2, (lo[2] + hi[2]) / 2]
+    t = recs[pid]["at"]
+    off = [centre[0] - t[0], centre[1] - t[2]]   # its middle from its origin, as it stands
+    ground = min(b["min"][1] for b in hb)
+    fits = []
+    for q in g["parts"]:
+        if q.get("placement") != host or q.get("sky"):
+            continue
+        for b in q["instances"]:
+            sx, sz = b["max"][0] - b["min"][0], b["max"][2] - b["min"][2]
+            if _flat(b) and b["max"][1] <= ground + 1.2 and sx >= w * (1 + margin) and sz >= d * (1 + margin):
+                fits.append((sx * sz, q["id"], b))
+    if fits:
+        _, part, b = max(fits, key=lambda f: f[0])
+        mx, mz = (b["min"][0] + b["max"][0]) / 2, (b["min"][2] + b["max"][2]) / 2
+        p["on"] = "%s/%s" % (host, part[len(host) + 1:])
+        p["at"] = [_r(mx - off[0]), 0.0, _r(mz - off[1])]
+        return out
+    # outside, in front of the host, clear of everything placed
+    hlo = [min(b["min"][k] for b in hb) for k in range(3)]
+    hhi = [max(b["max"][k] for b in hb) for k in range(3)]
+    others = [(r_lo, r_hi) for q in g["world"]["placements"] if q["id"] not in (pid, host) and "sky" not in q
+              for r_lo, r_hi in [_wbox(g, q["id"])] if r_lo]
+    z = hhi[2] + d / 2 + 0.6
+    for i in range(12):
+        x = (hlo[0] + hhi[0]) / 2 + (((i + 1) // 2) * (w + 0.6) * (1 if i % 2 else -1) if i else 0)
+        box = ([x - w / 2, 0, z - d / 2], [x + w / 2, 1, z + d / 2])
+        if not any(_meets((box[0], box[1]), (a, b2), 0.0) for a, b2 in others if a[1] < 2.5):
+            break
+    ht = recs[host]["at"]
+    p["on"] = host
+    p["at"] = [_r(x - off[0] - ht[0]), 0.0, _r(z - off[1] - ht[2])]
+    return out
+
+
+def _wbox(g, pid):
+    bs = [b for q in g["parts"] if q.get("placement") == pid and not q.get("sky") for b in q["instances"]]
+    if not bs:
+        return None, None
+    return [min(b["min"][k] for b in bs) for k in range(3)], [max(b["max"][k] for b in bs) for k in range(3)]
 
 
 def _meets(a, b, tol=0.01):

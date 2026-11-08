@@ -391,6 +391,61 @@ def place_by_hand(slug, name):
     return dict(_summary(checked), world=slug, placed=pid, build=build, job_id=job_id, undo="edits/%s-before.json" % stamp)
 
 
+def remove_by_hand(slug, pid):
+    """A placement taken out of a world by the user (the card's Remove); what stood on it goes too only if the user
+    asks again for each: it is refused while anything stands on it."""
+    folder = runtime.project_dir(slug)
+    path, doc = _load(folder)
+    idx = next((i for i, p in enumerate(doc["placements"]) if p["id"] == pid), None)
+    if idx is None:
+        raise ConstructError("no placement %r in %s" % (pid, slug))
+    if idx == 0:
+        raise ConstructError("%s holds the others; it stays" % pid)
+    on_it = [p["id"] for p in doc["placements"] if p.get("on", "").split("/")[0] == pid]
+    if on_it:
+        raise ConstructError("%s carries %s; take those off first" % (pid, ", ".join(on_it)))
+    before = json.loads(path.read_text(encoding="utf-8"))
+    doc["placements"].pop(idx)
+    checked = _save_checked(path, doc, folder)
+    stamp = _log(folder, before, {"op": "remove", "by": "user", "placement": pid})
+    build, job_id = _rebuild_later(slug, folder, path)
+    return dict(_summary(checked), world=slug, removed=pid, build=build, job_id=job_id, undo="edits/%s-before.json" % stamp)
+
+
+def duplicate_by_hand(slug, pid):
+    """Another of a placement's construct, set down beside it (the card's Duplicate), facing the same way."""
+    folder = runtime.project_dir(slug)
+    path, doc = _load(folder)
+    src = next((p for p in doc["placements"] if p["id"] == pid), None)
+    if src is None or "sky" in src:
+        raise ConstructError("no placement %r to duplicate in %s" % (pid, slug))
+    res = check(doc, folder)
+    row = next(r for r in res["placements"] if r["id"] == pid)
+    width = (row.get("size_m") or [1, 1, 1])[0]
+    base, n = re.sub(r"-\d+$", "", pid), 2
+    new_id = "%s-%d" % (base, n)
+    while any(p["id"] == new_id for p in doc["placements"]):
+        n += 1
+        new_id = "%s-%d" % (base, n)
+    twin = json.loads(json.dumps(src))
+    twin["id"] = new_id
+    twin.pop("note", None)
+    at = list(twin.get("at") or [0.0, 0.0, 0.0])
+    at[0] = round(at[0] + width + 0.4, 3)
+    twin["at"] = at
+    doc["placements"].append(twin)
+    before = json.loads(path.read_text(encoding="utf-8"))
+    checked = check(doc, folder, settle=[new_id])
+    if checked.get("errors"):
+        raise ConstructError("the world would not be valid:\n" + "\n".join(checked["errors"]))
+    doc = checked.pop("doc", doc)
+    checked.pop("moved", None)
+    runtime.write_json(path, doc)
+    stamp = _log(folder, before, {"op": "duplicate", "by": "user", "placement": new_id, "args": {"of": pid}})
+    build, job_id = _rebuild_later(slug, folder, path)
+    return dict(_summary(checked), world=slug, placed=new_id, build=build, job_id=job_id, undo="edits/%s-before.json" % stamp)
+
+
 def undo(slug):
     """The world as it was before its last change (by the agent or by hand), rebuilt."""
     if not isinstance(slug, str) or not NAME.match(slug):

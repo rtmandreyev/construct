@@ -1009,6 +1009,51 @@ void main() {
     }
     return Object.values(best).sort((a, b) => a.dist - b.dist);
   };
+  Hologram.prototype.bottomOf = function (id) {   // its lowest point, as it was compiled
+    let lo = Infinity;
+    for (const [a] of this.framingBoxes(id, true)) lo = Math.min(lo, a[1]);
+    return lo === Infinity ? 0 : lo;
+  };
+  // what the pointer meets first, not counting `skip` (the placement being moved and what it carries): the top of
+  // something flat (a floor, a deck, a roof, a table) to stand on, or a wall (side: true), which stops the ray: what is
+  // behind a see-through wall is never where a thing is put. Nothing met: the ground.
+  Hologram.prototype.surfaceAt = function (px, py, cw, ch, skip) {
+    const ray = this.rayAt(px, py, cw, ch);
+    if (!ray) return null;
+    const memo = {};
+    let best = null;
+    for (const p of this.geo.parts) {
+      if (p.sky || !p.placement || skip.has(p.placement) || p.shape === "points") continue;
+      const m = this.arranging() ? this.placeMotion(p.placement, memo) : null;
+      let ro = ray.o, rd = ray.d;
+      if (m) {
+        const q = V.sub(ray.o, m.t), R = m.R;
+        ro = [0, 1, 2].map((j) => R[0][j] * q[0] + R[1][j] * q[1] + R[2][j] * q[2]);
+        rd = [0, 1, 2].map((j) => R[0][j] * ray.d[0] + R[1][j] * ray.d[1] + R[2][j] * ray.d[2]);
+      }
+      for (const b of p.instances) {
+        let t0 = -Infinity, t1 = Infinity, axis = -1;
+        for (let k = 0; k < 3; k++) {
+          if (Math.abs(rd[k]) < 1e-12) { if (ro[k] < b.min[k] || ro[k] > b.max[k]) { t0 = Infinity; break; } continue; }
+          let a = (b.min[k] - ro[k]) / rd[k], c = (b.max[k] - ro[k]) / rd[k];
+          if (a > c) { const x = a; a = c; c = x; }
+          if (a > t0) { t0 = a; axis = k; }
+          t1 = Math.min(t1, c);
+        }
+        if (!(t0 <= t1) || t0 <= 0 || (best && t0 >= best.t)) continue;
+        const dy = b.max[1] - b.min[1], flat = dy < 0.6 * Math.min(b.max[0] - b.min[0], b.max[2] - b.min[2]);
+        const top = axis === 1 && rd[1] < 0 && flat;
+        // a thin board seen edge-on is not a wall; anything with height is
+        if (!top && dy < 0.05) continue;
+        best = { t: t0, point: V.add(ray.o, V.mul(ray.d, t0)), side: !top };
+      }
+    }
+    if (!best && ray.d[1] < -1e-6) {   // the ground
+      const t = (this.ground - ray.o[1]) / ray.d[1];
+      if (t > 0) best = { t, point: V.add(ray.o, V.mul(ray.d, t)), side: false };
+    }
+    return best;
+  };
   // the changes as the world's file takes them: [{id, move, turn, pivot}], rounded, none that does nothing
   Hologram.prototype.arrangeChanges = function () {
     const out = [], r3 = (x) => Math.round(x * 1000) / 1000;
@@ -1492,8 +1537,8 @@ void main() {
       if (ids.length > 3) legend.appendChild(el("div", "src more", "+" + (ids.length - 3) + " MORE"));
     });
     overlay.appendChild(legend);
-    const help = el("div", "help", "drag orbit · wheel zoom · WASD fly · space/shift up/down · double-click focus · F skip · 1–6 views · R replay · P provenance" +
-      (holo.solid ? " · O solid" : "") + (geo.world ? " · G arrange" : "") + " · L labels" + (holo.art.length ? " · T text" : "") + " · . pause");
+    const help = el("div", "help", "drag orbit · wheel zoom · arrows fly · space/shift up/down · double-click focus · F skip · P provenance" +
+      (holo.solid ? " · S solid" : "") + (geo.world ? " · A arrange" : "") + " · ? all keys");
     overlay.appendChild(help);
     // a world: its views by name (the whole, each placement, the world's own), each a click away
     const viewsBar = el("div", "viewsbar");
@@ -1646,7 +1691,7 @@ void main() {
       arrangeBox.appendChild(el("div", "sel", r ? String(r.label || r.title || sel).toUpperCase() +
         (e ? " · MOVED " + Math.hypot(e.move[0], e.move[2]).toFixed(2) + " M" + (Math.abs(e.move[1]) > 5e-4 ? " · LIFTED " + e.move[1].toFixed(2) + " M" : "") +
              " · TURNED " + Math.round(e.turn) + "°" : "") : "CLICK A CONSTRUCT TO CHOOSE IT"));
-      arrangeBox.appendChild(el("div", "keys", "DRAG MOVE · SHIFT-DRAG OR Q E TURN · ARROWS NUDGE · PGUP PGDN LIFT · ⌫ PUT BACK · ESC LET GO · G DONE"));
+      arrangeBox.appendChild(el("div", "keys", "DRAG: IT RIDES ON WHAT IS UNDER THE POINTER (ALT KEEPS ITS LEVEL) · SHIFT-DRAG OR Q E TURN · ARROWS NUDGE · PGUP PGDN LIFT · ⌫ PUT BACK · ESC LET GO · A DONE"));
       arrangeBox.style.display = arrangeOn() && opt.ui ? "block" : "none";
       if (typeof window.HOLO === "object" && window.HOLO && typeof window.HOLO.onArrange === "function") {
         try { window.HOLO.onArrange({ on: arrangeOn(), selected: sel || null, changes: ch }); } catch (err) { /* the listener's own problem */ }
@@ -1679,6 +1724,7 @@ void main() {
       return t > 0 ? [a[0] + (b[0] - a[0]) * t, y, a[2] + (b[2] - a[2]) * t] : null;
     };
 
+    const hover = el("div", "hover"); overlay.appendChild(hover);
     // interaction
     let drag = null, lastInput = -1e9;
     canvas.addEventListener("pointerdown", (e) => {
@@ -1696,14 +1742,44 @@ void main() {
       lastPick = { x: px, y: py };
       holo.arr.sel = pick.id;
       const ed = editOf(pick.id);
-      drag.place = { id: pick.id, y: pick.point[1], start: groundAt(px, py, pick.point[1]), move0: ed.move.slice(), turn0: ed.turn, turning: e.shiftKey };
+      const skip = new Set(geo.world.placements.filter((q) => q.id === pick.id || holo.carriedBy(q.id, pick.id)).map((q) => q.id));
+      const mo = holo.placeMotion(pick.id), P3 = [ed.pivot[0], holo.bottomOf(pick.id), ed.pivot[1]];
+      const now3 = V.add([0, 1, 2].map((i) => mo.R[i][0] * P3[0] + mo.R[i][1] * P3[1] + mo.R[i][2] * P3[2]), mo.t);
+      // where the pointer took hold, at the level it stands on: its middle keeps that small offset from the pointer
+      const g0 = groundAt(px, py, now3[1]);
+      drag.place = { id: pick.id, y: pick.point[1], start: groundAt(px, py, pick.point[1]), move0: ed.move.slice(), turn0: ed.turn, turning: e.shiftKey,
+                     skip, P3, offset: g0 ? [now3[0] - g0[0], now3[2] - g0[2]] : [0, 0] };
+      hover.style.display = "none";
       arrangeTell(); kick();
     });
+    let hoverAt = 0;
     canvas.addEventListener("pointermove", (e) => {
+      if (!drag && arrangeOn() && performance.now() - hoverAt > 60) {   // what a click would choose, named
+        hoverAt = performance.now();
+        const r = canvas.getBoundingClientRect(), hits = holo.pickPlacements(e.clientX - r.left, e.clientY - r.top, r.width, r.height);
+        const rec = hits.length && geo.world.placements.find((q) => q.id === hits[0].id);
+        hover.textContent = rec ? String(rec.label || rec.title || rec.id) : "";
+        hover.style.display = rec ? "block" : "none";
+        hover.style.left = (e.clientX - r.left + 14) + "px"; hover.style.top = (e.clientY - r.top + 12) + "px";
+      } else if (!arrangeOn()) hover.style.display = "none";
       if (!drag) return;
       if (drag.place) {
         const pl = drag.place, ed = editOf(pl.id);
+        const rr = canvas.getBoundingClientRect();
+        const surf = !pl.turning && !e.altKey ? holo.surfaceAt(e.clientX - rr.left, e.clientY - rr.top, rr.width, rr.height, pl.skip) : null;
         if (pl.turning) ed.turn = pl.turn0 + (e.clientX - drag.x0) * 0.5;
+        else if (surf) {   // it rides on what is under the pointer: its bottom on that top, its middle where the pointer is
+          let W = [surf.point[0] + pl.offset[0], surf.point[1], surf.point[2] + pl.offset[1]];
+          if (surf.side) {   // the pointer is on a wall: it keeps its level, just this side of the wall
+            const level = pl.P3[1] + ed.move[1], r2 = holo.rayAt(e.clientX - rr.left, e.clientY - rr.top, rr.width, rr.height);
+            const back = r2 ? [r2.d[0], r2.d[2]] : [0, 0], n = Math.hypot(back[0], back[1]) || 1;
+            W = [surf.point[0] - back[0] / n * 0.25 + pl.offset[0], level, surf.point[2] - back[1] / n * 0.25 + pl.offset[1]];
+          }
+          const r0 = geo.world.placements.find((q) => q.id === pl.id), host = r0 && r0.on ? String(r0.on).split("/")[0] : null;
+          const hm = host ? holo.placeMotion(host) : { R: [[1, 0, 0], [0, 1, 0], [0, 0, 1]], t: [0, 0, 0] };
+          const q = V.sub(W, hm.t), loc = [0, 1, 2].map((j) => hm.R[0][j] * q[0] + hm.R[1][j] * q[1] + hm.R[2][j] * q[2]);
+          ed.move = [loc[0] - pl.P3[0], loc[1] - pl.P3[1], loc[2] - pl.P3[2]];
+        }
         else if (pl.start) {
           const r = canvas.getBoundingClientRect(), g = groundAt(e.clientX - r.left, e.clientY - r.top, pl.y);
           if (g) { const d = local(pl.id, [g[0] - pl.start[0], 0, g[2] - pl.start[2]]); ed.move = [pl.move0[0] + d[0], pl.move0[1], pl.move0[2] + d[2]]; }
@@ -1716,6 +1792,12 @@ void main() {
       drag = { x: e.clientX, y: e.clientY }; lastInput = performance.now(); kick();
     });
     canvas.addEventListener("pointerup", () => { drag = null; });
+    canvas.addEventListener("pointerleave", () => { hover.style.display = "none"; });
+    // the keyboard follows the pointer into the picture (inside an app's frame, keys only reach a focused page)
+    canvas.tabIndex = 0;
+    const grabKeys = () => { try { if (document.activeElement !== canvas) canvas.focus({ preventScroll: true }); } catch (err) { /* nothing to focus */ } };
+    canvas.addEventListener("pointerenter", grabKeys);
+    canvas.addEventListener("pointerdown", grabKeys);
     // set in a page (an iframe), the wheel scrolls the page until the construct is clicked, then zooms it until the
     // pointer leaves: a page never stops scrolling under a construct it passes over
     let embedded = false;
@@ -1744,10 +1826,11 @@ void main() {
       c.target = hit.point; c.focus = Math.max(0.05, hit.radius); c.dist = Math.max(0.15, Math.min(c.dist, hit.radius * 3.2));
       lastInput = performance.now(); kick();
     });
-    // flying: W A S D across the ground, Space up, Shift or C down (held); Alt goes faster
+    // flying: the arrow keys across the ground, Space up, Shift down (held); Alt goes faster. With a construct chosen
+    // while arranging, the arrows move it instead
     const held = new Set();
     const flyKey = (e) => (e.key === " " ? " " : e.key === "Shift" ? "shift" : e.key.length === 1 ? e.key.toLowerCase() : e.key);
-    const FLY = new Set(["w", "a", "s", "d", " ", "shift", "c"]);
+    const FLY = new Set(["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", " ", "shift"]);
     let flyAt = 0;
     const fly = (t) => {
       if (!held.size || !holo.userCamera) { flyAt = 0; return; }
@@ -1755,10 +1838,11 @@ void main() {
       const c = holo.userCamera, y = c.yaw * Math.PI / 180;
       const fwd = [-Math.sin(y), 0, -Math.cos(y)], right = [Math.cos(y), 0, -Math.sin(y)];
       let m = [0, 0, 0];
-      if (held.has("w")) m = V.add(m, fwd); if (held.has("s")) m = V.sub(m, fwd);
-      if (held.has("d")) m = V.add(m, right); if (held.has("a")) m = V.sub(m, right);
-      if (held.has(" ")) m[1] += 1; if (held.has("shift") || held.has("c")) m[1] -= 1;
-      const speed = Math.max(0.5, Math.min(60, c.dist * 0.9)) * (held.has("Alt") ? 3 : 1);
+      if (held.has("ArrowUp")) m = V.add(m, fwd); if (held.has("ArrowDown")) m = V.sub(m, fwd);
+      if (held.has("ArrowRight")) m = V.add(m, right); if (held.has("ArrowLeft")) m = V.sub(m, right);
+      if (held.has(" ")) m[1] += 1; if (held.has("shift")) m[1] -= 1;
+      // about a third of the distance to what you look at, a second: a room at walking pace, a city at a car's
+      const speed = Math.max(0.25, Math.min(25, c.dist * 0.32)) * (held.has("Alt") ? 3 : 1);
       c.target = V.add(c.target, V.mul(m, speed * dt));
       lastInput = performance.now();
     };
@@ -1767,14 +1851,15 @@ void main() {
     window.addEventListener("keydown", (e) => {
       if (e.metaKey || e.ctrlKey) return;
       const fk = flyKey(e);
-      // Shift is "down" unless it changes something else (a turn of one degree, a lift of half a metre)
-      const shiftFree = !(arrangeOn() && holo.arr.sel) && !drag;
-      if (FLY.has(fk) && (fk !== "shift" || shiftFree) && !(fk === "c" && arrangeOn() && holo.arr.sel)) {
+      if (e.key === "?") { toggleKeys(); return; }
+      // with a construct chosen while arranging, the arrows and Shift belong to it
+      const chosen = arrangeOn() && holo.arr.sel;
+      if (FLY.has(fk) && !(chosen && fk !== " ") && !drag) {
         if (!holo.userCamera) holo.userCamera = holo.cameraAt(now(), holo.cameraFor(opt.view));
         held.add(fk); if (e.altKey) held.add("Alt");
         e.preventDefault(); kick(); return;
       }
-      if (geo.world && (e.key === "g" || e.key === "G")) { setArrange(!arrangeOn()); return; }
+      if (geo.world && (e.key === "a" || e.key === "A" || e.key === "g" || e.key === "G")) { setArrange(!arrangeOn()); return; }
       if (arrangeOn()) {
         const sel = holo.arr.sel;
         if (e.key === "Escape") { holo.arr.sel = null; arrangeTell(); kick(); return; }
@@ -1800,7 +1885,7 @@ void main() {
       else if (e.key === "r" || e.key === "R") { clock0 = performance.now(); frozen = null; paused = false; holo.userCamera = null; }
       else if (e.key === "m" || e.key === "M") { opt.reduced = !opt.reduced; holo.opt.reduced = opt.reduced; holo.schedule = holo.buildSchedule(); }
       else if (e.key === "p" || e.key === "P") { opt.mode = opt.mode === "provenance" ? "light" : "provenance"; holo.opt.mode = opt.mode; setUi(); }
-      else if ((e.key === "o" || e.key === "O") && holo.solid) { opt.solid = !opt.solid; holo.opt.solid = opt.solid; setUi(); }
+      else if ((e.key === "s" || e.key === "S" || e.key === "o" || e.key === "O") && holo.solid) { opt.solid = !opt.solid; holo.opt.solid = opt.solid; setUi(); }
       else if (e.key === "f" || e.key === "F") skip();
       else if (e.key === "l" || e.key === "L") { opt.labels = !opt.labels; }
       else if (e.key === "t" || e.key === "T") { opt.text = !opt.text; }
@@ -1809,6 +1894,14 @@ void main() {
       kick();
     });
     let pausedStamp = 0;
+    const keysBox = el("div", "keys");
+    [["Drag", "turn around"], ["Wheel", "closer, then on through"], ["Double-click", "look at that part"], ["Arrows", "fly across"],
+     ["Space / Shift", "up / down (Alt: faster)"], ["F", "finish the assembly"], ["R", "replay"], ["1–6", "front, side, back, top…"],
+     ["P", "how each part is known"], ["S", "solid"], ["L / T", "labels / printed text"], [".", "pause"]]
+      .concat(geo.world ? [["A", "arrange: click one, drag it onto anything; Q/E or Shift-drag turn; PgUp/PgDn lift; ⌫ put back"]] : [])
+      .forEach(([k, v]) => { const row = el("div", "row"); row.appendChild(el("b", "", k)); row.appendChild(el("span", "", v)); keysBox.appendChild(row); });
+    overlay.appendChild(keysBox);
+    function toggleKeys() { keysBox.classList.toggle("open"); }
     // F: the assembly done at once, everything in place and open to look at
     function skip() { const end = Math.max(holo.assemblyTimes().end, 0) + 0.05; frozen = null; paused = false; clock0 = performance.now() - end * 1000; kick(); }
     // a kiosk (?return=1): after a while untouched the presentation returns to its own camera
@@ -1851,6 +1944,7 @@ void main() {
         else if (name === "replay") { clock0 = performance.now(); frozen = null; paused = false; }
         else if (name === "skip") skip();
         else if (name === "home") { opt.view = "hero"; holo.userCamera = null; }
+        else if (name === "keys") toggleKeys();
         else return false;
         kick(); return true;
       },
@@ -1867,6 +1961,9 @@ void main() {
         changes() { return holo.arrangeChanges(); },
         reset() { holo.arr.edits = {}; holo.arr.sel = null; arrangeTell(); kick(); return true; },
         select(id) { if (!holo.arrangeable(id)) return false; holo.arr.sel = id; editOf(id); arrangeTell(); kick(); return true; },
+        turn(deg) { const id = holo.arr.sel; if (!id || typeof deg !== "number") return false; editOf(id).turn += deg; arrangeTell(); kick(); return true; },
+        lift(m) { const id = holo.arr.sel; if (!id || typeof m !== "number") return false; editOf(id).move[1] += m; arrangeTell(); kick(); return true; },
+        putBack() { const id = holo.arr.sel; if (!id) return false; delete holo.arr.edits[id]; arrangeTell(); kick(); return true; },
         edit(id, change) { if (!holo.arrangeable(id) || !change) return false; const ed = editOf(id);
           if (Array.isArray(change.move) && change.move.length === 3) ed.move = change.move.map(Number);
           if (typeof change.turn === "number") ed.turn = change.turn; arrangeTell(); kick(); return true; },

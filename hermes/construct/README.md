@@ -51,9 +51,9 @@ message in the chat follows its progress.
   known), Solid, Replay, How to read it, Open in browser, and actions that ask Hermes for the next step in that
   chat: Export a glTF, More detail, Review it, Place in a world. A NetLogo run's construct grows in the card while
   the run goes.
-- **A world, arranged by hand.** A world's card adds **Arrange**: click a construct and drag it over the ground;
-  Shift-drag or Q and E turn it, the arrows nudge it, Page Up and Page Down lift it, and what stands on it goes with
-  it. **Save** sends the changes to the plugin's own `/construct arrange` command, run in the gateway with no model
+- **A world, arranged by hand.** A world's card adds **Arrange**: click a construct and drag it onto anything, a
+  floor, a table, a roof; Shift-drag or Q and E turn it, the arrows nudge it, Page Up and Page Down lift it, and what
+  stands on it goes with it. **Save** sends the changes to the plugin's own `/construct arrange` command, run in the gateway with no model
   turn: the world is checked with them (overlaps, collisions, doors that cannot open), saved, logged as yours and
   rebuilt, and the card shows the new build. **Undo last change** steps back one saved change, yours or the agent's.
 - **Its own viewers.** A glTF export opens as a model to turn, with each part's name, certainty and role on hover

@@ -61,7 +61,7 @@ reach 1,000 km from the origin, and an optional `origin: {lat, lon}` ties the wo
 
 - **The page** draws it like a construct.
   - The caption says how many constructs it holds.
-  - Provenance (P) shows every part's evidence across the world, and the solid view (O) works too, and cuts away what stands between you and the room a view looks into.
+  - Provenance (P) shows every part's evidence across the world, and the solid view (S) works too, and cuts away what stands between you and the room a view looks into.
   - A view frames each placement.
   - Every joint opens: the viewer keeps joint and motion poses in a texture, so a world's dozens of doors, lids
     and hinges are not limited to a construct's sixteen.
@@ -91,12 +91,13 @@ reach 1,000 km from the origin, and an optional `origin: {lat, lon}` ties the wo
 - `op: list`, with an id to list the surfaces things can stand on;
 - `op: view` with an id, a label and a target: a named view, a button on the page (`remove: true` drops it).
 
-In Hermes Desktop a world's card has **Arrange**: click a construct, drag it over the ground, Shift-drag or Q/E to
-turn it, the arrows to nudge, Page Up/Down to lift, Backspace to put it back. What stands on it (on it, or on one of
+In Hermes Desktop a world's card has **Arrange**: click a construct and drag it: it rides on whatever is under the
+pointer (a floor, a table, a roof; a wall stops it; Alt keeps its level). Shift-drag or Q/E turns it, the arrows
+nudge it, Page Up/Down lift it, Backspace puts it back; Duplicate and Remove are on its bar. What stands on it (on it, or on one of
 its parts) goes with it, as a table carries what is on it. **Save** runs `/construct arrange <world> <changes>`
 in the gateway, with no model turn: the world is checked with the moves, written back as each placement was
 placed (absolute, or on its host), logged as the user's in `edits/log.jsonl` and rebuilt. `/construct undo <world>`
-steps back one saved change, the agent's or the user's. Any world page does the same with G; outside Hermes,
+steps back one saved change, the agent's or the user's. Any world page does the same with A; outside Hermes,
 `HOLO.arrange.changes()` gives the moves.
 
 **Quality.** A world asked for from a picture or a description is made to a masterpiece's standard: each missing

@@ -11,6 +11,8 @@
                                   these: a JSON list of {id, move, turn, pivot}); checked, saved and rebuilt
     /construct place <world> <construct>   put a construct into a world (the card's Add a construct)
     /construct open-world <example>        a shipped world as your own (the Worlds page's Open)
+    /construct remove <world> <placement>  take one out (the card's Remove)
+    /construct duplicate <world> <placement>   another beside it (the card's Duplicate)
     /construct undo <world>       the world as it was before its last change
     /construct open-example <name>         a shipped construct as your own, built (the Start from page's Open)
     /construct thumbs [n]         stills for tiles that have none
@@ -145,6 +147,14 @@ def handle(raw_args="", event=None, **kwargs):
             warn = r.get("warnings") or []
             return ("Placed %s in %s. Rebuilding (build %s, job %s); drag it where it belongs%s" % (
                 r["placed"], r["world"], r["build"], r["job_id"], (". The check says: " + "; ".join(warn[:3])) if warn else "."))
+        if verb in ("remove", "duplicate"):   # the card's buttons for the construct chosen while arranging
+            if len(words) < 3:
+                return "Usage: /construct %s <world> <placement>" % verb
+            if verb == "remove":
+                r = world_tools.remove_by_hand(words[1].lower(), words[2])
+                return "Removed %s from %s. Rebuilding (build %s, job %s)." % (r["removed"], r["world"], r["build"], r["job_id"])
+            r = world_tools.duplicate_by_hand(words[1].lower(), words[2])
+            return "Placed %s in %s. Rebuilding (build %s, job %s); drag it where it belongs." % (r["placed"], r["world"], r["build"], r["job_id"])
         if verb == "open-world":   # the Worlds page's Open: a shipped world as the user's own, with no model turn
             if len(words) < 2:
                 return "Which world? /construct open-world <example> (/construct worlds lists them)"

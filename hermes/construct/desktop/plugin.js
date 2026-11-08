@@ -4327,9 +4327,9 @@ function PageFrame({ route, kind, loaderUrl, height, onCard, onState, control, o
       control.current = {
         key: key => typeof key === 'string' && KEYS.has(key) && post({ type: 'construct:key', key }),
         step: n => typeof n === 'number' && n >= 1 && n < 1000 && post({ type: 'construct:step', step: Math.floor(n) }),
-        arrange: action => ['on', 'off', 'reset'].includes(action) && post({ type: 'construct:arrange', action }),
+        arrange: (action, value) => ['on', 'off', 'reset', 'turn', 'lift', 'put-back'].includes(action) && post({ type: 'construct:arrange', action, value }),
         select: id => PLACE_ID.test(String(id)) && post({ type: 'construct:arrange', action: 'select', id }),
-        action: name => ['solid', 'provenance', 'replay', 'skip', 'home'].includes(name) && post({ type: 'construct:action', name }),
+        action: name => ['solid', 'provenance', 'replay', 'skip', 'home', 'keys'].includes(name) && post({ type: 'construct:action', name }),
         view: id => typeof id === 'string' && id.length < 80 && post({ type: 'construct:view', id })
       }
     }
@@ -4514,7 +4514,7 @@ function ConstructCard({ project, build, loaderUrl, title, parts, sessionId, hei
             : card && card.changed_since && !(follow && follow.ready)
             ? jsx('div', { style: S.meta, children: 'The world changed after this build: arrange its newest build (Constructs page, or ask Hermes to show it).' })
             : jsx(Button, { label: arr.on ? 'Arranging' : 'Arrange', icon: 'move', active: arr.on, disabled: !view.ready || saving,
-              title: 'Move and turn the constructs yourself: click one, drag it; Shift-drag or Q/E turns it (G)',
+              title: 'Move and turn the constructs yourself: click one and drag it onto anything, a floor, a table, a roof; Q/E or Shift-drag turns it (A)',
               onClick: () => control.current && control.current.arrange(arr.on ? 'off' : 'on') }),
           jsx(Button, { label: 'Add a construct', icon: 'add', active: picking, disabled: saving || arr.changes.length > 0,
             title: 'Put one of your constructs, a shipped one or one from the gallery into this world, then drag it into place',
@@ -4527,6 +4527,22 @@ function ConstructCard({ project, build, loaderUrl, title, parts, sessionId, hei
             title: 'The world as it was before its last saved change (yours or the agent\'s)',
             onClick: () => command('construct undo ' + project, 'Undoing the last change…') }),
           note ? jsx('div', { style: Object.assign({}, S.meta, { flex: '1 1 260px', whiteSpace: 'normal' }), children: note }) : null
+        ]
+      }) : null,
+      isWorld && arr.on && arr.selected ? jsxs('div', {
+        style: S.bar,
+        children: [
+          jsx('div', { style: Object.assign({}, S.title, { fontSize: 12, maxWidth: 220 }), children: arr.selected }),
+          jsx(Button, { label: 'Turn 90°', icon: 'refresh', title: 'Q / E turn 15° (Shift: 1°)', onClick: () => control.current.arrange('turn', 90) }),
+          jsx(Button, { label: 'Lift', icon: 'arrow-up', title: 'PgUp (Shift: 0.5 m); it lands on what is under it when you save',
+            onClick: () => control.current.arrange('lift', 0.25) }),
+          jsx(Button, { label: 'Lower', icon: 'arrow-down', title: 'PgDn', onClick: () => control.current.arrange('lift', -0.25) }),
+          jsx(Button, { label: 'Put back', icon: 'discard', title: 'Where it was (⌫)', onClick: () => control.current.arrange('put-back') }),
+          jsx('div', { style: S.sep }),
+          jsx(Button, { label: 'Duplicate', icon: 'copy', disabled: saving || arr.changes.length > 0, title: 'Another one beside it (save your moves first)',
+            onClick: () => command('construct duplicate ' + project + ' ' + arr.selected, 'Duplicating ' + arr.selected + '…') }),
+          jsx(Button, { label: 'Remove', icon: 'trash', disabled: saving || arr.changes.length > 0, title: 'Take it out of the world (Undo last change brings it back)',
+            onClick: () => command('construct remove ' + project + ' ' + arr.selected, 'Removing ' + arr.selected + '…') })
         ]
       }) : null,
       isWorld && picking ? jsx(Picker, { onPick: place, exclude: project }) : null,
@@ -4547,11 +4563,12 @@ function ConstructCard({ project, build, loaderUrl, title, parts, sessionId, hei
           jsx(Button, { label: 'Provenance', icon: 'eye', active: view.mode === 'provenance', disabled: !view.ready,
             title: 'How each part is known (P)', onClick: () => act('provenance') }),
           jsx(Button, { label: 'Solid', icon: 'circle-filled', active: view.solid, disabled: !view.ready || !view.hasSolid,
-            title: 'The surfaces as a solid (O)', onClick: () => act('solid') }),
+            title: 'The surfaces as a solid (S)', onClick: () => act('solid') }),
           jsx(Button, { label: 'Replay', icon: 'debug-restart', disabled: !view.ready, title: 'Build it again (R)',
             onClick: () => act('replay') }),
           jsx(Button, { label: 'How to read it', icon: 'info', disabled: !view.ready, title: 'The reading panel, where the construct has one (H)',
             onClick: () => press('h') }),
+          view.canAct ? jsx(Button, { label: 'Keys', icon: 'keyboard', disabled: !view.ready, title: 'Every key (?)', onClick: () => act('keys') }) : null,
           canAsk ? jsx('div', { style: S.sep }) : null,
           canAsk ? jsx(Button, { label: 'Export a glTF', icon: 'package', disabled: busy,
             onClick: () => ask('Export the construct ' + subject + ' as a glTF (.glb) with construct_export and show me the file.') }) : null,
@@ -5240,7 +5257,8 @@ function Projects({ focus }) {
   if (!rows.length) {
     return jsxs('div', { style: { padding: '40px 0', textAlign: 'center', color: 'var(--ui-text-tertiary)', fontSize: 13 },
       children: [jsx('div', { style: { fontSize: 15, color: 'var(--ui-text-secondary)', marginBottom: 6 }, children: 'No constructs yet' }),
-        jsx('div', { children: 'Ask Hermes for one ("Make a construct of a lighthouse"), or start from one under Start from.' })] })
+        jsx('div', { children: 'Ask Hermes for one ("Make a construct of a lighthouse"), or open one of these.' }),
+        jsx('div', { style: { textAlign: 'left', marginTop: 24 }, children: jsx(Examples, { onOpen: project => { load(); setOpen(project) } }) })] })
   }
   // the same name twice (two copies of an example) is told apart by its project id and its dates
   const titles = {}
@@ -5258,7 +5276,7 @@ function Projects({ focus }) {
   }
   // sorted by kind: worlds, then vehicles, buildings…; what was made for a world sits under that world, folded
   const ORDER = ['Worlds', 'Vehicles', 'Buildings', 'Machines and instruments', 'Designed', 'Objects', 'Living things', 'Simulations']
-  const own = rows.filter(r => !r.in_world)
+  const own = rows.filter(r => !r.in_world && !r.world)
   const groups = ORDER.map(g => [g, own.filter(r => (r.group || 'Objects') === g)]).filter(([, list]) => list.length)
   const parts = {}
   rows.filter(r => r.in_world).forEach(r => (parts[r.in_world] = parts[r.in_world] || []).push(r))
@@ -5267,7 +5285,9 @@ function Projects({ focus }) {
   return jsxs('div', {
     children: [
       ...groups.map(([g, list]) => jsxs('div', { children: [head(g + ' (' + list.length + ')'), jsx('div', { style: GRID, children: list.map(tile) })] }, g)),
-      ...Object.keys(parts).sort().map(w => jsx(Folded, { title: 'Made for ' + w + ' (' + parts[w].length + ')', children: jsx('div', { style: GRID, children: parts[w].map(tile) }) }, 'w' + w))
+      ...Object.keys(parts).sort().map(w => jsx(Folded, { title: 'Made for ' + w + ' (' + parts[w].length + ')', children: jsx('div', { style: GRID, children: parts[w].map(tile) }) }, 'w' + w)),
+      head('Shipped constructs to start from'),
+      jsx(Examples, { onOpen: project => { load(); setOpen(project) } })
     ]
   })
 }
@@ -5314,8 +5334,10 @@ function Examples({ onOpen }) {
     ? 'Show me the "' + e.title + '" construct: start a project from the example ' + e.name + ' with construct_start, build it with construct_build and put it in your reply; then tell me in a few lines what it shows and how each part is known (construct_inspect).'
     : 'Start a new construct from the example ' + e.name + ' ("' + e.title + '") with construct_start, build and show it, then ask me what I want to change: we will make it mine.')
   return jsxs('div', {
-    children: [jsx('div', { style: Object.assign({}, S.text, { marginBottom: 12 }), children: 'Finished constructs that ship with the plugin. Each opens a new chat: Show builds it there; Start from makes it the first version of your own.' }),
-      jsx('div', { style: GRID, children: rows.map(e => jsx(Tile, {
+    children: [jsx('div', { style: Object.assign({}, S.text, { marginBottom: 12 }), children: 'Finished constructs that ship with the plugin, by kind. Open makes one yours and shows it here, with no chat; Explain in a chat has Hermes walk you through it.' }),
+      ...KINDS.map(k => [k, rows.filter(e => (CATEGORY_KIND[e.category] || 'Objects') === k)]).filter(([, l]) => l.length).map(([k, list]) => jsxs('div', { children: [
+        jsx('div', { style: Object.assign({}, S.meta, { textTransform: 'uppercase', letterSpacing: '.08em', margin: '14px 0 8px' }), children: k }),
+        jsx('div', { style: GRID, children: list.map(e => jsx(Tile, {
         title: e.title, onOpen: () => openShipped(e),
         image: jsx(Img, { load: e.has_thumb ? () => rest('/example-thumb?' + query({ name: e.name })) : null, deps: [e.name] }),
         lines: [plural(e.parts || 0, 'part') + (e.made ? ' · ' + str(e.made, 60) : ''),
@@ -5323,7 +5345,7 @@ function Examples({ onOpen }) {
         actions: [jsx(Button, { label: 'Open', icon: 'eye', disabled: !!opening, title: 'Make it yours and look at it here: no chat, no model',
           onClick: () => openShipped(e) }, 'o'),
           jsx(Button, { label: 'Explain in a chat', icon: 'comment', onClick: () => start(e, 'show') }, 's')]
-      }, e.name)) })]
+      }, e.name)) })] }, k))]
   })
 }
 
@@ -5453,12 +5475,12 @@ function Learn() {
 }
 
 function Hub() {
-  const [tab, setTab] = useState(pending.tab || 'constructs')
+  const [tab, setTab] = useState(pending.tab === 'examples' ? 'constructs' : pending.tab || 'constructs')
   const [focus, setFocus] = useState(pending.project)
   const [drop, setDrop] = useState(pending.drop)
   useEffect(() => {
     const fn = () => {
-      if (pending.tab) setTab(pending.tab)
+      if (pending.tab) setTab(pending.tab === 'examples' ? 'constructs' : pending.tab)
       if (pending.project) setFocus(pending.project)
       setDrop(pending.drop)
       pending = { tab: null, project: null, drop: null }
@@ -5467,14 +5489,14 @@ function Hub() {
     hubListeners.add(fn)
     return () => hubListeners.delete(fn)
   }, [])
-  const tabs = [['constructs', 'Constructs', 'symbol-structure'], ['worlds', 'Worlds', 'globe'], ['examples', 'Start from', 'add'], ['learn', 'Learn', 'mortar-board']]
+  const tabs = [['constructs', 'Constructs', 'symbol-structure'], ['worlds', 'Worlds', 'globe'], ['learn', 'Learn', 'mortar-board']]
   return jsxs('div', {
     style: { height: '100%', overflow: 'auto', padding: '20px 24px', boxSizing: 'border-box' },
     children: [
       jsxs('div', { style: { display: 'flex', alignItems: 'center', gap: 8, marginBottom: 16, flexWrap: 'wrap' },
         children: [jsx('div', { style: { fontSize: 18, fontWeight: 600, color: 'var(--ui-text-primary)', marginRight: 10 }, children: 'Construct' }),
           ...tabs.map(t => jsx(Button, { label: t[1], icon: t[2], active: tab === t[0], onClick: () => { setTab(t[0]); setFocus(null); setDrop(null) } }, t[0]))] }),
-      tab === 'examples' ? jsx(Examples, { onOpen: project => { setFocus(project); setTab('constructs') } }) : tab === 'learn' ? jsx(Learn, {})
+      tab === 'learn' ? jsx(Learn, {})
         : tab === 'worlds' ? jsx(Worlds, { focus, drop }, (focus || '') + (drop ? drop.job : '')) : jsx(Projects, { focus })
     ]
   })
