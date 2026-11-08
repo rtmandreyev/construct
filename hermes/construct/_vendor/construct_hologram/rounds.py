@@ -161,7 +161,7 @@ def pause(folder, now=None):
     return st
 
 
-def start(scene_path, tier="masterpiece", folder=None, now=None):
+def start(scene_path, tier="masterpiece", folder=None, now=None, max_rounds=None):
     import os
     scene_path = Path(scene_path).resolve()
     folder = Path(folder or scene_path.parent).resolve()
@@ -171,7 +171,11 @@ def start(scene_path, tier="masterpiece", folder=None, now=None):
     if tier not in tiers.ROUNDS:
         raise RoundsError("the rounds loop is the masterpiece and unbounded modes; %s is fast mode: one pass with "
                           "self-review" % tier)
-    lim = tiers.limits(tier)
+    lim = dict(tiers.limits(tier))
+    if max_rounds is not None:   # a lower cap than the mode's: a prop seen small and many times in a world
+        if not isinstance(max_rounds, int) or max_rounds < 2:
+            raise RoundsError("--max-rounds is at least 2 (a baseline and one round to beat it)")
+        lim["review_rounds"] = min(max_rounds, lim.get("review_rounds") or max_rounds)
     now = time.time() if now is None else now
     st = {"format": "construct-rounds", "version": 2, "scene": os.path.relpath(scene_path, folder), "tier": tier, "round": 1,
           "step": "authoring", "active_seconds": 0.0, "critic_seconds": 0.0, "last_step_at": now,

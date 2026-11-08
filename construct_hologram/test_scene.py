@@ -1411,6 +1411,14 @@ class Rounds(unittest.TestCase):
     def tearDown(self):
         self.tmp.cleanup()
 
+    def test_a_lower_round_cap_for_a_prop(self):
+        with tempfile.TemporaryDirectory() as t:
+            scene = Path(t, "prop.json")
+            scene.write_text(json.dumps(self.doc))
+            self.assertEqual(self.r.start(str(scene), "masterpiece", Path(t), max_rounds=4)["max_rounds"], 4)
+            with self.assertRaises(self.r.RoundsError):
+                self.r.start(str(scene), "masterpiece", Path(t, "again"), max_rounds=1)
+
     def edit(self, size):
         doc = json.loads(json.dumps(self.doc))
         doc["parts"][0]["shape"]["size"] = size

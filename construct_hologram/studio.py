@@ -206,7 +206,8 @@ def _rounds(args):
         if args.action == "start":
             if len(a) != 1:
                 raise rounds.RoundsError("usage: construct rounds start scene.json [--tier masterpiece] [--dir run]")
-            st = rounds.start(a[0], args.tier, folder if args.dir != "." else Path(a[0]).resolve().parent)
+            st = rounds.start(a[0], args.tier, folder if args.dir != "." else Path(a[0]).resolve().parent,
+                              max_rounds=getattr(args, "max_rounds", None))
             sys.stdout.write("started: round 1, %s mode, %s; the medium's limits are seeded as known limits (L1-L3)\n" % (
                 st["tier"], "stops after 2 rounds without a win, at %d rounds or %d minutes of %s" % (
                     st["max_rounds"], st["limit_seconds"] // 60, "working time, the critic's included"
@@ -375,6 +376,8 @@ def add_commands(sub):
     p.add_argument("--tier", "--mode", dest="tier", default="masterpiece", choices=("masterpiece", "timeboxed", "unbounded"),
                    help="masterpiece (12 rounds, 2 hours active), timeboxed (the same, 2 hours in all: the critic's "
                         "time counted too) or unbounded (only the stop rules; explicit request)")
+    p.add_argument("--max-rounds", type=int, help="start: a lower round cap than the mode's (at least 2): a small prop "
+                                                     "in a world, seen many times, needs fewer rounds than its hero")
     p.add_argument("--reference", action="append", default=[], help="view=image, as for critique; repeatable")
     p.add_argument("--request", help="the request in plain words")
     p.add_argument("--out", help="the packet folder (default: a neutral folder in the temp directory)")

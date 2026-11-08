@@ -228,6 +228,10 @@ the user says **fast** (then one pass each, and the world says so).
    the critic's last verdict and what it could not settle. Orchestrator children need Hermes's
    `delegation.max_spawn_depth: 2`; if a builder cannot delegate its critic, it returns its packet folder after
    each round and you run that critic yourself.
+   **Spend the rounds where they show.** The hero pieces (the subject the picture is about, the landmark
+   buildings, a hero vehicle) run the full masterpiece loop; small repeated props (a bollard, a bin, a lamp) run
+   masterpiece rounds with a lower cap (`rounds start scene.json --mode masterpiece --max-rounds 4`): they are seen
+   small and many times.
 3. **One project per construct, and the world's name on it.** Each builder calls `construct_start` with `for_world`
    (the world's name) and keeps every round, repair and check in that one project: never a copy to mark it accepted,
    released or repaired (the rounds keep checkpoints). Trial projects made on the way are archived at the end with
@@ -235,7 +239,13 @@ the user says **fast** (then one pass each, and the world says so).
 4. **Text and signs say something real.** Lettering on signs, screens and plates is real, legible words that fit
    the place (a shop name, a street, a price), never letter-shaped noise copied from a generated picture.
 5. Place them as above, then judge the whole world once with a fresh critic against the picture or brief
-   (composition, scale, what is missing), fix what it finds, and name the views. Say which placements were made
+   (composition, scale, what is missing), fix what it finds, and name the views. Frame each named view so its
+   subject fills the picture: the picture's own shot matches its camera (height, direction, what is in frame),
+   and no view is half empty ground or sky.
+6. **Deliver the world, not a pipeline.** "Usable in a game" or "for a video" means the world is clean enough to
+   export and film: offer `construct_export` (a glTF, or a Godot game map with `pieces: glued`) and
+   `construct_film`. Never build an engine project, a render pipeline or a bundle of your own unless the user asks
+   for that file by name. Say which placements were made
    (with each critic's verdict), which came from the gallery, and what was left out.
 
 ## NetLogo (only when asked)
