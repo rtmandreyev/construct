@@ -727,8 +727,14 @@ def to_gltf(g, wire="edges", pose="closed", materials=None, wire_radius=None, me
                     "axis": [round(x, 6) for x in a["axis"]], "amount": a["amount"],
                     "unit": a.get("unit", "deg" if a["type"] in ("hinge", "turn") else "m")}
         if glued:   # one body for what stays put; one for each articulation chain, its joint in its extras
+            # articulations that move alike (one deck split into several for their parts' count, on one hinge) are one
+            # body: as separate bodies on one pivot, an engine lets a light one flap free of the heavy one it rides on
+            same, alike = {}, {}
+            for i, a in enumerate(arts):
+                motion = {k: v for k, v in spec(a).items() if k != "articulation"}
+                alike[i] = same.setdefault(json.dumps(motion, sort_keys=True), i)
             for c in copies:   # keyed by the chain's articulations, outermost first
-                groups_of.setdefault(tuple(joints[c["chain"]]) if c["chain"] >= 0 else (), []).append(c)
+                groups_of.setdefault(tuple(alike[i] for i in joints[c["chain"]]) if c["chain"] >= 0 else (), []).append(c)
             for path in groups_of:
                 if path:
                     # it hangs on the nearest body its chain passes through; the joints between them (a sunroof

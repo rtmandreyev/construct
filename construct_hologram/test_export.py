@@ -700,6 +700,17 @@ class Hosts(unittest.TestCase):
         self.assertEqual(len(fixed), 1)                                  # the house itself: it does not topple
         self.assertTrue(all(v == "dynamic" for k, v in motions.items() if k not in fixed))   # the shoji slides
 
+    def test_glued_articulations_that_move_alike_are_one_body(self):
+        """SERUM's service deck opens as four articulations on one hinge (for its parts' count): one body, so an
+        engine cannot let its light fader strip flap free of the heavy deck it rides on."""
+        with tempfile.TemporaryDirectory() as d:
+            out = Path(d, "serum.glb")
+            export.export(load_example("serum-2-61"), out, pieces="glued")
+            doc, _ = export.read_glb(out.read_bytes())
+            pieces = [n["extras"]["construct"]["piece"] for n in doc["nodes"]
+                      if "piece" in n.get("extras", {}).get("construct", {})]
+            self.assertEqual(len([x for x in pieces if "service-deck-open" in x]), 1, pieces)
+
     @unittest.skipUnless(os.environ.get("CONSTRUCT_GODOT"), "set CONSTRUCT_GODOT to the Godot binary to run")
     def test_godot_holds_glued_pieces_together_and_opens_the_tailgate_on_its_hinge(self):
         with tempfile.TemporaryDirectory() as d:
