@@ -9,7 +9,6 @@ import json
 import re
 import shutil
 import tempfile
-import threading
 from pathlib import Path
 
 from . import runtime, tools
@@ -321,22 +320,14 @@ def _log(folder, before, entry):
 
 
 def _rebuild_later(slug, folder, path):
-    """Rebuild without waiting: the page that asked follows the project's newest build. A thread finishes the job
-    (its build is published to the Constructs page) when it ends."""
+    """Rebuild without waiting. The page that asked follows the job with /construct job <id>, which publishes the
+    build (to the chat card and the Constructs page) once it has ended; no thread outlives the call."""
     build_id = runtime.new_id()
     out = folder / "builds" / build_id
     spec = {"scene": str(path), "out": str(out), "thumb": True, "asset_root": str(folder)}
     from . import jobs
     job_id = jobs.start("build", "build", project=slug, label="build of world %s" % slug, cwd=folder, spec=spec,
                         finish={"slug": slug, "build": build_id, "out": str(out), "scene": str(path)})
-
-    def finish():
-        try:
-            if jobs.wait(job_id, 1800) is not None:
-                jobs.status(job_id)
-        except Exception:   # the job's own record says what happened
-            pass
-    threading.Thread(target=finish, name="construct-world-%s" % job_id, daemon=True).start()
     return build_id, job_id
 
 

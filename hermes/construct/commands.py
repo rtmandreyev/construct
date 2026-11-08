@@ -10,11 +10,13 @@
     /construct arrange <world> <changes>   moves and turns made by hand on a world's page (the Desktop half sends
                                   these: a JSON list of {id, move, turn, pivot}); checked, saved and rebuilt
     /construct undo <world>       the world as it was before its last change
+    /construct job <id>           one background job's state (an ended build is published here)
 """
 
 from pathlib import Path
 
 import json
+import re
 
 from . import jobs, runtime, world_tools
 
@@ -129,13 +131,23 @@ def handle(raw_args="", event=None, **kwargs):
                 return "Construct could not read those changes (a JSON list of {id, move, turn, pivot})."
             r = world_tools.arrange_by_hand(parts[1].lower(), changes)
             warn = r.get("warnings") or []
-            return ("Arranged %s by hand: %s. Rebuilding (build %s)%s" % (r["world"], ", ".join(r["moved"]), r["build"],
+            return ("Arranged %s by hand: %s. Rebuilding (build %s, job %s)%s" % (r["world"], ", ".join(r["moved"]), r["build"], r["job_id"],
                     (". The check says: " + "; ".join(warn[:4])) if warn else "; the check found nothing in the way."))
         if verb == "undo":
             if len(words) < 2:
                 return "Which world? /construct undo <world>"
             r = world_tools.undo(words[1].lower())
-            return "Undid the last change to %s (%s %s). Rebuilding (build %s)." % (r["world"], r["undid"], r["placement"], r["build"])
+            return "Undid the last change to %s (%s %s). Rebuilding (build %s, job %s)." % (r["world"], r["undid"], r["placement"], r["build"], r["job_id"])
+        if verb == "job":   # one job's state; an ended job's result is made here (a build is published)
+            jid = words[1] if len(words) > 1 else ""
+            if not re.match(r"^[0-9a-f]{12}$", jid):
+                return "Which job? /construct job <id> (/construct jobs lists them)"
+            st = jobs.status(jid)
+            if st.get("state") == "running":
+                prog = st.get("progress") or {}
+                return "Job %s is running%s." % (jid, " (%s%%)" % prog["percent"] if prog.get("percent") is not None else "")
+            return "Job %s %s%s." % (jid, {"done": "finished", "warned": "finished, with problems to fix"}.get(st.get("state"), "failed"),
+                                     " (build %s)" % st["build"] if st.get("build") else (": " + str(st.get("error"))[:300] if st.get("error") else ""))
         if verb == "jobs":
             rows = jobs.recent()
             if not rows:

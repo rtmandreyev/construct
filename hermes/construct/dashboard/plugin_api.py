@@ -88,6 +88,8 @@ def _card(folder):
     raw = _read_json(folder / "card.json", {})
     card = {k: raw.get(k) for k in CARD_KEYS}
     card.update(project=folder.parent.name, build=folder.name)
+    if str(raw.get("scene") or "").endswith("world.json"):   # a world (built before builds said so too)
+        card["kind"] = "world"
     card["changed_since"] = _changed(raw)
     return card
 

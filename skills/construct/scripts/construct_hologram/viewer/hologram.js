@@ -1332,7 +1332,7 @@ void main() {
     const subj = geo.subject;
     const accuracy = { generic: "GENERIC RECONSTRUCTION", approximate: "APPROXIMATE RECONSTRUCTION", documented: "DOCUMENTED RECONSTRUCTION",
       original: "ORIGINAL DESIGN", recorded: "RECORDED RUN" }[subj.accuracy];
-    const worldNote = geo.world ? geo.world.placements.length + " CONSTRUCTS, EACH ITS OWN" : null;
+    const worldNote = geo.world ? (geo.world.placements.length === 1 ? "1 CONSTRUCT" : geo.world.placements.length + " CONSTRUCTS, EACH ITS OWN") : null;
     const caption = el("div", "caption");
     caption.appendChild(el("div", "title", geo.title));
     caption.appendChild(el("div", "meta", [geo.world ? worldNote : accuracy, subj.synthetic ? "SYNTHETIC EXAMPLE" : null, geo.counts.lines + " LINES"].filter(Boolean).join(" · ")));

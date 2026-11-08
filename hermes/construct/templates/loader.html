@@ -38,7 +38,8 @@
       var o = (h && h.opt) || {};
       return { type: "construct:state", ready: !!h, mode: o.mode === "provenance" ? "provenance" : "light",
                solid: !!o.solid, hasSolid: !!(h && h.solid), reduced: !!o.reduced, step: step,
-               world: !!(h && h.geo && h.geo.world), arranging: !!(h && h.arranging && h.arranging()) };
+               world: !!(h && h.geo && h.geo.world), arranging: !!(h && h.arranging && h.arranging()),
+               canArrange: !!(window.HOLO && window.HOLO.arrange) };
     }
     function tell() { try { parent.postMessage(state(), "*"); } catch (e) { /* the host went away */ } }
     function stepOf(url) { var m = /#step-(\d+)/.exec(String(url || "")); if (m) { step = parseInt(m[1], 10); tell(); } }

@@ -352,7 +352,7 @@ function PageFrame({ route, kind, loaderUrl, height, onCard, onState, control, o
       } else if (d.type === 'construct:state' && onState) {
         onState({ ready: d.ready === true, mode: d.mode === 'provenance' ? 'provenance' : 'light', solid: d.solid === true,
           hasSolid: d.hasSolid === true, step: typeof d.step === 'number' && d.step >= 0 && d.step < 1000 ? d.step : 0,
-          world: d.world === true, arranging: d.arranging === true })
+          world: d.world === true, arranging: d.arranging === true, canArrange: d.canArrange === true })
       } else if (d.type === 'construct:arranged' && onArrange) {
         onArrange({ on: d.on === true, selected: typeof d.selected === 'string' ? d.selected.slice(0, 64) : null,
           changes: arrangeChanges(d.changes) })
@@ -407,7 +407,7 @@ function ConstructCard({ project, build, loaderUrl, title, parts, sessionId, hei
   const busy = useBusy(sessionId)
   const run = useRunPreview(project, jobId)
   const [arr, setArr] = useState({ on: false, selected: null, changes: [] })
-  const [follow, setFollow] = useState(null)   // a build being made from a saved arrangement: {build, ready}
+  const [follow, setFollow] = useState(null)   // a build being made from a saved arrangement: {build, job, ready}
   const [note, setNote] = useState('')
   const [saving, setSaving] = useState(false)
   const shownBuild = follow && follow.ready ? follow.build : run ? run.build : build
@@ -420,15 +420,24 @@ function ConstructCard({ project, build, loaderUrl, title, parts, sessionId, hei
           const c = await rest('/card?' + query({ project, build: follow.build }))
           if (c && c.build === follow.build) {
             if (live) {
-              setFollow({ build: follow.build, ready: true })
+              setFollow({ build: follow.build, job: follow.job, ready: true })
               setArr({ on: false, selected: null, changes: [] })
             }
             return
           }
         } catch {
-          /* not built yet */
+          /* not published yet: asking after the job publishes it once it has ended */
+          try {
+            const out = await runCommand(sessionId, 'construct job ' + follow.job)
+            if (/ failed/.test(out) && live) {
+              setNote(out.slice(0, 300))
+              return
+            }
+          } catch {
+            /* the next turn asks again */
+          }
         }
-        await sleep(1500)
+        await sleep(2000)
       }
       if (live) setNote('The rebuild is taking long: it appears on the Constructs page when it is done.')
     }
@@ -436,16 +445,16 @@ function ConstructCard({ project, build, loaderUrl, title, parts, sessionId, hei
     return () => {
       live = false
     }
-  }, [follow, project])
+  }, [follow, project, sessionId])
   const command = async (text, doing) => {
     if (saving) return
     setSaving(true)
     setNote(doing)
     try {
       const out = await runCommand(sessionId, text)
-      const m = /\(build (\d{8}-\d{6}-[0-9a-f]{4})\)/.exec(out)
+      const m = /\(build (\d{8}-\d{6}-[0-9a-f]{4}), job ([0-9a-f]{12})\)/.exec(out)
       setNote(out.replace(/\s*\(build [^)]*\)/, '').slice(0, 400))
-      if (m) setFollow({ build: m[1], ready: false })
+      if (m) setFollow({ build: m[1], job: m[2], ready: false })
     } catch (err) {
       setNote(errorText(err))
     } finally {
@@ -491,9 +500,13 @@ function ConstructCard({ project, build, loaderUrl, title, parts, sessionId, hei
       isWorld ? jsxs('div', {
         style: S.bar,
         children: [
-          jsx(Button, { label: arr.on ? 'Arranging' : 'Arrange', icon: 'move', active: arr.on, disabled: !view.ready || saving,
-            title: 'Move and turn the constructs yourself: click one, drag it; Shift-drag or Q/E turns it (A)',
-            onClick: () => control.current && control.current.arrange(arr.on ? 'off' : 'on') }),
+          view.ready && !view.canArrange
+            ? jsx('div', { style: S.meta, children: 'Built before worlds could be arranged by hand: ask Hermes to build it again to arrange it.' })
+            : card && card.changed_since && !(follow && follow.ready)
+            ? jsx('div', { style: S.meta, children: 'The world changed after this build: arrange its newest build (Constructs page, or ask Hermes to show it).' })
+            : jsx(Button, { label: arr.on ? 'Arranging' : 'Arrange', icon: 'move', active: arr.on, disabled: !view.ready || saving,
+              title: 'Move and turn the constructs yourself: click one, drag it; Shift-drag or Q/E turns it (A)',
+              onClick: () => control.current && control.current.arrange(arr.on ? 'off' : 'on') }),
           arr.changes.length ? jsx(Button, { label: 'Save ' + plural(arr.changes.length, 'change'), icon: 'save', disabled: saving,
             title: 'Check the world with the moves, save it and rebuild it', onClick: save }) : null,
           arr.changes.length ? jsx(Button, { label: 'Put back', icon: 'discard', disabled: saving,

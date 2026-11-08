@@ -539,24 +539,26 @@ class Plugin(unittest.TestCase):
         first = json.loads((self.data / "projects" / sw / "world.json").read_text())
         out = handle("arrange %s %s" % (sw, json.dumps([{"id": "vespa", "move": [0.5, 0, 0.2], "turn": 15, "pivot": [-0.6, 2.7]}])))
         self.assertIn("Arranged %s by hand: vespa" % sw, out)
-        build = re.search(r"\(build (\d{8}-\d{6}-[0-9a-f]{4})\)", out).group(1)
+        build, job = re.search(r"\(build (\d{8}-\d{6}-[0-9a-f]{4}), job ([0-9a-f]{12})\)", out).groups()
         moved = json.loads((self.data / "projects" / sw / "world.json").read_text())
         v0, v1 = (next(p for p in d["placements"] if p["id"] == "vespa") for d in (first, moved))
         self.assertNotEqual(v0["at"], v1["at"])
         self.assertEqual(v1["yaw"], v0.get("yaw", 0) + 15)
         log = (self.data / "projects" / sw / "edits" / "log.jsonl").read_text().splitlines()
         self.assertEqual((json.loads(log[-1])["op"], json.loads(log[-1])["by"]), ("arrange", "user"))
-        for _ in range(240):   # the rebuild finishes on its own; the card follows the new build
+        for _ in range(240):   # the card follows the job with /construct job, which publishes the build once it ends
             try:
                 card = self.api.card(self.data, sw, build)
                 break
             except self.api.NotFound:
+                self.assertRegex(handle("job %s" % job), r"^Job %s (is running|finished)" % job)
                 time.sleep(1)
         self.assertEqual(card["kind"], "world")
         self.assertTrue(self.api.project(self.data, sw)["world"])
         self.assertIn("could not", handle("arrange %s %s" % (sw, json.dumps([{"id": "nobody", "move": [1, 0, 0], "turn": 0, "pivot": [0, 0]}]))))
         self.assertIn("could not", handle("arrange %s [not json" % sw))
         self.assertIn("Undid the last change to %s (arrange vespa)" % sw, handle("undo %s" % sw))
+        self.assertIn("Which job?", handle("job ../x"))
         self.assertEqual(json.loads((self.data / "projects" / sw / "world.json").read_text()), first)
         self.assertIn(sw, handle("worlds"))
         shipped = {w["name"]: w for w in self.api.example_worlds(self.pkg)}
