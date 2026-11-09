@@ -32,8 +32,9 @@ from the chat. [docs/WORLDS.md](docs/WORLDS.md)
   swing. The Blender add-on imports a world.
 - **In Hermes,** `construct_world` makes, places (several at once), moves, removes, lists and names views, and shows
   each change live in the chat. Its constructs come from the user's projects, the constructs the plugin ships, or the
-  gallery, fetched by name from this release's tag. Three worlds ship: the shed with the Samba and the Vespa; the
-  Villa Savoye lived in (fifteen constructs and Saturn at the Moon's distance); a street of landmarks.
+  gallery, fetched by name from this release's tag after the user approves the download in Hermes's prompt (an
+  unattended run is refused). Six worlds ship: Rain Harbour and Stortorget (below), the Villa Savoye lived in, the
+  shed and the things around it, a street of landmarks, and KESTREL at Saturn.
   `construct_inspect` reads a shipped construct by name.
 - **Arranged by hand.** On a world's page, G (and Arrange on its card in Hermes Desktop) lets you move and turn the
   constructs yourself: click one, drag it over the ground, Shift-drag or Q/E to turn, arrows to nudge, Page Up/Down
@@ -76,6 +77,31 @@ from the chat. [docs/WORLDS.md](docs/WORLDS.md)
   construct saves unsaved moves first instead of being greyed out; after a drop-in the world shows once, with the
   new construct, not the old world first; full screen in Hermes is opaque and clear of the title bar; How to read it
   shows only where there is a reading panel.
+- **Two worlds from one picture each, in masterpiece mode:** Rain Harbour, a game level from a concept picture (21
+  constructs placed 50 times, signs in real English and Chinese, a drivable hero car; 12 world rounds, verdict good),
+  and Stortorget, Stockholm's old square at Christmas from a photograph (8 houses researched one by one, one stall
+  placed 41 times). Each ships with its constructs and a page on how it was made.
+- **Masterpiece rounds, from those two runs:** a critic's tie (`same`) is a result; `rounds extend MINUTES` reopens a
+  run stopped by its time ceiling; a construct's artwork travels with each checkpoint and comes back with a lost
+  round; the picture and the request given at `rounds start` carry to every packet; a reference naming a view the
+  scene lacks is refused before the build; `rounds record --dry-run`; packets stay in the project; `--request-file`;
+  a round with no requests still has a summary; colour is judged in the solid view.
+- **Big worlds:** the viewer keeps style and pose records 256 to a texture row, so a world with thousands of styles
+  keeps its colours on every GPU (Stortorget's houses showed grey in the solid view before); checks put boxes on a
+  grid (a 7,700-part spruce: 86 s to 14 s; reports unchanged); the solid view cuts away only where a view looks into
+  something, so a street keeps its façades; a construct placed many times embeds its artwork once; in Hermes a page
+  up to 192 MB travels gzipped, and one larger says so.
+- **In Hermes, from the same runs:** a construct a subagent built is shown by building it in the chat, so it opens
+  live; `construct_world` op `refresh` brings improved constructs back into a world, and copies are named after their
+  projects; a project may be named by its folder; `construct_command --help`; edits take `views[1]`, JSON pointers and
+  dashed keys; errors name the limit they hit; a review whose capture fails says why and tries smaller; a material map
+  names the key it does not know. The Blender add-on imports a world that names its constructs.
+- **The constructs that ship (24, from 16):** the Villa Savoye, SERUM 2 / 61, the Leica M3, the Jackson, State Bench,
+  Saturn, the Aston Martin DB5, the Sagrada Família, the James Webb Space Telescope and Rietveld's Red-Blue Chair join;
+  the Eames is the one built in the ChatGPT app; the Yamaha CFX and the first KESTREL leave (KESTREL v2 stays).
+  Wordmarks on a maker's product are left off.
+- **The Learn tutorials, run end to end** against the plugin's own tools: every step that did not work as written,
+  or said what the tools no longer do, corrected.
 - Tested in Hermes Desktop with GPT-6.1 Sol and DeepSeek V4
   Pro; what each had to work around became the tool's: placing many at once, named views, host collisions, door
   swings, and sky sizing by a part.
