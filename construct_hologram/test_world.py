@@ -586,3 +586,28 @@ class ViewerTextures(unittest.TestCase):
         self.assertNotRegex(js, r"texelFetch\(u(Styles|Pose), ivec2\(\d")
         for line in re.findall(r"gl\.tex(?:Sub)?Image2D\(gl\.TEXTURE_2D, 0, [^;]*gl\.FLOAT[^;]*;", js):
             self.assertIn("1280", line, line)
+
+
+class WorldArtwork(unittest.TestCase):
+    def test_a_construct_placed_twice_embeds_its_artwork_once(self):
+        import hashlib
+        from construct_hologram import png
+        from construct_hologram.test_scene import base
+        with tempfile.TemporaryDirectory() as d:
+            data = png.book_cover(32, 48)
+            Path(d, "art.png").write_bytes(data)
+            s = base(assets=[{"id": "art", "path": "art.png", "sha256": hashlib.sha256(data).hexdigest(),
+                              "media_type": "image/png", "rights": "synthetic", "provenance": "generated-decorative"}])
+            s["parts"].append({"id": "face", "role": "artwork", "certainty": "decorative", "stage": 1,
+                               "shape": {"type": "plane", "size": [0.5, 0.75]}, "at": [0, 0.5, 0.51],
+                               "artwork": {"slot": "cover-front", "asset": "art"}})
+            Path(d, "scene.json").write_text(json.dumps(s), encoding="utf-8")
+            w = {"format": "construct-world", "version": 1, "id": "twice", "title": "Twice",
+                 "placements": [{"id": "a", "construct": "scene.json"}, {"id": "b", "construct": "scene.json", "at": [3, 0, 0]}]}
+            Path(d, "world.json").write_text(json.dumps(w), encoding="utf-8")
+            g, report, _ = world.build(Path(d, "world.json"), Path(d, "out"))
+            html = Path(d, "out", "construct.html").read_text(encoding="utf-8")
+        self.assertEqual([a["asset_id"] for a in g["artwork"]], ["a/art", "a/art"])   # both copies show the first's
+        self.assertEqual(sorted(a["part"] for a in g["artwork"]), ["a/face", "b/face"])
+        self.assertIn('"a/art":"data:image/png', html)
+        self.assertNotIn('"b/art":"data:', html)

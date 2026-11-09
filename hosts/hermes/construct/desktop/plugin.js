@@ -25,7 +25,7 @@ const SLUG = /^[a-z0-9][a-z0-9-]{0,62}$/
 const BUILD = /^\d{8}-\d{6}-[0-9a-f]{4}$/
 const SHOWN = /[\\/]shown[\\/]([a-z0-9][a-z0-9-]{0,62})[\\/](\d{8}-\d{6}-[0-9a-f]{4})[\\/](loader|construct)\.html$/
 const SHOWN_KIT = /[\\/]shown[\\/]([a-z0-9][a-z0-9-]{0,62})[\\/]kits[\\/](\d{8}-\d{6}-[0-9a-f]{4})[\\/]loader\.html$/
-const PAGE_MAX = 64 * 1024 * 1024
+const PAGE_MAX = 192 * 1024 * 1024
 const LOADER_MAX = 256 * 1024
 const MODEL_MAX = 48 * 1024 * 1024
 const KEYS = new Set(['p', 's', 'r', 'm', 'l', 't', 'h', ' ', '1', '2', '3', '4', '5', '6', 'ArrowLeft', 'ArrowRight'])
@@ -103,6 +103,7 @@ const FULL_TOP = 34   // Hermes's title bar: its window controls sit over the to
 
 function errorText(err) {
   const text = String((err && (err.message || err.detail)) || err || 'unknown error')
+  if (/413|too large/i.test(text)) return 'This page is too large to show in the chat; open it in a browser.'
   if (/404/.test(text)) return 'This is no longer kept (only the newest builds of a project are).'
   if (/not found|unavailable|refused|enabled/i.test(text)) return 'The Construct plugin backend is not running: enable the plugin and restart the gateway.'
   return text.slice(0, 240)
@@ -223,8 +224,9 @@ const S = {
   sep: { width: 1, alignSelf: 'stretch', margin: '2px 4px', background: 'var(--ui-stroke-secondary)' },
   frameBox: { position: 'relative', width: '100%', background: FRAME_BG },
   frame: { display: 'block', width: '100%', height: '100%', border: 0, background: FRAME_BG },
+  // opaque, in the frame's own night: it covers the loader's own words instead of being drawn over them
   wait: { position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24,
-    textAlign: 'center', fontSize: 12, color: 'var(--ui-text-tertiary)', pointerEvents: 'none' },
+    textAlign: 'center', fontSize: 12, color: 'var(--ui-text-tertiary)', pointerEvents: 'none', background: FRAME_BG },
   tip: { position: 'absolute', left: 10, top: 10, padding: '3px 8px', borderRadius: 6, fontSize: 11, pointerEvents: 'none',
     background: 'var(--ui-surface-primary, rgba(0,0,0,.6))', color: 'var(--ui-text-primary)', border: '1px solid var(--ui-stroke-secondary)' },
   rows: { display: 'grid', gridTemplateColumns: 'auto 1fr', gap: '3px 12px', padding: '10px 12px', fontSize: 12 },

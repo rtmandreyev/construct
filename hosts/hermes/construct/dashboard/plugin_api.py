@@ -28,7 +28,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent.parent
 SLUG = re.compile(r"^[a-z0-9][a-z0-9-]{0,62}$")
 BUILD = re.compile(r"^\d{8}-\d{6}-[0-9a-f]{4}$")
-PAGE_MAX = 64 * 1024 * 1024
+PAGE_MAX = 192 * 1024 * 1024   # a page (a big world's is tens of megabytes; it travels gzipped)
 THUMB_MAX = 2 * 1024 * 1024
 ITEM_MAX = 48 * 1024 * 1024
 LIST_MAX = 200
@@ -41,6 +41,10 @@ CARD_KEYS = ("title", "parts", "counts", "size_m", "audit_ok", "created", "page"
 
 class NotFound(Exception):
     pass
+
+
+class TooLarge(NotFound):
+    """There, but too large to send to the chat (HTTP 413, so the card says so instead of 'no longer kept')."""
 
 
 def data_dir():
@@ -304,7 +308,7 @@ def _page(path, loader):
         raise NotFound("the page is not there")
     st = path.stat()
     if st.st_size > PAGE_MAX:
-        raise NotFound("the page is larger than %d MB" % (PAGE_MAX // 1048576))
+        raise TooLarge("too large to show here: the page is larger than %d MB" % (PAGE_MAX // 1048576))
     out = {"loader": _current_loader(loader.read_text(encoding="utf-8"))}
     if st.st_size <= GZ_FROM:
         out["html"] = path.read_text(encoding="utf-8")
@@ -482,6 +486,8 @@ if APIRouter is not None:
     def _answer(fn, *args):
         try:
             return fn(data_dir(), *args)
+        except TooLarge as exc:
+            raise HTTPException(status_code=413, detail=str(exc))
         except NotFound as exc:
             raise HTTPException(status_code=404, detail=str(exc))
 

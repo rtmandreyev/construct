@@ -342,6 +342,7 @@ class _Empty:
         self.lines, self.fills, self.points = [], [], []
         self.motions, self.arts, self.joints = [], [], []
         self.artwork, self.labels, self.annotations = [], [], []
+        self.art_owner = {}   # a compiled construct -> the first placement that shows its artwork
         self.sources, self.facts, self.assets, self.checked = [], [], [], []
         self.first = None
 
@@ -499,10 +500,13 @@ def _append(out, g, pid, xf, start, span, sky=False):
         out.arts.append(q)
     for ch in g["joints"]:
         out.joints.append([i + ao for i in ch])
+    # a construct placed many times is compiled once; its artwork is embedded once too, under the first
+    # placement that shows it (41 market stalls, one copy of their signs)
+    owner = out.art_owner.setdefault(id(g), pid)
     for a in g.get("artwork", []):
         q = dict(a)
         q["part"] = _pre(pid, a["part"])
-        q["asset_id"] = _pre(pid, a.get("asset_id"))
+        q["asset_id"] = _pre(owner, a.get("asset_id"))
         q["corners"] = [[_r(x) for x in xf.p(c)] for c in a["corners"]]
         q["motion_slot"] = a["motion_slot"] + mo if a.get("motion_slot", -1) >= 0 else -1
         q["joint"] = a["joint"] + jo if a.get("joint", -1) >= 0 else -1
@@ -996,11 +1000,14 @@ def build(world_path, out_dir, resolver=None, force=True):
     # each placed construct's artwork, from its own folder, under its placement's id
     assets, notes = {}, []
     recs = g["world"]["placements"]
+    wanted = {a.get("asset_id") for a in g.get("artwork", [])}   # a construct placed again shares the first's
     for r in recs:
         src = next((c for (k, sld), c in cache.items() if not sld and c.get("_path") and
                     Path(c["_path"]).resolve() == Path(resolver(r["construct"], path.parent) if resolver else
                                                        default_resolver(r["construct"], path.parent)).resolve()), None)
         if src is None or not src.get("artwork"):
+            continue
+        if not any(str(k).startswith(r["id"] + "/") for k in wanted):
             continue
         a, n = render.embed_assets(src, str(Path(src["_path"]).parent))
         assets.update({"%s/%s" % (r["id"], k): v for k, v in a.items()})

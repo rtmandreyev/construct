@@ -957,6 +957,22 @@ class Plugin(unittest.TestCase):
 
     # ------------------------------------------------------------------ refusals
 
+    def test_a_page_too_large_for_the_chat_says_so(self):
+        # a 78 MB world page was answered 404 and the card said "no longer kept"; it is too large, and says so
+        with tempfile.TemporaryDirectory() as d:
+            page, loader = Path(d, "construct.html"), Path(d, "loader.html")
+            page.write_text("<!doctype html>" + "x" * 2048, encoding="utf-8")
+            loader.write_text("<!doctype html>", encoding="utf-8")
+            keep = self.api.PAGE_MAX
+            self.api.PAGE_MAX = 1024
+            try:
+                with self.assertRaises(self.api.TooLarge) as cm:
+                    self.api._page(page, loader)
+            finally:
+                self.api.PAGE_MAX = keep
+        self.assertIn("too large", str(cm.exception))
+        self.assertTrue(issubclass(self.api.TooLarge, self.api.NotFound))
+
     def test_handlers_never_raise(self):
         for name in self.ctx.tools:
             for bad in (None, {"nonsense": 1}, {"project": "../../etc"}, {"project": 5}, {"scene": "/no/such.json"},
