@@ -57,11 +57,14 @@ def _rgb(hex_color):
 # ---------------------------------------------------------------------------- reading
 
 def _materials_for(path, materials=""):
-    """The material map to use: the one given, or `<scene>.materials.json` beside the scene."""
+    """The material map to use: the one given, or the scene's own (Construct's lookup: `<scene>.materials.json`,
+    `scene.materials.json`, `maps/finish.json`, `materials.json` beside it)."""
     if materials:
         return bpy.path.abspath(materials)
-    beside = os.path.splitext(path)[0] + ".materials.json"
-    return beside if os.path.exists(beside) else None
+    if path.lower().endswith(".glb"):
+        return None
+    beside = c_export.map_beside(path)
+    return str(beside) if beside else None
 
 
 def _world_resolver(c_world):
@@ -104,7 +107,8 @@ def _glb_of(path, materials=None):
         return tmp, tmp
     if c_params.is_params(doc):
         doc = c_params.expand(doc)
-    out, _ = c_export.render(doc, "glb", wire="edges", materials=materials)
+    out, _ = c_export.render(doc, "glb", wire="edges", materials=materials,
+                             asset_root=os.path.dirname(os.path.abspath(path)))
     fd, tmp = tempfile.mkstemp(suffix=".glb", prefix="construct-")
     with os.fdopen(fd, "wb") as fh:
         fh.write(out["glb"])
@@ -368,6 +372,24 @@ def _split_lines(obj):
     return me
 
 
+def _artwork_surface(mat, root):
+    """An artwork face (a sign's lettering, a cover): its image as imported, lit when it gives light, appearing
+    with its part in the build."""
+    mat.use_nodes = True
+    nodes, links = mat.node_tree.nodes, mat.node_tree.links
+    out = next((n for n in nodes if n.type == "OUTPUT_MATERIAL"), None)
+    if out is None or not out.inputs["Surface"].links:
+        return
+    shader = out.inputs["Surface"].links[0].from_node
+    visible, _ = _reveal(nodes, links, root)
+    clear = nodes.new("ShaderNodeBsdfTransparent")
+    mix = nodes.new("ShaderNodeMixShader")
+    links.new(visible, mix.inputs[0])
+    links.new(clear.outputs[0], mix.inputs[1])
+    links.new(shader.outputs[0], mix.inputs[2])
+    links.new(mix.outputs[0], out.inputs["Surface"])
+
+
 def setup(root, objects, wire_radius, metal=1.0, keep_animations=False):
     """Give an imported construct its controls: build, open, metal and wire."""
     info = _info(root)
@@ -420,7 +442,10 @@ def setup(root, objects, wire_radius, metal=1.0, keep_animations=False):
             continue
         for slot in o.material_slots:
             m = slot.material
-            if m and m not in done and not m.name.startswith("construct:light"):
+            if m and m not in done and m.name.startswith("construct:artwork"):
+                _artwork_surface(m, root)
+                done.add(m)
+            elif m and m not in done and not m.name.startswith("construct:light"):
                 _surface(m, root)
                 done.add(m)
 

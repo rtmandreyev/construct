@@ -1,0 +1,11 @@
+{
+ "about": "A finish for the Leica M3 construct, chosen for this page: satin chrome body, top plate and collapsible Summicron, black vulcanite, clear finder windows and a milky frameline window, as on period cameras. The scene documents the vulcanite covering and the glass windows and elements by name, not their colours; the chrome is chosen. Colours are the exporter's choice, not facts of the construct.",
+ "materials": [
+  {"parts": ["rangefinder-glass", "main-viewfinder-glass", "rear-ocular-glass"], "name": "finder glass", "color": "#2a3540", "finish": "glass"},
+  {"parts": ["frameline-illuminator-glass"], "name": "frosted illuminator window", "color": "#e6e8e4", "finish": "glass", "roughness": 0.35},
+  {"parts": ["optical-element-*"], "name": "optical glass", "color": "#c9d6dc", "finish": "glass"},
+  {"parts": ["vulcanite-*", "rear-loading-panel", "rear-panel-inset"], "name": "black vulcanite", "color": "#161616", "finish": "plastic", "roughness": 0.85},
+  {"parts": ["lens-cell", "lens-name-annulus", "film-reminder-inner", "frame-counter-face"], "name": "black enamel", "color": "#141414", "finish": "paint", "roughness": 0.5},
+  {"parts": ["*"], "name": "satin chrome", "color": "#cdd0d3", "finish": "brushed", "roughness": 0.22}
+ ]
+}

@@ -70,7 +70,7 @@ EDIT = _tool(
     "k or [kx,ky,kz] | shape: {radius: ..}}; set {part, field: \"look.weight\", value} or {path: \"subject.accuracy\", "
     "value} (a path is dotted keys with list indexes as .1 or [1], e.g. presentation.views[1].distance, or a JSON "
     "pointer, /authoring/rounds/5/summary); unset {part, field} or {path}; certainty {part, certainty: word or {size, shape}, basis?: [fact keys], "
-    "source?}; add_part {part: {...}, after?}; remove_part {part} (also leaves its joints and identity features); "
+    "source?}; add_part {part: {...}, after?}; remove_part {part} (also leaves its joints and identity features; its annotations and labels go with it); "
     "add_fact {fact: {key, value, unit, certainty, source}}; set_fact {key, value?, unit?, certainty?, source?, note?}; "
     "remove_fact {key}; add_source {source: {id, kind, title, ref}}. part may be a pattern (door-*) or parts a list. "
     "Paths that leave the project, URLs and scripts are refused.",
@@ -232,7 +232,7 @@ WORLD = _tool(
     "change is checked, rebuilt and shown (a MEDIA line, as construct_build), with the placements' sizes, what each "
     "stands on and warnings (overlaps, a thing running into the house it is in, things standing on nothing). place "
     "several at once with placements: [{construct, id?, on?, at?, yaw?, ...}, ...] (one check, one rebuild). view {world, "
-    "id, label?, target?, yaw?, pitch?, distance?, remove?}: a named view of the world (a room: target a floor part; "
+    "id or label, target?, yaw?, pitch?, distance?, remove?}: a named view of the world (a room: target a floor part; "
     "one placement: its id), shown as a button on the page beside one for each placement. tidy {world, projects}: archive the "
     "scratch projects made on the way (nothing is deleted). refresh {world, id?}: copy the placed constructs (one "
     "placement's, or all) in again from their own projects as they are now, after improving them, and rebuild; each "
@@ -251,7 +251,8 @@ WORLD = _tool(
                                                     "world), a construct the plugin ships (construct_start lists them), "
                                                     "a gallery construct by name, or a scene's absolute path."},
      "id": {"type": "string", "description": "The placement's id (default: from the construct's name); refresh: the one "
-                                             "placement to refresh (default: all)."},
+                                             "placement to refresh (default: all); view: the view's id (default: "
+                                             "from its label)."},
      "on": {"type": "string", "description": "An earlier placement's id, or placement/part-id to stand on that part."},
      "at": {"type": "array", "items": {"type": "number"}, "description": "[x, y, z] metres."},
      "yaw": {"type": "number", "description": "Degrees about up (+Y)."},

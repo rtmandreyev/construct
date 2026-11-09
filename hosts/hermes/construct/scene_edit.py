@@ -16,7 +16,8 @@ An operation is an object with `op` and its fields:
     unset        part, field | path                             removes it
     certainty    part, certainty: "inferred" | {size, shape}, basis?: [fact keys], source?: source id
     add_part     part: {id, role, shape, certainty, stage, ...}, after?: part id
-    remove_part  part                                           and its id from joints and identity features
+    remove_part  part                                           and its id from joints and identity features, its
+                                                                annotations and labels
     add_fact     fact: {key, value, unit?, certainty, source?}
     set_fact     key, and any of value, unit, certainty, source, note
     remove_fact  key                                            and from the parts' basis lists
@@ -333,6 +334,12 @@ def apply(doc, op):
                 before = list(f["parts"])
                 f["parts"] = [x for x in f["parts"] if x not in gone]
                 changes.append(_change(None, "authoring.identity[%s].parts" % f.get("feature", "")[:40], before, f["parts"]))
+        for key in ("annotations", "labels"):   # what is written on a removed part goes with it
+            if isinstance(doc.get(key), list):
+                for x in doc[key]:
+                    if isinstance(x, dict) and x.get("part") in gone:
+                        changes.append(_change(x["part"], "%s[%s]" % (key, x.get("id")), x, None))
+                doc[key] = [x for x in doc[key] if not (isinstance(x, dict) and x.get("part") in gone)]
     elif kind == "add_fact":
         fact = op.get("fact")
         if not isinstance(fact, dict) or not isinstance(fact.get("key"), str):

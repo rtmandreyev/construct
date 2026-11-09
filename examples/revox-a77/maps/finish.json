@@ -1,0 +1,17 @@
+{
+ "about": "A finish for the Revox A77 construct, chosen for this page: the Mk I's silver front and black knobs with aluminium caps, in a dark metal case. Colours are the exporter's choice, not facts of the construct.",
+ "materials": [
+  {"parts": ["meter-face-*"], "name": "lit meter", "color": "#f4e2a4", "finish": "light"},
+  {"parts": ["pilot-lamp"], "name": "pilot lamp", "color": "#ff8a3c", "finish": "light"},
+  {"parts": ["rec-mark"], "name": "red print", "color": "#c0262d", "finish": "plastic"},
+  {"parts": ["legend-*"], "name": "white print", "color": "#efefec", "finish": "plastic"},
+  {"parts": ["counter-window"], "name": "glass", "color": "#d8e2e8", "finish": "glass"},
+  {"parts": ["reel-table-*", "spindle-*", "head-*", "capstan", "guide-post-*", "guide-flange-*", "cover-post-cap-*", "meter-flange-*", "jack-ring-*", "rear-socket-ring-*", "rear-din-ring"], "name": "chrome", "color": "#dfe2e6", "finish": "chrome"},
+  {"parts": ["pinch-roller", "feet"], "name": "rubber", "color": "#1a1a1b", "finish": "rubber"},
+  {"parts": ["sup-pack", "tak-pack", "tape-*"], "name": "tape", "color": "#3a2a20", "finish": "plastic", "roughness": 0.6},
+  {"parts": ["vol-body", "bal-body", "lev1-body", "lev2-body", "button-body-*", "power-switch", "power-rock", "meter-housing-*", "meter-needle-*", "jack-*", "rear-socket-*", "rear-din", "rear-fuse", "counter-digits", "head-mount", "head-mount-top"], "name": "black plastic", "color": "#141415", "finish": "plastic"},
+  {"parts": ["*-skirt", "*-pointer", "button-paddle-*", "pinch-arm", "pinch-pivot", "sup-flange-*", "tak-flange-*", "sup-hub*", "tak-hub*", "cover-post-*"], "name": "aluminium", "color": "#c3c6cb", "finish": "brushed"},
+  {"parts": ["control-panel", "deck-plate", "deck-cheek", "name-band*", "panel-*", "head-plate"], "name": "silver front", "color": "#cfd2d6", "finish": "brushed"},
+  {"parts": ["carcass", "base-plate", "top-lid", "lid-lip", "side-rail", "rear-panel", "rear-vent-*", "rear-volts"], "name": "case", "color": "#38393c", "finish": "paint", "roughness": 0.5}
+ ]
+}

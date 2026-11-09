@@ -676,3 +676,29 @@ class WorldArtwork(unittest.TestCase):
         self.assertEqual(sorted(a["part"] for a in g["artwork"]), ["a/face", "b/face"])
         self.assertIn('"a/art":"data:image/png', html)
         self.assertNotIn('"b/art":"data:', html)
+
+    def test_an_export_embeds_a_construct_placed_twice_once_with_a_face_for_each(self):
+        from construct_hologram import test_export
+        with tempfile.TemporaryDirectory() as d:
+            Path(d, "c").mkdir()
+            s = test_export.art_scene(Path(d, "c"), glow=0.6, joint=True)
+            Path(d, "c", "scene.json").write_text(json.dumps(s), encoding="utf-8")
+            w = {"format": "construct-world", "version": 1, "id": "twice", "title": "Twice",
+                 "placements": [{"id": "a", "construct": "c/scene.json"},
+                                {"id": "b", "construct": "c/scene.json", "at": [3, 0, 0]}]}
+            Path(d, "world.json").write_text(json.dumps(w), encoding="utf-8")
+            summary = world.export(Path(d, "world.json"), Path(d, "w.glb"))
+            doc, binary = export.read_glb(Path(d, "w.glb").read_bytes())
+            obj = world.export(Path(d, "world.json"), Path(d, "w.obj"))
+            self.assertEqual(sorted(Path(f).name for f in obj["files"]), ["w.a-art.png", "w.mtl", "w.obj"])
+        self.assertEqual((len(doc["images"]), len(doc["textures"]), summary["images"], summary["artwork"]), (1, 1, 1, 2))
+        self.assertEqual(doc["images"][0]["name"], "a/art")
+        for pid in ("a/face", "b/face"):   # each in its own part's joint, lit
+            q = next(i for i, n in enumerate(doc["nodes"]) if n.get("name") == pid + ".artwork")
+            pivot = next(i for i, n in enumerate(doc["nodes"]) if n.get("name") == "%s:%s/lid" % (pid, pid[0]))
+            self.assertIn(q, doc["nodes"][pivot]["children"])
+            mat = doc["materials"][doc["meshes"][doc["nodes"][q]["mesh"]]["primitives"][0]["material"]]
+            self.assertEqual(mat["emissiveTexture"]["index"], 0)
+            if pid == "b/face":
+                pts = test_export.world_points(doc, binary, q, {})
+                self.assertAlmostEqual(min(p[0] for p in pts), 2.75, places=4)

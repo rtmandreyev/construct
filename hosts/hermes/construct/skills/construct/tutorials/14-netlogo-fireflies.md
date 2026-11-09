@@ -14,7 +14,8 @@ Teach me to run NetLogo's Fireflies model with Construct and see the fireflies f
 ## Steps
 
 1. **NetLogo first.** Ask whether desktop NetLogo 7 is installed; the model comes from the user's own Models Library.
-   If `construct_netlogo_run` cannot find NetLogo, say so and stop: Construct never installs it.
+   If NetLogo isn't found, ask where it is installed and have the user set it in Settings → Plugins → Construct →
+   NetLogo folder; Construct never installs it.
 2. **The model in one line.** Each firefly flashes on its own clock and resets it when it sees a neighbour flash.
    Nobody conducts, yet the swarm can end up flashing together. It never stops on its own, so a run needs a length.
 3. **One run.** `construct_netlogo_run` for the library model "Fireflies", one run, seed 5, 2000 ticks. Put the MEDIA
@@ -24,8 +25,8 @@ Teach me to run NetLogo's Fireflies model with Construct and see the fireflies f
    chosen was not pulse, redraw with `construct_netlogo_draw` on the `run.jsonl`, view `pulse`, state `hidden?`.
 5. **The landmarks.** The dashed frames mark the first tick half the swarm flashed at once, then all of it. Ask the
    user to drag the replay bar to each and press **H**. `construct_inspect` gives the ticks and the synchrony (0 each
-   on its own rhythm, 1 all in step). In Construct's own published run with seed 5 they were ticks 325 and 466; the
-   user's may differ.
+   on its own rhythm, 1 all in step). With seed 5 in NetLogo 7.0.4 they were ticks 315 and 456; another version or
+   seed may differ.
 6. **The window.** The construct is drawn up to just after the swarm fell into step; the title says which ticks.
    `construct_netlogo_draw` with the window `whole` draws all 2000 ticks: the plates then go on to the top.
 7. **Try another.** Another seed: does it always fall into step, and how soon? `15-netlogo-compare-runs.md`.

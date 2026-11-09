@@ -90,7 +90,11 @@
     if (!c) return null;
     const facts = {};
     ((geo.provenance || {}).facts || []).forEach((f) => { facts[f.key] = f.value; });
-    if (!facts.model) return null;
+    // one run's facts, or several side by side, each run's under its letter (a_model, b_model, ...)
+    const runs = facts.model != null ? [facts] : "abcdefgh".split("").filter((k) => facts[k + "_model"] != null)
+      .map((k) => ({ letter: k, model: facts[k + "_model"], netlogo: facts[k + "_netlogo"], seed: facts[k + "_seed"],
+                     ticks: facts[k + "_ticks"] }));
+    if (!runs.length) return null;
     const box = el("div", "rd-tools");
     if (series.length) {
       const csv = el("a", null, "DATA (CSV)");
@@ -107,8 +111,11 @@
       box.append(csv);
     }
     const cite = el("a", null, "CITE THIS RUN"), text = el("div", "rd-cite");
-    text.textContent = facts.model + " (NetLogo " + (facts.netlogo || "?") + "), one run" +
-      (facts.seed != null ? ", random-seed " + facts.seed : "") + ", " + facts.ticks + " " + c.label + "s" +
+    const one = (r) => (r.seed != null ? "random-seed " + r.seed + ", " : "") + r.ticks + " " + c.label + "s";
+    const same = runs.every((r) => r.model === runs[0].model);
+    text.textContent = (same ? runs[0].model + " (NetLogo " + (runs[0].netlogo || "?") + "), " : "NetLogo, ") +
+      (runs.length === 1 ? "one run, " + one(runs[0]) : runs.length + " runs side by side: " +
+        runs.map((r) => "run " + r.letter + (same ? "" : " " + r.model) + ", " + one(r)).join("; ")) +
       ". Drawn with " + (geo.generator || "Construct").replace(/^construct/, "Construct") +
       " (github.com/rtmandreyev/construct)" + (facts.data_lock ? "; data lock " + facts.data_lock : "") + ".";
     text.hidden = true;

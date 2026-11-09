@@ -98,6 +98,9 @@ res["lights"], res["light_faces"], res["light_phase"] = len(lights), len(e.data.
 res["light_material"] = bool(e.data.materials) and e.data.materials[0] is not None and ":light:" in e.data.materials[0].name
 res["edge_materials"] = sorted({m.name.endswith(":edges") for m in bpy.data.materials if ":light:" in m.name and not m.name.startswith("construct:")})
 res["open_actions"] = [a.name for a in bpy.data.actions if a.name.startswith("open")]
+res["artwork"] = sorted(o.name for o in objs if o.name.endswith(".artwork"))
+res["artwork_textures"] = sorted(m.name for m in bpy.data.materials if m.name.startswith("construct:artwork")
+                                 and any(n.type == "TEX_IMAGE" and n.image for n in m.node_tree.nodes))
 bpy.ops.construct.animate_reveal()
 res["reveal_keyed"] = root.animation_data is not None and root.animation_data.action is not None
 print("RESULT " + json.dumps(res))
@@ -133,6 +136,9 @@ class InBlender(unittest.TestCase):
                 self.assertTrue(res["light_phase"])
                 self.assertEqual(res["open_actions"], [])
                 self.assertTrue(res["reveal_keyed"])
+                if name == "cd":   # the disc's picture and the booklet's cover, one image (the disc's lit)
+                    self.assertEqual(res["artwork"], ["booklet.artwork", "disc.artwork"])
+                    self.assertEqual(res["artwork_textures"], ["construct:artwork:disc-art", "construct:artwork:disc-art:lit"])
 
     def test_a_shipped_world_imports_by_its_constructs_names(self):
         # the shed names its constructs (garden-shed-planned, the Samba, the Vespa...) as the gallery does; the

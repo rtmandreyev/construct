@@ -1,0 +1,16 @@
+{
+ "about": "A finish for the Braun SK 4 construct. Documented by the scene's sources: white-lacquered sheet steel, elm side panels and hood rails, a clear acrylic hood, light-grey controls, a grey turntable plate, a white platter, an ivory tonearm and a white arm rest, felt pads, six dark marks on the platter. Chosen for this page: the exact shades, the dark rubber mat edge and label, the steel hinges, the paper dial and the dark interior (driver, valve chassis, transformer). Colours are the exporter's choice, not facts of the construct.",
+ "materials": [
+  {"parts": ["lid-glass-hood", "lid-front-lip"], "name": "clear acrylic", "color": "#e4ecef", "finish": "glass", "roughness": 0.05},
+  {"parts": ["cheek-*", "lid-rail-*"], "name": "elm veneer", "color": "#9a5a36", "finish": "wood", "roughness": 0.45},
+  {"parts": ["foot-*"], "name": "felt", "color": "#4a4a48", "finish": "rubber"},
+  {"parts": ["knob-?", "knob-?-skirt", "button-?", "tuning-knob", "dial-hub", "turntable-chassis", "spider-hub", "spider-arm"], "name": "light grey", "color": "#c5c7c4", "finish": "plastic", "roughness": 0.4},
+  {"parts": ["knob-?-pointer", "tuning-knob-pointer", "platter-notch", "brand-field"], "name": "dark grey print", "color": "#3a3b3c", "finish": "plastic"},
+  {"parts": ["platter-mat-seam", "platter-label-ring"], "name": "black rubber", "color": "#1d1d1d", "finish": "rubber"},
+  {"parts": ["tonearm", "tonearm-headshell", "tonearm-grip", "tonearm-finger-lift", "arm-rest-*", "tonearm-pivot-boss"], "name": "ivory", "color": "#ebe5d4", "finish": "plastic", "roughness": 0.35},
+  {"parts": ["dial-card"], "name": "paper scale", "color": "#f1efe8", "finish": "plastic", "roughness": 0.8},
+  {"parts": ["spindle", "tonearm-stylus", "hinge-bracket-*", "type-plate", "mains-inlet"], "name": "steel", "color": "#a9adb1", "finish": "brushed"},
+  {"parts": ["chassis-floor", "speaker-driver-*", "tuner-block", "mains-transformer"], "name": "dark interior", "color": "#3b3a37", "finish": "paint", "metallic": 0.3, "roughness": 0.6},
+  {"parts": ["*"], "name": "white lacquer", "color": "#efeee8", "finish": "paint", "roughness": 0.3}
+ ]
+}

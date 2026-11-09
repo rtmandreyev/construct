@@ -46,6 +46,21 @@ class ChildTimeout(ConstructError):
 
 # ---------------------------------------------------------------------------- folders
 
+MAP_NAMES = ("{stem}.materials.json", "scene.materials.json", "maps/finish.json", "materials.json")
+
+
+def map_beside(scene):
+    """A construct's own finish map, where Construct keeps one (the same lookup as the engine's
+    export.map_beside: the plugin never imports the engine), or None."""
+    p = Path(scene)
+    stem = re.sub(r"(\.params)?\.json$", "", p.name)
+    for name in MAP_NAMES:
+        c = p.parent / name.format(stem=stem)
+        if c.is_file():
+            return c
+    return None
+
+
 def configure(data=None, projects=None, config=None):
     """Test seam and host wiring: a fixed data folder, a fixed projects folder, or a config reader
     (`config(key, default)`, the plugin context's `get_config`)."""

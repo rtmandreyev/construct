@@ -638,8 +638,8 @@ def _materials(args, scene, exports):
         if not p.is_file():
             raise ConstructError("no material map at %s" % p)
         return str(p)
-    beside = scene.with_name(re.sub(r"(\.params)?\.json$", "", scene.name) + ".materials.json")
-    return str(beside) if beside.is_file() else None
+    beside = runtime.map_beside(scene)
+    return str(beside) if beside else None
 
 
 def _finish_export(rec, done, tail):
@@ -683,6 +683,8 @@ def verify_export(target, fmt, tail=""):
     dims = ""
     if b:
         dims = "%s m (%s mm)" % (" x ".join("%g" % v for v in b["m"]), " x ".join("%g" % v for v in b["mm"]))
+        if b.get("approximate"):
+            dims = "about %s, approximate (from vertices)" % dims
     bits = ["%s %s" % (got["size"], fmt.upper())]
     if fmt == "glb" and "nodes" in got:
         bits.append("%d named parts in %d nodes and %d meshes, %d triangles" % (
@@ -953,22 +955,32 @@ def command(args):
     started = time.time()
     label = "construct %s" % sub
     job_id = jobs.start("command", "cli", argv, project=project, label=label, cwd=folder,
-                        finish={"folder": str(folder), "since": started, "argv": argv})
+                        finish={"folder": str(folder), "since": started, "argv": argv, "before": _snapshot(folder)})
     return _waited(job_id, "command", wait, label)
+
+
+def _snapshot(folder):
+    """Every file under a folder with its modification time, to tell afterwards what a command wrote."""
+    seen = {}
+    for p in Path(folder).rglob("*"):
+        try:
+            if p.is_file() and not p.name.startswith("."):
+                seen[str(p)] = p.stat().st_mtime_ns
+        except OSError:
+            continue
+    return seen
 
 
 def _finish_command(rec, done, tail):
     f = rec["finish"]
-    folder, since = Path(f["folder"]), f["since"] - 1
+    folder, since, before = Path(f["folder"]), f["since"] - 1, f.get("before")
     written = []
-    for p in sorted(folder.rglob("*")):
+    for p, mtime in sorted(_snapshot(folder).items()):
         if len(written) >= 60:
             break
-        try:
-            if p.is_file() and p.stat().st_mtime >= since and not p.name.startswith("."):
-                written.append(str(p))
-        except OSError:
-            continue
+        # new or changed since the command started (a record from before snapshots: by time)
+        if (before.get(p) != mtime) if before is not None else mtime / 1e9 >= since:
+            written.append(p)
     shown = [p for p in written if Path(p).suffix.lower() in (".png", ".jpg", ".mp4", ".gif", ".glb", ".3mf", ".stl")][:8]
     out = {"state": jobs.outcome(done, tail), "exit": done.get("code"), "argv": f["argv"],
            "output": tail.strip()[-6000:], "files": written[:LIST_CAP],

@@ -34,6 +34,7 @@ construct export scene.json --out model.glb
 | `--materials map.json` | colours and finishes for parts, by id or pattern (below) |
 | `--frame z-up` | OBJ only, for Z-up tools; glTF is Y up by definition |
 | `--quality` | glTF: each triangle coloured by its smallest angle, to find the slivers |
+| `--asset-root DIR` | where the scene's artwork paths are read from (default: the scene's own folder) |
 
 Agents use the same export through the skill, and MCP clients through the `construct_export` tool
 (the `.glb` comes back as base64).
@@ -50,13 +51,24 @@ Agents use the same export through the skill, and MCP clients through the `const
 | hinges, turns, slides, lifts | pivot nodes; the animation `open` plays them in their order groups (1.5 s each), `open:<id>` plays one; a joint that rides on another is nested inside it |
 | spin, swing, bob | the looping animation `idle` (a pulse of light is listed in the root's `extras`) |
 | the assembly | each vertex's build phase, 0 to 1, as the vertex attribute `_PHASE` |
+| artwork (a sign's lettering, a cover, a texture) | a textured face, `<part>.artwork`, under its part: it moves with the part's joint and stays with its piece |
 
 Units are metres; the front faces +Z. In Blender the importer turns that into Z up, front −Y.
+
+Artwork is embedded as the page embeds it: only bytes that match the scene's declared sha256, with
+rights that permit showing them, as PNG or JPEG (glTF carries no WebP); anything else is left out with a
+note. Each image is embedded once, however many faces show it. Its material (`construct:artwork:<asset>`)
+is double-sided and blended where the PNG is transparent; a circle mask is a disc or a ring. When the part
+glows (a `look.glow` above 0, or an identity or data part, which glow by default) or the material map
+makes it a light, the image is also its emissive texture, so a sign lights. A world reads each
+construct's artwork from that construct's own folder. The MCP tool exports a document without a folder,
+so its artwork is left out.
 
 An OBJ has the same surfaces and edges, one object per part, in one pose, without animation or
 build phase. Its positions are shared between faces and its strips are quads again (a loft, a lathe, a
 tube or an extrusion's side is a grid of four-sided faces), so it subdivides cleanly in Blender or Houdini;
-normals and texture coordinates stay per corner, so a hard edge stays hard.
+normals and texture coordinates stay per corner, so a hard edge stays hard. Its artwork faces are objects
+too, their images written beside the `.mtl` (`map_Kd`, and `map_Ke` for a face that gives light).
 
 Every export reports how well shaped its triangles are: the share whose smallest angle is under 10
 degrees (thin slivers, which subdivide and shade badly) and under 20. `--quality` writes a glTF with each
@@ -137,9 +149,9 @@ person who exports, kept beside the scene, never in it: `examples/light-to-metal
   starting point for modelling.
 - **It is not** a finished hero asset. Shapes come from Construct's own vocabulary (boxes,
   cylinders, lathes, lofts, tubes, extrusions…); overlapping parts are not merged, so the model is
-  not watertight for 3D printing; there are no textures and no levels of detail, and the texture
-  coordinates are a simple box projection. Joints are mechanical (hinges, slides); there is no
-  skinned rig. It is not CAD.
+  not watertight for 3D printing; the only textures are the scene's own artwork, there are no levels
+  of detail, and the texture coordinates are a simple box projection. Joints are mechanical (hinges,
+  slides); there is no skinned rig. It is not CAD.
 - **Sizes are as true as their certainty.** A part marked `verified` has a source; one marked
   `inferred` was designed; the extras say which.
 - **Every part has a surface only if its shape has one.** A main or structural part drawn as a

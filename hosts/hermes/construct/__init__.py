@@ -109,10 +109,9 @@ def register(ctx):
     jobs.set_reporters(post=ctx.post_message, event=_event)
     tools.set_surface(ctx.session_surface)
     handlers = dict(tools.HANDLERS, **netlogo_tools.HANDLERS, **world_tools.HANDLERS)
-    checks = dict(netlogo_tools.CHECKS)
     for schema in schemas.TOOLS:
         ctx.register_tool(name=schema["name"], toolset="construct", schema=schema, handler=handlers[schema["name"]],
-                          check_fn=checks.get(schema["name"], _runtime_present),
+                          check_fn=_runtime_present,
                           description=schema["description"].split(". ")[0])
     ctx.register_hook("pre_tool_call", make_gate(ctx))
     ctx.register_skill("construct", SKILL, description=SKILL_DESCRIPTION,

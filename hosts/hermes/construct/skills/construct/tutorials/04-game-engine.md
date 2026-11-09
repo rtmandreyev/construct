@@ -1,6 +1,6 @@
 ---
 title: Use it in a game engine
-summary: A prop with named parts, real sizes and working joints, as glTF for Godot, Unity or Unreal: doors that open, a car that holds together.
+summary: A prop with named parts, real sizes and working joints, as glTF for Godot, Unity or Unreal: a tailgate that opens, a car that holds together.
 group: Makers and creators
 example: toyota-land-cruiser-fj62
 time: about 15 minutes
@@ -14,21 +14,24 @@ Teach me to take a construct into a game engine, step by step, one step at a tim
 ## Steps
 
 1. **Show the example.** `construct_start(example="toyota-land-cruiser-fj62")` and `construct_build`; MEDIA line in
-   the reply. Ask the user to replay the opening: the doors and tailgate are articulations, and they leave as joints.
-   `construct_inspect` lists the articulations and their travel.
+   the reply. Ask the user to replay the opening: the tailgate folds down 85°. It is the FJ62's one articulation, and
+   it leaves as a joint; `construct_inspect` lists it with its travel. (For doors, lids and a folding roof that open,
+   the VW T1 Samba, `volkswagen-t1-samba`, goes the same way.)
 2. **A prop.** `construct_export(project=<id>, format="glb", merge=true, wire="seams", colliders=true)`: few draw
-   calls, the design lines as thin seams, a box collider per part. Report the triangle count from the summary.
-   Colours only if the user names them, as `materials` (part ids or patterns to colour and finish).
+   calls, the design lines as thin seams, a box collider per part. Report the triangle count from the result's
+   `summary` (the file as read back), not the `report`'s. Colours only if the user names them, as `materials` (part
+   ids or patterns to colour and finish).
 3. **A physics prop that holds together.** `construct_export(format="glb", pieces="glued")`: what stays put is one
-   body, and each door, lid or tailgate one more on its own hinge, its joint in the file. In Godot, drop the `.glb`
-   and Construct's `construct_joints.gd` (in the Construct repository, `hosts/godot/`) into the project, then:
+   body, and each door, lid or tailgate (here the tailgate) one more on its own hinge, its joint in the file. In
+   Godot, drop the `.glb` and Construct's `construct_joints.gd` (in the Construct repository, `hosts/godot/`) into
+   the project, then:
    ```gdscript
    const ConstructJoints = preload("res://construct_joints.gd")
    func _ready():
        ConstructJoints.connect_joints($Car)
    ```
 4. **A prop that breaks apart.** `construct_export(format="glb", pieces="loose")`: every piece a rigid body with
-   convex shapes, made to settle rather than burst. `pose="open"` rests it with its doors open.
+   convex shapes, made to settle rather than burst. `pose="open"` rests it open (here, the tailgate down).
 5. **Variants.** Seeded variants of an archetype: `construct_start(archetype="vehicle", variant="sedan", seed=3)`
    (also guitars, bottles, cans), check, build, export. Each seed gives sizes drawn near the standard.
 6. **The user's own prop.** Ask what they need (the object, its size, what opens), then author it as SKILL.md says,
