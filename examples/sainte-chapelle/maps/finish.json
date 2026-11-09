@@ -1,0 +1,9 @@
+{
+ "about": "A finish for the Sainte-Chapelle construct. Documented by the scene: the upper chapel's walls of glass between the buttresses, the steep lead roofs and the cedar-and-lead flèche. Chosen for this page: the deep blue of the glass seen from outside, the cream limestone, the lead grey, and gilding on the archangel. Colours are the exporter's choice, not facts of the construct.",
+ "materials": [
+  {"parts": ["upper-chapel"], "name": "stained glass (from outside)", "color": "#26314d", "finish": "glass", "roughness": 0.1},
+  {"parts": ["angel-figure", "angel-head", "angel-wing*"], "name": "gilding", "color": "#d2a640", "finish": "brushed", "roughness": 0.25},
+  {"parts": ["nave-roof", "apse-roof", "fleche-*", "angel-pedestal*"], "name": "lead", "color": "#6e7377", "finish": "brushed", "metallic": 0.6, "roughness": 0.55},
+  {"parts": ["*"], "name": "limestone", "color": "#d9cfb8", "roughness": 0.8}
+ ]
+}
