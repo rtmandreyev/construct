@@ -32,7 +32,7 @@ Four worlds ship in [examples/worlds](../examples/worlds/), made of the construc
 
 | World | What it holds |
 |---|---|
-| [The shed, the Samba and the Vespa](../examples/worlds/the-shed/world.json) | The garden shed with its planned deck and log store, a VW T1 Samba by the log store, a Vespa GS 150 by the door, State Bench inside and Rietveld's Red-Blue Chair on the deck |
+| [The shed and the things around it](../examples/worlds/the-shed/world.json) | The garden shed with its planned deck and log store, a VW T1 Samba by the log store, a Vespa GS 150 by the door, State Bench inside and Rietveld's Red-Blue Chair on the deck |
 | [The Villa Savoye, lived in](../examples/worlds/villa-savoye-lived-in/world.json) | The salon with an Eames chair, a Tompion clock and two tables (designed for this world) carrying a Braun SK 4, a Revox A77, a Leica M3 and SERUM 2 / 61; a Jackson by the studio table; a Land Cruiser and an Aston Martin DB5 under the pilotis; KESTREL far off over the roof |
 | [A street of landmarks](../examples/worlds/a-street-of-landmarks/world.json) | The Duomo di Milano, the Sainte-Chapelle and the Sagrada Família on one street at their real sizes, Neuschwanstein across it |
 | [KESTREL at Saturn](../examples/worlds/kestrel-at-saturn/world.json) | KESTREL at work by Saturn's rings, the planet at its real size from about 350,000 km |
