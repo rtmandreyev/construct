@@ -103,7 +103,8 @@ are the model's own design.
 Press **S** for the solid view: the same construct as surfaces, clay grey (or a part's own colour, or
 its provenance colour with **P**), lit by a studio light that follows the eye, glass see-through. It is
 what a print or a modelling program shows, so it shows what the light forgives: panels that do not
-meet, glass outside its frame, a crumpled corner.
+meet, glass outside its frame, a crumpled corner. A close view of a part inside cuts away the walls in
+front of it, never the floor under the eye; a view sets `"cutaway": false` to keep them.
 
 ## Detail where it counts
 

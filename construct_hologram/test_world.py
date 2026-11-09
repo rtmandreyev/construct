@@ -9,9 +9,10 @@ import subprocess
 import tempfile
 import re
 import unittest
+import unittest.mock
 from pathlib import Path
 
-from construct_hologram import export, render, scene, studio, world
+from construct_hologram import audit as audit_mod, export, render, scene, studio, world
 
 HERE = Path(__file__).resolve().parent
 V2 = HERE / "examples" / "v2"
@@ -34,6 +35,19 @@ class Format(unittest.TestCase):
 
     def test_a_valid_world(self):
         self.assertEqual(world.validate(place({"id": "a", "construct": lit("cd.json")})), [])
+
+    def test_a_view_may_say_whether_it_cuts_away(self):
+        ok = place({"id": "a", "construct": lit("cd.json")},
+                   presentation={"views": [{"id": "v", "target": "a", "cutaway": False}]})
+        self.assertEqual(world.validate(ok), [])
+        ok["presentation"]["views"][0]["cutaway"] = "no"
+        self.assertTrue(any("cutaway" in e for e in world.validate(ok)))
+        s = json.loads((V2 / "cd.json").read_text())
+        s["presentation"]["views"] = [{"id": "v", "yaw": 0, "pitch": 10, "cutaway": False}]
+        self.assertEqual(scene.validate(s), [])
+        self.assertFalse(scene.compile_scene(s)["presentation"]["views"][0]["cutaway"])
+        s["presentation"]["views"][0]["cutaway"] = 0
+        self.assertTrue(any("cutaway" in e for e in scene.validate(s)))
 
     def test_problems_are_named(self):
         bad = place({"id": "a", "construct": lit("cd.json"), "colour": "red"},
@@ -243,6 +257,26 @@ class Audit(unittest.TestCase):
             self.assertEqual(rep["stats"]["placements"], 2)
             w.write_text(json.dumps(place({"id": "a", "construct": "no-such-construct.json"})))
             self.assertFalse(world.check(str(w))["ok"])
+
+    def test_the_grid_says_what_every_pair_says(self):
+        """Placements' parts are tried against those near them on a grid; the warnings are those of trying every pair."""
+        top = Compile._top_part(self)
+        rows = [{"id": "a", "construct": lit("book.json")}, {"id": "b", "construct": lit("book.json")},
+                {"id": "c", "construct": lit("cd.json"), "on": "a/" + top}, {"id": "d", "construct": lit("book.json"), "on": "a"},
+                {"id": "e", "construct": lit("cd.json"), "at": [3, 2, 0]}]
+        rows += [{"id": "cd-%d" % i, "construct": lit("cd.json"), "at": [0.06 * i, 0, 0.3 + 0.01 * i]} for i in range(12)]
+        cd = world.compile_world(place({"id": "cd", "construct": lit("cd.json")}))
+        lid = next(b for p in cd["parts"] if p["id"] == "cd/lid" for b in p["instances"])
+        rows += [{"id": "f", "construct": lit("cd.json"), "at": [-3, 0, 0]},   # a CD standing where another's lid opens
+                 {"id": "g", "construct": lit("book.json"), "at": [-3 + (lid["open_min"][0] + lid["open_max"][0]) / 2, 0,
+                                                                    (lid["open_min"][2] + lid["open_max"][2]) / 2 + 0.03]}]
+        doc = place(*rows)
+        g = world.compile_world(doc)
+        fast = world.audit(doc, g)
+        with unittest.mock.patch.object(audit_mod, "_BRUTE", True):
+            slow = world.audit(doc, g)
+        self.assertEqual(json.dumps(fast), json.dumps(slow))
+        self.assertEqual({"overlap", "collides", "blocks", "unsupported"} - {w["code"] for w in fast["warnings"]}, set())
 
     def test_floating_and_on_are_not_unsupported(self):
         doc = place({"id": "a", "construct": lit("book.json")},
@@ -493,6 +527,37 @@ class Viewer(unittest.TestCase):
         self.assertTrue(got["snap"])
         self.assertEqual(len(got["hits"]), 1)
         self.assertTrue(got["keys"])
+
+    @unittest.skipUnless(render.find_browser(), "no browser")
+    def test_a_view_from_outside_keeps_its_foreground(self):
+        """The solid view's cutaway: in a world only a view into something (its target under another placement's part,
+        or its camera) cuts away what stands in front; a view across open ground keeps it; a view may say either."""
+        rows = [{"id": "low", "construct": lit("cd.json")},
+                {"id": "lid", "construct": lit("cd.json"), "at": [0, 0.1, 0], "floating": True},   # a roof over low
+                {"id": "open", "construct": lit("cd.json"), "at": [2, 0, 0]}]
+        views = [{"id": "under", "target": "low"}, {"id": "out", "target": "open"},
+                 {"id": "under-off", "target": "low", "cutaway": False}, {"id": "out-on", "target": "open", "cutaway": True},
+                 {"id": "saved-out", "target": [2, 0, 0], "yaw": 0, "pitch": 10, "distance_m": 1},
+                 {"id": "saved-in", "target": [0, 0.02, -0.01], "yaw": 0, "pitch": 0, "distance_m": 0.01}]   # its eye under lid
+        with tempfile.TemporaryDirectory() as d:
+            w = Path(d, "w.json")
+            w.write_text(json.dumps(place(*rows, presentation={"views": views})))
+            studio.build(str(w), Path(d, "out"))
+            s = json.loads((V2 / "cd.json").read_text())
+            s["presentation"]["views"] = [{"id": "near", "yaw": 0, "pitch": 10, "target": s["parts"][0]["id"]},
+                                          {"id": "kept", "yaw": 0, "pitch": 10, "target": s["parts"][0]["id"], "cutaway": False}]
+            Path(d, "cd.json").write_text(json.dumps(s))
+            studio.build(str(Path(d, "cd.json")), Path(d, "cd"))
+            probe = "(() => { const h = HOLO.hologram; return Object.fromEntries(%s.map((v) => [v, h.cameraFor(v).cut])); })()"
+            got = {}
+            for page, ids in ((Path(d, "out"), [v["id"] for v in views]), (Path(d, "cd"), ["hero", "near", "kept"])):
+                b = render.open_browser(render._url(page / "construct.html", ui=1), 480, 300, 1.0)
+                try:
+                    got.update(b.evaluate(probe % json.dumps(ids)))
+                finally:
+                    b.close()
+        self.assertEqual(got, {"under": True, "out": False, "under-off": False, "out-on": True, "saved-out": False,
+                               "saved-in": True, "hero": True, "near": True, "kept": False})
 
     @unittest.skipUnless(render.find_browser(), "no browser")
     def test_a_far_off_placement_does_not_pull_the_whole_view_away(self):

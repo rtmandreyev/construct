@@ -1219,7 +1219,8 @@ void main() {
     // axes and solve the distance that keeps all of them inside both fields of view, with margin
     const v = this.viewSpec(id), fr = this.geo.presentation.framing, fov = 34;
     if (Array.isArray(v.target) && v.distance_m) {   // a camera saved where someone left it
-      return { target: v.target.slice(), yaw: v.yaw || 0, pitch: v.pitch || 0, dist: v.distance_m, fov, focus: v.distance_m * 0.5 };
+      return { target: v.target.slice(), yaw: v.yaw || 0, pitch: v.pitch || 0, dist: v.distance_m, fov, focus: v.distance_m * 0.5,
+               cut: this.cutaway(v, v.target, v.distance_m, null) };
     }
     const tid = v.target || (id === "hero" ? fr.target : null);
     const boxes = this.framingBoxes(tid);
@@ -1237,7 +1238,26 @@ void main() {
       dist = Math.max(dist, z + x / (tanH * margin), z + yy / (tanV * margin));
     }
     dist *= (fr.fit || 1) * (v.distance || 1) * (this.opt.zoom || 1);
-    return { target, yaw: v.yaw, pitch: v.pitch, dist, fov, focus: 0.5 * Math.hypot(hi[0] - lo[0], hi[1] - lo[1], hi[2] - lo[2]) };
+    return { target, yaw: v.yaw, pitch: v.pitch, dist, fov, focus: 0.5 * Math.hypot(hi[0] - lo[0], hi[1] - lo[1], hi[2] - lo[2]),
+             cut: this.cutaway(v, target, dist, tid || null) };
+  };
+  Hologram.prototype.cutaway = function (v, target, dist, tid) {
+    // whether the solid view may cut away what stands in front of a view's subject (the cut itself is in draw). A
+    // view says so with "cutaway": true or false. Without it a construct cuts as it always has, and a world only when
+    // the view looks into something: its target (not counting the target's own parts) or its camera stands under a
+    // part of a placement, as a bench in a shed, a car under the pilotis or an eye in a room do. A view down a street
+    // or across a market, from outside, keeps its foreground: the facades are what it is of.
+    if (typeof v.cutaway === "boolean") return v.cutaway;
+    if (!this.geo.world) return true;
+    const key = [v.id, v.yaw, v.pitch, dist, target, tid].join(":");
+    this._cuts = this._cuts || {};
+    if (key in this._cuts) return this._cuts[key];
+    const y = (v.yaw || 0) * Math.PI / 180, p = (v.pitch || 0) * Math.PI / 180;
+    const eye = V.add(target, [dist * Math.sin(y) * Math.cos(p), dist * Math.sin(p), dist * Math.cos(y) * Math.cos(p)]);
+    const own = (q) => !!tid && (q.id === tid || q.placement === tid || q.id.startsWith(tid + "/"));
+    const roofed = (pt, skip) => this.geo.parts.some((q) => !q.sky && !(q.shape === "points" && (q.role === "ornament" || q.certainty === "decorative")) &&
+      !skip(q) && q.instances.some((b) => b.min[1] > pt[1] && b.min[0] <= pt[0] && pt[0] <= b.max[0] && b.min[2] <= pt[2] && pt[2] <= b.max[2]));
+    return (this._cuts[key] = roofed(eye, () => false) || (!!tid && roofed(target, own)));
   };
   Hologram.prototype.cameraAt = function (t, base) {
     // the base camera, then the scene's tour (flights between views), then drift and breathing
@@ -1385,7 +1405,8 @@ void main() {
       gl.uniform1f(u.uFly, this.opt.fly || 0); gl.uniform2fv(u.uHi, this.opt.highlight || [0, 0]);
       gl.uniform1f(u.uReveal, this.opt.reveal || 0.04); gl.uniform1f(u.uFrom, this.opt.from || 0);
       // looking at a part inside (a room, a car in a garage): the surfaces in front of it are cut away
-      if (u.uCut) gl.uniform1f(u.uCut, cam.focus && cam.focus < this.R * 0.45 ? Math.max(0, cam.dist - cam.focus * 1.15) : 0);
+      // (not where the view says "cutaway": false, nor in a world's view from outside: cutaway() above)
+      if (u.uCut) gl.uniform1f(u.uCut, cam.cut !== false && cam.focus && cam.focus < this.R * 0.45 ? Math.max(0, cam.dist - cam.focus * 1.15) : 0);
       gl.bindVertexArray(so.vao);
       gl.depthFunc(gl.LEQUAL); gl.depthMask(true);
       gl.uniform1f(u.uClear, 0);

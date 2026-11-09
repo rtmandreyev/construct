@@ -50,9 +50,14 @@ Four worlds ship in [examples/worlds](../examples/worlds/), made of the construc
 | `sky` | `{diameter_m, distance_m, of, azimuth, elevation}`: far away, at its real angular size (a planet, a moon). `of` names the part `diameter_m` belongs to (Saturn's `globe`), so its rings and moons come at the same scale; without it, `diameter_m` is the whole construct's size. Never what a view fits |
 | `note` | why it is there |
 
-A world's `presentation.views` name its own views (`{id, label, target, yaw, pitch, distance}`; `target` is a
+A world's `presentation.views` name its own views (`{id, label, target, yaw, pitch, distance, cutaway}`; `target` is a
 placement or `placement/part-id`, such as a room's floor). The page shows them as buttons, after one for the whole
 world and before one for each placement.
+
+The solid view cuts away what stands between the eye and a view's target only when the view looks into something:
+its target stands under another placement's part (a bench in a shed, a car under the pilotis), or its camera does
+(a camera saved in a room). A view from outside, down a street or across a market, keeps its foreground: the
+façades are what it shows. A view says otherwise with `"cutaway": true` or `false`.
 
 The same construct placed many times is compiled once. A world can place worlds, up to eight levels deep: a city
 holds districts, a district holds buildings, a building holds rooms. Ids join with `/` at each level. Coordinates
