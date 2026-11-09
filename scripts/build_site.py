@@ -138,6 +138,9 @@ header.site h1 em { font-style: normal; color: var(--accent); }
 .shelf .grid { padding-top: 14px; }
 @media (min-width: 1100px) { .shelf .grid { grid-template-columns: repeat(3, 1fr); } }
 .shelf-count { color: var(--dim); font-size: 13px; margin: 10px 0 0; }
+p.world-line { color: var(--dim); font-size: 14px; line-height: 1.5; margin: 6px 0 12px; }
+main img.hero { width: 100%; height: auto; border-radius: 12px; display: block; margin: 8px 0 18px; }
+main p.section kbd { border: 1px solid var(--line); border-radius: 4px; padding: 0 5px; font-size: 12px; color: var(--ink); }
 .part p.section kbd { border: 1px solid var(--line); border-radius: 4px; padding: 0 5px; font-size: 12px; color: var(--ink); }
 .feature { display: grid; grid-template-columns: 1fr; gap: 22px; align-items: center; background: var(--panel);
            border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
@@ -169,6 +172,26 @@ def _load_films():
 def _load_beyond():
     path = EXAMPLES / "beyond.json"
     return json.loads(path.read_text(encoding="utf-8"))["beyond"] if path.exists() else []
+
+
+WORLDS_ORDER = ["rain-harbour", "stortorget", "villa-savoye-lived-in", "the-shed", "a-street-of-landmarks",
+                "kestrel-at-saturn"]
+
+
+def _load_worlds():
+    """The worlds that ship (examples/worlds/<slug>/world.json), the two made from a picture first."""
+    found = {p.parent.name: p.parent for p in (EXAMPLES / "worlds").glob("*/world.json")}
+    order = [s for s in WORLDS_ORDER if s in found] + sorted(s for s in found if s not in WORLDS_ORDER)
+    out = []
+    for slug in order:
+        doc = json.loads((found[slug] / "world.json").read_text(encoding="utf-8"))
+        crit = (doc.get("authoring") or {}).get("critic") or {}
+        out.append({"slug": slug, "title": doc["title"], "summary": doc.get("summary", ""),
+                    "placements": len(doc["placements"]),
+                    "constructs": len({p["construct"] for p in doc["placements"]}),
+                    "rounds": len((doc.get("authoring") or {}).get("rounds") or []), "verdict": crit.get("verdict"),
+                    "readme": (found[slug] / "README.md").exists()})
+    return out
 
 
 def _load_kits():
@@ -204,7 +227,7 @@ def _beyond_buttons(b):
                    for i, (label, href) in enumerate(buttons))
 
 
-def index_page(examples, films=(), beyond=(), kits=()):
+def index_page(examples, films=(), beyond=(), kits=(), worlds=()):
     """The landing page, in five parts: the full pipeline (from a hologram to a finished 3D model), the
     constructs (a compact scroller), model kits, film mode, and models come alive (a live simulation, then
     recorded runs). A part with nothing in it is left out."""
@@ -218,7 +241,24 @@ def index_page(examples, films=(), beyond=(), kits=()):
         % (k["slug"], k["slug"], html.escape(k["title"]), k["slug"], html.escape(k["title"]), html.escape(k["scale"]),
            k["pieces"], k["steps"], k["slug"], k["slug"], KIT_ZIP % k["slug"])
         for k in kits]
-    number = iter(range(3, 6))
+    number = iter(range(4 if worlds else 3, 7))
+    world_cards = [
+        "<div class=\"card film\"><a href=\"worlds/%s/\"><img src=\"worlds/%s/thumb.jpg\" alt=\"%s, a world of "
+        "constructs\" loading=\"lazy\" width=\"1200\" height=\"750\"></a><div class=\"body\"><h2><a href=\"worlds/%s/\">%s"
+        "</a></h2><p class=\"prov\">world · %d constructs, placed %d times%s</p><p class=\"world-line\">%s</p>"
+        "<div class=\"choose\"><a class=\"button primary\" href=\"worlds/%s/\">Open the world</a>%s</div></div></div>"
+        % (w["slug"], w["slug"], html.escape(w["title"]), w["slug"], html.escape(w["title"]), w["constructs"],
+           w["placements"], (" · %d world rounds, %s" % (w["rounds"], w["verdict"])) if w["rounds"] and w["verdict"] else "",
+           html.escape(w["summary"][:220] + ("…" if len(w["summary"]) > 220 else "")), w["slug"],
+           ("<a class=\"button\" href=\"%s/tree/main/examples/worlds/%s\">How it was made</a>" % (REPO_URL, w["slug"]))
+           if w["readme"] else "")
+        for w in worlds]
+    world_part = ("<section class=\"part films\" id=\"worlds\"><div class=\"eyebrow\">3 · Worlds</div>"
+                  "<h2 class=\"section\">Whole constructs, together in one place</h2><p class=\"section\">A world places "
+                  "constructs at their real sizes, each still itself: its parts, its record, its joints. Two were made in "
+                  "Hermes from a single picture each, in masterpiece rounds; the rest from the constructs above. "
+                  "<a href=\"%s/blob/main/docs/for/worlds-walkthrough.md\">Worlds, step by step</a>.</p>"
+                  "<div class=\"grid\">\n%s\n</div></section>" % (REPO_URL, "\n".join(world_cards))) if worlds else ""
     kit_part = ("<section class=\"part films\" id=\"kits\"><div class=\"eyebrow\">%d · Model kits</div>"
                 "<h2 class=\"section\">A construct as a kit to print, glue and paint</h2><p class=\"section\">Each "
                 "kit's steps in 3D, each piece dropping into place in its paint, its booklet, to print, as a kit "
@@ -311,20 +351,37 @@ def index_page(examples, films=(), beyond=(), kits=()):
             "simulation, a model's whole run drawn in time.</p>"
             "<div class=\"links\"><a class=\"button\" href=\"%s\">Construct on GitHub</a>"
             "<a class=\"button\" href=\"#pipeline\">The full pipeline</a><a class=\"button\" href=\"#constructs\">"
-            "Constructs</a>%s%s<a class=\"button\" href=\"#models\">Models come alive</a>"
+            "Constructs</a>%s%s%s<a class=\"button\" href=\"#models\">Models come alive</a>"
             "<a class=\"button\" href=\"%s/blob/main/docs/HOW-IT-IS-MADE.md\">How they are made</a></div></header>"
-            "<main>%s%s%s%s%s</main>"
+            "<main>%s%s%s%s%s%s</main>"
             "<footer class=\"site\">Construct is Apache-2.0 licensed; its Blender add-on is GPL-3.0-or-later. Product and "
             "place names belong to their owners; each construct of a real thing is an independent reconstruction "
             "from public references, not an official model. %s"
             "<a href=\"%s\">Source and documentation</a>.</footer>"
-            % (REPO_URL, "<a class=\"button\" href=\"#kits\">Model kits</a>" if kits else "",
+            % (REPO_URL, "<a class=\"button\" href=\"#worlds\">Worlds</a>" if worlds else "",
+               "<a class=\"button\" href=\"#kits\">Model kits</a>" if kits else "",
                "<a class=\"button\" href=\"#films\">Film mode</a>" if film_part else "",
-               REPO_URL, pipeline, shelf, kit_part, film_part, alive,
+               REPO_URL, pipeline, shelf, world_part, kit_part, film_part, alive,
                "The pages under Models come alive keep their own licences, given on each. " if models else "",
                REPO_URL))
     return _page("Construct · examples", body, 0, "Holographic constructs built by AI agents, the 3D models they "
                                                "export, and agent-based models drawn in time.")
+
+
+def world_page(w):
+    """A world's own page: the live world, what it holds, and where it came from."""
+    body = ("<header class=\"site\"><div class=\"eyebrow\">World</div><h1>%s</h1><p>%s</p><div class=\"links\">"
+            "<a class=\"button primary\" href=\"construct.html\">Open the world</a>%s"
+            "<a class=\"button\" href=\"%s/blob/main/docs/for/worlds-walkthrough.md\">Worlds, step by step</a>"
+            "<a class=\"button\" href=\"../../#worlds\">All worlds</a></div></header>"
+            "<main><a href=\"construct.html\"><img class=\"hero\" src=\"hero.jpg\" alt=\"%s\" width=\"1600\" "
+            "height=\"1000\"></a><p class=\"section\">%d constructs, placed %d times. Drag to turn it; the buttons are "
+            "its views; <kbd>P</kbd> shows how each part is known, <kbd>S</kbd> shows it as a solid in its own colours."
+            "</p></main>"
+            % (html.escape(w["title"]), html.escape(w["summary"]),
+               ("<a class=\"button\" href=\"%s/tree/main/examples/worlds/%s\">How it was made</a>" % (REPO_URL, w["slug"]))
+               if w["readme"] else "", REPO_URL, html.escape(w["title"]), w["constructs"], w["placements"]))
+    return _page("%s · Construct" % w["title"], body, 2, w["summary"][:160])
 
 
 def example_page(ex, kit=None):
@@ -518,6 +575,17 @@ def build(out, films_dir=None, kits=False):
         (dst / "index.html").write_text(example_page(ex, made.get(ex["slug"])), encoding="utf-8")
         if ex["slug"] in made and (src / "kit-thumb.jpg").exists():
             shutil.copyfile(src / "kit-thumb.jpg", dst / "kit-thumb.jpg")
+    worlds = _load_worlds()
+    world_mod = importlib.import_module("construct_hologram.world")
+    for w in worlds:   # each world's live page, built from its world.json beside the gallery it names
+        src, dst = EXAMPLES / "worlds" / w["slug"], out / "worlds" / w["slug"]
+        dst.mkdir(parents=True)
+        tmp = out / ".build" / ("world-" + w["slug"])
+        world_mod.build(src / "world.json", tmp)
+        shutil.copyfile(tmp / "construct.html", dst / "construct.html")
+        shutil.copyfile(src / "thumb.jpg", dst / "thumb.jpg")
+        shutil.copyfile(src / ("hero.jpg" if (src / "hero.jpg").exists() else "thumb.jpg"), dst / "hero.jpg")
+        (dst / "index.html").write_text(world_page(w), encoding="utf-8")
     films = _load_films() if films_dir else []
     for film in films:
         _film(film, films_dir, out, studio)
@@ -543,7 +611,7 @@ def build(out, films_dir=None, kits=False):
     shutil.rmtree(out / ".build", ignore_errors=True)
     kit_list = [dict(made[k["slug"]], title=next(e["title"] for e in examples if e["slug"] == k["slug"]))
                 for k in _load_kits() if k["slug"] in made]
-    (out / "index.html").write_text(index_page(examples, films, beyond, kit_list), encoding="utf-8")
+    (out / "index.html").write_text(index_page(examples, films, beyond, kit_list, worlds), encoding="utf-8")
     (out / "404.html").write_text(_page("Not found · Construct", "<header class=\"site\"><h1>Not here</h1><p>That page "
                                         "does not exist.</p><a class=\"button\" href=\"%s\">All examples</a></header>"
                                         % SITE_URL, 0, "Page not found."), encoding="utf-8")

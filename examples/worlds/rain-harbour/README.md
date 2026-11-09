@@ -53,10 +53,10 @@ says so (press **P**).
   <img src="signs.jpg" width="49%" alt="Under the signs: the RAIN HARBOUR district fascia and the hotel blades overhead, looking up between the towers">
 </p>
 <p align="center">
-  <img src="skyline.jpg" width="49%" alt="The skyline behind the street: layered towers, the signal tower's mast and the cables slung between the buildings">
-  <img src="solid.jpg" width="49%" alt="The same street in the solid view: the yellow car, the dark towers and the coloured sign faces">
+  <img src="solid.jpg" width="49%" alt="The same street in the solid view: grey towers, the coloured sign faces and the yellow car">
+  <img src="car-solid.jpg" width="49%" alt="AURIC in the solid view: yellow body, magenta tail lights, its wheels and rear wing">
 </p>
-<p align="center"><sub>Its own views: the car close, under the signs, the skyline, and the street in the solid view (S),
+<p align="center"><sub>Its own views: the car close, under the signs, and the street and the car in the solid view (S),
 where the car is yellow. The light view keeps Construct's house palette.</sub></p>
 
 ## How it was made
@@ -119,7 +119,7 @@ a wall touches it.
 ## Use it
 
 - **In Hermes:** Worlds → Rain Harbour. Arrange it by hand, add your own constructs, save views, export it.
-- **In a game engine:** `construct export examples/worlds/rain-harbour/world.json --format glb --pieces glued` gives
+- **In a game engine:** `construct export examples/worlds/rain-harbour/world.json --out level.glb --pieces glued` gives
   a Godot map: the street and buildings fixed, the car's doors on their hinges. Every placement is a named group.
 - **In Blender:** import `world.json` with the Construct add-on, or the exported `.glb`.
 - **As a starting point:** every construct is its own folder under `constructs/`, with its own record. Place the
