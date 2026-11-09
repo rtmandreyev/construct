@@ -86,7 +86,7 @@ triangle coloured by that angle (green good, amber under 20 degrees, red under 1
 construct export scene.json --out prop.glb --materials prop.materials.json --merge --wire seams
 ```
 
-The Toyota Land Cruiser FJ62 comes out at about 21,000 triangles in 27 draw calls (from about 300
+The Toyota Land Cruiser FJ62 comes out at about 37,000 triangles in 22 draw calls (from about 300
 unmerged), with its tailgate still opening; the Arturia MiniFreak at about 4,500 triangles. The
 texture coordinates are a box projection: enough to texture a part or tile a material, and an
 engine can generate lightmap coordinates from them on import.

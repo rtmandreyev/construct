@@ -125,7 +125,7 @@ chapter ring, blued steel hands, glass.
 
 ```sh
 construct export scene.json --out clock.glb --materials finish.json     # 207 parts; animations: open, idle
-construct export scene.json --out clock.obj                             # 7900 quads, ready to subdivide
+construct export scene.json --out clock.obj                             # about 3,800 quads, ready to subdivide
 construct export scene.json --out quality.glb --quality                 # each triangle coloured by its quality
 ```
 
