@@ -1534,6 +1534,18 @@ class Rounds(unittest.TestCase):
         self.assertIn("copied the scene hash with a slip", (self.d / "rounds.md").read_text())
         self.assertFalse(r._hash_slip("0" * 64, want))   # another hash altogether is still refused
 
+    def test_a_run_stopped_by_time_is_extended_only_on_request(self):
+        r = self.r
+        st = r.state(self.d)
+        st.update(status="stopped", stop="the 120-minute ceiling on active time", limit_seconds=7200)
+        r._save(self.d, "state.json", st)
+        st = r.extend(self.d, 60)
+        self.assertEqual((st["status"], st["limit_seconds"]), ("running", 10800))
+        st.update(status="stopped", stop="2 rounds in a row did not beat round 3")
+        r._save(self.d, "state.json", st)
+        with self.assertRaises(r.RoundsError):   # more time does not undo a stop rule
+            r.extend(self.d, 60)
+
     def test_a_tie_is_recorded_and_keeps_the_best(self):
         # a critic that cannot choose says "same": the round is recorded (not refused) and does not beat the best
         r = self.r

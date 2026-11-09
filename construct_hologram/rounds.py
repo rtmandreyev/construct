@@ -161,6 +161,26 @@ def pause(folder, now=None):
     return st
 
 
+def extend(folder, minutes, now=None):
+    """More working time for a run, when the person asks: a run stopped by its time ceiling (and only by that: the
+    round cap and two rounds without a win still stand) runs on from where it stopped, with `minutes` more."""
+    st = state(folder)
+    if not (isinstance(minutes, (int, float)) and 1 <= minutes <= 600):
+        raise RoundsError("extend by 1 to 600 minutes")
+    if st["status"] == "stopped" and "ceiling" not in str(st.get("stop", "")):
+        raise RoundsError("the run stopped on %s, which more time does not change" % st.get("stop"))
+    st["limit_seconds"] = (st.get("limit_seconds") or 0) + int(minutes * 60)
+    if st["status"] == "stopped":
+        st["status"] = "running"
+        st.pop("stop", None)
+    st["last_step_at"] = time.time() if now is None else now   # the time it stood stopped is not counted
+    _save(folder, STATE, st)
+    with open(Path(folder, LOG), "a", encoding="utf-8") as f:
+        f.write("\n**Extended by %d minutes at the person's request: the ceiling is now %d minutes.**\n"
+                % (minutes, st["limit_seconds"] // 60))
+    return st
+
+
 def start(scene_path, tier="masterpiece", folder=None, now=None, max_rounds=None):
     import os
     scene_path = Path(scene_path).resolve()

@@ -251,6 +251,11 @@ def _rounds(args):
                 sys.stdout.write(rounds.summary(e) + "\n")
             else:
                 sys.stdout.write("round %d recorded (%s); details in rounds.md\n" % (e["round"], "kept" if e["kept"] else "reverted"))
+        elif args.action == "extend":   # more working time, when the person asks for it
+            if len(a) != 1 or not a[0].isdigit():
+                raise rounds.RoundsError("usage: construct rounds extend MINUTES (asked for by the person)")
+            st = rounds.extend(folder, int(a[0]))
+            sys.stdout.write("extended: the ceiling is now %d minutes; round %d is next\n" % (st["limit_seconds"] // 60, st["round"]))
         elif args.action == "pause":
             rounds.pause(folder)
             sys.stdout.write("paused: the time until the next command is not counted; resume with `construct rounds "
@@ -370,7 +375,7 @@ def add_commands(sub):
     p.add_argument("--model")
     p.add_argument("--key-env")
     p = sub.add_parser("rounds", help="improvement rounds: a defect ledger, a pairwise gate, stop rules and a log")
-    p.add_argument("action", choices=("start", "change", "packet", "record", "run", "pause", "status", "report"))
+    p.add_argument("action", choices=("start", "change", "packet", "record", "run", "pause", "extend", "status", "report"))
     p.add_argument("args", nargs="*", help="start: scene.json; change: ID \"what changed\"; record: answer.json")
     p.add_argument("--dir", default=".", help="the run's folder (state.json, ledger.json, rounds.md, checkpoints/)")
     p.add_argument("--tier", "--mode", dest="tier", default="masterpiece", choices=("masterpiece", "timeboxed", "unbounded"),
