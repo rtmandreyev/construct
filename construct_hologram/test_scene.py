@@ -9,6 +9,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+import unittest.mock
 from pathlib import Path
 
 from . import shapes as shapes_mod
@@ -311,6 +312,69 @@ class Compilation(unittest.TestCase):
             self.assertIn(seg["tone"], ("accent", "bright", "structure", "dust", "identity", "faint"))
             self.assertTrue(0 <= seg["stage"] <= 5)
             self.assertIn(seg["certainty"], scene.CERTAINTIES)
+
+
+def many_copies():
+    """Copies by the hundred: posts on the ground, a beam built before them, a stack, a ring of loose beads."""
+    s = base()
+    box = lambda size: {"type": "box", "size": size, "anchor": "base"}
+    s["parts"] += [
+        {"id": "posts", "role": "structure", "certainty": "inferred", "stage": 1, "shape": box([0.1, 1, 0.1]),
+         "at": [-3, 0, 2], "repeat": {"count": 60, "step": {"at": [0.1, 0, 0]}}},
+        {"id": "beam", "role": "structure", "certainty": "inferred", "stage": 0, "shape": box([6, 0.1, 0.1]),
+         "at": [0, 1, 2]},
+        {"id": "stack", "role": "detail", "certainty": "inferred", "stage": 2, "shape": box([0.1, 0.1, 0.1]),
+         "at": [0, 1, 0], "repeat": {"count": 64, "step": {"at": [0, 0.1, 0]}}},
+        {"id": "beads", "role": "ornament", "certainty": "inferred", "stage": 3, "shape": box([0.05, 0.05, 0.05]),
+         "at": [2, 3, 0], "repeat": {"count": 64, "radial": {"axis": "y", "center": [0, 3, 0]}}},
+        {"id": "halo", "role": "ornament", "certainty": "inferred", "stage": 3, "shape": box([0.05, 0.05, 0.05]),
+         "at": [1, 4, 0], "floating": True, "repeat": {"count": 64, "radial": {"axis": "y", "center": [0, 4, 0]}}},
+        {"id": "plank", "role": "detail", "certainty": "inferred", "stage": 0, "shape": box([0.4, 0.05, 0.4]),
+         "at": [0, 7.4, 0]}]
+    return s
+
+
+class AuditGrid(unittest.TestCase):
+    """The support, stage-order and contact checks find which boxes touch on a grid, not by trying every pair: the
+    report is the same, word for word and in the same order, as trying every pair."""
+
+    def both(self, s):
+        g = scene.compile_scene(s)
+        fast = audit.audit(s, g)
+        with unittest.mock.patch.object(audit, "_BRUTE", True):
+            slow = audit.audit(s, g)
+        self.assertEqual(json.dumps(fast), json.dumps(slow))
+        return fast
+
+    def test_the_grid_says_what_every_pair_says(self):
+        rep = self.both(many_copies())
+        codes = [(x["code"], x["part"]) for x in rep["errors"] + rep["warnings"]]
+        self.assertIn(("floating", "beads"), codes)
+        self.assertIn(("stage-order", "plank"), codes)   # set on the stack, which is built after it
+        self.assertNotIn(("floating", "stack"), codes)
+        self.assertNotIn(("floating", "halo"), codes)
+        for s in (base(), lid_scene(), red_blue_chair()):
+            self.both(s)
+
+    def test_on_real_constructs(self):
+        for name in ("rietveld-red-blue-chair", "garden-shed", "braun-sk4"):
+            self.both(json.loads((HERE.parent / "examples" / name / "scene.json").read_text()))
+
+    def test_the_index_never_misses_a_box(self):
+        import random
+        rnd = random.Random(7)
+        boxes = []
+        for _ in range(400):
+            lo = [rnd.uniform(-5, 5) for _ in range(3)]
+            size = rnd.choice([0.0, 0.01, 0.1, 0.5, 3.0, 20.0])   # points, small, typical, large, a ground plane
+            boxes.append({"min": lo, "max": [v + size * rnd.random() for v in lo]})
+        boxes.append({"min": [1, 1, 1], "max": [1, 1, 1]})
+        boxes.append({"min": [1.002, 1, 1], "max": [1.002, 1, 1]})   # exactly the reach away
+        for tol in (0.0, 0.002, 0.05):
+            fast = audit._box_neighbours(boxes, tol)
+            with unittest.mock.patch.object(audit, "_BRUTE", True):
+                self.assertEqual(fast, audit._box_neighbours(boxes, tol))
+        self.assertIn(len(boxes) - 1, audit._box_neighbours(boxes, 0.002)[len(boxes) - 2])
 
 
 class Audit(unittest.TestCase):

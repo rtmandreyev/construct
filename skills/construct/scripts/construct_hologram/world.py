@@ -48,7 +48,7 @@ SKY_RENDER = 6.0              # a sky placement is drawn this many world radii a
 TOP = {"format", "version", "id", "title", "summary", "origin", "placements", "presentation", "animation", "authoring"}
 PLACEMENT = {"id", "construct", "label", "at", "yaw", "rotate", "scale", "on", "floating", "sky", "note"}
 SKY = {"diameter_m", "distance_m", "azimuth", "elevation", "spin", "of"}
-VIEW = {"id", "label", "target", "yaw", "pitch", "distance", "distance_m"}
+VIEW = {"id", "label", "target", "yaw", "pitch", "distance", "distance_m", "cutaway"}
 MAX_VIEWS = 48
 
 
@@ -173,7 +173,7 @@ def validate(doc):
             for i, v in enumerate(views):
                 vw = "world.presentation.views[%d]" % i
                 if not isinstance(v, dict) or set(v) - VIEW or not _ident(v.get("id")):
-                    err(vw, "expected {id, label?, target?, yaw?, pitch?, distance?} with a lowercase id")
+                    err(vw, "expected {id, label?, target?, yaw?, pitch?, distance?, cutaway?} with a lowercase id")
                     continue
                 if v["id"] in vids:
                     err(vw + ".id", "%r is named twice" % v["id"])
@@ -189,6 +189,8 @@ def validate(doc):
                 for k, lo, hi in (("yaw", -3600, 3600), ("pitch", -89, 89), ("distance", 0.01, 100)):
                     if k in v and not _num(v[k], lo, hi):
                         err(vw + "." + k, "expected %g..%g" % (lo, hi))
+                if "cutaway" in v and not isinstance(v["cutaway"], bool):
+                    err(vw + ".cutaway", "expected true or false (whether the solid view cuts away what stands in front)")
     return errs
 
 
@@ -426,7 +428,12 @@ def _append(out, g, pid, xf, start, span, sky=False):
     out.placed = getattr(out, "placed", [])
     if not any(r[0] == pid for r in out.placed):
         out.placed.append((pid, xf.t))
-    ph = lambda v: _r(start + span * min(1.0, max(0.0, v)))
+    phases = {}   # a construct's lines share a few dozen phases: each is worked out once
+
+    def ph(v):
+        if v not in phases:
+            phases[v] = _r(start + span * min(1.0, max(0.0, v)))
+        return phases[v]
     for st in g["styles"]:
         row = list(st)
         if row[6] >= 0:
@@ -441,10 +448,19 @@ def _append(out, g, pid, xf, start, span, sky=False):
     cols = g.get("style_colors") or [None] * len(g["styles"])
     out.style_colors.extend(cols)
     out.style_light.extend(g.get("style_light") or [bool(c) for c in cols])
-    L = g["lines"]
+    # every vertex through xf.p and _r, written out: the same arithmetic in the same order, without a call per number
+    (r00, r01, r02), (r10, r11, r12), (r20, r21, r22) = xf.r
+    s_, (t0, t1, t2) = xf.s, xf.t
+    L, lines = g["lines"], out.lines
     for i in range(0, len(L), 9):
-        a, b = xf.p(L[i:i + 3]), xf.p(L[i + 3:i + 6])
-        out.lines.extend([_r(a[0]), _r(a[1]), _r(a[2]), _r(b[0]), _r(b[1]), _r(b[2]), L[i + 6] + so, ph(L[i + 7]), ph(L[i + 8])])
+        x, y, z, u, v, w = L[i:i + 6]
+        lines.extend((round(t0 + s_ * (r00 * x + r01 * y + r02 * z), 5) + 0.0,
+                      round(t1 + s_ * (r10 * x + r11 * y + r12 * z), 5) + 0.0,
+                      round(t2 + s_ * (r20 * x + r21 * y + r22 * z), 5) + 0.0,
+                      round(t0 + s_ * (r00 * u + r01 * v + r02 * w), 5) + 0.0,
+                      round(t1 + s_ * (r10 * u + r11 * v + r12 * w), 5) + 0.0,
+                      round(t2 + s_ * (r20 * u + r21 * v + r22 * w), 5) + 0.0,
+                      L[i + 6] + so, ph(L[i + 7]), ph(L[i + 8])))
     F = g["fills"]
     for i in range(0, len(F), 5):
         a = xf.p(F[i:i + 3])
@@ -639,6 +655,16 @@ def audit(doc, g):
         if solid(p):
             parts_of.setdefault(p["placement"], []).extend((p["id"], b["min"], b["max"]) for b in p["instances"])
     ground = 0.0   # the world's ground plane (a construct's own foundations may go below it)
+    # each placement's part boxes on a grid, so a box is tried only against those near it (a spruce's thousands of
+    # ornaments against a market's stalls were millions of pairs)
+    from .audit import BoxIndex
+    indexes = {}
+
+    def meeting(pid, lo, hi):   # the indices of placement pid's part boxes that meet (lo, hi)
+        if pid not in indexes:
+            indexes[pid] = BoxIndex([(blo, bhi) for _, blo, bhi in parts_of[pid]])
+        own = parts_of[pid]
+        return [i for i in indexes[pid].near(lo, hi) if _meets((lo, hi), (own[i][1], own[i][2]))]
     hosts = {r["on"].split("/")[0] for r in recs.values() if r.get("on")}
     ids = [r["id"] for r in g["world"]["placements"]]
     for i, a in enumerate(ids):
@@ -652,9 +678,8 @@ def audit(doc, g):
             if not _meets(A, B):
                 continue
             # their boxes cross; do their parts? (a scooter beside a shed shares the box of the shed's yard, not a wall)
-            pa = [(lo, hi) for _, lo, hi in parts_of.get(a, []) if _meets((lo, hi), B)]
-            pb = [(lo, hi) for _, lo, hi in parts_of.get(b, []) if _meets((lo, hi), A)]
-            hits = sum(1 for x in pa if any(_meets(x, y) for y in pb))
+            pb = set(meeting(b, *A)) if b in parts_of else set()
+            hits = sum(1 for _, lo, hi in parts_of.get(a, []) if _meets((lo, hi), B) and pb.intersection(meeting(b, lo, hi)))
             if hits:
                 add("overlap", a, "%s and %s overlap (%d of %s's parts run into %s's)" % (a, b, hits, a, b))
     # a thing shares space with what it stands on (a chair in its house), but not with every part of it: a car
@@ -668,7 +693,7 @@ def audit(doc, g):
         for hid, lo, hi in parts_of.get(host, []):
             if support and hid == on or not _meets((lo, hi), A):
                 continue
-            if any(_meets((lo, hi), (alo, ahi)) for _, alo, ahi in parts_of[pid]):
+            if meeting(pid, lo, hi):
                 hits.append(hid)
         if hits:
             shown = sorted(set(hits))
@@ -688,7 +713,7 @@ def audit(doc, g):
                 continue
             skip = {recs[b].get("on"), recs[a].get("on")}   # what one of them stands on is shared by design
             hit = sorted({mid for mid, lo, hi in moving if mid not in skip and _meets((lo, hi), boxes[b])
-                          and any(_meets((lo, hi), (blo, bhi)) for bid, blo, bhi in parts_of[b] if bid not in skip)})
+                          and any(parts_of[b][i][0] not in skip for i in meeting(b, lo, hi))})
             if hit:
                 add("blocks", b, "%s is in the way of %s's %s when %s open%s: move it clear, unless that is never "
                     "opened" % (b, a, ", ".join(x.split("/", 1)[1] for x in hit[:3]),

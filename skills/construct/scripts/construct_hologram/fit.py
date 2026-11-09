@@ -75,6 +75,8 @@ def touch(a, b, reach=1):
     """Whether two parts' voxels meet or lie within `reach` voxels of each other."""
     if not a or not b:
         return False
+    if len(b) < len(a):   # the same question either way round: walk the smaller
+        a, b = b, a
     for (x, y), m in a.items():
         grow = m
         for i in range(1, reach + 1):

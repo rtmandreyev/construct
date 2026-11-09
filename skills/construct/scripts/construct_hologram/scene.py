@@ -1102,7 +1102,7 @@ def _presentation_check(c, pr, part_ids):
         views = []
     for i, v in enumerate(views):
         vw = "%s.views[%d]" % (w, i)
-        if c.keys(v, {"id", "label", "yaw", "pitch", "distance", "target"}, {"id", "yaw", "pitch"}, vw):
+        if c.keys(v, {"id", "label", "yaw", "pitch", "distance", "target", "cutaway"}, {"id", "yaw", "pitch"}, vw):
             if c.ident(v.get("id"), vw + ".id"):
                 if v["id"] in seen:
                     c.err(vw + ".id", "duplicate %r" % v["id"])
@@ -1115,6 +1115,8 @@ def _presentation_check(c, pr, part_ids):
                 c.num(v["distance"], vw + ".distance", 0.1, 5)
             if "target" in v and v["target"] not in part_ids:
                 c.err(vw + ".target", "unknown part %r" % v["target"])
+            if "cutaway" in v and not isinstance(v["cutaway"], bool):
+                c.err(vw + ".cutaway", "expected true or false")
     at = pr.get("atmosphere", {})
     if c.keys(at, {"haze", "scanlines", "vignette", "grid", "projector", "motes"}, set(), w + ".atmosphere"):
         for k in ("haze", "motes"):
