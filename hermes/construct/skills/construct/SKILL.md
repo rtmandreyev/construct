@@ -39,7 +39,8 @@ alive without being noisy, or until the mode's limits are reached. Then deliver 
 (`{"op": "move", "part": "lid", "by": [0, 0.004, 0]}`, `{"op": "set", "part": "door-*", "field": "look.weight",
 "value": 1.4}`, `{"op": "certainty", "parts": ["wheel-*"], "certainty": "verified", "basis": ["wheel-diameter"]}`,
 `{"op": "add_fact", "fact": {...}}`, `{"op": "add_part", "part": {...}}`, `{"op": "remove_part", "part": "..."}`).
-Each step is validated; the scene is written only when the edits add no error, and the result gives the diff,
+`construct_inspect` lists part labels, not ids: take the ids from the project's `scene.json` (or a kit's `kit.json`
+`pieces[].parts`, or a glTF read-back's `part_names`). Each step is validated; the scene is written only when the edits add no error, and the result gives the diff,
 what each step broke or fixed, and a check summary (an `undo` copy is kept). Use your file tools only to write a
 new scene or rewrite most of one; the project folder is in `construct_start`'s result. The references are this skill's files: read one with
 `skill_view("construct:construct", file_path="references/craft.md")`. They write commands as
@@ -59,9 +60,9 @@ its call returns a `job_id`. Tell the user what is running, then call `construct
 waits here and answers as soon as the job ends. Never `sleep` in a terminal to wait for Construct.
 
 **Start from what ships.** `construct_start` with no arguments lists finished constructs to start from or show (a
-Land Cruiser, a VW T1 Samba, a Vespa, an Eames chair, a Braun SK 4 and its knob, a Revox A77, a Yamaha piano, a
-Tompion clock, a garden shed before and after a planned change, the Sainte-Chapelle, the Duomo di Milano,
-Neuschwanstein, the invented KESTREL ship in two versions). When the user wants to see what Construct makes, or the
+Land Cruiser, a VW T1 Samba, a Vespa, an Eames chair, a Braun SK 4 and its knob, a Revox A77, a Tompion clock, a
+garden shed before and after a planned change, the Sainte-Chapelle, the Duomo di Milano, Neuschwanstein, the
+invented KESTREL ship, and more). When the user wants to see what Construct makes, or the
 thing is close to one of them, start from it.
 
 **Teach when asked.** "Teach me", "show me how", "a tutorial", or a message naming a tutorial file: the tutorials
@@ -139,11 +140,12 @@ show what each step makes, and wait for the user between steps.
    only when it beats the best so far. After every round, report in chat: the critic's top requests, what
    changed (ledger ids), won or lost, and the minutes. Stop when `record` says STOP. After an interruption run
    `rounds status` and redo only the step it names.
-7. **Deliver.** Record the `authoring` block (mode as `tier`, `research`, the `sources` used, `review_rounds`,
-   `outcome`, `next`: the most valuable improvements still open). Build it, put the MEDIA line in your reply,
-   and say plainly what is evidence, what is inferred or designed, which artwork is the user's own and which is
-   generated decoration, and, if a limit stopped you, what the next improvement would be. Never call a generic
-   reconstruction exact, and never present generated art as a real cover.
+7. **Deliver.** Record the `authoring` block (the mode as `tier`: masterpiece as `masterpiece`, fast as `standard`;
+   `research`, the `sources` used, `review_rounds`, `outcome`, `next`: the most valuable improvements still open).
+   Build it, put the MEDIA line in your reply, and say plainly what is evidence, what is inferred or designed,
+   which artwork is the user's own and which is generated decoration, and, if a limit stopped you, what the next
+   improvement would be. Never call a generic reconstruction exact, and never present generated art as a real
+   cover.
 
 ## Answering "what is actually known about it?"
 

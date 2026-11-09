@@ -21,14 +21,15 @@ Teach me to take a construct into CAD as FreeCAD and STEP files, step by step, o
    the reply. Ask the user to replay the opening (the hood and the trunk door) and press **S** for the solid.
 3. **Fit first.** `construct_check(project=<id>, fit=true)`; explain what each finding means and fix the ones that
    matter, so the solids meet as they should.
-4. **FreeCAD and STEP.** `construct_export(project=<id>, format="fcstd", step=true)`. Report what the summary
-   says: named solids grouped by build stage, true CAD shapes where a part allows, and its joints. MEDIA line in
-   the reply. Tell the user to open the `.FCStd` in FreeCAD and the `.step` in any CAD program (Fusion,
-   SolidWorks, Onshape).
+4. **FreeCAD and STEP.** `construct_export(project=<id>, format="fcstd", step=true)`. Report what the summary says:
+   named solids grouped by build stage, true CAD shapes where a part allows, and its joints; and name the parts it
+   *left out* (drawn only in lines) and any FreeCAD found *invalid*. MEDIA line in the reply. Tell the user to open
+   the `.FCStd` in FreeCAD and the `.step` in any CAD program (Fusion, SolidWorks, Onshape).
 5. **The user's own.** Ask which construct they want in CAD (one from another tutorial, or a new one), and for what:
    a layout to measure, a drawing for a builder, a part to send to a print service. Check with `fit=true`, export.
-6. **Change, then export again.** `construct_edit` by part id for a size the user corrects (mark it `user_supplied`),
-   `construct_check`, export again: the same scene always gives the same files.
+6. **Change, then export again.** `construct_edit` by part id (the ids are in the project's `scene.json`) for a size
+   the user corrects (mark it `user_supplied`), `construct_check`, export again: the same scene gives the same shapes
+   (only the STEP file's header, which carries the time it was written, differs).
 
 **What next:** `02-replace-a-part.md` (one part, for a print or a service), `03-home-and-garden.md`.
 

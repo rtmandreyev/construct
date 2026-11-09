@@ -273,7 +273,15 @@ def exact_shape(spec, smooth=True):
         return Part.makeTorus(spec["major"], spec["minor"], V(0, 0, 0), Y), True
     if t == "lathe":
         prof = spec["profile"]
-        w = _smooth_wire([[r, y, 0.0] for r, y in prof], False, smooth)
+        ring = len(prof) > 3 and max(abs(a - b) for a, b in zip(prof[0], prof[-1])) < 1e-9
+        w = _smooth_wire([[r, y, 0.0] for r, y in prof], ring, smooth)
+        if ring:   # a closed outline (a ring, a bored knob): the face it bounds, turned into a solid
+            try:
+                sol = Part.Face(w).revolve(V(0, 0, 0), Y, 360)
+                if sol.ShapeType == "Solid" and sol.isValid():
+                    return sol, True
+            except Exception:
+                pass
         s = w.revolve(V(0, 0, 0), Y, 360)
         closed = prof[0][0] <= 1e-9 and prof[-1][0] <= 1e-9
         if closed:

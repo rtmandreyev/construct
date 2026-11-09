@@ -408,8 +408,10 @@ def world(args):
         pid = ", ".join(added)
     elif op == "view":   # a named view of the world: a room, a group, one placement; shown as a button on the page
         vid = args.get("id")
+        if not vid and isinstance(args.get("label"), str) and args["label"].strip():   # as the Desktop names it
+            vid = runtime.slugify(args["label"])[:40]
         if not isinstance(vid, str) or not NAME.match(vid):
-            raise ConstructError("a view needs an id (lowercase letters, digits, - _ .)")
+            raise ConstructError("a view needs an id or a label (id: lowercase letters, digits, - _ .)")
         pr = doc.setdefault("presentation", {})
         views = [v for v in pr.get("views", []) if v.get("id") != vid]
         if not tools._bool(args, "remove"):

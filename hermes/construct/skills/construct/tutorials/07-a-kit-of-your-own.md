@@ -15,16 +15,20 @@ Teach me to make a model kit of my own thing with Construct, step by step, one s
 ## Steps
 
 1. **Show the example.** `construct_start(example="vespa-gs150")` and `construct_build`; MEDIA line in the reply.
-   Say: an owner's 1960 Vespa GS 150 from two photos. Its published kit is 32 pieces on 3 plates in 21 steps at 1:12,
-   157 mm long (open it: https://rtmandreyev.github.io/construct/examples/vespa-gs150/kit/assembly.html).
+   Say: an owner's 1960 Vespa GS 150 from two photos. It ships with its kit plan: 28 pieces on 2 plates in 22 steps
+   at 1:12, 157 mm long (a published kit to open:
+   https://rtmandreyev.github.io/construct/examples/vespa-gs150/kit/assembly.html).
 2. **A first kit.** `construct_check(project=<id>, fit=true)` first: a kit cannot glue what does not touch. Then
    `construct_command(argv=["kit", "scene.json", "--scale", "12", "--printer", "desktop", "--out", "kit"],
-   project=<id>)`. Exit 1 means it was written with notes to read. Expect many small pieces and slivers on a first
-   kit: a construct is drawn to look right, not to be moulded.
-3. **A plan.** Write `kit-plan.json` in the project: `{"title": "...", "merge": [["body", "floorboard-*", ...],
-   ...]}`, merging what a factory would cast as one piece (the body with its floor and legshield, each wheel with
-   its tyre and hubcaps, each cowl with its trim). Use part ids from `construct_inspect`. Run the kit again with
-   `"--plan", "kit-plan.json"`. Report pieces, plates and steps, and read the remaining notes to the user.
+   project=<id>)`. The first kit takes about 10 minutes: say so before starting. Exit 1 means it was written with
+   notes to read. Expect many small pieces and slivers on a first kit: a construct is drawn to look right, not to be
+   moulded.
+3. **A plan.** The Vespa's project already holds its `kit-plan.json`: show it as the model. `{"title": "...",
+   "merge": [["monocoque", "floorboard-*", ...], ...]}` merges what a factory would cast as one piece (the body with
+   its floor and legshield, each wheel with its tyre and hubcaps, each cowl with its trim). Run the kit again with
+   `"--plan", "kit-plan.json"`: 28 pieces on 2 plates in 22 steps. Report pieces, plates and steps, and read the
+   remaining notes to the user. For the user's own construct you write its `kit-plan.json` in the project, the part
+   ids taken from its `scene.json` or from the first kit's `kit/kit.json` (`pieces[].parts`).
 4. **What they get.** In `kit/`: `booklet.html` (to print), `assembly.html` (the steps in 3D), a `.3mf` per plate
    for their slicer, and every piece on its own. Put the files the result lists in the reply.
 5. **The user's own thing.** It starts from a construct of it in masterpiece mode: `01-copy-your-thing.md`,

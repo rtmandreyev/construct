@@ -4,7 +4,7 @@ summary: A construct assembling across a piece of music, pausing in quiet passag
 group: Makers and creators
 example: sainte-chapelle
 needs: browser, ffmpeg
-time: about 15 minutes, then the render (about an hour for four minutes of music)
+time: about 15 minutes, then the render
 status: ready
 ---
 
@@ -21,8 +21,9 @@ Teach me to make a film of a construct assembling to music, step by step, one st
 3. **A short test first.** `construct_film(project=<id>, seconds=12, camera="steady")`, no music: it returns a
    `job_id` at once. Say what is running, then `construct_job(job_id, wait_seconds=...)` until done, and put its MEDIA
    line in the reply.
-4. **The music.** Ask for a music file of their own (any format ffmpeg reads) and, optionally, a separate vocal
-   stem. Warn before starting: about 1 to 2 frames a second, so about an hour for four minutes of music.
+4. **The music.** Ask for a music file of their own (any format ffmpeg reads) and, optionally, a separate vocal stem.
+   Warn before starting: a film renders at about 3 frames a second (24 frames to each second of film), so a 24-second
+   film takes about 3 minutes and four minutes of music half an hour or more; slower on a slower machine.
 5. **The film.** Keep the scene's own assembly at most 20 s (the film stretches it). Then
    `construct_film(project=<id>, track="/path/track.wav", camera="steady")`, with `voice="/path/vocals.wav"` if
    they gave a stem (it shimmers while the voice is present); `size="1920x1080"` only if they ask. Follow it with

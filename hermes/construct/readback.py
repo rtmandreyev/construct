@@ -2,7 +2,7 @@
 
 Standard library only, each reader bounded: glTF binary (nodes, meshes, animations, bounds through the node tree),
 OBJ, STL (binary or text), 3MF (its model XML), STEP (products, solids, faces by surface kind, bounds from its
-vertices) and FreeCAD documents (their objects). Each returns a small dict; a file that cannot be read says why.
+vertices, approximate) and FreeCAD documents (their objects). Each returns a small dict; a file that cannot be read says why.
 """
 
 import json
@@ -255,12 +255,15 @@ def step(path):
     unit = "mm" if re.search(r"SI_UNIT\s*\(\s*\.MILLI\.\s*,\s*\.METRE\.\s*\)", text) else \
         ("m" if re.search(r"SI_UNIT\s*\(\s*\$\s*,\s*\.METRE\.\s*\)", text) else "mm")
     curved = sum(v for k, v in surfaces.items() if k != "plane")
+    bounds = _bounds(lo if seen else None, hi, unit)
+    if bounds:   # a curved face (a cylinder's side, a fender) reaches past the vertices on its edges
+        bounds["approximate"] = "from the vertices only: curved parts can reach further"
     return {"schema": (re.search(r"FILE_SCHEMA\s*\(\s*\(\s*'([^']+)'", text) or [None, None])[1],
             "products": len(products), "part_names": [p.replace("''", "'") for p in products][:NAMES_MAX],
             "solids": ents.get("MANIFOLD_SOLID_BREP", 0) + ents.get("BREP_WITH_VOIDS", 0),
             "faceted_solids": ents.get("FACETED_BREP", 0), "shells": ents.get("SHELL_BASED_SURFACE_MODEL", 0),
             "faces": ents.get("ADVANCED_FACE", 0) + ents.get("FACE_SURFACE", 0), "surfaces": surfaces,
-            "curved_faces": curved, "bounds": _bounds(lo if seen else None, hi, unit)}
+            "curved_faces": curved, "bounds": bounds}
 
 
 # ---------------------------------------------------------------------------- FreeCAD
@@ -285,7 +288,7 @@ def fcstd(path):
                 s = prop.find("String")
                 if s is not None and o.get("name", "").startswith("p_"):
                     labels.append(s.get("value"))
-    return {"objects": sum(kinds.values()), "solids": kinds.get("Part::Feature", 0), "groups": kinds.get("App::DocumentObjectGroup", 0),
+    return {"objects": sum(kinds.values()), "solids": kinds.get("Part::Feature", 0), "groups": kinds.get("App::Part", 0) + kinds.get("App::DocumentObjectGroup", 0),
             "part_names": labels[:NAMES_MAX], "shape_files": breps}
 
 

@@ -14,8 +14,9 @@ Teach me to run NetLogo's Simple Viral Marketing model with Construct and watch 
 ## Steps
 
 1. **NetLogo first.** Ask whether desktop NetLogo 7 is installed. The model comes from the user's own installed
-   Models Library; nothing is downloaded or bundled. If `construct_netlogo_run` cannot find NetLogo, say so and stop:
-   Construct never installs it (NetLogo Web cannot run it).
+   Models Library; nothing is downloaded or bundled. If NetLogo isn't found, ask where it is installed and have the
+   user set it in Settings → Plugins → Construct → NetLogo folder; Construct never installs it (NetLogo Web cannot
+   run it).
 2. **The model in one line.** People on a social network and one product: some adopt from advertising, others
    because their neighbours have. The question: how fast does it spread, and how far?
 3. **One run.** `construct_netlogo_run` for the library model "Simple Viral Marketing", one run with a fixed seed
@@ -23,12 +24,14 @@ Teach me to run NetLogo's Simple Viral Marketing model with Construct and watch 
    `construct_build` it). Nothing in the model is changed: the run is recorded as it is.
 4. **How to read it.** The network is on the floor; each person rises to the tick they adopted, and each link climbs
    from the earlier adopter to the later (a steep link joins two people who adopted far apart in time). Ask the user
-   to drag the replay bar, press **H** (How to read it), **L** (the legend) and **P**: every data part is verified
+   to drag the replay bar, press **H** (How to read it), **L** (labels) and **P**: every data part is verified
    against the recording. The dashed frames mark where adoption was half way and 90% of the way, from the run itself.
 5. **Ask what they see.** Where does it start, where does it stall, who adopts last? Answer from
    `construct_inspect` (the model, NetLogo's version, the seed, the ticks, the counts), never from memory.
-6. **Stretch the start.** Most of a cascade happens early. Redraw the same recording, without running NetLogo again:
-   `construct_netlogo_draw` on its `run.jsonl` with the view `network-time`, the state `adopted?` and time `sqrt`.
+6. **The start, stretched.** Most of a cascade happens early, so the auto view has already drawn height as the square
+   root of time (time `sqrt`; the time axis says so). To compare, redraw the same recording without running NetLogo
+   again: `construct_netlogo_draw` on its `run.jsonl` with the view `network-time`, the state `adopted?` and time
+   `linear`, and show both MEDIA lines.
 7. **Keep it.** The How to read it panel offers the counts as CSV and *Cite this run*. Printed (Cmd/Ctrl+P), the page
    is a one-page worksheet with three questions.
 
