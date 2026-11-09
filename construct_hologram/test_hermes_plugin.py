@@ -621,6 +621,12 @@ class Plugin(unittest.TestCase):
         self.assertRegex(out, r"^Saved the view by-the-door in %s\." % sw)
         views = json.loads((self.data / "projects" / sw / "world.json").read_text())["presentation"]["views"]
         self.assertEqual([v for v in views if v["id"] == "by-the-door"][0]["distance_m"], 6.0)
+        # a world's own settings edit like a scene's, checked as a world (its assembly time, here)
+        r = self.call("construct_edit", {"project": sw, "operations": [{"op": "set", "path": "animation.assembly.seconds", "value": 18}]})
+        self.assertTrue(r["written"], r)
+        self.assertEqual(json.loads((self.data / "projects" / sw / "world.json").read_text())["animation"]["assembly"]["seconds"], 18)
+        r = self.call("construct_edit", {"project": sw, "operations": [{"op": "set", "path": "placements", "value": []}]})
+        self.assertFalse(r.get("written"))
         self.assertIn("a favourite", handle("favourite %s" % sw))
         self.assertIn('now "My shed"', handle("rename %s My shed" % sw))
         row = {r["project"]: r for r in self.api.projects(self.data)}[sw]

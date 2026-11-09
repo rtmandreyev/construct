@@ -369,22 +369,33 @@ def _beside(name):
 def edit(spec):
     """Apply a list of edits to a scene, validating after each; write the result to spec["candidate"] (never to the
     scene itself: the plugin decides whether it replaces it). Prints what happened as JSON."""
-    from construct_hologram import diagnose, params, scene as scene_mod
+    from construct_hologram import diagnose, params, scene as scene_mod, world as world_mod
     se = _beside("scene_edit")
     text = Path(spec["scene"]).read_text(encoding="utf-8")
     doc = json.loads(text)
     is_params = params.is_params(doc)
+    is_world = world_mod.is_world(doc)   # a world's own settings (its title, views, assembly time) edit the same way
 
     def problems(d):
         if is_params or not isinstance(d, dict):
             return set()
+        if is_world:
+            return set(world_mod.validate(d))
         return {"%s: %s" % (i.get("where"), i.get("message")) for i in scene_mod.validate_items(d)}
+
+    def diagnose_text(t):
+        if not is_world:
+            return diagnose.diagnose_text(t)
+        found = world_mod.validate(json.loads(t))
+        diags = [{"severity": "error", "code": "world", "path": e.partition(": ")[0], "message": e.partition(": ")[2],
+                  "hint": "see docs/WORLDS.md for each key"} for e in found]
+        return {"ok": not diags, "needs_repair": bool(diags), "errors": len(diags), "warnings": 0, "diagnostics": diags}
 
     def errors(report):
         return {"%s|%s|%s" % (d.get("path"), d.get("code"), d.get("message")) for d in report.get("diagnostics") or []
                 if d.get("severity") == "error"}
 
-    before = diagnose.diagnose_text(text)
+    before = diagnose_text(text)
     seen = problems(doc)
     steps = []
     for i, op in enumerate(spec["ops"], 1):
@@ -405,7 +416,7 @@ def edit(spec):
         seen = now
         steps.append(step)
     new_text = json.dumps(doc, indent=2, ensure_ascii=False) + "\n"
-    after = diagnose.diagnose_text(new_text)
+    after = diagnose_text(new_text)
     introduced = sorted(errors(after) - errors(before))
     Path(spec["candidate"]).write_text(new_text, encoding="utf-8")
     print(json.dumps({"ok": not introduced, "applied": steps, "introduced": introduced[:20],

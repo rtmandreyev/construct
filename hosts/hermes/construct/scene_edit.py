@@ -248,6 +248,8 @@ def apply(doc, op):
             segs = _segments(op["path"])
             if segs[0] in ("parts",):
                 raise EditError("change parts by id: set with part and field")
+            if segs[0] == "placements":
+                raise EditError("a world's placements change through construct_world (place, move, remove)")
             if segs[0] in ("format", "version"):
                 raise EditError("the document's format and version are Construct's, not edited")
             targets = [(doc, None)]

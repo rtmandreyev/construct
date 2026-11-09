@@ -67,8 +67,8 @@ def validate_items(doc):
             c.choice(d.get("severity"), SEVERITIES, w + ".severity")
             if "criterion" in d:
                 c.choice(d["criterion"], tiers.CRITERIA, w + ".criterion")
-            c.text(d.get("problem"), w + ".problem", 600)
-            c.text(d.get("fix"), w + ".fix", 600)
+            c.text(d.get("problem"), w + ".problem", 1500)
+            c.text(d.get("fix"), w + ".fix", 1500)
     c.choice(doc.get("verdict"), tiers.VERDICTS, "scene.verdict")
     if isinstance(sc, dict) and isinstance(defects, list):  # a score below 3 names what is wrong
         cited = {d.get("criterion") for d in defects if isinstance(d, dict)}

@@ -1516,6 +1516,24 @@ class Rounds(unittest.TestCase):
         self.assertEqual(json.loads(text), big)
         self.assertIn("\n  ", self.r._scene_text({"small": [1, 2]}))   # a small one stays indented for reading
 
+    def test_a_hash_copied_with_a_slip_is_recorded_when_the_packet_seal_holds(self):
+        r = self.r
+        _check_in(self.d, self.doc)
+        pk = self.d / "pk"
+        pk.mkdir()
+        (pk / "packet.md").write_text("the packet")
+        st = r.state(self.d)
+        st["packet"], st["packet_sha256"] = str(pk), r._seal(pk)
+        r._save(self.d, "state.json", st)
+        ans = _round_answer(self.d, 1)
+        want = ans["scene_sha256"]
+        slipped = want[:20] + want[30:]   # ten characters dropped, as a critic did
+        ans["scene_sha256"] = ans["critique"]["scene_sha256"] = slipped
+        e = r.record(self.d, ans, self.scene)
+        self.assertTrue(e["hash_slip"])
+        self.assertIn("copied the scene hash with a slip", (self.d / "rounds.md").read_text())
+        self.assertFalse(r._hash_slip("0" * 64, want))   # another hash altogether is still refused
+
     def test_a_tie_is_recorded_and_keeps_the_best(self):
         # a critic that cannot choose says "same": the round is recorded (not refused) and does not beat the best
         r = self.r
@@ -1524,8 +1542,11 @@ class Rounds(unittest.TestCase):
         _check_in(self.d, self.edit([2, 2, 1]))
         ans = _round_answer(self.d, 2)
         ans["pairwise"]["winner"] = "same"
+        ans["pairwise"]["evidence"] = "Across all views the two read the same."   # a critic's own note: kept, not refused
+        ans["pairwise"]["differences"][0]["evidence"] = "x" * 900   # longer than the old 600-character limit
         e = r.record(self.d, ans, self.scene)
         self.assertFalse(e["kept"])
+        self.assertIn("tied with round 1", r.summary(e))
         self.assertEqual(r.state(self.d)["best_round"], 1)
         self.assertEqual(json.loads(self.scene.read_text())["parts"], self.doc["parts"])
 

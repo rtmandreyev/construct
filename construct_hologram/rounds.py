@@ -415,7 +415,9 @@ def validate(doc, first=False, ids=()):
     items = list(c.items) + [dict(i, where="critique." + i["where"]) for i in critic.validate_items(doc["critique"])]
     c = scene_mod._Check()
     pw = doc.get("pairwise")
-    if pw is not None and c.keys(pw, {"winner", "criteria", "differences", "reasons"}, {"winner", "criteria", "differences"},
+    # a critic's own notes beside the verdict (evidence, a summary) are kept, not refused: refusing them stalled loops
+    if pw is not None and c.keys(pw, {"winner", "criteria", "differences", "reasons", "evidence", "summary", "notes"},
+                                 {"winner", "criteria", "differences"},
                                  "pairwise"):
         c.choice(pw.get("winner"), ("A", "B", "same"), "pairwise.winner")   # a tie keeps the best: the round did not beat it
         if c.keys(pw.get("criteria"), set(tiers.CRITERIA), set(tiers.CRITERIA), "pairwise.criteria"):
@@ -423,17 +425,17 @@ def validate(doc, first=False, ids=()):
                 c.choice(v, ("A", "B", "same"), "pairwise.criteria." + k)
         for i, d in enumerate(pw.get("differences") if isinstance(pw.get("differences"), list) else []):
             w = "pairwise.differences[%d]" % i
-            if c.keys(d, {"better", "criterion", "parts", "evidence"}, {"better", "evidence"}, w):
+            if c.keys(d, {"better", "criterion", "parts", "evidence", "notes"}, {"better", "evidence"}, w):
                 c.choice(d.get("better"), ("A", "B"), w + ".better")
                 if "criterion" in d:
                     c.choice(d["criterion"], tiers.CRITERIA, w + ".criterion")
-                c.text(d.get("evidence"), w + ".evidence", 600)
+                c.text(d.get("evidence"), w + ".evidence", 2000)
     rc = doc.get("reconcile")
     if c.keys(rc, {"items", "new", "limits"}, {"items", "new"}, "reconcile"):
         seen = set()
         for i, it in enumerate(rc["items"] if isinstance(rc["items"], list) else []):
             w = "reconcile.items[%d]" % i
-            if c.keys(it, {"id", "status", "evidence"}, {"id", "status"}, w):
+            if c.keys(it, {"id", "status", "evidence", "notes"}, {"id", "status"}, w):
                 c.choice(it.get("status"), ("fixed", "open", "regressed", "inexpressible"), w + ".status")
                 if it.get("id") not in ids:
                     c.err(w + ".id", "not an open item of the packet's ledger", "choice")
@@ -448,6 +450,17 @@ def validate(doc, first=False, ids=()):
                 str(r).isdigit() and v in {m["id"] for m in MEDIUM} for r, v in rc["limits"].items())):
             c.err("reconcile.limits", "expected {rank: \"L1\"|\"L2\"|\"L3\"}", "type")
     return items + c.items
+
+
+def _hash_slip(got, want):
+    """A copied hash with characters dropped or a few mistyped: at least 48 of the 64, in order."""
+    if not (48 <= len(got) <= 64 and all(ch in "0123456789abcdef" for ch in got.lower())):
+        return False
+    got = got.lower()
+    if len(got) == len(want):
+        return sum(a != b for a, b in zip(got, want)) <= 4
+    it = iter(want)
+    return all(ch in it for ch in got)
 
 
 def _new_id(led):
@@ -481,6 +494,14 @@ def record(folder, answer, scene_path=None, model=None, now=None):
     led = ledger(folder)
     ids = [i["id"] for i in led["items"] if i["status"] != "known-limit"]
     key = _load(rd, "key.json", None)
+    # a critic that copied the 64-character scene hash with a slip (a run of characters dropped) judged this packet
+    # all the same when the packet's seal holds: its judgement stands and the hash is written as it should be
+    want, slip = tiers.critic_hash(doc), False
+    if sealed and isinstance(answer, dict):
+        for holder in (answer, answer.get("critique") if isinstance(answer.get("critique"), dict) else {}):
+            got = holder.get("scene_sha256")
+            if isinstance(got, str) and got != want and _hash_slip(got, want):
+                holder["scene_sha256"], slip = want, True
     items = validate(answer, first=key is None, ids=ids)
     if items:
         from . import scene as scene_mod
@@ -601,6 +622,7 @@ def record(folder, answer, scene_path=None, model=None, now=None):
              "critic_minutes": round(critic_s / 60, 1), "finish_cap": cap, "medium": medium,
              "active_minutes": round(st["active_seconds"] / 60, 1), "scores": scores, "verdict": crit["verdict"],
              "against": None if key is None else key["best_round"], "changes": st["changes"], "requests": top,
+             "tie": key is not None and answer["pairwise"]["winner"] == "same", "hash_slip": slip,
              "improvements": [d["evidence"][:160] for d in improvements][:4],
              "regressions": [d["evidence"][:160] for d in regressions][:4], "ledger": line, "added": added,
              "moved": moved, "answer_sha256": answered}
@@ -647,7 +669,7 @@ def timeline(st):
 
 def _write_log(folder, e, led, stop):
     kept = "baseline" if e["baseline"] else "kept (won against round %d)" % e["against"] if e["kept"] else \
-        "reverted (lost to round %d)" % e["against"]
+        ("reverted (tied with round %d, which stays the best)" if e.get("tie") else "reverted (lost to round %d)") % e["against"]
     lines = ["", "## Round %02d · %s · %.1f min · %.1f min active · critic %.1f min" % (
         e["round"], kept, e["minutes"], e["active_minutes"], e.get("critic_minutes", 0.0)),
              "Scores: " + ", ".join("%s %d%s" % (k, v, " (%s)" % e["moved"][k] if k in e["moved"] else "")
@@ -661,6 +683,8 @@ def _write_log(folder, e, led, stop):
         lines.append("Worse than the best: " + " | ".join(e["regressions"]))
     lines.append("Ledger: " + ("; ".join(e["ledger"]) or "no status changed") + ("; new " + ", ".join(e["added"]) if e["added"] else ""))
     lines.append("Asks about the medium (not worked on): " + ("; ".join(e.get("medium", [])) or "none"))
+    if e.get("hash_slip"):
+        lines.append("The critic copied the scene hash with a slip; its packet's seal held, so its judgement was recorded.")
     lines.append("Would a %d-round finish cap stop here? %s (log only)" % (FINISH_CAP, e["finish_cap"]))
     limits = [i["id"] for i in led["items"] if i["status"] == "known-limit" and not i.get("medium")]
     if limits:
@@ -675,7 +699,8 @@ def summary(e):
     """The short chat report after a round."""
     head = "Round %d: %s, %.1f min (%.1f active; critic %.1f min)." % (
         e["round"], "baseline" if e["baseline"] else "kept: won against round %d" % e["against"] if e["kept"]
-        else "reverted: lost to round %d (the working scene is round %d again)" % (e["against"], e["best_round"]),
+        else "reverted: %s round %d (the working scene is round %d again)" % ("tied with" if e.get("tie") else "lost to",
+                                                                            e["against"], e["best_round"]),
         e["minutes"], e["active_minutes"], e["critic_minutes"])
     out = [head, "Changed: " + (", ".join("[%s] %s" % (c["ledger"], c["change"][:70]) for c in e["changes"]) or "nothing tagged")]
     out.append("The critic asks: " + ("; ".join(r[:110] for r in e["requests"]) or "nothing"))

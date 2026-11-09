@@ -574,7 +574,9 @@ def _finish(doc, out, records, n, solid):
     pr["labels"] = False
     anim = json.loads(json.dumps(first["animation"]))
     wa = doc.get("animation", {})
-    secs = wa.get("assembly", {}).get("seconds", min(600.0, 8.0 + 3.0 * len(records)))
+    # a world assembles in under a minute by default (Rain Harbour's 48 placements took 153 s at three seconds each);
+    # a world that wants a longer ceremony, for a film, says so in animation.assembly.seconds
+    secs = wa.get("assembly", {}).get("seconds", min(40.0, 8.0 + 0.5 * len(records)))
     anim["assembly"] = {"style": "ceremony", "seconds": secs, "interference": False}
     if "camera" in wa:
         anim["camera"] = dict(anim["camera"], **wa["camera"])
