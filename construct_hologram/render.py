@@ -11,7 +11,6 @@ loads a local file and is closed afterwards.
 """
 
 import base64
-import hashlib
 import json
 import os
 import shutil
@@ -25,9 +24,10 @@ import urllib.parse
 import urllib.request
 from pathlib import Path
 
+from .scene import ART_RIGHTS, read_assets  # noqa: F401 (the page's artwork rules)
+
 HERE = Path(__file__).resolve().parent
 VIEWER = HERE / "viewer"
-ART_RIGHTS = ("synthetic", "user_private", "permitted")
 
 
 class CaptureError(Exception):
@@ -41,38 +41,16 @@ def _script_json(obj):
     return json.dumps(obj, separators=(",", ":"), ensure_ascii=False).replace("<", "\\u003c")
 
 
+def data_uris(images):
+    """{asset id: (media type, bytes)} as data URIs, for the page."""
+    return {k: "data:%s;base64,%s" % (m, base64.b64encode(d).decode("ascii")) for k, (m, d) in images.items()}
+
+
 def embed_assets(geometry, asset_root):
     """Data URIs for artwork whose bytes exist under asset_root and match the declared
     SHA-256. Anything else stays an empty slot; returns (assets, notes)."""
-    out, notes = {}, []
-    declared = {a["id"]: a for a in geometry.get("provenance", {}).get("assets", [])}
-    for art in geometry.get("artwork", []):
-        a = declared.get(art["asset_id"])
-        if a is None:
-            continue
-        if asset_root is None:
-            notes.append("artwork %s: no asset folder given; the slot stays empty" % a["id"])
-            continue
-        root = Path(asset_root).resolve()
-        path = (root / a["path"]).resolve()
-        if root not in path.parents:
-            notes.append("artwork %s: path escapes the asset folder; skipped" % a["id"])
-            continue
-        if not path.is_file():
-            notes.append("artwork %s: %s not found; the slot stays empty" % (a["id"], a["path"]))
-            continue
-        data = path.read_bytes()
-        if len(data) > 20 * 1024 * 1024:
-            notes.append("artwork %s: larger than 20 MiB; skipped" % a["id"])
-            continue
-        if hashlib.sha256(data).hexdigest() != a["sha256"]:
-            notes.append("artwork %s: bytes do not match the declared sha256; skipped" % a["id"])
-            continue
-        if a["rights"] not in ART_RIGHTS:
-            notes.append("artwork %s: rights %r do not permit display; skipped" % (a["id"], a["rights"]))
-            continue
-        out[a["id"]] = "data:%s;base64,%s" % (a["media_type"], base64.b64encode(data).decode("ascii"))
-    return out, notes
+    images, notes = read_assets(geometry, asset_root)
+    return data_uris(images), notes
 
 
 def solid_payload(scene, geometry, phase_of=None, solid=None):

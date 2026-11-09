@@ -1015,6 +1015,41 @@ def _compiled_all(doc, base_dir, resolver, solid):
     return g, cache
 
 
+def _sources(path, g, cache, resolver, solid):
+    """Each placement record with the compiled construct it places (from the compile's cache)."""
+    for r in g["world"]["placements"]:
+        where = Path((resolver or default_resolver)(r["construct"], path.parent)).resolve()
+        src = next((c for (k, sld), c in cache.items() if sld == solid and c.get("_path") and
+                    Path(c["_path"]).resolve() == where), None)
+        if src is not None:
+            yield r, src
+
+
+def _artwork(path, g, cache, resolver, solid):
+    """Each placed construct's artwork, read from its own folder and checked as a construct's is, under its
+    placement's id: ({"<placement>/<asset>": (media type, bytes)}, notes). A construct placed again shares the
+    first placement's artwork, so it is read once."""
+    images, notes = {}, []
+    wanted = {a.get("asset_id") for a in g.get("artwork", [])}
+    for r, src in _sources(path, g, cache, resolver, solid):
+        if not src.get("artwork") or not any(str(k).startswith(r["id"] + "/") for k in wanted):
+            continue
+        a, n = scene_mod.read_assets(src, str(Path(src["_path"]).parent))
+        images.update({"%s/%s" % (r["id"], k): v for k, v in a.items()})
+        notes += ["%s: %s" % (r["id"], x) for x in n]
+    return images, notes
+
+
+def _glows(path, g, cache, resolver, solid):
+    """Which placed parts glow (their artwork gives light in an export), by their world ids."""
+    from . import export as export_mod
+    out = {}
+    for r, src in _sources(path, g, cache, resolver, solid):
+        if src.get("_scene"):
+            out.update(export_mod.artwork_glows(src["_scene"], r["id"] + "/"))
+    return out
+
+
 def build(world_path, out_dir, resolver=None, force=True):
     """A world's page, like a construct's (construct.html, geometry.json, audit.json and audit.txt)."""
     from . import render
@@ -1022,24 +1057,10 @@ def build(world_path, out_dir, resolver=None, force=True):
     doc = load(path)
     g, cache = _compiled_all(doc, path.parent, resolver, False)
     report = audit(doc, g)
-    # each placed construct's artwork, from its own folder, under its placement's id
-    assets, notes = {}, []
-    recs = g["world"]["placements"]
-    wanted = {a.get("asset_id") for a in g.get("artwork", [])}   # a construct placed again shares the first's
-    for r in recs:
-        src = next((c for (k, sld), c in cache.items() if not sld and c.get("_path") and
-                    Path(c["_path"]).resolve() == Path(resolver(r["construct"], path.parent) if resolver else
-                                                       default_resolver(r["construct"], path.parent)).resolve()), None)
-        if src is None or not src.get("artwork"):
-            continue
-        if not any(str(k).startswith(r["id"] + "/") for k in wanted):
-            continue
-        a, n = render.embed_assets(src, str(Path(src["_path"]).parent))
-        assets.update({"%s/%s" % (r["id"], k): v for k, v in a.items()})
-        notes += ["%s: %s" % (r["id"], x) for x in n]
+    images, notes = _artwork(path, g, cache, resolver, False)
     solid_g, _ = _compiled_all(doc, path.parent, resolver, True)
     solid = render.solid_payload(None, g, solid=solid_g)
-    html, _ = render.build_html(g, None, solid=solid, assets=assets)
+    html, _ = render.build_html(g, None, solid=solid, assets=render.data_uris(images))
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)
     for name, text in (("geometry.json", json.dumps(g, separators=(",", ":")) + "\n"), ("construct.html", html),
@@ -1108,26 +1129,33 @@ def export(world_path, out, fmt=None, wire="edges", pose="closed", materials_pat
     doc = load(path)
     out = Path(out)
     fmt = fmt or out.suffix.lower().lstrip(".")
-    g, _ = _compiled_all(doc, path.parent, resolver, True)
+    g, cache = _compiled_all(doc, path.parent, resolver, True)
     mats = materials_path if materials_path else materials(doc, path.parent, resolver)
+    images, notes = _artwork(path, g, cache, resolver, True)
+    art = {"images": images, "glow": _glows(path, g, cache, resolver, True), "notes": notes}
     if fmt == "glb":
-        gdoc, binary, summary = export_mod.to_gltf(g, wire, pose, mats, None, merge, colliders, pieces, False)
+        gdoc, binary, summary = export_mod.to_gltf(g, wire, pose, mats, None, merge, colliders, pieces, False, art)
         _world_nodes(gdoc, g)
         out.parent.mkdir(parents=True, exist_ok=True)
         data = export_mod.pack_glb(gdoc, binary)
         out.write_bytes(data)
         summary.update({"bytes": len(data), "files": [str(out)], "format": "glb", "pose": pose, "wire": wire})
     elif fmt == "obj":
-        text, mtl, counts = export_mod.to_obj(g, out.stem, wire, pose, mats, "y-up", None)
+        textures = {}
+        text, mtl, counts = export_mod.to_obj(g, out.stem, wire, pose, mats, "y-up", None, art, textures)
         out.parent.mkdir(parents=True, exist_ok=True)
         out.write_text(text, encoding="utf-8")
         out.with_suffix(".mtl").write_text(mtl, encoding="utf-8")
-        summary = {"parts": len(g["parts"]), **counts, "files": [str(out), str(out.with_suffix(".mtl"))],
-                   "format": "obj", "pose": pose, "wire": wire}
+        for name, data in textures.items():
+            (out.parent / name).write_bytes(data)
+        summary = {"parts": len(g["parts"]), **counts, "files": [str(out), str(out.with_suffix(".mtl"))]
+                   + [str(out.parent / n) for n in textures], "format": "obj", "pose": pose, "wire": wire}
     else:
         raise WorldError("a world exports as .glb (glTF: Blender, Godot, Unity, Unreal, the web) or .obj")
     summary["placements"] = len(g["world"]["placements"])
     summary["quality"] = export_mod.triangle_quality(g)
+    if notes:
+        summary["notes"] = summary.get("notes") or notes
     return summary
 
 
