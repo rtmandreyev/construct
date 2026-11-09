@@ -14,7 +14,8 @@ Teach me to run NetLogo's Flocking model with Construct and see flocks form in t
 ## Steps
 
 1. **NetLogo first.** Ask whether desktop NetLogo 7 is installed; the model comes from the user's own Models Library.
-   If `construct_netlogo_run` cannot find NetLogo, say so and stop: Construct never installs it.
+   If NetLogo isn't found, ask where it is installed and have the user set it in Settings → Plugins → Construct →
+   NetLogo folder; Construct never installs it.
 2. **The model in one line.** Each bird follows three rules (keep apart, align with neighbours, stay close), and
    nobody leads. Flocking never stops on its own, so a run needs a length.
 3. **One run.** `construct_netlogo_run` for the library model "Flocking", one run, seed 7, about 1000 ticks. Put the

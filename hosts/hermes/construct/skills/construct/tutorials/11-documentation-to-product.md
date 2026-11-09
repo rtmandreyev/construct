@@ -2,6 +2,7 @@
 title: Documentation to product
 summary: Placeholder, not written yet: this tutorial waits for its documentation page, so treat its steps as a rough outline only.
 group: Makers and creators
+needs: browser
 time: about 30 minutes
 status: placeholder
 ---
