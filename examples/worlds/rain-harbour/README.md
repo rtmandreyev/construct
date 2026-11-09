@@ -29,8 +29,14 @@ Constructs page) or with <code>construct build examples/worlds/rain-harbour/worl
 
 ## The ask
 
-One message, with the concept picture attached (an AI-generated picture, the requester's own; it is not published
-here). Word for word:
+One message, with the concept picture attached: an AI-generated picture, made by the requester and published here
+with the world.
+
+<p align="center"><img src="reference.jpg" width="95%" alt="The concept picture: a rain-soaked cyberpunk street at night, stacked towers with neon signs on both sides, a yellow sports car at the front left, the street running away to a bright gap in the skyline"></p>
+<p align="center"><sub>The concept picture the world was made from. Its signs are AI letter-noise, which the request
+asked Construct to replace with real words.</sub></p>
+
+Word for word:
 
 > Make a Construct world from this concept picture: a game level, a rain-soaked cyberpunk street at night.
 > Masterpiece quality: it should be usable in a game as it comes out, and good enough to show in a video.

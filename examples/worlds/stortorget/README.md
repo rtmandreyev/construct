@@ -31,8 +31,12 @@ Hermes (<b>Worlds</b> on the Constructs page) or with <code>construct build exam
 ## The ask
 
 One message, with the photograph attached: Stortorget's Christmas market in December 2022, by Ximonic (Simo
-Räsänen), CC BY-SA 4.0. The photograph is not part of this repository; the run identified it, by comparison, as
-[this file on Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Stortorget_in_Gamla_Stan,_Stockholm,_Sweden,_2022_December_-_5.jpg).
+Räsänen), CC BY-SA 4.0 ([on Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Stortorget_in_Gamla_Stan,_Stockholm,_Sweden,_2022_December_-_5.jpg)).
+
+<p align="center"><img src="reference.jpg" width="95%" alt="The photograph: Stortorget in December 2022, the red stepped gable of No. 20 and the orange No. 18 behind rows of red Christmas market stalls, the tall decorated spruce, a granite block in the foreground"></p>
+<p align="center"><sub>The photograph the world was made from: Stortorget, Stockholm, December 2022, by Ximonic (Simo
+Räsänen), <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>, unchanged.</sub></p>
+
 Word for word:
 
 > Make a Construct world from this photo: Stortorget, the square in Gamla stan, Stockholm, at its Christmas market
@@ -341,7 +345,7 @@ What this run shows, for the next world from a photograph:
 ## Credits
 
 Made by GPT-6.1 Sol in Hermes Agent with the Construct plugin, after a photograph by Ximonic (Simo Räsänen),
-CC BY-SA 4.0, which is not included. Sources for the houses are cited in each construct's scene. The stall's name is
+CC BY-SA 4.0, included unchanged as `reference.jpg` under that licence. Sources for the houses are cited in each construct's scene. The stall's name is
 invented, in real Swedish. **Licence: to be decided before release.** The world was made from a CC BY-SA 4.0
 photograph; if it counts as an adaptation of it, the world is offered under CC BY-SA 4.0 with this credit, apart from
 the rest of Construct (Apache-2.0).
