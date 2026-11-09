@@ -32,7 +32,7 @@ Four worlds ship in [examples/worlds](../examples/worlds/), made of the construc
 
 | World | What it holds |
 |---|---|
-| [The shed, the Samba and the Vespa](../examples/worlds/the-shed/world.json) | The garden shed with its planned deck and log store, a VW T1 Samba by the log store, a Vespa GS 150 by the door, State Bench inside and Rietveld's Red-Blue Chair on the deck |
+| [The shed and the things around it](../examples/worlds/the-shed/world.json) | The garden shed with its planned deck and log store, a VW T1 Samba by the log store, a Vespa GS 150 by the door, State Bench inside and Rietveld's Red-Blue Chair on the deck |
 | [The Villa Savoye, lived in](../examples/worlds/villa-savoye-lived-in/world.json) | The salon with an Eames chair, a Tompion clock and two tables (designed for this world) carrying a Braun SK 4, a Revox A77, a Leica M3 and SERUM 2 / 61; a Jackson by the studio table; a Land Cruiser and an Aston Martin DB5 under the pilotis; KESTREL far off over the roof |
 | [A street of landmarks](../examples/worlds/a-street-of-landmarks/world.json) | The Duomo di Milano, the Sainte-Chapelle and the Sagrada Família on one street at their real sizes, Neuschwanstein across it |
 | [KESTREL at Saturn](../examples/worlds/kestrel-at-saturn/world.json) | KESTREL at work by Saturn's rings, the planet at its real size from about 350,000 km |
@@ -90,7 +90,9 @@ reach 1,000 km from the origin, and an optional `origin: {lat, lon}` ties the wo
   list of these, placed together with one check and one rebuild;
 - `op: move` and `op: remove` by placement id;
 - `op: list`, with an id to list the surfaces things can stand on;
-- `op: view` with an id, a label and a target: a named view, a button on the page (`remove: true` drops it).
+- `op: view` with an id, a label and a target: a named view, a button on the page (`remove: true` drops it);
+- `op: refresh`, with an id or for all: the placed constructs copied in again from their own projects as they are
+  now (after improving them), checked and rebuilt; a check that fails leaves the copies as they were.
 
 In Hermes Desktop a world's card has **Arrange**: click a construct and drag it: it rides on whatever is under the
 pointer (a floor, a table, a roof; a wall stops it; Alt keeps its level). Shift-drag or Q/E turns it, the arrows
@@ -111,7 +113,9 @@ What a world places comes from three sources:
 - the constructs the plugin ships;
 - the whole gallery, fetched by name from this release on GitHub.
 
-Each placed construct is copied into the world's folder, so a world travels whole and can be shared.
+Each placed construct is copied into the world's folder (`constructs/<name>/`, named after its project or its
+scene's id, with `.source.json` saying where it came from), so a world travels whole and can be shared; a change
+to the original shows only after `op: refresh`.
 `construct_check` checks a world, and `construct_export` exports it, as they do a construct.
 
 ## Limits

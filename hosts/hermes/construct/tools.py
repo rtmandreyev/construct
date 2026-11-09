@@ -17,6 +17,7 @@ from .runtime import ConstructError
 log = logging.getLogger(__name__)
 
 WAIT = {"build": 240, "review": 300, "export": 330, "check": 300, "film": 4}
+EDIT_TIMEOUT = 360
 REVIEW_SHOW = ["hero", "sheet-views", "sheet-assembly", "view-open"]
 LIST_CAP = 40
 _surface = {"fn": None}
@@ -340,7 +341,13 @@ def edit(args):
     spec_path, candidate = work / (".%s.spec.json" % edit_id), work / (".%s.candidate.json" % edit_id)
     runtime.write_json(spec_path, {"scene": str(scene), "ops": ops, "candidate": str(candidate)})
     try:
-        code, out, err = runtime.run_child("edit", str(spec_path), timeout=360, cwd=folder)
+        try:
+            code, out, err = runtime.run_child("edit", str(spec_path), timeout=EDIT_TIMEOUT, cwd=folder)
+        except runtime.ChildTimeout:
+            # the child writes only a candidate beside the scene; the scene is replaced here, after it answers
+            raise ConstructError("Construct did not answer within %d s, so nothing was written (the scene is as it was). "
+                                 "Each operation is validated against the whole scene: send fewer operations at a time "
+                                 "(a large scene takes longer per step)" % EDIT_TIMEOUT)
         try:
             res = json.loads(out.strip().splitlines()[-1]) if out.strip() else None
         except ValueError:
@@ -482,17 +489,52 @@ def review(args):
     for k, opts in (("palette", schemas.PALETTES), ("identity", schemas.IDENTITIES)):
         if _choice(args, k, opts):
             argv += ["--" + k, args[k]]
-    job_id = jobs.start("review", "cli", argv, project=slug, label="review of %s" % slug, cwd=folder,
-                        finish={"slug": slug, "out": str(out), "show": show})
+    # a capture that times out at a large size is tried once more at the smaller one, in the same job (child.py review)
+    w, h = (int(x) for x in size.split("x"))
+    retry = RETRY_SIZE if w * h > _area(RETRY_SIZE) else None
+    job_id = jobs.start("review", "review", project=slug, label="review of %s" % slug, cwd=folder,
+                        spec={"argv": argv, "retry_size": retry},
+                        finish={"slug": slug, "out": str(out), "show": show, "size": size, "retry_size": retry})
     return _waited(job_id, "review", WAIT["review"], "review of %s" % slug)
+
+
+RETRY_SIZE = "1024x640"
+TIMED_OUT = ("did not become ready", "did not start", "did not answer", "timed out", "timeout")
+
+
+def _area(size):
+    w, h = (int(x) for x in size.split("x"))
+    return w * h
+
+
+def capture_error(tail):
+    """What stopped a capture, as Construct said it (`capture unavailable: ...`), and whether it was a timeout;
+    the last such line (after a retry, the retry's). ("", False) when the log names none."""
+    said = [line.split("capture unavailable:", 1)[1].strip() for line in (tail or "").splitlines()
+            if "capture unavailable:" in line]
+    if not said:
+        return "", False
+    return said[-1], any(t in said[-1].lower() for t in TIMED_OUT)
 
 
 def _finish_review(rec, done, tail):
     f = rec["finish"]
     folder = Path(f["out"]) / "review"
     if done.get("code") == 2 or "capture unavailable" in tail:
-        raise ConstructError("no review images: %s. Deliver the page without captures and say so; do not install a "
-                             "browser." % (tail.strip().splitlines()[-1] if tail.strip() else "no browser"))
+        why, timed_out = capture_error(tail)
+        retried = "capture timed out at %s; trying once more" % f.get("size") in tail and f.get("retry_size")
+        if not why:
+            why = (tail.strip().splitlines() or ["no browser"])[-1]
+        if "no chromium-family browser" in why.lower():
+            raise ConstructError("no review images: %s. Deliver the page without captures and say so; do not install a "
+                                 "browser." % why)
+        where = "at %s and again at %s" % (f.get("size"), retried) if retried else "at %s" % f.get("size", "its size")
+        if timed_out:
+            raise ConstructError("no review images: the capture timed out %s (%s). The machine may be busy (a render "
+                                 "beside it): try construct_review once more later with a smaller size, or deliver the "
+                                 "page without captures and say so" % (where, why))
+        raise ConstructError("no review images: the capture failed %s: %s. Deliver the page without captures and say so"
+                             % (where, why))
     images = {p.stem: str(p) for p in sorted(folder.glob("*.png"))} if folder.is_dir() else {}
     if not images:
         raise ConstructError("the review made no images:\n%s" % tail)
@@ -767,6 +809,7 @@ WRITES = {"out": "--out", "output": "--output", "overlay": "--overlay", "into": 
 NETWORK_ARGS = {"base_url": "--base-url", "critic_base_url": "--critic-base-url", "key_env": "--key-env",
                 "critic_key_env": "--critic-key-env", "critic_model": "--critic-model"}
 PROGRAM_ARGS = {"freecad": "--freecad", "blender": "--blender"}
+READS = {"request_file": "--request-file"}   # files read whole into what Construct writes: from inside the project
 
 
 def parsed(argv):
@@ -787,23 +830,86 @@ def parsed(argv):
     if got.get("error"):
         hint = " (options are written in full: --out, not --ou)" if "unrecognized" in got["error"] else ""
         raise ConstructError("construct %s: %s%s" % (argv[0], got["error"], hint))
-    return got.get("values")   # None: a help request, which runs nothing else
+    if got.get("help"):   # a help request, which runs nothing else
+        return {"help": got["help"] if isinstance(got["help"], str) else ""}
+    return {"values": got.get("values") or {}}
+
+
+ARGV_MAX, ARG_CHARS = 64, 4000
+HELP = ("--help", "-h", "help")
+# names an agent tries here that are tools of their own (or not the plugin's to run)
+ELSEWHERE = {"edit": "construct_edit (operations by part id or path)",
+             "world": "construct_world (op new, place, move, remove, refresh, list, view, tidy)",
+             "capture": "construct_review (it builds and captures the review images)",
+             "schema": "construct_check (each diagnostic names its JSON path with a fix); a valid starter scene comes "
+                       "from construct_start category, the parameter schema from construct_command prompts --out <folder>",
+             "validate": "construct_check", "compile": "construct_build", "template": "construct_start (category)",
+             "start": "construct_start", "inspect": "construct_inspect", "film": "construct_film",
+             "job": "construct_job"}
+
+
+def _argv_problem(argv):
+    """Why argv cannot be run as given (naming the limit it broke), or None."""
+    if not isinstance(argv, list) or not argv:
+        return "argv must be a list of 1 to %d strings (the command line after `construct`)" % ARGV_MAX
+    if len(argv) > ARGV_MAX:
+        return "argv has %d items; at most %d" % (len(argv), ARGV_MAX)
+    for i, a in enumerate(argv):
+        if not isinstance(a, str):
+            return "argv[%d] is not a string" % i
+        if "\0" in a:
+            return "argv[%d] holds a NUL character" % i
+        if len(a) > ARG_CHARS:
+            return ("argv[%d] is %d characters; each item is at most %d. Put long text in a file inside the project "
+                    "and pass its path (a round's request: `--request-file FILE`)" % (i, len(a), ARG_CHARS))
+    return None
+
+
+def _subcommands():
+    """The subcommands construct_command runs, with Construct's own line for each."""
+    try:
+        code, out, _ = runtime.run_child("commands", timeout=60)
+        lines = json.loads(out) if code == 0 else {}
+    except (ConstructError, ValueError):
+        lines = {}
+    return {name: (lines.get(name) or "") for name in sorted(COMMANDS)}
+
+
+def _help():
+    return {"subcommands": _subcommands(),
+            "other_tools": {k: "call %s" % v for k, v in ELSEWHERE.items() if k in ("edit", "world", "capture", "schema")},
+            "next": "run one with construct_command argv [name, ...]; [name, \"--help\"] shows its options"}
 
 
 @tool("construct_command")
 def command(args):
     argv = args.get("argv")
-    if not isinstance(argv, list) or not argv or len(argv) > 64 or \
-            any(not isinstance(a, str) or len(a) > 4000 or "\0" in a for a in argv):
-        raise ConstructError("argv must be a list of 1 to 64 strings")
+    problem = _argv_problem(argv)
+    if problem:
+        raise ConstructError(problem)
     sub = argv[0]
+    if sub in HELP:
+        if len(argv) > 1 and (argv[1] in COMMANDS or argv[1] in ELSEWHERE):
+            argv = [argv[1], "--help"]
+            sub = argv[0]
+        else:
+            return _help()
     if sub in NETWORK:
         raise ConstructError("%s is not run by the plugin: %s. Do that step yourself (a delegated subagent for a critic)." %
                              (sub, NETWORK[sub]))
+    if sub in ELSEWHERE:
+        if any(a in HELP for a in argv[1:]):
+            return {"subcommand": sub, "call_instead": ELSEWHERE[sub],
+                    "next": "%s is a tool of its own, not a construct_command subcommand" % sub}
+        raise ConstructError("%s is not a subcommand here: call %s" % (sub, ELSEWHERE[sub]))
     if sub not in COMMANDS:
         raise ConstructError("unknown or unavailable subcommand %r; available: %s" % (sub, ", ".join(sorted(COMMANDS))))
     # every check below reads what Construct's parser will act on, never the spelling of a flag
-    values = parsed(argv) or {}
+    got = parsed(argv)
+    if "help" in got:
+        return {"subcommand": sub, "help": got["help"],
+                "next": "run it with construct_command (relative paths are the project's)"}
+    values = got["values"]
     for name, flag in NETWORK_ARGS.items():
         if values.get(name) not in (None, False):
             raise ConstructError("%s calls a model over the network; the plugin does not. Delegate the critic to a fresh "
@@ -815,7 +921,7 @@ def command(args):
     if sub == "rounds" and values.get("action") == "run":
         raise ConstructError("rounds run calls a model over the network; use rounds packet, a delegated critic and "
                              "rounds record")
-    project = args.get("project")
+    project = runtime.project_id(args["project"]) if args.get("project") else None
     folder = runtime.project_dir(project) if project else runtime.data_dir() / "work"
     folder.mkdir(parents=True, exist_ok=True)
     roots = runtime.allowed_roots()
@@ -829,6 +935,11 @@ def command(args):
             if isinstance(v, str) and v and not runtime.inside(where(v), roots):
                 raise ConstructError("%s %s is outside the project and the plugin's data folder; write inside the project "
                                      "(a relative path)" % (flag, v))
+    for name, flag in READS.items():
+        v = values.get(name)
+        if isinstance(v, str) and v and not runtime.inside(where(v), roots):
+            raise ConstructError("%s %s is outside the project and the plugin's data folder; put the file inside the "
+                                 "project (a relative path)" % (flag, v))
     # commands that write beside (or into) the scene they are given: that scene must be inside a project
     scene_arg = None
     if sub == "critique" or (sub == "compare" and values.get("record")):

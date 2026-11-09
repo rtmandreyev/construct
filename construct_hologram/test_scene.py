@@ -1562,6 +1562,162 @@ class Rounds(unittest.TestCase):
         self.assertEqual(r.state(self.d)["best_round"], 1)
         self.assertEqual(json.loads(self.scene.read_text())["parts"], self.doc["parts"])
 
+    def fake_packets(self):
+        """critic.packet without a browser: records what each packet was built from (the scene, its artwork as the
+        build reads it beside the scene, the references and the request) and writes stand-in renders."""
+        seen = []
+
+        def fake(scene_path, out_dir, references=(), request=None, browser=None, summary=True, **kw):
+            doc = json.loads(Path(scene_path).read_text())
+            refs = critic.parse_references(references)
+            critic.check_views(doc, refs)
+            here = Path(scene_path).parent
+            seen.append({"scene": str(scene_path), "views": sorted(v or "hero" for v, _ in refs), "request": request,
+                         "art": {a["path"]: (here / a["path"]).read_bytes() for a in doc.get("assets", [])
+                                 if (here / a["path"]).is_file()}})
+            names = ["hero.png"] + ["still-%s.png" % v for v, _ in refs if v]
+            (Path(out_dir) / "renders").mkdir(parents=True, exist_ok=True)
+            for n in names:
+                (Path(out_dir) / "renders" / n).write_bytes(png.encode(4, 4, lambda x, y: (x * 40, y * 40, 9)))
+            Path(out_dir, "packet.md").write_text("part 1")
+            return {"renders": ["renders/" + n for n in names]}
+        real = critic.packet
+        critic.packet = fake
+        self.addCleanup(setattr, critic, "packet", real)
+        return seen
+
+    def picture(self, name):
+        p = self.d / "refs" / name
+        p.parent.mkdir(exist_ok=True)
+        p.write_bytes(png.encode(4, 4, lambda x, y: (9, x * 50, y * 50)))
+        return p
+
+    def test_a_checkpoint_carries_the_artwork_and_a_reverted_round_puts_it_back(self):
+        # seen in live runs: checkpoints held scene.json alone, so a packet built from one judged blank signs, and a
+        # reverted round left the losing round's artwork in place
+        r, seen = self.r, self.fake_packets()
+        art = self.d / "art" / "sign.png"
+        art.parent.mkdir()
+        art.write_bytes(b"first sign")
+        doc = dict(self.doc, assets=[{"id": "sign", "path": "art/sign.png", "sha256": "0" * 64, "media_type": "image/png",
+                                      "rights": "synthetic", "provenance": "synthetic"},
+                                     {"id": "bad", "path": "../outside.png", "sha256": "0" * 64}])
+        self.scene.write_text(json.dumps(doc))
+        cp = lambda n: self.d / "checkpoints" / ("round-%02d" % n) / "art" / "sign.png"
+        r.packet(self.d, self.scene)
+        self.assertEqual(cp(1).read_bytes(), b"first sign")
+        self.assertEqual(seen[-1]["art"], {"art/sign.png": b"first sign"})   # the packet is built with its artwork
+        r.record(self.d, _round_answer(self.d, 1), self.scene)
+        art.write_bytes(b"a sign that loses")
+        r.packet(self.d, self.scene)
+        self.assertEqual(cp(2).read_bytes(), b"a sign that loses")
+        self.assertEqual([s["art"]["art/sign.png"] for s in seen[-2:]], [b"a sign that loses", b"first sign"])
+        self.assertFalse(r.record(self.d, _round_answer(self.d, 2, win=False), self.scene)["kept"])
+        self.assertEqual(art.read_bytes(), b"first sign")                     # reverted with the scene
+        r.packet(self.d, self.scene)
+        self.assertTrue(os.path.samefile(cp(3), cp(1)))                       # unchanged: linked, not copied again
+        art.write_bytes(b"third sign")
+        r.packet(self.d, self.scene)                                          # the round's packet made again
+        self.assertEqual((cp(3).read_bytes(), cp(1).read_bytes()), (b"third sign", b"first sign"))
+        self.assertFalse((self.d / "checkpoints" / "outside.png").exists())
+
+    def test_references_and_the_request_are_kept_for_later_packets(self):
+        # seen in live runs: 15 packets lost the references the round before had, 28 had no request, and a world's
+        # round 1 was judged without the photo given to `rounds start`
+        r, seen = self.r, self.fake_packets()
+        side = self.picture("side-photo.png")
+        with tempfile.TemporaryDirectory() as t:
+            scene = Path(t, "s.json")
+            scene.write_text(json.dumps(self.doc))
+            r.start(str(scene), "masterpiece", t, references=["side=%s" % side], request="a plain box")
+            r.packet(t, scene)
+            self.assertEqual((seen[-1]["views"], seen[-1]["request"]), (["side"], "a plain box"))
+        r.packet(self.d, self.scene, ["side=%s" % side, str(side)], "a red box")
+        self.assertTrue((self.d / "checkpoints" / "references" / "side-photo.png").is_file())
+        side.unlink()                                                          # kept in the run: still there next round
+        r.record(self.d, _round_answer(self.d, 1), self.scene)
+        r.packet(self.d, self.scene)
+        self.assertEqual([(s["views"], s["request"]) for s in seen[-2:]], [(["hero", "side"], "a red box")] * 2)
+        self.assertTrue(Path(r.state(self.d)["packet"], "step-1", "references", "side-photo.png").is_file())
+        r.packet(self.d, self.scene, [r.CLEAR], "")                            # dropped on request
+        self.assertEqual([(s["views"], s["request"]) for s in seen[-2:]], [([], None)] * 2)
+
+    def test_a_reference_view_is_checked_before_building_and_the_best_is_paired_without_a_new_view(self):
+        r, seen = self.r, self.fake_packets()
+        photo = self.picture("concept.png")
+        with self.assertRaisesRegex(r.RoundsError, "'concept' is not a view of this scene.*with no view"):
+            r.packet(self.d, self.scene, ["concept=%s" % photo])
+        self.assertEqual(seen, [])                                             # refused before anything was built
+        self.assertFalse((self.d / "checkpoints" / "round-01").exists())
+        with self.assertRaisesRegex(r.RoundsError, "no reference picture"):
+            r.packet(self.d, self.scene, ["side=%s" % (self.d / "missing.png")])
+        r.packet(self.d, self.scene, [str(photo)])                              # no view: beside the hero
+        self.assertEqual(seen[-1]["views"], ["hero"])
+        r.record(self.d, _round_answer(self.d, 1), self.scene)
+        doc = dict(self.doc, presentation={"views": [{"id": "close", "label": "Close", "yaw": 30, "pitch": 10,
+                                                      "distance": 2}]})
+        self.scene.write_text(json.dumps(doc))
+        r.packet(self.d, self.scene, ["close=%s" % photo])                    # the best (round 1) has no "close" view
+        self.assertEqual([s["views"] for s in seen[-2:]], [["close"], []])
+        self.assertEqual(r.state(self.d)["step"], "packet")
+
+    def test_the_packet_is_kept_in_the_run_and_an_unsafe_folder_is_refused(self):
+        r, _ = self.r, self.fake_packets()
+        pk, _ = r.packet(self.d, self.scene)
+        self.assertEqual(pk, self.d.resolve() / "packets" / "round-01")
+        r.record(self.d, _round_answer(self.d, 1), self.scene)
+        self.assertTrue((pk / "packet.md").is_file())                         # kept after record
+        (self.d / "notes").mkdir()
+        (self.d / "notes" / "mine.txt").write_text("not a packet")
+        for out in (self.d, self.d.parent, self.d / "checkpoints" / "x", self.d / "notes"):
+            with self.assertRaises(r.RoundsError, msg=out):
+                r.packet(self.d, self.scene, out=str(out))
+        self.assertTrue((self.d / "notes" / "mine.txt").is_file() and (self.d / "state.json").is_file())
+
+    def test_a_dry_run_checks_an_answer_as_record_would_and_writes_nothing(self):
+        r = self.r
+        _check_in(self.d, self.doc)
+        before = (self.d / "state.json").read_text()
+        ans = _round_answer(self.d, 1)
+        ans["critique"]["notes"] = "judged from the hero and the side still"   # the critic's own notes: kept
+        ans["critique"]["assessment_basis"] = ["hero.png", "still-side.png"]
+        self.assertIn("valid", r.check(self.d, ans))
+        bad = json.loads(json.dumps(ans))
+        bad["critique"]["defects"][0]["fix"] = ""
+        bad["critique"]["notes"] = 5
+        with self.assertRaises(r.RoundsError) as said:
+            r.check(self.d, bad)
+        self.assertIn("defects[0].fix", str(said.exception))
+        self.assertIn("notes", str(said.exception))
+        self.assertEqual((self.d / "state.json").read_text(), before)
+        self.assertFalse((self.d / "checkpoints" / "round-01" / "round.json").exists())
+        r.record(self.d, ans, self.scene)
+        kept = json.loads((self.d / "checkpoints" / "round-01" / "round.json").read_text())
+        self.assertIn("assessment_basis", kept["critique"])                   # kept in the answer, never read
+
+    def test_a_round_with_no_requests_still_has_a_summary(self):
+        # seen in a live run: a round whose critic asked for nothing wrote a blank summary, and the scene's next
+        # build was refused
+        h = {"round": 6, "baseline": False, "kept": True, "minutes": 3.0, "changes": [], "requests": [],
+             "verdict": "good"}
+        line = self.r.timeline({"history": [h]})[0]["summary"]
+        self.assertEqual(line, "no requests (verdict: good)")
+        long = self.r.timeline({"history": [dict(h, requests=["x" * 500])]})[0]["summary"]
+        self.assertTrue(0 < len(long) <= 200)
+
+    def test_a_long_request_comes_from_a_file(self):
+        import argparse
+        r, seen = self.r, self.fake_packets()
+        ap = argparse.ArgumentParser()
+        studio.add_commands(ap.add_subparsers(dest="command"))
+        req = self.d / "request.txt"
+        req.write_text("a box, " * 1000)
+        self.assertEqual(studio.run(ap.parse_args(["rounds", "packet", "--dir", str(self.d), "--request-file", str(req)])), 0)
+        self.assertEqual(seen[-1]["request"], ("a box, " * 1000).strip())
+        self.assertEqual(r.state(self.d)["request"], ("a box, " * 1000).strip())
+        self.assertEqual(studio.run(ap.parse_args(["rounds", "packet", "--dir", str(self.d), "--request", "x",
+                                                   "--request-file", str(req)])), 1)
+
     def test_a_round_that_loses_is_reverted_and_two_in_a_row_stop_the_run(self):
         r = self.r
         _check_in(self.d, self.doc)
@@ -2740,10 +2896,11 @@ class Capture(unittest.TestCase):
             self.assertTrue(Path(pk).exists())   # a packet written where it was asked for stays
             doc["parts"][0]["shape"]["size"][1] *= 1.1
             scene_path.write_text(json.dumps(dict(json.loads(scene_path.read_text()), parts=doc["parts"])))
-            pk, key = rounds.packet(d, scene_path, ["front=%s" % ref], seed=4)   # in the temporary folder
-            self.assertTrue(Path(pk, "packet.md").exists())
+            pk, key = rounds.packet(d, scene_path, seed=4)   # the references kept; in the run's packets/ folder
+            self.assertEqual(Path(pk), Path(d).resolve() / "packets" / "round-03")
+            self.assertTrue(Path(pk, "step-1", "references", "front-photo.png").exists())
             rounds.record(d, _round_answer(d, 3), scene_path)
-            self.assertFalse(Path(pk).exists())   # spent: its renders are kept with the checkpoint
+            self.assertTrue(Path(pk, "packet.md").exists())   # kept after record
             self.assertTrue(Path(d, "checkpoints", "round-03", "hero.png").exists())
             studio.build(str(scene_path), str(Path(d, "out")))
             paths = render.review(str(Path(d, "out", "construct.html")), str(Path(d, "out", "review")), 640, 400, sheets=())

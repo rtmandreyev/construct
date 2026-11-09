@@ -14,7 +14,7 @@ from pathlib import Path
 from . import runtime, tools
 from .runtime import ConstructError
 
-OPS = ("new", "place", "move", "remove", "list", "view", "tidy")
+OPS = ("new", "place", "move", "remove", "list", "view", "tidy", "refresh")
 MAX_BATCH = 64
 VIEW_KEYS = ("label", "target", "yaw", "pitch", "distance")
 NAME = re.compile(r"^[a-z0-9][a-z0-9_.-]{0,63}$")
@@ -54,28 +54,131 @@ def _source(name):
     p = Path(name).expanduser()
     if p.is_absolute() and p.is_file():
         maps = p.with_name(re.sub(r"(\.params)?\.json$", "", p.name) + ".materials.json")
-        return runtime.slugify(p.parent.name if p.stem in ("scene", "world") else p.stem), p, \
-            maps if maps.is_file() else None, p.stem
+        key, title = _path_key(p)
+        return key, p, maps if maps.is_file() else None, title or p.stem
     raise ConstructError("no construct %r: name one of your projects, a shipped construct (%s) or a scene's absolute "
                          "path" % (name, ", ".join(sorted(stock))))
 
 
-def _bring(folder, name):
-    """Copy a construct into the world (constructs/<key>/), once; the placement's `construct` path."""
-    key, scene, maps, _ = _source(name)
-    dest = folder / "constructs" / key
-    rel = "constructs/%s/%s" % (key, "world.json" if scene.name == "world.json" else "scene.json")
-    if (folder / rel).is_file():
-        return rel
+def _path_key(path):
+    """The name a scene given by path is kept under in a world, and its title: the project it belongs to (a scene in
+    a checkpoint or round folder of one of the user's projects), else the scene's own id, else its folder's name."""
+    try:
+        doc = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        doc = {}
+    doc = doc if isinstance(doc, dict) else {}
+    root = runtime.projects_root()
+    try:
+        rel = path.resolve().relative_to(root).parts
+    except ValueError:
+        rel = ()
+    if len(rel) > 1 and runtime.SLUG.match(rel[0]) and (root / rel[0]).is_dir() and rel[1] != "constructs":
+        return rel[0], doc.get("title")
+    if isinstance(doc.get("id"), str) and runtime.slugify(doc["id"]) != "construct":
+        return runtime.slugify(doc["id"]), doc.get("title")
+    stem = path.stem[:-7] if path.stem.endswith(".params") else path.stem
+    return runtime.slugify(path.parent.name if stem in ("scene", "world") else stem), doc.get("title")
+
+
+SOURCE = ".source.json"   # beside each copy: what it was copied from, for refresh
+
+
+def _origin(name):
+    p = Path(name).expanduser()
+    return str(p.resolve()) if p.is_absolute() else name.strip()
+
+
+def _copy_in(dest, scene, maps):
+    """A construct (or a world, whole) copied into `dest`, with its artwork and material map."""
     dest.mkdir(parents=True, exist_ok=True)
     if scene.name == "world.json":   # a world placed in a world (a building in a district): it comes whole
         shutil.copytree(scene.parent, dest, dirs_exist_ok=True,
-                        ignore=shutil.ignore_patterns("builds", "exports", "review", "work", "edits", "films"))
-        return rel
+                        ignore=shutil.ignore_patterns("builds", "exports", "review", "work", "edits", "films", "stills"))
+        return
     tools._copy_scene(scene, dest / "scene.json")
     if maps is not None:
         shutil.copyfile(maps, dest / "scene.materials.json")
+
+
+def _bring(folder, name):
+    """Copy a construct into the world (constructs/<key>/), once per source; the placement's `construct` path. The
+    key is the source's project id or the scene's own id; a different construct under a taken key gets key-2."""
+    key, scene, maps, _ = _source(name)
+    origin, base, n = _origin(name), key, 2
+    kind = "world.json" if scene.name == "world.json" else "scene.json"
+    while True:
+        dest = folder / "constructs" / key
+        rel = "constructs/%s/%s" % (key, kind)
+        if not dest.exists():
+            break
+        rec = _read_source(dest)
+        if (folder / rel).is_file() and (rec.get("origin") == origin if rec else key == base):
+            return rel   # this construct is here already (a copy from before records were kept: by its name)
+        key, n = "%s-%d" % (base, n), n + 1
+    _copy_in(dest, scene, maps)
+    runtime.write_json(dest / SOURCE, {"construct": name.strip(), "origin": origin, "copied": runtime.stamp_iso()})
     return rel
+
+
+def _read_source(dest):
+    try:
+        rec = json.loads((dest / SOURCE).read_text(encoding="utf-8"))
+        return rec if isinstance(rec, dict) and isinstance(rec.get("construct"), str) else None
+    except (OSError, ValueError):
+        return None
+
+
+def _refresh(slug, folder, doc, pid=None):
+    """Re-copy the placed constructs (one placement's, or all) from their sources as they are now, then check the
+    world; on a failed check the copies go back as they were. Returns (refreshed, skipped, the world's check)."""
+    placements = doc["placements"]
+    if pid is not None:
+        placements = [p for p in placements if p["id"] == pid]
+        if not placements:
+            raise ConstructError("no placement %r in %s (placements: %s)" % (
+                pid, slug, ", ".join(p["id"] for p in doc["placements"])))
+    keys = {}
+    for p in placements:
+        parts = p["construct"].split("/")
+        if len(parts) == 3 and parts[0] == "constructs":
+            keys.setdefault(parts[1], []).append(p["id"])
+    refreshed, skipped, backups, res = [], [], {}, None
+    stash = Path(tempfile.mkdtemp(prefix=".refresh-", dir=str(folder)))
+    try:
+        for key, ids in sorted(keys.items()):
+            dest = folder / "constructs" / key
+            rec = _read_source(dest)
+            name = rec["construct"] if rec else key
+            if rec is None and not (runtime.SLUG.match(key) and (runtime.projects_root() / key).is_dir()):
+                skipped.append({"construct": key, "placements": ids, "why": "no source recorded (it came with the world)"})
+                continue
+            try:
+                _, scene, maps, _ = _source(name)
+            except ConstructError as exc:
+                skipped.append({"construct": key, "placements": ids, "why": str(exc)})
+                continue
+            kind = "world.json" if scene.name == "world.json" else "scene.json"
+            before = (dest / kind).read_bytes() if (dest / kind).is_file() else None
+            shutil.move(str(dest), str(stash / key))
+            backups[key] = dest
+            _copy_in(dest, scene, maps)
+            runtime.write_json(dest / SOURCE, {"construct": name, "origin": _origin(name), "copied": runtime.stamp_iso()})
+            refreshed.append({"construct": key, "placements": ids, "from": name,
+                              "changed": before != (dest / kind).read_bytes()})
+        if backups:
+            res = check(doc, folder)
+            if res.get("errors"):
+                raise ConstructError("refreshed, the world would not be valid (the copies are back as they were):\n" +
+                                     "\n".join(res["errors"]))
+    except Exception:
+        for key, dest in backups.items():
+            shutil.rmtree(dest, ignore_errors=True)
+            shutil.move(str(stash / key), str(dest))
+        raise
+    finally:
+        shutil.rmtree(stash, ignore_errors=True)
+    return refreshed, skipped, res
 
 
 def _vec(args, key):
@@ -243,8 +346,24 @@ def world(args):
     slug = args.get("world")
     if not isinstance(slug, str):
         raise ConstructError("world must be the world's project id (from op new)")
+    slug = runtime.project_id(slug)
     folder = runtime.project_dir(slug)
     path, doc = _load(folder)
+    if op == "refresh":   # the constructs improved since they were placed, copied in again
+        pid = args.get("id")
+        if pid is not None and not isinstance(pid, str):
+            raise ConstructError("id is one placement's id (leave it out to refresh every placed construct)")
+        refreshed, skipped, checked = _refresh(slug, folder, doc, pid)
+        if not any(r["changed"] for r in refreshed):
+            return {"world": slug, "refreshed": refreshed, "skipped": skipped,
+                    "next": "nothing changed since they were placed: the world is as it was (not rebuilt)"}
+        with open(_edits(folder), "a", encoding="utf-8") as fh:  # no before-file: undo leaves a refresh alone
+            fh.write(json.dumps({"id": runtime.new_id(), "op": "refresh", "by": "agent", "placement": pid or "",
+                                 "constructs": [r["construct"] for r in refreshed if r["changed"]]}) + "\n")
+        res = _rebuild(slug, folder, path, args.get("wait_seconds"))
+        if isinstance(res, dict):
+            res.update(world=_summary(checked), refreshed=refreshed, skipped=skipped)
+        return res
     if op == "list":
         got = check(doc, folder, args.get("id"))
         if got.get("errors"):
@@ -328,9 +447,14 @@ def world(args):
     return res
 
 
+def _edits(folder):
+    (folder / "edits").mkdir(exist_ok=True)
+    return folder / "edits" / "log.jsonl"
+
+
 def _log(folder, before, entry):
     """Keep the world as it was (edits/<id>-before.json) and say what changed (edits/log.jsonl): every change undoes."""
-    (folder / "edits").mkdir(exist_ok=True)
+    _edits(folder)
     stamp = runtime.new_id()
     runtime.write_json(folder / "edits" / ("%s-before.json" % stamp), before)
     with open(folder / "edits" / "log.jsonl", "a", encoding="utf-8") as fh:

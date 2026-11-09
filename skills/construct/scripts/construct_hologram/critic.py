@@ -35,12 +35,16 @@ class CriticError(Exception):
     pass
 
 
+KEYS = {"format", "version", "scene_sha256", "scores", "checklist", "defects", "verdict", "summary", "notes"}
+
+
 def validate_items(doc):
     from . import scene as scene_mod
     c = scene_mod._Check()
-    if not c.keys(doc, {"format", "version", "scene_sha256", "scores", "checklist", "defects", "verdict", "summary"},
-                  {"format", "version", "scene_sha256", "scores", "defects", "verdict"}, "scene"):
+    if not c.keys(doc, KEYS, {"format", "version", "scene_sha256", "scores", "defects", "verdict"}, "scene"):
         return c.items
+    if "notes" in doc:   # the critic's own notes beside its judgement
+        c.text(doc["notes"], "scene.notes", 4000)
     if doc.get("format") != FORMAT:
         c.err("scene.format", "must be %r" % FORMAT, "choice")
     if not (isinstance(doc.get("scene_sha256"), str) and len(doc["scene_sha256"]) == 64):
@@ -162,6 +166,29 @@ def parse_references(refs):
     return out
 
 
+def views_of(doc):
+    """The views a reference can name: the standard ones and the scene's own (a world's, and each placement's)."""
+    from . import params
+    scene = params.expand(doc) if params.is_params(doc) else doc
+    pres = scene.get("presentation") if isinstance(scene.get("presentation"), dict) else {}
+    own = {v.get("id") for v in (pres.get("views") if isinstance(pres.get("views"), list) else [])
+           if isinstance(v, dict) and isinstance(v.get("id"), str)}
+    if scene.get("format") == "construct-world":   # its page has a view of each placement (but the sky's)
+        own |= {p.get("id") for p in scene.get("placements", []) if isinstance(p, dict) and isinstance(p.get("id"), str)
+                and "sky" not in p}
+    return set(VIEWS) | own
+
+
+def check_views(doc, refs):
+    """Refuse a reference whose view the scene does not have; refs as parse_references returns them."""
+    known = views_of(doc)
+    unknown = sorted({v for v, _ in refs if v and v not in known})
+    if unknown:
+        raise CriticError("reference view %s is not a view of this scene: use one of %s, or give the picture with no "
+                          "view (just its path) to set it beside the hero"
+                          % (", ".join(repr(v) for v in unknown), ", ".join(list(VIEWS) + sorted(known - set(VIEWS)))))
+
+
 def packet(scene_path, out_dir, references=(), request=None, width=1280, height=800, browser=None, summary=True):
     """Render what the critic looks at and write packet.md / packet.json; returns the packet dict.
 
@@ -178,17 +205,11 @@ def packet(scene_path, out_dir, references=(), request=None, width=1280, height=
     scene = params.expand(doc) if params.is_params(doc) else doc
     if params.is_params(doc) and doc.get("authoring"):
         scene["authoring"] = doc["authoring"]
+    check_views(doc, parse_references(references))   # before the (slow) build
     build_dir = out / "build"
     studio.build(str(scene_path), str(build_dir))
     html = studio.page_in(build_dir)
     refs = parse_references(references)
-    pres = scene.get("presentation") if isinstance(scene.get("presentation"), dict) else {}
-    own = {v.get("id") for v in (pres.get("views") if isinstance(pres.get("views"), list) else [])
-           if isinstance(v, dict) and isinstance(v.get("id"), str)}
-    unknown = sorted({v for v, _ in refs if v and v not in VIEWS and v not in own})
-    if unknown:
-        raise CriticError("reference view %s is not a view of this scene: use one of %s"
-                          % (", ".join(repr(v) for v in unknown), ", ".join(list(VIEWS) + sorted(own))))
     views = sorted({v for v, _ in refs if v and v != "hero"} | {"front", "side", "top"})
     shots = render.review(html, str(renders), width, height, sheets=("views", "assembly"), browser=browser)
     shots += render.stills(html, str(renders), views, width, height, browser=browser)

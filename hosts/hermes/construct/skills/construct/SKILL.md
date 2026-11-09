@@ -133,8 +133,9 @@ show what each step makes, and wait for the user between steps.
    rounds modes.
    **Masterpiece, timeboxed and unbounded run judged rounds** ([rounds](references/rounds.md)), all through
    `construct_command`: `rounds start scene.json --mode masterpiece`; each round at most 4 ledger items, each
-   edit tagged (`rounds change D3 "..."`); `rounds packet --reference side=...`; ONE delegated critic a round
-   (a fresh subagent given the packet folder and nothing else); `rounds record answer.json`. A version is kept
+   edit tagged (`rounds change D3 "..."`); `rounds packet --reference side=... --request "..."` (both kept for
+   later packets; a long request: `--request-file`); ONE delegated critic a round (a fresh subagent given the
+   packet folder and nothing else); `rounds record answer.json` (`--dry-run` checks it first). A version is kept
    only when it beats the best so far. After every round, report in chat: the critic's top requests, what
    changed (ledger ids), won or lost, and the minutes. Stop when `record` says STOP. After an interruption run
    `rounds status` and redo only the step it names.
@@ -214,6 +215,10 @@ too (`construct_start` lists them under `worlds`): `op: new` with `example` make
 8. **The user can arrange it too.** In Hermes Desktop a world's card has Arrange: they drag and turn constructs and
    save, without you. Before changing a world again, read it (`op: list`): their moves are in it, and
    `edits/log.jsonl` marks them `"by": "user"`. Keep them unless asked otherwise.
+9. **A placed construct is a copy.** Improve it in its own project, then `op: refresh` (`id`: one placement, or
+   none for all) copies it in again and rebuilds. Never edit `constructs/` by hand.
+10. **Exporting a world:** leave `materials` out. Export merges the constructs' own material maps; a hand-made map
+    replaces them.
 
 **A world from a description or pictures: masterpiece by default.** A world is made to be used as it is (a game
 level, a set, a background for a film), so every construct made for it is made to a masterpiece's standard unless
@@ -245,7 +250,7 @@ the user says **fast** (then one pass each, and the world says so).
    `rounds start world.json --mode masterpiece --reference <the picture>`, then each round `rounds packet`, ONE
    fresh critic (`delegate_task`) on the packet against the picture (composition, scale, what is missing, the
    world's named views), `rounds record`, and the fixes it asks for: placements and views yourself, a construct's
-   repair by its builder. The same stop rules as a construct's (12 rounds, two in a row that do not beat the best,
+   repair by its builder (then `construct_world` op `refresh` to bring it in). The same stop rules as a construct's (12 rounds, two in a row that do not beat the best,
    two hours of your own time); a round that loses puts the world and its constructs back. What is still open when
    it stops goes in the reply as the critic wrote it. The background carries a picture as much as its hero:
    plan enough distinct masses (heights, depths, setbacks) that a repeated building does not read as a copy.
