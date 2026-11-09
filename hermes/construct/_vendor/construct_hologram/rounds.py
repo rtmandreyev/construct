@@ -250,6 +250,16 @@ def _remove(folder):
         shutil.rmtree(folder, **({"onexc": again} if sys.version_info >= (3, 12) else {"onerror": again}))
 
 
+def _scene_text(sc):
+    """A scene as the round writes it back: indented for reading, compact when indenting would take it past a
+    scene's 1 MB (a tree's thousands of needles written compactly stay under it; indented they would not)."""
+    from . import hologram
+    text = json.dumps(sc, indent=2, ensure_ascii=False) + "\n"
+    if len(text.encode("utf-8")) > hologram.MAX_INPUT_BYTES * 0.9:
+        text = json.dumps(sc, separators=(",", ":"), ensure_ascii=False) + "\n"
+    return text
+
+
 def _world_files(doc, src, dst, materials=True):
     """A world's round carries what it places by path (its constructs' folders, its material map), so a checkpoint
     is the whole world as it was judged and a reverted round puts the constructs back too."""
@@ -617,14 +627,14 @@ def record(folder, answer, scene_path=None, model=None, now=None):
     # record bound to it and the round history (the timeline in construct.html and review)
     if won:
         sc, _ = critic.record(json.loads((rd / "scene.json").read_text(encoding="utf-8")), crit, model, round=n)
-        (rd / "scene.json").write_text(json.dumps(sc, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+        (rd / "scene.json").write_text(_scene_text(sc), encoding="utf-8")
     else:
         sc = json.loads((_round_dir(folder, restored) / "scene.json").read_text(encoding="utf-8"))
         if scene_path:
             _world_files(sc, _round_dir(folder, restored), Path(scene_path).parent, materials=False)   # its constructs go back too
     if scene_path:
         sc.setdefault("authoring", {"tier": st["tier"], "research": "unavailable"})["rounds"] = timeline(st)
-        Path(scene_path).write_text(json.dumps(sc, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+        Path(scene_path).write_text(_scene_text(sc), encoding="utf-8")
     return dict(entry, stop=stop, restored=restored, best_round=st["best_round"])
 
 

@@ -1506,6 +1506,16 @@ class Rounds(unittest.TestCase):
         kept.write_text(json.dumps(dict(answer, critique=dict(answer["critique"], verdict="outstanding"))))
         self.assertIn("Edited after recording (the run kept the answer as recorded): round 1", r.report(self.d))
 
+    def test_a_big_scene_stays_under_the_limit_when_recorded(self):
+        # a tree's compact 570 KB scene was written back indented at 1.5 MB, over a scene's 1 MB, and its next
+        # round could not be built
+        from . import hologram
+        big = {"points": list(range(110000))}
+        text = self.r._scene_text(big)
+        self.assertLess(len(text.encode("utf-8")), hologram.MAX_INPUT_BYTES)
+        self.assertEqual(json.loads(text), big)
+        self.assertIn("\n  ", self.r._scene_text({"small": [1, 2]}))   # a small one stays indented for reading
+
     def test_a_tie_is_recorded_and_keeps_the_best(self):
         # a critic that cannot choose says "same": the round is recorded (not refused) and does not beat the best
         r = self.r
