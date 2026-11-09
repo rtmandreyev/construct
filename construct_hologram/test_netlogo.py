@@ -373,6 +373,28 @@ class Views(unittest.TestCase):
         self.assertIn("DATA (CSV)", page)
         self.assertIn("CITE THIS RUN", page)
 
+    @unittest.skipUnless(__import__("construct_hologram.render", fromlist=["x"]).find_browser()
+                         and os.environ.get("HOLOGRAM_SKIP_CAPTURE") != "1", "needs a Chromium-family browser")
+    def test_runs_side_by_side_are_cited_each_with_its_seed_and_ticks(self):
+        from . import render
+        d = Path(self.tmp.name)
+        short = netlogo.read_run(recording(d / "short.jsonl", frames=6))
+        page, _ = render.build_html(scene.compile_scene(netlogo.compare_runs(self.run, short, "phase", ("x", "y"))))
+        (d / "c.html").write_text(page, encoding="utf-8")
+        b = render.Browser(1000, 700, 1.0, gpu=False)
+        try:
+            b.open(render._url(str(d / "c.html")))
+            b.evaluate("HOLO.ready.then(() => new Promise((r) => setTimeout(r, 300)))")
+            got = json.loads(b.evaluate("JSON.stringify({cite: (document.querySelector('.rd-cite') || {}).textContent, "
+                                        "csv: [...document.querySelectorAll('.rd-tools a')].map((a) => a.textContent)})"))
+        finally:
+            b.close()
+        self.assertIn("DATA (CSV)", got["csv"])
+        self.assertIn("2 runs side by side", got["cite"])
+        self.assertIn("run a, ", got["cite"])
+        self.assertIn("run b, ", got["cite"])
+        self.assertIn("5 ticks", got["cite"])   # the short run's own length
+
     def test_two_runs_side_by_side(self):
         d = Path(self.tmp.name)
         short = netlogo.read_run(recording(d / "short.jsonl", frames=6))

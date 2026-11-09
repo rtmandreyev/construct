@@ -134,18 +134,20 @@ class Tools(Base):
                     if v["type"] == "object" and "properties" in v:
                         typed(v["properties"], "%s.%s" % (where, k))
             typed(schema["parameters"]["properties"], name)
-        self.assertIs(self.ctx.tools["construct_netlogo_run"]["check_fn"], self.nt.ready)
-        self.assertTrue(self.ctx.tools["construct_netlogo_draw"]["check_fn"]())   # the runtime alone
+        for name in ("construct_netlogo_run", "construct_netlogo_draw"):   # the runtime alone: the run says what is missing
+            self.assertTrue(self.ctx.tools[name]["check_fn"]())
         self.assertEqual(set(self.mod.netlogo_tools.HANDLERS), {"construct_netlogo_run", "construct_netlogo_draw"})
 
-    def test_check_fn_hides_the_run_without_netlogo(self):
+    def test_without_netlogo_the_run_stays_and_says_where_to_set_it(self):
         saved = self.nt._candidates
         try:
             self.nt._candidates = lambda: []
             self.nt._found["at"] = 0.0
-            self.assertFalse(self.nt.ready())
+            self.assertTrue(self.ctx.tools["construct_netlogo_run"]["check_fn"]())
             r = self.call("construct_netlogo_run", {"model": "Flocking"})
             self.assertIn("NetLogo was not found", r["error"])
+            self.assertIn("Settings → Plugins → Construct", r["error"])
+            self.assertIn("never installs NetLogo", r["error"])
             self.assertIsNone(self.call("construct_netlogo_run", {"search": "flock"})["netlogo"])
         finally:
             self.nt._candidates = saved
