@@ -1,0 +1,9 @@
+{
+ "about": "A finish for the Eames 670 / 671 construct, chosen for this page: the classic configuration, black leather cushions on walnut-veneered seven-ply shells, a polished aluminium base and black rubber shock mounts and glides, as in the gallery's other Eames map. The scene documents the leather-covered buttons, the seven-ply shells and the five- and four-star bases, not their colours. Colours are the exporter's choice, not facts of the construct.",
+ "materials": [
+  {"parts": ["*-cushion", "*-cushion-tufted-face", "*-button", "chair-arm-pad-*"], "name": "black leather", "color": "#151313", "finish": "plastic", "roughness": 0.6},
+  {"parts": ["*-shell", "chair-seat-cheek-*"], "name": "walnut veneer", "color": "#5a3620", "finish": "wood"},
+  {"parts": ["*-shock-mount-*", "*-floor-glide-*"], "name": "black rubber", "color": "#1a1a1a", "finish": "rubber"},
+  {"parts": ["*-cast-spoke-*", "*-base-hub", "*-pedestal", "*-collar", "chair-underseat-*", "chair-back-brace-*", "chair-arm-mount-*", "ottoman-top-carrier"], "name": "polished aluminium", "color": "#c9ccd0", "finish": "brushed"}
+ ]
+}

@@ -1,0 +1,17 @@
+{
+ "about": "A finish for the Sagrada Família construct, a completed-design reconstruction; the scene documents no colours, so every finish is chosen for this page from the basilica's public appearance: warm sandstone for the older fabric, pale stone panels on the central towers, mosaic and gold on the apostle-tower pinnacles, a glowing star on Mary's tower and a glowing cross on Christ's, a green ceramic cypress, coloured fruit on the nave pinnacles, bronze doors and stained glass. Colours are the exporter's choice, not facts of the construct.",
+ "materials": [
+  {"parts": ["*-lancets-*", "*-rose-*", "*-lower-lancets-*"], "name": "stained glass", "color": "#2f4f6e", "finish": "glass", "roughness": 0.1},
+  {"parts": ["mary-star-*"], "name": "Mary's star (lit)", "color": "#f2f4ff", "finish": "light"},
+  {"parts": ["christ-cross-*"], "name": "Christ's cross (lit)", "color": "#fbf6ea", "finish": "light"},
+  {"parts": ["*-mitre-crown-*"], "name": "gold mosaic", "color": "#cfa53b", "finish": "brushed", "roughness": 0.3},
+  {"parts": ["*-mitre-*"], "name": "Venetian glass mosaic", "color": "#d8c9b4", "finish": "plastic", "roughness": 0.25},
+  {"parts": ["cypress-*"], "name": "green ceramic", "color": "#3f6b3a", "finish": "plastic", "roughness": 0.3},
+  {"parts": ["*-fruit-bunch-*", "*-fruit-crowns"], "name": "coloured fruit mosaic", "color": "#c0532e", "finish": "plastic", "roughness": 0.3},
+  {"parts": ["*-fruit-stems"], "name": "green fruit stems", "color": "#4d7a3a", "finish": "plastic", "roughness": 0.3},
+  {"parts": ["evangelist-emblem-*", "evangelist-wings-*"], "name": "pale gold", "color": "#d9c48a", "finish": "brushed", "roughness": 0.35},
+  {"parts": ["nativity-door-*", "passion-doors"], "name": "bronze", "color": "#7a5a32", "finish": "brushed", "roughness": 0.45},
+  {"parts": ["christ-tower*", "mary-tower*", "mary-deck", "evangelist-*", "crossing-*", "*-sacristy-*"], "name": "pale stone panels", "color": "#e2dccf", "roughness": 0.6},
+  {"parts": ["*"], "name": "Montjuïc sandstone", "color": "#c7ad86", "roughness": 0.85}
+ ]
+}

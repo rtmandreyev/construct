@@ -370,6 +370,25 @@ class Finishes(unittest.TestCase):
                                                                for q in r["patterns"])], [])
                 self.assertIn("not facts of the construct", json.loads((maps / (name + ".json")).read_text())["about"])
 
+    def test_every_finish_map_beside_a_scene_covers_every_surface(self):
+        import fnmatch
+        said = {"aston-martin-db5", "eames-lounge-chair-chatgpt", "leica-m3", "jackson-juggernaut-et7", "braun-sk4",
+                "braun-sk4-knob", "rietveld-red-blue-chair", "state-bench", "garden-shed", "garden-shed-planned",
+                "saturn", "sagrada-familia", "sainte-chapelle", "duomo-di-milano", "neuschwanstein"}
+        found = set()
+        for path in sorted((ROOT / "examples").glob("*/maps/finish.json")):
+            slug = path.parent.parent.name
+            found.add(slug)
+            with self.subTest(slug):
+                sc = studio.load(str(path.parent.parent / "scene.json"))
+                rules = export._load_materials(path)
+                solid = [p["id"] for p in sc["parts"] if scene._local_mesh(p["shape"], 0).tris]
+                self.assertEqual([i for i in solid if not any(fnmatch.fnmatchcase(i, q) for r in rules
+                                                               for q in r["patterns"])], [])
+                if slug in said:   # these say which colours are documented and which chosen
+                    self.assertIn("not facts of the construct", json.loads(path.read_text())["about"])
+        self.assertTrue(said <= found)
+
 
 class GameReady(unittest.TestCase):
     def test_merge_keeps_moving_parts_and_their_exact_joints(self):
