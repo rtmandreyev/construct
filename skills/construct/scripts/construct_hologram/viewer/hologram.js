@@ -73,7 +73,7 @@ uniform vec4 uEvent;         // kind, progress 0..1, strength, seed
 uniform vec4 uEventP;        // kind-specific: origin/axis data
 uniform vec4 uBounds;        // centre xyz, radius
 uniform vec2 uYRange;        // ground y, top y
-uniform highp sampler2D uPose; // one row per motion slot, then one per articulation chain: 4 texels of matrix, 1 of gain
+uniform highp sampler2D uPose; // a record per motion slot, then per articulation chain (rec()): 4 texels of matrix, 1 of gain
 uniform float uJointBase;    // the first chain's row (rows before it are the motion slots)
 uniform float uPlaceBase;    // a world being arranged: the first placement's row (after the chains), else -1
 uniform float uGhost;        // pre-build ghost image 0..1
@@ -86,26 +86,29 @@ float h1(float n) { return fract(sin(n * 12.9898 + uEvent.w * 78.233) * 43758.54
 float band(float x, float front, float w) { float d = (x - front) / w; return exp(-d * d); }
 float strike(float t) { return smoothstep(0.0, 0.08, t) * (1.0 - smoothstep(0.7, 1.0, t)) * (0.75 + 0.25 * step(0.5, fract(t * 5.0))); }
 
-vec4 styleA(float s) { return texelFetch(uStyles, ivec2(0, int(s + 0.5)), 0); }  // tone, alpha, width, glow
-vec4 styleB(float s) { return texelFetch(uStyles, ivec2(1, int(s + 0.5)), 0); }  // dash, fade, part, slot
-vec4 styleC(float s) { return texelFetch(uStyles, ivec2(2, int(s + 0.5)), 0); }  // occluder, certainty, role, drift
-vec4 styleD(float s) { return texelFetch(uStyles, ivec2(3, int(s + 0.5)), 0); }  // joint, colour (r, g, b or -1)
-vec4 styleE(float s) { return texelFetch(uStyles, ivec2(4, int(s + 0.5)), 0); }  // a world's placement (or -1); the solid view's own colour
+// style and pose records sit 256 to a row, 5 texels each: a world with thousands of them stays inside the
+// texture size every GPU (and software WebGL, 8192) allows
+ivec2 rec(int i, int k) { return ivec2((i % 256) * 5 + k, i / 256); }
+vec4 styleA(float s) { return texelFetch(uStyles, rec(int(s + 0.5), 0), 0); }  // tone, alpha, width, glow
+vec4 styleB(float s) { return texelFetch(uStyles, rec(int(s + 0.5), 1), 0); }  // dash, fade, part, slot
+vec4 styleC(float s) { return texelFetch(uStyles, rec(int(s + 0.5), 2), 0); }  // occluder, certainty, role, drift
+vec4 styleD(float s) { return texelFetch(uStyles, rec(int(s + 0.5), 3), 0); }  // joint, colour (r, g, b or -1)
+vec4 styleE(float s) { return texelFetch(uStyles, rec(int(s + 0.5), 4), 0); }  // a world's placement (or -1); the solid view's own colour
 
 mat4 poseAt(int r) {
-  return mat4(texelFetch(uPose, ivec2(0, r), 0), texelFetch(uPose, ivec2(1, r), 0),
-              texelFetch(uPose, ivec2(2, r), 0), texelFetch(uPose, ivec2(3, r), 0));
+  return mat4(texelFetch(uPose, rec(r, 0), 0), texelFetch(uPose, rec(r, 1), 0),
+              texelFetch(uPose, rec(r, 2), 0), texelFetch(uPose, rec(r, 3), 0));
 }
 // periodic motion about the rest pose, then the articulation chain carries it
 vec3 moved(vec3 p, float slot, float joint, inout float gain) {
-  if (slot >= -0.5) { int i = int(slot + 0.5); p = (poseAt(i) * vec4(p, 1.0)).xyz; gain *= texelFetch(uPose, ivec2(4, i), 0).x; }
+  if (slot >= -0.5) { int i = int(slot + 0.5); p = (poseAt(i) * vec4(p, 1.0)).xyz; gain *= texelFetch(uPose, rec(i, 4), 0).x; }
   if (joint >= -0.5) p = (poseAt(int(uJointBase + 0.5) + int(joint + 0.5)) * vec4(p, 1.0)).xyz;
   return p;
 }
 // a world being arranged by hand: each placement's row holds where it has been moved to and how bright it is drawn
 float placeRow(float k) { return (uPlaceBase < -0.5 || k < -0.5) ? -1.0 : uPlaceBase + k; }
 vec3 placed(vec3 p, float row) { return row < -0.5 ? p : (poseAt(int(row + 0.5)) * vec4(p, 1.0)).xyz; }
-float placeGain(float row) { return row < -0.5 ? 1.0 : texelFetch(uPose, ivec2(4, int(row + 0.5)), 0).x; }
+float placeGain(float row) { return row < -0.5 ? 1.0 : texelFetch(uPose, rec(int(row + 0.5), 4), 0).x; }
 // what an event does to where a point is drawn
 vec3 displaced(vec3 p, float id) {
   int k = int(uEvent.x + 0.5);
@@ -605,7 +608,7 @@ void main() {
   Hologram.prototype.upload = function () {
     const gl = this.gl, g = this.geo;
     // styles texture: 5 texels per style (the fifth: in a world, the placement the style's part belongs to)
-    const st = new Float32Array(this.styles.length * 20);
+    const st = new Float32Array(Math.ceil(this.styles.length / 256) * 256 * 20);   // whole rows of 256 records
     const placeIx = this.placeIndex();
     this.styles.forEach((s, i) => {
       const part = s[6] >= 0 ? g.parts[s[6]] : null;
@@ -622,7 +625,7 @@ void main() {
     gl.bindTexture(gl.TEXTURE_2D, this.styleTex);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
-    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA32F, 5, this.styles.length, 0, gl.RGBA, gl.FLOAT, st);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA32F, 1280, st.length / 5120, 0, gl.RGBA, gl.FLOAT, st);
 
     const corner = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, corner);
@@ -859,7 +862,8 @@ void main() {
   Hologram.prototype.uploadPose = function (mot, joints) {
     const gl = this.gl, nm = mot.gains.length, nj = joints.length / 16;
     const pl = this.arranging() ? this.placeMats() : null, np = pl ? pl.gains.length : 0, rows = nm + nj + np;
-    const data = this._poseData && this._poseData.length === rows * 20 ? this._poseData : (this._poseData = new Float32Array(rows * 20));
+    const padded = Math.ceil(Math.max(rows, 1) / 256) * 256;   // whole rows of 256 records, as the style texture
+    const data = this._poseData && this._poseData.length === padded * 20 ? this._poseData : (this._poseData = new Float32Array(padded * 20));
     for (let r = 0; r < rows; r++) {
       const q = r - nm - nj;
       const src = r < nm ? mot.mats.subarray(r * 16, r * 16 + 16) : q < 0 ? joints.subarray((r - nm) * 16, (r - nm) * 16 + 16) : pl.mats.subarray(q * 16, q * 16 + 16);
@@ -872,10 +876,10 @@ void main() {
       gl.bindTexture(gl.TEXTURE_2D, this.poseTex);
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
-      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA32F, 5, rows, 0, gl.RGBA, gl.FLOAT, data);
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA32F, 1280, padded / 256, 0, gl.RGBA, gl.FLOAT, data);
     } else {
       gl.bindTexture(gl.TEXTURE_2D, this.poseTex);
-      gl.texSubImage2D(gl.TEXTURE_2D, 0, 0, 0, 5, rows, gl.RGBA, gl.FLOAT, data);
+      gl.texSubImage2D(gl.TEXTURE_2D, 0, 0, 0, 1280, padded / 256, gl.RGBA, gl.FLOAT, data);
     }
     this.poseJointBase = nm;
   };
