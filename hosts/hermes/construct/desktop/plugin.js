@@ -85,6 +85,20 @@ function notify(kind, message) {
   }
 }
 
+// a thin bar that runs while the gateway works (a rebuild, an export, a picture): something is happening
+let busyCss = false
+function BusyBar() {
+  if (!busyCss && typeof document !== 'undefined') {
+    busyCss = true
+    const st = document.createElement('style')
+    st.textContent = '@keyframes construct-busy{0%{transform:translateX(-100%)}100%{transform:translateX(250%)}}'
+    document.head.appendChild(st)
+  }
+  return jsx('div', { style: { position: 'relative', height: 2, overflow: 'hidden', borderRadius: 1, background: 'var(--ui-stroke-secondary)', width: '100%' },
+    children: jsx('div', { style: { position: 'absolute', top: 0, bottom: 0, width: '40%', background: 'var(--ui-text-accent, #4deaff)',
+      animation: 'construct-busy 1.3s ease-in-out infinite' } }) })
+}
+
 const FULL_TOP = 34   // Hermes's title bar: its window controls sit over the top of the page
 
 function errorText(err) {
@@ -273,7 +287,10 @@ function arrangeChanges(list) {
 const KINDS = ['Vehicles', 'Buildings', 'Machines and instruments', 'Objects', 'Living things']
 const CATEGORY_KIND = { vehicle: 'Vehicles', architecture: 'Buildings', machine: 'Machines and instruments',
   organism: 'Living things' }
-const MINI = { display: 'grid', gap: 8, gridTemplateColumns: 'repeat(auto-fill, minmax(132px, 1fr))', maxHeight: 300, overflow: 'auto' }
+// rows keep their full height (a picture and a title) and the box scrolls: a fixed-height grid would squeeze the
+// pictures out of a long list
+const MINI = { display: 'grid', gap: 8, gridTemplateColumns: 'repeat(auto-fill, minmax(132px, 1fr))', gridAutoRows: 'max-content',
+  maxHeight: 300, overflowY: 'auto', overscrollBehavior: 'contain', alignContent: 'start' }
 
 function MiniTile({ title, sub, load, deps, onPick }) {
   return jsxs('button', {
@@ -598,6 +615,7 @@ function ConstructCard({ project, build, loaderUrl, title, parts, sessionId, hei
           if (c && c.build === follow.build) {
             if (live) {
               setFollow({ build: target, job: follow.job, ready: true })
+              setNote(n => (n ? n.replace(/Rebuilding[^.]*\.?\s*$/, 'Rebuilt: this is the new build.') : n))
               setArr({ on: false, selected: null, changes: [] })
             }
             return
@@ -740,7 +758,10 @@ function ConstructCard({ project, build, loaderUrl, title, parts, sessionId, hei
   const growing = run && !run.final ? 'growing' + (run.ticks !== null ? ': tick ' + run.ticks : '') : null
 
   const views = view.views || null
-  const frameHeight = full ? 'calc(100vh - ' + (FULL_TOP + (isWorld ? 140 : 110)) + 'px)' : height || 420
+  const working = saving || (follow && !follow.ready) || /…$/.test(note)
+  // full screen: the picture gives room to what is open under it (the library, the chosen construct's bar)
+  const below = (isWorld ? 140 : 110) + (picking ? 360 : 0) + (arr.selected ? 50 : 0) + (choosing ? 200 : 0)
+  const frameHeight = full ? 'calc(100vh - ' + (FULL_TOP + below) + 'px)' : height || 420
   return jsxs('div', {
     // full screen: over the whole window below Hermes's title bar (its own controls stay clickable), on an opaque
     // ground (Hermes's page colours are see-through tints over its window)
@@ -763,7 +784,9 @@ function ConstructCard({ project, build, loaderUrl, title, parts, sessionId, hei
       // opened right after a drop-in: the world without it would load first, then again with it; wait for the new one
       follow && !follow.ready && drop && drop.job && follow.job === drop.job
         ? jsx('div', { style: { height: frameHeight, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24, textAlign: 'center',
-            color: 'var(--ui-text-secondary)', fontSize: 13 }, children: note || 'Placing it and rebuilding the world (half a minute or so for a big one)…' })
+            color: 'var(--ui-text-secondary)', fontSize: 13, flexDirection: 'column', gap: 12 },
+            children: [jsx('div', { children: note || 'Placing it and rebuilding the world (half a minute or so for a big one)…' }, 't'),
+              jsx('div', { style: { width: 240 }, children: jsx(BusyBar, {}) }, 'b')] })
         : jsx(PageFrame, { route: '/view?' + query({ project, build: shownBuild }), kind: 'construct',
           loaderUrl: shownBuild === build ? loaderUrl : null, height: frameHeight, onCard: setCard, onState: setView, control,
           onArrange: setArr }),
@@ -792,7 +815,8 @@ function ConstructCard({ project, build, loaderUrl, title, parts, sessionId, hei
           jsx(Button, { label: 'Undo last change', icon: 'debug-step-back', disabled: saving || arr.changes.length > 0,
             title: 'The world as it was before its last saved change (yours or the agent\'s)',
             onClick: () => command('construct undo ' + project, 'Undoing the last change…') }),
-          note ? jsx('div', { style: Object.assign({}, S.meta, { flex: '1 1 260px', whiteSpace: 'normal' }), children: note }) : null
+          note ? jsxs('div', { style: Object.assign({}, S.meta, { flex: '1 1 260px', whiteSpace: 'normal', display: 'flex', flexDirection: 'column', gap: 4 }),
+            children: [jsx('div', { children: follow && !follow.ready && !/…$/.test(note) ? note + ' Rebuilding…' : note }, 't'), working ? jsx(BusyBar, {}, 'b') : null] }) : null
         ]
       }) : null,
       isWorld && arr.on && arr.selected ? jsxs('div', {
@@ -822,7 +846,8 @@ function ConstructCard({ project, build, loaderUrl, title, parts, sessionId, hei
             background: 'transparent', color: 'var(--ui-text-primary)', width: 260 } }),
         jsx(Button, { label: 'Save', icon: 'check', disabled: !viewName.trim(), onClick: saveView })] }) : null,
       (!isWorld && note) || made ? jsxs('div', { style: Object.assign({}, S.bar, { gap: 8 }), children: [
-        !isWorld && note ? jsx('div', { style: S.meta, children: note }) : null,
+        !isWorld && note ? jsxs('div', { style: Object.assign({}, S.meta, { display: 'flex', flexDirection: 'column', gap: 4 }),
+          children: [jsx('div', { children: note }, 't'), working ? jsx(BusyBar, {}, 'b') : null] }) : null,
         made ? jsx(Button, { label: 'Open ' + made.label.replace(/^The /, ''), icon: 'link-external', onClick: () => openPath(made.path) }) : null,
         made ? jsx('div', { style: Object.assign({}, S.meta, { whiteSpace: 'normal' }), children: made.path }) : null] }) : null,
       jsxs('div', {
@@ -1358,21 +1383,47 @@ function openHub(tab, project, select, job) {
   if (sdk.host && typeof sdk.host.navigate === 'function') sdk.host.navigate(HUB)
 }
 
+// previews load when they come into view, a few at a time: a library of a hundred tiles never asks the gateway
+// for a hundred pictures at once
+const IMG_QUEUE = { running: 0, waiting: [] }
+function queued(task) {
+  return new Promise((resolve, reject) => {
+    const go = () => {
+      IMG_QUEUE.running++
+      task().then(resolve, reject).finally(() => {
+        IMG_QUEUE.running--
+        const next = IMG_QUEUE.waiting.shift()
+        if (next) next()
+      })
+    }
+    if (IMG_QUEUE.running < 4) go(); else IMG_QUEUE.waiting.push(go)
+  })
+}
+
 function Img({ load, deps, icon }) {
   const [src, setSrc] = useState(null)
+  const [seen, setSeen] = useState(false)
+  const box = useRef(null)
+  useEffect(() => {
+    if (seen || !box.current || typeof IntersectionObserver !== 'function') { if (!seen) setSeen(true); return undefined }
+    const io = new IntersectionObserver(es => { if (es.some(e => e.isIntersecting)) { setSeen(true); io.disconnect() } }, { rootMargin: '200px' })
+    io.observe(box.current)
+    return () => io.disconnect()
+  }, [seen])
   useEffect(() => {
     let live = true
-    if (!load) return undefined
-    load().then(
+    if (!load || !seen) return undefined
+    queued(() => (live ? load() : Promise.resolve(null))).then(
       t => live && t && typeof t.data_url === 'string' && /^data:image\/(png|jpeg);base64,/.test(t.data_url) && setSrc(t.data_url),
       () => {}
     )
     return () => {
       live = false
     }
-  }, deps)
+  }, deps.concat([seen]))
   return jsx('div', {
-    style: { aspectRatio: '16 / 10', width: '100%', background: FRAME_BG, display: 'flex', alignItems: 'center',
+    ref: box,
+    style: { aspectRatio: '16 / 10', width: '100%', flexShrink: 0, background: FRAME_BG, display: 'flex', alignItems: 'center',
       justifyContent: 'center', overflow: 'hidden' },
     children: src ? jsx('img', { src, alt: '', style: { width: '100%', height: '100%', objectFit: 'cover' } }) : jsx(Icon, { name: icon || 'symbol-structure' })
   })
@@ -1594,7 +1645,7 @@ function Projects({ focus }) {
     return jsxs('div', { style: { padding: '40px 0', textAlign: 'center', color: 'var(--ui-text-tertiary)', fontSize: 13 },
       children: [jsx('div', { style: { fontSize: 15, color: 'var(--ui-text-secondary)', marginBottom: 6 }, children: 'No constructs yet' }),
         jsx('div', { children: 'Ask Hermes for one ("Make a construct of a lighthouse"), or open one of these.' }),
-        jsx('div', { style: { textAlign: 'left', marginTop: 24 }, children: jsx(Examples, { onOpen: project => { load(); setOpen(project) } }) })] })
+        jsx('div', { style: { textAlign: 'left', marginTop: 24 }, children: jsx(Examples, { onOpen: project => { load(); setOpen(project) }, groups: ORDER.filter(g => g !== 'Worlds' && g !== 'Simulations') }) })] })
   }
   // the same name twice (two copies of an example) is told apart by its project id and its dates
   const titles = {}
@@ -1640,7 +1691,7 @@ function Projects({ focus }) {
       ...Object.keys(parts).sort().map(w => jsx(Folded, { title: 'Made for ' + w + ' (' + parts[w].length + ')', children: jsx('div', { style: GRID, children: parts[w].map(tile) }) }, 'w' + w)),
       archived.length ? jsx(Folded, { title: 'Archived (' + archived.length + ')', children: jsx('div', { style: GRID, children: archived.map(tile) }) }, 'archived') : null,
       head('Shipped constructs to start from'),
-      jsx(Examples, { onOpen: project => { load(); setOpen(project) } })
+      jsx(Examples, { onOpen: project => { load(); setOpen(project) }, groups: allGroups })
     ]
   })
 }
@@ -1652,7 +1703,27 @@ function Folded({ title, children }) {
     open ? jsx('div', { style: { marginTop: 10 }, children }) : null] })
 }
 
-function Examples({ onOpen }) {
+// a shipped construct straight into one of your groups (a game's props, a client's job): it becomes yours, then
+// goes in the group
+function ExampleMenu({ e, groups, busy, onAdd }) {
+  const [typing, setTyping] = useState(false)
+  if (typing) {
+    return jsx('input', { autoFocus: true, placeholder: 'A new group: My game…', maxLength: 40,
+      onKeyDown: ev => { if (ev.key === 'Enter' && ev.target.value.trim()) { setTyping(false); onAdd(e, ev.target.value.trim()) } if (ev.key === 'Escape') setTyping(false) },
+      style: { font: 'inherit', fontSize: 12, padding: '3px 6px', borderRadius: 6, border: '1px solid var(--ui-stroke-secondary)', background: 'transparent',
+        color: 'var(--ui-text-primary)', width: '100%' } })
+  }
+  const opt = (value, label) => jsx('option', { value, children: label }, value)
+  return jsx('select', {
+    value: '', disabled: busy, title: 'Make it yours, in one of your groups',
+    onChange: ev => { const v = ev.target.value; ev.target.value = ''; if (v === 'new') setTyping(true); else if (v) onAdd(e, v.slice(2)) },
+    style: { font: 'inherit', fontSize: 12, padding: '3px 6px', borderRadius: 6, border: '1px solid var(--ui-stroke-secondary)',
+      background: 'transparent', color: 'var(--ui-text-secondary)', cursor: 'pointer', maxWidth: 120 },
+    children: [opt('', 'Add to…'), jsx('optgroup', { label: 'Make it yours, in', children: groups.map(g => opt('g:' + g, g)).concat([opt('new', 'A new group…')]) }, 'g')]
+  })
+}
+
+function Examples({ onOpen, groups }) {
   const [opening, setOpening] = useState(null)   // {name, note}
   const [rows, setRows] = useState(null)
   const [error, setError] = useState('')
@@ -1683,6 +1754,25 @@ function Examples({ onOpen }) {
       setOpening({ name: e.name, note: errorText(err) })
     }
   }
+  const addTo = async (e, group) => {   // made yours with no chat, then put in the group
+    setOpening({ name: e.name, note: 'Making it yours, in ' + group + '…' })
+    try {
+      const out = await runCommand(null, 'construct open-example ' + e.name)
+      const m = /^Opened \S+ as (\S+)\. Building \(build (\S+), job ([0-9a-f]{12})\)/.exec(out)
+      if (!m) throw new Error(out.slice(0, 200) || 'it could not be opened')
+      await runCommand(null, 'construct group ' + m[1] + ' ' + group)
+      for (let i = 0; i < 120; i++) {   // its first build, so its tile has a page
+        const st = await runCommand(null, 'construct job ' + m[3]).catch(() => '')
+        if (/\(build /.test(st) || / failed/.test(st)) break
+        await sleep(1500)
+      }
+      setOpening(null)
+      notify('info', e.title + ' is yours, in ' + group + '.')
+      if (onOpen) onOpen(null)
+    } catch (err) {
+      setOpening({ name: e.name, note: errorText(err) })
+    }
+  }
   const start = (e, how) => startChat(how === 'show'
     ? 'Show me the "' + e.title + '" construct: start a project from the example ' + e.name + ' with construct_start, build it with construct_build and put it in your reply; then tell me in a few lines what it shows and how each part is known (construct_inspect).'
     : 'Start a new construct from the example ' + e.name + ' ("' + e.title + '") with construct_start, build and show it, then ask me what I want to change: we will make it mine.')
@@ -1697,7 +1787,8 @@ function Examples({ onOpen }) {
           opening && opening.name === e.name ? opening.note : str(e.use, 120) || str(e.line, 170)],
         actions: [jsx(Button, { label: 'Open', icon: 'eye', disabled: !!opening, title: 'Make it yours and look at it here: no chat, no model',
           onClick: () => openShipped(e) }, 'o'),
-          jsx(Button, { label: 'Explain in a chat', icon: 'comment', onClick: () => start(e, 'show') }, 's')]
+          groups ? jsx(ExampleMenu, { key: 'g', e, groups, busy: !!opening, onAdd: addTo }) : null,
+          jsx(Button, { label: 'Explain', icon: 'comment', title: 'Explain it in a chat', onClick: () => start(e, 'show') }, 's')]
       }, e.name)) })] }, k))]
   })
 }
