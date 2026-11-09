@@ -900,6 +900,11 @@ class Plugin(unittest.TestCase):
         self.assertIn("network", said(["rounds", "--tier", "masterpiece", "run"]))
         self.assertIn("program to run", said(["freecad", "scene.json", "--out", "s.FCStd", "--freecad", "/bin/sh"]))
         self.assertIn("outside the project", said(["export", "scene.json", "--out", "/tmp/elsewhere.glb"]))
+        # a long request was refused as "argv must be a list of 1 to 64 strings": the cap is named, and a file is the way
+        long = said(["rounds", "packet", "--request", "x" * 4001])
+        self.assertIn("at most 4000", long)
+        self.assertIn("--request-file", long)
+        self.assertIn("outside the project", said(["rounds", "packet", "--request-file", "/tmp/request.txt"]))
         ok = self.call("construct_command", {"argv": ["params", "--list"], "project": project})
         self.assertEqual(ok["exit"], 0, ok)
         self.assertIn("case / jewel", ok["output"])
