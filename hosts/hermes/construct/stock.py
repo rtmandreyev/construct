@@ -17,11 +17,10 @@ STOCK = {
     "toyota-land-cruiser-fj62": "examples/toyota-land-cruiser-fj62",
     "volkswagen-t1-samba": "examples/volkswagen-t1-samba",
     "vespa-gs150": "examples/vespa-gs150",
-    "eames-lounge-chair": "examples/eames-lounge-chair",
+    "eames-lounge-chair": "examples/eames-lounge-chair-chatgpt",   # the stronger of the two builds (critic: good)
     "braun-sk4": "examples/braun-sk4",
     "braun-sk4-knob": "examples/braun-sk4-knob",
     "revox-a77": "examples/revox-a77",
-    "yamaha-cfx": "examples/yamaha-cfx",
     "tompion-year-going-clock": "examples/tompion-year-going-clock",
     "garden-shed": "examples/garden-shed",
     "garden-shed-planned": "examples/garden-shed-planned",
@@ -33,9 +32,12 @@ STOCK = {
     "serum-2-61": "examples/serum-2-61",
     "leica-m3": "examples/leica-m3",
     "jackson-juggernaut-et7": "examples/jackson-juggernaut-et7",
-    "omega-speedmaster-321": "examples/omega-speedmaster-321",
     "state-bench": "examples/state-bench",
     "saturn": "examples/saturn",
+    "aston-martin-db5": "examples/aston-martin-db5",
+    "sagrada-familia": "examples/sagrada-familia",
+    "james-webb-space-telescope": "examples/films/james-webb-space-telescope",
+    "rietveld-red-blue-chair": "examples/rietveld-red-blue-chair",
 }
 # what each one is good to start from (shown with it; the tutorials name them too)
 USE = {
@@ -46,7 +48,6 @@ USE = {
     "braun-sk4": "a product from published dimensions and photographs",
     "braun-sk4-knob": "a missing part, to print or to send as CAD",
     "revox-a77": "a machine with moving reels",
-    "yamaha-cfx": "an instrument, with a model kit plan",
     "tompion-year-going-clock": "an antique with opening doors, with a model kit plan",
     "garden-shed": "a building from one photograph",
     "garden-shed-planned": "the same shed with a planned change built on",
@@ -58,9 +59,12 @@ USE = {
     "serum-2-61": "a product designed from a software manual (unaffiliated concept)",
     "leica-m3": "a camera, small and exact",
     "jackson-juggernaut-et7": "an electric guitar",
-    "omega-speedmaster-321": "a watch, its movement inside",
     "state-bench": "an invented instrument with a sliding service drawer",
     "saturn": "a planet: in a world's sky at its real angular size",
+    "aston-martin-db5": "a grand tourer from published dimensions and photographs",
+    "sagrada-familia": "a basilica's completed design, from published heights",
+    "james-webb-space-telescope": "a spacecraft at L2, from NASA's own figures",
+    "rietveld-red-blue-chair": "a design classic from a museum's sizes and a dimensioned drawing",
 }
 NAME = re.compile(r"^[a-z0-9][a-z0-9-]{0,62}$")
 

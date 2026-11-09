@@ -6386,51 +6386,6 @@
         0,
         180
       ]
-    },
-    {
-      "id": "headstock-maker-label-carrier",
-      "label": "Headstock Maker Label Carrier",
-      "role": "detail",
-      "certainty": "inferred",
-      "stage": 7,
-      "source": "front",
-      "basis": [
-        "maker",
-        "head-trace"
-      ],
-      "shape": {
-        "type": "box",
-        "size": [
-          0.022,
-          0.058,
-          0.001
-        ]
-      },
-      "at": [
-        0.001,
-        0.8739152,
-        0.022
-      ],
-      "look": {
-        "line": "none",
-        "fill": "none"
-      }
-    }
-  ],
-  "labels": [
-    {
-      "id": "maker-wordmark",
-      "part": "headstock-maker-label-carrier",
-      "face": "front",
-      "field": "maker",
-      "role": "creator",
-      "orientation": "vertical-up",
-      "region": [
-        0,
-        0,
-        1,
-        1
-      ]
     }
   ],
   "articulations": [

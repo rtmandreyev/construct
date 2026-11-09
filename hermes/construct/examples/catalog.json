@@ -37,13 +37,13 @@
  },
  {
   "name": "eames-lounge-chair",
-  "title": "Eames Lounge Chair 670 and Ottoman 671",
-  "parts": 52,
-  "with_copies": 74,
-  "line": "The owner's Herman Miller Eames Lounge Chair (670) and Ottoman (671): three moulded plywood shells with leather cushions, the arms bridging seat and back, a five-star sw…",
+  "title": "Eames · 670 / 671",
+  "parts": 223,
+  "with_copies": 223,
+  "line": "Charles and Ray Eames — Lounge Chair and Ottoman.",
   "category": "object",
   "accuracy": "approximate",
-  "made": "masterpiece · Claude Opus 5.5, in the Claude app (Cowork), no terminal",
+  "made": "masterpiece · GPT-6.1 Sol, in the ChatGPT app (Codex), no terminal",
   "use": "furniture copied from two photos",
   "has_thumb": true
  },
@@ -81,18 +81,6 @@
   "accuracy": "approximate",
   "made": "fast · DeepSeek V4.1 Flash",
   "use": "a machine with moving reels",
-  "has_thumb": true
- },
- {
-  "name": "yamaha-cfx",
-  "title": "Yamaha CFX concert grand piano",
-  "parts": 31,
-  "with_copies": 204,
-  "line": "Yamaha's 275 cm (9') concert grand: a curved rim tapering to a rounded tail on three casters, a raised lid on its prop stick, a full 88-key keyboard and the strung, cast…",
-  "category": "object",
-  "accuracy": "approximate",
-  "made": "fast · DeepSeek V4.1 Flash",
-  "use": "an instrument, with a model kit plan",
   "has_thumb": true
  },
  {
@@ -218,25 +206,13 @@
  {
   "name": "jackson-juggernaut-et7",
   "title": "Jackson Juggernaut ET7 | Seven strings, one equilibrium",
-  "parts": 130,
-  "with_copies": 170,
+  "parts": 129,
+  "with_copies": 169,
   "line": "Exact-model reconstruction of Jackson Pro Plus Signature Misha Mansoor Juggernaut ET7, model 2914017554.",
   "category": "object",
   "accuracy": "approximate",
   "made": "fast · GPT-6.1 Sol",
   "use": "an electric guitar",
-  "has_thumb": true
- },
- {
-  "name": "omega-speedmaster-321",
-  "title": "Omega Speedmaster Professional Moonwatch - calibre 321, exploded",
-  "parts": 64,
-  "with_copies": 229,
-  "line": "An exploded 42 mm Omega Speedmaster Professional 'Moonwatch': steel case with twisted lugs and tachymeter bezel, triple-register dial with its chronograph hands, and the…",
-  "category": "machine",
-  "accuracy": "approximate",
-  "made": "fast · DeepSeek V4.1 Flash",
-  "use": "a watch, its movement inside",
   "has_thumb": true
  },
  {
@@ -261,6 +237,54 @@
   "accuracy": "documented",
   "made": "masterpiece · DeepSeek V4.1 Flash",
   "use": "a planet: in a world's sky at its real angular size",
+  "has_thumb": true
+ },
+ {
+  "name": "aston-martin-db5",
+  "title": "Aston Martin DB5",
+  "parts": 105,
+  "with_copies": 175,
+  "line": "The 1963-65 Aston Martin DB5 coupe: a Touring Superleggera fastback grand tourer on wire wheels.",
+  "category": "vehicle",
+  "accuracy": "approximate",
+  "made": "masterpiece · Claude Opus 5.5",
+  "use": "a grand tourer from published dimensions and photographs",
+  "has_thumb": true
+ },
+ {
+  "name": "sagrada-familia",
+  "title": "Sagrada Família · completed design",
+  "parts": 256,
+  "with_copies": 306,
+  "line": "Approximate completed-design reconstruction.",
+  "category": "architecture",
+  "accuracy": "approximate",
+  "made": "masterpiece · GPT-6.1 Sol",
+  "use": "a basilica's completed design, from published heights",
+  "has_thumb": true
+ },
+ {
+  "name": "james-webb-space-telescope",
+  "title": "James Webb Space Telescope — built at L2",
+  "parts": 167,
+  "with_copies": 167,
+  "line": "The deployed James Webb Space Telescope drifting at Sun-Earth L2, assembled in eight stages: spacecraft bus, power and comms, sunshield rigging, the five membranes, the…",
+  "category": "machine",
+  "accuracy": "approximate",
+  "made": "masterpiece",
+  "use": "a spacecraft at L2, from NASA's own figures",
+  "has_thumb": true
+ },
+ {
+  "name": "rietveld-red-blue-chair",
+  "title": "Rietveld Red-Blue Chair",
+  "parts": 17,
+  "with_copies": 23,
+  "line": "Gerrit Rietveld's Red-Blue Chair (designed 1918, painted c.1923): thirteen-ish 30 mm beech battens carrying two 12 mm plywood planes and two board armrests.",
+  "category": "object",
+  "accuracy": "documented",
+  "made": "masterpiece · DeepSeek V4.1 Flash",
+  "use": "a design classic from a museum's sizes and a dimensioned drawing",
   "has_thumb": true
  }
 ]
