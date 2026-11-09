@@ -556,7 +556,7 @@ class Plugin(unittest.TestCase):
         self.assertIn("the-shed", [x["name"] for x in menu["worlds"]])
         ex = self.until_done(self.call("construct_world", {"op": "new", "example": "the-shed"}))
         self.assertTrue(ex.get("success"), ex)
-        self.assertEqual([p["id"] for p in ex["world"]["placements"]], ["shed", "samba", "vespa"])
+        self.assertEqual([p["id"] for p in ex["world"]["placements"]], ["shed", "samba", "vespa", "bench", "chair"])
         self.assertFalse(ex["world"]["warnings"])
         self.assertTrue((self.data / "projects" / ex["project"] / "constructs" / "vespa-gs150" / "scene.json").is_file())
         self.assertIn("error", self.call("construct_world", {"op": "new", "example": "nowhere"}))
@@ -672,7 +672,7 @@ class Plugin(unittest.TestCase):
         self.assertTrue(all(r["in_world"] in worlds for r in rows.values() if r.get("in_world")))   # folded under a real world
         self.assertRegex(handle("thumbs 1"), r"^Made [01] thumbnails?\.")
         shipped = {w["name"]: w for w in self.api.example_worlds(self.pkg)}
-        self.assertEqual(set(shipped), {"the-shed", "villa-savoye-lived-in", "a-street-of-landmarks"})
+        self.assertEqual(set(shipped), {"the-shed", "villa-savoye-lived-in", "a-street-of-landmarks", "kestrel-at-saturn"})
         self.assertTrue(all(w["has_thumb"] for w in shipped.values()))
         self.assertTrue(self.api.example_world_thumb("the-shed", self.pkg)["data_url"].startswith("data:image/jpeg;base64,"))
         shed = self.call("construct_inspect", {"project": "garden-shed"})   # a shipped construct, measured in place
@@ -992,6 +992,23 @@ class Plugin(unittest.TestCase):
         try:
             self.assertEqual(gate(tool_name="construct_netlogo_run", args={"model": "Fireflies", "go": "x"})["action"],
                              "block")
+        finally:
+            self.ctx.cron = None
+
+    def test_a_gallery_download_is_always_approved(self):
+        # a world that places a gallery construct the plugin does not ship downloads it from GitHub: the user is asked
+        gate = self.ctx.hooks["pre_tool_call"]
+        self.assertIsNone(gate(tool_name="construct_world", args={"op": "place", "world": "w", "construct": "vespa-gs150"}))
+        ask = gate(tool_name="construct_world", args={"op": "place", "world": "w", "construct": "ferrari-f40"})
+        self.assertEqual(ask["action"], "approve")
+        self.assertIn("ferrari-f40", ask["message"])
+        self.assertIn("GitHub", ask["message"])
+        many = gate(tool_name="construct_world", args={"op": "place", "world": "w",
+                                                       "placements": [{"construct": "ferrari-f40"}, {"construct": "saturn"}]})
+        self.assertEqual(many["rule_key"], "construct:gallery:ferrari-f40")   # shipped ones are not downloaded
+        self.ctx.cron = object()
+        try:
+            self.assertEqual(gate(tool_name="construct_world", args={"op": "place", "construct": "ferrari-f40"})["action"], "block")
         finally:
             self.ctx.cron = None
 

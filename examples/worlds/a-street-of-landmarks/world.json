@@ -3,7 +3,7 @@
  "version": 1,
  "id": "a-street-of-landmarks",
  "title": "A street of landmarks",
- "summary": "Four buildings from the gallery on one street, each at its real size and facing it: the Duomo di Milano, the Sainte-Chapelle and the Sagrada Família on the north side, the tea house across from them, and KESTREL, an invented ship, holding station above. Their real sites are far apart; this street is a what-if.",
+ "summary": "Four landmarks on one street, each at its real size and facing it: the Duomo di Milano, the Sainte-Chapelle and the Sagrada Família on the north side, Neuschwanstein across from them. Their real sites are far apart; this street is a what-if. Every building keeps its own parts, sources and joints.",
  "placements": [
   {
    "id": "sainte-chapelle",
@@ -36,27 +36,15 @@
    "note": "The Nativity facade on the street."
   },
   {
-   "id": "tea-house",
-   "construct": "tea-house",
+   "id": "neuschwanstein",
+   "construct": "neuschwanstein",
    "at": [
     0,
     0,
-    16
+    28
    ],
    "yaw": 180,
-   "note": "Across the street, facing the chapel."
-  },
-  {
-   "id": "kestrel",
-   "construct": "kestrel-v2",
-   "at": [
-    10,
-    150,
-    0
-   ],
-   "yaw": 90,
-   "floating": true,
-   "note": "An invented ship, holding station over the street."
+   "note": "Across the street, its gatehouse facing the chapel."
   }
  ],
  "presentation": {
@@ -75,11 +63,11 @@
     "distance": 2.6
    },
    {
-    "id": "overhead",
-    "label": "Under KESTREL",
-    "target": "kestrel",
-    "yaw": 160,
-    "pitch": -12,
+    "id": "castle",
+    "label": "Across to the castle",
+    "target": "neuschwanstein",
+    "yaw": 200,
+    "pitch": 8,
     "distance": 1.6
    }
   ]

@@ -74,6 +74,16 @@ def make_gate(ctx):
                 return {"action": "approve", "rule_key": "construct:netlogo-code:" + key,
                         "message": "Construct wants to run NetLogo (Java, on this machine, no network) with %s. "
                                    "NetLogo code runs with your rights: check it first." % "; ".join(why)}
+        if tool_name == "construct_world":   # a gallery construct not shipped is downloaded from GitHub: always asked
+            fetch = runtime.gallery_downloads(args)
+            if fetch:
+                if unattended():
+                    return {"action": "block",
+                            "message": "Construct asks before downloading %s from its GitHub release, and nobody can "
+                                       "answer in a scheduled run." % ", ".join(fetch)}
+                return {"action": "approve", "rule_key": "construct:gallery:" + "+".join(fetch),
+                        "message": "Construct wants to download %s from its own GitHub release (scene data, JSON only, "
+                                   "this version's tag) to place in the world." % ", ".join(fetch)}
         if not runtime.setting("confirm_runs", False):
             return None
         progs = programs_for(tool_name, args)

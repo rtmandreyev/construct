@@ -3,34 +3,58 @@
  "version": 1,
  "id": "the-shed",
  "title": "The shed, the Samba and the Vespa",
- "summary": "A garden shed with a 1960s VW T1 Samba parked in front and a Vespa GS 150 beside its door; three constructs from the gallery, each whole and at real size.",
+ "summary": "A garden shed with its planned deck and log store, a 1960s VW T1 Samba parked by the log store, a Vespa GS 150 on its stand by the door, State Bench set up inside on the floor, and Rietveld's Red-Blue Chair out on the deck. Five constructs, each whole, at real size.",
  "placements": [
   {
    "id": "shed",
-   "construct": "garden-shed",
+   "construct": "garden-shed-planned",
    "note": "What holds the rest: its site ground is the yard's."
   },
   {
    "id": "samba",
    "construct": "volkswagen-t1-samba",
    "at": [
-    4.75,
+    5.55,
     0,
     0.6
    ],
    "yaw": 0,
-   "note": "Parked along the shed's east end, clear of its eaves."
+   "note": "Parked along the log store, clear of its roof."
   },
   {
    "id": "vespa",
    "construct": "vespa-gs150",
    "at": [
-    -0.6,
+    1.2,
     0,
-    2.75
+    2.55
    ],
    "yaw": 60,
-   "note": "On its stand beside the door."
+   "note": "On its stand in front of the shed."
+  },
+  {
+   "id": "bench",
+   "construct": "state-bench",
+   "on": "shed/floor-deck",
+   "at": [
+    0.9,
+    0,
+    0.0
+   ],
+   "yaw": 0,
+   "note": "Set up inside, with room behind it for its service drawer."
+  },
+  {
+   "id": "chair",
+   "construct": "rietveld-red-blue-chair",
+   "on": "shed/planned-deck-boards",
+   "at": [
+    -1.95,
+    0,
+    1.95
+   ],
+   "yaw": 200,
+   "note": "Out on the planned deck."
   }
  ],
  "presentation": {
@@ -41,12 +65,28 @@
   },
   "views": [
    {
+    "id": "deck",
+    "label": "The deck",
+    "target": "chair",
+    "yaw": -30,
+    "pitch": 12,
+    "distance": 2.2
+   },
+   {
     "id": "door",
     "label": "By the door",
     "target": "vespa",
     "yaw": -20,
     "pitch": 10,
-    "distance": 1.5
+    "distance": 1.6
+   },
+   {
+    "id": "bench",
+    "label": "The bench inside",
+    "target": "bench",
+    "yaw": 20,
+    "pitch": 22,
+    "distance": 1.8
    },
    {
     "id": "yard",

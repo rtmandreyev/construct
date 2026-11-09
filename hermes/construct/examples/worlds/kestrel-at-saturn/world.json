@@ -1,0 +1,52 @@
+{
+ "format": "construct-world",
+ "version": 1,
+ "id": "kestrel-at-saturn",
+ "title": "KESTREL at Saturn",
+ "summary": "KESTREL, an invented ring-ice pusher, at work by Saturn's rings, the planet huge behind it at its real size from about 350,000 km. Each construct keeps its own parts, sources and joints.",
+ "placements": [
+  {
+   "id": "kestrel",
+   "construct": "kestrel-v2",
+   "floating": true,
+   "note": "What the scene is about: the ice tug at its station."
+  },
+  {
+   "id": "saturn",
+   "construct": "saturn",
+   "sky": {
+    "diameter_m": 120536000.0,
+    "of": "globe",
+    "distance_m": 350000000.0,
+    "azimuth": 150,
+    "elevation": 8
+   },
+   "note": "Its real size from about 350,000 km: the rings fill a good part of the sky."
+  }
+ ],
+ "presentation": {
+  "framing": {
+   "yaw": -35,
+   "pitch": 6,
+   "fit": 1.0
+  },
+  "views": [
+   {
+    "id": "at-the-rings",
+    "label": "At the rings",
+    "target": "kestrel",
+    "yaw": -20,
+    "pitch": 4,
+    "distance": 1.6
+   },
+   {
+    "id": "tug",
+    "label": "The tug",
+    "target": "kestrel",
+    "yaw": 110,
+    "pitch": 12,
+    "distance": 1.1
+   }
+  ]
+ }
+}

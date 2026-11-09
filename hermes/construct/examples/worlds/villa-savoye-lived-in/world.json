@@ -1,220 +1,188 @@
 {
- "format": "construct-world",
- "version": 1,
- "id": "villa-savoye-lived-in",
- "title": "The Villa Savoye, lived in",
- "summary": "The Villa Savoye (Poissy, 1931) with a life moved in: an Eames lounge chair, a Yamaha CFX, a Tompion year-going clock and two tables in the salon, a Braun SK 4, a Revox A77, a Leica M3, a Speedmaster and a Serum 2/61 on them, a Jackson by the piano, a Land Cruiser, a Samba and a Vespa under the pilotis, and Saturn as close as the Moon. Fifteen constructs from the gallery, each whole and at real size; the tables are designed for this world.",
- "placements": [
-  {
-   "id": "villa",
-   "construct": "villa-savoye",
-   "note": "What holds the rest."
-  },
-  {
-   "id": "cfx",
-   "construct": "yamaha-cfx",
-   "on": "villa/living-floor-east",
-   "at": [
-    7.0,
-    0,
-    7.7
-   ],
-   "yaw": -20,
-   "note": "The concert grand, by the salon's east glass."
-  },
-  {
-   "id": "jackson",
-   "construct": "jackson-juggernaut-et7",
-   "on": "villa/living-floor-east",
-   "at": [
-    8.85,
-    0,
-    10.2
-   ],
-   "yaw": -40,
-   "note": "Upright by the piano; its stand is not drawn."
-  },
-  {
-   "id": "eames",
-   "construct": "eames-lounge-chair",
-   "on": "villa/living-floor-east",
-   "at": [
-    1.6,
-    0,
-    7.6
-   ],
-   "yaw": 200,
-   "note": "Facing the terrace glass."
-  },
-  {
-   "id": "tompion",
-   "construct": "tompion-year-going-clock",
-   "on": "villa/living-floor-east",
-   "at": [
-    -4.3,
-    0,
-    6.2
-   ],
-   "yaw": 90,
-   "note": "Against the salon's west wall."
-  },
-  {
-   "id": "table",
-   "construct": "constructs/tube-table/scene.json",
-   "on": "villa/living-floor-east",
-   "at": [
-    -2.6,
-    0,
-    9.65
-   ],
-   "note": "Designed for this world: a surface for the small things."
-  },
-  {
-   "id": "braun",
-   "construct": "braun-sk4",
-   "on": "table/top",
-   "at": [
-    -3.05,
-    0,
-    9.7
-   ]
-  },
-  {
-   "id": "revox",
-   "construct": "revox-a77",
-   "on": "table/top",
-   "at": [
-    -2.42,
-    0,
-    9.7
-   ]
-  },
-  {
-   "id": "leica",
-   "construct": "leica-m3",
-   "on": "table/top",
-   "at": [
-    -1.97,
-    0,
-    9.75
-   ],
-   "yaw": -15
-  },
-  {
-   "id": "speedmaster",
-   "construct": "omega-speedmaster-321",
-   "on": "table/top",
-   "at": [
-    -1.97,
-    0,
-    9.45
-   ]
-  },
-  {
-   "id": "studio-table",
-   "construct": "constructs/tube-table/scene.json",
-   "on": "villa/living-floor-east",
-   "at": [
-    3.4,
-    0,
-    9.75
-   ],
-   "note": "Designed for this world: the synth's."
-  },
-  {
-   "id": "serum",
-   "construct": "serum-2-61",
-   "on": "studio-table/top",
-   "at": [
-    3.4,
-    0,
-    9.75
-   ]
-  },
-  {
-   "id": "fj62",
-   "construct": "toyota-land-cruiser-fj62",
-   "on": "villa/drive-through-ground",
-   "at": [
-    7.8,
-    0,
-    -2.2
-   ],
-   "note": "Under the pilotis, between the columns and the garage wall."
-  },
-  {
-   "id": "samba",
-   "construct": "volkswagen-t1-samba",
-   "on": "villa/drive-through-ground",
-   "at": [
-    -7.8,
-    0,
-    2.0
-   ]
-  },
-  {
-   "id": "vespa",
-   "construct": "vespa-gs150",
-   "on": "villa/drive-through-ground",
-   "at": [
-    7.8,
-    0,
-    6.8
-   ],
-   "yaw": -15
-  },
-  {
-   "id": "saturn",
-   "construct": "saturn",
-   "sky": {
-    "diameter_m": 120536000.0,
-    "of": "globe",
-    "distance_m": 384400000.0,
-    "azimuth": -150,
-    "elevation": 12
-   },
-   "note": "Its real size at the Moon's mean distance: a what-if, not an orbit."
+  "format": "construct-world",
+  "version": 1,
+  "id": "villa-savoye-lived-in",
+  "title": "The Villa Savoye, lived in",
+  "summary": "The Villa Savoye (Poissy, 1931) with a life moved in: an Eames lounge chair and two tables in the salon, a Braun SK 4, a Revox A77 and a Leica M3 on one, SERUM 2 / 61 on the other, a Tompion year-going clock against the wall and a Jackson by the studio table; a Land Cruiser and an Aston Martin DB5 under the pilotis, where the ground floor follows a car's turning circle; and KESTREL, far off over the roof. Every construct keeps its own parts, sources and joints.",
+  "placements": [
+    {
+      "id": "villa",
+      "construct": "villa-savoye",
+      "note": "What holds the rest."
+    },
+    {
+      "id": "jackson",
+      "construct": "jackson-juggernaut-et7",
+      "on": "villa/living-floor-east",
+      "at": [
+        4.6,
+        0,
+        10.4
+      ],
+      "yaw": -30,
+      "note": "Upright by the studio table; its stand is not drawn."
+    },
+    {
+      "id": "eames",
+      "construct": "eames-lounge-chair",
+      "on": "villa/living-floor-east",
+      "at": [
+        1.6,
+        0,
+        7.6
+      ],
+      "yaw": 200,
+      "note": "Facing the terrace glass."
+    },
+    {
+      "id": "tompion",
+      "construct": "tompion-year-going-clock",
+      "on": "villa/living-floor-east",
+      "at": [
+        -4.3,
+        0,
+        6.2
+      ],
+      "yaw": 90,
+      "note": "Against the salon's west wall."
+    },
+    {
+      "id": "table",
+      "construct": "constructs/tube-table/scene.json",
+      "on": "villa/living-floor-east",
+      "at": [
+        -2.6,
+        0,
+        9.65
+      ],
+      "note": "Designed for this world: a surface for the small things."
+    },
+    {
+      "id": "braun",
+      "construct": "braun-sk4",
+      "on": "table/top",
+      "at": [
+        -3.05,
+        0,
+        9.7
+      ]
+    },
+    {
+      "id": "revox",
+      "construct": "revox-a77",
+      "on": "table/top",
+      "at": [
+        -2.42,
+        0,
+        9.7
+      ]
+    },
+    {
+      "id": "leica",
+      "construct": "leica-m3",
+      "on": "table/top",
+      "at": [
+        -1.97,
+        0,
+        9.75
+      ],
+      "yaw": -15
+    },
+    {
+      "id": "studio-table",
+      "construct": "constructs/tube-table/scene.json",
+      "on": "villa/living-floor-east",
+      "at": [
+        3.4,
+        0,
+        9.75
+      ],
+      "note": "Designed for this world: the synth's."
+    },
+    {
+      "id": "serum",
+      "construct": "serum-2-61",
+      "on": "studio-table/top",
+      "at": [
+        3.4,
+        0,
+        9.75
+      ]
+    },
+    {
+      "id": "fj62",
+      "construct": "toyota-land-cruiser-fj62",
+      "on": "villa/drive-through-ground",
+      "at": [
+        7.8,
+        0,
+        -2.2
+      ],
+      "note": "Under the pilotis, between the columns and the garage wall."
+    },
+    {
+      "id": "db5",
+      "construct": "aston-martin-db5",
+      "on": "villa/drive-through-ground",
+      "at": [
+        -7.8,
+        0,
+        2.0
+      ],
+      "yaw": 0,
+      "note": "The house's ground floor follows a car's turning circle: the cars belong under the pilotis."
+    },
+    {
+      "id": "kestrel",
+      "construct": "kestrel-v2",
+      "sky": {
+        "diameter_m": 120.0,
+        "distance_m": 1500.0,
+        "azimuth": -150,
+        "elevation": 18
+      },
+      "note": "Far off over the roof garden, at its real size a kilometre and a half away: a what-if, not a flight."
+    }
+  ],
+  "presentation": {
+    "framing": {
+      "yaw": 32,
+      "pitch": 16,
+      "fit": 1.0
+    },
+    "views": [
+      {
+        "id": "kestrel-over-the-roof",
+        "label": "KESTREL over the roof",
+        "target": "villa",
+        "yaw": 30,
+        "pitch": -5,
+        "distance": 1.35
+      },
+      {
+        "id": "salon",
+        "label": "Salon",
+        "target": "eames",
+        "yaw": 250,
+        "pitch": 14,
+        "distance": 2.6
+      },
+      {
+        "id": "the-table",
+        "label": "The table",
+        "target": "table",
+        "yaw": 160,
+        "pitch": 30,
+        "distance": 1.1
+      },
+      {
+        "id": "pilotis",
+        "label": "Under the pilotis",
+        "target": "fj62",
+        "yaw": 125,
+        "pitch": 6,
+        "distance": 2.6
+      }
+    ]
   }
- ],
- "presentation": {
-  "framing": {
-   "yaw": 32,
-   "pitch": 16,
-   "fit": 1.0
-  },
-  "views": [
-   {
-    "id": "saturn-rising",
-    "label": "Saturn rising",
-    "target": "villa",
-    "yaw": 30,
-    "pitch": -5,
-    "distance": 1.35
-   },
-   {
-    "id": "salon",
-    "label": "Salon",
-    "target": "cfx",
-    "yaw": 250,
-    "pitch": 14,
-    "distance": 2.0
-   },
-   {
-    "id": "the-table",
-    "label": "The table",
-    "target": "table",
-    "yaw": 160,
-    "pitch": 30,
-    "distance": 1.1
-   },
-   {
-    "id": "pilotis",
-    "label": "Under the pilotis",
-    "target": "fj62",
-    "yaw": 125,
-    "pitch": 6,
-    "distance": 2.6
-   }
-  ]
- }
 }

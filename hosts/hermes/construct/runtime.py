@@ -164,6 +164,40 @@ def gallery():
     return {r["name"]: r for r in doc.get("constructs", [])}
 
 
+def gallery_downloads(args):
+    """The gallery constructs a construct_world call would download from GitHub (empty: none): the names it places
+    that are neither the user's projects, nor shipped with the plugin, nor already downloaded. A source checkout reads
+    its own copies and downloads nothing."""
+    from . import stock
+    if not (HERE / "examples" / "gallery.json").is_file():
+        return []
+    names = set()
+
+    def walk(o):
+        if isinstance(o, dict):
+            for k, v in o.items():
+                if k == "construct" and isinstance(v, str):
+                    names.add(v.strip())
+                else:
+                    walk(v)
+        elif isinstance(o, list):
+            for v in o:
+                walk(v)
+    walk(args if isinstance(args, dict) else {})
+    try:
+        rows = gallery()
+    except Exception:
+        return []
+    out = []
+    for n in sorted(names):
+        if not SLUG.match(n) or n in stock.STOCK or n not in rows or (projects_root() / n).is_dir():
+            continue
+        if (data_dir() / "gallery" / n / "scene.json").is_file():
+            continue
+        out.append(n)
+    return out
+
+
 def gallery_files(name):
     """A gallery construct's scene and material map: read from the repository in a source checkout, else fetched
     once from GitHub (this release's tag) into the plugin's data folder."""

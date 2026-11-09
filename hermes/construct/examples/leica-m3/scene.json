@@ -4298,40 +4298,6 @@
         "top-layout"
       ],
       "note": "A9 observed engraved scale, evenly-spaced simplification; inferred tick positions."
-    },
-    {
-      "id": "top-engraving-field",
-      "label": "Top Engraving Field",
-      "role": "detail",
-      "stage": 7,
-      "certainty": "inferred",
-      "shape": {
-        "type": "plane",
-        "size": [
-          0.047,
-          0.025
-        ]
-      },
-      "at": [
-        0.028,
-        0.07712,
-        0.0
-      ],
-      "source": "a9",
-      "basis": [
-        "top-maker",
-        "top-origin"
-      ],
-      "note": "Measured visual approximation; see research.md. No outline coordinates are documented.",
-      "rotate": [
-        -90,
-        0,
-        0
-      ],
-      "look": {
-        "line": "none",
-        "fill": "none"
-      }
     }
   ],
   "presentation": {
@@ -4446,73 +4412,6 @@
     "reduced_motion": "still"
   },
   "assets": [],
-  "labels": [
-    {
-      "id": "maker",
-      "part": "top-engraving-field",
-      "field": "top-maker",
-      "face": "front",
-      "region": [
-        0.08,
-        0.08,
-        0.92,
-        0.42
-      ],
-      "role": "title"
-    },
-    {
-      "id": "origin",
-      "part": "top-engraving-field",
-      "field": "top-origin",
-      "face": "front",
-      "region": [
-        0.03,
-        0.55,
-        0.97,
-        0.95
-      ],
-      "role": "meta"
-    },
-    {
-      "id": "lens-inscription",
-      "part": "lens-name-annulus",
-      "field": "lens-name",
-      "face": "top",
-      "region": [
-        0.3874,
-        0.0128,
-        0.6126,
-        0.059
-      ],
-      "role": "meta"
-    },
-    {
-      "id": "lens-focal-inscription",
-      "part": "lens-name-annulus",
-      "field": "lens-focal",
-      "face": "top",
-      "region": [
-        0.3874,
-        0.941,
-        0.6126,
-        0.9872
-      ],
-      "role": "meta"
-    },
-    {
-      "id": "rear-asa",
-      "part": "film-reminder-rim",
-      "field": "film-reminder",
-      "face": "top",
-      "region": [
-        0.25,
-        0.1,
-        0.75,
-        0.26
-      ],
-      "role": "meta"
-    }
-  ],
   "articulations": [
     {
       "id": "extend-collapsible-summicron",

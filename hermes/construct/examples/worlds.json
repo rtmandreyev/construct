@@ -2,47 +2,55 @@
  {
   "name": "a-street-of-landmarks",
   "title": "A street of landmarks",
-  "summary": "Four buildings from the gallery on one street, each at its real size and facing it: the Duomo di Milano, the Sainte-Chapelle and the Sagrada Família on the north side, the tea house across from them, and KESTREL, an invented ship, holding station above. Their real sites are far apart; this street is a what-if.",
+  "summary": "Four landmarks on one street, each at its real size and facing it: the Duomo di Milano, the Sainte-Chapelle and the Sagrada Família on the north side, Neuschwanstein across from them. Their real sites are far apart; this street is a what-if. Every building keeps its own parts, sources and joints.",
   "constructs": [
    "duomo-di-milano",
-   "kestrel-v2",
+   "neuschwanstein",
    "sagrada-familia",
-   "sainte-chapelle",
-   "tea-house"
+   "sainte-chapelle"
   ],
-  "placements": 5
+  "placements": 4
+ },
+ {
+  "name": "kestrel-at-saturn",
+  "title": "KESTREL at Saturn",
+  "summary": "KESTREL, an invented ring-ice pusher, at work by Saturn's rings, the planet huge behind it at its real size from about 350,000 km. Each construct keeps its own parts, sources and joints.",
+  "constructs": [
+   "kestrel-v2",
+   "saturn"
+  ],
+  "placements": 2
  },
  {
   "name": "the-shed",
   "title": "The shed, the Samba and the Vespa",
-  "summary": "A garden shed with a 1960s VW T1 Samba parked in front and a Vespa GS 150 beside its door; three constructs from the gallery, each whole and at real size.",
+  "summary": "A garden shed with its planned deck and log store, a 1960s VW T1 Samba parked by the log store, a Vespa GS 150 on its stand by the door, State Bench set up inside on the floor, and Rietveld's Red-Blue Chair out on the deck. Five constructs, each whole, at real size.",
   "constructs": [
-   "garden-shed",
+   "garden-shed-planned",
+   "rietveld-red-blue-chair",
+   "state-bench",
    "vespa-gs150",
    "volkswagen-t1-samba"
   ],
-  "placements": 3
+  "placements": 5
  },
  {
   "name": "villa-savoye-lived-in",
   "title": "The Villa Savoye, lived in",
-  "summary": "The Villa Savoye (Poissy, 1931) with a life moved in: an Eames lounge chair, a Yamaha CFX, a Tompion year-going clock and two tables in the salon, a Braun SK 4, a Revox A77, a Leica M3, a Speedmaster and a Serum 2/61 on them, a Jackson by the piano, a Land Cruiser, a Samba and a Vespa under the pilotis, and Saturn as close as the Moon. Fifteen constructs from the gallery, each whole and at real size; the tables are designed for this world.",
+  "summary": "The Villa Savoye (Poissy, 1931) with a life moved in: an Eames lounge chair and two tables in the salon, a Braun SK 4, a Revox A77 and a Leica M3 on one, SERUM 2 / 61 on the other, a Tompion year-going clock against the wall and a Jackson by the studio table; a Land Cruiser and an Aston Martin DB5 under the pilotis, where the ground floor follows a car's turning circle; and KESTREL, far off over the roof. Every construct keeps its own parts, sources and joints.",
   "constructs": [
+   "aston-martin-db5",
    "braun-sk4",
    "eames-lounge-chair",
    "jackson-juggernaut-et7",
+   "kestrel-v2",
    "leica-m3",
-   "omega-speedmaster-321",
    "revox-a77",
-   "saturn",
    "serum-2-61",
    "tompion-year-going-clock",
    "toyota-land-cruiser-fj62",
-   "vespa-gs150",
-   "villa-savoye",
-   "volkswagen-t1-samba",
-   "yamaha-cfx"
+   "villa-savoye"
   ],
-  "placements": 16
+  "placements": 13
  }
 ]

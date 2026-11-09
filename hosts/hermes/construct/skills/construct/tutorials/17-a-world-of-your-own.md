@@ -30,5 +30,5 @@ Teach me to make a world with Construct, step by step, one step at a time and wa
    placement, or a floor part). They become buttons.
 5. **Take it elsewhere.** `construct_export(project=..., format="glb")` for Blender or a game engine, each placement a
    group; with `pieces="glued"` a Godot game map whose doors swing. Point at the other worlds:
-   `construct_start` lists them (the Villa Savoye lived in; a street of landmarks), and **Worlds** on the Constructs
-   page.
+   `construct_start` lists them (the Villa Savoye lived in; a street of landmarks; KESTREL at Saturn), and **Worlds**
+   on the Constructs page.
