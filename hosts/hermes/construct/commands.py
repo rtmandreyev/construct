@@ -126,7 +126,7 @@ def handle(raw_args="", event=None, **kwargs):
             lines = ["Your worlds (%d):" % len(mine) if mine else "No worlds yet: ask for one, or start from an example."]
             for r in mine[:20]:
                 n = r.get("newest") or {}
-                lines.append("  %s \"%s\"%s" % (r["project"], r["title"], " · %d constructs" % n["placements"] if n.get("placements") else ""))
+                lines.append("  %s \"%s\"%s" % (r["project"], r["title"], " · %d placed" % n["placements"] if n.get("placements") else ""))
             lines.append("Worlds to start from (ask \"start the world <name>\"):")
             for name, w in sorted(runtime.example_worlds().items()):
                 lines.append("  %s · %s" % (name, w["title"]))
