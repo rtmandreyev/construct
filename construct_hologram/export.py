@@ -222,7 +222,11 @@ def _load_materials(materials):
     for i, r in enumerate(rules):
         w = "materials[%d]" % i
         if not isinstance(r, dict) or not set(r) <= MATERIAL_KEYS or "parts" not in r:
-            raise ExportError("%s: keys are %s, and \"parts\" is required" % (w, ", ".join(sorted(MATERIAL_KEYS))))
+            odd = sorted(set(r) - MATERIAL_KEYS) if isinstance(r, dict) else []
+            why = ("unknown key %s" % ", ".join('"%s"' % k for k in odd)) if odd else (
+                "\"parts\" is missing" if isinstance(r, dict) else "not an object")
+            raise ExportError("%s: %s (the keys are %s; \"parts\" is required)"
+                              % (w, why, ", ".join(sorted(MATERIAL_KEYS))))
         pats = [r["parts"]] if isinstance(r["parts"], str) else r["parts"]
         if not isinstance(pats, list) or not pats or not all(isinstance(p, str) for p in pats):
             raise ExportError("%s.parts: a part id, a pattern like \"tile-*\", or a list of them" % w)

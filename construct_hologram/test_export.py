@@ -349,6 +349,14 @@ class Finishes(unittest.TestCase):
         with self.assertRaises(export.ExportError):
             glb_of(sc, materials={"materials": [{"parts": "x", "finish": "velvet"}]})
 
+    def test_a_material_map_names_the_key_it_does_not_know(self):
+        with self.assertRaises(export.ExportError) as cm:
+            export._load_materials({"materials": [{"parts": ["x"], "metalness": 1.0}]})
+        self.assertIn('unknown key "metalness"', str(cm.exception))
+        with self.assertRaises(export.ExportError) as cm:
+            export._load_materials({"materials": [{"color": "#ffffff"}]})
+        self.assertIn('"parts" is missing', str(cm.exception))
+
     def test_the_example_maps_cover_every_surface(self):
         import fnmatch
         maps = ROOT / "examples" / "light-to-metal" / "maps"
