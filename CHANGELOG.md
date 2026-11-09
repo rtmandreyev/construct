@@ -87,7 +87,7 @@ from the chat. [docs/WORLDS.md](docs/WORLDS.md)
   scene lacks is refused before the build; `rounds record --dry-run`; packets stay in the project; `--request-file`;
   a round with no requests still has a summary; colour is judged in the solid view.
 - **Big worlds:** the viewer keeps style and pose records 256 to a texture row, so a world with thousands of styles
-  keeps its colours on every GPU (Stortorget's houses showed grey in the solid view before); checks put boxes on a
+  keeps its colours on every GPU (Stortorget, about 15,600 styles, drew black in software WebGL and on GPUs with smaller textures); checks put boxes on a
   grid (a 7,700-part spruce: 86 s to 14 s; reports unchanged); the solid view cuts away only where a view looks into
   something, so a street keeps its façades; a construct placed many times embeds its artwork once; in Hermes a page
   up to 192 MB travels gzipped, and one larger says so.
