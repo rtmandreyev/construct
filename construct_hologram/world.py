@@ -1081,12 +1081,8 @@ def materials(doc, base_dir, resolver=None):
     rules = []
     for p in doc["placements"]:
         path = Path((resolver or default_resolver)(p["construct"], base_dir))
-        src = None
-        for c in (path.parent / "maps" / "finish.json", path.with_suffix(".materials.json"),
-                  path.parent / "scene.materials.json", path.parent / "materials.json"):
-            if c.is_file():
-                src = c
-                break
+        from .export import map_beside
+        src = map_beside(path)
         if src is None:
             continue
         for r in json.loads(src.read_text(encoding="utf-8")).get("materials", []):

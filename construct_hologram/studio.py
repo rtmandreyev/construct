@@ -1110,7 +1110,7 @@ def run(args):
         if args.command == "export":
             from . import export as export_mod
             try:
-                s = export_mod.export(load(args.scene), args.out, args.format, args.wire, args.pose, args.materials,
+                s = export_mod.export(load(args.scene), args.out, args.format, args.wire, args.pose, args.materials or export_mod.map_beside(args.scene),
                                       args.frame, args.wire_radius, args.merge, args.colliders,
                                       {None: False, "loose": True}.get(args.pieces, args.pieces), args.quality)
             except export_mod.ExportError as exc:
@@ -1178,8 +1178,8 @@ def run(args):
             try:
                 bed = tuple(float(x) for x in args.bed.lower().split("x")) if args.bed else \
                     __import__("construct_hologram.printing", fromlist=["PRINTERS"]).PRINTERS[args.printer or "desktop"]["bed"]
-                mats = args.materials or (str(Path(args.scene).with_suffix(".materials.json"))
-                                          if Path(args.scene).with_suffix(".materials.json").is_file() else None)
+                from . import export as _export
+                mats = args.materials or (str(_export.map_beside(args.scene)) if _export.map_beside(args.scene) else None)
                 progress = lambda m: sys.stderr.write(m + "\n")   # a building's kit takes many minutes: say where it is
                 k = kit_mod.make(load(args.scene), scale=args.scale, size=args.size, detail=args.detail, plan=args.plan,
                                  materials=mats, bed=bed, log=progress)

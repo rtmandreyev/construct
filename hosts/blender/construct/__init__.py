@@ -57,11 +57,14 @@ def _rgb(hex_color):
 # ---------------------------------------------------------------------------- reading
 
 def _materials_for(path, materials=""):
-    """The material map to use: the one given, or `<scene>.materials.json` beside the scene."""
+    """The material map to use: the one given, or the scene's own (Construct's lookup: `<scene>.materials.json`,
+    `scene.materials.json`, `maps/finish.json`, `materials.json` beside it)."""
     if materials:
         return bpy.path.abspath(materials)
-    beside = os.path.splitext(path)[0] + ".materials.json"
-    return beside if os.path.exists(beside) else None
+    if path.lower().endswith(".glb"):
+        return None
+    beside = c_export.map_beside(path)
+    return str(beside) if beside else None
 
 
 def _world_resolver(c_world):

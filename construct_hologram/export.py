@@ -24,6 +24,7 @@ Python standard library only.
 import fnmatch
 import json
 import math
+import re
 import struct
 from pathlib import Path
 
@@ -155,6 +156,38 @@ NOT_GLASS_WORDS = ("frame", "surround", "seal", "rim", "trim", "bezel", "pillar"
                    "divider", "rail", "channel", "washer", "crank", "winder", "regulator", "sill", "lever", "hinge",
                    "catch", "latch", "handle", "bracket", "mount", "stay", "strut", "louvre", "shade", "blind", "sticker",
                    "button", "release", "annulus", "ring", "cell", "barrel")
+
+
+MAP_NAMES = ("{stem}.materials.json", "scene.materials.json", "maps/finish.json", "materials.json")
+
+
+def map_beside(scene_path):
+    """A construct's own finish map, where Construct keeps one: `<scene>.materials.json` or `scene.materials.json`
+    beside the scene (what the Hermes plugin writes), `maps/finish.json` (the gallery's), or `materials.json`.
+    None when it has none. Exports, worlds, kits, the plugin and the Blender add-on all read it from here."""
+    p = Path(scene_path)
+    stem = re.sub(r"(\.params)?\.json$", "", p.name)
+    for name in MAP_NAMES:
+        c = p.parent / name.format(stem=stem)
+        if c.is_file():
+            return c
+    return None
+
+
+# with no map, a few surfaces are finished by their names (as glass is): what a tyre or chrome trim is made of is
+# not in doubt. A part's own colour is kept; only how it is finished follows the name.
+RUBBER_WORDS = ("tyre", "tire", "tread", "rubber", "gasket")
+CHROME_WORDS = ("chrome",)
+
+
+def name_finish(pid):
+    """"rubber" or "chrome" when a part's id names one of them, else None."""
+    low = pid.lower()
+    if any(w in low for w in RUBBER_WORDS):
+        return "rubber"
+    if any(w in low for w in CHROME_WORDS):
+        return "chrome"
+    return None
 
 
 def is_glass_name(pid):
@@ -605,6 +638,7 @@ def to_gltf(g, wire="edges", pose="closed", materials=None, wire_radius=None, me
     rules = _load_materials(materials)
     parts, arts, motions, joints = g["parts"], g["articulations"], g["motions"], g["joints"]
     own = _own_colours(g)
+    unmapped = []   # solid parts a given finish map leaves on their role's default
     b = _Bin()
     nodes, meshes, mats, mat_index = [], [], [], {}
     used_ext = set()
@@ -646,11 +680,19 @@ def to_gltf(g, wire="edges", pose="closed", materials=None, wire_radius=None, me
             if any(fnmatch.fnmatchcase(part["id"], p) for p in r["patterns"]):
                 return material(("map", r["name"]), (r["name"], r["color"], r["metallic"], r["roughness"],
                                                      r["emissive"], False), r)
+        if rules:
+            unmapped.append(part["id"])
         if is_glass_name(part["id"]):
             f = FINISHES["glass"]
             return material(("glass", None), ("construct:glass", _hex("#cfd8de", "glass"), f["metallic"],
                                               f["roughness"], None, False), dict(f, finish="glass"))
         rgb, metallic, rough = ROLE_MATERIAL.get(part["role"], ROLE_MATERIAL["mass"])
+        named = name_finish(part["id"])
+        if named:   # a tyre is rubber, chrome trim is chrome: its own colour if it has one, the finish by its name
+            f = FINISHES[named]
+            c = own.get(part["id"]) or {"rubber": "#1c1c1e", "chrome": "#d6d9de"}[named]
+            return material(("named", named, c), ("construct:" + named + ":" + c, _hex(c, "color"), f["metallic"],
+                                                  f["roughness"], None, False), dict(f, finish=named))
         if part["id"] in own:   # the part's own colour, finished as its role is
             c = own[part["id"]]
             return material(("own", c, part["role"]), ("construct:" + c, _hex(c, "color"), metallic, rough, None, False))
@@ -990,6 +1032,8 @@ def to_gltf(g, wire="edges", pose="closed", materials=None, wire_radius=None, me
                     for m in motions]}}
     summary = {"parts": len(parts), "nodes": len(nodes), "meshes": len(meshes), "materials": len(mats),
                "animations": [a["name"] for a in animations], **counts}
+    if unmapped:   # a finish map that leaves surfaces on their role's default: say which
+        summary["unmapped"] = sorted(set(unmapped))
     return doc, bytes(b.data), summary
 
 
