@@ -27,6 +27,7 @@ import json
 import math
 import os
 import tempfile
+from pathlib import Path
 
 import bmesh
 import bpy
@@ -63,6 +64,28 @@ def _materials_for(path, materials=""):
     return beside if os.path.exists(beside) else None
 
 
+def _world_resolver(c_world):
+    """A world's constructs by name, as Blender can find them: Construct's own lookup, then the folders around the
+    world (its constructs/, its neighbours: a Hermes world beside the projects it places, a repository world in
+    examples/worlds/ beside the gallery). A name found nowhere asks for the world as a .glb instead."""
+    def resolve(name, base_dir):
+        try:
+            return c_world.default_resolver(name, base_dir)
+        except c_world.WorldError:
+            if name.endswith(".json") or not name or "/" in name or "\\" in name or name.startswith("."):
+                raise
+        base = Path(base_dir)
+        for d in (base / "constructs" / name, base.parent / name, base.parent.parent / name,
+                  base.parent.parent / "films" / name):
+            for f in ("scene.json", "scene.params.json", "world.json"):
+                if (d / f).is_file():
+                    return d / f
+        raise c_world.WorldError(
+            "the world places %r, which Blender cannot find beside it. Export the world as a .glb with Construct "
+            "(construct export world.json --format glb, or construct_export in Hermes) and import that file" % name)
+    return resolve
+
+
 def _glb_of(path, materials=None):
     """A .glb path for the file: itself, or a construct compiled and exported to a temporary file."""
     if path.lower().endswith(".glb"):
@@ -73,7 +96,11 @@ def _glb_of(path, materials=None):
         from .construct_hologram import world as c_world
         fd, tmp = tempfile.mkstemp(suffix=".glb", prefix="construct-world-")
         os.close(fd)
-        c_world.export(path, tmp, "glb", materials_path=materials)
+        try:
+            c_world.export(path, tmp, "glb", materials_path=materials, resolver=_world_resolver(c_world))
+        except Exception:
+            os.remove(tmp)
+            raise
         return tmp, tmp
     if c_params.is_params(doc):
         doc = c_params.expand(doc)

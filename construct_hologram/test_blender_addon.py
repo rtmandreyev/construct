@@ -134,6 +134,32 @@ class InBlender(unittest.TestCase):
                 self.assertEqual(res["open_actions"], [])
                 self.assertTrue(res["reveal_keyed"])
 
+    def test_a_shipped_world_imports_by_its_constructs_names(self):
+        # the shed names its constructs (garden-shed-planned, the Samba, the Vespa...) as the gallery does; the
+        # add-on finds them beside the world, not in its own bundled runtime
+        script = (
+            "import sys, json\n"
+            "argv = sys.argv[sys.argv.index('--') + 1:]\n"
+            "sys.path.insert(0, argv[0])\n"
+            "import bpy\n"
+            "import construct\n"
+            "bpy.ops.wm.read_factory_settings(use_empty=True)\n"
+            "construct.register()\n"
+            "op = bpy.ops.import_scene.construct(filepath=argv[1])\n"
+            "meshes = [o for o in bpy.data.objects if o.type == 'MESH']\n"
+            "print('RESULT ' + json.dumps({'op': list(op), 'meshes': len(meshes)}))\n")
+        with tempfile.TemporaryDirectory() as d:
+            _builder().stage(Path(d, "construct"))
+            Path(d, "t.py").write_text(script, encoding="utf-8")
+            r = subprocess.run([BLENDER, "-b", "--factory-startup", "--python", str(Path(d, "t.py")), "--", d,
+                                str(HERE.parent / "examples" / "worlds" / "the-shed" / "world.json")],
+                               capture_output=True, text=True, timeout=900, encoding="utf-8", errors="replace")
+        line = next((ln for ln in r.stdout.splitlines() if ln.startswith("RESULT ")), None)
+        self.assertIsNotNone(line, r.stdout[-2000:] + r.stderr[-2000:])
+        res = json.loads(line[7:])
+        self.assertEqual(res["op"], ["FINISHED"])
+        self.assertGreater(res["meshes"], 50)
+
     def test_a_material_map_finishes_the_model(self):
         script = BLENDER_TEST.split("res[\"props\"]")[0] + (
             "import os\n"
