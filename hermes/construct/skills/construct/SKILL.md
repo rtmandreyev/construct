@@ -49,7 +49,10 @@ new scene or rewrite most of one; the project folder is in `construct_start`'s r
 **Show what you make.** Each result that carries `media` holds `MEDIA:/path` lines. Put each one in your reply on
 a line of its own: that is how the construct appears live in Hermes Desktop (with a toolbar: provenance, solid,
 replay, export, more detail, review), and how images, models and films reach the user on every other surface.
-Never invent a MEDIA path; use the ones the tools return.
+Never invent a MEDIA path; use the ones the tools return. **It appears live only when a Construct tool in this
+chat returned it:** a path from a subagent's result, `execute_code` or an earlier reply shows only as a plain file.
+To show a construct or world a subagent built (or one asked for again), call `construct_build` on its scene or
+`world.json` here first (a few seconds) and put that call's MEDIA line in your reply.
 
 **Long work runs as a job.** A film and a NetLogo run always do; a build, review, export or command that outlasts
 its call returns a `job_id`. Tell the user what is running, then call `construct_job(job_id, wait_seconds=300)`: it
@@ -248,7 +251,9 @@ the user says **fast** (then one pass each, and the world says so).
    plan enough distinct masses (heights, depths, setbacks) that a repeated building does not read as a copy.
    Frame each named view so its subject fills the picture: the picture's own shot matches its camera (height,
    direction, what is in frame), and no view is half empty ground or sky.
-6. **Deliver the world, not a pipeline.** "Usable in a game" or "for a video" means the world is clean enough to
+6. **Deliver the world, not a pipeline.** End with your own `construct_build` of the final `world.json` and its
+   MEDIA line, so the world opens live in the chat (a subagent's MEDIA line would show only as a file).
+   "Usable in a game" or "for a video" means the world is clean enough to
    export and film: offer `construct_export` (a glTF, or a Godot game map with `pieces: glued`) and
    `construct_film`. Never build an engine project, a render pipeline or a bundle of your own unless the user asks
    for that file by name. Say which placements were made
