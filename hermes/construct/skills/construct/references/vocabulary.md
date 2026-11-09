@@ -32,6 +32,7 @@ errors: the closed vocabulary is the safety boundary.
   needs a `source`. A designed part that realises it names it in `basis` and stays `inferred`: the
   provenance view counts it as designed to a requirement, apart from free design, and lists the
   requirements' sources; `check` warns `requirement-unmet` when no part names one.
+- A part's real colour (a car's paint, a stall's red wood) goes in `look.color` (`#rrggbb`): it shows in the solid view and in every export, while the light view keeps the house palette. Only what is light (a bulb, a neon tube, a screen: `look.glow` from 0.5) keeps its own colour in the light view too; a sign's lettering is artwork and keeps its colours.
 - Colour is the renderer's: every construct renders in one house palette. Never write `presentation.style_hint` (it is ignored, with a warning). If the person explicitly asks for a colour, the host applies it: `build --palette amber` (palettes `violet, cyan, amber, green, ice, rose`; `--identity` tints `none, warm-wood, stone, steel, brass, bio, ember, ice, paper`).
 
 ## Parts

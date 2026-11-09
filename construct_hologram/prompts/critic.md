@@ -51,6 +51,11 @@ Answer with one JSON object, no prose:
 - **The medium.** The renderer cannot do three things; do not ask for them: hidden lines show
   faintly through solid parts (the x-ray style), glass cannot be tinted or coloured, and stills
   show the still pose (when it is closed, an opening shows only in the scene's "open" view).
+  **Colour is judged in the solid view.** The light views draw everything in one house palette
+  by design: a part's own colour (a car's paint, a stall's red wood) shows only in `solid.png`,
+  and only lights (bulbs, neon, screens), sign artwork and recorded data keep their colours in
+  the light. Never ask for a colour in the light views; if the solid view has the wrong colour,
+  that is the defect.
 - `verdict`: "outstanding" only when every score is 3 and nothing critical or major remains;
   "good" when every score is at least 2 and nothing is critical; otherwise "improve". It is
   recomputed from your scores, so score honestly rather than kindly.
