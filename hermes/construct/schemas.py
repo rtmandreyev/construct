@@ -68,7 +68,8 @@ EDIT = _tool(
     "every scene change you can express this way instead of editing JSON in the terminal. Operations (op + fields): "
     "move {part, by|to: [x,y,z] m}; rotate {part, by|to: [rx,ry,rz] degrees}; resize {part, size: [w,h,d] | factor: "
     "k or [kx,ky,kz] | shape: {radius: ..}}; set {part, field: \"look.weight\", value} or {path: \"subject.accuracy\", "
-    "value}; unset {part, field} or {path}; certainty {part, certainty: word or {size, shape}, basis?: [fact keys], "
+    "value} (a path is dotted keys with list indexes as .1 or [1], e.g. presentation.views[1].distance, or a JSON "
+    "pointer, /authoring/rounds/5/summary); unset {part, field} or {path}; certainty {part, certainty: word or {size, shape}, basis?: [fact keys], "
     "source?}; add_part {part: {...}, after?}; remove_part {part} (also leaves its joints and identity features); "
     "add_fact {fact: {key, value, unit, certainty, source}}; set_fact {key, value?, unit?, certainty?, source?, note?}; "
     "remove_fact {key}; add_source {source: {id, kind, title, ref}}. part may be a pattern (door-*) or parts a list. "
@@ -209,7 +210,7 @@ COMMAND = _tool(
     "inside the project or the plugin's data folder. Commands that call a model over the network (author, trace-image, "
     "--base-url, rounds run) are not run here: delegate the critic to a fresh subagent instead. Returns the exit code, "
     "the output and the files written; a command that outlasts wait_seconds returns a job_id for construct_job.",
-    {"argv": {"type": "array", "items": {"type": "string"}, "minItems": 1, "maxItems": 64,
+    {"argv": {"type": "array", "items": {"type": "string", "maxLength": 4000}, "minItems": 1, "maxItems": 64,
               "description": "e.g. [\"compare\", \"scene.json\", \"--trace\", \"side.json\", \"--view\", \"side\", \"--record\"]"},
      "project": {"type": "string", "description": "The project to run in (its folder is the working folder)."},
      "wait_seconds": {"type": "integer", "minimum": 1, "maximum": 380,
@@ -233,9 +234,11 @@ WORLD = _tool(
     "several at once with placements: [{construct, id?, on?, at?, yaw?, ...}, ...] (one check, one rebuild). view {world, "
     "id, label?, target?, yaw?, pitch?, distance?, remove?}: a named view of the world (a room: target a floor part; "
     "one placement: its id), shown as a button on the page beside one for each placement. tidy {world, projects}: archive the "
-    "scratch projects made on the way (nothing is deleted). construct_check checks a "
+    "scratch projects made on the way (nothing is deleted). refresh {world, id?}: copy the placed constructs (one "
+    "placement's, or all) in again from their own projects as they are now, after improving them, and rebuild; each "
+    "placed construct is a copy, so a change to its project shows only after refresh. construct_check checks a "
     "world; construct_export exports it whole (one glTF for Blender or a game engine, joints working).",
-    {"op": {"type": "string", "enum": ["new", "place", "move", "remove", "list", "view", "tidy"]},
+    {"op": {"type": "string", "enum": ["new", "place", "move", "remove", "list", "view", "tidy", "refresh"]},
      "projects": {"type": "array", "items": {"type": "string"},
                   "description": "tidy: project ids of scratch work for this world (trial copies, superseded builds) to "
                                  "archive: kept, out of the Constructs page's way."},
@@ -247,7 +250,8 @@ WORLD = _tool(
      "construct": {"type": "string", "description": "What to place: the user's project id (a construct or another "
                                                     "world), a construct the plugin ships (construct_start lists them), "
                                                     "a gallery construct by name, or a scene's absolute path."},
-     "id": {"type": "string", "description": "The placement's id (default: from the construct's name)."},
+     "id": {"type": "string", "description": "The placement's id (default: from the construct's name); refresh: the one "
+                                             "placement to refresh (default: all)."},
      "on": {"type": "string", "description": "An earlier placement's id, or placement/part-id to stand on that part."},
      "at": {"type": "array", "items": {"type": "number"}, "description": "[x, y, z] metres."},
      "yaw": {"type": "number", "description": "Degrees about up (+Y)."},

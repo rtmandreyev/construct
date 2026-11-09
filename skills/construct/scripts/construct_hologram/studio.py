@@ -1078,8 +1078,7 @@ def run(args):
         if args.command == "export" and (args.format or Path(args.out).suffix.lower().lstrip(".")) in ("fbx", "usd", "usdz"):
             # FBX and USD: the glTF made here, carried over by Blender (its importer keeps the parts, materials and
             # the open animation)
-            import argparse as _ap
-            import tempfile
+            import argparse as _ap   # (tempfile is the module's own: a local import would shadow it in all of run)
             from . import export as export_mod
             fmt = args.format or Path(args.out).suffix.lower().lstrip(".")
             with tempfile.TemporaryDirectory() as tmp:

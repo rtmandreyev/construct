@@ -17,6 +17,71 @@ def _touch(a, b, tol):
     return all(a["min"][k] <= b["max"][k] + tol and b["min"][k] <= a["max"][k] + tol for k in range(3))
 
 
+# ---------------------------------------------------------------------------- which boxes are near which
+#
+# The support and contact checks ask, for every copy of every part, which others its box touches. Asked of every
+# pair that is n² (a spruce of 7,700 copies took ten minutes); on a grid each box is tried only against those in its
+# cells. The grid only finds candidates: the test that decides is the same one, so the answers are the same.
+
+_BRUTE = False   # every pair, the old way (the tests compare the two)
+_BIG = 64        # a box over this many cells (a ground plane, a hull) is tried against everything instead
+
+
+class BoxIndex:
+    """Boxes (lo, hi) on a uniform grid sized to a typical one. `near(lo, hi, pad)` gives the indices of every box
+    that might come within `pad` of (lo, hi): a superset of those that do, never missing one."""
+
+    def __init__(self, boxes, least=0.0):
+        self.n = len(boxes)
+        ext = sorted(max(hi[k] - lo[k] for k in range(3)) for lo, hi in boxes) or [0.0]
+        self.cell = max(ext[len(ext) // 2], least, 1e-6)   # `least`: the reach asked about, so a query spans few cells
+        self.grid, self.big = {}, []
+        for i, (lo, hi) in enumerate(boxes):
+            cells = self._cells(lo, hi, 0.0)
+            if cells is None:
+                self.big.append(i)
+                continue
+            for c in cells:
+                self.grid.setdefault(c, []).append(i)
+
+    def _cells(self, lo, hi, pad):
+        pad = pad * (1 + 1e-6) + 1e-9   # past the rounding of lo - pad: a box exactly `pad` away is still found
+        a = [math.floor((lo[k] - pad) / self.cell) for k in range(3)]
+        b = [math.floor((hi[k] + pad) / self.cell) for k in range(3)]
+        if (b[0] - a[0] + 1) * (b[1] - a[1] + 1) * (b[2] - a[2] + 1) > _BIG:
+            return None
+        return [(x, y, z) for x in range(a[0], b[0] + 1) for y in range(a[1], b[1] + 1) for z in range(a[2], b[2] + 1)]
+
+    def near(self, lo, hi, pad=0.0):
+        cells = None if _BRUTE else self._cells(lo, hi, pad)
+        if cells is None:
+            return range(self.n)
+        out = set(self.big)
+        for c in cells:
+            out.update(self.grid.get(c, ()))
+        return sorted(out)
+
+
+def _box_neighbours(boxes, tol):
+    """Per box ({"min", "max"}), the set of the other boxes' indices it touches within `tol` (_touch)."""
+    n = len(boxes)
+    near = [set() for _ in range(n)]
+    if _BRUTE:
+        for i in range(n):
+            for j in range(i + 1, n):
+                if _touch(boxes[i], boxes[j], tol):
+                    near[i].add(j)
+                    near[j].add(i)
+        return near
+    index = BoxIndex([(b["min"], b["max"]) for b in boxes], 2 * tol)
+    for i, b in enumerate(boxes):
+        for j in index.near(b["min"], b["max"], tol):
+            if j > i and _touch(b, boxes[j], tol):
+                near[i].add(j)
+                near[j].add(i)
+    return near
+
+
 def audit(scene, geometry):
     errors, warnings, info = [], [], {}
 
@@ -39,15 +104,15 @@ def audit(scene, geometry):
     ground = min((b["min"][1] for _, _, b in solid), default=0.0)
     supported = {(pid, i) for pid, i, b in solid if b["min"][1] <= ground + tol}
     supported |= {(pid, i) for pid, i, b in inst if by_id[pid]["floating"]}
-    solid = inst
+    near = _box_neighbours([b for _, _, b in inst], tol)   # which copies' boxes touch which (indices into inst)
+    at = {(pid, i): n for n, (pid, i, _) in enumerate(inst)}
     frontier = list(supported)
     while frontier:
-        pid, i = frontier.pop()
-        box = by_id[pid]["instances"][i]
-        for qid, j, other in solid:
-            if (qid, j) not in supported and _touch(box, other, tol):
-                supported.add((qid, j))
-                frontier.append((qid, j))
+        for m in near[at[frontier.pop()]]:
+            key = inst[m][:2]
+            if key not in supported:
+                supported.add(key)
+                frontier.append(key)
     for p in parts:
         if p["floating"]:
             continue
@@ -65,7 +130,7 @@ def audit(scene, geometry):
         for i, b in enumerate(p["instances"]):
             if b["min"][1] <= ground + tol:
                 continue
-            holders = [by_id[q] for q, j, o in solid if q != p["id"] and _touch(b, o, tol)]
+            holders = [by_id[inst[m][0]] for m in near[at[(p["id"], i)]] if inst[m][0] != p["id"]]
             if holders and all(h["stage"] > p["stage"] for h in holders):
                 add(warnings, "stage-order", p["id"],
                     "appears (stage %d) before everything it rests on (stages %s): it will float during assembly."
@@ -188,7 +253,10 @@ def audit(scene, geometry):
     if n and dup / n > 0.02:
         add(warnings, "duplicates", None,
             "%d duplicate segments (%.1f%%): repeats or mirrors overlap themselves." % (dup, 100.0 * dup / n))
-    for p in parts:
+    carriers = {x["part"] for x in geometry.get("labels", []) + geometry.get("artwork", [])}
+    carriers |= {a["part"] for a in geometry.get("anchors", {}).values() if isinstance(a, dict) and a.get("part")}
+    drawn = {int(s[6]) for s in styles}   # the parts (by index) that some style draws
+    for n_p, p in enumerate(parts):
         b = p["instances"][0]
         diag = math.sqrt(sum((b["max"][k] - b["min"][k]) ** 2 for k in range(3)))
         if diag < 0.015 * 2 * radius and p["shape"] not in ("marker", "points"):
@@ -203,9 +271,7 @@ def audit(scene, geometry):
             add(warnings, "glass-name", p["id"],
                 "is glass by its label, but its id does not say so: the solid view, exports, prints and kits know glass by "
                 "its id and make it an opaque panel. Put glass, glazing or window in it (\"hood-door-glass\").")
-        carriers = {x["part"] for x in geometry.get("labels", []) + geometry.get("artwork", [])}
-        carriers |= {a["part"] for a in geometry.get("anchors", {}).values() if isinstance(a, dict) and a.get("part")}
-        if p["id"] not in carriers and not any(int(styles[s][6]) == parts.index(p) for s in range(len(styles))):
+        if p["id"] not in carriers and n_p not in drawn:
             add(warnings, "invisible", p["id"], "produces nothing to draw (line \"none\" and no fill).")
         # the 3D export keeps every surface: a load-bearing part drawn only as lines has none
         if p["role"] in ("mass", "structure") and p["id"] in scene_parts and \
@@ -430,11 +496,18 @@ def _contact_and_thickness(scene, geometry, add, warnings, errors=None):
 
     whole = {pid: {"min": [min(c["min"][k] for c in cs) for k in range(3)],
                    "max": [max(c["max"][k] for c in cs) for k in range(3)]} for pid, cs in boxes.items() if cs}
+    # which parts have copies whose boxes touch (within the gap): found once for all, on the grid
+    copies = [(pid, c) for pid, cs in boxes.items() for c in cs]
+    by_box = {pid: set() for pid in boxes}
+    for n_c, others in enumerate(_box_neighbours([c for _, c in copies], gap) if not _BRUTE else ()):
+        by_box[copies[n_c][0]].update(copies[m][0] for m in others)
 
     def boxes_touch(a, b):
-        if a not in whole or b not in whole or not _touch(whole[a], whole[b], gap):
+        if a not in whole or b not in whole:
             return False
-        return any(_touch(x, y, gap) for x in boxes[a] for y in boxes[b])
+        if _BRUTE:
+            return _touch(whole[a], whole[b], gap) and any(_touch(x, y, gap) for x in boxes[a] for y in boxes[b])
+        return b in by_box[a]
 
     def inside(a, b):   # a set inside b, as a movement in its case or a lens in its barrel: b holds it
         return all(whole[b]["min"][k] - gap <= whole[a]["min"][k] and whole[a]["max"][k] <= whole[b]["max"][k] + gap
@@ -445,8 +518,10 @@ def _contact_and_thickness(scene, geometry, add, warnings, errors=None):
                any((m & -m).bit_length() - 1 <= low + 1 for m in vox.get(pid, {}).values())}
     contacts = {pid: set() for pid in geo}
     ids = list(geo)
+    pos = {pid: i for i, pid in enumerate(ids)}
     for i, a in enumerate(ids):
-        for b in ids[i + 1:]:
+        for b in ids[i + 1:] if _BRUTE else sorted((q for q in by_box[a] if pos.get(q, -1) > i), key=pos.get) \
+                if a in by_box else ():   # the pairs in the same order as trying every one
             if not boxes_touch(a, b):
                 continue
             if a in vox and b in vox and (fit_mod.touch(vox[a], vox[b], within) or inside(a, b) or inside(b, a)):
@@ -514,16 +589,17 @@ def _contact_and_thickness(scene, geometry, add, warnings, errors=None):
             "second hold on that side (a rail or a stop it leans against), or move it until its weight is over what it "
             "stands on." % (on, how, t["at"], t["lever"], t["toward"]))
     # held up only through something far thinner than itself: a motor on a wire strut, a lamp on a hairline
+    across = {q: _thickness(parts[q]) for q in geo}
     for pid in geo:
         p = parts[pid]
         if pid in anchors or pid not in held or p["role"] not in ("mass", "structure", "identity"):
             continue
         bulk = min(max(c["max"][k] for c in boxes[pid]) - min(c["min"][k] for c in boxes[pid]) for k in range(3))
-        own = _thickness(p)
+        own = across[pid]
         if own is not None and own < 0.5 * bulk:
             continue   # itself a rod or a cable
         thin = {q for q in geo if q != pid and q not in anchors and len(boxes.get(q, ())) < THIN_SET and
-                _thickness(parts[q]) is not None and _thickness(parts[q]) <= THIN_HOLD * bulk}
+                across[q] is not None and across[q] <= THIN_HOLD * bulk}
         if not thin or pid in reach(thin):
             continue
         by = sorted(q for q in contacts[pid] if q in thin) or sorted(thin & held)[:1]

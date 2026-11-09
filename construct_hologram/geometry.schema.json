@@ -1336,6 +1336,18 @@
     "still_pose"
    ],
    "properties": {
+    "views": {
+     "type": "array",
+     "items": {
+      "type": "object",
+      "properties": {
+       "cutaway": {
+        "type": "boolean",
+        "description": "Optional: whether the solid view cuts away what stands between the eye and the view's target. Without it a construct's view cuts (when its target is small beside the whole), and a world's view only when it looks into something (its target or its camera stands under another placement's part)."
+       }
+      }
+     }
+    },
     "style_hint": {
      "type": "object",
      "properties": {

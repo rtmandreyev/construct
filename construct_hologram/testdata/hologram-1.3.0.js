@@ -73,7 +73,7 @@ uniform vec4 uEvent;         // kind, progress 0..1, strength, seed
 uniform vec4 uEventP;        // kind-specific: origin/axis data
 uniform vec4 uBounds;        // centre xyz, radius
 uniform vec2 uYRange;        // ground y, top y
-uniform highp sampler2D uPose; // one row per motion slot, then one per articulation chain: 4 texels of matrix, 1 of gain
+uniform highp sampler2D uPose; // a record per motion slot, then per articulation chain (rec()): 4 texels of matrix, 1 of gain
 uniform float uJointBase;    // the first chain's row (rows before it are the motion slots)
 uniform float uPlaceBase;    // a world being arranged: the first placement's row (after the chains), else -1
 uniform float uGhost;        // pre-build ghost image 0..1
@@ -86,26 +86,29 @@ float h1(float n) { return fract(sin(n * 12.9898 + uEvent.w * 78.233) * 43758.54
 float band(float x, float front, float w) { float d = (x - front) / w; return exp(-d * d); }
 float strike(float t) { return smoothstep(0.0, 0.08, t) * (1.0 - smoothstep(0.7, 1.0, t)) * (0.75 + 0.25 * step(0.5, fract(t * 5.0))); }
 
-vec4 styleA(float s) { return texelFetch(uStyles, ivec2(0, int(s + 0.5)), 0); }  // tone, alpha, width, glow
-vec4 styleB(float s) { return texelFetch(uStyles, ivec2(1, int(s + 0.5)), 0); }  // dash, fade, part, slot
-vec4 styleC(float s) { return texelFetch(uStyles, ivec2(2, int(s + 0.5)), 0); }  // occluder, certainty, role, drift
-vec4 styleD(float s) { return texelFetch(uStyles, ivec2(3, int(s + 0.5)), 0); }  // joint, colour (r, g, b or -1)
-vec4 styleE(float s) { return texelFetch(uStyles, ivec2(4, int(s + 0.5)), 0); }  // a world's placement (or -1); the solid view's own colour
+// style and pose records sit 256 to a row, 5 texels each: a world with thousands of them stays inside the
+// texture size every GPU (and software WebGL, 8192) allows
+ivec2 rec(int i, int k) { return ivec2((i % 256) * 5 + k, i / 256); }
+vec4 styleA(float s) { return texelFetch(uStyles, rec(int(s + 0.5), 0), 0); }  // tone, alpha, width, glow
+vec4 styleB(float s) { return texelFetch(uStyles, rec(int(s + 0.5), 1), 0); }  // dash, fade, part, slot
+vec4 styleC(float s) { return texelFetch(uStyles, rec(int(s + 0.5), 2), 0); }  // occluder, certainty, role, drift
+vec4 styleD(float s) { return texelFetch(uStyles, rec(int(s + 0.5), 3), 0); }  // joint, colour (r, g, b or -1)
+vec4 styleE(float s) { return texelFetch(uStyles, rec(int(s + 0.5), 4), 0); }  // a world's placement (or -1); the solid view's own colour
 
 mat4 poseAt(int r) {
-  return mat4(texelFetch(uPose, ivec2(0, r), 0), texelFetch(uPose, ivec2(1, r), 0),
-              texelFetch(uPose, ivec2(2, r), 0), texelFetch(uPose, ivec2(3, r), 0));
+  return mat4(texelFetch(uPose, rec(r, 0), 0), texelFetch(uPose, rec(r, 1), 0),
+              texelFetch(uPose, rec(r, 2), 0), texelFetch(uPose, rec(r, 3), 0));
 }
 // periodic motion about the rest pose, then the articulation chain carries it
 vec3 moved(vec3 p, float slot, float joint, inout float gain) {
-  if (slot >= -0.5) { int i = int(slot + 0.5); p = (poseAt(i) * vec4(p, 1.0)).xyz; gain *= texelFetch(uPose, ivec2(4, i), 0).x; }
+  if (slot >= -0.5) { int i = int(slot + 0.5); p = (poseAt(i) * vec4(p, 1.0)).xyz; gain *= texelFetch(uPose, rec(i, 4), 0).x; }
   if (joint >= -0.5) p = (poseAt(int(uJointBase + 0.5) + int(joint + 0.5)) * vec4(p, 1.0)).xyz;
   return p;
 }
 // a world being arranged by hand: each placement's row holds where it has been moved to and how bright it is drawn
 float placeRow(float k) { return (uPlaceBase < -0.5 || k < -0.5) ? -1.0 : uPlaceBase + k; }
 vec3 placed(vec3 p, float row) { return row < -0.5 ? p : (poseAt(int(row + 0.5)) * vec4(p, 1.0)).xyz; }
-float placeGain(float row) { return row < -0.5 ? 1.0 : texelFetch(uPose, ivec2(4, int(row + 0.5)), 0).x; }
+float placeGain(float row) { return row < -0.5 ? 1.0 : texelFetch(uPose, rec(int(row + 0.5), 4), 0).x; }
 // what an event does to where a point is drawn
 vec3 displaced(vec3 p, float id) {
   int k = int(uEvent.x + 0.5);
@@ -605,7 +608,7 @@ void main() {
   Hologram.prototype.upload = function () {
     const gl = this.gl, g = this.geo;
     // styles texture: 5 texels per style (the fifth: in a world, the placement the style's part belongs to)
-    const st = new Float32Array(this.styles.length * 20);
+    const st = new Float32Array(Math.ceil(this.styles.length / 256) * 256 * 20);   // whole rows of 256 records
     const placeIx = this.placeIndex();
     this.styles.forEach((s, i) => {
       const part = s[6] >= 0 ? g.parts[s[6]] : null;
@@ -622,7 +625,7 @@ void main() {
     gl.bindTexture(gl.TEXTURE_2D, this.styleTex);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
-    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA32F, 5, this.styles.length, 0, gl.RGBA, gl.FLOAT, st);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA32F, 1280, st.length / 5120, 0, gl.RGBA, gl.FLOAT, st);
 
     const corner = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, corner);
@@ -859,7 +862,8 @@ void main() {
   Hologram.prototype.uploadPose = function (mot, joints) {
     const gl = this.gl, nm = mot.gains.length, nj = joints.length / 16;
     const pl = this.arranging() ? this.placeMats() : null, np = pl ? pl.gains.length : 0, rows = nm + nj + np;
-    const data = this._poseData && this._poseData.length === rows * 20 ? this._poseData : (this._poseData = new Float32Array(rows * 20));
+    const padded = Math.ceil(Math.max(rows, 1) / 256) * 256;   // whole rows of 256 records, as the style texture
+    const data = this._poseData && this._poseData.length === padded * 20 ? this._poseData : (this._poseData = new Float32Array(padded * 20));
     for (let r = 0; r < rows; r++) {
       const q = r - nm - nj;
       const src = r < nm ? mot.mats.subarray(r * 16, r * 16 + 16) : q < 0 ? joints.subarray((r - nm) * 16, (r - nm) * 16 + 16) : pl.mats.subarray(q * 16, q * 16 + 16);
@@ -872,10 +876,10 @@ void main() {
       gl.bindTexture(gl.TEXTURE_2D, this.poseTex);
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
-      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA32F, 5, rows, 0, gl.RGBA, gl.FLOAT, data);
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA32F, 1280, padded / 256, 0, gl.RGBA, gl.FLOAT, data);
     } else {
       gl.bindTexture(gl.TEXTURE_2D, this.poseTex);
-      gl.texSubImage2D(gl.TEXTURE_2D, 0, 0, 0, 5, rows, gl.RGBA, gl.FLOAT, data);
+      gl.texSubImage2D(gl.TEXTURE_2D, 0, 0, 0, 1280, padded / 256, gl.RGBA, gl.FLOAT, data);
     }
     this.poseJointBase = nm;
   };
@@ -1215,7 +1219,8 @@ void main() {
     // axes and solve the distance that keeps all of them inside both fields of view, with margin
     const v = this.viewSpec(id), fr = this.geo.presentation.framing, fov = 34;
     if (Array.isArray(v.target) && v.distance_m) {   // a camera saved where someone left it
-      return { target: v.target.slice(), yaw: v.yaw || 0, pitch: v.pitch || 0, dist: v.distance_m, fov, focus: v.distance_m * 0.5 };
+      return { target: v.target.slice(), yaw: v.yaw || 0, pitch: v.pitch || 0, dist: v.distance_m, fov, focus: v.distance_m * 0.5,
+               cut: this.cutaway(v, v.target, v.distance_m, null) };
     }
     const tid = v.target || (id === "hero" ? fr.target : null);
     const boxes = this.framingBoxes(tid);
@@ -1233,7 +1238,26 @@ void main() {
       dist = Math.max(dist, z + x / (tanH * margin), z + yy / (tanV * margin));
     }
     dist *= (fr.fit || 1) * (v.distance || 1) * (this.opt.zoom || 1);
-    return { target, yaw: v.yaw, pitch: v.pitch, dist, fov, focus: 0.5 * Math.hypot(hi[0] - lo[0], hi[1] - lo[1], hi[2] - lo[2]) };
+    return { target, yaw: v.yaw, pitch: v.pitch, dist, fov, focus: 0.5 * Math.hypot(hi[0] - lo[0], hi[1] - lo[1], hi[2] - lo[2]),
+             cut: this.cutaway(v, target, dist, tid || null) };
+  };
+  Hologram.prototype.cutaway = function (v, target, dist, tid) {
+    // whether the solid view may cut away what stands in front of a view's subject (the cut itself is in draw). A
+    // view says so with "cutaway": true or false. Without it a construct cuts as it always has, and a world only when
+    // the view looks into something: its target (not counting the target's own parts) or its camera stands under a
+    // part of a placement, as a bench in a shed, a car under the pilotis or an eye in a room do. A view down a street
+    // or across a market, from outside, keeps its foreground: the facades are what it is of.
+    if (typeof v.cutaway === "boolean") return v.cutaway;
+    if (!this.geo.world) return true;
+    const key = [v.id, v.yaw, v.pitch, dist, target, tid].join(":");
+    this._cuts = this._cuts || {};
+    if (key in this._cuts) return this._cuts[key];
+    const y = (v.yaw || 0) * Math.PI / 180, p = (v.pitch || 0) * Math.PI / 180;
+    const eye = V.add(target, [dist * Math.sin(y) * Math.cos(p), dist * Math.sin(p), dist * Math.cos(y) * Math.cos(p)]);
+    const own = (q) => !!tid && (q.id === tid || q.placement === tid || q.id.startsWith(tid + "/"));
+    const roofed = (pt, skip) => this.geo.parts.some((q) => !q.sky && !(q.shape === "points" && (q.role === "ornament" || q.certainty === "decorative")) &&
+      !skip(q) && q.instances.some((b) => b.min[1] > pt[1] && b.min[0] <= pt[0] && pt[0] <= b.max[0] && b.min[2] <= pt[2] && pt[2] <= b.max[2]));
+    return (this._cuts[key] = roofed(eye, () => false) || (!!tid && roofed(target, own)));
   };
   Hologram.prototype.cameraAt = function (t, base) {
     // the base camera, then the scene's tour (flights between views), then drift and breathing
@@ -1381,7 +1405,8 @@ void main() {
       gl.uniform1f(u.uFly, this.opt.fly || 0); gl.uniform2fv(u.uHi, this.opt.highlight || [0, 0]);
       gl.uniform1f(u.uReveal, this.opt.reveal || 0.04); gl.uniform1f(u.uFrom, this.opt.from || 0);
       // looking at a part inside (a room, a car in a garage): the surfaces in front of it are cut away
-      if (u.uCut) gl.uniform1f(u.uCut, cam.focus && cam.focus < this.R * 0.45 ? Math.max(0, cam.dist - cam.focus * 1.15) : 0);
+      // (not where the view says "cutaway": false, nor in a world's view from outside: cutaway() above)
+      if (u.uCut) gl.uniform1f(u.uCut, cam.cut !== false && cam.focus && cam.focus < this.R * 0.45 ? Math.max(0, cam.dist - cam.focus * 1.15) : 0);
       gl.bindVertexArray(so.vao);
       gl.depthFunc(gl.LEQUAL); gl.depthMask(true);
       gl.uniform1f(u.uClear, 0);

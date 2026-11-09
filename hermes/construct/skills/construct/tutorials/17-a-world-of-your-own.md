@@ -10,13 +10,13 @@ status: ready
 
 ## Prompt
 
-Teach me to make a world with Construct, step by step, one step at a time and waiting for me between steps. Follow the Construct tutorial: skill_view("construct:construct", file_path="tutorials/17-a-world-of-your-own.md"). Start by showing me the shed with the Samba and the Vespa.
+Teach me to make a world with Construct, step by step, one step at a time and waiting for me between steps. Follow the Construct tutorial: skill_view("construct:construct", file_path="tutorials/17-a-world-of-your-own.md"). Start by showing me the shed and the things around it.
 
 ## Steps
 
-1. **A world to start from.** `construct_world(op="new", example="the-shed")`; the MEDIA line in the reply. Say: three
-   whole constructs (the shed, a VW T1 Samba, a Vespa GS 150), each with its own record and joints, placed at real
-   size; the buttons on the page are the world's views. Ask the user to press **P**: every part's evidence, across
+1. **A world to start from.** `construct_world(op="new", example="the-shed")`; the MEDIA line in the reply. Say: five
+   whole constructs (the shed with its planned deck, a VW T1 Samba, a Vespa GS 150, State Bench and Rietveld's
+   Red-Blue Chair), each with its own record and joints, placed at real size; the buttons on the page are the world's views. Ask the user to press **P**: every part's evidence, across
    the world.
 2. **Placed by asking.** Ask what of theirs should join it (one of their projects, or a shipped construct:
    `construct_start` lists them). `construct_world(op="list", world=..., id="shed")` gives the surfaces to stand on;
@@ -30,5 +30,6 @@ Teach me to make a world with Construct, step by step, one step at a time and wa
    placement, or a floor part). They become buttons.
 5. **Take it elsewhere.** `construct_export(project=..., format="glb")` for Blender or a game engine, each placement a
    group; with `pieces="glued"` a Godot game map whose doors swing. Point at the other worlds:
-   `construct_start` lists them (the Villa Savoye lived in; a street of landmarks; KESTREL at Saturn), and **Worlds**
+   `construct_start` lists them (the Villa Savoye lived in; a street of landmarks; KESTREL at Saturn; Rain Harbour and Stortorget, each made
+   from one picture), and **Worlds**
    on the Constructs page.

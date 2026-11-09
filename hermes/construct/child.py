@@ -11,6 +11,8 @@ from the user's site or the current folder is imported. Ops:
     build <spec.json>         `build`, then a small still for the gallery when a browser is there
     inspect <scene>           what the scene's own record says is known (JSON)
     edit <spec.json>          apply construct_edit's operations, validating each; the result beside, as a candidate
+    review <spec.json>        `review`; a capture that timed out is tried once more at a smaller size
+    commands                  Construct's subcommands with their one-line help (JSON)
     world <spec.json>         check a world: its errors, or its placements, audit and surfaces (JSON)
     version                   Construct's version
     netlogo-run|netlogo-draw <spec.json>   NetLogo runs and recordings drawn (netlogo_child.py)
@@ -35,6 +37,57 @@ def _cli(argv):
         return main(argv) or 0
     except SystemExit as exc:   # argparse refusing an argument
         return exc.code if isinstance(exc.code, int) else 2
+
+
+class _Tee:
+    """stderr as it was, and kept: what a command said when it failed. stdout is flushed first, so the log keeps
+    the order things were said in."""
+
+    def __init__(self, stream):
+        self.stream, self.said = stream, []
+
+    def write(self, text):
+        sys.stdout.flush()
+        self.said.append(text)
+        return self.stream.write(text)
+
+    def __getattr__(self, name):
+        return getattr(self.stream, name)
+
+
+def _cli_said(argv):
+    """_cli, and what it wrote to stderr. A browser that stops answering mid-capture is a capture failure (exit 2)."""
+    sys.stdout.flush()
+    old = sys.stderr
+    sys.stderr = tee = _Tee(old)
+    try:
+        try:
+            code = _cli(argv)
+        except OSError as exc:
+            if not isinstance(exc, TimeoutError) and "timed out" not in str(exc):
+                raise
+            sys.stderr.write("capture unavailable: the browser did not answer in time (%s)\n" % (exc or "timed out"))
+            code = 2
+    finally:
+        sys.stdout.flush()
+        sys.stderr = old
+    return code, "".join(tee.said)
+
+
+def review(spec):
+    """`construct review` (spec["argv"]); a capture that timed out is tried once more at spec["retry_size"]."""
+    argv = list(spec["argv"])
+    code, said = _cli_said(argv)
+    retry = spec.get("retry_size")
+    lines = [x.split("capture unavailable:", 1)[1].lower() for x in said.splitlines() if "capture unavailable:" in x]
+    timed_out = bool(lines) and any(t in lines[-1] for t in ("did not become ready", "did not start", "did not answer",
+                                                              "timed out", "timeout"))
+    if code == 2 and retry and timed_out and "--size" in argv:
+        i = argv.index("--size") + 1
+        print("review: capture timed out at %s; trying once more at %s" % (argv[i], retry), flush=True)
+        argv[i] = retry
+        code, _ = _cli_said(argv)
+    return code
 
 
 def programs():
@@ -525,18 +578,29 @@ def parse(argv):
                 sub.error = refuse
     import contextlib
     import io
+    shown = io.StringIO()
     try:
-        with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
+        with contextlib.redirect_stdout(shown), contextlib.redirect_stderr(io.StringIO()):
             ns = parser.parse_args(argv)
     except SystemExit as exc:
         if exc.code in (0, None) and not err:
-            return {"help": True}
+            return {"help": shown.getvalue()[-12000:] or True}
         return {"error": err[0] if err else "the command line could not be read"}
 
     def plain(v):
         return v if isinstance(v, (str, int, float, bool)) or v is None else \
             [plain(x) for x in v] if isinstance(v, (list, tuple)) else str(v)
     return {"values": {k: plain(v) for k, v in vars(ns).items()}}
+
+
+def commands():
+    """Construct's subcommands with their one-line help, as its parser lists them: {name: line}."""
+    import argparse
+    from construct_hologram.__main__ import build_parser
+    for action in build_parser()._actions:
+        if isinstance(action, argparse._SubParsersAction):
+            return {a.dest: a.help or "" for a in action._choices_actions}
+    return {}
 
 
 def run(op, args):
@@ -563,6 +627,11 @@ def run(op, args):
         return still(json.loads(Path(args[0]).read_text(encoding="utf-8")))
     if op == "edit":
         return edit(json.loads(Path(args[0]).read_text(encoding="utf-8")))
+    if op == "review":
+        return review(json.loads(Path(args[0]).read_text(encoding="utf-8")))
+    if op == "commands":
+        print(json.dumps(commands(), ensure_ascii=False))
+        return 0
     if op.startswith("netlogo-"):   # the NetLogo ops live beside this file (netlogo_child.py)
         return _beside("netlogo_child").run(op, args)
     if op in ("build", "film"):
