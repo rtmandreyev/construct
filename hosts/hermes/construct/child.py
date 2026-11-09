@@ -169,7 +169,7 @@ def _capped(items, n):
 
 ROLE_ORDER = ("identity", "mass", "structure", "artwork", "data", "detail", "ornament", "ground")
 GROUPS = ("verified", "size_verified", "shape_verified", "supplied", "traced", "inferred", "designed", "decorative")
-LEVELS = {2: "described", 3: "seen", 4: "seen and checked"}
+LEVELS = {"required": "designed · to a requirement", 2: "described", 3: "seen", 4: "seen and checked"}
 
 
 AXES = (("width", "x"), ("height", "y"), ("length", "z"))
@@ -256,6 +256,7 @@ def inspect(path):
     parts = doc.get("parts", [])
     source_kind = {s.get("id"): s.get("kind") for s in sources}
     fact_cert = {f.get("key"): f.get("certainty") for f in facts}
+    wants = {f.get("key") for f in facts if f.get("requirement")}
     authoring = doc.get("authoring", {}) or {}
     try:
         current = tiers.critic_hash(doc)
@@ -268,8 +269,10 @@ def inspect(path):
         cls = scene_mod.provenance_class(p)
         level = None
         if cls == "inferred":
-            level = scene_mod.evidence_level(p, source_kind, fact_cert, checked)
+            level = scene_mod.evidence_level(p, source_kind, fact_cert, checked, wants)
             cls = "designed" if level == 1 else "inferred"
+            if level == 1 and scene_mod.requirements(p, wants):
+                level = "required"
         cls = {"user_supplied": "supplied"}.get(cls, cls)
         g = groups.setdefault(cls, {"count": 0, "parts": [], "evidence": {}})
         g["count"] += 1
@@ -301,6 +304,10 @@ def inspect(path):
         for k in ("unit", "source"):
             if f.get(k) is not None:
                 row[k] = f[k]
+        if f.get("requirement"):
+            row["requirement"] = True
+        if f.get("note"):
+            row["note"] = _short(f["note"], 240)
         return row
     dims = {}
     for f in facts:
@@ -340,6 +347,8 @@ def inspect(path):
         out["artwork"] = [{"id": a.get("id"), "provenance": a.get("provenance"), "rights": a.get("rights")} for a in assets]
     if authoring:
         a = {k: authoring[k] for k in ("tier", "research", "outcome", "review_rounds") if k in authoring}
+        if authoring.get("provenance_note"):
+            a["provenance_note"] = _short(authoring["provenance_note"], 240)
         if authoring.get("identity"):
             a["identity"] = [_short(i.get("feature", ""), 120) for i in authoring["identity"][:CAP["identity"]]]
         if authoring.get("next"):
@@ -406,7 +415,8 @@ def film(spec):
     shutil.rmtree(frames, ignore_errors=True)
     shutil.rmtree(page, ignore_errors=True)
     print(json.dumps({"film": spec["out"], "seconds": round(seconds, 2), "fps": fps, "size": "%dx%d" % (w, h),
-                      "camera": camera, "assembly": assembly, "reactivity": reactivity, "audio": bool(audio)}))
+                      "camera": camera, "assembly": assembly,
+                      "reactivity": 1 if reactivity is None else reactivity, "audio": bool(audio)}))   # the page's default
     return 0
 
 
