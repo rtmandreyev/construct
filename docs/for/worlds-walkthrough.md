@@ -34,13 +34,13 @@ the chat, assembling piece by piece.
 
 <p align="center"><img src="../media/worlds/hermes-worlds-tab.png" width="90%" alt="The Worlds tab on the Constructs page: a card for each world with its picture, its placements and an Open button"></p>
 
-- The buttons under the picture are the world's **views**: the whole, each placement, and the views the world names
-  ("by the door", "the car close").
+- **Views…** on the card lists the world's views: the whole, the views the world names ("by the door", "the car
+  close"), and each placement.
 - **Provenance** (P) colours every part by how it is known, across the whole world: traced from plans, measured,
   seen in photos, designed.
 - **Solid** (S) shows it as a solid in its own colours: the light view keeps the house palette, so a red house reads
   red here.
-- **How to read it** explains the colours and the controls.
+- **Keys** (?) lists every key: fly with the arrows, double-click a part to focus on it, F skips the assembly.
 
 ## 2. Arrange it by hand
 
@@ -61,8 +61,8 @@ The world's log marks the moves as yours. **Undo last change** steps back one sa
 ## 3. Add a construct
 
 **Add a construct** opens the library: your own constructs, the ones that ship and the gallery, with their pictures.
-Pick one and drop it where you want it; Construct finds a clear spot on the floor you drop it on and stands it there
-at its real size. A construct's own card has **Place in a world** for the same thing from the other side.
+Pick one: it appears in the middle of the world, standing at its real size on what is under it, chosen and ready to
+drag where it belongs. A construct's own card has **Place in a world** for the same thing from the other side.
 
 <p align="center"><img src="../media/worlds/hermes-add-construct.png" width="90%" alt="The Add a construct picker over a world: a grid of construct pictures in groups (vehicles, furniture, buildings, instruments)"></p>
 
@@ -78,7 +78,7 @@ live.
 
 Hermes finds the constructs by name in your projects, the ones that ship and the gallery (a gallery construct is
 downloaded from Construct's own GitHub release, after you approve it in Hermes's prompt). It places them at real
-size: KESTREL, 120 m long, hangs a kilometre off over the roof, at the size it would look from there.
+size: KESTREL, 120 m long, hangs a kilometre and a half off over the roof, at the size it would look from there.
 
 ## 5. Take it elsewhere
 
@@ -91,7 +91,7 @@ a named group, every joint working:
 | Godot game map | a fixed body with colliders; doors and lids swing on their hinges |
 | FBX | Unity, Unreal, Maya (through Blender, if it is on the machine) |
 | USDZ / USD | Reality Composer, Quick Look, Omniverse, Houdini (through Blender) |
-| OBJ, STL, 3MF | other tools and printing |
+| OBJ | plain meshes for other tools |
 
 In Blender, the Construct add-on imports a `world.json` or the `.glb` with its build, metal and finish sliders.
 
@@ -135,7 +135,7 @@ Plan for a long run: each world below took most of a day of model time.
 | From | a concept picture of a cyberpunk street | a photograph of Stockholm's old square at its Christmas market |
 | For | a game level | a film set |
 | Constructs | 21, placed 50 times | 13, placed 53 times (one stall, 41 times) |
-| World rounds | 12 (the cap), final verdict good | 12 (the cap), final verdict *pending* |
+| World rounds | 12 (the cap), final verdict good | 9 so far (stopped at its time ceiling), final verdict good |
 | Made by | GPT-6.1 Sol in Hermes | GPT-6.1 Sol in Hermes |
 
 Each page has the request word for word, the plan, every construct's rounds, the world's rounds, what the last

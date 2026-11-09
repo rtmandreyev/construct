@@ -1,8 +1,8 @@
 # Rain Harbour, a night street
 
 A game level made in Hermes from one concept picture: 60 m of a rain-soaked night street in an invented harbour
-district, its towers, its bilingual neon signs and one drivable hero car. 21 constructs, placed 50 times. Every
-construct was made in masterpiece rounds, each judged by a fresh critic. Then the whole world ran 12 rounds of its own
+district, its towers, its bilingual neon signs and one drivable hero car. 21 constructs, placed 50 times. The
+constructs were made in rounds, each judged by a fresh critic. Then the whole world ran 12 rounds of its own
 against the picture. Built by GPT-6.1 Sol in Hermes Desktop with the Construct plugin, 8–9 November 2026.
 
 <p align="center">
@@ -77,13 +77,15 @@ repeated props ran fewer rounds, since they are seen small. Several builders ran
 | Far Signal Tower | 12 | (stopped by its own ceiling) |
 | NIGHT MARKET / 夜市 | 12 | improve |
 | HARBOUR HOTEL / 港湾旅馆 | 11 | good |
-| Convenience store, PEACE OF MIND PHARMACY, water vending | 9–10 | good |
+| Convenience store, PEACE OF MIND PHARMACY, BLUE LINE ELECTRONICS, water vending | 9–10 | good |
 | RAIN HARBOUR ROAD 08, RAIN HARBOUR / 雨港 | 6–8 | outstanding |
-| The street, the bin, the noodle bar, the towers | 6–8 | good, the street improve |
+| The street, the bin, the noodle bar, the Tide Relay Tower, the Terrace Exchange | 6–8 | good, the street improve |
+| Service Tower (placed five times) | one critic's pass, repaired in the world's rounds | good |
 | Bollard, cable span, street lamp | 3–4 | good, the bollard improve |
 
-**3. Placed at real size.** `construct_world` stood each construct on its surface: the bollards and bins on the
-pavements, the buildings on the ground, the signs on the façades, the car on the road, at scale 1.
+**3. Placed at real size.** `construct_world` stood the bollards, lamps, bins and the vending machine on the
+pavements, and set the buildings, the signs against their façades and the car on the road by their coordinates, all at
+scale 1.
 
 **4. The world's own rounds.** Then the whole world ran masterpiece rounds against the concept picture, one fresh
 critic a round judging the world's packet (its named views beside the picture): composition, scale, what is missing,

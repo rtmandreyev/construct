@@ -11,7 +11,7 @@ budgets and checks, and a world has its own, for many constructs at once.
  "placements": [
    {"id": "villa", "construct": "villa-savoye"},
    {"id": "eames", "construct": "eames-lounge-chair", "on": "villa/living-floor-east", "at": [3.2, 0, -1.5], "yaw": 30},
-   {"id": "fj62", "construct": "toyota-land-cruiser-fj62", "on": "villa", "at": [4, 0, 6], "yaw": 90},
+   {"id": "fj62", "construct": "toyota-land-cruiser-fj62", "on": "villa/drive-through-ground", "at": [7.8, 0, -2.2]},
    {"id": "saturn", "construct": "saturn", "sky": {"diameter_m": 1.20536e8, "of": "globe", "distance_m": 3.844e8,
                                                    "azimuth": 120, "elevation": 25}}],
  "presentation": {"views": [{"id": "salon", "label": "Salon", "target": "villa/living-floor-east", "pitch": 30}]}}
@@ -27,11 +27,14 @@ python3 construct_hologram/cli.py export my-villa.json --out my-villa.glb --piec
 
 ## Examples
 
-Four worlds ship in [examples/worlds](../examples/worlds/), made of the constructs the plugin ships. In Hermes,
+Six worlds ship in [examples/worlds](../examples/worlds/): four made of the constructs the plugin ships, and two made in
+Hermes from a single picture each, which bring their own constructs with them. In Hermes,
 `construct_world` with `op: new` and `example` makes one the user's own.
 
 | World | What it holds |
 |---|---|
+| [Rain Harbour, a night street](../examples/worlds/rain-harbour/) | A game level from a concept picture: a 60 m wet street, its towers, eight bilingual neon signs and a drivable hero car; 21 constructs placed 50 times, made in masterpiece rounds, then 12 world rounds |
+| [Stortorget at Christmas](../examples/worlds/stortorget/) | Stockholm's old square at its Christmas market, from a photograph: eight houses researched one by one, one stall placed 41 times, the spruce, the lamp |
 | [The shed and the things around it](../examples/worlds/the-shed/world.json) | The garden shed with its planned deck and log store, a VW T1 Samba by the log store, a Vespa GS 150 by the door, State Bench inside and Rietveld's Red-Blue Chair on the deck |
 | [The Villa Savoye, lived in](../examples/worlds/villa-savoye-lived-in/world.json) | The salon with an Eames chair, a Tompion clock and two tables (designed for this world) carrying a Braun SK 4, a Revox A77, a Leica M3 and SERUM 2 / 61; a Jackson by the studio table; a Land Cruiser and an Aston Martin DB5 under the pilotis; KESTREL far off over the roof |
 | [A street of landmarks](../examples/worlds/a-street-of-landmarks/world.json) | The Duomo di Milano, the Sainte-Chapelle and the Sagrada Família on one street at their real sizes, Neuschwanstein across it |
@@ -48,11 +51,12 @@ Four worlds ship in [examples/worlds](../examples/worlds/), made of the construc
 | `scale` | 1 is real size. Anything else is disclosed by the world's audit and wherever it is shown |
 | `floating` | it's meant to hover: a ship, a hanging lamp |
 | `sky` | `{diameter_m, distance_m, of, azimuth, elevation}`: far away, at its real angular size (a planet, a moon). `of` names the part `diameter_m` belongs to (Saturn's `globe`), so its rings and moons come at the same scale; without it, `diameter_m` is the whole construct's size. Never what a view fits |
+| `label` | the name shown for it (by default its construct's title) |
 | `note` | why it is there |
 
 A world's `presentation.views` name its own views (`{id, label, target, yaw, pitch, distance, cutaway}`; `target` is a
-placement or `placement/part-id`, such as a room's floor). The page shows them as buttons, after one for the whole
-world and before one for each placement.
+placement or `placement/part-id`, such as a room's floor). The page lists them (in Hermes, the card's **Views…**) after the
+whole world and before each placement.
 
 The solid view cuts away what stands between the eye and a view's target only when the view looks into something:
 its target stands under another placement's part (a bench in a shed, a car under the pilotis), or its camera does
@@ -95,9 +99,11 @@ reach 1,000 km from the origin, and an optional `origin: {lat, lon}` ties the wo
   list of these, placed together with one check and one rebuild;
 - `op: move` and `op: remove` by placement id;
 - `op: list`, with an id to list the surfaces things can stand on;
-- `op: view` with an id, a label and a target: a named view, a button on the page (`remove: true` drops it);
+- `op: view` with a label and a target (an id, or one made from the label): a named view on the page (`remove: true`
+  drops it);
 - `op: refresh`, with an id or for all: the placed constructs copied in again from their own projects as they are
-  now (after improving them), checked and rebuilt; a check that fails leaves the copies as they were.
+  now (after improving them), checked and rebuilt; a check that fails leaves the copies as they were;
+- `op: tidy` with `projects`: scratch projects made on the way archived (kept, off the Constructs page).
 
 In Hermes Desktop a world's card has **Arrange**: click a construct and drag it: it rides on whatever is under the
 pointer (a floor, a table, a roof; a wall stops it; Alt keeps its level). Shift-drag or Q/E turns it, the arrows
@@ -134,8 +140,8 @@ to the original shows only after `op: refresh`.
 | Placements | — | 4,096 |
 | Extent | 500 m | 1,000 km |
 
-A world's page grows with what it holds. The fifteen constructs of the Villa Savoye example come to about
-140,000 lines and 150,000 triangles. Larger worlds (a city) will need what a construct page never needed:
+A world's page grows with what it holds. The thirteen placements of the Villa Savoye example come to about
+120,000 lines and 125,000 triangles; Stortorget's 53 to about 210,000 lines and 275,000 triangles. Larger worlds (a city) will need what a construct page never needed:
 - drawing each repeated construct once, instanced;
 - leaving out what is off screen;
 - far placements as outlines;

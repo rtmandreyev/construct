@@ -39,7 +39,7 @@ Six ship to start from:
 | [KESTREL at Saturn](../examples/worlds/kestrel-at-saturn/world.json) | the ice tug at the rings, the planet at its real size behind it |
 
 ```sh
-construct build examples/worlds/the-shed/world.json      # its page, like a construct's
+construct build examples/worlds/the-shed/world.json --out out/the-shed   # its page, like a construct's
 construct check examples/worlds/the-shed/world.json      # the world's audit
 ```
 
@@ -71,7 +71,8 @@ critic still found.
 
 On a world's card in Hermes Desktop, **Arrange**: click a construct and drag it onto anything (a floor, a table, a
 roof), **Shift**-drag or **Q / E** to turn it, the arrows to nudge it, **Lift / Lower** for what hangs or flies.
-What stands on it goes with it. **Add a construct** opens the library with previews and drops one where it fits.
+What stands on it goes with it. **Add a construct** opens the library with previews; the one you pick appears in the
+middle of the world, ready to drag.
 **Save** checks the world with the moves, saves it and rebuilds it, with no model turn; **Undo last change** steps
 back. **Save view** names the camera as a view of the world; **Picture** saves a still.
 
@@ -95,8 +96,8 @@ it.
 
 ## Masterpiece rounds, sturdier
 
-Two long runs in Hermes (Rain Harbour and Stortorget, about a day each, 428 agent sessions between them) found what
-the rounds recorder made harder than it should be. Each is fixed:
+Two long runs in Hermes (Rain Harbour and Stortorget, about a day each, every construct built by its own subagent)
+found what the rounds recorder made harder than it should be. Each is fixed:
 
 - **A tie is a result.** A critic who finds two versions equal says `same`; the round did not beat the best.
 - **More time on request.** `rounds extend 90` reopens a run stopped by its time ceiling; the other stop rules stand.
@@ -123,7 +124,7 @@ the rounds recorder made harder than it should be. Each is fixed:
 
 ## The constructs that ship
 
-The plugin ships 24 constructs, the ones made to a masterpiece's standard: KESTREL v2, an Aston Martin DB5, the
-James Webb Space Telescope, the Sagrada Família and Rietveld's Red-Blue Chair join the FJ62, the Samba, the Vespa,
-the Villa Savoye, SERUM 2 / 61, the Tompion clock, the Revox, the Leica, the Jackson and the rest. Wordmarks drawn on
-a maker's product (a guitar's headstock, a camera's top plate) are left off.
+The plugin ships 24 constructs (16 in 1.2.1). New: the Villa Savoye, SERUM 2 / 61, the Leica M3, the Jackson,
+State Bench, Saturn, the Aston Martin DB5, the Sagrada Família, the James Webb Space Telescope and Rietveld's Red-Blue
+Chair; the Eames is now the one built in the ChatGPT app. The Yamaha CFX and the first KESTREL left (KESTREL v2
+stays). Wordmarks drawn on a maker's product (a guitar's headstock, a camera's top plate) are left off.
