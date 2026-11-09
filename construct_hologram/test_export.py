@@ -878,3 +878,159 @@ class ThroughBlender(unittest.TestCase):
             self.assertTrue(out.is_file())
             self.assertEqual(out.read_bytes()[:18], b"Kaydara FBX Binary")
             self.assertIn("through Blender", r.stdout)
+
+
+def art_scene(folder, glow=None, sha=None, joint=False):
+    """A box with a picture on its front face: a 4 x 2 PNG whose top-left pixel is red, the rest blue."""
+    import hashlib
+    from . import png
+    data = png.encode(4, 2, lambda x, y: (255, 0, 0) if (x, y) == (0, 0) else (0, 0, 255))
+    Path(folder, "art.png").write_bytes(data)
+    s = {"format": "construct-scene", "version": 2, "id": "t", "title": "Test", "units": "m", "seed": 1,
+         "subject": {"category": "object", "accuracy": "generic", "synthetic": True},
+         "sources": [{"id": "req", "kind": "user_request", "title": "test", "rights": "synthetic"}],
+         "facts": [{"key": "h", "value": 1.0, "certainty": "inferred", "source": "req"}],
+         "assets": [{"id": "art", "path": "art.png", "sha256": sha or hashlib.sha256(data).hexdigest(),
+                     "media_type": "image/png", "rights": "synthetic", "provenance": "generated-decorative"}],
+         "parts": [{"id": "body", "role": "mass", "certainty": "inferred", "stage": 0,
+                    "shape": {"type": "box", "size": [1, 1, 1], "anchor": "base"}},
+                   {"id": "face", "role": "artwork", "certainty": "inferred", "stage": 1,
+                    "shape": {"type": "box", "size": [0.5, 0.75, 0.02]}, "at": [0, 0.5, 0.52],
+                    "artwork": {"slot": "cover-front", "asset": "art"}}]}
+    if glow is not None:
+        s["parts"][1]["look"] = {"glow": glow}
+    if joint:
+        s["articulations"] = [{"id": "lid", "type": "hinge", "parts": ["face"], "axis": [1, 0, 0],
+                               "pivot": [0, 0.875, 0.53], "amount": -60}]
+    return s
+
+
+def png_pixel(data, x, y):
+    """One pixel of an 8-bit RGB PNG with unfiltered rows (png.encode's)."""
+    import zlib
+    w = struct.unpack(">I", data[16:20])[0]
+    i, idat = 8, b""
+    while i < len(data):
+        n, kind = struct.unpack_from(">I4s", data, i)
+        if kind == b"IDAT":
+            idat += data[i + 8:i + 8 + n]
+        i += 12 + n
+    raw = zlib.decompress(idat)
+    row = raw[y * (1 + 3 * w):(y + 1) * (1 + 3 * w)]
+    return tuple(row[1 + 3 * x:4 + 3 * x])
+
+
+class Artwork(unittest.TestCase):
+    """A scene's artwork (a sign's lettering, a cover) in the file: a textured face under its part."""
+
+    def test_a_picture_becomes_a_textured_face_under_its_part(self):
+        with tempfile.TemporaryDirectory() as d:
+            doc, binary = glb_of(art_scene(d, glow=0.4), asset_root=d)
+            Structure.check(self, doc, binary)
+            self.assertEqual((len(doc["images"]), len(doc["textures"])), (1, 1))
+            self.assertEqual(doc["images"][0]["mimeType"], "image/png")
+            q = node_named(doc, "face.artwork")
+            self.assertIn(q, doc["nodes"][node_named(doc, "face")]["children"])
+            prim = doc["meshes"][doc["nodes"][q]["mesh"]]["primitives"][0]
+            mat = doc["materials"][prim["material"]]
+            self.assertEqual(mat["pbrMetallicRoughness"]["baseColorTexture"]["index"], 0)
+            self.assertTrue(mat["doubleSided"])
+            # it glows: the image is its own light
+            self.assertEqual(mat["emissiveTexture"]["index"], 0)
+            self.assertEqual(mat["emissiveFactor"], [1.0, 1.0, 1.0])
+            # the image's top-left pixel (red) lands on the face's top-left corner, seen from the front (+Z)
+            pos = accessor(doc, binary, prim["attributes"]["POSITION"])
+            uv = accessor(doc, binary, prim["attributes"]["TEXCOORD_0"])
+            v = doc["bufferViews"][doc["images"][0]["bufferView"]]
+            img = bytes(binary[v["byteOffset"]:v["byteOffset"] + v["byteLength"]])
+            self.assertEqual(png_pixel(img, 0, 0), (255, 0, 0))
+            tl = pos[uv.index((0.0, 0.0))]
+            self.assertAlmostEqual(tl[0], -0.25, places=4)
+            self.assertAlmostEqual(tl[1], 0.875, places=4)
+            br = pos[uv.index((1.0, 1.0))]
+            self.assertAlmostEqual(br[0], 0.25, places=4)
+            self.assertAlmostEqual(br[1], 0.125, places=4)
+            self.assertGreater(min(p[2] for p in pos), 0.53)   # in front of its face
+            nrm = accessor(doc, binary, prim["attributes"]["NORMAL"])
+            self.assertAlmostEqual(nrm[0][2], 1.0, places=4)
+            a, b_, c = [pos[i] for i in accessor(doc, binary, prim["indices"])[:3]]
+            self.assertGreater(export._cross(export._sub(b_, a), export._sub(c, a))[2], 0)   # wound to face out
+
+    def test_a_face_that_does_not_glow_is_not_emissive(self):
+        with tempfile.TemporaryDirectory() as d:
+            doc, _ = glb_of(art_scene(d), asset_root=d)   # an artwork part: no glow of its own
+            m = next(m for m in doc["materials"] if m["name"].startswith("construct:artwork:"))
+            self.assertNotIn("emissiveTexture", m)
+            doc, _ = glb_of(art_scene(d), asset_root=d,
+                            materials={"materials": [{"parts": "face", "color": "#ffffff", "finish": "light"}]})
+            m = next(m for m in doc["materials"] if m["name"].startswith("construct:artwork:"))
+            self.assertIn("emissiveTexture", m)   # the material map makes it a light
+
+    def test_only_matching_bytes_are_embedded(self):
+        with tempfile.TemporaryDirectory() as d:
+            out, summary = export.render(art_scene(d, sha="f" * 64), "glb", asset_root=d)
+            doc, _ = export.read_glb(out["glb"])
+            self.assertNotIn("images", doc)
+            self.assertFalse(any(n.get("name") == "face.artwork" for n in doc["nodes"]))
+            self.assertTrue(any("do not match" in n for n in summary["notes"]))
+            # without an asset folder (the MCP tool's document) the face is left out, as the page leaves its slot empty
+            doc, _ = glb_of(art_scene(d))
+            self.assertNotIn("images", doc)
+
+    def test_a_moving_part_carries_its_artwork(self):
+        with tempfile.TemporaryDirectory() as d:
+            sc = art_scene(d, joint=True)
+            doc, binary = glb_of(sc, asset_root=d)
+        q = node_named(doc, "face.artwork")
+        pivot = node_named(doc, "face:lid")
+        self.assertIn(q, doc["nodes"][pivot]["children"])
+        self.assertIn(pivot, doc["nodes"][node_named(doc, "face")]["children"])
+        g = scene.compile_scene(sc, solid=True)
+        corners = g["artwork"][0]["corners"]
+        anim = next(a for a in doc["animations"] if a["name"] == "open")
+        end = sample(doc, binary, anim, 1e9)
+        got = world_points(doc, binary, q, end)
+        want = [scene._chain_apply(g["joints"][0], g["articulations"], tuple(c)) for c in corners]
+        for w in want:   # each opened corner is a vertex of the opened face
+            self.assertLess(min(math.dist(w, p) for p in got), TOL)
+
+    def test_merged_and_pieces_keep_the_face_with_its_part(self):
+        with tempfile.TemporaryDirectory() as d:
+            sc = art_scene(d)
+            doc, _ = glb_of(sc, asset_root=d, merge=True)
+            self.assertIn(node_named(doc, "face.artwork"), doc["nodes"][node_named(doc, "merged")]["children"])
+            for pieces in (True, "glued"):
+                doc, binary = glb_of(sc, asset_root=d, pieces=pieces)
+                q = node_named(doc, "face.artwork")
+                body = next(n for n in doc["nodes"] if q in n.get("children", []))
+                self.assertIn("OMI_physics_body", body.get("extensions", {}), pieces)
+                pts = world_points(doc, binary, q, {})
+                self.assertAlmostEqual(min(p[1] for p in pts), 0.125, places=4)   # where the page draws it
+                self.assertAlmostEqual(max(p[1] for p in pts), 0.875, places=4)
+
+    def test_obj_maps_the_image(self):
+        with tempfile.TemporaryDirectory() as d:
+            summary = export.export(art_scene(d, glow=0.5), Path(d, "out", "m.obj"), asset_root=d)
+            mtl = Path(d, "out", "m.mtl").read_text()
+            obj = Path(d, "out", "m.obj").read_text()
+            self.assertTrue(Path(d, "out", "m.art.png").is_file())
+        self.assertIn(str(Path(d, "out", "m.art.png")), summary["files"])
+        self.assertIn("map_Kd m.art.png", mtl)
+        self.assertIn("map_Ke m.art.png", mtl)
+        self.assertIn("o face.artwork", obj)
+        block = obj.split("o face.artwork")[1].splitlines()
+        vs = [tuple(map(float, ln.split()[1:])) for ln in block if ln.startswith("v ")]
+        vts = [tuple(map(float, ln.split()[1:])) for ln in block if ln.startswith("vt ")]
+        tl = vs[vts.index((0.0, 1.0))]   # OBJ counts v from the image's bottom: the top-left pixel is (0, 1)
+        self.assertAlmostEqual(tl[0], -0.25, places=4)
+        self.assertAlmostEqual(tl[1], 0.875, places=4)
+
+    def test_cli_reads_the_artwork_beside_the_scene(self):
+        with tempfile.TemporaryDirectory() as d:
+            Path(d, "scene.json").write_text(json.dumps(art_scene(d, glow=0.3)), encoding="utf-8")
+            r = subprocess.run([sys.executable, str(HERE / "cli.py"), "export", str(Path(d, "scene.json")), "--out",
+                                str(Path(d, "m.glb"))], cwd=str(ROOT), capture_output=True, text=True, timeout=120)
+            self.assertEqual(r.returncode, 0, r.stderr)
+            self.assertIn("artwork: 1 face, 1 image", r.stdout)
+            doc, _ = export.read_glb(Path(d, "m.glb").read_bytes())
+        self.assertEqual(len(doc["images"]), 1)
