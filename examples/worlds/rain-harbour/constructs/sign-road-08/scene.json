@@ -1,0 +1,466 @@
+{
+ "format": "construct-scene",
+ "version": 2,
+ "id": "rain-harbour-road-08-address-plaque",
+ "title": "RAIN HARBOUR ROAD 08 / 雨港路 08",
+ "subject": {
+  "category": "artwork-carrier",
+  "summary": "Original amber and charcoal bilingual illuminated address plaque. Supplied scene dimensions are design targets, not surveyed measurements; actual illumination and PNG material binding are provided by the parent game-engine assembly.",
+  "accuracy": "original",
+  "synthetic": false
+ },
+ "units": "m",
+ "seed": 8,
+ "sources": [
+  {
+   "id": "request",
+   "kind": "user_request",
+   "title": "Original Rain Harbour address plaque brief",
+   "rights": "user_private"
+  }
+ ],
+ "facts": [
+  {
+   "key": "body-width",
+   "value": 1.2,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "request",
+   "note": "Designer-assigned metric target; not a real-world user measurement."
+  },
+  {
+   "key": "body-height",
+   "value": 0.8,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "request",
+   "note": "Designer-assigned metric target."
+  },
+  {
+   "key": "body-depth",
+   "value": 0.12,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "request",
+   "note": "Housing including front panel; mounting brackets extend farther rearward."
+  },
+  {
+   "key": "wall-plane",
+   "value": -0.2,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "request",
+   "note": "Rear bracket ends meet host wall at this local Z plane."
+  },
+  {
+   "key": "address",
+   "value": "RAIN HARBOUR ROAD 08 / 雨港路 08",
+   "certainty": "inferred",
+   "source": "request",
+   "note": "Original invented district and street address, not a real supplied location."
+  }
+ ],
+ "assets": [
+  {
+   "id": "address-art",
+   "media_type": "image/png",
+   "path": "assets/rain-harbour-road-08.png",
+   "provenance": "generated-decorative",
+   "rights": "permitted",
+   "sha256": "47fd3f00a58b19251d2c60637a04efe06eb765581f5e2524dd94ac18e916f725",
+   "source": "request"
+  },
+  {
+   "id": "rear-service-art",
+   "media_type": "image/png",
+   "path": "assets/rear-service-panel.png",
+   "provenance": "generated-decorative",
+   "rights": "permitted",
+   "sha256": "2ba2f3218be654a22b0bfdcaa2ad140342de33656eeda96686cad89ced095bae",
+   "source": "request"
+  },
+  {
+   "id": "wall-mount-art",
+   "media_type": "image/png",
+   "path": "assets/wall-mount-plate.png",
+   "provenance": "generated-decorative",
+   "rights": "permitted",
+   "sha256": "3aba5dd1222cff53b63f57a148339f229ea2eedbe4e6481b7bcc2b543938ac92",
+   "source": "request"
+  }
+ ],
+ "parts": [
+  {
+   "id": "housing",
+   "label": "Charcoal folded-metal housing",
+   "role": "mass",
+   "certainty": "inferred",
+   "basis": [
+    "body-width",
+    "body-height",
+    "body-depth"
+   ],
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.2,
+     0.8,
+     0.1
+    ]
+   },
+   "at": [
+    0,
+    0.4,
+    -0.01
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "weight": 0.8
+   }
+  },
+  {
+   "id": "address-face",
+   "label": "Amber bilingual luminous front panel",
+   "role": "artwork",
+   "certainty": "inferred",
+   "basis": [
+    "address"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.14,
+     0.74,
+     0.02
+    ]
+   },
+   "at": [
+    0,
+    0.4,
+    0.05
+   ],
+   "artwork": {
+    "slot": "label",
+    "asset": "address-art",
+    "face": "front",
+    "mask": "rect"
+   },
+   "look": {
+    "fill": "dark",
+    "tone": "identity",
+    "weight": 1.2,
+    "glow": 0.35
+   }
+  },
+  {
+   "id": "rear-standoff",
+   "label": "Rear wall mounting standoff",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "wall-plane"
+   ],
+   "stage": 1,
+   "shape": {
+    "axis": "y",
+    "height": 0.54,
+    "profile": [
+     [
+      -0.07,
+      -0.14
+     ],
+     [
+      0.07,
+      -0.14
+     ],
+     [
+      0.07,
+      -0.12
+     ],
+     [
+      0.04,
+      -0.12
+     ],
+     [
+      0.04,
+      0
+     ],
+     [
+      -0.04,
+      0
+     ],
+     [
+      -0.04,
+      -0.12
+     ],
+     [
+      -0.07,
+      -0.12
+     ]
+    ],
+    "ribs": 0,
+    "type": "extrude"
+   },
+   "at": [
+    -0.4,
+    0.13,
+    -0.06
+   ],
+   "repeat": {
+    "count": 2,
+    "step": {
+     "at": [
+      0.8,
+      0,
+      0
+     ]
+    }
+   },
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "weight": 0.7
+   },
+   "rotate": [
+    0.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "mounting-saddle",
+   "label": "10mm wall mounting plate with screw stations",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "wall-plane"
+   ],
+   "stage": 1,
+   "shape": {
+    "size": [
+     1,
+     0.64,
+     0.01
+    ],
+    "type": "box"
+   },
+   "at": [
+    0.0,
+    0.4,
+    -0.195
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "weight": 0.65
+   },
+   "artwork": {
+    "asset": "wall-mount-art",
+    "face": "back",
+    "mask": "rect",
+    "slot": "inlay"
+   }
+  }
+ ],
+ "articulations": [],
+ "labels": [],
+ "anchors": {
+  "front": {
+   "part": "address-face",
+   "face": "front"
+  },
+  "base": {
+   "point": [
+    0,
+    0,
+    0
+   ],
+   "up": [
+    0,
+    1,
+    0
+   ]
+  }
+ },
+ "presentation": {
+  "framing": {
+   "yaw": 20,
+   "pitch": 8,
+   "fit": 1.1
+  },
+  "views": [
+   {
+    "id": "concept",
+    "label": "Concept — upright bilingual address",
+    "yaw": 0,
+    "pitch": 0,
+    "distance": 1.1
+   },
+   {
+    "id": "mount",
+    "label": "Rear brackets / host wall plane",
+    "yaw": 160,
+    "pitch": 12,
+    "distance": 1.15
+   }
+  ],
+  "atmosphere": {
+   "haze": 0.1,
+   "scanlines": false,
+   "vignette": true,
+   "grid": false,
+   "projector": false,
+   "motes": 0
+  },
+  "occlusion": "xray",
+  "certainty_style": "subtle",
+  "background": "deep",
+  "float": 0,
+  "still_pose": "closed"
+ },
+ "animation": {
+  "assembly": {
+   "style": "build",
+   "seconds": 3,
+   "interference": false
+  },
+  "idle": {
+   "life": "off",
+   "events": [],
+   "cadence": [
+    8,
+    12
+   ],
+   "strength": 0.1
+  },
+  "camera": {
+   "drift": 0,
+   "breathe": 0
+  },
+  "reduced_motion": "still"
+ },
+ "authoring": {
+  "tier": "masterpiece",
+  "research": "off",
+  "review_rounds": 0,
+  "outcome": "outstanding",
+  "next": [],
+  "identity": [
+   {
+    "feature": "Bilingual address with large 08",
+    "parts": [
+     "address-face"
+    ]
+   },
+   {
+    "feature": "Charcoal casing and wall standoffs",
+    "parts": [
+     "housing",
+     "rear-standoff"
+    ]
+   }
+  ],
+  "critic": {
+   "scene_sha256": "4e0b8a9de3b58e6a6d42b21a11bc6ef8f000767eaa7ac1be8073a3f7a2f5ea1f",
+   "verdict": "outstanding",
+   "scores": {
+    "silhouette": 3,
+    "proportions": 3,
+    "identity": 3,
+    "depth": 3,
+    "composition": 3,
+    "assembly": 3,
+    "motion": 3,
+    "density": 3,
+    "honesty": 3
+   },
+   "round": 8,
+   "defects": 0
+  },
+  "rounds": [
+   {
+    "changes": [
+     "draft"
+    ],
+    "minutes": 0.6,
+    "result": "baseline",
+    "round": 1,
+    "summary": "The central identifying content is not visible on the plaque: no large 08, no upright 雨港路 and no smaller English address. Against the matchi"
+   },
+   {
+    "changes": [
+     "D1",
+     "D2",
+     "D3"
+    ],
+    "minutes": 0.6,
+    "result": "kept",
+    "round": 2,
+    "summary": "The two rear standoffs end as plain rectangular prisms against a bare back; no seat or edge treatment explains how the layers meet."
+   },
+   {
+    "changes": [
+     "D4"
+    ],
+    "minutes": 1.2,
+    "result": "kept",
+    "round": 3,
+    "summary": "Both standoffs end as plain rectangular blocks in view-mount; no flange, slot or fastener contour explains attachment to the wall."
+   },
+   {
+    "changes": [
+     "D4"
+    ],
+    "minutes": 1,
+    "result": "kept",
+    "round": 4,
+    "summary": "Both rear supports terminate as plain blocks; no visible fixing detail explains attachment to the wall."
+   },
+   {
+    "changes": [
+     "D4",
+     "D5"
+    ],
+    "minutes": 1.4,
+    "result": "kept",
+    "round": 5,
+    "summary": "The filled rear graphic is already visible at 0.40 s, shrinks to a strip at 1.00 s, then disappears at 1.80 s before the address arrives at "
+   },
+   {
+    "changes": [
+     "D6",
+     "D7"
+    ],
+    "minutes": 1,
+    "result": "kept",
+    "round": 6,
+    "summary": "At 0.30 s a filled rear panel floats above the housing, then becomes a narrow top strip at 0.75 s before the supports form. The build starts"
+   },
+   {
+    "changes": [
+     "D4",
+     "D6",
+     "D7"
+    ],
+    "minutes": 1.1,
+    "result": "reverted",
+    "round": 7,
+    "summary": "The assembly sheet is empty. Timeline phases all end at 0 and contain no events, so no construction story is shown."
+   },
+   {
+    "changes": [
+     "D4",
+     "D6",
+     "D7"
+    ],
+    "minutes": 1.1,
+    "result": "kept",
+    "round": 8,
+    "summary": "No critic defects. Every criterion at 3; outstanding. Tool STOP."
+   }
+  ]
+ }
+}

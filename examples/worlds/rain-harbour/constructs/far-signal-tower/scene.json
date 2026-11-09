@@ -1,0 +1,719 @@
+{
+ "format": "construct-scene",
+ "version": 2,
+ "id": "rainharbour-far-signal-tower",
+ "title": "Far Signal Tower",
+ "subject": {
+  "category": "architecture",
+  "summary": "Existing-world RainHarbour signal/skybridge snapshot repair: ground-bearing twin piers carry a real 6m-wide, 14m-high through portal, broad shoulders, stepped upper storeys and an offset flat service cap. Original invented architecture, not a measured reconstruction.",
+  "accuracy": "original",
+  "synthetic": false
+ },
+ "units": "m",
+ "seed": 31,
+ "sources": [
+  {
+   "id": "request",
+   "kind": "user_request",
+   "title": "RainHarbour skyline tower contract: nominal 10 by 10 metres, 100 metres tall, front +Z, bottom zero, no ground or labels; reused five times at scale one.",
+   "rights": "user_private"
+  },
+  {
+   "id": "concept",
+   "kind": "user_request",
+   "title": "User supplied RainHarbour street concept: distant skyline mood only; original invented geometry, no real-building claim.",
+   "rights": "user_private"
+  },
+  {
+   "id": "world6-design",
+   "kind": "generated",
+   "title": "Generated WORLD6 repair brief: replacement 48m stepped signal tower with open lower passage; source history retained in r6-source-scene.json. Not human-supplied measurements.",
+   "ref": "../../world-completion-run/r6-skyline-brief.md",
+   "rights": "synthetic"
+  }
+ ],
+ "facts": [
+  {
+   "key": "height",
+   "value": 48,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "world6-design",
+   "note": "Designed/inferred WORLD6 replacement dimension; prior 100m needle design was inferred, not verified. Original source retained separately."
+  },
+  {
+   "key": "footprint.width",
+   "value": 12,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "world6-design",
+   "note": "Designed/inferred WORLD6 replacement dimension; prior 100m needle design was inferred, not verified. Original source retained separately."
+  },
+  {
+   "key": "footprint.depth",
+   "value": 10,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "world6-design",
+   "note": "Designed/inferred WORLD6 replacement dimension; prior 100m needle design was inferred, not verified. Original source retained separately."
+  },
+  {
+   "key": "portal.width",
+   "value": 6,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "world6-design",
+   "note": "Designed clear through opening, no wall, mask, hidden plane or ground slab."
+  },
+  {
+   "key": "portal.height",
+   "value": 14,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "world6-design",
+   "note": "Designed clear through opening, no wall, mask, hidden plane or ground slab."
+  }
+ ],
+ "assets": [],
+ "parts": [
+  {
+   "id": "podium",
+   "label": "Continuous twin ground piers and 14-20m transfer bridge",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 10,
+    "ribs": 0,
+    "profile": [
+     [
+      -6,
+      0
+     ],
+     [
+      -3,
+      0
+     ],
+     [
+      -3,
+      14
+     ],
+     [
+      3,
+      14
+     ],
+     [
+      3,
+      0
+     ],
+     [
+      6,
+      0
+     ],
+     [
+      6,
+      20
+     ],
+     [
+      -6,
+      20
+     ]
+    ]
+   },
+   "at": [
+    0,
+    0,
+    -5
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "weight": 0.7,
+    "glow": 0
+   }
+  },
+  {
+   "id": "main-shaft",
+   "label": "Broad 20-30m shoulder storeys",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     11.8,
+     10,
+     9.8
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    0,
+    20,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "weight": 0.7,
+    "glow": 0
+   }
+  },
+  {
+   "id": "setback-tier",
+   "label": "Offset 30-41m upper storeys",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     8,
+     11,
+     8
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    -1,
+    30,
+    -0.3
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "weight": 0.7,
+    "glow": 0
+   }
+  },
+  {
+   "id": "crown-core",
+   "label": "Offset 41-46m service house",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     5,
+     5,
+     6
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    0.4,
+    41,
+    -0.3
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "weight": 0.9,
+    "glow": 0
+   }
+  },
+  {
+   "id": "blade-crown",
+   "label": "Broad flat 46-47m service roof",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     6,
+     1,
+     7
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    0.4,
+    46,
+    -0.3
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "weight": 1,
+    "glow": 0
+   }
+  },
+  {
+   "id": "antenna",
+   "label": "Low roof-mounted signal plant, not needle",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.4,
+     1,
+     2.2
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    -0.7,
+    47,
+    -0.5
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "weight": 0.7,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "window-band-main",
+   "label": "Two broad shoulder window groups",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "box",
+    "size": [
+     8.6,
+     0.5,
+     0.08
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    0,
+    23,
+    4.9
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "identity",
+    "weight": 0.8,
+    "glow": 0.38
+   },
+   "repeat": {
+    "count": 2,
+    "step": {
+     "at": [
+      0,
+      4,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "window-band-upper",
+   "label": "Two upper signal window groups",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "box",
+    "size": [
+     5.6,
+     0.5,
+     0.08
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    -1,
+    33,
+    3.7
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "identity",
+    "weight": 0.8,
+    "glow": 0.38
+   },
+   "repeat": {
+    "count": 2,
+    "step": {
+     "at": [
+      0,
+      5,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "window-band-crown",
+   "label": "Service house signal glazing",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "box",
+    "size": [
+     3.4,
+     0.5,
+     0.08
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    0.4,
+    43.3,
+    2.7
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "identity",
+    "weight": 0.8,
+    "glow": 0.4
+   }
+  },
+  {
+   "id": "window-band-podium",
+   "label": "Skybridge front signal glazing above open portal",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "box",
+    "size": [
+     8.2,
+     0.5,
+     0.08
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    0,
+    17.2,
+    4.96
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "identity",
+    "weight": 0.65,
+    "glow": 0.26
+   }
+  },
+  {
+   "at": [
+    5.9,
+    25,
+    0
+   ],
+   "certainty": "inferred",
+   "id": "window-band-main-upper",
+   "label": "Shoulder side signal glazing",
+   "look": {
+    "fill": "dark",
+    "glow": 0.38,
+    "tone": "identity",
+    "weight": 0.8
+   },
+   "role": "identity",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.08,
+     0.5,
+     6
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "stage": 6
+  },
+  {
+   "at": [
+    0.58,
+    47.15,
+    -0.5
+   ],
+   "certainty": "inferred",
+   "id": "blade-facet",
+   "label": "Side-mounted plant ventilation block",
+   "look": {
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 0.65
+   },
+   "role": "structure",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.18,
+     0.55,
+     1.3
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "stage": 5
+  }
+ ],
+ "articulations": [],
+ "labels": [],
+ "annotations": [],
+ "anchors": {
+  "base": {
+   "point": [
+    0,
+    0,
+    0
+   ],
+   "up": [
+    0,
+    1,
+    0
+   ]
+  }
+ },
+ "presentation": {
+  "framing": {
+   "yaw": 30,
+   "pitch": 8,
+   "fit": 1.02
+  },
+  "views": [
+   {
+    "id": "front-elevation",
+    "label": "True 6m by 14m lower portal",
+    "yaw": 0,
+    "pitch": 0,
+    "distance": 1
+   },
+   {
+    "id": "rear-quarter",
+    "label": "Ground bearing quarter",
+    "yaw": 150,
+    "pitch": 8,
+    "distance": 1
+   },
+   {
+    "id": "crown-detail",
+    "label": "Offset flat service cap",
+    "yaw": 25,
+    "pitch": 12,
+    "distance": 2,
+    "target": "crown-core"
+   },
+   {
+    "id": "concept",
+    "label": "Stepped signal tower",
+    "yaw": 30,
+    "pitch": 8,
+    "distance": 1
+   },
+   {
+    "id": "portal",
+    "label": "Lower through portal",
+    "yaw": 0,
+    "pitch": 0,
+    "distance": 0.65,
+    "target": "podium"
+   }
+  ],
+  "atmosphere": {
+   "haze": 0.25,
+   "scanlines": false,
+   "vignette": true,
+   "grid": false,
+   "projector": false,
+   "motes": 0
+  },
+  "occlusion": "xray",
+  "certainty_style": "subtle",
+  "background": "deep",
+  "float": 0
+ },
+ "animation": {
+  "assembly": {
+   "style": "ceremony",
+   "seconds": 5,
+   "interference": false
+  },
+  "idle": {
+   "life": "off",
+   "events": [],
+   "cadence": [
+    12,
+    18
+   ],
+   "strength": 0
+  },
+  "camera": {
+   "drift": 0,
+   "breathe": 0
+  },
+  "reduced_motion": "still"
+ },
+ "authoring": {
+  "tier": "masterpiece",
+  "research": "off",
+  "review_rounds": 12,
+  "outcome": "unreviewed",
+  "next": [
+   "WORLD6 existing snapshot repair only; historic standalone rounds and verdict apply ONLY to r6-source-scene.json, not this replacement.",
+   "Whole-world placement and one fresh whole-world critic remain parent work; no standalone rounds run.",
+   "Source SHA256 5c615e342790e81b3e276e91d60bf2da9d162ee2d095587e95eb13fab847c3bc"
+  ],
+  "identity": [
+   {
+    "feature": "Real open lower portal, broad shoulders, stepped asymmetric upper storeys and flat offset service cap",
+    "parts": [
+     "podium",
+     "main-shaft",
+     "setback-tier",
+     "crown-core",
+     "blade-crown",
+     "antenna"
+    ]
+   },
+   {
+    "feature": "Restrained cyan signal window groups, inherited palette and contour medium",
+    "parts": [
+     "window-band-main",
+     "window-band-upper",
+     "window-band-crown",
+     "window-band-podium"
+    ]
+   }
+  ],
+  "rounds": [
+   {
+    "round": 1,
+    "result": "baseline",
+    "minutes": 0.6,
+    "changes": [
+     "draft"
+    ],
+    "summary": "The long shaft and nested upper rectangles dominate the outline; lateral asymmetry is small in front and almost absent in side. Consequently"
+   },
+   {
+    "round": 2,
+    "result": "kept",
+    "minutes": 10.4,
+    "changes": [
+     "D1",
+     "D2",
+     "D3"
+    ],
+    "summary": "Most of the outline is a long straight shaft followed by small rectangular reductions. The upper stack's lateral shift is modest, so the req"
+   },
+   {
+    "round": 3,
+    "result": "kept",
+    "minutes": 1.4,
+    "changes": [
+     "D1",
+     "D2",
+     "D4"
+    ],
+    "summary": "The crown is mainly another upright rectangular tier with a small triangular blade at its top. Although the checklist components exist, the "
+   },
+   {
+    "round": 4,
+    "result": "kept",
+    "minutes": 1.3,
+    "changes": [
+     "D1",
+     "D2",
+     "D4",
+     "D5"
+    ],
+    "summary": "The crown core remains a straight rectangular box and the diagonal is confined to a thin triangular attachment. The desired canted futuristi"
+   },
+   {
+    "round": 5,
+    "result": "kept",
+    "minutes": 1.0,
+    "changes": [
+     "D4",
+     "D6",
+     "D8",
+     "D9"
+    ],
+    "summary": "The crown remains an upright rectangular core with a thin triangular blade attached at its top. Most of the silhouette is successive vertica"
+   },
+   {
+    "round": 6,
+    "result": "kept",
+    "minutes": 0.9,
+    "changes": [
+     "D10"
+    ],
+    "summary": "The dominant blade has a long vertical inner edge and a triangular outer edge above a small upright support. It reads as a flag attached to "
+   },
+   {
+    "round": 7,
+    "result": "kept",
+    "minutes": 1.1,
+    "changes": [
+     "D10",
+     "D6",
+     "D8"
+    ],
+    "summary": "The dominant blade's long inner edge is nearly vertical while its outer edge converges towards it, so the filled silhouette reads as a taper"
+   },
+   {
+    "round": 8,
+    "result": "kept",
+    "minutes": 1.1,
+    "changes": [
+     "D10"
+    ],
+    "summary": "The crown's broad base narrows strongly toward its tip, while its trailing edge stays close to vertical. It reads more as a tapered fin than"
+   },
+   {
+    "round": 9,
+    "result": "kept",
+    "minutes": 1.9,
+    "changes": [
+     "D3"
+    ],
+    "summary": "The blade leans clearly, but its broad bottom contracts to a very narrow flat tip. This makes a triangular-fin accent rather than an unambig"
+   },
+   {
+    "round": 10,
+    "result": "kept",
+    "minutes": 1.3,
+    "changes": [
+     "D11",
+     "D12"
+    ],
+    "summary": "The long diagonal blade converges from a broad root to a very narrow flat tip. In hero and front views that gives a spike-like crown rather "
+   },
+   {
+    "round": 11,
+    "result": "kept",
+    "minutes": 1.0,
+    "changes": [
+     "D13",
+     "D14"
+    ],
+    "summary": "Most of the lower and middle outline is one uninterrupted straight-sided shaft; the asymmetry is concentrated near the top. The concept's sk"
+   },
+   {
+    "round": 12,
+    "result": "kept",
+    "minutes": 1.8,
+    "changes": [
+     "D16"
+    ],
+    "summary": "Most of the lower and middle silhouette is a constant-width upright prism, with the principal asymmetric shoulder concentrated high on the b"
+   }
+  ]
+ }
+}

@@ -1,0 +1,6 @@
+{
+ "materials":[
+  {"parts":["housing","rear-standoff","mounting-saddle"],"color":"#172129","finish":"paint"},
+  {"parts":["address-face"],"color":"#ffbf62","finish":"light"}
+ ]
+}

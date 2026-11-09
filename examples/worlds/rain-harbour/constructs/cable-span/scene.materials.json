@@ -1,0 +1,19 @@
+{
+  "materials": [
+    {
+      "parts": [
+        "cable-*",
+        "insulator-bank-*"
+      ],
+      "color": "#080a0c",
+      "finish": "rubber"
+    },
+    {
+      "parts": [
+        "wall-bracket-*"
+      ],
+      "color": "#353e46",
+      "finish": "brushed"
+    }
+  ]
+}

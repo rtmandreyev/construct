@@ -1,0 +1,9088 @@
+{
+ "format": "construct-scene",
+ "version": 2,
+ "id": "rain-harbour-terrace-exchange",
+ "title": "Terrace Exchange",
+ "subject": {
+  "category": "architecture",
+  "summary": "Original paired broad terrace exchange: two unequal stepping wings on a substantial lower exchange block, with supported roof decks and low mechanical crests; no spire.",
+  "accuracy": "original",
+  "synthetic": false
+ },
+ "units": "m",
+ "seed": 47,
+ "sources": [
+  {
+   "id": "request",
+   "kind": "generated",
+   "rights": "user_private",
+   "title": "Supervisory original skyline design brief; not a human measurement"
+  },
+  {
+   "id": "concept",
+   "kind": "reference_image",
+   "ref": "dashboard_20261108_101719_52f95e45_neon-street-concept_2f106a.jpg",
+   "rights": "user_private",
+   "title": "User night street concept: atmosphere only, not a measured building"
+  }
+ ],
+ "facts": [
+  {
+   "key": "paired-terraces",
+   "value": "Two broad asymmetric stepping terrace volumes with low service crests and a substantial lower mass",
+   "certainty": "inferred",
+   "source": "request",
+   "requirement": true,
+   "note": "Original supervisory design specification for this fictional skyline building, not a direct end-user measurement or supplied real-world feature."
+  },
+  {
+   "key": "design-width",
+   "value": 17.8,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "request",
+   "note": "Supervisor original design choice, below18m envelope; not measured from concept."
+  },
+  {
+   "key": "design-depth",
+   "value": 15.8,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "request",
+   "note": "Supervisor original design choice, below16m envelope; centred aboutXZ0."
+  },
+  {
+   "key": "design-height",
+   "value": 63.72,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "request",
+   "note": "Original design choice below72m maximum, low service crest not antenna."
+  }
+ ],
+ "parts": [
+  {
+   "id": "ground-bearing-plinth",
+   "label": "Ground Bearing Plinth",
+   "role": "mass",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     17.8,
+     1.2,
+     15.8
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 0,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "exchange-lower-mass",
+   "label": "Exchange Lower Mass",
+   "role": "mass",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     16.6,
+     33.0,
+     14.6
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0,
+    1.2,
+    0
+   ],
+   "stage": 1,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "west-first-volume",
+   "label": "West First Volume",
+   "role": "mass",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     8.4,
+     12,
+     10.6
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -3.4,
+    34.2,
+    1.0
+   ],
+   "stage": 2,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "west-first-deck",
+   "label": "West First Deck",
+   "role": "identity",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     8.564347826086957,
+     0.45,
+     10.76736842105263
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -3.4,
+    46.2,
+    1.0
+   ],
+   "stage": 3,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.2,
+    "alpha": 0.75,
+    "glow": 0.26
+   }
+  },
+  {
+   "id": "west-first-parapet-front",
+   "label": "West First Parapet Front",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     8.564347826086957,
+     0.85,
+     0.20456140350877192
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -3.4,
+    46.65,
+    6.3
+   ],
+   "stage": 4,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.75,
+    "alpha": 0.64,
+    "glow": 0.12
+   }
+  },
+  {
+   "id": "west-first-parapet-back",
+   "label": "West First Parapet Back",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     8.564347826086957,
+     0.85,
+     0.20456140350877192
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -3.4,
+    46.65,
+    -4.3
+   ],
+   "stage": 4,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.75,
+    "alpha": 0.64,
+    "glow": 0.12
+   }
+  },
+  {
+   "id": "west-first-parapet-west",
+   "label": "West First Parapet West",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.20086956521739133,
+     0.85,
+     10.6
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -7.6,
+    46.65,
+    1.0
+   ],
+   "stage": 4,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.75,
+    "alpha": 0.64,
+    "glow": 0.12
+   }
+  },
+  {
+   "id": "west-first-parapet-east",
+   "label": "West First Parapet East",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.20086956521739133,
+     0.85,
+     10.6
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0.8,
+    46.65,
+    1.0
+   ],
+   "stage": 4,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.75,
+    "alpha": 0.64,
+    "glow": 0.12
+   }
+  },
+  {
+   "id": "west-first-front-panel-seams",
+   "label": "West First Front Panel Seams",
+   "role": "detail",
+   "certainty": "inferred",
+   "shape": {
+    "type": "paths",
+    "paths": [
+     [
+      [
+       -6.088,
+       38.8,
+       6.313947368421052
+      ],
+      [
+       -6.088,
+       49.55,
+       6.313947368421052
+      ]
+     ],
+     [
+      [
+       -3.4,
+       38.8,
+       6.313947368421052
+      ],
+      [
+       -3.4,
+       49.55,
+       6.313947368421052
+      ]
+     ],
+     [
+      [
+       -0.712,
+       38.8,
+       6.313947368421052
+      ],
+      [
+       -0.712,
+       49.55,
+       6.313947368421052
+      ]
+     ],
+     [
+      [
+       -7.326086956521738,
+       40,
+       6.313947368421052
+      ],
+      [
+       0.5260869565217392,
+       40,
+       6.313947368421052
+      ]
+     ],
+     [
+      [
+       -7.326086956521738,
+       43,
+       6.313947368421052
+      ],
+      [
+       0.5260869565217392,
+       43,
+       6.313947368421052
+      ]
+     ],
+     [
+      [
+       -7.326086956521738,
+       46,
+       6.313947368421052
+      ],
+      [
+       0.5260869565217392,
+       46,
+       6.313947368421052
+      ]
+     ],
+     [
+      [
+       -7.326086956521738,
+       49,
+       6.313947368421052
+      ],
+      [
+       0.5260869565217392,
+       49,
+       6.313947368421052
+      ]
+     ]
+    ]
+   },
+   "at": [
+    0.0,
+    -3.8,
+    0.0
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "none",
+    "weight": 0.45,
+    "alpha": 0.28,
+    "glow": 0.1
+   }
+  },
+  {
+   "id": "west-first-back-panel-seams",
+   "label": "West First Back Panel Seams",
+   "role": "detail",
+   "certainty": "inferred",
+   "shape": {
+    "type": "paths",
+    "paths": [
+     [
+      [
+       -6.088,
+       38.8,
+       -4.313947368421052
+      ],
+      [
+       -6.088,
+       49.55,
+       -4.313947368421052
+      ]
+     ],
+     [
+      [
+       -3.4,
+       38.8,
+       -4.313947368421052
+      ],
+      [
+       -3.4,
+       49.55,
+       -4.313947368421052
+      ]
+     ],
+     [
+      [
+       -0.712,
+       38.8,
+       -4.313947368421052
+      ],
+      [
+       -0.712,
+       49.55,
+       -4.313947368421052
+      ]
+     ],
+     [
+      [
+       -7.326086956521738,
+       40,
+       -4.313947368421052
+      ],
+      [
+       0.5260869565217392,
+       40,
+       -4.313947368421052
+      ]
+     ],
+     [
+      [
+       -7.326086956521738,
+       43,
+       -4.313947368421052
+      ],
+      [
+       0.5260869565217392,
+       43,
+       -4.313947368421052
+      ]
+     ],
+     [
+      [
+       -7.326086956521738,
+       46,
+       -4.313947368421052
+      ],
+      [
+       0.5260869565217392,
+       46,
+       -4.313947368421052
+      ]
+     ],
+     [
+      [
+       -7.326086956521738,
+       49,
+       -4.313947368421052
+      ],
+      [
+       0.5260869565217392,
+       49,
+       -4.313947368421052
+      ]
+     ]
+    ]
+   },
+   "at": [
+    0.0,
+    -3.8,
+    0.0
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "none",
+    "weight": 0.45,
+    "alpha": 0.28,
+    "glow": 0.1
+   }
+  },
+  {
+   "id": "west-firstleft-panel-seams",
+   "label": "West Firstleft Panel Seams",
+   "role": "detail",
+   "certainty": "inferred",
+   "shape": {
+    "type": "paths",
+    "paths": [
+     [
+      [
+       -7.613695652173912,
+       38.8,
+       -2.1799999999999997
+      ],
+      [
+       -7.613695652173912,
+       49.6,
+       -2.1799999999999997
+      ]
+     ],
+     [
+      [
+       -7.613695652173912,
+       38.8,
+       1.0
+      ],
+      [
+       -7.613695652173912,
+       49.6,
+       1.0
+      ]
+     ],
+     [
+      [
+       -7.613695652173912,
+       38.8,
+       4.18
+      ],
+      [
+       -7.613695652173912,
+       49.6,
+       4.18
+      ]
+     ],
+     [
+      [
+       -7.613695652173912,
+       40,
+       -4.021052631578947
+      ],
+      [
+       -7.613695652173912,
+       40,
+       6.021052631578947
+      ]
+     ],
+     [
+      [
+       -7.613695652173912,
+       43,
+       -4.021052631578947
+      ],
+      [
+       -7.613695652173912,
+       43,
+       6.021052631578947
+      ]
+     ],
+     [
+      [
+       -7.613695652173912,
+       46,
+       -4.021052631578947
+      ],
+      [
+       -7.613695652173912,
+       46,
+       6.021052631578947
+      ]
+     ],
+     [
+      [
+       -7.613695652173912,
+       49,
+       -4.021052631578947
+      ],
+      [
+       -7.613695652173912,
+       49,
+       6.021052631578947
+      ]
+     ]
+    ]
+   },
+   "at": [
+    0.0,
+    -3.8,
+    0.0
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "none",
+    "weight": 0.45,
+    "alpha": 0.28,
+    "glow": 0.1
+   }
+  },
+  {
+   "id": "west-firstright-panel-seams",
+   "label": "West Firstright Panel Seams",
+   "role": "detail",
+   "certainty": "inferred",
+   "shape": {
+    "type": "paths",
+    "paths": [
+     [
+      [
+       0.8136956521739125,
+       38.8,
+       -2.1799999999999997
+      ],
+      [
+       0.8136956521739125,
+       49.6,
+       -2.1799999999999997
+      ]
+     ],
+     [
+      [
+       0.8136956521739125,
+       38.8,
+       1.0
+      ],
+      [
+       0.8136956521739125,
+       49.6,
+       1.0
+      ]
+     ],
+     [
+      [
+       0.8136956521739125,
+       38.8,
+       4.18
+      ],
+      [
+       0.8136956521739125,
+       49.6,
+       4.18
+      ]
+     ],
+     [
+      [
+       0.8136956521739125,
+       40,
+       -4.021052631578947
+      ],
+      [
+       0.8136956521739125,
+       40,
+       6.021052631578947
+      ]
+     ],
+     [
+      [
+       0.8136956521739125,
+       43,
+       -4.021052631578947
+      ],
+      [
+       0.8136956521739125,
+       43,
+       6.021052631578947
+      ]
+     ],
+     [
+      [
+       0.8136956521739125,
+       46,
+       -4.021052631578947
+      ],
+      [
+       0.8136956521739125,
+       46,
+       6.021052631578947
+      ]
+     ],
+     [
+      [
+       0.8136956521739125,
+       49,
+       -4.021052631578947
+      ],
+      [
+       0.8136956521739125,
+       49,
+       6.021052631578947
+      ]
+     ]
+    ]
+   },
+   "at": [
+    0.0,
+    -3.8,
+    0.0
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "none",
+    "weight": 0.45,
+    "alpha": 0.28,
+    "glow": 0.1
+   }
+  },
+  {
+   "id": "west-second-volume",
+   "label": "West Second Volume",
+   "role": "mass",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     6.5,
+     8.0,
+     7.6
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -3.4,
+    46.2,
+    0.2
+   ],
+   "stage": 3,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "west-second-deck",
+   "label": "West Second Deck",
+   "role": "identity",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     6.6499999999999995,
+     0.36000000000000004,
+     7.75906976744186
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -3.4,
+    54.2,
+    0.2
+   ],
+   "stage": 3,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.2,
+    "alpha": 0.75,
+    "glow": 0.26
+   }
+  },
+  {
+   "id": "west-second-parapet-front",
+   "label": "West Second Parapet Front",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     6.6499999999999995,
+     0.68,
+     0.19441860465116279
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -3.4,
+    54.56,
+    4.0
+   ],
+   "stage": 4,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.75,
+    "alpha": 0.64,
+    "glow": 0.12
+   }
+  },
+  {
+   "id": "west-second-parapet-back",
+   "label": "West Second Parapet Back",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     6.6499999999999995,
+     0.68,
+     0.19441860465116279
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -3.4,
+    54.56,
+    -3.6
+   ],
+   "stage": 4,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.75,
+    "alpha": 0.64,
+    "glow": 0.12
+   }
+  },
+  {
+   "id": "west-second-parapet-west",
+   "label": "West Second Parapet West",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.18333333333333335,
+     0.68,
+     7.6
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -6.65,
+    54.56,
+    0.2
+   ],
+   "stage": 4,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.75,
+    "alpha": 0.64,
+    "glow": 0.12
+   }
+  },
+  {
+   "id": "west-second-parapet-east",
+   "label": "West Second Parapet East",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.18333333333333335,
+     0.68,
+     7.6
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -0.15,
+    54.56,
+    0.2
+   ],
+   "stage": 4,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.75,
+    "alpha": 0.64,
+    "glow": 0.12
+   }
+  },
+  {
+   "id": "west-second-front-panel-seams",
+   "label": "West Second Front Panel Seams",
+   "role": "detail",
+   "certainty": "inferred",
+   "shape": {
+    "type": "paths",
+    "paths": [
+     [
+      [
+       -5.48,
+       50.64,
+       4.013255813953488
+      ],
+      [
+       -5.48,
+       57.64,
+       4.013255813953488
+      ]
+     ],
+     [
+      [
+       -3.4,
+       50.64,
+       4.013255813953488
+      ],
+      [
+       -3.4,
+       57.64,
+       4.013255813953488
+      ]
+     ],
+     [
+      [
+       -1.3200000000000003,
+       50.64,
+       4.013255813953488
+      ],
+      [
+       -1.3200000000000003,
+       57.64,
+       4.013255813953488
+      ]
+     ],
+     [
+      [
+       -6.399999999999999,
+       51.6,
+       4.013255813953488
+      ],
+      [
+       -0.40000000000000036,
+       51.6,
+       4.013255813953488
+      ]
+     ],
+     [
+      [
+       -6.399999999999999,
+       54.0,
+       4.013255813953488
+      ],
+      [
+       -0.40000000000000036,
+       54.0,
+       4.013255813953488
+      ]
+     ],
+     [
+      [
+       -6.399999999999999,
+       56.4,
+       4.013255813953488
+      ],
+      [
+       -0.40000000000000036,
+       56.4,
+       4.013255813953488
+      ]
+     ]
+    ]
+   },
+   "at": [
+    0.0,
+    -3.8,
+    0.0
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "none",
+    "weight": 0.45,
+    "alpha": 0.28,
+    "glow": 0.1
+   }
+  },
+  {
+   "id": "west-second-back-panel-seams",
+   "label": "West Second Back Panel Seams",
+   "role": "detail",
+   "certainty": "inferred",
+   "shape": {
+    "type": "paths",
+    "paths": [
+     [
+      [
+       -5.48,
+       50.64,
+       -3.613255813953488
+      ],
+      [
+       -5.48,
+       57.64,
+       -3.613255813953488
+      ]
+     ],
+     [
+      [
+       -3.4,
+       50.64,
+       -3.613255813953488
+      ],
+      [
+       -3.4,
+       57.64,
+       -3.613255813953488
+      ]
+     ],
+     [
+      [
+       -1.3200000000000003,
+       50.64,
+       -3.613255813953488
+      ],
+      [
+       -1.3200000000000003,
+       57.64,
+       -3.613255813953488
+      ]
+     ],
+     [
+      [
+       -6.399999999999999,
+       51.6,
+       -3.613255813953488
+      ],
+      [
+       -0.40000000000000036,
+       51.6,
+       -3.613255813953488
+      ]
+     ],
+     [
+      [
+       -6.399999999999999,
+       54.0,
+       -3.613255813953488
+      ],
+      [
+       -0.40000000000000036,
+       54.0,
+       -3.613255813953488
+      ]
+     ],
+     [
+      [
+       -6.399999999999999,
+       56.4,
+       -3.613255813953488
+      ],
+      [
+       -0.40000000000000036,
+       56.4,
+       -3.613255813953488
+      ]
+     ]
+    ]
+   },
+   "at": [
+    0.0,
+    -3.8,
+    0.0
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "none",
+    "weight": 0.45,
+    "alpha": 0.28,
+    "glow": 0.1
+   }
+  },
+  {
+   "id": "west-secondleft-panel-seams",
+   "label": "West Secondleft Panel Seams",
+   "role": "detail",
+   "certainty": "inferred",
+   "shape": {
+    "type": "paths",
+    "paths": [
+     [
+      [
+       -6.662500000000001,
+       50.64,
+       -2.0799999999999996
+      ],
+      [
+       -6.662500000000001,
+       57.68,
+       -2.0799999999999996
+      ]
+     ],
+     [
+      [
+       -6.662500000000001,
+       50.64,
+       0.2
+      ],
+      [
+       -6.662500000000001,
+       57.68,
+       0.2
+      ]
+     ],
+     [
+      [
+       -6.662500000000001,
+       50.64,
+       2.48
+      ],
+      [
+       -6.662500000000001,
+       57.68,
+       2.48
+      ]
+     ],
+     [
+      [
+       -6.662500000000001,
+       51.6,
+       -3.3348837209302324
+      ],
+      [
+       -6.662500000000001,
+       51.6,
+       3.7348837209302324
+      ]
+     ],
+     [
+      [
+       -6.662500000000001,
+       54.0,
+       -3.3348837209302324
+      ],
+      [
+       -6.662500000000001,
+       54.0,
+       3.7348837209302324
+      ]
+     ],
+     [
+      [
+       -6.662500000000001,
+       56.4,
+       -3.3348837209302324
+      ],
+      [
+       -6.662500000000001,
+       56.4,
+       3.7348837209302324
+      ]
+     ]
+    ]
+   },
+   "at": [
+    0.0,
+    -3.8,
+    0.0
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "none",
+    "weight": 0.45,
+    "alpha": 0.28,
+    "glow": 0.1
+   }
+  },
+  {
+   "id": "west-secondright-panel-seams",
+   "label": "West Secondright Panel Seams",
+   "role": "detail",
+   "certainty": "inferred",
+   "shape": {
+    "type": "paths",
+    "paths": [
+     [
+      [
+       -0.13750000000000018,
+       50.64,
+       -2.0799999999999996
+      ],
+      [
+       -0.13750000000000018,
+       57.68,
+       -2.0799999999999996
+      ]
+     ],
+     [
+      [
+       -0.13750000000000018,
+       50.64,
+       0.2
+      ],
+      [
+       -0.13750000000000018,
+       57.68,
+       0.2
+      ]
+     ],
+     [
+      [
+       -0.13750000000000018,
+       50.64,
+       2.48
+      ],
+      [
+       -0.13750000000000018,
+       57.68,
+       2.48
+      ]
+     ],
+     [
+      [
+       -0.13750000000000018,
+       51.6,
+       -3.3348837209302324
+      ],
+      [
+       -0.13750000000000018,
+       51.6,
+       3.7348837209302324
+      ]
+     ],
+     [
+      [
+       -0.13750000000000018,
+       54.0,
+       -3.3348837209302324
+      ],
+      [
+       -0.13750000000000018,
+       54.0,
+       3.7348837209302324
+      ]
+     ],
+     [
+      [
+       -0.13750000000000018,
+       56.4,
+       -3.3348837209302324
+      ],
+      [
+       -0.13750000000000018,
+       56.4,
+       3.7348837209302324
+      ]
+     ]
+    ]
+   },
+   "at": [
+    0.0,
+    -3.8,
+    0.0
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "none",
+    "weight": 0.45,
+    "alpha": 0.28,
+    "glow": 0.1
+   }
+  },
+  {
+   "id": "east-first-volume",
+   "label": "East First Volume",
+   "role": "mass",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     6.8,
+     18,
+     11.6
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    3.8,
+    34.2,
+    -1.6
+   ],
+   "stage": 2,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "east-first-deck",
+   "label": "East First Deck",
+   "role": "identity",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     6.961052631578947,
+     0.45,
+     11.768387096774193
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    3.8,
+    52.2,
+    -1.6
+   ],
+   "stage": 3,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.2,
+    "alpha": 0.75,
+    "glow": 0.26
+   }
+  },
+  {
+   "id": "east-first-parapet-front",
+   "label": "East First Parapet Front",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     6.961052631578947,
+     0.85,
+     0.2058064516129032
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    3.8,
+    52.65,
+    4.2
+   ],
+   "stage": 4,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.75,
+    "alpha": 0.64,
+    "glow": 0.12
+   }
+  },
+  {
+   "id": "east-first-parapet-back",
+   "label": "East First Parapet Back",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     6.961052631578947,
+     0.85,
+     0.2058064516129032
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    3.8,
+    52.65,
+    -7.4
+   ],
+   "stage": 4,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.75,
+    "alpha": 0.64,
+    "glow": 0.12
+   }
+  },
+  {
+   "id": "east-first-parapet-west",
+   "label": "East First Parapet West",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.1968421052631579,
+     0.85,
+     11.6
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0.4,
+    52.65,
+    -1.6
+   ],
+   "stage": 4,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.75,
+    "alpha": 0.64,
+    "glow": 0.12
+   }
+  },
+  {
+   "id": "east-first-parapet-east",
+   "label": "East First Parapet East",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.1968421052631579,
+     0.85,
+     11.6
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    7.2,
+    52.65,
+    -1.6
+   ],
+   "stage": 4,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.75,
+    "alpha": 0.64,
+    "glow": 0.12
+   }
+  },
+  {
+   "id": "east-first-front-panel-seams",
+   "label": "East First Front Panel Seams",
+   "role": "detail",
+   "certainty": "inferred",
+   "shape": {
+    "type": "paths",
+    "paths": [
+     [
+      [
+       1.6239999999999997,
+       38.8,
+       4.214032258064515
+      ],
+      [
+       1.6239999999999997,
+       55.55,
+       4.214032258064515
+      ]
+     ],
+     [
+      [
+       3.8,
+       38.8,
+       4.214032258064515
+      ],
+      [
+       3.8,
+       55.55,
+       4.214032258064515
+      ]
+     ],
+     [
+      [
+       5.975999999999999,
+       38.8,
+       4.214032258064515
+      ],
+      [
+       5.975999999999999,
+       55.55,
+       4.214032258064515
+      ]
+     ],
+     [
+      [
+       0.6684210526315786,
+       40,
+       4.214032258064515
+      ],
+      [
+       6.931578947368421,
+       40,
+       4.214032258064515
+      ]
+     ],
+     [
+      [
+       0.6684210526315786,
+       43,
+       4.214032258064515
+      ],
+      [
+       6.931578947368421,
+       43,
+       4.214032258064515
+      ]
+     ],
+     [
+      [
+       0.6684210526315786,
+       46,
+       4.214032258064515
+      ],
+      [
+       6.931578947368421,
+       46,
+       4.214032258064515
+      ]
+     ],
+     [
+      [
+       0.6684210526315786,
+       49,
+       4.214032258064515
+      ],
+      [
+       6.931578947368421,
+       49,
+       4.214032258064515
+      ]
+     ],
+     [
+      [
+       0.6684210526315786,
+       52,
+       4.214032258064515
+      ],
+      [
+       6.931578947368421,
+       52,
+       4.214032258064515
+      ]
+     ],
+     [
+      [
+       0.6684210526315786,
+       55,
+       4.214032258064515
+      ],
+      [
+       6.931578947368421,
+       55,
+       4.214032258064515
+      ]
+     ]
+    ]
+   },
+   "at": [
+    0.0,
+    -3.8,
+    0.0
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "none",
+    "weight": 0.45,
+    "alpha": 0.28,
+    "glow": 0.1
+   }
+  },
+  {
+   "id": "east-first-back-panel-seams",
+   "label": "East First Back Panel Seams",
+   "role": "detail",
+   "certainty": "inferred",
+   "shape": {
+    "type": "paths",
+    "paths": [
+     [
+      [
+       1.6239999999999997,
+       38.8,
+       -7.414032258064516
+      ],
+      [
+       1.6239999999999997,
+       55.55,
+       -7.414032258064516
+      ]
+     ],
+     [
+      [
+       3.8,
+       38.8,
+       -7.414032258064516
+      ],
+      [
+       3.8,
+       55.55,
+       -7.414032258064516
+      ]
+     ],
+     [
+      [
+       5.975999999999999,
+       38.8,
+       -7.414032258064516
+      ],
+      [
+       5.975999999999999,
+       55.55,
+       -7.414032258064516
+      ]
+     ],
+     [
+      [
+       0.6684210526315786,
+       40,
+       -7.414032258064516
+      ],
+      [
+       6.931578947368421,
+       40,
+       -7.414032258064516
+      ]
+     ],
+     [
+      [
+       0.6684210526315786,
+       43,
+       -7.414032258064516
+      ],
+      [
+       6.931578947368421,
+       43,
+       -7.414032258064516
+      ]
+     ],
+     [
+      [
+       0.6684210526315786,
+       46,
+       -7.414032258064516
+      ],
+      [
+       6.931578947368421,
+       46,
+       -7.414032258064516
+      ]
+     ],
+     [
+      [
+       0.6684210526315786,
+       49,
+       -7.414032258064516
+      ],
+      [
+       6.931578947368421,
+       49,
+       -7.414032258064516
+      ]
+     ],
+     [
+      [
+       0.6684210526315786,
+       52,
+       -7.414032258064516
+      ],
+      [
+       6.931578947368421,
+       52,
+       -7.414032258064516
+      ]
+     ],
+     [
+      [
+       0.6684210526315786,
+       55,
+       -7.414032258064516
+      ],
+      [
+       6.931578947368421,
+       55,
+       -7.414032258064516
+      ]
+     ]
+    ]
+   },
+   "at": [
+    0.0,
+    -3.8,
+    0.0
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "none",
+    "weight": 0.45,
+    "alpha": 0.28,
+    "glow": 0.1
+   }
+  },
+  {
+   "id": "east-firstleft-panel-seams",
+   "label": "East Firstleft Panel Seams",
+   "role": "detail",
+   "certainty": "inferred",
+   "shape": {
+    "type": "paths",
+    "paths": [
+     [
+      [
+       0.3865789473684207,
+       38.8,
+       -5.08
+      ],
+      [
+       0.3865789473684207,
+       55.6,
+       -5.08
+      ]
+     ],
+     [
+      [
+       0.3865789473684207,
+       38.8,
+       -1.6
+      ],
+      [
+       0.3865789473684207,
+       55.6,
+       -1.6
+      ]
+     ],
+     [
+      [
+       0.3865789473684207,
+       38.8,
+       1.8799999999999994
+      ],
+      [
+       0.3865789473684207,
+       55.6,
+       1.8799999999999994
+      ]
+     ],
+     [
+      [
+       0.3865789473684207,
+       40,
+       -7.119354838709677
+      ],
+      [
+       0.3865789473684207,
+       40,
+       3.9193548387096775
+      ]
+     ],
+     [
+      [
+       0.3865789473684207,
+       43,
+       -7.119354838709677
+      ],
+      [
+       0.3865789473684207,
+       43,
+       3.9193548387096775
+      ]
+     ],
+     [
+      [
+       0.3865789473684207,
+       46,
+       -7.119354838709677
+      ],
+      [
+       0.3865789473684207,
+       46,
+       3.9193548387096775
+      ]
+     ],
+     [
+      [
+       0.3865789473684207,
+       49,
+       -7.119354838709677
+      ],
+      [
+       0.3865789473684207,
+       49,
+       3.9193548387096775
+      ]
+     ],
+     [
+      [
+       0.3865789473684207,
+       52,
+       -7.119354838709677
+      ],
+      [
+       0.3865789473684207,
+       52,
+       3.9193548387096775
+      ]
+     ],
+     [
+      [
+       0.3865789473684207,
+       55,
+       -7.119354838709677
+      ],
+      [
+       0.3865789473684207,
+       55,
+       3.9193548387096775
+      ]
+     ]
+    ]
+   },
+   "at": [
+    0.0,
+    -3.8,
+    0.0
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "none",
+    "weight": 0.45,
+    "alpha": 0.28,
+    "glow": 0.1
+   }
+  },
+  {
+   "id": "east-firstright-panel-seams",
+   "label": "East Firstright Panel Seams",
+   "role": "detail",
+   "certainty": "inferred",
+   "shape": {
+    "type": "paths",
+    "paths": [
+     [
+      [
+       7.213421052631579,
+       38.8,
+       -5.08
+      ],
+      [
+       7.213421052631579,
+       55.6,
+       -5.08
+      ]
+     ],
+     [
+      [
+       7.213421052631579,
+       38.8,
+       -1.6
+      ],
+      [
+       7.213421052631579,
+       55.6,
+       -1.6
+      ]
+     ],
+     [
+      [
+       7.213421052631579,
+       38.8,
+       1.8799999999999994
+      ],
+      [
+       7.213421052631579,
+       55.6,
+       1.8799999999999994
+      ]
+     ],
+     [
+      [
+       7.213421052631579,
+       40,
+       -7.119354838709677
+      ],
+      [
+       7.213421052631579,
+       40,
+       3.9193548387096775
+      ]
+     ],
+     [
+      [
+       7.213421052631579,
+       43,
+       -7.119354838709677
+      ],
+      [
+       7.213421052631579,
+       43,
+       3.9193548387096775
+      ]
+     ],
+     [
+      [
+       7.213421052631579,
+       46,
+       -7.119354838709677
+      ],
+      [
+       7.213421052631579,
+       46,
+       3.9193548387096775
+      ]
+     ],
+     [
+      [
+       7.213421052631579,
+       49,
+       -7.119354838709677
+      ],
+      [
+       7.213421052631579,
+       49,
+       3.9193548387096775
+      ]
+     ],
+     [
+      [
+       7.213421052631579,
+       52,
+       -7.119354838709677
+      ],
+      [
+       7.213421052631579,
+       52,
+       3.9193548387096775
+      ]
+     ],
+     [
+      [
+       7.213421052631579,
+       55,
+       -7.119354838709677
+      ],
+      [
+       7.213421052631579,
+       55,
+       3.9193548387096775
+      ]
+     ]
+    ]
+   },
+   "at": [
+    0.0,
+    -3.8,
+    0.0
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "none",
+    "weight": 0.45,
+    "alpha": 0.28,
+    "glow": 0.1
+   }
+  },
+  {
+   "id": "east-second-volume",
+   "label": "East Second Volume",
+   "role": "mass",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     5.5,
+     8.8,
+     8.5
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    3.4,
+    52.2,
+    -3.1
+   ],
+   "stage": 3,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "east-second-deck",
+   "label": "East Second Deck",
+   "role": "identity",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     5.659677419354838,
+     0.36000000000000004,
+     8.659375
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    3.4,
+    61.0,
+    -3.1
+   ],
+   "stage": 3,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.2,
+    "alpha": 0.75,
+    "glow": 0.26
+   }
+  },
+  {
+   "id": "east-second-parapet-front",
+   "label": "East Second Parapet Front",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     5.659677419354838,
+     0.68,
+     0.1947916666666667
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    3.4,
+    61.36,
+    1.15
+   ],
+   "stage": 4,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.75,
+    "alpha": 0.64,
+    "glow": 0.12
+   }
+  },
+  {
+   "id": "east-second-parapet-back",
+   "label": "East Second Parapet Back",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     5.659677419354838,
+     0.68,
+     0.1947916666666667
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    3.4,
+    61.36,
+    -7.35
+   ],
+   "stage": 4,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.75,
+    "alpha": 0.64,
+    "glow": 0.12
+   }
+  },
+  {
+   "id": "east-second-parapet-west",
+   "label": "East Second Parapet West",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.19516129032258064,
+     0.68,
+     8.5
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0.65,
+    61.36,
+    -3.1
+   ],
+   "stage": 4,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.75,
+    "alpha": 0.64,
+    "glow": 0.12
+   }
+  },
+  {
+   "id": "east-second-parapet-east",
+   "label": "East Second Parapet East",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.19516129032258064,
+     0.68,
+     8.5
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    6.15,
+    61.36,
+    -3.1
+   ],
+   "stage": 4,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.75,
+    "alpha": 0.64,
+    "glow": 0.12
+   }
+  },
+  {
+   "id": "east-second-front-panel-seams",
+   "label": "East Second Front Panel Seams",
+   "role": "detail",
+   "certainty": "inferred",
+   "shape": {
+    "type": "paths",
+    "paths": [
+     [
+      [
+       1.6400000000000006,
+       56.64,
+       1.1632812500000003
+      ],
+      [
+       1.6400000000000006,
+       64.44,
+       1.1632812500000003
+      ]
+     ],
+     [
+      [
+       3.4000000000000004,
+       56.64,
+       1.1632812500000003
+      ],
+      [
+       3.4000000000000004,
+       64.44,
+       1.1632812500000003
+      ]
+     ],
+     [
+      [
+       5.16,
+       56.64,
+       1.1632812500000003
+      ],
+      [
+       5.16,
+       64.44,
+       1.1632812500000003
+      ]
+     ],
+     [
+      [
+       0.9161290322580649,
+       57.6,
+       1.1632812500000003
+      ],
+      [
+       5.883870967741936,
+       57.6,
+       1.1632812500000003
+      ]
+     ],
+     [
+      [
+       0.9161290322580649,
+       60.0,
+       1.1632812500000003
+      ],
+      [
+       5.883870967741936,
+       60.0,
+       1.1632812500000003
+      ]
+     ],
+     [
+      [
+       0.9161290322580649,
+       62.4,
+       1.1632812500000003
+      ],
+      [
+       5.883870967741936,
+       62.4,
+       1.1632812500000003
+      ]
+     ]
+    ]
+   },
+   "at": [
+    0.0,
+    -3.8,
+    0.0
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "none",
+    "weight": 0.45,
+    "alpha": 0.28,
+    "glow": 0.1
+   }
+  },
+  {
+   "id": "east-second-back-panel-seams",
+   "label": "East Second Back Panel Seams",
+   "role": "detail",
+   "certainty": "inferred",
+   "shape": {
+    "type": "paths",
+    "paths": [
+     [
+      [
+       1.6400000000000006,
+       56.64,
+       -7.36328125
+      ],
+      [
+       1.6400000000000006,
+       64.44,
+       -7.36328125
+      ]
+     ],
+     [
+      [
+       3.4000000000000004,
+       56.64,
+       -7.36328125
+      ],
+      [
+       3.4000000000000004,
+       64.44,
+       -7.36328125
+      ]
+     ],
+     [
+      [
+       5.16,
+       56.64,
+       -7.36328125
+      ],
+      [
+       5.16,
+       64.44,
+       -7.36328125
+      ]
+     ],
+     [
+      [
+       0.9161290322580649,
+       57.6,
+       -7.36328125
+      ],
+      [
+       5.883870967741936,
+       57.6,
+       -7.36328125
+      ]
+     ],
+     [
+      [
+       0.9161290322580649,
+       60.0,
+       -7.36328125
+      ],
+      [
+       5.883870967741936,
+       60.0,
+       -7.36328125
+      ]
+     ],
+     [
+      [
+       0.9161290322580649,
+       62.4,
+       -7.36328125
+      ],
+      [
+       5.883870967741936,
+       62.4,
+       -7.36328125
+      ]
+     ]
+    ]
+   },
+   "at": [
+    0.0,
+    -3.8,
+    0.0
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "none",
+    "weight": 0.45,
+    "alpha": 0.28,
+    "glow": 0.1
+   }
+  },
+  {
+   "id": "east-secondleft-panel-seams",
+   "label": "East Secondleft Panel Seams",
+   "role": "detail",
+   "certainty": "inferred",
+   "shape": {
+    "type": "paths",
+    "paths": [
+     [
+      [
+       0.6366935483870968,
+       56.64,
+       -5.65
+      ],
+      [
+       0.6366935483870968,
+       64.47999999999999,
+       -5.65
+      ]
+     ],
+     [
+      [
+       0.6366935483870968,
+       56.64,
+       -3.1
+      ],
+      [
+       0.6366935483870968,
+       64.47999999999999,
+       -3.1
+      ]
+     ],
+     [
+      [
+       0.6366935483870968,
+       56.64,
+       -0.5499999999999998
+      ],
+      [
+       0.6366935483870968,
+       64.47999999999999,
+       -0.5499999999999998
+      ]
+     ],
+     [
+      [
+       0.6366935483870968,
+       57.6,
+       -7.0843750000000005
+      ],
+      [
+       0.6366935483870968,
+       57.6,
+       0.8843750000000004
+      ]
+     ],
+     [
+      [
+       0.6366935483870968,
+       60.0,
+       -7.0843750000000005
+      ],
+      [
+       0.6366935483870968,
+       60.0,
+       0.8843750000000004
+      ]
+     ],
+     [
+      [
+       0.6366935483870968,
+       62.4,
+       -7.0843750000000005
+      ],
+      [
+       0.6366935483870968,
+       62.4,
+       0.8843750000000004
+      ]
+     ]
+    ]
+   },
+   "at": [
+    0.0,
+    -3.8,
+    0.0
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "none",
+    "weight": 0.45,
+    "alpha": 0.28,
+    "glow": 0.1
+   }
+  },
+  {
+   "id": "east-secondright-panel-seams",
+   "label": "East Secondright Panel Seams",
+   "role": "detail",
+   "certainty": "inferred",
+   "shape": {
+    "type": "paths",
+    "paths": [
+     [
+      [
+       6.163306451612904,
+       56.64,
+       -5.65
+      ],
+      [
+       6.163306451612904,
+       64.47999999999999,
+       -5.65
+      ]
+     ],
+     [
+      [
+       6.163306451612904,
+       56.64,
+       -3.1
+      ],
+      [
+       6.163306451612904,
+       64.47999999999999,
+       -3.1
+      ]
+     ],
+     [
+      [
+       6.163306451612904,
+       56.64,
+       -0.5499999999999998
+      ],
+      [
+       6.163306451612904,
+       64.47999999999999,
+       -0.5499999999999998
+      ]
+     ],
+     [
+      [
+       6.163306451612904,
+       57.6,
+       -7.0843750000000005
+      ],
+      [
+       6.163306451612904,
+       57.6,
+       0.8843750000000004
+      ]
+     ],
+     [
+      [
+       6.163306451612904,
+       60.0,
+       -7.0843750000000005
+      ],
+      [
+       6.163306451612904,
+       60.0,
+       0.8843750000000004
+      ]
+     ],
+     [
+      [
+       6.163306451612904,
+       62.4,
+       -7.0843750000000005
+      ],
+      [
+       6.163306451612904,
+       62.4,
+       0.8843750000000004
+      ]
+     ]
+    ]
+   },
+   "at": [
+    0.0,
+    -3.8,
+    0.0
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "none",
+    "weight": 0.45,
+    "alpha": 0.28,
+    "glow": 0.1
+   }
+  },
+  {
+   "id": "transfer-terrace-slab",
+   "label": "Transfer Terrace Slab",
+   "role": "identity",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     17.5,
+     0.6,
+     15.5
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0.0,
+    33.6,
+    0.0
+   ],
+   "stage": 2,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.15,
+    "alpha": 0.72,
+    "glow": 0.2
+   }
+  },
+  {
+   "id": "transfer-parapet-front",
+   "label": "Transfer Parapet Front",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     17.5,
+     1,
+     0.24
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0.0,
+    34.2,
+    7.6
+   ],
+   "stage": 4,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "transfer-parapet-back",
+   "label": "Transfer Parapet Back",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     17.5,
+     1,
+     0.24
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0.0,
+    34.2,
+    -7.6
+   ],
+   "stage": 4,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "transfer-parapet-west",
+   "label": "Transfer Parapet West",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.24,
+     1,
+     15.2
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -8.6,
+    34.2,
+    0.0
+   ],
+   "stage": 4,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "transfer-parapet-east",
+   "label": "Transfer Parapet East",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.24,
+     1,
+     15.2
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    8.6,
+    34.2,
+    0.0
+   ],
+   "stage": 4,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "west-roof-service-room",
+   "label": "West Roof Service Room",
+   "role": "identity",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     4.4,
+     2.2399999999999998,
+     4.4
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -3.6,
+    54.56,
+    -0.3
+   ],
+   "stage": 4,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "west-service-cap",
+   "label": "West Service Cap",
+   "role": "identity",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     4.7,
+     0.32000000000000006,
+     4.7
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -3.6,
+    56.8,
+    -0.3
+   ],
+   "stage": 4,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "east-roof-service-room",
+   "label": "East Roof Service Room",
+   "role": "identity",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     3.5,
+     2.0,
+     4.5
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    3.5,
+    61.36,
+    -3.6
+   ],
+   "stage": 4,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "east-service-cap",
+   "label": "East Service Cap",
+   "role": "identity",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     3.8,
+     0.36000000000000004,
+     4.8
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    3.5,
+    63.36,
+    -3.6
+   ],
+   "stage": 4,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.2,
+    "alpha": 0.78,
+    "glow": 0.18
+   }
+  },
+  {
+   "id": "west-low-vent-bank",
+   "label": "West Low Vent Bank",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     2.5,
+     0.8,
+     1.5
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -6.1,
+    46.65,
+    5.4
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "west-low-vent-slats",
+   "label": "West Low Vent Slats",
+   "role": "detail",
+   "certainty": "inferred",
+   "shape": {
+    "type": "paths",
+    "paths": [
+     [
+      [
+       -7.1499999999999995,
+       51.260000000000005,
+       5.2
+      ],
+      [
+       -7.1499999999999995,
+       51.260000000000005,
+       6.3999999999999995
+      ]
+     ],
+     [
+      [
+       -6.7299999999999995,
+       51.260000000000005,
+       5.2
+      ],
+      [
+       -6.7299999999999995,
+       51.260000000000005,
+       6.3999999999999995
+      ]
+     ],
+     [
+      [
+       -6.31,
+       51.260000000000005,
+       5.2
+      ],
+      [
+       -6.31,
+       51.260000000000005,
+       6.3999999999999995
+      ]
+     ],
+     [
+      [
+       -5.889999999999999,
+       51.260000000000005,
+       5.2
+      ],
+      [
+       -5.889999999999999,
+       51.260000000000005,
+       6.3999999999999995
+      ]
+     ],
+     [
+      [
+       -5.469999999999999,
+       51.260000000000005,
+       5.2
+      ],
+      [
+       -5.469999999999999,
+       51.260000000000005,
+       6.3999999999999995
+      ]
+     ],
+     [
+      [
+       -5.049999999999999,
+       51.260000000000005,
+       5.2
+      ],
+      [
+       -5.049999999999999,
+       51.260000000000005,
+       6.3999999999999995
+      ]
+     ]
+    ]
+   },
+   "at": [
+    0.0,
+    -3.8,
+    0.0
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "none",
+    "weight": 0.6,
+    "alpha": 0.5,
+    "glow": 0.1
+   }
+  },
+  {
+   "id": "east-low-vent-bank",
+   "label": "East Low Vent Bank",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     2.4,
+     0.8,
+     1.6
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    5.5,
+    52.65,
+    3.5
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "east-low-vent-slats",
+   "label": "East Low Vent Slats",
+   "role": "detail",
+   "certainty": "inferred",
+   "shape": {
+    "type": "paths",
+    "paths": [
+     [
+      [
+       4.5,
+       57.260000000000005,
+       3.2499999999999996
+      ],
+      [
+       4.5,
+       57.260000000000005,
+       4.55
+      ]
+     ],
+     [
+      [
+       4.9,
+       57.260000000000005,
+       3.2499999999999996
+      ],
+      [
+       4.9,
+       57.260000000000005,
+       4.55
+      ]
+     ],
+     [
+      [
+       5.3,
+       57.260000000000005,
+       3.2499999999999996
+      ],
+      [
+       5.3,
+       57.260000000000005,
+       4.55
+      ]
+     ],
+     [
+      [
+       5.7,
+       57.260000000000005,
+       3.2499999999999996
+      ],
+      [
+       5.7,
+       57.260000000000005,
+       4.55
+      ]
+     ],
+     [
+      [
+       6.1,
+       57.260000000000005,
+       3.2499999999999996
+      ],
+      [
+       6.1,
+       57.260000000000005,
+       4.55
+      ]
+     ],
+     [
+      [
+       6.5,
+       57.260000000000005,
+       3.2499999999999996
+      ],
+      [
+       6.5,
+       57.260000000000005,
+       4.55
+      ]
+     ]
+    ]
+   },
+   "at": [
+    0.0,
+    -3.8,
+    0.0
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "none",
+    "weight": 0.6,
+    "alpha": 0.5,
+    "glow": 0.1
+   }
+  },
+  {
+   "id": "west-top-vent-bank",
+   "label": "West Top Vent Bank",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     2.8,
+     0.6400000000000001,
+     2.7
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -3.6,
+    57.12,
+    -0.3
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "west-top-vent-slats",
+   "label": "West Top Vent Slats",
+   "role": "detail",
+   "certainty": "inferred",
+   "shape": {
+    "type": "paths",
+    "paths": [
+     [
+      [
+       -4.800000000000001,
+       61.568,
+       -1.5000000000000002
+      ],
+      [
+       -4.800000000000001,
+       61.568,
+       0.9000000000000004
+      ]
+     ],
+     [
+      [
+       -4.32,
+       61.568,
+       -1.5000000000000002
+      ],
+      [
+       -4.32,
+       61.568,
+       0.9000000000000004
+      ]
+     ],
+     [
+      [
+       -3.8400000000000003,
+       61.568,
+       -1.5000000000000002
+      ],
+      [
+       -3.8400000000000003,
+       61.568,
+       0.9000000000000004
+      ]
+     ],
+     [
+      [
+       -3.36,
+       61.568,
+       -1.5000000000000002
+      ],
+      [
+       -3.36,
+       61.568,
+       0.9000000000000004
+      ]
+     ],
+     [
+      [
+       -2.880000000000001,
+       61.568,
+       -1.5000000000000002
+      ],
+      [
+       -2.880000000000001,
+       61.568,
+       0.9000000000000004
+      ]
+     ],
+     [
+      [
+       -2.4000000000000004,
+       61.568,
+       -1.5000000000000002
+      ],
+      [
+       -2.4000000000000004,
+       61.568,
+       0.9000000000000004
+      ]
+     ]
+    ]
+   },
+   "at": [
+    0.0,
+    -3.8,
+    0.0
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "none",
+    "weight": 0.6,
+    "alpha": 0.5,
+    "glow": 0.1
+   }
+  },
+  {
+   "id": "west-crest-louvre",
+   "label": "West Crest Louvre",
+   "role": "identity",
+   "certainty": "inferred",
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 0.2,
+    "profile": [
+     [
+      -1.4,
+      0
+     ],
+     [
+      1.4,
+      0
+     ],
+     [
+      1.4,
+      0.18
+     ],
+     [
+      -1.18,
+      0.18
+     ],
+     [
+      -1.18,
+      0.5
+     ],
+     [
+      1.4,
+      0.5
+     ],
+     [
+      1.4,
+      0.68
+     ],
+     [
+      -1.18,
+      0.68
+     ],
+     [
+      -1.18,
+      1
+     ],
+     [
+      1.4,
+      1
+     ],
+     [
+      1.4,
+      1.18
+     ],
+     [
+      -1.18,
+      1.18
+     ],
+     [
+      -1.18,
+      1.5
+     ],
+     [
+      -1.4,
+      1.5
+     ]
+    ]
+   },
+   "at": [
+    -2.85,
+    54.8,
+    1.89
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.8,
+    "alpha": 0.55,
+    "glow": 0.1
+   }
+  },
+  {
+   "id": "east-crest-louvre",
+   "label": "East Crest Louvre",
+   "role": "identity",
+   "certainty": "inferred",
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 0.2,
+    "profile": [
+     [
+      -1,
+      0
+     ],
+     [
+      1,
+      0
+     ],
+     [
+      1,
+      0.18
+     ],
+     [
+      -0.78,
+      0.18
+     ],
+     [
+      -0.78,
+      0.5
+     ],
+     [
+      1,
+      0.5
+     ],
+     [
+      1,
+      0.68
+     ],
+     [
+      -0.78,
+      0.68
+     ],
+     [
+      -0.78,
+      1
+     ],
+     [
+      1,
+      1
+     ],
+     [
+      1,
+      1.18
+     ],
+     [
+      -0.78,
+      1.18
+     ],
+     [
+      -0.78,
+      1.5
+     ],
+     [
+      -1,
+      1.5
+     ]
+    ]
+   },
+   "at": [
+    3.9,
+    61.6,
+    -1.36
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.8,
+    "alpha": 0.55,
+    "glow": 0.1
+   }
+  },
+  {
+   "id": "front-pier--7.6",
+   "label": "Front Pier  7.6",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.5,
+     31.8,
+     0.6
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -7.6,
+    1.2,
+    7.6
+   ],
+   "stage": 2,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "front-pier--2.6",
+   "label": "Front Pier  2.6",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.5,
+     31.8,
+     0.6
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -2.6,
+    1.2,
+    7.6
+   ],
+   "stage": 2,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "front-pier-2.6",
+   "label": "Front Pier 2.6",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.5,
+     31.8,
+     0.6
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    2.6,
+    1.2,
+    7.6
+   ],
+   "stage": 2,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "front-pier-7.6",
+   "label": "Front Pier 7.6",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.5,
+     31.8,
+     0.6
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    7.6,
+    1.2,
+    7.6
+   ],
+   "stage": 2,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "front-glazing-bay--5.2",
+   "label": "Front Glazing Bay  5.2",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     4.2,
+     24.2,
+     0.1
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -5.2,
+    7.8,
+    7.36
+   ],
+   "stage": 3,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.4,
+    "alpha": 0.3,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "front-glazing-bay-0",
+   "label": "Front Glazing Bay 0",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     4.2,
+     24.2,
+     0.1
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0.0,
+    7.8,
+    7.36
+   ],
+   "stage": 3,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.4,
+    "alpha": 0.3,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "front-glazing-bay-5.2",
+   "label": "Front Glazing Bay 5.2",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     4.2,
+     24.2,
+     0.1
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    5.2,
+    7.8,
+    7.36
+   ],
+   "stage": 3,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.4,
+    "alpha": 0.3,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "west-wall-pier--5",
+   "label": "West Wall Pier  5",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.7,
+     31.8,
+     0.5
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -8.55,
+    1.2,
+    -5.0
+   ],
+   "stage": 2,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "west-wall-pier-0",
+   "label": "West Wall Pier 0",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.7,
+     31.8,
+     0.5
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -8.55,
+    1.2,
+    0.0
+   ],
+   "stage": 2,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "west-wall-pier-5",
+   "label": "West Wall Pier 5",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.7,
+     31.8,
+     0.5
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -8.55,
+    1.2,
+    5.0
+   ],
+   "stage": 2,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "east-wall-pier--5",
+   "label": "East Wall Pier  5",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.7,
+     31.8,
+     0.5
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    8.55,
+    1.2,
+    -5.0
+   ],
+   "stage": 2,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "east-wall-pier-0",
+   "label": "East Wall Pier 0",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.7,
+     31.8,
+     0.5
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    8.55,
+    1.2,
+    0.0
+   ],
+   "stage": 2,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "east-wall-pier-5",
+   "label": "East Wall Pier 5",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.7,
+     31.8,
+     0.5
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    8.55,
+    1.2,
+    5.0
+   ],
+   "stage": 2,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "lower-front-panel-joints",
+   "label": "Lower Front Panel Joints",
+   "role": "detail",
+   "certainty": "inferred",
+   "shape": {
+    "type": "paths",
+    "paths": [
+     [
+      [
+       -8.25,
+       5,
+       7.72
+      ],
+      [
+       8.25,
+       5,
+       7.72
+      ]
+     ],
+     [
+      [
+       -8.25,
+       8,
+       7.72
+      ],
+      [
+       8.25,
+       8,
+       7.72
+      ]
+     ],
+     [
+      [
+       -8.25,
+       11,
+       7.72
+      ],
+      [
+       8.25,
+       11,
+       7.72
+      ]
+     ],
+     [
+      [
+       -8.25,
+       14,
+       7.72
+      ],
+      [
+       8.25,
+       14,
+       7.72
+      ]
+     ],
+     [
+      [
+       -8.25,
+       17,
+       7.72
+      ],
+      [
+       8.25,
+       17,
+       7.72
+      ]
+     ],
+     [
+      [
+       -8.25,
+       20,
+       7.72
+      ],
+      [
+       8.25,
+       20,
+       7.72
+      ]
+     ],
+     [
+      [
+       -8.25,
+       23,
+       7.72
+      ],
+      [
+       8.25,
+       23,
+       7.72
+      ]
+     ],
+     [
+      [
+       -8.25,
+       26,
+       7.72
+      ],
+      [
+       8.25,
+       26,
+       7.72
+      ]
+     ],
+     [
+      [
+       -8.25,
+       29,
+       7.72
+      ],
+      [
+       8.25,
+       29,
+       7.72
+      ]
+     ],
+     [
+      [
+       -8.25,
+       32,
+       7.72
+      ],
+      [
+       8.25,
+       32,
+       7.72
+      ]
+     ],
+     [
+      [
+       -8.25,
+       35,
+       7.72
+      ],
+      [
+       8.25,
+       35,
+       7.72
+      ]
+     ],
+     [
+      [
+       -6.6,
+       2,
+       7.72
+      ],
+      [
+       -6.6,
+       37,
+       7.72
+      ]
+     ],
+     [
+      [
+       -3.3,
+       2,
+       7.72
+      ],
+      [
+       -3.3,
+       37,
+       7.72
+      ]
+     ],
+     [
+      [
+       0,
+       2,
+       7.72
+      ],
+      [
+       0,
+       37,
+       7.72
+      ]
+     ],
+     [
+      [
+       3.3,
+       2,
+       7.72
+      ],
+      [
+       3.3,
+       37,
+       7.72
+      ]
+     ],
+     [
+      [
+       6.6,
+       2,
+       7.72
+      ],
+      [
+       6.6,
+       37,
+       7.72
+      ]
+     ]
+    ]
+   },
+   "at": [
+    0.0,
+    0.0,
+    -0.4
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "none",
+    "weight": 0.5,
+    "alpha": 0.32,
+    "glow": 0.1
+   },
+   "scale": [
+    1,
+    0.9,
+    1
+   ]
+  },
+  {
+   "id": "lower-back-panel-joints",
+   "label": "Lower Back Panel Joints",
+   "role": "detail",
+   "certainty": "inferred",
+   "shape": {
+    "type": "paths",
+    "paths": [
+     [
+      [
+       -8.25,
+       5,
+       -7.62
+      ],
+      [
+       8.25,
+       5,
+       -7.62
+      ]
+     ],
+     [
+      [
+       -8.25,
+       8,
+       -7.62
+      ],
+      [
+       8.25,
+       8,
+       -7.62
+      ]
+     ],
+     [
+      [
+       -8.25,
+       11,
+       -7.62
+      ],
+      [
+       8.25,
+       11,
+       -7.62
+      ]
+     ],
+     [
+      [
+       -8.25,
+       14,
+       -7.62
+      ],
+      [
+       8.25,
+       14,
+       -7.62
+      ]
+     ],
+     [
+      [
+       -8.25,
+       17,
+       -7.62
+      ],
+      [
+       8.25,
+       17,
+       -7.62
+      ]
+     ],
+     [
+      [
+       -8.25,
+       20,
+       -7.62
+      ],
+      [
+       8.25,
+       20,
+       -7.62
+      ]
+     ],
+     [
+      [
+       -8.25,
+       23,
+       -7.62
+      ],
+      [
+       8.25,
+       23,
+       -7.62
+      ]
+     ],
+     [
+      [
+       -8.25,
+       26,
+       -7.62
+      ],
+      [
+       8.25,
+       26,
+       -7.62
+      ]
+     ],
+     [
+      [
+       -8.25,
+       29,
+       -7.62
+      ],
+      [
+       8.25,
+       29,
+       -7.62
+      ]
+     ],
+     [
+      [
+       -8.25,
+       32,
+       -7.62
+      ],
+      [
+       8.25,
+       32,
+       -7.62
+      ]
+     ],
+     [
+      [
+       -8.25,
+       35,
+       -7.62
+      ],
+      [
+       8.25,
+       35,
+       -7.62
+      ]
+     ],
+     [
+      [
+       -6.6,
+       2,
+       -7.62
+      ],
+      [
+       -6.6,
+       37,
+       -7.62
+      ]
+     ],
+     [
+      [
+       -3.3,
+       2,
+       -7.62
+      ],
+      [
+       -3.3,
+       37,
+       -7.62
+      ]
+     ],
+     [
+      [
+       0,
+       2,
+       -7.62
+      ],
+      [
+       0,
+       37,
+       -7.62
+      ]
+     ],
+     [
+      [
+       3.3,
+       2,
+       -7.62
+      ],
+      [
+       3.3,
+       37,
+       -7.62
+      ]
+     ],
+     [
+      [
+       6.6,
+       2,
+       -7.62
+      ],
+      [
+       6.6,
+       37,
+       -7.62
+      ]
+     ]
+    ]
+   },
+   "at": [
+    0.0,
+    0.0,
+    0.3
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "none",
+    "weight": 0.5,
+    "alpha": 0.32,
+    "glow": 0.1
+   },
+   "scale": [
+    1,
+    0.9,
+    1
+   ]
+  },
+  {
+   "id": "lower-west-panel-joints",
+   "label": "Lower West Panel Joints",
+   "role": "detail",
+   "certainty": "inferred",
+   "shape": {
+    "type": "paths",
+    "paths": [
+     [
+      [
+       -8.62,
+       5,
+       -7.2
+      ],
+      [
+       -8.62,
+       5,
+       7.2
+      ]
+     ],
+     [
+      [
+       -8.62,
+       8,
+       -7.2
+      ],
+      [
+       -8.62,
+       8,
+       7.2
+      ]
+     ],
+     [
+      [
+       -8.62,
+       11,
+       -7.2
+      ],
+      [
+       -8.62,
+       11,
+       7.2
+      ]
+     ],
+     [
+      [
+       -8.62,
+       14,
+       -7.2
+      ],
+      [
+       -8.62,
+       14,
+       7.2
+      ]
+     ],
+     [
+      [
+       -8.62,
+       17,
+       -7.2
+      ],
+      [
+       -8.62,
+       17,
+       7.2
+      ]
+     ],
+     [
+      [
+       -8.62,
+       20,
+       -7.2
+      ],
+      [
+       -8.62,
+       20,
+       7.2
+      ]
+     ],
+     [
+      [
+       -8.62,
+       23,
+       -7.2
+      ],
+      [
+       -8.62,
+       23,
+       7.2
+      ]
+     ],
+     [
+      [
+       -8.62,
+       26,
+       -7.2
+      ],
+      [
+       -8.62,
+       26,
+       7.2
+      ]
+     ],
+     [
+      [
+       -8.62,
+       29,
+       -7.2
+      ],
+      [
+       -8.62,
+       29,
+       7.2
+      ]
+     ],
+     [
+      [
+       -8.62,
+       32,
+       -7.2
+      ],
+      [
+       -8.62,
+       32,
+       7.2
+      ]
+     ],
+     [
+      [
+       -8.62,
+       35,
+       -7.2
+      ],
+      [
+       -8.62,
+       35,
+       7.2
+      ]
+     ],
+     [
+      [
+       -8.62,
+       2,
+       -6.6
+      ],
+      [
+       -8.62,
+       37,
+       -6.6
+      ]
+     ],
+     [
+      [
+       -8.62,
+       2,
+       -3.3
+      ],
+      [
+       -8.62,
+       37,
+       -3.3
+      ]
+     ],
+     [
+      [
+       -8.62,
+       2,
+       0
+      ],
+      [
+       -8.62,
+       37,
+       0
+      ]
+     ],
+     [
+      [
+       -8.62,
+       2,
+       3.3
+      ],
+      [
+       -8.62,
+       37,
+       3.3
+      ]
+     ],
+     [
+      [
+       -8.62,
+       2,
+       6.6
+      ],
+      [
+       -8.62,
+       37,
+       6.6
+      ]
+     ]
+    ]
+   },
+   "at": [
+    0.3,
+    0.0,
+    0.0
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "none",
+    "weight": 0.5,
+    "alpha": 0.32,
+    "glow": 0.1
+   },
+   "scale": [
+    1,
+    0.9,
+    1
+   ]
+  },
+  {
+   "id": "lower-east-panel-joints",
+   "label": "Lower East Panel Joints",
+   "role": "detail",
+   "certainty": "inferred",
+   "shape": {
+    "type": "paths",
+    "paths": [
+     [
+      [
+       8.62,
+       5,
+       -7.2
+      ],
+      [
+       8.62,
+       5,
+       7.2
+      ]
+     ],
+     [
+      [
+       8.62,
+       8,
+       -7.2
+      ],
+      [
+       8.62,
+       8,
+       7.2
+      ]
+     ],
+     [
+      [
+       8.62,
+       11,
+       -7.2
+      ],
+      [
+       8.62,
+       11,
+       7.2
+      ]
+     ],
+     [
+      [
+       8.62,
+       14,
+       -7.2
+      ],
+      [
+       8.62,
+       14,
+       7.2
+      ]
+     ],
+     [
+      [
+       8.62,
+       17,
+       -7.2
+      ],
+      [
+       8.62,
+       17,
+       7.2
+      ]
+     ],
+     [
+      [
+       8.62,
+       20,
+       -7.2
+      ],
+      [
+       8.62,
+       20,
+       7.2
+      ]
+     ],
+     [
+      [
+       8.62,
+       23,
+       -7.2
+      ],
+      [
+       8.62,
+       23,
+       7.2
+      ]
+     ],
+     [
+      [
+       8.62,
+       26,
+       -7.2
+      ],
+      [
+       8.62,
+       26,
+       7.2
+      ]
+     ],
+     [
+      [
+       8.62,
+       29,
+       -7.2
+      ],
+      [
+       8.62,
+       29,
+       7.2
+      ]
+     ],
+     [
+      [
+       8.62,
+       32,
+       -7.2
+      ],
+      [
+       8.62,
+       32,
+       7.2
+      ]
+     ],
+     [
+      [
+       8.62,
+       35,
+       -7.2
+      ],
+      [
+       8.62,
+       35,
+       7.2
+      ]
+     ],
+     [
+      [
+       8.62,
+       2,
+       -6.6
+      ],
+      [
+       8.62,
+       37,
+       -6.6
+      ]
+     ],
+     [
+      [
+       8.62,
+       2,
+       -3.3
+      ],
+      [
+       8.62,
+       37,
+       -3.3
+      ]
+     ],
+     [
+      [
+       8.62,
+       2,
+       0
+      ],
+      [
+       8.62,
+       37,
+       0
+      ]
+     ],
+     [
+      [
+       8.62,
+       2,
+       3.3
+      ],
+      [
+       8.62,
+       37,
+       3.3
+      ]
+     ],
+     [
+      [
+       8.62,
+       2,
+       6.6
+      ],
+      [
+       8.62,
+       37,
+       6.6
+      ]
+     ]
+    ]
+   },
+   "at": [
+    -0.3,
+    0.0,
+    0.0
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "none",
+    "weight": 0.5,
+    "alpha": 0.32,
+    "glow": 0.1
+   },
+   "scale": [
+    1,
+    0.9,
+    1
+   ]
+  },
+  {
+   "id": "entry-door-glass",
+   "label": "Entry Door Glass",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     3.6,
+     5.2,
+     0.12
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0.0,
+    1.2,
+    7.4
+   ],
+   "stage": 2,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "entry-canopy",
+   "label": "Entry Canopy",
+   "role": "identity",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     6.2,
+     0.5,
+     1
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0,
+    6.4,
+    7.3
+   ],
+   "stage": 3,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.2,
+    "alpha": 0.8,
+    "glow": 0.23
+   }
+  },
+  {
+   "id": "entry-jamb--2.2",
+   "label": "Entry Jamb  2.2",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.45,
+     5.2,
+     0.7
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -2.2,
+    1.2,
+    7.55
+   ],
+   "stage": 2,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "entry-jamb-2.2",
+   "label": "Entry Jamb 2.2",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.45,
+     5.2,
+     0.7
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    2.2,
+    1.2,
+    7.55
+   ],
+   "stage": 2,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "service-door--6.4",
+   "label": "Service Door  6.4",
+   "role": "detail",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.6,
+     3.2,
+     0.15
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -6.4,
+    1.2,
+    7.7
+   ],
+   "stage": 3,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "service-door-6.4",
+   "label": "Service Door 6.4",
+   "role": "detail",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.6,
+     3.2,
+     0.15
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    6.4,
+    1.2,
+    7.7
+   ],
+   "stage": 3,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "occupied-slit-0",
+   "label": "Occupied Slit 0",
+   "role": "identity",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.14,
+     9,
+     0.09
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -6.5,
+    12,
+    7.78
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.1,
+    "alpha": 0.72,
+    "glow": 0.35
+   }
+  },
+  {
+   "id": "occupied-slit-1",
+   "label": "Occupied Slit 1",
+   "role": "identity",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.14,
+     7,
+     0.09
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    1.1,
+    23,
+    7.78
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.1,
+    "alpha": 0.72,
+    "glow": 0.35
+   }
+  },
+  {
+   "id": "occupied-slit-2",
+   "label": "Occupied Slit 2",
+   "role": "identity",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.14,
+     6,
+     0.09
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    6.5,
+    8,
+    7.78
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.1,
+    "alpha": 0.72,
+    "glow": 0.35
+   }
+  },
+  {
+   "id": "occupied-slit-3",
+   "label": "Occupied Slit 3",
+   "role": "identity",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.14,
+     5,
+     0.09
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -3.8,
+    38.2,
+    6.3
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.1,
+    "alpha": 0.72,
+    "glow": 0.35
+   }
+  },
+  {
+   "id": "occupied-slit-4",
+   "label": "Occupied Slit 4",
+   "role": "identity",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.14,
+     4,
+     0.09
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    5.2,
+    53.8,
+    1.18
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.1,
+    "alpha": 0.72,
+    "glow": 0.35
+   }
+  },
+  {
+   "id": "lower-front-recess-spandrel",
+   "label": "Lower Front Recess Spandrel",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     16.6,
+     0.5,
+     0.7
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0.0,
+    6.8,
+    7.5
+   ],
+   "stage": 3,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   },
+   "repeat": {
+    "count": 5,
+    "step": {
+     "at": [
+      0,
+      6,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "lower-back-recess-spandrel",
+   "label": "Lower Back Recess Spandrel",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     16.6,
+     0.5,
+     0.7
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0.0,
+    6.8,
+    -7.5
+   ],
+   "stage": 3,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   },
+   "repeat": {
+    "count": 5,
+    "step": {
+     "at": [
+      0,
+      6,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "lower-west-recess-spandrel",
+   "label": "Lower West Recess Spandrel",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.7,
+     0.5,
+     14.4
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -8.5,
+    6.8,
+    0.0
+   ],
+   "stage": 3,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   },
+   "repeat": {
+    "count": 5,
+    "step": {
+     "at": [
+      0,
+      6,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "lower-east-recess-spandrel",
+   "label": "Lower East Recess Spandrel",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.7,
+     0.5,
+     14.4
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    8.5,
+    6.8,
+    0.0
+   ],
+   "stage": 3,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   },
+   "repeat": {
+    "count": 5,
+    "step": {
+     "at": [
+      0,
+      6,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "west-plant-plinth-0",
+   "label": "West Plant Plinth 0",
+   "role": "detail",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.3,
+     0.2,
+     1.5
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -3.55,
+    46.65,
+    5.3
+   ],
+   "stage": 4,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "west-plant-housing-0",
+   "label": "West Plant Housing 0",
+   "role": "identity",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.1,
+     1.1,
+     1.3
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -3.55,
+    46.85,
+    5.3
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "west-plant-grille-0",
+   "label": "West Plant Grille 0",
+   "role": "detail",
+   "certainty": "inferred",
+   "shape": {
+    "type": "paths",
+    "paths": [
+     [
+      [
+       -4.0,
+       50.85,
+       6.26
+      ],
+      [
+       -3.0999999999999996,
+       50.85,
+       6.26
+      ]
+     ],
+     [
+      [
+       -4.0,
+       51.01,
+       6.26
+      ],
+      [
+       -3.0999999999999996,
+       51.01,
+       6.26
+      ]
+     ],
+     [
+      [
+       -4.0,
+       51.17,
+       6.26
+      ],
+      [
+       -3.0999999999999996,
+       51.17,
+       6.26
+      ]
+     ],
+     [
+      [
+       -4.0,
+       51.33,
+       6.26
+      ],
+      [
+       -3.0999999999999996,
+       51.33,
+       6.26
+      ]
+     ],
+     [
+      [
+       -4.0,
+       51.49,
+       6.26
+      ],
+      [
+       -3.0999999999999996,
+       51.49,
+       6.26
+      ]
+     ]
+    ]
+   },
+   "at": [
+    0.0,
+    -3.8,
+    -0.3
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "none",
+    "weight": 0.55,
+    "alpha": 0.55,
+    "glow": 0.1
+   }
+  },
+  {
+   "id": "west-plant-plinth-1",
+   "label": "West Plant Plinth 1",
+   "role": "detail",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.3,
+     0.2,
+     1.5
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -2.05,
+    46.65,
+    5.3
+   ],
+   "stage": 4,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "west-plant-housing-1",
+   "label": "West Plant Housing 1",
+   "role": "identity",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.1,
+     1.1,
+     1.3
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -2.05,
+    46.85,
+    5.3
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "west-plant-grille-1",
+   "label": "West Plant Grille 1",
+   "role": "detail",
+   "certainty": "inferred",
+   "shape": {
+    "type": "paths",
+    "paths": [
+     [
+      [
+       -2.5,
+       50.85,
+       6.26
+      ],
+      [
+       -1.5999999999999999,
+       50.85,
+       6.26
+      ]
+     ],
+     [
+      [
+       -2.5,
+       51.01,
+       6.26
+      ],
+      [
+       -1.5999999999999999,
+       51.01,
+       6.26
+      ]
+     ],
+     [
+      [
+       -2.5,
+       51.17,
+       6.26
+      ],
+      [
+       -1.5999999999999999,
+       51.17,
+       6.26
+      ]
+     ],
+     [
+      [
+       -2.5,
+       51.33,
+       6.26
+      ],
+      [
+       -1.5999999999999999,
+       51.33,
+       6.26
+      ]
+     ],
+     [
+      [
+       -2.5,
+       51.49,
+       6.26
+      ],
+      [
+       -1.5999999999999999,
+       51.49,
+       6.26
+      ]
+     ]
+    ]
+   },
+   "at": [
+    0.0,
+    -3.8,
+    -0.3
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "none",
+    "weight": 0.55,
+    "alpha": 0.55,
+    "glow": 0.1
+   }
+  },
+  {
+   "id": "west-service-tray",
+   "label": "West Service Tray",
+   "role": "detail",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     3.1,
+     0.3,
+     0.5
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -2.8,
+    46.65,
+    4.25
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "west-crest-door-leaf",
+   "label": "West Crest Door Leaf",
+   "role": "detail",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.1,
+     1.65,
+     0.3
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -4.2,
+    54.56,
+    1.95
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "west-maintenance-route",
+   "label": "West Maintenance Route",
+   "role": "detail",
+   "certainty": "inferred",
+   "shape": {
+    "type": "paths",
+    "paths": [
+     [
+      [
+       -7.1,
+       50.46,
+       4.4
+      ],
+      [
+       0.2,
+       50.46,
+       4.4
+      ]
+     ],
+     [
+      [
+       -7.1,
+       50.46,
+       5.2
+      ],
+      [
+       0.2,
+       50.46,
+       5.2
+      ]
+     ],
+     [
+      [
+       -7.1,
+       50.46,
+       6
+      ],
+      [
+       0.2,
+       50.46,
+       6
+      ]
+     ],
+     [
+      [
+       -6,
+       50.46,
+       4.1
+      ],
+      [
+       -6,
+       50.46,
+       6.1
+      ]
+     ],
+     [
+      [
+       -4.5,
+       50.46,
+       4.1
+      ],
+      [
+       -4.5,
+       50.46,
+       6.1
+      ]
+     ],
+     [
+      [
+       -3,
+       50.46,
+       4.1
+      ],
+      [
+       -3,
+       50.46,
+       6.1
+      ]
+     ],
+     [
+      [
+       -1.5,
+       50.46,
+       4.1
+      ],
+      [
+       -1.5,
+       50.46,
+       6.1
+      ]
+     ]
+    ]
+   },
+   "at": [
+    0.0,
+    -3.8,
+    0.0
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "none",
+    "weight": 0.7,
+    "alpha": 0.45,
+    "glow": 0.1
+   }
+  },
+  {
+   "id": "west-roof-drain",
+   "label": "West Roof Drain",
+   "role": "detail",
+   "certainty": "inferred",
+   "shape": {
+    "axis": "y",
+    "height": 0.12,
+    "profile": [
+     [
+      -0.4,
+      -0.4
+     ],
+     [
+      0.4,
+      -0.4
+     ],
+     [
+      0.4,
+      -0.3
+     ],
+     [
+      -0.3,
+      -0.3
+     ],
+     [
+      -0.3,
+      -0.15
+     ],
+     [
+      0.4,
+      -0.15
+     ],
+     [
+      0.4,
+      -0.05
+     ],
+     [
+      -0.3,
+      -0.05
+     ],
+     [
+      -0.3,
+      0.1
+     ],
+     [
+      0.4,
+      0.1
+     ],
+     [
+      0.4,
+      0.2
+     ],
+     [
+      -0.3,
+      0.2
+     ],
+     [
+      -0.3,
+      0.4
+     ],
+     [
+      -0.4,
+      0.4
+     ]
+    ],
+    "type": "extrude"
+   },
+   "at": [
+    -0.9,
+    46.65,
+    6.15
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "east-plant-plinth-0",
+   "label": "East Plant Plinth 0",
+   "role": "detail",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.3,
+     0.2,
+     1.5
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    4.95,
+    52.65,
+    3.55
+   ],
+   "stage": 4,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "east-plant-housing-0",
+   "label": "East Plant Housing 0",
+   "role": "identity",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.1,
+     1.1,
+     1.3
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    4.95,
+    52.85,
+    3.55
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "east-plant-grille-0",
+   "label": "East Plant Grille 0",
+   "role": "detail",
+   "certainty": "inferred",
+   "shape": {
+    "type": "paths",
+    "paths": [
+     [
+      [
+       4.5,
+       56.85,
+       4.21
+      ],
+      [
+       5.4,
+       56.85,
+       4.21
+      ]
+     ],
+     [
+      [
+       4.5,
+       57.01,
+       4.21
+      ],
+      [
+       5.4,
+       57.01,
+       4.21
+      ]
+     ],
+     [
+      [
+       4.5,
+       57.17,
+       4.21
+      ],
+      [
+       5.4,
+       57.17,
+       4.21
+      ]
+     ],
+     [
+      [
+       4.5,
+       57.33,
+       4.21
+      ],
+      [
+       5.4,
+       57.33,
+       4.21
+      ]
+     ],
+     [
+      [
+       4.5,
+       57.49,
+       4.21
+      ],
+      [
+       5.4,
+       57.49,
+       4.21
+      ]
+     ]
+    ]
+   },
+   "at": [
+    0.0,
+    -3.8,
+    0.0
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "none",
+    "weight": 0.55,
+    "alpha": 0.55,
+    "glow": 0.1
+   }
+  },
+  {
+   "id": "east-plant-plinth-1",
+   "label": "East Plant Plinth 1",
+   "role": "detail",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.3,
+     0.2,
+     1.5
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    6.45,
+    52.65,
+    3.55
+   ],
+   "stage": 4,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "east-plant-housing-1",
+   "label": "East Plant Housing 1",
+   "role": "identity",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.1,
+     1.1,
+     1.3
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    6.45,
+    52.85,
+    3.55
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "east-plant-grille-1",
+   "label": "East Plant Grille 1",
+   "role": "detail",
+   "certainty": "inferred",
+   "shape": {
+    "type": "paths",
+    "paths": [
+     [
+      [
+       6.0,
+       56.85,
+       4.21
+      ],
+      [
+       6.9,
+       56.85,
+       4.21
+      ]
+     ],
+     [
+      [
+       6.0,
+       57.01,
+       4.21
+      ],
+      [
+       6.9,
+       57.01,
+       4.21
+      ]
+     ],
+     [
+      [
+       6.0,
+       57.17,
+       4.21
+      ],
+      [
+       6.9,
+       57.17,
+       4.21
+      ]
+     ],
+     [
+      [
+       6.0,
+       57.33,
+       4.21
+      ],
+      [
+       6.9,
+       57.33,
+       4.21
+      ]
+     ],
+     [
+      [
+       6.0,
+       57.49,
+       4.21
+      ],
+      [
+       6.9,
+       57.49,
+       4.21
+      ]
+     ]
+    ]
+   },
+   "at": [
+    0.0,
+    -3.8,
+    0.0
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "none",
+    "weight": 0.55,
+    "alpha": 0.55,
+    "glow": 0.1
+   }
+  },
+  {
+   "id": "east-service-tray",
+   "label": "East Service Tray",
+   "role": "detail",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     3.1,
+     0.3,
+     0.5
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    5.7,
+    52.65,
+    2.5
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "east-crest-door-leaf",
+   "label": "East Crest Door Leaf",
+   "role": "detail",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.0,
+     1.65,
+     0.3
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    2.9,
+    61.36,
+    -1.3
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "east-maintenance-route",
+   "label": "East Maintenance Route",
+   "role": "detail",
+   "certainty": "inferred",
+   "shape": {
+    "type": "paths",
+    "paths": [
+     [
+      [
+       1,
+       56.46,
+       1.6
+      ],
+      [
+       6.8,
+       56.46,
+       1.6
+      ]
+     ],
+     [
+      [
+       1,
+       56.46,
+       2.4
+      ],
+      [
+       6.8,
+       56.46,
+       2.4
+      ]
+     ],
+     [
+      [
+       1,
+       56.46,
+       3.2
+      ],
+      [
+       6.8,
+       56.46,
+       3.2
+      ]
+     ],
+     [
+      [
+       1,
+       56.46,
+       4
+      ],
+      [
+       6.8,
+       56.46,
+       4
+      ]
+     ],
+     [
+      [
+       2,
+       56.46,
+       1.4
+      ],
+      [
+       2,
+       56.46,
+       4
+      ]
+     ],
+     [
+      [
+       3.5,
+       56.46,
+       1.4
+      ],
+      [
+       3.5,
+       56.46,
+       4
+      ]
+     ],
+     [
+      [
+       5,
+       56.46,
+       1.4
+      ],
+      [
+       5,
+       56.46,
+       4
+      ]
+     ],
+     [
+      [
+       6.5,
+       56.46,
+       1.4
+      ],
+      [
+       6.5,
+       56.46,
+       4
+      ]
+     ]
+    ]
+   },
+   "at": [
+    0.0,
+    -3.8,
+    0.0
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "none",
+    "weight": 0.7,
+    "alpha": 0.45,
+    "glow": 0.1
+   }
+  },
+  {
+   "id": "east-roof-drain",
+   "label": "East Roof Drain",
+   "role": "detail",
+   "certainty": "inferred",
+   "shape": {
+    "axis": "y",
+    "height": 0.12,
+    "profile": [
+     [
+      -0.4,
+      -0.4
+     ],
+     [
+      0.4,
+      -0.4
+     ],
+     [
+      0.4,
+      -0.3
+     ],
+     [
+      -0.3,
+      -0.3
+     ],
+     [
+      -0.3,
+      -0.15
+     ],
+     [
+      0.4,
+      -0.15
+     ],
+     [
+      0.4,
+      -0.05
+     ],
+     [
+      -0.3,
+      -0.05
+     ],
+     [
+      -0.3,
+      0.1
+     ],
+     [
+      0.4,
+      0.1
+     ],
+     [
+      0.4,
+      0.2
+     ],
+     [
+      -0.3,
+      0.2
+     ],
+     [
+      -0.3,
+      0.4
+     ],
+     [
+      -0.4,
+      0.4
+     ]
+    ],
+    "type": "extrude"
+   },
+   "at": [
+    6.8,
+    52.65,
+    3.7
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "west-first-coping--1",
+   "label": "West First Coping  1",
+   "role": "detail",
+   "certainty": "inferred",
+   "shape": {
+    "axis": "x",
+    "height": 8.62826,
+    "profile": [
+     [
+      -0.25,
+      0
+     ],
+     [
+      0.25,
+      0
+     ],
+     [
+      0.25,
+      0.1
+     ],
+     [
+      0.18,
+      0.1
+     ],
+     [
+      0.18,
+      0.22
+     ],
+     [
+      -0.18,
+      0.22
+     ],
+     [
+      -0.18,
+      0.1
+     ],
+     [
+      -0.25,
+      0.1
+     ]
+    ],
+    "type": "extrude"
+   },
+   "at": [
+    -7.71413,
+    47.5,
+    -4.3
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "west-first-coping-1",
+   "label": "West First Coping 1",
+   "role": "detail",
+   "certainty": "inferred",
+   "shape": {
+    "axis": "x",
+    "height": 8.62826,
+    "profile": [
+     [
+      -0.25,
+      0
+     ],
+     [
+      0.25,
+      0
+     ],
+     [
+      0.25,
+      0.1
+     ],
+     [
+      0.18,
+      0.1
+     ],
+     [
+      0.18,
+      0.22
+     ],
+     [
+      -0.18,
+      0.22
+     ],
+     [
+      -0.18,
+      0.1
+     ],
+     [
+      -0.25,
+      0.1
+     ]
+    ],
+    "type": "extrude"
+   },
+   "at": [
+    -7.71413,
+    47.5,
+    6.3
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "east-first-coping--1",
+   "label": "East First Coping  1",
+   "role": "detail",
+   "certainty": "inferred",
+   "shape": {
+    "axis": "x",
+    "height": 7.02368,
+    "profile": [
+     [
+      -0.25,
+      0
+     ],
+     [
+      0.25,
+      0
+     ],
+     [
+      0.25,
+      0.1
+     ],
+     [
+      0.18,
+      0.1
+     ],
+     [
+      0.18,
+      0.22
+     ],
+     [
+      -0.18,
+      0.22
+     ],
+     [
+      -0.18,
+      0.1
+     ],
+     [
+      -0.25,
+      0.1
+     ]
+    ],
+    "type": "extrude"
+   },
+   "at": [
+    0.28816,
+    53.5,
+    -7.4
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "east-first-coping-1",
+   "label": "East First Coping 1",
+   "role": "detail",
+   "certainty": "inferred",
+   "shape": {
+    "axis": "x",
+    "height": 7.02368,
+    "profile": [
+     [
+      -0.25,
+      0
+     ],
+     [
+      0.25,
+      0
+     ],
+     [
+      0.25,
+      0.1
+     ],
+     [
+      0.18,
+      0.1
+     ],
+     [
+      0.18,
+      0.22
+     ],
+     [
+      -0.18,
+      0.22
+     ],
+     [
+      -0.18,
+      0.1
+     ],
+     [
+      -0.25,
+      0.1
+     ]
+    ],
+    "type": "extrude"
+   },
+   "at": [
+    0.28816,
+    53.5,
+    4.2
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "lower-service-grille-surround",
+   "label": "Lower Service Grille Surround",
+   "role": "detail",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     3.6,
+     2.4,
+     0.25
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -5,
+    3.4,
+    7.7
+   ],
+   "stage": 4,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "lower-service-grille-slats",
+   "label": "Lower Service Grille Slats",
+   "role": "detail",
+   "certainty": "inferred",
+   "shape": {
+    "type": "paths",
+    "paths": [
+     [
+      [
+       -6.6,
+       3.6,
+       7.84
+      ],
+      [
+       -3.4,
+       3.6,
+       7.84
+      ]
+     ],
+     [
+      [
+       -6.6,
+       3.88,
+       7.84
+      ],
+      [
+       -3.4,
+       3.88,
+       7.84
+      ]
+     ],
+     [
+      [
+       -6.6,
+       4.16,
+       7.84
+      ],
+      [
+       -3.4,
+       4.16,
+       7.84
+      ]
+     ],
+     [
+      [
+       -6.6,
+       4.44,
+       7.84
+      ],
+      [
+       -3.4,
+       4.44,
+       7.84
+      ]
+     ],
+     [
+      [
+       -6.6,
+       4.720000000000001,
+       7.84
+      ],
+      [
+       -3.4,
+       4.720000000000001,
+       7.84
+      ]
+     ],
+     [
+      [
+       -6.6,
+       5.0,
+       7.84
+      ],
+      [
+       -3.4,
+       5.0,
+       7.84
+      ]
+     ],
+     [
+      [
+       -6.6,
+       5.28,
+       7.84
+      ],
+      [
+       -3.4,
+       5.28,
+       7.84
+      ]
+     ],
+     [
+      [
+       -6.6,
+       5.5600000000000005,
+       7.84
+      ],
+      [
+       -3.4,
+       5.5600000000000005,
+       7.84
+      ]
+     ]
+    ]
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "none",
+    "weight": 0.6,
+    "alpha": 0.5,
+    "glow": 0.1
+   }
+  },
+  {
+   "id": "west-first-front-bay-return",
+   "label": "West First Front Bay Return",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 0.24,
+    "profile": [
+     [
+      -4.2,
+      0
+     ],
+     [
+      4.2,
+      0
+     ],
+     [
+      4.2,
+      0.34
+     ],
+     [
+      -3.8600000000000003,
+      0.34
+     ],
+     [
+      -3.8600000000000003,
+      3
+     ],
+     [
+      4.2,
+      3
+     ],
+     [
+      4.2,
+      3.34
+     ],
+     [
+      -3.8600000000000003,
+      3.34
+     ],
+     [
+      -3.8600000000000003,
+      6
+     ],
+     [
+      4.2,
+      6
+     ],
+     [
+      4.2,
+      6.34
+     ],
+     [
+      -3.8600000000000003,
+      6.34
+     ],
+     [
+      -3.8600000000000003,
+      9
+     ],
+     [
+      4.2,
+      9
+     ],
+     [
+      4.2,
+      9.34
+     ],
+     [
+      -3.8600000000000003,
+      9.34
+     ],
+     [
+      -3.8600000000000003,
+      12
+     ],
+     [
+      -4.2,
+      12
+     ]
+    ]
+   },
+   "at": [
+    -3.4,
+    34.2,
+    6.28
+   ],
+   "stage": 3,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   },
+   "rotate": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "id": "west-first-back-bay-return",
+   "label": "West First Back Bay Return",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 0.24,
+    "profile": [
+     [
+      -4.2,
+      0
+     ],
+     [
+      4.2,
+      0
+     ],
+     [
+      4.2,
+      0.34
+     ],
+     [
+      -3.8600000000000003,
+      0.34
+     ],
+     [
+      -3.8600000000000003,
+      3
+     ],
+     [
+      4.2,
+      3
+     ],
+     [
+      4.2,
+      3.34
+     ],
+     [
+      -3.8600000000000003,
+      3.34
+     ],
+     [
+      -3.8600000000000003,
+      6
+     ],
+     [
+      4.2,
+      6
+     ],
+     [
+      4.2,
+      6.34
+     ],
+     [
+      -3.8600000000000003,
+      6.34
+     ],
+     [
+      -3.8600000000000003,
+      9
+     ],
+     [
+      4.2,
+      9
+     ],
+     [
+      4.2,
+      9.34
+     ],
+     [
+      -3.8600000000000003,
+      9.34
+     ],
+     [
+      -3.8600000000000003,
+      12
+     ],
+     [
+      -4.2,
+      12
+     ]
+    ]
+   },
+   "at": [
+    -3.4,
+    34.2,
+    -4.28
+   ],
+   "stage": 3,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   },
+   "rotate": [
+    0,
+    180,
+    0
+   ]
+  },
+  {
+   "id": "west-first-west-bay-return",
+   "label": "West First West Bay Return",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 0.24,
+    "profile": [
+     [
+      -5.3,
+      0
+     ],
+     [
+      5.3,
+      0
+     ],
+     [
+      5.3,
+      0.34
+     ],
+     [
+      -4.96,
+      0.34
+     ],
+     [
+      -4.96,
+      3
+     ],
+     [
+      5.3,
+      3
+     ],
+     [
+      5.3,
+      3.34
+     ],
+     [
+      -4.96,
+      3.34
+     ],
+     [
+      -4.96,
+      6
+     ],
+     [
+      5.3,
+      6
+     ],
+     [
+      5.3,
+      6.34
+     ],
+     [
+      -4.96,
+      6.34
+     ],
+     [
+      -4.96,
+      9
+     ],
+     [
+      5.3,
+      9
+     ],
+     [
+      5.3,
+      9.34
+     ],
+     [
+      -4.96,
+      9.34
+     ],
+     [
+      -4.96,
+      12
+     ],
+     [
+      -5.3,
+      12
+     ]
+    ]
+   },
+   "at": [
+    -7.58,
+    34.2,
+    1.0
+   ],
+   "stage": 3,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   },
+   "rotate": [
+    0,
+    -90,
+    0
+   ]
+  },
+  {
+   "id": "west-first-east-bay-return",
+   "label": "West First East Bay Return",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 0.24,
+    "profile": [
+     [
+      -5.3,
+      0
+     ],
+     [
+      5.3,
+      0
+     ],
+     [
+      5.3,
+      0.34
+     ],
+     [
+      -4.96,
+      0.34
+     ],
+     [
+      -4.96,
+      3
+     ],
+     [
+      5.3,
+      3
+     ],
+     [
+      5.3,
+      3.34
+     ],
+     [
+      -4.96,
+      3.34
+     ],
+     [
+      -4.96,
+      6
+     ],
+     [
+      5.3,
+      6
+     ],
+     [
+      5.3,
+      6.34
+     ],
+     [
+      -4.96,
+      6.34
+     ],
+     [
+      -4.96,
+      9
+     ],
+     [
+      5.3,
+      9
+     ],
+     [
+      5.3,
+      9.34
+     ],
+     [
+      -4.96,
+      9.34
+     ],
+     [
+      -4.96,
+      12
+     ],
+     [
+      -5.3,
+      12
+     ]
+    ]
+   },
+   "at": [
+    0.78,
+    34.2,
+    1.0
+   ],
+   "stage": 3,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   },
+   "rotate": [
+    0,
+    90,
+    0
+   ]
+  },
+  {
+   "id": "west-second-front-bay-return",
+   "label": "West Second Front Bay Return",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 0.24,
+    "profile": [
+     [
+      -3.25,
+      0
+     ],
+     [
+      3.25,
+      0
+     ],
+     [
+      3.25,
+      0.34
+     ],
+     [
+      -2.91,
+      0.34
+     ],
+     [
+      -2.91,
+      3
+     ],
+     [
+      3.25,
+      3
+     ],
+     [
+      3.25,
+      3.34
+     ],
+     [
+      -2.91,
+      3.34
+     ],
+     [
+      -2.91,
+      6
+     ],
+     [
+      3.25,
+      6
+     ],
+     [
+      3.25,
+      6.34
+     ],
+     [
+      -2.91,
+      6.34
+     ],
+     [
+      -2.91,
+      8
+     ],
+     [
+      -3.25,
+      8
+     ]
+    ]
+   },
+   "at": [
+    -3.4,
+    46.2,
+    3.98
+   ],
+   "stage": 3,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   },
+   "rotate": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "id": "west-second-back-bay-return",
+   "label": "West Second Back Bay Return",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 0.24,
+    "profile": [
+     [
+      -3.25,
+      0
+     ],
+     [
+      3.25,
+      0
+     ],
+     [
+      3.25,
+      0.34
+     ],
+     [
+      -2.91,
+      0.34
+     ],
+     [
+      -2.91,
+      3
+     ],
+     [
+      3.25,
+      3
+     ],
+     [
+      3.25,
+      3.34
+     ],
+     [
+      -2.91,
+      3.34
+     ],
+     [
+      -2.91,
+      6
+     ],
+     [
+      3.25,
+      6
+     ],
+     [
+      3.25,
+      6.34
+     ],
+     [
+      -2.91,
+      6.34
+     ],
+     [
+      -2.91,
+      8
+     ],
+     [
+      -3.25,
+      8
+     ]
+    ]
+   },
+   "at": [
+    -3.4,
+    46.2,
+    -3.58
+   ],
+   "stage": 3,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   },
+   "rotate": [
+    0,
+    180,
+    0
+   ]
+  },
+  {
+   "id": "west-second-west-bay-return",
+   "label": "West Second West Bay Return",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 0.24,
+    "profile": [
+     [
+      -3.8,
+      0
+     ],
+     [
+      3.8,
+      0
+     ],
+     [
+      3.8,
+      0.34
+     ],
+     [
+      -3.46,
+      0.34
+     ],
+     [
+      -3.46,
+      3
+     ],
+     [
+      3.8,
+      3
+     ],
+     [
+      3.8,
+      3.34
+     ],
+     [
+      -3.46,
+      3.34
+     ],
+     [
+      -3.46,
+      6
+     ],
+     [
+      3.8,
+      6
+     ],
+     [
+      3.8,
+      6.34
+     ],
+     [
+      -3.46,
+      6.34
+     ],
+     [
+      -3.46,
+      8
+     ],
+     [
+      -3.8,
+      8
+     ]
+    ]
+   },
+   "at": [
+    -6.63,
+    46.2,
+    0.2
+   ],
+   "stage": 3,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   },
+   "rotate": [
+    0,
+    -90,
+    0
+   ]
+  },
+  {
+   "id": "west-second-east-bay-return",
+   "label": "West Second East Bay Return",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 0.24,
+    "profile": [
+     [
+      -3.8,
+      0
+     ],
+     [
+      3.8,
+      0
+     ],
+     [
+      3.8,
+      0.34
+     ],
+     [
+      -3.46,
+      0.34
+     ],
+     [
+      -3.46,
+      3
+     ],
+     [
+      3.8,
+      3
+     ],
+     [
+      3.8,
+      3.34
+     ],
+     [
+      -3.46,
+      3.34
+     ],
+     [
+      -3.46,
+      6
+     ],
+     [
+      3.8,
+      6
+     ],
+     [
+      3.8,
+      6.34
+     ],
+     [
+      -3.46,
+      6.34
+     ],
+     [
+      -3.46,
+      8
+     ],
+     [
+      -3.8,
+      8
+     ]
+    ]
+   },
+   "at": [
+    -0.17,
+    46.2,
+    0.2
+   ],
+   "stage": 3,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   },
+   "rotate": [
+    0,
+    90,
+    0
+   ]
+  },
+  {
+   "id": "east-first-front-bay-return",
+   "label": "East First Front Bay Return",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 0.24,
+    "profile": [
+     [
+      -3.4,
+      0
+     ],
+     [
+      3.4,
+      0
+     ],
+     [
+      3.4,
+      0.34
+     ],
+     [
+      -3.06,
+      0.34
+     ],
+     [
+      -3.06,
+      3
+     ],
+     [
+      3.4,
+      3
+     ],
+     [
+      3.4,
+      3.34
+     ],
+     [
+      -3.06,
+      3.34
+     ],
+     [
+      -3.06,
+      6
+     ],
+     [
+      3.4,
+      6
+     ],
+     [
+      3.4,
+      6.34
+     ],
+     [
+      -3.06,
+      6.34
+     ],
+     [
+      -3.06,
+      9
+     ],
+     [
+      3.4,
+      9
+     ],
+     [
+      3.4,
+      9.34
+     ],
+     [
+      -3.06,
+      9.34
+     ],
+     [
+      -3.06,
+      12
+     ],
+     [
+      3.4,
+      12
+     ],
+     [
+      3.4,
+      12.34
+     ],
+     [
+      -3.06,
+      12.34
+     ],
+     [
+      -3.06,
+      15
+     ],
+     [
+      3.4,
+      15
+     ],
+     [
+      3.4,
+      15.34
+     ],
+     [
+      -3.06,
+      15.34
+     ],
+     [
+      -3.06,
+      18
+     ],
+     [
+      -3.4,
+      18
+     ]
+    ]
+   },
+   "at": [
+    3.8,
+    34.2,
+    4.18
+   ],
+   "stage": 3,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   },
+   "rotate": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "id": "east-first-back-bay-return",
+   "label": "East First Back Bay Return",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 0.24,
+    "profile": [
+     [
+      -3.4,
+      0
+     ],
+     [
+      3.4,
+      0
+     ],
+     [
+      3.4,
+      0.34
+     ],
+     [
+      -3.06,
+      0.34
+     ],
+     [
+      -3.06,
+      3
+     ],
+     [
+      3.4,
+      3
+     ],
+     [
+      3.4,
+      3.34
+     ],
+     [
+      -3.06,
+      3.34
+     ],
+     [
+      -3.06,
+      6
+     ],
+     [
+      3.4,
+      6
+     ],
+     [
+      3.4,
+      6.34
+     ],
+     [
+      -3.06,
+      6.34
+     ],
+     [
+      -3.06,
+      9
+     ],
+     [
+      3.4,
+      9
+     ],
+     [
+      3.4,
+      9.34
+     ],
+     [
+      -3.06,
+      9.34
+     ],
+     [
+      -3.06,
+      12
+     ],
+     [
+      3.4,
+      12
+     ],
+     [
+      3.4,
+      12.34
+     ],
+     [
+      -3.06,
+      12.34
+     ],
+     [
+      -3.06,
+      15
+     ],
+     [
+      3.4,
+      15
+     ],
+     [
+      3.4,
+      15.34
+     ],
+     [
+      -3.06,
+      15.34
+     ],
+     [
+      -3.06,
+      18
+     ],
+     [
+      -3.4,
+      18
+     ]
+    ]
+   },
+   "at": [
+    3.8,
+    34.2,
+    -7.38
+   ],
+   "stage": 3,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   },
+   "rotate": [
+    0,
+    180,
+    0
+   ]
+  },
+  {
+   "id": "east-first-west-bay-return",
+   "label": "East First West Bay Return",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 0.24,
+    "profile": [
+     [
+      -5.8,
+      0
+     ],
+     [
+      5.8,
+      0
+     ],
+     [
+      5.8,
+      0.34
+     ],
+     [
+      -5.46,
+      0.34
+     ],
+     [
+      -5.46,
+      3
+     ],
+     [
+      5.8,
+      3
+     ],
+     [
+      5.8,
+      3.34
+     ],
+     [
+      -5.46,
+      3.34
+     ],
+     [
+      -5.46,
+      6
+     ],
+     [
+      5.8,
+      6
+     ],
+     [
+      5.8,
+      6.34
+     ],
+     [
+      -5.46,
+      6.34
+     ],
+     [
+      -5.46,
+      9
+     ],
+     [
+      5.8,
+      9
+     ],
+     [
+      5.8,
+      9.34
+     ],
+     [
+      -5.46,
+      9.34
+     ],
+     [
+      -5.46,
+      12
+     ],
+     [
+      5.8,
+      12
+     ],
+     [
+      5.8,
+      12.34
+     ],
+     [
+      -5.46,
+      12.34
+     ],
+     [
+      -5.46,
+      15
+     ],
+     [
+      5.8,
+      15
+     ],
+     [
+      5.8,
+      15.34
+     ],
+     [
+      -5.46,
+      15.34
+     ],
+     [
+      -5.46,
+      18
+     ],
+     [
+      -5.8,
+      18
+     ]
+    ]
+   },
+   "at": [
+    0.42,
+    34.2,
+    -1.6
+   ],
+   "stage": 3,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   },
+   "rotate": [
+    0,
+    -90,
+    0
+   ]
+  },
+  {
+   "id": "east-first-east-bay-return",
+   "label": "East First East Bay Return",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 0.24,
+    "profile": [
+     [
+      -5.8,
+      0
+     ],
+     [
+      5.8,
+      0
+     ],
+     [
+      5.8,
+      0.34
+     ],
+     [
+      -5.46,
+      0.34
+     ],
+     [
+      -5.46,
+      3
+     ],
+     [
+      5.8,
+      3
+     ],
+     [
+      5.8,
+      3.34
+     ],
+     [
+      -5.46,
+      3.34
+     ],
+     [
+      -5.46,
+      6
+     ],
+     [
+      5.8,
+      6
+     ],
+     [
+      5.8,
+      6.34
+     ],
+     [
+      -5.46,
+      6.34
+     ],
+     [
+      -5.46,
+      9
+     ],
+     [
+      5.8,
+      9
+     ],
+     [
+      5.8,
+      9.34
+     ],
+     [
+      -5.46,
+      9.34
+     ],
+     [
+      -5.46,
+      12
+     ],
+     [
+      5.8,
+      12
+     ],
+     [
+      5.8,
+      12.34
+     ],
+     [
+      -5.46,
+      12.34
+     ],
+     [
+      -5.46,
+      15
+     ],
+     [
+      5.8,
+      15
+     ],
+     [
+      5.8,
+      15.34
+     ],
+     [
+      -5.46,
+      15.34
+     ],
+     [
+      -5.46,
+      18
+     ],
+     [
+      -5.8,
+      18
+     ]
+    ]
+   },
+   "at": [
+    7.18,
+    34.2,
+    -1.6
+   ],
+   "stage": 3,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   },
+   "rotate": [
+    0,
+    90,
+    0
+   ]
+  },
+  {
+   "id": "east-second-front-bay-return",
+   "label": "East Second Front Bay Return",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 0.24,
+    "profile": [
+     [
+      -2.75,
+      0
+     ],
+     [
+      2.75,
+      0
+     ],
+     [
+      2.75,
+      0.34
+     ],
+     [
+      -2.41,
+      0.34
+     ],
+     [
+      -2.41,
+      3
+     ],
+     [
+      2.75,
+      3
+     ],
+     [
+      2.75,
+      3.34
+     ],
+     [
+      -2.41,
+      3.34
+     ],
+     [
+      -2.41,
+      6
+     ],
+     [
+      2.75,
+      6
+     ],
+     [
+      2.75,
+      6.34
+     ],
+     [
+      -2.41,
+      6.34
+     ],
+     [
+      -2.41,
+      8.8
+     ],
+     [
+      -2.75,
+      8.8
+     ]
+    ]
+   },
+   "at": [
+    3.4,
+    52.2,
+    1.13
+   ],
+   "stage": 3,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   },
+   "rotate": [
+    0,
+    0,
+    0
+   ]
+  },
+  {
+   "id": "east-second-back-bay-return",
+   "label": "East Second Back Bay Return",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 0.24,
+    "profile": [
+     [
+      -2.75,
+      0
+     ],
+     [
+      2.75,
+      0
+     ],
+     [
+      2.75,
+      0.34
+     ],
+     [
+      -2.41,
+      0.34
+     ],
+     [
+      -2.41,
+      3
+     ],
+     [
+      2.75,
+      3
+     ],
+     [
+      2.75,
+      3.34
+     ],
+     [
+      -2.41,
+      3.34
+     ],
+     [
+      -2.41,
+      6
+     ],
+     [
+      2.75,
+      6
+     ],
+     [
+      2.75,
+      6.34
+     ],
+     [
+      -2.41,
+      6.34
+     ],
+     [
+      -2.41,
+      8.8
+     ],
+     [
+      -2.75,
+      8.8
+     ]
+    ]
+   },
+   "at": [
+    3.4,
+    52.2,
+    -7.33
+   ],
+   "stage": 3,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   },
+   "rotate": [
+    0,
+    180,
+    0
+   ]
+  },
+  {
+   "id": "east-second-west-bay-return",
+   "label": "East Second West Bay Return",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 0.24,
+    "profile": [
+     [
+      -4.25,
+      0
+     ],
+     [
+      4.25,
+      0
+     ],
+     [
+      4.25,
+      0.34
+     ],
+     [
+      -3.91,
+      0.34
+     ],
+     [
+      -3.91,
+      3
+     ],
+     [
+      4.25,
+      3
+     ],
+     [
+      4.25,
+      3.34
+     ],
+     [
+      -3.91,
+      3.34
+     ],
+     [
+      -3.91,
+      6
+     ],
+     [
+      4.25,
+      6
+     ],
+     [
+      4.25,
+      6.34
+     ],
+     [
+      -3.91,
+      6.34
+     ],
+     [
+      -3.91,
+      8.8
+     ],
+     [
+      -4.25,
+      8.8
+     ]
+    ]
+   },
+   "at": [
+    0.67,
+    52.2,
+    -3.1
+   ],
+   "stage": 3,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   },
+   "rotate": [
+    0,
+    -90,
+    0
+   ]
+  },
+  {
+   "id": "east-second-east-bay-return",
+   "label": "East Second East Bay Return",
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 0.24,
+    "profile": [
+     [
+      -4.25,
+      0
+     ],
+     [
+      4.25,
+      0
+     ],
+     [
+      4.25,
+      0.34
+     ],
+     [
+      -3.91,
+      0.34
+     ],
+     [
+      -3.91,
+      3
+     ],
+     [
+      4.25,
+      3
+     ],
+     [
+      4.25,
+      3.34
+     ],
+     [
+      -3.91,
+      3.34
+     ],
+     [
+      -3.91,
+      6
+     ],
+     [
+      4.25,
+      6
+     ],
+     [
+      4.25,
+      6.34
+     ],
+     [
+      -3.91,
+      6.34
+     ],
+     [
+      -3.91,
+      8.8
+     ],
+     [
+      -4.25,
+      8.8
+     ]
+    ]
+   },
+   "at": [
+    6.13,
+    52.2,
+    -3.1
+   ],
+   "stage": 3,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   },
+   "rotate": [
+    0,
+    90,
+    0
+   ]
+  },
+  {
+   "id": "west-crest-equipment-0",
+   "label": "West Crest Equipment 0",
+   "role": "identity",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.1,
+     0.68,
+     1.15
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -4.15,
+    54.56,
+    2.8
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.8,
+    "alpha": 0.65,
+    "glow": 0.12
+   }
+  },
+  {
+   "id": "west-crest-equipment-1",
+   "label": "West Crest Equipment 1",
+   "role": "identity",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.1,
+     0.68,
+     1.15
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -2.65,
+    54.56,
+    2.8
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.8,
+    "alpha": 0.65,
+    "glow": 0.12
+   }
+  },
+  {
+   "id": "west-crest-access-hatch",
+   "label": "West Crest Access Hatch",
+   "role": "detail",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.3,
+     0.22,
+     1
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.9,
+    54.56,
+    1.5
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "west-crest-duct",
+   "label": "West Crest Duct",
+   "role": "detail",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     3.4,
+     0.32,
+     0.42
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -3.4,
+    54.56,
+    2.0
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "west-crest-equipment-louvres",
+   "label": "West Crest Equipment Louvres",
+   "role": "detail",
+   "certainty": "inferred",
+   "shape": {
+    "type": "paths",
+    "paths": [
+     [
+      [
+       -4.6000000000000005,
+       58.54,
+       3.3899999999999997
+      ],
+      [
+       -3.7,
+       58.54,
+       3.3899999999999997
+      ]
+     ],
+     [
+      [
+       -4.6000000000000005,
+       58.66,
+       3.3899999999999997
+      ],
+      [
+       -3.7,
+       58.66,
+       3.3899999999999997
+      ]
+     ],
+     [
+      [
+       -4.6000000000000005,
+       58.78,
+       3.3899999999999997
+      ],
+      [
+       -3.7,
+       58.78,
+       3.3899999999999997
+      ]
+     ],
+     [
+      [
+       -4.6000000000000005,
+       58.9,
+       3.3899999999999997
+      ],
+      [
+       -3.7,
+       58.9,
+       3.3899999999999997
+      ]
+     ],
+     [
+      [
+       -3.1,
+       58.54,
+       3.3899999999999997
+      ],
+      [
+       -2.1999999999999997,
+       58.54,
+       3.3899999999999997
+      ]
+     ],
+     [
+      [
+       -3.1,
+       58.66,
+       3.3899999999999997
+      ],
+      [
+       -2.1999999999999997,
+       58.66,
+       3.3899999999999997
+      ]
+     ],
+     [
+      [
+       -3.1,
+       58.78,
+       3.3899999999999997
+      ],
+      [
+       -2.1999999999999997,
+       58.78,
+       3.3899999999999997
+      ]
+     ],
+     [
+      [
+       -3.1,
+       58.9,
+       3.3899999999999997
+      ],
+      [
+       -2.1999999999999997,
+       58.9,
+       3.3899999999999997
+      ]
+     ]
+    ]
+   },
+   "at": [
+    0.0,
+    -3.8,
+    0.0
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "none",
+    "weight": 0.6,
+    "alpha": 0.5,
+    "glow": 0.1
+   }
+  },
+  {
+   "id": "east-crest-equipment-0",
+   "label": "East Crest Equipment 0",
+   "role": "identity",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.1,
+     0.68,
+     1.15
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    2.65,
+    61.36,
+    0.1
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.8,
+    "alpha": 0.65,
+    "glow": 0.12
+   }
+  },
+  {
+   "id": "east-crest-equipment-1",
+   "label": "East Crest Equipment 1",
+   "role": "identity",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.1,
+     0.68,
+     1.15
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    4.15,
+    61.36,
+    0.1
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.8,
+    "alpha": 0.65,
+    "glow": 0.12
+   }
+  },
+  {
+   "id": "east-crest-access-hatch",
+   "label": "East Crest Access Hatch",
+   "role": "detail",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.3,
+     0.22,
+     1
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    4.9,
+    61.36,
+    -1.2
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "east-crest-duct",
+   "label": "East Crest Duct",
+   "role": "detail",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     3.4,
+     0.32,
+     0.42
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    3.4,
+    61.36,
+    -0.7
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.56,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "east-crest-equipment-louvres",
+   "label": "East Crest Equipment Louvres",
+   "role": "detail",
+   "certainty": "inferred",
+   "shape": {
+    "type": "paths",
+    "paths": [
+     [
+      [
+       2.1999999999999997,
+       65.34,
+       0.69
+      ],
+      [
+       3.1,
+       65.34,
+       0.69
+      ]
+     ],
+     [
+      [
+       2.1999999999999997,
+       65.46000000000001,
+       0.69
+      ],
+      [
+       3.1,
+       65.46000000000001,
+       0.69
+      ]
+     ],
+     [
+      [
+       2.1999999999999997,
+       65.58,
+       0.69
+      ],
+      [
+       3.1,
+       65.58,
+       0.69
+      ]
+     ],
+     [
+      [
+       2.1999999999999997,
+       65.7,
+       0.69
+      ],
+      [
+       3.1,
+       65.7,
+       0.69
+      ]
+     ],
+     [
+      [
+       3.7,
+       65.34,
+       0.69
+      ],
+      [
+       4.6000000000000005,
+       65.34,
+       0.69
+      ]
+     ],
+     [
+      [
+       3.7,
+       65.46000000000001,
+       0.69
+      ],
+      [
+       4.6000000000000005,
+       65.46000000000001,
+       0.69
+      ]
+     ],
+     [
+      [
+       3.7,
+       65.58,
+       0.69
+      ],
+      [
+       4.6000000000000005,
+       65.58,
+       0.69
+      ]
+     ],
+     [
+      [
+       3.7,
+       65.7,
+       0.69
+      ],
+      [
+       4.6000000000000005,
+       65.7,
+       0.69
+      ]
+     ]
+    ]
+   },
+   "at": [
+    0.0,
+    -3.8,
+    0.0
+   ],
+   "stage": 5,
+   "basis": [
+    "paired-terraces"
+   ],
+   "look": {
+    "fill": "none",
+    "weight": 0.6,
+    "alpha": 0.5,
+    "glow": 0.1
+   }
+  },
+  {
+   "at": [
+    0,
+    6,
+    7.55
+   ],
+   "basis": [
+    "paired-terraces"
+   ],
+   "certainty": "inferred",
+   "id": "recessed-entry-header",
+   "label": "Recessed entry header",
+   "look": {
+    "alpha": 0.65,
+    "fill": "dark",
+    "glow": 0.1,
+    "weight": 0.8
+   },
+   "role": "detail",
+   "shape": {
+    "anchor": "base",
+    "size": [
+     4.85,
+     0.4,
+     0.65
+    ],
+    "type": "box"
+   },
+   "stage": 3
+  }
+ ],
+ "assets": [],
+ "articulations": [],
+ "labels": [],
+ "anchors": {
+  "base": {
+   "point": [
+    0,
+    0,
+    0
+   ],
+   "up": [
+    0,
+    1,
+    0
+   ]
+  }
+ },
+ "presentation": {
+  "framing": {
+   "yaw": 28,
+   "pitch": 12,
+   "fit": 1.05
+  },
+  "views": [
+   {
+    "id": "concept",
+    "label": "Concept silhouette",
+    "yaw": 20,
+    "pitch": 8,
+    "distance": 1.05
+   },
+   {
+    "id": "roof-detail",
+    "label": "Paired terrace roofs",
+    "yaw": 35,
+    "pitch": 35,
+    "distance": 2.5,
+    "target": "east-second-volume"
+   }
+  ],
+  "atmosphere": {
+   "haze": 0.3,
+   "grid": false,
+   "projector": false,
+   "motes": 0,
+   "scanlines": false
+  },
+  "occlusion": "none",
+  "certainty_style": "subtle",
+  "background": "deep",
+  "float": 0
+ },
+ "animation": {
+  "assembly": {
+   "style": "ceremony",
+   "seconds": 10,
+   "interference": false
+  },
+  "idle": {
+   "life": "off",
+   "events": []
+  },
+  "camera": {
+   "drift": 0,
+   "breathe": 0
+  },
+  "reduced_motion": "still"
+ },
+ "authoring": {
+  "tier": "masterpiece",
+  "research": "off",
+  "review_rounds": 5,
+  "outcome": "good",
+  "identity": [
+   {
+    "feature": "Paired unequal broad stepping terraces",
+    "parts": [
+     "west-first-volume",
+     "west-second-volume",
+     "east-first-volume",
+     "east-second-volume"
+    ]
+   },
+   {
+    "feature": "Substantial lower exchange shoulders",
+    "parts": [
+     "exchange-lower-mass",
+     "transfer-terrace-slab"
+    ]
+   },
+   {
+    "feature": "Low supported service crests, no aerial",
+    "parts": [
+     "west-roof-service-room",
+     "east-roof-service-room"
+    ]
+   }
+  ],
+  "next": [],
+  "critic": {
+   "scene_sha256": "21180c9595cb4d9c363a3d78a6a8c4d3d816970688cd5fab5894e14226d6f8b9",
+   "verdict": "good",
+   "scores": {
+    "silhouette": 2,
+    "proportions": 2,
+    "identity": 2,
+    "depth": 2,
+    "composition": 3,
+    "assembly": 3,
+    "motion": 3,
+    "density": 2,
+    "honesty": 3
+   },
+   "round": 6,
+   "defects": 5
+  },
+  "rounds": [
+   {
+    "round": 1,
+    "result": "baseline",
+    "minutes": 0.5,
+    "changes": [
+     "draft"
+    ],
+    "summary": "The unequal twin stacks are identifiable, but their upper blocks retreat only modestly from the first volumes. The solid outline remains dom"
+   },
+   {
+    "round": 2,
+    "result": "kept",
+    "minutes": 3.5,
+    "changes": [
+     "D1",
+     "D2",
+     "D3",
+     "D5"
+    ],
+    "summary": "The unequal pair is legible, but each second stage is still a tall narrow rectangle and the lateral step is modest. The solid view is domina"
+   },
+   {
+    "round": 3,
+    "result": "kept",
+    "minutes": 2.3,
+    "changes": [
+     "D1",
+     "D2",
+     "D4",
+     "D6"
+    ],
+    "summary": "The unequal heights read clearly, but each upper stage retreats only modestly from its supporting block. Narrow projecting parapet edges do "
+   },
+   {
+    "round": 4,
+    "result": "kept",
+    "minutes": 1.4,
+    "changes": [
+     "D1",
+     "D3",
+     "D4",
+     "D6"
+    ],
+    "summary": "The two unequal stacks are identifiable, but the second stages lose only roughly one fifth of the first stages' visible width. Long parallel"
+   },
+   {
+    "round": 5,
+    "result": "kept",
+    "minutes": 2.2,
+    "changes": [
+     "D2",
+     "D3",
+     "D4",
+     "D5"
+    ],
+    "summary": "The unequal heights read well, but each upper stage remains close to the width of the stage below. In front and solid views the outer wall r"
+   },
+   {
+    "round": 6,
+    "result": "kept",
+    "minutes": 1.5,
+    "changes": [
+     "D5"
+    ],
+    "summary": "Both second-stage masses retain most of the first-stage frontal width. The collars are stronger than the actual lateral retreats, making the"
+   },
+   {
+    "round": 7,
+    "result": "reverted",
+    "minutes": 0.5,
+    "changes": [],
+    "summary": "The upper volumes remain largely uninterrupted wall faces in the solid view. Thin floor contours describe their shape, but there are almost "
+   },
+   {
+    "round": 8,
+    "result": "reverted",
+    "minutes": 0.7,
+    "changes": [],
+    "summary": "The unequal pair is clear, but each second-stage frontage retains most of its first-stage width. The lateral change reads more like a shallo"
+   }
+  ]
+ }
+}

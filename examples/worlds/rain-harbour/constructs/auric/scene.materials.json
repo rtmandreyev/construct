@@ -1,0 +1,15 @@
+{
+  "materials": [
+    {"parts":["*-taillight-bar-*"],"name":"AURIC red-magenta real mesh tail bars","color":"#ff196b","emissive":"#ff0753","finish":"light","roughness":0.28,"metallic":0.0},
+    {"parts":["*-front-lamp"],"name":"Warm white headlights","color":"#fff4ce","emissive":"#fff1c2","finish":"light","roughness":0.22,"metallic":0.0},
+    {"parts":["*glass*","*windshield*"],"name":"Smoked cabin glazing","color":"#152431","finish":"glass","roughness":0.14,"metallic":0.05},
+    {"parts":["*rubber-tyre*"],"name":"Dark profiled road rubber","color":"#101318","finish":"rubber","roughness":0.8,"metallic":0.0},
+    {"parts":["*wheel-brake-caliper"],"name":"Oxide red brake caliper","color":"#9b2633","finish":"paint","roughness":0.47,"metallic":0.25},
+    {"parts":["*wheel-brake-disc"],"name":"Recessed steel brake disc","color":"#4b5661","finish":"brushed","roughness":0.46,"metallic":0.85},
+    {"parts":["*wheel-rim","*spoke-*","*wheel-hub","*wheel-lug-*"],"name":"Open five spoke satin alloy","color":"#8d9ca8","finish":"brushed","roughness":0.29,"metallic":0.92},
+    {"parts":["front-wedge-hood","rear-muscle-deck","*-arch-crown","*-door-skin","*-rocker","roof-spine","rear-spoiler-blade"],"name":"AURIC yellow lacquer","color":"#f5c719","finish":"paint","metallic":0.25,"roughness":0.31},
+    {"parts":["*-seat-cushion","*-seat-back-insert","*-seat-headrest"],"name":"Charcoal upholstered inserts","color":"#2d3540","finish":"rubber","roughness":0.78,"metallic":0.0},
+    {"parts":["*-seat-cushion-stitch-*","instrument-screen"],"name":"Muted warm cabin accents","color":"#b39852","finish":"plastic","roughness":0.55,"metallic":0.0},
+    {"parts":["*"],"name":"Dark graphite cabin and exterior trim","color":"#18202b","finish":"plastic","roughness":0.64,"metallic":0.05}
+  ]
+}

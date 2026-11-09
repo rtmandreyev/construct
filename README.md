@@ -21,9 +21,15 @@ model with named parts and working joints, a print, a model kit, a CAD file or a
   <a href="https://rtmandreyev.github.io/construct/examples/tompion-year-going-clock/"><img src="docs/media/assembly-tompion-year-going-clock.gif" width="32%" alt="Tompion's year-going longcase clock construct assembling itself, its hood and trunk doors opening"></a>
   <a href="https://rtmandreyev.github.io/construct/examples/volkswagen-t1-samba/"><img src="docs/media/assembly-volkswagen-t1-samba.gif" width="32%" alt="The Volkswagen T1 Samba construct assembling itself"></a>
 </p>
+<p align="center">
+  <a href="examples/worlds/rain-harbour/"><img src="examples/worlds/rain-harbour/hero.jpg" width="32%" alt="Rain Harbour, a night street: towers, neon signs in English and Chinese, a yellow car, in lines of light"></a>
+  <a href="examples/worlds/stortorget/"><img src="examples/worlds/stortorget/hero.jpg" width="32%" alt="Stortorget at its Christmas market: the red and orange gabled houses, rows of red stalls and the tree, in lines of light"></a>
+  <a href="docs/for/worlds-walkthrough.md"><img src="docs/media/world-villa-dusk-blender.jpg" width="32%" alt="A world in Blender at dusk: the Villa Savoye lit from inside, a Vespa under its pilotis, KESTREL far off in the sky"></a>
+</p>
+<p align="center"><sub><b>Worlds, new in 1.3.</b> Rain Harbour, a game level from a concept picture, and Stortorget, Stockholm's old square from a photograph, each made in Hermes in masterpiece rounds by GPT-6.1 Sol; and the Villa, a Vespa and KESTREL in one world, in Blender. <a href="docs/for/worlds-walkthrough.md">Worlds, step by step →</a></sub></p>
 <p align="center"><sub><b>Constructs.</b> Sainte-Chapelle · Duomo di Milano · Toyota Land Cruiser FJ62 · KESTREL, an invented ice tug · Tompion's year-going clock · Volkswagen T1 Samba, each built in masterpiece mode, by Claude Opus 5.5, KESTREL by GPT-6.1 Sol and the clock by DeepSeek V4.1 Flash. <a href="https://rtmandreyev.github.io/construct/">Open the gallery</a> to orbit them, replay the assembly and read the labels; <a href="docs/for/invent-from-what-exists.md">how KESTREL was made</a>, step by step.</sub></p>
 
-- **Construct for Hermes.** A native Hermes plugin: ask for a thing in plain words and the construct appears live in the chat, with its 3D model, kit and NetLogo runs beside it, and place your constructs together into worlds. `hermes plugins install rtmandreyev/construct#hermes/construct` ([what it does](hosts/hermes/construct/README.md), [Villa Savoye in Hermes, step by step](docs/for/hermes-walkthrough.md)).
+- **Construct for Hermes.** A native Hermes plugin: ask for a thing in plain words and the construct appears live in the chat, with its 3D model, kit and NetLogo runs beside it, and place your constructs together into worlds. `hermes plugins install rtmandreyev/construct#hermes/construct` ([what it does](hosts/hermes/construct/README.md), [Villa Savoye in Hermes, step by step](docs/for/hermes-walkthrough.md), [worlds, step by step](docs/for/worlds-walkthrough.md)).
 - **Any agent, any model.** Claude Code, Hermes, any MCP client or any OpenAI-compatible endpoint, or by hand.
 - **Honest about what is known.** Every part says how it is known, its size and its shape apart, every guess in a shade of how firmly it is held.
 - **One house style.** Models never choose the colours, so every construct looks like it belongs with the rest.
@@ -40,13 +46,14 @@ model with named parts and working joints, a print, a model kit, a CAD file or a
 | are planning a change to your **home or garden** | Your shed, room or garden as a model to try the change on first: a deck, shelves, an extension, a new layout. A planning model, not a survey | [Try it on a copy](docs/for/home-and-garden.md) |
 | want to customise or restore a **vehicle** | Your car, bike or scooter from its published sizes and your photos, your parts told apart from the factory's: try wheels or a new colour, plan a restoration, make a model of it | [Your vehicle](docs/for/your-vehicle.md) |
 | need a part that is **missing or broken** | A knob, bracket or cover drawn to the thing it fits, as a print or a CAD file someone can make | [Make the part](docs/for/replace-a-part.md) |
+| want **your things together in one place** | Your house with your furniture, your car and scooter under it, a ship over the roof: whole constructs placed at real size, arranged by asking or by hand | [Worlds, step by step](docs/for/worlds-walkthrough.md) |
 | want a **model kit of your own thing** | Your scooter, house or guitar as a kit to print, glue and paint, with a booklet ([one to open](https://rtmandreyev.github.io/construct/examples/vespa-gs150/kit/assembly.html)) | [A kit of your own](docs/for/a-kit-of-your-own.md) |
 | want to **show someone what you mean** | A model a builder, a fabricator or a friend can turn and measure, and a file for their own tools | [Show what you mean](docs/for/show-what-you-mean.md) |
 | ***Professionals and creators*** | | |
 | are a **maker** | A print at your printer's largest size, a model kit with plates and a booklet ([five to try](https://rtmandreyev.github.io/construct/#kits)), true CAD shapes | [Print, kit, CAD](docs/for/makers.md) |
 | create **new ships, creatures or worlds** for a game, film or story | New things designed from real ones: a construct, a 3D model with working parts, a film ([see KESTREL](https://rtmandreyev.github.io/construct/examples/kestrel/), an invented ice tug) | [New things from real ones](docs/for/invent-from-what-exists.md) |
 | have **software or a documented system** you wish were a physical product | Its documented functions mapped to controls, displays and the parts inside, what the documents fix kept apart from what is designed (one worked example: a software synthesizer as a 61-key instrument) | [Documentation → product](docs/for/documentation-to-product.md) |
-| are a **game developer** | Props with named parts, real sizes and working joints, for Godot, Unity or Unreal | [Into a game engine](docs/for/game-developers.md) |
+| are a **game developer** | Props with named parts, real sizes and working joints, for Godot, Unity or Unreal; a whole level from a concept picture ([Rain Harbour](examples/worlds/rain-harbour/)) | [Into a game engine](docs/for/game-developers.md) |
 | are a **3D artist** | A construct in Blender with its build, joints and finish on sliders, ready to render or model over | [Into Blender](docs/for/3d-artists.md) |
 | work in **film and motion** | A construct that assembles across a piece of music, as a video | [Film mode](docs/for/film-and-motion.md) |
 | are an **educator or researcher** | An agent-based model's run drawn as a construct, compared, printed, filmed | [Models come alive](docs/for/educators-and-researchers.md) |
@@ -55,11 +62,23 @@ model with named parts and working joints, a print, a model kit, a CAD file or a
 
 ## New in 1.3
 
-- **Worlds.** Whole constructs placed together in one scene: your chair, clock and piano in your house, your cars under
-  it, a planet in the sky; a street, a city, a game map. Each construct stays whole, with its own record and joints.
-  The world's audit says what overlaps, what runs into the house it stands in, and what stands where a door opens. A
-  world exports as one glTF or a Godot game map, and in Hermes `construct_world` builds one from the chat, live; or
-  arrange it yourself, dragging and turning each construct on its card. Three ship to start from. [Worlds](docs/WORLDS.md) · [release notes](docs/releases/v1.3.0.md)
+Every change with pictures and the commands to try it: **[What's new in 1.3, a walkthrough](docs/NEW-IN-1.3.md)**.
+
+- **Worlds.** Whole constructs placed together in one scene, each still itself: your chair, clock and synthesizer in
+  your house, your cars under it, a ship over the roof; a street, a market square, a game level. The world's audit
+  says what overlaps, what runs into the house it stands in, and what stands where a door opens. Six ship to start
+  from. [Worlds, step by step](docs/for/worlds-walkthrough.md) · [the format](docs/WORLDS.md)
+- **A world from a picture, in masterpiece mode.** Attach a photo or a concept picture: Hermes plans the pieces,
+  builds each new construct in its own masterpiece rounds with a fresh critic, places them at real size, then runs
+  the world itself through rounds against the picture. Two made this way, each from one picture:
+  [Rain Harbour](examples/worlds/rain-harbour/), a game level, and [Stortorget](examples/worlds/stortorget/),
+  Stockholm's old square at Christmas.
+- **Arranged by hand in Hermes.** Arrange on a world's card: drag a construct onto any floor, table or roof, turn
+  it, lift it; add one from the library; save, with no model turn. A Worlds tab, groups of your own, previews.
+- **More ways out.** FBX, USD and USDZ (through Blender), a Godot game map whose doors swing, and the Blender
+  add-on imports a world.
+- **Sturdier masterpiece rounds**, from two long runs: ties recorded, artwork kept in checkpoints, references
+  carried from round to round, more time on request (`rounds extend`), colour judged in the solid view.
 
 ## New in 1.2
 
@@ -112,6 +131,15 @@ And one construct taken through all of it, step by step: **[A longcase clock, en
   stack. 388 of the Models Library's 445 models record with no edits.
 
 ## Examples
+
+**Worlds.** Rain Harbour, a game level from a concept picture: 21 constructs placed 50 times, every sign in real
+English and Chinese, a drivable hero car, then 12 world rounds against the picture. Stortorget, from a photograph of
+Stockholm's old square: eight real houses, one market stall placed 41 times, the tree. [Worlds, step by step →](docs/for/worlds-walkthrough.md)
+
+<p align="center">
+  <a href="examples/worlds/rain-harbour/"><img src="examples/worlds/rain-harbour/car.jpg" width="49%" alt="Rain Harbour: AURIC, the yellow hero car, close"></a>
+  <a href="examples/worlds/stortorget/"><img src="examples/worlds/stortorget/stall.jpg" width="49%" alt="Stortorget: the nearest market stall close, its Swedish sign and its bulbs"></a>
+</p>
 
 **Provenance and solids.** The Duomo di Milano in provenance shades (**P**): verified sizes in cyan, traced shapes in blue,
 every guess a deeper amber the more firmly it is held; and the same Duomo as a solid (**S**), as a modelling program shows it. [Museums and archives →](docs/for/museums-and-archives.md)
