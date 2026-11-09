@@ -90,7 +90,9 @@ reach 1,000 km from the origin, and an optional `origin: {lat, lon}` ties the wo
   list of these, placed together with one check and one rebuild;
 - `op: move` and `op: remove` by placement id;
 - `op: list`, with an id to list the surfaces things can stand on;
-- `op: view` with an id, a label and a target: a named view, a button on the page (`remove: true` drops it).
+- `op: view` with an id, a label and a target: a named view, a button on the page (`remove: true` drops it);
+- `op: refresh`, with an id or for all: the placed constructs copied in again from their own projects as they are
+  now (after improving them), checked and rebuilt; a check that fails leaves the copies as they were.
 
 In Hermes Desktop a world's card has **Arrange**: click a construct and drag it: it rides on whatever is under the
 pointer (a floor, a table, a roof; a wall stops it; Alt keeps its level). Shift-drag or Q/E turns it, the arrows
@@ -111,7 +113,9 @@ What a world places comes from three sources:
 - the constructs the plugin ships;
 - the whole gallery, fetched by name from this release on GitHub.
 
-Each placed construct is copied into the world's folder, so a world travels whole and can be shared.
+Each placed construct is copied into the world's folder (`constructs/<name>/`, named after its project or its
+scene's id, with `.source.json` saying where it came from), so a world travels whole and can be shared; a change
+to the original shows only after `op: refresh`.
 `construct_check` checks a world, and `construct_export` exports it, as they do a construct.
 
 ## Limits

@@ -10,7 +10,9 @@ An operation is an object with `op` and its fields:
                  part, factor: k | [kx, ky, kz]                 multiplies the part's `scale`
                  part, shape: {radius: .., height: ..}          sets the shape's own fields
     set          part, field: "look.weight", value              a field of the part (a dotted path inside it)
-                 path: "subject.accuracy", value                a field of the scene (a dotted path; list indexes as numbers)
+                 path: "subject.accuracy", value                a field of the scene (a dotted path; list indexes as
+                                                                numbers or [n], keys may hold dashes; or a JSON
+                                                                pointer, /authoring/rounds/5/summary)
     unset        part, field | path                             removes it
     certainty    part, certainty: "inferred" | {size, shape}, basis?: [fact keys], source?: source id
     add_part     part: {id, role, shape, certainty, stage, ...}, after?: part id
@@ -32,7 +34,9 @@ import re
 OPS = ("move", "rotate", "resize", "set", "unset", "certainty", "add_part", "remove_part", "add_fact", "set_fact",
        "remove_fact", "add_source")
 MAX_OPS = 100
-SEGMENT = re.compile(r"^(?:[A-Za-z_][A-Za-z0-9_]{0,63}|[0-9]{1,5})$")
+SEGMENT = re.compile(r"^(?:[A-Za-z_][A-Za-z0-9_-]{0,63}|[0-9]{1,5})$")
+INDEX = re.compile(r"\[([0-9]{1,5})\]")          # views[1] is views.1
+FORBIDDEN = {"__proto__", "constructor", "prototype"}   # what a page's script could take for its own
 PART_CERTAINTIES = ("verified", "user_supplied", "traced", "inferred", "decorative")
 FACT_FIELDS = ("value", "unit", "certainty", "source", "note")
 
@@ -75,11 +79,20 @@ def _match(doc, op):
 
 
 def _segments(path):
+    """A path's steps: dotted names (subject.accuracy, anchors.wall-mount) with list indexes as numbers or in
+    brackets (views.1, views[1].distance), or a JSON pointer (/authoring/rounds/5/summary)."""
     if not isinstance(path, str) or not path or len(path) > 200:
         raise EditError("a path is dotted names, e.g. subject.accuracy or look.weight")
-    segs = path.split(".")
-    if any(not SEGMENT.match(s) for s in segs):
-        raise EditError("path %r: each step is a name (letters, digits, _) or a list index" % path)
+    if path.startswith("/"):   # a JSON pointer (RFC 6901): ~1 is a slash and ~0 a tilde inside a name
+        segs = [s.replace("~1", "/").replace("~0", "~") for s in path[1:].split("/")]
+    else:
+        segs = INDEX.sub(r".\1", path).split(".")
+    for s in segs:
+        if not SEGMENT.match(s):
+            raise EditError("path %r: each step is a name (letters, digits, _ and -) or a list index (views.1, "
+                            "views[1] or /views/1)" % path)
+        if s in FORBIDDEN or (s.startswith("__") and s.endswith("__")):
+            raise EditError("path %r: %r is not a key a scene has" % (path, s))
     return segs
 
 

@@ -614,8 +614,8 @@ def draw_tool(args):
     labels = _strings(args, "labels", 8, 40)
     credit, scene_name = None, "scene.json"
     if project is not None:
-        folder = runtime.project_dir(project)
-        slug = project
+        slug = runtime.project_id(project)
+        folder = runtime.project_dir(slug)
         info = runtime.read_project(folder)
         nl = info.get("netlogo") or {}
         names = nl.get("compared") or nl.get("recordings") or []

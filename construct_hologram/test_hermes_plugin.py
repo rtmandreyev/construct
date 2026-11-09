@@ -504,6 +504,56 @@ class Plugin(unittest.TestCase):
         shutil.copyfile(scene, outside)
         self.assertIn("outside the projects", self.call("construct_edit", {"scene": str(outside), "operations": ops[:1]})["error"])
 
+    def test_edit_paths_take_brackets_pointers_and_dashes(self):
+        se = _load(self.pkg / "scene_edit.py", "construct_scene_edit_under_test")
+        self.assertEqual(se._segments("presentation.views[1].distance"), ["presentation", "views", "1", "distance"])
+        self.assertEqual(se._segments("/authoring/rounds/5/summary"), ["authoring", "rounds", "5", "summary"])
+        self.assertEqual(se._segments("assets[0].sha256"), ["assets", "0", "sha256"])
+        self.assertEqual(se._segments("anchors.wall-mount"), ["anchors", "wall-mount"])
+        for bad in ("a.__proto__.x", "/constructor/x", "notes.prototype", "a..b", "a[x]", "/a//b", "-a", "a.__init__",
+                    "/a~1b", "a b"):
+            with self.assertRaises(se.EditError, msg=bad):
+                se._segments(bad)
+        doc = {"anchors": {}, "presentation": {"views": [{"id": "a"}, {"id": "b", "distance": 1}]},
+               "authoring": {"rounds": [{"summary": "x"}] * 6}}
+        se.apply(doc, {"op": "set", "path": "presentation.views[1].distance", "value": 5})
+        se.apply(doc, {"op": "set", "path": "/authoring/rounds/5/summary", "value": "shorter"})
+        se.apply(doc, {"op": "set", "path": "anchors.wall-mount", "value": [0, 1, 0]})
+        self.assertEqual(doc["presentation"]["views"][1]["distance"], 5)
+        self.assertEqual(doc["authoring"]["rounds"][5]["summary"], "shorter")
+        self.assertEqual(doc["anchors"]["wall-mount"], [0, 1, 0])
+        se.apply(doc, {"op": "unset", "path": "anchors.wall-mount"})
+        self.assertEqual(doc["anchors"], {})
+        for refused in ({"op": "set", "path": "/placements/0/at", "value": [0, 0, 0]},
+                        {"op": "set", "path": "parts[0].id", "value": "x"},
+                        {"op": "set", "path": "assets[0].path", "value": "/etc/passwd"}):
+            with self.assertRaises(se.EditError, msg=refused):
+                se.apply({"assets": [{"path": "a.png"}], "parts": [{"id": "p"}], "placements": [{}]}, refused)
+        # end to end: a bracketed path is written and validated like any other
+        r = self.call("construct_start", {"example": "braun-sk4-knob"})
+        e = self.call("construct_edit", {"project": r["project"], "operations": [
+            {"op": "set", "path": "/title", "value": "A knob"}], "dry_run": True})
+        self.assertNotIn("error", e)
+        self.assertFalse(e.get("introduced"), e)
+        self.assertEqual(e["applied"][0]["changes"][0]["field"], "/title")
+
+    def test_an_edit_that_times_out_says_nothing_was_written(self):
+        r = self.call("construct_start", {"example": "braun-sk4-knob"})
+        scene = Path(r["scene"])
+        before = scene.read_bytes()
+        tools = self.mod.tools
+        old = tools.EDIT_TIMEOUT
+        tools.EDIT_TIMEOUT = 0.001
+        try:
+            out = self.call("construct_edit", {"project": r["project"], "operations": [
+                {"op": "move", "part": "knob-body", "by": [0, 0.001, 0]}]})
+        finally:
+            tools.EDIT_TIMEOUT = old
+        self.assertIn("did not answer within", out["error"])
+        self.assertIn("nothing was written", out["error"])
+        self.assertEqual(scene.read_bytes(), before)
+        self.assertFalse(list((scene.parent / "edits").glob(".*.json")))   # no spec or candidate left behind
+
     def test_inspect_gives_the_body_apart_from_what_stands_out(self):
         r = self.call("construct_start", {"example": "volkswagen-t1-samba"})
         size = self.call("construct_inspect", {"project": r["project"]})["size"]
@@ -684,6 +734,47 @@ class Plugin(unittest.TestCase):
         self.assertEqual(c["stats"]["placements"], 3)
         e = self.until_done(self.call("construct_export", {"project": w, "format": "glb"}))
         self.assertTrue(e.get("success"), e)
+
+    def test_world_copies_are_named_by_their_source_and_refresh(self):
+        a = self.call("construct_start", {"example": "braun-sk4-knob", "title": "Knob A"})
+        b = self.call("construct_start", {"example": "braun-sk4-knob", "title": "Knob B"})
+        checkpoints = []
+        for r in (a, b):   # two constructs' checkpoints in folders of the same name
+            cp = Path(r["project_dir"]) / "checkpoints" / "round-05" / "scene.json"
+            cp.parent.mkdir(parents=True)
+            shutil.copyfile(r["scene"], cp)
+            checkpoints.append(str(cp))
+        w = self.until_done(self.call("construct_world", {"op": "new", "title": "Two knobs", "construct": "garden-shed"}))
+        self.assertTrue(w.get("success"), w)
+        on = w["surfaces"][0]["on"]
+        r = self.until_done(self.call("construct_world", {"op": "place", "world": w["project"], "placements": [
+            {"construct": checkpoints[0], "on": on, "at": [-0.5, 0, 0]},
+            {"construct": checkpoints[1], "on": on, "at": [0.5, 0, 0]},
+            {"construct": a["project"], "id": "knob-a-now", "on": on, "at": [0, 0, 0.5]}]}))
+        self.assertTrue(r.get("success"), r)
+        folder = self.data / "projects" / w["project"]
+        doc = json.loads((folder / "world.json").read_text())
+        paths = [p["construct"] for p in doc["placements"][1:]]
+        self.assertEqual(paths, ["constructs/%s/scene.json" % a["project"], "constructs/%s/scene.json" % b["project"],
+                                 "constructs/%s-2/scene.json" % a["project"]])   # not both constructs/round-05
+        self.assertEqual(json.loads((folder / "constructs" / b["project"] / ".source.json").read_text())["origin"],
+                         str(Path(checkpoints[1]).resolve()))
+        # the construct improved after placing: refresh brings it in again
+        e = self.call("construct_edit", {"project": a["project"], "operations": [
+            {"op": "set", "path": "title", "value": "Knob A, improved"}]})
+        self.assertTrue(e["written"], e)
+        r = self.until_done(self.call("construct_world", {"op": "refresh", "world": w["project"], "id": "knob-a-now"}))
+        self.assertTrue(r.get("success"), r)
+        self.assertEqual([(x["construct"], x["changed"]) for x in r["refreshed"]], [(a["project"] + "-2", True)])
+        copy = json.loads((folder / "constructs" / (a["project"] + "-2") / "scene.json").read_text())
+        self.assertEqual(copy["title"], "Knob A, improved")
+        r = self.call("construct_world", {"op": "refresh", "world": w["project"]})
+        self.assertFalse(any(x["changed"] for x in r["refreshed"]), r)
+        self.assertIn("not rebuilt", r["next"])
+        self.assertIn("error", self.call("construct_world", {"op": "refresh", "world": w["project"], "id": "nobody"}))
+        log = [json.loads(x) for x in (folder / "edits" / "log.jsonl").read_text().splitlines()]
+        self.assertEqual(log[-1]["op"], "refresh")
+        self.assertFalse(list(folder.glob(".refresh-*")))
 
     def test_export_is_read_back(self):
         r = self.call("construct_start", {"example": "volkswagen-t1-samba"})
@@ -908,6 +999,85 @@ class Plugin(unittest.TestCase):
         self.assertEqual(wrote["exit"], 0, wrote)
         self.assertTrue(any(f.endswith("expanded.json") for f in wrote["files"]), wrote)
         self.assertIn("error", self.call("construct_command", {"argv": ["expand", "scene.json"], "project": "nope"}))
+
+    def test_command_help_and_its_limits(self):
+        for argv in (["--help"], ["help"], ["-h"]):
+            h = self.call("construct_command", {"argv": argv})
+            self.assertNotIn("error", h, argv)
+            self.assertIn("rounds", h["subcommands"])
+            self.assertTrue(h["subcommands"]["rounds"], h["subcommands"])   # a line each, Construct's own
+            self.assertNotIn("author", h["subcommands"])
+            self.assertIn("construct_edit", h["other_tools"]["edit"])
+        sub = self.call("construct_command", {"argv": ["rounds", "--help"]})
+        self.assertIn("usage", sub["help"].lower())
+        self.assertIn("usage", self.call("construct_command", {"argv": ["help", "export"]})["help"].lower())
+        for name, tool in (("edit", "construct_edit"), ("world", "construct_world"), ("capture", "construct_review"),
+                           ("schema", "construct_check")):
+            self.assertIn(tool, self.call("construct_command", {"argv": [name, "--help"]})["call_instead"])
+            self.assertIn(tool, self.call("construct_command", {"argv": [name, "x"]})["error"])
+        said = lambda argv: self.call("construct_command", {"argv": argv})["error"]
+        self.assertIn("argv[2] is 4179 characters; each item is at most 4000", said(["rounds", "packet", "x" * 4179]))
+        self.assertIn("argv has 65 items; at most 64", said(["check"] * 65))
+        self.assertIn("argv must be a list", said([]))
+
+    def test_project_may_be_named_by_its_folder(self):
+        r = self.call("construct_start", {"from_path": str(V2 / "cd.json")})
+        folder = Path(r["project_dir"])
+        ok = self.call("construct_command", {"argv": ["params", "--list"], "project": str(folder)})
+        self.assertEqual(ok["exit"], 0, ok)
+        self.assertEqual(ok["project"], r["project"])
+        self.assertEqual(self.mod.runtime.project_id(str(folder) + "/"), r["project"])
+        i = self.call("construct_inspect", {"project": str(folder)})
+        self.assertEqual(i["project"], r["project"])
+        inner = self.call("construct_command", {"argv": ["check", "scene.json"], "project": str(folder / "scene.json")})
+        self.assertIn("give project %r" % r["project"], inner["error"])
+        world = self.data / "projects" / "a-placed-world"
+        (world / "constructs" / "lamp").mkdir(parents=True)
+        (world / "world.json").write_text("{}")
+        placed = self.call("construct_command", {"argv": ["check", "scene.json"], "project": str(world / "constructs" / "lamp")})
+        self.assertIn("scene 'constructs/lamp/scene.json'", placed["error"])
+        self.assertIn("refresh", placed["error"])
+        shutil.rmtree(world)
+        for outside in (str(Path(self.tmp.name) / "elsewhere"), "/etc", "relative/path", str(self.data / "jobs")):
+            self.assertIn("project must be a project id", self.call("construct_command", {
+                "argv": ["params", "--list"], "project": outside})["error"], outside)
+
+    def test_review_reports_the_capture_error_and_retries_smaller(self):
+        tools = self.mod.tools
+        self.assertEqual(tools.capture_error("x\ncapture unavailable: the viewer did not become ready\nworld audit: PASS"),
+                         ("the viewer did not become ready", True))
+        self.assertEqual(tools.capture_error("audit: PASS"), ("", False))
+        rec = {"finish": {"slug": "w", "out": str(Path(self.tmp.name) / "no-review"), "show": [], "size": "1280x800",
+                          "retry_size": "1024x640"}}
+        tail = ("review: capture timed out at 1280x800; trying once more at 1024x640\n"
+                "capture unavailable: the viewer did not become ready\nworld audit: PASS (0 warnings)")
+        with self.assertRaises(self.mod.runtime.ConstructError) as cm:
+            tools._finish_review(rec, {"code": 2}, tail)
+        msg = str(cm.exception)
+        self.assertIn("timed out at 1280x800 and again at 1024x640", msg)
+        self.assertIn("the viewer did not become ready", msg)
+        self.assertNotIn("world audit", msg)
+        with self.assertRaises(self.mod.runtime.ConstructError) as cm:
+            tools._finish_review(rec, {"code": 2}, "capture unavailable: No Chromium-family browser found. Install it\nok")
+        self.assertIn("do not install a browser", str(cm.exception))
+        # the child tries once more, smaller, only when the capture timed out
+        child = _load(self.pkg / "child.py", "construct_child_under_test")
+        sizes = []
+
+        def fake(argv, timeout_until=("1280x800",)):
+            size = argv[argv.index("--size") + 1]
+            sizes.append(size)
+            if size in timeout_until:
+                sys.stderr.write("capture unavailable: the viewer did not become ready\n")
+                return 2
+            return 0
+        child._cli = fake
+        self.assertEqual(child.review({"argv": ["review", "s.json", "--size", "1280x800"], "retry_size": "1024x640"}), 0)
+        self.assertEqual(sizes, ["1280x800", "1024x640"])
+        sizes.clear()
+        child._cli = lambda argv: (sizes.append(1), sys.stderr.write("capture unavailable: DevTools refused\n"), 2)[-1]
+        self.assertEqual(child.review({"argv": ["review", "s.json", "--size", "1280x800"], "retry_size": "1024x640"}), 2)
+        self.assertEqual(sizes, [1])   # not a timeout: no retry
 
     def test_backend_refuses_traversal(self):
         r = self.call("construct_start", {"from_path": str(V2 / "book.json")})
