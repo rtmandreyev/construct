@@ -40,6 +40,10 @@ class ConstructError(Exception):
     """A request the plugin cannot carry out; the message says why, in words for the model."""
 
 
+class ChildTimeout(ConstructError):
+    """A short child stopped because it outlived its time (run_child)."""
+
+
 # ---------------------------------------------------------------------------- folders
 
 def configure(data=None, projects=None, config=None):
@@ -263,10 +267,42 @@ def new_project(title):
     raise ConstructError("too many projects named %r" % base)
 
 
+def project_id(value):
+    """A project id from what a call names: the id itself, or the project's folder by path (inside the projects
+    folder). A path inside a world's constructs/ folder, or anywhere else, is refused with what to give instead."""
+    if isinstance(value, str) and SLUG.match(value):
+        return value
+    refusal = ("project must be a project id as construct_start returned it (lower-case letters, digits and dashes), "
+               "or that project's folder inside the projects folder")
+    if not isinstance(value, str) or not value.strip() or "\0" in value:
+        raise ConstructError(refusal)
+    p = Path(value.strip()).expanduser()
+    if not p.is_absolute():
+        raise ConstructError(refusal)
+    root = projects_root()
+    try:
+        rel = p.resolve().relative_to(root)
+    except (ValueError, OSError):
+        raise ConstructError(refusal + "; %s is outside it" % value)
+    parts = rel.parts
+    if not parts or not SLUG.match(parts[0]) or not (root / parts[0]).is_dir():
+        raise ConstructError(refusal)
+    if len(parts) == 1:
+        return parts[0]
+    if parts[1] == "constructs" and len(parts) > 2 and (root / parts[0] / "world.json").is_file():
+        inner = "/".join(parts[1:3]) + ("/world.json" if (root.joinpath(*parts[:3]) / "world.json").is_file()
+                                        else "/scene.json")
+        raise ConstructError("%s is a construct placed in world %s, not a project: give project %r with scene %r "
+                             "(construct_check, construct_edit, construct_inspect, construct_build and construct_review "
+                             "take scene), or in construct_command name the file relative to the world (%s). To change "
+                             "the construct itself, change its own project, then construct_world op refresh" % (
+                                 value, parts[0], parts[0], inner, inner))
+    raise ConstructError("%s is inside project %s: give project %r, and the file as a path relative to it (scene, or in "
+                         "construct_command's argv)" % (value, parts[0], parts[0]))
+
+
 def project_dir(slug):
-    if not isinstance(slug, str) or not SLUG.match(slug):
-        raise ConstructError("project must be a project id as construct_start returned it (lower-case letters, "
-                             "digits and dashes)")
+    slug = project_id(slug)
     folder = projects_root() / slug
     if not folder.is_dir():
         known = ", ".join(sorted(p.name for p in projects_root().iterdir() if p.is_dir())[:20]) or "none yet"
@@ -302,6 +338,7 @@ def resolve(args):
     if not project and not scene:
         raise ConstructError("name a project (from construct_start) or a scene path")
     if project:
+        project = project_id(project)
         folder = project_dir(project)
         if scene:
             path = Path(scene).expanduser()
@@ -390,7 +427,7 @@ def run_child(op, *args, timeout=120, cwd=None):
         r = subprocess.run(child_argv(op, *args), capture_output=True, text=True, encoding="utf-8", errors="replace",
                            timeout=timeout, cwd=str(cwd) if cwd else None, env=child_env())
     except subprocess.TimeoutExpired:
-        raise ConstructError("Construct did not answer within %d s" % timeout)
+        raise ChildTimeout("Construct did not answer within %d s" % timeout)
     return r.returncode, r.stdout, r.stderr
 
 

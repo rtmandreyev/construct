@@ -203,11 +203,21 @@ def _rounds(args):
     from . import rounds
     folder, a = Path(args.dir), list(args.args)
     try:
+        request = args.request
+        if getattr(args, "request_file", None):   # a request too long for one argument
+            if request is not None:
+                raise rounds.RoundsError("give --request or --request-file, not both")
+            rf = Path(args.request_file)
+            if not rf.is_file() or rf.stat().st_size > 64000:
+                raise rounds.RoundsError("--request-file %s: expected a text file of at most 64 KB" % rf)
+            request = rf.read_text(encoding="utf-8").strip()
+            if not request:
+                raise rounds.RoundsError("--request-file %s is empty (an empty --request \"\" drops the kept request)" % rf)
         if args.action == "start":
             if len(a) != 1:
                 raise rounds.RoundsError("usage: construct rounds start scene.json [--tier masterpiece] [--dir run]")
             st = rounds.start(a[0], args.tier, folder if args.dir != "." else Path(a[0]).resolve().parent,
-                              max_rounds=getattr(args, "max_rounds", None))
+                              max_rounds=getattr(args, "max_rounds", None), references=args.reference, request=request)
             sys.stdout.write("started: round 1, %s mode, %s; the medium's limits are seeded as known limits (L1-L3)\n" % (
                 st["tier"], "stops after 2 rounds without a win, at %d rounds or %d minutes of %s" % (
                     st["max_rounds"], st["limit_seconds"] // 60, "working time, the critic's included"
@@ -222,7 +232,7 @@ def _rounds(args):
                 sorted({c["ledger"] for c in st["changes"]}))))
         elif args.action == "packet":
             scene = rounds.scene_of(folder)
-            pk, key = rounds.packet(folder, scene, args.reference, args.request, args.out)
+            pk, key = rounds.packet(folder, scene, args.reference, request, args.out)
             sys.stdout.write("round packet: %s (part 1 this version%s, part 3 the ledger)\nGive it to ONE fresh critic "
                              "started in that folder, or `construct rounds run --base-url ...`; then:\n"
                              "  construct rounds record answer.json\n" % (pk, "" if key is None else ", part 2 the pair"))
@@ -233,6 +243,9 @@ def _rounds(args):
                 answer, _ = diagnose_mod.parse_text(Path(a[0]).read_text(encoding="utf-8"))
                 if not isinstance(answer, dict):
                     raise rounds.RoundsError("the answer is not a JSON object")
+                if getattr(args, "dry_run", False):
+                    sys.stdout.write(rounds.check(folder, answer) + "\n")
+                    return 0
                 model = None
             else:
                 base = args.base_url or os.environ.get("CONSTRUCT_CRITIC_BASE_URL")
@@ -383,9 +396,13 @@ def add_commands(sub):
                         "time counted too) or unbounded (only the stop rules; explicit request)")
     p.add_argument("--max-rounds", type=int, help="start: a lower round cap than the mode's (at least 2): a small prop "
                                                      "in a world, seen many times, needs fewer rounds than its hero")
-    p.add_argument("--reference", action="append", default=[], help="view=image, as for critique; repeatable")
-    p.add_argument("--request", help="the request in plain words")
-    p.add_argument("--out", help="the packet folder (default: a neutral folder in the temp directory)")
+    p.add_argument("--reference", action="append", default=[],
+                   help="start/packet: view=image (or just image: beside the hero), as for critique; repeatable. Kept "
+                        "for later packets until new ones are given; `--reference none` drops them")
+    p.add_argument("--request", help="start/packet: the request in plain words, kept for later packets; \"\" drops it")
+    p.add_argument("--request-file", help="start/packet: read the request from this text file (a long request)")
+    p.add_argument("--out", help="packet: the packet folder (default: packets/round-NN/ in the run's folder, kept)")
+    p.add_argument("--dry-run", action="store_true", help="record: check the answer as record would; write nothing")
     p.add_argument("--base-url", help="run the round's critic as direct model calls (default: $CONSTRUCT_CRITIC_BASE_URL)")
     p.add_argument("--model")
     p.add_argument("--key-env")
@@ -1061,8 +1078,7 @@ def run(args):
         if args.command == "export" and (args.format or Path(args.out).suffix.lower().lstrip(".")) in ("fbx", "usd", "usdz"):
             # FBX and USD: the glTF made here, carried over by Blender (its importer keeps the parts, materials and
             # the open animation)
-            import argparse as _ap
-            import tempfile
+            import argparse as _ap   # (tempfile is the module's own: a local import would shadow it in all of run)
             from . import export as export_mod
             fmt = args.format or Path(args.out).suffix.lower().lstrip(".")
             with tempfile.TemporaryDirectory() as tmp:
