@@ -1707,6 +1707,8 @@ def compile_scene(scene, solid=False):
               for c in scene.get("authoring", {}).get("compare", []) if c["pass"] and c["scene_sha256"] == current]
     checked = {c["reference"] for c in passed}   # references a current silhouette comparison passed against
     styles, style_key, style_colors = [], {}, []   # a part's own colour (look.color), beside its tone
+    style_light = []   # whether that colour is drawn in the light view too (light itself, or recorded data)
+    recorded = (scene.get("subject") or {}).get("accuracy") == "recorded"
     lines, fills, points, motions, artwork = [], [], [], [], []
     part_out = []
     # per stage height range for the build phase (filled in a first pass)
@@ -1846,7 +1848,12 @@ def compile_scene(scene, solid=False):
         if key not in style_key:
             style_key[key] = len(styles)
             styles.append(entry)
-            style_colors.append(scene["parts"][pi].get("look", {}).get("color"))
+            look = scene["parts"][pi].get("look", {})
+            style_colors.append(look.get("color"))
+            # the light view is drawn in the house palette: a part's own colour shows there only when it is light
+            # (a bulb, a neon tube, a screen: glow from 0.5) or recorded data (a NetLogo run's turtles and patches);
+            # the solid view and exports show every part's colour
+            style_light.append(bool(look.get("color")) and (recorded or float(look.get("glow", 0) or 0) >= 0.5))
         return style_key[key]
 
     art_done = set()
@@ -1969,7 +1976,7 @@ def compile_scene(scene, solid=False):
         "parts": part_out, "styles": styles,
         "style_fields": ["tone", "alpha", "width_px", "glow_px", "dash", "fade", "part", "motion_slot", "occluder",
                          "joint"],
-        **({"style_colors": [c.lower() if c else None for c in style_colors]} if any(style_colors) else {}),
+        **({"style_colors": [c.lower() if c else None for c in style_colors], "style_light": style_light} if any(style_colors) else {}),
         "lines": lines, "line_stride": 9, "line_fields": ["ax", "ay", "az", "bx", "by", "bz", "style", "phase_a", "phase_b"],
         "fills": fills, "fill_stride": 5, "fill_fields": ["x", "y", "z", "style", "phase"],
         "points": points, "point_stride": 7, "point_fields": ["x", "y", "z", "size_px", "style", "sprite", "phase"],

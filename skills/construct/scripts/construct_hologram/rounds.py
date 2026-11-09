@@ -250,6 +250,23 @@ def _remove(folder):
         shutil.rmtree(folder, **({"onexc": again} if sys.version_info >= (3, 12) else {"onerror": again}))
 
 
+def _world_files(doc, src, dst, materials=True):
+    """A world's round carries what it places by path (its constructs' folders, its material map), so a checkpoint
+    is the whole world as it was judged and a reverted round puts the constructs back too."""
+    if not (isinstance(doc, dict) and doc.get("format") == "construct-world"):
+        return
+    src, dst = Path(src), Path(dst)
+    for p in doc.get("placements", []):
+        c = p.get("construct") if isinstance(p, dict) else None
+        if isinstance(c, str) and c.endswith(".json") and not Path(c).is_absolute() and ".." not in Path(c).parts:
+            if (src / c).is_file() and (src / c).parent.resolve() != src.resolve():
+                shutil.copytree(src / Path(c).parent, dst / Path(c).parent, dirs_exist_ok=True)
+    for name in ("world.materials.json", "scene.materials.json") if materials else ():
+        if (src / name).is_file():
+            shutil.copyfile(src / name, dst / "scene.materials.json")
+            break
+
+
 def packet(folder, scene_path, references=(), request=None, out=None, browser=None, seed=None, now=None):
     """Check the scene in and write the round's one-critic packet. Returns (packet folder, key)."""
     from . import critic, diagnose
@@ -270,6 +287,7 @@ def packet(folder, scene_path, references=(), request=None, out=None, browser=No
     if doc is None:
         raise RoundsError("cannot read %s" % scene_path)
     (rd / "scene.json").write_text(text, encoding="utf-8")
+    _world_files(doc, Path(scene_path).parent, rd)   # a world: its constructs come with it
     step(folder, st, "checkpointed", now)
     digest = tiers.critic_hash(doc)
     pk_dir = Path(out) if out else Path(tempfile.gettempdir()) / ("round-" + digest[:12])  # a name that says nothing
@@ -389,7 +407,7 @@ def validate(doc, first=False, ids=()):
     pw = doc.get("pairwise")
     if pw is not None and c.keys(pw, {"winner", "criteria", "differences", "reasons"}, {"winner", "criteria", "differences"},
                                  "pairwise"):
-        c.choice(pw.get("winner"), ("A", "B"), "pairwise.winner")
+        c.choice(pw.get("winner"), ("A", "B", "same"), "pairwise.winner")   # a tie keeps the best: the round did not beat it
         if c.keys(pw.get("criteria"), set(tiers.CRITERIA), set(tiers.CRITERIA), "pairwise.criteria"):
             for k, v in pw["criteria"].items():
                 c.choice(v, ("A", "B", "same"), "pairwise.criteria." + k)
@@ -602,6 +620,8 @@ def record(folder, answer, scene_path=None, model=None, now=None):
         (rd / "scene.json").write_text(json.dumps(sc, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     else:
         sc = json.loads((_round_dir(folder, restored) / "scene.json").read_text(encoding="utf-8"))
+        if scene_path:
+            _world_files(sc, _round_dir(folder, restored), Path(scene_path).parent, materials=False)   # its constructs go back too
     if scene_path:
         sc.setdefault("authoring", {"tier": st["tier"], "research": "unavailable"})["rounds"] = timeline(st)
         Path(scene_path).write_text(json.dumps(sc, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
@@ -752,7 +772,8 @@ def run(pk_dir, base_url, model, key=None, log=None):
     if two.exists():
         pics = sorted(two.glob("*.png"))
         content = [{"type": "text", "text": "Part 2. The same views of two versions, A and B, in a random order. Which is "
-                    "better overall and more recognisable? Answer {\"winner\": \"A\"|\"B\", \"criteria\": {criterion: "
+                    "better overall and more recognisable? Answer {\"winner\": \"A\"|\"B\"|\"same\" (same only when neither is better: "
+                    "the best so far stays), \"criteria\": {criterion: "
                     "\"A\"|\"B\"|\"same\"}, \"differences\": [{\"better\", \"criterion\", \"parts\", \"evidence\"}]}."}]
         for p in pics:
             content += [{"type": "text", "text": p.name + ":"}, runner.image_part(str(p))]

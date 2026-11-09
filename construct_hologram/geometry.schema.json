@@ -874,6 +874,13 @@
     "pattern": "^#[0-9a-f]{6}$"
    }
   },
+  "style_light": {
+   "type": "array",
+   "description": "optional, beside style_colors: whether that colour is drawn in the light view too (a part that is light, glow from 0.5, or recorded data); the solid view and exports use every colour",
+   "items": {
+    "type": "boolean"
+   }
+  },
   "lines": {
    "type": "array",
    "items": {

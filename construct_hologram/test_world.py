@@ -541,3 +541,36 @@ class Viewer(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class Rounds(unittest.TestCase):
+    """A world goes through masterpiece rounds like a construct: its checkpoints carry its constructs, and a round
+    that loses puts them back."""
+
+    @unittest.skipUnless(render.find_browser(), "no browser")
+    def test_a_world_runs_rounds_with_its_constructs(self):
+        import shutil
+        from construct_hologram import rounds
+        from construct_hologram.test_scene import _round_answer
+        with tempfile.TemporaryDirectory() as d:
+            d = Path(d)
+            for name in ("cd", "book"):
+                (d / "constructs" / name).mkdir(parents=True)
+                shutil.copyfile(lit(name + ".json"), d / "constructs" / name / "scene.json")
+            w = d / "world.json"
+            w.write_text(json.dumps(place({"id": "book", "construct": "constructs/book/scene.json"},
+                                          {"id": "cd", "construct": "constructs/cd/scene.json", "at": [0.4, 0, 0]})))
+            run = d / "run"
+            rounds.start(str(w), "masterpiece", run)
+            rounds.packet(run, str(w), out=str(d / "pk1"))
+            self.assertTrue((run / "checkpoints" / "round-01" / "constructs" / "cd" / "scene.json").is_file())
+            rounds.record(run, _round_answer(run, 1), str(w))
+            # round 2 edits a construct, and loses: the construct goes back to round 1's
+            cd = json.loads((d / "constructs" / "cd" / "scene.json").read_text())
+            cd["title"] = "an edit that loses"
+            (d / "constructs" / "cd" / "scene.json").write_text(json.dumps(cd))
+            rounds.packet(run, str(w), out=str(d / "pk2"))
+            e = rounds.record(run, _round_answer(run, 2, win=False), str(w))
+            self.assertFalse(e["kept"])
+            self.assertNotEqual(json.loads((d / "constructs" / "cd" / "scene.json").read_text())["title"], "an edit that loses")
+            self.assertTrue(world.is_world(json.loads(w.read_text())))

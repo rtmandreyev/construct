@@ -1394,6 +1394,23 @@ def _check_in(folder, scene_doc, best=None, seed=0):
     rounds._save(folder, "state.json", st)
 
 
+class OwnColours(unittest.TestCase):
+    """The light view is the house palette: a part's own colour shows there only when the part is light or
+    recorded data; the solid view and exports keep every colour."""
+
+    def test_only_light_and_data_keep_their_colour_in_the_light_view(self):
+        doc = base(subject={"category": "object", "accuracy": "approximate", "synthetic": True})
+        wall = dict(doc["parts"][0], id="wall", look={"color": "#9e3028", "glow": 0.05})
+        bulb = dict(doc["parts"][0], id="bulb", look={"color": "#ffd58a", "glow": 0.75})
+        doc["parts"] = [wall, bulb]
+        g = scene.compile_scene(doc)
+        lit = {c: l for c, l in zip(g["style_colors"], g["style_light"]) if c}
+        self.assertEqual((lit["#9e3028"], lit["#ffd58a"]), (False, True))   # a red wall in the house light; a bulb its own
+        rec = dict(doc, subject=dict(doc["subject"], accuracy="recorded", synthetic=False))
+        g2 = scene.compile_scene(rec)
+        self.assertTrue(all(l for c, l in zip(g2["style_colors"], g2["style_light"]) if c))
+
+
 class Rounds(unittest.TestCase):
     """Masterpiece rounds: the pairwise gate decides, repair don't revert, small batches, the ledger,
     stop rules, a log, resumable state."""
@@ -1488,6 +1505,19 @@ class Rounds(unittest.TestCase):
         os.chmod(kept, 0o644)
         kept.write_text(json.dumps(dict(answer, critique=dict(answer["critique"], verdict="outstanding"))))
         self.assertIn("Edited after recording (the run kept the answer as recorded): round 1", r.report(self.d))
+
+    def test_a_tie_is_recorded_and_keeps_the_best(self):
+        # a critic that cannot choose says "same": the round is recorded (not refused) and does not beat the best
+        r = self.r
+        _check_in(self.d, self.doc)
+        r.record(self.d, _round_answer(self.d, 1), self.scene)
+        _check_in(self.d, self.edit([2, 2, 1]))
+        ans = _round_answer(self.d, 2)
+        ans["pairwise"]["winner"] = "same"
+        e = r.record(self.d, ans, self.scene)
+        self.assertFalse(e["kept"])
+        self.assertEqual(r.state(self.d)["best_round"], 1)
+        self.assertEqual(json.loads(self.scene.read_text())["parts"], self.doc["parts"])
 
     def test_a_round_that_loses_is_reverted_and_two_in_a_row_stop_the_run(self):
         r = self.r

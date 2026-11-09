@@ -521,6 +521,7 @@ class Views(unittest.TestCase):
         self.assertEqual(tracks["look"]["color"], netlogo.light_colour(netlogo.netlogo_rgb(15)))   # the walkers are red
         g = scene.compile_scene(sc)
         self.assertIn(tracks["look"]["color"], g["style_colors"])
+        self.assertTrue(all(lit for c, lit in zip(g["style_colors"], g["style_light"]) if c))   # recorded data: drawn in the light view
         doc, _ = export.read_glb(export.render(sc, "glb", wire="tubes")[0]["glb"])
         self.assertIn("construct:light:" + tracks["look"]["color"], [m["name"] for m in doc["materials"]])
         house = netlogo.scene_from_run(self.run, "space-time", colors="house")

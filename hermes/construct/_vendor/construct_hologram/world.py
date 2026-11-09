@@ -338,7 +338,7 @@ def compile_world(doc, base_dir=".", resolver=None, solid=False, _depth=0, _stac
 
 class _Empty:
     def __init__(self):
-        self.parts, self.styles, self.style_colors = [], [], []
+        self.parts, self.styles, self.style_colors, self.style_light = [], [], [], []
         self.lines, self.fills, self.points = [], [], []
         self.motions, self.arts, self.joints = [], [], []
         self.artwork, self.labels, self.annotations = [], [], []
@@ -440,6 +440,7 @@ def _append(out, g, pid, xf, start, span, sky=False):
         out.styles.append(row)
     cols = g.get("style_colors") or [None] * len(g["styles"])
     out.style_colors.extend(cols)
+    out.style_light.extend(g.get("style_light") or [bool(c) for c in cols])
     L = g["lines"]
     for i in range(0, len(L), 9):
         a, b = xf.p(L[i:i + 3]), xf.p(L[i + 3:i + 6])
@@ -595,7 +596,7 @@ def _finish(doc, out, records, n, solid):
         "bounds": bounds, "anchors": anchors,
         "stages": [{"stage": i, "index": i} for i in range(len(records))],
         "parts": out.parts, "styles": out.styles, "style_fields": first["style_fields"],
-        **({"style_colors": out.style_colors} if any(out.style_colors) else {}),
+        **({"style_colors": out.style_colors, "style_light": out.style_light} if any(out.style_colors) else {}),
         "lines": out.lines, "line_stride": 9, "line_fields": first["line_fields"],
         "fills": out.fills, "fill_stride": 5, "fill_fields": first["fill_fields"],
         "points": out.points, "point_stride": 7, "point_fields": first["point_fields"],

@@ -238,10 +238,13 @@ the user says **fast** (then one pass each, and the world says so).
    `construct_world` op `tidy` (`projects: [...]`); nothing is deleted.
 4. **Text and signs say something real.** Lettering on signs, screens and plates is real, legible words that fit
    the place (a shop name, a street, a price), never letter-shaped noise copied from a generated picture.
-5. Place them as above, then judge the whole world with a fresh critic against the picture or brief
-   (composition, scale, what is missing) on `construct_review` images of the world itself, fix what it
-   finds, and judge again: up to three world rounds, stopping when the critic accepts. What is still open after
-   the third goes in the reply as the critic wrote it. The background carries a picture as much as its hero:
+5. Place them as above, then **run the world itself through masterpiece rounds**, as a construct is run:
+   `rounds start world.json --mode masterpiece --reference <the picture>`, then each round `rounds packet`, ONE
+   fresh critic (`delegate_task`) on the packet against the picture (composition, scale, what is missing, the
+   world's named views), `rounds record`, and the fixes it asks for: placements and views yourself, a construct's
+   repair by its builder. The same stop rules as a construct's (12 rounds, two in a row that do not beat the best,
+   two hours of your own time); a round that loses puts the world and its constructs back. What is still open when
+   it stops goes in the reply as the critic wrote it. The background carries a picture as much as its hero:
    plan enough distinct masses (heights, depths, setbacks) that a repeated building does not read as a copy.
    Frame each named view so its subject fills the picture: the picture's own shot matches its camera (height,
    direction, what is in frame), and no view is half empty ground or sky.

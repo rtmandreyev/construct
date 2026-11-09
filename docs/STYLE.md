@@ -38,6 +38,12 @@ is the part only it can do.
 
 You can still choose another palette yourself when you build a construct; the model can't.
 
+A part may carry its own colour (`look.color`): the red of a market stall, a car's paint. The light view still
+draws it in the house palette; its colour shows in the solid view and goes into every export. Two things keep their
+own colour in the light too: what is itself light (a bulb, a neon tube, a screen: a part that glows) and recorded
+data (a NetLogo run's turtles and patches). Pictures on a thing, a sign's lettering or a poster, are its artwork
+and keep their colours.
+
 ## How a construct assembles
 
 ![The Duomo di Milano at seven moments of its assembly, from an empty base plate to the finished cathedral with its spires](media/style-assembly.jpg)

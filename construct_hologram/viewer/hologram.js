@@ -90,7 +90,7 @@ vec4 styleA(float s) { return texelFetch(uStyles, ivec2(0, int(s + 0.5)), 0); } 
 vec4 styleB(float s) { return texelFetch(uStyles, ivec2(1, int(s + 0.5)), 0); }  // dash, fade, part, slot
 vec4 styleC(float s) { return texelFetch(uStyles, ivec2(2, int(s + 0.5)), 0); }  // occluder, certainty, role, drift
 vec4 styleD(float s) { return texelFetch(uStyles, ivec2(3, int(s + 0.5)), 0); }  // joint, colour (r, g, b or -1)
-vec4 styleE(float s) { return texelFetch(uStyles, ivec2(4, int(s + 0.5)), 0); }  // a world's placement (or -1)
+vec4 styleE(float s) { return texelFetch(uStyles, ivec2(4, int(s + 0.5)), 0); }  // a world's placement (or -1); the solid view's own colour
 
 mat4 poseAt(int r) {
   return mat4(texelFetch(uPose, ivec2(0, r), 0), texelFetch(uPose, ivec2(1, r), 0),
@@ -280,7 +280,8 @@ void main() {
   p.y += (1.0 - smoothstep(aPhase, aPhase + uReveal * 1.25, uBuild)) * uFly * uBounds.w;   // a piece drops into place
   vec3 q = placed(moved(p0 + aNrm * 0.01 * uBounds.w, sb.w, sd.x, g2), pr);   // the normal turns with its part
   vWorld = p; vNrm = q - p; vPhase = aPhase;
-  vBase = uMode > 0.5 ? uCertColor[int(sc.y + 0.5)] : (sd.y >= 0.0 ? sd.yzw : vec3(0.72, 0.71, 0.73));
+  vec4 se = styleE(aStyle);   // .yzw: the part's own colour for the solid view (or -1)
+  vBase = uMode > 0.5 ? uCertColor[int(sc.y + 0.5)] : (se.y >= 0.0 ? se.yzw : vec3(0.72, 0.71, 0.73));
   gl_Position = uVP * vec4(p, 1.0);
 }`;
   const SOLID_FS = `#version 300 es
@@ -608,11 +609,14 @@ void main() {
     const placeIx = this.placeIndex();
     this.styles.forEach((s, i) => {
       const part = s[6] >= 0 ? g.parts[s[6]] : null;
+      // a part's own colour: in the solid view always; in the light view only where the geometry says it is light
+      // (or recorded data). Older geometry without style_light drew it everywhere, and still does
       const own = g.style_colors && g.style_colors[i] ? hex(g.style_colors[i]) : [-1, -1, -1];
+      const lit = own[0] >= 0 && (!g.style_light || g.style_light[i]) ? own : [-1, -1, -1];
       const pl = part && part.placement !== undefined && placeIx[part.placement] !== undefined ? placeIx[part.placement] : -1;
       st.set([s[0], s[1], s[2], s[3], s[4], s[5], s[6], s[7], s[8],
               part ? provCode(part) : 2, part ? ROLE_CODE[part.role] : 6,
-              (this.moteStyle === i) ? 1 : 0, s.length > 9 ? s[9] : -1, own[0], own[1], own[2], pl, 0, 0, 0], i * 20);
+              (this.moteStyle === i) ? 1 : 0, s.length > 9 ? s[9] : -1, lit[0], lit[1], lit[2], pl, own[0], own[1], own[2]], i * 20);
     });
     this.styleTex = gl.createTexture();
     gl.bindTexture(gl.TEXTURE_2D, this.styleTex);

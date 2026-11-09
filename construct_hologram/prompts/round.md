@@ -12,7 +12,8 @@ defect of its criterion. Write it down now and do not change it later.
 
 **Part 2, against the best so far** (when the packet has `step-2/`). The same views of two
 versions, A and B, unlabelled and in a random order, beside the same references. Which is
-better overall and more recognisable as the real thing? For each criterion: A, B or same. Then
+better overall and more recognisable as the real thing (`winner`: A or B; `same` only when neither is
+better, and then the best so far stays)? For each criterion: A, B or same. Then
 the concrete differences: each one with the version that is better (`better`: A or B), its
 criterion, the parts, and the evidence you see. Judge the pictures, not a guess about which is
 newer.
