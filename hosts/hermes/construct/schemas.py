@@ -209,7 +209,7 @@ COMMAND = _tool(
     "inside the project or the plugin's data folder. Commands that call a model over the network (author, trace-image, "
     "--base-url, rounds run) are not run here: delegate the critic to a fresh subagent instead. Returns the exit code, "
     "the output and the files written; a command that outlasts wait_seconds returns a job_id for construct_job.",
-    {"argv": {"type": "array", "items": {"type": "string"}, "minItems": 1, "maxItems": 64,
+    {"argv": {"type": "array", "items": {"type": "string", "maxLength": 4000}, "minItems": 1, "maxItems": 64,
               "description": "e.g. [\"compare\", \"scene.json\", \"--trace\", \"side.json\", \"--view\", \"side\", \"--record\"]"},
      "project": {"type": "string", "description": "The project to run in (its folder is the working folder)."},
      "wait_seconds": {"type": "integer", "minimum": 1, "maximum": 380,

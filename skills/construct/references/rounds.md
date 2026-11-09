@@ -28,7 +28,9 @@ step:
 | `state.json` | `round`, `step`, `active_seconds`, `critic_seconds`, `best_round`, `status` (running / stopped) |
 | `ledger.json` | every defect ever raised: `id`, `title`, `criterion`, `severity`, `first_round`, `status` (open / fixed / regressed / known-limit), `rounds_attempted`, `history` |
 | `rounds.md` | one section per round, appended: what changed, the critic's requests, won or lost |
-| `checkpoints/round-NN/` | that round's scene, its renders, the critic's answer, the A/B key (never shown to the critic) |
+| `checkpoints/round-NN/` | that round's scene, its artwork (the files its `assets` name), its renders, the critic's answer, the A/B key (never shown to the critic) |
+| `checkpoints/references/` | the reference pictures, kept for every later packet |
+| `packets/round-NN/` | that round's packet, kept after `record` |
 
 ## One round
 
@@ -38,9 +40,10 @@ step:
    is `draft`. A fifth item is refused: check the round in and let the critic judge first.
    Small batches tell you which edit did what.
 2. **`check` until clean,** then `python3 ${HERMES_SKILL_DIR}/scripts/cli.py rounds packet --reference side=side.jpg
-   --reference top=top.jpg ...`. That checks the scene in to `checkpoints/round-NN/` and
-   writes one packet, in a neutral folder, with the references copied in, for **one** fresh
-   critic:
+   --reference top=top.jpg ...`. That checks the scene in to `checkpoints/round-NN/` (with
+   its artwork, so the critic sees the signs and covers) and writes one packet to
+   `packets/round-NN/` in the run's folder (or `--out`, a folder inside the project), with the
+   references copied in, for **one** fresh critic:
    - **part 1:** this version alone, the standard critique;
    - **part 2:** this version and the best so far, from the same views, unlabelled and in a
      random A/B order, beside the references. The pictures are re-encoded and named at random,
@@ -50,25 +53,35 @@ step:
    The critic writes part 1 before it opens part 2. Its blind judgement never sees the history.
 
    The packet holds only what the critic judges by: the renders, the reference pictures and the
-   user's request (`--request`, in the user's words; without it, none). `--reference` takes
-   pictures only (png, jpg, webp, gif) or links: your notes, reasons and rationale never go in,
-   and a document is refused. Once written, the packet is sealed: its files are read-only and its
-   hash is in `state.json`.
+   user's request (`--request`, in the user's words, or `--request-file request.txt` for a long
+   one; without it, none). `--reference` takes pictures only (png, jpg, webp, gif) or links:
+   your notes, reasons and rationale never go in, and a document is refused. A reference names
+   one of the scene's views (`side=`, `top=`, a view of its own); a picture given with no view
+   (just its path) is set beside the hero. Both are checked before anything is built.
+
+   References and the request given once (to `start` or to any packet) are kept in the run and
+   used by every later packet. Giving new ones replaces them; `--reference none` drops the
+   references and `--request ""` drops the request. When the best version lacks a view this
+   one added, the pair shows the views both have.
+
+   Once written, the packet is sealed: its files are read-only and its hash is in `state.json`.
 3. **The critic.** Give a fresh critic the packet folder and nothing else: a subagent, one
    delegated task (in Hermes, one child a round fits its two-child budget), or direct model
    calls: `python3 ${HERMES_SKILL_DIR}/scripts/cli.py rounds run --base-url URL --model M --key-env VAR` (one conversation,
    part 1 answered before parts 2 and 3 are shown). Save its answer outside the packet folder.
    The critic and the author do not talk until the answer is recorded: no questions, no
    explanations, no second thoughts after a word from the author.
-4. **`python3 ${HERMES_SKILL_DIR}/scripts/cli.py rounds record answer.json`.** It refuses an answer when the packet changed
+4. **`python3 ${HERMES_SKILL_DIR}/scripts/cli.py rounds record answer.json`.** `--dry-run` first checks the answer exactly as
+   `record` would and writes nothing: fix what it names (the critic's own extra notes, a
+   `notes` string or other keys beside its judgement, are kept, not refused). It refuses an answer when the packet changed
    after it was written (or is gone), and a packet is answered once: a recorded blind verdict is
    not rewritten (the checkpoint's `round.json` is read-only, its hash is in the round's history,
    and `rounds report` names a round whose answer was edited afterwards). A new answer needs a
    new packet and a fresh critic. Then it un-blinds the pair and decides:
    - **Won overall: keep it.** Its regressions go to the top of the ledger. Repair, don't
      revert.
-   - **Lost overall: revert.** The working scene becomes the best round again. Next round, try
-     a different fix.
+   - **Lost overall: revert.** The working scene, and its artwork, become the best round again.
+     Next round, try a different fix.
 
    Absolute scores are recorded but decide nothing.
 5. **Report the round in chat,** every round.

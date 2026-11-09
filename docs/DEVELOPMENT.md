@@ -121,7 +121,8 @@ version and the best so far, then for the status of the earlier defects. `rounds
 --base-url ...` runs the critic as one model conversation instead of a helper agent.
 
 The run lives in its folder: `state.json`, the defect list (`ledger.json`), `rounds.md` (one
-section per round) and `checkpoints/round-NN/`. `rounds status` says where a run is after any
+section per round), `checkpoints/round-NN/` (the scene and its artwork) and `packets/round-NN/`.
+References and the request given once are kept for every later packet. `rounds status` says where a run is after any
 interruption, and `rounds pause` marks a break. The full procedure is in
 [`skill/references/rounds.md`](../construct_hologram/skill/references/rounds.md).
 

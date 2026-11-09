@@ -133,8 +133,9 @@ show what each step makes, and wait for the user between steps.
    rounds modes.
    **Masterpiece, timeboxed and unbounded run judged rounds** ([rounds](references/rounds.md)), all through
    `construct_command`: `rounds start scene.json --mode masterpiece`; each round at most 4 ledger items, each
-   edit tagged (`rounds change D3 "..."`); `rounds packet --reference side=...`; ONE delegated critic a round
-   (a fresh subagent given the packet folder and nothing else); `rounds record answer.json`. A version is kept
+   edit tagged (`rounds change D3 "..."`); `rounds packet --reference side=... --request "..."` (both kept for
+   later packets; a long request: `--request-file`); ONE delegated critic a round (a fresh subagent given the
+   packet folder and nothing else); `rounds record answer.json` (`--dry-run` checks it first). A version is kept
    only when it beats the best so far. After every round, report in chat: the critic's top requests, what
    changed (ledger ids), won or lost, and the minutes. Stop when `record` says STOP. After an interruption run
    `rounds status` and redo only the step it names.

@@ -767,6 +767,8 @@ WRITES = {"out": "--out", "output": "--output", "overlay": "--overlay", "into": 
 NETWORK_ARGS = {"base_url": "--base-url", "critic_base_url": "--critic-base-url", "key_env": "--key-env",
                 "critic_key_env": "--critic-key-env", "critic_model": "--critic-model"}
 PROGRAM_ARGS = {"freecad": "--freecad", "blender": "--blender"}
+READS = {"request_file": "--request-file"}   # files read whole into what Construct writes: from inside the project
+ARG_MAX = 4000   # characters in one argv string
 
 
 def parsed(argv):
@@ -793,9 +795,14 @@ def parsed(argv):
 @tool("construct_command")
 def command(args):
     argv = args.get("argv")
-    if not isinstance(argv, list) or not argv or len(argv) > 64 or \
-            any(not isinstance(a, str) or len(a) > 4000 or "\0" in a for a in argv):
+    if not isinstance(argv, list) or not argv or len(argv) > 64 or any(not isinstance(a, str) for a in argv):
         raise ConstructError("argv must be a list of 1 to 64 strings")
+    for i, a in enumerate(argv):
+        if len(a) > ARG_MAX:
+            raise ConstructError("argv[%d] is %d characters; each string is at most %d. Put a long request in a text "
+                                 "file inside the project and pass `--request-file FILE`" % (i, len(a), ARG_MAX))
+        if "\0" in a:
+            raise ConstructError("argv[%d] holds a NUL character" % i)
     sub = argv[0]
     if sub in NETWORK:
         raise ConstructError("%s is not run by the plugin: %s. Do that step yourself (a delegated subagent for a critic)." %
@@ -829,6 +836,11 @@ def command(args):
             if isinstance(v, str) and v and not runtime.inside(where(v), roots):
                 raise ConstructError("%s %s is outside the project and the plugin's data folder; write inside the project "
                                      "(a relative path)" % (flag, v))
+    for name, flag in READS.items():
+        v = values.get(name)
+        if isinstance(v, str) and v and not runtime.inside(where(v), roots):
+            raise ConstructError("%s %s is outside the project and the plugin's data folder; put the file inside the "
+                                 "project (a relative path)" % (flag, v))
     # commands that write beside (or into) the scene they are given: that scene must be inside a project
     scene_arg = None
     if sub == "critique" or (sub == "compare" and values.get("record")):

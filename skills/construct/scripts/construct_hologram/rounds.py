@@ -27,8 +27,9 @@ state), `record` refuses an answer when the packet changed, and a packet is answ
 be rewritten (a new answer needs a new packet).
 
 Files (the run's memory; every command saves them, so a usage limit loses at most one step):
-`state.json`, `ledger.json`, `rounds.md`, `checkpoints/round-NN/` (the scene, its renders, the
-critic's answer and the A/B key, which the critic never sees).
+`state.json`, `ledger.json`, `rounds.md`, `checkpoints/round-NN/` (the scene, its artwork, its renders, the
+critic's answer and the A/B key, which the critic never sees), `checkpoints/references/` (the reference pictures,
+kept for every later packet) and `packets/round-NN/` (each round's packet, kept).
 """
 
 import hashlib
@@ -181,12 +182,19 @@ def extend(folder, minutes, now=None):
     return st
 
 
-def start(scene_path, tier="masterpiece", folder=None, now=None, max_rounds=None):
+def start(scene_path, tier="masterpiece", folder=None, now=None, max_rounds=None, references=(), request=None):
+    """Start a run. References and the request given here are kept for every packet (as if given to the first)."""
     import os
     scene_path = Path(scene_path).resolve()
     folder = Path(folder or scene_path.parent).resolve()
     if Path(folder, STATE).exists():
         raise RoundsError("%s already holds a run: `construct rounds status` resumes it" % (folder / STATE))
+    if references and list(references) != [CLEAR]:
+        from . import diagnose
+        doc, _ = diagnose.parse_text(scene_path.read_text(encoding="utf-8"))
+        if doc is None:
+            raise RoundsError("cannot read %s" % scene_path)
+        _check_references(doc, references)   # refused before anything is written
     tier = tiers.tier_of(tier)
     if tier not in tiers.ROUNDS:
         raise RoundsError("the rounds loop is the masterpiece and unbounded modes; %s is fast mode: one pass with "
@@ -203,6 +211,7 @@ def start(scene_path, tier="masterpiece", folder=None, now=None, max_rounds=None
           "history": []}
     folder.mkdir(parents=True, exist_ok=True)
     (folder / "checkpoints").mkdir(exist_ok=True)
+    _inputs(folder, st, references, request)
     _save(folder, STATE, st)
     _save(folder, LEDGER, {"format": "construct-ledger", "version": 1, "items": [
         {"id": m["id"], "title": m["title"], "criterion": m["criterion"], "severity": "major", "parts": [],
@@ -297,47 +306,170 @@ def _world_files(doc, src, dst, materials=True):
             break
 
 
+def _asset_paths(doc):
+    """The files a scene's assets (its artwork) name, relative to the scene's folder: only plain relative paths."""
+    from . import scene as scene_mod
+    out = set()
+    for a in (doc.get("assets") if isinstance(doc, dict) and isinstance(doc.get("assets"), list) else []):
+        c = scene_mod._Check()
+        path = a.get("path") if isinstance(a, dict) else None
+        scene_mod._asset_path(path, "asset", c)
+        if not c.items:
+            out.add(path)
+    return sorted(out)
+
+
+def _file_sha(path):
+    h = hashlib.sha256()
+    with open(path, "rb") as f:
+        for block in iter(lambda: f.read(1 << 20), b""):
+            h.update(block)
+    return h.digest()
+
+
+def _same(a, b):
+    a, b = Path(a), Path(b)
+    return a.is_file() and b.is_file() and a.stat().st_size == b.stat().st_size and _file_sha(a) == _file_sha(b)
+
+
+def _copy_assets(doc, src, dst, earlier=()):
+    """The scene's artwork, from src to dst at the same relative paths, so a checkpoint builds as it was judged and a
+    reverted round puts its pictures back. A file unchanged since an earlier checkpoint is hard-linked to it there
+    (checkpoints are never written in place) rather than copied again; one already the same at dst is left alone."""
+    for rel in _asset_paths(doc):
+        s, d = Path(src, rel), Path(dst, rel)
+        if not s.is_file() or (d.is_file() and _same(s, d)):
+            continue
+        d.parent.mkdir(parents=True, exist_ok=True)
+        if d.exists() or d.is_symlink():
+            d.unlink()   # never write through a link into an earlier checkpoint
+        for e in earlier:
+            if _same(Path(e, rel), s):
+                try:
+                    os.link(Path(e, rel), d)
+                    break
+                except OSError:
+                    pass
+        else:
+            shutil.copyfile(s, d)
+
+
+CLEAR = "none"   # `--reference none` drops the run's kept references
+
+
+def _check_references(doc, references):
+    """Refuse what is not a reference picture, or names a view this scene lacks, before anything is built."""
+    from . import critic
+    refs = critic.parse_references(references)
+    for view, ref in refs:
+        if ref.startswith(("http://", "https://")):
+            continue
+        if Path(ref).suffix.lower() not in PICTURES:
+            raise RoundsError("a reference is a picture of the subject (%s): %s is not one. The author's notes and "
+                              "rationale stay out of the critic's packet" % (", ".join(PICTURES), ref))
+        if not Path(ref).is_file():
+            raise RoundsError("no reference picture at %s" % ref)
+    try:
+        critic.check_views(doc, refs)
+    except critic.CriticError as exc:
+        raise RoundsError(str(exc))
+    return refs
+
+
+def _inputs(folder, st, references, request):
+    """What the critic is given besides the renders: the references and the user's request. Given once, they are kept
+    in the run (the pictures copied to checkpoints/references/) and every later packet reuses them; a new value
+    replaces them, `--reference none` drops the references and an empty request drops the request. Returns
+    (references as view=path, request) to use now."""
+    from . import critic
+    if references:
+        kept = []
+        if list(references) != [CLEAR]:
+            store = Path(folder, "checkpoints", "references")
+            for view, ref in critic.parse_references(references):
+                if not ref.startswith(("http://", "https://")):
+                    store.mkdir(parents=True, exist_ok=True)
+                    dst, k = store / Path(ref).name, 1
+                    while dst.exists() and not _same(dst, ref) and Path(ref).resolve() != dst.resolve():
+                        k += 1
+                        dst = store / ("%s-%d%s" % (Path(ref).stem, k, Path(ref).suffix))
+                    if Path(ref).resolve() != dst.resolve() and not dst.exists():
+                        shutil.copyfile(ref, dst)
+                    ref = "checkpoints/references/" + dst.name
+                kept.append("%s=%s" % (view, ref) if view else ref)
+        st["references"] = kept
+    if request is not None:
+        st["request"] = str(request).strip() or None
+    out = []
+    for view, ref in critic.parse_references(st.get("references", [])):
+        if not ref.startswith(("http://", "https://")):
+            ref = str(Path(folder, ref))
+        out.append("%s=%s" % (view, ref) if view else ref)
+    return out, st.get("request")
+
+
+def _packet_dir(folder, scene_path, n, out):
+    """Where the round's packet goes: packets/round-NN/ in the run's folder (kept after `record`), or --out. A folder
+    that holds the run or the scene, the checkpoints, or files that are not a packet is refused: it is replaced."""
+    run = Path(folder).resolve()
+    if not out:
+        return run / "packets" / ("round-%02d" % n)
+    p = Path(out).resolve()
+    if p in (run, Path(scene_path).resolve().parent) or run.is_relative_to(p) or \
+            Path(scene_path).resolve().is_relative_to(p) or p.is_relative_to(run / "checkpoints"):
+        raise RoundsError("--out %s would replace the run or its scene: name a folder of its own (the default is "
+                          "packets/round-NN/ in the run)" % out)
+    if p.exists() and (not p.is_dir() or (any(p.iterdir()) and not (p / "packet.md").exists())):
+        raise RoundsError("--out %s already holds other files, and a packet folder is replaced: name a new or empty "
+                          "folder" % out)
+    return p
+
+
 def packet(folder, scene_path, references=(), request=None, out=None, browser=None, seed=None, now=None):
-    """Check the scene in and write the round's one-critic packet. Returns (packet folder, key)."""
+    """Check the scene in and write the round's one-critic packet. Returns (packet folder, key). The references and
+    the request are the run's kept ones unless new ones are given (see _inputs)."""
     from . import critic, diagnose
     st = state(folder)
     if st["status"] != "running":
         raise RoundsError("the run has stopped (%s)" % st.get("stop", st["status"]))
-    # the references travel with the packet: a critic opens only its own folder. Only pictures: the author's notes
-    # and rationale stay out of what the critic sees
-    for view, ref in critic.parse_references(references):
-        if not ref.startswith(("http://", "https://")) and Path(ref).suffix.lower() not in PICTURES:
-            raise RoundsError("a reference is a picture of the subject (%s): %s is not one. The author's notes and "
-                              "rationale stay out of the critic's packet" % (", ".join(PICTURES), ref))
-    n = st["round"]
-    rd = _round_dir(folder, n)
-    rd.mkdir(parents=True, exist_ok=True)
     text = Path(scene_path).read_text(encoding="utf-8")
     doc, _ = diagnose.parse_text(text)
     if doc is None:
         raise RoundsError("cannot read %s" % scene_path)
+    n = st["round"]
+    # checked before anything is written or built: the references (only pictures: the author's notes and rationale
+    # stay out of what the critic sees; each view one this scene has) and the packet's folder
+    if references and list(references) != [CLEAR]:
+        _check_references(doc, references)
+    pk_dir = _packet_dir(folder, scene_path, n, out)
+    references, request = _inputs(folder, st, references, request)
+    _check_references(doc, references)   # kept ones too: the scene may have dropped a view since
+    _save(folder, STATE, st)
+    rd = _round_dir(folder, n)
+    rd.mkdir(parents=True, exist_ok=True)
     (rd / "scene.json").write_text(text, encoding="utf-8")
     _world_files(doc, Path(scene_path).parent, rd)   # a world: its constructs come with it
+    best = st.get("best_round")
+    _copy_assets(doc, Path(scene_path).parent, rd,   # its artwork: the packet is built from the checkpoint
+                 [e for e in {_round_dir(folder, k) for k in (n - 1, best) if k} if e != rd])
     step(folder, st, "checkpointed", now)
     digest = tiers.critic_hash(doc)
-    pk_dir = Path(out) if out else Path(tempfile.gettempdir()) / ("round-" + digest[:12])  # a name that says nothing
     rng = random.Random(seed if seed is not None else digest)
     _remove(pk_dir)
-    refs = []
+    refs = []   # the references travel with the packet: a critic opens only its own folder
     for view, ref in critic.parse_references(references):
         if not ref.startswith(("http://", "https://")) and Path(ref).exists():
             dst = Path(pk_dir, "step-1", "references", Path(ref).name)
             dst.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(ref, dst)
             ref = str(dst)
-        refs.append("%s=%s" % (view, ref) if view else ref)
-    one = critic.packet(str(rd / "scene.json"), str(pk_dir / "step-1"), refs, request, browser=browser,
-                        summary=False)
+        refs.append((view, ref))
+    one = critic.packet(str(rd / "scene.json"), str(pk_dir / "step-1"), ["%s=%s" % vr if vr[0] else vr[1] for vr in refs],
+                        request, browser=browser, summary=False)
     _localise(pk_dir / "step-1")
     for png in Path(pk_dir, "step-1", "renders").glob("*.png"):  # this version's renders, kept with its checkpoint
         shutil.copyfile(png, rd / png.name)
     shutil.rmtree(Path(pk_dir, "step-1", "build"), ignore_errors=True)
-    best = st.get("best_round")
     key = None
     if best is not None:
         new_is = rng.choice(("A", "B"))
@@ -345,8 +477,14 @@ def packet(folder, scene_path, references=(), request=None, out=None, browser=No
                "round": n}
         tmp = Path(tempfile.mkdtemp(prefix="construct-pair-"))
         try:
-            other = critic.packet(str(_round_dir(folder, best) / "scene.json"), str(tmp), refs, request,
-                                  browser=browser, summary=False)
+            best_scene = _round_dir(folder, best) / "scene.json"
+            best_doc, _ = diagnose.parse_text(best_scene.read_text(encoding="utf-8"))
+            has = critic.views_of(best_doc) if best_doc is not None else set(critic.VIEWS)
+            # a view this version added that the best lacks: the best is rendered without it (the pair is the views
+            # both have)
+            other = critic.packet(str(best_scene), str(tmp), ["%s=%s" % (v, r) if v else r for v, r in refs
+                                                              if v is None or v in has],
+                                  request, browser=browser, summary=False)
             two = Path(pk_dir, "step-2")
             two.mkdir(parents=True, exist_ok=True)
             views = sorted({Path(r).name for r in one["renders"]} & {Path(r).name for r in other["renders"]})
@@ -375,7 +513,7 @@ def packet(folder, scene_path, references=(), request=None, out=None, browser=No
     st = state(folder)
     st["packet"] = str(pk_dir)
     st["packet_sha256"] = _seal(pk_dir)   # sealed: `record` refuses an answer if it changed
-    st["packet_temp"] = out is None   # in the temporary folder: removed once its answer is recorded
+    st.pop("packet_temp", None)   # kept after its answer is recorded (packets of older runs were in the temp folder)
     step(folder, st, "packet", now)
     st["packet_at"] = st["last_step_at"]
     _save(folder, STATE, st)
@@ -432,7 +570,7 @@ def validate(doc, first=False, ids=()):
         return c.items
     if doc.get("format") != ANSWER:
         c.err("scene.format", "must be %r" % ANSWER, "choice")
-    items = list(c.items) + [dict(i, where="critique." + i["where"]) for i in critic.validate_items(doc["critique"])]
+    items = list(c.items) + [dict(i, where="critique." + i["where"]) for i in critic.validate_items(_critique(doc))]
     c = scene_mod._Check()
     pw = doc.get("pairwise")
     # a critic's own notes beside the verdict (evidence, a summary) are kept, not refused: refusing them stalled loops
@@ -472,6 +610,14 @@ def validate(doc, first=False, ids=()):
     return items + c.items
 
 
+def _critique(answer):
+    """The answer's critique without the critic's own extra keys (an "assessment_basis", say): informational, kept in
+    the round's answer, never read. The fields that matter are validated as strictly as ever."""
+    from . import critic
+    crit = answer.get("critique") if isinstance(answer, dict) else None
+    return {k: v for k, v in crit.items() if k in critic.KEYS} if isinstance(crit, dict) else crit
+
+
 def _hash_slip(got, want):
     """A copied hash with characters dropped or a few mistyped: at least 48 of the 64, in order."""
     if not (48 <= len(got) <= 64 and all(ch in "0123456789abcdef" for ch in got.lower())):
@@ -493,9 +639,9 @@ def _sorted(items):
     return sorted(items, key=lambda i: (order[i["status"]], SEVERITY.get(i["severity"], 3), i["first_round"]))
 
 
-def record(folder, answer, scene_path=None, model=None, now=None):
-    """Judge the round from the critic's answer; returns the round's summary dict."""
-    from . import critic
+def _checked(folder, answer):
+    """Every check `record` makes of an answer before it writes anything (`record --dry-run` makes them alone).
+    Returns (state, round, checkpoint folder, scene, ledger, key, sealed hash, hash slip)."""
     st = state(folder)
     if st["status"] != "running":
         raise RoundsError("the run has stopped (%s)" % st.get("stop", st["status"]))
@@ -529,6 +675,23 @@ def record(folder, answer, scene_path=None, model=None, now=None):
                                                                      for i in items))
     if answer["scene_sha256"] != tiers.critic_hash(doc):
         raise RoundsError("the answer is for another version: make the round's packet again")
+    return st, n, rd, doc, led, key, sealed, slip
+
+
+def check(folder, answer):
+    """`rounds record --dry-run`: the answer checked exactly as `record` checks it; nothing is written. Raises
+    RoundsError with every problem; returns a line saying it would be accepted (never the verdict: the pair stays
+    blind until it is recorded)."""
+    answer = json.loads(json.dumps(answer))
+    _, n, _, _, _, _, _, slip = _checked(folder, answer)
+    return "the answer is valid: `rounds record` would accept it for round %d%s (dry run: nothing written)" % (
+        n, "; its scene hash has a slip, which record corrects" if slip else "")
+
+
+def record(folder, answer, scene_path=None, model=None, now=None):
+    """Judge the round from the critic's answer; returns the round's summary dict."""
+    from . import critic
+    st, n, rd, doc, led, key, sealed, slip = _checked(folder, answer)
     if sealed:
         st.setdefault("answered", []).append("%d:%s" % (n, sealed))
     if (rd / "round.json").exists():
@@ -547,7 +710,7 @@ def record(folder, answer, scene_path=None, model=None, now=None):
         _remove(st.pop("packet"))
     st["critic_seconds"] = round(st.get("critic_seconds", 0.0) + critic_s, 1)
     st["last_step_at"] = now
-    crit = answer["critique"]
+    crit = _critique(answer)
     worked = sorted({c["ledger"] for c in st["changes"]} - {"draft"})
     if key is None:  # the first version stands
         won, improvements, regressions = True, [], []
@@ -674,6 +837,7 @@ def record(folder, answer, scene_path=None, model=None, now=None):
         sc = json.loads((_round_dir(folder, restored) / "scene.json").read_text(encoding="utf-8"))
         if scene_path:
             _world_files(sc, _round_dir(folder, restored), Path(scene_path).parent, materials=False)   # its constructs go back too
+            _copy_assets(sc, _round_dir(folder, restored), Path(scene_path).parent)   # and its artwork
     if scene_path:
         sc.setdefault("authoring", {"tier": st["tier"], "research": "unavailable"})["rounds"] = timeline(st)
         Path(scene_path).write_text(_scene_text(sc), encoding="utf-8")
@@ -684,7 +848,14 @@ def timeline(st):
     """The compact round history a page shows: round, kept or not, minutes, what changed."""
     return [{"round": h["round"], "result": "baseline" if h["baseline"] else "kept" if h["kept"] else "reverted",
              "minutes": h["minutes"], "changes": sorted({c["ledger"] for c in h["changes"]})[:8],
-             "summary": (h["requests"][0] if h["requests"] else "")[:140]} for h in st["history"]][-40:]
+             "summary": _summary_line(h)} for h in st["history"]][-40:]
+
+
+def _summary_line(h):
+    """A round's one line on the page: the critic's top request, or, with none, its verdict (never blank: the scene
+    schema wants 1 to 200 characters)."""
+    top = next((r.strip() for r in h.get("requests", []) if isinstance(r, str) and r.strip()), "")
+    return (top or "no requests (verdict: %s)" % (h.get("verdict") or "not given"))[:140]
 
 
 def _write_log(folder, e, led, stop):
