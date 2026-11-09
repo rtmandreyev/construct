@@ -271,10 +271,10 @@ class Plugin(unittest.TestCase):
 
     def test_designed_things_go_with_what_they_are(self):
         groups = {e["name"]: e["group"] for e in self.api.examples(self.pkg)}
-        self.assertEqual(groups["kestrel"], "Vehicles")   # a designed ring-ice pusher is a vehicle, not a group of its own
+        self.assertEqual(groups["kestrel-v2"], "Vehicles")   # a designed ring-ice pusher is a vehicle, not a group of its own
         self.assertEqual(groups["state-bench"], "Machines and instruments")
         self.assertNotIn("Designed", set(groups.values()))
-        self.assertTrue(next(e for e in self.api.examples(self.pkg) if e["name"] == "kestrel")["original"])
+        self.assertTrue(next(e for e in self.api.examples(self.pkg) if e["name"] == "kestrel-v2")["original"])
 
     def test_project_ids_keep_their_letters(self):
         slug = self.mod.runtime.slugify
@@ -322,7 +322,7 @@ class Plugin(unittest.TestCase):
         menu = self.call("construct_start")
         names = [e["name"] for e in menu["examples"]]
         self.assertEqual(set(names), set(self.mod.stock.STOCK))
-        self.assertEqual(len(names), 23)
+        self.assertEqual(len(names), len(self.mod.stock.STOCK))
         for e in menu["examples"]:
             self.assertTrue(e["title"] and e["line"] and e["parts"] > 0, e)
         self.assertEqual(next(e for e in menu["examples"] if e["name"] == "kestrel-v2")["parts"], 498)

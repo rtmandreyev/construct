@@ -168,27 +168,15 @@
   "has_thumb": true
  },
  {
-  "name": "kestrel",
-  "title": "KESTREL · Original fictional ring-ice pusher",
-  "parts": 256,
-  "with_copies": 639,
-  "line": "Original crewed ring-ice pusher. Long compression spine, raised two-deck bow cab, articulated four-jaw empty cradle and thrust-parallel folding radiators. An engineering…",
-  "category": "fictional",
-  "accuracy": "generic",
-  "made": "unbounded",
-  "use": "an original design invented from real hardware (a game brief)",
-  "has_thumb": true
- },
- {
   "name": "kestrel-v2",
   "title": "KESTREL v2 · Original fictional ring-ice pusher",
   "parts": 498,
   "with_copies": 1023,
   "line": "Original crewed ring-ice pusher. Long compression spine, raised two-deck bow cab, articulated four-jaw empty cradle and thrust-parallel folding radiators. An engineering…",
   "category": "fictional",
-  "accuracy": "generic",
-  "made": "masterpiece",
-  "use": "the same ship, refined with 242 more parts",
+  "accuracy": "original",
+  "made": "masterpiece · GPT-6.1 Sol, in Codex",
+  "use": "an original design invented from real hardware (a game brief), refined for close-ups",
   "has_thumb": true
  },
  {

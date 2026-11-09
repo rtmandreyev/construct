@@ -54,7 +54,7 @@ START = _tool(
                                                                           "rewrite with the real thing."},
         "example": {"type": "string", "description": "A finished construct the plugin ships, by name (call with no source "
                                                      "to list them with their titles), e.g. volkswagen-t1-samba, "
-                                                     "braun-sk4-knob, garden-shed, sainte-chapelle, kestrel."},
+                                                     "braun-sk4-knob, garden-shed, sainte-chapelle, kestrel-v2."},
         "from_path": {"type": "string", "description": "An existing scene or parameter document (absolute path) the user "
                                                        "gave you; it is copied into the new project."},
     })

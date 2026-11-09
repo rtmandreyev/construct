@@ -2,7 +2,7 @@
 title: Invent from real designs
 summary: A ship, vehicle or creature that does not exist, designed from real ones with a clear brief, for a game, film or story.
 group: Makers and creators
-example: kestrel
+example: kestrel-v2
 needs: browser
 time: about 20 minutes, then an hour or more for your own
 status: ready
@@ -14,13 +14,15 @@ Teach me to design something that does not exist from real designs with Construc
 
 ## Steps
 
-1. **Show the example.** `construct_start(example="kestrel")` and `construct_build`; MEDIA line in the reply. Say:
+1. **Show the example.** `construct_start(example="kestrel-v2")` and `construct_build`; MEDIA line in the reply. Say:
    KESTREL is an invented ice tug for a game, built from a brief that borrows reasoning from real space-tug studies
    and the ISS truss, copying nothing. Ask the user to press **P**: every part is designed, none measured, because
    none of it exists. The features the brief asked for are kept as facts.
-2. **Change it without breaking it.** `construct_start(example="kestrel-v2")` and `construct_build`. Compare the two
-   with `construct_inspect`: v2 asked for more detail for close-ups, keeping every part's name, place and size and
-   adding detail as new parts. Explain why: every scene, animation and engine setup that names a part keeps working.
+2. **Change it without breaking it.** KESTREL was refined once already: its first version had 256 parts, this one
+   has 498, and every part of the first kept its name, place and size while the detail for close-ups came as new
+   parts. Show it with `construct_inspect` (the parts list and the facts). Explain why: every scene, animation and
+   engine setup that names a part keeps working. Then make one small change together with `construct_edit` (a
+   part's size or a new detail part) and `construct_build` again, so the user sees the same rule kept.
 3. **Write the user's brief together.** Ask, one or two at a time: what it is and what it is for; what real designs,
    studies or living things to learn from (their reasoning, not their look); size, units and frame ("about 120 m;
    metres; Y up; nose towards +Z"); the features that must be there, numbered; what may be invented ("design what
