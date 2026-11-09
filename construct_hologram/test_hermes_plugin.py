@@ -12,6 +12,7 @@ import sys
 import tempfile
 import time
 import unittest
+import zipfile
 from pathlib import Path
 
 from . import params, render, scene as scene_mod, studio
@@ -227,9 +228,8 @@ class Plugin(unittest.TestCase):
         self.assertEqual(len(m["provides_tools"]), 13)
         self.assertEqual(set(m["provides_hooks"]), set(self.ctx.hooks))
         self.assertTrue(all(t["toolset"] == "construct" and t["schema"]["name"] == n for n, t in self.ctx.tools.items()))
-        # every tool shows while the runtime is there; the NetLogo run only where NetLogo and Java are found
-        self.assertTrue(all(t["check_fn"]() for n, t in self.ctx.tools.items() if n != "construct_netlogo_run"))
-        self.assertIsInstance(self.ctx.tools["construct_netlogo_run"]["check_fn"](), bool)
+        # every tool shows while the runtime is there (the NetLogo run too: without NetLogo it says where to set it)
+        self.assertTrue(all(t["check_fn"]() for t in self.ctx.tools.values()))
         skill = self.ctx.skills["construct"]
         self.assertTrue(skill["description"])
         self.assertEqual(skill["frontmatter"]["metadata"]["hermes"]["requires_tools"], ["construct_start", "construct_build"])
@@ -446,6 +446,7 @@ class Plugin(unittest.TestCase):
         self.assertTrue(done.get("success"), done)
         (mp4,) = media_paths(done)
         self.assertTrue(mp4.is_file() and mp4.suffix == ".mp4")
+        self.assertEqual(done["film"]["reactivity"], 1)   # the default, said
         self.assertEqual(self.call("construct_job", {"job_id": f["job_id"]})["file_path"], done["file_path"])  # kept
         self.assertIn(f["job_id"], [j["job_id"] for j in self.call("construct_job")["jobs"]])
 
@@ -537,6 +538,47 @@ class Plugin(unittest.TestCase):
         self.assertFalse(e.get("introduced"), e)
         self.assertEqual(e["applied"][0]["changes"][0]["field"], "/title")
 
+    def test_removing_a_part_takes_what_is_written_on_it(self):
+        se = _load(self.pkg / "scene_edit.py", "construct_scene_edit_under_test")
+        doc = {"parts": [{"id": "a"}, {"id": "b"}], "annotations": [{"id": "n1", "part": "a"}, {"id": "n2", "part": "b"}],
+               "labels": [{"id": "l1", "part": "b"}]}
+        changes = se.apply(doc, {"op": "remove_part", "part": "b"})
+        self.assertEqual((doc["annotations"], doc["labels"]), ([{"id": "n1", "part": "a"}], []))
+        self.assertEqual([c["field"] for c in changes], ["", "annotations[n2]", "labels[l1]"])
+        r = self.call("construct_start", {"example": "braun-sk4-knob"})   # the knob's flute carries a note
+        e = self.call("construct_edit", {"project": r["project"], "operations": [{"op": "remove_part", "part": "knob-flute"}]})
+        self.assertTrue(e["written"], e)
+        self.assertIn("annotations[a-flute]", [c["field"] for c in e["applied"][0]["changes"]])
+
+    def test_inspect_keeps_notes_requirements_and_the_provenance_note(self):
+        r = self.call("construct_start", {"example": "braun-sk4-knob"})
+        e = self.call("construct_edit", {"project": r["project"], "operations": [
+            {"op": "add_fact", "fact": {"key": "fits-shaft", "value": "a 6 mm shaft with one flat", "certainty": "user_supplied",
+                                        "source": "request", "requirement": True, "note": "the owner's. " * 40}},
+            {"op": "unset", "part": "knob-bore-flat", "field": "source"},
+            {"op": "certainty", "part": "knob-bore-flat", "certainty": "inferred", "basis": ["fits-shaft"]}]})
+        self.assertTrue(e["written"], e)
+        info = self.call("construct_inspect", {"project": r["project"]})
+        fact = next(f for f in info["facts"]["items"] if f["key"] == "fits-shaft")
+        self.assertTrue(fact["requirement"])
+        self.assertLessEqual(len(fact["note"]), 240)
+        self.assertTrue(next(f for f in info["facts"]["items"] if f["key"] == "bore")["note"].startswith("DESIGNED"))
+        self.assertEqual(info["parts"]["by_certainty"]["designed"]["evidence"], {"designed · to a requirement": 1})
+        self.assertIn("Sizes are of two kinds", info["authoring"]["provenance_note"])
+
+    def test_a_command_reports_only_what_it_wrote(self):
+        tools = self.mod.tools
+        folder = Path(self.tmp.name) / "cmd-folder"
+        folder.mkdir()
+        (folder / "earlier.png").write_bytes(b"x")    # the previous command's, a moment ago
+        (folder / "changed.png").write_bytes(b"x")
+        before = tools._snapshot(folder)
+        (folder / "new.png").write_bytes(b"y")
+        os.utime(folder / "changed.png", ns=(before[str(folder / "changed.png")] + 10**9,) * 2)
+        rec = {"project": None, "finish": {"folder": str(folder), "since": time.time(), "argv": ["check"], "before": before}}
+        out = tools._finish_command(rec, {"code": 0}, "")
+        self.assertEqual(sorted(Path(f).name for f in out["files"]), ["changed.png", "new.png"])
+
     def test_an_edit_that_times_out_says_nothing_was_written(self):
         r = self.call("construct_start", {"example": "braun-sk4-knob"})
         scene = Path(r["scene"])
@@ -601,6 +643,11 @@ class Plugin(unittest.TestCase):
         world = json.loads((self.data / "projects" / w / "world.json").read_text())
         self.assertEqual(world["presentation"]["views"][0]["id"], "knobs")
         self.assertIn("error", self.call("construct_world", {"op": "view", "world": w, "id": "x", "target": "nowhere"}))
+        r = self.until_done(self.call("construct_world", {"op": "view", "world": w, "label": "Both knobs", "target": "knob-b"}))
+        self.assertTrue(r.get("success"), r)   # its id from its label, as the Desktop names a view
+        world = json.loads((self.data / "projects" / w / "world.json").read_text())
+        self.assertEqual([v["id"] for v in world["presentation"]["views"]], ["knobs", "both-knobs"])
+        self.assertIn("error", self.call("construct_world", {"op": "view", "world": w, "target": "knob-b"}))
         # a world that ships with the plugin, as the user's own (its constructs brought in)
         menu = self.call("construct_start")
         self.assertIn("the-shed", [x["name"] for x in menu["worlds"]])
@@ -816,6 +863,14 @@ class Plugin(unittest.TestCase):
         self.assertEqual(got["part_names"], ["lid", "base"])
         self.assertEqual(got["bounds"]["mm"], [120.0, 40.0, 25.5])
         self.assertEqual(got["bounds"]["m"], [0.12, 0.04, 0.0255])
+        self.assertIn("from the vertices", got["bounds"]["approximate"])   # a curved part can reach past them
+        self.assertIn("approximate (from vertices)", self.mod.tools.verify_export(step, "step")["summary"])
+        fc = Path(self.tmp.name) / "groups.FCStd"
+        with zipfile.ZipFile(fc, "w") as z:   # the writer's groups are App::Part
+            z.writestr("Document.xml", '<Document><Objects><Object type="App::Part" name="root"/>'
+                       '<Object type="App::Part" name="stage_0"/><Object type="App::DocumentObjectGroup" name="g"/>'
+                       '<Object type="Part::Feature" name="p_lid"/></Objects><ObjectData/></Document>')
+        self.assertEqual((rb.read(fc)["groups"], rb.read(fc)["solids"]), (3, 1))
         made = rb.construct_report("wrote x.step: 12 named parts, 2 joints\n  true shapes (exact solids, splines, NURBS): 9 of 12 parts\n")
         self.assertEqual((made["parts"], made["joints"], made["exact"], made["faceted"]), (12, 2, 9, 3))
         bad = Path(self.tmp.name) / "bad.glb"

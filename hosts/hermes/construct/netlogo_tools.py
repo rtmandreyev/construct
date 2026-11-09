@@ -117,14 +117,9 @@ def find_netlogo(fresh=False):
     return value
 
 
-def ready():
-    """check_fn of construct_netlogo_run: the runtime, NetLogo and a Java to run it (cheap: cached file checks)."""
-    try:
-        runtime.vendor_root()
-        found = find_netlogo()
-        return bool(found and found.get("java"))
-    except Exception:
-        return False
+NOT_FOUND = ("NetLogo was not found on this machine (Construct looks at the plugin's NetLogo folder setting, "
+             "CONSTRUCT_NETLOGO and the usual install places). If it is installed somewhere else, set its folder in "
+             "Settings → Plugins → Construct → NetLogo folder. Construct never installs NetLogo: say so; do not install it.")
 
 
 def library_models(found):
@@ -146,9 +141,7 @@ def _row(p, root):
 def _search(words, found):
     if not found:
         return {"netlogo": None,
-                "how": "NetLogo was not found (Construct looks at the plugin's NetLogo folder setting, CONSTRUCT_NETLOGO "
-                       "and the usual install places). Say so; do not install it. A recorded run (run.jsonl) can still "
-                       "be drawn with construct_netlogo_draw."}
+                "how": NOT_FOUND + " A recorded run (run.jsonl) can still be drawn with construct_netlogo_draw."}
     models = library_models(found)
     root = Path(found["models"]) if found.get("models") else None
     out = {"netlogo": found["folder"], "version": found["version"], "java": found["java"],
@@ -346,9 +339,7 @@ def run_tool(args):
             raise ConstructError("search must be a string of at most 80 characters")
         return _search(args["search"], found)
     if not found:
-        raise ConstructError("NetLogo was not found on this machine (Construct looks at the plugin's NetLogo folder "
-                             "setting, CONSTRUCT_NETLOGO and the usual install places). Say so; do not install it. A "
-                             "recorded run can still be drawn with construct_netlogo_draw.")
+        raise ConstructError(NOT_FOUND + " A recorded run can still be drawn with construct_netlogo_draw.")
     if not found.get("java"):
         raise ConstructError("NetLogo is at %s, but no Java runtime was found to run it (NetLogo's own, JAVA_HOME or "
                              "java on the PATH). Say so; do not install one." % found["folder"])
@@ -720,4 +711,3 @@ jobs.register_finisher("netlogo-run", _finish_run)
 jobs.register_finisher("netlogo-draw", _finish_draw)
 
 HANDLERS = {"construct_netlogo_run": run_tool, "construct_netlogo_draw": draw_tool}
-CHECKS = {"construct_netlogo_run": ready}

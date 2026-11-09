@@ -154,6 +154,14 @@ class InFreeCAD(unittest.TestCase):
             self.assertGreater(out["rise"], 900)          # a 42 degree hinge on a 1.6 m lid lifts its edge about 1.07 m
             self.assertIn("lid", out["step_labels"])
 
+    def test_a_closed_lathe_off_the_axis_is_a_solid(self):
+        with tempfile.TemporaryDirectory() as tmp:   # the knob's body and skirt: closed outlines around a bore
+            r = freecad.make(example("braun-sk4-knob"), step=Path(tmp, "knob.step"))
+            for pid in ("knob-body", "knob-skirt"):
+                self.assertIn(pid, r["exact"])
+                self.assertNotIn(pid, r["surfaces"])
+            self.assertEqual(r["invalid"], [])
+
 
 if __name__ == "__main__":
     unittest.main()
