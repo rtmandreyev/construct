@@ -7,6 +7,7 @@ import os
 import struct
 import subprocess
 import tempfile
+import re
 import unittest
 from pathlib import Path
 
@@ -574,3 +575,14 @@ class Rounds(unittest.TestCase):
             self.assertFalse(e["kept"])
             self.assertNotEqual(json.loads((d / "constructs" / "cd" / "scene.json").read_text())["title"], "an edit that loses")
             self.assertTrue(world.is_world(json.loads(w.read_text())))
+
+
+class ViewerTextures(unittest.TestCase):
+    def test_style_and_pose_records_never_make_a_texture_taller_than_a_gpu_allows(self):
+        # Stortorget: 15,663 styles. One row per style made a texture taller than software WebGL (8,192) and some
+        # GPUs allow; it failed to upload and every own colour read as black or grey. Records sit 256 to a row.
+        js = (Path(__file__).resolve().parent / "viewer" / "hologram.js").read_text(encoding="utf-8")
+        self.assertIn("ivec2 rec(int i, int k) { return ivec2((i % 256) * 5 + k, i / 256); }", js)
+        self.assertNotRegex(js, r"texelFetch\(u(Styles|Pose), ivec2\(\d")
+        for line in re.findall(r"gl\.tex(?:Sub)?Image2D\(gl\.TEXTURE_2D, 0, [^;]*gl\.FLOAT[^;]*;", js):
+            self.assertIn("1280", line, line)
