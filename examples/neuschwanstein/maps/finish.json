@@ -1,0 +1,11 @@
+{
+ "about": "A finish for the Neuschwanstein construct; the scene documents no colours, so every finish is chosen for this page from the castle's public appearance: pale limestone walls, the red-brick gatehouse, grey slate roofs, dark windows, a glazed conservatory, gilded finials and grey rock. Colours are the exporter's choice, not facts of the construct.",
+ "materials": [
+  {"parts": ["conservatory-glass", "conservatory-glazing", "*-windows", "*-windows-*", "*-lancets-?"], "name": "dark windows", "color": "#1f262c", "finish": "glass"},
+  {"parts": ["north-tower-finial*"], "name": "gilded finial", "color": "#d2a640", "finish": "brushed", "roughness": 0.25},
+  {"parts": ["*-roof", "*-spire", "*-cap", "*-cone", "palas-stacks-*", "palas-dormers-*"], "name": "grey slate", "color": "#4a5058", "finish": "paint", "roughness": 0.6},
+  {"parts": ["gatehouse", "gatehouse-tower-*", "gatehouse-*-gable-*", "gatehouse-gate"], "name": "red brick", "color": "#9a4a35", "roughness": 0.85},
+  {"parts": ["rock-*"], "name": "rock", "color": "#7b7a72", "roughness": 0.95},
+  {"parts": ["*"], "name": "pale limestone", "color": "#e6e0d3", "roughness": 0.8}
+ ]
+}

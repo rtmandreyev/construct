@@ -14,9 +14,12 @@ glTF (.glb):
   - `merge` merges every part that does not move into one mesh per material, for game engines;
   - articulations are pivot nodes: the animation `open` plays them in their order groups, and
     `open:<id>` plays one; periodic motions (spin, swing, bob) loop in the animation `idle`;
-  - every vertex carries its build phase (0..1, the assembly order) as the attribute `_PHASE`.
+  - every vertex carries its build phase (0..1, the assembly order) as the attribute `_PHASE`;
+  - artwork (checked bytes only, as the page embeds them) is a textured face `<part>.artwork` under its part,
+    each image embedded once, emissive where the part glows.
 
-OBJ (.obj and .mtl): the same surfaces and edges, one object per part, in one pose; no animation.
+OBJ (.obj and .mtl): the same surfaces and edges, one object per part, in one pose; no animation. Artwork
+faces map their images (map_Kd), written beside the .mtl.
 
 Python standard library only.
 """
@@ -24,6 +27,7 @@ Python standard library only.
 import fnmatch
 import json
 import math
+import re
 import struct
 from pathlib import Path
 
@@ -155,6 +159,38 @@ NOT_GLASS_WORDS = ("frame", "surround", "seal", "rim", "trim", "bezel", "pillar"
                    "divider", "rail", "channel", "washer", "crank", "winder", "regulator", "sill", "lever", "hinge",
                    "catch", "latch", "handle", "bracket", "mount", "stay", "strut", "louvre", "shade", "blind", "sticker",
                    "button", "release", "annulus", "ring", "cell", "barrel")
+
+
+MAP_NAMES = ("{stem}.materials.json", "scene.materials.json", "maps/finish.json", "materials.json")
+
+
+def map_beside(scene_path):
+    """A construct's own finish map, where Construct keeps one: `<scene>.materials.json` or `scene.materials.json`
+    beside the scene (what the Hermes plugin writes), `maps/finish.json` (the gallery's), or `materials.json`.
+    None when it has none. Exports, worlds, kits, the plugin and the Blender add-on all read it from here."""
+    p = Path(scene_path)
+    stem = re.sub(r"(\.params)?\.json$", "", p.name)
+    for name in MAP_NAMES:
+        c = p.parent / name.format(stem=stem)
+        if c.is_file():
+            return c
+    return None
+
+
+# with no map, a few surfaces are finished by their names (as glass is): what a tyre or chrome trim is made of is
+# not in doubt. A part's own colour is kept; only how it is finished follows the name.
+RUBBER_WORDS = ("tyre", "tire", "tread", "rubber", "gasket")
+CHROME_WORDS = ("chrome",)
+
+
+def name_finish(pid):
+    """"rubber" or "chrome" when a part's id names one of them, else None."""
+    low = pid.lower()
+    if any(w in low for w in RUBBER_WORDS):
+        return "rubber"
+    if any(w in low for w in CHROME_WORDS):
+        return "chrome"
+    return None
 
 
 def is_glass_name(pid):
@@ -519,6 +555,97 @@ def _bounds(pts):
     return [min(p[a] for p in pts) for a in range(3)], [max(p[a] for p in pts) for a in range(3)]
 
 
+# ---------------------------------------------------------------------------- artwork
+
+TEXTURE_TYPES = ("image/png", "image/jpeg")   # what glTF 2.0 carries without an extension
+ART_SEGMENTS = 48                              # a circle mask (a disc's label) as a ring of this many quads
+
+
+def artwork_glows(scene, prefix=""):
+    """Which parts' artwork gives light in an export: a part whose look glows (look.glow above 0), or an identity
+    or data part, which glows by default. {part id: True}."""
+    out = {}
+    for p in scene.get("parts", []):
+        look = p.get("look") or {}
+        glow = look["glow"] if "glow" in look else scene_mod.ROLE_STYLE.get(p.get("role"), (0, 0, 0, 0.0))[3] / 3.0
+        if p.get("artwork") and (glow > 0 if "glow" in look else glow >= 0.5):
+            out[prefix + p["id"]] = True
+    return out
+
+
+def scene_artwork(scene, g, asset_root):
+    """The artwork an export embeds for a scene: its images, read from asset_root and checked as the page checks
+    them (the declared sha256, rights that permit showing them), which parts glow, and notes on what was left out."""
+    if not g.get("artwork"):
+        return None
+    images, notes = scene_mod.read_assets(g, asset_root)
+    return {"images": images, "glow": artwork_glows(scene), "notes": notes}
+
+
+def _png_alpha(data):
+    """Whether PNG bytes carry transparency: a grey or colour image with alpha, or a tRNS chunk."""
+    if data[:8] != b"\x89PNG\r\n\x1a\n" or len(data) < 26:
+        return False
+    if data[25] in (4, 6):
+        return True
+    i = 8
+    while i + 8 <= len(data):
+        n, kind = struct.unpack_from(">I4s", data, i)
+        if kind == b"tRNS":
+            return True
+        if kind in (b"IDAT", b"IEND"):
+            return False
+        i += 12 + n
+    return False
+
+
+def _art_mesh(a):
+    """An artwork's face as positions, texture coordinates and triangles (outward, counter-clockwise), with its
+    normal. Texture coordinates are the viewer's: (0, 0) at the first corner is the image's top-left pixel, as
+    glTF reads an image; a circle mask is drawn as a disc (or a ring, with its hole) cut from the same mapping."""
+    c = [tuple(x) for x in a["corners"]]
+    n = _unit(_cross(_sub(c[3], c[0]), _sub(c[1], c[0])))
+
+    def at(u, v):   # bilinear across the corners, whose texture coordinates are (0,0), (1,0), (1,1), (0,1)
+        return tuple(c[0][k] * (1 - u) * (1 - v) + c[1][k] * u * (1 - v) + c[2][k] * u * v + c[3][k] * (1 - u) * v
+                     for k in range(3))
+    if a.get("mask") != "circle":
+        uv = [tuple(x) for x in a.get("uv") or ((0, 0), (1, 0), (1, 1), (0, 1))]
+        return c, uv, [(0, 3, 2), (0, 2, 1)], n
+    inner = max(0.0, min(0.99, float(a.get("inner_ratio") or 0.0)))
+    uv = []
+    for k in range(ART_SEGMENTS):
+        t = 2 * math.pi * k / ART_SEGMENTS
+        uv.append((0.5 + 0.5 * math.cos(t), 0.5 + 0.5 * math.sin(t)))
+        uv.append((0.5 + 0.5 * inner * math.cos(t), 0.5 + 0.5 * inner * math.sin(t)))
+    tris = []
+    for k in range(ART_SEGMENTS):
+        o0, i0, o1, i1 = 2 * k, 2 * k + 1, 2 * ((k + 1) % ART_SEGMENTS), 2 * ((k + 1) % ART_SEGMENTS) + 1
+        tris.append((o0, o1, i1))
+        if inner > 0:
+            tris.append((o0, i1, i0))
+    pos = [at(u, v) for u, v in uv]
+    out = []
+    for t in tris:   # wound to face outward
+        f = _cross(_sub(pos[t[1]], pos[t[0]]), _sub(pos[t[2]], pos[t[0]]))
+        out.append(t if sum(f[k] * n[k] for k in range(3)) >= 0 else (t[0], t[2], t[1]))
+    return pos, uv, out, n
+
+
+def _art_lit(pid, glow, rules):
+    """An artwork gives light when its part glows, or when the material map makes its part emissive."""
+    if glow.get(pid):
+        return True
+    for r in rules:
+        if any(fnmatch.fnmatchcase(pid, p) for p in r["patterns"]):
+            return bool(r["emissive"])
+    return False
+
+
+def _file_name(text):
+    return "".join(ch if ch.isalnum() or ch in "._-" else "-" for ch in text)
+
+
 # ---------------------------------------------------------------------------- glTF
 
 class _Bin:
@@ -555,6 +682,15 @@ class _Bin:
         self.accessors.append(acc)
         return len(self.accessors) - 1
 
+    def raw(self, data):
+        """Bytes of their own (an image), as a bufferView."""
+        start = len(self.data)
+        self.data += data
+        while len(self.data) % 4:
+            self.data.append(0)
+        self.views.append({"buffer": 0, "byteOffset": start, "byteLength": len(data)})
+        return len(self.views) - 1
+
 
 def _f32(v):
     return struct.unpack("<f", struct.pack("<f", v))[0]
@@ -583,14 +719,16 @@ def _primitive(b, mode, positions, normals, phases, material, uvs=None):
 
 
 def to_gltf(g, wire="edges", pose="closed", materials=None, wire_radius=None, merge=False, colliders=False,
-            pieces=False, quality=False):
+            pieces=False, quality=False, artwork=None):
     """The glTF document (a dict) and its binary chunk, from a solid compile. With `merge`, every part
     that does not move is merged into one mesh per material (a game engine's handful of draw calls);
     the parts that move keep their own nodes, pivots and animations. With `colliders`, each part's surfaces
     get a box around them, `<part>-convcolonly` (a collision shape in Godot, moving with its joint); with
     `pieces`, each part's mesh is `<part>-rigid`, a body of its own that physics can knock apart; `pieces="glued"`,
     everything that does not move is one body and each hinged or sliding part one more, its joint in its extras
-    (`construct.joint`: the body it hangs on, pivot, axis, travel) for an engine to connect (docs/GODOT.md)."""
+    (`construct.joint`: the body it hangs on, pivot, axis, travel) for an engine to connect (docs/GODOT.md).
+    `artwork` (scene_artwork, or a world's) gives the checked images: each artwork face becomes a textured mesh,
+    `<part>.artwork`, under its part (its joint, its piece), each image embedded once."""
     glued = pieces == "glued"
     pieces = bool(pieces)
     if pieces and merge:
@@ -605,6 +743,7 @@ def to_gltf(g, wire="edges", pose="closed", materials=None, wire_radius=None, me
     rules = _load_materials(materials)
     parts, arts, motions, joints = g["parts"], g["articulations"], g["motions"], g["joints"]
     own = _own_colours(g)
+    unmapped = []   # solid parts a given finish map leaves on their role's default
     b = _Bin()
     nodes, meshes, mats, mat_index = [], [], [], {}
     used_ext = set()
@@ -646,11 +785,19 @@ def to_gltf(g, wire="edges", pose="closed", materials=None, wire_radius=None, me
             if any(fnmatch.fnmatchcase(part["id"], p) for p in r["patterns"]):
                 return material(("map", r["name"]), (r["name"], r["color"], r["metallic"], r["roughness"],
                                                      r["emissive"], False), r)
+        if rules:
+            unmapped.append(part["id"])
         if is_glass_name(part["id"]):
             f = FINISHES["glass"]
             return material(("glass", None), ("construct:glass", _hex("#cfd8de", "glass"), f["metallic"],
                                               f["roughness"], None, False), dict(f, finish="glass"))
         rgb, metallic, rough = ROLE_MATERIAL.get(part["role"], ROLE_MATERIAL["mass"])
+        named = name_finish(part["id"])
+        if named:   # a tyre is rubber, chrome trim is chrome: its own colour if it has one, the finish by its name
+            f = FINISHES[named]
+            c = own.get(part["id"]) or {"rubber": "#1c1c1e", "chrome": "#d6d9de"}[named]
+            return material(("named", named, c), ("construct:" + named + ":" + c, _hex(c, "color"), f["metallic"],
+                                                  f["roughness"], None, False), dict(f, finish=named))
         if part["id"] in own:   # the part's own colour, finished as its role is
             c = own[part["id"]]
             return material(("own", c, part["role"]), ("construct:" + c, _hex(c, "color"), metallic, rough, None, False))
@@ -804,6 +951,8 @@ def to_gltf(g, wire="edges", pose="closed", materials=None, wire_radius=None, me
             # glued, a building's fixed body stays where it stands (static): a castle on its rock does not topple
             # (and a world's: a game map's ground and buildings stay put; its doors, lids and wheels move)
             fixed = glued and key == fixed_key and g.get("subject", {}).get("category") in ("architecture", "world")
+            for c in members:   # where a part's artwork hangs when the part is a piece
+                c["body"], c["centre"] = len(nodes), centre
             body = node({"name": _node_name(name), "translation": _sub(centre, head["origin"]), "children": kids,
                          "extensions": {"OMI_physics_body": {"motion": {"type": "static"} if fixed else {
                              "type": "dynamic", "mass": round(min(max(mass, 0.05), 2000.0), 3)}}},
@@ -827,6 +976,41 @@ def to_gltf(g, wire="edges", pose="closed", materials=None, wire_radius=None, me
     counts = {"triangles": 0, "edges": 0, "points": 0}
 
     merged, merged_parts = {}, []   # (mode, material) -> positions, normals, phases, uvs
+    chains = {}   # (part, joint, motion slot) -> the node its meshes hang from, and that node's origin
+
+    def chain(pi, jt, slot):
+        """A part's chain of pivot nodes for one joint and motion: the first articulation is outermost, a periodic
+        motion inside them. Made once per (part, joint, motion), so its artwork hangs where its meshes do."""
+        if (pi, jt, slot) in chains:
+            return chains[(pi, jt, slot)]
+        pid = parts[pi]["id"]
+        parent, origin = pnode_of[pid], (0.0, 0.0, 0.0)
+        for ai in (joints[jt] if jt >= 0 else []):
+            a = arts[ai]
+            piv = tuple(a["pivot"]) if a["type"] in ("hinge", "turn") and a.get("pivot") else origin
+            base = _sub(piv, origin)
+            spec = {"name": "%s:%s" % (pid, a["id"]), "translation": list(base),
+                    "extras": {"construct": {"part": pid, "articulation": a["id"]}}}
+            if pose == "open":
+                if a["type"] in ("hinge", "turn"):
+                    spec["rotation"] = list(_quat(a["axis"], a["amount"]))
+                else:
+                    spec["translation"] = [base[i] + a["axis"][i] * a["amount"] for i in range(3)]
+            n = node(spec)
+            nodes[parent].setdefault("children", []).append(n)
+            art_nodes[ai].append((n, base))
+            parent, origin = n, piv
+        if slot >= 0 and motions[slot]["type"] != "pulse":
+            m = motions[slot]
+            piv = tuple(m["pivot"]) if m["type"] in ("spin", "swing") else origin
+            base = _sub(piv, origin)
+            n = node({"name": "%s:motion-%d" % (pid, slot), "translation": list(base),
+                      "extras": {"construct": {"part": pid, "motion": slot}}})
+            nodes[parent].setdefault("children", []).append(n)
+            motion_nodes[slot].append((n, base))
+            parent, origin = n, piv
+        chains[(pi, jt, slot)] = (parent, origin)
+        return parent, origin
 
     def bucket(mode, mat, pos, nor, ph, uv):
         m = merged.setdefault((mode, mat), ([], [], [], []))
@@ -905,35 +1089,11 @@ def to_gltf(g, wire="edges", pose="closed", materials=None, wire_radius=None, me
             mesh = len(meshes) - 1
             if jt < 0 and slot < 0 and len(keys) == 1 and not (pieces and gr["tris"]):
                 nodes[pnode]["mesh"] = mesh
+                chains[k] = (pnode, (0.0, 0.0, 0.0))
                 if colliders and gr["tris"]:
                     collider(part["id"], gr["tris"], pnode, [0.0, 0.0, 0.0])
                 continue
-            # a chain of pivot nodes: the first articulation is outermost, a periodic motion inside them
-            parent, origin = pnode, (0.0, 0.0, 0.0)
-            for ai in (joints[jt] if jt >= 0 else []):
-                a = arts[ai]
-                piv = tuple(a["pivot"]) if a["type"] in ("hinge", "turn") and a.get("pivot") else origin
-                base = _sub(piv, origin)
-                spec = {"name": "%s:%s" % (part["id"], a["id"]), "translation": list(base),
-                        "extras": {"construct": {"part": part["id"], "articulation": a["id"]}}}
-                if pose == "open":
-                    if a["type"] in ("hinge", "turn"):
-                        spec["rotation"] = list(_quat(a["axis"], a["amount"]))
-                    else:
-                        spec["translation"] = [base[i] + a["axis"][i] * a["amount"] for i in range(3)]
-                n = node(spec)
-                nodes[parent].setdefault("children", []).append(n)
-                art_nodes[ai].append((n, base))
-                parent, origin = n, piv
-            if slot >= 0 and motions[slot]["type"] != "pulse":
-                m = motions[slot]
-                piv = tuple(m["pivot"]) if m["type"] in ("spin", "swing") else origin
-                base = _sub(piv, origin)
-                n = node({"name": "%s:motion-%d" % (part["id"], slot), "translation": list(base),
-                          "extras": {"construct": {"part": part["id"], "motion": slot}}})
-                nodes[parent].setdefault("children", []).append(n)
-                motion_nodes[slot].append((n, base))
-                parent, origin = n, piv
+            parent, origin = chain(pi, jt, slot)
             if pieces and gr["tris"]:
                 bodies(part, gr, parent, origin, jt)
                 continue
@@ -953,12 +1113,72 @@ def to_gltf(g, wire="edges", pose="closed", materials=None, wire_radius=None, me
                   "extras": {"construct": {"merged_parts": merged_parts,
                                            "note": "every part that does not move, one primitive per material"}}})
         nodes[root]["children"].append(n)
+        node_of_merged = n
         if colliders:   # the merged parts keep a collision shape each, beside the one mesh
             index = {p["id"]: i for i, p in enumerate(parts)}
             for pid in merged_parts:
                 tris = [t for k, gr in groups.items() if k[0] == index[pid] for t in gr["tris"]]
                 if tris:
                     collider(pid, tris, n, [0.0, 0.0, 0.0])
+    images, textures, samplers, notes = [], [], [], list((artwork or {}).get("notes") or [])
+    if artwork and g.get("artwork"):
+        tex_of, art_mat = {}, {}
+        index = {p["id"]: i for i, p in enumerate(parts)}
+        found, glow = artwork.get("images") or {}, artwork.get("glow") or {}
+        for a in g["artwork"]:
+            pid, aid = a["part"], a.get("asset_id")
+            if aid not in found or pid not in index:
+                continue
+            media, data = found[aid]
+            if media not in TEXTURE_TYPES:
+                if aid not in tex_of:
+                    notes.append("artwork %s: %s is not a glTF texture (PNG or JPEG); left out" % (aid, media))
+                    tex_of[aid] = None
+                continue
+            if aid not in tex_of:   # each image once, however many faces show it
+                if not samplers:
+                    samplers.append({"magFilter": 9729, "minFilter": 9987, "wrapS": 33071, "wrapT": 33071})
+                images.append({"name": aid, "bufferView": b.raw(data), "mimeType": media})
+                textures.append({"sampler": 0, "source": len(images) - 1})
+                tex_of[aid] = (len(textures) - 1, media == "image/png" and _png_alpha(data))
+            if tex_of[aid] is None:
+                continue
+            tex, alpha = tex_of[aid]
+            lit = _art_lit(pid, glow, rules)
+            if (aid, lit) not in art_mat:
+                m = {"name": "construct:artwork:%s%s" % (aid, ":lit" if lit else ""), "doubleSided": True,
+                     "pbrMetallicRoughness": {"baseColorTexture": {"index": tex}, "metallicFactor": 0.0,
+                                              "roughnessFactor": ROLE_MATERIAL["artwork"][2]},
+                     "extras": {"construct": {"artwork": aid, "lit": lit}}}
+                if alpha:
+                    m["alphaMode"] = "BLEND"
+                if lit:   # a sign's lettering, a screen: the image is its own light
+                    m["emissiveTexture"] = {"index": tex}
+                    m["emissiveFactor"] = [1.0, 1.0, 1.0]
+                mats.append(m)
+                art_mat[(aid, lit)] = len(mats) - 1
+            # where it hangs: with its part's piece, in its part's joint and motion, or in the merged mesh
+            jt, slot = a.get("joint", -1), a.get("motion_slot", -1)
+            mine = [c for c in copies if c["part"]["id"] == pid and c["chain"] == jt and "body" in c]
+            pos, uv, tris, nrm = _art_mesh(a)
+            if mine:
+                mid = _mean(pos)
+                c = min(mine, key=lambda c: math.dist(mid, c["centre"]))
+                parent, origin = c["body"], c["centre"]
+            elif pid in pnode_of:
+                parent, origin = chain(index[pid], jt, slot)
+            elif merged:
+                parent, origin = node_of_merged, (0.0, 0.0, 0.0)
+            else:
+                continue
+            flat = [pos[i] for t in tris for i in t]
+            meshes.append({"name": pid + ".artwork", "primitives": [
+                _primitive(b, 4, flat, [nrm] * len(flat), [float(a.get("phase", 0.0))] * len(flat), art_mat[(aid, lit)],
+                           [uv[i] for t in tris for i in t])]})
+            n = node({"name": pid + ".artwork", "mesh": len(meshes) - 1, "translation": [-x for x in origin],
+                      "extras": {"construct": {"part": pid, "artwork": aid, "slot": a.get("slot")}}})
+            nodes[parent].setdefault("children", []).append(n)
+            counts["artwork"] = counts.get("artwork", 0) + 1
     animations = _animations(b, arts, motions, art_nodes, motion_nodes)
     for n in nodes:
         if "translation" in n and all(abs(x) < 1e-12 for x in n["translation"]):
@@ -971,6 +1191,8 @@ def to_gltf(g, wire="edges", pose="closed", materials=None, wire_radius=None, me
         "nodes": nodes, "meshes": meshes, "materials": mats, "accessors": b.accessors, "bufferViews": b.views,
         "buffers": [{"byteLength": len(b.data)}],
     }
+    if images:
+        doc.update({"images": images, "textures": textures, "samplers": samplers})
     if animations:
         doc["animations"] = animations
     if used_ext:
@@ -989,7 +1211,11 @@ def to_gltf(g, wire="edges", pose="closed", materials=None, wire_radius=None, me
         "motions": [{k: m[k] for k in ("part", "type", "period", "rpm", "degrees", "distance", "amount", "phase")}
                     for m in motions]}}
     summary = {"parts": len(parts), "nodes": len(nodes), "meshes": len(meshes), "materials": len(mats),
-               "animations": [a["name"] for a in animations], **counts}
+               "animations": [a["name"] for a in animations], "images": len(images), **counts}
+    if unmapped:   # a finish map that leaves surfaces on their role's default: say which
+        summary["unmapped"] = sorted(set(unmapped))
+    if notes:
+        summary["notes"] = notes
     return doc, bytes(b.data), summary
 
 
@@ -1094,8 +1320,11 @@ def read_glb(data):
 
 # ---------------------------------------------------------------------------- OBJ
 
-def to_obj(g, name, wire="edges", pose="closed", materials=None, frame="y-up", wire_radius=None):
-    """The OBJ and MTL texts: one object per part, in one pose, with smoothed normals."""
+def to_obj(g, name, wire="edges", pose="closed", materials=None, frame="y-up", wire_radius=None, artwork=None,
+           textures=None):
+    """The OBJ and MTL texts: one object per part, in one pose, with smoothed normals. With `artwork`, each artwork
+    face is an object `<part>.artwork` whose material maps its image (map_Kd); the image files to write beside
+    the .mtl are put in `textures` ({file name: bytes})."""
     if wire not in WIRES:
         raise ExportError("wire: one of %s" % ", ".join(WIRES))
     rules = _load_materials(materials)
@@ -1228,15 +1457,58 @@ def to_obj(g, name, wire="edges", pose="closed", materials=None, frame="y-up", w
         if emissive:
             mtl.append("Ke %.4f %.4f %.4f" % emissive)
         mtl.append("")
+    notes = list((artwork or {}).get("notes") or [])
+    if artwork and g.get("artwork"):
+        found, glow, files = artwork.get("images") or {}, artwork.get("glow") or {}, {}
+        joint_of = {p["id"]: p.get("joint", -1) for p in parts}
+        for a in g["artwork"]:
+            aid = a.get("asset_id")
+            if aid not in found or a["part"] not in joint_of:
+                continue
+            media, data = found[aid]
+            if media not in TEXTURE_TYPES:
+                if aid not in files:
+                    notes.append("artwork %s: %s is not a texture OBJ tools read (PNG or JPEG); left out" % (aid, media))
+                    files[aid] = None
+                continue
+            if aid not in files:   # the image beside the .mtl, once
+                files[aid] = "%s.%s.%s" % (name, _file_name(aid), "png" if media == "image/png" else "jpg")
+                if textures is not None:
+                    textures[files[aid]] = data
+            if files[aid] is None:
+                continue
+            lit = _art_lit(a["part"], glow, rules)
+            nm = "construct-artwork-%s%s" % (_file_name(aid), "-lit" if lit else "")
+            if nm not in used:
+                used[nm] = None
+                mtl += ["newmtl %s" % nm, "Kd 1.0000 1.0000 1.0000", "Ks 0.04 0.04 0.04", "Ns 64.0", "illum 2",
+                        "map_Kd %s" % files[aid]]
+                if media == "image/png" and _png_alpha(data):
+                    mtl.append("map_d %s" % files[aid])
+                if lit:
+                    mtl += ["Ke 1.0000 1.0000 1.0000", "map_Ke %s" % files[aid]]
+                mtl.append("")
+            jt = a.get("joint", joint_of[a["part"]])
+            pos, uv, tris, nrm = _art_mesh(a)
+            out += ["o %s.artwork" % a["part"], "usemtl %s" % nm]
+            out += ["v %.6f %.6f %.6f" % place(q, jt) for q in pos]
+            out += ["vt %.5f %.5f" % (u, 1.0 - v) for u, v in uv]   # OBJ counts v from the image's bottom
+            out.append("vn %.5f %.5f %.5f" % placen(nrm, jt))
+            out += ["f " + " ".join("%d/%d/%d" % (nv + i + 1, nt + i + 1, nn + 1) for i in t) for t in tris]
+            nv, nt, nn = nv + len(pos), nt + len(uv), nn + 1
+            counts["artwork"] = counts.get("artwork", 0) + 1
+    if notes:
+        counts["notes"] = notes
     return "\n".join(out) + "\n", "\n".join(mtl), counts
 
 
 # ---------------------------------------------------------------------------- one call
 
 def render(scene, fmt="glb", wire="edges", pose="closed", materials=None, frame="y-up", wire_radius=None,
-           name="construct", merge=False, colliders=False, pieces=False, quality=False):
-    """Compile `scene` solid and export it in memory: {"glb": bytes} or {"obj": text, "mtl": text}, with a
-    summary."""
+           name="construct", merge=False, colliders=False, pieces=False, quality=False, asset_root=None):
+    """Compile `scene` solid and export it in memory: {"glb": bytes} or {"obj": text, "mtl": text} (and its
+    images, {"textures": {file name: bytes}}), with a summary. `asset_root` is the folder the scene's artwork
+    paths are read from (the scene's own folder); without it the artwork's faces are left out."""
     if fmt not in FORMATS:
         raise ExportError("format: glb or obj (from --format or the file's extension), not %r" % fmt)
     if frame not in FRAMES:
@@ -1244,13 +1516,15 @@ def render(scene, fmt="glb", wire="edges", pose="closed", materials=None, frame=
     if fmt == "glb" and frame != "y-up":
         raise ExportError("glTF is Y up by definition; --frame z-up is for OBJ")
     g = scene_mod.compile_scene(scene, solid=True)
+    art = scene_artwork(scene, g, asset_root)
     if fmt == "glb":
-        doc, binary, summary = to_gltf(g, wire, pose, materials, wire_radius, merge, colliders, pieces, quality)
+        doc, binary, summary = to_gltf(g, wire, pose, materials, wire_radius, merge, colliders, pieces, quality, art)
         out = {"glb": pack_glb(doc, binary)}
         summary["bytes"] = len(out["glb"])
     else:
-        text, mtl, counts = to_obj(g, name, wire, pose, materials, frame, wire_radius)
-        out = {"obj": text, "mtl": mtl}
+        textures = {}
+        text, mtl, counts = to_obj(g, name, wire, pose, materials, frame, wire_radius, art, textures)
+        out = {"obj": text, "mtl": mtl, **({"textures": textures} if textures else {})}
         summary = {"parts": len(g["parts"]), **counts}
     if quality and fmt != "glb":
         raise ExportError("--quality is a glTF view (each triangle coloured); give a .glb")
@@ -1259,12 +1533,13 @@ def render(scene, fmt="glb", wire="edges", pose="closed", materials=None, frame=
 
 
 def export(scene, path, fmt=None, wire="edges", pose="closed", materials=None, frame="y-up", wire_radius=None,
-           merge=False, colliders=False, pieces=False, quality=False):
-    """Compile `scene` solid and write it to `path` (.glb, or .obj with its .mtl beside it). Returns a summary."""
+           merge=False, colliders=False, pieces=False, quality=False, asset_root=None):
+    """Compile `scene` solid and write it to `path` (.glb, or .obj with its .mtl and images beside it). Returns a
+    summary."""
     path = Path(path)
     fmt = fmt or path.suffix.lower().lstrip(".")
     out, summary = render(scene, fmt, wire, pose, materials, frame, wire_radius, name=path.stem, merge=merge,
-                          colliders=colliders, pieces=pieces, quality=quality)
+                          colliders=colliders, pieces=pieces, quality=quality, asset_root=asset_root)
     path.parent.mkdir(parents=True, exist_ok=True)
     if fmt == "glb":
         path.write_bytes(out["glb"])
@@ -1273,6 +1548,9 @@ def export(scene, path, fmt=None, wire="edges", pose="closed", materials=None, f
         path.write_text(out["obj"], encoding="utf-8")
         path.with_suffix(".mtl").write_text(out["mtl"], encoding="utf-8")
         summary["files"] = [str(path), str(path.with_suffix(".mtl"))]
+        for nm, data in out.get("textures", {}).items():
+            (path.parent / nm).write_bytes(data)
+            summary["files"].append(str(path.parent / nm))
     return summary
 
 

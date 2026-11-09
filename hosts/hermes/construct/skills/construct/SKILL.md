@@ -140,7 +140,15 @@ show what each step makes, and wait for the user between steps.
    only when it beats the best so far. After every round, report in chat: the critic's top requests, what
    changed (ledger ids), won or lost, and the minutes. Stop when `record` says STOP. After an interruption run
    `rounds status` and redo only the step it names.
-7. **Deliver.** Record the `authoring` block (the mode as `tier`: masterpiece as `masterpiece`, fast as `standard`;
+7. **Finish it.** Write the construct's finish map, `scene.materials.json` beside its scene (`{"about": ...,
+   "materials": [{"parts": ["body-*"], "name": "...", "color": "#rrggbb", "finish": "paint"}, ...]}`; finishes:
+   paint, brushed, chrome, wood, rubber, plastic, glass, and light for what glows; a rule may set its own
+   `roughness` and `metallic`, so leather is plastic at roughness 0.6, fabric or stone roughness 0.9). Every
+   solid part is covered by an id or pattern: an export's result lists any it leaves `unmapped`. Colours the
+   research documents (a car's paint code, a maker's published finish) are used and named in `about`; the rest are
+   chosen, and `about` says so. It is presentation, never a fact of the construct: the light view keeps the house palette and
+   provenance does not change; exports, the Blender add-on and worlds use it. Fast mode: a short map by part group.
+8. **Deliver.** Record the `authoring` block (the mode as `tier`: masterpiece as `masterpiece`, fast as `standard`;
    `research`, the `sources` used, `review_rounds`, `outcome`, `next`: the most valuable improvements still open).
    Build it, put the MEDIA line in your reply, and say plainly what is evidence, what is inferred or designed,
    which artwork is the user's own and which is generated decoration, and, if a limit stopped you, what the next
@@ -167,8 +175,8 @@ in Blender, FreeCAD or a script to check it again. In Hermes Desktop a glTF open
 (part names on hover, its animations to play) and a STEP or FreeCAD file shows its read-back.
 - **glb / obj**: a 3D model for Blender, game engines and the web: every part a named object, joints as the
   `open` animation, periodic motion as `idle`. A game prop: `merge` + `wire: "seams"`; physics: `pieces: "glued"`
-  (each door or lid its own body on its hinge) or `"loose"`, `colliders`; `pose: "open"`. `materials` colours and
-  finishes parts by id or pattern, only as the user chooses. A `no-surface` audit warning names a part drawn only
+  (each door or lid its own body on its hinge) or `"loose"`, `colliders`; `pose: "open"`. The construct's own finish map
+  (`scene.materials.json`, step 7) is used by default; `materials` replaces it when the user wants another finish. A `no-surface` audit warning names a part drawn only
   as lines that would be missing: give it a solid shape. Say what it is: correctly sized named parts with working
   joints, without textures; a blockout or prop, not a hero asset.
 - **stl / 3mf**: one watertight solid, Z up, 100 mm on its longest side (`size_mm`, `scale: 43` for 1:43,

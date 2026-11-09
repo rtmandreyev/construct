@@ -115,6 +115,16 @@ def _is_world_file(path):
     return re.search(r'"format"\s*:\s*"construct-world"', head) is not None
 
 
+def _artwork_lines(s):
+    """An export's artwork, and what was left out of it, for the command line."""
+    if s.get("artwork"):
+        n = s.get("images", len([f for f in s.get("files", []) if not f.endswith((".obj", ".mtl"))]))
+        sys.stdout.write("  artwork: %d face%s, %d image%s\n" % (s["artwork"], "" if s["artwork"] == 1 else "s",
+                                                               n, "" if n == 1 else "s"))
+    for note in s.get("notes", []):
+        sys.stdout.write("  note: %s\n" % note)
+
+
 def load(path):
     """A scene, or the scene a parameter document builds."""
     try:
@@ -525,6 +535,7 @@ def add_commands(sub):
     p.add_argument("--quality", action="store_true",
                    help="glTF: each triangle coloured by its smallest angle (green good, amber under 20 degrees, red "
                         "under 10: slivers that subdivide and shade badly)")
+    p.add_argument("--asset-root", help="the folder the scene's artwork paths are read from (default: the scene's own)")
     p = sub.add_parser("print", help="one watertight body to 3D print: STL or 3MF, checked (docs/PRINTING.md)")
     p.add_argument("scene")
     p.add_argument("--out", help="FILE.stl or FILE.3mf")
@@ -1106,13 +1117,15 @@ def run(args):
                              % (", ".join(s["files"]), s["placements"], s["parts"], s["triangles"], s["edges"],
                                 "; animations: " + anims + (" …" if len(s.get("animations", [])) > 8 else "")
                                 if s["format"] == "glb" else ""))
+            _artwork_lines(s)
             return 0
         if args.command == "export":
             from . import export as export_mod
             try:
-                s = export_mod.export(load(args.scene), args.out, args.format, args.wire, args.pose, args.materials,
+                s = export_mod.export(load(args.scene), args.out, args.format, args.wire, args.pose, args.materials or export_mod.map_beside(args.scene),
                                       args.frame, args.wire_radius, args.merge, args.colliders,
-                                      {None: False, "loose": True}.get(args.pieces, args.pieces), args.quality)
+                                      {None: False, "loose": True}.get(args.pieces, args.pieces), args.quality,
+                                      args.asset_root or str(Path(args.scene).resolve().parent))
             except export_mod.ExportError as exc:
                 sys.stderr.write("export: %s\n" % exc)
                 return 1
@@ -1126,6 +1139,7 @@ def run(args):
                     100 * q["thin_share"], 100 * q["fair_share"], "" if args.quality else "; --quality shows where"))
             if s.get("quads"):
                 sys.stdout.write("  %d quads, positions shared: ready to subdivide\n" % s["quads"])
+            _artwork_lines(s)
             return 0
         if args.command == "print":
             from . import printing
@@ -1178,8 +1192,8 @@ def run(args):
             try:
                 bed = tuple(float(x) for x in args.bed.lower().split("x")) if args.bed else \
                     __import__("construct_hologram.printing", fromlist=["PRINTERS"]).PRINTERS[args.printer or "desktop"]["bed"]
-                mats = args.materials or (str(Path(args.scene).with_suffix(".materials.json"))
-                                          if Path(args.scene).with_suffix(".materials.json").is_file() else None)
+                from . import export as _export
+                mats = args.materials or (str(_export.map_beside(args.scene)) if _export.map_beside(args.scene) else None)
                 progress = lambda m: sys.stderr.write(m + "\n")   # a building's kit takes many minutes: say where it is
                 k = kit_mod.make(load(args.scene), scale=args.scale, size=args.size, detail=args.detail, plan=args.plan,
                                  materials=mats, bed=bed, log=progress)

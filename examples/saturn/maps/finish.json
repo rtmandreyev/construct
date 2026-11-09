@@ -1,0 +1,25 @@
+{
+ "about": "A finish for the Saturn construct, chosen for this page from the Cassini photographs the scene cites: a pale butterscotch globe with a blue-grey north polar hood and vortex, the rings as translucent bands (the B ring brightest, the C ring and the Cassini Division darker, the D and G rings faint), white Enceladus and its icy plumes, orange Titan under a bluish detached haze, and two-toned Iapetus drawn dark on its ridge. The scene documents ring boundaries, sizes and periods, not colours. Colours are the exporter's choice, not facts of the construct.",
+ "materials": [
+  {"parts": ["globe"], "name": "Saturn cloud tops", "color": "#d6bf8c", "roughness": 0.85},
+  {"parts": ["polar-hood"], "name": "polar hood", "color": "#8e9aa4", "roughness": 0.85},
+  {"parts": ["vortex-*"], "name": "polar vortex", "color": "#6d7a86", "roughness": 0.8},
+  {"parts": ["ring-b", "ring-cassini-in-lip"], "name": "B ring", "color": "#d9c9a6", "finish": "glass", "roughness": 0.6},
+  {"parts": ["ring-a?", "ring-cassini-out-lip", "ring-encke-*", "ring-keeler-*"], "name": "A ring", "color": "#bfb299", "finish": "glass", "roughness": 0.6},
+  {"parts": ["ring-c?"], "name": "C ring", "color": "#8e8475", "finish": "glass", "roughness": 0.6},
+  {"parts": ["ring-cassini"], "name": "Cassini Division", "color": "#4a453f", "finish": "glass", "roughness": 0.6},
+  {"parts": ["ring-f"], "name": "F ring", "color": "#cfc6b4", "finish": "glass", "roughness": 0.6},
+  {"parts": ["ring-d", "ring-g"], "name": "faint dusty ring", "color": "#6e6a64", "finish": "glass", "roughness": 0.7},
+  {"parts": ["plume-*"], "name": "icy plume", "color": "#eef3f7", "finish": "glass", "roughness": 0.7},
+  {"parts": ["titan-haze*"], "name": "detached haze", "color": "#9fb3c8", "finish": "glass", "roughness": 0.7},
+  {"parts": ["titan"], "name": "Titan haze orange", "color": "#c9933f", "roughness": 0.9},
+  {"parts": ["enceladus"], "name": "Enceladus ice", "color": "#f2f3f4", "roughness": 0.7},
+  {"parts": ["mimas-*", "tethys-*", "dione-*", "rhea-*", "iapetus-crater-*"], "name": "crater floors", "color": "#8d8a85", "roughness": 0.95},
+  {"parts": ["mimas"], "name": "Mimas", "color": "#b1aea9", "roughness": 0.95},
+  {"parts": ["tethys"], "name": "Tethys", "color": "#dad8d3", "roughness": 0.95},
+  {"parts": ["dione"], "name": "Dione", "color": "#c8c5bf", "roughness": 0.95},
+  {"parts": ["rhea"], "name": "Rhea", "color": "#bcb8b1", "roughness": 0.95},
+  {"parts": ["iapetus-ridge"], "name": "Iapetus dark terrain", "color": "#3b332c", "roughness": 0.95},
+  {"parts": ["iapetus"], "name": "Iapetus", "color": "#a59d91", "roughness": 0.95}
+ ]
+}
