@@ -1,0 +1,2734 @@
+{
+ "format": "construct-scene",
+ "version": 2,
+ "id": "stortorget-back-left-russet-mansard-neighbor",
+ "title": "The russet mansard house (behind, left)",
+ "subject": {
+  "category": "architecture",
+  "summary": "Photo-relative reconstruction of the reddish mansard-roofed neighbor immediately left of the sage-green curved gable in Ximonic's December 2022 Stortorget photograph. No address or historic name is asserted. Faded russet plaster, pale wedge lintels, pink ornamental attic band, charcoal broken-pitch roof and paired dormers are represented by native architectural relief; the hologram does not reproduce plaster paint colors.",
+  "accuracy": "approximate",
+  "synthetic": false
+ },
+ "units": "m",
+ "seed": 21,
+ "sources": [
+  {
+   "id": "request",
+   "kind": "user_request",
+   "title": "Photo-relative building and inferred envelope",
+   "rights": "user_private"
+  },
+  {
+   "id": "photo",
+   "kind": "reference_image",
+   "title": "Ximonic (Simo Räsänen), Stortorget Christmas Market, December 2022; CC BY-SA 4.0",
+   "ref": "https://creativecommons.org/licenses/by-sa/4.0/",
+   "rights": "permitted"
+  }
+ ],
+ "facts": [
+  {
+   "key": "width",
+   "value": 9.5,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "request",
+   "note": "Supervisor's nominal inference, not a measured or published size."
+  },
+  {
+   "key": "eave-height",
+   "value": 14,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "request"
+  },
+  {
+   "key": "roof-ridge",
+   "value": 20,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "request"
+  },
+  {
+   "key": "depth",
+   "value": 10,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "request",
+   "note": "Hidden footprint inferred."
+  },
+  {
+   "key": "dormer-count",
+   "value": 2,
+   "certainty": "verified",
+   "source": "photo"
+  }
+ ],
+ "assets": [],
+ "parts": [
+  {
+   "id": "russet-plaster-mass",
+   "label": "Russet lower two storeys; hidden base inferred",
+   "role": "mass",
+   "certainty": "inferred",
+   "basis": [
+    "width",
+    "eave-height",
+    "depth"
+   ],
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     9.5,
+     11.8,
+     10
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0,
+    0,
+    -5
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "weight": 1.2,
+    "color": "#9b5142"
+   }
+  },
+  {
+   "id": "pink-attic-band",
+   "label": "Compressed painted pink upper storey",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     9.5,
+     2.2,
+     10
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0,
+    11.8,
+    -5
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "identity",
+    "weight": 1.4,
+    "color": "#c68f80"
+   }
+  },
+  {
+   "id": "slate-broken-mansard",
+   "label": "Tall charcoal mansard: steep lower and shallow upper pitches",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "roof-ridge",
+    "depth"
+   ],
+   "stage": 2,
+   "shape": {
+    "axis": "z",
+    "height": 9.72,
+    "profile": [
+     [
+      -5.12,
+      14
+     ],
+     [
+      -3.4,
+      17.5
+     ],
+     [
+      0,
+      20
+     ],
+     [
+      3.4,
+      17.5
+     ],
+     [
+      5,
+      14
+     ]
+    ],
+    "type": "extrude"
+   },
+   "at": [
+    -4.86,
+    0.0,
+    -5.0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "weight": 1.3,
+    "color": "#3c4549"
+   },
+   "rotate": [
+    0.0,
+    90.0,
+    0.0
+   ]
+  },
+  {
+   "id": "eaves-dark-frieze",
+   "label": "Deep dark entablature below slate",
+   "role": "structure",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     9.86,
+     0.38,
+     0.36
+    ]
+   },
+   "at": [
+    0,
+    13.8,
+    0.08
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.8,
+    "color": "#5f5148"
+   }
+  },
+  {
+   "id": "eaves-crown",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     9.98,
+     0.13,
+     0.48
+    ]
+   },
+   "at": [
+    0,
+    14,
+    0.08
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "color": "#dfcfb4"
+   }
+  },
+  {
+   "id": "attic-lower-string",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     9.6,
+     0.13,
+     0.16
+    ]
+   },
+   "at": [
+    0,
+    11.78,
+    0.05
+   ],
+   "look": {
+    "tone": "bright",
+    "fill": "dark",
+    "color": "#dfcfb4"
+   }
+  },
+  {
+   "id": "lower-bay-surround",
+   "label": "Pale shallow rectangular bay frame",
+   "role": "structure",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.58,
+     2.72,
+     0.16
+    ]
+   },
+   "at": [
+    -3,
+    9.15,
+    0.065
+   ],
+   "repeat": {
+    "count": 3,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 1.4,
+    "color": "#dfcfb4"
+   }
+  },
+  {
+   "id": "lower-window-glazing",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.3,
+     2.46,
+     0.07
+    ]
+   },
+   "at": [
+    -3,
+    9.15,
+    0.17
+   ],
+   "repeat": {
+    "count": 3,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "look": {
+    "fill": "glass",
+    "tone": "faint",
+    "color": "#2b3b40"
+   }
+  },
+  {
+   "id": "lower-bay-center-mullion",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.065,
+     2.46,
+     0.08
+    ]
+   },
+   "at": [
+    -3,
+    9.15,
+    0.215
+   ],
+   "repeat": {
+    "count": 3,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "color": "#dfcfb4"
+   }
+  },
+  {
+   "id": "lower-bay-transom",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.3,
+     0.07,
+     0.08
+    ]
+   },
+   "at": [
+    -3,
+    9.5,
+    0.215
+   ],
+   "repeat": {
+    "count": 3,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "color": "#dfcfb4"
+   }
+  },
+  {
+   "id": "lower-sill",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.73,
+     0.13,
+     0.3
+    ]
+   },
+   "at": [
+    -3,
+    7.75,
+    0.11
+   ],
+   "repeat": {
+    "count": 3,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "color": "#dfcfb4"
+   }
+  },
+  {
+   "id": "lintel-center-wedge",
+   "label": "Pale splayed stone wedge lintels",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 3,
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      -0.2,
+      0
+     ],
+     [
+      0.2,
+      0
+     ],
+     [
+      0.26,
+      0.28
+     ],
+     [
+      -0.26,
+      0.28
+     ]
+    ],
+    "axis": "z",
+    "height": 0.18
+   },
+   "at": [
+    -3.0,
+    10.5,
+    0.01
+   ],
+   "repeat": {
+    "count": 3,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 1.6,
+    "color": "#dfcfb4"
+   }
+  },
+  {
+   "id": "lintel-left-wedge",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 3,
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      -0.18,
+      0
+     ],
+     [
+      0.18,
+      0
+     ],
+     [
+      0.2,
+      0.26
+     ],
+     [
+      -0.2,
+      0.26
+     ]
+    ],
+    "axis": "z",
+    "height": 0.16
+   },
+   "at": [
+    -3.66,
+    10.5,
+    0.01
+   ],
+   "rotate": [
+    0.0,
+    0.0,
+    7.0
+   ],
+   "repeat": {
+    "count": 3,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "color": "#dfcfb4"
+   }
+  },
+  {
+   "id": "lintel-right-wedge",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 3,
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      -0.18,
+      0
+     ],
+     [
+      0.18,
+      0
+     ],
+     [
+      0.2,
+      0.26
+     ],
+     [
+      -0.2,
+      0.26
+     ]
+    ],
+    "axis": "z",
+    "height": 0.16
+   },
+   "at": [
+    -2.34,
+    10.5,
+    0.01
+   ],
+   "rotate": [
+    0.0,
+    0.0,
+    -7.0
+   ],
+   "repeat": {
+    "count": 3,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "color": "#dfcfb4"
+   }
+  },
+  {
+   "id": "short-attic-bay-frame",
+   "label": "Short upper windows in ornamental band",
+   "role": "structure",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.24,
+     1.65,
+     0.14
+    ]
+   },
+   "at": [
+    -3.0,
+    12.6,
+    0.07
+   ],
+   "repeat": {
+    "count": 3,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "color": "#dfcfb4"
+   }
+  },
+  {
+   "id": "short-attic-window-glazing",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.04,
+     1.45,
+     0.06
+    ]
+   },
+   "at": [
+    -3.0,
+    12.6,
+    0.16
+   ],
+   "repeat": {
+    "count": 3,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "look": {
+    "fill": "glass",
+    "tone": "faint",
+    "color": "#2b3b40"
+   }
+  },
+  {
+   "id": "short-attic-mullion",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.055,
+     1.45,
+     0.07
+    ]
+   },
+   "at": [
+    -3.0,
+    12.6,
+    0.2
+   ],
+   "repeat": {
+    "count": 3,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "color": "#dfcfb4"
+   }
+  },
+  {
+   "id": "short-attic-transom",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.04,
+     0.055,
+     0.07
+    ]
+   },
+   "at": [
+    -3.0,
+    12.5,
+    0.2
+   ],
+   "repeat": {
+    "count": 3,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "color": "#dfcfb4"
+   }
+  },
+  {
+   "id": "pink-relief-panel-rails",
+   "label": "Narrow pink ornamental rectangular panels",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 3,
+   "shape": {
+    "type": "paths",
+    "paths": [
+     [
+      [
+       -0.36,
+       -0.79,
+       0
+      ],
+      [
+       0.36,
+       -0.79,
+       0
+      ],
+      [
+       0.36,
+       0.79,
+       0
+      ],
+      [
+       -0.36,
+       0.79,
+       0
+      ],
+      [
+       -0.36,
+       -0.79,
+       0
+      ]
+     ],
+     [
+      [
+       -0.25,
+       -0.65,
+       0
+      ],
+      [
+       -0.07,
+       -0.65,
+       0
+      ],
+      [
+       -0.12,
+       -0.36,
+       0
+      ],
+      [
+       -0.07,
+       -0.12,
+       0
+      ],
+      [
+       -0.07,
+       0.12,
+       0
+      ],
+      [
+       -0.12,
+       0.36,
+       0
+      ],
+      [
+       -0.07,
+       0.65,
+       0
+      ],
+      [
+       -0.25,
+       0.65,
+       0
+      ],
+      [
+       -0.2,
+       0.36,
+       0
+      ],
+      [
+       -0.25,
+       0.12,
+       0
+      ],
+      [
+       -0.25,
+       -0.12,
+       0
+      ],
+      [
+       -0.2,
+       -0.36,
+       0
+      ],
+      [
+       -0.25,
+       -0.65,
+       0
+      ]
+     ],
+     [
+      [
+       0.07,
+       -0.65,
+       0
+      ],
+      [
+       0.25,
+       -0.65,
+       0
+      ],
+      [
+       0.2,
+       -0.36,
+       0
+      ],
+      [
+       0.25,
+       -0.12,
+       0
+      ],
+      [
+       0.25,
+       0.12,
+       0
+      ],
+      [
+       0.2,
+       0.36,
+       0
+      ],
+      [
+       0.25,
+       0.65,
+       0
+      ],
+      [
+       0.07,
+       0.65,
+       0
+      ],
+      [
+       0.12,
+       0.36,
+       0
+      ],
+      [
+       0.07,
+       0.12,
+       0
+      ],
+      [
+       0.07,
+       -0.12,
+       0
+      ],
+      [
+       0.12,
+       -0.36,
+       0
+      ],
+      [
+       0.07,
+       -0.65,
+       0
+      ]
+     ],
+     [
+      [
+       -0.27,
+       -0.21,
+       0
+      ],
+      [
+       0.27,
+       -0.21,
+       0
+      ]
+     ],
+     [
+      [
+       -0.27,
+       0.21,
+       0
+      ],
+      [
+       0.27,
+       0.21,
+       0
+      ]
+     ],
+     [
+      [
+       -0.12,
+       0,
+       0
+      ],
+      [
+       0,
+       0.1,
+       0
+      ],
+      [
+       0.12,
+       0,
+       0
+      ],
+      [
+       0,
+       -0.1,
+       0
+      ],
+      [
+       -0.12,
+       0,
+       0
+      ]
+     ]
+    ]
+   },
+   "at": [
+    -4.4,
+    12.6,
+    0.025
+   ],
+   "repeat": {
+    "count": 4,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "look": {
+    "fill": "none",
+    "tone": "identity",
+    "weight": 1.5,
+    "color": "#c68f80"
+   },
+   "scale": [
+    1.1,
+    0.85,
+    1
+   ]
+  },
+  {
+   "id": "pink-panel-vertical-pilasters",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.09,
+     1.77,
+     0.12
+    ]
+   },
+   "at": [
+    -4.05,
+    12.73,
+    0.08
+   ],
+   "repeat": {
+    "count": 3,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "look": {
+    "fill": "dark",
+    "tone": "identity",
+    "color": "#c68f80"
+   }
+  },
+  {
+   "id": "inferred-base-bay-frame",
+   "label": "Restrained hidden lower storey; inferred",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.58,
+     2.7,
+     0.15
+    ]
+   },
+   "at": [
+    -3,
+    3.8,
+    0.06
+   ],
+   "repeat": {
+    "count": 3,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "color": "#dfcfb4"
+   }
+  },
+  {
+   "id": "inferred-base-window-glazing",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.3,
+     2.44,
+     0.06
+    ]
+   },
+   "at": [
+    -3,
+    3.8,
+    0.16
+   ],
+   "repeat": {
+    "count": 3,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "look": {
+    "fill": "glass",
+    "tone": "faint",
+    "color": "#2b3b40"
+   }
+  },
+  {
+   "id": "inferred-base-mullion",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.07,
+     2.44,
+     0.07
+    ]
+   },
+   "at": [
+    -3,
+    3.8,
+    0.2
+   ],
+   "repeat": {
+    "count": 3,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "color": "#dfcfb4"
+   }
+  },
+  {
+   "id": "paired-dormer-cheeks",
+   "label": "Two dark rectangular mansard dormers",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "dormer-count"
+   ],
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.84,
+     2.16,
+     1.85
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -2.55,
+    14.87,
+    -1.28
+   ],
+   "repeat": {
+    "count": 2,
+    "step": {
+     "at": [
+      5.1,
+      0,
+      0
+     ]
+    }
+   },
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "weight": 1.1,
+    "color": "#4b5354"
+   }
+  },
+  {
+   "id": "dormer-front-frame",
+   "role": "structure",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.58,
+     1.94,
+     0.1
+    ]
+   },
+   "at": [
+    -2.55,
+    15.93,
+    -0.34
+   ],
+   "repeat": {
+    "count": 2,
+    "step": {
+     "at": [
+      5.1,
+      0,
+      0
+     ]
+    }
+   },
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.8,
+    "color": "#dfcfb4"
+   }
+  },
+  {
+   "id": "dormer-window-glazing",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.4,
+     1.74,
+     0.05
+    ]
+   },
+   "at": [
+    -2.55,
+    15.93,
+    -0.26
+   ],
+   "repeat": {
+    "count": 2,
+    "step": {
+     "at": [
+      5.1,
+      0,
+      0
+     ]
+    }
+   },
+   "look": {
+    "fill": "glass",
+    "tone": "faint",
+    "color": "#2b3b40"
+   }
+  },
+  {
+   "id": "dormer-paired-mullion",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.075,
+     1.74,
+     0.06
+    ]
+   },
+   "at": [
+    -2.55,
+    15.93,
+    -0.215
+   ],
+   "repeat": {
+    "count": 2,
+    "step": {
+     "at": [
+      5.1,
+      0,
+      0
+     ]
+    }
+   },
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "color": "#dfcfb4"
+   }
+  },
+  {
+   "id": "dormer-transom",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.4,
+     0.055,
+     0.06
+    ]
+   },
+   "at": [
+    -2.55,
+    16.13,
+    -0.215
+   ],
+   "repeat": {
+    "count": 2,
+    "step": {
+     "at": [
+      5.1,
+      0,
+      0
+     ]
+    }
+   },
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "color": "#dfcfb4"
+   }
+  },
+  {
+   "id": "dormer-triangular-cap",
+   "label": "Small triangular dark metal dormer cap",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 4,
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      -1,
+      0
+     ],
+     [
+      1,
+      0
+     ],
+     [
+      0,
+      0.4
+     ]
+    ],
+    "axis": "z",
+    "height": 1.95
+   },
+   "at": [
+    -2.55,
+    17.01,
+    -2.2
+   ],
+   "repeat": {
+    "count": 2,
+    "step": {
+     "at": [
+      5.1,
+      0,
+      0
+     ]
+    }
+   },
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "weight": 1,
+    "color": "#4b5354"
+   }
+  },
+  {
+   "id": "dormer-cap-edge",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "paths",
+    "paths": [
+     [
+      [
+       -1,
+       0,
+       0
+      ],
+      [
+       0,
+       0.4,
+       0
+      ],
+      [
+       1,
+       0,
+       0
+      ]
+     ]
+    ]
+   },
+   "at": [
+    -2.55,
+    17.01,
+    -0.245
+   ],
+   "repeat": {
+    "count": 2,
+    "step": {
+     "at": [
+      5.1,
+      0,
+      0
+     ]
+    }
+   },
+   "look": {
+    "fill": "none",
+    "tone": "bright",
+    "weight": 1.4,
+    "color": "#dfcfb4"
+   }
+  },
+  {
+   "id": "front-standing-seams",
+   "label": "Mansard standing metal seams",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 5,
+   "shape": {
+    "type": "paths",
+    "paths": [
+     [
+      [
+       0,
+       14.08,
+       0.13
+      ],
+      [
+       0,
+       17.53,
+       -1.6
+      ],
+      [
+       0,
+       20.03,
+       -5
+      ]
+     ]
+    ]
+   },
+   "at": [
+    -4.75,
+    0,
+    0
+   ],
+   "repeat": {
+    "count": 11,
+    "step": {
+     "at": [
+      0.95,
+      0,
+      0
+     ]
+    }
+   },
+   "look": {
+    "fill": "none",
+    "tone": "hairline",
+    "weight": 0.6,
+    "color": "#3c4549"
+   }
+  },
+  {
+   "id": "roof-break-fold",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 5,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -4.87,
+      17.52,
+      -1.59
+     ],
+     [
+      4.87,
+      17.52,
+      -1.59
+     ]
+    ]
+   },
+   "look": {
+    "fill": "none",
+    "tone": "structure",
+    "weight": 1.1,
+    "color": "#3c4549"
+   }
+  },
+  {
+   "id": "ridge-fold",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 5,
+   "shape": {
+    "type": "curve",
+    "points": [
+     [
+      -4.87,
+      20.03,
+      -5
+     ],
+     [
+      4.87,
+      20.03,
+      -5
+     ]
+    ]
+   },
+   "look": {
+    "fill": "none",
+    "tone": "bright",
+    "color": "#3c4549"
+   }
+  },
+  {
+   "id": "ridge-chimney-stack",
+   "label": "Dark metal-clad masonry chimney",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 5,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.25,
+     2.75,
+     1.2
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    2.95,
+    19.2,
+    -5.15
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "weight": 1.6,
+    "color": "#3c4549"
+   }
+  },
+  {
+   "id": "chimney-crown",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.5,
+     0.18,
+     1.4
+    ]
+   },
+   "at": [
+    2.95,
+    22.11,
+    -5.15
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "color": "#4b4c47"
+   }
+  },
+  {
+   "id": "chimney-metal-seams",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 5,
+   "shape": {
+    "type": "paths",
+    "paths": [
+     [
+      [
+       2.5,
+       20.1,
+       -4.58
+      ],
+      [
+       3.4,
+       20.1,
+       -4.58
+      ]
+     ],
+     [
+      [
+       2.5,
+       20.8,
+       -4.58
+      ],
+      [
+       3.4,
+       20.8,
+       -4.58
+      ]
+     ],
+     [
+      [
+       2.5,
+       21.5,
+       -4.58
+      ],
+      [
+       3.4,
+       21.5,
+       -4.58
+      ]
+     ],
+     [
+      [
+       2.95,
+       20,
+       -4.58
+      ],
+      [
+       2.95,
+       22.5,
+       -4.58
+      ]
+     ]
+    ]
+   },
+   "look": {
+    "fill": "none",
+    "tone": "hairline",
+    "color": "#4b4c47"
+   },
+   "at": [
+    0.0,
+    -0.6,
+    0.0
+   ]
+  },
+  {
+   "id": "far-left-chimney",
+   "role": "structure",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 5,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.7,
+     1.6,
+     0.85
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -3.9,
+    19.4,
+    -5.25
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "color": "#4b4c47"
+   }
+  },
+  {
+   "id": "ridge-safety-rail",
+   "label": "Sparse dark metal ridge railing",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 6,
+   "shape": {
+    "type": "paths",
+    "paths": [
+     [
+      [
+       -4.6,
+       20.64,
+       -5
+      ],
+      [
+       -4.6,
+       21.35,
+       -5
+      ],
+      [
+       4.6,
+       21.35,
+       -5
+      ],
+      [
+       4.6,
+       20.64,
+       -5
+      ]
+     ],
+     [
+      [
+       -3.1,
+       20.64,
+       -5
+      ],
+      [
+       -3.1,
+       21.35,
+       -5
+      ]
+     ],
+     [
+      [
+       -1.55,
+       20.64,
+       -5
+      ],
+      [
+       -1.55,
+       21.35,
+       -5
+      ]
+     ],
+     [
+      [
+       0,
+       20.64,
+       -5
+      ],
+      [
+       0,
+       21.35,
+       -5
+      ]
+     ],
+     [
+      [
+       1.55,
+       20.64,
+       -5
+      ],
+      [
+       1.55,
+       21.35,
+       -5
+      ]
+     ],
+     [
+      [
+       3.1,
+       20.64,
+       -5
+      ],
+      [
+       3.1,
+       21.35,
+       -5
+      ]
+     ]
+    ]
+   },
+   "look": {
+    "fill": "none",
+    "tone": "hairline",
+    "weight": 0.8,
+    "color": "#3c4549"
+   },
+   "at": [
+    0.0,
+    -0.6,
+    0.0
+   ]
+  },
+  {
+   "id": "television-aerial",
+   "label": "Sparse aerial against winter sky",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 6,
+   "shape": {
+    "type": "paths",
+    "paths": [
+     [
+      [
+       -0.7,
+       20.6,
+       -5
+      ],
+      [
+       -0.7,
+       24.2,
+       -5
+      ]
+     ],
+     [
+      [
+       -1.7,
+       23.8,
+       -5
+      ],
+      [
+       -0.7,
+       23.8,
+       -5
+      ],
+      [
+       0.35,
+       23.8,
+       -5
+      ]
+     ],
+     [
+      [
+       -1.5,
+       23.1,
+       -5
+      ],
+      [
+       0.1,
+       23.1,
+       -5
+      ]
+     ],
+     [
+      [
+       -1.25,
+       22.4,
+       -5
+      ],
+      [
+       -0.15,
+       22.4,
+       -5
+      ]
+     ],
+     [
+      [
+       -1.6,
+       23.65,
+       -5.2
+      ],
+      [
+       -1.6,
+       23.95,
+       -4.8
+      ]
+     ],
+     [
+      [
+       -1.1,
+       23.65,
+       -5.2
+      ],
+      [
+       -1.1,
+       23.95,
+       -4.8
+      ]
+     ],
+     [
+      [
+       -0.3,
+       23.65,
+       -5.2
+      ],
+      [
+       -0.3,
+       23.95,
+       -4.8
+      ]
+     ]
+    ]
+   },
+   "look": {
+    "fill": "none",
+    "tone": "hairline",
+    "weight": 0.7,
+    "color": "#3c4549"
+   },
+   "at": [
+    0.0,
+    -0.6,
+    0.0
+   ]
+  },
+  {
+   "id": "native-facade-linework",
+   "label": "Native facade survey over shallow solid bays",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 3,
+   "shape": {
+    "type": "facade",
+    "size": [
+     9,
+     3.2
+    ],
+    "rows": 1,
+    "cols": 3,
+    "opening": [
+     1.3,
+     2.46
+    ],
+    "arch": "flat",
+    "kind": "windows",
+    "outline": false
+   },
+   "at": [
+    0.0,
+    7.55,
+    0.001
+   ],
+   "look": {
+    "fill": "none",
+    "tone": "hairline",
+    "weight": 0.55,
+    "color": "#dfcfb4"
+   }
+  },
+  {
+   "at": [
+    -4.6,
+    12.6,
+    0.035
+   ],
+   "certainty": "inferred",
+   "id": "pink-panel-raised-stile-left",
+   "look": {
+    "fill": "dark",
+    "tone": "identity",
+    "color": "#c68f80"
+   },
+   "repeat": {
+    "count": 4,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "role": "detail",
+   "shape": {
+    "size": [
+     0.055,
+     1.3,
+     0.12
+    ],
+    "type": "box"
+   },
+   "source": "photo",
+   "stage": 3
+  },
+  {
+   "at": [
+    -4.2,
+    12.6,
+    0.035
+   ],
+   "certainty": "inferred",
+   "id": "pink-panel-raised-stile-right",
+   "look": {
+    "fill": "dark",
+    "tone": "identity",
+    "color": "#c68f80"
+   },
+   "repeat": {
+    "count": 4,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "role": "detail",
+   "shape": {
+    "size": [
+     0.055,
+     1.3,
+     0.12
+    ],
+    "type": "box"
+   },
+   "source": "photo",
+   "stage": 3
+  },
+  {
+   "at": [
+    2.95,
+    21.87,
+    -5.15
+   ],
+   "certainty": "inferred",
+   "id": "chimney-shoulder-course",
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "color": "#4b4c47"
+   },
+   "role": "detail",
+   "shape": {
+    "size": [
+     1.42,
+     0.26,
+     1.36
+    ],
+    "type": "box"
+   },
+   "source": "photo",
+   "stage": 5
+  },
+  {
+   "at": [
+    2.95,
+    22.0,
+    -5.15
+   ],
+   "certainty": "inferred",
+   "id": "chimney-neck-course",
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "color": "#4b4c47"
+   },
+   "role": "detail",
+   "shape": {
+    "size": [
+     1.3,
+     0.16,
+     1.24
+    ],
+    "type": "box"
+   },
+   "source": "photo",
+   "stage": 5
+  },
+  {
+   "at": [
+    -2.55,
+    14.89,
+    -0.22
+   ],
+   "certainty": "inferred",
+   "id": "dormer-sill-flashing",
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "color": "#4b5354"
+   },
+   "repeat": {
+    "count": 2,
+    "step": {
+     "at": [
+      5.1,
+      0,
+      0
+     ]
+    }
+   },
+   "role": "detail",
+   "shape": {
+    "size": [
+     1.9,
+     0.07,
+     0.25
+    ],
+    "type": "box"
+   },
+   "source": "photo",
+   "stage": 4
+  },
+  {
+   "at": [
+    -4.1,
+    14.16,
+    0.02
+   ],
+   "certainty": "inferred",
+   "id": "eave-metal-fittings",
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "color": "#dfcfb4"
+   },
+   "repeat": {
+    "count": 6,
+    "step": {
+     "at": [
+      1.64,
+      0,
+      0
+     ]
+    }
+   },
+   "role": "detail",
+   "shape": {
+    "size": [
+     0.17,
+     0.15,
+     0.22
+    ],
+    "type": "box"
+   },
+   "source": "photo",
+   "stage": 5
+  },
+  {
+   "at": [
+    2.65,
+    22.16,
+    -5.15
+   ],
+   "certainty": "inferred",
+   "id": "chimney-double-flue",
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "color": "#4b4c47"
+   },
+   "repeat": {
+    "count": 2,
+    "step": {
+     "at": [
+      0.6,
+      0,
+      0
+     ]
+    }
+   },
+   "role": "detail",
+   "shape": {
+    "anchor": "base",
+    "size": [
+     0.4,
+     0.32,
+     0.64
+    ],
+    "type": "box"
+   },
+   "source": "photo",
+   "stage": 5
+  },
+  {
+   "at": [
+    2.95,
+    19.6,
+    -5.75
+   ],
+   "certainty": "inferred",
+   "id": "chimney-sloping-shoulder",
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "weight": 1.2,
+    "color": "#4b4c47"
+   },
+   "role": "detail",
+   "shape": {
+    "axis": "z",
+    "height": 1.2,
+    "profile": [
+     [
+      -0.95,
+      0
+     ],
+     [
+      0.95,
+      0
+     ],
+     [
+      0.8,
+      0.5
+     ],
+     [
+      0.625,
+      0.8
+     ],
+     [
+      0.625,
+      1.2
+     ],
+     [
+      -0.625,
+      1.2
+     ],
+     [
+      -0.625,
+      0.8
+     ],
+     [
+      -0.8,
+      0.5
+     ]
+    ],
+    "type": "extrude"
+   },
+   "source": "photo",
+   "stage": 5
+  },
+  {
+   "at": [
+    -4.4,
+    11.99,
+    0.055
+   ],
+   "certainty": "inferred",
+   "id": "pink-panel-bottom-tab",
+   "look": {
+    "fill": "dark",
+    "tone": "identity",
+    "color": "#c68f80"
+   },
+   "repeat": {
+    "count": 4,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "role": "detail",
+   "shape": {
+    "size": [
+     0.53,
+     0.075,
+     0.12
+    ],
+    "type": "box"
+   },
+   "source": "photo",
+   "stage": 3
+  },
+  {
+   "at": [
+    -4.4,
+    13.2,
+    0.055
+   ],
+   "certainty": "inferred",
+   "id": "pink-panel-upper-tab",
+   "look": {
+    "fill": "dark",
+    "tone": "identity",
+    "color": "#c68f80"
+   },
+   "repeat": {
+    "count": 4,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "role": "detail",
+   "shape": {
+    "size": [
+     0.53,
+     0.075,
+     0.12
+    ],
+    "type": "box"
+   },
+   "source": "photo",
+   "stage": 3
+  },
+  {
+   "at": [
+    -4.4,
+    12.6,
+    0.035
+   ],
+   "certainty": "inferred",
+   "id": "pink-panel-center-knop",
+   "look": {
+    "fill": "dark",
+    "tone": "identity",
+    "color": "#c68f80"
+   },
+   "repeat": {
+    "count": 4,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "role": "detail",
+   "shape": {
+    "size": [
+     0.17,
+     0.19,
+     0.07
+    ],
+    "type": "box"
+   },
+   "source": "photo",
+   "stage": 3
+  },
+  {
+   "at": [
+    -3.65,
+    18.55,
+    -3
+   ],
+   "certainty": "inferred",
+   "id": "upper-roof-small-fitting-rim",
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "color": "#3c4549"
+   },
+   "repeat": {
+    "count": 2,
+    "step": {
+     "at": [
+      0.85,
+      0,
+      0
+     ]
+    }
+   },
+   "role": "detail",
+   "rotate": [
+    -36,
+    0,
+    0
+   ],
+   "shape": {
+    "size": [
+     0.5,
+     0.09,
+     0.55
+    ],
+    "type": "box"
+   },
+   "source": "photo",
+   "stage": 5
+  },
+  {
+   "at": [
+    -3.65,
+    18.6,
+    -3
+   ],
+   "certainty": "inferred",
+   "id": "upper-roof-small-fitting-inset",
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "color": "#3c4549"
+   },
+   "repeat": {
+    "count": 2,
+    "step": {
+     "at": [
+      0.85,
+      0,
+      0
+     ]
+    }
+   },
+   "role": "detail",
+   "rotate": [
+    -36,
+    0,
+    0
+   ],
+   "shape": {
+    "size": [
+     0.36,
+     0.07,
+     0.4
+    ],
+    "type": "box"
+   },
+   "source": "photo",
+   "stage": 5
+  },
+  {
+   "at": [
+    0,
+    13.6,
+    0.025
+   ],
+   "certainty": "inferred",
+   "id": "recessed-cornice-fascia",
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "weight": 0.75,
+    "color": "#5f5148"
+   },
+   "role": "identity",
+   "shape": {
+    "size": [
+     9.52,
+     0.46,
+     0.09
+    ],
+    "type": "box"
+   },
+   "source": "photo",
+   "stage": 2
+  },
+  {
+   "at": [
+    0,
+    13.37,
+    0.065
+   ],
+   "certainty": "inferred",
+   "id": "cornice-lower-lip",
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "weight": 1.1,
+    "color": "#dfcfb4"
+   },
+   "role": "identity",
+   "shape": {
+    "size": [
+     9.74,
+     0.1,
+     0.29
+    ],
+    "type": "box"
+   },
+   "source": "photo",
+   "stage": 2
+  },
+  {
+   "at": [
+    0,
+    13.94,
+    0.1
+   ],
+   "certainty": "inferred",
+   "id": "cornice-upper-lip",
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "weight": 1.2,
+    "color": "#dfcfb4"
+   },
+   "role": "identity",
+   "shape": {
+    "size": [
+     9.88,
+     0.1,
+     0.36
+    ],
+    "type": "box"
+   },
+   "source": "photo",
+   "stage": 2
+  },
+  {
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "certainty": "inferred",
+   "id": "right-eave-gutter-elbow",
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "weight": 0.8,
+    "color": "#3c4549"
+   },
+   "role": "detail",
+   "shape": {
+    "caps": true,
+    "path": [
+     [
+      4.7,
+      14.08,
+      0.08
+     ],
+     [
+      4.85,
+      14.08,
+      0.08
+     ],
+     [
+      4.9,
+      13.8,
+      0.1
+     ],
+     [
+      4.76,
+      13.55,
+      0.12
+     ],
+     [
+      4.7,
+      13.3,
+      0.12
+     ],
+     [
+      4.7,
+      11.8,
+      0.12
+     ]
+    ],
+    "radius": 0.055,
+    "samples": 1,
+    "sides": 6,
+    "type": "tube"
+   },
+   "source": "photo",
+   "stage": 5
+  }
+ ],
+ "anchors": {
+  "base": {
+   "point": [
+    0,
+    0,
+    0
+   ],
+   "up": [
+    0,
+    1,
+    0
+   ]
+  },
+  "front": {
+   "part": "russet-plaster-mass",
+   "face": "front"
+  }
+ },
+ "presentation": {
+  "framing": {
+   "yaw": 18,
+   "pitch": 12,
+   "fit": 1.05
+  },
+  "views": [
+   {
+    "id": "photo",
+    "label": "Photo-relative front",
+    "yaw": -5,
+    "pitch": 7,
+    "distance": 1.05
+   },
+   {
+    "id": "roof",
+    "label": "Broken mansard and dormers",
+    "yaw": 20,
+    "pitch": 14,
+    "target": "slate-broken-mansard",
+    "distance": 1.25
+   }
+  ],
+  "atmosphere": {
+   "haze": 0.35,
+   "grid": false,
+   "projector": false,
+   "motes": 0,
+   "scanlines": false
+  },
+  "occlusion": "xray",
+  "certainty_style": "subtle",
+  "background": "deep",
+  "float": 0
+ },
+ "animation": {
+  "assembly": {
+   "style": "ceremony",
+   "seconds": 10,
+   "interference": false
+  },
+  "idle": {
+   "life": "off",
+   "events": [],
+   "strength": 0
+  },
+  "camera": {
+   "drift": 0,
+   "breathe": 0
+  },
+  "reduced_motion": "still"
+ },
+ "authoring": {
+  "tier": "masterpiece",
+  "research": "done",
+  "identity": [
+   {
+    "feature": "Distinct broken-pitch mansard, not a gable",
+    "parts": [
+     "slate-broken-mansard",
+     "paired-dormer-cheeks",
+     "dormer-triangular-cap"
+    ]
+   },
+   {
+    "feature": "Narrow pink ornamental band above wedge-linteled russet facade",
+    "parts": [
+     "pink-attic-band",
+     "pink-relief-panel-rails",
+     "lintel-center-wedge"
+    ]
+   }
+  ],
+  "review_rounds": 0,
+  "sources": [
+   "photo"
+  ],
+  "critic": {
+   "scene_sha256": "34d8cdd8a2cb9eb004ea4c46a671bc5f925142703f194c03ab7a6b0ddd823948",
+   "verdict": "good",
+   "scores": {
+    "silhouette": 2,
+    "proportions": 2,
+    "identity": 2,
+    "depth": 2,
+    "composition": 3,
+    "assembly": 3,
+    "motion": 3,
+    "density": 2,
+    "honesty": 3
+   },
+   "round": 7,
+   "defects": 5
+  },
+  "rounds": [
+   {
+    "round": 1,
+    "result": "baseline",
+    "minutes": 0.8,
+    "changes": [
+     "draft"
+    ],
+    "summary": "The dormer fronts and especially their broad cap/frame envelopes are too wide for the roof. Each rendered cap spans roughly a quarter of the"
+   },
+   {
+    "round": 2,
+    "result": "kept",
+    "minutes": 3.2,
+    "changes": [
+     "D1",
+     "D2",
+     "D3",
+     "D4"
+    ],
+    "summary": "Against the cropped reference, the dormer fronts are relatively slender and the attic-band glazing relatively squat: the real dormers have b"
+   },
+   {
+    "round": 3,
+    "result": "kept",
+    "minutes": 1.3,
+    "changes": [
+     "D5",
+     "D6",
+     "D7",
+     "D9"
+    ],
+    "summary": "The tall right stack reads as a narrow straight rectangular tube. The reference stack at the roof's right edge is a broader, stockier assemb"
+   },
+   {
+    "round": 4,
+    "result": "kept",
+    "minutes": 1.3,
+    "changes": [
+     "D10",
+     "D13",
+     "D5",
+     "D6"
+    ],
+    "summary": "The photo-matched render gives the steep lower roof face much more vertical room around the dormers than the reference: the reference dormer"
+   },
+   {
+    "round": 5,
+    "result": "kept",
+    "minutes": 2.2,
+    "changes": [
+     "D11",
+     "D14",
+     "D4",
+     "D5"
+    ],
+    "summary": "The photo-matched render gives the steep lower mansard face appreciably more vertical extent than the upper face, whereas the reference's tw"
+   },
+   {
+    "round": 6,
+    "result": "reverted",
+    "minutes": 1.3,
+    "changes": [
+     "D10",
+     "D14",
+     "D15",
+     "D9"
+    ],
+    "summary": "The reference gives the dormer-bearing steep lower roof face appreciably more vertical height than the upper face. In still-photo the two pr"
+   },
+   {
+    "round": 7,
+    "result": "kept",
+    "minutes": 1.2,
+    "changes": [
+     "D10",
+     "D15",
+     "D9"
+    ],
+    "summary": "Relative to the visible facade span, the two dormer fronts are narrower than the photograph's prominent rectangular dormers. Their enclosing"
+   },
+   {
+    "round": 8,
+    "result": "reverted",
+    "minutes": 1.3,
+    "changes": [
+     "D10",
+     "D16",
+     "D4",
+     "D9"
+    ],
+    "summary": "The photo view allocates noticeably more projected height to the steep dormer-bearing face than to the upper roof face; the reference has a "
+   },
+   {
+    "round": 9,
+    "result": "reverted",
+    "minutes": 1.0,
+    "changes": [
+     "D10",
+     "D14",
+     "D17",
+     "D4"
+    ],
+    "summary": "The main right stack is a slender uniform shaft with a small foot. In the reference it is a conspicuously broad, shouldered mass beside the "
+   }
+  ],
+  "outcome": "good"
+ }
+}

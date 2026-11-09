@@ -41,7 +41,7 @@ here):
 | Signs | RAIN HARBOUR / 雨港, NIGHT VOYAGE NOODLES / 夜航面馆, HARBOUR HOTEL / 港湾旅馆, BLUE LINE ELECTRONICS / 蓝线电器, PEACE OF MIND PHARMACY / 安心药房, NIGHT MARKET / 夜市, a convenience store, RAIN HARBOUR ROAD 08 / 雨港路 08 |
 | The car | AURIC, a two-door coupé at a real sports car's size: doors that swing 65°, four wheels, tail lights |
 | Street props | bollards ×6, street lamps ×2, bins ×2, a water vending machine, cable spans ×3 |
-| Size | 3,250 parts placed; 93,868 lines and 116,246 triangles on the page; 3.4 MB as shipped |
+| Size | 3,250 parts placed; 93,868 lines and 116,246 triangles on the page; 4.7 MB with its pictures |
 
 The district is invented, so every sign was written for it: the hotel, the noodle bar and the pharmacy are named in
 English and in Chinese that says the same thing. The sign artwork was drawn for this world (marked

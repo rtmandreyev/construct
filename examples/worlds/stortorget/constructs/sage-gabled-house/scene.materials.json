@@ -1,0 +1,56 @@
+{
+  "materials": [
+    {
+      "parts": [
+        "sage-*",
+        "curved-gable"
+      ],
+      "color": "#929d8d",
+      "finish": "paint"
+    },
+    {
+      "parts": [
+        "cream-*",
+        "course-cap-*"
+      ],
+      "color": "#e5dec9",
+      "finish": "paint"
+    },
+    {
+      "parts": [
+        "bay-frame-*",
+        "sash-*",
+        "rose-*",
+        "rear-bay-frame-*"
+      ],
+      "color": "#765446",
+      "finish": "wood"
+    },
+    {
+      "parts": [
+        "dark-roof",
+        "rear-chimney",
+        "chimney-cap",
+        "roof-*"
+      ],
+      "color": "#42484b",
+      "finish": "paint"
+    },
+    {
+      "parts": [
+        "stone-footing"
+      ],
+      "color": "#6a6e67",
+      "finish": "paint"
+    },
+    {
+      "parts": [
+        "window-*",
+        "oculus-window-*",
+        "rear-window-*"
+      ],
+      "color": "#303d41",
+      "finish": "glass"
+    }
+  ]
+}

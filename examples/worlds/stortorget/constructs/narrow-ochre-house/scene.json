@@ -1,0 +1,4120 @@
+{
+ "format": "construct-scene",
+ "version": 2,
+ "id": "photo-right-narrow-ochre-neighbor",
+ "title": "The narrow ochre house (right)",
+ "subject": {
+  "category": "architecture",
+  "summary": "Photo-inferred narrow ochre/russet two-bay neighbor immediately right of the broad yellow mansard house and behind Börshuset. Unidentified address; hidden lower facade, rear and footprint are conservative inference, not documented architecture.",
+  "accuracy": "approximate",
+  "synthetic": false
+ },
+ "units": "m",
+ "seed": 7,
+ "sources": [
+  {
+   "id": "request",
+   "kind": "user_request",
+   "title": "User assignment: independent narrow photo-right neighbor",
+   "rights": "user_private"
+  },
+  {
+   "id": "photo",
+   "kind": "reference_image",
+   "title": "Ximonic (Simo Räsänen), Stortorget Christmas Market December 2022",
+   "rights": "permitted",
+   "ref": "User-supplied photograph; CC BY-SA 4.0 https://creativecommons.org/licenses/by-sa/4.0/ ; derived visual reconstruction attribution retained."
+  }
+ ],
+ "facts": [
+  {
+   "key": "envelope",
+   "value": "Approximately 6 m wide, 10 m deep, eave 18 m; roof ridge about 23 m and chimney about 24.1 m. All metric dimensions are inferred, not photo measurements.",
+   "certainty": "inferred",
+   "source": "photo",
+   "note": "Envelope from supervisor estimate refined by visible two-bay proportions; no documented address."
+  }
+ ],
+ "parts": [
+  {
+   "id": "rear-core",
+   "label": "rear core",
+   "role": "mass",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     6,
+     18,
+     9.4
+    ],
+    "anchor": "base",
+    "ribs": 3
+   },
+   "at": [
+    0,
+    0,
+    -5.3
+   ],
+   "look": {
+    "alpha": 0.55,
+    "fill": "dark",
+    "tone": "faint",
+    "weight": 0.45,
+    "color": "#c99b50"
+   }
+  },
+  {
+   "id": "front-spandrel-0",
+   "label": "front spandrel 0",
+   "role": "mass",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     6,
+     1.0,
+     0.6
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0,
+    0,
+    -0.3
+   ],
+   "look": {
+    "alpha": 0.5,
+    "fill": "dark",
+    "tone": "faint",
+    "weight": 0.4,
+    "color": "#c99b50"
+   }
+  },
+  {
+   "id": "front-spandrel-1",
+   "label": "front spandrel 1",
+   "role": "mass",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     6,
+     2.2,
+     0.6
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0,
+    3.0,
+    -0.3
+   ],
+   "look": {
+    "alpha": 0.5,
+    "fill": "dark",
+    "tone": "faint",
+    "weight": 0.4,
+    "color": "#c99b50"
+   }
+  },
+  {
+   "id": "front-spandrel-2",
+   "label": "front spandrel 2",
+   "role": "mass",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     6,
+     1.8000000000000007,
+     0.6
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0,
+    7.5,
+    -0.3
+   ],
+   "look": {
+    "alpha": 0.5,
+    "fill": "dark",
+    "tone": "faint",
+    "weight": 0.4,
+    "color": "#c99b50"
+   }
+  },
+  {
+   "id": "front-spandrel-3",
+   "label": "front spandrel 3",
+   "role": "mass",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     6,
+     1.6999999999999993,
+     0.6
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0,
+    11.8,
+    -0.3
+   ],
+   "look": {
+    "alpha": 0.5,
+    "fill": "dark",
+    "tone": "faint",
+    "weight": 0.4,
+    "color": "#c99b50"
+   }
+  },
+  {
+   "id": "front-upper-spandrel",
+   "label": "front upper spandrel",
+   "role": "mass",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     6,
+     1.8999999999999986,
+     0.6
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0,
+    16.1,
+    -0.3
+   ],
+   "look": {
+    "alpha": 0.5,
+    "fill": "dark",
+    "tone": "faint",
+    "weight": 0.4,
+    "color": "#c99b50"
+   }
+  },
+  {
+   "id": "front-pier-0",
+   "label": "front pier 0",
+   "role": "mass",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.85,
+     18.0,
+     0.6
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -2.575,
+    0.0,
+    -0.3
+   ],
+   "look": {
+    "alpha": 0.5,
+    "fill": "dark",
+    "tone": "faint",
+    "weight": 0.4,
+    "color": "#c99b50"
+   }
+  },
+  {
+   "id": "front-pier-1",
+   "label": "front pier 1",
+   "role": "mass",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.6,
+     18.0,
+     0.6
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0,
+    0,
+    -0.3
+   ],
+   "look": {
+    "alpha": 0.5,
+    "fill": "dark",
+    "tone": "faint",
+    "weight": 0.4,
+    "color": "#c99b50"
+   }
+  },
+  {
+   "id": "front-pier-2",
+   "label": "front pier 2",
+   "role": "mass",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.85,
+     18.0,
+     0.6
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    2.575,
+    0.0,
+    -0.3
+   ],
+   "look": {
+    "alpha": 0.5,
+    "fill": "dark",
+    "tone": "faint",
+    "weight": 0.4,
+    "color": "#c99b50"
+   }
+  },
+  {
+   "id": "bay-0-0-glazing",
+   "label": "bay 0 0 glazing",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.4,
+     2.6,
+     0.16
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.5,
+    1.0,
+    -0.18
+   ],
+   "look": {
+    "fill": "glass",
+    "tone": "faint",
+    "color": "#2e3b40"
+   }
+  },
+  {
+   "id": "bay-0-0-jamb-l",
+   "label": "bay 0 0 jamb l",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.18,
+     2.16,
+     0.18
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -2.24,
+    0.92,
+    0.015
+   ],
+   "look": {
+    "tone": "bright",
+    "color": "#ded1b2"
+   },
+   "scale": [
+    1.0,
+    1.0,
+    1.9
+   ]
+  },
+  {
+   "id": "bay-0-0-jamb-r",
+   "label": "bay 0 0 jamb r",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.18,
+     2.16,
+     0.18
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -0.76,
+    0.92,
+    0.015
+   ],
+   "look": {
+    "tone": "bright",
+    "color": "#ded1b2"
+   },
+   "scale": [
+    1.0,
+    1.0,
+    1.9
+   ]
+  },
+  {
+   "id": "bay-0-0-head",
+   "label": "bay 0 0 head",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.08,
+     0.16,
+     0.26
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.5,
+    3.0,
+    0.035
+   ],
+   "look": {
+    "tone": "bright",
+    "color": "#ded1b2"
+   },
+   "scale": [
+    0.7749,
+    1.0,
+    1.0
+   ]
+  },
+  {
+   "id": "bay-0-0-sill",
+   "label": "bay 0 0 sill",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.2,
+     0.16,
+     0.26
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.5,
+    0.86,
+    0.035
+   ],
+   "look": {
+    "tone": "bright",
+    "color": "#ded1b2"
+   },
+   "scale": [
+    0.7749,
+    1.0,
+    1.6
+   ]
+  },
+  {
+   "id": "bay-0-0-center-bar",
+   "label": "bay 0 0 center bar",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.065,
+     1.84,
+     0.09
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.5,
+    1.08,
+    -0.12
+   ],
+   "look": {
+    "tone": "structure",
+    "color": "#65513b"
+   }
+  },
+  {
+   "id": "bay-0-0-cross-0",
+   "label": "bay 0 0 cross 0",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.6,
+     0.055,
+     0.1
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.5,
+    1.6800000000000002,
+    -0.11
+   ],
+   "look": {
+    "tone": "structure",
+    "color": "#65513b"
+   },
+   "scale": [
+    0.7749,
+    1.0,
+    1.0
+   ]
+  },
+  {
+   "id": "bay-0-0-cross-1",
+   "label": "bay 0 0 cross 1",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.6,
+     0.055,
+     0.1
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.5,
+    2.3600000000000003,
+    -0.11
+   ],
+   "look": {
+    "tone": "structure",
+    "color": "#65513b"
+   },
+   "scale": [
+    0.7749,
+    1.0,
+    1.0
+   ]
+  },
+  {
+   "id": "bay-0-1-glazing",
+   "label": "bay 0 1 glazing",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.4,
+     2.6,
+     0.16
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    1.5,
+    1.0,
+    -0.18
+   ],
+   "look": {
+    "fill": "glass",
+    "tone": "faint",
+    "color": "#2e3b40"
+   }
+  },
+  {
+   "id": "bay-0-1-jamb-l",
+   "label": "bay 0 1 jamb l",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.18,
+     2.16,
+     0.18
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0.76,
+    0.92,
+    0.015
+   ],
+   "look": {
+    "tone": "bright",
+    "color": "#ded1b2"
+   },
+   "scale": [
+    1.0,
+    1.0,
+    1.9
+   ]
+  },
+  {
+   "id": "bay-0-1-jamb-r",
+   "label": "bay 0 1 jamb r",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.18,
+     2.16,
+     0.18
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    2.24,
+    0.92,
+    0.015
+   ],
+   "look": {
+    "tone": "bright",
+    "color": "#ded1b2"
+   },
+   "scale": [
+    1.0,
+    1.0,
+    1.9
+   ]
+  },
+  {
+   "id": "bay-0-1-head",
+   "label": "bay 0 1 head",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.08,
+     0.16,
+     0.26
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    1.5,
+    3.0,
+    0.035
+   ],
+   "look": {
+    "tone": "bright",
+    "color": "#ded1b2"
+   },
+   "scale": [
+    0.7749,
+    1.0,
+    1.0
+   ]
+  },
+  {
+   "id": "bay-0-1-sill",
+   "label": "bay 0 1 sill",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.2,
+     0.16,
+     0.26
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    1.5,
+    0.86,
+    0.035
+   ],
+   "look": {
+    "tone": "bright",
+    "color": "#ded1b2"
+   },
+   "scale": [
+    0.7749,
+    1.0,
+    1.6
+   ]
+  },
+  {
+   "id": "bay-0-1-center-bar",
+   "label": "bay 0 1 center bar",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.065,
+     1.84,
+     0.09
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    1.5,
+    1.08,
+    -0.12
+   ],
+   "look": {
+    "tone": "structure",
+    "color": "#65513b"
+   }
+  },
+  {
+   "id": "bay-0-1-cross-0",
+   "label": "bay 0 1 cross 0",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.6,
+     0.055,
+     0.1
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    1.5,
+    1.6800000000000002,
+    -0.11
+   ],
+   "look": {
+    "tone": "structure",
+    "color": "#65513b"
+   },
+   "scale": [
+    0.7749,
+    1.0,
+    1.0
+   ]
+  },
+  {
+   "id": "bay-0-1-cross-1",
+   "label": "bay 0 1 cross 1",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.6,
+     0.055,
+     0.1
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    1.5,
+    2.3600000000000003,
+    -0.11
+   ],
+   "look": {
+    "tone": "structure",
+    "color": "#65513b"
+   },
+   "scale": [
+    0.7749,
+    1.0,
+    1.0
+   ]
+  },
+  {
+   "id": "bay-1-0-glazing",
+   "label": "bay 1 0 glazing",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.4,
+     2.6,
+     0.16
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.5,
+    5.2,
+    -0.18
+   ],
+   "look": {
+    "fill": "glass",
+    "tone": "faint",
+    "color": "#2e3b40"
+   }
+  },
+  {
+   "id": "bay-1-0-jamb-l",
+   "label": "bay 1 0 jamb l",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.18,
+     2.46,
+     0.18
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -2.24,
+    5.12,
+    0.015
+   ],
+   "look": {
+    "tone": "bright",
+    "color": "#ded1b2"
+   },
+   "scale": [
+    1.0,
+    1.0,
+    1.9
+   ]
+  },
+  {
+   "id": "bay-1-0-jamb-r",
+   "label": "bay 1 0 jamb r",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.18,
+     2.46,
+     0.18
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -0.76,
+    5.12,
+    0.015
+   ],
+   "look": {
+    "tone": "bright",
+    "color": "#ded1b2"
+   },
+   "scale": [
+    1.0,
+    1.0,
+    1.9
+   ]
+  },
+  {
+   "id": "bay-1-0-head",
+   "label": "bay 1 0 head",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.08,
+     0.16,
+     0.26
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.5,
+    7.5,
+    0.035
+   ],
+   "look": {
+    "tone": "bright",
+    "color": "#ded1b2"
+   },
+   "scale": [
+    0.7749,
+    1.0,
+    1.0
+   ]
+  },
+  {
+   "id": "bay-1-0-sill",
+   "label": "bay 1 0 sill",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.2,
+     0.16,
+     0.26
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.5,
+    5.0600000000000005,
+    0.035
+   ],
+   "look": {
+    "tone": "bright",
+    "color": "#ded1b2"
+   },
+   "scale": [
+    0.7749,
+    1.0,
+    1.6
+   ]
+  },
+  {
+   "id": "bay-1-0-center-bar",
+   "label": "bay 1 0 center bar",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.065,
+     2.1399999999999997,
+     0.09
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.5,
+    5.28,
+    -0.12
+   ],
+   "look": {
+    "tone": "structure",
+    "color": "#65513b"
+   }
+  },
+  {
+   "id": "bay-1-0-cross-0",
+   "label": "bay 1 0 cross 0",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.6,
+     0.055,
+     0.1
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.5,
+    5.982,
+    -0.11
+   ],
+   "look": {
+    "tone": "structure",
+    "color": "#65513b"
+   },
+   "scale": [
+    0.7749,
+    1.0,
+    1.0
+   ]
+  },
+  {
+   "id": "bay-1-0-cross-1",
+   "label": "bay 1 0 cross 1",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.6,
+     0.055,
+     0.1
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.5,
+    6.764,
+    -0.11
+   ],
+   "look": {
+    "tone": "structure",
+    "color": "#65513b"
+   },
+   "scale": [
+    0.7749,
+    1.0,
+    1.0
+   ]
+  },
+  {
+   "id": "bay-1-1-glazing",
+   "label": "bay 1 1 glazing",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.4,
+     2.6,
+     0.16
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    1.5,
+    5.2,
+    -0.18
+   ],
+   "look": {
+    "fill": "glass",
+    "tone": "faint",
+    "color": "#2e3b40"
+   }
+  },
+  {
+   "id": "bay-1-1-jamb-l",
+   "label": "bay 1 1 jamb l",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.18,
+     2.46,
+     0.18
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0.76,
+    5.12,
+    0.015
+   ],
+   "look": {
+    "tone": "bright",
+    "color": "#ded1b2"
+   },
+   "scale": [
+    1.0,
+    1.0,
+    1.9
+   ]
+  },
+  {
+   "id": "bay-1-1-jamb-r",
+   "label": "bay 1 1 jamb r",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.18,
+     2.46,
+     0.18
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    2.24,
+    5.12,
+    0.015
+   ],
+   "look": {
+    "tone": "bright",
+    "color": "#ded1b2"
+   },
+   "scale": [
+    1.0,
+    1.0,
+    1.9
+   ]
+  },
+  {
+   "id": "bay-1-1-head",
+   "label": "bay 1 1 head",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.08,
+     0.16,
+     0.26
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    1.5,
+    7.5,
+    0.035
+   ],
+   "look": {
+    "tone": "bright",
+    "color": "#ded1b2"
+   },
+   "scale": [
+    0.7749,
+    1.0,
+    1.0
+   ]
+  },
+  {
+   "id": "bay-1-1-sill",
+   "label": "bay 1 1 sill",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.2,
+     0.16,
+     0.26
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    1.5,
+    5.0600000000000005,
+    0.035
+   ],
+   "look": {
+    "tone": "bright",
+    "color": "#ded1b2"
+   },
+   "scale": [
+    0.7749,
+    1.0,
+    1.6
+   ]
+  },
+  {
+   "id": "bay-1-1-center-bar",
+   "label": "bay 1 1 center bar",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.065,
+     2.1399999999999997,
+     0.09
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    1.5,
+    5.28,
+    -0.12
+   ],
+   "look": {
+    "tone": "structure",
+    "color": "#65513b"
+   }
+  },
+  {
+   "id": "bay-1-1-cross-0",
+   "label": "bay 1 1 cross 0",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.6,
+     0.055,
+     0.1
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    1.5,
+    5.982,
+    -0.11
+   ],
+   "look": {
+    "tone": "structure",
+    "color": "#65513b"
+   },
+   "scale": [
+    0.7749,
+    1.0,
+    1.0
+   ]
+  },
+  {
+   "id": "bay-1-1-cross-1",
+   "label": "bay 1 1 cross 1",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.6,
+     0.055,
+     0.1
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    1.5,
+    6.764,
+    -0.11
+   ],
+   "look": {
+    "tone": "structure",
+    "color": "#65513b"
+   },
+   "scale": [
+    0.7749,
+    1.0,
+    1.0
+   ]
+  },
+  {
+   "id": "bay-2-0-glazing",
+   "label": "bay 2 0 glazing",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.4,
+     2.6,
+     0.16
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.5,
+    9.3,
+    -0.18
+   ],
+   "look": {
+    "fill": "glass",
+    "tone": "faint",
+    "color": "#2e3b40"
+   }
+  },
+  {
+   "id": "bay-2-0-jamb-l",
+   "label": "bay 2 0 jamb l",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.18,
+     2.66,
+     0.18
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -2.24,
+    9.22,
+    0.015
+   ],
+   "look": {
+    "tone": "bright",
+    "color": "#ded1b2"
+   },
+   "scale": [
+    1.0,
+    1.0,
+    1.9
+   ]
+  },
+  {
+   "id": "bay-2-0-jamb-r",
+   "label": "bay 2 0 jamb r",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.18,
+     2.66,
+     0.18
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -0.76,
+    9.22,
+    0.015
+   ],
+   "look": {
+    "tone": "bright",
+    "color": "#ded1b2"
+   },
+   "scale": [
+    1.0,
+    1.0,
+    1.9
+   ]
+  },
+  {
+   "id": "bay-2-0-head",
+   "label": "bay 2 0 head",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.08,
+     0.16,
+     0.26
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.5,
+    11.8,
+    0.035
+   ],
+   "look": {
+    "tone": "bright",
+    "color": "#ded1b2"
+   },
+   "scale": [
+    0.7749,
+    1.0,
+    1.0
+   ]
+  },
+  {
+   "id": "bay-2-0-sill",
+   "label": "bay 2 0 sill",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.2,
+     0.16,
+     0.26
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.5,
+    9.16,
+    0.035
+   ],
+   "look": {
+    "tone": "bright",
+    "color": "#ded1b2"
+   },
+   "scale": [
+    0.7749,
+    1.0,
+    1.6
+   ]
+  },
+  {
+   "id": "bay-2-0-center-bar",
+   "label": "bay 2 0 center bar",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.065,
+     2.34,
+     0.09
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.5,
+    9.38,
+    -0.12
+   ],
+   "look": {
+    "tone": "structure",
+    "color": "#65513b"
+   }
+  },
+  {
+   "id": "bay-2-0-cross-0",
+   "label": "bay 2 0 cross 0",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.6,
+     0.055,
+     0.1
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.5,
+    10.15,
+    -0.11
+   ],
+   "look": {
+    "tone": "structure",
+    "color": "#65513b"
+   },
+   "scale": [
+    0.7749,
+    1.0,
+    1.0
+   ]
+  },
+  {
+   "id": "bay-2-0-cross-1",
+   "label": "bay 2 0 cross 1",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.6,
+     0.055,
+     0.1
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.5,
+    11.0,
+    -0.11
+   ],
+   "look": {
+    "tone": "structure",
+    "color": "#65513b"
+   },
+   "scale": [
+    0.7749,
+    1.0,
+    1.0
+   ]
+  },
+  {
+   "id": "bay-2-1-glazing",
+   "label": "bay 2 1 glazing",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.4,
+     2.6,
+     0.16
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    1.5,
+    9.3,
+    -0.18
+   ],
+   "look": {
+    "fill": "glass",
+    "tone": "faint",
+    "color": "#2e3b40"
+   }
+  },
+  {
+   "id": "bay-2-1-jamb-l",
+   "label": "bay 2 1 jamb l",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.18,
+     2.66,
+     0.18
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0.76,
+    9.22,
+    0.015
+   ],
+   "look": {
+    "tone": "bright",
+    "color": "#ded1b2"
+   },
+   "scale": [
+    1.0,
+    1.0,
+    1.9
+   ]
+  },
+  {
+   "id": "bay-2-1-jamb-r",
+   "label": "bay 2 1 jamb r",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.18,
+     2.66,
+     0.18
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    2.24,
+    9.22,
+    0.015
+   ],
+   "look": {
+    "tone": "bright",
+    "color": "#ded1b2"
+   },
+   "scale": [
+    1.0,
+    1.0,
+    1.9
+   ]
+  },
+  {
+   "id": "bay-2-1-head",
+   "label": "bay 2 1 head",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.08,
+     0.16,
+     0.26
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    1.5,
+    11.8,
+    0.035
+   ],
+   "look": {
+    "tone": "bright",
+    "color": "#ded1b2"
+   },
+   "scale": [
+    0.7749,
+    1.0,
+    1.0
+   ]
+  },
+  {
+   "id": "bay-2-1-sill",
+   "label": "bay 2 1 sill",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.2,
+     0.16,
+     0.26
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    1.5,
+    9.16,
+    0.035
+   ],
+   "look": {
+    "tone": "bright",
+    "color": "#ded1b2"
+   },
+   "scale": [
+    0.7749,
+    1.0,
+    1.6
+   ]
+  },
+  {
+   "id": "bay-2-1-center-bar",
+   "label": "bay 2 1 center bar",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.065,
+     2.34,
+     0.09
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    1.5,
+    9.38,
+    -0.12
+   ],
+   "look": {
+    "tone": "structure",
+    "color": "#65513b"
+   }
+  },
+  {
+   "id": "bay-2-1-cross-0",
+   "label": "bay 2 1 cross 0",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.6,
+     0.055,
+     0.1
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    1.5,
+    10.15,
+    -0.11
+   ],
+   "look": {
+    "tone": "structure",
+    "color": "#65513b"
+   },
+   "scale": [
+    0.7749,
+    1.0,
+    1.0
+   ]
+  },
+  {
+   "id": "bay-2-1-cross-1",
+   "label": "bay 2 1 cross 1",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.6,
+     0.055,
+     0.1
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    1.5,
+    11.0,
+    -0.11
+   ],
+   "look": {
+    "tone": "structure",
+    "color": "#65513b"
+   },
+   "scale": [
+    0.7749,
+    1.0,
+    1.0
+   ]
+  },
+  {
+   "id": "bay-3-0-glazing",
+   "label": "bay 3 0 glazing",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.4,
+     2.6,
+     0.16
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.5,
+    13.5,
+    -0.18
+   ],
+   "look": {
+    "fill": "glass",
+    "tone": "faint",
+    "color": "#2e3b40"
+   }
+  },
+  {
+   "id": "bay-3-0-jamb-l",
+   "label": "bay 3 0 jamb l",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.18,
+     2.7600000000000016,
+     0.18
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -2.24,
+    13.42,
+    0.015
+   ],
+   "look": {
+    "tone": "bright",
+    "color": "#ded1b2"
+   },
+   "scale": [
+    1.0,
+    1.0,
+    1.9
+   ]
+  },
+  {
+   "id": "bay-3-0-jamb-r",
+   "label": "bay 3 0 jamb r",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.18,
+     2.7600000000000016,
+     0.18
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -0.76,
+    13.42,
+    0.015
+   ],
+   "look": {
+    "tone": "bright",
+    "color": "#ded1b2"
+   },
+   "scale": [
+    1.0,
+    1.0,
+    1.9
+   ]
+  },
+  {
+   "id": "bay-3-0-head",
+   "label": "bay 3 0 head",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.08,
+     0.16,
+     0.26
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.5,
+    16.1,
+    0.035
+   ],
+   "look": {
+    "tone": "bright",
+    "color": "#ded1b2"
+   },
+   "scale": [
+    0.7749,
+    1.0,
+    1.0
+   ]
+  },
+  {
+   "id": "bay-3-0-sill",
+   "label": "bay 3 0 sill",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.2,
+     0.16,
+     0.26
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.5,
+    13.36,
+    0.035
+   ],
+   "look": {
+    "tone": "bright",
+    "color": "#ded1b2"
+   },
+   "scale": [
+    0.7749,
+    1.0,
+    1.6
+   ]
+  },
+  {
+   "id": "bay-3-0-center-bar",
+   "label": "bay 3 0 center bar",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.065,
+     2.4400000000000013,
+     0.09
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.5,
+    13.58,
+    -0.12
+   ],
+   "look": {
+    "tone": "structure",
+    "color": "#65513b"
+   }
+  },
+  {
+   "id": "bay-3-0-cross-0",
+   "label": "bay 3 0 cross 0",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.6,
+     0.055,
+     0.1
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.5,
+    14.384,
+    -0.11
+   ],
+   "look": {
+    "tone": "structure",
+    "color": "#65513b"
+   },
+   "scale": [
+    0.7749,
+    1.0,
+    1.0
+   ]
+  },
+  {
+   "id": "bay-3-0-cross-1",
+   "label": "bay 3 0 cross 1",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.6,
+     0.055,
+     0.1
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.5,
+    15.268,
+    -0.11
+   ],
+   "look": {
+    "tone": "structure",
+    "color": "#65513b"
+   },
+   "scale": [
+    0.7749,
+    1.0,
+    1.0
+   ]
+  },
+  {
+   "id": "bay-3-1-glazing",
+   "label": "bay 3 1 glazing",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.4,
+     2.6,
+     0.16
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    1.5,
+    13.5,
+    -0.18
+   ],
+   "look": {
+    "fill": "glass",
+    "tone": "faint",
+    "color": "#2e3b40"
+   }
+  },
+  {
+   "id": "bay-3-1-jamb-l",
+   "label": "bay 3 1 jamb l",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.18,
+     2.7600000000000016,
+     0.18
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0.76,
+    13.42,
+    0.015
+   ],
+   "look": {
+    "tone": "bright",
+    "color": "#ded1b2"
+   },
+   "scale": [
+    1.0,
+    1.0,
+    1.9
+   ]
+  },
+  {
+   "id": "bay-3-1-jamb-r",
+   "label": "bay 3 1 jamb r",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.18,
+     2.7600000000000016,
+     0.18
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    2.24,
+    13.42,
+    0.015
+   ],
+   "look": {
+    "tone": "bright",
+    "color": "#ded1b2"
+   },
+   "scale": [
+    1.0,
+    1.0,
+    1.9
+   ]
+  },
+  {
+   "id": "bay-3-1-head",
+   "label": "bay 3 1 head",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.08,
+     0.16,
+     0.26
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    1.5,
+    16.1,
+    0.035
+   ],
+   "look": {
+    "tone": "bright",
+    "color": "#ded1b2"
+   },
+   "scale": [
+    0.7749,
+    1.0,
+    1.0
+   ]
+  },
+  {
+   "id": "bay-3-1-sill",
+   "label": "bay 3 1 sill",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.2,
+     0.16,
+     0.26
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    1.5,
+    13.36,
+    0.035
+   ],
+   "look": {
+    "tone": "bright",
+    "color": "#ded1b2"
+   },
+   "scale": [
+    0.7749,
+    1.0,
+    1.6
+   ]
+  },
+  {
+   "id": "bay-3-1-center-bar",
+   "label": "bay 3 1 center bar",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.065,
+     2.4400000000000013,
+     0.09
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    1.5,
+    13.58,
+    -0.12
+   ],
+   "look": {
+    "tone": "structure",
+    "color": "#65513b"
+   }
+  },
+  {
+   "id": "bay-3-1-cross-0",
+   "label": "bay 3 1 cross 0",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.6,
+     0.055,
+     0.1
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    1.5,
+    14.384,
+    -0.11
+   ],
+   "look": {
+    "tone": "structure",
+    "color": "#65513b"
+   },
+   "scale": [
+    0.7749,
+    1.0,
+    1.0
+   ]
+  },
+  {
+   "id": "bay-3-1-cross-1",
+   "label": "bay 3 1 cross 1",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.6,
+     0.055,
+     0.1
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    1.5,
+    15.268,
+    -0.11
+   ],
+   "look": {
+    "tone": "structure",
+    "color": "#65513b"
+   },
+   "scale": [
+    0.7749,
+    1.0,
+    1.0
+   ]
+  },
+  {
+   "id": "edge-trim-left",
+   "label": "edge trim left",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.23,
+     17.9,
+     0.16
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -2.87,
+    0.05,
+    0.015
+   ],
+   "look": {
+    "tone": "bright",
+    "color": "#ded1b2"
+   }
+  },
+  {
+   "id": "edge-trim-right",
+   "label": "edge trim right",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.23,
+     17.9,
+     0.16
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    2.87,
+    0.05,
+    0.015
+   ],
+   "look": {
+    "tone": "bright",
+    "color": "#ded1b2"
+   }
+  },
+  {
+   "id": "storey-ribbon-2",
+   "label": "storey ribbon 2",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     6.03,
+     0.08,
+     0.08
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0,
+    12.6,
+    0.02
+   ],
+   "look": {
+    "tone": "hairline",
+    "weight": 0.5,
+    "color": "#ded1b2"
+   }
+  },
+  {
+   "id": "base-stone-skirting",
+   "label": "base stone skirting",
+   "role": "structure",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     6.08,
+     0.58,
+     0.22
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0,
+    0,
+    0.015
+   ],
+   "look": {
+    "tone": "structure",
+    "color": "#938b78"
+   }
+  },
+  {
+   "id": "eave-course-0",
+   "label": "eave course 0",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     3.9,
+     0.16,
+     0.38
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.25,
+    17.56,
+    0.0
+   ],
+   "look": {
+    "tone": "bright",
+    "color": "#ded1b2"
+   }
+  },
+  {
+   "id": "eave-course-1",
+   "label": "eave course 1",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     3.9,
+     0.16,
+     0.38
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.25,
+    17.78,
+    0.0
+   ],
+   "look": {
+    "tone": "bright",
+    "color": "#ded1b2"
+   }
+  },
+  {
+   "id": "eave-course-2",
+   "label": "eave course 2",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     3.9,
+     0.16,
+     0.38
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.25,
+    17.96,
+    0.0
+   ],
+   "look": {
+    "tone": "bright",
+    "color": "#ded1b2"
+   }
+  },
+  {
+   "id": "metal-roof",
+   "label": "Steep front-falling metal roof",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 1,
+   "shape": {
+    "type": "roof",
+    "style": "gable",
+    "size": [
+     6,
+     10
+    ],
+    "height": 3.8,
+    "ridge": "x",
+    "overhang": 0.18,
+    "courses": 4
+   },
+   "at": [
+    0,
+    18,
+    -5
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "weight": 1.4,
+    "color": "#444b4b"
+   }
+  },
+  {
+   "id": "roof-standing-seams",
+   "label": "Roof sheet seams",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "paths",
+    "paths": [
+     [
+      [
+       -2.8,
+       18.04,
+       0.18
+      ],
+      [
+       -2.8,
+       23.04,
+       -5
+      ],
+      [
+       -2.8,
+       18.04,
+       -10.18
+      ]
+     ],
+     [
+      [
+       -2.1,
+       18.04,
+       0.18
+      ],
+      [
+       -2.1,
+       23.04,
+       -5
+      ],
+      [
+       -2.1,
+       18.04,
+       -10.18
+      ]
+     ],
+     [
+      [
+       -1.4,
+       18.04,
+       0.18
+      ],
+      [
+       -1.4,
+       23.04,
+       -5
+      ],
+      [
+       -1.4,
+       18.04,
+       -10.18
+      ]
+     ],
+     [
+      [
+       -0.7,
+       18.04,
+       0.18
+      ],
+      [
+       -0.7,
+       23.04,
+       -5
+      ],
+      [
+       -0.7,
+       18.04,
+       -10.18
+      ]
+     ],
+     [
+      [
+       0,
+       18.04,
+       0.18
+      ],
+      [
+       0,
+       23.04,
+       -5
+      ],
+      [
+       0,
+       18.04,
+       -10.18
+      ]
+     ],
+     [
+      [
+       0.7,
+       18.04,
+       0.18
+      ],
+      [
+       0.7,
+       23.04,
+       -5
+      ],
+      [
+       0.7,
+       18.04,
+       -10.18
+      ]
+     ],
+     [
+      [
+       1.4,
+       18.04,
+       0.18
+      ],
+      [
+       1.4,
+       23.04,
+       -5
+      ],
+      [
+       1.4,
+       18.04,
+       -10.18
+      ]
+     ],
+     [
+      [
+       2.1,
+       18.04,
+       0.18
+      ],
+      [
+       2.1,
+       23.04,
+       -5
+      ],
+      [
+       2.1,
+       18.04,
+       -10.18
+      ]
+     ],
+     [
+      [
+       2.8,
+       18.04,
+       0.18
+      ],
+      [
+       2.8,
+       23.04,
+       -5
+      ],
+      [
+       2.8,
+       18.04,
+       -10.18
+      ]
+     ]
+    ]
+   },
+   "at": [
+    0.0,
+    4.32,
+    0.0
+   ],
+   "look": {
+    "fill": "none",
+    "tone": "hairline",
+    "weight": 0.6,
+    "color": "#444b4b"
+   },
+   "scale": [
+    1.0,
+    0.76,
+    1.0
+   ]
+  },
+  {
+   "id": "ridge-cap",
+   "label": "ridge cap",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     6.39,
+     0.15,
+     0.18
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0.0,
+    21.76,
+    -5.0
+   ],
+   "look": {
+    "tone": "structure",
+    "color": "#444b4b"
+   }
+  },
+  {
+   "id": "chimney-shaft",
+   "label": "chimney shaft",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.22,
+     3.1,
+     1.16
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -2.05,
+    20.3,
+    -6.3
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "color": "#4a4b44"
+   }
+  },
+  {
+   "id": "chimney-neck",
+   "label": "chimney neck",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.4,
+     0.18,
+     1.28
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -2.05,
+    23.26,
+    -6.3
+   ],
+   "look": {
+    "tone": "bright",
+    "color": "#4a4b44"
+   }
+  },
+  {
+   "id": "chimney-cap",
+   "label": "chimney cap",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.55,
+     0.2,
+     1.43
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -2.05,
+    23.44,
+    -6.3
+   ],
+   "look": {
+    "tone": "structure",
+    "color": "#4a4b44"
+   }
+  },
+  {
+   "id": "right-eave-arch",
+   "label": "Modest semicircular cream eave trim",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      2.15,
+      16.75
+     ],
+     [
+      2.1278517870878946,
+      16.91823237931664
+     ],
+     [
+      2.062916512459885,
+      17.075
+     ],
+     [
+      1.9596194077712559,
+      17.209619407771257
+     ],
+     [
+      1.8250000000000002,
+      17.312916512459886
+     ],
+     [
+      1.6682323793166385,
+      17.377851787087895
+     ],
+     [
+      1.5,
+      17.4
+     ],
+     [
+      1.3317676206833615,
+      17.377851787087895
+     ],
+     [
+      1.175,
+      17.312916512459886
+     ],
+     [
+      1.0403805922287441,
+      17.209619407771257
+     ],
+     [
+      0.9370834875401148,
+      17.075
+     ],
+     [
+      0.8721482129121056,
+      16.91823237931664
+     ],
+     [
+      0.85,
+      16.75
+     ],
+     [
+      1.03,
+      16.75
+     ],
+     [
+      1.046014861644138,
+      16.871644951198185
+     ],
+     [
+      1.0929680602213139,
+      16.985
+     ],
+     [
+      1.1676598128423228,
+      17.082340187157676
+     ],
+     [
+      1.2650000000000001,
+      17.157031939778687
+     ],
+     [
+      1.3783550488018153,
+      17.20398513835586
+     ],
+     [
+      1.5,
+      17.22
+     ],
+     [
+      1.6216449511981847,
+      17.20398513835586
+     ],
+     [
+      1.735,
+      17.157031939778687
+     ],
+     [
+      1.8323401871576772,
+      17.082340187157676
+     ],
+     [
+      1.9070319397786861,
+      16.985
+     ],
+     [
+      1.9539851383558622,
+      16.871644951198185
+     ],
+     [
+      1.97,
+      16.75
+     ]
+    ],
+    "height": 0.06
+   },
+   "at": [
+    0.25,
+    1.05,
+    0.34
+   ],
+   "look": {
+    "tone": "bright",
+    "weight": 1.25,
+    "color": "#ded1b2"
+   }
+  },
+  {
+   "id": "rear-door-leaf",
+   "label": "rear door leaf",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.0,
+     2.05,
+     0.08
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0,
+    0.58,
+    -10.035
+   ],
+   "look": {
+    "fill": "dark",
+    "color": "#584832"
+   }
+  },
+  {
+   "id": "right-eave-wall-backing",
+   "label": "Wall-backed semicircular eave termination",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 1,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 0.35,
+    "profile": [
+     [
+      2.15,
+      17.7
+     ],
+     [
+      2.15,
+      17.8
+     ],
+     [
+      2.128,
+      17.968
+     ],
+     [
+      2.063,
+      18.125
+     ],
+     [
+      1.96,
+      18.26
+     ],
+     [
+      1.825,
+      18.363
+     ],
+     [
+      1.668,
+      18.428
+     ],
+     [
+      1.5,
+      18.45
+     ],
+     [
+      1.332,
+      18.428
+     ],
+     [
+      1.175,
+      18.363
+     ],
+     [
+      1.04,
+      18.26
+     ],
+     [
+      0.937,
+      18.125
+     ],
+     [
+      0.872,
+      17.968
+     ],
+     [
+      0.85,
+      17.8
+     ],
+     [
+      0.85,
+      17.7
+     ]
+    ]
+   },
+   "at": [
+    0.25,
+    0.0,
+    0.03
+   ],
+   "look": {
+    "fill": "auto",
+    "tone": "identity",
+    "weight": 0.6,
+    "color": "#c99b50"
+   }
+  },
+  {
+   "id": "chimney-coping-step",
+   "label": "Stepped chimney coping transition",
+   "role": "identity",
+   "certainty": "inferred",
+   "basis": [
+    "envelope"
+   ],
+   "source": "photo",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.28,
+     0.2,
+     1.2
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -2.05,
+    23.1,
+    -6.3
+   ],
+   "look": {
+    "tone": "structure",
+    "color": "#4a4b44"
+   }
+  },
+  {
+   "id": "roof-transverse-joints",
+   "label": "Restrained cross joints in metal sheets",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "envelope"
+   ],
+   "source": "photo",
+   "stage": 3,
+   "shape": {
+    "type": "paths",
+    "paths": [
+     [
+      [
+       -3,
+       19.55,
+       -1.5
+      ],
+      [
+       3,
+       19.55,
+       -1.5
+      ]
+     ],
+     [
+      [
+       -3,
+       21.05,
+       -3
+      ],
+      [
+       3,
+       21.05,
+       -3
+      ]
+     ],
+     [
+      [
+       -3,
+       22.25,
+       -4.2
+      ],
+      [
+       3,
+       22.25,
+       -4.2
+      ]
+     ]
+    ]
+   },
+   "at": [
+    0.0,
+    4.32,
+    0.0
+   ],
+   "look": {
+    "tone": "hairline",
+    "weight": 0.5,
+    "fill": "none",
+    "color": "#444b4b"
+   },
+   "scale": [
+    1.0,
+    0.76,
+    1.0
+   ]
+  },
+  {
+   "id": "chimney-flashing-apron",
+   "label": "Folded roof flashing around chimney",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "anchor": "center",
+    "size": [
+     1.55,
+     0.14,
+     1.5
+    ],
+    "type": "box"
+   },
+   "at": [
+    -2.05,
+    20.86,
+    -6.3
+   ],
+   "look": {
+    "tone": "identity",
+    "weight": 0.6,
+    "fill": "dark",
+    "color": "#4a4b44"
+   },
+   "rotate": [
+    -40.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "at": [
+    -3.02,
+    0,
+    -5
+   ],
+   "basis": [
+    "envelope"
+   ],
+   "certainty": "inferred",
+   "id": "plain-side-plinth-left",
+   "label": "Inferred plain side base return",
+   "look": {
+    "tone": "structure",
+    "color": "#938b78"
+   },
+   "role": "structure",
+   "shape": {
+    "anchor": "base",
+    "size": [
+     0.18,
+     0.58,
+     10.1
+    ],
+    "type": "box"
+   },
+   "source": "photo",
+   "stage": 1
+  },
+  {
+   "at": [
+    3.02,
+    0,
+    -5
+   ],
+   "basis": [
+    "envelope"
+   ],
+   "certainty": "inferred",
+   "id": "plain-side-plinth-right",
+   "label": "Inferred plain side base return",
+   "look": {
+    "tone": "structure",
+    "color": "#938b78"
+   },
+   "role": "structure",
+   "shape": {
+    "anchor": "base",
+    "size": [
+     0.18,
+     0.58,
+     10.1
+    ],
+    "type": "box"
+   },
+   "source": "photo",
+   "stage": 1
+  },
+  {
+   "at": [
+    0,
+    0,
+    -10.04
+   ],
+   "basis": [
+    "envelope"
+   ],
+   "certainty": "inferred",
+   "id": "plain-rear-plinth",
+   "label": "Inferred plain rear base return",
+   "look": {
+    "tone": "structure",
+    "color": "#938b78"
+   },
+   "role": "structure",
+   "shape": {
+    "anchor": "base",
+    "size": [
+     6.2,
+     0.58,
+     0.18
+    ],
+    "type": "box"
+   },
+   "source": "photo",
+   "stage": 1
+  },
+  {
+   "at": [
+    3.01,
+    17.74,
+    -5
+   ],
+   "basis": [
+    "envelope"
+   ],
+   "certainty": "inferred",
+   "id": "plain-side-eave-right",
+   "label": "Inferred restrained side eave return",
+   "look": {
+    "tone": "structure",
+    "color": "#ded1b2"
+   },
+   "role": "structure",
+   "shape": {
+    "anchor": "base",
+    "size": [
+     0.2,
+     0.2,
+     10.1
+    ],
+    "type": "box"
+   },
+   "source": "photo",
+   "stage": 1
+  },
+  {
+   "at": [
+    -3.01,
+    17.74,
+    -5
+   ],
+   "basis": [
+    "envelope"
+   ],
+   "certainty": "inferred",
+   "id": "plain-side-eave-left",
+   "label": "Inferred restrained side eave return",
+   "look": {
+    "tone": "structure",
+    "color": "#ded1b2"
+   },
+   "role": "structure",
+   "shape": {
+    "anchor": "base",
+    "size": [
+     0.2,
+     0.2,
+     10.1
+    ],
+    "type": "box"
+   },
+   "source": "photo",
+   "stage": 1
+  },
+  {
+   "at": [
+    -0.15,
+    0.0,
+    0.1
+   ],
+   "basis": [
+    "envelope"
+   ],
+   "certainty": "inferred",
+   "id": "left-downpipe",
+   "label": "Visible left boundary drainpipe, continuation inferred",
+   "look": {
+    "tone": "identity",
+    "weight": 1.8,
+    "fill": "dark",
+    "color": "#444b4b"
+   },
+   "role": "identity",
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      -2.9,
+      0.15,
+      0.13
+     ],
+     [
+      -2.9,
+      17.45,
+      0.13
+     ],
+     [
+      -2.9,
+      17.7,
+      0.25
+     ],
+     [
+      -2.9,
+      17.9,
+      0.25
+     ]
+    ],
+    "radius": 0.065,
+    "sides": 8,
+    "samples": 1,
+    "longitudinal": 4,
+    "caps": true
+   },
+   "source": "photo",
+   "stage": 2
+  },
+  {
+   "at": [
+    0,
+    17.8,
+    0.17
+   ],
+   "basis": [
+    "envelope"
+   ],
+   "certainty": "inferred",
+   "id": "front-eaves-gutter",
+   "label": "Shallow eaves drainage lip",
+   "look": {
+    "tone": "structure",
+    "color": "#444b4b"
+   },
+   "role": "detail",
+   "shape": {
+    "anchor": "base",
+    "size": [
+     6.22,
+     0.16,
+     0.28
+    ],
+    "type": "box"
+   },
+   "source": "photo",
+   "stage": 2
+  },
+  {
+   "at": [
+    -2.99,
+    1.2,
+    0.14
+   ],
+   "basis": [
+    "envelope"
+   ],
+   "certainty": "inferred",
+   "id": "pipe-support-clip",
+   "label": "Plain drainpipe retaining clips, lower positions inferred",
+   "look": {
+    "tone": "structure",
+    "color": "#444b4b"
+   },
+   "repeat": {
+    "count": 4,
+    "step": {
+     "at": [
+      0,
+      5,
+      0
+     ]
+    }
+   },
+   "role": "detail",
+   "shape": {
+    "anchor": "base",
+    "size": [
+     0.26,
+     0.09,
+     0.34
+    ],
+    "type": "box"
+   },
+   "source": "photo",
+   "stage": 1
+  },
+  {
+   "at": [
+    0.0,
+    -0.4,
+    0.0
+   ],
+   "basis": [
+    "envelope"
+   ],
+   "certainty": "inferred",
+   "id": "chimney-flashing-fold",
+   "label": "Raised folded edge of roof flashing",
+   "look": {
+    "tone": "bright",
+    "weight": 1.2,
+    "fill": "dark",
+    "color": "#4a4b44"
+   },
+   "role": "detail",
+   "shape": {
+    "caps": true,
+    "path": [
+     [
+      -2.8,
+      20.65,
+      -7.05
+     ],
+     [
+      -1.3,
+      20.65,
+      -7.05
+     ],
+     [
+      -1.3,
+      21.87,
+      -5.55
+     ],
+     [
+      -2.8,
+      21.87,
+      -5.55
+     ],
+     [
+      -2.8,
+      20.65,
+      -7.05
+     ]
+    ],
+    "radius": 0.035,
+    "samples": 1,
+    "sides": 6,
+    "type": "tube"
+   },
+   "source": "photo",
+   "stage": 2
+  },
+  {
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "basis": [
+    "envelope"
+   ],
+   "certainty": "inferred",
+   "id": "plain-party-wall-contours",
+   "label": "Sparse inferred plaster construction joints on blind party walls",
+   "look": {
+    "alpha": 0.55,
+    "fill": "none",
+    "tone": "faint",
+    "weight": 0.65,
+    "color": "#ded1b2"
+   },
+   "role": "detail",
+   "shape": {
+    "paths": [
+     [
+      [
+       3.004,
+       4.5,
+       -9.8
+      ],
+      [
+       3.004,
+       4.5,
+       -0.7
+      ]
+     ],
+     [
+      [
+       3.004,
+       9,
+       -9.8
+      ],
+      [
+       3.004,
+       9,
+       -0.7
+      ]
+     ],
+     [
+      [
+       3.004,
+       13.5,
+       -9.8
+      ],
+      [
+       3.004,
+       13.5,
+       -0.7
+      ]
+     ],
+     [
+      [
+       -3.004,
+       4.5,
+       -9.8
+      ],
+      [
+       -3.004,
+       4.5,
+       -0.7
+      ]
+     ],
+     [
+      [
+       -3.004,
+       9,
+       -9.8
+      ],
+      [
+       -3.004,
+       9,
+       -0.7
+      ]
+     ],
+     [
+      [
+       -3.004,
+       13.5,
+       -9.8
+      ],
+      [
+       -3.004,
+       13.5,
+       -0.7
+      ]
+     ]
+    ],
+    "type": "paths"
+   },
+   "source": "photo",
+   "stage": 3
+  },
+  {
+   "at": [
+    -2.8,
+    0,
+    0
+   ],
+   "basis": [
+    "envelope"
+   ],
+   "certainty": "inferred",
+   "id": "metal-standing-seam-relief",
+   "label": "Shallow standing seam folds, native solid geometry",
+   "look": {
+    "tone": "hairline",
+    "weight": 0.5,
+    "fill": "dark",
+    "color": "#444b4b"
+   },
+   "repeat": {
+    "count": 9,
+    "step": {
+     "at": [
+      0.7,
+      0,
+      0
+     ]
+    }
+   },
+   "role": "detail",
+   "shape": {
+    "caps": true,
+    "path": [
+     [
+      0,
+      18.025,
+      0.18
+     ],
+     [
+      0,
+      21.825,
+      -5
+     ],
+     [
+      0,
+      18.025,
+      -10.18
+     ]
+    ],
+    "radius": 0.014,
+    "samples": 1,
+    "sides": 4,
+    "type": "tube"
+   },
+   "source": "photo",
+   "stage": 3
+  }
+ ],
+ "assets": [],
+ "articulations": [],
+ "labels": [],
+ "anchors": {
+  "base": {
+   "point": [
+    0,
+    0,
+    -5
+   ],
+   "up": [
+    0,
+    1,
+    0
+   ]
+  },
+  "front": {
+   "part": "front-pier-1",
+   "face": "front"
+  }
+ },
+ "presentation": {
+  "framing": {
+   "yaw": 24,
+   "pitch": 15,
+   "fit": 1.05
+  },
+  "views": [
+   {
+    "id": "photo",
+    "label": "Photo facade",
+    "yaw": 30,
+    "pitch": -12,
+    "distance": 1.05
+   },
+   {
+    "id": "highview",
+    "label": "Inferred roof and depth",
+    "yaw": 38,
+    "pitch": 38,
+    "distance": 1.05
+   }
+  ],
+  "atmosphere": {
+   "haze": 0.25,
+   "grid": false,
+   "projector": false,
+   "motes": 0
+  },
+  "occlusion": "xray",
+  "certainty_style": "subtle",
+  "background": "deep",
+  "float": 0
+ },
+ "animation": {
+  "assembly": {
+   "style": "ceremony",
+   "seconds": 7,
+   "interference": false
+  },
+  "idle": {
+   "life": "off",
+   "events": [],
+   "cadence": [
+    8,
+    12
+   ],
+   "strength": 0
+  },
+  "camera": {
+   "drift": 0,
+   "breathe": 0
+  },
+  "reduced_motion": "still"
+ },
+ "authoring": {
+  "tier": "masterpiece",
+  "research": "done",
+  "sources": [
+   "photo",
+   "request"
+  ],
+  "review_rounds": 0,
+  "outcome": "good",
+  "identity": [
+   {
+    "feature": "Narrow two-bay plain ochre facade with cream trim",
+    "parts": [
+     "front-pier-0",
+     "front-pier-1",
+     "front-pier-2",
+     "edge-trim-left",
+     "edge-trim-right"
+    ]
+   },
+   {
+    "feature": "Front-falling metal roof and chimney",
+    "parts": [
+     "metal-roof",
+     "chimney-shaft",
+     "roof-standing-seams"
+    ]
+   },
+   {
+    "feature": "Small semicircular right eave detail, no ornate palace invention",
+    "parts": [
+     "right-eave-arch"
+    ]
+   }
+  ],
+  "next": [
+   "Check roof interpretation and cropped window inference against the photograph."
+  ],
+  "critic": {
+   "scene_sha256": "f70509e3afa21dbc4f9f714ca6a79fe33c92ddcac251b6aaa5135058b8ea0de7",
+   "verdict": "good",
+   "scores": {
+    "silhouette": 2,
+    "proportions": 2,
+    "identity": 2,
+    "depth": 2,
+    "composition": 3,
+    "assembly": 3,
+    "motion": 3,
+    "density": 3,
+    "honesty": 3
+   },
+   "round": 11,
+   "defects": 4
+  },
+  "rounds": [
+   {
+    "round": 1,
+    "result": "baseline",
+    "minutes": 0.8,
+    "changes": [
+     "draft"
+    ],
+    "summary": "The distinctive right eave feature is reduced to an open horseshoe set in a flat strip of wall beneath a continuous horizontal cornice. In t"
+   },
+   {
+    "round": 2,
+    "result": "kept",
+    "minutes": 1.3,
+    "changes": [
+     "D1",
+     "D2",
+     "D3",
+     "D4"
+    ],
+    "summary": "The model's opening widths read roughly one third of the facade each. The exposed reference windows appear nearer one quarter of its project"
+   },
+   {
+    "round": 3,
+    "result": "kept",
+    "minutes": 1.3,
+    "changes": [
+     "D4",
+     "D6",
+     "D7",
+     "D8"
+    ],
+    "summary": "The semicircular feature is centered around three quarters of the facade width in still-front, whereas the visible reference feature sits cl"
+   },
+   {
+    "round": 4,
+    "result": "kept",
+    "minutes": 1.2,
+    "changes": [
+     "D10",
+     "D5",
+     "D7",
+     "D9"
+    ],
+    "summary": "The front roof plane reads too tall against its width: the front render exposes a roof rise approaching three quarters of the facade width, "
+   },
+   {
+    "round": 5,
+    "result": "kept",
+    "minutes": 2.3,
+    "changes": [
+     "D11",
+     "D12",
+     "D13",
+     "D6"
+    ],
+    "summary": "The visible left-junction rainwater pipe is missing as a distinct round drainage element; facade trim alone does not reproduce it."
+   },
+   {
+    "round": 6,
+    "result": "kept",
+    "minutes": 1.5,
+    "changes": [
+     "D10",
+     "D6",
+     "D8"
+    ],
+    "summary": "The reference has a dark round eave feature continuing down into the wall beneath the curved cornice; the render resolves principally as a s"
+   },
+   {
+    "round": 7,
+    "result": "reverted",
+    "minutes": 1.2,
+    "changes": [
+     "D1",
+     "D14",
+     "D4"
+    ],
+    "summary": "The distinctive right eave feature still reads as a complete round applied medallion. In the photograph the pale upper arch and dark interio"
+   },
+   {
+    "round": 8,
+    "result": "kept",
+    "minutes": 0.9,
+    "changes": [
+     "D1",
+     "D14",
+     "D4"
+    ],
+    "summary": "The distinctive right eave feature still reads as a small open horseshoe on a straight cornice. In the reference crop the cream edge enclose"
+   },
+   {
+    "round": 9,
+    "result": "kept",
+    "minutes": 1.4,
+    "changes": [
+     "D1",
+     "D11",
+     "D14"
+    ],
+    "summary": "Although now infilled, the eave feature has a thick rounded projecting rim and reads as a small attached bonnet. The reference shows a compa"
+   },
+   {
+    "round": 10,
+    "result": "reverted",
+    "minutes": 1.1,
+    "changes": [
+     "D1",
+     "D15"
+    ],
+    "summary": "The right eave detail has a conspicuously thick rounded arch rim in line views and a projecting rounded plaque in solid. The photo shows a m"
+   },
+   {
+    "round": 11,
+    "result": "kept",
+    "minutes": 1.4,
+    "changes": [
+     "D1",
+     "D10",
+     "D6"
+    ],
+    "summary": "The right eave feature reads as a conspicuous thick horseshoe with a projecting bottom ledge. In the cropped reference it is a shallow semic"
+   },
+   {
+    "round": 12,
+    "result": "reverted",
+    "minutes": 1.5,
+    "changes": [
+     "D10",
+     "D15"
+    ],
+    "summary": "The identifying right eave semicircle has several thick rounded concentric profiles and reads as an ornamental horseshoe. The photograph sho"
+   }
+  ]
+ },
+ "annotations": [
+  {
+   "id": "inferred-hidden-rows",
+   "offset": [
+    0,
+    0.4,
+    0.8
+   ],
+   "part": "front-spandrel-1",
+   "text": "Lower rows and rear/side depth inferred: obscured in source photo."
+  },
+  {
+   "id": "photo-visible-eave",
+   "offset": [
+    1,
+    0.6,
+    0
+   ],
+   "part": "right-eave-wall-backing",
+   "text": "Photo: upper windows, trim, roof, chimney. All metric sizes inferred."
+  }
+ ]
+}
