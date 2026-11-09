@@ -24,6 +24,7 @@ construct export scene.json --out model.glb
 | Option | What it does |
 | --- | --- |
 | `--out FILE.glb` or `FILE.obj` | glTF 2.0 binary, or Wavefront OBJ with an `.mtl` beside it |
+| `--out FILE.fbx`, `FILE.usd` or `FILE.usdz` | the glTF carried over by Blender (when it is installed: `$CONSTRUCT_BLENDER`, `blender` on the PATH, or the usual installs): FBX for Unity, Unreal, Maya and 3ds Max; USD for Omniverse and Houdini, USDZ for Apple's Reality Composer and Quick Look. Blender's importer and exporters do the work, so the parts, materials and opening animation are what they make of the glTF |
 | `--wire edges` (default), `tubes`, `seams`, `none` | the line art: as edges (Blender keeps them); as thin tubes (game engines drop plain lines); as dark tubes for the design lines only, the parts drawn as lines (door seams, creases, outlines), for a finished model; or left out |
 | `--merge` | glTF: every part that does not move merged into one mesh per material, for game engines; moving parts keep their own nodes and animations |
 | `--colliders` | glTF: a box collider per part, named for Godot (`<part>-convcolonly`), moving with its joint ([GODOT.md](GODOT.md)) |

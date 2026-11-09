@@ -480,8 +480,9 @@ def add_commands(sub):
     p = sub.add_parser("export", help="a 3D model: glTF (.glb) for Blender, game engines and the web, or OBJ "
                                       "(docs/EXPORT.md)")
     p.add_argument("scene")
-    p.add_argument("--out", required=True, help="FILE.glb or FILE.obj (an .mtl is written beside it)")
-    p.add_argument("--format", choices=("glb", "obj"), help="default: from the file's extension")
+    p.add_argument("--out", required=True, help="FILE.glb or FILE.obj (an .mtl is written beside it); FILE.fbx, .usd or "
+                                                 ".usdz through Blender when it is installed")
+    p.add_argument("--format", choices=("glb", "obj", "fbx", "usd", "usdz"), help="default: from the file's extension")
     p.add_argument("--wire", choices=("edges", "tubes", "seams", "none"), default="edges",
                    help="the line art: edges (default), thin tubes (for engines that drop lines), tubes for the "
                         "design lines only (seams, creases, outlines: for finished game models) or none")
@@ -1051,6 +1052,25 @@ def run(args):
             g = scene_mod.compile_scene(scene)
             sys.stdout.write("wrote %s: %s, %d parts, %d lines, %d triangles\n"
                              % (args.out, args.view, len(scene["parts"]), g["counts"]["lines"], g["counts"]["triangles"]))
+            return 0
+        if args.command == "export" and (args.format or Path(args.out).suffix.lower().lstrip(".")) in ("fbx", "usd", "usdz"):
+            # FBX and USD: the glTF made here, carried over by Blender (its importer keeps the parts, materials and
+            # the open animation)
+            import argparse as _ap
+            import tempfile
+            from . import export as export_mod
+            fmt = args.format or Path(args.out).suffix.lower().lstrip(".")
+            with tempfile.TemporaryDirectory() as tmp:
+                inner = _ap.Namespace(**dict(vars(args), out=str(Path(tmp, "model.glb")), format="glb"))
+                code = globals()["run"](inner)   # `run` is also a local name further down
+                if code:
+                    return code
+                try:
+                    s = export_mod.via_blender(Path(tmp, "model.glb"), args.out, fmt)
+                except export_mod.ExportError as exc:
+                    sys.stderr.write("export: %s\n" % exc)
+                    return 1
+            sys.stdout.write("wrote %s (%s, %d KB, through Blender)\n" % (args.out, fmt.upper(), s["bytes"] // 1024))
             return 0
         if args.command == "export" and _is_world_file(args.scene):
             from . import world as world_mod, export as export_mod

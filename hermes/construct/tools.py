@@ -506,7 +506,8 @@ def _finish_review(rec, done, tail):
 
 # ---------------------------------------------------------------------------- export
 
-EXT = {"glb": ".glb", "obj": ".obj", "stl": ".stl", "3mf": ".3mf", "fcstd": ".FCStd", "step": ".step"}
+EXT = {"glb": ".glb", "obj": ".obj", "fbx": ".fbx", "usd": ".usd", "usdz": ".usdz", "stl": ".stl", "3mf": ".3mf",
+       "fcstd": ".FCStd", "step": ".step"}
 
 
 @tool("construct_export")
@@ -526,7 +527,10 @@ def _export(args, wait):
     exports.mkdir(parents=True, exist_ok=True)
     target = exports / ("%s-%s%s" % (stem, runtime.new_id(), EXT[fmt]))
     extra_files = []
-    if fmt in ("glb", "obj"):
+    if fmt in ("glb", "obj", "fbx", "usd", "usdz"):   # fbx and usd: the glTF carried over by Blender
+        if fmt in ("fbx", "usd", "usdz") and not runtime.programs().get("blender"):
+            raise ConstructError("%s needs Blender, which is not installed here; offer the glTF (glb): Unity, Unreal, "
+                                 "Godot and Blender open it as it is" % fmt.upper())
         argv = ["export", str(scene), "--out", str(target)]
         for k, opts in (("wire", ["edges", "tubes", "seams", "none"]), ("pose", ["closed", "open"]),
                         ("frame", ["y-up", "z-up"])):

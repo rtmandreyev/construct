@@ -63,6 +63,19 @@ from the chat. [docs/WORLDS.md](docs/WORLDS.md)
   card makes a picture from where its camera is (2560 × 1440), saves that camera as a named view of a world, and
   exports a glTF or a Godot game map. The Constructs page stars favourites first, renames, and archives (nothing is
   deleted).
+- **Exports for more tools:** FBX (Unity, Unreal, Maya) and USD or USDZ (Omniverse, Houdini, Apple's Reality
+  tools), carried over from the glTF by Blender when it is installed; a card's Export menu offers them with the glTF,
+  the Godot map, OBJ, and STL or 3MF sized to a desktop printer.
+- **The Constructs page sorts by what a thing is**, a designed thing too (an original ship goes with the vehicles,
+  marked an original design); your own groups (More → Move to → A new group) come first, and a construct goes back
+  with its kind when you like. A construct that has only files (an export, no page) is built once for its picture.
+- **Fixes from use:** a far-off placement (a planet set down a kilometre from the square) no longer pulls every view
+  of the world out to empty ground; the solid view's cutaway keeps the floor and the road under the eye; Lift, Lower
+  and the nudges move a big construct in steps its size; a construct put into a world finds a clear spot instead of
+  the middle of the floor where something already stands, and is never set on a top too small to carry it; Add a
+  construct saves unsaved moves first instead of being greyed out; after a drop-in the world shows once, with the
+  new construct, not the old world first; full screen in Hermes is opaque and clear of the title bar; How to read it
+  shows only where there is a reading panel.
 - Tested in Hermes Desktop with GPT-6.1 Sol and DeepSeek V4
   Pro; what each had to work around became the tool's: placing many at once, named views, host collisions, door
   swings, and sky sizing by a part.

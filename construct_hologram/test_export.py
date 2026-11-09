@@ -797,3 +797,23 @@ class Blender(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class ThroughBlender(unittest.TestCase):
+    """FBX and USD: the glTF carried over by Blender, when it is installed."""
+
+    def test_an_unknown_format_is_refused(self):
+        with tempfile.TemporaryDirectory() as d:
+            with self.assertRaises(export.ExportError):
+                export.via_blender(Path(d, "x.glb"), Path(d, "x.dwg"), "dwg")
+
+    @unittest.skipUnless(__import__("construct_hologram.runfilm", fromlist=["find_blender"]).find_blender(), "no Blender")
+    def test_a_construct_becomes_an_fbx(self):
+        with tempfile.TemporaryDirectory() as d:
+            out = Path(d, "cd.fbx")
+            r = subprocess.run([sys.executable, "-m", "construct_hologram", "export", str(EXAMPLES / "cd.json"), "--out", str(out)],
+                               cwd=str(ROOT), capture_output=True, text=True, timeout=600)
+            self.assertEqual(r.returncode, 0, r.stderr)
+            self.assertTrue(out.is_file())
+            self.assertEqual(out.read_bytes()[:18], b"Kaydara FBX Binary")
+            self.assertIn("through Blender", r.stdout)

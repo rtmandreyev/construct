@@ -132,11 +132,12 @@ REVIEW = _tool(
 EXPORT = _tool(
     "construct_export",
     "Export the construct as a file: glb or obj (a 3D model for Blender, game engines and the web: named parts, joints "
-    "as the open animation, idle motion), stl or 3mf (one watertight solid to 3D print, checked), fcstd or step (named "
+    "as the open animation, idle motion), fbx or usd/usdz (the same model carried over by Blender, when it is installed: "
+    "FBX for Unity, Unreal, Maya; USD for Omniverse, Houdini, Apple's tools), stl or 3mf (one watertight solid to 3D print, checked), fcstd or step (named "
     "solids and joints in FreeCAD, and STEP; needs FreeCAD installed). Returns the file, Construct's report and a MEDIA: "
     "line to put in your reply. Long exports return a job_id: follow it with construct_job.",
     dict(_TARGET,
-         format={"type": "string", "enum": ["glb", "obj", "stl", "3mf", "fcstd", "step"]},
+         format={"type": "string", "enum": ["glb", "obj", "fbx", "usd", "usdz", "stl", "3mf", "fcstd", "step"]},
          pieces={"type": "string", "enum": ["none", "glued", "loose"],
                  "description": "glb/obj physics: glued = what stays put is one body, each door or lid one more on its "
                                 "hinge; loose = pieces that break apart and settle."},

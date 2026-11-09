@@ -291,6 +291,25 @@ class Arrange(unittest.TestCase):
         high = place({"id": "deck", "construct": lit("cd.json"), "rotate": [-90, 0, 0]}, {"id": "cd", "construct": lit("book.json"), "on": "deck"})
         self.assertEqual(world.settle(high, g, {"cd"}, step=0.0)[1], [])   # out of reach: it stays
 
+    def test_a_big_thing_is_not_set_on_a_small_top(self):
+        samba = str(Path(__file__).resolve().parent.parent / "examples" / "volkswagen-t1-samba" / "scene.json")
+        doc = place({"id": "ground", "construct": lit("cd.json")},
+                    {"id": "cd", "construct": lit("cd.json"), "rotate": [-90, 0, 0], "at": [0, 0, 0.12]},   # under the van's middle
+                    {"id": "van", "construct": samba})
+        g = world.compile_world(doc, ".")
+        self.assertEqual(world.settle(doc, g, {"van"})[1], [])   # a jewel case under its middle does not carry a van
+
+    def test_a_dropped_construct_finds_a_clear_spot_on_the_floor(self):
+        shed = str(Path(__file__).resolve().parent.parent / "examples" / "garden-shed" / "scene.json")
+        doc = place({"id": "shed", "construct": shed}, {"id": "a", "construct": lit("cd.json")})
+        doc = world.drop_spot(doc, world.compile_world(doc, "."), "a")
+        doc["placements"].append({"id": "b", "construct": lit("cd.json")})
+        doc = world.drop_spot(doc, world.compile_world(doc, "."), "b")
+        g = world.compile_world(doc, ".")
+        boxes = {pid: world._wbox(g, pid) for pid in ("a", "b")}
+        self.assertEqual(doc["placements"][1]["on"].split("/")[0], doc["placements"][2]["on"].split("/")[0])
+        self.assertFalse(world._meets(boxes["a"], boxes["b"], 0.0))   # the second is not put inside the first
+
     def test_what_it_cannot_do_is_refused(self):
         doc = place({"id": "a", "construct": lit("cd.json")},
                     {"id": "moon", "construct": lit("cd.json"), "sky": {"diameter_m": 3.4e6, "distance_m": 3.8e8}})
@@ -473,6 +492,24 @@ class Viewer(unittest.TestCase):
         self.assertTrue(got["snap"])
         self.assertEqual(len(got["hits"]), 1)
         self.assertTrue(got["keys"])
+
+    @unittest.skipUnless(render.find_browser(), "no browser")
+    def test_a_far_off_placement_does_not_pull_the_whole_view_away(self):
+        rows = [{"id": "cd-%d" % i, "construct": lit("cd.json"), "at": [i * 0.3, 0, 0]} for i in range(4)]
+        rows.append({"id": "far", "construct": lit("cd.json"), "at": [1500, 0, 0]})   # a planet set down a kilometre off
+        with tempfile.TemporaryDirectory() as d:
+            w = Path(d, "w.json")
+            w.write_text(json.dumps(place(*rows)))
+            studio.build(str(w), Path(d, "out"))
+            b = render.open_browser(render._url(Path(d, "out", "construct.html"), ui=1), 480, 300, 1.0)
+            try:
+                got = b.evaluate("(() => { const h = HOLO.hologram; return { far: [...h.farPlacements()], whole: h.cameraFor('hero').target[0],"
+                                 " own: h.cameraFor('far').target[0] }; })()")
+            finally:
+                b.close()
+        self.assertEqual(got["far"], ["far"])
+        self.assertLess(got["whole"], 5)        # the whole view stays on the four cases
+        self.assertGreater(got["own"], 1000)    # the far one keeps its own view
 
     @unittest.skipUnless(render.find_browser(), "no browser")
     def test_a_van_roof_is_somewhere_to_stand(self):

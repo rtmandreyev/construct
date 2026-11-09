@@ -40,6 +40,7 @@
                solid: !!o.solid, hasSolid: !!(h && h.solid), reduced: !!o.reduced, step: step,
                world: !!(h && h.geo && h.geo.world), arranging: !!(h && h.arranging && h.arranging()),
                canArrange: !!(window.HOLO && window.HOLO.arrange), canAct: !!(window.HOLO && window.HOLO.action),
+               hasReading: !!document.querySelector(".rd-how"),
                views: window.HOLO && window.HOLO.views ? window.HOLO.views().slice(0, 300) : null };
     }
     function tell() { try { parent.postMessage(state(), "*"); } catch (e) { /* the host went away */ } }
@@ -80,7 +81,9 @@
         if (d.action === "on" || d.action === "off") window.HOLO.arrange.set(d.action === "on");
         else if (d.action === "reset") window.HOLO.arrange.reset();
         else if (d.action === "turn" && typeof d.value === "number" && Math.abs(d.value) <= 360) window.HOLO.arrange.turn(d.value);
-        else if (d.action === "lift" && typeof d.value === "number" && Math.abs(d.value) <= 10) window.HOLO.arrange.lift(d.value);
+        else if (d.action === "lift" && typeof d.value === "number" && Math.abs(d.value) <= 10) {
+          if (window.HOLO.arrange.liftStep) window.HOLO.arrange.liftStep(d.value / 0.25); else window.HOLO.arrange.lift(d.value);   // a step its size
+        }
         else if (d.action === "put-back") window.HOLO.arrange.putBack();
         else if (d.action === "undo" && window.HOLO.arrange.undo) window.HOLO.arrange.undo();
         else if (d.action === "redo" && window.HOLO.arrange.redo) window.HOLO.arrange.redo();

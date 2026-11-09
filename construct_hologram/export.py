@@ -1270,3 +1270,44 @@ def export(scene, path, fmt=None, wire="edges", pose="closed", materials=None, f
         path.with_suffix(".mtl").write_text(out["mtl"], encoding="utf-8")
         summary["files"] = [str(path), str(path.with_suffix(".mtl"))]
     return summary
+
+
+# ---------------------------------------------------------------------------- through Blender
+
+BLENDER_FORMATS = ("fbx", "usd", "usdz")
+_CONVERT = """
+import bpy, sys
+src, out, fmt = sys.argv[sys.argv.index("--") + 1:][:3]
+bpy.ops.wm.read_factory_settings(use_empty=True)
+bpy.ops.import_scene.gltf(filepath=src)
+if fmt == "fbx":
+    bpy.ops.export_scene.fbx(filepath=out, use_selection=False, apply_scale_options="FBX_SCALE_ALL", bake_anim=True,
+                             path_mode="COPY", embed_textures=True, add_leaf_bones=False)
+else:
+    bpy.ops.wm.usd_export(filepath=out, export_animation=True)
+"""
+
+
+def via_blender(glb, out, fmt, blender=None, timeout=1800):
+    """A glTF made here, carried into FBX (Unity, Unreal, Maya, 3ds Max) or USD (Omniverse, Houdini, Apple's
+    Reality tools) by Blender's own importer and exporters, run in the background. Blender must be installed."""
+    import subprocess
+    from . import procenv
+    from .runfilm import find_blender
+    if fmt not in BLENDER_FORMATS:
+        raise ExportError("through Blender: one of %s, not %r" % (", ".join(BLENDER_FORMATS), fmt))
+    exe = find_blender(blender)
+    if not exe:
+        raise ExportError("%s needs Blender (none found: install it, or set CONSTRUCT_BLENDER); the glTF (.glb) opens "
+                          "in Unity, Unreal, Godot and Blender as it is" % fmt.upper())
+    out = Path(out)
+    out.parent.mkdir(parents=True, exist_ok=True)
+    try:
+        r = subprocess.run([exe, "-b", "--factory-startup", "--python-expr", _CONVERT, "--", str(glb), str(out), fmt],
+                           capture_output=True, text=True, timeout=timeout, env=procenv.minimal())
+    except subprocess.TimeoutExpired:
+        raise ExportError("Blender took longer than %d s to write the %s" % (timeout, fmt.upper()))
+    if r.returncode != 0 or not out.is_file():
+        tail = (r.stderr or r.stdout or "").strip().splitlines()[-3:]
+        raise ExportError("Blender could not write the %s: %s" % (fmt.upper(), " / ".join(tail) or "no output"))
+    return {"files": [str(out)], "bytes": out.stat().st_size, "format": fmt}

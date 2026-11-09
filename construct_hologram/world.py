@@ -826,6 +826,8 @@ def settle(doc, g, ids, step=STEP_M):
         cx = (min(b["min"][0] for b in own) + max(b["max"][0] for b in own)) / 2
         cz = (min(b["min"][2] for b in own) + max(b["max"][2] for b in own)) / 2
         bottom = min(b["min"][1] for b in own)
+        # what it stands on carries it: a top at least a quarter of its footprint (a hotel is not set on a van's floor)
+        foot = (max(b["max"][0] for b in own) - min(b["min"][0] for b in own)) * (max(b["max"][2] for b in own) - min(b["min"][2] for b in own))
         skip = {p["id"]} | _carried(out, p["id"])
         best = None
         for q in g["parts"]:
@@ -834,6 +836,8 @@ def settle(doc, g, ids, step=STEP_M):
                 continue
             for b in q["instances"]:
                 if not _flat(b) or not (b["min"][0] <= cx <= b["max"][0] and b["min"][2] <= cz <= b["max"][2]):
+                    continue
+                if (b["max"][0] - b["min"][0]) * (b["max"][2] - b["min"][2]) < 0.25 * foot:
                     continue
                 top = b["max"][1]
                 if top <= bottom + step and (best is None or top > best[0]):
@@ -877,17 +881,30 @@ def drop_spot(doc, g, pid, margin=0.12):
             sx, sz = b["max"][0] - b["min"][0], b["max"][2] - b["min"][2]
             if _flat(b) and b["max"][1] <= ground + 1.2 and sx >= w * (1 + margin) and sz >= d * (1 + margin):
                 fits.append((sx * sz, q["id"], b))
+    others = [(r_lo, r_hi) for q in g["world"]["placements"] if q["id"] not in (pid, host) and "sky" not in q
+              for r_lo, r_hi in [_wbox(g, q["id"])] if r_lo]
     if fits:
         _, part, b = max(fits, key=lambda f: f[0])
         mx, mz = (b["min"][0] + b["max"][0]) / 2, (b["min"][2] + b["max"][2]) / 2
+        # the middle of that floor, or the nearest spot on it clear of what already stands there (a second car in
+        # the square is not parked inside the first)
+        top, h = b["max"][1], hi[1] - lo[1]
+        sx, sz = w + 0.6, d + 0.6
+        spots = sorted(((i, j) for i in range(-8, 9) for j in range(-8, 9)), key=lambda ij: (ij[0] * sx) ** 2 + (ij[1] * sz) ** 2)
+        for i, j in spots:
+            x, z = mx + i * sx, mz + j * sz
+            if not (b["min"][0] <= x - w / 2 and x + w / 2 <= b["max"][0] and b["min"][2] <= z - d / 2 and z + d / 2 <= b["max"][2]):
+                continue
+            box = ([x - w / 2, top, z - d / 2], [x + w / 2, top + h, z + d / 2])
+            if not any(_meets(box, (a, b2), 0.0) for a, b2 in others):
+                mx, mz = x, z
+                break
         p["on"] = "%s/%s" % (host, part[len(host) + 1:])
         p["at"] = [_r(mx - off[0]), 0.0, _r(mz - off[1])]
         return out
     # outside, in front of the host, clear of everything placed
     hlo = [min(b["min"][k] for b in hb) for k in range(3)]
     hhi = [max(b["max"][k] for b in hb) for k in range(3)]
-    others = [(r_lo, r_hi) for q in g["world"]["placements"] if q["id"] not in (pid, host) and "sky" not in q
-              for r_lo, r_hi in [_wbox(g, q["id"])] if r_lo]
     z = hhi[2] + d / 2 + 0.6
     for i in range(12):
         x = (hlo[0] + hhi[0]) / 2 + (((i + 1) // 2) * (w + 0.6) * (1 if i % 2 else -1) if i else 0)

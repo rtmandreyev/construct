@@ -85,6 +85,8 @@ function notify(kind, message) {
   }
 }
 
+const FULL_TOP = 34   // Hermes's title bar: its window controls sit over the top of the page
+
 function errorText(err) {
   const text = String((err && (err.message || err.detail)) || err || 'unknown error')
   if (/404/.test(text)) return 'This is no longer kept (only the newest builds of a project are).'
@@ -268,8 +270,8 @@ function arrangeChanges(list) {
 }
 
 // the library a world draws on: your constructs, the shipped ones, the gallery's (fetched once, by name), by kind
-const KINDS = ['Vehicles', 'Buildings', 'Machines and instruments', 'Objects', 'Designed', 'Living things']
-const CATEGORY_KIND = { vehicle: 'Vehicles', architecture: 'Buildings', machine: 'Machines and instruments', fictional: 'Designed',
+const KINDS = ['Vehicles', 'Buildings', 'Machines and instruments', 'Objects', 'Living things']
+const CATEGORY_KIND = { vehicle: 'Vehicles', architecture: 'Buildings', machine: 'Machines and instruments',
   organism: 'Living things' }
 const MINI = { display: 'grid', gap: 8, gridTemplateColumns: 'repeat(auto-fill, minmax(132px, 1fr))', maxHeight: 300, overflow: 'auto' }
 
@@ -297,7 +299,7 @@ function Picker({ onPick, exclude }) {
         .map(r => ({ name: r.project, title: r.title, from: 'Yours', kind: KINDS.includes(r.group) ? r.group : 'Objects',
           load: r.newest.has_thumb ? () => rest('/thumb?' + query({ project: r.project, build: r.newest.build })) : null }))
       const shipped = (Array.isArray(e.examples) ? e.examples : []).map(r => ({ name: r.name, title: r.title, from: 'Shipped',
-        kind: CATEGORY_KIND[r.category] || 'Objects', load: r.has_thumb ? () => rest('/example-thumb?' + query({ name: r.name })) : null }))
+        kind: KINDS.includes(r.group) ? r.group : CATEGORY_KIND[r.category] || 'Objects', load: r.has_thumb ? () => rest('/example-thumb?' + query({ name: r.name })) : null }))
       const seen = new Set(shipped.map(r => r.name))
       const more = (Array.isArray(g.constructs) ? g.constructs : []).filter(r => !seen.has(r.name))
         .map(r => ({ name: r.name, title: r.title, from: 'Gallery', kind: 'Objects', load: null }))
@@ -496,6 +498,7 @@ function PageFrame({ route, kind, loaderUrl, height, onCard, onState, control, o
         onState({ ready: d.ready === true, mode: d.mode === 'provenance' ? 'provenance' : 'light', solid: d.solid === true,
           hasSolid: d.hasSolid === true, step: typeof d.step === 'number' && d.step >= 0 && d.step < 1000 ? d.step : 0,
           world: d.world === true, arranging: d.arranging === true, canArrange: d.canArrange === true, canAct: d.canAct === true,
+          hasReading: d.hasReading === true,
           views: Array.isArray(d.views) ? d.views.filter(v => v && typeof v.id === 'string' && v.id.length < 80).slice(0, 300)
             .map(v => ({ id: v.id, label: String(v.label || v.id).slice(0, 80) })) : null })
       } else if (d.type === 'construct:arranged' && onArrange) {
@@ -645,8 +648,17 @@ function ConstructCard({ project, build, loaderUrl, title, parts, sessionId, hei
       setSelectNext(null)
     }
   }, [selectNext, follow, view])
-  const place = name => {
+  const place = async name => {
     setPicking(false)
+    if (arr.changes.length) {   // moves not saved yet are saved first: the new construct joins the world as you left it
+      setNote('Saving your moves first…')
+      try {
+        await runCommand(sessionId, 'construct arrange ' + project + ' ' + JSON.stringify(arr.changes))
+      } catch (err) {
+        setNote(errorText(err))
+        return
+      }
+    }
     command('construct place ' + project + ' ' + name, 'Placing ' + name + ': checking the world and rebuilding it…')
   }
   const save = () => arr.changes.length &&
@@ -676,10 +688,12 @@ function ConstructCard({ project, build, loaderUrl, title, parts, sessionId, hei
     }
   }
   const exportAs = async kind => {
-    setNote(kind === 'godot' ? 'Exporting a Godot game map…' : 'Exporting a glTF…')
+    const label = { glb: 'The glTF', godot: 'The Godot game map', fbx: 'The FBX', usd: 'The USD', usdz: 'The USDZ', obj: 'The OBJ',
+      stl: 'The STL', '3mf': 'The 3MF' }[kind] || 'The export'
+    setNote(label + ': exporting' + (kind === 'fbx' || kind.startsWith('usd') ? ' (through Blender, a minute or so)…' : '…'))
     try {
       const out = await runCommand(sessionId, 'construct export ' + project + ' ' + kind)
-      await follow2(out, kind === 'godot' ? 'The Godot game map' : 'The glTF')
+      await follow2(out, label)
     } catch (err) { setNote(errorText(err)) }
   }
   const picture = async () => {
@@ -726,10 +740,13 @@ function ConstructCard({ project, build, loaderUrl, title, parts, sessionId, hei
   const growing = run && !run.final ? 'growing' + (run.ticks !== null ? ': tick ' + run.ticks : '') : null
 
   const views = view.views || null
-  const frameHeight = full ? 'calc(100vh - ' + (isWorld ? 200 : 150) + 'px)' : height || 420
+  const frameHeight = full ? 'calc(100vh - ' + (FULL_TOP + (isWorld ? 140 : 110)) + 'px)' : height || 420
   return jsxs('div', {
-    style: full ? Object.assign({}, S.card, { position: 'fixed', inset: 0, zIndex: 900, borderRadius: 0, margin: 0, maxWidth: 'none',
-      background: 'var(--ui-bg-primary, #0b0b10)', display: 'flex', flexDirection: 'column' }) : S.card,
+    // full screen: over the whole window below Hermes's title bar (its own controls stay clickable), on an opaque
+    // ground (Hermes's page colours are see-through tints over its window)
+    style: full ? Object.assign({}, S.card, { position: 'fixed', top: FULL_TOP, left: 0, right: 0, bottom: 0, zIndex: 900, borderRadius: 0, margin: 0,
+      maxWidth: 'none', background: 'var(--ui-bg-chrome, var(--ui-bg-sidebar, #0b0b10))', display: 'flex', flexDirection: 'column',
+      overflowY: 'auto' }) : S.card,
     children: [
       jsx(Head, {
         title: name,
@@ -743,9 +760,13 @@ function ConstructCard({ project, build, loaderUrl, title, parts, sessionId, hei
           jsx(Button, { label: 'Open in browser', icon: 'link-external', disabled: !(card && card.page), onClick: () => openPath(card.page),
             title: 'Open the page in your browser' }, 'open')]
       }),
-      jsx(PageFrame, { route: '/view?' + query({ project, build: shownBuild }), kind: 'construct',
-        loaderUrl: shownBuild === build ? loaderUrl : null, height: frameHeight, onCard: setCard, onState: setView, control,
-        onArrange: setArr }),
+      // opened right after a drop-in: the world without it would load first, then again with it; wait for the new one
+      follow && !follow.ready && drop && drop.job && follow.job === drop.job
+        ? jsx('div', { style: { height: frameHeight, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24, textAlign: 'center',
+            color: 'var(--ui-text-secondary)', fontSize: 13 }, children: note || 'Placing it and rebuilding the world (half a minute or so for a big one)…' })
+        : jsx(PageFrame, { route: '/view?' + query({ project, build: shownBuild }), kind: 'construct',
+          loaderUrl: shownBuild === build ? loaderUrl : null, height: frameHeight, onCard: setCard, onState: setView, control,
+          onArrange: setArr }),
       isWorld ? jsxs('div', {
         style: S.bar,
         children: [
@@ -756,7 +777,7 @@ function ConstructCard({ project, build, loaderUrl, title, parts, sessionId, hei
             : jsx(Button, { label: arr.on ? 'Arranging' : 'Arrange', icon: 'move', active: arr.on, disabled: !view.ready || saving,
               title: 'Move and turn the constructs yourself: click one and drag it onto anything, a floor, a table, a roof; Q/E or Shift-drag turns it (A)',
               onClick: () => control.current && control.current.arrange(arr.on ? 'off' : 'on') }),
-          jsx(Button, { label: 'Add a construct', icon: 'add', active: picking, disabled: saving || arr.changes.length > 0,
+          jsx(Button, { label: 'Add a construct', icon: 'add', active: picking, disabled: saving,
             title: 'Put one of your constructs, a shipped one or one from the gallery into this world, then drag it into place',
             onClick: () => setPicking(!picking) }),
           arr.changes.length ? jsx(Button, { label: 'Save ' + plural(arr.changes.length, 'change'), icon: 'save', disabled: saving,
@@ -822,17 +843,15 @@ function ConstructCard({ project, build, loaderUrl, title, parts, sessionId, hei
             title: 'The surfaces as a solid (S)', onClick: () => act('solid') }),
           jsx(Button, { label: 'Replay', icon: 'debug-restart', disabled: !view.ready, title: 'Build it again (R)',
             onClick: () => act('replay') }),
-          jsx(Button, { label: 'How to read it', icon: 'info', disabled: !view.ready, title: 'The reading panel, where the construct has one (H)',
-            onClick: () => press('h') }),
+          view.hasReading ? jsx(Button, { label: 'How to read it', icon: 'info', disabled: !view.ready, title: 'What the run\'s picture shows (H)',
+            onClick: () => press('h') }) : null,
           view.canAct ? jsx(Button, { label: 'Keys', icon: 'keyboard', disabled: !view.ready, title: 'Every key (?)', onClick: () => act('keys') }) : null,
           jsx('div', { style: S.sep }),
           jsx(Button, { label: 'Picture', icon: 'device-camera', disabled: !view.ready, title: 'A 2560 × 1440 picture from where the camera is now',
             onClick: picture }),
           isWorld && view.canAct ? jsx(Button, { label: 'Save view', icon: 'bookmark', active: naming, disabled: !view.ready,
             title: 'Keep this camera as a named view of the world', onClick: () => setNaming(!naming) }) : null,
-          jsx(Button, { label: 'glTF', icon: 'package', disabled: !view.ready, title: 'Export for Blender, three.js or any engine', onClick: () => exportAs('glb') }),
-          jsx(Button, { label: 'Godot map', icon: 'game', disabled: !view.ready, title: 'One file for Godot: fixed body, working joints, colliders',
-            onClick: () => exportAs('godot') }),
+          jsx(ExportMenu, { disabled: !view.ready, world: isWorld, onPick: exportAs }),
           canAsk ? jsx('div', { style: S.sep }) : null,
           canAsk ? jsx(Button, { label: 'Export a glTF', icon: 'package', disabled: busy,
             onClick: () => ask('Export the construct ' + subject + ' as a glTF (.glb) with construct_export and show me the file.') }) : null,
@@ -1475,6 +1494,50 @@ function ProjectView({ row, onBack, backLabel, drop }) {
   })
 }
 
+// the card's exports, by what they are for: one menu instead of a button each
+function ExportMenu({ disabled, world, onPick }) {
+  const opt = (value, label) => jsx('option', { value, children: label }, value)
+  return jsx('select', {
+    value: '', disabled, title: 'Export a file: for Blender and game engines, Apple and Omniverse, or a 3D printer',
+    onChange: e => { const v = e.target.value; e.target.value = ''; if (v) onPick(v) },
+    style: { font: 'inherit', fontSize: 12, padding: '3px 6px', borderRadius: 6, border: '1px solid var(--ui-stroke-secondary)',
+      background: 'transparent', color: 'var(--ui-text-secondary)', cursor: disabled ? 'default' : 'pointer', width: 110 },
+    children: [opt('', 'Export…'),
+      jsx('optgroup', { label: 'Blender, game engines, the web', children: [opt('glb', 'glTF (.glb): Blender, Unity, Unreal, Godot, three.js'),
+        opt('godot', 'Godot game map (fixed body, joints, colliders)'), opt('fbx', 'FBX: Unity, Unreal, Maya (through Blender)'),
+        opt('obj', 'OBJ (plain meshes)')] }, 'eng'),
+      jsx('optgroup', { label: 'Apple, Omniverse, Houdini', children: [opt('usdz', 'USDZ: Reality Composer, Quick Look (through Blender)'),
+        opt('usd', 'USD (through Blender)')] }, 'usd'),
+      world ? null : jsx('optgroup', { label: '3D printing', children: [opt('stl', 'STL, sized to a desktop printer'), opt('3mf', '3MF')] }, 'print')]
+  })
+}
+
+// the Constructs page's kinds, in order (the user's own groups come before them)
+const ORDER = ['Worlds', 'Vehicles', 'Buildings', 'Machines and instruments', 'Objects', 'Living things', 'Simulations']
+
+// a tile's other actions, in one menu so a tile keeps one row of buttons: rename, move to a group, archive
+function MoreMenu({ row, groups, onRename, onNewGroup, tidy }) {
+  const choose = e => {
+    const v = e.target.value
+    e.target.value = ''
+    if (v === 'rename') onRename()
+    else if (v === 'archive') tidy(row.project, row.archived ? 'unarchive' : 'archive')
+    else if (v === 'new-group') onNewGroup()
+    else if (v === 'kind') tidy(row.project, 'group', '-')
+    else if (v.startsWith('g:')) tidy(row.project, 'group', v.slice(2))
+  }
+  const opt = (value, label, disabled) => jsx('option', { value, disabled: !!disabled, children: label }, value)
+  return jsx('select', {
+    value: '', onChange: choose, title: 'Rename, move to a group, archive',
+    style: { font: 'inherit', fontSize: 12, padding: '3px 6px', borderRadius: 6, border: '1px solid var(--ui-stroke-secondary)',
+      background: 'transparent', color: 'var(--ui-text-secondary)', cursor: 'pointer', maxWidth: 120 },
+    children: [opt('', 'More…'), opt('rename', 'Rename'),
+      opt('archive', row.archived ? 'Restore from the archive' : 'Archive (nothing is deleted)'),
+      jsx('optgroup', { label: 'Move to', children: groups.filter(g => g !== row.group).map(g => opt('g:' + g, g))
+        .concat([opt('new-group', 'A new group…')], row.own_group ? [opt('kind', 'Back with its kind')] : []) }, 'mv')]
+  })
+}
+
 function Projects({ focus }) {
   const [rows, setRows] = useState(null)
   const [error, setError] = useState('')
@@ -1484,7 +1547,7 @@ function Projects({ focus }) {
   const tidy = async (project, verb, title) => {
     setRenaming(null)
     try {
-      const out = await runCommand(null, 'construct ' + verb + ' ' + project + (verb === 'rename' ? ' ' + String(title || '').trim().slice(0, 120) : ''))
+      const out = await runCommand(null, 'construct ' + verb + ' ' + project + (verb === 'rename' || verb === 'group' ? ' ' + String(title || '').trim().slice(0, verb === 'group' ? 40 : 120) : ''))
       notify('info', out.slice(0, 160))
     } catch (err) { notify('info', errorText(err)) }
     load()
@@ -1496,7 +1559,7 @@ function Projects({ focus }) {
         setRows(list)
         setError('')
         // tiles without a still get one, a few at a time, in the gateway (no model turn)
-        if (!thumbsAsked.current && list.some(p => p.newest && !p.newest.has_thumb)) {
+        if (!thumbsAsked.current && list.some(p => (p.newest && !p.newest.has_thumb) || p.unbuilt)) {
           thumbsAsked.current = true
           const more = async () => {
             for (let i = 0; i < 12; i++) {
@@ -1536,31 +1599,36 @@ function Projects({ focus }) {
   // the same name twice (two copies of an example) is told apart by its project id and its dates
   const titles = {}
   rows.forEach(r => (titles[r.title] = (titles[r.title] || 0) + 1))
+  const allGroups = [...new Set(rows.filter(r => r.own_group && !r.world).map(r => r.group))].sort()
+    .concat(ORDER.filter(g => g !== 'Worlds' && g !== 'Simulations'))
   const tile = r => {
     const n = r.newest
     const counts = [n && n.parts ? plural(n.parts, 'part') : null, r.builds.length ? plural(r.builds.length, 'build') : null,
       r.kits.length ? plural(r.kits.length, 'kit') : null,
       r.items.length ? plural(r.items.length, 'file') : null].filter(Boolean).join(' · ')
+    const typing = renaming && renaming.project === r.project ? renaming : null   // a new name or a new group being typed
     return jsx(Tile, {
       title: (r.favourite ? '★ ' : '') + r.title, badge: titles[r.title] > 1 ? r.project : r.world ? 'world' : null, onOpen: () => setOpen(r.project),
-      actions: renaming === r.project ? [jsx('input', { key: 'n', autoFocus: true, defaultValue: r.title,
-          onKeyDown: e => { if (e.key === 'Enter') tidy(r.project, 'rename', e.target.value); if (e.key === 'Escape') setRenaming(null) },
+      actions: typing ? [jsx('input', { key: 'n', autoFocus: true, defaultValue: typing.verb === 'rename' ? r.title : '',
+          placeholder: typing.verb === 'group' ? 'A new group: Props, Client work…' : null, maxLength: typing.verb === 'group' ? 40 : 120,
+          onKeyDown: e => { if (e.key === 'Enter') tidy(r.project, typing.verb, e.target.value); if (e.key === 'Escape') setRenaming(null) },
           style: { font: 'inherit', fontSize: 12, padding: '3px 6px', borderRadius: 6, border: '1px solid var(--ui-stroke-secondary)', background: 'transparent',
             color: 'var(--ui-text-primary)', width: '100%' } })]
         : [jsx(Button, { label: r.favourite ? 'Unstar' : 'Star', icon: r.favourite ? 'star-full' : 'star-empty', title: 'Favourites come first',
             onClick: () => tidy(r.project, r.favourite ? 'unfavourite' : 'favourite') }, 'f'),
-          jsx(Button, { label: 'Rename', icon: 'edit', onClick: () => setRenaming(r.project) }, 'r'),
-          jsx(Button, { label: r.archived ? 'Restore' : 'Archive', icon: r.archived ? 'reply' : 'archive', title: r.archived ? 'Back on the page' : 'Out of the way (nothing is deleted)',
-            onClick: () => tidy(r.project, r.archived ? 'unarchive' : 'archive') }, 'a')],
+          jsx(MoreMenu, { key: 'm', row: r, groups: allGroups, onRename: () => setRenaming({ project: r.project, verb: 'rename' }),
+            onNewGroup: () => setRenaming({ project: r.project, verb: 'group' }), tidy })],
       image: jsx(Img, { load: n && n.has_thumb ? () => rest('/thumb?' + query({ project: r.project, build: n.build })) : null, deps: [r.project, n && n.build, n && n.has_thumb] }),
       lines: [counts, 'last ' + when(r.updated) + (titles[r.title] > 1 ? '' : ' · ' + r.project), r.changed_since ? 'scene changed since the last build' : null]
     }, r.project)
   }
-  // sorted by kind: worlds, then vehicles, buildings…; what was made for a world sits under that world, folded
-  const ORDER = ['Worlds', 'Vehicles', 'Buildings', 'Machines and instruments', 'Designed', 'Objects', 'Living things', 'Simulations']
+  // sorted by kind: vehicles, buildings…, the user's own groups first; what was made for a world sits under that
+  // world, folded
   const own = rows.filter(r => !r.in_world && !r.world && !r.archived)
   const favs = own.filter(r => r.favourite)
-  const groups = [['Favourites', favs]].concat(ORDER.map(g => [g, own.filter(r => !r.favourite && (r.group || 'Objects') === g)])).filter(([, list]) => list.length)
+  const mine = [...new Set(rows.filter(r => r.own_group && !r.world).map(r => r.group))].sort()
+  const order = mine.concat(ORDER.filter(g => !mine.includes(g)))
+  const groups = [['Favourites', favs]].concat(order.map(g => [g, own.filter(r => !r.favourite && (r.group || 'Objects') === g)])).filter(([, list]) => list.length)
   const archived = rows.filter(r => r.archived && !r.world)
   const parts = {}
   rows.filter(r => r.in_world && !r.archived).forEach(r => (parts[r.in_world] = parts[r.in_world] || []).push(r))
@@ -1620,12 +1688,12 @@ function Examples({ onOpen }) {
     : 'Start a new construct from the example ' + e.name + ' ("' + e.title + '") with construct_start, build and show it, then ask me what I want to change: we will make it mine.')
   return jsxs('div', {
     children: [jsx('div', { style: Object.assign({}, S.text, { marginBottom: 12 }), children: 'Finished constructs that ship with the plugin, by kind. Open makes one yours and shows it here, with no chat; Explain in a chat has Hermes walk you through it.' }),
-      ...KINDS.map(k => [k, rows.filter(e => (CATEGORY_KIND[e.category] || 'Objects') === k)]).filter(([, l]) => l.length).map(([k, list]) => jsxs('div', { children: [
+      ...KINDS.map(k => [k, rows.filter(e => (KINDS.includes(e.group) ? e.group : CATEGORY_KIND[e.category] || 'Objects') === k)]).filter(([, l]) => l.length).map(([k, list]) => jsxs('div', { children: [
         jsx('div', { style: Object.assign({}, S.meta, { textTransform: 'uppercase', letterSpacing: '.08em', margin: '14px 0 8px' }), children: k }),
         jsx('div', { style: GRID, children: list.map(e => jsx(Tile, {
         title: e.title, onOpen: () => openShipped(e),
         image: jsx(Img, { load: e.has_thumb ? () => rest('/example-thumb?' + query({ name: e.name })) : null, deps: [e.name] }),
-        lines: [plural(e.parts || 0, 'part') + (e.made ? ' · ' + str(e.made, 60) : ''),
+        lines: [plural(e.parts || 0, 'part') + (e.original ? ' · original design' : '') + (e.made ? ' · ' + str(e.made, 60) : ''),
           opening && opening.name === e.name ? opening.note : str(e.use, 120) || str(e.line, 170)],
         actions: [jsx(Button, { label: 'Open', icon: 'eye', disabled: !!opening, title: 'Make it yours and look at it here: no chat, no model',
           onClick: () => openShipped(e) }, 'o'),
@@ -1650,7 +1718,7 @@ function Worlds({ focus, drop }) {
   const tidy = async (project, verb, title) => {   // the same marks as the Constructs page: a favourite, a name, the archive
     setRenaming(null)
     try {
-      const out = await runCommand(null, 'construct ' + verb + ' ' + project + (verb === 'rename' ? ' ' + String(title || '').trim().slice(0, 120) : ''))
+      const out = await runCommand(null, 'construct ' + verb + ' ' + project + (verb === 'rename' || verb === 'group' ? ' ' + String(title || '').trim().slice(0, verb === 'group' ? 40 : 120) : ''))
       notify('info', out.slice(0, 160))
     } catch (err) { notify('info', errorText(err)) }
     load()

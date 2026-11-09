@@ -19,7 +19,7 @@
     /construct export <project> glb|godot  an export without a model turn (the card's Export)
     /construct still <project> <build> <camera>   a picture from where the camera is (the card's Picture)
     /construct save-view <world> <name> <camera>  the camera where it is, a named view (the card's Save view)
-    /construct favourite|archive|rename <project> [title]   tidying the Constructs page
+    /construct favourite|archive|rename|group <project> [title|group]   tidying the Constructs page
     /construct job <id>           one background job's state (an ended build is published here)
 """
 
@@ -159,16 +159,19 @@ def handle(raw_args="", event=None, **kwargs):
                 return "Removed %s from %s. Rebuilding (build %s, job %s)." % (r["removed"], r["world"], r["build"], r["job_id"])
             r = world_tools.duplicate_by_hand(words[1].lower(), words[2])
             return "Placed %s in %s. Rebuilding (build %s, job %s); drag it where it belongs." % (r["placed"], r["world"], r["build"], r["job_id"])
-        if verb == "export":   # the card's Export: glb (Blender, three.js, any engine) or godot (a game map), no model turn
-            if len(words) < 3 or words[2] not in ("glb", "godot"):
-                return "Usage: /construct export <project> glb|godot"
+        if verb == "export":   # the card's Export: a model for any tool, a Godot game map, a print; no model turn
+            kinds = {"glb": "glTF", "godot": "Godot", "obj": "OBJ", "fbx": "FBX", "usd": "USD", "usdz": "USDZ", "stl": "STL", "3mf": "3MF"}
+            if len(words) < 3 or words[2] not in kinds:
+                return "Usage: /construct export <project> %s" % "|".join(kinds)
             from . import tools
-            args = {"project": words[1].lower(), "format": "glb"}
+            args = {"project": words[1].lower(), "format": "glb" if words[2] == "godot" else words[2]}
             if words[2] == "godot":
                 args.update(pieces="glued", colliders=True)
+            if words[2] in ("stl", "3mf"):
+                args.update(fit=True)   # the largest that fits the desktop printer's bed
             r = tools._export(args, 0)
             if r.get("job_id") and r.get("state") == "running":
-                return "Exporting %s for %s (job %s)." % (words[1].lower(), "Godot" if words[2] == "godot" else "glTF", r["job_id"])
+                return "Exporting %s for %s (job %s)." % (words[1].lower(), kinds[words[2]], r["job_id"])
             return "Exported %s (file %s)." % (words[1].lower(), r.get("file_path"))
         if verb == "still":   # the card's Picture: the page from where the camera is, a PNG in the project
             parts = str(raw_args or "").strip().split(None, 3)
@@ -182,9 +185,9 @@ def handle(raw_args="", event=None, **kwargs):
                 return "Usage: /construct save-view <world> <name> <camera json>"
             r = world_tools.save_view(parts[1].lower(), parts[2], json.loads(parts[3]))
             return "Saved the view %s in %s. Rebuilding (build %s, job %s)." % (r["view"], r["world"], r["build"], r["job_id"])
-        if verb in ("favourite", "unfavourite", "archive", "unarchive", "rename"):   # tidying the Constructs page
+        if verb in ("favourite", "unfavourite", "archive", "unarchive", "rename", "group"):   # tidying the Constructs page
             if len(words) < 2:
-                return "Usage: /construct %s <project>%s" % (verb, " <title>" if verb == "rename" else "")
+                return "Usage: /construct %s <project>%s" % (verb, {"rename": " <title>", "group": " <group name, or - for its kind>"}.get(verb, ""))
             slug = words[1].lower()
             folder = runtime.projects_root() / slug
             if runtime.SLUG.match(slug) and not folder.is_dir() and (runtime.shown_root() / slug).is_dir():
@@ -196,20 +199,38 @@ def handle(raw_args="", event=None, **kwargs):
                 if len(title) < 3 or not title[2].strip() or len(title[2]) > 120:
                     return "Usage: /construct rename <project> <title, at most 120 characters>"
                 info["title"] = title[2].strip()
+            elif verb == "group":   # the user's own group on the Constructs page; "-" gives it back to its kind
+                name = str(raw_args or "").strip().split(None, 2)
+                name = name[2].strip() if len(name) > 2 else ""
+                if not name or len(name) > 40 or not re.match(r"^[^\x00-\x1f<>]+$", name):
+                    return "Usage: /construct group <project> <group name, at most 40 characters, or - for its kind>"
+                if name == "-":
+                    info.pop("group", None)
+                else:
+                    info["group"] = name
             else:
                 info["favourite" if "favourite" in verb else "archived"] = not verb.startswith("un")
             runtime.write_json(folder / "project.json", info)
             return "%s: %s." % (words[1].lower(), {"favourite": "a favourite", "unfavourite": "no longer a favourite", "archive": "archived",
-                                                  "unarchive": "back from the archive", "rename": "now \"%s\"" % info.get("title")}[verb])
+                                                  "unarchive": "back from the archive", "rename": "now \"%s\"" % info.get("title"),
+                                                  "group": "in \"%s\"" % info["group"] if info.get("group") else "back with its kind"}[verb])
         if verb == "open-world":   # the Worlds page's Open: a shipped world as the user's own, with no model turn
             if len(words) < 2:
                 return "Which world? /construct open-world <example> (/construct worlds lists them)"
             r = world_tools.open_example(words[1].lower())
             return "Opened %s as %s. Building (build %s, job %s)." % (words[1].lower(), r["project"], r["build"], r["job_id"])
         if verb == "thumbs":   # stills for the Constructs page's tiles built without one (a few each call)
-            n = 0
+            n, built = 0, 0
+            for j in jobs.recent(24):   # builds asked for earlier (a picture's build) are published once ended
+                if j.get("kind") == "build" and j.get("state") != "running":
+                    jobs.status(j["job_id"])
             for r in api.projects(root):
                 b = r.get("newest") or {}
+                if r.get("unbuilt") and not r.get("archived") and built < 2:   # only files so far: built once, for its picture
+                    folder = runtime.projects_root() / r["project"]
+                    world_tools._rebuild_later(r["project"], folder, folder / "scene.json")
+                    built += 1
+                    continue
                 if b.get("has_thumb") or not b.get("build"):
                     continue
                 folder = root / "shown" / r["project"] / b["build"]
@@ -221,7 +242,7 @@ def handle(raw_args="", event=None, **kwargs):
                     n += 1
                 if n >= (int(words[1]) if len(words) > 1 and words[1].isdigit() else 4):
                     break
-            return "Made %d thumbnail%s." % (n, "" if n == 1 else "s")
+            return "Made %d thumbnail%s." % (n, "" if n == 1 else "s") + (" Building %d for a picture." % built if built else "")
         if verb == "open-example":   # the Start from page's Open: a shipped construct as the user's own, no model turn
             if len(words) < 2:
                 return "Which construct? /construct open-example <name> (/construct examples lists them)"

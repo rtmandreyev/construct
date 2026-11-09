@@ -269,6 +269,13 @@ class Plugin(unittest.TestCase):
         for area in ("TOOL_MEDIA_RENDERER_AREA", "ROUTES_AREA", "SIDEBAR_NAV_AREA", "PALETTE_AREA"):
             self.assertIn("typeof sdk.%s === 'string'" % area, js)   # feature-detected, never a named import
 
+    def test_designed_things_go_with_what_they_are(self):
+        groups = {e["name"]: e["group"] for e in self.api.examples(self.pkg)}
+        self.assertEqual(groups["kestrel"], "Vehicles")   # a designed ring-ice pusher is a vehicle, not a group of its own
+        self.assertEqual(groups["state-bench"], "Machines and instruments")
+        self.assertNotIn("Designed", set(groups.values()))
+        self.assertTrue(next(e for e in self.api.examples(self.pkg) if e["name"] == "kestrel")["original"])
+
     def test_project_ids_keep_their_letters(self):
         slug = self.mod.runtime.slugify
         self.assertEqual(slug("BÖRSHUSET / Nobel Prize Museum"), "borshuset-nobel-prize-museum")
@@ -609,7 +616,7 @@ class Plugin(unittest.TestCase):
             out = handle("job %s" % job.group(1))
             time.sleep(1)
         self.assertRegex(out, r"\(file .+\.glb\)")
-        self.assertIn("Usage", handle("export %s stl" % sw))
+        self.assertIn("Usage", handle("export %s dwg" % sw))
         out = handle('save-view %s by-the-door {"target": [0, 1, 2], "yaw": 30, "pitch": 12, "dist": 6}' % sw)
         self.assertRegex(out, r"^Saved the view by-the-door in %s\." % sw)
         views = json.loads((self.data / "projects" / sw / "world.json").read_text())["presentation"]["views"]
@@ -623,6 +630,12 @@ class Plugin(unittest.TestCase):
         self.until_done(self.call("construct_build", {"project": piece}))
         rows = {r["project"]: r for r in self.api.projects(self.data)}
         self.assertEqual(rows[piece]["in_world"], "My shed")
+        # the user's own groups on the Constructs page; "-" gives it back to its kind
+        self.assertIn('in "Props"', handle("group %s Props" % piece))
+        row = {r["project"]: r for r in self.api.projects(self.data)}[piece]
+        self.assertEqual((row["group"], row.get("own_group")), ("Props", True))
+        self.assertIn("back with its kind", handle("group %s -" % piece))
+        self.assertNotEqual({r["project"]: r for r in self.api.projects(self.data)}[piece]["group"], "Props")
         tidy = self.call("construct_world", {"op": "tidy", "world": sw, "projects": [piece, "no-such-project"]})
         self.assertEqual(tidy["archived"], [piece])
         self.assertTrue({r["project"]: r for r in self.api.projects(self.data)}[piece]["archived"])

@@ -149,12 +149,32 @@ def project(root, name):
             "created": min(stamps) if stamps else None, "updated": max(stamps) if stamps else None,
             "newest": newest, "builds": builds, "kits": kits, "items": items,
             "world": bool(newest and newest.get("kind") == "world"),
-            "changed_since": bool(newest and newest.get("changed_since"))}
+            "changed_since": bool(newest and newest.get("changed_since")),
+            # only files so far (an export, no page): the Constructs page has it built once for its picture
+            "unbuilt": not builds and (Path(root) / "projects" / name / "scene.json").is_file()}
 
 
-GROUPS = {"architecture": "Buildings", "vehicle": "Vehicles", "machine": "Machines and instruments",
-          "fictional": "Designed", "organism": "Living things"}
+GROUPS = {"architecture": "Buildings", "vehicle": "Vehicles", "machine": "Machines and instruments", "organism": "Living things"}
 _subject_cache = {}
+# what a thing is, from its words (a designed thing, or an older build with no scene to ask): first match wins
+_KIND_WORDS = (
+    ("Vehicles", r"car|taxi|van|bus|truck|lorry|scooter|motorbike|motorcycle|bike|bicycle|samba|vespa|skyline|cruiser|tram|"
+                 r"train|locomotive|ship|boat|yacht|vessel|submarine|aircraft|airplane|plane|jet|helicopter|rocket|spacecraft|"
+                 r"spaceship|starship|shuttle|pusher|tug|hovercraft|drone|rover"),
+    ("Buildings", r"house|townhouse|tower|tenement|villa|basilica|cathedral|church|chapel|duomo|castle|palace|mansion|shed|"
+                  r"building|hall|temple|bridge|lighthouse|station|cabin|pavilion|street|nave"),
+    ("Machines and instruments", r"machine|instrument|synth|synthesizer|synthesiser|engine|clock|watch|orrery|robot|recorder|"
+                                 r"radio|camera|console|device|computer|piano|guitar"),
+    ("Living things", r"creature|animal|plant|tree|flower|fish|bird|jellyfish|insect|organism"),
+)
+
+
+def _kind_of_words(text):
+    t = str(text or "").lower()
+    for group, words in _KIND_WORDS:
+        if re.search(r"\b(%s)s?\b" % words, t):
+            return group
+    return None
 
 
 def _group_of(card):
@@ -171,21 +191,22 @@ def _group_of(card):
             with open(scene, "r", encoding="utf-8") as fh:
                 head = fh.read(4096)
             m = re.search(r'"category"\s*:\s*"([a-z-]+)"', head)
-            _subject_cache[key] = m.group(1) if m else ""
-        cat = _subject_cache[key]
+            summary = re.search(r'"summary"\s*:\s*"((?:[^"\\]|\\.){0,600})"', head)
+            _subject_cache[key] = (m.group(1) if m else "", summary.group(1) if summary else "")
+        cat, summary = _subject_cache[key]
     except (OSError, TypeError):
-        cat = ""
+        cat, summary = "", ""
     if cat in GROUPS:
         return GROUPS[cat]
-    # no scene to ask (an older build): the title is a fair guess
-    title = str(card.get("title") or "").lower()
-    if re.search(r"\b(car|taxi|van|bus|truck|lorry|scooter|motorbike|bike|bicycle|samba|vespa|skyline|cruiser|tram|train|ship|boat|"
-                 r"aircraft|plane|rocket|tug|spacecraft)\b", title):
-        return "Vehicles"
-    if re.search(r"\b(house|townhouse|tower|tenement|villa|basilica|cathedral|church|chapel|duomo|castle|palace|mansion|shed|"
-                 r"building|hall|temple|bridge|lighthouse|street)\b", title):
-        return "Buildings"
-    return "Objects"
+    # designed (fictional) things go with what they are (a designed ship with the vehicles); with no scene to ask
+    # (an older build), the title is a fair guess
+    return _kind_of_words(card.get("title")) or (_kind_of_words(summary) if cat == "fictional" else None) or "Objects"
+
+
+def _example_group(row):
+    if row.get("category") in GROUPS:
+        return GROUPS[row["category"]]
+    return _kind_of_words(row.get("title")) or _kind_of_words(row.get("line")) or "Objects"
 
 
 _SCENE_ID = re.compile(rb'"id"\s*:\s*"([^"]{1,200})"')
@@ -251,7 +272,10 @@ def projects(root):
     rows = rows[:LIST_MAX]
     infos = {}
     for r in rows:
-        info = infos[r["project"]] = _project_info(r.get("newest") or {})   # the user's own: a title, a favourite, the archive
+        # the user's own marks (a title, a favourite, the archive, a group, the world it was made for) live in the
+        # project's folder; a build made from a round's scene inside it still finds them there
+        own = {"scene": str(Path(root) / "projects" / r["project"] / "project.json")}
+        info = infos[r["project"]] = _project_info(own)
         if isinstance(info.get("title"), str) and info["title"].strip():
             r["title"] = info["title"].strip()[:120]
     parts = _parts_of_worlds(rows)
@@ -259,6 +283,8 @@ def projects(root):
         r["group"] = _group_of(r.get("newest") or {})
         info = infos[r["project"]]
         r["favourite"], r["archived"] = info.get("favourite") is True, info.get("archived") is True
+        if isinstance(info.get("group"), str) and info["group"].strip() and not r.get("world"):
+            r["group"], r["own_group"] = info["group"].strip()[:40], True   # the user's own group
         if not r.get("in_world") and not r.get("world") and isinstance(info.get("for_world"), str):
             fw = info["for_world"]   # made for a world (its id or name): kept with it
             r["in_world"] = next((w["title"] for w in rows if w.get("world") and fw in (w["project"], w["title"])), fw)
@@ -353,7 +379,11 @@ def item(root, project, item_id):
 
 def examples(base=HERE):
     rows = _read_json(Path(base) / "examples" / "catalog.json", [])
-    return [r for r in rows if isinstance(r, dict) and SLUG.match(str(r.get("name", "")))]
+    rows = [r for r in rows if isinstance(r, dict) and SLUG.match(str(r.get("name", "")))]
+    for r in rows:
+        r["group"] = _example_group(r)
+        r["original"] = r.get("category") == "fictional" or r.get("accuracy") == "original"
+    return rows
 
 
 def example_thumb(name, base=HERE):

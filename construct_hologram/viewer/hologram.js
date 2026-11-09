@@ -290,7 +290,9 @@ uniform vec3 uEye; uniform float uBuild; uniform float uClear; uniform vec2 uHi;
 uniform float uCut;   // a cutaway: surfaces nearer the eye than this are not drawn (a wall between you and the room)
 out vec4 o;
 void main() {
-  if (uCut > 0.0 && distance(vWorld, uEye) < uCut) discard;
+  // a cutaway takes away walls and what stands between the eye and its subject, never the floor, road or ground
+  // below the eye (a camera at street level would otherwise look down into a hole)
+  if (uCut > 0.0 && distance(vWorld, uEye) < uCut && !(abs(normalize(vNrm).y) > 0.7 && vWorld.y < uEye.y - 0.05)) discard;
   bool ghost = uClear > 1.5;   // what was built before a sub-assembly at the bench (uFrom): a faint ghost around it
   if (vPhase > uBuild + 0.0005 || (ghost ? vPhase >= uFrom - 1e-4 : vPhase < uFrom - 1e-4)) discard;
   float hi = (vPhase >= uHi.x && vPhase < uHi.y) ? 1.0 : 0.0;   // the pieces of the step being shown
@@ -1010,6 +1012,16 @@ void main() {
     }
     return Object.values(best).sort((a, b) => a.dist - b.dist);
   };
+  // how far a nudge moves a placement: steps grow with its size (a tenth of its largest side, at least one), so a
+  // planet in a market square moves in steps you can see and a cup in steps you can place it by
+  Hologram.prototype.stepScale = function (id) {
+    let lo = [Infinity, Infinity, Infinity], hi = [-Infinity, -Infinity, -Infinity];
+    for (const [a, b] of this.framingBoxes(id, true)) for (let k = 0; k < 3; k++) { lo[k] = Math.min(lo[k], a[k]); hi[k] = Math.max(hi[k], b[k]); }
+    const size = Math.max(hi[0] - lo[0], hi[1] - lo[1], hi[2] - lo[2]);
+    if (!(size > 10)) return 1;
+    const raw = size / 10, mag = Math.pow(10, Math.floor(Math.log10(raw))), f = raw / mag;
+    return (f < 1.5 ? 1 : f < 3.5 ? 2 : f < 7.5 ? 5 : 10) * mag;
+  };
   Hologram.prototype.bottomOf = function (id) {   // its lowest point, as it was compiled
     let lo = Infinity;
     for (const [a] of this.framingBoxes(id, true)) lo = Math.min(lo, a[1]);
@@ -1160,9 +1172,39 @@ void main() {
       }
       this._boxes["*"] = all.length ? all : [[this.geo.bounds.min, this.geo.bounds.max]];
       this._shut["*"] = shut.length ? shut : this._boxes["*"];
+      // a world's whole view frames where its things are, not a far-off one: a placement farther from the rest than
+      // three times their size (a planet set down a kilometre off) is drawn, and has its own view, but does not
+      // pull every view out to empty ground between it and the square
+      if (this.geo.world) {
+        const far = this.farPlacements();
+        if (far.size) {
+          const keep = (p) => !p.sky && !far.has(p.placement) && !(p.shape === "points" && (p.role === "ornament" || p.certainty === "decorative"));
+          const near = [], nearShut = [];
+          for (const p of this.geo.parts) if (keep(p)) { near.push(...this._boxes[p.id]); nearShut.push(...this._shut[p.id]); }
+          if (near.length) { this._boxes["*"] = near; this._shut["*"] = nearShut; }
+        }
+      }
     }
     const from = closed ? this._shut : this._boxes;
     return from[partId || "*"] || from["*"];
+  };
+  Hologram.prototype.farPlacements = function () {
+    const box = {};
+    for (const p of this.geo.parts) {
+      if (p.sky || !p.placement) continue;
+      const b = box[p.placement] = box[p.placement] || [[Infinity, Infinity, Infinity], [-Infinity, -Infinity, -Infinity]];
+      for (const x of p.instances) for (let k = 0; k < 3; k++) { b[0][k] = Math.min(b[0][k], x.min[k]); b[1][k] = Math.max(b[1][k], x.max[k]); }
+    }
+    const ids = Object.keys(box), far = new Set();
+    if (ids.length < 3) return far;
+    const mid = (b) => [0, 1, 2].map((k) => (b[0][k] + b[1][k]) / 2), rad = (b) => 0.5 * Math.hypot(b[1][0] - b[0][0], b[1][1] - b[0][1], b[1][2] - b[0][2]);
+    for (const id of ids) {
+      const rest = [[Infinity, Infinity, Infinity], [-Infinity, -Infinity, -Infinity]];
+      for (const o of ids) if (o !== id) for (let k = 0; k < 3; k++) { rest[0][k] = Math.min(rest[0][k], box[o][0][k]); rest[1][k] = Math.max(rest[1][k], box[o][1][k]); }
+      const r = rad(rest), d = Math.hypot(...[0, 1, 2].map((k) => mid(box[id])[k] - mid(rest)[k]));
+      if (r > 0 && d - rad(box[id]) > 3 * r) far.add(id);
+    }
+    return far.size < ids.length / 2 ? far : new Set();
   };
   Hologram.prototype.cameraFor = function (id) {
     // fit the silhouette as seen from this direction: project every box corner onto the camera's
@@ -1948,7 +1990,7 @@ void main() {
         const sel = holo.arr.sel;
         if (e.key === "Escape") { holo.arr.sel = null; holo.arr.multi.clear(); holo.arr.hits = []; arrangeTell(); kick(); return; }
         if (sel) {
-          const ed = editOf(sel), step = e.shiftKey ? 1 : e.altKey ? 0.01 : 0.1, c = holo.userCamera || holo.lastCamera;
+          const k = holo.stepScale(sel), ed = editOf(sel), step = (e.shiftKey ? 1 : e.altKey ? 0.01 : 0.1) * k, c = holo.userCamera || holo.lastCamera;
           const yaw = (c ? c.yaw : 0) * Math.PI / 180;
           const fwd = [-Math.sin(yaw), 0, -Math.cos(yaw)], right = [Math.cos(yaw), 0, -Math.sin(yaw)];
           let w = null;
@@ -1959,8 +2001,8 @@ void main() {
           if (w) { for (const id of all) { const d = local(id, w), em = editOf(id); em.move = [em.move[0] + d[0], em.move[1], em.move[2] + d[2]]; } }
           else if (e.key === "q" || e.key === "Q") all.forEach((id) => { editOf(id).turn += e.shiftKey ? 1 : 15; });
           else if (e.key === "e" || e.key === "E") all.forEach((id) => { editOf(id).turn -= e.shiftKey ? 1 : 15; });
-          else if (e.key === "PageUp") all.forEach((id) => { editOf(id).move[1] += e.shiftKey ? 0.5 : 0.05; });
-          else if (e.key === "PageDown") all.forEach((id) => { editOf(id).move[1] -= e.shiftKey ? 0.5 : 0.05; });
+          else if (e.key === "PageUp") all.forEach((id) => { editOf(id).move[1] += (e.shiftKey ? 0.5 : 0.05) * k; });
+          else if (e.key === "PageDown") all.forEach((id) => { editOf(id).move[1] -= (e.shiftKey ? 0.5 : 0.05) * k; });
           else if (e.key === "Backspace" || e.key === "Delete") all.forEach((id) => { delete holo.arr.edits[id]; });
           else w = false;
           if (w !== false) { e.preventDefault(); checkHits(true); lastInput = performance.now(); arrangeTell(); kick(); return; }
@@ -2053,6 +2095,7 @@ void main() {
           (holo.arr.multi.size > 1 ? [...holo.arr.multi] : [id]).forEach((x) => { editOf(x).move[1] += m; }); checkHits(true); arrangeTell(); kick(); return true; },
         putBack() { const id = holo.arr.sel; if (!id) return false; remember();
           (holo.arr.multi.size > 1 ? [...holo.arr.multi] : [id]).forEach((x) => { delete holo.arr.edits[x]; }); checkHits(true); arrangeTell(); kick(); return true; },
+        liftStep(n) { const id = holo.arr.sel; if (!id || typeof n !== "number") return false; return this.lift(n * 0.25 * holo.stepScale(id)); },
         undo() { return stepBack(true); },
         redo() { return stepBack(false); },
         snap(on) { holo.arr.snap = on === undefined ? !holo.arr.snap : !!on; arrangeTell(); return holo.arr.snap; },
