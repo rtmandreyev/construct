@@ -349,6 +349,40 @@ class Finishes(unittest.TestCase):
         with self.assertRaises(export.ExportError):
             glb_of(sc, materials={"materials": [{"parts": "x", "finish": "velvet"}]})
 
+    def test_a_construct_finishes_with_its_own_map_by_default(self):
+        with tempfile.TemporaryDirectory() as d:
+            d = Path(d)
+            (d / "maps").mkdir()
+            (d / "scene.json").write_text("{}", encoding="utf-8")
+            self.assertIsNone(export.map_beside(d / "scene.json"))
+            (d / "maps" / "finish.json").write_text("{}", encoding="utf-8")
+            self.assertEqual(export.map_beside(d / "scene.json"), d / "maps" / "finish.json")
+            (d / "scene.materials.json").write_text("{}", encoding="utf-8")   # the plugin's name comes first
+            self.assertEqual(export.map_beside(d / "scene.json"), d / "scene.materials.json")
+        # `construct export` with no --materials uses the gallery's own map (the Vespa's), not the role greys
+        with tempfile.TemporaryDirectory() as d:
+            out = Path(d, "v.glb")
+            from construct_hologram import cli
+            self.assertEqual(cli.main(["export", str(ROOT / "examples" / "vespa-gs150" / "scene.json"), "--out", str(out)]), 0)
+            names = {m.get("name", "") for m in export.read_glb(out.read_bytes())[0]["materials"]}
+            self.assertFalse(any(n.startswith("construct:mass") for n in names), names)
+
+    def test_tyres_are_rubber_and_chrome_is_chrome_without_a_map(self):
+        self.assertEqual(export.name_finish("front-left-tyre"), "rubber")
+        self.assertEqual(export.name_finish("chrome-bumper"), "chrome")
+        self.assertIsNone(export.name_finish("body-left"))
+        sc = load("open-reel")
+        sc["parts"][0] = dict(sc["parts"][0], id="reel-tyre")
+        doc, _ = glb_of(sc)
+        mat = next(m for m in doc["materials"] if m["name"].startswith("construct:rubber"))
+        self.assertGreater(mat["pbrMetallicRoughness"]["roughnessFactor"], 0.9)
+
+    def test_a_map_that_misses_surfaces_lists_them(self):
+        sc = load("open-reel")
+        _, summary = export.render(sc, "glb", materials={"materials": [{"parts": [sc["parts"][0]["id"]], "color": "#ff0000"}]})
+        self.assertIn("unmapped", summary)
+        self.assertNotIn(sc["parts"][0]["id"], summary["unmapped"])
+
     def test_a_material_map_names_the_key_it_does_not_know(self):
         with self.assertRaises(export.ExportError) as cm:
             export._load_materials({"materials": [{"parts": ["x"], "metalness": 1.0}]})

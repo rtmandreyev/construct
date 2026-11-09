@@ -1012,6 +1012,13 @@ class Plugin(unittest.TestCase):
 
     # ------------------------------------------------------------------ refusals
 
+    def test_the_plugin_finds_a_construct_finish_map_as_the_engine_does(self):
+        from construct_hologram import export as engine_export
+        root = Path(__file__).resolve().parent.parent / "examples"
+        for scene in sorted(root.glob("*/scene.json"))[:40]:
+            mine, theirs = self.mod.runtime.map_beside(scene), engine_export.map_beside(scene)
+            self.assertEqual(str(mine) if mine else None, str(theirs) if theirs else None, scene)
+
     def test_a_page_too_large_for_the_chat_says_so(self):
         # a 78 MB world page was answered 404 and the card said "no longer kept"; it is too large, and says so
         with tempfile.TemporaryDirectory() as d:
