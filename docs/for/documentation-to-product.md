@@ -1,7 +1,7 @@
 # Documentation → product
 
 A program, a system or a machine that is well documented can be the specification for a physical product nobody
-has built. The documentation fixes what the product must do; the agent designs the controls, displays, enclosure
+has built. The documentation fixes what the product must do. The agent designs the controls, displays, enclosure
 and insides that do it, and Construct keeps the two apart, checks the result and builds it as a construct and a 3D
 model. This page follows one run, a hardware instrument designed from the manual of a software synthesizer, and
 says plainly what it showed and what it did not.
@@ -15,7 +15,7 @@ says plainly what it showed and what it did not.
 one session of 64 minutes. The original autonomous run, shown as it came out.</sub></p>
 
 The pictures down to [The result](#the-result) are the original autonomous run, as it came out. An independent audit
-then read the run; what it found worth correcting is corrected in an audited revision of the same instrument,
+then read the run, and what it found worth correcting is corrected in an audited revision of the same instrument,
 [live in the gallery](https://rtmandreyev.github.io/construct/examples/serum-2-61/) and described under
 [The audited revision](#the-audited-revision).
 
@@ -29,7 +29,7 @@ Serum 2 is a demanding test. Its manual documents three oscillators with five en
 multisample, sample, granular, spectral), sub and noise oscillators, two filters, three nested effect racks, four
 envelopes, ten LFOs, eight macros, a 64-slot modulation matrix with 49 sources, clip banks with a piano-roll
 editor, an arpeggiator, a wavetable editor, a formula parser, MPE and a preset database. A panel of knobs cannot
-hold that; the design has to decide how each part is reached.
+hold that. The design has to decide how each part is reached.
 
 ## The input
 
@@ -119,7 +119,7 @@ depends on a host program). The session log fixes the order: the inventory at mi
 hardware architecture at minute 13, the design notes at minute 14, the first geometry at minute 18.
 
 Each row is a paraphrase of its pages, not a quotation. Spot-checked against the manual, the counts held (64 slots
-and 49 sources, ten LFOs, twelve clip slots, four envelopes, up to 16 unison voices); one detail in one row was not
+and 49 sources, ten LFOs, twelve clip slots, four envelopes, up to 16 unison voices). One detail in one row was not
 in the pages it cites. The grouping itself is the agent's: nobody has yet compared it with the manual parameter by
 parameter.
 
@@ -149,12 +149,12 @@ electronics, the cooling).
 
 The design notes, written before any geometry, set one rule: *the stable object is the parameter, not a screen
 pixel.* Every engine parameter keeps its identity, units, value, modulation eligibility, undo history and saved
-state; a dedicated knob, a contextual encoder and a display field are all views of that same parameter. So a
+state. A dedicated knob, a contextual encoder and a display field are all views of that same parameter. So a
 feature with no knob of its own is still the same feature, reached another way, rather than a simplified second
 engine.
 
 In the model this shows in one checkable way: the display studies. The same scene in its modulation, effects and
-clip states changes only labels and the screen's trace; not one part moves or changes size.
+clip states changes only labels and the screen's trace. Not one part moves or changes size.
 
 <p align="center">
   <img src="../media/docs-to-product-modulation.jpg" width="49%" alt="The panel in its modulation state: the LFO family key lit, pad L2 selected, the oscillator A POSITION knob with a modulation ring, the status window reading LFO BANK / LFO2 > A.POS / +32% BI / 3, the matrix row on the central display">
@@ -180,8 +180,8 @@ In the software, modulation is a drag from a source onto a knob. The design turn
 
 The deep matrix work (auxiliary sources, output scaling, bypass, delete, reassign, sorting and locking all 64
 slots) stays on the central display as a table, with undo. It is an established hardware idiom (touch the
-destination, turn a depth encoder) applied to Serum's documented matrix; hardware-native for the frequent
-operations, a faithful table for the deep ones.
+destination, turn a depth encoder) applied to Serum's documented matrix: hardware-native for the frequent
+operations, and a faithful table for the deep ones.
 
 ## Deep editing
 
@@ -271,7 +271,7 @@ They establish different things, and neither is engineering validation.
   configured stop condition. The critics found real presentation problems: legends running
   through knob rings, an unreadable rear panel, a bay with no visible harnesses, crowded labels. They were the same
   model family as the author, had no reference to compare with, and received the author's own documents with each
-  version; one critic messaged the author mid-round and then changed its blind judgement. Read the loop as a check
+  version. One critic messaged the author mid-round and then changed its blind judgement. Read the loop as a check
   on legibility, not as an expert's review.
 
 ## The result
@@ -339,7 +339,7 @@ animations) was imported and rendered the same way for the pictures above. No CA
 In a single 64-minute agent session (64 min 27 s from task start to task complete; GPT-6.1 Sol, high effort), from
 prompt to packaged deliverables, including the research, five critic rounds and the exports. About 20 minutes went
 to research and documents before the first scene, about 32 to the rounds (critics included) and about 12 to the
-exports. The brief was written in advance and the skill was already installed; one message from the person
+exports. The brief was written in advance and the skill was already installed. One message from the person
 arrived during the run ("I downloaded the manual for you"), which the agent did not need: it had the same file.
 
 ## What it shows
@@ -380,7 +380,7 @@ The problem is complex but unusually well conditioned. The manual states its arc
 oscillators, two filters, four envelopes, ten LFOs, eight macros, 64 slots, 12 clips), and counts turn straight into
 panel sections and pads. It is linear and page-addressed, so 354 pages could be reduced to 44 cited rows in minutes.
 Synthesizers are a mature hardware genre, with known idioms for oscillator strips, filter sections, macro rows and
-assign-and-depth modulation, standard keybeds and catalogued converters, so the model had strong priors; the manual
+assign-and-depth modulation, standard keybeds and catalogued converters, so the model had strong priors. The manual
 was not doing all the work. And nothing had to look like an existing object: a car or a building is harder because
 its shape is the evidence.
 
