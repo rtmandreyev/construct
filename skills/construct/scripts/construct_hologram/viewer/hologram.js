@@ -1890,8 +1890,10 @@ void main() {
       const siblings = re ? geo.parts.filter((q) => q.placement === p.placement && re.test(localId(q))).length : 1;
       const si = holo.styles.findIndex((st) => st[6] === pi);
       const colour = si >= 0 && geo.style_colors && geo.style_colors[si] ? String(geo.style_colors[si]).toLowerCase() : null;
+      const recs = geo.world ? geo.world.placements : [], rec = recs.find((q) => q.id === p.placement);
+      const shared = rec ? recs.filter((q) => q.construct === rec.construct).map((q) => q.id) : [];
       return { part: id, placement: p.placement || null, label: p.label || id, pattern: siblings > 1 ? pattern : null, siblings,
-               color: colour, finish: null };
+               color: colour, finish: (geo.part_finishes || {})[p.id] || null, shared, title: rec ? rec.title : null };
     };
     let finDown = null;
     canvas.addEventListener("pointerdown", (e) => { finDown = holo.fin.on ? [e.clientX, e.clientY] : null; });
