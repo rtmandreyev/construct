@@ -239,7 +239,7 @@ def handle(raw_args="", event=None, **kwargs):
             shown = runtime.shown_root() / slug
             for d in (folder, shown):
                 if d.is_dir():
-                    shutil.rmtree(d, ignore_errors=True)
+                    runtime.remove_tree(d)
             if folder.exists():
                 return "%s could not be deleted completely; what is left is in %s." % (slug, folder)
             return "%s: deleted." % slug

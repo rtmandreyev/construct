@@ -18,6 +18,7 @@ import re
 import unicodedata
 import secrets
 import shutil
+import stat
 import subprocess
 import sys
 import time
@@ -428,7 +429,35 @@ CONSTRUCT_ENV = ("CONSTRUCT_BLENDER", "CONSTRUCT_FREECAD", "CONSTRUCT_NETLOGO", 
 
 
 def child_env():
-    return {k: os.environ.get(k) for k in CHILD_ENV + CONSTRUCT_ENV if os.environ.get(k) is not None}
+    """What a child is given of the environment: what it needs to start, Construct's own settings, and UTF-8 for its
+    output (Windows would otherwise write in its legacy code page, and a "·" would arrive broken)."""
+    env = {k: os.environ.get(k) for k in CHILD_ENV + CONSTRUCT_ENV if os.environ.get(k) is not None}
+    env.update({"PYTHONIOENCODING": "utf-8", "PYTHONUTF8": "1"})
+    return env
+
+
+def remove_tree(path, tries=5):
+    """Remove a folder and all it holds, on Windows too: a read-only file is made writable, and a file another
+    process still holds is given a moment to be let go. True when the folder is gone."""
+    path = Path(path)
+
+    def again(func, p, *_):
+        try:
+            os.chmod(p, stat.S_IWRITE)
+            func(p)
+        except OSError:
+            pass
+    for i in range(tries):
+        if not path.exists():
+            return True
+        try:
+            shutil.rmtree(path, **({"onexc": again} if sys.version_info >= (3, 12) else {"onerror": again}))
+        except OSError:
+            pass
+        if not path.exists():
+            return True
+        time.sleep(0.15 * (i + 1))
+    return not path.exists()
 
 
 def child_argv(op, *args):
@@ -515,7 +544,7 @@ def prune(folder, keep=KEEP_BUILDS):
         return
     builds = sorted(p for p in folder.iterdir() if p.is_dir() and BUILD.match(p.name))
     for old in builds[:-keep] if keep else builds:
-        shutil.rmtree(old, ignore_errors=True)
+        remove_tree(old)
 
 
 def show(slug, build, page, card, thumb=None):

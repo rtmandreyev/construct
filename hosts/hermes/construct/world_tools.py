@@ -179,11 +179,11 @@ def _refresh(slug, folder, doc, pid=None):
                                      "\n".join(res["errors"]))
     except Exception:
         for key, dest in backups.items():
-            shutil.rmtree(dest, ignore_errors=True)
+            runtime.remove_tree(dest)
             shutil.move(str(stash / key), str(dest))
         raise
     finally:
-        shutil.rmtree(stash, ignore_errors=True)
+        runtime.remove_tree(stash)
     return refreshed, skipped, res
 
 
@@ -305,7 +305,7 @@ def _from_example(args, later=False):
                                                      "origin": "world", "from": "example:%s" % name,
                                                      "created": runtime.stamp_iso()})
     except Exception:
-        shutil.rmtree(folder, ignore_errors=True)
+        runtime.remove_tree(folder)
         raise
     if later:   # opened from the Worlds page: the page follows the build itself
         build, job_id = _rebuild_later(slug, folder, path)
@@ -347,7 +347,7 @@ def world(args):
             runtime.write_json(folder / "project.json", {"slug": slug, "title": title.strip(), "scene": "world.json",
                                                          "origin": "world", "created": runtime.stamp_iso()})
         except Exception:
-            shutil.rmtree(folder, ignore_errors=True)
+            runtime.remove_tree(folder)
             raise
         res = _rebuild(slug, folder, path, args.get("wait_seconds"))
         if isinstance(res, dict):
