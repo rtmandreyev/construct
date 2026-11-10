@@ -50,7 +50,7 @@ On the page:
    same camera (the hologram, the plain model, the finished one) blended along two diagonals.
 
 The page loads three.js 0.160.0 from cdn.jsdelivr.net and its fonts (Instrument Serif, IBM Plex
-Mono) from Google Fonts, so it needs an internet connection; to open it from disk, build the site
+Mono) from Google Fonts, so it needs an internet connection. To open it from disk, build the site
 (`python3 scripts/build_site.py --out site --no-films`) and serve `site/` with any static server.
 
 **What the models are, honestly:** correctly sized named parts with working joints, built from

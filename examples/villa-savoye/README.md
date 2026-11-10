@@ -56,7 +56,7 @@ and rails, the solarium's framed opening, the sashes in their reveals.
 | Time | the build 2 h 25 min (22:54 to 01:19): 59.8 active authoring minutes and 76.2 critic minutes. Then a question, the fit repair, the exports, the kit and the film in about an hour more |
 | Frame | metres, +Y up, the origin at the centre of the presentation ground (21 × 23 m); the house's footprint is the published 19 × 21.5 m |
 
-The requests, in order, as typed. The first three were one conversation; the exports, kit and film a second, after
+The requests, in order, as typed. The first three were one conversation. The exports, kit and film were a second, after
 the plugin was restarted with fixes, which found the project by its name:
 
 1. *Make me a masterpiece construct of Le Corbusier's Villa Savoye in Poissy (1931). Research its published plans

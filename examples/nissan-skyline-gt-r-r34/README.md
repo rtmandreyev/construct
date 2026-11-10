@@ -16,7 +16,7 @@ python3 construct_hologram/cli.py build examples/nissan-skyline-gt-r-r34/scene.j
 ## Refined for the solid (1.2)
 
 The light forgives what a solid does not. Seen as a solid (**S** on the page) and exported to Blender, the first
-version showed defects the checks had let through; this version answers them, and every part keeps its name:
+version showed defects the checks had let through. This version answers them, and every part keeps its name:
 
 - **C-pillar** (`sail-panel`): a fully rounded fin at 36° that stopped short of the rear glass, left a hollow
   between itself and the glass and ran forward through the quarter window. It now closes the pillar from the
