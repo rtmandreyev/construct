@@ -3,13 +3,17 @@
 **Construct is a tool for AI agents that turns everything that can be found out about a thing into one exact,
 checked description of it: its named parts at their real sizes, how they fit together, open and move, and how
 each one is known, measured or guessed.** An agent does the research and writes the description; Construct
-checks it and builds from it, the same description always into the same result. Everything else comes from that
-one description.
+checks it and builds from it, the same description always into the same result. Put constructs together and they
+make a **world**: a room, a street, a whole game level, every construct in it still whole, with its own parts,
+sources and joints.
 
-**Describe a thing. Get a hologram, a 3D model, a print and a kit.** You ask any AI agent for a thing
-in plain words, and it builds an animated model of it in lines of light, the **Measured Light** style,
-as one web page you can open anywhere, honest about what is known. The same construct becomes a 3D
-model with named parts and working joints, a print, a model kit, a CAD file or a film.
+**Describe a thing, or show a place. Get a hologram, a 3D model, a print, a kit, or a whole world.** You ask any AI
+agent in plain words, and it builds an animated model in lines of light, the **Measured Light** style, as one web
+page you can open anywhere, honest about what is known. The same construct becomes a 3D model with named parts and
+working joints, a print, a model kit, a CAD file or a film. Give it one picture of a place and it builds the place:
+[Rain Harbour](examples/worlds/rain-harbour/), a game level from a concept picture, and
+[Stortorget](examples/worlds/stortorget/), Stockholm's old square from a photograph, each zero-shot, each construct in
+it its own. In Hermes you arrange a world by hand, with no AI at all.
 
 <p align="center">
   <a href="https://rtmandreyev.github.io/construct/examples/sainte-chapelle/"><img src="docs/media/assembly-sainte-chapelle.gif" width="32%" alt="The Sainte-Chapelle construct assembling itself"></a>

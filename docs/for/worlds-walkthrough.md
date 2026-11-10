@@ -35,6 +35,9 @@ the chat, assembling piece by piece.
 
 <p align="center"><img src="../media/worlds/hermes-worlds-tab.png" width="90%" alt="The Worlds tab on the Constructs page: a card for each world with its picture, its placements and an Open button"></p>
 
+<p align="center"><img src="../media/worlds/hermes-world-card.png" width="90%" alt="The Villa Savoye, lived in, opened from the Worlds tab: its card in the solid view looking into the salon, the Eames chair and the studio table with SERUM, and the card's Arrange, Views, Provenance, Solid and Export controls"></p>
+<p align="center"><sub>The Villa Savoye, lived in, as it ships, opened from the Worlds tab: Solid (S), the Salon view.</sub></p>
+
 - **Views…** on the card lists the world's views: the whole, the views the world names ("by the door", "the car
   close"), and each placement.
 - **Provenance** (P) colours every part by how it is known, across the whole world: traced from plans, measured,
@@ -57,7 +60,7 @@ the chat, assembling piece by piece.
 **Save** checks the world with your moves (overlaps, collisions, what stands on nothing), saves it and rebuilds it.
 The world's log marks the moves as yours. **Undo last change** steps back one save.
 
-<p align="center"><img src="../media/worlds/hermes-arrange.png" width="90%" alt="Arranging a world of the Villa, the Vespa, SERUM and KESTREL: the Vespa selected, the Arrange toolbar with Snap and Undo last change, and the Vespa's bar with Turn 90°, Lift, Lower, Put back, Duplicate and Remove"></p>
+<p align="center"><img src="../media/worlds/hermes-arrange.png" width="90%" alt="Arranging the Villa Savoye, lived in, in Hermes Desktop, in the solid view: the Eames chair chosen in the salon, moved 0.45 m and turned 45°, the Arrange bar with Save 1 change, Put back and Undo, and the chair's own bar with Turn 90°, Lift, Lower and Put back"></p>
 
 ## 3. Add a construct
 
@@ -65,7 +68,7 @@ The world's log marks the moves as yours. **Undo last change** steps back one sa
 Pick one: it lands at its real size on a floor it fits on, or on clear ground in front, chosen and ready to drag
 where it belongs. A construct's own card has **Place in a world** for the same thing from the other side.
 
-<p align="center"><img src="../media/worlds/hermes-add-construct.png" width="90%" alt="The Add a construct picker over a world: a search box, filters by kind (vehicles, buildings, machines and instruments, objects, living things) and by source (yours, the gallery), and a grid of construct pictures"></p>
+<p align="center"><img src="../media/worlds/hermes-add-construct.png" width="90%" alt="Add a construct over the Villa Savoye, lived in: the Revox, the Braun and the Leica on their table above, and below it the library with a search box, filters by kind and source, and a grid of shipped constructs"></p>
 
 ## 4. Ask for one
 
@@ -73,9 +76,8 @@ A world can be asked for in plain words. Hermes uses `construct_world`: it makes
 on its surface (several at once), reads the world's warnings and fixes them, names the views, and shows each change
 live.
 
-> Put my Villa, my Vespa, SERUM and KESTREL in one world.
-
-<p align="center"><img src="../media/worlds/hermes-world-card.png" width="90%" alt="A world in the Hermes chat: the Villa Savoye with a Vespa under its pilotis, a synthesizer in the salon and an ice tug far off in the sky, with the world's Views menu"></p>
+> Put my Eames chair in the Villa's salon facing the terrace, my Revox, Braun and Leica on a table, the FJ62 and the DB5
+> under the pilotis, and KESTREL far off over the roof.
 
 Hermes finds the constructs by name in your projects, the ones that ship and the gallery (a gallery construct is
 downloaded from Construct's own GitHub release, after you approve it in Hermes's prompt). It places them at real

@@ -56,7 +56,7 @@ It is the place to learn **Arrange**. On a world's card in Hermes Desktop (or **
 - **Add a construct** opens the library with previews; the one you pick lands on a floor it fits on, or on clear
   ground in front.
 
-<p align="center"><img src="media/worlds/hermes-arrange.png" width="95%" alt="Arranging a world in Hermes Desktop: the Vespa selected in a world of the Villa, SERUM and KESTREL, the Arrange bar with Snap and Undo last change, and the Vespa's own bar with Turn 90°, Lift, Lower, Put back, Duplicate and Remove"></p>
+<p align="center"><img src="media/worlds/hermes-arrange.png" width="95%" alt="Arranging the Villa Savoye, lived in, in Hermes Desktop, in the solid view: the Eames chair chosen in the salon, moved 0.45 m and turned 45°, the Arrange bar with Save 1 change, Put back and Undo, and the chair's own bar with Turn 90°, Lift, Lower and Put back"></p>
 
 **Save** checks the world with the moves (the audit names anything that now overlaps), saves it and rebuilds it,
 with no model turn; **Undo last change** steps back. **Save view** names the camera as a view of the world;

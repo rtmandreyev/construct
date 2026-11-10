@@ -474,10 +474,10 @@ scene always gives the same file.
   `move` or `remove`. By hand, change a placement's `at` (metres) or `yaw` (degrees) and run `construct check
   world.json`.
 
-<p align="center"><img src="../media/worlds/hermes-arrange.png" width="90%" alt="Arranging a world in Hermes Desktop: a construct selected and dragged, the Arrange bar with Snap, Turn 90°, Lift, Lower, Duplicate and Save"></p>
+<p align="center"><img src="../media/worlds/hermes-arrange.png" width="90%" alt="Arranging the Villa Savoye, lived in, in Hermes Desktop, in the solid view: the Eames chair chosen in the salon, moved 0.45 m and turned 45°, the Arrange bar with Save 1 change, Put back and Undo, and the chair's own bar with Turn 90°, Lift, Lower and Put back"></p>
 
 - **Place your own props.** On the card, **Add a construct** opens the library (your own constructs, the ones the
-  plugin ships, the gallery) and drops the one you pick in the middle of the world, ready to drag. By asking, the agent
+  plugin ships, the gallery) and puts the one you pick on a floor it fits on, or on clear ground in front, ready to drag. By asking, the agent
   uses `construct_world` op `place`, several at once with one check. By hand, add a placement: on a part's top with
   `on`, by a scene's path or a gallery name:
 
@@ -489,7 +489,7 @@ scene always gives the same file.
   Tried on a copy of Rain Harbour: both placed, checked (52 placements, 2,320 parts), with the same six cable warnings
   and nothing new.
 
-<p align="center"><img src="../media/worlds/hermes-add-construct.png" width="90%" alt="The Add a construct picker over a world: a grid of construct pictures in groups (vehicles, furniture, buildings, instruments)"></p>
+<p align="center"><img src="../media/worlds/hermes-add-construct.png" width="90%" alt="Add a construct over the Villa Savoye, lived in: the Revox, the Braun and the Leica on their table above, and below it the library with a search box, filters by kind and source, and a grid of shipped constructs"></p>
 
 - **Improve one construct, and bring it back.** A world places whole constructs; it does not merge them. Improve the
   construct in its own project (`construct_edit`, or more masterpiece rounds: "more detail on the hotel's upper
