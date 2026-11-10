@@ -76,6 +76,10 @@ from the chat. [docs/WORLDS.md](docs/WORLDS.md)
   construct saves unsaved moves first instead of being greyed out; after a drop-in the world shows once, with the
   new construct, not the old world first; full screen in Hermes is opaque and clear of the title bar; How to read it
   shows only where there is a reading panel.
+- **The solid view (S) in a construct's real colours:** a part with no colour of its own takes its finish map's (the
+  map beside its scene; in a world, each placed construct's own), or its name's finish (tyres rubber, chrome trim),
+  as the exports and Blender show it, and what the map finishes as glass is see-through. The light view keeps the
+  house palette.
 - Tested in Hermes Desktop with GPT-6.1 Sol and DeepSeek V4
   Pro; what each had to work around became the tool's: placing many at once, named views, host collisions, door
   swings, and sky sizing by a part.

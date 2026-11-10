@@ -1059,8 +1059,17 @@ def build(world_path, out_dir, resolver=None, force=True):
     report = audit(doc, g)
     images, notes = _artwork(path, g, cache, resolver, False)
     solid_g, _ = _compiled_all(doc, path.parent, resolver, True)
-    solid = render.solid_payload(None, g, solid=solid_g)
-    html, _ = render.build_html(g, None, solid=solid, assets=render.data_uris(images))
+    # the solid view (S) in the colours an export gives: each placed construct's own finish map (materials())
+    from . import export as export_mod
+    try:
+        maps = materials(doc, path.parent, resolver)
+    except (OSError, ValueError, TypeError, KeyError, AttributeError) as exc:
+        maps, notes = None, notes + ["a placed construct's finish map was not read (%s): the solid view draws "
+                                     "without it" % exc]
+    page, glass, map_notes = export_mod.page_colours(g, maps)
+    notes = notes + map_notes
+    solid = render.solid_payload(None, page, solid=solid_g, glass=glass)
+    html, _ = render.build_html(page, None, solid=solid, assets=render.data_uris(images))
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)
     for name, text in (("geometry.json", json.dumps(g, separators=(",", ":")) + "\n"), ("construct.html", html),
