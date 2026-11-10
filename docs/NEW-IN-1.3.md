@@ -190,20 +190,28 @@ text-to-mesh model.
 
 ### Changed by hand, no AI
 
-A level made from one prompt is still yours to change, with no model at all. Opened from the Worlds tab in Hermes,
-**Arrange**: click AURIC, **Turn 90°** twice and the arrow keys to bring it out into the middle of the street; click
-the cyan-banded signal tower at the end of the street and bring it 30 m closer with the arrow keys. **Save** checks
-the level and rebuilds it (the same six cable notes as before, nothing new). Exported again and rendered from the
-same camera, with the car's doors opened on their own hinges:
+A level made from one prompt is still yours to remake, with no model at all. Opened from the Worlds tab in Hermes,
+**Arrange**: click AURIC, **Turn 90°** twice and the arrow keys to bring it out into the middle of the street, then
+**Save**. Each save checks the level and rebuilds it. The card's moves are sent as one plugin command, which can
+also be typed in the chat to move many things at once, still with no model turn:
+
+```text
+/construct arrange rain-harbour-a-night-street [{"id": "skyline-centre", "move": [-19, 0, -54], "turn": 0, "pivot": [19, 98]}, ...]
+```
+
+Ten changes that way: the Terrace Exchange brought 54 m forward to close the street into a dead end, two signal
+towers moved and turned, and the signs swapped across the street (Night Market and the pharmacy to the left, Rain
+Harbour and Blue Line Electronics to the right, the hotel's blade to the other side). The check found nothing new.
+Exported again and rendered from the same camera, with the car's doors opened on their own hinges:
 
 <p align="center"><img src="media/worlds/hermes-arrange-rain-harbour.png" width="70%" alt="Rain Harbour on its card in Hermes Desktop, in the solid view: AURIC chosen, moved 3.45 m and turned 180°, the Arrange bar with Save 1 change"></p>
 
 <p align="center">
-  <img src="../examples/worlds/rain-harbour/blender-street.jpg" width="49%" alt="Rain Harbour as it was made: AURIC parked at the front left, facing away">
-  <img src="../examples/worlds/rain-harbour/blender-arranged.jpg" width="49%" alt="The same street after the change by hand: AURIC in the middle of the road facing the camera, its gull-wing doors raised, and the cyan-banded tower 30 m closer, larger at the end of the street">
+  <img src="../examples/worlds/rain-harbour/blender-street.jpg" width="49%" alt="Rain Harbour as it was made: a long street running away to towers in the distance, AURIC parked at the front left">
+  <img src="../examples/worlds/rain-harbour/blender-arranged.jpg" width="49%" alt="The same level rearranged by hand: a dead end closed by a tall tower, the signs on the other sides of the street, AURIC in the middle of the road facing the camera with its gull-wing doors raised">
 </p>
-<p align="center"><sub>Left, the level as Hermes made it; right, after a few clicks and key presses in Hermes: the car
-turned and moved, the tower brought closer, AURIC's doors open. Same camera, same light; nothing else changed.</sub></p>
+<p align="center"><sub>Left, the level as Hermes made it; right, the same constructs rearranged in Hermes without a model:
+a dead end, the signs swapped, the car turned with its doors open. Same camera, same light.</sub></p>
 
 ## Out to other tools, finished
 
