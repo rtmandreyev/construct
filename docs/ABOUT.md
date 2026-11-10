@@ -14,8 +14,8 @@ thing into an honest, animated construct any agent can build.**
    path, a code and a fix hint: a `verified` claim without a source, an unknown fact written
    as `null` or "unknown", a part that floats or barely renders, an assembly order that builds
    a roof before its walls. The model repairs the draft until it is clean.
-3. **Construct compiles it deterministically**, so the same scene gives the same geometry, byte
-   for byte, and **renders it in one holographic style**: line light over smoked glass,
+3. **Construct compiles it deterministically** — the same scene gives the same geometry, byte
+   for byte — and **renders it in one holographic style**: line light over smoked glass,
    staged assembly (a ghost, a collapse, a build that grows bottom-up with a bright tip, a
    settle), one-shot articulations (a lid opens, a disc lifts and turns), calm idle life, and
    a visible certainty for every fact and part. The renderer chooses every colour; agents never do.

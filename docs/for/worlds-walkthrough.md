@@ -2,7 +2,7 @@
 
 A construct is one thing understood: its parts at their real sizes, how each is known, how it opens. A **world** puts
 whole constructs together in one place: your Vespa under your house, a synthesizer on its table, a ship far off in
-the sky, or a street, a market square, a game level. Each construct keeps its own parts, record and
+the sky; or a street, a market square, a game level. Each construct keeps its own parts, record and
 joints, and the world checks what overlaps, what runs into the house it stands in, and what stands where a door opens.
 
 This page walks through worlds in Hermes Desktop, from opening one that ships to making one from a picture. It ends
@@ -74,7 +74,7 @@ where it belongs. A construct's own card has **Place in a world** for the same t
 
 **Finish** on the card: click a part in the solid view, pick its colour and what it is made of, for its whole material
 (a car's paint, every panel of it), every part of its kind (all four tyres) or that part alone, then **Save colour**.
-A repainted material says so in its name in exports (*Repainted by hand (was Freeborn Red)*). The colour is written into that world's own copy of the
+A repainted material says so in its name in exports (*Repainted by hand (was Freeborn Red)*). The repaint is written into that world's own copy of the
 construct without calling a model. Your own construct and your other worlds are not touched, and **Undo last change**
 puts it back. Exports and the Blender add-on take the new colour.
 
