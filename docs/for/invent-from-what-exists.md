@@ -70,11 +70,11 @@ The agent looked up the three things the brief named and cites them in the scene
   (NTRS 20000032541, 1999), its abstract: heat rejection governed by which way the panels face. KESTREL's two wings lie in planes
   that contain the thrust axis, so the engines see only their edges, and they fold about that axis.
 
-From that reasoning, the design: a pusher. Four engines feed a common thrust collector; the spine carries the load
-forward to a platen that spreads it over brittle ice; four arms hold the block against sideways motion. The
+From that reasoning, the design: a pusher. Four engines feed a common thrust collector. The spine carries the load
+forward to a platen that spreads it over brittle ice, and four arms hold the block against sideways motion. The
 two-deck cab sits at the far end from the drives, raised above the spine to see over the cargo. Two water tanks
-sit near the engines (water is the reaction mass the refinery refills); thruster stations sit far apart for
-leverage; the joints carry geared drives and locks, because a fixed-length rod cannot follow a hinge. Its notes are
+sit near the engines (water is the reaction mass the refinery refills). Thruster stations sit far apart for
+leverage, and the joints carry geared drives and locks, because a fixed-length rod cannot follow a hinge. Its notes are
 as plain about what was *not* worked out: no thrust, mass, power, radiation shielding or journey time is claimed.
 
 What the brief fixed is in the scene as facts from the request (120 m, four arms, four engines, two decks, two
@@ -146,9 +146,9 @@ should keep working. So the fourth brief asked for detail on a strict rule:
 
 [KESTREL, more detailed](https://rtmandreyev.github.io/construct/examples/kestrel-v2/): all 256 parts unchanged and in
 their order, 242 added (`v2-…`), 498 in all. The size, origin, docking port and joints are the same; the new
-hardware on the arms and wings rides their hinges. Six rounds: the critic asked for the plain aft face of the cab,
-the bare wing roots and the blank engine mounts; round 3 lost (one close-up cropped to a fragment, the floodlight's open frames almost black) and was
-reverted; round 6 stopped with every criterion at 3. The session took about 50 minutes. A scene this size needs Construct 1.2 or
+hardware on the arms and wings rides their hinges. It ran six rounds. The critic asked for the plain aft face of the cab,
+the bare wing roots and the blank engine mounts. Round 3 lost (one close-up cropped to a fragment, the floodlight's open frames almost black) and was
+reverted, and round 6 stopped with every criterion at 3. The session took about 50 minutes. A scene this size needs Construct 1.2 or
 newer, which allows 1,024 parts (1.1 allowed 256).
 
 <p align="center"><img src="../media/kestrel-v2-detail.jpg" alt="Close-ups of the second version: the roof docking ring with its stud heads and capture locks, and a floodlight as a solid, its bezel held by four screws"></p>
@@ -175,7 +175,7 @@ by [`construct_joints.gd`](../../hosts/godot/construct_joints.gd) ([Godot](../GO
 For each version: the construct (`construct.html`), the scene, the glTF (`.glb`, and `.gltf` with `.bin`), the
 Godot project, a 16-second silent review film (assembly, the arms releasing, the wings folding and returning),
 `NOTES.md` (sizes, the frame, the docking port, the joints, the reasoning, what is not claimed), `PARTS.md` (the job
-of every part) and the review stills the critics judged. The scenes are in this repository; build the rest from
+of every part) and the review stills the critics judged. The scenes are in this repository. Build the rest from
 them with the commands in the [README](../../examples/kestrel/README.md#build-it).
 
 ## Take it further: a finish in Blender
