@@ -781,8 +781,11 @@ class Plugin(unittest.TestCase):
         out = handle('finish %s {"placement": "vespa", "material": "white vinyl", "color": "#aa2222", "finish": "plastic"}' % sw)
         self.assertRegex(out, r"^Finished white vinyl in %s: plastic #aa2222 " % sw)
         vmap = self.mod.runtime.map_beside(self.data / "projects" / sw / vespa)
-        rule = next(r for r in json.loads(vmap.read_text())["materials"] if r.get("name") == "white vinyl")
+        rule = next(r for r in json.loads(vmap.read_text())["materials"] if r.get("name") == "Repainted by hand (was white vinyl)")
         self.assertEqual((rule["color"], rule["finish"]), ("#aa2222", "plastic"))
+        out = handle('finish %s {"placement": "vespa", "material": "Repainted by hand (was white vinyl)", "color": "#2222aa", "finish": "plastic"}' % sw)
+        self.assertRegex(out, r"^Finished white vinyl in %s: plastic #2222aa " % sw)   # a second change keeps its first name
+        self.assertIn("Undid", handle("undo %s" % sw))
         self.assertIn("could not", handle('finish %s {"placement": "vespa", "material": "no such", "color": "#000000", "finish": "paint"}' % sw))
         self.assertIn("Undid the last change to %s (finish vespa)" % sw, handle("undo %s" % sw))
         self.assertEqual(vmap.read_text() if vmap.is_file() else None, before)
