@@ -635,19 +635,105 @@ def save_view(slug, name, camera):
     return {"world": slug, "view": vid, "build": build, "job_id": job_id}
 
 
+FINISH_NAMES = ("paint", "brushed", "chrome", "wood", "rubber", "plastic", "glass", "light")
+HEX = re.compile(r"^#[0-9a-fA-F]{6}$")
+PATTERN = re.compile(r"^[A-Za-z0-9_.*?\[\]-]{1,120}$")
+
+
+def _finish_target(folder, placement):
+    """The scene whose map a colour goes into: a world's placement (its own copy, inside the world) or the
+    project's own scene. Returns (scene path, the file that undo and the rebuild read: world.json or the scene)."""
+    if (folder / "world.json").is_file():
+        path, doc = _load(folder)
+        p = next((q for q in doc["placements"] if q.get("id") == placement), None)
+        if p is None:
+            raise ConstructError("no placement %r in this world" % placement)
+        c = str(p.get("construct") or "")
+        scene = folder / c if c.endswith(".json") else folder / "constructs" / c / "scene.json"
+        scene = scene.resolve()
+        if not scene.is_file() or folder.resolve() not in scene.parents:
+            raise ConstructError("%s is not kept in this world, so its colours cannot change here" % placement)
+        if scene.name == "world.json":
+            raise ConstructError("%s is a world of its own: open it to change its colours" % placement)
+        return scene, path
+    scene = Path(runtime.read_project(folder).get("scene") or "scene.json")
+    scene = scene if scene.is_absolute() else folder / scene
+    if not scene.is_file():
+        raise ConstructError("project %s has no scene yet" % folder.name)
+    return scene, scene
+
+
+def finish_by_hand(slug, change):
+    """A colour and a finish chosen on the card (its Finish mode), with no model turn: a rule at the top of the
+    construct's own material map (scene.materials.json, or the map it already has), which the page's solid view and
+    every export read. In a world it is the world's own copy of the construct, every placement of that copy. Logged
+    as the user's and undone like any change; rebuilt."""
+    if not isinstance(slug, str) or not NAME.match(slug):
+        raise ConstructError("which project? /construct finish <project> <change>")
+    if not isinstance(change, dict) or set(change) - {"placement", "parts", "color", "finish"}:
+        raise ConstructError("finish: {placement?, parts, color, finish}")
+    parts = change.get("parts")
+    parts = [parts] if isinstance(parts, str) else parts
+    if not isinstance(parts, list) or not 0 < len(parts) <= 64 or not all(isinstance(x, str) and PATTERN.match(x) for x in parts):
+        raise ConstructError("finish: parts is a part id or pattern (tyre-*), or a list of them")
+    color, fin = change.get("color"), change.get("finish")
+    if not isinstance(color, str) or not HEX.match(color):
+        raise ConstructError("finish: color is #rrggbb")
+    if fin not in FINISH_NAMES:
+        raise ConstructError("finish: finish is one of %s" % ", ".join(FINISH_NAMES))
+    folder = runtime.project_dir(slug)
+    scene, rebuild = _finish_target(folder, change.get("placement"))
+    target = runtime.map_beside(scene) or scene.with_name("scene.materials.json")
+    old = target.read_text(encoding="utf-8") if target.is_file() else None
+    doc = json.loads(old) if old else {"about": "Colours chosen by hand on the card.", "materials": []}
+    if not isinstance(doc.get("materials"), list):
+        raise ConstructError("the map %s cannot be read" % target.name)
+    same = sorted(parts)
+    rules = [r for r in doc["materials"]
+             if sorted([r["parts"]] if isinstance(r.get("parts"), str) else (r.get("parts") or [])) != same]
+    rule = {"parts": parts, "name": "Chosen by hand: %s %s" % (fin, color.lower()), "color": color.lower(), "finish": fin}
+    doc["materials"] = [rule] + rules
+    _edits(folder)
+    stamp = runtime.new_id()
+    where = target.resolve()
+    runtime.write_json(folder / "edits" / ("%s-map-before.json" % stamp),
+                       {"map": str(where.relative_to(folder.resolve()) if folder.resolve() in where.parents else where),
+                        "content": old})
+    runtime.write_json(target, doc)
+    with open(folder / "edits" / "log.jsonl", "a", encoding="utf-8") as fh:
+        fh.write(json.dumps({"id": stamp, "op": "finish", "by": "user", "placement": change.get("placement") or "",
+                             "parts": parts, "color": color.lower(), "finish": fin}) + "\n")
+    build, job_id = _rebuild_later(slug, folder, rebuild)
+    return {"project": slug, "map": target.name, "rule": rule, "build": build, "job_id": job_id}
+
+
 def undo(slug):
     """The world as it was before its last change (by the agent or by hand), rebuilt."""
     if not isinstance(slug, str) or not NAME.match(slug):
         raise ConstructError("which world? /construct undo <world>")
     folder = runtime.project_dir(slug)
-    path, doc = _load(folder)
     log = folder / "edits" / "log.jsonl"
     rows = [json.loads(x) for x in log.read_text(encoding="utf-8").splitlines() if x.strip()] if log.is_file() else []
     undone = {r.get("undoes") for r in rows if r.get("op") == "undo"}
-    last = next((r for r in reversed(rows) if r.get("op") != "undo" and r["id"] not in undone
-                 and (folder / "edits" / ("%s-before.json" % r["id"])).is_file()), None)
+    kept = lambda r: (folder / "edits" / ("%s-%s.json" % (r["id"], "map-before" if r.get("op") == "finish" else "before"))).is_file()
+    last = next((r for r in reversed(rows) if r.get("op") != "undo" and r["id"] not in undone and kept(r)), None)
     if last is None:
         raise ConstructError("nothing to undo in %s" % slug)
+    if last.get("op") == "finish":   # a colour chosen by hand: the map as it was (or none, if there was none)
+        saved = json.loads((folder / "edits" / ("%s-map-before.json" % last["id"])).read_text(encoding="utf-8"))
+        target = Path(saved["map"])
+        target = target if target.is_absolute() else folder / target
+        if saved.get("content") is None:
+            target.unlink(missing_ok=True)
+        else:
+            target.write_text(saved["content"], encoding="utf-8")
+        with open(log, "a", encoding="utf-8") as fh:
+            fh.write(json.dumps({"id": runtime.new_id(), "op": "undo", "by": "user", "undoes": last["id"],
+                                 "placement": last.get("placement", "")}) + "\n")
+        _, rebuild = _finish_target(folder, last.get("placement"))
+        build, job_id = _rebuild_later(slug, folder, rebuild)
+        return {"world": slug, "undid": "finish", "placement": last.get("placement", ""), "build": build, "job_id": job_id}
+    path, doc = _load(folder)
     prior = json.loads((folder / "edits" / ("%s-before.json" % last["id"])).read_text(encoding="utf-8"))
     res = check(prior, folder)
     if res.get("errors"):

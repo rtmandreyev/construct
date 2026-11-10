@@ -287,8 +287,8 @@ def projects(root):
         r["group"] = _group_of(r.get("newest") or {})
         info = infos[r["project"]]
         r["favourite"], r["archived"] = info.get("favourite") is True, info.get("archived") is True
-        if isinstance(info.get("group"), str) and info["group"].strip() and not r.get("world"):
-            r["group"], r["own_group"] = info["group"].strip()[:40], True   # the user's own group
+        if isinstance(info.get("group"), str) and info["group"].strip():
+            r["group"], r["own_group"] = info["group"].strip()[:40], True   # the user's own group (worlds have folders too)
         if not r.get("in_world") and not r.get("world") and isinstance(info.get("for_world"), str):
             fw = info["for_world"]   # made for a world (its id or name): kept with it
             r["in_world"] = next((w["title"] for w in rows if w.get("world") and fw in (w["project"], w["title"])), fw)
