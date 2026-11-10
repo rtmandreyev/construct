@@ -781,6 +781,10 @@ class Plugin(unittest.TestCase):
         out = handle('finish %s {"parts": "knob-*", "color": "#101010", "finish": "plastic"}' % piece)
         self.assertRegex(out, r"^Finished knob-\* in %s: plastic #101010 " % piece)
         self.assertIn("Undid the last change to %s (finish)" % piece, handle("undo %s" % piece))
+        # Keep only the newest: a project's older builds go, its scene stays
+        self.assertRegex(handle("prune %s" % sw), r"^%s: kept the newest build, removed \d+ older\.$" % sw)
+        self.assertEqual(len([p for p in (self.data / "projects" / sw / "builds").iterdir() if p.is_dir()]), 1)
+        self.assertTrue((self.data / "projects" / sw / "world.json").is_file())
         # worlds go in folders of the user's own, and come out of them
         self.assertIn('in "Client work"', handle("group %s Client work" % sw))
         row = {r["project"]: r for r in self.api.projects(self.data)}[sw]

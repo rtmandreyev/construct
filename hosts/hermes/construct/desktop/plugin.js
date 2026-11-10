@@ -532,6 +532,8 @@ function PageFrame({ route, kind, loaderUrl, height, onCard, onState, control, o
         const p = d.pick
         const id = v => (typeof v === 'string' && FINISH_PART.test(v) ? v : null)
         onFinish(p && id(p.part) ? { placement: p.placement && PLACE_ID.test(String(p.placement)) ? p.placement : null, part: p.part,
+          shared: Array.isArray(p.shared) ? p.shared.filter(x => PLACE_ID.test(String(x))).slice(0, 50) : [],
+          title: typeof p.title === 'string' ? p.title.slice(0, 120) : null,
           pattern: id(p.pattern), label: String(p.label || p.part).slice(0, 120), siblings: Math.max(0, Math.min(10000, +p.siblings || 0)),
           color: typeof p.color === 'string' && HEXCOL.test(p.color) ? p.color.toLowerCase() : null,
           finish: FINISH_NAMES.includes(p.finish) ? p.finish : null } : null)
@@ -896,7 +898,12 @@ function ConstructCard({ project, build, loaderUrl, title, parts, sessionId, hei
             title: 'Write it into the construct\'s material map and rebuild: the solid view, Blender and every export follow', onClick: finSave }),
           !isWorld ? jsx(Button, { label: 'Undo last colour', icon: 'debug-step-back', disabled: saving,
             onClick: () => command('construct undo ' + project, 'Undoing the last colour…') }) : null]
-        : [jsx('div', { style: S.meta, children: 'Click a part to choose its colour and what it is made of.' }, 'h')] }) : null,
+        : [jsx('div', { style: S.meta, children: isWorld
+            ? 'Click a part to choose its colour and what it is made of. A colour chosen here changes this world only.'
+            : 'Click a part to choose its colour and what it is made of. Worlds keep their own copies: they change only when refreshed.' }, 'h')] }) : null,
+      fin.on && fin.pick && isWorld ? jsx('div', { style: Object.assign({}, S.meta, { padding: '0 12px 8px' }), children:
+        'In this world only' + (fin.pick.shared && fin.pick.shared.length > 1 ? ': every ' + (fin.pick.title || 'copy') + ' here changes (' + fin.pick.shared.join(', ') + ')' : '') +
+        '. Your own ' + (fin.pick.title || 'construct') + ' and other worlds stay as they are; Undo last change puts it back.' }) : null,
       isWorld && picking ? jsx(Picker, { onPick: place, exclude: project }) : null,
       !isWorld && choosing ? jsx(WorldChooser, { onPick: dropInto }) : null,
       naming ? jsxs('div', { style: S.bar, children: [
@@ -1570,6 +1577,18 @@ function ItemView({ project, item }) {
 
 function ProjectView({ row, onBack, backLabel, drop }) {
   const [open, setOpen] = useState({ kind: 'build', id: row.newest ? row.newest.build : null })
+  const [onlyNewest, setOnlyNewest] = useState(false)   // older builds just removed (Keep only the newest)
+  const [pruning, setPruning] = useState(false)
+  const builds = onlyNewest && row.newest ? row.builds.filter(b => b.build === row.newest.build) : row.builds
+  const prune = async () => {
+    setPruning(true)
+    try {
+      const out = await runCommand(null, 'construct prune ' + row.project)
+      notify('info', out.slice(0, 160))
+      setOnlyNewest(true)
+      if (row.newest) setOpen({ kind: 'build', id: row.newest.build })
+    } catch (err) { notify('info', errorText(err)) } finally { setPruning(false) }
+  }
   const pick = (kind, id) => setOpen({ kind, id })
   let body = null
   if (open.kind === 'build' && open.id) {
@@ -1593,7 +1612,11 @@ function ProjectView({ row, onBack, backLabel, drop }) {
           jsx('div', { style: S.meta, children: 'started ' + when(row.created) + ' · last ' + when(row.updated) }),
           row.changed_since ? jsx('span', { style: S.chip, title: 'The scene was changed after its newest build: build it again to see the change', children: 'scene changed since the last build' }) : null] }),
       body,
-      list('Builds', row.builds.map(b => jsx('div', { style: { display: 'flex', alignItems: 'center', gap: 8, padding: '6px 0', borderTop: '1px solid var(--ui-stroke-secondary)' },
+      builds.length > 1 ? jsx('div', { style: { marginTop: 18, marginBottom: -12, display: 'flex', justifyContent: 'flex-end' },
+        children: jsx(Button, { label: 'Keep only the newest', icon: 'trash', disabled: pruning,
+          title: 'Remove the ' + (builds.length - 1) + ' older builds of this ' + (row.world ? 'world' : 'construct') + ' (its scene, colours and kits stay)',
+          onClick: prune }) }) : null,
+      list('Builds', builds.map(b => jsx('div', { style: { display: 'flex', alignItems: 'center', gap: 8, padding: '6px 0', borderTop: '1px solid var(--ui-stroke-secondary)' },
         children: [jsx(Icon, { name: 'symbol-structure' }),
           jsx('div', { style: Object.assign({}, S.text, { flex: '1 1 auto' }), children: [when(b.created), b.parts ? plural(b.parts, 'part') : '', b.preview ? 'a run still growing' : '',
             b.audit_ok === false ? 'audit has errors' : ''].filter(Boolean).join(' · ') }),
