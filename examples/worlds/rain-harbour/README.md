@@ -318,9 +318,9 @@ the run's record; the world's own `authoring` keeps the 12 rounds.
 
 ## Changed by hand
 
-The level stays yours to remake after the run, without calling a model. Open it from the Worlds tab in Hermes
-Desktop and use **Arrange**: click AURIC, **Turn 90°** twice, use the arrow keys to bring it into the middle of the
-street, and **Save**. The
+The level stays yours to remake after the run, without calling a model. Open it from the Worlds tab in
+Hermes Desktop and use **Arrange**: click AURIC, **Turn 90°** twice, use the arrow keys to bring it into the middle
+of the street, and **Save**. The
 card sends its moves as one plugin command, `/construct arrange`, which can be typed in the chat too to move many
 things at once. Ten changes made that way gave a different street: the Terrace Exchange brought 54 m forward into a dead
 end, two signal towers moved, the signs swapped across the street. Each save checks the level (the same six cable
