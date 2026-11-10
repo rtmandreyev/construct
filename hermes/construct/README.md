@@ -2,8 +2,8 @@
 
 **Construct turns everything that can be found out about a thing into one exact, checked description of it: its
 named parts at their real sizes, how they fit together, open and move, and how each one is known, measured or
-guessed.** Hermes does the research and writes the description; Construct checks it and builds from it, the same
-description always into the same result. Everything else comes from that one description.
+guessed.** Hermes does the research and writes the description. Construct checks it and builds from it, and the same
+description always gives the same result. Everything else comes from that one description.
 
 **Describe a thing. Get a hologram, a 3D model, a print and a kit.** Ask Hermes for a thing in plain words and it
 builds an animated model of it in lines of light, shown live in the chat and honest about what is known. The same
@@ -14,7 +14,7 @@ See it used, from the request to a printable kit:
 [Villa Savoye in Hermes, step by step](https://github.com/rtmandreyev/construct/blob/main/docs/for/hermes-walkthrough.md).
 
 This is the Hermes plugin of [Construct](https://github.com/rtmandreyev/construct) (Apache-2.0). It runs
-Construct's own engine, bundled as Python source; nothing is downloaded.
+Construct's own engine, bundled as Python source. Nothing is downloaded.
 
 ## What it does
 
@@ -39,7 +39,7 @@ independent critic run as a fresh subagent through Hermes's delegation, and seve
 | `construct_command` | the rest of Construct's command line (critique, rounds, tracing, lofting, likeness, terrain, globe, model kits, NetLogo plates and films), guarded; `["--help"]` lists what it runs |
 
 Long work never runs into Hermes's tool deadline: a film, a NetLogo run, or a build, review or export that takes
-longer than a few minutes, continues as a background job; `construct_job` reports it and waits for it, and a status
+longer than a few minutes, continues as a background job. `construct_job` reports it and waits for it, and a status
 message in the chat follows its progress.
 
 `/construct` lists your projects; `/construct open <project>`, `/construct examples`, `/construct learn [n]`
@@ -53,8 +53,8 @@ message in the chat follows its progress.
   the run goes.
 - **A world, arranged by hand.** A world's card adds **Arrange**: click a construct and drag it onto anything, a
   floor, a table, a roof; Shift-drag or Q and E turn it, the arrows nudge it, Page Up and Page Down lift it, and what
-  stands on it goes with it. **Save** sends the changes to the plugin's own `/construct arrange` command, run in the gateway with no model
-  turn: the world is checked with them (overlaps, collisions, doors that cannot open), saved, logged as yours and
+  stands on it goes with it. **Save** sends the changes to the plugin's own `/construct arrange` command, run in the gateway without calling
+  a model. The world is checked with them (overlaps, collisions, doors that cannot open), saved, logged as yours and
   rebuilt, and the card shows the new build. **Undo last change** steps back one saved change, yours or the agent's.
 - **Its own viewers.** A glTF export opens as a model to turn, with each part's name, certainty and role on hover
   and its joints' animations to play; a STEP or FreeCAD file shows what was read back from it (parts, solids, exact

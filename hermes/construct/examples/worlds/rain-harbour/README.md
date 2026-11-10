@@ -1,10 +1,10 @@
 # Rain Harbour, a night street
 
 A game level made in Hermes from one concept picture: 60 m of a rain-soaked night street in an invented harbour
-district, its towers, its bilingual neon signs and one hero car. 21 constructs, placed 50 times. Each construct was
-made in masterpiece rounds by its own builder, a fresh critic judging every round; then the whole world ran 12 rounds
-of its own against the picture. Built by GPT-6.1 Sol in Hermes Desktop with the Construct plugin, in about 17 hours, many
-constructs building at once. This page follows it from the request to a map in Godot.
+district, its towers, its bilingual neon signs and one hero car. It has 21 constructs, placed 50 times. Each
+construct was made in masterpiece rounds by its own builder, with a fresh critic judging every round, and then the
+whole world ran 12 rounds of its own against the picture. It was built by GPT-6.1 Sol in Hermes Desktop with the
+Construct plugin, in about 17 hours, with many constructs building at once. This page follows it from the request to a map in Godot.
 
 <p align="center">
   <img src="hero.jpg" width="95%" alt="Rain Harbour in lines of light: a long wet street between stacked towers, cyan and magenta neon signs in English and Chinese on both sides, the yellow hero car at the front left, the skyline behind">
@@ -82,15 +82,15 @@ Sol listed what the picture holds and made each distinct thing once, placed as m
 | Props: bollard, street lamp, bin, water vending machine, cable span | 5 | 14 (6 + 2 + 2 + 1 + 3) |
 | **In all** | **21** | **50** |
 
-Six of the ten street-front placements line the 60 m block, three a side, facing each other across the road; the
-other four stand behind them as nearer layers of the skyline, the same two buildings again. Every placement is at
-scale 1. The first pass had 18 constructs placed 48 times; the world's own round 2 added three skyline towers, each
-in its own builder.
+Six of the ten street-front placements line the 60 m block, three a side, facing each other across the road. The
+other four stand behind them as nearer layers of the skyline: the same two buildings again. Every placement is at
+scale 1. The first pass had 18 constructs placed 48 times, and the world's own round 2 added three skyline towers,
+each in its own builder.
 
 ## Designed and inferred
 
 The district is invented, so nothing here is surveyed. Only one number came from the request, the street's 60 m,
-and only that fact is marked as supplied; every other size is a design choice, and each part says so (press **P**).
+and only that fact is marked as supplied. Every other size is a design choice, and each part says so (press **P**).
 Inferred from the picture: the street's proportions and spacing, the stacking of the towers, the rhythm of balconies
 and overhangs, the low camera, where the car stands and which way it faces, the layered skyline and the cyan,
 magenta and amber palette. Designed: the district and its businesses, every sign, the car, the buildings' details,
@@ -136,7 +136,7 @@ district is not Keelung.
 Each construct was its own project with its own builder: a scene, a build, a packet of review pictures, a fresh
 critic who never saw the authoring, a recorded verdict, the fixes, round after round until a stop rule (12 rounds;
 two rounds in a row that do not beat the best; every criterion at 3; two hours of the builder's own time). Signs and
-buildings ran up to 12 rounds; the props were capped at four. Several builders ran at once.
+buildings ran up to 12 rounds, and the props were capped at four. Several builders ran at once.
 
 | Construct | Folder | Placed | Rounds | Kept | Verdict of the kept round | Stopped by | Builder / critic min |
 | --- | --- | ---: | ---: | ---: | --- | --- | --- |
@@ -186,7 +186,7 @@ What the critics pushed on, in their words:
 
 Two bugs in Construct's rounds recorder paused about eight of these loops early in the first pass: a critic's tie
 (`same`) was refused, and so were a critic's extra notes beside its verdict. Both were fixed in Construct before the
-world's rounds; the paused loops were resumed from their unchanged answers, at most four builders at a time, and
+world's rounds. The paused loops were then resumed from their unchanged answers, at most four builders at a time, and
 their new bests were brought into the world.
 
 <p align="center">
@@ -204,9 +204,9 @@ Construct's house palette; the car's yellow shows in the solid view and in expor
 AURIC is an original two-door coupé: 185 named parts, four wheels with tyres, rims, spokes and brakes, magenta tail
 lights, a rear wing, two seats, and two gull-wing doors. Each door is a hinge along the roof line (pivot 1.17 m up,
 0.59 m either side of the centre line) that lifts 65° and carries 16 parts with it: skin, glass, mirror, lining,
-handle, latch. Its builder ran 12 rounds; after the first whole-world review, a second builder made one bounded
-repair (rounded quarters, open alloy wheels, thinner door skins, a fuller cabin) judged by one fresh critic,
-*improve*; the world's own round 9 painted its body yellow.
+handle, latch. Its builder ran 12 rounds. After the first whole-world review, a second builder made one bounded
+repair (rounded quarters, open alloy wheels, thinner door skins, a fuller cabin), which one fresh critic judged
+*improve*. The world's own round 9 painted its body yellow.
 
 ## Placed at real size
 
@@ -318,10 +318,11 @@ the run's record; the world's own `authoring` keeps the 12 rounds.
 
 ## Changed by hand
 
-The level stays yours to remake after the run, with no model turn. Opened from the Worlds tab in Hermes Desktop,
-**Arrange**: click AURIC, **Turn 90°** twice, the arrow keys to bring it into the middle of the street, **Save**. The
+The level stays yours to remake after the run, without calling a model. Open it from the Worlds tab in
+Hermes Desktop and use **Arrange**: click AURIC, **Turn 90°** twice, use the arrow keys to bring it into the middle
+of the street, and **Save**. The
 card sends its moves as one plugin command, `/construct arrange`, which can be typed in the chat too to move many
-things at once. Ten changes that way made a different street: the Terrace Exchange brought 54 m forward into a dead
+things at once. Ten changes made that way gave a different street: the Terrace Exchange brought 54 m forward into a dead
 end, two signal towers moved, the signs swapped across the street. Each save checks the level (the same six cable
 notes, nothing new), keeps the change in the world's log as the user's, and rebuilds it; `world.json` keeps one
 `at` and `yaw` per placement.
@@ -344,7 +345,7 @@ construct export examples/worlds/rain-harbour/world.json --out level.glb --piece
 #   artwork: 87 faces, 26 images
 ```
 
-About 20 seconds on a laptop, a 28 MB file with the signs' artwork in it. Each placement is a group named after it (`hero-car`,
+It takes about 20 seconds on a laptop and writes a 28 MB file with the signs' artwork in it. Each placement is a group named after it (`hero-car`,
 `left-hotel-middle`), every part keeps its name under it, and the street and buildings are the fixed body. The car's
 two doors are bodies of their own on their hinges once [`construct_joints.gd`](../../../hosts/godot/construct_joints.gd)
 connects them; in the map the hinges carry the doors, so a push or a motor on the hinge opens them. The `open`
@@ -371,7 +372,7 @@ exports, and checked it in Godot 4.7.2 (Forward+, Metal):
   averaged 45.4 frames a second (95th percentile 42.8 ms a frame): one sample, not a promise.
 
 Sol also rendered a 20-second, 1920 × 1080 silent film of the four views from that project, and packed a
-development kit (18.8 MB, 133 files). Neither is shipped; the person kept them as they were and asked for the world.
+development kit (18.8 MB, 133 files). Neither is shipped. The person kept them as they were and asked for the world.
 
 **Blender.** Import `world.json` with the [Construct add-on](../../../hosts/blender/README.md), or the exported
 `.glb`.
