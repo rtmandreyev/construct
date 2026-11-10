@@ -296,12 +296,15 @@ def page_colours(g, materials):
         where = Path(materials).name if isinstance(materials, (str, Path)) else "the finish map"
         return g, set(), ["%s was not read (%s): the solid view draws without it" % (where, exc)]
     own = _own_colours(g)
-    colour, glass, finishes = {}, set(), {}
+    colour, glass, finishes, named_as = {}, set(), {}, {}
     for pi, part in enumerate(g["parts"]):
         pid = part["id"]
         rule = next((r for r in rules if any(fnmatch.fnmatchcase(pid, p) for p in r["patterns"])), None)
         if rule is not None and rule["finish"] == "glass":
             glass.add(pi)
+        if rule is not None and rule.get("name") and not re.match(r"^(.+: )?map:\d+$", rule["name"]):
+            # the material it belongs to (Freeborn Red), when the map names it: Finish changes it whole
+            named_as[pid] = rule["name"]
         named = rule["finish"] if rule is not None and rule.get("finish") else name_finish(pid)
         if named:   # what the part is made of, for the card's Finish (a tyre opens as rubber)
             finishes[pid] = named
@@ -312,14 +315,14 @@ def page_colours(g, materials):
         elif not is_glass_name(pid) and name_finish(pid):
             colour[pi] = {"rubber": "#1c1c1e", "chrome": "#d6d9de"}[name_finish(pid)]
     if not colour:
-        return (dict(g, part_finishes=finishes) if finishes else g), glass, []
+        return (dict(g, part_finishes=finishes, part_materials=named_as) if finishes or named_as else g), glass, []
     cols = list(g.get("style_colors") or [None] * len(g["styles"]))
     light = list(g.get("style_light") or [bool(c) for c in cols])
     for i, st in enumerate(g["styles"]):
         pi = int(st[6])
         if not cols[i] and pi in colour:
             cols[i], light[i] = colour[pi], False
-    return dict(g, style_colors=cols, style_light=light, part_finishes=finishes), glass, []
+    return dict(g, style_colors=cols, style_light=light, part_finishes=finishes, part_materials=named_as), glass, []
 
 
 def _groups(g):
