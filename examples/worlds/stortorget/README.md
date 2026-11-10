@@ -4,8 +4,8 @@ Stockholm's old square at its Christmas market, made in Hermes from one photogra
 researched one by one, the market's stalls, the spruce, the lamp and the granite block in front. 13 constructs,
 placed 53 times (one market stall, 41 times). Each construct was made in masterpiece rounds by its own builder, a
 fresh critic judging every round; then the whole world ran rounds of its own against the photograph. Built by
-GPT-6.1 Sol in Hermes Desktop with the Construct plugin, from the afternoon of 8 November 2026 into the next
-morning. This page follows it from the request to the houses' colours, and says what is documented and what is not.
+GPT-6.1 Sol in Hermes Desktop with the Construct plugin, from the afternoon of 8 November 2026 to the evening
+of the 9th. This page follows it from the request to the houses' colours, and says what is documented and what is not.
 
 <p align="center">
   <img src="hero.jpg" width="95%" alt="Stortorget in the solid view: the red stepped gable of No. 20, the orange No. 18 and the yellow houses over rows of red market stalls, the spruce, the granite block in front">
@@ -202,8 +202,8 @@ constructs in the world's own copies, at most four at a time.
 The first eight rounds stopped at the two-hour ceiling on the author's own time (127.5 active minutes). The person
 asked for 90 more minutes (`rounds extend 90`); round 9 won, and its packet's captures alone took 26 minutes (failed)
 and 35 (succeeded) on a world this large, which used up the extension. A second extension took the ceiling to 300
-minutes, and rounds 10 to 12 are running as this is written; this page describes the world as it stood after round
-9, which is the world in this folder.
+minutes, and rounds 10 to 12 ran to the 12-round cap (295.6 active minutes in all). Round 11 is the world in this
+folder.
 
 <p align="center"><img src="run/rounds-01-09-photo.jpg" alt="The photograph's shot at round 1 and round 9, in lines of light: at round 1 the tree stands low in front of the sage house and the stalls form a long low band; at round 9 the tree rises to No. 20's gable, the post lamp stands in the foreground and the granite block sits low in the centre"></p>
 <p align="center"><sub>The photograph's shot at round 1 (left) and round 9 (right), from the critics' packets.</sub></p>
@@ -218,12 +218,17 @@ minutes, and rounds 10 to 12 are running as this is written; this page describes
 | 6 | kept | the nearest stall turned so its counter faces the camera; built early in the assembly | the shot "is not the source composition" | improve, 19 | 10.1 / 5.4 |
 | 7 | kept | the stall close-up reframed so its name reads whole; Börshuset's blank ends given plinths and cornices | the façades "almost uniformly grey in the actual colour view" | improve, 18 | 14.8 / 4.9 |
 | 8 | kept | a steeper high view over the whole market | "red No20, orange No18 and colored neighboring range become uniformly pale gray" | improve, 19 | 11.7 / 5.1 |
-| 9 | kept | the eight houses given their own colours | below, under Still open | **good, 21** | 95.9 / 6.3 |
-| 10 | to come | | | | |
-| 11 | to come | | | | |
-| 12 | to come | | | | |
+| 9 | kept | the eight houses given their own colours | the tree's "separated angular skirts and large open gaps" | good, 21 | 95.9 / 6.3 |
+| 10 | kept | the lamp's own view shows its one lantern whole; the sage and russet houses raised towards the photograph's roofline (18.5 to 20.7 m, 23.6 to 26.0 m) | "The tree foliage is pale grey in the actual SOLID image" | good, 22 | 39.8 / 4.1 |
+| 11 | kept | No. 18's crown raised against No. 20's (22.6 to 24.1 m) | "The actual SOLID tree is pale grey rather than the deep green spruce" | **improve, 19** | 25.4 / 5.1 |
+| 12 | tied, put back | the long range's bare end walls given cornice and band returns | the same pale tree; "separated thin branch tiers" | good, 21 | 7.0 / 4.4 |
 
-Round 9's 95.9 minutes include the two long captures. Round 1's packet left out the request and the photograph by
+Round 9's 95.9 minutes include the two long captures. Each round is decided by the critic comparing the new version
+with the best so far, not by the scores, so round 11 won against round 10 while scoring lower: the critic preferred
+No. 18's taller crown in the photograph's shot. Rounds 10 and 11 also tried to make the spruce darker and fuller,
+twice; on a tree of 7,700 parts the edit timed out each time and the tree stayed as it was, which is why the last
+three critics still saw it grey. In the exports and in Blender it is green: a finish map beside it
+(`constructs/christmas-spruce/scene.materials.json`) gives its needles, trunk and lights their materials. Round 1's packet left out the request and the photograph by
 mistake; its judgement was kept, and every later packet carried both. The first critic's complaint about one vendor
 repeated was set aside as the request's own choice (one stall design); the photograph's low approach, attempted in
 three kept rounds without the critic's agreement, was retired as a limit of the skill after round 8.
@@ -251,15 +256,16 @@ this run, after round 9, and fixed in Construct 1.3: records now sit 256 to a te
 colours on every GPU. The critics' captures were not affected (the stalls kept their red throughout), so the round
 table stands as recorded.
 
-Final verdict after round 9: **good**, 21 of 27 (silhouette, proportions, identity, depth, composition and density
-2 of 3; assembly, motion and honesty 3 of 3).
+Final verdict, round 11 kept: **improve**, 19 of 27 (silhouette, proportions, depth and density 2 of 3; identity
+and composition 1, both for the grey tree and the photograph's shot; assembly, motion and honesty 3 of 3). Round 9's
+critic had said *good*, 21; round 10's, *good*, 22.
 
 ## Still open
 
-What the round-9 critic wrote, so the next person (and rounds 10 to 12) know where to start:
+What the last critics wrote (rounds 11 and 12, both against round 11), so the next person knows where to start:
 
-- the tree: "separated angular skirts and large open gaps rather than the reference's nearly continuous, broad
-  spruce crown", and its foliage "pale grey rather than the photograph's dark evergreen";
+- the tree: its crown "reads as separated thin branch tiers with conspicuous empty intervals", too "narrow and
+  spire-like" in its upper half, and its foliage pale grey in the solid view (green in exports, by its map);
 - the photograph's shot: the block's top sits near 79 percent of the frame's height where the photograph has it near
   72, "an oversized cropped left stall plus straight recession dominate", and the right-hand buildings are mostly
   outside the frame;
@@ -269,8 +275,9 @@ What the round-9 critic wrote, so the next person (and rounds 10 to 12) know whe
 - the backs: "large minimally articulated end walls and broad roof planes", a "detailed facade set around simpler
   boxes".
 
-The ledger also keeps the lamp (its inspection view "looks down through stalls rather than clearly presenting the
-lantern head"), the assembly's later stages, the curved kerb in the foreground and No. 20's height over No. 18.
+Fixed in rounds 10 and 11, and closed in the ledger: the lamp's view, the curved kerb in the foreground, the
+assembly's later stages and No. 20's height over No. 18. The ledger keeps seven open defects and four known limits,
+each with its history, in the run's record.
 
 ## The numbers
 
@@ -278,16 +285,17 @@ lantern head"), the assembly's later stages, the curved kerb in the foreground a
 | --- | --- |
 | Constructs, placements | 13, placed 53 times, all at scale 1; one stall 41 times |
 | Parts | 2,790 named parts across the 13 scenes; 15,531 copies in the world with every repeat; 7,710 named parts in its glTF |
-| On the page | 212,818 lines and 273,912 triangles; 165 labels; six named views; an 18-second build |
+| On the page | 212,818 lines and 273,912 triangles; 165 labels; seven named views; an 18-second build |
 | The check | passes, no warnings |
 | The folder | 7.5 MB with its pictures; the built page is about 65 MB |
 | The constructs' rounds | 121 rounds in 13 builders: about 390 minutes of builders' own time and 480 of critics', many running at once |
-| The world's rounds, 1 to 9 | 223.4 minutes of authoring (including captures) and 45.5 of critics |
+| The world's rounds, 1 to 12 | 295.6 minutes of authoring (including captures) and 59.1 of critics |
 
 ## Into other tools
 
-**Films.** The world's six named views are the shots the request asked for: *Photo approach* (and its alias *hero*),
-*Nearest stall*, *Both gables from below*, *Christmas spruce* and *High view*. Capture them with the viewer, or
+**Films.** Six of the world's seven named views are the shots the request asked for: *Photo approach* (and its
+alias *hero*), *Nearest stall*, *Both gables from below*, *Christmas spruce* and *High view*; the seventh, *Single
+lamp*, was added in round 10 to show the lamp whole. Capture them with the viewer, or
 finish them in Blender. Film mode, which assembles a construct across a track of music, is for single constructs,
 not worlds.
 
@@ -339,7 +347,8 @@ What this run shows, for the next world from a photograph:
   part says how it is known.
 - **The layout of the market is inferred.** The photograph shows a corner of it; the count of 41 is documented.
 - **The colours are in the solid view and in exports;** the light view keeps Construct's house palette.
-- **Rounds 10 to 12** are still running; this folder holds the world after round 9.
+- **The verdict is *improve*.** Two critics called it *good* (rounds 9 and 10); the last kept round's critic did not,
+  mostly for the grey tree in the solid view. What is still open is listed above.
 - **No people, no vendors, no vehicles,** as asked.
 
 ## Credits

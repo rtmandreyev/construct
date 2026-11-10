@@ -135,7 +135,7 @@ Plan for a long run: each world below took most of a day of model time.
 | From | a concept picture of a cyberpunk street | a photograph of Stockholm's old square at its Christmas market |
 | For | a game level | a film set |
 | Constructs | 21, placed 50 times | 13, placed 53 times (one stall, 41 times) |
-| World rounds | 12 (the cap), final verdict good | 9 so far (stopped at its time ceiling), final verdict good |
+| World rounds | 12 (the cap), final verdict good | 12 (the cap), final verdict improve (good at rounds 9 and 10) |
 | Made by | GPT-6.1 Sol in Hermes | GPT-6.1 Sol in Hermes |
 
 Each page has the request word for word, the plan, every construct's rounds, the world's rounds, what the last
