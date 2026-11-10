@@ -13,19 +13,22 @@
     /construct open-world <example>        a shipped world as your own (the Worlds page's Open)
     /construct remove <world> <placement>  take one out (the card's Remove)
     /construct duplicate <world> <placement>   another beside it (the card's Duplicate)
-    /construct undo <world>       the world as it was before its last change
+    /construct finish <project> <change>   a colour and finish chosen on the card (its Finish mode)
+    /construct undo <project>     the world (or a construct's colours) as it was before its last change
     /construct open-example <name>         a shipped construct as your own, built (the Start from page's Open)
     /construct thumbs [n]         stills for tiles that have none
     /construct export <project> glb|godot  an export without a model turn (the card's Export)
     /construct still <project> <build> <camera>   a picture from where the camera is (the card's Picture)
     /construct save-view <world> <name> <camera>  the camera where it is, a named view (the card's Save view)
     /construct favourite|archive|rename|group <project> [title|group]   tidying the Constructs page
+    /construct delete <project>             an archived construct or world, for good (the page asks first)
     /construct job <id>           one background job's state (an ended build is published here)
 """
 
 from pathlib import Path
 
 import json
+import shutil
 import re
 
 from . import jobs, runtime, world_tools
@@ -214,6 +217,21 @@ def handle(raw_args="", event=None, **kwargs):
             return "%s: %s." % (words[1].lower(), {"favourite": "a favourite", "unfavourite": "no longer a favourite", "archive": "archived",
                                                   "unarchive": "back from the archive", "rename": "now \"%s\"" % info.get("title"),
                                                   "group": "in \"%s\"" % info["group"] if info.get("group") else "back with its kind"}[verb])
+        if verb == "delete":   # the page's Delete, for what is archived only: the project and its shown builds, for good
+            if len(words) < 2:
+                return "Usage: /construct delete <project> (archive it first)"
+            slug = words[1].lower()
+            folder = runtime.project_dir(slug)
+            info = json.loads((folder / "project.json").read_text(encoding="utf-8")) if (folder / "project.json").is_file() else {}
+            if info.get("archived") is not True:
+                return "%s is not archived: only an archived construct or world can be deleted (archive it first)." % slug
+            shown = runtime.shown_root() / slug
+            for d in (folder, shown):
+                if d.is_dir():
+                    shutil.rmtree(d, ignore_errors=True)
+            if folder.exists():
+                return "%s could not be deleted completely; what is left is in %s." % (slug, folder)
+            return "%s: deleted." % slug
         if verb == "open-world":   # the Worlds page's Open: a shipped world as the user's own, with no model turn
             if len(words) < 2:
                 return "Which world? /construct open-world <example> (/construct worlds lists them)"
@@ -253,11 +271,20 @@ def handle(raw_args="", event=None, **kwargs):
             folder = runtime.project_dir(r["project"])
             build, job_id = world_tools._rebuild_later(r["project"], folder, Path(r["scene"]))
             return "Opened %s as %s. Building (build %s, job %s)." % (words[1].lower(), r["project"], build, job_id)
+        if verb == "finish":   # the card's Finish: a colour and a finish for a part (or a pattern), no model turn
+            parts = str(raw_args or "").strip().split(None, 2)
+            if len(parts) < 3:
+                return "Usage: /construct finish <project> <{placement?, parts, color, finish}>"
+            r = world_tools.finish_by_hand(parts[1].lower(), json.loads(parts[2]))
+            rule = r["rule"]
+            return "Finished %s in %s: %s %s (%s). Rebuilding (build %s, job %s)." % (
+                ", ".join(rule["parts"]), r["project"], rule["finish"], rule["color"], r["map"], r["build"], r["job_id"])
         if verb == "undo":
             if len(words) < 2:
                 return "Which world? /construct undo <world>"
             r = world_tools.undo(words[1].lower())
-            return "Undid the last change to %s (%s %s). Rebuilding (build %s, job %s)." % (r["world"], r["undid"], r["placement"], r["build"], r["job_id"])
+            what = " ".join(x for x in (r["undid"], r["placement"]) if x)
+            return "Undid the last change to %s (%s). Rebuilding (build %s, job %s)." % (r["world"], what, r["build"], r["job_id"])
         if verb == "job":   # one job's state; an ended job's result is made here (a build is published)
             jid = words[1] if len(words) > 1 else ""
             if not re.match(r"^[0-9a-f]{12}$", jid):

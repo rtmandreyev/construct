@@ -40,6 +40,7 @@
                solid: !!o.solid, hasSolid: !!(h && h.solid), reduced: !!o.reduced, step: step,
                world: !!(h && h.geo && h.geo.world), arranging: !!(h && h.arranging && h.arranging()),
                canArrange: !!(window.HOLO && window.HOLO.arrange), canAct: !!(window.HOLO && window.HOLO.action),
+               canFinish: !!(window.HOLO && window.HOLO.finish), finishing: !!(window.HOLO && window.HOLO.finish && window.HOLO.finish.on()),
                hasReading: !!document.querySelector(".rd-how"),
                views: window.HOLO && window.HOLO.views ? window.HOLO.views().slice(0, 300) : null };
     }
@@ -92,6 +93,13 @@
           window.HOLO.arrange.set(true); window.HOLO.arrange.select(d.id);
         }
         setTimeout(tell, 30);
+      } else if (d.type === "construct:finish" && window.HOLO && window.HOLO.finish) {
+        // colours chosen by hand: the card's Finish; a click on a part goes back to the card, which saves the choice
+        if (d.action === "on" || d.action === "off") window.HOLO.finish.set(d.action === "on");
+        else if (d.action === "preview" && typeof d.color === "string" && /^#[0-9a-fA-F]{6}$/.test(d.color) && Array.isArray(d.parts) && d.parts.length <= 64)
+          window.HOLO.finish.preview(d.parts.map(String), d.color);
+        else if (d.action === "clear") window.HOLO.finish.preview(null);
+        setTimeout(tell, 30);
       }
     });
     // in a card the "How to read it" panel starts folded (H, or its heading, opens it)
@@ -109,6 +117,15 @@
         window.HOLO.onArrange = function (st) {
           try { parent.postMessage({ type: "construct:arranged", on: !!st.on, selected: st.selected || null, changes: st.changes || [],
                                      hits: st.hits || [], several: st.several || 0, snap: !!st.snap, canUndo: !!st.canUndo, canRedo: !!st.canRedo }, "*"); }
+          catch (e) { /* the host went away */ }
+        };
+      }
+      if (window.HOLO && window.HOLO.finish) {
+        window.HOLO.onFinish = function (pick) {
+          try { parent.postMessage({ type: "construct:finish-pick", pick: pick ? { placement: pick.placement || null, part: String(pick.part || ""),
+                                     label: String(pick.label || "").slice(0, 120), color: pick.color || null, finish: pick.finish || null,
+                                     pattern: pick.pattern ? String(pick.pattern).slice(0, 120) : null,
+                                     siblings: Math.min(10000, +pick.siblings || 0) } : null }, "*"); }
           catch (e) { /* the host went away */ }
         };
       }

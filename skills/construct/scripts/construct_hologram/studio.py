@@ -157,7 +157,11 @@ def build(scene_path, out_dir, asset_root=None, v1=False, force=True, frame="y-u
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)
     root = asset_root or str(Path(scene_path).resolve().parent)
-    html, notes = render.build_html(geometry, root, film=film, solid=render.solid_payload(scene, geometry))
+    # the solid view (S) in the colours an export gives: the finish map beside the scene (export.map_beside)
+    from . import export as export_mod
+    page, glass, map_notes = export_mod.page_colours(geometry, export_mod.map_beside(scene_path))
+    html, notes = render.build_html(page, root, film=film, solid=render.solid_payload(scene, page, glass=glass))
+    notes = map_notes + notes
     _write(out / "geometry.json", json.dumps(geometry, separators=(",", ":")) + "\n", force)
     _write(out / "construct.html", html, force)
     _write(out / "audit.json", json.dumps(report, indent=2) + "\n", force)

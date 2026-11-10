@@ -1474,6 +1474,53 @@ class OwnColours(unittest.TestCase):
         g2 = scene.compile_scene(rec)
         self.assertTrue(all(l for c, l in zip(g2["style_colors"], g2["style_light"]) if c))
 
+    def test_the_solid_view_takes_the_finish_map_where_a_part_has_no_colour_of_its_own(self):
+        import re
+        doc = base()
+        body = doc["parts"][0]
+        doc["parts"] = [dict(body, id="hull"), dict(body, id="mast", at=[0, 1, 0], look={"color": "#123456"}),
+                        dict(body, id="front-tyre", at=[0, 2, 0]), dict(body, id="porthole", at=[0, 3, 0])]
+
+        def page(d):   # the geometry and the solids the page carries
+            html = Path(d, "construct.html").read_text(encoding="utf-8")
+            pick = lambda k: json.loads(re.search(r'<script id="hologram-%s" type="application/json">(.*?)</script>'
+                                                   % k, html, re.S).group(1))
+            return pick("geometry"), pick("solid")
+
+        def colour(g, pid):
+            pi = [p["id"] for p in g["parts"]].index(pid)
+            got = {(c, l) for st, c, l in zip(g["styles"], g.get("style_colors") or [None] * len(g["styles"]),
+                                              g.get("style_light") or [False] * len(g["styles"])) if st[6] == pi}
+            self.assertEqual(len(got), 1, got)   # every style of a part alike
+            return got.pop()
+
+        with tempfile.TemporaryDirectory() as d:
+            Path(d, "scene.json").write_text(json.dumps(doc))
+            studio.build(str(Path(d, "scene.json")), Path(d, "bare"))
+            g0, s0 = page(Path(d, "bare"))
+            self.assertEqual(colour(g0, "hull"), (None, False))              # no map: clay, as before
+            self.assertEqual(colour(g0, "front-tyre"), ("#1c1c1e", False))   # a tyre is rubber, as in an export
+            Path(d, "scene.materials.json").write_text(json.dumps({"materials": [
+                {"parts": "hull", "color": "#AA2211", "finish": "paint"},
+                {"parts": ["mast", "front-*"], "color": "#00ff00"},
+                {"parts": "porthole", "color": "#cfe8ee", "finish": "glass"}]}))
+            g, _, _ = studio.build(str(Path(d, "scene.json")), Path(d, "out"))
+            pg, sd = page(Path(d, "out"))
+            self.assertEqual(colour(pg, "hull"), ("#aa2211", False))         # the map's colour, solid view only
+            self.assertEqual(colour(pg, "mast"), ("#123456", False))         # its own colour wins over the map
+            self.assertEqual(colour(pg, "front-tyre"), ("#00ff00", False))   # the map wins over the name's finish
+            self.assertEqual(sd["clear"], s0["clear"] + 36)                  # the map's glass is drawn see-through
+            # the light view is unchanged: the same styles, nothing new drawn in the light; geometry.json keeps
+            # only the scene's own colours
+            self.assertEqual(pg["styles"], g0["styles"])
+            self.assertEqual({i for i, l in enumerate(pg["style_light"]) if l}, set())
+            self.assertEqual(json.loads(Path(d, "out", "geometry.json").read_text())["style_colors"], g["style_colors"])
+            self.assertEqual({c for c in g["style_colors"] if c}, {"#123456"})
+            Path(d, "scene.materials.json").write_text('{"materials": [{"color": "#ff0000"}]}')   # broken: a note
+            _, _, text = studio.build(str(Path(d, "scene.json")), Path(d, "broken"))
+            self.assertIn("scene.materials.json was not read", text)
+            self.assertEqual(colour(page(Path(d, "broken"))[0], "hull"), (None, False))
+
 
 class Rounds(unittest.TestCase):
     """Masterpiece rounds: the pairwise gate decides, repair don't revert, small batches, the ledger,
