@@ -396,6 +396,29 @@ class Build(unittest.TestCase):
             m = world.materials(place({"id": "x", "construct": "c/scene.json"}), d)
             self.assertEqual(m["materials"][0]["parts"], ["x/*"])
 
+    def test_the_solid_view_paints_each_construct_from_its_own_map(self):
+        with tempfile.TemporaryDirectory() as d:
+            for name, colour in (("a", "#ff0000"), ("b", "#0000ff"), ("c", None)):
+                Path(d, name).mkdir()
+                Path(d, name, "scene.json").write_text(Path(lit("cd.json")).read_text())
+                if colour:
+                    Path(d, name, "scene.materials.json").write_text(
+                        json.dumps({"materials": [{"parts": "*", "color": colour}]}))
+            w = Path(d, "w.json")
+            w.write_text(json.dumps(place({"id": "x", "construct": "a/scene.json"},
+                                          {"id": "y", "construct": "b/scene.json", "at": [1, 0, 0]},
+                                          {"id": "z", "construct": "c/scene.json", "at": [2, 0, 0]})))
+            g, _, _ = world.build(str(w), Path(d, "out"))
+            html = Path(d, "out", "construct.html").read_text(encoding="utf-8")
+            pg = json.loads(re.search(r'<script id="hologram-geometry" type="application/json">(.*?)</script>',
+                                      html, re.S).group(1))
+            seen = {}
+            for st, c, lit_ in zip(pg["styles"], pg["style_colors"], pg["style_light"]):
+                seen.setdefault(pg["parts"][st[6]]["id"].split("/")[0], set()).add((c, lit_))
+            self.assertEqual(seen, {"x": {("#ff0000", False)}, "y": {("#0000ff", False)}, "z": {(None, False)}})
+            self.assertEqual(pg["styles"], g["styles"])           # the light view: the same styles as before
+            self.assertNotIn("style_colors", g)                   # and geometry.json keeps only own colours
+
 
 class Viewer(unittest.TestCase):
     """The viewer carries any number of joints and motions (a texture, not 16 fixed slots)."""

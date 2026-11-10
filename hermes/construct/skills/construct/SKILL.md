@@ -147,7 +147,7 @@ show what each step makes, and wait for the user between steps.
    solid part is covered by an id or pattern: an export's result lists any it leaves `unmapped`. Colours the
    research documents (a car's paint code, a maker's published finish) are used and named in `about`; the rest are
    chosen, and `about` says so. It is presentation, never a fact of the construct: the light view keeps the house palette and
-   provenance does not change; exports, the Blender add-on and worlds use it. Fast mode: a short map by part group.
+   provenance does not change; exports, the solid view (S), the Blender add-on and worlds use it. Fast mode: a short map by part group.
 8. **Deliver.** Record the `authoring` block (the mode as `tier`: masterpiece as `masterpiece`, fast as `standard`;
    `research`, the `sources` used, `review_rounds`, `outcome`, `next`: the most valuable improvements still open).
    Build it, put the MEDIA line in your reply, and say plainly what is evidence, what is inferred or designed,

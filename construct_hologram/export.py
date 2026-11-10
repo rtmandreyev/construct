@@ -283,6 +283,42 @@ def _load_materials(materials):
     return out
 
 
+def page_colours(g, materials):
+    """The page's solid view (S) in an export's colours: a part without its own colour (look.color) takes its
+    finish map's (the first rule that matches its id, as an export reads it) or, unmapped, its name's finish (a
+    tyre's rubber, chrome trim). The light view keeps the house palette: these colours are never drawn there
+    (style_light stays false). Returns (the geometry for the page, the indices of the parts the map finishes as
+    glass, notes); `g` itself is left as it is, so geometry.json keeps only the scene's own colours. A map that
+    cannot be read is a note, and the page is built without it."""
+    try:
+        rules = _load_materials(materials)
+    except (OSError, ValueError, TypeError, KeyError) as exc:   # a broken map: the exports name it; the page goes on
+        where = Path(materials).name if isinstance(materials, (str, Path)) else "the finish map"
+        return g, set(), ["%s was not read (%s): the solid view draws without it" % (where, exc)]
+    own = _own_colours(g)
+    colour, glass = {}, set()
+    for pi, part in enumerate(g["parts"]):
+        pid = part["id"]
+        rule = next((r for r in rules if any(fnmatch.fnmatchcase(pid, p) for p in r["patterns"])), None)
+        if rule is not None and rule["finish"] == "glass":
+            glass.add(pi)
+        if pid in own:
+            continue
+        if rule is not None:
+            colour[pi] = "#%02x%02x%02x" % tuple(int(round(c * 255)) for c in rule["color"])
+        elif not is_glass_name(pid) and name_finish(pid):
+            colour[pi] = {"rubber": "#1c1c1e", "chrome": "#d6d9de"}[name_finish(pid)]
+    if not colour:
+        return g, glass, []
+    cols = list(g.get("style_colors") or [None] * len(g["styles"]))
+    light = list(g.get("style_light") or [bool(c) for c in cols])
+    for i, st in enumerate(g["styles"]):
+        pi = int(st[6])
+        if not cols[i] and pi in colour:
+            cols[i], light[i] = colour[pi], False
+    return dict(g, style_colors=cols, style_light=light), glass, []
+
+
 def _groups(g):
     """The compile's packed arrays, grouped by (part, joint, motion slot): triangles with their phases,
     segments and points by tone."""

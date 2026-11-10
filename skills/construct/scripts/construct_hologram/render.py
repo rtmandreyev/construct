@@ -53,13 +53,14 @@ def embed_assets(geometry, asset_root):
     return data_uris(images), notes
 
 
-def solid_payload(scene, geometry, phase_of=None, solid=None):
+def solid_payload(scene, geometry, phase_of=None, solid=None, glass=()):
     """The construct's surfaces for the page's solid view (S): what a modelling program shows, from the same
     solid compile as the 3D export, packed small. Each vertex carries its part's style in `geometry` (so the
     opening, the stages and provenance colours move it as they move the lines), its build phase and a smooth
     normal; glass comes last, drawn see-through. None when the scene has no surfaces. `phase_of` (part id ->
     phase, or a function of a triangle's middle: a part made into several pieces) builds the parts in another
-    order (a kit's steps: each piece whole, at once); a part it leaves out is never built."""
+    order (a kit's steps: each piece whole, at once); a part it leaves out is never built. `glass` (part indices:
+    what a finish map finishes as glass, export.page_colours) is drawn see-through too."""
     from . import export as export_mod, scene as scene_mod
     solid = solid if solid is not None else scene_mod.compile_scene(scene, solid=True)   # a world gives its own
     styles, parts = geometry["styles"], geometry["parts"]
@@ -76,7 +77,7 @@ def solid_payload(scene, geometry, phase_of=None, solid=None):
     if not by_part:
         return None
     # glass by its name (a window, a windscreen): `look.fill` "glass" is how the light draws a part, not its material
-    glassy = {pi for pi in by_part if export_mod.is_glass_name(parts[pi]["id"])}
+    glassy = {pi for pi in by_part if pi in glass or export_mod.is_glass_name(parts[pi]["id"])}
     corners = [c for tris in by_part.values() for t in tris for c in t]
     lo = [min(c[a] for c in corners) for a in range(3)]
     hi = [max(c[a] for c in corners) for a in range(3)]
