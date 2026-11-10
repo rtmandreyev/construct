@@ -94,7 +94,7 @@ construct print examples/worlds/stortorget/constructs/schantzska-huset-no-20/sce
 ```
 
 The same goes for a house you placed in a world of your own, a car from a game level, or a shelf of things from
-your room, each at the scale your printer takes; `construct kit` turns a construct into a model kit the same way.
+your room, each at the scale your printer takes. `construct kit` turns a construct into a model kit the same way.
 
 ## A part that fits
 
@@ -111,7 +111,7 @@ Say you want to build the Eiffel Tower on a basic home printer.
    detailed). You get `scene.json` and a page to look at it.
 2. **Check that it holds together:** `construct check scene.json --fit`. It names every part that pokes through
    another, crosses a pane, hangs in the air, or leans with its weight off what it stands on. Ask your agent to fix
-   each one; a kit cannot glue what does not touch.
+   each one. A kit cannot glue what does not touch.
 3. **Make the kit at a size your printer takes:** `construct kit scene.json --size 200 --printer desktop --out kit/`.
    The check at the end names pieces that are too thin or too many; fix them in the construct (step 2) or with a plan.
 4. **Read `kit/booklet.html` first,** then open `kit/assembly.html` to see the steps in 3D.
@@ -125,8 +125,8 @@ Say you want to build the Eiffel Tower on a basic home printer.
    plan (`--plan kit-plan.json`: merges, parts to keep, clear parts, sub-assemblies in order), as the clock's did.
 8. **Clean, glue and paint** step by step, following the booklet.
 
-In Hermes Desktop the same happens from the chat: ask for a kit and it opens with its steps in 3D beside its booklet;
-a construct's Export menu also offers STL or 3MF sized to a desktop printer.
+In Hermes Desktop the same happens from the chat: ask for a kit and it opens with its steps in 3D beside its booklet.
+A construct's Export menu also offers STL or 3MF sized to a desktop printer.
 
 ## The commands
 

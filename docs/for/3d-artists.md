@@ -28,7 +28,7 @@ Each matches part ids or patterns, and the first that matches a part wins; four 
 {"parts": ["*"], "name": "white render", "color": "#ecebe6", "finish": "paint", "roughness": 0.75}
 ```
 
-The finishes are paint (a clear coat), brushed, chrome, wood, rubber, plastic, glass and light; in Blender the add-on
+The finishes are paint (a clear coat), brushed, chrome, wood, rubber, plastic, glass and light. In Blender the add-on
 draws wood grain, brushed streaks and rubber's tooth procedurally, so nothing needs texture coordinates.
 
 <p align="center">
@@ -106,9 +106,9 @@ In Blender (4.2 or later; tested with 5.2): **Edit > Preferences > Get Extension
 ## Good to know
 
 - **A starting point, not a finished hero asset.** Shapes come from Construct's vocabulary (boxes, lathes, lofts,
-  tubes, extrusions); overlapping parts are not merged; the only textures are its own artwork (a sign, a label),
-  and the texture coordinates are a box projection in metres. Joints are mechanical; there is no skinned rig.
-- **Colour belongs to you.** The hologram keeps Construct's house palette; a construct's own colours show in the solid
+  tubes, extrusions), and overlapping parts are not merged. The only textures are its own artwork (a sign, a label),
+  and the texture coordinates are a box projection in metres. Joints are mechanical, and there is no skinned rig.
+- **Colour belongs to you.** The hologram keeps Construct's house palette. A construct's own colours show in the solid
   view and in every export, and a material map is yours, kept beside the scene, never in it.
 - **A part drawn only as a line has no surface**; the audit warns `no-surface` so it can be given one.
 - **New designs:** a ship, a vehicle or a creature to light and render, designed from real ones:
