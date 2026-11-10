@@ -28,8 +28,8 @@ from the chat. [docs/WORLDS.md](docs/WORLDS.md)
   - a world's views are buttons (the whole, each placement, the world's own);
   - the sky is never lost to depth haze.
 - **Exports:** one glTF for Blender or a game engine (each placement a group, material maps merged, every joint in
-  the `open` animation); with `--pieces glued`, a Godot game map whose fixed body stays put while doors and lids
-  swing. The Blender add-on imports a world.
+  the `open` animation); with `--pieces glued`, a Godot game map whose fixed body stays put while every hinged or
+  sliding part (doors, lids, hatches) moves on its own joint. The Blender add-on imports a world.
 - **In Hermes,** `construct_world` makes, places (several at once), moves, removes, lists and names views, and shows
   each change live in the chat. Its constructs come from the user's projects, the constructs the plugin ships, or the
   gallery, fetched by name from this release's tag after the user approves the download in Hermes's prompt (an

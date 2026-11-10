@@ -12,8 +12,8 @@ agent in plain words, and it builds an animated model in lines of light, the **M
 page you can open anywhere, honest about what is known. The same construct becomes a 3D model with named parts and
 working joints, a print, a model kit, a CAD file or a film. Give it one picture of a place and it builds the place,
 zero-shot: [Stortorget](examples/worlds/stortorget/), Stockholm's old square from a single photograph, stands almost
-exactly as the photograph shows it; [Rain Harbour](examples/worlds/rain-harbour/) is a playable game level from one
-concept picture. Then rearrange it by hand in Hermes, with no AI at all.
+exactly as the photograph shows it; [Rain Harbour](examples/worlds/rain-harbour/) is a game level from one concept picture,
+ready to open in Godot, Unity or Unreal. Then rearrange it by hand in Hermes, with no AI at all.
 
 <p align="center">
   <a href="https://rtmandreyev.github.io/construct/examples/sainte-chapelle/"><img src="docs/media/assembly-sainte-chapelle.gif" width="32%" alt="The Sainte-Chapelle construct assembling itself"></a>
@@ -33,7 +33,7 @@ assembly and read the labels; <a href="docs/for/invent-from-what-exists.md">how 
 <a href="examples/worlds/stortorget/">how Stortorget was made</a>.</sub></p>
 
 - **Construct for Hermes.** A native Hermes plugin: ask for a thing in plain words and the construct appears live in the chat, with its 3D model, kit and NetLogo runs beside it, and place your constructs together into worlds. `hermes plugins install rtmandreyev/construct#hermes/construct` ([what it does](hosts/hermes/construct/README.md), [Villa Savoye in Hermes, step by step](docs/for/hermes-walkthrough.md), [worlds, step by step](docs/for/worlds-walkthrough.md)).
-- **Whole places, still in pieces.** A world made from one picture keeps every construct separate: move a car, turn a tower, swap the signs, open a door on its hinge, export it to Blender or Godot, reuse a building in another level ([Rain Harbour, before and after](examples/worlds/rain-harbour/#changed-by-hand)).
+- **Every piece still its own.** A world made from one picture keeps every construct separate: move a car, turn a tower, swap the signs, open a door on its hinge, export it to Blender or Godot, reuse a building in another level ([Rain Harbour, before and after](examples/worlds/rain-harbour/#changed-by-hand)).
 - **Any agent, any model.** Claude Code, Hermes, any MCP client or any OpenAI-compatible endpoint, or by hand.
 - **Honest about what is known.** Every part says how it is known, its size and its shape apart, every guess in a shade of how firmly it is held.
 - **One house style.** Models never choose the colours, so every construct looks like it belongs with the rest.
@@ -82,7 +82,8 @@ Every change with pictures and the commands to try it: **[What's new in 1.3, a w
   it, lift it; add one from the library; save, with no model turn. A Worlds tab, groups of your own, previews. The
   plugin ships 24 constructs (16 in 1.2.1) and all six worlds, the two from pictures with their artwork. A level
   made from one prompt can be remade by hand: [Rain Harbour, before and after](examples/worlds/rain-harbour/#changed-by-hand).
-- **More ways out.** FBX, USD and USDZ (through Blender), a Godot game map whose doors swing, and the Blender
+- **More ways out.** FBX, USD and USDZ (through Blender), a Godot game map (what stays put is one static body,
+  every hinged or sliding part moves on its own joint), and the Blender
   add-on imports a world. Every construct now finishes with its own material map, which every export uses by
   default, and its artwork (signs, labels, screens) exports as textures in glTF and OBJ.
 - **Sturdier masterpiece rounds**, from two long runs: ties recorded, artwork kept in checkpoints, references

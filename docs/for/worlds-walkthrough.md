@@ -110,7 +110,7 @@ a named group, every joint working:
 | Export | For |
 | --- | --- |
 | glTF (.glb) | Blender, Unity, Unreal, Godot, three.js |
-| Godot game map | a fixed body with colliders; doors and lids swing on their hinges |
+| Godot game map | one static body with colliders for what stays put; every hinged or sliding part (doors, lids, hatches) moves on its own joint |
 | FBX | Unity, Unreal, Maya (through Blender, if it is on the machine) |
 | USDZ / USD | Reality Composer, Quick Look, Omniverse, Houdini (through Blender) |
 | OBJ | plain meshes for other tools |
