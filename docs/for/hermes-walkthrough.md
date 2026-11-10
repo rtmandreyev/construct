@@ -1,10 +1,10 @@
 # Villa Savoye in Hermes, step by step
 
 Construct is a native plugin for [Hermes Agent](https://github.com/NousResearch/hermes-agent). You ask in plain
-words; Hermes researches the thing, writes the description and builds it, and the construct appears live in the
+words. Hermes researches the thing, writes the description and builds it, and the construct appears live in the
 chat with its own controls. Everything it becomes stays in the chat too: the 3D model turning with its parts, the
-exact shapes of a CAD file, a kit stepping through in 3D, a film. This page follows the final test of Construct 1.2,
-GPT-6.1 Sol in Hermes Desktop asked in five plain requests: Le Corbusier's Villa Savoye, from the request to a
+exact shapes of a CAD file, a kit stepping through in 3D, a film. This page follows the final test of Construct 1.2:
+GPT-6.1 Sol in Hermes Desktop, given five plain requests, taking Le Corbusier's Villa Savoye from the request to a
 printable kit.
 
 <p align="center">
@@ -36,7 +36,7 @@ images), ffmpeg (films), FreeCAD (CAD) and Blender are used when they are on the
 | The build | masterpiece mode, 12 rounds in 2 h 25 min: 59.8 minutes of authoring, 76.2 of critics |
 | After it | a question, a fit repair, three exports, a kit and a film, in about an hour more |
 
-Five requests, typed as they are below; nothing else was said to it. The first three were one conversation. The
+Five requests, typed as they are below. Nothing else was said to it. The first three were one conversation. The
 exports, the kit and the film were a second, opened after the plugin was restarted with fixes: Hermes found the
 project by its name and carried on.
 
@@ -60,7 +60,7 @@ cites each in the scene by URL. It aligned the plans by their outer prism and sc
 [Its research notes](../../examples/villa-savoye/run/RESEARCH.md)
 
 Two corrections came from reading the sources against each other. The section showed the ramp in **four** flights,
-two to the living floor and two to the roof, not one long upper run; and a photograph published as the "rear"
+two to the living floor and two to the roof, not one long upper run. And a photograph published as the "rear"
 façade turned out to show the terrace side, so the run remapped the photograph rather than moving correct geometry
 to match it.
 
@@ -83,7 +83,7 @@ the run stopped at its 12-round cap. What the critics asked for, and got:
 - **Rounds 9–12:** the façade's bands calibrated to the photographs; the courtyard's table and planters; the solarium
   curves sampled twice as finely, which is what won round 12.
 
-The last verdict was *good*, not outstanding, and the run says so; the critic's remaining asks (the interiors behind
+The last verdict was *good*, not outstanding, and the run says so. The critic's remaining asks (the interiors behind
 the envelope, the stair's floor tiles) are listed as open in its record. [Every round](../../examples/villa-savoye/run/rounds.md)
 
 <p align="center"><img src="../media/hermes-villa-built.jpg" width="95%" alt="The finished construct's card in the chat with its controls (Provenance, Solid, Replay, How to read it, Export a glTF, More detail, Review it), and Sol's summary: anchored to the published 19 × 21.5 m footprint and 9.4 m height, the named views, the sources, and the verification"></p>
@@ -151,7 +151,7 @@ and said plainly that nobody has printed it. The film runs 15 seconds. [Open the
 
 ### 8. Finished in Blender
 
-The glTF opens in Blender as it is; with Construct's Blender add-on the construct comes in with its build, joints
+The glTF opens in Blender as it is. With Construct's Blender add-on the construct comes in with its build, joints
 and finish on sliders. A material map gives each group of parts its material: here white render, dark steel frames,
 the ground floor's dark green and the solarium's rose and pale blue ([maps/finish.json](../../examples/villa-savoye/maps/finish.json),
 written for this page). Every surface in these stills is a named part of the construct, inside as well as out.
