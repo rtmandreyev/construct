@@ -60,9 +60,9 @@ run, whose turtles fly at their own heights); bloom; and a camera that orbits sl
 frames span the run at 30 ticks a second, in a steady light, without sound.
 
 It draws the recording itself, not a construct of it, so a run of any length and any number of
-turtles loses nothing; between two records a turtle moves on a straight line (never across a wrap
+turtles loses nothing. Between two records a turtle moves on a straight line (never across a wrap
 of the world), and the trail stops where the turtle wrapped. A frame handler moves the turtles as
-the scene plays or renders; the objects keep the recording's path, so a saved .blend replays it
+the scene plays or renders, and the objects keep the recording's path, so a saved .blend replays it
 wherever the add-on is installed. Import options: the trail's length in seconds, and the camera.
 
 Headless, to a film, Construct's command line runs Blender for you:
