@@ -50,7 +50,7 @@ python3 construct_hologram/cli.py video scene.json --out film.mp4 \
 
 The construct builds for 245 seconds, following the music, and the finished video has the track
 in it. A construct with a ceremony assembly first shows a short opening, a ghost of itself
-collapsing into place, of about a second (1.25 s); its build starts after that, so for a build
+collapsing into place, of about a second (1.25 s). Its build starts after that, so for a build
 that ends with the track, give `--assembly` the track's length minus 1.25. The video runs three
 seconds past the assembly so it can settle; set `--seconds` for a different length. A scene whose
 assembly style is `cut` appears at once, so film mode has nothing to pace there.
@@ -58,8 +58,8 @@ assembly style is `cut` appears at once, so film mode has nothing to pace there.
 Rendering takes a while: every frame is drawn in a browser, about a frame or two a second on a
 laptop, so a four-minute film at 24 frames a second takes roughly an hour.
 
-**3. Watch it.** Open `film.mp4`. A quiet opening builds only a little; the louder the music, the
-faster the construct grows; each new section starts a new part of it; and it completes exactly
+**3. Watch it.** Open `film.mp4`. A quiet opening builds only a little, and the louder the music, the
+faster the construct grows. Each new section starts a new part of it, and it completes exactly
 when its build time is up.
 
 ## How the music shows

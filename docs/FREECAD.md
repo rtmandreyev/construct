@@ -68,8 +68,8 @@ are left out, and the command lists them.
 The shapes are the construct's own: true shapes where its parameters allow, smooth where the construct
 draws a polygon (a loft's NURBS surface follows its sections more smoothly than the construct's straight
 strips between them, by design). They are good for layout, clearance, packaging, rendering and a start to
-model over; a construct's dimensions are as certain as it says, so they are not for machining. Joints are
-groups with their axis and range, not FreeCAD Assembly joints; dimensions come from the construct,
+model over. A construct's dimensions are as certain as it says, so they are not for machining. Joints are
+groups with their axis and range, not FreeCAD Assembly joints. Dimensions come from the construct,
 so a part's size is as certain as the construct says.
 
 The tests build the Yamaha CFX in FreeCAD when `CONSTRUCT_FREECAD` names its `freecadcmd`, reopen
