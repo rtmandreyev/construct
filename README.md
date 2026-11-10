@@ -371,7 +371,9 @@ See [CONTRIBUTING.md](CONTRIBUTING.md). Run the tests with
 (`examples/netlogo-*`: [viral marketing](examples/netlogo-viral-marketing/), [flocking](examples/netlogo-flocking/),
 [wolf sheep](examples/netlogo-wolf-sheep/), [fire](examples/netlogo-fire/), [fireflies](examples/netlogo-fireflies/),
 [virus on a network](examples/netlogo-virus-on-a-network/) and [virus compare](examples/netlogo-virus-compare/)) derive from Uri
-Wilensky's NetLogo models and are under CC BY-NC-SA 3.0 instead (see each LICENSE). The [Blender
+Wilensky's NetLogo models and are under CC BY-NC-SA 3.0 instead (see each LICENSE). The
+[Stortorget](examples/worlds/stortorget/) world, made from a CC BY-SA 4.0 photograph that it includes, is under CC BY-SA
+4.0 (see its [LICENSE](examples/worlds/stortorget/LICENSE)). The [Blender
 add-on](hosts/blender/) is under GPL-3.0-or-later, as Blender's extensions platform requires; what
 you make with it is yours.
 

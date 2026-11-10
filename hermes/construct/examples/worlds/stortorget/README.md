@@ -355,6 +355,7 @@ What this run shows, for the next world from a photograph:
 
 Made by GPT-6.1 Sol in Hermes Agent with the Construct plugin, after a photograph by Ximonic (Simo Räsänen),
 CC BY-SA 4.0, included unchanged as `reference.jpg` under that licence. Sources for the houses are cited in each construct's scene. The stall's name is
-invented, in real Swedish. **Licence: to be decided before release.** The world was made from a CC BY-SA 4.0
-photograph; if it counts as an adaptation of it, the world is offered under CC BY-SA 4.0 with this credit, apart from
-the rest of Construct (Apache-2.0).
+invented, in real Swedish. **Licence:** the world was made to match a CC BY-SA 4.0
+photograph, so this folder (the world, its constructs, its pictures and this page) is under
+[CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) with the credit above, apart from the rest of
+Construct (Apache-2.0); see its [LICENSE](LICENSE).

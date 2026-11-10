@@ -1,0 +1,21 @@
+This folder (examples/worlds/stortorget/) is licensed differently from the rest of Construct.
+
+Stortorget at Christmas was made from one photograph:
+
+  "Stortorget in Gamla Stan, Stockholm, Sweden, 2022 December - 5" by Ximonic (Simo Räsänen)
+  https://commons.wikimedia.org/wiki/File:Stortorget_in_Gamla_Stan,_Stockholm,_Sweden,_2022_December_-_5.jpg
+  licensed under Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
+
+The photograph is included unchanged as reference.jpg. The world was made to match it (its camera, its layout and
+the critics' judgements follow the photograph), so everything in this folder is treated as an adaptation of it and
+distributed under the same license: the world (world.json), its constructs (constructs/), its pictures and renders,
+the record of its rounds (run/) and its page (README.md).
+
+  Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)
+  https://creativecommons.org/licenses/by-sa/4.0/
+  Legal code: https://creativecommons.org/licenses/by-sa/4.0/legalcode
+
+Credit when reusing it: "Stortorget at Christmas, made with Construct by GPT-6.1 Sol, after a photograph by Ximonic
+(Simo Räsänen), CC BY-SA 4.0." The buildings are real places; their names belong to them, and no endorsement is
+implied. The rest of Construct, outside this folder, is under the Apache License 2.0 (see the LICENSE file at the
+root of the repository).

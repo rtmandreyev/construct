@@ -20,8 +20,14 @@ Example constructs (examples/): scenes written by AI models (Claude Opus 5.5, GP
 with Construct, with hero images and animations rendered by Construct's own viewer. Those of real
 things are independent reconstructions from public references (KESTREL is an invented design, and
 SERUM 2 / 61 an unaffiliated concept designed from a public manual); the scenes cite their references
-by URL and include no reference photograph. Product, vehicle and place names belong to their owners, and
-no endorsement is implied.
+by URL and include no reference photograph, apart from the two worlds below. Product, vehicle and place names
+belong to their owners, and no endorsement is implied.
+
+The two worlds made from one picture each include that picture as reference.jpg. Rain Harbour's
+(examples/worlds/rain-harbour/) is a concept picture made by the author and is Apache-2.0 with the rest.
+Stortorget's (examples/worlds/stortorget/) is a photograph by Ximonic (Simo Räsänen), CC BY-SA 4.0, from
+Wikimedia Commons; the world was made to match it, so that whole folder is under CC BY-SA 4.0, not Apache-2.0;
+see its LICENSE.
 
 One folder is licensed differently: examples/netlogo-viral-marketing/ derives from NetLogo's
 Simple Viral Marketing model, Copyright 2012 Uri Wilensky (NetLogo Models Library; Wilensky &

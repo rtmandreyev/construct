@@ -116,7 +116,7 @@ def build(out):
         for f in sorted(wdir.rglob("*")):
             rel = f.relative_to(wdir)
             art = "assets" in rel.parts and f.suffix.lower() in (".png", ".jpg", ".jpeg", ".webp")   # signs, textures
-            if f.is_file() and (f.suffix in (".json", ".md") or f.name == "thumb.jpg" or art) and "builds" not in f.parts:
+            if f.is_file() and (f.suffix in (".json", ".md") or f.name in ("thumb.jpg", "LICENSE") or art) and "builds" not in f.parts:
                 _copy(f, pkg / "examples" / "worlds" / wdir.name / rel)
         doc = json.loads((wdir / "world.json").read_text(encoding="utf-8"))
         worlds.append({"name": wdir.name, "title": doc["title"], "summary": doc.get("summary", ""),
