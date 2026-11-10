@@ -1,7 +1,7 @@
 # Documentation
 
 If you are new to Construct, start with [how a construct is made](HOW-IT-IS-MADE.md) and
-[what you see in one](STYLE.md); the what's-new pages walk through each release, and the rest are there when you
+[what you see in one](STYLE.md). The what's-new pages walk through each release, and the rest are there when you
 need them.
 
 **Everyday:** [no terminal: the Claude or ChatGPT app](for/in-the-apps.md) · [copy your thing](for/copy-your-thing.md) · [your home or garden](for/home-and-garden.md) · [your vehicle](for/your-vehicle.md) · [make a part](for/replace-a-part.md) · [a kit of your own](for/a-kit-of-your-own.md) · [show what you mean](for/show-what-you-mean.md)

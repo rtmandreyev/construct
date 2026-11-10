@@ -137,7 +137,7 @@ id (move, rotate, resize, set fields, add or remove parts), each step validated 
 with the diff. From a checkout, edit `scene.json` and run `construct check`.
 
 Tried here on a copy of AURIC: its two door hinges set from 65° to 80° (`"amount": 80` on each articulation), checked
-(no errors), exported glued again. The doors' joints in the new file read 80, and nothing else changed.
+(no errors), exported glued again. The doors' joints in the new file read 80. Nothing else changed.
 
 When you ask an agent for more detail, ask it to keep what your game already names. KESTREL's second version kept all
 256 parts with their names, places and sizes and added 242 (`v2-…`), so every script and animation that names a part
