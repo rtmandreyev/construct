@@ -128,6 +128,14 @@
    }
   },
   {
+   "name": "toy-xylophone",
+   "title": "A child's toy xylophone",
+   "model": "DeepSeek V4.1 Flash",
+   "files": {
+    "scene": "examples/toy-xylophone/scene.json"
+   }
+  },
+  {
    "name": "garden-shed",
    "title": "A garden shed",
    "model": "DeepSeek V4.1 Flash",
