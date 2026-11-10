@@ -21,16 +21,23 @@
   {
    "id": "photo",
    "kind": "reference_image",
-   "title": "Ximonic (Simo Räsänen), Stortorget Christmas Market December 2022; CC BY-SA 4.0 derived visual reconstruction",
+   "title": "Supplied December 2022 market photo: sage facade visible immediately left of Christmas tree; address unresolved",
    "ref": "https://commons.wikimedia.org/wiki/File:Stortorget_Christmas_Market_2022.jpg",
    "rights": "permitted"
   },
   {
    "id": "stortorget",
    "kind": "document",
-   "title": "Stortorget: Number22 green left of Kåkbrinken dated1758; locator does not conclusively identify photo gable",
+   "title": "Stortorget article: No22 1758 claim is a locator for a green building left of Kåkbrinken, NOT an established match to this photographed gable",
    "ref": "https://en.wikipedia.org/wiki/Stortorget",
    "rights": "permitted"
+  },
+  {
+   "id": "production",
+   "kind": "generated",
+   "ref": "provenance-audit/before/constructs/stortorget-sage-curved-gable-neighbor-no22-tenta/scene.json",
+   "rights": "permitted",
+   "title": "Existing agent-authored production dimensions and unseen completion; not human measurements"
   }
  ],
  "facts": [
@@ -39,32 +46,53 @@
    "value": 8.5,
    "unit": "m",
    "certainty": "inferred",
-   "source": "request",
-   "note": "Production envelope estimate, not published measurement"
+   "source": "production",
+   "note": "Agent-authored production envelope estimate, not a published measurement or human-supplied dimension."
   },
   {
    "key": "eave",
    "value": 15.72,
    "unit": "m",
    "certainty": "inferred",
-   "source": "request",
-   "note": "Round10 D18 photo-relative inferred adjustment: +2.22m distributed equally through three storeys; footprint and opening rhythms retained."
+   "source": "production",
+   "note": "Retained agent-authored photo-relative estimate and historical adjustment; source photo occludes lower floors. Not a published height or verified storey count."
   },
   {
    "key": "apex",
    "value": 20.72,
    "unit": "m",
    "certainty": "inferred",
-   "source": "request",
-   "note": "Round10 D18 photo-relative inferred crown +12%; no surveyed height asserted."
+   "source": "production",
+   "note": "Retained agent-authored production estimate; no surveyed apex height or calibrated photogrammetry established."
   },
   {
    "key": "depth",
    "value": 10,
    "unit": "m",
    "certainty": "inferred",
-   "source": "request",
-   "note": "Production envelope estimate, not published measurement"
+   "source": "production",
+   "note": "Agent-authored hidden completion estimate, not a surveyed footprint or user measurement."
+  },
+  {
+   "certainty": "inferred",
+   "key": "identity-gap",
+   "note": "Do not import No22's 1758 date, occupants, medieval walls or basement dimensions into this asset. Source describes a green building left of Kåkbrinken but no conclusive photo/parcel match was established; scene position was not changed.",
+   "source": "stortorget",
+   "value": "UNRESOLVED: No22 attribution and exact parcel identity of the sage curved-gable neighbour."
+  },
+  {
+   "certainty": "inferred",
+   "key": "visible-photo-form",
+   "note": "Visible in reference only; tree occludes right edge and market roofs obscure lower frontage. These observations establish neither complete storey/window counts nor metric geometry; no tracing.",
+   "source": "photo",
+   "value": "Sage/grey-green curved gable with cream border, one round oculus, paired small segmental-headed attic windows and paired larger rectangular windows below the cornice, immediately left of tree."
+  },
+  {
+   "certainty": "inferred",
+   "key": "production-inference",
+   "note": "Honest authoring provenance of unchanged parts. Production estimates are not human measurements and do not establish real hidden geometry.",
+   "source": "production",
+   "value": "All numeric dimensions, unseen lower facade, full shell depth, rear windows, roof details and hidden continuations remain inferred agent-authored geometry."
   }
  ],
  "assets": [],
@@ -75,10 +103,9 @@
    "role": "mass",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "production-inference",
+    "identity-gap"
    ],
    "stage": 0,
    "shape": {
@@ -100,7 +127,9 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#929d8d"
-   }
+   },
+   "source": "photo",
+   "note": "Photo supports visible sage facade appearance only. Three-storey lower body, back, side walls, thickness, depth and chosen dimensions are inferred behind stalls/tree. Exact address/parcel and world position identity remain unresolved."
   },
   {
    "id": "curved-gable",
@@ -108,10 +137,8 @@
    "role": "identity",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "identity-gap"
    ],
    "stage": 2,
    "shape": {
@@ -239,7 +266,9 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#929d8d"
-   }
+   },
+   "source": "photo",
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "cream-curved-pediment-ribbon",
@@ -247,10 +276,8 @@
    "role": "identity",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "identity-gap"
    ],
    "stage": 3,
    "shape": {
@@ -486,7 +513,9 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#e5dec9"
-   }
+   },
+   "source": "photo",
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "dark-roof",
@@ -494,10 +523,8 @@
    "role": "mass",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "stage": 1,
    "shape": {
@@ -529,7 +556,9 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#42484b"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "cream-course-4.55",
@@ -537,10 +566,8 @@
    "role": "structure",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "stage": 2,
    "shape": {
@@ -562,7 +589,9 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#e5dec9"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "course-cap-4.55",
@@ -570,10 +599,8 @@
    "role": "structure",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "stage": 2,
    "shape": {
@@ -595,7 +622,9 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#e5dec9"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "cream-course-8.65",
@@ -603,10 +632,8 @@
    "role": "structure",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "stage": 2,
    "shape": {
@@ -628,7 +655,9 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#e5dec9"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "course-cap-8.65",
@@ -636,10 +665,8 @@
    "role": "structure",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "stage": 2,
    "shape": {
@@ -661,7 +688,9 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#e5dec9"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "cream-course-13.3",
@@ -669,10 +698,8 @@
    "role": "structure",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "identity-gap"
    ],
    "stage": 2,
    "shape": {
@@ -694,7 +721,9 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#e5dec9"
-   }
+   },
+   "source": "photo",
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "course-cap-13.3",
@@ -702,10 +731,8 @@
    "role": "structure",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "identity-gap"
    ],
    "stage": 2,
    "shape": {
@@ -727,7 +754,9 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#e5dec9"
-   }
+   },
+   "source": "photo",
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "stone-footing",
@@ -735,10 +764,8 @@
    "role": "structure",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "stage": 0,
    "shape": {
@@ -760,7 +787,9 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#6a6e67"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "sash-stile-0-0",
@@ -768,10 +797,8 @@
    "role": "detail",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "stage": 5,
    "shape": {
@@ -793,7 +820,9 @@
     "weight": 0.5,
     "alpha": 0.75,
     "color": "#765446"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "sash-rail-0-0-0.65",
@@ -801,10 +830,8 @@
    "role": "detail",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "stage": 5,
    "shape": {
@@ -826,7 +853,9 @@
     "weight": 0.5,
     "alpha": 0.75,
     "color": "#765446"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "sash-rail-0-0-1.36",
@@ -834,10 +863,8 @@
    "role": "detail",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "stage": 5,
    "shape": {
@@ -859,7 +886,9 @@
     "weight": 0.5,
     "alpha": 0.75,
     "color": "#765446"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "cream-sill-0-0",
@@ -867,10 +896,8 @@
    "role": "detail",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "stage": 5,
    "shape": {
@@ -892,7 +919,9 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#e5dec9"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "sash-stile-0-1",
@@ -900,10 +929,8 @@
    "role": "detail",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "stage": 5,
    "shape": {
@@ -925,7 +952,9 @@
     "weight": 0.5,
     "alpha": 0.75,
     "color": "#765446"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "sash-rail-0-1-0.65",
@@ -933,10 +962,8 @@
    "role": "detail",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "stage": 5,
    "shape": {
@@ -958,7 +985,9 @@
     "weight": 0.5,
     "alpha": 0.75,
     "color": "#765446"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "sash-rail-0-1-1.36",
@@ -966,10 +995,8 @@
    "role": "detail",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "stage": 5,
    "shape": {
@@ -991,7 +1018,9 @@
     "weight": 0.5,
     "alpha": 0.75,
     "color": "#765446"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "cream-sill-0-1",
@@ -999,10 +1028,8 @@
    "role": "detail",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "stage": 5,
    "shape": {
@@ -1024,7 +1051,9 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#e5dec9"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "sash-stile-1-0",
@@ -1032,10 +1061,8 @@
    "role": "detail",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "stage": 5,
    "shape": {
@@ -1057,7 +1084,9 @@
     "weight": 0.5,
     "alpha": 0.75,
     "color": "#765446"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "sash-rail-1-0-0.65",
@@ -1065,10 +1094,8 @@
    "role": "detail",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "stage": 5,
    "shape": {
@@ -1090,7 +1117,9 @@
     "weight": 0.5,
     "alpha": 0.75,
     "color": "#765446"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "sash-rail-1-0-1.36",
@@ -1098,10 +1127,8 @@
    "role": "detail",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "stage": 5,
    "shape": {
@@ -1123,7 +1150,9 @@
     "weight": 0.5,
     "alpha": 0.75,
     "color": "#765446"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "cream-sill-1-0",
@@ -1131,10 +1160,8 @@
    "role": "detail",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "stage": 5,
    "shape": {
@@ -1156,7 +1183,9 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#e5dec9"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "sash-stile-1-1",
@@ -1164,10 +1193,8 @@
    "role": "detail",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "stage": 5,
    "shape": {
@@ -1189,7 +1216,9 @@
     "weight": 0.5,
     "alpha": 0.75,
     "color": "#765446"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "sash-rail-1-1-0.65",
@@ -1197,10 +1226,8 @@
    "role": "detail",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "stage": 5,
    "shape": {
@@ -1222,7 +1249,9 @@
     "weight": 0.5,
     "alpha": 0.75,
     "color": "#765446"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "sash-rail-1-1-1.36",
@@ -1230,10 +1259,8 @@
    "role": "detail",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "stage": 5,
    "shape": {
@@ -1255,7 +1282,9 @@
     "weight": 0.5,
     "alpha": 0.75,
     "color": "#765446"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "cream-sill-1-1",
@@ -1263,10 +1292,8 @@
    "role": "detail",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "stage": 5,
    "shape": {
@@ -1288,7 +1315,9 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#e5dec9"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "sash-stile-2-0",
@@ -1296,10 +1325,8 @@
    "role": "detail",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "identity-gap"
    ],
    "stage": 5,
    "shape": {
@@ -1321,7 +1348,9 @@
     "weight": 0.5,
     "alpha": 0.75,
     "color": "#765446"
-   }
+   },
+   "source": "photo",
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "sash-rail-2-0-0.65",
@@ -1329,10 +1358,8 @@
    "role": "detail",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "identity-gap"
    ],
    "stage": 5,
    "shape": {
@@ -1354,7 +1381,9 @@
     "weight": 0.5,
     "alpha": 0.75,
     "color": "#765446"
-   }
+   },
+   "source": "photo",
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "sash-rail-2-0-1.36",
@@ -1362,10 +1391,8 @@
    "role": "detail",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "identity-gap"
    ],
    "stage": 5,
    "shape": {
@@ -1387,7 +1414,9 @@
     "weight": 0.5,
     "alpha": 0.75,
     "color": "#765446"
-   }
+   },
+   "source": "photo",
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "cream-sill-2-0",
@@ -1395,10 +1424,8 @@
    "role": "detail",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "identity-gap"
    ],
    "stage": 5,
    "shape": {
@@ -1420,7 +1447,9 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#e5dec9"
-   }
+   },
+   "source": "photo",
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "sash-stile-2-1",
@@ -1428,10 +1457,8 @@
    "role": "detail",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "identity-gap"
    ],
    "stage": 5,
    "shape": {
@@ -1453,7 +1480,9 @@
     "weight": 0.5,
     "alpha": 0.75,
     "color": "#765446"
-   }
+   },
+   "source": "photo",
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "sash-rail-2-1-0.65",
@@ -1461,10 +1490,8 @@
    "role": "detail",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "identity-gap"
    ],
    "stage": 5,
    "shape": {
@@ -1486,7 +1513,9 @@
     "weight": 0.5,
     "alpha": 0.75,
     "color": "#765446"
-   }
+   },
+   "source": "photo",
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "sash-rail-2-1-1.36",
@@ -1494,10 +1523,8 @@
    "role": "detail",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "identity-gap"
    ],
    "stage": 5,
    "shape": {
@@ -1519,7 +1546,9 @@
     "weight": 0.5,
     "alpha": 0.75,
     "color": "#765446"
-   }
+   },
+   "source": "photo",
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "cream-sill-2-1",
@@ -1527,10 +1556,8 @@
    "role": "detail",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "identity-gap"
    ],
    "stage": 5,
    "shape": {
@@ -1552,7 +1579,9 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#e5dec9"
-   }
+   },
+   "source": "photo",
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "sash-stile-attic-0",
@@ -1560,10 +1589,8 @@
    "role": "detail",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "identity-gap"
    ],
    "stage": 5,
    "shape": {
@@ -1585,7 +1612,9 @@
     "weight": 0.5,
     "alpha": 0.75,
     "color": "#765446"
-   }
+   },
+   "source": "photo",
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "sash-rail-attic-0-0.6",
@@ -1593,10 +1622,8 @@
    "role": "detail",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "identity-gap"
    ],
    "stage": 5,
    "shape": {
@@ -1618,7 +1645,9 @@
     "weight": 0.5,
     "alpha": 0.75,
     "color": "#765446"
-   }
+   },
+   "source": "photo",
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "sash-rail-attic-0-1.16",
@@ -1626,10 +1655,8 @@
    "role": "detail",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "identity-gap"
    ],
    "stage": 5,
    "shape": {
@@ -1651,7 +1678,9 @@
     "weight": 0.5,
     "alpha": 0.75,
     "color": "#765446"
-   }
+   },
+   "source": "photo",
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "cream-sill-attic-0",
@@ -1659,10 +1688,8 @@
    "role": "detail",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "identity-gap"
    ],
    "stage": 5,
    "shape": {
@@ -1684,7 +1711,9 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#e5dec9"
-   }
+   },
+   "source": "photo",
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "sash-stile-attic-1",
@@ -1692,10 +1721,8 @@
    "role": "detail",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "identity-gap"
    ],
    "stage": 5,
    "shape": {
@@ -1717,7 +1744,9 @@
     "weight": 0.5,
     "alpha": 0.75,
     "color": "#765446"
-   }
+   },
+   "source": "photo",
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "sash-rail-attic-1-0.6",
@@ -1725,10 +1754,8 @@
    "role": "detail",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "identity-gap"
    ],
    "stage": 5,
    "shape": {
@@ -1750,7 +1777,9 @@
     "weight": 0.5,
     "alpha": 0.75,
     "color": "#765446"
-   }
+   },
+   "source": "photo",
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "sash-rail-attic-1-1.16",
@@ -1758,10 +1787,8 @@
    "role": "detail",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "identity-gap"
    ],
    "stage": 5,
    "shape": {
@@ -1783,7 +1810,9 @@
     "weight": 0.5,
     "alpha": 0.75,
     "color": "#765446"
-   }
+   },
+   "source": "photo",
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "cream-sill-attic-1",
@@ -1791,10 +1820,8 @@
    "role": "detail",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "identity-gap"
    ],
    "stage": 5,
    "shape": {
@@ -1816,7 +1843,9 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#e5dec9"
-   }
+   },
+   "source": "photo",
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "cream-oculus-ring",
@@ -1824,10 +1853,8 @@
    "role": "identity",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "identity-gap"
    ],
    "stage": 4,
    "shape": {
@@ -1852,7 +1879,9 @@
     90,
     0,
     0
-   ]
+   ],
+   "source": "photo",
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "oculus-window-glazing",
@@ -1860,10 +1889,8 @@
    "role": "identity",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "identity-gap"
    ],
    "stage": 5,
    "shape": {
@@ -1889,7 +1916,9 @@
     90,
     0,
     0
-   ]
+   ],
+   "source": "photo",
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "rear-bay-frame-0-0",
@@ -1897,10 +1926,8 @@
    "role": "detail",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "stage": 3,
    "shape": {
@@ -1922,7 +1949,9 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#765446"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "rear-window-glazing-0-0",
@@ -1930,10 +1959,8 @@
    "role": "detail",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "stage": 4,
    "shape": {
@@ -1955,7 +1982,9 @@
     "weight": 0.5,
     "alpha": 0.6,
     "color": "#303d41"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "rear-bay-frame-0-1",
@@ -1963,10 +1992,8 @@
    "role": "detail",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "stage": 3,
    "shape": {
@@ -1988,7 +2015,9 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#765446"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "rear-window-glazing-0-1",
@@ -1996,10 +2025,8 @@
    "role": "detail",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "stage": 4,
    "shape": {
@@ -2021,7 +2048,9 @@
     "weight": 0.5,
     "alpha": 0.6,
     "color": "#303d41"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "rear-bay-frame-1-0",
@@ -2029,10 +2058,8 @@
    "role": "detail",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "stage": 3,
    "shape": {
@@ -2054,7 +2081,9 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#765446"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "rear-window-glazing-1-0",
@@ -2062,10 +2091,8 @@
    "role": "detail",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "stage": 4,
    "shape": {
@@ -2087,7 +2114,9 @@
     "weight": 0.5,
     "alpha": 0.6,
     "color": "#303d41"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "rear-bay-frame-1-1",
@@ -2095,10 +2124,8 @@
    "role": "detail",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "stage": 3,
    "shape": {
@@ -2120,7 +2147,9 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#765446"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "rear-window-glazing-1-1",
@@ -2128,10 +2157,8 @@
    "role": "detail",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "stage": 4,
    "shape": {
@@ -2153,7 +2180,9 @@
     "weight": 0.5,
     "alpha": 0.6,
     "color": "#303d41"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "rear-bay-frame-2-0",
@@ -2161,10 +2190,8 @@
    "role": "detail",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "stage": 3,
    "shape": {
@@ -2186,7 +2213,9 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#765446"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "rear-window-glazing-2-0",
@@ -2194,10 +2223,8 @@
    "role": "detail",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "stage": 4,
    "shape": {
@@ -2219,7 +2246,9 @@
     "weight": 0.5,
     "alpha": 0.6,
     "color": "#303d41"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "rear-bay-frame-2-1",
@@ -2227,10 +2256,8 @@
    "role": "detail",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "stage": 3,
    "shape": {
@@ -2252,7 +2279,9 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#765446"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "rear-window-glazing-2-1",
@@ -2260,10 +2289,8 @@
    "role": "detail",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "stage": 4,
    "shape": {
@@ -2285,7 +2312,9 @@
     "weight": 0.5,
     "alpha": 0.6,
     "color": "#303d41"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "rear-chimney",
@@ -2293,10 +2322,8 @@
    "role": "structure",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "stage": 2,
    "shape": {
@@ -2318,7 +2345,9 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#42484b"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "chimney-cap",
@@ -2326,10 +2355,8 @@
    "role": "structure",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "stage": 3,
    "shape": {
@@ -2351,7 +2378,9 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#42484b"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "roof-seams",
@@ -2359,10 +2388,8 @@
    "role": "detail",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "stage": 5,
    "shape": {
@@ -2482,7 +2509,9 @@
     "weight": 0.45,
     "alpha": 0.35,
     "color": "#42484b"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "cream-cornice-lower-molding",
@@ -2508,7 +2537,13 @@
     "weight": 1.1,
     "alpha": 0.85,
     "color": "#e5dec9"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "visible-photo-form",
+    "identity-gap"
+   ],
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "cream-cornice-sloped-cap",
@@ -2548,7 +2583,13 @@
     "weight": 1.1,
     "alpha": 0.85,
     "color": "#e5dec9"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "visible-photo-form",
+    "identity-gap"
+   ],
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "rose-center-hub",
@@ -2571,7 +2612,13 @@
     "weight": 0.7,
     "alpha": 0.8,
     "color": "#765446"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "visible-photo-form",
+    "identity-gap"
+   ],
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "sash-inner-jamb-left",
@@ -2607,7 +2654,13 @@
     "weight": 0.5,
     "alpha": 0.85,
     "color": "#765446"
-   }
+   },
+   "source": "production",
+   "basis": [
+    "production-inference",
+    "identity-gap"
+   ],
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "sash-inner-jamb-right",
@@ -2643,7 +2696,13 @@
     "weight": 0.5,
     "alpha": 0.85,
     "color": "#765446"
-   }
+   },
+   "source": "production",
+   "basis": [
+    "production-inference",
+    "identity-gap"
+   ],
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "rose-petal",
@@ -2684,7 +2743,13 @@
     "weight": 0.8,
     "alpha": 0.9,
     "color": "#765446"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "visible-photo-form",
+    "identity-gap"
+   ],
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "at": [
@@ -2710,7 +2775,13 @@
     ],
     "type": "box"
    },
-   "stage": 5
+   "stage": 5,
+   "source": "production",
+   "basis": [
+    "production-inference",
+    "identity-gap"
+   ],
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "at": [
@@ -2750,7 +2821,13 @@
     ],
     "type": "extrude"
    },
-   "stage": 5
+   "stage": 5,
+   "source": "production",
+   "basis": [
+    "production-inference",
+    "identity-gap"
+   ],
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "at": [
@@ -2786,7 +2863,13 @@
     "sides": 6,
     "type": "tube"
    },
-   "stage": 5
+   "stage": 5,
+   "source": "production",
+   "basis": [
+    "production-inference",
+    "identity-gap"
+   ],
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "at": [
@@ -2880,7 +2963,13 @@
     ],
     "type": "paths"
    },
-   "stage": 5
+   "stage": 5,
+   "source": "production",
+   "basis": [
+    "production-inference",
+    "identity-gap"
+   ],
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "at": [
@@ -2916,7 +3005,13 @@
       0
      ]
     }
-   }
+   },
+   "source": "production",
+   "basis": [
+    "production-inference",
+    "identity-gap"
+   ],
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "at": [
@@ -2942,7 +3037,13 @@
     ],
     "type": "box"
    },
-   "stage": 4
+   "stage": 4,
+   "source": "production",
+   "basis": [
+    "production-inference",
+    "identity-gap"
+   ],
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "at": [
@@ -2983,7 +3084,13 @@
     ],
     "type": "extrude"
    },
-   "stage": 4
+   "stage": 4,
+   "source": "production",
+   "basis": [
+    "production-inference",
+    "identity-gap"
+   ],
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "at": [
@@ -3016,17 +3123,21 @@
     "smooth": false,
     "type": "curve"
    },
-   "stage": 5
+   "stage": 5,
+   "source": "production",
+   "basis": [
+    "production-inference",
+    "identity-gap"
+   ],
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "sage-front-spandrel-low-0",
    "label": "sage front spandrel low 0",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -3049,17 +3160,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#929d8d"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "sage-front-spandrel-high-0",
    "label": "sage front spandrel high 0",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -3082,17 +3193,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#929d8d"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "sage-front-pier-0-0",
    "label": "sage front pier 0 0",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -3115,17 +3226,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#929d8d"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "sage-front-pier-0-2",
    "label": "sage front pier 0 2",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -3148,17 +3259,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#929d8d"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "sage-front-pier-0-4",
    "label": "sage front pier 0 4",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -3181,17 +3292,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#929d8d"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "cream-surround-jamb-0-0--1",
    "label": "cream surround jamb 0 0  1",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -3214,17 +3325,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#e5dec9"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "bay-frame-jamb-0-0--1",
    "label": "bay frame jamb 0 0  1",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -3247,17 +3358,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#765446"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "cream-surround-jamb-0-0-1",
    "label": "cream surround jamb 0 0 1",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -3280,17 +3391,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#e5dec9"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "bay-frame-jamb-0-0-1",
    "label": "bay frame jamb 0 0 1",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -3313,17 +3424,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#765446"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "cream-surround-bottom-0-0",
    "label": "cream surround bottom 0 0",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -3346,17 +3457,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#e5dec9"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "cream-surround-top-0-0",
    "label": "cream surround top 0 0",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -3379,17 +3490,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#e5dec9"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "bay-frame-bottom-0-0",
    "label": "bay frame bottom 0 0",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -3412,17 +3523,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#765446"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "bay-frame-top-0-0",
    "label": "bay frame top 0 0",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -3445,17 +3556,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#765446"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "window-glazing-0-0",
    "label": "window glazing 0 0",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -3478,17 +3589,17 @@
     "weight": 0.4,
     "alpha": 0.7,
     "color": "#303d41"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "elevation-aperture-linework-0-0",
    "label": "elevation aperture linework 0 0",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "shape": {
     "type": "curve",
@@ -3529,17 +3640,17 @@
     "weight": 0.55,
     "alpha": 0.6,
     "color": "#e5dec9"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "cream-surround-jamb-0-1--1",
    "label": "cream surround jamb 0 1  1",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -3562,17 +3673,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#e5dec9"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "bay-frame-jamb-0-1--1",
    "label": "bay frame jamb 0 1  1",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -3595,17 +3706,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#765446"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "cream-surround-jamb-0-1-1",
    "label": "cream surround jamb 0 1 1",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -3628,17 +3739,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#e5dec9"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "bay-frame-jamb-0-1-1",
    "label": "bay frame jamb 0 1 1",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -3661,17 +3772,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#765446"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "cream-surround-bottom-0-1",
    "label": "cream surround bottom 0 1",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -3694,17 +3805,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#e5dec9"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "cream-surround-top-0-1",
    "label": "cream surround top 0 1",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -3727,17 +3838,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#e5dec9"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "bay-frame-bottom-0-1",
    "label": "bay frame bottom 0 1",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -3760,17 +3871,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#765446"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "bay-frame-top-0-1",
    "label": "bay frame top 0 1",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -3793,17 +3904,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#765446"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "window-glazing-0-1",
    "label": "window glazing 0 1",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -3826,17 +3937,17 @@
     "weight": 0.4,
     "alpha": 0.7,
     "color": "#303d41"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "elevation-aperture-linework-0-1",
    "label": "elevation aperture linework 0 1",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "shape": {
     "type": "curve",
@@ -3877,17 +3988,17 @@
     "weight": 0.55,
     "alpha": 0.6,
     "color": "#e5dec9"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "sage-front-spandrel-low-1",
    "label": "sage front spandrel low 1",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -3910,17 +4021,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#929d8d"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "sage-front-spandrel-high-1",
    "label": "sage front spandrel high 1",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -3943,17 +4054,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#929d8d"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "sage-front-pier-1-0",
    "label": "sage front pier 1 0",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -3976,17 +4087,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#929d8d"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "sage-front-pier-1-2",
    "label": "sage front pier 1 2",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -4009,17 +4120,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#929d8d"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "sage-front-pier-1-4",
    "label": "sage front pier 1 4",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -4042,17 +4153,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#929d8d"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "cream-surround-jamb-1-0--1",
    "label": "cream surround jamb 1 0  1",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -4075,17 +4186,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#e5dec9"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "bay-frame-jamb-1-0--1",
    "label": "bay frame jamb 1 0  1",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -4108,17 +4219,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#765446"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "cream-surround-jamb-1-0-1",
    "label": "cream surround jamb 1 0 1",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -4141,17 +4252,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#e5dec9"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "bay-frame-jamb-1-0-1",
    "label": "bay frame jamb 1 0 1",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -4174,17 +4285,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#765446"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "cream-surround-bottom-1-0",
    "label": "cream surround bottom 1 0",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -4207,17 +4318,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#e5dec9"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "cream-surround-top-1-0",
    "label": "cream surround top 1 0",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -4240,17 +4351,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#e5dec9"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "bay-frame-bottom-1-0",
    "label": "bay frame bottom 1 0",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -4273,17 +4384,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#765446"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "bay-frame-top-1-0",
    "label": "bay frame top 1 0",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -4306,17 +4417,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#765446"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "window-glazing-1-0",
    "label": "window glazing 1 0",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -4339,17 +4450,17 @@
     "weight": 0.4,
     "alpha": 0.7,
     "color": "#303d41"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "elevation-aperture-linework-1-0",
    "label": "elevation aperture linework 1 0",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "shape": {
     "type": "curve",
@@ -4390,17 +4501,17 @@
     "weight": 0.55,
     "alpha": 0.6,
     "color": "#e5dec9"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "cream-surround-jamb-1-1--1",
    "label": "cream surround jamb 1 1  1",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -4423,17 +4534,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#e5dec9"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "bay-frame-jamb-1-1--1",
    "label": "bay frame jamb 1 1  1",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -4456,17 +4567,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#765446"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "cream-surround-jamb-1-1-1",
    "label": "cream surround jamb 1 1 1",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -4489,17 +4600,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#e5dec9"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "bay-frame-jamb-1-1-1",
    "label": "bay frame jamb 1 1 1",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -4522,17 +4633,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#765446"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "cream-surround-bottom-1-1",
    "label": "cream surround bottom 1 1",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -4555,17 +4666,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#e5dec9"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "cream-surround-top-1-1",
    "label": "cream surround top 1 1",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -4588,17 +4699,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#e5dec9"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "bay-frame-bottom-1-1",
    "label": "bay frame bottom 1 1",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -4621,17 +4732,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#765446"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "bay-frame-top-1-1",
    "label": "bay frame top 1 1",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -4654,17 +4765,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#765446"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "window-glazing-1-1",
    "label": "window glazing 1 1",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -4687,17 +4798,17 @@
     "weight": 0.4,
     "alpha": 0.7,
     "color": "#303d41"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "elevation-aperture-linework-1-1",
    "label": "elevation aperture linework 1 1",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "shape": {
     "type": "curve",
@@ -4738,17 +4849,17 @@
     "weight": 0.55,
     "alpha": 0.6,
     "color": "#e5dec9"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "sage-front-spandrel-low-2",
    "label": "sage front spandrel low 2",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -4771,17 +4882,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#929d8d"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "sage-front-spandrel-high-2",
    "label": "sage front spandrel high 2",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -4804,17 +4915,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#929d8d"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "sage-front-pier-2-0",
    "label": "sage front pier 2 0",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -4837,17 +4948,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#929d8d"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "sage-front-pier-2-2",
    "label": "sage front pier 2 2",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -4870,17 +4981,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#929d8d"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "sage-front-pier-2-4",
    "label": "sage front pier 2 4",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -4903,17 +5014,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#929d8d"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "cream-surround-jamb-2-0--1",
    "label": "cream surround jamb 2 0  1",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -4936,17 +5047,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#e5dec9"
-   }
+   },
+   "source": "photo",
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "bay-frame-jamb-2-0--1",
    "label": "bay frame jamb 2 0  1",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -4969,17 +5080,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#765446"
-   }
+   },
+   "source": "photo",
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "cream-surround-jamb-2-0-1",
    "label": "cream surround jamb 2 0 1",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -5002,17 +5113,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#e5dec9"
-   }
+   },
+   "source": "photo",
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "bay-frame-jamb-2-0-1",
    "label": "bay frame jamb 2 0 1",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -5035,17 +5146,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#765446"
-   }
+   },
+   "source": "photo",
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "cream-surround-bottom-2-0",
    "label": "cream surround bottom 2 0",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -5068,17 +5179,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#e5dec9"
-   }
+   },
+   "source": "photo",
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "cream-surround-top-2-0",
    "label": "cream surround top 2 0",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -5101,17 +5212,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#e5dec9"
-   }
+   },
+   "source": "photo",
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "bay-frame-bottom-2-0",
    "label": "bay frame bottom 2 0",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -5134,17 +5245,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#765446"
-   }
+   },
+   "source": "photo",
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "bay-frame-top-2-0",
    "label": "bay frame top 2 0",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -5167,17 +5278,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#765446"
-   }
+   },
+   "source": "photo",
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "window-glazing-2-0",
    "label": "window glazing 2 0",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -5200,17 +5311,17 @@
     "weight": 0.4,
     "alpha": 0.7,
     "color": "#303d41"
-   }
+   },
+   "source": "photo",
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "elevation-aperture-linework-2-0",
    "label": "elevation aperture linework 2 0",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "shape": {
     "type": "curve",
@@ -5251,17 +5362,17 @@
     "weight": 0.55,
     "alpha": 0.6,
     "color": "#e5dec9"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "cream-surround-jamb-2-1--1",
    "label": "cream surround jamb 2 1  1",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -5284,17 +5395,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#e5dec9"
-   }
+   },
+   "source": "photo",
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "bay-frame-jamb-2-1--1",
    "label": "bay frame jamb 2 1  1",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -5317,17 +5428,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#765446"
-   }
+   },
+   "source": "photo",
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "cream-surround-jamb-2-1-1",
    "label": "cream surround jamb 2 1 1",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -5350,17 +5461,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#e5dec9"
-   }
+   },
+   "source": "photo",
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "bay-frame-jamb-2-1-1",
    "label": "bay frame jamb 2 1 1",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -5383,17 +5494,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#765446"
-   }
+   },
+   "source": "photo",
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "cream-surround-bottom-2-1",
    "label": "cream surround bottom 2 1",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -5416,17 +5527,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#e5dec9"
-   }
+   },
+   "source": "photo",
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "cream-surround-top-2-1",
    "label": "cream surround top 2 1",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -5449,17 +5560,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#e5dec9"
-   }
+   },
+   "source": "photo",
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "bay-frame-bottom-2-1",
    "label": "bay frame bottom 2 1",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -5482,17 +5593,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#765446"
-   }
+   },
+   "source": "photo",
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "bay-frame-top-2-1",
    "label": "bay frame top 2 1",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -5515,17 +5626,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#765446"
-   }
+   },
+   "source": "photo",
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "window-glazing-2-1",
    "label": "window glazing 2 1",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -5548,17 +5659,17 @@
     "weight": 0.4,
     "alpha": 0.7,
     "color": "#303d41"
-   }
+   },
+   "source": "photo",
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "elevation-aperture-linework-2-1",
    "label": "elevation aperture linework 2 1",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "production-inference",
+    "identity-gap"
    ],
    "shape": {
     "type": "curve",
@@ -5599,17 +5710,17 @@
     "weight": 0.55,
     "alpha": 0.6,
     "color": "#e5dec9"
-   }
+   },
+   "source": "production",
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "id": "sage-gable-apertured-front-skin",
    "label": "sage gable apertured front skin",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "identity-gap"
    ],
    "shape": {
     "type": "extrude",
@@ -5858,17 +5969,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#929d8d"
-   }
+   },
+   "source": "photo",
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "sage-gable-lower-spandrel",
    "label": "sage gable lower spandrel",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -5891,17 +6002,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#929d8d"
-   }
+   },
+   "source": "photo",
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "cream-segmental-head-attic-0",
    "label": "cream segmental head attic 0",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "identity-gap"
    ],
    "shape": {
     "type": "extrude",
@@ -6063,17 +6174,17 @@
     0.9,
     1.0,
     1.0
-   ]
+   ],
+   "source": "photo",
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "cream-segmental-jamb-attic-0--1",
    "label": "cream segmental jamb attic 0  1",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -6096,17 +6207,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#e5dec9"
-   }
+   },
+   "source": "photo",
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "bay-frame-arched-jamb-attic-0--1",
    "label": "bay frame arched jamb attic 0  1",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -6129,17 +6240,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#765446"
-   }
+   },
+   "source": "photo",
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "cream-segmental-jamb-attic-0-1",
    "label": "cream segmental jamb attic 0 1",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -6162,17 +6273,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#e5dec9"
-   }
+   },
+   "source": "photo",
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "bay-frame-arched-jamb-attic-0-1",
    "label": "bay frame arched jamb attic 0 1",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -6195,17 +6306,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#765446"
-   }
+   },
+   "source": "photo",
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "window-glazing-attic-0",
    "label": "window glazing attic 0",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "identity-gap"
    ],
    "shape": {
     "type": "extrude",
@@ -6291,17 +6402,17 @@
     0.9,
     1.0,
     1.0
-   ]
+   ],
+   "source": "photo",
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "sash-curved-head-attic-0",
    "label": "sash curved head attic 0",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "identity-gap"
    ],
    "shape": {
     "type": "curve",
@@ -6346,17 +6457,17 @@
     "weight": 0.5,
     "alpha": 0.7,
     "color": "#765446"
-   }
+   },
+   "source": "photo",
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "cream-segmental-head-attic-1",
    "label": "cream segmental head attic 1",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "identity-gap"
    ],
    "shape": {
     "type": "extrude",
@@ -6518,17 +6629,17 @@
     0.9,
     1.0,
     1.0
-   ]
+   ],
+   "source": "photo",
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "cream-segmental-jamb-attic-1--1",
    "label": "cream segmental jamb attic 1  1",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -6551,17 +6662,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#e5dec9"
-   }
+   },
+   "source": "photo",
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "bay-frame-arched-jamb-attic-1--1",
    "label": "bay frame arched jamb attic 1  1",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -6584,17 +6695,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#765446"
-   }
+   },
+   "source": "photo",
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "cream-segmental-jamb-attic-1-1",
    "label": "cream segmental jamb attic 1 1",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -6617,17 +6728,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#e5dec9"
-   }
+   },
+   "source": "photo",
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "bay-frame-arched-jamb-attic-1-1",
    "label": "bay frame arched jamb attic 1 1",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -6650,17 +6761,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#765446"
-   }
+   },
+   "source": "photo",
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "window-glazing-attic-1",
    "label": "window glazing attic 1",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "identity-gap"
    ],
    "shape": {
     "type": "extrude",
@@ -6746,17 +6857,17 @@
     0.9,
     1.0,
     1.0
-   ]
+   ],
+   "source": "photo",
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "sash-curved-head-attic-1",
    "label": "sash curved head attic 1",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "identity-gap"
    ],
    "shape": {
     "type": "curve",
@@ -6801,17 +6912,17 @@
     "weight": 0.5,
     "alpha": 0.7,
     "color": "#765446"
-   }
+   },
+   "source": "photo",
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "cream-gable-shoulder--1",
    "label": "cream gable shoulder  1",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -6834,17 +6945,17 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#e5dec9"
-   }
+   },
+   "source": "photo",
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "id": "cream-gable-shoulder-1",
    "label": "cream gable shoulder 1",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave",
-    "apex",
-    "depth"
+    "visible-photo-form",
+    "identity-gap"
    ],
    "shape": {
     "type": "box",
@@ -6867,7 +6978,9 @@
     "weight": 0.65,
     "alpha": 0.75,
     "color": "#e5dec9"
-   }
+   },
+   "source": "photo",
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   },
   {
    "at": [
@@ -6894,7 +7007,13 @@
     ],
     "type": "box"
    },
-   "stage": 3
+   "stage": 3,
+   "source": "production",
+   "basis": [
+    "production-inference",
+    "identity-gap"
+   ],
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "at": [
@@ -6921,7 +7040,13 @@
     ],
     "type": "box"
    },
-   "stage": 4
+   "stage": 4,
+   "source": "production",
+   "basis": [
+    "production-inference",
+    "identity-gap"
+   ],
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "at": [
@@ -6947,7 +7072,13 @@
     ],
     "type": "box"
    },
-   "stage": 3
+   "stage": 3,
+   "source": "production",
+   "basis": [
+    "production-inference",
+    "identity-gap"
+   ],
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "at": [
@@ -6973,7 +7104,13 @@
     ],
     "type": "box"
    },
-   "stage": 4
+   "stage": 4,
+   "source": "production",
+   "basis": [
+    "production-inference",
+    "identity-gap"
+   ],
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "at": [
@@ -7009,7 +7146,13 @@
     ],
     "type": "box"
    },
-   "stage": 4
+   "stage": 4,
+   "source": "production",
+   "basis": [
+    "production-inference",
+    "identity-gap"
+   ],
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "at": [
@@ -7045,7 +7188,13 @@
     ],
     "type": "box"
    },
-   "stage": 4
+   "stage": 4,
+   "source": "production",
+   "basis": [
+    "production-inference",
+    "identity-gap"
+   ],
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "at": [
@@ -7081,7 +7230,13 @@
     ],
     "type": "box"
    },
-   "stage": 4
+   "stage": 4,
+   "source": "production",
+   "basis": [
+    "production-inference",
+    "identity-gap"
+   ],
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "at": [
@@ -7117,7 +7272,13 @@
     ],
     "type": "box"
    },
-   "stage": 4
+   "stage": 4,
+   "source": "production",
+   "basis": [
+    "production-inference",
+    "identity-gap"
+   ],
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "at": [
@@ -7153,7 +7314,13 @@
     ],
     "type": "box"
    },
-   "stage": 4
+   "stage": 4,
+   "source": "production",
+   "basis": [
+    "production-inference",
+    "identity-gap"
+   ],
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "at": [
@@ -7189,7 +7356,13 @@
     ],
     "type": "box"
    },
-   "stage": 4
+   "stage": 4,
+   "source": "production",
+   "basis": [
+    "production-inference",
+    "identity-gap"
+   ],
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "at": [
@@ -7234,7 +7407,13 @@
     "sides": 6,
     "type": "tube"
    },
-   "stage": 5
+   "stage": 5,
+   "source": "production",
+   "basis": [
+    "production-inference",
+    "identity-gap"
+   ],
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "at": [
@@ -7270,7 +7449,13 @@
     ],
     "type": "box"
    },
-   "stage": 4
+   "stage": 4,
+   "source": "production",
+   "basis": [
+    "production-inference",
+    "identity-gap"
+   ],
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "at": [
@@ -7306,7 +7491,13 @@
     ],
     "type": "box"
    },
-   "stage": 4
+   "stage": 4,
+   "source": "production",
+   "basis": [
+    "production-inference",
+    "identity-gap"
+   ],
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "at": [
@@ -7342,7 +7533,13 @@
     ],
     "type": "box"
    },
-   "stage": 4
+   "stage": 4,
+   "source": "production",
+   "basis": [
+    "production-inference",
+    "identity-gap"
+   ],
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "at": [
@@ -7382,7 +7579,13 @@
     ],
     "type": "extrude"
    },
-   "stage": 5
+   "stage": 5,
+   "source": "production",
+   "basis": [
+    "production-inference",
+    "identity-gap"
+   ],
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "at": [
@@ -7408,7 +7611,13 @@
     ],
     "type": "box"
    },
-   "stage": 5
+   "stage": 5,
+   "source": "production",
+   "basis": [
+    "production-inference",
+    "identity-gap"
+   ],
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "at": [
@@ -7484,7 +7693,13 @@
     ],
     "type": "paths"
    },
-   "stage": 5
+   "stage": 5,
+   "source": "production",
+   "basis": [
+    "production-inference",
+    "identity-gap"
+   ],
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "at": [
@@ -7520,7 +7735,13 @@
     ],
     "type": "box"
    },
-   "stage": 5
+   "stage": 5,
+   "source": "production",
+   "basis": [
+    "production-inference",
+    "identity-gap"
+   ],
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "at": [
@@ -7556,7 +7777,13 @@
     ],
     "type": "box"
    },
-   "stage": 5
+   "stage": 5,
+   "source": "production",
+   "basis": [
+    "production-inference",
+    "identity-gap"
+   ],
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "at": [
@@ -7592,7 +7819,13 @@
     ],
     "type": "box"
    },
-   "stage": 4
+   "stage": 4,
+   "source": "production",
+   "basis": [
+    "production-inference",
+    "identity-gap"
+   ],
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "at": [
@@ -7646,7 +7879,13 @@
     "smooth": false,
     "type": "curve"
    },
-   "stage": 5
+   "stage": 5,
+   "source": "production",
+   "basis": [
+    "production-inference",
+    "identity-gap"
+   ],
+   "note": "Unseen, occluded or insufficiently resolved production completion; no direct photographic support for exact form, depth, opening arrangement or detail. Dimensions and shape remain inferred. No22/parcel identity unresolved; world placement is not validated by this attribution."
   },
   {
    "at": [
@@ -7746,7 +7985,13 @@
     "sides": 6,
     "type": "tube"
    },
-   "stage": 4
+   "stage": 4,
+   "source": "photo",
+   "basis": [
+    "visible-photo-form",
+    "identity-gap"
+   ],
+   "note": "Supplied market photograph supports visible gable/window/moulding general form, not metric size, exact curve, joinery grid or sculptural detail. Tree partly occludes right edge; thickness, cap/return depth and unseen continuation inferred. No orthographic tracing. Address and placement identity remain unresolved."
   }
  ],
  "articulations": [],
@@ -7826,23 +8071,6 @@
  "authoring": {
   "tier": "standard",
   "research": "unavailable",
-  "critic": {
-   "scene_sha256": "fe3f047bd0e2b08b8edc6273d702254c8721fb4be6bceb150ba0f0accb73f41a",
-   "verdict": "good",
-   "scores": {
-    "silhouette": 3,
-    "proportions": 3,
-    "identity": 2,
-    "depth": 2,
-    "composition": 3,
-    "assembly": 3,
-    "motion": 3,
-    "density": 3,
-    "honesty": 3
-   },
-   "round": 11,
-   "defects": 2
-  },
   "rounds": [
    {
     "round": 1,
@@ -7981,6 +8209,24 @@
     "summary": "The attic joinery reads as a regular repeated sash grid; the reference's small windows have a more differentiated upper division and larger "
    }
   ],
-  "outcome": "good"
+  "outcome": "self-reviewed",
+  "provenance_note": "Provenance-only audit; physical payload unchanged; historical independent judgement preserved in before backup and sealed checkpoints, not a fresh critique. No22 attribution unresolved; no 1758 building fact imported. All parts retain inferred size and shape.",
+  "critic": {
+   "scene_sha256": "a3ebf1cde236610699ae476348b00cd8a108ccc90e6d8aba50107371efbc43eb",
+   "verdict": "improve",
+   "scores": {
+    "silhouette": 2,
+    "proportions": 2,
+    "identity": 2,
+    "depth": 2,
+    "composition": 3,
+    "assembly": 3,
+    "motion": 3,
+    "density": 2,
+    "honesty": 3
+   },
+   "round": 1,
+   "defects": 5
+  }
  }
 }

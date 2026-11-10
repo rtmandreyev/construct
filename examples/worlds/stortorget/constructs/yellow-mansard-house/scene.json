@@ -15,7 +15,7 @@
   {
    "id": "request",
    "kind": "user_request",
-   "title": "Production frame and inferred envelope",
+   "title": "Human request for photo-relative yellow mansard house; dimensions not human measurements",
    "rights": "user_private"
   },
   {
@@ -24,6 +24,27 @@
    "title": "Stortorget Christmas Market December 2022 — Ximonic (Simo Räsänen), CC BY-SA 4.0; derived visual reconstruction",
    "rights": "permitted",
    "ref": "https://creativecommons.org/licenses/by-sa/4.0/"
+  },
+  {
+   "id": "production-estimate",
+   "kind": "generated",
+   "ref": "provenance-audit/before/constructs/stortorget-yellow-mansard-house-right-of-orange1/scene.json",
+   "rights": "reference_only",
+   "title": "Agent/supervisor inferred envelope and hidden geometry, not user measurements"
+  },
+  {
+   "id": "municipal-facades",
+   "kind": "document",
+   "ref": "https://stockholmskallan.stockholm.se/post/12244",
+   "rights": "reference_only",
+   "title": "Stadsmuseet Lennart af Petersens F64132, Stortorget16-14,1960; web page image viewed, not downloaded"
+  },
+  {
+   "id": "aesculapius-history",
+   "kind": "document",
+   "ref": "https://sv.wikipedia.org/wiki/Kvarteret_Aesculapius",
+   "rights": "reference_only",
+   "title": "Aesculapius secondary history; Stortorget16/Aesculapius3 name association"
   }
  ],
  "facts": [
@@ -32,39 +53,39 @@
    "value": 10,
    "unit": "m",
    "certainty": "inferred",
-   "source": "request",
-   "note": "Supervisor estimate, not survey or published metric"
+   "source": "production-estimate",
+   "note": "Agent/supervisor estimate, not user-supplied or published measurement."
   },
   {
    "key": "eave_height",
    "value": 16.5,
    "unit": "m",
    "certainty": "inferred",
-   "source": "request",
-   "note": "Estimated principal facade cornice"
+   "source": "production-estimate",
+   "note": "Agent/supervisor estimate, not user-supplied or published measurement."
   },
   {
    "key": "attic_top",
    "value": 22.2,
    "unit": "m",
    "certainty": "inferred",
-   "source": "request",
-   "note": "Estimated uppermost pale-edged dormer coping"
+   "source": "production-estimate",
+   "note": "Agent/supervisor estimate, not user-supplied or published measurement."
   },
   {
    "key": "depth",
    "value": 11,
    "unit": "m",
    "certainty": "inferred",
-   "source": "request",
-   "note": "Unseen footprint estimate"
+   "source": "production-estimate",
+   "note": "Agent estimate of unseen footprint; photograph does not establish rear depth."
   },
   {
    "key": "bay_count",
    "value": 3,
-   "certainty": "verified",
+   "certainty": "inferred",
    "source": "photo",
-   "note": "Three principal facade sash axes visible"
+   "note": "Three principal facade axes visible in supplied reference; photo observation, not published full-building window count."
   },
   {
    "key": "storeys",
@@ -72,6 +93,34 @@
    "certainty": "inferred",
    "source": "photo",
    "note": "Three upper rows visible; lowest largely obscured by market"
+  },
+  {
+   "certainty": "inferred",
+   "key": "photo-visible-observation",
+   "note": "Visible-in-reference observation with street-level occlusion. Numeric pigment values, full storey count, roof depth and hidden continuation not verified.",
+   "source": "photo",
+   "value": "Three principal upper facade window axes; broad raised attic with two windows and one narrower central dormer; yellow-appearing plaster, pale trim and dark roof. Market/crowds obscure ground level."
+  },
+  {
+   "certainty": "inferred",
+   "key": "production-envelope",
+   "note": "Agent/supervisor estimates; no published target height/footprint or orthographic fitting retrieved.",
+   "source": "production-estimate",
+   "value": "Existing 10 m width, 16.5 m eave, 22.2 m attic-top and 11 m depth; hidden returns, base and entrance/storefront completions are inferred production geometry."
+  },
+  {
+   "certainty": "verified",
+   "key": "municipal-reference-record",
+   "note": "Documented non-metric statement; not a verified measurement. 1960 is the archival photo date, not building construction. Its paired facades visually correspond to this yellow mansard and the right neighbor; no metric geometry obtained.",
+   "source": "municipal-facades",
+   "value": "Stadsmuseet photograph F64132 by Lennart af Petersens is titled Stortorget 16-14 and dated 1960."
+  },
+  {
+   "certainty": "inferred",
+   "key": "address-candidate",
+   "note": "Broad raised-attic facade matches the left facade in the municipal pair. Source gives Scharenbergska stortorgshuset as Aesculapius3/current Stortorget16, but no parcel-exact measured elevation was retrieved; avoid importing pharmacy dates as building construction.",
+   "source": "aesculapius-history",
+   "value": "Reference comparison suggests Stortorget16/Aesculapius3; kept qualified rather than promoted to a new verified model identity."
   }
  ],
  "assets": [],
@@ -82,9 +131,7 @@
    "role": "mass",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave_height",
-    "depth"
+    "production-envelope"
    ],
    "shape": {
     "type": "box",
@@ -106,7 +153,9 @@
     "weight": 0.45,
     "alpha": 0.6,
     "color": "#d7ae57"
-   }
+   },
+   "source": "production-estimate",
+   "note": "Agent envelope or occluded/unseen completion; photo not direct evidence for depth, rear, base or entrance detail. Entirely inferred."
   },
   {
    "id": "cream-base",
@@ -132,7 +181,12 @@
     "tone": "bright",
     "weight": 0.8,
     "color": "#e5d8b7"
-   }
+   },
+   "source": "production-estimate",
+   "basis": [
+    "production-envelope"
+   ],
+   "note": "Agent envelope or occluded/unseen completion; photo not direct evidence for depth, rear, base or entrance detail. Entirely inferred."
   },
   {
    "id": "ground-band",
@@ -158,7 +212,12 @@
     "tone": "bright",
     "weight": 0.85,
     "color": "#e5d8b7"
-   }
+   },
+   "source": "production-estimate",
+   "basis": [
+    "production-envelope"
+   ],
+   "note": "Agent envelope or occluded/unseen completion; photo not direct evidence for depth, rear, base or entrance detail. Entirely inferred."
   },
   {
    "id": "corner-strip-left",
@@ -185,7 +244,12 @@
     "tone": "bright",
     "weight": 0.6,
     "color": "#e5d8b7"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "id": "cornice-under",
@@ -209,7 +273,12 @@
     "fill": "dark",
     "weight": 0.8,
     "color": "#e5d8b7"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "id": "cornice-dentil-shadow",
@@ -233,7 +302,12 @@
     "fill": "dark",
     "weight": 0.65,
     "color": "#e5d8b7"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "id": "cream-eave-coping",
@@ -258,7 +332,12 @@
     "tone": "bright",
     "weight": 1.2,
     "color": "#e5d8b7"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "id": "eave-metal-lip",
@@ -282,7 +361,12 @@
     "fill": "dark",
     "weight": 0.75,
     "color": "#41494b"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "id": "mansard-roof",
@@ -331,7 +415,12 @@
     "weight": 0.5,
     "alpha": 0.65,
     "color": "#41494b"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "id": "attic-lower-block",
@@ -357,7 +446,12 @@
     "fill": "dark",
     "weight": 0.6,
     "color": "#d7ae57"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "id": "attic-upper-block",
@@ -383,7 +477,12 @@
     "fill": "dark",
     "weight": 0.7,
     "color": "#d7ae57"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "id": "attic-belt",
@@ -407,7 +506,12 @@
     "fill": "dark",
     "weight": 1.1,
     "color": "#e5d8b7"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "id": "attic-cap-left",
@@ -433,7 +537,12 @@
     "tone": "bright",
     "weight": 1.1,
     "color": "#e5d8b7"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "id": "dormer-cheek",
@@ -547,7 +656,12 @@
     0.9,
     1.1,
     1.0
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "id": "dormer-dark-sash",
@@ -576,7 +690,12 @@
     0.9,
     1.1,
     1.0
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "id": "dormer-glazing",
@@ -605,7 +724,12 @@
     0.9,
     1.1,
     1.0
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "id": "dormer-mullion",
@@ -634,7 +758,12 @@
     1.0,
     1.1,
     1.0
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "id": "dormer-transom",
@@ -673,7 +802,12 @@
     0.9,
     1.0,
     1.0
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "id": "chimney-shaft",
@@ -699,7 +833,12 @@
     "fill": "dark",
     "weight": 0.7,
     "color": "#4a4b46"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "id": "chimney-cap",
@@ -723,7 +862,12 @@
     "fill": "dark",
     "weight": 0.9,
     "color": "#4a4b46"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "id": "chimney-vent",
@@ -748,14 +892,19 @@
     "fill": "dark",
     "weight": 0.65,
     "color": "#4a4b46"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "id": "main-sash-glazing",
    "role": "detail",
    "certainty": "inferred",
    "basis": [
-    "bay_count"
+    "photo-visible-observation"
    ],
    "shape": {
     "type": "box",
@@ -785,7 +934,9 @@
     "fill": "glass",
     "weight": 0.4,
     "color": "#2c3d43"
-   }
+   },
+   "source": "photo",
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "id": "main-sash-glazing-middle",
@@ -819,7 +970,12 @@
     "fill": "glass",
     "weight": 0.4,
     "color": "#2c3d43"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "id": "main-sash-glazing-upper",
@@ -853,7 +1009,12 @@
     "fill": "glass",
     "weight": 0.4,
     "color": "#2c3d43"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "id": "bay-cheek-low-left",
@@ -888,7 +1049,12 @@
     "tone": "bright",
     "weight": 0.8,
     "color": "#e5d8b7"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "id": "bay-cheek-low-right",
@@ -923,7 +1089,12 @@
     "tone": "bright",
     "weight": 0.8,
     "color": "#e5d8b7"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "id": "bay-head-low",
@@ -958,7 +1129,12 @@
     "tone": "bright",
     "weight": 0.9,
     "color": "#e5d8b7"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "id": "bay-sill-low",
@@ -993,7 +1169,12 @@
     "tone": "bright",
     "weight": 0.95,
     "color": "#e5d8b7"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "id": "bay-cheek-mid-left",
@@ -1028,7 +1209,12 @@
     "tone": "bright",
     "weight": 0.8,
     "color": "#e5d8b7"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "id": "bay-cheek-mid-right",
@@ -1063,7 +1249,12 @@
     "tone": "bright",
     "weight": 0.8,
     "color": "#e5d8b7"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "id": "bay-head-mid",
@@ -1098,7 +1289,12 @@
     "tone": "bright",
     "weight": 0.9,
     "color": "#e5d8b7"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "id": "bay-sill-mid",
@@ -1133,7 +1329,12 @@
     "tone": "bright",
     "weight": 0.95,
     "color": "#e5d8b7"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "id": "bay-cheek-top-left",
@@ -1168,7 +1369,12 @@
     "tone": "bright",
     "weight": 0.8,
     "color": "#e5d8b7"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "id": "bay-cheek-top-right",
@@ -1203,7 +1409,12 @@
     "tone": "bright",
     "weight": 0.8,
     "color": "#e5d8b7"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "id": "bay-head-top",
@@ -1238,7 +1449,12 @@
     "tone": "bright",
     "weight": 0.9,
     "color": "#e5d8b7"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "id": "bay-sill-top",
@@ -1273,7 +1489,12 @@
     "tone": "bright",
     "weight": 0.95,
     "color": "#e5d8b7"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "id": "sash-mullion-low",
@@ -1307,7 +1528,12 @@
     "fill": "dark",
     "weight": 0.75,
     "color": "#514535"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "id": "sash-mullion-mid",
@@ -1341,7 +1567,12 @@
     "fill": "dark",
     "weight": 0.75,
     "color": "#514535"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "id": "sash-mullion-top",
@@ -1375,7 +1606,12 @@
     "fill": "dark",
     "weight": 0.75,
     "color": "#514535"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "id": "sash-transom-low",
@@ -1409,7 +1645,12 @@
     "fill": "dark",
     "weight": 0.7,
     "color": "#514535"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "id": "sash-transom-mid",
@@ -1443,7 +1684,12 @@
     "fill": "dark",
     "weight": 0.7,
     "color": "#514535"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "id": "sash-transom-top",
@@ -1477,7 +1723,12 @@
     "fill": "dark",
     "weight": 0.7,
     "color": "#514535"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "id": "ground-glazing",
@@ -1512,7 +1763,12 @@
     "fill": "glass",
     "weight": 0.4,
     "color": "#2c3d43"
-   }
+   },
+   "source": "production-estimate",
+   "basis": [
+    "production-envelope"
+   ],
+   "note": "Agent envelope or occluded/unseen completion; photo not direct evidence for depth, rear, base or entrance detail. Entirely inferred."
   },
   {
    "id": "ground-jamb-left",
@@ -1547,7 +1803,12 @@
     "tone": "bright",
     "weight": 0.75,
     "color": "#e5d8b7"
-   }
+   },
+   "source": "production-estimate",
+   "basis": [
+    "production-envelope"
+   ],
+   "note": "Agent envelope or occluded/unseen completion; photo not direct evidence for depth, rear, base or entrance detail. Entirely inferred."
   },
   {
    "id": "ground-jamb-right",
@@ -1582,7 +1843,12 @@
     "tone": "bright",
     "weight": 0.75,
     "color": "#e5d8b7"
-   }
+   },
+   "source": "production-estimate",
+   "basis": [
+    "production-envelope"
+   ],
+   "note": "Agent envelope or occluded/unseen completion; photo not direct evidence for depth, rear, base or entrance detail. Entirely inferred."
   },
   {
    "id": "ground-lintel",
@@ -1617,7 +1883,12 @@
     "tone": "bright",
     "weight": 0.75,
     "color": "#e5d8b7"
-   }
+   },
+   "source": "production-estimate",
+   "basis": [
+    "production-envelope"
+   ],
+   "note": "Agent envelope or occluded/unseen completion; photo not direct evidence for depth, rear, base or entrance detail. Entirely inferred."
   },
   {
    "id": "attic-glazing",
@@ -1651,7 +1922,12 @@
     "fill": "glass",
     "weight": 0.45,
     "color": "#2c3d43"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "id": "attic-jamb-left",
@@ -1686,7 +1962,12 @@
     "tone": "bright",
     "weight": 0.9,
     "color": "#e5d8b7"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "id": "attic-jamb-right",
@@ -1721,7 +2002,12 @@
     "tone": "bright",
     "weight": 0.9,
     "color": "#e5d8b7"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "id": "attic-head",
@@ -1756,7 +2042,12 @@
     "tone": "bright",
     "weight": 1,
     "color": "#e5d8b7"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "id": "attic-sill",
@@ -1791,7 +2082,12 @@
     "tone": "bright",
     "weight": 1,
     "color": "#e5d8b7"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "id": "attic-mullion",
@@ -1825,7 +2121,12 @@
     "fill": "dark",
     "weight": 0.7,
     "color": "#e5d8b7"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "id": "attic-transom",
@@ -1859,7 +2160,12 @@
     "fill": "dark",
     "weight": 0.7,
     "color": "#e5d8b7"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "id": "left-gutter-pipe",
@@ -1904,7 +2210,12 @@
     "weight": 1.2,
     "tone": "bright",
     "color": "#41494b"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "id": "mansard-seams-left",
@@ -1938,7 +2249,12 @@
     "weight": 0.55,
     "alpha": 0.45,
     "color": "#41494b"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "id": "sash-transom-mid-lower",
@@ -1972,7 +2288,12 @@
     "fill": "dark",
     "weight": 0.7,
     "color": "#514535"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "id": "sash-frame-low",
@@ -2006,7 +2327,12 @@
     "fill": "dark",
     "weight": 0.85,
     "color": "#514535"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "id": "sash-frame-mid",
@@ -2040,7 +2366,12 @@
     "fill": "dark",
     "weight": 0.85,
     "color": "#514535"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "id": "sash-frame-top",
@@ -2074,7 +2405,12 @@
     "fill": "dark",
     "weight": 0.85,
     "color": "#514535"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "id": "metal-standing-seams",
@@ -2217,7 +2553,12 @@
     "weight": 0.8,
     "alpha": 0.75,
     "color": "#41494b"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "id": "attic-foot-flashing",
@@ -2241,7 +2582,12 @@
     "fill": "dark",
     "weight": 0.75,
     "color": "#41494b"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "id": "chimney-flashing-collar",
@@ -2265,7 +2611,12 @@
     "fill": "dark",
     "weight": 0.65,
     "color": "#4a4b46"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "id": "inferred-central-door-leaf",
@@ -2290,7 +2641,12 @@
     "fill": "dark",
     "weight": 0.8,
     "color": "#514535"
-   }
+   },
+   "source": "production-estimate",
+   "basis": [
+    "production-envelope"
+   ],
+   "note": "Agent envelope or occluded/unseen completion; photo not direct evidence for depth, rear, base or entrance detail. Entirely inferred."
   },
   {
    "id": "inferred-door-inset",
@@ -2314,7 +2670,12 @@
     "fill": "dark",
     "weight": 0.55,
     "color": "#514535"
-   }
+   },
+   "source": "production-estimate",
+   "basis": [
+    "production-envelope"
+   ],
+   "note": "Agent envelope or occluded/unseen completion; photo not direct evidence for depth, rear, base or entrance detail. Entirely inferred."
   },
   {
    "id": "inferred-door-glazing",
@@ -2338,7 +2699,12 @@
     "fill": "glass",
     "weight": 0.55,
     "color": "#2c3d43"
-   }
+   },
+   "source": "production-estimate",
+   "basis": [
+    "production-envelope"
+   ],
+   "note": "Agent envelope or occluded/unseen completion; photo not direct evidence for depth, rear, base or entrance detail. Entirely inferred."
   },
   {
    "id": "inferred-door-handle",
@@ -2382,7 +2748,12 @@
     "fill": "dark",
     "weight": 0.9,
     "color": "#e5d8b7"
-   }
+   },
+   "source": "production-estimate",
+   "basis": [
+    "production-envelope"
+   ],
+   "note": "Agent envelope or occluded/unseen completion; photo not direct evidence for depth, rear, base or entrance detail. Entirely inferred."
   },
   {
    "id": "inferred-shop-transom",
@@ -2416,7 +2787,12 @@
     "fill": "dark",
     "weight": 0.65,
     "color": "#e5d8b7"
-   }
+   },
+   "source": "production-estimate",
+   "basis": [
+    "production-envelope"
+   ],
+   "note": "Agent envelope or occluded/unseen completion; photo not direct evidence for depth, rear, base or entrance detail. Entirely inferred."
   },
   {
    "id": "inferred-shop-mullion",
@@ -2441,7 +2817,12 @@
     "fill": "dark",
     "weight": 0.65,
     "color": "#e5d8b7"
-   }
+   },
+   "source": "production-estimate",
+   "basis": [
+    "production-envelope"
+   ],
+   "note": "Agent envelope or occluded/unseen completion; photo not direct evidence for depth, rear, base or entrance detail. Entirely inferred."
   },
   {
    "id": "inferred-thresholds",
@@ -2475,7 +2856,12 @@
     "fill": "dark",
     "weight": 0.7,
     "color": "#e5d8b7"
-   }
+   },
+   "source": "production-estimate",
+   "basis": [
+    "production-envelope"
+   ],
+   "note": "Agent envelope or occluded/unseen completion; photo not direct evidence for depth, rear, base or entrance detail. Entirely inferred."
   },
   {
    "id": "upper-shallow-roof",
@@ -2505,7 +2891,12 @@
     "weight": 0.45,
     "alpha": 0.6,
     "color": "#41494b"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "at": [
@@ -2588,7 +2979,12 @@
     ],
     "type": "paths"
    },
-   "stage": 7
+   "stage": 7,
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "at": [
@@ -2615,7 +3011,12 @@
     ],
     "type": "box"
    },
-   "stage": 0
+   "stage": 0,
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "at": [
@@ -2642,7 +3043,12 @@
     ],
     "type": "box"
    },
-   "stage": 0
+   "stage": 0,
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "at": [
@@ -2668,7 +3074,12 @@
     ],
     "type": "box"
    },
-   "stage": 1
+   "stage": 1,
+   "source": "production-estimate",
+   "basis": [
+    "production-envelope"
+   ],
+   "note": "Agent envelope or occluded/unseen completion; photo not direct evidence for depth, rear, base or entrance detail. Entirely inferred."
   },
   {
    "at": [
@@ -2694,7 +3105,12 @@
     ],
     "type": "box"
    },
-   "stage": 2
+   "stage": 2,
+   "source": "production-estimate",
+   "basis": [
+    "production-envelope"
+   ],
+   "note": "Agent envelope or occluded/unseen completion; photo not direct evidence for depth, rear, base or entrance detail. Entirely inferred."
   },
   {
    "at": [
@@ -2720,7 +3136,12 @@
     ],
     "type": "box"
    },
-   "stage": 3
+   "stage": 3,
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "at": [
@@ -2746,7 +3167,12 @@
     ],
     "type": "box"
    },
-   "stage": 4
+   "stage": 4,
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "at": [
@@ -2772,7 +3198,12 @@
     ],
     "type": "box"
    },
-   "stage": 4
+   "stage": 4,
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "at": [
@@ -2806,7 +3237,12 @@
     ],
     "type": "box"
    },
-   "stage": 2
+   "stage": 2,
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "at": [
@@ -2840,7 +3276,12 @@
     ],
     "type": "box"
    },
-   "stage": 3
+   "stage": 3,
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "at": [
@@ -2874,7 +3315,12 @@
     ],
     "type": "box"
    },
-   "stage": 4
+   "stage": 4,
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "at": [
@@ -2898,7 +3344,12 @@
     ],
     "type": "box"
    },
-   "stage": 6
+   "stage": 6,
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "at": [
@@ -2932,7 +3383,12 @@
     ],
     "type": "box"
    },
-   "stage": 6
+   "stage": 6,
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "at": [
@@ -2957,7 +3413,12 @@
     ],
     "type": "box"
    },
-   "stage": 7
+   "stage": 7,
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "at": [
@@ -2982,7 +3443,12 @@
     ],
     "type": "box"
    },
-   "stage": 7
+   "stage": 7,
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "at": [
@@ -3099,7 +3565,12 @@
     0.9,
     1.1,
     1.0
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "at": [
@@ -3127,7 +3598,12 @@
     ],
     "type": "box"
    },
-   "stage": 1
+   "stage": 1,
+   "source": "production-estimate",
+   "basis": [
+    "production-envelope"
+   ],
+   "note": "Agent envelope or occluded/unseen completion; photo not direct evidence for depth, rear, base or entrance detail. Entirely inferred."
   },
   {
    "at": [
@@ -3186,7 +3662,12 @@
     ],
     "type": "paths"
    },
-   "stage": 5
+   "stage": 5,
+   "source": "production-estimate",
+   "basis": [
+    "production-envelope"
+   ],
+   "note": "Agent envelope or occluded/unseen completion; photo not direct evidence for depth, rear, base or entrance detail. Entirely inferred."
   },
   {
    "at": [
@@ -3211,7 +3692,12 @@
     ],
     "type": "box"
    },
-   "stage": 6
+   "stage": 6,
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Visible motif only; all size/shape, profiles, spacings and exact colors inferred. Hidden continuations not photo documented."
   },
   {
    "at": [
@@ -3237,7 +3723,12 @@
     ],
     "type": "box"
    },
-   "stage": 5
+   "stage": 5,
+   "source": "production-estimate",
+   "basis": [
+    "production-envelope"
+   ],
+   "note": "Agent envelope or occluded/unseen completion; photo not direct evidence for depth, rear, base or entrance detail. Entirely inferred."
   },
   {
    "at": [
@@ -3261,7 +3752,12 @@
     ],
     "type": "box"
    },
-   "stage": 5
+   "stage": 5,
+   "source": "production-estimate",
+   "basis": [
+    "production-envelope"
+   ],
+   "note": "Agent envelope or occluded/unseen completion; photo not direct evidence for depth, rear, base or entrance detail. Entirely inferred."
   }
  ],
  "articulations": [],
@@ -3351,23 +3847,6 @@
  "authoring": {
   "tier": "masterpiece",
   "research": "unavailable",
-  "critic": {
-   "scene_sha256": "e0d51500e7df829cb239a0421ae14a7ec2740cce47765fdd6c84e753fdd16b55",
-   "verdict": "good",
-   "scores": {
-    "silhouette": 2,
-    "proportions": 2,
-    "identity": 2,
-    "depth": 2,
-    "composition": 3,
-    "assembly": 3,
-    "motion": 3,
-    "density": 3,
-    "honesty": 3
-   },
-   "round": 12,
-   "defects": 4
-  },
   "rounds": [
    {
     "round": 1,
@@ -3502,7 +3981,7 @@
     "summary": "The chimney clears the dormer by approximately 0.07 eaves widths in still-photo, versus approximately 0.115 in the reference. The ordering i"
    }
   ],
-  "outcome": "good",
+  "outcome": "self-reviewed",
   "identity": [
    {
     "feature": "Three principal facade sash axes with differentiated storey heights",
@@ -3529,6 +4008,24 @@
      "chimney-cap"
     ]
    }
-  ]
+  ],
+  "provenance_note": "Provenance-only audit; physical payload unchanged; historical independent judgement preserved in before backup and sealed checkpoints, not a fresh critique.",
+  "critic": {
+   "scene_sha256": "45a53a822795cfb5a16fb4288e7117f416a705be23486afb0d8e22bb5b3b4dec",
+   "verdict": "improve",
+   "scores": {
+    "silhouette": 2,
+    "proportions": 2,
+    "identity": 2,
+    "depth": 2,
+    "composition": 3,
+    "assembly": 3,
+    "motion": 3,
+    "density": 2,
+    "honesty": 3
+   },
+   "round": 1,
+   "defects": 5
+  }
  }
 }

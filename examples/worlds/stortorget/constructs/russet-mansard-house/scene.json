@@ -15,7 +15,7 @@
   {
    "id": "request",
    "kind": "user_request",
-   "title": "Photo-relative building and inferred envelope",
+   "title": "Human request to reconstruct the photo-relative building; no surveyed dimensions supplied",
    "rights": "user_private"
   },
   {
@@ -24,6 +24,20 @@
    "title": "Ximonic (Simo Räsänen), Stortorget Christmas Market, December 2022; CC BY-SA 4.0",
    "ref": "https://creativecommons.org/licenses/by-sa/4.0/",
    "rights": "permitted"
+  },
+  {
+   "id": "production-estimate",
+   "kind": "generated",
+   "rights": "reference_only",
+   "ref": "provenance-audit/before/constructs/stortorget-back-left-russet-mansard-neighbor/scene.json",
+   "title": "Agent/supervisor production estimates, not user measurements"
+  },
+  {
+   "id": "atlas-research",
+   "kind": "document",
+   "rights": "reference_only",
+   "ref": "https://runeberg.org/stock14/0269.html",
+   "title": "Schück p267: 1939 measured ground-floor plan caption Atlas 2/3; candidate only, target identity unconfirmed"
   }
  ],
  "facts": [
@@ -32,38 +46,53 @@
    "value": 9.5,
    "unit": "m",
    "certainty": "inferred",
-   "source": "request",
-   "note": "Supervisor's nominal inference, not a measured or published size."
+   "source": "production-estimate",
+   "note": "Agent/supervisor production estimate, not a user measurement or published metric."
   },
   {
    "key": "eave-height",
    "value": 16.4,
    "unit": "m",
    "certainty": "inferred",
-   "source": "request",
-   "note": "Round10 D18: +2.4m distributed through lower storeys, retaining compressed pink attic band, paired dormers and inferred footprint."
+   "source": "production-estimate",
+   "note": "Existing round-derived agent estimate retained at 16.4 m; not survey data."
   },
   {
    "key": "roof-ridge",
    "value": 22.4,
    "unit": "m",
    "certainty": "inferred",
-   "source": "request",
-   "note": "Round10 D18 photo-relative inferred roof ridge +12%; no measured height asserted."
+   "source": "production-estimate",
+   "note": "Existing photo-relative agent estimate retained at 22.4 m; not published metric."
   },
   {
    "key": "depth",
    "value": 10,
    "unit": "m",
    "certainty": "inferred",
-   "source": "request",
-   "note": "Hidden footprint inferred."
+   "source": "production-estimate",
+   "note": "Agent estimate of unseen footprint; photo does not document rear depth."
   },
   {
    "key": "dormer-count",
    "value": 2,
-   "certainty": "verified",
-   "source": "photo"
+   "certainty": "inferred",
+   "source": "photo",
+   "note": "Two front dormers visible in reference; perspective-photo observation only, not a verified measurement."
+  },
+  {
+   "certainty": "inferred",
+   "key": "photo-visible-observation",
+   "note": "Direct perspective-photo observation, not documentary identification, tracing, measured coordinates or pigment specification.",
+   "source": "photo",
+   "value": "Visible in reference: russet lower facade, pink ornamental upper band, dark broken-slope roof and two front dormers. Market stalls obscure lower facade; rear and footprint unseen."
+  },
+  {
+   "certainty": "inferred",
+   "key": "production-envelope",
+   "note": "No published target dimensions retrieved. Atlas 3/Lucidor remains an unconfirmed candidate; its record facts must not be applied to this model.",
+   "source": "production-estimate",
+   "value": "Existing dimensions, occluded lower openings, hidden continuation, roof depth and fine profiles are agent/supervisor production estimates, not human supplied measurements."
   }
  ],
  "assets": [],
@@ -74,9 +103,7 @@
    "role": "mass",
    "certainty": "inferred",
    "basis": [
-    "width",
-    "eave-height",
-    "depth"
+    "production-envelope"
    ],
    "stage": 0,
    "shape": {
@@ -98,7 +125,9 @@
     "tone": "structure",
     "weight": 1.2,
     "color": "#9b5142"
-   }
+   },
+   "source": "production-estimate",
+   "note": "Agent production envelope/occluded lower-facade completion. Photo does not directly establish hidden back, full depth or lower opening geometry. Entirely inferred; not user-supplied measurements."
   },
   {
    "id": "pink-attic-band",
@@ -126,7 +155,13 @@
     "tone": "identity",
     "weight": 1.4,
     "color": "#c68f80"
-   }
+   },
+   "basis": [
+    "photo-visible-observation",
+    "production-envelope",
+    "dormer-count"
+   ],
+   "note": "Photo supports visible motif only. Proportions, depths, fine profiles and repeat spacings are modeler inferences; size and shape remain inferred. No photo evidence for unseen rear continuation; no published coordinates."
   },
   {
    "id": "slate-broken-mansard",
@@ -135,8 +170,9 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "roof-ridge",
-    "depth"
+    "photo-visible-observation",
+    "production-envelope",
+    "dormer-count"
    ],
    "stage": 2,
    "shape": {
@@ -181,7 +217,8 @@
     0.0,
     90.0,
     0.0
-   ]
+   ],
+   "note": "Photo supports visible motif only. Proportions, depths, fine profiles and repeat spacings are modeler inferences; size and shape remain inferred. No photo evidence for unseen rear continuation; no published coordinates."
   },
   {
    "id": "eaves-dark-frieze",
@@ -207,7 +244,11 @@
     "fill": "dark",
     "weight": 1.8,
     "color": "#5f5148"
-   }
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only. Proportions, depths, fine profiles and repeat spacings are modeler inferences; size and shape remain inferred. No photo evidence for unseen rear continuation; no published coordinates."
   },
   {
    "id": "eaves-crown",
@@ -231,7 +272,12 @@
     "fill": "dark",
     "tone": "bright",
     "color": "#dfcfb4"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only. Proportions, depths, fine profiles and repeat spacings are modeler inferences; size and shape remain inferred. No photo evidence for unseen rear continuation; no published coordinates."
   },
   {
    "id": "attic-lower-string",
@@ -256,7 +302,11 @@
     "tone": "bright",
     "fill": "dark",
     "color": "#dfcfb4"
-   }
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only. Proportions, depths, fine profiles and repeat spacings are modeler inferences; size and shape remain inferred. No photo evidence for unseen rear continuation; no published coordinates."
   },
   {
    "id": "lower-bay-surround",
@@ -293,7 +343,11 @@
     "tone": "bright",
     "weight": 1.4,
     "color": "#dfcfb4"
-   }
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only. Proportions, depths, fine profiles and repeat spacings are modeler inferences; size and shape remain inferred. No photo evidence for unseen rear continuation; no published coordinates."
   },
   {
    "id": "lower-window-glazing",
@@ -328,7 +382,11 @@
     "fill": "glass",
     "tone": "faint",
     "color": "#2b3b40"
-   }
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only. Proportions, depths, fine profiles and repeat spacings are modeler inferences; size and shape remain inferred. No photo evidence for unseen rear continuation; no published coordinates."
   },
   {
    "id": "lower-bay-center-mullion",
@@ -362,7 +420,12 @@
     "fill": "dark",
     "tone": "bright",
     "color": "#dfcfb4"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only. Proportions, depths, fine profiles and repeat spacings are modeler inferences; size and shape remain inferred. No photo evidence for unseen rear continuation; no published coordinates."
   },
   {
    "id": "lower-bay-transom",
@@ -396,7 +459,12 @@
     "fill": "dark",
     "tone": "bright",
     "color": "#dfcfb4"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only. Proportions, depths, fine profiles and repeat spacings are modeler inferences; size and shape remain inferred. No photo evidence for unseen rear continuation; no published coordinates."
   },
   {
    "id": "lower-sill",
@@ -430,7 +498,12 @@
     "fill": "dark",
     "tone": "bright",
     "color": "#dfcfb4"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only. Proportions, depths, fine profiles and repeat spacings are modeler inferences; size and shape remain inferred. No photo evidence for unseen rear continuation; no published coordinates."
   },
   {
    "id": "lintel-center-wedge",
@@ -482,7 +555,11 @@
     "tone": "bright",
     "weight": 1.6,
     "color": "#dfcfb4"
-   }
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only. Proportions, depths, fine profiles and repeat spacings are modeler inferences; size and shape remain inferred. No photo evidence for unseen rear continuation; no published coordinates."
   },
   {
    "id": "lintel-left-wedge",
@@ -537,7 +614,11 @@
     "fill": "dark",
     "tone": "bright",
     "color": "#dfcfb4"
-   }
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only. Proportions, depths, fine profiles and repeat spacings are modeler inferences; size and shape remain inferred. No photo evidence for unseen rear continuation; no published coordinates."
   },
   {
    "id": "lintel-right-wedge",
@@ -592,7 +673,11 @@
     "fill": "dark",
     "tone": "bright",
     "color": "#dfcfb4"
-   }
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only. Proportions, depths, fine profiles and repeat spacings are modeler inferences; size and shape remain inferred. No photo evidence for unseen rear continuation; no published coordinates."
   },
   {
    "id": "short-attic-bay-frame",
@@ -628,7 +713,11 @@
     "fill": "dark",
     "tone": "bright",
     "color": "#dfcfb4"
-   }
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only. Proportions, depths, fine profiles and repeat spacings are modeler inferences; size and shape remain inferred. No photo evidence for unseen rear continuation; no published coordinates."
   },
   {
    "id": "short-attic-window-glazing",
@@ -663,7 +752,11 @@
     "fill": "glass",
     "tone": "faint",
     "color": "#2b3b40"
-   }
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only. Proportions, depths, fine profiles and repeat spacings are modeler inferences; size and shape remain inferred. No photo evidence for unseen rear continuation; no published coordinates."
   },
   {
    "id": "short-attic-mullion",
@@ -697,7 +790,12 @@
     "fill": "dark",
     "tone": "bright",
     "color": "#dfcfb4"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only. Proportions, depths, fine profiles and repeat spacings are modeler inferences; size and shape remain inferred. No photo evidence for unseen rear continuation; no published coordinates."
   },
   {
    "id": "short-attic-transom",
@@ -731,7 +829,12 @@
     "fill": "dark",
     "tone": "bright",
     "color": "#dfcfb4"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only. Proportions, depths, fine profiles and repeat spacings are modeler inferences; size and shape remain inferred. No photo evidence for unseen rear continuation; no published coordinates."
   },
   {
    "id": "pink-relief-panel-rails",
@@ -982,7 +1085,11 @@
     1.1,
     0.85,
     1
-   ]
+   ],
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only. Proportions, depths, fine profiles and repeat spacings are modeler inferences; size and shape remain inferred. No photo evidence for unseen rear continuation; no published coordinates."
   },
   {
    "id": "pink-panel-vertical-pilasters",
@@ -1017,7 +1124,11 @@
     "fill": "dark",
     "tone": "identity",
     "color": "#c68f80"
-   }
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only. Proportions, depths, fine profiles and repeat spacings are modeler inferences; size and shape remain inferred. No photo evidence for unseen rear continuation; no published coordinates."
   },
   {
    "id": "inferred-base-bay-frame",
@@ -1052,7 +1163,12 @@
     "fill": "dark",
     "tone": "structure",
     "color": "#dfcfb4"
-   }
+   },
+   "source": "production-estimate",
+   "basis": [
+    "production-envelope"
+   ],
+   "note": "Agent production envelope/occluded lower-facade completion. Photo does not directly establish hidden back, full depth or lower opening geometry. Entirely inferred; not user-supplied measurements."
   },
   {
    "id": "inferred-base-window-glazing",
@@ -1086,7 +1202,12 @@
     "fill": "glass",
     "tone": "faint",
     "color": "#2b3b40"
-   }
+   },
+   "source": "production-estimate",
+   "basis": [
+    "production-envelope"
+   ],
+   "note": "Agent production envelope/occluded lower-facade completion. Photo does not directly establish hidden back, full depth or lower opening geometry. Entirely inferred; not user-supplied measurements."
   },
   {
    "id": "inferred-base-mullion",
@@ -1120,7 +1241,12 @@
     "fill": "dark",
     "tone": "structure",
     "color": "#dfcfb4"
-   }
+   },
+   "source": "production-estimate",
+   "basis": [
+    "production-envelope"
+   ],
+   "note": "Agent production envelope/occluded lower-facade completion. Photo does not directly establish hidden back, full depth or lower opening geometry. Entirely inferred; not user-supplied measurements."
   },
   {
    "id": "paired-dormer-cheeks",
@@ -1129,6 +1255,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
+    "photo-visible-observation",
+    "production-envelope",
     "dormer-count"
    ],
    "stage": 4,
@@ -1161,7 +1289,8 @@
     "tone": "structure",
     "weight": 1.1,
     "color": "#4b5354"
-   }
+   },
+   "note": "Photo supports visible motif only. Proportions, depths, fine profiles and repeat spacings are modeler inferences; size and shape remain inferred. No photo evidence for unseen rear continuation; no published coordinates."
   },
   {
    "id": "dormer-front-frame",
@@ -1197,7 +1326,11 @@
     "tone": "bright",
     "weight": 0.8,
     "color": "#dfcfb4"
-   }
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only. Proportions, depths, fine profiles and repeat spacings are modeler inferences; size and shape remain inferred. No photo evidence for unseen rear continuation; no published coordinates."
   },
   {
    "id": "dormer-window-glazing",
@@ -1232,7 +1365,11 @@
     "fill": "glass",
     "tone": "faint",
     "color": "#2b3b40"
-   }
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only. Proportions, depths, fine profiles and repeat spacings are modeler inferences; size and shape remain inferred. No photo evidence for unseen rear continuation; no published coordinates."
   },
   {
    "id": "dormer-paired-mullion",
@@ -1267,7 +1404,11 @@
     "fill": "dark",
     "tone": "bright",
     "color": "#dfcfb4"
-   }
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only. Proportions, depths, fine profiles and repeat spacings are modeler inferences; size and shape remain inferred. No photo evidence for unseen rear continuation; no published coordinates."
   },
   {
    "id": "dormer-transom",
@@ -1302,7 +1443,11 @@
     "fill": "dark",
     "tone": "bright",
     "color": "#dfcfb4"
-   }
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only. Proportions, depths, fine profiles and repeat spacings are modeler inferences; size and shape remain inferred. No photo evidence for unseen rear continuation; no published coordinates."
   },
   {
    "id": "dormer-triangular-cap",
@@ -1350,7 +1495,11 @@
     "tone": "structure",
     "weight": 1,
     "color": "#4b5354"
-   }
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only. Proportions, depths, fine profiles and repeat spacings are modeler inferences; size and shape remain inferred. No photo evidence for unseen rear continuation; no published coordinates."
   },
   {
    "id": "dormer-cap-edge",
@@ -1399,7 +1548,12 @@
     "tone": "bright",
     "weight": 1.4,
     "color": "#dfcfb4"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only. Proportions, depths, fine profiles and repeat spacings are modeler inferences; size and shape remain inferred. No photo evidence for unseen rear continuation; no published coordinates."
   },
   {
    "id": "front-standing-seams",
@@ -1450,7 +1604,11 @@
     "tone": "hairline",
     "weight": 0.6,
     "color": "#3c4549"
-   }
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only. Proportions, depths, fine profiles and repeat spacings are modeler inferences; size and shape remain inferred. No photo evidence for unseen rear continuation; no published coordinates."
   },
   {
    "id": "roof-break-fold",
@@ -1483,7 +1641,11 @@
     0.0,
     2.4,
     0.0
-   ]
+   ],
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only. Proportions, depths, fine profiles and repeat spacings are modeler inferences; size and shape remain inferred. No photo evidence for unseen rear continuation; no published coordinates."
   },
   {
    "id": "ridge-fold",
@@ -1515,7 +1677,11 @@
     0.0,
     2.4,
     0.0
-   ]
+   ],
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only. Proportions, depths, fine profiles and repeat spacings are modeler inferences; size and shape remain inferred. No photo evidence for unseen rear continuation; no published coordinates."
   },
   {
    "id": "ridge-chimney-stack",
@@ -1543,7 +1709,11 @@
     "tone": "structure",
     "weight": 1.6,
     "color": "#3c4549"
-   }
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only. Proportions, depths, fine profiles and repeat spacings are modeler inferences; size and shape remain inferred. No photo evidence for unseen rear continuation; no published coordinates."
   },
   {
    "id": "chimney-crown",
@@ -1567,7 +1737,12 @@
     "fill": "dark",
     "tone": "structure",
     "color": "#4b4c47"
-   }
+   },
+   "source": "photo",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only. Proportions, depths, fine profiles and repeat spacings are modeler inferences; size and shape remain inferred. No photo evidence for unseen rear continuation; no published coordinates."
   },
   {
    "id": "chimney-metal-seams",
@@ -1637,7 +1812,11 @@
     0,
     1.8,
     0
-   ]
+   ],
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only. Proportions, depths, fine profiles and repeat spacings are modeler inferences; size and shape remain inferred. No photo evidence for unseen rear continuation; no published coordinates."
   },
   {
    "id": "far-left-chimney",
@@ -1663,7 +1842,11 @@
     "fill": "dark",
     "tone": "structure",
     "color": "#4b4c47"
-   }
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only. Proportions, depths, fine profiles and repeat spacings are modeler inferences; size and shape remain inferred. No photo evidence for unseen rear continuation; no published coordinates."
   },
   {
    "id": "ridge-safety-rail",
@@ -1769,7 +1952,11 @@
     0,
     1.8,
     0
-   ]
+   ],
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only. Proportions, depths, fine profiles and repeat spacings are modeler inferences; size and shape remain inferred. No photo evidence for unseen rear continuation; no published coordinates."
   },
   {
    "id": "television-aerial",
@@ -1882,7 +2069,11 @@
     0,
     1.8,
     0
-   ]
+   ],
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only. Proportions, depths, fine profiles and repeat spacings are modeler inferences; size and shape remain inferred. No photo evidence for unseen rear continuation; no published coordinates."
   },
   {
    "id": "native-facade-linework",
@@ -1917,7 +2108,11 @@
     "tone": "hairline",
     "weight": 0.55,
     "color": "#dfcfb4"
-   }
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only. Proportions, depths, fine profiles and repeat spacings are modeler inferences; size and shape remain inferred. No photo evidence for unseen rear continuation; no published coordinates."
   },
   {
    "at": [
@@ -1952,7 +2147,11 @@
     "type": "box"
    },
    "source": "photo",
-   "stage": 3
+   "stage": 3,
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only. Proportions, depths, fine profiles and repeat spacings are modeler inferences; size and shape remain inferred. No photo evidence for unseen rear continuation; no published coordinates."
   },
   {
    "at": [
@@ -1987,7 +2186,11 @@
     "type": "box"
    },
    "source": "photo",
-   "stage": 3
+   "stage": 3,
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only. Proportions, depths, fine profiles and repeat spacings are modeler inferences; size and shape remain inferred. No photo evidence for unseen rear continuation; no published coordinates."
   },
   {
    "at": [
@@ -2012,7 +2215,11 @@
     "type": "box"
    },
    "source": "photo",
-   "stage": 5
+   "stage": 5,
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only. Proportions, depths, fine profiles and repeat spacings are modeler inferences; size and shape remain inferred. No photo evidence for unseen rear continuation; no published coordinates."
   },
   {
    "at": [
@@ -2037,7 +2244,11 @@
     "type": "box"
    },
    "source": "photo",
-   "stage": 5
+   "stage": 5,
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only. Proportions, depths, fine profiles and repeat spacings are modeler inferences; size and shape remain inferred. No photo evidence for unseen rear continuation; no published coordinates."
   },
   {
    "at": [
@@ -2072,7 +2283,11 @@
     "type": "box"
    },
    "source": "photo",
-   "stage": 4
+   "stage": 4,
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only. Proportions, depths, fine profiles and repeat spacings are modeler inferences; size and shape remain inferred. No photo evidence for unseen rear continuation; no published coordinates."
   },
   {
    "at": [
@@ -2107,7 +2322,11 @@
     "type": "box"
    },
    "source": "photo",
-   "stage": 5
+   "stage": 5,
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only. Proportions, depths, fine profiles and repeat spacings are modeler inferences; size and shape remain inferred. No photo evidence for unseen rear continuation; no published coordinates."
   },
   {
    "at": [
@@ -2143,7 +2362,11 @@
     "type": "box"
    },
    "source": "photo",
-   "stage": 5
+   "stage": 5,
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only. Proportions, depths, fine profiles and repeat spacings are modeler inferences; size and shape remain inferred. No photo evidence for unseen rear continuation; no published coordinates."
   },
   {
    "at": [
@@ -2200,7 +2423,11 @@
     "type": "extrude"
    },
    "source": "photo",
-   "stage": 5
+   "stage": 5,
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only. Proportions, depths, fine profiles and repeat spacings are modeler inferences; size and shape remain inferred. No photo evidence for unseen rear continuation; no published coordinates."
   },
   {
    "at": [
@@ -2235,7 +2462,11 @@
     "type": "box"
    },
    "source": "photo",
-   "stage": 3
+   "stage": 3,
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only. Proportions, depths, fine profiles and repeat spacings are modeler inferences; size and shape remain inferred. No photo evidence for unseen rear continuation; no published coordinates."
   },
   {
    "at": [
@@ -2270,7 +2501,11 @@
     "type": "box"
    },
    "source": "photo",
-   "stage": 3
+   "stage": 3,
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only. Proportions, depths, fine profiles and repeat spacings are modeler inferences; size and shape remain inferred. No photo evidence for unseen rear continuation; no published coordinates."
   },
   {
    "at": [
@@ -2305,7 +2540,11 @@
     "type": "box"
    },
    "source": "photo",
-   "stage": 3
+   "stage": 3,
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only. Proportions, depths, fine profiles and repeat spacings are modeler inferences; size and shape remain inferred. No photo evidence for unseen rear continuation; no published coordinates."
   },
   {
    "at": [
@@ -2345,7 +2584,11 @@
     "type": "box"
    },
    "source": "photo",
-   "stage": 5
+   "stage": 5,
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only. Proportions, depths, fine profiles and repeat spacings are modeler inferences; size and shape remain inferred. No photo evidence for unseen rear continuation; no published coordinates."
   },
   {
    "at": [
@@ -2385,7 +2628,11 @@
     "type": "box"
    },
    "source": "photo",
-   "stage": 5
+   "stage": 5,
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only. Proportions, depths, fine profiles and repeat spacings are modeler inferences; size and shape remain inferred. No photo evidence for unseen rear continuation; no published coordinates."
   },
   {
    "at": [
@@ -2411,7 +2658,11 @@
     "type": "box"
    },
    "source": "photo",
-   "stage": 2
+   "stage": 2,
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only. Proportions, depths, fine profiles and repeat spacings are modeler inferences; size and shape remain inferred. No photo evidence for unseen rear continuation; no published coordinates."
   },
   {
    "at": [
@@ -2437,7 +2688,11 @@
     "type": "box"
    },
    "source": "photo",
-   "stage": 2
+   "stage": 2,
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only. Proportions, depths, fine profiles and repeat spacings are modeler inferences; size and shape remain inferred. No photo evidence for unseen rear continuation; no published coordinates."
   },
   {
    "at": [
@@ -2463,7 +2718,11 @@
     "type": "box"
    },
    "source": "photo",
-   "stage": 2
+   "stage": 2,
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only. Proportions, depths, fine profiles and repeat spacings are modeler inferences; size and shape remain inferred. No photo evidence for unseen rear continuation; no published coordinates."
   },
   {
    "at": [
@@ -2520,7 +2779,11 @@
     "type": "tube"
    },
    "source": "photo",
-   "stage": 5
+   "stage": 5,
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only. Proportions, depths, fine profiles and repeat spacings are modeler inferences; size and shape remain inferred. No photo evidence for unseen rear continuation; no published coordinates."
   }
  ],
  "anchors": {
@@ -2618,23 +2881,6 @@
   "sources": [
    "photo"
   ],
-  "critic": {
-   "scene_sha256": "34d8cdd8a2cb9eb004ea4c46a671bc5f925142703f194c03ab7a6b0ddd823948",
-   "verdict": "good",
-   "scores": {
-    "silhouette": 2,
-    "proportions": 2,
-    "identity": 2,
-    "depth": 2,
-    "composition": 3,
-    "assembly": 3,
-    "motion": 3,
-    "density": 2,
-    "honesty": 3
-   },
-   "round": 7,
-   "defects": 5
-  },
   "rounds": [
    {
     "round": 1,
@@ -2741,6 +2987,24 @@
     "summary": "The main right stack is a slender uniform shaft with a small foot. In the reference it is a conspicuously broad, shouldered mass beside the "
    }
   ],
-  "outcome": "good"
+  "outcome": "good",
+  "provenance_note": "Provenance-only audit; physical payload unchanged; historical independent judgement preserved in before backup and sealed checkpoints, not a fresh critique.",
+  "critic": {
+   "scene_sha256": "d7d82b8caa26b05a1f8936f9f8b65400c876fe7e290a1088fc3fbb580acb681c",
+   "verdict": "good",
+   "scores": {
+    "silhouette": 2,
+    "proportions": 2,
+    "identity": 2,
+    "depth": 2,
+    "composition": 3,
+    "assembly": 3,
+    "motion": 3,
+    "density": 2,
+    "honesty": 3
+   },
+   "round": 1,
+   "defects": 5
+  }
  }
 }

@@ -45,6 +45,34 @@
    "title": "Börshuset — inaugurated 1776, construction listed 1773–1778",
    "ref": "https://en.wikipedia.org/wiki/Stockholm_Stock_Exchange_Building",
    "rights": "reference_only"
+  },
+  {
+   "id": "production",
+   "kind": "generated",
+   "rights": "permitted",
+   "title": "Agent-authored production envelope and hidden completion; not user measurements",
+   "ref": "provenance-audit/before/constructs/b-rshuset-nobel-prize-museum-north-palace/scene.json"
+  },
+  {
+   "id": "municipal-drawing",
+   "kind": "document",
+   "rights": "reference_only",
+   "title": "Palmstedt, Erik; Börshusets fasad 1773; Stadsarkivet SSA GS 15:167, GSH41342; RÅDSTUGAN 1",
+   "ref": "https://stockholmskallan.stockholm.se/post/18907"
+  },
+  {
+   "id": "municipal-history",
+   "kind": "document",
+   "rights": "reference_only",
+   "title": "Stockholmskällan, Om Beurse-byggnad i Stockholm catalog discussion; construction 1773-78",
+   "ref": "https://stockholmskallan.stockholm.se/post/28666"
+  },
+  {
+   "id": "museum-facade-study",
+   "kind": "document",
+   "rights": "reference_only",
+   "title": "Margareta Cramér, Börshusets fasader, Stadsvandringar 8 (1985), pp44–50; 1983 facade investigation",
+   "ref": "https://stockholmskallan.stockholm.se/postfiles/SMF/SD/SSMB_0005795_01.pdf"
   }
  ],
  "facts": [
@@ -53,50 +81,115 @@
    "value": 40,
    "unit": "m",
    "certainty": "inferred",
-   "source": "request",
-   "note": "Supervisor envelope, no published dimension established"
+   "source": "production",
+   "note": "Agent/supervisor production envelope estimate, not a human-supplied measurement; no published frontage value retrieved."
   },
   {
    "key": "depth",
    "value": 17,
    "unit": "m",
    "certainty": "inferred",
-   "source": "request",
-   "note": "Full hidden plan inferred for overhead coherence"
+   "source": "production",
+   "note": "Agent-authored hidden plan estimate; not user measurement or surveyed footprint."
   },
   {
    "key": "eave",
    "value": 15.1,
    "unit": "m",
    "certainty": "inferred",
-   "source": "facade-photo",
-   "note": "Reduced from initial 18m estimate to preserve reference two-storey proportion at 40m frontage"
+   "source": "production",
+   "note": "Agent-authored photo-relative estimate retained unchanged; no surveyed eave height retrieved."
   },
   {
    "key": "inauguration",
    "value": 1776,
    "certainty": "verified",
    "source": "history",
-   "note": "Not a claim that all construction ended in 1776; sources list construction through 1778"
+   "note": "Documented non-metric statement; not a verified measurement. Source reports inauguration by Gustav III in 1776; this does not claim all construction ended then. Construction is separately reported as 1773–1778."
   },
   {
    "key": "architect",
    "value": "Erik Palmstedt",
    "certainty": "verified",
-   "source": "stortorget"
+   "source": "stortorget",
+   "note": "Documented non-metric statement; not a verified measurement. Palmstedt credited by Stortorget and municipal 1773 facade record; does not deny earlier Cronstedt/Carlberg design involvement."
   },
   {
    "key": "plan",
    "value": "trapezoid with rounded corners",
    "certainty": "verified",
-   "source": "stortorget"
+   "source": "stortorget",
+   "note": "Documented non-metric statement; not a verified measurement. Stortorget describes a trapezium and rounded corner; model coordinates, corner radii and hidden depth remain inferred."
   },
   {
    "key": "d13-end-relief",
    "value": "Shallow inferred masonry relief on existing local +/-X ends; local +X faces world +Z at yaw -90. Existing full-perimeter plinth, storey bands and eaves retained. No new openings.",
    "certainty": "inferred",
-   "source": "request",
+   "source": "production",
    "note": "Bounded D13 repair: corner returns and rusticated solid piers stay inside existing envelope; unseen details are inferred, not a documented window rhythm."
+  },
+  {
+   "key": "construction-period",
+   "value": "1773–1778",
+   "certainty": "verified",
+   "source": "municipal-history",
+   "note": "Documented non-metric statement; not a verified measurement. Municipal catalog reports 1773-78; Cramér states completion in 1778. Stortorget's shorter 1773–1776 and inauguration in 1776 are retained as chronology distinctions, not silently harmonized."
+  },
+  {
+   "key": "civic-crown",
+   "value": "central pediment and lantern-style cupola",
+   "certainty": "verified",
+   "source": "stortorget",
+   "note": "Documented non-metric statement; not a verified measurement. Documents existence/form, not model proportions or ornamental coordinates."
+  },
+  {
+   "key": "facade-visible-form",
+   "value": "Visible south facade has an arcaded/rusticated ground tier, rectangular upper windows, projecting central entrance composition, rounded corner order, pediment and cupola.",
+   "certainty": "inferred",
+   "source": "facade-photo",
+   "note": "Visible in 2015 reference; photograph read in original Commons webpage. Photo interpretation, with perspective and foreground occlusions; no calibrated tracing."
+  },
+  {
+   "key": "production-inference",
+   "value": "Existing model dimensions, hidden backs and side openings, cap depths and repetitive detail are agent-authored inferred completion.",
+   "certainty": "inferred",
+   "source": "production",
+   "note": "Provenance statement for unchanged existing geometry; not source-confirmed physical dimensions."
+  },
+  {
+   "key": "municipal-facade-record",
+   "value": "1773 facade drawing; Palmstedt, Erik; RÅDSTUGAN 1; approved by Gustav III; Stadsarkivet SSA GS 15:167, GSH41342",
+   "certainty": "verified",
+   "source": "municipal-drawing",
+   "note": "Documented non-metric statement; not a verified measurement. Catalog read and drawing viewed in browser; historical design, not surveyed current as-built. Scale bar visible but units/value not reliably transcribed; no fitting performed."
+  },
+  {
+   "key": "museum-two-main-floors",
+   "value": "Stock exchange premises on ground floor and city festive hall in the upper high floor; columns on main facade in both floors.",
+   "certainty": "verified",
+   "source": "museum-facade-study",
+   "note": "Documented non-metric statement; not a verified measurement. Cramér 1985 text about the main facade floors; not a claim that no attic/interior subdivisions exist."
+  },
+  {
+   "key": "museum-three-central-door-openings",
+   "value": 3,
+   "certainty": "verified",
+   "source": "museum-facade-study",
+   "note": "Documented non-metric statement; not a verified measurement. Cramér describes three arched door openings in the ground-floor central section toward the square. Model's central display and flanking glazed archetypes are not independently verified doors."
+  },
+  {
+   "key": "museum-facade-colour-1983",
+   "value": "gulrosa upper facade field and fronton; warm-grey stone-imitating ground floor, projecting corner pilasters, mouldings and window surrounds",
+   "certainty": "verified",
+   "source": "museum-facade-study",
+   "note": "Documented non-metric statement; not a verified measurement. Describes 1983 restoration documented in 1985; not calibrated 2022 colour or actual material of every model part."
+  },
+  {
+   "key": "stortorget-short-construction-period",
+   "value": "1773–1776",
+   "certainty": "verified",
+   "source": "stortorget",
+   "note": "Documented non-metric statement; not a verified measurement. This is explicitly the shorter range reported by Stortorget, not a settled construction-end date. Building article and municipal discussion report 1773–1778; inauguration 1776 is a different event."
   }
  ],
  "parts": [
@@ -180,7 +273,12 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#d8c9a5"
-   }
+   },
+   "basis": [
+    "plan",
+    "production-inference"
+   ],
+   "note": "Text documents trapezium plan and rounded corner only. Full shell, footprint coordinates, corner radii, wall thickness, depth and all sizes remain inferred; facade photos cannot establish hidden mass."
   },
   {
    "id": "stone-plinth",
@@ -262,7 +360,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#a6a497"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "ground-stringcourse",
@@ -344,7 +446,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-entablature",
@@ -426,7 +532,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "eave-cornice",
@@ -508,7 +618,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "parapet-foot",
@@ -590,7 +704,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "parapet-coping",
@@ -672,14 +790,18 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "concealed-hip-roof",
    "label": "concealed hip roof",
    "role": "mass",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 0,
    "shape": {
     "type": "roof",
@@ -703,7 +825,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#414b48"
-   }
+   },
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "front-parapet-piers",
@@ -741,7 +867,11 @@
       0
      ]
     }
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "front-baluster",
@@ -793,7 +923,11 @@
       0
      ]
     }
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "ground-glazing-0",
@@ -868,7 +1002,11 @@
     1.0,
     1.15,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "ground-jamb-0",
@@ -911,7 +1049,11 @@
     1.0,
     1.15,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "arch-stone-0-0",
@@ -1014,7 +1156,11 @@
     0,
     0,
     0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "ground-centre-mullion-0",
@@ -1047,7 +1193,11 @@
     1.0,
     1.15,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "ground-transom-0-2.25",
@@ -1075,7 +1225,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#645c4b"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "ground-transom-0-3.85",
@@ -1103,7 +1257,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#645c4b"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-glazing-0",
@@ -1136,7 +1294,11 @@
     1.0,
     0.9,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-jamb-0",
@@ -1179,7 +1341,11 @@
     1.0,
     0.9,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-sill-0",
@@ -1207,7 +1373,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-lintel-0",
@@ -1235,7 +1405,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-mullion-0",
@@ -1268,7 +1442,11 @@
     1.0,
     0.9,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-transom-0-9.55",
@@ -1296,7 +1474,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#645c4b"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-transom-0-10.45",
@@ -1324,7 +1506,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#645c4b"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-transom-0-11.35",
@@ -1352,7 +1538,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#645c4b"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "ground-glazing-1",
@@ -1427,7 +1617,11 @@
     1.0,
     1.15,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "ground-jamb-1",
@@ -1470,7 +1664,11 @@
     1.0,
     1.15,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "arch-stone-1-0",
@@ -1573,7 +1771,11 @@
     0,
     0,
     0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "ground-centre-mullion-1",
@@ -1606,7 +1808,11 @@
     1.0,
     1.15,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "ground-transom-1-2.25",
@@ -1634,7 +1840,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#645c4b"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "ground-transom-1-3.85",
@@ -1662,7 +1872,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#645c4b"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-glazing-1",
@@ -1695,7 +1909,11 @@
     1.0,
     0.9,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-jamb-1",
@@ -1738,7 +1956,11 @@
     1.0,
     0.9,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-sill-1",
@@ -1766,7 +1988,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-lintel-1",
@@ -1794,7 +2020,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-mullion-1",
@@ -1827,7 +2057,11 @@
     1.0,
     0.9,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-transom-1-9.55",
@@ -1855,7 +2089,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#645c4b"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-transom-1-10.45",
@@ -1883,7 +2121,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#645c4b"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-transom-1-11.35",
@@ -1911,7 +2153,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#645c4b"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "ground-glazing-2",
@@ -1986,7 +2232,11 @@
     1.0,
     1.15,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "ground-jamb-2",
@@ -2029,7 +2279,11 @@
     1.0,
     1.15,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "arch-stone-2-0",
@@ -2132,7 +2386,11 @@
     0,
     0,
     0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "ground-centre-mullion-2",
@@ -2165,7 +2423,11 @@
     1.0,
     1.15,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "ground-transom-2-2.25",
@@ -2193,7 +2455,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#645c4b"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "ground-transom-2-3.85",
@@ -2221,7 +2487,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#645c4b"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-glazing-2",
@@ -2254,7 +2524,11 @@
     1.0,
     0.9,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-jamb-2",
@@ -2297,7 +2571,11 @@
     1.0,
     0.9,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-sill-2",
@@ -2325,7 +2603,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-lintel-2",
@@ -2353,7 +2635,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-mullion-2",
@@ -2386,7 +2672,11 @@
     1.0,
     0.9,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-transom-2-9.55",
@@ -2414,7 +2704,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#645c4b"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-transom-2-10.45",
@@ -2442,7 +2736,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#645c4b"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-transom-2-11.35",
@@ -2470,7 +2768,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#645c4b"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "ground-glazing-3",
@@ -2545,7 +2847,11 @@
     1.0,
     1.15,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "ground-jamb-3",
@@ -2588,7 +2894,11 @@
     1.0,
     1.15,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "arch-stone-3-0",
@@ -2691,7 +3001,11 @@
     0,
     0,
     0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "ground-centre-mullion-3",
@@ -2724,7 +3038,11 @@
     1.0,
     1.15,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "ground-transom-3-2.25",
@@ -2752,7 +3070,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#645c4b"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "ground-transom-3-3.85",
@@ -2780,7 +3102,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#645c4b"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-glazing-3",
@@ -2813,7 +3139,11 @@
     1.0,
     0.9,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-jamb-3",
@@ -2856,7 +3186,11 @@
     1.0,
     0.9,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-sill-3",
@@ -2884,7 +3218,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-lintel-3",
@@ -2912,7 +3250,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-mullion-3",
@@ -2945,7 +3287,11 @@
     1.0,
     0.9,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-transom-3-9.55",
@@ -2973,7 +3319,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#645c4b"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-transom-3-10.45",
@@ -3001,7 +3351,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#645c4b"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-transom-3-11.35",
@@ -3029,7 +3383,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#645c4b"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "ground-glazing-4",
@@ -3104,7 +3462,11 @@
     1.0,
     1.15,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Reference shows central entrance composition and Cramér documents three arched central door openings. Model reuses glazed forms for flanks and a central display mass: opening function/detail is simplified and not verified. All sizes/depths inferred."
   },
   {
    "id": "ground-jamb-4",
@@ -3147,7 +3509,11 @@
     1.0,
     1.15,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "arch-stone-4-0",
@@ -3250,7 +3616,11 @@
     0,
     0,
     0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "ground-centre-mullion-4",
@@ -3283,7 +3653,11 @@
     1.0,
     1.15,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "ground-transom-4-2.25",
@@ -3311,7 +3685,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#645c4b"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "ground-transom-4-3.85",
@@ -3339,7 +3717,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#645c4b"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-glazing-4",
@@ -3372,7 +3754,11 @@
     1.0,
     0.9,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-jamb-4",
@@ -3415,7 +3801,11 @@
     1.0,
     0.9,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-sill-4",
@@ -3443,7 +3833,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-lintel-4",
@@ -3471,7 +3865,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-mullion-4",
@@ -3504,7 +3902,11 @@
     1.0,
     0.9,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-transom-4-9.55",
@@ -3532,7 +3934,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#645c4b"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-transom-4-10.45",
@@ -3560,7 +3966,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#645c4b"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-transom-4-11.35",
@@ -3588,7 +3998,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#645c4b"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-glazing-5",
@@ -3621,7 +4035,11 @@
     1.0,
     0.9,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-jamb-5",
@@ -3664,7 +4082,11 @@
     1.0,
     0.9,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-sill-5",
@@ -3692,7 +4114,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-lintel-5",
@@ -3720,7 +4146,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-mullion-5",
@@ -3753,7 +4183,11 @@
     1.0,
     0.9,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-transom-5-9.55",
@@ -3781,7 +4215,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#645c4b"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-transom-5-10.45",
@@ -3809,7 +4247,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#645c4b"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-transom-5-11.35",
@@ -3837,7 +4279,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#645c4b"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "ground-glazing-6",
@@ -3912,7 +4358,11 @@
     1.0,
     1.15,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Reference shows central entrance composition and Cramér documents three arched central door openings. Model reuses glazed forms for flanks and a central display mass: opening function/detail is simplified and not verified. All sizes/depths inferred."
   },
   {
    "id": "ground-jamb-6",
@@ -3955,7 +4405,11 @@
     1.0,
     1.15,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "arch-stone-6-0",
@@ -4058,7 +4512,11 @@
     0,
     0,
     0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "ground-centre-mullion-6",
@@ -4091,7 +4549,11 @@
     1.0,
     1.15,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "ground-transom-6-2.25",
@@ -4119,7 +4581,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#645c4b"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "ground-transom-6-3.85",
@@ -4147,7 +4613,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#645c4b"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-glazing-6",
@@ -4180,7 +4650,11 @@
     1.0,
     0.9,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-jamb-6",
@@ -4223,7 +4697,11 @@
     1.0,
     0.9,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-sill-6",
@@ -4251,7 +4729,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-lintel-6",
@@ -4279,7 +4761,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-mullion-6",
@@ -4312,7 +4798,11 @@
     1.0,
     0.9,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-transom-6-9.55",
@@ -4340,7 +4830,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#645c4b"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-transom-6-10.45",
@@ -4368,7 +4862,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#645c4b"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-transom-6-11.35",
@@ -4396,7 +4894,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#645c4b"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "ground-glazing-7",
@@ -4471,7 +4973,11 @@
     1.0,
     1.15,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "ground-jamb-7",
@@ -4514,7 +5020,11 @@
     1.0,
     1.15,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "arch-stone-7-0",
@@ -4617,7 +5127,11 @@
     0,
     0,
     0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "ground-centre-mullion-7",
@@ -4650,7 +5164,11 @@
     1.0,
     1.15,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "ground-transom-7-2.25",
@@ -4678,7 +5196,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#645c4b"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "ground-transom-7-3.85",
@@ -4706,7 +5228,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#645c4b"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-glazing-7",
@@ -4739,7 +5265,11 @@
     1.0,
     0.9,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-jamb-7",
@@ -4782,7 +5312,11 @@
     1.0,
     0.9,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-sill-7",
@@ -4810,7 +5344,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-lintel-7",
@@ -4838,7 +5376,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-mullion-7",
@@ -4871,7 +5413,11 @@
     1.0,
     0.9,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-transom-7-9.55",
@@ -4899,7 +5445,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#645c4b"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-transom-7-10.45",
@@ -4927,7 +5477,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#645c4b"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-transom-7-11.35",
@@ -4955,7 +5509,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#645c4b"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "ground-glazing-8",
@@ -5030,7 +5588,11 @@
     1.0,
     1.15,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "ground-jamb-8",
@@ -5073,7 +5635,11 @@
     1.0,
     1.15,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "arch-stone-8-0",
@@ -5176,7 +5742,11 @@
     0,
     0,
     0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "ground-centre-mullion-8",
@@ -5209,7 +5779,11 @@
     1.0,
     1.15,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "ground-transom-8-2.25",
@@ -5237,7 +5811,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#645c4b"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "ground-transom-8-3.85",
@@ -5265,7 +5843,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#645c4b"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-glazing-8",
@@ -5298,7 +5880,11 @@
     1.0,
     0.9,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-jamb-8",
@@ -5341,7 +5927,11 @@
     1.0,
     0.9,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-sill-8",
@@ -5369,7 +5959,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-lintel-8",
@@ -5397,7 +5991,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-mullion-8",
@@ -5430,7 +6028,11 @@
     1.0,
     0.9,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-transom-8-9.55",
@@ -5458,7 +6060,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#645c4b"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-transom-8-10.45",
@@ -5486,7 +6092,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#645c4b"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-transom-8-11.35",
@@ -5514,7 +6124,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#645c4b"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "ground-glazing-9",
@@ -5589,7 +6203,11 @@
     1.0,
     1.15,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "ground-jamb-9",
@@ -5632,7 +6250,11 @@
     1.0,
     1.15,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "arch-stone-9-0",
@@ -5735,7 +6357,11 @@
     0,
     0,
     0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "ground-centre-mullion-9",
@@ -5768,7 +6394,11 @@
     1.0,
     1.15,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "ground-transom-9-2.25",
@@ -5796,7 +6426,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#645c4b"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "ground-transom-9-3.85",
@@ -5824,7 +6458,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#645c4b"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-glazing-9",
@@ -5857,7 +6495,11 @@
     1.0,
     0.9,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-jamb-9",
@@ -5900,7 +6542,11 @@
     1.0,
     0.9,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-sill-9",
@@ -5928,7 +6574,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-lintel-9",
@@ -5956,7 +6606,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-mullion-9",
@@ -5989,7 +6643,11 @@
     1.0,
     0.9,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-transom-9-9.55",
@@ -6017,7 +6675,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#645c4b"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-transom-9-10.45",
@@ -6045,7 +6707,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#645c4b"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-transom-9-11.35",
@@ -6073,7 +6739,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#645c4b"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "ground-glazing-10",
@@ -6148,7 +6818,11 @@
     1.0,
     1.15,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "ground-jamb-10",
@@ -6191,7 +6865,11 @@
     1.0,
     1.15,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "arch-stone-10-0",
@@ -6294,7 +6972,11 @@
     0,
     0,
     0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "ground-centre-mullion-10",
@@ -6327,7 +7009,11 @@
     1.0,
     1.15,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "ground-transom-10-2.25",
@@ -6355,7 +7041,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#645c4b"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "ground-transom-10-3.85",
@@ -6383,7 +7073,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#645c4b"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-glazing-10",
@@ -6416,7 +7110,11 @@
     1.0,
     0.9,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-jamb-10",
@@ -6459,7 +7157,11 @@
     1.0,
     0.9,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-sill-10",
@@ -6487,7 +7189,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-lintel-10",
@@ -6515,7 +7221,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-mullion-10",
@@ -6548,7 +7258,11 @@
     1.0,
     0.9,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-transom-10-9.55",
@@ -6576,7 +7290,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#645c4b"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-transom-10-10.45",
@@ -6604,7 +7322,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#645c4b"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "upper-transom-10-11.35",
@@ -6632,7 +7354,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#645c4b"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "rusticated-pier-0",
@@ -6670,7 +7396,11 @@
       0
      ]
     }
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "rusticated-pier-1",
@@ -6708,7 +7438,11 @@
       0
      ]
     }
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "rusticated-pier-2",
@@ -6746,7 +7480,11 @@
       0
      ]
     }
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "rusticated-pier-3",
@@ -6784,7 +7522,11 @@
       0
      ]
     }
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "rusticated-pier-4",
@@ -6822,7 +7564,11 @@
       0
      ]
     }
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "rusticated-pier-5",
@@ -6860,7 +7606,11 @@
       0
      ]
     }
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "rusticated-pier-6",
@@ -6898,7 +7648,11 @@
       0
      ]
     }
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "rusticated-pier-7",
@@ -6936,7 +7690,11 @@
       0
      ]
     }
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "rusticated-pier-8",
@@ -6974,7 +7732,11 @@
       0
      ]
     }
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "rusticated-pier-9",
@@ -7012,7 +7774,11 @@
       0
      ]
     }
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "rusticated-spandrel-0.7",
@@ -7040,7 +7806,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#c8bfa8"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "rusticated-spandrel-5.35",
@@ -7068,7 +7838,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#c8bfa8"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "rusticated-spandrel-5.82",
@@ -7096,7 +7870,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#c8bfa8"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "rusticated-spandrel-6.27",
@@ -7124,14 +7902,18 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#c8bfa8"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "corner-order--1-0-plinth",
    "label": "corner order  1 0 plinth",
    "role": "structure",
    "certainty": "inferred",
-   "source": "market-photo",
+   "source": "facade-photo",
    "stage": 2,
    "shape": {
     "type": "cylinder",
@@ -7154,14 +7936,18 @@
     1.4,
     1.0,
     1.4
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Commons 2015 full-facade photo supports visible rounded corner-order/rustication general form. Market photo shows only a cropped near corner; it does not establish both ends. Applied shafts/capitals, symmetry, profile, downpipes, hidden returns and dimensions remain inferred; no verified/traced geometry."
   },
   {
    "id": "corner-order--1-0-base",
    "label": "corner order  1 0 base",
    "role": "structure",
    "certainty": "inferred",
-   "source": "market-photo",
+   "source": "facade-photo",
    "stage": 2,
    "shape": {
     "type": "lathe",
@@ -7200,14 +7986,18 @@
     1.4,
     1.0,
     1.4
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Commons 2015 full-facade photo supports visible rounded corner-order/rustication general form. Market photo shows only a cropped near corner; it does not establish both ends. Applied shafts/capitals, symmetry, profile, downpipes, hidden returns and dimensions remain inferred; no verified/traced geometry."
   },
   {
    "id": "corner-order--1-0-shaft",
    "label": "corner order  1 0 shaft",
    "role": "structure",
    "certainty": "inferred",
-   "source": "market-photo",
+   "source": "facade-photo",
    "stage": 2,
    "shape": {
     "type": "cone",
@@ -7231,14 +8021,18 @@
     1.4,
     1.15,
     1.4
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Commons 2015 full-facade photo supports visible rounded corner-order/rustication general form. Market photo shows only a cropped near corner; it does not establish both ends. Applied shafts/capitals, symmetry, profile, downpipes, hidden returns and dimensions remain inferred; no verified/traced geometry."
   },
   {
    "id": "corner-order--1-0-capital",
    "label": "corner order  1 0 capital",
    "role": "structure",
    "certainty": "inferred",
-   "source": "market-photo",
+   "source": "facade-photo",
    "stage": 2,
    "shape": {
     "type": "lathe",
@@ -7281,14 +8075,18 @@
     1.4,
     1.0,
     1.4
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Commons 2015 full-facade photo supports visible rounded corner-order/rustication general form. Market photo shows only a cropped near corner; it does not establish both ends. Applied shafts/capitals, symmetry, profile, downpipes, hidden returns and dimensions remain inferred; no verified/traced geometry."
   },
   {
    "id": "corner-order--1-0-abacus",
    "label": "corner order  1 0 abacus",
    "role": "structure",
    "certainty": "inferred",
-   "source": "market-photo",
+   "source": "facade-photo",
    "stage": 2,
    "shape": {
     "type": "box",
@@ -7314,14 +8112,18 @@
     1.3,
     1.0,
     1.3
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Commons 2015 full-facade photo supports visible rounded corner-order/rustication general form. Market photo shows only a cropped near corner; it does not establish both ends. Applied shafts/capitals, symmetry, profile, downpipes, hidden returns and dimensions remain inferred; no verified/traced geometry."
   },
   {
    "id": "corner-order--1-0-upper-shaft",
    "label": "corner order  1 0 upper shaft",
    "role": "structure",
    "certainty": "inferred",
-   "source": "market-photo",
+   "source": "facade-photo",
    "stage": 2,
    "shape": {
     "type": "cylinder",
@@ -7344,14 +8146,18 @@
     1.3,
     0.88,
     1.3
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Commons 2015 full-facade photo supports visible rounded corner-order/rustication general form. Market photo shows only a cropped near corner; it does not establish both ends. Applied shafts/capitals, symmetry, profile, downpipes, hidden returns and dimensions remain inferred; no verified/traced geometry."
   },
   {
    "id": "corner-order--1-0-upper-base",
    "label": "corner order  1 0 upper base",
    "role": "structure",
    "certainty": "inferred",
-   "source": "market-photo",
+   "source": "facade-photo",
    "stage": 2,
    "shape": {
     "type": "cylinder",
@@ -7374,14 +8180,18 @@
     1.4,
     1.0,
     1.4
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Commons 2015 full-facade photo supports visible rounded corner-order/rustication general form. Market photo shows only a cropped near corner; it does not establish both ends. Applied shafts/capitals, symmetry, profile, downpipes, hidden returns and dimensions remain inferred; no verified/traced geometry."
   },
   {
    "id": "corner-order--1-0-upper-capital",
    "label": "corner order  1 0 upper capital",
    "role": "structure",
    "certainty": "inferred",
-   "source": "market-photo",
+   "source": "facade-photo",
    "stage": 2,
    "shape": {
     "type": "cylinder",
@@ -7404,14 +8214,18 @@
     1.3,
     1,
     1.3
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Commons 2015 full-facade photo supports visible rounded corner-order/rustication general form. Market photo shows only a cropped near corner; it does not establish both ends. Applied shafts/capitals, symmetry, profile, downpipes, hidden returns and dimensions remain inferred; no verified/traced geometry."
   },
   {
    "id": "corner-order--1-1-plinth",
    "label": "corner order  1 1 plinth",
    "role": "structure",
    "certainty": "inferred",
-   "source": "market-photo",
+   "source": "facade-photo",
    "stage": 2,
    "shape": {
     "type": "cylinder",
@@ -7434,14 +8248,18 @@
     1.4,
     1.0,
     1.4
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Commons 2015 full-facade photo supports visible rounded corner-order/rustication general form. Market photo shows only a cropped near corner; it does not establish both ends. Applied shafts/capitals, symmetry, profile, downpipes, hidden returns and dimensions remain inferred; no verified/traced geometry."
   },
   {
    "id": "corner-order--1-1-base",
    "label": "corner order  1 1 base",
    "role": "structure",
    "certainty": "inferred",
-   "source": "market-photo",
+   "source": "facade-photo",
    "stage": 2,
    "shape": {
     "type": "lathe",
@@ -7480,14 +8298,18 @@
     1.4,
     1.0,
     1.4
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Commons 2015 full-facade photo supports visible rounded corner-order/rustication general form. Market photo shows only a cropped near corner; it does not establish both ends. Applied shafts/capitals, symmetry, profile, downpipes, hidden returns and dimensions remain inferred; no verified/traced geometry."
   },
   {
    "id": "corner-order--1-1-shaft",
    "label": "corner order  1 1 shaft",
    "role": "structure",
    "certainty": "inferred",
-   "source": "market-photo",
+   "source": "facade-photo",
    "stage": 2,
    "shape": {
     "type": "cone",
@@ -7511,14 +8333,18 @@
     1.4,
     1.15,
     1.4
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Commons 2015 full-facade photo supports visible rounded corner-order/rustication general form. Market photo shows only a cropped near corner; it does not establish both ends. Applied shafts/capitals, symmetry, profile, downpipes, hidden returns and dimensions remain inferred; no verified/traced geometry."
   },
   {
    "id": "corner-order--1-1-capital",
    "label": "corner order  1 1 capital",
    "role": "structure",
    "certainty": "inferred",
-   "source": "market-photo",
+   "source": "facade-photo",
    "stage": 2,
    "shape": {
     "type": "lathe",
@@ -7561,14 +8387,18 @@
     1.4,
     1.0,
     1.4
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Commons 2015 full-facade photo supports visible rounded corner-order/rustication general form. Market photo shows only a cropped near corner; it does not establish both ends. Applied shafts/capitals, symmetry, profile, downpipes, hidden returns and dimensions remain inferred; no verified/traced geometry."
   },
   {
    "id": "corner-order--1-1-abacus",
    "label": "corner order  1 1 abacus",
    "role": "structure",
    "certainty": "inferred",
-   "source": "market-photo",
+   "source": "facade-photo",
    "stage": 2,
    "shape": {
     "type": "box",
@@ -7594,14 +8424,18 @@
     1.3,
     1.0,
     1.3
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Commons 2015 full-facade photo supports visible rounded corner-order/rustication general form. Market photo shows only a cropped near corner; it does not establish both ends. Applied shafts/capitals, symmetry, profile, downpipes, hidden returns and dimensions remain inferred; no verified/traced geometry."
   },
   {
    "id": "corner-order--1-1-upper-shaft",
    "label": "corner order  1 1 upper shaft",
    "role": "structure",
    "certainty": "inferred",
-   "source": "market-photo",
+   "source": "facade-photo",
    "stage": 2,
    "shape": {
     "type": "cylinder",
@@ -7624,14 +8458,18 @@
     1.3,
     0.88,
     1.3
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Commons 2015 full-facade photo supports visible rounded corner-order/rustication general form. Market photo shows only a cropped near corner; it does not establish both ends. Applied shafts/capitals, symmetry, profile, downpipes, hidden returns and dimensions remain inferred; no verified/traced geometry."
   },
   {
    "id": "corner-order--1-1-upper-base",
    "label": "corner order  1 1 upper base",
    "role": "structure",
    "certainty": "inferred",
-   "source": "market-photo",
+   "source": "facade-photo",
    "stage": 2,
    "shape": {
     "type": "cylinder",
@@ -7654,14 +8492,18 @@
     1.4,
     1.0,
     1.4
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Commons 2015 full-facade photo supports visible rounded corner-order/rustication general form. Market photo shows only a cropped near corner; it does not establish both ends. Applied shafts/capitals, symmetry, profile, downpipes, hidden returns and dimensions remain inferred; no verified/traced geometry."
   },
   {
    "id": "corner-order--1-1-upper-capital",
    "label": "corner order  1 1 upper capital",
    "role": "structure",
    "certainty": "inferred",
-   "source": "market-photo",
+   "source": "facade-photo",
    "stage": 2,
    "shape": {
     "type": "cylinder",
@@ -7684,14 +8526,18 @@
     1.3,
     1,
     1.3
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Commons 2015 full-facade photo supports visible rounded corner-order/rustication general form. Market photo shows only a cropped near corner; it does not establish both ends. Applied shafts/capitals, symmetry, profile, downpipes, hidden returns and dimensions remain inferred; no verified/traced geometry."
   },
   {
    "id": "corner-order-1-0-plinth",
    "label": "corner order 1 0 plinth",
    "role": "structure",
    "certainty": "inferred",
-   "source": "market-photo",
+   "source": "facade-photo",
    "stage": 2,
    "shape": {
     "type": "cylinder",
@@ -7714,14 +8560,18 @@
     1.4,
     1.0,
     1.4
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Commons 2015 full-facade photo supports visible rounded corner-order/rustication general form. Market photo shows only a cropped near corner; it does not establish both ends. Applied shafts/capitals, symmetry, profile, downpipes, hidden returns and dimensions remain inferred; no verified/traced geometry."
   },
   {
    "id": "corner-order-1-0-base",
    "label": "corner order 1 0 base",
    "role": "structure",
    "certainty": "inferred",
-   "source": "market-photo",
+   "source": "facade-photo",
    "stage": 2,
    "shape": {
     "type": "lathe",
@@ -7760,14 +8610,18 @@
     1.4,
     1.0,
     1.4
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Commons 2015 full-facade photo supports visible rounded corner-order/rustication general form. Market photo shows only a cropped near corner; it does not establish both ends. Applied shafts/capitals, symmetry, profile, downpipes, hidden returns and dimensions remain inferred; no verified/traced geometry."
   },
   {
    "id": "corner-order-1-0-shaft",
    "label": "corner order 1 0 shaft",
    "role": "structure",
    "certainty": "inferred",
-   "source": "market-photo",
+   "source": "facade-photo",
    "stage": 2,
    "shape": {
     "type": "cone",
@@ -7791,14 +8645,18 @@
     1.4,
     1.15,
     1.4
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Commons 2015 full-facade photo supports visible rounded corner-order/rustication general form. Market photo shows only a cropped near corner; it does not establish both ends. Applied shafts/capitals, symmetry, profile, downpipes, hidden returns and dimensions remain inferred; no verified/traced geometry."
   },
   {
    "id": "corner-order-1-0-capital",
    "label": "corner order 1 0 capital",
    "role": "structure",
    "certainty": "inferred",
-   "source": "market-photo",
+   "source": "facade-photo",
    "stage": 2,
    "shape": {
     "type": "lathe",
@@ -7841,14 +8699,18 @@
     1.4,
     1.0,
     1.4
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Commons 2015 full-facade photo supports visible rounded corner-order/rustication general form. Market photo shows only a cropped near corner; it does not establish both ends. Applied shafts/capitals, symmetry, profile, downpipes, hidden returns and dimensions remain inferred; no verified/traced geometry."
   },
   {
    "id": "corner-order-1-0-abacus",
    "label": "corner order 1 0 abacus",
    "role": "structure",
    "certainty": "inferred",
-   "source": "market-photo",
+   "source": "facade-photo",
    "stage": 2,
    "shape": {
     "type": "box",
@@ -7874,14 +8736,18 @@
     1.3,
     1.0,
     1.3
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Commons 2015 full-facade photo supports visible rounded corner-order/rustication general form. Market photo shows only a cropped near corner; it does not establish both ends. Applied shafts/capitals, symmetry, profile, downpipes, hidden returns and dimensions remain inferred; no verified/traced geometry."
   },
   {
    "id": "corner-order-1-0-upper-shaft",
    "label": "corner order 1 0 upper shaft",
    "role": "structure",
    "certainty": "inferred",
-   "source": "market-photo",
+   "source": "facade-photo",
    "stage": 2,
    "shape": {
     "type": "cylinder",
@@ -7904,14 +8770,18 @@
     1.3,
     0.88,
     1.3
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Commons 2015 full-facade photo supports visible rounded corner-order/rustication general form. Market photo shows only a cropped near corner; it does not establish both ends. Applied shafts/capitals, symmetry, profile, downpipes, hidden returns and dimensions remain inferred; no verified/traced geometry."
   },
   {
    "id": "corner-order-1-0-upper-base",
    "label": "corner order 1 0 upper base",
    "role": "structure",
    "certainty": "inferred",
-   "source": "market-photo",
+   "source": "facade-photo",
    "stage": 2,
    "shape": {
     "type": "cylinder",
@@ -7934,14 +8804,18 @@
     1.4,
     1.0,
     1.4
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Commons 2015 full-facade photo supports visible rounded corner-order/rustication general form. Market photo shows only a cropped near corner; it does not establish both ends. Applied shafts/capitals, symmetry, profile, downpipes, hidden returns and dimensions remain inferred; no verified/traced geometry."
   },
   {
    "id": "corner-order-1-0-upper-capital",
    "label": "corner order 1 0 upper capital",
    "role": "structure",
    "certainty": "inferred",
-   "source": "market-photo",
+   "source": "facade-photo",
    "stage": 2,
    "shape": {
     "type": "cylinder",
@@ -7964,14 +8838,18 @@
     1.3,
     1,
     1.3
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Commons 2015 full-facade photo supports visible rounded corner-order/rustication general form. Market photo shows only a cropped near corner; it does not establish both ends. Applied shafts/capitals, symmetry, profile, downpipes, hidden returns and dimensions remain inferred; no verified/traced geometry."
   },
   {
    "id": "corner-order-1-1-plinth",
    "label": "corner order 1 1 plinth",
    "role": "structure",
    "certainty": "inferred",
-   "source": "market-photo",
+   "source": "facade-photo",
    "stage": 2,
    "shape": {
     "type": "cylinder",
@@ -7994,14 +8872,18 @@
     1.4,
     1.0,
     1.4
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Commons 2015 full-facade photo supports visible rounded corner-order/rustication general form. Market photo shows only a cropped near corner; it does not establish both ends. Applied shafts/capitals, symmetry, profile, downpipes, hidden returns and dimensions remain inferred; no verified/traced geometry."
   },
   {
    "id": "corner-order-1-1-base",
    "label": "corner order 1 1 base",
    "role": "structure",
    "certainty": "inferred",
-   "source": "market-photo",
+   "source": "facade-photo",
    "stage": 2,
    "shape": {
     "type": "lathe",
@@ -8040,14 +8922,18 @@
     1.4,
     1.0,
     1.4
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Commons 2015 full-facade photo supports visible rounded corner-order/rustication general form. Market photo shows only a cropped near corner; it does not establish both ends. Applied shafts/capitals, symmetry, profile, downpipes, hidden returns and dimensions remain inferred; no verified/traced geometry."
   },
   {
    "id": "corner-order-1-1-shaft",
    "label": "corner order 1 1 shaft",
    "role": "structure",
    "certainty": "inferred",
-   "source": "market-photo",
+   "source": "facade-photo",
    "stage": 2,
    "shape": {
     "type": "cone",
@@ -8071,14 +8957,18 @@
     1.4,
     1.15,
     1.4
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Commons 2015 full-facade photo supports visible rounded corner-order/rustication general form. Market photo shows only a cropped near corner; it does not establish both ends. Applied shafts/capitals, symmetry, profile, downpipes, hidden returns and dimensions remain inferred; no verified/traced geometry."
   },
   {
    "id": "corner-order-1-1-capital",
    "label": "corner order 1 1 capital",
    "role": "structure",
    "certainty": "inferred",
-   "source": "market-photo",
+   "source": "facade-photo",
    "stage": 2,
    "shape": {
     "type": "lathe",
@@ -8121,14 +9011,18 @@
     1.4,
     1.0,
     1.4
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Commons 2015 full-facade photo supports visible rounded corner-order/rustication general form. Market photo shows only a cropped near corner; it does not establish both ends. Applied shafts/capitals, symmetry, profile, downpipes, hidden returns and dimensions remain inferred; no verified/traced geometry."
   },
   {
    "id": "corner-order-1-1-abacus",
    "label": "corner order 1 1 abacus",
    "role": "structure",
    "certainty": "inferred",
-   "source": "market-photo",
+   "source": "facade-photo",
    "stage": 2,
    "shape": {
     "type": "box",
@@ -8154,14 +9048,18 @@
     1.3,
     1.0,
     1.3
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Commons 2015 full-facade photo supports visible rounded corner-order/rustication general form. Market photo shows only a cropped near corner; it does not establish both ends. Applied shafts/capitals, symmetry, profile, downpipes, hidden returns and dimensions remain inferred; no verified/traced geometry."
   },
   {
    "id": "corner-order-1-1-upper-shaft",
    "label": "corner order 1 1 upper shaft",
    "role": "structure",
    "certainty": "inferred",
-   "source": "market-photo",
+   "source": "facade-photo",
    "stage": 2,
    "shape": {
     "type": "cylinder",
@@ -8184,14 +9082,18 @@
     1.3,
     0.88,
     1.3
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Commons 2015 full-facade photo supports visible rounded corner-order/rustication general form. Market photo shows only a cropped near corner; it does not establish both ends. Applied shafts/capitals, symmetry, profile, downpipes, hidden returns and dimensions remain inferred; no verified/traced geometry."
   },
   {
    "id": "corner-order-1-1-upper-base",
    "label": "corner order 1 1 upper base",
    "role": "structure",
    "certainty": "inferred",
-   "source": "market-photo",
+   "source": "facade-photo",
    "stage": 2,
    "shape": {
     "type": "cylinder",
@@ -8214,14 +9116,18 @@
     1.4,
     1.0,
     1.4
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Commons 2015 full-facade photo supports visible rounded corner-order/rustication general form. Market photo shows only a cropped near corner; it does not establish both ends. Applied shafts/capitals, symmetry, profile, downpipes, hidden returns and dimensions remain inferred; no verified/traced geometry."
   },
   {
    "id": "corner-order-1-1-upper-capital",
    "label": "corner order 1 1 upper capital",
    "role": "structure",
    "certainty": "inferred",
-   "source": "market-photo",
+   "source": "facade-photo",
    "stage": 2,
    "shape": {
     "type": "cylinder",
@@ -8244,7 +9150,11 @@
     1.3,
     1,
     1.3
-   ]
+   ],
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Commons 2015 full-facade photo supports visible rounded corner-order/rustication general form. Market photo shows only a cropped near corner; it does not establish both ends. Applied shafts/capitals, symmetry, profile, downpipes, hidden returns and dimensions remain inferred; no verified/traced geometry."
   },
   {
    "id": "portico-base-0",
@@ -8269,7 +9179,13 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "facade-visible-form",
+    "museum-two-main-floors",
+    "museum-three-central-door-openings"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "portico-shaft-0",
@@ -8300,7 +9216,13 @@
     1.15,
     1.17,
     1.15
-   ]
+   ],
+   "basis": [
+    "facade-visible-form",
+    "museum-two-main-floors",
+    "museum-three-central-door-openings"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "portico-capital-0",
@@ -8341,7 +9263,13 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "facade-visible-form",
+    "museum-two-main-floors",
+    "museum-three-central-door-openings"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "portico-abacus-0",
@@ -8369,7 +9297,13 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "facade-visible-form",
+    "museum-two-main-floors",
+    "museum-three-central-door-openings"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "risalit-pilaster-0",
@@ -8402,7 +9336,13 @@
     1.0,
     0.88,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form",
+    "museum-two-main-floors",
+    "museum-three-central-door-openings"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "risalit-upper-capital-0",
@@ -8430,7 +9370,13 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "facade-visible-form",
+    "museum-two-main-floors",
+    "museum-three-central-door-openings"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "portico-base-1",
@@ -8455,7 +9401,13 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "facade-visible-form",
+    "museum-two-main-floors",
+    "museum-three-central-door-openings"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "portico-shaft-1",
@@ -8486,7 +9438,13 @@
     1.15,
     1.17,
     1.15
-   ]
+   ],
+   "basis": [
+    "facade-visible-form",
+    "museum-two-main-floors",
+    "museum-three-central-door-openings"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "portico-capital-1",
@@ -8527,7 +9485,13 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "facade-visible-form",
+    "museum-two-main-floors",
+    "museum-three-central-door-openings"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "portico-abacus-1",
@@ -8555,7 +9519,13 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "facade-visible-form",
+    "museum-two-main-floors",
+    "museum-three-central-door-openings"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "risalit-pilaster-1",
@@ -8588,7 +9558,13 @@
     1.0,
     0.88,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form",
+    "museum-two-main-floors",
+    "museum-three-central-door-openings"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "risalit-upper-capital-1",
@@ -8616,7 +9592,13 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "facade-visible-form",
+    "museum-two-main-floors",
+    "museum-three-central-door-openings"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "portico-base-2",
@@ -8641,7 +9623,13 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "facade-visible-form",
+    "museum-two-main-floors",
+    "museum-three-central-door-openings"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "portico-shaft-2",
@@ -8672,7 +9660,13 @@
     1.15,
     1.17,
     1.15
-   ]
+   ],
+   "basis": [
+    "facade-visible-form",
+    "museum-two-main-floors",
+    "museum-three-central-door-openings"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "portico-capital-2",
@@ -8713,7 +9707,13 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "facade-visible-form",
+    "museum-two-main-floors",
+    "museum-three-central-door-openings"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "portico-abacus-2",
@@ -8741,7 +9741,13 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "facade-visible-form",
+    "museum-two-main-floors",
+    "museum-three-central-door-openings"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "risalit-pilaster-2",
@@ -8774,7 +9780,13 @@
     1.0,
     0.88,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form",
+    "museum-two-main-floors",
+    "museum-three-central-door-openings"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "risalit-upper-capital-2",
@@ -8802,7 +9814,13 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "facade-visible-form",
+    "museum-two-main-floors",
+    "museum-three-central-door-openings"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "portico-base-3",
@@ -8827,7 +9845,13 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "facade-visible-form",
+    "museum-two-main-floors",
+    "museum-three-central-door-openings"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "portico-shaft-3",
@@ -8858,7 +9882,13 @@
     1.15,
     1.17,
     1.15
-   ]
+   ],
+   "basis": [
+    "facade-visible-form",
+    "museum-two-main-floors",
+    "museum-three-central-door-openings"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "portico-capital-3",
@@ -8899,7 +9929,13 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "facade-visible-form",
+    "museum-two-main-floors",
+    "museum-three-central-door-openings"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "portico-abacus-3",
@@ -8927,7 +9963,13 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "facade-visible-form",
+    "museum-two-main-floors",
+    "museum-three-central-door-openings"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "risalit-pilaster-3",
@@ -8960,7 +10002,13 @@
     1.0,
     0.88,
     1.0
-   ]
+   ],
+   "basis": [
+    "facade-visible-form",
+    "museum-two-main-floors",
+    "museum-three-central-door-openings"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "risalit-upper-capital-3",
@@ -8988,7 +10036,13 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "facade-visible-form",
+    "museum-two-main-floors",
+    "museum-three-central-door-openings"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "projecting-portico-entablature",
@@ -9021,14 +10075,20 @@
     1.0,
     1.0,
     1.45
-   ]
+   ],
+   "basis": [
+    "facade-visible-form",
+    "museum-two-main-floors",
+    "museum-three-central-door-openings"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "central-pediment-bed",
    "label": "central pediment bed",
    "role": "structure",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "stortorget",
    "stage": 2,
    "shape": {
     "type": "box",
@@ -9049,14 +10109,19 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "civic-crown",
+    "facade-visible-form"
+   ],
+   "note": "Documented pediment/cupola existence; facade photograph informs visible general form only. Fine sculpture, clocks, all-around cupola panes, hidden backs, thickness and exact coordinates are inferred rather than measured or traced."
   },
   {
    "id": "central-triangular-pediment",
    "label": "central triangular pediment",
    "role": "identity",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "stortorget",
    "stage": 4,
    "shape": {
     "type": "extrude",
@@ -9087,14 +10152,19 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "civic-crown",
+    "facade-visible-form"
+   ],
+   "note": "Documented pediment/cupola existence; facade photograph informs visible general form only. Fine sculpture, clocks, all-around cupola panes, hidden backs, thickness and exact coordinates are inferred rather than measured or traced."
   },
   {
    "id": "pediment-raking-cornices",
    "label": "pediment raking cornices",
    "role": "identity",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "stortorget",
    "stage": 4,
    "shape": {
     "type": "curve",
@@ -9126,14 +10196,19 @@
     "tone": "bright",
     "weight": 2.5,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "civic-crown",
+    "facade-visible-form"
+   ],
+   "note": "Documented pediment/cupola existence; facade photograph informs visible general form only. Fine sculpture, clocks, all-around cupola panes, hidden backs, thickness and exact coordinates are inferred rather than measured or traced."
   },
   {
    "id": "tympanum-medallion",
    "label": "tympanum medallion",
    "role": "detail",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "stortorget",
    "stage": 4,
    "shape": {
     "height": 0.12,
@@ -9156,14 +10231,19 @@
     90,
     0,
     0
-   ]
+   ],
+   "basis": [
+    "civic-crown",
+    "facade-visible-form"
+   ],
+   "note": "Documented pediment/cupola existence; facade photograph informs visible general form only. Fine sculpture, clocks, all-around cupola panes, hidden backs, thickness and exact coordinates are inferred rather than measured or traced."
   },
   {
    "id": "tympanum-relief-left",
    "label": "tympanum relief left",
    "role": "detail",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "stortorget",
    "stage": 4,
    "shape": {
     "type": "curve",
@@ -9195,14 +10275,19 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "civic-crown",
+    "facade-visible-form"
+   ],
+   "note": "Documented pediment/cupola existence; facade photograph informs visible general form only. Fine sculpture, clocks, all-around cupola panes, hidden backs, thickness and exact coordinates are inferred rather than measured or traced."
   },
   {
    "id": "tympanum-relief-right",
    "label": "tympanum relief right",
    "role": "detail",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "stortorget",
    "stage": 4,
    "shape": {
     "type": "curve",
@@ -9234,14 +10319,19 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "civic-crown",
+    "facade-visible-form"
+   ],
+   "note": "Documented pediment/cupola existence; facade photograph informs visible general form only. Fine sculpture, clocks, all-around cupola panes, hidden backs, thickness and exact coordinates are inferred rather than measured or traced."
   },
   {
    "id": "cupola-roof-pedestal",
    "label": "cupola roof pedestal",
    "role": "identity",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "stortorget",
    "stage": 4,
    "shape": {
     "type": "roof",
@@ -9265,14 +10355,19 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#4d625b"
-   }
+   },
+   "basis": [
+    "civic-crown",
+    "facade-visible-form"
+   ],
+   "note": "Documented pediment/cupola existence; facade photograph informs visible general form only. Fine sculpture, clocks, all-around cupola panes, hidden backs, thickness and exact coordinates are inferred rather than measured or traced."
   },
   {
    "id": "cupola-drum",
    "label": "cupola drum",
    "role": "identity",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "stortorget",
    "stage": 4,
    "shape": {
     "type": "cylinder",
@@ -9290,14 +10385,19 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#4d625b"
-   }
+   },
+   "basis": [
+    "civic-crown",
+    "facade-visible-form"
+   ],
+   "note": "Documented pediment/cupola existence; facade photograph informs visible general form only. Fine sculpture, clocks, all-around cupola panes, hidden backs, thickness and exact coordinates are inferred rather than measured or traced."
   },
   {
    "id": "cupola-dark-pane-0",
    "label": "cupola dark pane 0",
    "role": "detail",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "stortorget",
    "stage": 4,
    "shape": {
     "type": "box",
@@ -9328,14 +10428,19 @@
     1.0,
     1.3,
     1.0
-   ]
+   ],
+   "basis": [
+    "civic-crown",
+    "facade-visible-form"
+   ],
+   "note": "Documented pediment/cupola existence; facade photograph informs visible general form only. Fine sculpture, clocks, all-around cupola panes, hidden backs, thickness and exact coordinates are inferred rather than measured or traced."
   },
   {
    "id": "cupola-dark-pane-1",
    "label": "cupola dark pane 1",
    "role": "detail",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "stortorget",
    "stage": 4,
    "shape": {
     "type": "box",
@@ -9366,14 +10471,19 @@
     1.0,
     1.3,
     1.0
-   ]
+   ],
+   "basis": [
+    "civic-crown",
+    "facade-visible-form"
+   ],
+   "note": "Documented pediment/cupola existence; facade photograph informs visible general form only. Fine sculpture, clocks, all-around cupola panes, hidden backs, thickness and exact coordinates are inferred rather than measured or traced."
   },
   {
    "id": "cupola-dark-pane-2",
    "label": "cupola dark pane 2",
    "role": "detail",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "stortorget",
    "stage": 4,
    "shape": {
     "type": "box",
@@ -9404,14 +10514,19 @@
     1.0,
     1.3,
     1.0
-   ]
+   ],
+   "basis": [
+    "civic-crown",
+    "facade-visible-form"
+   ],
+   "note": "Documented pediment/cupola existence; facade photograph informs visible general form only. Fine sculpture, clocks, all-around cupola panes, hidden backs, thickness and exact coordinates are inferred rather than measured or traced."
   },
   {
    "id": "cupola-dark-pane-3",
    "label": "cupola dark pane 3",
    "role": "detail",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "stortorget",
    "stage": 4,
    "shape": {
     "type": "box",
@@ -9442,14 +10557,19 @@
     1.0,
     1.3,
     1.0
-   ]
+   ],
+   "basis": [
+    "civic-crown",
+    "facade-visible-form"
+   ],
+   "note": "Documented pediment/cupola existence; facade photograph informs visible general form only. Fine sculpture, clocks, all-around cupola panes, hidden backs, thickness and exact coordinates are inferred rather than measured or traced."
   },
   {
    "id": "cupola-dark-pane-4",
    "label": "cupola dark pane 4",
    "role": "detail",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "stortorget",
    "stage": 4,
    "shape": {
     "type": "box",
@@ -9480,14 +10600,19 @@
     1.0,
     1.3,
     1.0
-   ]
+   ],
+   "basis": [
+    "civic-crown",
+    "facade-visible-form"
+   ],
+   "note": "Documented pediment/cupola existence; facade photograph informs visible general form only. Fine sculpture, clocks, all-around cupola panes, hidden backs, thickness and exact coordinates are inferred rather than measured or traced."
   },
   {
    "id": "cupola-dark-pane-5",
    "label": "cupola dark pane 5",
    "role": "detail",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "stortorget",
    "stage": 4,
    "shape": {
     "type": "box",
@@ -9518,14 +10643,19 @@
     1.0,
     1.3,
     1.0
-   ]
+   ],
+   "basis": [
+    "civic-crown",
+    "facade-visible-form"
+   ],
+   "note": "Documented pediment/cupola existence; facade photograph informs visible general form only. Fine sculpture, clocks, all-around cupola panes, hidden backs, thickness and exact coordinates are inferred rather than measured or traced."
   },
   {
    "id": "cupola-dark-pane-6",
    "label": "cupola dark pane 6",
    "role": "detail",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "stortorget",
    "stage": 4,
    "shape": {
     "type": "box",
@@ -9556,14 +10686,19 @@
     1.0,
     1.3,
     1.0
-   ]
+   ],
+   "basis": [
+    "civic-crown",
+    "facade-visible-form"
+   ],
+   "note": "Documented pediment/cupola existence; facade photograph informs visible general form only. Fine sculpture, clocks, all-around cupola panes, hidden backs, thickness and exact coordinates are inferred rather than measured or traced."
   },
   {
    "id": "cupola-dark-pane-7",
    "label": "cupola dark pane 7",
    "role": "detail",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "stortorget",
    "stage": 4,
    "shape": {
     "type": "box",
@@ -9594,14 +10729,19 @@
     1.0,
     1.3,
     1.0
-   ]
+   ],
+   "basis": [
+    "civic-crown",
+    "facade-visible-form"
+   ],
+   "note": "Documented pediment/cupola existence; facade photograph informs visible general form only. Fine sculpture, clocks, all-around cupola panes, hidden backs, thickness and exact coordinates are inferred rather than measured or traced."
   },
   {
    "id": "cupola-crown",
    "label": "cupola crown",
    "role": "identity",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "stortorget",
    "stage": 4,
    "shape": {
     "type": "lathe",
@@ -9651,14 +10791,19 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#4d625b"
-   }
+   },
+   "basis": [
+    "civic-crown",
+    "facade-visible-form"
+   ],
+   "note": "Documented pediment/cupola existence; facade photograph informs visible general form only. Fine sculpture, clocks, all-around cupola panes, hidden backs, thickness and exact coordinates are inferred rather than measured or traced."
   },
   {
    "id": "cupola-finial",
    "label": "cupola finial",
    "role": "identity",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "stortorget",
    "stage": 4,
    "shape": {
     "type": "cylinder",
@@ -9676,14 +10821,19 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#4d625b"
-   }
+   },
+   "basis": [
+    "civic-crown",
+    "facade-visible-form"
+   ],
+   "note": "Documented pediment/cupola existence; facade photograph informs visible general form only. Fine sculpture, clocks, all-around cupola panes, hidden backs, thickness and exact coordinates are inferred rather than measured or traced."
   },
   {
    "id": "side-glazing--1-0-1.1",
    "label": "side glazing  1 0 1.1",
    "role": "detail",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 4,
    "shape": {
     "type": "box",
@@ -9709,14 +10859,18 @@
     0,
     -90,
     0
-   ]
+   ],
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "side-sill--1-0-1.1",
    "label": "side sill  1 0 1.1",
    "role": "structure",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 2,
    "shape": {
     "type": "box",
@@ -9742,14 +10896,18 @@
     0,
     -90,
     0
-   ]
+   ],
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "side-glazing--1-0-8.65",
    "label": "side glazing  1 0 8.65",
    "role": "detail",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 4,
    "shape": {
     "type": "box",
@@ -9775,14 +10933,18 @@
     0,
     -90,
     0
-   ]
+   ],
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "side-sill--1-0-8.65",
    "label": "side sill  1 0 8.65",
    "role": "structure",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 2,
    "shape": {
     "type": "box",
@@ -9808,14 +10970,18 @@
     0,
     -90,
     0
-   ]
+   ],
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "side-glazing--1-1-1.1",
    "label": "side glazing  1 1 1.1",
    "role": "detail",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 4,
    "shape": {
     "type": "box",
@@ -9841,14 +11007,18 @@
     0,
     -90,
     0
-   ]
+   ],
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "side-sill--1-1-1.1",
    "label": "side sill  1 1 1.1",
    "role": "structure",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 2,
    "shape": {
     "type": "box",
@@ -9874,14 +11044,18 @@
     0,
     -90,
     0
-   ]
+   ],
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "side-glazing--1-1-8.65",
    "label": "side glazing  1 1 8.65",
    "role": "detail",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 4,
    "shape": {
     "type": "box",
@@ -9907,14 +11081,18 @@
     0,
     -90,
     0
-   ]
+   ],
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "side-sill--1-1-8.65",
    "label": "side sill  1 1 8.65",
    "role": "structure",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 2,
    "shape": {
     "type": "box",
@@ -9940,14 +11118,18 @@
     0,
     -90,
     0
-   ]
+   ],
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "side-glazing--1-2-1.1",
    "label": "side glazing  1 2 1.1",
    "role": "detail",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 4,
    "shape": {
     "type": "box",
@@ -9973,14 +11155,18 @@
     0,
     -90,
     0
-   ]
+   ],
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "side-sill--1-2-1.1",
    "label": "side sill  1 2 1.1",
    "role": "structure",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 2,
    "shape": {
     "type": "box",
@@ -10006,14 +11192,18 @@
     0,
     -90,
     0
-   ]
+   ],
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "side-glazing--1-2-8.65",
    "label": "side glazing  1 2 8.65",
    "role": "detail",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 4,
    "shape": {
     "type": "box",
@@ -10039,14 +11229,18 @@
     0,
     -90,
     0
-   ]
+   ],
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "side-sill--1-2-8.65",
    "label": "side sill  1 2 8.65",
    "role": "structure",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 2,
    "shape": {
     "type": "box",
@@ -10072,14 +11266,18 @@
     0,
     -90,
     0
-   ]
+   ],
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "side-cornice--1-6.5",
    "label": "side cornice  1 6.5",
    "role": "structure",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 2,
    "shape": {
     "type": "box",
@@ -10100,14 +11298,18 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "side-cornice--1-14.5",
    "label": "side cornice  1 14.5",
    "role": "structure",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 2,
    "shape": {
     "type": "box",
@@ -10128,14 +11330,18 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "side-cornice--1-15.3",
    "label": "side cornice  1 15.3",
    "role": "structure",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 2,
    "shape": {
     "type": "box",
@@ -10156,14 +11362,18 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "side-cornice--1-16.1",
    "label": "side cornice  1 16.1",
    "role": "structure",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 2,
    "shape": {
     "type": "box",
@@ -10184,14 +11394,18 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "side-glazing-1-0-1.1",
    "label": "side glazing 1 0 1.1",
    "role": "detail",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 4,
    "shape": {
     "type": "box",
@@ -10217,14 +11431,18 @@
     0,
     90,
     0
-   ]
+   ],
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "side-sill-1-0-1.1",
    "label": "side sill 1 0 1.1",
    "role": "structure",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 2,
    "shape": {
     "type": "box",
@@ -10250,14 +11468,18 @@
     0,
     90,
     0
-   ]
+   ],
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "side-glazing-1-0-8.65",
    "label": "side glazing 1 0 8.65",
    "role": "detail",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 4,
    "shape": {
     "type": "box",
@@ -10283,14 +11505,18 @@
     0,
     90,
     0
-   ]
+   ],
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "side-sill-1-0-8.65",
    "label": "side sill 1 0 8.65",
    "role": "structure",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 2,
    "shape": {
     "type": "box",
@@ -10316,14 +11542,18 @@
     0,
     90,
     0
-   ]
+   ],
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "side-glazing-1-1-1.1",
    "label": "side glazing 1 1 1.1",
    "role": "detail",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 4,
    "shape": {
     "type": "box",
@@ -10349,14 +11579,18 @@
     0,
     90,
     0
-   ]
+   ],
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "side-sill-1-1-1.1",
    "label": "side sill 1 1 1.1",
    "role": "structure",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 2,
    "shape": {
     "type": "box",
@@ -10382,14 +11616,18 @@
     0,
     90,
     0
-   ]
+   ],
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "side-glazing-1-1-8.65",
    "label": "side glazing 1 1 8.65",
    "role": "detail",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 4,
    "shape": {
     "type": "box",
@@ -10415,14 +11653,18 @@
     0,
     90,
     0
-   ]
+   ],
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "side-sill-1-1-8.65",
    "label": "side sill 1 1 8.65",
    "role": "structure",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 2,
    "shape": {
     "type": "box",
@@ -10448,14 +11690,18 @@
     0,
     90,
     0
-   ]
+   ],
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "side-glazing-1-2-1.1",
    "label": "side glazing 1 2 1.1",
    "role": "detail",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 4,
    "shape": {
     "type": "box",
@@ -10481,14 +11727,18 @@
     0,
     90,
     0
-   ]
+   ],
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "side-sill-1-2-1.1",
    "label": "side sill 1 2 1.1",
    "role": "structure",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 2,
    "shape": {
     "type": "box",
@@ -10514,14 +11764,18 @@
     0,
     90,
     0
-   ]
+   ],
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "side-glazing-1-2-8.65",
    "label": "side glazing 1 2 8.65",
    "role": "detail",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 4,
    "shape": {
     "type": "box",
@@ -10547,14 +11801,18 @@
     0,
     90,
     0
-   ]
+   ],
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "side-sill-1-2-8.65",
    "label": "side sill 1 2 8.65",
    "role": "structure",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 2,
    "shape": {
     "type": "box",
@@ -10580,14 +11838,18 @@
     0,
     90,
     0
-   ]
+   ],
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "side-cornice-1-6.5",
    "label": "side cornice 1 6.5",
    "role": "structure",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 2,
    "shape": {
     "type": "box",
@@ -10608,14 +11870,18 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "side-cornice-1-14.5",
    "label": "side cornice 1 14.5",
    "role": "structure",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 2,
    "shape": {
     "type": "box",
@@ -10636,14 +11902,18 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "side-cornice-1-15.3",
    "label": "side cornice 1 15.3",
    "role": "structure",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 2,
    "shape": {
     "type": "box",
@@ -10664,14 +11934,18 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "side-cornice-1-16.1",
    "label": "side cornice 1 16.1",
    "role": "structure",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 2,
    "shape": {
     "type": "box",
@@ -10692,14 +11966,18 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "back-glazing-0-1.1",
    "label": "back glazing 0 1.1",
    "role": "detail",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 4,
    "shape": {
     "type": "box",
@@ -10725,14 +12003,18 @@
     0,
     180,
     0
-   ]
+   ],
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "back-glazing-0-8.65",
    "label": "back glazing 0 8.65",
    "role": "detail",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 4,
    "shape": {
     "type": "box",
@@ -10758,14 +12040,18 @@
     0,
     180,
     0
-   ]
+   ],
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "back-glazing-1-1.1",
    "label": "back glazing 1 1.1",
    "role": "detail",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 4,
    "shape": {
     "type": "box",
@@ -10791,14 +12077,18 @@
     0,
     180,
     0
-   ]
+   ],
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "back-glazing-1-8.65",
    "label": "back glazing 1 8.65",
    "role": "detail",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 4,
    "shape": {
     "type": "box",
@@ -10824,14 +12114,18 @@
     0,
     180,
     0
-   ]
+   ],
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "back-glazing-2-1.1",
    "label": "back glazing 2 1.1",
    "role": "detail",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 4,
    "shape": {
     "type": "box",
@@ -10857,14 +12151,18 @@
     0,
     180,
     0
-   ]
+   ],
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "back-glazing-2-8.65",
    "label": "back glazing 2 8.65",
    "role": "detail",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 4,
    "shape": {
     "type": "box",
@@ -10890,14 +12188,18 @@
     0,
     180,
     0
-   ]
+   ],
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "back-glazing-3-1.1",
    "label": "back glazing 3 1.1",
    "role": "detail",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 4,
    "shape": {
     "type": "box",
@@ -10923,14 +12225,18 @@
     0,
     180,
     0
-   ]
+   ],
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "back-glazing-3-8.65",
    "label": "back glazing 3 8.65",
    "role": "detail",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 4,
    "shape": {
     "type": "box",
@@ -10956,14 +12262,18 @@
     0,
     180,
     0
-   ]
+   ],
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "back-glazing-4-1.1",
    "label": "back glazing 4 1.1",
    "role": "detail",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 4,
    "shape": {
     "type": "box",
@@ -10989,14 +12299,18 @@
     0,
     180,
     0
-   ]
+   ],
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "back-glazing-4-8.65",
    "label": "back glazing 4 8.65",
    "role": "detail",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 4,
    "shape": {
     "type": "box",
@@ -11022,14 +12336,18 @@
     0,
     180,
     0
-   ]
+   ],
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "back-glazing-5-1.1",
    "label": "back glazing 5 1.1",
    "role": "detail",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 4,
    "shape": {
     "type": "box",
@@ -11055,14 +12373,18 @@
     0,
     180,
     0
-   ]
+   ],
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "back-glazing-5-8.65",
    "label": "back glazing 5 8.65",
    "role": "detail",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 4,
    "shape": {
     "type": "box",
@@ -11088,14 +12410,18 @@
     0,
     180,
     0
-   ]
+   ],
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "back-glazing-6-1.1",
    "label": "back glazing 6 1.1",
    "role": "detail",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 4,
    "shape": {
     "type": "box",
@@ -11121,14 +12447,18 @@
     0,
     180,
     0
-   ]
+   ],
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "back-glazing-6-8.65",
    "label": "back glazing 6 8.65",
    "role": "detail",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 4,
    "shape": {
     "type": "box",
@@ -11154,14 +12484,18 @@
     0,
     180,
     0
-   ]
+   ],
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "back-glazing-7-1.1",
    "label": "back glazing 7 1.1",
    "role": "detail",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 4,
    "shape": {
     "type": "box",
@@ -11187,14 +12521,18 @@
     0,
     180,
     0
-   ]
+   ],
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "back-glazing-7-8.65",
    "label": "back glazing 7 8.65",
    "role": "detail",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 4,
    "shape": {
     "type": "box",
@@ -11220,14 +12558,18 @@
     0,
     180,
     0
-   ]
+   ],
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "back-glazing-8-1.1",
    "label": "back glazing 8 1.1",
    "role": "detail",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 4,
    "shape": {
     "type": "box",
@@ -11253,14 +12595,18 @@
     0,
     180,
     0
-   ]
+   ],
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "back-glazing-8-8.65",
    "label": "back glazing 8 8.65",
    "role": "detail",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 4,
    "shape": {
     "type": "box",
@@ -11286,14 +12632,18 @@
     0,
     180,
     0
-   ]
+   ],
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "corner-iron-downpipe--1",
    "label": "corner iron downpipe  1",
    "role": "detail",
    "certainty": "inferred",
-   "source": "market-photo",
+   "source": "facade-photo",
    "stage": 4,
    "shape": {
     "type": "tube",
@@ -11333,7 +12683,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#303a36"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Commons 2015 full-facade photo supports visible rounded corner-order/rustication general form. Market photo shows only a cropped near corner; it does not establish both ends. Applied shafts/capitals, symmetry, profile, downpipes, hidden returns and dimensions remain inferred; no verified/traced geometry."
   },
   {
    "id": "iron-light-lantern--7",
@@ -11361,7 +12715,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#303a36"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "iron-light-lantern--15.5",
@@ -11389,14 +12747,18 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#303a36"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "corner-iron-downpipe-1",
    "label": "corner iron downpipe 1",
    "role": "detail",
    "certainty": "inferred",
-   "source": "market-photo",
+   "source": "facade-photo",
    "stage": 4,
    "shape": {
     "type": "tube",
@@ -11436,7 +12798,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#303a36"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Commons 2015 full-facade photo supports visible rounded corner-order/rustication general form. Market photo shows only a cropped near corner; it does not establish both ends. Applied shafts/capitals, symmetry, profile, downpipes, hidden returns and dimensions remain inferred; no verified/traced geometry."
   },
   {
    "id": "iron-light-lantern-7",
@@ -11464,7 +12830,11 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#303a36"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "iron-light-lantern-15.5",
@@ -11492,13 +12862,17 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#303a36"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "cupola-clock-housing",
    "role": "identity",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "stortorget",
    "stage": 5,
    "shape": {
     "type": "cylinder",
@@ -11520,13 +12894,18 @@
     "fill": "dark",
     "tone": "bright",
     "color": "#4d625b"
-   }
+   },
+   "basis": [
+    "civic-crown",
+    "facade-visible-form"
+   ],
+   "note": "Documented pediment/cupola existence; facade photograph informs visible general form only. Fine sculpture, clocks, all-around cupola panes, hidden backs, thickness and exact coordinates are inferred rather than measured or traced."
   },
   {
    "id": "cupola-clock-hands",
    "role": "detail",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "stortorget",
    "stage": 5,
    "shape": {
     "type": "curve",
@@ -11558,13 +12937,18 @@
     "tone": "bright",
     "weight": 2.4,
     "color": "#4d625b"
-   }
+   },
+   "basis": [
+    "civic-crown",
+    "facade-visible-form"
+   ],
+   "note": "Documented pediment/cupola existence; facade photograph informs visible general form only. Fine sculpture, clocks, all-around cupola panes, hidden backs, thickness and exact coordinates are inferred rather than measured or traced."
   },
   {
    "id": "pediment-acroterion-left",
    "role": "detail",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "stortorget",
    "stage": 5,
    "shape": {
     "type": "lathe",
@@ -11609,13 +12993,18 @@
    },
    "look": {
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "civic-crown",
+    "facade-visible-form"
+   ],
+   "note": "Documented pediment/cupola existence; facade photograph informs visible general form only. Fine sculpture, clocks, all-around cupola panes, hidden backs, thickness and exact coordinates are inferred rather than measured or traced."
   },
   {
    "id": "pediment-apex-ornament",
    "role": "detail",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "stortorget",
    "stage": 5,
    "shape": {
     "type": "lathe",
@@ -11650,13 +13039,18 @@
    ],
    "look": {
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "civic-crown",
+    "facade-visible-form"
+   ],
+   "note": "Documented pediment/cupola existence; facade photograph informs visible general form only. Fine sculpture, clocks, all-around cupola panes, hidden backs, thickness and exact coordinates are inferred rather than measured or traced."
   },
   {
    "id": "corner-frieze-brackets",
    "role": "structure",
    "certainty": "inferred",
-   "source": "market-photo",
+   "source": "facade-photo",
    "stage": 4,
    "shape": {
     "type": "box",
@@ -11688,7 +13082,11 @@
     "tone": "bright",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Commons 2015 full-facade photo supports visible rounded corner-order/rustication general form. Market photo shows only a cropped near corner; it does not establish both ends. Applied shafts/capitals, symmetry, profile, downpipes, hidden returns and dimensions remain inferred; no verified/traced geometry."
   },
   {
    "at": [
@@ -11714,7 +13112,11 @@
     "type": "box"
    },
    "source": "facade-photo",
-   "stage": 2
+   "stage": 2,
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Reference shows central entrance composition and Cramér documents three arched central door openings. Model reuses glazed forms for flanks and a central display mass: opening function/detail is simplified and not verified. All sizes/depths inferred."
   },
   {
    "at": [
@@ -11740,7 +13142,11 @@
     "type": "box"
    },
    "source": "facade-photo",
-   "stage": 4
+   "stage": 4,
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Reference shows central entrance composition and Cramér documents three arched central door openings. Model reuses glazed forms for flanks and a central display mass: opening function/detail is simplified and not verified. All sizes/depths inferred."
   },
   {
    "at": [
@@ -11764,7 +13170,11 @@
    "stage": 0,
    "look": {
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "at": [
@@ -11788,7 +13198,11 @@
    "stage": 0,
    "look": {
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "at": [
@@ -11812,13 +13226,17 @@
    "stage": 0,
    "look": {
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "return-right-frames",
    "role": "structure",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 2,
    "at": [
     19.87,
@@ -11847,13 +13265,17 @@
    "mirror": "x",
    "look": {
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "return-right-opposite-jambs",
    "role": "structure",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 2,
    "at": [
     19.87,
@@ -11882,13 +13304,17 @@
    "mirror": "x",
    "look": {
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "return-right-upper-frames",
    "role": "structure",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 2,
    "at": [
     19.87,
@@ -11917,13 +13343,17 @@
    "mirror": "x",
    "look": {
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "return-right-upper-opposite-jambs",
    "role": "structure",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 2,
    "at": [
     19.87,
@@ -11952,13 +13382,17 @@
    "mirror": "x",
    "look": {
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "return-right-heads",
    "role": "structure",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 2,
    "at": [
     19.87,
@@ -11987,13 +13421,17 @@
    "mirror": "x",
    "look": {
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "return-right-upper-heads",
    "role": "structure",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 2,
    "at": [
     19.87,
@@ -12022,13 +13460,17 @@
    "mirror": "x",
    "look": {
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "return-left-bay-lines",
    "role": "detail",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 4,
    "at": [
     -19.9,
@@ -12061,13 +13503,17 @@
     "tone": "bright",
     "weight": 0.9,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "return-right-bay-lines",
    "role": "detail",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 4,
    "at": [
     19.9,
@@ -12100,13 +13546,17 @@
     "tone": "bright",
     "weight": 0.9,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "rear-bay-lines",
    "role": "detail",
    "certainty": "inferred",
-   "source": "facade-photo",
+   "source": "production",
    "stage": 4,
    "at": [
     0,
@@ -12139,13 +13589,17 @@
     "tone": "bright",
     "weight": 0.8,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "corner-rounded-rusticated-piers",
    "role": "structure",
    "certainty": "inferred",
-   "source": "market-photo",
+   "source": "facade-photo",
    "stage": 2,
    "at": [
     19.15,
@@ -12165,7 +13619,11 @@
     "tone": "structure",
     "weight": 0.6,
     "color": "#dcd6c3"
-   }
+   },
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Commons 2015 full-facade photo supports visible rounded corner-order/rustication general form. Market photo shows only a cropped near corner; it does not establish both ends. Applied shafts/capitals, symmetry, profile, downpipes, hidden returns and dimensions remain inferred; no verified/traced geometry."
   },
   {
    "at": [
@@ -12213,8 +13671,12 @@
     ],
     "type": "curve"
    },
-   "source": "market-photo",
-   "stage": 4
+   "source": "production",
+   "stage": 4,
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "at": [
@@ -12256,8 +13718,12 @@
     ],
     "type": "curve"
    },
-   "source": "facade-photo",
-   "stage": 4
+   "source": "production",
+   "stage": 4,
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "at": [
@@ -12375,7 +13841,11 @@
     "type": "paths"
    },
    "source": "facade-photo",
-   "stage": 4
+   "stage": 4,
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "at": [
@@ -12483,7 +13953,11 @@
     "type": "paths"
    },
    "source": "facade-photo",
-   "stage": 4
+   "stage": 4,
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Commons 2015 full-facade photo supports visible rounded corner-order/rustication general form. Market photo shows only a cropped near corner; it does not establish both ends. Applied shafts/capitals, symmetry, profile, downpipes, hidden returns and dimensions remain inferred; no verified/traced geometry."
   },
   {
    "at": [
@@ -12520,7 +13994,11 @@
     "type": "box"
    },
    "source": "facade-photo",
-   "stage": 4
+   "stage": 4,
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "at": [
@@ -12547,7 +14025,13 @@
     "type": "box"
    },
    "source": "facade-photo",
-   "stage": 4
+   "stage": 4,
+   "basis": [
+    "facade-visible-form",
+    "museum-two-main-floors",
+    "museum-three-central-door-openings"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "at": [
@@ -12574,7 +14058,11 @@
     "type": "box"
    },
    "source": "facade-photo",
-   "stage": 4
+   "stage": 4,
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "at": [
@@ -12611,7 +14099,11 @@
     "type": "box"
    },
    "source": "facade-photo",
-   "stage": 4
+   "stage": 4,
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "at": [
@@ -12639,7 +14131,11 @@
     "type": "box"
    },
    "source": "facade-photo",
-   "stage": 4
+   "stage": 4,
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "at": [
@@ -12667,7 +14163,11 @@
     "type": "box"
    },
    "source": "facade-photo",
-   "stage": 2
+   "stage": 2,
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Commons 2015 full-facade photo supports visible rounded corner-order/rustication general form. Market photo shows only a cropped near corner; it does not establish both ends. Applied shafts/capitals, symmetry, profile, downpipes, hidden returns and dimensions remain inferred; no verified/traced geometry."
   },
   {
    "at": [
@@ -12711,8 +14211,12 @@
     "segments": 8,
     "type": "lathe"
    },
-   "source": "market-photo",
-   "stage": 3
+   "source": "facade-photo",
+   "stage": 3,
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Commons 2015 full-facade photo supports visible rounded corner-order/rustication general form. Market photo shows only a cropped near corner; it does not establish both ends. Applied shafts/capitals, symmetry, profile, downpipes, hidden returns and dimensions remain inferred; no verified/traced geometry."
   },
   {
    "at": [
@@ -12740,8 +14244,13 @@
     "segments": 16,
     "type": "cylinder"
    },
-   "source": "facade-photo",
-   "stage": 5
+   "source": "stortorget",
+   "stage": 5,
+   "basis": [
+    "civic-crown",
+    "facade-visible-form"
+   ],
+   "note": "Documented pediment/cupola existence; facade photograph informs visible general form only. Fine sculpture, clocks, all-around cupola panes, hidden backs, thickness and exact coordinates are inferred rather than measured or traced."
   },
   {
    "at": [
@@ -12767,8 +14276,13 @@
     ],
     "type": "box"
    },
-   "source": "facade-photo",
-   "stage": 5
+   "source": "stortorget",
+   "stage": 5,
+   "basis": [
+    "civic-crown",
+    "facade-visible-form"
+   ],
+   "note": "Documented pediment/cupola existence; facade photograph informs visible general form only. Fine sculpture, clocks, all-around cupola panes, hidden backs, thickness and exact coordinates are inferred rather than measured or traced."
   },
   {
    "at": [
@@ -12799,8 +14313,13 @@
     ],
     "type": "box"
    },
-   "source": "facade-photo",
-   "stage": 5
+   "source": "stortorget",
+   "stage": 5,
+   "basis": [
+    "civic-crown",
+    "facade-visible-form"
+   ],
+   "note": "Documented pediment/cupola existence; facade photograph informs visible general form only. Fine sculpture, clocks, all-around cupola panes, hidden backs, thickness and exact coordinates are inferred rather than measured or traced."
   },
   {
    "at": [
@@ -12838,8 +14357,13 @@
     ],
     "type": "box"
    },
-   "source": "facade-photo",
-   "stage": 5
+   "source": "stortorget",
+   "stage": 5,
+   "basis": [
+    "civic-crown",
+    "facade-visible-form"
+   ],
+   "note": "Documented pediment/cupola existence; facade photograph informs visible general form only. Fine sculpture, clocks, all-around cupola panes, hidden backs, thickness and exact coordinates are inferred rather than measured or traced."
   },
   {
    "at": [
@@ -12868,8 +14392,13 @@
     "sides": 4,
     "type": "torus"
    },
-   "source": "facade-photo",
-   "stage": 5
+   "source": "stortorget",
+   "stage": 5,
+   "basis": [
+    "civic-crown",
+    "facade-visible-form"
+   ],
+   "note": "Documented pediment/cupola existence; facade photograph informs visible general form only. Fine sculpture, clocks, all-around cupola panes, hidden backs, thickness and exact coordinates are inferred rather than measured or traced."
   },
   {
    "at": [
@@ -12892,8 +14421,13 @@
     "segments": 8,
     "type": "cylinder"
    },
-   "source": "facade-photo",
-   "stage": 5
+   "source": "stortorget",
+   "stage": 5,
+   "basis": [
+    "civic-crown",
+    "facade-visible-form"
+   ],
+   "note": "Documented pediment/cupola existence; facade photograph informs visible general form only. Fine sculpture, clocks, all-around cupola panes, hidden backs, thickness and exact coordinates are inferred rather than measured or traced."
   },
   {
    "at": [
@@ -12926,8 +14460,13 @@
     ],
     "type": "sphere"
    },
-   "source": "facade-photo",
-   "stage": 5
+   "source": "stortorget",
+   "stage": 5,
+   "basis": [
+    "civic-crown",
+    "facade-visible-form"
+   ],
+   "note": "Documented pediment/cupola existence; facade photograph informs visible general form only. Fine sculpture, clocks, all-around cupola panes, hidden backs, thickness and exact coordinates are inferred rather than measured or traced."
   },
   {
    "at": [
@@ -12955,8 +14494,13 @@
     ],
     "type": "sphere"
    },
-   "source": "facade-photo",
-   "stage": 5
+   "source": "stortorget",
+   "stage": 5,
+   "basis": [
+    "civic-crown",
+    "facade-visible-form"
+   ],
+   "note": "Documented pediment/cupola existence; facade photograph informs visible general form only. Fine sculpture, clocks, all-around cupola panes, hidden backs, thickness and exact coordinates are inferred rather than measured or traced."
   },
   {
    "at": [
@@ -13018,8 +14562,13 @@
     ],
     "type": "curve"
    },
-   "source": "facade-photo",
-   "stage": 5
+   "source": "stortorget",
+   "stage": 5,
+   "basis": [
+    "civic-crown",
+    "facade-visible-form"
+   ],
+   "note": "Documented pediment/cupola existence; facade photograph informs visible general form only. Fine sculpture, clocks, all-around cupola panes, hidden backs, thickness and exact coordinates are inferred rather than measured or traced."
   },
   {
    "at": [
@@ -13055,8 +14604,12 @@
     ],
     "type": "box"
    },
-   "source": "facade-photo",
-   "stage": 2
+   "source": "production",
+   "stage": 2,
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "at": [
@@ -13092,8 +14645,12 @@
     ],
     "type": "box"
    },
-   "source": "facade-photo",
-   "stage": 2
+   "source": "production",
+   "stage": 2,
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "at": [
@@ -13129,8 +14686,12 @@
     ],
     "type": "box"
    },
-   "source": "facade-photo",
-   "stage": 2
+   "source": "production",
+   "stage": 2,
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "at": [
@@ -13166,8 +14727,12 @@
     ],
     "type": "box"
    },
-   "source": "facade-photo",
-   "stage": 2
+   "source": "production",
+   "stage": 2,
+   "basis": [
+    "production-inference"
+   ],
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "at": [
@@ -13205,7 +14770,11 @@
     "type": "box"
    },
    "source": "facade-photo",
-   "stage": 4
+   "stage": 4,
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "at": [
@@ -13232,7 +14801,11 @@
     "type": "box"
    },
    "source": "facade-photo",
-   "stage": 4
+   "stage": 4,
+   "basis": [
+    "facade-visible-form"
+   ],
+   "note": "Source supports visible facade feature/form only. Authored proportions, depth, repeat spacing, small ornament and unseen continuation remain inferred; no orthographic fitting or published measurement establishes this geometry."
   },
   {
    "id": "d13-front-corner-rusticated-return",
@@ -13240,9 +14813,9 @@
    "role": "structure",
    "certainty": "inferred",
    "basis": [
-    "d13-end-relief"
+    "production-inference"
    ],
-   "source": "request",
+   "source": "production",
    "stage": 2,
    "at": [
     0,
@@ -13304,7 +14877,8 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "d13-side-solid-pier-a-rustication",
@@ -13312,9 +14886,9 @@
    "role": "structure",
    "certainty": "inferred",
    "basis": [
-    "d13-end-relief"
+    "production-inference"
    ],
-   "source": "request",
+   "source": "production",
    "stage": 2,
    "at": [
     0,
@@ -13360,7 +14934,8 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "d13-side-solid-pier-b-rustication",
@@ -13368,9 +14943,9 @@
    "role": "structure",
    "certainty": "inferred",
    "basis": [
-    "d13-end-relief"
+    "production-inference"
    ],
-   "source": "request",
+   "source": "production",
    "stage": 2,
    "at": [
     0,
@@ -13416,7 +14991,8 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "d13-rear-corner-rusticated-return",
@@ -13424,9 +15000,9 @@
    "role": "structure",
    "certainty": "inferred",
    "basis": [
-    "d13-end-relief"
+    "production-inference"
    ],
-   "source": "request",
+   "source": "production",
    "stage": 2,
    "at": [
     0,
@@ -13488,7 +15064,8 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "d13-upper-front-corner-return",
@@ -13496,9 +15073,9 @@
    "role": "structure",
    "certainty": "inferred",
    "basis": [
-    "d13-end-relief"
+    "production-inference"
    ],
-   "source": "request",
+   "source": "production",
    "stage": 2,
    "at": [
     0,
@@ -13542,7 +15119,8 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   },
   {
    "id": "d13-upper-rear-corner-return",
@@ -13550,9 +15128,9 @@
    "role": "structure",
    "certainty": "inferred",
    "basis": [
-    "d13-end-relief"
+    "production-inference"
    ],
-   "source": "request",
+   "source": "production",
    "stage": 2,
    "at": [
     0,
@@ -13604,7 +15182,8 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dcd6c3"
-   }
+   },
+   "note": "Hidden or insufficiently observed side/rear/roof completion. No direct photographic or measured evidence for these openings, return courses, depth or rear arrangement; retained inferred production geometry, not documented facade inventory."
   }
  ],
  "assets": [],
@@ -13707,23 +15286,6 @@
    "stortorget",
    "history"
   ],
-  "critic": {
-   "scene_sha256": "cc864aa325a1a3a06a2773e0cd96248b91bb85d34acead8214b488c09c1f8f58",
-   "verdict": "improve",
-   "scores": {
-    "silhouette": 2,
-    "proportions": 2,
-    "identity": 1,
-    "depth": 2,
-    "composition": 3,
-    "assembly": 3,
-    "motion": 3,
-    "density": 2,
-    "honesty": 3
-   },
-   "round": 6,
-   "defects": 5
-  },
   "rounds": [
    {
     "round": 1,
@@ -13814,6 +15376,24 @@
     ],
     "summary": "Each heavy upper corner is split into narrow round shafts with individually circular caps. In the facade reference a broad continuous rounde"
    }
-  ]
+  ],
+  "provenance_note": "Provenance-only audit; physical payload unchanged; historical independent judgement preserved in before backup and sealed checkpoints, not a fresh critique. Native verified facts here are documented non-metric statements, never verification of part dimensions or shape coordinates.",
+  "critic": {
+   "scene_sha256": "9c49e1d69734f52138bf2e712fa56281945f5d4c7d09276a2eef19fe33dbb69b",
+   "verdict": "improve",
+   "scores": {
+    "silhouette": 2,
+    "proportions": 2,
+    "identity": 1,
+    "depth": 2,
+    "composition": 3,
+    "assembly": 2,
+    "motion": 3,
+    "density": 2,
+    "honesty": 3
+   },
+   "round": 1,
+   "defects": 7
+  }
  }
 }

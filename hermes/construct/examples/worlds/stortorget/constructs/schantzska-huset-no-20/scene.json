@@ -55,10 +55,31 @@
   },
   {
    "id": "cafe",
-   "kind": "reference_image",
-   "title": "Café Kaffekoppen official website photographs: full facade and Wendelstam portal. Reference-only, not embedded artwork; photographer not stated.",
+   "kind": "document",
+   "title": "Café Kaffekoppen official history, reread audit: red facade, stepped gable, Wendelstam limestone portal, 1648 and 94-stone claims; not a measured elevation",
    "ref": "https://www.cafekaffekoppen.se/",
    "rights": "reference_only"
+  },
+  {
+   "id": "audit-model",
+   "kind": "generated",
+   "rights": "reference_only",
+   "ref": "provenance-audit/before/constructs/schantzska-huset-stortorget-20/scene.json",
+   "title": "Agent-authored inferred envelope and hidden continuation; not human measurements"
+  },
+  {
+   "id": "stadsholmen2013",
+   "kind": "document",
+   "rights": "reference_only",
+   "ref": "https://www.stadsholmen.se/app/uploads/2018/09/Echo1-FAKTABLAD.pdf",
+   "title": "Stadsholmen / Stadsmuseum Echo 1 fact sheet, Stockholm 2013; f.d. Echo 2 = Schantzska No20"
+  },
+  {
+   "id": "plaque-audit",
+   "kind": "document",
+   "rights": "reference_only",
+   "ref": "https://stockholmskallan.stockholm.se/post/27664",
+   "title": "Stockholmskällan / Samfundet S:t Erik: Stortorget 18–20 Echo 1 plaque"
   }
  ],
  "facts": [
@@ -91,27 +112,106 @@
    "value": 11,
    "unit": "m",
    "certainty": "inferred",
-   "source": "request",
-   "note": "Hidden depth inferred."
+   "source": "audit-model",
+   "note": "Agent-authored unseen depth estimate; not a human-provided or published measurement."
   },
   {
    "key": "address",
    "value": "Stortorget 20",
    "certainty": "verified",
-   "source": "sv"
+   "source": "sv",
+   "note": "Documented non-metric statement; not a verified measurement."
   },
   {
    "key": "stone.count.discrepancy",
    "value": "English Stortorget says 82; Swedish Schantzska huset says 94. Neither count settled; placement photo-derived and completed inferentially. Bloodbath connection unproven legend.",
    "certainty": "inferred",
-   "source": "request"
+   "source": "audit-model",
+   "note": "Audit preserves source-attributed 82 versus 94 claims below without selecting a physical total. Model patch geometry is not a counted survey."
   },
   {
    "key": "body.bay.count",
    "value": 3,
    "certainty": "verified",
+   "source": "stadsholmen2013",
+   "note": "Documented non-metric statement; not a verified measurement. F.d. Echo 2 exterior explicitly has three window axes. Market photograph tree obscures the left part; not a photo survey."
+  },
+  {
+   "key": "audit.construction.plaque",
+   "value": 1650,
+   "certainty": "verified",
+   "source": "plaque-audit",
+   "note": "Documented non-metric statement; not a verified measurement. Plaque dates the left/red house, not the right house's medieval masonry."
+  },
+  {
+   "key": "audit.construction.cafe.report",
+   "value": 1648,
+   "certainty": "verified",
    "source": "cafe",
-   "note": "Full facade café photograph exposes three bays; user market photo tree hides left bay. Gable remains two-to-one."
+   "note": "Documented non-metric statement; not a verified measurement. Source-reported date only; conflicts with plaque 1650. Cafe also has an inconsistent 1500s heading; not reconciled."
+  },
+  {
+   "key": "audit.body.storeys",
+   "value": 4,
+   "certainty": "verified",
+   "source": "stadsholmen2013",
+   "note": "Documented non-metric statement; not a verified measurement. F.d. Echo 2: four storeys, distinct from two fitted attic levels. Heights remain inferred."
+  },
+  {
+   "key": "audit.attic.levels",
+   "value": 2,
+   "certainty": "verified",
+   "source": "stadsholmen2013",
+   "note": "Documented non-metric statement; not a verified measurement. Two fitted attic levels under sheet-metal-covered saddle roof, not measured model roof geometry."
+  },
+  {
+   "key": "audit.gable.form",
+   "value": "German-Dutch Renaissance stepped gable with sculptural ornaments and decorative anchor irons",
+   "certainty": "verified",
+   "source": "sv",
+   "note": "Documented non-metric statement; not a verified measurement. Source confirms named form; exact profiles, depths and sculpture are inferred."
+  },
+  {
+   "key": "audit.portal.authorship",
+   "value": "Johan Wendelstam",
+   "certainty": "verified",
+   "source": "plaque-audit",
+   "note": "Documented non-metric statement; not a verified measurement. Confirms craftsman, not sculptural coordinates."
+  },
+  {
+   "key": "audit.portal.form",
+   "value": "Limestone portal with reclining Roman warriors, dated 1650",
+   "certainty": "verified",
+   "source": "sv",
+   "note": "Documented non-metric statement; not a verified measurement. Text and municipal fact sheet corroborate identity; modeled anatomy and relief depth remain inferred."
+  },
+  {
+   "key": "audit.stones.en.report",
+   "value": 82,
+   "certainty": "verified",
+   "source": "en",
+   "note": "Documented non-metric statement; not a verified measurement. English article reports 82 white stones. Conflicts with Swedish and cafe 94; no physical total selected."
+  },
+  {
+   "key": "audit.stones.sv.report",
+   "value": 94,
+   "certainty": "verified",
+   "source": "sv",
+   "note": "Documented non-metric statement; not a verified measurement. Swedish article reports 94 and denies historical basis for Bloodbath linkage. English reports 82; unresolved."
+  },
+  {
+   "key": "audit.stones.cafe.report",
+   "value": 94,
+   "certainty": "verified",
+   "source": "cafe",
+   "note": "Documented non-metric statement; not a verified measurement. Cafe says actually 94 while associating legend with 82 victims. Source report only, not a chosen count."
+  },
+  {
+   "key": "audit.facade.materials.colours",
+   "value": "Red rendered facade with grey sandstone ornaments and squares around windows",
+   "certainty": "verified",
+   "source": "stadsholmen2013",
+   "note": "Documented non-metric statement; not a verified measurement. Documentary material/colour description, not calibrated colour or a look edit."
   }
  ],
  "parts": [
@@ -145,7 +245,12 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "audit-model",
+   "basis": [
+    "body.depth"
+   ],
+   "note": "Agent-authored inferred envelope, support, thickness or hidden continuation. Market perspective does not document rear geometry, roof depth or concealed construction; neither size nor shape is verified."
   },
   {
    "id": "stone-base",
@@ -177,7 +282,12 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "audit-model",
+   "basis": [
+    "body.depth"
+   ],
+   "note": "Agent-authored inferred envelope, support, thickness or hidden continuation. Market perspective does not document rear geometry, roof depth or concealed construction; neither size nor shape is verified."
   },
   {
    "id": "gable-core",
@@ -399,7 +509,13 @@
     1.12,
     1.32,
     1
-   ]
+   ],
+   "source": "stadsholmen2013",
+   "basis": [
+    "audit.gable.form",
+    "audit.attic.levels"
+   ],
+   "note": "Text confirms stepped gable with curved sandstone ornaments, spires and balls; perspective photo informs silhouette only. Profile, relief, thickness and placement are modeler's inferred approximations, not surveyed or traced."
   },
   {
    "id": "dark-pitched-roof",
@@ -434,7 +550,12 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "audit-model",
+   "basis": [
+    "body.depth"
+   ],
+   "note": "Agent-authored inferred envelope, support, thickness or hidden continuation. Market perspective does not document rear geometry, roof depth or concealed construction; neither size nor shape is verified."
   },
   {
    "id": "scroll-edge-left",
@@ -587,7 +708,13 @@
     1.12,
     1.32,
     1
-   ]
+   ],
+   "source": "stadsholmen2013",
+   "basis": [
+    "audit.gable.form",
+    "audit.attic.levels"
+   ],
+   "note": "Text confirms stepped gable with curved sandstone ornaments, spires and balls; perspective photo informs silhouette only. Profile, relief, thickness and placement are modeler's inferred approximations, not surveyed or traced."
   },
   {
    "id": "carved-volute-left0",
@@ -725,7 +852,13 @@
     1.12,
     1.32,
     1
-   ]
+   ],
+   "source": "stadsholmen2013",
+   "basis": [
+    "audit.gable.form",
+    "audit.attic.levels"
+   ],
+   "note": "Text confirms stepped gable with curved sandstone ornaments, spires and balls; perspective photo informs silhouette only. Profile, relief, thickness and placement are modeler's inferred approximations, not surveyed or traced."
   },
   {
    "id": "carved-volute-left1",
@@ -863,7 +996,13 @@
     1.12,
     1.32,
     1
-   ]
+   ],
+   "source": "stadsholmen2013",
+   "basis": [
+    "audit.gable.form",
+    "audit.attic.levels"
+   ],
+   "note": "Text confirms stepped gable with curved sandstone ornaments, spires and balls; perspective photo informs silhouette only. Profile, relief, thickness and placement are modeler's inferred approximations, not surveyed or traced."
   },
   {
    "id": "carved-volute-left2",
@@ -1001,7 +1140,13 @@
     1.12,
     1.32,
     1
-   ]
+   ],
+   "source": "stadsholmen2013",
+   "basis": [
+    "audit.gable.form",
+    "audit.attic.levels"
+   ],
+   "note": "Text confirms stepped gable with curved sandstone ornaments, spires and balls; perspective photo informs silhouette only. Profile, relief, thickness and placement are modeler's inferred approximations, not surveyed or traced."
   },
   {
    "id": "scroll-edge-right",
@@ -1154,7 +1299,13 @@
     1.12,
     1.32,
     1
-   ]
+   ],
+   "source": "stadsholmen2013",
+   "basis": [
+    "audit.gable.form",
+    "audit.attic.levels"
+   ],
+   "note": "Text confirms stepped gable with curved sandstone ornaments, spires and balls; perspective photo informs silhouette only. Profile, relief, thickness and placement are modeler's inferred approximations, not surveyed or traced."
   },
   {
    "id": "carved-volute-right0",
@@ -1292,7 +1443,13 @@
     1.12,
     1.32,
     1
-   ]
+   ],
+   "source": "stadsholmen2013",
+   "basis": [
+    "audit.gable.form",
+    "audit.attic.levels"
+   ],
+   "note": "Text confirms stepped gable with curved sandstone ornaments, spires and balls; perspective photo informs silhouette only. Profile, relief, thickness and placement are modeler's inferred approximations, not surveyed or traced."
   },
   {
    "id": "carved-volute-right1",
@@ -1430,7 +1587,13 @@
     1.12,
     1.32,
     1
-   ]
+   ],
+   "source": "stadsholmen2013",
+   "basis": [
+    "audit.gable.form",
+    "audit.attic.levels"
+   ],
+   "note": "Text confirms stepped gable with curved sandstone ornaments, spires and balls; perspective photo informs silhouette only. Profile, relief, thickness and placement are modeler's inferred approximations, not surveyed or traced."
   },
   {
    "id": "carved-volute-right2",
@@ -1568,7 +1731,13 @@
     1.12,
     1.32,
     1
-   ]
+   ],
+   "source": "stadsholmen2013",
+   "basis": [
+    "audit.gable.form",
+    "audit.attic.levels"
+   ],
+   "note": "Text confirms stepped gable with curved sandstone ornaments, spires and balls; perspective photo informs silhouette only. Profile, relief, thickness and placement are modeler's inferred approximations, not surveyed or traced."
   },
   {
    "id": "ledge-3",
@@ -1600,7 +1769,14 @@
     1.12,
     1.32,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "ledge-shadow-3",
@@ -1632,7 +1808,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "ledge-4",
@@ -1664,7 +1847,14 @@
     1.12,
     1.32,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "ledge-shadow-4",
@@ -1696,7 +1886,14 @@
     1.12,
     1.32,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "ledge-5",
@@ -1728,7 +1925,14 @@
     1.12,
     1.32,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "ledge-shadow-5",
@@ -1760,7 +1964,14 @@
     1.12,
     1.32,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "bay-frame-6",
@@ -1792,7 +2003,14 @@
     1.12,
     1.32,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "sash-glazing-6",
@@ -1824,7 +2042,14 @@
     1.12,
     1.32,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "sash-central-6",
@@ -1856,7 +2081,14 @@
     1.12,
     1.32,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "sash-vertical-6--1",
@@ -1888,7 +2120,14 @@
     1.12,
     1.32,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "sash-vertical-6-1",
@@ -1920,7 +2159,14 @@
     1.12,
     1.32,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "sash-horizontal-6-1",
@@ -1951,7 +2197,14 @@
     1.12,
     1.32,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "sash-horizontal-6-2",
@@ -1982,7 +2235,14 @@
     1.12,
     1.32,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "sash-horizontal-6-3",
@@ -2013,7 +2273,14 @@
     1.12,
     1.32,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "sash-horizontal-6-4",
@@ -2044,7 +2311,14 @@
     1.12,
     1.32,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "sill-6",
@@ -2076,7 +2350,14 @@
     1.12,
     1.32,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "bay-frame-7",
@@ -2108,7 +2389,14 @@
     1.12,
     1.32,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "sash-glazing-7",
@@ -2140,7 +2428,14 @@
     1.12,
     1.32,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "sash-central-7",
@@ -2172,7 +2467,14 @@
     1.12,
     1.32,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "sash-vertical-7--1",
@@ -2204,7 +2506,14 @@
     1.12,
     1.32,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "sash-vertical-7-1",
@@ -2236,7 +2545,14 @@
     1.12,
     1.32,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "sash-horizontal-7-1",
@@ -2267,7 +2583,14 @@
     1.12,
     1.32,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "sash-horizontal-7-2",
@@ -2298,7 +2621,14 @@
     1.12,
     1.32,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "sash-horizontal-7-3",
@@ -2329,7 +2659,14 @@
     1.12,
     1.32,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "sash-horizontal-7-4",
@@ -2360,7 +2697,14 @@
     1.12,
     1.32,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "sill-7",
@@ -2392,7 +2736,14 @@
     1.12,
     1.32,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "bay-frame-8",
@@ -2424,7 +2775,14 @@
     1.12,
     1.32,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "sash-glazing-8",
@@ -2456,7 +2814,14 @@
     1.12,
     1.32,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "sash-central-8",
@@ -2488,7 +2853,14 @@
     1.12,
     1.32,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "sash-vertical-8--1",
@@ -2520,7 +2892,14 @@
     1.12,
     1.32,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "sash-vertical-8-1",
@@ -2552,7 +2931,14 @@
     1.12,
     1.32,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "sash-horizontal-8-1",
@@ -2583,7 +2969,14 @@
     1.12,
     1.32,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "sash-horizontal-8-2",
@@ -2614,7 +3007,14 @@
     1.12,
     1.32,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "sash-horizontal-8-3",
@@ -2645,7 +3045,14 @@
     1.12,
     1.32,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "sash-horizontal-8-4",
@@ -2676,7 +3083,14 @@
     1.12,
     1.32,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "sill-8",
@@ -2708,7 +3122,14 @@
     1.12,
     1.32,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "inset-stones-left",
@@ -2740,7 +3161,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "audit.facade.materials.colours",
+    "audit.stones.en.report",
+    "audit.stones.sv.report"
+   ],
+   "note": "Grey sandstone inset motif is documented; placement, patch segmentation and hidden continuation are inferred from perspective reference. These model definitions do not settle the unresolved 82 versus94 physical-stone reports."
   },
   {
    "id": "inset-stones-center",
@@ -2772,7 +3200,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "audit.facade.materials.colours",
+    "audit.stones.en.report",
+    "audit.stones.sv.report"
+   ],
+   "note": "Grey sandstone inset motif is documented; placement, patch segmentation and hidden continuation are inferred from perspective reference. These model definitions do not settle the unresolved 82 versus94 physical-stone reports."
   },
   {
    "id": "inset-stones-right",
@@ -2804,7 +3239,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "audit.facade.materials.colours",
+    "audit.stones.en.report",
+    "audit.stones.sv.report"
+   ],
+   "note": "Grey sandstone inset motif is documented; placement, patch segmentation and hidden continuation are inferred from perspective reference. These model definitions do not settle the unresolved 82 versus94 physical-stone reports."
   },
   {
    "id": "attic-stones--1",
@@ -2836,7 +3278,14 @@
     1.12,
     1.32,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "attic-stones-1",
@@ -2868,7 +3317,14 @@
     1.12,
     1.32,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "iron-anchor-0",
@@ -2966,7 +3422,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "iron-anchor-1",
@@ -3064,7 +3527,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "iron-anchor-2",
@@ -3162,7 +3632,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "iron-anchor-3",
@@ -3260,7 +3737,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "iron-anchor-4",
@@ -3358,7 +3842,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "iron-anchor-5",
@@ -3456,7 +3947,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "iron-anchor-6",
@@ -3554,7 +4052,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "iron-anchor-7",
@@ -3652,7 +4157,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "grey-cap",
@@ -3702,7 +4214,12 @@
     1.12,
     1.32,
     1
-   ]
+   ],
+   "source": "audit-model",
+   "basis": [
+    "body.depth"
+   ],
+   "note": "Agent-authored inferred envelope, support, thickness or hidden continuation. Market perspective does not document rear geometry, roof depth or concealed construction; neither size nor shape is verified."
   },
   {
    "id": "finial",
@@ -3796,7 +4313,13 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "stadsholmen2013",
+   "basis": [
+    "audit.gable.form",
+    "audit.attic.levels"
+   ],
+   "note": "Text confirms stepped gable with curved sandstone ornaments, spires and balls; perspective photo informs silhouette only. Profile, relief, thickness and placement are modeler's inferred approximations, not surveyed or traced."
   },
   {
    "id": "portal-recess",
@@ -3828,7 +4351,13 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "stadsholmen2013",
+   "basis": [
+    "audit.portal.authorship",
+    "audit.portal.form"
+   ],
+   "note": "Municipal text confirms original central round-arched limestone portal and reclining-warrior ornament, not this part's exact coordinates. Market stalls obscure portal; sculpture, anatomy, trim, recess depth and proportions are inferred, not traced or measured."
   },
   {
    "id": "door-leaf",
@@ -3902,7 +4431,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "audit-model",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Door details hidden in market photograph: modeler's inferred paneling and thickness, not a documented or measured reproduction."
   },
   {
    "id": "portal-jamb--1.03",
@@ -3934,7 +4470,13 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "stadsholmen2013",
+   "basis": [
+    "audit.portal.authorship",
+    "audit.portal.form"
+   ],
+   "note": "Municipal text confirms original central round-arched limestone portal and reclining-warrior ornament, not this part's exact coordinates. Market stalls obscure portal; sculpture, anatomy, trim, recess depth and proportions are inferred, not traced or measured."
   },
   {
    "id": "portal-plinth--1.03",
@@ -3966,7 +4508,13 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "stadsholmen2013",
+   "basis": [
+    "audit.portal.authorship",
+    "audit.portal.form"
+   ],
+   "note": "Municipal text confirms original central round-arched limestone portal and reclining-warrior ornament, not this part's exact coordinates. Market stalls obscure portal; sculpture, anatomy, trim, recess depth and proportions are inferred, not traced or measured."
   },
   {
    "id": "portal-jamb-1.03",
@@ -3998,7 +4546,13 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "stadsholmen2013",
+   "basis": [
+    "audit.portal.authorship",
+    "audit.portal.form"
+   ],
+   "note": "Municipal text confirms original central round-arched limestone portal and reclining-warrior ornament, not this part's exact coordinates. Market stalls obscure portal; sculpture, anatomy, trim, recess depth and proportions are inferred, not traced or measured."
   },
   {
    "id": "portal-plinth-1.03",
@@ -4030,7 +4584,13 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "stadsholmen2013",
+   "basis": [
+    "audit.portal.authorship",
+    "audit.portal.form"
+   ],
+   "note": "Municipal text confirms original central round-arched limestone portal and reclining-warrior ornament, not this part's exact coordinates. Market stalls obscure portal; sculpture, anatomy, trim, recess depth and proportions are inferred, not traced or measured."
   },
   {
    "id": "portal-head",
@@ -4062,7 +4622,13 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "stadsholmen2013",
+   "basis": [
+    "audit.portal.authorship",
+    "audit.portal.form"
+   ],
+   "note": "Municipal text confirms original central round-arched limestone portal and reclining-warrior ornament, not this part's exact coordinates. Market stalls obscure portal; sculpture, anatomy, trim, recess depth and proportions are inferred, not traced or measured."
   },
   {
    "id": "door-panel--1",
@@ -4094,7 +4660,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "audit-model",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Door details hidden in market photograph: modeler's inferred paneling and thickness, not a documented or measured reproduction."
   },
   {
    "id": "door-panel-1",
@@ -4126,7 +4699,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "audit-model",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Door details hidden in market photograph: modeler's inferred paneling and thickness, not a documented or measured reproduction."
   },
   {
    "id": "chimney",
@@ -4158,7 +4738,12 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "audit-model",
+   "basis": [
+    "body.depth"
+   ],
+   "note": "Agent-authored inferred envelope, support, thickness or hidden continuation. Market perspective does not document rear geometry, roof depth or concealed construction; neither size nor shape is verified."
   },
   {
    "id": "chimney-crown",
@@ -4190,7 +4775,12 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "audit-model",
+   "basis": [
+    "body.depth"
+   ],
+   "note": "Agent-authored inferred envelope, support, thickness or hidden continuation. Market perspective does not document rear geometry, roof depth or concealed construction; neither size nor shape is verified."
   },
   {
    "id": "sculpted-border-left",
@@ -4404,7 +4994,13 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "stadsholmen2013",
+   "basis": [
+    "audit.gable.form",
+    "audit.attic.levels"
+   ],
+   "note": "Text confirms stepped gable with curved sandstone ornaments, spires and balls; perspective photo informs silhouette only. Profile, relief, thickness and placement are modeler's inferred approximations, not surveyed or traced."
   },
   {
    "id": "sculpted-border-right",
@@ -4618,7 +5214,13 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "stadsholmen2013",
+   "basis": [
+    "audit.gable.form",
+    "audit.attic.levels"
+   ],
+   "note": "Text confirms stepped gable with curved sandstone ornaments, spires and balls; perspective photo informs silhouette only. Profile, relief, thickness and placement are modeler's inferred approximations, not surveyed or traced."
   },
   {
    "id": "hooked-scroll-body",
@@ -4737,7 +5339,13 @@
     "tone": "bright",
     "weight": 1,
     "color": "#dfd4bb"
-   }
+   },
+   "source": "stadsholmen2013",
+   "basis": [
+    "audit.gable.form",
+    "audit.attic.levels"
+   ],
+   "note": "Text confirms stepped gable with curved sandstone ornaments, spires and balls; perspective photo informs silhouette only. Profile, relief, thickness and placement are modeler's inferred approximations, not surveyed or traced."
   },
   {
    "id": "hooked-upper-scroll",
@@ -4848,7 +5456,13 @@
     "tone": "bright",
     "weight": 1,
     "color": "#dfd4bb"
-   }
+   },
+   "source": "stadsholmen2013",
+   "basis": [
+    "audit.gable.form",
+    "audit.attic.levels"
+   ],
+   "note": "Text confirms stepped gable with curved sandstone ornaments, spires and balls; perspective photo informs silhouette only. Profile, relief, thickness and placement are modeler's inferred approximations, not surveyed or traced."
   },
   {
    "id": "stone-scatter-a",
@@ -5416,7 +6030,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "pale-inset-solid-a",
@@ -5448,7 +6069,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "pale-inset-solid-b",
@@ -5480,7 +6108,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "party-wall--1",
@@ -5512,7 +6147,12 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "audit-model",
+   "basis": [
+    "body.depth"
+   ],
+   "note": "Agent-authored inferred envelope, support, thickness or hidden continuation. Market perspective does not document rear geometry, roof depth or concealed construction; neither size nor shape is verified."
   },
   {
    "id": "party-wall-1",
@@ -5544,7 +6184,12 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "audit-model",
+   "basis": [
+    "body.depth"
+   ],
+   "note": "Agent-authored inferred envelope, support, thickness or hidden continuation. Market perspective does not document rear geometry, roof depth or concealed construction; neither size nor shape is verified."
   },
   {
    "id": "opaque-reveal-6-left",
@@ -5576,7 +6221,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "opaque-reveal-6-right",
@@ -5608,7 +6260,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "opaque-reveal-6-bottom",
@@ -5640,7 +6299,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "opaque-reveal-6-top",
@@ -5672,7 +6338,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "opaque-reveal-7-left",
@@ -5704,7 +6377,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "opaque-reveal-7-right",
@@ -5736,7 +6416,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "opaque-reveal-7-bottom",
@@ -5768,7 +6455,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "opaque-reveal-7-top",
@@ -5800,7 +6494,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "opaque-reveal-8-left",
@@ -5832,7 +6533,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "opaque-reveal-8-right",
@@ -5864,7 +6572,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "opaque-reveal-8-bottom",
@@ -5896,7 +6611,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "opaque-reveal-8-top",
@@ -5928,7 +6650,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "inferred-party-wall-contours",
@@ -6052,7 +6781,12 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "audit-model",
+   "basis": [
+    "body.depth"
+   ],
+   "note": "Agent-authored inferred envelope, support, thickness or hidden continuation. Market perspective does not document rear geometry, roof depth or concealed construction; neither size nor shape is verified."
   },
   {
    "id": "eaves-return--3.9",
@@ -6084,7 +6818,12 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "audit-model",
+   "basis": [
+    "body.depth"
+   ],
+   "note": "Agent-authored inferred envelope, support, thickness or hidden continuation. Market perspective does not document rear geometry, roof depth or concealed construction; neither size nor shape is verified."
   },
   {
    "id": "eaves-return-3.9",
@@ -6116,7 +6855,12 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "audit-model",
+   "basis": [
+    "body.depth"
+   ],
+   "note": "Agent-authored inferred envelope, support, thickness or hidden continuation. Market perspective does not document rear geometry, roof depth or concealed construction; neither size nor shape is verified."
   },
   {
    "id": "gable-flank-stone-a",
@@ -6163,7 +6907,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "gable-flank-stone-b",
@@ -6210,7 +6961,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "gable-flank-stone-c",
@@ -6257,7 +7015,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "gable-flank-stone-d",
@@ -6304,7 +7069,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "gable-flank-stone-e",
@@ -6351,7 +7123,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-0-0-glazing",
@@ -6383,7 +7162,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-0-0-jamb--1",
@@ -6415,7 +7202,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-0-0-jamb-1",
@@ -6447,7 +7242,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-0-0-bottom",
@@ -6479,7 +7282,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-0-0-head",
@@ -6511,7 +7322,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-0-0-central",
@@ -6543,7 +7362,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-0-0-mullion--1",
@@ -6574,7 +7401,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-0-0-mullion-1",
@@ -6605,7 +7440,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-0-0-transom-1",
@@ -6636,7 +7479,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-0-0-transom-2",
@@ -6667,7 +7518,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-0-0-transom-3",
@@ -6698,7 +7557,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-0-0-transom-4",
@@ -6729,7 +7596,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-0-0-sill",
@@ -6761,7 +7636,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-0-1-glazing",
@@ -6793,7 +7676,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-0-1-jamb--1",
@@ -6825,7 +7716,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-0-1-jamb-1",
@@ -6857,7 +7756,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-0-1-bottom",
@@ -6889,7 +7796,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-0-1-head",
@@ -6921,7 +7836,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-0-1-central",
@@ -6953,7 +7876,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-0-1-mullion--1",
@@ -6984,7 +7915,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-0-1-mullion-1",
@@ -7015,7 +7954,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-0-1-transom-1",
@@ -7046,7 +7993,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-0-1-transom-2",
@@ -7077,7 +8032,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-0-1-transom-3",
@@ -7108,7 +8071,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-0-1-transom-4",
@@ -7139,7 +8110,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-0-1-sill",
@@ -7171,7 +8150,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-0-2-glazing",
@@ -7203,7 +8190,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-0-2-jamb--1",
@@ -7235,7 +8230,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-0-2-jamb-1",
@@ -7267,7 +8270,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-0-2-bottom",
@@ -7299,7 +8310,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-0-2-head",
@@ -7331,7 +8350,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-0-2-central",
@@ -7363,7 +8390,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-0-2-mullion--1",
@@ -7394,7 +8429,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-0-2-mullion-1",
@@ -7425,7 +8468,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-0-2-transom-1",
@@ -7456,7 +8507,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-0-2-transom-2",
@@ -7487,7 +8546,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-0-2-transom-3",
@@ -7518,7 +8585,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-0-2-transom-4",
@@ -7549,7 +8624,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-0-2-sill",
@@ -7581,7 +8664,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-1-0-glazing",
@@ -7613,7 +8704,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-1-0-jamb--1",
@@ -7645,7 +8744,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-1-0-jamb-1",
@@ -7677,7 +8784,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-1-0-bottom",
@@ -7709,7 +8824,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-1-0-head",
@@ -7741,7 +8864,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-1-0-central",
@@ -7773,7 +8904,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-1-0-mullion--1",
@@ -7804,7 +8943,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-1-0-mullion-1",
@@ -7835,7 +8982,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-1-0-transom-1",
@@ -7866,7 +9021,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-1-0-transom-2",
@@ -7897,7 +9060,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-1-0-transom-3",
@@ -7928,7 +9099,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-1-0-transom-4",
@@ -7959,7 +9138,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-1-0-sill",
@@ -7991,7 +9178,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-1-1-glazing",
@@ -8023,7 +9218,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-1-1-jamb--1",
@@ -8055,7 +9258,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-1-1-jamb-1",
@@ -8087,7 +9298,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-1-1-bottom",
@@ -8119,7 +9338,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-1-1-head",
@@ -8151,7 +9378,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-1-1-central",
@@ -8183,7 +9418,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-1-1-mullion--1",
@@ -8214,7 +9457,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-1-1-mullion-1",
@@ -8245,7 +9496,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-1-1-transom-1",
@@ -8276,7 +9535,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-1-1-transom-2",
@@ -8307,7 +9574,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-1-1-transom-3",
@@ -8338,7 +9613,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-1-1-transom-4",
@@ -8369,7 +9652,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-1-1-sill",
@@ -8401,7 +9692,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-1-2-glazing",
@@ -8433,7 +9732,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-1-2-jamb--1",
@@ -8465,7 +9772,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-1-2-jamb-1",
@@ -8497,7 +9812,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-1-2-bottom",
@@ -8529,7 +9852,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-1-2-head",
@@ -8561,7 +9892,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-1-2-central",
@@ -8593,7 +9932,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-1-2-mullion--1",
@@ -8624,7 +9971,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-1-2-mullion-1",
@@ -8655,7 +10010,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-1-2-transom-1",
@@ -8686,7 +10049,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-1-2-transom-2",
@@ -8717,7 +10088,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-1-2-transom-3",
@@ -8748,7 +10127,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-1-2-transom-4",
@@ -8779,7 +10166,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-1-2-sill",
@@ -8811,7 +10206,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-2-0-glazing",
@@ -8843,7 +10246,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-2-0-jamb--1",
@@ -8875,7 +10286,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-2-0-jamb-1",
@@ -8907,7 +10326,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-2-0-bottom",
@@ -8939,7 +10366,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-2-0-head",
@@ -8971,7 +10406,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-2-0-central",
@@ -9003,7 +10446,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-2-0-mullion--1",
@@ -9034,7 +10485,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-2-0-mullion-1",
@@ -9065,7 +10524,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-2-0-transom-1",
@@ -9096,7 +10563,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-2-0-transom-2",
@@ -9127,7 +10602,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-2-0-transom-3",
@@ -9158,7 +10641,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-2-0-transom-4",
@@ -9189,7 +10680,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-2-0-sill",
@@ -9221,7 +10720,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-2-1-glazing",
@@ -9253,7 +10760,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-2-1-jamb--1",
@@ -9285,7 +10800,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-2-1-jamb-1",
@@ -9317,7 +10840,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-2-1-bottom",
@@ -9349,7 +10880,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-2-1-head",
@@ -9381,7 +10920,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-2-1-central",
@@ -9413,7 +10960,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-2-1-mullion--1",
@@ -9444,7 +10999,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-2-1-mullion-1",
@@ -9475,7 +11038,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-2-1-transom-1",
@@ -9506,7 +11077,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-2-1-transom-2",
@@ -9537,7 +11116,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-2-1-transom-3",
@@ -9568,7 +11155,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-2-1-transom-4",
@@ -9599,7 +11194,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-2-1-sill",
@@ -9631,7 +11234,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-2-2-glazing",
@@ -9663,7 +11274,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-2-2-jamb--1",
@@ -9695,7 +11314,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-2-2-jamb-1",
@@ -9727,7 +11354,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-2-2-bottom",
@@ -9759,7 +11394,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-2-2-head",
@@ -9791,7 +11434,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-2-2-central",
@@ -9823,7 +11474,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-2-2-mullion--1",
@@ -9854,7 +11513,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-2-2-mullion-1",
@@ -9885,7 +11552,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-2-2-transom-1",
@@ -9916,7 +11591,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-2-2-transom-2",
@@ -9947,7 +11630,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-2-2-transom-3",
@@ -9978,7 +11669,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-2-2-transom-4",
@@ -10009,7 +11708,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "body-sash-2-2-sill",
@@ -10041,7 +11748,15 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "body.bay.count",
+    "audit.body.storeys",
+    "facade.width",
+    "eaves.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "pierced-facade-band-1",
@@ -10087,7 +11802,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "pierced-facade-band-2",
@@ -10133,7 +11855,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "pierced-facade-band-3",
@@ -10179,7 +11908,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "pierced-facade-band-4",
@@ -10225,7 +11961,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "pierced-facade-band-5",
@@ -10271,7 +12014,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "pierced-facade-band-6",
@@ -10317,7 +12067,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "pierced-facade-band-7",
@@ -10363,7 +12120,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "pierced-facade-band-8",
@@ -10409,7 +12173,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "pierced-facade-band-9",
@@ -10455,7 +12226,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "pierced-facade-band-10",
@@ -10501,7 +12279,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "pierced-facade-band-11",
@@ -10547,7 +12332,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "pierced-facade-band-12",
@@ -10593,7 +12385,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "pierced-facade-band-13",
@@ -10639,7 +12438,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "pierced-facade-band-14",
@@ -10685,7 +12491,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "pierced-facade-band-15",
@@ -10731,7 +12544,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "pierced-facade-band-16",
@@ -10777,7 +12597,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "pierced-facade-band-17",
@@ -10823,7 +12650,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "pierced-facade-band-18",
@@ -10869,7 +12703,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "pierced-facade-band-19",
@@ -10915,7 +12756,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "pierced-facade-band-20",
@@ -10961,7 +12809,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "pierced-facade-band-21",
@@ -11007,7 +12862,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "pierced-facade-band-22",
@@ -11053,7 +12915,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "pierced-facade-band-23",
@@ -11099,7 +12968,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "pierced-facade-band-24",
@@ -11145,7 +13021,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "pierced-facade-band-25",
@@ -11191,7 +13074,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "pierced-facade-band-26",
@@ -11237,7 +13127,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "pierced-facade-band-27",
@@ -11283,7 +13180,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "pierced-facade-band-28",
@@ -11329,7 +13233,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "pierced-facade-band-29",
@@ -11375,7 +13286,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "pierced-facade-band-30",
@@ -11421,7 +13339,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "pierced-facade-band-31",
@@ -11467,7 +13392,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "pierced-facade-band-32",
@@ -11513,7 +13445,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "pierced-facade-band-33",
@@ -11559,7 +13498,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "pierced-facade-band-34",
@@ -11605,7 +13551,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "pierced-facade-band-35",
@@ -11651,7 +13604,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "pierced-facade-band-36",
@@ -11697,7 +13657,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "pierced-facade-band-37",
@@ -11743,7 +13710,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "pierced-facade-band-38",
@@ -11789,7 +13763,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "pierced-facade-band-39",
@@ -11835,7 +13816,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "pierced-facade-band-40",
@@ -11881,7 +13869,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "pierced-facade-band-41",
@@ -11927,7 +13922,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "pierced-facade-band-42",
@@ -11973,7 +13975,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "pierced-facade-band-43",
@@ -12019,7 +14028,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "pierced-facade-band-44",
@@ -12065,7 +14081,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "pierced-facade-band-45",
@@ -12111,7 +14134,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "pierced-facade-band-46",
@@ -12157,7 +14187,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "pierced-facade-band-47",
@@ -12203,7 +14240,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "pierced-facade-band-48",
@@ -12249,7 +14293,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "pierced-facade-band-49",
@@ -12295,7 +14346,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "pierced-facade-band-50",
@@ -12341,7 +14399,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "pierced-facade-band-51",
@@ -12387,7 +14452,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "pierced-facade-band-52",
@@ -12433,7 +14505,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "pierced-facade-band-53",
@@ -12479,7 +14558,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "pierced-facade-band-54",
@@ -12525,7 +14611,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "pierced-facade-band-55",
@@ -12571,7 +14664,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "pierced-facade-band-56",
@@ -12617,7 +14717,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Perspective-reference reconstruction only. Visible facade placement is approximate; tree/stall occlusion and inferred completion prevent direct verification of every element. No measured coordinates; size and shape remain inferred."
   },
   {
    "id": "inset-visible-face-0",
@@ -12663,7 +14770,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "audit.facade.materials.colours",
+    "audit.stones.en.report",
+    "audit.stones.sv.report"
+   ],
+   "note": "Grey sandstone inset motif is documented; placement, patch segmentation and hidden continuation are inferred from perspective reference. These model definitions do not settle the unresolved 82 versus94 physical-stone reports."
   },
   {
    "id": "inset-visible-face-1",
@@ -12709,7 +14823,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "audit.facade.materials.colours",
+    "audit.stones.en.report",
+    "audit.stones.sv.report"
+   ],
+   "note": "Grey sandstone inset motif is documented; placement, patch segmentation and hidden continuation are inferred from perspective reference. These model definitions do not settle the unresolved 82 versus94 physical-stone reports."
   },
   {
    "id": "inset-visible-face-2",
@@ -12755,7 +14876,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "audit.facade.materials.colours",
+    "audit.stones.en.report",
+    "audit.stones.sv.report"
+   ],
+   "note": "Grey sandstone inset motif is documented; placement, patch segmentation and hidden continuation are inferred from perspective reference. These model definitions do not settle the unresolved 82 versus94 physical-stone reports."
   },
   {
    "id": "inset-visible-face-3",
@@ -12801,7 +14929,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "audit.facade.materials.colours",
+    "audit.stones.en.report",
+    "audit.stones.sv.report"
+   ],
+   "note": "Grey sandstone inset motif is documented; placement, patch segmentation and hidden continuation are inferred from perspective reference. These model definitions do not settle the unresolved 82 versus94 physical-stone reports."
   },
   {
    "id": "inset-visible-face-4",
@@ -12847,7 +14982,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "audit.facade.materials.colours",
+    "audit.stones.en.report",
+    "audit.stones.sv.report"
+   ],
+   "note": "Grey sandstone inset motif is documented; placement, patch segmentation and hidden continuation are inferred from perspective reference. These model definitions do not settle the unresolved 82 versus94 physical-stone reports."
   },
   {
    "id": "inset-visible-face-5",
@@ -12893,7 +15035,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "audit.facade.materials.colours",
+    "audit.stones.en.report",
+    "audit.stones.sv.report"
+   ],
+   "note": "Grey sandstone inset motif is documented; placement, patch segmentation and hidden continuation are inferred from perspective reference. These model definitions do not settle the unresolved 82 versus94 physical-stone reports."
   },
   {
    "id": "inset-visible-face-6",
@@ -12939,7 +15088,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "audit.facade.materials.colours",
+    "audit.stones.en.report",
+    "audit.stones.sv.report"
+   ],
+   "note": "Grey sandstone inset motif is documented; placement, patch segmentation and hidden continuation are inferred from perspective reference. These model definitions do not settle the unresolved 82 versus94 physical-stone reports."
   },
   {
    "id": "inset-visible-face-7",
@@ -12985,7 +15141,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "audit.facade.materials.colours",
+    "audit.stones.en.report",
+    "audit.stones.sv.report"
+   ],
+   "note": "Grey sandstone inset motif is documented; placement, patch segmentation and hidden continuation are inferred from perspective reference. These model definitions do not settle the unresolved 82 versus94 physical-stone reports."
   },
   {
    "id": "inset-visible-face-8",
@@ -13031,7 +15194,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "audit.facade.materials.colours",
+    "audit.stones.en.report",
+    "audit.stones.sv.report"
+   ],
+   "note": "Grey sandstone inset motif is documented; placement, patch segmentation and hidden continuation are inferred from perspective reference. These model definitions do not settle the unresolved 82 versus94 physical-stone reports."
   },
   {
    "id": "inset-visible-face-9",
@@ -13077,7 +15247,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "audit.facade.materials.colours",
+    "audit.stones.en.report",
+    "audit.stones.sv.report"
+   ],
+   "note": "Grey sandstone inset motif is documented; placement, patch segmentation and hidden continuation are inferred from perspective reference. These model definitions do not settle the unresolved 82 versus94 physical-stone reports."
   },
   {
    "id": "inset-visible-face-10",
@@ -13123,7 +15300,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "audit.facade.materials.colours",
+    "audit.stones.en.report",
+    "audit.stones.sv.report"
+   ],
+   "note": "Grey sandstone inset motif is documented; placement, patch segmentation and hidden continuation are inferred from perspective reference. These model definitions do not settle the unresolved 82 versus94 physical-stone reports."
   },
   {
    "id": "inset-visible-face-11",
@@ -13169,7 +15353,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "audit.facade.materials.colours",
+    "audit.stones.en.report",
+    "audit.stones.sv.report"
+   ],
+   "note": "Grey sandstone inset motif is documented; placement, patch segmentation and hidden continuation are inferred from perspective reference. These model definitions do not settle the unresolved 82 versus94 physical-stone reports."
   },
   {
    "id": "inset-visible-face-12",
@@ -13215,7 +15406,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "audit.facade.materials.colours",
+    "audit.stones.en.report",
+    "audit.stones.sv.report"
+   ],
+   "note": "Grey sandstone inset motif is documented; placement, patch segmentation and hidden continuation are inferred from perspective reference. These model definitions do not settle the unresolved 82 versus94 physical-stone reports."
   },
   {
    "id": "inset-visible-face-13",
@@ -13261,7 +15459,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "audit.facade.materials.colours",
+    "audit.stones.en.report",
+    "audit.stones.sv.report"
+   ],
+   "note": "Grey sandstone inset motif is documented; placement, patch segmentation and hidden continuation are inferred from perspective reference. These model definitions do not settle the unresolved 82 versus94 physical-stone reports."
   },
   {
    "id": "inset-visible-face-14",
@@ -13307,7 +15512,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "audit.facade.materials.colours",
+    "audit.stones.en.report",
+    "audit.stones.sv.report"
+   ],
+   "note": "Grey sandstone inset motif is documented; placement, patch segmentation and hidden continuation are inferred from perspective reference. These model definitions do not settle the unresolved 82 versus94 physical-stone reports."
   },
   {
    "id": "inset-visible-face-15",
@@ -13353,7 +15565,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "audit.facade.materials.colours",
+    "audit.stones.en.report",
+    "audit.stones.sv.report"
+   ],
+   "note": "Grey sandstone inset motif is documented; placement, patch segmentation and hidden continuation are inferred from perspective reference. These model definitions do not settle the unresolved 82 versus94 physical-stone reports."
   },
   {
    "id": "inset-visible-face-16",
@@ -13399,7 +15618,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "audit.facade.materials.colours",
+    "audit.stones.en.report",
+    "audit.stones.sv.report"
+   ],
+   "note": "Grey sandstone inset motif is documented; placement, patch segmentation and hidden continuation are inferred from perspective reference. These model definitions do not settle the unresolved 82 versus94 physical-stone reports."
   },
   {
    "id": "inset-visible-face-17",
@@ -13445,7 +15671,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "audit.facade.materials.colours",
+    "audit.stones.en.report",
+    "audit.stones.sv.report"
+   ],
+   "note": "Grey sandstone inset motif is documented; placement, patch segmentation and hidden continuation are inferred from perspective reference. These model definitions do not settle the unresolved 82 versus94 physical-stone reports."
   },
   {
    "id": "inset-visible-face-18",
@@ -13491,7 +15724,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "audit.facade.materials.colours",
+    "audit.stones.en.report",
+    "audit.stones.sv.report"
+   ],
+   "note": "Grey sandstone inset motif is documented; placement, patch segmentation and hidden continuation are inferred from perspective reference. These model definitions do not settle the unresolved 82 versus94 physical-stone reports."
   },
   {
    "id": "inset-visible-face-19",
@@ -13537,7 +15777,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "audit.facade.materials.colours",
+    "audit.stones.en.report",
+    "audit.stones.sv.report"
+   ],
+   "note": "Grey sandstone inset motif is documented; placement, patch segmentation and hidden continuation are inferred from perspective reference. These model definitions do not settle the unresolved 82 versus94 physical-stone reports."
   },
   {
    "id": "portal-central-plaque",
@@ -13569,7 +15816,13 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "stadsholmen2013",
+   "basis": [
+    "audit.portal.authorship",
+    "audit.portal.form"
+   ],
+   "note": "Municipal text confirms original central round-arched limestone portal and reclining-warrior ornament, not this part's exact coordinates. Market stalls obscure portal; sculpture, anatomy, trim, recess depth and proportions are inferred, not traced or measured."
   },
   {
    "id": "portal-plaque-cap",
@@ -13635,7 +15888,13 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "stadsholmen2013",
+   "basis": [
+    "audit.portal.authorship",
+    "audit.portal.form"
+   ],
+   "note": "Municipal text confirms original central round-arched limestone portal and reclining-warrior ornament, not this part's exact coordinates. Market stalls obscure portal; sculpture, anatomy, trim, recess depth and proportions are inferred, not traced or measured."
   },
   {
    "id": "portal-warrior-relief--1",
@@ -13697,7 +15956,13 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "stadsholmen2013",
+   "basis": [
+    "audit.portal.authorship",
+    "audit.portal.form"
+   ],
+   "note": "Municipal text confirms original central round-arched limestone portal and reclining-warrior ornament, not this part's exact coordinates. Market stalls obscure portal; sculpture, anatomy, trim, recess depth and proportions are inferred, not traced or measured."
   },
   {
    "id": "portal-warrior-head--1",
@@ -13730,7 +15995,13 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "stadsholmen2013",
+   "basis": [
+    "audit.portal.authorship",
+    "audit.portal.form"
+   ],
+   "note": "Municipal text confirms original central round-arched limestone portal and reclining-warrior ornament, not this part's exact coordinates. Market stalls obscure portal; sculpture, anatomy, trim, recess depth and proportions are inferred, not traced or measured."
   },
   {
    "id": "portal-warrior-relief-1",
@@ -13792,7 +16063,13 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "stadsholmen2013",
+   "basis": [
+    "audit.portal.authorship",
+    "audit.portal.form"
+   ],
+   "note": "Municipal text confirms original central round-arched limestone portal and reclining-warrior ornament, not this part's exact coordinates. Market stalls obscure portal; sculpture, anatomy, trim, recess depth and proportions are inferred, not traced or measured."
   },
   {
    "id": "portal-warrior-head-1",
@@ -13825,7 +16102,13 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "stadsholmen2013",
+   "basis": [
+    "audit.portal.authorship",
+    "audit.portal.form"
+   ],
+   "note": "Municipal text confirms original central round-arched limestone portal and reclining-warrior ornament, not this part's exact coordinates. Market stalls obscure portal; sculpture, anatomy, trim, recess depth and proportions are inferred, not traced or measured."
   },
   {
    "id": "ground-floor-pier-0",
@@ -13857,7 +16140,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "audit-model",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Lower frontage is occluded by market stalls in supplied photograph. Existing shopfront, masonry segmentation and door details are agent-authored inferred completions, not directly visible evidence or measured construction."
   },
   {
    "id": "ground-floor-pier-1",
@@ -13889,7 +16179,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "audit-model",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Lower frontage is occluded by market stalls in supplied photograph. Existing shopfront, masonry segmentation and door details are agent-authored inferred completions, not directly visible evidence or measured construction."
   },
   {
    "id": "ground-floor-pier-2",
@@ -13921,7 +16218,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "audit-model",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Lower frontage is occluded by market stalls in supplied photograph. Existing shopfront, masonry segmentation and door details are agent-authored inferred completions, not directly visible evidence or measured construction."
   },
   {
    "id": "ground-floor-pier-3",
@@ -13953,7 +16257,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "audit-model",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Lower frontage is occluded by market stalls in supplied photograph. Existing shopfront, masonry segmentation and door details are agent-authored inferred completions, not directly visible evidence or measured construction."
   },
   {
    "id": "ground-floor-head-wall",
@@ -13985,7 +16296,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "audit-model",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Lower frontage is occluded by market stalls in supplied photograph. Existing shopfront, masonry segmentation and door details are agent-authored inferred completions, not directly visible evidence or measured construction."
   },
   {
    "id": "ground-shop-0-glazing",
@@ -14017,7 +16335,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "audit-model",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Lower frontage is occluded by market stalls in supplied photograph. Existing shopfront, masonry segmentation and door details are agent-authored inferred completions, not directly visible evidence or measured construction."
   },
   {
    "id": "ground-shop-0-jamb--1",
@@ -14049,7 +16374,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "audit-model",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Lower frontage is occluded by market stalls in supplied photograph. Existing shopfront, masonry segmentation and door details are agent-authored inferred completions, not directly visible evidence or measured construction."
   },
   {
    "id": "ground-shop-0-jamb-1",
@@ -14081,7 +16413,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "audit-model",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Lower frontage is occluded by market stalls in supplied photograph. Existing shopfront, masonry segmentation and door details are agent-authored inferred completions, not directly visible evidence or measured construction."
   },
   {
    "id": "ground-shop-0-lintel",
@@ -14113,7 +16452,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "audit-model",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Lower frontage is occluded by market stalls in supplied photograph. Existing shopfront, masonry segmentation and door details are agent-authored inferred completions, not directly visible evidence or measured construction."
   },
   {
    "id": "ground-shop-0-threshold",
@@ -14145,7 +16491,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "audit-model",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Lower frontage is occluded by market stalls in supplied photograph. Existing shopfront, masonry segmentation and door details are agent-authored inferred completions, not directly visible evidence or measured construction."
   },
   {
    "id": "ground-shop-0-mullion",
@@ -14177,7 +16530,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "audit-model",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Lower frontage is occluded by market stalls in supplied photograph. Existing shopfront, masonry segmentation and door details are agent-authored inferred completions, not directly visible evidence or measured construction."
   },
   {
    "id": "ground-shop-0-transom",
@@ -14209,7 +16569,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "audit-model",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Lower frontage is occluded by market stalls in supplied photograph. Existing shopfront, masonry segmentation and door details are agent-authored inferred completions, not directly visible evidence or measured construction."
   },
   {
    "id": "ground-shop-1-glazing",
@@ -14241,7 +16608,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "audit-model",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Lower frontage is occluded by market stalls in supplied photograph. Existing shopfront, masonry segmentation and door details are agent-authored inferred completions, not directly visible evidence or measured construction."
   },
   {
    "id": "ground-shop-1-jamb--1",
@@ -14273,7 +16647,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "audit-model",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Lower frontage is occluded by market stalls in supplied photograph. Existing shopfront, masonry segmentation and door details are agent-authored inferred completions, not directly visible evidence or measured construction."
   },
   {
    "id": "ground-shop-1-jamb-1",
@@ -14305,7 +16686,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "audit-model",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Lower frontage is occluded by market stalls in supplied photograph. Existing shopfront, masonry segmentation and door details are agent-authored inferred completions, not directly visible evidence or measured construction."
   },
   {
    "id": "ground-shop-1-lintel",
@@ -14337,7 +16725,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "audit-model",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Lower frontage is occluded by market stalls in supplied photograph. Existing shopfront, masonry segmentation and door details are agent-authored inferred completions, not directly visible evidence or measured construction."
   },
   {
    "id": "ground-shop-1-threshold",
@@ -14369,7 +16764,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "audit-model",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Lower frontage is occluded by market stalls in supplied photograph. Existing shopfront, masonry segmentation and door details are agent-authored inferred completions, not directly visible evidence or measured construction."
   },
   {
    "id": "ground-shop-1-mullion",
@@ -14401,7 +16803,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "audit-model",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Lower frontage is occluded by market stalls in supplied photograph. Existing shopfront, masonry segmentation and door details are agent-authored inferred completions, not directly visible evidence or measured construction."
   },
   {
    "id": "ground-shop-1-transom",
@@ -14433,7 +16842,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "audit-model",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Lower frontage is occluded by market stalls in supplied photograph. Existing shopfront, masonry segmentation and door details are agent-authored inferred completions, not directly visible evidence or measured construction."
   },
   {
    "id": "portal-cornice-0",
@@ -14465,7 +16881,13 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "stadsholmen2013",
+   "basis": [
+    "audit.portal.authorship",
+    "audit.portal.form"
+   ],
+   "note": "Municipal text confirms original central round-arched limestone portal and reclining-warrior ornament, not this part's exact coordinates. Market stalls obscure portal; sculpture, anatomy, trim, recess depth and proportions are inferred, not traced or measured."
   },
   {
    "id": "portal-cornice-1",
@@ -14497,7 +16919,13 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "stadsholmen2013",
+   "basis": [
+    "audit.portal.authorship",
+    "audit.portal.form"
+   ],
+   "note": "Municipal text confirms original central round-arched limestone portal and reclining-warrior ornament, not this part's exact coordinates. Market stalls obscure portal; sculpture, anatomy, trim, recess depth and proportions are inferred, not traced or measured."
   },
   {
    "id": "portal-cornice-2",
@@ -14529,7 +16957,13 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "stadsholmen2013",
+   "basis": [
+    "audit.portal.authorship",
+    "audit.portal.form"
+   ],
+   "note": "Municipal text confirms original central round-arched limestone portal and reclining-warrior ornament, not this part's exact coordinates. Market stalls obscure portal; sculpture, anatomy, trim, recess depth and proportions are inferred, not traced or measured."
   },
   {
    "id": "portal-rusticated-block--1",
@@ -14571,7 +17005,13 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "stadsholmen2013",
+   "basis": [
+    "audit.portal.authorship",
+    "audit.portal.form"
+   ],
+   "note": "Municipal text confirms original central round-arched limestone portal and reclining-warrior ornament, not this part's exact coordinates. Market stalls obscure portal; sculpture, anatomy, trim, recess depth and proportions are inferred, not traced or measured."
   },
   {
    "id": "portal-rusticated-block-1",
@@ -14613,7 +17053,13 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "stadsholmen2013",
+   "basis": [
+    "audit.portal.authorship",
+    "audit.portal.form"
+   ],
+   "note": "Municipal text confirms original central round-arched limestone portal and reclining-warrior ornament, not this part's exact coordinates. Market stalls obscure portal; sculpture, anatomy, trim, recess depth and proportions are inferred, not traced or measured."
   },
   {
    "id": "portal-arch-band-0",
@@ -14779,7 +17225,13 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "stadsholmen2013",
+   "basis": [
+    "audit.portal.authorship",
+    "audit.portal.form"
+   ],
+   "note": "Municipal text confirms original central round-arched limestone portal and reclining-warrior ornament, not this part's exact coordinates. Market stalls obscure portal; sculpture, anatomy, trim, recess depth and proportions are inferred, not traced or measured."
   },
   {
    "id": "portal-arch-band-1",
@@ -14945,7 +17397,13 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "stadsholmen2013",
+   "basis": [
+    "audit.portal.authorship",
+    "audit.portal.form"
+   ],
+   "note": "Municipal text confirms original central round-arched limestone portal and reclining-warrior ornament, not this part's exact coordinates. Market stalls obscure portal; sculpture, anatomy, trim, recess depth and proportions are inferred, not traced or measured."
   },
   {
    "id": "portal-oval-tablet",
@@ -14978,7 +17436,13 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "stadsholmen2013",
+   "basis": [
+    "audit.portal.authorship",
+    "audit.portal.form"
+   ],
+   "note": "Municipal text confirms original central round-arched limestone portal and reclining-warrior ornament, not this part's exact coordinates. Market stalls obscure portal; sculpture, anatomy, trim, recess depth and proportions are inferred, not traced or measured."
   },
   {
    "id": "portal-oval-rim",
@@ -15068,7 +17532,13 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "stadsholmen2013",
+   "basis": [
+    "audit.portal.authorship",
+    "audit.portal.form"
+   ],
+   "note": "Municipal text confirms original central round-arched limestone portal and reclining-warrior ornament, not this part's exact coordinates. Market stalls obscure portal; sculpture, anatomy, trim, recess depth and proportions are inferred, not traced or measured."
   },
   {
    "id": "portal-warrior-torso--1",
@@ -15130,7 +17600,13 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "stadsholmen2013",
+   "basis": [
+    "audit.portal.authorship",
+    "audit.portal.form"
+   ],
+   "note": "Municipal text confirms original central round-arched limestone portal and reclining-warrior ornament, not this part's exact coordinates. Market stalls obscure portal; sculpture, anatomy, trim, recess depth and proportions are inferred, not traced or measured."
   },
   {
    "id": "portal-warrior-arm--1",
@@ -15183,7 +17659,13 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "stadsholmen2013",
+   "basis": [
+    "audit.portal.authorship",
+    "audit.portal.form"
+   ],
+   "note": "Municipal text confirms original central round-arched limestone portal and reclining-warrior ornament, not this part's exact coordinates. Market stalls obscure portal; sculpture, anatomy, trim, recess depth and proportions are inferred, not traced or measured."
   },
   {
    "id": "portal-warrior-torso-1",
@@ -15245,7 +17727,13 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "stadsholmen2013",
+   "basis": [
+    "audit.portal.authorship",
+    "audit.portal.form"
+   ],
+   "note": "Municipal text confirms original central round-arched limestone portal and reclining-warrior ornament, not this part's exact coordinates. Market stalls obscure portal; sculpture, anatomy, trim, recess depth and proportions are inferred, not traced or measured."
   },
   {
    "id": "portal-warrior-arm-1",
@@ -15298,7 +17786,13 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "stadsholmen2013",
+   "basis": [
+    "audit.portal.authorship",
+    "audit.portal.form"
+   ],
+   "note": "Municipal text confirms original central round-arched limestone portal and reclining-warrior ornament, not this part's exact coordinates. Market stalls obscure portal; sculpture, anatomy, trim, recess depth and proportions are inferred, not traced or measured."
   },
   {
    "id": "portal-number-20",
@@ -15405,7 +17899,13 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "stadsholmen2013",
+   "basis": [
+    "audit.portal.authorship",
+    "audit.portal.form"
+   ],
+   "note": "Municipal text confirms original central round-arched limestone portal and reclining-warrior ornament, not this part's exact coordinates. Market stalls obscure portal; sculpture, anatomy, trim, recess depth and proportions are inferred, not traced or measured."
   },
   {
    "id": "mapped-inset-patch-0",
@@ -15451,7 +17951,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "audit.facade.materials.colours",
+    "audit.stones.en.report",
+    "audit.stones.sv.report"
+   ],
+   "note": "Perspective-visible pale facade patches, partly occluded and inferentially completed. Text confirms grey sandstone squares, not an exact physical count or these patch coordinates. English82/Swedish94 conflict remains unresolved; modeled patches are not a survey."
   },
   {
    "id": "mapped-inset-patch-1",
@@ -15497,7 +18004,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "audit.facade.materials.colours",
+    "audit.stones.en.report",
+    "audit.stones.sv.report"
+   ],
+   "note": "Perspective-visible pale facade patches, partly occluded and inferentially completed. Text confirms grey sandstone squares, not an exact physical count or these patch coordinates. English82/Swedish94 conflict remains unresolved; modeled patches are not a survey."
   },
   {
    "id": "mapped-inset-patch-2",
@@ -15543,7 +18057,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "audit.facade.materials.colours",
+    "audit.stones.en.report",
+    "audit.stones.sv.report"
+   ],
+   "note": "Perspective-visible pale facade patches, partly occluded and inferentially completed. Text confirms grey sandstone squares, not an exact physical count or these patch coordinates. English82/Swedish94 conflict remains unresolved; modeled patches are not a survey."
   },
   {
    "id": "mapped-inset-patch-3",
@@ -15589,7 +18110,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "audit.facade.materials.colours",
+    "audit.stones.en.report",
+    "audit.stones.sv.report"
+   ],
+   "note": "Perspective-visible pale facade patches, partly occluded and inferentially completed. Text confirms grey sandstone squares, not an exact physical count or these patch coordinates. English82/Swedish94 conflict remains unresolved; modeled patches are not a survey."
   },
   {
    "id": "mapped-inset-patch-4",
@@ -15635,7 +18163,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "audit.facade.materials.colours",
+    "audit.stones.en.report",
+    "audit.stones.sv.report"
+   ],
+   "note": "Perspective-visible pale facade patches, partly occluded and inferentially completed. Text confirms grey sandstone squares, not an exact physical count or these patch coordinates. English82/Swedish94 conflict remains unresolved; modeled patches are not a survey."
   },
   {
    "id": "mapped-inset-patch-5",
@@ -15681,7 +18216,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "audit.facade.materials.colours",
+    "audit.stones.en.report",
+    "audit.stones.sv.report"
+   ],
+   "note": "Perspective-visible pale facade patches, partly occluded and inferentially completed. Text confirms grey sandstone squares, not an exact physical count or these patch coordinates. English82/Swedish94 conflict remains unresolved; modeled patches are not a survey."
   },
   {
    "id": "mapped-inset-patch-6",
@@ -15727,7 +18269,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "audit.facade.materials.colours",
+    "audit.stones.en.report",
+    "audit.stones.sv.report"
+   ],
+   "note": "Perspective-visible pale facade patches, partly occluded and inferentially completed. Text confirms grey sandstone squares, not an exact physical count or these patch coordinates. English82/Swedish94 conflict remains unresolved; modeled patches are not a survey."
   },
   {
    "id": "mapped-inset-patch-7",
@@ -15773,7 +18322,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "audit.facade.materials.colours",
+    "audit.stones.en.report",
+    "audit.stones.sv.report"
+   ],
+   "note": "Perspective-visible pale facade patches, partly occluded and inferentially completed. Text confirms grey sandstone squares, not an exact physical count or these patch coordinates. English82/Swedish94 conflict remains unresolved; modeled patches are not a survey."
   },
   {
    "id": "mapped-inset-patch-8",
@@ -15819,7 +18375,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "audit.facade.materials.colours",
+    "audit.stones.en.report",
+    "audit.stones.sv.report"
+   ],
+   "note": "Perspective-visible pale facade patches, partly occluded and inferentially completed. Text confirms grey sandstone squares, not an exact physical count or these patch coordinates. English82/Swedish94 conflict remains unresolved; modeled patches are not a survey."
   },
   {
    "id": "mapped-inset-patch-9",
@@ -15865,7 +18428,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "audit.facade.materials.colours",
+    "audit.stones.en.report",
+    "audit.stones.sv.report"
+   ],
+   "note": "Perspective-visible pale facade patches, partly occluded and inferentially completed. Text confirms grey sandstone squares, not an exact physical count or these patch coordinates. English82/Swedish94 conflict remains unresolved; modeled patches are not a survey."
   },
   {
    "id": "mapped-inset-patch-10",
@@ -15911,7 +18481,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "audit.facade.materials.colours",
+    "audit.stones.en.report",
+    "audit.stones.sv.report"
+   ],
+   "note": "Perspective-visible pale facade patches, partly occluded and inferentially completed. Text confirms grey sandstone squares, not an exact physical count or these patch coordinates. English82/Swedish94 conflict remains unresolved; modeled patches are not a survey."
   },
   {
    "id": "mapped-inset-patch-11",
@@ -15957,7 +18534,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "audit.facade.materials.colours",
+    "audit.stones.en.report",
+    "audit.stones.sv.report"
+   ],
+   "note": "Perspective-visible pale facade patches, partly occluded and inferentially completed. Text confirms grey sandstone squares, not an exact physical count or these patch coordinates. English82/Swedish94 conflict remains unresolved; modeled patches are not a survey."
   },
   {
    "id": "mapped-inset-patch-12",
@@ -16003,7 +18587,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "audit.facade.materials.colours",
+    "audit.stones.en.report",
+    "audit.stones.sv.report"
+   ],
+   "note": "Perspective-visible pale facade patches, partly occluded and inferentially completed. Text confirms grey sandstone squares, not an exact physical count or these patch coordinates. English82/Swedish94 conflict remains unresolved; modeled patches are not a survey."
   },
   {
    "id": "mapped-inset-patch-13",
@@ -16049,7 +18640,14 @@
     1.12,
     1,
     1
-   ]
+   ],
+   "source": "photo",
+   "basis": [
+    "audit.facade.materials.colours",
+    "audit.stones.en.report",
+    "audit.stones.sv.report"
+   ],
+   "note": "Perspective-visible pale facade patches, partly occluded and inferentially completed. Text confirms grey sandstone squares, not an exact physical count or these patch coordinates. English82/Swedish94 conflict remains unresolved; modeled patches are not a survey."
   },
   {
    "id": "portal-pediment-mask",
@@ -16107,7 +18705,13 @@
     "tone": "bright",
     "weight": 0.7,
     "color": "#dfd4bb"
-   }
+   },
+   "source": "stadsholmen2013",
+   "basis": [
+    "audit.portal.authorship",
+    "audit.portal.form"
+   ],
+   "note": "Municipal text confirms original central round-arched limestone portal and reclining-warrior ornament, not this part's exact coordinates. Market stalls obscure portal; sculpture, anatomy, trim, recess depth and proportions are inferred, not traced or measured."
   },
   {
    "id": "portal-terminal-urn",
@@ -16160,7 +18764,13 @@
     "tone": "structure",
     "weight": 0.7,
     "color": "#dfd4bb"
-   }
+   },
+   "source": "stadsholmen2013",
+   "basis": [
+    "audit.portal.authorship",
+    "audit.portal.form"
+   ],
+   "note": "Municipal text confirms original central round-arched limestone portal and reclining-warrior ornament, not this part's exact coordinates. Market stalls obscure portal; sculpture, anatomy, trim, recess depth and proportions are inferred, not traced or measured."
   },
   {
    "id": "ground-door-panel-articulation",
@@ -16303,7 +18913,14 @@
     "tone": "structure",
     "weight": 0.6,
     "color": "#dfd4bb"
-   }
+   },
+   "source": "audit-model",
+   "basis": [
+    "facade.width",
+    "eaves.height",
+    "apex.height"
+   ],
+   "note": "Lower frontage is occluded by market stalls in supplied photograph. Existing shopfront, masonry segmentation and door details are agent-authored inferred completions, not directly visible evidence or measured construction."
   }
  ],
  "articulations": [],
@@ -16433,23 +19050,6 @@
    "museum",
    "cafe"
   ],
-  "critic": {
-   "scene_sha256": "18d032497a01409424b2cf9b95b95b92a3a4cb021c6c8a401cb2043cd640814f",
-   "verdict": "improve",
-   "scores": {
-    "silhouette": 2,
-    "proportions": 2,
-    "identity": 1,
-    "depth": 2,
-    "composition": 2,
-    "assembly": 3,
-    "motion": 3,
-    "density": 2,
-    "honesty": 3
-   },
-   "round": 8,
-   "defects": 6
-  },
   "rounds": [
    {
     "round": 1,
@@ -16562,6 +19162,24 @@
     "summary": "The reference has complete reclining people with bent arms, torsos and long draped legs supported by sloping pediments. Here each side is a "
    }
   ],
-  "outcome": "self-reviewed"
+  "outcome": "self-reviewed",
+  "provenance_note": "Provenance-only audit; physical payload unchanged; historical independent judgement preserved in before backup and sealed checkpoints, not a fresh critique. Native verified facts are documented non-metric statements, not verified part measurements. All part size/shape remain inferred; 82/94 stone conflict unresolved. No rounds or geometry work.",
+  "critic": {
+   "scene_sha256": "804dceba8e708a6630a9aaf0a78a4b1210f2f67878bb04876fd6360ac35c919e",
+   "verdict": "improve",
+   "scores": {
+    "silhouette": 2,
+    "proportions": 2,
+    "identity": 1,
+    "depth": 2,
+    "composition": 3,
+    "assembly": 3,
+    "motion": 3,
+    "density": 1,
+    "honesty": 3
+   },
+   "round": 1,
+   "defects": 6
+  }
  }
 }

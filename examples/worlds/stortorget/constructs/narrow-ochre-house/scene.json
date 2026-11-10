@@ -21,9 +21,30 @@
   {
    "id": "photo",
    "kind": "reference_image",
-   "title": "Ximonic (Simo Räsänen), Stortorget Christmas Market December 2022",
+   "title": "Ximonic (Simo Räsänen), Stortorget Christmas Market December 2022; CC BY-SA 4.0 https://creativecommons.org/licenses/by-sa/4.0/ ; derived visual reconstruction attribution retained.",
    "rights": "permitted",
    "ref": "User-supplied photograph; CC BY-SA 4.0 https://creativecommons.org/licenses/by-sa/4.0/ ; derived visual reconstruction attribution retained."
+  },
+  {
+   "id": "production-estimate",
+   "kind": "generated",
+   "ref": "provenance-audit/before/constructs/photo-right-narrow-ochre-neighbor/scene.json",
+   "rights": "reference_only",
+   "title": "Agent/supervisor inferred two-bay crop reconstruction, envelope and hidden backs; not user measurements"
+  },
+  {
+   "id": "municipal-facades",
+   "kind": "document",
+   "ref": "https://stockholmskallan.stockholm.se/post/12244",
+   "rights": "reference_only",
+   "title": "Stadsmuseet F64132 Lennart af Petersens, Stortorget16-14,1960; reference image viewed on webpage"
+  },
+  {
+   "id": "arkdes-building",
+   "kind": "document",
+   "ref": "https://kulturnav.org/ab3923ff-502c-482b-9a88-f13c92846551",
+   "rights": "reference_only",
+   "title": "ArkDes building catalogue ARKM.B12924 Aesculapius2 at Stortorget14; architect unknown"
   }
  ],
  "facts": [
@@ -31,8 +52,43 @@
    "key": "envelope",
    "value": "Approximately 6 m wide, 10 m deep, eave 18 m; roof ridge about 23 m and chimney about 24.1 m. All metric dimensions are inferred, not photo measurements.",
    "certainty": "inferred",
+   "source": "production-estimate",
+   "note": "Agent/supervisor production estimate refined from the visible crop, not user measurements, survey or a complete facade count. Historic image comparison shows that crop can omit bays."
+  },
+  {
+   "certainty": "inferred",
+   "key": "photo-visible-observation",
+   "note": "Visible-in-reference only: lamp, foreground stall and right-edge architecture obscure much of this facade. A cropped two-axis reconstruction must not imply two total building bays.",
    "source": "photo",
-   "note": "Envelope from supervisor estimate refined by visible two-bay proportions; no documented address."
+   "value": "Narrow ochre/yellow-appearing facade fragment with pale trim, dark sloping roof and a curved eave detail toward the right of the visible crop. Full facade and street level are obscured."
+  },
+  {
+   "certainty": "inferred",
+   "key": "production-envelope",
+   "note": "No published height/footprint or measured coordinates applied; hidden surfaces and cropped repeats remain modeler estimates.",
+   "source": "production-estimate",
+   "value": "Existing six-metre-wide two-bay house is a production completion from a crop, not a verified complete building. Rear door, walls, depth and returns are inferred."
+  },
+  {
+   "certainty": "verified",
+   "key": "arkdes-catalogue-statement",
+   "note": "Documented non-metric statement; not a verified measurement. Catalogue address and unknown architect are source statements; no construction year is supplied. This alone does not verify the modeled two-bay building identity.",
+   "source": "arkdes-building",
+   "value": "ArkDes catalogue ARKM.B12924 names Aesculapius2 and locates it at Stortorget14; architect is listed as Okänd."
+  },
+  {
+   "certainty": "verified",
+   "key": "municipal-reference-record",
+   "note": "Documented non-metric statement; not a verified measurement. 1960 is the photograph date, not construction date.",
+   "source": "municipal-facades",
+   "value": "Stadsmuseet photograph F64132 by Lennart af Petersens is titled Stortorget16-14 and dated 1960."
+  },
+  {
+   "certainty": "inferred",
+   "key": "reference-counterexample",
+   "note": "Visual comparison on the municipal webpage, not a measured survey or construction record. Do not repair geometry in this provenance-only audit.",
+   "source": "municipal-facades",
+   "value": "The matching right-hand facade in the 1960 municipal photograph shows three principal upper window axes and a centrally curved eave, whereas this model has two axes and a right-biased curved detail. Stortorget14/Aesculapius2 is a candidate, not a verified exact model reconstruction."
   }
  ],
  "parts": [
@@ -41,9 +97,9 @@
    "label": "rear core",
    "role": "mass",
    "certainty": "inferred",
-   "source": "photo",
+   "source": "production-estimate",
    "basis": [
-    "envelope"
+    "production-envelope"
    ],
    "stage": 0,
    "shape": {
@@ -67,16 +123,17 @@
     "tone": "faint",
     "weight": 0.45,
     "color": "#c99b50"
-   }
+   },
+   "note": "Agent-only envelope/hidden back, side or occluded ground-level completion. Photograph does not directly support this geometry; size and shape inferred."
   },
   {
    "id": "front-spandrel-0",
    "label": "front spandrel 0",
    "role": "mass",
    "certainty": "inferred",
-   "source": "photo",
+   "source": "production-estimate",
    "basis": [
-    "envelope"
+    "production-envelope"
    ],
    "stage": 0,
    "shape": {
@@ -99,7 +156,8 @@
     "tone": "faint",
     "weight": 0.4,
     "color": "#c99b50"
-   }
+   },
+   "note": "Agent-only envelope/hidden back, side or occluded ground-level completion. Photograph does not directly support this geometry; size and shape inferred."
   },
   {
    "id": "front-spandrel-1",
@@ -108,7 +166,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 0,
    "shape": {
@@ -131,7 +190,8 @@
     "tone": "faint",
     "weight": 0.4,
     "color": "#c99b50"
-   }
+   },
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "front-spandrel-2",
@@ -140,7 +200,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 0,
    "shape": {
@@ -163,7 +224,8 @@
     "tone": "faint",
     "weight": 0.4,
     "color": "#c99b50"
-   }
+   },
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "front-spandrel-3",
@@ -172,7 +234,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 0,
    "shape": {
@@ -195,7 +258,8 @@
     "tone": "faint",
     "weight": 0.4,
     "color": "#c99b50"
-   }
+   },
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "front-upper-spandrel",
@@ -204,7 +268,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 0,
    "shape": {
@@ -227,7 +292,8 @@
     "tone": "faint",
     "weight": 0.4,
     "color": "#c99b50"
-   }
+   },
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "front-pier-0",
@@ -236,7 +302,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 0,
    "shape": {
@@ -259,7 +326,8 @@
     "tone": "faint",
     "weight": 0.4,
     "color": "#c99b50"
-   }
+   },
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "front-pier-1",
@@ -268,7 +336,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 0,
    "shape": {
@@ -291,7 +360,8 @@
     "tone": "faint",
     "weight": 0.4,
     "color": "#c99b50"
-   }
+   },
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "front-pier-2",
@@ -300,7 +370,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 0,
    "shape": {
@@ -323,16 +394,17 @@
     "tone": "faint",
     "weight": 0.4,
     "color": "#c99b50"
-   }
+   },
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "bay-0-0-glazing",
    "label": "bay 0 0 glazing",
    "role": "detail",
    "certainty": "inferred",
-   "source": "photo",
+   "source": "production-estimate",
    "basis": [
-    "envelope"
+    "production-envelope"
    ],
    "stage": 3,
    "shape": {
@@ -353,16 +425,17 @@
     "fill": "glass",
     "tone": "faint",
     "color": "#2e3b40"
-   }
+   },
+   "note": "Agent-only envelope/hidden back, side or occluded ground-level completion. Photograph does not directly support this geometry; size and shape inferred."
   },
   {
    "id": "bay-0-0-jamb-l",
    "label": "bay 0 0 jamb l",
    "role": "identity",
    "certainty": "inferred",
-   "source": "photo",
+   "source": "production-estimate",
    "basis": [
-    "envelope"
+    "production-envelope"
    ],
    "stage": 2,
    "shape": {
@@ -387,16 +460,17 @@
     1.0,
     1.0,
     1.9
-   ]
+   ],
+   "note": "Agent-only envelope/hidden back, side or occluded ground-level completion. Photograph does not directly support this geometry; size and shape inferred."
   },
   {
    "id": "bay-0-0-jamb-r",
    "label": "bay 0 0 jamb r",
    "role": "identity",
    "certainty": "inferred",
-   "source": "photo",
+   "source": "production-estimate",
    "basis": [
-    "envelope"
+    "production-envelope"
    ],
    "stage": 2,
    "shape": {
@@ -421,16 +495,17 @@
     1.0,
     1.0,
     1.9
-   ]
+   ],
+   "note": "Agent-only envelope/hidden back, side or occluded ground-level completion. Photograph does not directly support this geometry; size and shape inferred."
   },
   {
    "id": "bay-0-0-head",
    "label": "bay 0 0 head",
    "role": "identity",
    "certainty": "inferred",
-   "source": "photo",
+   "source": "production-estimate",
    "basis": [
-    "envelope"
+    "production-envelope"
    ],
    "stage": 2,
    "shape": {
@@ -455,16 +530,17 @@
     0.7749,
     1.0,
     1.0
-   ]
+   ],
+   "note": "Agent-only envelope/hidden back, side or occluded ground-level completion. Photograph does not directly support this geometry; size and shape inferred."
   },
   {
    "id": "bay-0-0-sill",
    "label": "bay 0 0 sill",
    "role": "identity",
    "certainty": "inferred",
-   "source": "photo",
+   "source": "production-estimate",
    "basis": [
-    "envelope"
+    "production-envelope"
    ],
    "stage": 2,
    "shape": {
@@ -489,16 +565,17 @@
     0.7749,
     1.0,
     1.6
-   ]
+   ],
+   "note": "Agent-only envelope/hidden back, side or occluded ground-level completion. Photograph does not directly support this geometry; size and shape inferred."
   },
   {
    "id": "bay-0-0-center-bar",
    "label": "bay 0 0 center bar",
    "role": "detail",
    "certainty": "inferred",
-   "source": "photo",
+   "source": "production-estimate",
    "basis": [
-    "envelope"
+    "production-envelope"
    ],
    "stage": 3,
    "shape": {
@@ -518,16 +595,17 @@
    "look": {
     "tone": "structure",
     "color": "#65513b"
-   }
+   },
+   "note": "Agent-only envelope/hidden back, side or occluded ground-level completion. Photograph does not directly support this geometry; size and shape inferred."
   },
   {
    "id": "bay-0-0-cross-0",
    "label": "bay 0 0 cross 0",
    "role": "detail",
    "certainty": "inferred",
-   "source": "photo",
+   "source": "production-estimate",
    "basis": [
-    "envelope"
+    "production-envelope"
    ],
    "stage": 3,
    "shape": {
@@ -552,16 +630,17 @@
     0.7749,
     1.0,
     1.0
-   ]
+   ],
+   "note": "Agent-only envelope/hidden back, side or occluded ground-level completion. Photograph does not directly support this geometry; size and shape inferred."
   },
   {
    "id": "bay-0-0-cross-1",
    "label": "bay 0 0 cross 1",
    "role": "detail",
    "certainty": "inferred",
-   "source": "photo",
+   "source": "production-estimate",
    "basis": [
-    "envelope"
+    "production-envelope"
    ],
    "stage": 3,
    "shape": {
@@ -586,16 +665,17 @@
     0.7749,
     1.0,
     1.0
-   ]
+   ],
+   "note": "Agent-only envelope/hidden back, side or occluded ground-level completion. Photograph does not directly support this geometry; size and shape inferred."
   },
   {
    "id": "bay-0-1-glazing",
    "label": "bay 0 1 glazing",
    "role": "detail",
    "certainty": "inferred",
-   "source": "photo",
+   "source": "production-estimate",
    "basis": [
-    "envelope"
+    "production-envelope"
    ],
    "stage": 3,
    "shape": {
@@ -616,16 +696,17 @@
     "fill": "glass",
     "tone": "faint",
     "color": "#2e3b40"
-   }
+   },
+   "note": "Agent-only envelope/hidden back, side or occluded ground-level completion. Photograph does not directly support this geometry; size and shape inferred."
   },
   {
    "id": "bay-0-1-jamb-l",
    "label": "bay 0 1 jamb l",
    "role": "identity",
    "certainty": "inferred",
-   "source": "photo",
+   "source": "production-estimate",
    "basis": [
-    "envelope"
+    "production-envelope"
    ],
    "stage": 2,
    "shape": {
@@ -650,16 +731,17 @@
     1.0,
     1.0,
     1.9
-   ]
+   ],
+   "note": "Agent-only envelope/hidden back, side or occluded ground-level completion. Photograph does not directly support this geometry; size and shape inferred."
   },
   {
    "id": "bay-0-1-jamb-r",
    "label": "bay 0 1 jamb r",
    "role": "identity",
    "certainty": "inferred",
-   "source": "photo",
+   "source": "production-estimate",
    "basis": [
-    "envelope"
+    "production-envelope"
    ],
    "stage": 2,
    "shape": {
@@ -684,16 +766,17 @@
     1.0,
     1.0,
     1.9
-   ]
+   ],
+   "note": "Agent-only envelope/hidden back, side or occluded ground-level completion. Photograph does not directly support this geometry; size and shape inferred."
   },
   {
    "id": "bay-0-1-head",
    "label": "bay 0 1 head",
    "role": "identity",
    "certainty": "inferred",
-   "source": "photo",
+   "source": "production-estimate",
    "basis": [
-    "envelope"
+    "production-envelope"
    ],
    "stage": 2,
    "shape": {
@@ -718,16 +801,17 @@
     0.7749,
     1.0,
     1.0
-   ]
+   ],
+   "note": "Agent-only envelope/hidden back, side or occluded ground-level completion. Photograph does not directly support this geometry; size and shape inferred."
   },
   {
    "id": "bay-0-1-sill",
    "label": "bay 0 1 sill",
    "role": "identity",
    "certainty": "inferred",
-   "source": "photo",
+   "source": "production-estimate",
    "basis": [
-    "envelope"
+    "production-envelope"
    ],
    "stage": 2,
    "shape": {
@@ -752,16 +836,17 @@
     0.7749,
     1.0,
     1.6
-   ]
+   ],
+   "note": "Agent-only envelope/hidden back, side or occluded ground-level completion. Photograph does not directly support this geometry; size and shape inferred."
   },
   {
    "id": "bay-0-1-center-bar",
    "label": "bay 0 1 center bar",
    "role": "detail",
    "certainty": "inferred",
-   "source": "photo",
+   "source": "production-estimate",
    "basis": [
-    "envelope"
+    "production-envelope"
    ],
    "stage": 3,
    "shape": {
@@ -781,16 +866,17 @@
    "look": {
     "tone": "structure",
     "color": "#65513b"
-   }
+   },
+   "note": "Agent-only envelope/hidden back, side or occluded ground-level completion. Photograph does not directly support this geometry; size and shape inferred."
   },
   {
    "id": "bay-0-1-cross-0",
    "label": "bay 0 1 cross 0",
    "role": "detail",
    "certainty": "inferred",
-   "source": "photo",
+   "source": "production-estimate",
    "basis": [
-    "envelope"
+    "production-envelope"
    ],
    "stage": 3,
    "shape": {
@@ -815,16 +901,17 @@
     0.7749,
     1.0,
     1.0
-   ]
+   ],
+   "note": "Agent-only envelope/hidden back, side or occluded ground-level completion. Photograph does not directly support this geometry; size and shape inferred."
   },
   {
    "id": "bay-0-1-cross-1",
    "label": "bay 0 1 cross 1",
    "role": "detail",
    "certainty": "inferred",
-   "source": "photo",
+   "source": "production-estimate",
    "basis": [
-    "envelope"
+    "production-envelope"
    ],
    "stage": 3,
    "shape": {
@@ -849,7 +936,8 @@
     0.7749,
     1.0,
     1.0
-   ]
+   ],
+   "note": "Agent-only envelope/hidden back, side or occluded ground-level completion. Photograph does not directly support this geometry; size and shape inferred."
   },
   {
    "id": "bay-1-0-glazing",
@@ -858,7 +946,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 3,
    "shape": {
@@ -879,7 +968,8 @@
     "fill": "glass",
     "tone": "faint",
     "color": "#2e3b40"
-   }
+   },
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "bay-1-0-jamb-l",
@@ -888,7 +978,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 2,
    "shape": {
@@ -913,7 +1004,8 @@
     1.0,
     1.0,
     1.9
-   ]
+   ],
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "bay-1-0-jamb-r",
@@ -922,7 +1014,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 2,
    "shape": {
@@ -947,7 +1040,8 @@
     1.0,
     1.0,
     1.9
-   ]
+   ],
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "bay-1-0-head",
@@ -956,7 +1050,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 2,
    "shape": {
@@ -981,7 +1076,8 @@
     0.7749,
     1.0,
     1.0
-   ]
+   ],
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "bay-1-0-sill",
@@ -990,7 +1086,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 2,
    "shape": {
@@ -1015,7 +1112,8 @@
     0.7749,
     1.0,
     1.6
-   ]
+   ],
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "bay-1-0-center-bar",
@@ -1024,7 +1122,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 3,
    "shape": {
@@ -1044,7 +1143,8 @@
    "look": {
     "tone": "structure",
     "color": "#65513b"
-   }
+   },
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "bay-1-0-cross-0",
@@ -1053,7 +1153,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 3,
    "shape": {
@@ -1078,7 +1179,8 @@
     0.7749,
     1.0,
     1.0
-   ]
+   ],
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "bay-1-0-cross-1",
@@ -1087,7 +1189,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 3,
    "shape": {
@@ -1112,7 +1215,8 @@
     0.7749,
     1.0,
     1.0
-   ]
+   ],
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "bay-1-1-glazing",
@@ -1121,7 +1225,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 3,
    "shape": {
@@ -1142,7 +1247,8 @@
     "fill": "glass",
     "tone": "faint",
     "color": "#2e3b40"
-   }
+   },
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "bay-1-1-jamb-l",
@@ -1151,7 +1257,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 2,
    "shape": {
@@ -1176,7 +1283,8 @@
     1.0,
     1.0,
     1.9
-   ]
+   ],
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "bay-1-1-jamb-r",
@@ -1185,7 +1293,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 2,
    "shape": {
@@ -1210,7 +1319,8 @@
     1.0,
     1.0,
     1.9
-   ]
+   ],
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "bay-1-1-head",
@@ -1219,7 +1329,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 2,
    "shape": {
@@ -1244,7 +1355,8 @@
     0.7749,
     1.0,
     1.0
-   ]
+   ],
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "bay-1-1-sill",
@@ -1253,7 +1365,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 2,
    "shape": {
@@ -1278,7 +1391,8 @@
     0.7749,
     1.0,
     1.6
-   ]
+   ],
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "bay-1-1-center-bar",
@@ -1287,7 +1401,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 3,
    "shape": {
@@ -1307,7 +1422,8 @@
    "look": {
     "tone": "structure",
     "color": "#65513b"
-   }
+   },
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "bay-1-1-cross-0",
@@ -1316,7 +1432,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 3,
    "shape": {
@@ -1341,7 +1458,8 @@
     0.7749,
     1.0,
     1.0
-   ]
+   ],
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "bay-1-1-cross-1",
@@ -1350,7 +1468,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 3,
    "shape": {
@@ -1375,7 +1494,8 @@
     0.7749,
     1.0,
     1.0
-   ]
+   ],
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "bay-2-0-glazing",
@@ -1384,7 +1504,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 3,
    "shape": {
@@ -1405,7 +1526,8 @@
     "fill": "glass",
     "tone": "faint",
     "color": "#2e3b40"
-   }
+   },
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "bay-2-0-jamb-l",
@@ -1414,7 +1536,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 2,
    "shape": {
@@ -1439,7 +1562,8 @@
     1.0,
     1.0,
     1.9
-   ]
+   ],
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "bay-2-0-jamb-r",
@@ -1448,7 +1572,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 2,
    "shape": {
@@ -1473,7 +1598,8 @@
     1.0,
     1.0,
     1.9
-   ]
+   ],
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "bay-2-0-head",
@@ -1482,7 +1608,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 2,
    "shape": {
@@ -1507,7 +1634,8 @@
     0.7749,
     1.0,
     1.0
-   ]
+   ],
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "bay-2-0-sill",
@@ -1516,7 +1644,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 2,
    "shape": {
@@ -1541,7 +1670,8 @@
     0.7749,
     1.0,
     1.6
-   ]
+   ],
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "bay-2-0-center-bar",
@@ -1550,7 +1680,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 3,
    "shape": {
@@ -1570,7 +1701,8 @@
    "look": {
     "tone": "structure",
     "color": "#65513b"
-   }
+   },
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "bay-2-0-cross-0",
@@ -1579,7 +1711,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 3,
    "shape": {
@@ -1604,7 +1737,8 @@
     0.7749,
     1.0,
     1.0
-   ]
+   ],
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "bay-2-0-cross-1",
@@ -1613,7 +1747,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 3,
    "shape": {
@@ -1638,7 +1773,8 @@
     0.7749,
     1.0,
     1.0
-   ]
+   ],
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "bay-2-1-glazing",
@@ -1647,7 +1783,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 3,
    "shape": {
@@ -1668,7 +1805,8 @@
     "fill": "glass",
     "tone": "faint",
     "color": "#2e3b40"
-   }
+   },
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "bay-2-1-jamb-l",
@@ -1677,7 +1815,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 2,
    "shape": {
@@ -1702,7 +1841,8 @@
     1.0,
     1.0,
     1.9
-   ]
+   ],
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "bay-2-1-jamb-r",
@@ -1711,7 +1851,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 2,
    "shape": {
@@ -1736,7 +1877,8 @@
     1.0,
     1.0,
     1.9
-   ]
+   ],
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "bay-2-1-head",
@@ -1745,7 +1887,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 2,
    "shape": {
@@ -1770,7 +1913,8 @@
     0.7749,
     1.0,
     1.0
-   ]
+   ],
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "bay-2-1-sill",
@@ -1779,7 +1923,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 2,
    "shape": {
@@ -1804,7 +1949,8 @@
     0.7749,
     1.0,
     1.6
-   ]
+   ],
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "bay-2-1-center-bar",
@@ -1813,7 +1959,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 3,
    "shape": {
@@ -1833,7 +1980,8 @@
    "look": {
     "tone": "structure",
     "color": "#65513b"
-   }
+   },
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "bay-2-1-cross-0",
@@ -1842,7 +1990,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 3,
    "shape": {
@@ -1867,7 +2016,8 @@
     0.7749,
     1.0,
     1.0
-   ]
+   ],
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "bay-2-1-cross-1",
@@ -1876,7 +2026,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 3,
    "shape": {
@@ -1901,7 +2052,8 @@
     0.7749,
     1.0,
     1.0
-   ]
+   ],
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "bay-3-0-glazing",
@@ -1910,7 +2062,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 3,
    "shape": {
@@ -1931,7 +2084,8 @@
     "fill": "glass",
     "tone": "faint",
     "color": "#2e3b40"
-   }
+   },
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "bay-3-0-jamb-l",
@@ -1940,7 +2094,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 2,
    "shape": {
@@ -1965,7 +2120,8 @@
     1.0,
     1.0,
     1.9
-   ]
+   ],
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "bay-3-0-jamb-r",
@@ -1974,7 +2130,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 2,
    "shape": {
@@ -1999,7 +2156,8 @@
     1.0,
     1.0,
     1.9
-   ]
+   ],
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "bay-3-0-head",
@@ -2008,7 +2166,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 2,
    "shape": {
@@ -2033,7 +2192,8 @@
     0.7749,
     1.0,
     1.0
-   ]
+   ],
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "bay-3-0-sill",
@@ -2042,7 +2202,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 2,
    "shape": {
@@ -2067,7 +2228,8 @@
     0.7749,
     1.0,
     1.6
-   ]
+   ],
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "bay-3-0-center-bar",
@@ -2076,7 +2238,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 3,
    "shape": {
@@ -2096,7 +2259,8 @@
    "look": {
     "tone": "structure",
     "color": "#65513b"
-   }
+   },
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "bay-3-0-cross-0",
@@ -2105,7 +2269,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 3,
    "shape": {
@@ -2130,7 +2295,8 @@
     0.7749,
     1.0,
     1.0
-   ]
+   ],
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "bay-3-0-cross-1",
@@ -2139,7 +2305,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 3,
    "shape": {
@@ -2164,7 +2331,8 @@
     0.7749,
     1.0,
     1.0
-   ]
+   ],
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "bay-3-1-glazing",
@@ -2173,7 +2341,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 3,
    "shape": {
@@ -2194,7 +2363,8 @@
     "fill": "glass",
     "tone": "faint",
     "color": "#2e3b40"
-   }
+   },
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "bay-3-1-jamb-l",
@@ -2203,7 +2373,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 2,
    "shape": {
@@ -2228,7 +2399,8 @@
     1.0,
     1.0,
     1.9
-   ]
+   ],
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "bay-3-1-jamb-r",
@@ -2237,7 +2409,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 2,
    "shape": {
@@ -2262,7 +2435,8 @@
     1.0,
     1.0,
     1.9
-   ]
+   ],
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "bay-3-1-head",
@@ -2271,7 +2445,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 2,
    "shape": {
@@ -2296,7 +2471,8 @@
     0.7749,
     1.0,
     1.0
-   ]
+   ],
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "bay-3-1-sill",
@@ -2305,7 +2481,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 2,
    "shape": {
@@ -2330,7 +2507,8 @@
     0.7749,
     1.0,
     1.6
-   ]
+   ],
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "bay-3-1-center-bar",
@@ -2339,7 +2517,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 3,
    "shape": {
@@ -2359,7 +2538,8 @@
    "look": {
     "tone": "structure",
     "color": "#65513b"
-   }
+   },
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "bay-3-1-cross-0",
@@ -2368,7 +2548,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 3,
    "shape": {
@@ -2393,7 +2574,8 @@
     0.7749,
     1.0,
     1.0
-   ]
+   ],
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "bay-3-1-cross-1",
@@ -2402,7 +2584,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 3,
    "shape": {
@@ -2427,7 +2610,8 @@
     0.7749,
     1.0,
     1.0
-   ]
+   ],
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "edge-trim-left",
@@ -2436,7 +2620,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 2,
    "shape": {
@@ -2456,7 +2641,8 @@
    "look": {
     "tone": "bright",
     "color": "#ded1b2"
-   }
+   },
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "edge-trim-right",
@@ -2465,7 +2651,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 2,
    "shape": {
@@ -2485,7 +2672,8 @@
    "look": {
     "tone": "bright",
     "color": "#ded1b2"
-   }
+   },
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "storey-ribbon-2",
@@ -2494,7 +2682,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 2,
    "shape": {
@@ -2515,16 +2704,17 @@
     "tone": "hairline",
     "weight": 0.5,
     "color": "#ded1b2"
-   }
+   },
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "base-stone-skirting",
    "label": "base stone skirting",
    "role": "structure",
    "certainty": "inferred",
-   "source": "photo",
+   "source": "production-estimate",
    "basis": [
-    "envelope"
+    "production-envelope"
    ],
    "stage": 1,
    "shape": {
@@ -2544,7 +2734,8 @@
    "look": {
     "tone": "structure",
     "color": "#938b78"
-   }
+   },
+   "note": "Agent-only envelope/hidden back, side or occluded ground-level completion. Photograph does not directly support this geometry; size and shape inferred."
   },
   {
    "id": "eave-course-0",
@@ -2553,7 +2744,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 2,
    "shape": {
@@ -2573,7 +2765,8 @@
    "look": {
     "tone": "bright",
     "color": "#ded1b2"
-   }
+   },
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "eave-course-1",
@@ -2582,7 +2775,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 2,
    "shape": {
@@ -2602,7 +2796,8 @@
    "look": {
     "tone": "bright",
     "color": "#ded1b2"
-   }
+   },
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "eave-course-2",
@@ -2611,7 +2806,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 2,
    "shape": {
@@ -2631,7 +2827,8 @@
    "look": {
     "tone": "bright",
     "color": "#ded1b2"
-   }
+   },
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "metal-roof",
@@ -2640,7 +2837,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 1,
    "shape": {
@@ -2665,7 +2863,8 @@
     "tone": "structure",
     "weight": 1.4,
     "color": "#444b4b"
-   }
+   },
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "roof-standing-seams",
@@ -2674,7 +2873,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 3,
    "shape": {
@@ -2850,7 +3050,8 @@
     1.0,
     0.76,
     1.0
-   ]
+   ],
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "ridge-cap",
@@ -2859,7 +3060,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 2,
    "shape": {
@@ -2879,7 +3081,8 @@
    "look": {
     "tone": "structure",
     "color": "#444b4b"
-   }
+   },
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "chimney-shaft",
@@ -2888,7 +3091,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 1,
    "shape": {
@@ -2909,7 +3113,8 @@
     "fill": "dark",
     "tone": "structure",
     "color": "#4a4b44"
-   }
+   },
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "chimney-neck",
@@ -2918,7 +3123,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 2,
    "shape": {
@@ -2938,7 +3144,8 @@
    "look": {
     "tone": "bright",
     "color": "#4a4b44"
-   }
+   },
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "chimney-cap",
@@ -2947,7 +3154,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 2,
    "shape": {
@@ -2967,7 +3175,8 @@
    "look": {
     "tone": "structure",
     "color": "#4a4b44"
-   }
+   },
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "right-eave-arch",
@@ -2976,7 +3185,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "reference-counterexample"
    ],
    "stage": 2,
    "shape": {
@@ -3099,16 +3309,17 @@
     "tone": "bright",
     "weight": 1.25,
     "color": "#ded1b2"
-   }
+   },
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "rear-door-leaf",
    "label": "rear door leaf",
    "role": "detail",
    "certainty": "inferred",
-   "source": "photo",
+   "source": "production-estimate",
    "basis": [
-    "envelope"
+    "production-envelope"
    ],
    "stage": 2,
    "shape": {
@@ -3128,7 +3339,8 @@
    "look": {
     "fill": "dark",
     "color": "#584832"
-   }
+   },
+   "note": "Agent-only envelope/hidden back, side or occluded ground-level completion. Photograph does not directly support this geometry; size and shape inferred."
   },
   {
    "id": "right-eave-wall-backing",
@@ -3137,7 +3349,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "reference-counterexample"
    ],
    "stage": 1,
    "shape": {
@@ -3217,7 +3430,8 @@
     "tone": "identity",
     "weight": 0.6,
     "color": "#c99b50"
-   }
+   },
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "chimney-coping-step",
@@ -3225,7 +3439,8 @@
    "role": "identity",
    "certainty": "inferred",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "source": "photo",
    "stage": 2,
@@ -3246,7 +3461,8 @@
    "look": {
     "tone": "structure",
     "color": "#4a4b44"
-   }
+   },
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "roof-transverse-joints",
@@ -3254,7 +3470,8 @@
    "role": "detail",
    "certainty": "inferred",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "source": "photo",
    "stage": 3,
@@ -3314,7 +3531,8 @@
     1.0,
     0.76,
     1.0
-   ]
+   ],
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "id": "chimney-flashing-apron",
@@ -3323,7 +3541,8 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "stage": 2,
    "shape": {
@@ -3350,7 +3569,8 @@
     -40.0,
     0.0,
     0.0
-   ]
+   ],
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "at": [
@@ -3359,7 +3579,7 @@
     -5
    ],
    "basis": [
-    "envelope"
+    "production-envelope"
    ],
    "certainty": "inferred",
    "id": "plain-side-plinth-left",
@@ -3378,8 +3598,9 @@
     ],
     "type": "box"
    },
-   "source": "photo",
-   "stage": 1
+   "source": "production-estimate",
+   "stage": 1,
+   "note": "Agent-only envelope/hidden back, side or occluded ground-level completion. Photograph does not directly support this geometry; size and shape inferred."
   },
   {
    "at": [
@@ -3388,7 +3609,7 @@
     -5
    ],
    "basis": [
-    "envelope"
+    "production-envelope"
    ],
    "certainty": "inferred",
    "id": "plain-side-plinth-right",
@@ -3407,8 +3628,9 @@
     ],
     "type": "box"
    },
-   "source": "photo",
-   "stage": 1
+   "source": "production-estimate",
+   "stage": 1,
+   "note": "Agent-only envelope/hidden back, side or occluded ground-level completion. Photograph does not directly support this geometry; size and shape inferred."
   },
   {
    "at": [
@@ -3417,7 +3639,7 @@
     -10.04
    ],
    "basis": [
-    "envelope"
+    "production-envelope"
    ],
    "certainty": "inferred",
    "id": "plain-rear-plinth",
@@ -3436,8 +3658,9 @@
     ],
     "type": "box"
    },
-   "source": "photo",
-   "stage": 1
+   "source": "production-estimate",
+   "stage": 1,
+   "note": "Agent-only envelope/hidden back, side or occluded ground-level completion. Photograph does not directly support this geometry; size and shape inferred."
   },
   {
    "at": [
@@ -3446,7 +3669,7 @@
     -5
    ],
    "basis": [
-    "envelope"
+    "production-envelope"
    ],
    "certainty": "inferred",
    "id": "plain-side-eave-right",
@@ -3465,8 +3688,9 @@
     ],
     "type": "box"
    },
-   "source": "photo",
-   "stage": 1
+   "source": "production-estimate",
+   "stage": 1,
+   "note": "Agent-only envelope/hidden back, side or occluded ground-level completion. Photograph does not directly support this geometry; size and shape inferred."
   },
   {
    "at": [
@@ -3475,7 +3699,7 @@
     -5
    ],
    "basis": [
-    "envelope"
+    "production-envelope"
    ],
    "certainty": "inferred",
    "id": "plain-side-eave-left",
@@ -3494,8 +3718,9 @@
     ],
     "type": "box"
    },
-   "source": "photo",
-   "stage": 1
+   "source": "production-estimate",
+   "stage": 1,
+   "note": "Agent-only envelope/hidden back, side or occluded ground-level completion. Photograph does not directly support this geometry; size and shape inferred."
   },
   {
    "at": [
@@ -3504,7 +3729,8 @@
     0.1
    ],
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "certainty": "inferred",
    "id": "left-downpipe",
@@ -3547,7 +3773,8 @@
     "caps": true
    },
    "source": "photo",
-   "stage": 2
+   "stage": 2,
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "at": [
@@ -3556,7 +3783,8 @@
     0.17
    ],
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "certainty": "inferred",
    "id": "front-eaves-gutter",
@@ -3576,7 +3804,8 @@
     "type": "box"
    },
    "source": "photo",
-   "stage": 2
+   "stage": 2,
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "at": [
@@ -3585,7 +3814,8 @@
     0.14
    ],
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "certainty": "inferred",
    "id": "pipe-support-clip",
@@ -3615,7 +3845,8 @@
     "type": "box"
    },
    "source": "photo",
-   "stage": 1
+   "stage": 1,
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "at": [
@@ -3624,7 +3855,8 @@
     0.0
    ],
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "certainty": "inferred",
    "id": "chimney-flashing-fold",
@@ -3671,7 +3903,8 @@
     "type": "tube"
    },
    "source": "photo",
-   "stage": 2
+   "stage": 2,
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   },
   {
    "at": [
@@ -3680,7 +3913,7 @@
     0
    ],
    "basis": [
-    "envelope"
+    "production-envelope"
    ],
    "certainty": "inferred",
    "id": "plain-party-wall-contours",
@@ -3770,8 +4003,9 @@
     ],
     "type": "paths"
    },
-   "source": "photo",
-   "stage": 3
+   "source": "production-estimate",
+   "stage": 3,
+   "note": "Agent-only envelope/hidden back, side or occluded ground-level completion. Photograph does not directly support this geometry; size and shape inferred."
   },
   {
    "at": [
@@ -3780,7 +4014,8 @@
     0
    ],
    "basis": [
-    "envelope"
+    "photo-visible-observation",
+    "production-envelope"
    ],
    "certainty": "inferred",
    "id": "metal-standing-seam-relief",
@@ -3827,7 +4062,8 @@
     "type": "tube"
    },
    "source": "photo",
-   "stage": 3
+   "stage": 3,
+   "note": "Photo-crop motif only; complete facade/bay count not verified. All dimensions, fine profiles and hidden continuation inferred; archival comparison exposes a possible omitted bay."
   }
  ],
  "assets": [],
@@ -3943,23 +4179,6 @@
   "next": [
    "Check roof interpretation and cropped window inference against the photograph."
   ],
-  "critic": {
-   "scene_sha256": "f70509e3afa21dbc4f9f714ca6a79fe33c92ddcac251b6aaa5135058b8ea0de7",
-   "verdict": "good",
-   "scores": {
-    "silhouette": 2,
-    "proportions": 2,
-    "identity": 2,
-    "depth": 2,
-    "composition": 3,
-    "assembly": 3,
-    "motion": 3,
-    "density": 3,
-    "honesty": 3
-   },
-   "round": 11,
-   "defects": 4
-  },
   "rounds": [
    {
     "round": 1,
@@ -4093,7 +4312,25 @@
     ],
     "summary": "The identifying right eave semicircle has several thick rounded concentric profiles and reads as an ornamental horseshoe. The photograph sho"
    }
-  ]
+  ],
+  "provenance_note": "Provenance-only audit; physical payload unchanged; historical independent judgement preserved in before backup and sealed checkpoints, not a fresh critique.",
+  "critic": {
+   "scene_sha256": "2056d2ec3f64a2c965190ee69f1f07944c7f1e69bfeef48bd4fa4637c6f6c1d6",
+   "verdict": "good",
+   "scores": {
+    "silhouette": 2,
+    "proportions": 2,
+    "identity": 2,
+    "depth": 2,
+    "composition": 3,
+    "assembly": 3,
+    "motion": 3,
+    "density": 2,
+    "honesty": 3
+   },
+   "round": 1,
+   "defects": 5
+  }
  },
  "annotations": [
   {
