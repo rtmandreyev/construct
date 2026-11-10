@@ -97,7 +97,8 @@
         // colours chosen by hand: the card's Finish; a click on a part goes back to the card, which saves the choice
         if (d.action === "on" || d.action === "off") window.HOLO.finish.set(d.action === "on");
         else if (d.action === "preview" && typeof d.color === "string" && /^#[0-9a-fA-F]{6}$/.test(d.color) && Array.isArray(d.parts) && d.parts.length <= 64)
-          window.HOLO.finish.preview(d.parts.map(String), d.color);
+          window.HOLO.finish.preview(d.parts.length ? d.parts.map(String) : null, d.color, null,
+                                     typeof d.material === "string" && d.material.length <= 120 ? d.material : null);
         else if (d.action === "clear") window.HOLO.finish.preview(null);
         setTimeout(tell, 30);
       }
@@ -126,6 +127,7 @@
                                      label: String(pick.label || "").slice(0, 120), color: pick.color || null, finish: pick.finish || null,
                                      pattern: pick.pattern ? String(pick.pattern).slice(0, 120) : null,
                                      shared: Array.isArray(pick.shared) ? pick.shared.slice(0, 50).map(String) : [],
+                                     material: pick.material ? String(pick.material).slice(0, 120) : null, together: Math.min(10000, +pick.together || 0),
                                      title: pick.title ? String(pick.title).slice(0, 120) : null,
                                      siblings: Math.min(10000, +pick.siblings || 0) } : null }, "*"); }
           catch (e) { /* the host went away */ }

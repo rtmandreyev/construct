@@ -534,6 +534,8 @@ function PageFrame({ route, kind, loaderUrl, height, onCard, onState, control, o
         onFinish(p && id(p.part) ? { placement: p.placement && PLACE_ID.test(String(p.placement)) ? p.placement : null, part: p.part,
           shared: Array.isArray(p.shared) ? p.shared.filter(x => PLACE_ID.test(String(x))).slice(0, 50) : [],
           title: typeof p.title === 'string' ? p.title.slice(0, 120) : null,
+          material: typeof p.material === 'string' && p.material.length <= 120 ? p.material : null,
+          together: Math.max(0, Math.min(10000, +p.together || 0)),
           pattern: id(p.pattern), label: String(p.label || p.part).slice(0, 120), siblings: Math.max(0, Math.min(10000, +p.siblings || 0)),
           color: typeof p.color === 'string' && HEXCOL.test(p.color) ? p.color.toLowerCase() : null,
           finish: FINISH_NAMES.includes(p.finish) ? p.finish : null } : null)
@@ -561,9 +563,9 @@ function PageFrame({ route, kind, loaderUrl, height, onCard, onState, control, o
           setTimeout(() => { if (cameraWait.current === resolve) { cameraWait.current = null; resolve(null) } }, 3000)
         }),
         select: id => PLACE_ID.test(String(id)) && post({ type: 'construct:arrange', action: 'select', id }),
-        finish: (action, parts, color) => ['on', 'off', 'clear'].includes(action) ? post({ type: 'construct:finish', action })
+        finish: (action, parts, color, material) => ['on', 'off', 'clear'].includes(action) ? post({ type: 'construct:finish', action })
           : action === 'preview' && Array.isArray(parts) && parts.every(x => FINISH_PART.test(x)) && HEXCOL.test(color) &&
-            post({ type: 'construct:finish', action, parts, color }),
+            post({ type: 'construct:finish', action, parts, color, material: typeof material === 'string' ? material.slice(0, 120) : null }),
         action: name => ['solid', 'provenance', 'replay', 'skip', 'home', 'keys'].includes(name) && post({ type: 'construct:action', name }),
         view: id => typeof id === 'string' && id.length < 80 && post({ type: 'construct:view', id })
       }
@@ -617,7 +619,7 @@ function ConstructCard({ project, build, loaderUrl, title, parts, sessionId, hei
   const [full, setFull] = useState(false)               // the card over the whole window, inside Hermes
   const [choosing, setChoosing] = useState(false)       // a construct's card: choosing the world to drop it into
   // Finish: colours chosen by hand in the solid view; the part clicked, the colour and finish chosen, this part or its kind
-  const [fin, setFin] = useState({ on: false, pick: null, color: '#888888', finish: 'paint', all: true })
+  const [fin, setFin] = useState({ on: false, pick: null, color: '#888888', finish: 'paint', scope: 'one' })
   useEffect(() => {
     if (!full || !CTX) return undefined
     return CTX.addEventListener(window, 'keydown', e => { if (e.key === 'Escape') setFull(false) })
@@ -700,9 +702,12 @@ function ConstructCard({ project, build, loaderUrl, title, parts, sessionId, hei
     }
     command('construct place ' + project + ' ' + name, 'Placing ' + name + ': checking the world and rebuilding it…')
   }
-  const finParts = (all, f) => { const pk = (f || fin).pick; return pk ? [all && pk.pattern ? pk.pattern : pk.part] : [] }
-  const finPreview = (color, all) => control.current && fin.pick && HEXCOL.test(color) &&
-    control.current.finish('preview', finParts(all === undefined ? fin.all : all), color)
+  const finParts = scope => { const pk = fin.pick; return !pk || scope === 'material' ? [] : [scope === 'kind' && pk.pattern ? pk.pattern : pk.part] }
+  const finPreview = (color, scope) => {
+    const sc = scope === undefined ? fin.scope : scope
+    return control.current && fin.pick && HEXCOL.test(color) &&
+      control.current.finish('preview', finParts(sc), color, sc === 'material' ? fin.pick.material : null)
+  }
   const finToggle = () => {
     if (!control.current) return
     if (fin.on) { control.current.finish('clear'); control.current.finish('off'); setFin(f => Object.assign({}, f, { on: false, pick: null })); return }
@@ -712,7 +717,9 @@ function ConstructCard({ project, build, loaderUrl, title, parts, sessionId, hei
     setFin(f => Object.assign({}, f, { on: true, pick: null }))
   }
   const finSave = () => fin.pick && command('construct finish ' + project + ' ' + JSON.stringify(Object.assign(
-    fin.pick.placement ? { placement: fin.pick.placement } : {}, { parts: finParts(fin.all), color: fin.color.toLowerCase(), finish: fin.finish })),
+    fin.pick.placement ? { placement: fin.pick.placement } : {},
+    fin.scope === 'material' && fin.pick.material ? { material: fin.pick.material } : { parts: finParts(fin.scope) },
+    { color: fin.color.toLowerCase(), finish: fin.finish })),
     'Saving the colour: writing the material map and rebuilding…')
   const save = () => arr.changes.length &&
     command('construct arrange ' + project + ' ' + JSON.stringify(arr.changes), 'Saving: checking the world and rebuilding it…')
@@ -824,7 +831,8 @@ function ConstructCard({ project, build, loaderUrl, title, parts, sessionId, hei
               jsx('div', { style: { width: 240 }, children: jsx(BusyBar, {}) }, 'b')] })
         : jsx(PageFrame, { route: '/view?' + query({ project, build: shownBuild }), kind: 'construct',
           loaderUrl: shownBuild === build ? loaderUrl : null, height: frameHeight, onCard: setCard, onState: setView, control,
-          onArrange: setArr, onFinish: pick => setFin(f => Object.assign({}, f, { pick, all: !!(pick && pick.pattern),
+          onArrange: setArr, onFinish: pick => setFin(f => Object.assign({}, f, { pick,
+            scope: pick && pick.material ? 'material' : pick && pick.pattern ? 'kind' : 'one',
             color: (pick && pick.color) || f.color, finish: (pick && pick.finish) || 'paint' })) }),
       isWorld ? jsxs('div', {
         style: S.bar,
@@ -888,12 +896,13 @@ function ConstructCard({ project, build, loaderUrl, title, parts, sessionId, hei
             style: { font: 'inherit', fontSize: 12, padding: '3px 6px', borderRadius: 6, border: '1px solid var(--ui-stroke-secondary)', background: 'transparent',
               color: 'var(--ui-text-primary)' },
             children: FINISH_NAMES.map(n => jsx('option', { value: n, children: { brushed: 'brushed metal' }[n] || n }, n)) }),
-          fin.pick.pattern ? jsx('select', { value: fin.all ? 'all' : 'one', title: 'This part only, or every part of its kind',
-            onChange: e => { const all = e.target.value === 'all'; setFin(f => Object.assign({}, f, { all })); finPreview(fin.color, all) },
+          fin.pick.material || fin.pick.pattern ? jsx('select', { value: fin.scope, title: 'What changes: the whole material, every part of its kind, or this part',
+            onChange: e => { const scope = e.target.value; setFin(f => Object.assign({}, f, { scope })); finPreview(fin.color, scope) },
             style: { font: 'inherit', fontSize: 12, padding: '3px 6px', borderRadius: 6, border: '1px solid var(--ui-stroke-secondary)', background: 'transparent',
-              color: 'var(--ui-text-primary)', maxWidth: 220 },
-            children: [jsx('option', { value: 'all', children: 'Every ' + fin.pick.pattern + (fin.pick.siblings > 1 ? ' (' + fin.pick.siblings + ')' : '') }, 'all'),
-              jsx('option', { value: 'one', children: 'This part only' }, 'one')] }) : null,
+              color: 'var(--ui-text-primary)', maxWidth: 240 },
+            children: [fin.pick.material ? jsx('option', { value: 'material', children: 'Everything in ' + fin.pick.material + (fin.pick.together > 1 ? ' (' + fin.pick.together + ' parts)' : '') }, 'material') : null,
+              fin.pick.pattern ? jsx('option', { value: 'kind', children: 'Every ' + fin.pick.pattern + ' (' + fin.pick.siblings + ')' }, 'kind') : null,
+              jsx('option', { value: 'one', children: 'This part only' }, 'one')].filter(Boolean) }) : null,
           jsx(Button, { label: 'Save colour', icon: 'save', disabled: saving || !HEXCOL.test(fin.color),
             title: 'Write it into the construct\'s material map and rebuild: the solid view, Blender and every export follow', onClick: finSave }),
           !isWorld ? jsx(Button, { label: 'Undo last colour', icon: 'debug-step-back', disabled: saving,
