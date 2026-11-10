@@ -9,7 +9,7 @@ construct export scene.json --out car.glb --pieces                           # a
 construct export scene.json --out car.glb --pieces glued                     # a prop that holds together, doors on hinges
 ```
 
-Drop the `.glb` into the project (`res://`) and Godot imports it; drag it into a scene.
+Drop the `.glb` into the project (`res://`) and Godot imports it. Then drag it into a scene.
 
 ## What arrives
 
@@ -38,7 +38,7 @@ Drop the `.glb` into the project (`res://`) and Godot imports it; drag it into a
 Measured in Godot 4.7 on the FJ62 when it exported as 47 pieces (49 now): 17 pairs still touching at rest (one convex hull per
 part had 249), and released on a floor, none travels more than 1.5 m in two seconds. The bodies and
 shapes are written with the glTF physics extensions `OMI_physics_body` and `OMI_physics_shape`, which
-Godot imports; an engine that does not read them gets the pieces as named nodes and meshes. Masses are in
+Godot imports. An engine that does not read them gets the pieces as named nodes and meshes. Masses are in
 proportion to each piece's size, not real. The tests run this in Godot.
 
 ## Glued: a car that stays a car
@@ -60,15 +60,15 @@ func _ready():
 ```
 
 A building's fixed body is static (a castle on its rock stays where it stands; its doors still hang on
-it). A hinge opens in the construct's direction up to its angle; a slide or lift travels its distance, its
+it). A hinge opens in the construct's direction up to its angle, and a slide or lift travels its distance, its
 joint on the piece it moves. A part moved by joints inside joints (the T1's sunroof panels slide back and then
 lift; the Vespa's cowls lift off and then turn) is one body with the whole chain in its joint's `"chain"`, and the
 script makes it one Generic6DOFJoint3D with all their freedoms. A construct's pieces do not collide with one
 another: their shapes are close-fitting hulls that meet at every seam, and the joints keep them in place.
 Measured in Godot 4.7: the glued FJ62 is two bodies that settle within 2 cm, and its tailgate, released, falls
-open on its hinge and stops at 86 degrees (its 85, on a soft limit); the T1 is ten bodies with all nine of its
+open on its hinge and stops at 86 degrees (its 85, on a soft limit). The T1 is ten bodies with all nine of its
 joints, and nothing moves past its own travel. Every gallery construct exports glued and gets every joint it
-asks for; what tips over (a guitar stood on its end, a scooter off its stand) is physics, not glue. The tests
+asks for. What tips over (a guitar stood on its end, a scooter off its stand) is physics, not glue. The tests
 run this in Godot.
 
 ## Names Godot would misread
