@@ -5,17 +5,17 @@ thing into an honest, animated construct any agent can build.**
 
 ## What it does
 
-1. **A model describes the thing.** It writes a declarative *scene* — facts with their
+1. **A model describes the thing.** It writes a declarative *scene*: facts with their
    certainty and sources, and parts built from a closed set of shapes (box, cylinder, lathe,
-   extrusion, tube and so on), each with a role, a stage and the facts it rests on — or, for
-   common things, it fills an *archetype's* few parameters (a CD case, a book, a guitar, a
+   extrusion, tube and so on), each with a role, a stage and the facts it rests on. For
+   common things, it fills an *archetype's* few parameters instead (a CD case, a book, a guitar, a
    synth, a bottle).
 2. **Construct checks it.** Validation and a geometric audit report every problem with a JSON
    path, a code and a fix hint: a `verified` claim without a source, an unknown fact written
    as `null` or "unknown", a part that floats or barely renders, an assembly order that builds
    a roof before its walls. The model repairs the draft until it is clean.
-3. **Construct compiles it deterministically** — the same scene gives the same geometry, byte
-   for byte — and **renders it in one holographic style**: line light over smoked glass,
+3. **Construct compiles it deterministically**, so the same scene gives the same geometry, byte
+   for byte, and **renders it in one holographic style**: line light over smoked glass,
    staged assembly (a ghost, a collapse, a build that grows bottom-up with a bright tip, a
    settle), one-shot articulations (a lid opens, a disc lifts and turns), calm idle life, and
    a visible certainty for every fact and part. The renderer chooses every colour; agents never do.
@@ -38,7 +38,7 @@ much Construct may design:
 - **Invent from requirements:** the requirements are the facts and the rest is designed
   ([KESTREL](../examples/kestrel/)).
 
-Redesigning a product around what it does, or re-housing an existing board or mechanism, sit between these; they
+Redesigning a product around what it does, or re-housing an existing board or mechanism, sit between these. They
 are possibilities, not yet tested. Provenance keeps every part on its side of the line: Construct does not relabel
 design as evidence. The whole continuum, with what each point has shown:
 [the design-freedom continuum](for/documentation-to-product.md#the-design-freedom-continuum).
