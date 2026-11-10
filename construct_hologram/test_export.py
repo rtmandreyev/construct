@@ -728,6 +728,19 @@ class Hosts(unittest.TestCase):
         self.assertTrue(export._intersect(a, [(p[0] + 0.5, p[1], p[2]) for p in a]))
         self.assertFalse(export._intersect(a, [(p[0] + 1.5, p[1] + 0.2, p[2]) for p in a]))
 
+    def test_pieces_write_each_mesh_once_and_count_it_once(self):
+        sc = load_example("toyota-land-cruiser-fj62")
+        plain, plain_summary = export.render(sc, "glb")
+        for mode in (True, "glued"):
+            with self.subTest(mode):
+                out, summary = export.render(sc, "glb", pieces=mode)
+                doc = export.read_glb(out["glb"])[0]
+                used = {n["mesh"] for n in doc["nodes"] if "mesh" in n}
+                used |= {s["convex"]["mesh"] for s in doc["extensions"]["OMI_physics_shape"]["shapes"]}
+                self.assertEqual(sorted(set(range(len(doc["meshes"]))) - used), [])   # no mesh left unreferenced
+                self.assertEqual(summary["triangles"], plain_summary["triangles"])
+                self.assertLess(len(out["glb"]), 2 * len(plain["glb"]))   # the shapes beside the meshes, not a second copy
+
     def test_glued_pieces_are_one_body_and_one_per_joint_with_the_joint_in_its_extras(self):
         doc = glb_of(load_example("toyota-land-cruiser-fj62"), pieces="glued")[0]
         bodies = {n["extras"]["construct"]["piece"]: n["extras"]["construct"] for n in doc["nodes"]
