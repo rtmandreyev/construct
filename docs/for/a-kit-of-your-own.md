@@ -1,8 +1,8 @@
 # A model kit of your own thing
 
 Not the kits someone else chose to make: yours. Your scooter, your house, your guitar as a kit to print, glue and
-paint, with numbered plates, a booklet drawn like a kit sheet and the same steps in 3D. No terminal: the Claude app
-or the ChatGPT app does the work ([how to set it up](in-the-apps.md)).
+paint, with numbered plates, a booklet drawn like a kit sheet and the same steps in 3D. You need no terminal: the
+Claude app or the ChatGPT app does the work ([how to set it up](in-the-apps.md)).
 
 <p align="center">
   <a href="https://rtmandreyev.github.io/construct/examples/vespa-gs150/kit/assembly.html"><img src="../media/kit-vespa-guide.gif" width="49%" alt="The Vespa kit's 3D guide stepping through its build: the body first, the seat and rack at the bench, then the wheels, fork and cowls"></a>

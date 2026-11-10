@@ -1,8 +1,8 @@
 # Make a digital copy of something you own
 
-Your chair, guitar, camera, lamp or heirloom, in 3D from your photos and whatever its maker publishes: a model you
-can turn, change, render, print or hand to someone, that tells you what was measured and what was guessed. No
-terminal: the Claude app or the ChatGPT app does the work ([how to set it up](in-the-apps.md)).
+Your chair, guitar, camera, lamp or heirloom in 3D, from your photos and whatever its maker publishes. It is a model
+you can turn, change, render, print or hand to someone, and it tells you what was measured and what was guessed. You
+need no terminal: the Claude app or the ChatGPT app does the work ([how to set it up](in-the-apps.md)).
 
 <p align="center"><a href="https://rtmandreyev.github.io/construct/examples/eames-lounge-chair/"><img src="../media/everyday-chair.jpg" width="90%" alt="An Eames Lounge Chair and Ottoman made from two photos, in lines of light and as a solid"></a></p>
 <p align="center"><sub>An Eames Lounge Chair and Ottoman from two photos and one message. <a href="https://rtmandreyev.github.io/construct/examples/eames-lounge-chair/">Open it</a>: drag to turn it, <b>P</b> for how each part is known, <b>S</b> for the solid.</sub></p>
@@ -75,7 +75,7 @@ for something like a chair.
 
 ## Good to know
 
-- **It is a careful model, not a measurement.** Before you make anything to fit, check the sizes that matter; **P**
+- **It is a careful model, not a measurement.** Before you make anything to fit, check the sizes that matter. **P**
   shows how each part is known: measured by you, published by the maker, or read from your photos (and whether it
   was checked against a published size).
 - **Shapes come from what the photos show.** The underside, the back, the inside: if no photo shows it, it is

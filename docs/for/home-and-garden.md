@@ -1,8 +1,8 @@
 # Try a change to your home or garden on a copy first
 
-Your shed, room, garage or garden as a model, then the change you have in mind added to it (a deck, shelves, an
-extension, a new layout), so you can see it, turn it, measure it and send it to whoever will build it, before
-anything is built. No terminal: the Claude app or the ChatGPT app does the work ([how to set it up](in-the-apps.md)).
+Make your shed, room, garage or garden into a model, then add the change you have in mind (a deck, shelves, an
+extension, a new layout). You can see it, turn it, measure it and send it to whoever will build it, before anything
+is built. You need no terminal: the Claude app or the ChatGPT app does the work ([how to set it up](in-the-apps.md)).
 
 <p align="center"><a href="https://rtmandreyev.github.io/construct/examples/garden-shed-planned/"><img src="../media/everyday-shed.jpg" width="90%" alt="A garden shed made from one photo, and the same shed with a planned log store and deck"></a></p>
 <p align="center"><sub>A garden shed from one photo and no measurements (left), and the same shed with a planned log store and deck
