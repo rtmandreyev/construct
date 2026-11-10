@@ -56,7 +56,7 @@ It is the place to learn **Arrange**. On a world's card in Hermes Desktop (or **
 - **Add a construct** opens the library with previews; the one you pick lands on a floor it fits on, or on clear
   ground in front.
 
-<p align="center"><img src="media/worlds/hermes-arrange.png" width="95%" alt="Arranging a world in Hermes Desktop: a construct selected and dragged, the Arrange bar with Snap, Turn 90°, Lift, Lower, Duplicate and Save"></p>
+<p align="center"><img src="media/worlds/hermes-arrange.png" width="95%" alt="Arranging a world in Hermes Desktop: the Vespa selected in a world of the Villa, SERUM and KESTREL, the Arrange bar with Snap and Undo last change, and the Vespa's own bar with Turn 90°, Lift, Lower, Put back, Duplicate and Remove"></p>
 
 **Save** checks the world with the moves (the audit names anything that now overlaps), saves it and rebuilds it,
 with no model turn; **Undo last change** steps back. **Save view** names the camera as a view of the world;
@@ -234,5 +234,6 @@ Chair; the Eames is now the one built in the ChatGPT app. The Yamaha CFX and the
 stays). Wordmarks drawn on a maker's product (a guitar's headstock, a camera's top plate) are left off.
 
 Six worlds ship to start from: the five above and [a street of landmarks](../examples/worlds/a-street-of-landmarks/world.json)
-(the Duomo, the Sainte-Chapelle, the Sagrada Família and Neuschwanstein on one street at their real sizes).
+(the Duomo, the Sainte-Chapelle, the Sagrada Família and Neuschwanstein on one street at their real sizes). The plugin
+ships all six, Rain Harbour and Stortorget with their constructs and their artwork.
 [The format](WORLDS.md) · [Worlds, step by step](for/worlds-walkthrough.md)

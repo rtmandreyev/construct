@@ -20,6 +20,9 @@ and the 3D export, Python standard library only), so nothing else has to be inst
 
 - a construct scene (`scene.json`) or a parameter document: the add-on compiles and exports it
   itself;
+- a world (`world.json`): the constructs it places, found beside it (its own `constructs/` folder, or the
+  examples in a checkout of Construct), each placement a group; a world whose constructs it cannot find
+  asks for its exported `.glb` instead;
 - a `.glb` written by `construct export`.
 
 The construct arrives as one root object (its name is the construct's id) with its stages and
@@ -39,8 +42,9 @@ through ordinary drivers, so a saved .blend keeps working without the add-on. Ev
 role, certainty and source as custom properties (`construct`), and periodic motion (a spinning
 reel) stays as the `idle` action.
 
-Import options: a material map (by default `<scene>.materials.json` beside the scene, if there is
-one; see [3D export](../../docs/EXPORT.md#a-material-map-the-finished-model)), the line thickness,
+Import options: a material map (by default the construct's own beside its scene: `<scene>.materials.json`,
+`scene.materials.json`, `maps/finish.json` or `materials.json`; see
+[3D export](../../docs/EXPORT.md#a-material-map-the-finished-model)), the line thickness,
 whether the construct starts as metal or light, and whether to keep the file's own `open` actions
 beside the Open control.
 

@@ -1,6 +1,6 @@
 # Worlds: constructs placed together
 
-A world places whole constructs in one scene: your chair, clock and piano in your house, your cars under it, a ship
+A world places whole constructs in one scene: your chair, clock and synthesizer in your house, your cars under it, a ship
 overhead, a planet in the sky. It's a room, a street, a city, or a game map. Each placed construct stays whole: its
 parts, its sources, how each part is known, its critic's verdict and its joints are its own, under its placement's
 id (`eames/seat-shell`, `vespa/photo-front`). A world is not a bigger construct. A construct keeps a construct's
@@ -27,9 +27,9 @@ python3 construct_hologram/cli.py export my-villa.json --out my-villa.glb --piec
 
 ## Examples
 
-Six worlds ship in [examples/worlds](../examples/worlds/): four made of the constructs the plugin ships, and two made in
-Hermes from a single picture each, which bring their own constructs with them. In Hermes,
-`construct_world` with `op: new` and `example` makes one the user's own.
+Six worlds ship in [examples/worlds](../examples/worlds/): four made of the constructs the plugin ships (the
+Villa adds a table designed for it), and two made in Hermes from a single picture each, which bring their own
+constructs and artwork with them. In Hermes, `construct_world` with `op: new` and `example` makes one the user's own.
 
 | World | What it holds |
 |---|---|
@@ -84,8 +84,9 @@ reach 1,000 km from the origin, and an optional `origin: {lat, lon}` ties the wo
 
   Each placed construct's own audit stays its own.
 - **Exports:**
-  - **glTF:** one file. Each placement is a group named after it. Each construct's own material map is merged in
-    under its id. Every joint is in the `open` animation.
+  - **glTF:** one file. Each placement is a group named after it. Each construct's own material map (the
+    `scene.materials.json` beside its scene) is merged in under its id. Every joint is in the `open` animation.
+    Each construct's artwork is a textured quad under its part, in glTF and OBJ.
   - **Godot:** with `--pieces glued`, the world is a game map. Its fixed body stays put; doors, lids and wheels
     swing on their joints through `construct_joints.gd`.
   - **Blender:** the add-on imports a world (`.json`) with the usual build, open, metal and finish sliders.

@@ -68,9 +68,11 @@ Every change with pictures and the commands to try it: **[What's new in 1.3, a w
   [Rain Harbour](examples/worlds/rain-harbour/), a game level, and [Stortorget](examples/worlds/stortorget/),
   Stockholm's old square at Christmas.
 - **Arranged by hand in Hermes.** Arrange on a world's card: drag a construct onto any floor, table or roof, turn
-  it, lift it; add one from the library; save, with no model turn. A Worlds tab, groups of your own, previews.
+  it, lift it; add one from the library; save, with no model turn. A Worlds tab, groups of your own, previews. The
+  plugin ships 24 constructs (16 in 1.2.1) and all six worlds, the two from pictures with their artwork.
 - **More ways out.** FBX, USD and USDZ (through Blender), a Godot game map whose doors swing, and the Blender
-  add-on imports a world.
+  add-on imports a world. Every construct now finishes with its own material map, which every export uses by
+  default, and its artwork (signs, labels, screens) exports as textures in glTF and OBJ.
 - **Sturdier masterpiece rounds**, from two long runs: ties recorded, artwork kept in checkpoints, references
   carried from round to round, more time on request (`rounds extend`), colour judged in the solid view.
 

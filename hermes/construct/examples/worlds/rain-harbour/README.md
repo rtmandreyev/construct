@@ -77,7 +77,7 @@ Sol listed what the picture holds and made each distinct thing once, placed as m
 | The street: road, pavements, kerbs, drains, wet patches, the ground under it all | 1 | 1 |
 | Street-front towers: the Service Tower and the Offset Balcony Hotel | 2 | 10 (five each) |
 | Skyline: the Far Signal Tower, the Tide Relay Tower, the Terrace Exchange, the Service Loft | 4 | 5 |
-| Signs: eight businesses and a street number | 8 | 19 |
+| Signs: six businesses, the district's name and a street number | 8 | 19 |
 | AURIC, the hero car | 1 | 1 |
 | Props: bollard, street lamp, bin, water vending machine, cable span | 5 | 14 (6 + 2 + 2 + 1 + 3) |
 | **In all** | **21** | **50** |
@@ -371,7 +371,7 @@ Place the hotel, a sign or the car in a level of your own.
 What this run shows, for the next request from a picture:
 
 1. **Say what the picture gets wrong.** "Never the AI letter-noise in the picture" turned noise into eight readable
-   businesses; "leave out the three other cars and any people" held through every round (a critic noted that adding
+   signs; "leave out the three other cars and any people" held through every round (a critic noted that adding
    the picture's other cars "would violate the brief").
 2. **Give the numbers you know, and only those.** One length came from the request and is the only supplied fact.
    Everything else is designed and labelled so; check that the scenes say the same.

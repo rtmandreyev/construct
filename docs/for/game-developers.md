@@ -216,7 +216,7 @@ export.</sub></p>
 | The street: road, pavements, kerbs, drains, wet patches | 1 | 1 |
 | Street-front towers: the Service Tower and the Offset Balcony Hotel | 2 | 10 (five each) |
 | Skyline towers | 4 | 5 |
-| Signs: eight businesses and a street number | 8 | 19 |
+| Signs: six businesses, the district's name and a street number | 8 | 19 |
 | AURIC, the hero car | 1 | 1 |
 | Props: bollard, street lamp, bin, water vending machine, cable span | 5 | 14 |
 | **In all** | **21** | **50** |
@@ -242,7 +242,7 @@ a façade (Construct has no wall mount yet). Its extent: 100 × 84.4 × 160 m.
 
 ### Real signs
 
-Eight businesses, each in English and simplified Chinese that say the same thing, where the picture had letter-noise:
+Eight signs, each in English and simplified Chinese that say the same thing, where the picture had letter-noise:
 
 | English | Chinese |
 | --- | --- |

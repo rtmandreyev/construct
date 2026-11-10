@@ -2,8 +2,9 @@
 
 A construct comes into Blender as a model of named parts at real size, with four sliders on it: **Build** (its
 assembly), **Open** (every joint), **Light ↔ Metal** (from the hologram to the solid) and **Plain ↔ Finished** (from
-clay to its materials). The finish is a small map of part names to paint, chrome, glass, wood or rubber. Since 1.3 the
-add-on imports a whole world too, and Blender carries the model on to FBX and USD.
+clay to its materials). The finish is a small map of part names to paint, chrome, glass, wood or rubber, which every
+construct writes beside its scene since 1.3. The add-on imports a whole world too, and Blender carries the model on to
+FBX and USD.
 
 <p align="center"><a href="../../examples/villa-savoye/"><img src="../../examples/villa-savoye/blender.jpg" width="95%" alt="Villa Savoye finished in Blender: white render, dark steel window frames, the solarium screens in rose and pale blue, on a gravel ground"></a></p>
 <p align="center"><sub>The Villa Savoye, made in Hermes by GPT-6.1 Sol, finished in Blender with the add-on and its
@@ -64,16 +65,17 @@ black), the [Vespa](your-vehicle.md#take-it-further-try-a-finish-in-blender) and
 
 File > Import > Construct reads a `world.json` as well as a scene: it finds the constructs the world places beside it
 (its own `constructs/` folder, or the examples in a checkout of Construct), each placement whole, with the usual
-build, open, metal and finish sliders. A world whose constructs it cannot find comes in as its exported `.glb`
-instead.
+build, open, metal and finish sliders. A world whose constructs it cannot find says so: export it as a `.glb`
+and import that instead.
 
 <p align="center"><img src="../media/worlds/blender-villa-dusk.jpg" width="95%" alt="The Villa Savoye, lived in, in Blender at dusk: the Land Cruiser and the DB5 under its pilotis, KESTREL far off over the roof"></p>
 <p align="center"><sub>The Villa Savoye, lived in: the house, a Land Cruiser FJ62 and an Aston Martin DB5 under it, KESTREL
 far off over the roof, imported with the add-on and lit at dusk. Each is the gallery's construct, unchanged, finished
 with its own material map.</sub></p>
 
-The worlds that ship are in [examples/worlds](../../examples/worlds/): a street with the Duomo, the Sainte-Chapelle and
-the Sagrada Família at their real sizes, Rain Harbour's night street, Stortorget's square. In Hermes Desktop you can
+The six worlds that ship are in [examples/worlds](../../examples/worlds/): this Villa, the shed, KESTREL at Saturn, a
+street with the Duomo, the Sainte-Chapelle, the Sagrada Família and Neuschwanstein at their real sizes, Rain Harbour's
+night street, Stortorget's square. In Hermes Desktop you can
 arrange one by hand first (drag, turn, lift; **Save**), then export it ([worlds, step by step](worlds-walkthrough.md)).
 
 ## Model over it
@@ -104,8 +106,8 @@ In Blender (4.2 or later; tested with 5.2): **Edit > Preferences > Get Extension
 ## Good to know
 
 - **A starting point, not a finished hero asset.** Shapes come from Construct's vocabulary (boxes, lathes, lofts,
-  tubes, extrusions); overlapping parts are not merged; there are no textures, and the texture coordinates are a box
-  projection in metres. Joints are mechanical; there is no skinned rig.
+  tubes, extrusions); overlapping parts are not merged; the only textures are its own artwork (a sign, a label),
+  and the texture coordinates are a box projection in metres. Joints are mechanical; there is no skinned rig.
 - **Colour belongs to you.** The hologram keeps Construct's house palette; a construct's own colours show in the solid
   view and in every export, and a material map is yours, kept beside the scene, never in it.
 - **A part drawn only as a line has no surface**; the audit warns `no-surface` so it can be given one.

@@ -56,15 +56,15 @@ the chat, assembling piece by piece.
 **Save** checks the world with your moves (overlaps, collisions, what stands on nothing), saves it and rebuilds it.
 The world's log marks the moves as yours. **Undo last change** steps back one save.
 
-<p align="center"><img src="../media/worlds/hermes-arrange.png" width="90%" alt="Arranging the shed: the Vespa selected and being dragged across the deck, the Arrange toolbar with Snap, Turn 90°, Lift, Lower, Duplicate and Save"></p>
+<p align="center"><img src="../media/worlds/hermes-arrange.png" width="90%" alt="Arranging a world of the Villa, the Vespa, SERUM and KESTREL: the Vespa selected, the Arrange toolbar with Snap and Undo last change, and the Vespa's bar with Turn 90°, Lift, Lower, Put back, Duplicate and Remove"></p>
 
 ## 3. Add a construct
 
 **Add a construct** opens the library: your own constructs, the ones that ship and the gallery, with their pictures.
-Pick one: it appears in the middle of the world, standing at its real size on what is under it, chosen and ready to
-drag where it belongs. A construct's own card has **Place in a world** for the same thing from the other side.
+Pick one: it lands at its real size on a floor it fits on, or on clear ground in front, chosen and ready to drag
+where it belongs. A construct's own card has **Place in a world** for the same thing from the other side.
 
-<p align="center"><img src="../media/worlds/hermes-add-construct.png" width="90%" alt="The Add a construct picker over a world: a grid of construct pictures in groups (vehicles, furniture, buildings, instruments)"></p>
+<p align="center"><img src="../media/worlds/hermes-add-construct.png" width="90%" alt="The Add a construct picker over a world: a search box, filters by kind (vehicles, buildings, machines and instruments, objects, living things) and by source (yours, the gallery), and a grid of construct pictures"></p>
 
 ## 4. Ask for one
 
@@ -74,7 +74,7 @@ live.
 
 > Put my Villa, my Vespa, SERUM and KESTREL in one world.
 
-<p align="center"><img src="../media/worlds/hermes-world-card.png" width="90%" alt="A world in the Hermes chat: the Villa Savoye with a Vespa under its pilotis, a synthesizer in the salon and an ice tug far off in the sky, with the world's view buttons"></p>
+<p align="center"><img src="../media/worlds/hermes-world-card.png" width="90%" alt="A world in the Hermes chat: the Villa Savoye with a Vespa under its pilotis, a synthesizer in the salon and an ice tug far off in the sky, with the world's Views menu"></p>
 
 Hermes finds the constructs by name in your projects, the ones that ship and the gallery (a gallery construct is
 downloaded from Construct's own GitHub release, after you approve it in Hermes's prompt). It places them at real

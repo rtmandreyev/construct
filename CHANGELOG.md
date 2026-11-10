@@ -33,8 +33,9 @@ from the chat. [docs/WORLDS.md](docs/WORLDS.md)
 - **In Hermes,** `construct_world` makes, places (several at once), moves, removes, lists and names views, and shows
   each change live in the chat. Its constructs come from the user's projects, the constructs the plugin ships, or the
   gallery, fetched by name from this release's tag after the user approves the download in Hermes's prompt (an
-  unattended run is refused). Six worlds ship: Rain Harbour and Stortorget (below), the Villa Savoye lived in, the
-  shed and the things around it, a street of landmarks, and KESTREL at Saturn.
+  unattended run is refused). Six worlds ship, in the plugin too: Rain Harbour and Stortorget (below, each with its
+  constructs and artwork), the Villa Savoye lived in, the shed and the things around it, a street of landmarks, and
+  KESTREL at Saturn.
   `construct_inspect` reads a shipped construct by name.
 - **Arranged by hand.** On a world's page, G (and Arrange on its card in Hermes Desktop) lets you move and turn the
   constructs yourself: click one, drag it over the ground, Shift-drag or Q/E to turn, arrows to nudge, Page Up/Down
