@@ -269,7 +269,12 @@ class Browser:
         self.proc = subprocess.Popen(args, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, env=procenv.minimal())
         port_file = Path(self.profile) / "DevToolsActivePort"
         deadline = time.time() + 60   # a busy machine (a render beside it) can take half a minute to start one
-        while not port_file.exists() or not port_file.read_text().strip():
+        def port_text():   # the browser may still be writing it: on Windows, a read then is refused, not empty
+            try:
+                return port_file.read_text().strip()
+            except OSError:
+                return ""
+        while not port_text():
             if self.proc.poll() is not None:
                 code = self.proc.returncode
                 self.close()
@@ -278,7 +283,7 @@ class Browser:
                 self.close()
                 raise CaptureError("the browser did not start its DevTools endpoint in 60 s")
             time.sleep(0.05)
-        port = int(port_file.read_text().split()[0])
+        port = int(port_text().split()[0])
         page = None
         while page is None:   # a busy machine (a render beside it) can take a while to answer: wait, within the deadline
             try:
