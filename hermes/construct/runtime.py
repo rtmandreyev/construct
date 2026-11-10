@@ -430,7 +430,7 @@ CONSTRUCT_ENV = ("CONSTRUCT_BLENDER", "CONSTRUCT_FREECAD", "CONSTRUCT_NETLOGO", 
 
 def child_env():
     """What a child is given of the environment: what it needs to start, Construct's own settings, and UTF-8 for its
-    output (Windows would otherwise write in its legacy code page, and a "·" would arrive broken)."""
+    output (for a program the child starts in turn; Construct's own child is in UTF-8 mode through its argv)."""
     env = {k: os.environ.get(k) for k in CHILD_ENV + CONSTRUCT_ENV if os.environ.get(k) is not None}
     env.update({"PYTHONIOENCODING": "utf-8", "PYTHONUTF8": "1"})
     return env
@@ -461,8 +461,10 @@ def remove_tree(path, tries=5):
 
 
 def child_argv(op, *args):
-    """The argv that runs `child.py <op> ...` on Hermes's interpreter, isolated and without bytecode."""
-    return [sys.executable, "-I", "-B", str(CHILD), str(vendor_root()), op] + [str(a) for a in args]
+    """The argv that runs `child.py <op> ...` on Hermes's interpreter, isolated, without bytecode, and in UTF-8 mode
+    (`-I` ignores the PYTHON* variables, so the mode is set here; Windows would otherwise write its output in its
+    legacy code page, and a "·" would arrive broken)."""
+    return [sys.executable, "-I", "-B", "-X", "utf8", str(CHILD), str(vendor_root()), op] + [str(a) for a in args]
 
 
 def run_child(op, *args, timeout=120, cwd=None):
