@@ -276,6 +276,9 @@ function Head({ icon, title, meta, children }) {
 // route that answers {html, loader, card}; `kind` is what the loader checks it as (construct, assembly, booklet).
 // a world's page reports what was moved by hand: only well-formed changes pass, to be saved by /construct arrange
 const PLACE_ID = /^[a-z0-9][a-z0-9_.-]{0,63}$/
+const FINISH_PART = /^[A-Za-z0-9_.*?\[\]-]{1,120}$/   // a part's id or a pattern of ids, as a material map names them
+const HEXCOL = /^#[0-9a-fA-F]{6}$/
+const FINISH_NAMES = ['paint', 'brushed', 'chrome', 'wood', 'rubber', 'plastic', 'glass', 'light']
 function arrangeChanges(list) {
   if (!Array.isArray(list)) return []
   const fin = v => typeof v === 'number' && isFinite(v) && Math.abs(v) < 1e6
@@ -425,7 +428,7 @@ async function gunzipText(b64) {
   return text
 }
 
-function PageFrame({ route, kind, loaderUrl, height, onCard, onState, control, onOpenSteps, onArrange }) {
+function PageFrame({ route, kind, loaderUrl, height, onCard, onState, control, onOpenSteps, onArrange, onFinish }) {
   const frameRef = useRef(null)
   const htmlRef = useRef(null)
   const readyRef = useRef(false)
@@ -517,6 +520,7 @@ function PageFrame({ route, kind, loaderUrl, height, onCard, onState, control, o
         onState({ ready: d.ready === true, mode: d.mode === 'provenance' ? 'provenance' : 'light', solid: d.solid === true,
           hasSolid: d.hasSolid === true, step: typeof d.step === 'number' && d.step >= 0 && d.step < 1000 ? d.step : 0,
           world: d.world === true, arranging: d.arranging === true, canArrange: d.canArrange === true, canAct: d.canAct === true,
+          canFinish: d.canFinish === true, finishing: d.finishing === true,
           hasReading: d.hasReading === true,
           views: Array.isArray(d.views) ? d.views.filter(v => v && typeof v.id === 'string' && v.id.length < 80).slice(0, 300)
             .map(v => ({ id: v.id, label: String(v.label || v.id).slice(0, 80) })) : null })
@@ -524,6 +528,13 @@ function PageFrame({ route, kind, loaderUrl, height, onCard, onState, control, o
         onArrange({ on: d.on === true, selected: typeof d.selected === 'string' ? d.selected.slice(0, 64) : null,
           changes: arrangeChanges(d.changes), hits: Array.isArray(d.hits) ? d.hits.slice(0, 4).map(h => String(h).slice(0, 80)) : [],
           several: typeof d.several === 'number' ? d.several : 0, snap: d.snap === true, canUndo: d.canUndo === true, canRedo: d.canRedo === true })
+      } else if (d.type === 'construct:finish-pick' && onFinish) {
+        const p = d.pick
+        const id = v => (typeof v === 'string' && FINISH_PART.test(v) ? v : null)
+        onFinish(p && id(p.part) ? { placement: p.placement && PLACE_ID.test(String(p.placement)) ? p.placement : null, part: p.part,
+          pattern: id(p.pattern), label: String(p.label || p.part).slice(0, 120), siblings: Math.max(0, Math.min(10000, +p.siblings || 0)),
+          color: typeof p.color === 'string' && HEXCOL.test(p.color) ? p.color.toLowerCase() : null,
+          finish: FINISH_NAMES.includes(p.finish) ? p.finish : null } : null)
       } else if (d.type === 'construct:camera' && cameraWait.current) {
         const c = d.camera
         const ok = c && Array.isArray(c.target) && c.target.length === 3 && c.target.every(v => typeof v === 'number' && isFinite(v))
@@ -534,7 +545,7 @@ function PageFrame({ route, kind, loaderUrl, height, onCard, onState, control, o
         onOpenSteps(typeof d.step === 'number' && d.step >= 1 && d.step < 1000 ? Math.floor(d.step) : 1)
       }
     })
-  }, [deliver, onState, onOpenSteps, onArrange])
+  }, [deliver, onState, onOpenSteps, onArrange, onFinish])
 
   useEffect(() => {
     if (control) {
@@ -548,6 +559,9 @@ function PageFrame({ route, kind, loaderUrl, height, onCard, onState, control, o
           setTimeout(() => { if (cameraWait.current === resolve) { cameraWait.current = null; resolve(null) } }, 3000)
         }),
         select: id => PLACE_ID.test(String(id)) && post({ type: 'construct:arrange', action: 'select', id }),
+        finish: (action, parts, color) => ['on', 'off', 'clear'].includes(action) ? post({ type: 'construct:finish', action })
+          : action === 'preview' && Array.isArray(parts) && parts.every(x => FINISH_PART.test(x)) && HEXCOL.test(color) &&
+            post({ type: 'construct:finish', action, parts, color }),
         action: name => ['solid', 'provenance', 'replay', 'skip', 'home', 'keys'].includes(name) && post({ type: 'construct:action', name }),
         view: id => typeof id === 'string' && id.length < 80 && post({ type: 'construct:view', id })
       }
@@ -600,6 +614,8 @@ function ConstructCard({ project, build, loaderUrl, title, parts, sessionId, hei
   const [selectNext, setSelectNext] = useState(drop && drop.select ? drop.select : null)   // a construct just placed: chosen once its build is shown
   const [full, setFull] = useState(false)               // the card over the whole window, inside Hermes
   const [choosing, setChoosing] = useState(false)       // a construct's card: choosing the world to drop it into
+  // Finish: colours chosen by hand in the solid view; the part clicked, the colour and finish chosen, this part or its kind
+  const [fin, setFin] = useState({ on: false, pick: null, color: '#888888', finish: 'paint', all: true })
   useEffect(() => {
     if (!full || !CTX) return undefined
     return CTX.addEventListener(window, 'keydown', e => { if (e.key === 'Escape') setFull(false) })
@@ -619,6 +635,7 @@ function ConstructCard({ project, build, loaderUrl, title, parts, sessionId, hei
               setFollow({ build: target, job: follow.job, ready: true })
               setNote(n => (n ? n.replace(/Rebuilding[^.]*\.?\s*$/, 'Rebuilt: this is the new build.') : n))
               setArr({ on: false, selected: null, changes: [] })
+              setFin(f => Object.assign({}, f, { on: false, pick: null }))   // the new build shows the saved colours
             }
             return
           }
@@ -681,6 +698,20 @@ function ConstructCard({ project, build, loaderUrl, title, parts, sessionId, hei
     }
     command('construct place ' + project + ' ' + name, 'Placing ' + name + ': checking the world and rebuilding it…')
   }
+  const finParts = (all, f) => { const pk = (f || fin).pick; return pk ? [all && pk.pattern ? pk.pattern : pk.part] : [] }
+  const finPreview = (color, all) => control.current && fin.pick && HEXCOL.test(color) &&
+    control.current.finish('preview', finParts(all === undefined ? fin.all : all), color)
+  const finToggle = () => {
+    if (!control.current) return
+    if (fin.on) { control.current.finish('clear'); control.current.finish('off'); setFin(f => Object.assign({}, f, { on: false, pick: null })); return }
+    if (arr.on) control.current.arrange('off')
+    if (!view.solid) act('solid')
+    control.current.finish('on')
+    setFin(f => Object.assign({}, f, { on: true, pick: null }))
+  }
+  const finSave = () => fin.pick && command('construct finish ' + project + ' ' + JSON.stringify(Object.assign(
+    fin.pick.placement ? { placement: fin.pick.placement } : {}, { parts: finParts(fin.all), color: fin.color.toLowerCase(), finish: fin.finish })),
+    'Saving the colour: writing the material map and rebuilding…')
   const save = () => arr.changes.length &&
     command('construct arrange ' + project + ' ' + JSON.stringify(arr.changes), 'Saving: checking the world and rebuilding it…')
   const composer = sdk.host && sdk.host.composer
@@ -762,7 +793,7 @@ function ConstructCard({ project, build, loaderUrl, title, parts, sessionId, hei
   const views = view.views || null
   const working = saving || (follow && !follow.ready) || /…$/.test(note)
   // full screen: the picture gives room to what is open under it (the library, the chosen construct's bar)
-  const below = (isWorld ? 140 : 110) + (picking ? 360 : 0) + (arr.selected ? 50 : 0) + (choosing ? 200 : 0)
+  const below = (isWorld ? 140 : 110) + (picking ? 360 : 0) + (arr.selected ? 50 : 0) + (choosing ? 200 : 0) + (fin.on ? 50 : 0)
   const frameHeight = full ? 'calc(100vh - ' + (FULL_TOP + below) + 'px)' : height || 420
   return jsxs('div', {
     // full screen: over the whole window below Hermes's title bar (its own controls stay clickable), on an opaque
@@ -791,7 +822,8 @@ function ConstructCard({ project, build, loaderUrl, title, parts, sessionId, hei
               jsx('div', { style: { width: 240 }, children: jsx(BusyBar, {}) }, 'b')] })
         : jsx(PageFrame, { route: '/view?' + query({ project, build: shownBuild }), kind: 'construct',
           loaderUrl: shownBuild === build ? loaderUrl : null, height: frameHeight, onCard: setCard, onState: setView, control,
-          onArrange: setArr }),
+          onArrange: setArr, onFinish: pick => setFin(f => Object.assign({}, f, { pick, all: !!(pick && pick.pattern),
+            color: (pick && pick.color) || f.color, finish: (pick && pick.finish) || 'paint' })) }),
       isWorld ? jsxs('div', {
         style: S.bar,
         children: [
@@ -801,7 +833,7 @@ function ConstructCard({ project, build, loaderUrl, title, parts, sessionId, hei
             ? jsx('div', { style: S.meta, children: 'The world changed after this build: arrange its newest build (Constructs page, or ask Hermes to show it).' })
             : jsx(Button, { label: arr.on ? 'Arranging' : 'Arrange', icon: 'move', active: arr.on, disabled: !view.ready || saving,
               title: 'Move and turn the constructs yourself: click one and drag it onto anything, a floor, a table, a roof; Q/E or Shift-drag turns it (A)',
-              onClick: () => control.current && control.current.arrange(arr.on ? 'off' : 'on') }),
+              onClick: () => { if (!control.current) return; if (fin.on) finToggle(); control.current.arrange(arr.on ? 'off' : 'on') } }),
           jsx(Button, { label: 'Add a construct', icon: 'add', active: picking, disabled: saving,
             title: 'Put one of your constructs, a shipped one or one from the gallery into this world, then drag it into place',
             onClick: () => setPicking(!picking) }),
@@ -839,6 +871,32 @@ function ConstructCard({ project, build, loaderUrl, title, parts, sessionId, hei
             onClick: () => command('construct remove ' + project + ' ' + arr.selected, 'Removing ' + arr.selected + '…') })
         ]
       }) : null,
+      fin.on ? jsxs('div', { style: S.bar, children: fin.pick ? [
+          jsx('div', { style: Object.assign({}, S.title, { fontSize: 12, maxWidth: 240 }), title: fin.pick.part,
+            children: (fin.pick.placement ? fin.pick.placement + ' · ' : '') + fin.pick.label }),
+          jsx('input', { type: 'color', value: fin.color, title: 'Its colour',
+            onChange: e => { const c = e.target.value; setFin(f => Object.assign({}, f, { color: c })); finPreview(c) },
+            style: { width: 34, height: 24, padding: 0, border: '1px solid var(--ui-stroke-secondary)', borderRadius: 6, background: 'transparent', cursor: 'pointer' } }),
+          jsx('input', { value: fin.color, maxLength: 7, title: '#rrggbb', spellCheck: false,
+            onChange: e => { const c = e.target.value.trim(); setFin(f => Object.assign({}, f, { color: c })); if (HEXCOL.test(c)) finPreview(c) },
+            style: { font: 'inherit', fontSize: 12, padding: '3px 6px', borderRadius: 6, border: '1px solid var(--ui-stroke-secondary)', background: 'transparent',
+              color: 'var(--ui-text-primary)', width: 74 } }),
+          jsx('select', { value: fin.finish, title: 'What it is made of: exports and Blender read the finish',
+            onChange: e => { const v = e.target.value; setFin(f => Object.assign({}, f, { finish: v })) },
+            style: { font: 'inherit', fontSize: 12, padding: '3px 6px', borderRadius: 6, border: '1px solid var(--ui-stroke-secondary)', background: 'transparent',
+              color: 'var(--ui-text-primary)' },
+            children: FINISH_NAMES.map(n => jsx('option', { value: n, children: { brushed: 'brushed metal' }[n] || n }, n)) }),
+          fin.pick.pattern ? jsx('select', { value: fin.all ? 'all' : 'one', title: 'This part only, or every part of its kind',
+            onChange: e => { const all = e.target.value === 'all'; setFin(f => Object.assign({}, f, { all })); finPreview(fin.color, all) },
+            style: { font: 'inherit', fontSize: 12, padding: '3px 6px', borderRadius: 6, border: '1px solid var(--ui-stroke-secondary)', background: 'transparent',
+              color: 'var(--ui-text-primary)', maxWidth: 220 },
+            children: [jsx('option', { value: 'all', children: 'Every ' + fin.pick.pattern + (fin.pick.siblings > 1 ? ' (' + fin.pick.siblings + ')' : '') }, 'all'),
+              jsx('option', { value: 'one', children: 'This part only' }, 'one')] }) : null,
+          jsx(Button, { label: 'Save colour', icon: 'save', disabled: saving || !HEXCOL.test(fin.color),
+            title: 'Write it into the construct\'s material map and rebuild: the solid view, Blender and every export follow', onClick: finSave }),
+          !isWorld ? jsx(Button, { label: 'Undo last colour', icon: 'debug-step-back', disabled: saving,
+            onClick: () => command('construct undo ' + project, 'Undoing the last colour…') }) : null]
+        : [jsx('div', { style: S.meta, children: 'Click a part to choose its colour and what it is made of.' }, 'h')] }) : null,
       isWorld && picking ? jsx(Picker, { onPick: place, exclude: project }) : null,
       !isWorld && choosing ? jsx(WorldChooser, { onPick: dropInto }) : null,
       naming ? jsxs('div', { style: S.bar, children: [
@@ -868,6 +926,8 @@ function ConstructCard({ project, build, loaderUrl, title, parts, sessionId, hei
             title: 'How each part is known (P)', onClick: () => act('provenance') }),
           jsx(Button, { label: 'Solid', icon: 'circle-filled', active: view.solid, disabled: !view.ready || !view.hasSolid,
             title: 'The surfaces as a solid (S)', onClick: () => act('solid') }),
+          view.canFinish && view.hasSolid ? jsx(Button, { label: fin.on ? 'Finishing' : 'Finish', icon: 'symbol-color', active: fin.on,
+            disabled: !view.ready || saving, title: 'Choose the colours and materials yourself: click a part in the solid view', onClick: finToggle }) : null,
           jsx(Button, { label: 'Replay', icon: 'debug-restart', disabled: !view.ready, title: 'Build it again (R)',
             onClick: () => act('replay') }),
           view.hasReading ? jsx(Button, { label: 'How to read it', icon: 'info', disabled: !view.ready, title: 'What the run\'s picture shows (H)',
