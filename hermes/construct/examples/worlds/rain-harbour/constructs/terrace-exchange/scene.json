@@ -15,14 +15,14 @@
   {
    "id": "request",
    "kind": "generated",
-   "rights": "user_private",
+   "rights": "permitted",
    "title": "Supervisory original skyline design brief; not a human measurement"
   },
   {
    "id": "concept",
    "kind": "reference_image",
    "ref": "dashboard_20261108_101719_52f95e45_neon-street-concept_2f106a.jpg",
-   "rights": "user_private",
+   "rights": "permitted",
    "title": "User night street concept: atmosphere only, not a measured building"
   }
  ],

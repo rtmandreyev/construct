@@ -16,13 +16,13 @@
    "id": "request",
    "kind": "user_request",
    "title": "RainHarbour skyline tower contract: nominal 10 by 10 metres, 100 metres tall, front +Z, bottom zero, no ground or labels; reused five times at scale one.",
-   "rights": "user_private"
+   "rights": "permitted"
   },
   {
    "id": "concept",
    "kind": "user_request",
    "title": "User supplied RainHarbour street concept: distant skyline mood only; original invented geometry, no real-building claim.",
-   "rights": "user_private"
+   "rights": "permitted"
   },
   {
    "id": "world6-design",

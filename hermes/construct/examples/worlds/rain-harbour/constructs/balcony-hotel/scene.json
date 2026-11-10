@@ -16,13 +16,13 @@
    "id": "request",
    "kind": "user_request",
    "title": "Rain Harbour balcony hotel tower dimensions and constraints",
-   "rights": "user_private"
+   "rights": "permitted"
   },
   {
    "id": "concept",
    "kind": "reference_image",
    "title": "Rain Harbour atmosphere and layered architectural rhythm",
-   "rights": "user_private"
+   "rights": "permitted"
   }
  ],
  "facts": [
