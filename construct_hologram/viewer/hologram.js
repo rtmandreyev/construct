@@ -2238,6 +2238,11 @@ void main() {
         set(on) { setFinish(on); return holo.fin.on; },
         on() { return holo.fin.on; },
         preview(patterns, colour, placement, material) {
+          const done = this._preview(patterns, colour, placement, material);
+          kick();   // the colour shows at once, not at the next move of the camera
+          return done;
+        },
+        _preview(patterns, colour, placement, material) {
           if (!patterns && !material) return holo.previewColours(null);
           const res = (patterns || []).map(globRe), rgb = hex(colour);
           const where = placement === undefined || placement === null ? holo.fin.placement : placement;
