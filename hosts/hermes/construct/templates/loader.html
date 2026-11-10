@@ -125,6 +125,8 @@
           try { parent.postMessage({ type: "construct:finish-pick", pick: pick ? { placement: pick.placement || null, part: String(pick.part || ""),
                                      label: String(pick.label || "").slice(0, 120), color: pick.color || null, finish: pick.finish || null,
                                      pattern: pick.pattern ? String(pick.pattern).slice(0, 120) : null,
+                                     shared: Array.isArray(pick.shared) ? pick.shared.slice(0, 50).map(String) : [],
+                                     title: pick.title ? String(pick.title).slice(0, 120) : null,
                                      siblings: Math.min(10000, +pick.siblings || 0) } : null }, "*"); }
           catch (e) { /* the host went away */ }
         };
