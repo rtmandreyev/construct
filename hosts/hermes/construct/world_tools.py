@@ -675,11 +675,15 @@ def finish_by_hand(slug, change):
     as the user's and undone like any change; rebuilt."""
     if not isinstance(slug, str) or not NAME.match(slug):
         raise ConstructError("which project? /construct finish <project> <change>")
-    if not isinstance(change, dict) or set(change) - {"placement", "parts", "color", "finish"}:
-        raise ConstructError("finish: {placement?, parts, color, finish}")
+    if not isinstance(change, dict) or set(change) - {"placement", "parts", "material", "color", "finish"}:
+        raise ConstructError("finish: {placement?, parts or material, color, finish}")
+    material = change.get("material")
+    if material is not None and (not isinstance(material, str) or not 0 < len(material) <= 120):
+        raise ConstructError("finish: material is the name of one of the map's materials")
     parts = change.get("parts")
     parts = [parts] if isinstance(parts, str) else parts
-    if not isinstance(parts, list) or not 0 < len(parts) <= 64 or not all(isinstance(x, str) and PATTERN.match(x) for x in parts):
+    if material is None and (not isinstance(parts, list) or not 0 < len(parts) <= 64 or
+                             not all(isinstance(x, str) and PATTERN.match(x) for x in parts)):
         raise ConstructError("finish: parts is a part id or pattern (tyre-*), or a list of them")
     color, fin = change.get("color"), change.get("finish")
     if not isinstance(color, str) or not HEX.match(color):
@@ -693,11 +697,20 @@ def finish_by_hand(slug, change):
     doc = json.loads(old) if old else {"about": "Colours chosen by hand on the card.", "materials": []}
     if not isinstance(doc.get("materials"), list):
         raise ConstructError("the map %s cannot be read" % target.name)
-    same = sorted(parts)
-    rules = [r for r in doc["materials"]
-             if sorted([r["parts"]] if isinstance(r.get("parts"), str) else (r.get("parts") or [])) != same]
-    rule = {"parts": parts, "name": "Chosen by hand: %s %s" % (fin, color.lower()), "color": color.lower(), "finish": fin}
-    doc["materials"] = [rule] + rules
+    if material is not None:   # a material changed whole (Freeborn Red: the body, the doors, the wings), where it is
+        rule = next((r for r in doc["materials"] if r.get("name") == material), None)
+        if rule is None:
+            raise ConstructError("the map has no material called %r" % material)
+        rule.update({"color": color.lower(), "finish": fin})
+        for k in ("metallic", "roughness"):   # the new finish's own, not the old one's
+            rule.pop(k, None)
+        parts = [rule["parts"]] if isinstance(rule["parts"], str) else list(rule["parts"])
+    else:
+        same = sorted(parts)
+        rules = [r for r in doc["materials"]
+                 if sorted([r["parts"]] if isinstance(r.get("parts"), str) else (r.get("parts") or [])) != same]
+        rule = {"parts": parts, "name": "Chosen by hand: %s %s" % (fin, color.lower()), "color": color.lower(), "finish": fin}
+        doc["materials"] = [rule] + rules
     _edits(folder)
     stamp = runtime.new_id()
     where = target.resolve()
@@ -707,7 +720,7 @@ def finish_by_hand(slug, change):
     runtime.write_json(target, doc)
     with open(folder / "edits" / "log.jsonl", "a", encoding="utf-8") as fh:
         fh.write(json.dumps({"id": stamp, "op": "finish", "by": "user", "placement": change.get("placement") or "",
-                             "parts": parts, "color": color.lower(), "finish": fin}) + "\n")
+                             "parts": parts, "material": material, "color": color.lower(), "finish": fin}) + "\n")
     build, job_id = _rebuild_later(slug, folder, rebuild)
     return {"project": slug, "map": target.name, "rule": rule, "build": build, "job_id": job_id}
 

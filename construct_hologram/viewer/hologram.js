@@ -1941,7 +1941,11 @@ void main() {
       const colour = si >= 0 && geo.style_colors && geo.style_colors[si] ? String(geo.style_colors[si]).toLowerCase() : null;
       const recs = geo.world ? geo.world.placements : [], rec = recs.find((q) => q.id === p.placement);
       const shared = rec ? recs.filter((q) => q.construct === rec.construct).map((q) => q.id) : [];
+      // the material it belongs to in its construct's map (in a world, named "<placement>: <name>")
+      const matOf = (q) => { const m = (geo.part_materials || {})[q.id]; return m && q.placement && m.startsWith(q.placement + ": ") ? m.slice(q.placement.length + 2) : m || null; };
+      const material = matOf(p), together = material ? geo.parts.filter((q) => q.placement === p.placement && matOf(q) === material).length : 0;
       return { part: id, placement: p.placement || null, label: p.label || id, pattern: siblings > 1 ? pattern : null, siblings,
+               material, together,
                color: colour, finish: (geo.part_finishes || {})[p.id] || null, shared, title: rec ? rec.title : null };
     };
     let finDown = null;
@@ -2233,12 +2237,15 @@ void main() {
       finish: {
         set(on) { setFinish(on); return holo.fin.on; },
         on() { return holo.fin.on; },
-        preview(patterns, colour, placement) {
-          if (!patterns) return holo.previewColours(null);
-          const res = patterns.map(globRe), rgb = hex(colour);
-          const where = placement === undefined ? holo.fin.placement : placement;
+        preview(patterns, colour, placement, material) {
+          if (!patterns && !material) return holo.previewColours(null);
+          const res = (patterns || []).map(globRe), rgb = hex(colour);
+          const where = placement === undefined || placement === null ? holo.fin.placement : placement;
+          const mats = geo.part_materials || {};
           return holo.previewColours((pi) => { const p = geo.parts[pi];
-            return (where ? p.placement === where : true) && res.some((re) => re.test(localId(p))); }, rgb);
+            if (where && p.placement !== where) return false;
+            if (material) { const m = mats[p.id]; return m === material || (p.placement && m === p.placement + ": " + material); }
+            return res.some((re) => re.test(localId(p))); }, rgb);
         },
       },
       onFinish: null,

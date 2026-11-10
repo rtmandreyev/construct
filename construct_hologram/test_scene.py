@@ -1512,6 +1512,7 @@ class OwnColours(unittest.TestCase):
             # what each part is made of travels too, for the card's Finish (a tyre opens as rubber)
             self.assertEqual((pg["part_finishes"]["hull"], pg["part_finishes"]["porthole"]), ("paint", "glass"))
             self.assertEqual(g0["part_finishes"]["front-tyre"], "rubber")
+            self.assertNotIn("hull", pg.get("part_materials", {}))   # an unnamed rule is no material to change whole
             self.assertEqual(sd["clear"], s0["clear"] + 36)                  # the map's glass is drawn see-through
             # the light view is unchanged: the same styles, nothing new drawn in the light; geometry.json keeps
             # only the scene's own colours
