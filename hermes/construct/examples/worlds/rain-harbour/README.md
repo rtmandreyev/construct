@@ -316,6 +316,23 @@ the run's record; the world's own `authoring` keeps the 12 rounds.
 | The constructs' rounds | 186 rounds in 21 builders: about 325 minutes of builders' own time and 700 of critics', many running at once |
 | The world's rounds | 12 rounds: 204.1 minutes of authoring and 59.4 of critics |
 
+## Changed by hand
+
+The level stays yours to remake after the run, with no model turn. Opened from the Worlds tab in Hermes Desktop,
+**Arrange**: click AURIC, **Turn 90°** twice, the arrow keys to bring it into the middle of the street, **Save**. The
+card sends its moves as one plugin command, `/construct arrange`, which can be typed in the chat too to move many
+things at once. Ten changes that way made a different street: the Terrace Exchange brought 54 m forward into a dead
+end, two signal towers moved, the signs swapped across the street. Each save checks the level (the same six cable
+notes, nothing new), keeps the change in the world's log as the user's, and rebuilds it; `world.json` keeps one
+`at` and `yaw` per placement.
+
+<p align="center">
+  <img src="blender-street.jpg" width="49%" alt="The level as it was made: a long street running away to distant towers, AURIC parked at the front left">
+  <img src="blender-arranged.jpg" width="49%" alt="Rearranged by hand: a dead end closed by a tall tower, the signs on the other sides, AURIC in the middle of the road facing the camera with its doors raised">
+</p>
+<p align="center"><sub>Before and after, rendered from the same camera; on the right, AURIC's doors opened on their own
+hinges (the export's <code>--pose open</code>).</sub></p>
+
 ## Into other tools
 
 **Godot, from Construct itself.** One command makes the world a game map:
