@@ -288,8 +288,9 @@ def handle(raw_args="", event=None, **kwargs):
                 return "Usage: /construct finish <project> <{placement?, parts, color, finish}>"
             r = world_tools.finish_by_hand(parts[1].lower(), json.loads(parts[2]))
             rule = r["rule"]
+            what = rule.get("name") if not str(rule.get("name", "")).startswith("Chosen by hand") else ", ".join(rule["parts"])
             return "Finished %s in %s: %s %s (%s). Rebuilding (build %s, job %s)." % (
-                ", ".join(rule["parts"]), r["project"], rule["finish"], rule["color"], r["map"], r["build"], r["job_id"])
+                what, r["project"], rule["finish"], rule["color"], r["map"], r["build"], r["job_id"])
         if verb == "undo":
             if len(words) < 2:
                 return "Which world? /construct undo <world>"
