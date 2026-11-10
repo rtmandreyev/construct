@@ -20,7 +20,7 @@ you ask  →  the agent looks it up  →  it writes a scene  →  Construct chec
 2. **The agent looks it up.** For a specific, named subject it finds real facts (dimensions,
    dates, the features that make the thing recognisable) and reference photos. The photos are
    for comparison only. They are never copied into the construct or published with it, because
-   they belong to someone else; the construct only cites where its facts came from.
+   they belong to someone else. The construct only cites where its facts came from.
 
 3. **It writes a short scene description.** A scene is a plain text file that says what the
    thing is: the facts, each marked with how well it is known, and the parts, built from a set
@@ -82,7 +82,7 @@ from what the model knows and says so.
   less than a cent.
 - **masterpiece:** up to two hours of the agent's own working time, plus the critic's time each
   round, so often well over an hour in all. It uses a frontier model throughout, so it is the
-  expensive mode; on a subscription plan it uses your plan's allowance.
+  expensive mode. On a subscription plan it uses your plan's allowance.
 - **timeboxed:** masterpiece in two hours in all, the critic's time included: fewer rounds when
   the critic is slow, but done within two hours.
 - **unbounded:** no limit on rounds or time. Expect many rounds and hours, and a high token
