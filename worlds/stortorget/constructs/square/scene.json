@@ -1,0 +1,7883 @@
+{
+ "format": "construct-scene",
+ "version": 2,
+ "id": "stortorget-plaza",
+ "title": "Stortorget: the square, its setts and kerbs",
+ "subject": {
+  "category": "architecture",
+  "summary": "Approximate bare wet cobbled Stortorget plaza host, inferred metric envelope and curved right pavement; no buildings or street props. Original decorative paving field derived visually from the supplied photo.",
+  "accuracy": "approximate",
+  "synthetic": false
+ },
+ "units": "m",
+ "seed": 2022,
+ "sources": [
+  {
+   "id": "request",
+   "kind": "user_request",
+   "title": "Assigned plaza host brief; all metric envelopes inferred",
+   "rights": "user_private"
+  },
+  {
+   "id": "photo",
+   "kind": "reference_image",
+   "title": "Ximonic (Simo Räsänen), Stortorget Christmas Market, December 2022. Derived visual reconstruction; CC BY-SA 4.0",
+   "ref": "https://creativecommons.org/licenses/by-sa/4.0/",
+   "rights": "permitted"
+  },
+  {
+   "id": "original-paving",
+   "kind": "user_request",
+   "title": "Original generated decorative wet-sett artwork; not a photographic texture or measured survey",
+   "rights": "synthetic"
+  }
+ ],
+ "facts": [
+  {
+   "key": "footprint",
+   "value": "96 X by 80 Z supporting envelope; central photographed square remains inferred",
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "request",
+   "note": "World assembly revision: extended support beneath full building footprints, not a surveyed size of Stortorget."
+  },
+  {
+   "key": "ground-datum",
+   "value": 0,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "request",
+   "note": "Nominal standing datum; continuous solid support top."
+  },
+  {
+   "key": "ground-bottom",
+   "value": -0.45,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "request",
+   "note": "Belowground supporting bed."
+  },
+  {
+   "key": "pavement-rise",
+   "value": 0.12,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "photo",
+   "note": "Photo shows right raised curved kerb; height, curve and extents inferred."
+  },
+  {
+   "key": "winter-surface",
+   "value": "Bare wet small dark granite setts, varied joints; no snow carpet",
+   "certainty": "verified",
+   "source": "photo"
+  }
+ ],
+ "assets": [
+  {
+   "id": "wet-setts-v3",
+   "path": "assets/wet-setts-v3.jpg",
+   "sha256": "455a440ad1e6901629b41fcd27f9945ef08740f20cbca512f3d3836c29065a76",
+   "media_type": "image/jpeg",
+   "rights": "synthetic",
+   "provenance": "generated-decorative",
+   "source": "original-paving"
+  },
+  {
+   "id": "kerb-riser-v4",
+   "path": "assets/kerb-riser-v4.png",
+   "sha256": "8e26d4afae55691d3483e59a02b66be56e7b384d04261c9f23f35451517fbdcf",
+   "media_type": "image/png",
+   "rights": "synthetic",
+   "provenance": "generated-decorative",
+   "source": "original-paving"
+  },
+  {
+   "id": "pavement-metric-v9",
+   "path": "assets/pavement-metric-v9.jpg",
+   "sha256": "430dc2b454aee695f61031fb40f8cfa606694a6bb24e22b3ebde83b5ffb5475a",
+   "media_type": "image/jpeg",
+   "rights": "synthetic",
+   "provenance": "generated-decorative",
+   "source": "original-paving"
+  },
+  {
+   "id": "apron-straight-v9",
+   "path": "assets/apron-straight-v9.png",
+   "sha256": "bf2635a67cb182b3345af28302231e1be0d2a766b8fda07ef0a15b39e96290e4",
+   "media_type": "image/png",
+   "rights": "synthetic",
+   "provenance": "generated-decorative",
+   "source": "original-paving"
+  },
+  {
+   "id": "apron-corner-v9-00",
+   "path": "assets/apron-corner-v9-00.png",
+   "sha256": "307562cc1b8a44dbd6594751b3e7983e0e631e87ad7bf8a8c98a206066be8840",
+   "media_type": "image/png",
+   "rights": "synthetic",
+   "provenance": "generated-decorative",
+   "source": "original-paving"
+  },
+  {
+   "id": "apron-corner-v9-01",
+   "path": "assets/apron-corner-v9-01.png",
+   "sha256": "1048864e74b2f8b93e8961441daeb2772f8a08e951c25a626bf344a21ea0a7b6",
+   "media_type": "image/png",
+   "rights": "synthetic",
+   "provenance": "generated-decorative",
+   "source": "original-paving"
+  },
+  {
+   "id": "apron-corner-v9-02",
+   "path": "assets/apron-corner-v9-02.png",
+   "sha256": "bbd04fe74fb13bd1ffc219cfd00c25ac17186e7941fc16a5ca370e6b0ce7a105",
+   "media_type": "image/png",
+   "rights": "synthetic",
+   "provenance": "generated-decorative",
+   "source": "original-paving"
+  },
+  {
+   "id": "apron-corner-v9-03",
+   "path": "assets/apron-corner-v9-03.png",
+   "sha256": "10dd06867712b46fd12ec8cd02c4a202259cd61663b0e3922e1e3d130f952b56",
+   "media_type": "image/png",
+   "rights": "synthetic",
+   "provenance": "generated-decorative",
+   "source": "original-paving"
+  },
+  {
+   "id": "apron-corner-v9-04",
+   "path": "assets/apron-corner-v9-04.png",
+   "sha256": "f1df6997657bc953431816f07914cacc72f19e95c74094e4ff33771f5492b54c",
+   "media_type": "image/png",
+   "rights": "synthetic",
+   "provenance": "generated-decorative",
+   "source": "original-paving"
+  },
+  {
+   "id": "apron-corner-v9-05",
+   "path": "assets/apron-corner-v9-05.png",
+   "sha256": "350a28d4c7432a25f957fa8666b8abd54ae340b38df1681e68cad317904c43f9",
+   "media_type": "image/png",
+   "rights": "synthetic",
+   "provenance": "generated-decorative",
+   "source": "original-paving"
+  }
+ ],
+ "parts": [
+  {
+   "id": "foundation-bed",
+   "label": "Continuous underground solid support bed",
+   "role": "mass",
+   "certainty": "inferred",
+   "basis": [
+    "ground-bottom",
+    "footprint"
+   ],
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     96.0,
+     0.425,
+     80.0
+    ]
+   },
+   "at": [
+    0,
+    -0.2375,
+    0
+   ],
+   "look": {
+    "fill": "glass",
+    "tone": "structure",
+    "weight": 0.6
+   }
+  },
+  {
+   "id": "site-ground",
+   "label": "Continuous belowground plaza bed; top Y zero",
+   "shape": {
+    "type": "box",
+    "size": [
+     96.0,
+     0.025,
+     80.0
+    ]
+   },
+   "at": [
+    0,
+    -0.0125,
+    0
+   ],
+   "role": "mass",
+   "stage": 0,
+   "certainty": "inferred",
+   "basis": [
+    "footprint",
+    "ground-datum"
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "weight": 0.4,
+    "glow": 0
+   },
+   "artwork": {
+    "slot": "cover-front",
+    "asset": "wet-setts-v3",
+    "face": "top",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "right-pavement",
+   "label": "Raised right pavement explicit support",
+   "shape": {
+    "type": "box",
+    "size": [
+     2.5,
+     0.12,
+     50
+    ]
+   },
+   "at": [
+    23.75,
+    0.06,
+    -5
+   ],
+   "role": "structure",
+   "stage": 1,
+   "certainty": "inferred",
+   "basis": [
+    "footprint",
+    "ground-datum"
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "weight": 0.4,
+    "glow": 0
+   },
+   "artwork": {
+    "slot": "cover-back",
+    "asset": "pavement-metric-v9",
+    "face": "top",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "curved-pavement-apron",
+   "label": "Inferred curved photo-edge pavement support",
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      21.8,
+      -30
+     ],
+     [
+      21.8,
+      -29
+     ],
+     [
+      21.8,
+      -28
+     ],
+     [
+      21.8,
+      -27
+     ],
+     [
+      21.8,
+      -26
+     ],
+     [
+      21.8,
+      -25
+     ],
+     [
+      21.8,
+      -24
+     ],
+     [
+      21.8,
+      -23
+     ],
+     [
+      21.8,
+      -22
+     ],
+     [
+      21.8,
+      -21
+     ],
+     [
+      21.8,
+      -20
+     ],
+     [
+      21.8,
+      -19
+     ],
+     [
+      21.8,
+      -18
+     ],
+     [
+      21.8,
+      -17
+     ],
+     [
+      21.8,
+      -16
+     ],
+     [
+      21.8,
+      -15
+     ],
+     [
+      21.8,
+      -14
+     ],
+     [
+      21.8,
+      -13
+     ],
+     [
+      21.8,
+      -12
+     ],
+     [
+      21.8,
+      -11
+     ],
+     [
+      21.8,
+      -10
+     ],
+     [
+      21.8,
+      -9
+     ],
+     [
+      21.8,
+      -8
+     ],
+     [
+      21.8,
+      -7
+     ],
+     [
+      21.8,
+      -6
+     ],
+     [
+      21.8,
+      -5
+     ],
+     [
+      21.8,
+      -4
+     ],
+     [
+      21.8,
+      -3
+     ],
+     [
+      21.8,
+      -2
+     ],
+     [
+      21.8,
+      -1
+     ],
+     [
+      21.8,
+      0
+     ],
+     [
+      21.8,
+      1
+     ],
+     [
+      21.8,
+      2
+     ],
+     [
+      21.8,
+      3
+     ],
+     [
+      21.8,
+      4
+     ],
+     [
+      21.8,
+      5
+     ],
+     [
+      21.8,
+      6
+     ],
+     [
+      21.8,
+      7
+     ],
+     [
+      21.8,
+      8
+     ],
+     [
+      21.8,
+      9
+     ],
+     [
+      21.8,
+      10
+     ],
+     [
+      21.8,
+      11
+     ],
+     [
+      21.8,
+      12
+     ],
+     [
+      21.8,
+      13
+     ],
+     [
+      21.8,
+      14
+     ],
+     [
+      21.8,
+      15
+     ],
+     [
+      21.8,
+      16
+     ],
+     [
+      21.8,
+      17
+     ],
+     [
+      21.8,
+      18
+     ],
+     [
+      21.8,
+      19
+     ],
+     [
+      21.8,
+      20
+     ],
+     [
+      21.80642323028419,
+      20.19620938769043
+     ],
+     [
+      21.825665415878568,
+      20.391578576660155
+     ],
+     [
+      21.857644158790308,
+      20.585270966048384
+     ],
+     [
+      21.902222521132796,
+      20.776457135307563
+     ],
+     [
+      21.959209611514684,
+      20.964318395909483
+     ],
+     [
+      22.02836140246614,
+      21.14805029709527
+     ],
+     [
+      22.109381775401935,
+      21.326866070657005
+     ],
+     [
+      22.201923788646685,
+      21.5
+     ],
+     [
+      22.305591163092366,
+      21.666710699058807
+     ],
+     [
+      22.419939979126294,
+      21.826284287026162
+     ],
+     [
+      22.544480577563068,
+      21.978037445300206
+     ],
+     [
+      22.67867965644036,
+      22.121320343559642
+     ],
+     [
+      22.821962554699795,
+      22.255519422436933
+     ],
+     [
+      22.97371571297384,
+      22.380060020873707
+     ],
+     [
+      23.133289300941193,
+      22.494408836907635
+     ],
+     [
+      23.3,
+      22.598076211353316
+     ],
+     [
+      23.473133929342996,
+      22.690618224598065
+     ],
+     [
+      23.65194970290473,
+      22.771638597533858
+     ],
+     [
+      23.835681604090517,
+      22.840790388485317
+     ],
+     [
+      24.023542864692438,
+      22.897777478867205
+     ],
+     [
+      24.214729033951617,
+      22.94235584120969
+     ],
+     [
+      24.408421423339846,
+      22.97433458412143
+     ],
+     [
+      24.60379061230957,
+      22.99357676971581
+     ],
+     [
+      24.8,
+      23.0
+     ],
+     [
+      25,
+      23
+     ],
+     [
+      25,
+      -30
+     ]
+    ],
+    "height": 0.108,
+    "axis": "y"
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "role": "identity",
+   "stage": 1,
+   "certainty": "inferred",
+   "basis": [
+    "footprint",
+    "ground-datum"
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "weight": 0.4,
+    "glow": 0
+   }
+  },
+  {
+   "at": [
+    18.5,
+    -0.43,
+    20
+   ],
+   "basis": [
+    "ground-datum"
+   ],
+   "certainty": "inferred",
+   "id": "photo-framing-region",
+   "label": "Buried native camera framing region; not visible geometry",
+   "look": {
+    "alpha": 0.05,
+    "fill": "none",
+    "line": "none",
+    "weight": 0.25
+   },
+   "role": "ground",
+   "shape": {
+    "size": [
+     3,
+     0.01,
+     5
+    ],
+    "type": "box"
+   },
+   "stage": 0
+  },
+  {
+   "id": "kerb-49",
+   "label": "Jointed tangent-following granite kerb",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.992
+   },
+   "at": [
+    21.900000000000002,
+    0,
+    19.004
+   ],
+   "rotate": [
+    0,
+    0.0,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-50",
+   "label": "Jointed tangent-following granite kerb",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.38441877538085867
+   },
+   "at": [
+    21.90004750484078,
+    0,
+    19.997451122769938
+   ],
+   "rotate": [
+    0,
+    3.749999999999767,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-51",
+   "label": "Jointed tangent-following granite kerb",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.3844187753808591
+   },
+   "at": [
+    21.924524305206955,
+    0,
+    20.375992685580158
+   ],
+   "rotate": [
+    0,
+    11.250000000000188,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-52",
+   "label": "Jointed tangent-following granite kerb",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.38441877538085845
+   },
+   "at": [
+    21.998201291943516,
+    0,
+    20.74810090929523
+   ],
+   "rotate": [
+    0,
+    18.749999999999797,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-53",
+   "label": "Jointed tangent-following granite kerb",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.38441877538085784
+   },
+   "at": [
+    22.119817831380285,
+    0,
+    21.1074089190395
+   ],
+   "rotate": [
+    0,
+    26.250000000000274,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-54",
+   "label": "Jointed tangent-following granite kerb",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.38441877538085806
+   },
+   "at": [
+    22.287293030809018,
+    0,
+    21.44776885514725
+   ],
+   "rotate": [
+    0,
+    33.74999999999985,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-55",
+   "label": "Jointed tangent-following granite kerb",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.3844187753808589
+   },
+   "at": [
+    22.49776134313459,
+    0,
+    21.76335706474607
+   ],
+   "rotate": [
+    0,
+    41.25000000000028,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-56",
+   "label": "Jointed tangent-following granite kerb",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.3844187753808589
+   },
+   "at": [
+    22.74762159718028,
+    0,
+    22.048773746072143
+   ],
+   "rotate": [
+    0,
+    48.74999999999972,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-57",
+   "label": "Jointed tangent-following granite kerb",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.38441877538085806
+   },
+   "at": [
+    23.03259861472501,
+    0,
+    22.29913534057553
+   ],
+   "rotate": [
+    0,
+    56.25000000000015,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-58",
+   "label": "Jointed tangent-following granite kerb",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.3844187753808563
+   },
+   "at": [
+    23.34781635998803,
+    0,
+    22.51015809196092
+   ],
+   "rotate": [
+    0,
+    63.75000000000019,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-59",
+   "label": "Jointed tangent-following granite kerb",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.38441877538085956
+   },
+   "at": [
+    23.687881369953026,
+    0,
+    22.67823134244556
+   ],
+   "rotate": [
+    0,
+    71.24999999999972,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-60",
+   "label": "Jointed tangent-following granite kerb",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.3844187753808584
+   },
+   "at": [
+    24.046975038015663,
+    0,
+    22.80047931211495
+   ],
+   "rotate": [
+    0,
+    78.75000000000033,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-61",
+   "label": "Jointed tangent-following granite kerb",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.3844187753808589
+   },
+   "at": [
+    24.418953171955813,
+    0,
+    22.874810304314487
+   ],
+   "rotate": [
+    0,
+    86.24999999999973,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "apron-corner-v8-00",
+   "label": "Supported pavement wearing strip",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.6999999999999993,
+     0.012,
+     1.994
+    ]
+   },
+   "at": [
+    22.15,
+    0.114,
+    -29
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "weight": 0.25,
+    "line": "none"
+   },
+   "artwork": {
+    "slot": "booklet-page-1",
+    "asset": "apron-straight-v9",
+    "face": "top",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "kerb-face-v8-00",
+   "label": "Granite facing on curved supported edge",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.016,
+     0.112,
+     1.994
+    ]
+   },
+   "at": [
+    21.774,
+    0.056,
+    -29.0
+   ],
+   "rotate": [
+    0,
+    0.0,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "line": "none",
+    "weight": 0.25
+   },
+   "artwork": {
+    "slot": "booklet-page-32",
+    "asset": "kerb-riser-v4",
+    "face": "left",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "apron-corner-v8-01",
+   "label": "Supported pavement wearing strip",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.6999999999999993,
+     0.012,
+     1.994
+    ]
+   },
+   "at": [
+    22.15,
+    0.114,
+    -27
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "weight": 0.25,
+    "line": "none"
+   },
+   "artwork": {
+    "slot": "booklet-page-2",
+    "asset": "apron-straight-v9",
+    "face": "top",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "kerb-face-v8-01",
+   "label": "Granite facing on curved supported edge",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.016,
+     0.112,
+     1.994
+    ]
+   },
+   "at": [
+    21.774,
+    0.056,
+    -27.0
+   ],
+   "rotate": [
+    0,
+    0.0,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "line": "none",
+    "weight": 0.25
+   },
+   "artwork": {
+    "slot": "booklet-page-33",
+    "asset": "kerb-riser-v4",
+    "face": "left",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "apron-corner-v8-02",
+   "label": "Supported pavement wearing strip",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.6999999999999993,
+     0.012,
+     1.994
+    ]
+   },
+   "at": [
+    22.15,
+    0.114,
+    -25
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "weight": 0.25,
+    "line": "none"
+   },
+   "artwork": {
+    "slot": "booklet-page-3",
+    "asset": "apron-straight-v9",
+    "face": "top",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "kerb-face-v8-02",
+   "label": "Granite facing on curved supported edge",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.016,
+     0.112,
+     1.994
+    ]
+   },
+   "at": [
+    21.774,
+    0.056,
+    -25.0
+   ],
+   "rotate": [
+    0,
+    0.0,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "line": "none",
+    "weight": 0.25
+   },
+   "artwork": {
+    "slot": "booklet-page-34",
+    "asset": "kerb-riser-v4",
+    "face": "left",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "apron-corner-v8-03",
+   "label": "Supported pavement wearing strip",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.6999999999999993,
+     0.012,
+     1.994
+    ]
+   },
+   "at": [
+    22.15,
+    0.114,
+    -23
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "weight": 0.25,
+    "line": "none"
+   },
+   "artwork": {
+    "slot": "booklet-page-4",
+    "asset": "apron-straight-v9",
+    "face": "top",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "kerb-face-v8-03",
+   "label": "Granite facing on curved supported edge",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.016,
+     0.112,
+     1.994
+    ]
+   },
+   "at": [
+    21.774,
+    0.056,
+    -23.0
+   ],
+   "rotate": [
+    0,
+    0.0,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "line": "none",
+    "weight": 0.25
+   },
+   "artwork": {
+    "slot": "booklet-page-35",
+    "asset": "kerb-riser-v4",
+    "face": "left",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "apron-corner-v8-04",
+   "label": "Supported pavement wearing strip",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.6999999999999993,
+     0.012,
+     1.994
+    ]
+   },
+   "at": [
+    22.15,
+    0.114,
+    -21
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "weight": 0.25,
+    "line": "none"
+   },
+   "artwork": {
+    "slot": "booklet-page-5",
+    "asset": "apron-straight-v9",
+    "face": "top",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "kerb-face-v8-04",
+   "label": "Granite facing on curved supported edge",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.016,
+     0.112,
+     1.994
+    ]
+   },
+   "at": [
+    21.774,
+    0.056,
+    -21.0
+   ],
+   "rotate": [
+    0,
+    0.0,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "line": "none",
+    "weight": 0.25
+   },
+   "artwork": {
+    "slot": "booklet-page-36",
+    "asset": "kerb-riser-v4",
+    "face": "left",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "apron-corner-v8-05",
+   "label": "Supported pavement wearing strip",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.6999999999999993,
+     0.012,
+     1.994
+    ]
+   },
+   "at": [
+    22.15,
+    0.114,
+    -19
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "weight": 0.25,
+    "line": "none"
+   },
+   "artwork": {
+    "slot": "booklet-page-6",
+    "asset": "apron-straight-v9",
+    "face": "top",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "kerb-face-v8-05",
+   "label": "Granite facing on curved supported edge",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.016,
+     0.112,
+     1.994
+    ]
+   },
+   "at": [
+    21.774,
+    0.056,
+    -19.0
+   ],
+   "rotate": [
+    0,
+    0.0,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "line": "none",
+    "weight": 0.25
+   },
+   "artwork": {
+    "slot": "booklet-page-37",
+    "asset": "kerb-riser-v4",
+    "face": "left",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "apron-corner-v8-06",
+   "label": "Supported pavement wearing strip",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.6999999999999993,
+     0.012,
+     1.994
+    ]
+   },
+   "at": [
+    22.15,
+    0.114,
+    -17
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "weight": 0.25,
+    "line": "none"
+   },
+   "artwork": {
+    "slot": "booklet-page-7",
+    "asset": "apron-straight-v9",
+    "face": "top",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "kerb-face-v8-06",
+   "label": "Granite facing on curved supported edge",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.016,
+     0.112,
+     1.994
+    ]
+   },
+   "at": [
+    21.774,
+    0.056,
+    -17.0
+   ],
+   "rotate": [
+    0,
+    0.0,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "line": "none",
+    "weight": 0.25
+   },
+   "artwork": {
+    "slot": "booklet-page-38",
+    "asset": "kerb-riser-v4",
+    "face": "left",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "apron-corner-v8-07",
+   "label": "Supported pavement wearing strip",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.6999999999999993,
+     0.012,
+     1.994
+    ]
+   },
+   "at": [
+    22.15,
+    0.114,
+    -15
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "weight": 0.25,
+    "line": "none"
+   },
+   "artwork": {
+    "slot": "booklet-page-8",
+    "asset": "apron-straight-v9",
+    "face": "top",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "kerb-face-v8-07",
+   "label": "Granite facing on curved supported edge",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.016,
+     0.112,
+     1.994
+    ]
+   },
+   "at": [
+    21.774,
+    0.056,
+    -15.0
+   ],
+   "rotate": [
+    0,
+    0.0,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "line": "none",
+    "weight": 0.25
+   },
+   "artwork": {
+    "slot": "booklet-page-39",
+    "asset": "kerb-riser-v4",
+    "face": "left",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "apron-corner-v8-08",
+   "label": "Supported pavement wearing strip",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.6999999999999993,
+     0.012,
+     1.994
+    ]
+   },
+   "at": [
+    22.15,
+    0.114,
+    -13
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "weight": 0.25,
+    "line": "none"
+   },
+   "artwork": {
+    "slot": "booklet-page-9",
+    "asset": "apron-straight-v9",
+    "face": "top",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "kerb-face-v8-08",
+   "label": "Granite facing on curved supported edge",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.016,
+     0.112,
+     1.994
+    ]
+   },
+   "at": [
+    21.774,
+    0.056,
+    -13.0
+   ],
+   "rotate": [
+    0,
+    0.0,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "line": "none",
+    "weight": 0.25
+   },
+   "artwork": {
+    "slot": "booklet-page-40",
+    "asset": "kerb-riser-v4",
+    "face": "left",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "apron-corner-v8-09",
+   "label": "Supported pavement wearing strip",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.6999999999999993,
+     0.012,
+     1.994
+    ]
+   },
+   "at": [
+    22.15,
+    0.114,
+    -11
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "weight": 0.25,
+    "line": "none"
+   },
+   "artwork": {
+    "slot": "booklet-page-10",
+    "asset": "apron-straight-v9",
+    "face": "top",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "kerb-face-v8-09",
+   "label": "Granite facing on curved supported edge",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.016,
+     0.112,
+     1.994
+    ]
+   },
+   "at": [
+    21.774,
+    0.056,
+    -11.0
+   ],
+   "rotate": [
+    0,
+    0.0,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "line": "none",
+    "weight": 0.25
+   },
+   "artwork": {
+    "slot": "booklet-page-41",
+    "asset": "kerb-riser-v4",
+    "face": "left",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "apron-corner-v8-10",
+   "label": "Supported pavement wearing strip",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.6999999999999993,
+     0.012,
+     1.994
+    ]
+   },
+   "at": [
+    22.15,
+    0.114,
+    -9
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "weight": 0.25,
+    "line": "none"
+   },
+   "artwork": {
+    "slot": "booklet-page-11",
+    "asset": "apron-straight-v9",
+    "face": "top",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "kerb-face-v8-10",
+   "label": "Granite facing on curved supported edge",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.016,
+     0.112,
+     1.994
+    ]
+   },
+   "at": [
+    21.774,
+    0.056,
+    -9.0
+   ],
+   "rotate": [
+    0,
+    0.0,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "line": "none",
+    "weight": 0.25
+   },
+   "artwork": {
+    "slot": "booklet-page-42",
+    "asset": "kerb-riser-v4",
+    "face": "left",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "apron-corner-v8-11",
+   "label": "Supported pavement wearing strip",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.6999999999999993,
+     0.012,
+     1.994
+    ]
+   },
+   "at": [
+    22.15,
+    0.114,
+    -7
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "weight": 0.25,
+    "line": "none"
+   },
+   "artwork": {
+    "slot": "booklet-page-12",
+    "asset": "apron-straight-v9",
+    "face": "top",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "kerb-face-v8-11",
+   "label": "Granite facing on curved supported edge",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.016,
+     0.112,
+     1.994
+    ]
+   },
+   "at": [
+    21.774,
+    0.056,
+    -7.0
+   ],
+   "rotate": [
+    0,
+    0.0,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "line": "none",
+    "weight": 0.25
+   },
+   "artwork": {
+    "slot": "booklet-page-43",
+    "asset": "kerb-riser-v4",
+    "face": "left",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "apron-corner-v8-12",
+   "label": "Supported pavement wearing strip",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.6999999999999993,
+     0.012,
+     1.994
+    ]
+   },
+   "at": [
+    22.15,
+    0.114,
+    -5
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "weight": 0.25,
+    "line": "none"
+   },
+   "artwork": {
+    "slot": "booklet-page-13",
+    "asset": "apron-straight-v9",
+    "face": "top",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "kerb-face-v8-12",
+   "label": "Granite facing on curved supported edge",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.016,
+     0.112,
+     1.994
+    ]
+   },
+   "at": [
+    21.774,
+    0.056,
+    -5.0
+   ],
+   "rotate": [
+    0,
+    0.0,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "line": "none",
+    "weight": 0.25
+   },
+   "artwork": {
+    "slot": "booklet-page-44",
+    "asset": "kerb-riser-v4",
+    "face": "left",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "apron-corner-v8-13",
+   "label": "Supported pavement wearing strip",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.6999999999999993,
+     0.012,
+     1.994
+    ]
+   },
+   "at": [
+    22.15,
+    0.114,
+    -3
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "weight": 0.25,
+    "line": "none"
+   },
+   "artwork": {
+    "slot": "booklet-page-14",
+    "asset": "apron-straight-v9",
+    "face": "top",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "kerb-face-v8-13",
+   "label": "Granite facing on curved supported edge",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.016,
+     0.112,
+     1.994
+    ]
+   },
+   "at": [
+    21.774,
+    0.056,
+    -3.0
+   ],
+   "rotate": [
+    0,
+    0.0,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "line": "none",
+    "weight": 0.25
+   },
+   "artwork": {
+    "slot": "booklet-page-45",
+    "asset": "kerb-riser-v4",
+    "face": "left",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "apron-corner-v8-14",
+   "label": "Supported pavement wearing strip",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.6999999999999993,
+     0.012,
+     1.994
+    ]
+   },
+   "at": [
+    22.15,
+    0.114,
+    -1
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "weight": 0.25,
+    "line": "none"
+   },
+   "artwork": {
+    "slot": "booklet-page-15",
+    "asset": "apron-straight-v9",
+    "face": "top",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "kerb-face-v8-14",
+   "label": "Granite facing on curved supported edge",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.016,
+     0.112,
+     1.994
+    ]
+   },
+   "at": [
+    21.774,
+    0.056,
+    -1.0
+   ],
+   "rotate": [
+    0,
+    0.0,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "line": "none",
+    "weight": 0.25
+   },
+   "artwork": {
+    "slot": "booklet-page-46",
+    "asset": "kerb-riser-v4",
+    "face": "left",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "apron-corner-v8-15",
+   "label": "Supported pavement wearing strip",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.6999999999999993,
+     0.012,
+     1.994
+    ]
+   },
+   "at": [
+    22.15,
+    0.114,
+    1
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "weight": 0.25,
+    "line": "none"
+   },
+   "artwork": {
+    "slot": "booklet-page-16",
+    "asset": "apron-straight-v9",
+    "face": "top",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "kerb-face-v8-15",
+   "label": "Granite facing on curved supported edge",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.016,
+     0.112,
+     1.994
+    ]
+   },
+   "at": [
+    21.774,
+    0.056,
+    1.0
+   ],
+   "rotate": [
+    0,
+    0.0,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "line": "none",
+    "weight": 0.25
+   },
+   "artwork": {
+    "slot": "booklet-page-47",
+    "asset": "kerb-riser-v4",
+    "face": "left",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "apron-corner-v8-16",
+   "label": "Supported pavement wearing strip",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.6999999999999993,
+     0.012,
+     1.994
+    ]
+   },
+   "at": [
+    22.15,
+    0.114,
+    3
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "weight": 0.25,
+    "line": "none"
+   },
+   "artwork": {
+    "slot": "booklet-page-17",
+    "asset": "apron-straight-v9",
+    "face": "top",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "kerb-face-v8-16",
+   "label": "Granite facing on curved supported edge",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.016,
+     0.112,
+     1.994
+    ]
+   },
+   "at": [
+    21.774,
+    0.056,
+    3.0
+   ],
+   "rotate": [
+    0,
+    0.0,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "line": "none",
+    "weight": 0.25
+   },
+   "artwork": {
+    "slot": "booklet-page-48",
+    "asset": "kerb-riser-v4",
+    "face": "left",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "apron-corner-v8-17",
+   "label": "Supported pavement wearing strip",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.6999999999999993,
+     0.012,
+     1.994
+    ]
+   },
+   "at": [
+    22.15,
+    0.114,
+    5
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "weight": 0.25,
+    "line": "none"
+   },
+   "artwork": {
+    "slot": "booklet-page-18",
+    "asset": "apron-straight-v9",
+    "face": "top",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "kerb-face-v8-17",
+   "label": "Granite facing on curved supported edge",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.016,
+     0.112,
+     1.994
+    ]
+   },
+   "at": [
+    21.774,
+    0.056,
+    5.0
+   ],
+   "rotate": [
+    0,
+    0.0,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "line": "none",
+    "weight": 0.25
+   },
+   "artwork": {
+    "slot": "booklet-page-49",
+    "asset": "kerb-riser-v4",
+    "face": "left",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "apron-corner-v8-18",
+   "label": "Supported pavement wearing strip",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.6999999999999993,
+     0.012,
+     1.994
+    ]
+   },
+   "at": [
+    22.15,
+    0.114,
+    7
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "weight": 0.25,
+    "line": "none"
+   },
+   "artwork": {
+    "slot": "booklet-page-19",
+    "asset": "apron-straight-v9",
+    "face": "top",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "kerb-face-v8-18",
+   "label": "Granite facing on curved supported edge",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.016,
+     0.112,
+     1.994
+    ]
+   },
+   "at": [
+    21.774,
+    0.056,
+    7.0
+   ],
+   "rotate": [
+    0,
+    0.0,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "line": "none",
+    "weight": 0.25
+   },
+   "artwork": {
+    "slot": "booklet-page-50",
+    "asset": "kerb-riser-v4",
+    "face": "left",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "apron-corner-v8-19",
+   "label": "Supported pavement wearing strip",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.6999999999999993,
+     0.012,
+     1.994
+    ]
+   },
+   "at": [
+    22.15,
+    0.114,
+    9
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "weight": 0.25,
+    "line": "none"
+   },
+   "artwork": {
+    "slot": "booklet-page-20",
+    "asset": "apron-straight-v9",
+    "face": "top",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "kerb-face-v8-19",
+   "label": "Granite facing on curved supported edge",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.016,
+     0.112,
+     1.994
+    ]
+   },
+   "at": [
+    21.774,
+    0.056,
+    9.0
+   ],
+   "rotate": [
+    0,
+    0.0,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "line": "none",
+    "weight": 0.25
+   },
+   "artwork": {
+    "slot": "booklet-page-51",
+    "asset": "kerb-riser-v4",
+    "face": "left",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "apron-corner-v8-20",
+   "label": "Supported pavement wearing strip",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.6999999999999993,
+     0.012,
+     1.994
+    ]
+   },
+   "at": [
+    22.15,
+    0.114,
+    11
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "weight": 0.25,
+    "line": "none"
+   },
+   "artwork": {
+    "slot": "booklet-page-21",
+    "asset": "apron-straight-v9",
+    "face": "top",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "kerb-face-v8-20",
+   "label": "Granite facing on curved supported edge",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.016,
+     0.112,
+     1.994
+    ]
+   },
+   "at": [
+    21.774,
+    0.056,
+    11.0
+   ],
+   "rotate": [
+    0,
+    0.0,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "line": "none",
+    "weight": 0.25
+   },
+   "artwork": {
+    "slot": "booklet-page-52",
+    "asset": "kerb-riser-v4",
+    "face": "left",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "apron-corner-v8-21",
+   "label": "Supported pavement wearing strip",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.6999999999999993,
+     0.012,
+     1.994
+    ]
+   },
+   "at": [
+    22.15,
+    0.114,
+    13
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "weight": 0.25,
+    "line": "none"
+   },
+   "artwork": {
+    "slot": "booklet-page-22",
+    "asset": "apron-straight-v9",
+    "face": "top",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "kerb-face-v8-21",
+   "label": "Granite facing on curved supported edge",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.016,
+     0.112,
+     1.994
+    ]
+   },
+   "at": [
+    21.774,
+    0.056,
+    13.0
+   ],
+   "rotate": [
+    0,
+    0.0,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "line": "none",
+    "weight": 0.25
+   },
+   "artwork": {
+    "slot": "booklet-page-53",
+    "asset": "kerb-riser-v4",
+    "face": "left",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "apron-corner-v8-22",
+   "label": "Supported pavement wearing strip",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.6999999999999993,
+     0.012,
+     1.994
+    ]
+   },
+   "at": [
+    22.15,
+    0.114,
+    15
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "weight": 0.25,
+    "line": "none"
+   },
+   "artwork": {
+    "slot": "booklet-page-23",
+    "asset": "apron-straight-v9",
+    "face": "top",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "kerb-face-v8-22",
+   "label": "Granite facing on curved supported edge",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.016,
+     0.112,
+     1.994
+    ]
+   },
+   "at": [
+    21.774,
+    0.056,
+    15.0
+   ],
+   "rotate": [
+    0,
+    0.0,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "line": "none",
+    "weight": 0.25
+   },
+   "artwork": {
+    "slot": "booklet-page-54",
+    "asset": "kerb-riser-v4",
+    "face": "left",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "apron-corner-v8-23",
+   "label": "Supported pavement wearing strip",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.6999999999999993,
+     0.012,
+     1.994
+    ]
+   },
+   "at": [
+    22.15,
+    0.114,
+    17
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "weight": 0.25,
+    "line": "none"
+   },
+   "artwork": {
+    "slot": "booklet-page-24",
+    "asset": "apron-straight-v9",
+    "face": "top",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "kerb-face-v8-23",
+   "label": "Granite facing on curved supported edge",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.016,
+     0.112,
+     1.994
+    ]
+   },
+   "at": [
+    21.774,
+    0.056,
+    17.0
+   ],
+   "rotate": [
+    0,
+    0.0,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "line": "none",
+    "weight": 0.25
+   },
+   "artwork": {
+    "slot": "booklet-page-55",
+    "asset": "kerb-riser-v4",
+    "face": "left",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "apron-corner-v8-24",
+   "label": "Supported pavement wearing strip",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.6999999999999993,
+     0.012,
+     1.994
+    ]
+   },
+   "at": [
+    22.15,
+    0.114,
+    19
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "weight": 0.25,
+    "line": "none"
+   },
+   "artwork": {
+    "slot": "booklet-page-25",
+    "asset": "apron-straight-v9",
+    "face": "top",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "kerb-face-v8-24",
+   "label": "Granite facing on curved supported edge",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.016,
+     0.112,
+     1.994
+    ]
+   },
+   "at": [
+    21.774,
+    0.056,
+    19.0
+   ],
+   "rotate": [
+    0,
+    0.0,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "line": "none",
+    "weight": 0.25
+   },
+   "artwork": {
+    "slot": "booklet-page-56",
+    "asset": "kerb-riser-v4",
+    "face": "left",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "apron-corner-v8-25",
+   "label": "Supported pavement wearing strip",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     3.1895651857753506,
+     0.012,
+     0.494
+    ]
+   },
+   "at": [
+    23.405217407112325,
+    0.114,
+    20.25
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "weight": 0.25,
+    "line": "none"
+   },
+   "artwork": {
+    "slot": "booklet-page-26",
+    "asset": "apron-corner-v9-00",
+    "face": "top",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "kerb-face-v8-25",
+   "label": "Granite facing on curved supported edge",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.016,
+     0.112,
+     0.4957575616780995
+    ]
+   },
+   "at": [
+    21.795071127299266,
+    0.056,
+    20.25217428276727
+   ],
+   "rotate": [
+    0,
+    4.797034113430074,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "line": "none",
+    "weight": 0.25
+   },
+   "artwork": {
+    "slot": "booklet-page-57",
+    "asset": "kerb-riser-v4",
+    "face": "left",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "apron-corner-v8-26",
+   "label": "Supported pavement wearing strip",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     3.1047375096555605,
+     0.012,
+     0.494
+    ]
+   },
+   "at": [
+    23.447631245172218,
+    0.114,
+    20.75
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "weight": 0.25,
+    "line": "none"
+   },
+   "artwork": {
+    "slot": "booklet-page-27",
+    "asset": "apron-corner-v9-01",
+    "face": "top",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "kerb-face-v8-26",
+   "label": "Granite facing on curved supported edge",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.016,
+     0.112,
+     0.5105263491037887
+    ]
+   },
+   "at": [
+    21.88159836630999,
+    0.056,
+    20.75652422077352
+   ],
+   "rotate": [
+    0,
+    14.53264443067556,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "line": "none",
+    "weight": 0.25
+   },
+   "artwork": {
+    "slot": "booklet-page-58",
+    "asset": "kerb-riser-v4",
+    "face": "left",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "apron-corner-v8-27",
+   "label": "Supported pavement wearing strip",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.927178028658929,
+     0.012,
+     0.494
+    ]
+   },
+   "at": [
+    23.536410985670535,
+    0.114,
+    21.25
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "weight": 0.25,
+    "line": "none"
+   },
+   "artwork": {
+    "slot": "booklet-page-28",
+    "asset": "apron-corner-v9-02",
+    "face": "top",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "kerb-face-v8-27",
+   "label": "Granite facing on curved supported edge",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.016,
+     0.112,
+     0.5445102572168226
+    ]
+   },
+   "at": [
+    22.063133876398187,
+    0.056,
+    21.260879222811386
+   ],
+   "rotate": [
+    0,
+    24.735610317245484,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "line": "none",
+    "weight": 0.25
+   },
+   "artwork": {
+    "slot": "booklet-page-59",
+    "asset": "kerb-riser-v4",
+    "face": "left",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "apron-corner-v8-28",
+   "label": "Supported pavement wearing strip",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.6366985862022396,
+     0.012,
+     0.494
+    ]
+   },
+   "at": [
+    23.68165070689888,
+    0.114,
+    21.75
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "weight": 0.25,
+    "line": "none"
+   },
+   "artwork": {
+    "slot": "booklet-page-29",
+    "asset": "apron-corner-v9-03",
+    "face": "top",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "kerb-face-v8-28",
+   "label": "Granite facing on curved supported edge",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.016,
+     0.112,
+     0.611292443966188
+    ]
+   },
+   "at": [
+    22.361868195338744,
+    0.056,
+    21.765247577015064
+   ],
+   "rotate": [
+    0,
+    35.905157447889295,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "line": "none",
+    "weight": 0.25
+   },
+   "artwork": {
+    "slot": "booklet-page-60",
+    "asset": "kerb-riser-v4",
+    "face": "left",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "apron-corner-v8-29",
+   "label": "Supported pavement wearing strip",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.1843134832984425,
+     0.012,
+     0.494
+    ]
+   },
+   "at": [
+    23.90784325835078,
+    0.114,
+    22.25
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "weight": 0.25,
+    "line": "none"
+   },
+   "artwork": {
+    "slot": "booklet-page-30",
+    "asset": "apron-corner-v9-04",
+    "face": "top",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "kerb-face-v8-29",
+   "label": "Granite facing on curved supported edge",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.016,
+     0.112,
+     0.7580690498275259
+    ]
+   },
+   "at": [
+    22.835795644584607,
+    0.056,
+    22.26966006232521
+   ],
+   "rotate": [
+    0,
+    49.12650256692899,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "line": "none",
+    "weight": 0.25
+   },
+   "artwork": {
+    "slot": "booklet-page-61",
+    "asset": "kerb-riser-v4",
+    "face": "left",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "apron-corner-v8-30",
+   "label": "Supported pavement wearing strip",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.3989578808281777,
+     0.012,
+     0.494
+    ]
+   },
+   "at": [
+    24.30052105958591,
+    0.114,
+    22.75
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "weight": 0.25,
+    "line": "none"
+   },
+   "artwork": {
+    "slot": "booklet-page-31",
+    "asset": "apron-corner-v9-05",
+    "face": "top",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "kerb-face-v8-30",
+   "label": "Granite facing on curved supported edge",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.016,
+     0.112,
+     1.7260508075688765
+    ]
+   },
+   "at": [
+    23.963338248911686,
+    0.056,
+    22.774893104801667
+   ],
+   "rotate": [
+    0,
+    73.22134511903964,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "faint",
+    "line": "none",
+    "weight": 0.25
+   },
+   "artwork": {
+    "slot": "booklet-page-62",
+    "asset": "kerb-riser-v4",
+    "face": "left",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "kerb-course-000",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    -29.9955
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-001",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    -29.342166666666667
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-002",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    -28.688833333333335
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-003",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    -28.0355
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-004",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    -27.382166666666667
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-005",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    -26.728833333333334
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-006",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    -26.075499999999998
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-007",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    -25.422166666666666
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-008",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    -24.768833333333333
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-009",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    -24.1155
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-010",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    -23.46216666666667
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-011",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    -22.808833333333332
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-012",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    -22.1555
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-013",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    -21.502166666666668
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-014",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    -20.84883333333333
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-015",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    -20.1955
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-016",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    -19.542166666666667
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-017",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    -18.888833333333334
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-018",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    -18.235500000000002
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-019",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    -17.582166666666666
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-020",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    -16.928833333333333
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-021",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    -16.2755
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-022",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    -15.622166666666667
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-023",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    -14.968833333333333
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-024",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    -14.3155
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-025",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    -13.662166666666668
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-026",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    -13.008833333333335
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-027",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    -12.3555
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-028",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    -11.702166666666667
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-029",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    -11.048833333333334
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-030",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    -10.395499999999998
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-031",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    -9.742166666666666
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-032",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    -9.088833333333334
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-033",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    -8.435500000000001
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-034",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    -7.782166666666669
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-035",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    -7.128833333333333
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-036",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    -6.4755
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-037",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    -5.822166666666668
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-038",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    -5.168833333333332
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-039",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    -4.515499999999999
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-040",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    -3.862166666666667
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-041",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    -3.2088333333333345
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-042",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    -2.555500000000002
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-043",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    -1.9021666666666663
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-044",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    -1.248833333333334
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-045",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    -0.5955000000000015
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-046",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    0.05783333333333456
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-047",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    0.711166666666667
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-048",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    1.3644999999999994
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-049",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    2.0178333333333356
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-050",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    2.6711666666666645
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-051",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    3.3245000000000005
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-052",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    3.9778333333333293
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-053",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    4.631166666666665
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-054",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    5.284500000000001
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-055",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    5.93783333333333
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-056",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    6.591166666666666
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-057",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    7.244500000000002
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-058",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    7.897833333333331
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-059",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    8.551166666666667
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-060",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    9.204500000000003
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-061",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    9.857833333333332
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-062",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    10.511166666666668
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-063",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    11.164499999999997
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-064",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    11.817833333333333
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-065",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    12.471166666666669
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-066",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    13.124499999999998
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-067",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    13.777833333333334
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-068",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    14.431166666666662
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-069",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    15.084499999999998
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-070",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    15.737833333333334
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-071",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    16.391166666666663
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-072",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    17.0445
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-073",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    17.697833333333335
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-course-074",
+   "label": "Closely jointed granite kerb course",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "pavement-rise"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -0.11,
+      0
+     ],
+     [
+      0.11,
+      0
+     ],
+     [
+      0.11,
+      0.105
+     ],
+     [
+      0.092,
+      0.12
+     ],
+     [
+      -0.092,
+      0.12
+     ],
+     [
+      -0.11,
+      0.105
+     ]
+    ],
+    "height": 0.6443333333333333
+   },
+   "at": [
+    21.9,
+    0,
+    18.351166666666664
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.3,
+    "glow": 0
+   }
+  }
+ ],
+ "articulations": [],
+ "labels": [],
+ "anchors": {
+  "base": {
+   "point": [
+    0,
+    0,
+    0
+   ],
+   "up": [
+    0,
+    1,
+    0
+   ]
+  }
+ },
+ "presentation": {
+  "framing": {
+   "yaw": 12,
+   "pitch": 28,
+   "fit": 1.03
+  },
+  "views": [
+   {
+    "id": "hero",
+    "label": "Low approach — setts and curved kerb",
+    "yaw": 0,
+    "pitch": 18,
+    "distance": 1.8,
+    "target": "photo-framing-region"
+   },
+   {
+    "id": "photo",
+    "label": "Reference approach and right curved kerb",
+    "yaw": 0,
+    "pitch": 10,
+    "distance": 1.6,
+    "target": "photo-framing-region"
+   },
+   {
+    "id": "paving",
+    "label": "Bare wet setts close study",
+    "yaw": 25,
+    "pitch": 48,
+    "distance": 0.18,
+    "target": "site-ground"
+   },
+   {
+    "id": "kerb",
+    "label": "Curved right pavement edge",
+    "yaw": -40,
+    "pitch": 26,
+    "distance": 4,
+    "target": "kerb-49"
+   },
+   {
+    "id": "plan",
+    "label": "64 by 60 m support envelope",
+    "yaw": 0,
+    "pitch": 88,
+    "distance": 1.04
+   }
+  ],
+  "atmosphere": {
+   "haze": 0.2,
+   "scanlines": false,
+   "vignette": true,
+   "grid": false,
+   "projector": false,
+   "motes": 0
+  },
+  "occlusion": "xray",
+  "certainty_style": "subtle",
+  "background": "deep",
+  "float": 0
+ },
+ "animation": {
+  "assembly": {
+   "style": "build",
+   "seconds": 4,
+   "interference": false
+  },
+  "idle": {
+   "life": "off",
+   "events": [],
+   "strength": 0
+  },
+  "camera": {
+   "drift": 0,
+   "breathe": 0,
+   "tour": [
+    {
+     "view": "paving",
+     "at": 8,
+     "fly": 4
+    },
+    {
+     "view": "kerb",
+     "at": 16,
+     "fly": 4
+    },
+    {
+     "view": "hero",
+     "at": 24,
+     "fly": 5
+    }
+   ]
+  },
+  "reduced_motion": "still"
+ },
+ "authoring": {
+  "tier": "masterpiece",
+  "research": "done",
+  "review_rounds": 0,
+  "outcome": "unreviewed",
+  "identity": [
+   {
+    "feature": "Bare wet cobbled square",
+    "parts": [
+     "site-ground"
+    ]
+   },
+   {
+    "feature": "Curved raised right pavement",
+    "parts": [
+     "right-pavement",
+     "curved-pavement-apron"
+    ]
+   }
+  ],
+  "sources": [
+   "photo"
+  ],
+  "critic": {
+   "scene_sha256": "1a3a41158e8c04f581d38944e51eb1e3d0f164b6ced9a7f7a0e23744434bf2d6",
+   "verdict": "improve",
+   "scores": {
+    "silhouette": 3,
+    "proportions": 2,
+    "identity": 1,
+    "depth": 2,
+    "composition": 2,
+    "assembly": 2,
+    "motion": 3,
+    "density": 2,
+    "honesty": 3
+   },
+   "round": 11,
+   "defects": 6
+  },
+  "rounds": [
+   {
+    "round": 1,
+    "result": "baseline",
+    "minutes": 1.6,
+    "changes": [
+     "draft"
+    ],
+    "summary": "The defining wet winter surface reads as a dark matte paving print. The reference foreground has uneven, rounded stones catching broken cool"
+   },
+   {
+    "round": 2,
+    "result": "kept",
+    "minutes": 5.3,
+    "changes": [
+     "D1",
+     "D2",
+     "D3",
+     "D4"
+    ],
+    "summary": "The defining wet winter finish is weak. The reference has irregular connected sheen across stone crowns and dark saturated joints; the rende"
+   },
+   {
+    "round": 3,
+    "result": "kept",
+    "minutes": 4.6,
+    "changes": [
+     "D1",
+     "D2",
+     "D6",
+     "D7"
+    ],
+    "summary": "The defining wet winter finish remains weak. Hero and solid read as uniformly matte grey paving; close up, many stones repeat the same littl"
+   },
+   {
+    "round": 4,
+    "result": "kept",
+    "minutes": 4.0,
+    "changes": [
+     "D2",
+     "D6",
+     "D8",
+     "D9"
+    ],
+    "summary": "The defining wet finish is weak: hero and solid are evenly grey and matte, while the reference has irregular silver sky reflections and dark"
+   },
+   {
+    "round": 5,
+    "result": "reverted",
+    "minutes": 4.5,
+    "changes": [
+     "D1",
+     "D10",
+     "D4",
+     "D5"
+    ],
+    "summary": "The defining wet winter finish is not convincing: hero and solid show an evenly grey diffuse field, while the reference has irregular bright"
+   },
+   {
+    "round": 6,
+    "result": "kept",
+    "minutes": 2.0,
+    "changes": [
+     "D10"
+    ],
+    "summary": "The defining wet winter finish is not convincing. Hero and solid remain a nearly evenly grey carpet; at photo distance tiny bright strokes o"
+   },
+   {
+    "round": 7,
+    "result": "reverted",
+    "minutes": 5.3,
+    "changes": [
+     "D1",
+     "D12",
+     "D5"
+    ],
+    "summary": "The defining wet winter finish is not convincing. Hero and solid show an evenly grey field, and photo shows diffuse pale streaks, unlike the"
+   },
+   {
+    "round": 8,
+    "result": "kept",
+    "minutes": 3.4,
+    "changes": [
+     "D4"
+    ],
+    "summary": "The defining wet winter finish is not convincing: hero and solid show a nearly even grey field, while the close photo view has isolated whit"
+   },
+   {
+    "round": 9,
+    "result": "kept",
+    "minutes": 3.3,
+    "changes": [
+     "D11",
+     "D12",
+     "D8"
+    ],
+    "summary": "The defining wet winter finish is not convincing. Hero and solid show a broadly uniform matte grey field; the reference has irregular glossy"
+   },
+   {
+    "round": 10,
+    "result": "reverted",
+    "minutes": 4.6,
+    "changes": [
+     "D1",
+     "D14",
+     "D5"
+    ],
+    "summary": "The defining wet winter finish is not convincing. The reference shows broad directional cool sheen and brighter grazing reflections across t"
+   },
+   {
+    "round": 11,
+    "result": "kept",
+    "minutes": 2.8,
+    "changes": [
+     "D15"
+    ],
+    "summary": "The defining wet winter finish remains weak. The photo has irregular connected bright reflections between dark wet stones; hero and solid in"
+   },
+   {
+    "round": 12,
+    "result": "reverted",
+    "minutes": 2.3,
+    "changes": [
+     "D16",
+     "D17",
+     "D6"
+    ],
+    "summary": "The defining wet winter finish is not convincing. The reference foreground has broad irregular silver highlights and broken reflected light "
+   }
+  ]
+ }
+}

@@ -153,7 +153,8 @@
    "unit": "m",
    "certainty": "inferred",
    "source": "request",
-   "note": "Designed, not built. The log store is 1.20 m deep inside the 2.40 m shed's depth and 1.80 m long, with 0.30 m clear of each corner: deep enough for a 2.4 m log laid across it, and sized to the shed's depth rather than to a measurement of the garden."
+   "note": "Designed, not built. The log store is 1.20 m deep inside the 2.40 m shed's depth and 1.80 m long, with 0.30 m clear of each corner: deep enough for a 2.4 m log laid across it, and sized to the shed's depth rather than to a measurement of the garden.",
+   "requirement": true
   },
   {
    "key": "planned-logstore-rise",
@@ -161,7 +162,8 @@
    "unit": "m",
    "certainty": "inferred",
    "source": "request",
-   "note": "Designed, not built. Its roof leans from the shed's end wall at 1.98 m down to a beam at 1.70 m, a 13 deg fall, so it sheds away from the shed and stays under the shed's own eaves line."
+   "note": "Designed, not built. Its roof leans from the shed's end wall at 1.98 m down to a beam at 1.70 m, a 13 deg fall, so it sheds away from the shed and stays under the shed's own eaves line.",
+   "requirement": true
   },
   {
    "key": "planned-deck-size",
@@ -169,7 +171,8 @@
    "unit": "m",
    "certainty": "inferred",
    "source": "request",
-   "note": "Designed, not built. The deck is 2.00 x 1.40 m, centred on the 0.91 m doorway with 0.55 m either side, and its top is level with the shed's floor at 0.075 m so the threshold stays flush."
+   "note": "Designed, not built. The deck is 2.00 x 1.40 m, centred on the 0.91 m doorway with 0.55 m either side, and its top is level with the shed's floor at 0.075 m so the threshold stays flush.",
+   "requirement": true
   },
   {
    "key": "planned-step-height",
@@ -177,7 +180,8 @@
    "unit": "m",
    "certainty": "inferred",
    "source": "request",
-   "note": "Designed, not built. One 50 mm step from a 0.35 m tread to the garden: the deck can only be as high as the shed's floor allows, so the step is shallow. Raise the shed's threshold if you want a taller deck."
+   "note": "Designed, not built. One 50 mm step from a 0.35 m tread to the garden: the deck can only be as high as the shed's floor allows, so the step is shallow. Raise the shed's threshold if you want a taller deck.",
+   "requirement": true
   }
  ],
  "assets": [],
@@ -4553,7 +4557,9 @@
     0
    ],
    "note": "Designed, not built. Size: 1.20 x 1.80 m of 25 mm boards at 0.12 m, a raised floor that keeps the logs off the ground. Shape: a boarded deck butted to the shed's end wall, which is where it gets its support at the wall side.",
-   "source": "request",
+   "basis": [
+    "planned-logstore-size"
+   ],
    "look": {
     "fill": "dark",
     "weight": 0.85,
@@ -4583,7 +4589,9 @@
     -0.7
    ],
    "note": "Designed, not built. Size: 75 x 95 mm bearers on the ground under the floor, two of them at 1.4 m centres. Shape: a sawn bearer.",
-   "source": "request",
+   "basis": [
+    "planned-logstore-size"
+   ],
    "repeat": {
     "count": 2,
     "step": {
@@ -4618,7 +4626,10 @@
     0.855
    ],
    "note": "Designed, not built. Size: 90 x 90 mm posts at the two outer corners, 1.50 m high on the floor. Shape: a squared post.",
-   "source": "request",
+   "basis": [
+    "planned-logstore-size",
+    "planned-logstore-rise"
+   ],
    "repeat": {
     "count": 2,
     "step": {
@@ -4653,7 +4664,10 @@
     0
    ],
    "note": "Designed, not built. Size: a 90 x 90 mm head beam along the open side, on the posts. Shape: a beam carrying the low edge of the roof.",
-   "source": "request"
+   "basis": [
+    "planned-logstore-size",
+    "planned-logstore-rise"
+   ]
   },
   {
    "id": "planned-logstore-rafter",
@@ -4678,7 +4692,10 @@
     -0.72
    ],
    "note": "Designed, not built. Size: 45 x 75 mm rafters at 0.72 m centres, on the shed's end wall at 1.98 m and the beam at 1.70 m: a 13 deg fall off the shed. Shape: a rafter.",
-   "source": "request",
+   "basis": [
+    "planned-logstore-size",
+    "planned-logstore-rise"
+   ],
    "repeat": {
     "count": 3,
     "step": {
@@ -4718,7 +4735,10 @@
     0
    ],
    "note": "Designed, not built. Size: 1.24 x 1.90 m of 22 mm boards, its high edge tucked 0.09 m under the shed's own roof overhang. Shape: the lean-to deck on the rafters.",
-   "source": "request",
+   "basis": [
+    "planned-logstore-size",
+    "planned-logstore-rise"
+   ],
    "rotate": [
     0,
     0,
@@ -4748,7 +4768,10 @@
     0
    ],
    "note": "Designed, not built. Size: a felt covering on the lean-to boards, as the shed's own roof is felted. Shape: a sheet on the fall.",
-   "source": "request",
+   "basis": [
+    "planned-logstore-size",
+    "planned-logstore-rise"
+   ],
    "rotate": [
     0,
     0,
@@ -4784,7 +4807,9 @@
     0.8775
    ],
    "note": "Designed, not built. Size: a 75 mm side rail at the top of each open side, so logs cannot roll out. Shape: a rail.",
-   "source": "request",
+   "basis": [
+    "planned-logstore-size"
+   ],
    "repeat": {
     "count": 2,
     "step": {
@@ -4818,7 +4843,9 @@
     -0.8
    ],
    "note": "Designed, not built. Size: split logs 170 mm across, 1.60 m long, three across the floor. Shape: rounds lying on the floor, their ends facing the garden; a second course sits on the hollow between them.",
-   "source": "request",
+   "basis": [
+    "planned-logstore-size"
+   ],
    "repeat": {
     "count": 3,
     "step": {
@@ -4861,7 +4888,9 @@
     -0.8
    ],
    "note": "Designed, not built. Size: two more logs in the hollow of the first course. Shape: rounds.",
-   "source": "request",
+   "basis": [
+    "planned-logstore-size"
+   ],
    "repeat": {
     "count": 2,
     "step": {
@@ -4905,7 +4934,9 @@
     1.45
    ],
    "note": "Designed, not built. Size: 75 x 50 mm joists on the ground at 0.55 m centres under the boards. Shape: a joist.",
-   "source": "request",
+   "basis": [
+    "planned-deck-size"
+   ],
    "repeat": {
     "count": 3,
     "step": {
@@ -4941,7 +4972,9 @@
     1.9
    ],
    "note": "Designed, not built. Size: 2.00 x 1.40 m of 25 mm decking, its top level with the shed's floor so the door's threshold is not a step. Shape: a boarded platform against the front wall, seven boards.",
-   "source": "request",
+   "basis": [
+    "planned-deck-size"
+   ],
    "look": {
     "fill": "dark",
     "weight": 0.85,
@@ -4971,7 +5004,9 @@
     2.5875
    ],
    "note": "Designed, not built. Size: a 75 mm riser board at the deck's outer edge, closing the joist ends. Shape: a flat board.",
-   "source": "request"
+   "basis": [
+    "planned-deck-size"
+   ]
   },
   {
    "id": "planned-deck-step",
@@ -4996,7 +5031,10 @@
     2.775
    ],
    "note": "Designed, not built. Size: a 2.00 x 0.35 m tread 50 mm below the deck: one low step to the garden, because the shed's floor stands only 75 mm above it. A raised deck would need the shed's threshold raised with it. Shape: a tread on two bearers.",
-   "source": "request",
+   "basis": [
+    "planned-deck-size",
+    "planned-step-height"
+   ],
    "look": {
     "fill": "dark",
     "weight": 0.85,

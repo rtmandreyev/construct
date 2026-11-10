@@ -1,0 +1,6337 @@
+{
+ "format": "construct-scene",
+ "version": 2,
+ "id": "rain-harbour-offset-balcony-hotel-world-repair",
+ "title": "Offset Balcony Hotel",
+ "subject": {
+  "category": "architecture",
+  "summary": "Original night-street hotel tower with three offset residential stacks, cantilever balconies, a recessed shopfront and compact roof services. Approximate visual atmosphere from concept, not a reconstruction.",
+  "accuracy": "original",
+  "synthetic": false
+ },
+ "units": "m",
+ "seed": 41,
+ "sources": [
+  {
+   "id": "request",
+   "kind": "user_request",
+   "title": "Rain Harbour balcony hotel tower dimensions and constraints",
+   "rights": "permitted"
+  },
+  {
+   "id": "concept",
+   "kind": "reference_image",
+   "title": "Rain Harbour atmosphere and layered architectural rhythm",
+   "rights": "permitted"
+  }
+ ],
+ "facts": [
+  {
+   "key": "nominal-width",
+   "value": 18,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "request",
+   "note": "Original metric design choice by builder supervisor; not user-measured."
+  },
+  {
+   "key": "nominal-depth",
+   "value": 12,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "request",
+   "note": "Original metric design choice by builder supervisor; not user-measured."
+  },
+  {
+   "key": "nominal-height",
+   "value": 62,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "request",
+   "note": "Original metric design choice inferred from the concept, not user-measured."
+  }
+ ],
+ "parts": [
+  {
+   "id": "podium-rear",
+   "label": "podium rear",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     18.0,
+     7.0,
+     10.4
+    ]
+   },
+   "at": [
+    0.0,
+    6.5,
+    -6.8
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "weight": 0.65,
+    "glow": 0
+   }
+  },
+  {
+   "id": "sign-band-podium",
+   "label": "sign band podium",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     18,
+     7,
+     1.1
+    ]
+   },
+   "at": [
+    0.0,
+    6.5,
+    -1.05
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "weight": 0.65,
+    "glow": 0
+   }
+  },
+  {
+   "id": "lower-residential-mass",
+   "label": "lower residential mass",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     17.9,
+     17.0,
+     9.1
+    ]
+   },
+   "at": [
+    0.0,
+    18.5,
+    -5.45
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "weight": 0.9,
+    "glow": 0
+   }
+  },
+  {
+   "id": "offset-middle-mass",
+   "label": "offset middle mass",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     15.9,
+     17.0,
+     8.7
+    ]
+   },
+   "at": [
+    1.0,
+    35.5,
+    -5.65
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "weight": 0.9,
+    "glow": 0
+   }
+  },
+  {
+   "id": "offset-crown-mass",
+   "label": "offset crown mass",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 5,
+   "shape": {
+    "type": "box",
+    "size": [
+     13.9,
+     15.0,
+     8.3
+    ]
+   },
+   "at": [
+    -1.0,
+    51.5,
+    -5.85
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "weight": 0.9,
+    "glow": 0
+   }
+  },
+  {
+   "id": "roof-service-room",
+   "label": "roof service room",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 7,
+   "shape": {
+    "axis": "z",
+    "height": 4,
+    "profile": [
+     [
+      -2.5,
+      1.8
+     ],
+     [
+      2.5,
+      1.8
+     ],
+     [
+      2.5,
+      0
+     ],
+     [
+      2.2,
+      0
+     ],
+     [
+      2.2,
+      1.55
+     ],
+     [
+      0.15,
+      1.55
+     ],
+     [
+      0.15,
+      0
+     ],
+     [
+      -0.15,
+      0
+     ],
+     [
+      -0.15,
+      1.55
+     ],
+     [
+      -2.2,
+      1.55
+     ],
+     [
+      -2.2,
+      0
+     ],
+     [
+      -2.5,
+      0
+     ]
+    ],
+    "type": "extrude"
+   },
+   "at": [
+    -1.0,
+    59.0,
+    -8.0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "weight": 0.65,
+    "glow": 0
+   }
+  },
+  {
+   "id": "roof-hvac",
+   "label": "roof hvac",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 7,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.2,
+     0.9,
+     2.4
+    ],
+    "ribs": 2
+   },
+   "at": [
+    4,
+    59.45,
+    -6.8
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "weight": 0.65,
+    "glow": 0
+   }
+  },
+  {
+   "id": "roof-access-cap",
+   "label": "roof access cap",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 7,
+   "shape": {
+    "type": "box",
+    "size": [
+     14.0,
+     0.16,
+     8.3
+    ]
+   },
+   "at": [
+    -1.0,
+    59.08,
+    -5.85
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "weight": 0.65,
+    "glow": 0
+   }
+  },
+  {
+   "id": "roof-antenna-mast",
+   "label": "roof antenna mast",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 7,
+   "shape": {
+    "axis": "z",
+    "height": 0.12,
+    "profile": [
+     [
+      -0.07,
+      0
+     ],
+     [
+      0.07,
+      0
+     ],
+     [
+      0.07,
+      0.82
+     ],
+     [
+      1.15,
+      0.82
+     ],
+     [
+      1.15,
+      0.9
+     ],
+     [
+      0.07,
+      0.9
+     ],
+     [
+      0.07,
+      1.15
+     ],
+     [
+      -0.07,
+      1.15
+     ],
+     [
+      -0.07,
+      0.9
+     ],
+     [
+      -1.15,
+      0.9
+     ],
+     [
+      -1.15,
+      0.82
+     ],
+     [
+      -0.07,
+      0.82
+     ]
+    ],
+    "type": "extrude"
+   },
+   "at": [
+    -1.0,
+    60.85,
+    -5.94
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.65,
+    "glow": 0
+   }
+  },
+  {
+   "at": [
+    -1,
+    60.88,
+    -6
+   ],
+   "certainty": "inferred",
+   "id": "roof-service-room-cap",
+   "look": {
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 0.8
+   },
+   "role": "detail",
+   "shape": {
+    "size": [
+     5.4,
+     0.16,
+     4.4
+    ],
+    "type": "box"
+   },
+   "stage": 7
+  },
+  {
+   "id": "shopfront-threshold",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     18.0,
+     0.18,
+     2.1
+    ]
+   },
+   "at": [
+    0.0,
+    0.09,
+    -1.05
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.8,
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "shopfront-pier",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.26,
+     3.85,
+     2.1
+    ]
+   },
+   "at": [
+    -8.87,
+    1.925,
+    -1.05
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.8,
+    "tone": "structure"
+   },
+   "repeat": {
+    "count": 4,
+    "step": {
+     "at": [
+      5.91,
+      0,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "shop-glass-warm",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.85,
+     2.3,
+     0.09
+    ]
+   },
+   "at": [
+    -6.65,
+    1.42,
+    -0.745
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.5,
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "shop-bay-frame-0",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 1.6,
+    "profile": [
+     [
+      -2.72,
+      0.18
+     ],
+     [
+      -2.72,
+      2.68
+     ],
+     [
+      2.72,
+      2.68
+     ],
+     [
+      2.72,
+      0.18
+     ],
+     [
+      2.52,
+      0.18
+     ],
+     [
+      2.52,
+      2.48
+     ],
+     [
+      -2.52,
+      2.48
+     ],
+     [
+      -2.52,
+      0.18
+     ]
+    ]
+   },
+   "at": [
+    -5.78,
+    0.0,
+    -1.6
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "shop-transom-0",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     5.25,
+     0.07,
+     0.19
+    ]
+   },
+   "at": [
+    -5.78,
+    2.25,
+    -0.72
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "shop-awning-0",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.05,
+     0.16,
+     0.8
+    ]
+   },
+   "at": [
+    -4.815,
+    2.84,
+    0.1
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.8,
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "shop-awning-lip-0",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.05,
+     0.15,
+     0.1
+    ]
+   },
+   "at": [
+    -4.815,
+    2.78,
+    0.45
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "shop-glass-dark",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     5.04,
+     1.43,
+     0.09
+    ]
+   },
+   "at": [
+    0.0,
+    1.745,
+    -0.695
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.5,
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "shop-bay-frame-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 1.6,
+    "profile": [
+     [
+      -2.72,
+      0.18
+     ],
+     [
+      -2.72,
+      2.68
+     ],
+     [
+      2.72,
+      2.68
+     ],
+     [
+      2.72,
+      0.18
+     ],
+     [
+      2.52,
+      0.18
+     ],
+     [
+      2.52,
+      2.48
+     ],
+     [
+      -2.52,
+      2.48
+     ],
+     [
+      -2.52,
+      0.18
+     ]
+    ]
+   },
+   "at": [
+    0.0,
+    0.0,
+    -1.6
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "shop-transom-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     5.25,
+     0.07,
+     0.19
+    ]
+   },
+   "at": [
+    0.0,
+    2.25,
+    -0.67
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "shop-awning-1",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     5.5,
+     0.16,
+     0.6
+    ]
+   },
+   "at": [
+    0.0,
+    2.86,
+    0.0
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.8,
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "shop-awning-lip-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     5.5,
+     0.15,
+     0.1
+    ]
+   },
+   "at": [
+    0.0,
+    2.78,
+    0.25
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "shop-glass-cool",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     5.15,
+     2.5,
+     0.09
+    ]
+   },
+   "at": [
+    5.78,
+    1.52,
+    -0.585
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.5,
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "shop-bay-frame-2",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -2.62,
+      0.18
+     ],
+     [
+      2.62,
+      0.18
+     ],
+     [
+      2.62,
+      2.82
+     ],
+     [
+      2.54,
+      2.82
+     ],
+     [
+      2.54,
+      0.26
+     ],
+     [
+      1.42,
+      0.26
+     ],
+     [
+      1.42,
+      2.82
+     ],
+     [
+      1.35,
+      2.82
+     ],
+     [
+      1.35,
+      0.26
+     ],
+     [
+      0.12,
+      0.26
+     ],
+     [
+      0.12,
+      2.82
+     ],
+     [
+      0.05,
+      2.82
+     ],
+     [
+      0.05,
+      0.26
+     ],
+     [
+      -1.03,
+      0.26
+     ],
+     [
+      -1.03,
+      2.82
+     ],
+     [
+      -1.1,
+      2.82
+     ],
+     [
+      -1.1,
+      0.26
+     ],
+     [
+      -2.54,
+      0.26
+     ],
+     [
+      -2.54,
+      2.82
+     ],
+     [
+      -2.62,
+      2.82
+     ]
+    ],
+    "height": 0.17
+   },
+   "at": [
+    5.78,
+    0.0,
+    -0.53
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "shop-transom-2",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     5.25,
+     0.07,
+     0.19
+    ]
+   },
+   "at": [
+    5.78,
+    2.25,
+    -0.56
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "shop-awning-2",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     5.5,
+     0.12,
+     0.4
+    ]
+   },
+   "at": [
+    5.78,
+    2.86,
+    0.0
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.8,
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "shop-awning-lip-2",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     5.5,
+     0.15,
+     0.1
+    ]
+   },
+   "at": [
+    5.78,
+    2.78,
+    0.15
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "lower-cantilever-slab",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     17.6,
+     0.24,
+     2.06
+    ]
+   },
+   "at": [
+    0.0,
+    18.1,
+    0.13
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.8,
+    "tone": "structure"
+   },
+   "repeat": {
+    "count": 3,
+    "step": {
+     "at": [
+      0,
+      3.6,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "lower-balcony-rail",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -8.8,
+      1.04
+     ],
+     [
+      8.8,
+      1.04
+     ],
+     [
+      8.8,
+      0.0
+     ],
+     [
+      8.735000000000001,
+      0.0
+     ],
+     [
+      8.735000000000001,
+      0.98
+     ],
+     [
+      7.3658333333333355,
+      0.98
+     ],
+     [
+      7.3658333333333355,
+      0.0
+     ],
+     [
+      7.300833333333336,
+      0.0
+     ],
+     [
+      7.300833333333336,
+      0.98
+     ],
+     [
+      5.899166666666665,
+      0.98
+     ],
+     [
+      5.899166666666665,
+      0.0
+     ],
+     [
+      5.834166666666666,
+      0.0
+     ],
+     [
+      5.834166666666666,
+      0.98
+     ],
+     [
+      4.4325,
+      0.98
+     ],
+     [
+      4.4325,
+      0.0
+     ],
+     [
+      4.367500000000001,
+      0.0
+     ],
+     [
+      4.367500000000001,
+      0.98
+     ],
+     [
+      2.9658333333333338,
+      0.98
+     ],
+     [
+      2.9658333333333338,
+      0.0
+     ],
+     [
+      2.9008333333333334,
+      0.0
+     ],
+     [
+      2.9008333333333334,
+      0.98
+     ],
+     [
+      1.4991666666666668,
+      0.98
+     ],
+     [
+      1.4991666666666668,
+      0.0
+     ],
+     [
+      1.4341666666666668,
+      0.0
+     ],
+     [
+      1.4341666666666668,
+      0.98
+     ],
+     [
+      0.0325,
+      0.98
+     ],
+     [
+      0.0325,
+      0.0
+     ],
+     [
+      -0.0325,
+      0.0
+     ],
+     [
+      -0.0325,
+      0.98
+     ],
+     [
+      -1.4341666666666677,
+      0.98
+     ],
+     [
+      -1.4341666666666677,
+      0.0
+     ],
+     [
+      -1.4991666666666676,
+      0.0
+     ],
+     [
+      -1.4991666666666676,
+      0.98
+     ],
+     [
+      -2.9008333333333334,
+      0.98
+     ],
+     [
+      -2.9008333333333334,
+      0.0
+     ],
+     [
+      -2.9658333333333338,
+      0.0
+     ],
+     [
+      -2.9658333333333338,
+      0.98
+     ],
+     [
+      -4.367500000000001,
+      0.98
+     ],
+     [
+      -4.367500000000001,
+      0.0
+     ],
+     [
+      -4.4325,
+      0.0
+     ],
+     [
+      -4.4325,
+      0.98
+     ],
+     [
+      -5.834166666666667,
+      0.98
+     ],
+     [
+      -5.834166666666667,
+      0.0
+     ],
+     [
+      -5.899166666666667,
+      0.0
+     ],
+     [
+      -5.899166666666667,
+      0.98
+     ],
+     [
+      -7.300833333333334,
+      0.98
+     ],
+     [
+      -7.300833333333334,
+      0.0
+     ],
+     [
+      -7.365833333333334,
+      0.0
+     ],
+     [
+      -7.365833333333334,
+      0.98
+     ],
+     [
+      -8.735000000000001,
+      0.98
+     ],
+     [
+      -8.735000000000001,
+      0.0
+     ],
+     [
+      -8.8,
+      0.0
+     ]
+    ],
+    "height": 0.065
+   },
+   "at": [
+    0.0,
+    18.22,
+    1.06
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "tone": "structure"
+   },
+   "repeat": {
+    "count": 3,
+    "step": {
+     "at": [
+      0,
+      3.6,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "lower-balcony-partitions",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "y",
+    "profile": [
+     [
+      -4.445,
+      -0.9
+     ],
+     [
+      4.445,
+      -0.9
+     ],
+     [
+      4.445,
+      1.08
+     ],
+     [
+      4.355,
+      1.08
+     ],
+     [
+      4.355,
+      -0.8250000000000001
+     ],
+     [
+      0.045,
+      -0.8250000000000001
+     ],
+     [
+      0.045,
+      1.08
+     ],
+     [
+      -0.045,
+      1.08
+     ],
+     [
+      -0.045,
+      -0.8250000000000001
+     ],
+     [
+      -4.355,
+      -0.8250000000000001
+     ],
+     [
+      -4.355,
+      1.08
+     ],
+     [
+      -4.445,
+      1.08
+     ]
+    ],
+    "height": 1.3
+   },
+   "at": [
+    0.0,
+    18.22,
+    0.0
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "tone": "structure"
+   },
+   "repeat": {
+    "count": 3,
+    "step": {
+     "at": [
+      0,
+      3.6,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "lower-window-warm",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -8.12,
+      0.19
+     ],
+     [
+      -5.5466666667,
+      0.19
+     ],
+     [
+      -5.5466666667,
+      2.55
+     ],
+     [
+      -8.12,
+      2.55
+     ]
+    ],
+    "height": 0.08
+   },
+   "at": [
+    0,
+    10.9,
+    -0.875
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.5,
+    "tone": "structure"
+   },
+   "repeat": {
+    "count": 5,
+    "step": {
+     "at": [
+      0,
+      3.6,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "lower-window-cool",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -5.386666666666667,
+      0.19
+     ],
+     [
+      5.3866666666666685,
+      0.19
+     ],
+     [
+      5.3866666666666685,
+      2.55
+     ],
+     [
+      2.8133333333333344,
+      2.55
+     ],
+     [
+      2.8133333333333344,
+      0.225
+     ],
+     [
+      -2.813333333333333,
+      0.225
+     ],
+     [
+      -2.813333333333333,
+      2.55
+     ],
+     [
+      -5.386666666666667,
+      2.55
+     ]
+    ],
+    "height": 0.08
+   },
+   "at": [
+    0.0,
+    18.1,
+    -0.875
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.5,
+    "tone": "structure"
+   },
+   "repeat": {
+    "count": 3,
+    "step": {
+     "at": [
+      0,
+      3.6,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "lower-window-dark",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -2.6533333333333333,
+      0.19
+     ],
+     [
+      8.120000000000003,
+      0.19
+     ],
+     [
+      8.120000000000003,
+      2.55
+     ],
+     [
+      5.546666666666669,
+      2.55
+     ],
+     [
+      5.546666666666669,
+      0.225
+     ],
+     [
+      -0.07999999999999963,
+      0.225
+     ],
+     [
+      -0.07999999999999963,
+      2.55
+     ],
+     [
+      -2.6533333333333333,
+      2.55
+     ]
+    ],
+    "height": 0.08
+   },
+   "at": [
+    0.0,
+    18.1,
+    -0.875
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.5,
+    "tone": "structure"
+   },
+   "repeat": {
+    "count": 3,
+    "step": {
+     "at": [
+      0,
+      3.6,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "lower-aperture-mullions",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -8.235000000000001,
+      0.15
+     ],
+     [
+      8.235000000000001,
+      0.15
+     ],
+     [
+      8.235000000000001,
+      2.66
+     ],
+     [
+      8.165000000000001,
+      2.66
+     ],
+     [
+      8.165000000000001,
+      0.24
+     ],
+     [
+      5.501666666666669,
+      0.24
+     ],
+     [
+      5.501666666666669,
+      2.66
+     ],
+     [
+      5.431666666666668,
+      2.66
+     ],
+     [
+      5.431666666666668,
+      0.24
+     ],
+     [
+      2.7683333333333344,
+      0.24
+     ],
+     [
+      2.7683333333333344,
+      2.66
+     ],
+     [
+      2.698333333333334,
+      2.66
+     ],
+     [
+      2.698333333333334,
+      0.24
+     ],
+     [
+      0.035,
+      0.24
+     ],
+     [
+      0.035,
+      2.66
+     ],
+     [
+      -0.035,
+      2.66
+     ],
+     [
+      -0.035,
+      0.24
+     ],
+     [
+      -2.6983333333333333,
+      0.24
+     ],
+     [
+      -2.6983333333333333,
+      2.66
+     ],
+     [
+      -2.7683333333333335,
+      2.66
+     ],
+     [
+      -2.7683333333333335,
+      0.24
+     ],
+     [
+      -5.431666666666667,
+      0.24
+     ],
+     [
+      -5.431666666666667,
+      2.66
+     ],
+     [
+      -5.501666666666667,
+      2.66
+     ],
+     [
+      -5.501666666666667,
+      0.24
+     ],
+     [
+      -8.165000000000001,
+      0.24
+     ],
+     [
+      -8.165000000000001,
+      2.66
+     ],
+     [
+      -8.235000000000001,
+      2.66
+     ]
+    ],
+    "height": 0.12
+   },
+   "at": [
+    0.0,
+    18.1,
+    -0.82
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "tone": "structure"
+   },
+   "repeat": {
+    "count": 3,
+    "step": {
+     "at": [
+      0,
+      3.6,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "lower-deck-supports",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -8.8,
+      -0.12
+     ],
+     [
+      8.8,
+      -0.12
+     ],
+     [
+      8.8,
+      -0.23
+     ],
+     [
+      5.104,
+      -0.23
+     ],
+     [
+      5.104,
+      -0.66
+     ],
+     [
+      4.224,
+      -0.23
+     ],
+     [
+      -4.224,
+      -0.23
+     ],
+     [
+      -5.104,
+      -0.66
+     ],
+     [
+      -5.104,
+      -0.23
+     ],
+     [
+      -8.8,
+      -0.23
+     ]
+    ],
+    "height": 1.98
+   },
+   "at": [
+    0.0,
+    18.1,
+    -0.9
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.8,
+    "tone": "structure"
+   },
+   "repeat": {
+    "count": 3,
+    "step": {
+     "at": [
+      0,
+      3.6,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "lower-east-window-cool",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -2.5,
+      0.45
+     ],
+     [
+      2.5,
+      0.45
+     ],
+     [
+      2.5,
+      2.4
+     ],
+     [
+      1.15,
+      2.4
+     ],
+     [
+      1.15,
+      0.485
+     ],
+     [
+      0.65,
+      0.485
+     ],
+     [
+      0.65,
+      2.4
+     ],
+     [
+      -0.65,
+      2.4
+     ],
+     [
+      -0.65,
+      0.485
+     ],
+     [
+      -1.15,
+      0.485
+     ],
+     [
+      -1.15,
+      2.4
+     ],
+     [
+      -2.5,
+      2.4
+     ]
+    ],
+    "height": 0.04
+   },
+   "at": [
+    8.95,
+    10.9,
+    -5.65
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.5,
+    "tone": "structure"
+   },
+   "repeat": {
+    "count": 5,
+    "step": {
+     "at": [
+      0,
+      3.6,
+      0
+     ]
+    }
+   },
+   "rotate": [
+    0,
+    90,
+    0
+   ]
+  },
+  {
+   "id": "lower-west-window-warm",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -2.5,
+      0.45
+     ],
+     [
+      2.5,
+      0.45
+     ],
+     [
+      2.5,
+      2.4
+     ],
+     [
+      1.15,
+      2.4
+     ],
+     [
+      1.15,
+      0.485
+     ],
+     [
+      0.65,
+      0.485
+     ],
+     [
+      0.65,
+      2.4
+     ],
+     [
+      -0.65,
+      2.4
+     ],
+     [
+      -0.65,
+      0.485
+     ],
+     [
+      -1.15,
+      0.485
+     ],
+     [
+      -1.15,
+      2.4
+     ],
+     [
+      -2.5,
+      2.4
+     ]
+    ],
+    "height": 0.04
+   },
+   "at": [
+    -8.95,
+    10.9,
+    -5.65
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.5,
+    "tone": "structure"
+   },
+   "repeat": {
+    "count": 5,
+    "step": {
+     "at": [
+      0,
+      3.6,
+      0
+     ]
+    }
+   },
+   "rotate": [
+    0,
+    -90,
+    0
+   ]
+  },
+  {
+   "id": "middle-cantilever-slab",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     15.6,
+     0.24,
+     2.46
+    ]
+   },
+   "at": [
+    1,
+    28.1,
+    -0.07000000000000006
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.8,
+    "tone": "structure"
+   },
+   "repeat": {
+    "count": 4,
+    "step": {
+     "at": [
+      0,
+      3.6,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "middle-balcony-rail",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -7.8,
+      1.04
+     ],
+     [
+      7.8,
+      1.04
+     ],
+     [
+      7.8,
+      0.0
+     ],
+     [
+      7.734999999999999,
+      0.0
+     ],
+     [
+      7.734999999999999,
+      0.98
+     ],
+     [
+      6.532499999999999,
+      0.98
+     ],
+     [
+      6.532499999999999,
+      0.0
+     ],
+     [
+      6.467499999999999,
+      0.0
+     ],
+     [
+      6.467499999999999,
+      0.98
+     ],
+     [
+      5.2325,
+      0.98
+     ],
+     [
+      5.2325,
+      0.0
+     ],
+     [
+      5.1675,
+      0.0
+     ],
+     [
+      5.1675,
+      0.98
+     ],
+     [
+      3.9325000000000014,
+      0.98
+     ],
+     [
+      3.9325000000000014,
+      0.0
+     ],
+     [
+      3.867500000000001,
+      0.0
+     ],
+     [
+      3.867500000000001,
+      0.98
+     ],
+     [
+      2.6325000000000007,
+      0.98
+     ],
+     [
+      2.6325000000000007,
+      0.0
+     ],
+     [
+      2.5675000000000003,
+      0.0
+     ],
+     [
+      2.5675000000000003,
+      0.98
+     ],
+     [
+      1.3324999999999998,
+      0.98
+     ],
+     [
+      1.3324999999999998,
+      0.0
+     ],
+     [
+      1.2674999999999998,
+      0.0
+     ],
+     [
+      1.2674999999999998,
+      0.98
+     ],
+     [
+      0.0325,
+      0.98
+     ],
+     [
+      0.0325,
+      0.0
+     ],
+     [
+      -0.0325,
+      0.0
+     ],
+     [
+      -0.0325,
+      0.98
+     ],
+     [
+      -1.2674999999999998,
+      0.98
+     ],
+     [
+      -1.2674999999999998,
+      0.0
+     ],
+     [
+      -1.3324999999999998,
+      0.0
+     ],
+     [
+      -1.3324999999999998,
+      0.98
+     ],
+     [
+      -2.5674999999999994,
+      0.98
+     ],
+     [
+      -2.5674999999999994,
+      0.0
+     ],
+     [
+      -2.6325,
+      0.0
+     ],
+     [
+      -2.6325,
+      0.98
+     ],
+     [
+      -3.8674999999999997,
+      0.98
+     ],
+     [
+      -3.8674999999999997,
+      0.0
+     ],
+     [
+      -3.9325,
+      0.0
+     ],
+     [
+      -3.9325,
+      0.98
+     ],
+     [
+      -5.1674999999999995,
+      0.98
+     ],
+     [
+      -5.1674999999999995,
+      0.0
+     ],
+     [
+      -5.232499999999999,
+      0.0
+     ],
+     [
+      -5.232499999999999,
+      0.98
+     ],
+     [
+      -6.4675,
+      0.98
+     ],
+     [
+      -6.4675,
+      0.0
+     ],
+     [
+      -6.5325,
+      0.0
+     ],
+     [
+      -6.5325,
+      0.98
+     ],
+     [
+      -7.734999999999999,
+      0.98
+     ],
+     [
+      -7.734999999999999,
+      0.0
+     ],
+     [
+      -7.8,
+      0.0
+     ]
+    ],
+    "height": 0.065
+   },
+   "at": [
+    1,
+    28.220000000000002,
+    1.06
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "tone": "structure"
+   },
+   "repeat": {
+    "count": 4,
+    "step": {
+     "at": [
+      0,
+      3.6,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "middle-balcony-partitions",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "extrude",
+    "axis": "y",
+    "profile": [
+     [
+      -3.945,
+      -1.3
+     ],
+     [
+      3.945,
+      -1.3
+     ],
+     [
+      3.945,
+      1.08
+     ],
+     [
+      3.855,
+      1.08
+     ],
+     [
+      3.855,
+      -1.225
+     ],
+     [
+      0.045,
+      -1.225
+     ],
+     [
+      0.045,
+      1.08
+     ],
+     [
+      -0.045,
+      1.08
+     ],
+     [
+      -0.045,
+      -1.225
+     ],
+     [
+      -3.855,
+      -1.225
+     ],
+     [
+      -3.855,
+      1.08
+     ],
+     [
+      -3.945,
+      1.08
+     ]
+    ],
+    "height": 1.3
+   },
+   "at": [
+    1,
+    28.220000000000002,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "tone": "structure"
+   },
+   "repeat": {
+    "count": 4,
+    "step": {
+     "at": [
+      0,
+      3.6,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "middle-window-warm",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -7.12,
+      0.19
+     ],
+     [
+      2.319999999999999,
+      0.19
+     ],
+     [
+      2.319999999999999,
+      2.55
+     ],
+     [
+      0.07999999999999911,
+      2.55
+     ],
+     [
+      0.07999999999999911,
+      0.225
+     ],
+     [
+      -4.880000000000001,
+      0.225
+     ],
+     [
+      -4.880000000000001,
+      2.55
+     ],
+     [
+      -7.12,
+      2.55
+     ]
+    ],
+    "height": 0.08
+   },
+   "at": [
+    1,
+    28.1,
+    -1.2750000000000001
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.5,
+    "tone": "structure"
+   },
+   "repeat": {
+    "count": 4,
+    "step": {
+     "at": [
+      0,
+      3.6,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "middle-window-cool",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -4.720000000000001,
+      0.19
+     ],
+     [
+      4.719999999999999,
+      0.19
+     ],
+     [
+      4.719999999999999,
+      2.55
+     ],
+     [
+      2.4799999999999995,
+      2.55
+     ],
+     [
+      2.4799999999999995,
+      0.225
+     ],
+     [
+      -2.480000000000001,
+      0.225
+     ],
+     [
+      -2.480000000000001,
+      2.55
+     ],
+     [
+      -4.720000000000001,
+      2.55
+     ]
+    ],
+    "height": 0.08
+   },
+   "at": [
+    1,
+    28.1,
+    -1.2750000000000001
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.5,
+    "tone": "structure"
+   },
+   "repeat": {
+    "count": 4,
+    "step": {
+     "at": [
+      0,
+      3.6,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "middle-window-dark",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -2.3200000000000003,
+      0.19
+     ],
+     [
+      7.119999999999999,
+      0.19
+     ],
+     [
+      7.119999999999999,
+      2.55
+     ],
+     [
+      4.88,
+      2.55
+     ],
+     [
+      4.88,
+      0.225
+     ],
+     [
+      -0.08000000000000052,
+      0.225
+     ],
+     [
+      -0.08000000000000052,
+      2.55
+     ],
+     [
+      -2.3200000000000003,
+      2.55
+     ]
+    ],
+    "height": 0.08
+   },
+   "at": [
+    1,
+    28.1,
+    -1.2750000000000001
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.5,
+    "tone": "structure"
+   },
+   "repeat": {
+    "count": 4,
+    "step": {
+     "at": [
+      0,
+      3.6,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "middle-aperture-mullions",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -7.235,
+      0.15
+     ],
+     [
+      7.2349999999999985,
+      0.15
+     ],
+     [
+      7.2349999999999985,
+      2.66
+     ],
+     [
+      7.164999999999998,
+      2.66
+     ],
+     [
+      7.164999999999998,
+      0.24
+     ],
+     [
+      4.835,
+      0.24
+     ],
+     [
+      4.835,
+      2.66
+     ],
+     [
+      4.765,
+      2.66
+     ],
+     [
+      4.765,
+      0.24
+     ],
+     [
+      2.4349999999999996,
+      0.24
+     ],
+     [
+      2.4349999999999996,
+      2.66
+     ],
+     [
+      2.3649999999999993,
+      2.66
+     ],
+     [
+      2.3649999999999993,
+      0.24
+     ],
+     [
+      0.034999999999999115,
+      0.24
+     ],
+     [
+      0.034999999999999115,
+      2.66
+     ],
+     [
+      -0.03500000000000089,
+      2.66
+     ],
+     [
+      -0.03500000000000089,
+      0.24
+     ],
+     [
+      -2.365,
+      0.24
+     ],
+     [
+      -2.365,
+      2.66
+     ],
+     [
+      -2.4350000000000005,
+      2.66
+     ],
+     [
+      -2.4350000000000005,
+      0.24
+     ],
+     [
+      -4.765000000000001,
+      0.24
+     ],
+     [
+      -4.765000000000001,
+      2.66
+     ],
+     [
+      -4.835000000000001,
+      2.66
+     ],
+     [
+      -4.835000000000001,
+      0.24
+     ],
+     [
+      -7.165,
+      0.24
+     ],
+     [
+      -7.165,
+      2.66
+     ],
+     [
+      -7.235,
+      2.66
+     ]
+    ],
+    "height": 0.12
+   },
+   "at": [
+    1,
+    28.1,
+    -1.22
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "tone": "structure"
+   },
+   "repeat": {
+    "count": 4,
+    "step": {
+     "at": [
+      0,
+      3.6,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "middle-transom",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     14.4,
+     0.065,
+     0.12
+    ]
+   },
+   "at": [
+    1,
+    30.020000000000003,
+    -1.1600000000000001
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "tone": "structure"
+   },
+   "repeat": {
+    "count": 4,
+    "step": {
+     "at": [
+      0,
+      3.6,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "middle-deck-supports",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -7.8,
+      -0.12
+     ],
+     [
+      7.8,
+      -0.12
+     ],
+     [
+      7.8,
+      -0.23
+     ],
+     [
+      4.524,
+      -0.23
+     ],
+     [
+      4.524,
+      -0.66
+     ],
+     [
+      3.7439999999999998,
+      -0.23
+     ],
+     [
+      -3.7439999999999998,
+      -0.23
+     ],
+     [
+      -4.524,
+      -0.66
+     ],
+     [
+      -4.524,
+      -0.23
+     ],
+     [
+      -7.8,
+      -0.23
+     ]
+    ],
+    "height": 2.38
+   },
+   "at": [
+    1,
+    28.1,
+    -1.3
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.8,
+    "tone": "structure"
+   },
+   "repeat": {
+    "count": 4,
+    "step": {
+     "at": [
+      0,
+      3.6,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "middle-east-window-cool",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -2.5,
+      0.45
+     ],
+     [
+      2.5,
+      0.45
+     ],
+     [
+      2.5,
+      2.4
+     ],
+     [
+      1.15,
+      2.4
+     ],
+     [
+      1.15,
+      0.485
+     ],
+     [
+      0.65,
+      0.485
+     ],
+     [
+      0.65,
+      2.4
+     ],
+     [
+      -0.65,
+      2.4
+     ],
+     [
+      -0.65,
+      0.485
+     ],
+     [
+      -1.15,
+      0.485
+     ],
+     [
+      -1.15,
+      2.4
+     ],
+     [
+      -2.5,
+      2.4
+     ]
+    ],
+    "height": 0.04
+   },
+   "at": [
+    8.95,
+    28.1,
+    -5.65
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.5,
+    "tone": "structure"
+   },
+   "repeat": {
+    "count": 4,
+    "step": {
+     "at": [
+      0,
+      3.6,
+      0
+     ]
+    }
+   },
+   "rotate": [
+    0,
+    90,
+    0
+   ]
+  },
+  {
+   "id": "middle-west-window-warm",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -2.5,
+      0.45
+     ],
+     [
+      2.5,
+      0.45
+     ],
+     [
+      2.5,
+      2.4
+     ],
+     [
+      1.15,
+      2.4
+     ],
+     [
+      1.15,
+      0.485
+     ],
+     [
+      0.65,
+      0.485
+     ],
+     [
+      0.65,
+      2.4
+     ],
+     [
+      -0.65,
+      2.4
+     ],
+     [
+      -0.65,
+      0.485
+     ],
+     [
+      -1.15,
+      0.485
+     ],
+     [
+      -1.15,
+      2.4
+     ],
+     [
+      -2.5,
+      2.4
+     ]
+    ],
+    "height": 0.04
+   },
+   "at": [
+    -6.95,
+    28.1,
+    -5.65
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.5,
+    "tone": "structure"
+   },
+   "repeat": {
+    "count": 4,
+    "step": {
+     "at": [
+      0,
+      3.6,
+      0
+     ]
+    }
+   },
+   "rotate": [
+    0,
+    -90,
+    0
+   ]
+  },
+  {
+   "id": "crown-cantilever-slab",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "box",
+    "size": [
+     13.6,
+     0.24,
+     2.86
+    ]
+   },
+   "at": [
+    -1,
+    44.6,
+    -0.27
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.8,
+    "tone": "structure"
+   },
+   "repeat": {
+    "count": 4,
+    "step": {
+     "at": [
+      0,
+      3.6,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "crown-balcony-rail",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -6.8,
+      1.04
+     ],
+     [
+      6.8,
+      1.04
+     ],
+     [
+      6.8,
+      0.0
+     ],
+     [
+      6.734999999999999,
+      0.0
+     ],
+     [
+      6.734999999999999,
+      0.98
+     ],
+     [
+      5.699166666666667,
+      0.98
+     ],
+     [
+      5.699166666666667,
+      0.0
+     ],
+     [
+      5.634166666666667,
+      0.0
+     ],
+     [
+      5.634166666666667,
+      0.98
+     ],
+     [
+      4.565833333333334,
+      0.98
+     ],
+     [
+      4.565833333333334,
+      0.0
+     ],
+     [
+      4.500833333333334,
+      0.0
+     ],
+     [
+      4.500833333333334,
+      0.98
+     ],
+     [
+      3.4324999999999997,
+      0.98
+     ],
+     [
+      3.4324999999999997,
+      0.0
+     ],
+     [
+      3.3674999999999993,
+      0.0
+     ],
+     [
+      3.3674999999999993,
+      0.98
+     ],
+     [
+      2.299166666666667,
+      0.98
+     ],
+     [
+      2.299166666666667,
+      0.0
+     ],
+     [
+      2.2341666666666664,
+      0.0
+     ],
+     [
+      2.2341666666666664,
+      0.98
+     ],
+     [
+      1.1658333333333337,
+      0.98
+     ],
+     [
+      1.1658333333333337,
+      0.0
+     ],
+     [
+      1.1008333333333338,
+      0.0
+     ],
+     [
+      1.1008333333333338,
+      0.98
+     ],
+     [
+      0.0325,
+      0.98
+     ],
+     [
+      0.0325,
+      0.0
+     ],
+     [
+      -0.0325,
+      0.0
+     ],
+     [
+      -0.0325,
+      0.98
+     ],
+     [
+      -1.1008333333333329,
+      0.98
+     ],
+     [
+      -1.1008333333333329,
+      0.0
+     ],
+     [
+      -1.1658333333333328,
+      0.0
+     ],
+     [
+      -1.1658333333333328,
+      0.98
+     ],
+     [
+      -2.2341666666666664,
+      0.98
+     ],
+     [
+      -2.2341666666666664,
+      0.0
+     ],
+     [
+      -2.299166666666667,
+      0.0
+     ],
+     [
+      -2.299166666666667,
+      0.98
+     ],
+     [
+      -3.3674999999999997,
+      0.98
+     ],
+     [
+      -3.3674999999999997,
+      0.0
+     ],
+     [
+      -3.4325,
+      0.0
+     ],
+     [
+      -3.4325,
+      0.98
+     ],
+     [
+      -4.5008333333333335,
+      0.98
+     ],
+     [
+      -4.5008333333333335,
+      0.0
+     ],
+     [
+      -4.565833333333333,
+      0.0
+     ],
+     [
+      -4.565833333333333,
+      0.98
+     ],
+     [
+      -5.634166666666666,
+      0.98
+     ],
+     [
+      -5.634166666666666,
+      0.0
+     ],
+     [
+      -5.699166666666666,
+      0.0
+     ],
+     [
+      -5.699166666666666,
+      0.98
+     ],
+     [
+      -6.734999999999999,
+      0.98
+     ],
+     [
+      -6.734999999999999,
+      0.0
+     ],
+     [
+      -6.8,
+      0.0
+     ]
+    ],
+    "height": 0.065
+   },
+   "at": [
+    -1,
+    44.72,
+    1.06
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "tone": "structure"
+   },
+   "repeat": {
+    "count": 4,
+    "step": {
+     "at": [
+      0,
+      3.6,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "crown-balcony-partitions",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "extrude",
+    "axis": "y",
+    "profile": [
+     [
+      -3.445,
+      -1.7
+     ],
+     [
+      3.445,
+      -1.7
+     ],
+     [
+      3.445,
+      1.08
+     ],
+     [
+      3.355,
+      1.08
+     ],
+     [
+      3.355,
+      -1.625
+     ],
+     [
+      0.045,
+      -1.625
+     ],
+     [
+      0.045,
+      1.08
+     ],
+     [
+      -0.045,
+      1.08
+     ],
+     [
+      -0.045,
+      -1.625
+     ],
+     [
+      -3.355,
+      -1.625
+     ],
+     [
+      -3.355,
+      1.08
+     ],
+     [
+      -3.445,
+      1.08
+     ]
+    ],
+    "height": 1.3
+   },
+   "at": [
+    -1,
+    44.72,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "tone": "structure"
+   },
+   "repeat": {
+    "count": 4,
+    "step": {
+     "at": [
+      0,
+      3.6,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "crown-window-warm",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -6.12,
+      0.19
+     ],
+     [
+      1.986666666666668,
+      0.19
+     ],
+     [
+      1.986666666666668,
+      2.55
+     ],
+     [
+      0.08000000000000089,
+      2.55
+     ],
+     [
+      0.08000000000000089,
+      0.225
+     ],
+     [
+      -4.213333333333333,
+      0.225
+     ],
+     [
+      -4.213333333333333,
+      2.55
+     ],
+     [
+      -6.12,
+      2.55
+     ]
+    ],
+    "height": 0.08
+   },
+   "at": [
+    -1,
+    44.6,
+    -1.675
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.5,
+    "tone": "structure"
+   },
+   "repeat": {
+    "count": 4,
+    "step": {
+     "at": [
+      0,
+      3.6,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "crown-window-cool",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -4.053333333333333,
+      0.19
+     ],
+     [
+      4.053333333333335,
+      0.19
+     ],
+     [
+      4.053333333333335,
+      2.55
+     ],
+     [
+      2.1466666666666674,
+      2.55
+     ],
+     [
+      2.1466666666666674,
+      0.225
+     ],
+     [
+      -2.1466666666666656,
+      0.225
+     ],
+     [
+      -2.1466666666666656,
+      2.55
+     ],
+     [
+      -4.053333333333333,
+      2.55
+     ]
+    ],
+    "height": 0.08
+   },
+   "at": [
+    -1,
+    44.6,
+    -1.675
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.5,
+    "tone": "structure"
+   },
+   "repeat": {
+    "count": 4,
+    "step": {
+     "at": [
+      0,
+      3.6,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "crown-window-dark",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -1.9866666666666664,
+      0.19
+     ],
+     [
+      6.120000000000001,
+      0.19
+     ],
+     [
+      6.120000000000001,
+      2.55
+     ],
+     [
+      4.213333333333334,
+      2.55
+     ],
+     [
+      4.213333333333334,
+      0.225
+     ],
+     [
+      -0.0799999999999994,
+      0.225
+     ],
+     [
+      -0.0799999999999994,
+      2.55
+     ],
+     [
+      -1.9866666666666664,
+      2.55
+     ]
+    ],
+    "height": 0.08
+   },
+   "at": [
+    -1,
+    44.6,
+    -1.675
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.5,
+    "tone": "structure"
+   },
+   "repeat": {
+    "count": 4,
+    "step": {
+     "at": [
+      0,
+      3.6,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "crown-aperture-mullions",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -6.235,
+      0.15
+     ],
+     [
+      6.235000000000002,
+      0.15
+     ],
+     [
+      6.235000000000002,
+      2.66
+     ],
+     [
+      6.165000000000002,
+      2.66
+     ],
+     [
+      6.165000000000002,
+      0.24
+     ],
+     [
+      4.168333333333334,
+      0.24
+     ],
+     [
+      4.168333333333334,
+      2.66
+     ],
+     [
+      4.098333333333334,
+      2.66
+     ],
+     [
+      4.098333333333334,
+      0.24
+     ],
+     [
+      2.1016666666666675,
+      0.24
+     ],
+     [
+      2.1016666666666675,
+      2.66
+     ],
+     [
+      2.031666666666667,
+      2.66
+     ],
+     [
+      2.031666666666667,
+      0.24
+     ],
+     [
+      0.03500000000000089,
+      0.24
+     ],
+     [
+      0.03500000000000089,
+      2.66
+     ],
+     [
+      -0.034999999999999115,
+      2.66
+     ],
+     [
+      -0.034999999999999115,
+      0.24
+     ],
+     [
+      -2.0316666666666663,
+      0.24
+     ],
+     [
+      -2.0316666666666663,
+      2.66
+     ],
+     [
+      -2.1016666666666666,
+      2.66
+     ],
+     [
+      -2.1016666666666666,
+      0.24
+     ],
+     [
+      -4.098333333333333,
+      0.24
+     ],
+     [
+      -4.098333333333333,
+      2.66
+     ],
+     [
+      -4.168333333333333,
+      2.66
+     ],
+     [
+      -4.168333333333333,
+      0.24
+     ],
+     [
+      -6.165,
+      0.24
+     ],
+     [
+      -6.165,
+      2.66
+     ],
+     [
+      -6.235,
+      2.66
+     ]
+    ],
+    "height": 0.12
+   },
+   "at": [
+    -1,
+    44.6,
+    -1.6199999999999999
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "tone": "structure"
+   },
+   "repeat": {
+    "count": 4,
+    "step": {
+     "at": [
+      0,
+      3.6,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "crown-transom",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "box",
+    "size": [
+     12.4,
+     0.065,
+     0.12
+    ]
+   },
+   "at": [
+    -1,
+    46.52,
+    -1.56
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "tone": "structure"
+   },
+   "repeat": {
+    "count": 4,
+    "step": {
+     "at": [
+      0,
+      3.6,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "crown-deck-supports",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -6.8,
+      -0.12
+     ],
+     [
+      6.8,
+      -0.12
+     ],
+     [
+      6.8,
+      -0.23
+     ],
+     [
+      3.9439999999999995,
+      -0.23
+     ],
+     [
+      3.9439999999999995,
+      -0.66
+     ],
+     [
+      3.264,
+      -0.23
+     ],
+     [
+      -3.264,
+      -0.23
+     ],
+     [
+      -3.9439999999999995,
+      -0.66
+     ],
+     [
+      -3.9439999999999995,
+      -0.23
+     ],
+     [
+      -6.8,
+      -0.23
+     ]
+    ],
+    "height": 2.78
+   },
+   "at": [
+    -1,
+    44.6,
+    -1.7
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.8,
+    "tone": "structure"
+   },
+   "repeat": {
+    "count": 4,
+    "step": {
+     "at": [
+      0,
+      3.6,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "crown-east-window-cool",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -2.5,
+      0.45
+     ],
+     [
+      2.5,
+      0.45
+     ],
+     [
+      2.5,
+      2.4
+     ],
+     [
+      1.15,
+      2.4
+     ],
+     [
+      1.15,
+      0.485
+     ],
+     [
+      0.65,
+      0.485
+     ],
+     [
+      0.65,
+      2.4
+     ],
+     [
+      -0.65,
+      2.4
+     ],
+     [
+      -0.65,
+      0.485
+     ],
+     [
+      -1.15,
+      0.485
+     ],
+     [
+      -1.15,
+      2.4
+     ],
+     [
+      -2.5,
+      2.4
+     ]
+    ],
+    "height": 0.04
+   },
+   "at": [
+    5.95,
+    44.6,
+    -5.65
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.5,
+    "tone": "structure"
+   },
+   "repeat": {
+    "count": 4,
+    "step": {
+     "at": [
+      0,
+      3.6,
+      0
+     ]
+    }
+   },
+   "rotate": [
+    0,
+    90,
+    0
+   ]
+  },
+  {
+   "id": "crown-west-window-warm",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 6,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -2.5,
+      0.45
+     ],
+     [
+      2.5,
+      0.45
+     ],
+     [
+      2.5,
+      2.4
+     ],
+     [
+      1.15,
+      2.4
+     ],
+     [
+      1.15,
+      0.485
+     ],
+     [
+      0.65,
+      0.485
+     ],
+     [
+      0.65,
+      2.4
+     ],
+     [
+      -0.65,
+      2.4
+     ],
+     [
+      -0.65,
+      0.485
+     ],
+     [
+      -1.15,
+      0.485
+     ],
+     [
+      -1.15,
+      2.4
+     ],
+     [
+      -2.5,
+      2.4
+     ]
+    ],
+    "height": 0.04
+   },
+   "at": [
+    -7.95,
+    44.6,
+    -5.65
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.5,
+    "tone": "structure"
+   },
+   "repeat": {
+    "count": 4,
+    "step": {
+     "at": [
+      0,
+      3.6,
+      0
+     ]
+    }
+   },
+   "rotate": [
+    0,
+    -90,
+    0
+   ]
+  },
+  {
+   "id": "ac-housing-0",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 7,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.15,
+     0.76,
+     0.5
+    ]
+   },
+   "at": [
+    7.2,
+    13.6,
+    -0.42
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "ac-fan-0",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 7,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 0.07,
+    "profile": [
+     [
+      -0.065,
+      -0.065
+     ],
+     [
+      -0.25,
+      -0.16
+     ],
+     [
+      -0.22,
+      -0.24
+     ],
+     [
+      -0.05,
+      -0.18
+     ],
+     [
+      0.065,
+      -0.065
+     ],
+     [
+      0.16,
+      -0.25
+     ],
+     [
+      0.24,
+      -0.22
+     ],
+     [
+      0.18,
+      -0.05
+     ],
+     [
+      0.065,
+      0.065
+     ],
+     [
+      0.25,
+      0.16
+     ],
+     [
+      0.22,
+      0.24
+     ],
+     [
+      0.05,
+      0.18
+     ],
+     [
+      -0.065,
+      0.065
+     ],
+     [
+      -0.16,
+      0.25
+     ],
+     [
+      -0.24,
+      0.22
+     ],
+     [
+      -0.18,
+      0.05
+     ]
+    ]
+   },
+   "at": [
+    7.04,
+    13.6,
+    -0.18
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "ac-louvre-0",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 7,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      0.2,
+      -0.27
+     ],
+     [
+      0.52,
+      -0.27
+     ],
+     [
+      0.52,
+      0.27
+     ],
+     [
+      0.48,
+      0.27
+     ],
+     [
+      0.48,
+      -0.23500000000000001
+     ],
+     [
+      0.38,
+      -0.23500000000000001
+     ],
+     [
+      0.38,
+      0.27
+     ],
+     [
+      0.34,
+      0.27
+     ],
+     [
+      0.34,
+      -0.23500000000000001
+     ],
+     [
+      0.24,
+      -0.23500000000000001
+     ],
+     [
+      0.24,
+      0.27
+     ],
+     [
+      0.2,
+      0.27
+     ]
+    ],
+    "height": 0.055
+   },
+   "at": [
+    7.2,
+    13.6,
+    -0.14999999999999997
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "ac-conduit-0",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 7,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      7.71,
+      13.5,
+      -0.42
+     ],
+     [
+      7.9,
+      13.5,
+      -0.42
+     ],
+     [
+      7.9,
+      12.5,
+      -0.42
+     ],
+     [
+      7.4,
+      12.5,
+      -0.77
+     ]
+    ],
+    "radius": 0.035,
+    "sides": 6,
+    "samples": 1,
+    "caps": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "ac-housing-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 7,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.15,
+     0.76,
+     0.5
+    ]
+   },
+   "at": [
+    -6.9,
+    20.8,
+    -0.42
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "ac-fan-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 7,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 0.07,
+    "profile": [
+     [
+      -0.065,
+      -0.065
+     ],
+     [
+      -0.25,
+      -0.16
+     ],
+     [
+      -0.22,
+      -0.24
+     ],
+     [
+      -0.05,
+      -0.18
+     ],
+     [
+      0.065,
+      -0.065
+     ],
+     [
+      0.16,
+      -0.25
+     ],
+     [
+      0.24,
+      -0.22
+     ],
+     [
+      0.18,
+      -0.05
+     ],
+     [
+      0.065,
+      0.065
+     ],
+     [
+      0.25,
+      0.16
+     ],
+     [
+      0.22,
+      0.24
+     ],
+     [
+      0.05,
+      0.18
+     ],
+     [
+      -0.065,
+      0.065
+     ],
+     [
+      -0.16,
+      0.25
+     ],
+     [
+      -0.24,
+      0.22
+     ],
+     [
+      -0.18,
+      0.05
+     ]
+    ]
+   },
+   "at": [
+    -7.06,
+    20.8,
+    -0.18
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "ac-louvre-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 7,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      0.2,
+      -0.27
+     ],
+     [
+      0.52,
+      -0.27
+     ],
+     [
+      0.52,
+      0.27
+     ],
+     [
+      0.48,
+      0.27
+     ],
+     [
+      0.48,
+      -0.23500000000000001
+     ],
+     [
+      0.38,
+      -0.23500000000000001
+     ],
+     [
+      0.38,
+      0.27
+     ],
+     [
+      0.34,
+      0.27
+     ],
+     [
+      0.34,
+      -0.23500000000000001
+     ],
+     [
+      0.24,
+      -0.23500000000000001
+     ],
+     [
+      0.24,
+      0.27
+     ],
+     [
+      0.2,
+      0.27
+     ]
+    ],
+    "height": 0.055
+   },
+   "at": [
+    -6.9,
+    20.8,
+    -0.14999999999999997
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "ac-conduit-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 7,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      -6.390000000000001,
+      20.7,
+      -0.42
+     ],
+     [
+      -6.2,
+      20.7,
+      -0.42
+     ],
+     [
+      -6.2,
+      19.7,
+      -0.42
+     ],
+     [
+      -6.7,
+      19.7,
+      -0.77
+     ]
+    ],
+    "radius": 0.035,
+    "sides": 6,
+    "samples": 1,
+    "caps": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "ac-housing-2",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 7,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.15,
+     0.76,
+     0.5
+    ]
+   },
+   "at": [
+    7.3,
+    30.8,
+    -0.82
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "ac-fan-2",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 7,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 0.07,
+    "profile": [
+     [
+      -0.065,
+      -0.065
+     ],
+     [
+      -0.25,
+      -0.16
+     ],
+     [
+      -0.22,
+      -0.24
+     ],
+     [
+      -0.05,
+      -0.18
+     ],
+     [
+      0.065,
+      -0.065
+     ],
+     [
+      0.16,
+      -0.25
+     ],
+     [
+      0.24,
+      -0.22
+     ],
+     [
+      0.18,
+      -0.05
+     ],
+     [
+      0.065,
+      0.065
+     ],
+     [
+      0.25,
+      0.16
+     ],
+     [
+      0.22,
+      0.24
+     ],
+     [
+      0.05,
+      0.18
+     ],
+     [
+      -0.065,
+      0.065
+     ],
+     [
+      -0.16,
+      0.25
+     ],
+     [
+      -0.24,
+      0.22
+     ],
+     [
+      -0.18,
+      0.05
+     ]
+    ]
+   },
+   "at": [
+    7.14,
+    30.8,
+    -0.58
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "ac-louvre-2",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 7,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      0.2,
+      -0.27
+     ],
+     [
+      0.52,
+      -0.27
+     ],
+     [
+      0.52,
+      0.27
+     ],
+     [
+      0.48,
+      0.27
+     ],
+     [
+      0.48,
+      -0.23500000000000001
+     ],
+     [
+      0.38,
+      -0.23500000000000001
+     ],
+     [
+      0.38,
+      0.27
+     ],
+     [
+      0.34,
+      0.27
+     ],
+     [
+      0.34,
+      -0.23500000000000001
+     ],
+     [
+      0.24,
+      -0.23500000000000001
+     ],
+     [
+      0.24,
+      0.27
+     ],
+     [
+      0.2,
+      0.27
+     ]
+    ],
+    "height": 0.055
+   },
+   "at": [
+    7.3,
+    30.8,
+    -0.5499999999999999
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "ac-conduit-2",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 7,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      7.81,
+      30.7,
+      -0.82
+     ],
+     [
+      8.0,
+      30.7,
+      -0.82
+     ],
+     [
+      8.0,
+      29.7,
+      -0.82
+     ],
+     [
+      7.5,
+      29.7,
+      -1.17
+     ]
+    ],
+    "radius": 0.035,
+    "sides": 6,
+    "samples": 1,
+    "caps": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "ac-housing-3",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 7,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.15,
+     0.76,
+     0.5
+    ]
+   },
+   "at": [
+    -4.8,
+    38,
+    -0.82
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "ac-fan-3",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 7,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 0.07,
+    "profile": [
+     [
+      -0.065,
+      -0.065
+     ],
+     [
+      -0.25,
+      -0.16
+     ],
+     [
+      -0.22,
+      -0.24
+     ],
+     [
+      -0.05,
+      -0.18
+     ],
+     [
+      0.065,
+      -0.065
+     ],
+     [
+      0.16,
+      -0.25
+     ],
+     [
+      0.24,
+      -0.22
+     ],
+     [
+      0.18,
+      -0.05
+     ],
+     [
+      0.065,
+      0.065
+     ],
+     [
+      0.25,
+      0.16
+     ],
+     [
+      0.22,
+      0.24
+     ],
+     [
+      0.05,
+      0.18
+     ],
+     [
+      -0.065,
+      0.065
+     ],
+     [
+      -0.16,
+      0.25
+     ],
+     [
+      -0.24,
+      0.22
+     ],
+     [
+      -0.18,
+      0.05
+     ]
+    ]
+   },
+   "at": [
+    -4.96,
+    38.0,
+    -0.58
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "ac-conduit-3",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 7,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      -4.29,
+      37.9,
+      -0.82
+     ],
+     [
+      -4.1,
+      37.9,
+      -0.82
+     ],
+     [
+      -4.1,
+      36.9,
+      -0.82
+     ],
+     [
+      -4.6,
+      36.9,
+      -1.17
+     ]
+    ],
+    "radius": 0.035,
+    "sides": 6,
+    "samples": 1,
+    "caps": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "ac-housing-4",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 7,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.15,
+     0.76,
+     0.5
+    ]
+   },
+   "at": [
+    4.8,
+    47.4,
+    -1.22
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "ac-fan-4",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 7,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 0.07,
+    "profile": [
+     [
+      -0.065,
+      -0.065
+     ],
+     [
+      -0.25,
+      -0.16
+     ],
+     [
+      -0.22,
+      -0.24
+     ],
+     [
+      -0.05,
+      -0.18
+     ],
+     [
+      0.065,
+      -0.065
+     ],
+     [
+      0.16,
+      -0.25
+     ],
+     [
+      0.24,
+      -0.22
+     ],
+     [
+      0.18,
+      -0.05
+     ],
+     [
+      0.065,
+      0.065
+     ],
+     [
+      0.25,
+      0.16
+     ],
+     [
+      0.22,
+      0.24
+     ],
+     [
+      0.05,
+      0.18
+     ],
+     [
+      -0.065,
+      0.065
+     ],
+     [
+      -0.16,
+      0.25
+     ],
+     [
+      -0.24,
+      0.22
+     ],
+     [
+      -0.18,
+      0.05
+     ]
+    ]
+   },
+   "at": [
+    4.64,
+    47.4,
+    -0.98
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "ac-housing-5",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 7,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.15,
+     0.76,
+     0.5
+    ]
+   },
+   "at": [
+    -5.7,
+    54.6,
+    -1.22
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "ac-fan-5",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 7,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 0.07,
+    "profile": [
+     [
+      -0.065,
+      -0.065
+     ],
+     [
+      -0.25,
+      -0.16
+     ],
+     [
+      -0.22,
+      -0.24
+     ],
+     [
+      -0.05,
+      -0.18
+     ],
+     [
+      0.065,
+      -0.065
+     ],
+     [
+      0.16,
+      -0.25
+     ],
+     [
+      0.24,
+      -0.22
+     ],
+     [
+      0.18,
+      -0.05
+     ],
+     [
+      0.065,
+      0.065
+     ],
+     [
+      0.25,
+      0.16
+     ],
+     [
+      0.22,
+      0.24
+     ],
+     [
+      0.05,
+      0.18
+     ],
+     [
+      -0.065,
+      0.065
+     ],
+     [
+      -0.16,
+      0.25
+     ],
+     [
+      -0.24,
+      0.22
+     ],
+     [
+      -0.18,
+      0.05
+     ]
+    ]
+   },
+   "at": [
+    -5.86,
+    54.6,
+    -0.98
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "service-low-riser",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 7,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      8.72,
+      0.25,
+      -0.35
+     ],
+     [
+      8.72,
+      2.95,
+      -0.35
+     ],
+     [
+      8.72,
+      2.95,
+      -0.14
+     ],
+     [
+      8.72,
+      8.15,
+      -0.14
+     ],
+     [
+      8.72,
+      26.7,
+      -0.35
+     ]
+    ],
+    "radius": 0.06,
+    "sides": 8,
+    "samples": 1,
+    "caps": true
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "roof-edge-screen",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 7,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.1,
+     1.15,
+     5.6
+    ]
+   },
+   "at": [
+    -7.83,
+    59.65,
+    -6.3
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.8,
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "roof-tank-support",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 7,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.7,
+     0.35,
+     1.7
+    ]
+   },
+   "at": [
+    -4.6,
+    59.33,
+    -5.6
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "roof-water-tank",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 7,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.8,
+    "height": 1.45,
+    "segments": 20,
+    "caps": true,
+    "rings": 2
+   },
+   "at": [
+    -4.6,
+    59.5,
+    -5.6
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.8,
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "roof-duct-elbow",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 7,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.0,
+     1.7,
+     0.85
+    ]
+   },
+   "at": [
+    4,
+    60.75,
+    -6.8
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "lower-first-deck",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     17.6,
+     0.24,
+     2.06
+    ]
+   },
+   "at": [
+    0,
+    10.9,
+    0.13
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.8
+   }
+  },
+  {
+   "id": "billboard-deck-left",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     9.5,
+     0.24,
+     2.06
+    ]
+   },
+   "at": [
+    -4.05,
+    14.5,
+    0.13
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.8
+   }
+  },
+  {
+   "id": "billboard-deck-right",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     6.5,
+     0.24,
+     2.06
+    ]
+   },
+   "at": [
+    5.55,
+    14.5,
+    0.13
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.8
+   }
+  },
+  {
+   "id": "lower-first-handrail",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 0.065,
+    "profile": [
+     [
+      -8.8,
+      1.04
+     ],
+     [
+      8.8,
+      1.04
+     ],
+     [
+      8.8,
+      0
+     ],
+     [
+      8.73,
+      0
+     ],
+     [
+      8.73,
+      0.98
+     ],
+     [
+      -8.73,
+      0.98
+     ],
+     [
+      -8.73,
+      0
+     ],
+     [
+      -8.8,
+      0
+     ]
+    ]
+   },
+   "at": [
+    0,
+    11.02,
+    1.06
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.6
+   }
+  },
+  {
+   "id": "billboard-handrail-left",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 0.065,
+    "profile": [
+     [
+      -8.8,
+      1.04
+     ],
+     [
+      0.7,
+      1.04
+     ],
+     [
+      0.7,
+      0
+     ],
+     [
+      0.63,
+      0
+     ],
+     [
+      0.63,
+      0.98
+     ],
+     [
+      -8.73,
+      0.98
+     ],
+     [
+      -8.73,
+      0
+     ],
+     [
+      -8.8,
+      0
+     ]
+    ]
+   },
+   "at": [
+    0,
+    14.62,
+    1.06
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.6
+   }
+  },
+  {
+   "id": "billboard-handrail-right",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 0.065,
+    "profile": [
+     [
+      2.3,
+      1.04
+     ],
+     [
+      8.8,
+      1.04
+     ],
+     [
+      8.8,
+      0
+     ],
+     [
+      8.73,
+      0
+     ],
+     [
+      8.73,
+      0.98
+     ],
+     [
+      2.37,
+      0.98
+     ],
+     [
+      2.37,
+      0
+     ],
+     [
+      2.3,
+      0
+     ]
+    ]
+   },
+   "at": [
+    0,
+    14.62,
+    1.06
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.6
+   }
+  },
+  {
+   "id": "lower-first-support",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     17.6,
+     0.15,
+     1.98
+    ]
+   },
+   "at": [
+    0,
+    10.705,
+    0.09
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.6
+   }
+  },
+  {
+   "id": "billboard-support-left",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     9.5,
+     0.15,
+     1.98
+    ]
+   },
+   "at": [
+    -4.05,
+    14.305,
+    0.09
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.6
+   }
+  },
+  {
+   "id": "billboard-support-right",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     6.5,
+     0.15,
+     1.98
+    ]
+   },
+   "at": [
+    5.55,
+    14.305,
+    0.09
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.6
+   }
+  },
+  {
+   "at": [
+    0,
+    11.02,
+    0
+   ],
+   "certainty": "inferred",
+   "id": "lower-first-partitions",
+   "look": {
+    "fill": "dark",
+    "weight": 0.5
+   },
+   "role": "detail",
+   "shape": {
+    "axis": "y",
+    "height": 1.3,
+    "profile": [
+     [
+      -4.445,
+      -0.9
+     ],
+     [
+      4.445,
+      -0.9
+     ],
+     [
+      4.445,
+      1.08
+     ],
+     [
+      4.355,
+      1.08
+     ],
+     [
+      4.355,
+      -0.825
+     ],
+     [
+      0.045,
+      -0.825
+     ],
+     [
+      0.045,
+      1.08
+     ],
+     [
+      -0.045,
+      1.08
+     ],
+     [
+      -0.045,
+      -0.825
+     ],
+     [
+      -4.355,
+      -0.825
+     ],
+     [
+      -4.355,
+      1.08
+     ],
+     [
+      -4.445,
+      1.08
+     ]
+    ],
+    "type": "extrude"
+   },
+   "stage": 2
+  },
+  {
+   "id": "lower-first-window-cool",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -5.386666666666667,
+      0.19
+     ],
+     [
+      5.3866666666666685,
+      0.19
+     ],
+     [
+      5.3866666666666685,
+      2.55
+     ],
+     [
+      2.8133333333333344,
+      2.55
+     ],
+     [
+      2.8133333333333344,
+      0.225
+     ],
+     [
+      -2.813333333333333,
+      0.225
+     ],
+     [
+      -2.813333333333333,
+      2.55
+     ],
+     [
+      -5.386666666666667,
+      2.55
+     ]
+    ],
+    "height": 0.08
+   },
+   "at": [
+    0,
+    10.9,
+    -0.875
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.5,
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "lower-first-window-dark",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "profile": [
+     [
+      -2.6533333333333333,
+      0.19
+     ],
+     [
+      8.120000000000003,
+      0.19
+     ],
+     [
+      8.120000000000003,
+      2.55
+     ],
+     [
+      5.546666666666669,
+      2.55
+     ],
+     [
+      5.546666666666669,
+      0.225
+     ],
+     [
+      -0.08,
+      0.225
+     ],
+     [
+      -0.08,
+      2.55
+     ],
+     [
+      -2.6533333333333333,
+      2.55
+     ]
+    ],
+    "height": 0.08
+   },
+   "at": [
+    0,
+    10.9,
+    -0.875
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.5,
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "billboard-left-window-cool",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.5733333333,
+     2.36,
+     0.08
+    ]
+   },
+   "at": [
+    -4.1,
+    15.87,
+    -0.835
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.5
+   }
+  },
+  {
+   "id": "billboard-right-window-cool",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.5733333333,
+     2.36,
+     0.08
+    ]
+   },
+   "at": [
+    4.1,
+    15.87,
+    -0.835
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.5
+   }
+  },
+  {
+   "id": "billboard-left-window-dark",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.5733333333,
+     2.36,
+     0.08
+    ]
+   },
+   "at": [
+    -1.3666666667,
+    15.87,
+    -0.835
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.5
+   }
+  },
+  {
+   "id": "billboard-right-window-dark",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.5733333333,
+     2.36,
+     0.08
+    ]
+   },
+   "at": [
+    6.8333333333,
+    15.87,
+    -0.835
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.5
+   }
+  },
+  {
+   "id": "r5-band-opening-wall",
+   "stage": 1,
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 0.5,
+    "profile": [
+     [
+      -9,
+      0
+     ],
+     [
+      -9,
+      5.2
+     ],
+     [
+      9,
+      5.2
+     ],
+     [
+      9,
+      0
+     ],
+     [
+      7,
+      0
+     ],
+     [
+      7,
+      2.7
+     ],
+     [
+      4,
+      2.7
+     ],
+     [
+      4,
+      0
+     ],
+     [
+      1.1,
+      0
+     ],
+     [
+      1.1,
+      2.7
+     ],
+     [
+      -2.3,
+      2.7
+     ],
+     [
+      -2.3,
+      0
+     ],
+     [
+      -5.5,
+      0
+     ],
+     [
+      -5.5,
+      2.7
+     ],
+     [
+      -8,
+      2.7
+     ],
+     [
+      -8,
+      0
+     ]
+    ]
+   },
+   "at": [
+    0,
+    4.8,
+    -0.5
+   ],
+   "look": {
+    "fill": "dark"
+   }
+  },
+  {
+   "id": "r5-band-lower-spandrel",
+   "stage": 1,
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     18,
+     1.8,
+     0.5
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0,
+    3,
+    -0.25
+   ],
+   "look": {
+    "fill": "dark"
+   }
+  },
+  {
+   "id": "r5-service-second-canopy",
+   "stage": 4,
+   "role": "identity",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     2.5,
+     0.2,
+     0.5
+    ]
+   },
+   "at": [
+    -6.75,
+    5.85,
+    -0.25
+   ],
+   "look": {
+    "fill": "dark"
+   }
+  },
+  {
+   "id": "r5-west-inset-louvre",
+   "stage": 4,
+   "role": "identity",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     2.2,
+     1.15,
+     0.12
+    ],
+    "ribs": 5
+   },
+   "at": [
+    -6.75,
+    6.65,
+    -0.44
+   ],
+   "look": {
+    "fill": "dark"
+   }
+  },
+  {
+   "id": "r5-centre-service-cabinet",
+   "stage": 4,
+   "role": "identity",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     3,
+     1.9,
+     0.35
+    ],
+    "ribs": 3
+   },
+   "at": [
+    -0.6,
+    6.25,
+    -0.325
+   ],
+   "look": {
+    "fill": "dark"
+   }
+  },
+  {
+   "id": "r5-centre-service-sill",
+   "stage": 4,
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     3.4,
+     0.18,
+     0.5
+    ]
+   },
+   "at": [
+    -0.6,
+    5.21,
+    -0.25
+   ],
+   "look": {
+    "fill": "dark"
+   }
+  },
+  {
+   "id": "r5-east-exhaust-box",
+   "stage": 4,
+   "role": "identity",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.6,
+     0.95,
+     0.45
+    ]
+   },
+   "at": [
+    5.5,
+    6.3,
+    -0.275
+   ],
+   "look": {
+    "fill": "dark"
+   }
+  },
+  {
+   "id": "r5-east-exhaust-shelf",
+   "stage": 4,
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     2,
+     0.16,
+     0.5
+    ]
+   },
+   "at": [
+    5.5,
+    5.745,
+    -0.25
+   ],
+   "look": {
+    "fill": "dark"
+   }
+  },
+  {
+   "id": "r5-display-counter-plinth",
+   "stage": 4,
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     5.04,
+     0.78,
+     1.8
+    ]
+   },
+   "at": [
+    0.0,
+    0.57,
+    -1.0
+   ],
+   "look": {
+    "fill": "dark"
+   }
+  },
+  {
+   "id": "r5-display-counter-ledge",
+   "stage": 4,
+   "role": "identity",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     5.26,
+     0.14,
+     1.9
+    ]
+   },
+   "at": [
+    0.0,
+    1.03,
+    -0.95
+   ],
+   "look": {
+    "fill": "dark"
+   }
+  },
+  {
+   "id": "r5-display-division",
+   "stage": 4,
+   "role": "detail",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.12,
+     1.38,
+     0.28
+    ]
+   },
+   "at": [
+    -0.84,
+    1.79,
+    -0.68
+   ],
+   "repeat": {
+    "count": 2,
+    "step": {
+     "at": [
+      1.68,
+      0,
+      0
+     ]
+    }
+   },
+   "look": {
+    "fill": "dark"
+   }
+  },
+  {
+   "id": "r5-display-internal-shelf",
+   "stage": 4,
+   "role": "detail",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     5.04,
+     0.1,
+     0.7
+    ]
+   },
+   "at": [
+    0,
+    1.75,
+    -1.05
+   ],
+   "look": {
+    "fill": "dark"
+   }
+  },
+  {
+   "id": "r5-entry-door-stiles",
+   "stage": 4,
+   "role": "structure",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.12,
+     2.4,
+     0.4
+    ]
+   },
+   "at": [
+    -5.58,
+    1.38,
+    -0.82
+   ],
+   "repeat": {
+    "count": 2,
+    "step": {
+     "at": [
+      1.53,
+      0,
+      0
+     ]
+    }
+   },
+   "look": {
+    "fill": "dark"
+   }
+  },
+  {
+   "id": "r5-entry-kickplate",
+   "stage": 4,
+   "role": "identity",
+   "certainty": "inferred",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.53,
+     0.52,
+     0.22
+    ]
+   },
+   "at": [
+    -4.815,
+    0.44,
+    -0.73
+   ],
+   "look": {
+    "fill": "dark"
+   }
+  },
+  {
+   "at": [
+    0,
+    1.5,
+    -7.05
+   ],
+   "certainty": "inferred",
+   "id": "r9-lower-receded-core",
+   "label": "Designed lower rear core; upper core unchanged",
+   "look": {
+    "fill": "dark"
+   },
+   "role": "mass",
+   "shape": {
+    "size": [
+     18,
+     3,
+     9.9
+    ],
+    "type": "box"
+   },
+   "stage": 0
+  },
+  {
+   "at": [
+    0,
+    2.85,
+    -1.05
+   ],
+   "certainty": "inferred",
+   "id": "r9-ground-header",
+   "label": "Loadbearing spandrel with open bays below",
+   "look": {
+    "fill": "dark"
+   },
+   "role": "structure",
+   "shape": {
+    "size": [
+     18,
+     0.3,
+     2.1
+    ],
+    "type": "box"
+   },
+   "stage": 0
+  },
+  {
+   "at": [
+    -4.815,
+    1.38,
+    -0.805
+   ],
+   "certainty": "inferred",
+   "id": "r9-lobby-door-leaf",
+   "label": "Opaque narrow lobby door at 0.76m setback",
+   "look": {
+    "fill": "dark"
+   },
+   "role": "structure",
+   "shape": {
+    "size": [
+     1.53,
+     2.4,
+     0.09
+    ],
+    "type": "box"
+   },
+   "stage": 0
+  }
+ ],
+ "labels": [],
+ "anchors": {
+  "base": {
+   "point": [
+    0,
+    0,
+    0
+   ],
+   "up": [
+    0,
+    1,
+    0
+   ]
+  },
+  "front": {
+   "part": "sign-band-podium",
+   "face": "front"
+  }
+ },
+ "presentation": {
+  "framing": {
+   "yaw": 28,
+   "pitch": 12,
+   "fit": 1.05
+  },
+  "views": [
+   {
+    "distance": 1.15,
+    "id": "truefront",
+    "label": "Three differentiated ground bays",
+    "pitch": 0,
+    "target": "r9-ground-header",
+    "yaw": 0
+   },
+   {
+    "distance": 1.25,
+    "id": "under-signshop",
+    "label": "Under-signshop ground-level recession",
+    "pitch": 7,
+    "target": "r9-ground-header",
+    "yaw": 35
+   },
+   {
+    "distance": 4,
+    "id": "close",
+    "label": "Lobby door and 0.76m aperture",
+    "pitch": 10,
+    "target": "r9-lobby-door-leaf",
+    "yaw": 45
+   }
+  ],
+  "atmosphere": {
+   "haze": 0.2,
+   "grid": false,
+   "projector": false,
+   "scanlines": false,
+   "motes": 0
+  },
+  "occlusion": "xray",
+  "certainty_style": "subtle",
+  "background": "deep"
+ },
+ "animation": {
+  "assembly": {
+   "style": "build",
+   "seconds": 6,
+   "interference": false
+  },
+  "idle": {
+   "life": "off"
+  },
+  "reduced_motion": "still"
+ },
+ "authoring": {
+  "tier": "masterpiece",
+  "research": "off",
+  "review_rounds": 0,
+  "outcome": "good",
+  "next": [
+   "Bounded whole-world W2 repair, not a restarted masterpiece run. Original completed rounds retained unchanged.",
+   "Native renderer integration and parent whole-world rereview pending."
+  ],
+  "identity": [
+   {
+    "feature": "Three offset hotel stacks",
+    "parts": [
+     "lower-residential-mass",
+     "offset-middle-mass",
+     "offset-crown-mass"
+    ]
+   },
+   {
+    "feature": "Deep repeated cantilever balconies",
+    "parts": [
+     "lower-cantilever-slab",
+     "middle-cantilever-slab",
+     "crown-cantilever-slab"
+    ]
+   },
+   {
+    "feature": "Recessed unlettered shopfront and clear sign band",
+    "parts": [
+     "shop-glass-warm",
+     "shopfront-pier",
+     "sign-band-podium"
+    ]
+   }
+  ],
+  "rounds": [
+   {
+    "round": 1,
+    "result": "baseline",
+    "minutes": 0.5,
+    "changes": [
+     "draft"
+    ],
+    "summary": "The repeated ledges establish the right type but read predominantly as shallow shelves. Rail ends and usable balcony enclosures are difficul"
+   },
+   {
+    "round": 2,
+    "result": "kept",
+    "minutes": 12.7,
+    "changes": [
+     "D1",
+     "D2",
+     "D3",
+     "D4"
+    ],
+    "summary": "Repeated rails establish a hotel rhythm, but the projecting floors read mainly as thin facade ledges in side and solid views. The walking su"
+   },
+   {
+    "round": 3,
+    "result": "kept",
+    "minutes": 8.0,
+    "changes": [
+     "D1",
+     "D2",
+     "D3",
+     "D5"
+    ],
+    "summary": "Each occupied floor is effectively one broad rectangular opening crossed by a central vertical run; there are no convincingly distinguished "
+   },
+   {
+    "round": 4,
+    "result": "kept",
+    "minutes": 1.7,
+    "changes": [
+     "D1",
+     "D2",
+     "D3"
+    ],
+    "summary": "Four narrow door-like outlines per balcony row make the wire view read as a hotel, but solid view presents effectively two broad panel field"
+   },
+   {
+    "round": 5,
+    "result": "kept",
+    "minutes": 1.1,
+    "changes": [
+     "D6"
+    ],
+    "summary": "The wire facade gives four narrow door-like outlines per row, but the solid rendering is dominated by two large flat window-relief plates pe"
+   },
+   {
+    "round": 6,
+    "result": "kept",
+    "minutes": 2.1,
+    "changes": [
+     "D6",
+     "D7",
+     "D8",
+     "D9"
+    ],
+    "summary": "Each floor remains one uninterrupted deck and rail across almost the full stack width, despite several narrow door outlines behind it. The r"
+   },
+   {
+    "round": 7,
+    "result": "kept",
+    "minutes": 1.7,
+    "changes": [
+     "D10",
+     "D7"
+    ],
+    "summary": "Each occupied floor remains a nearly continuous deck and rail across the facade. Narrow room-door outlines give a room rhythm, but the outdo"
+   },
+   {
+    "round": 8,
+    "result": "kept",
+    "minutes": 1.9,
+    "changes": [
+     "D11",
+     "D12",
+     "D8"
+    ],
+    "summary": "The repeated slabs and front rails read primarily as uninterrupted communal galleries across each stack. The visible narrow door divisions d"
+   },
+   {
+    "round": 9,
+    "result": "kept",
+    "minutes": 1.5,
+    "changes": [
+     "D9"
+    ],
+    "summary": "Repeated slabs and front rails extend almost uninterrupted across each floor. Multiple door-like outlines sit behind them, but the deck rema"
+   },
+   {
+    "round": 10,
+    "result": "kept",
+    "minutes": 1.9,
+    "changes": [
+     "D11",
+     "D7"
+    ],
+    "summary": "Each floor's slab and front railing remain almost uninterrupted across the stack width. The room-door rhythm is visible behind them, but the"
+   },
+   {
+    "round": 11,
+    "result": "kept",
+    "minutes": 1.8,
+    "changes": [
+     "D10",
+     "D13"
+    ],
+    "summary": "The four front room openings per floor are legible up close, but the slab and rail silhouettes remain almost uninterrupted across each whole"
+   },
+   {
+    "round": 12,
+    "result": "reverted",
+    "minutes": 1.5,
+    "changes": [
+     "D10",
+     "D9"
+    ],
+    "summary": "Four room openings are readable per floor, but the slab and railing remain almost uninterrupted across each stack, with only a weak central "
+   }
+  ],
+  "critic": {
+   "scene_sha256": "49a263bc35cedcd8c7dc8da09908a30836b1b39a51b7a6566c21f767853c52d1",
+   "verdict": "good",
+   "scores": {
+    "silhouette": 3,
+    "proportions": 3,
+    "identity": 2,
+    "depth": 2,
+    "composition": 2,
+    "assembly": 3,
+    "motion": 2,
+    "density": 2,
+    "honesty": 3
+   },
+   "round": 1,
+   "defects": 5
+  }
+ }
+}

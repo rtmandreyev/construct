@@ -5632,9 +5632,9 @@
     "feature": "the Golden Record bolted flat to a bus face on its mounting plate",
     "parts": [
      "golden-record",
-     "record-cover",
      "record-plate",
-     "record-clamp"
+     "record-clamp",
+     "record-jacket"
     ],
     "source": "ref-record"
    }

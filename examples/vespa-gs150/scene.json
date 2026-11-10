@@ -6592,8 +6592,8 @@
       },
       "source": "photo-rear",
       "basis": [
-        "owner-equipment",
-        "owner-cowl-bar-left.presence"
+        "owner-cowl-bar-left.presence",
+        "owner-equipment"
       ],
       "stage": 5,
       "shape": {
@@ -6608,62 +6608,49 @@
             -0.32,
             0.38,
             -0.32
-          ]
-        ],
-        "radius": 0.009,
-        "sides": 6,
-        "samples": 3,
-        "longitudinal": 4,
-        "ring_every": 0,
-        "caps": true
-      },
-      "at": [
-        0,
-        0,
-        0
-      ],
-      "rotate": [
-        0,
-        0,
-        0
-      ],
-      "look": {
-        "fill": "dark",
-        "weight": 1.15,
-        "alpha": 0.86,
-        "glow": 0.3
-      }
-    },
-    {
-      "id": "owner-floor-bar-left",
-      "label": "MINE / NOT FACTORY · chrome floor protection rail left",
-      "role": "identity",
-      "certainty": {
-        "size": "inferred",
-        "shape": "inferred"
-      },
-      "source": "photo-front",
-      "basis": [
-        "owner-equipment",
-        "owner-floor-bar-left.presence"
-      ],
-      "stage": 5,
-      "shape": {
-        "type": "tube",
-        "path": [
-          [
-            -0.2,
-            0.3,
-            0.36
           ],
           [
-            -0.287,
-            0.285,
-            0.24
+            -0.33,
+            0.39,
+            -0.62
+          ],
+          [
+            -0.29,
+            0.36,
+            -0.88
+          ],
+          [
+            -0.2,
+            0.335,
+            -0.912
+          ],
+          [
+            -0.13,
+            0.36,
+            -0.905
+          ],
+          [
+            -0.1,
+            0.45,
+            -0.87
+          ],
+          [
+            -0.075,
+            0.58,
+            -0.82
           ]
         ],
-        "radius": 0.008,
-        "sides": 6,
+        "radius": [
+          0.009,
+          0.009,
+          0.009,
+          0.009,
+          0.009,
+          0.008,
+          0.0075,
+          0.007
+        ],
+        "sides": 12,
         "samples": 3,
         "longitudinal": 4,
         "ring_every": 0,
@@ -6688,7 +6675,7 @@
     },
     {
       "id": "owner-shield-bar-left",
-      "label": "MINE / NOT FACTORY · chrome legshield protection left",
+      "label": "MINE / NOT FACTORY · chrome legshield and floor protection bar left",
       "role": "identity",
       "certainty": {
         "size": "inferred",
@@ -6697,30 +6684,66 @@
       "source": "photo-front",
       "basis": [
         "owner-equipment",
-        "owner-shield-bar-left.presence"
+        "owner-shield-bar-left.presence",
+        "owner-floor-bar-left.presence"
       ],
       "stage": 5,
       "shape": {
         "type": "tube",
         "path": [
           [
-            -0.24,
-            0.32,
-            0.38
+            -0.1537,
+            0.8773,
+            0.2876
           ],
           [
-            -0.3,
+            -0.25,
+            0.862,
+            0.318
+          ],
+          [
+            -0.293,
+            0.79,
+            0.341
+          ],
+          [
+            -0.306,
+            0.64,
+            0.386
+          ],
+          [
+            -0.295,
             0.48,
-            0.43
+            0.417
           ],
           [
-            -0.31,
-            0.66,
-            0.4
+            -0.258,
+            0.36,
+            0.418
+          ],
+          [
+            -0.262,
+            0.305,
+            0.37
+          ],
+          [
+            -0.292,
+            0.293,
+            0.24
+          ],
+          [
+            -0.292,
+            0.293,
+            -0.12
+          ],
+          [
+            -0.26,
+            0.3,
+            -0.2
           ]
         ],
         "radius": 0.008,
-        "sides": 6,
+        "sides": 12,
         "samples": 3,
         "longitudinal": 4,
         "ring_every": 0,
@@ -6753,8 +6776,8 @@
       },
       "source": "photo-rear",
       "basis": [
-        "owner-equipment",
-        "owner-cowl-bar-right.presence"
+        "owner-cowl-bar-right.presence",
+        "owner-equipment"
       ],
       "stage": 5,
       "shape": {
@@ -6769,62 +6792,49 @@
             0.32,
             0.38,
             -0.32
-          ]
-        ],
-        "radius": 0.009,
-        "sides": 6,
-        "samples": 3,
-        "longitudinal": 4,
-        "ring_every": 0,
-        "caps": true
-      },
-      "at": [
-        0,
-        0,
-        0
-      ],
-      "rotate": [
-        0,
-        0,
-        0
-      ],
-      "look": {
-        "fill": "dark",
-        "weight": 1.15,
-        "alpha": 0.86,
-        "glow": 0.3
-      }
-    },
-    {
-      "id": "owner-floor-bar-right",
-      "label": "MINE / NOT FACTORY · chrome floor protection rail right",
-      "role": "identity",
-      "certainty": {
-        "size": "inferred",
-        "shape": "inferred"
-      },
-      "source": "photo-front",
-      "basis": [
-        "owner-equipment",
-        "owner-floor-bar-right.presence"
-      ],
-      "stage": 5,
-      "shape": {
-        "type": "tube",
-        "path": [
-          [
-            0.2,
-            0.3,
-            0.36
           ],
           [
-            0.287,
-            0.285,
-            0.24
+            0.33,
+            0.39,
+            -0.62
+          ],
+          [
+            0.29,
+            0.36,
+            -0.88
+          ],
+          [
+            0.2,
+            0.335,
+            -0.912
+          ],
+          [
+            0.13,
+            0.36,
+            -0.905
+          ],
+          [
+            0.1,
+            0.45,
+            -0.87
+          ],
+          [
+            0.075,
+            0.58,
+            -0.82
           ]
         ],
-        "radius": 0.008,
-        "sides": 6,
+        "radius": [
+          0.009,
+          0.009,
+          0.009,
+          0.009,
+          0.009,
+          0.008,
+          0.0075,
+          0.007
+        ],
+        "sides": 12,
         "samples": 3,
         "longitudinal": 4,
         "ring_every": 0,
@@ -6849,7 +6859,7 @@
     },
     {
       "id": "owner-shield-bar-right",
-      "label": "MINE / NOT FACTORY · chrome legshield protection right",
+      "label": "MINE / NOT FACTORY · chrome legshield and floor protection bar right",
       "role": "identity",
       "certainty": {
         "size": "inferred",
@@ -6858,30 +6868,66 @@
       "source": "photo-front",
       "basis": [
         "owner-equipment",
-        "owner-shield-bar-right.presence"
+        "owner-shield-bar-right.presence",
+        "owner-floor-bar-right.presence"
       ],
       "stage": 5,
       "shape": {
         "type": "tube",
         "path": [
           [
-            0.24,
-            0.32,
-            0.38
+            0.1531,
+            0.8771,
+            0.2876
           ],
           [
-            0.3,
+            0.25,
+            0.862,
+            0.318
+          ],
+          [
+            0.293,
+            0.79,
+            0.341
+          ],
+          [
+            0.306,
+            0.64,
+            0.386
+          ],
+          [
+            0.295,
             0.48,
-            0.43
+            0.417
           ],
           [
-            0.31,
-            0.66,
-            0.4
+            0.258,
+            0.36,
+            0.418
+          ],
+          [
+            0.262,
+            0.305,
+            0.37
+          ],
+          [
+            0.292,
+            0.293,
+            0.24
+          ],
+          [
+            0.292,
+            0.293,
+            -0.12
+          ],
+          [
+            0.26,
+            0.3,
+            -0.2
           ]
         ],
         "radius": 0.008,
-        "sides": 6,
+        "sides": 12,
         "samples": 3,
         "longitudinal": 4,
         "ring_every": 0,
@@ -6922,23 +6968,58 @@
         "type": "tube",
         "path": [
           [
-            -0.173,
-            0.73,
+            -0.188,
+            0.736,
             -0.72
           ],
           [
-            -0.18,
+            -0.195,
             0.76,
             -0.87
+          ],
+          [
+            -0.195,
+            0.76,
+            -0.945
+          ],
+          [
+            -0.195,
+            0.76,
+            -0.96
           ],
           [
             -0.18,
             0.76,
             -0.96
+          ],
+          [
+            0.18,
+            0.76,
+            -0.96
+          ],
+          [
+            0.195,
+            0.76,
+            -0.96
+          ],
+          [
+            0.195,
+            0.76,
+            -0.945
+          ],
+          [
+            0.195,
+            0.76,
+            -0.87
+          ],
+          [
+            0.188,
+            0.736,
+            -0.72
           ]
         ],
         "radius": 0.01,
-        "sides": 6,
+        "sides": 12,
         "samples": 3,
         "longitudinal": 4,
         "ring_every": 0,
@@ -6984,18 +7065,18 @@
             -0.82
           ],
           [
-            -0.14,
+            -0.15,
             0.6,
             -0.9
           ],
           [
-            -0.18,
+            -0.195,
             0.76,
             -0.94
           ]
         ],
         "radius": 0.008,
-        "sides": 6,
+        "sides": 12,
         "samples": 3,
         "longitudinal": 4,
         "ring_every": 0,
@@ -7041,18 +7122,18 @@
             -0.82
           ],
           [
-            0.14,
+            0.15,
             0.6,
             -0.9
           ],
           [
-            0.18,
+            0.195,
             0.76,
             -0.94
           ]
         ],
         "radius": 0.008,
-        "sides": 6,
+        "sides": 12,
         "samples": 3,
         "longitudinal": 4,
         "ring_every": 0,
@@ -7093,18 +7174,18 @@
         "type": "tube",
         "path": [
           [
-            -0.175,
+            -0.195,
             0.777,
             -0.85
           ],
           [
-            0.175,
+            0.195,
             0.777,
             -0.85
           ]
         ],
         "radius": 0.007,
-        "sides": 6,
+        "sides": 12,
         "samples": 3,
         "longitudinal": 4,
         "ring_every": 0,
@@ -7145,18 +7226,18 @@
         "type": "tube",
         "path": [
           [
-            -0.175,
+            -0.195,
             0.777,
             -0.885
           ],
           [
-            0.175,
+            0.195,
             0.777,
             -0.885
           ]
         ],
         "radius": 0.007,
-        "sides": 6,
+        "sides": 12,
         "samples": 3,
         "longitudinal": 4,
         "ring_every": 0,
@@ -7197,18 +7278,18 @@
         "type": "tube",
         "path": [
           [
-            -0.175,
+            -0.195,
             0.777,
             -0.9199999999999999
           ],
           [
-            0.175,
+            0.195,
             0.777,
             -0.9199999999999999
           ]
         ],
         "radius": 0.007,
-        "sides": 6,
+        "sides": 12,
         "samples": 3,
         "longitudinal": 4,
         "ring_every": 0,
@@ -7393,13 +7474,13 @@
         "path": [
           [
             0,
-            0.57,
-            0.35
+            0.585,
+            0.343
           ],
           [
             0,
             0.602,
-            0.34
+            0.322
           ],
           [
             0,
@@ -7408,7 +7489,7 @@
           ]
         ],
         "radius": 0.02,
-        "sides": 6,
+        "sides": 12,
         "samples": 3,
         "longitudinal": 4,
         "ring_every": 0,
@@ -7456,7 +7537,121 @@
       "at": [
         0,
         0.614,
-        0.451
+        0.4981
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "fill": "dark",
+        "weight": 1.15,
+        "alpha": 0.86,
+        "glow": 0.3
+      }
+    },
+    {
+      "id": "owner-badge-bar-arm-right",
+      "label": "MINE / NOT FACTORY · badge carrier arm right",
+      "role": "identity",
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "source": "photo-front",
+      "basis": [
+        "owner-equipment",
+        "owner-badge-bar.presence"
+      ],
+      "stage": 5,
+      "shape": {
+        "type": "tube",
+        "path": [
+          [
+            0.157,
+            0.614,
+            0.4951
+          ],
+          [
+            0.2366,
+            0.614,
+            0.4546
+          ],
+          [
+            0.3042,
+            0.614,
+            0.391
+          ]
+        ],
+        "radius": 0.006,
+        "sides": 12,
+        "samples": 3,
+        "longitudinal": 4,
+        "ring_every": 0,
+        "caps": true
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "rotate": [
+        0,
+        0,
+        0
+      ],
+      "look": {
+        "fill": "dark",
+        "weight": 1.15,
+        "alpha": 0.86,
+        "glow": 0.3
+      }
+    },
+    {
+      "id": "owner-badge-bar-arm-left",
+      "label": "MINE / NOT FACTORY · badge carrier arm left",
+      "role": "identity",
+      "certainty": {
+        "size": "inferred",
+        "shape": "inferred"
+      },
+      "source": "photo-front",
+      "basis": [
+        "owner-equipment",
+        "owner-badge-bar.presence"
+      ],
+      "stage": 5,
+      "shape": {
+        "type": "tube",
+        "path": [
+          [
+            -0.157,
+            0.614,
+            0.4951
+          ],
+          [
+            -0.2366,
+            0.614,
+            0.4546
+          ],
+          [
+            -0.3042,
+            0.614,
+            0.391
+          ]
+        ],
+        "radius": 0.006,
+        "sides": 12,
+        "samples": 3,
+        "longitudinal": 4,
+        "ring_every": 0,
+        "caps": true
+      },
+      "at": [
+        0,
+        0,
+        0
       ],
       "rotate": [
         0,
@@ -7514,7 +7709,7 @@
       "at": [
         -0.125,
         0.615,
-        0.46
+        0.5071
       ],
       "rotate": [
         0,
@@ -7553,7 +7748,7 @@
       "at": [
         0,
         0.614,
-        0.459
+        0.5061
       ],
       "rotate": [
         90,
@@ -7592,7 +7787,7 @@
       "at": [
         0.125,
         0.614,
-        0.466
+        0.5131
       ],
       "rotate": [
         0,
@@ -8600,655 +8795,6 @@
       }
     },
     {
-      "id": "owner-cowl-bar-left-section-2",
-      "label": "MINE / NOT FACTORY · chrome side-cowl protection bar left · section 2",
-      "role": "identity",
-      "certainty": {
-        "size": "inferred",
-        "shape": "inferred"
-      },
-      "source": "photo-rear",
-      "basis": [
-        "owner-equipment",
-        "owner-cowl-bar-left.presence"
-      ],
-      "stage": 5,
-      "shape": {
-        "type": "tube",
-        "path": [
-          [
-            -0.32,
-            0.38,
-            -0.32
-          ],
-          [
-            -0.33,
-            0.39,
-            -0.62
-          ]
-        ],
-        "radius": 0.009,
-        "sides": 6,
-        "samples": 3,
-        "longitudinal": 4,
-        "ring_every": 0,
-        "caps": true
-      },
-      "at": [
-        0,
-        0,
-        0
-      ],
-      "rotate": [
-        0,
-        0,
-        0
-      ],
-      "look": {
-        "fill": "dark",
-        "weight": 1.15,
-        "alpha": 0.86,
-        "glow": 0.3
-      }
-    },
-    {
-      "id": "owner-cowl-bar-left-section-3",
-      "label": "MINE / NOT FACTORY · chrome side-cowl protection bar left · section 3",
-      "role": "identity",
-      "certainty": {
-        "size": "inferred",
-        "shape": "inferred"
-      },
-      "source": "photo-rear",
-      "basis": [
-        "owner-equipment",
-        "owner-cowl-bar-left.presence"
-      ],
-      "stage": 5,
-      "shape": {
-        "type": "tube",
-        "path": [
-          [
-            -0.33,
-            0.39,
-            -0.62
-          ],
-          [
-            -0.28,
-            0.36,
-            -0.85
-          ],
-          [
-            -0.17,
-            0.33,
-            -0.86
-          ]
-        ],
-        "radius": 0.009,
-        "sides": 6,
-        "samples": 3,
-        "longitudinal": 4,
-        "ring_every": 0,
-        "caps": true
-      },
-      "at": [
-        0,
-        0,
-        0
-      ],
-      "rotate": [
-        0,
-        0,
-        0
-      ],
-      "look": {
-        "fill": "dark",
-        "weight": 1.15,
-        "alpha": 0.86,
-        "glow": 0.3
-      }
-    },
-    {
-      "id": "owner-floor-bar-left-section-2",
-      "label": "MINE / NOT FACTORY · chrome floor protection rail left · section 2",
-      "role": "identity",
-      "certainty": {
-        "size": "inferred",
-        "shape": "inferred"
-      },
-      "source": "photo-front",
-      "basis": [
-        "owner-equipment",
-        "owner-floor-bar-left.presence"
-      ],
-      "stage": 5,
-      "shape": {
-        "type": "tube",
-        "path": [
-          [
-            -0.287,
-            0.285,
-            0.24
-          ],
-          [
-            -0.287,
-            0.285,
-            -0.12
-          ]
-        ],
-        "radius": 0.008,
-        "sides": 6,
-        "samples": 3,
-        "longitudinal": 4,
-        "ring_every": 0,
-        "caps": true
-      },
-      "at": [
-        0,
-        0,
-        0
-      ],
-      "rotate": [
-        0,
-        0,
-        0
-      ],
-      "look": {
-        "fill": "dark",
-        "weight": 1.15,
-        "alpha": 0.86,
-        "glow": 0.3
-      }
-    },
-    {
-      "id": "owner-floor-bar-left-section-3",
-      "label": "MINE / NOT FACTORY · chrome floor protection rail left · section 3",
-      "role": "identity",
-      "certainty": {
-        "size": "inferred",
-        "shape": "inferred"
-      },
-      "source": "photo-front",
-      "basis": [
-        "owner-equipment",
-        "owner-floor-bar-left.presence"
-      ],
-      "stage": 5,
-      "shape": {
-        "type": "tube",
-        "path": [
-          [
-            -0.287,
-            0.285,
-            -0.12
-          ],
-          [
-            -0.26,
-            0.3,
-            -0.2
-          ]
-        ],
-        "radius": 0.008,
-        "sides": 6,
-        "samples": 3,
-        "longitudinal": 4,
-        "ring_every": 0,
-        "caps": true
-      },
-      "at": [
-        0,
-        0,
-        0
-      ],
-      "rotate": [
-        0,
-        0,
-        0
-      ],
-      "look": {
-        "fill": "dark",
-        "weight": 1.15,
-        "alpha": 0.86,
-        "glow": 0.3
-      }
-    },
-    {
-      "id": "owner-shield-bar-left-section-2",
-      "label": "MINE / NOT FACTORY · chrome legshield protection left · section 2",
-      "role": "identity",
-      "certainty": {
-        "size": "inferred",
-        "shape": "inferred"
-      },
-      "source": "photo-front",
-      "basis": [
-        "owner-equipment",
-        "owner-shield-bar-left.presence"
-      ],
-      "stage": 5,
-      "shape": {
-        "type": "tube",
-        "path": [
-          [
-            -0.31,
-            0.66,
-            0.4
-          ],
-          [
-            -0.29,
-            0.82,
-            0.35
-          ],
-          [
-            -0.23,
-            0.889,
-            0.3
-          ]
-        ],
-        "radius": 0.008,
-        "sides": 6,
-        "samples": 3,
-        "longitudinal": 4,
-        "ring_every": 0,
-        "caps": true
-      },
-      "at": [
-        0,
-        0,
-        0
-      ],
-      "rotate": [
-        0,
-        0,
-        0
-      ],
-      "look": {
-        "fill": "dark",
-        "weight": 1.15,
-        "alpha": 0.86,
-        "glow": 0.3
-      }
-    },
-    {
-      "id": "owner-cowl-bar-right-section-2",
-      "label": "MINE / NOT FACTORY · chrome side-cowl protection bar right · section 2",
-      "role": "identity",
-      "certainty": {
-        "size": "inferred",
-        "shape": "inferred"
-      },
-      "source": "photo-rear",
-      "basis": [
-        "owner-equipment",
-        "owner-cowl-bar-right.presence"
-      ],
-      "stage": 5,
-      "shape": {
-        "type": "tube",
-        "path": [
-          [
-            0.32,
-            0.38,
-            -0.32
-          ],
-          [
-            0.33,
-            0.39,
-            -0.62
-          ]
-        ],
-        "radius": 0.009,
-        "sides": 6,
-        "samples": 3,
-        "longitudinal": 4,
-        "ring_every": 0,
-        "caps": true
-      },
-      "at": [
-        0,
-        0,
-        0
-      ],
-      "rotate": [
-        0,
-        0,
-        0
-      ],
-      "look": {
-        "fill": "dark",
-        "weight": 1.15,
-        "alpha": 0.86,
-        "glow": 0.3
-      }
-    },
-    {
-      "id": "owner-cowl-bar-right-section-3",
-      "label": "MINE / NOT FACTORY · chrome side-cowl protection bar right · section 3",
-      "role": "identity",
-      "certainty": {
-        "size": "inferred",
-        "shape": "inferred"
-      },
-      "source": "photo-rear",
-      "basis": [
-        "owner-equipment",
-        "owner-cowl-bar-right.presence"
-      ],
-      "stage": 5,
-      "shape": {
-        "type": "tube",
-        "path": [
-          [
-            0.33,
-            0.39,
-            -0.62
-          ],
-          [
-            0.28,
-            0.36,
-            -0.85
-          ],
-          [
-            0.17,
-            0.33,
-            -0.86
-          ]
-        ],
-        "radius": 0.009,
-        "sides": 6,
-        "samples": 3,
-        "longitudinal": 4,
-        "ring_every": 0,
-        "caps": true
-      },
-      "at": [
-        0,
-        0,
-        0
-      ],
-      "rotate": [
-        0,
-        0,
-        0
-      ],
-      "look": {
-        "fill": "dark",
-        "weight": 1.15,
-        "alpha": 0.86,
-        "glow": 0.3
-      }
-    },
-    {
-      "id": "owner-floor-bar-right-section-2",
-      "label": "MINE / NOT FACTORY · chrome floor protection rail right · section 2",
-      "role": "identity",
-      "certainty": {
-        "size": "inferred",
-        "shape": "inferred"
-      },
-      "source": "photo-front",
-      "basis": [
-        "owner-equipment",
-        "owner-floor-bar-right.presence"
-      ],
-      "stage": 5,
-      "shape": {
-        "type": "tube",
-        "path": [
-          [
-            0.287,
-            0.285,
-            0.24
-          ],
-          [
-            0.287,
-            0.285,
-            -0.12
-          ]
-        ],
-        "radius": 0.008,
-        "sides": 6,
-        "samples": 3,
-        "longitudinal": 4,
-        "ring_every": 0,
-        "caps": true
-      },
-      "at": [
-        0,
-        0,
-        0
-      ],
-      "rotate": [
-        0,
-        0,
-        0
-      ],
-      "look": {
-        "fill": "dark",
-        "weight": 1.15,
-        "alpha": 0.86,
-        "glow": 0.3
-      }
-    },
-    {
-      "id": "owner-floor-bar-right-section-3",
-      "label": "MINE / NOT FACTORY · chrome floor protection rail right · section 3",
-      "role": "identity",
-      "certainty": {
-        "size": "inferred",
-        "shape": "inferred"
-      },
-      "source": "photo-front",
-      "basis": [
-        "owner-equipment",
-        "owner-floor-bar-right.presence"
-      ],
-      "stage": 5,
-      "shape": {
-        "type": "tube",
-        "path": [
-          [
-            0.287,
-            0.285,
-            -0.12
-          ],
-          [
-            0.26,
-            0.3,
-            -0.2
-          ]
-        ],
-        "radius": 0.008,
-        "sides": 6,
-        "samples": 3,
-        "longitudinal": 4,
-        "ring_every": 0,
-        "caps": true
-      },
-      "at": [
-        0,
-        0,
-        0
-      ],
-      "rotate": [
-        0,
-        0,
-        0
-      ],
-      "look": {
-        "fill": "dark",
-        "weight": 1.15,
-        "alpha": 0.86,
-        "glow": 0.3
-      }
-    },
-    {
-      "id": "owner-shield-bar-right-section-2",
-      "label": "MINE / NOT FACTORY · chrome legshield protection right · section 2",
-      "role": "identity",
-      "certainty": {
-        "size": "inferred",
-        "shape": "inferred"
-      },
-      "source": "photo-front",
-      "basis": [
-        "owner-equipment",
-        "owner-shield-bar-right.presence"
-      ],
-      "stage": 5,
-      "shape": {
-        "type": "tube",
-        "path": [
-          [
-            0.31,
-            0.66,
-            0.4
-          ],
-          [
-            0.29,
-            0.82,
-            0.35
-          ],
-          [
-            0.23,
-            0.889,
-            0.3
-          ]
-        ],
-        "radius": 0.008,
-        "sides": 6,
-        "samples": 3,
-        "longitudinal": 4,
-        "ring_every": 0,
-        "caps": true
-      },
-      "at": [
-        0,
-        0,
-        0
-      ],
-      "rotate": [
-        0,
-        0,
-        0
-      ],
-      "look": {
-        "fill": "dark",
-        "weight": 1.15,
-        "alpha": 0.86,
-        "glow": 0.3
-      }
-    },
-    {
-      "id": "owner-rear-rack-section-2",
-      "label": "MINE / NOT FACTORY · chrome rear luggage rack · section 2",
-      "role": "identity",
-      "certainty": {
-        "size": "inferred",
-        "shape": "inferred"
-      },
-      "source": "photo-rear",
-      "basis": [
-        "owner-equipment",
-        "owner-rear-rack.presence"
-      ],
-      "stage": 5,
-      "shape": {
-        "type": "tube",
-        "path": [
-          [
-            -0.18,
-            0.76,
-            -0.96
-          ],
-          [
-            0.18,
-            0.76,
-            -0.96
-          ]
-        ],
-        "radius": 0.01,
-        "sides": 6,
-        "samples": 3,
-        "longitudinal": 4,
-        "ring_every": 0,
-        "caps": true
-      },
-      "at": [
-        0,
-        0,
-        0
-      ],
-      "rotate": [
-        0,
-        0,
-        0
-      ],
-      "look": {
-        "fill": "dark",
-        "weight": 1.15,
-        "alpha": 0.86,
-        "glow": 0.3
-      }
-    },
-    {
-      "id": "owner-rear-rack-section-3",
-      "label": "MINE / NOT FACTORY · chrome rear luggage rack · section 3",
-      "role": "identity",
-      "certainty": {
-        "size": "inferred",
-        "shape": "inferred"
-      },
-      "source": "photo-rear",
-      "basis": [
-        "owner-equipment",
-        "owner-rear-rack.presence"
-      ],
-      "stage": 5,
-      "shape": {
-        "type": "tube",
-        "path": [
-          [
-            0.18,
-            0.76,
-            -0.96
-          ],
-          [
-            0.18,
-            0.76,
-            -0.87
-          ],
-          [
-            0.173,
-            0.73,
-            -0.72
-          ]
-        ],
-        "radius": 0.01,
-        "sides": 6,
-        "samples": 3,
-        "longitudinal": 4,
-        "ring_every": 0,
-        "caps": true
-      },
-      "at": [
-        0,
-        0,
-        0
-      ],
-      "rotate": [
-        0,
-        0,
-        0
-      ],
-      "look": {
-        "fill": "dark",
-        "weight": 1.15,
-        "alpha": 0.86,
-        "glow": 0.3
-      }
-    },
-    {
       "id": "fork-upper-steerer-section-2",
       "label": "Factory · upper steering column · section 2",
       "role": "structure",
@@ -9617,27 +9163,27 @@
           [
             -0.175,
             0.565,
-            0.462
+            0.5091
           ],
           [
             0.175,
             0.565,
-            0.462
+            0.5091
           ],
           [
             0.175,
             0.663,
-            0.462
+            0.5091
           ],
           [
             -0.175,
             0.663,
-            0.462
+            0.5091
           ],
           [
             -0.175,
             0.565,
-            0.462
+            0.5091
           ]
         ],
         "radius": 0.006,
@@ -9687,9 +9233,9 @@
         "rings": 0
       },
       "at": [
-        0,
-        0.768,
-        0.37
+        -0.045,
+        0.7664,
+        0.3664
       ],
       "rotate": [
         90,
@@ -10074,7 +9620,7 @@
     },
     {
       "id": "owner-front-mudguard-hoop-left",
-      "label": "MINE / NOT FACTORY · chrome front mudguard guard left",
+      "label": "MINE / NOT FACTORY · front mudguard protection hoop",
       "shape": {
         "type": "tube",
         "path": [
@@ -10094,13 +9640,28 @@
             0.875
           ],
           [
-            0,
+            0.0,
             0.33,
             0.9
+          ],
+          [
+            0.14,
+            0.34,
+            0.875
+          ],
+          [
+            0.14,
+            0.385,
+            0.8
+          ],
+          [
+            0.11,
+            0.405,
+            0.75
           ]
         ],
         "radius": 0.008,
-        "sides": 6,
+        "sides": 12,
         "samples": 3,
         "longitudinal": 4,
         "ring_every": 0,
@@ -10125,67 +9686,6 @@
       },
       "basis": [
         "owner-front-mudguard-hoop-left.presence"
-      ],
-      "look": {
-        "fill": "dark",
-        "weight": 0.9,
-        "alpha": 0.75,
-        "glow": 0.15
-      }
-    },
-    {
-      "id": "owner-front-mudguard-hoop-right",
-      "label": "MINE / NOT FACTORY · chrome front mudguard guard right",
-      "shape": {
-        "type": "tube",
-        "path": [
-          [
-            0.11,
-            0.405,
-            0.75
-          ],
-          [
-            0.14,
-            0.385,
-            0.8
-          ],
-          [
-            0.14,
-            0.34,
-            0.875
-          ],
-          [
-            0,
-            0.33,
-            0.9
-          ]
-        ],
-        "radius": 0.008,
-        "sides": 6,
-        "samples": 3,
-        "longitudinal": 4,
-        "ring_every": 0,
-        "caps": true
-      },
-      "at": [
-        0,
-        0,
-        0
-      ],
-      "rotate": [
-        0,
-        0,
-        0
-      ],
-      "role": "identity",
-      "stage": 5,
-      "source": "photo-front",
-      "certainty": {
-        "size": "inferred",
-        "shape": "inferred"
-      },
-      "basis": [
-        "owner-front-mudguard-hoop-right.presence"
       ],
       "look": {
         "fill": "dark",
@@ -11699,32 +11199,32 @@
           [
             -0.153,
             0.587,
-            0.472
+            0.5191
           ],
           [
             -0.125,
             0.575,
-            0.472
+            0.5191
           ],
           [
             -0.097,
             0.587,
-            0.472
+            0.5191
           ],
           [
             -0.097,
             0.645,
-            0.472
+            0.5191
           ],
           [
             -0.153,
             0.645,
-            0.472
+            0.5191
           ],
           [
             -0.153,
             0.587,
-            0.472
+            0.5191
           ]
         ],
         "radius": 0.0025,
@@ -11843,7 +11343,7 @@
       "at": [
         0,
         0.614,
-        0.47
+        0.5171
       ],
       "rotate": [
         0,
@@ -11900,7 +11400,7 @@
       "at": [
         0.125,
         0.614,
-        0.472
+        0.5191
       ],
       "rotate": [
         0,
@@ -12286,13 +11786,13 @@
         "type": "tube",
         "path": [
           [
-            -0.284,
-            0.346,
-            -0.848
+            -0.29,
+            0.36,
+            -0.88
           ],
           [
-            -0.305,
-            0.32,
+            -0.31,
+            0.325,
             -0.83
           ],
           [
@@ -12312,7 +11812,7 @@
           ]
         ],
         "radius": 0.006,
-        "sides": 6,
+        "sides": 12,
         "samples": 2,
         "longitudinal": 3,
         "ring_every": 0,
@@ -12401,62 +11901,6 @@
       }
     },
     {
-      "id": "owner-guard-rear-bracket-left",
-      "label": "MINE / NOT FACTORY · rear protection-bar mounting stay left",
-      "role": "identity",
-      "stage": 5,
-      "source": "photo-rear",
-      "basis": [
-        "owner-equipment"
-      ],
-      "certainty": {
-        "size": "inferred",
-        "shape": "inferred"
-      },
-      "shape": {
-        "type": "tube",
-        "path": [
-          [
-            -0.17,
-            0.33,
-            -0.86
-          ],
-          [
-            -0.12,
-            0.43,
-            -0.82
-          ],
-          [
-            -0.075,
-            0.58,
-            -0.82
-          ]
-        ],
-        "radius": 0.007,
-        "sides": 6,
-        "samples": 2,
-        "longitudinal": 3,
-        "ring_every": 0,
-        "caps": true
-      },
-      "at": [
-        0,
-        0,
-        0
-      ],
-      "rotate": [
-        0,
-        0,
-        0
-      ],
-      "look": {
-        "fill": "dark",
-        "weight": 0.8,
-        "alpha": 0.75,
-        "glow": 0.1
-      }
-    },
-    {
       "id": "owner-guard-endplate-right",
       "label": "MINE / NOT FACTORY · lower cowl protection rail right",
       "role": "identity",
@@ -12473,13 +11917,13 @@
         "type": "tube",
         "path": [
           [
-            0.284,
-            0.346,
-            -0.848
+            0.29,
+            0.36,
+            -0.88
           ],
           [
-            0.305,
-            0.32,
+            0.31,
+            0.325,
             -0.83
           ],
           [
@@ -12499,7 +11943,7 @@
           ]
         ],
         "radius": 0.006,
-        "sides": 6,
+        "sides": 12,
         "samples": 2,
         "longitudinal": 3,
         "ring_every": 0,
@@ -12583,62 +12027,6 @@
       "look": {
         "fill": "dark",
         "weight": 1.05,
-        "alpha": 0.75,
-        "glow": 0.1
-      }
-    },
-    {
-      "id": "owner-guard-rear-bracket-right",
-      "label": "MINE / NOT FACTORY · rear protection-bar mounting stay right",
-      "role": "identity",
-      "stage": 5,
-      "source": "photo-rear",
-      "basis": [
-        "owner-equipment"
-      ],
-      "certainty": {
-        "size": "inferred",
-        "shape": "inferred"
-      },
-      "shape": {
-        "type": "tube",
-        "path": [
-          [
-            0.17,
-            0.33,
-            -0.86
-          ],
-          [
-            0.12,
-            0.43,
-            -0.82
-          ],
-          [
-            0.075,
-            0.58,
-            -0.82
-          ]
-        ],
-        "radius": 0.007,
-        "sides": 6,
-        "samples": 2,
-        "longitudinal": 3,
-        "ring_every": 0,
-        "caps": true
-      },
-      "at": [
-        0,
-        0,
-        0
-      ],
-      "rotate": [
-        0,
-        0,
-        0
-      ],
-      "look": {
-        "fill": "dark",
-        "weight": 0.8,
         "alpha": 0.75,
         "glow": 0.1
       }
@@ -12890,7 +12278,7 @@
           0.009,
           0.01
         ],
-        "sides": 4,
+        "sides": 12,
         "samples": 1,
         "longitudinal": 3,
         "ring_every": 0,
@@ -12952,7 +12340,6 @@
         "front-coil-spring-section-3",
         "fork-upper-steerer-section-2",
         "owner-front-mudguard-hoop-left",
-        "owner-front-mudguard-hoop-right",
         "speedometer-bezel",
         "speedometer-scale",
         "wheel-fasteners-hubcap-front-left",
@@ -13018,11 +12405,8 @@
         "cowl-engine-front-locating-tab",
         "cowl-script-engine",
         "owner-cowl-bar-right",
-        "owner-cowl-bar-right-section-2",
-        "owner-cowl-bar-right-section-3",
         "owner-guard-endplate-right",
-        "owner-guard-collar-right",
-        "owner-guard-rear-bracket-right"
+        "owner-guard-collar-right"
       ],
       "axis": [
         1,
@@ -13046,11 +12430,8 @@
         "cowl-spare-wheel-front-locating-tab",
         "cowl-script-spare-wheel",
         "owner-cowl-bar-left",
-        "owner-cowl-bar-left-section-2",
-        "owner-cowl-bar-left-section-3",
         "owner-guard-endplate-left",
-        "owner-guard-collar-left",
-        "owner-guard-rear-bracket-left"
+        "owner-guard-collar-left"
       ],
       "axis": [
         -1,
@@ -13079,11 +12460,8 @@
         "cowl-engine-front-locating-tab",
         "cowl-script-engine",
         "owner-cowl-bar-right",
-        "owner-cowl-bar-right-section-2",
-        "owner-cowl-bar-right-section-3",
         "owner-guard-endplate-right",
-        "owner-guard-collar-right",
-        "owner-guard-rear-bracket-right"
+        "owner-guard-collar-right"
       ],
       "axis": [
         0,
@@ -13112,11 +12490,8 @@
         "cowl-spare-wheel-front-locating-tab",
         "cowl-script-spare-wheel",
         "owner-cowl-bar-left",
-        "owner-cowl-bar-left-section-2",
-        "owner-cowl-bar-left-section-3",
         "owner-guard-endplate-left",
-        "owner-guard-collar-left",
-        "owner-guard-rear-bracket-left"
+        "owner-guard-collar-left"
       ],
       "axis": [
         0,
@@ -13155,7 +12530,7 @@
     },
     {
       "id": "note-owner-rear-rack",
-      "part": "owner-rear-rack-section-2",
+      "part": "owner-rear-rack",
       "text": "MINE · rack · not factory",
       "offset": [
         0,
@@ -13540,21 +12915,21 @@
       }
     ],
     "critic": {
-      "scene_sha256": "b7061186ce0498ea21366c0bbe66cbbcb6e09f329ab816dd64e2fc4dc1df9a28",
+      "scene_sha256": "fc87065a0293a1d62c40869e75cf13766b011de6bdfb42b5f5e2b123dfb83c41",
       "verdict": "improve",
       "scores": {
-        "silhouette": 1,
+        "silhouette": 2,
         "proportions": 2,
         "identity": 2,
         "depth": 2,
-        "composition": 3,
-        "assembly": 3,
-        "motion": 3,
+        "composition": 2,
+        "assembly": 2,
+        "motion": 2,
         "density": 2,
-        "honesty": 3
+        "honesty": 2
       },
-      "round": 12,
-      "defects": 5
+      "round": 13,
+      "defects": 12
     }
   },
   "reading": {

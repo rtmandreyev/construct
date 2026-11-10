@@ -2979,7 +2979,7 @@
       "note": "the dot over 90 at twelve, an identifying Moonwatch detail"
     },
     {
-      "id": "crystal",
+      "id": "crystal-glass",
       "role": "structure",
       "certainty": "inferred",
       "stage": 5,
@@ -3060,7 +3060,7 @@
       "id": "crystal-lift",
       "type": "lift",
       "parts": [
-        "crystal",
+        "crystal-glass",
         "crystal-edge"
       ],
       "axis": [
@@ -3075,7 +3075,7 @@
       "id": "crystal-stagger",
       "type": "slide",
       "parts": [
-        "crystal",
+        "crystal-glass",
         "crystal-edge"
       ],
       "axis": [
@@ -3258,9 +3258,9 @@
   "labels": [],
   "annotations": [
     {
-      "id": "crystal",
+      "id": "crystal-glass",
       "text": "Hesalite crystal",
-      "part": "crystal",
+      "part": "crystal-glass",
       "offset": [
         0.016,
         -0.008,
@@ -3406,5 +3406,26 @@
       ]
     },
     "reduced_motion": "still"
+  },
+  "authoring": {
+    "tier": "standard",
+    "research": "unavailable",
+    "critic": {
+      "scene_sha256": "a030bd965d34d8ba62f93598bf385e9e7c3b77a96c78eeb4ed2daa336c527ac1",
+      "verdict": "improve",
+      "scores": {
+        "silhouette": 1,
+        "proportions": 2,
+        "identity": 1,
+        "depth": 1,
+        "composition": 2,
+        "assembly": 2,
+        "motion": 2,
+        "density": 1,
+        "honesty": 2
+      },
+      "round": 1,
+      "defects": 9
+    }
   }
 }

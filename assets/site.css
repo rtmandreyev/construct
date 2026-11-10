@@ -86,6 +86,9 @@ header.site h1 em { font-style: normal; color: var(--accent); }
 .shelf .grid { padding-top: 14px; }
 @media (min-width: 1100px) { .shelf .grid { grid-template-columns: repeat(3, 1fr); } }
 .shelf-count { color: var(--dim); font-size: 13px; margin: 10px 0 0; }
+p.world-line { color: var(--dim); font-size: 14px; line-height: 1.5; margin: 6px 0 12px; }
+main img.hero { width: 100%; height: auto; border-radius: 12px; display: block; margin: 8px 0 18px; }
+main p.section kbd { border: 1px solid var(--line); border-radius: 4px; padding: 0 5px; font-size: 12px; color: var(--ink); }
 .part p.section kbd { border: 1px solid var(--line); border-radius: 4px; padding: 0 5px; font-size: 12px; color: var(--ink); }
 .feature { display: grid; grid-template-columns: 1fr; gap: 22px; align-items: center; background: var(--panel);
            border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
@@ -102,3 +105,15 @@ header.site h1 em { font-style: normal; color: var(--accent); }
 .feature h3 { margin: 0 0 10px; font-size: 22px; }
 h3.sub { margin: 6px 0 4px; font-size: 18px; }
 @media (max-width: 600px) { .part-head { align-items: flex-start; } }
+/* a world's own constructs, below it: the gallery's cards, smaller */
+section.made { margin: 34px 0 0; padding-top: 18px; border-top: 1px solid var(--line); }
+.grid.compact { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+@media (min-width: 700px) { .grid.compact { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 1000px) { .grid.compact { grid-template-columns: repeat(4, 1fr); } }
+@media (min-width: 1300px) { .grid.compact { grid-template-columns: repeat(5, 1fr); } }
+@media (min-width: 1700px) { .grid.compact { grid-template-columns: repeat(6, 1fr); } }
+.grid.compact .card { border-radius: 10px; }
+.grid.compact .card .body { padding: 7px 10px 9px; }
+.grid.compact .card h2 { font-size: 13.5px; line-height: 1.3; }
+.grid.compact .card .prov { font-size: 12px; }
+p.also { color: var(--dim); font-size: 14px; margin: 18px 0 0; }

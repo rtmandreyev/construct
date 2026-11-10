@@ -10230,7 +10230,7 @@
       "note": "Photo-inferred transparent shell; internal closing wall omitted to avoid a repeated profile-seam circumference."
     },
     {
-      "id": "box-sapphire",
+      "id": "box-sapphire-glass",
       "label": "Raised convex box-type sapphire crystal",
       "role": "identity",
       "certainty": "inferred",
@@ -10283,13 +10283,12 @@
         0
       ],
       "look": {
-        "fill": "glass",
-        "alpha": 0.12,
+        "fill": "none",
         "weight": 0.6
       }
     },
     {
-      "id": "back-sapphire",
+      "id": "back-sapphire-glass",
       "label": "Transparent sapphire display back",
       "role": "identity",
       "certainty": "inferred",
@@ -10318,8 +10317,7 @@
         0
       ],
       "look": {
-        "fill": "glass",
-        "alpha": 0.1,
+        "fill": "none",
         "weight": 0.6
       }
     },
@@ -10835,7 +10833,7 @@
   ],
   "anchors": {
     "front": {
-      "part": "box-sapphire",
+      "part": "box-sapphire-glass",
       "face": "top"
     },
     "base": {
@@ -10887,7 +10885,7 @@
         "yaw": 180,
         "pitch": 4,
         "distance": 1.35,
-        "target": "back-sapphire"
+        "target": "back-sapphire-glass"
       }
     ],
     "atmosphere": {
@@ -10953,5 +10951,26 @@
       ]
     },
     "reduced_motion": "still"
+  },
+  "authoring": {
+    "tier": "standard",
+    "research": "unavailable",
+    "critic": {
+      "scene_sha256": "93b9c77f7e9b07a69cfa275607e94c219d86c3e9acfec5e03f49382bd33a51df",
+      "verdict": "improve",
+      "scores": {
+        "silhouette": 2,
+        "proportions": 2,
+        "identity": 2,
+        "depth": 2,
+        "composition": 2,
+        "assembly": 2,
+        "motion": 2,
+        "density": 2,
+        "honesty": 2
+      },
+      "round": 1,
+      "defects": 10
+    }
   }
 }

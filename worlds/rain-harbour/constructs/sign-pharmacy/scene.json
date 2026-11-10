@@ -1,0 +1,654 @@
+{
+ "format": "construct-scene",
+ "version": 2,
+ "id": "rain-harbour-peace-of-mind-pharmacy",
+ "title": "PEACE OF MIND PHARMACY / 安心药房",
+ "subject": {
+  "category": "artwork-carrier",
+  "summary": "Original cyan bilingual pharmacy lightbox, front-facing +Z, two rear wall standoffs. Decorative typographic artwork, not a reconstructed brand.",
+  "accuracy": "original",
+  "synthetic": false
+ },
+ "units": "m",
+ "seed": 7,
+ "sources": [
+  {
+   "id": "request",
+   "kind": "user_request",
+   "title": "Rain Harbour original bilingual pharmacy sign identity; supervisor design allocations 5.5 by 1.4m, 0.22m case and rear wall z=-0.4, not user measurements",
+   "rights": "permitted"
+  }
+ ],
+ "facts": [
+  {
+   "key": "width",
+   "value": 5.5,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "request",
+   "note": "Supervisor's 5.5m design allocation for the original sign, not a direct human measurement."
+  },
+  {
+   "key": "height",
+   "value": 1.4,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "request",
+   "note": "Supervisor's 1.4m design allocation, not a surveyed or human-supplied measurement."
+  },
+  {
+   "key": "case_depth",
+   "value": 0.22,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "request",
+   "note": "Supervisor's 0.22m nominal enclosure design allocation, not a direct human measurement."
+  },
+  {
+   "key": "wall_plane",
+   "value": -0.4,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "request",
+   "note": "Supervisor's local mounting-plane design allocation; not measured from concept."
+  },
+  {
+   "key": "english",
+   "value": "PEACE OF MIND PHARMACY",
+   "certainty": "inferred",
+   "source": "request",
+   "note": "Specific original fictional business name designed by the asset author, not words supplied by the end user."
+  },
+  {
+   "key": "chinese",
+   "value": "安心药房",
+   "certainty": "inferred",
+   "source": "request",
+   "note": "Original meaningful Chinese business wording from the supervisory design brief, not an authentic photographed brand or human-supplied transcription."
+  }
+ ],
+ "assets": [
+  {
+   "id": "pharmacy-art",
+   "path": "assets/pharmacy-cyan.png",
+   "sha256": "d367d259d2b8c72e38b5ca622b5d7a0ef8856adc10b35d8d076a7b721a96ca7d",
+   "media_type": "image/png",
+   "rights": "permitted",
+   "provenance": "generated-decorative",
+   "source": "request"
+  },
+  {
+   "id": "service-art",
+   "path": "assets/pharmacy-service-back.png",
+   "sha256": "dd277f611d1b079be627fadaa8d84cb287406665877f368e7a3b363e127667f9",
+   "media_type": "image/png",
+   "rights": "permitted",
+   "provenance": "generated-decorative",
+   "source": "request"
+  },
+  {
+   "id": "mount-art",
+   "path": "assets/pharmacy-mount-plate.png",
+   "sha256": "c443b3f9632d7899b7303bd59e12de3dae4c7de1a6ecd6f140d72f1559670240",
+   "media_type": "image/png",
+   "rights": "permitted",
+   "provenance": "generated-decorative",
+   "source": "request"
+  }
+ ],
+ "parts": [
+  {
+   "id": "lightbox-case",
+   "label": "Dark blue-grey aluminium lightbox",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 2,
+   "basis": [
+    "width",
+    "height",
+    "case_depth"
+   ],
+   "shape": {
+    "type": "box",
+    "size": [
+     5.5,
+     1.4,
+     0.19
+    ],
+    "ribs": 5
+   },
+   "at": [
+    0.0,
+    0.7,
+    0.095
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "glow": 0.08,
+    "weight": 1,
+    "alpha": 1
+   },
+   "artwork": {
+    "slot": "cover-back",
+    "asset": "service-art",
+    "face": "back",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "cyan-pharmacy-face",
+   "label": "Baked bilingual cyan pharmacy artwork",
+   "role": "artwork",
+   "certainty": "decorative",
+   "stage": 2,
+   "basis": [
+    "english",
+    "chinese"
+   ],
+   "shape": {
+    "type": "box",
+    "size": [
+     5.44,
+     1.34,
+     0.01
+    ]
+   },
+   "at": [
+    0.0,
+    0.7,
+    0.195
+   ],
+   "artwork": {
+    "slot": "cover-front",
+    "asset": "pharmacy-art",
+    "face": "front",
+    "mask": "rect"
+   },
+   "look": {
+    "fill": "dark",
+    "tone": "identity",
+    "glow": 0.42,
+    "line": "none"
+   }
+  },
+  {
+   "id": "rear-standoff",
+   "label": "Joined mounting yoke with integral wall and case bearing shoulders",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 0,
+   "basis": [
+    "wall_plane"
+   ],
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      -2.25,
+      -0.38
+     ],
+     [
+      2.25,
+      -0.38
+     ],
+     [
+      2.25,
+      -0.34
+     ],
+     [
+      2.21,
+      -0.34
+     ],
+     [
+      2.21,
+      -0.04
+     ],
+     [
+      2.25,
+      -0.04
+     ],
+     [
+      2.25,
+      0.01
+     ],
+     [
+      2.05,
+      0.01
+     ],
+     [
+      2.05,
+      -0.04
+     ],
+     [
+      2.09,
+      -0.04
+     ],
+     [
+      2.09,
+      -0.26
+     ],
+     [
+      -2.09,
+      -0.26
+     ],
+     [
+      -2.09,
+      -0.04
+     ],
+     [
+      -2.05,
+      -0.04
+     ],
+     [
+      -2.05,
+      0.01
+     ],
+     [
+      -2.25,
+      0.01
+     ],
+     [
+      -2.25,
+      -0.04
+     ],
+     [
+      -2.21,
+      -0.04
+     ],
+     [
+      -2.21,
+      -0.34
+     ],
+     [
+      -2.25,
+      -0.34
+     ]
+    ],
+    "height": 0.12,
+    "axis": "y",
+    "ribs": 0
+   },
+   "at": [
+    0,
+    0.64,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "glow": 0,
+    "weight": 0.65
+   }
+  },
+  {
+   "id": "wall-plate",
+   "label": "Two wall attachment plates",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 0,
+   "basis": [
+    "wall_plane"
+   ],
+   "shape": {
+    "type": "box",
+    "size": [
+     0.2,
+     0.44,
+     0.02
+    ]
+   },
+   "at": [
+    -2.15,
+    0.7,
+    -0.39
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "glow": 0,
+    "weight": 0.65
+   },
+   "artwork": {
+    "slot": "label",
+    "asset": "mount-art",
+    "face": "back",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "wall-plate-right",
+   "label": "Right wall attachment plate",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 0,
+   "basis": [
+    "wall_plane"
+   ],
+   "shape": {
+    "type": "box",
+    "size": [
+     0.2,
+     0.44,
+     0.02
+    ]
+   },
+   "at": [
+    2.15,
+    0.7,
+    -0.39
+   ],
+   "artwork": {
+    "slot": "inlay",
+    "asset": "mount-art",
+    "face": "back",
+    "mask": "rect"
+   },
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "glow": 0,
+    "weight": 0.65
+   }
+  },
+  {
+   "id": "retaining-rim",
+   "label": "Physical cyan diffuser retaining lip",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "width",
+    "height",
+    "case_depth"
+   ],
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 0.03,
+    "ribs": 0,
+    "profile": [
+     [
+      -0.005,
+      0
+     ],
+     [
+      -2.75,
+      0
+     ],
+     [
+      -2.75,
+      1.4
+     ],
+     [
+      2.75,
+      1.4
+     ],
+     [
+      2.75,
+      0
+     ],
+     [
+      0.005,
+      0
+     ],
+     [
+      0.005,
+      0.025
+     ],
+     [
+      2.725,
+      0.025
+     ],
+     [
+      2.725,
+      1.375
+     ],
+     [
+      -2.725,
+      1.375
+     ],
+     [
+      -2.725,
+      0.025
+     ],
+     [
+      -0.005,
+      0.025
+     ]
+    ]
+   },
+   "at": [
+    0.0,
+    0.0,
+    0.19
+   ],
+   "stage": 2,
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "glow": 0.3,
+    "weight": 1.4
+   }
+  }
+ ],
+ "labels": [],
+ "articulations": [],
+ "anchors": {
+  "front": {
+   "part": "cyan-pharmacy-face",
+   "face": "front"
+  },
+  "base": {
+   "point": [
+    0,
+    0,
+    0
+   ],
+   "up": [
+    0,
+    1,
+    0
+   ]
+  }
+ },
+ "presentation": {
+  "framing": {
+   "yaw": 12,
+   "pitch": 8,
+   "fit": 1.05
+  },
+  "views": [
+   {
+    "id": "concept",
+    "label": "Street-mounted sign reference",
+    "yaw": 18,
+    "pitch": -8,
+    "distance": 1.08
+   },
+   {
+    "id": "lettering",
+    "label": "Readable bilingual face",
+    "yaw": 0,
+    "pitch": 0,
+    "distance": 1.05
+   },
+   {
+    "id": "mount",
+    "label": "Rear mounting hardware",
+    "yaw": 155,
+    "pitch": 12,
+    "distance": 1.05
+   }
+  ],
+  "atmosphere": {
+   "haze": 0.1,
+   "scanlines": false,
+   "vignette": true,
+   "grid": false,
+   "projector": false,
+   "motes": 0
+  },
+  "occlusion": "xray",
+  "certainty_style": "subtle",
+  "background": "deep",
+  "float": 0
+ },
+ "animation": {
+  "assembly": {
+   "style": "build",
+   "seconds": 5,
+   "interference": false
+  },
+  "idle": {
+   "life": "off",
+   "events": [],
+   "cadence": [
+    10,
+    20
+   ],
+   "strength": 0
+  },
+  "camera": {
+   "drift": 0,
+   "breathe": 0
+  },
+  "reduced_motion": "still"
+ },
+ "authoring": {
+  "tier": "masterpiece",
+  "research": "off",
+  "identity": [
+   {
+    "feature": "Readable bilingual cyan pharmacy face",
+    "parts": [
+     "cyan-pharmacy-face"
+    ]
+   },
+   {
+    "feature": "Slim wall-mounted housing",
+    "parts": [
+     "lightbox-case",
+     "rear-standoff",
+     "wall-plate"
+    ]
+   }
+  ],
+  "review_rounds": 0,
+  "outcome": "good",
+  "next": [],
+  "critic": {
+   "scene_sha256": "a22cb589c3354ce0a317938c36ee7959b4f06bb927dadca01274a3297c998a44",
+   "verdict": "good",
+   "scores": {
+    "silhouette": 3,
+    "proportions": 3,
+    "identity": 3,
+    "depth": 3,
+    "composition": 3,
+    "assembly": 3,
+    "motion": 3,
+    "density": 2,
+    "honesty": 3
+   },
+   "round": 8,
+   "defects": 1
+  },
+  "rounds": [
+   {
+    "round": 1,
+    "result": "baseline",
+    "minutes": 0.3,
+    "changes": [
+     "draft"
+    ],
+    "summary": "The required identity is absent from every face-on render: there is no readable English, Chinese or cyan illuminated artwork. The concept re"
+   },
+   {
+    "round": 2,
+    "result": "kept",
+    "minutes": 1.6,
+    "changes": [
+     "D1"
+    ],
+    "summary": "The luminous artwork is well resolved, but the case is a single plain slab: there is no visible face-retaining lip or service-panel joint to"
+   },
+   {
+    "round": 3,
+    "result": "kept",
+    "minutes": 2.0,
+    "changes": [
+     "D6",
+     "D7",
+     "D8"
+    ],
+    "summary": "The luminous graphic is resolved, but the housing still reads as one simple box with artwork against its front: there is no distinct physica"
+   },
+   {
+    "round": 4,
+    "result": "kept",
+    "minutes": 1.7,
+    "changes": [
+     "D10",
+     "D6"
+    ],
+    "summary": "The luminous graphic is well resolved, but the housing reads mainly as one plain extruded rectangle: the front perimeter has little visible "
+   },
+   {
+    "round": 5,
+    "result": "kept",
+    "minutes": 1.8,
+    "changes": [
+     "D10",
+     "D6",
+     "D9"
+    ],
+    "summary": "The front rim and rear service texture establish a lightbox, but its top and narrow ends still read as one plain rectangular extrusion. Thes"
+   },
+   {
+    "round": 6,
+    "result": "reverted",
+    "minutes": 1.2,
+    "changes": [
+     "D9"
+    ],
+    "summary": "The face and rear cover are developed, but the long top return and narrow side return remain nearly featureless dark strips between perimete"
+   },
+   {
+    "round": 7,
+    "result": "kept",
+    "minutes": 1.6,
+    "changes": [
+     "D9"
+    ],
+    "summary": "The top return and end return are broad unarticulated dark strips: the face and rear have a border, fasteners and service detail, but these "
+   },
+   {
+    "round": 8,
+    "result": "kept",
+    "minutes": 1.2,
+    "changes": [
+     "D11"
+    ],
+    "summary": "The face and rear service cover are developed, but the long top return and vertical end return remain nearly uninterrupted dark strips. Up c"
+   },
+   {
+    "round": 9,
+    "result": "reverted",
+    "minutes": 1.0,
+    "changes": [
+     "D9"
+    ],
+    "summary": "The face and rear service cover are finished, but the long top return and narrow end return still read as nearly featureless dark bands betw"
+   },
+   {
+    "round": 10,
+    "result": "reverted",
+    "minutes": 0.8,
+    "changes": [
+     "D9"
+    ],
+    "summary": "The long top return and narrow end return remain largely uninterrupted dark surfaces between the front lip and rear cover. Their faint surfa"
+   }
+  ]
+ }
+}

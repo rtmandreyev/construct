@@ -1,0 +1,757 @@
+{
+ "format": "construct-scene",
+ "version": 2,
+ "id": "blue-line-electronics-cyan-fascia",
+ "title": "BLUE LINE ELECTRONICS / 蓝线电器",
+ "subject": {
+  "category": "object",
+  "summary": "Independent twin-panel cyan electronics lightbox fascia for Rain Harbour. Original geometric design inspired by the broad cyan foreground signs; no other brand wording. Rear spacers mount to a wall at z=-0.4.",
+  "accuracy": "original",
+  "synthetic": false
+ },
+ "units": "m",
+ "seed": 7,
+ "sources": [
+  {
+   "id": "request",
+   "kind": "user_request",
+   "title": "Blue Line Electronics independent fascia requirements",
+   "rights": "permitted"
+  },
+  {
+   "id": "artwork-design",
+   "kind": "user_request",
+   "title": "User permits original generated-decorative typographic sign artwork",
+   "rights": "permitted"
+  }
+ ],
+ "facts": [
+  {
+   "key": "width",
+   "value": 4.8,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "request",
+   "requirement": true,
+   "note": "Original supervisor design choice, not an end-user measurement."
+  },
+  {
+   "key": "height",
+   "value": 1.25,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "request",
+   "requirement": true
+  },
+  {
+   "key": "case-depth",
+   "value": 0.22,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "request",
+   "requirement": true
+  },
+  {
+   "key": "rear-mount-z",
+   "value": -0.4,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "request",
+   "requirement": true
+  },
+  {
+   "key": "english-name",
+   "value": "BLUE LINE ELECTRONICS",
+   "certainty": "inferred",
+   "source": "request",
+   "note": "Original invented business identity."
+  },
+  {
+   "key": "chinese-name",
+   "value": "蓝线电器",
+   "certainty": "inferred",
+   "source": "request",
+   "note": "Original invented meaningful Chinese business identity."
+  }
+ ],
+ "assets": [
+  {
+   "id": "english-art",
+   "path": "assets/english.png",
+   "sha256": "e232cf7a9b2c55572df4e097b714291f0b0407fe4dacf595abddda6a0e7c80c3",
+   "media_type": "image/png",
+   "rights": "permitted",
+   "provenance": "generated-decorative",
+   "source": "artwork-design"
+  },
+  {
+   "id": "chinese-art",
+   "path": "assets/chinese.png",
+   "sha256": "9402b92309974bf28602558ab5dd52d65de4a89b2d55586806111564631ac9da",
+   "media_type": "image/png",
+   "rights": "permitted",
+   "provenance": "generated-decorative",
+   "source": "artwork-design"
+  }
+ ],
+ "parts": [
+  {
+   "id": "charcoal-case",
+   "label": "Folded dark charcoal lightbox housing",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 1,
+   "basis": [
+    "width",
+    "height",
+    "case-depth"
+   ],
+   "shape": {
+    "type": "box",
+    "size": [
+     4.8,
+     1.25,
+     0.205
+    ]
+   },
+   "at": [
+    0,
+    0.625,
+    0.1025
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "weight": 2,
+    "glow": 0.3
+   }
+  },
+  {
+   "id": "english-cyan-panel",
+   "label": "Cyan BLUE LINE ELECTRONICS diffuser",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.28,
+     1.05,
+     0.015
+    ]
+   },
+   "at": [
+    -1.18,
+    0.625,
+    0.2125
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "identity",
+    "line": "solid",
+    "weight": 1.1,
+    "glow": 0.32
+   },
+   "artwork": {
+    "slot": "cover-front",
+    "asset": "english-art",
+    "face": "front",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "chinese-cyan-panel",
+   "label": "Cyan 蓝线电器 diffuser",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.28,
+     1.05,
+     0.015
+    ]
+   },
+   "at": [
+    1.18,
+    0.625,
+    0.2125
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "identity",
+    "line": "solid",
+    "weight": 1.1,
+    "glow": 0.32
+   },
+   "artwork": {
+    "slot": "cover-back",
+    "asset": "chinese-art",
+    "face": "front",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "rear-wall-standoff",
+   "label": "Pair of rigid rear wall mounting spacers",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 1,
+   "basis": [
+    "rear-mount-z"
+   ],
+   "shape": {
+    "type": "extrude",
+    "axis": "x",
+    "height": 0.14,
+    "profile": [
+     [
+      -0.4,
+      0
+     ],
+     [
+      -0.35,
+      0
+     ],
+     [
+      -0.35,
+      0.24
+     ],
+     [
+      -0.05,
+      0.24
+     ],
+     [
+      -0.05,
+      0
+     ],
+     [
+      0,
+      0
+     ],
+     [
+      0,
+      0.65
+     ],
+     [
+      -0.05,
+      0.65
+     ],
+     [
+      -0.05,
+      0.41
+     ],
+     [
+      -0.35,
+      0.41
+     ],
+     [
+      -0.35,
+      0.65
+     ],
+     [
+      -0.4,
+      0.65
+     ]
+    ]
+   },
+   "at": [
+    -1.72,
+    0.3,
+    0.0
+   ],
+   "repeat": {
+    "count": 2,
+    "step": {
+     "at": [
+      3.3,
+      0,
+      0
+     ]
+    }
+   },
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "weight": 1.8,
+    "glow": 0.3
+   }
+  },
+  {
+   "certainty": "inferred",
+   "id": "rear-service-seams",
+   "label": "Inferred rear service seams, cable entry and spacer collars",
+   "look": {
+    "fill": "none",
+    "glow": 0.05,
+    "tone": "hairline",
+    "weight": 1.15
+   },
+   "role": "detail",
+   "shape": {
+    "paths": [
+     [
+      [
+       -2.2,
+       0.15,
+       -0.001
+      ],
+      [
+       2.2,
+       0.15,
+       -0.001
+      ],
+      [
+       2.2,
+       1.1,
+       -0.001
+      ],
+      [
+       -2.2,
+       1.1,
+       -0.001
+      ],
+      [
+       -2.2,
+       0.15,
+       -0.001
+      ]
+     ],
+     [
+      [
+       -0.05,
+       0.15,
+       -0.001
+      ],
+      [
+       -0.05,
+       1.1,
+       -0.001
+      ]
+     ],
+     [
+      [
+       0.52,
+       0.28,
+       -0.001
+      ],
+      [
+       0.58,
+       0.34,
+       -0.001
+      ],
+      [
+       0.52,
+       0.4,
+       -0.001
+      ],
+      [
+       0.46,
+       0.34,
+       -0.001
+      ],
+      [
+       0.52,
+       0.28,
+       -0.001
+      ]
+     ],
+     [
+      [
+       -2.14,
+       0.21,
+       -0.001
+      ],
+      [
+       -2.1,
+       0.21,
+       -0.001
+      ]
+     ],
+     [
+      [
+       -2.12,
+       0.19,
+       -0.001
+      ],
+      [
+       -2.12,
+       0.23,
+       -0.001
+      ]
+     ],
+     [
+      [
+       2.1,
+       0.21,
+       -0.001
+      ],
+      [
+       2.14,
+       0.21,
+       -0.001
+      ]
+     ],
+     [
+      [
+       2.12,
+       0.19,
+       -0.001
+      ],
+      [
+       2.12,
+       0.23,
+       -0.001
+      ]
+     ],
+     [
+      [
+       -2.14,
+       1.04,
+       -0.001
+      ],
+      [
+       -2.1,
+       1.04,
+       -0.001
+      ]
+     ],
+     [
+      [
+       -2.12,
+       1.02,
+       -0.001
+      ],
+      [
+       -2.12,
+       1.06,
+       -0.001
+      ]
+     ],
+     [
+      [
+       2.1,
+       1.04,
+       -0.001
+      ],
+      [
+       2.14,
+       1.04,
+       -0.001
+      ]
+     ],
+     [
+      [
+       2.12,
+       1.02,
+       -0.001
+      ],
+      [
+       2.12,
+       1.06,
+       -0.001
+      ]
+     ],
+     [
+      [
+       -1.68,
+       0.34,
+       -0.4
+      ],
+      [
+       -1.62,
+       0.34,
+       -0.4
+      ]
+     ],
+     [
+      [
+       -1.65,
+       0.32,
+       -0.4
+      ],
+      [
+       -1.65,
+       0.36,
+       -0.4
+      ]
+     ],
+     [
+      [
+       1.62,
+       0.34,
+       -0.4
+      ],
+      [
+       1.68,
+       0.34,
+       -0.4
+      ]
+     ],
+     [
+      [
+       1.65,
+       0.32,
+       -0.4
+      ],
+      [
+       1.65,
+       0.36,
+       -0.4
+      ]
+     ],
+     [
+      [
+       -1.68,
+       0.91,
+       -0.4
+      ],
+      [
+       -1.62,
+       0.91,
+       -0.4
+      ]
+     ],
+     [
+      [
+       -1.65,
+       0.89,
+       -0.4
+      ],
+      [
+       -1.65,
+       0.93,
+       -0.4
+      ]
+     ],
+     [
+      [
+       1.62,
+       0.91,
+       -0.4
+      ],
+      [
+       1.68,
+       0.91,
+       -0.4
+      ]
+     ],
+     [
+      [
+       1.65,
+       0.89,
+       -0.4
+      ],
+      [
+       1.65,
+       0.93,
+       -0.4
+      ]
+     ]
+    ],
+    "type": "paths"
+   },
+   "stage": 1
+  }
+ ],
+ "labels": [],
+ "articulations": [],
+ "annotations": [],
+ "anchors": {
+  "base": {
+   "point": [
+    0,
+    0,
+    0
+   ],
+   "up": [
+    0,
+    1,
+    0
+   ]
+  },
+  "front": {
+   "face": "front",
+   "part": "charcoal-case"
+  },
+  "grip": {
+   "point": [
+    0,
+    0.625,
+    -0.4
+   ]
+  }
+ },
+ "presentation": {
+  "framing": {
+   "yaw": 12,
+   "pitch": 8,
+   "fit": 1.05
+  },
+  "views": [
+   {
+    "id": "concept",
+    "label": "Concept · twin cyan fascia",
+    "yaw": 0,
+    "pitch": 0,
+    "distance": 1.02
+   },
+   {
+    "id": "rear-mount",
+    "label": "Rear wall spacers",
+    "yaw": 155,
+    "pitch": 12,
+    "distance": 1.05
+   }
+  ],
+  "occlusion": "xray",
+  "certainty_style": "subtle",
+  "background": "deep",
+  "float": 0,
+  "atmosphere": {
+   "haze": 0.12,
+   "scanlines": false,
+   "vignette": true,
+   "grid": false,
+   "projector": false,
+   "motes": 0
+  }
+ },
+ "animation": {
+  "assembly": {
+   "style": "ceremony",
+   "seconds": 5,
+   "interference": false
+  },
+  "idle": {
+   "life": "off",
+   "events": [],
+   "cadence": [
+    8,
+    12
+   ],
+   "strength": 0
+  },
+  "camera": {
+   "drift": 0,
+   "breathe": 0
+  },
+  "reduced_motion": "still"
+ },
+ "authoring": {
+  "tier": "standard",
+  "research": "unavailable",
+  "critic": {
+   "scene_sha256": "bd90039ca4991eeeef682d6800ebe7e2163853f45537a300c2156d70631dbe13",
+   "verdict": "good",
+   "scores": {
+    "silhouette": 3,
+    "proportions": 3,
+    "identity": 2,
+    "depth": 3,
+    "composition": 3,
+    "assembly": 3,
+    "motion": 3,
+    "density": 3,
+    "honesty": 3
+   },
+   "round": 7,
+   "defects": 1
+  },
+  "rounds": [
+   {
+    "round": 1,
+    "result": "baseline",
+    "minutes": 0.4,
+    "changes": [
+     "draft"
+    ],
+    "summary": "The defining strong cyan lightbox faces are absent. The concept reference's cyan signs remain conspicuous at street scale, whereas this asse"
+   },
+   {
+    "round": 2,
+    "result": "kept",
+    "minutes": 2.4,
+    "changes": [
+     "D1",
+     "D2",
+     "D3",
+     "D4"
+    ],
+    "summary": "The correct cyan-and-charcoal identity is present, but both faces look like muted teal display plates rather than the bright cyan lightboxes"
+   },
+   {
+    "round": 3,
+    "result": "kept",
+    "minutes": 1.9,
+    "changes": [
+     "D1",
+     "D5",
+     "D6",
+     "D7"
+    ],
+    "summary": "The face has the correct name and colour, but its conventional two-line typography is less forceful than the reference's graphic cyan signs."
+   },
+   {
+    "round": 4,
+    "result": "kept",
+    "minutes": 1.6,
+    "changes": [
+     "D5",
+     "D6",
+     "D8"
+    ],
+    "summary": "The cyan-and-charcoal two-panel identity is correct, but the face lettering reads as ordinary contemporary shop typography rather than the a"
+   },
+   {
+    "round": 5,
+    "result": "kept",
+    "minutes": 1.6,
+    "changes": [
+     "D8",
+     "D9"
+    ],
+    "summary": "The English face is clean and correct but visually conventional: BLUE LINE and ELECTRONICS use ordinary sans-serif letter shapes, whereas th"
+   },
+   {
+    "round": 6,
+    "result": "kept",
+    "minutes": 1.6,
+    "changes": [
+     "D8"
+    ],
+    "summary": "The angular English design is clear and appropriate, but ELECTRONICS and parts of BLUE LINE use thin monoline strokes while the reference's "
+   },
+   {
+    "round": 7,
+    "result": "kept",
+    "minutes": 1.2,
+    "changes": [
+     "D10",
+     "D9"
+    ],
+    "summary": "The lower English category line is considerably finer-stroked than BLUE LINE and the Chinese panel. The main identity is correct, but the fi"
+   },
+   {
+    "round": 8,
+    "result": "reverted",
+    "minutes": 0.9,
+    "changes": [
+     "D10"
+    ],
+    "summary": "ELECTRONICS is readable as a word but its angular central letters crowd into a nearly connected dark band, especially around TRON. This is v"
+   },
+   {
+    "round": 9,
+    "result": "reverted",
+    "minutes": 1.0,
+    "changes": [
+     "D10"
+    ],
+    "summary": "ELECTRONICS is readable, but the dense angular treatment through the central TRONI region has less clear internal space than BLUE LINE; at t"
+   }
+  ],
+  "outcome": "good"
+ }
+}

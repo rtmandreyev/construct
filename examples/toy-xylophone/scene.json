@@ -1,0 +1,2769 @@
+{
+  "format": "construct-scene",
+  "version": 2,
+  "id": "child-s-wooden-toy-xylophone",
+  "title": "Child's wooden toy xylophone",
+  "subject": {
+    "category": "object",
+    "summary": "An eight-note child's toy xylophone: eight lacquered metal bars in rainbow colours, longest to shortest, pegged over felt pads on a painted wooden trapezoid frame, with two beech mallets lying in front.",
+    "accuracy": "generic",
+    "synthetic": false
+  },
+  "units": "m",
+  "seed": 11,
+  "sources": [
+    {
+      "id": "request",
+      "kind": "user_request",
+      "title": "The user's request",
+      "rights": "user_private"
+    }
+  ],
+  "facts": [
+    {
+      "key": "req-bars",
+      "value": "eight metal bars, longest to shortest, in rainbow colours",
+      "certainty": "user_supplied",
+      "source": "request",
+      "requirement": true
+    },
+    {
+      "key": "req-frame",
+      "value": "a painted wooden trapezoid frame",
+      "certainty": "user_supplied",
+      "source": "request",
+      "requirement": true
+    },
+    {
+      "key": "req-pads",
+      "value": "each bar resting on felt pads",
+      "certainty": "user_supplied",
+      "source": "request",
+      "requirement": true
+    },
+    {
+      "key": "req-pegs",
+      "value": "each bar held by two small rubber pegs",
+      "certainty": "user_supplied",
+      "source": "request",
+      "requirement": true
+    },
+    {
+      "key": "req-mallets",
+      "value": "two beech mallets with round red rubber heads, lying in front",
+      "certainty": "user_supplied",
+      "source": "request",
+      "requirement": true
+    },
+    {
+      "key": "bar-count",
+      "value": 8,
+      "unit": "bars",
+      "certainty": "user_supplied",
+      "source": "request"
+    },
+    {
+      "key": "bar-length-longest",
+      "value": 0.24,
+      "unit": "m",
+      "certainty": "inferred",
+      "source": "request",
+      "note": "a typical toy xylophone bar; the octave taper fixes the shortest"
+    },
+    {
+      "key": "bar-length-shortest",
+      "value": 0.17,
+      "unit": "m",
+      "certainty": "inferred",
+      "source": "request",
+      "note": "0.708 of the longest, the octave ratio of a free-free bar"
+    },
+    {
+      "key": "bar-width",
+      "value": 0.026,
+      "unit": "m",
+      "certainty": "inferred",
+      "source": "request"
+    },
+    {
+      "key": "bar-thickness",
+      "value": 0.0065,
+      "unit": "m",
+      "certainty": "inferred",
+      "source": "request",
+      "note": "spring steel / aluminium bar stock of this size"
+    },
+    {
+      "key": "bar-pitch",
+      "value": 0.048,
+      "unit": "m",
+      "certainty": "inferred",
+      "source": "request"
+    },
+    {
+      "key": "frame-length",
+      "value": 0.408,
+      "unit": "m",
+      "certainty": "inferred",
+      "source": "request"
+    },
+    {
+      "key": "frame-width-wide",
+      "value": 0.2275,
+      "unit": "m",
+      "certainty": "inferred",
+      "source": "request",
+      "note": "trapezoid plan, measured at the bass end"
+    },
+    {
+      "key": "frame-width-narrow",
+      "value": 0.1425,
+      "unit": "m",
+      "certainty": "inferred",
+      "source": "request",
+      "note": "measured at the treble end"
+    },
+    {
+      "key": "frame-height",
+      "value": 0.058,
+      "unit": "m",
+      "certainty": "inferred",
+      "source": "request"
+    },
+    {
+      "key": "mallet-count",
+      "value": 2,
+      "unit": "mallets",
+      "certainty": "user_supplied",
+      "source": "request"
+    },
+    {
+      "key": "mallet-length",
+      "value": 0.212,
+      "unit": "m",
+      "certainty": "inferred",
+      "source": "request"
+    },
+    {
+      "key": "mallet-head-diameter",
+      "value": 0.034,
+      "unit": "m",
+      "certainty": "inferred",
+      "source": "request"
+    }
+  ],
+  "parts": [
+    {
+      "id": "frame-base",
+      "label": "Painted wooden frame base",
+      "role": "mass",
+      "shape": {
+        "type": "extrude",
+        "profile": [
+          [
+            -0.204,
+            0.07125
+          ],
+          [
+            -0.204,
+            -0.07125
+          ],
+          [
+            0.204,
+            -0.11375
+          ],
+          [
+            0.204,
+            0.11375
+          ]
+        ],
+        "height": 0.018,
+        "axis": "y"
+      },
+      "at": [
+        0,
+        0,
+        0
+      ],
+      "certainty": "inferred",
+      "stage": 0,
+      "basis": [
+        "req-frame",
+        "frame-length",
+        "frame-width-wide",
+        "frame-width-narrow"
+      ],
+      "look": {
+        "color": "#eeddb8",
+        "fill": "dark",
+        "weight": 0.75,
+        "alpha": 0.55,
+        "glow": 0.06
+      }
+    },
+    {
+      "id": "frame-rail-front",
+      "label": "Front rail of the frame",
+      "role": "structure",
+      "shape": {
+        "type": "extrude",
+        "profile": [
+          [
+            -0.194,
+            0.050292
+          ],
+          [
+            0.194,
+            0.090708
+          ],
+          [
+            0.194,
+            0.112708
+          ],
+          [
+            -0.194,
+            0.072292
+          ]
+        ],
+        "height": 0.04,
+        "axis": "y"
+      },
+      "at": [
+        0,
+        0.018,
+        0
+      ],
+      "certainty": "inferred",
+      "stage": 1,
+      "basis": [
+        "req-frame",
+        "frame-height"
+      ],
+      "look": {
+        "color": "#eeddb8",
+        "fill": "dark",
+        "weight": 0.5,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "frame-rail-back",
+      "label": "Back rail of the frame",
+      "role": "structure",
+      "shape": {
+        "type": "extrude",
+        "profile": [
+          [
+            -0.194,
+            -0.072292
+          ],
+          [
+            0.194,
+            -0.112708
+          ],
+          [
+            0.194,
+            -0.090708
+          ],
+          [
+            -0.194,
+            -0.050292
+          ]
+        ],
+        "height": 0.04,
+        "axis": "y"
+      },
+      "at": [
+        0,
+        0.018,
+        0
+      ],
+      "certainty": "inferred",
+      "stage": 1,
+      "basis": [
+        "req-frame",
+        "frame-height"
+      ],
+      "look": {
+        "color": "#eeddb8",
+        "fill": "dark",
+        "weight": 0.5,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "frame-end-wide",
+      "label": "Wide end of the frame (bass end)",
+      "role": "structure",
+      "shape": {
+        "type": "extrude",
+        "profile": [
+          [
+            0.204,
+            0.11375
+          ],
+          [
+            0.194,
+            0.112708
+          ],
+          [
+            0.194,
+            -0.112708
+          ],
+          [
+            0.204,
+            -0.11375
+          ]
+        ],
+        "height": 0.04,
+        "axis": "y"
+      },
+      "at": [
+        0,
+        0.018,
+        0
+      ],
+      "certainty": "inferred",
+      "stage": 1,
+      "basis": [
+        "req-frame",
+        "frame-height"
+      ],
+      "look": {
+        "color": "#eeddb8",
+        "fill": "dark",
+        "weight": 0.5,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "frame-end-narrow",
+      "label": "Narrow end of the frame (treble end)",
+      "role": "structure",
+      "shape": {
+        "type": "extrude",
+        "profile": [
+          [
+            -0.204,
+            -0.07125
+          ],
+          [
+            -0.194,
+            -0.072292
+          ],
+          [
+            -0.194,
+            0.072292
+          ],
+          [
+            -0.204,
+            0.07125
+          ]
+        ],
+        "height": 0.04,
+        "axis": "y"
+      },
+      "at": [
+        0,
+        0.018,
+        0
+      ],
+      "certainty": "inferred",
+      "stage": 1,
+      "basis": [
+        "req-frame",
+        "frame-height"
+      ],
+      "look": {
+        "color": "#eeddb8",
+        "fill": "dark",
+        "weight": 0.5,
+        "alpha": 0.6
+      }
+    },
+    {
+      "id": "pad-red-front",
+      "label": "Felt pad, red bar (front)",
+      "role": "detail",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.034,
+          0.004,
+          0.022
+        ],
+        "anchor": "base"
+      },
+      "at": [
+        0.18,
+        0.057999999999999996,
+        0.099
+      ],
+      "certainty": "inferred",
+      "stage": 2,
+      "basis": [
+        "req-pads",
+        "bar-length-longest"
+      ],
+      "look": {
+        "color": "#33333a",
+        "weight": 0.45,
+        "alpha": 0.3
+      }
+    },
+    {
+      "id": "pad-red-back",
+      "label": "Felt pad, red bar (back)",
+      "role": "detail",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.034,
+          0.004,
+          0.022
+        ],
+        "anchor": "base"
+      },
+      "at": [
+        0.18,
+        0.057999999999999996,
+        -0.099
+      ],
+      "certainty": "inferred",
+      "stage": 2,
+      "basis": [
+        "req-pads",
+        "bar-length-longest"
+      ],
+      "look": {
+        "color": "#33333a",
+        "weight": 0.45,
+        "alpha": 0.3
+      }
+    },
+    {
+      "id": "pad-orange-front",
+      "label": "Felt pad, orange bar (front)",
+      "role": "detail",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.034,
+          0.004,
+          0.022
+        ],
+        "anchor": "base"
+      },
+      "at": [
+        0.132,
+        0.057999999999999996,
+        0.094
+      ],
+      "certainty": "inferred",
+      "stage": 2,
+      "basis": [
+        "req-pads",
+        "bar-length-longest"
+      ],
+      "look": {
+        "color": "#33333a",
+        "weight": 0.45,
+        "alpha": 0.3
+      }
+    },
+    {
+      "id": "pad-orange-back",
+      "label": "Felt pad, orange bar (back)",
+      "role": "detail",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.034,
+          0.004,
+          0.022
+        ],
+        "anchor": "base"
+      },
+      "at": [
+        0.132,
+        0.057999999999999996,
+        -0.094
+      ],
+      "certainty": "inferred",
+      "stage": 2,
+      "basis": [
+        "req-pads",
+        "bar-length-longest"
+      ],
+      "look": {
+        "color": "#33333a",
+        "weight": 0.45,
+        "alpha": 0.3
+      }
+    },
+    {
+      "id": "pad-yellow-front",
+      "label": "Felt pad, yellow bar (front)",
+      "role": "detail",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.034,
+          0.004,
+          0.022
+        ],
+        "anchor": "base"
+      },
+      "at": [
+        0.084,
+        0.057999999999999996,
+        0.089
+      ],
+      "certainty": "inferred",
+      "stage": 2,
+      "basis": [
+        "req-pads",
+        "bar-length-longest"
+      ],
+      "look": {
+        "color": "#33333a",
+        "weight": 0.45,
+        "alpha": 0.3
+      }
+    },
+    {
+      "id": "pad-yellow-back",
+      "label": "Felt pad, yellow bar (back)",
+      "role": "detail",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.034,
+          0.004,
+          0.022
+        ],
+        "anchor": "base"
+      },
+      "at": [
+        0.084,
+        0.057999999999999996,
+        -0.089
+      ],
+      "certainty": "inferred",
+      "stage": 2,
+      "basis": [
+        "req-pads",
+        "bar-length-longest"
+      ],
+      "look": {
+        "color": "#33333a",
+        "weight": 0.45,
+        "alpha": 0.3
+      }
+    },
+    {
+      "id": "pad-green-front",
+      "label": "Felt pad, green bar (front)",
+      "role": "detail",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.034,
+          0.004,
+          0.022
+        ],
+        "anchor": "base"
+      },
+      "at": [
+        0.036,
+        0.057999999999999996,
+        0.084
+      ],
+      "certainty": "inferred",
+      "stage": 2,
+      "basis": [
+        "req-pads",
+        "bar-length-longest"
+      ],
+      "look": {
+        "color": "#33333a",
+        "weight": 0.45,
+        "alpha": 0.3
+      }
+    },
+    {
+      "id": "pad-green-back",
+      "label": "Felt pad, green bar (back)",
+      "role": "detail",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.034,
+          0.004,
+          0.022
+        ],
+        "anchor": "base"
+      },
+      "at": [
+        0.036,
+        0.057999999999999996,
+        -0.084
+      ],
+      "certainty": "inferred",
+      "stage": 2,
+      "basis": [
+        "req-pads",
+        "bar-length-longest"
+      ],
+      "look": {
+        "color": "#33333a",
+        "weight": 0.45,
+        "alpha": 0.3
+      }
+    },
+    {
+      "id": "pad-lightblue-front",
+      "label": "Felt pad, light blue bar (front)",
+      "role": "detail",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.034,
+          0.004,
+          0.022
+        ],
+        "anchor": "base"
+      },
+      "at": [
+        -0.012,
+        0.057999999999999996,
+        0.079
+      ],
+      "certainty": "inferred",
+      "stage": 2,
+      "basis": [
+        "req-pads",
+        "bar-length-longest"
+      ],
+      "look": {
+        "color": "#33333a",
+        "weight": 0.45,
+        "alpha": 0.3
+      }
+    },
+    {
+      "id": "pad-lightblue-back",
+      "label": "Felt pad, light blue bar (back)",
+      "role": "detail",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.034,
+          0.004,
+          0.022
+        ],
+        "anchor": "base"
+      },
+      "at": [
+        -0.012,
+        0.057999999999999996,
+        -0.079
+      ],
+      "certainty": "inferred",
+      "stage": 2,
+      "basis": [
+        "req-pads",
+        "bar-length-longest"
+      ],
+      "look": {
+        "color": "#33333a",
+        "weight": 0.45,
+        "alpha": 0.3
+      }
+    },
+    {
+      "id": "pad-blue-front",
+      "label": "Felt pad, blue bar (front)",
+      "role": "detail",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.034,
+          0.004,
+          0.022
+        ],
+        "anchor": "base"
+      },
+      "at": [
+        -0.06,
+        0.057999999999999996,
+        0.074
+      ],
+      "certainty": "inferred",
+      "stage": 2,
+      "basis": [
+        "req-pads",
+        "bar-length-longest"
+      ],
+      "look": {
+        "color": "#33333a",
+        "weight": 0.45,
+        "alpha": 0.3
+      }
+    },
+    {
+      "id": "pad-blue-back",
+      "label": "Felt pad, blue bar (back)",
+      "role": "detail",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.034,
+          0.004,
+          0.022
+        ],
+        "anchor": "base"
+      },
+      "at": [
+        -0.06,
+        0.057999999999999996,
+        -0.074
+      ],
+      "certainty": "inferred",
+      "stage": 2,
+      "basis": [
+        "req-pads",
+        "bar-length-longest"
+      ],
+      "look": {
+        "color": "#33333a",
+        "weight": 0.45,
+        "alpha": 0.3
+      }
+    },
+    {
+      "id": "pad-indigo-front",
+      "label": "Felt pad, indigo bar (front)",
+      "role": "detail",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.034,
+          0.004,
+          0.022
+        ],
+        "anchor": "base"
+      },
+      "at": [
+        -0.108,
+        0.057999999999999996,
+        0.069
+      ],
+      "certainty": "inferred",
+      "stage": 2,
+      "basis": [
+        "req-pads",
+        "bar-length-longest"
+      ],
+      "look": {
+        "color": "#33333a",
+        "weight": 0.45,
+        "alpha": 0.3
+      }
+    },
+    {
+      "id": "pad-indigo-back",
+      "label": "Felt pad, indigo bar (back)",
+      "role": "detail",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.034,
+          0.004,
+          0.022
+        ],
+        "anchor": "base"
+      },
+      "at": [
+        -0.108,
+        0.057999999999999996,
+        -0.069
+      ],
+      "certainty": "inferred",
+      "stage": 2,
+      "basis": [
+        "req-pads",
+        "bar-length-longest"
+      ],
+      "look": {
+        "color": "#33333a",
+        "weight": 0.45,
+        "alpha": 0.3
+      }
+    },
+    {
+      "id": "pad-violet-front",
+      "label": "Felt pad, violet bar (front)",
+      "role": "detail",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.034,
+          0.004,
+          0.022
+        ],
+        "anchor": "base"
+      },
+      "at": [
+        -0.156,
+        0.057999999999999996,
+        0.064
+      ],
+      "certainty": "inferred",
+      "stage": 2,
+      "basis": [
+        "req-pads",
+        "bar-length-longest"
+      ],
+      "look": {
+        "color": "#33333a",
+        "weight": 0.45,
+        "alpha": 0.3
+      }
+    },
+    {
+      "id": "pad-violet-back",
+      "label": "Felt pad, violet bar (back)",
+      "role": "detail",
+      "shape": {
+        "type": "box",
+        "size": [
+          0.034,
+          0.004,
+          0.022
+        ],
+        "anchor": "base"
+      },
+      "at": [
+        -0.156,
+        0.057999999999999996,
+        -0.064
+      ],
+      "certainty": "inferred",
+      "stage": 2,
+      "basis": [
+        "req-pads",
+        "bar-length-longest"
+      ],
+      "look": {
+        "color": "#33333a",
+        "weight": 0.45,
+        "alpha": 0.3
+      }
+    },
+    {
+      "id": "bar-red",
+      "label": "Red bar (C5)",
+      "role": "identity",
+      "shape": {
+        "type": "extrude",
+        "profile": [
+          [
+            0.013,
+            -0.107
+          ],
+          [
+            0.013,
+            0.107
+          ],
+          [
+            0.012216,
+            0.111446
+          ],
+          [
+            0.009959,
+            0.115356
+          ],
+          [
+            0.0065,
+            0.118258
+          ],
+          [
+            0.002257,
+            0.119803
+          ],
+          [
+            -0.002257,
+            0.119803
+          ],
+          [
+            -0.0065,
+            0.118258
+          ],
+          [
+            -0.009959,
+            0.115356
+          ],
+          [
+            -0.012216,
+            0.111446
+          ],
+          [
+            -0.013,
+            0.107
+          ],
+          [
+            -0.013,
+            -0.107
+          ],
+          [
+            -0.012216,
+            -0.111446
+          ],
+          [
+            -0.009959,
+            -0.115356
+          ],
+          [
+            -0.0065,
+            -0.118258
+          ],
+          [
+            -0.002257,
+            -0.119803
+          ],
+          [
+            0.002257,
+            -0.119803
+          ],
+          [
+            0.0065,
+            -0.118258
+          ],
+          [
+            0.009959,
+            -0.115356
+          ],
+          [
+            0.012216,
+            -0.111446
+          ]
+        ],
+        "height": 0.0065,
+        "axis": "y"
+      },
+      "at": [
+        0.18,
+        0.062,
+        0
+      ],
+      "certainty": "inferred",
+      "stage": 3,
+      "basis": [
+        "req-bars",
+        "bar-length-longest",
+        "bar-width",
+        "bar-pitch"
+      ],
+      "look": {
+        "color": "#d5382c",
+        "weight": 1.45,
+        "glow": 0.42
+      }
+    },
+    {
+      "id": "bar-orange",
+      "label": "Orange bar (D5)",
+      "role": "identity",
+      "shape": {
+        "type": "extrude",
+        "profile": [
+          [
+            0.013,
+            -0.102
+          ],
+          [
+            0.013,
+            0.102
+          ],
+          [
+            0.012216,
+            0.106446
+          ],
+          [
+            0.009959,
+            0.110356
+          ],
+          [
+            0.0065,
+            0.113258
+          ],
+          [
+            0.002257,
+            0.114803
+          ],
+          [
+            -0.002257,
+            0.114803
+          ],
+          [
+            -0.0065,
+            0.113258
+          ],
+          [
+            -0.009959,
+            0.110356
+          ],
+          [
+            -0.012216,
+            0.106446
+          ],
+          [
+            -0.013,
+            0.102
+          ],
+          [
+            -0.013,
+            -0.102
+          ],
+          [
+            -0.012216,
+            -0.106446
+          ],
+          [
+            -0.009959,
+            -0.110356
+          ],
+          [
+            -0.0065,
+            -0.113258
+          ],
+          [
+            -0.002257,
+            -0.114803
+          ],
+          [
+            0.002257,
+            -0.114803
+          ],
+          [
+            0.0065,
+            -0.113258
+          ],
+          [
+            0.009959,
+            -0.110356
+          ],
+          [
+            0.012216,
+            -0.106446
+          ]
+        ],
+        "height": 0.0065,
+        "axis": "y"
+      },
+      "at": [
+        0.132,
+        0.062,
+        0
+      ],
+      "certainty": "inferred",
+      "stage": 3,
+      "basis": [
+        "req-bars",
+        "bar-length-longest",
+        "bar-width",
+        "bar-pitch"
+      ],
+      "look": {
+        "color": "#e8812a",
+        "weight": 1.45,
+        "glow": 0.42
+      }
+    },
+    {
+      "id": "bar-yellow",
+      "label": "Yellow bar (E5)",
+      "role": "identity",
+      "shape": {
+        "type": "extrude",
+        "profile": [
+          [
+            0.013,
+            -0.097
+          ],
+          [
+            0.013,
+            0.097
+          ],
+          [
+            0.012216,
+            0.101446
+          ],
+          [
+            0.009959,
+            0.105356
+          ],
+          [
+            0.0065,
+            0.108258
+          ],
+          [
+            0.002257,
+            0.109803
+          ],
+          [
+            -0.002257,
+            0.109803
+          ],
+          [
+            -0.0065,
+            0.108258
+          ],
+          [
+            -0.009959,
+            0.105356
+          ],
+          [
+            -0.012216,
+            0.101446
+          ],
+          [
+            -0.013,
+            0.097
+          ],
+          [
+            -0.013,
+            -0.097
+          ],
+          [
+            -0.012216,
+            -0.101446
+          ],
+          [
+            -0.009959,
+            -0.105356
+          ],
+          [
+            -0.0065,
+            -0.108258
+          ],
+          [
+            -0.002257,
+            -0.109803
+          ],
+          [
+            0.002257,
+            -0.109803
+          ],
+          [
+            0.0065,
+            -0.108258
+          ],
+          [
+            0.009959,
+            -0.105356
+          ],
+          [
+            0.012216,
+            -0.101446
+          ]
+        ],
+        "height": 0.0065,
+        "axis": "y"
+      },
+      "at": [
+        0.084,
+        0.062,
+        0
+      ],
+      "certainty": "inferred",
+      "stage": 3,
+      "basis": [
+        "req-bars",
+        "bar-length-longest",
+        "bar-width",
+        "bar-pitch"
+      ],
+      "look": {
+        "color": "#efc02f",
+        "weight": 1.45,
+        "glow": 0.42
+      }
+    },
+    {
+      "id": "bar-green",
+      "label": "Green bar (F5)",
+      "role": "identity",
+      "shape": {
+        "type": "extrude",
+        "profile": [
+          [
+            0.013,
+            -0.092
+          ],
+          [
+            0.013,
+            0.092
+          ],
+          [
+            0.012216,
+            0.096446
+          ],
+          [
+            0.009959,
+            0.100356
+          ],
+          [
+            0.0065,
+            0.103258
+          ],
+          [
+            0.002257,
+            0.104803
+          ],
+          [
+            -0.002257,
+            0.104803
+          ],
+          [
+            -0.0065,
+            0.103258
+          ],
+          [
+            -0.009959,
+            0.100356
+          ],
+          [
+            -0.012216,
+            0.096446
+          ],
+          [
+            -0.013,
+            0.092
+          ],
+          [
+            -0.013,
+            -0.092
+          ],
+          [
+            -0.012216,
+            -0.096446
+          ],
+          [
+            -0.009959,
+            -0.100356
+          ],
+          [
+            -0.0065,
+            -0.103258
+          ],
+          [
+            -0.002257,
+            -0.104803
+          ],
+          [
+            0.002257,
+            -0.104803
+          ],
+          [
+            0.0065,
+            -0.103258
+          ],
+          [
+            0.009959,
+            -0.100356
+          ],
+          [
+            0.012216,
+            -0.096446
+          ]
+        ],
+        "height": 0.0065,
+        "axis": "y"
+      },
+      "at": [
+        0.036,
+        0.062,
+        0
+      ],
+      "certainty": "inferred",
+      "stage": 3,
+      "basis": [
+        "req-bars",
+        "bar-length-longest",
+        "bar-width",
+        "bar-pitch"
+      ],
+      "look": {
+        "color": "#48a13a",
+        "weight": 1.45,
+        "glow": 0.42
+      }
+    },
+    {
+      "id": "bar-lightblue",
+      "label": "Light blue bar (G5)",
+      "role": "identity",
+      "shape": {
+        "type": "extrude",
+        "profile": [
+          [
+            0.013,
+            -0.087
+          ],
+          [
+            0.013,
+            0.087
+          ],
+          [
+            0.012216,
+            0.091446
+          ],
+          [
+            0.009959,
+            0.095356
+          ],
+          [
+            0.0065,
+            0.098258
+          ],
+          [
+            0.002257,
+            0.099803
+          ],
+          [
+            -0.002257,
+            0.099803
+          ],
+          [
+            -0.0065,
+            0.098258
+          ],
+          [
+            -0.009959,
+            0.095356
+          ],
+          [
+            -0.012216,
+            0.091446
+          ],
+          [
+            -0.013,
+            0.087
+          ],
+          [
+            -0.013,
+            -0.087
+          ],
+          [
+            -0.012216,
+            -0.091446
+          ],
+          [
+            -0.009959,
+            -0.095356
+          ],
+          [
+            -0.0065,
+            -0.098258
+          ],
+          [
+            -0.002257,
+            -0.099803
+          ],
+          [
+            0.002257,
+            -0.099803
+          ],
+          [
+            0.0065,
+            -0.098258
+          ],
+          [
+            0.009959,
+            -0.095356
+          ],
+          [
+            0.012216,
+            -0.091446
+          ]
+        ],
+        "height": 0.0065,
+        "axis": "y"
+      },
+      "at": [
+        -0.012,
+        0.062,
+        0
+      ],
+      "certainty": "inferred",
+      "stage": 3,
+      "basis": [
+        "req-bars",
+        "bar-length-longest",
+        "bar-width",
+        "bar-pitch"
+      ],
+      "look": {
+        "color": "#4fb0d4",
+        "weight": 1.45,
+        "glow": 0.42
+      }
+    },
+    {
+      "id": "bar-blue",
+      "label": "Blue bar (A5)",
+      "role": "identity",
+      "shape": {
+        "type": "extrude",
+        "profile": [
+          [
+            0.013,
+            -0.082
+          ],
+          [
+            0.013,
+            0.082
+          ],
+          [
+            0.012216,
+            0.086446
+          ],
+          [
+            0.009959,
+            0.090356
+          ],
+          [
+            0.0065,
+            0.093258
+          ],
+          [
+            0.002257,
+            0.094803
+          ],
+          [
+            -0.002257,
+            0.094803
+          ],
+          [
+            -0.0065,
+            0.093258
+          ],
+          [
+            -0.009959,
+            0.090356
+          ],
+          [
+            -0.012216,
+            0.086446
+          ],
+          [
+            -0.013,
+            0.082
+          ],
+          [
+            -0.013,
+            -0.082
+          ],
+          [
+            -0.012216,
+            -0.086446
+          ],
+          [
+            -0.009959,
+            -0.090356
+          ],
+          [
+            -0.0065,
+            -0.093258
+          ],
+          [
+            -0.002257,
+            -0.094803
+          ],
+          [
+            0.002257,
+            -0.094803
+          ],
+          [
+            0.0065,
+            -0.093258
+          ],
+          [
+            0.009959,
+            -0.090356
+          ],
+          [
+            0.012216,
+            -0.086446
+          ]
+        ],
+        "height": 0.0065,
+        "axis": "y"
+      },
+      "at": [
+        -0.06,
+        0.062,
+        0
+      ],
+      "certainty": "inferred",
+      "stage": 3,
+      "basis": [
+        "req-bars",
+        "bar-length-longest",
+        "bar-width",
+        "bar-pitch"
+      ],
+      "look": {
+        "color": "#2b6cb0",
+        "weight": 1.45,
+        "glow": 0.42
+      }
+    },
+    {
+      "id": "bar-indigo",
+      "label": "Indigo bar (B5)",
+      "role": "identity",
+      "shape": {
+        "type": "extrude",
+        "profile": [
+          [
+            0.013,
+            -0.077
+          ],
+          [
+            0.013,
+            0.077
+          ],
+          [
+            0.012216,
+            0.081446
+          ],
+          [
+            0.009959,
+            0.085356
+          ],
+          [
+            0.0065,
+            0.088258
+          ],
+          [
+            0.002257,
+            0.089803
+          ],
+          [
+            -0.002257,
+            0.089803
+          ],
+          [
+            -0.0065,
+            0.088258
+          ],
+          [
+            -0.009959,
+            0.085356
+          ],
+          [
+            -0.012216,
+            0.081446
+          ],
+          [
+            -0.013,
+            0.077
+          ],
+          [
+            -0.013,
+            -0.077
+          ],
+          [
+            -0.012216,
+            -0.081446
+          ],
+          [
+            -0.009959,
+            -0.085356
+          ],
+          [
+            -0.0065,
+            -0.088258
+          ],
+          [
+            -0.002257,
+            -0.089803
+          ],
+          [
+            0.002257,
+            -0.089803
+          ],
+          [
+            0.0065,
+            -0.088258
+          ],
+          [
+            0.009959,
+            -0.085356
+          ],
+          [
+            0.012216,
+            -0.081446
+          ]
+        ],
+        "height": 0.0065,
+        "axis": "y"
+      },
+      "at": [
+        -0.108,
+        0.062,
+        0
+      ],
+      "certainty": "inferred",
+      "stage": 3,
+      "basis": [
+        "req-bars",
+        "bar-length-longest",
+        "bar-width",
+        "bar-pitch"
+      ],
+      "look": {
+        "color": "#3c3a96",
+        "weight": 1.45,
+        "glow": 0.42
+      }
+    },
+    {
+      "id": "bar-violet",
+      "label": "Violet bar (C6)",
+      "role": "identity",
+      "shape": {
+        "type": "extrude",
+        "profile": [
+          [
+            0.013,
+            -0.072
+          ],
+          [
+            0.013,
+            0.072
+          ],
+          [
+            0.012216,
+            0.076446
+          ],
+          [
+            0.009959,
+            0.080356
+          ],
+          [
+            0.0065,
+            0.083258
+          ],
+          [
+            0.002257,
+            0.084803
+          ],
+          [
+            -0.002257,
+            0.084803
+          ],
+          [
+            -0.0065,
+            0.083258
+          ],
+          [
+            -0.009959,
+            0.080356
+          ],
+          [
+            -0.012216,
+            0.076446
+          ],
+          [
+            -0.013,
+            0.072
+          ],
+          [
+            -0.013,
+            -0.072
+          ],
+          [
+            -0.012216,
+            -0.076446
+          ],
+          [
+            -0.009959,
+            -0.080356
+          ],
+          [
+            -0.0065,
+            -0.083258
+          ],
+          [
+            -0.002257,
+            -0.084803
+          ],
+          [
+            0.002257,
+            -0.084803
+          ],
+          [
+            0.0065,
+            -0.083258
+          ],
+          [
+            0.009959,
+            -0.080356
+          ],
+          [
+            0.012216,
+            -0.076446
+          ]
+        ],
+        "height": 0.0065,
+        "axis": "y"
+      },
+      "at": [
+        -0.156,
+        0.062,
+        0
+      ],
+      "certainty": "inferred",
+      "stage": 3,
+      "basis": [
+        "req-bars",
+        "bar-length-longest",
+        "bar-width",
+        "bar-pitch"
+      ],
+      "look": {
+        "color": "#7a4f9f",
+        "weight": 1.45,
+        "glow": 0.42
+      }
+    },
+    {
+      "id": "peg-red-front",
+      "label": "Rubber peg, red bar (front)",
+      "role": "detail",
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0045,
+            0.0
+          ],
+          [
+            0.0045,
+            0.0112
+          ],
+          [
+            0.006,
+            0.015
+          ],
+          [
+            0.0,
+            0.0196
+          ]
+        ],
+        "segments": 12
+      },
+      "at": [
+        0.18,
+        0.057999999999999996,
+        0.099
+      ],
+      "certainty": "inferred",
+      "stage": 4,
+      "basis": [
+        "req-pegs",
+        "bar-pitch"
+      ],
+      "look": {
+        "color": "#26262b",
+        "weight": 0.7,
+        "alpha": 0.72
+      }
+    },
+    {
+      "id": "peg-red-back",
+      "label": "Rubber peg, red bar (back)",
+      "role": "detail",
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0045,
+            0.0
+          ],
+          [
+            0.0045,
+            0.0112
+          ],
+          [
+            0.006,
+            0.015
+          ],
+          [
+            0.0,
+            0.0196
+          ]
+        ],
+        "segments": 12
+      },
+      "at": [
+        0.18,
+        0.057999999999999996,
+        -0.099
+      ],
+      "certainty": "inferred",
+      "stage": 4,
+      "basis": [
+        "req-pegs",
+        "bar-pitch"
+      ],
+      "look": {
+        "color": "#26262b",
+        "weight": 0.7,
+        "alpha": 0.72
+      }
+    },
+    {
+      "id": "peg-orange-front",
+      "label": "Rubber peg, orange bar (front)",
+      "role": "detail",
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0045,
+            0.0
+          ],
+          [
+            0.0045,
+            0.0112
+          ],
+          [
+            0.006,
+            0.015
+          ],
+          [
+            0.0,
+            0.0196
+          ]
+        ],
+        "segments": 12
+      },
+      "at": [
+        0.132,
+        0.057999999999999996,
+        0.094
+      ],
+      "certainty": "inferred",
+      "stage": 4,
+      "basis": [
+        "req-pegs",
+        "bar-pitch"
+      ],
+      "look": {
+        "color": "#26262b",
+        "weight": 0.7,
+        "alpha": 0.72
+      }
+    },
+    {
+      "id": "peg-orange-back",
+      "label": "Rubber peg, orange bar (back)",
+      "role": "detail",
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0045,
+            0.0
+          ],
+          [
+            0.0045,
+            0.0112
+          ],
+          [
+            0.006,
+            0.015
+          ],
+          [
+            0.0,
+            0.0196
+          ]
+        ],
+        "segments": 12
+      },
+      "at": [
+        0.132,
+        0.057999999999999996,
+        -0.094
+      ],
+      "certainty": "inferred",
+      "stage": 4,
+      "basis": [
+        "req-pegs",
+        "bar-pitch"
+      ],
+      "look": {
+        "color": "#26262b",
+        "weight": 0.7,
+        "alpha": 0.72
+      }
+    },
+    {
+      "id": "peg-yellow-front",
+      "label": "Rubber peg, yellow bar (front)",
+      "role": "detail",
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0045,
+            0.0
+          ],
+          [
+            0.0045,
+            0.0112
+          ],
+          [
+            0.006,
+            0.015
+          ],
+          [
+            0.0,
+            0.0196
+          ]
+        ],
+        "segments": 12
+      },
+      "at": [
+        0.084,
+        0.057999999999999996,
+        0.089
+      ],
+      "certainty": "inferred",
+      "stage": 4,
+      "basis": [
+        "req-pegs",
+        "bar-pitch"
+      ],
+      "look": {
+        "color": "#26262b",
+        "weight": 0.7,
+        "alpha": 0.72
+      }
+    },
+    {
+      "id": "peg-yellow-back",
+      "label": "Rubber peg, yellow bar (back)",
+      "role": "detail",
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0045,
+            0.0
+          ],
+          [
+            0.0045,
+            0.0112
+          ],
+          [
+            0.006,
+            0.015
+          ],
+          [
+            0.0,
+            0.0196
+          ]
+        ],
+        "segments": 12
+      },
+      "at": [
+        0.084,
+        0.057999999999999996,
+        -0.089
+      ],
+      "certainty": "inferred",
+      "stage": 4,
+      "basis": [
+        "req-pegs",
+        "bar-pitch"
+      ],
+      "look": {
+        "color": "#26262b",
+        "weight": 0.7,
+        "alpha": 0.72
+      }
+    },
+    {
+      "id": "peg-green-front",
+      "label": "Rubber peg, green bar (front)",
+      "role": "detail",
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0045,
+            0.0
+          ],
+          [
+            0.0045,
+            0.0112
+          ],
+          [
+            0.006,
+            0.015
+          ],
+          [
+            0.0,
+            0.0196
+          ]
+        ],
+        "segments": 12
+      },
+      "at": [
+        0.036,
+        0.057999999999999996,
+        0.084
+      ],
+      "certainty": "inferred",
+      "stage": 4,
+      "basis": [
+        "req-pegs",
+        "bar-pitch"
+      ],
+      "look": {
+        "color": "#26262b",
+        "weight": 0.7,
+        "alpha": 0.72
+      }
+    },
+    {
+      "id": "peg-green-back",
+      "label": "Rubber peg, green bar (back)",
+      "role": "detail",
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0045,
+            0.0
+          ],
+          [
+            0.0045,
+            0.0112
+          ],
+          [
+            0.006,
+            0.015
+          ],
+          [
+            0.0,
+            0.0196
+          ]
+        ],
+        "segments": 12
+      },
+      "at": [
+        0.036,
+        0.057999999999999996,
+        -0.084
+      ],
+      "certainty": "inferred",
+      "stage": 4,
+      "basis": [
+        "req-pegs",
+        "bar-pitch"
+      ],
+      "look": {
+        "color": "#26262b",
+        "weight": 0.7,
+        "alpha": 0.72
+      }
+    },
+    {
+      "id": "peg-lightblue-front",
+      "label": "Rubber peg, light blue bar (front)",
+      "role": "detail",
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0045,
+            0.0
+          ],
+          [
+            0.0045,
+            0.0112
+          ],
+          [
+            0.006,
+            0.015
+          ],
+          [
+            0.0,
+            0.0196
+          ]
+        ],
+        "segments": 12
+      },
+      "at": [
+        -0.012,
+        0.057999999999999996,
+        0.079
+      ],
+      "certainty": "inferred",
+      "stage": 4,
+      "basis": [
+        "req-pegs",
+        "bar-pitch"
+      ],
+      "look": {
+        "color": "#26262b",
+        "weight": 0.7,
+        "alpha": 0.72
+      }
+    },
+    {
+      "id": "peg-lightblue-back",
+      "label": "Rubber peg, light blue bar (back)",
+      "role": "detail",
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0045,
+            0.0
+          ],
+          [
+            0.0045,
+            0.0112
+          ],
+          [
+            0.006,
+            0.015
+          ],
+          [
+            0.0,
+            0.0196
+          ]
+        ],
+        "segments": 12
+      },
+      "at": [
+        -0.012,
+        0.057999999999999996,
+        -0.079
+      ],
+      "certainty": "inferred",
+      "stage": 4,
+      "basis": [
+        "req-pegs",
+        "bar-pitch"
+      ],
+      "look": {
+        "color": "#26262b",
+        "weight": 0.7,
+        "alpha": 0.72
+      }
+    },
+    {
+      "id": "peg-blue-front",
+      "label": "Rubber peg, blue bar (front)",
+      "role": "detail",
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0045,
+            0.0
+          ],
+          [
+            0.0045,
+            0.0112
+          ],
+          [
+            0.006,
+            0.015
+          ],
+          [
+            0.0,
+            0.0196
+          ]
+        ],
+        "segments": 12
+      },
+      "at": [
+        -0.06,
+        0.057999999999999996,
+        0.074
+      ],
+      "certainty": "inferred",
+      "stage": 4,
+      "basis": [
+        "req-pegs",
+        "bar-pitch"
+      ],
+      "look": {
+        "color": "#26262b",
+        "weight": 0.7,
+        "alpha": 0.72
+      }
+    },
+    {
+      "id": "peg-blue-back",
+      "label": "Rubber peg, blue bar (back)",
+      "role": "detail",
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0045,
+            0.0
+          ],
+          [
+            0.0045,
+            0.0112
+          ],
+          [
+            0.006,
+            0.015
+          ],
+          [
+            0.0,
+            0.0196
+          ]
+        ],
+        "segments": 12
+      },
+      "at": [
+        -0.06,
+        0.057999999999999996,
+        -0.074
+      ],
+      "certainty": "inferred",
+      "stage": 4,
+      "basis": [
+        "req-pegs",
+        "bar-pitch"
+      ],
+      "look": {
+        "color": "#26262b",
+        "weight": 0.7,
+        "alpha": 0.72
+      }
+    },
+    {
+      "id": "peg-indigo-front",
+      "label": "Rubber peg, indigo bar (front)",
+      "role": "detail",
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0045,
+            0.0
+          ],
+          [
+            0.0045,
+            0.0112
+          ],
+          [
+            0.006,
+            0.015
+          ],
+          [
+            0.0,
+            0.0196
+          ]
+        ],
+        "segments": 12
+      },
+      "at": [
+        -0.108,
+        0.057999999999999996,
+        0.069
+      ],
+      "certainty": "inferred",
+      "stage": 4,
+      "basis": [
+        "req-pegs",
+        "bar-pitch"
+      ],
+      "look": {
+        "color": "#26262b",
+        "weight": 0.7,
+        "alpha": 0.72
+      }
+    },
+    {
+      "id": "peg-indigo-back",
+      "label": "Rubber peg, indigo bar (back)",
+      "role": "detail",
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0045,
+            0.0
+          ],
+          [
+            0.0045,
+            0.0112
+          ],
+          [
+            0.006,
+            0.015
+          ],
+          [
+            0.0,
+            0.0196
+          ]
+        ],
+        "segments": 12
+      },
+      "at": [
+        -0.108,
+        0.057999999999999996,
+        -0.069
+      ],
+      "certainty": "inferred",
+      "stage": 4,
+      "basis": [
+        "req-pegs",
+        "bar-pitch"
+      ],
+      "look": {
+        "color": "#26262b",
+        "weight": 0.7,
+        "alpha": 0.72
+      }
+    },
+    {
+      "id": "peg-violet-front",
+      "label": "Rubber peg, violet bar (front)",
+      "role": "detail",
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0045,
+            0.0
+          ],
+          [
+            0.0045,
+            0.0112
+          ],
+          [
+            0.006,
+            0.015
+          ],
+          [
+            0.0,
+            0.0196
+          ]
+        ],
+        "segments": 12
+      },
+      "at": [
+        -0.156,
+        0.057999999999999996,
+        0.064
+      ],
+      "certainty": "inferred",
+      "stage": 4,
+      "basis": [
+        "req-pegs",
+        "bar-pitch"
+      ],
+      "look": {
+        "color": "#26262b",
+        "weight": 0.7,
+        "alpha": 0.72
+      }
+    },
+    {
+      "id": "peg-violet-back",
+      "label": "Rubber peg, violet bar (back)",
+      "role": "detail",
+      "shape": {
+        "type": "lathe",
+        "profile": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0045,
+            0.0
+          ],
+          [
+            0.0045,
+            0.0112
+          ],
+          [
+            0.006,
+            0.015
+          ],
+          [
+            0.0,
+            0.0196
+          ]
+        ],
+        "segments": 12
+      },
+      "at": [
+        -0.156,
+        0.057999999999999996,
+        -0.064
+      ],
+      "certainty": "inferred",
+      "stage": 4,
+      "basis": [
+        "req-pegs",
+        "bar-pitch"
+      ],
+      "look": {
+        "color": "#26262b",
+        "weight": 0.7,
+        "alpha": 0.72
+      }
+    },
+    {
+      "id": "mallet-a-head",
+      "label": "Red rubber head, mallet A",
+      "role": "identity",
+      "shape": {
+        "type": "sphere",
+        "radius": 0.017,
+        "lat": 16,
+        "lon": 24
+      },
+      "at": [
+        0.1,
+        0.017,
+        0.15
+      ],
+      "certainty": "inferred",
+      "stage": 5,
+      "basis": [
+        "req-mallets",
+        "mallet-head-diameter"
+      ],
+      "look": {
+        "color": "#bb3a2c",
+        "weight": 1.2,
+        "glow": 0.3
+      }
+    },
+    {
+      "id": "mallet-a-shaft",
+      "label": "Beech handle, mallet A",
+      "role": "structure",
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.005,
+        "height": 0.195,
+        "segments": 16
+      },
+      "at": [
+        0.1,
+        0.017,
+        0.15
+      ],
+      "rotate": [
+        -2.9943,
+        0,
+        93.533
+      ],
+      "certainty": "inferred",
+      "stage": 5,
+      "basis": [
+        "req-mallets",
+        "mallet-length"
+      ],
+      "look": {
+        "color": "#d9b184",
+        "weight": 0.85,
+        "alpha": 0.85
+      }
+    },
+    {
+      "id": "mallet-a-butt",
+      "label": "Rounded butt, mallet A",
+      "role": "detail",
+      "shape": {
+        "type": "sphere",
+        "radius": 0.005,
+        "lat": 6,
+        "lon": 10
+      },
+      "at": [
+        -0.094364,
+        0.005,
+        0.139814
+      ],
+      "certainty": "inferred",
+      "stage": 5,
+      "basis": [
+        "req-mallets",
+        "mallet-length"
+      ],
+      "look": {
+        "color": "#d9b184",
+        "weight": 0.6,
+        "alpha": 0.7
+      }
+    },
+    {
+      "id": "mallet-b-head",
+      "label": "Red rubber head, mallet B",
+      "role": "identity",
+      "shape": {
+        "type": "sphere",
+        "radius": 0.017,
+        "lat": 16,
+        "lon": 24
+      },
+      "at": [
+        0.062,
+        0.017,
+        0.192
+      ],
+      "certainty": "inferred",
+      "stage": 5,
+      "basis": [
+        "req-mallets",
+        "mallet-head-diameter"
+      ],
+      "look": {
+        "color": "#bb3a2c",
+        "weight": 1.2,
+        "glow": 0.3
+      }
+    },
+    {
+      "id": "mallet-b-shaft",
+      "label": "Beech handle, mallet B",
+      "role": "structure",
+      "shape": {
+        "type": "cylinder",
+        "radius": 0.005,
+        "height": 0.195,
+        "segments": 16
+      },
+      "at": [
+        0.062,
+        0.017,
+        0.192
+      ],
+      "rotate": [
+        -5.9886,
+        0,
+        93.5475
+      ],
+      "certainty": "inferred",
+      "stage": 5,
+      "basis": [
+        "req-mallets",
+        "mallet-length"
+      ],
+      "look": {
+        "color": "#d9b184",
+        "weight": 0.85,
+        "alpha": 0.85
+      }
+    },
+    {
+      "id": "mallet-b-butt",
+      "label": "Rounded butt, mallet B",
+      "role": "detail",
+      "shape": {
+        "type": "sphere",
+        "radius": 0.005,
+        "lat": 6,
+        "lon": 10
+      },
+      "at": [
+        -0.131564,
+        0.005,
+        0.171656
+      ],
+      "certainty": "inferred",
+      "stage": 5,
+      "basis": [
+        "req-mallets",
+        "mallet-length"
+      ],
+      "look": {
+        "color": "#d9b184",
+        "weight": 0.6,
+        "alpha": 0.7
+      }
+    }
+  ],
+  "presentation": {
+    "framing": {
+      "yaw": 34,
+      "pitch": 22,
+      "fit": 1.0
+    },
+    "views": [
+      {
+        "id": "hero",
+        "label": "Hero",
+        "yaw": 34,
+        "pitch": 22
+      },
+      {
+        "id": "plan",
+        "label": "Plan",
+        "yaw": 0,
+        "pitch": 86
+      },
+      {
+        "id": "low",
+        "label": "Low",
+        "yaw": 22,
+        "pitch": 7
+      },
+      {
+        "id": "pegs",
+        "label": "Pegs and felt",
+        "yaw": 30,
+        "pitch": 26,
+        "distance": 0.55
+      }
+    ],
+    "atmosphere": {
+      "haze": 0.68,
+      "scanlines": true,
+      "vignette": true,
+      "grid": true,
+      "projector": false,
+      "motes": 0.35
+    },
+    "occlusion": "xray",
+    "certainty_style": "subtle",
+    "background": "deep"
+  },
+  "animation": {
+    "assembly": {
+      "style": "ceremony",
+      "seconds": 7.0,
+      "interference": true
+    },
+    "idle": {
+      "life": "calm",
+      "events": [
+        "shimmer",
+        "scan"
+      ],
+      "cadence": [
+        6,
+        12
+      ],
+      "strength": 0.5
+    },
+    "camera": {
+      "drift": 5,
+      "breathe": 0.02,
+      "tour": [
+        {
+          "view": "pegs",
+          "at": 11,
+          "fly": 3
+        },
+        {
+          "view": "low",
+          "at": 18,
+          "fly": 3
+        },
+        {
+          "view": "hero",
+          "at": 25,
+          "fly": 3.5
+        }
+      ]
+    },
+    "reduced_motion": "still"
+  },
+  "authoring": {
+    "tier": "standard",
+    "research": "off",
+    "sources": [
+      "request"
+    ],
+    "review_rounds": 6,
+    "outcome": "self-reviewed",
+    "next": [
+      "bevel the bars' top edges for a softer highlight",
+      "give the frame a real hole-and-bead so a bar can be swapped",
+      "round the frame's four vertical corners"
+    ]
+  }
+}

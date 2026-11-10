@@ -1,0 +1,3190 @@
+{
+ "format": "construct-scene",
+ "version": 2,
+ "id": "rain-harbour-tide-relay-tower",
+ "title": "Tide Relay Tower",
+ "subject": {
+  "category": "architecture",
+  "summary": "Original broad-shouldered skyline relay building with a right-offset supported crown and layered service roofs; a background architectural design for Rain Harbour. Dimensions are inferred design choices, not measured real-world specifications.",
+  "accuracy": "original",
+  "synthetic": false
+ },
+ "units": "m",
+ "seed": 29,
+ "sources": [
+  {
+   "id": "request",
+   "kind": "user_request",
+   "title": "Original independent Tide Relay Tower brief",
+   "rights": "permitted"
+  },
+  {
+   "id": "concept",
+   "kind": "reference_image",
+   "title": "User Rain Harbour neon night street concept: atmosphere and skyline composition only",
+   "rights": "permitted"
+  }
+ ],
+ "facts": [
+  {
+   "key": "design-envelope",
+   "value": "Maximum 18m wide x16m deep x84m high, base0; original design constraints.",
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "request",
+   "note": "Nominal maximum width, height, depth are original supervisory design constraints, not human measurements."
+  },
+  {
+   "key": "shoulder-height",
+   "value": 51,
+   "unit": "m",
+   "certainty": "inferred",
+   "note": "Original design shoulder ends at 60.7 percent of nominal tower height."
+  }
+ ],
+ "parts": [
+  {
+   "id": "foundation-plinth",
+   "label": "Foundation Plinth",
+   "role": "mass",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     18,
+     2,
+     16
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.58,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "flood-services-podium",
+   "label": "Flood Services Podium",
+   "role": "mass",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     18,
+     5,
+     16
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    0,
+    2,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.45,
+    "alpha": 0.58,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "broad-shoulder-body",
+   "label": "Broad Shoulder Body",
+   "role": "mass",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     16.3,
+     35.0,
+     14.0
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    0.0,
+    7.0,
+    -0.5
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.45,
+    "alpha": 0.58,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "shoulder-setback-storeys",
+   "label": "Shoulder Setback Storeys",
+   "role": "mass",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     15,
+     9,
+     14
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    -0.5,
+    42,
+    -0.5
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.45,
+    "alpha": 0.58,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "offset-crown-main",
+   "label": "Offset Crown Main",
+   "role": "mass",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     9.4,
+     26.0,
+     10.0
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    3.0,
+    51.0,
+    -1.5
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.58,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "crown-service-cap",
+   "label": "Crown Service Cap",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     10.4,
+     1,
+     11.4
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    3,
+    77,
+    -1
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.8,
+    "alpha": 0.58,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "upper-relay-plant",
+   "label": "Upper Relay Plant",
+   "role": "mass",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 5,
+   "shape": {
+    "type": "box",
+    "size": [
+     6,
+     4,
+     7
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    4,
+    78,
+    -1
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.58,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "top-relay-house",
+   "label": "Top Relay House",
+   "role": "identity",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 6,
+   "shape": {
+    "type": "box",
+    "size": [
+     4,
+     2,
+     4
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    5,
+    82,
+    -1
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.2,
+    "alpha": 0.75,
+    "glow": 0.25
+   }
+  },
+  {
+   "id": "crown-haunch--5p5",
+   "label": "Offset crown transfer haunch",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      -6,
+      0
+     ],
+     [
+      6,
+      0
+     ],
+     [
+      6,
+      7
+     ],
+     [
+      0,
+      7
+     ]
+    ],
+    "axis": "z",
+    "height": 1.2
+   },
+   "at": [
+    0,
+    48,
+    -5.5
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.8,
+    "alpha": 0.7
+   }
+  },
+  {
+   "id": "crown-haunch-0",
+   "label": "Offset crown transfer haunch",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      -6,
+      0
+     ],
+     [
+      6,
+      0
+     ],
+     [
+      6,
+      7
+     ],
+     [
+      0,
+      7
+     ]
+    ],
+    "axis": "z",
+    "height": 1.2
+   },
+   "at": [
+    0,
+    48,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.8,
+    "alpha": 0.7
+   }
+  },
+  {
+   "id": "crown-haunch-4",
+   "label": "Offset crown transfer haunch",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      -6,
+      0
+     ],
+     [
+      6,
+      0
+     ],
+     [
+      6,
+      7
+     ],
+     [
+      0,
+      7
+     ]
+    ],
+    "axis": "z",
+    "height": 1.2
+   },
+   "at": [
+    0,
+    48,
+    4
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.8,
+    "alpha": 0.7
+   }
+  },
+  {
+   "id": "shoulder-left-parapet",
+   "label": "Shoulder Left Parapet",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.45,
+     1.2,
+     13
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    -7.75,
+    51,
+    -0.5
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.65,
+    "alpha": 0.58,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "shoulder-front-parapet",
+   "label": "Shoulder Front Parapet",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     5.5,
+     1.2,
+     0.45
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    -4.95,
+    51,
+    6.25
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.65,
+    "alpha": 0.58,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "shoulder-back-parapet",
+   "label": "Shoulder Back Parapet",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     5.5,
+     1.2,
+     0.45
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    -4.95,
+    51,
+    -7.25
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.65,
+    "alpha": 0.58,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "shoulder-service-house",
+   "label": "Shoulder Service House",
+   "role": "mass",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     3.6,
+     3.4,
+     6
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    -5,
+    51,
+    -1.5
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.58,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "shoulder-service-roof",
+   "label": "Shoulder Service Roof",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 5,
+   "shape": {
+    "type": "box",
+    "size": [
+     4,
+     0.45,
+     6.4
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    -5,
+    54.4,
+    -1.5
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.65,
+    "alpha": 0.58,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "front-vertical-pier--7p9",
+   "label": "Front Vertical Pier  7P9",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.6,
+     35.0,
+     0.6
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    -7.9,
+    7,
+    7.55
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.75,
+    "alpha": 0.58,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "front-vertical-pier--3p7",
+   "label": "Front Vertical Pier  3P7",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.6,
+     35.0,
+     0.6
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    -3.7,
+    7,
+    7.55
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.75,
+    "alpha": 0.58,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "front-vertical-pier-0p5",
+   "label": "Front Vertical Pier 0P5",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.6,
+     35.0,
+     0.6
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    0.5,
+    7,
+    7.55
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.75,
+    "alpha": 0.58,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "front-vertical-pier-4p7",
+   "label": "Front Vertical Pier 4P7",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.6,
+     35.0,
+     0.6
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    4.7,
+    7,
+    7.55
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.75,
+    "alpha": 0.58,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "front-vertical-pier-7p9",
+   "label": "Front Vertical Pier 7P9",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.6,
+     35.0,
+     0.6
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    7.9,
+    7,
+    7.55
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.75,
+    "alpha": 0.58,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "rear-vertical-pier--7p9",
+   "label": "Rear Vertical Pier  7P9",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.6,
+     35.0,
+     0.6
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    -7.9,
+    7,
+    -7.55
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.65,
+    "alpha": 0.58,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "rear-vertical-pier--2p6",
+   "label": "Rear Vertical Pier  2P6",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.6,
+     35.0,
+     0.6
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    -2.6,
+    7,
+    -7.55
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.65,
+    "alpha": 0.58,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "rear-vertical-pier-2p6",
+   "label": "Rear Vertical Pier 2P6",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.6,
+     35.0,
+     0.6
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    2.6,
+    7,
+    -7.55
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.65,
+    "alpha": 0.58,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "rear-vertical-pier-7p9",
+   "label": "Rear Vertical Pier 7P9",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.6,
+     35.0,
+     0.6
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    7.9,
+    7,
+    -7.55
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.65,
+    "alpha": 0.58,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "shoulder-window-0-0",
+   "label": "Shoulder Window 0 0",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.4,
+     7.5,
+     0.16
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    -5.7,
+    9,
+    7.58
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.55,
+    "alpha": 0.38,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "shoulder-window-0-1",
+   "label": "Shoulder Window 0 1",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.4,
+     7.5,
+     0.16
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    -1.6,
+    9,
+    7.58
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.55,
+    "alpha": 0.38,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "shoulder-window-0-2",
+   "label": "Shoulder Window 0 2",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.4,
+     7.5,
+     0.16
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    2.6,
+    9,
+    7.58
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.55,
+    "alpha": 0.38,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "shoulder-window-0-3",
+   "label": "Shoulder Window 0 3",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.4,
+     7.5,
+     0.16
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    6.5,
+    9,
+    7.58
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.55,
+    "alpha": 0.38,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "side-window-0--1",
+   "label": "Side Window 0  1",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.16,
+     2.4,
+     7.4
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    -8.25,
+    10.0,
+    1.0
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.5,
+    "alpha": 0.35,
+    "glow": 0.05
+   },
+   "repeat": {
+    "count": 8,
+    "step": {
+     "at": [
+      0,
+      4.2,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "side-window-0-1",
+   "label": "Side Window 0 1",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.16,
+     2.4,
+     7.4
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    8.25,
+    10.0,
+    1.0
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.5,
+    "alpha": 0.35,
+    "glow": 0.05
+   },
+   "repeat": {
+    "count": 8,
+    "step": {
+     "at": [
+      0,
+      4.2,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "shoulder-window-1-0",
+   "label": "Shoulder Window 1 0",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.4,
+     10,
+     0.16
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    -5.7,
+    19,
+    7.58
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.55,
+    "alpha": 0.38,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "shoulder-window-1-1",
+   "label": "Shoulder Window 1 1",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.4,
+     10,
+     0.16
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    -1.6,
+    19,
+    7.58
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.55,
+    "alpha": 0.38,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "shoulder-window-1-2",
+   "label": "Shoulder Window 1 2",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.4,
+     10,
+     0.16
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    2.6,
+    19,
+    7.58
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.55,
+    "alpha": 0.38,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "shoulder-window-1-3",
+   "label": "Shoulder Window 1 3",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.4,
+     10,
+     0.16
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    6.5,
+    19,
+    7.58
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.55,
+    "alpha": 0.38,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "shoulder-window-2-0",
+   "label": "Shoulder Window 2 0",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.4,
+     7.5,
+     0.16
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    -5.7,
+    32,
+    7.58
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.55,
+    "alpha": 0.38,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "shoulder-window-2-1",
+   "label": "Shoulder Window 2 1",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.4,
+     7.5,
+     0.16
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    -1.6,
+    32,
+    7.58
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.55,
+    "alpha": 0.38,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "shoulder-window-2-2",
+   "label": "Shoulder Window 2 2",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.4,
+     7.5,
+     0.16
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    2.6,
+    32,
+    7.58
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.55,
+    "alpha": 0.38,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "shoulder-window-2-3",
+   "label": "Shoulder Window 2 3",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.4,
+     7.5,
+     0.16
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    6.5,
+    32,
+    7.58
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.55,
+    "alpha": 0.38,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "rear-service-riser",
+   "label": "Rear Service Riser",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     2,
+     39,
+     1
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    -4,
+    7,
+    -7.35
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.8,
+    "alpha": 0.58,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "podium-louvre-0",
+   "label": "Podium Louvre 0",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.2,
+     2,
+     0.3
+    ],
+    "anchor": "base",
+    "ribs": 4
+   },
+   "at": [
+    -6.0,
+    3.0,
+    7.85
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.6,
+    "alpha": 0.5,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "podium-louvre-1",
+   "label": "Podium Louvre 1",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.2,
+     2,
+     0.3
+    ],
+    "anchor": "base",
+    "ribs": 4
+   },
+   "at": [
+    -2.0,
+    3.0,
+    7.85
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.6,
+    "alpha": 0.5,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "podium-louvre-2",
+   "label": "Podium Louvre 2",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.2,
+     2,
+     0.3
+    ],
+    "anchor": "base",
+    "ribs": 4
+   },
+   "at": [
+    2.0,
+    3.0,
+    7.85
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.6,
+    "alpha": 0.5,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "podium-louvre-3",
+   "label": "Podium Louvre 3",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.2,
+     2,
+     0.3
+    ],
+    "anchor": "base",
+    "ribs": 4
+   },
+   "at": [
+    6.0,
+    3.0,
+    7.85
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.6,
+    "alpha": 0.5,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "entry-recess",
+   "label": "Entry Recess",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     3.4,
+     4.6,
+     0.2
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    3.0,
+    2.0,
+    7.87
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.7,
+    "alpha": 0.58,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "entry-canopy",
+   "label": "Entry Canopy",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     4.2,
+     0.4,
+     1.1
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    3,
+    6.6,
+    7.4
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.9,
+    "alpha": 0.58,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "crown-front-pier-0",
+   "label": "Crown Front Pier 0",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.6,
+     26.0,
+     0.6
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    -1.7,
+    51,
+    4.55
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.8,
+    "alpha": 0.58,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "crown-front-pier-1",
+   "label": "Crown Front Pier 1",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.6,
+     26.0,
+     0.6
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    1.5,
+    51,
+    4.55
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.8,
+    "alpha": 0.58,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "crown-front-pier-2",
+   "label": "Crown Front Pier 2",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.6,
+     26.0,
+     0.6
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    4.7,
+    51,
+    4.55
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.8,
+    "alpha": 0.58,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "crown-front-pier-3",
+   "label": "Crown Front Pier 3",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.6,
+     26.0,
+     0.6
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    7.7,
+    51,
+    4.55
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.8,
+    "alpha": 0.58,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "crown-window-0-0",
+   "label": "Crown Window 0 0",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.2,
+     8,
+     0.16
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    -0.2,
+    53,
+    4.58
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.6,
+    "alpha": 0.42,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "crown-window-0-1",
+   "label": "Crown Window 0 1",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.2,
+     8,
+     0.16
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    3.1,
+    53,
+    4.58
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.6,
+    "alpha": 0.42,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "crown-window-0-2",
+   "label": "Crown Window 0 2",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.2,
+     8,
+     0.16
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    6.2,
+    53,
+    4.58
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.6,
+    "alpha": 0.42,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "crown-side-window-0--1",
+   "label": "Crown Side Window 0  1",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.16,
+     2.7,
+     7.2
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    -1.8,
+    53.0,
+    -1.0
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.55,
+    "alpha": 0.38,
+    "glow": 0.05
+   },
+   "repeat": {
+    "count": 6,
+    "step": {
+     "at": [
+      0,
+      3.8,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "crown-side-window-0-1",
+   "label": "Crown Side Window 0 1",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.16,
+     2.7,
+     7.2
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    7.8,
+    53.0,
+    -1.0
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.55,
+    "alpha": 0.38,
+    "glow": 0.05
+   },
+   "repeat": {
+    "count": 6,
+    "step": {
+     "at": [
+      0,
+      3.8,
+      0
+     ]
+    }
+   }
+  },
+  {
+   "id": "crown-window-1-0",
+   "label": "Crown Window 1 0",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.2,
+     10,
+     0.16
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    -0.2,
+    64,
+    4.58
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.6,
+    "alpha": 0.42,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "crown-window-1-1",
+   "label": "Crown Window 1 1",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.2,
+     10,
+     0.16
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    3.1,
+    64,
+    4.58
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.6,
+    "alpha": 0.42,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "crown-window-1-2",
+   "label": "Crown Window 1 2",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.2,
+     10,
+     0.16
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    6.2,
+    64,
+    4.58
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.6,
+    "alpha": 0.42,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "crown-identity-return",
+   "label": "Crown Identity Return",
+   "role": "identity",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 5,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.32,
+     23,
+     0.34
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    7.9,
+    54,
+    4.65
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.4,
+    "alpha": 0.8,
+    "glow": 0.3
+   }
+  },
+  {
+   "id": "shoulder-transfer-lintel",
+   "label": "Shoulder Transfer Lintel",
+   "role": "identity",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     14.8,
+     0.38,
+     0.38
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    -0.5,
+    50.6,
+    6.7
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.1,
+    "alpha": 0.75,
+    "glow": 0.2
+   }
+  },
+  {
+   "id": "crown-parapet--6p45",
+   "label": "Crown Parapet  6P45",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 5,
+   "shape": {
+    "type": "box",
+    "size": [
+     10,
+     0.75,
+     0.3
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    3,
+    78,
+    -6.45
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.65,
+    "alpha": 0.58,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "crown-parapet-4p45",
+   "label": "Crown Parapet 4P45",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 5,
+   "shape": {
+    "type": "box",
+    "size": [
+     10,
+     0.75,
+     0.3
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    3,
+    78,
+    4.45
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.65,
+    "alpha": 0.58,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "crown-left-parapet",
+   "label": "Crown Left Parapet",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 5,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.3,
+     0.75,
+     10.6
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    -2,
+    78,
+    -1
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.65,
+    "alpha": 0.58,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "plant-louvre-0",
+   "label": "Plant Louvre 0",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 6,
+   "shape": {
+    "type": "box",
+    "size": [
+     4.8,
+     0.4,
+     0.4
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    4,
+    78.8,
+    2.6
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.6,
+    "alpha": 0.55,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "plant-louvre-1",
+   "label": "Plant Louvre 1",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 6,
+   "shape": {
+    "type": "box",
+    "size": [
+     4.8,
+     0.4,
+     0.4
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    4,
+    79.64999999999999,
+    2.6
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.6,
+    "alpha": 0.55,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "plant-louvre-2",
+   "label": "Plant Louvre 2",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 6,
+   "shape": {
+    "type": "box",
+    "size": [
+     4.8,
+     0.4,
+     0.4
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    4,
+    80.5,
+    2.6
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.6,
+    "alpha": 0.55,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "plant-maintenance-door",
+   "label": "Plant Maintenance Door",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 6,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.3,
+     2.4,
+     0.15
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    2.5,
+    78,
+    2.58
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.6,
+    "alpha": 0.58,
+    "glow": 0.05
+   }
+  },
+  {
+   "id": "relay-roof-rim",
+   "label": "Relay Roof Rim",
+   "role": "identity",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 7,
+   "shape": {
+    "type": "box",
+    "size": [
+     4.3,
+     0.2,
+     4.3
+    ],
+    "anchor": "base",
+    "ribs": 0
+   },
+   "at": [
+    5,
+    83.8,
+    -1
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.1,
+    "alpha": 0.75,
+    "glow": 0.2
+   }
+  },
+  {
+   "id": "shoulder-storey-spandrels",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     17,
+     0.6,
+     1.3
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0,
+    7,
+    7.15
+   ],
+   "repeat": {
+    "count": 11,
+    "step": {
+     "at": [
+      0,
+      3.4,
+      0
+     ]
+    }
+   },
+   "look": {
+    "fill": "dark",
+    "weight": 0.55,
+    "alpha": 0.45
+   }
+  },
+  {
+   "id": "crown-storey-spandrels",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     10,
+     0.6,
+     1.3
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    3,
+    51,
+    4.15
+   ],
+   "repeat": {
+    "count": 8,
+    "step": {
+     "at": [
+      0,
+      3.5,
+      0
+     ]
+    }
+   },
+   "look": {
+    "fill": "dark",
+    "weight": 0.55,
+    "alpha": 0.45
+   }
+  },
+  {
+   "id": "shoulder-setback-service-door",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.7,
+     3,
+     0.35
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -4.5,
+    44,
+    6.65
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.8,
+    "alpha": 0.7
+   }
+  },
+  {
+   "id": "shoulder-setback-service-hood",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.4,
+     0.4,
+     1.1
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -4.5,
+    47,
+    6.9
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.85,
+    "alpha": 0.7
+   }
+  },
+  {
+   "id": "shoulder-setback-louvre-bank",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     5,
+     3.6,
+     0.4
+    ],
+    "anchor": "base",
+    "ribs": 6
+   },
+   "at": [
+    1,
+    44,
+    6.65
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.65,
+    "alpha": 0.6
+   }
+  },
+  {
+   "id": "shoulder-roof-maintenance-door",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 5,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.3,
+     2.5,
+     0.25
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -5,
+    51,
+    1.55
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.8,
+    "alpha": 0.7
+   }
+  },
+  {
+   "id": "relay-wall-transceiver",
+   "role": "identity",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 7,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.4,
+     1.2,
+     0.5
+    ],
+    "anchor": "base",
+    "ribs": 3
+   },
+   "at": [
+    5,
+    82.3,
+    1.2
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.1,
+    "alpha": 0.7,
+    "glow": 0.2
+   }
+  },
+  {
+   "id": "crown-cable-tray",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 6,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.7,
+     0.45,
+     5.8
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1,
+    78,
+    -0.4
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.65,
+    "alpha": 0.6
+   }
+  },
+  {
+   "id": "crown-walkway",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 5,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.3,
+     0.25,
+     8
+    ],
+    "anchor": "base",
+    "ribs": 6
+   },
+   "at": [
+    -0.3,
+    78,
+    -1
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.6,
+    "alpha": 0.5
+   }
+  },
+  {
+   "id": "crown-access-guard",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "design-envelope"
+   ],
+   "stage": 6,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.15,
+     0.9,
+     8
+    ],
+    "anchor": "base",
+    "ribs": 7
+   },
+   "at": [
+    -1,
+    78.25,
+    -1
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.65,
+    "alpha": 0.55
+   }
+  },
+  {
+   "id": "rear-storey-elevation",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 3,
+   "basis": [
+    "design-envelope"
+   ],
+   "shape": {
+    "type": "facade",
+    "size": [
+     16,
+     34
+    ],
+    "rows": 8,
+    "cols": 4,
+    "opening": [
+     2.6,
+     2.1
+    ],
+    "outline": false
+   },
+   "at": [
+    0,
+    7,
+    -7.56
+   ],
+   "rotate": [
+    0,
+    180,
+    0
+   ],
+   "look": {
+    "fill": "none",
+    "weight": 0.5,
+    "alpha": 0.35
+   }
+  },
+  {
+   "at": [
+    8.45,
+    9,
+    0
+   ],
+   "basis": [
+    "design-envelope"
+   ],
+   "certainty": "inferred",
+   "id": "right-shoulder-sill-groups",
+   "look": {
+    "alpha": 0.5,
+    "fill": "dark",
+    "weight": 0.6
+   },
+   "repeat": {
+    "count": 8,
+    "step": {
+     "at": [
+      0,
+      4.2,
+      0
+     ]
+    }
+   },
+   "role": "structure",
+   "shape": {
+    "anchor": "base",
+    "size": [
+     0.7,
+     0.6,
+     12.5
+    ],
+    "type": "box"
+   },
+   "stage": 3
+  },
+  {
+   "at": [
+    -8.45,
+    9,
+    0
+   ],
+   "basis": [
+    "design-envelope"
+   ],
+   "certainty": "inferred",
+   "id": "left-shoulder-sill-groups",
+   "look": {
+    "alpha": 0.5,
+    "fill": "dark",
+    "weight": 0.6
+   },
+   "repeat": {
+    "count": 8,
+    "step": {
+     "at": [
+      0,
+      4.2,
+      0
+     ]
+    }
+   },
+   "role": "structure",
+   "shape": {
+    "anchor": "base",
+    "size": [
+     0.7,
+     0.6,
+     12.5
+    ],
+    "type": "box"
+   },
+   "stage": 3
+  },
+  {
+   "at": [
+    7.95,
+    54,
+    -1
+   ],
+   "basis": [
+    "design-envelope"
+   ],
+   "certainty": "inferred",
+   "id": "right-crown-sill-groups",
+   "look": {
+    "alpha": 0.5,
+    "fill": "dark",
+    "weight": 0.6
+   },
+   "repeat": {
+    "count": 5,
+    "step": {
+     "at": [
+      0,
+      4.6,
+      0
+     ]
+    }
+   },
+   "role": "structure",
+   "shape": {
+    "anchor": "base",
+    "size": [
+     0.6,
+     0.6,
+     9.6
+    ],
+    "type": "box"
+   },
+   "stage": 4
+  },
+  {
+   "at": [
+    -1.95,
+    54,
+    -1
+   ],
+   "basis": [
+    "design-envelope"
+   ],
+   "certainty": "inferred",
+   "id": "left-crown-sill-groups",
+   "look": {
+    "alpha": 0.5,
+    "fill": "dark",
+    "weight": 0.6
+   },
+   "repeat": {
+    "count": 5,
+    "step": {
+     "at": [
+      0,
+      4.6,
+      0
+     ]
+    }
+   },
+   "role": "structure",
+   "shape": {
+    "anchor": "base",
+    "size": [
+     0.6,
+     0.6,
+     9.6
+    ],
+    "type": "box"
+   },
+   "stage": 4
+  },
+  {
+   "at": [
+    8.3,
+    7,
+    -4.7
+   ],
+   "basis": [
+    "design-envelope"
+   ],
+   "certainty": "inferred",
+   "id": "side-drainage-chase",
+   "look": {
+    "alpha": 0.55,
+    "fill": "dark",
+    "weight": 0.65
+   },
+   "role": "structure",
+   "shape": {
+    "anchor": "base",
+    "size": [
+     0.6,
+     35,
+     0.8
+    ],
+    "type": "box"
+   },
+   "stage": 3
+  },
+  {
+   "at": [
+    7.1,
+    79,
+    -1.5
+   ],
+   "basis": [
+    "design-envelope"
+   ],
+   "certainty": "inferred",
+   "id": "plant-side-intake",
+   "look": {
+    "alpha": 0.6,
+    "fill": "dark",
+    "weight": 0.65
+   },
+   "role": "detail",
+   "shape": {
+    "anchor": "base",
+    "ribs": 5,
+    "size": [
+     0.4,
+     2.2,
+     2.2
+    ],
+    "type": "box"
+   },
+   "stage": 6
+  },
+  {
+   "at": [
+    7.1,
+    82.3,
+    -1
+   ],
+   "basis": [
+    "design-envelope"
+   ],
+   "certainty": "inferred",
+   "id": "top-relay-access-hatch",
+   "look": {
+    "alpha": 0.65,
+    "fill": "dark",
+    "weight": 0.8
+   },
+   "role": "detail",
+   "shape": {
+    "anchor": "base",
+    "size": [
+     0.35,
+     1.2,
+     1.4
+    ],
+    "type": "box"
+   },
+   "stage": 7
+  },
+  {
+   "at": [
+    6.6,
+    81,
+    -0.5
+   ],
+   "basis": [
+    "design-envelope"
+   ],
+   "certainty": "inferred",
+   "id": "relay-service-conduit",
+   "look": {
+    "alpha": 0.6,
+    "fill": "dark",
+    "weight": 0.7
+   },
+   "role": "detail",
+   "shape": {
+    "caps": true,
+    "path": [
+     [
+      0,
+      0,
+      0
+     ],
+     [
+      0.5,
+      0,
+      0
+     ],
+     [
+      0.5,
+      1.3,
+      0
+     ],
+     [
+      0.2,
+      1.3,
+      0
+     ]
+    ],
+    "radius": 0.12,
+    "samples": 1,
+    "sides": 6,
+    "type": "tube"
+   },
+   "stage": 7
+  },
+  {
+   "at": [
+    4,
+    78.7,
+    2.7
+   ],
+   "basis": [
+    "design-envelope"
+   ],
+   "certainty": "inferred",
+   "id": "plant-recess-louvre-blades",
+   "look": {
+    "alpha": 0.6,
+    "fill": "dark",
+    "weight": 0.65
+   },
+   "repeat": {
+    "count": 5,
+    "step": {
+     "at": [
+      0,
+      0.5,
+      0
+     ]
+    }
+   },
+   "role": "detail",
+   "rotate": [
+    18,
+    0,
+    0
+   ],
+   "shape": {
+    "anchor": "base",
+    "size": [
+     4.5,
+     0.16,
+     0.65
+    ],
+    "type": "box"
+   },
+   "stage": 6
+  },
+  {
+   "at": [
+    0.9,
+    78,
+    2.7
+   ],
+   "basis": [
+    "design-envelope"
+   ],
+   "certainty": "inferred",
+   "id": "roof-apron-equipment-plinth",
+   "look": {
+    "alpha": 0.6,
+    "fill": "dark",
+    "weight": 0.75
+   },
+   "role": "structure",
+   "shape": {
+    "anchor": "base",
+    "ribs": 4,
+    "size": [
+     1.6,
+     1.4,
+     1.5
+    ],
+    "type": "box"
+   },
+   "stage": 6
+  },
+  {
+   "at": [
+    5.5,
+    81.65,
+    1
+   ],
+   "basis": [
+    "design-envelope"
+   ],
+   "certainty": "inferred",
+   "id": "plant-to-relay-rectangular-duct",
+   "look": {
+    "alpha": 0.65,
+    "fill": "dark",
+    "weight": 0.85
+   },
+   "role": "structure",
+   "shape": {
+    "axis": "z",
+    "height": 0.7,
+    "profile": [
+     [
+      0,
+      0
+     ],
+     [
+      1.1,
+      0
+     ],
+     [
+      1.1,
+      1.3
+     ],
+     [
+      0.6,
+      1.3
+     ],
+     [
+      0.6,
+      0.55
+     ],
+     [
+      0,
+      0.55
+     ]
+    ],
+    "type": "extrude"
+   },
+   "stage": 7
+  },
+  {
+   "at": [
+    -5,
+    52,
+    1.6
+   ],
+   "basis": [
+    "design-envelope"
+   ],
+   "certainty": "inferred",
+   "id": "shoulder-roof-service-panel",
+   "look": {
+    "alpha": 0.65,
+    "fill": "dark",
+    "weight": 0.7
+   },
+   "role": "detail",
+   "shape": {
+    "anchor": "base",
+    "ribs": 5,
+    "size": [
+     2.3,
+     1.2,
+     0.4
+    ],
+    "type": "box"
+   },
+   "stage": 5
+  }
+ ],
+ "assets": [],
+ "articulations": [],
+ "labels": [],
+ "anchors": {
+  "base": {
+   "point": [
+    0,
+    0,
+    0
+   ],
+   "up": [
+    0,
+    1,
+    0
+   ]
+  }
+ },
+ "presentation": {
+  "framing": {
+   "yaw": 30,
+   "pitch": 14,
+   "fit": 1.05
+  },
+  "views": [
+   {
+    "id": "concept",
+    "label": "Concept skyline",
+    "yaw": 24,
+    "pitch": 6,
+    "distance": 1.05
+   },
+   {
+    "id": "roof-detail",
+    "label": "Layered crown roofs",
+    "yaw": 35,
+    "pitch": 30,
+    "target": "crown-service-cap",
+    "distance": 2.5
+   }
+  ],
+  "atmosphere": {
+   "haze": 0.3,
+   "grid": true,
+   "projector": false,
+   "scanlines": false,
+   "motes": 0
+  },
+  "occlusion": "none",
+  "certainty_style": "subtle",
+  "background": "deep",
+  "float": 0
+ },
+ "animation": {
+  "assembly": {
+   "style": "ceremony",
+   "seconds": 10,
+   "interference": false
+  },
+  "idle": {
+   "life": "calm",
+   "events": [
+    "shimmer"
+   ],
+   "cadence": [
+    9,
+    15
+   ],
+   "strength": 0.15
+  },
+  "camera": {
+   "drift": 0,
+   "breathe": 0
+  },
+  "reduced_motion": "still"
+ },
+ "authoring": {
+  "tier": "masterpiece",
+  "research": "off",
+  "review_rounds": 0,
+  "outcome": "good",
+  "identity": [
+   {
+    "feature": "Substantial lower shoulder to roughly three fifths height",
+    "parts": [
+     "broad-shoulder-body",
+     "shoulder-setback-storeys"
+    ]
+   },
+   {
+    "feature": "Strong supported offset upper crown",
+    "parts": [
+     "offset-crown-main"
+    ]
+   },
+   {
+    "feature": "Layered relay and service roof volumes",
+    "parts": [
+     "upper-relay-plant",
+     "top-relay-house",
+     "shoulder-service-house"
+    ]
+   }
+  ],
+  "next": [],
+  "critic": {
+   "scene_sha256": "55385b1c41907901f9f515092bb26e5e9e0dd1a57960798aab3c52cc149aa013",
+   "verdict": "good",
+   "scores": {
+    "silhouette": 3,
+    "proportions": 3,
+    "identity": 3,
+    "depth": 2,
+    "composition": 3,
+    "assembly": 3,
+    "motion": 3,
+    "density": 2,
+    "honesty": 3
+   },
+   "round": 4,
+   "defects": 2
+  },
+  "rounds": [
+   {
+    "round": 1,
+    "result": "baseline",
+    "minutes": 0.5,
+    "changes": [
+     "draft"
+    ],
+    "summary": "The main lower body has only three tall panel groups across roughly half an 84m building; the crown has only two. Side view reduces these to"
+   },
+   {
+    "round": 2,
+    "result": "kept",
+    "minutes": 1.6,
+    "changes": [
+     "D1",
+     "D2",
+     "D3"
+    ],
+    "summary": "Facade information is concentrated on the front. The side view leaves broad wall strips around one tall lower panel stack and two crown rect"
+   },
+   {
+    "round": 3,
+    "result": "kept",
+    "minutes": 1.3,
+    "changes": [
+     "D1",
+     "D2",
+     "D3"
+    ],
+    "summary": "The side elevation is much less resolved than the front: approximately three tall lower panel fields and two upper fields sit between widely"
+   },
+   {
+    "round": 4,
+    "result": "kept",
+    "minutes": 1.9,
+    "changes": [
+     "D1",
+     "D2",
+     "D3"
+    ],
+    "summary": "The side elevations now carry repeated horizontal panels, but each is still essentially one uninterrupted shallow strip across most of the f"
+   },
+   {
+    "round": 5,
+    "result": "reverted",
+    "minutes": 1.4,
+    "changes": [],
+    "summary": "The roof has good stepped masses and rails, but its broad deck and service-house flanks remain largely unarticulated boxes in the close view"
+   },
+   {
+    "round": 6,
+    "result": "reverted",
+    "minutes": 0.5,
+    "changes": [],
+    "summary": "The roof close-up resolves the front plant louvers and rails, but the broad right-facing plant wall and adjacent exposed deck remain largely"
+   }
+  ]
+ }
+}

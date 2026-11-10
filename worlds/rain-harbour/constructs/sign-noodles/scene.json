@@ -1,0 +1,477 @@
+{
+ "format": "construct-scene",
+ "version": 2,
+ "id": "night-voyage-noodles",
+ "title": "NIGHT VOYAGE NOODLES / 夜航面馆",
+ "subject": {
+  "category": "object",
+  "summary": "Original warm amber backlit noodle-bar fascia, inspired by the foreground-left amber band in the supplied rainy street concept. Real bilingual typography is generated decorative artwork, attached to the front face rather than optional labels.",
+  "accuracy": "original",
+  "synthetic": false
+ },
+ "units": "m",
+ "seed": 7,
+ "sources": [
+  {
+   "id": "request",
+   "kind": "user_request",
+   "title": "Rain Harbour concept and component brief; nominal dimensions inferred from supervisor allocation, original bilingual sign design",
+   "rights": "permitted"
+  }
+ ],
+ "facts": [
+  {
+   "key": "width",
+   "value": 6,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "request",
+   "requirement": true,
+   "note": "Nominal 6 m component allocation from supervisor brief, not a user measurement."
+  },
+  {
+   "key": "height",
+   "value": 1.25,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "request",
+   "requirement": true,
+   "note": "Nominal 1.25 m component allocation from supervisor brief, not a user measurement."
+  },
+  {
+   "key": "depth",
+   "value": 0.2,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "request",
+   "requirement": true,
+   "note": "Nominal 0.2 m component allocation from supervisor brief, not a user measurement."
+  },
+  {
+   "key": "english",
+   "value": "NIGHT VOYAGE NOODLES",
+   "certainty": "inferred",
+   "source": "request",
+   "note": "Original business name invented by the supervisor for the user's fictional district, not supplied verbatim by the end user."
+  },
+  {
+   "key": "chinese",
+   "value": "夜航面馆",
+   "certainty": "inferred",
+   "source": "request",
+   "note": "Original meaningful Chinese business name invented for this task, not supplied verbatim by the end user."
+  }
+ ],
+ "assets": [
+  {
+   "id": "amber-lettering",
+   "path": "assets/night-voyage-amber-v2.png",
+   "sha256": "e511698005e1f48b1a0f597d34b56a10c55d56695b32087514e26b9fa9e1893a",
+   "media_type": "image/png",
+   "rights": "permitted",
+   "provenance": "generated-decorative",
+   "source": "request"
+  },
+  {
+   "id": "rear-fabrication",
+   "media_type": "image/png",
+   "path": "assets/rear-service-panel.png",
+   "provenance": "generated-decorative",
+   "rights": "permitted",
+   "sha256": "a3f79158b2e894eef9e937a4ae8581dfbb4b2e3a969cbef296c5405997cb5141",
+   "source": "request"
+  }
+ ],
+ "parts": [
+  {
+   "id": "casing",
+   "label": "Folded dark blue-grey metal casing",
+   "role": "mass",
+   "certainty": "inferred",
+   "basis": [
+    "width",
+    "height",
+    "depth"
+   ],
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     6,
+     1.25,
+     0.18
+    ],
+    "ribs": 0
+   },
+   "at": [
+    0,
+    0.625,
+    0.09
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "glow": 0,
+    "weight": 0.8
+   },
+   "artwork": {
+    "asset": "rear-fabrication",
+    "face": "back",
+    "mask": "rect",
+    "slot": "cover-back"
+   }
+  },
+  {
+   "id": "amber-face",
+   "label": "Backlit amber bilingual face",
+   "role": "artwork",
+   "certainty": "decorative",
+   "basis": [
+    "english",
+    "chinese"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     5.86,
+     1.11,
+     0.02
+    ],
+    "ribs": 0
+   },
+   "at": [
+    0,
+    0.625,
+    0.19
+   ],
+   "artwork": {
+    "slot": "cover-front",
+    "asset": "amber-lettering",
+    "face": "front",
+    "mask": "rect"
+   },
+   "look": {
+    "fill": "dark",
+    "tone": "identity",
+    "glow": 0.15,
+    "weight": 0.4
+   }
+  },
+  {
+   "id": "rear-bracket",
+   "label": "Paired rear standoff rails to facade",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      -0.15,
+      -0.4
+     ],
+     [
+      0.15,
+      -0.4
+     ],
+     [
+      0.15,
+      -0.34
+     ],
+     [
+      0.07,
+      -0.34
+     ],
+     [
+      0.07,
+      -0.03
+     ],
+     [
+      0.15,
+      -0.03
+     ],
+     [
+      0.15,
+      0.02
+     ],
+     [
+      -0.15,
+      0.02
+     ],
+     [
+      -0.15,
+      -0.03
+     ],
+     [
+      -0.07,
+      -0.03
+     ],
+     [
+      -0.07,
+      -0.34
+     ],
+     [
+      -0.15,
+      -0.34
+     ]
+    ],
+    "axis": "y",
+    "height": 0.74,
+    "ribs": 0
+   },
+   "at": [
+    -2.25,
+    0.255,
+    0.0
+   ],
+   "repeat": {
+    "count": 2,
+    "step": {
+     "at": [
+      4.5,
+      0,
+      0
+     ]
+    }
+   },
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "glow": 0,
+    "weight": 0.9
+   }
+  },
+  {
+   "id": "amber-lip",
+   "label": "Slim amber perimeter lips",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     5.92,
+     0.025,
+     0.02
+    ],
+    "ribs": 0
+   },
+   "at": [
+    0,
+    0.034,
+    0.19
+   ],
+   "repeat": {
+    "count": 2,
+    "step": {
+     "at": [
+      0,
+      1.182,
+      0
+     ]
+    }
+   },
+   "look": {
+    "fill": "dark",
+    "tone": "identity",
+    "glow": 0.35,
+    "weight": 0.4
+   },
+   "basis": [
+    "width",
+    "height"
+   ]
+  }
+ ],
+ "labels": [],
+ "articulations": [],
+ "anchors": {
+  "front": {
+   "part": "amber-face",
+   "face": "front"
+  },
+  "base": {
+   "point": [
+    0,
+    0,
+    0
+   ],
+   "up": [
+    0,
+    1,
+    0
+   ]
+  }
+ },
+ "presentation": {
+  "framing": {
+   "yaw": 16,
+   "pitch": 8,
+   "fit": 1.08
+  },
+  "views": [
+   {
+    "id": "concept",
+    "label": "Street-front concept correspondence",
+    "yaw": -25,
+    "pitch": -8,
+    "distance": 1.15
+   },
+   {
+    "id": "lettering",
+    "label": "Readable bilingual face",
+    "yaw": 0,
+    "pitch": 0,
+    "distance": 1.05
+   },
+   {
+    "id": "mount",
+    "label": "Rear facade standoff attachment",
+    "yaw": 150,
+    "pitch": 12,
+    "distance": 1.1
+   }
+  ],
+  "atmosphere": {
+   "haze": 0.15,
+   "scanlines": false,
+   "vignette": true,
+   "grid": false,
+   "projector": false,
+   "motes": 0
+  },
+  "occlusion": "xray",
+  "certainty_style": "subtle",
+  "background": "deep",
+  "float": 0
+ },
+ "animation": {
+  "assembly": {
+   "style": "ceremony",
+   "seconds": 5,
+   "interference": false
+  },
+  "idle": {
+   "life": "off",
+   "events": [],
+   "cadence": [
+    8,
+    14
+   ],
+   "strength": 0
+  },
+  "camera": {
+   "drift": 0,
+   "breathe": 0
+  },
+  "reduced_motion": "still"
+ },
+ "authoring": {
+  "tier": "masterpiece",
+  "research": "unavailable",
+  "critic": {
+   "scene_sha256": "d39323b6299a3b95b6f40decdd6ba2d5d3b0902c7b07f59597093b36ffc3b199",
+   "verdict": "good",
+   "scores": {
+    "silhouette": 3,
+    "proportions": 3,
+    "identity": 2,
+    "depth": 3,
+    "composition": 3,
+    "assembly": 3,
+    "motion": 3,
+    "density": 3,
+    "honesty": 3
+   },
+   "round": 5,
+   "defects": 1
+  },
+  "rounds": [
+   {
+    "round": 1,
+    "result": "baseline",
+    "minutes": 0.4,
+    "changes": [
+     "draft"
+    ],
+    "summary": "The entire sign face is blank: neither NIGHT VOYAGE NOODLES nor 夜航面馆 is visible, even in the dedicated lettering view. Only the off-object H"
+   },
+   {
+    "round": 2,
+    "result": "kept",
+    "minutes": 1.7,
+    "changes": [
+     "D1"
+    ],
+    "summary": "The reference's lower-left band is a bright yellow-amber lightbox with almost black print; this face is a noticeably darker orange-ochre, we"
+   },
+   {
+    "round": 3,
+    "result": "kept",
+    "minutes": 1.9,
+    "changes": [
+     "D10",
+     "D7",
+     "D8",
+     "D9"
+    ],
+    "summary": "The face reads as muted ochre in the settled renders, whereas the lower-left concept fascia is a bright yellow-amber lightbox and the suppli"
+   },
+   {
+    "round": 4,
+    "result": "reverted",
+    "minutes": 1.9,
+    "changes": [
+     "D7",
+     "D8"
+    ],
+    "summary": "The reference concept's lower-left fascia is a rich warm yellow-amber lightbox; this face reads as paler, slightly olive cream in the concep"
+   },
+   {
+    "round": 5,
+    "result": "kept",
+    "minutes": 1.8,
+    "changes": [
+     "D8"
+    ],
+    "summary": "The illuminated face reads as muted yellow-ochre, especially across the broad center, rather than the warm bright amber lightbox in the conc"
+   },
+   {
+    "round": 6,
+    "result": "reverted",
+    "minutes": 0.9,
+    "changes": [
+     "D7"
+    ],
+    "summary": "Although the original bilingual artwork is correct, the settled face is a muted ochre with darkened edges. It does not quite carry the brigh"
+   },
+   {
+    "round": 7,
+    "result": "reverted",
+    "minutes": 1.1,
+    "changes": [
+     "D7"
+    ],
+    "summary": "The fascia reads as muted mustard-yellow rather than the bright warm amber lightbox in the lower-left concept band. The artwork is correct, "
+   }
+  ],
+  "outcome": "good",
+  "identity": [
+   {
+    "feature": "Broad shallow amber bilingual fascia with exact 夜航面馆 and NIGHT VOYAGE NOODLES lettering in original decorative artwork",
+    "parts": [
+     "amber-face",
+     "amber-lip"
+    ]
+   },
+   {
+    "feature": "Thin dark metal enclosure with two flanged rear mounting rails and inferred service-panel detail",
+    "parts": [
+     "casing",
+     "rear-bracket"
+    ]
+   }
+  ]
+ }
+}

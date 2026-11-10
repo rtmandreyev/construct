@@ -1,0 +1,897 @@
+{
+ "format": "construct-scene",
+ "version": 2,
+ "id": "rainharbour-water-vending-machine",
+ "title": "Water vending machine",
+ "subject": {
+  "category": "machine",
+  "summary": "Original compact rain-ready water vendor, with a recessed cyan product bay, separate payment spine and reachable open collection pocket. Nominal dimensions are original design choices, not surveyed measurements.",
+  "accuracy": "original",
+  "synthetic": false
+ },
+ "units": "m",
+ "seed": 29,
+ "sources": [
+  {
+   "id": "request",
+   "kind": "user_request",
+   "title": "RainHarbour street-prop brief: original water vending machine",
+   "rights": "permitted"
+  }
+ ],
+ "facts": [
+  {
+   "key": "width",
+   "value": 0.95,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "request",
+   "note": "Original design intent; compact pavement footprint, not a user measurement."
+  },
+  {
+   "key": "depth",
+   "value": 0.85,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "request",
+   "note": "Original design intent including rain lip."
+  },
+  {
+   "key": "height",
+   "value": 1.95,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "request",
+   "note": "Original design intent."
+  },
+  {
+   "key": "front",
+   "value": "+Z",
+   "certainty": "inferred",
+   "source": "request"
+  }
+ ],
+ "assets": [
+  {
+   "id": "water-header",
+   "path": "assets/water-header.png",
+   "sha256": "f050294dd38dec24d70afe7f6a7171ad84b9b4582637f96fd5de9b453a51efbc",
+   "media_type": "image/png",
+   "rights": "permitted",
+   "provenance": "generated-decorative",
+   "source": "request"
+  },
+  {
+   "id": "payment-panel",
+   "path": "assets/payment-panel.png",
+   "sha256": "c82380ba69a7fc4f31a409ba5b0c5c6b9096e6c76aba3688611b8c736b847079",
+   "media_type": "image/png",
+   "rights": "permitted",
+   "provenance": "generated-decorative",
+   "source": "request"
+  }
+ ],
+ "parts": [
+  {
+   "id": "sturdy-plinth",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.91,
+     0.12,
+     0.8
+    ]
+   },
+   "at": [
+    0,
+    0.06,
+    -0.025
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.5
+   }
+  },
+  {
+   "id": "rear-cabinet",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 1,
+   "basis": [
+    "height",
+    "depth"
+   ],
+   "shape": {
+    "axis": "y",
+    "height": 1.78,
+    "profile": [
+     [
+      -0.471,
+      -0.425
+     ],
+     [
+      -0.32,
+      -0.425
+     ],
+     [
+      -0.32,
+      -0.42
+     ],
+     [
+      0.32,
+      -0.42
+     ],
+     [
+      0.32,
+      -0.425
+     ],
+     [
+      0.471,
+      -0.425
+     ],
+     [
+      0.471,
+      -0.36
+     ],
+     [
+      0.466,
+      -0.36
+     ],
+     [
+      0.466,
+      0.28
+     ],
+     [
+      0.471,
+      0.28
+     ],
+     [
+      0.471,
+      0.375
+     ],
+     [
+      0.415,
+      0.375
+     ],
+     [
+      0.415,
+      0.175
+     ],
+     [
+      -0.415,
+      0.175
+     ],
+     [
+      -0.415,
+      0.375
+     ],
+     [
+      -0.471,
+      0.375
+     ]
+    ],
+    "type": "extrude",
+    "ribs": 2
+   },
+   "at": [
+    0.0,
+    0.12,
+    0.0
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.1
+   }
+  },
+  {
+   "id": "rain-lip",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 2,
+   "basis": [
+    "width",
+    "height",
+    "depth"
+   ],
+   "shape": {
+    "type": "box",
+    "size": [
+     0.95,
+     0.06,
+     0.85
+    ]
+   },
+   "at": [
+    0,
+    1.92,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.5
+   }
+  },
+  {
+   "id": "lower-apron-collection-sill",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "axis": "x",
+    "height": 0.83,
+    "profile": [
+     [
+      0.175,
+      0.12
+     ],
+     [
+      0.36,
+      0.12
+     ],
+     [
+      0.36,
+      0.15
+     ],
+     [
+      0.35,
+      0.165
+     ],
+     [
+      0.35,
+      0.435
+     ],
+     [
+      0.36,
+      0.45
+     ],
+     [
+      0.36,
+      0.47
+     ],
+     [
+      0.385,
+      0.47
+     ],
+     [
+      0.385,
+      0.525
+     ],
+     [
+      0.365,
+      0.525
+     ],
+     [
+      0.355,
+      0.51
+     ],
+     [
+      0.195,
+      0.51
+     ],
+     [
+      0.195,
+      0.7
+     ],
+     [
+      0.33,
+      0.79
+     ],
+     [
+      0.33,
+      0.82
+     ],
+     [
+      0.175,
+      0.72
+     ]
+    ],
+    "type": "extrude"
+   },
+   "at": [
+    -0.415,
+    0.0,
+    0.0
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.3
+   }
+  },
+  {
+   "id": "water-header",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.83,
+     0.24,
+     0.2
+    ]
+   },
+   "at": [
+    0,
+    1.78,
+    0.275
+   ],
+   "look": {
+    "fill": "dark",
+    "glow": 0.2
+   }
+  },
+  {
+   "id": "cyan-product-bay",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "axis": "x",
+    "height": 0.6,
+    "profile": [
+     [
+      0.1925,
+      0.96
+     ],
+     [
+      0.2275,
+      0.96
+     ],
+     [
+      0.2275,
+      1.6
+     ],
+     [
+      0.34,
+      1.6
+     ],
+     [
+      0.34,
+      1.66
+     ],
+     [
+      0.1925,
+      1.66
+     ]
+    ],
+    "type": "extrude"
+   },
+   "at": [
+    -0.405,
+    0.0,
+    0.0
+   ],
+   "look": {
+    "fill": "dark",
+    "glow": 0.8,
+    "tone": "data",
+    "weight": 1.5
+   }
+  },
+  {
+   "id": "solid-display-bottles",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "lathe",
+    "profile": [
+     [
+      0.045,
+      0
+     ],
+     [
+      0.049,
+      0.025
+     ],
+     [
+      0.049,
+      0.265
+     ],
+     [
+      0.025,
+      0.31
+     ],
+     [
+      0.022,
+      0.365
+     ],
+     [
+      0.026,
+      0.365
+     ],
+     [
+      0.026,
+      0.39
+     ],
+     [
+      0,
+      0.39
+     ]
+    ],
+    "segments": 8,
+    "meridians": 4
+   },
+   "at": [
+    -0.33,
+    0.995,
+    0.29
+   ],
+   "repeat": {
+    "count": 4,
+    "step": {
+     "at": [
+      0.15,
+      0,
+      0
+     ]
+    }
+   },
+   "look": {
+    "fill": "dark",
+    "tone": "data",
+    "weight": 1.1,
+    "glow": 0.35
+   }
+  },
+  {
+   "id": "product-shelf-pocket-roof",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.65,
+     0.05,
+     0.22
+    ]
+   },
+   "at": [
+    -0.085,
+    0.97,
+    0.285
+   ],
+   "look": {
+    "fill": "dark",
+    "glow": 0.5,
+    "tone": "data",
+    "weight": 1.2
+   }
+  },
+  {
+   "id": "separate-payment-control-spine",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "axis": "z",
+    "height": 0.17,
+    "profile": [
+     [
+      -0.09,
+      -0.35
+     ],
+     [
+      0.09,
+      -0.35
+     ],
+     [
+      0.09,
+      -0.3
+     ],
+     [
+      -0.055,
+      -0.3
+     ],
+     [
+      -0.055,
+      -0.27
+     ],
+     [
+      0.09,
+      -0.27
+     ],
+     [
+      0.09,
+      0.35
+     ],
+     [
+      -0.09,
+      0.35
+     ]
+    ],
+    "type": "extrude"
+   },
+   "at": [
+    0.315,
+    1.31,
+    0.2
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.2
+   }
+  },
+  {
+   "at": [
+    0.315,
+    1.38,
+    0.39
+   ],
+   "certainty": "inferred",
+   "id": "raised-contactless-reader",
+   "look": {
+    "fill": "dark",
+    "glow": 0.4,
+    "tone": "data",
+    "weight": 1.5
+   },
+   "role": "identity",
+   "shape": {
+    "size": [
+     0.105,
+     0.145,
+     0.04
+    ],
+    "type": "box"
+   },
+   "stage": 4
+  },
+  {
+   "at": [
+    0.315,
+    1.12,
+    0.369
+   ],
+   "certainty": "inferred",
+   "id": "selection-push-button",
+   "look": {
+    "fill": "dark",
+    "glow": 0.75,
+    "tone": "data",
+    "weight": 1.8
+   },
+   "role": "identity",
+   "rotate": [
+    -90.0,
+    0.0,
+    0.0
+   ],
+   "shape": {
+    "height": 0.022,
+    "radius": 0.033,
+    "rings": 1,
+    "segments": 12,
+    "type": "cylinder"
+   },
+   "stage": 4
+  },
+  {
+   "at": [
+    0.465,
+    0.32,
+    -0.12
+   ],
+   "certainty": "inferred",
+   "id": "side-intake-louver-comb",
+   "look": {
+    "fill": "dark",
+    "weight": 0.7
+   },
+   "role": "detail",
+   "shape": {
+    "axis": "x",
+    "height": 0.007,
+    "profile": [
+     [
+      -0.16,
+      -0.07
+     ],
+     [
+      0.16,
+      -0.07
+     ],
+     [
+      0.16,
+      -0.04
+     ],
+     [
+      -0.13,
+      -0.04
+     ],
+     [
+      -0.13,
+      -0.02
+     ],
+     [
+      0.16,
+      -0.02
+     ],
+     [
+      0.16,
+      0
+     ],
+     [
+      -0.13,
+      0
+     ],
+     [
+      -0.13,
+      0.02
+     ],
+     [
+      0.16,
+      0.02
+     ],
+     [
+      0.16,
+      0.04
+     ],
+     [
+      -0.13,
+      0.04
+     ],
+     [
+      -0.13,
+      0.06
+     ],
+     [
+      0.16,
+      0.06
+     ],
+     [
+      0.16,
+      0.08
+     ],
+     [
+      -0.16,
+      0.08
+     ]
+    ],
+    "type": "extrude"
+   },
+   "stage": 3
+  },
+  {
+   "id": "lower-service-latch",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.035,
+     0.065,
+     0.02
+    ]
+   },
+   "at": [
+    0.315,
+    0.3,
+    0.355
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.8
+   }
+  }
+ ],
+ "articulations": [],
+ "labels": [
+  {
+   "id": "water-title",
+   "part": "water-header",
+   "face": "front",
+   "text": "WATER / 水",
+   "role": "title",
+   "align": "center",
+   "region": [
+    0.03,
+    0.12,
+    0.97,
+    0.86
+   ]
+  },
+  {
+   "id": "reader-price",
+   "part": "raised-contactless-reader",
+   "face": "front",
+   "text": "¥5",
+   "role": "decorative",
+   "align": "center",
+   "region": [
+    0.03,
+    0.1,
+    0.97,
+    0.9
+   ]
+  }
+ ],
+ "anchors": {
+  "base": {
+   "point": [
+    0,
+    0,
+    0
+   ],
+   "up": [
+    0,
+    1,
+    0
+   ]
+  },
+  "front": {
+   "part": "water-header",
+   "face": "front"
+  }
+ },
+ "presentation": {
+  "framing": {
+   "yaw": 27,
+   "pitch": 10,
+   "fit": 1.05
+  },
+  "views": [
+   {
+    "distance": 1.05,
+    "id": "concept",
+    "label": "Street concept",
+    "pitch": 6,
+    "yaw": -24
+   },
+   {
+    "id": "front",
+    "label": "Product / payment / pocket",
+    "pitch": 0,
+    "yaw": 0
+   },
+   {
+    "distance": 1.8,
+    "id": "collection",
+    "label": "Reachable collection recess",
+    "pitch": 5,
+    "target": "lower-apron-collection-sill",
+    "yaw": -20
+   }
+  ],
+  "atmosphere": {
+   "haze": 0.15,
+   "grid": false,
+   "projector": false,
+   "motes": 0,
+   "scanlines": false,
+   "vignette": true
+  },
+  "occlusion": "xray",
+  "certainty_style": "subtle",
+  "background": "deep",
+  "still_pose": "closed",
+  "labels": true
+ },
+ "animation": {
+  "assembly": {
+   "style": "ceremony",
+   "seconds": 5,
+   "interference": false
+  },
+  "camera": {
+   "drift": 0,
+   "breathe": 0
+  },
+  "reduced_motion": "still"
+ },
+ "authoring": {
+  "tier": "standard",
+  "research": "unavailable",
+  "critic": {
+   "scene_sha256": "f49bb19ee413ac42dec49c5af4e5bc33afc6a9139447bbb0e76ee67b682a56ff",
+   "verdict": "good",
+   "scores": {
+    "silhouette": 3,
+    "proportions": 3,
+    "identity": 2,
+    "depth": 2,
+    "composition": 3,
+    "assembly": 3,
+    "motion": 3,
+    "density": 2,
+    "honesty": 3
+   },
+   "round": 7,
+   "defects": 3
+  },
+  "rounds": [
+   {
+    "round": 1,
+    "result": "baseline",
+    "minutes": 0.5,
+    "changes": [
+     "draft"
+    ],
+    "summary": "The supposed payment/control area is an empty vertical rectangle. No visible selection or payment affordance distinguishes a vending machine"
+   },
+   {
+    "round": 2,
+    "result": "kept",
+    "minutes": 2.2,
+    "changes": [
+     "D1",
+     "D2",
+     "D3"
+    ],
+    "summary": "The cabinet's large side and back faces and lower fascia are bare apart from outer edges. At close range these regions have no service acces"
+   },
+   {
+    "round": 3,
+    "result": "kept",
+    "minutes": 1.4,
+    "changes": [
+     "D3",
+     "D4"
+    ],
+    "summary": "The requested cyan-lit product display reads mainly as a thin cyan perimeter around three pale bottle outlines. Its large interior is dark a"
+   },
+   {
+    "round": 4,
+    "result": "kept",
+    "minutes": 1.1,
+    "changes": [
+     "D4",
+     "D6"
+    ],
+    "summary": "The requested cyan-lit product display reads mainly as two thin cyan horizontal bars around white bottle outlines. The actual products remai"
+   },
+   {
+    "round": 5,
+    "result": "kept",
+    "minutes": 1.4,
+    "changes": [
+     "D4"
+    ],
+    "summary": "The price and button establish a control strip, but the low narrow rectangle does not clearly communicate how payment is made. A working ven"
+   },
+   {
+    "round": 6,
+    "result": "kept",
+    "minutes": 0.9,
+    "changes": [
+     "D3"
+    ],
+    "summary": "The right strip establishes price and a button, but its lowest payment feature remains a tiny double rectangle. At hero scale it does not co"
+   },
+   {
+    "round": 7,
+    "result": "kept",
+    "minutes": 1.0,
+    "changes": [
+     "D3",
+     "D7"
+    ],
+    "summary": "The requested cyan-lit display reads primarily as a thin cyan header and shelf around a largely black bay. The upper half above the bottle s"
+   },
+   {
+    "round": 8,
+    "result": "reverted",
+    "minutes": 0.9,
+    "changes": [
+     "D3"
+    ],
+    "summary": "The requested cyan-lit product display reads primarily as two slim cyan rails around a dark bay. The four supported bottles identify the pro"
+   },
+   {
+    "round": 9,
+    "result": "reverted",
+    "minutes": 0.9,
+    "changes": [
+     "D3"
+    ],
+    "summary": "The requested cyan-lit display is conveyed primarily by its top and bottom rails and bottle outlines. The upper portion of the product bay i"
+   }
+  ],
+  "outcome": "good"
+ }
+}

@@ -1,0 +1,6426 @@
+{
+ "format": "construct-scene",
+ "version": 2,
+ "id": "seyfridtzska-huset-stortorget-18",
+ "title": "Seyfridtzska huset, Stortorget 18",
+ "subject": {
+  "category": "architecture",
+  "summary": "Photo-inferred reconstruction of the orange-ochre Seyfridtzska huset at Stortorget 18, Stockholm: one rounded central gable, curved shoulders, oculus, two window axes and black medieval-type anchor irons. Unseen rear and ground shopfront simplified.",
+  "accuracy": "approximate",
+  "synthetic": false
+ },
+ "units": "m",
+ "seed": 18,
+ "sources": [
+  {
+   "id": "request",
+   "kind": "user_request",
+   "title": "Assigned building and inferred envelope",
+   "rights": "user_private"
+  },
+  {
+   "id": "photo",
+   "kind": "reference_image",
+   "title": "User-supplied Ximonic (Simo Räsänen), Stortorget Christmas Market December 2022, CC BY-SA 4.0; perspective reference, lower facade occluded",
+   "rights": "permitted",
+   "ref": "User supplied image; CC BY-SA 4.0 https://creativecommons.org/licenses/by-sa/4.0/ ; derived visual reconstruction attribution retained."
+  },
+  {
+   "id": "cafe",
+   "kind": "document",
+   "title": "Chokladkoppen — About Chokladkoppen",
+   "rights": "reference_only",
+   "ref": "https://chokladkoppen.se/en/about-chokladkoppen"
+  },
+  {
+   "id": "history",
+   "kind": "document",
+   "title": "Seyfridtzska huset",
+   "rights": "reference_only",
+   "ref": "https://sv.wikipedia.org/wiki/Seyfridtzska_huset"
+  },
+  {
+   "id": "audit-model",
+   "kind": "generated",
+   "ref": "provenance-audit/before/constructs/seyfridtzska-huset-stortorget-18/scene.json",
+   "rights": "reference_only",
+   "title": "Agent-authored inferred envelope and hidden continuation; not user measurements"
+  },
+  {
+   "id": "stadsholmen2013",
+   "kind": "document",
+   "ref": "https://www.stadsholmen.se/app/uploads/2018/09/Echo1-FAKTABLAD.pdf",
+   "rights": "reference_only",
+   "title": "Stadsholmen / Stadsmuseum Echo 1 fact sheet, Stockholm 2013; f.d. Echo 1 = right/yellow No18"
+  },
+  {
+   "id": "plaque-audit",
+   "kind": "document",
+   "ref": "https://stockholmskallan.stockholm.se/post/27664",
+   "rights": "reference_only",
+   "title": "Stockholmskällan / Samfundet S:t Erik: Stortorget 18–20 Echo 1 plaque"
+  }
+ ],
+ "facts": [
+  {
+   "key": "width",
+   "value": 7.5,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "audit-model",
+   "note": "Agent production estimate, not a user-provided or published measurement."
+  },
+  {
+   "key": "eave_height",
+   "value": 18.575,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "audit-model",
+   "note": "Agent's historical photo-relative repair estimate; not human-supplied or surveyed. Value preserved without geometry change."
+  },
+  {
+   "key": "gable_apex",
+   "value": 24.075,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "audit-model",
+   "note": "Agent's historical photo-relative repair estimate; not human-supplied or surveyed. Value preserved without geometry change."
+  },
+  {
+   "key": "depth",
+   "value": 11,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "audit-model",
+   "note": "Agent production estimate for unseen continuation; not a user-provided or published measurement."
+  },
+  {
+   "key": "address",
+   "value": "18",
+   "certainty": "verified",
+   "source": "cafe",
+   "note": "Documented non-metric statement; not a verified measurement. Cafe explicitly identifies Stortorget 18."
+  },
+  {
+   "key": "building_name",
+   "value": "Seyfridtzska huset",
+   "certainty": "verified",
+   "source": "history",
+   "note": "Documented non-metric statement; not a verified measurement."
+  },
+  {
+   "certainty": "verified",
+   "key": "audit.medieval.masonry.storeys",
+   "note": "Documented non-metric statement; not a verified measurement. Medieval masonry across three storeys is NOT today's total storey count or a 1650 facade claim.",
+   "source": "plaque-audit",
+   "value": 3
+  },
+  {
+   "certainty": "verified",
+   "key": "audit.appearance.period",
+   "note": "Documented non-metric statement; not a verified measurement. Right-house appearance, distinct from red house built 1650. Fact sheet tentatively links curved gable to owner after 1728, not a firm construction date.",
+   "source": "plaque-audit",
+   "value": "Early 18th century"
+  },
+  {
+   "certainty": "verified",
+   "key": "audit.present.storeys",
+   "note": "Documented non-metric statement; not a verified measurement. F.d. Echo 1 exterior has five storeys with unconverted attic. Three refers only to surviving medieval masonry.",
+   "source": "stadsholmen2013",
+   "value": 5
+  },
+  {
+   "certainty": "verified",
+   "key": "audit.body.window.axes",
+   "note": "Documented non-metric statement; not a verified measurement. Two Stortorget window axes; precise sash divisions and spacing remain inferred.",
+   "source": "stadsholmen2013",
+   "value": 2
+  },
+  {
+   "certainty": "verified",
+   "key": "audit.facade.form.colour",
+   "note": "Documented non-metric statement; not a verified measurement. Descriptive colour, not calibrated paint. Gable profile coordinates remain inferred.",
+   "source": "stadsholmen2013",
+   "value": "Smooth rendered yellow facade, curved-sided gable and brown-painted small-pane window frames"
+  },
+  {
+   "certainty": "verified",
+   "key": "audit.anchor.irons",
+   "note": "Documented non-metric statement; not a verified measurement. Source identifies medieval-type irons and inverted Hans Rode initial anchor from 1590s extension; not proof of modeled hooks.",
+   "source": "stadsholmen2013",
+   "value": "Straight and cross-shaped medieval-type anchor irons; Hans Rode initials anchor now upside down"
+  },
+  {
+   "certainty": "verified",
+   "key": "audit.window.restoration",
+   "note": "Documented non-metric statement; not a verified measurement. Not all visible windows are original medieval components; exact model grids remain inferred.",
+   "source": "stadsholmen2013",
+   "value": "1904–1905 small-pane division restored; 1967 paired sashes installed"
+  }
+ ],
+ "assets": [],
+ "parts": [
+  {
+   "id": "ochre-main-masonry",
+   "label": "ochre main masonry",
+   "role": "mass",
+   "certainty": "inferred",
+   "source": "audit-model",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     7.5,
+     18.575,
+     11
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0,
+    0,
+    -5.5
+   ],
+   "look": {
+    "alpha": 0.38,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "faint",
+    "weight": 0.45,
+    "color": "#d78135"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "note": "Agent-authored envelope, support or hidden/oblique continuation. No measured thickness, rear geometry, roof seams or concealed flashing retrieved. Both size and shape remain inferred, not direct photographic evidence of unseen construction."
+  },
+  {
+   "id": "ochre-curvilinear-gable",
+   "label": "ochre curvilinear gable",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "stadsholmen2013",
+   "stage": 1,
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      -3.75,
+      17
+     ],
+     [
+      3.75,
+      17
+     ],
+     [
+      3.74,
+      17.65
+     ],
+     [
+      3.72,
+      17.8652
+     ],
+     [
+      3.65,
+      18.0424
+     ],
+     [
+      3.54,
+      18.1914
+     ],
+     [
+      3.37,
+      18.3222
+     ],
+     [
+      3.17,
+      18.4447
+     ],
+     [
+      2.9,
+      18.5688
+     ],
+     [
+      2.7142,
+      18.7043
+     ],
+     [
+      2.5389,
+      18.8611
+     ],
+     [
+      2.3844,
+      19.0492
+     ],
+     [
+      2.2611,
+      19.2785
+     ],
+     [
+      2.1795,
+      19.5588
+     ],
+     [
+      2.15,
+      19.9
+     ],
+     [
+      2.15,
+      20.8
+     ],
+     [
+      1.596,
+      20.8
+     ],
+     [
+      1.596,
+      20.98
+     ],
+     [
+      1.58235,
+      21.1784
+     ],
+     [
+      1.54161,
+      21.3734
+     ],
+     [
+      1.474515,
+      21.5617
+     ],
+     [
+      1.38222,
+      21.74
+     ],
+     [
+      1.266195,
+      21.9053
+     ],
+     [
+      1.12854,
+      22.0548
+     ],
+     [
+      0.971565,
+      22.1859
+     ],
+     [
+      0.798,
+      22.2964
+     ],
+     [
+      0.610785,
+      22.3843
+     ],
+     [
+      0.41307,
+      22.4482
+     ],
+     [
+      0.20832,
+      22.487
+     ],
+     [
+      0,
+      22.5
+     ],
+     [
+      -0.20832,
+      22.487
+     ],
+     [
+      -0.41307,
+      22.4482
+     ],
+     [
+      -0.610785,
+      22.3843
+     ],
+     [
+      -0.798,
+      22.2964
+     ],
+     [
+      -0.971565,
+      22.1859
+     ],
+     [
+      -1.12854,
+      22.0548
+     ],
+     [
+      -1.266195,
+      21.9053
+     ],
+     [
+      -1.38222,
+      21.74
+     ],
+     [
+      -1.474515,
+      21.5617
+     ],
+     [
+      -1.54161,
+      21.3734
+     ],
+     [
+      -1.58235,
+      21.1784
+     ],
+     [
+      -1.596,
+      20.98
+     ],
+     [
+      -1.596,
+      20.8
+     ],
+     [
+      -2.15,
+      20.8
+     ],
+     [
+      -2.15,
+      19.9
+     ],
+     [
+      -2.1795,
+      19.5588
+     ],
+     [
+      -2.2611,
+      19.2785
+     ],
+     [
+      -2.3844,
+      19.0492
+     ],
+     [
+      -2.5389,
+      18.8611
+     ],
+     [
+      -2.7142,
+      18.7043
+     ],
+     [
+      -2.9,
+      18.5688
+     ],
+     [
+      -3.17,
+      18.4447
+     ],
+     [
+      -3.37,
+      18.3222
+     ],
+     [
+      -3.54,
+      18.1914
+     ],
+     [
+      -3.65,
+      18.0424
+     ],
+     [
+      -3.72,
+      17.8652
+     ],
+     [
+      -3.74,
+      17.65
+     ]
+    ],
+    "height": 0.42,
+    "axis": "z"
+   },
+   "at": [
+    0.0,
+    1.575,
+    -0.42
+   ],
+   "look": {
+    "alpha": 0.38,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "faint",
+    "weight": 0.45,
+    "color": "#d78135"
+   },
+   "basis": [
+    "audit.appearance.period",
+    "audit.facade.form.colour",
+    "gable_apex"
+   ],
+   "note": "Municipal description confirms curved-sided yellow gable and early-1700s character, not these profiles or trim dimensions. Photo supports approximate silhouette only; depth, size and precise shape remain inferred."
+  },
+  {
+   "id": "slate-saddle-roof",
+   "label": "slate saddle roof",
+   "role": "structure",
+   "certainty": "inferred",
+   "source": "audit-model",
+   "stage": 1,
+   "shape": {
+    "type": "roof",
+    "size": [
+     7.36,
+     10.65
+    ],
+    "height": 4.0,
+    "style": "gable",
+    "ridge": "z",
+    "overhang": 0.02,
+    "courses": 0
+   },
+   "at": [
+    0.0,
+    18.535,
+    -5.63
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.65,
+    "alpha": 0.65,
+    "color": "#3f4548"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "note": "Agent-authored envelope, support or hidden/oblique continuation. No measured thickness, rear geometry, roof seams or concealed flashing retrieved. Both size and shape remain inferred, not direct photographic evidence of unseen construction."
+  },
+  {
+   "id": "warm-shadow-right-side",
+   "label": "warm shadow right side",
+   "role": "mass",
+   "certainty": "inferred",
+   "source": "audit-model",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.08,
+     18.475,
+     10.95
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    3.71,
+    0,
+    -5.5
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.65,
+    "alpha": 0.65,
+    "color": "#a8622d"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "note": "Agent-authored envelope, support or hidden/oblique continuation. No measured thickness, rear geometry, roof seams or concealed flashing retrieved. Both size and shape remain inferred, not direct photographic evidence of unseen construction."
+  },
+  {
+   "id": "chimney-stack",
+   "label": "chimney stack",
+   "role": "structure",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.04,
+     5.5,
+     1.1
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    2.6,
+    17.475,
+    -4.5
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.65,
+    "alpha": 0.65,
+    "color": "#3f4548"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "chimney-crown",
+   "label": "chimney crown",
+   "role": "structure",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.24,
+     0.18,
+     1.3
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    2.6,
+    22.825,
+    -4.5
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.65,
+    "alpha": 0.65,
+    "color": "#3f4548"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "chimney-cap",
+   "label": "chimney cap",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.36,
+     0.12,
+     1.42
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    2.6,
+    23.015,
+    -4.5
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.65,
+    "alpha": 0.65,
+    "color": "#3f4548"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "cream-eave-lower--1",
+   "label": "cream eave lower  1",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.77,
+     0.18,
+     0.4
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -2.365,
+    18.125,
+    0.04
+   ],
+   "look": {
+    "alpha": 1,
+    "fill": "dark",
+    "glow": 0.05,
+    "tone": "bright",
+    "weight": 1.45,
+    "color": "#e7d5ae"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "cream-eave-broad--1",
+   "label": "cream eave broad  1",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.82,
+     0.25,
+     0.6
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -2.365,
+    18.305,
+    0.06
+   ],
+   "look": {
+    "alpha": 1,
+    "fill": "dark",
+    "glow": 0.05,
+    "tone": "bright",
+    "weight": 1.45,
+    "color": "#e7d5ae"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "slate-eave-coping--1",
+   "label": "slate eave coping  1",
+   "role": "structure",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.87,
+     0.1,
+     0.64
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -2.365,
+    18.555,
+    0.07
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.65,
+    "alpha": 0.65,
+    "color": "#3f4548"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "cream-gable-pilaster--1",
+   "label": "cream gable pilaster  1",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "stadsholmen2013",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.6,
+     3.65,
+     0.3
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.89,
+    18.625,
+    0.08
+   ],
+   "look": {
+    "alpha": 1,
+    "fill": "dark",
+    "glow": 0.05,
+    "tone": "bright",
+    "weight": 1.45,
+    "color": "#e7d5ae"
+   },
+   "basis": [
+    "audit.appearance.period",
+    "audit.facade.form.colour",
+    "gable_apex"
+   ],
+   "note": "Municipal description confirms curved-sided yellow gable and early-1700s character, not these profiles or trim dimensions. Photo supports approximate silhouette only; depth, size and precise shape remain inferred."
+  },
+  {
+   "id": "cream-shoulder-foot--1",
+   "label": "cream shoulder foot  1",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "stadsholmen2013",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.85,
+     0.17,
+     0.14
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -3.12,
+    19.585,
+    0.055
+   ],
+   "look": {
+    "alpha": 1,
+    "fill": "dark",
+    "glow": 0.05,
+    "tone": "bright",
+    "weight": 1.45,
+    "color": "#e7d5ae"
+   },
+   "basis": [
+    "audit.appearance.period",
+    "audit.facade.form.colour",
+    "gable_apex"
+   ],
+   "note": "Municipal description confirms curved-sided yellow gable and early-1700s character, not these profiles or trim dimensions. Photo supports approximate silhouette only; depth, size and precise shape remain inferred."
+  },
+  {
+   "id": "cream-outer-shoulder--1",
+   "label": "cream outer shoulder  1",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "stadsholmen2013",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.29,
+     1.08,
+     0.12
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -3.52,
+    18.645,
+    0.055
+   ],
+   "look": {
+    "alpha": 1,
+    "fill": "dark",
+    "glow": 0.05,
+    "tone": "bright",
+    "weight": 1.45,
+    "color": "#e7d5ae"
+   },
+   "basis": [
+    "audit.appearance.period",
+    "audit.facade.form.colour",
+    "gable_apex"
+   ],
+   "note": "Municipal description confirms curved-sided yellow gable and early-1700s character, not these profiles or trim dimensions. Photo supports approximate silhouette only; depth, size and precise shape remain inferred."
+  },
+  {
+   "id": "cream-eave-lower-1",
+   "label": "cream eave lower 1",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.77,
+     0.18,
+     0.4
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    2.365,
+    18.125,
+    0.04
+   ],
+   "look": {
+    "alpha": 1,
+    "fill": "dark",
+    "glow": 0.05,
+    "tone": "bright",
+    "weight": 1.45,
+    "color": "#e7d5ae"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "cream-eave-broad-1",
+   "label": "cream eave broad 1",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.82,
+     0.25,
+     0.6
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    2.365,
+    18.305,
+    0.06
+   ],
+   "look": {
+    "alpha": 1,
+    "fill": "dark",
+    "glow": 0.05,
+    "tone": "bright",
+    "weight": 1.45,
+    "color": "#e7d5ae"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "slate-eave-coping-1",
+   "label": "slate eave coping 1",
+   "role": "structure",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.87,
+     0.1,
+     0.64
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    2.365,
+    18.555,
+    0.07
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.65,
+    "alpha": 0.65,
+    "color": "#3f4548"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "cream-gable-pilaster-1",
+   "label": "cream gable pilaster 1",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "stadsholmen2013",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.6,
+     3.65,
+     0.3
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    1.89,
+    18.625,
+    0.08
+   ],
+   "look": {
+    "alpha": 1,
+    "fill": "dark",
+    "glow": 0.05,
+    "tone": "bright",
+    "weight": 1.45,
+    "color": "#e7d5ae"
+   },
+   "basis": [
+    "audit.appearance.period",
+    "audit.facade.form.colour",
+    "gable_apex"
+   ],
+   "note": "Municipal description confirms curved-sided yellow gable and early-1700s character, not these profiles or trim dimensions. Photo supports approximate silhouette only; depth, size and precise shape remain inferred."
+  },
+  {
+   "id": "cream-shoulder-foot-1",
+   "label": "cream shoulder foot 1",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "stadsholmen2013",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.85,
+     0.17,
+     0.14
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    3.12,
+    19.585,
+    0.055
+   ],
+   "look": {
+    "alpha": 1,
+    "fill": "dark",
+    "glow": 0.05,
+    "tone": "bright",
+    "weight": 1.45,
+    "color": "#e7d5ae"
+   },
+   "basis": [
+    "audit.appearance.period",
+    "audit.facade.form.colour",
+    "gable_apex"
+   ],
+   "note": "Municipal description confirms curved-sided yellow gable and early-1700s character, not these profiles or trim dimensions. Photo supports approximate silhouette only; depth, size and precise shape remain inferred."
+  },
+  {
+   "id": "cream-outer-shoulder-1",
+   "label": "cream outer shoulder 1",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "stadsholmen2013",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.29,
+     1.08,
+     0.12
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    3.52,
+    18.645,
+    0.055
+   ],
+   "look": {
+    "alpha": 1,
+    "fill": "dark",
+    "glow": 0.05,
+    "tone": "bright",
+    "weight": 1.45,
+    "color": "#e7d5ae"
+   },
+   "basis": [
+    "audit.appearance.period",
+    "audit.facade.form.colour",
+    "gable_apex"
+   ],
+   "note": "Municipal description confirms curved-sided yellow gable and early-1700s character, not these profiles or trim dimensions. Photo supports approximate silhouette only; depth, size and precise shape remain inferred."
+  },
+  {
+   "id": "cream-crown-spring-ledge",
+   "label": "cream crown spring ledge",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "stadsholmen2013",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     4.37,
+     0.17,
+     0.17
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0.0,
+    21.925,
+    0.07
+   ],
+   "look": {
+    "alpha": 1,
+    "fill": "dark",
+    "glow": 0.05,
+    "tone": "bright",
+    "weight": 1.45,
+    "color": "#e7d5ae"
+   },
+   "basis": [
+    "audit.appearance.period",
+    "audit.facade.form.colour",
+    "gable_apex"
+   ],
+   "note": "Municipal description confirms curved-sided yellow gable and early-1700s character, not these profiles or trim dimensions. Photo supports approximate silhouette only; depth, size and precise shape remain inferred."
+  },
+  {
+   "id": "cream-curved-gable-rim",
+   "label": "cream curved gable rim",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "stadsholmen2013",
+   "stage": 2,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      3.75,
+      17,
+      0.09
+     ],
+     [
+      3.74,
+      17.65,
+      0.09
+     ],
+     [
+      3.72,
+      17.8652,
+      0.09
+     ],
+     [
+      3.65,
+      18.0424,
+      0.09
+     ],
+     [
+      3.54,
+      18.1914,
+      0.09
+     ],
+     [
+      3.37,
+      18.3222,
+      0.09
+     ],
+     [
+      3.17,
+      18.4447,
+      0.09
+     ],
+     [
+      2.9,
+      18.5688,
+      0.09
+     ],
+     [
+      2.7142,
+      18.7043,
+      0.09
+     ],
+     [
+      2.5389,
+      18.8611,
+      0.09
+     ],
+     [
+      2.3844,
+      19.0492,
+      0.09
+     ],
+     [
+      2.2611,
+      19.2785,
+      0.09
+     ],
+     [
+      2.1795,
+      19.5588,
+      0.09
+     ],
+     [
+      2.15,
+      19.9,
+      0.09
+     ],
+     [
+      2.15,
+      20.8,
+      0.09
+     ],
+     [
+      1.596,
+      20.8,
+      0.09
+     ],
+     [
+      1.596,
+      20.98,
+      0.09
+     ],
+     [
+      1.58235,
+      21.1784,
+      0.09
+     ],
+     [
+      1.54161,
+      21.3734,
+      0.09
+     ],
+     [
+      1.474515,
+      21.5617,
+      0.09
+     ],
+     [
+      1.38222,
+      21.74,
+      0.09
+     ],
+     [
+      1.266195,
+      21.9053,
+      0.09
+     ],
+     [
+      1.12854,
+      22.0548,
+      0.09
+     ],
+     [
+      0.971565,
+      22.1859,
+      0.09
+     ],
+     [
+      0.798,
+      22.2964,
+      0.09
+     ],
+     [
+      0.610785,
+      22.3843,
+      0.09
+     ],
+     [
+      0.41307,
+      22.4482,
+      0.09
+     ],
+     [
+      0.20832,
+      22.487,
+      0.09
+     ],
+     [
+      0,
+      22.5,
+      0.09
+     ],
+     [
+      -0.20832,
+      22.487,
+      0.09
+     ],
+     [
+      -0.41307,
+      22.4482,
+      0.09
+     ],
+     [
+      -0.610785,
+      22.3843,
+      0.09
+     ],
+     [
+      -0.798,
+      22.2964,
+      0.09
+     ],
+     [
+      -0.971565,
+      22.1859,
+      0.09
+     ],
+     [
+      -1.12854,
+      22.0548,
+      0.09
+     ],
+     [
+      -1.266195,
+      21.9053,
+      0.09
+     ],
+     [
+      -1.38222,
+      21.74,
+      0.09
+     ],
+     [
+      -1.474515,
+      21.5617,
+      0.09
+     ],
+     [
+      -1.54161,
+      21.3734,
+      0.09
+     ],
+     [
+      -1.58235,
+      21.1784,
+      0.09
+     ],
+     [
+      -1.596,
+      20.98,
+      0.09
+     ],
+     [
+      -1.596,
+      20.8,
+      0.09
+     ],
+     [
+      -2.15,
+      20.8,
+      0.09
+     ],
+     [
+      -2.15,
+      19.9,
+      0.09
+     ],
+     [
+      -2.1795,
+      19.5588,
+      0.09
+     ],
+     [
+      -2.2611,
+      19.2785,
+      0.09
+     ],
+     [
+      -2.3844,
+      19.0492,
+      0.09
+     ],
+     [
+      -2.5389,
+      18.8611,
+      0.09
+     ],
+     [
+      -2.7142,
+      18.7043,
+      0.09
+     ],
+     [
+      -2.9,
+      18.5688,
+      0.09
+     ],
+     [
+      -3.17,
+      18.4447,
+      0.09
+     ],
+     [
+      -3.37,
+      18.3222,
+      0.09
+     ],
+     [
+      -3.54,
+      18.1914,
+      0.09
+     ],
+     [
+      -3.65,
+      18.0424,
+      0.09
+     ],
+     [
+      -3.72,
+      17.8652,
+      0.09
+     ],
+     [
+      -3.74,
+      17.65,
+      0.09
+     ],
+     [
+      -3.75,
+      17,
+      0.09
+     ]
+    ],
+    "radius": 0.065,
+    "sides": 6,
+    "samples": 1,
+    "longitudinal": 3,
+    "ring_every": 0
+   },
+   "at": [
+    0.0,
+    1.575,
+    0.0
+   ],
+   "look": {
+    "alpha": 1,
+    "fill": "dark",
+    "glow": 0.05,
+    "tone": "bright",
+    "weight": 1.45,
+    "color": "#e7d5ae"
+   },
+   "basis": [
+    "audit.appearance.period",
+    "audit.facade.form.colour",
+    "gable_apex"
+   ],
+   "note": "Municipal description confirms curved-sided yellow gable and early-1700s character, not these profiles or trim dimensions. Photo supports approximate silhouette only; depth, size and precise shape remain inferred."
+  },
+  {
+   "id": "glazing-main-0-0",
+   "label": "glazing main 0 0",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.52,
+     2.4,
+     0.035
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.75,
+    5.35,
+    0.126
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.45,
+    "alpha": 0.7,
+    "color": "#283943"
+   },
+   "basis": [
+    "audit.body.window.axes",
+    "audit.present.storeys",
+    "audit.window.restoration",
+    "width",
+    "eave_height"
+   ],
+   "note": "Photo shows two window axes across three main rectangular-window rows; municipal text confirms two axes and five present storeys overall. This does not verify exact sash geometry, spacing or height; both axes of certainty remain inferred."
+  },
+  {
+   "id": "dark-bay-jamb-main-0-0--1",
+   "label": "dark bay jamb main 0 0  1",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.095,
+     2.58,
+     0.1
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -2.545,
+    5.26,
+    0.15
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 1.2,
+    "color": "#302d27"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "scale": [
+    1.35,
+    1.0,
+    1.5
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-bay-jamb-main-0-0-1",
+   "label": "dark bay jamb main 0 0 1",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.095,
+     2.58,
+     0.1
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -0.955,
+    5.26,
+    0.15
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 1.2,
+    "color": "#302d27"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "scale": [
+    1.35,
+    1.0,
+    1.5
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-bay-head-main-0-0",
+   "label": "dark bay head main 0 0",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.68,
+     0.09,
+     0.11
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.75,
+    7.75,
+    0.15
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 1.2,
+    "color": "#302d27"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "scale": [
+    1.0,
+    1.25,
+    1.5
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-bay-sill-main-0-0",
+   "label": "dark bay sill main 0 0",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.68,
+     0.09,
+     0.11
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.75,
+    5.26,
+    0.15
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 1.2,
+    "color": "#302d27"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "scale": [
+    1.0,
+    1.25,
+    1.5
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-mullion-main-0-0-1",
+   "label": "dark mullion main 0 0 1",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.042,
+     2.4,
+     0.07
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -2.13,
+    5.35,
+    0.175
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 0.75,
+    "color": "#302d27"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-mullion-main-0-0-2",
+   "label": "dark mullion main 0 0 2",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.042,
+     2.4,
+     0.07
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.37,
+    5.35,
+    0.175
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 0.75,
+    "color": "#302d27"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "stone-sill-ledge-main-0-0",
+   "label": "stone sill ledge main 0 0",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.76,
+     0.065,
+     0.16
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.75,
+    5.195,
+    0.11
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.65,
+    "alpha": 0.65,
+    "color": "#e7d5ae"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "glazing-main-0-1",
+   "label": "glazing main 0 1",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.52,
+     2.4,
+     0.035
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    1.75,
+    5.35,
+    0.126
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.45,
+    "alpha": 0.7,
+    "color": "#283943"
+   },
+   "basis": [
+    "audit.body.window.axes",
+    "audit.present.storeys",
+    "audit.window.restoration",
+    "width",
+    "eave_height"
+   ],
+   "note": "Photo shows two window axes across three main rectangular-window rows; municipal text confirms two axes and five present storeys overall. This does not verify exact sash geometry, spacing or height; both axes of certainty remain inferred."
+  },
+  {
+   "id": "dark-bay-jamb-main-0-1--1",
+   "label": "dark bay jamb main 0 1  1",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.095,
+     2.58,
+     0.1
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0.955,
+    5.26,
+    0.15
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 1.2,
+    "color": "#302d27"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "scale": [
+    1.35,
+    1.0,
+    1.5
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-bay-jamb-main-0-1-1",
+   "label": "dark bay jamb main 0 1 1",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.095,
+     2.58,
+     0.1
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    2.545,
+    5.26,
+    0.15
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 1.2,
+    "color": "#302d27"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "scale": [
+    1.35,
+    1.0,
+    1.5
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-bay-head-main-0-1",
+   "label": "dark bay head main 0 1",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.68,
+     0.09,
+     0.11
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    1.75,
+    7.75,
+    0.15
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 1.2,
+    "color": "#302d27"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "scale": [
+    1.0,
+    1.25,
+    1.5
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-bay-sill-main-0-1",
+   "label": "dark bay sill main 0 1",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.68,
+     0.09,
+     0.11
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    1.75,
+    5.26,
+    0.15
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 1.2,
+    "color": "#302d27"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "scale": [
+    1.0,
+    1.25,
+    1.5
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-mullion-main-0-1-1",
+   "label": "dark mullion main 0 1 1",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.042,
+     2.4,
+     0.07
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    1.37,
+    5.35,
+    0.175
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 0.75,
+    "color": "#302d27"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-mullion-main-0-1-2",
+   "label": "dark mullion main 0 1 2",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.042,
+     2.4,
+     0.07
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    2.13,
+    5.35,
+    0.175
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 0.75,
+    "color": "#302d27"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "stone-sill-ledge-main-0-1",
+   "label": "stone sill ledge main 0 1",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.76,
+     0.065,
+     0.16
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    1.75,
+    5.195,
+    0.11
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.65,
+    "alpha": 0.65,
+    "color": "#e7d5ae"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "glazing-main-1-0",
+   "label": "glazing main 1 0",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.52,
+     2.385,
+     0.035
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.75,
+    10.275,
+    0.126
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.45,
+    "alpha": 0.7,
+    "color": "#283943"
+   },
+   "basis": [
+    "audit.body.window.axes",
+    "audit.present.storeys",
+    "audit.window.restoration",
+    "width",
+    "eave_height"
+   ],
+   "note": "Photo shows two window axes across three main rectangular-window rows; municipal text confirms two axes and five present storeys overall. This does not verify exact sash geometry, spacing or height; both axes of certainty remain inferred."
+  },
+  {
+   "id": "dark-bay-jamb-main-1-0--1",
+   "label": "dark bay jamb main 1 0  1",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.095,
+     2.565,
+     0.1
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -2.545,
+    10.185,
+    0.15
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 1.2,
+    "color": "#302d27"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "scale": [
+    1.35,
+    1.0,
+    1.5
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-bay-jamb-main-1-0-1",
+   "label": "dark bay jamb main 1 0 1",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.095,
+     2.565,
+     0.1
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -0.955,
+    10.185,
+    0.15
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 1.2,
+    "color": "#302d27"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "scale": [
+    1.35,
+    1.0,
+    1.5
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-bay-head-main-1-0",
+   "label": "dark bay head main 1 0",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.68,
+     0.09,
+     0.11
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.75,
+    12.66,
+    0.15
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 1.2,
+    "color": "#302d27"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "scale": [
+    1.0,
+    1.25,
+    1.5
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-bay-sill-main-1-0",
+   "label": "dark bay sill main 1 0",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.68,
+     0.09,
+     0.11
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.75,
+    10.185,
+    0.15
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 1.2,
+    "color": "#302d27"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "scale": [
+    1.0,
+    1.25,
+    1.5
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-mullion-main-1-0-1",
+   "label": "dark mullion main 1 0 1",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.042,
+     2.385,
+     0.07
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -2.13,
+    10.275,
+    0.175
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 0.75,
+    "color": "#302d27"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-mullion-main-1-0-2",
+   "label": "dark mullion main 1 0 2",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.042,
+     2.385,
+     0.07
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.37,
+    10.275,
+    0.175
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 0.75,
+    "color": "#302d27"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "stone-sill-ledge-main-1-0",
+   "label": "stone sill ledge main 1 0",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.76,
+     0.065,
+     0.16
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.75,
+    10.12,
+    0.11
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.65,
+    "alpha": 0.65,
+    "color": "#e7d5ae"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "glazing-main-1-1",
+   "label": "glazing main 1 1",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.52,
+     2.385,
+     0.035
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    1.75,
+    10.275,
+    0.126
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.45,
+    "alpha": 0.7,
+    "color": "#283943"
+   },
+   "basis": [
+    "audit.body.window.axes",
+    "audit.present.storeys",
+    "audit.window.restoration",
+    "width",
+    "eave_height"
+   ],
+   "note": "Photo shows two window axes across three main rectangular-window rows; municipal text confirms two axes and five present storeys overall. This does not verify exact sash geometry, spacing or height; both axes of certainty remain inferred."
+  },
+  {
+   "id": "dark-bay-jamb-main-1-1--1",
+   "label": "dark bay jamb main 1 1  1",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.095,
+     2.565,
+     0.1
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0.955,
+    10.185,
+    0.15
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 1.2,
+    "color": "#302d27"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "scale": [
+    1.35,
+    1.0,
+    1.5
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-bay-jamb-main-1-1-1",
+   "label": "dark bay jamb main 1 1 1",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.095,
+     2.565,
+     0.1
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    2.545,
+    10.185,
+    0.15
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 1.2,
+    "color": "#302d27"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "scale": [
+    1.35,
+    1.0,
+    1.5
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-bay-head-main-1-1",
+   "label": "dark bay head main 1 1",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.68,
+     0.09,
+     0.11
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    1.75,
+    12.66,
+    0.15
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 1.2,
+    "color": "#302d27"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "scale": [
+    1.0,
+    1.25,
+    1.5
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-bay-sill-main-1-1",
+   "label": "dark bay sill main 1 1",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.68,
+     0.09,
+     0.11
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    1.75,
+    10.185,
+    0.15
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 1.2,
+    "color": "#302d27"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "scale": [
+    1.0,
+    1.25,
+    1.5
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-mullion-main-1-1-1",
+   "label": "dark mullion main 1 1 1",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.042,
+     2.385,
+     0.07
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    1.37,
+    10.275,
+    0.175
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 0.75,
+    "color": "#302d27"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-mullion-main-1-1-2",
+   "label": "dark mullion main 1 1 2",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.042,
+     2.385,
+     0.07
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    2.13,
+    10.275,
+    0.175
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 0.75,
+    "color": "#302d27"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "stone-sill-ledge-main-1-1",
+   "label": "stone sill ledge main 1 1",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.76,
+     0.065,
+     0.16
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    1.75,
+    10.12,
+    0.11
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.65,
+    "alpha": 0.65,
+    "color": "#e7d5ae"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "glazing-main-2-0",
+   "label": "glazing main 2 0",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.52,
+     1.65,
+     0.035
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.75,
+    15.15,
+    0.126
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.45,
+    "alpha": 0.7,
+    "color": "#283943"
+   },
+   "basis": [
+    "audit.body.window.axes",
+    "audit.present.storeys",
+    "audit.window.restoration",
+    "width",
+    "eave_height"
+   ],
+   "note": "Photo shows two window axes across three main rectangular-window rows; municipal text confirms two axes and five present storeys overall. This does not verify exact sash geometry, spacing or height; both axes of certainty remain inferred."
+  },
+  {
+   "id": "dark-bay-jamb-main-2-0--1",
+   "label": "dark bay jamb main 2 0  1",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.095,
+     1.8299999999999998,
+     0.1
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -2.545,
+    15.06,
+    0.15
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 1.2,
+    "color": "#302d27"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "scale": [
+    1.35,
+    1.0,
+    1.5
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-bay-jamb-main-2-0-1",
+   "label": "dark bay jamb main 2 0 1",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.095,
+     1.8299999999999998,
+     0.1
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -0.955,
+    15.06,
+    0.15
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 1.2,
+    "color": "#302d27"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "scale": [
+    1.35,
+    1.0,
+    1.5
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-bay-head-main-2-0",
+   "label": "dark bay head main 2 0",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.68,
+     0.09,
+     0.11
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.75,
+    16.8,
+    0.15
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 1.2,
+    "color": "#302d27"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "scale": [
+    1.0,
+    1.25,
+    1.5
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-bay-sill-main-2-0",
+   "label": "dark bay sill main 2 0",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.68,
+     0.09,
+     0.11
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.75,
+    15.06,
+    0.15
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 1.2,
+    "color": "#302d27"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "scale": [
+    1.0,
+    1.25,
+    1.5
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-mullion-main-2-0-1",
+   "label": "dark mullion main 2 0 1",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.042,
+     1.65,
+     0.07
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -2.13,
+    15.15,
+    0.175
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 0.75,
+    "color": "#302d27"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-mullion-main-2-0-2",
+   "label": "dark mullion main 2 0 2",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.042,
+     1.65,
+     0.07
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.37,
+    15.15,
+    0.175
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 0.75,
+    "color": "#302d27"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "stone-sill-ledge-main-2-0",
+   "label": "stone sill ledge main 2 0",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.76,
+     0.065,
+     0.16
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.75,
+    14.995,
+    0.11
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.65,
+    "alpha": 0.65,
+    "color": "#e7d5ae"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "glazing-main-2-1",
+   "label": "glazing main 2 1",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.52,
+     1.65,
+     0.035
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    1.75,
+    15.15,
+    0.126
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.45,
+    "alpha": 0.7,
+    "color": "#283943"
+   },
+   "basis": [
+    "audit.body.window.axes",
+    "audit.present.storeys",
+    "audit.window.restoration",
+    "width",
+    "eave_height"
+   ],
+   "note": "Photo shows two window axes across three main rectangular-window rows; municipal text confirms two axes and five present storeys overall. This does not verify exact sash geometry, spacing or height; both axes of certainty remain inferred."
+  },
+  {
+   "id": "dark-bay-jamb-main-2-1--1",
+   "label": "dark bay jamb main 2 1  1",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.095,
+     1.8299999999999998,
+     0.1
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0.955,
+    15.06,
+    0.15
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 1.2,
+    "color": "#302d27"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "scale": [
+    1.35,
+    1.0,
+    1.5
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-bay-jamb-main-2-1-1",
+   "label": "dark bay jamb main 2 1 1",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.095,
+     1.8299999999999998,
+     0.1
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    2.545,
+    15.06,
+    0.15
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 1.2,
+    "color": "#302d27"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "scale": [
+    1.35,
+    1.0,
+    1.5
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-bay-head-main-2-1",
+   "label": "dark bay head main 2 1",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.68,
+     0.09,
+     0.11
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    1.75,
+    16.8,
+    0.15
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 1.2,
+    "color": "#302d27"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "scale": [
+    1.0,
+    1.25,
+    1.5
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-bay-sill-main-2-1",
+   "label": "dark bay sill main 2 1",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.68,
+     0.09,
+     0.11
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    1.75,
+    15.06,
+    0.15
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 1.2,
+    "color": "#302d27"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "scale": [
+    1.0,
+    1.25,
+    1.5
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-mullion-main-2-1-1",
+   "label": "dark mullion main 2 1 1",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.042,
+     1.65,
+     0.07
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    1.37,
+    15.15,
+    0.175
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 0.75,
+    "color": "#302d27"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-mullion-main-2-1-2",
+   "label": "dark mullion main 2 1 2",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.042,
+     1.65,
+     0.07
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    2.13,
+    15.15,
+    0.175
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 0.75,
+    "color": "#302d27"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "stone-sill-ledge-main-2-1",
+   "label": "stone sill ledge main 2 1",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.76,
+     0.065,
+     0.16
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    1.75,
+    14.995,
+    0.11
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.65,
+    "alpha": 0.65,
+    "color": "#e7d5ae"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "glazing-centred-gable",
+   "label": "glazing centred gable",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.334,
+     1.73,
+     0.035
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0.0,
+    19.225,
+    0.126
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.45,
+    "alpha": 0.7,
+    "color": "#283943"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-bay-jamb-centred-gable--1",
+   "label": "dark bay jamb centred gable  1",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.095,
+     1.91,
+     0.1
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -0.6992,
+    19.135,
+    0.15
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 1.2,
+    "color": "#302d27"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "scale": [
+    1.35,
+    1.0,
+    1.5
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-bay-jamb-centred-gable-1",
+   "label": "dark bay jamb centred gable 1",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.095,
+     1.91,
+     0.1
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0.6992,
+    19.135,
+    0.15
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 1.2,
+    "color": "#302d27"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "scale": [
+    1.35,
+    1.0,
+    1.5
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-bay-head-centred-gable",
+   "label": "dark bay head centred gable",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.48,
+     0.09,
+     0.11
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0.0,
+    20.955,
+    0.15
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 1.2,
+    "color": "#302d27"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "scale": [
+    1.0,
+    1.25,
+    1.5
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-bay-sill-centred-gable",
+   "label": "dark bay sill centred gable",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.48,
+     0.09,
+     0.11
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0.0,
+    19.135,
+    0.15
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 1.2,
+    "color": "#302d27"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "scale": [
+    1.0,
+    1.25,
+    1.5
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-mullion-centred-gable-1",
+   "label": "dark mullion centred gable 1",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.042,
+     1.73,
+     0.07
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -0.3335,
+    19.225,
+    0.175
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 0.75,
+    "color": "#302d27"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-mullion-centred-gable-2",
+   "label": "dark mullion centred gable 2",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.042,
+     1.73,
+     0.07
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0.3335,
+    19.225,
+    0.175
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 0.75,
+    "color": "#302d27"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "stone-sill-ledge-centred-gable",
+   "label": "stone sill ledge centred gable",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.56,
+     0.065,
+     0.16
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0.0,
+    19.07,
+    0.11
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.65,
+    "alpha": 0.65,
+    "color": "#e7d5ae"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "oculus-glazing",
+   "label": "oculus glazing",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 3,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.468,
+    "height": 0.05,
+    "segments": 32,
+    "caps": true
+   },
+   "at": [
+    0.0,
+    22.825,
+    0.08
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.8,
+    "alpha": 0.9,
+    "color": "#283943"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "rotate": [
+    90,
+    0,
+    0
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "cream-oculus-ring",
+   "label": "cream oculus ring",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 3,
+   "shape": {
+    "type": "torus",
+    "major": 0.52,
+    "minor": 0.105,
+    "segments": 32,
+    "sides": 6,
+    "rings": 1
+   },
+   "at": [
+    0.0,
+    22.825,
+    0.12
+   ],
+   "look": {
+    "alpha": 1,
+    "fill": "dark",
+    "glow": 0.05,
+    "tone": "bright",
+    "weight": 1.45,
+    "color": "#e7d5ae"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "rotate": [
+    90,
+    0,
+    0
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "black-straight-tie-0",
+   "label": "black straight tie 0",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "stadsholmen2013",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.035,
+     0.62,
+     0.04
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -3.2,
+    12.275,
+    0.07
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.65,
+    "alpha": 0.65,
+    "color": "#302d27"
+   },
+   "basis": [
+    "audit.anchor.irons"
+   ],
+   "note": "Municipal text documents straight medieval-type anchor irons; exact modeled length, orientation and placement remain inferred, not measured."
+  },
+  {
+   "id": "black-straight-tie-1",
+   "label": "black straight tie 1",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "stadsholmen2013",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.035,
+     0.62,
+     0.04
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    3.2,
+    12.275,
+    0.07
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.65,
+    "alpha": 0.65,
+    "color": "#302d27"
+   },
+   "basis": [
+    "audit.anchor.irons"
+   ],
+   "note": "Municipal text documents straight medieval-type anchor irons; exact modeled length, orientation and placement remain inferred, not measured."
+  },
+  {
+   "id": "stone-plinth",
+   "label": "stone plinth",
+   "role": "structure",
+   "certainty": "inferred",
+   "source": "audit-model",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     7.5,
+     0.28,
+     0.13
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0,
+    0,
+    0.015
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.65,
+    "alpha": 0.65,
+    "color": "#958475"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "note": "Agent-authored envelope, support or hidden/oblique continuation. No measured thickness, rear geometry, roof seams or concealed flashing retrieved. Both size and shape remain inferred, not direct photographic evidence of unseen construction."
+  },
+  {
+   "id": "glazing-cafe-0",
+   "label": "glazing cafe 0",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "stadsholmen2013",
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.65,
+     2.5,
+     0.035
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.75,
+    0.45,
+    0.126
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.45,
+    "alpha": 0.7,
+    "color": "#283943"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "note": "Municipal text describes a ground-floor display window beside a glazed portal with simple sandstone surround. Existing paired cafe opening model is only a simplified inference, not an exact match; market photo obscures ground details. No geometry corrected."
+  },
+  {
+   "id": "dark-bay-jamb-cafe-0--1",
+   "label": "dark bay jamb cafe 0  1",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.095,
+     2.68,
+     0.1
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -2.61,
+    0.36,
+    0.15
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 1.2,
+    "color": "#302d27"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "scale": [
+    1.35,
+    1.0,
+    1.5
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-bay-jamb-cafe-0-1",
+   "label": "dark bay jamb cafe 0 1",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.095,
+     2.68,
+     0.1
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -0.89,
+    0.36,
+    0.15
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 1.2,
+    "color": "#302d27"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "scale": [
+    1.35,
+    1.0,
+    1.5
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-bay-head-cafe-0",
+   "label": "dark bay head cafe 0",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.8099999999999998,
+     0.09,
+     0.11
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.75,
+    2.95,
+    0.15
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 1.2,
+    "color": "#302d27"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "scale": [
+    1.0,
+    1.25,
+    1.5
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-bay-sill-cafe-0",
+   "label": "dark bay sill cafe 0",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.8099999999999998,
+     0.09,
+     0.11
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.75,
+    0.36,
+    0.15
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 1.2,
+    "color": "#302d27"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "scale": [
+    1.0,
+    1.25,
+    1.5
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-mullion-cafe-0-1",
+   "label": "dark mullion cafe 0 1",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.042,
+     2.5,
+     0.07
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.75,
+    0.45,
+    0.175
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 0.75,
+    "color": "#302d27"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-transom-cafe-0-1",
+   "label": "dark transom cafe 0 1",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.65,
+     0.037,
+     0.07
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.75,
+    1.264833,
+    0.176
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 0.75,
+    "color": "#302d27"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-transom-cafe-0-2",
+   "label": "dark transom cafe 0 2",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.65,
+     0.037,
+     0.07
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.75,
+    2.098167,
+    0.176
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 0.75,
+    "color": "#302d27"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "stone-sill-ledge-cafe-0",
+   "label": "stone sill ledge cafe 0",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.89,
+     0.065,
+     0.16
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.75,
+    0.29500000000000004,
+    0.11
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.65,
+    "alpha": 0.65,
+    "color": "#e7d5ae"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-door-bottom-0",
+   "label": "dark door bottom 0",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "stadsholmen2013",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.52,
+     0.56,
+     0.05
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.75,
+    0.45,
+    0.16
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 0.75,
+    "color": "#302d27"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "note": "Municipal text describes a ground-floor display window beside a glazed portal with simple sandstone surround. Existing paired cafe opening model is only a simplified inference, not an exact match; market photo obscures ground details. No geometry corrected."
+  },
+  {
+   "id": "glazing-cafe-1",
+   "label": "glazing cafe 1",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "stadsholmen2013",
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.65,
+     2.5,
+     0.035
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    1.75,
+    0.45,
+    0.126
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.45,
+    "alpha": 0.7,
+    "color": "#283943"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "note": "Municipal text describes a ground-floor display window beside a glazed portal with simple sandstone surround. Existing paired cafe opening model is only a simplified inference, not an exact match; market photo obscures ground details. No geometry corrected."
+  },
+  {
+   "id": "dark-bay-jamb-cafe-1--1",
+   "label": "dark bay jamb cafe 1  1",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.095,
+     2.68,
+     0.1
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0.89,
+    0.36,
+    0.15
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 1.2,
+    "color": "#302d27"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "scale": [
+    1.35,
+    1.0,
+    1.5
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-bay-jamb-cafe-1-1",
+   "label": "dark bay jamb cafe 1 1",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.095,
+     2.68,
+     0.1
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    2.61,
+    0.36,
+    0.15
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 1.2,
+    "color": "#302d27"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "scale": [
+    1.35,
+    1.0,
+    1.5
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-bay-head-cafe-1",
+   "label": "dark bay head cafe 1",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.8099999999999998,
+     0.09,
+     0.11
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    1.75,
+    2.95,
+    0.15
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 1.2,
+    "color": "#302d27"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "scale": [
+    1.0,
+    1.25,
+    1.5
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-bay-sill-cafe-1",
+   "label": "dark bay sill cafe 1",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.8099999999999998,
+     0.09,
+     0.11
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    1.75,
+    0.36,
+    0.15
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 1.2,
+    "color": "#302d27"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "scale": [
+    1.0,
+    1.25,
+    1.5
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-mullion-cafe-1-1",
+   "label": "dark mullion cafe 1 1",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.042,
+     2.5,
+     0.07
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    1.75,
+    0.45,
+    0.175
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 0.75,
+    "color": "#302d27"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-transom-cafe-1-1",
+   "label": "dark transom cafe 1 1",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.65,
+     0.037,
+     0.07
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    1.75,
+    1.264833,
+    0.176
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 0.75,
+    "color": "#302d27"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-transom-cafe-1-2",
+   "label": "dark transom cafe 1 2",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.65,
+     0.037,
+     0.07
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    1.75,
+    2.098167,
+    0.176
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 0.75,
+    "color": "#302d27"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "stone-sill-ledge-cafe-1",
+   "label": "stone sill ledge cafe 1",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.89,
+     0.065,
+     0.16
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    1.75,
+    0.29500000000000004,
+    0.11
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.65,
+    "alpha": 0.65,
+    "color": "#e7d5ae"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-door-bottom-1",
+   "label": "dark door bottom 1",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "stadsholmen2013",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.52,
+     0.56,
+     0.05
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    1.75,
+    0.45,
+    0.16
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 0.75,
+    "color": "#302d27"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "note": "Municipal text describes a ground-floor display window beside a glazed portal with simple sandstone surround. Existing paired cafe opening model is only a simplified inference, not an exact match; market photo obscures ground details. No geometry corrected."
+  },
+  {
+   "id": "address-plaque",
+   "label": "address plaque",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.33,
+     0.38,
+     0.04
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    3.15,
+    3.15,
+    0.04
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.65,
+    "alpha": 0.65,
+    "color": "#dcc89d"
+   },
+   "basis": [
+    "width",
+    "eave_height",
+    "gable_apex",
+    "depth"
+   ],
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-backing-lower",
+   "role": "structure",
+   "certainty": "inferred",
+   "source": "audit-model",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.76,
+     2.6,
+     0.13
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.75,
+    5.25,
+    0.065
+   ],
+   "repeat": {
+    "count": 2,
+    "step": {
+     "at": [
+      3.5,
+      0,
+      0
+     ]
+    }
+   },
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 0.75,
+    "color": "#302d27"
+   },
+   "note": "Modeler-added dark backing for representational opening depth, not a documented historical component or measured hidden surface. Both size and shape remain inferred."
+  },
+  {
+   "id": "dark-backing-middle",
+   "role": "structure",
+   "certainty": "inferred",
+   "source": "audit-model",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.76,
+     2.585,
+     0.13
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.75,
+    10.175,
+    0.065
+   ],
+   "repeat": {
+    "count": 2,
+    "step": {
+     "at": [
+      3.5,
+      0,
+      0
+     ]
+    }
+   },
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 0.75,
+    "color": "#302d27"
+   },
+   "note": "Modeler-added dark backing for representational opening depth, not a documented historical component or measured hidden surface. Both size and shape remain inferred."
+  },
+  {
+   "id": "dark-backing-upper",
+   "role": "structure",
+   "certainty": "inferred",
+   "source": "audit-model",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.76,
+     1.85,
+     0.13
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.75,
+    15.05,
+    0.065
+   ],
+   "repeat": {
+    "count": 2,
+    "step": {
+     "at": [
+      3.5,
+      0,
+      0
+     ]
+    }
+   },
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 0.75,
+    "color": "#302d27"
+   },
+   "note": "Modeler-added dark backing for representational opening depth, not a documented historical component or measured hidden surface. Both size and shape remain inferred."
+  },
+  {
+   "id": "dark-backing-gable",
+   "role": "structure",
+   "certainty": "inferred",
+   "source": "audit-model",
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.555,
+     1.93,
+     0.13
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0.0,
+    19.125,
+    0.065
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 0.75,
+    "color": "#302d27"
+   },
+   "note": "Modeler-added dark backing for representational opening depth, not a documented historical component or measured hidden surface. Both size and shape remain inferred."
+  },
+  {
+   "id": "dark-backing-cafe",
+   "role": "structure",
+   "certainty": "inferred",
+   "source": "audit-model",
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.89,
+     2.7,
+     0.13
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.75,
+    0.35,
+    0.065
+   ],
+   "repeat": {
+    "count": 2,
+    "step": {
+     "at": [
+      3.5,
+      0,
+      0
+     ]
+    }
+   },
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 0.75,
+    "color": "#302d27"
+   },
+   "note": "Modeler-added dark backing for representational opening depth, not a documented historical component or measured hidden surface. Both size and shape remain inferred."
+  },
+  {
+   "id": "dark-central-sash-lower",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.084,
+     2.4,
+     0.07
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.75,
+    5.35,
+    0.175
+   ],
+   "repeat": {
+    "count": 2,
+    "step": {
+     "at": [
+      3.5,
+      0,
+      0
+     ]
+    }
+   },
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 0.75,
+    "color": "#302d27"
+   },
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-central-sash-middle",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.084,
+     2.385,
+     0.07
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.75,
+    10.275,
+    0.175
+   ],
+   "repeat": {
+    "count": 2,
+    "step": {
+     "at": [
+      3.5,
+      0,
+      0
+     ]
+    }
+   },
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 0.75,
+    "color": "#302d27"
+   },
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-central-sash-upper",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.084,
+     1.65,
+     0.07
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.75,
+    15.15,
+    0.175
+   ],
+   "repeat": {
+    "count": 2,
+    "step": {
+     "at": [
+      3.5,
+      0,
+      0
+     ]
+    }
+   },
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 0.75,
+    "color": "#302d27"
+   },
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-central-sash-gable",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.084,
+     1.73,
+     0.07
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0.0,
+    19.225,
+    0.175
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 0.75,
+    "color": "#302d27"
+   },
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-six-pane-rail-lower",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.52,
+     0.032,
+     0.07
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.75,
+    5.734,
+    0.176
+   ],
+   "repeat": {
+    "count": 5,
+    "step": {
+     "at": [
+      0,
+      0.4,
+      0
+     ]
+    }
+   },
+   "mirror": "x",
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 0.75,
+    "color": "#302d27"
+   },
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-six-pane-rail-middle",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.52,
+     0.032,
+     0.07
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -1.75,
+    10.6565,
+    0.176
+   ],
+   "repeat": {
+    "count": 5,
+    "step": {
+     "at": [
+      0,
+      0.3975,
+      0
+     ]
+    }
+   },
+   "mirror": "x",
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 0.75,
+    "color": "#302d27"
+   },
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-five-pane-rail-gable",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.334,
+     0.032,
+     0.07
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0.0,
+    19.555,
+    0.176
+   ],
+   "repeat": {
+    "count": 4,
+    "step": {
+     "at": [
+      0,
+      0.346,
+      0
+     ]
+    }
+   },
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 0.75,
+    "color": "#302d27"
+   },
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-oculus-cross-v",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.035,
+     0.936,
+     0.06
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0.0,
+    22.357,
+    0.11
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 0.75,
+    "color": "#302d27"
+   },
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-oculus-cross-h",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.936,
+     0.035,
+     0.06
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    0.0,
+    22.808,
+    0.11
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 0.75,
+    "color": "#302d27"
+   },
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "cream-side-eave-return",
+   "role": "structure",
+   "certainty": "inferred",
+   "source": "audit-model",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.45,
+     0.25,
+     10.9
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    3.78,
+    18.305,
+    -5.5
+   ],
+   "look": {
+    "alpha": 1,
+    "fill": "dark",
+    "glow": 0.05,
+    "tone": "bright",
+    "weight": 1.45,
+    "color": "#e7d5ae"
+   },
+   "note": "Agent-authored envelope, support or hidden/oblique continuation. No measured thickness, rear geometry, roof seams or concealed flashing retrieved. Both size and shape remain inferred, not direct photographic evidence of unseen construction."
+  },
+  {
+   "id": "slate-side-eave-edge",
+   "role": "structure",
+   "certainty": "inferred",
+   "source": "audit-model",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.55,
+     0.1,
+     10.9
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    3.8,
+    18.555,
+    -5.5
+   ],
+   "look": {
+    "color": "#3f4548"
+   },
+   "note": "Agent-authored envelope, support or hidden/oblique continuation. No measured thickness, rear geometry, roof seams or concealed flashing retrieved. Both size and shape remain inferred, not direct photographic evidence of unseen construction."
+  },
+  {
+   "id": "dark-side-opening-frame",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.16,
+     2.2,
+     1.28
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    3.76,
+    11.225,
+    -1.05
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 0.75,
+    "color": "#302d27"
+   },
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "side-window-glazing",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.035,
+     1.96,
+     1.04
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    3.855,
+    11.345,
+    -1.05
+   ],
+   "look": {
+    "fill": "glass",
+    "weight": 0.5,
+    "color": "#283943"
+   },
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "dark-side-opening-central-sash",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.05,
+     1.96,
+     0.055
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    3.88,
+    11.345,
+    -1.05
+   ],
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 0.75,
+    "color": "#302d27"
+   },
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "id": "slate-roof-ridge-seam",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "audit-model",
+   "stage": 4,
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      0,
+      20.97,
+      -10.98
+     ],
+     [
+      0,
+      20.97,
+      -0.32
+     ]
+    ],
+    "radius": 0.035,
+    "sides": 6,
+    "samples": 1,
+    "longitudinal": 3,
+    "ring_every": 0
+   },
+   "at": [
+    0.0,
+    1.575,
+    0.0
+   ],
+   "look": {
+    "color": "#3f4548"
+   },
+   "note": "Agent-authored envelope, support or hidden/oblique continuation. No measured thickness, rear geometry, roof seams or concealed flashing retrieved. Both size and shape remain inferred, not direct photographic evidence of unseen construction."
+  },
+  {
+   "id": "slate-chimney-flashing",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "audit-model",
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.25,
+     0.12,
+     1.34
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    2.6,
+    19.755,
+    -4.5
+   ],
+   "look": {
+    "color": "#3f4548"
+   },
+   "note": "Agent-authored envelope, support or hidden/oblique continuation. No measured thickness, rear geometry, roof seams or concealed flashing retrieved. Both size and shape remain inferred, not direct photographic evidence of unseen construction."
+  },
+  {
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "certainty": "inferred",
+   "id": "black-anchor-outer-hooks-a",
+   "look": {
+    "alpha": 0.8,
+    "fill": "dark",
+    "weight": 0.7,
+    "color": "#302d27"
+   },
+   "mirror": "x",
+   "role": "identity",
+   "shape": {
+    "longitudinal": 3,
+    "path": [
+     [
+      -3.14,
+      8.16,
+      0.02
+     ],
+     [
+      -3.29,
+      8.1,
+      0.02
+     ],
+     [
+      -3.34,
+      7.92,
+      0.02
+     ],
+     [
+      -3.3,
+      7.74,
+      0.02
+     ],
+     [
+      -3.16,
+      7.68,
+      0.02
+     ]
+    ],
+    "radius": 0.021,
+    "ring_every": 0,
+    "samples": 2,
+    "sides": 6,
+    "type": "tube"
+   },
+   "source": "stadsholmen2013",
+   "stage": 4,
+   "note": "Text confirms historic anchor types and inverted initials anchor, not the exact identity of each modeled hook or stem. Shape, placement and scale remain inferred, not traced or measured.",
+   "basis": [
+    "audit.anchor.irons"
+   ]
+  },
+  {
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "certainty": "inferred",
+   "id": "black-anchor-outer-hooks-b",
+   "look": {
+    "alpha": 0.8,
+    "fill": "dark",
+    "weight": 0.7,
+    "color": "#302d27"
+   },
+   "mirror": "x",
+   "role": "identity",
+   "shape": {
+    "longitudinal": 3,
+    "path": [
+     [
+      -2.78,
+      8.16,
+      0.02
+     ],
+     [
+      -2.64,
+      8.08,
+      0.02
+     ],
+     [
+      -2.61,
+      7.92,
+      0.02
+     ],
+     [
+      -2.66,
+      7.74,
+      0.02
+     ],
+     [
+      -2.8,
+      7.68,
+      0.02
+     ]
+    ],
+    "radius": 0.021,
+    "ring_every": 0,
+    "samples": 2,
+    "sides": 6,
+    "type": "tube"
+   },
+   "source": "stadsholmen2013",
+   "stage": 4,
+   "note": "Text confirms historic anchor types and inverted initials anchor, not the exact identity of each modeled hook or stem. Shape, placement and scale remain inferred, not traced or measured.",
+   "basis": [
+    "audit.anchor.irons"
+   ]
+  },
+  {
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "certainty": "inferred",
+   "id": "black-anchor-central-hook",
+   "look": {
+    "alpha": 0.8,
+    "fill": "dark",
+    "weight": 0.7,
+    "color": "#302d27"
+   },
+   "role": "identity",
+   "shape": {
+    "longitudinal": 3,
+    "path": [
+     [
+      -0.31,
+      8.12,
+      0.02
+     ],
+     [
+      -0.24,
+      8.17,
+      0.02
+     ],
+     [
+      -0.13,
+      8.1,
+      0.02
+     ],
+     [
+      -0.11,
+      7.72,
+      0.02
+     ],
+     [
+      -0.2,
+      7.62,
+      0.02
+     ],
+     [
+      -0.11,
+      7.72,
+      0.02
+     ],
+     [
+      -0.1,
+      7.95,
+      0.02
+     ],
+     [
+      0.16,
+      7.91,
+      0.02
+     ],
+     [
+      0.17,
+      8.18,
+      0.02
+     ],
+     [
+      0.17,
+      7.63,
+      0.02
+     ],
+     [
+      0.27,
+      7.69,
+      0.02
+     ]
+    ],
+    "radius": 0.031,
+    "ring_every": 0,
+    "samples": 1,
+    "sides": 6,
+    "type": "tube"
+   },
+   "source": "stadsholmen2013",
+   "stage": 4,
+   "note": "Text confirms historic anchor types and inverted initials anchor, not the exact identity of each modeled hook or stem. Shape, placement and scale remain inferred, not traced or measured.",
+   "basis": [
+    "audit.anchor.irons"
+   ]
+  },
+  {
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "certainty": "inferred",
+   "id": "dark-side-rainwater-downpipe",
+   "look": {
+    "alpha": 0.75,
+    "fill": "dark",
+    "glow": 0,
+    "tone": "structure",
+    "weight": 0.75,
+    "color": "#302d27"
+   },
+   "role": "detail",
+   "shape": {
+    "longitudinal": 3,
+    "path": [
+     [
+      3.69,
+      0,
+      0.04
+     ],
+     [
+      3.69,
+      15.65,
+      0.04
+     ],
+     [
+      3.69,
+      16.975,
+      0.04
+     ],
+     [
+      3.72,
+      17.575,
+      -0.08
+     ],
+     [
+      3.72,
+      18.375,
+      -0.08
+     ]
+    ],
+    "radius": 0.065,
+    "ring_every": 0,
+    "samples": 1,
+    "sides": 8,
+    "type": "tube"
+   },
+   "source": "photo",
+   "stage": 4,
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "at": [
+    3.8,
+    18.135,
+    -5.5
+   ],
+   "certainty": "inferred",
+   "id": "cream-side-eave-underside",
+   "role": "structure",
+   "shape": {
+    "anchor": "base",
+    "size": [
+     0.25,
+     0.17,
+     10.9
+    ],
+    "type": "box"
+   },
+   "source": "audit-model",
+   "stage": 2,
+   "look": {
+    "alpha": 1,
+    "fill": "dark",
+    "glow": 0.05,
+    "tone": "bright",
+    "weight": 1.45,
+    "color": "#e7d5ae"
+   },
+   "note": "Agent-authored envelope, support or hidden/oblique continuation. No measured thickness, rear geometry, roof seams or concealed flashing retrieved. Both size and shape remain inferred, not direct photographic evidence of unseen construction."
+  },
+  {
+   "at": [
+    0.0,
+    1.575,
+    0.0
+   ],
+   "certainty": "inferred",
+   "id": "slate-roof-standing-seams",
+   "mirror": "x",
+   "repeat": {
+    "count": 7,
+    "step": {
+     "at": [
+      0,
+      0,
+      -1.4
+     ]
+    }
+   },
+   "role": "detail",
+   "shape": {
+    "longitudinal": 3,
+    "path": [
+     [
+      0,
+      20.98,
+      -0.8
+     ],
+     [
+      3.68,
+      17.01,
+      -0.8
+     ]
+    ],
+    "radius": 0.019,
+    "ring_every": 0,
+    "samples": 1,
+    "sides": 4,
+    "type": "tube"
+   },
+   "source": "audit-model",
+   "stage": 4,
+   "look": {
+    "color": "#3f4548"
+   },
+   "note": "Agent-authored envelope, support or hidden/oblique continuation. No measured thickness, rear geometry, roof seams or concealed flashing retrieved. Both size and shape remain inferred, not direct photographic evidence of unseen construction."
+  },
+  {
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "certainty": "inferred",
+   "id": "black-anchor-outer-stem",
+   "mirror": "x",
+   "role": "identity",
+   "shape": {
+    "longitudinal": 3,
+    "path": [
+     [
+      -2.98,
+      7.61,
+      0.02
+     ],
+     [
+      -2.98,
+      8.18,
+      0.02
+     ]
+    ],
+    "radius": 0.023,
+    "ring_every": 0,
+    "samples": 1,
+    "sides": 6,
+    "type": "tube"
+   },
+   "source": "stadsholmen2013",
+   "stage": 4,
+   "look": {
+    "color": "#302d27"
+   },
+   "note": "Text confirms historic anchor types and inverted initials anchor, not the exact identity of each modeled hook or stem. Shape, placement and scale remain inferred, not traced or measured.",
+   "basis": [
+    "audit.anchor.irons"
+   ]
+  },
+  {
+   "at": [
+    -1.75,
+    15.546,
+    0.176
+   ],
+   "certainty": "inferred",
+   "id": "dark-four-pane-rail-upper",
+   "mirror": "x",
+   "repeat": {
+    "count": 3,
+    "step": {
+     "at": [
+      0,
+      0.4125,
+      0
+     ]
+    }
+   },
+   "role": "detail",
+   "shape": {
+    "anchor": "base",
+    "size": [
+     1.52,
+     0.032,
+     0.07
+    ],
+    "type": "box"
+   },
+   "source": "photo",
+   "stage": 4,
+   "look": {
+    "color": "#302d27"
+   },
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "at": [
+    3.69,
+    4,
+    0.03
+   ],
+   "certainty": "inferred",
+   "id": "dark-downpipe-collars",
+   "repeat": {
+    "count": 4,
+    "step": {
+     "at": [
+      0,
+      3,
+      0
+     ]
+    }
+   },
+   "role": "detail",
+   "shape": {
+    "anchor": "base",
+    "size": [
+     0.18,
+     0.05,
+     0.16
+    ],
+    "type": "box"
+   },
+   "source": "photo",
+   "stage": 4,
+   "look": {
+    "color": "#302d27"
+   },
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "at": [
+    0.0,
+    1.575,
+    0.0
+   ],
+   "certainty": "inferred",
+   "id": "black-crown-iron-left",
+   "role": "detail",
+   "shape": {
+    "longitudinal": 3,
+    "path": [
+     [
+      -0.9,
+      20.59,
+      0.02
+     ],
+     [
+      -0.91,
+      20.84,
+      0.02
+     ],
+     [
+      -0.88,
+      20.94,
+      0.02
+     ]
+    ],
+    "radius": 0.019,
+    "ring_every": 0,
+    "samples": 1,
+    "sides": 5,
+    "type": "tube"
+   },
+   "source": "photo",
+   "stage": 4,
+   "look": {
+    "color": "#302d27"
+   },
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "at": [
+    0.0,
+    1.575,
+    0.0
+   ],
+   "certainty": "inferred",
+   "id": "black-crown-iron-right",
+   "role": "detail",
+   "shape": {
+    "longitudinal": 3,
+    "path": [
+     [
+      0.9,
+      20.59,
+      0.02
+     ],
+     [
+      0.91,
+      20.85,
+      0.02
+     ],
+     [
+      0.88,
+      20.96,
+      0.02
+     ]
+    ],
+    "radius": 0.019,
+    "ring_every": 0,
+    "samples": 1,
+    "sides": 5,
+    "type": "tube"
+   },
+   "source": "photo",
+   "stage": 4,
+   "look": {
+    "color": "#302d27"
+   },
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "at": [
+    -1.75,
+    6.914,
+    0.176
+   ],
+   "certainty": "inferred",
+   "id": "dark-primary-transom-lower",
+   "repeat": {
+    "count": 2,
+    "step": {
+     "at": [
+      3.5,
+      0,
+      0
+     ]
+    }
+   },
+   "role": "identity",
+   "shape": {
+    "anchor": "base",
+    "size": [
+     1.52,
+     0.072,
+     0.08
+    ],
+    "type": "box"
+   },
+   "source": "photo",
+   "stage": 4,
+   "look": {
+    "color": "#302d27"
+   },
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "at": [
+    -1.75,
+    11.829,
+    0.176
+   ],
+   "certainty": "inferred",
+   "id": "dark-primary-transom-middle",
+   "repeat": {
+    "count": 2,
+    "step": {
+     "at": [
+      3.5,
+      0,
+      0
+     ]
+    }
+   },
+   "role": "identity",
+   "shape": {
+    "anchor": "base",
+    "size": [
+     1.52,
+     0.072,
+     0.08
+    ],
+    "type": "box"
+   },
+   "source": "photo",
+   "stage": 4,
+   "look": {
+    "color": "#302d27"
+   },
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "at": [
+    -1.75,
+    15.939,
+    0.176
+   ],
+   "certainty": "inferred",
+   "id": "dark-primary-transom-upper",
+   "repeat": {
+    "count": 2,
+    "step": {
+     "at": [
+      3.5,
+      0,
+      0
+     ]
+    }
+   },
+   "role": "identity",
+   "shape": {
+    "anchor": "base",
+    "size": [
+     1.52,
+     0.072,
+     0.08
+    ],
+    "type": "box"
+   },
+   "source": "photo",
+   "stage": 4,
+   "look": {
+    "color": "#302d27"
+   },
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "at": [
+    0.0,
+    20.054,
+    0.176
+   ],
+   "certainty": "inferred",
+   "id": "dark-primary-transom-gable",
+   "role": "identity",
+   "shape": {
+    "anchor": "base",
+    "size": [
+     1.334,
+     0.072,
+     0.08
+    ],
+    "type": "box"
+   },
+   "source": "photo",
+   "stage": 4,
+   "look": {
+    "color": "#302d27"
+   },
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "at": [
+    2.6,
+    19.875,
+    -4.5
+   ],
+   "certainty": "inferred",
+   "id": "slate-chimney-stepped-apron",
+   "role": "detail",
+   "shape": {
+    "anchor": "base",
+    "size": [
+     1.38,
+     0.06,
+     1.48
+    ],
+    "type": "box"
+   },
+   "source": "audit-model",
+   "stage": 4,
+   "look": {
+    "color": "#3f4548"
+   },
+   "note": "Agent-authored envelope, support or hidden/oblique continuation. No measured thickness, rear geometry, roof seams or concealed flashing retrieved. Both size and shape remain inferred, not direct photographic evidence of unseen construction."
+  },
+  {
+   "at": [
+    3.88,
+    11.995,
+    -1.05
+   ],
+   "certainty": "inferred",
+   "id": "dark-side-opening-transoms",
+   "repeat": {
+    "count": 2,
+    "step": {
+     "at": [
+      0,
+      0.65,
+      0
+     ]
+    }
+   },
+   "role": "detail",
+   "shape": {
+    "anchor": "base",
+    "size": [
+     0.05,
+     0.045,
+     1.04
+    ],
+    "type": "box"
+   },
+   "source": "photo",
+   "stage": 4,
+   "look": {
+    "color": "#302d27"
+   },
+   "note": "Perspective-photo inference only: visible arrangement informs approximation, not measured shape or size. Lower cafe facade is stall-occluded; small details, proportions and unseen continuation cannot be verified from this view."
+  },
+  {
+   "at": [
+    3.82,
+    11.225,
+    -1.64
+   ],
+   "certainty": "inferred",
+   "id": "dark-side-jamb-reveals",
+   "repeat": {
+    "count": 2,
+    "step": {
+     "at": [
+      0,
+      0,
+      1.18
+     ]
+    }
+   },
+   "role": "identity",
+   "shape": {
+    "anchor": "base",
+    "size": [
+     0.14,
+     2.2,
+     0.085
+    ],
+    "type": "box"
+   },
+   "source": "audit-model",
+   "stage": 3,
+   "look": {
+    "color": "#302d27"
+   },
+   "note": "Agent-authored envelope, support or hidden/oblique continuation. No measured thickness, rear geometry, roof seams or concealed flashing retrieved. Both size and shape remain inferred, not direct photographic evidence of unseen construction."
+  },
+  {
+   "at": [
+    3.82,
+    11.225,
+    -1.05
+   ],
+   "certainty": "inferred",
+   "id": "dark-side-head-sill-reveals",
+   "repeat": {
+    "count": 2,
+    "step": {
+     "at": [
+      0,
+      2.115,
+      0
+     ]
+    }
+   },
+   "role": "identity",
+   "shape": {
+    "anchor": "base",
+    "size": [
+     0.14,
+     0.085,
+     1.26
+    ],
+    "type": "box"
+   },
+   "source": "audit-model",
+   "stage": 3,
+   "look": {
+    "color": "#302d27"
+   },
+   "note": "Agent-authored envelope, support or hidden/oblique continuation. No measured thickness, rear geometry, roof seams or concealed flashing retrieved. Both size and shape remain inferred, not direct photographic evidence of unseen construction."
+  },
+  {
+   "at": [
+    3.82,
+    18.075,
+    -5.5
+   ],
+   "certainty": "inferred",
+   "id": "slate-side-fascia-bottom-return",
+   "role": "detail",
+   "shape": {
+    "anchor": "base",
+    "size": [
+     0.31,
+     0.06,
+     10.9
+    ],
+    "type": "box"
+   },
+   "source": "audit-model",
+   "stage": 3,
+   "look": {
+    "color": "#3f4548"
+   },
+   "note": "Agent-authored envelope, support or hidden/oblique continuation. No measured thickness, rear geometry, roof seams or concealed flashing retrieved. Both size and shape remain inferred, not direct photographic evidence of unseen construction."
+  }
+ ],
+ "articulations": [],
+ "labels": [
+  {
+   "id": "number",
+   "part": "address-plaque",
+   "face": "front",
+   "field": "address",
+   "role": "catalog"
+  }
+ ],
+ "anchors": {
+  "base": {
+   "point": [
+    0,
+    0,
+    0
+   ],
+   "up": [
+    0,
+    1,
+    0
+   ]
+  },
+  "front": {
+   "part": "ochre-main-masonry",
+   "face": "front"
+  }
+ },
+ "annotations": [],
+ "presentation": {
+  "framing": {
+   "fit": 0.94,
+   "pitch": 6,
+   "yaw": 20
+  },
+  "views": [
+   {
+    "id": "photo",
+    "label": "Source-photo facade",
+    "yaw": 14,
+    "pitch": -3,
+    "distance": 0.95
+   },
+   {
+    "id": "gable",
+    "label": "Rounded gable and oculus",
+    "yaw": 0,
+    "pitch": 0,
+    "distance": 1.4,
+    "target": "ochre-curvilinear-gable"
+   }
+  ],
+  "atmosphere": {
+   "haze": 0.12,
+   "scanlines": false,
+   "vignette": true,
+   "grid": false,
+   "projector": false,
+   "motes": 0
+  },
+  "occlusion": "xray",
+  "certainty_style": "subtle",
+  "background": "deep",
+  "float": 0
+ },
+ "animation": {
+  "assembly": {
+   "style": "ceremony",
+   "seconds": 9,
+   "interference": false
+  },
+  "idle": {
+   "life": "off"
+  },
+  "camera": {
+   "drift": 0,
+   "breathe": 0
+  },
+  "reduced_motion": "still"
+ },
+ "authoring": {
+  "tier": "masterpiece",
+  "research": "done",
+  "sources": [
+   "photo",
+   "cafe",
+   "history"
+  ],
+  "identity": [
+   {
+    "feature": "Single central round-topped gable with curved low shoulders, never red-house steps or twin gables",
+    "parts": [
+     "ochre-curvilinear-gable",
+     "cream-curved-gable-rim",
+     "cream-gable-pilaster--1",
+     "cream-gable-pilaster-1"
+    ]
+   },
+   {
+    "feature": "Dark round oculus over centred gable window",
+    "parts": [
+     "oculus-glazing",
+     "cream-oculus-ring",
+     "glazing-centred-gable"
+    ]
+   },
+   {
+    "feature": "Two bays of small-pane windows and black historic anchor irons",
+    "parts": [
+     "glazing-main-0-0",
+     "glazing-main-2-1",
+     "black-anchor-central-hook",
+     "black-anchor-outer-hooks-a",
+     "black-anchor-outer-hooks-b"
+    ]
+   }
+  ],
+  "review_rounds": 12,
+  "outcome": "self-reviewed",
+  "next": [
+   "Main and gable openings still read slab-like in solid view; see unchanged critic-round-12.json for full defect and fix.",
+   "Upper sash spacing and squat proportions need further photo-matching; retain current inferred total height.",
+   "Historic anchor irons remain an unresolved skill gap; preserve final critic wording in manifest.",
+   "Chimney shaft lacks shallow bands below its cap."
+  ],
+  "provenance_note": "Provenance-only audit; physical payload unchanged; historical independent judgement preserved in before backup and sealed checkpoints, not a fresh critique. Verified facts are documented non-metric statements, not part measurements. All parts remain inferred. Three medieval masonry levels differ from present five-storey building/early-1700s appearance. No rounds or geometry work.",
+  "rounds": [
+   {
+    "round": 1,
+    "result": "baseline",
+    "minutes": 0.9,
+    "changes": [
+     "draft"
+    ],
+    "summary": "The solid view reads as a largely uninterrupted slab with window grids scratched onto it. The photograph instead has broad pilaster faces, a"
+   },
+   {
+    "round": 2,
+    "result": "kept",
+    "minutes": 3.1,
+    "changes": [
+     "D1",
+     "D2",
+     "D3",
+     "D6"
+    ],
+    "summary": "The solid image is predominantly an uninterrupted slab: the broad pilasters, layered split cornices and dark recessed window surrounds that "
+   },
+   {
+    "round": 3,
+    "result": "kept",
+    "minutes": 3.4,
+    "changes": [
+     "D1",
+     "D3",
+     "D4",
+     "D5"
+    ],
+    "summary": "The solid view remains an almost uninterrupted slab: window grids sit on the wall rather than reading as dark openings with substantial fram"
+   },
+   {
+    "round": 4,
+    "result": "reverted",
+    "minutes": 3.6,
+    "changes": [
+     "D1",
+     "D3",
+     "D4",
+     "D6"
+    ],
+    "summary": "The solid facade is an almost continuous gray slab: main sash rectangles and the centered gable sash survive chiefly as intermittent thin ma"
+   },
+   {
+    "round": 5,
+    "result": "kept",
+    "minutes": 2.1,
+    "changes": [
+     "D6",
+     "D7",
+     "D8",
+     "D9"
+    ],
+    "summary": "The solid facade reads as an almost continuous slab: rectangular pane grids sit on its face without the strong recessed dark openings and la"
+   },
+   {
+    "round": 6,
+    "result": "kept",
+    "minutes": 1.7,
+    "changes": [
+     "D10",
+     "D11",
+     "D3",
+     "D5"
+    ],
+    "summary": "The solid facade remains close to a continuous slab: panes are pale wall-like patches with thin grid lines, and the oculus centre barely sep"
+   },
+   {
+    "round": 7,
+    "result": "kept",
+    "minutes": 2.4,
+    "changes": [
+     "D1",
+     "D4",
+     "D7"
+    ],
+    "summary": "The solid facade reads as an almost continuous slab: pane grids are visible but window fields, jambs and oculus do not read as substantial r"
+   },
+   {
+    "round": 8,
+    "result": "reverted",
+    "minutes": 2.3,
+    "changes": [
+     "D12",
+     "D13",
+     "D14",
+     "D4"
+    ],
+    "summary": "In solid.png the facade is nearly one continuous gray slab: the pane grids are engraved-looking patches, the oculus is wall-colored, and win"
+   },
+   {
+    "round": 9,
+    "result": "kept",
+    "minutes": 1.5,
+    "changes": [
+     "D13",
+     "D14"
+    ],
+    "summary": "The solid facade remains a nearly uninterrupted slab: sash grids are visible but panes do not read as dark recessed openings, and the oculus"
+   },
+   {
+    "round": 10,
+    "result": "kept",
+    "minutes": 1.6,
+    "changes": [
+     "D12",
+     "D4"
+    ],
+    "summary": "In the solid view the facade is almost one continuous wall plane: pane grids are visible but the openings, sash frames and round oculus lack"
+   },
+   {
+    "round": 11,
+    "result": "kept",
+    "minutes": 1.7,
+    "changes": [
+     "D13",
+     "D16",
+     "D17"
+    ],
+    "summary": "The solid view reads as a nearly continuous wall with shallow pane grids applied to it. The reference has visibly dark window cavities with "
+   },
+   {
+    "round": 12,
+    "result": "kept",
+    "minutes": 1.5,
+    "changes": [
+     "D16",
+     "D18"
+    ],
+    "summary": "In the solid render the window rectangles retain pane grids but almost no dark reveal or readable jamb depth; the main wall still reads as a"
+   }
+  ],
+  "critic": {
+   "scene_sha256": "5f935f88c26ef0061d0a71645e33fb2795dcbd76fb328d53ba43a9b321d68ea2",
+   "verdict": "improve",
+   "scores": {
+    "silhouette": 3,
+    "proportions": 1,
+    "identity": 2,
+    "depth": 2,
+    "composition": 2,
+    "assembly": 3,
+    "motion": 3,
+    "density": 2,
+    "honesty": 3
+   },
+   "round": 2,
+   "defects": 5
+  }
+ }
+}

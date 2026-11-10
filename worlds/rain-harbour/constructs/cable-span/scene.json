@@ -1,0 +1,1071 @@
+{
+ "format": "construct-scene",
+ "version": 2,
+ "id": "rainharbour-cable-span",
+ "title": "Suspended cable span",
+ "subject": {
+  "category": "object",
+  "summary": "Original reusable three-cable street crossing suspended between facade wall plates. Local y=0 is the hanging anchor datum, NOT a ground plane. Cable ends at x=±10, y=0, z=−0.28/0/+0.28; wall plates cross facade planes x=±10. The molded terminal seats carry the cables into the plates.",
+  "accuracy": "original",
+  "synthetic": false
+ },
+ "units": "m",
+ "seed": 7,
+ "sources": [
+  {
+   "id": "request",
+   "kind": "user_request",
+   "title": "RainHarbour reusable suspended cable brief",
+   "rights": "permitted"
+  }
+ ],
+ "facts": [
+  {
+   "key": "span",
+   "value": 20,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "request",
+   "note": "Design-intent span selected for parent street; not a surveyed or user-supplied measurement."
+  },
+  {
+   "key": "parent.anchor-height",
+   "value": 7.6,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "request",
+   "note": "Parent placement datum. Never normalize this hanging asset to minimum y."
+  },
+  {
+   "key": "mounting",
+   "value": "Wall plates cross facade planes x=±10; cable end centers meet continuous molded terminal banks at y=0. No ground support intended.",
+   "certainty": "inferred",
+   "source": "request"
+  },
+  {
+   "key": "sag.messenger",
+   "value": 0.72,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "request",
+   "note": "Designed parabolic control path, Catmull–Rom interpolated."
+  },
+  {
+   "key": "sag.service",
+   "value": 0.96,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "request",
+   "note": "Designed parabolic control path, Catmull–Rom interpolated."
+  },
+  {
+   "key": "sag.feeder",
+   "value": 1.18,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "request",
+   "note": "Designed parabolic control path, Catmull–Rom interpolated."
+  }
+ ],
+ "assets": [],
+ "parts": [
+  {
+   "id": "cable-messenger",
+   "label": "Messenger cable",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 1,
+   "basis": [
+    "span",
+    "sag.messenger"
+   ],
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      -10,
+      0,
+      -0.28
+     ],
+     [
+      -9.92,
+      -0.011474,
+      -0.28
+     ],
+     [
+      -9.78,
+      -0.031332,
+      -0.28
+     ],
+     [
+      -9.72,
+      -0.039756,
+      -0.28
+     ],
+     [
+      -7.5,
+      -0.315,
+      -0.28
+     ],
+     [
+      -5,
+      -0.54,
+      -0.28
+     ],
+     [
+      -2.5,
+      -0.675,
+      -0.28
+     ],
+     [
+      0,
+      -0.72,
+      -0.28
+     ],
+     [
+      2.5,
+      -0.675,
+      -0.28
+     ],
+     [
+      5,
+      -0.54,
+      -0.28
+     ],
+     [
+      7.5,
+      -0.315,
+      -0.28
+     ],
+     [
+      9.72,
+      -0.039756,
+      -0.28
+     ],
+     [
+      9.78,
+      -0.031332,
+      -0.28
+     ],
+     [
+      9.92,
+      -0.011474,
+      -0.28
+     ],
+     [
+      10,
+      0,
+      -0.28
+     ]
+    ],
+    "radius": [
+     0.025,
+     0.048,
+     0.048,
+     0.025,
+     0.025,
+     0.025,
+     0.025,
+     0.025,
+     0.025,
+     0.025,
+     0.025,
+     0.025,
+     0.048,
+     0.048,
+     0.025
+    ],
+    "sides": 6,
+    "samples": 2,
+    "longitudinal": 1,
+    "ring_every": 0,
+    "caps": true
+   },
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "glow": 0,
+    "weight": 1.65,
+    "line": "solid"
+   }
+  },
+  {
+   "id": "cable-service",
+   "label": "Service cable",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 1,
+   "basis": [
+    "span",
+    "sag.service"
+   ],
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      -10,
+      0,
+      0
+     ],
+     [
+      -9.92,
+      -0.015299,
+      0
+     ],
+     [
+      -9.78,
+      -0.041775,
+      0
+     ],
+     [
+      -9.72,
+      -0.053007,
+      0
+     ],
+     [
+      -7.5,
+      -0.42,
+      0
+     ],
+     [
+      -5,
+      -0.72,
+      0
+     ],
+     [
+      -2.5,
+      -0.9,
+      0
+     ],
+     [
+      0,
+      -0.96,
+      0
+     ],
+     [
+      2.5,
+      -0.9,
+      0
+     ],
+     [
+      5,
+      -0.72,
+      0
+     ],
+     [
+      7.5,
+      -0.42,
+      0
+     ],
+     [
+      9.72,
+      -0.053007,
+      0
+     ],
+     [
+      9.78,
+      -0.041775,
+      0
+     ],
+     [
+      9.92,
+      -0.015299,
+      0
+     ],
+     [
+      10,
+      0,
+      0
+     ]
+    ],
+    "radius": [
+     0.03,
+     0.048,
+     0.048,
+     0.03,
+     0.03,
+     0.03,
+     0.03,
+     0.03,
+     0.03,
+     0.03,
+     0.03,
+     0.03,
+     0.048,
+     0.048,
+     0.03
+    ],
+    "sides": 6,
+    "samples": 2,
+    "longitudinal": 1,
+    "ring_every": 0,
+    "caps": true
+   },
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "glow": 0,
+    "weight": 1.65,
+    "line": "solid"
+   }
+  },
+  {
+   "id": "cable-feeder",
+   "label": "Feeder cable",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 1,
+   "basis": [
+    "span",
+    "sag.feeder"
+   ],
+   "shape": {
+    "type": "tube",
+    "path": [
+     [
+      -10,
+      0,
+      0.28
+     ],
+     [
+      -9.92,
+      -0.018804,
+      0.28
+     ],
+     [
+      -9.78,
+      -0.051349,
+      0.28
+     ],
+     [
+      -9.72,
+      -0.065155,
+      0.28
+     ],
+     [
+      -7.5,
+      -0.51625,
+      0.28
+     ],
+     [
+      -5,
+      -0.885,
+      0.28
+     ],
+     [
+      -2.5,
+      -1.10625,
+      0.28
+     ],
+     [
+      0,
+      -1.18,
+      0.28
+     ],
+     [
+      2.5,
+      -1.10625,
+      0.28
+     ],
+     [
+      5,
+      -0.885,
+      0.28
+     ],
+     [
+      7.5,
+      -0.51625,
+      0.28
+     ],
+     [
+      9.72,
+      -0.065155,
+      0.28
+     ],
+     [
+      9.78,
+      -0.051349,
+      0.28
+     ],
+     [
+      9.92,
+      -0.018804,
+      0.28
+     ],
+     [
+      10,
+      0,
+      0.28
+     ]
+    ],
+    "radius": [
+     0.034,
+     0.048,
+     0.048,
+     0.034,
+     0.034,
+     0.034,
+     0.034,
+     0.034,
+     0.034,
+     0.034,
+     0.034,
+     0.034,
+     0.048,
+     0.048,
+     0.034
+    ],
+    "sides": 6,
+    "samples": 2,
+    "longitudinal": 1,
+    "ring_every": 0,
+    "caps": true
+   },
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "glow": 0,
+    "weight": 1.65,
+    "line": "solid"
+   }
+  },
+  {
+   "id": "wall-bracket-positive",
+   "label": "Positive wall plate",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 0,
+   "basis": [
+    "span",
+    "mounting"
+   ],
+   "shape": {
+    "axis": "y",
+    "height": 0.24,
+    "profile": [
+     [
+      9.98,
+      -0.46
+     ],
+     [
+      10.06,
+      -0.46
+     ],
+     [
+      10.06,
+      0.46
+     ],
+     [
+      9.98,
+      0.46
+     ],
+     [
+      9.98,
+      0.43
+     ],
+     [
+      9.95,
+      0.4
+     ],
+     [
+      9.98,
+      0.37
+     ],
+     [
+      9.98,
+      -0.37
+     ],
+     [
+      9.95,
+      -0.4
+     ],
+     [
+      9.98,
+      -0.43
+     ]
+    ],
+    "ribs": 0,
+    "type": "extrude"
+   },
+   "at": [
+    0.0,
+    -0.12,
+    0.0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "glow": 0,
+    "weight": 0.8
+   }
+  },
+  {
+   "id": "insulator-bank-positive",
+   "label": "Positive molded three-seat insulator",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 0,
+   "basis": [
+    "mounting"
+   ],
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      0.014,
+      -0.42
+     ],
+     [
+      0.014,
+      -0.355
+     ],
+     [
+      0.053,
+      -0.333
+     ],
+     [
+      0.075,
+      -0.28
+     ],
+     [
+      0.053,
+      -0.227
+     ],
+     [
+      0.014,
+      -0.205
+     ],
+     [
+      0.014,
+      -0.075
+     ],
+     [
+      0.053,
+      -0.053
+     ],
+     [
+      0.075,
+      0
+     ],
+     [
+      0.053,
+      0.053
+     ],
+     [
+      0.014,
+      0.075
+     ],
+     [
+      0.014,
+      0.205
+     ],
+     [
+      0.053,
+      0.227
+     ],
+     [
+      0.075,
+      0.28
+     ],
+     [
+      0.053,
+      0.333
+     ],
+     [
+      0.014,
+      0.355
+     ],
+     [
+      0.014,
+      0.42
+     ],
+     [
+      -0.014,
+      0.42
+     ],
+     [
+      -0.014,
+      0.355
+     ],
+     [
+      -0.053,
+      0.333
+     ],
+     [
+      -0.075,
+      0.28
+     ],
+     [
+      -0.053,
+      0.227
+     ],
+     [
+      -0.014,
+      0.205
+     ],
+     [
+      -0.014,
+      0.075
+     ],
+     [
+      -0.053,
+      0.053
+     ],
+     [
+      -0.075,
+      0
+     ],
+     [
+      -0.053,
+      -0.053
+     ],
+     [
+      -0.014,
+      -0.075
+     ],
+     [
+      -0.014,
+      -0.205
+     ],
+     [
+      -0.053,
+      -0.227
+     ],
+     [
+      -0.075,
+      -0.28
+     ],
+     [
+      -0.053,
+      -0.333
+     ],
+     [
+      -0.014,
+      -0.355
+     ],
+     [
+      -0.014,
+      -0.42
+     ]
+    ],
+    "height": 0.11,
+    "axis": "x",
+    "ribs": 0
+   },
+   "at": [
+    9.88,
+    0.0,
+    0.0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "glow": 0,
+    "weight": 0.7
+   },
+   "rotate": [
+    90.0,
+    0.0,
+    0.0
+   ]
+  },
+  {
+   "id": "wall-bracket-negative",
+   "label": "Negative wall plate",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 0,
+   "basis": [
+    "span",
+    "mounting"
+   ],
+   "shape": {
+    "axis": "y",
+    "height": 0.24,
+    "profile": [
+     [
+      -9.98,
+      -0.43
+     ],
+     [
+      -9.95,
+      -0.4
+     ],
+     [
+      -9.98,
+      -0.37
+     ],
+     [
+      -9.98,
+      0.37
+     ],
+     [
+      -9.95,
+      0.4
+     ],
+     [
+      -9.98,
+      0.43
+     ],
+     [
+      -9.98,
+      0.46
+     ],
+     [
+      -10.06,
+      0.46
+     ],
+     [
+      -10.06,
+      -0.46
+     ],
+     [
+      -9.98,
+      -0.46
+     ]
+    ],
+    "ribs": 0,
+    "type": "extrude"
+   },
+   "at": [
+    0.0,
+    -0.12,
+    0.0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "glow": 0,
+    "weight": 0.8
+   }
+  },
+  {
+   "id": "insulator-bank-negative",
+   "label": "Negative molded three-seat insulator",
+   "role": "identity",
+   "certainty": "inferred",
+   "stage": 0,
+   "basis": [
+    "mounting"
+   ],
+   "shape": {
+    "type": "extrude",
+    "profile": [
+     [
+      0.014,
+      -0.42
+     ],
+     [
+      0.014,
+      -0.355
+     ],
+     [
+      0.053,
+      -0.333
+     ],
+     [
+      0.075,
+      -0.28
+     ],
+     [
+      0.053,
+      -0.227
+     ],
+     [
+      0.014,
+      -0.205
+     ],
+     [
+      0.014,
+      -0.075
+     ],
+     [
+      0.053,
+      -0.053
+     ],
+     [
+      0.075,
+      0
+     ],
+     [
+      0.053,
+      0.053
+     ],
+     [
+      0.014,
+      0.075
+     ],
+     [
+      0.014,
+      0.205
+     ],
+     [
+      0.053,
+      0.227
+     ],
+     [
+      0.075,
+      0.28
+     ],
+     [
+      0.053,
+      0.333
+     ],
+     [
+      0.014,
+      0.355
+     ],
+     [
+      0.014,
+      0.42
+     ],
+     [
+      -0.014,
+      0.42
+     ],
+     [
+      -0.014,
+      0.355
+     ],
+     [
+      -0.053,
+      0.333
+     ],
+     [
+      -0.075,
+      0.28
+     ],
+     [
+      -0.053,
+      0.227
+     ],
+     [
+      -0.014,
+      0.205
+     ],
+     [
+      -0.014,
+      0.075
+     ],
+     [
+      -0.053,
+      0.053
+     ],
+     [
+      -0.075,
+      0
+     ],
+     [
+      -0.053,
+      -0.053
+     ],
+     [
+      -0.014,
+      -0.075
+     ],
+     [
+      -0.014,
+      -0.205
+     ],
+     [
+      -0.053,
+      -0.227
+     ],
+     [
+      -0.075,
+      -0.28
+     ],
+     [
+      -0.053,
+      -0.333
+     ],
+     [
+      -0.014,
+      -0.355
+     ],
+     [
+      -0.014,
+      -0.42
+     ]
+    ],
+    "height": 0.11,
+    "axis": "x",
+    "ribs": 0
+   },
+   "at": [
+    -9.99,
+    0.0,
+    0.0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "glow": 0,
+    "weight": 0.7
+   },
+   "rotate": [
+    90.0,
+    0.0,
+    0.0
+   ]
+  }
+ ],
+ "articulations": [],
+ "labels": [],
+ "anchors": {
+  "grip": {
+   "point": [
+    0,
+    0,
+    0
+   ]
+  }
+ },
+ "annotations": [],
+ "presentation": {
+  "framing": {
+   "yaw": 14,
+   "pitch": 9,
+   "fit": 1.04
+  },
+  "views": [
+   {
+    "id": "concept",
+    "label": "Street-eye cable silhouette",
+    "yaw": 0,
+    "pitch": -12,
+    "distance": 0.98
+   },
+   {
+    "id": "attachment",
+    "label": "Seated wall termination",
+    "yaw": 32,
+    "pitch": 24,
+    "distance": 2.5,
+    "target": "insulator-bank-positive"
+   }
+  ],
+  "atmosphere": {
+   "haze": 0.15,
+   "scanlines": false,
+   "vignette": true,
+   "grid": false,
+   "projector": false,
+   "motes": 0
+  },
+  "occlusion": "xray",
+  "certainty_style": "subtle",
+  "background": "deep",
+  "float": 0
+ },
+ "animation": {
+  "assembly": {
+   "style": "ceremony",
+   "seconds": 3,
+   "interference": false
+  },
+  "idle": {
+   "life": "off",
+   "events": [],
+   "cadence": [
+    8,
+    14
+   ],
+   "strength": 0
+  },
+  "camera": {
+   "drift": 0,
+   "breathe": 0
+  },
+  "reduced_motion": "still"
+ },
+ "authoring": {
+  "tier": "masterpiece",
+  "research": "off",
+  "review_rounds": 3,
+  "outcome": "good",
+  "next": [
+   "Independent judged review of cable silhouette and attachment."
+  ],
+  "identity": [
+   {
+    "feature": "Three distinct gentle sagging solid cables",
+    "parts": [
+     "cable-messenger",
+     "cable-service",
+     "cable-feeder"
+    ]
+   },
+   {
+    "feature": "Seated triple-terminal wall plates",
+    "parts": [
+     "wall-bracket-positive",
+     "wall-bracket-negative",
+     "insulator-bank-positive",
+     "insulator-bank-negative"
+    ]
+   }
+  ],
+  "critic": {
+   "scene_sha256": "f362345c2b995071204562976321f9f4d29a92ad2f5f6fac1a64f487250d5b3b",
+   "verdict": "good",
+   "scores": {
+    "silhouette": 2,
+    "proportions": 3,
+    "identity": 3,
+    "depth": 2,
+    "composition": 3,
+    "assembly": 2,
+    "motion": 3,
+    "density": 2,
+    "honesty": 3
+   },
+   "round": 3,
+   "defects": 4
+  },
+  "rounds": [
+   {
+    "round": 1,
+    "result": "baseline",
+    "minutes": 0.8,
+    "changes": [
+     "draft"
+    ],
+    "summary": "The wall-end detail exposes three plain cuboids as the entire terminal bank. They communicate three attachment positions, but not rubber ins"
+   },
+   {
+    "round": 2,
+    "result": "kept",
+    "minutes": 2.3,
+    "changes": [
+     "D1",
+     "D2",
+     "D3"
+    ],
+    "summary": "The three terminals are present and seated, but their dominant silhouette is still that of long rectangular blocks with polygonal end faces."
+   },
+   {
+    "round": 3,
+    "result": "kept",
+    "minutes": 1.9,
+    "changes": [
+     "D1",
+     "D3",
+     "D4"
+    ],
+    "summary": "The shallow arcs have perceptible straight chord sections and small slope changes, particularly around the middle portions in the solid and "
+   },
+   {
+    "round": 4,
+    "result": "reverted",
+    "minutes": 1.3,
+    "changes": [
+     "D2",
+     "D5",
+     "D6"
+    ],
+    "summary": "The assembly sheet is entirely blank apart from its footer. The supplied timeline has every assembly boundary at zero and no events, so ther"
+   }
+  ]
+ }
+}

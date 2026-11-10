@@ -1,0 +1,4866 @@
+{
+ "format": "construct-scene",
+ "version": 2,
+ "id": "rain-harbour-street-foundation",
+ "title": "Rain Harbour Road: the wet street",
+ "subject": {
+  "category": "architecture",
+  "summary": "Original metre-scale street foundation: two raised pavements, a fourteen-metre carriageway and shallow flush rainwater insets. The reference supplies an approximate wet-night mood, not surveyed dimensions.",
+  "accuracy": "original",
+  "synthetic": false
+ },
+ "units": "m",
+ "seed": 19,
+ "sources": [
+  {
+   "id": "request",
+   "kind": "user_request",
+   "title": "Rain Harbour street-foundation dimensional contract and supplied night concept",
+   "rights": "permitted"
+  }
+ ],
+ "facts": [
+  {
+   "key": "road.length",
+   "value": 60,
+   "unit": "m",
+   "certainty": "user_supplied",
+   "source": "request",
+   "requirement": true
+  },
+  {
+   "key": "road.width",
+   "value": 14,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "request",
+   "requirement": true,
+   "note": "Designer-selected nominal road width, not supplied by the user."
+  },
+  {
+   "key": "pavement.width",
+   "value": 3,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "request",
+   "requirement": true,
+   "note": "Designer-selected nominal pavement width, not supplied by the user."
+  },
+  {
+   "key": "pavement.top",
+   "value": 0.18,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "request",
+   "requirement": true,
+   "note": "Designer-selected kerb datum, not supplied by the user."
+  },
+  {
+   "key": "support.size",
+   "value": "100 x 160",
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "request",
+   "requirement": true,
+   "note": "Designer-selected support extent, not supplied by the user."
+  },
+  {
+   "key": "wet.inset",
+   "value": 0.008,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "request",
+   "note": "Designed thin wearing layer and shallow inset water. All road and water top faces are exactly y=0; no hovering overlays."
+  },
+  {
+   "key": "support.recess",
+   "value": 0.12,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "request",
+   "note": "Designed central support recess removes coplanar z-fighting: site-ground retains the required 100 x 160 envelope and y=0 top; the street-lower-support carries the road bed within its recess. Front infill closes the approach. Combined support remains continuous."
+  }
+ ],
+ "parts": [
+  {
+   "id": "site-ground",
+   "label": "Continuous site support",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "support.size"
+   ],
+   "stage": 0,
+   "shape": {
+    "axis": "y",
+    "height": 0.4,
+    "profile": [
+     [
+      -50,
+      -45
+     ],
+     [
+      -7,
+      -45
+     ],
+     [
+      -7,
+      30
+     ],
+     [
+      7,
+      30
+     ],
+     [
+      7,
+      -45
+     ],
+     [
+      50,
+      -45
+     ],
+     [
+      50,
+      115
+     ],
+     [
+      -50,
+      115
+     ]
+    ],
+    "type": "extrude"
+   },
+   "at": [
+    0,
+    -0.4,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "line": "none",
+    "alpha": 1,
+    "glow": 0
+   }
+  },
+  {
+   "id": "road-bed",
+   "label": "Carriageway structural bed",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "road.length",
+    "road.width"
+   ],
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     14,
+     0.112,
+     60
+    ]
+   },
+   "at": [
+    0,
+    -0.064,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "line": "none",
+    "alpha": 1,
+    "glow": 0
+   }
+  },
+  {
+   "id": "road-left-gutter",
+   "label": "Left asphalt gutter and inset margins",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "road.length",
+    "road.width",
+    "wet.inset"
+   ],
+   "stage": 1,
+   "shape": {
+    "type": "extrude",
+    "axis": "y",
+    "height": 0.008,
+    "profile": [
+     [
+      -7,
+      -30
+     ],
+     [
+      -5,
+      -30
+     ],
+     [
+      -4.8,
+      -24.1
+     ],
+     [
+      -5.18,
+      -25
+     ],
+     [
+      -5.5,
+      -24.7
+     ],
+     [
+      -5.8,
+      -23.8
+     ],
+     [
+      -5.73,
+      -23
+     ],
+     [
+      -5.88,
+      -22.3
+     ],
+     [
+      -5.65,
+      -21
+     ],
+     [
+      -5.18,
+      -20.35
+     ],
+     [
+      -5.11498771,
+      -13
+     ],
+     [
+      -6,
+      -13
+     ],
+     [
+      -6,
+      -8
+     ],
+     [
+      -5.07076167,
+      -8
+     ],
+     [
+      -5,
+      0
+     ],
+     [
+      -4.83,
+      9.5
+     ],
+     [
+      -5.1,
+      8.2
+     ],
+     [
+      -5.55,
+      8
+     ],
+     [
+      -5.82,
+      8.9
+     ],
+     [
+      -5.9,
+      9.7
+     ],
+     [
+      -5.65,
+      10.5
+     ],
+     [
+      -5.73,
+      11.4
+     ],
+     [
+      -5.45,
+      12.6
+     ],
+     [
+      -5.07,
+      13
+     ],
+     [
+      -5,
+      30
+     ],
+     [
+      -7,
+      30
+     ],
+     [
+      -7,
+      24.42
+     ],
+     [
+      -6.48,
+      24.42
+     ],
+     [
+      -6.48,
+      23.58
+     ],
+     [
+      -7,
+      23.58
+     ],
+     [
+      -7,
+      8.42
+     ],
+     [
+      -6.48,
+      8.42
+     ],
+     [
+      -6.48,
+      7.58
+     ],
+     [
+      -7,
+      7.58
+     ],
+     [
+      -7,
+      3.99
+     ],
+     [
+      -6.8812,
+      4.1
+     ],
+     [
+      -6.7272,
+      3.935
+     ],
+     [
+      -6.604,
+      3.605
+     ],
+     [
+      -6.6744,
+      3.44
+     ],
+     [
+      -6.56,
+      3.242
+     ],
+     [
+      -6.758,
+      3.044
+     ],
+     [
+      -7,
+      3
+     ],
+     [
+      -7,
+      -3.24
+     ],
+     [
+      -6.8326,
+      -3.1
+     ],
+     [
+      -6.6156,
+      -3.31
+     ],
+     [
+      -6.442,
+      -3.73
+     ],
+     [
+      -6.5412,
+      -3.94
+     ],
+     [
+      -6.38,
+      -4.192
+     ],
+     [
+      -6.659,
+      -4.444
+     ],
+     [
+      -7,
+      -4.5
+     ],
+     [
+      -7,
+      -7.58
+     ],
+     [
+      -6.48,
+      -7.58
+     ],
+     [
+      -6.48,
+      -8.42
+     ],
+     [
+      -7,
+      -8.42
+     ],
+     [
+      -7,
+      -11.89
+     ],
+     [
+      -6.9217,
+      -11.8
+     ],
+     [
+      -6.8202,
+      -11.935
+     ],
+     [
+      -6.739,
+      -12.205
+     ],
+     [
+      -6.7854,
+      -12.34
+     ],
+     [
+      -6.71,
+      -12.502
+     ],
+     [
+      -6.8405,
+      -12.664
+     ],
+     [
+      -7,
+      -12.7
+     ],
+     [
+      -7,
+      -15.445
+     ],
+     [
+      -6.7948,
+      -15.25
+     ],
+     [
+      -6.5288,
+      -15.5425
+     ],
+     [
+      -6.316,
+      -16.1275
+     ],
+     [
+      -6.4376,
+      -16.42
+     ],
+     [
+      -6.24,
+      -16.771
+     ],
+     [
+      -6.582,
+      -17.122
+     ],
+     [
+      -7,
+      -17.2
+     ],
+     [
+      -7,
+      -18.78
+     ],
+     [
+      -6.9055,
+      -18.7
+     ],
+     [
+      -6.783,
+      -18.82
+     ],
+     [
+      -6.685,
+      -19.06
+     ],
+     [
+      -6.741,
+      -19.18
+     ],
+     [
+      -6.65,
+      -19.324
+     ],
+     [
+      -6.8075,
+      -19.468
+     ],
+     [
+      -7,
+      -19.5
+     ],
+     [
+      -7,
+      -21.46
+     ],
+     [
+      -6.8056,
+      -21.3
+     ],
+     [
+      -6.5536,
+      -21.54
+     ],
+     [
+      -6.352,
+      -22.02
+     ],
+     [
+      -6.4672,
+      -22.26
+     ],
+     [
+      -6.28,
+      -22.548
+     ],
+     [
+      -6.604,
+      -22.836
+     ],
+     [
+      -7,
+      -22.9
+     ],
+     [
+      -7,
+      -23.58
+     ],
+     [
+      -6.48,
+      -23.58
+     ],
+     [
+      -6.48,
+      -24.42
+     ],
+     [
+      -7,
+      -24.42
+     ],
+     [
+      -7,
+      -25.945
+     ],
+     [
+      -6.8839,
+      -25.85
+     ],
+     [
+      -6.7334,
+      -25.9925
+     ],
+     [
+      -6.613,
+      -26.2775
+     ],
+     [
+      -6.6818,
+      -26.42
+     ],
+     [
+      -6.57,
+      -26.591
+     ],
+     [
+      -6.7635,
+      -26.762
+     ],
+     [
+      -7,
+      -26.8
+     ],
+     [
+      -7,
+      -28.08
+     ],
+     [
+      -6.8245,
+      -27.9
+     ],
+     [
+      -6.597,
+      -28.17
+     ],
+     [
+      -6.415,
+      -28.71
+     ],
+     [
+      -6.519,
+      -28.98
+     ],
+     [
+      -6.35,
+      -29.304
+     ],
+     [
+      -6.6425,
+      -29.628
+     ],
+     [
+      -7,
+      -29.7
+     ]
+    ]
+   },
+   "at": [
+    0,
+    -0.008,
+    0
+   ],
+   "look": {
+    "alpha": 0.18,
+    "fill": "dark",
+    "glow": 0,
+    "line": "none",
+    "tone": "structure",
+    "weight": 0.25
+   }
+  },
+  {
+   "id": "road-left-lane",
+   "label": "Left lane continuous asphalt",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "road.length",
+    "road.width",
+    "wet.inset"
+   ],
+   "stage": 1,
+   "shape": {
+    "type": "extrude",
+    "axis": "y",
+    "height": 0.008,
+    "profile": [
+     [
+      -5,
+      -30
+     ],
+     [
+      0,
+      -30
+     ],
+     [
+      0.32,
+      -14.8
+     ],
+     [
+      -0.12,
+      -16
+     ],
+     [
+      -0.6,
+      -15.8
+     ],
+     [
+      -1.1,
+      -14.5
+     ],
+     [
+      -0.95,
+      -13.8
+     ],
+     [
+      -1.12,
+      -12.9
+     ],
+     [
+      -0.85,
+      -11
+     ],
+     [
+      -0.4,
+      -10
+     ],
+     [
+      0.12,
+      -10.3
+     ],
+     [
+      0,
+      8
+     ],
+     [
+      0.35,
+      18.9
+     ],
+     [
+      -0.12,
+      17
+     ],
+     [
+      -0.55,
+      17.3
+     ],
+     [
+      -0.9,
+      19
+     ],
+     [
+      -0.7,
+      19.8
+     ],
+     [
+      -0.8,
+      20.6
+     ],
+     [
+      -0.5,
+      22
+     ],
+     [
+      -0.1,
+      22.7
+     ],
+     [
+      0,
+      30
+     ],
+     [
+      -5,
+      30
+     ],
+     [
+      -5.07,
+      13
+     ],
+     [
+      -4.72,
+      11.4
+     ],
+     [
+      -4.83,
+      9.5
+     ],
+     [
+      -5,
+      0
+     ],
+     [
+      -5.07076167,
+      -8
+     ],
+     [
+      -2.2,
+      -8
+     ],
+     [
+      -2.2,
+      -13
+     ],
+     [
+      -5.11498771,
+      -13
+     ],
+     [
+      -5.18,
+      -20.35
+     ],
+     [
+      -4.83,
+      -21.7
+     ],
+     [
+      -4.95,
+      -23.2
+     ],
+     [
+      -4.8,
+      -24.1
+     ]
+    ]
+   },
+   "at": [
+    0,
+    -0.008,
+    0
+   ],
+   "look": {
+    "alpha": 0.18,
+    "fill": "dark",
+    "glow": 0,
+    "line": "none",
+    "tone": "structure",
+    "weight": 0.25
+   }
+  },
+  {
+   "id": "road-right-lane",
+   "label": "Right lane continuous asphalt",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "road.length",
+    "road.width",
+    "wet.inset"
+   ],
+   "stage": 1,
+   "shape": {
+    "type": "extrude",
+    "axis": "y",
+    "height": 0.008,
+    "profile": [
+     [
+      0,
+      -30
+     ],
+     [
+      5,
+      -30
+     ],
+     [
+      5.07836735,
+      -24
+     ],
+     [
+      2.2,
+      -24
+     ],
+     [
+      2.2,
+      -19
+     ],
+     [
+      5.14367347,
+      -19
+     ],
+     [
+      5.19983674,
+      -14.7
+     ],
+     [
+      2.2,
+      -14.7
+     ],
+     [
+      2.2,
+      -9.7
+     ],
+     [
+      5.26514286,
+      -9.7
+     ],
+     [
+      5.32,
+      -5.5
+     ],
+     [
+      4.85,
+      -7
+     ],
+     [
+      4.55,
+      -6.8
+     ],
+     [
+      4.1,
+      -5.8
+     ],
+     [
+      4.3,
+      -4.8
+     ],
+     [
+      4.15,
+      -4
+     ],
+     [
+      4.3,
+      -2.5
+     ],
+     [
+      4.65,
+      -1.25
+     ],
+     [
+      5.12,
+      -1
+     ],
+     [
+      5.11225806,
+      1
+     ],
+     [
+      2.2,
+      1
+     ],
+     [
+      2.2,
+      5.8
+     ],
+     [
+      5.09367742,
+      5.8
+     ],
+     [
+      5,
+      30
+     ],
+     [
+      0,
+      30
+     ],
+     [
+      -0.1,
+      22.7
+     ],
+     [
+      0.3,
+      21.8
+     ],
+     [
+      0.15,
+      20.4
+     ],
+     [
+      0.35,
+      18.9
+     ],
+     [
+      0,
+      8
+     ],
+     [
+      0.12,
+      -10.3
+     ],
+     [
+      0.3,
+      -11.6
+     ],
+     [
+      0.15,
+      -13.7
+     ],
+     [
+      0.32,
+      -14.8
+     ]
+    ]
+   },
+   "at": [
+    0,
+    -0.008,
+    0
+   ],
+   "look": {
+    "alpha": 0.18,
+    "fill": "dark",
+    "glow": 0,
+    "line": "none",
+    "tone": "structure",
+    "weight": 0.25
+   }
+  },
+  {
+   "id": "road-right-gutter",
+   "label": "Right asphalt gutter and inset margins",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "road.length",
+    "road.width",
+    "wet.inset"
+   ],
+   "stage": 1,
+   "shape": {
+    "type": "extrude",
+    "axis": "y",
+    "height": 0.008,
+    "profile": [
+     [
+      5,
+      -30
+     ],
+     [
+      7,
+      -30
+     ],
+     [
+      7,
+      -29.4
+     ],
+     [
+      6.604,
+      -29.328
+     ],
+     [
+      6.28,
+      -29.004
+     ],
+     [
+      6.4672,
+      -28.68
+     ],
+     [
+      6.352,
+      -28.41
+     ],
+     [
+      6.5536,
+      -27.87
+     ],
+     [
+      6.8056,
+      -27.6
+     ],
+     [
+      7,
+      -27.78
+     ],
+     [
+      7,
+      -26.8
+     ],
+     [
+      6.791,
+      -26.752
+     ],
+     [
+      6.62,
+      -26.536
+     ],
+     [
+      6.7188,
+      -26.32
+     ],
+     [
+      6.658,
+      -26.14
+     ],
+     [
+      6.7644,
+      -25.78
+     ],
+     [
+      6.8974,
+      -25.6
+     ],
+     [
+      7,
+      -25.72
+     ],
+     [
+      7,
+      -24.42
+     ],
+     [
+      6.48,
+      -24.42
+     ],
+     [
+      6.48,
+      -23.58
+     ],
+     [
+      7,
+      -23.58
+     ],
+     [
+      7,
+      -22.9
+     ],
+     [
+      6.6425,
+      -22.836
+     ],
+     [
+      6.35,
+      -22.548
+     ],
+     [
+      6.519,
+      -22.26
+     ],
+     [
+      6.415,
+      -22.02
+     ],
+     [
+      6.597,
+      -21.54
+     ],
+     [
+      6.8245,
+      -21.3
+     ],
+     [
+      7,
+      -21.46
+     ],
+     [
+      7,
+      -19.8
+     ],
+     [
+      6.824,
+      -19.764
+     ],
+     [
+      6.68,
+      -19.602
+     ],
+     [
+      6.7632,
+      -19.44
+     ],
+     [
+      6.712,
+      -19.305
+     ],
+     [
+      6.8016,
+      -19.035
+     ],
+     [
+      6.9136,
+      -18.9
+     ],
+     [
+      7,
+      -18.99
+     ],
+     [
+      7,
+      -16.8
+     ],
+     [
+      6.571,
+      -16.722
+     ],
+     [
+      6.22,
+      -16.371
+     ],
+     [
+      6.4228,
+      -16.02
+     ],
+     [
+      6.298,
+      -15.7275
+     ],
+     [
+      6.5164,
+      -15.1425
+     ],
+     [
+      6.7894,
+      -14.85
+     ],
+     [
+      7,
+      -15.045
+     ],
+     [
+      7,
+      -11.6
+     ],
+     [
+      6.868,
+      -11.572
+     ],
+     [
+      6.76,
+      -11.446
+     ],
+     [
+      6.8224,
+      -11.32
+     ],
+     [
+      6.784,
+      -11.215
+     ],
+     [
+      6.8512,
+      -11.005
+     ],
+     [
+      6.9352,
+      -10.9
+     ],
+     [
+      7,
+      -10.97
+     ],
+     [
+      7,
+      -8.42
+     ],
+     [
+      6.48,
+      -8.42
+     ],
+     [
+      6.48,
+      -7.58
+     ],
+     [
+      7,
+      -7.58
+     ],
+     [
+      7,
+      -3.1
+     ],
+     [
+      6.681,
+      -3.048
+     ],
+     [
+      6.42,
+      -2.814
+     ],
+     [
+      6.5708,
+      -2.58
+     ],
+     [
+      6.478,
+      -2.385
+     ],
+     [
+      6.6404,
+      -1.995
+     ],
+     [
+      6.8434,
+      -1.8
+     ],
+     [
+      7,
+      -1.93
+     ],
+     [
+      7,
+      7.58
+     ],
+     [
+      6.48,
+      7.58
+     ],
+     [
+      6.48,
+      8.42
+     ],
+     [
+      7,
+      8.42
+     ],
+     [
+      7,
+      9.8
+     ],
+     [
+      6.7745,
+      9.844
+     ],
+     [
+      6.59,
+      10.042
+     ],
+     [
+      6.6966,
+      10.24
+     ],
+     [
+      6.631,
+      10.405
+     ],
+     [
+      6.7458,
+      10.735
+     ],
+     [
+      6.8893,
+      10.9
+     ],
+     [
+      7,
+      10.79
+     ],
+     [
+      7,
+      23.58
+     ],
+     [
+      6.48,
+      23.58
+     ],
+     [
+      6.48,
+      24.42
+     ],
+     [
+      7,
+      24.42
+     ],
+     [
+      7,
+      30
+     ],
+     [
+      5,
+      30
+     ],
+     [
+      5.09367742,
+      5.8
+     ],
+     [
+      6,
+      5.8
+     ],
+     [
+      6,
+      1
+     ],
+     [
+      5.11225806,
+      1
+     ],
+     [
+      5.12,
+      -1
+     ],
+     [
+      5.28,
+      -2.8
+     ],
+     [
+      5.15,
+      -4.3
+     ],
+     [
+      5.32,
+      -5.5
+     ],
+     [
+      5.26514286,
+      -9.7
+     ],
+     [
+      6,
+      -9.7
+     ],
+     [
+      6,
+      -14.7
+     ],
+     [
+      5.19983674,
+      -14.7
+     ],
+     [
+      5.14367347,
+      -19
+     ],
+     [
+      6,
+      -19
+     ],
+     [
+      6,
+      -24
+     ],
+     [
+      5.07836735,
+      -24
+     ]
+    ]
+   },
+   "at": [
+    0,
+    -0.008,
+    0
+   ],
+   "look": {
+    "alpha": 0.18,
+    "fill": "dark",
+    "glow": 0,
+    "line": "none",
+    "tone": "structure",
+    "weight": 0.25
+   }
+  },
+  {
+   "id": "puddle-near-left",
+   "label": "Foreground irregular shallow rain inset",
+   "role": "identity",
+   "certainty": "inferred",
+   "basis": [
+    "wet.inset"
+   ],
+   "stage": 4,
+   "shape": {
+    "type": "extrude",
+    "axis": "y",
+    "height": 0.008,
+    "profile": [
+     [
+      -5.18,
+      -25
+     ],
+     [
+      -5.5,
+      -24.7
+     ],
+     [
+      -5.8,
+      -23.8
+     ],
+     [
+      -5.73,
+      -23
+     ],
+     [
+      -5.88,
+      -22.3
+     ],
+     [
+      -5.65,
+      -21
+     ],
+     [
+      -5.18,
+      -20.35
+     ],
+     [
+      -4.83,
+      -21.7
+     ],
+     [
+      -4.95,
+      -23.2
+     ],
+     [
+      -4.8,
+      -24.1
+     ]
+    ]
+   },
+   "at": [
+    0,
+    -0.008,
+    0
+   ],
+   "look": {
+    "fill": "glass",
+    "tone": "identity",
+    "line": "solid",
+    "alpha": 0.5,
+    "weight": 0.25,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "puddle-left-far",
+   "label": "Left shallow rain inset",
+   "role": "identity",
+   "certainty": "inferred",
+   "basis": [
+    "wet.inset"
+   ],
+   "stage": 4,
+   "shape": {
+    "type": "extrude",
+    "axis": "y",
+    "height": 0.008,
+    "profile": [
+     [
+      -5.1,
+      8.2
+     ],
+     [
+      -5.55,
+      8
+     ],
+     [
+      -5.82,
+      8.9
+     ],
+     [
+      -5.9,
+      9.7
+     ],
+     [
+      -5.65,
+      10.5
+     ],
+     [
+      -5.73,
+      11.4
+     ],
+     [
+      -5.45,
+      12.6
+     ],
+     [
+      -5.07,
+      13
+     ],
+     [
+      -4.72,
+      11.4
+     ],
+     [
+      -4.83,
+      9.5
+     ]
+    ]
+   },
+   "at": [
+    0,
+    -0.008,
+    0
+   ],
+   "look": {
+    "fill": "glass",
+    "tone": "identity",
+    "line": "solid",
+    "alpha": 0.5,
+    "weight": 0.25,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "puddle-centre-near",
+   "label": "Near centre shallow rain inset",
+   "role": "identity",
+   "certainty": "inferred",
+   "basis": [
+    "wet.inset"
+   ],
+   "stage": 4,
+   "shape": {
+    "type": "extrude",
+    "axis": "y",
+    "height": 0.008,
+    "profile": [
+     [
+      -0.12,
+      -16
+     ],
+     [
+      -0.6,
+      -15.8
+     ],
+     [
+      -1.1,
+      -14.5
+     ],
+     [
+      -0.95,
+      -13.8
+     ],
+     [
+      -1.12,
+      -12.9
+     ],
+     [
+      -0.85,
+      -11
+     ],
+     [
+      -0.4,
+      -10
+     ],
+     [
+      0.12,
+      -10.3
+     ],
+     [
+      0.3,
+      -11.6
+     ],
+     [
+      0.15,
+      -13.7
+     ],
+     [
+      0.32,
+      -14.8
+     ]
+    ]
+   },
+   "at": [
+    0,
+    -0.008,
+    0
+   ],
+   "look": {
+    "fill": "glass",
+    "tone": "identity",
+    "line": "solid",
+    "alpha": 0.5,
+    "weight": 0.25,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "puddle-centre-far",
+   "label": "Far centre shallow rain inset",
+   "role": "identity",
+   "certainty": "inferred",
+   "basis": [
+    "wet.inset"
+   ],
+   "stage": 4,
+   "shape": {
+    "type": "extrude",
+    "axis": "y",
+    "height": 0.008,
+    "profile": [
+     [
+      -0.12,
+      17
+     ],
+     [
+      -0.55,
+      17.3
+     ],
+     [
+      -0.9,
+      19
+     ],
+     [
+      -0.7,
+      19.8
+     ],
+     [
+      -0.8,
+      20.6
+     ],
+     [
+      -0.5,
+      22
+     ],
+     [
+      -0.1,
+      22.7
+     ],
+     [
+      0.3,
+      21.8
+     ],
+     [
+      0.15,
+      20.4
+     ],
+     [
+      0.35,
+      18.9
+     ]
+    ]
+   },
+   "at": [
+    0,
+    -0.008,
+    0
+   ],
+   "look": {
+    "fill": "glass",
+    "tone": "identity",
+    "line": "solid",
+    "alpha": 0.5,
+    "weight": 0.25,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "puddle-right-mid",
+   "label": "Right shallow rain inset",
+   "role": "identity",
+   "certainty": "inferred",
+   "basis": [
+    "wet.inset"
+   ],
+   "stage": 4,
+   "shape": {
+    "type": "extrude",
+    "axis": "y",
+    "height": 0.008,
+    "profile": [
+     [
+      4.85,
+      -7
+     ],
+     [
+      4.55,
+      -6.8
+     ],
+     [
+      4.1,
+      -5.8
+     ],
+     [
+      4.3,
+      -4.8
+     ],
+     [
+      4.15,
+      -4
+     ],
+     [
+      4.3,
+      -2.5
+     ],
+     [
+      4.65,
+      -1.25
+     ],
+     [
+      5.12,
+      -1
+     ],
+     [
+      5.28,
+      -2.8
+     ],
+     [
+      5.15,
+      -4.3
+     ],
+     [
+      5.32,
+      -5.5
+     ]
+    ]
+   },
+   "at": [
+    0,
+    -0.008,
+    0
+   ],
+   "look": {
+    "fill": "glass",
+    "tone": "identity",
+    "line": "solid",
+    "alpha": 0.5,
+    "weight": 0.25,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "sidewalk-left",
+   "label": "Left raised pavement",
+   "role": "mass",
+   "certainty": "inferred",
+   "basis": [
+    "pavement.width",
+    "pavement.top",
+    "road.length"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     3,
+     0.18,
+     60
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -8.5,
+    0,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "line": "solid",
+    "alpha": 1,
+    "weight": 0.65,
+    "glow": 0
+   }
+  },
+  {
+   "id": "sidewalk-right",
+   "label": "Right raised pavement",
+   "role": "mass",
+   "certainty": "inferred",
+   "basis": [
+    "pavement.width",
+    "pavement.top",
+    "road.length"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     3,
+     0.18,
+     60
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    8.5,
+    0,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "line": "solid",
+    "alpha": 1,
+    "weight": 0.65,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-left",
+   "label": "Left stone kerb edge",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement.top",
+    "road.length"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.18,
+     0.18,
+     60
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    -7.09,
+    0,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "line": "solid",
+    "alpha": 1,
+    "weight": 0.7,
+    "glow": 0
+   }
+  },
+  {
+   "id": "kerb-right",
+   "label": "Right stone kerb edge",
+   "role": "detail",
+   "certainty": "inferred",
+   "basis": [
+    "pavement.top",
+    "road.length"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.18,
+     0.18,
+     60
+    ],
+    "anchor": "base"
+   },
+   "at": [
+    7.09,
+    0,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "line": "solid",
+    "alpha": 1,
+    "weight": 0.7,
+    "glow": 0
+   }
+  },
+  {
+   "id": "drain-left-recess",
+   "label": "Left gutter drain plates",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "extrude",
+    "axis": "y",
+    "height": 0.012,
+    "profile": [
+     [
+      -0.21,
+      -0.39
+     ],
+     [
+      0.21,
+      -0.39
+     ],
+     [
+      0.21,
+      -0.28
+     ],
+     [
+      -0.12,
+      -0.28
+     ],
+     [
+      -0.12,
+      -0.23
+     ],
+     [
+      0.21,
+      -0.23
+     ],
+     [
+      0.21,
+      -0.12
+     ],
+     [
+      -0.12,
+      -0.12
+     ],
+     [
+      -0.12,
+      -0.07
+     ],
+     [
+      0.21,
+      -0.07
+     ],
+     [
+      0.21,
+      0.04
+     ],
+     [
+      -0.12,
+      0.04
+     ],
+     [
+      -0.12,
+      0.09
+     ],
+     [
+      0.21,
+      0.09
+     ],
+     [
+      0.21,
+      0.2
+     ],
+     [
+      -0.12,
+      0.2
+     ],
+     [
+      -0.12,
+      0.25
+     ],
+     [
+      0.21,
+      0.25
+     ],
+     [
+      0.21,
+      0.39
+     ],
+     [
+      -0.21,
+      0.39
+     ]
+    ]
+   },
+   "at": [
+    -6.72,
+    -0.012,
+    -24
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "line": "solid",
+    "alpha": 1,
+    "glow": 0,
+    "weight": 0.7
+   }
+  },
+  {
+   "id": "drain-right-recess",
+   "label": "Right gutter drain plates",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "extrude",
+    "axis": "y",
+    "height": 0.012,
+    "profile": [
+     [
+      -0.21,
+      -0.39
+     ],
+     [
+      0.21,
+      -0.39
+     ],
+     [
+      0.21,
+      -0.28
+     ],
+     [
+      -0.12,
+      -0.28
+     ],
+     [
+      -0.12,
+      -0.23
+     ],
+     [
+      0.21,
+      -0.23
+     ],
+     [
+      0.21,
+      -0.12
+     ],
+     [
+      -0.12,
+      -0.12
+     ],
+     [
+      -0.12,
+      -0.07
+     ],
+     [
+      0.21,
+      -0.07
+     ],
+     [
+      0.21,
+      0.04
+     ],
+     [
+      -0.12,
+      0.04
+     ],
+     [
+      -0.12,
+      0.09
+     ],
+     [
+      0.21,
+      0.09
+     ],
+     [
+      0.21,
+      0.2
+     ],
+     [
+      -0.12,
+      0.2
+     ],
+     [
+      -0.12,
+      0.25
+     ],
+     [
+      0.21,
+      0.25
+     ],
+     [
+      0.21,
+      0.39
+     ],
+     [
+      -0.21,
+      0.39
+     ]
+    ]
+   },
+   "at": [
+    6.72,
+    -0.012,
+    -24
+   ],
+   "repeat": {
+    "count": 4,
+    "step": {
+     "at": [
+      0,
+      0,
+      16
+     ]
+    }
+   },
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "line": "solid",
+    "alpha": 1,
+    "glow": 0,
+    "weight": 0.7
+   }
+  },
+  {
+   "id": "pavement-joints-left",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "paths",
+    "paths": [
+     [
+      [
+       -9.9,
+       0.18,
+       -26
+      ],
+      [
+       -7.22,
+       0.18,
+       -26
+      ]
+     ],
+     [
+      [
+       -9.9,
+       0.18,
+       -22
+      ],
+      [
+       -7.22,
+       0.18,
+       -22
+      ]
+     ],
+     [
+      [
+       -9.9,
+       0.18,
+       -18
+      ],
+      [
+       -7.22,
+       0.18,
+       -18
+      ]
+     ],
+     [
+      [
+       -9.9,
+       0.18,
+       -14
+      ],
+      [
+       -7.22,
+       0.18,
+       -14
+      ]
+     ],
+     [
+      [
+       -9.9,
+       0.18,
+       -10
+      ],
+      [
+       -7.22,
+       0.18,
+       -10
+      ]
+     ],
+     [
+      [
+       -9.9,
+       0.18,
+       -6
+      ],
+      [
+       -7.22,
+       0.18,
+       -6
+      ]
+     ],
+     [
+      [
+       -9.9,
+       0.18,
+       -2
+      ],
+      [
+       -7.22,
+       0.18,
+       -2
+      ]
+     ],
+     [
+      [
+       -9.9,
+       0.18,
+       2
+      ],
+      [
+       -7.22,
+       0.18,
+       2
+      ]
+     ],
+     [
+      [
+       -9.9,
+       0.18,
+       6
+      ],
+      [
+       -7.22,
+       0.18,
+       6
+      ]
+     ],
+     [
+      [
+       -9.9,
+       0.18,
+       10
+      ],
+      [
+       -7.22,
+       0.18,
+       10
+      ]
+     ],
+     [
+      [
+       -9.9,
+       0.18,
+       14
+      ],
+      [
+       -7.22,
+       0.18,
+       14
+      ]
+     ],
+     [
+      [
+       -9.9,
+       0.18,
+       18
+      ],
+      [
+       -7.22,
+       0.18,
+       18
+      ]
+     ],
+     [
+      [
+       -9.9,
+       0.18,
+       22
+      ],
+      [
+       -7.22,
+       0.18,
+       22
+      ]
+     ],
+     [
+      [
+       -9.9,
+       0.18,
+       26
+      ],
+      [
+       -7.22,
+       0.18,
+       26
+      ]
+     ]
+    ]
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "mirror": "x",
+   "look": {
+    "tone": "faint",
+    "line": "solid",
+    "weight": 0.25,
+    "alpha": 0.3,
+    "glow": 0
+   }
+  },
+  {
+   "id": "drain-camera-rim",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.42,
+     0.016,
+     0.025
+    ]
+   },
+   "at": [
+    -6.72,
+    -0.008,
+    -24.39
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "line": "solid",
+    "weight": 0.4,
+    "alpha": 1,
+    "glow": 0
+   }
+  },
+  {
+   "id": "drain-left-far",
+   "label": "Further left comb grates",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 3,
+   "shape": {
+    "type": "extrude",
+    "axis": "y",
+    "height": 0.012,
+    "profile": [
+     [
+      -0.21,
+      -0.39
+     ],
+     [
+      0.21,
+      -0.39
+     ],
+     [
+      0.21,
+      -0.28
+     ],
+     [
+      -0.12,
+      -0.28
+     ],
+     [
+      -0.12,
+      -0.23
+     ],
+     [
+      0.21,
+      -0.23
+     ],
+     [
+      0.21,
+      -0.12
+     ],
+     [
+      -0.12,
+      -0.12
+     ],
+     [
+      -0.12,
+      -0.07
+     ],
+     [
+      0.21,
+      -0.07
+     ],
+     [
+      0.21,
+      0.04
+     ],
+     [
+      -0.12,
+      0.04
+     ],
+     [
+      -0.12,
+      0.09
+     ],
+     [
+      0.21,
+      0.09
+     ],
+     [
+      0.21,
+      0.2
+     ],
+     [
+      -0.12,
+      0.2
+     ],
+     [
+      -0.12,
+      0.25
+     ],
+     [
+      0.21,
+      0.25
+     ],
+     [
+      0.21,
+      0.39
+     ],
+     [
+      -0.21,
+      0.39
+     ]
+    ]
+   },
+   "at": [
+    -6.72,
+    -0.012,
+    -8
+   ],
+   "repeat": {
+    "count": 3,
+    "step": {
+     "at": [
+      0,
+      0,
+      16
+     ]
+    }
+   },
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "line": "solid",
+    "alpha": 1,
+    "glow": 0,
+    "weight": 0.7
+   }
+  },
+  {
+   "at": [
+    0,
+    -0.26,
+    0
+   ],
+   "basis": [
+    "road.length",
+    "road.width"
+   ],
+   "certainty": "inferred",
+   "id": "street-lower-support",
+   "label": "Recessed support beneath the zero-level street",
+   "look": {
+    "alpha": 1,
+    "fill": "dark",
+    "glow": 0,
+    "line": "none"
+   },
+   "role": "structure",
+   "shape": {
+    "size": [
+     14,
+     0.28,
+     60
+    ],
+    "type": "box"
+   },
+   "stage": 0
+  },
+  {
+   "at": [
+    0,
+    -0.2,
+    -37.5
+   ],
+   "basis": [
+    "support.size"
+   ],
+   "certainty": "inferred",
+   "id": "support-front-infill",
+   "label": "Continuous zero-level approach support",
+   "look": {
+    "alpha": 1,
+    "fill": "dark",
+    "glow": 0,
+    "line": "none"
+   },
+   "role": "structure",
+   "shape": {
+    "size": [
+     14,
+     0.4,
+     15
+    ],
+    "type": "box"
+   },
+   "stage": 0
+  },
+  {
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "certainty": "inferred",
+   "id": "road-end-joints",
+   "look": {
+    "alpha": 0.25,
+    "glow": 0,
+    "line": "solid",
+    "tone": "structure",
+    "weight": 0.25
+   },
+   "role": "detail",
+   "shape": {
+    "paths": [
+     [
+      [
+       -7,
+       0,
+       -30
+      ],
+      [
+       7,
+       0,
+       -30
+      ]
+     ],
+     [
+      [
+       -7,
+       0,
+       30
+      ],
+      [
+       7,
+       0,
+       30
+      ]
+     ]
+    ],
+    "type": "paths"
+   },
+   "stage": 1
+  },
+  {
+   "id": "r2-wet-left-01",
+   "role": "identity",
+   "certainty": "inferred",
+   "basis": [
+    "wet.inset"
+   ],
+   "stage": 4,
+   "shape": {
+    "type": "extrude",
+    "axis": "y",
+    "height": 0.008,
+    "profile": [
+     [
+      0,
+      0
+     ],
+     [
+      0.55,
+      0.04
+     ],
+     [
+      1,
+      0.22
+     ],
+     [
+      0.74,
+      0.4
+     ],
+     [
+      0.9,
+      0.55
+     ],
+     [
+      0.62,
+      0.85
+     ],
+     [
+      0.27,
+      1
+     ],
+     [
+      0,
+      0.9
+     ],
+     [
+      0,
+      0.7
+     ],
+     [
+      0.2,
+      0.7
+     ],
+     [
+      0.2,
+      0.3
+     ],
+     [
+      0,
+      0.3
+     ]
+    ]
+   },
+   "at": [
+    -7,
+    -0.008,
+    -29.7
+   ],
+   "scale": [
+    0.65,
+    1,
+    1.8
+   ],
+   "look": {
+    "fill": "glass",
+    "tone": "identity",
+    "line": "solid",
+    "alpha": 0.62,
+    "weight": 0.25,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "r2-wet-left-01-broken-cue",
+   "role": "detail",
+   "certainty": "decorative",
+   "basis": [
+    "wet.inset"
+   ],
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.13,
+     0.008,
+     0.72
+    ]
+   },
+   "at": [
+    -6.935,
+    -0.004,
+    -28.8
+   ],
+   "look": {
+    "fill": "dark",
+    "line": "none",
+    "alpha": 1,
+    "glow": 0
+   },
+   "artwork": {
+    "slot": "booklet-page-1",
+    "asset": "r2-wet-cyan",
+    "face": "top",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "r2-wet-left-02",
+   "role": "identity",
+   "certainty": "inferred",
+   "basis": [
+    "wet.inset"
+   ],
+   "stage": 4,
+   "shape": {
+    "type": "extrude",
+    "axis": "y",
+    "height": 0.008,
+    "profile": [
+     [
+      0,
+      0
+     ],
+     [
+      0.55,
+      0.04
+     ],
+     [
+      1,
+      0.22
+     ],
+     [
+      0.74,
+      0.4
+     ],
+     [
+      0.9,
+      0.55
+     ],
+     [
+      0.62,
+      0.85
+     ],
+     [
+      0.27,
+      1
+     ],
+     [
+      0,
+      0.9
+     ],
+     [
+      0,
+      0.7
+     ],
+     [
+      0.2,
+      0.7
+     ],
+     [
+      0.2,
+      0.3
+     ],
+     [
+      0,
+      0.3
+     ]
+    ]
+   },
+   "at": [
+    -7,
+    -0.008,
+    -26.8
+   ],
+   "scale": [
+    0.43,
+    1,
+    0.95
+   ],
+   "look": {
+    "fill": "glass",
+    "tone": "identity",
+    "line": "solid",
+    "alpha": 0.62,
+    "weight": 0.25,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "r2-wet-left-02-broken-cue",
+   "role": "detail",
+   "certainty": "decorative",
+   "basis": [
+    "wet.inset"
+   ],
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.086,
+     0.008,
+     0.38
+    ]
+   },
+   "at": [
+    -6.957,
+    -0.004,
+    -26.325
+   ],
+   "look": {
+    "fill": "dark",
+    "line": "none",
+    "alpha": 1,
+    "glow": 0
+   },
+   "artwork": {
+    "slot": "booklet-page-2",
+    "asset": "r2-wet-amber",
+    "face": "top",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "r2-wet-left-03",
+   "role": "identity",
+   "certainty": "inferred",
+   "basis": [
+    "wet.inset"
+   ],
+   "stage": 4,
+   "shape": {
+    "type": "extrude",
+    "axis": "y",
+    "height": 0.008,
+    "profile": [
+     [
+      0,
+      0
+     ],
+     [
+      0.55,
+      0.04
+     ],
+     [
+      1,
+      0.22
+     ],
+     [
+      0.74,
+      0.4
+     ],
+     [
+      0.9,
+      0.55
+     ],
+     [
+      0.62,
+      0.85
+     ],
+     [
+      0.27,
+      1
+     ],
+     [
+      0,
+      0.9
+     ],
+     [
+      0,
+      0.7
+     ],
+     [
+      0.2,
+      0.7
+     ],
+     [
+      0.2,
+      0.3
+     ],
+     [
+      0,
+      0.3
+     ]
+    ]
+   },
+   "at": [
+    -7,
+    -0.008,
+    -22.9
+   ],
+   "scale": [
+    0.72,
+    1,
+    1.6
+   ],
+   "look": {
+    "fill": "glass",
+    "tone": "identity",
+    "line": "solid",
+    "alpha": 0.62,
+    "weight": 0.25,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "r2-wet-left-03-broken-cue",
+   "role": "detail",
+   "certainty": "decorative",
+   "basis": [
+    "wet.inset"
+   ],
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.144,
+     0.008,
+     0.64
+    ]
+   },
+   "at": [
+    -6.928,
+    -0.004,
+    -22.1
+   ],
+   "look": {
+    "fill": "dark",
+    "line": "none",
+    "alpha": 1,
+    "glow": 0
+   },
+   "artwork": {
+    "slot": "booklet-page-3",
+    "asset": "r2-wet-magenta",
+    "face": "top",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "r2-wet-left-04",
+   "role": "identity",
+   "certainty": "inferred",
+   "basis": [
+    "wet.inset"
+   ],
+   "stage": 4,
+   "shape": {
+    "type": "extrude",
+    "axis": "y",
+    "height": 0.008,
+    "profile": [
+     [
+      0,
+      0
+     ],
+     [
+      0.55,
+      0.04
+     ],
+     [
+      1,
+      0.22
+     ],
+     [
+      0.74,
+      0.4
+     ],
+     [
+      0.9,
+      0.55
+     ],
+     [
+      0.62,
+      0.85
+     ],
+     [
+      0.27,
+      1
+     ],
+     [
+      0,
+      0.9
+     ],
+     [
+      0,
+      0.7
+     ],
+     [
+      0.2,
+      0.7
+     ],
+     [
+      0.2,
+      0.3
+     ],
+     [
+      0,
+      0.3
+     ]
+    ]
+   },
+   "at": [
+    -7,
+    -0.008,
+    -19.5
+   ],
+   "scale": [
+    0.35,
+    1,
+    0.8
+   ],
+   "look": {
+    "fill": "glass",
+    "tone": "identity",
+    "line": "solid",
+    "alpha": 0.62,
+    "weight": 0.25,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "r2-wet-left-04-broken-cue",
+   "role": "detail",
+   "certainty": "decorative",
+   "basis": [
+    "wet.inset"
+   ],
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.07,
+     0.008,
+     0.32
+    ]
+   },
+   "at": [
+    -6.965,
+    -0.004,
+    -19.1
+   ],
+   "look": {
+    "fill": "dark",
+    "line": "none",
+    "alpha": 1,
+    "glow": 0
+   },
+   "artwork": {
+    "slot": "booklet-page-4",
+    "asset": "r2-wet-cyan",
+    "face": "top",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "r2-wet-left-05",
+   "role": "identity",
+   "certainty": "inferred",
+   "basis": [
+    "wet.inset"
+   ],
+   "stage": 4,
+   "shape": {
+    "type": "extrude",
+    "axis": "y",
+    "height": 0.008,
+    "profile": [
+     [
+      0,
+      0
+     ],
+     [
+      0.55,
+      0.04
+     ],
+     [
+      1,
+      0.22
+     ],
+     [
+      0.74,
+      0.4
+     ],
+     [
+      0.9,
+      0.55
+     ],
+     [
+      0.62,
+      0.85
+     ],
+     [
+      0.27,
+      1
+     ],
+     [
+      0,
+      0.9
+     ],
+     [
+      0,
+      0.7
+     ],
+     [
+      0.2,
+      0.7
+     ],
+     [
+      0.2,
+      0.3
+     ],
+     [
+      0,
+      0.3
+     ]
+    ]
+   },
+   "at": [
+    -7,
+    -0.008,
+    -17.2
+   ],
+   "scale": [
+    0.76,
+    1,
+    1.95
+   ],
+   "look": {
+    "fill": "glass",
+    "tone": "identity",
+    "line": "solid",
+    "alpha": 0.62,
+    "weight": 0.25,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "r2-wet-left-05-broken-cue",
+   "role": "detail",
+   "certainty": "decorative",
+   "basis": [
+    "wet.inset"
+   ],
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.152,
+     0.008,
+     0.78
+    ]
+   },
+   "at": [
+    -6.924,
+    -0.004,
+    -16.225
+   ],
+   "look": {
+    "fill": "dark",
+    "line": "none",
+    "alpha": 1,
+    "glow": 0
+   },
+   "artwork": {
+    "slot": "booklet-page-5",
+    "asset": "r2-wet-magenta",
+    "face": "top",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "r2-wet-left-06",
+   "role": "identity",
+   "certainty": "inferred",
+   "basis": [
+    "wet.inset"
+   ],
+   "stage": 4,
+   "shape": {
+    "type": "extrude",
+    "axis": "y",
+    "height": 0.008,
+    "profile": [
+     [
+      0,
+      0
+     ],
+     [
+      0.55,
+      0.04
+     ],
+     [
+      1,
+      0.22
+     ],
+     [
+      0.74,
+      0.4
+     ],
+     [
+      0.9,
+      0.55
+     ],
+     [
+      0.62,
+      0.85
+     ],
+     [
+      0.27,
+      1
+     ],
+     [
+      0,
+      0.9
+     ],
+     [
+      0,
+      0.7
+     ],
+     [
+      0.2,
+      0.7
+     ],
+     [
+      0.2,
+      0.3
+     ],
+     [
+      0,
+      0.3
+     ]
+    ]
+   },
+   "at": [
+    -7,
+    -0.008,
+    -12.7
+   ],
+   "scale": [
+    0.29,
+    1,
+    0.9
+   ],
+   "look": {
+    "fill": "glass",
+    "tone": "identity",
+    "line": "solid",
+    "alpha": 0.62,
+    "weight": 0.25,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "r2-wet-left-06-broken-cue",
+   "role": "detail",
+   "certainty": "decorative",
+   "basis": [
+    "wet.inset"
+   ],
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.058,
+     0.008,
+     0.36
+    ]
+   },
+   "at": [
+    -6.971,
+    -0.004,
+    -12.25
+   ],
+   "look": {
+    "fill": "dark",
+    "line": "none",
+    "alpha": 1,
+    "glow": 0
+   },
+   "artwork": {
+    "slot": "booklet-page-6",
+    "asset": "r2-wet-amber",
+    "face": "top",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "r2-wet-left-07",
+   "role": "identity",
+   "certainty": "inferred",
+   "basis": [
+    "wet.inset"
+   ],
+   "stage": 4,
+   "shape": {
+    "type": "extrude",
+    "axis": "y",
+    "height": 0.008,
+    "profile": [
+     [
+      0,
+      0
+     ],
+     [
+      0.55,
+      0.04
+     ],
+     [
+      1,
+      0.22
+     ],
+     [
+      0.74,
+      0.4
+     ],
+     [
+      0.9,
+      0.55
+     ],
+     [
+      0.62,
+      0.85
+     ],
+     [
+      0.27,
+      1
+     ],
+     [
+      0,
+      0.9
+     ],
+     [
+      0,
+      0.7
+     ],
+     [
+      0.2,
+      0.7
+     ],
+     [
+      0.2,
+      0.3
+     ],
+     [
+      0,
+      0.3
+     ]
+    ]
+   },
+   "at": [
+    -7,
+    -0.008,
+    -4.5
+   ],
+   "scale": [
+    0.62,
+    1,
+    1.4
+   ],
+   "look": {
+    "fill": "glass",
+    "tone": "identity",
+    "line": "solid",
+    "alpha": 0.62,
+    "weight": 0.25,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "r2-wet-left-07-broken-cue",
+   "role": "detail",
+   "certainty": "decorative",
+   "basis": [
+    "wet.inset"
+   ],
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.124,
+     0.008,
+     0.56
+    ]
+   },
+   "at": [
+    -6.938,
+    -0.004,
+    -3.8
+   ],
+   "look": {
+    "fill": "dark",
+    "line": "none",
+    "alpha": 1,
+    "glow": 0
+   },
+   "artwork": {
+    "slot": "booklet-page-7",
+    "asset": "r2-wet-cyan",
+    "face": "top",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "r2-wet-left-08",
+   "role": "identity",
+   "certainty": "inferred",
+   "basis": [
+    "wet.inset"
+   ],
+   "stage": 4,
+   "shape": {
+    "type": "extrude",
+    "axis": "y",
+    "height": 0.008,
+    "profile": [
+     [
+      0,
+      0
+     ],
+     [
+      0.55,
+      0.04
+     ],
+     [
+      1,
+      0.22
+     ],
+     [
+      0.74,
+      0.4
+     ],
+     [
+      0.9,
+      0.55
+     ],
+     [
+      0.62,
+      0.85
+     ],
+     [
+      0.27,
+      1
+     ],
+     [
+      0,
+      0.9
+     ],
+     [
+      0,
+      0.7
+     ],
+     [
+      0.2,
+      0.7
+     ],
+     [
+      0.2,
+      0.3
+     ],
+     [
+      0,
+      0.3
+     ]
+    ]
+   },
+   "at": [
+    -7,
+    -0.008,
+    3
+   ],
+   "scale": [
+    0.44,
+    1,
+    1.1
+   ],
+   "look": {
+    "fill": "glass",
+    "tone": "identity",
+    "line": "solid",
+    "alpha": 0.62,
+    "weight": 0.25,
+    "glow": 0.08
+   }
+  },
+  {
+   "id": "r2-wet-left-08-broken-cue",
+   "role": "detail",
+   "certainty": "decorative",
+   "basis": [
+    "wet.inset"
+   ],
+   "stage": 4,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.088,
+     0.008,
+     0.44
+    ]
+   },
+   "at": [
+    -6.956,
+    -0.004,
+    3.55
+   ],
+   "look": {
+    "fill": "dark",
+    "line": "none",
+    "alpha": 1,
+    "glow": 0
+   },
+   "artwork": {
+    "slot": "booklet-page-8",
+    "asset": "r2-wet-magenta",
+    "face": "top",
+    "mask": "rect"
+   }
+  },
+  {
+   "at": [
+    7,
+    -0.008,
+    -29.4
+   ],
+   "basis": [
+    "wet.inset"
+   ],
+   "certainty": "inferred",
+   "id": "r2-wet-right-01",
+   "look": {
+    "alpha": 0.62,
+    "fill": "glass",
+    "glow": 0.08,
+    "line": "solid",
+    "tone": "identity",
+    "weight": 0.25
+   },
+   "role": "identity",
+   "scale": [
+    0.72,
+    1,
+    1.8
+   ],
+   "shape": {
+    "axis": "y",
+    "height": 0.008,
+    "profile": [
+     [
+      0,
+      0
+     ],
+     [
+      -0.55,
+      0.04
+     ],
+     [
+      -1,
+      0.22
+     ],
+     [
+      -0.74,
+      0.4
+     ],
+     [
+      -0.9,
+      0.55
+     ],
+     [
+      -0.62,
+      0.85
+     ],
+     [
+      -0.27,
+      1
+     ],
+     [
+      0,
+      0.9
+     ],
+     [
+      0,
+      0.7
+     ],
+     [
+      -0.2,
+      0.7
+     ],
+     [
+      -0.2,
+      0.3
+     ],
+     [
+      0,
+      0.3
+     ]
+    ],
+    "type": "extrude"
+   },
+   "stage": 4
+  },
+  {
+   "artwork": {
+    "asset": "r2-wet-magenta",
+    "face": "top",
+    "mask": "rect",
+    "slot": "booklet-page-9"
+   },
+   "at": [
+    6.928,
+    -0.004,
+    -28.5
+   ],
+   "basis": [
+    "wet.inset"
+   ],
+   "certainty": "decorative",
+   "id": "r2-wet-right-01-broken-cue",
+   "look": {
+    "alpha": 1,
+    "fill": "dark",
+    "glow": 0,
+    "line": "none"
+   },
+   "role": "detail",
+   "shape": {
+    "size": [
+     0.144,
+     0.008,
+     0.72
+    ],
+    "type": "box"
+   },
+   "stage": 4
+  },
+  {
+   "at": [
+    7,
+    -0.008,
+    -26.8
+   ],
+   "basis": [
+    "wet.inset"
+   ],
+   "certainty": "inferred",
+   "id": "r2-wet-right-02",
+   "look": {
+    "alpha": 0.62,
+    "fill": "glass",
+    "glow": 0.08,
+    "line": "solid",
+    "tone": "identity",
+    "weight": 0.25
+   },
+   "role": "identity",
+   "scale": [
+    0.38,
+    1,
+    1.2
+   ],
+   "shape": {
+    "axis": "y",
+    "height": 0.008,
+    "profile": [
+     [
+      0,
+      0
+     ],
+     [
+      -0.55,
+      0.04
+     ],
+     [
+      -1,
+      0.22
+     ],
+     [
+      -0.74,
+      0.4
+     ],
+     [
+      -0.9,
+      0.55
+     ],
+     [
+      -0.62,
+      0.85
+     ],
+     [
+      -0.27,
+      1
+     ],
+     [
+      0,
+      0.9
+     ],
+     [
+      0,
+      0.7
+     ],
+     [
+      -0.2,
+      0.7
+     ],
+     [
+      -0.2,
+      0.3
+     ],
+     [
+      0,
+      0.3
+     ]
+    ],
+    "type": "extrude"
+   },
+   "stage": 4
+  },
+  {
+   "artwork": {
+    "asset": "r2-wet-cyan",
+    "face": "top",
+    "mask": "rect",
+    "slot": "booklet-page-10"
+   },
+   "at": [
+    6.962,
+    -0.004,
+    -26.2
+   ],
+   "basis": [
+    "wet.inset"
+   ],
+   "certainty": "decorative",
+   "id": "r2-wet-right-02-broken-cue",
+   "look": {
+    "alpha": 1,
+    "fill": "dark",
+    "glow": 0,
+    "line": "none"
+   },
+   "role": "detail",
+   "shape": {
+    "size": [
+     0.076,
+     0.008,
+     0.48
+    ],
+    "type": "box"
+   },
+   "stage": 4
+  },
+  {
+   "at": [
+    7,
+    -0.008,
+    -22.9
+   ],
+   "basis": [
+    "wet.inset"
+   ],
+   "certainty": "inferred",
+   "id": "r2-wet-right-03",
+   "look": {
+    "alpha": 0.62,
+    "fill": "glass",
+    "glow": 0.08,
+    "line": "solid",
+    "tone": "identity",
+    "weight": 0.25
+   },
+   "role": "identity",
+   "scale": [
+    0.65,
+    1,
+    1.6
+   ],
+   "shape": {
+    "axis": "y",
+    "height": 0.008,
+    "profile": [
+     [
+      0,
+      0
+     ],
+     [
+      -0.55,
+      0.04
+     ],
+     [
+      -1,
+      0.22
+     ],
+     [
+      -0.74,
+      0.4
+     ],
+     [
+      -0.9,
+      0.55
+     ],
+     [
+      -0.62,
+      0.85
+     ],
+     [
+      -0.27,
+      1
+     ],
+     [
+      0,
+      0.9
+     ],
+     [
+      0,
+      0.7
+     ],
+     [
+      -0.2,
+      0.7
+     ],
+     [
+      -0.2,
+      0.3
+     ],
+     [
+      0,
+      0.3
+     ]
+    ],
+    "type": "extrude"
+   },
+   "stage": 4
+  },
+  {
+   "artwork": {
+    "asset": "r2-wet-amber",
+    "face": "top",
+    "mask": "rect",
+    "slot": "booklet-page-11"
+   },
+   "at": [
+    6.935,
+    -0.004,
+    -22.1
+   ],
+   "basis": [
+    "wet.inset"
+   ],
+   "certainty": "decorative",
+   "id": "r2-wet-right-03-broken-cue",
+   "look": {
+    "alpha": 1,
+    "fill": "dark",
+    "glow": 0,
+    "line": "none"
+   },
+   "role": "detail",
+   "shape": {
+    "size": [
+     0.13,
+     0.008,
+     0.64
+    ],
+    "type": "box"
+   },
+   "stage": 4
+  },
+  {
+   "at": [
+    7,
+    -0.008,
+    -19.8
+   ],
+   "basis": [
+    "wet.inset"
+   ],
+   "certainty": "inferred",
+   "id": "r2-wet-right-04",
+   "look": {
+    "alpha": 0.62,
+    "fill": "glass",
+    "glow": 0.08,
+    "line": "solid",
+    "tone": "identity",
+    "weight": 0.25
+   },
+   "role": "identity",
+   "scale": [
+    0.32,
+    1,
+    0.9
+   ],
+   "shape": {
+    "axis": "y",
+    "height": 0.008,
+    "profile": [
+     [
+      0,
+      0
+     ],
+     [
+      -0.55,
+      0.04
+     ],
+     [
+      -1,
+      0.22
+     ],
+     [
+      -0.74,
+      0.4
+     ],
+     [
+      -0.9,
+      0.55
+     ],
+     [
+      -0.62,
+      0.85
+     ],
+     [
+      -0.27,
+      1
+     ],
+     [
+      0,
+      0.9
+     ],
+     [
+      0,
+      0.7
+     ],
+     [
+      -0.2,
+      0.7
+     ],
+     [
+      -0.2,
+      0.3
+     ],
+     [
+      0,
+      0.3
+     ]
+    ],
+    "type": "extrude"
+   },
+   "stage": 4
+  },
+  {
+   "artwork": {
+    "asset": "r2-wet-magenta",
+    "face": "top",
+    "mask": "rect",
+    "slot": "booklet-page-12"
+   },
+   "at": [
+    6.968,
+    -0.004,
+    -19.35
+   ],
+   "basis": [
+    "wet.inset"
+   ],
+   "certainty": "decorative",
+   "id": "r2-wet-right-04-broken-cue",
+   "look": {
+    "alpha": 1,
+    "fill": "dark",
+    "glow": 0,
+    "line": "none"
+   },
+   "role": "detail",
+   "shape": {
+    "size": [
+     0.064,
+     0.008,
+     0.36
+    ],
+    "type": "box"
+   },
+   "stage": 4
+  },
+  {
+   "at": [
+    7,
+    -0.008,
+    -16.8
+   ],
+   "basis": [
+    "wet.inset"
+   ],
+   "certainty": "inferred",
+   "id": "r2-wet-right-05",
+   "look": {
+    "alpha": 0.62,
+    "fill": "glass",
+    "glow": 0.08,
+    "line": "solid",
+    "tone": "identity",
+    "weight": 0.25
+   },
+   "role": "identity",
+   "scale": [
+    0.78,
+    1,
+    1.95
+   ],
+   "shape": {
+    "axis": "y",
+    "height": 0.008,
+    "profile": [
+     [
+      0,
+      0
+     ],
+     [
+      -0.55,
+      0.04
+     ],
+     [
+      -1,
+      0.22
+     ],
+     [
+      -0.74,
+      0.4
+     ],
+     [
+      -0.9,
+      0.55
+     ],
+     [
+      -0.62,
+      0.85
+     ],
+     [
+      -0.27,
+      1
+     ],
+     [
+      0,
+      0.9
+     ],
+     [
+      0,
+      0.7
+     ],
+     [
+      -0.2,
+      0.7
+     ],
+     [
+      -0.2,
+      0.3
+     ],
+     [
+      0,
+      0.3
+     ]
+    ],
+    "type": "extrude"
+   },
+   "stage": 4
+  },
+  {
+   "artwork": {
+    "asset": "r2-wet-cyan",
+    "face": "top",
+    "mask": "rect",
+    "slot": "booklet-page-13"
+   },
+   "at": [
+    6.922,
+    -0.004,
+    -15.825
+   ],
+   "basis": [
+    "wet.inset"
+   ],
+   "certainty": "decorative",
+   "id": "r2-wet-right-05-broken-cue",
+   "look": {
+    "alpha": 1,
+    "fill": "dark",
+    "glow": 0,
+    "line": "none"
+   },
+   "role": "detail",
+   "shape": {
+    "size": [
+     0.156,
+     0.008,
+     0.78
+    ],
+    "type": "box"
+   },
+   "stage": 4
+  },
+  {
+   "at": [
+    7,
+    -0.008,
+    -11.6
+   ],
+   "basis": [
+    "wet.inset"
+   ],
+   "certainty": "inferred",
+   "id": "r2-wet-right-06",
+   "look": {
+    "alpha": 0.62,
+    "fill": "glass",
+    "glow": 0.08,
+    "line": "solid",
+    "tone": "identity",
+    "weight": 0.25
+   },
+   "role": "identity",
+   "scale": [
+    0.24,
+    1,
+    0.7
+   ],
+   "shape": {
+    "axis": "y",
+    "height": 0.008,
+    "profile": [
+     [
+      0,
+      0
+     ],
+     [
+      -0.55,
+      0.04
+     ],
+     [
+      -1,
+      0.22
+     ],
+     [
+      -0.74,
+      0.4
+     ],
+     [
+      -0.9,
+      0.55
+     ],
+     [
+      -0.62,
+      0.85
+     ],
+     [
+      -0.27,
+      1
+     ],
+     [
+      0,
+      0.9
+     ],
+     [
+      0,
+      0.7
+     ],
+     [
+      -0.2,
+      0.7
+     ],
+     [
+      -0.2,
+      0.3
+     ],
+     [
+      0,
+      0.3
+     ]
+    ],
+    "type": "extrude"
+   },
+   "stage": 4
+  },
+  {
+   "artwork": {
+    "asset": "r2-wet-amber",
+    "face": "top",
+    "mask": "rect",
+    "slot": "booklet-page-14"
+   },
+   "at": [
+    6.976,
+    -0.004,
+    -11.25
+   ],
+   "basis": [
+    "wet.inset"
+   ],
+   "certainty": "decorative",
+   "id": "r2-wet-right-06-broken-cue",
+   "look": {
+    "alpha": 1,
+    "fill": "dark",
+    "glow": 0,
+    "line": "none"
+   },
+   "role": "detail",
+   "shape": {
+    "size": [
+     0.048,
+     0.008,
+     0.28
+    ],
+    "type": "box"
+   },
+   "stage": 4
+  },
+  {
+   "at": [
+    7,
+    -0.008,
+    -3.1
+   ],
+   "basis": [
+    "wet.inset"
+   ],
+   "certainty": "inferred",
+   "id": "r2-wet-right-07",
+   "look": {
+    "alpha": 0.62,
+    "fill": "glass",
+    "glow": 0.08,
+    "line": "solid",
+    "tone": "identity",
+    "weight": 0.25
+   },
+   "role": "identity",
+   "scale": [
+    0.58,
+    1,
+    1.3
+   ],
+   "shape": {
+    "axis": "y",
+    "height": 0.008,
+    "profile": [
+     [
+      0,
+      0
+     ],
+     [
+      -0.55,
+      0.04
+     ],
+     [
+      -1,
+      0.22
+     ],
+     [
+      -0.74,
+      0.4
+     ],
+     [
+      -0.9,
+      0.55
+     ],
+     [
+      -0.62,
+      0.85
+     ],
+     [
+      -0.27,
+      1
+     ],
+     [
+      0,
+      0.9
+     ],
+     [
+      0,
+      0.7
+     ],
+     [
+      -0.2,
+      0.7
+     ],
+     [
+      -0.2,
+      0.3
+     ],
+     [
+      0,
+      0.3
+     ]
+    ],
+    "type": "extrude"
+   },
+   "stage": 4
+  },
+  {
+   "artwork": {
+    "asset": "r2-wet-magenta",
+    "face": "top",
+    "mask": "rect",
+    "slot": "booklet-page-15"
+   },
+   "at": [
+    6.942,
+    -0.004,
+    -2.45
+   ],
+   "basis": [
+    "wet.inset"
+   ],
+   "certainty": "decorative",
+   "id": "r2-wet-right-07-broken-cue",
+   "look": {
+    "alpha": 1,
+    "fill": "dark",
+    "glow": 0,
+    "line": "none"
+   },
+   "role": "detail",
+   "shape": {
+    "size": [
+     0.116,
+     0.008,
+     0.52
+    ],
+    "type": "box"
+   },
+   "stage": 4
+  },
+  {
+   "at": [
+    7,
+    -0.008,
+    9.8
+   ],
+   "basis": [
+    "wet.inset"
+   ],
+   "certainty": "inferred",
+   "id": "r2-wet-right-08",
+   "look": {
+    "alpha": 0.62,
+    "fill": "glass",
+    "glow": 0.08,
+    "line": "solid",
+    "tone": "identity",
+    "weight": 0.25
+   },
+   "role": "identity",
+   "scale": [
+    0.41,
+    1,
+    1.1
+   ],
+   "shape": {
+    "axis": "y",
+    "height": 0.008,
+    "profile": [
+     [
+      0,
+      0
+     ],
+     [
+      -0.55,
+      0.04
+     ],
+     [
+      -1,
+      0.22
+     ],
+     [
+      -0.74,
+      0.4
+     ],
+     [
+      -0.9,
+      0.55
+     ],
+     [
+      -0.62,
+      0.85
+     ],
+     [
+      -0.27,
+      1
+     ],
+     [
+      0,
+      0.9
+     ],
+     [
+      0,
+      0.7
+     ],
+     [
+      -0.2,
+      0.7
+     ],
+     [
+      -0.2,
+      0.3
+     ],
+     [
+      0,
+      0.3
+     ]
+    ],
+    "type": "extrude"
+   },
+   "stage": 4
+  },
+  {
+   "artwork": {
+    "asset": "r2-wet-cyan",
+    "face": "top",
+    "mask": "rect",
+    "slot": "booklet-page-16"
+   },
+   "at": [
+    6.959,
+    -0.004,
+    10.35
+   ],
+   "basis": [
+    "wet.inset"
+   ],
+   "certainty": "decorative",
+   "id": "r2-wet-right-08-broken-cue",
+   "look": {
+    "alpha": 1,
+    "fill": "dark",
+    "glow": 0,
+    "line": "none"
+   },
+   "role": "detail",
+   "shape": {
+    "size": [
+     0.082,
+     0.008,
+     0.44
+    ],
+    "type": "box"
+   },
+   "stage": 4
+  },
+  {
+   "id": "r4-asphalt-front-cyan",
+   "label": "Flush asphalt with original decorative cyan broken wet-light accent",
+   "role": "structure",
+   "certainty": "decorative",
+   "basis": [
+    "wet.inset"
+   ],
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     3.8,
+     0.008,
+     5.0
+    ]
+   },
+   "at": [
+    4.1,
+    -0.004,
+    -21.5
+   ],
+   "look": {
+    "fill": "dark",
+    "line": "none",
+    "alpha": 1,
+    "glow": 0
+   },
+   "artwork": {
+    "slot": "booklet-page-17",
+    "asset": "r4-asphalt-front-cyan",
+    "face": "top",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "r4-asphalt-near-magenta",
+   "label": "Flush asphalt with original decorative magenta broken wet-light accent",
+   "role": "structure",
+   "certainty": "decorative",
+   "basis": [
+    "wet.inset"
+   ],
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     3.8,
+     0.008,
+     5.0
+    ]
+   },
+   "at": [
+    4.1,
+    -0.004,
+    -12.2
+   ],
+   "look": {
+    "fill": "dark",
+    "line": "none",
+    "alpha": 1,
+    "glow": 0
+   },
+   "artwork": {
+    "slot": "booklet-page-18",
+    "asset": "r4-asphalt-near-magenta",
+    "face": "top",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "r4-asphalt-near-cyan",
+   "label": "Flush asphalt with original decorative cyan broken wet-light accent",
+   "role": "structure",
+   "certainty": "decorative",
+   "basis": [
+    "wet.inset"
+   ],
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     3.8,
+     0.008,
+     5.0
+    ]
+   },
+   "at": [
+    -4.1,
+    -0.004,
+    -10.5
+   ],
+   "look": {
+    "fill": "dark",
+    "line": "none",
+    "alpha": 1,
+    "glow": 0
+   },
+   "artwork": {
+    "slot": "booklet-page-19",
+    "asset": "r4-asphalt-near-cyan",
+    "face": "top",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "r4-asphalt-middle-magenta",
+   "label": "Flush asphalt with original decorative magenta broken wet-light accent",
+   "role": "structure",
+   "certainty": "decorative",
+   "basis": [
+    "wet.inset"
+   ],
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     3.8,
+     0.008,
+     4.8
+    ]
+   },
+   "at": [
+    4.1,
+    -0.004,
+    3.4
+   ],
+   "look": {
+    "fill": "dark",
+    "line": "none",
+    "alpha": 1,
+    "glow": 0
+   },
+   "artwork": {
+    "slot": "booklet-page-20",
+    "asset": "r4-asphalt-middle-magenta",
+    "face": "top",
+    "mask": "rect"
+   }
+  }
+ ],
+ "labels": [],
+ "annotations": [],
+ "articulations": [],
+ "anchors": {
+  "base": {
+   "point": [
+    0,
+    -0.4,
+    35
+   ],
+   "up": [
+    0,
+    1,
+    0
+   ]
+  },
+  "front": {
+   "part": "road-bed",
+   "face": "front"
+  }
+ },
+ "presentation": {
+  "framing": {
+   "yaw": 160,
+   "pitch": 30,
+   "fit": 1.05,
+   "target": "road-bed"
+  },
+  "views": [
+   {
+    "distance": 5,
+    "id": "street",
+    "label": "Street approach",
+    "pitch": 8,
+    "target": "puddle-near-left",
+    "yaw": 174
+   },
+   {
+    "distance": 1.15,
+    "id": "foundation",
+    "label": "Foundation overview",
+    "pitch": 48,
+    "target": "road-bed",
+    "yaw": 150
+   },
+   {
+    "distance": 5,
+    "id": "kerb-detail",
+    "label": "Kerb and drainage",
+    "pitch": 50,
+    "target": "drain-left-recess",
+    "yaw": 145
+   },
+   {
+    "distance": 5,
+    "id": "concept",
+    "label": "Concept approach",
+    "pitch": 8,
+    "target": "puddle-near-left",
+    "yaw": 174
+   },
+   {
+    "distance": 1.2,
+    "id": "front",
+    "label": "Street end",
+    "pitch": 8,
+    "target": "road-bed",
+    "yaw": 180
+   },
+   {
+    "distance": 1.2,
+    "id": "side",
+    "label": "Street section",
+    "pitch": 10,
+    "target": "road-bed",
+    "yaw": 90
+   },
+   {
+    "distance": 1.1,
+    "id": "top",
+    "label": "Street plan",
+    "pitch": 89,
+    "target": "road-bed",
+    "yaw": 180
+   }
+  ],
+  "atmosphere": {
+   "haze": 0.68,
+   "grid": false,
+   "scanlines": false,
+   "projector": false,
+   "motes": 0,
+   "vignette": true
+  },
+  "occlusion": "xray",
+  "certainty_style": "subtle",
+  "background": "deep",
+  "float": 0,
+  "still_pose": "closed"
+ },
+ "animation": {
+  "assembly": {
+   "style": "build",
+   "seconds": 4,
+   "interference": false
+  },
+  "idle": {
+   "life": "off",
+   "events": [],
+   "cadence": [
+    8,
+    14
+   ],
+   "strength": 0
+  },
+  "camera": {
+   "drift": 0,
+   "breathe": 0
+  },
+  "reduced_motion": "still"
+ },
+ "authoring": {
+  "tier": "masterpiece",
+  "research": "off",
+  "review_rounds": 2,
+  "outcome": "self-reviewed",
+  "next": [
+   "WORLD5 bounded D1 alternative: long broken original colour artwork, not wet PBR. Awaiting parent whole-world judgement."
+  ],
+  "identity": [
+   {
+    "feature": "Sixty-metre clear carriageway with matched raised pavements",
+    "parts": [
+     "road-bed",
+     "sidewalk-left",
+     "sidewalk-right"
+    ]
+   },
+   {
+    "feature": "Exactly flush irregular rainwater insets",
+    "parts": [
+     "puddle-near-left",
+     "puddle-left-far",
+     "puddle-centre-near",
+     "puddle-centre-far",
+     "puddle-right-mid"
+    ]
+   },
+   {
+    "feature": "Continuous kerb edges and paired gutter drainage",
+    "parts": [
+     "kerb-left",
+     "kerb-right",
+     "drain-left-recess",
+     "drain-right-recess"
+    ]
+   }
+  ],
+  "critic": {
+   "scene_sha256": "f68a014ad90948d36676bd13bd2fa632ad3ee9f8a26e0d03adf001c79781589d",
+   "verdict": "improve",
+   "scores": {
+    "silhouette": 3,
+    "proportions": 3,
+    "identity": 1,
+    "depth": 2,
+    "composition": 2,
+    "assembly": 2,
+    "motion": 3,
+    "density": 1,
+    "honesty": 3
+   },
+   "round": 5,
+   "defects": 5
+  },
+  "rounds": [
+   {
+    "round": 1,
+    "result": "baseline",
+    "minutes": 0.9,
+    "changes": [
+     "draft"
+    ],
+    "summary": "All five water patches read as narrow, pointed polygon tabs with conspicuously straight long boundaries and similar silhouettes. In the stre"
+   },
+   {
+    "round": 2,
+    "result": "kept",
+    "minutes": 11.0,
+    "changes": [
+     "D1",
+     "D2",
+     "D3",
+     "D4"
+    ],
+    "summary": "Water reads as five outlined polygon tablets: near patches expose doubled angular boundaries and strip-like faces instead of integrating int"
+   },
+   {
+    "round": 3,
+    "result": "kept",
+    "minutes": 7.3,
+    "changes": [
+     "D1",
+     "D2",
+     "D5",
+     "D6"
+    ],
+    "summary": "The five puddles read as sharp-ended polygon tablets rather than flush rainwater. In the close-up the water fill is broken into repeated par"
+   },
+   {
+    "round": 4,
+    "result": "kept",
+    "minutes": 1.5,
+    "changes": [
+     "D1",
+     "D2",
+     "D3",
+     "D7"
+    ],
+    "summary": "The five water regions look like pointed, outlined polygon tablets. The close-up patch has long straight edges, a pinched middle and acute e"
+   },
+   {
+    "round": 5,
+    "result": "kept",
+    "minutes": 1.1,
+    "changes": [
+     "D4",
+     "D8"
+    ],
+    "summary": "All five water regions have similar narrow, pointed leaf-like silhouettes; several appear roughly four to five times longer than wide in top"
+   },
+   {
+    "round": 6,
+    "result": "reverted",
+    "minutes": 0.5,
+    "changes": [],
+    "summary": "All five water footprints are narrow, pointed and similarly oriented in plan. Their hard bounded grey faces read as five leaf-shaped polygon"
+   },
+   {
+    "round": 7,
+    "result": "reverted",
+    "minutes": 0.5,
+    "changes": [],
+    "summary": "All five water regions repeat a narrow pointed longitudinal leaf silhouette. The top view makes the repetition unmistakable, and the concept"
+   }
+  ]
+ },
+ "assets": [
+  {
+   "id": "r2-wet-cyan",
+   "path": "assets/r2-wet-cyan.png",
+   "sha256": "e9dd0dd073439624aa7428ba6979849d2af523390572f7f22f85412c29009a3c",
+   "media_type": "image/png",
+   "rights": "permitted",
+   "provenance": "generated-decorative",
+   "source": "request"
+  },
+  {
+   "id": "r2-wet-magenta",
+   "path": "assets/r2-wet-magenta.png",
+   "sha256": "5604094a41f6dbe09272c6601929255bc0e0a73cad8cc14452961210f73a7f97",
+   "media_type": "image/png",
+   "rights": "permitted",
+   "provenance": "generated-decorative",
+   "source": "request"
+  },
+  {
+   "id": "r2-wet-amber",
+   "path": "assets/r2-wet-amber.png",
+   "sha256": "4dd662758d17d81e81327d47b1b3e77aa06ce64bdbe8827dd0585717d2e0ec23",
+   "media_type": "image/png",
+   "rights": "permitted",
+   "provenance": "generated-decorative",
+   "source": "request"
+  },
+  {
+   "id": "r4-asphalt-front-cyan",
+   "path": "assets/r5-front-cyan-long-broken-original.png",
+   "sha256": "b3e23f314b7f945285cb5723018a363dc5254e9893a31e53c2b0f8d80ba59da9",
+   "media_type": "image/png",
+   "rights": "permitted",
+   "provenance": "generated-decorative",
+   "source": "request"
+  },
+  {
+   "id": "r4-asphalt-near-magenta",
+   "path": "assets/r5-near-magenta-long-broken-original.png",
+   "sha256": "042ab8f7aed4a716f8a66e404d9ee50a36605e3747e43ab6f6e653f76a0cde88",
+   "media_type": "image/png",
+   "rights": "permitted",
+   "provenance": "generated-decorative",
+   "source": "request"
+  },
+  {
+   "id": "r4-asphalt-near-cyan",
+   "path": "assets/r5-near-cyan-long-broken-original.png",
+   "sha256": "1fc47fb240e5e447cb7f8fdedadfe52020867cc94f15c550149032fad3093b8c",
+   "media_type": "image/png",
+   "rights": "permitted",
+   "provenance": "generated-decorative",
+   "source": "request"
+  },
+  {
+   "id": "r4-asphalt-middle-magenta",
+   "path": "assets/r5-middle-magenta-long-broken-original.png",
+   "sha256": "7f3efd03ebc41e3931484fb721ee975f57867725d2e080312fccf0756dae7466",
+   "media_type": "image/png",
+   "rights": "permitted",
+   "provenance": "generated-decorative",
+   "source": "request"
+  }
+ ]
+}

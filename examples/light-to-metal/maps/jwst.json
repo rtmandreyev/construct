@@ -3,7 +3,7 @@
  "materials": [
   {"parts": ["mirror-segment-*", "sm-dish"], "name": "gold mirror", "color": "#d9a84e", "finish": "chrome", "roughness": 0.12},
   {"parts": ["mirror-bevel-*", "strut-*", "backplane*", "sm-hub", "sm-baffle", "aos*", "isim-cover", "tower-*"], "name": "black composite", "color": "#1d1d20", "finish": "plastic", "roughness": 0.55},
-  {"parts": ["shield-layer-*"], "name": "sunshield", "color": "#cdb4d6", "finish": "brushed", "roughness": 0.4},
+  {"parts": ["shield-layer-*", "layer-*-border"], "name": "sunshield", "color": "#cdb4d6", "finish": "brushed", "roughness": 0.4},
   {"parts": ["array-panel-*"], "name": "solar cells", "color": "#16203a", "finish": "plastic", "roughness": 0.2},
   {"parts": ["bus-radiator-*", "isim-radiator-*", "hga-dish"], "name": "white radiator", "color": "#e8e8e6", "finish": "paint"},
   {"parts": ["thruster-*", "array-*", "hga-*", "mga", "shield-hub", "spreader-*", "mid-boom*", "ups-*", "trim-flap"], "name": "aluminium", "color": "#9a9ca3", "finish": "brushed"},

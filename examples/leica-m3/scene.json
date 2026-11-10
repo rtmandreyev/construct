@@ -195,6 +195,20 @@
       "source": "auction"
     },
     {
+      "key": "lens-name",
+      "value": "Summicron",
+      "certainty": "verified",
+      "source": "auction",
+      "note": "The lens fact's name, set on the front name ring."
+    },
+    {
+      "key": "lens-focal",
+      "value": "5 cm 1:2",
+      "certainty": "verified",
+      "source": "auction",
+      "note": "The lens fact's focal length and aperture, set on the front name ring."
+    },
+    {
       "key": "lens-focal-length",
       "value": 50,
       "certainty": "verified",
@@ -799,13 +813,13 @@
       "shape": {
         "type": "box",
         "size": [
-          0.048,
+          0.03325,
           0.047,
           0.0009
         ]
       },
       "at": [
-        -0.043,
+        -0.035625,
         0.0275,
         0.0167
       ],
@@ -824,13 +838,13 @@
       "shape": {
         "type": "box",
         "size": [
-          0.036,
+          0.02125,
           0.047,
           0.0009
         ]
       },
       "at": [
-        0.049,
+        0.041625,
         0.0275,
         0.0167
       ],
@@ -947,7 +961,7 @@
       "rotate": [
         -90,
         0,
-        0
+        180
       ]
     },
     {
@@ -2028,17 +2042,36 @@
       "stage": 6,
       "certainty": "inferred",
       "shape": {
-        "type": "cylinder",
-        "radius": 0.0205,
-        "height": 0.0006,
-        "segments": 40,
-        "ribs": 0,
-        "rings": 0
+        "type": "lathe",
+        "profile": [
+          [
+            0.017,
+            0.0
+          ],
+          [
+            0.0195,
+            0.0
+          ],
+          [
+            0.0195,
+            0.0006
+          ],
+          [
+            0.017,
+            0.0006
+          ],
+          [
+            0.017,
+            0.0
+          ]
+        ],
+        "segments": 48,
+        "meridians": 8
       },
       "at": [
         0.0053,
         0.031,
-        0.0443
+        0.044
       ],
       "source": "a2",
       "basis": [
@@ -4265,40 +4298,6 @@
         "top-layout"
       ],
       "note": "A9 observed engraved scale, evenly-spaced simplification; inferred tick positions."
-    },
-    {
-      "id": "top-engraving-field",
-      "label": "Top Engraving Field",
-      "role": "detail",
-      "stage": 7,
-      "certainty": "inferred",
-      "shape": {
-        "type": "plane",
-        "size": [
-          0.047,
-          0.025
-        ]
-      },
-      "at": [
-        0.028,
-        0.07712,
-        0.0
-      ],
-      "source": "a9",
-      "basis": [
-        "top-maker",
-        "top-origin"
-      ],
-      "note": "Measured visual approximation; see research.md. No outline coordinates are documented.",
-      "rotate": [
-        -90,
-        0,
-        0
-      ],
-      "look": {
-        "line": "none",
-        "fill": "none"
-      }
     }
   ],
   "presentation": {
@@ -4413,60 +4412,6 @@
     "reduced_motion": "still"
   },
   "assets": [],
-  "labels": [
-    {
-      "id": "maker",
-      "part": "top-engraving-field",
-      "field": "top-maker",
-      "face": "front",
-      "region": [
-        0.08,
-        0.08,
-        0.92,
-        0.42
-      ],
-      "role": "title"
-    },
-    {
-      "id": "origin",
-      "part": "top-engraving-field",
-      "field": "top-origin",
-      "face": "front",
-      "region": [
-        0.03,
-        0.55,
-        0.97,
-        0.95
-      ],
-      "role": "meta"
-    },
-    {
-      "id": "lens-inscription",
-      "part": "lens-name-annulus",
-      "field": "lens",
-      "face": "top",
-      "region": [
-        0.18,
-        0.02,
-        0.82,
-        0.15
-      ],
-      "role": "meta"
-    },
-    {
-      "id": "rear-asa",
-      "part": "film-reminder-rim",
-      "field": "film-reminder",
-      "face": "top",
-      "region": [
-        0.2,
-        0.76,
-        0.8,
-        0.94
-      ],
-      "role": "meta"
-    }
-  ],
   "articulations": [
     {
       "id": "extend-collapsible-summicron",
@@ -4602,6 +4547,27 @@
         1,
         0
       ]
+    }
+  },
+  "authoring": {
+    "tier": "standard",
+    "research": "unavailable",
+    "critic": {
+      "scene_sha256": "7399b551d4e40219882197d08879fe8ee21cdca9a220c3aa190899bfc901d66c",
+      "verdict": "improve",
+      "scores": {
+        "silhouette": 1,
+        "proportions": 2,
+        "identity": 2,
+        "depth": 2,
+        "composition": 2,
+        "assembly": 2,
+        "motion": 2,
+        "density": 2,
+        "honesty": 3
+      },
+      "round": 1,
+      "defects": 8
     }
   }
 }

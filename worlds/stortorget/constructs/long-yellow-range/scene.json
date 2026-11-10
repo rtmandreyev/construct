@@ -1,0 +1,6642 @@
+{
+ "format": "construct-scene",
+ "version": 2,
+ "id": "photo-left-yellow-range",
+ "title": "The long yellow range (left)",
+ "subject": {
+  "category": "architecture",
+  "summary": "Approximate reconstruction of the long four-storey ochre facade on the left of the supplied Stortorget photograph. Address not substantiated. Hidden ground level, roof and rear are inferred. Native hologram palette is not photorealistic plaster or terracotta.",
+  "accuracy": "approximate",
+  "synthetic": false
+ },
+ "units": "m",
+ "seed": 7,
+ "sources": [
+  {
+   "id": "request",
+   "kind": "user_request",
+   "title": "Human request to reconstruct the photo-left yellow range; no surveyed dimensions supplied",
+   "rights": "user_private"
+  },
+  {
+   "id": "photo",
+   "kind": "reference_image",
+   "title": "Ximonic (Simo Räsänen), Stortorget Christmas Market, December 2022; derived visual reconstruction; CC BY-SA 4.0",
+   "ref": "https://creativecommons.org/licenses/by-sa/4.0/",
+   "rights": "permitted"
+  },
+  {
+   "id": "production-estimate",
+   "kind": "generated",
+   "rights": "reference_only",
+   "ref": "provenance-audit/before/constructs/photo-left-yellow-range/scene.json",
+   "title": "Agent/supervisor inferred envelope, hidden returns and occluded street level; not user measurements"
+  },
+  {
+   "id": "operator-audit",
+   "kind": "document",
+   "rights": "reference_only",
+   "ref": "https://stortorgskallaren.com/om-oss",
+   "title": "Stortorgskällaren operator: south side of Stortorget, address 7; does not identify every parcel of the long yellow range"
+  },
+  {
+   "id": "ceres-research",
+   "kind": "document",
+   "rights": "reference_only",
+   "ref": "https://sv.wikipedia.org/wiki/Kvarteret_Ceres",
+   "title": "Ceres secondary history; Ceres9/11 association and 1937 drawing pointer, not inspected measured geometry"
+  }
+ ],
+ "facts": [
+  {
+   "key": "width",
+   "value": 27,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "production-estimate",
+   "note": "Agent/supervisor production estimate, not human-supplied or published measurement."
+  },
+  {
+   "key": "eave-height",
+   "value": 18.7,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "production-estimate",
+   "note": "Agent/supervisor production estimate, not human-supplied or published measurement."
+  },
+  {
+   "key": "ridge-height",
+   "value": 23,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "production-estimate",
+   "note": "Agent/supervisor production estimate, not human-supplied or published measurement."
+  },
+  {
+   "key": "depth",
+   "value": 10,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "production-estimate",
+   "note": "Unseen depth chosen by agent/supervisor; not established by photograph."
+  },
+  {
+   "key": "photo-visible-observation",
+   "value": "Visible in reference: long oblique yellow facade, repeated upper window rows, continuous cornice, roof dormers and chimney group. Left image edge crops the range and market stalls obscure street level.",
+   "certainty": "inferred",
+   "source": "photo",
+   "note": "Photo observation only; nine modeled upper bays are not a verified full-building count, and the full rear/footprint is not shown."
+  },
+  {
+   "key": "production-envelope",
+   "value": "Existing 27 m width, 18.7 m eave, 23 m ridge, 10 m depth, full range extent and hidden or occluded returns/details are agent/supervisor estimates.",
+   "certainty": "inferred",
+   "source": "production-estimate",
+   "note": "No exact-target published metric retrieved. Human assignment supplied a subject, not these dimensions."
+  },
+  {
+   "key": "operator-location-statement",
+   "value": "Stortorgskällaren describes itself as on Stortorget's south side and gives Stortorget 7 as its address.",
+   "certainty": "verified",
+   "source": "operator-audit",
+   "note": "Documented non-metric statement; not a verified measurement. Positional/operator context only: does not establish that the entire photo-left range is one property, nor verify its bay/storey counts, age or color."
+  }
+ ],
+ "assets": [],
+ "parts": [
+  {
+   "id": "continuous-plaster-body",
+   "role": "mass",
+   "certainty": "inferred",
+   "source": "production-estimate",
+   "shape": {
+    "type": "box",
+    "size": [
+     27.0,
+     18.7,
+     9.4
+    ]
+   },
+   "at": [
+    0.0,
+    9.35,
+    -5.3
+   ],
+   "stage": 0,
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.66,
+    "color": "#d8b35f"
+   },
+   "basis": [
+    "production-envelope"
+   ],
+   "note": "Agent-authored envelope, unseen end/rear continuation or market-occluded street-level completion. Photograph is not direct evidence for this hidden geometry. All size/shape remains inferred; not human measurements."
+  },
+  {
+   "id": "granite-plinth",
+   "role": "structure",
+   "certainty": "inferred",
+   "source": "production-estimate",
+   "shape": {
+    "type": "box",
+    "size": [
+     27,
+     0.65,
+     10.06
+    ]
+   },
+   "at": [
+    0,
+    0.325,
+    -5
+   ],
+   "stage": 0,
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.66,
+    "color": "#89877b"
+   },
+   "basis": [
+    "production-envelope"
+   ],
+   "note": "Agent-authored envelope, unseen end/rear continuation or market-occluded street-level completion. Photograph is not direct evidence for this hidden geometry. All size/shape remains inferred; not human measurements."
+  },
+  {
+   "id": "low-tiled-roof",
+   "role": "mass",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "roof",
+    "size": [
+     27,
+     10
+    ],
+    "height": 4.3,
+    "style": "gable",
+    "ridge": "x",
+    "overhang": 0.3,
+    "courses": 12
+   },
+   "at": [
+    0,
+    18.7,
+    -5
+   ],
+   "stage": 2,
+   "look": {
+    "fill": "dark",
+    "weight": 0.45,
+    "alpha": 0.6,
+    "color": "#544238"
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "continuous-cornice-0",
+   "role": "structure",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     27.25,
+     0.24,
+     0.2
+    ]
+   },
+   "at": [
+    0,
+    18.45,
+    0.07
+   ],
+   "stage": 3,
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.8,
+    "color": "#e5d9ba"
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "continuous-cornice-1",
+   "role": "structure",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     27.25,
+     0.18,
+     0.4
+    ]
+   },
+   "at": [
+    0,
+    18.68,
+    0.17
+   ],
+   "stage": 3,
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.8,
+    "color": "#e5d9ba"
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "continuous-cornice-2",
+   "role": "structure",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     27.25,
+     0.13,
+     0.55
+    ]
+   },
+   "at": [
+    0,
+    18.82,
+    0.24500000000000002
+   ],
+   "stage": 3,
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.8,
+    "color": "#e5d9ba"
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "continuous-cornice-3",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     27.25,
+     0.16,
+     0.14
+    ]
+   },
+   "at": [
+    0,
+    15.15,
+    0.04000000000000001
+   ],
+   "stage": 3,
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.8,
+    "color": "#e5d9ba"
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "continuous-cornice-4",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     27.25,
+     0.12,
+     0.08
+    ]
+   },
+   "at": [
+    0,
+    5.8,
+    0.010000000000000002
+   ],
+   "stage": 3,
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.8,
+    "color": "#e5d9ba"
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "glazing-panes-r0",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "production-estimate",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.4,
+     3.25,
+     0.075
+    ]
+   },
+   "at": [
+    -12.0,
+    2.9,
+    -0.255
+   ],
+   "stage": 2,
+   "look": {
+    "fill": "glass",
+    "weight": 0.55,
+    "alpha": 0.7,
+    "color": "#2e3d40"
+   },
+   "repeat": {
+    "count": 4,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "basis": [
+    "production-envelope"
+   ],
+   "note": "Agent-authored envelope, unseen end/rear continuation or market-occluded street-level completion. Photograph is not direct evidence for this hidden geometry. All size/shape remains inferred; not human measurements."
+  },
+  {
+   "id": "opaque-jamb-r0--1",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "production-estimate",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.075,
+     3.38,
+     0.12
+    ]
+   },
+   "at": [
+    -12.715,
+    2.9,
+    0.195
+   ],
+   "stage": 2,
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.8,
+    "alpha": 0.35,
+    "color": "#e5d9ba"
+   },
+   "repeat": {
+    "count": 4,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "scale": [
+    1.7,
+    1.0,
+    2.5
+   ],
+   "basis": [
+    "production-envelope"
+   ],
+   "note": "Agent-authored envelope, unseen end/rear continuation or market-occluded street-level completion. Photograph is not direct evidence for this hidden geometry. All size/shape remains inferred; not human measurements."
+  },
+  {
+   "id": "opaque-jamb-r0-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "production-estimate",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.075,
+     3.38,
+     0.12
+    ]
+   },
+   "at": [
+    -11.285,
+    2.9,
+    0.195
+   ],
+   "stage": 2,
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.8,
+    "alpha": 0.35,
+    "color": "#e5d9ba"
+   },
+   "repeat": {
+    "count": 4,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "scale": [
+    1.7,
+    1.0,
+    2.5
+   ],
+   "basis": [
+    "production-envelope"
+   ],
+   "note": "Agent-authored envelope, unseen end/rear continuation or market-occluded street-level completion. Photograph is not direct evidence for this hidden geometry. All size/shape remains inferred; not human measurements."
+  },
+  {
+   "id": "opaque-headbase-r0--1",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "production-estimate",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.5599999999999998,
+     0.075,
+     0.13
+    ]
+   },
+   "at": [
+    -12.0,
+    1.245,
+    0.2
+   ],
+   "stage": 2,
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.8,
+    "alpha": 0.35,
+    "color": "#e5d9ba"
+   },
+   "repeat": {
+    "count": 4,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "scale": [
+    1.0,
+    1.6,
+    2.3
+   ],
+   "basis": [
+    "production-envelope"
+   ],
+   "note": "Agent-authored envelope, unseen end/rear continuation or market-occluded street-level completion. Photograph is not direct evidence for this hidden geometry. All size/shape remains inferred; not human measurements."
+  },
+  {
+   "id": "opaque-headbase-r0-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "production-estimate",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.5599999999999998,
+     0.075,
+     0.13
+    ]
+   },
+   "at": [
+    -12.0,
+    4.555,
+    0.2
+   ],
+   "stage": 2,
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.8,
+    "alpha": 0.35,
+    "color": "#e5d9ba"
+   },
+   "repeat": {
+    "count": 4,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "scale": [
+    1.0,
+    1.6,
+    2.3
+   ],
+   "basis": [
+    "production-envelope"
+   ],
+   "note": "Agent-authored envelope, unseen end/rear continuation or market-occluded street-level completion. Photograph is not direct evidence for this hidden geometry. All size/shape remains inferred; not human measurements."
+  },
+  {
+   "id": "dark-stone-sill-r0",
+   "role": "structure",
+   "certainty": "inferred",
+   "source": "production-estimate",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.71,
+     0.14,
+     0.34
+    ]
+   },
+   "at": [
+    -12,
+    1.1349999999999998,
+    0.1
+   ],
+   "stage": 2,
+   "look": {
+    "fill": "dark",
+    "weight": 0.9,
+    "color": "#7a7364"
+   },
+   "repeat": {
+    "count": 4,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "scale": [
+    1.0,
+    1.2,
+    1.4
+   ],
+   "basis": [
+    "production-envelope"
+   ],
+   "note": "Agent-authored envelope, unseen end/rear continuation or market-occluded street-level completion. Photograph is not direct evidence for this hidden geometry. All size/shape remains inferred; not human measurements."
+  },
+  {
+   "id": "sash-linework-r1",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "facade",
+    "size": [
+     27,
+     3.2
+    ],
+    "rows": 1,
+    "cols": 9,
+    "opening": [
+     1.1,
+     3
+    ],
+    "arch": "flat",
+    "kind": "windows",
+    "outline": false
+   },
+   "at": [
+    0,
+    6.700000000000001,
+    0.19
+   ],
+   "stage": 3,
+   "look": {
+    "fill": "none",
+    "weight": 0.6,
+    "alpha": 0.65,
+    "color": "#e5d9ba"
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "glazing-panes-r1",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.1,
+     3.0,
+     0.075
+    ]
+   },
+   "at": [
+    -12.0,
+    8.3,
+    -0.255
+   ],
+   "stage": 3,
+   "look": {
+    "fill": "glass",
+    "weight": 0.55,
+    "alpha": 0.7,
+    "color": "#2e3d40"
+   },
+   "repeat": {
+    "count": 9,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "opaque-jamb-r1--1",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.075,
+     3.13,
+     0.12
+    ]
+   },
+   "at": [
+    -12.565,
+    8.3,
+    0.195
+   ],
+   "stage": 3,
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.8,
+    "color": "#e5d9ba"
+   },
+   "repeat": {
+    "count": 9,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "scale": [
+    1.7,
+    1.0,
+    2.5
+   ],
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "opaque-jamb-r1-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.075,
+     3.13,
+     0.12
+    ]
+   },
+   "at": [
+    -11.435,
+    8.3,
+    0.195
+   ],
+   "stage": 3,
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.8,
+    "color": "#e5d9ba"
+   },
+   "repeat": {
+    "count": 9,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "scale": [
+    1.7,
+    1.0,
+    2.5
+   ],
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "opaque-headbase-r1--1",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.26,
+     0.075,
+     0.13
+    ]
+   },
+   "at": [
+    -12.0,
+    6.77,
+    0.2
+   ],
+   "stage": 3,
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.8,
+    "color": "#e5d9ba"
+   },
+   "repeat": {
+    "count": 9,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "scale": [
+    1,
+    1.6,
+    2.3
+   ],
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "opaque-headbase-r1-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.26,
+     0.075,
+     0.13
+    ]
+   },
+   "at": [
+    -12.0,
+    9.83,
+    0.2
+   ],
+   "stage": 3,
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.8,
+    "color": "#e5d9ba"
+   },
+   "repeat": {
+    "count": 9,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "scale": [
+    1,
+    1.6,
+    2.3
+   ],
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "opaque-mullion-r1",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.055,
+     3.0,
+     0.13
+    ]
+   },
+   "at": [
+    -12.0,
+    8.3,
+    0.23
+   ],
+   "stage": 3,
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.8,
+    "color": "#e5d9ba"
+   },
+   "repeat": {
+    "count": 9,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "scale": [
+    1.3,
+    1.0,
+    2.3
+   ],
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "opaque-sashrail-r1--1",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.1,
+     0.055,
+     0.13
+    ]
+   },
+   "at": [
+    -12.0,
+    7.8,
+    0.235
+   ],
+   "stage": 3,
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.8,
+    "color": "#e5d9ba"
+   },
+   "repeat": {
+    "count": 9,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "scale": [
+    1,
+    1.3,
+    2.3
+   ],
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "opaque-sashrail-r1-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.1,
+     0.055,
+     0.13
+    ]
+   },
+   "at": [
+    -12.0,
+    8.8,
+    0.235
+   ],
+   "stage": 3,
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.8,
+    "color": "#e5d9ba"
+   },
+   "repeat": {
+    "count": 9,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "scale": [
+    1,
+    1.3,
+    2.3
+   ],
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "dark-stone-sill-r1",
+   "role": "structure",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.6600000000000001,
+     0.14,
+     0.34
+    ]
+   },
+   "at": [
+    -12,
+    6.660000000000001,
+    0.1
+   ],
+   "stage": 3,
+   "look": {
+    "fill": "dark",
+    "weight": 0.9,
+    "color": "#7a7364"
+   },
+   "repeat": {
+    "count": 9,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "scale": [
+    1.0,
+    1.2,
+    1.4
+   ],
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "varied-pediment-0",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 0.184,
+    "profile": [
+     [
+      -0.88,
+      0
+     ],
+     [
+      0.88,
+      0
+     ],
+     [
+      0.97,
+      0.16
+     ],
+     [
+      -0.97,
+      0.16
+     ]
+    ]
+   },
+   "at": [
+    -12,
+    9.96,
+    0.025
+   ],
+   "stage": 6,
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "weight": 0.65,
+    "alpha": 0.55,
+    "color": "#e5d9ba"
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "varied-lintel-1",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 0.184,
+    "profile": [
+     [
+      -0.88,
+      0
+     ],
+     [
+      0.88,
+      0
+     ],
+     [
+      1,
+      0.2
+     ],
+     [
+      -1,
+      0.2
+     ]
+    ]
+   },
+   "at": [
+    -9,
+    9.96,
+    0.025
+   ],
+   "stage": 6,
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "weight": 0.65,
+    "alpha": 0.55,
+    "color": "#e5d9ba"
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "varied-lintel-2",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 0.184,
+    "profile": [
+     [
+      -0.88,
+      0
+     ],
+     [
+      0.88,
+      0
+     ],
+     [
+      1,
+      0.2
+     ],
+     [
+      -1,
+      0.2
+     ]
+    ]
+   },
+   "at": [
+    -6,
+    9.96,
+    0.025
+   ],
+   "stage": 6,
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "weight": 0.65,
+    "alpha": 0.55,
+    "color": "#e5d9ba"
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "varied-pediment-3",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 0.184,
+    "profile": [
+     [
+      -0.88,
+      0
+     ],
+     [
+      0.88,
+      0
+     ],
+     [
+      0.97,
+      0.16
+     ],
+     [
+      -0.97,
+      0.16
+     ]
+    ]
+   },
+   "at": [
+    -3,
+    9.96,
+    0.025
+   ],
+   "stage": 6,
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "weight": 0.65,
+    "alpha": 0.55,
+    "color": "#e5d9ba"
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "varied-pediment-4",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 0.184,
+    "profile": [
+     [
+      -0.88,
+      0
+     ],
+     [
+      0.88,
+      0
+     ],
+     [
+      0.97,
+      0.16
+     ],
+     [
+      -0.97,
+      0.16
+     ]
+    ]
+   },
+   "at": [
+    0,
+    9.96,
+    0.025
+   ],
+   "stage": 6,
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "weight": 0.65,
+    "alpha": 0.55,
+    "color": "#e5d9ba"
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "varied-pediment-5",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 0.184,
+    "profile": [
+     [
+      -0.88,
+      0
+     ],
+     [
+      0.88,
+      0
+     ],
+     [
+      0.97,
+      0.16
+     ],
+     [
+      -0.97,
+      0.16
+     ]
+    ]
+   },
+   "at": [
+    3,
+    9.96,
+    0.025
+   ],
+   "stage": 6,
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "weight": 0.65,
+    "alpha": 0.55,
+    "color": "#e5d9ba"
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "varied-lintel-6",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 0.184,
+    "profile": [
+     [
+      -0.88,
+      0
+     ],
+     [
+      0.88,
+      0
+     ],
+     [
+      1,
+      0.2
+     ],
+     [
+      -1,
+      0.2
+     ]
+    ]
+   },
+   "at": [
+    6,
+    9.96,
+    0.025
+   ],
+   "stage": 6,
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "weight": 0.65,
+    "alpha": 0.55,
+    "color": "#e5d9ba"
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "varied-pediment-7",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 0.184,
+    "profile": [
+     [
+      -0.88,
+      0
+     ],
+     [
+      0.88,
+      0
+     ],
+     [
+      0.97,
+      0.16
+     ],
+     [
+      -0.97,
+      0.16
+     ]
+    ]
+   },
+   "at": [
+    9,
+    9.96,
+    0.025
+   ],
+   "stage": 6,
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "weight": 0.65,
+    "alpha": 0.55,
+    "color": "#e5d9ba"
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "varied-pediment-8",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 0.184,
+    "profile": [
+     [
+      -0.88,
+      0
+     ],
+     [
+      0.88,
+      0
+     ],
+     [
+      0.97,
+      0.16
+     ],
+     [
+      -0.97,
+      0.16
+     ]
+    ]
+   },
+   "at": [
+    12,
+    9.96,
+    0.025
+   ],
+   "stage": 6,
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "weight": 0.65,
+    "alpha": 0.55,
+    "color": "#e5d9ba"
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "sash-linework-r2",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "facade",
+    "size": [
+     27,
+     3.0
+    ],
+    "rows": 1,
+    "cols": 9,
+    "opening": [
+     1.05,
+     2.8
+    ],
+    "arch": "flat",
+    "kind": "windows",
+    "outline": false
+   },
+   "at": [
+    0,
+    11.3,
+    0.19
+   ],
+   "stage": 4,
+   "look": {
+    "fill": "none",
+    "weight": 0.6,
+    "alpha": 0.65,
+    "color": "#e5d9ba"
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "glazing-panes-r2",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.05,
+     2.8,
+     0.075
+    ]
+   },
+   "at": [
+    -12.0,
+    12.8,
+    -0.255
+   ],
+   "stage": 4,
+   "look": {
+    "fill": "glass",
+    "weight": 0.55,
+    "alpha": 0.7,
+    "color": "#2e3d40"
+   },
+   "repeat": {
+    "count": 9,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "opaque-jamb-r2--1",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.075,
+     2.9299999999999997,
+     0.12
+    ]
+   },
+   "at": [
+    -12.54,
+    12.8,
+    0.195
+   ],
+   "stage": 4,
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.8,
+    "color": "#e5d9ba"
+   },
+   "repeat": {
+    "count": 9,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "scale": [
+    1.7,
+    1.0,
+    2.5
+   ],
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "opaque-jamb-r2-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.075,
+     2.9299999999999997,
+     0.12
+    ]
+   },
+   "at": [
+    -11.46,
+    12.8,
+    0.195
+   ],
+   "stage": 4,
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.8,
+    "color": "#e5d9ba"
+   },
+   "repeat": {
+    "count": 9,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "scale": [
+    1.7,
+    1.0,
+    2.5
+   ],
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "opaque-headbase-r2--1",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.21,
+     0.075,
+     0.13
+    ]
+   },
+   "at": [
+    -12.0,
+    11.37,
+    0.2
+   ],
+   "stage": 4,
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.8,
+    "color": "#e5d9ba"
+   },
+   "repeat": {
+    "count": 9,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "scale": [
+    1,
+    1.6,
+    2.3
+   ],
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "opaque-headbase-r2-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.21,
+     0.075,
+     0.13
+    ]
+   },
+   "at": [
+    -12.0,
+    14.23,
+    0.2
+   ],
+   "stage": 4,
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.8,
+    "color": "#e5d9ba"
+   },
+   "repeat": {
+    "count": 9,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "scale": [
+    1,
+    1.6,
+    2.3
+   ],
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "opaque-mullion-r2",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.055,
+     2.8,
+     0.13
+    ]
+   },
+   "at": [
+    -12.0,
+    12.8,
+    0.23
+   ],
+   "stage": 4,
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.8,
+    "color": "#e5d9ba"
+   },
+   "repeat": {
+    "count": 9,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "scale": [
+    1.3,
+    1.0,
+    2.3
+   ],
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "opaque-sashrail-r2--1",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.05,
+     0.055,
+     0.13
+    ]
+   },
+   "at": [
+    -12.0,
+    12.333333,
+    0.235
+   ],
+   "stage": 4,
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.8,
+    "color": "#e5d9ba"
+   },
+   "repeat": {
+    "count": 9,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "scale": [
+    1,
+    1.3,
+    2.3
+   ],
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "opaque-sashrail-r2-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.05,
+     0.055,
+     0.13
+    ]
+   },
+   "at": [
+    -12.0,
+    13.266667,
+    0.235
+   ],
+   "stage": 4,
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.8,
+    "color": "#e5d9ba"
+   },
+   "repeat": {
+    "count": 9,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "scale": [
+    1,
+    1.3,
+    2.3
+   ],
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "dark-stone-sill-r2",
+   "role": "structure",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.6600000000000001,
+     0.14,
+     0.34
+    ]
+   },
+   "at": [
+    -12,
+    11.26,
+    0.1
+   ],
+   "stage": 4,
+   "look": {
+    "fill": "dark",
+    "weight": 0.9,
+    "color": "#7a7364"
+   },
+   "repeat": {
+    "count": 9,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "scale": [
+    1.0,
+    1.2,
+    1.4
+   ],
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "chamfered-lintel-r2",
+   "role": "structure",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 0.23,
+    "profile": [
+     [
+      -0.86,
+      0
+     ],
+     [
+      0.86,
+      0
+     ],
+     [
+      0.99,
+      0.18
+     ],
+     [
+      -0.99,
+      0.18
+     ]
+    ]
+   },
+   "at": [
+    -12,
+    14.340000000000002,
+    0.02
+   ],
+   "stage": 4,
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.66,
+    "color": "#e5d9ba"
+   },
+   "repeat": {
+    "count": 9,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "glazing-panes-r3",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.2,
+     1.845,
+     0.075
+    ]
+   },
+   "at": [
+    -12.0,
+    16.7,
+    -0.255
+   ],
+   "stage": 5,
+   "look": {
+    "fill": "glass",
+    "weight": 0.55,
+    "alpha": 0.7,
+    "color": "#2e3d40"
+   },
+   "repeat": {
+    "count": 9,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "opaque-jamb-r3--1",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.075,
+     1.975,
+     0.12
+    ]
+   },
+   "at": [
+    -12.615,
+    16.7,
+    0.195
+   ],
+   "stage": 5,
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.8,
+    "color": "#e5d9ba"
+   },
+   "repeat": {
+    "count": 9,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "scale": [
+    1.7,
+    1.0,
+    2.5
+   ],
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "opaque-jamb-r3-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.075,
+     1.975,
+     0.12
+    ]
+   },
+   "at": [
+    -11.385,
+    16.7,
+    0.195
+   ],
+   "stage": 5,
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.8,
+    "color": "#e5d9ba"
+   },
+   "repeat": {
+    "count": 9,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "scale": [
+    1.7,
+    1.0,
+    2.5
+   ],
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "opaque-headbase-r3--1",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.36,
+     0.075,
+     0.13
+    ]
+   },
+   "at": [
+    -12.0,
+    15.7475,
+    0.2
+   ],
+   "stage": 5,
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.8,
+    "color": "#e5d9ba"
+   },
+   "repeat": {
+    "count": 9,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "scale": [
+    1.0,
+    1.6,
+    2.3
+   ],
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "opaque-headbase-r3-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.36,
+     0.075,
+     0.13
+    ]
+   },
+   "at": [
+    -12.0,
+    17.6525,
+    0.2
+   ],
+   "stage": 5,
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.8,
+    "color": "#e5d9ba"
+   },
+   "repeat": {
+    "count": 9,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "scale": [
+    1.0,
+    1.6,
+    2.3
+   ],
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "opaque-mullion-r3",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.055,
+     1.845,
+     0.13
+    ]
+   },
+   "at": [
+    -12.0,
+    16.7,
+    0.23
+   ],
+   "stage": 5,
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.8,
+    "color": "#e5d9ba"
+   },
+   "repeat": {
+    "count": 9,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "scale": [
+    1.3,
+    1.0,
+    2.3
+   ],
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "dark-stone-sill-r3",
+   "role": "structure",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.71,
+     0.14,
+     0.34
+    ]
+   },
+   "at": [
+    -12.0,
+    15.6375,
+    0.1
+   ],
+   "stage": 5,
+   "look": {
+    "fill": "dark",
+    "weight": 0.9,
+    "color": "#7a7364"
+   },
+   "repeat": {
+    "count": 9,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "scale": [
+    1.0,
+    1.2,
+    1.4
+   ],
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "end-plaster-return-0",
+   "role": "structure",
+   "certainty": "inferred",
+   "source": "production-estimate",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.3,
+     18.4,
+     0.09
+    ]
+   },
+   "at": [
+    -13.3,
+    9.2,
+    0.015
+   ],
+   "stage": 3,
+   "look": {
+    "fill": "dark",
+    "weight": 0.35,
+    "alpha": 0.48,
+    "color": "#d8b35f"
+   },
+   "basis": [
+    "production-envelope"
+   ],
+   "note": "Agent-authored envelope, unseen end/rear continuation or market-occluded street-level completion. Photograph is not direct evidence for this hidden geometry. All size/shape remains inferred; not human measurements."
+  },
+  {
+   "id": "end-plaster-return-1",
+   "role": "structure",
+   "certainty": "inferred",
+   "source": "production-estimate",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.3,
+     18.4,
+     0.09
+    ]
+   },
+   "at": [
+    13.3,
+    9.2,
+    0.015
+   ],
+   "stage": 3,
+   "look": {
+    "fill": "dark",
+    "weight": 0.35,
+    "alpha": 0.48,
+    "color": "#d8b35f"
+   },
+   "basis": [
+    "production-envelope"
+   ],
+   "note": "Agent-authored envelope, unseen end/rear continuation or market-occluded street-level completion. Photograph is not direct evidence for this hidden geometry. All size/shape remains inferred; not human measurements."
+  },
+  {
+   "id": "black-drain-riser-0",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "tube",
+    "radius": 0.065,
+    "sides": 6,
+    "samples": 1,
+    "path": [
+     [
+      -9.9,
+      0.12,
+      0.27
+     ],
+     [
+      -9.9,
+      0.45,
+      0.27
+     ],
+     [
+      -9.9,
+      17.95,
+      0.27
+     ],
+     [
+      -9.74,
+      18.55,
+      0.16
+     ],
+     [
+      -9.74,
+      18.75,
+      0.16
+     ]
+    ]
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "stage": 7,
+   "look": {
+    "fill": "dark",
+    "weight": 1.2,
+    "tone": "structure",
+    "color": "#343b38"
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "riser-bracket-0-0",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.18,
+     0.055,
+     0.16
+    ]
+   },
+   "at": [
+    -9.9,
+    2,
+    0.19
+   ],
+   "stage": 7,
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.66,
+    "color": "#343b38"
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "riser-bracket-0-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.18,
+     0.055,
+     0.16
+    ]
+   },
+   "at": [
+    -9.9,
+    6,
+    0.19
+   ],
+   "stage": 7,
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.66,
+    "color": "#343b38"
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "riser-bracket-0-2",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.18,
+     0.055,
+     0.16
+    ]
+   },
+   "at": [
+    -9.9,
+    10,
+    0.19
+   ],
+   "stage": 7,
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.66,
+    "color": "#343b38"
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "riser-bracket-0-3",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.18,
+     0.055,
+     0.16
+    ]
+   },
+   "at": [
+    -9.9,
+    14,
+    0.19
+   ],
+   "stage": 7,
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.66,
+    "color": "#343b38"
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "riser-bracket-0-4",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.18,
+     0.055,
+     0.16
+    ]
+   },
+   "at": [
+    -9.9,
+    17,
+    0.19
+   ],
+   "stage": 7,
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.66,
+    "color": "#343b38"
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "black-drain-riser-1",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "tube",
+    "radius": 0.065,
+    "sides": 6,
+    "samples": 1,
+    "path": [
+     [
+      8.8,
+      0.12,
+      0.27
+     ],
+     [
+      8.8,
+      0.45,
+      0.27
+     ],
+     [
+      8.8,
+      17.95,
+      0.27
+     ],
+     [
+      8.96,
+      18.55,
+      0.16
+     ],
+     [
+      8.96,
+      18.75,
+      0.16
+     ]
+    ]
+   },
+   "at": [
+    -1.3,
+    0.0,
+    0.0
+   ],
+   "stage": 7,
+   "look": {
+    "fill": "dark",
+    "weight": 1.2,
+    "tone": "structure",
+    "color": "#343b38"
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "riser-bracket-1-0",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.18,
+     0.055,
+     0.16
+    ]
+   },
+   "at": [
+    7.5,
+    2.0,
+    0.19
+   ],
+   "stage": 7,
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.66,
+    "color": "#343b38"
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "riser-bracket-1-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.18,
+     0.055,
+     0.16
+    ]
+   },
+   "at": [
+    7.5,
+    6.0,
+    0.19
+   ],
+   "stage": 7,
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.66,
+    "color": "#343b38"
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "riser-bracket-1-2",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.18,
+     0.055,
+     0.16
+    ]
+   },
+   "at": [
+    7.5,
+    10.0,
+    0.19
+   ],
+   "stage": 7,
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.66,
+    "color": "#343b38"
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "riser-bracket-1-3",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.18,
+     0.055,
+     0.16
+    ]
+   },
+   "at": [
+    7.5,
+    14.0,
+    0.19
+   ],
+   "stage": 7,
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.66,
+    "color": "#343b38"
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "riser-bracket-1-4",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.18,
+     0.055,
+     0.16
+    ]
+   },
+   "at": [
+    7.5,
+    17.0,
+    0.19
+   ],
+   "stage": 7,
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.66,
+    "color": "#343b38"
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "rounded-dormer-shell-0",
+   "role": "structure",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 1.35,
+    "profile": [
+     [
+      -0.6,
+      0
+     ],
+     [
+      0.6,
+      0
+     ],
+     [
+      0.6,
+      0.45
+     ],
+     [
+      0.5543277195067721,
+      0.6222075445642904
+     ],
+     [
+      0.4242640687119285,
+      0.7681980515339464
+     ],
+     [
+      0.22961005941905388,
+      0.8657457896300791
+     ],
+     [
+      3.6739403974420595e-17,
+      0.9
+     ],
+     [
+      -0.22961005941905382,
+      0.8657457896300791
+     ],
+     [
+      -0.42426406871192845,
+      0.7681980515339464
+     ],
+     [
+      -0.5543277195067721,
+      0.6222075445642905
+     ],
+     [
+      -0.6,
+      0.45000000000000007
+     ]
+    ]
+   },
+   "at": [
+    -12.0,
+    19.65,
+    -2.15
+   ],
+   "stage": 6,
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.66,
+    "color": "#e5d9ba"
+   },
+   "scale": [
+    1.4,
+    1.176,
+    1.0
+   ],
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "dormer-glazing-0",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.58,
+     0.57,
+     0.045
+    ]
+   },
+   "at": [
+    -12.0,
+    20.07,
+    -0.77
+   ],
+   "stage": 6,
+   "look": {
+    "fill": "glass",
+    "weight": 0.7,
+    "color": "#2e3d40"
+   },
+   "scale": [
+    1.4,
+    1.05,
+    1.0
+   ],
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "dormer-centre-bar-0",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.055,
+     0.6,
+     0.08
+    ]
+   },
+   "at": [
+    -12.0,
+    20.07,
+    -0.73
+   ],
+   "stage": 6,
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.8,
+    "color": "#e5d9ba"
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "rounded-dormer-shell-1",
+   "role": "structure",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 1.35,
+    "profile": [
+     [
+      -0.6,
+      0
+     ],
+     [
+      0.6,
+      0
+     ],
+     [
+      0.6,
+      0.45
+     ],
+     [
+      0.5543277195067721,
+      0.6222075445642904
+     ],
+     [
+      0.4242640687119285,
+      0.7681980515339464
+     ],
+     [
+      0.22961005941905388,
+      0.8657457896300791
+     ],
+     [
+      3.6739403974420595e-17,
+      0.9
+     ],
+     [
+      -0.22961005941905382,
+      0.8657457896300791
+     ],
+     [
+      -0.42426406871192845,
+      0.7681980515339464
+     ],
+     [
+      -0.5543277195067721,
+      0.6222075445642905
+     ],
+     [
+      -0.6,
+      0.45000000000000007
+     ]
+    ]
+   },
+   "at": [
+    -4.0,
+    19.65,
+    -2.15
+   ],
+   "stage": 6,
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.66,
+    "color": "#e5d9ba"
+   },
+   "scale": [
+    1.4,
+    1.176,
+    1.0
+   ],
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "dormer-glazing-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.58,
+     0.57,
+     0.045
+    ]
+   },
+   "at": [
+    -4.0,
+    20.07,
+    -0.77
+   ],
+   "stage": 6,
+   "look": {
+    "fill": "glass",
+    "weight": 0.7,
+    "color": "#2e3d40"
+   },
+   "scale": [
+    1.4,
+    1.05,
+    1.0
+   ],
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "dormer-centre-bar-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.055,
+     0.6,
+     0.08
+    ]
+   },
+   "at": [
+    -4.0,
+    20.07,
+    -0.73
+   ],
+   "stage": 6,
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.8,
+    "color": "#e5d9ba"
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "rounded-dormer-shell-2",
+   "role": "structure",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 1.35,
+    "profile": [
+     [
+      -0.6,
+      0
+     ],
+     [
+      0.6,
+      0
+     ],
+     [
+      0.6,
+      0.45
+     ],
+     [
+      0.5543277195067721,
+      0.6222075445642904
+     ],
+     [
+      0.4242640687119285,
+      0.7681980515339464
+     ],
+     [
+      0.22961005941905388,
+      0.8657457896300791
+     ],
+     [
+      3.6739403974420595e-17,
+      0.9
+     ],
+     [
+      -0.22961005941905382,
+      0.8657457896300791
+     ],
+     [
+      -0.42426406871192845,
+      0.7681980515339464
+     ],
+     [
+      -0.5543277195067721,
+      0.6222075445642905
+     ],
+     [
+      -0.6,
+      0.45000000000000007
+     ]
+    ]
+   },
+   "at": [
+    5.0,
+    19.65,
+    -2.15
+   ],
+   "stage": 6,
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.66,
+    "color": "#e5d9ba"
+   },
+   "scale": [
+    1.4,
+    1.176,
+    1.0
+   ],
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "dormer-glazing-2",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.58,
+     0.57,
+     0.045
+    ]
+   },
+   "at": [
+    5.0,
+    20.07,
+    -0.77
+   ],
+   "stage": 6,
+   "look": {
+    "fill": "glass",
+    "weight": 0.7,
+    "color": "#2e3d40"
+   },
+   "scale": [
+    1.4,
+    1.05,
+    1.0
+   ],
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "dormer-centre-bar-2",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.055,
+     0.6,
+     0.08
+    ]
+   },
+   "at": [
+    5.0,
+    20.07,
+    -0.73
+   ],
+   "stage": 6,
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.8,
+    "color": "#e5d9ba"
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "chimney-stack-0",
+   "role": "structure",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.45,
+     2.8,
+     0.75
+    ]
+   },
+   "at": [
+    -7.4,
+    23.1,
+    -5.2
+   ],
+   "stage": 6,
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.66,
+    "color": "#55504a"
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "chimney-cap-0",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.56,
+     0.15,
+     0.88
+    ]
+   },
+   "at": [
+    -7.4,
+    24.575,
+    -5.2
+   ],
+   "stage": 6,
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.8,
+    "color": "#55504a"
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "chimney-stack-1",
+   "role": "structure",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.65,
+     3.3,
+     0.85
+    ]
+   },
+   "at": [
+    2.0,
+    22.55,
+    -5.2
+   ],
+   "stage": 6,
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.66,
+    "color": "#55504a"
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "chimney-cap-1",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.8,
+     0.18,
+     1
+    ]
+   },
+   "at": [
+    2.0,
+    24.25,
+    -5.2
+   ],
+   "stage": 6,
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.8,
+    "color": "#55504a"
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "chimney-stack-2",
+   "role": "structure",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.65,
+     3.3,
+     0.85
+    ]
+   },
+   "at": [
+    10.0,
+    22.55,
+    -5.2
+   ],
+   "stage": 6,
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.66,
+    "color": "#55504a"
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "chimney-cap-2",
+   "role": "detail",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.8,
+     0.18,
+     1
+    ]
+   },
+   "at": [
+    10.0,
+    24.25,
+    -5.2
+   ],
+   "stage": 6,
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.8,
+    "color": "#55504a"
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "front-piers-r0",
+   "role": "structure",
+   "certainty": "inferred",
+   "source": "production-estimate",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.6,
+     3.25,
+     0.6
+    ]
+   },
+   "at": [
+    -10.5,
+    2.9,
+    -0.3
+   ],
+   "stage": 1,
+   "repeat": {
+    "count": 8,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "look": {
+    "fill": "dark",
+    "weight": 0.4,
+    "alpha": 0.65,
+    "color": "#d8b35f"
+   },
+   "basis": [
+    "production-envelope"
+   ],
+   "note": "Agent-authored envelope, unseen end/rear continuation or market-occluded street-level completion. Photograph is not direct evidence for this hidden geometry. All size/shape remains inferred; not human measurements."
+  },
+  {
+   "id": "front-piers-r1",
+   "role": "structure",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.9,
+     3.0,
+     0.6
+    ]
+   },
+   "at": [
+    -10.5,
+    8.3,
+    -0.3
+   ],
+   "stage": 1,
+   "repeat": {
+    "count": 8,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "look": {
+    "fill": "dark",
+    "weight": 0.4,
+    "alpha": 0.65,
+    "color": "#d8b35f"
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "front-piers-r2",
+   "role": "structure",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.95,
+     2.8,
+     0.6
+    ]
+   },
+   "at": [
+    -10.5,
+    12.8,
+    -0.3
+   ],
+   "stage": 1,
+   "repeat": {
+    "count": 8,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "look": {
+    "fill": "dark",
+    "weight": 0.4,
+    "alpha": 0.65,
+    "color": "#d8b35f"
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "front-piers-r3",
+   "role": "structure",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     1.8,
+     1.845,
+     0.6
+    ]
+   },
+   "at": [
+    -10.5,
+    16.7,
+    -0.3
+   ],
+   "stage": 1,
+   "repeat": {
+    "count": 8,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "look": {
+    "fill": "dark",
+    "weight": 0.4,
+    "alpha": 0.65,
+    "color": "#d8b35f"
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "front-edge-piers-r0",
+   "role": "structure",
+   "certainty": "inferred",
+   "source": "production-estimate",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.8,
+     3.25,
+     0.6
+    ]
+   },
+   "at": [
+    13.1,
+    2.9,
+    -0.3
+   ],
+   "stage": 1,
+   "mirror": "x",
+   "look": {
+    "fill": "dark",
+    "weight": 0.4,
+    "alpha": 0.65,
+    "color": "#d8b35f"
+   },
+   "basis": [
+    "production-envelope"
+   ],
+   "note": "Agent-authored envelope, unseen end/rear continuation or market-occluded street-level completion. Photograph is not direct evidence for this hidden geometry. All size/shape remains inferred; not human measurements."
+  },
+  {
+   "id": "front-edge-piers-r1",
+   "role": "structure",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.95,
+     3.0,
+     0.6
+    ]
+   },
+   "at": [
+    13.025,
+    8.3,
+    -0.3
+   ],
+   "stage": 1,
+   "mirror": "x",
+   "look": {
+    "fill": "dark",
+    "weight": 0.4,
+    "alpha": 0.65,
+    "color": "#d8b35f"
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "front-edge-piers-r2",
+   "role": "structure",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.975,
+     2.8,
+     0.6
+    ]
+   },
+   "at": [
+    13.0125,
+    12.8,
+    -0.3
+   ],
+   "stage": 1,
+   "mirror": "x",
+   "look": {
+    "fill": "dark",
+    "weight": 0.4,
+    "alpha": 0.65,
+    "color": "#d8b35f"
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "front-edge-piers-r3",
+   "role": "structure",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.9,
+     1.845,
+     0.6
+    ]
+   },
+   "at": [
+    13.05,
+    16.7,
+    -0.3
+   ],
+   "stage": 1,
+   "mirror": "x",
+   "look": {
+    "fill": "dark",
+    "weight": 0.4,
+    "alpha": 0.65,
+    "color": "#d8b35f"
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "front-spandrel-0",
+   "role": "structure",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     12.8,
+     1.275,
+     0.6
+    ]
+   },
+   "at": [
+    -7.1,
+    0.6375,
+    -0.3
+   ],
+   "stage": 1,
+   "look": {
+    "fill": "dark",
+    "weight": 0.4,
+    "alpha": 0.65,
+    "color": "#d8b35f"
+   },
+   "mirror": "x",
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "front-spandrel-1",
+   "role": "structure",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     27,
+     2.275,
+     0.6
+    ]
+   },
+   "at": [
+    0,
+    5.6625,
+    -0.3
+   ],
+   "stage": 1,
+   "look": {
+    "fill": "dark",
+    "weight": 0.4,
+    "alpha": 0.65,
+    "color": "#d8b35f"
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "front-spandrel-2",
+   "role": "structure",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     27,
+     1.6,
+     0.6
+    ]
+   },
+   "at": [
+    0,
+    10.6,
+    -0.3
+   ],
+   "stage": 1,
+   "look": {
+    "fill": "dark",
+    "weight": 0.4,
+    "alpha": 0.65,
+    "color": "#d8b35f"
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "front-spandrel-3",
+   "role": "structure",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     27.0,
+     1.5775,
+     0.6
+    ]
+   },
+   "at": [
+    0.0,
+    14.98875,
+    -0.3
+   ],
+   "stage": 1,
+   "look": {
+    "fill": "dark",
+    "weight": 0.4,
+    "alpha": 0.65,
+    "color": "#d8b35f"
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "id": "front-spandrel-4",
+   "role": "structure",
+   "certainty": "inferred",
+   "source": "photo",
+   "shape": {
+    "type": "box",
+    "size": [
+     27.0,
+     1.0775,
+     0.6
+    ]
+   },
+   "at": [
+    0.0,
+    18.16125,
+    -0.3
+   ],
+   "stage": 1,
+   "look": {
+    "fill": "dark",
+    "weight": 0.4,
+    "alpha": 0.65,
+    "color": "#d8b35f"
+   },
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "at": [
+    -12.55,
+    6.8,
+    0.0
+   ],
+   "certainty": "inferred",
+   "id": "chamfered-reveal-left-r1",
+   "look": {
+    "fill": "dark",
+    "weight": 0.7,
+    "color": "#e5d9ba"
+   },
+   "repeat": {
+    "count": 9,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "role": "structure",
+   "shape": {
+    "axis": "y",
+    "height": 3,
+    "profile": [
+     [
+      -0.14,
+      0
+     ],
+     [
+      0.04,
+      -0.38
+     ],
+     [
+      0.04,
+      -0.6
+     ],
+     [
+      -0.14,
+      -0.6
+     ]
+    ],
+    "type": "extrude"
+   },
+   "source": "photo",
+   "stage": 3,
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "at": [
+    -11.45,
+    6.8,
+    0.0
+   ],
+   "certainty": "inferred",
+   "id": "chamfered-reveal-right-r1",
+   "look": {
+    "fill": "dark",
+    "weight": 0.7,
+    "color": "#e5d9ba"
+   },
+   "repeat": {
+    "count": 9,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "role": "structure",
+   "shape": {
+    "axis": "y",
+    "height": 3,
+    "profile": [
+     [
+      0.14,
+      0
+     ],
+     [
+      -0.04,
+      -0.38
+     ],
+     [
+      -0.04,
+      -0.6
+     ],
+     [
+      0.14,
+      -0.6
+     ]
+    ],
+    "type": "extrude"
+   },
+   "source": "photo",
+   "stage": 3,
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "at": [
+    -12.525,
+    11.4,
+    0.0
+   ],
+   "certainty": "inferred",
+   "id": "chamfered-reveal-left-r2",
+   "look": {
+    "fill": "dark",
+    "weight": 0.7,
+    "color": "#e5d9ba"
+   },
+   "repeat": {
+    "count": 9,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "role": "structure",
+   "shape": {
+    "axis": "y",
+    "height": 2.8,
+    "profile": [
+     [
+      -0.14,
+      0
+     ],
+     [
+      0.04,
+      -0.38
+     ],
+     [
+      0.04,
+      -0.6
+     ],
+     [
+      -0.14,
+      -0.6
+     ]
+    ],
+    "type": "extrude"
+   },
+   "source": "photo",
+   "stage": 4,
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "at": [
+    -11.475,
+    11.4,
+    0.0
+   ],
+   "certainty": "inferred",
+   "id": "chamfered-reveal-right-r2",
+   "look": {
+    "fill": "dark",
+    "weight": 0.7,
+    "color": "#e5d9ba"
+   },
+   "repeat": {
+    "count": 9,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "role": "structure",
+   "shape": {
+    "axis": "y",
+    "height": 2.8,
+    "profile": [
+     [
+      0.14,
+      0
+     ],
+     [
+      -0.04,
+      -0.38
+     ],
+     [
+      -0.04,
+      -0.6
+     ],
+     [
+      0.14,
+      -0.6
+     ]
+    ],
+    "type": "extrude"
+   },
+   "source": "photo",
+   "stage": 4,
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "at": [
+    -12.6,
+    15.7775,
+    0.0
+   ],
+   "certainty": "inferred",
+   "id": "chamfered-reveal-left-r3",
+   "look": {
+    "fill": "dark",
+    "weight": 0.7,
+    "color": "#e5d9ba"
+   },
+   "repeat": {
+    "count": 9,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "role": "structure",
+   "shape": {
+    "axis": "y",
+    "height": 1.845,
+    "profile": [
+     [
+      -0.14,
+      0
+     ],
+     [
+      0.04,
+      -0.38
+     ],
+     [
+      0.04,
+      -0.6
+     ],
+     [
+      -0.14,
+      -0.6
+     ]
+    ],
+    "type": "extrude"
+   },
+   "source": "photo",
+   "stage": 5,
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "at": [
+    -11.4,
+    15.7775,
+    0.0
+   ],
+   "certainty": "inferred",
+   "id": "chamfered-reveal-right-r3",
+   "look": {
+    "fill": "dark",
+    "weight": 0.7,
+    "color": "#e5d9ba"
+   },
+   "repeat": {
+    "count": 9,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "role": "structure",
+   "shape": {
+    "axis": "y",
+    "height": 1.845,
+    "profile": [
+     [
+      0.14,
+      0
+     ],
+     [
+      -0.04,
+      -0.38
+     ],
+     [
+      -0.04,
+      -0.6
+     ],
+     [
+      0.14,
+      -0.6
+     ]
+    ],
+    "type": "extrude"
+   },
+   "source": "photo",
+   "stage": 5,
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "at": [
+    13.52,
+    18.68,
+    -5
+   ],
+   "certainty": "inferred",
+   "id": "inferred-end-eave-returns",
+   "look": {
+    "fill": "dark",
+    "weight": 0.65,
+    "color": "#e5d9ba"
+   },
+   "mirror": "x",
+   "role": "structure",
+   "shape": {
+    "size": [
+     0.22,
+     0.24,
+     10.3
+    ],
+    "type": "box"
+   },
+   "source": "production-estimate",
+   "stage": 2,
+   "basis": [
+    "production-envelope"
+   ],
+   "note": "Agent-authored envelope, unseen end/rear continuation or market-occluded street-level completion. Photograph is not direct evidence for this hidden geometry. All size/shape remains inferred; not human measurements."
+  },
+  {
+   "at": [
+    0,
+    18.68,
+    -10.04
+   ],
+   "certainty": "inferred",
+   "id": "inferred-rear-eave-return",
+   "look": {
+    "fill": "dark",
+    "weight": 0.65,
+    "color": "#e5d9ba"
+   },
+   "role": "structure",
+   "shape": {
+    "size": [
+     27.26,
+     0.24,
+     0.22
+    ],
+    "type": "box"
+   },
+   "source": "production-estimate",
+   "stage": 2,
+   "basis": [
+    "production-envelope"
+   ],
+   "note": "Agent-authored envelope, unseen end/rear continuation or market-occluded street-level completion. Photograph is not direct evidence for this hidden geometry. All size/shape remains inferred; not human measurements."
+  },
+  {
+   "at": [
+    13.5,
+    15.15,
+    -5
+   ],
+   "certainty": "inferred",
+   "id": "inferred-end-string-returns",
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "color": "#e5d9ba"
+   },
+   "mirror": "x",
+   "role": "detail",
+   "shape": {
+    "size": [
+     0.1,
+     0.16,
+     10
+    ],
+    "type": "box"
+   },
+   "source": "production-estimate",
+   "stage": 2,
+   "basis": [
+    "production-envelope"
+   ],
+   "note": "Agent-authored envelope, unseen end/rear continuation or market-occluded street-level completion. Photograph is not direct evidence for this hidden geometry. All size/shape remains inferred; not human measurements."
+  },
+  {
+   "at": [
+    0,
+    15.15,
+    -10
+   ],
+   "certainty": "inferred",
+   "id": "inferred-rear-string-return",
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "color": "#e5d9ba"
+   },
+   "role": "detail",
+   "shape": {
+    "size": [
+     27,
+     0.16,
+     0.1
+    ],
+    "type": "box"
+   },
+   "source": "production-estimate",
+   "stage": 2,
+   "basis": [
+    "production-envelope"
+   ],
+   "note": "Agent-authored envelope, unseen end/rear continuation or market-occluded street-level completion. Photograph is not direct evidence for this hidden geometry. All size/shape remains inferred; not human measurements."
+  },
+  {
+   "at": [
+    -13.4,
+    0,
+    0
+   ],
+   "certainty": "inferred",
+   "id": "staggered-tile-joints-even",
+   "look": {
+    "alpha": 0.3,
+    "fill": "none",
+    "weight": 0.4,
+    "color": "#544238"
+   },
+   "repeat": {
+    "count": 54,
+    "step": {
+     "at": [
+      0.5,
+      0,
+      0
+     ]
+    }
+   },
+   "role": "detail",
+   "shape": {
+    "type": "paths",
+    "paths": [
+     [
+      [
+       0,
+       18.96,
+       0
+      ],
+      [
+       0,
+       19.37,
+       -0.5
+      ]
+     ],
+     [
+      [
+       0,
+       19.77,
+       -1
+      ],
+      [
+       0,
+       20.18,
+       -1.5
+      ]
+     ],
+     [
+      [
+       0,
+       20.58,
+       -2
+      ],
+      [
+       0,
+       20.99,
+       -2.5
+      ]
+     ],
+     [
+      [
+       0,
+       21.39,
+       -3
+      ],
+      [
+       0,
+       21.8,
+       -3.5
+      ]
+     ],
+     [
+      [
+       0,
+       22.2,
+       -4
+      ],
+      [
+       0,
+       22.61,
+       -4.5
+      ]
+     ],
+     [
+      [
+       0,
+       18.96,
+       -10
+      ],
+      [
+       0,
+       19.37,
+       -9.5
+      ]
+     ],
+     [
+      [
+       0,
+       19.77,
+       -9
+      ],
+      [
+       0,
+       20.18,
+       -8.5
+      ]
+     ],
+     [
+      [
+       0,
+       20.58,
+       -8
+      ],
+      [
+       0,
+       20.99,
+       -7.5
+      ]
+     ],
+     [
+      [
+       0,
+       21.39,
+       -7
+      ],
+      [
+       0,
+       21.8,
+       -6.5
+      ]
+     ],
+     [
+      [
+       0,
+       22.2,
+       -6
+      ],
+      [
+       0,
+       22.61,
+       -5.5
+      ]
+     ]
+    ]
+   },
+   "source": "photo",
+   "stage": 6,
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "at": [
+    -13.15,
+    0,
+    0
+   ],
+   "certainty": "inferred",
+   "id": "staggered-tile-joints-odd",
+   "look": {
+    "alpha": 0.3,
+    "fill": "none",
+    "weight": 0.4,
+    "color": "#544238"
+   },
+   "repeat": {
+    "count": 53,
+    "step": {
+     "at": [
+      0.5,
+      0,
+      0
+     ]
+    }
+   },
+   "role": "detail",
+   "shape": {
+    "type": "paths",
+    "paths": [
+     [
+      [
+       0,
+       19.37,
+       -0.5
+      ],
+      [
+       0,
+       19.77,
+       -1
+      ]
+     ],
+     [
+      [
+       0,
+       20.18,
+       -1.5
+      ],
+      [
+       0,
+       20.58,
+       -2
+      ]
+     ],
+     [
+      [
+       0,
+       20.99,
+       -2.5
+      ],
+      [
+       0,
+       21.39,
+       -3
+      ]
+     ],
+     [
+      [
+       0,
+       21.8,
+       -3.5
+      ],
+      [
+       0,
+       22.2,
+       -4
+      ]
+     ],
+     [
+      [
+       0,
+       22.61,
+       -4.5
+      ],
+      [
+       0,
+       23.02,
+       -5
+      ]
+     ],
+     [
+      [
+       0,
+       19.37,
+       -9.5
+      ],
+      [
+       0,
+       19.77,
+       -9
+      ]
+     ],
+     [
+      [
+       0,
+       20.18,
+       -8.5
+      ],
+      [
+       0,
+       20.58,
+       -8
+      ]
+     ],
+     [
+      [
+       0,
+       20.99,
+       -7.5
+      ],
+      [
+       0,
+       21.39,
+       -7
+      ]
+     ],
+     [
+      [
+       0,
+       21.8,
+       -6.5
+      ],
+      [
+       0,
+       22.2,
+       -6
+      ]
+     ],
+     [
+      [
+       0,
+       22.61,
+       -5.5
+      ],
+      [
+       0,
+       23.02,
+       -5
+      ]
+     ]
+    ]
+   },
+   "source": "photo",
+   "stage": 6,
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "at": [
+    -13.25,
+    23.02,
+    -5
+   ],
+   "certainty": "inferred",
+   "id": "segmented-ridge-caps",
+   "look": {
+    "fill": "dark",
+    "weight": 0.55,
+    "color": "#544238"
+   },
+   "repeat": {
+    "count": 54,
+    "step": {
+     "at": [
+      0.5,
+      0,
+      0
+     ]
+    }
+   },
+   "role": "detail",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.47,
+     0.09,
+     0.25
+    ]
+   },
+   "source": "photo",
+   "stage": 6,
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "at": [
+    -7.0,
+    22.95,
+    -5.2
+   ],
+   "certainty": "inferred",
+   "id": "stack-flashing-0",
+   "look": {
+    "fill": "dark",
+    "weight": 0.55,
+    "color": "#414949"
+   },
+   "role": "detail",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.95,
+     0.12,
+     1.15
+    ]
+   },
+   "source": "photo",
+   "stage": 6,
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "at": [
+    2.0,
+    22.95,
+    -5.2
+   ],
+   "certainty": "inferred",
+   "id": "stack-flashing-1",
+   "look": {
+    "fill": "dark",
+    "weight": 0.55,
+    "color": "#414949"
+   },
+   "role": "detail",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.95,
+     0.12,
+     1.15
+    ]
+   },
+   "source": "photo",
+   "stage": 6,
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "at": [
+    10.0,
+    22.95,
+    -5.2
+   ],
+   "certainty": "inferred",
+   "id": "stack-flashing-2",
+   "look": {
+    "fill": "dark",
+    "weight": 0.55,
+    "color": "#414949"
+   },
+   "role": "detail",
+   "shape": {
+    "type": "box",
+    "size": [
+     0.95,
+     0.12,
+     1.15
+    ]
+   },
+   "source": "photo",
+   "stage": 6,
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "at": [
+    -12,
+    16.7,
+    0.235
+   ],
+   "certainty": "inferred",
+   "id": "opaque-short-sash-midrail",
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 0.8,
+    "color": "#e5d9ba"
+   },
+   "repeat": {
+    "count": 9,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "role": "detail",
+   "shape": {
+    "size": [
+     1.2,
+     0.07,
+     0.3
+    ],
+    "type": "box"
+   },
+   "source": "photo",
+   "stage": 5,
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "at": [
+    -6.6,
+    23.3,
+    -5.2
+   ],
+   "certainty": "inferred",
+   "id": "prominent-unequal-paired-flue",
+   "look": {
+    "fill": "dark",
+    "weight": 0.65,
+    "color": "#55504a"
+   },
+   "role": "identity",
+   "shape": {
+    "size": [
+     0.45,
+     3.2,
+     0.75
+    ],
+    "type": "box"
+   },
+   "source": "photo",
+   "stage": 6,
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "at": [
+    -6.6,
+    24.975,
+    -5.2
+   ],
+   "certainty": "inferred",
+   "id": "prominent-paired-flue-cap",
+   "look": {
+    "fill": "dark",
+    "weight": 0.8,
+    "color": "#55504a"
+   },
+   "role": "detail",
+   "shape": {
+    "size": [
+     0.56,
+     0.15,
+     0.88
+    ],
+    "type": "box"
+   },
+   "source": "photo",
+   "stage": 6,
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "at": [
+    -7.8,
+    22.45,
+    -5.2
+   ],
+   "certainty": "inferred",
+   "id": "small-adjacent-roof-terminal",
+   "look": {
+    "fill": "dark",
+    "weight": 0.65,
+    "color": "#e5d9ba"
+   },
+   "role": "detail",
+   "shape": {
+    "radius": 0.1,
+    "height": 1.05,
+    "segments": 6,
+    "type": "cylinder"
+   },
+   "source": "photo",
+   "stage": 6,
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "at": [
+    -7,
+    23.1,
+    -5.2
+   ],
+   "certainty": "inferred",
+   "id": "shared-paired-stack-base",
+   "look": {
+    "fill": "dark",
+    "weight": 0.6,
+    "color": "#e5d9ba"
+   },
+   "role": "structure",
+   "shape": {
+    "size": [
+     1.35,
+     0.7,
+     1
+    ],
+    "type": "box"
+   },
+   "source": "photo",
+   "stage": 6,
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "certainty": "inferred",
+   "id": "front-separate-gutter-lip",
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "weight": 1,
+    "color": "#414949"
+   },
+   "role": "identity",
+   "shape": {
+    "caps": true,
+    "path": [
+     [
+      -13.6,
+      18.97,
+      0.26
+     ],
+     [
+      13.6,
+      18.97,
+      0.26
+     ]
+    ],
+    "radius": 0.09,
+    "samples": 1,
+    "sides": 8,
+    "type": "tube"
+   },
+   "source": "photo",
+   "stage": 2,
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "at": [
+    0,
+    18.54,
+    0.16
+   ],
+   "certainty": "inferred",
+   "id": "front-shadow-fascia",
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "weight": 0.65,
+    "color": "#e5d9ba"
+   },
+   "role": "structure",
+   "shape": {
+    "size": [
+     27.3,
+     0.18,
+     0.25
+    ],
+    "type": "box"
+   },
+   "source": "photo",
+   "stage": 2,
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "at": [
+    3,
+    2.9,
+    -0.255
+   ],
+   "certainty": "inferred",
+   "id": "provisional-right-ground-glazing",
+   "look": {
+    "alpha": 0.35,
+    "fill": "glass",
+    "weight": 0.5,
+    "color": "#2e3d40"
+   },
+   "repeat": {
+    "count": 4,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "role": "detail",
+   "shape": {
+    "size": [
+     1.4,
+     3.25,
+     0.075
+    ],
+    "type": "box"
+   },
+   "source": "production-estimate",
+   "stage": 2,
+   "basis": [
+    "production-envelope"
+   ],
+   "note": "Agent-authored envelope, unseen end/rear continuation or market-occluded street-level completion. Photograph is not direct evidence for this hidden geometry. All size/shape remains inferred; not human measurements."
+  },
+  {
+   "at": [
+    2.285,
+    2.9,
+    0.195
+   ],
+   "certainty": "inferred",
+   "id": "provisional-right-ground-jamb-left",
+   "look": {
+    "alpha": 0.35,
+    "fill": "dark",
+    "weight": 0.6,
+    "color": "#e5d9ba"
+   },
+   "repeat": {
+    "count": 4,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "role": "detail",
+   "shape": {
+    "size": [
+     0.1275,
+     3.38,
+     0.3
+    ],
+    "type": "box"
+   },
+   "source": "production-estimate",
+   "stage": 2,
+   "basis": [
+    "production-envelope"
+   ],
+   "note": "Agent-authored envelope, unseen end/rear continuation or market-occluded street-level completion. Photograph is not direct evidence for this hidden geometry. All size/shape remains inferred; not human measurements."
+  },
+  {
+   "at": [
+    3.715,
+    2.9,
+    0.195
+   ],
+   "certainty": "inferred",
+   "id": "provisional-right-ground-jamb-right",
+   "look": {
+    "alpha": 0.35,
+    "fill": "dark",
+    "weight": 0.6,
+    "color": "#e5d9ba"
+   },
+   "repeat": {
+    "count": 4,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "role": "detail",
+   "shape": {
+    "size": [
+     0.1275,
+     3.38,
+     0.3
+    ],
+    "type": "box"
+   },
+   "source": "production-estimate",
+   "stage": 2,
+   "basis": [
+    "production-envelope"
+   ],
+   "note": "Agent-authored envelope, unseen end/rear continuation or market-occluded street-level completion. Photograph is not direct evidence for this hidden geometry. All size/shape remains inferred; not human measurements."
+  },
+  {
+   "at": [
+    3,
+    4.555,
+    0.2
+   ],
+   "certainty": "inferred",
+   "id": "provisional-right-ground-head",
+   "look": {
+    "alpha": 0.35,
+    "fill": "dark",
+    "weight": 0.6,
+    "color": "#e5d9ba"
+   },
+   "repeat": {
+    "count": 4,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "role": "detail",
+   "shape": {
+    "size": [
+     1.56,
+     0.12,
+     0.299
+    ],
+    "type": "box"
+   },
+   "source": "production-estimate",
+   "stage": 2,
+   "basis": [
+    "production-envelope"
+   ],
+   "note": "Agent-authored envelope, unseen end/rear continuation or market-occluded street-level completion. Photograph is not direct evidence for this hidden geometry. All size/shape remains inferred; not human measurements."
+  },
+  {
+   "at": [
+    3,
+    1.245,
+    0.2
+   ],
+   "certainty": "inferred",
+   "id": "provisional-right-ground-bottom",
+   "look": {
+    "alpha": 0.35,
+    "fill": "dark",
+    "weight": 0.6,
+    "color": "#e5d9ba"
+   },
+   "repeat": {
+    "count": 4,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "role": "detail",
+   "shape": {
+    "size": [
+     1.56,
+     0.12,
+     0.299
+    ],
+    "type": "box"
+   },
+   "source": "production-estimate",
+   "stage": 2,
+   "basis": [
+    "production-envelope"
+   ],
+   "note": "Agent-authored envelope, unseen end/rear continuation or market-occluded street-level completion. Photograph is not direct evidence for this hidden geometry. All size/shape remains inferred; not human measurements."
+  },
+  {
+   "at": [
+    3,
+    1.135,
+    0.1
+   ],
+   "certainty": "inferred",
+   "id": "provisional-right-ground-sill",
+   "look": {
+    "alpha": 0.5,
+    "fill": "dark",
+    "weight": 0.6,
+    "color": "#e5d9ba"
+   },
+   "repeat": {
+    "count": 4,
+    "step": {
+     "at": [
+      3,
+      0,
+      0
+     ]
+    }
+   },
+   "role": "detail",
+   "shape": {
+    "size": [
+     1.71,
+     0.168,
+     0.476
+    ],
+    "type": "box"
+   },
+   "source": "production-estimate",
+   "stage": 2,
+   "basis": [
+    "production-envelope"
+   ],
+   "note": "Agent-authored envelope, unseen end/rear continuation or market-occluded street-level completion. Photograph is not direct evidence for this hidden geometry. All size/shape remains inferred; not human measurements."
+  },
+  {
+   "at": [
+    0,
+    1.5,
+    0.08
+   ],
+   "certainty": "inferred",
+   "id": "provisional-entrance-door-leaf",
+   "look": {
+    "alpha": 0.45,
+    "fill": "dark",
+    "weight": 0.7,
+    "color": "#554633"
+   },
+   "role": "structure",
+   "shape": {
+    "size": [
+     1.28,
+     2.9,
+     0.16
+    ],
+    "type": "box"
+   },
+   "source": "production-estimate",
+   "stage": 2,
+   "basis": [
+    "production-envelope"
+   ],
+   "note": "Agent-authored envelope, unseen end/rear continuation or market-occluded street-level completion. Photograph is not direct evidence for this hidden geometry. All size/shape remains inferred; not human measurements."
+  },
+  {
+   "at": [
+    -0.72,
+    1.95,
+    0.08
+   ],
+   "certainty": "inferred",
+   "id": "provisional-entrance-jambs",
+   "look": {
+    "alpha": 0.45,
+    "fill": "dark",
+    "weight": 0.7,
+    "color": "#e5d9ba"
+   },
+   "mirror": "x",
+   "role": "detail",
+   "shape": {
+    "size": [
+     0.16,
+     3.9,
+     0.2
+    ],
+    "type": "box"
+   },
+   "source": "production-estimate",
+   "stage": 2,
+   "basis": [
+    "production-envelope"
+   ],
+   "note": "Agent-authored envelope, unseen end/rear continuation or market-occluded street-level completion. Photograph is not direct evidence for this hidden geometry. All size/shape remains inferred; not human measurements."
+  },
+  {
+   "at": [
+    0,
+    3.92,
+    0.08
+   ],
+   "certainty": "inferred",
+   "id": "provisional-entrance-head",
+   "look": {
+    "alpha": 0.45,
+    "fill": "dark",
+    "weight": 0.7,
+    "color": "#e5d9ba"
+   },
+   "role": "detail",
+   "shape": {
+    "size": [
+     1.6,
+     0.16,
+     0.2
+    ],
+    "type": "box"
+   },
+   "source": "production-estimate",
+   "stage": 2,
+   "basis": [
+    "production-envelope"
+   ],
+   "note": "Agent-authored envelope, unseen end/rear continuation or market-occluded street-level completion. Photograph is not direct evidence for this hidden geometry. All size/shape remains inferred; not human measurements."
+  },
+  {
+   "at": [
+    0,
+    0.05,
+    0.13
+   ],
+   "certainty": "inferred",
+   "id": "provisional-entrance-threshold",
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "color": "#e5d9ba"
+   },
+   "role": "detail",
+   "shape": {
+    "size": [
+     1.6,
+     0.1,
+     0.4
+    ],
+    "type": "box"
+   },
+   "source": "production-estimate",
+   "stage": 2,
+   "basis": [
+    "production-envelope"
+   ],
+   "note": "Agent-authored envelope, unseen end/rear continuation or market-occluded street-level completion. Photograph is not direct evidence for this hidden geometry. All size/shape remains inferred; not human measurements."
+  },
+  {
+   "at": [
+    0,
+    3.4,
+    -0.2
+   ],
+   "certainty": "inferred",
+   "id": "provisional-entrance-transom-glazing",
+   "look": {
+    "alpha": 0.35,
+    "fill": "glass",
+    "weight": 0.5,
+    "color": "#2e3d40"
+   },
+   "role": "detail",
+   "shape": {
+    "size": [
+     1.28,
+     0.8,
+     0.08
+    ],
+    "type": "box"
+   },
+   "source": "production-estimate",
+   "stage": 2,
+   "basis": [
+    "production-envelope"
+   ],
+   "note": "Agent-authored envelope, unseen end/rear continuation or market-occluded street-level completion. Photograph is not direct evidence for this hidden geometry. All size/shape remains inferred; not human measurements."
+  },
+  {
+   "at": [
+    0,
+    4.2125,
+    -0.3
+   ],
+   "certainty": "inferred",
+   "id": "provisional-entrance-upper-plaster",
+   "look": {
+    "fill": "dark",
+    "weight": 0.4,
+    "color": "#d8b35f"
+   },
+   "role": "structure",
+   "shape": {
+    "size": [
+     1.4,
+     0.625,
+     0.6
+    ],
+    "type": "box"
+   },
+   "source": "production-estimate",
+   "stage": 1,
+   "basis": [
+    "production-envelope"
+   ],
+   "note": "Agent-authored envelope, unseen end/rear continuation or market-occluded street-level completion. Photograph is not direct evidence for this hidden geometry. All size/shape remains inferred; not human measurements."
+  },
+  {
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "certainty": "inferred",
+   "id": "subtle-plaster-patch-contours",
+   "look": {
+    "alpha": 0.28,
+    "fill": "none",
+    "tone": "faint",
+    "weight": 0.45,
+    "color": "#d8b35f"
+   },
+   "role": "detail",
+   "shape": {
+    "paths": [
+     [
+      [
+       -7.9,
+       10.5,
+       0.012
+      ],
+      [
+       -7.55,
+       10.62,
+       0.012
+      ],
+      [
+       -7.1,
+       10.53,
+       0.012
+      ],
+      [
+       -7.0,
+       10.15,
+       0.012
+      ],
+      [
+       -7.4,
+       10.05,
+       0.012
+      ]
+     ],
+     [
+      [
+       -4.7,
+       15.3,
+       0.012
+      ],
+      [
+       -4.4,
+       15.38,
+       0.012
+      ],
+      [
+       -4.18,
+       15.31,
+       0.012
+      ],
+      [
+       -4.1,
+       15.05,
+       0.012
+      ]
+     ],
+     [
+      [
+       4.1,
+       10.42,
+       0.012
+      ],
+      [
+       4.45,
+       10.5,
+       0.012
+      ],
+      [
+       4.65,
+       10.33,
+       0.012
+      ],
+      [
+       4.52,
+       10.12,
+       0.012
+      ]
+     ],
+     [
+      [
+       10.1,
+       14.8,
+       0.012
+      ],
+      [
+       10.42,
+       14.86,
+       0.012
+      ],
+      [
+       10.7,
+       14.72,
+       0.012
+      ]
+     ],
+     [
+      [
+       -10.7,
+       5.7,
+       0.012
+      ],
+      [
+       -10.42,
+       5.74,
+       0.012
+      ],
+      [
+       -10.2,
+       5.6,
+       0.012
+      ]
+     ]
+    ],
+    "type": "paths"
+   },
+   "source": "photo",
+   "stage": 6,
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "at": [
+    -7.8,
+    24.18,
+    -5.2
+   ],
+   "certainty": "inferred",
+   "id": "prominent-stack-offset-crossblock",
+   "look": {
+    "fill": "dark",
+    "weight": 0.7,
+    "color": "#55504a"
+   },
+   "role": "identity",
+   "shape": {
+    "size": [
+     0.5,
+     0.22,
+     0.5
+    ],
+    "type": "box"
+   },
+   "source": "photo",
+   "stage": 6,
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "at": [
+    -7.98,
+    24.5,
+    -5.2
+   ],
+   "certainty": "inferred",
+   "id": "prominent-stack-small-offset-riser",
+   "look": {
+    "fill": "dark",
+    "weight": 0.65,
+    "color": "#55504a"
+   },
+   "role": "identity",
+   "shape": {
+    "size": [
+     0.16,
+     0.65,
+     0.5
+    ],
+    "type": "box"
+   },
+   "source": "photo",
+   "stage": 6,
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "at": [
+    -6.35,
+    23.65,
+    -5.2
+   ],
+   "certainty": "inferred",
+   "id": "paired-base-small-roof-pot",
+   "look": {
+    "fill": "dark",
+    "weight": 0.6,
+    "color": "#e5d9ba"
+   },
+   "role": "detail",
+   "shape": {
+    "size": [
+     0.12,
+     0.5,
+     0.35
+    ],
+    "type": "box"
+   },
+   "source": "photo",
+   "stage": 6,
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "at": [
+    -7.9,
+    10.1,
+    0
+   ],
+   "certainty": "inferred",
+   "id": "shallow-plaster-repair-plane-a",
+   "look": {
+    "alpha": 0.22,
+    "fill": "dark",
+    "tone": "faint",
+    "weight": 0.4,
+    "color": "#d8b35f"
+   },
+   "role": "detail",
+   "shape": {
+    "axis": "z",
+    "height": 0.025,
+    "profile": [
+     [
+      0,
+      0
+     ],
+     [
+      0.8,
+      0.03
+     ],
+     [
+      0.92,
+      0.3
+     ],
+     [
+      0.62,
+      0.5
+     ],
+     [
+      0.12,
+      0.44
+     ]
+    ],
+    "type": "extrude"
+   },
+   "source": "photo",
+   "stage": 6,
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "at": [
+    3.7,
+    14.6,
+    0
+   ],
+   "certainty": "inferred",
+   "id": "shallow-plaster-repair-plane-b",
+   "look": {
+    "alpha": 0.22,
+    "fill": "dark",
+    "tone": "faint",
+    "weight": 0.4,
+    "color": "#d8b35f"
+   },
+   "role": "detail",
+   "shape": {
+    "axis": "z",
+    "height": 0.02,
+    "profile": [
+     [
+      0,
+      0
+     ],
+     [
+      1.05,
+      0.02
+     ],
+     [
+      1.14,
+      0.21
+     ],
+     [
+      0.83,
+      0.34
+     ],
+     [
+      0.15,
+      0.29
+     ]
+    ],
+    "type": "extrude"
+   },
+   "source": "photo",
+   "stage": 6,
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "at": [
+    -12,
+    0,
+    0
+   ],
+   "certainty": "inferred",
+   "id": "dormer-arch-rim-0",
+   "look": {
+    "fill": "dark",
+    "weight": 0.8,
+    "color": "#e5d9ba"
+   },
+   "role": "detail",
+   "shape": {
+    "caps": true,
+    "path": [
+     [
+      0.84,
+      19.65,
+      -0.77
+     ],
+     [
+      0.84,
+      20.1792,
+      -0.77
+     ],
+     [
+      0.7761,
+      20.3817,
+      -0.77
+     ],
+     [
+      0.594,
+      20.5534,
+      -0.77
+     ],
+     [
+      0.3215,
+      20.6681,
+      -0.77
+     ],
+     [
+      0,
+      20.7084,
+      -0.77
+     ],
+     [
+      -0.3215,
+      20.6681,
+      -0.77
+     ],
+     [
+      -0.594,
+      20.5534,
+      -0.77
+     ],
+     [
+      -0.7761,
+      20.3817,
+      -0.77
+     ],
+     [
+      -0.84,
+      20.1792,
+      -0.77
+     ],
+     [
+      -0.84,
+      19.65,
+      -0.77
+     ]
+    ],
+    "radius": 0.055,
+    "samples": 1,
+    "sides": 6,
+    "type": "tube"
+   },
+   "source": "photo",
+   "stage": 6,
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "at": [
+    -4,
+    0,
+    0
+   ],
+   "certainty": "inferred",
+   "id": "dormer-arch-rim-1",
+   "look": {
+    "fill": "dark",
+    "weight": 0.8,
+    "color": "#e5d9ba"
+   },
+   "role": "detail",
+   "shape": {
+    "caps": true,
+    "path": [
+     [
+      0.84,
+      19.65,
+      -0.77
+     ],
+     [
+      0.84,
+      20.1792,
+      -0.77
+     ],
+     [
+      0.7761,
+      20.3817,
+      -0.77
+     ],
+     [
+      0.594,
+      20.5534,
+      -0.77
+     ],
+     [
+      0.3215,
+      20.6681,
+      -0.77
+     ],
+     [
+      0,
+      20.7084,
+      -0.77
+     ],
+     [
+      -0.3215,
+      20.6681,
+      -0.77
+     ],
+     [
+      -0.594,
+      20.5534,
+      -0.77
+     ],
+     [
+      -0.7761,
+      20.3817,
+      -0.77
+     ],
+     [
+      -0.84,
+      20.1792,
+      -0.77
+     ],
+     [
+      -0.84,
+      19.65,
+      -0.77
+     ]
+    ],
+    "radius": 0.055,
+    "samples": 1,
+    "sides": 6,
+    "type": "tube"
+   },
+   "source": "photo",
+   "stage": 6,
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "at": [
+    5,
+    0,
+    0
+   ],
+   "certainty": "inferred",
+   "id": "dormer-arch-rim-2",
+   "look": {
+    "fill": "dark",
+    "weight": 0.8,
+    "color": "#e5d9ba"
+   },
+   "role": "detail",
+   "shape": {
+    "caps": true,
+    "path": [
+     [
+      0.84,
+      19.65,
+      -0.77
+     ],
+     [
+      0.84,
+      20.1792,
+      -0.77
+     ],
+     [
+      0.7761,
+      20.3817,
+      -0.77
+     ],
+     [
+      0.594,
+      20.5534,
+      -0.77
+     ],
+     [
+      0.3215,
+      20.6681,
+      -0.77
+     ],
+     [
+      0,
+      20.7084,
+      -0.77
+     ],
+     [
+      -0.3215,
+      20.6681,
+      -0.77
+     ],
+     [
+      -0.594,
+      20.5534,
+      -0.77
+     ],
+     [
+      -0.7761,
+      20.3817,
+      -0.77
+     ],
+     [
+      -0.84,
+      20.1792,
+      -0.77
+     ],
+     [
+      -0.84,
+      19.65,
+      -0.77
+     ]
+    ],
+    "radius": 0.055,
+    "samples": 1,
+    "sides": 6,
+    "type": "tube"
+   },
+   "source": "photo",
+   "stage": 6,
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "at": [
+    -12.78,
+    19.83,
+    -1.45
+   ],
+   "certainty": "inferred",
+   "id": "dormer-cheek-returns-0",
+   "look": {
+    "fill": "dark",
+    "weight": 0.55,
+    "color": "#e5d9ba"
+   },
+   "repeat": {
+    "count": 2,
+    "step": {
+     "at": [
+      1.56,
+      0,
+      0
+     ]
+    }
+   },
+   "role": "structure",
+   "shape": {
+    "size": [
+     0.12,
+     0.4,
+     1.35
+    ],
+    "type": "box"
+   },
+   "source": "photo",
+   "stage": 6,
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "at": [
+    -4.78,
+    19.83,
+    -1.45
+   ],
+   "certainty": "inferred",
+   "id": "dormer-cheek-returns-1",
+   "look": {
+    "fill": "dark",
+    "weight": 0.55,
+    "color": "#e5d9ba"
+   },
+   "repeat": {
+    "count": 2,
+    "step": {
+     "at": [
+      1.56,
+      0,
+      0
+     ]
+    }
+   },
+   "role": "structure",
+   "shape": {
+    "size": [
+     0.12,
+     0.4,
+     1.35
+    ],
+    "type": "box"
+   },
+   "source": "photo",
+   "stage": 6,
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "at": [
+    4.22,
+    19.83,
+    -1.45
+   ],
+   "certainty": "inferred",
+   "id": "dormer-cheek-returns-2",
+   "look": {
+    "fill": "dark",
+    "weight": 0.55,
+    "color": "#e5d9ba"
+   },
+   "repeat": {
+    "count": 2,
+    "step": {
+     "at": [
+      1.56,
+      0,
+      0
+     ]
+    }
+   },
+   "role": "structure",
+   "shape": {
+    "size": [
+     0.12,
+     0.4,
+     1.35
+    ],
+    "type": "box"
+   },
+   "source": "photo",
+   "stage": 6,
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "at": [
+    -12,
+    19.55,
+    -0.85
+   ],
+   "certainty": "inferred",
+   "id": "dormer-base-flashing-0",
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "color": "#e5d9ba"
+   },
+   "role": "detail",
+   "shape": {
+    "size": [
+     1.88,
+     0.1,
+     0.4
+    ],
+    "type": "box"
+   },
+   "source": "photo",
+   "stage": 6,
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "at": [
+    -4,
+    19.55,
+    -0.85
+   ],
+   "certainty": "inferred",
+   "id": "dormer-base-flashing-1",
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "color": "#e5d9ba"
+   },
+   "role": "detail",
+   "shape": {
+    "size": [
+     1.88,
+     0.1,
+     0.4
+    ],
+    "type": "box"
+   },
+   "source": "photo",
+   "stage": 6,
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "at": [
+    5,
+    19.55,
+    -0.85
+   ],
+   "certainty": "inferred",
+   "id": "dormer-base-flashing-2",
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "color": "#e5d9ba"
+   },
+   "role": "detail",
+   "shape": {
+    "size": [
+     1.88,
+     0.1,
+     0.4
+    ],
+    "type": "box"
+   },
+   "source": "photo",
+   "stage": 6,
+   "basis": [
+    "photo-visible-observation"
+   ],
+   "note": "Photo supports visible motif only; window geometry, molding profiles, spacing, material identity and numeric colors remain inferred. Rear and end continuation are not photo documented. No surveyed size/shape or orthographic trace."
+  },
+  {
+   "at": [
+    -13.51,
+    10.5,
+    -5
+   ],
+   "certainty": "inferred",
+   "id": "inferred-end-plaster-plane-returns",
+   "look": {
+    "alpha": 0.2,
+    "fill": "dark",
+    "tone": "faint",
+    "weight": 0.4,
+    "color": "#d8b35f"
+   },
+   "mirror": "x",
+   "role": "detail",
+   "shape": {
+    "size": [
+     0.04,
+     12,
+     5
+    ],
+    "type": "box"
+   },
+   "source": "production-estimate",
+   "stage": 3,
+   "basis": [
+    "production-envelope"
+   ],
+   "note": "Agent-authored envelope, unseen end/rear continuation or market-occluded street-level completion. Photograph is not direct evidence for this hidden geometry. All size/shape remains inferred; not human measurements."
+  },
+  {
+   "at": [
+    0,
+    5.8,
+    -10.01
+   ],
+   "certainty": "inferred",
+   "id": "inferred-rear-low-string-return",
+   "look": {
+    "alpha": 0.4,
+    "fill": "dark",
+    "weight": 0.5,
+    "color": "#e5d9ba"
+   },
+   "role": "detail",
+   "shape": {
+    "size": [
+     27,
+     0.12,
+     0.08
+    ],
+    "type": "box"
+   },
+   "source": "production-estimate",
+   "stage": 3,
+   "basis": [
+    "production-envelope"
+   ],
+   "note": "Agent-authored envelope, unseen end/rear continuation or market-occluded street-level completion. Photograph is not direct evidence for this hidden geometry. All size/shape remains inferred; not human measurements."
+  },
+  {
+   "at": [
+    -13.51,
+    5.8,
+    -5
+   ],
+   "certainty": "inferred",
+   "id": "inferred-end-low-string-returns",
+   "look": {
+    "alpha": 0.4,
+    "fill": "dark",
+    "weight": 0.5,
+    "color": "#e5d9ba"
+   },
+   "mirror": "x",
+   "role": "detail",
+   "shape": {
+    "size": [
+     0.08,
+     0.12,
+     10
+    ],
+    "type": "box"
+   },
+   "source": "production-estimate",
+   "stage": 3,
+   "basis": [
+    "production-envelope"
+   ],
+   "note": "Agent-authored envelope, unseen end/rear continuation or market-occluded street-level completion. Photograph is not direct evidence for this hidden geometry. All size/shape remains inferred; not human measurements."
+  },
+  {
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "certainty": "inferred",
+   "id": "inferred-end-plaster-closure-seams",
+   "look": {
+    "alpha": 0.2,
+    "fill": "none",
+    "tone": "faint",
+    "weight": 0.4,
+    "color": "#d8b35f"
+   },
+   "mirror": "x",
+   "role": "detail",
+   "shape": {
+    "paths": [
+     [
+      [
+       -13.535,
+       0.65,
+       -9.8
+      ],
+      [
+       -13.535,
+       18.4,
+       -9.8
+      ]
+     ],
+     [
+      [
+       -13.535,
+       0.65,
+       -0.2
+      ],
+      [
+       -13.535,
+       18.4,
+       -0.2
+      ]
+     ],
+     [
+      [
+       -13.535,
+       8.1,
+       -6.2
+      ],
+      [
+       -13.535,
+       8.3,
+       -5.3
+      ],
+      [
+       -13.535,
+       9.2,
+       -5.1
+      ],
+      [
+       -13.535,
+       9.5,
+       -5.9
+      ],
+      [
+       -13.535,
+       9.2,
+       -6.4
+      ]
+     ],
+     [
+      [
+       -13.535,
+       12.3,
+       -3.5
+      ],
+      [
+       -13.535,
+       12.65,
+       -2.8
+      ],
+      [
+       -13.535,
+       13.1,
+       -2.9
+      ]
+     ]
+    ],
+    "type": "paths"
+   },
+   "source": "production-estimate",
+   "stage": 3,
+   "basis": [
+    "production-envelope"
+   ],
+   "note": "Agent-authored envelope, unseen end/rear continuation or market-occluded street-level completion. Photograph is not direct evidence for this hidden geometry. All size/shape remains inferred; not human measurements."
+  },
+  {
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "certainty": "inferred",
+   "id": "inferred-rear-plaster-closure-seams",
+   "look": {
+    "alpha": 0.18,
+    "fill": "none",
+    "tone": "faint",
+    "weight": 0.4,
+    "color": "#d8b35f"
+   },
+   "role": "detail",
+   "shape": {
+    "paths": [
+     [
+      [
+       -13.3,
+       0.65,
+       -10.025
+      ],
+      [
+       -13.3,
+       18.4,
+       -10.025
+      ]
+     ],
+     [
+      [
+       13.3,
+       0.65,
+       -10.025
+      ],
+      [
+       13.3,
+       18.4,
+       -10.025
+      ]
+     ],
+     [
+      [
+       -4,
+       9.1,
+       -10.025
+      ],
+      [
+       -3.2,
+       8.95,
+       -10.025
+      ],
+      [
+       -2.6,
+       9.3,
+       -10.025
+      ],
+      [
+       -2.9,
+       10.3,
+       -10.025
+      ],
+      [
+       -3.8,
+       10.2,
+       -10.025
+      ]
+     ]
+    ],
+    "type": "paths"
+   },
+   "source": "production-estimate",
+   "stage": 3,
+   "basis": [
+    "production-envelope"
+   ],
+   "note": "Agent-authored envelope, unseen end/rear continuation or market-occluded street-level completion. Photograph is not direct evidence for this hidden geometry. All size/shape remains inferred; not human measurements."
+  }
+ ],
+ "articulations": [],
+ "labels": [],
+ "anchors": {
+  "base": {
+   "point": [
+    0,
+    0,
+    0
+   ],
+   "up": [
+    0,
+    1,
+    0
+   ]
+  }
+ },
+ "annotations": [
+  {
+   "id": "hidden-ground-caution",
+   "offset": [
+    0,
+    0,
+    0
+   ],
+   "part": "granite-plinth",
+   "text": "Ground openings and end closures inferred; source stalls hide these."
+  }
+ ],
+ "presentation": {
+  "framing": {
+   "yaw": -25,
+   "pitch": 10,
+   "fit": 1
+  },
+  "views": [
+   {
+    "id": "photo",
+    "label": "Source-angle facade",
+    "yaw": -46,
+    "pitch": -14,
+    "distance": 1.1
+   },
+   {
+    "id": "elevation",
+    "label": "Front elevation",
+    "yaw": 0,
+    "pitch": 0,
+    "distance": 1
+   },
+   {
+    "id": "roof-context",
+    "label": "Roof and upper facade context",
+    "yaw": -27,
+    "pitch": 13,
+    "distance": 1
+   }
+  ],
+  "atmosphere": {
+   "haze": 0.25,
+   "scanlines": false,
+   "vignette": true,
+   "grid": false,
+   "projector": false,
+   "motes": 0
+  },
+  "occlusion": "xray",
+  "certainty_style": "subtle",
+  "background": "deep",
+  "float": 0
+ },
+ "animation": {
+  "assembly": {
+   "style": "ceremony",
+   "seconds": 9,
+   "interference": false
+  },
+  "idle": {
+   "life": "off"
+  },
+  "camera": {
+   "drift": 0,
+   "breathe": 0
+  },
+  "reduced_motion": "still"
+ },
+ "authoring": {
+  "tier": "masterpiece",
+  "research": "unavailable",
+  "rounds": [
+   {
+    "round": 1,
+    "result": "baseline",
+    "minutes": 0.4,
+    "changes": [
+     "draft"
+    ],
+    "summary": "The supposed matching view does not match the photograph's street-wall perspective. The reference eave drops steeply from the cropped upper-"
+   },
+   {
+    "round": 2,
+    "result": "kept",
+    "minutes": 2.6,
+    "changes": [
+     "D1",
+     "D2",
+     "D3",
+     "D4"
+    ],
+    "summary": "The entire ground floor is another row of nine similar windows, leaving no recognizable entrance or functional street-level hierarchy. With "
+   },
+   {
+    "round": 3,
+    "result": "kept",
+    "minutes": 1.7,
+    "changes": [
+     "D10",
+     "D3",
+     "D5",
+     "D7"
+    ],
+    "summary": "The source stalls hide the ground floor, yet the render presents nine fully ornamented ground-floor sashes with the same evidential confiden"
+   },
+   {
+    "round": 4,
+    "result": "kept",
+    "minutes": 3.3,
+    "changes": [
+     "D1",
+     "D11",
+     "D3",
+     "D9"
+    ],
+    "summary": "The comparison camera cuts off the roof and the left/top facade instead of retaining the photographed roofline and upper range. In hero, the"
+   },
+   {
+    "round": 5,
+    "result": "kept",
+    "minutes": 2.7,
+    "changes": [
+     "D12",
+     "D13",
+     "D5",
+     "D6"
+    ],
+    "summary": "The right drainpipe runs directly over the eighth-bay sash stack, dividing windows and interrupting their heads. The photo's dark risers occ"
+   },
+   {
+    "round": 6,
+    "result": "kept",
+    "minutes": 2.0,
+    "changes": [
+     "D14",
+     "D15",
+     "D16",
+     "D19"
+    ],
+    "summary": "The roof skyline is three mostly isolated straight capped shafts. The reference's most conspicuous terminal is a broad, unequal stepped grou"
+   },
+   {
+    "round": 7,
+    "result": "kept",
+    "minutes": 1.9,
+    "changes": [
+     "D16",
+     "D19",
+     "D20",
+     "D21"
+    ],
+    "summary": "The designated comparison camera reverses the photo's perspective: the source range is large at the left crop and recedes toward the neighbo"
+   },
+   {
+    "round": 8,
+    "result": "kept",
+    "minutes": 2.2,
+    "changes": [
+     "D1",
+     "D16",
+     "D18",
+     "D8"
+    ],
+    "summary": "The principal windows read noticeably broader relative to their height than the narrow source sashes, weakening the slender vertical rhythm "
+   },
+   {
+    "round": 9,
+    "result": "reverted",
+    "minutes": 2.7,
+    "changes": [
+     "D10",
+     "D18",
+     "D22",
+     "D5"
+    ],
+    "summary": "The designated photo render has the correct downward-right eave direction but is much more frontal than the reference: the facade is present"
+   },
+   {
+    "round": 10,
+    "result": "kept",
+    "minutes": 1.7,
+    "changes": [
+     "D10",
+     "D18",
+     "D22",
+     "D5"
+    ],
+    "summary": "The designated photo view has the correct downward-right receding eave, but a large blank near-end wall and triangular gable occupy the left"
+   },
+   {
+    "round": 11,
+    "result": "kept",
+    "minutes": 2.9,
+    "changes": [
+     "D19",
+     "D23",
+     "D24",
+     "D9"
+    ],
+    "summary": "The facade recedes downward-right as in the source, but the comparison render also gives a large blank left end and an entirely exposed infe"
+   },
+   {
+    "round": 12,
+    "result": "kept",
+    "minutes": 2.7,
+    "changes": [
+     "D22",
+     "D25",
+     "D9"
+    ],
+    "summary": "The designated photo comparison retains the correct downward-right facade recession but presents a broad complete left end and the entire in"
+   }
+  ],
+  "identity": [
+   {
+    "feature": "Long separate four-storey range, inferred metric envelope",
+    "parts": [
+     "continuous-plaster-body",
+     "low-tiled-roof"
+    ]
+   },
+   {
+    "feature": "Nine-bay upper facade with tall principal sashes and short two-tier top sashes",
+    "parts": [
+     "glazing-panes-r1",
+     "glazing-panes-r2",
+     "glazing-panes-r3",
+     "opaque-short-sash-midrail"
+    ]
+   },
+   {
+    "feature": "Dark shallow heads, stone sills and black downpipes",
+    "parts": [
+     "varied-pediment-0",
+     "dark-stone-sill-r1",
+     "black-drain-riser-0",
+     "black-drain-riser-1"
+    ]
+   },
+   {
+    "feature": "Rounded dormers and irregular paired chimney group",
+    "parts": [
+     "rounded-dormer-shell-0",
+     "prominent-unequal-paired-flue",
+     "prominent-stack-offset-crossblock"
+    ]
+   }
+  ],
+  "outcome": "self-reviewed",
+  "provenance_note": "Provenance-only audit; physical payload unchanged; historical independent judgement preserved in before backup and sealed checkpoints, not a fresh critique.",
+  "critic": {
+   "scene_sha256": "0b7caf4a45c564ccda5c7093ad49c3ad41978b8ddfcd08843de9a105e1d821f1",
+   "verdict": "improve",
+   "scores": {
+    "silhouette": 2,
+    "proportions": 2,
+    "identity": 1,
+    "depth": 2,
+    "composition": 2,
+    "assembly": 3,
+    "motion": 3,
+    "density": 2,
+    "honesty": 3
+   },
+   "round": 2,
+   "defects": 6
+  }
+ }
+}

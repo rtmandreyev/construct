@@ -8964,7 +8964,7 @@
   },
   {
    "id": "madonnina",
-   "role": "data",
+   "role": "identity",
    "certainty": {
     "size": "verified",
     "shape": "inferred"
@@ -9024,7 +9024,8 @@
    ],
    "look": {
     "glow": 0.55,
-    "weight": 1.3
+    "weight": 1.3,
+    "tone": "bright"
    },
    "basis": [
     "madonnina.height",
@@ -9038,7 +9039,7 @@
   },
   {
    "id": "madonnina-arm",
-   "role": "data",
+   "role": "identity",
    "certainty": "inferred",
    "stage": 7,
    "shape": {
@@ -9068,7 +9069,8 @@
    },
    "look": {
     "glow": 0.9,
-    "weight": 1.6
+    "weight": 1.6,
+    "tone": "bright"
    },
    "basis": [
     "madonnina.height"
@@ -9076,7 +9078,7 @@
   },
   {
    "id": "madonnina-lance",
-   "role": "data",
+   "role": "identity",
    "certainty": "inferred",
    "stage": 7,
    "shape": {
@@ -9096,7 +9098,8 @@
    },
    "look": {
     "glow": 0.8,
-    "weight": 1.4
+    "weight": 1.4,
+    "tone": "bright"
    },
    "basis": [
     "madonnina.height"
@@ -9423,6 +9426,23 @@
     "source": "wiki-it"
    }
   ],
-  "provenance_note": "Made before Construct 1.1: 98 parts cite nothing and show as designed (pale), though the construct was built with its sources at hand, and the 8 parts traced on the plan were never compared with it, so they show as not yet checked. The shades understate its evidence."
+  "provenance_note": "Made before Construct 1.1: 98 parts cite nothing and show as designed (pale), though the construct was built with its sources at hand, and the 8 parts traced on the plan were never compared with it, so they show as not yet checked. The shades understate its evidence.",
+  "critic": {
+   "scene_sha256": "4a2de59ba25e665659c2a3df362567a92864e52a4a3e12b7a61d74218e176651",
+   "verdict": "improve",
+   "scores": {
+    "silhouette": 2,
+    "proportions": 2,
+    "identity": 2,
+    "depth": 2,
+    "composition": 2,
+    "assembly": 2,
+    "motion": 2,
+    "density": 1,
+    "honesty": 3
+   },
+   "round": 1,
+   "defects": 9
+  }
  }
 }
