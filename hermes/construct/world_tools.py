@@ -6,6 +6,7 @@ checked (construct_hologram/world.py), rebuilt and shown live in the chat, like 
 """
 
 import json
+import os
 import re
 import shutil
 import tempfile
@@ -227,11 +228,18 @@ def _placement_fields(args, p):
     return p
 
 
+def _temp_json(folder, prefix):
+    """A new empty file for a child's spec, its handle closed at once: Windows cannot replace a file still open."""
+    fd, name = tempfile.mkstemp(prefix=prefix, suffix=".json", dir=str(folder))
+    os.close(fd)
+    return Path(name)
+
+
 def check(doc, folder, surfaces_of=None, arrange=None, settle=None):
     """The world checked by Construct (construct_hologram/world.py, in a child like every engine call): its
     placements as they stand, its audit and, for `surfaces_of`, where things can stand on that placement. With
     `arrange` (moves and turns made by hand on the page), the world after them: its document comes back as `doc`."""
-    spec = Path(tempfile.mkstemp(prefix=".world-check-", suffix=".json", dir=str(folder))[1])
+    spec = _temp_json(folder, ".world-check-")
     try:
         body = {"doc": doc, "folder": str(folder), "surfaces_of": surfaces_of}
         if arrange is not None:
@@ -604,7 +612,7 @@ def still(slug, build, camera):
         raise ConstructError("the camera is {target: [x, y, z], yaw, pitch, dist}")
     out = folder / "stills" / ("%s.png" % runtime.new_id())
     out.parent.mkdir(parents=True, exist_ok=True)
-    spec = Path(tempfile.mkstemp(prefix=".still-", suffix=".json", dir=str(folder))[1])
+    spec = _temp_json(folder, ".still-")
     try:
         runtime.write_json(spec, {"page": str(page), "camera": cam, "out": str(out),
                                   "mode": camera.get("mode") if isinstance(camera, dict) else None,
