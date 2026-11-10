@@ -1,8 +1,8 @@
 # Worlds in Hermes, step by step
 
 A construct is one thing understood: its parts at their real sizes, how each is known, how it opens. A **world** puts
-whole constructs together in one place, each still itself: your Vespa under your house, a synthesizer on its table,
-a ship far off in the sky; a street, a market square, a game level. Each construct keeps its own parts, record and
+whole constructs together in one place: your Vespa under your house, a synthesizer on its table, a ship far off in
+the sky, or a street, a market square, a game level. Each construct keeps its own parts, record and
 joints, and the world checks what overlaps, what runs into the house it stands in, and what stands where a door opens.
 
 This page walks through worlds in Hermes Desktop, from opening one that ships to making one from a picture. It ends
@@ -42,13 +42,13 @@ the chat, assembling piece by piece.
   close"), and each placement.
 - **Provenance** (P) colours every part by how it is known, across the whole world: traced from plans, measured,
   seen in photos, designed.
-- **Solid** (S) shows it as a solid in its own colours: the light view keeps the house palette, so a red house reads
-  red here.
+- **Solid** (S) shows it as a solid in its own colours. The light view keeps the house palette, so this is where a
+  red house reads red.
 - **Keys** (?) lists every key: fly with the arrows, double-click a part to focus on it, F skips the assembly.
 
 ## 2. Arrange it by hand
 
-**Arrange** on the card turns the world into a table you can move things on, with no model turn:
+**Arrange** on the card turns the world into a table you can move things on, without calling a model:
 
 - click a construct, then drag it onto anything: the ground, a floor, a table, a roof. What stands on it goes with
   it;
@@ -65,7 +65,7 @@ The world's log marks the moves as yours. **Undo last change** steps back one sa
 ## 3. Add a construct
 
 **Add a construct** opens the library: your own constructs, the ones that ship and the gallery, with their pictures.
-Pick one: it lands at its real size on a floor it fits on, or on clear ground in front, chosen and ready to drag
+Pick one and it lands at its real size on a floor it fits on, or on clear ground in front, chosen and ready to drag
 where it belongs. A construct's own card has **Place in a world** for the same thing from the other side.
 
 <p align="center"><img src="../media/worlds/hermes-add-construct.png" width="90%" alt="Add a construct over the Villa Savoye, lived in: the Revox, the Braun and the Leica on their table above, and below it the library with a search box, filters by kind and source, and a grid of shipped constructs"></p>
@@ -74,8 +74,8 @@ where it belongs. A construct's own card has **Place in a world** for the same t
 
 **Finish** on the card: click a part in the solid view, pick its colour and what it is made of, for its whole material
 (a car's paint, every panel of it), every part of its kind (all four tyres) or that part alone, then **Save colour**.
-A repainted material says so in its name in exports (*Repainted by hand (was Freeborn Red)*). It is written into that world's own copy of the
-construct, with no model turn; your own construct and your other worlds are not touched, and **Undo last change**
+A repainted material says so in its name in exports (*Repainted by hand (was Freeborn Red)*). The colour is written into that world's own copy of the
+construct without calling a model. Your own construct and your other worlds are not touched, and **Undo last change**
 puts it back. Exports and the Blender add-on take the new colour.
 
 On the Worlds page, **More…** on a world:
