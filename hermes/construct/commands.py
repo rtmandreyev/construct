@@ -22,6 +22,7 @@
     /construct save-view <world> <name> <camera>  the camera where it is, a named view (the card's Save view)
     /construct favourite|archive|rename|group <project> [title|group]   tidying the Constructs page
     /construct delete <project>             an archived construct or world, for good (the page asks first)
+    /construct prune <project>              keep only its newest build (older builds removed)
     /construct job <id>           one background job's state (an ended build is published here)
 """
 
@@ -217,6 +218,16 @@ def handle(raw_args="", event=None, **kwargs):
             return "%s: %s." % (words[1].lower(), {"favourite": "a favourite", "unfavourite": "no longer a favourite", "archive": "archived",
                                                   "unarchive": "back from the archive", "rename": "now \"%s\"" % info.get("title"),
                                                   "group": "in \"%s\"" % info["group"] if info.get("group") else "back with its kind"}[verb])
+        if verb == "prune":   # the page's Keep only the newest: a project's older builds go (its scene and kits stay)
+            if len(words) < 2:
+                return "Usage: /construct prune <project>"
+            slug = words[1].lower()
+            folder = runtime.project_dir(slug)
+            builds = folder / "builds"
+            had = len([p for p in builds.iterdir() if p.is_dir() and runtime.BUILD.match(p.name)]) if builds.is_dir() else 0
+            runtime.prune(builds, keep=1)
+            runtime.prune(runtime.shown_root() / slug, keep=1)
+            return "%s: kept the newest build, removed %d older." % (slug, max(0, had - 1))
         if verb == "delete":   # the page's Delete, for what is archived only: the project and its shown builds, for good
             if len(words) < 2:
                 return "Usage: /construct delete <project> (archive it first)"

@@ -1509,6 +1509,9 @@ class OwnColours(unittest.TestCase):
             self.assertEqual(colour(pg, "hull"), ("#aa2211", False))         # the map's colour, solid view only
             self.assertEqual(colour(pg, "mast"), ("#123456", False))         # its own colour wins over the map
             self.assertEqual(colour(pg, "front-tyre"), ("#00ff00", False))   # the map wins over the name's finish
+            # what each part is made of travels too, for the card's Finish (a tyre opens as rubber)
+            self.assertEqual((pg["part_finishes"]["hull"], pg["part_finishes"]["porthole"]), ("paint", "glass"))
+            self.assertEqual(g0["part_finishes"]["front-tyre"], "rubber")
             self.assertEqual(sd["clear"], s0["clear"] + 36)                  # the map's glass is drawn see-through
             # the light view is unchanged: the same styles, nothing new drawn in the light; geometry.json keeps
             # only the scene's own colours
