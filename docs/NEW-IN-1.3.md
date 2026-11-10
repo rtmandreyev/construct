@@ -10,7 +10,7 @@ In the commands below, `construct` is short for `python3 construct_hologram/cli.
 - [What a world is](#what-a-world-is)
 - [1. The shed: move anything, on every axis](#1-the-shed-move-anything-on-every-axis)
 - [2. The Villa: your own constructs, in one place](#2-the-villa-your-own-constructs-in-one-place)
-- [3. KESTREL at Saturn: near and far, each at its real size](#3-kestrel-at-saturn-near-and-far-each-at-its-real-size)
+- [3. KESTREL over the Villa: far off, at its real size](#3-kestrel-over-the-villa-far-off-at-its-real-size)
 - [4. Stortorget: a world from a photograph](#4-stortorget-a-world-from-a-photograph)
 - [5. Rain Harbour: a game level, zero-shot](#5-rain-harbour-a-game-level-zero-shot)
 - [Out to other tools, finished](#out-to-other-tools-finished)
@@ -37,11 +37,12 @@ construct check examples/worlds/the-shed/world.json                       # the 
 
 ## 1. The shed: move anything, on every axis
 
-<p align="center"><img src="media/worlds/blender-shed-yard.jpg" width="95%" alt="The shed world in Blender: a dark timber garden shed with its log store, a pale blue VW T1 Samba parked alongside, a Vespa on its stand and the Red-Blue Chair out on the deck"></p>
+<p align="center"><img src="media/worlds/blender-shed-yard.jpg" width="95%" alt="The shed world in Blender: a dark timber garden shed with its log store and planned deck, a pale blue VW T1 Samba parked alongside, a Vespa on its stand"></p>
 
 [The shed and the things around it](../examples/worlds/the-shed/world.json) is the smallest world: a garden shed
 with its planned deck, a VW T1 Samba by the log store, a Vespa GS 150 on its stand, State Bench inside on the floor,
-and Rietveld's Red-Blue Chair out on the deck. Five constructs from the gallery, each unchanged.
+and Rietveld's Red-Blue Chair inside by the door. Five constructs from the gallery, each unchanged, and each keeps its
+joints: the shed's door opens on its hinge, and the chair is inside.
 
 It is the place to learn **Arrange**. On a world's card in Hermes Desktop (or **A** on its page anywhere):
 
@@ -61,11 +62,11 @@ It is the place to learn **Arrange**. On a world's card in Hermes Desktop (or **
 with no model turn; **Undo last change** steps back. **Save view** names the camera as a view of the world;
 **Picture** saves a still at 2560 × 1440.
 
-<p align="center"><img src="media/worlds/blender-shed-deck.jpg" width="95%" alt="The Red-Blue Chair on the shed's planned deck, the Vespa beside it"></p>
+<p align="center"><img src="media/worlds/blender-shed-door.jpg" width="95%" alt="The shed's door open, the Red-Blue Chair inside facing out"></p>
+<p align="center"><sub>The shed's own door, opened by its joint, and the chair inside on the shed's floor
+(<code>"on": "shed/floor-deck"</code>).</sub></p>
 
 ## 2. The Villa: your own constructs, in one place
-
-<p align="center"><img src="media/worlds/blender-villa-dusk.jpg" width="95%" alt="The Villa Savoye, lived in, in Blender at dusk: the Land Cruiser and the DB5 under its pilotis, KESTREL far off over the roof"></p>
 
 [The Villa Savoye, lived in](../examples/worlds/villa-savoye-lived-in/world.json) is what worlds are for: the
 constructs you have made, together where they belong. Le Corbusier's house holds an Eames lounge chair facing the
@@ -75,15 +76,15 @@ Aston Martin DB5 stand under the pilotis, KESTREL far off over the roof. Thirtee
 each at its real size.
 
 <p align="center">
-  <img src="media/worlds/blender-villa-table.jpg" width="49%" alt="A table in the salon carrying a Leica M3, a Revox A77 and a Braun SK 4">
-  <img src="media/worlds/blender-villa-pilotis.jpg" width="49%" alt="The red Land Cruiser FJ62 under the Villa's pilotis">
+  <img src="media/worlds/blender-villa-table.jpg" width="49%" alt="A table in the salon carrying a Leica M3, a Revox A77 and a Braun SK 4, turned to the room">
+  <img src="media/worlds/blender-villa-pilotis.jpg" width="49%" alt="The red Land Cruiser FJ62 under the Villa's pilotis at dusk">
 </p>
 
 Things stand **on** the part they rest on, not at a guessed height:
 
 ```json
 {"id": "table", "construct": "constructs/tube-table/scene.json", "on": "villa/living-floor-east", "at": [-2.6, 0, 9.65]},
-{"id": "revox", "construct": "revox-a77", "on": "table/top", "at": [-2.42, 0, 9.7]},
+{"id": "revox", "construct": "revox-a77", "on": "table/top", "at": [-2.42, 0, 9.7], "yaw": 160},
 {"id": "fj62",  "construct": "toyota-land-cruiser-fj62", "on": "villa/drive-through-ground", "at": [7.8, 0, -2.2]}
 ```
 
@@ -97,27 +98,25 @@ Hermes places them with `construct_world`, several at once, and shows the world 
 and its provenance, critic's verdicts and joints are still its own. [Worlds, step by step](for/worlds-walkthrough.md)
 goes through this world in Hermes from the first request.
 
-## 3. KESTREL at Saturn: near and far, each at its real size
+## 3. KESTREL over the Villa: far off, at its real size
 
-<p align="center"><img src="media/worlds/blender-saturn.jpg" width="95%" alt="KESTREL, the ice tug, at work by Saturn's rings, the planet filling the sky behind it"></p>
+<p align="center"><img src="media/worlds/blender-villa-dusk.jpg" width="95%" alt="The Villa Savoye, lived in, in Blender at dusk: the Land Cruiser and the DB5 under its pilotis, KESTREL high over the roof"></p>
 
 A world can hold what is far away without shrinking it to fit. A **sky** placement gives a construct's real size and
-how far off it is, and the world draws it at the angle it would fill in the sky:
+how far off it is, and the world draws it at the angle it would fill in the sky. KESTREL, an ice tug 120 m long,
+hangs over the Villa's roof garden at its real size from a kilometre and a half: small, high and believable, not a
+toy on the roof.
 
 ```json
-{"id": "saturn", "construct": "saturn",
- "sky": {"diameter_m": 1.20536e8, "of": "globe", "distance_m": 3.5e8, "azimuth": 150, "elevation": 8}}
+{"id": "kestrel", "construct": "kestrel-v2",
+ "sky": {"diameter_m": 120.0, "distance_m": 1500.0, "azimuth": -150, "elevation": 18}}
 ```
 
-In [KESTREL at Saturn](../examples/worlds/kestrel-at-saturn/world.json) that is Saturn from about 350,000 km: the
-rings fill a good part of the sky behind the tug. `of` names the part the diameter belongs to (Saturn's globe), so
-the rings and moons come at the same scale. The same rule puts KESTREL, 120 m long, over the Villa's roof garden at
-its real size from a kilometre and a half (`"sky": {"diameter_m": 120.0, "distance_m": 1500.0}`): small, high and
-believable, not a toy on the roof (the Villa's picture above).
-
-Nothing a view fits ever changes a sky placement's size, and a far placement no longer pulls every view out to
-empty ground. Anything not at real size (`scale` other than 1) is disclosed by the audit and wherever the world is
-shown.
+The same rule scales a planet: `of` names the part the diameter belongs to (Saturn's globe, 120,536 km), so its rings
+and moons come at the same scale; [KESTREL at Saturn](../examples/worlds/kestrel-at-saturn/world.json) puts the planet
+behind the tug as it would look from about 350,000 km. Nothing a view fits ever changes a sky placement's size, and a
+far placement no longer pulls every view out to empty ground. Anything not at real size (`scale` other than 1) is
+disclosed by the audit and wherever the world is shown.
 
 ## 4. Stortorget: a world from a photograph
 

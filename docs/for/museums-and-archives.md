@@ -106,8 +106,9 @@ a construct's page is a single file that needs no network: copy it to the exhibi
 
 - **A reconstruction, not a survey.** Where no source gives a size, it is read from a photograph or designed, and the
   part says so. Before using a construct as a measurement, check what **P** shows.
-- **Credit travels with the record.** Each source is cited with its credit. Stortorget's photograph, CC BY-SA, is not
-  part of the repository; the world carries its credit and a note on its licence.
+- **Credit travels with the record.** Each source is cited with its credit. Stortorget's photograph is included
+  unchanged as its `reference.jpg` under its own licence, CC BY-SA 4.0, credited to its photographer on the world's
+  page.
 - **Not yet:** pages for a museum screen that loop by themselves and open to a touch come in a later release.
 
 ## Go deeper

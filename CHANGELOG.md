@@ -88,7 +88,8 @@ from the chat. [docs/WORLDS.md](docs/WORLDS.md)
 - **Two worlds from one picture each, in masterpiece mode:** Rain Harbour, a game level from a concept picture (21
   constructs placed 50 times, signs in real English and Chinese, a drivable hero car; 12 world rounds, verdict good),
   and Stortorget, Stockholm's old square at Christmas from a photograph (8 houses researched one by one, one stall
-  placed 41 times). Each ships with its constructs and a page on how it was made.
+  placed 41 times; 12 world rounds, verdict improve, good at rounds 9 and 10). Each ships with its constructs, the
+  picture it was made from and a page on how it was made.
 - **Masterpiece rounds, from those two runs:** a critic's tie (`same`) is a result; `rounds extend MINUTES` reopens a
   run stopped by its time ceiling; a construct's artwork travels with each checkpoint and comes back with a lost
   round; the picture and the request given at `rounds start` carry to every packet; a reference naming a view the
