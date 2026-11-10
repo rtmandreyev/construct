@@ -1,7 +1,7 @@
 # Construct for developers
 
 Construct is a Python toolkit (3.10 or newer, standard library only, Apache-2.0) around one idea: a thing is
-described as data, a **scene**, and everything else is built from it. A model writes the scene; Construct checks it,
+described as data, a **scene**, and everything else is built from it. A model writes the scene. Construct checks it,
 hands back each problem with its JSON path and a fix, and builds from it: a self-contained page, a glTF, a print, a
 kit, a CAD file, a film. The same scene always builds into the same page and the same model. You can drive it from a command line, an MCP server,
 the agent skills or the Hermes plugin, or read its outputs from your own code.
@@ -12,11 +12,11 @@ the agent skills or the Hermes plugin, or read its outputs from your own code.
 their sources, named parts in metres made from a small vocabulary of shapes (boxes, lathes, lofts, tubes,
 extrusions…), each part's certainty (its size and its shape apart), joints, motions and the assembly order. Construct
 decides how it looks. A **world** (`construct-world`, [WORLDS.md](../WORLDS.md)) places whole scenes together at real
-size, each still itself under its placement's id.
+size, each kept whole under its placement's id.
 
 **A check an agent can act on.** `construct check scene.json --json` returns `ok`, `needs_repair`, `diagnostics[]`
 (each with `severity`, `code`, `path`, `message` and `hint`) and `repair_text` to send straight back to the model.
-Every audit code carries a hint; a test keeps a new one from arriving without. `--fit` adds how the solids meet:
+Every audit code carries a hint, and a test keeps a new code from arriving without one. `--fit` adds how the solids meet:
 parts that poke through, cross a pane, are buried, or are left open where they show.
 
 ```json

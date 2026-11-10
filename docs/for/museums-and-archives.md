@@ -30,10 +30,10 @@ sister equation clock (RCIN 2754), a Britannica entry on Tompion and a Christie'
 | dial plate | 0.305 m (12 in) square | inferred · Christie's essay on a sister clock |
 | movement plates | three brass plates, the year-going train between them | inferred · the sister clock, RCIN 2754 |
 
-The overall size and the materials are documented; the case's mouldings were read from the photographs; the
-movement's wheels behind the dial were designed from Tompion's practice, and they say so. Twelve rounds, each judged
-by a critic that never saw the authoring; its last verdict is *improve*, with its reasons kept in the scene: the arch
-above the hood is a thin hoop, and the movement does not read as one. [The clock, end to end →](../END-TO-END.md)
+The overall size and the materials are documented. The case's mouldings were read from the photographs. The
+movement's wheels behind the dial were designed from Tompion's practice, and they say so. It ran twelve rounds, each
+judged by a critic that never saw the authoring. The last verdict is *improve*, with its reasons kept in the scene:
+the arch above the hood is a thin hoop, and the movement does not read as one. [The clock, end to end →](../END-TO-END.md)
 
 ## A place, house by house: Stortorget
 
