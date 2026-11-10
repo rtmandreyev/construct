@@ -754,6 +754,25 @@ class Plugin(unittest.TestCase):
         tidy = self.call("construct_world", {"op": "tidy", "world": sw, "projects": [piece, "no-such-project"]})
         self.assertEqual(tidy["archived"], [piece])
         self.assertTrue({r["project"]: r for r in self.api.projects(self.data)}[piece]["archived"])
+        # colours chosen on the card (Finish): a rule at the top of the construct's own map, undone like any change
+        vespa = next(p["construct"] for p in json.loads((self.data / "projects" / sw / "world.json").read_text())["placements"]
+                     if p["id"] == "vespa")
+        vmap = self.mod.runtime.map_beside(self.data / "projects" / sw / vespa)
+        before = vmap.read_text() if vmap else None
+        out = handle('finish %s {"placement": "vespa", "parts": ["tyre-*"], "color": "#22AA44", "finish": "rubber"}' % sw)
+        self.assertRegex(out, r"^Finished tyre-\* in %s: rubber #22aa44 " % sw)
+        vmap = self.mod.runtime.map_beside(self.data / "projects" / sw / vespa)
+        top = json.loads(vmap.read_text())["materials"][0]
+        self.assertEqual((top["parts"], top["color"], top["finish"]), (["tyre-*"], "#22aa44", "rubber"))
+        self.assertIn("could not", handle('finish %s {"placement": "vespa", "parts": ["tyre-*"], "color": "green", "finish": "rubber"}' % sw))
+        self.assertIn("could not", handle('finish %s {"placement": "nobody", "parts": ["x"], "color": "#000000", "finish": "paint"}' % sw))
+        self.assertIn("could not", handle('finish %s {"parts": ["../x"], "color": "#000000", "finish": "paint"}' % piece))
+        self.assertIn("Undid the last change to %s (finish vespa)" % sw, handle("undo %s" % sw))
+        self.assertEqual(vmap.read_text() if vmap.is_file() else None, before)
+        # a construct of its own takes a colour the same way, and gives it back
+        out = handle('finish %s {"parts": "knob-*", "color": "#101010", "finish": "plastic"}' % piece)
+        self.assertRegex(out, r"^Finished knob-\* in %s: plastic #101010 " % piece)
+        self.assertIn("Undid the last change to %s (finish)" % piece, handle("undo %s" % piece))
         # worlds go in folders of the user's own, and come out of them
         self.assertIn('in "Client work"', handle("group %s Client work" % sw))
         row = {r["project"]: r for r in self.api.projects(self.data)}[sw]
