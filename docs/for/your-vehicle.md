@@ -1,8 +1,8 @@
 # Customise or restore your vehicle
 
-Your car, bike or scooter from its published sizes and your photos, with your own parts told apart from the
-factory's: try a colour or wheels on the copy first, plan a restoration, render it, or make a model of it. No
-terminal: the Claude app or the ChatGPT app does the work ([how to set it up](in-the-apps.md)).
+Your car, bike or scooter, built from its published sizes and your photos, with your own parts told apart from the
+factory's. Try a colour or wheels on the copy first, plan a restoration, render it, or make a model of it. You need
+no terminal: the Claude app or the ChatGPT app does the work ([how to set it up](in-the-apps.md)).
 
 <p align="center"><a href="https://rtmandreyev.github.io/construct/examples/vespa-gs150/"><img src="../media/everyday-vespa.jpg" width="90%" alt="A 1960 Vespa GS 150 made from two photos, in lines of light and as a solid, with its owner's chrome bars, rack and spare wheel"></a></p>
 <p align="center"><sub>A 1960 Vespa GS 150 from two photos and one message. <a href="https://rtmandreyev.github.io/construct/examples/vespa-gs150/">Open it</a>: press <b>L</b> for the labels,
@@ -33,8 +33,8 @@ and the owner's parts say <i>MINE, not factory</i>.</sub></p>
 
 **What came back.** The scooter in 174 named parts a restorer would recognise, and the scooter's own story kept
 straight: its whitewalls, chrome bars, rear rack, spare wheel and badges are separate parts labelled as the owner's,
-not the factory's. The cowls lift off, the handlebar steers, the stand folds. Twelve rounds, each judged by an
-independent critic, about an hour and a half in all. Press **P**: every part is a reading, in shades of how firmly
+not the factory's. The cowls lift off, the handlebar steers, the stand folds. It ran twelve rounds, each judged by an
+independent critic, in about an hour and a half in all. Press **P**: every part is a reading, in shades of how firmly
 it is held (67 seen in the photos and checked against the published sizes, 104 seen, 3 described), and the
 construct's own note says that the published dimensions set the scale, not the outlines. (Revised since: the owner's
 bars, rack, mudguard hoop and badge carrier were rebuilt as continuous tubes that meet the body, so the scene now has

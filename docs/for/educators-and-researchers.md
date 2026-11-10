@@ -1,8 +1,8 @@
 # Construct for educators and researchers
 
-An agent-based model's run becomes something to explore, replay and compare: drawn with time as its height, so its
-assembly replays the run, in the model's own NetLogo colours, with a legend, a *How to read it* panel, a replay bar
-and the moments that matter marked on it. Everything drawn comes from the recording, under a data lock. The same
+An agent-based model's run becomes something to explore, replay and compare. It is drawn with time as its height,
+so its assembly replays the run, in the model's own NetLogo colours. It comes with a legend, a *How to read it*
+panel, a replay bar and the moments that matter marked on it. Everything drawn comes from the recording, under a data lock. The same
 run goes into Blender as a film or a 3D model, and onto a 3D printer as plates you can hold.
 
 <p align="center">
@@ -36,7 +36,7 @@ seed and the ticks.
 
 ## Two runs side by side
 
-A slider moved, or another seed: two or more runs on one time scale, with a printable worksheet for the class.
+Move a slider or change the seed, and compare two or more runs on one time scale, with a printable worksheet for the class.
 
 <p align="center"><a href="https://rtmandreyev.github.io/construct/examples/netlogo-virus-compare/"><img src="../media/netlogo-compare-virus.jpg" width="70%" alt="Virus on a Network at four spread chances side by side, on one time scale, with the How to read it panel"></a></p>
 

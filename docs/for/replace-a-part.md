@@ -1,7 +1,7 @@
 # Make a part that is missing or broken
 
 A knob, a bracket, a cover or a clip, drawn to the thing it belongs to and ready to print, or to send to someone with
-a printer or CAD. No terminal: the Claude app or the ChatGPT app does the work ([how to set it up](in-the-apps.md)).
+a printer or CAD. You need no terminal: the Claude app or the ChatGPT app does the work ([how to set it up](in-the-apps.md)).
 
 <p align="center">
   <a href="https://rtmandreyev.github.io/construct/examples/braun-sk4/"><img src="../media/everyday-sk4.jpg" width="49%" alt="A Braun SK 4 radio-phonograph made from three photos"></a>
@@ -35,8 +35,8 @@ a printer or CAD. No terminal: the Claude app or the ChatGPT app does the work (
 > - Work only in this folder.
 
 **What came back.** The SK 4 in 153 named parts (body, side panels, lid on its hinge, platter, tonearm, controls,
-grille slots), its overall size from published records and its shapes read from the photos; twelve rounds, the critic's
-verdict *good*. Then the knob as its own construct at real size: a 35 mm skirt, a fluted body, the indicator bar,
+grille slots), its overall size from published records and its shapes read from the photos. It ran twelve rounds, and the
+critic's verdict was *good*. Then the knob as its own construct at real size: a 35 mm skirt, a fluted body, the indicator bar,
 and the bore for the shaft with its flat, the bore marked as designed to fit.
 
 ## The print file
