@@ -256,8 +256,12 @@ Freeborn Red under the Villa's pilotis in the page and on the Hermes card, as in
 Construct's house palette.
 
 **And it is yours to change, by hand.** On a card in Hermes Desktop, **Finish**: click a part in the solid view, pick
-its colour and what it is made of (paint, brushed metal, chrome, wood, rubber, plastic, glass, light), for that part
-or every part of its kind (all four tyres), and **Save colour**. The colour is tried on the part as you pick it; the
+its colour and what it is made of (paint, brushed metal, chrome, wood, rubber, plastic, glass, light), for its whole
+material (Everything in Freeborn Red: the body, the doors, the wings), every part of its kind (all four tyres) or
+that part alone, and **Save colour**.
+
+<p align="center"><img src="media/worlds/hermes-finish.png" width="70%" alt="Finish on the Villa's card in Hermes Desktop: the Land Cruiser under the pilotis repainted green, the panel with fj62 · body, the colour #1f4d33, paint, Everything in Freeborn Red (11 parts) and Save colour, and the note that it changes this world only"></p>
+ The colour is tried on as you pick it; the
 save writes it into the construct's map, with no model turn, and every export and Blender follow. In a world it
 changes that world's own copy only: your own construct and your other worlds stay as they are, and **Undo last
 change** puts it back. Or edit the map's text, ask the agent, or export once with another

@@ -72,8 +72,9 @@ where it belongs. A construct's own card has **Place in a world** for the same t
 
 ## 4. Colour it, keep it tidy
 
-**Finish** on the card: click a part in the solid view, pick its colour and what it is made of, for that part or
-every part of its kind (all four tyres), then **Save colour**. It is written into that world's own copy of the
+**Finish** on the card: click a part in the solid view, pick its colour and what it is made of, for its whole material
+(a car's paint, every panel of it), every part of its kind (all four tyres) or that part alone, then **Save colour**.
+A repainted material says so in its name in exports (*Repainted by hand (was Freeborn Red)*). It is written into that world's own copy of the
 construct, with no model turn; your own construct and your other worlds are not touched, and **Undo last change**
 puts it back. Exports and the Blender add-on take the new colour.
 
