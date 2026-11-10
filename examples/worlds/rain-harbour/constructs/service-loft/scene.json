@@ -16,13 +16,13 @@
    "id": "request",
    "kind": "user_request",
    "title": "Original Rain Harbour Service Loft brief",
-   "rights": "user_private"
+   "rights": "permitted"
   },
   {
    "id": "concept",
    "kind": "reference_image",
    "title": "User cyberpunk district concept; style and composition guidance only",
-   "rights": "user_private",
+   "rights": "permitted",
    "ref": "User-provided Rain Harbour neon street concept"
   }
  ],

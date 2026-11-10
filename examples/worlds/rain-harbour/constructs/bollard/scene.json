@@ -16,13 +16,13 @@
    "id": "request",
    "kind": "user_request",
    "title": "Rain Harbour bollard requirements",
-   "rights": "user_private"
+   "rights": "permitted"
   },
   {
    "id": "design",
    "kind": "user_request",
    "title": "Supervisor-assigned nominal design dimensions, not surveyed reference dimensions",
-   "rights": "user_private"
+   "rights": "permitted"
   }
  ],
  "facts": [
