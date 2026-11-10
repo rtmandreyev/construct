@@ -17,15 +17,20 @@ it its own. In Hermes you arrange a world by hand, with no AI at all.
 
 <p align="center">
   <a href="https://rtmandreyev.github.io/construct/examples/sainte-chapelle/"><img src="docs/media/assembly-sainte-chapelle.gif" width="32%" alt="The Sainte-Chapelle construct assembling itself"></a>
-  <a href="https://rtmandreyev.github.io/construct/examples/duomo-di-milano/"><img src="docs/media/assembly-duomo-di-milano.gif" width="32%" alt="The Duomo di Milano construct assembling itself"></a>
+  <a href="https://rtmandreyev.github.io/construct/examples/kestrel/"><img src="docs/media/assembly-kestrel.gif" width="32%" alt="KESTREL, an invented ice tug, assembling itself, its cradle arms opening and radiator wings folding"></a>
   <a href="https://rtmandreyev.github.io/construct/examples/toyota-land-cruiser-fj62/"><img src="docs/media/assembly-toyota-land-cruiser-fj62.gif" width="32%" alt="The Toyota Land Cruiser FJ62 construct assembling itself"></a>
 </p>
 <p align="center">
-  <a href="https://rtmandreyev.github.io/construct/examples/kestrel/"><img src="docs/media/assembly-kestrel.gif" width="32%" alt="KESTREL, an invented ice tug, assembling itself, its cradle arms opening and radiator wings folding"></a>
-  <a href="https://rtmandreyev.github.io/construct/examples/tompion-year-going-clock/"><img src="docs/media/assembly-tompion-year-going-clock.gif" width="32%" alt="Tompion's year-going longcase clock construct assembling itself, its hood and trunk doors opening"></a>
-  <a href="https://rtmandreyev.github.io/construct/examples/volkswagen-t1-samba/"><img src="docs/media/assembly-volkswagen-t1-samba.gif" width="32%" alt="The Volkswagen T1 Samba construct assembling itself"></a>
+  <a href="https://rtmandreyev.github.io/construct/worlds/villa-savoye-lived-in/"><img src="docs/media/world-villa.gif" width="32%" alt="The Villa Savoye, lived in, assembling as a world: the house, then its furniture, the Braun, the Revox, the Leica, SERUM, and the FJ62 and the DB5 under the pilotis"></a>
+  <a href="https://rtmandreyev.github.io/construct/worlds/the-shed/"><img src="docs/media/world-shed.gif" width="32%" alt="The shed and the things around it assembling as a world: the shed with its deck and log store, the VW T1 Samba and the Vespa"></a>
+  <a href="https://rtmandreyev.github.io/construct/worlds/stortorget/"><img src="docs/media/world-stortorget.gif" width="32%" alt="Stortorget assembling as a world from the photograph's viewpoint: the gabled houses, the Christmas tree, the lamp and the rows of market stalls"></a>
 </p>
-<p align="center"><sub><b>Constructs.</b> Sainte-Chapelle · Duomo di Milano · Toyota Land Cruiser FJ62 · KESTREL, an invented ice tug · Tompion's year-going clock · Volkswagen T1 Samba, each built in masterpiece mode, by Claude Opus 5.5, KESTREL by GPT-6.1 Sol and the clock by DeepSeek V4.1 Flash. <a href="https://rtmandreyev.github.io/construct/">Open the gallery</a> to orbit them, replay the assembly and read the labels; <a href="docs/for/invent-from-what-exists.md">how KESTREL was made</a>, step by step.</sub></p>
+<p align="center"><sub><b>Constructs</b> (top): the Sainte-Chapelle and the Toyota Land Cruiser FJ62 by Claude Opus 5.5, KESTREL, an
+invented ice tug, by GPT-6.1 Sol, each in masterpiece mode. <b>Worlds</b> (below): the Villa Savoye, lived in, and the
+shed and the things around it, made of constructs from the gallery; Stortorget at Christmas, made by GPT-6.1 Sol from
+one photograph. <a href="https://rtmandreyev.github.io/construct/">Open the gallery</a> to orbit them, replay the
+assembly and read the labels; <a href="docs/for/invent-from-what-exists.md">how KESTREL was made</a>,
+<a href="examples/worlds/stortorget/">how Stortorget was made</a>.</sub></p>
 
 - **Construct for Hermes.** A native Hermes plugin: ask for a thing in plain words and the construct appears live in the chat, with its 3D model, kit and NetLogo runs beside it, and place your constructs together into worlds. `hermes plugins install rtmandreyev/construct#hermes/construct` ([what it does](hosts/hermes/construct/README.md), [Villa Savoye in Hermes, step by step](docs/for/hermes-walkthrough.md), [worlds, step by step](docs/for/worlds-walkthrough.md)).
 - **Any agent, any model.** Claude Code, Hermes, any MCP client or any OpenAI-compatible endpoint, or by hand.
