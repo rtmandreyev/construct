@@ -1,8 +1,8 @@
 # Worlds: constructs placed together
 
 A world places whole constructs in one scene: your chair, clock and synthesizer in your house, your cars under it, a ship
-overhead, a planet in the sky. It's a room, a street, a city, or a game map. Each placed construct stays whole: its
-parts, its sources, how each part is known, its critic's verdict and its joints are its own, under its placement's
+overhead, a planet in the sky. It's a room, a street, a city, or a game map. Each placed construct stays whole. Its
+parts, its sources, how each part is known, its critic's verdict and its joints all stay with it, under its placement's
 id (`eames/seat-shell`, `vespa/photo-front`). A world is not a bigger construct. A construct keeps a construct's
 budgets and checks, and a world has its own, for many constructs at once.
 
@@ -106,11 +106,11 @@ reach 1,000 km from the origin, and an optional `origin: {lat, lon}` ties the wo
   now (after improving them), checked and rebuilt; a check that fails leaves the copies as they were;
 - `op: tidy` with `projects`: scratch projects made on the way archived (kept, off the Constructs page).
 
-In Hermes Desktop a world's card has **Arrange**: click a construct and drag it: it rides on whatever is under the
+In Hermes Desktop a world's card has **Arrange**. Click a construct and drag it, and it rides on whatever is under the
 pointer (a floor, a table, a roof; a wall stops it; Alt keeps its level). Shift-drag or Q/E turns it, the arrows
 nudge it, Page Up/Down lift it, Backspace puts it back; Duplicate and Remove are on its bar. What stands on it (on it, or on one of
 its parts) goes with it, as a table carries what is on it. **Save** runs `/construct arrange <world> <changes>`
-in the gateway, with no model turn: the world is checked with the moves, written back as each placement was
+in the gateway, without calling a model. The world is checked with the moves, written back as each placement was
 placed (absolute, or on its host), logged as the user's in `edits/log.jsonl` and rebuilt. `/construct undo <world>`
 steps back one saved change, the agent's or the user's. Any world page does the same with A; outside Hermes,
 `HOLO.arrange.changes()` gives the moves.
@@ -126,7 +126,7 @@ What a world places comes from three sources:
 - the whole gallery, fetched by name from this release on GitHub.
 
 Each placed construct is copied into the world's folder (`constructs/<name>/`, named after its project or its
-scene's id, with `.source.json` saying where it came from), so a world travels whole and can be shared; a change
+scene's id, with `.source.json` saying where it came from), so a world travels whole and can be shared. A change
 to the original shows only after `op: refresh`.
 `construct_check` checks a world, and `construct_export` exports it, as they do a construct.
 
