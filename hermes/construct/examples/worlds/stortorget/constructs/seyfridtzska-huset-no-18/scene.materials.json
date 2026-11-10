@@ -1,0 +1,79 @@
+{
+  "materials": [
+    {
+      "parts": [
+        "ochre-*"
+      ],
+      "name": "photo orange ochre plaster",
+      "color": "#d78135",
+      "metallic": 0.0,
+      "roughness": 0.9
+    },
+    {
+      "parts": [
+        "cream-*",
+        "stone-sill-*"
+      ],
+      "name": "warm cream limestone trim",
+      "color": "#e7d5ae",
+      "metallic": 0.0,
+      "roughness": 0.9
+    },
+    {
+      "parts": [
+        "warm-shadow-*"
+      ],
+      "name": "shaded ochre sidewall",
+      "color": "#a8622d",
+      "metallic": 0.0,
+      "roughness": 0.9
+    },
+    {
+      "parts": [
+        "slate-*",
+        "chimney-*"
+      ],
+      "name": "dark weathered sheet metal",
+      "color": "#3f4548",
+      "metallic": 0.0,
+      "roughness": 0.9
+    },
+    {
+      "parts": [
+        "dark-*",
+        "black-*"
+      ],
+      "name": "dark brown frames and black iron",
+      "color": "#302d27",
+      "metallic": 0.0,
+      "roughness": 0.9
+    },
+    {
+      "parts": [
+        "glazing-*",
+        "oculus-glazing"
+      ],
+      "name": "dark glazing",
+      "color": "#283943",
+      "finish": "glass"
+    },
+    {
+      "parts": [
+        "stone-plinth"
+      ],
+      "name": "stone foundation",
+      "color": "#958475",
+      "metallic": 0.0,
+      "roughness": 0.9
+    },
+    {
+      "parts": [
+        "address-plaque"
+      ],
+      "name": "ochre address plate",
+      "color": "#dcc89d",
+      "metallic": 0.0,
+      "roughness": 0.9
+    }
+  ]
+}

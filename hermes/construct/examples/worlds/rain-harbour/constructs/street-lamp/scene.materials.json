@@ -1,0 +1,7 @@
+{
+  "materials": [
+    {"parts":["mounting-base","tapered-pole","swept-arm","lantern-shell","lens-retaining-rim","pole-service-hatch"],"color":"#263A49","finish":"paint","metallic":0.78,"roughness":0.38},
+    {"parts":["maintenance-joint","lantern-latch","service-and-anchor-seams"],"color":"#415563","finish":"brushed","metallic":0.85,"roughness":0.32},
+    {"parts":["underside-luminous-lens"],"color":"#CDF7FF","finish":"light","emissive":"#B8F1FF","roughness":0.2}
+  ]
+}

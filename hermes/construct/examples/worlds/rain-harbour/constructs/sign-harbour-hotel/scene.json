@@ -1,0 +1,565 @@
+{
+ "format": "construct-scene",
+ "version": 2,
+ "id": "harbour-hotel-sign",
+ "title": "HARBOUR HOTEL / 港湾旅馆",
+ "subject": {
+  "category": "object",
+  "summary": "Original 5.4 m double-sided 港湾旅馆 / HARBOUR HOTEL magenta/cyan projecting blade. Two connected local +X arms; inferred design dimensions and parent-owned world placement.",
+  "accuracy": "original",
+  "synthetic": false
+ },
+ "units": "m",
+ "seed": 7,
+ "sources": [
+  {
+   "id": "request",
+   "kind": "user_request",
+   "title": "Rain Harbour sign contract",
+   "rights": "user_private"
+  },
+  {
+   "id": "concept",
+   "kind": "reference_image",
+   "title": "Rain-soaked neon street concept; magenta right-foreground vertical sign composition",
+   "rights": "user_private"
+  },
+  {
+   "id": "original-art",
+   "kind": "user_request",
+   "title": "Original Pillow-rendered 港湾旅馆 / HARBOUR HOTEL typographic artwork generated for this project; no downloaded imagery",
+   "rights": "permitted"
+  },
+  {
+   "id": "r9-original-art",
+   "kind": "user_request",
+   "rights": "permitted",
+   "title": "Original generated-decorative Pillow typography: Arial Unicode CJK and Lato English; no downloaded imagery"
+  }
+ ],
+ "facts": [
+  {
+   "key": "width",
+   "value": 1.3,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "request",
+   "note": "Supervisory design allocation for the original component, not a direct human measurement."
+  },
+  {
+   "key": "height",
+   "value": 5.4,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "request",
+   "note": "D10 designed/inferred blade height; not human measured."
+  },
+  {
+   "key": "cabinet-depth",
+   "value": 0.3,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "request",
+   "note": "Supervisory design allocation for the original component, not a direct human measurement."
+  },
+  {
+   "certainty": "inferred",
+   "key": "wall-tip-x",
+   "note": "Designed local +X contact 1.2 m beyond case edge; not human measured.",
+   "source": "request",
+   "unit": "m",
+   "value": 1.85
+  },
+  {
+   "certainty": "inferred",
+   "key": "mount-heights",
+   "note": "Designed sidearm centres at Y0.55 and Y4.8; parent applies all three world poses.",
+   "source": "request",
+   "unit": "m",
+   "value": "0.55;4.8"
+  }
+ ],
+ "assets": [
+  {
+   "id": "hotel-text",
+   "media_type": "image/png",
+   "path": "assets/harbour-hotel-original.png",
+   "provenance": "generated-decorative",
+   "rights": "permitted",
+   "sha256": "88f82b20455f53d914ffdca1a7b155f56a3365b58c4fae6de8000b4ec15d4669",
+   "source": "original-art"
+  },
+  {
+   "id": "hotel-text-r9",
+   "media_type": "image/png",
+   "path": "assets/harbour-hotel-r9-double-sided-650x2800.png",
+   "provenance": "generated-decorative",
+   "rights": "permitted",
+   "sha256": "eb331b7114e27335b91d4db809b3a0b1b678222b88563467a2fe335c8a9a79ea",
+   "source": "r9-original-art"
+  }
+ ],
+ "parts": [
+  {
+   "id": "cabinet",
+   "label": "Magenta aluminium cabinet",
+   "role": "mass",
+   "certainty": "inferred",
+   "basis": [
+    "width",
+    "height",
+    "cabinet-depth"
+   ],
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.3,
+     5.4,
+     0.3
+    ]
+   },
+   "at": [
+    0.0,
+    2.7,
+    0.0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "weight": 1.1,
+    "color": "#83134f"
+   }
+  },
+  {
+   "id": "illuminated-face",
+   "label": "港湾旅馆 · HARBOUR HOTEL illuminated original artwork",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "r9-original-art",
+   "stage": 2,
+   "shape": {
+    "type": "plane",
+    "size": [
+     1.23,
+     5.32
+    ]
+   },
+   "at": [
+    0.0,
+    2.7,
+    0.151
+   ],
+   "artwork": {
+    "slot": "cover-front",
+    "asset": "hotel-text-r9",
+    "face": "front",
+    "mask": "rect"
+   },
+   "look": {
+    "fill": "dark",
+    "tone": "identity",
+    "glow": 0.5,
+    "weight": 0.8
+   }
+  },
+  {
+   "id": "rear-bracket",
+   "label": "Two connected local +X sidearms",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "wall-tip-x",
+    "mount-heights"
+   ],
+   "stage": 1,
+   "shape": {
+    "size": [
+     1.26,
+     0.14,
+     0.15
+    ],
+    "type": "box"
+   },
+   "at": [
+    1.22,
+    0.55,
+    0.0
+   ],
+   "repeat": {
+    "count": 2,
+    "step": {
+     "at": [
+      0,
+      4.25,
+      0
+     ]
+    }
+   },
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "weight": 0.7
+   }
+  },
+  {
+   "artwork": {
+    "asset": "hotel-text-r9",
+    "face": "front",
+    "mask": "rect",
+    "slot": "cover-back"
+   },
+   "at": [
+    0,
+    2.7,
+    -0.151
+   ],
+   "certainty": "inferred",
+   "id": "illuminated-face-back",
+   "label": "Readable rear bilingual original artwork",
+   "look": {
+    "fill": "dark",
+    "glow": 0.5,
+    "tone": "identity",
+    "weight": 0.8
+   },
+   "role": "identity",
+   "rotate": [
+    0,
+    180,
+    0
+   ],
+   "shape": {
+    "size": [
+     1.23,
+     5.32
+    ],
+    "type": "plane"
+   },
+   "source": "r9-original-art",
+   "stage": 2
+  },
+  {
+   "at": [
+    1.82,
+    0.55,
+    0
+   ],
+   "basis": [
+    "wall-tip-x",
+    "mount-heights"
+   ],
+   "certainty": "inferred",
+   "id": "side-wall-plate",
+   "label": "Wall contact local X +1.85",
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "weight": 0.7
+   },
+   "repeat": {
+    "count": 2,
+    "step": {
+     "at": [
+      0,
+      4.25,
+      0
+     ]
+    }
+   },
+   "role": "structure",
+   "shape": {
+    "size": [
+     0.06,
+     0.4,
+     0.3
+    ],
+    "type": "box"
+   },
+   "stage": 1
+  },
+  {
+   "at": [
+    0.0,
+    0.55,
+    -0.075
+   ],
+   "basis": [
+    "wall-tip-x",
+    "mount-heights"
+   ],
+   "certainty": "inferred",
+   "id": "sidearm-gusset",
+   "label": "Solid sidearm to plate reinforcement",
+   "look": {
+    "fill": "dark",
+    "tone": "structure",
+    "weight": 0.7
+   },
+   "repeat": {
+    "count": 2,
+    "step": {
+     "at": [
+      0,
+      4.25,
+      0
+     ]
+    }
+   },
+   "role": "structure",
+   "shape": {
+    "axis": "z",
+    "height": 0.15,
+    "profile": [
+     [
+      1.48,
+      0.07
+     ],
+     [
+      1.85,
+      0.07
+     ],
+     [
+      1.85,
+      0.2
+     ]
+    ],
+    "type": "extrude"
+   },
+   "stage": 1
+  }
+ ],
+ "articulations": [],
+ "labels": [],
+ "annotations": [],
+ "anchors": {
+  "front": {
+   "part": "illuminated-face",
+   "face": "front"
+  },
+  "base": {
+   "point": [
+    0,
+    0,
+    0
+   ],
+   "up": [
+    0,
+    1,
+    0
+   ]
+  }
+ },
+ "presentation": {
+  "framing": {
+   "yaw": 22,
+   "pitch": 7,
+   "fit": 1.05
+  },
+  "views": [
+   {
+    "distance": 1.05,
+    "id": "concept",
+    "label": "True front +Z bilingual blade",
+    "pitch": 0,
+    "yaw": 0
+   },
+   {
+    "distance": 1.05,
+    "id": "back-readable",
+    "label": "True back -Z bilingual blade",
+    "pitch": 0,
+    "yaw": 180
+   },
+   {
+    "distance": 1.05,
+    "id": "mounting",
+    "label": "Connected +X sidearms and wall tips",
+    "pitch": 7,
+    "yaw": 63
+   },
+   {
+    "distance": 1,
+    "id": "bracket-close",
+    "label": "Sidearm cabinet to wall contact",
+    "pitch": 10,
+    "target": "side-wall-plate",
+    "yaw": 40
+   }
+  ],
+  "occlusion": "xray",
+  "certainty_style": "subtle",
+  "background": "deep",
+  "atmosphere": {
+   "haze": 0.2,
+   "scanlines": false,
+   "grid": false,
+   "projector": false,
+   "motes": 0
+  },
+  "still_pose": "closed"
+ },
+ "animation": {
+  "assembly": {
+   "style": "build",
+   "seconds": 3,
+   "interference": false
+  },
+  "idle": {
+   "life": "off"
+  },
+  "camera": {
+   "drift": 0,
+   "breathe": 0
+  },
+  "reduced_motion": "still"
+ },
+ "authoring": {
+  "tier": "showcase",
+  "research": "off",
+  "review_rounds": 0,
+  "outcome": "good",
+  "next": [
+   "Parent must reposition all three existing blade placements to D10 +X wall-tip contract before whole-world audit.",
+   "Existing critic metadata is historical and does not certify this redesign; no standalone rounds."
+  ],
+  "identity": [
+   {
+    "feature": "Readable 港湾旅馆 / HARBOUR HOTEL on true front and back",
+    "parts": [
+     "illuminated-face",
+     "illuminated-face-back"
+    ]
+   },
+   {
+    "feature": "5.4 m blade, two connected +X arms; tips X1.85 at Y0.55 and 4.8",
+    "parts": [
+     "cabinet",
+     "rear-bracket",
+     "side-wall-plate",
+     "sidearm-gusset"
+    ]
+   }
+  ],
+  "critic": {
+   "scene_sha256": "e7c45f60463ace065ca4a9b6199bd40b7107357667ccfa9fffbdf567d409058e",
+   "verdict": "good",
+   "scores": {
+    "silhouette": 3,
+    "proportions": 3,
+    "identity": 3,
+    "depth": 2,
+    "composition": 3,
+    "assembly": 3,
+    "motion": 3,
+    "density": 2,
+    "honesty": 3
+   },
+   "round": 9,
+   "defects": 2
+  },
+  "rounds": [
+   {
+    "round": 1,
+    "result": "baseline",
+    "minutes": 0.4,
+    "changes": [
+     "draft"
+    ],
+    "summary": "The entire identifying artwork is missing from the rendered sign. There are zero visible upright 港 湾 旅 馆 characters and no subordinate HOTEL"
+   },
+   {
+    "round": 2,
+    "result": "reverted",
+    "minutes": 2.1,
+    "changes": [
+     "D1",
+     "D2",
+     "D3",
+     "D4"
+    ],
+    "summary": "No on-object Chinese characters, subordinate English, or magenta face is visible; the object can only be identified as HARBOUR HOTEL by its "
+   },
+   {
+    "round": 3,
+    "result": "kept",
+    "minutes": 1.1,
+    "changes": [
+     "D1",
+     "D4"
+    ],
+    "summary": "Both bracket-to-plate junctions are plain rectangular intersections, with no visible fastening or joint treatment. The mounting close-up con"
+   },
+   {
+    "round": 4,
+    "result": "kept",
+    "minutes": 1.4,
+    "changes": [
+     "D5",
+     "D7"
+    ],
+    "summary": "Both rear arms and facade plates read as simple intersecting rectangular blocks. The plate marks give an attachment cue, but the load-bearin"
+   },
+   {
+    "round": 5,
+    "result": "kept",
+    "minutes": 1.0,
+    "changes": [
+     "D7"
+    ],
+    "summary": "The two rear mounts have visible anchor-hole marks, but each arm meets its facade plate as a plain rectangular intersection. This locally re"
+   },
+   {
+    "round": 6,
+    "result": "reverted",
+    "minutes": 0.8,
+    "changes": [
+     "D7"
+    ],
+    "summary": "The two rear arms and facade plates are legible, including their anchor marks, but the arm-to-plate connection still reads as a square tube "
+   },
+   {
+    "round": 7,
+    "result": "kept",
+    "minutes": 1.2,
+    "changes": [
+     "D5"
+    ],
+    "summary": "The two rear mounts have unequal construction resolution: the lower mount visibly has a shaped shoulder/transition, while the upper mount st"
+   },
+   {
+    "round": 8,
+    "result": "kept",
+    "minutes": 1.5,
+    "changes": [
+     "D5"
+    ],
+    "summary": "The two rear mounting stations do not have equivalent construction resolution. The lower mount has an articulated tapered/splayed transition"
+   },
+   {
+    "round": 9,
+    "result": "kept",
+    "minutes": 1.1,
+    "changes": [
+     "D5",
+     "D7"
+    ],
+    "summary": "The two mounting stations have unequal construction resolution: the lower mount has a projecting, shaped reinforcement at its arm-to-plate t"
+   },
+   {
+    "round": 10,
+    "result": "reverted",
+    "minutes": 0.8,
+    "changes": [],
+    "summary": "The two rear mounting stations are not equally resolved: the lower station has a readable angled/flared transition into its plate, whereas t"
+   },
+   {
+    "round": 11,
+    "result": "reverted",
+    "minutes": 0.6,
+    "changes": [],
+    "summary": "The upper mounting station reads as a rectangular stub with a flat end plate, whereas the lower station has a visibly sloping, stepped conne"
+   }
+  ]
+ }
+}

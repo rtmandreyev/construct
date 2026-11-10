@@ -1,0 +1,88 @@
+{
+  "materials": [
+    {
+      "parts": [
+        "window-*-warm*"
+      ],
+      "color": "#B99B68",
+      "finish": "glass",
+      "roughness": 0.28,
+      "metallic": 0.05,
+      "emissive": "#3A2915"
+    },
+    {
+      "parts": [
+        "window-*-cool*"
+      ],
+      "color": "#4C9DA9",
+      "finish": "glass",
+      "roughness": 0.23,
+      "metallic": 0.06,
+      "emissive": "#12383F"
+    },
+    {
+      "parts": [
+        "window-*-dark*"
+      ],
+      "color": "#0C202B",
+      "finish": "glass",
+      "roughness": 0.24,
+      "metallic": 0.12,
+      "emissive": "#000000"
+    },
+    {
+      "parts": [
+        "shop-shutter",
+        "door-leaf",
+        "shop-mullion-*",
+        "shop-reveal-header",
+        "awning-*",
+        "ac-housing",
+        "ac-support-*",
+        "roof-duct",
+        "lift-overrun"
+      ],
+      "color": "#304754",
+      "finish": "paint",
+      "roughness": 0.61,
+      "metallic": 0.22
+    },
+    {
+      "parts": [
+        "balcony-*-guard",
+        "balcony-*-return",
+        "ac-fan-ring",
+        "ac-fan-blades",
+        "front-drain-riser",
+        "side-service-pipe",
+        "east-service-spine",
+        "roof-water-*",
+        "roof-exhaust",
+        "door-handle"
+      ],
+      "color": "#4A6471",
+      "finish": "brushed",
+      "roughness": 0.42,
+      "metallic": 0.68
+    },
+    {
+      "parts": [
+        "ac-fan-recess",
+        "ac-return-grille"
+      ],
+      "color": "#0B171D",
+      "finish": "paint",
+      "roughness": 0.69,
+      "metallic": 0.1
+    },
+    {
+      "parts": [
+        "*"
+      ],
+      "color": "#192A38",
+      "finish": "paint",
+      "roughness": 0.78,
+      "metallic": 0.08
+    }
+  ]
+}

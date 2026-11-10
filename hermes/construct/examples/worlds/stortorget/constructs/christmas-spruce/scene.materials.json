@@ -1,0 +1,44 @@
+{
+ "about": "Finishes for rendering, not facts of the construct: a Norway spruce's dark green needles and brown trunk, warm white light strings (chosen; the photograph shows warm bulbs).",
+ "materials": [
+  {
+   "parts": [
+    "light*"
+   ],
+   "name": "Warm white light strings",
+   "color": "#ffd9a0",
+   "finish": "light"
+  },
+  {
+   "parts": [
+    "*trunk*"
+   ],
+   "name": "Spruce bark",
+   "color": "#4a3424",
+   "finish": "wood",
+   "roughness": 0.9
+  },
+  {
+   "parts": [
+    "bough*",
+    "pendant*",
+    "overlap*",
+    "fine*",
+    "feathered*"
+   ],
+   "name": "Spruce needles",
+   "color": "#1f3b25",
+   "finish": "plastic",
+   "roughness": 0.85
+  },
+  {
+   "parts": [
+    "*"
+   ],
+   "name": "Spruce needles (rest)",
+   "color": "#1f3b25",
+   "finish": "plastic",
+   "roughness": 0.85
+  }
+ ]
+}

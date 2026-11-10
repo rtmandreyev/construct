@@ -1,0 +1,22 @@
+{
+  "materials": [
+    {
+      "parts": [
+        "lightbox-case",
+        "rear-standoff",
+        "wall-plate",
+        "wall-plate-right",
+        "retaining-rim"
+      ],
+      "color": "#182c3b",
+      "finish": "brushed"
+    },
+    {
+      "parts": [
+        "cyan-pharmacy-face"
+      ],
+      "color": "#76f5f7",
+      "finish": "light"
+    }
+  ]
+}

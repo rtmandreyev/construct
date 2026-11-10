@@ -1,0 +1,494 @@
+{
+  "materials": [
+    {
+      "name": "rain-harbour-foundation-independent-rest :: dark blue-grey site backing",
+      "parts": [
+        "street/site-ground",
+        "street/road-bed",
+        "street/street-lower-support",
+        "street/support-front-infill"
+      ],
+      "color": "#101923",
+      "finish": "plastic", "roughness": 0.8
+    },
+    {
+      "name": "rain-harbour-foundation-independent-rest :: wet blue-grey asphalt",
+      "parts": [
+        "street/road-left-*",
+        "street/road-right-*"
+      ],
+      "color": "#172630",
+      "finish": "plastic"
+    },
+    {
+      "name": "rain-harbour-foundation-independent-rest :: blue-grey raised pavement",
+      "parts": [
+        "street/sidewalk-*"
+      ],
+      "color": "#29343d",
+      "finish": "plastic", "roughness": 0.8
+    },
+    {
+      "name": "rain-harbour-foundation-independent-rest :: worn pale blue-grey kerb",
+      "parts": [
+        "street/kerb-*"
+      ],
+      "color": "#49545a",
+      "finish": "plastic", "roughness": 0.8
+    },
+    {
+      "name": "rain-harbour-foundation-independent-rest :: shallow night rainwater",
+      "parts": [
+        "street/puddle-*"
+      ],
+      "color": "#253c48",
+      "finish": "glass"
+    },
+    {
+      "name": "rain-harbour-foundation-independent-rest :: gutter grate iron",
+      "parts": [
+        "street/drain-*-recess",
+        "street/drain-left-far",
+        "street/drain-camera-rim"
+      ],
+      "color": "#303e47",
+      "finish": "brushed"
+    },
+    {
+      "parts": [
+        "left-service-front/*"
+      ],
+      "color": "#192A38",
+      "finish": "paint",
+      "roughness": 0.78,
+      "name": "left-service-front :: material"
+    },
+    {
+      "parts": [
+        "left-service-front/shop-shutter",
+        "left-service-front/door-leaf",
+        "left-service-front/doorway-lintel",
+        "left-service-front/lower-side-service-hatch",
+        "left-service-front/ac-housing",
+        "left-service-front/roof-duct",
+        "left-service-front/lift-overrun"
+      ],
+      "color": "#263B49",
+      "finish": "paint",
+      "roughness": 0.64,
+      "name": "left-service-front :: material"
+    },
+    {
+      "parts": [
+        "left-service-front/balcony-*-rail",
+        "left-service-front/balcony-*-guard",
+        "left-service-front/balcony-centre-post",
+        "left-service-front/front-drain-riser",
+        "left-service-front/side-service-pipe",
+        "left-service-front/east-service-spine",
+        "left-service-front/roof-water-outlet",
+        "left-service-front/roof-water-tank",
+        "left-service-front/roof-exhaust",
+        "left-service-front/ac-fan",
+        "left-service-front/ac-fan-blades",
+        "left-service-front/door-handle"
+      ],
+      "color": "#344B59",
+      "finish": "brushed",
+      "roughness": 0.48,
+      "name": "left-service-front :: material"
+    },
+    {
+      "parts": [
+        "left-service-front/window-*",
+        "left-service-front/upper-window-frames",
+        "left-service-front/east-window-frames",
+        "left-service-front/side-window-frames",
+        "left-service-front/crown-flank-window-frames",
+        "left-service-front/upper-west-flank-facade",
+        "left-service-front/balcony-door-glazing",
+        "left-service-front/overrun-access-louvre"
+      ],
+      "color": "#233B4A",
+      "finish": "paint",
+      "roughness": 0.66,
+      "name": "left-service-front :: material"
+    },
+    {
+      "parts": [
+        "left-hotel-middle/*"
+      ],
+      "color": "#192b37",
+      "finish": "paint",
+      "name": "left-hotel-middle :: material"
+    },
+    {
+      "parts": [
+        "left-hotel-middle/*window*"
+      ],
+      "color": "#153f48",
+      "finish": "glass",
+      "name": "left-hotel-middle :: material"
+    },
+    {
+      "parts": [
+        "left-hotel-middle/*rail*",
+        "left-hotel-middle/*antenna*"
+      ],
+      "color": "#526976",
+      "finish": "brushed",
+      "name": "left-hotel-middle :: material"
+    },
+    {
+      "parts": [
+        "left-service-back/*"
+      ],
+      "color": "#192A38",
+      "finish": "paint",
+      "roughness": 0.78,
+      "name": "left-service-back :: material"
+    },
+    {
+      "parts": [
+        "left-service-back/shop-shutter",
+        "left-service-back/door-leaf",
+        "left-service-back/doorway-lintel",
+        "left-service-back/lower-side-service-hatch",
+        "left-service-back/ac-housing",
+        "left-service-back/roof-duct",
+        "left-service-back/lift-overrun"
+      ],
+      "color": "#263B49",
+      "finish": "paint",
+      "roughness": 0.64,
+      "name": "left-service-back :: material"
+    },
+    {
+      "parts": [
+        "left-service-back/balcony-*-rail",
+        "left-service-back/balcony-*-guard",
+        "left-service-back/balcony-centre-post",
+        "left-service-back/front-drain-riser",
+        "left-service-back/side-service-pipe",
+        "left-service-back/east-service-spine",
+        "left-service-back/roof-water-outlet",
+        "left-service-back/roof-water-tank",
+        "left-service-back/roof-exhaust",
+        "left-service-back/ac-fan",
+        "left-service-back/ac-fan-blades",
+        "left-service-back/door-handle"
+      ],
+      "color": "#344B59",
+      "finish": "brushed",
+      "roughness": 0.48,
+      "name": "left-service-back :: material"
+    },
+    {
+      "parts": [
+        "left-service-back/window-*",
+        "left-service-back/upper-window-frames",
+        "left-service-back/east-window-frames",
+        "left-service-back/side-window-frames",
+        "left-service-back/crown-flank-window-frames",
+        "left-service-back/upper-west-flank-facade",
+        "left-service-back/balcony-door-glazing",
+        "left-service-back/overrun-access-louvre"
+      ],
+      "color": "#233B4A",
+      "finish": "paint",
+      "roughness": 0.66,
+      "name": "left-service-back :: material"
+    },
+    {
+      "parts": [
+        "right-hotel-front/*"
+      ],
+      "color": "#192b37",
+      "finish": "paint",
+      "name": "right-hotel-front :: material"
+    },
+    {
+      "parts": [
+        "right-hotel-front/*window*"
+      ],
+      "color": "#153f48",
+      "finish": "glass",
+      "name": "right-hotel-front :: material"
+    },
+    {
+      "parts": [
+        "right-hotel-front/*rail*",
+        "right-hotel-front/*antenna*"
+      ],
+      "color": "#526976",
+      "finish": "brushed",
+      "name": "right-hotel-front :: material"
+    },
+    {
+      "parts": [
+        "right-service-middle/*"
+      ],
+      "color": "#192A38",
+      "finish": "paint",
+      "roughness": 0.78,
+      "name": "right-service-middle :: material"
+    },
+    {
+      "parts": [
+        "right-service-middle/shop-shutter",
+        "right-service-middle/door-leaf",
+        "right-service-middle/doorway-lintel",
+        "right-service-middle/lower-side-service-hatch",
+        "right-service-middle/ac-housing",
+        "right-service-middle/roof-duct",
+        "right-service-middle/lift-overrun"
+      ],
+      "color": "#263B49",
+      "finish": "paint",
+      "roughness": 0.64,
+      "name": "right-service-middle :: material"
+    },
+    {
+      "parts": [
+        "right-service-middle/balcony-*-rail",
+        "right-service-middle/balcony-*-guard",
+        "right-service-middle/balcony-centre-post",
+        "right-service-middle/front-drain-riser",
+        "right-service-middle/side-service-pipe",
+        "right-service-middle/east-service-spine",
+        "right-service-middle/roof-water-outlet",
+        "right-service-middle/roof-water-tank",
+        "right-service-middle/roof-exhaust",
+        "right-service-middle/ac-fan",
+        "right-service-middle/ac-fan-blades",
+        "right-service-middle/door-handle"
+      ],
+      "color": "#344B59",
+      "finish": "brushed",
+      "roughness": 0.48,
+      "name": "right-service-middle :: material"
+    },
+    {
+      "parts": [
+        "right-service-middle/window-*",
+        "right-service-middle/upper-window-frames",
+        "right-service-middle/east-window-frames",
+        "right-service-middle/side-window-frames",
+        "right-service-middle/crown-flank-window-frames",
+        "right-service-middle/upper-west-flank-facade",
+        "right-service-middle/balcony-door-glazing",
+        "right-service-middle/overrun-access-louvre"
+      ],
+      "color": "#233B4A",
+      "finish": "paint",
+      "roughness": 0.66,
+      "name": "right-service-middle :: material"
+    },
+    {
+      "parts": [
+        "right-hotel-back/*"
+      ],
+      "color": "#192b37",
+      "finish": "paint",
+      "name": "right-hotel-back :: material"
+    },
+    {
+      "parts": [
+        "right-hotel-back/*window*"
+      ],
+      "color": "#153f48",
+      "finish": "glass",
+      "name": "right-hotel-back :: material"
+    },
+    {
+      "parts": [
+        "right-hotel-back/*rail*",
+        "right-hotel-back/*antenna*"
+      ],
+      "color": "#526976",
+      "finish": "brushed",
+      "name": "right-hotel-back :: material"
+    },
+    {
+      "parts": [
+        "skyline-west/podium",
+        "skyline-west/main-shaft",
+        "skyline-west/setback-tier",
+        "skyline-west/crown-core",
+        "skyline-west/blade-crown",
+        "skyline-west/blade-facet",
+        "skyline-west/antenna"
+      ],
+      "color": "#152B3D",
+      "finish": "paint",
+      "name": "skyline-west :: material"
+    },
+    {
+      "parts": [
+        "skyline-west/window-band-*"
+      ],
+      "color": "#36DDEB",
+      "finish": "light",
+      "name": "skyline-west :: material"
+    },
+    {
+      "parts": [
+        "skyline-inner-west/podium",
+        "skyline-inner-west/main-shaft",
+        "skyline-inner-west/setback-tier",
+        "skyline-inner-west/crown-core",
+        "skyline-inner-west/blade-crown",
+        "skyline-inner-west/blade-facet",
+        "skyline-inner-west/antenna"
+      ],
+      "color": "#152B3D",
+      "finish": "paint",
+      "name": "skyline-inner-west :: material"
+    },
+    {
+      "parts": [
+        "skyline-inner-west/window-band-*"
+      ],
+      "color": "#36DDEB",
+      "finish": "light",
+      "name": "skyline-inner-west :: material"
+    },
+    {
+      "parts": [
+        "skyline-centre/podium",
+        "skyline-centre/main-shaft",
+        "skyline-centre/setback-tier",
+        "skyline-centre/crown-core",
+        "skyline-centre/blade-crown",
+        "skyline-centre/blade-facet",
+        "skyline-centre/antenna"
+      ],
+      "color": "#152B3D",
+      "finish": "paint",
+      "name": "skyline-centre :: material"
+    },
+    {
+      "parts": [
+        "skyline-centre/window-band-*"
+      ],
+      "color": "#36DDEB",
+      "finish": "light",
+      "name": "skyline-centre :: material"
+    },
+    {
+      "parts": [
+        "skyline-inner-east/podium",
+        "skyline-inner-east/main-shaft",
+        "skyline-inner-east/setback-tier",
+        "skyline-inner-east/crown-core",
+        "skyline-inner-east/blade-crown",
+        "skyline-inner-east/blade-facet",
+        "skyline-inner-east/antenna"
+      ],
+      "color": "#152B3D",
+      "finish": "paint",
+      "name": "skyline-inner-east :: material"
+    },
+    {
+      "parts": [
+        "skyline-inner-east/window-band-*"
+      ],
+      "color": "#36DDEB",
+      "finish": "light",
+      "name": "skyline-inner-east :: material"
+    },
+    {
+      "parts": [
+        "skyline-east/podium",
+        "skyline-east/main-shaft",
+        "skyline-east/setback-tier",
+        "skyline-east/crown-core",
+        "skyline-east/blade-crown",
+        "skyline-east/blade-facet",
+        "skyline-east/antenna"
+      ],
+      "color": "#152B3D",
+      "finish": "paint",
+      "name": "skyline-east :: material"
+    },
+    {
+      "parts": [
+        "skyline-east/window-band-*"
+      ],
+      "color": "#36DDEB",
+      "finish": "light",
+      "name": "skyline-east :: material"
+    },
+    {
+      "parts": [
+        "hero-car/*-taillight-bar-*"
+      ],
+      "name": "hero-car :: AURIC red magenta tail emitters",
+      "color": "#ff196b",
+      "emissive": "#ff0753",
+      "finish": "light"
+    },
+    {
+      "parts": [
+        "hero-car/*-front-lamp"
+      ],
+      "name": "hero-car :: Warm white headlight",
+      "color": "#fff4ce",
+      "finish": "light"
+    },
+    {
+      "parts": [
+        "hero-car/*glass*",
+        "hero-car/*windshield*"
+      ],
+      "name": "hero-car :: Dark smoked cabin glass",
+      "color": "#101b26",
+      "finish": "glass"
+    },
+    {
+      "parts": [
+        "hero-car/*rubber-tyre"
+      ],
+      "name": "hero-car :: Dark road rubber",
+      "color": "#080b10",
+      "finish": "rubber"
+    },
+    {
+      "parts": [
+        "hero-car/*wheel-rim",
+        "hero-car/*spoke-*",
+        "hero-car/*wheel-hub"
+      ],
+      "name": "hero-car :: Graphite alloy",
+      "color": "#26313d",
+      "finish": "brushed",
+      "roughness": 0.28
+    },
+    {
+      "parts": [
+        "hero-car/front-wedge-hood",
+        "hero-car/rear-muscle-deck",
+        "hero-car/*-arch-crown",
+        "hero-car/*-rear-shoulder-facet",
+        "hero-car/*-door-skin",
+        "hero-car/*-rocker",
+        "hero-car/roof-spine",
+        "hero-car/rear-spoiler-blade"
+      ],
+      "name": "hero-car :: AURIC taxi yellow lacquer",
+      "color": "#ffd21b",
+      "finish": "paint",
+      "metallic": 0.35,
+      "roughness": 0.23
+    },
+    {
+      "parts": [
+        "hero-car/*"
+      ],
+      "name": "hero-car :: Dark graphite structure trim and cabin",
+      "color": "#101721",
+      "finish": "plastic",
+      "roughness": 0.62
+    }
+  ]
+}

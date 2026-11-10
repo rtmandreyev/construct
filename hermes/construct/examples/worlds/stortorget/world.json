@@ -1,0 +1,857 @@
+{
+ "format": "construct-world",
+ "version": 1,
+ "id": "stortorget-christmas-market-2022",
+ "title": "Stortorget at Christmas",
+ "placements": [
+  {
+   "id": "square",
+   "construct": "constructs/square/scene.json"
+  },
+  {
+   "id": "red-house-20",
+   "construct": "constructs/schantzska-huset-no-20/scene.json",
+   "at": [
+    -3.5,
+    0.0,
+    -25.0
+   ],
+   "yaw": 0.0,
+   "note": "Documented identity; inferred metric facade and location; retained individual round8.",
+   "label": "Schantzska huset · Stortorget 20"
+  },
+  {
+   "id": "orange-house-18",
+   "construct": "constructs/seyfridtzska-huset-no-18/scene.json",
+   "at": [
+    5.24,
+    0.0,
+    -25.0
+   ],
+   "yaw": 0.0,
+   "note": "Documented identity; inferred metric facade and location; retained individual round12.",
+   "label": "Seyfridtzska huset · Stortorget 18"
+  },
+  {
+   "id": "russet-mansard-house",
+   "construct": "constructs/russet-mansard-house/scene.json",
+   "at": [
+    -22.68,
+    0.0,
+    -25.0
+   ],
+   "yaw": 0.0,
+   "note": "Photo-derived identity and dimensions, historic address unresolved; retained round7.",
+   "label": "Russet mansard neighbour"
+  },
+  {
+   "id": "long-yellow-left",
+   "construct": "constructs/long-yellow-range/scene.json",
+   "at": [
+    -21.1,
+    0.0,
+    -3.0
+   ],
+   "yaw": 90.0,
+   "note": "Photo-derived range; rotates to flank square, actual address unresolved; retained round12.",
+   "label": "Long yellow range · photo left"
+  },
+  {
+   "id": "borshuset",
+   "construct": "constructs/borshuset/scene.json",
+   "at": [
+    28.0,
+    0.0,
+    4.0
+   ],
+   "yaw": -90.0,
+   "note": "Documented northern palace identity; full mass and metrics inferred. Retained asset round6; actual plateau STOP after round8. Rounded stone corner faces square on right.",
+   "label": "Börshuset · Nobel Prize Museum"
+  },
+  {
+   "id": "sage-gabled-house",
+   "construct": "constructs/sage-gabled-house/scene.json",
+   "at": [
+    -13.01,
+    0.0,
+    -25.0
+   ],
+   "yaw": 0.0,
+   "note": "Photo-derived geometry. No22 attribution uncertain; retainedbest11.",
+   "label": "Sage curved-gable neighbour"
+  },
+  {
+   "id": "yellow-mansard-right",
+   "construct": "constructs/yellow-mansard-house/scene.json",
+   "at": [
+    16.395,
+    0.0,
+    -25.0
+   ],
+   "yaw": 0.0,
+   "note": "Photo-inferred dimensions/address unresolved; retainedbest12. Alley spacing inferred.",
+   "label": "Yellow mansard house · right of No18"
+  },
+  {
+   "id": "narrow-ochre-right",
+   "construct": "constructs/narrow-ochre-house/scene.json",
+   "at": [
+    25.25,
+    0.0,
+    -25.0
+   ],
+   "yaw": 0.0,
+   "note": "Photo-relative identity, metrics inferred; retainedbest11. Base explicitly supported at right-pavement topY0.12 to clear raised kerb.",
+   "label": "Narrow ochre neighbour · photo right",
+   "on": "square/right-pavement"
+  },
+  {
+   "id": "christmas-tree",
+   "construct": "constructs/christmas-spruce/scene.json",
+   "at": [
+    1.0,
+    0.0,
+    -4.0
+   ],
+   "yaw": 0.0,
+   "note": "19m inferred height; retainedbest8 with declared post-stop technical repairs, not independently rejudged before world review.",
+   "label": "Stortorget Christmas spruce"
+  },
+  {
+   "id": "post-lamp",
+   "construct": "constructs/post-lamp/scene.json",
+   "at": [
+    23.75,
+    0.0,
+    11.0
+   ],
+   "yaw": 0.0,
+   "on": "square/right-pavement",
+   "note": "Photo head, inferred shaft/5.128m height. Explicit raised-pavement support.",
+   "label": "Single gas-style post lamp"
+  },
+  {
+   "id": "granite-block",
+   "construct": "constructs/granite-block/scene.json",
+   "at": [
+    14.2,
+    0.0,
+    21.5
+   ],
+   "yaw": 0.0,
+   "note": "Photo-inferred dimensions/function unknown; derived CC BY-SA4.0 surface crops.",
+   "label": "Foreground granite block"
+  },
+  {
+   "id": "stall-r1-c1",
+   "construct": "constructs/market-stall/scene.json",
+   "at": [
+    -15.0,
+    0.0,
+    -12.19625
+   ],
+   "yaw": 0.0
+  },
+  {
+   "id": "stall-r1-c4",
+   "construct": "constructs/market-stall/scene.json",
+   "at": [
+    1.5,
+    0.0,
+    -12.19625
+   ],
+   "yaw": 0.0
+  },
+  {
+   "id": "stall-r1-c5",
+   "construct": "constructs/market-stall/scene.json",
+   "at": [
+    7.0,
+    0.0,
+    -12.19625
+   ],
+   "yaw": 0.0
+  },
+  {
+   "id": "stall-r1-c6",
+   "construct": "constructs/market-stall/scene.json",
+   "at": [
+    12.5,
+    0.0,
+    -12.19625
+   ],
+   "yaw": 0.0
+  },
+  {
+   "id": "stall-r2-c1",
+   "construct": "constructs/market-stall/scene.json",
+   "at": [
+    -15.0,
+    0.0,
+    -6.19625
+   ],
+   "yaw": 0.0
+  },
+  {
+   "id": "stall-r2-c4",
+   "construct": "constructs/market-stall/scene.json",
+   "at": [
+    -9.5,
+    0.0,
+    -6.19625
+   ],
+   "yaw": 0.0
+  },
+  {
+   "id": "stall-r2-c5",
+   "construct": "constructs/market-stall/scene.json",
+   "at": [
+    7.0,
+    0.0,
+    -6.19625
+   ],
+   "yaw": 0.0
+  },
+  {
+   "id": "stall-r2-c6",
+   "construct": "constructs/market-stall/scene.json",
+   "at": [
+    12.5,
+    0.0,
+    -6.19625
+   ],
+   "yaw": 0.0
+  },
+  {
+   "id": "stall-r3-c1",
+   "construct": "constructs/market-stall/scene.json",
+   "at": [
+    -15.0,
+    0.0,
+    -0.19625
+   ],
+   "yaw": 0.0
+  },
+  {
+   "id": "stall-r3-c2",
+   "construct": "constructs/market-stall/scene.json",
+   "at": [
+    -9.5,
+    0.0,
+    30.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "id": "stall-r3-c3",
+   "construct": "constructs/market-stall/scene.json",
+   "at": [
+    -4.0,
+    0.0,
+    30.0
+   ],
+   "yaw": 0.0
+  },
+  {
+   "id": "stall-r3-c4",
+   "construct": "constructs/market-stall/scene.json",
+   "at": [
+    -9.5,
+    0.0,
+    -0.19625
+   ],
+   "yaw": 0.0
+  },
+  {
+   "id": "stall-r3-c5",
+   "construct": "constructs/market-stall/scene.json",
+   "at": [
+    7.0,
+    0.0,
+    -0.19625
+   ],
+   "yaw": 0.0
+  },
+  {
+   "id": "stall-r3-c6",
+   "construct": "constructs/market-stall/scene.json",
+   "at": [
+    12.5,
+    0.0,
+    -0.19625
+   ],
+   "yaw": 0.0
+  },
+  {
+   "id": "stall-r4-c1",
+   "construct": "constructs/market-stall/scene.json",
+   "at": [
+    -15.0,
+    0.0,
+    5.80375
+   ],
+   "yaw": 0.0
+  },
+  {
+   "id": "stall-r4-c2",
+   "construct": "constructs/market-stall/scene.json",
+   "at": [
+    -9.5,
+    0.0,
+    5.80375
+   ],
+   "yaw": 0.0
+  },
+  {
+   "id": "stall-r4-c3",
+   "construct": "constructs/market-stall/scene.json",
+   "at": [
+    -4.0,
+    0.0,
+    5.80375
+   ],
+   "yaw": 0.0
+  },
+  {
+   "id": "stall-r4-c4",
+   "construct": "constructs/market-stall/scene.json",
+   "at": [
+    1.5,
+    0.0,
+    5.80375
+   ],
+   "yaw": 0.0
+  },
+  {
+   "id": "stall-r4-c5",
+   "construct": "constructs/market-stall/scene.json",
+   "at": [
+    7.0,
+    0.0,
+    5.80375
+   ],
+   "yaw": 0.0
+  },
+  {
+   "id": "stall-r4-c6",
+   "construct": "constructs/market-stall/scene.json",
+   "at": [
+    12.5,
+    0.0,
+    5.80375
+   ],
+   "yaw": 0.0
+  },
+  {
+   "id": "stall-r5-c1",
+   "construct": "constructs/market-stall/scene.json",
+   "at": [
+    -15.0,
+    0.0,
+    11.80375
+   ],
+   "yaw": 0.0
+  },
+  {
+   "id": "stall-r5-c2",
+   "construct": "constructs/market-stall/scene.json",
+   "at": [
+    -9.5,
+    0.0,
+    11.80375
+   ],
+   "yaw": 0.0
+  },
+  {
+   "id": "stall-r5-c3",
+   "construct": "constructs/market-stall/scene.json",
+   "at": [
+    -4.0,
+    0.0,
+    11.80375
+   ],
+   "yaw": 0.0
+  },
+  {
+   "id": "stall-r5-c4",
+   "construct": "constructs/market-stall/scene.json",
+   "at": [
+    1.5,
+    0.0,
+    11.80375
+   ],
+   "yaw": 0.0
+  },
+  {
+   "id": "stall-r5-c5",
+   "construct": "constructs/market-stall/scene.json",
+   "at": [
+    7.0,
+    0.0,
+    11.80375
+   ],
+   "yaw": 0.0
+  },
+  {
+   "id": "stall-r5-c6",
+   "construct": "constructs/market-stall/scene.json",
+   "at": [
+    12.5,
+    0.0,
+    11.80375
+   ],
+   "yaw": 0.0
+  },
+  {
+   "id": "stall-r6-c1",
+   "construct": "constructs/market-stall/scene.json",
+   "at": [
+    -15.0,
+    0.0,
+    17.80375
+   ],
+   "yaw": 0.0
+  },
+  {
+   "id": "stall-r6-c2",
+   "construct": "constructs/market-stall/scene.json",
+   "at": [
+    -9.5,
+    0.0,
+    17.80375
+   ],
+   "yaw": 0.0
+  },
+  {
+   "id": "stall-r6-c3",
+   "construct": "constructs/market-stall/scene.json",
+   "at": [
+    -4.0,
+    0.0,
+    17.80375
+   ],
+   "yaw": 0.0
+  },
+  {
+   "id": "stall-r6-c4",
+   "construct": "constructs/market-stall/scene.json",
+   "at": [
+    1.5,
+    0.0,
+    17.80375
+   ],
+   "yaw": 0.0
+  },
+  {
+   "id": "stall-r6-c5",
+   "construct": "constructs/market-stall/scene.json",
+   "at": [
+    7.0,
+    0.0,
+    17.80375
+   ],
+   "yaw": 0.0
+  },
+  {
+   "id": "stall-r6-c6",
+   "construct": "constructs/market-stall/scene.json",
+   "at": [
+    12.5,
+    0.0,
+    17.80375
+   ],
+   "yaw": 0.0
+  },
+  {
+   "id": "stall-r7-c1",
+   "construct": "constructs/market-stall/scene.json",
+   "at": [
+    -15.0,
+    0.0,
+    23.80375
+   ],
+   "yaw": 0.0
+  },
+  {
+   "id": "stall-r7-c2",
+   "construct": "constructs/market-stall/scene.json",
+   "at": [
+    -9.5,
+    0.0,
+    23.80375
+   ],
+   "yaw": 0.0
+  },
+  {
+   "id": "stall-r7-c3",
+   "construct": "constructs/market-stall/scene.json",
+   "at": [
+    -4.0,
+    0.0,
+    23.80375
+   ],
+   "yaw": 0.0
+  },
+  {
+   "id": "stall-r7-c4",
+   "construct": "constructs/market-stall/scene.json",
+   "at": [
+    1.5,
+    0.0,
+    23.80375
+   ],
+   "yaw": 0.0
+  },
+  {
+   "id": "stall-r7-c5",
+   "construct": "constructs/market-stall/scene.json",
+   "at": [
+    7.0,
+    0.0,
+    23.80375
+   ],
+   "yaw": 0.0
+  },
+  {
+   "id": "stall-r7-c6",
+   "construct": "constructs/market-stall/scene.json",
+   "at": [
+    12.8,
+    0.0,
+    26.5
+   ],
+   "yaw": 30.0
+  },
+  {
+   "id": "stall-east-1",
+   "construct": "constructs/market-stall/scene.json",
+   "at": [
+    18.69625,
+    0.0,
+    -10.0
+   ],
+   "yaw": -90.0
+  },
+  {
+   "id": "stall-east-2",
+   "construct": "constructs/market-stall/scene.json",
+   "at": [
+    18.69625,
+    0.0,
+    -4.0
+   ],
+   "yaw": -90.0
+  },
+  {
+   "id": "stall-east-3",
+   "construct": "constructs/market-stall/scene.json",
+   "at": [
+    18.69625,
+    0.0,
+    2.0
+   ],
+   "yaw": -90.0
+  }
+ ],
+ "summary": "Stockholm's old square at its Christmas market, December 2022, from one photograph (Ximonic / Simo Räsänen, CC BY-SA 4.0, not included): eight houses researched one by one, the red No. 20 and the orange No. 18 among them, one market stall placed 41 times, the spruce, the lamp and the granite block. Heights and the stalls' layout are inferred, not surveyed. No people or vehicles.",
+ "animation": {
+  "assembly": {
+   "seconds": 18,
+   "order": [
+    "square",
+    "red-house-20",
+    "orange-house-18",
+    "russet-mansard-house",
+    "long-yellow-left",
+    "borshuset",
+    "sage-gabled-house",
+    "yellow-mansard-right",
+    "narrow-ochre-right",
+    "christmas-tree",
+    "post-lamp",
+    "granite-block",
+    "stall-r7-c6",
+    "stall-r1-c1",
+    "stall-r1-c4",
+    "stall-r1-c5",
+    "stall-r1-c6",
+    "stall-r2-c1",
+    "stall-r2-c4",
+    "stall-r2-c5",
+    "stall-r2-c6",
+    "stall-r3-c1",
+    "stall-r3-c2",
+    "stall-r3-c3",
+    "stall-r3-c4",
+    "stall-r3-c5",
+    "stall-r3-c6",
+    "stall-r4-c1",
+    "stall-r4-c2",
+    "stall-r4-c3",
+    "stall-r4-c4",
+    "stall-r4-c5",
+    "stall-r4-c6",
+    "stall-r5-c1",
+    "stall-r5-c2",
+    "stall-r5-c3",
+    "stall-r5-c4",
+    "stall-r5-c5",
+    "stall-r5-c6",
+    "stall-r6-c1",
+    "stall-r6-c2",
+    "stall-r6-c3",
+    "stall-r6-c4",
+    "stall-r6-c5",
+    "stall-r6-c6",
+    "stall-r7-c1",
+    "stall-r7-c2",
+    "stall-r7-c3",
+    "stall-r7-c4",
+    "stall-r7-c5",
+    "stall-east-1",
+    "stall-east-2",
+    "stall-east-3"
+   ]
+  }
+ },
+ "presentation": {
+  "framing": {
+   "yaw": 18,
+   "pitch": 25,
+   "fit": 0.76
+  },
+  "views": [
+   {
+    "id": "a-photo",
+    "label": "Photo approach · market foreground",
+    "target": [
+     -38.075662,
+     27.218516,
+     -115.384637
+    ],
+    "distance_m": 160,
+    "yaw": 21,
+    "pitch": -9.358755
+   },
+   {
+    "id": "b-stall-close",
+    "label": "Nearest stall · Swedish signs and bulbs",
+    "target": [
+     -90.222309,
+     -13.001734,
+     -86.293523
+    ],
+    "distance_m": 160,
+    "yaw": 42.31023,
+    "pitch": 5.415972
+   },
+   {
+    "id": "c-gables-low",
+    "label": "Both gables · from below",
+    "target": [
+     -12.638249,
+     115.595393,
+     -119.595393
+    ],
+    "distance_m": 160,
+    "yaw": 7.907163,
+    "pitch": -44.726325
+   },
+   {
+    "id": "d-tree",
+    "label": "Christmas spruce · crown and lights",
+    "target": [
+     -26.049002,
+     21.59243,
+     -127.652582
+    ],
+    "distance_m": 160,
+    "yaw": 12.339087,
+    "pitch": -5.2328
+   },
+   {
+    "id": "e-high-square",
+    "label": "High view · complete square",
+    "target": [
+     -8.93601,
+     -25.382434,
+     -15.586901
+    ],
+    "distance_m": 160,
+    "yaw": 25.676816,
+    "pitch": 55.831576
+   },
+   {
+    "id": "hero",
+    "label": "Photo approach",
+    "target": [
+     -38.075662,
+     27.218516,
+     -115.384637
+    ],
+    "distance_m": 160,
+    "yaw": 21,
+    "pitch": -9.358755
+   },
+   {
+    "cutaway": false,
+    "distance_m": 10,
+    "id": "post-lamp",
+    "label": "Single lamp · complete lantern inspection",
+    "pitch": 0,
+    "target": [
+     23.75,
+     2.684,
+     11
+    ],
+    "yaw": -25
+   }
+  ]
+ },
+ "authoring": {
+  "tier": "masterpiece",
+  "research": "unavailable",
+  "critic": {
+   "scene_sha256": "50b287131f8adb2561656184aa16e05277b9a46243ed8d74a6da9d4ec0ee72f0",
+   "verdict": "improve",
+   "scores": {
+    "silhouette": 2,
+    "proportions": 2,
+    "identity": 1,
+    "depth": 2,
+    "composition": 1,
+    "assembly": 3,
+    "motion": 3,
+    "density": 2,
+    "honesty": 3
+   },
+   "round": 11,
+   "defects": 6
+  },
+  "rounds": [
+   {
+    "round": 1,
+    "result": "baseline",
+    "minutes": 1.5,
+    "changes": [
+     "draft"
+    ],
+    "summary": "The market is presented as repeated copies of one glögg-and-gingerbread vendor: the same Stortorgets Julbod header, Glögg panel, Pepparkakor"
+   },
+   {
+    "round": 2,
+    "result": "reverted",
+    "minutes": 35.9,
+    "changes": [
+     "D2",
+     "D4",
+     "D5"
+    ],
+    "summary": "The alleged matched approach is a wide frontal architectural elevation above a continuous low band of stalls. In the source, the nearest lef"
+   },
+   {
+    "round": 3,
+    "result": "kept",
+    "minutes": 24.3,
+    "changes": [
+     "D2"
+    ],
+    "summary": "The reference places the granite block near the lower center-left, with a broad cobbled approach below it and the Borshuset corner and lamp "
+   },
+   {
+    "round": 4,
+    "result": "kept",
+    "minutes": 16.1,
+    "changes": [
+     "D2",
+     "D5",
+     "D8"
+    ],
+    "summary": "The source is a close human-height approach, with one broad stall filling the lower left, the block near the lower centre, a curving right a"
+   },
+   {
+    "round": 5,
+    "result": "kept",
+    "minutes": 13.1,
+    "changes": [
+     "D12",
+     "D4"
+    ],
+    "summary": "The buildings and tree are uniformly grey in the solid render. The reference's red No20, orange No18, yellow flanks, muted neighbouring faca"
+   },
+   {
+    "round": 6,
+    "result": "kept",
+    "minutes": 10.1,
+    "changes": [
+     "D14",
+     "D6"
+    ],
+    "summary": "The requested approach is not the source composition: the real photo is anchored by a broad close stall at left, a large low granite block, "
+   },
+   {
+    "round": 7,
+    "result": "kept",
+    "minutes": 14.8,
+    "changes": [
+     "D13",
+     "D16"
+    ],
+    "summary": "The architectural setting and tree are almost uniformly grey in the actual colour view. The reference's red No. 20, orange No. 18, yellow en"
+   },
+   {
+    "round": 8,
+    "result": "kept",
+    "minutes": 11.7,
+    "changes": [
+     "D2"
+    ],
+    "summary": "The source's red No20, orange No18 and colored neighboring range become uniformly pale gray in the solid render, although the stalls retain "
+   },
+   {
+    "round": 9,
+    "result": "kept",
+    "minutes": 95.9,
+    "changes": [
+     "D7"
+    ],
+    "summary": "The tree has separated angular skirts and large open gaps rather than the reference's nearly continuous, broad spruce crown. This is visible"
+   },
+   {
+    "round": 10,
+    "result": "kept",
+    "minutes": 39.8,
+    "changes": [
+     "D17",
+     "D18",
+     "D4",
+     "D9"
+    ],
+    "summary": "The tree foliage is pale grey in the actual SOLID image, whereas the original has a dark green evergreen crown. This is an actual SOLID colo"
+   },
+   {
+    "round": 11,
+    "result": "kept",
+    "minutes": 25.4,
+    "changes": [
+     "D11",
+     "D17",
+     "D4"
+    ],
+    "summary": "The actual SOLID tree is pale grey rather than the deep green spruce in the reference, despite correct red/orange building and red stall pai"
+   },
+   {
+    "round": 12,
+    "result": "reverted",
+    "minutes": 7.0,
+    "changes": [
+     "D13"
+    ],
+    "summary": "The spruce foliage is visibly pale grey in SOLID, whereas the reference has a dark green living spruce. This is an opaque foliage mismatch, "
+   }
+  ],
+  "review_rounds": 12,
+  "outcome": "limit",
+  "next": "Original world run stopped natively at the 12-round cap; retained best11, independently judged improve (not good/outstanding), 295.6 active minutes of the authorized 300. Round10 and11 kept; round12 tied/reverted. Saved single-head lamp inspection and inferred sage/russet/orange height corrections retained; tree edits timed out and wrote nothing. Open D8,D15,D17,D18,D19,D13,D20. Known-limit D4,D2 and medium L1-L3 remain binding. Exact answers/packets/native ledger preserved. See EXTENSION90B_MANIFEST.json and EXTENSION90B_REPORT.md. No new run/reset/extension/clock edits; final live publication belongs to parent."
+ }
+}

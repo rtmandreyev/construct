@@ -1,0 +1,37 @@
+{
+  "materials": [
+    {
+      "name": "magenta enamel casing",
+      "parts": [
+        "magenta-casing"
+      ],
+      "color": "#b41672",
+      "finish": "paint"
+    },
+    {
+      "name": "magenta luminous rim rails",
+      "parts": [
+        "rim-light-rail"
+      ],
+      "color": "#f031a4",
+      "finish": "paint"
+    },
+    {
+      "name": "dark blue-grey artwork substrate",
+      "parts": [
+        "dark-artwork-face"
+      ],
+      "color": "#0f141f",
+      "finish": "paint"
+    },
+    {
+      "name": "dark blue-grey rear bracket steel",
+      "parts": [
+        "rear-mount",
+        "mount-fixing-marks"
+      ],
+      "color": "#273441",
+      "finish": "brushed"
+    }
+  ]
+}

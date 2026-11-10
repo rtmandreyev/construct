@@ -1,0 +1,26 @@
+{
+  "materials": [
+    {
+      "name": "Magenta enamel cabinet",
+      "parts": ["cabinet"],
+      "color": "#83134f",
+      "roughness": 0.28,
+      "metallic": 0.45
+    },
+    {
+      "name": "Original luminous magenta bilingual artwork on BOTH faces; companion PNG binding",
+      "parts": ["illuminated-face", "illuminated-face-back"],
+      "color": "#ffffff",
+      "emissive": "#ffffff",
+      "roughness": 0.3,
+      "metallic": 0
+    },
+    {
+      "name": "Dark blue-grey connected sidearm hardware",
+      "parts": ["rear-bracket*", "side-wall-plate*", "sidearm-gusset*"],
+      "color": "#182633",
+      "roughness": 0.32,
+      "metallic": 0.75
+    }
+  ]
+}

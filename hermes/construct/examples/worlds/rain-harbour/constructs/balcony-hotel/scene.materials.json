@@ -1,0 +1,111 @@
+{
+  "materials": [
+    {
+      "parts": [
+        "*slab",
+        "*supports",
+        "shopfront-*"
+      ],
+      "color": "#2c3e4a",
+      "finish": "paint",
+      "metallic": 0.05,
+      "roughness": 0.74
+    },
+    {
+      "parts": [
+        "*mullions",
+        "*transom*",
+        "shop-bay-frame-*",
+        "*handrail*",
+        "*rail",
+        "*partitions",
+        "*pull*"
+      ],
+      "color": "#4c6570",
+      "finish": "brushed",
+      "metallic": 0.7,
+      "roughness": 0.34
+    },
+    {
+      "parts": [
+        "*window-warm",
+        "shop-glass-warm"
+      ],
+      "color": "#ae8751",
+      "finish": "glass",
+      "metallic": 0.05,
+      "roughness": 0.27,
+      "emissive": "#775025"
+    },
+    {
+      "parts": [
+        "*window-cool",
+        "shop-glass-cool"
+      ],
+      "color": "#407785",
+      "finish": "glass",
+      "metallic": 0.05,
+      "roughness": 0.22,
+      "emissive": "#1c4653"
+    },
+    {
+      "parts": [
+        "*window-dark",
+        "shop-glass-dark"
+      ],
+      "color": "#162f3c",
+      "finish": "glass",
+      "metallic": 0.15,
+      "roughness": 0.3
+    },
+    {
+      "parts": [
+        "ac-housing-*",
+        "*tank*",
+        "roof-duct*"
+      ],
+      "color": "#52616a",
+      "finish": "brushed",
+      "metallic": 0.45,
+      "roughness": 0.5
+    },
+    {
+      "parts": [
+        "ac-fan-*",
+        "ac-louvre-*"
+      ],
+      "color": "#182831",
+      "finish": "brushed",
+      "metallic": 0.65,
+      "roughness": 0.4
+    },
+    {
+      "parts": [
+        "*conduit*",
+        "*riser*"
+      ],
+      "color": "#48616a",
+      "finish": "paint",
+      "metallic": 0.35,
+      "roughness": 0.48
+    },
+    {
+      "parts": [
+        "shop-awning-*"
+      ],
+      "color": "#243746",
+      "finish": "paint",
+      "metallic": 0.3,
+      "roughness": 0.42
+    },
+    {
+      "parts": [
+        "*"
+      ],
+      "color": "#192b37",
+      "finish": "paint",
+      "metallic": 0.12,
+      "roughness": 0.68
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "materials": [
+    {"name": "drab dark blue-grey powder coat", "parts": ["body", "mouth-cheek", "sloped-rain-lid"], "color": "#293743", "finish": "paint"},
+    {"name": "shadowed disposal cavity", "parts": ["rear-mouth-wall"], "color": "#111a23", "finish": "paint"},
+    {"name": "service panel blue-grey", "parts": ["service-door"], "color": "#24313c", "finish": "paint"},
+    {"name": "worn folded threshold", "parts": ["opening-lip"], "color": "#55626c", "finish": "brushed"},
+    {"name": "metal base skids", "parts": ["metal-skid-foot"], "color": "#424d56", "finish": "brushed"}
+  ]
+}

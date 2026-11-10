@@ -1,0 +1,10 @@
+{
+  "materials": [
+    {"name":"dark blue-grey site backing","parts":["site-ground","road-bed","street-lower-support","support-front-infill"],"color":"#101923","finish":"plastic","roughness":0.8},
+    {"name":"wet blue-grey asphalt","parts":["road-left-*","road-right-*"],"color":"#172630","finish":"plastic","roughness":0.18},
+    {"name":"blue-grey raised pavement","parts":["sidewalk-*"],"color":"#29343d","finish":"plastic","roughness":0.8},
+    {"name":"worn pale blue-grey kerb","parts":["kerb-*"],"color":"#49545a","finish":"plastic","roughness":0.8},
+    {"name":"shallow night rainwater","parts":["puddle-*"],"color":"#253c48","finish":"glass"},
+    {"name":"gutter grate iron","parts":["drain-*-recess","drain-left-far","drain-camera-rim"],"color":"#303e47","finish":"brushed"}
+  ]
+}

@@ -1,0 +1,1180 @@
+{
+ "format": "construct-scene",
+ "version": 2,
+ "id": "rain-harbour-street-bin",
+ "title": "Street bin",
+ "subject": {
+  "category": "object",
+  "summary": "Original drab blue-grey street refuse bin with a rain-shedding sloped lid, genuinely recessed front disposal mouth, metal skid feet and restrained service-door detail. Dimensions are chosen design intent, not surveyed measurements.",
+  "accuracy": "original",
+  "synthetic": false
+ },
+ "units": "m",
+ "seed": 19,
+ "sources": [
+  {
+   "id": "request",
+   "kind": "user_request",
+   "title": "Rain Harbour reusable street bin brief",
+   "rights": "user_private"
+  }
+ ],
+ "facts": [
+  {
+   "key": "width",
+   "value": 0.65,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "request",
+   "note": "Original design target, not a user measurement."
+  },
+  {
+   "key": "depth",
+   "value": 0.55,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "request",
+   "note": "Original design target, not a user measurement."
+  },
+  {
+   "key": "height",
+   "value": 1.05,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "request",
+   "note": "Original design target, not a user measurement."
+  },
+  {
+   "key": "disposal-aperture",
+   "value": "A real front-facing recessed disposal opening with a lower lip",
+   "certainty": "inferred",
+   "source": "request",
+   "requirement": true,
+   "note": "Original supervisor-selected bin-opening detail. The user asked for bins, not this specific aperture; this is design intent, not an end-user supplied specification."
+  }
+ ],
+ "parts": [
+  {
+   "id": "body",
+   "label": "Refuse body",
+   "role": "mass",
+   "certainty": "inferred",
+   "basis": [
+    "height"
+   ],
+   "stage": 1,
+   "shape": {
+    "axis": "y",
+    "height": 0.71,
+    "profile": [
+     [
+      -0.289,
+      0.24
+     ],
+     [
+      0.289,
+      0.24
+     ],
+     [
+      0.295,
+      0.234
+     ],
+     [
+      0.295,
+      -0.21
+     ],
+     [
+      0.28,
+      -0.21
+     ],
+     [
+      0.28,
+      -0.24
+     ],
+     [
+      -0.28,
+      -0.24
+     ],
+     [
+      -0.28,
+      -0.21
+     ],
+     [
+      -0.295,
+      -0.21
+     ],
+     [
+      -0.295,
+      0.234
+     ]
+    ],
+    "type": "extrude"
+   },
+   "at": [
+    0.0,
+    0.07,
+    0.0
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 1.1
+   }
+  },
+  {
+   "id": "rear-mouth-wall",
+   "label": "Recess rear wall",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "disposal-aperture"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.59,
+     0.22,
+     0.035
+    ]
+   },
+   "at": [
+    0,
+    0.89,
+    -0.2225
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.6
+   }
+  },
+  {
+   "id": "mouth-cheek",
+   "label": "Folded aperture cheek",
+   "role": "structure",
+   "certainty": "inferred",
+   "basis": [
+    "disposal-aperture"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "loft",
+    "sections": [
+     [
+      -0.24,
+      0.0225,
+      0.78,
+      0.99
+     ],
+     [
+      0.265,
+      0.0225,
+      0.78,
+      0.952
+     ]
+    ]
+   },
+   "at": [
+    0.2725,
+    0,
+    0
+   ],
+   "mirror": "x",
+   "look": {
+    "fill": "dark",
+    "weight": 0.8
+   }
+  },
+  {
+   "id": "sloped-rain-lid",
+   "label": "Sloped rain lid",
+   "role": "identity",
+   "certainty": "inferred",
+   "basis": [
+    "width",
+    "depth",
+    "height",
+    "disposal-aperture"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "loft",
+    "sections": [
+     [
+      -0.275,
+      0.325,
+      0.99,
+      1.05
+     ],
+     [
+      0.275,
+      0.325,
+      0.95,
+      1.01
+     ]
+    ]
+   },
+   "look": {
+    "fill": "dark",
+    "weight": 1.2
+   }
+  },
+  {
+   "id": "opening-lip",
+   "label": "Folded disposal threshold",
+   "role": "identity",
+   "certainty": "inferred",
+   "basis": [
+    "disposal-aperture"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "extrude",
+    "axis": "x",
+    "height": 0.55,
+    "profile": [
+     [
+      0.19,
+      0.797
+     ],
+     [
+      0.268,
+      0.797
+     ],
+     [
+      0.268,
+      0.781
+     ],
+     [
+      0.275,
+      0.781
+     ],
+     [
+      0.275,
+      0.801
+     ],
+     [
+      0.272,
+      0.805
+     ],
+     [
+      0.19,
+      0.805
+     ]
+    ]
+   },
+   "at": [
+    -0.275,
+    0.0,
+    0.0
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.8,
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "metal-skid-foot",
+   "label": "Metal skid foot",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 0,
+   "shape": {
+    "type": "extrude",
+    "axis": "x",
+    "height": 0.09,
+    "profile": [
+     [
+      -0.225,
+      0
+     ],
+     [
+      0.225,
+      0
+     ],
+     [
+      0.225,
+      0.02
+     ],
+     [
+      0.18,
+      0.02
+     ],
+     [
+      0.18,
+      0.075
+     ],
+     [
+      -0.18,
+      0.075
+     ],
+     [
+      -0.18,
+      0.02
+     ],
+     [
+      -0.225,
+      0.02
+     ]
+    ]
+   },
+   "at": [
+    0.17,
+    0.0,
+    0.0
+   ],
+   "mirror": "x",
+   "look": {
+    "fill": "dark",
+    "weight": 0.9
+   }
+  },
+  {
+   "id": "service-door",
+   "label": "Inset service panel",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 0.012,
+    "profile": [
+     [
+      -0.2345,
+      -0.2825
+     ],
+     [
+      0.2345,
+      -0.2825
+     ],
+     [
+      0.2425,
+      -0.2745
+     ],
+     [
+      0.2425,
+      0.155
+     ],
+     [
+      0.215,
+      0.155
+     ],
+     [
+      0.215,
+      0.21
+     ],
+     [
+      0.2425,
+      0.21
+     ],
+     [
+      0.2425,
+      0.2745
+     ],
+     [
+      0.2345,
+      0.2825
+     ],
+     [
+      -0.2345,
+      0.2825
+     ],
+     [
+      -0.2425,
+      0.2745
+     ],
+     [
+      -0.2425,
+      0.205
+     ],
+     [
+      -0.255,
+      0.205
+     ],
+     [
+      -0.255,
+      0.17
+     ],
+     [
+      -0.2425,
+      0.17
+     ],
+     [
+      -0.2425,
+      -0.17
+     ],
+     [
+      -0.255,
+      -0.17
+     ],
+     [
+      -0.255,
+      -0.205
+     ],
+     [
+      -0.2425,
+      -0.205
+     ],
+     [
+      -0.2425,
+      -0.2745
+     ]
+    ]
+   },
+   "at": [
+    0.0,
+    0.415,
+    0.237
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.95,
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "service-hinge-knuckle-upper",
+   "label": "True service hinge barrel",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.012,
+    "height": 0.047
+   },
+   "at": [
+    -0.249,
+    0.603,
+    0.251
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "service-hinge-pin-upper",
+   "label": "Exposed hinge pin ends",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.006,
+    "height": 0.061
+   },
+   "at": [
+    -0.249,
+    0.603,
+    0.251
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "service-hinge-knuckle-lower",
+   "label": "True service hinge barrel",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.012,
+    "height": 0.047
+   },
+   "at": [
+    -0.249,
+    0.227,
+    0.251
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "service-hinge-pin-lower",
+   "label": "Exposed hinge pin ends",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "cylinder",
+    "radius": 0.006,
+    "height": 0.061
+   },
+   "at": [
+    -0.249,
+    0.227,
+    0.251
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "latch-recess-backing",
+   "label": "Inset latch socket backplate",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.027,
+     0.054,
+     0.004
+    ]
+   },
+   "at": [
+    0.228,
+    0.597,
+    0.242
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "latch-socket-left",
+   "label": "Latch socket cheek",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.008,
+     0.065,
+     0.024
+    ]
+   },
+   "at": [
+    0.21,
+    0.597,
+    0.252
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "latch-socket-right",
+   "label": "Latch socket cheek",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.008,
+     0.065,
+     0.024
+    ]
+   },
+   "at": [
+    0.246,
+    0.597,
+    0.252
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "latch-socket-top",
+   "label": "Latch socket return",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.044,
+     0.008,
+     0.024
+    ]
+   },
+   "at": [
+    0.228,
+    0.629,
+    0.252
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "latch-socket-bottom",
+   "label": "Latch socket return",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.044,
+     0.008,
+     0.024
+    ]
+   },
+   "at": [
+    0.228,
+    0.565,
+    0.252
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "service-latch-tongue",
+   "label": "Recessed latch turn tongue",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.009,
+     0.028,
+     0.016
+    ]
+   },
+   "at": [
+    0.228,
+    0.597,
+    0.251
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "base-front-plinth",
+   "label": "Separate folded base kick plate",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.57,
+     0.046,
+     0.035
+    ]
+   },
+   "at": [
+    0,
+    0.093,
+    0.24
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "base-side-return",
+   "label": "Folded kick plate side returns",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.016,
+     0.046,
+     0.42
+    ]
+   },
+   "at": [
+    0.3,
+    0.093,
+    0.025
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "structure"
+   },
+   "mirror": "x"
+  },
+  {
+   "id": "foot-cluster-left-paper",
+   "label": "Closed irregular left-paper",
+   "role": "detail",
+   "certainty": "decorative",
+   "stage": 0,
+   "shape": {
+    "type": "extrude",
+    "axis": "y",
+    "height": 0.006,
+    "profile": [
+     [
+      -0.63,
+      0.3
+     ],
+     [
+      -0.49,
+      0.27
+     ],
+     [
+      -0.455,
+      0.345
+     ],
+     [
+      -0.53,
+      0.405
+     ],
+     [
+      -0.645,
+      0.365
+     ]
+    ]
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "foot-cluster-left-chip",
+   "label": "Closed irregular left-chip",
+   "role": "detail",
+   "certainty": "decorative",
+   "stage": 0,
+   "shape": {
+    "type": "extrude",
+    "axis": "y",
+    "height": 0.014,
+    "profile": [
+     [
+      -0.48,
+      0.39
+     ],
+     [
+      -0.405,
+      0.4
+     ],
+     [
+      -0.415,
+      0.455
+     ],
+     [
+      -0.47,
+      0.47
+     ],
+     [
+      -0.495,
+      0.435
+     ]
+    ]
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "foot-cluster-left-tin",
+   "label": "Closed irregular left-tin",
+   "role": "detail",
+   "certainty": "decorative",
+   "stage": 0,
+   "shape": {
+    "type": "extrude",
+    "axis": "y",
+    "height": 0.021,
+    "profile": [
+     [
+      -0.6,
+      0.44
+     ],
+     [
+      -0.55,
+      0.435
+     ],
+     [
+      -0.515,
+      0.47
+     ],
+     [
+      -0.535,
+      0.515
+     ],
+     [
+      -0.59,
+      0.52
+     ],
+     [
+      -0.615,
+      0.48
+     ]
+    ]
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "foot-cluster-right-paper",
+   "label": "Closed irregular right-paper",
+   "role": "detail",
+   "certainty": "decorative",
+   "stage": 0,
+   "shape": {
+    "type": "extrude",
+    "axis": "y",
+    "height": 0.005,
+    "profile": [
+     [
+      0.41,
+      0.23
+     ],
+     [
+      0.53,
+      0.19
+     ],
+     [
+      0.61,
+      0.24
+     ],
+     [
+      0.585,
+      0.32
+     ],
+     [
+      0.46,
+      0.335
+     ]
+    ]
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "foot-cluster-right-chip",
+   "label": "Closed irregular right-chip",
+   "role": "detail",
+   "certainty": "decorative",
+   "stage": 0,
+   "shape": {
+    "type": "extrude",
+    "axis": "y",
+    "height": 0.011,
+    "profile": [
+     [
+      0.49,
+      0.36
+     ],
+     [
+      0.56,
+      0.345
+     ],
+     [
+      0.595,
+      0.38
+     ],
+     [
+      0.555,
+      0.415
+     ],
+     [
+      0.505,
+      0.405
+     ]
+    ]
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "structure"
+   }
+  },
+  {
+   "id": "foot-cluster-right-tin",
+   "label": "Closed irregular right-tin",
+   "role": "detail",
+   "certainty": "decorative",
+   "stage": 0,
+   "shape": {
+    "type": "extrude",
+    "axis": "y",
+    "height": 0.018,
+    "profile": [
+     [
+      0.605,
+      0.305
+     ],
+     [
+      0.65,
+      0.295
+     ],
+     [
+      0.67,
+      0.33
+     ],
+     [
+      0.65,
+      0.365
+     ],
+     [
+      0.61,
+      0.355
+     ],
+     [
+      0.595,
+      0.33
+     ]
+    ]
+   },
+   "at": [
+    0,
+    0,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "tone": "structure"
+   }
+  }
+ ],
+ "assets": [],
+ "articulations": [],
+ "labels": [],
+ "anchors": {
+  "base": {
+   "point": [
+    0,
+    0,
+    0
+   ],
+   "up": [
+    0,
+    1,
+    0
+   ]
+  }
+ },
+ "annotations": [],
+ "authoring": {
+  "tier": "showcase",
+  "research": "off",
+  "outcome": "good",
+  "review_rounds": 0,
+  "next": [
+   "Independent judged masterpiece rounds."
+  ],
+  "identity": [
+   {
+    "feature": "Rain-shedding pitched lid",
+    "parts": [
+     "sloped-rain-lid"
+    ]
+   },
+   {
+    "feature": "Genuine recessed disposal mouth with folded lip",
+    "parts": [
+     "rear-mouth-wall",
+     "mouth-cheek",
+     "opening-lip"
+    ]
+   },
+   {
+    "feature": "Grounded metal skids and plain service panel",
+    "parts": [
+     "metal-skid-foot",
+     "service-door"
+    ]
+   }
+  ],
+  "critic": {
+   "scene_sha256": "bece27297e3f30df7b521c1389394522923712df4a608c63826a63c19b6470bd",
+   "verdict": "good",
+   "scores": {
+    "silhouette": 3,
+    "proportions": 3,
+    "identity": 2,
+    "depth": 2,
+    "composition": 3,
+    "assembly": 3,
+    "motion": 3,
+    "density": 3,
+    "honesty": 3
+   },
+   "round": 7,
+   "defects": 2
+  },
+  "rounds": [
+   {
+    "round": 1,
+    "result": "baseline",
+    "minutes": 0.4,
+    "changes": [
+     "draft"
+    ],
+    "summary": "The disposal mouth is genuinely recessed, but its lower lip is a thick, square-section projecting bar. It communicates a shelf more readily "
+   },
+   {
+    "round": 2,
+    "result": "kept",
+    "minutes": 1.9,
+    "changes": [
+     "D1",
+     "D2",
+     "D3"
+    ],
+    "summary": "The recessed mouth is convincing, but the lower edge reads more as a separate bright rail attached to a flat shelf than as an unequivocal fo"
+   },
+   {
+    "round": 3,
+    "result": "kept",
+    "minutes": 1.4,
+    "changes": [
+     "D1",
+     "D2",
+     "D3"
+    ],
+    "summary": "The disposal mouth is genuinely recessed, but the bright straight lower rim reads as a narrow shelf/rail. A distinct folded return is not cl"
+   },
+   {
+    "round": 4,
+    "result": "kept",
+    "minutes": 0.9,
+    "changes": [
+     "D1",
+     "D2"
+    ],
+    "summary": "The folded lower lip exists, but its visible profile remains a long, thin, nearly level bar. The fold is appreciable only in the low section"
+   },
+   {
+    "round": 5,
+    "result": "kept",
+    "minutes": 0.8,
+    "changes": [
+     "D5"
+    ],
+    "summary": "The disposal opening is genuine, but the lower bright edge remains a long straight rail in the hero and front; the folded return is apprecia"
+   },
+   {
+    "round": 6,
+    "result": "kept",
+    "minutes": 1.0,
+    "changes": [
+     "D3",
+     "D4",
+     "D7"
+    ],
+    "summary": "The disposal recess is genuine, but the lower mouth boundary reads primarily as a narrow straight shelf with parallel edges. The short retur"
+   },
+   {
+    "round": 7,
+    "result": "kept",
+    "minutes": 0.8,
+    "changes": [
+     "D7"
+    ],
+    "summary": "The mouth's lower boundary reads predominantly as a straight narrow rail. The oblique lip-section view reveals a small wedge, but not a read"
+   },
+   {
+    "round": 8,
+    "result": "reverted",
+    "minutes": 0.5,
+    "changes": [],
+    "summary": "The mouth is genuinely recessed, but the prominent lower edge is a long narrow rectangular strip. The close oblique section exposes a square"
+   }
+  ]
+ },
+ "presentation": {
+  "framing": {
+   "yaw": 28,
+   "pitch": 14,
+   "fit": 1
+  },
+  "views": [
+   {
+    "id": "r12-front-quarter",
+    "label": "Actual front mouth and hardware",
+    "yaw": 25,
+    "pitch": 12,
+    "distance": 1
+   },
+   {
+    "id": "r12-feet",
+    "label": "Pavement-supported foot clusters",
+    "yaw": 20,
+    "pitch": 22,
+    "distance": 1.7,
+    "target": "base-front-plinth"
+   }
+  ],
+  "atmosphere": {
+   "haze": 0,
+   "scanlines": false,
+   "vignette": true,
+   "grid": false,
+   "projector": false,
+   "motes": 0
+  },
+  "occlusion": "none",
+  "certainty_style": "subtle",
+  "background": "deep",
+  "float": 0,
+  "still_pose": "closed"
+ },
+ "animation": {
+  "assembly": {
+   "style": "ceremony",
+   "seconds": 1.6,
+   "interference": false
+  },
+  "idle": {
+   "life": "off",
+   "events": [],
+   "strength": 0
+  },
+  "camera": {
+   "drift": 0,
+   "breathe": 0
+  },
+  "reduced_motion": "still"
+ }
+}

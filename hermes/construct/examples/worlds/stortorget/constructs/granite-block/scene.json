@@ -1,0 +1,1416 @@
+{
+ "format": "construct-scene",
+ "version": 2,
+ "id": "stortorget-granite-block",
+ "title": "The granite block",
+ "subject": {
+  "category": "object",
+  "summary": "Photo-inferred broad squat granite block in the foreground of Stortorget Christmas Market, December 2022. Thick overhanging flat lid, narrow pale inset band, vertical stone base slabs and two black foot-level front recesses. Its function is not identified.",
+  "accuracy": "approximate",
+  "synthetic": false
+ },
+ "units": "m",
+ "seed": 7,
+ "sources": [
+  {
+   "id": "request",
+   "kind": "user_request",
+   "title": "Foreground granite block reconstruction brief",
+   "rights": "user_private"
+  },
+  {
+   "id": "photo",
+   "kind": "reference_image",
+   "title": "Ximonic (Simo Räsänen), Stortorget Christmas Market, December 2022",
+   "ref": "Source photograph supplied in shared brief; CC BY-SA 4.0 https://creativecommons.org/licenses/by-sa/4.0/ . Derived visual reconstruction credit: Ximonic (Simo Räsänen).",
+   "rights": "permitted"
+  }
+ ],
+ "facts": [
+  {
+   "key": "width",
+   "value": 2.2,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "photo",
+   "note": "Supervisor envelope estimate, refined by broad squat photographic silhouette; not surveyed."
+  },
+  {
+   "key": "depth",
+   "value": 1.55,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "photo",
+   "note": "Estimated footprint; foreshortened depth and hidden back are uncertain."
+  },
+  {
+   "key": "height",
+   "value": 1.05,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "photo",
+   "note": "Estimated envelope, not a published measurement."
+  },
+  {
+   "key": "cap.thickness",
+   "value": 0.17,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "photo",
+   "note": "Visible thick lid edge compared with body."
+  },
+  {
+   "key": "band.height",
+   "value": 0.13,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "photo",
+   "note": "Narrow pale band beneath projecting lid."
+  },
+  {
+   "key": "front.notch.count",
+   "value": 2,
+   "certainty": "user_supplied",
+   "source": "request"
+  }
+ ],
+ "parts": [
+  {
+   "id": "base-core",
+   "label": "Inferred hidden stone core",
+   "role": "structure",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "width",
+    "depth",
+    "height"
+   ],
+   "stage": 0,
+   "shape": {
+    "type": "box",
+    "size": [
+     1.84,
+     0.75,
+     1.18
+    ]
+   },
+   "at": [
+    0,
+    0.375,
+    -0.015
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.4,
+    "alpha": 0.55
+   }
+  },
+  {
+   "id": "front-notched-slab",
+   "label": "Front granite slab with two foot-level rectangular notches",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "front.notch.count",
+    "width",
+    "height"
+   ],
+   "stage": 1,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 0.13,
+    "profile": [
+     [
+      -1.05,
+      0.006
+     ],
+     [
+      -0.95,
+      0
+     ],
+     [
+      -0.82,
+      0.004
+     ],
+     [
+      -0.7,
+      0
+     ],
+     [
+      -0.7,
+      0.135
+     ],
+     [
+      -0.4,
+      0.135
+     ],
+     [
+      -0.4,
+      0
+     ],
+     [
+      -0.353,
+      0.003
+     ],
+     [
+      -0.353,
+      0.75
+     ],
+     [
+      -1.05,
+      0.75
+     ]
+    ]
+   },
+   "at": [
+    0.0,
+    0.0,
+    0.595
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.85,
+    "alpha": 0.78,
+    "glow": 0
+   }
+  },
+  {
+   "id": "rear-slab",
+   "label": "Hidden rear granite slab, inferred",
+   "role": "structure",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.1,
+     0.75,
+     0.13
+    ]
+   },
+   "at": [
+    0,
+    0.375,
+    -0.66
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.45,
+    "alpha": 0.6
+   }
+  },
+  {
+   "id": "side-slab-left",
+   "label": "Left granite base slab",
+   "role": "structure",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 1,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.13,
+     0.75,
+     1.19
+    ]
+   },
+   "at": [
+    -0.985,
+    0.375,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.55,
+    "alpha": 0.7
+   },
+   "mirror": "x"
+  },
+  {
+   "id": "inset-pale-band",
+   "label": "Narrow pale inset horizontal band",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "band.height"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     2.04,
+     0.13,
+     1.39
+    ]
+   },
+   "at": [
+    0,
+    0.815,
+    0
+   ],
+   "look": {
+    "fill": "auto",
+    "tone": "bright",
+    "weight": 0.65,
+    "alpha": 1,
+    "glow": 0
+   }
+  },
+  {
+   "id": "band-corner-pier-left",
+   "label": "Stone corner interrupting pale band",
+   "role": "structure",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 2,
+   "shape": {
+    "type": "box",
+    "size": [
+     0.17,
+     0.13,
+     0.15
+    ]
+   },
+   "at": [
+    -0.965,
+    0.815,
+    0.65
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.5,
+    "alpha": 0.75
+   },
+   "mirror": "x",
+   "artwork": {
+    "asset": "neutral-stone-photo",
+    "face": "front",
+    "slot": "booklet-page-20"
+   }
+  },
+  {
+   "id": "thick-flat-lid",
+   "label": "Thick flat granite lid with modest edge wear",
+   "role": "mass",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "width",
+    "depth",
+    "cap.thickness",
+    "height"
+   ],
+   "stage": 3,
+   "shape": {
+    "type": "extrude",
+    "axis": "y",
+    "height": 0.17,
+    "profile": [
+     [
+      -1.082,
+      -0.775
+     ],
+     [
+      1.078,
+      -0.775
+     ],
+     [
+      1.1,
+      -0.752
+     ],
+     [
+      1.1,
+      0.746
+     ],
+     [
+      1.086,
+      0.775
+     ],
+     [
+      -1.078,
+      0.772
+     ],
+     [
+      -1.1,
+      0.75
+     ],
+     [
+      -1.1,
+      -0.757
+     ]
+    ]
+   },
+   "at": [
+    0,
+    0.88,
+    0
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.7,
+    "alpha": 0.75,
+    "glow": 0
+   }
+  },
+  {
+   "id": "front-notched-slab-right",
+   "label": "Right front stone slab with second rectangular foot notch",
+   "role": "identity",
+   "certainty": "inferred",
+   "source": "photo",
+   "basis": [
+    "front.notch.count",
+    "width",
+    "height"
+   ],
+   "stage": 1,
+   "shape": {
+    "type": "extrude",
+    "axis": "z",
+    "height": 0.127,
+    "profile": [
+     [
+      -0.347,
+      0.003
+     ],
+     [
+      0.12,
+      0
+     ],
+     [
+      0.28,
+      0.004
+     ],
+     [
+      0.28,
+      0.135
+     ],
+     [
+      0.58,
+      0.135
+     ],
+     [
+      0.58,
+      0
+     ],
+     [
+      0.9,
+      0.005
+     ],
+     [
+      1.05,
+      0.002
+     ],
+     [
+      1.05,
+      0.75
+     ],
+     [
+      -0.347,
+      0.75
+     ]
+    ]
+   },
+   "at": [
+    0,
+    0,
+    0.595
+   ],
+   "look": {
+    "fill": "dark",
+    "weight": 0.75,
+    "alpha": 0.75,
+    "glow": 0
+   }
+  },
+  {
+   "id": "photo-front-upper-left",
+   "role": "artwork",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 4,
+   "shape": {
+    "type": "plane",
+    "size": [
+     0.697,
+     0.615
+    ]
+   },
+   "at": [
+    -0.7015,
+    0.4425,
+    0.7255
+   ],
+   "look": {
+    "fill": "none",
+    "line": "none"
+   },
+   "artwork": {
+    "slot": "booklet-page-1",
+    "asset": "front-upper-left-photo",
+    "face": "front"
+   }
+  },
+  {
+   "id": "photo-front-upper-right",
+   "role": "artwork",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 4,
+   "shape": {
+    "type": "plane",
+    "size": [
+     1.397,
+     0.615
+    ]
+   },
+   "at": [
+    0.3515,
+    0.4425,
+    0.7225
+   ],
+   "look": {
+    "fill": "none",
+    "line": "none"
+   },
+   "artwork": {
+    "slot": "booklet-page-2",
+    "asset": "front-upper-right-photo",
+    "face": "front"
+   }
+  },
+  {
+   "id": "photo-front-foot-left",
+   "role": "artwork",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 4,
+   "shape": {
+    "type": "plane",
+    "size": [
+     0.35,
+     0.129
+    ]
+   },
+   "at": [
+    -0.875,
+    0.0705,
+    0.7255
+   ],
+   "look": {
+    "fill": "none",
+    "line": "none"
+   },
+   "artwork": {
+    "slot": "booklet-page-3",
+    "asset": "front-foot-left-photo",
+    "face": "front"
+   }
+  },
+  {
+   "id": "photo-front-foot-middle",
+   "role": "artwork",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 4,
+   "shape": {
+    "type": "plane",
+    "size": [
+     0.68,
+     0.129
+    ]
+   },
+   "at": [
+    -0.06,
+    0.0705,
+    0.7255
+   ],
+   "look": {
+    "fill": "none",
+    "line": "none"
+   },
+   "artwork": {
+    "slot": "booklet-page-4",
+    "asset": "front-foot-middle-photo",
+    "face": "front"
+   }
+  },
+  {
+   "id": "photo-front-foot-right",
+   "role": "artwork",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 4,
+   "shape": {
+    "type": "plane",
+    "size": [
+     0.47,
+     0.129
+    ]
+   },
+   "at": [
+    0.815,
+    0.0705,
+    0.7225
+   ],
+   "look": {
+    "fill": "none",
+    "line": "none"
+   },
+   "artwork": {
+    "slot": "booklet-page-5",
+    "asset": "front-foot-right-photo",
+    "face": "front"
+   }
+  },
+  {
+   "id": "photo-right-base",
+   "role": "artwork",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 4,
+   "shape": {
+    "type": "plane",
+    "size": [
+     1.45,
+     0.75
+    ]
+   },
+   "at": [
+    1.05,
+    0.375,
+    0.0
+   ],
+   "rotate": [
+    0,
+    90,
+    0
+   ],
+   "look": {
+    "fill": "none",
+    "line": "none"
+   },
+   "artwork": {
+    "slot": "booklet-page-6",
+    "asset": "right-base-photo",
+    "face": "front"
+   }
+  },
+  {
+   "id": "photo-lid-top",
+   "role": "artwork",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 4,
+   "shape": {
+    "type": "plane",
+    "size": [
+     2.16,
+     1.51
+    ]
+   },
+   "at": [
+    0.0,
+    1.05,
+    0.0
+   ],
+   "rotate": [
+    -90,
+    0,
+    0
+   ],
+   "look": {
+    "fill": "none",
+    "line": "none"
+   },
+   "artwork": {
+    "slot": "booklet-page-7",
+    "asset": "lid-top-photo",
+    "face": "front"
+   }
+  },
+  {
+   "id": "photo-pale-front-band",
+   "role": "artwork",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 4,
+   "shape": {
+    "type": "plane",
+    "size": [
+     1.76,
+     0.13
+    ]
+   },
+   "at": [
+    0.0,
+    0.815,
+    0.6955
+   ],
+   "look": {
+    "fill": "none",
+    "line": "none"
+   },
+   "artwork": {
+    "slot": "booklet-page-8",
+    "asset": "pale-front-photo",
+    "face": "front"
+   }
+  },
+  {
+   "id": "photo-pale-right-band",
+   "role": "artwork",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 4,
+   "shape": {
+    "type": "plane",
+    "size": [
+     1.18,
+     0.13
+    ]
+   },
+   "at": [
+    1.0205,
+    0.815,
+    0.0
+   ],
+   "rotate": [
+    0,
+    90,
+    0
+   ],
+   "look": {
+    "fill": "none",
+    "line": "none"
+   },
+   "artwork": {
+    "slot": "booklet-page-9",
+    "asset": "pale-right-photo",
+    "face": "front"
+   }
+  },
+  {
+   "id": "photo-lid-front-edge",
+   "role": "artwork",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 4,
+   "shape": {
+    "type": "plane",
+    "size": [
+     2.172,
+     0.17
+    ]
+   },
+   "at": [
+    0.0,
+    0.965,
+    0.775
+   ],
+   "look": {
+    "fill": "none",
+    "line": "none"
+   },
+   "artwork": {
+    "slot": "booklet-page-10",
+    "asset": "lid-front-photo",
+    "face": "front"
+   }
+  },
+  {
+   "id": "photo-lid-right-edge",
+   "role": "artwork",
+   "certainty": "inferred",
+   "source": "photo",
+   "stage": 4,
+   "shape": {
+    "type": "plane",
+    "size": [
+     1.498,
+     0.17
+    ]
+   },
+   "at": [
+    1.1,
+    0.965,
+    0.0
+   ],
+   "rotate": [
+    0,
+    90,
+    0
+   ],
+   "look": {
+    "fill": "none",
+    "line": "none"
+   },
+   "artwork": {
+    "slot": "booklet-page-11",
+    "asset": "lid-right-photo",
+    "face": "front"
+   }
+  },
+  {
+   "artwork": {
+    "asset": "neutral-stone-photo",
+    "face": "front",
+    "slot": "booklet-page-21"
+   },
+   "at": [
+    1.05,
+    0.815,
+    0.65
+   ],
+   "certainty": "inferred",
+   "id": "photo-corner-pier-right-return",
+   "look": {
+    "fill": "none",
+    "line": "none"
+   },
+   "role": "artwork",
+   "rotate": [
+    0,
+    90,
+    0
+   ],
+   "shape": {
+    "size": [
+     0.15,
+     0.13
+    ],
+    "type": "plane"
+   },
+   "source": "photo",
+   "stage": 4
+  },
+  {
+   "artwork": {
+    "asset": "neutral-stone-photo",
+    "face": "front",
+    "slot": "booklet-page-22"
+   },
+   "at": [
+    0,
+    0.7501,
+    0.71
+   ],
+   "certainty": "inferred",
+   "id": "photo-front-base-rim",
+   "look": {
+    "fill": "none",
+    "line": "none"
+   },
+   "role": "artwork",
+   "rotate": [
+    -90,
+    0,
+    0
+   ],
+   "shape": {
+    "size": [
+     2.1,
+     0.03
+    ],
+    "type": "plane"
+   },
+   "source": "photo",
+   "stage": 4
+  },
+  {
+   "artwork": {
+    "asset": "neutral-stone-photo",
+    "face": "front",
+    "slot": "booklet-page-23"
+   },
+   "at": [
+    1.035,
+    0.7501,
+    0
+   ],
+   "certainty": "inferred",
+   "id": "photo-right-base-rim",
+   "look": {
+    "fill": "none",
+    "line": "none"
+   },
+   "role": "artwork",
+   "rotate": [
+    -90,
+    0,
+    0
+   ],
+   "shape": {
+    "size": [
+     0.03,
+     1.45
+    ],
+    "type": "plane"
+   },
+   "source": "photo",
+   "stage": 4
+  },
+  {
+   "artwork": {
+    "asset": "notch-interior-photo",
+    "face": "front",
+    "slot": "booklet-page-12"
+   },
+   "at": [
+    -0.55,
+    0.0675,
+    0.576
+   ],
+   "certainty": "inferred",
+   "id": "notch-left-dark-back",
+   "look": {
+    "fill": "none",
+    "line": "none"
+   },
+   "role": "artwork",
+   "shape": {
+    "size": [
+     0.3,
+     0.135
+    ],
+    "type": "plane"
+   },
+   "source": "photo",
+   "stage": 4
+  },
+  {
+   "artwork": {
+    "asset": "notch-interior-photo",
+    "face": "front",
+    "slot": "booklet-page-13"
+   },
+   "at": [
+    0.43,
+    0.0675,
+    0.576
+   ],
+   "certainty": "inferred",
+   "id": "notch-right-dark-back",
+   "look": {
+    "fill": "none",
+    "line": "none"
+   },
+   "role": "artwork",
+   "shape": {
+    "size": [
+     0.3,
+     0.135
+    ],
+    "type": "plane"
+   },
+   "source": "photo",
+   "stage": 4
+  },
+  {
+   "artwork": {
+    "asset": "notch-interior-photo",
+    "face": "front",
+    "slot": "booklet-page-14"
+   },
+   "at": [
+    -0.6995,
+    0.0675,
+    0.66
+   ],
+   "certainty": "inferred",
+   "id": "notch-left-dark-left-return",
+   "look": {
+    "fill": "none",
+    "line": "none"
+   },
+   "role": "artwork",
+   "rotate": [
+    0,
+    90,
+    0
+   ],
+   "shape": {
+    "size": [
+     0.13,
+     0.135
+    ],
+    "type": "plane"
+   },
+   "source": "photo",
+   "stage": 4
+  },
+  {
+   "artwork": {
+    "asset": "notch-interior-photo",
+    "face": "front",
+    "slot": "booklet-page-15"
+   },
+   "at": [
+    -0.4005,
+    0.0675,
+    0.66
+   ],
+   "certainty": "inferred",
+   "id": "notch-left-dark-right-return",
+   "look": {
+    "fill": "none",
+    "line": "none"
+   },
+   "role": "artwork",
+   "rotate": [
+    0,
+    -90,
+    0
+   ],
+   "shape": {
+    "size": [
+     0.13,
+     0.135
+    ],
+    "type": "plane"
+   },
+   "source": "photo",
+   "stage": 4
+  },
+  {
+   "artwork": {
+    "asset": "notch-interior-photo",
+    "face": "front",
+    "slot": "booklet-page-16"
+   },
+   "at": [
+    0.2805,
+    0.0675,
+    0.6585
+   ],
+   "certainty": "inferred",
+   "id": "notch-right-dark-left-return",
+   "look": {
+    "fill": "none",
+    "line": "none"
+   },
+   "role": "artwork",
+   "rotate": [
+    0,
+    90,
+    0
+   ],
+   "shape": {
+    "size": [
+     0.127,
+     0.135
+    ],
+    "type": "plane"
+   },
+   "source": "photo",
+   "stage": 4
+  },
+  {
+   "artwork": {
+    "asset": "notch-interior-photo",
+    "face": "front",
+    "slot": "booklet-page-17"
+   },
+   "at": [
+    0.5795,
+    0.0675,
+    0.6585
+   ],
+   "certainty": "inferred",
+   "id": "notch-right-dark-right-return",
+   "look": {
+    "fill": "none",
+    "line": "none"
+   },
+   "role": "artwork",
+   "rotate": [
+    0,
+    -90,
+    0
+   ],
+   "shape": {
+    "size": [
+     0.127,
+     0.135
+    ],
+    "type": "plane"
+   },
+   "source": "photo",
+   "stage": 4
+  },
+  {
+   "artwork": {
+    "asset": "notch-interior-photo",
+    "face": "front",
+    "slot": "booklet-page-18"
+   },
+   "at": [
+    -0.55,
+    0.1345,
+    0.66
+   ],
+   "certainty": "inferred",
+   "id": "notch-left-dark-soffit",
+   "look": {
+    "fill": "none",
+    "line": "none"
+   },
+   "role": "artwork",
+   "rotate": [
+    90,
+    0,
+    0
+   ],
+   "shape": {
+    "size": [
+     0.3,
+     0.13
+    ],
+    "type": "plane"
+   },
+   "source": "photo",
+   "stage": 4
+  },
+  {
+   "artwork": {
+    "asset": "notch-interior-photo",
+    "face": "front",
+    "slot": "booklet-page-19"
+   },
+   "at": [
+    0.43,
+    0.1345,
+    0.6585
+   ],
+   "certainty": "inferred",
+   "id": "notch-right-dark-soffit",
+   "look": {
+    "fill": "none",
+    "line": "none"
+   },
+   "role": "artwork",
+   "rotate": [
+    90,
+    0,
+    0
+   ],
+   "shape": {
+    "size": [
+     0.3,
+     0.127
+    ],
+    "type": "plane"
+   },
+   "source": "photo",
+   "stage": 4
+  }
+ ],
+ "articulations": [],
+ "labels": [],
+ "assets": [
+  {
+   "id": "front-foot-left-photo",
+   "path": "assets/front-foot-left-photo.png",
+   "sha256": "6e3ea7c83920bbd7666dbbfdb0f47172fd72be75d9ea79780e60b4d282b54ecd",
+   "media_type": "image/png",
+   "rights": "permitted",
+   "provenance": "user_photo",
+   "source": "photo"
+  },
+  {
+   "id": "front-foot-middle-photo",
+   "path": "assets/front-foot-middle-photo.png",
+   "sha256": "22fb5e8b4c7d9ee28e51081a5ad42c6677575a9f0640b2a1ec640e5f2180e4ec",
+   "media_type": "image/png",
+   "rights": "permitted",
+   "provenance": "user_photo",
+   "source": "photo"
+  },
+  {
+   "id": "front-foot-right-photo",
+   "path": "assets/front-foot-right-photo.png",
+   "sha256": "1e49e2f0c0ba049c65aa4f2b90393a9aacb66541a308a8d3b24ebdcbdc398fb8",
+   "media_type": "image/png",
+   "rights": "permitted",
+   "provenance": "user_photo",
+   "source": "photo"
+  },
+  {
+   "id": "front-upper-left-photo",
+   "path": "assets/front-upper-left-photo.png",
+   "sha256": "93f01ad7031218f7d55575133f1c058fb19b4f0565d68c876964b134968c7bee",
+   "media_type": "image/png",
+   "rights": "permitted",
+   "provenance": "user_photo",
+   "source": "photo"
+  },
+  {
+   "id": "front-upper-right-photo",
+   "path": "assets/front-upper-right-photo.png",
+   "sha256": "2857b3f2945311f9f40a17eb2afcd766bccea1ea0c80b319ecdfbea46371767d",
+   "media_type": "image/png",
+   "rights": "permitted",
+   "provenance": "user_photo",
+   "source": "photo"
+  },
+  {
+   "id": "lid-front-photo",
+   "path": "assets/lid-front-photo.png",
+   "sha256": "640bab61463f0a415455fe33a1637df22752f1276292f10840565669a4683b38",
+   "media_type": "image/png",
+   "rights": "permitted",
+   "provenance": "user_photo",
+   "source": "photo"
+  },
+  {
+   "id": "lid-right-photo",
+   "path": "assets/lid-right-photo.png",
+   "sha256": "73aa0c3312ef43d148a0d17379a6a1973f3b276068271d0dd5372b6af6950eef",
+   "media_type": "image/png",
+   "rights": "permitted",
+   "provenance": "user_photo",
+   "source": "photo"
+  },
+  {
+   "id": "lid-top-photo",
+   "path": "assets/lid-top-photo.png",
+   "sha256": "cc2e405690d039d986243aa6c5042ed47a8ed085eda7a12b1577e820b5408e15",
+   "media_type": "image/png",
+   "rights": "permitted",
+   "provenance": "user_photo",
+   "source": "photo"
+  },
+  {
+   "id": "pale-front-photo",
+   "path": "assets/pale-front-photo.png",
+   "sha256": "b50136c520d2e6990e117d91eeaaec2ba9ad6936dbfbb3d617d9a277c2457cc2",
+   "media_type": "image/png",
+   "rights": "permitted",
+   "provenance": "user_photo",
+   "source": "photo"
+  },
+  {
+   "id": "pale-right-photo",
+   "path": "assets/pale-right-photo.png",
+   "sha256": "cf5d0012ed2ad1a548ad115f9b5e370dd4ac7a9f68bb6fe3b8511b2b5f6c216f",
+   "media_type": "image/png",
+   "rights": "permitted",
+   "provenance": "user_photo",
+   "source": "photo"
+  },
+  {
+   "id": "right-base-photo",
+   "path": "assets/right-base-photo.png",
+   "sha256": "e625a25a3968398648d3c70818a08a6946ec0748b42d1bb4d1a5dec4f002952a",
+   "media_type": "image/png",
+   "rights": "permitted",
+   "provenance": "user_photo",
+   "source": "photo"
+  },
+  {
+   "id": "notch-interior-photo",
+   "media_type": "image/png",
+   "path": "assets/notch-interior-photo.png",
+   "provenance": "user_photo",
+   "rights": "permitted",
+   "sha256": "c2501bcf5015b357bd99ea4f05cb9131730e0d324229972428c4f683eee9ee2e",
+   "source": "photo"
+  },
+  {
+   "id": "neutral-stone-photo",
+   "media_type": "image/png",
+   "path": "assets/neutral-stone-photo.png",
+   "provenance": "user_photo",
+   "rights": "permitted",
+   "sha256": "5be700bb6f9942478e1431721064154ae3ec412576872e7286ebfde49d406df8",
+   "source": "photo"
+  }
+ ],
+ "anchors": {
+  "base": {
+   "point": [
+    0,
+    0,
+    0
+   ],
+   "up": [
+    0,
+    1,
+    0
+   ]
+  }
+ },
+ "presentation": {
+  "framing": {
+   "yaw": 35,
+   "pitch": 20,
+   "fit": 1.05
+  },
+  "views": [
+   {
+    "id": "photo",
+    "label": "Photo comparison",
+    "yaw": 40,
+    "pitch": 14,
+    "distance": 1.05
+   }
+  ],
+  "atmosphere": {
+   "haze": 0.12,
+   "scanlines": false,
+   "vignette": false,
+   "grid": false,
+   "projector": false,
+   "motes": 0
+  },
+  "occlusion": "xray",
+  "certainty_style": "subtle",
+  "background": "deep",
+  "float": 0,
+  "still_pose": "closed"
+ },
+ "animation": {
+  "assembly": {
+   "style": "ceremony",
+   "seconds": 6,
+   "interference": false
+  },
+  "idle": {
+   "life": "off",
+   "events": [],
+   "strength": 0
+  },
+  "camera": {
+   "drift": 0,
+   "breathe": 0
+  },
+  "reduced_motion": "still"
+ },
+ "authoring": {
+  "tier": "masterpiece",
+  "research": "done",
+  "critic": {
+   "scene_sha256": "9e27e21c3d2d7cb4e3c7b2f197f3a035de516e8c31bb75a79219eb3c0821734c",
+   "verdict": "improve",
+   "scores": {
+    "silhouette": 2,
+    "proportions": 2,
+    "identity": 2,
+    "depth": 3,
+    "composition": 2,
+    "assembly": 3,
+    "motion": 3,
+    "density": 2,
+    "honesty": 3
+   },
+   "round": 4,
+   "defects": 5
+  },
+  "rounds": [
+   {
+    "round": 1,
+    "result": "baseline",
+    "minutes": 0.6,
+    "changes": [
+     "draft"
+    ],
+    "summary": "The reference's pale band is a substantial exposed strip immediately below the granite lid on both visible sides. In solid.png the correspon"
+   },
+   {
+    "round": 2,
+    "result": "kept",
+    "minutes": 3.9,
+    "changes": [
+     "D1",
+     "D2",
+     "D3",
+     "D4"
+    ],
+    "summary": "The exposed band is still too shallow relative to the thick lid. In still-front it is approximately 60 pixels high against an approximately "
+   },
+   {
+    "round": 3,
+    "result": "reverted",
+    "minutes": 1.9,
+    "changes": [
+     "D1",
+     "D5",
+     "D6",
+     "D7"
+    ],
+    "summary": "The nominal photo view is not matched to the reference: the lid's receding edges slope much more steeply and the top occupies much more vert"
+   },
+   {
+    "round": 4,
+    "result": "kept",
+    "minutes": 2.9,
+    "changes": [
+     "D1",
+     "D5",
+     "D6",
+     "D7"
+    ],
+    "summary": "The nominal matched view gives too much projected width to the front and too little to the right side. In the reference the front/right top-"
+   }
+  ],
+  "sources": [
+   "photo",
+   "request"
+  ],
+  "review_rounds": 4,
+  "outcome": "limit",
+  "next": [
+   "Improve photo-view camera matching without changing the accepted hero.",
+   "Resolve conflicting band-height critiques with a more precise photo comparison.",
+   "Improve modest worn stone edge shaping and source-limited fine surface detail.",
+   "Finish unseen rear stone surfaces as explicitly inferred."
+  ],
+  "identity": [
+   {
+    "feature": "Broad squat rectangular granite block with thick flat overhanging cap",
+    "parts": [
+     "thick-flat-lid",
+     "front-notched-slab",
+     "front-notched-slab-right",
+     "side-slab-left"
+    ],
+    "source": "photo"
+   },
+   {
+    "feature": "Narrow pale band with stone corner interruptions",
+    "parts": [
+     "inset-pale-band",
+     "band-corner-pier-left",
+     "photo-pale-front-band",
+     "photo-pale-right-band"
+    ],
+    "source": "photo"
+   },
+   {
+    "feature": "Two genuinely recessed black foot-level rectangular openings",
+    "parts": [
+     "front-notched-slab",
+     "front-notched-slab-right",
+     "notch-left-dark-back",
+     "notch-right-dark-back"
+    ],
+    "source": "photo"
+   },
+   {
+    "feature": "Photo-derived restrained pink-grey granite weathering and vertical slab join",
+    "parts": [
+     "photo-lid-top",
+     "photo-front-upper-left",
+     "photo-front-upper-right",
+     "photo-right-base"
+    ],
+    "source": "photo"
+   }
+  ]
+ }
+}

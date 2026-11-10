@@ -1,0 +1,775 @@
+{
+ "format": "construct-scene",
+ "version": 2,
+ "id": "rain-harbour-night-market-magenta-fascia",
+ "title": "NIGHT MARKET / 夜市",
+ "subject": {
+  "category": "object",
+  "summary": "Original wide magenta bilingual neon fascia for Rain Harbour upper-right street frontage. Designer-chosen dimensions and lettering, approximately informed by the concept composition; not surveyed architecture.",
+  "accuracy": "original",
+  "synthetic": false
+ },
+ "units": "m",
+ "seed": 27,
+ "sources": [
+  {
+   "id": "request",
+   "kind": "user_request",
+   "title": "Rain Harbour sign brief; assigned dimensions and wording are original designer choices, not measured user evidence",
+   "rights": "user_private"
+  }
+ ],
+ "facts": [
+  {
+   "key": "body.width",
+   "value": 5,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "request",
+   "note": "Original design allocation for a wide upper-right fascia."
+  },
+  {
+   "key": "body.height",
+   "value": 1.5,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "request",
+   "note": "Original design allocation; local bottom zero."
+  },
+  {
+   "key": "body.depth",
+   "value": 0.22,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "request",
+   "note": "Original lightbox design; front z=0, rear z=-0.22."
+  },
+  {
+   "key": "wall.plane",
+   "value": -0.4,
+   "unit": "m",
+   "certainty": "inferred",
+   "source": "request",
+   "note": "Bracket rear ends coincide with the parent wall plane."
+  },
+  {
+   "key": "sign.words",
+   "value": "NIGHT MARKET / 夜市",
+   "certainty": "decorative",
+   "source": "request",
+   "note": "Original bilingual sign wording; Chinese glyphs upright and correctly typeset."
+  }
+ ],
+ "assets": [
+  {
+   "id": "night-market-art",
+   "media_type": "image/png",
+   "path": "assets/night-market-magenta.png",
+   "provenance": "generated-decorative",
+   "rights": "permitted",
+   "sha256": "b683a8e567571e348c3acc26a6fd83739e6a9292e8d3870544e3b8c04a3f8495",
+   "source": "request"
+  },
+  {
+   "id": "rear-plate-art",
+   "media_type": "image/png",
+   "path": "assets/night-market-rear-plate.png",
+   "provenance": "generated-decorative",
+   "rights": "permitted",
+   "sha256": "fca57037af7ecf01d18a50c2116aa99ee874a84355d548349455842287a8e576",
+   "source": "request"
+  }
+ ],
+ "parts": [
+  {
+   "id": "rear-wall-bracket",
+   "label": "Paired rear wall mounting standoffs",
+   "role": "structure",
+   "certainty": "inferred",
+   "stage": 1,
+   "basis": [
+    "wall.plane"
+   ],
+   "shape": {
+    "round": 0,
+    "sections": [
+     [
+      -0.4,
+      0.14,
+      0.3,
+      1.2
+     ],
+     [
+      -0.37,
+      0.06,
+      0.38,
+      1.12
+     ],
+     [
+      -0.25,
+      0.06,
+      0.38,
+      1.12
+     ],
+     [
+      -0.22,
+      0.14,
+      0.3,
+      1.2
+     ]
+    ],
+    "type": "loft"
+   },
+   "at": [
+    -1.7,
+    0.0,
+    0.0
+   ],
+   "repeat": {
+    "count": 2,
+    "step": {
+     "at": [
+      3.4,
+      0,
+      0
+     ]
+    }
+   },
+   "look": {
+    "fill": "dark",
+    "tone": "bright",
+    "weight": 1.3,
+    "alpha": 1,
+    "glow": 0.15
+   }
+  },
+  {
+   "id": "night-market-lightbox",
+   "label": "Magenta bilingual fascia lightbox",
+   "role": "mass",
+   "certainty": "inferred",
+   "stage": 0,
+   "basis": [
+    "body.width",
+    "body.height",
+    "body.depth",
+    "sign.words"
+   ],
+   "shape": {
+    "type": "box",
+    "size": [
+     4.98,
+     1.48,
+     0.19
+    ],
+    "ribs": 0
+   },
+   "at": [
+    0.0,
+    0.75,
+    -0.125
+   ],
+   "look": {
+    "alpha": 1,
+    "fill": "dark",
+    "glow": 0.1,
+    "tone": "bright",
+    "weight": 1.1
+   },
+   "artwork": {
+    "asset": "rear-plate-art",
+    "face": "back",
+    "mask": "rect",
+    "slot": "cover-back"
+   }
+  },
+  {
+   "id": "night-market-face",
+   "label": "Original bilingual magenta front artwork",
+   "role": "identity",
+   "certainty": "inferred",
+   "basis": [
+    "sign.words"
+   ],
+   "stage": 2,
+   "shape": {
+    "type": "plane",
+    "size": [
+     5,
+     1.5
+    ]
+   },
+   "at": [
+    0,
+    0.75,
+    0.002
+   ],
+   "look": {
+    "fill": "dark",
+    "line": "none"
+   },
+   "artwork": {
+    "slot": "cover-front",
+    "asset": "night-market-art",
+    "face": "front",
+    "mask": "rect"
+   }
+  },
+  {
+   "id": "rear-service-and-mount-seams",
+   "label": "Original rear hatch and mounting flange seams",
+   "role": "detail",
+   "certainty": "inferred",
+   "stage": 1,
+   "shape": {
+    "type": "paths",
+    "paths": [
+     [
+      [
+       -0.75,
+       0.4,
+       -0.221
+      ],
+      [
+       0.75,
+       0.4,
+       -0.221
+      ],
+      [
+       0.75,
+       1.1,
+       -0.221
+      ],
+      [
+       -0.75,
+       1.1,
+       -0.221
+      ],
+      [
+       -0.75,
+       0.4,
+       -0.221
+      ]
+     ],
+     [
+      [
+       -1.83,
+       0.31,
+       -0.399
+      ],
+      [
+       -1.57,
+       0.31,
+       -0.399
+      ],
+      [
+       -1.57,
+       1.19,
+       -0.399
+      ],
+      [
+       -1.83,
+       1.19,
+       -0.399
+      ],
+      [
+       -1.83,
+       0.31,
+       -0.399
+      ]
+     ],
+     [
+      [
+       1.57,
+       0.31,
+       -0.399
+      ],
+      [
+       1.83,
+       0.31,
+       -0.399
+      ],
+      [
+       1.83,
+       1.19,
+       -0.399
+      ],
+      [
+       1.57,
+       1.19,
+       -0.399
+      ],
+      [
+       1.57,
+       0.31,
+       -0.399
+      ]
+     ],
+     [
+      [
+       -1.73,
+       0.334,
+       -0.401
+      ],
+      [
+       -1.67,
+       0.334,
+       -0.401
+      ],
+      [
+       -1.67,
+       0.366,
+       -0.401
+      ],
+      [
+       -1.73,
+       0.366,
+       -0.401
+      ],
+      [
+       -1.73,
+       0.334,
+       -0.401
+      ]
+     ],
+     [
+      [
+       -1.73,
+       1.134,
+       -0.401
+      ],
+      [
+       -1.67,
+       1.134,
+       -0.401
+      ],
+      [
+       -1.67,
+       1.166,
+       -0.401
+      ],
+      [
+       -1.73,
+       1.166,
+       -0.401
+      ],
+      [
+       -1.73,
+       1.134,
+       -0.401
+      ]
+     ],
+     [
+      [
+       1.67,
+       0.334,
+       -0.401
+      ],
+      [
+       1.73,
+       0.334,
+       -0.401
+      ],
+      [
+       1.73,
+       0.366,
+       -0.401
+      ],
+      [
+       1.67,
+       0.366,
+       -0.401
+      ],
+      [
+       1.67,
+       0.334,
+       -0.401
+      ]
+     ],
+     [
+      [
+       1.67,
+       1.134,
+       -0.401
+      ],
+      [
+       1.73,
+       1.134,
+       -0.401
+      ],
+      [
+       1.73,
+       1.166,
+       -0.401
+      ],
+      [
+       1.67,
+       1.166,
+       -0.401
+      ],
+      [
+       1.67,
+       1.134,
+       -0.401
+      ]
+     ],
+     [
+      [
+       -0.64,
+       0.48,
+       -0.221
+      ],
+      [
+       -0.54,
+       0.48,
+       -0.221
+      ]
+     ],
+     [
+      [
+       -0.59,
+       0.43,
+       -0.221
+      ],
+      [
+       -0.59,
+       0.53,
+       -0.221
+      ]
+     ],
+     [
+      [
+       0.54,
+       0.48,
+       -0.221
+      ],
+      [
+       0.64,
+       0.48,
+       -0.221
+      ]
+     ],
+     [
+      [
+       0.59,
+       0.43,
+       -0.221
+      ],
+      [
+       0.59,
+       0.53,
+       -0.221
+      ]
+     ],
+     [
+      [
+       -1.24,
+       0.4,
+       -0.222
+      ],
+      [
+       -1.228,
+       0.428,
+       -0.222
+      ],
+      [
+       -1.2,
+       0.44,
+       -0.222
+      ],
+      [
+       -1.172,
+       0.428,
+       -0.222
+      ],
+      [
+       -1.16,
+       0.4,
+       -0.222
+      ],
+      [
+       -1.172,
+       0.372,
+       -0.222
+      ],
+      [
+       -1.2,
+       0.36,
+       -0.222
+      ],
+      [
+       -1.228,
+       0.372,
+       -0.222
+      ],
+      [
+       -1.24,
+       0.4,
+       -0.222
+      ],
+      [
+       -1.2,
+       0.36,
+       -0.222
+      ],
+      [
+       -1.2,
+       0.31,
+       -0.23
+      ],
+      [
+       -1.1,
+       0.31,
+       -0.23
+      ]
+     ]
+    ]
+   },
+   "look": {
+    "alpha": 1,
+    "glow": 0.1,
+    "tone": "structure",
+    "weight": 1.1
+   }
+  },
+  {
+   "certainty": "inferred",
+   "id": "casing-bezel-joint",
+   "label": "Physical shallow face retainer bezel",
+   "look": {
+    "alpha": 1,
+    "tone": "structure",
+    "weight": 1.15,
+    "fill": "dark"
+   },
+   "role": "detail",
+   "shape": {
+    "type": "box",
+    "size": [
+     5,
+     1.5,
+     0.03
+    ],
+    "ribs": 0
+   },
+   "stage": 3,
+   "at": [
+    0.0,
+    0.75,
+    -0.015
+   ]
+  }
+ ],
+ "articulations": [],
+ "labels": [],
+ "annotations": [],
+ "anchors": {
+  "front": {
+   "part": "night-market-lightbox",
+   "face": "front"
+  },
+  "base": {
+   "point": [
+    0,
+    0,
+    0
+   ],
+   "up": [
+    0,
+    1,
+    0
+   ]
+  }
+ },
+ "presentation": {
+  "framing": {
+   "yaw": 24,
+   "pitch": 14,
+   "fit": 1.1
+  },
+  "views": [
+   {
+    "id": "front-reading",
+    "label": "Bilingual front reading",
+    "yaw": 0,
+    "pitch": 0,
+    "distance": 1.08
+   },
+   {
+    "id": "concept",
+    "label": "Upper-right street fascia concept",
+    "yaw": -28,
+    "pitch": -10,
+    "distance": 1.1
+   },
+   {
+    "id": "mounting",
+    "label": "Rear wall brackets",
+    "yaw": 155,
+    "pitch": 12,
+    "distance": 1.08
+   }
+  ],
+  "occlusion": "xray",
+  "certainty_style": "subtle",
+  "background": "deep",
+  "float": 0,
+  "atmosphere": {
+   "haze": 0.25,
+   "scanlines": false,
+   "vignette": true,
+   "grid": false,
+   "projector": false,
+   "motes": 0
+  }
+ },
+ "animation": {
+  "assembly": {
+   "style": "build",
+   "seconds": 4.2,
+   "interference": false
+  },
+  "camera": {
+   "drift": 0,
+   "breathe": 0
+  },
+  "reduced_motion": "still"
+ },
+ "authoring": {
+  "tier": "standard",
+  "research": "unavailable",
+  "critic": {
+   "scene_sha256": "f989ef0f499cbfd2bba044555b274ddefdbff1e8b3ffafd2729774dda4b25ed4",
+   "verdict": "improve",
+   "scores": {
+    "silhouette": 3,
+    "proportions": 3,
+    "identity": 3,
+    "depth": 2,
+    "composition": 3,
+    "assembly": 3,
+    "motion": 3,
+    "density": 2,
+    "honesty": 3
+   },
+   "round": 10,
+   "defects": 2
+  },
+  "rounds": [
+   {
+    "round": 1,
+    "result": "baseline",
+    "minutes": 0.3,
+    "changes": [
+     "draft"
+    ],
+    "summary": "The defining magenta face, upright 夜市 and NIGHT MARKET are entirely absent from the sign itself. At the dedicated reading view the asset is "
+   },
+   {
+    "round": 2,
+    "result": "kept",
+    "minutes": 2.1,
+    "changes": [
+     "D1",
+     "D2",
+     "D3"
+    ],
+    "summary": "The magenta role is concentrated in two narrow perimeter strokes. The broad face remains almost black while the main luminous area is pale l"
+   },
+   {
+    "round": 3,
+    "result": "kept",
+    "minutes": 1.7,
+    "changes": [
+     "D4",
+     "D5",
+     "D6"
+    ],
+    "summary": "Against the concept's upper-right fascia, this face reads as a dark plum billboard with a bright double outline rather than a broadly lumino"
+   },
+   {
+    "round": 4,
+    "result": "kept",
+    "minutes": 1.8,
+    "changes": [
+     "D5",
+     "D6",
+     "D7"
+    ],
+    "summary": "The shallow housing is dimensional, but its side reads as a single plain slab; the bright inset face border does not establish a distinct fa"
+   },
+   {
+    "round": 5,
+    "result": "kept",
+    "minutes": 1.5,
+    "changes": [
+     "D3",
+     "D6"
+    ],
+    "summary": "The shallow body is genuinely dimensional, but its long return surfaces read as one uninterrupted dark extrusion. The front rim is visible; "
+   },
+   {
+    "round": 6,
+    "result": "reverted",
+    "minutes": 1.8,
+    "changes": [
+     "D3",
+     "D4"
+    ],
+    "summary": "The housing has real shallow thickness, but its exposed top and end returns read as uninterrupted dark strips bounded by perimeter contours."
+   },
+   {
+    "round": 7,
+    "result": "kept",
+    "minutes": 1.9,
+    "changes": [
+     "D3",
+     "D4"
+    ],
+    "summary": "The shallow housing has real thickness, but its exposed returns still read as uninterrupted strips bounded mostly by the outer contour. The "
+   },
+   {
+    "round": 8,
+    "result": "kept",
+    "minutes": 1.5,
+    "changes": [
+     "D3"
+    ],
+    "summary": "The casing has real shallow thickness, but its exposed returns read as one uninterrupted dark slab between front and back outlines. The face"
+   },
+   {
+    "round": 9,
+    "result": "kept",
+    "minutes": 1.3,
+    "changes": [
+     "D4"
+    ],
+    "summary": "The shallow housing is correctly dimensional, but the exposed returns read as uninterrupted dark bands bounded almost entirely by their oute"
+   },
+   {
+    "round": 10,
+    "result": "kept",
+    "minutes": 1.1,
+    "changes": [
+     "D4"
+    ],
+    "summary": "The body has the right shallow thickness, but its exposed top and end returns read as a single slab extrusion. The inset luminous face is de"
+   },
+   {
+    "round": 11,
+    "result": "reverted",
+    "minutes": 0.6,
+    "changes": [],
+    "summary": "The defining identity is absent in the judged renders: no magenta face and no readable NIGHT MARKET or 夜市 appear on the fascia. The concept "
+   },
+   {
+    "round": 12,
+    "result": "reverted",
+    "minutes": 0.6,
+    "changes": [],
+    "summary": "The housing has real shallow thickness, but its exposed end and long top returns read as uninterrupted dark strips bounded only by perimeter"
+   }
+  ],
+  "outcome": "self-reviewed"
+ }
+}

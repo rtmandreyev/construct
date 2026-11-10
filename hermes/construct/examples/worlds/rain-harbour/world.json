@@ -1,0 +1,1041 @@
+{
+ "format": "construct-world",
+ "version": 1,
+ "id": "rain-harbour-night-street",
+ "title": "Rain Harbour, a night street",
+ "placements": [
+  {
+   "id": "street",
+   "construct": "constructs/street/scene.json"
+  },
+  {
+   "id": "left-service-front",
+   "construct": "constructs/service-tower/scene.json",
+   "at": [
+    10.0,
+    0.0,
+    -20.0
+   ],
+   "yaw": 270.0,
+   "scale": 1.0
+  },
+  {
+   "id": "left-hotel-middle",
+   "construct": "constructs/balcony-hotel/scene.json",
+   "at": [
+    10.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 270.0,
+   "scale": 1.0
+  },
+  {
+   "id": "left-service-back",
+   "construct": "constructs/service-tower/scene.json",
+   "at": [
+    10.0,
+    0.0,
+    20.0
+   ],
+   "yaw": 270.0,
+   "scale": 1.0
+  },
+  {
+   "id": "right-hotel-front",
+   "construct": "constructs/balcony-hotel/scene.json",
+   "at": [
+    -10.0,
+    0.0,
+    -20.0
+   ],
+   "yaw": 90.0,
+   "scale": 1.0
+  },
+  {
+   "id": "right-service-middle",
+   "construct": "constructs/service-tower/scene.json",
+   "at": [
+    -10.0,
+    0.0,
+    0.0
+   ],
+   "yaw": 90.0,
+   "scale": 1.0
+  },
+  {
+   "id": "right-hotel-back",
+   "construct": "constructs/balcony-hotel/scene.json",
+   "at": [
+    -10.0,
+    0.0,
+    20.0
+   ],
+   "yaw": 90.0,
+   "scale": 1.0
+  },
+  {
+   "id": "skyline-west",
+   "construct": "constructs/far-signal-tower/scene.json",
+   "at": [
+    -40.0,
+    0.0,
+    101.0
+   ],
+   "yaw": 15.0,
+   "scale": 1.0,
+   "note": "World7 D3/D5 retry compact stepped48m source as newcandidate, clear Tide Relay with actualfootprint, no retained5 camera/car/road changes."
+  },
+  {
+   "id": "skyline-east",
+   "construct": "constructs/far-signal-tower/scene.json",
+   "at": [
+    -8.0,
+    0.0,
+    105.0
+   ],
+   "yaw": 180.0,
+   "scale": 1.0,
+   "note": "World7 D16/D14 alternative: shift compact distant tower9m to right skyline edge rather than lost6 centralx1. Keep best5 main camera and an unobstructed avenue vanishingpoint; actualshape/inferredsize and lowerportal unchanged."
+  },
+  {
+   "id": "hero-car",
+   "construct": "constructs/auric/scene.json",
+   "at": [
+    4.4,
+    0.0,
+    -25.0
+   ],
+   "yaw": -16.0,
+   "scale": 1.0,
+   "note": "Only vehicle; screen-left looking +Z. Original sports car parked 16 degrees inward, with gullwing sweep clear of kerb and future pavement props."
+  },
+  {
+   "id": "sign-rain-harbour",
+   "construct": "constructs/sign-rain-harbour/scene.json",
+   "at": [
+    9.6,
+    6.15,
+    -21.2
+   ],
+   "yaw": 270.0,
+   "note": "Wall-hung: local rear mounts z=-.4 meet left-service-front facade world x10. Original generated bilingual artwork.",
+   "floating": true
+  },
+  {
+   "id": "sign-noodles",
+   "construct": "constructs/sign-noodles/scene.json",
+   "at": [
+    9.6,
+    4.3,
+    -21.3
+   ],
+   "yaw": 270.0,
+   "note": "Accepted round3, not paused candidate. Wall-hung rear brackets terminate at facade x10.",
+   "floating": true
+  },
+  {
+   "id": "sign-hotel",
+   "construct": "constructs/sign-harbour-hotel/scene.json",
+   "at": [
+    -8.15,
+    8.0,
+    -6.0
+   ],
+   "yaw": 180.0,
+   "note": "WORLD9 D10 integrated hero-right5.4m projecting double-sided blade. Z-6 clears existing district fascia instead of original proposed-5; both +X fixing tips meet right-service-middle frontX-10, armsY8.55/12.8. Groundpavementclear; inferreddesign.",
+   "floating": true
+  },
+  {
+   "id": "sign-electronics",
+   "construct": "constructs/sign-blue-line-electronics/scene.json",
+   "at": [
+    9.6,
+    6.2,
+    -15.8
+   ],
+   "yaw": 270.0,
+   "note": "Wall-hung: two rear I-profile mounts meet facade x10; twin real bilingual cyan panels.",
+   "floating": true
+  },
+  {
+   "id": "sign-pharmacy",
+   "construct": "constructs/sign-pharmacy/scene.json",
+   "at": [
+    9.6,
+    5.3,
+    -1.0
+   ],
+   "yaw": 270.0,
+   "note": "Accepted round5. Original pharmacy, unique snapshot path to avoid same-named round-05 checkpoint collision. Rear mounts meet facade x10.",
+   "floating": true
+  },
+  {
+   "id": "cables-near",
+   "construct": "constructs/cable-span/scene.json",
+   "at": [
+    0.0,
+    7.6,
+    -12.0
+   ],
+   "yaw": 0.0,
+   "note": "Suspended, not ground-based. End centres x±10 contact both facades; fixing plates intentionally embed up to60mm. Lowest solid y6.39056.",
+   "floating": true
+  },
+  {
+   "id": "cables-middle",
+   "construct": "constructs/cable-span/scene.json",
+   "at": [
+    0.0,
+    7.6,
+    5.0
+   ],
+   "yaw": 0.0,
+   "note": "Suspended span at facade anchor datum7.6m; plates intentionally seated into both wall faces.",
+   "floating": true
+  },
+  {
+   "id": "cables-far",
+   "construct": "constructs/cable-span/scene.json",
+   "at": [
+    0.0,
+    7.6,
+    25.0
+   ],
+   "yaw": 0.0,
+   "note": "Suspended reusable span, identical real dimensions; facade-mounted plates intentionally seated.",
+   "floating": true
+  },
+  {
+   "id": "bollard-left-near",
+   "construct": "constructs/bollard/scene.json",
+   "at": [
+    7.45,
+    0.0,
+    -19.0
+   ],
+   "yaw": 0.0,
+   "on": "street/sidewalk-right"
+  },
+  {
+   "id": "bollard-left-middle",
+   "construct": "constructs/bollard/scene.json",
+   "at": [
+    7.45,
+    0.0,
+    -1.0
+   ],
+   "yaw": 0.0,
+   "on": "street/sidewalk-right"
+  },
+  {
+   "id": "bollard-left-far",
+   "construct": "constructs/bollard/scene.json",
+   "at": [
+    7.45,
+    0.0,
+    17.0
+   ],
+   "yaw": 0.0,
+   "on": "street/sidewalk-right"
+  },
+  {
+   "id": "bollard-right-near",
+   "construct": "constructs/bollard/scene.json",
+   "at": [
+    -7.45,
+    0.0,
+    -19.0
+   ],
+   "yaw": 0.0,
+   "on": "street/sidewalk-left"
+  },
+  {
+   "id": "bollard-right-middle",
+   "construct": "constructs/bollard/scene.json",
+   "at": [
+    -7.45,
+    0.0,
+    -1.0
+   ],
+   "yaw": 0.0,
+   "on": "street/sidewalk-left"
+  },
+  {
+   "id": "bollard-right-far",
+   "construct": "constructs/bollard/scene.json",
+   "at": [
+    -7.45,
+    0.0,
+    17.0
+   ],
+   "yaw": 0.0,
+   "on": "street/sidewalk-left"
+  },
+  {
+   "id": "lamp-left",
+   "construct": "constructs/street-lamp/scene.json",
+   "at": [
+    7.75,
+    0.0,
+    -5.0
+   ],
+   "yaw": 270.0,
+   "on": "street/sidewalk-right"
+  },
+  {
+   "id": "lamp-right",
+   "construct": "constructs/street-lamp/scene.json",
+   "at": [
+    -7.75,
+    0.0,
+    14.0
+   ],
+   "yaw": 90.0,
+   "on": "street/sidewalk-left"
+  },
+  {
+   "id": "sign-night-market",
+   "construct": "constructs/sign-night-market/scene.json",
+   "at": [
+    -9.6,
+    6.2,
+    -17.0
+   ],
+   "yaw": 90.0,
+   "note": "Accepted round5. Original 夜市 / NIGHT MARKET; rear bracket ends meet right facade x-10.",
+   "floating": true
+  },
+  {
+   "id": "sign-convenience",
+   "construct": "constructs/sign-convenience-store/scene.json",
+   "at": [
+    -9.6,
+    5.3,
+    0.0
+   ],
+   "yaw": 90.0,
+   "note": "Accepted round11. Original 便利店 / CONVENIENCE STORE; rear mounts meet right middle facade x-10.",
+   "floating": true
+  },
+  {
+   "id": "sign-road-08",
+   "construct": "constructs/sign-road-08/scene.json",
+   "at": [
+    9.8,
+    3.2,
+    -18.0
+   ],
+   "yaw": 270.0,
+   "note": "Original road address 雨港路08 / RAIN HARBOUR ROAD08. Rear saddle at localz-.2 meets left facade x10.",
+   "floating": true
+  },
+  {
+   "id": "bin-left-front",
+   "construct": "constructs/street-bin/scene.json",
+   "at": [
+    8.8,
+    0.0,
+    -27.5
+   ],
+   "yaw": 270.0,
+   "on": "street/sidewalk-right"
+  },
+  {
+   "id": "bin-right-middle",
+   "construct": "constructs/street-bin/scene.json",
+   "at": [
+    -8.8,
+    0.0,
+    8.0
+   ],
+   "yaw": 90.0,
+   "on": "street/sidewalk-left"
+  },
+  {
+   "id": "water-vending",
+   "construct": "constructs/water-vending/scene.json",
+   "at": [
+    -9.1,
+    0.0,
+    -17.8
+   ],
+   "yaw": 90.0,
+   "on": "street/sidewalk-left"
+  },
+  {
+   "id": "sign-night-market-upper-left",
+   "construct": "constructs/sign-night-market/scene.json",
+   "at": [
+    9.6,
+    10.9,
+    -22.0
+   ],
+   "yaw": 270.0,
+   "scale": 1.0,
+   "note": "WORLD9: retain original clear fascia pose; proposedlowerposition conflicted with existing AC housing/shelf/spine. New hotel blades provide the vertical main-shot hierarchy instead. Original magentaNightMarket words/art/scale and source wall contacts unchanged.",
+   "floating": true
+  },
+  {
+   "id": "sign-hotel-upper-left",
+   "construct": "constructs/sign-harbour-hotel/scene.json",
+   "at": [
+    8.15,
+    5.6,
+    -12.75
+   ],
+   "yaw": 0.0,
+   "scale": 1.0,
+   "note": "WORLD9 D10 integration correction: same5.4m blade moved to foreground-left service east-return after middle-hotel rails/partitions obstructed its cabinet. Both +X tips meet actual front X10 atY6.15/10.4; upper bracket above band, lower bracket supported by r5-band-east-return. No camera trick/scale; inferred pose.",
+   "floating": true
+  },
+  {
+   "id": "sign-electronics-right-front",
+   "construct": "constructs/sign-blue-line-electronics/scene.json",
+   "at": [
+    -9.6,
+    8.4,
+    -24.0
+   ],
+   "yaw": 90.0,
+   "scale": 1.0,
+   "note": "Repeated bilingual electronics identity, high right foreground. Rear mounts meet front plane x-10.",
+   "floating": true
+  },
+  {
+   "id": "sign-noodles-middle",
+   "construct": "constructs/sign-noodles/scene.json",
+   "at": [
+    9.6,
+    3.9,
+    4.0
+   ],
+   "yaw": 270.0,
+   "scale": 1.0,
+   "note": "Repeated noodle bar fascia below the pharmacy in the left middle storefronts; no text change.",
+   "floating": true
+  },
+  {
+   "id": "sign-pharmacy-right-front",
+   "construct": "constructs/sign-pharmacy/scene.json",
+   "at": [
+    -9.6,
+    4.0,
+    -14.5
+   ],
+   "yaw": 90.0,
+   "scale": 1.0,
+   "note": "Pharmacy branch fascia in right foreground, visible in the under-signs camera; brackets meet front plane.",
+   "floating": true
+  },
+  {
+   "id": "sign-convenience-left-front",
+   "construct": "constructs/sign-convenience-store/scene.json",
+   "at": [
+    9.6,
+    3.0,
+    -14.5
+   ],
+   "yaw": 270.0,
+   "scale": 1.0,
+   "note": "Convenience branch fascia in left foreground, clear of original address and electronics signs.",
+   "floating": true
+  },
+  {
+   "id": "sign-rain-harbour-right-middle",
+   "construct": "constructs/sign-rain-harbour/scene.json",
+   "at": [
+    -9.6,
+    6.9,
+    -2.5
+   ],
+   "yaw": 90.0,
+   "scale": 1.0,
+   "note": "Final integration pose selected by all-world part-AABB search: clears both balcony consoles, low AC shelves and the middle cable endpoint. Original bracket depth meets frontplane; not a scaled sign.",
+   "floating": true
+  },
+  {
+   "id": "sign-hotel-left-back",
+   "construct": "constructs/sign-harbour-hotel/scene.json",
+   "at": [
+    8.15,
+    8.0,
+    24.0
+   ],
+   "yaw": 0.0,
+   "scale": 1.0,
+   "note": "WORLD9 D10 integration: shift reused blade1.5m along same service-back front to clear existing AC-support shelf. Both sidearm tips X10 touch opaque wall; cabinet clear ofbalconies, physicallysupported fixing heights8.55/12.8.",
+   "floating": true
+  },
+  {
+   "id": "sign-night-market-right-back",
+   "construct": "constructs/sign-night-market/scene.json",
+   "at": [
+    -9.6,
+    5.2,
+    20.0
+   ],
+   "yaw": 90.0,
+   "scale": 1.0,
+   "note": "Same Night Market identity as a far street accent; original-size reused sign.",
+   "floating": true
+  },
+  {
+   "id": "sign-electronics-left-back",
+   "construct": "constructs/sign-blue-line-electronics/scene.json",
+   "at": [
+    9.6,
+    7.6,
+    16.5
+   ],
+   "yaw": 270.0,
+   "scale": 1.0,
+   "note": "Post-integration correction: lowered below service balcony console (miny9.1); original-size reused sign with rear tips at facade. New top8.85 leaves0.25m vertical clearance.",
+   "floating": true
+  },
+  {
+   "id": "sign-pharmacy-right-middle",
+   "construct": "constructs/sign-pharmacy/scene.json",
+   "at": [
+    -9.6,
+    3.3,
+    -3.5
+   ],
+   "yaw": 90.0,
+   "scale": 1.0,
+   "note": "Pharmacy branch fascia below the right middle convenience fascia; clear vertical separation.",
+   "floating": true
+  },
+  {
+   "id": "background-service-east",
+   "construct": "constructs/service-tower/scene.json",
+   "at": [
+    -30.0,
+    0.0,
+    69.0
+   ],
+   "yaw": 180.0,
+   "scale": 1.0,
+   "note": "World round2 D3/D5: existing service midrise shifted outward so broad Tide Relay shoulder and terraces remain visible in the canyon; scale1 retained."
+  },
+  {
+   "id": "background-hotel-west",
+   "construct": "constructs/balcony-hotel/scene.json",
+   "at": [
+    25.0,
+    0.0,
+    75.0
+   ],
+   "yaw": 180.0,
+   "scale": 1.0,
+   "note": "World round2 D3/D5: offset existing hotel behind the flat service-roof block, clear of adjacent masses; keep original size and source."
+  },
+  {
+   "id": "background-service-far-west",
+   "construct": "constructs/service-tower/scene.json",
+   "at": [
+    -33.0,
+    0.0,
+    51.0
+   ],
+   "yaw": 180.0,
+   "note": "World round2 D3/D5: reuse existing service design as a broad intermediate shoulder below the west skyline; no new logical building template."
+  },
+  {
+   "id": "background-hotel-far-east",
+   "construct": "constructs/balcony-hotel/scene.json",
+   "at": [
+    34.0,
+    0.0,
+    58.0
+   ],
+   "yaw": 180.0,
+   "note": "World round2 D3/D5: reuse existing offset-balcony hotel as an intermediate skyline mass, preserving real size and modular source."
+  },
+  {
+   "id": "skyline-inner-west",
+   "construct": "constructs/tide-relay-tower/scene.json",
+   "at": [
+    -23.0,
+    0.0,
+    90.0
+   ],
+   "yaw": 180.0,
+   "note": "World5 D8: separate Tide Relay to bound the other edge of an approximately17percent projected sky slot, just behind the existing service midrise for collision clearance; full84m designed tower and yaw180 retained.",
+   "label": "Tide Relay Tower"
+  },
+  {
+   "id": "skyline-centre",
+   "construct": "constructs/terrace-exchange/scene.json",
+   "at": [
+    19.0,
+    0.0,
+    98.0
+   ],
+   "yaw": 180.0,
+   "note": "World5 D8: retain Terrace Exchange at its existing depth and real size, shift laterally to bound the left edge of a projected central sky slot without removing all skyline architecture.",
+   "label": "Terrace Exchange"
+  },
+  {
+   "id": "skyline-inner-east",
+   "construct": "constructs/service-loft/scene.json",
+   "at": [
+    37.0,
+    0.0,
+    105.0
+   ],
+   "yaw": 180.0,
+   "note": "World5 D8: make room for separated Terrace Exchange while preserving original scale and full supported footprint; staggered far-flank service-roof mass, not all-masses removal.",
+   "label": "Service Loft"
+  }
+ ],
+ "summary": "A game level from a concept picture: 60 m of a rain-soaked night street in an invented harbour district, its towers, bilingual neon signs (real English and Chinese that mean what they say) and one drivable hero car. 21 constructs placed 50 times, each made in masterpiece rounds; then the world itself ran 12 rounds against the picture. Designed, not surveyed.",
+ "presentation": {
+  "views": [
+   {
+    "distance_m": 143.84475138148073,
+    "id": "reference-street",
+    "label": "01 · Low street / reference shot",
+    "pitch": -6.486494815007331,
+    "target": [
+     11.399999999999999,
+     17.25,
+     105.5
+    ],
+    "yaw": -175.58592148210184
+   },
+   {
+    "distance": 0.9,
+    "id": "hero-car-close",
+    "label": "02 · AURIC / hero car",
+    "pitch": 9,
+    "target": "hero-car",
+    "yaw": 148
+   },
+   {
+    "distance_m": 154.49595463959565,
+    "id": "skyline",
+    "label": "04 · Layered Harbour skyline",
+    "pitch": 13.856351501698548,
+    "target": [
+     0,
+     48,
+     90
+    ],
+    "yaw": 180
+   },
+   {
+    "distance": 1.5,
+    "id": "under-signs",
+    "label": "03 · Under the signs",
+    "pitch": -16,
+    "target": "sign-rain-harbour",
+    "yaw": 293
+   },
+   {
+    "distance_m": 143.84475138148073,
+    "id": "hero",
+    "label": "Rain Harbour · street approach",
+    "pitch": -6.486494815007331,
+    "target": [
+     11.399999999999999,
+     17.25,
+     105.5
+    ],
+    "yaw": -175.58592148210184
+   },
+   {
+    "distance": 1.4,
+    "id": "sign-rain-harbour",
+    "label": "Sign face · rain harbour",
+    "pitch": 5,
+    "target": "sign-rain-harbour",
+    "yaw": 270
+   },
+   {
+    "distance": 1.4,
+    "id": "sign-noodles",
+    "label": "Sign face · noodles",
+    "pitch": 5,
+    "target": "sign-noodles",
+    "yaw": 270
+   },
+   {
+    "distance": 1.4,
+    "id": "sign-hotel",
+    "label": "Sign face · hotel",
+    "pitch": 5,
+    "target": "sign-hotel",
+    "yaw": 180
+   },
+   {
+    "distance": 1.4,
+    "id": "sign-electronics",
+    "label": "Sign face · electronics",
+    "pitch": 5,
+    "target": "sign-electronics",
+    "yaw": 270
+   },
+   {
+    "distance": 1.4,
+    "id": "sign-pharmacy",
+    "label": "Sign face · pharmacy",
+    "pitch": 5,
+    "target": "sign-pharmacy",
+    "yaw": 270
+   },
+   {
+    "distance": 1.4,
+    "id": "sign-night-market",
+    "label": "Sign face · night market",
+    "pitch": 5,
+    "target": "sign-night-market",
+    "yaw": 90
+   },
+   {
+    "distance": 1.4,
+    "id": "sign-convenience",
+    "label": "Sign face · convenience",
+    "pitch": 5,
+    "target": "sign-convenience",
+    "yaw": 90
+   },
+   {
+    "distance": 1.4,
+    "id": "sign-road-08",
+    "label": "Sign face · road 08",
+    "pitch": 5,
+    "target": "sign-road-08",
+    "yaw": 270
+   },
+   {
+    "distance": 1.4,
+    "id": "sign-night-market-upper-left",
+    "label": "Sign face · night market upper left",
+    "pitch": 5,
+    "target": "sign-night-market-upper-left",
+    "yaw": 270
+   },
+   {
+    "distance": 1.4,
+    "id": "sign-hotel-upper-left",
+    "label": "Sign face · hotel upper left",
+    "pitch": 5,
+    "target": "sign-hotel-upper-left",
+    "yaw": 180
+   },
+   {
+    "distance": 1.4,
+    "id": "sign-electronics-right-front",
+    "label": "Sign face · electronics right front",
+    "pitch": 5,
+    "target": "sign-electronics-right-front",
+    "yaw": 90
+   },
+   {
+    "distance": 1.4,
+    "id": "sign-noodles-middle",
+    "label": "Sign face · noodles middle",
+    "pitch": 5,
+    "target": "sign-noodles-middle",
+    "yaw": 270
+   },
+   {
+    "distance": 1.4,
+    "id": "sign-pharmacy-right-front",
+    "label": "Sign face · pharmacy right front",
+    "pitch": 5,
+    "target": "sign-pharmacy-right-front",
+    "yaw": 90
+   },
+   {
+    "distance": 1.4,
+    "id": "sign-convenience-left-front",
+    "label": "Sign face · convenience left front",
+    "pitch": 5,
+    "target": "sign-convenience-left-front",
+    "yaw": 270
+   },
+   {
+    "distance": 1.4,
+    "id": "sign-rain-harbour-right-middle",
+    "label": "Sign face · rain harbour right middle",
+    "pitch": 5,
+    "target": "sign-rain-harbour-right-middle",
+    "yaw": 90
+   },
+   {
+    "distance": 1.4,
+    "id": "sign-hotel-left-back",
+    "label": "Sign face · hotel left back",
+    "pitch": 5,
+    "target": "sign-hotel-left-back",
+    "yaw": 180
+   },
+   {
+    "distance": 1.4,
+    "id": "sign-night-market-right-back",
+    "label": "Sign face · night market right back",
+    "pitch": 5,
+    "target": "sign-night-market-right-back",
+    "yaw": 90
+   },
+   {
+    "distance": 1.4,
+    "id": "sign-electronics-left-back",
+    "label": "Sign face · electronics left back",
+    "pitch": 5,
+    "target": "sign-electronics-left-back",
+    "yaw": 270
+   },
+   {
+    "distance": 1.4,
+    "id": "sign-pharmacy-right-middle",
+    "label": "Sign face · pharmacy right middle",
+    "pitch": 5,
+    "target": "sign-pharmacy-right-middle",
+    "yaw": 90
+   },
+   {
+    "distance": 1.1,
+    "id": "bin-left-front",
+    "label": "Bin · foreground street face",
+    "pitch": 12,
+    "target": "bin-left-front",
+    "yaw": 290
+   },
+   {
+    "distance": 1.1,
+    "id": "bin-right-middle",
+    "label": "Bin · middle street face",
+    "pitch": 12,
+    "target": "bin-right-middle",
+    "yaw": 110
+   },
+   {
+    "id": "left-service-front",
+    "label": "Service frontage · occupied lower shops",
+    "target": "left-service-front/r12-counter-worktop",
+    "yaw": 290,
+    "pitch": 8,
+    "distance": 2
+   }
+  ]
+ },
+ "authoring": {
+  "tier": "masterpiece",
+  "research": "unavailable",
+  "critic": {
+   "scene_sha256": "5d5dadb7f653c277c5b6f787eb9ee3ea2d17a76035622a727a11ff72d673ebd7",
+   "verdict": "good",
+   "scores": {
+    "silhouette": 2,
+    "proportions": 2,
+    "identity": 2,
+    "depth": 2,
+    "composition": 2,
+    "assembly": 3,
+    "motion": 3,
+    "density": 2,
+    "honesty": 3
+   },
+   "round": 12,
+   "defects": 6
+  },
+  "rounds": [
+   {
+    "round": 1,
+    "result": "baseline",
+    "minutes": 1.7,
+    "changes": [
+     "draft"
+    ],
+    "summary": "The defining rain-soaked foreground is reduced to a few isolated flat patches on a nearly featureless road. In the concept, broken cyan, mag"
+   },
+   {
+    "round": 2,
+    "result": "kept",
+    "minutes": 27.0,
+    "changes": [
+     "D1",
+     "D2",
+     "D3",
+     "D5"
+    ],
+    "summary": "The vanishing point runs straight into the broad center building mass. In the reference the center-right distance opens into a bright gap, s"
+   },
+   {
+    "round": 3,
+    "result": "reverted",
+    "minutes": 20.5,
+    "changes": [
+     "D1",
+     "D12",
+     "D4",
+     "D8"
+    ],
+    "summary": "In the solid hero pass the front-left car is a cluster of broken horizontal fragments, not a continuous yellow sports-car mass. The wire vie"
+   },
+   {
+    "round": 4,
+    "result": "kept",
+    "minutes": 22.7,
+    "changes": [
+     "D1",
+     "D3",
+     "D8"
+    ],
+    "summary": "A broad, near-contiguous central slab occupies most of the vanishing-point skyline. The reference instead has a clearly open central sky slo"
+   },
+   {
+    "round": 5,
+    "result": "kept",
+    "minutes": 23.7,
+    "changes": [
+     "D1",
+     "D13",
+     "D4",
+     "D8"
+    ],
+    "summary": "The reference's distant tower group closes the central corridor above the vanishing point; here the centre remains a featureless dark vertic"
+   },
+   {
+    "round": 6,
+    "result": "reverted",
+    "minutes": 13.9,
+    "changes": [
+     "D14",
+     "D16",
+     "D3",
+     "D5"
+    ],
+    "summary": "The key neon hierarchy is weak in the matching street shot. Several dedicated placed-instance views show an empty carrier or its back while "
+   },
+   {
+    "round": 7,
+    "result": "kept",
+    "minutes": 5.9,
+    "changes": [
+     "D14",
+     "D16",
+     "D3",
+     "D5"
+    ],
+    "summary": "The requested yellow hero vehicle reads predominantly grey/dark with thin yellow inset strips. In the reference the broad upper flank, rear "
+   },
+   {
+    "round": 8,
+    "result": "kept",
+    "minutes": 8.6,
+    "changes": [
+     "D10"
+    ],
+    "summary": "The avenue terminates visually in a large stepped upper mass supported on two extremely long bare legs. In the solid shot its black opening "
+   },
+   {
+    "round": 9,
+    "result": "kept",
+    "minutes": 37.7,
+    "changes": [
+     "D10",
+     "D12",
+     "D13",
+     "D4"
+    ],
+    "summary": "The concept's continuous rain-polished road is replaced by separated reflection cards. In the car view the cyan area sits within a large gre"
+   },
+   {
+    "round": 10,
+    "result": "reverted",
+    "minutes": 23.1,
+    "changes": [
+     "D15",
+     "D19",
+     "D20",
+     "D22"
+    ],
+    "summary": "The concept's defining continuous wet roadway has become separated rectangular cyan/magenta mats with sharp card boundaries and disconnected"
+   },
+   {
+    "round": 11,
+    "result": "kept",
+    "minutes": 5.2,
+    "changes": [
+     "D20",
+     "D22"
+    ],
+    "summary": "The concept's wet foreground is a continuous, irregularly broken surface. Here the strongest cyan and magenta ground accents sit on conspicu"
+   },
+   {
+    "round": 12,
+    "result": "kept",
+    "minutes": 14.1,
+    "changes": [
+     "D11",
+     "D4",
+     "D6"
+    ],
+    "summary": "The concept's wet road carries broken vertical reflection ribbons across most of the foreground. Here cyan and magenta pools sit inside cons"
+   }
+  ],
+  "outcome": "limit",
+  "review_rounds": 12
+ },
+ "animation": {
+  "assembly": {
+   "order": [
+    "street",
+    "skyline-inner-west",
+    "skyline-centre",
+    "skyline-inner-east",
+    "skyline-west",
+    "skyline-east",
+    "background-service-east",
+    "background-hotel-west",
+    "background-service-far-west",
+    "background-hotel-far-east",
+    "bollard-left-near",
+    "bollard-right-near",
+    "bollard-left-middle",
+    "bollard-right-middle",
+    "bollard-left-far",
+    "bollard-right-far",
+    "left-service-front",
+    "sign-rain-harbour",
+    "sign-noodles",
+    "lamp-left",
+    "right-hotel-front",
+    "sign-night-market",
+    "sign-pharmacy-right-front",
+    "water-vending",
+    "left-hotel-middle",
+    "sign-pharmacy",
+    "sign-noodles-middle",
+    "bin-left-front",
+    "right-service-middle",
+    "sign-convenience",
+    "sign-rain-harbour-right-middle",
+    "bin-right-middle",
+    "left-service-back",
+    "sign-electronics-left-back",
+    "sign-hotel-left-back",
+    "lamp-right",
+    "right-hotel-back",
+    "sign-night-market-right-back",
+    "hero-car",
+    "cables-near",
+    "cables-middle",
+    "cables-far",
+    "sign-hotel",
+    "sign-hotel-upper-left",
+    "sign-electronics",
+    "sign-road-08",
+    "sign-night-market-upper-left",
+    "sign-electronics-right-front",
+    "sign-convenience-left-front",
+    "sign-pharmacy-right-middle"
+   ],
+   "seconds": 24
+  }
+ }
+}

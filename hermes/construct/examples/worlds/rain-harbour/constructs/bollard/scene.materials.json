@@ -1,0 +1,26 @@
+{
+  "about": "Original Rain Harbour bollard export colors requested by the supervisor; coatings and amber film are design intent, not measured materials. Reflective film uses a plastic PBR approximation; no physically accurate retroreflection is claimed.",
+  "materials": [
+    {
+      "parts": [
+        "steel-baseplate",
+        "steel-post-and-cap"
+      ],
+      "name": "Dark blue-grey powder-coated steel",
+      "color": "#17212a",
+      "finish": "paint",
+      "roughness": 0.48,
+      "metallic": 0.35
+    },
+    {
+      "parts": [
+        "amber-reflective-band"
+      ],
+      "name": "Amber retroreflective film approximation",
+      "color": "#e9a329",
+      "finish": "plastic",
+      "roughness": 0.27,
+      "metallic": 0.0
+    }
+  ]
+}

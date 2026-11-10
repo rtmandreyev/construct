@@ -35,7 +35,7 @@ independent critic run as a fresh subagent through Hermes's delegation, and seve
 | `construct_job` | progress and results of background work; `wait_seconds` waits for it |
 | `construct_netlogo_run` | a NetLogo model run headless (yours, or one from your installed Models Library), drawn as a construct; N seeded runs compared |
 | `construct_netlogo_draw` | recorded NetLogo runs drawn or compared, with no NetLogo needed |
-| `construct_world` | whole constructs placed together in one world (a house, its furniture, cars under it, a planet in the sky; a street, a city), checked for overlaps, collisions and doors that cannot open, and shown live; `refresh` brings in constructs improved since they were placed; three worlds ship to start from ([Worlds](https://github.com/rtmandreyev/construct/blob/main/docs/WORLDS.md)) |
+| `construct_world` | whole constructs placed together in one world (a house, its furniture, cars under it, a planet in the sky; a street, a city), checked for overlaps, collisions and doors that cannot open, and shown live; `refresh` brings in constructs improved since they were placed; six worlds ship to start from, two of them made from a single picture each ([Worlds](https://github.com/rtmandreyev/construct/blob/main/docs/WORLDS.md)) |
 | `construct_command` | the rest of Construct's command line (critique, rounds, tracing, lofting, likeness, terrain, globe, model kits, NetLogo plates and films), guarded; `["--help"]` lists what it runs |
 
 Long work never runs into Hermes's tool deadline: a film, a NetLogo run, or a build, review or export that takes

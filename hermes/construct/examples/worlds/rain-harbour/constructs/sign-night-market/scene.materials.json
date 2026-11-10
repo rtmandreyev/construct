@@ -1,0 +1,9 @@
+{
+  "materials": [
+    {"parts":["night-market-face"],"name":"Night Market magenta emission fallback; runtime PNG replaces flat color","color":"#ff21ba","emissive":"#ff21ba","finish":"light","metallic":0,"roughness":0.28},
+    {"parts":["casing-bezel-joint"],"name":"Magenta painted bezel","color":"#7b175e","finish":"paint","metallic":0.25,"roughness":0.3},
+    {"parts":["night-market-lightbox"],"name":"Dark blue-grey housing","color":"#263544","finish":"paint","metallic":0.35,"roughness":0.38},
+    {"parts":["rear-wall-bracket*"],"name":"Blue-grey brushed wall brackets","color":"#405264","finish":"brushed","metallic":0.8,"roughness":0.4},
+    {"parts":["rear-service-and-mount-seams"],"name":"Muted blue-grey service seams","color":"#7b8996","metallic":0.65,"roughness":0.5}
+  ]
+}
