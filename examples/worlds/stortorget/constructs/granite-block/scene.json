@@ -24,6 +24,13 @@
    "title": "Ximonic (Simo Räsänen), Stortorget Christmas Market, December 2022",
    "ref": "Source photograph supplied in shared brief; CC BY-SA 4.0 https://creativecommons.org/licenses/by-sa/4.0/ . Derived visual reconstruction credit: Ximonic (Simo Räsänen).",
    "rights": "permitted"
+  },
+  {
+   "id": "model-estimate",
+   "kind": "generated",
+   "ref": "Provenance audit D; existing geometry/artwork retained without orthographic fitting or measurement.",
+   "rights": "reference_only",
+   "title": "Agent-authored dimensions, unseen continuation and neutral-texture placements"
   }
  ],
  "facts": [
@@ -32,46 +39,61 @@
    "value": 2.2,
    "unit": "m",
    "certainty": "inferred",
-   "source": "photo",
-   "note": "Supervisor envelope estimate, refined by broad squat photographic silhouette; not surveyed."
+   "source": "model-estimate",
+   "note": "Agent/supervisor production estimate motivated by perspective silhouette, not user-measured or published; no verified scale."
   },
   {
    "key": "depth",
    "value": 1.55,
    "unit": "m",
    "certainty": "inferred",
-   "source": "photo",
-   "note": "Estimated footprint; foreshortened depth and hidden back are uncertain."
+   "source": "model-estimate",
+   "note": "Agent production estimate of foreshortened footprint; hidden back is unknown, no measured footprint or fitted orthographic drawing."
   },
   {
    "key": "height",
    "value": 1.05,
    "unit": "m",
    "certainty": "inferred",
-   "source": "photo",
-   "note": "Estimated envelope, not a published measurement."
+   "source": "model-estimate",
+   "note": "Agent production envelope estimate, not published or measured."
   },
   {
    "key": "cap.thickness",
    "value": 0.17,
    "unit": "m",
    "certainty": "inferred",
-   "source": "photo",
-   "note": "Visible thick lid edge compared with body."
+   "source": "model-estimate",
+   "note": "Photo shows thick projecting edge but 0.17 m is an agent estimate, not measured."
   },
   {
    "key": "band.height",
    "value": 0.13,
    "unit": "m",
    "certainty": "inferred",
-   "source": "photo",
-   "note": "Narrow pale band beneath projecting lid."
+   "source": "model-estimate",
+   "note": "Photo shows pale narrow band, but 0.13 m is agent-authored, not a published dimension."
   },
   {
    "key": "front.notch.count",
    "value": 2,
-   "certainty": "user_supplied",
-   "source": "request"
+   "certainty": "inferred",
+   "source": "photo",
+   "note": "Visible in reference: two dark, roughly rectangular foot-level front recess-like patches. Agent interpretation of this visible face, not user-supplied or published count. Internal depth/structure and hidden faces unresolved."
+  },
+  {
+   "certainty": "inferred",
+   "key": "visible-outer-form",
+   "note": "Literal perspective-photo observation only; appearance does not establish geology, material, date, sculptor or function. No metric scale or orthographic fitting.",
+   "source": "photo",
+   "value": "Squat broad block-like object with overhanging flat top, pale inset horizontal band and darker upright faces; top/front/right visible, back/left/underside hidden."
+  },
+  {
+   "certainty": "inferred",
+   "key": "identity-limits",
+   "note": "Legacy granite/stone slab/lid names are modeling descriptions, not geological or functional identifications. Function explicitly remains unknown; no record conclusively matched to this actual foreground object.",
+   "source": "model-estimate",
+   "value": "Function, internal construction, exact geological material, installation date, maker and sculptor remain unknown."
   }
  ],
  "parts": [
@@ -80,8 +102,9 @@
    "label": "Inferred hidden stone core",
    "role": "structure",
    "certainty": "inferred",
-   "source": "photo",
+   "source": "model-estimate",
    "basis": [
+    "identity-limits",
     "width",
     "depth",
     "height"
@@ -104,7 +127,8 @@
     "fill": "dark",
     "weight": 0.4,
     "alpha": 0.55
-   }
+   },
+   "note": "Hidden core/rear are not visible in reference. Entire structure, thickness, composition and dimensions are agent-inferred completion; photo is not direct evidence; both axes remain inferred."
   },
   {
    "id": "front-notched-slab",
@@ -114,6 +138,7 @@
    "source": "photo",
    "basis": [
     "front.notch.count",
+    "visible-outer-form",
     "width",
     "height"
    ],
@@ -175,14 +200,15 @@
     "weight": 0.85,
     "alpha": 0.78,
     "glow": 0
-   }
+   },
+   "note": "Visible front face and two dark foot-level rectangular patches motivate notched outline only. Actual cavity depths, slab thickness/joints, geology and function are unverified; extruded profiles/coordinates remain inferred, not orthographically traced."
   },
   {
    "id": "rear-slab",
    "label": "Hidden rear granite slab, inferred",
    "role": "structure",
    "certainty": "inferred",
-   "source": "photo",
+   "source": "model-estimate",
    "stage": 1,
    "shape": {
     "type": "box",
@@ -201,7 +227,14 @@
     "fill": "dark",
     "weight": 0.45,
     "alpha": 0.6
-   }
+   },
+   "basis": [
+    "identity-limits",
+    "width",
+    "depth",
+    "height"
+   ],
+   "note": "Hidden core/rear are not visible in reference. Entire structure, thickness, composition and dimensions are agent-inferred completion; photo is not direct evidence; both axes remain inferred."
   },
   {
    "id": "side-slab-left",
@@ -228,7 +261,13 @@
     "weight": 0.55,
     "alpha": 0.7
    },
-   "mirror": "x"
+   "mirror": "x",
+   "basis": [
+    "visible-outer-form",
+    "depth",
+    "height"
+   ],
+   "note": "Photo shows the object's right-hand face only. This authored definition also mirrors to the unseen left: left face, slab construction/thickness, full depth and mirrored symmetry are inferred; photo supports visible right-face appearance, not hidden geometry."
   },
   {
    "id": "inset-pale-band",
@@ -237,6 +276,7 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
+    "visible-outer-form",
     "band.height"
    ],
    "stage": 2,
@@ -259,7 +299,8 @@
     "weight": 0.65,
     "alpha": 1,
     "glow": 0
-   }
+   },
+   "note": "Pale horizontal band visible at front/right. Whole box, concealed rear/left continuation, thickness and 0.13 m height inferred; appearance does not identify material or function."
   },
   {
    "id": "band-corner-pier-left",
@@ -291,7 +332,12 @@
     "asset": "neutral-stone-photo",
     "face": "front",
     "slot": "booklet-page-20"
-   }
+   },
+   "basis": [
+    "visible-outer-form",
+    "band.height"
+   ],
+   "note": "Dark front corner interruptions of pale band are visible. Exact paired geometry, thickness and neutral texture placement are inferred; artwork does not establish granite/geology."
   },
   {
    "id": "thick-flat-lid",
@@ -300,10 +346,10 @@
    "certainty": "inferred",
    "source": "photo",
    "basis": [
+    "visible-outer-form",
     "width",
     "depth",
-    "cap.thickness",
-    "height"
+    "cap.thickness"
    ],
    "stage": 3,
    "shape": {
@@ -355,7 +401,8 @@
     "weight": 0.7,
     "alpha": 0.75,
     "glow": 0
-   }
+   },
+   "note": "Photo supports broad flat projecting top/front/right edge appearance. Exact plan profile, chipped corners, back/left edge, underside and thickness remain inferred; lid is a modeling label, function/geological material unknown."
   },
   {
    "id": "front-notched-slab-right",
@@ -365,6 +412,7 @@
    "source": "photo",
    "basis": [
     "front.notch.count",
+    "visible-outer-form",
     "width",
     "height"
    ],
@@ -426,7 +474,8 @@
     "weight": 0.75,
     "alpha": 0.75,
     "glow": 0
-   }
+   },
+   "note": "Visible front face and two dark foot-level rectangular patches motivate notched outline only. Actual cavity depths, slab thickness/joints, geology and function are unverified; extruded profiles/coordinates remain inferred, not orthographically traced."
   },
   {
    "id": "photo-front-upper-left",
@@ -454,7 +503,11 @@
     "slot": "booklet-page-1",
     "asset": "front-upper-left-photo",
     "face": "front"
-   }
+   },
+   "basis": [
+    "visible-outer-form"
+   ],
+   "note": "Existing photo-derived artwork represents a visible top/front/right surface appearance only. Plane sizes, orthogonal placement, crop warping/rectification and actual surface depths remain inferred; no orthographic fitting or published dimensions. Texture does not verify geological material or object function."
   },
   {
    "id": "photo-front-upper-right",
@@ -482,7 +535,11 @@
     "slot": "booklet-page-2",
     "asset": "front-upper-right-photo",
     "face": "front"
-   }
+   },
+   "basis": [
+    "visible-outer-form"
+   ],
+   "note": "Existing photo-derived artwork represents a visible top/front/right surface appearance only. Plane sizes, orthogonal placement, crop warping/rectification and actual surface depths remain inferred; no orthographic fitting or published dimensions. Texture does not verify geological material or object function."
   },
   {
    "id": "photo-front-foot-left",
@@ -510,7 +567,11 @@
     "slot": "booklet-page-3",
     "asset": "front-foot-left-photo",
     "face": "front"
-   }
+   },
+   "basis": [
+    "visible-outer-form"
+   ],
+   "note": "Existing photo-derived artwork represents a visible top/front/right surface appearance only. Plane sizes, orthogonal placement, crop warping/rectification and actual surface depths remain inferred; no orthographic fitting or published dimensions. Texture does not verify geological material or object function."
   },
   {
    "id": "photo-front-foot-middle",
@@ -538,7 +599,11 @@
     "slot": "booklet-page-4",
     "asset": "front-foot-middle-photo",
     "face": "front"
-   }
+   },
+   "basis": [
+    "visible-outer-form"
+   ],
+   "note": "Existing photo-derived artwork represents a visible top/front/right surface appearance only. Plane sizes, orthogonal placement, crop warping/rectification and actual surface depths remain inferred; no orthographic fitting or published dimensions. Texture does not verify geological material or object function."
   },
   {
    "id": "photo-front-foot-right",
@@ -566,7 +631,11 @@
     "slot": "booklet-page-5",
     "asset": "front-foot-right-photo",
     "face": "front"
-   }
+   },
+   "basis": [
+    "visible-outer-form"
+   ],
+   "note": "Existing photo-derived artwork represents a visible top/front/right surface appearance only. Plane sizes, orthogonal placement, crop warping/rectification and actual surface depths remain inferred; no orthographic fitting or published dimensions. Texture does not verify geological material or object function."
   },
   {
    "id": "photo-right-base",
@@ -599,7 +668,11 @@
     "slot": "booklet-page-6",
     "asset": "right-base-photo",
     "face": "front"
-   }
+   },
+   "basis": [
+    "visible-outer-form"
+   ],
+   "note": "Existing photo-derived artwork represents a visible top/front/right surface appearance only. Plane sizes, orthogonal placement, crop warping/rectification and actual surface depths remain inferred; no orthographic fitting or published dimensions. Texture does not verify geological material or object function."
   },
   {
    "id": "photo-lid-top",
@@ -632,7 +705,11 @@
     "slot": "booklet-page-7",
     "asset": "lid-top-photo",
     "face": "front"
-   }
+   },
+   "basis": [
+    "visible-outer-form"
+   ],
+   "note": "Existing photo-derived artwork represents a visible top/front/right surface appearance only. Plane sizes, orthogonal placement, crop warping/rectification and actual surface depths remain inferred; no orthographic fitting or published dimensions. Texture does not verify geological material or object function."
   },
   {
    "id": "photo-pale-front-band",
@@ -660,7 +737,11 @@
     "slot": "booklet-page-8",
     "asset": "pale-front-photo",
     "face": "front"
-   }
+   },
+   "basis": [
+    "visible-outer-form"
+   ],
+   "note": "Existing photo-derived artwork represents a visible top/front/right surface appearance only. Plane sizes, orthogonal placement, crop warping/rectification and actual surface depths remain inferred; no orthographic fitting or published dimensions. Texture does not verify geological material or object function."
   },
   {
    "id": "photo-pale-right-band",
@@ -693,7 +774,11 @@
     "slot": "booklet-page-9",
     "asset": "pale-right-photo",
     "face": "front"
-   }
+   },
+   "basis": [
+    "visible-outer-form"
+   ],
+   "note": "Existing photo-derived artwork represents a visible top/front/right surface appearance only. Plane sizes, orthogonal placement, crop warping/rectification and actual surface depths remain inferred; no orthographic fitting or published dimensions. Texture does not verify geological material or object function."
   },
   {
    "id": "photo-lid-front-edge",
@@ -721,7 +806,11 @@
     "slot": "booklet-page-10",
     "asset": "lid-front-photo",
     "face": "front"
-   }
+   },
+   "basis": [
+    "visible-outer-form"
+   ],
+   "note": "Existing photo-derived artwork represents a visible top/front/right surface appearance only. Plane sizes, orthogonal placement, crop warping/rectification and actual surface depths remain inferred; no orthographic fitting or published dimensions. Texture does not verify geological material or object function."
   },
   {
    "id": "photo-lid-right-edge",
@@ -754,7 +843,11 @@
     "slot": "booklet-page-11",
     "asset": "lid-right-photo",
     "face": "front"
-   }
+   },
+   "basis": [
+    "visible-outer-form"
+   ],
+   "note": "Existing photo-derived artwork represents a visible top/front/right surface appearance only. Plane sizes, orthogonal placement, crop warping/rectification and actual surface depths remain inferred; no orthographic fitting or published dimensions. Texture does not verify geological material or object function."
   },
   {
    "artwork": {
@@ -786,8 +879,15 @@
     ],
     "type": "plane"
    },
-   "source": "photo",
-   "stage": 4
+   "source": "model-estimate",
+   "stage": 4,
+   "basis": [
+    "identity-limits",
+    "width",
+    "depth",
+    "height"
+   ],
+   "note": "Existing neutral-stone artwork placement fills modeled returns/rims. Specific thin plane, exact seam and continuation are agent choices, not individually resolved photo features; source texture appearance does not verify geology, geometry or dimensions."
   },
   {
    "artwork": {
@@ -819,8 +919,15 @@
     ],
     "type": "plane"
    },
-   "source": "photo",
-   "stage": 4
+   "source": "model-estimate",
+   "stage": 4,
+   "basis": [
+    "identity-limits",
+    "width",
+    "depth",
+    "height"
+   ],
+   "note": "Existing neutral-stone artwork placement fills modeled returns/rims. Specific thin plane, exact seam and continuation are agent choices, not individually resolved photo features; source texture appearance does not verify geology, geometry or dimensions."
   },
   {
    "artwork": {
@@ -852,8 +959,15 @@
     ],
     "type": "plane"
    },
-   "source": "photo",
-   "stage": 4
+   "source": "model-estimate",
+   "stage": 4,
+   "basis": [
+    "identity-limits",
+    "width",
+    "depth",
+    "height"
+   ],
+   "note": "Existing neutral-stone artwork placement fills modeled returns/rims. Specific thin plane, exact seam and continuation are agent choices, not individually resolved photo features; source texture appearance does not verify geology, geometry or dimensions."
   },
   {
    "artwork": {
@@ -880,8 +994,15 @@
     ],
     "type": "plane"
    },
-   "source": "photo",
-   "stage": 4
+   "source": "model-estimate",
+   "stage": 4,
+   "basis": [
+    "identity-limits",
+    "width",
+    "depth",
+    "height"
+   ],
+   "note": "Photo supports dark front foot-level patches only. These placed interior back planes and depths are agent-inferred, not measured cavity surfaces. Existing dark artwork is appearance fill, not evidence of actual internal construction or function."
   },
   {
    "artwork": {
@@ -908,8 +1029,15 @@
     ],
     "type": "plane"
    },
-   "source": "photo",
-   "stage": 4
+   "source": "model-estimate",
+   "stage": 4,
+   "basis": [
+    "identity-limits",
+    "width",
+    "depth",
+    "height"
+   ],
+   "note": "Photo supports dark front foot-level patches only. These placed interior back planes and depths are agent-inferred, not measured cavity surfaces. Existing dark artwork is appearance fill, not evidence of actual internal construction or function."
   },
   {
    "artwork": {
@@ -941,8 +1069,15 @@
     ],
     "type": "plane"
    },
-   "source": "photo",
-   "stage": 4
+   "source": "model-estimate",
+   "stage": 4,
+   "basis": [
+    "identity-limits",
+    "width",
+    "depth",
+    "height"
+   ],
+   "note": "Internal notch return/soffit geometry is unresolved in source. Exact depths, orthogonal planes and texture placements are agent completion, not traced/photo-verified cavity construction or evidence of block function."
   },
   {
    "artwork": {
@@ -974,8 +1109,15 @@
     ],
     "type": "plane"
    },
-   "source": "photo",
-   "stage": 4
+   "source": "model-estimate",
+   "stage": 4,
+   "basis": [
+    "identity-limits",
+    "width",
+    "depth",
+    "height"
+   ],
+   "note": "Internal notch return/soffit geometry is unresolved in source. Exact depths, orthogonal planes and texture placements are agent completion, not traced/photo-verified cavity construction or evidence of block function."
   },
   {
    "artwork": {
@@ -1007,8 +1149,15 @@
     ],
     "type": "plane"
    },
-   "source": "photo",
-   "stage": 4
+   "source": "model-estimate",
+   "stage": 4,
+   "basis": [
+    "identity-limits",
+    "width",
+    "depth",
+    "height"
+   ],
+   "note": "Internal notch return/soffit geometry is unresolved in source. Exact depths, orthogonal planes and texture placements are agent completion, not traced/photo-verified cavity construction or evidence of block function."
   },
   {
    "artwork": {
@@ -1040,8 +1189,15 @@
     ],
     "type": "plane"
    },
-   "source": "photo",
-   "stage": 4
+   "source": "model-estimate",
+   "stage": 4,
+   "basis": [
+    "identity-limits",
+    "width",
+    "depth",
+    "height"
+   ],
+   "note": "Internal notch return/soffit geometry is unresolved in source. Exact depths, orthogonal planes and texture placements are agent completion, not traced/photo-verified cavity construction or evidence of block function."
   },
   {
    "artwork": {
@@ -1073,8 +1229,15 @@
     ],
     "type": "plane"
    },
-   "source": "photo",
-   "stage": 4
+   "source": "model-estimate",
+   "stage": 4,
+   "basis": [
+    "identity-limits",
+    "width",
+    "depth",
+    "height"
+   ],
+   "note": "Internal notch return/soffit geometry is unresolved in source. Exact depths, orthogonal planes and texture placements are agent completion, not traced/photo-verified cavity construction or evidence of block function."
   },
   {
    "artwork": {
@@ -1106,8 +1269,15 @@
     ],
     "type": "plane"
    },
-   "source": "photo",
-   "stage": 4
+   "source": "model-estimate",
+   "stage": 4,
+   "basis": [
+    "identity-limits",
+    "width",
+    "depth",
+    "height"
+   ],
+   "note": "Internal notch return/soffit geometry is unresolved in source. Exact depths, orthogonal planes and texture placements are agent completion, not traced/photo-verified cavity construction or evidence of block function."
   }
  ],
  "articulations": [],
@@ -1294,23 +1464,6 @@
  "authoring": {
   "tier": "masterpiece",
   "research": "done",
-  "critic": {
-   "scene_sha256": "9e27e21c3d2d7cb4e3c7b2f197f3a035de516e8c31bb75a79219eb3c0821734c",
-   "verdict": "improve",
-   "scores": {
-    "silhouette": 2,
-    "proportions": 2,
-    "identity": 2,
-    "depth": 3,
-    "composition": 2,
-    "assembly": 3,
-    "motion": 3,
-    "density": 2,
-    "honesty": 3
-   },
-   "round": 4,
-   "defects": 5
-  },
   "rounds": [
    {
     "round": 1,
@@ -1363,7 +1516,7 @@
    "request"
   ],
   "review_rounds": 4,
-  "outcome": "limit",
+  "outcome": "self-reviewed",
   "next": [
    "Improve photo-view camera matching without changing the accepted hero.",
    "Resolve conflicting band-height critiques with a more precise photo comparison.",
@@ -1411,6 +1564,24 @@
     ],
     "source": "photo"
    }
-  ]
+  ],
+  "provenance_note": "Provenance-only audit; physical payload unchanged; historical independent judgement preserved in before backup and sealed checkpoints, not a fresh critique. Live critic removed because provenance edits invalidate scene hash; no new independent round. Prior limit and unresolved camera/band/texture defects remain in before backup, rounds and next; no geometry/camera fix performed.",
+  "critic": {
+   "scene_sha256": "911d99d9abba104cd131ee97fa4ed05c5a041f3dbcf0211dc2f8b9de3b389b57",
+   "verdict": "improve",
+   "scores": {
+    "silhouette": 2,
+    "proportions": 2,
+    "identity": 2,
+    "depth": 2,
+    "composition": 2,
+    "assembly": 3,
+    "motion": 3,
+    "density": 2,
+    "honesty": 3
+   },
+   "round": 1,
+   "defects": 7
+  }
  }
 }
