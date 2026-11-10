@@ -188,6 +188,22 @@ In Godot the glued map's fixed body stays put while each door is a body of its o
 developers](for/game-developers.md) goes through it with numbers measured in Godot, and why a construct is not a
 text-to-mesh model.
 
+### Changed by hand, no AI
+
+A level made from one prompt is still yours to change, with no model at all. Opened from the Worlds tab in Hermes,
+**Arrange**, click AURIC, **Turn 90°** twice and the arrow keys to bring it out into the middle of the street;
+**Save** checks the level and rebuilds it (the same six cable notes as before, nothing new). Exported again and
+rendered from the same camera, with the car's doors opened on their own hinges:
+
+<p align="center"><img src="media/worlds/hermes-arrange-rain-harbour.png" width="70%" alt="Rain Harbour on its card in Hermes Desktop, in the solid view: AURIC chosen, moved 3.45 m and turned 180°, the Arrange bar with Save 1 change"></p>
+
+<p align="center">
+  <img src="../examples/worlds/rain-harbour/blender-street.jpg" width="49%" alt="Rain Harbour as it was made: AURIC parked at the front left, facing away">
+  <img src="../examples/worlds/rain-harbour/blender-arranged.jpg" width="49%" alt="The same street after the change by hand: AURIC in the middle of the road facing the camera, its gull-wing doors raised">
+</p>
+<p align="center"><sub>Left, the level as Hermes made it; right, after two clicks and a few key presses in Hermes, with
+AURIC's doors open. Same camera, same light; nothing else changed.</sub></p>
+
 ## Out to other tools, finished
 
 A world exports as one file, each placement a named group, every joint in the `open` animation. FBX (Unity, Unreal,
