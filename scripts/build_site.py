@@ -4,6 +4,7 @@
     python3 scripts/build_site.py --out site --no-films      # the same, without the film section
     python3 scripts/build_site.py --out site --films DIR --no-kits   # without the model kits (they take minutes)
     python3 scripts/build_site.py --set-url OWNER/REPO       # move every link to another repository
+    python3 scripts/build_site.py --world-thumbs            # render the missing thumbnails of the worlds' own constructs
 
 Every example in examples/ (listed in examples/examples.json) is compiled with this checkout's
 compiler into a self-contained construct.html, beside its hero image and its own page. The films
@@ -25,6 +26,7 @@ here and in the documents that link to the site.
 import argparse
 import html
 import importlib
+import importlib.util
 import json
 import re
 import shutil
@@ -157,6 +159,18 @@ main p.section kbd { border: 1px solid var(--line); border-radius: 4px; padding:
 .feature h3 { margin: 0 0 10px; font-size: 22px; }
 h3.sub { margin: 6px 0 4px; font-size: 18px; }
 @media (max-width: 600px) { .part-head { align-items: flex-start; } }
+/* a world's own constructs, below it: the gallery's cards, smaller */
+section.made { margin: 34px 0 0; padding-top: 18px; border-top: 1px solid var(--line); }
+.grid.compact { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+@media (min-width: 700px) { .grid.compact { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 1000px) { .grid.compact { grid-template-columns: repeat(4, 1fr); } }
+@media (min-width: 1300px) { .grid.compact { grid-template-columns: repeat(5, 1fr); } }
+@media (min-width: 1700px) { .grid.compact { grid-template-columns: repeat(6, 1fr); } }
+.grid.compact .card { border-radius: 10px; }
+.grid.compact .card .body { padding: 7px 10px 9px; }
+.grid.compact .card h2 { font-size: 13.5px; line-height: 1.3; }
+.grid.compact .card .prov { font-size: 12px; }
+p.also { color: var(--dim); font-size: 14px; margin: 18px 0 0; }
 """
 
 
@@ -186,12 +200,26 @@ def _load_worlds():
     for slug in order:
         doc = json.loads((found[slug] / "world.json").read_text(encoding="utf-8"))
         crit = (doc.get("authoring") or {}).get("critic") or {}
+        placed = {}
+        for p in doc["placements"]:
+            placed[p["construct"]] = placed.get(p["construct"], 0) + 1
         out.append({"slug": slug, "title": doc["title"], "summary": doc.get("summary", ""),
                     "placements": len(doc["placements"]),
-                    "constructs": len({p["construct"] for p in doc["placements"]}),
+                    "constructs": len(placed),
                     "rounds": len((doc.get("authoring") or {}).get("rounds") or []), "verdict": crit.get("verdict"),
-                    "readme": (found[slug] / "README.md").exists()})
+                    "readme": (found[slug] / "README.md").exists(),
+                    "own": _own_constructs(found[slug], placed), "gallery": [c for c in placed if "/" not in c]})
     return out
+
+
+def _own_constructs(src, placed):
+    """A world's own constructs, made for it (constructs/<name>/scene.json beside its world.json): each one's
+    name, title (its scene's) and how many times the world places it, in the order the world first places them."""
+    found = {p.parent.name: p for p in sorted(src.glob("constructs/*/scene.json"))}
+    order = [c.split("/")[1] for c in placed if c.startswith("constructs/") and c.split("/")[1] in found]
+    order += [name for name in found if name not in order]
+    return [{"name": name, "title": json.loads(found[name].read_text(encoding="utf-8"))["title"],
+             "placed": placed.get("constructs/%s/scene.json" % name, 0)} for name in order]
 
 
 def _load_kits():
@@ -245,10 +273,12 @@ def index_page(examples, films=(), beyond=(), kits=(), worlds=()):
     world_cards = [
         "<div class=\"card film\"><a href=\"worlds/%s/\"><img src=\"worlds/%s/thumb.jpg\" alt=\"%s, a world of "
         "constructs\" loading=\"lazy\" width=\"1200\" height=\"750\"></a><div class=\"body\"><h2><a href=\"worlds/%s/\">%s"
-        "</a></h2><p class=\"prov\">world · %d constructs, placed %d times%s</p><p class=\"world-line\">%s</p>"
+        "</a></h2><p class=\"prov\">world · %d constructs, placed %d times%s</p>%s<p class=\"world-line\">%s</p>"
         "<div class=\"choose\"><a class=\"button primary\" href=\"worlds/%s/\">Open the world</a>%s</div></div></div>"
         % (w["slug"], w["slug"], html.escape(w["title"]), w["slug"], html.escape(w["title"]), w["constructs"],
            w["placements"], (" · %d world rounds, %s" % (w["rounds"], w["verdict"])) if w["rounds"] and w["verdict"] else "",
+           ("<p class=\"prov\"><a href=\"worlds/%s/#constructs\">%d construct%s made for it</a></p>"
+            % (w["slug"], len(w["own"]), "" if len(w["own"]) == 1 else "s")) if w.get("own") else "",
            html.escape(w["summary"][:220] + ("…" if len(w["summary"]) > 220 else "")), w["slug"],
            ("<a class=\"button\" href=\"%s/tree/main/examples/worlds/%s\">How it was made</a>" % (REPO_URL, w["slug"]))
            if w["readme"] else "")
@@ -368,8 +398,58 @@ def index_page(examples, films=(), beyond=(), kits=(), worlds=()):
                                                "export, and agent-based models drawn in time.")
 
 
-def world_page(w):
-    """A world's own page: the live world, what it holds, and where it came from."""
+def _placed(n):
+    return "placed once" if n == 1 else "placed %d times" % n if n else "not placed"
+
+
+def _world_constructs(w, examples=(), thumbs=None):
+    """The part of a world's page below the world: the constructs made for it (a compact grid, each card
+    opening its own page under constructs/), then the gallery constructs it places, linked to their pages.
+    `thumbs`: the names whose thumb.jpg exists (None: all); a card without one shows its title only."""
+    titles = {e["slug"]: e["title"] for e in examples}
+    own = w.get("own") or []
+    gallery = [s for s in w.get("gallery") or () if not titles or s in titles]   # each with a page of its own
+    if not own and not gallery:
+        return ""
+    cards = "\n".join(
+        "<a class=\"card\" href=\"constructs/%s/\">%s<div class=\"body\"><h2>%s</h2><p class=\"prov\">%s</p></div></a>"
+        % (c["name"], ("<img src=\"constructs/%s/thumb.jpg\" alt=\"%s, a holographic construct\" loading=\"lazy\" "
+                       "width=\"1200\" height=\"750\">" % (c["name"], html.escape(c["title"])))
+           if thumbs is None or c["name"] in thumbs else "", html.escape(c["title"]), _placed(c["placed"]))
+        for c in own)
+    links = ", ".join("<a href=\"../../examples/%s/\">%s</a>" % (s, html.escape(titles.get(s, s))) for s in gallery)
+    return ("<section class=\"part made\" id=\"constructs\">%s%s</section>"
+            % (("<h2 class=\"section\">Made for this world</h2><p class=\"section\">%d construct%s made for %s, each its "
+                "own construct: open one to see it alone, with its parts and its record.</p>"
+                "<div class=\"grid compact\">\n%s\n</div>" % (len(own), "" if len(own) == 1 else "s",
+                                                             html.escape(w["title"]), cards)) if own else "",
+               ("<p class=\"also\">%s %s.</p>" % ("Also placed from the gallery:" if own else "Placed from the gallery:",
+                                                  links)) if gallery else ""))
+
+
+def world_construct_page(w, c):
+    """A construct made for a world: its live construct, as an example's page shows one, under the world's page."""
+    body = ("<div class=\"viewer\"><div class=\"bar\"><h1>%s</h1><p class=\"prov\">made for %s · %s</p><nav>"
+            "<a class=\"button\" href=\"../../\">%s</a>"
+            "<a class=\"button\" href=\"../../../../\">All examples</a>"
+            "<a class=\"button\" href=\"construct.html?rounds=0\">Full screen</a>"
+            "<a class=\"button\" href=\"scene.json\">Scene</a>"
+            "<a class=\"button\" href=\"%s/tree/main/examples/worlds/%s/constructs/%s\">Source</a></nav></div>"
+            "<div class=\"stage\"><iframe src=\"construct.html?ui=0&amp;rounds=0\" title=\"%s, live construct\" "
+            "allowfullscreen></iframe></div>"
+            "<p class=\"hint\">Drag to orbit; click the construct, then scroll to zoom and <kbd>R</kbd> replays the "
+            "assembly, <kbd>L</kbd> shows labels, <kbd>P</kbd> shows how each part is known, <kbd>S</kbd> shows it as a "
+            "solid, <kbd>T</kbd> hides the text on its surfaces, <kbd>1</kbd>–<kbd>6</kbd> change the view and "
+            "<kbd>space</kbd> pauses.</p></div>"
+            % (html.escape(c["title"]), html.escape(w["title"]), _placed(c["placed"]), html.escape(w["title"]), REPO_URL,
+               w["slug"], c["name"], html.escape(c["title"])))
+    return _page("%s · %s · Construct" % (c["title"], w["title"]), body, 4,
+                 "%s: a holographic construct made for %s, a Construct world." % (c["title"], w["title"]))
+
+
+def world_page(w, examples=(), thumbs=None):
+    """A world's own page: the live world, what it holds, and where it came from; below it, the constructs
+    made for it and the gallery constructs it places."""
     body = ("<header class=\"site\"><div class=\"eyebrow\">World</div><h1>%s</h1><p>%s</p><div class=\"links\">"
             "<a class=\"button primary\" href=\"construct.html\">Open the world</a>%s"
             "<a class=\"button\" href=\"%s/blob/main/docs/for/worlds-walkthrough.md\">Worlds, step by step</a>"
@@ -377,10 +457,11 @@ def world_page(w):
             "<main><a href=\"construct.html\"><img class=\"hero\" src=\"hero.jpg\" alt=\"%s\" width=\"1600\" "
             "height=\"1000\"></a><p class=\"section\">%d constructs, placed %d times. Drag to turn it; the buttons are "
             "its views; <kbd>P</kbd> shows how each part is known, <kbd>S</kbd> shows it as a solid in its own colours."
-            "</p></main>"
+            "</p>%s</main>"
             % (html.escape(w["title"]), html.escape(w["summary"]),
                ("<a class=\"button\" href=\"%s/tree/main/examples/worlds/%s\">How it was made</a>" % (REPO_URL, w["slug"]))
-               if w["readme"] else "", REPO_URL, html.escape(w["title"]), w["constructs"], w["placements"]))
+               if w["readme"] else "", REPO_URL, html.escape(w["title"]), w["constructs"], w["placements"],
+               _world_constructs(w, examples, thumbs)))
     return _page("%s · Construct" % w["title"], body, 2, w["summary"][:160])
 
 
@@ -585,7 +666,19 @@ def build(out, films_dir=None, kits=False):
         shutil.copyfile(tmp / "construct.html", dst / "construct.html")
         shutil.copyfile(src / "thumb.jpg", dst / "thumb.jpg")
         shutil.copyfile(src / ("hero.jpg" if (src / "hero.jpg").exists() else "thumb.jpg"), dst / "hero.jpg")
-        (dst / "index.html").write_text(world_page(w), encoding="utf-8")
+        thumbs = set()
+        for c in w["own"]:   # each construct made for the world: its own live page, as an example gets
+            csrc, cdst = src / "constructs" / c["name"], dst / "constructs" / c["name"]
+            cdst.mkdir(parents=True)
+            _world_construct_html(csrc, cdst / "construct.html", out / ".build" / ("scenes-" + w["slug"]))
+            shutil.copyfile(csrc / "scene.json", cdst / "scene.json")
+            if (csrc / "thumb.jpg").exists():   # rendered once by --world-thumbs, kept beside the scene
+                shutil.copyfile(csrc / "thumb.jpg", cdst / "thumb.jpg")
+                thumbs.add(c["name"])
+            else:
+                print("no thumb.jpg for %s/%s: run scripts/build_site.py --world-thumbs" % (w["slug"], c["name"]))
+            (cdst / "index.html").write_text(world_construct_page(w, c), encoding="utf-8")
+        (dst / "index.html").write_text(world_page(w, examples, thumbs), encoding="utf-8")
     films = _load_films() if films_dir else []
     for film in films:
         _film(film, films_dir, out, studio)
@@ -618,6 +711,48 @@ def build(out, films_dir=None, kits=False):
     return out
 
 
+def _world_construct_html(src, page, tmp):
+    """The live page of a construct made for a world (its folder `src`), written to `page`: the page
+    `studio.build` makes from the public scene, with its artwork, without the build's audit report, which the
+    site does not publish (a thousand-part spruce makes the audit's contact check take half an hour)."""
+    studio, scene_mod, render = (importlib.import_module("construct_hologram." + m) for m in ("studio", "scene", "render"))
+    scene = studio.load(str(_public_scene(src / "scene.json", tmp)))
+    geometry = scene_mod.compile_scene(scene)
+    text, notes = render.build_html(geometry, str(src), solid=render.solid_payload(scene, geometry))
+    for note in notes:
+        print("%s: %s" % (src.relative_to(EXAMPLES), note))
+    Path(page).write_text(text, encoding="utf-8")
+
+
+def world_thumbs():
+    """Render the thumb.jpg (1200 x 750) of every construct made for a world that has none, beside its scene,
+    exactly as scripts/gallery_images.py frames a gallery thumbnail (Construct's own viewer, its hero view,
+    assembled and at rest), one browser at a time. One already there is kept. Needs a local Chromium-family
+    browser and ffmpeg. Returns the files written."""
+    import tempfile
+    spec = importlib.util.spec_from_file_location("gallery_images", ROOT / "scripts" / "gallery_images.py")
+    gi = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(gi)
+    made = []
+    with tempfile.TemporaryDirectory() as tmp:
+        for w in _load_worlds():
+            for c in w["own"]:
+                src = EXAMPLES / "worlds" / w["slug"] / "constructs" / c["name"]
+                if (src / "thumb.jpg").exists():
+                    continue
+                page, png = Path(tmp, "%s-%s.html" % (w["slug"], c["name"])), Path(tmp, "%s-%s.png" % (w["slug"], c["name"]))
+                _world_construct_html(src, page, Path(tmp, "scenes-" + w["slug"]))
+                try:
+                    window, zoom = gi.shoot(page, png)
+                except SystemExit:   # too large to frame even pulled back (a street): the whole render
+                    gi.capture(page, png, 4.0, 1)
+                    window, zoom = (0.0, 0.0, float(gi.W), float(gi.H)), 4.0
+                gi.cut(png, window, src / "thumb.jpg", (1200, 750))
+                made.append(src / "thumb.jpg")
+                print("thumb %-24s %-28s zoom %.2f" % (w["slug"], c["name"], zoom), flush=True)
+    return made
+
+
 def set_url(owner_repo):
     """Point every public link at OWNER/REPO: the constants above and the documents that link to the site."""
     owner, repo = owner_repo.split("/", 1)
@@ -646,7 +781,12 @@ def main(argv=None):
     ap.add_argument("--no-films", action="store_true", help="build without the film section")
     ap.add_argument("--no-kits", action="store_true", help="build without the model kits")
     ap.add_argument("--set-url", metavar="OWNER/REPO", help="move every public link to another repository")
+    ap.add_argument("--world-thumbs", action="store_true", help="render the missing thumb.jpg of each construct made "
+                    "for a world, beside its scene (needs a browser and ffmpeg), then stop")
     args = ap.parse_args(argv)
+    if args.world_thumbs:
+        print("%d thumbnails rendered" % len(world_thumbs()))
+        return 0
     if args.set_url:
         set_url(args.set_url)
         return 0

@@ -13,12 +13,14 @@ made with earlier versions of Construct; all of them build with this release.
 | [![KESTREL, an invented ice tug](kestrel/thumb.jpg)](kestrel/) | [KESTREL, an invented ice tug](kestrel/) | masterpiece | GPT-6.1 Sol |
 | [![KESTREL, more detailed](kestrel-v2/thumb.jpg)](kestrel-v2/) | [KESTREL, more detailed](kestrel-v2/) | masterpiece | GPT-6.1 Sol |
 | [![State Bench, an invented instrument](state-bench/thumb.jpg)](state-bench/) | [State Bench, an invented instrument](state-bench/) | masterpiece | GPT-6.1 Sol |
+| [![Rietveld Red-Blue Chair](rietveld-red-blue-chair/thumb.jpg)](rietveld-red-blue-chair/) | [Rietveld Red-Blue Chair](rietveld-red-blue-chair/) | masterpiece | DeepSeek V4.1 Flash |
 | [![SERUM 2 / 61, an unaffiliated concept from a manual](serum-2-61/thumb.jpg)](serum-2-61/) | [SERUM 2 / 61, an unaffiliated concept from a manual](serum-2-61/) | masterpiece | GPT-6.1 Sol |
 | [![Villa Savoye, made in Hermes](villa-savoye/thumb.jpg)](villa-savoye/) | [Villa Savoye, made in Hermes](villa-savoye/) | masterpiece | GPT-6.1 Sol |
 | [![Eames Lounge Chair and Ottoman](eames-lounge-chair/thumb.jpg)](eames-lounge-chair/) | [Eames Lounge Chair and Ottoman](eames-lounge-chair/) | masterpiece | Claude Opus 5.5 |
 | [![Eames Lounge Chair, from the ChatGPT app](eames-lounge-chair-chatgpt/thumb.jpg)](eames-lounge-chair-chatgpt/) | [Eames Lounge Chair, from the ChatGPT app](eames-lounge-chair-chatgpt/) | masterpiece | GPT-6.1 Sol |
 | [![Braun SK 4](braun-sk4/thumb.jpg)](braun-sk4/) | [Braun SK 4](braun-sk4/) | masterpiece | DeepSeek V4.1 Flash |
 | [![Braun SK 4: a replacement knob](braun-sk4-knob/thumb.jpg)](braun-sk4-knob/) | [Braun SK 4: a replacement knob](braun-sk4-knob/) | fast | DeepSeek V4.1 Flash |
+| [![A child's toy xylophone](toy-xylophone/thumb.jpg)](toy-xylophone/) | [A child's toy xylophone](toy-xylophone/) | fast | DeepSeek V4.1 Flash |
 | [![A garden shed](garden-shed/thumb.jpg)](garden-shed/) | [A garden shed](garden-shed/) | masterpiece | DeepSeek V4.1 Flash |
 | [![A garden shed, with a planned change](garden-shed-planned/thumb.jpg)](garden-shed-planned/) | [A garden shed, with a planned change](garden-shed-planned/) | fast | DeepSeek V4.1 Flash |
 | [![Vespa GS 150, an owner's scooter](vespa-gs150/thumb.jpg)](vespa-gs150/) | [Vespa GS 150, an owner's scooter](vespa-gs150/) | masterpiece | GPT-6.1 Sol |

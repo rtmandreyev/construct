@@ -222,8 +222,8 @@ installed. The Blender add-on imports a `world.json` too, finding the constructs
 - **Every construct finishes with its own map, by default.** A construct now writes `scene.materials.json` beside
   its scene as its last step (paint, brushed metal, chrome, wood, rubber, plastic, glass, light), and every export,
   the Blender add-on and the plugin use it without being told. Tyres come out rubber and chrome comes out chrome
-  even without a map; a map that misses surfaces lists them (`unmapped`) in the export's summary. Fifteen gallery
-  constructs gained maps of their own.
+  even without a map; a map that misses surfaces lists them (`unmapped`) in the export's summary. See
+  [Finished by default](#finished-by-default) below.
 - **Artwork comes along.** A sign's picture, a label, a screen exports as a textured quad under its part, in glTF and
   OBJ alike: Rain Harbour's glTF carries 26 images.
 
@@ -231,6 +231,29 @@ installed. The Blender add-on imports a `world.json` too, finding the constructs
 construct export examples/worlds/the-shed/world.json --out shed.glb      # finished from each construct's map
 construct export examples/worlds/the-shed/world.json --out shed.fbx      # through Blender
 ```
+
+### Finished by default
+
+Before 1.3 a construct came out of an export in neutral materials by role, and a finished model needed a map written
+by hand. The gap showed in the first world renders: houses and cars from the gallery went into Blender white. Two
+things closed it.
+
+**New constructs write their own.** Finishing is now a step of the skill: after the construct checks clean, the agent
+writes a map from what it knows (documented colours named as such, chosen ones said to be chosen). Tested with
+DeepSeek V4.1 Flash in fast mode, asked for [a child's toy xylophone](../examples/toy-xylophone/) in plain words with
+nothing said about a map or a finish: it wrote the map itself, rainbow lacquer on the bars, cream enamel on the frame, felt,
+rubber and beech, and its export came into Blender finished, in about nine minutes in all.
+
+<p align="center"><img src="media/finish-xylophone-blender.jpg" width="80%" alt="DeepSeek's toy xylophone in Blender, finished from the map it wrote: eight rainbow bars on a cream frame, black rubber pegs, grey felt pads, beech mallets with red heads"></p>
+
+**The constructs that already existed got theirs.** Every construct that ships with the plugin, and every one the
+six worlds place, now has a map beside its scene, written from its sources and checked by a test that every map
+covers every surface. Where a colour is documented (Freeborn Red, the DB5's Silver Birch) it is named; where it is
+chosen, the map's `about` says so. That is why the worlds on this page render finished.
+
+A map is a small text file and always yours to change: edit a line, ask the agent to, or export once with another
+(`--materials my-colours.json`).
+
 
 ## Masterpiece rounds, sturdier
 

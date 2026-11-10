@@ -1,0 +1,131 @@
+{
+  "about": "Painted toy finish. Bar colours are the user's rainbow order; frame cream, felt charcoal, pegs black rubber, mallets beech with red rubber heads. All colour choices are the author's; none is a documented product finish.",
+  "materials": [
+    {
+      "parts": [
+        "bar-red"
+      ],
+      "name": "Red lacquered metal",
+      "color": "#d5382c",
+      "finish": "paint",
+      "metallic": 0.6,
+      "roughness": 0.3
+    },
+    {
+      "parts": [
+        "bar-orange"
+      ],
+      "name": "Orange lacquered metal",
+      "color": "#e8812a",
+      "finish": "paint",
+      "metallic": 0.6,
+      "roughness": 0.3
+    },
+    {
+      "parts": [
+        "bar-yellow"
+      ],
+      "name": "Yellow lacquered metal",
+      "color": "#efc02f",
+      "finish": "paint",
+      "metallic": 0.6,
+      "roughness": 0.3
+    },
+    {
+      "parts": [
+        "bar-green"
+      ],
+      "name": "Green lacquered metal",
+      "color": "#48a13a",
+      "finish": "paint",
+      "metallic": 0.6,
+      "roughness": 0.3
+    },
+    {
+      "parts": [
+        "bar-lightblue"
+      ],
+      "name": "Light blue lacquered metal",
+      "color": "#4fb0d4",
+      "finish": "paint",
+      "metallic": 0.6,
+      "roughness": 0.3
+    },
+    {
+      "parts": [
+        "bar-blue"
+      ],
+      "name": "Blue lacquered metal",
+      "color": "#2b6cb0",
+      "finish": "paint",
+      "metallic": 0.6,
+      "roughness": 0.3
+    },
+    {
+      "parts": [
+        "bar-indigo"
+      ],
+      "name": "Indigo lacquered metal",
+      "color": "#3c3a96",
+      "finish": "paint",
+      "metallic": 0.6,
+      "roughness": 0.3
+    },
+    {
+      "parts": [
+        "bar-violet"
+      ],
+      "name": "Violet lacquered metal",
+      "color": "#7a4f9f",
+      "finish": "paint",
+      "metallic": 0.6,
+      "roughness": 0.3
+    },
+    {
+      "parts": [
+        "frame-*"
+      ],
+      "name": "Cream enamel on beech",
+      "color": "#eeddb8",
+      "finish": "paint",
+      "roughness": 0.42
+    },
+    {
+      "parts": [
+        "pad-*"
+      ],
+      "name": "Grey felt",
+      "color": "#33333a",
+      "finish": "plastic",
+      "roughness": 0.95
+    },
+    {
+      "parts": [
+        "peg-*"
+      ],
+      "name": "Black rubber peg",
+      "color": "#26262b",
+      "finish": "rubber",
+      "roughness": 0.75
+    },
+    {
+      "parts": [
+        "mallet-*-shaft",
+        "mallet-*-butt"
+      ],
+      "name": "Beech",
+      "color": "#d9b184",
+      "finish": "wood",
+      "roughness": 0.55
+    },
+    {
+      "parts": [
+        "mallet-*-head"
+      ],
+      "name": "Red rubber",
+      "color": "#bb3a2c",
+      "finish": "rubber",
+      "roughness": 0.6
+    }
+  ]
+}

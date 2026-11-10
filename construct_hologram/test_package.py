@@ -165,8 +165,11 @@ class ExamplesGallery(unittest.TestCase):
             self.assertTrue((out / ".nojekyll").exists())
             pages = [p for p in out.rglob("*.html") if p.name != "construct.html"]
             beyond = {b["slug"] for b in site._load_beyond()}
+            worlds = site._load_worlds()   # each world's page, and a page for each construct made for it
+            made = sum(len(list((site.EXAMPLES / "worlds" / w["slug"] / "constructs").glob("*/scene.json")))
+                       for w in worlds)
             self.assertEqual(len([p for p in pages if p.name == "index.html"]),
-                             len(site._load_examples()) + len(beyond) + 1)
+                             len(site._load_examples()) + len(beyond) + 1 + len(worlds) + made)
             for page in pages:
                 own = page.parent.name in beyond  # a "beyond" page, published as it is: its fonts, licence link
                 for ref in re.findall(r'(?:href|src)="([^"]+)"', page.read_text(encoding="utf-8")):

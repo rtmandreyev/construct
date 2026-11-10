@@ -87,6 +87,12 @@
    "model": "DeepSeek V4.1 Flash"
   },
   {
+   "slug": "toy-xylophone",
+   "title": "A child's toy xylophone",
+   "mode": "fast",
+   "model": "DeepSeek V4.1 Flash"
+  },
+  {
    "slug": "garden-shed",
    "title": "A garden shed",
    "mode": "masterpiece",
