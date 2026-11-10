@@ -1,0 +1,7 @@
+{
+ "about": "A finish for the Braun SK 4 Sender knob construct. Documented by the scene: the original is a moulded grey knob (this one is a printed replacement). Chosen for this page: the light grey shade, matched to the SK 4 map, and a darker indicator bar. Colours are the exporter's choice, not facts of the construct.",
+ "materials": [
+  {"parts": ["knob-indicator"], "name": "indicator", "color": "#3a3b3c", "finish": "plastic"},
+  {"parts": ["*"], "name": "light grey", "color": "#c5c7c4", "finish": "plastic", "roughness": 0.4}
+ ]
+}

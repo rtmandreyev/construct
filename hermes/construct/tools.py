@@ -638,8 +638,8 @@ def _materials(args, scene, exports):
         if not p.is_file():
             raise ConstructError("no material map at %s" % p)
         return str(p)
-    beside = scene.with_name(re.sub(r"(\.params)?\.json$", "", scene.name) + ".materials.json")
-    return str(beside) if beside.is_file() else None
+    beside = runtime.map_beside(scene)
+    return str(beside) if beside else None
 
 
 def _finish_export(rec, done, tail):

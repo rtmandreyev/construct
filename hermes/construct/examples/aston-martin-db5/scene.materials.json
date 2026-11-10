@@ -1,0 +1,16 @@
+{
+ "about": "A finish for the Aston Martin DB5 construct, chosen for this page: Silver Birch, a DB5 factory colour the scene's sources do not name, with chrome blade bumpers, chrome wire wheels, a wood-rimmed wheel and black leather seats, as on period cars. The scene documents only the coachwork (aluminium Superleggera) and the 6.70-15 tyres on wire wheels. Colours are the exporter's choice, not facts of the construct.",
+ "materials": [
+  {"parts": ["glasshouse"], "name": "tinted glass", "color": "#2a3540", "finish": "glass"},
+  {"parts": ["lamp-cover"], "name": "clear lamp dome", "color": "#e4eef2", "finish": "glass"},
+  {"parts": ["headlamp"], "name": "headlamp", "color": "#fff3dc", "finish": "light"},
+  {"parts": ["sidelamp"], "name": "amber lens", "color": "#e38a1d", "finish": "plastic", "roughness": 0.15},
+  {"parts": ["tail-lamps"], "name": "red lens", "color": "#a3141c", "finish": "plastic", "roughness": 0.15},
+  {"parts": ["grille", "front-bumper", "front-overriders", "rear-bumper", "driver-handle", "passenger-handle", "side-vents", "exhausts", "wiper-*", "mirror-stem", "wing-mirror", "fuel-fillers", "rim-lip", "hub-flange", "front-wheel", "hub", "spinner-*"], "name": "chrome", "color": "#d9dde2", "finish": "chrome"},
+  {"parts": ["tyres"], "name": "rubber", "color": "#1b1b1c", "finish": "rubber"},
+  {"parts": ["steering-wheel"], "name": "wood rim", "color": "#6a3e22", "finish": "wood", "roughness": 0.3},
+  {"parts": ["seats"], "name": "black leather", "color": "#18161a", "finish": "plastic", "roughness": 0.6},
+  {"parts": ["chassis-*"], "name": "chassis", "color": "#2a2a2c", "finish": "paint", "roughness": 0.6},
+  {"parts": ["body", "rear-wing", "door-skin", "bonnet-scoop", "front-wing", "wing-crest", "lamp-cowl"], "name": "Silver Birch", "color": "#b6b9b5", "finish": "paint", "metallic": 0.6, "roughness": 0.32}
+ ]
+}

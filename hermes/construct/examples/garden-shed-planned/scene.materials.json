@@ -1,0 +1,14 @@
+{
+ "about": "A finish for the garden shed construct with the planned log store and deck. Documented by the scene from its photograph: black-stained shiplap and corner posts, a grey-green mineral felt roof (the log store is felted as the shed is), dark glazed lights, iron glazing clips and an oak threshold. Chosen for this page: the black of the door, linings, window frames and fascia, the black iron hinge and latch, the pale treated softwood of the hidden frame, the log store stained black to match the shed, a natural softwood deck, and split logs. Colours are the exporter's choice, not facts of the construct.",
+ "materials": [
+  {"parts": ["window-?-glass"], "name": "dark glass", "color": "#1d262c", "finish": "glass"},
+  {"parts": ["roof-felt", "felt-*", "planned-logstore-felt"], "name": "grey-green mineral felt", "color": "#5d6656", "finish": "rubber", "roughness": 0.95},
+  {"parts": ["door-threshold"], "name": "oak", "color": "#8a6a45", "finish": "wood", "roughness": 0.7},
+  {"parts": ["door-hinge-*", "door-latch-*", "window-?-clip"], "name": "black iron", "color": "#1e1e1f", "finish": "brushed", "roughness": 0.65},
+  {"parts": ["planned-logstore-logs*"], "name": "split logs", "color": "#7a5a3c", "finish": "wood", "roughness": 0.9},
+  {"parts": ["planned-logstore-post", "planned-logstore-beam", "planned-logstore-rail"], "name": "black stain (log store)", "color": "#1a1a1a", "finish": "wood", "roughness": 0.8},
+  {"parts": ["planned-deck-*"], "name": "natural softwood deck", "color": "#b48c5c", "finish": "wood", "roughness": 0.7},
+  {"parts": ["cladding-*", "corner-post-*", "post-mid", "fascia-*", "door-leaf", "door-ledge-*", "door-brace", "door-jamb-*", "door-head-lining", "window-?-frame-*", "window-?-sill", "window-?-bead"], "name": "black stain", "color": "#1a1a1a", "finish": "wood", "roughness": 0.8},
+  {"parts": ["base-bearer", "floor-deck", "sole-plate-*", "top-plate-*", "stud-*", "window-?-jack", "window-?-lintel", "roof-rafter", "roof-boards", "planned-logstore-floor", "planned-logstore-bearer", "planned-logstore-rafter", "planned-logstore-roof"], "name": "treated softwood (framing)", "color": "#a89a72", "finish": "wood", "roughness": 0.8}
+ ]
+}

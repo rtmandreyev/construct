@@ -1,0 +1,12 @@
+{
+ "about": "A finish for the Jackson Juggernaut ET7 construct. Documented by the scene: a caramelized maple neck and an ebony fingerboard (their colours here follow those woods). Chosen for this page: a satin charcoal body (the scene does not name the model's colour), black hardware, the EverTune and pickups in black, a bone-white nut. Colours are the exporter's choice, not facts of the construct.",
+ "materials": [
+  {"parts": ["caramelized-maple-neck", "at1-four-by-three-headstock"], "name": "caramelized maple", "color": "#a8693a", "finish": "wood", "roughness": 0.4},
+  {"parts": ["ebony-fingerboard"], "name": "ebony", "color": "#1e1814", "finish": "wood", "roughness": 0.45},
+  {"parts": ["nut"], "name": "nut", "color": "#e8e2d2", "finish": "plastic", "roughness": 0.3},
+  {"parts": ["*-mm1-bobbin-*"], "name": "pickup bobbins", "color": "#121212", "finish": "plastic", "roughness": 0.35},
+  {"parts": ["volume-dome-knob", "tone-dome-knob", "selector-tip", "rear-evertune-access-plate", "rear-electronics-cover"], "name": "black plastic", "color": "#141414", "finish": "plastic"},
+  {"parts": ["locking-tuner-*", "tuning-key-*", "heel-truss-adjustment-wheel", "*-mm1-base", "evertune-*", "selector-lever", "*-strap-button"], "name": "black hardware", "color": "#1c1d1f", "finish": "brushed", "roughness": 0.4},
+  {"parts": ["juggernaut-body"], "name": "satin charcoal body", "color": "#2b2d30", "finish": "paint", "roughness": 0.55}
+ ]
+}

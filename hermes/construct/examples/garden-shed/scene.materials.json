@@ -1,0 +1,11 @@
+{
+ "about": "A finish for the garden shed construct. Documented by the scene from its photograph: black-stained shiplap and corner posts, a grey-green mineral felt roof, dark glazed lights, iron glazing clips and an oak threshold. Chosen for this page: the black of the door, linings, window frames and fascia, the black iron hinge and latch, and the pale treated softwood of the hidden frame, floor and roof boards. Colours are the exporter's choice, not facts of the construct.",
+ "materials": [
+  {"parts": ["window-?-glass"], "name": "dark glass", "color": "#1d262c", "finish": "glass"},
+  {"parts": ["roof-felt", "felt-*", "planned-logstore-felt"], "name": "grey-green mineral felt", "color": "#5d6656", "finish": "rubber", "roughness": 0.95},
+  {"parts": ["door-threshold"], "name": "oak", "color": "#8a6a45", "finish": "wood", "roughness": 0.7},
+  {"parts": ["door-hinge-*", "door-latch-*", "window-?-clip"], "name": "black iron", "color": "#1e1e1f", "finish": "brushed", "roughness": 0.65},
+  {"parts": ["cladding-*", "corner-post-*", "post-mid", "fascia-*", "door-leaf", "door-ledge-*", "door-brace", "door-jamb-*", "door-head-lining", "window-?-frame-*", "window-?-sill", "window-?-bead"], "name": "black stain", "color": "#1a1a1a", "finish": "wood", "roughness": 0.8},
+  {"parts": ["base-bearer", "floor-deck", "sole-plate-*", "top-plate-*", "stud-*", "window-?-jack", "window-?-lintel", "roof-rafter", "roof-boards"], "name": "treated softwood (framing)", "color": "#a89a72", "finish": "wood", "roughness": 0.8}
+ ]
+}
