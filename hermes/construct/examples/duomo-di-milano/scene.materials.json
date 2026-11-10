@@ -1,0 +1,8 @@
+{
+ "about": "A finish for the Duomo di Milano construct. Documented by the scene: white marble throughout (the cathedral is Candoglia marble, walls, spires, statues and the walkable roofs alike) and the gilded copper Madonnina. Chosen for this page: the marble's faint pink-white shade and a slightly greyer weathered shade for the roof slabs and terraces. Colours are the exporter's choice, not facts of the construct.",
+ "materials": [
+  {"parts": ["madonnina", "madonnina-arm"], "name": "gilded copper", "color": "#d4a73c", "finish": "brushed", "roughness": 0.25},
+  {"parts": ["*-roof", "inner-terrace-*", "front-steps"], "name": "weathered marble", "color": "#d9d3cb", "roughness": 0.7},
+  {"parts": ["*"], "name": "Candoglia marble", "color": "#eee6de", "roughness": 0.55}
+ ]
+}

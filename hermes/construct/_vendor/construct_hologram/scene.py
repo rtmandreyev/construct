@@ -2104,6 +2104,46 @@ def to_v1(geometry, limit=20000):
                                 "dropped_segments": len(order) - len(keep)}}
 
 
+# ---------------------------------------------------------------------------- artwork bytes
+
+ART_RIGHTS = ("synthetic", "user_private", "permitted")   # rights that let a page or an export show artwork
+
+
+def read_assets(geometry, asset_root):
+    """The bytes of the artwork whose files exist under asset_root, match the declared SHA-256 and whose rights
+    permit showing them: ({asset id: (media type, bytes)}, notes). Anything else stays an empty slot."""
+    from pathlib import Path
+    out, notes = {}, []
+    declared = {a["id"]: a for a in geometry.get("provenance", {}).get("assets", [])}
+    for art in geometry.get("artwork", []):
+        a = declared.get(art["asset_id"])
+        if a is None or a["id"] in out:
+            continue
+        if asset_root is None:
+            notes.append("artwork %s: no asset folder given; the slot stays empty" % a["id"])
+            continue
+        root = Path(asset_root).resolve()
+        path = (root / a["path"]).resolve()
+        if root not in path.parents:
+            notes.append("artwork %s: path escapes the asset folder; skipped" % a["id"])
+            continue
+        if not path.is_file():
+            notes.append("artwork %s: %s not found; the slot stays empty" % (a["id"], a["path"]))
+            continue
+        data = path.read_bytes()
+        if len(data) > 20 * 1024 * 1024:
+            notes.append("artwork %s: larger than 20 MiB; skipped" % a["id"])
+            continue
+        if hashlib.sha256(data).hexdigest() != a["sha256"]:
+            notes.append("artwork %s: bytes do not match the declared sha256; skipped" % a["id"])
+            continue
+        if a["rights"] not in ART_RIGHTS:
+            notes.append("artwork %s: rights %r do not permit display; skipped" % (a["id"], a["rights"]))
+            continue
+        out[a["id"]] = (a["media_type"], data)
+    return out, notes
+
+
 # ---------------------------------------------------------------------------- output frame
 
 def reframe(geometry, frame="z-up"):

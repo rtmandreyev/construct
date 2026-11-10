@@ -1,0 +1,8 @@
+{
+ "about": "A finish for the Rietveld Red-Blue Chair construct. Documented by the scene: a red back board, a blue seat and yellow cut ends on the battens. Chosen: black battens and arms, the chair's known painted frame, which the scene does not state; the battens are single parts here, so their yellow ends cannot be painted apart and stay black. The exact shades are chosen too. Colours are the exporter's choice, not facts of the construct.",
+ "materials": [
+  {"parts": ["back"], "name": "Rietveld red", "color": "#b0201a", "finish": "paint", "roughness": 0.55},
+  {"parts": ["seat"], "name": "Rietveld blue", "color": "#1f3f8c", "finish": "paint", "roughness": 0.55},
+  {"parts": ["*"], "name": "black frame", "color": "#151515", "finish": "paint", "roughness": 0.55}
+ ]
+}

@@ -7,7 +7,8 @@
    "title": "Toyota Land Cruiser FJ62",
    "model": "Claude Opus 5.5",
    "files": {
-    "scene": "examples/toyota-land-cruiser-fj62/scene.json"
+    "scene": "examples/toyota-land-cruiser-fj62/scene.json",
+    "materials": "examples/toyota-land-cruiser-fj62/maps/finish.json"
    }
   },
   {
@@ -50,7 +51,8 @@
    "title": "KESTREL, more detailed",
    "model": "GPT-6.1 Sol",
    "files": {
-    "scene": "examples/kestrel-v2/scene.json"
+    "scene": "examples/kestrel-v2/scene.json",
+    "materials": "examples/kestrel-v2/maps/finish.json"
    }
   },
   {
@@ -58,7 +60,8 @@
    "title": "State Bench, an invented instrument",
    "model": "GPT-6.1 Sol",
    "files": {
-    "scene": "examples/state-bench/scene.json"
+    "scene": "examples/state-bench/scene.json",
+    "materials": "examples/state-bench/maps/finish.json"
    }
   },
   {
@@ -93,7 +96,8 @@
    "title": "Eames Lounge Chair, from the ChatGPT app",
    "model": "GPT-6.1 Sol",
    "files": {
-    "scene": "examples/eames-lounge-chair-chatgpt/scene.json"
+    "scene": "examples/eames-lounge-chair-chatgpt/scene.json",
+    "materials": "examples/eames-lounge-chair-chatgpt/maps/finish.json"
    }
   },
   {
@@ -101,7 +105,8 @@
    "title": "Braun SK 4",
    "model": "DeepSeek V4.1 Flash",
    "files": {
-    "scene": "examples/braun-sk4/scene.json"
+    "scene": "examples/braun-sk4/scene.json",
+    "materials": "examples/braun-sk4/maps/finish.json"
    }
   },
   {
@@ -109,7 +114,8 @@
    "title": "Braun SK 4: a replacement knob",
    "model": "DeepSeek V4.1 Flash",
    "files": {
-    "scene": "examples/braun-sk4-knob/scene.json"
+    "scene": "examples/braun-sk4-knob/scene.json",
+    "materials": "examples/braun-sk4-knob/maps/finish.json"
    }
   },
   {
@@ -117,7 +123,8 @@
    "title": "A garden shed",
    "model": "DeepSeek V4.1 Flash",
    "files": {
-    "scene": "examples/garden-shed/scene.json"
+    "scene": "examples/garden-shed/scene.json",
+    "materials": "examples/garden-shed/maps/finish.json"
    }
   },
   {
@@ -125,7 +132,8 @@
    "title": "A garden shed, with a planned change",
    "model": "DeepSeek V4.1 Flash",
    "files": {
-    "scene": "examples/garden-shed-planned/scene.json"
+    "scene": "examples/garden-shed-planned/scene.json",
+    "materials": "examples/garden-shed-planned/maps/finish.json"
    }
   },
   {
@@ -142,7 +150,8 @@
    "title": "Revox A77",
    "model": "DeepSeek V4.1 Flash",
    "files": {
-    "scene": "examples/revox-a77/scene.json"
+    "scene": "examples/revox-a77/scene.json",
+    "materials": "examples/revox-a77/maps/finish.json"
    }
   },
   {
@@ -150,7 +159,8 @@
    "title": "Sainte-Chapelle",
    "model": "Claude Opus 5.5",
    "files": {
-    "scene": "examples/sainte-chapelle/scene.json"
+    "scene": "examples/sainte-chapelle/scene.json",
+    "materials": "examples/sainte-chapelle/maps/finish.json"
    }
   },
   {
@@ -167,7 +177,8 @@
    "title": "Neuschwanstein",
    "model": "Claude Opus 5.5",
    "files": {
-    "scene": "examples/neuschwanstein/scene.json"
+    "scene": "examples/neuschwanstein/scene.json",
+    "materials": "examples/neuschwanstein/maps/finish.json"
    }
   },
   {
@@ -175,7 +186,8 @@
    "title": "Aston Martin DB5",
    "model": "Claude Opus 5.5",
    "files": {
-    "scene": "examples/aston-martin-db5/scene.json"
+    "scene": "examples/aston-martin-db5/scene.json",
+    "materials": "examples/aston-martin-db5/maps/finish.json"
    }
   },
   {
@@ -183,7 +195,8 @@
    "title": "Leica M3",
    "model": "GPT-6.1 Sol",
    "files": {
-    "scene": "examples/leica-m3/scene.json"
+    "scene": "examples/leica-m3/scene.json",
+    "materials": "examples/leica-m3/maps/finish.json"
    }
   },
   {
@@ -191,7 +204,8 @@
    "title": "Sagrada Família",
    "model": "GPT-6.1 Sol",
    "files": {
-    "scene": "examples/sagrada-familia/scene.json"
+    "scene": "examples/sagrada-familia/scene.json",
+    "materials": "examples/sagrada-familia/maps/finish.json"
    }
   },
   {
@@ -199,7 +213,8 @@
    "title": "Duomo di Milano",
    "model": "Claude Opus 5.5",
    "files": {
-    "scene": "examples/duomo-di-milano/scene.json"
+    "scene": "examples/duomo-di-milano/scene.json",
+    "materials": "examples/duomo-di-milano/maps/finish.json"
    }
   },
   {
@@ -223,7 +238,8 @@
    "title": "Saturn",
    "model": "DeepSeek V4.1 Flash",
    "files": {
-    "scene": "examples/saturn/scene.json"
+    "scene": "examples/saturn/scene.json",
+    "materials": "examples/saturn/maps/finish.json"
    }
   },
   {
@@ -247,7 +263,8 @@
    "title": "Jackson Juggernaut ET7",
    "model": "GPT-6.1 Sol",
    "files": {
-    "scene": "examples/jackson-juggernaut-et7/scene.json"
+    "scene": "examples/jackson-juggernaut-et7/scene.json",
+    "materials": "examples/jackson-juggernaut-et7/maps/finish.json"
    }
   },
   {
@@ -303,7 +320,8 @@
    "title": "James Webb Space Telescope",
    "model": "DeepSeek V4.1 Flash",
    "files": {
-    "scene": "examples/films/james-webb-space-telescope/scene.json"
+    "scene": "examples/films/james-webb-space-telescope/scene.json",
+    "materials": "examples/films/james-webb-space-telescope/maps/finish.json"
    }
   },
   {

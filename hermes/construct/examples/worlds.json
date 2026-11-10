@@ -24,7 +24,7 @@
  {
   "name": "the-shed",
   "title": "The shed and the things around it",
-  "summary": "A garden shed with its planned deck and log store, a 1960s VW T1 Samba parked by the log store, a Vespa GS 150 on its stand by the door, State Bench set up inside on the floor, and Rietveld's Red-Blue Chair out on the deck. Five constructs, each whole, at real size.",
+  "summary": "A garden shed with its planned deck and log store, a 1960s VW T1 Samba parked by the log store, a Vespa GS 150 on its stand by the door, State Bench set up inside on the floor, and Rietveld's Red-Blue Chair inside by the door. Five constructs, each whole, at real size.",
   "constructs": [
    "garden-shed-planned",
    "rietveld-red-blue-chair",

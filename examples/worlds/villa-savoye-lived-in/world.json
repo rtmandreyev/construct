@@ -62,10 +62,12 @@
       "construct": "braun-sk4",
       "on": "table/top",
       "at": [
-        -3.05,
+        -3.1,
         0,
-        9.7
-      ]
+        9.6
+      ],
+      "yaw": 160,
+      "note": "Turned to the room, its lid clear of the table's edge."
     },
     {
       "id": "revox",
@@ -75,7 +77,9 @@
         -2.42,
         0,
         9.7
-      ]
+      ],
+      "yaw": 160,
+      "note": "Turned to the room."
     },
     {
       "id": "leica",
@@ -86,7 +90,7 @@
         0,
         9.75
       ],
-      "yaw": -15
+      "yaw": 145
     },
     {
       "id": "studio-table",

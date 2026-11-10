@@ -1,0 +1,15 @@
+{
+ "about": "A finish for the State Bench construct, an original fictional instrument with no documented colours: every finish is chosen for this page, sober laboratory finishes. Graphite anodised enclosure, brushed aluminium stages and fins, dark keys with one red protected branch key, black rubber grips, bellows and isolators, and the displays as dark glowing screens. Colours are the exporter's choice, not facts of the construct.",
+ "materials": [
+  {"parts": ["*-glass"], "name": "display screen", "color": "#0e1416", "roughness": 0.08, "emissive": "#2f6670"},
+  {"parts": ["branch-key"], "name": "protected branch key", "color": "#a3241c", "finish": "plastic", "roughness": 0.35},
+  {"parts": ["run-key-*", "numeric-key-*", "precision-enter", "precision-revert", "keypad-commit", "setup-line-key-*", "setup-focus-key", "archive-?-select", "target-selector-thumb"], "name": "key grey", "color": "#2c2e31", "finish": "plastic", "roughness": 0.4},
+  {"parts": ["*-clutch-grip", "*-clutch-insert", "precision-wheel-finger-cup", "front-wrist-rail", "*-bellows-*", "isolator-*"], "name": "black rubber", "color": "#18191a", "finish": "rubber"},
+  {"parts": ["*-sensor-flex", "module-service-lead-*"], "name": "amber flex", "color": "#a8692a", "finish": "plastic", "roughness": 0.4},
+  {"parts": ["*-loom", "*-readhead", "*-sensor-connector", "*-cable-entry", "module-strain-relief-*", "module-termination-*", "carrier-keyed-header-bank"], "name": "black plastic", "color": "#1c1d1f", "finish": "plastic"},
+  {"parts": ["*-fasteners-*", "module-captive-heads-*", "module-latch-*", "service-inner-end-retainer-*", "rear-face-hinge-*", "backplane-tray-standoffs", "*-locking-barrel", "power-inlet", "host-network", "model-usb", "trigger-in", "trigger-out", "analog-monitor", "*-disconnect", "drawer-handle-foot-*"], "name": "dark steel", "color": "#4c5055", "finish": "brushed", "roughness": 0.38},
+  {"parts": ["*-stage-bed", "*-axis-guide-*", "*-lateral-guide", "*-moving-crossbeam", "*-sliding-saddle", "*-bridge-bearing-*", "*-travel-stop-*", "*-clutch-collar", "*-linear-encoder-strip", "stage-backbone-*", "precision-wheel", "thermal-fin-*", "drawer-handle", "service-*-rail-*", "service-slide-*"], "name": "brushed aluminium", "color": "#b4b8bd", "finish": "brushed", "roughness": 0.3},
+  {"parts": ["compute-module", "memory-storage-module", "control-scan-controller", "isolated-power-module", "display-link-controller", "module-carrier-*", "carrier-*", "*-disconnect-guide", "*-socket-bracket"], "name": "module grey", "color": "#5c6166", "finish": "paint", "metallic": 0.35, "roughness": 0.45},
+  {"parts": ["*"], "name": "graphite anodised", "color": "#3a3d41", "finish": "paint", "metallic": 0.4, "roughness": 0.42}
+ ]
+}
