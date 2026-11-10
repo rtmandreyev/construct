@@ -282,6 +282,18 @@ class Plugin(unittest.TestCase):
         self.assertEqual(slug("Kraków Market Square"), "krakow-market-square")
         self.assertEqual((slug("Łódź"), slug("Straße"), slug("!!!")), ("lodz", "strasse", "construct"))
 
+    def test_the_page_limit_is_the_same_at_every_step(self):
+        # a big world's page passes the backend, the card and the loader, or none of them: a loader that kept the
+        # old 64 MB limit dropped Stortorget's 78 MB page in silence and its card stayed "opening" for ever
+        js = (self.pkg / "desktop" / "plugin.js").read_text(encoding="utf-8")
+        loader = (self.pkg / "templates" / "loader.html").read_text(encoding="utf-8")
+        api = (self.pkg / "dashboard" / "plugin_api.py").read_text(encoding="utf-8")
+        mb = lambda pattern, text: int(re.search(pattern, text).group(1))
+        sizes = {mb(r"const PAGE_MAX = (\d+) \* 1024 \* 1024", js), mb(r"var MAX = (\d+) \* 1024 \* 1024", loader),
+                 mb(r"PAGE_MAX = (\d+) \* 1024 \* 1024", api)}
+        self.assertEqual(sizes, {192})
+        self.assertIn("TOO LARGE TO SHOW HERE", loader)   # one over the limit says so
+
     def test_worlds_are_arranged_on_their_card(self):
         js = (self.pkg / "desktop" / "plugin.js").read_text(encoding="utf-8")
         loader = (self.pkg / "templates" / "loader.html").read_text(encoding="utf-8")

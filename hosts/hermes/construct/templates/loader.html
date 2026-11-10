@@ -20,7 +20,7 @@
    (assembly.html, a construct page) and its booklet (static HTML, its pictures inlined, no scripts of its own). */
 (function () {
   "use strict";
-  var MAX = 64 * 1024 * 1024;
+  var MAX = 192 * 1024 * 1024;   // the plugin's PAGE_MAX (plugin.js, plugin_api.py): a big world is tens of megabytes
   var wait = document.getElementById("wait");
   if (location.protocol === "file:") {
     location.replace(document.documentElement.getAttribute("data-page") || "construct.html");
@@ -150,7 +150,11 @@
     var d = e.data;
     if (!d || typeof d !== "object" || d.type !== "construct:page") return;
     var html = d.html, kind = d.kind || "construct";
-    if (typeof html !== "string" || html.length < 64 || html.length > MAX) return;
+    if (typeof html === "string" && html.length > MAX) {
+      wait.textContent = "THIS PAGE IS TOO LARGE TO SHOW HERE: OPEN IT IN A BROWSER";
+      return;
+    }
+    if (typeof html !== "string" || html.length < 64) return;
     if (!/^\s*<!doctype html>/i.test(html.slice(0, 64))) return;
     var add;
     if (kind === "construct" || kind === "assembly") {
