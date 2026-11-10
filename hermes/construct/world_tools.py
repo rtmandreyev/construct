@@ -701,7 +701,9 @@ def finish_by_hand(slug, change):
         rule = next((r for r in doc["materials"] if r.get("name") == material), None)
         if rule is None:
             raise ConstructError("the map has no material called %r" % material)
-        rule.update({"color": color.lower(), "finish": fin})
+        was = re.match(r"^Repainted by hand \(was (.+)\)$", material)
+        rule.update({"color": color.lower(), "finish": fin,   # its name says it changed: Blender and exports show it
+                     "name": "Repainted by hand (was %s)" % (was.group(1) if was else material)})
         for k in ("metallic", "roughness"):   # the new finish's own, not the old one's
             rule.pop(k, None)
         parts = [rule["parts"]] if isinstance(rule["parts"], str) else list(rule["parts"])
