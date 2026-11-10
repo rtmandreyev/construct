@@ -21,14 +21,14 @@ ready to open in Godot, Unity or Unreal. Then rearrange it by hand in Hermes, wi
   <a href="https://rtmandreyev.github.io/construct/examples/toyota-land-cruiser-fj62/"><img src="docs/media/assembly-toyota-land-cruiser-fj62.gif" width="32%" alt="The Toyota Land Cruiser FJ62 construct assembling itself"></a>
 </p>
 <p align="center">
-  <a href="https://rtmandreyev.github.io/construct/worlds/villa-savoye-lived-in/"><img src="docs/media/world-villa.gif" width="32%" alt="The Villa Savoye, lived in, assembling as a world: the house, then its furniture, the Braun, the Revox, the Leica, SERUM, and the FJ62 and the DB5 under the pilotis"></a>
+  <a href="https://rtmandreyev.github.io/construct/worlds/rain-harbour/"><img src="docs/media/world-rain-harbour.gif" width="32%" alt="Rain Harbour assembling as a world: the towers of a night street, its neon signs in English and Chinese, then the hero car"></a>
   <a href="https://rtmandreyev.github.io/construct/worlds/the-shed/"><img src="docs/media/world-shed.gif" width="32%" alt="The shed and the things around it assembling as a world: the shed with its deck and log store, the VW T1 Samba and the Vespa"></a>
   <a href="https://rtmandreyev.github.io/construct/worlds/stortorget/"><img src="docs/media/world-stortorget.gif" width="32%" alt="Stortorget assembling as a world from the photograph's viewpoint: the gabled houses, the Christmas tree, the lamp and the rows of market stalls"></a>
 </p>
 <p align="center"><sub><b>Constructs</b> (top): the Sainte-Chapelle and the Toyota Land Cruiser FJ62 by Claude Opus 5.5, KESTREL, an
-invented ice tug, by GPT-6.1 Sol, each in masterpiece mode. <b>Worlds</b> (below): the Villa Savoye, lived in, and the
-shed and the things around it, made of constructs from the gallery; Stortorget at Christmas, made by GPT-6.1 Sol from
-one photograph. <a href="https://rtmandreyev.github.io/construct/">Open the gallery</a> to orbit them, replay the
+invented ice tug, by GPT-6.1 Sol, each in masterpiece mode. <b>Worlds</b> (below): Rain Harbour, a game level, and Stortorget at
+Christmas, each made by GPT-6.1 Sol from one picture; the shed and the things around it, made of constructs from the
+gallery. <a href="https://rtmandreyev.github.io/construct/">Open the gallery</a> to orbit them, replay the
 assembly and read the labels; <a href="docs/for/invent-from-what-exists.md">how KESTREL was made</a>,
 <a href="examples/worlds/stortorget/">how Stortorget was made</a>.</sub></p>
 
