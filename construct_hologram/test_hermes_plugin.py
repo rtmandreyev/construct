@@ -668,6 +668,14 @@ class Plugin(unittest.TestCase):
         self.assertEqual([p["id"] for p in ex["world"]["placements"]], ["shed", "samba", "vespa", "bench", "chair"])
         self.assertFalse(ex["world"]["warnings"])
         self.assertTrue((self.data / "projects" / ex["project"] / "constructs" / "vespa-gs150" / "scene.json").is_file())
+        # a shipped world brings the shipped constructs with their finish maps, even beside a project of the same name
+        # (an older copy of the user's): Saturn's world, with a project called "saturn" that has no map
+        (self.data / "projects" / "saturn").mkdir(parents=True, exist_ok=True)
+        shutil.copy(self.pkg / "examples" / "saturn" / "scene.json", self.data / "projects" / "saturn" / "scene.json")
+        sat = self.call("construct_world", {"op": "new", "example": "kestrel-at-saturn", "wait_seconds": 0})
+        made = self.data / "projects" / (sat.get("project") or "") / "constructs" / "saturn"
+        self.assertTrue((made / "scene.materials.json").is_file(), sat)
+        shutil.rmtree(self.data / "projects" / "saturn")
         self.assertIn("error", self.call("construct_world", {"op": "new", "example": "nowhere"}))
         # arranged by hand on the page: what the Desktop half sends through /construct arrange, then undone
         sw, handle = ex["project"], self.mod.commands.handle
