@@ -20,12 +20,14 @@
     /construct still <project> <build> <camera>   a picture from where the camera is (the card's Picture)
     /construct save-view <world> <name> <camera>  the camera where it is, a named view (the card's Save view)
     /construct favourite|archive|rename|group <project> [title|group]   tidying the Constructs page
+    /construct delete <project>             an archived construct or world, for good (the page asks first)
     /construct job <id>           one background job's state (an ended build is published here)
 """
 
 from pathlib import Path
 
 import json
+import shutil
 import re
 
 from . import jobs, runtime, world_tools
@@ -214,6 +216,21 @@ def handle(raw_args="", event=None, **kwargs):
             return "%s: %s." % (words[1].lower(), {"favourite": "a favourite", "unfavourite": "no longer a favourite", "archive": "archived",
                                                   "unarchive": "back from the archive", "rename": "now \"%s\"" % info.get("title"),
                                                   "group": "in \"%s\"" % info["group"] if info.get("group") else "back with its kind"}[verb])
+        if verb == "delete":   # the page's Delete, for what is archived only: the project and its shown builds, for good
+            if len(words) < 2:
+                return "Usage: /construct delete <project> (archive it first)"
+            slug = words[1].lower()
+            folder = runtime.project_dir(slug)
+            info = json.loads((folder / "project.json").read_text(encoding="utf-8")) if (folder / "project.json").is_file() else {}
+            if info.get("archived") is not True:
+                return "%s is not archived: only an archived construct or world can be deleted (archive it first)." % slug
+            shown = runtime.shown_root() / slug
+            for d in (folder, shown):
+                if d.is_dir():
+                    shutil.rmtree(d, ignore_errors=True)
+            if folder.exists():
+                return "%s could not be deleted completely; what is left is in %s." % (slug, folder)
+            return "%s: deleted." % slug
         if verb == "open-world":   # the Worlds page's Open: a shipped world as the user's own, with no model turn
             if len(words) < 2:
                 return "Which world? /construct open-world <example> (/construct worlds lists them)"

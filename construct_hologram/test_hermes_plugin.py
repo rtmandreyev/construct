@@ -754,6 +754,19 @@ class Plugin(unittest.TestCase):
         tidy = self.call("construct_world", {"op": "tidy", "world": sw, "projects": [piece, "no-such-project"]})
         self.assertEqual(tidy["archived"], [piece])
         self.assertTrue({r["project"]: r for r in self.api.projects(self.data)}[piece]["archived"])
+        # worlds go in folders of the user's own, and come out of them
+        self.assertIn('in "Client work"', handle("group %s Client work" % sw))
+        row = {r["project"]: r for r in self.api.projects(self.data)}[sw]
+        self.assertEqual((row["group"], row.get("own_group")), ("Client work", True))
+        handle("group %s -" % sw)
+        # deleting: refused for what is not archived; an archived one goes with its shown builds
+        self.assertIn("not archived", handle("delete %s" % sw))
+        self.assertTrue((self.data / "projects" / sw).is_dir())
+        self.assertIn("deleted", handle("delete %s" % piece))
+        self.assertFalse((self.data / "projects" / piece).exists())
+        self.assertFalse((self.data / "shown" / piece).exists())
+        self.assertNotIn(piece, {r["project"] for r in self.api.projects(self.data)})
+        self.assertIn("could not", handle("delete ../%s" % sw))
         if render.find_browser() and not os.environ.get("HOLOGRAM_SKIP_CAPTURE"):
             self.assertRegex(handle('still %s %s {"target": [0, 1, 0], "yaw": 20, "pitch": 15, "dist": 9}' % (sw, build)), r"\(file .+\.png\)")
         # a shipped construct opened as the user's own from the Start from page, with no model turn

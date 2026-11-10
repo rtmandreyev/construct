@@ -1569,26 +1569,35 @@ function ExportMenu({ disabled, world, onPick }) {
 const ORDER = ['Worlds', 'Vehicles', 'Buildings', 'Machines and instruments', 'Objects', 'Living things', 'Simulations']
 
 // a tile's other actions, in one menu so a tile keeps one row of buttons: rename, move to a group, archive
-function MoreMenu({ row, groups, onRename, onNewGroup, tidy }) {
+function MoreMenu({ row, groups, onRename, onNewGroup, onDelete, tidy, outLabel, groupWord }) {
   const choose = e => {
     const v = e.target.value
     e.target.value = ''
     if (v === 'rename') onRename()
     else if (v === 'archive') tidy(row.project, row.archived ? 'unarchive' : 'archive')
+    else if (v === 'delete') onDelete()
     else if (v === 'new-group') onNewGroup()
     else if (v === 'kind') tidy(row.project, 'group', '-')
     else if (v.startsWith('g:')) tidy(row.project, 'group', v.slice(2))
   }
   const opt = (value, label, disabled) => jsx('option', { value, disabled: !!disabled, children: label }, value)
   return jsx('select', {
-    value: '', onChange: choose, title: 'Rename, move to a group, archive',
+    value: '', onChange: choose, title: 'Rename, move to a ' + (groupWord || 'group') + ', archive or delete',
     style: { font: 'inherit', fontSize: 12, padding: '3px 6px', borderRadius: 6, border: '1px solid var(--ui-stroke-secondary)',
       background: 'transparent', color: 'var(--ui-text-secondary)', cursor: 'pointer', maxWidth: 120 },
     children: [opt('', 'More…'), opt('rename', 'Rename'),
       opt('archive', row.archived ? 'Restore from the archive' : 'Archive (nothing is deleted)'),
-      jsx('optgroup', { label: 'Move to', children: groups.filter(g => g !== row.group).map(g => opt('g:' + g, g))
-        .concat([opt('new-group', 'A new group…')], row.own_group ? [opt('kind', 'Back with its kind')] : []) }, 'mv')]
+      row.archived ? opt('delete', 'Delete for good…') : null,
+      jsx('optgroup', { label: 'Move to', children: groups.filter(g => !(row.own_group && g === row.group)).map(g => opt('g:' + g, g))
+        .concat([opt('new-group', 'A new ' + (groupWord || 'group') + '…')], row.own_group ? [opt('kind', outLabel || 'Back with its kind')] : []) }, 'mv')].filter(Boolean)
   })
+}
+
+// the last word before something archived is deleted: the tile's buttons become these two
+function DeleteAsk({ row, onDelete, onCancel }) {
+  return [jsx('span', { key: 'q', style: { fontSize: 12, color: 'var(--ui-text-secondary)' }, children: 'Delete ' + row.project + ' and its builds? This cannot be undone.' }),
+    jsx(Button, { key: 'y', label: 'Delete for good', icon: 'trash', onClick: onDelete }),
+    jsx(Button, { key: 'n', label: 'Keep it', icon: 'close', onClick: onCancel })]
 }
 
 function Projects({ focus }) {
@@ -1597,8 +1606,10 @@ function Projects({ focus }) {
   const [open, setOpen] = useState(focus || null)
   const thumbsAsked = useRef(false)
   const [renaming, setRenaming] = useState(null)
+  const [deleting, setDeleting] = useState(null)   // the archived construct whose tile asks before deleting it
   const tidy = async (project, verb, title) => {
     setRenaming(null)
+    setDeleting(null)
     try {
       const out = await runCommand(null, 'construct ' + verb + ' ' + project + (verb === 'rename' || verb === 'group' ? ' ' + String(title || '').trim().slice(0, verb === 'group' ? 40 : 120) : ''))
       notify('info', out.slice(0, 160))
@@ -1662,7 +1673,8 @@ function Projects({ focus }) {
     const typing = renaming && renaming.project === r.project ? renaming : null   // a new name or a new group being typed
     return jsx(Tile, {
       title: (r.favourite ? '★ ' : '') + r.title, badge: titles[r.title] > 1 ? r.project : r.world ? 'world' : null, onOpen: () => setOpen(r.project),
-      actions: typing ? [jsx('input', { key: 'n', autoFocus: true, defaultValue: typing.verb === 'rename' ? r.title : '',
+      actions: deleting === r.project ? DeleteAsk({ row: r, onDelete: () => tidy(r.project, 'delete'), onCancel: () => setDeleting(null) })
+        : typing ? [jsx('input', { key: 'n', autoFocus: true, defaultValue: typing.verb === 'rename' ? r.title : '',
           placeholder: typing.verb === 'group' ? 'A new group: Props, Client work…' : null, maxLength: typing.verb === 'group' ? 40 : 120,
           onKeyDown: e => { if (e.key === 'Enter') tidy(r.project, typing.verb, e.target.value); if (e.key === 'Escape') setRenaming(null) },
           style: { font: 'inherit', fontSize: 12, padding: '3px 6px', borderRadius: 6, border: '1px solid var(--ui-stroke-secondary)', background: 'transparent',
@@ -1670,7 +1682,7 @@ function Projects({ focus }) {
         : [jsx(Button, { label: r.favourite ? 'Unstar' : 'Star', icon: r.favourite ? 'star-full' : 'star-empty', title: 'Favourites come first',
             onClick: () => tidy(r.project, r.favourite ? 'unfavourite' : 'favourite') }, 'f'),
           jsx(MoreMenu, { key: 'm', row: r, groups: allGroups, onRename: () => setRenaming({ project: r.project, verb: 'rename' }),
-            onNewGroup: () => setRenaming({ project: r.project, verb: 'group' }), tidy })],
+            onNewGroup: () => setRenaming({ project: r.project, verb: 'group' }), onDelete: () => setDeleting(r.project), tidy })],
       image: jsx(Img, { load: n && n.has_thumb ? () => rest('/thumb?' + query({ project: r.project, build: n.build })) : null, deps: [r.project, n && n.build, n && n.has_thumb] }),
       lines: [counts, 'last ' + when(r.updated) + (titles[r.title] > 1 ? '' : ' · ' + r.project), r.changed_since ? 'scene changed since the last build' : null]
     }, r.project)
@@ -1802,14 +1814,16 @@ function Worlds({ focus, drop }) {
   const [error, setError] = useState('')
   const [open, setOpen] = useState(focus || null)
   const [opening, setOpening] = useState(null)   // a shipped world being made yours: {name, project, build, job, note}
-  const [renaming, setRenaming] = useState(null)
+  const [renaming, setRenaming] = useState(null)   // {project, verb: rename | group}
+  const [deleting, setDeleting] = useState(null)
   const load = useCallback(() => {
     rest('/projects').then(r => setMine((Array.isArray(r && r.projects) ? r.projects : []).filter(p => p.world && SLUG.test(String(p.project)))),
       err => setError(listError(err)))
     rest('/example-worlds').then(r => setShipped(Array.isArray(r && r.worlds) ? r.worlds : []), err => setError(listError(err)))
   }, [])
-  const tidy = async (project, verb, title) => {   // the same marks as the Constructs page: a favourite, a name, the archive
+  const tidy = async (project, verb, title) => {   // the same marks as the Constructs page: a favourite, a name, a folder, the archive
     setRenaming(null)
+    setDeleting(null)
     try {
       const out = await runCommand(null, 'construct ' + verb + ' ' + project + (verb === 'rename' || verb === 'group' ? ' ' + String(title || '').trim().slice(0, verb === 'group' ? 40 : 120) : ''))
       notify('info', out.slice(0, 160))
@@ -1872,25 +1886,32 @@ function Worlds({ focus, drop }) {
     ? 'Show me the example world "' + w.title + '": make it with construct_world (op new, example ' + w.name + '), put it in your reply, then tell me in a few lines what it holds and how each construct is known.'
     : 'Start a world of my own from the example world ' + w.name + ' ("' + w.title + '") with construct_world (op new, example ' + w.name + '), show it, then ask me what to place, move or remove.')
   const head = (text) => jsx('div', { style: Object.assign({}, S.meta, { textTransform: 'uppercase', letterSpacing: '.08em', margin: '4px 0 8px' }), children: text })
-  // favourites first; archived worlds (scratch work, old tries) folded away, nothing deleted
-  const kept = mine.filter(r => !r.archived).sort((a, b) => (b.favourite ? 1 : 0) - (a.favourite ? 1 : 0))
+  // the user's own folders first (none until made), then the rest; favourites first in each; archived worlds folded
+  // away, deleted only from there and only when asked twice
+  const byFav = (a, b) => (b.favourite ? 1 : 0) - (a.favourite ? 1 : 0)
+  const kept = mine.filter(r => !r.archived).sort(byFav)
   const put = mine.filter(r => r.archived)
+  const folders = [...new Set(mine.filter(r => r.own_group).map(r => r.group))].sort()
+  const loose = kept.filter(r => !r.own_group)
   const worldTile = r => {
     const n = r.newest
+    const typing = renaming && renaming.project === r.project ? renaming : null
     return jsx(Tile, {
       title: (r.favourite ? '★ ' : '') + r.title, onOpen: () => setOpen(r.project),
       image: jsx(Img, { load: n && n.has_thumb ? () => rest('/thumb?' + query({ project: r.project, build: n.build })) : null, deps: [r.project, n && n.build] }),
       lines: [[n && n.placements ? plural(n.placements, 'construct') : null, n && n.parts ? plural(n.parts, 'part') : null].filter(Boolean).join(' · '),
         'last ' + when(r.updated) + ' · ' + r.project],
-      actions: renaming === r.project ? [jsx('input', { key: 'n', autoFocus: true, defaultValue: r.title,
-          onKeyDown: e => { if (e.key === 'Enter') tidy(r.project, 'rename', e.target.value); if (e.key === 'Escape') setRenaming(null) },
+      actions: deleting === r.project ? DeleteAsk({ row: r, onDelete: () => tidy(r.project, 'delete'), onCancel: () => setDeleting(null) })
+        : typing ? [jsx('input', { key: 'n', autoFocus: true, defaultValue: typing.verb === 'rename' ? r.title : '',
+          placeholder: typing.verb === 'group' ? 'A new folder: My game, Client work…' : null, maxLength: typing.verb === 'group' ? 40 : 120,
+          onKeyDown: e => { if (e.key === 'Enter') tidy(r.project, typing.verb, e.target.value); if (e.key === 'Escape') setRenaming(null) },
           style: { font: 'inherit', fontSize: 12, padding: '3px 6px', borderRadius: 6, border: '1px solid var(--ui-stroke-secondary)', background: 'transparent',
             color: 'var(--ui-text-primary)', width: '100%' } })]
         : [jsx(Button, { label: r.favourite ? 'Unstar' : 'Star', icon: r.favourite ? 'star-full' : 'star-empty', title: 'Favourites come first',
             onClick: () => tidy(r.project, r.favourite ? 'unfavourite' : 'favourite') }, 'f'),
-          jsx(Button, { label: 'Rename', icon: 'edit', onClick: () => setRenaming(r.project) }, 'r'),
-          jsx(Button, { label: r.archived ? 'Restore' : 'Archive', icon: r.archived ? 'reply' : 'archive', title: r.archived ? 'Back on the page' : 'Out of the way (nothing is deleted)',
-            onClick: () => tidy(r.project, r.archived ? 'unarchive' : 'archive') }, 'a')]
+          jsx(MoreMenu, { key: 'm', row: r, groups: folders, groupWord: 'folder', outLabel: 'Out of its folder',
+            onRename: () => setRenaming({ project: r.project, verb: 'rename' }), onNewGroup: () => setRenaming({ project: r.project, verb: 'group' }),
+            onDelete: () => setDeleting(r.project), tidy })]
     }, r.project)
   }
   return jsxs('div', {
@@ -1900,8 +1921,16 @@ function Worlds({ focus, drop }) {
         jsx(Button, { label: 'Make a world', icon: 'add', onClick: () => startChat('I want to make a world with Construct. Ask me what it should hold (my own constructs, the ones the plugin ships, the gallery) and where; then make it with construct_world, check it and show it.') }),
         jsx(Button, { label: 'A world from a picture', icon: 'file-media', onClick: () => startChat('I will attach a picture of a place. Make a Construct world from it: say what is in the picture, use the constructs that exist (mine, the shipped ones, the gallery), make the ones that are missing, place them at real sizes with construct_world and show the world.') })] }),
       head('Your worlds'),
-      kept.length ? jsx('div', { style: GRID, children: kept.map(worldTile) })
-        : jsx('div', { style: Object.assign({}, S.meta, { marginBottom: 8 }), children: 'None yet: start from one below, or make one.' }),
+      ...folders.map(f => {
+        const list = kept.filter(r => r.own_group && r.group === f)
+        return list.length ? jsxs('div', { style: { marginBottom: 14 }, children: [
+          jsx('div', { style: Object.assign({}, S.meta, { margin: '2px 0 8px' }), children: f + ' (' + list.length + ')' }),
+          jsx('div', { style: GRID, children: list.map(worldTile) })] }, 'f' + f) : null
+      }),
+      loose.length ? jsxs('div', { children: [
+          folders.length ? jsx('div', { style: Object.assign({}, S.meta, { margin: '2px 0 8px' }), children: 'Not in a folder (' + loose.length + ')' }) : null,
+          jsx('div', { style: GRID, children: loose.map(worldTile) })] }, 'loose')
+        : kept.length ? null : jsx('div', { style: Object.assign({}, S.meta, { marginBottom: 8 }), children: 'None yet: start from one below, or make one.' }),
       put.length ? jsx(Folded, { title: 'Archived (' + put.length + ')', children: jsx('div', { style: GRID, children: put.map(worldTile) }) }, 'archived') : null,
       jsx('div', { style: { height: 18 } }),
       head('Worlds to start from'),
