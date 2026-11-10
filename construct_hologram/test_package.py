@@ -175,6 +175,7 @@ class ExamplesGallery(unittest.TestCase):
                     if ref.startswith(("https://", "http://")):
                         self.assertTrue(own or ref.startswith((site.SITE_URL, site.REPO_URL)), (page, ref))
                         continue
+                    ref = ref.split("#")[0]   # a place on another page: the page must exist
                     target = (page.parent / ref.split("?")[0]).resolve()
                     if ref.endswith("/"):
                         target = target / "index.html"
