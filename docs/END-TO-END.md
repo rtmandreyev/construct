@@ -114,7 +114,7 @@ materials are documented; the shape of each moulding was read from a photograph;
 
 Press **S**: the same construct as a modelling program shows it, the glass clear.
 
-<p align="center"><a href="https://rtmandreyev.github.io/construct/examples/tompion-year-going-clock/construct.html?mode=solid"><img src="media/tompion-solid.jpg" width="70%" alt="The clock in lines of light and as a grey solid side by side"></a></p>
+<p align="center"><a href="https://rtmandreyev.github.io/construct/examples/tompion-year-going-clock/construct.html?mode=solid"><img src="media/tompion-solid.jpg" width="70%" alt="The clock with its hood door open, in lines of light and as a solid in its walnut and gilt, side by side"></a></p>
 <p align="center"><sub><a href="https://rtmandreyev.github.io/construct/examples/tompion-year-going-clock/construct.html?mode=solid">Open it as a solid</a> · <a href="https://rtmandreyev.github.io/construct/examples/tompion-year-going-clock/construct.html?open=1">with its doors open</a></sub></p>
 
 ## 6. In Blender

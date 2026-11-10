@@ -169,7 +169,7 @@ every guess a deeper amber the more firmly it is held; and the same Duomo as a s
 
 <p align="center">
   <img src="docs/media/provenance-shades-duomo.jpg" width="49%" alt="The Duomo di Milano in the provenance view: verified sizes in cyan, traced parts in blue, inferred parts in shades of amber, with the legend counting each">
-  <img src="docs/media/solid-duomo.jpg" width="49%" alt="The Duomo di Milano as a solid, from the same view">
+  <img src="docs/media/solid-duomo.jpg" width="49%" alt="The Duomo di Milano as a solid in its marble, the Madonnina gilded, from the same view">
 </p>
 
 **Film mode.** A construct assembling across a piece of music. [Film and motion →](docs/for/film-and-motion.md)
