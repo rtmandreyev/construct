@@ -19165,7 +19165,7 @@
   "outcome": "self-reviewed",
   "provenance_note": "Provenance-only audit; physical payload unchanged; historical independent judgement preserved in before backup and sealed checkpoints, not a fresh critique. Native verified facts are documented non-metric statements, not verified part measurements. All part size/shape remain inferred; 82/94 stone conflict unresolved. No rounds or geometry work.",
   "critic": {
-   "scene_sha256": "804dceba8e708a6630a9aaf0a78a4b1210f2f67878bb04876fd6360ac35c919e",
+   "scene_sha256": "6ce5ded1634c29426b8f783a2b36a659d189409619911d2e06bfc95e36896aa7",
    "verdict": "improve",
    "scores": {
     "silhouette": 2,
@@ -19175,11 +19175,11 @@
     "composition": 3,
     "assembly": 3,
     "motion": 3,
-    "density": 1,
+    "density": 2,
     "honesty": 3
    },
-   "round": 1,
-   "defects": 6
+   "round": 2,
+   "defects": 5
   }
  }
 }

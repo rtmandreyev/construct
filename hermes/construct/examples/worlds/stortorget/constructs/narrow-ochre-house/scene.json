@@ -4149,7 +4149,7 @@
    "request"
   ],
   "review_rounds": 0,
-  "outcome": "good",
+  "outcome": "self-reviewed",
   "identity": [
    {
     "feature": "Narrow two-bay plain ochre facade with cream trim",
@@ -4315,10 +4315,10 @@
   ],
   "provenance_note": "Provenance-only audit; physical payload unchanged; historical independent judgement preserved in before backup and sealed checkpoints, not a fresh critique.",
   "critic": {
-   "scene_sha256": "2056d2ec3f64a2c965190ee69f1f07944c7f1e69bfeef48bd4fa4637c6f6c1d6",
-   "verdict": "good",
+   "scene_sha256": "41d5cc43640f022ba274164f09dbbf1131efd59e1313dc464baaeb5eef56f667",
+   "verdict": "improve",
    "scores": {
-    "silhouette": 2,
+    "silhouette": 3,
     "proportions": 2,
     "identity": 2,
     "depth": 2,
@@ -4328,8 +4328,8 @@
     "density": 2,
     "honesty": 3
    },
-   "round": 1,
-   "defects": 5
+   "round": 2,
+   "defects": 4
   }
  },
  "annotations": [

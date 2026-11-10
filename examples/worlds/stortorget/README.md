@@ -243,19 +243,21 @@ and its answer was recorded as it came:
 
 | Construct | Verdict | Score | Defects (major / minor) |
 | --- | --- | ---: | --- |
-| Schantzska huset, No. 20 | improve | 20 of 27 | 6 / 0 |
-| Seyfridtzska huset, No. 18 | improve | 21 | 3 / 3 |
-| Börshuset | improve | 20 | 6 / 1 |
-| The sage curved-gable house | improve | 22 | 2 / 3 |
-| The russet mansard house | good | 22 | 2 / 3 |
+| Schantzska huset, No. 20 | improve | 21 of 27 | 5 / 0 |
+| Seyfridtzska huset, No. 18 | improve | 21 | 3 / 2 |
+| Börshuset | improve | 19 | 5 / 3 |
+| The sage curved-gable house | good | 25 | 1 / 1 |
+| The russet mansard house | improve | 21 | 4 / 1 |
 | The long yellow range | improve | 20 | 3 / 3 |
-| The yellow mansard house | improve | 22 | 1 / 4 |
-| The narrow ochre house | good | 22 | 1 / 4 |
-| The post lamp | improve | 22 | 4 / 1 |
-| The granite block | improve | 21 | 4 / 3 |
+| The yellow mansard house | good | 22 | 1 / 4 |
+| The narrow ochre house | improve | 23 | 1 / 3 |
+| The post lamp | good | 23 | 3 / 2 |
+| The granite block | good | 22 | 2 / 3 |
 
-Four critics (the sage and yellow mansard houses, the lamp, the block) answered *good* but marked a feature of their
-checklist missing. Construct recomputes every verdict from the critic's own answer, and records those as *improve*.
+The narrow ochre house's critic answered *good* but marked a feature of its checklist missing. Construct recomputes
+every verdict from the critic's own answer, and records that one as *improve*. A first pass, made before a correction
+to the photograph's source reference, recorded 2 *good* and 8 *improve*: a verdict is one fresh critic's judgement,
+and two critics can differ.
 The verdicts in the table above are the builders' rounds as they ran; these are the scenes as they ship.
 
 ## Placed at real size

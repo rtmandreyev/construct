@@ -1516,7 +1516,7 @@
    "request"
   ],
   "review_rounds": 4,
-  "outcome": "self-reviewed",
+  "outcome": "good",
   "next": [
    "Improve photo-view camera matching without changing the accepted hero.",
    "Resolve conflicting band-height critiques with a more precise photo comparison.",
@@ -1567,8 +1567,8 @@
   ],
   "provenance_note": "Provenance-only audit; physical payload unchanged; historical independent judgement preserved in before backup and sealed checkpoints, not a fresh critique. Live critic removed because provenance edits invalidate scene hash; no new independent round. Prior limit and unresolved camera/band/texture defects remain in before backup, rounds and next; no geometry/camera fix performed.",
   "critic": {
-   "scene_sha256": "911d99d9abba104cd131ee97fa4ed05c5a041f3dbcf0211dc2f8b9de3b389b57",
-   "verdict": "improve",
+   "scene_sha256": "1a1040fb5df181743c7d767da3829bc4d64397e8b4fd874c465b813e75eaa419",
+   "verdict": "good",
    "scores": {
     "silhouette": 2,
     "proportions": 2,
@@ -1577,11 +1577,11 @@
     "composition": 2,
     "assembly": 3,
     "motion": 3,
-    "density": 2,
+    "density": 3,
     "honesty": 3
    },
-   "round": 1,
-   "defects": 7
+   "round": 2,
+   "defects": 5
   }
  }
 }

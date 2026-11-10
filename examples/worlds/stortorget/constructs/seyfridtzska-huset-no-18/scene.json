@@ -6406,21 +6406,21 @@
    }
   ],
   "critic": {
-   "scene_sha256": "bdf3265697c4728f98fefd08b1b30ca851f8ee7c323944d8e10e0ca7811f6038",
+   "scene_sha256": "5f935f88c26ef0061d0a71645e33fb2795dcbd76fb328d53ba43a9b321d68ea2",
    "verdict": "improve",
    "scores": {
-    "silhouette": 2,
+    "silhouette": 3,
     "proportions": 1,
     "identity": 2,
     "depth": 2,
-    "composition": 3,
+    "composition": 2,
     "assembly": 3,
     "motion": 3,
     "density": 2,
     "honesty": 3
    },
-   "round": 1,
-   "defects": 6
+   "round": 2,
+   "defects": 5
   }
  }
 }

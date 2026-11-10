@@ -93,7 +93,7 @@ from the chat. [docs/WORLDS.md](docs/WORLDS.md)
   picture it was made from and a page on how it was made.
 - **Stortorget's provenance, revisited** by the agent that built it: every part of its ten researched constructs
   names its source (1,491 of 1,491), 36 documented facts that are not measurements are marked verified and say so,
-  four over-claimed facts are now inferred, and each changed construct has a fresh critic's verdict (2 good, 8
+  four over-claimed facts are now inferred, and each changed construct has a fresh critic's verdict (4 good, 6
   improve). No geometry changed. [Provenance, revisited](examples/worlds/stortorget/README.md#provenance-revisited)
 - **The documentation, read through for plain language:** the same facts, commands and links, in shorter sentences.
 - **Masterpiece rounds, from those two runs:** a critic's tie (`same`) is a result; `rounds extend MINUTES` reopens a

@@ -155,6 +155,10 @@ class ExamplesGallery(unittest.TestCase):
             text = (d / "scene.json").read_text(encoding="utf-8")
             self.assertIsNone(re.search(r"/Users/|/private/|/var/folders|references/", text), ex["slug"])
             self.assertTrue(diagnose.diagnose_text(text)["ok"], ex["slug"])
+        # every shipped world and every construct inside it: no path from the machine it was made on
+        for path in sorted((root / "worlds").rglob("*.json")):
+            text = path.read_text(encoding="utf-8")
+            self.assertIsNone(re.search(r"/Users/|/home/[a-z]|/private/|/var/folders|\.hermes/", text), str(path.relative_to(root)))
 
     def test_the_site_has_only_relative_links_that_resolve(self):
         spec = __import__("importlib.util").util.spec_from_file_location("build_site", HERE.parent / "scripts" / "build_site.py")
