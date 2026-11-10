@@ -24,9 +24,9 @@ another browser. Very old browsers and some locked-down environments don't offer
 
 That is the check doing its job. Each error says where the problem is in the scene and how to fix
 it, for example a part that floats in the air, or a fact marked *verified* without a source. When
-an agent is working, it reads these and repairs the scene itself; it keeps going until the check
+an agent is working, it reads these and repairs the scene itself, and it keeps going until the check
 passes. If you are editing by hand, `check --json` gives the same report in a form you can read
-part by part. Warnings don't stop a construct from building; they point at things a viewer might
+part by part. Warnings don't stop a construct from building. They point at things a viewer might
 notice.
 
 ## A masterpiece run in Hermes stops judging after two rounds

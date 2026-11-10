@@ -106,9 +106,9 @@ shades from designed to seen in a photograph and checked against a fact.
 <p align="center"><a href="https://rtmandreyev.github.io/construct/examples/tompion-year-going-clock/construct.html?mode=provenance"><img src="media/tompion-provenance.jpg" width="60%" alt="The clock in the provenance view: the case's outline in cyan, size verified; the rest in shades of amber; the legend counts 3 size verified and 204 inferred, and the caption names what is known and from where"></a></p>
 <p align="center"><sub><a href="https://rtmandreyev.github.io/construct/examples/tompion-year-going-clock/construct.html?mode=provenance">Open it in the provenance view</a></sub></p>
 
-It is an honest picture of what two photographs and a museum record can give: the overall size and the
-materials are documented; the shape of each moulding was read from a photograph; what hides behind the dial
-(the movement's wheels) was designed from Tompion's practice and says so.
+It is an honest picture of what two photographs and a museum record can give. The overall size and the
+materials are documented, and the shape of each moulding was read from a photograph. What hides behind the dial
+(the movement's wheels) was designed from Tompion's practice, and says so.
 
 ## 5. The solid
 
