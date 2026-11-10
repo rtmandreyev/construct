@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.3.0 — 2026-11-08
+## 1.3.0 — 2026-11-10
 
 **Worlds:** whole constructs placed together in one scene. A room, a street, a city or a game map, made in Hermes
 from the chat. [docs/WORLDS.md](docs/WORLDS.md)
@@ -91,6 +91,11 @@ from the chat. [docs/WORLDS.md](docs/WORLDS.md)
   and Stortorget, Stockholm's old square at Christmas from a photograph (8 houses researched one by one, one stall
   placed 41 times; 12 world rounds, verdict improve, good at rounds 9 and 10). Each ships with its constructs, the
   picture it was made from and a page on how it was made.
+- **Stortorget's provenance, revisited** by the agent that built it: every part of its ten researched constructs
+  names its source (1,491 of 1,491), 36 documented facts that are not measurements are marked verified and say so,
+  four over-claimed facts are now inferred, and each changed construct has a fresh critic's verdict (2 good, 8
+  improve). No geometry changed. [Provenance, revisited](examples/worlds/stortorget/README.md#provenance-revisited)
+- **The documentation, read through for plain language:** the same facts, commands and links, in shorter sentences.
 - **Masterpiece rounds, from those two runs:** a critic's tie (`same`) is a result; `rounds extend MINUTES` reopens a
   run stopped by its time ceiling; a construct's artwork travels with each checkpoint and comes back with a lost
   round; the picture and the request given at `rounds start` carry to every packet; a reference naming a view the
