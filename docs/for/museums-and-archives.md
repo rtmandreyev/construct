@@ -76,6 +76,8 @@ reconstruction, not an exact 1931 digital twin". [The walkthrough →](hermes-wa
 | green | supplied by the person who asked |
 | magenta, dotted | decorative, not a claim |
 
+Every mark and shade, in plain words with examples: [How each part is known](../PROVENANCE.md).
+
 The legend counts the parts of each kind, names the sources behind the verified ones, and counts designed parts made
 *to a requirement* (a function a document gives, a feature the request asked for) apart from free design. The
 caption says what kind of thing it is: DOCUMENTED RECONSTRUCTION, APPROXIMATE RECONSTRUCTION, GENERIC

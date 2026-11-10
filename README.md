@@ -40,7 +40,7 @@ assembly and read the labels; <a href="docs/for/invent-from-what-exists.md">how 
 - **Construct for Hermes.** A native Hermes plugin. Ask for a thing in plain words and the construct appears live in the chat, with its 3D model, kit and NetLogo runs beside it. You can also place your constructs together into worlds. `hermes plugins install rtmandreyev/construct#hermes/construct` ([what it does](hosts/hermes/construct/README.md), [Villa Savoye in Hermes, step by step](docs/for/hermes-walkthrough.md), [worlds, step by step](docs/for/worlds-walkthrough.md)).
 - **Every piece stays separate.** In a world made from one picture you can still handle each construct on its own: move a car, turn a tower, swap the signs, open a door on its hinge, export it to Blender or Godot, or reuse a building in another level ([Rain Harbour, before and after](examples/worlds/rain-harbour/#changed-by-hand)).
 - **Any agent, any model.** Claude Code, Hermes, any MCP client or any OpenAI-compatible endpoint, or by hand.
-- **Honest about what is known.** Every part says how it is known, for its size and its shape separately, and every guess is shown in a shade of how firmly it is held.
+- **Honest about what is known.** Every part says how it is known, for its size and its shape separately, and every guess is shown in a shade of how firmly it is held. [What each mark means](docs/PROVENANCE.md).
 - **One house style.** Models never choose the colours, so every construct looks like it belongs with the rest.
 - **It repairs itself.** Every problem comes back with where it is and how to fix it.
 - **Nothing to install.** It needs only Python's standard library and a browser. There are no API keys and no network service inside Construct.

@@ -65,7 +65,7 @@ there is no author line. Press **L** to show or hide the labels.
 
 ![Saturn in the provenance view: the rings, taken from published data, drawn in white; the globe's cloud bands, designed by the model, drawn in amber; and the legend in the corner](media/style-provenance.jpg)
 
-Every fact and every part in a construct is marked with how it is known:
+Every fact and every part in a construct is marked with how it is known ([in plain words, with examples](PROVENANCE.md)):
 
 | Mark | Meaning |
 | --- | --- |

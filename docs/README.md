@@ -21,6 +21,7 @@ need them.
 | see what was new in 1.1, with pictures and commands | [NEW-IN-1.1.md](NEW-IN-1.1.md) |
 | see how a construct is made, step by step | [HOW-IT-IS-MADE.md](HOW-IT-IS-MADE.md) |
 | understand what you see in a construct | [STYLE.md](STYLE.md) |
+| know what verified, traced and the shades of a guess mean | [PROVENANCE.md](PROVENANCE.md) |
 | run Construct in Claude Code, Hermes, another agent or by hand | [USING.md](USING.md) |
 | fix something that went wrong | [TROUBLESHOOTING.md](TROUBLESHOOTING.md) |
 | fill in a ready-made template (a book, a CD, a guitar, a bottle, a car) | [ARCHETYPES.md](ARCHETYPES.md) |
