@@ -15,11 +15,30 @@ know 3D, code or graphics.
 - **See it as a solid:** press **S** and the same construct is shown as a modelling program shows it.
 - **Take it further:** the same construct exports as a 3D model, prints on a 3D printer, becomes a model kit
   ([four to open](https://rtmandreyev.github.io/construct/#kits)), plays in a game engine or assembles across a piece of music in a film.
+- **Give it colour:** every new construct comes with its own colours and materials, so its 3D model arrives finished.
+  In Hermes you can click any part and repaint it yourself.
+- **Make a whole place:** put your constructs together into a **world**, ask for one in plain words, or give your
+  agent a single photo or picture of a place. Every construct in a world stays its own, so you can move it, take it
+  out, or open it on its own.
+
+## A whole place, from one picture
+
+<p align="center"><a href="../../examples/worlds/stortorget/"><img src="../media/world-stortorget.gif" width="49%" alt="Stortorget, Stockholm's old square, assembling as a world"></a>
+<a href="../../examples/worlds/rain-harbour/"><img src="../media/world-rain-harbour.gif" width="49%" alt="Rain Harbour, a night street with neon signs, assembling as a world"></a></p>
+<p align="center"><sub>Left: <a href="../../examples/worlds/stortorget/">Stortorget</a>, Stockholm's old square, made from one photograph.
+Right: <a href="../../examples/worlds/rain-harbour/">Rain Harbour</a>, a game level made from one concept picture.</sub></p>
+
+Both were made by GPT-6.1 Sol in Hermes, zero-shot: one picture and one request each. A world
+this size takes time (Stortorget about 20 hours, Rain Harbour about 17), because every house, sign and car is built
+and checked as its own construct. Putting constructs you already have together, in a room or a yard, takes minutes.
+[Worlds, step by step](worlds-walkthrough.md).
 
 ## Try it
 
-1. Install it for your agent (two minutes, nothing system-wide; see [Install](../../README.md#install)), or, with no
-   terminal at all, use the [Claude or ChatGPT app](in-the-apps.md).
+1. Install it for your agent (two minutes, nothing system-wide; see [Install](../../README.md#install)). In Hermes it
+   is one line: `hermes plugins install rtmandreyev/construct#hermes/construct`, and constructs then appear live in
+   the chat ([step by step](hermes-walkthrough.md)). With no terminal at all, use the
+   [Claude or ChatGPT app](in-the-apps.md).
 2. Ask: *"make a construct of a 1970s desk fan"*, or *"a masterpiece of the Sydney Opera House"*.
 3. Open the `construct.html` it gives you. Drag to orbit, scroll to zoom, **R** replays the build.
 
@@ -29,6 +48,7 @@ Before it starts, the agent tells you which mode it will use and why:
 | --- | --- | --- |
 | **fast** | simple objects and generic subjects | about 10 minutes |
 | **masterpiece** | a named car, landmark or instrument whose likeness matters | up to 2 hours |
+| a **world** from one picture | a whole street, square or game level | many hours: every piece is its own construct |
 
 ## Go deeper
 

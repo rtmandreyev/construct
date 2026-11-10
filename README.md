@@ -10,12 +10,15 @@ its own parts, sources and joints, so you can move, reuse or open any of it.
 **Describe a thing, or show a place. Get a hologram, a 3D model, a print, a kit, or a whole world.** Ask any AI
 agent in plain words and it builds an animated model in lines of light, in the **Measured Light** style. The result
 is a single web page you can open anywhere, and it is honest about what is known. The same construct can also become
-a 3D model with named parts and working joints, a print, a model kit, a CAD file or a film.
+a 3D model with named parts and working joints, a print, a model kit, a CAD file or a film, or one piece of a world
+made with others.
 
-Give it one picture of a place and it builds the place, zero-shot. [Stortorget](examples/worlds/stortorget/),
+A world can be asked for in plain words, put together from constructs you already have, or made from a single
+picture. Given one picture of a place, it builds the place zero-shot. [Stortorget](examples/worlds/stortorget/),
 Stockholm's old square, was made from a single photograph and stands almost exactly as the photograph shows it.
 [Rain Harbour](examples/worlds/rain-harbour/) is a game level made from one concept picture, ready to open in Godot,
-Unity or Unreal. You can then rearrange it by hand in Hermes, with no AI at all.
+Unity or Unreal. And a world comes apart again, construct by construct: rearrange it by hand in Hermes, or take any
+one construct out to open, export or reuse on its own.
 
 <p align="center">
   <a href="https://rtmandreyev.github.io/construct/examples/sainte-chapelle/"><img src="docs/media/assembly-sainte-chapelle.gif" width="32%" alt="The Sainte-Chapelle construct assembling itself"></a>

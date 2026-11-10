@@ -189,9 +189,9 @@ In Godot the glued map's fixed body stays put while each door is a body of its o
 developers](for/game-developers.md) goes through it with numbers measured in Godot, and why a construct is not a
 text-to-mesh model.
 
-### Changed by hand, no AI
+### Changed by hand
 
-A level made from one prompt is still yours to remake, with no model at all. Open it from the Worlds tab in Hermes and use
+A level made from one prompt is still yours to remake, by hand. Open it from the Worlds tab in Hermes and use
 **Arrange**: click AURIC, then **Turn 90°** twice and the arrow keys to bring it out into the middle of the street,
 then **Save**. Each save checks the level and rebuilds it. The card's moves are sent as one plugin command, which can
 also be typed in the chat to move many things at once, again without calling a model:
