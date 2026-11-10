@@ -834,7 +834,8 @@ class Plugin(unittest.TestCase):
         self.assertTrue(all(r["in_world"] in worlds for r in rows.values() if r.get("in_world")))   # folded under a real world
         self.assertRegex(handle("thumbs 1"), r"^Made [01] thumbnails?\.")
         shipped = {w["name"]: w for w in self.api.example_worlds(self.pkg)}
-        self.assertEqual(set(shipped), {"the-shed", "villa-savoye-lived-in", "a-street-of-landmarks", "kestrel-at-saturn"})
+        self.assertEqual(set(shipped), {"the-shed", "villa-savoye-lived-in", "a-street-of-landmarks", "kestrel-at-saturn",
+                                        "rain-harbour", "stortorget"})
         self.assertTrue(all(w["has_thumb"] for w in shipped.values()))
         self.assertTrue(self.api.example_world_thumb("the-shed", self.pkg)["data_url"].startswith("data:image/jpeg;base64,"))
         shed = self.call("construct_inspect", {"project": "garden-shed"})   # a shipped construct, measured in place
