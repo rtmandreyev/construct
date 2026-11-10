@@ -626,6 +626,7 @@ void main() {
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA32F, 1280, st.length / 5120, 0, gl.RGBA, gl.FLOAT, st);
+    this.styleBuf = st; this.styleOrig = st.slice();   // Finish previews a colour by rewriting the solid colour slots
 
     const corner = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, corner);
@@ -955,14 +956,26 @@ void main() {
     const o = un(-1);
     return { o, d: V.norm(V.sub(un(1), o)) };
   };
+  // a colour tried on the card's Finish before it is saved: the solid colour of every part `match(partIndex)` says
+  // yes to (null: everything as built). Only the solid view's slots change; the light view keeps its palette
+  Hologram.prototype.previewColours = function (match, rgb) {
+    const gl = this.gl, st = this.styleBuf;
+    if (!st || !this.styleTex) return false;
+    st.set(this.styleOrig);
+    if (match && rgb) this.styles.forEach((s, i) => { if (s[6] >= 0 && match(s[6])) st.set(rgb, i * 20 + 17); });
+    gl.bindTexture(gl.TEXTURE_2D, this.styleTex);
+    gl.texSubImage2D(gl.TEXTURE_2D, 0, 0, 0, 1280, st.length / 5120, gl.RGBA, gl.FLOAT, st);
+    return true;
+  };
   // the nearest part under a point of the canvas: {id, point, radius} (double-click focuses the camera on it)
-  Hologram.prototype.pickPart = function (px, py, cw, ch) {
+  Hologram.prototype.pickPart = function (px, py, cw, ch, keep) {
     const ray = this.rayAt(px, py, cw, ch);
     if (!ray) return null;
     const memo = {};
     let best = null;
-    for (const p of this.geo.parts) {
+    for (const [pi, p] of this.geo.parts.entries()) {
       if (p.sky || (p.shape === "points" && (p.role === "ornament" || p.certainty === "decorative"))) continue;
+      if (keep && !keep(pi)) continue;
       const m = p.placement && this.arranging() ? this.placeMotion(p.placement, memo) : null;
       let ro = ray.o, rd = ray.d;
       if (m) {
@@ -1858,6 +1871,92 @@ void main() {
       return t > 0 ? [a[0] + (b[0] - a[0]) * t, y, a[2] + (b[2] - a[2]) * t] : null;
     };
 
+    // Finish (the card's): click a part in the solid view to choose its colour and finish; the card saves it
+    holo.fin = { on: false };
+    const globRe = (pat) => new RegExp("^" + String(pat).replace(/[.+^${}()|\\]/g, "\\$&").replace(/\*/g, ".*").replace(/\?/g, ".") + "$");
+    const localId = (p) => (p.placement !== undefined && p.placement !== null && p.id.startsWith(p.placement + "/") ? p.id.slice(p.placement.length + 1) : p.id);
+    const setFinish = (on) => {
+      holo.fin.on = !!on;
+      if (on && holo.arr && holo.arr.on) setArrange(false);
+      if (on && holo.solid && !opt.solid) { opt.solid = true; holo.opt.solid = true; setUi(); }
+      if (!on) holo.previewColours(null);
+      document.body.classList.toggle("finishing", !!on); kick();
+    };
+    // only what has surfaces takes a colour (a seam or an edge line has none): the parts the solid view draws
+    let surfaced = null;
+    const hasSurface = (pi) => {
+      if (!surfaced) {
+        surfaced = new Set();
+        const sd = window.HOLOGRAM_SOLID;
+        if (sd && sd.sty) {
+          const t = atob(sd.sty), u = new Uint16Array(t.length >> 1);
+          for (let i = 0; i < u.length; i++) u[i] = t.charCodeAt(2 * i) | (t.charCodeAt(2 * i + 1) << 8);
+          for (const si of new Set(u)) { const st = holo.styles[si]; if (st && st[6] >= 0) surfaced.add(st[6]); }
+        }
+      }
+      return surfaced.size ? surfaced.has(pi) : true;
+    };
+    // the exact part under the pointer: the solid view's own triangles, nearest first (a box test would give a car's
+    // body for a click on its wheel); decoded once, on the first click
+    let mesh = null;
+    const triPick = (px, py, w, h) => {
+      const sd = window.HOLOGRAM_SOLID, ray = holo.rayAt(px, py, w, h);
+      if (!sd || !sd.vertices || !ray || !holo.solid) return null;
+      if (!mesh) {
+        const raw = (b64) => { const t = atob(b64), u = new Uint8Array(t.length); for (let i = 0; i < t.length; i++) u[i] = t.charCodeAt(i); return u.buffer; };
+        const q = new Uint16Array(raw(sd.pos)), lo = holo.solid.lo, sp = holo.solid.span, P = new Float32Array(q.length);
+        for (let i = 0; i < q.length; i++) P[i] = lo[i % 3] + q[i] / 65535 * sp[i % 3];
+        mesh = { P, I: sd.wide ? new Uint32Array(raw(sd.idx)) : new Uint16Array(raw(sd.idx)), S: new Uint16Array(raw(sd.sty)) };
+      }
+      const { P, I, S } = mesh, o = ray.o, d = ray.d;
+      let best = Infinity, bi = -1;
+      for (let k = 0; k + 2 < I.length; k += 3) {
+        const a = I[k] * 3, b = I[k + 1] * 3, c = I[k + 2] * 3;
+        const e1x = P[b] - P[a], e1y = P[b + 1] - P[a + 1], e1z = P[b + 2] - P[a + 2];
+        const e2x = P[c] - P[a], e2y = P[c + 1] - P[a + 1], e2z = P[c + 2] - P[a + 2];
+        const hx = d[1] * e2z - d[2] * e2y, hy = d[2] * e2x - d[0] * e2z, hz = d[0] * e2y - d[1] * e2x;
+        const det = e1x * hx + e1y * hy + e1z * hz;
+        if (Math.abs(det) < 1e-12) continue;
+        const f = 1 / det, sx = o[0] - P[a], sy = o[1] - P[a + 1], sz = o[2] - P[a + 2];
+        const u = f * (sx * hx + sy * hy + sz * hz);
+        if (u < 0 || u > 1) continue;
+        const qx = sy * e1z - sz * e1y, qy = sz * e1x - sx * e1z, qz = sx * e1y - sy * e1x;
+        const v = f * (d[0] * qx + d[1] * qy + d[2] * qz);
+        if (v < 0 || u + v > 1) continue;
+        const t = f * (e2x * qx + e2y * qy + e2z * qz);
+        if (t > 1e-6 && t < best) { best = t; bi = k; }
+      }
+      if (bi < 0) return null;
+      const st = holo.styles[S[I[bi]]], pi = st ? st[6] : -1;
+      return pi >= 0 ? { id: geo.parts[pi].id } : null;
+    };
+    const finishPick = (px, py, w, h) => {
+      const hit = triPick(px, py, w, h) || holo.pickPart(px, py, w, h, hasSurface);
+      if (!hit) return null;
+      const pi = geo.parts.findIndex((q) => q.id === hit.id), p = geo.parts[pi];
+      const id = localId(p), pattern = id.includes("-") ? id.replace(/-[^-]*$/, "-*") : null;
+      const re = pattern ? globRe(pattern) : null;
+      const siblings = re ? geo.parts.filter((q) => q.placement === p.placement && re.test(localId(q))).length : 1;
+      const si = holo.styles.findIndex((st) => st[6] === pi);
+      const colour = si >= 0 && geo.style_colors && geo.style_colors[si] ? String(geo.style_colors[si]).toLowerCase() : null;
+      const recs = geo.world ? geo.world.placements : [], rec = recs.find((q) => q.id === p.placement);
+      const shared = rec ? recs.filter((q) => q.construct === rec.construct).map((q) => q.id) : [];
+      // the material it belongs to in its construct's map (in a world, named "<placement>: <name>")
+      const matOf = (q) => { const m = (geo.part_materials || {})[q.id]; return m && q.placement && m.startsWith(q.placement + ": ") ? m.slice(q.placement.length + 2) : m || null; };
+      const material = matOf(p), together = material ? geo.parts.filter((q) => q.placement === p.placement && matOf(q) === material).length : 0;
+      return { part: id, placement: p.placement || null, label: p.label || id, pattern: siblings > 1 ? pattern : null, siblings,
+               material, together,
+               color: colour, finish: (geo.part_finishes || {})[p.id] || null, shared, title: rec ? rec.title : null };
+    };
+    let finDown = null;
+    canvas.addEventListener("pointerdown", (e) => { finDown = holo.fin.on ? [e.clientX, e.clientY] : null; });
+    canvas.addEventListener("pointerup", (e) => {
+      if (!holo.fin.on || !finDown || Math.hypot(e.clientX - finDown[0], e.clientY - finDown[1]) > 5) return;
+      const r = canvas.getBoundingClientRect(), pick = finishPick(e.clientX - r.left, e.clientY - r.top, r.width, r.height);
+      holo.fin.placement = pick ? pick.placement : null;
+      try { if (window.HOLO.onFinish) window.HOLO.onFinish(pick); } catch (err) { /* the host went away */ }
+    });
+
     const hover = el("div", "hover"); overlay.appendChild(hover);
     // interaction
     let drag = null, lastInput = -1e9;
@@ -2133,6 +2232,28 @@ void main() {
           if (typeof change.turn === "number") ed.turn = change.turn; arrangeTell(); kick(); return true; },
       },
       onArrange: null,
+      // Finish (the card's): on/off, a colour tried on parts by their ids or patterns (in a world, of the placement
+      // last clicked), and onFinish, told each part clicked
+      finish: {
+        set(on) { setFinish(on); return holo.fin.on; },
+        on() { return holo.fin.on; },
+        preview(patterns, colour, placement, material) {
+          const done = this._preview(patterns, colour, placement, material);
+          kick();   // the colour shows at once, not at the next move of the camera
+          return done;
+        },
+        _preview(patterns, colour, placement, material) {
+          if (!patterns && !material) return holo.previewColours(null);
+          const res = (patterns || []).map(globRe), rgb = hex(colour);
+          const where = placement === undefined || placement === null ? holo.fin.placement : placement;
+          const mats = geo.part_materials || {};
+          return holo.previewColours((pi) => { const p = geo.parts[pi];
+            if (where && p.placement !== where) return false;
+            if (material) { const m = mats[p.id]; return m === material || (p.placement && m === p.placement + ": " + material); }
+            return res.some((re) => re.test(localId(p))); }, rgb);
+        },
+      },
+      onFinish: null,
     };
     if (geo.world) { overlay.appendChild(arrangeBox); arrangeTell(); }
   }
