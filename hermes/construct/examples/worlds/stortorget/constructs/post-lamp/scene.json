@@ -24,6 +24,20 @@
    "title": "Ximonic (Simo Räsänen), Stortorget Christmas Market, December 2022; CC BY-SA 4.0. Derived visual reconstruction.",
    "ref": "https://creativecommons.org/licenses/by-sa/4.0/",
    "rights": "reference_only"
+  },
+  {
+   "id": "model-estimate",
+   "kind": "generated",
+   "ref": "Provenance audit D; existing geometry retained, no measured or orthographic fit.",
+   "rights": "reference_only",
+   "title": "Agent-authored production estimates and unseen continuations, not human measurements"
+  },
+  {
+   "id": "lighting-context",
+   "kind": "document",
+   "ref": "https://sv.wikipedia.org/wiki/Gatubelysning_i_Stockholm",
+   "rights": "reference_only",
+   "title": "Gatubelysning i Stockholm; context only, not identification of this lamp"
   }
  ],
  "facts": [
@@ -32,23 +46,37 @@
    "value": 5.1,
    "unit": "m",
    "certainty": "inferred",
-   "source": "request",
-   "note": "Supervisor inferred metric envelope, not a published or measured lamp height."
+   "source": "model-estimate",
+   "note": "Agent/supervisor production envelope estimate only, not user-measured or published. Full lower post is occluded in reference; actual model compiled envelope is 5.1283 m, not a measured lamp height."
   },
   {
    "key": "head-diameter",
    "value": 0.91,
    "unit": "m",
    "certainty": "inferred",
-   "source": "request",
-   "note": "Approximate photo-proportioned cap diameter around nominal 0.9m."
+   "source": "model-estimate",
+   "note": "Agent photo-proportioned production estimate, not a human measurement or published dimension. Perspective reference does not verify 0.91 m."
   },
   {
    "key": "single-head",
    "value": 1,
-   "certainty": "user_supplied",
-   "source": "request",
-   "note": "One centrally mounted gas-style lantern, not a double electric streetlight."
+   "certainty": "inferred",
+   "source": "photo",
+   "note": "Visible in reference: one centrally mounted lantern head at upper right. Agent visual observation, not a user-supplied claim, published count, fuel identification or measurement; lower post is occluded by stall."
+  },
+  {
+   "certainty": "inferred",
+   "key": "visible-outer-form",
+   "note": "Literal perspective-photo observation only. Rotational profiles, all dimensions, precise detail counts and hidden continuation are inferred; no orthographic fitting.",
+   "source": "photo",
+   "value": "One tapered transparent-looking enclosure below a broad rounded cap, upper dome/loop, open curved cradle and short visible ridged shaft; lower shaft/foot hidden by stall."
+  },
+  {
+   "certainty": "inferred",
+   "key": "identity-limits",
+   "note": "Legacy gas/castiron/mantle/porcelain/vent part IDs and labels are modeling terminology, not documented identities or physical functions. Citywide lighting history discusses electrified historic-looking fittings; it does not identify this actual lamp.",
+   "source": "model-estimate",
+   "value": "Actual fixture type, fuel, manufacturer, date and metal/glass composition remain unverified."
   }
  ],
  "parts": [
@@ -59,7 +87,8 @@
    "certainty": "inferred",
    "basis": [
     "height",
-    "head-diameter"
+    "head-diameter",
+    "identity-limits"
    ],
    "stage": 0,
    "shape": {
@@ -110,7 +139,9 @@
     "fill": "dark",
     "weight": 0.65,
     "alpha": 0.85
-   }
+   },
+   "source": "model-estimate",
+   "note": "Hidden below stall in source photo. Entire foot/pedestal shape, construction, material and proportions are agent-inferred completion; photo is not direct evidence. Both size and shape remain inferred."
   },
   {
    "id": "pedestal-moulded-shoe",
@@ -119,7 +150,8 @@
    "certainty": "inferred",
    "basis": [
     "height",
-    "head-diameter"
+    "head-diameter",
+    "identity-limits"
    ],
    "stage": 1,
    "shape": {
@@ -170,7 +202,9 @@
     "fill": "dark",
     "weight": 0.65,
     "alpha": 0.85
-   }
+   },
+   "source": "model-estimate",
+   "note": "Hidden below stall in source photo. Entire foot/pedestal shape, construction, material and proportions are agent-inferred completion; photo is not direct evidence. Both size and shape remain inferred."
   },
   {
    "id": "fluted-post-core",
@@ -178,8 +212,8 @@
    "role": "mass",
    "certainty": "inferred",
    "basis": [
-    "height",
-    "head-diameter"
+    "visible-outer-form",
+    "single-head"
    ],
    "stage": 1,
    "shape": {
@@ -222,7 +256,9 @@
     "fill": "dark",
     "weight": 0.65,
     "alpha": 0.85
-   }
+   },
+   "source": "photo",
+   "note": "Photo supports only the short exposed upper ridged shaft silhouette. Hidden lower continuation, full core, rotational symmetry and chosen lengths/radii are inferred; no cast-iron material identification or measurement."
   },
   {
    "id": "post-raised-flutes",
@@ -230,8 +266,8 @@
    "role": "detail",
    "certainty": "inferred",
    "basis": [
-    "height",
-    "head-diameter"
+    "visible-outer-form",
+    "single-head"
    ],
    "stage": 1,
    "shape": {
@@ -283,7 +319,9 @@
      ],
      "span": 360
     }
-   }
+   },
+   "source": "photo",
+   "note": "Visible upper shaft looks ridged. Twelve repeated flutes, profiles, full hidden lengths and radial spacing are model choices, not a published count or measured/traced geometry."
   },
   {
    "id": "ornamental-neck-collars",
@@ -291,8 +329,8 @@
    "role": "identity",
    "certainty": "inferred",
    "basis": [
-    "height",
-    "head-diameter"
+    "visible-outer-form",
+    "single-head"
    ],
    "stage": 2,
    "shape": {
@@ -359,7 +397,9 @@
     "fill": "dark",
     "weight": 0.65,
     "alpha": 0.85
-   }
+   },
+   "source": "photo",
+   "note": "Visible stacked collar-like transitions below cradle support general motif only. Exact lathe profile, rear continuation and dimensions remain inferred; material unverified."
   },
   {
    "id": "castiron-scroll-cradle",
@@ -367,8 +407,8 @@
    "role": "identity",
    "certainty": "inferred",
    "basis": [
-    "height",
-    "head-diameter"
+    "visible-outer-form",
+    "single-head"
    ],
    "stage": 2,
    "shape": {
@@ -479,7 +519,9 @@
     "fill": "dark",
     "weight": 1.2,
     "alpha": 0.95
-   }
+   },
+   "source": "photo",
+   "note": "Open curved cradle visible under head. Tube path, symmetry, thickness and attachment construction are inferred from perspective, not traced; cast-iron label is unverified."
   },
   {
    "id": "mantle-feed-stem",
@@ -487,8 +529,8 @@
    "role": "structure",
    "certainty": "inferred",
    "basis": [
-    "height",
-    "head-diameter"
+    "visible-outer-form",
+    "single-head"
    ],
    "stage": 2,
    "shape": {
@@ -506,7 +548,9 @@
    "look": {
     "fill": "dark",
     "weight": 0.65
-   }
+   },
+   "source": "photo",
+   "note": "A narrow central upright is visible between cradle and bowl. Its modeled cylinder and dimensions are inferred; feed/gas function is not established by the photo."
   },
   {
    "id": "lantern-lower-bowl",
@@ -514,8 +558,8 @@
    "role": "identity",
    "certainty": "inferred",
    "basis": [
-    "height",
-    "head-diameter"
+    "visible-outer-form",
+    "single-head"
    ],
    "stage": 3,
    "shape": {
@@ -578,7 +622,9 @@
     "fill": "dark",
     "weight": 0.65,
     "alpha": 0.85
-   }
+   },
+   "source": "photo",
+   "note": "Lower dark bowl/ring silhouette visible; complete radial profile, closed underside and depth are inferred, not measured."
   },
   {
    "id": "clear-tapered-lantern-glass",
@@ -586,8 +632,8 @@
    "role": "mass",
    "certainty": "inferred",
    "basis": [
-    "height",
-    "head-diameter"
+    "visible-outer-form",
+    "single-head"
    ],
    "stage": 3,
    "shape": {
@@ -623,7 +669,9 @@
     "weight": 0.35,
     "alpha": 0.24,
     "glow": 0.04
-   }
+   },
+   "source": "photo",
+   "note": "Photo shows tapered transparent-looking enclosure. Actual glazing composition, thickness, segmentation and complete lathe surface are unverified/inferred; dimensions not measured."
   },
   {
    "id": "broad-bell-cap",
@@ -631,8 +679,8 @@
    "role": "identity",
    "certainty": "inferred",
    "basis": [
-    "height",
-    "head-diameter"
+    "visible-outer-form",
+    "single-head"
    ],
    "stage": 4,
    "shape": {
@@ -703,7 +751,9 @@
     "fill": "dark",
     "weight": 0.65,
     "alpha": 0.95
-   }
+   },
+   "source": "photo",
+   "note": "Broad dark rounded cap silhouette visible. Profile samples, circular completion, underside depth and radius remain inferred; no surveyed or orthographic data."
   },
   {
    "id": "cap-raised-eave-bead",
@@ -711,8 +761,8 @@
    "role": "detail",
    "certainty": "inferred",
    "basis": [
-    "height",
-    "head-diameter"
+    "visible-outer-form",
+    "single-head"
    ],
    "stage": 4,
    "shape": {
@@ -743,7 +793,9 @@
     "fill": "dark",
     "weight": 1.1,
     "alpha": 0.9
-   }
+   },
+   "source": "photo",
+   "note": "Photo supports a projecting cap edge only; separate raised bead construction and tiny profile dimensions are inferred."
   },
   {
    "id": "vent-bell",
@@ -751,8 +803,8 @@
    "role": "identity",
    "certainty": "inferred",
    "basis": [
-    "height",
-    "head-diameter"
+    "visible-outer-form",
+    "single-head"
    ],
    "stage": 4,
    "shape": {
@@ -795,7 +847,9 @@
     "fill": "dark",
     "weight": 0.65,
     "alpha": 0.85
-   }
+   },
+   "source": "photo",
+   "note": "Small upper dome and dark gap visible. Ventilation function, hidden inner cavity, full radial profile and dimensions are not established."
   },
   {
    "id": "vent-slot-rim",
@@ -804,7 +858,8 @@
    "certainty": "inferred",
    "basis": [
     "height",
-    "head-diameter"
+    "head-diameter",
+    "identity-limits"
    ],
    "stage": 4,
    "shape": {
@@ -833,7 +888,9 @@
      ],
      "span": 360
     }
-   }
+   },
+   "source": "model-estimate",
+   "note": "Fine construction is not independently resolved in reference. Exact repeated count, section, hidden sides and shape are agent-authored inferred details, not literal photo evidence or measurements. Legacy name is not verified type/material/function."
   },
   {
    "id": "little-loop-finial",
@@ -841,8 +898,8 @@
    "role": "identity",
    "certainty": "inferred",
    "basis": [
-    "height",
-    "head-diameter"
+    "visible-outer-form",
+    "single-head"
    ],
    "stage": 5,
    "shape": {
@@ -897,7 +954,9 @@
     "fill": "dark",
     "weight": 1.1,
     "alpha": 0.95
-   }
+   },
+   "source": "photo",
+   "note": "Small loop-like top silhouette visible. Tube path, rear form, mounting detail and dimensions inferred; no documented functional identity."
   },
   {
    "id": "mantle-burner-pipe",
@@ -906,7 +965,8 @@
    "certainty": "inferred",
    "basis": [
     "height",
-    "head-diameter"
+    "head-diameter",
+    "identity-limits"
    ],
    "stage": 3,
    "shape": {
@@ -924,7 +984,9 @@
     "fill": "dark",
     "weight": 0.65,
     "alpha": 0.85
-   }
+   },
+   "source": "model-estimate",
+   "note": "Internal/hidden component construction cannot be established from reference. Agent-inferred support/fill geometry only; burner, porcelain and flue terminology does not verify gas fuel, material or function. Both axes inferred."
   },
   {
    "id": "warm-inner-gas-mantle",
@@ -932,8 +994,8 @@
    "role": "data",
    "certainty": "inferred",
    "basis": [
-    "height",
-    "head-diameter"
+    "visible-outer-form",
+    "single-head"
    ],
    "stage": 3,
    "shape": {
@@ -978,7 +1040,9 @@
     "weight": 1.3,
     "glow": 1,
     "alpha": 0.95
-   }
+   },
+   "source": "photo",
+   "note": "A pale narrow interior element is visible through enclosure. Its mantle/gas identity, light source technology, warm glow and modeled profile are not established; geometry and size remain inferred."
   },
   {
    "id": "finial-base-socket",
@@ -986,7 +1050,9 @@
    "certainty": "inferred",
    "stage": 5,
    "basis": [
-    "height"
+    "height",
+    "head-diameter",
+    "identity-limits"
    ],
    "shape": {
     "type": "cylinder",
@@ -1003,14 +1069,17 @@
     "fill": "dark",
     "weight": 0.6,
     "alpha": 0.9
-   }
+   },
+   "source": "model-estimate",
+   "note": "Fine construction is not independently resolved in reference. Exact repeated count, section, hidden sides and shape are agent-authored inferred details, not literal photo evidence or measurements. Legacy name is not verified type/material/function."
   },
   {
    "id": "neck-cradle-moulded-saddle",
    "role": "identity",
    "certainty": "inferred",
    "basis": [
-    "height"
+    "visible-outer-form",
+    "single-head"
    ],
    "shape": {
     "type": "lathe",
@@ -1043,14 +1112,18 @@
     "fill": "dark",
     "weight": 0.85
    },
-   "stage": 2
+   "stage": 2,
+   "source": "photo",
+   "note": "Visible dark neck/cradle transition supports location only. Specific saddle construction, revolved profile, hidden continuation and dimensions inferred."
   },
   {
    "id": "lower-bowl-attachment-ears",
    "role": "identity",
    "certainty": "inferred",
    "basis": [
-    "head-diameter"
+    "height",
+    "head-diameter",
+    "identity-limits"
    ],
    "shape": {
     "type": "sphere",
@@ -1072,14 +1145,18 @@
     "fill": "dark",
     "weight": 0.9
    },
-   "stage": 3
+   "stage": 3,
+   "source": "model-estimate",
+   "note": "Fine construction is not independently resolved in reference. Exact repeated count, section, hidden sides and shape are agent-authored inferred details, not literal photo evidence or measurements. Legacy name is not verified type/material/function."
   },
   {
    "id": "mantle-porcelain-lower-socket",
    "role": "detail",
    "certainty": "inferred",
    "basis": [
-    "head-diameter"
+    "height",
+    "head-diameter",
+    "identity-limits"
    ],
    "shape": {
     "type": "cylinder",
@@ -1096,14 +1173,18 @@
     "fill": "dark",
     "weight": 0.8
    },
-   "stage": 3
+   "stage": 3,
+   "source": "model-estimate",
+   "note": "Internal/hidden component construction cannot be established from reference. Agent-inferred support/fill geometry only; burner, porcelain and flue terminology does not verify gas fuel, material or function. Both axes inferred."
   },
   {
    "id": "cast-leaf-neck-relief",
    "role": "identity",
    "certainty": "inferred",
    "basis": [
-    "height"
+    "height",
+    "head-diameter",
+    "identity-limits"
    ],
    "stage": 2,
    "shape": {
@@ -1155,14 +1236,18 @@
     "fill": "dark",
     "weight": 0.85,
     "alpha": 0.9
-   }
+   },
+   "source": "model-estimate",
+   "note": "Fine construction is not independently resolved in reference. Exact repeated count, section, hidden sides and shape are agent-authored inferred details, not literal photo evidence or measurements. Legacy name is not verified type/material/function."
   },
   {
    "id": "recessed-vent-inner-flue",
    "role": "structure",
    "certainty": "inferred",
    "basis": [
-    "head-diameter"
+    "height",
+    "head-diameter",
+    "identity-limits"
    ],
    "stage": 4,
    "at": [
@@ -1180,7 +1265,9 @@
     "fill": "dark",
     "weight": 0.45,
     "alpha": 0.8
-   }
+   },
+   "source": "model-estimate",
+   "note": "Internal/hidden component construction cannot be established from reference. Agent-inferred support/fill geometry only; burner, porcelain and flue terminology does not verify gas fuel, material or function. Both axes inferred."
   }
  ],
  "anchors": {
@@ -1275,25 +1362,8 @@
    }
   ],
   "review_rounds": 0,
-  "outcome": "good",
+  "outcome": "self-reviewed",
   "next": [],
-  "critic": {
-   "scene_sha256": "1abb488c96d1d34a858695e51fdef237efbc672eb4732d2651bcd701eee4a51f",
-   "verdict": "good",
-   "scores": {
-    "silhouette": 2,
-    "proportions": 2,
-    "identity": 2,
-    "depth": 2,
-    "composition": 3,
-    "assembly": 3,
-    "motion": 3,
-    "density": 2,
-    "honesty": 3
-   },
-   "round": 4,
-   "defects": 5
-  },
   "rounds": [
    {
     "round": 1,
@@ -1340,6 +1410,24 @@
     ],
     "summary": "The two support arms read as a smooth, symmetric U tube with tiny round end pads. The photographed casting has tighter changes of curvature "
    }
-  ]
+  ],
+  "provenance_note": "Provenance-only audit; physical payload unchanged; historical independent judgement preserved in before backup and sealed checkpoints, not a fresh critique. Live critic removed because provenance edits invalidate its scene hash; no new independent round. Legacy fuel/material/functional labels remain unverified.",
+  "critic": {
+   "scene_sha256": "df74db97218895c5c3011230542c103657cc55b5a1bdcdedd1c5f669226537c2",
+   "verdict": "improve",
+   "scores": {
+    "silhouette": 2,
+    "proportions": 2,
+    "identity": 2,
+    "depth": 2,
+    "composition": 3,
+    "assembly": 3,
+    "motion": 3,
+    "density": 2,
+    "honesty": 3
+   },
+   "round": 1,
+   "defects": 5
+  }
  }
 }

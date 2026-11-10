@@ -91,7 +91,8 @@ at scale 1. No construct in the gallery matched, so all 13 were built new.
 ## Research: documented and inferred
 
 Each house was researched by its own builder, and each scene cites its sources by link and marks every fact
-*verified* (from a source), *user-supplied* (from the request) or *inferred*. The scenes cite:
+*verified* (from a source), *user-supplied* (from the request) or *inferred*. The builders cited (more was added
+later; see [Provenance, revisited](#provenance-revisited)):
 
 - **Schantzska huset, Stortorget 20 (red).** Its address, and its German–Dutch Renaissance front of 1650 with a
   limestone portal by Johan Wendelstam (reclining Roman warriors), from
@@ -192,6 +193,69 @@ What the critics pushed on, in their words:
   <img src="tree.jpg" width="49%" alt="The spruce and the houses behind it, in lines of light, the stalls in the foreground">
 </p>
 <p align="center"><sub>The nearest stall with its bulbs, and the tree: two of the five shots the request asked for.</sub></p>
+
+## Provenance, revisited
+
+After the world was finished, every part of it still said *inferred*, and many parts named no source, although each
+house had been researched. So GPT-6.1 Sol, the agent that built the world, went back over the ten constructs it had
+researched (the eight houses, the lamp and the granite block; the square, the stall and the spruce were left as
+they were) and marked what their sources actually establish. It changed no geometry: every size, shape, place,
+colour and view is byte for byte what it was; only the provenance fields differ.
+
+What changed:
+
+- **Every part now names its source**, 1,491 of 1,491 (825 before): a document, a photograph, or, for 355 parts
+  hidden or invented to complete a house, the generated modelling estimate it is, said plainly.
+- **Facts:** 36 *verified* (9 before), 61 *inferred* (38). The new verified facts are documented statements that are
+  not measurements, and each says so: No. 20's four storeys and two attic levels and its three window bays, from the
+  [Stadsholmen fact sheet](https://www.stadsholmen.se/app/uploads/2018/09/Echo1-FAKTABLAD.pdf); No. 18's three
+  storeys of medieval masonry under five present storeys; Börshuset's construction, inauguration and restoration,
+  kept apart rather than merged into one date. Four facts went the other way: two counts read from the photograph
+  had been marked *verified*, and two had been marked as given by the request, which never gave them; all four are
+  now *inferred*.
+- **Sources:** 56 across the ten scenes (31 before), among them a
+  [1960 photograph of Stortorget 16–14](https://stockholmskallan.stockholm.se/post/12244) and
+  [Börshuset's façade drawing of 1773](https://stockholmskallan.stockholm.se/post/18907) (found and viewed, not
+  fitted or measured).
+- **How firmly each guess is held**, the shade of amber in the provenance view (**P**), counted over the ten scenes'
+  named parts:
+
+| | designed | described | seen | seen and checked |
+| --- | ---: | ---: | ---: | ---: |
+| Before | 488 | 206 | 794 | 3 |
+| After | 15 | 433 | 857 | 186 |
+
+Most guesses are now held more firmly: No. 20's windows and storeys rest on the fact sheet's counts and the
+photograph, and show as *seen and checked*. Some are held less firmly than before, where the old link claimed too
+much: 104 of Börshuset's parts are now *described* (7 before), most of them *seen* before, and 15 of No. 18's are
+plainly designed.
+
+No measured height or footprint was found, so no size became *verified*: the provenance view is still all amber.
+The audit also recorded, without repairing them, where the houses differ from their sources: No. 18's documented
+shop window and portal against the model's paired café openings, Börshuset's three arched doors against the model's
+glazing, and three upper window bays and a central curved eave on the narrow ochre house in the 1960 photograph,
+where the model has two bays.
+
+**The critics again.** Construct keeps a critic's verdict only for the exact scene it judged, so changing the scenes
+cleared the verdicts in the table above. Each of the ten then had one fresh critic, with no rounds and no repairs,
+and its answer was recorded as it came:
+
+| Construct | Verdict | Score | Defects (major / minor) |
+| --- | --- | ---: | --- |
+| Schantzska huset, No. 20 | improve | 20 of 27 | 6 / 0 |
+| Seyfridtzska huset, No. 18 | improve | 21 | 3 / 3 |
+| Börshuset | improve | 20 | 6 / 1 |
+| The sage curved-gable house | improve | 22 | 2 / 3 |
+| The russet mansard house | good | 22 | 2 / 3 |
+| The long yellow range | improve | 20 | 3 / 3 |
+| The yellow mansard house | improve | 22 | 1 / 4 |
+| The narrow ochre house | good | 22 | 1 / 4 |
+| The post lamp | improve | 22 | 4 / 1 |
+| The granite block | improve | 21 | 4 / 3 |
+
+Four critics (the sage and yellow mansard houses, the lamp, the block) answered *good* but marked a feature of their
+checklist missing; Construct recomputes every verdict from the critic's own answer, and records those as *improve*.
+The verdicts in the table above are the builders' rounds as they ran; these are the scenes as they ship.
 
 ## Placed at real size
 
@@ -295,7 +359,7 @@ each with its history, in the run's record.
 | Parts | 2,790 named parts across the 13 scenes; 15,531 copies in the world with every repeat; 7,710 named parts in its glTF |
 | On the page | 212,818 lines and 273,912 triangles; 165 labels; seven named views; an 18-second build |
 | The check | passes, no warnings |
-| The folder | 7.5 MB with its pictures; the built page is about 65 MB |
+| The folder | 9.5 MB with its pictures; the built page is about 65 MB |
 | The constructs' rounds | 121 rounds in 13 builders: about 390 minutes of builders' own time and 480 of critics', many running at once |
 | The world's rounds, 1 to 12 | 295.6 minutes of authoring (including captures) and 59.1 of critics |
 
