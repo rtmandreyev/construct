@@ -35,7 +35,7 @@ Drop the `.glb` into the project (`res://`) and Godot imports it; drag it into a
   keeping its own named mesh inside it. Parts that move (a door) stay apart.
 - **Shapes are pulled in** by 0.3% of the object, so parts that only touch start apart.
 
-Measured in Godot 4.7 on the FJ62: 47 pieces with 17 pairs still touching at rest (one convex hull per
+Measured in Godot 4.7 on the FJ62 when it exported as 47 pieces (49 now): 17 pairs still touching at rest (one convex hull per
 part had 249), and released on a floor, none travels more than 1.5 m in two seconds. The bodies and
 shapes are written with the glTF physics extensions `OMI_physics_body` and `OMI_physics_shape`, which
 Godot imports; an engine that does not read them gets the pieces as named nodes and meshes. Masses are in

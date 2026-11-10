@@ -67,6 +67,14 @@ from the chat. [docs/WORLDS.md](docs/WORLDS.md)
 - **Exports for more tools:** FBX (Unity, Unreal, Maya) and USD or USDZ (Omniverse, Houdini, Apple's Reality
   tools), carried over from the glTF by Blender when it is installed; a card's Export menu offers them with the glTF,
   the Godot map, OBJ, and STL or 3MF sized to a desktop printer.
+- **Every construct finishes with its own map, by default.** The skill's last building step writes
+  `scene.materials.json` beside the scene (paint, brushed metal, chrome, wood, rubber, plastic, glass, light), and
+  every export, the Blender add-on and the plugin use the map beside a scene without being told (`--materials`
+  still overrides). Without one, tyres come out rubber and chrome comes out chrome; a map that misses surfaces lists
+  them as `unmapped` in the export's summary. Fifteen gallery constructs gained maps (19 in all sit beside their
+  scenes).
+- **Artwork in exports:** a construct's artwork (a sign's picture, a label, a screen) exports as a textured quad under
+  its part, in glTF and OBJ; a world carries each construct's artwork (Rain Harbour's glTF: 26 images).
 - **The Constructs page sorts by what a thing is**, a designed thing too (an original ship goes with the vehicles,
   marked an original design); your own groups (More → Move to → A new group) come first, and a construct goes back
   with its kind when you like. A construct that has only files (an export, no page) is built once for its picture.

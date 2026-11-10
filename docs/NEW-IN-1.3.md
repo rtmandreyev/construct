@@ -1,98 +1,200 @@
 # What's new in 1.3, a walkthrough
 
-1.3 is about **worlds**: whole constructs placed together in one place, each still itself. Your house with your
-furniture and your cars, a ship over the roof; a street, a market square, a game level. A world is made by asking
-Hermes, or by hand on its card, or from one picture in masterpiece rounds. This page goes through each change with
-an example and the commands to try it. The full list is in the [changelog](../CHANGELOG.md).
+1.3 is about **worlds**: whole constructs placed together in one place, each still itself. A world can be your
+yard, your house with your furniture and your cars, a ship in the sky, a market square from a photograph, or a game
+level from a concept picture. This page goes through the worlds that ship, one feature each, from the simplest to
+the most ambitious, then the rest of what changed. The full list is in the [changelog](../CHANGELOG.md).
 
 In the commands below, `construct` is short for `python3 construct_hologram/cli.py` in a checkout of Construct.
 
-- [Worlds](#worlds)
-- [A world from a picture](#a-world-from-a-picture)
-- [Arranged by hand](#arranged-by-hand)
-- [Out to other tools](#out-to-other-tools)
+- [What a world is](#what-a-world-is)
+- [1. The shed: move anything, on every axis](#1-the-shed-move-anything-on-every-axis)
+- [2. The Villa: your own constructs, in one place](#2-the-villa-your-own-constructs-in-one-place)
+- [3. KESTREL at Saturn: near and far, each at its real size](#3-kestrel-at-saturn-near-and-far-each-at-its-real-size)
+- [4. Stortorget: a world from a photograph](#4-stortorget-a-world-from-a-photograph)
+- [5. Rain Harbour: a game level, zero-shot](#5-rain-harbour-a-game-level-zero-shot)
+- [Out to other tools, finished](#out-to-other-tools-finished)
 - [Masterpiece rounds, sturdier](#masterpiece-rounds-sturdier)
 - [The plugin, from two long runs](#the-plugin-from-two-long-runs)
 - [The constructs that ship](#the-constructs-that-ship)
 
-## Worlds
+## What a world is
 
 A world places constructs at their real sizes and keeps each one whole: its parts, sources, provenance, critic's
-verdicts and joints stay its own, under its placement's id (`vespa/legshield`). Things stand on the part they rest on
-(`on: villa/drive-through-ground`); a ship hangs in the sky at the size it looks from a kilometre off; Saturn fills the
-sky behind KESTREL at its real size from 350,000 km. The world's audit says what overlaps, what runs into the house
-it stands in, what stands where a door opens, and what stands on nothing.
+verdicts and joints stay its own, under its placement's id (`vespa/legshield`). A world is not one big model. Every
+construct in it can still be opened, moved, exported on its own, reused in another world, and animated by its own
+joints. The world's audit says what overlaps, what runs into the house it stands in, what stands where a door
+opens, and what stands on nothing.
 
-<p align="center"><img src="media/world-villa-dusk-blender.jpg" width="95%" alt="A world in Blender at dusk: the Villa Savoye lit from inside, a Vespa under its pilotis, KESTREL far off in the sky"></p>
-<p align="center"><sub>The Villa Savoye, a Vespa GS 150 and KESTREL in one world, imported into Blender with
-Construct's add-on and lit at dusk. Each is the construct from the gallery, unchanged.</sub></p>
-
-Six ship to start from:
-
-| World | What it holds |
-| --- | --- |
-| [Rain Harbour](../examples/worlds/rain-harbour/) | a game level from a concept picture: 21 constructs placed 50 times |
-| [Stortorget](../examples/worlds/stortorget/) | Stockholm's old square at its Christmas market, from a photograph |
-| [The Villa Savoye, lived in](../examples/worlds/villa-savoye-lived-in/world.json) | the house with its furniture, a guitar, a clock, a synthesizer, an FJ62 and a DB5 under the pilotis, KESTREL over the roof |
-| [The shed and the things around it](../examples/worlds/the-shed/world.json) | the shed with its planned deck, the Samba, the Vespa, State Bench and the Red-Blue Chair |
-| [A street of landmarks](../examples/worlds/a-street-of-landmarks/world.json) | the Duomo, the Sainte-Chapelle, the Sagrada Família and Neuschwanstein on one street |
-| [KESTREL at Saturn](../examples/worlds/kestrel-at-saturn/world.json) | the ice tug at the rings, the planet at its real size behind it |
+A world is made by asking Hermes (in words, or from one picture), by hand on its card in Hermes Desktop, or by
+writing its `world.json`. Each one below is in [`examples/worlds/`](../examples/worlds/), and each picture on this
+page is that world imported into Blender with Construct's add-on and rendered as it ships.
 
 ```sh
 construct build examples/worlds/the-shed/world.json --out out/the-shed   # its page, like a construct's
-construct check examples/worlds/the-shed/world.json      # the world's audit
+construct check examples/worlds/the-shed/world.json                       # the world's audit
 ```
 
-[Worlds, step by step](for/worlds-walkthrough.md) · [the format](WORLDS.md)
+## 1. The shed: move anything, on every axis
 
-## A world from a picture
+<p align="center"><img src="media/worlds/blender-shed-yard.jpg" width="95%" alt="The shed world in Blender: a dark timber garden shed with its log store, a pale blue VW T1 Samba parked alongside, a Vespa on its stand and the Red-Blue Chair out on the deck"></p>
 
-Attach a picture and ask for a world from it. Hermes plans the pieces (each distinct thing once, placed as often as
-needed), builds each new construct in its own subagent in masterpiece rounds with a fresh critic each round, places
-them at real size, then runs the whole world through rounds of its own against the picture. A round that loses puts
-the world and its constructs back.
+[The shed and the things around it](../examples/worlds/the-shed/world.json) is the smallest world: a garden shed
+with its planned deck, a VW T1 Samba by the log store, a Vespa GS 150 on its stand, State Bench inside on the floor,
+and Rietveld's Red-Blue Chair out on the deck. Five constructs from the gallery, each unchanged.
 
-<p align="center">
-  <a href="../examples/worlds/rain-harbour/"><img src="../examples/worlds/rain-harbour/hero.jpg" width="49%" alt="Rain Harbour: a wet night street between towers, neon signs in English and Chinese, a yellow car"></a>
-  <a href="../examples/worlds/stortorget/"><img src="../examples/worlds/stortorget/hero.jpg" width="49%" alt="Stortorget: the red and orange gabled houses over rows of red market stalls and the Christmas tree"></a>
-</p>
+It is the place to learn **Arrange**. On a world's card in Hermes Desktop (or **A** on its page anywhere):
 
-- **[Rain Harbour](../examples/worlds/rain-harbour/)**, from a concept picture: a 60 m street, its towers, eight
-  neon signs in real English and Chinese, and AURIC, a drivable hero car whose doors swing. 21 constructs, each in
-  its own rounds; then 12 world rounds against the picture. Final verdict: good.
-- **[Stortorget](../examples/worlds/stortorget/)**, from a photograph: eight real houses (the red No. 20, the orange
-  No. 18, Börshuset), one market stall placed 41 times, the tree, the lamp. What is documented and what is inferred,
-  house by house.
-
-Each page has the request word for word, the plan, every construct's rounds, the world's rounds and what the last
-critic still found.
-
-## Arranged by hand
-
-On a world's card in Hermes Desktop, **Arrange**: click a construct and drag it onto anything (a floor, a table, a
-roof), **Shift**-drag or **Q / E** to turn it, the arrows to nudge it, **Lift / Lower** for what hangs or flies.
-What stands on it goes with it. **Add a construct** opens the library with previews; the one you pick appears in the
-middle of the world, ready to drag.
-**Save** checks the world with the moves, saves it and rebuilds it, with no model turn; **Undo last change** steps
-back. **Save view** names the camera as a view of the world; **Picture** saves a still.
+- **Across the ground:** click a construct and drag it. It rides on whatever is under the pointer, the yard, the
+  deck, a table, a roof, and a wall stops it. What stands on it goes with it (move the shed and the bench inside
+  comes too).
+- **Up and down:** **Lift** and **Lower** (Page Up / Down) for what hangs or flies; Alt keeps its level while you
+  drag. Saved, a construct lands on what is under it.
+- **Round:** **Shift**-drag or **Q / E** to turn, **Turn 90°** on its bar, the arrows to nudge. **N** snaps to a
+  quarter-metre grid and 15° turns; ⌘-click chooses several to move and turn together.
+- **Add a construct** opens the library with previews; the one you pick lands on a floor it fits on, or on clear
+  ground in front.
 
 <p align="center"><img src="media/worlds/hermes-arrange.png" width="95%" alt="Arranging a world in Hermes Desktop: a construct selected and dragged, the Arrange bar with Snap, Turn 90°, Lift, Lower, Duplicate and Save"></p>
 
-Outside Hermes, a world's page does the same with **A**; in Hermes, Save runs `/construct arrange` in the gateway.
+**Save** checks the world with the moves (the audit names anything that now overlaps), saves it and rebuilds it,
+with no model turn; **Undo last change** steps back. **Save view** names the camera as a view of the world;
+**Picture** saves a still at 2560 × 1440.
 
-## Out to other tools
+<p align="center"><img src="media/worlds/blender-shed-deck.jpg" width="95%" alt="The Red-Blue Chair on the shed's planned deck, the Vespa beside it"></p>
 
-A world exports as one file, each placement a named group, every joint in the `open` animation:
+## 2. The Villa: your own constructs, in one place
 
-```sh
-construct export examples/worlds/the-shed/world.json --out shed.glb                        # Blender, Unity, Unreal, three.js
-construct export examples/worlds/rain-harbour/world.json --out level.glb --pieces glued   # a Godot map: doors swing
-construct export examples/worlds/the-shed/world.json --out shed.fbx                        # through Blender
+<p align="center"><img src="media/worlds/blender-villa-dusk.jpg" width="95%" alt="The Villa Savoye, lived in, in Blender at dusk: the Land Cruiser and the DB5 under its pilotis, KESTREL far off over the roof"></p>
+
+[The Villa Savoye, lived in](../examples/worlds/villa-savoye-lived-in/world.json) is what worlds are for: the
+constructs you have made, together where they belong. Le Corbusier's house holds an Eames lounge chair facing the
+terrace glass, a Tompion clock against the salon wall, a Jackson by the studio table, and two tables designed for
+this world: one carries a Braun SK 4, a Revox A77 and a Leica M3, the other SERUM 2 / 61. A Land Cruiser FJ62 and an
+Aston Martin DB5 stand under the pilotis, KESTREL far off over the roof. Thirteen placements of twelve constructs,
+each at its real size.
+
+<p align="center">
+  <img src="media/worlds/blender-villa-table.jpg" width="49%" alt="A table in the salon carrying a Leica M3, a Revox A77 and a Braun SK 4">
+  <img src="media/worlds/blender-villa-pilotis.jpg" width="49%" alt="The red Land Cruiser FJ62 under the Villa's pilotis">
+</p>
+
+Things stand **on** the part they rest on, not at a guessed height:
+
+```json
+{"id": "table", "construct": "constructs/tube-table/scene.json", "on": "villa/living-floor-east", "at": [-2.6, 0, 9.65]},
+{"id": "revox", "construct": "revox-a77", "on": "table/top", "at": [-2.42, 0, 9.7]},
+{"id": "fj62",  "construct": "toyota-land-cruiser-fj62", "on": "villa/drive-through-ground", "at": [7.8, 0, -2.2]}
 ```
 
-FBX (Unity, Unreal, Maya), USD and USDZ (Omniverse, Houdini, Apple's Reality tools) are made from the glTF by
-Blender when it is installed. The Blender add-on imports a `world.json` too, finding the constructs it names beside
-it.
+The world's audit checks each part of a placement against the house's, so the cars must clear the columns, and the
+Revox's lid must have room to open. In Hermes, ask for it the way you would say it:
+
+> Put my Eames chair in the Villa's salon facing the terrace, my Revox and Leica on a table by the west wall, and the
+> FJ62 under the pilotis.
+
+Hermes places them with `construct_world`, several at once, and shows the world live in the chat; open any of them
+and its provenance, critic's verdicts and joints are still its own. [Worlds, step by step](for/worlds-walkthrough.md)
+goes through this world in Hermes from the first request.
+
+## 3. KESTREL at Saturn: near and far, each at its real size
+
+<p align="center"><img src="media/worlds/blender-saturn.jpg" width="95%" alt="KESTREL, the ice tug, at work by Saturn's rings, the planet filling the sky behind it"></p>
+
+A world can hold what is far away without shrinking it to fit. A **sky** placement gives a construct's real size and
+how far off it is, and the world draws it at the angle it would fill in the sky:
+
+```json
+{"id": "saturn", "construct": "saturn",
+ "sky": {"diameter_m": 1.20536e8, "of": "globe", "distance_m": 3.5e8, "azimuth": 150, "elevation": 8}}
+```
+
+In [KESTREL at Saturn](../examples/worlds/kestrel-at-saturn/world.json) that is Saturn from about 350,000 km: the
+rings fill a good part of the sky behind the tug. `of` names the part the diameter belongs to (Saturn's globe), so
+the rings and moons come at the same scale. The same rule puts KESTREL, 120 m long, over the Villa's roof garden at
+its real size from a kilometre and a half (`"sky": {"diameter_m": 120.0, "distance_m": 1500.0}`): small, high and
+believable, not a toy on the roof (the Villa's picture above).
+
+Nothing a view fits ever changes a sky placement's size, and a far placement no longer pulls every view out to
+empty ground. Anything not at real size (`scale` other than 1) is disclosed by the audit and wherever the world is
+shown.
+
+## 4. Stortorget: a world from a photograph
+
+<p align="center">
+  <img src="../examples/worlds/stortorget/reference.jpg" width="49%" alt="The photograph: Stortorget in Stockholm at its Christmas market">
+  <img src="../examples/worlds/stortorget/blender-photo.jpg" width="49%" alt="The world rendered in Blender from the photograph's viewpoint">
+</p>
+<p align="center"><sub>Left, the photograph the world was asked from (Wikimedia Commons, CC BY-SA 4.0, credited on
+<a href="../examples/worlds/stortorget/">its page</a>); right, the world in Blender from the same place.</sub></p>
+
+Attach a picture and ask for a world from it:
+
+> Make this square as a world: the houses, the market, the tree. Masterpiece.
+
+Hermes plans the pieces (each distinct thing once, placed as often as needed), researches what it can name, builds
+each new construct in its own subagent in masterpiece rounds with a fresh critic each round, places them at real
+size, then runs the whole world through rounds of its own against the picture. A round that loses puts the world
+and its constructs back.
+
+[Stortorget](../examples/worlds/stortorget/) is Stockholm's old square at Christmas: eight real houses researched one
+by one (the red No. 20, the orange No. 18, Börshuset), one market stall built once and placed 41 times, the
+Christmas tree, the lamp. Each house says what is documented and what is inferred from the photograph.
+
+<p align="center">
+  <img src="../examples/worlds/stortorget/blender-gables.jpg" width="49%" alt="The gabled houses from low in the square">
+  <img src="../examples/worlds/stortorget/blender-stall.jpg" width="49%" alt="One market stall close: mugs, pretzels, a lantern">
+</p>
+
+Its page has the request word for word, the plan, every construct's rounds, the world's rounds, and what the last
+critic still found.
+
+## 5. Rain Harbour: a game level, zero-shot
+
+<p align="center"><img src="../examples/worlds/rain-harbour/blender-street.jpg" width="95%" alt="Rain Harbour in Blender: a wet night street between towers, neon signs in English and Chinese reflected in the road, a yellow car"></p>
+
+One concept picture and one request made [Rain Harbour](../examples/worlds/rain-harbour/): a 60 m night street, its
+towers, eight neon signs in real English and Chinese, and AURIC, a drivable hero car whose doors swing. 21
+constructs placed 50 times, each built in its own rounds; then 12 world rounds against the picture. Final verdict:
+good.
+
+<p align="center">
+  <img src="../examples/worlds/rain-harbour/reference.jpg" width="32%" alt="The concept picture Rain Harbour was asked from">
+  <img src="../examples/worlds/rain-harbour/blender-car.jpg" width="32%" alt="AURIC, the hero car, close on the wet street">
+  <img src="../examples/worlds/rain-harbour/blender-signs.jpg" width="32%" alt="Under the neon signs">
+</p>
+
+What makes it a level and not a picture of one: every construct in it is still a construct. The car is one object
+with its own doors on their hinges; a sign is one object with its artwork; the street, each tower and each prop can
+be moved, reused in another level, or replaced, and the world exports as one file with each placement a named group:
+
+```sh
+construct export examples/worlds/rain-harbour/world.json --out level.glb                   # Blender, Unity, Unreal
+construct export examples/worlds/rain-harbour/world.json --out level.glb --pieces glued    # a Godot map
+```
+
+In Godot the glued map's fixed body stays put while each door is a body of its own on its hinge. [For game
+developers](for/game-developers.md) goes through it with numbers measured in Godot, and why a construct is not a
+text-to-mesh model.
+
+## Out to other tools, finished
+
+A world exports as one file, each placement a named group, every joint in the `open` animation. FBX (Unity, Unreal,
+Maya), USD and USDZ (Omniverse, Houdini, Apple's Reality tools) are made from the glTF by Blender when it is
+installed. The Blender add-on imports a `world.json` too, finding the constructs it names beside it.
+
+- **Every construct finishes with its own map, by default.** A construct now writes `scene.materials.json` beside
+  its scene as its last step (paint, brushed metal, chrome, wood, rubber, plastic, glass, light), and every export,
+  the Blender add-on and the plugin use it without being told. Tyres come out rubber and chrome comes out chrome
+  even without a map; a map that misses surfaces lists them (`unmapped`) in the export's summary. Fifteen gallery
+  constructs gained maps of their own.
+- **Artwork comes along.** A sign's picture, a label, a screen exports as a textured quad under its part, in glTF and
+  OBJ alike: Rain Harbour's glTF carries 26 images.
+
+```sh
+construct export examples/worlds/the-shed/world.json --out shed.glb      # finished from each construct's map
+construct export examples/worlds/the-shed/world.json --out shed.fbx      # through Blender
+```
 
 ## Masterpiece rounds, sturdier
 
@@ -113,14 +215,17 @@ found what the rounds recorder made harder than it should be. Each is fixed:
 ## The plugin, from two long runs
 
 - **Shown live, not as a file.** A construct or world a subagent built is shown by building it in the chat first, so
-  it opens live on its card.
+  it opens live on its card. A world's page up to 192 MB travels gzipped; one larger says so.
 - **A world's constructs stay current.** `construct_world` op `refresh` brings an improved construct back into the
   world; copies are named after their projects, so two constructs never share one.
 - **Friendlier tools:** `construct_command` answers `--help`; a project may be named by its folder; edits accept
   `views[1]`, JSON pointers and dashed keys; errors name the limit they hit; a review whose capture fails says why
-  and tries smaller.
+  and tries smaller; a material map names the key it does not know.
 - **Downloads ask first.** A world that places a gallery construct by name fetches it from Construct's own GitHub
   release only after you approve it in Hermes's prompt; an unattended run is refused.
+- **Big worlds keep their colours.** Thousands of styles (Stortorget has about 15,600) draw on every GPU, checks on
+  a 7,700-part tree run in 14 s instead of 86, and the solid view cuts away only where a view looks into a room, so a
+  street keeps its façades.
 
 ## The constructs that ship
 
@@ -128,3 +233,7 @@ The plugin ships 24 constructs (16 in 1.2.1). New: the Villa Savoye, SERUM 2 / 6
 State Bench, Saturn, the Aston Martin DB5, the Sagrada Família, the James Webb Space Telescope and Rietveld's Red-Blue
 Chair; the Eames is now the one built in the ChatGPT app. The Yamaha CFX and the first KESTREL left (KESTREL v2
 stays). Wordmarks drawn on a maker's product (a guitar's headstock, a camera's top plate) are left off.
+
+Six worlds ship to start from: the five above and [a street of landmarks](../examples/worlds/a-street-of-landmarks/world.json)
+(the Duomo, the Sainte-Chapelle, the Sagrada Família and Neuschwanstein on one street at their real sizes).
+[The format](WORLDS.md) · [Worlds, step by step](for/worlds-walkthrough.md)

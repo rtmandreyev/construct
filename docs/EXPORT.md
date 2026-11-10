@@ -110,8 +110,13 @@ Transparent BSDF do it; in three.js, compare `_phase` in the material's shader.
 
 ## A material map: the finished model
 
-By default every part gets a neutral material for its role: the plain model. A material map
-finishes it:
+A material map finishes a model. A construct writes its own as the last step of building it,
+`scene.materials.json` beside its scene, and every export uses the map beside the scene without being
+told: `<name>.materials.json`, then `scene.materials.json`, `maps/finish.json` and `materials.json`
+(`--materials FILE` chooses another). Without a map, a part keeps its own colour, a tyre or a gasket
+comes out rubber and a part named chrome comes out chrome, and everything else gets a neutral
+material for its role: the plain model. A map that misses some surfaces lists them as `unmapped` in
+the export's summary. A map:
 
 ```json
 {"materials": [
@@ -139,8 +144,8 @@ finish's own. The finishes:
 | `light` | emissive, at strength 4 (`KHR_materials_emissive_strength`) | as imported |
 
 Each material keeps its finish in `extras.construct.finish`. The grain and streaks are procedural
-and need no texture coordinates. Colour is a host's choice in Construct, so a map belongs to the
-person who exports, kept beside the scene, never in it: `examples/light-to-metal/maps/` has four.
+and need no texture coordinates. A map is kept beside the scene, never in it, so the person who exports can always replace it:
+`examples/light-to-metal/maps/` has four to choose from.
 
 ## What it is, and what it is not
 

@@ -275,15 +275,12 @@ From `examples/worlds/rain-harbour/world.json`, on an Apple M2 Pro:
 
 | Export | Command | Time | File | What is in it |
 | --- | --- | ---: | ---: | --- |
-| Godot map | `--out level.glb --pieces glued` | 14 s | 39.1 MB | 50 placements, 2,081 parts, 164,974 triangles; one static body of 3,235 convex shapes; two door bodies with their hinges; 217 materials |
-| glTF | `--out level.glb` | 7 s | 14.4 MB | the same 2,081 parts as named meshes, 164,974 triangles, the design lines as edges |
-| glTF, merged | `--out level.glb --merge --wire seams` | 7 s | 9.2 MB | 175,478 triangles (seams as tubes) in 33 meshes and 240 surfaces; the car's doors still their own nodes |
-| glTF, with colliders | add `--colliders` | 8 s | 11.3 MB | 2,025 box colliders, `<part>-convcolonly` |
+| Godot map | `--out level.glb --pieces glued` | 19 s | 28.0 MB | 50 placements, 2,081 parts, 164,974 triangles; one static body of 3,235 convex shapes; two door bodies with their hinges; 243 materials; the signs' artwork, 26 images |
+| glTF | `--out level.glb` | 8 s | 16.7 MB | the same 2,081 parts as named meshes, 164,974 triangles, the design lines as edges, the 26 images |
+| glTF, merged | `--out level.glb --merge --wire seams` | 8 s | 11.5 MB | 175,478 triangles (seams as tubes) in 120 meshes and 327 surfaces, the artwork among them; the car's doors still their own nodes |
+| glTF, with colliders | add `--colliders` | 8 s | 18.8 MB | 2,025 box colliders, `<part>-convcolonly` |
 | FBX | `--out level.fbx` | 53 s | 10.5 MB | read back into Blender: 2,081 meshes, 164,968 triangles, 217 materials, the doors' animation |
-| OBJ | `--out level.obj` | 7 s | 44.6 MB | plain meshes in quads, one object per part, one pose |
-
-The command's own summary for the glued map reads "329948 triangles": a pieces export counts its triangles twice
-there. The file holds 164,974, the same as the plain glTF.
+| OBJ | `--out level.obj` | 19 s | 46.8 MB | plain meshes in quads, one object per part, one pose; the 26 images beside the `.mtl` |
 
 ### Measured: the map in Godot
 

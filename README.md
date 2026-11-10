@@ -131,9 +131,14 @@ English and Chinese, a drivable hero car, then 12 world rounds against the pictu
 Stockholm's old square: eight real houses, one market stall placed 41 times, the tree. [Worlds, step by step →](docs/for/worlds-walkthrough.md)
 
 <p align="center">
-  <a href="examples/worlds/rain-harbour/"><img src="examples/worlds/rain-harbour/car.jpg" width="49%" alt="Rain Harbour: AURIC, the yellow hero car, close"></a>
-  <a href="examples/worlds/stortorget/"><img src="examples/worlds/stortorget/stall.jpg" width="49%" alt="Stortorget: the nearest market stall close, its Swedish sign and its bulbs"></a>
+  <a href="examples/worlds/rain-harbour/"><img src="examples/worlds/rain-harbour/blender-street.jpg" width="98%" alt="Rain Harbour in Blender at night: a wet street between towers, neon signs in English and Chinese reflected in the road, the yellow hero car"></a>
 </p>
+<p align="center">
+  <a href="examples/worlds/rain-harbour/"><img src="examples/worlds/rain-harbour/blender-car.jpg" width="49%" alt="Rain Harbour in Blender: AURIC, the yellow hero car, close on the wet street"></a>
+  <a href="examples/worlds/stortorget/"><img src="examples/worlds/stortorget/blender-photo.jpg" width="49%" alt="Stortorget in Blender at dusk: the market stalls, the Christmas tree and the red and orange gables"></a>
+</p>
+<p align="center"><sub>Both worlds as they ship, imported into Blender with Construct's add-on, each construct finished
+with its own material map.</sub></p>
 
 **Provenance and solids.** The Duomo di Milano in provenance shades (**P**): verified sizes in cyan, traced shapes in blue,
 every guess a deeper amber the more firmly it is held; and the same Duomo as a solid (**S**), as a modelling program shows it. [Museums and archives →](docs/for/museums-and-archives.md)

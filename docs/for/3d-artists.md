@@ -67,9 +67,10 @@ File > Import > Construct reads a `world.json` as well as a scene: it finds the 
 build, open, metal and finish sliders. A world whose constructs it cannot find comes in as its exported `.glb`
 instead.
 
-<p align="center"><img src="../media/world-villa-dusk-blender.jpg" width="95%" alt="A world in Blender at dusk: the Villa Savoye lit from inside, a Vespa under its pilotis, KESTREL far off in the sky"></p>
-<p align="center"><sub>The Villa Savoye, a Vespa GS 150 and KESTREL in one world, imported with the add-on and lit at dusk.
-Each is the gallery's construct, unchanged.</sub></p>
+<p align="center"><img src="../media/worlds/blender-villa-dusk.jpg" width="95%" alt="The Villa Savoye, lived in, in Blender at dusk: the Land Cruiser and the DB5 under its pilotis, KESTREL far off over the roof"></p>
+<p align="center"><sub>The Villa Savoye, lived in: the house, a Land Cruiser FJ62 and an Aston Martin DB5 under it, KESTREL
+far off over the roof, imported with the add-on and lit at dusk. Each is the gallery's construct, unchanged, finished
+with its own material map.</sub></p>
 
 The worlds that ship are in [examples/worlds](../../examples/worlds/): a street with the Duomo, the Sainte-Chapelle and
 the Sagrada Família at their real sizes, Rain Harbour's night street, Stortorget's square. In Hermes Desktop you can

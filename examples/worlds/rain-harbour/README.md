@@ -322,14 +322,16 @@ the run's record; the world's own `authoring` keeps the 12 rounds.
 
 ```sh
 construct export examples/worlds/rain-harbour/world.json --out level.glb --pieces glued
-# wrote level.glb: a world of 50 constructs, 2081 parts, 329948 triangles, 239531 edges;
+# wrote level.glb: a world of 50 constructs, 2081 parts, 164974 triangles, 120422 edges;
 #   animations: open, open:hero-car/left-gullwing-open, open:hero-car/right-gullwing-open
+#   artwork: 87 faces, 26 images
 ```
 
-About 15 seconds on a laptop, a 39 MB file. Each placement is a group named after it (`hero-car`,
+About 20 seconds on a laptop, a 28 MB file with the signs' artwork in it. Each placement is a group named after it (`hero-car`,
 `left-hotel-middle`), every part keeps its name under it, and the street and buildings are the fixed body. The car's
 two doors are bodies of their own on their hinges once [`construct_joints.gd`](../../../hosts/godot/construct_joints.gd)
-connects them, and the `open` animation lifts both. The car is drivable by design only: its size, its wheelbase and
+connects them; in the map the hinges carry the doors, so a push or a motor on the hinge opens them. The `open`
+animation lifts both in the plain glTF (Blender, or an engine that plays it). The car is drivable by design only: its size, its wheelbase and
 its named wheels are a vehicle's, but in the export its wheels are fixed parts of the body. Driving it needs your own
 script, as Sol's Godot project did ([Godot](../../../docs/GODOT.md)).
 

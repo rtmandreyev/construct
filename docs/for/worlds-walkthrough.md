@@ -95,7 +95,7 @@ a named group, every joint working:
 
 In Blender, the Construct add-on imports a `world.json` or the `.glb` with its build, metal and finish sliders.
 
-<p align="center"><img src="../media/world-villa-dusk-blender.jpg" width="90%" alt="A world in Blender at dusk: the Villa Savoye lit from inside, a Vespa under the pilotis, and KESTREL far off in the evening sky"></p>
+<p align="center"><img src="../media/worlds/blender-villa-dusk.jpg" width="90%" alt="The Villa Savoye, lived in, in Blender at dusk: the Land Cruiser and the DB5 under its pilotis, KESTREL far off over the roof"></p>
 
 ## 6. A world from a picture, in masterpiece mode
 
