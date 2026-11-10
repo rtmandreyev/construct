@@ -251,7 +251,16 @@ six worlds place, now has a map beside its scene, written from its sources and c
 covers every surface. Where a colour is documented (Freeborn Red, the DB5's Silver Birch) it is named; where it is
 chosen, the map's `about` says so. That is why the worlds on this page render finished.
 
-A map is a small text file and always yours to change: edit a line, ask the agent to, or export once with another
+**The solid view shows it too.** Press **S** and a part with no colour of its own takes its map's: the FJ62 is
+Freeborn Red under the Villa's pilotis in the page and on the Hermes card, as in Blender. The light view keeps
+Construct's house palette.
+
+**And it is yours to change, by hand.** On a card in Hermes Desktop, **Finish**: click a part in the solid view, pick
+its colour and what it is made of (paint, brushed metal, chrome, wood, rubber, plastic, glass, light), for that part
+or every part of its kind (all four tyres), and **Save colour**. The colour is tried on the part as you pick it; the
+save writes it into the construct's map, with no model turn, and every export and Blender follow. In a world it
+changes that world's own copy only: your own construct and your other worlds stay as they are, and **Undo last
+change** puts it back. Or edit the map's text, ask the agent, or export once with another
 (`--materials my-colours.json`).
 
 

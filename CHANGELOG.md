@@ -112,6 +112,12 @@ from the chat. [docs/WORLDS.md](docs/WORLDS.md)
   Wordmarks on a maker's product are left off.
 - **The Learn tutorials, run end to end** against the plugin's own tools: every step that did not work as written,
   or said what the tools no longer do, corrected.
+- **Colours by hand, Finish:** on a card in Hermes Desktop, click a part in the solid view, pick its colour and what
+  it is made of, for that part or every part of its kind, and save: written into the construct's map with no model
+  turn (in a world, that world's own copy), tried on the part before saving, undone like any change.
+- **Tidying, without a model:** an archived world or construct can be deleted for good (the page asks first); worlds
+  go in folders of the user's own; Keep only the newest clears a project's older builds. A shipped world opened in
+  Hermes brings the shipped constructs with their maps, never a project of the user's with the same name.
 - **The solid view (S) in a construct's real colours:** a part with no colour of its own takes its finish map's (the
   map beside its scene; in a world, each placed construct's own), or its name's finish (tyres rubber, chrome trim),
   as the exports and Blender show it, and what the map finishes as glass is see-through. The light view keeps the

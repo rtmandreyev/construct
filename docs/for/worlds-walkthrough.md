@@ -70,7 +70,25 @@ where it belongs. A construct's own card has **Place in a world** for the same t
 
 <p align="center"><img src="../media/worlds/hermes-add-construct.png" width="90%" alt="Add a construct over the Villa Savoye, lived in: the Revox, the Braun and the Leica on their table above, and below it the library with a search box, filters by kind and source, and a grid of shipped constructs"></p>
 
-## 4. Ask for one
+## 4. Colour it, keep it tidy
+
+**Finish** on the card: click a part in the solid view, pick its colour and what it is made of, for that part or
+every part of its kind (all four tyres), then **Save colour**. It is written into that world's own copy of the
+construct, with no model turn; your own construct and your other worlds are not touched, and **Undo last change**
+puts it back. Exports and the Blender add-on take the new colour.
+
+On the Worlds page, **More…** on a world:
+
+- **Move to → A new folder** makes a folder of your own (My game, Client work); worlds go in and out of folders,
+  and the ones that ship stay apart under *Worlds to start from*;
+- **Archive** puts a world out of the way, folded under *Archived*, and nothing is deleted;
+- **Delete for good**, on an archived world only, removes it and its builds after asking once more. The same goes
+  for constructs on the Constructs page.
+
+Each world and construct keeps its newest six builds by itself; **Keep only the newest**, above its Builds list,
+clears the rest whenever you like.
+
+## 5. Ask for one
 
 A world can be asked for in plain words. Hermes uses `construct_world`: it makes the world, places each construct
 on its surface (several at once), reads the world's warnings and fixes them, names the views, and shows each change
@@ -83,7 +101,7 @@ Hermes finds the constructs by name in your projects, the ones that ship and the
 downloaded from Construct's own GitHub release, after you approve it in Hermes's prompt). It places them at real
 size: KESTREL, 120 m long, hangs a kilometre and a half off over the roof, at the size it would look from there.
 
-## 5. Take it elsewhere
+## 6. Take it elsewhere
 
 **Picture** saves a still of the current view. The **Export** menu writes the whole world as one file, each placement
 a named group, every joint working:
@@ -100,7 +118,7 @@ In Blender, the Construct add-on imports a `world.json` or the `.glb` with its b
 
 <p align="center"><img src="../media/worlds/blender-villa-dusk.jpg" width="90%" alt="The Villa Savoye, lived in, in Blender at dusk: the Land Cruiser and the DB5 under its pilotis, KESTREL far off over the roof"></p>
 
-## 6. A world from a picture, in masterpiece mode
+## 7. A world from a picture, in masterpiece mode
 
 Attach a picture (a photo of a real place, a concept painting, a sketch) and ask for a world from it. A world is made
 to be used as it is, so every construct made for it is made to a masterpiece's standard unless you say **fast**.

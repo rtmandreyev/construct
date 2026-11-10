@@ -396,7 +396,7 @@ rules for your pipeline ("no text in the geometry", "nothing random from run to 
 for Godot, NOTES.md with the sizes and the docking port").
 
 A world from a picture needs Hermes with `delegation.max_spawn_depth: 2` (an orchestrator subagent per construct);
-say "fast" for one pass each, much quicker and cheaper. [Worlds, step by step](worlds-walkthrough.md#6-a-world-from-a-picture-in-masterpiece-mode)
+say "fast" for one pass each, much quicker and cheaper. [Worlds, step by step](worlds-walkthrough.md#7-a-world-from-a-picture-in-masterpiece-mode)
 has the setup.
 
 ### Step 2: export
