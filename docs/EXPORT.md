@@ -153,12 +153,12 @@ and need no texture coordinates. A map is kept beside the scene, never in it, so
   its provenance: a blockout, a prop, a kitbash part, a previs model, a teaching model, or the
   starting point for modelling.
 - **It is not** a finished hero asset. Shapes come from Construct's own vocabulary (boxes,
-  cylinders, lathes, lofts, tubes, extrusions…); overlapping parts are not merged, so the model is
-  not watertight for 3D printing; the only textures are the scene's own artwork, there are no levels
+  cylinders, lathes, lofts, tubes, extrusions…), and overlapping parts are not merged, so the model is
+  not watertight for 3D printing. The only textures are the scene's own artwork, there are no levels
   of detail, and the texture coordinates are a simple box projection. Joints are mechanical (hinges,
-  slides); there is no skinned rig. It is not CAD.
-- **Sizes are as true as their certainty.** A part marked `verified` has a source; one marked
-  `inferred` was designed; the extras say which.
+  slides), and there is no skinned rig. It is not CAD.
+- **Sizes are as true as their certainty.** A part marked `verified` has a source, and one marked
+  `inferred` was designed. The extras say which.
 - **Every part has a surface only if its shape has one.** A main or structural part drawn as a
   line (a `curve`) has none; the audit warns `no-surface` so an author can give it a solid shape.
 - A solid compile may hold up to 200,000 triangles (the hologram's budget is 48,000).

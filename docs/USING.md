@@ -1,7 +1,7 @@
 # Using Construct
 
-Construct works the same way wherever you run it. A model, or you, writes a scene; Construct
-checks it and the scene is repaired until it is clean; then it is built into a page you can open
+Construct works the same way wherever you run it. A model, or you, writes a scene. Construct
+checks it, and the scene is repaired until it is clean. Then it is built into a page you can open
 in any browser, and reviewed. This page walks through each way to run it, starting with the
 simplest. To see what the results look like first, open the
 [examples gallery](https://rtmandreyev.github.io/construct/).
@@ -9,7 +9,7 @@ simplest. To see what the results look like first, open the
 ## Before you start
 
 You need Python 3.10 or newer, and nothing else to install. For review stills, Construct uses a
-Chromium-family browser you already have (Chrome, Chromium, Edge or Brave); if yours is
+Chromium-family browser you already have (Chrome, Chromium, Edge or Brave). If yours is
 somewhere unusual, point to it with `HOLOGRAM_CHROME=/path/to/browser`. Videos also need ffmpeg.
 Construct never downloads or installs anything.
 
