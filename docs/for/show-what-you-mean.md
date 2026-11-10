@@ -1,8 +1,8 @@
 # Show someone what you mean
 
-An idea about a real thing, turned into a model another person can turn, measure and build from: for a builder, a
-joiner, a fabricator, a designer or a friend with CAD, with a file for their own tools. No terminal: the Claude app
-or the ChatGPT app does the work ([how to set it up](in-the-apps.md)).
+Turn an idea about a real thing into a model another person can turn, measure and build from. It might be for a
+builder, a joiner, a fabricator, a designer or a friend with CAD, and it comes with a file for their own tools. You
+need no terminal: the Claude app or the ChatGPT app does the work ([how to set it up](in-the-apps.md)).
 
 <p align="center"><a href="https://rtmandreyev.github.io/construct/examples/garden-shed-planned/"><img src="../media/everyday-shed-plan.jpg" width="90%" alt="A shed with a planned log store and deck, as a solid and in the provenance view, where the planned parts show as designed"></a></p>
 <p align="center"><sub>A planned change to a shed, as a solid (left) and with <b>P</b> (right): what is planned shows as designed, not

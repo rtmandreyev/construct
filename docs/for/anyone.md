@@ -1,8 +1,8 @@
 # Construct for anyone with an AI agent
 
 You describe a thing in plain words, and your agent builds it as a construct: an animated model drawn in lines of
-light, as one web page that works anywhere, honest about what is known about it. You don't need to know 3D, code or
-graphics.
+light. It comes as one web page that works anywhere, and it is honest about what is known about it. You don't need to
+know 3D, code or graphics.
 
 <p align="center"><a href="https://rtmandreyev.github.io/construct/examples/sainte-chapelle/"><img src="../media/assembly-sainte-chapelle.gif" width="60%" alt="The Sainte-Chapelle construct assembling itself"></a></p>
 <p align="center"><sub>The Sainte-Chapelle, made by Claude Opus 5.5 in masterpiece mode. <a href="https://rtmandreyev.github.io/construct/examples/sainte-chapelle/">Open it</a> and drag to turn it around.</sub></p>
