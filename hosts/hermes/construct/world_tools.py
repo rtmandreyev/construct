@@ -27,13 +27,16 @@ def _load(folder):
     return path, json.loads(path.read_text(encoding="utf-8"))
 
 
-def _source(name):
+def _source(name, shipped=False):
     """A construct to place: the user's own project, a construct the plugin ships, or a scene by absolute path.
-    Returns (key, scene path, material map or None, title)."""
+    `shipped` (a world that ships naming its constructs): the plugin's own or the gallery's first, never a project of
+    the user's that happens to have the same name (an older copy, made before its finish map). Returns (key, scene
+    path, material map or None, title)."""
     if not isinstance(name, str) or not name.strip():
         raise ConstructError("construct must be a project id, a shipped construct's name or a scene's path")
     root = runtime.projects_root()
-    if runtime.SLUG.match(name) and (root / name).is_dir():   # the user's own construct (or world) first
+    if not (shipped and (name in runtime.examples() or name in runtime.gallery())) and \
+            runtime.SLUG.match(name) and (root / name).is_dir():   # the user's own construct (or world) first
         folder = root / name
         info = runtime.read_project(folder)
         scene = Path(info.get("scene") or "scene.json")
@@ -101,11 +104,11 @@ def _copy_in(dest, scene, maps):
         shutil.copyfile(maps, dest / "scene.materials.json")
 
 
-def _bring(folder, name):
+def _bring(folder, name, shipped=False):
     """Copy a construct into the world (constructs/<key>/), once per source; the placement's `construct` path. The
     key is the source's project id or the scene's own id; a different construct under a taken key gets key-2."""
-    key, scene, maps, _ = _source(name)
-    origin, base, n = _origin(name), key, 2
+    key, scene, maps, _ = _source(name, shipped)
+    origin, base, n = "shipped:" + name if shipped else _origin(name), key, 2
     kind = "world.json" if scene.name == "world.json" else "scene.json"
     while True:
         dest = folder / "constructs" / key
@@ -153,8 +156,9 @@ def _refresh(slug, folder, doc, pid=None):
             if rec is None and not (runtime.SLUG.match(key) and (runtime.projects_root() / key).is_dir()):
                 skipped.append({"construct": key, "placements": ids, "why": "no source recorded (it came with the world)"})
                 continue
+            shipped = bool(rec and str(rec.get("origin", "")).startswith("shipped:"))
             try:
-                _, scene, maps, _ = _source(name)
+                _, scene, maps, _ = _source(name, shipped)
             except ConstructError as exc:
                 skipped.append({"construct": key, "placements": ids, "why": str(exc)})
                 continue
@@ -163,7 +167,8 @@ def _refresh(slug, folder, doc, pid=None):
             shutil.move(str(dest), str(stash / key))
             backups[key] = dest
             _copy_in(dest, scene, maps)
-            runtime.write_json(dest / SOURCE, {"construct": name, "origin": _origin(name), "copied": runtime.stamp_iso()})
+            runtime.write_json(dest / SOURCE, {"construct": name, "origin": "shipped:" + name if shipped else _origin(name),
+                                               "copied": runtime.stamp_iso()})
             refreshed.append({"construct": key, "placements": ids, "from": name,
                               "changed": before != (dest / kind).read_bytes()})
         if backups:
@@ -284,7 +289,7 @@ def _from_example(args, later=False):
             shutil.copytree(src / "constructs", folder / "constructs", dirs_exist_ok=True)
         for p in doc["placements"]:
             if not p["construct"].endswith(".json"):
-                p["construct"] = _bring(folder, p["construct"])
+                p["construct"] = _bring(folder, p["construct"], shipped=True)
         doc["id"], doc["title"] = slug.replace("_", "-")[:64], title.strip()
         path = folder / "world.json"
         checked = _save_checked(path, doc, folder, surfaces_of=doc["placements"][0]["id"])
