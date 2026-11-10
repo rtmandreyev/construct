@@ -1,10 +1,11 @@
 # Stortorget at Christmas
 
 Stockholm's old square at its Christmas market, made in Hermes from one photograph: the eight houses around it,
-researched one by one, the market's stalls, the spruce, the lamp and the granite block in front. 13 constructs,
-placed 53 times (one market stall, 41 times). Each construct was made in masterpiece rounds by its own builder, a
-fresh critic judging every round; then the whole world ran rounds of its own against the photograph. Built by
-GPT-6.1 Sol in Hermes Desktop with the Construct plugin, in about 20 hours of work over a day and a night. This page follows it from the request to the houses' colours, and says what is documented and what is not.
+researched one by one, the market's stalls, the spruce, the lamp and the granite block in front. It has 13
+constructs, placed 53 times (one market stall, 41 times). Each construct was made in masterpiece rounds by its own
+builder, with a fresh critic judging every round, and then the whole world ran rounds of its own against the
+photograph. It was built by GPT-6.1 Sol in Hermes Desktop with the Construct plugin, in about 20 hours of work over a
+day and a night. This page follows it from the request to the houses' colours, and says what is documented and what is not.
 
 <p align="center">
   <img src="hero.jpg" width="95%" alt="Stortorget in the solid view: the red stepped gable of No. 20, the orange No. 18 and the yellow houses over rows of red market stalls, the spruce, the granite block in front">
@@ -22,7 +23,7 @@ from the world's export.</sub></p>
 Put side by side, the world is close to the photograph: the same gables in the same order and colours, No. 20's
 stepped red front beside No. 18's orange curve and its round window, the spruce rising in front of them, the rows of
 red stalls running off towards the corner, the granite block, the lamp. All of it came from one photograph and one
-request, zero-shot. One picture was a deliberate limit, to show how far one goes: given photographs from every
+request, zero-shot. One picture was a deliberate limit, to show how far one goes. Given photographs from every
 side, plans and measurements, each house has more to be checked against, and with tens or hundreds of pictures a
 world becomes a digital twin of a place (see [what more pictures give](#what-more-pictures-give)).
 
@@ -165,7 +166,7 @@ block were capped at four rounds. Several builders ran at once.
 | The granite block | `granite-block` | 1 | 4 | 4 | good, 22 | the 4-round cap | 9.4 / 12.8 |
 
 "Kept" is the round the builder kept as its best; the score is that round's sum over the nine criteria, out of 27.
-The minutes are each builder's own active time and its critics' time, as its rounds recorded them; the spruce's is
+The minutes are each builder's own active time and its critics' time, as its rounds recorded them. The spruce's is
 its time at its last round (its clock ran on through repairs after it stopped). The run's own report notes that
 the stall's and the block's summaries in their scenes said *improve* where the critic's answer said *good*; the
 table gives the answers.
@@ -200,7 +201,7 @@ After the world was finished, every part of it still said *inferred*, and many p
 house had been researched. So GPT-6.1 Sol, the agent that built the world, went back over the ten constructs it had
 researched (the eight houses, the lamp and the granite block; the square, the stall and the spruce were left as
 they were) and marked what their sources actually establish. It changed no geometry: every size, shape, place,
-colour and view is byte for byte what it was; only the provenance fields differ.
+colour and view is byte for byte what it was. Only the provenance fields differ.
 
 What changed:
 
@@ -254,7 +255,7 @@ and its answer was recorded as it came:
 | The granite block | improve | 21 | 4 / 3 |
 
 Four critics (the sage and yellow mansard houses, the lamp, the block) answered *good* but marked a feature of their
-checklist missing; Construct recomputes every verdict from the critic's own answer, and records those as *improve*.
+checklist missing. Construct recomputes every verdict from the critic's own answer, and records those as *improve*.
 The verdicts in the table above are the builders' rounds as they ran; these are the scenes as they ship.
 
 ## Placed at real size
@@ -272,7 +273,7 @@ without knowing which was which. A round that lost put the world and its constru
 constructs in the world's own copies, at most four at a time.
 
 The first eight rounds stopped at the two-hour ceiling on the author's own time (127.5 active minutes). The person
-asked for 90 more minutes (`rounds extend 90`); round 9 won, and its packet's captures alone took 26 minutes (failed)
+asked for 90 more minutes (`rounds extend 90`). Round 9 won, and its packet's captures alone took 26 minutes (failed)
 and 35 (succeeded) on a world this large, which used up the extension. A second extension took the ceiling to 300
 minutes, and rounds 10 to 12 ran to the 12-round cap (295.6 active minutes in all). Round 11 is the world in this
 folder.
@@ -298,11 +299,11 @@ folder.
 Round 9's 95.9 minutes include the two long captures. Each round is decided by the critic comparing the new version
 with the best so far, not by the scores, so round 11 won against round 10 while scoring lower: the critic preferred
 No. 18's taller crown in the photograph's shot. Rounds 10 and 11 also tried to make the spruce darker and fuller,
-twice; on a tree of 7,700 parts the edit timed out each time and the tree stayed as it was, which is why the last
+twice. On a tree of 7,700 parts the edit timed out each time and the tree stayed as it was, which is why the last
 three critics still saw it grey. In the exports and in Blender it is green: a finish map beside it
 (`constructs/christmas-spruce/scene.materials.json`) gives its needles, trunk and lights their materials. Round 1's packet left out the request and the photograph by
 mistake; its judgement was kept, and every later packet carried both. The first critic's complaint about one vendor
-repeated was set aside as the request's own choice (one stall design); the photograph's low approach, attempted in
+repeated was set aside as the request's own choice (one stall design). The photograph's low approach, attempted in
 three kept rounds without the critic's agreement, was retired as a limit of the skill after round 8.
 
 <p align="center"><img src="run/rounds-01-09-tree.jpg" alt="The tree view at round 1 and round 9: at round 1 the spruce stands in front of No. 20's lower floors; at round 9 it rises in front of the gable, its branches still in separate tiers"></p>
@@ -312,7 +313,7 @@ three kept rounds without the critic's agreement, was retired as a limit of the 
 
 From round 2 to round 8 every critic said the same thing: in the solid view the houses were grey, while the stalls
 were red and green. The critics were right. The stall's builder had given its parts colours of their own from the
-start; the eight houses' builders had not, so the solid view drew them in Construct's neutral grey. In round 9 one
+start. The eight houses' builders had not, so the solid view drew them in Construct's neutral grey. In round 9 one
 repair builder gave the houses their colours (`look.color` on every part of the eight houses, nothing else changed):
 red for No. 20, orange for No. 18, yellow and ochre for the long range, the yellow mansard house and the narrow
 house, sage, russet, and pale stone for Börshuset. The round-9 critic saw them ("No20 is red, No18 orange and the
@@ -425,7 +426,7 @@ layout beyond the frame. Each kind of picture removes a kind of guess:
 - **a few measurements** (a door, a storey) turn proportions into sizes the audit can hold.
 
 With tens or hundreds of pictures of one place, a world becomes a digital twin of it, and every construct in it
-stays its own: a heritage site recorded house by house with what is known about each, a street as a set for a
+stays separate: a heritage site recorded house by house with what is known about each, a street as a set for a
 film's previsualisation, a campus, a shop floor or a hall to plan a change in, a real neighbourhood as a game level.
 
 ## Good to know
