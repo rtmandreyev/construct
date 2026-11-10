@@ -626,6 +626,7 @@ void main() {
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
     gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA32F, 1280, st.length / 5120, 0, gl.RGBA, gl.FLOAT, st);
+    this.styleBuf = st; this.styleOrig = st.slice();   // Finish previews a colour by rewriting the solid colour slots
 
     const corner = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, corner);
@@ -954,6 +955,17 @@ void main() {
       return [o[0] / o[3], o[1] / o[3], o[2] / o[3]]; };
     const o = un(-1);
     return { o, d: V.norm(V.sub(un(1), o)) };
+  };
+  // a colour tried on the card's Finish before it is saved: the solid colour of every part `match(partIndex)` says
+  // yes to (null: everything as built). Only the solid view's slots change; the light view keeps its palette
+  Hologram.prototype.previewColours = function (match, rgb) {
+    const gl = this.gl, st = this.styleBuf;
+    if (!st || !this.styleTex) return false;
+    st.set(this.styleOrig);
+    if (match && rgb) this.styles.forEach((s, i) => { if (s[6] >= 0 && match(s[6])) st.set(rgb, i * 20 + 17); });
+    gl.bindTexture(gl.TEXTURE_2D, this.styleTex);
+    gl.texSubImage2D(gl.TEXTURE_2D, 0, 0, 0, 1280, st.length / 5120, gl.RGBA, gl.FLOAT, st);
+    return true;
   };
   // the nearest part under a point of the canvas: {id, point, radius} (double-click focuses the camera on it)
   Hologram.prototype.pickPart = function (px, py, cw, ch) {
@@ -1858,6 +1870,38 @@ void main() {
       return t > 0 ? [a[0] + (b[0] - a[0]) * t, y, a[2] + (b[2] - a[2]) * t] : null;
     };
 
+    // Finish (the card's): click a part in the solid view to choose its colour and finish; the card saves it
+    holo.fin = { on: false };
+    const globRe = (pat) => new RegExp("^" + String(pat).replace(/[.+^${}()|\\]/g, "\\$&").replace(/\*/g, ".*").replace(/\?/g, ".") + "$");
+    const localId = (p) => (p.placement !== undefined && p.placement !== null && p.id.startsWith(p.placement + "/") ? p.id.slice(p.placement.length + 1) : p.id);
+    const setFinish = (on) => {
+      holo.fin.on = !!on;
+      if (on && holo.arr && holo.arr.on) setArrange(false);
+      if (on && holo.solid && !opt.solid) { opt.solid = true; holo.opt.solid = true; setUi(); }
+      if (!on) holo.previewColours(null);
+      document.body.classList.toggle("finishing", !!on); kick();
+    };
+    const finishPick = (px, py, w, h) => {
+      const hit = holo.pickPart(px, py, w, h);
+      if (!hit) return null;
+      const pi = geo.parts.findIndex((q) => q.id === hit.id), p = geo.parts[pi];
+      const id = localId(p), pattern = id.includes("-") ? id.replace(/-[^-]*$/, "-*") : null;
+      const re = pattern ? globRe(pattern) : null;
+      const siblings = re ? geo.parts.filter((q) => q.placement === p.placement && re.test(localId(q))).length : 1;
+      const si = holo.styles.findIndex((st) => st[6] === pi);
+      const colour = si >= 0 && geo.style_colors && geo.style_colors[si] ? String(geo.style_colors[si]).toLowerCase() : null;
+      return { part: id, placement: p.placement || null, label: p.label || id, pattern: siblings > 1 ? pattern : null, siblings,
+               color: colour, finish: null };
+    };
+    let finDown = null;
+    canvas.addEventListener("pointerdown", (e) => { finDown = holo.fin.on ? [e.clientX, e.clientY] : null; });
+    canvas.addEventListener("pointerup", (e) => {
+      if (!holo.fin.on || !finDown || Math.hypot(e.clientX - finDown[0], e.clientY - finDown[1]) > 5) return;
+      const r = canvas.getBoundingClientRect(), pick = finishPick(e.clientX - r.left, e.clientY - r.top, r.width, r.height);
+      holo.fin.placement = pick ? pick.placement : null;
+      try { if (window.HOLO.onFinish) window.HOLO.onFinish(pick); } catch (err) { /* the host went away */ }
+    });
+
     const hover = el("div", "hover"); overlay.appendChild(hover);
     // interaction
     let drag = null, lastInput = -1e9;
@@ -2133,6 +2177,20 @@ void main() {
           if (typeof change.turn === "number") ed.turn = change.turn; arrangeTell(); kick(); return true; },
       },
       onArrange: null,
+      // Finish (the card's): on/off, a colour tried on parts by their ids or patterns (in a world, of the placement
+      // last clicked), and onFinish, told each part clicked
+      finish: {
+        set(on) { setFinish(on); return holo.fin.on; },
+        on() { return holo.fin.on; },
+        preview(patterns, colour, placement) {
+          if (!patterns) return holo.previewColours(null);
+          const res = patterns.map(globRe), rgb = hex(colour);
+          const where = placement === undefined ? holo.fin.placement : placement;
+          return holo.previewColours((pi) => { const p = geo.parts[pi];
+            return (where ? p.placement === where : true) && res.some((re) => re.test(localId(p))); }, rgb);
+        },
+      },
+      onFinish: null,
     };
     if (geo.world) { overlay.appendChild(arrangeBox); arrangeTell(); }
   }
