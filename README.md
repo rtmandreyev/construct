@@ -4,16 +4,16 @@
 checked description of it: its named parts at their real sizes, how they fit together, open and move, and how
 each one is known, measured or guessed.** An agent does the research and writes the description; Construct
 checks it and builds from it, the same description always into the same result. Put constructs together and they
-make a **world**: a room, a street, a whole game level, every construct in it still whole, with its own parts,
-sources and joints.
+make a **world**: a room, a street, a whole game level, where every construct is still whole, with its own parts,
+sources and joints, so you can move, reuse or open any of it.
 
 **Describe a thing, or show a place. Get a hologram, a 3D model, a print, a kit, or a whole world.** You ask any AI
 agent in plain words, and it builds an animated model in lines of light, the **Measured Light** style, as one web
 page you can open anywhere, honest about what is known. The same construct becomes a 3D model with named parts and
-working joints, a print, a model kit, a CAD file or a film. Give it one picture of a place and it builds the place:
-[Rain Harbour](examples/worlds/rain-harbour/), a game level from a concept picture, and
-[Stortorget](examples/worlds/stortorget/), Stockholm's old square from a photograph, each zero-shot, each construct in
-it its own. In Hermes you arrange a world by hand, with no AI at all.
+working joints, a print, a model kit, a CAD file or a film. Give it one picture of a place and it builds the place,
+zero-shot: [Stortorget](examples/worlds/stortorget/), Stockholm's old square from a single photograph, stands almost
+exactly as the photograph shows it; [Rain Harbour](examples/worlds/rain-harbour/) is a playable game level from one
+concept picture. Then rearrange it by hand in Hermes, with no AI at all.
 
 <p align="center">
   <a href="https://rtmandreyev.github.io/construct/examples/sainte-chapelle/"><img src="docs/media/assembly-sainte-chapelle.gif" width="32%" alt="The Sainte-Chapelle construct assembling itself"></a>
@@ -33,6 +33,7 @@ assembly and read the labels; <a href="docs/for/invent-from-what-exists.md">how 
 <a href="examples/worlds/stortorget/">how Stortorget was made</a>.</sub></p>
 
 - **Construct for Hermes.** A native Hermes plugin: ask for a thing in plain words and the construct appears live in the chat, with its 3D model, kit and NetLogo runs beside it, and place your constructs together into worlds. `hermes plugins install rtmandreyev/construct#hermes/construct` ([what it does](hosts/hermes/construct/README.md), [Villa Savoye in Hermes, step by step](docs/for/hermes-walkthrough.md), [worlds, step by step](docs/for/worlds-walkthrough.md)).
+- **Whole places, still in pieces.** A world made from one picture keeps every construct separate: move a car, turn a tower, swap the signs, open a door on its hinge, export it to Blender or Godot, reuse a building in another level ([Rain Harbour, before and after](examples/worlds/rain-harbour/#changed-by-hand)).
 - **Any agent, any model.** Claude Code, Hermes, any MCP client or any OpenAI-compatible endpoint, or by hand.
 - **Honest about what is known.** Every part says how it is known, its size and its shape apart, every guess in a shade of how firmly it is held.
 - **One house style.** Models never choose the colours, so every construct looks like it belongs with the rest.
@@ -49,15 +50,16 @@ assembly and read the labels; <a href="docs/for/invent-from-what-exists.md">how 
 | are planning a change to your **home or garden** | Your shed, room or garden as a model to try the change on first: a deck, shelves, an extension, a new layout. A planning model, not a survey | [Try it on a copy](docs/for/home-and-garden.md) |
 | want to customise or restore a **vehicle** | Your car, bike or scooter from its published sizes and your photos, your parts told apart from the factory's: try wheels or a new colour, plan a restoration, make a model of it | [Your vehicle](docs/for/your-vehicle.md) |
 | need a part that is **missing or broken** | A knob, bracket or cover drawn to the thing it fits, as a print or a CAD file someone can make | [Make the part](docs/for/replace-a-part.md) |
+| want **a place from a photo**: a square, a street, a building, your neighbourhood | One photograph is enough to start (Stortorget, from one); more pictures make it closer, up to a digital twin, house by house, each part saying how it is known | [Stortorget, start to finish](examples/worlds/stortorget/) |
 | want **your things together in one place** | Your house with your furniture, your car and scooter under it, a ship over the roof: whole constructs placed at real size, arranged by asking or by hand | [Worlds, step by step](docs/for/worlds-walkthrough.md) |
 | want a **model kit of your own thing** | Your scooter, house or guitar as a kit to print, glue and paint, with a booklet ([one to open](https://rtmandreyev.github.io/construct/examples/vespa-gs150/kit/assembly.html)) | [A kit of your own](docs/for/a-kit-of-your-own.md) |
 | want to **show someone what you mean** | A model a builder, a fabricator or a friend can turn and measure, and a file for their own tools | [Show what you mean](docs/for/show-what-you-mean.md) |
 | ***Professionals and creators*** | | |
 | are a **maker** with a printer or CAD | A construct as one checked print at your printer's largest size (Tompion's clock: 21 cm on a desktop printer, 10½ hours in PrusaSlicer), a model kit with plates, a booklet and its steps in 3D ([five to open](https://rtmandreyev.github.io/construct/#kits)), and true CAD shapes in FreeCAD and STEP | [Print, kit, CAD](docs/for/makers.md) |
-| create **new ships, creatures or worlds** for a game, film or story | New things designed from real ones: a construct, a 3D model with working parts, a film ([see KESTREL](https://rtmandreyev.github.io/construct/examples/kestrel/), an invented ice tug) | [New things from real ones](docs/for/invent-from-what-exists.md) |
+| create **new ships, creatures or places** for a game, film or story | New things designed from real ones: a construct, a 3D model with working parts, a film ([see KESTREL](https://rtmandreyev.github.io/construct/examples/kestrel/), an invented ice tug) | [New things from real ones](docs/for/invent-from-what-exists.md) |
 | have **software or a documented system** you wish were a physical product | Its documented functions mapped to controls, displays and the parts inside, what the documents fix kept apart from what is designed (one worked example: a software synthesizer as a 61-key instrument) | [Documentation → product](docs/for/documentation-to-product.md) |
 | are a **game developer** | Props in named parts at their real size, with doors and lids on working hinges in Godot, FBX for Unity and Unreal; models of what your game needs instead of stock ones; a whole level from one concept picture ([Rain Harbour](examples/worlds/rain-harbour/): 21 constructs placed 50 times, a hero car, one command to a Godot map) | [Into a game engine](docs/for/game-developers.md) |
-| are a **3D artist** | A construct or a whole world in Blender with its build, joints, metal and finish on sliders, painted from a small material map ([the Villa Savoye](examples/villa-savoye/), 396 parts, rendered in Cycles); OBJ in quads to model over; FBX and USD | [Into Blender](docs/for/3d-artists.md) |
+| are a **3D artist** | A construct or a whole world in Blender with its build, joints, metal and finish on sliders, painted from a small material map ([the Villa Savoye](examples/villa-savoye/), 396 parts, and [the Villa lived in](https://rtmandreyev.github.io/construct/worlds/villa-savoye-lived-in/), a world of 13, rendered in Cycles); OBJ in quads to model over; FBX and USD | [Into Blender](docs/for/3d-artists.md) |
 | work in **film and motion** | A construct that assembles across your track, pausing, surging and flaring with the music, shimmering with a vocal stem ([three films](https://rtmandreyev.github.io/construct/#films)); keyed reveals in Blender; a world's named views as shots | [Film mode](docs/for/film-and-motion.md) |
 | are an **educator or researcher** | An agent-based model's run drawn as a construct, compared, printed, filmed | [Models come alive](docs/for/educators-and-researchers.md) |
 | work in a **museum or archive** | Reconstructions where every part says how it is known (measured, traced, seen in a photo, designed), sources cited and the critic's verdict kept: [Tompion's clock](https://rtmandreyev.github.io/construct/examples/tompion-year-going-clock/) from the Royal Collection's record, [Stortorget](examples/worlds/stortorget/) house by house | [Honest reconstructions](docs/for/museums-and-archives.md) |
@@ -78,7 +80,8 @@ Every change with pictures and the commands to try it: **[What's new in 1.3, a w
   Stockholm's old square at Christmas.
 - **Arranged by hand in Hermes.** Arrange on a world's card: drag a construct onto any floor, table or roof, turn
   it, lift it; add one from the library; save, with no model turn. A Worlds tab, groups of your own, previews. The
-  plugin ships 24 constructs (16 in 1.2.1) and all six worlds, the two from pictures with their artwork.
+  plugin ships 24 constructs (16 in 1.2.1) and all six worlds, the two from pictures with their artwork. A level
+  made from one prompt can be remade by hand: [Rain Harbour, before and after](examples/worlds/rain-harbour/#changed-by-hand).
 - **More ways out.** FBX, USD and USDZ (through Blender), a Godot game map whose doors swing, and the Blender
   add-on imports a world. Every construct now finishes with its own material map, which every export uses by
   default, and its artwork (signs, labels, screens) exports as textures in glTF and OBJ.
