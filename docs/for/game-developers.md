@@ -3,7 +3,7 @@
 Props and whole levels you can open, change and rebuild: named parts at real sizes, doors and lids on working
 hinges, a record of how every part is known, and one command to a Godot map, a glTF or an FBX. Make the models your
 game needs from photos, studies or a concept picture, instead of buying stock models or living with a generated
-blob of triangles. Godot 4.7 is tested here; Unity and Unreal take the same glTF, or an FBX made from it by Blender.
+blob of triangles. Godot 4.7 is tested here. Unity and Unreal take the same glTF, or an FBX made from it by Blender.
 
 <p align="center">
   <img src="../../examples/worlds/rain-harbour/reference.jpg" width="49%" alt="The concept picture: a rain-soaked cyberpunk street at night, stacked towers with neon signs in letter-noise on both sides, a yellow sports car at the front left">
@@ -137,7 +137,7 @@ id (move, rotate, resize, set fields, add or remove parts), each step validated 
 with the diff. From a checkout, edit `scene.json` and run `construct check`.
 
 Tried here on a copy of AURIC: its two door hinges set from 65° to 80° (`"amount": 80` on each articulation), checked
-(no errors), exported glued again. The doors' joints in the new file read 80; nothing else changed.
+(no errors), exported glued again. The doors' joints in the new file read 80, and nothing else changed.
 
 When you ask an agent for more detail, ask it to keep what your game already names. KESTREL's second version kept all
 256 parts with their names, places and sizes and added 242 (`v2-…`), so every script and animation that names a part
@@ -172,7 +172,7 @@ What else is in every file:
   `.usdz` (Omniverse, Houdini, Apple's Reality tools).
 - **Budgets:** a construct exports up to 200,000 triangles, a world up to 2,000,000.
 
-The full option list is in [3D export](../EXPORT.md); bodies, colliders and joints in [Godot](../GODOT.md).
+The full option list is in [3D export](../EXPORT.md), and bodies, colliders and joints are in [Godot](../GODOT.md).
 
 ### A finish map
 
@@ -233,7 +233,7 @@ a façade (Construct has no wall mount yet). Its extent: 100 × 84.4 × 160 m.
   [`constructs/balcony-hotel/`](https://rtmandreyev.github.io/construct/worlds/rain-harbour/constructs/balcony-hotel/). Each of the 21 has its
   own scene, material map and round record, to place in a level of your own.
 - **Movable.** A placement is an id, a construct, a position and a turn. Move it on the world's card in Hermes
-  (**Arrange**), by asking (`construct_world` op `move`), or by editing `world.json`; then export again.
+  (**Arrange**), by asking (`construct_world` op `move`), or by editing `world.json`. Then export again.
 - **Animated.** Joints still work inside the world. Every export of it carries `open`,
   `open:hero-car/left-gullwing-open` and `open:hero-car/right-gullwing-open`: in the merged glTF, Godot's
   AnimationPlayer lifts the left door its 65°; in the glued map the doors are bodies of their own on their hinges
@@ -421,7 +421,7 @@ How the physics differs:
   joint.
 - **Unity and Unreal** do not read the glTF physics extensions (`OMI_physics_body`, `OMI_physics_shape`). They get the
   named parts and the `open` animation; the `<part>-convcolonly` boxes arrive as ordinary meshes, to turn into
-  colliders by hand. Neither is tested here; Godot 4.7 is.
+  colliders by hand. Neither is tested here. Godot 4.7 is.
 
 ### Step 3: in Godot
 
@@ -464,13 +464,13 @@ or backwards for the doors when the car is stopped. That project is described on
 
 ### Step 4: change the level, and export again
 
-Any change is a change to `world.json` or to a construct's scene; the export is the same command again, and the same
+Any change is a change to `world.json` or to a construct's scene. The export is the same command again, and the same
 scene always gives the same file.
 
 - **Move things.** On the world's card in Hermes Desktop, **Arrange**: click a construct and drag it onto any floor,
   roof or pavement, **Shift**-drag or **Q / E** to turn it, **Lift / Lower** for what hangs, **Duplicate**, **Remove**.
   **Save** checks the level (overlaps, collisions, what stands where a door opens, what stands on nothing), saves and
-  rebuilds it with no model turn; **Undo last change** steps back. By asking, the agent uses `construct_world` op
+  rebuilds it without calling a model. **Undo last change** steps back. By asking, the agent uses `construct_world` op
   `move` or `remove`. By hand, change a placement's `at` (metres) or `yaw` (degrees) and run `construct check
   world.json`.
 
