@@ -7,11 +7,12 @@ blob of triangles. Godot 4.7 is tested here; Unity and Unreal take the same glTF
 
 <p align="center">
   <img src="../../examples/worlds/rain-harbour/reference.jpg" width="49%" alt="The concept picture: a rain-soaked cyberpunk street at night, stacked towers with neon signs in letter-noise on both sides, a yellow sports car at the front left">
-  <img src="../../examples/worlds/rain-harbour/solid.jpg" width="49%" alt="Rain Harbour in the solid view: the same street with grey towers, the yellow car at the front left and readable signs: RAIN HARBOUR, BLUE LINE ELECTRONICS, NIGHT VOYAGE NOODLES, HARBOUR HOTEL in English and Chinese">
+  <img src="../media/godot-rain-harbour.jpg" width="49%" alt="Rain Harbour running in Godot at night: the wet street between towers, the neon signs in English and Chinese glowing and reflected in the road, the yellow car at the front left">
 </p>
 <p align="center"><sub>Left: a concept picture, the requester's own. Right: <a href="../../examples/worlds/rain-harbour/">Rain Harbour</a>,
-the level made from it in Hermes: 21 constructs placed 50 times, every sign in real English and Chinese, a hero car
-whose doors open. Shown in the solid view (S), where each construct's own colours show.</sub></p>
+the level made from it in Hermes, zero-shot, running in Godot 4.7: 21 constructs placed 50 times, every sign in real
+English and Chinese, a hero car whose doors open. The level is the export as it comes (<code>--wire none</code>); the
+night (glow, fog, reflections on a glossy road) is a few lines of Godot setup.</sub></p>
 
 On this page:
 
@@ -89,7 +90,7 @@ plays one, and `idle` loops periodic motion (a spinning reel, a pendulum).
 | [Volkswagen T1 Samba](../../examples/volkswagen-t1-samba/) | nine: two cab doors (18°), two cargo doors (15°), the engine lid (70°), three panels of the folding sunroof that slide back (1.08, 0.72 and 0.36 m) and the folded stack that lifts (4 cm) |
 | [Vespa GS 150](../../examples/vespa-gs150/) | six: the handlebar steers (24°), the stand folds (78°), each side cowl lifts off (0.23 and 0.19 m) and then turns away (110°) |
 | [KESTREL](../../examples/kestrel/), an invented ice tug | six: four cradle arms that release (32°) and two radiator wings that fold (78°) |
-| [AURIC](../../examples/worlds/rain-harbour/constructs/auric/), Rain Harbour's hero car | two gull-wing doors, each a hinge along the roof line that lifts 65° and carries 16 parts (skin, glass, mirror, lining, handle, latch) |
+| [AURIC](https://rtmandreyev.github.io/construct/worlds/rain-harbour/constructs/auric/), Rain Harbour's hero car | two gull-wing doors, each a hinge along the roof line that lifts 65° and carries 16 parts (skin, glass, mirror, lining, handle, latch) |
 
 With `--pieces glued`, each joint becomes a body of its own on its hinge in Godot, once
 [`construct_joints.gd`](../../hosts/godot/construct_joints.gd) connects it (a HingeJoint3D or SliderJoint3D per
@@ -229,7 +230,7 @@ a façade (Construct has no wall mount yet). Its extent: 100 × 84.4 × 160 m.
 ### Every construct keeps what a prop has
 
 - **Reusable.** The hotel placed five times is one construct, compiled once, in one folder:
-  [`constructs/balcony-hotel/`](../../examples/worlds/rain-harbour/constructs/balcony-hotel/). Each of the 21 has its
+  [`constructs/balcony-hotel/`](https://rtmandreyev.github.io/construct/worlds/rain-harbour/constructs/balcony-hotel/). Each of the 21 has its
   own scene, material map and round record, to place in a level of your own.
 - **Movable.** A placement is an id, a construct, a position and a turn. Move it on the world's card in Hermes
   (**Arrange**), by asking (`construct_world` op `move`), or by editing `world.json`; then export again.

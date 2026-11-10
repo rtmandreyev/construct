@@ -396,6 +396,10 @@ What this run shows, for the next request from a picture:
 - **The car's colour** is in the solid view and in exports; the light view shows Construct's house palette.
 - **The Godot project, film and kit** were made from the first pass and are not part of this repository.
 - **Sign artwork** is generated decoration, marked so in each scene.
+- **The coloured patches on the road** are artwork too: the builder painted the signs' reflections onto the wet
+  street as cyan, magenta and amber images, because the viewer draws no reflections. In the page they lie flat on the
+  road; the Blender and Godot pictures here give the road a glossy wet material instead, which reflects the real
+  signs, so the painted patches are not drawn there.
 
 ## Credits
 
