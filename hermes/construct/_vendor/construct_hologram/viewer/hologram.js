@@ -968,13 +968,14 @@ void main() {
     return true;
   };
   // the nearest part under a point of the canvas: {id, point, radius} (double-click focuses the camera on it)
-  Hologram.prototype.pickPart = function (px, py, cw, ch) {
+  Hologram.prototype.pickPart = function (px, py, cw, ch, keep) {
     const ray = this.rayAt(px, py, cw, ch);
     if (!ray) return null;
     const memo = {};
     let best = null;
-    for (const p of this.geo.parts) {
+    for (const [pi, p] of this.geo.parts.entries()) {
       if (p.sky || (p.shape === "points" && (p.role === "ornament" || p.certainty === "decorative"))) continue;
+      if (keep && !keep(pi)) continue;
       const m = p.placement && this.arranging() ? this.placeMotion(p.placement, memo) : null;
       let ro = ray.o, rd = ray.d;
       if (m) {
@@ -1881,8 +1882,56 @@ void main() {
       if (!on) holo.previewColours(null);
       document.body.classList.toggle("finishing", !!on); kick();
     };
+    // only what has surfaces takes a colour (a seam or an edge line has none): the parts the solid view draws
+    let surfaced = null;
+    const hasSurface = (pi) => {
+      if (!surfaced) {
+        surfaced = new Set();
+        const sd = window.HOLOGRAM_SOLID;
+        if (sd && sd.sty) {
+          const t = atob(sd.sty), u = new Uint16Array(t.length >> 1);
+          for (let i = 0; i < u.length; i++) u[i] = t.charCodeAt(2 * i) | (t.charCodeAt(2 * i + 1) << 8);
+          for (const si of new Set(u)) { const st = holo.styles[si]; if (st && st[6] >= 0) surfaced.add(st[6]); }
+        }
+      }
+      return surfaced.size ? surfaced.has(pi) : true;
+    };
+    // the exact part under the pointer: the solid view's own triangles, nearest first (a box test would give a car's
+    // body for a click on its wheel); decoded once, on the first click
+    let mesh = null;
+    const triPick = (px, py, w, h) => {
+      const sd = window.HOLOGRAM_SOLID, ray = holo.rayAt(px, py, w, h);
+      if (!sd || !sd.vertices || !ray || !holo.solid) return null;
+      if (!mesh) {
+        const raw = (b64) => { const t = atob(b64), u = new Uint8Array(t.length); for (let i = 0; i < t.length; i++) u[i] = t.charCodeAt(i); return u.buffer; };
+        const q = new Uint16Array(raw(sd.pos)), lo = holo.solid.lo, sp = holo.solid.span, P = new Float32Array(q.length);
+        for (let i = 0; i < q.length; i++) P[i] = lo[i % 3] + q[i] / 65535 * sp[i % 3];
+        mesh = { P, I: sd.wide ? new Uint32Array(raw(sd.idx)) : new Uint16Array(raw(sd.idx)), S: new Uint16Array(raw(sd.sty)) };
+      }
+      const { P, I, S } = mesh, o = ray.o, d = ray.d;
+      let best = Infinity, bi = -1;
+      for (let k = 0; k + 2 < I.length; k += 3) {
+        const a = I[k] * 3, b = I[k + 1] * 3, c = I[k + 2] * 3;
+        const e1x = P[b] - P[a], e1y = P[b + 1] - P[a + 1], e1z = P[b + 2] - P[a + 2];
+        const e2x = P[c] - P[a], e2y = P[c + 1] - P[a + 1], e2z = P[c + 2] - P[a + 2];
+        const hx = d[1] * e2z - d[2] * e2y, hy = d[2] * e2x - d[0] * e2z, hz = d[0] * e2y - d[1] * e2x;
+        const det = e1x * hx + e1y * hy + e1z * hz;
+        if (Math.abs(det) < 1e-12) continue;
+        const f = 1 / det, sx = o[0] - P[a], sy = o[1] - P[a + 1], sz = o[2] - P[a + 2];
+        const u = f * (sx * hx + sy * hy + sz * hz);
+        if (u < 0 || u > 1) continue;
+        const qx = sy * e1z - sz * e1y, qy = sz * e1x - sx * e1z, qz = sx * e1y - sy * e1x;
+        const v = f * (d[0] * qx + d[1] * qy + d[2] * qz);
+        if (v < 0 || u + v > 1) continue;
+        const t = f * (e2x * qx + e2y * qy + e2z * qz);
+        if (t > 1e-6 && t < best) { best = t; bi = k; }
+      }
+      if (bi < 0) return null;
+      const st = holo.styles[S[I[bi]]], pi = st ? st[6] : -1;
+      return pi >= 0 ? { id: geo.parts[pi].id } : null;
+    };
     const finishPick = (px, py, w, h) => {
-      const hit = holo.pickPart(px, py, w, h);
+      const hit = triPick(px, py, w, h) || holo.pickPart(px, py, w, h, hasSurface);
       if (!hit) return null;
       const pi = geo.parts.findIndex((q) => q.id === hit.id), p = geo.parts[pi];
       const id = localId(p), pattern = id.includes("-") ? id.replace(/-[^-]*$/, "-*") : null;
