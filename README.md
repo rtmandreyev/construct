@@ -1,19 +1,21 @@
 # Construct
 
-**Construct is a tool for AI agents that turns everything that can be found out about a thing into one exact,
+**Construct is a tool for AI agents. It turns everything that can be found out about a thing into one exact,
 checked description of it: its named parts at their real sizes, how they fit together, open and move, and how
-each one is known, measured or guessed.** An agent does the research and writes the description; Construct
-checks it and builds from it, the same description always into the same result. Put constructs together and they
-make a **world**: a room, a street, a whole game level, where every construct is still whole, with its own parts,
-sources and joints, so you can move, reuse or open any of it.
+each one is known, measured or guessed.** An agent does the research and writes the description. Construct
+checks it and builds from it, and the same description always gives the same result. Put constructs together and
+they make a **world**: a room, a street, a whole game level. Inside a world every construct is still whole, with
+its own parts, sources and joints, so you can move, reuse or open any of it.
 
-**Describe a thing, or show a place. Get a hologram, a 3D model, a print, a kit, or a whole world.** You ask any AI
-agent in plain words, and it builds an animated model in lines of light, the **Measured Light** style, as one web
-page you can open anywhere, honest about what is known. The same construct becomes a 3D model with named parts and
-working joints, a print, a model kit, a CAD file or a film. Give it one picture of a place and it builds the place,
-zero-shot: [Stortorget](examples/worlds/stortorget/), Stockholm's old square from a single photograph, stands almost
-exactly as the photograph shows it; [Rain Harbour](examples/worlds/rain-harbour/) is a game level from one concept picture,
-ready to open in Godot, Unity or Unreal. Then rearrange it by hand in Hermes, with no AI at all.
+**Describe a thing, or show a place. Get a hologram, a 3D model, a print, a kit, or a whole world.** Ask any AI
+agent in plain words and it builds an animated model in lines of light, in the **Measured Light** style. The result
+is a single web page you can open anywhere, and it is honest about what is known. The same construct can also become
+a 3D model with named parts and working joints, a print, a model kit, a CAD file or a film.
+
+Give it one picture of a place and it builds the place, zero-shot. [Stortorget](examples/worlds/stortorget/),
+Stockholm's old square, was made from a single photograph and stands almost exactly as the photograph shows it.
+[Rain Harbour](examples/worlds/rain-harbour/) is a game level made from one concept picture, ready to open in Godot,
+Unity or Unreal. You can then rearrange it by hand in Hermes, with no AI at all.
 
 <p align="center">
   <a href="https://rtmandreyev.github.io/construct/examples/sainte-chapelle/"><img src="docs/media/assembly-sainte-chapelle.gif" width="32%" alt="The Sainte-Chapelle construct assembling itself"></a>
@@ -32,13 +34,13 @@ gallery. <a href="https://rtmandreyev.github.io/construct/">Open the gallery</a>
 assembly and read the labels; <a href="docs/for/invent-from-what-exists.md">how KESTREL was made</a>,
 <a href="examples/worlds/stortorget/">how Stortorget was made</a>.</sub></p>
 
-- **Construct for Hermes.** A native Hermes plugin: ask for a thing in plain words and the construct appears live in the chat, with its 3D model, kit and NetLogo runs beside it, and place your constructs together into worlds. `hermes plugins install rtmandreyev/construct#hermes/construct` ([what it does](hosts/hermes/construct/README.md), [Villa Savoye in Hermes, step by step](docs/for/hermes-walkthrough.md), [worlds, step by step](docs/for/worlds-walkthrough.md)).
-- **Every piece still its own.** A world made from one picture keeps every construct separate: move a car, turn a tower, swap the signs, open a door on its hinge, export it to Blender or Godot, reuse a building in another level ([Rain Harbour, before and after](examples/worlds/rain-harbour/#changed-by-hand)).
+- **Construct for Hermes.** A native Hermes plugin. Ask for a thing in plain words and the construct appears live in the chat, with its 3D model, kit and NetLogo runs beside it. You can also place your constructs together into worlds. `hermes plugins install rtmandreyev/construct#hermes/construct` ([what it does](hosts/hermes/construct/README.md), [Villa Savoye in Hermes, step by step](docs/for/hermes-walkthrough.md), [worlds, step by step](docs/for/worlds-walkthrough.md)).
+- **Every piece stays separate.** In a world made from one picture you can still handle each construct on its own: move a car, turn a tower, swap the signs, open a door on its hinge, export it to Blender or Godot, or reuse a building in another level ([Rain Harbour, before and after](examples/worlds/rain-harbour/#changed-by-hand)).
 - **Any agent, any model.** Claude Code, Hermes, any MCP client or any OpenAI-compatible endpoint, or by hand.
-- **Honest about what is known.** Every part says how it is known, its size and its shape apart, every guess in a shade of how firmly it is held.
+- **Honest about what is known.** Every part says how it is known, for its size and its shape separately, and every guess is shown in a shade of how firmly it is held.
 - **One house style.** Models never choose the colours, so every construct looks like it belongs with the rest.
 - **It repairs itself.** Every problem comes back with where it is and how to fix it.
-- **Nothing to install.** Python's standard library and a browser; no API keys or network service inside Construct.
+- **Nothing to install.** It needs only Python's standard library and a browser. There are no API keys and no network service inside Construct.
 
 ## Find your path
 
@@ -69,22 +71,21 @@ assembly and read the labels; <a href="docs/for/invent-from-what-exists.md">how 
 
 Every change with pictures and the commands to try it: **[What's new in 1.3, a walkthrough](docs/NEW-IN-1.3.md)**.
 
-- **Worlds.** Whole constructs placed together in one scene, each still itself: your chair, clock and synthesizer in
-  your house, your cars under it, a ship over the roof; a street, a market square, a game level. The world's audit
-  says what overlaps, what runs into the house it stands in, and what stands where a door opens. Six ship to start
-  from. [Worlds, step by step](docs/for/worlds-walkthrough.md) · [the format](docs/WORLDS.md)
-- **A world from a picture, in masterpiece mode.** Attach a photo or a concept picture: Hermes plans the pieces,
-  builds each new construct in its own masterpiece rounds with a fresh critic, places them at real size, then runs
-  the world itself through rounds against the picture. Two made this way, each from one picture:
+- **Worlds.** Whole constructs placed together in one scene, each keeping its own parts. Put your chair, clock and
+  synthesizer in your house, your cars under it and a ship over the roof, or build a street, a market square or a game
+  level. The world's audit says what overlaps, what runs into the house it stands in, and what stands where a door
+  opens. Six worlds ship to start from. [Worlds, step by step](docs/for/worlds-walkthrough.md) · [the format](docs/WORLDS.md)
+- **A world from a picture, in masterpiece mode.** Attach a photo or a concept picture. Hermes plans the pieces,
+  builds each new construct in its own masterpiece rounds with a fresh critic and places them at real size. Then it
+  runs the world itself through rounds against the picture. Two worlds were made this way, each from one picture:
   [Rain Harbour](examples/worlds/rain-harbour/), a game level, and [Stortorget](examples/worlds/stortorget/),
   Stockholm's old square at Christmas.
-- **Arranged by hand in Hermes.** Arrange on a world's card: drag a construct onto any floor, table or roof, turn
-  it, lift it; add one from the library; save, with no model turn. A Worlds tab, groups of your own, previews. The
-  plugin ships 24 constructs (16 in 1.2.1) and all six worlds, the two from pictures with their artwork. A level
+- **Arranged by hand in Hermes.** Use Arrange on a world's card to drag a construct onto any floor, table or roof,
+  turn it or lift it, add one from the library, and save, all without calling a model. There is a Worlds tab, with
+  groups of your own and previews. The plugin ships 24 constructs (16 in 1.2.1) and all six worlds, the two from pictures with their artwork. A level
   made from one prompt can be remade by hand: [Rain Harbour, before and after](examples/worlds/rain-harbour/#changed-by-hand).
-- **More ways out.** FBX, USD and USDZ (through Blender), a Godot game map (what stays put is one static body,
-  every hinged or sliding part moves on its own joint), and the Blender
-  add-on imports a world. Every construct now finishes with its own material map, which every export uses by
+- **More ways out.** FBX, USD and USDZ (through Blender); a Godot game map, where everything that stays put is one
+  static body and every hinged or sliding part moves on its own joint; and a Blender add-on that imports a world. Every construct now finishes with its own material map, which every export uses by
   default, and its artwork (signs, labels, screens) exports as textures in glTF and OBJ.
 - **Sturdier masterpiece rounds**, from two long runs: ties recorded, artwork kept in checkpoints, references
   carried from round to round, more time on request (`rounds extend`), colour judged in the solid view.
@@ -142,11 +143,11 @@ And one construct taken through all of it, step by step: **[A longcase clock, en
 ## Examples
 
 **Worlds.** Rain Harbour and Stortorget were each made in Hermes from one picture and one request, zero-shot. Rain
-Harbour, a game level from a concept picture: 21 constructs placed 50 times, every sign in real English and Chinese, a drivable hero car.
-Stortorget, from one photograph of Stockholm's old square: eight real houses researched one by one, one market stall
-placed 41 times, the tree, standing almost exactly as the photograph shows them. The Villa Savoye, lived in, is
-your own constructs together: the house with its furniture, a Braun, a Revox, a Leica, SERUM, an FJ62 and a DB5
-under the pilotis, KESTREL far off over the roof. [Worlds, step by step →](docs/for/worlds-walkthrough.md)
+Harbour is a game level from a concept picture: 21 constructs placed 50 times, every sign in real English and
+Chinese, and a drivable hero car. Stortorget comes from one photograph of Stockholm's old square: eight real houses
+researched one by one, one market stall placed 41 times, and the tree, all standing almost exactly as the photograph
+shows them. The Villa Savoye, lived in, is made of your own constructs: the house with its furniture, a Braun, a
+Revox, a Leica, SERUM, an FJ62 and a DB5 under the pilotis, and KESTREL far off over the roof. [Worlds, step by step →](docs/for/worlds-walkthrough.md)
 
 <p align="center">
   <a href="examples/worlds/rain-harbour/"><img src="examples/worlds/rain-harbour/blender-street.jpg" width="98%" alt="Rain Harbour in Blender at night: a wet street between towers, neon signs in English and Chinese reflected in the road, the yellow hero car"></a>
@@ -164,8 +165,9 @@ it, rendered from the same place.</sub></p>
 <p align="center"><sub>Every world as it ships, imported into Blender with Construct's add-on, each construct finished
 with its own material map.</sub></p>
 
-**Provenance and solids.** The Duomo di Milano in provenance shades (**P**): verified sizes in cyan, traced shapes in blue,
-every guess a deeper amber the more firmly it is held; and the same Duomo as a solid (**S**), as a modelling program shows it. [Museums and archives →](docs/for/museums-and-archives.md)
+**Provenance and solids.** On the left, the Duomo di Milano in provenance shades (**P**): verified sizes in cyan, traced
+shapes in blue, and every guess a deeper amber the more firmly it is held. On the right, the same Duomo as a solid (**S**),
+the way a modelling program shows it. [Museums and archives →](docs/for/museums-and-archives.md)
 
 <p align="center">
   <img src="docs/media/provenance-shades-duomo.jpg" width="49%" alt="The Duomo di Milano in the provenance view: verified sizes in cyan, traced parts in blue, inferred parts in shades of amber, with the legend counting each">
@@ -180,7 +182,7 @@ every guess a deeper amber the more firmly it is held; and the same Duomo as a s
   <a href="https://rtmandreyev.github.io/construct/films/arecibo-observatory/"><img src="docs/media/film-arecibo-observatory.gif" width="32%" alt="The Arecibo Observatory assembling across a piece of music"></a>
 </p>
 
-**Game engines and Blender.** The FJ62 in Godot, knocked apart into its pieces; and from light to a finished model. [Game developers →](docs/for/game-developers.md) · [3D artists →](docs/for/3d-artists.md)
+**Game engines and Blender.** The FJ62 in Godot, knocked apart into its pieces, and the same car going from light to a finished model. [Game developers →](docs/for/game-developers.md) · [3D artists →](docs/for/3d-artists.md)
 
 <p align="center">
   <img src="docs/media/godot-fj62-pieces.gif" width="49%" alt="The Toyota Land Cruiser FJ62 in Godot, falling apart into its pieces and settling">
@@ -260,7 +262,7 @@ models never choose its colours, is in **[The Measured Light style](docs/STYLE.m
 
 ## Install
 
-Construct runs from a copy of this repository; there is nothing to install system-wide. Clone it
+Construct runs from a copy of this repository. There is nothing to install system-wide. Clone it
 and build the skills for your agent:
 
 ```sh
@@ -283,8 +285,8 @@ Then add the skill to your agent, or use Construct directly:
 
 ## Quick start
 
-**In the Claude or ChatGPT app, no terminal.** Download Construct, give the app its folder and your photos, and ask:
-the Claude app's Cowork and the ChatGPT app's Codex both read the skill and build the construct for you.
+**In the Claude or ChatGPT app, no terminal.** Download Construct, give the app its folder and your photos, and ask.
+The Claude app's Cowork and the ChatGPT app's Codex both read the skill and build the construct for you.
 [Construct in the Claude or ChatGPT app →](docs/for/in-the-apps.md)
 
 **In your agent,** just ask in plain words: *"a masterpiece of the Sydney Opera House"*, or *"a masterpiece
@@ -318,10 +320,10 @@ the skill picks one and tells you why before it starts.
 | **timeboxed** | Masterpiece in 2 hours in all: the critic's time counts too | Two rounds without a win, 12 rounds, or 2 hours in all | Up to 2 hours, fewer rounds when the critic is slow | When you want masterpiece done within two hours |
 | **unbounded** | The same rounds, with no cap and no time limit | Only after two rounds without a win | Many rounds and hours, a high token cost | Only when you ask for it by name |
 
-Masterpiece's two hours count only the agent's own work; the critic's turns come on top, so a
+Masterpiece's two hours count only the agent's own work. The critic's turns come on top, so a
 run with a slow critic can take three hours or more. **timeboxed** stops at two hours in all. The
-skill never picks timeboxed or unbounded on its own: the critic finds an improvement almost every round,
-so it can run for hours. Every round is reported, so you can stop it whenever you like.
+skill never picks timeboxed or unbounded on its own, because the critic finds an improvement almost every
+round, so a run can go on for hours. Every round is reported, so you can stop it whenever you like.
 
 ## Models
 
