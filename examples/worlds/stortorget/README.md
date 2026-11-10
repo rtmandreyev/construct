@@ -4,19 +4,27 @@ Stockholm's old square at its Christmas market, made in Hermes from one photogra
 researched one by one, the market's stalls, the spruce, the lamp and the granite block in front. 13 constructs,
 placed 53 times (one market stall, 41 times). Each construct was made in masterpiece rounds by its own builder, a
 fresh critic judging every round; then the whole world ran rounds of its own against the photograph. Built by
-GPT-6.1 Sol in Hermes Desktop with the Construct plugin, from the afternoon of 8 November 2026 to the evening
-of the 9th. This page follows it from the request to the houses' colours, and says what is documented and what is not.
+GPT-6.1 Sol in Hermes Desktop with the Construct plugin, in about 20 hours of work over a day and a night. This page follows it from the request to the houses' colours, and says what is documented and what is not.
 
 <p align="center">
   <img src="hero.jpg" width="95%" alt="Stortorget in the solid view: the red stepped gable of No. 20, the orange No. 18 and the yellow houses over rows of red market stalls, the spruce, the granite block in front">
 </p>
-<p align="center"><sub>The photograph's own shot, in the solid view (S), each house in its own colours. Open the world in
+<p align="center"><sub>From where the photograph was taken, in the solid view (S), each house in its own colours. Open the world in
 Hermes (<b>Worlds</b> on the Constructs page) or with <code>construct build examples/worlds/stortorget/world.json</code>.</sub></p>
 
 <p align="center">
-  <img src="blender-photo.jpg" width="95%" alt="Stortorget in Blender at dusk: the photograph's shot over the market stalls to the red and orange gables and the Christmas tree">
+  <img src="reference.jpg" width="49%" alt="The photograph: the red stepped gable of No. 20 and the orange No. 18 behind rows of red Christmas market stalls, the tall spruce, the granite block in front">
+  <img src="blender-photo.jpg" width="49%" alt="The world from the same place, in Blender at dusk: the same gables, stalls, spruce and block">
 </p>
-<p align="center"><sub>The same shot at dusk in Blender, from the world's export.</sub></p>
+<p align="center"><sub>Left, the one photograph it was asked from; right, the world from the same place, at dusk in Blender
+from the world's export.</sub></p>
+
+Put side by side, the world is close to the photograph: the same gables in the same order and colours, No. 20's
+stepped red front beside No. 18's orange curve and its round window, the spruce rising in front of them, the rows of
+red stalls running off towards the corner, the granite block, the lamp. All of it came from one photograph and one
+request, zero-shot. One picture was a deliberate limit, to show how far one goes: given photographs from every
+side, plans and measurements, each house has more to be checked against, and with tens or hundreds of pictures a
+world becomes a digital twin of a place (see [what more pictures give](#what-more-pictures-give)).
 
 ## Who it is for
 
@@ -340,6 +348,21 @@ What this run shows, for the next world from a photograph:
    Ask for more time at the start, or extend a stopped run with `rounds extend`.
 8. **Leave things out by name.** "Leave out the people, the pram and the red shipping container" held through every
    round, and no critic penalised their absence.
+
+## What more pictures give
+
+This world had one photograph on purpose. Most of what the provenance view (**P**) marks as inferred is inferred
+because one picture cannot show it: the backs of the houses, the far side of the square, true heights, the market's
+layout beyond the frame. Each kind of picture removes a kind of guess:
+
+- **Photographs from every side** fix the backs and ends that were "large minimally articulated end walls" here;
+- **a plan or a map** fixes the square's outline and the houses' footprints;
+- **elevations, old postcards or archive drawings** fix heights, windows and details that change over time;
+- **a few measurements** (a door, a storey) turn proportions into sizes the audit can hold.
+
+With tens or hundreds of pictures of one place, a world becomes a digital twin of it, and every construct in it
+stays its own: a heritage site recorded house by house with what is known about each, a street as a set for a
+film's previsualisation, a campus, a shop floor or a hall to plan a change in, a real neighbourhood as a game level.
 
 ## Good to know
 

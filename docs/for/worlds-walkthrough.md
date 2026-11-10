@@ -28,8 +28,9 @@ Restart the gateway and turn the Desktop half on in **Capabilities → Plugins**
 
 ## 1. Open a world that ships
 
-**Constructs → Worlds** lists your worlds and the ones that ship: the shed with the Samba and the Vespa; the Villa
-Savoye lived in; a street of landmarks; KESTREL at Saturn; Rain Harbour; Stortorget. Open one and it builds live in
+**Constructs → Worlds** lists your worlds and the ones that ship: [the shed](https://rtmandreyev.github.io/construct/worlds/the-shed/) with the Samba and the Vespa;
+[the Villa Savoye lived in](https://rtmandreyev.github.io/construct/worlds/villa-savoye-lived-in/); [a street of landmarks](https://rtmandreyev.github.io/construct/worlds/a-street-of-landmarks/); [KESTREL at Saturn](https://rtmandreyev.github.io/construct/worlds/kestrel-at-saturn/);
+[Rain Harbour](https://rtmandreyev.github.io/construct/worlds/rain-harbour/); [Stortorget](https://rtmandreyev.github.io/construct/worlds/stortorget/). Each also opens in a browser from the gallery. Open one and it builds live in
 the chat, assembling piece by piece.
 
 <p align="center"><img src="../media/worlds/hermes-worlds-tab.png" width="90%" alt="The Worlds tab on the Constructs page: a card for each world with its picture, its placements and an Open button"></p>
@@ -108,7 +109,7 @@ What a good request says, from the two below:
 - **what to leave out** (people, the other cars, a container);
 - **that the words are real:** signs in a real language that mean what they say, never letter-noise copied from a
   generated picture;
-- **the views you want**, for a film or a level: the picture's own shot, a close-up, a high view;
+- **the views you want**, for a film or a level: the view from where the picture was taken, a close-up, a high view;
 - **say the plan, then go on:** Hermes states the plan and its cost and starts without waiting.
 
 What happens:

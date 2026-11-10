@@ -45,6 +45,12 @@
    "model": "GPT-6.1 Sol"
   },
   {
+   "slug": "rietveld-red-blue-chair",
+   "title": "Rietveld Red-Blue Chair",
+   "mode": "masterpiece",
+   "model": "DeepSeek V4.1 Flash"
+  },
+  {
    "slug": "serum-2-61",
    "title": "SERUM 2 / 61, an unaffiliated concept from a manual",
    "mode": "masterpiece",

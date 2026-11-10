@@ -47,7 +47,7 @@ model with named parts and working joints, a print, a model kit, a CAD file or a
 | are a **maker** with a printer or CAD | A construct as one checked print at your printer's largest size (Tompion's clock: 21 cm on a desktop printer, 10½ hours in PrusaSlicer), a model kit with plates, a booklet and its steps in 3D ([five to open](https://rtmandreyev.github.io/construct/#kits)), and true CAD shapes in FreeCAD and STEP | [Print, kit, CAD](docs/for/makers.md) |
 | create **new ships, creatures or worlds** for a game, film or story | New things designed from real ones: a construct, a 3D model with working parts, a film ([see KESTREL](https://rtmandreyev.github.io/construct/examples/kestrel/), an invented ice tug) | [New things from real ones](docs/for/invent-from-what-exists.md) |
 | have **software or a documented system** you wish were a physical product | Its documented functions mapped to controls, displays and the parts inside, what the documents fix kept apart from what is designed (one worked example: a software synthesizer as a 61-key instrument) | [Documentation → product](docs/for/documentation-to-product.md) |
-| are a **game developer** | Props with named parts and real sizes whose doors swing in Godot, FBX for Unity and Unreal; models of what your game needs instead of stock ones; a whole level from one concept picture ([Rain Harbour](examples/worlds/rain-harbour/): 21 constructs placed 50 times, a hero car, one command to a Godot map) | [Into a game engine](docs/for/game-developers.md) |
+| are a **game developer** | Props in named parts at their real size, with doors and lids on working hinges in Godot, FBX for Unity and Unreal; models of what your game needs instead of stock ones; a whole level from one concept picture ([Rain Harbour](examples/worlds/rain-harbour/): 21 constructs placed 50 times, a hero car, one command to a Godot map) | [Into a game engine](docs/for/game-developers.md) |
 | are a **3D artist** | A construct or a whole world in Blender with its build, joints, metal and finish on sliders, painted from a small material map ([the Villa Savoye](examples/villa-savoye/), 396 parts, rendered in Cycles); OBJ in quads to model over; FBX and USD | [Into Blender](docs/for/3d-artists.md) |
 | work in **film and motion** | A construct that assembles across your track, pausing, surging and flaring with the music, shimmering with a vocal stem ([three films](https://rtmandreyev.github.io/construct/#films)); keyed reveals in Blender; a world's named views as shots | [Film mode](docs/for/film-and-motion.md) |
 | are an **educator or researcher** | An agent-based model's run drawn as a construct, compared, printed, filmed | [Models come alive](docs/for/educators-and-researchers.md) |
@@ -128,18 +128,27 @@ And one construct taken through all of it, step by step: **[A longcase clock, en
 
 ## Examples
 
-**Worlds.** Rain Harbour, a game level from a concept picture: 21 constructs placed 50 times, every sign in real
-English and Chinese, a drivable hero car, then 12 world rounds against the picture. Stortorget, from a photograph of
-Stockholm's old square: eight real houses, one market stall placed 41 times, the tree. [Worlds, step by step →](docs/for/worlds-walkthrough.md)
+**Worlds.** Rain Harbour and Stortorget were each made in Hermes from one picture and one request, zero-shot. Rain
+Harbour, a game level from a concept picture: 21 constructs placed 50 times, every sign in real English and Chinese, a drivable hero car.
+Stortorget, from one photograph of Stockholm's old square: eight real houses researched one by one, one market stall
+placed 41 times, the tree, standing almost exactly as the photograph shows them. The Villa Savoye, lived in, is
+your own constructs together: the house with its furniture, a Braun, a Revox, a Leica, SERUM, an FJ62 and a DB5
+under the pilotis, KESTREL far off over the roof. [Worlds, step by step →](docs/for/worlds-walkthrough.md)
 
 <p align="center">
   <a href="examples/worlds/rain-harbour/"><img src="examples/worlds/rain-harbour/blender-street.jpg" width="98%" alt="Rain Harbour in Blender at night: a wet street between towers, neon signs in English and Chinese reflected in the road, the yellow hero car"></a>
 </p>
 <p align="center">
-  <a href="examples/worlds/rain-harbour/"><img src="examples/worlds/rain-harbour/blender-car.jpg" width="49%" alt="Rain Harbour in Blender: AURIC, the yellow hero car, close on the wet street"></a>
-  <a href="examples/worlds/stortorget/"><img src="examples/worlds/stortorget/blender-photo.jpg" width="49%" alt="Stortorget in Blender at dusk: the market stalls, the Christmas tree and the red and orange gables"></a>
+  <a href="examples/worlds/stortorget/"><img src="examples/worlds/stortorget/reference.jpg" width="49%" alt="The photograph Stortorget was made from: the red and orange gabled houses over rows of red Christmas market stalls and a tall spruce"></a>
+  <a href="examples/worlds/stortorget/"><img src="examples/worlds/stortorget/blender-photo.jpg" width="49%" alt="Stortorget made from that photograph, in Blender at dusk: the same houses, stalls and spruce from the same place"></a>
 </p>
-<p align="center"><sub>Both worlds as they ship, imported into Blender with Construct's add-on, each construct finished
+<p align="center"><sub>Left, the one photograph Stortorget was asked from (Ximonic, CC BY-SA 4.0); right, the world made from
+it, rendered from the same place.</sub></p>
+<p align="center">
+  <a href="https://rtmandreyev.github.io/construct/worlds/villa-savoye-lived-in/"><img src="docs/media/worlds/blender-villa-dusk.jpg" width="49%" alt="The Villa Savoye, lived in, in Blender at dusk: the Land Cruiser and the DB5 under its pilotis, KESTREL high over the roof"></a>
+  <a href="https://rtmandreyev.github.io/construct/worlds/villa-savoye-lived-in/"><img src="docs/media/worlds/blender-villa-table.jpg" width="49%" alt="Inside the Villa: a Revox A77, a Braun SK 4 and a Leica M3 on a table in the salon"></a>
+</p>
+<p align="center"><sub>Every world as it ships, imported into Blender with Construct's add-on, each construct finished
 with its own material map.</sub></p>
 
 **Provenance and solids.** The Duomo di Milano in provenance shades (**P**): verified sizes in cyan, traced shapes in blue,
@@ -310,7 +319,11 @@ evaluation runs:
   (tested: GPT-6.1 Sol, Claude Opus 5.5). A smaller model given such a subject says so and
   recommends them.
 - **Simpler objects in fast mode:** DeepSeek V4.1 Flash does as well as those on objects such as a
-  tape deck, a watch or a camera.
+  tape deck, a watch or a camera (a toy xylophone with its own finish map: about nine minutes).
+- **Worlds:** placing and arranging works with any of the models above. A world from a picture in
+  masterpiece mode is long work for a strong model: Rain Harbour and Stortorget were each about a day
+  of GPT-6.1 Sol, every construct built by its own subagent. Say "fast" for one pass each. Worlds were
+  also tested in Hermes Desktop with DeepSeek V4 Pro.
 - **Small models** (tested: MiniMax M3.1 Flash, Thinking Machines Inkling, NVIDIA Nemotron 3.5
   Super VL) are not recommended: in about half of their runs they did not save a scene, and they
   made scale errors.
@@ -325,13 +338,20 @@ Construct is deliberately small. You need:
 - For the Blender add-on, Blender 4.2 or newer (the film of a run: checked in Blender 5.2); for the
   NetLogo bridge, NetLogo 6 or 7 (the extension: NetLogo 7, and NetLogo 3D 7).
 - For CAD, FreeCAD 1.0 or newer (STEP needs nothing more); for game engines, any glTF 2.0 importer
-  (glued joints: tested in Godot 4.7).
+  (glued joints and worlds as game maps: tested in Godot 4.7). FBX and USD come through Blender.
+- For Hermes, the Construct plugin needs Hermes 0.22 or newer; a world from a picture in masterpiece
+  mode needs `delegation.max_spawn_depth: 2` in Hermes's config (an orchestrator subagent per
+  construct).
 - Tested on macOS; review capture on Linux and Windows is untested.
 
 ## Documentation
 
 | If you want to… | read |
 | --- | --- |
+| see everything new in 1.3, the worlds one by one | [What's new in 1.3](docs/NEW-IN-1.3.md) |
+| make a world, in Hermes or by hand, and the format | [Worlds, step by step](docs/for/worlds-walkthrough.md) and [Worlds](docs/WORLDS.md) |
+| see how a world was made from one picture | [Rain Harbour](examples/worlds/rain-harbour/) and [Stortorget](examples/worlds/stortorget/) |
+| use constructs and whole levels in a game | [Construct for game developers](docs/for/game-developers.md) |
 | see everything new in 1.2, with examples | [What's new in 1.2](docs/NEW-IN-1.2.md) |
 | see everything new in 1.1, with examples | [What's new in 1.1](docs/NEW-IN-1.1.md) |
 | see how a construct is made, step by step | [How a construct is made](docs/HOW-IT-IS-MADE.md) |
@@ -341,7 +361,7 @@ Construct is deliberately small. You need:
 | start from a ready-made template (a book, a CD, a guitar, a car) | [Archetypes](docs/ARCHETYPES.md) |
 | make mountains, routes and planets from real elevation data | [Terrain](docs/TERRAIN.md) |
 | turn a construct into a film with music | [Film mode](docs/FILM.md) |
-| export a 3D model, plain or finished | [3D export](docs/EXPORT.md) and the [Blender add-on](hosts/blender/README.md) |
+| export a 3D model or a world, plain or finished from its own material map | [3D export](docs/EXPORT.md) and the [Blender add-on](hosts/blender/README.md) |
 | print it, or make it a model kit | [3D printing and kits](docs/PRINTING.md) |
 | open it in CAD | [FreeCAD and STEP](docs/FREECAD.md) |
 | put it in a game engine | [Godot](docs/GODOT.md) |

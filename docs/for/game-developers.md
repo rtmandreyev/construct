@@ -206,7 +206,7 @@ the design. [Its page](../../examples/worlds/rain-harbour/README.md) follows the
 
 <p align="center"><img src="../../examples/worlds/rain-harbour/hero.jpg" width="95%" alt="Rain Harbour in lines of light: a long wet street between stacked towers, cyan and magenta neon signs in English and Chinese on both sides, the yellow hero car at the front left, the skyline behind"></p>
 <p align="center"><img src="../../examples/worlds/rain-harbour/blender-street.jpg" width="95%" alt="Rain Harbour in Blender at night: the same low shot down the wet street, the towers, the lit signs and the yellow car"></p>
-<p align="center"><sub>The picture's own shot in lines of light, and the same shot at night in Blender, from the world's
+<p align="center"><sub>The view from the picture's viewpoint in lines of light, and the same shot at night in Blender, from the world's
 export.</sub></p>
 
 ### The plan: each thing once, placed as often as needed

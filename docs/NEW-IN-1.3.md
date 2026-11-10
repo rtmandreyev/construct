@@ -11,7 +11,7 @@ In the commands below, `construct` is short for `python3 construct_hologram/cli.
 - [1. The shed: move anything, on every axis](#1-the-shed-move-anything-on-every-axis)
 - [2. The Villa: your own constructs, in one place](#2-the-villa-your-own-constructs-in-one-place)
 - [3. KESTREL over the Villa: far off, at its real size](#3-kestrel-over-the-villa-far-off-at-its-real-size)
-- [4. Stortorget: a world from a photograph](#4-stortorget-a-world-from-a-photograph)
+- [4. Stortorget: a world from one photograph, zero-shot](#4-stortorget-a-world-from-one-photograph-zero-shot)
 - [5. Rain Harbour: a game level, zero-shot](#5-rain-harbour-a-game-level-zero-shot)
 - [Out to other tools, finished](#out-to-other-tools-finished)
 - [Masterpiece rounds, sturdier](#masterpiece-rounds-sturdier)
@@ -39,9 +39,9 @@ construct check examples/worlds/the-shed/world.json                       # the 
 
 <p align="center"><img src="media/worlds/blender-shed-yard.jpg" width="95%" alt="The shed world in Blender: a dark timber garden shed with its log store and planned deck, a pale blue VW T1 Samba parked alongside, a Vespa on its stand"></p>
 
-[The shed and the things around it](../examples/worlds/the-shed/world.json) is the smallest world: a garden shed
-with its planned deck, a VW T1 Samba by the log store, a Vespa GS 150 on its stand, State Bench inside on the floor,
-and Rietveld's Red-Blue Chair inside by the door. Five constructs from the gallery, each unchanged, and each keeps its
+[The shed and the things around it](https://rtmandreyev.github.io/construct/worlds/the-shed/) is the smallest world: [a garden shed](https://rtmandreyev.github.io/construct/examples/garden-shed-planned/)
+with its planned deck, [a VW T1 Samba](https://rtmandreyev.github.io/construct/examples/volkswagen-t1-samba/) by the log store, [a Vespa GS 150](https://rtmandreyev.github.io/construct/examples/vespa-gs150/) on its stand, [State Bench](https://rtmandreyev.github.io/construct/examples/state-bench/) inside on the floor,
+and [Rietveld's Red-Blue Chair](https://rtmandreyev.github.io/construct/examples/rietveld-red-blue-chair/) inside by the door. Five constructs from the gallery, each unchanged, and each keeps its
 joints: the shed's door opens on its hinge, and the chair is inside.
 
 It is the place to learn **Arrange**. On a world's card in Hermes Desktop (or **A** on its page anywhere):
@@ -68,11 +68,11 @@ with no model turn; **Undo last change** steps back. **Save view** names the cam
 
 ## 2. The Villa: your own constructs, in one place
 
-[The Villa Savoye, lived in](../examples/worlds/villa-savoye-lived-in/world.json) is what worlds are for: the
-constructs you have made, together where they belong. Le Corbusier's house holds an Eames lounge chair facing the
-terrace glass, a Tompion clock against the salon wall, a Jackson by the studio table, and two tables designed for
-this world: one carries a Braun SK 4, a Revox A77 and a Leica M3, the other SERUM 2 / 61. A Land Cruiser FJ62 and an
-Aston Martin DB5 stand under the pilotis, KESTREL far off over the roof. Thirteen placements of twelve constructs,
+[The Villa Savoye, lived in](https://rtmandreyev.github.io/construct/worlds/villa-savoye-lived-in/) is what worlds are for: the
+constructs you have made, together where they belong. [Le Corbusier's house](https://rtmandreyev.github.io/construct/examples/villa-savoye/) holds [an Eames lounge chair](https://rtmandreyev.github.io/construct/examples/eames-lounge-chair/) facing the
+terrace glass, [a Tompion clock](https://rtmandreyev.github.io/construct/examples/tompion-year-going-clock/) against the salon wall, [a Jackson](https://rtmandreyev.github.io/construct/examples/jackson-juggernaut-et7/) by the studio table, and two tables designed for
+this world: one carries [a Braun SK 4](https://rtmandreyev.github.io/construct/examples/braun-sk4/), [a Revox A77](https://rtmandreyev.github.io/construct/examples/revox-a77/) and [a Leica M3](https://rtmandreyev.github.io/construct/examples/leica-m3/), the other [SERUM 2 / 61](https://rtmandreyev.github.io/construct/examples/serum-2-61/). [A Land Cruiser FJ62](https://rtmandreyev.github.io/construct/examples/toyota-land-cruiser-fj62/) and
+[an Aston Martin DB5](https://rtmandreyev.github.io/construct/examples/aston-martin-db5/) stand under the pilotis, [KESTREL](https://rtmandreyev.github.io/construct/examples/kestrel-v2/) far off over the roof. Thirteen placements of twelve constructs,
 each at its real size.
 
 <p align="center">
@@ -113,12 +113,12 @@ toy on the roof.
 ```
 
 The same rule scales a planet: `of` names the part the diameter belongs to (Saturn's globe, 120,536 km), so its rings
-and moons come at the same scale; [KESTREL at Saturn](../examples/worlds/kestrel-at-saturn/world.json) puts the planet
+and moons come at the same scale; [KESTREL at Saturn](https://rtmandreyev.github.io/construct/worlds/kestrel-at-saturn/) puts the planet
 behind the tug as it would look from about 350,000 km. Nothing a view fits ever changes a sky placement's size, and a
 far placement no longer pulls every view out to empty ground. Anything not at real size (`scale` other than 1) is
 disclosed by the audit and wherever the world is shown.
 
-## 4. Stortorget: a world from a photograph
+## 4. Stortorget: a world from one photograph, zero-shot
 
 <p align="center">
   <img src="../examples/worlds/stortorget/reference.jpg" width="49%" alt="The photograph: Stortorget in Stockholm at its Christmas market">
@@ -127,7 +127,10 @@ disclosed by the audit and wherever the world is shown.
 <p align="center"><sub>Left, the photograph the world was asked from (Wikimedia Commons, CC BY-SA 4.0, credited on
 <a href="../examples/worlds/stortorget/">its page</a>); right, the world in Blender from the same place.</sub></p>
 
-Attach a picture and ask for a world from it:
+Put the two side by side: the same gables in the same order and colours, No. 20's stepped red front beside No. 18's
+orange curve, the spruce rising in front of them, the rows of red stalls, the granite block, the lamp. All of it
+came from that one photograph and one request, zero-shot: no plan drawn by a person, no model picked from a library.
+The one thing added after the run is the spruce's material map, which makes its needles green in exports. Attach a picture and ask for a world from it, for example:
 
 > Make this square as a world: the houses, the market, the tree. Masterpiece.
 
@@ -148,12 +151,21 @@ Christmas tree, the lamp. Each house says what is documented and what is inferre
 Its page has the request word for word, the plan, every construct's rounds, the world's rounds, and what the last
 critic still found.
 
+**One picture is a deliberate limit.** Both worlds here were each asked from a single picture, to show how far one
+goes. Nothing stops you giving more: photographs from every side, a plan, elevations, old postcards, measurements.
+Each construct then has more to be checked against, and what the provenance view (**P**) marks as inferred becomes
+documented. With tens or hundreds of photographs of one place, a world becomes a digital twin of it: a heritage site
+recorded house by house, a street for a film's previsualisation, a campus or a shop floor to plan a change in, a
+level built on a real neighbourhood.
+
 ## 5. Rain Harbour: a game level, zero-shot
 
 <p align="center"><img src="../examples/worlds/rain-harbour/blender-street.jpg" width="95%" alt="Rain Harbour in Blender: a wet night street between towers, neon signs in English and Chinese reflected in the road, a yellow car"></p>
 
-One concept picture and one request made [Rain Harbour](../examples/worlds/rain-harbour/): a 60 m night street, its
-towers, eight neon signs in real English and Chinese, and AURIC, a drivable hero car whose doors swing. 21
+One concept picture and one request made [Rain Harbour](../examples/worlds/rain-harbour/), zero-shot like
+Stortorget: a 60 m night street, its towers, eight neon signs in real English and Chinese, and
+[AURIC](https://rtmandreyev.github.io/construct/worlds/rain-harbour/constructs/auric/), a hero car built to be driven,
+its gull-wing doors on working hinges. 21
 constructs placed 50 times, each built in its own rounds; then 12 world rounds against the picture. Final verdict:
 good.
 
@@ -233,7 +245,7 @@ State Bench, Saturn, the Aston Martin DB5, the Sagrada Família, the James Webb 
 Chair; the Eames is now the one built in the ChatGPT app. The Yamaha CFX and the first KESTREL left (KESTREL v2
 stays). Wordmarks drawn on a maker's product (a guitar's headstock, a camera's top plate) are left off.
 
-Six worlds ship to start from: the five above and [a street of landmarks](../examples/worlds/a-street-of-landmarks/world.json)
+Six worlds ship to start from: the five above and [a street of landmarks](https://rtmandreyev.github.io/construct/worlds/a-street-of-landmarks/)
 (the Duomo, the Sainte-Chapelle, the Sagrada Família and Neuschwanstein on one street at their real sizes). The plugin
 ships all six, Rain Harbour and Stortorget with their constructs and their artwork.
 [The format](WORLDS.md) · [Worlds, step by step](for/worlds-walkthrough.md)

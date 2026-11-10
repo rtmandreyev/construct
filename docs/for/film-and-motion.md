@@ -72,7 +72,7 @@ own NetLogo colour, at 30 ticks a second (`construct netlogo-film run.jsonl --ou
 
 A world places whole constructs together at real size and names its own views, so the shots of a set can be asked
 for with it. [Stortorget](../../examples/worlds/stortorget/), Stockholm's old square at its Christmas market, was asked
-for "made to be filmed", with five views: the photograph's own shot, the nearest stall close with its bulbs, the red
+for "made to be filmed", with five views: the view from where the photograph was taken, the nearest stall close with its bulbs, the red
 and orange gables from below, the tree, and a high view over the square. Each is a named view of the world
 (`b-stall-close`, `c-gables-low`…); `construct video world.json --view c-gables-low` renders the world assembling
 from it, with `--sound` for a track under it.

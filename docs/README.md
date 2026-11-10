@@ -9,10 +9,14 @@ need them.
 **By who you are:** [anyone with an AI agent](for/anyone.md) · [makers](for/makers.md) ·
 [new things from real ones](for/invent-from-what-exists.md) · [documentation → product](for/documentation-to-product.md) · [game developers](for/game-developers.md) · [3D artists](for/3d-artists.md) · [film and motion](for/film-and-motion.md) ·
 [educators and researchers](for/educators-and-researchers.md) · [museums and archives](for/museums-and-archives.md) ·
-[developers](for/developers.md) · [Villa Savoye in Hermes, step by step](for/hermes-walkthrough.md)
+[developers](for/developers.md) · [Villa Savoye in Hermes, step by step](for/hermes-walkthrough.md) ·
+[worlds, step by step](for/worlds-walkthrough.md)
 
 | If you want to… | read |
 | --- | --- |
+| see what is new in 1.3: worlds, one feature each | [NEW-IN-1.3.md](NEW-IN-1.3.md) |
+| place constructs together in a world, in Hermes or by hand | [for/worlds-walkthrough.md](for/worlds-walkthrough.md) and [WORLDS.md](WORLDS.md) |
+| see a world made from one picture, start to finish | [Rain Harbour](../examples/worlds/rain-harbour/) and [Stortorget](../examples/worlds/stortorget/) |
 | see what is new in 1.2, with pictures and commands | [NEW-IN-1.2.md](NEW-IN-1.2.md) |
 | see what was new in 1.1, with pictures and commands | [NEW-IN-1.1.md](NEW-IN-1.1.md) |
 | see how a construct is made, step by step | [HOW-IT-IS-MADE.md](HOW-IT-IS-MADE.md) |

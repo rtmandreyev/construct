@@ -3,13 +3,13 @@
 A game level made in Hermes from one concept picture: 60 m of a rain-soaked night street in an invented harbour
 district, its towers, its bilingual neon signs and one hero car. 21 constructs, placed 50 times. Each construct was
 made in masterpiece rounds by its own builder, a fresh critic judging every round; then the whole world ran 12 rounds
-of its own against the picture. Built by GPT-6.1 Sol in Hermes Desktop with the Construct plugin, from the morning of
-8 November 2026 to three in the morning of the 9th. This page follows it from the request to a map in Godot.
+of its own against the picture. Built by GPT-6.1 Sol in Hermes Desktop with the Construct plugin, in about 17 hours, many
+constructs building at once. This page follows it from the request to a map in Godot.
 
 <p align="center">
   <img src="hero.jpg" width="95%" alt="Rain Harbour in lines of light: a long wet street between stacked towers, cyan and magenta neon signs in English and Chinese on both sides, the yellow hero car at the front left, the skyline behind">
 </p>
-<p align="center"><sub>The picture's own shot, low down the street. Open the world in Hermes (<b>Worlds</b> on the
+<p align="center"><sub>From the picture's viewpoint, low down the street. Open the world in Hermes (<b>Worlds</b> on the
 Constructs page) or with <code>construct build examples/worlds/rain-harbour/world.json</code>.</sub></p>
 
 <p align="center">
@@ -239,8 +239,8 @@ a round, judging the world's packet (its named views beside the picture) on nine
 against the best so far without knowing which was which. A round that lost put the world and its constructs back.
 At most four builders repaired constructs at once, each in the world's own copy of its construct.
 
-<p align="center"><img src="run/rounds-01-12-street.jpg" alt="The picture's own shot at round 1 and round 12: at round 1 the car is cut off at the left edge and the lower half is empty road; at round 12 the whole yellow-striped car sits in the foreground, magenta hotel blades and the street's signs frame the road, and cyan and magenta patches lie on the road"></p>
-<p align="center"><sub>The picture's own shot at round 1 (left) and round 12 (right), from the critics' packets.</sub></p>
+<p align="center"><img src="run/rounds-01-12-street.jpg" alt="The view from the picture's viewpoint at round 1 and round 12: at round 1 the car is cut off at the left edge and the lower half is empty road; at round 12 the whole yellow-striped car sits in the foreground, magenta hotel blades and the street's signs frame the road, and cyan and magenta patches lie on the road"></p>
+<p align="center"><sub>The view from the picture's viewpoint at round 1 (left) and round 12 (right), from the critics' packets.</sub></p>
 
 | Round | Kept? | What changed | What the critic said next | Verdict, score | Author / critic min |
 | --- | --- | --- | --- | --- | --- |

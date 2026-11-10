@@ -72,6 +72,30 @@ steps in 3D, to turn and rewatch. The Villa Savoye's kit was asked for in one se
 <p align="center"><img src="../media/print-exact-fj62.jpg" alt="The FJ62 printed as voxels on the left, with a stepped arch and tyre, and as an exact print on the right, with a clean arch and a round tyre"></p>
 <p align="center"><sub>The same FJ62 print, voxels (left) and <code>--exact</code> (right): the construct's own solids keep a round tyre and a clean arch.</sub></p>
 
+## Something you'll build: a shed into CAD
+
+A construct of what you plan to make goes into CAD the same way. The [garden shed with its planned log store and
+deck](https://rtmandreyev.github.io/construct/examples/garden-shed-planned/) was made from one photo of the shed,
+then extended with what its owner meant to add, every new part marked as designed. Asked for "a STEP file of the
+planned version", it opens in FreeCAD as named solids by stage, ready to dimension and change:
+
+<p align="center"><img src="../media/everyday-shed-freecad.jpg" width="90%" alt="The planned shed in FreeCAD: the model tree of named parts by stage, and the shed with its log store, logs and deck as CAD solids"></p>
+
+The steps, from the photo to the file: [your home or garden](home-and-garden.md).
+
+## A piece of a world, on your desk
+
+Every construct in a world is still a construct, so any of them prints on its own. Stortorget's red No. 20, one of
+the eight houses of [a world made from one photograph](../../examples/worlds/stortorget/), as a desktop print:
+
+```sh
+construct print examples/worlds/stortorget/constructs/schantzska-huset-no-20/scene.json --out no20.3mf --fit --exact
+# wrote no20.3mf: 71.5 x 84.7 x 211.7 mm at 1:137, 64996 triangles
+```
+
+The same goes for a house you placed in a world of your own, a car from a game level, or a shelf of things from
+your room, each at the scale your printer takes; `construct kit` turns a construct into a model kit the same way.
+
 ## A part that fits
 
 The same tools make a single part. The [Braun SK 4's replacement knob](https://rtmandreyev.github.io/construct/examples/braun-sk4-knob/)
