@@ -1036,6 +1036,10 @@ def to_gltf(g, wire="edges", pose="closed", materials=None, wire_radius=None, me
         for k in keys:
             _, jt, slot = k
             gr = groups[k]
+            if pieces and gr["tris"]:   # its meshes are written with its body (emit_bodies), once, and counted there
+                parent, origin = chain(pi, jt, slot)
+                bodies(part, gr, parent, origin, jt)
+                continue
             prims = []
             static = merge and jt < 0 and slot < 0
             if gr["tris"]:
@@ -1087,16 +1091,13 @@ def to_gltf(g, wire="edges", pose="closed", materials=None, wire_radius=None, me
                 continue
             meshes.append({"name": part["id"], "primitives": prims})
             mesh = len(meshes) - 1
-            if jt < 0 and slot < 0 and len(keys) == 1 and not (pieces and gr["tris"]):
+            if jt < 0 and slot < 0 and len(keys) == 1:
                 nodes[pnode]["mesh"] = mesh
                 chains[k] = (pnode, (0.0, 0.0, 0.0))
                 if colliders and gr["tris"]:
                     collider(part["id"], gr["tris"], pnode, [0.0, 0.0, 0.0])
                 continue
             parent, origin = chain(pi, jt, slot)
-            if pieces and gr["tris"]:
-                bodies(part, gr, parent, origin, jt)
-                continue
             n = node({"name": "%s:mesh" % part["id"], "mesh": mesh,
                       "translation": [-x for x in origin], "extras": {"construct": {"part": part["id"], "role": part["role"]}}})
             nodes[parent].setdefault("children", []).append(n)
