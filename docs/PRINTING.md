@@ -121,7 +121,7 @@ spacing them by time is a later step.
 
 `construct kit` makes a construct into a model kit to print, glue and paint, as a Revell or Tamiya kit is.
 
-> **Not yet built by anyone.** The kits are made and checked by software and by AI critics; none has yet been printed
+> **Not yet built by anyone.** The kits are made and checked by software and by AI critics. None has yet been printed
 > and glued by a person. Print one piece first (`pieces/`), and if you build one, tell us how it went:
 > [issues](https://github.com/rtmandreyev/construct/issues).
 
