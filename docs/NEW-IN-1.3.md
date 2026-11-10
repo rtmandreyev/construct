@@ -1,6 +1,6 @@
 # What's new in 1.3, a walkthrough
 
-1.3 is about **worlds**: whole constructs placed together in one place, each still itself. A world can be your
+1.3 is about **worlds**: whole constructs placed together in one place, each keeping its own parts and joints. A world can be your
 yard, your house with your furniture and your cars, a ship in the sky, a market square from a photograph, or a game
 level from a concept picture. This page goes through the worlds that ship, one feature each, from the simplest to
 the most ambitious, then the rest of what changed. The full list is in the [changelog](../CHANGELOG.md).
@@ -21,7 +21,7 @@ In the commands below, `construct` is short for `python3 construct_hologram/cli.
 ## What a world is
 
 A world places constructs at their real sizes and keeps each one whole: its parts, sources, provenance, critic's
-verdicts and joints stay its own, under its placement's id (`vespa/legshield`). A world is not one big model. Every
+verdicts and joints stay with it, under its placement's id (`vespa/legshield`). A world is not one big model. Every
 construct in it can still be opened, moved, exported on its own, reused in another world, and animated by its own
 joints. The world's audit says what overlaps, what runs into the house it stands in, what stands where a door
 opens, and what stands on nothing.
@@ -41,16 +41,16 @@ construct check examples/worlds/the-shed/world.json                       # the 
 
 [The shed and the things around it](https://rtmandreyev.github.io/construct/worlds/the-shed/) is the smallest world: [a garden shed](https://rtmandreyev.github.io/construct/examples/garden-shed-planned/)
 with its planned deck, [a VW T1 Samba](https://rtmandreyev.github.io/construct/examples/volkswagen-t1-samba/) by the log store, [a Vespa GS 150](https://rtmandreyev.github.io/construct/examples/vespa-gs150/) on its stand, [State Bench](https://rtmandreyev.github.io/construct/examples/state-bench/) inside on the floor,
-and [Rietveld's Red-Blue Chair](https://rtmandreyev.github.io/construct/examples/rietveld-red-blue-chair/) inside by the door. Five constructs from the gallery, each unchanged, and each keeps its
-joints: the shed's door opens on its hinge, and the chair is inside.
+and [Rietveld's Red-Blue Chair](https://rtmandreyev.github.io/construct/examples/rietveld-red-blue-chair/) inside by the door. These are five constructs from the gallery, each unchanged and each with its
+own joints: the shed's door opens on its hinge, and the chair sits inside.
 
-It is the place to learn **Arrange**. On a world's card in Hermes Desktop (or **A** on its page anywhere):
+It is the place to learn **Arrange**, on a world's card in Hermes Desktop (or with **A** on its page anywhere):
 
-- **Across the ground:** click a construct and drag it. It rides on whatever is under the pointer, the yard, the
-  deck, a table, a roof, and a wall stops it. What stands on it goes with it (move the shed and the bench inside
+- **Across the ground:** click a construct and drag it. It rides on whatever is under the pointer (the yard, the
+  deck, a table, a roof), and a wall stops it. What stands on it goes with it (move the shed and the bench inside
   comes too).
 - **Up and down:** **Lift** and **Lower** (Page Up / Down) for what hangs or flies; Alt keeps its level while you
-  drag. Saved, a construct lands on what is under it.
+  drag. When you save, a construct lands on what is under it.
 - **Round:** **Shift**-drag or **Q / E** to turn, **Turn 90°** on its bar, the arrows to nudge. **N** snaps to a
   quarter-metre grid and 15° turns; ⌘-click chooses several to move and turn together.
 - **Add a construct** opens the library with previews; the one you pick lands on a floor it fits on, or on clear
@@ -59,7 +59,7 @@ It is the place to learn **Arrange**. On a world's card in Hermes Desktop (or **
 <p align="center"><img src="media/worlds/hermes-arrange.png" width="95%" alt="Arranging the Villa Savoye, lived in, in Hermes Desktop, in the solid view: the Eames chair chosen in the salon, moved 0.45 m and turned 45°, the Arrange bar with Save 1 change, Put back and Undo, and the chair's own bar with Turn 90°, Lift, Lower and Put back"></p>
 
 **Save** checks the world with the moves (the audit names anything that now overlaps), saves it and rebuilds it,
-with no model turn; **Undo last change** steps back. **Save view** names the camera as a view of the world;
+without calling a model. **Undo last change** steps back. **Save view** names the camera as a view of the world;
 **Picture** saves a still at 2560 × 1440.
 
 <p align="center"><img src="media/worlds/blender-shed-door.jpg" width="95%" alt="The shed's door open, the Red-Blue Chair inside facing out"></p>
@@ -94,8 +94,8 @@ Revox's lid must have room to open. In Hermes, ask for it the way you would say 
 > Put my Eames chair in the Villa's salon facing the terrace, my Revox and Leica on a table by the west wall, and the
 > FJ62 under the pilotis.
 
-Hermes places them with `construct_world`, several at once, and shows the world live in the chat; open any of them
-and its provenance, critic's verdicts and joints are still its own. [Worlds, step by step](for/worlds-walkthrough.md)
+Hermes places them with `construct_world`, several at once, and shows the world live in the chat. Open any of them
+and you still find its own provenance, critic's verdicts and joints. [Worlds, step by step](for/worlds-walkthrough.md)
 goes through this world in Hermes from the first request.
 
 ## 3. KESTREL over the Villa: far off, at its real size
@@ -114,7 +114,7 @@ toy on the roof.
 
 The same rule scales a planet: `of` names the part the diameter belongs to (Saturn's globe, 120,536 km), so its rings
 and moons come at the same scale; [KESTREL at Saturn](https://rtmandreyev.github.io/construct/worlds/kestrel-at-saturn/) puts the planet
-behind the tug as it would look from about 350,000 km. Nothing a view fits ever changes a sky placement's size, and a
+behind the tug as it would look from about 350,000 km. Fitting a view never changes a sky placement's size, and a
 far placement no longer pulls every view out to empty ground. Anything not at real size (`scale` other than 1) is
 disclosed by the audit and wherever the world is shown.
 
@@ -134,9 +134,9 @@ The one thing added after the run is the spruce's material map, which makes its 
 
 > Make this square as a world: the houses, the market, the tree. Masterpiece.
 
-Hermes plans the pieces (each distinct thing once, placed as often as needed), researches what it can name, builds
-each new construct in its own subagent in masterpiece rounds with a fresh critic each round, places them at real
-size, then runs the whole world through rounds of its own against the picture. A round that loses puts the world
+Hermes plans the pieces (each distinct thing once, placed as often as needed) and researches what it can name. It
+builds each new construct in its own subagent, in masterpiece rounds with a fresh critic each round, and places them
+at real size. Then it runs the whole world through rounds of its own against the picture. A round that loses puts the world
 and its constructs back.
 
 [Stortorget](../examples/worlds/stortorget/) is Stockholm's old square at Christmas: eight real houses researched one
@@ -151,7 +151,7 @@ Christmas tree, the lamp. Each house says what is documented and what is inferre
 Its page has the request word for word, the plan, every construct's rounds, the world's rounds, and what the last
 critic still found.
 
-**One picture is a deliberate limit.** Both worlds here were each asked from a single picture, to show how far one
+**One picture is a deliberate limit.** Both worlds here were asked from a single picture each, to show how far one
 goes. Nothing stops you giving more: photographs from every side, a plan, elevations, old postcards, measurements.
 Each construct then has more to be checked against, and what the provenance view (**P**) marks as inferred becomes
 documented. With tens or hundreds of photographs of one place, a world becomes a digital twin of it: a heritage site
@@ -165,9 +165,9 @@ level built on a real neighbourhood.
 One concept picture and one request made [Rain Harbour](../examples/worlds/rain-harbour/), zero-shot like
 Stortorget: a 60 m night street, its towers, eight neon signs in real English and Chinese, and
 [AURIC](https://rtmandreyev.github.io/construct/worlds/rain-harbour/constructs/auric/), a hero car built to be driven,
-its gull-wing doors on working hinges. 21
-constructs placed 50 times, each built in its own rounds; then 12 world rounds against the picture. Final verdict:
-good.
+its gull-wing doors on working hinges. It has 21
+constructs placed 50 times, each built in its own rounds, followed by 12 world rounds against the picture. The
+final verdict: good.
 
 <p align="center">
   <img src="../examples/worlds/rain-harbour/reference.jpg" width="32%" alt="The concept picture Rain Harbour was asked from">
@@ -175,9 +175,10 @@ good.
   <img src="../examples/worlds/rain-harbour/blender-signs.jpg" width="32%" alt="Under the neon signs">
 </p>
 
-What makes it a level and not a picture of one: every construct in it is still a construct. The car is one object
-with its own doors on their hinges; a sign is one object with its artwork; the street, each tower and each prop can
-be moved, reused in another level, or replaced, and the world exports as one file with each placement a named group:
+What makes it a level, and not a picture of one, is that every construct in it is still a construct. The car is one
+object with its own doors on their hinges, and a sign is one object with its artwork. The street, each tower and each
+prop can be moved, reused in another level, or replaced, and the world exports as one file with each placement a
+named group:
 
 ```sh
 construct export examples/worlds/rain-harbour/world.json --out level.glb                   # Blender, Unity, Unreal
@@ -190,16 +191,16 @@ text-to-mesh model.
 
 ### Changed by hand, no AI
 
-A level made from one prompt is still yours to remake, with no model at all. Opened from the Worlds tab in Hermes,
-**Arrange**: click AURIC, **Turn 90°** twice and the arrow keys to bring it out into the middle of the street, then
-**Save**. Each save checks the level and rebuilds it. The card's moves are sent as one plugin command, which can
-also be typed in the chat to move many things at once, still with no model turn:
+A level made from one prompt is still yours to remake, with no model at all. Open it from the Worlds tab in Hermes and use
+**Arrange**: click AURIC, then **Turn 90°** twice and the arrow keys to bring it out into the middle of the street,
+then **Save**. Each save checks the level and rebuilds it. The card's moves are sent as one plugin command, which can
+also be typed in the chat to move many things at once, again without calling a model:
 
 ```text
 /construct arrange rain-harbour-a-night-street [{"id": "skyline-centre", "move": [-19, 0, -54], "turn": 0, "pivot": [19, 98]}, ...]
 ```
 
-Ten changes that way: the Terrace Exchange brought 54 m forward to close the street into a dead end, two signal
+Ten changes were made that way: the Terrace Exchange brought 54 m forward to close the street into a dead end, two signal
 towers moved and turned, and the signs swapped across the street (Night Market and the pharmacy to the left, Rain
 Harbour and Blue Line Electronics to the right, the hotel's blade to the other side). The check found nothing new.
 Exported again and rendered from the same camera, with the car's doors opened on their own hinges:
@@ -261,8 +262,8 @@ material (Everything in Freeborn Red: the body, the doors, the wings), every par
 that part alone, and **Save colour**.
 
 <p align="center"><img src="media/worlds/hermes-finish.png" width="70%" alt="Finish on the Villa's card in Hermes Desktop: the Land Cruiser under the pilotis repainted green, the panel with fj62 · body, the colour #1f4d33, paint, Everything in Freeborn Red (11 parts) and Save colour, and the note that it changes this world only"></p>
- The colour is tried on as you pick it; the
-save writes it into the construct's map, with no model turn, and every export and Blender follow. In a world it
+ The colour is tried on as you pick it. Saving
+writes it into the construct's map without calling a model, and every export and Blender follow it. In a world it
 changes that world's own copy only: your own construct and your other worlds stay as they are, and **Undo last
 change** puts it back. Or edit the map's text, ask the agent, or export once with another
 (`--materials my-colours.json`).
@@ -273,7 +274,7 @@ change** puts it back. Or edit the map's text, ask the agent, or export once wit
 Two long runs in Hermes (Rain Harbour and Stortorget, about a day each, every construct built by its own subagent)
 found what the rounds recorder made harder than it should be. Each is fixed:
 
-- **A tie is a result.** A critic who finds two versions equal says `same`; the round did not beat the best.
+- **A tie is a result.** A critic who finds two versions equal says `same`, and the round is recorded as not beating the best.
 - **More time on request.** `rounds extend 90` reopens a run stopped by its time ceiling; the other stop rules stand.
 - **Artwork travels with checkpoints.** A sign's picture is copied into the round's checkpoint and put back when a
   round loses, so a critic never judges a blank sign.
