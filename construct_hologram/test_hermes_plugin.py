@@ -829,7 +829,8 @@ class Plugin(unittest.TestCase):
         rows = {r["project"]: r for r in self.api.projects(self.data)}
         self.assertEqual(rows[opened]["in_world"], "My shed")
         # a build still shown after its project was removed can still be starred (its marks get a folder of their own)
-        shutil.rmtree(self.data / "projects" / opened)
+        # the job can say it is built a moment before its child lets go of the folder (Windows refuses the delete)
+        self.assertTrue(self.mod.runtime.remove_tree(self.data / "projects" / opened, tries=20))
         self.assertIn("a favourite", handle("favourite %s" % opened))
         self.assertTrue({r["project"]: r for r in self.api.projects(self.data)}[opened]["favourite"])
         self.assertEqual(rows[sw]["group"], "Worlds")

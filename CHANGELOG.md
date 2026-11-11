@@ -11,6 +11,8 @@
   server as Claude Desktop installs it with a double-click, and the official MCP Registry lists it as
   `io.github.rtmandreyev/construct`. `scripts/build_mcpb.py` builds the bundle and the registry's `server.json`
   reproducibly, so the hash in the entry holds for the attached file ([PUBLISHING.md](PUBLISHING.md)).
+- **The gallery build makes its model kits as the machine's memory allows** (`scripts/build_site.py`): up to four
+  side by side, one per 4 GB. Four at once ran a 7 GB Linux CI runner out of memory.
 
 ## 1.3.0 — 2026-11-10
 

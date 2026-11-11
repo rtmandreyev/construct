@@ -28,6 +28,7 @@ import html
 import importlib
 import importlib.util
 import json
+import os
 import re
 import shutil
 import subprocess
@@ -625,6 +626,21 @@ def _kit(spec, out):
     return {"slug": spec["slug"], "scale": kit["scale"], "pieces": len(kit["pieces"]), "steps": len(kit["steps"])}
 
 
+KIT_MEMORY = 4 * 2 ** 30   # the largest kit's build peaks near this (the T1, 4.3 GB measured)
+
+
+def kit_workers():
+    """How many kits to make side by side: up to four, one for each KIT_MEMORY the machine has. A 7 GB CI runner
+    makes them one at a time (four at once ran it out of memory); where the memory can't be read, up to the
+    processor count."""
+    n = min(4, os.cpu_count() or 1)
+    try:
+        memory = os.sysconf("SC_PAGE_SIZE") * os.sysconf("SC_PHYS_PAGES")
+    except (AttributeError, ValueError, OSError):   # Windows has no sysconf
+        return n
+    return max(1, min(n, memory // KIT_MEMORY))
+
+
 def build(out, films_dir=None, kits=False):
     """The site in `out`; with `films_dir` (the folder holding the videos films.json names) also the films, and
     with `kits` the model kits (examples/kits.json: a few minutes each, made side by side)."""
@@ -640,7 +656,7 @@ def build(out, films_dir=None, kits=False):
     examples = _load_examples()
     made = {}
     if kits:
-        with ThreadPoolExecutor(max_workers=4) as pool:
+        with ThreadPoolExecutor(max_workers=kit_workers()) as pool:
             made = {k["slug"]: k for k in pool.map(lambda spec: _kit(spec, out), _load_kits())}
     for ex in examples:
         src, dst = EXAMPLES / ex["slug"], out / "examples" / ex["slug"]
